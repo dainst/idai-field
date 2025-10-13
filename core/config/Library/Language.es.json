@@ -130,23 +130,23 @@
       "label": "Sitio",
       "fields": {
         "placeName": {
-          "label": "Yacimiento",
+          "label": "Nombre del sitio",
           "description": "Nombre de la localidad o término municipal"
         },
         "excavationHistory": {
-          "label": "Historia de la excavación",
-          "description": "Informe sobre los proyectos de excavación en el yacimiento"
+          "label": "Historia de las excavaciones",
+          "description": "Resumen sobre los proyectos de excavación en el yacimiento"
         },
         "siteClassification": {
-          "label": "Clasificación del yacimiento"
+          "label": "Clasificación del sitio"
         },
         "modernIntervention": {
-          "description": "Descripción de si el yacimiento ha estado expuesto a daños recientes (p. ej.: cantera, mina, construcción, relleno, saqueo, agricultura, reforestación, escombreras)",
+          "description": "Descripción de si el sitio ha estado expuesto a daños recientes (p. ej.: cantera, mina, construcción, relleno, saqueo, agricultura, reforestación, escombreras)",
           "label": "Intervenciones modernas"
         },
         "buildingHistory": {
-          "description": "Informe sobre los proyectos de investigación constructiva en el yacimiento",
-          "label": "Historia constructiva"
+          "description": "Resumen de los proyectos de investigación arquitectónica del sitio",
+          "label": "Historia del edificio"
         },
         "buildingResearchHistory": {
           "label": "Historia de la investigación",
@@ -158,10 +158,10 @@
         },
         "findSituation": {
           "label": "Circunstancias del hallazgo",
-          "description": "Descripción detallada de las condiciones y del descubridor del yacimiento"
+          "description": "Descripción detallada de las condiciones en las que se descubrió el sitio y de las personas implicadas"
         },
         "findspotClassification": {
-          "label": "Clasificación del yacimiento"
+          "label": "Clasificación del lugar del hallazgo"
         },
         "gazId": {
           "label": "Gazetteer ID",
@@ -209,7 +209,7 @@
           "description": "Número de hallazgos recuperados o inventariados"
         },
         "conditionComment": {
-          "label": "Comentario sobre estado de conservación"
+          "label": "Comentario sobre el estado de conservación"
         },
         "conditionPercent": {
           "label": "Estado de conservación - porcentaje",
@@ -224,8 +224,8 @@
           "description": "¿Se han llevado a cabo medidas de restauración y conservación?"
         },
         "conditionAmount": {
-          "label": "Porcentaje conservado",
-          "description": "Parte conservada respecto al original"
+          "label": "Parte conservada",
+          "description": "Parte conservada respecto a la original"
         },
         "catalogueNumber": {
           "description": "Número asignado al registrar el hallazgo en un catálogo",
@@ -233,7 +233,7 @@
         },
         "comparison": {
           "label": "Comparación(es)",
-          "description": "Comparación con hallazgos, objetos, inscripciones, etc., indicando la referencia"
+          "description": "Comparación con hallazgos similares, objetos, inscripciones, etc., indicando la referencia"
         },
         "condition": {
           "label": "Estado de conservación",
@@ -243,8 +243,8 @@
           "label": "Clasificación tipológica"
         },
         "publicationRemark": {
-          "label": "Notas",
-          "description": "Notas sobre la publicación"
+          "label": "Anotaciones",
+          "description": "Anotaciones sobre la publicación"
         },
         "publicationMaterialSummary": {
           "description": "Descripción detallada de la publicación",
@@ -268,15 +268,15 @@
         },
         "comparison": {
           "label": "Comparación(es)",
-          "description": "Comparación con hallazgos, objetos, inscripciones, etc., indicando la referencia"
+          "description": "Comparación con hallazgos similares, objetos, inscripciones, etc., indicando la referencia"
         },
         "hasDisturbance": {
-          "label": "Perturbación",
-          "description": "¿Se ha visto afectado el hallazgo por perturbaciones?"
+          "label": "Alteraciones",
+          "description": "¿Se ha visto alterada la unidad estratigráfica?"
         },
         "featureBorders": {
           "label": "Límites de la unidad estratigráfica",
-          "description": "Determinación de los límites del hallazgo"
+          "description": "Determinación de los límites de la unidad estratigráfica"
         },
         "featureForm": {
           "label": "Forma de la unidad estratigráfica",
@@ -298,14 +298,14 @@
         },
         "soilType": {
           "label": "Tipo de suelo",
-          "description": "Descripción del suelo según el mapa edafológico"
+          "description": "Descripción del suelo según el mapa pedológico"
         },
         "conditionComment": {
           "label": "Comentario sobre el estado de conservación"
         },
         "findingPlace": {
           "label": "Lugar del hallazgo",
-          "description": "Para introducir varios recursos adicionales como lugar de hallazgo, p.ej.: (PE07 So 04,002)"
+          "description": "Para introducir varios recursos adicionales como lugar de hallazgo, p. ej. (PE07 So 04,002)"
         },
         "publicationDatingFinds": {
           "label": "Datación (hallazgos)",
@@ -313,7 +313,7 @@
         },
         "conditionAmount": {
           "label": "Parte conservada",
-          "description": "Parte conservada respecto al original"
+          "description": "Parte conservada respecto a la original"
         },
         "publicationDatingScientific": {
           "label": "Datación (científica)",
@@ -324,8 +324,8 @@
           "description": "¿Qué criterio se utilizó para delimitar la unidad estratigráfica?"
         },
         "publicationRemark": {
-          "description": "Notas sobre la publicación",
-          "label": "Notas"
+          "description": "Anotaciones sobre la publicación",
+          "label": "Anotaciones"
         },
         "condition": {
           "label": "Estado de conservación",
@@ -333,7 +333,7 @@
         },
         "publicationDatingStratigraphy": {
           "description": "p. ej.: véase estructura funeraria 1, que intersecta la tumba 28 datada por C-14 (20 AEC–65 EC)",
-          "label": "Datación (estratigrafia)"
+          "label": "Datación (estratigrafía)"
         },
         "tombBuilding": {
           "label": "Construcción de la tumba"
@@ -344,18 +344,18 @@
       "label": "Estrato",
       "fields": {
         "layerClassification": {
-          "label": "Clasificación de la unidad estratigráfica"
+          "label": "Clasificación del estrato"
         },
         "isNatural": {
           "label": "Natural",
           "description": "¿El estrato es de formación natural? (p.ej., debido a erosión)"
         },
         "distinguishingCriteria": {
-          "label": "Criterio diferenciador",
+          "label": "Criterios distintivos",
           "description": "¿Qué criterio se utilizó para delimitar la unidad estratigráfica?"
         },
         "soilType": {
-          "description": "Denominación del suelo según la guía de cartografía del suelo",
+          "description": "Descripción del suelo según el mapa pedológico",
           "label": "Tipo de suelo"
         },
         "consistency": {
@@ -378,7 +378,7 @@
         },
         "typeOfWood": {
           "label": "Tipo de madera",
-          "description": "Determinación de la especie de la madera en el objeto"
+          "description": "Determinación del tipo de madera del objeto"
         },
         "colorInside": {
           "label": "Color(es) de la madera en el interior"
@@ -400,7 +400,7 @@
           "label": "Técnica de producción"
         },
         "surfaceCondition": {
-          "label": "Marcas de quemado"
+          "label": "Marcas de combustión"
         },
         "decorationTechnique": {
           "label": "Superficie y decoración"
@@ -459,7 +459,7 @@
           "label": "Desgrasante"
         },
         "FormComparisonCompendiadetail": {
-          "label": "Comparación detallada de la forma con referencias de compendios"
+          "label": "Comparación con la forma en el manual, información detallada"
         },
         "ApplicationComparisonCompendia": {
           "label": "Comparación de aplicaciones con referencias de compendios"
@@ -487,7 +487,7 @@
           "label": "Número de tapas"
         },
         "clayColorBreakMunsell": {
-          "label": "Color de la fractura (Munsell)"
+          "label": "Color fractura (Munsell)"
         },
         "clayColorBreak": {
           "label": "Fractura: color e intensidad de la arcilla"
@@ -508,7 +508,7 @@
           "label": "Número de fragmentos de borde y base"
         },
         "amountSherdsRimShoulder": {
-          "label": "Número de fragmentos del borde y el hombro"
+          "label": "Número de fragmentos de borde y hombro"
         },
         "amountSherdsPercent": {
           "description": "La entrada se realiza como número decimal, no se admiten valores negativos",
@@ -518,7 +518,7 @@
           "label": "Número de otros fragmentos"
         },
         "amountSherdsShoulder": {
-          "label": "Número de fragmentos del hombro"
+          "label": "Número de fragmentos de hombro"
         },
         "hasCoat": {
           "label": "Engobe"
@@ -540,8 +540,8 @@
           "description": "Información sobre el análisis de residuos"
         },
         "typeNumber": {
-          "description": "Número de catálogo del tipos",
-          "label": "Número de tipo"
+          "description": "Número de catálogo del tipo",
+          "label": "Número del tipo"
         },
         "clayColorInside": {
           "label": "Interior: color e intensidad de la arcilla"
@@ -585,16 +585,16 @@
           "description": "¿Cuál es el estilo del objeto encontrado?"
         },
         "FormComparisonCompendia": {
-          "label": "Comparación de la forma con referencias de compendios"
+          "label": "Compendio para compación de formas"
         },
         "Drawing": {
           "label": "Dibujo disponible"
         },
         "DecorationComparisonCompendia": {
-          "label": "Comparación de la decoración con referencias de compendios"
+          "label": "Comparación para la decoración en el manual"
         },
         "DecorationComparisonCompendiadetail": {
-          "label": "Comparación detallada de la decoración con referencias de compendios"
+          "label": "Comparación para la decoración en el manual, información detallada"
         }
       }
     },
@@ -702,7 +702,7 @@
         },
         "purpose": {
           "description": "Función o uso del objeto",
-          "label": "Uso"
+          "label": "Función"
         },
         "treatment": {
           "label": "Tratamiento",
@@ -736,10 +736,10 @@
       "label": "Sepultura",
       "fields": {
         "amountIndividuals": {
-          "label": "Número de individuos"
+          "label": "Tipo de sepultura - número"
         },
         "graveFeature": {
-          "label": "Tipo de enterramiento"
+          "label": "Método de enterramiento"
         },
         "ageDetermination": {
           "label": "Determinación de la edad"
@@ -757,7 +757,7 @@
           "label": "Determinación del sexo"
         },
         "sexDeterminationBasis": {
-          "label": "Base de la determinación del sexo"
+          "label": "Bases para la determinación del sexo"
         },
         "publicationDatingFinds": {
           "description": "p. ej.: ver restos funerarios perturbados: ajuares (s. II–III EC)",
@@ -765,7 +765,7 @@
         },
         "publicationDatingStratigraphy": {
           "label": "Datación (estratigrafía)",
-          "description": "p. ej.: ver estructura funeraria 1, que interseca la tumba 28, fechada por C14 entre el 20 AEC y el 65 EC"
+          "description": "p. ej.: véase estructura funeraria 1, que intersecta la tumba 28 datada por C-14 (20 AEC–65 EC)"
         },
         "dietReconstruction": {
           "label": "Reconstrucción de la dieta"
@@ -775,14 +775,14 @@
           "description": "Para introducir varios recursos adicionales como lugar de hallazgo, p. ej. (PE07 So 04,002)"
         },
         "burialCharacteristic": {
-          "label": "Secuencia de enterramiento (primario/secundario)"
+          "label": "Secuencia de inhumación (primaria/secundaria)"
         },
         "positionArms": {
           "label": "Posición de los brazos"
         },
         "burialDocumentation": {
           "label": "Documentación",
-          "description": "¿Qué tipos de documentación se utilizaron?"
+          "description": "¿Qué documentación se utilizó?"
         },
         "positionLegs": {
           "label": "Posición de las piernas"
@@ -851,10 +851,10 @@
       "fields": {
         "buildingHistory": {
           "label": "Historia del edificio",
-          "description": "Estudio histórico de la construcción"
+          "description": "Tratamiento histórico del edificio"
         },
         "buildingResearchHistory": {
-          "description": "Antecedentes de todas las investigaciones realizadas en la construcción, incluyendo excavaciones",
+          "description": "Antecedentes de todas las investigaciones realizadas en el edificio, incluidas las excavaciones",
           "label": "Historia de la investigación"
         },
         "architecturalOrders": {
@@ -870,31 +870,31 @@
         },
         "excavationHistory": {
           "label": "Historia de las excavaciones",
-          "description": "Estudio sobre los proyectos de excavación en el yacimiento"
+          "description": "Resumen sobre los proyectos de excavación en el yacimiento"
         },
         "conditionComment": {
-          "label": "Comentario sobre el estado"
+          "label": "Comentario sobre el estado de conservación"
         },
         "history": {
           "label": "Historia",
-          "description": "Pasado histórico de la construcción"
+          "description": "Pasado histórico del edificio"
         },
         "buildingTechnique": {
           "label": "Técnica constructiva",
           "description": "Especificación de la técnica utilizada en la construcción del edificio"
         },
         "buildingCategorySpecific": {
-          "label": "Tipo de construcción especial"
+          "label": "Tipo de edificio (específico)"
         },
         "buildingCategory": {
-          "label": "Tipo de construcción"
+          "label": "Tipo de edificio"
         },
         "buildingType": {
-          "label": "Tipo de construcción"
+          "label": "Tipo de edificio"
         },
         "conditionAmount": {
           "label": "Parte conservada",
-          "description": "Cantidad conservada en comparación con la original"
+          "description": "Parte conservada respecto a la original"
         },
         "condition": {
           "label": "Estado de conservación",
@@ -933,15 +933,15 @@
           "label": "Tipo de muro"
         },
         "findingPlace": {
-          "description": "Para introducir múltiples recursos adicionales como lugar de hallazgo, p. ej., (PE07 So 04,002)",
+          "description": "Para introducir varios recursos adicionales como lugar de hallazgo, p. ej. (PE07 So 04,002)",
           "label": "Lugar del hallazgo"
         },
         "publicationDatingFinds": {
           "label": "Datación (hallazgos)",
-          "description": "p. ej.: véase restos funerarios perturbados; ajuares (siglos II/III EC)"
+          "description": "p. ej.: véase los restos funerarios alterados: ajuares (siglos II-III EC)"
         },
         "conditionComment": {
-          "label": "Comentario sobre el estado"
+          "label": "Comentario sobre el estado de conservación"
         },
         "constructionDetailsDescription": {
           "label": "Descripción de los detalles constructivos",
@@ -952,7 +952,7 @@
           "description": "Descripción detallada de la técnica constructiva (p. ej., mampostería de piedra de campo o muro de ladrillo)"
         },
         "hasGrouting": {
-          "label": "Juntas/Rejuntado",
+          "label": "Juntas",
           "description": "¿Está rejuntado el muro?"
         },
         "layerHeight": {
@@ -960,12 +960,12 @@
           "description": "Número de hiladas"
         },
         "markDescription": {
-          "description": "Explicaciones y observaciones sobre las marcas de obra",
-          "label": "Descripción de marcas de obra"
+          "description": "Explicaciones y observaciones sobre las marcas existentes",
+          "label": "Descripción de marcas"
         },
         "materialCharacteristic": {
-          "label": "Característica del material",
-          "description": "Propiedades características del material"
+          "label": "Características del material",
+          "description": "Características de las propiedades del material"
         },
         "materialForm": {
           "label": "Forma del material",
@@ -980,12 +980,12 @@
           "description": "Descripción de la publicación, con indicación de las dataciones existentes"
         },
         "publicationDatingStratigraphy": {
-          "description": "p. ej.: véase estructura funeraria 1, que intersecta la tumba 28 datada por C-14 (20 AEC–65 EC)",
-          "label": "Datación (estratigráfica)"
+          "description": "p. ej.: véase la estructura funeraria 1, que intersecta la tumba 28 datada por C-14 (20 AEC–65 EC)",
+          "label": "Datación (estratigrafía)"
         },
         "publicationRemark": {
-          "description": "Notas sobre la publicación",
-          "label": "Notas"
+          "description": "Anotaciones sobre la publicación",
+          "label": "Anotaciones"
         },
         "blockProcessing": {
           "label": "Tipo de bloques de piedra"
@@ -1003,7 +1003,7 @@
         },
         "conditionAmount": {
           "label": "Parte conservada",
-          "description": "Cantidad conservada en comparación con la original"
+          "description": "Parte conservada respecto a la original"
         },
         "construction": {
           "description": "¿Qué tipo de construcción de muro existe?",
@@ -1045,7 +1045,7 @@
       "label": "Suelo",
       "fields": {
         "mortarBinder": {
-          "label": "Aglutinante para el mortero",
+          "label": "Agregado del mortero",
           "description": "¿Cuál es la proporción de material ajeno en el mortero?"
         },
         "conditionComment": {
@@ -1057,7 +1057,7 @@
         },
         "conditionAmount": {
           "label": "Parte conservada",
-          "description": "Parte conservada respecto la original"
+          "description": "Parte conservada respecto a la original"
         },
         "distinguishingCriteria": {
           "label": "Criterios distintivos",
@@ -1078,14 +1078,14 @@
       "label": "Inscripción",
       "fields": {
         "language": {
-          "label": "Idioma"
+          "label": "Lengua"
         },
         "comparison": {
           "label": "Comparación(es)",
-          "description": "Comparación con hallazgos, objetos, inscripciones, etc., indicando la referencia"
+          "description": "Comparación con hallazgos similares, objetos, inscripciones, etc., indicando la referencia"
         },
         "conditionComment": {
-          "label": "Comentarios sobre el estado de conservación"
+          "label": "Comentario sobre el estado de conservación"
         },
         "condition": {
           "label": "Estado de conservación",
@@ -1135,11 +1135,11 @@
           "description": "Descripción del estado de conservación"
         },
         "conditionComment": {
-          "label": "Comentario sobre estado de conservación"
+          "label": "Comentario sobre el estado de conservación"
         },
         "conditionAmount": {
           "label": "Parte conservada",
-          "description": "Parte conservada respecto al original"
+          "description": "Parte conservada respecto a la original"
         }
       }
     },
@@ -1218,7 +1218,7 @@
         },
         "soilType": {
           "label": "Tipo de suelo",
-          "description": "Descripción del suelo según el mapa edafológico"
+          "description": "Descripción del suelo según el mapa pedológico"
         }
       }
     },
@@ -1291,7 +1291,7 @@
         },
         "processor": {
           "description": "Editor/a de la imagen en caso de modificaciones posteriores a su creación",
-          "label": "Responsable"
+          "label": "Editor/a"
         }
       }
     },
@@ -1488,23 +1488,23 @@
     "FeatureSegment": {
       "fields": {
         "comparison": {
-          "description": "Comparación con hallazgos, objetos, inscripciones, etc., indicando la referencia",
+          "description": "Comparación con hallazgos similares, objetos, inscripciones, etc., indicando la referencia",
           "label": "Comparación(es)"
         },
         "hasDisturbance": {
-          "description": "¿Se ha visto afectado el hallazgo por perturbaciones?",
-          "label": "Perturbación"
+          "description": "¿Existen alteraciones en el segmento del depósito?",
+          "label": "Alteraciones"
         },
         "featureSegmentBorders": {
-          "label": "Límites del segmento de estructura",
-          "description": "Determinación de los límites del segmento de la estructura"
+          "label": "Límites del segmento del depósito",
+          "description": "Determinación de los límites del segmento del depósito"
         },
         "featureSegmentForm": {
-          "label": "Forma del segmento de la estructura",
-          "description": "Forma del segmento de la estructura en planta o sección: ¿Qué forma puede indentificarse?"
+          "label": "Forma del segmento del depósito",
+          "description": "Forma del segmento del depósito en planta o sección: ¿Qué forma puede indentificarse?"
         }
       },
-      "label": "Segmento de estructura"
+      "label": "Segmento del depósito"
     },
     "Sampling": {
       "fields": {
@@ -1796,11 +1796,11 @@
       }
     },
     "FeatureGroup": {
-      "label": "Conjuto de estructuras",
+      "label": "Conjuto de depósitos",
       "fields": {
         "comparison": {
           "label": "Comparación(es)",
-          "description": "Comparación con hallazgos, objetos, inscripciones, etc., indicando la referencia"
+          "description": "Comparación con hallazgos similares, objetos, inscripciones, etc., indicando la referencia"
         }
       }
     },

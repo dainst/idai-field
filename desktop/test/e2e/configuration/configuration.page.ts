@@ -63,7 +63,7 @@ export class ConfigurationPage {
 
     public static async clickSelectField(fieldName: string) {
 
-        return click(await this.getField(fieldName));
+        return click(await this.getField(fieldName).locator('b'));
     }
 
 

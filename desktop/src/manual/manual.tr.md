@@ -2146,6 +2146,26 @@ Bir alana girilen veriler, alan için seçilen giriş türüne uymuyor.
 * *Alan verilerini dönüştür* Butonu: Veriler, ilgili giriş türü için otomatik olarak doğru biçime dönüştürülür. İsteğe bağlı olarak, aynı alana geçersiz verilerin girildiği tüm girdilerde verilerin dönüştürülmesini sağlayabilirsiniz. Lütfen unutmayın; otomatik dönüştürme her durumda mümkün değildir ve bu nedenle bu düğme her zaman kullanılamaz.
 * *Yeni alan seç* Butonu: Girdi kategorisi için yapılandırılmış alanlardan birini seçin. Girilen veriler daha sonra bu alana taşınacaktır. Lütfen unutmayın; veriler, hedef alanda mevcut olan tüm verilerin üzerine yazılacaktır. İsteğe bağlı olarak, aynı alana geçersiz verilerin girildiği tüm girdilerde yeni alanı ayarlayabilirsiniz (geçerli veriler orijinal alanda kalır).
 
+### Zorunlu alan eksik
+Zorunlu olarak yapılandırılmış bir alana veri girilmedi.
+
+#### Olası nedenler
+* Alan, girdi oluşturulduktan sonra yapılandırma düzenleyicisinde zorunlu olarak yapılandırılmış olabilir.
+
+#### Olası çözümler
+* *Düzenle* Butonu: Zorunlu alanı doldurmak için girdiyi, girdi düzenleyicide açın.
+
+### Bir alanın görüntülenme koşulu yerine getirilmedi
+Bir alana veri girildi, ancak bu alanın görüntülenme koşulu yerine getirilmedi.
+
+#### Olası nedenler
+* Alana veri girildikten sonra görüntüleme koşulu yapılandırma düzenleyicisinde ayarlanmış veya değiştirilmiş olabilir.
+
+#### Olası çözümler
+* *Düzenle* Butonu: Koşul alanındaki verileri, koşulun karşılanması için ayarlamak üzere girdiyi, girdi düzenleyicide açın.
+* *Alan verisini sil* Butonu: Alana girilen veriler tamamen silinir.
+* Yapılandırma düzenleyicide alan için görüntüleme koşulunu kaldırın veya etkilenen girdiyi koşulun karşılanması için ayarlayın.
+
 ### Değer listesinde yer almayan değer
 Alana girilen, bir veya daha fazla (alan için yapılandırılmış) değer listesinde bulunmayan veri. 
 
@@ -2165,7 +2185,7 @@ Alana girilen, bir veya daha fazla (alan için yapılandırılmış) değer list
 * Proje özelliklerinde *Ekip* ve *Sezonlar* alanlarına girilen değerlere bağlı alanlarda: Eksik değeri proje özelliklerindeki ilgili alana ekleyin.
 * *Sezon* alanı için: Değer zaten orada yoksa, ana girdide ayarlayın.
 
-### Bir ilişkinin eksik hedef girdisi
+### Bir ilişkinin hedef girdisi eksik
 Bir ilişkinin hedefi olarak belirtilen bir girdi bulunamadı.
 
 #### Olası nedenler
@@ -2227,3 +2247,41 @@ Bu kategori için yapılandırılmış girdi sınırının izin verdiğinden dah
 #### Olası çözümler
 * Girdi sınırı karşılanana kadar ilgili kategorinin girdilerini silin.
 * Yapılandırma düzenleyicisinde girdi sınırını artırın.
+
+### Geçersiz durum
+Bir işlemin durumu belirtilen tarihle çelişiyor. Bu durum, örneğin "Planlandı" durumundaki bir işlemin tarihinin geçmişte veya "Tamamlandı" durumundaki bir işlemin tarihinin gelecekte olması gibi hallerde ortaya çıkar.
+
+#### Olası nedenler
+* İşlem başlatıldıktan, tamamlandıktan veya iptal edildikten sonra durum güncellenmemiş olabilir.
+* Planlanan bir işlem belirtilen tarihte henüz gerçekleştirilmemiş olabilir.
+
+#### Olası çözümler
+* *Düzenle* Butonu: İşlemin durumunu veya tarihini ayarlamak için girdi düzenleyiciyi açın.
+
+
+# API
+
+Field Desktop, HTTP üzerinden verilere erişmek ve içe aktarmak için kullanılabilen bir REST API sağlar. Uygulama açıkken, API'yi aşağıdaki URL üzerinden kullanabilirsiniz:
+
+http://localhost:3000
+
+Her API uç noktasına erişimde, "Senkronizasyon" altındaki "Ayarlar" menüsünde "Şifreniz" olarak girilen şifrenin *Temel Kimlik Doğrulama* ile girilmesi gerekmektedir. Kullanıcı adı girilmesine gerek yoktur.
+
+
+## Uç Noktalar
+
+### GET /info
+
+Bu API uç noktası, Field Desktop'ın çalışan (proje) örneği hakkında JSON formatında bazı bilgiler döndürür.
+
+Çıktı:
+* *version (string)*: Çalışan uygulamanın sürümü
+* *projects (string array)*: Bu bilgisayarda şu anda depolanan tüm projelerin tanımlayıcıları
+* *activeProject (string)*: Uygulamada şu anda açık olan projenin tanımlayıcısı
+* *user (string)*: Field Desktop'a "Kullanıcı adı" olarak girilen ad
+
+
+### GET /configuration/{project}
+
+Bu API uç noktası, proje yapılandırmasını JSON formatında almak için kullanılabilir. "Proje yapılandırması" ➝ "Yapılandırmayı dışa aktar..." menüsü aracılığıyla oluşturulabilen yapılandırma dosyaları, yapılandırmanın yalnızca projeye özgü kısmını içerirken, bu API uç noktası, Alan kitaplıklarından projede kullanılan tüm yapılandırma öğeleri (varsayılan formlar, değer listeleri vb.) dahil olmak üzere tam yapılandırmayı çıktı olarak verir.
+

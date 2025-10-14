@@ -2285,3 +2285,7 @@ Bu API uç noktası, Field Desktop'ın çalışan (proje) örneği hakkında JSO
 
 Bu API uç noktası, proje yapılandırmasını JSON formatında almak için kullanılabilir. "Proje yapılandırması" ➝ "Yapılandırmayı dışa aktar..." menüsü aracılığıyla oluşturulabilen yapılandırma dosyaları, yapılandırmanın yalnızca projeye özgü kısmını içerirken, bu API uç noktası, Alan kitaplıklarından projede kullanılan tüm yapılandırma öğeleri (varsayılan formlar, değer listeleri vb.) dahil olmak üzere tam yapılandırmayı çıktı olarak verir.
 
+API uç noktasının JSON çıktısının "Proje yapılandırması" ➝ "Yapılandırmayı içe aktar..." menüsü üzerinden içe **aktarılamayacağını** lütfen unutmayın. Bu amaca uygun bir yapılandırma dosyası edinmek için "Proje yapılandırması" ➝ "Yapılandırmayı dışa aktar..." menü seçeneğini kullanın.
+
+Parametreler:
+* *proje*: Yapılandırması alınacak projenin adı

@@ -1857,7 +1857,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.languages.info" datatype="html">
         <source>Wählen Sie hier die Sprachen aus, in denen innerhalb des Projekts Daten eingetragen werden sollen. Bitte wählen Sie mindestens eine Sprache aus.</source>
-        <target state="translated">Por favor, seleccione aquí los idiomas en los que se introducirán los datos dentro del proyecto. Seleccione al menos un idioma.</target>
+        <target state="translated">Seleccione aquí los idiomas en los que se introducirán los datos dentro del proyecto. Por favor, seleccione al menos un idioma.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">199</context>
@@ -2165,7 +2165,7 @@
       </trans-unit>
       <trans-unit id="docedit.conflictDeletedModal.info" datatype="html">
         <source>Die aktuelle Ressource wurde in der Zwischenzeit von jemand anderem gelöscht. Sie können die Ressource neu anlegen, indem Sie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Speichern<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wählen. Bei Klick auf <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Abbrechen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wird sie verworfen. </source>
-        <target state="translated">El recurso actual acaba de ser eliminado por otro usuario. Puede crear el recurso de nuevo seleccionando <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Guardar<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. Al hacer clic en <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Cancelar<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>, el recurso se descartará. </target>
+        <target state="needs-translation">El recurso actual acaba de ser eliminado por otro usuario. Puede crear el recurso de nuevo seleccionando <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Guardar<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. Al hacer clic en <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Cancelar<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>, el recurso se descartará. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/conflict-deleted-modal.component.ts</context>
           <context context-type="linenumber">24</context>
@@ -2498,7 +2498,7 @@
       </trans-unit>
       <trans-unit id="resources.moveModal.chooseParentResource.single" datatype="html">
         <source>Bitte wählen Sie die neue übergeordnete Ressource aus, der die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="zugewiesen we"/> zugewiesen werden soll: </source>
-        <target state="translated">Por favor, selecciona el nuevo recurso principal al que se debe asignar el recurso <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="zugewiesen we"/> </target>
+        <target state="translated">Seleccione el nuevo recurso principal al que se debe asignar el recurso <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="zugewiesen we"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/move-modal.component.ts</context>
           <context context-type="linenumber">52</context>
@@ -2506,7 +2506,7 @@
       </trans-unit>
       <trans-unit id="resources.moveModal.chooseParentResource.multiple" datatype="html">
         <source>Bitte wählen Sie die neue übergeordnete Ressource aus, der die ausgewählten <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> zugewiesen werden sollen: </source>
-        <target state="translated">Por favor, selecciona el nuevo recurso principal al que se deben asignar los <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION"/> los recursos seleccionados<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>: </target>
+        <target state="translated">Seleccione el nuevo recurso principal al que se deben asignar los <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION"/> los recursos seleccionados<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/move-modal.html</context>
           <context context-type="linenumber">20</context>
@@ -2530,7 +2530,7 @@
       </trans-unit>
       <trans-unit id="imageGrid.dropArea.tooltip" datatype="html">
         <source>Um Bilder hinzuzufügen, ziehen Sie sie in die markierte Fläche oder öffnen Sie per Klick ein Auswahlmenü.</source>
-        <target state="translated">Arrastra las imágenes al área marcada para importarlas o haz clic para abrir un cuadro de diálogo de selección de archivos.</target>
+        <target state="translated">Arrastre las imágenes al área marcada para importarlas o haga clic para abrir un cuadro de diálogo de selección de archivos.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/grid/drop-area.component.ts</context>
           <context context-type="linenumber">65</context>
@@ -2542,7 +2542,7 @@
       </trans-unit>
       <trans-unit id="imageView.georeferenceView.deleteModal.question" datatype="html">
         <source>Möchten Sie die Georeferenzdaten, die für dieses Bild hinterlegt wurden, wirklich löschen?</source>
-        <target state="translated">¿De verdad quieres eliminar los datos de georreferenciación almacenados para esta imagen?</target>
+        <target state="translated">¿De verdad quiere eliminar los datos de georreferenciación almacenados para esta imagen?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/georeference-view.component.ts</context>
           <context context-type="linenumber">63</context>
@@ -2558,7 +2558,7 @@
       </trans-unit>
       <trans-unit id="imageView.georeferenceView.present" datatype="html">
         <source>Vorhanden</source>
-        <target state="translated">Disponible/Presente</target>
+        <target state="translated">Disponible</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/georeference-view.component.ts</context>
           <context context-type="linenumber">119</context>
@@ -2582,7 +2582,7 @@
       </trans-unit>
       <trans-unit id="imageView.georeferenceView.notPresent" datatype="html">
         <source>Nicht vorhanden</source>
-        <target state="translated">No disponibles/No presentes</target>
+        <target state="translated">No disponibles</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/georeference-view.component.ts</context>
           <context context-type="linenumber">119</context>
@@ -2614,7 +2614,7 @@
       </trans-unit>
       <trans-unit id="widgets.saveModal.question" datatype="html">
         <source>Möchten Sie die Änderungen speichern?</source>
-        <target state="translated">¿Quieres guardar los cambios?</target>
+        <target state="translated">¿Quiere guardar los cambios?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/edit-save-dialog.component.ts</context>
           <context context-type="linenumber">36</context>
@@ -2622,7 +2622,7 @@
       </trans-unit>
       <trans-unit id="widgets.saveModal.applyQuestion" datatype="html">
         <source>Möchten Sie die Änderungen übernehmen?</source>
-        <target state="translated">¿Quieres aplicar los cambios?</target>
+        <target state="translated">¿Quiere aplicar los cambios?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/edit-save-dialog.component.ts</context>
           <context context-type="linenumber">36</context>
@@ -2662,7 +2662,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.header.multiple" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen löschen? </source>
-        <target state="translated">¿Eliminar<x id="INTERPOLATION" equiv-text="{{documents.length}}"/> recursos? </target>
+        <target state="translated">¿Eliminar <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> recursos? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">18</context>
@@ -2854,7 +2854,7 @@
       </trans-unit>
       <trans-unit id="resources.plusButton.selectCategory" datatype="html">
         <source>Bitte wählen Sie eine Kategorie aus.</source>
-        <target state="translated">Por favor, seleccioe una categoría.</target>
+        <target state="translated">Por favor, seleccione una categoría.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
           <context context-type="linenumber">61</context>
@@ -2894,7 +2894,7 @@
       </trans-unit>
       <trans-unit id="36ee20e03ddf97efb9b22a20d20f32f0a116eec8" datatype="html">
         <source>Möchten Sie die Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="wirklich l"/> wirklich löschen?</source>
-        <target state="translated">¿Realmente quieres eliminar la categoría <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>?</target>
+        <target state="translated">¿Realmente quiere eliminar la categoría <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>?</target>
         <note priority="1" from="description">configuration.deleteCategory.body</note>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.component.ts</context>
@@ -3139,7 +3139,7 @@
       </trans-unit>
       <trans-unit id="resources.searchResultsInfo.documentLimitRemoveTooltip" datatype="html">
         <source>Die Darstellung von sehr großen Suchergebnissen kann je nach Gerät und Anzahl der Treffer sehr lange dauern. Daher wurde die aktuelle Darstellung zunächst auf <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> Ressourcen begrenzt. Klicken Sie hier, um das gesamte Ergebnis zu laden.</source>
-        <target state="translated">Dependiendo de tu dispositivo y del número de coincidencias, la visualización de resultados de búsqueda grandes puede tardar un poco. Por ello, la lista actual se ha limitado a <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> recursos. Haz clic aquí para cargar el resultado completo.</target>
+        <target state="translated">Dependiendo de su dispositivo y del número de coincidencias, la visualización de resultados de búsqueda grandes puede tardar un poco. Por ello, la lista actual se ha limitado a <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> recursos. Haga clic aquí para cargar el resultado completo.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/list/sidebar-list.component.ts</context>
           <context context-type="linenumber">63</context>
@@ -3147,7 +3147,7 @@
       </trans-unit>
       <trans-unit id="resources.showChildResources.tooltip" datatype="html">
         <source>Untergeordnete Ressourcen anzeigen</source>
-        <target state="translated">Mostrar recursos hijos/dependientes</target>
+        <target state="translated">Mostrar recursos subordinados</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/list-button-group.component.ts</context>
           <context context-type="linenumber">49</context>
@@ -3227,7 +3227,7 @@
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.noLayersInfo" datatype="html">
         <source>Benutzen Sie den Bearbeiten-Button, um georeferenzierte Bilder als Kartenhintergründe hinzuzufügen.</source>
-        <target state="translated">Haz clic en el botón de editar para añadir imágenes georeferenciadas como capas del mapa.</target>
+        <target state="translated">Haga clic en el botón de editar para añadir imágenes georeferenciadas como capas del mapa.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
           <context context-type="linenumber">180</context>
@@ -3251,7 +3251,7 @@
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.setAsDefaultMapLayer" datatype="html">
         <source>Als Standard-Kartenhintergrund festlegen</source>
-        <target state="translated">Establecer como capa de mapa predeterminada</target>
+        <target state="translated">Establecer como capa del mapa predeterminada</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
           <context context-type="linenumber">190</context>
@@ -3327,7 +3327,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.header.oneConflict" datatype="html">
         <source>Es besteht <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>ein<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Konflikt. </source>
-        <target state="translated">Queda <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>un<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> conflicto. </target>
+        <target state="needs-translation">Queda <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>un<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> conflicto. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/revision-selector.component.ts</context>
           <context context-type="linenumber">41</context>
@@ -3359,7 +3359,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.notSet" datatype="html">
         <source>Nicht gesetzt</source>
-        <target state="translated">No establecido/definido</target>
+        <target state="translated">No definido</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.component.ts</context>
           <context context-type="linenumber">43</context>
@@ -3647,7 +3647,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.typeRelationPicker.allCatalogs" datatype="html">
         <source>Alle Kataloge</source>
-        <target state="translated">Todos los Catálogos</target>
+        <target state="translated">Todos los catálogos</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/type-relation/type-relation-picker.component.ts</context>
           <context context-type="linenumber">59</context>
@@ -3663,7 +3663,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.range" datatype="html">
         <source>Bereich</source>
-        <target state="translated">Rango/intervalo</target>
+        <target state="translated">Rango</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.component.ts</context>
           <context context-type="linenumber">115</context>
@@ -4063,7 +4063,7 @@
       </trans-unit>
       <trans-unit id="matrix.view.noOperationsWarning.single" datatype="html">
         <source>Legen Sie eine Maßnahme der Kategorie "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;&gt;"/>Übersicht<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> an, um hier mit ihr arbeiten zu können. </source>
-        <target state="translated">Por favor, crea una operación de la categoría "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" en la <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;&gt;"/>visión general<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> para poder trabajar con ella aquí. </target>
+        <target state="translated">Por favor, creaeuna operación de la categoría "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" en la <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;&gt;"/>visión general<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> para poder trabajar con ella aquí. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
           <context context-type="linenumber">268</context>
@@ -4071,7 +4071,7 @@
       </trans-unit>
       <trans-unit id="matrix.view.noOperationsWarning.multiple" datatype="html">
         <source>Legen Sie eine Maßnahme der Kategorie "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" oder "<x id="INTERPOLATION_1" equiv-text="{{getCategoryLabel(configuredOperationCategories[1])}}"/>" in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;&gt;"/>Übersicht<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> an, um hier mit ihr arbeiten zu können. </source>
-        <target state="translated">Por favor, crea una operación de la categoría "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" o "<x id="INTERPOLATION_1" equiv-text="{{getCategoryLabel(configuredOperationCategories[1])}}"/>" en la <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;&gt;"/>visión general<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> para poder trabajar con ella aquí. </target>
+        <target state="translated">Por favor, cree una operación de la categoría "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" o "<x id="INTERPOLATION_1" equiv-text="{{getCategoryLabel(configuredOperationCategories[1])}}"/>" en la <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;&gt;"/>visión general<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> para poder trabajar con ella aquí. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
           <context context-type="linenumber">150,138</context>
@@ -4143,7 +4143,7 @@
       </trans-unit>
       <trans-unit id="util.dating.bce" datatype="html">
         <source>v. Chr.</source>
-        <target state="translated">a. e.</target>
+        <target state="translated">a. EC.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4151,7 +4151,7 @@
       </trans-unit>
       <trans-unit id="util.dating.ce" datatype="html">
         <source>n. Chr.</source>
-        <target state="translated">e. c.</target>
+        <target state="translated">EC.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4223,7 +4223,7 @@
       </trans-unit>
       <trans-unit id="util.optionalRange.from" datatype="html">
         <source>Von:</source>
-        <target state="translated">Desde/De:</target>
+        <target state="translated">Desde:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4231,7 +4231,7 @@
       </trans-unit>
       <trans-unit id="util.optionalRange.to" datatype="html">
         <source>, bis:</source>
-        <target state="translated">, hasta/a:</target>
+        <target state="translated">, hasta:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4287,7 +4287,7 @@
       </trans-unit>
       <trans-unit id="configuration.fieldSpecificSearch.notAllowedForProjectFields" datatype="html">
         <source>Eine feldspezifische Suche ist für Felder der Projekt-Kategorie nicht möglich.</source>
-        <target state="translated">No es posible realizar búsquedas específicas en los campos de la categoría Proyecto.</target>
+        <target state="translated">No es posible realizar búsquedas específicas en los campos de la categoría proyecto.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4547,7 +4547,7 @@
       </trans-unit>
       <trans-unit id="messages.configReader.error.invalidJson" datatype="html">
         <source>Fehler beim Parsen der Konfigurationsdatei '[0]': Das JSON ist nicht valide.</source>
-        <target state="translated">FehError al analizar el archivo de configuración '[0]': el JSON no es válido.</target>
+        <target state="translated">Error al analizar el archivo de configuración '[0]': el JSON no es válido.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5011,7 +5011,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.liesWithinRecordedInMismatch" datatype="html">
         <source>'parent' zeigt auf Resource einer anderen Maßnahme. Bezeichner: '[0]'.</source>
-        <target state="translated">La relación 'parent' a un recurso registrado en otra operación. Identificador: '[0]'.</target>
+        <target state="translated">'parent' indica el recurso de otra operación. Identificador: '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5331,7 +5331,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.emptyObjectInResource" datatype="html">
         <source>Leere Objekte sind in Importdatensätzen nicht erlaubt (Ausnahme: Feld "relations").</source>
-        <target state="translated">No se permiten objetos vacíos en los registros de datos de importación (excepción: campo «relaciones»).</target>
+        <target state="translated">No se permiten objetos vacíos en los registros de datos de importación (excepción: campo "relaciones").</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5779,7 +5779,7 @@
       </trans-unit>
       <trans-unit id="remoteimagestore.warning.largeFileUploadBlockedByPeer" datatype="html">
         <source>Ihr aktuelles Synchronisationsziel blockiert den Empfang von Originalbildern. Sie können entweder in Ihren Synchronisations-Einstellungen das Hochladen von Originalbildern deaktivieren, oder Sie sorgen beim Synchronisationsziel dafür, dass die Option zur Annahme von Originalbildern angepasst wird.</source>
-        <target state="translated">Tu destino de sincronización actual bloquea tus intentos de subir imágenes originales. Puedes desactivar la subida de imágenes originales en tus opciones de sincronización, o asegurarte de que tu destino de sincronización cambie su configuración respecto a la subida de imágenes originales.</target>
+        <target state="translated">Su destino de sincronización actual bloquea sus intentos de subir imágenes originales. Puede desactivar la subida de imágenes originales en sus opciones de sincronización, o asegurarse de que su destino de sincronización cambie su configuración respecto a la subida de imágenes originales.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5835,7 +5835,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.cannotMoveChildren" datatype="html">
         <source>Die Ressource [0] kann nicht verschoben werden, weil eine oder mehrere der ihr untergeordneten Ressourcen nicht innerhalb der Zielmaßnahme liegen dürfen.</source>
-        <target state="translated">No se puede mover el recurso [0] porque uno o más de sus recursos hijos no deben de ser hijos de la operación de destino.</target>
+        <target state="translated">No se puede mover el recurso [0] porque uno o más de sus recursos subordinados no se pueden asignar a la operación de destino.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6971,7 +6971,7 @@
       </trans-unit>
       <trans-unit id="settings.updateUserNameModal.body.request" datatype="html">
         <source>Bitte geben Sie Ihren Namen ein.</source>
-        <target state="translated">Por favor, introduce tu nombre.</target>
+        <target state="translated">Por favor, introduce su nombre.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/update-username-modal.html</context>
           <context context-type="linenumber">27</context>
@@ -7295,7 +7295,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.resourceLimitExceeded.multiple" datatype="html">
         <source>Es dürfen nur <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="esourceLimit}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="Ressourcen de"/> Ressourcen der Kategorie <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="tion)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="angelegt werden"/> angelegt werden. </source>
-        <target state="translated">Solo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{section.category.resourceLimit}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> recursos de la categoría <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="{{getCategoryLabel(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> pueden ser creados. </target>
+        <target state="needs-translation">Solo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{section.category.resourceLimit}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> recursos de la categoría <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="{{getCategoryLabel(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> pueden ser creados. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">149,140</context>
@@ -7303,7 +7303,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.resourceLimitExceeded.single" datatype="html">
         <source>Es darf nur <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>eine<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Ressource der Kategorie <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="tion)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i"/> angelegt werden. </source>
-        <target state="translated">Solo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>un<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>recurso de la categoría<x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> puede crearse. </target>
+        <target state="needs-translation">Solo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>un<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>recurso de la categoría<x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> puede crearse. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">158,135</context>
@@ -7383,7 +7383,7 @@
       </trans-unit>
       <trans-unit id="resources.scanStoragePlaceModal.editMode.question.single" datatype="html">
         <source>Möchten Sie den bisherigen Aufbewahrungsort entfernen oder zusätzlich zum neuen Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ument.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="beibehalten?"/> beibehalten? </source>
-        <target state="translated">¿Quieres eliminar el lugar de almacenamiento actual o conservarlo además del nuevo lugar de almacenamiento <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newStoragePlaceDocument.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>? </target>
+        <target state="translated">¿Quiere eliminar el lugar de almacenamiento actual o conservarlo además del nuevo lugar de almacenamiento <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newStoragePlaceDocument.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.html</context>
           <context context-type="linenumber">47,34</context>
@@ -7599,7 +7599,7 @@
       </trans-unit>
       <trans-unit id="resources.scanStoragePlaceModal.editMode.singleDocument.singleStoragePlace" datatype="html">
         <source>Für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> ist bereits der Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="nts[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> gesetzt. </source>
-        <target state="translated">El lugar de almacenamiento <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{storagePlaceDocuments[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ya está asignado al recurso <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
+        <target state="needs-translation">El lugar de almacenamiento <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{storagePlaceDocuments[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ya está asignado al recurso <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.component.ts</context>
           <context context-type="linenumber">38</context>
@@ -7623,7 +7623,7 @@
       </trans-unit>
       <trans-unit id="resources.qrCodeEditor.delete.question" datatype="html">
         <source>Möchten Sie den QR-Code der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wirklich löschen? </source>
-        <target state="translated">¿Realmente quieres eliminar el código QR del recurso <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>? </target>
+        <target state="translated">¿Realmente quiere eliminar el código QR del recurso <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/delete-qr-code-modal.component.ts</context>
           <context context-type="linenumber">28</context>
@@ -8155,7 +8155,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.fieldData.none" datatype="html">
         <source><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="Keine&lt;/i&gt;&lt;/div&gt;     &lt;button class=&quot;btn btn-danger delete-invalid-field-data-button&quot; type=&quot;button&quot; (clic"/>Keine<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/></source>
-        <target state="translated"><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>Ninguno<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/></target>
+        <target state="needs-translation"><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>Ninguno<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">178,162</context>
@@ -8695,7 +8695,7 @@
       </trans-unit>
       <trans-unit id="matrix.export.selectFormat" datatype="html">
         <source>Bitte wählen Sie das Dateiformat für den Matrix-Export aus.</source>
-        <target state="translated">Por favor, seleccione el formato de archivo para la exportación de la matriz.</target>
+        <target state="translated">Seleccione el formato de archivo para la exportación de la matriz.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
           <context context-type="linenumber">140</context>
@@ -9027,7 +9027,7 @@
       </trans-unit>
       <trans-unit id="resources.workflowEditorModal.resultsIn" datatype="html">
         <source>Ergibt</source>
-        <target state="translated">Resulta en/Da lugar a</target>
+        <target state="translated">Resulta en</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-workflow/workflow-editor-modal.html</context>
           <context context-type="linenumber">22</context>
@@ -9083,7 +9083,7 @@
       </trans-unit>
       <trans-unit id="util.date.to" datatype="html">
         <source>bis</source>
-        <target state="translated">hasta/a</target>
+        <target state="translated">hasta</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">136</context>
@@ -9367,7 +9367,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidWorkflowRelationTargets" datatype="html">
         <source>Es dürfen nicht die selben Ressourcen sowohl als Ziele der Relation 'isCarriedOutOn' als auch der Relation 'resultsIn' angegeben werden.</source>
-        <target state="translated">Es dürfen nicht die selben Ressourcen sowohl als Ziele der Relation 'isCarriedOutOn' als auch der Relation 'resultsIn'.</target>
+        <target state="translated">Los mismos recursos no pueden especificarse como objetivos tanto de la relación 'isCarriedOutOn' como de la relación 'resultsIn'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">703</context>
@@ -9615,7 +9615,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.custom.single" datatype="html">
         <source>Eine Backup-Datei <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>jede<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Stunde </source>
-        <target state="translated">Un archivo de copia de seguridad <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>cada<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> hora </target>
+        <target state="needs-translation">Un archivo de copia de seguridad <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>cada<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> hora </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">230,232</context>
@@ -9851,7 +9851,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.invalidProcessState" datatype="html">
         <source>Der für diesen Prozess angegebene Status <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="n)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="."/> widerspricht dem eingetragenen Datum <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="dDocument.resource.date)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="."/>. </source>
-        <target state="translated">El estado <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="n)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="."/> especificado para este proceso contradice la fecha introducida <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="dDocument.resource.date)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="."/>. </target>
+        <target state="needs-translation">El estado <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="n)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="."/> especificado para este proceso contradice la fecha introducida <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="dDocument.resource.date)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="."/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">230,233</context>

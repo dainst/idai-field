@@ -834,7 +834,7 @@ Yeni bir değer listesi oluşturmak için, metin alanına istediğiniz tanımlay
 Tamamen yeni bir değer listesi oluşturmak yerine, alternatif olarak halihazırda var olan bir listeyi düzenleyebilirsiniz. Bunu yapmak için, ilgili liste girişine sağ tıklayarak içerik menüsünü açın, *Değer listesini genişlet* seçeneğini seçin ve genişletme listeniz için bir tanımlayıcı girin. Seçilen değer listesinin tüm değerleri devralınır ve artık düzenleyicide ek değerlerle desteklenebilir. Ayrıca, var olan değerleri gizleyebilir ve sıralarını ayarlayabilirsiniz. Lütfen unutmayın; genişletme listeleri ve projeye özgü listeler genişletilemeyecektir.
 
 
-### Projeye özgü değer listelerini yönetin
+### Projeye özgü değer listelerini yönetme
 
 Projeye özgü bir değer listesine sağ tıklandığında aşağıdaki seçenekleri sağlayan bir içerik menüsü açılır:
 
@@ -863,24 +863,86 @@ Değer düzenleyici, bir değeri özelleştirmenize olanak tanır:
 * *Semantik referanslar*: Diğer sistemlerdeki ilgili kavramlara bağlantılar (bkz. *Referanslar* bölümü).
 
 
-### Referanslar
+## Referanslar
 
 Formlar, alanlar, değer listeleri ve bunların değerleri referanslar aracılığıyla harici kaynaklara bağlanabilir. Genel ve semantik referanslar olarak ayrılmaktadır.
 
-**Genel referanslar**, proje yapılandırmasının ilgili öğesi hakkında daha fazla bilgiye erişebileceğiniz web sayfalarının URL'leridir. Bu URL'ler, girdi düzenleyicide bir alana veya değere sağ tıklanarak bir açılır pencerede görüntülenir ve veri girişi konusunda yardımcı olabilir.
 
-**Semantik referanslar**, diğer sistemlerdeki ilgili kavramlara (sözlükler, ontolojiler vb.) bağlantıları temsil eder ve bir tanım ve bir URI'den oluşur. Aşağıdaki ilişkilerden biri tanım olarak seçilebilir:
+### Genel referanslar
 
-*Simple Knowledge Organization System*:
+Genel referanslar, proje yapılandırmasının ilgili öğesi hakkında daha fazla bilgiye erişebileceğiniz web sayfalarının URL'leridir. Bu URL'ler, girdi düzenleyicide bir alana veya değere sağ tıklanarak bir açılır pencerede görüntülenir ve veri girişi için yardımcı olabilir.
+
+
+### Semantik referanslar
+
+Semantik referanslar, diğer sistemlerdeki ilgili kavramlara (sözlükler, ontolojiler vb.) bağlantıları temsil eder ve bir tanım ve bir URI'den oluşur. 
+
+
+#### İlişkileri Eşleme
+
+Aşağıdaki ilişkilerden biri tanım olarak seçilebilir:
+
 * skos:exactMatch
 * skos:closeMatch
 * skos:broadMatch
 * skos:narrowMatch
 * skos:relatedMatch
-
-*iDAI.world*:
 * idw:unknownMatch
 
+İlk beş ilişki, *Simple Knowledge Organization System'in (SKOS)* standart eşleme ilişkileridir. *idw:unknownMatch*, özel olarak tanımlanmış bir ektir. Tüm ilişkiler, *skos:mappingRelation*'ın alt özellikleridir ve - geleneksel olarak - farklı kavram şemaları arasındaki bağlantılar için tasarlanmıştır.
+
+Aşağıdaki açıklamalar, daha fazla bilgi bulabileceğiniz [SKOS referansına](https://www.w3.org/TR/skos-reference/#mapping) dayanmaktadır.
+
+
+##### skos:exactMatch
+
+*skos:exactMatch* ilişkisi, iki kavramı birbirine bağlamak için kullanılır ve bu kavramların çok çeşitli bilgi alma uygulamalarında birbirinin yerine kullanılabileceğine dair yüksek derece ilişkiyi gösterir.
+
+
+##### skos:closeMatch
+
+*skos:closeMatch* ilişkisi, bazı bilgi alma uygulamalarında birbirinin yerine kullanılabilecek kadar benzer olan iki kavramı birbirine bağlamak için kullanılır.
+
+
+##### skos:broadMatch
+
+*skos:broadMatch* ilişkisi, iki kavram arasında hiyerarşik bir eşleme bağlantısı belirtmek için kullanılır; hedef kavram daha geniş bir kavram olarak tanımlanır (yani bağlantılı kavram, Field Desktop projesi yapılandırmasındaki kavramı kapsar).
+
+[A], Field projesi yapılandırmasının öğesi (örneğin alan veya değer) ve [B], URI tarafından tanımlanan kavram ise:
+
+[A] skos:broadMatch [B] = [B], [A]'dan daha geniştir
+
+
+##### skos:narrowMatch
+
+*skos:narrowMatch* ilişkisi, iki kavram arasında hiyerarşik bir eşleme bağlantısı belirtmek için kullanılır; hedef kavram daha dar bir kavram olarak tanımlanır (yani Field projesi yapılandırmasındaki kavram, bağlantılı kavramı kapsar).
+
+[A], Alan proje yapılandırmasındaki öğe (örneğin, alan veya değer) ve [B], URI tarafından tanımlanan kavram ise:
+
+[A] skos:narrowMatch [B] = [B], [A] değerinden daha dardır
+
+
+##### skos:relatedMatch
+
+*skos:relatedMatch* ilişkisi, iki kavram arasında ilişkisel bir eşleme bağı kurmak için kullanılır. İki kavram ilişkili olduğunda, ancak hiçbiri diğerinden daha geniş veya daha dar olmadığında ve eşdeğer olmadıklarında kullanılmalıdır. Bu ilişki, işlevsel veya bağlamsal çağrışımlar için uygundur (örneğin, "Amfora" ve "Şarap ticareti" arasında bir bağlantı).
+
+
+##### idw:unknownMatch
+
+*idw:unknownMatch* ilişkisi, iki kavramı birbirine bağlamak için kullanılır ve eşleme türünün bilinmediğini belirtir. İki kavramın ilişkili olduğuna dair makul kanıtlar mevcut olduğunda, ancak kesin eşleme türü (eşdeğerlik, hiyerarşik veya ilişkisel) henüz belirlenemediğinde kullanılmalıdır.
+
+
+##### Decision guide
+
+Aynı kapsam ve amaç ise ➝ *skos:exactMatch*
+
+Çok yakın, ancak bazı çekinceler var ise ➝ *skos:closeMatch*
+
+Kesinlikle daha genel/özel ise ➝ *skos:broadMatch* / *skos:narrowMatch*
+
+Sadece ilişkili, hiyerarşik/eşdeğer değil ise ➝ *skos:relatedMatch*
+
+Belirsiz; ama küratörlük için işaretlenmeli ise ➝ *idw:unknownMatch*
 
 
 ## Proje dillerini değiştirme

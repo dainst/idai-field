@@ -1903,7 +1903,7 @@ Farklı dillerde değer girilebilen alanlarda, kullanılan dillerin kodlarına k
 "Tarihlendirme" giriş türündeki alanlar, her biri birkaç tarihlendirme girişi içerebilen liste alanlarıdır. Tarihlendirme, aşağıdaki alt alanlardan oluşan bir nesnedir:
 
 * *type*: Tarihlendirme türü. Olası değerler şunlardır: *range* (Dönem), *single* (Tek yıl), *before* (Önce), *after* (Sonra), *scientific* (Bilimsel)
-* *begin*: Tarihlendirme türü *after* ve tarihlendirme türü *range* için başlangıç ​​tarihi için ayarlanan yıl belirtimi
+* *begin*: Tarihlendirme türü *after* ve tarihlendirme türü *range* için başlangıç tarihi için ayarlanan yıl belirtimi
 * *end*: Tarihlendirme türü *single*, *before* ve *scientific* için ve tarihlendirme türü *range* için bitiş tarihi için ayarlanan yıl belirtimi
 * *margin*: Tarihlendirme türü *scientific* için yıl cinsinden tolerans aralığı
 * *source*: Tarihlendirmenin kaynağı, çok dilli metin alanı
@@ -1930,14 +1930,16 @@ Yıl özellikleri *begin* ve *end* iki alt alandan oluşur:
     }
 
 
-##### Boyutlar
+##### Boyutlar, ağırlıklar ve hacimler
 
-"Boyut" giriş türündeki alanlar, her biri birkaç boyut ölçüsü içerebilen liste alanlarıdır. Bir boyut girişi, aşağıdaki alt alanlardan oluşan bir nesnedir:
+"Boyut", "Ağırlık" ve "Hacim" giriş türlerinin alanları, her biri aşağıdaki alt alanlardan oluşan birkaç nesne içerebilen liste alanlarıdır:
 
 * *inputValue*: Ölçülen sayısal değer
 * *inputRangeEndValue*: Bir aralık boyutuysa ölçülen ikinci sayısal değer
-* *inputUnit*: Ölçüm birimi. Olası değerler: *mm*, *cm*, *m*
-* *measurementPosition*: Alan "Ölçüldüğü gibi". Alan için yapılandırılmış değer listesinden bir değerin tanımlayıcısı girilmelidir.
+* *inputUnit*: Ölçü birimi. Olası değerler: *mm*, *cm*, *m* (Boyut) / *mg*, *g*, *kg* (Ağırlık) / *ml*, *l* (Hacim).
+* *measurementPosition*: (yalnızca boyut özellikleri için) "Ölçüldüğü gibi" alanı. Alan için yapılandırılan değer listesinden bir değerin tanımlayıcısı girilmelidir.
+* *measurementDevice*: (yalnızca ağırlık özellikleri için) "Ölçüm cihazı" alanı. Alan için yapılandırılmış değer listesinden bir değerin tanımlayıcısı girilmelidir.
+* *measurementTechnique*: (yalnızca hacim özellikleri için) "Ölçüm yöntemi" alanı. Alan için yapılandırılmış değer listesinden bir değerin tanımlayıcısı girilmelidir.
 * *measurementComment*: Yorum, çok dilli metin alanı
 * *isImprecise*: "Hassas olmayan". Olası değerler şunlardır: *true* (evet), *false* (hayır)
 

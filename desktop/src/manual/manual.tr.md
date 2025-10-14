@@ -1,6 +1,6 @@
 # İlk adımlar
 
-Uygulamayı ilk başlattığınızda adınızı girmeniz istenecektir. Adınızı ve soyadınızı girmeniz önerilir. Girdiğiniz ad, yaptığınız tüm değişiklikler için veritabanında saklanır ve veri senkronizasyonu sırasında değişikliklerin açıkça atanmasına olanak tanıyarak projedeki veri kayıtları üzerinde iş birliği yapmanızı kolaylaştırır. Kullanıcı adını daha sonra gezinme çubuğunun sağ üst köşesindeki ada tıklayarak veya "Field" (macOS) veya "Araçlar" (Windows ve Linux) menüsünden erişebileceğiniz **Ayarlar** alt menüsü aracılığıyla değiştirebilirsiniz.
+Uygulamayı ilk başlattığınızda adınızı girmeniz istenecektir. Adınızı ve soyadınızı girmeniz önerilir. Girdiğiniz ad, yaptığınız tüm değişiklikler için veri tabanında saklanır ve veri senkronizasyonu sırasında değişikliklerin açıkça atanmasına olanak tanıyarak projedeki veri kayıtları üzerinde iş birliği yapmanızı kolaylaştırır. Kullanıcı adını daha sonra gezinme çubuğunun sağ üst köşesindeki ada tıklayarak veya "Field" (macOS) veya "Araçlar" (Windows ve Linux) menüsünden erişebileceğiniz **Ayarlar** alt menüsü aracılığıyla değiştirebilirsiniz.
 
 Başlangıçta, test projesi etkin olacak ve bir dizi örnek veri kullanarak uygulamanın işlevselliğini denemenize olanak tanıyacaktır. Lütfen unutmayın; test projesi seçili olduğu sürece, yeni oluşturulan tüm veri kümelerinin silinecek ve uygulama yeniden başlatıldığında tüm değişikliklerin sıfırlanacaktır. Bu nedenle, test projesi için diğer Field Desktop projeleri veya veritabanlarıyla senkronizasyon gerçekleştirilmez.
 
@@ -246,7 +246,7 @@ Değişiklikleri veri tabanına kaydetmek için "Kaydet" butonuna tıklayın.
 
 ### Harita katmanlarını görüntüle
 
-Ayarlanan harita katmanları, harita katmanı menüsü üzerinden her an gösterilebilir veya gizlenebilir. Bunu yapmak için listedeki ilgili katmanın solundaki göz düğmesine tıklayın. Burada yapılan ayarlar (sekme için kullanılabilen harita katmanları listesinin aksine) veritabanına kaydedilmez ve bu nedenle bir senkronizasyon bağlantısı üzerinden paylaşılmaz. Böylece farklı harita katmanları farklı bilgisayarlarda gösterilebilir ve gizlenebilir.
+Ayarlanan harita katmanları, harita katmanı menüsü üzerinden her an gösterilebilir veya gizlenebilir. Bunu yapmak için listedeki ilgili katmanın solundaki göz düğmesine tıklayın. Burada yapılan ayarlar (sekme için kullanılabilen harita katmanları listesinin aksine) veri tabanına kaydedilmez ve bu nedenle bir senkronizasyon bağlantısı üzerinden paylaşılmaz. Böylece farklı harita katmanları farklı bilgisayarlarda gösterilebilir ve gizlenebilir.
 
 
 <hr>
@@ -410,7 +410,7 @@ Bu işlem, menüyü tekrar açar ve kaldırılacak arama kriterini seçebilirsin
 
 # Senkronizasyon
 
-Veriler farklı bilgisayarlardaki birden fazla Field Desktop kurulumu arasında, tek bir proje üzerinde ortak çalışabilmek için senkronize edilebilir. Bu, başka bir makinede çalışan bir Field Desktop uygulamasından gelen değişikliklerin (yeni girdiler, silinen girdiler, mevcut girdilerin düzenlenmesi, eklenen veya silinen resimler...) otomatik olarak yerel veritabanına aktarılacağını veya kaldırılacağı anlamına gelir. Bu, tüm kullanıcıların projenin en son kayıtlı haliyle aynı anda çalışmasını sağlar. Senkronizasyon hem internet üzerinden hem de yerel ağ üzerinden çalışır. Çevrimdışıyken bir proje üzerinde çalışmaya devam edebilirsiniz - bu durumda veritabanları ağ bağlantısı tekrar kurulduğunda senkronize edilecektir.
+Veriler farklı bilgisayarlardaki birden fazla Field Desktop kurulumu arasında, tek bir proje üzerinde ortak çalışabilmek için senkronize edilebilir. Bu, başka bir makinede çalışan bir Field Desktop uygulamasından gelen değişikliklerin (yeni girdiler, silinen girdiler, mevcut girdilerin düzenlenmesi, eklenen veya silinen resimler...) otomatik olarak yerel veri tabanına aktarılacağını veya kaldırılacağı anlamına gelir. Bu, tüm kullanıcıların projenin en son kayıtlı haliyle aynı anda çalışmasını sağlar. Senkronizasyon hem internet üzerinden hem de yerel ağ üzerinden çalışır. Çevrimdışıyken bir proje üzerinde çalışmaya devam edebilirsiniz - bu durumda veritabanları ağ bağlantısı tekrar kurulduğunda senkronize edilecektir.
 
 
 ## Projeyi indir
@@ -433,7 +433,7 @@ Lütfen unutmayın; daha büyük projelerin indirmesi daha uzun sürebilir. İnd
 
 Hem indirilen hem de yeni oluşturulan projeler her zaman diğer veritabanlarıyla senkronize edilebilir. Senkronizasyon "Proje" ➝ "Senkronize et..." menüsü üzerinden yapılandırılabilir.
 
-* *Adres*: Eşitleme bağlantısı kurmak istediğiniz veritabanının adresi. Bu, Field Desktop'ın şu anda açık olduğu başka bir bilgisayarın ağ adresi olabilir (bu adres ayarlar bölümünde *Adresiniz* olarak görüntülenebilir) veya internet veya yerel ağ üzerinden erişilebilen bir Field Hub sunucusunun adresi olabilir (örneğin DAI'nin Field Hub sunucusu için *https://server.field.idai.world*).
+* *Adres*: Eşitleme bağlantısı kurmak istediğiniz veri tabanının adresi. Bu, Field Desktop'ın şu anda açık olduğu başka bir bilgisayarın ağ adresi olabilir (bu adres ayarlar bölümünde *Adresiniz* olarak görüntülenebilir) veya internet veya yerel ağ üzerinden erişilebilen bir Field Hub sunucusunun adresi olabilir (örneğin DAI'nin Field Hub sunucusu için *https://server.field.idai.world*).
 * *Şifre*: Senkronizasyon bağlantısını kurmak istediğiniz projenin veya Field Desktop kurulumunun şifresi.
 * *Senkronizasyonu etkinleştir*: Bağlantıyı başlatmak veya kesmek için bu anahtarı kullanın.
 * *Küçük resimleri senkronize et*: Bu seçenek varsayılan olarak etkindir. Zayıf bir internet bağlantınız varsa ve mümkün olduğunca az veri yüklemek/indirmek istiyorsanız, bunu devre dışı bırakmak isteyebilirsiniz.
@@ -454,7 +454,7 @@ Bağlantı başarıyla kurulmuşsa, simge bir onay işareti gösterir. Veriler y
 
 ## Çakışmalar
 
-Çakışmalar, bir girdinin birden fazla bilgisayarda aynı anda düzenlendiğinde veya bilgisayarlar bağlı değilken aynı girdinin düzenlendiği iki veritabanı senkronize edildiğinde ortaya çıkabilir . Bu durumlarda aynı girdinin iki farklı sürümü vardır: *geçerli sürüm* (girdi yönetiminde ve uygulamanın diğer alanlarında görüntülenir) ve *rekabet eden sürüm* (çakışma durumu görüntülene kadar arka planda saklanır). İki sürüm, doldurulan veri alanlarının sayısı bakımından farklılık gösterebilir veya aynı alanlarda farklı değerlere sahip olabilir.
+Çakışmalar, bir girdinin birden fazla bilgisayarda aynı anda düzenlendiğinde veya bilgisayarlar bağlı değilken aynı girdinin düzenlendiği iki veri tabanı senkronize edildiğinde ortaya çıkabilir . Bu durumlarda aynı girdinin iki farklı sürümü vardır: *geçerli sürüm* (girdi yönetiminde ve uygulamanın diğer alanlarında görüntülenir) ve *rekabet eden sürüm* (çakışma durumu görüntülene kadar arka planda saklanır). İki sürüm, doldurulan veri alanlarının sayısı bakımından farklılık gösterebilir veya aynı alanlarda farklı değerlere sahip olabilir.
 
 Çatışmaları olan her girdi için bir uyarı gösterilir (bkz. *Uyarılar* bölümü). Girdi düzenleyicisinin **Çakışmalar** sekmesinde etkilenen bir kaydı temizleyebilirsiniz.
 
@@ -2016,6 +2016,77 @@ Lütfen unutmayın; tip kataloglarını başka bir projeye aktarırken, her iki 
 Katalog dosyalarını dışa aktarırken aşağıdaki seçenek kullanılabilir:
 
 * *Katalog*: Buradan dışa aktarılacak katalog türünü seçin. Bu seçenek yalnızca şu anda açık olan projede katalog türleri varsa görüntülenir. Diğer projelerden içe aktarılan kataloglar seçilemez.
+
+
+<hr>
+
+
+# Yedeklemeler
+
+Veri kaybını önlemek için proje veritabanlarının yedek kopyalarını düzenli olarak oluşturmak önemlidir. Field Desktop, JSONL formatında yedek dosyaları otomatik veya manuel olarak oluşturmak için kapsamlı seçenekler sunar.
+
+**Önemli**: Bu şekilde oluşturulan yedekleme dosyaları, projeye girilen tüm verileri içerir, ancak **görüntü içermez**. Görüntü dosyaları, "Gelişmiş ayarlar" altındaki ayarlarda yolunu bulabileceğiniz görüntü dizininde bulunur. Veri tabanı yedeklerine ek olarak, görüntü dizininin düzenli yedek kopyalarını oluşturmanız önerilir. Ayrıca, veri tabanı ve görüntü verileri bir Field Hub sunucusuyla senkronize edilerek yedeklenebilir.
+
+Yedekleme fonksiyonu ile oluşturulan JSONL dosyalarının mevcut projelere aktarılmaya uygun olmadığını, yalnızca "Proje" ➝ "Yedekleme aktar..." menüsü üzerinden ayrı bir proje olarak geri yüklenebileceğini lütfen unutmayın.
+
+
+## Otomatik yedekleme
+
+Field Desktop, proje verilerinde yapılan her değişiklikten sonra ilgili proje için otomatik olarak bir yedekleme dosyası oluşturur. Varsayılan olarak, proje başına yalnızca en son yedekleme saklanırken, eski yedeklemeler silinir. Ancak bu durum ayarlardan ayarlanabilir (bkz. *Yedeklemelerin depolanması* bölümü).
+
+Dosya adı, proje tanımlayıcısının yanı sıra yedeklemenin oluşturulduğu tarih ve saati de içerir (örneğin, 14 Mayıs 2025'te saat 11:28:25'te yedeklenen "example-project" adlı bir proje için "example-project.2025-05-14.11-28-25.jsonl").
+
+Lütfen (seçilen ayarlardan bağımsız olarak) yeni bir yedeklemenin yalnızca son yedekleme oluşturulduktan sonra proje verilerinde değişiklik yapılmışsa oluşturulacağını unutmayın. Bunun amacı, depolama alanından tasarruf etmek için aynı kopyaların oluşturulmasını önlemektir.
+
+**Önemli**: Yedeklemeler yalnızca uygulama açıkken oluşturulur. Yedeklemeler yalnızca uygulamada açık olan proje için değil, tüm projeler için oluşturulmaktadır.
+
+Otomatik yedeklemeleri yapılandırma seçeneklerine "Gelişmiş ayarlar" bölümünden ulaşabilirsiniz.
+
+
+### Dizin yolunu değiştirme
+
+Otomatik olarak oluşturulan yedekleme dosyalarının depolandığı dizinin yolunu "Dosya yolu" giriş alanını kullanarak görüntüleyebilir ve değiştirebilirsiniz. Yedekleme dizini değiştirildiğinde mevcut yedekleme dosyalarının otomatik olarak yeni dizine taşınmayacağını lütfen unutmayın. Eski dizindeki dosyalar yerinde kalırken, yedekleme dosyaları tüm projeler için yeni dizinde yeniden oluşturulur.
+
+
+### Yedeklemelerin depolanması
+
+Her projenin en son sürümünün (her zaman saklanan) yedeğine ek olarak, başka yedekleme dosyaları da depolanabilir. Bunun için ayarlardan "Yedekleri zamana göre depola" ve "Yedekleri tarihe göre depola" kurallarını yapılandırabilirsiniz.
+
+
+#### Yedeklemeleri zamana göre depola
+
+Bu kural, yedekleme dosyalarını belirli bir zaman aralığında (her X saatte bir) kaydetmenizi sağlar.
+
+* *Saat cinsinden aralık*: Yedekleme dosyalarının tutulacağı zaman aralığını belirtir. Örneğin, girilen değer "3" ise, her üç saatte bir yedekleme dosyası tutulur.
+* *Sayı*: Kaç yedekleme dosyasının tutulacağını belirtir. Örneğin, girilen değer "5" ise, en son oluşturulan beş yedekleme dosyası tutulur.
+
+
+#### Yedeklemeleri tarihe göre depola
+
+Bu kural, günlük, haftalık veya aylık bir yedekleme dosyası kaydetmenizi sağlar.
+
+* *Gün*: Kaç günlük yedekleme dosyasının saklanacağını belirtir. Örneğin, girilen değer "7" ise, en son yedi günlük yedekleme saklanır. Her gün oluşturulan ilk yedekleme saklanacaktır.
+* *Hafta*: Kaç haftalık yedekleme dosyasının saklanacağını belirtir. Örneğin, girilen değer "4" ise, en son dört haftalık yedekleme saklanacaktır. Her hafta oluşturulan ilk yedekleme (Pazartesi'den başlayarak) saklanacaktır.
+* *Ay*: Kaç aylık yedekleme dosyasının saklanacağını belirtir. Örneğin, girilen değer "12" ise, en son on iki aylık yedekleme saklanacaktır. Her ay oluşturulan ilk yedekleme saklanacaktır.
+
+Yedekleme dosyalarının yalnızca uygulama açıkken ve son yedeklemeden bu yana proje verilerinde değişiklik yapılmışsa oluşturulduğunu lütfen unutmayın. Bu nedenle, günlük yedeklemeler için "7" ayarı, her proje için geçen haftanın her günü için bir yedekleme dosyasının mevcut olduğu anlamına gelmez. Bu durum, yalnızca uygulama haftanın her günü açıksa ve ilgili proje her gün düzenleniyorsa geçerlidir.
+
+
+#### Gereken sabit disk alanı
+
+Ne kadar çok yedekleme yaparsanız, seçili yedekleme dizininde o kadar fazla depolama alanına ihtiyacınız olur. Ayarlarda, otomatik yedeklemelerin kapladığı sabit disk alanını görebilirsiniz. Ayrıca, gelecekte ihtiyaç duyulacak tahmini disk alanı görüntülenir: Bu, şu anda bilgisayarda bulunan projeler için (belirtilen kurallara uygun olarak) maksimum sayıda yedekleme dosyası saklanması durumunda ihtiyaç duyulacak disk alanıdır. Projeler silinirse, yeni oluşturulursa veya mevcut projelerin boyutu değişirse, bu tahmin gerçek depolama alanından farklı olabilir.
+
+
+## Manuel yedekleme oluşturma
+
+Açık olan proje için yedekleme dosyaları, "Proje" ➝ "Yedek oluştur..." menüsü üzerinden manuel olarak oluşturulabilir. "Yedek oluştur" düğmesini kullanın ve oluşturulacak yedekleme dosyası için bir dizin ve ad seçin.
+
+
+## Yedeği Geri Yükleme
+
+Bir projeyi yedekleme dosyasından geri yüklemek için "Proje" ➝ "Yedeği Geri Yükle..." menüsünü açın. Öncelikle, "Dosya yolu" dosya seçim alanını kullanarak istediğiniz yedekleme dosyasını seçin. Seçilen dosya, Field Desktop'ta otomatik veya manuel yedekleme ile oluşturulmuş bir JSONL dosyası olmalıdır. "Proje tanımlayıcı" giriş alanına, yedekleme dosyasından oluşturulacak yeni proje için benzersiz bir tanımlayıcı girebilirsiniz. Bu, orijinal projenin tanımlayıcısı veya farklı bir tanımlayıcı olabilir. Girilen tanımlayıcı orijinalinden önemli ölçüde farklıysa, yanlışlıkla yanlış yedeklemeyi geri yükleme olasılığı konusunda sizi uyaran bir uyarı görüntülenir.
+
+**Önemli**: Mevcut bir projenin tanımlayıcısını girerseniz, geri yükleme işlemi sırasında bu projenin üzerine yazılır.
 
 
 <hr>

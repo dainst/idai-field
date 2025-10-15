@@ -5336,7 +5336,7 @@
         <target state="final">Bearbeiten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.html</context>
-          <context context-type="linenumber">87</context>
+          <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.list.moveButton.tooltip" datatype="html">
@@ -5344,7 +5344,7 @@
         <target state="final">Verschieben</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.html</context>
-          <context context-type="linenumber">101</context>
+          <context context-type="linenumber">102</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.list.deleteButton.tooltip" datatype="html">
@@ -5352,7 +5352,7 @@
         <target state="final">Löschen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.html</context>
-          <context context-type="linenumber">115</context>
+          <context context-type="linenumber">116</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchResultsInfo.documentLimitRemoveTooltip" datatype="html">
@@ -6143,8 +6143,8 @@
         <source> Der eingetragene Bezeichner <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{currentIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> beginnt nicht mit dem konfigurierten Bezeichner-Präfix <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="{{identifierPrefix}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>. Bitte tragen Sie einen neuen Bezeichner ein. </source>
         <target state="final"> Der eingetragene Bezeichner <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{currentIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> beginnt nicht mit dem konfigurierten Bezeichner-Präfix <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="{{identifierPrefix}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>. Bitte tragen Sie einen neuen Bezeichner ein. </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/docedit/core/forms/identifier.html</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="sourcefile">src/app/components/widgets/identifier-input.html</context>
+          <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.applySettings" datatype="html">
@@ -7148,7 +7148,7 @@
         <target state="final"> Die Werteliste für dieses Feld entspricht den Einträgen im Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code>"/><x id="INTERPOLATION" equiv-text="omProjectField}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="der Projek"/> der Projekteinstellungen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.relation.targetCategories" datatype="html">
@@ -7156,7 +7156,7 @@
         <target state="final">Erlaubte Zielkategorien</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">51</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
@@ -7168,7 +7168,7 @@
         <target state="final">Gegenrelation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
-          <context context-type="linenumber">58</context>
+          <context context-type="linenumber">60</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
@@ -7180,7 +7180,7 @@
         <target state="final">Angabe der Uhrzeit</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">64</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
@@ -7192,7 +7192,7 @@
         <target state="final">Optional</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
-          <context context-type="linenumber">64</context>
+          <context context-type="linenumber">66</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
@@ -7204,7 +7204,7 @@
         <target state="final">Verpflichtend</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
-          <context context-type="linenumber">66</context>
+          <context context-type="linenumber">68</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
@@ -7216,7 +7216,7 @@
         <target state="final">Nicht erlaubt</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
-          <context context-type="linenumber">68</context>
+          <context context-type="linenumber">70</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
@@ -7228,7 +7228,7 @@
         <target state="final">Eingabemodus</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
-          <context context-type="linenumber">71</context>
+          <context context-type="linenumber">73</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
@@ -7240,7 +7240,7 @@
         <target state="final">Wählbar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
-          <context context-type="linenumber">73</context>
+          <context context-type="linenumber">75</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
@@ -7252,7 +7252,7 @@
         <target state="final">Einzeldatum</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">77</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
@@ -7264,7 +7264,7 @@
         <target state="final">Datumsbereich</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="linenumber">79</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
@@ -10455,6 +10455,14 @@
           <context context-type="linenumber">5,7</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="widgets.quittingModal.backupInfo" datatype="html">
+        <source> Bitte warten Sie, bis die Erstellung von Backup-Dateien abgeschlossen wurde. </source>
+        <target state="final"> Bitte warten Sie, bis die Erstellung von Backup-Dateien abgeschlossen wurde. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/widgets/quitting-modal.html</context>
+          <context context-type="linenumber">8,10</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="referencesInfo.references" datatype="html">
         <source>Verweise:</source>
         <target state="final">Verweise:</target>
@@ -10484,7 +10492,7 @@
         <target state="final">Dieses Feld wird automatisch ausgefüllt.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/relation-picker/relation-picker-group.html</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageUpload.uploadModal.info.single" datatype="html">

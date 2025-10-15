@@ -27,6 +27,8 @@ export abstract class ContextMenuProvider {
 
     protected closeContextMenu() {
 
+        if (!this.contextMenu) return;
+
         this.contextMenu.close();
         this.changeDetectorRef.detectChanges();
     }

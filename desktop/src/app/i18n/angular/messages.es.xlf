@@ -6299,7 +6299,7 @@
       </trans-unit>
       <trans-unit id="configuration.swapCategoryForm.body" datatype="html">
         <source>Möchten Sie das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="ryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="ersetzen?"/> wirklich durch das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="ersetzen?"/> ersetzen? </source>
-        <target state="translated">¿De verdad quieres sustituir el formulario <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="ryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="ersetzen?"/> por el formulario <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="ersetzen?"/>? </target>
+        <target state="translated">¿De verdad quiere sustituir el formulario <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="ryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="ersetzen?"/> por el formulario <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="ersetzen?"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.component.ts</context>
           <context context-type="linenumber">40</context>
@@ -6483,7 +6483,7 @@
       </trans-unit>
       <trans-unit id="docedit.duplicateModal.info.createMultipleTimes" datatype="html">
         <source>Wie viele Ressourcen möchten Sie anlegen?</source>
-        <target state="translated">¿Cuántos recursos deseas crear?</target>
+        <target state="translated">¿Cuántos recursos desea crear?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/duplicate-modal.component.ts</context>
           <context context-type="linenumber">74</context>
@@ -6491,7 +6491,7 @@
       </trans-unit>
       <trans-unit id="docedit.duplicateModal.info.duplicate" datatype="html">
         <source>Wie viele Kopien der Ressource möchten Sie anlegen?</source>
-        <target state="translated">¿Cuántas copias del recurso deseas crear?</target>
+        <target state="translated">¿Cuántas copias del recurso desea crear?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/duplicate-modal.component.ts</context>
           <context context-type="linenumber">74</context>
@@ -6523,7 +6523,7 @@
       </trans-unit>
       <trans-unit id="docedit.header.create" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/> in <x id="INTERPOLATION_1" equiv-text="{{parentLabel}}"/> anlegen </source>
-        <target state="translated">Crear<x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/> en <x id="INTERPOLATION_1" equiv-text="{{parentLabel}}"/> </target>
+        <target state="translated">Crear <x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/> en <x id="INTERPOLATION_1" equiv-text="{{parentLabel}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.component.ts</context>
           <context context-type="linenumber">82</context>
@@ -6767,7 +6767,7 @@
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.deleteModal.question.multiple" datatype="html">
         <source>Möchten Sie die <x id="INTERPOLATION" equiv-text="{{numberOfSelectedImages}}"/> markierten Bilder wirklich löschen? </source>
-        <target state="translated">¿De verdad quieres eliminar las <x id="INTERPOLATION" equiv-text="{{numberOfSelectedImages}}"/> imágenes seleccionadas? </target>
+        <target state="translated">¿De verdad quiere eliminar las <x id="INTERPOLATION" equiv-text="{{numberOfSelectedImages}}"/> imágenes seleccionadas? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/deletion/delete-modal.component.ts</context>
           <context context-type="linenumber">28</context>
@@ -6775,7 +6775,7 @@
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.deleteModal.question.single" datatype="html">
         <source>Möchten Sie das markierte Bild wirklich löschen?</source>
-        <target state="translated">¿Realmente quieres eliminar la imagen seleccionada?</target>
+        <target state="translated">¿Realmente quiere eliminar la imagen seleccionada?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/deletion/delete-modal.html</context>
           <context context-type="linenumber">15</context>
@@ -7719,7 +7719,7 @@
       </trans-unit>
       <trans-unit id="resources.printSettingsModal.default" datatype="html">
         <source>Standard</source>
-        <target state="translated">Estándar</target>
+        <target state="translated">Por defecto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/print-settings-modal.component.ts</context>
           <context context-type="linenumber">1</context>

@@ -1312,7 +1312,7 @@ Field Desktop'ın eski sürümleriyle oluşturulan projelerde ve proje yapıland
 
 "Onay kutuları" ve "Tek satırlık metin (Liste)" (birden fazla dilde giriş olmadan) giriş türlerindeki alanlar için, alan için yalnızca bir sütun oluşturulur. Alan değerleri birbirinden noktalı virgülle ayrılır (örneğin "Granit; Kireçtaşı; Kayrak Taşı").
 
-"Tarih", "Boyut", "Bibliyografik referans", "Bileşik alan" ve "Tek satırlık metin (Liste)" (birden fazla dilde giriş ile) giriş türlerindeki alanlar için, ilgili alt alanlar veya diller için karşılık gelen sütunlar **her liste girişi için** oluşturulur. İlgili girişi tanımlamak için alan adından sonra bir sayı eklenir (0'dan başlar ve noktalarla ayrılır).
+"Tarih", "Boyut", "Ağırlık", "Hacim", "Bibliyografik referans", "Bileşik alan" ve "Tek satırlık metin (Liste)" (birden fazla dilde giriş yapıldığında) giriş türlerindeki alanlar için, ilgili alt alanlar veya diller için ilgili sütunlar **her liste girişi için** oluşturulur. Alan adından sonra, ilgili girişi tanımlamak için bir sayı eklenir (0'dan başlayıp noktalarla ayrılır).
 
 *Birden fazla dilde giriş ile "Tek satırlık metin (Liste)" giriş türündeki bir alana örnek:*
 

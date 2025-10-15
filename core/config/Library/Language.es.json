@@ -127,10 +127,10 @@
   },
   "categories": {
     "Place": {
-      "label": "Sitio",
+      "label": "Lugar",
       "fields": {
         "placeName": {
-          "label": "Nombre del sitio",
+          "label": "Nombre del lugar",
           "description": "Nombre de la localidad o término municipal"
         },
         "excavationHistory": {
@@ -216,7 +216,7 @@
           "description": "Cantidad conservada en porcentaje"
         },
         "storagePlace": {
-          "label": "Lugar de depósito",
+          "label": "Lugar de almacenamiento",
           "description": "Lugar de almacenamiento del hallazgo"
         },
         "hasRestoration": {
@@ -438,7 +438,7 @@
           "label": "Clasificación del material"
         },
         "vesselForm": {
-          "label": "Forma básica del vaso"
+          "label": "Forma básica del recipiente"
         },
         "vesselFormSpecific": {
           "label": "Forma",
@@ -452,7 +452,7 @@
           "label": "Tipo de cerámica"
         },
         "vesselpart": {
-          "label": "Parte del vaso"
+          "label": "Parte del recipiente"
         },
         "temper": {
           "description": "Principales tipos de inclusiones, p. ej., 'partículas orgánicas'",
@@ -639,7 +639,7 @@
           "description": "Número de la muestra, asignado en el laboratorio que realiza el análisis"
         },
         "storagePlace": {
-          "label": "Lugar de depósito"
+          "label": "Lugar de almacenamiento"
         }
       }
     },
@@ -650,8 +650,8 @@
           "label": "Denominación o tipo del objeto"
         },
         "vesselForm": {
-          "label": "Forma básica del vaso",
-          "description": "Forma básica del vaso"
+          "label": "Forma básica del recipiente",
+          "description": "Forma básica del recipiente"
         },
         "transparency": {
           "description": "¿Qué grado de translucidez tiene el objeto?",
@@ -1154,7 +1154,7 @@
           "label": "Cantidad de inclusiones"
         },
         "vesselForm": {
-          "label": "Forma básica del vaso"
+          "label": "Forma básica del recipiente"
         },
         "clayStructure": {
           "description": "¿De qué tipo es la estructura de terracota?",
@@ -1319,7 +1319,7 @@
           "label": "Denominación o tipo del objeto"
         },
         "vesselForm": {
-          "label": "Forma básica del vaso"
+          "label": "Forma básica del recipiente"
         },
         "vesselFormSpecific": {
           "label": "Forma",
@@ -1342,7 +1342,7 @@
       }
     },
     "BuildingPart": {
-      "label": "Parte de edificio",
+      "label": "Parte del edificio",
       "fields": {
         "material": {
           "label": "Material"
@@ -1411,7 +1411,7 @@
       "label": "Escalera"
     },
     "Opening": {
-      "label": "Abertura",
+      "label": "Apertura",
       "fields": {
         "material": {
           "label": "Material"
@@ -1756,8 +1756,8 @@
     "FindCollection": {
       "fields": {
         "storagePlace": {
-          "description": "Lugar de depósito de la colección de hallazgos",
-          "label": "Lugar de depósito"
+          "description": "Lugar de almacenamiento de la colección de hallazgos",
+          "label": "Lugar de almacenamiento"
         },
         "amount": {
           "description": "Número de hallazgos recuperados o inventariados",
@@ -1823,7 +1823,7 @@
       }
     },
     "StoragePlace": {
-      "label": "Lugar de depósito"
+      "label": "Lugar de almacenamiento"
     },
     "StorageBuilding": {
       "label": "Edificio"

@@ -879,7 +879,7 @@ Formulare, Felder, Wertelisten sowie deren Werte können durch Verweise mit exte
 
 ### Allgemeine Verweise
 
-Allgemeine Verweise sind URLs zu Webseiten, über die weitere Informationen zum jeweiligen Element der Projektkonfiguration abgerufen werden können. Diese URLs werden im Informations-Popup angezeigt, das im Ressourceneditor über einen Rechtsklick auf das Feld oder den Wert eingeblendet werden kann, und können so als Hilfestellung bei der Dateneingabe dienen.
+Allgemeine Verweise sind URLs zu Webseiten, über die weitere Informationen zum jeweiligen Element der Projektkonfiguration abgerufen werden können. Diese URLs werden im Informations-Popup angezeigt, das im Ressourceneditor über einen Rechtsklick auf das Feld bzw. den Wert eingeblendet werden kann, und können so als Hilfestellung bei der Dateneingabe dienen.
 
 
 ### Semantische Verweise

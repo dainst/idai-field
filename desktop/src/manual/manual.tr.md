@@ -90,7 +90,7 @@ Düzenleyicide yaptığınız değişiklikler ancak "Kaydet" butonuna tıkladık
 
 Proje yapılandırmasında, alanlar ve değer listeleri için ek bilgiler içeren açıklayıcı metinler ve web sitesi bağlantılarını kaydedebilirsiniz. Bu bilgiler, veri girerken yardımcı olabilir. Bir alan veya değer listesindeki bir değer için bu tür ek bilgiler mevcutsa fare işaretçisini ilgili alana veya değere getirdiğinizde görünen noktalı bir çizgiyle belirtilir.
 
-<p align="center"><img src="images/tr/resources/information_underline.png" alt="View information"/></p>
+<p align="center"><img src="images/tr/resources/information_underline.png" alt="Bilgi görüntüleme"/></p>
 
 **Sağ tıklayarak**, referans olarak girdiğiniz açıklama metninin ve/veya harici web sitelerine bağlantıların görüntülendiği bir pencere açabilirsiniz.
 
@@ -99,7 +99,7 @@ Proje yapılandırmasında, alanlar ve değer listeleri için ek bilgiler içere
 
 Seçilen girdinin ait olduğu kategorinin simgesi, düzenleyici başlığının sol tarafında görüntülenir. Kategori bir üst kategori veya alt kategorilerinden biriyse, başka bir alt kategoriye veya üst kategorinin kendisine geçebilirsiniz. Bu seçenek, ok sembolü bulunan küçük mavi bir düğmeyle gösterilir.
 
-<p align="center"><img src="images/tr/resources/change_category.png" alt="Change category"/></p>
+<p align="center"><img src="images/tr/resources/change_category.png" alt="Kategori değiştirme"/></p>
 
 İstediğiniz kategoriyi listeden seçmek için butona tıklayın. Düzenleyicide yeni seçilen kategorinin formu görüntülenecektir. Ancak yaptığınız değişiklikler yalnızca "Kaydet" butonuna tıkladığınızda kaydedilir.
 
@@ -623,7 +623,7 @@ Zaten girilmiş olan alan verileri, giriş türü değiştirilse bile görüntü
 
 #### Tek satırlık metin
 Tek satırlık bir metnin girişi (isteğe bağlı olarak tek dilli veya çok dilli olabilir)
-<p align="center"><img src="images/tr/configuration/input_type_input.png" alt="Input type 'Tek satırlık metin'"/></p>
+<p align="center"><img src="images/tr/configuration/input_type_input.png" alt="Giriş türü 'Tek satırlık metin'"/></p>
 
 #### Çoklu seçimli tek satırlık metin
 Birden fazla tek satırlık metnin girişi (isteğe bağlı olarak tek dilli veya çok dilli olabilir)
@@ -688,12 +688,12 @@ Bir veya daha fazla boyutsal ölçümün belirtilmesi. Mevcut ölçüm birimleri
 #### Ağırlık
 Bir veya daha fazla ağırlık ölçümünün belirtilmesi. Mevcut ölçüm birimleri "mg", "g" ve "kg"dır. Tekil bir değer veya bir değer aralığı belirtilebilir. "Ölçüm cihazı" açılır alt alanının seçim seçenekleri, belirtilen değer listesinden alınır.
 
-<p align="center"><img src="images/tr/configuration/input_type_weight.png" alt="Input type 'Weight'"/></p>
+<p align="center"><img src="images/tr/configuration/input_type_weight.png" alt="Giriş türü 'Ağırlık'"/></p>
 
 #### Hacim
 Bir veya daha fazla hacim ölçümünün belirtilmesi. Mevcut ölçüm birimleri "ml" ve "l"dir. Tekil bir değer veya bir değer aralığı belirtilebilir. "Ölçüm tekniği" açılır alt alanının seçim seçenekleri, belirtilen değer listesinden alınır.
 
-<p align="center"><img src="images/tr/configuration/input_type_volume.png" alt="Input type 'Volume'"/></p>
+<p align="center"><img src="images/tr/configuration/input_type_volume.png" alt="Giriş türü 'Hacim'"/></p>
 
 #### Bibliyografik referans
 Bir veya daha fazla bibliyografik referansın belirtilmesi. İsteğe bağlı olarak Zenon ID, DOI, sayfa numarası ve şekil numarası belirtilebilir.

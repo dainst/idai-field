@@ -10183,7 +10183,7 @@
       </trans-unit>
       <trans-unit id="widgets.quittingModal.backupInfo" datatype="html">
         <source>Bitte warten Sie, bis die Erstellung von Backup-Dateien abgeschlossen wurde.</source>
-        <target state="needs-translation">Bitte warten Sie, bis die Erstellung von Backup-Dateien abgeschlossen wurde.</target>
+        <target state="translated">Por favor, espere a que se complete la creación de los archivos de copia de seguridad.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/quitting-modal.html</context>
           <context context-type="linenumber">8,10</context>

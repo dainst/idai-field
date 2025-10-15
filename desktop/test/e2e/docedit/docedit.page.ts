@@ -272,7 +272,7 @@ export class DoceditPage {
 
     public static async getIdentifierInputFieldValue() {
 
-        const element = (await getLocator('form-field-identifier input')).nth(0);
+        const element = (await getLocator('identifier-input input')).nth(0);
         return getValue(element);
     }
 

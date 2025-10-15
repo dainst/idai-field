@@ -1,7 +1,8 @@
-import { AfterViewInit, Component, ElementRef, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, ViewChild, ChangeDetectorRef, OnChanges, AfterViewChecked,
+    SimpleChanges } from '@angular/core';
 import { isObject, isString, Map, equal, isEmpty, clone } from 'tsfun';
-import { FieldDocument, CategoryForm, Datastore, RelationsManager, ProjectConfiguration,
-    Labels, I18N, FieldResource, Valuelist } from 'idai-field-core';
+import { FieldDocument, CategoryForm, Datastore, RelationsManager, ProjectConfiguration, Labels, I18N, FieldResource,
+    Valuelist } from 'idai-field-core';
 import { ResourcesComponent } from '../resources.component';
 import { Validator } from '../../../model/validator';
 import { M } from '../../messages/m';
@@ -10,6 +11,7 @@ import { ViewFacade } from '../../../components/resources/view/view-facade';
 import { NavigationService } from '../navigation/navigation-service';
 import { Messages } from '../../messages/messages';
 import { Language } from '../../../services/languages';
+import { IdentifierInputComponent } from '../../widgets/identifier-input.component';
 
 
 @Component({
@@ -22,7 +24,7 @@ import { Language } from '../../../services/languages';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class RowComponent implements AfterViewInit {
+export class RowComponent implements AfterViewChecked, OnChanges {
 
     @Input() document: FieldDocument;
     @Input() category: CategoryForm;
@@ -31,10 +33,11 @@ export class RowComponent implements AfterViewInit {
     @Input() shortDescriptionValuelist: Valuelist|undefined;
     @Input() shortDescriptionValues: string[];
 
-    @ViewChild('identifierInput', { static: false }) identifierInput: ElementRef;
+    @ViewChild('identifierInput', { static: false }) identifierInput: IdentifierInputComponent;
 
     private initialValues: Map<string|I18N.String|undefined> = {};
     private saving: Promise<void>;
+    private focusTriggered: boolean;
 
 
     constructor(public resourcesComponent: ResourcesComponent,
@@ -82,8 +85,14 @@ export class RowComponent implements AfterViewInit {
     public isNewResource = () => !this.document.resource.id;
 
 
-    ngAfterViewInit() {
+    ngOnChanges(changes: SimpleChanges) {
+        
+        if (changes['document']) this.focusTriggered = false;
+    }
 
+
+    ngAfterViewChecked() {
+        
         this.focusIdentifierInputIfDocumentIsNew();
     }
 
@@ -273,7 +282,10 @@ export class RowComponent implements AfterViewInit {
 
     private focusIdentifierInputIfDocumentIsNew() {
 
-        if (!this.document.resource.identifier) this.identifierInput.nativeElement.focus();
+        if (!this.document.resource.identifier && !this.focusTriggered) {
+            this.identifierInput.inputFieldElement.nativeElement.focus();
+            this.focusTriggered = true;
+        }
     }
 
 

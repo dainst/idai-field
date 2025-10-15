@@ -204,9 +204,16 @@ export class ResourcesPage {
     }
 
 
-    public static async getListModeInputFieldValue(identifier, index) {
+    public static async getListModeIdentifierFieldValue(identifier) {
 
-        const inputField = await ResourcesPage.getListModeInputField(identifier, index);
+        const inputField = await ResourcesPage.getListModeIdentifierField(identifier);
+        return getValue(inputField);
+    }
+
+
+    public static async getListModeShortDescriptionFieldValue(identifier) {
+
+        const inputField = await ResourcesPage.getListModeShortDescriptionField(identifier);
         return getValue(inputField);
     }
 
@@ -267,13 +274,19 @@ export class ResourcesPage {
     }
 
 
-    public static async getListModeInputField(identifier, index) {
+    public static getListModeIdentifierField(identifier) {
 
-        const locator = identifier
-            ? getLocator('#resource-' + identifier + ' input')
-            : getLocator('#new-resource input');
+        return identifier
+            ? getLocator('#resource-' + identifier + ' identifier-input input')
+            : getLocator('#new-resource identifier-input input');
+    }
 
-        return (await locator).nth(index);
+
+    public static getListModeShortDescriptionField(identifier) {
+
+        return identifier
+            ? getLocator('#resource-' + identifier + ' .short-description-input-container input')
+            : getLocator('#new-resource .short-description-input-container input');
     }
 
 
@@ -349,15 +362,21 @@ export class ResourcesPage {
 
     // type in
 
-    public static async typeInListModeInputField(identifier: string, index: number, inputText: string) {
+    public static async typeInListModeIdentifierField(identifier: string, inputText: string) {
 
-        return typeIn(await this.getListModeInputField(identifier, index), inputText);
+        return typeIn(await this.getListModeIdentifierField(identifier), inputText);
+    }
+
+
+    public static async typeInListModeShortDescriptionField(identifier: string, inputText: string) {
+
+        return typeIn(await this.getListModeShortDescriptionField(identifier), inputText);
     }
 
 
     public static async typeInNewResourceAndHitEnterInList(inputText: string) {
 
-        const elements = await getLocator('#list .identifier-input');
+        const elements = await getLocator('#list identifier-input input');
         const element = elements.nth(await elements.count() - 1);
         await typeIn(element, inputText);
         await pause(2000);

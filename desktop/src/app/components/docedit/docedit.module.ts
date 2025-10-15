@@ -43,7 +43,6 @@ import { InvalidFieldDataComponent } from './core/forms/widgets/invalid-field-da
 import { MultiLanguageTextFieldComponent } from './core/forms/widgets/multi-language-text-field.component';
 import { SimpleInputComponent } from './core/forms/simple-input.component';
 import { SimpleMultiInputComponent } from './core/forms/simple-multi-input.component';
-import { IdentifierComponent } from './core/forms/identifier.component';
 import { CompositeComponent } from './core/forms/array-field/composite/composite.component';
 import { CompositeEntryModalComponent } from './core/forms/array-field/composite/composite-entry-modal.component';
 import { ValuelistMultiInputComponent } from './core/forms/valuelist-multi-input.component';
@@ -110,7 +109,6 @@ import { DateParserFormatter } from './core/forms/date/date-parser-formatter';
         EmptyValuelistInfoComponent,
         ObjectArrayComponent,
         LiteratureEntryModalComponent,
-        IdentifierComponent,
         InvalidFieldDataComponent,
         MultiLanguageTextFieldComponent,
         CompositeComponent,

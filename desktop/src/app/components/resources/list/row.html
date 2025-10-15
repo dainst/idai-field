@@ -55,15 +55,16 @@
         </button>
     </div>
     <div class="input-field">
-        <input #identifierInput
-               [value]="document.resource.identifier"
-               (focus)="startEditing('identifier', document.resource.identifier)"
-               (blur)="stopEditing('identifier', document.resource.identifier)"
-               (input)="onInput($event, 'identifier')"
-               (keyup)="onKeyUp($event, 'identifier')"
-               (dblclick)="$event.stopPropagation();" class="form-control form-control-sm identifier-input">
+        <identifier-input #identifierInput
+                          [fieldContainer]="document.resource"
+                          [fieldName]="'identifier'"
+                          [identifierPrefix]="category.identifierPrefix"
+                          [highlightOnFocus]="false"
+                          (onFocus)="startEditing('identifier', document.resource.identifier)"
+                          (onBlur)="stopEditing('identifier', document.resource.identifier)"
+                          (onKeyUp)="onKeyUp($event, 'identifier')"></identifier-input>
     </div>
-    <div *ngIf="!shortDescriptionValuelist" class="input-field">
+    <div *ngIf="!shortDescriptionValuelist" class="input-field short-description-input-container">
         <input [value]="getShortDescription()"
                (focus)="startEditing('shortDescription', document.resource.shortDescription)"
                (blur)="stopEditing('shortDescription', document.resource.shortDescription)"

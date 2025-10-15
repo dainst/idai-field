@@ -72,14 +72,18 @@
     }
   }
 
+  .identifier-prefix-label {
+    height: 36px;
+    font-size: 16px;
+    border-color: transparent !important;
+  }
+
   .dropdown-input-field {
     padding: 0;
   }
 
   input.form-control {
-    position: relative;
-    top: 1px;
-    border: 0;
+    border: none;
   }
 
   .ng-select {

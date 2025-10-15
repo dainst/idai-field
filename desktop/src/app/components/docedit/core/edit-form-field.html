@@ -51,9 +51,9 @@
 <form-field-geometry *ngIf="field.inputType === 'geometry'"
     [fieldContainer]="fieldContainer"></form-field-geometry>
 
-<form-field-identifier *ngIf="field.inputType === 'identifier'"
+<identifier-input *ngIf="field.inputType === 'identifier'"
     [fieldContainer]="fieldContainer" [fieldName]="field.name"
-    [identifierPrefix]="identifierPrefix"></form-field-identifier>
+    [identifierPrefix]="identifierPrefix"></identifier-input>
 
 <form-field-type-relation *ngIf="field.inputType === 'instanceOf'"
     [resource]="resource"></form-field-type-relation>

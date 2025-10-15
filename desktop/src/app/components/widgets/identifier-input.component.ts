@@ -1,19 +1,25 @@
-import { Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
+
 
 
 @Component({
-    selector: 'form-field-identifier',
-    templateUrl: './identifier.html',
+    selector: 'identifier-input',
+    templateUrl: './identifier-input.html',
     standalone: false
 })
 /**
  * @author Thomas Kleinke
  */
-export class IdentifierComponent implements OnChanges {
+export class IdentifierInputComponent implements OnChanges {
 
     @Input() fieldContainer: any;
     @Input() fieldName: string;
     @Input() identifierPrefix: string|undefined;
+    @Input() highlightOnFocus: boolean = true;
+    
+    @Output() onFocus: EventEmitter<void> = new EventEmitter<void>();
+    @Output() onBlur: EventEmitter<void> = new EventEmitter<void>();
+    @Output() onKeyUp: EventEmitter<KeyboardEvent> = new EventEmitter<KeyboardEvent>();
 
     @ViewChild('inputField') inputFieldElement: ElementRef;
 
@@ -32,12 +38,14 @@ export class IdentifierComponent implements OnChanges {
 
     public update() {
 
-        if (this.identifierBody === '') {
+        const trimmedIdentifierBody: string = this.identifierBody.trim();
+
+        if (trimmedIdentifierBody === '') {
             delete this.fieldContainer[this.fieldName];
         } else {
             this.fieldContainer[this.fieldName] = this.identifierPrefix
-                ? this.identifierPrefix + this.identifierBody
-                : this.identifierBody;
+                ? this.identifierPrefix + trimmedIdentifierBody
+                : trimmedIdentifierBody;
         }
     }
 

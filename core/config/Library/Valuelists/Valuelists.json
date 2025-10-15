@@ -2987,7 +2987,7 @@
       "horizontal": {},
       "vertical": {}
     },
-    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "createdBy": "Núria Morera Noguer, Ferran Antolin (DAI)",
     "creationDate": "2025"
   },
   "Sampling-horizontalSamplingStrategy-default": {
@@ -3014,7 +3014,7 @@
         ]
       }
     },
-    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "createdBy": "Núria Morera Noguer, Ferran Antolin (DAI)",
     "creationDate": "2025"
   },
   "Sampling-systematicSamplingStrategy-default": {
@@ -3053,7 +3053,7 @@
         ]
       }
     },
-    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "createdBy": "Núria Morera Noguer, Ferran Antolin (DAI)",
     "creationDate": "2025",
     "order": [
       "fixedVolume",
@@ -3069,7 +3069,7 @@
       "profile": {},
       "core": {}
     },
-    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "createdBy": "Núria Morera Noguer, Ferran Antolin (DAI)",
     "creationDate": "2025",
     "order": [
       "profile",
@@ -3086,7 +3086,7 @@
         ]
       }
     },
-    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "createdBy": "Núria Morera Noguer, Ferran Antolin (DAI)",
     "creationDate": "2025",
     "order": [
       "monolith",
@@ -3103,7 +3103,7 @@
       },
       "riverPondWell": {}
     },
-    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "createdBy": "Núria Morera Noguer, Ferran Antolin (DAI)",
     "creationDate": "2025",
     "order": [
       "regular",
@@ -3118,7 +3118,7 @@
       "onceADay": {},
       "afterFewDays": {}
     },
-    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "createdBy": "Núria Morera Noguer, Ferran Antolin (DAI)",
     "creationDate": "2025",
     "order": [
       "everyStratigraphicalUnit",
@@ -3160,7 +3160,7 @@
         ]
       }
     },
-    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "createdBy": "Núria Morera Noguer, Ferran Antolin (DAI)",
     "creationDate": "2025",
     "order": [
       "freezing",
@@ -3212,7 +3212,7 @@
         ]
       }
     },
-    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "createdBy": "Núria Morera Noguer, Ferran Antolin (DAI)",
     "creationDate": "2025",
     "order": [
       "flotation",
@@ -3240,7 +3240,7 @@
       "organicStrain": {},
       "mineralStrain": {}
     },
-    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "createdBy": "Núria Morera Noguer, Ferran Antolin (DAI)",
     "creationDate": "2025",
     "order": [
       "mineral8",
@@ -3264,7 +3264,7 @@
       "airDrying": {},
       "putIntoWater": {}
     },
-    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "createdBy": "Núria Morera Noguer, Ferran Antolin (DAI)",
     "creationDate": "2025"
   },
   "SievedFractionProcessing-subsamplingTechnique-default": {
@@ -3282,7 +3282,7 @@
         ]
       }
     },
-    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "createdBy": "Núria Morera Noguer, Ferran Antolin (DAI)",
     "creationDate": "2025",
     "order": [
       "gridMethod",
@@ -3296,7 +3296,7 @@
       "millilitres": {},
       "grams": {}
     },
-    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "createdBy": "Núria Morera Noguer, Ferran Antolin (DAI)",
     "creationDate": "2025",
     "order": [
       "litres",
@@ -3320,7 +3320,7 @@
         ]
       }
     },
-    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "createdBy": "Núria Morera Noguer, Ferran Antolin (DAI)",
     "creationDate": "2025"
   },
   "SievedFractionProcessing-organicFractionSubsampledList-default": {
@@ -3334,7 +3334,7 @@
       "organic025": {},
       "organicStrain": {}
     },
-    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "createdBy": "Núria Morera Noguer, Ferran Antolin (DAI)",
     "creationDate": "2025",
     "order": [
       "organic8",
@@ -3356,7 +3356,7 @@
       "mineral05": {},
       "mineralStrain": {}
     },
-    "createdBy": "Nuria Morera, Ferran Antolin (DAI)",
+    "createdBy": "Núria Morera Noguer, Ferran Antolin (DAI)",
     "creationDate": "2025",
     "order": [
       "mineral8",

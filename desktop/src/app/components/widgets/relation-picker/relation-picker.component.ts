@@ -130,11 +130,11 @@ export class RelationPickerComponent implements OnChanges {
 
     public async updateSelectedTarget(): Promise<void> {
 
-        const relationTargetIdentifier: string = this.getRelationTargetIdentifier();
+        const relationTargetId: string = this.getRelationTargetId();
 
-        if (!isUndefinedOrEmpty(relationTargetIdentifier)) {
+        if (!isUndefinedOrEmpty(relationTargetId)) {
             try {
-                this.selectedTarget = await this.datastore.get(relationTargetIdentifier);
+                this.selectedTarget = await this.datastore.get(relationTargetId);
             } catch (err) {
                 return Promise.reject(err);
             }
@@ -161,7 +161,7 @@ export class RelationPickerComponent implements OnChanges {
     }
 
 
-    private getRelationTargetIdentifier(): string {
+    private getRelationTargetId(): string {
 
         return this.resource.relations[this.relationDefinition.name][this.relationIndex];
     }

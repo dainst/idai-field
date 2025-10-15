@@ -868,6 +868,48 @@ test.describe('configuration', () => {
     });
 
 
+    test('prevent setting self-referencing conditions', async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Feature');
+        await ConfigurationPage.clickSelectGroup('properties');
+
+        await ConfigurationPage.clickOpenContextMenuForField('featureForm');
+        await ConfigurationPage.clickContextMenuEditOption();
+
+        let availableConditionFields: string[] = await EditConfigurationPage.getConditionSelectValues('field');
+        expect(availableConditionFields).not.toContain('Form der stratigraphischen Einheit');
+        expect(availableConditionFields).toContain('Störung');
+        expect(availableConditionFields).toContain('Grenzen der stratigraphischen Einheit');
+
+        await EditConfigurationPage.clickSelectConditionField('hasDisturbance', 'field');
+        await EditConfigurationPage.clickSelectConditionValue('boolean', 0, 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await ConfigurationPage.clickOpenContextMenuForField('hasDisturbance');
+        await ConfigurationPage.clickContextMenuEditOption();
+
+        availableConditionFields = await EditConfigurationPage.getConditionSelectValues('field');
+        expect(availableConditionFields).not.toContain('Form der stratigraphischen Einheit');
+        expect(availableConditionFields).not.toContain('Störung');
+        expect(availableConditionFields).toContain('Grenzen der stratigraphischen Einheit');
+
+        await EditConfigurationPage.clickSelectConditionField('featureBorders', 'field');
+        await EditConfigurationPage.clickSelectConditionValue('valuelist', 0, 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await ConfigurationPage.clickOpenContextMenuForField('featureBorders');
+        await ConfigurationPage.clickContextMenuEditOption();
+
+        availableConditionFields = await EditConfigurationPage.getConditionSelectValues('field');
+        expect(availableConditionFields).not.toContain('Form der stratigraphischen Einheit');
+        expect(availableConditionFields).not.toContain('Störung');
+        expect(availableConditionFields).not.toContain('Grenzen der stratigraphischen Einheit');
+
+        await EditConfigurationPage.clickCancel();
+        await ConfigurationPage.save();
+    });
+
+
     test('create composite field', async () => {
 
         await CategoryPickerPage.clickSelectCategory('Place');

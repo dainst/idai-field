@@ -185,6 +185,20 @@ export class EditConfigurationPage {
     }
 
 
+    public static async getConditionSelectValues(modalContext: ModalContext) {
+
+        const elements = await (await getLocator(this.getModalClass(modalContext) + ' .condition-field-select option')).all();
+        const result = [];
+
+        for (let element of elements) {
+            const text = await element.textContent();
+            result.push(text.trim());
+        }
+
+        return result;
+    }
+
+
     // type in
 
     public static async typeInTranslation(inputIndex: number, translationIndex: number, text: string,

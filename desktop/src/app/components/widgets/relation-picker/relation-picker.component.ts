@@ -161,7 +161,7 @@ export class RelationPickerComponent implements OnChanges {
     }
 
 
-    private getRelationTargetId(): string {
+    public getRelationTargetId(): string {
 
         return this.resource.relations[this.relationDefinition.name][this.relationIndex];
     }

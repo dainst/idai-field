@@ -1,5 +1,6 @@
 <div class="type-relation">
-    <div *ngFor="let targetDocument of targetDocuments; let i = index" class="relation-picker">
+    <div *ngFor="let targetDocument of targetDocuments; let i = index"
+         class="relation-picker has-target">
         <document-teaser [document]="targetDocument"></document-teaser>
         <div class="delete-relation small-circular-button red-button" (click)="deleteRelation(i)">
             <span class="mdi mdi-delete"></span>

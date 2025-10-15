@@ -15,8 +15,6 @@
      (click)="createRelation()">
      <span class="mdi mdi-plus"></span>
 </div>
-<div *ngIf="!isPlusButtonAvailable() && relations[relationDefinition.name]?.length > 1"
-     class="relation-picker-group-space"></div>
 
 <div *ngIf="disabled && !relations[relationDefinition.name]?.length"
      class="disabled-info"

@@ -33,7 +33,15 @@
   position: relative;
   display: block;
   width: 100%;
-  margin-bottom: 12px;
+  margin-bottom: 2px;
+
+  &.has-target:not(.editing) {
+    margin-bottom: 12px;
+  }
+
+  &.has-target.editing {
+    margin-bottom: 16px;
+  }
 
   .red-button {
     top: 50%;

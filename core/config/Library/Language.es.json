@@ -212,12 +212,12 @@
           "label": "Comentario sobre el estado de conservación"
         },
         "conditionPercent": {
-          "label": "Estado de conservación - porcentaje",
+          "label": "Estado de conservación en porcentaje",
           "description": "Cantidad conservada en porcentaje"
         },
         "storagePlace": {
-          "label": "Deposito - ciudad",
-          "description": "Lugar de conservación del hallazgo"
+          "label": "Lugar de depósito",
+          "description": "Lugar de almacenamiento del hallazgo"
         },
         "hasRestoration": {
           "label": "Restauración",
@@ -459,13 +459,13 @@
           "label": "Desgrasante"
         },
         "FormComparisonCompendiadetail": {
-          "label": "Comparación con la forma en el manual, información detallada"
+          "label": "Comparación para la forma en el manual, información detallada"
         },
         "ApplicationComparisonCompendia": {
-          "label": "Comparación de aplicaciones con referencias de compendios"
+          "label": "Comparación para las aplicaciones en el manual"
         },
         "ApplicationComparisonCompendiadetail": {
-          "label": "Comparación detallada de aplicaciones con referencias de compendios"
+          "label": "Comparación para las aplicaciones en el manual, información detallada"
         },
         "temperParticles": {
           "label": "Granulometría de las inclusiones",
@@ -502,7 +502,7 @@
           "label": "Número de labios"
         },
         "amountSherdsPedestal": {
-          "label": "Número de fragmentos de la base"
+          "label": "Número de fragmentos de base"
         },
         "amountSherdsRimBase": {
           "label": "Número de fragmentos de borde y base"
@@ -585,7 +585,7 @@
           "description": "¿Cuál es el estilo del objeto encontrado?"
         },
         "FormComparisonCompendia": {
-          "label": "Comparaciones por forma en el manual"
+          "label": "Comparaciones para la forma en el manual"
         },
         "Drawing": {
           "label": "Dibujo disponible"
@@ -687,7 +687,7 @@
       "label": "Piedra",
       "fields": {
         "objectType": {
-          "label": "Tipo de lítica"
+          "label": "Tipo de objeto"
         },
         "color": {
           "label": "Color e intensidad",
@@ -710,7 +710,7 @@
         },
         "workmanship": {
           "description": "Descripción de la calidad en la que se encuentra una piedra trabajada que, por ejemplo, se ha utilizado como soporte de una inscripción",
-          "label": "Ejecución/Realización"
+          "label": "Ejecución"
         },
         "architectureElement": {
           "label": "Elemento arquitectónico"
@@ -980,7 +980,7 @@
           "description": "Descripción de la publicación, con indicación de las dataciones existentes"
         },
         "publicationDatingStratigraphy": {
-          "description": "p. ej.: véase la estructura funeraria 1, que intersecta la tumba 28 datada por C-14 (20 AEC–65 EC)",
+          "description": "p. ej.: véase estructura funeraria 1, que intersecta la tumba 28 datada por C-14 (20 AEC–65 EC)",
           "label": "Datación (estratigrafía)"
         },
         "publicationRemark": {
@@ -1594,8 +1594,8 @@
           "description": "Cantidad de materia orgánica retenida en el tamiz de 0,125 mm"
         },
         "organicFractionMeasurementStrain": {
-          "label": "",
-          "description": ""
+          "label": "Medición de la fracción colador (ancho desconocido) ORG",
+          "description": "Cantidad de materia orgánica retenida en el colador"
         },
         "mineralFractionKept": {
           "label": "Fracción mineral conservada",
@@ -1628,8 +1628,8 @@
           "description": "Cantidad de material mineral retenido en el tamiz de 0,5 mm"
         },
         "mineralFractionMeasurementStrain": {
-          "description": "",
-          "label": ""
+          "description": "Cantidad de material mineral retenido en el colador",
+          "label": "Medición de la fracción colador (ancho desconocido) MIN"
         },
         "mineralFractionSubsampled": {
           "label": "Fracción mineral submuestreada",
@@ -1681,7 +1681,7 @@
         },
         "organicMultiplicationFactorStrain": {
           "label": "Factor de multiplicación colador (ancho desconocido) ORG",
-          "description": ""
+          "description": "Factor de multiplicación que debe utilizarse al estimar el total de restos en la fracción colador ORG"
         },
         "organicDescription": {
           "label": "Descripción (fracción orgánica)"
@@ -1712,6 +1712,10 @@
         "organicMultiplicationFactor035": {
           "label": "Factor de multiplicación 0,35 ORG",
           "description": "Factor de multiplicación que debe utilizarse al estimar el total de restos en la fracción 0,35 ORG"
+        },
+        "mineralMultiplicationFactorStrain": {
+          "label": "Factor de multiplicación colador (ancho desconocido) MIN",
+          "description": "Factor de multiplicación que debe utilizarse al estimar el total de restos en la fracción colador MIN"
         }
       },
       "label": "Procesamiento de la fracción tamizada"

@@ -366,9 +366,10 @@ defmodule FieldPublication.Publications.Data do
             fields: [
               "resource.id",
               "resource.identifier",
-              "resource.relations.depicts",
+              "resource.relations.isDepictedIn",
               "resource.category",
-              "resource.shortDescription"
+              "resource.shortDescription",
+              "resource.geometry"
             ]
           },
           db

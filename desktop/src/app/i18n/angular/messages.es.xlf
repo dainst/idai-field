@@ -1441,7 +1441,7 @@
       </trans-unit>
       <trans-unit id="configuration.saveInfo.general" datatype="html">
         <source>Möchten Sie die von Ihnen vorgenommenen Änderungen an der Konfiguration wirklich speichern? Bitte beachten Sie, dass Ihre Änderungen das gesamte Projekt betreffen.</source>
-        <target state="translated">¿De verdad quiere guardar los cambios que ha hecho en la configuración? Por favor, tenga en cuenta que los cambios afectarán a todo el proyecto.</target>
+        <target state="translated">¿Realmente desea guardar los cambios que ha hecho en la configuración? Por favor, tenga en cuenta que los cambios afectarán a todo el proyecto.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/save/save-modal.component.ts</context>
           <context context-type="linenumber">20</context>
@@ -2265,7 +2265,7 @@
       </trans-unit>
       <trans-unit id="90026491151501a7c5b791694c673a36d810e3cb" datatype="html">
         <source>Möchten Sie die Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="wirklich l"/> wirklich löschen? </source>
-        <target state="translated">¿De verdad quiere eliminar el grupo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="wirklich l"/> ? </target>
+        <target state="translated">¿Realmente desea eliminar el grupo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="wirklich l"/> ? </target>
         <note priority="1" from="description">configuration.deleteGroup.body</note>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-group-modal.component.ts</context>
@@ -2290,7 +2290,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteValuelist.body" datatype="html">
         <source>Möchten Sie die Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/c"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="wirklich l"/> wirklich löschen? </source>
-        <target state="translated">¿De verdad quiere eliminar la lista de valores <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/c"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="wirklich l"/>? </target>
+        <target state="translated">¿Realmente desea eliminar la lista de valores <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/c"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="wirklich l"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-valuelist-modal.component.ts</context>
           <context context-type="linenumber">53</context>
@@ -2542,7 +2542,7 @@
       </trans-unit>
       <trans-unit id="imageView.georeferenceView.deleteModal.question" datatype="html">
         <source>Möchten Sie die Georeferenzdaten, die für dieses Bild hinterlegt wurden, wirklich löschen?</source>
-        <target state="translated">¿De verdad quiere eliminar los datos de georreferenciación almacenados para esta imagen?</target>
+        <target state="translated">¿Realmente desea eliminar los datos de georreferenciación almacenados para esta imagen?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/georeference-view.component.ts</context>
           <context context-type="linenumber">63</context>
@@ -2894,7 +2894,7 @@
       </trans-unit>
       <trans-unit id="36ee20e03ddf97efb9b22a20d20f32f0a116eec8" datatype="html">
         <source>Möchten Sie die Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="wirklich l"/> wirklich löschen?</source>
-        <target state="translated">¿Realmente quiere eliminar la categoría <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>?</target>
+        <target state="translated">¿Realmente desea eliminar la categoría <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{category.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>?</target>
         <note priority="1" from="description">configuration.deleteCategory.body</note>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-category-modal.component.ts</context>
@@ -6299,7 +6299,7 @@
       </trans-unit>
       <trans-unit id="configuration.swapCategoryForm.body" datatype="html">
         <source>Möchten Sie das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="ryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="ersetzen?"/> wirklich durch das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="ersetzen?"/> ersetzen? </source>
-        <target state="translated">¿De verdad quiere sustituir el formulario <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="ryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="ersetzen?"/> por el formulario <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="ersetzen?"/>? </target>
+        <target state="translated">¿Realmente desea sustituir el formulario <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="ryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="ersetzen?"/> por el formulario <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="ersetzen?"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.component.ts</context>
           <context context-type="linenumber">40</context>
@@ -6767,7 +6767,7 @@
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.deleteModal.question.multiple" datatype="html">
         <source>Möchten Sie die <x id="INTERPOLATION" equiv-text="{{numberOfSelectedImages}}"/> markierten Bilder wirklich löschen? </source>
-        <target state="translated">¿De verdad quiere eliminar las <x id="INTERPOLATION" equiv-text="{{numberOfSelectedImages}}"/> imágenes seleccionadas? </target>
+        <target state="translated">¿Realmente desea eliminar las <x id="INTERPOLATION" equiv-text="{{numberOfSelectedImages}}"/> imágenes seleccionadas? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/deletion/delete-modal.component.ts</context>
           <context context-type="linenumber">28</context>
@@ -6775,7 +6775,7 @@
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.deleteModal.question.single" datatype="html">
         <source>Möchten Sie das markierte Bild wirklich löschen?</source>
-        <target state="translated">¿Realmente quiere eliminar la imagen seleccionada?</target>
+        <target state="translated">¿Realmente desea eliminar la imagen seleccionada?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/deletion/delete-modal.html</context>
           <context context-type="linenumber">15</context>
@@ -7199,7 +7199,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteField.body" datatype="html">
         <source>Möchten Sie das Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="wirklich l"/> wirklich löschen?</source>
-        <target state="translated">¿De verdad quiere eliminar el campo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="wirklich l"/>?</target>
+        <target state="translated">¿Realmente desea eliminar el campo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="wirklich l"/>?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-field-modal.component.ts</context>
           <context context-type="linenumber">40</context>
@@ -7623,7 +7623,7 @@
       </trans-unit>
       <trans-unit id="resources.qrCodeEditor.delete.question" datatype="html">
         <source>Möchten Sie den QR-Code der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> wirklich löschen? </source>
-        <target state="translated">¿Realmente quiere eliminar el código QR del recurso <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>? </target>
+        <target state="translated">¿Realmente desea eliminar el código QR del recurso <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/edit-qr-code/delete-qr-code-modal.component.ts</context>
           <context context-type="linenumber">28</context>
@@ -8035,7 +8035,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteResource.confirmation" datatype="html">
         <source>Möchten Sie die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="wirklich lösc"/> wirklich löschen? </source>
-        <target state="translated">¿De verdad quiere eliminar el recurso <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>? </target>
+        <target state="translated">¿Realmente desea eliminar el recurso <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-resource-modal.component.ts</context>
           <context context-type="linenumber">84</context>
@@ -8299,7 +8299,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.confirmation" datatype="html">
         <source>Möchten Sie die im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="eingetragen"/> eingetragenen Daten wirklich löschen? </source>
-        <target state="translated">¿De verdad quiere eliminar los datos introducidos en el campo <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>? </target>
+        <target state="translated">¿Realmente desea eliminar los datos introducidos en el campo <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-field-data-modal.component.ts</context>
           <context context-type="linenumber">84</context>
@@ -8315,7 +8315,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteOutliers.confirmation" datatype="html">
         <source>Möchten Sie den im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="eingetragen"/> eingetragenen Wert <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt;"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="wirklich lösc"/> wirklich löschen? </source>
-        <target state="needs-translation">¿De verdad quiere eliminar el valor <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> introducido en el campo <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>? </target>
+        <target state="translated">¿Realmente desea eliminar el valor <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{outlierValue}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> introducido en el campo <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-outliers-modal.html</context>
           <context context-type="linenumber">27,9</context>
@@ -8731,7 +8731,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.cleanUpRelation.confirmation.question" datatype="html">
         <source>Möchten Sie die Relation <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getRelationLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="wirklich be"/> wirklich bereinigen? </source>
-        <target state="translated">¿De verdad quiere limpiar la relación <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getRelationLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="wirklich be"/>? </target>
+        <target state="translated">¿Realmente desea limpiar la relación <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getRelationLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="wirklich be"/>? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/clean-up-relation-modal.html</context>
           <context context-type="linenumber">7,9</context>

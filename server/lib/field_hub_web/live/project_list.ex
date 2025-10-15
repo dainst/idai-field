@@ -1,7 +1,8 @@
 defmodule FieldHubWeb.Live.ProjectList do
-  use FieldHubWeb, :live_view
 
-  alias FieldHub.{
+use FieldHubWeb, :live_view
+
+alias FieldHub.{
     Project,
     User
   }
@@ -20,4 +21,14 @@ defmodule FieldHubWeb.Live.ProjectList do
 
     {:ok, assign(socket, :page_title, "Overview")}
   end
+
+
+
+  defp database_stats(project) do
+    %{database: %{doc_count: doc_counts, file_size: file_size}} =
+    Project.evaluate_project(project)
+
+    %{doc_counts: doc_counts, file_size: file_size}
+  end
+
 end

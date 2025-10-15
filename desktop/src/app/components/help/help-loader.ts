@@ -17,15 +17,9 @@ export module HelpLoader {
         const htmlString: string = createMarkdownConverter().makeHtml(markdown);
 
         return {
-            html: htmlString,
+            html: adjustLinks(htmlString),
             chapters: getChapters(htmlString)
         };
-    }
-
-
-    function adjustImageLinks(markdown: string, folderPath: string): string {
-
-        return markdown.replace(/img src="images/g, 'img src="' + folderPath + '/images');
     }
 
 
@@ -61,5 +55,17 @@ export module HelpLoader {
         const reader = new HttpReader(filePath, http);
         const markdown: string = await reader.go();
         return adjustImageLinks(markdown, folderPath);
+    }
+
+
+    function adjustImageLinks(markdown: string, folderPath: string): string {
+
+        return markdown.replace(/img src="images/g, 'img src="' + folderPath + '/images');
+    }
+
+
+    function adjustLinks(markdown: string): string {
+
+        return markdown.replace(/a href="/g, 'a target="_blank" href="');
     }
 }

@@ -35,6 +35,10 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     public showConstraintsMenu: boolean = false;
     public existIndexForTextField: boolean = false;
 
+    public values: string[];
+    public booleanValues: string[] = ['KNOWN', 'UNKNOWN', 'true', 'false'];
+    public existsValues: string[] = ['KNOWN', 'UNKNOWN'];
+
     private stopListeningToKeyDownEvents: Function|undefined;
 
     protected defaultFields: Array<Field>;
@@ -66,6 +70,8 @@ export abstract class SearchConstraintsComponent implements OnChanges {
                 return $localize `:@@boolean.yes:Ja`;
             case 'false':
                 return $localize `:@@boolean.no:Nein`;
+            case undefined:
+                return '';
             default:
                 return this.labels.getValueLabel(this.selectedField.valuelist, value);
         }
@@ -74,31 +80,13 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     public getExistsLabel = (value: string) => this.getValueLabel(value, true);
 
+    public isConstraintsMenuButtonVisible = () => this.fields?.length || this.constraintListItems?.length;
+
 
     async ngOnChanges() {
 
         await this.removeInvalidConstraints();
         await this.reset();
-    }
-
-
-    public getValues() {
-        
-        return ['KNOWN', 'UNKNOWN'].concat(
-            this.labels.orderKeysByLabels(this.selectedField.valuelist)
-        );
-    }
-
-
-    public getBooleanValues() {
-
-        return ['KNOWN', 'UNKNOWN', 'true', 'false'];
-    }
-
-
-    public getExistsValues() {
-
-        return ['KNOWN', 'UNKNOWN'];
     }
 
 
@@ -137,6 +125,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     public selectField(fieldName: string) {
 
         this.selectedField = this.fields.find(field => field.name === fieldName);
+        this.values = this.getValues();
         this.searchTerm = '';
         this.existIndexForTextField = false;
     }
@@ -254,7 +243,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     public async getValuelist(field: Field): Promise<Valuelist> {
 
-        return ValuelistUtil.getValuelist(field, await this.datastore.get('project'), this.projectConfiguration);
+        return ValuelistUtil.getValuelist(field, await this.datastore.get('project'));
     }
 
 
@@ -269,6 +258,15 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         this.updateConstraintListItems();
         await this.updateFields();
         this.removeUserEntries();
+    }
+
+
+    private getValues(): string[] {
+        
+        return this.selectedField.valuelist
+            ? ['KNOWN', 'UNKNOWN'].concat(
+                this.labels.orderKeysByLabels(this.selectedField.valuelist)
+            ) : [];
     }
 
 

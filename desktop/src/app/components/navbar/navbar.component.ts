@@ -53,7 +53,8 @@ export class NavbarComponent implements DoCheck {
     public getTabRouteArray = (tab: Tab) => TabUtil.getTabRouteArray(tab);
 
     public isInDefaultResourcesView = () => this.isActiveRoute('/resources')
-        && !this.isActiveRoute('/resources/types') && !this.isActiveRoute('/resources/inventory');
+        && !this.isActiveRoute('/resources/types') && !this.isActiveRoute('/resources/inventory')
+        && !this.isActiveRoute('/resources/workflow');
 
 
     ngDoCheck() {
@@ -111,6 +112,8 @@ export class NavbarComponent implements DoCheck {
             return $localize `:@@navbar.tabs.types:Typenverwaltung`;
         } else if (this.activeRoute.startsWith('/resources/inventory')) {
             return $localize `:@@navbar.tabs.inventory:Inventarisierung`;
+        } else if (this.activeRoute.startsWith('/resources/workflow')) {
+            return $localize `:@@navbar.tabs.workflow:Workflow`;
         } else if (this.activeRoute.startsWith('/matrix')) {
             return 'Matrix';
         } else if (this.activeRoute.startsWith('/downloadProject')) {

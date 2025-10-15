@@ -16,8 +16,7 @@
             "supervisor",
             "processor",
             "campaign",
-            "beginningDate",
-            "endDate"
+            "date"
           ]
         },
         {
@@ -261,8 +260,7 @@
             "processor",
             "campaign",
             "diary",
-            "beginningDate",
-            "endDate",
+            "date",
             "isSameAs"
           ]
         },
@@ -887,8 +885,7 @@
             "processor",
             "campaign",
             "diary",
-            "beginningDate",
-            "endDate"
+            "date"
           ]
         },
         {
@@ -1239,8 +1236,7 @@
             "processor",
             "campaign",
             "diary",
-            "beginningDate",
-            "endDate",
+            "date",
             "isSameAs"
           ]
         },
@@ -1329,8 +1325,7 @@
             "supervisor",
             "processor",
             "campaign",
-            "beginningDate",
-            "endDate"
+            "date"
           ]
         },
         {
@@ -1386,8 +1381,7 @@
             "supervisor",
             "processor",
             "campaign",
-            "beginningDate",
-            "endDate",
+            "date",
             "diary"
           ]
         },
@@ -1433,8 +1427,7 @@
             "supervisor",
             "processor",
             "campaign",
-            "beginningDate",
-            "endDate"
+            "date"
           ]
         },
         {
@@ -1678,8 +1671,7 @@
             "processor",
             "campaign",
             "diary",
-            "beginningDate",
-            "endDate",
+            "date",
             "isSameAs"
           ]
         },
@@ -1862,8 +1854,7 @@
             "processor",
             "campaign",
             "diary",
-            "beginningDate",
-            "endDate",
+            "date",
             "isSameAs"
           ]
         },
@@ -1962,8 +1953,7 @@
             "processor",
             "campaign",
             "diary",
-            "beginningDate",
-            "endDate",
+            "date",
             "isSameAs"
           ]
         },
@@ -2047,8 +2037,7 @@
             "processor",
             "campaign",
             "diary",
-            "beginningDate",
-            "endDate",
+            "date",
             "isSameAs"
           ]
         },

@@ -187,8 +187,8 @@ export class ImportValidator extends Validator {
         Validations.assertCorrectnessOfCompositeValues(document, this.projectConfiguration);
         Validations.assertCorrectnessOfOptionalRangeValues(document, this.projectConfiguration);
         Validations.assertCorrectnessOfDates(document, this.projectConfiguration);
-        Validations.assertCorrectnessOfBeginningAndEndDates(document);
         Validations.assertMapLayerRelations(document);
+        Validations.assertWorkflowRelations(document);
 
         const errWithParams = Validations.validateStructureOfGeometries(document.resource.geometry as any);
         if (errWithParams) throw errWithParams;

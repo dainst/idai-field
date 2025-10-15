@@ -1,5 +1,8 @@
+import { Condition } from '../../../model/configuration/condition';
+import { DateConfiguration } from '../../../model/configuration/date-configuration';
 import { Field } from '../../../model/configuration/field';
-import { Named } from '../../../tools';
+import { SemanticReference } from '../../../model/configuration/semantic-reference';
+import { Named } from '../../../tools/named';
 
 
 export interface BaseFieldDefinition {
@@ -9,7 +12,10 @@ export interface BaseFieldDefinition {
     fulltextIndexed?: boolean;
     source?: Field.SourceType;
     references?: string[];
+    semanticReferences?: Array<SemanticReference>;
+    condition?: Condition;
     subfields?: Array<BaseSubfieldDefinition>;
+    dateConfiguration?: DateConfiguration;
 }
 
 
@@ -17,14 +23,8 @@ export interface BaseSubfieldDefinition extends Named {
 
     inputType?: string;
     references?: string[];
-    condition?: BaseSubfieldConditionDefinition;
-}
-
-
-export interface BaseSubfieldConditionDefinition {
-
-    subfieldName: string;
-    values: string[]|boolean;
+    semanticReferences?: Array<SemanticReference>;
+    condition?: Condition;
 }
 
 

@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, ElementRef, ViewChild, Input, OnChanges } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild, Input, OnChanges, OnDestroy,
+    ChangeDetectorRef } from '@angular/core';
 import { to } from 'tsfun';
 import { FieldDocument } from 'idai-field-core';
 import { ResourcesComponent } from '../../resources.component';
@@ -18,7 +19,8 @@ import { WarningsService } from '../../../../services/warnings/warnings-service'
     selector: 'sidebar-list',
     templateUrl: './sidebar-list.html',
     host: {
-        '(window:contextmenu)': 'handleClick($event, true)'
+        '(window:contextmenu)': 'handleClick($event, true)',
+        '(window:resize)': 'closeContextMenu()'
     },
     standalone: false
 })
@@ -27,7 +29,7 @@ import { WarningsService } from '../../../../services/warnings/warnings-service'
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export class SidebarListComponent extends BaseList implements AfterViewInit, OnChanges {
+export class SidebarListComponent extends BaseList implements AfterViewInit, OnChanges, OnDestroy {
 
     @Input() selectedDocument: FieldDocument;
 
@@ -40,14 +42,15 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
     private lastSelectedDocument: FieldDocument|undefined;
 
 
-    constructor(private navigationService: NavigationService,
+    constructor(public resourcesComponent: ResourcesComponent,
+                private navigationService: NavigationService,
                 private warningsService: WarningsService,
-                resourcesComponent: ResourcesComponent,
+                changeDetectorRef: ChangeDetectorRef,
                 loading: Loading,
                 viewFacade: ViewFacade,
                 menuService: Menus) {
 
-        super(resourcesComponent, viewFacade, loading, menuService);
+        super(viewFacade, loading, menuService, changeDetectorRef);
 
         this.navigationService.moveIntoNotifications().subscribe(async () => {
             await this.viewFacade.deselect();
@@ -75,6 +78,12 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
         this.resourcesComponent.additionalSelectedDocuments = [];
         this.scrollTo(this.selectedDocument, this.isScrolledToBottomElement());
         this.lastSelectedDocument = this.selectedDocument;
+    }
+
+
+    ngOnDestroy() {
+
+        this.removeListeners();
     }
 
 
@@ -163,6 +172,9 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
             case 'scan-storage-place':
                 await this.resourcesComponent.scanStoragePlace(this.contextMenu.documents as Array<FieldDocument>);
                 break;
+            case 'edit-workflow':
+                await this.resourcesComponent.editWorkflow(this.contextMenu.documents);
+                break;
             case 'edit-geometry':
                 await this.viewFacade.setSelectedDocument(this.selectedDocument.resource.id);
                 this.menuService.setContext(MenuContext.GEOMETRY_EDIT);
@@ -189,7 +201,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
 
         if (!ComponentHelpers.isInside(event.target, target => target.id === 'context-menu'
                 || rightClick && target.id && target.id.startsWith('resource-'))) {
-            this.contextMenu.close();
+            this.closeContextMenu();
         }
     }
 

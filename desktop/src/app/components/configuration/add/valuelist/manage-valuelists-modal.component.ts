@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { nop } from 'tsfun';
 import { ConfigurationDocument, SortUtil, Valuelist } from 'idai-field-core';
@@ -17,6 +17,7 @@ import { ValuelistSearchQuery } from './valuelist-search-query';
 import { ExtendValuelistModalComponent } from './extend-valuelist-modal.component';
 import { SettingsProvider } from '../../../../services/settings/settings-provider';
 import { Naming } from '../naming';
+import { ContextMenuProvider } from '../../../widgets/context-menu-provider';
 
 
 @Component({
@@ -31,7 +32,7 @@ import { Naming } from '../naming';
 /**
  * @author Thomas Kleinke
  */
-export class ManageValuelistsModalComponent {
+export class ManageValuelistsModalComponent extends ContextMenuProvider implements OnDestroy {
 
     public configurationDocument: ConfigurationDocument;
     public applyChanges: (configurationDocument: ConfigurationDocument,
@@ -50,7 +51,17 @@ export class ManageValuelistsModalComponent {
                 protected modals: Modals,
                 private menus: Menus,
                 private messages: Messages,
-                private settingsProvider: SettingsProvider) {}
+                private settingsProvider: SettingsProvider,
+                changeDetectorRef: ChangeDetectorRef) {
+
+        super(changeDetectorRef);
+    }
+
+
+    ngOnDestroy() {
+        
+        this.removeListeners();
+    }
 
 
     public initialize() {

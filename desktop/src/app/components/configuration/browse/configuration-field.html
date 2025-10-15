@@ -18,11 +18,25 @@
     </div>
 
     <div *ngIf="opened" class="card-body">
-        <p *ngIf="description" class="card-text">{{description}}</p>
         <ul class="list-group list-group-flush">
+            <li *ngIf="description" class="list-group-item">{{description}}</li>
+            <li *ngIf="field.references?.length || field.semanticReferences?.length" class="list-group-item">
+                <references-info [references]="field.references"
+                         [semanticReferences]="field.semanticReferences"
+                         [context]="'configuration'"></references-info>
+            </li>
+            <li *ngIf="field.mandatory" class="list-group-item">
+                <b i18n="@@configuration.mandatoryField">Pflichtfeld</b>
+            </li>
             <li class="list-group-item">
                 <b i18n="@@configuration.field.inputType">Eingabetyp</b><span class="oneliner-colon">:</span>
                 <span>{{getInputTypeLabel()}}</span>
+            </li>
+            <li *ngIf="field.condition" class="list-group-item">
+                <div><b i18n="@@configuration.field.condition">Bedingung</b><span class="oneliner-colon">:</span></div>
+                <div class="field-condition-label">
+                    <i>{{getFieldLabel(field.condition.fieldName)}}:</i> {{getConditionValuesLabel()}}
+                </div>
             </li>
             <li *ngIf="field.valuelist" class="list-group-item">
                 <valuelist-view [valuelist]="field.valuelist"></valuelist-view>
@@ -46,6 +60,24 @@
                 <b i18n="@@configuration.relation.inverse">Gegenrelation</b><span class="oneliner-colon">:</span>
                 <span class="inverse-relation-label">{{getRelationLabel(getInverseRelation())}}</span>
             </li>
+            <li *ngIf="getDateDataType()" class="list-group-item">
+                <b i18n="@@configuration.date.dataType">Angabe der Uhrzeit</b><span class="oneliner-colon">:</span>
+                <span *ngIf="getDateDataType() === 'optional'"
+                      i18n="@@configuration.date.time.optional">Optional</span>
+                <span *ngIf="getDateDataType() === 'dateTime'"
+                      i18n="@@configuration.date.time.mandatory">Verpflichtend</span>
+                <span *ngIf="getDateDataType() === 'date'"
+                      i18n="@@configuration.date.time.no">Nicht erlaubt</span>
+            </li>
+            <li *ngIf="getDateInputMode()" class="list-group-item">
+                <b i18n="@@configuration.date.inputMode">Eingabemodus</b><span class="oneliner-colon">:</span>
+                <span *ngIf="getDateInputMode() === 'optional'"
+                      i18n="@@configuration.date.inputMode.optional">Wählbar</span>
+                <span *ngIf="getDateInputMode() === 'single'"
+                      i18n="@@configuration.date.inputMode.single">Einzeldatum</span>
+                <span *ngIf="getDateInputMode() === 'range'"
+                      i18n="@@configuration.date.inputMode.range">Datumsbereich</span>
+            </li> 
         </ul>
     </div>
 </div>

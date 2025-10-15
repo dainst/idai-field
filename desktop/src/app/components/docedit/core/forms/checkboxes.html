@@ -1,12 +1,26 @@
-<div *ngFor="let item of getValues()" class="checkbox form-check form-check-inline">
-    <label class="form-check-label">
-        <input class="form-check-input" value="{{item}}" type="checkbox"
-               (click)="toggleCheckbox(item)"
-               [checked]="fieldContainer[field.name] && fieldContainer[field.name].indexOf(item) > -1">
-        {{getLabel(item)}}
+<div *ngFor="let valueId of getValues()"
+     class="checkbox form-check form-check-inline" 
+     #valueInfoPopover="ngbPopover"
+     [ngbPopover]="infoPopover"
+     triggers="manual"
+     [popoverTitle]="getLabel(valueId)"
+     popoverClass="configuration-info-popover"
+     container="body"
+     (contextmenu)="hasInfo(valueId) && openPopover(valueInfoPopover)"
+     [autoClose]="false"
+     [popoverContext]="{ value: valuelist.values[valueId] }">
+    <label class="form-check-label" [class.with-info]="hasInfo(valueId)">
+        <input class="form-check-input" value="{{valueId}}" type="checkbox"
+               (click)="toggleCheckbox(valueId)"
+               [checked]="fieldContainer[field.name] && fieldContainer[field.name].indexOf(valueId) > -1">
+        {{getLabel(valueId)}}
     </label>
 </div>
 
 <empty-valuelist-info *ngIf="hasEmptyValuelist()" [field]="field"></empty-valuelist-info>
 
 <outliers [fieldContainer]="fieldContainer" [field]="field" [valuelist]="valuelist"></outliers>
+
+<ng-template #infoPopover let-value="value">
+    <configuration-info [configurationItem]="value"></configuration-info>
+</ng-template>

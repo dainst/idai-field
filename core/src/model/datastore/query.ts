@@ -30,18 +30,34 @@ export interface Query {
     constraints?: Constraints;
     limit?: number;
     offset?: number;
-    sort?: {
-        mode?: 'default'|'exactMatchFirst'|'none',
-        matchCategory?: string
-    };
+    sort?: SortOptions
+}
+
+
+export interface SortOptions {
+
+    mode?: SortMode,
+    matchCategory?: string
+}
+
+
+export enum SortMode {
+
+    // Sorting by identifier alphanumerically
+    Alphanumeric = 'alphanumeric',  // default
+    AlphanumericDescending = 'alphanumericDescending',
+
+    // Sorting by date first and identifier second
+    // (only available for resources of Process subcategories)
+    Date = 'date',
+    DateDescending = 'dateDescending',
+
+    ExactMatchFirst = 'exactMatchFirst',
+    None = 'none'
 }
 
 
 export module Query {
-
-    export const SORT = 'sort';
-    export const SORT_MODE_EXACTMATCHFIRST = 'exactMatchFirst';
-    export const SORT_MATCHTYPE = 'matchType';
 
     export function isEmpty(query: Query) {
 

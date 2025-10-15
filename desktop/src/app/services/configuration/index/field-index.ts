@@ -21,7 +21,7 @@ export namespace FieldIndex {
                            commonFields: Array<Field>): FieldIndex {
 
         return categories.reduce((index, category) => {
-            index[category.name] = createIndexSection(Object.values(category.fields));
+            index[category.name] = createIndexSection(getCategoryFields(category, commonFields));
             return index;
         }, {
             commons: createIndexSection(commonFields),
@@ -30,9 +30,7 @@ export namespace FieldIndex {
     }
 
 
-    export function find(index: FieldIndex,
-                         searchTerm: string,
-                         categoryName: string): Array<Field> {
+    export function find(index: FieldIndex, searchTerm: string, categoryName: string): Array<Field> {
 
         return set(flatten(keysValues(index[categoryName])
             .filter(([indexTerm, _]) => indexTerm.toLocaleLowerCase().startsWith(searchTerm.toLowerCase()))
@@ -63,6 +61,14 @@ export namespace FieldIndex {
             if (!section[term]) section[term] = [];
             if (!section[term].includes(field)) section[term].push(field);
         }
+    }
+
+
+    function getCategoryFields(category: Category, commonFields: Array<Field>): Array<Field> {
+
+        return Object.values(category.fields).filter(categoryField => {
+            return !commonFields.find(commonField => commonField.name === categoryField.name);
+        });
     }
 
 

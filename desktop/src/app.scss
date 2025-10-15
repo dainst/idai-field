@@ -9,10 +9,10 @@ $mdi-font-path: 'fonts' !default;
 @import 'app/components/variables';
 @import 'app/components/messages/messages';
 @import 'bootstrap';
-@import 'app/components/initialization';
 @import 'app/components/spinner';
 @import 'app/components/buttons';
 @import 'app/components/slider';
+@import 'app/components/relations';
 @import 'app/components/navbar/navbar';
 @import 'app/components/default-page';
 @import 'app/components/resources/resources';
@@ -39,6 +39,7 @@ $mdi-font-path: 'fonts' !default;
 }
 
 .tooltip > div {
+  border-radius: 10px;
   animation-name: delayedFadeIn;
   animation-duration: 1s; /* Adjust this duration */
 }
@@ -306,7 +307,10 @@ select.form-control:not([size]):not([multiple]) {
   transition: none;
 }
 
-/* wider modals */
+.modal-md {
+  min-width: 1135px;
+}
+
 .modal-lg {
   min-width: 86%;
 }
@@ -376,6 +380,39 @@ label {
   margin-bottom: 8px;
 }
 
-#file-path-input {
+.form-floating label {
+  left: 10px;
+}
+
+.file-path-input {
   height: 38px;
+  z-index: 1 !important;
+}
+
+.configuration-info-popover {
+  max-width: 450px;
+  z-index: 2000;
+
+  .popover-header {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+}
+
+.with-info,
+.with-info .ng-value {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color:rgba(0, 0, 0, 0);
+  transition: text-decoration-color 0.15s ease-in-out;
+
+  &.option-element,
+  &.value-badge {
+    transition: none;
+  }
+}
+
+.with-info:hover,
+.with-info:hover .ng-value {
+  text-decoration-color: $text-hover-color;
 }

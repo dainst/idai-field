@@ -1,3 +1,4 @@
+import { Condition } from '../../../model/configuration/condition';
 import { Valuelist } from '../../../model/configuration/valuelist';
 import { I18N } from '../../../tools/i18n';
 import { BuiltInFieldDefinition } from './built-in-field-definition';
@@ -7,9 +8,11 @@ import { LibrarySubfieldDefinition } from './library-field-definition';
 export interface TransientFieldDefinition extends BuiltInFieldDefinition, I18N.LabeledValue, I18N.Described {
 
     valuelist?: Valuelist;
+    mandatory?: boolean;
     defaultLabel?: I18N.String;
     defaultDescription?: I18N.String;
     defaultConstraintIndexed?: boolean;
+    defaultCondition?: Condition;
     subfields?: Array<TransientSubfieldDefinition>;
 
     // For relation fields

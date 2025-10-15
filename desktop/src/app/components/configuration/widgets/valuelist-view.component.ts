@@ -1,6 +1,7 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
 import { clone, Map } from 'tsfun';
-import { Labels, Valuelist } from 'idai-field-core';
+import { Labels, Valuelist, ValuelistValue } from 'idai-field-core';
+import { ConfigurationInfoProvider } from '../../widgets/configuration-info-provider';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { Labels, Valuelist } from 'idai-field-core';
  *  @author Sebastian Cuy
  *  @author Thomas Kleinke
  */
-export class ValuelistViewComponent implements OnChanges {
+export class ValuelistViewComponent extends ConfigurationInfoProvider implements OnChanges, OnDestroy {
 
     @Input() valuelist: Valuelist;
     @Input() showDescription: boolean = true;
@@ -22,7 +23,10 @@ export class ValuelistViewComponent implements OnChanges {
     public valueDescriptions: Map<string> = {};
 
 
-    constructor(private labels: Labels) {}
+    constructor(private labels: Labels) {
+
+        super();
+    }
 
 
     ngOnChanges() {
@@ -33,11 +37,25 @@ export class ValuelistViewComponent implements OnChanges {
             this.valueDescriptions[valueId] = description;
         });
     }
+
+
+    ngOnDestroy() {
+        
+        this.removeListeners();
+    }
     
 
     public getValuelistDescription = (valuelist: Valuelist) => this.labels.getDescription(valuelist);
 
-    public getValues = (valuelist: Valuelist) => this.labels.orderKeysByLabels(valuelist);
+    public getValueIds = (valuelist: Valuelist) => this.labels.orderKeysByLabels(valuelist);
+
+
+    public hasInfo(valueId: string): boolean {
+
+        const value: ValuelistValue = this.valuelist.values[valueId];
+
+        return this.valueDescriptions[valueId] !== undefined || (value.references && value.references?.length > 0);
+    }
 
 
     private getLabelAndDescription(valueId: string): { label: string, description?: string } {

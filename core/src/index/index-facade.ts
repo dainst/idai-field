@@ -125,6 +125,12 @@ export class IndexFacade {
         return ConstraintIndex.getCount(this.constraintIndex, constraintIndexName, matchTerm);
     }
 
+    
+    public getCategoryCount(categoryName: string): number {
+
+        return FulltextIndex.getCategoryCount(this.fulltextIndex, categoryName);
+    }
+
 
     public getDescendantIds(constraintIndexName: string, matchTerm: string): string[] {
 
@@ -159,7 +165,10 @@ export class IndexFacade {
 
         IndexFacade.setChildOfRelation(document);
 
-        const item = this.getIndexItem(document);
+        const isWorkflowCategory: boolean = this.projectConfiguration.getWorkflowCategories().map(to(Named.NAME))
+            .includes(document.resource.category);
+
+        const item: IndexItem = this.getIndexItem(document, isWorkflowCategory);
         if (!item || document.resource.category === CONFIGURATION) return;
 
         item.identifier = document.resource.identifier;
@@ -189,12 +198,12 @@ export class IndexFacade {
     }
 
 
-    private getIndexItem(document: Document) {
+    private getIndexItem(document: Document, addDate: boolean) {
 
         const existingItem = this.indexItems[document.resource.id];
         const indexItem = existingItem !== undefined
             ? existingItem
-            : IndexItem.from(document, this.showWarnings);
+            : IndexItem.from(document, this.showWarnings, addDate);
         if (!existingItem && indexItem) this.indexItems[document.resource.id] = indexItem;
         return indexItem;
     }

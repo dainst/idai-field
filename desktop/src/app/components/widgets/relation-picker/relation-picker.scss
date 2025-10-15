@@ -1,0 +1,19 @@
+/**
+ * @author Jan G. Wieners
+ * @author Thomas Kleinke
+ */
+
+.relation-picker {
+
+  ng-select {
+    position: relative;
+    top: 2px;
+    width: calc(100% - 50px);
+  }
+}
+
+relation-picker:last-child {
+  .relation-picker.disabled {
+    margin-bottom: 0;
+  }
+}

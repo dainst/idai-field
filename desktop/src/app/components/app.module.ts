@@ -1,6 +1,7 @@
 import { DecimalPipe, HashLocationStrategy, IMAGE_CONFIG, LocationStrategy, registerLocaleData } from '@angular/common';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import localeDe from '@angular/common/locales/de';
+import localeEs from '@angular/common/locales/es';
 import localeIt from '@angular/common/locales/it';
 import localePt from '@angular/common/locales/pt';
 import localeTr from '@angular/common/locales/tr';
@@ -8,7 +9,7 @@ import localeUk from '@angular/common/locales/uk';
 import { LOCALE_ID, NgModule, TRANSLATIONS, TRANSLATIONS_FORMAT, inject, provideAppInitializer } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppConfigurator, ConfigLoader, ConfigReader, ConstraintIndex, Datastore, DocumentCache, FulltextIndex,
     IndexFacade, PouchdbDatastore, ProjectConfiguration, Query, RelationsManager, SyncService, Labels,
@@ -17,7 +18,7 @@ import { Translations } from '../angular/translations';
 import { AppController } from '../services/app-controller';
 import { StateSerializer } from '../services/state-serializer';
 import { DatastoreModule } from '../services/datastore/datastore.module';
-import { ExpressServer } from '../services/express-server';
+import { ExpressServer } from '../services/express-server/express-server';
 import { ImageUrlMaker } from '../services/imagestore/image-url-maker';
 import { ThumbnailGenerator } from '../services/imagestore/thumbnail-generator';
 import { ImportValidator } from '../components/import/import/process/import-validator';
@@ -61,12 +62,15 @@ import { NavbarModule } from './navbar/navbar.module';
 import { WarningsService } from '../services/warnings/warnings-service';
 import { ProjectLabelProvider } from '../services/project-label-provider';
 import { AppState } from '../services/app-state';
+import { AutoBackupService } from '../services/backup/auto-backup/auto-backup-service';
+import { ImageToolLauncher } from '../services/imagestore/image-tool-launcher';
 
 
 const remote = window.require('@electron/remote');
 
 
 registerLocaleData(localeDe, 'de');
+registerLocaleData(localeEs, 'es');
 registerLocaleData(localeIt, 'it');
 registerLocaleData(localePt, 'pt');
 registerLocaleData(localeTr, 'tr');
@@ -248,8 +252,8 @@ registerLocaleData(localeUk, 'uk');
                     async (path: string[]) => {
                         await router.navigate(path);
                     });
-                router.events.subscribe(async () => {
-                    await tabManager.routeChanged(router.url);
+                router.events.subscribe(async event => {
+                    if (event instanceof NavigationEnd) await tabManager.routeChanged(event.url);
                 });
                 return tabManager;
             },
@@ -263,7 +267,9 @@ registerLocaleData(localeUk, 'uk');
         MenuModalLauncher,
         ViewModalLauncher,
         ProjectLabelProvider,
+        AutoBackupService,
         AppState,
+        ImageToolLauncher,
         { provide: IMAGE_CONFIG, useValue: { disableImageSizeWarning: true, disableImageLazyLoadWarning: true } },
         provideHttpClient(withInterceptorsFromDi())
     ],

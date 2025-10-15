@@ -1,4 +1,5 @@
 defmodule FieldPublicationWeb.Endpoint do
+  alias FieldPublication.FileService
   use Phoenix.Endpoint, otp_app: :field_publication
 
   # The session will be stored in the cookie and signed,
@@ -12,6 +13,12 @@ defmodule FieldPublicationWeb.Endpoint do
   ]
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
+
+  # Serve at "/custom" the static files from FileService directory.
+  plug Plug.Static,
+    at: "/custom",
+    from: FileService.custom_assets_path(),
+    only: ["images", "css"]
 
   # Serve at "/" the static files from "priv/static" directory.
   #
@@ -46,5 +53,6 @@ defmodule FieldPublicationWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
+  plug CORSPlug
   plug FieldPublicationWeb.Router
 end

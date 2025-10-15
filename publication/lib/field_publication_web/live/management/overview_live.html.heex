@@ -1,10 +1,12 @@
+<!-- TODO: General heading? -->
+
 <%= if FieldPublication.Users.is_admin?(@current_user) do %>
-  <h1>Administration</h1>
+  <.group_heading>Administration</.group_heading>
   <div>
     <p class="font-semibold">Actions</p>
     <ul class="mb-8">
       <li>
-        <.link patch={~p"/management/projects/new"}>
+        <.link navigate={~p"/management/projects/new"}>
           Create new project
         </.link>
       </li>
@@ -18,16 +20,21 @@
           Manage users
         </.link>
       </li>
+      <li>
+        <.link navigate={~p"/management/settings"}>
+          Settings
+        </.link>
+      </li>
     </ul>
   </div>
 <% end %>
-<h1>Projects</h1>
+<.group_heading>Projects</.group_heading>
 <%= if @projects != [] do %>
   <div class="grid lg:grid-cols-2 2xl:grid-cols-3">
     <%= for %{project: project, publications: publications, search_aliased_publication: search_aliased_publication} <- @projects do %>
       <div class="bg-slate-100 m-4" id={"project-panel-#{project.name}"}>
         <div class="bg-slate-200 p-3 m-4 text-center rounded-t text-lg">
-          Project: '<%= project.name %>'
+          Project: '{project.name}'
         </div>
 
         <div class="m-4 grid grid-cols-2">
@@ -35,14 +42,14 @@
             <p class="font-semibold">Actions</p>
             <ul>
               <li>
-                <.link patch={~p"/management/projects/#{project.name}/publication/new"}>
+                <.link navigate={~p"/management/projects/#{project.name}/publication/new"}>
                   Draft new publication
                 </.link>
               </li>
               <%= if FieldPublication.Users.is_admin?(@current_user) do %>
                 <li>
                   <.link
-                    patch={~p"/management/projects/#{project.name}/edit"}
+                    navigate={~p"/management/projects/#{project.name}/edit"}
                     phx-click={JS.push_focus()}
                   >
                     Edit
@@ -68,9 +75,9 @@
               <ul>
                 <%= for editor <- project.editors do %>
                   <li>
-                    <%= @users
+                    {@users
                     |> Enum.find(%{label: editor}, fn %{name: name} -> name == editor end)
-                    |> Map.get(:label) %>
+                    |> Map.get(:label)}
                   </li>
                 <% end %>
               </ul>
@@ -87,13 +94,13 @@
           </div>
         <% end %>
         <div class="m-4">
-          <p class="font-semibold mb-2 ">Publications (<%= Enum.count(publications) %>)</p>
+          <p class="font-semibold mb-2 ">Publications ({Enum.count(publications)})</p>
           <%= if publications == [] do %>
             -
           <% else %>
             <div class="ml-3 mr-3">
               <%= for publication <- publications do %>
-                <table class="table-auto w-full mb-8 hover:outline-offset-2 hover:outline-slate-300 hover:outline hover:outline-4">
+                <table class="table-auto w-full mb-8 hover:outline-offset-2 hover:outline-slate-300 hover:outline">
                   <% state =
                     cond do
                       publication.publication_date == nil -> :no_release_date
@@ -104,7 +111,7 @@
                   <tbody>
                     <tr>
                       <td>Publication type</td>
-                      <td><strong><%= publication.version %></strong></td>
+                      <td><strong>{publication.version}</strong></td>
                     </tr>
                     <tr>
                       <td>
@@ -114,7 +121,7 @@
                         <.link navigate={
                           ~p"/management/projects/#{project}/publication/#{publication.draft_date}"
                         }>
-                          <%= publication.draft_date %>
+                          {publication.draft_date}
                         </.link>
                       </td>
                     </tr>
@@ -132,7 +139,7 @@
                           Publication date
                         </td>
                         <td><.icon name="hero-eye" class="bg-yellow-500 mb-1" />
-                          <%= publication.publication_date %></td>
+                          {publication.publication_date}</td>
                       <% end %>
                     </tr>
                     <tr>
@@ -145,7 +152,7 @@
                           <.link navigate={
                             ~p"/projects/#{project}/#{publication.draft_date}/#{List.first(publication.languages)}"
                           }>
-                            <%= publication.publication_date %>
+                            {publication.publication_date}
                           </.link>
                         </td>
                       <% end %>
@@ -153,11 +160,11 @@
                     <tr>
                       <td>Drafted by</td>
                       <td>
-                        '<%= @users
+                        '{@users
                         |> Enum.find(%{label: publication.drafted_by}, fn %{name: name} ->
                           name == publication.drafted_by
                         end)
-                        |> Map.get(:label) %>'
+                        |> Map.get(:label)}'
                       </td>
                     </tr>
                     <tr>

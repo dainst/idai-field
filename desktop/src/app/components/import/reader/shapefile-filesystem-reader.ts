@@ -1,5 +1,5 @@
 import { Reader } from './reader';
-import { ReaderErrors} from './reader-errors';
+import { ReaderErrors } from './reader-errors';
 
 const remote = window.require('@electron/remote');
 const ipcRenderer = window.require('electron')?.ipcRenderer;

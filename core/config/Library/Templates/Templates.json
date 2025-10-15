@@ -246,6 +246,10 @@
         "StorageBag:default": {
           "hidden": [],
           "fields": {}
+        },
+        "Process:default": {
+          "hidden": [],
+          "fields": {}
         }
       },
       "order": [
@@ -298,6 +302,7 @@
         "FindCollection",
         "Inscription",
         "Sample",
+        "Process",
         "Image",
         "Drawing",
         "Photo",
@@ -352,6 +357,10 @@
         "Type": {
           "hidden": [],
           "fields": {}
+        },
+        "Process": {
+          "hidden": [],
+          "fields": {}
         }
       },
       "order": [
@@ -361,6 +370,7 @@
         "Place",
         "Feature",
         "Find",
+        "Process",
         "Image",
         "TypeCatalog",
         "Type"
@@ -434,6 +444,10 @@
         "Type": {
           "hidden": [],
           "fields": {}
+        },
+        "Process": {
+          "hidden": [],
+          "fields": {}
         }
       },
       "order": [
@@ -450,6 +464,7 @@
         "Roof",
         "Opening",
         "Stairs",
+        "Process",
         "Image",
         "TypeCatalog",
         "Type"
@@ -503,6 +518,10 @@
         "Type": {
           "hidden": [],
           "fields": {}
+        },
+        "Process": {
+          "hidden": [],
+          "fields": {}
         }
       },
       "order": [
@@ -514,6 +533,7 @@
         "SurveyUnit",
         "Excavation",
         "Find",
+        "Process",
         "Image",
         "TypeCatalog",
         "Type"
@@ -605,6 +625,10 @@
           "fields": {},
           "identifierPrefix": "PRZ",
           "color": "#00ff00"
+        },
+        "Process:default": {
+          "hidden": [],
+          "fields": {}
         }
       },
       "order": [
@@ -617,6 +641,7 @@
         "FeatureSegment",
         "Find",
         "Sample",
+        "Process",
         "Image",
         "Photo",
         "PlanDrawing",

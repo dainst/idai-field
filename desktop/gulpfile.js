@@ -1,9 +1,7 @@
 var gulp = require('gulp');
-var rename = require('gulp-rename');
 
 
 gulp.task('copy-fonts', () => {
-
     return gulp.src([
         'node_modules/@mdi/font/fonts/**/*'
     ])

@@ -1,9 +1,12 @@
-import { isArray, isObject, isString } from 'tsfun';
+import { isArray, isNumber, isObject, isString } from 'tsfun';
 import { Document } from '../model/document/document';
 import { OptionalRange } from '../model/input-types/optional-range';
 import { CategoryForm } from '../model/configuration/category-form';
 import { Field } from '../model/configuration/field';
 import { ProjectConfiguration } from '../services';
+import { DateSpecification } from '../model/input-types/date-specification';
+import { Measurement } from '../model/input-types/measurement';
+import { FieldGeometry } from '../model/document/field-geometry';
 
 
 export const singleToMultipleValuesFieldNames: string[] = [
@@ -28,8 +31,11 @@ export module Migrator {
         migrateGeneralFieldsAndRelations(document);
         migratePeriodFields(document);
         migrateSingleToMultipleValues(document);
+        migrateWeightFields(document);
         migrateDatings(document, projectConfiguration);
+        migrateDates(document, projectConfiguration);
         migrateProjectValuelistFields(document);
+        fixGeometry(document);
     }
 
 
@@ -72,6 +78,20 @@ export module Migrator {
     }
 
 
+    function migrateWeightFields(document: Document) {
+
+        if (document.resource.weight !== undefined && isNumber(document.resource.weight)) {
+            const weight: Measurement = {
+                inputValue: document.resource.weight,
+                inputUnit: 'g',
+                isImprecise: false
+            };
+            Measurement.addNormalizedValues(weight);
+            document.resource.weight = [weight];
+        }
+    }
+
+
     function migrateDatings(document: Document, projectConfiguration: ProjectConfiguration) {
 
         const category: CategoryForm = projectConfiguration.getCategory(document);
@@ -102,6 +122,52 @@ export module Migrator {
                     return { value, selectable: true };
                 });
             }
+        }
+    }
+
+
+    function migrateDates(document: Document, projectConfiguration: ProjectConfiguration) {
+
+        migrateBeginningAndEndDates(document);
+        migrateDatesByInputType(document, projectConfiguration);
+    }
+
+
+    function migrateBeginningAndEndDates(document: Document) {
+
+        const beginningDate: string = document.resource.beginningDate;
+        const endDate: string = document.resource.endDate;
+
+        if ((!beginningDate || !isString(beginningDate)) && (!endDate || !isString(endDate))) return;
+
+        const date: DateSpecification = { isRange: true };
+        if (beginningDate && isString(beginningDate)) date['value'] = beginningDate;
+        if (endDate && isString(endDate)) date['endValue'] = endDate;
+        document.resource.date = date;
+
+        delete document.resource.beginningDate;
+        delete document.resource.endDate;
+    }
+
+
+    function migrateDatesByInputType(document: Document, projectConfiguration: ProjectConfiguration) {
+
+        const category: CategoryForm = projectConfiguration.getCategory(document);
+        if (!category) return;
+
+        CategoryForm.getFields(category)
+            .filter(field => field.inputType === Field.InputType.DATE)
+            .forEach(field => {
+                const date: any = document.resource[field.name];
+                if (date && isString(date)) document.resource[field.name] = { value: date, isRange: false };
+            });
+    }
+
+
+    function fixGeometry(document: Document) {
+
+        if (document.resource.geometry) {
+            FieldGeometry.closeRings(document.resource.geometry);
         }
     }
 }

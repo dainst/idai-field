@@ -1,69 +1,52 @@
-export function parseDate(dateString: string, latestPossibleDate: boolean = false): Date|undefined {
+import { parse } from 'date-fns';
+import { fromZonedTime } from 'date-fns-tz';
 
-    try {
-        const dateComponents: string[] = dateString.split('.');
-        if (dateComponents.filter(component => !isNumber(component)).length > 0) return undefined;
-        
-        const date: Date|undefined = parse(dateComponents, latestPossibleDate);
 
-        return (date && isValid(date, dateComponents)) ? date : undefined;
-    } catch (_) {
-        return undefined;
+const ALLOWED_DATE_FORMATS: string[] = [
+    'dd.MM.yyyy HH:mm',
+    'dd.MM.yyyy',
+    'MM.yyyy',
+    'yyyy'
+];
+
+
+export function parseDate(dateString: string, timezone: string = 'UTC',
+                          latestPossibleDate: boolean = false): Date|undefined {
+
+    if (typeof dateString !== 'string') return undefined;
+
+    for (let format of ALLOWED_DATE_FORMATS) {
+        let date = parse(dateString, format, new Date());
+        if (isNaN(date.getTime())) continue;
+
+        date = fromZonedTime(date, timezone);
+        if (latestPossibleDate) setToLatestPossibleDate(date, format);
+
+        return date;
     }
+
+    return undefined;
 }
 
 
-function parse(dateComponents: string[], latestPossibleDate: boolean = false): Date|undefined {
+function setToLatestPossibleDate(date: Date, format: string) {
 
-    if (dateComponents.length === 1) {
-        return new Date(
-            parseInt(dateComponents[0]),
-            latestPossibleDate ? 11 : 0,
-            latestPossibleDate ? 31 : 1
-        );
-    } else if (dateComponents.length === 2) {
-        return latestPossibleDate
-            ? new Date(
-                parseInt(dateComponents[1]),
-                parseInt(dateComponents[0]),
-                0
-            ) : new Date(
-                parseInt(dateComponents[1]),
-                parseInt(dateComponents[0]) - 1,
-                1
-            );
-    } else if (dateComponents.length === 3) {
-        return new Date(
-            parseInt(dateComponents[2]),
-            parseInt(dateComponents[1]) - 1,
-            parseInt(dateComponents[0])
-        );
+    const segmentsCount: number = format.split('.').length;
+
+    if (segmentsCount === 1) {
+        // Set month to December
+        date.setMonth(11);
     }
-}
 
-
-function isValid(date: Date, dateComponents: string[]): boolean {
-
-    const normalizedDateComponents: string[] = dateComponents.map(dateComponent => {
-        if (dateComponent.startsWith('0')) {
-            return dateComponent.slice(1);
-        } else {
-            return dateComponent;
-        }
-    });
-
-    if (normalizedDateComponents.length === 2) {
-        return (date.getMonth() + 1).toString() === normalizedDateComponents[0];
-    } else if (normalizedDateComponents.length === 3) {
-        return (date.getMonth() + 1).toString() === normalizedDateComponents[1]
-            && date.getDate().toString() === normalizedDateComponents[0];
-    } else {
-        return true;
+    if (segmentsCount < 3) {
+        // Set date to last day of month
+        date.setMonth(date.getMonth() + 1);
+        date.setDate(0);
     }
-}
 
-
-function isNumber(value: string): boolean {
-
-    return value.match(/^[0-9]*$/) !== null;
+    if (!format.includes(':')) {
+        // Set time to latest possible time of the day
+        date.setHours(23);
+        date.setMinutes(59);
+    }
 }

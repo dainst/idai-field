@@ -1,0 +1,45 @@
+<div *ngIf="relationTargets?.length === 1" class="single-workflow-relation-target">
+    <document-teaser [document]="relationTargets[0]"
+                     (click)="selectRelationTarget(relationTargets[0])"></document-teaser>
+</div>
+<div *ngIf="relationTargets?.length > 1"
+     #dropdownMenu ngbDropdown
+     class="dropdown workflow-relations-dropdown"
+     placement="bottom-left top-left">
+    <div class="workflow-relations-toggle" ngbDropdownToggle>
+        <div *ngIf="categoryInfos.length < 4">
+            <div *ngFor="let info of categoryInfos" class="category-info">
+                <category-icon [category]="info.categoryName" [size]="35"></category-icon>
+                <span class="category-count">{{info.count}}</span>
+            </div>
+        </div>
+
+        <div *ngIf="categoryInfos.length >= 4">
+            <div *ngFor="let info of categoryInfos | slice:0:2" class="category-info">
+                <category-icon [category]="info.categoryName" [size]="35"></category-icon>
+                <span class="category-count">{{info.count}}</span>
+            </div>
+            <div class="category-info">
+                <span class="category-count additional-categories">+ {{getAdditionalCategoriesCount()}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="dropdown-menu" ngbDropdownMenu>
+        <div *ngIf="relationTargets.length < 5" class="relation-targets-container">
+            <button *ngFor="let relationTarget of relationTargets"
+                    class="dropdown-item"
+                    (click)="selectRelationTarget(relationTarget)">
+                <document-teaser [document]="relationTarget"></document-teaser>
+            </button>
+        </div>
+        <cdk-virtual-scroll-viewport *ngIf="relationTargets.length >= 5"
+                                     class="relation-targets-scroll-viewport"
+                                     itemSize="47">
+            <button *cdkVirtualFor="let relationTarget of relationTargets; trackBy: trackRelationTarget"
+                    class="dropdown-item"
+                    (click)="selectRelationTarget(relationTarget)">
+                <document-teaser [document]="relationTarget"></document-teaser>
+            </button>
+        </cdk-virtual-scroll-viewport>
+    </div>
+</div>

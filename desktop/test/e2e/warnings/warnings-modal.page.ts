@@ -1,4 +1,4 @@
-import { click, getLocator, getText, selectOption, selectSearchableSelectOption } from '../app';
+import { click, getLocator, getText, selectOption } from '../app';
 
 
 /**

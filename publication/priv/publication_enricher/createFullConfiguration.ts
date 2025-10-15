@@ -87,6 +87,6 @@ function getForest(projectConfiguration: ProjectConfiguration): Forest<CategoryF
     }, projectConfiguration.getCategories());
 }
 
-const result = await start();
-
-console.log(result);
+start().then(result => {
+    console.log(result);
+});

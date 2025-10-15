@@ -5,6 +5,7 @@ import { ConfigLoader, ConfigurationErrors } from '../../../src/configuration/bo
 import { CategoryForm } from '../../../src/model/configuration/category-form';
 import { Groups } from '../../../src/model/configuration/group';
 import { Named, Tree } from '../../../src/tools';
+import { Valuelist } from '../../../src/model/configuration/valuelist';
 
 
 /**
@@ -18,12 +19,13 @@ describe('ConfigLoader', () => {
 
     function applyConfig(libraryCategories: Map<LibraryCategoryDefinition> = {},
                          libraryForms: Map<LibraryFormDefinition> = {},
+                         libraryValuelists: Map<Valuelist> = {},
                          languageConfiguration = {}) {
 
         configReader.read.and.returnValues(
             libraryCategories,
             libraryForms,
-            {},
+            libraryValuelists,
             languageConfiguration,
             {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
         );
@@ -144,6 +146,7 @@ describe('ConfigLoader', () => {
 
         applyConfig(
             libraryCategories,
+            {},
             {},
             {
                 commons: {
@@ -286,6 +289,7 @@ describe('ConfigLoader', () => {
         };
 
         applyConfig(
+            {},
             {},
             {},
             {
@@ -547,6 +551,60 @@ describe('ConfigLoader', () => {
             fail();
         } catch(err) {
             expect(err).toEqual([ConfigurationErrors.TRYING_TO_SUBTYPE_A_NON_EXTENDABLE_CATEGORY, 'Place']);
+        }
+
+        done();
+    });
+
+
+    it('preprocess - apply mandatory setting', async done => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {
+                    field1: { inputType: 'input', required: true },
+                    field2: { inputType: 'input' }
+                },
+                minimalForm: {
+                    groups: [{ name: Groups.STEM, fields: ['field1', 'field2'] }]
+                },
+                userDefinedSubcategoriesAllowed: true,
+                supercategory: true
+            }
+        }
+        
+        const customForms: Map<CustomFormDefinition> = {
+            A: {
+                fields: {
+                    field1: { inputType: 'text', mandatory: false },    // Not allowed, expected to be ignored
+                    field2: { inputType: 'text', mandatory: true },
+                    customField: { inputType: 'text', mandatory: true }
+                },
+                groups: [{ name: Groups.STEM, fields: ['field1', 'field2', 'customField'] }]
+            }
+        };
+
+        applyConfig({});
+
+        let pconf;
+        try {
+            pconf = await configLoader.go(
+                {},
+                builtInCategories,
+                [],
+                {},
+                getConfigurationDocument(customForms)
+            );
+
+            expect(pconf.getCategory('A').groups[0].fields.find(field => field.name == 'field1')
+                .mandatory).toBe(true);
+            expect(pconf.getCategory('A').groups[0].fields.find(field => field.name == 'field2')
+                .mandatory).toBe(true);
+            expect(pconf.getCategory('A').groups[0].fields.find(field => field.name == 'customField')
+                .mandatory).toBe(true);
+
+        } catch(err) {
+            fail(err);
         }
 
         done();
@@ -1093,6 +1151,148 @@ describe('ConfigLoader', () => {
         expect(pconf.getRelations()[0].range.length).toBe(1);
         expect(pconf.getRelations()[0].range[0]).toBe('B');
         expect(pconf.getRelations()[1].name).toEqual('isSimilarTo');
+
+        done();
+    });
+
+
+    it('read valuelists', async () => {
+
+        const valuelists: Map<Valuelist> = {
+            valuelistDefault: {
+                values: {
+                    valueDefault: {}
+                }
+            },
+            valuelistProject: {
+                values: {
+                    valueProject: {}
+                }
+            }
+        };
+
+        const valuelistsLanguages = {
+            default: {
+                de: {
+                    valuelistDefault: {
+                        description: 'Valuelist Default Deutsch',
+                        values: {
+                            valueDefault: {
+                                label: 'Value Default Deutsch',
+                                description: 'Description Default Deutsch'
+                            }
+                        }
+                    }
+                },
+                en: {
+                    valuelistDefault: {
+                        description: 'Valuelist Default English',
+                        values: {
+                            valueDefault: {
+                                label: 'Value Default English',
+                                description: 'Description Default English'
+                            }
+                        }
+                    }
+                }
+            },
+            projects: {
+                de: {
+                    valuelistProject: {
+                        description: 'Valuelist Project Deutsch',
+                        values: {
+                            valueProject: {
+                                label: 'Value Project Deutsch',
+                                description: 'Description Project Deutsch'
+                            }
+                        }
+                    }
+                },
+                en: {
+                    valuelistProject: {
+                        description: 'Valuelist Project English',
+                        values: {
+                            valueProject: {
+                                label: 'Value Project English',
+                                description: 'Description Project English'
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        configReader.read.and.returnValue(valuelists);
+        configReader.getValuelistsLanguages.and.returnValue(valuelistsLanguages);
+
+        const result: Map<Valuelist> = configLoader.readValuelists();
+        expect(result.valuelistDefault.description.de).toEqual('Valuelist Default Deutsch');
+        expect(result.valuelistDefault.description.en).toEqual('Valuelist Default English');
+        expect(result.valuelistDefault.values.valueDefault.label.de).toEqual('Value Default Deutsch');
+        expect(result.valuelistDefault.values.valueDefault.label.en).toEqual('Value Default English');
+        expect(result.valuelistProject.description.de).toEqual('Valuelist Project Deutsch');
+        expect(result.valuelistProject.description.en).toEqual('Valuelist Project English');
+        expect(result.valuelistProject.values.valueProject.label.de).toEqual('Value Project Deutsch');
+        expect(result.valuelistProject.values.valueProject.label.en).toEqual('Value Project English');
+    });
+
+
+    it('save original groups', async done => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {
+                    fieldA1: { inputType: 'text '},
+                    fieldA2: { inputType: 'text '}
+                },
+                minimalForm: {
+                    groups: []
+                },
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                groups: [
+                    { name: Groups.STEM, fields: ['fieldA1', 'fieldA2'] }
+                ],
+                valuelists: {},
+                description: {},
+                createdBy: '',
+                creationDate: ''
+            }
+        };
+        
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {
+                    fieldA3: { inputType: 'text' }
+                },
+                groups: [
+                    { name: Groups.STEM, fields: ['fieldA2', 'fieldA1', 'fieldA3'] }
+                ],
+            }
+        };
+
+        applyConfig({}, libraryForms);
+
+        let pconf;
+        try {
+            pconf = await configLoader.go({},
+                builtInCategories,
+                [], {},
+                getConfigurationDocument(customForms)
+            );
+
+            expect(pconf.getCategory('A').originalGroups).toEqual([
+                { name: Groups.STEM, fields: ['fieldA1', 'fieldA2'] }
+            ])
+        } catch(err) {
+            fail(err);
+        }
 
         done();
     });

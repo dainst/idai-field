@@ -1,0 +1,20 @@
+configuration-info {
+  .configuration-info-container {
+    padding: 10px;
+    max-height: 350px;
+    overflow-y: auto;
+
+    .configuration-info-none-available {
+      font-style: italic;
+      user-select: none;
+    }
+
+    .configuration-info-description {
+      user-select: none;
+    }
+
+    .configuration-info-references-container.with-description {
+      margin-top: 15px;
+    }
+  }
+}

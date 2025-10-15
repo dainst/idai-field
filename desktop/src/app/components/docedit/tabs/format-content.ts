@@ -1,5 +1,5 @@
 import { flow, isArray, isObject, isString, map, Map, to } from 'tsfun';
-import { Composite, Dating, Dimension, Field, I18N, Labels, Literature, OptionalRange, Resource,
+import { Composite, Dating, Measurement, Field, I18N, Labels, Literature, OptionalRange, Resource,
     Valuelist } from 'idai-field-core';
 import { Language } from '../../../services/languages';
 import { DifferingField } from './field-diff';
@@ -87,11 +87,18 @@ const convertArray = (field: DifferingField, languages: Map<Language>, getTransl
                 (value: I18N.String|string) => labels.getFromI18NString(value),
                 (valuelist: Valuelist, valueId: string) => labels.getValueLabel(valuelist, valueId));
             return label ?? JSON.stringify(element);
-        } else if (field.inputType === Field.InputType.DIMENSION && Dimension.isDimension(element)) {
-            return Dimension.generateLabel(element, transform, getTranslation,
+        } else if (field.inputType === Field.InputType.DIMENSION && Measurement.isMeasurement(element)) {
+            return Measurement.generateLabel(element, Field.InputType.DIMENSION, transform, getTranslation,
                 (value: I18N.String|string) => labels.getFromI18NString(value),
                 labels.getValueLabel(field.valuelist, element.measurementPosition));
-        } else if (field.inputType === Field.InputType.DATING && Dating.isDating(element)) {
+        } else if (field.inputType === Field.InputType.WEIGHT && Measurement.isMeasurement(element)) {
+            return Measurement.generateLabel(element, Field.InputType.WEIGHT, transform, getTranslation,
+                (value: I18N.String|string) => labels.getFromI18NString(value),
+                labels.getValueLabel(field.valuelist, element.measurementDevice));
+        } else if (field.inputType === Field.InputType.VOLUME && Measurement.isMeasurement(element)) {
+            return Measurement.generateLabel(element, Field.InputType.VOLUME, transform, getTranslation,
+                (value: I18N.String|string) => labels.getFromI18NString(value));
+        }else if (field.inputType === Field.InputType.DATING && Dating.isDating(element)) {
             return Dating.generateLabel(element, getTranslation,
                 (value: I18N.String|string) => labels.getFromI18NString(value));
         } else if (field.inputType === Field.InputType.LITERATURE && Literature.isLiterature(element)) {

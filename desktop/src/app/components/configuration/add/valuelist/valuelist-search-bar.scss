@@ -3,6 +3,7 @@ valuelist-search-bar {
     width: calc(100% - 50px);
     height: 38px;
     border-right: none;
+    z-index: 3;
   }
 
   #valuelist-filter-button .btn {

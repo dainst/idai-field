@@ -51,5 +51,6 @@
   "autoUpdate.available.warning": "Atenção: Por favor crie uma cópia de segurança de todos os projetos antes de fazer a atualização.",
   "autoUpdate.downloaded.ok": "OK",
   "menu.configuration.projectLanguages": "Selecionar língua do projeto...",
-  "menu.tools.inventory": "Inventariação"
+  "menu.tools.inventory": "Inventariação",
+  "menu.tools.workflow": "fluxo de trabalho"
 }

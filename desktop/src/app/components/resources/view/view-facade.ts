@@ -1,5 +1,5 @@
-import { ChangesStream, Datastore, DatastoreErrors, Document, FieldDocument, IndexFacade,
-    SyncService, SyncStatus } from 'idai-field-core';
+import { ChangesStream, Datastore, Document, FieldDocument, IndexFacade, SortMode, SyncService,
+    SyncStatus } from 'idai-field-core';
 import { M } from '../../../components/messages/m';
 import { Messages } from '../../../components/messages/messages';
 import { Loading } from '../../../components/widgets/loading';
@@ -8,7 +8,7 @@ import { ResourcesStateManager } from './resources-state-manager';
 import { ResourcesState } from './state/resources-state';
 
 
-export type ResourcesViewMode = 'map'|'list'|'grid';
+export type ResourcesViewMode = 'map'|'list'|'grid'|'workflow';
 
 
 /**
@@ -55,6 +55,8 @@ export class ViewFacade {
 
     public isInInventoryManagement = () => this.resourcesStateManager.isInInventoryManagement();
 
+    public isInWorkflowManagement = () => this.resourcesStateManager.isInWorkflowManagement();
+
     public isInGridListView = () => this.resourcesStateManager.isInGridListView();
 
     public getMode = () => this.resourcesStateManager.getMode();
@@ -62,6 +64,8 @@ export class ViewFacade {
     public getFilterCategories = () => ResourcesState.getCategoryFilters(this.resourcesStateManager.get());
 
     public getCustomConstraints = () => ResourcesState.getCustomConstraints(this.resourcesStateManager.get());
+
+    public getSortMode = () => ResourcesState.getSortMode(this.resourcesStateManager.get());
 
     public getDocuments = () => this.documentsManager.getDocuments();
 
@@ -89,7 +93,9 @@ export class ViewFacade {
 
     public setFilterCategories = (categories: string[]) => this.documentsManager.setCategoryFilters(categories);
 
-    public setCustomConstraints = (constraints: { [name: string]: string}) => this.documentsManager.setCustomConstraints(constraints);
+    public setCustomConstraints = (constraints: { [name: string]: string }) => this.documentsManager.setCustomConstraints(constraints);
+
+    public setSortMode = (sortMode: SortMode) => this.documentsManager.setSortMode(sortMode);
 
     public rebuildNavigationPath = () => this.resourcesStateManager.rebuildNavigationPath();
 
@@ -124,7 +130,7 @@ export class ViewFacade {
     public getNavigationPath = () => ResourcesState.getNavigationPath(this.resourcesStateManager.get());
 
 
-    public async selectView(viewName: 'project'|'types'|'inventory'|string): Promise<void> {
+    public async selectView(viewName: 'project'|'types'|'inventory'|'workflow'|string): Promise<void> {
 
         this.ready = false;
         await this.resourcesStateManager.initialize(viewName);

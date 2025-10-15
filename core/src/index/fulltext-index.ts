@@ -66,8 +66,7 @@ export module FulltextIndex {
      * @param categories if undefined, searches in all categories. If defined, only search hits
      *   indexed under the specified categories will be included in the results.
      */
-    export function get(index: FulltextIndex,
-                        s: string,
+    export function get(index: FulltextIndex, s: string,
                         categories: string[]|undefined): Array<Resource.Id> {
 
         if (isEmpty(index)) return [];
@@ -78,6 +77,14 @@ export module FulltextIndex {
             .reduce(getFromIndex(index, categories), ResultSets.make());
 
         return ResultSets.collapse(resultSets) as Array<Resource.Id>;
+    }
+
+
+    export function getCategoryCount(index: FulltextIndex, categoryName: string): number {
+
+        if (!index.hasOwnProperty(categoryName)) return 0;
+
+        return Object.keys(index[categoryName]['*']).length;
     }
 
 
@@ -139,11 +146,8 @@ export module FulltextIndex {
     }
 
 
-    function getWithPlaceholder(index: FulltextIndex,
-                                resultSets: ResultSets<Resource.Id>,
-                                s: string,
-                                category: string,
-                                tokens: string): ResultSets<Resource.Id> {
+    function getWithPlaceholder(index: FulltextIndex, resultSets: ResultSets<Resource.Id>, s: string,
+                                category: string, tokens: string): ResultSets<Resource.Id> {
 
         return tokens.split('').reduce((_resultSets, nextChar: string) =>
                 addKeyToResultSets(
@@ -153,10 +157,8 @@ export module FulltextIndex {
     }
 
 
-    function addKeyToResultSets(index: FulltextIndex,
-                                resultSets: ResultSets<Resource.Id>,
-                                category: string,
-                                s: string): ResultSets<Resource.Id> {
+    function addKeyToResultSets(index: FulltextIndex, resultSets: ResultSets<Resource.Id>,
+                                category: string, s: string): ResultSets<Resource.Id> {
 
         if (!index[category] || !index[category][s]) return resultSets;
 

@@ -8,8 +8,8 @@ import { ConfigurationErrors } from '../../boot/configuration-errors';
 
 const VALID_INPUT_TYPES = [
     'input', 'simpleInput', 'multiInput', 'simpleMultiInput', 'text', 'dropdown', 'dropdownRange', 'radio',
-    'checkboxes', 'int', 'unsignedInt', 'float', 'unsignedFloat', 'dating', 'dimension', 'literature', 'boolean',
-    'date', 'url', 'composite', 'relation'
+    'checkboxes', 'int', 'unsignedInt', 'float', 'unsignedFloat', 'dating', 'dimension', 'weight', 'volume',
+    'literature', 'boolean', 'date', 'url', 'composite', 'relation'
 ];
 
 
@@ -24,8 +24,8 @@ export function assertFieldsAreValid(fields: Map<LibraryFieldDefinition>|Map<Cus
 function assertInputTypesAreValid(fields: Map<LibraryFieldDefinition>|Map<CustomFieldDefinition>) {
 
     const isIllegal = and(
-                isDefined,
-                isNot(includedIn(VALID_INPUT_TYPES))
+        isDefined,
+        isNot(includedIn(VALID_INPUT_TYPES))
     );
 
     flow(

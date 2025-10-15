@@ -1,12 +1,15 @@
-import { Component, ElementRef, Input, OnChanges, ViewChild, EventEmitter, Output,
-    SimpleChanges } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, ViewChild, EventEmitter, Output, SimpleChanges, OnInit,
+    OnDestroy } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
-import { to, aReduce } from 'tsfun';
-import { Datastore, ImageDocument, ImageVariant } from 'idai-field-core';
+import { Subscription } from 'rxjs';
+import { to, aReduce, Map } from 'tsfun';
+import { Datastore, FileInfo, ImageDocument, ImageStore, ImageVariant } from 'idai-field-core';
 import { ImageRow, ImageRowItem, ImageRowUpdate, PLACEHOLDER } from './image-row';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { showMissingThumbnailMessageOnConsole } from '../log-messages';
 import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
+import { ImageToolLauncher } from '../../../services/imagestore/image-tool-launcher';
+import { SettingsProvider } from '../../../services/settings/settings-provider';
 
 
 const MAX_IMAGE_WIDTH = 600;
@@ -26,7 +29,7 @@ const PLACEHOLDER_WIDTH = 150;
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class ImageRowComponent implements OnChanges {
+export class ImageRowComponent implements OnInit, OnChanges, OnDestroy {
 
     @ViewChild('imageRowContainer', { static: true }) containerElement: ElementRef;
     @ViewChild('imageRow', { static: false }) imageRowElement: ElementRef;
@@ -44,10 +47,14 @@ export class ImageRowComponent implements OnChanges {
     public initializing: boolean;
 
     private imageRow: ImageRow;
+    private downloadSubscription: Subscription;
 
 
     constructor(private imageUrlMaker: ImageUrlMaker,
-                private datastore: Datastore) {}
+                private datastore: Datastore,
+                private imageStore: ImageStore,
+                private settingsProvider: SettingsProvider,
+                private imageToolLauncher: ImageToolLauncher) {}
 
 
     public hasNextPage = (): boolean => this.imageRow && this.imageRow.hasNextPage();
@@ -61,27 +68,24 @@ export class ImageRowComponent implements OnChanges {
     public getImageWidth = (image: ImageRowItem) => this.imageRow.getImageWidth(image.imageId);
 
 
+    ngOnInit() {
+        
+        this.downloadSubscription = this.imageToolLauncher.downloadNotifications()
+            .subscribe(async () => await this.initialize());
+    }
+
+
+    ngOnDestroy() {
+        
+        if (this.downloadSubscription) this.downloadSubscription.unsubscribe();
+    }
+
+
     async ngOnChanges(changes: SimpleChanges) {
 
         if (!this.images || !changes['images']) return;
 
-        this.initializing = true;
-        await AngularUtility.refresh();
-
-        this.imageRow = new ImageRow(
-            this.containerElement.nativeElement.offsetWidth,
-            this.containerElement.nativeElement.offsetHeight,
-            MAX_IMAGE_WIDTH,
-            await this.fetchImageDocuments(this.images)
-        );
-
-        if (this.allowSelection && this.images.length > 0) {
-            await this.select(this.selectedImage ? this.selectedImage : this.images[0]);
-        } else {
-            await this.nextPage();
-        }
-
-        this.initializing = false;
+        await this.initialize();
     }
 
 
@@ -120,6 +124,31 @@ export class ImageRowComponent implements OnChanges {
         this.selectedImage = image;
         await this.applyUpdate(this.imageRow.switchToSelected(image));
         this.onImageSelected.emit(image);
+    }
+
+
+    private async initialize() {
+
+        this.initializing = true;
+
+        await AngularUtility.refresh();
+
+        this.imageRow = new ImageRow(
+            this.containerElement.nativeElement.offsetWidth,
+            this.containerElement.nativeElement.offsetHeight,
+            MAX_IMAGE_WIDTH,
+            PLACEHOLDER_WIDTH,
+            await this.fetchImageDocuments(this.images),
+            await this.fetchThumbnailIds()
+        );
+
+        this.initializing = false;
+
+        if (this.allowSelection && this.images.length > 0) {
+            await this.select(this.selectedImage ? this.selectedImage : this.images[0]);
+        } else {
+            await this.nextPage();
+        }
     }
 
 
@@ -198,5 +227,16 @@ export class ImageRowComponent implements OnChanges {
             imageDocuments.find(imageDocument => imageDocument.resource.id === image.imageId)
             ?? { resource: { id: PLACEHOLDER, width: PLACEHOLDER_WIDTH }} as ImageDocument
         );
+    }
+
+
+    private async fetchThumbnailIds(): Promise<string[]> {
+
+        const fileInfos: Map<FileInfo> = await this.imageStore.getFileInfos(
+            this.settingsProvider.getSettings().selectedProject,
+            [ImageVariant.THUMBNAIL]
+        );
+
+        return this.images.filter(image => fileInfos[image.document.resource.id]).map(image => image.document.resource.id);
     }
 }

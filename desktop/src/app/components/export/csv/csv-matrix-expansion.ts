@@ -1,5 +1,6 @@
 import { flow, left, reverse, isString, isArray } from 'tsfun';
-import { Dating, Dimension, Literature, OptionalRange, Field, I18N, Subfield } from 'idai-field-core';
+import { Dating, Measurement, Literature, OptionalRange, Field, I18N, Subfield,
+    DateSpecification } from 'idai-field-core';
 import { CSVExpansion } from './csv-expansion';
 import { CsvExportConsts, HeadingsAndMatrix } from './csv-export-consts';
 import { CsvExportUtils } from './csv-export-utils';
@@ -15,7 +16,13 @@ export module CSVMatrixExpansion {
         rowsWithI18nStringExpanded(languages), languages.length
     );
     const expandDimensionItems = (languages: string[]) => CSVExpansion.expandHomogeneousItems(
-        rowsWithDimensionElementsExpanded(languages), 5 + languages.length
+        rowsWithMeasurementElementsExpanded(languages, 'dimension'), 5 + languages.length
+    );
+    const expandWeightItems = (languages: string[]) => CSVExpansion.expandHomogeneousItems(
+        rowsWithMeasurementElementsExpanded(languages, 'weight'), 5 + languages.length
+    );
+    const expandVolumeItems = (languages: string[]) => CSVExpansion.expandHomogeneousItems(
+        rowsWithMeasurementElementsExpanded(languages, 'volume'), 5 + languages.length
     );
     const expandDatingItems = (languages: string[]) => CSVExpansion.expandHomogeneousItems(
         rowsWithDatingElementsExpanded(languages), 8 + languages.length
@@ -29,6 +36,8 @@ export module CSVMatrixExpansion {
             getNumberOfColumnsForCompositeElements(languages, subfields)
         );
     const expandOptionalRangeItems = CSVExpansion.expandHomogeneousItems(rowsWithOptionalRangeElementsExpanded, 2);
+
+    const expandDateItems = CSVExpansion.expandHomogeneousItems(rowsWithDateElementsExpanded, 3);
 
 
     export function expandI18nString(fieldDefinitions: Array<Field>, projectLanguages: string[], inputType: Field.InputType) {
@@ -47,7 +56,7 @@ export module CSVMatrixExpansion {
                     expandI18nStrings
                 )
             );
-        }
+        };
     }
 
 
@@ -68,18 +77,18 @@ export module CSVMatrixExpansion {
                     expandI18nStrings
                 )
             );
-        }
+        };
     }
 
 
-    export function expandOptionalRangeVal(fieldDefinitions: Array<Field>) {
+    export function expandOptionalRangeValue(fieldDefinitions: Array<Field>) {
 
         return (headingsAndMatrix: HeadingsAndMatrix) => {
 
             return flow(
                 headingsAndMatrix,
                 left,
-                CsvExportUtils.getIndices(fieldDefinitions, 'dropdownRange'),
+                CsvExportUtils.getIndices(fieldDefinitions, Field.InputType.DROPDOWNRANGE),
                 reverse,
                 CSVExpansion.objectExpand(
                     headingsAndMatrix,
@@ -87,7 +96,26 @@ export module CSVMatrixExpansion {
                     expandOptionalRangeItems
                 )
             );
-        }
+        };
+    }
+
+
+    export function expandDate(fieldDefinitions: Array<Field>) {
+
+        return (headingsAndMatrix: HeadingsAndMatrix) => {
+
+            return flow(
+                headingsAndMatrix,
+                left,
+                CsvExportUtils.getIndices(fieldDefinitions, Field.InputType.DATE),
+                reverse,
+                CSVExpansion.objectExpand(
+                    headingsAndMatrix,
+                    CSVHeadingsExpansion.expandDateHeadings,
+                    expandDateItems
+                )
+            );
+        };
     }
 
 
@@ -108,7 +136,7 @@ export module CSVMatrixExpansion {
                     expandDatingItems
                 )
             );
-        }
+        };
     }
 
 
@@ -124,12 +152,54 @@ export module CSVMatrixExpansion {
                 CSVExpansion.objectArrayExpand(
                     headingsAndMatrix,
                     projectLanguages,
-                    Dimension.MEASUREMENTCOMMENT,
+                    Measurement.MEASUREMENTCOMMENT,
                     CSVHeadingsExpansion.expandDimensionHeadings,
                     expandDimensionItems
                 )
             );
-        }
+        };
+    }
+
+
+    export function expandWeight(fieldDefinitions: Array<Field>, projectLanguages: string[]) {
+
+        return (headingsAndMatrix: HeadingsAndMatrix) => {
+
+            return flow(
+                headingsAndMatrix,
+                left,
+                CsvExportUtils.getIndices(fieldDefinitions, Field.InputType.WEIGHT),
+                reverse,
+                CSVExpansion.objectArrayExpand(
+                    headingsAndMatrix,
+                    projectLanguages,
+                    Measurement.MEASUREMENTCOMMENT,
+                    CSVHeadingsExpansion.expandWeightHeadings,
+                    expandWeightItems
+                )
+            );
+        };
+    }
+
+
+    export function expandVolume(fieldDefinitions: Array<Field>, projectLanguages: string[]) {
+
+        return (headingsAndMatrix: HeadingsAndMatrix) => {
+
+            return flow(
+                headingsAndMatrix,
+                left,
+                CsvExportUtils.getIndices(fieldDefinitions, Field.InputType.VOLUME),
+                reverse,
+                CSVExpansion.objectArrayExpand(
+                    headingsAndMatrix,
+                    projectLanguages,
+                    Measurement.MEASUREMENTCOMMENT,
+                    CSVHeadingsExpansion.expandVolumeHeadings,
+                    expandVolumeItems
+                )
+            );
+        };
     }
 
 
@@ -150,7 +220,7 @@ export module CSVMatrixExpansion {
                     expandLiteratureItems
                 )
             );
-        }
+        };
     }
 
 
@@ -171,7 +241,7 @@ export module CSVMatrixExpansion {
                     expandCompositeItems
                 )
             );
-        }
+        };
     }
 
 
@@ -188,6 +258,20 @@ export module CSVMatrixExpansion {
     }
 
 
+    function rowsWithOptionalRangeElementsExpanded(optionalRange: OptionalRange<string>): string[] {
+
+        const { value, endValue } = optionalRange;
+        return [value, endValue ?? ''];
+    }
+
+
+    function rowsWithDateElementsExpanded(date: DateSpecification): string[] {
+
+        const { value, endValue, isRange } = date;
+        return [value ?? '', endValue ?? '', isRange ? 'true' : 'false'];
+    }
+
+
     function rowsWithDatingElementsExpanded(languages: string[]) {
         
         return (dating: Dating): string[] => {
@@ -197,7 +281,7 @@ export module CSVMatrixExpansion {
             if (type === 'scientific') begin = undefined;
 
             const expandedDating = [
-                type ? type : '',
+                type ?? '',
                 begin?.inputType ?? '',
                 begin?.inputYear ? begin.inputYear.toString() : '',
                 end?.inputType ?? '',
@@ -212,29 +296,26 @@ export module CSVMatrixExpansion {
             if (isUncertain !== undefined) expandedDating.push(isUncertain ? 'true' : 'false');
 
             return expandedDating;
-        }
+        };
     }
 
 
-    function rowsWithOptionalRangeElementsExpanded(optionalRange: OptionalRange<string>): string[] {
-
-        const { value, endValue } = optionalRange;
-        return [value, endValue ? endValue : ''];
-    }
-
-
-    function rowsWithDimensionElementsExpanded(languages: string[]) {
+    function rowsWithMeasurementElementsExpanded(languages: string[], inputType: 'dimension'|'weight'|'volume') {
         
-        return (dimension: Dimension): string[] => {
+        return (measurement: Measurement): string[] => {
 
-            const { inputValue, inputRangeEndValue, measurementPosition, measurementComment,
-                inputUnit, isImprecise } = dimension;
+            const { inputValue, inputRangeEndValue, measurementPosition, measurementDevice, measurementTechnique,
+                measurementComment, inputUnit, isImprecise } = measurement;
+
+            const valuelistSubfieldValue: string = getMeasurementValuelistSubfieldValue(
+                inputType, measurementPosition, measurementDevice, measurementTechnique
+            );
 
             const expandedDimension = [
                 (inputValue !== undefined && inputValue !== null) ? inputValue.toString() : '',
                 (inputRangeEndValue !== undefined && inputRangeEndValue !== null) ? inputRangeEndValue.toString() : '',
                 inputUnit ?? '',
-                measurementPosition ?? ''
+                valuelistSubfieldValue ?? ''
             ].concat(measurementComment
                 ? rowsWithI18nStringExpanded(languages)(measurementComment)
                 : languages.map(_ => '')
@@ -243,7 +324,7 @@ export module CSVMatrixExpansion {
             if (isImprecise !== undefined) expandedDimension.push(isImprecise ? 'true' : 'false');
 
             return expandedDimension as string[];
-        }
+        };
     }
 
 
@@ -279,7 +360,7 @@ export module CSVMatrixExpansion {
                 }
                 return result;
             }, []);
-        }
+        };
     }
 
 
@@ -292,5 +373,22 @@ export module CSVMatrixExpansion {
         });
 
         return subfields.length - i18nStringSubfields.length + i18nStringSubfields.length * languages.length;
+    }
+
+
+    function getMeasurementValuelistSubfieldValue(inputType: 'dimension'|'weight'|'volume',
+                                                  measurementPosition: string, measurementDevice: string,
+                                                  measurementTechnique: string): string|undefined {
+
+        switch (inputType) {
+            case 'dimension':
+                return measurementPosition;
+            case 'weight':
+                return measurementDevice;
+            case 'volume':
+                return measurementTechnique;
+            default:
+                return undefined;
+        }
     }
  }

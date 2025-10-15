@@ -1,7 +1,7 @@
 import { setupZoneTestEnv } from 'jest-preset-angular/setup-env/zone';
-      
-setupZoneTestEnv();
 
+
+setupZoneTestEnv();
 
 const customRequire = (moduleName) => {
 
@@ -15,3 +15,5 @@ const customRequire = (moduleName) => {
 };
 
 window.require = customRequire as any;
+
+jest.mock('jimp', () => jest.fn());

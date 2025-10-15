@@ -1,21 +1,32 @@
 <div *ngIf="field" class="preview">
     <div id="preview-header">
         <span class="preview-item-title">
-            <b>{{getLabel(field)}}</b>
+            <b>{{label}}</b>
             <code>{{field.name}}</code>
         </span>
     </div>
     <div id="preview-body">
-        <ul class="list-group list-group-flush">
-            <li *ngIf="field.inputType" class="list-group-item">
-                <b i18n="@@configuration.field.inputType">Eingabetyp</b>:
-                <span>{{getInputTypeLabel()}}</span>
-            </li>
-            <li *ngIf="field.valuelist" class="list-group-item">
-                <valuelist-view [valuelist]="field.valuelist"
-                                [showDescription]="false"
-                                [largeList]="true"></valuelist-view>
-            </li>
-        </ul>
+        <div *ngIf="description" class="preview-section">
+            <b i18n="@@configuration.descriptionHeading">Beschreibung:</b>
+            <div class="preview-text">{{description}}</div>
+        </div>
+
+        <div *ngIf="field.references?.length || field.semanticReferences?.length" class="preview-section">
+            <references-info [references]="field.references"
+                             [semanticReferences]="field.semanticReferences"
+                             [context]="'configuration'"></references-info>
+        </div>
+
+        <div class="preview-section">
+            <b i18n="@@configuration.field.inputType">Eingabetyp</b>:
+            <div class="preview-text">{{getInputTypeLabel()}}</div>
+        </div>
+
+        <div *ngIf="field.valuelist">
+            <b i18n="@@configuration.valuesHeading">Werte:</b>
+            <valuelist-view [valuelist]="field.valuelist"
+                            [showDescription]="false"
+                            [largeList]="true"></valuelist-view>
+        </div>
     </div>
 </div>

@@ -1,12 +1,39 @@
 defmodule FieldPublication.FileService do
   @file_store_path Application.compile_env(:field_publication, :file_store_directory_root)
-
+  @custom_assets_path "#{@file_store_path}/custom_assets/"
+  @custom_images_path "#{@custom_assets_path}/images"
   require Logger
 
   @moduledoc """
   This module handles interaction with data served from the application's file system. This is
   currently means all image data variants.
   """
+  def initial_setup() do
+    File.mkdir_p!("#{@custom_assets_path}/images")
+  end
+
+  def custom_assets_path(), do: @custom_assets_path
+
+  def list_uploaded_logos() do
+    @custom_images_path
+    |> File.ls!()
+    |> Enum.map(fn file_name -> {file_name, "#{@custom_images_path}/#{file_name}"} end)
+  end
+
+  def store_admin_image_upload(input_path, target_file_name) do
+    target_path = "#{@custom_images_path}/#{target_file_name}"
+
+    if File.exists?(target_path) do
+      {:error, :exists}
+    else
+      File.cp(input_path, target_path)
+    end
+  end
+
+  def delete_admin_image_upload(file_name) do
+    "#{@custom_images_path}/#{file_name}"
+    |> File.rm()
+  end
 
   def get_raw_data_path(project_name) when is_binary(project_name) do
     "#{@file_store_path}/raw/#{project_name}"

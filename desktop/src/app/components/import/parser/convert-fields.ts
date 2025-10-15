@@ -1,5 +1,6 @@
 import { includedIn, is, isNot, isnt, on, Path, to, clone } from 'tsfun';
-import { CategoryForm, Field, Relation, InPlace, Dating, Dimension, Resource, Named } from 'idai-field-core';
+import { CategoryForm, Field, Relation, InPlace, Dating, Measurement, Resource, Named,
+    DateSpecification } from 'idai-field-core';
 import { CsvExportConsts } from '../../export/csv/csv-export-consts';
 import { ParserErrors } from './parser-errors';
 import ARRAY_SEPARATOR = CsvExportConsts.ARRAY_SEPARATOR;
@@ -53,35 +54,37 @@ const convertFloat = (container: any, path: string) => convertNumber(container, 
 function convertTypeDependent(container: any, fieldName: string, inputType: InputType, field: Field) {
 
     if (inputType === InputType.BOOLEAN) convertBoolean(container, fieldName);
+    if (inputType === InputType.DATE) convertBoolean(container[fieldName], DateSpecification.IS_RANGE);
     if (inputType === InputType.DATING) convertDating(container, fieldName);
-    if (inputType === InputType.DIMENSION) convertDimension(container, fieldName);
+    if (InputType.MEASUREMENT_INPUT_TYPES.includes(inputType)) convertMeasurement(container, fieldName);
     if (inputType === InputType.INT || inputType === InputType.UNSIGNEDINT) convertInt(container, fieldName);
     if (inputType === InputType.FLOAT || inputType === InputType.UNSIGNEDFLOAT) convertFloat(container, fieldName);
     if (inputType === InputType.COMPOSITE) convertComposite(container, fieldName, field);
-    if (inputType === InputType.CHECKBOXES || inputType === InputType.SIMPLE_MULTIINPUT) {
+    if (inputType === InputType.CHECKBOXES || inputType === InputType.SIMPLE_MULTIINPUT
+            || inputType === InputType.VALUELIST_MULTIINPUT) {
         convertStringArray(container, fieldName)
     };
 }
 
 
-function convertDimension(container: any, fieldName: string) {
+function convertMeasurement(container: any, fieldName: string) {
 
     let i = 0;
-    for (const dimension of container[fieldName] as Array<Dimension>) {
+    for (const measurement of container[fieldName] as Array<Measurement>) {
 
-        if (dimension === undefined) throw 'Undefined dimension found';
-        if (dimension === null) continue;
+        if (measurement === undefined) throw 'Undefined measurement found';
+        if (measurement === null) continue;
 
-        if (dimension.inputUnit) (dimension.inputUnit as string) = dimension.inputUnit.toLowerCase();
+        if (measurement.inputUnit) (measurement.inputUnit as string) = measurement.inputUnit.toLowerCase();
 
         try {
-            convertFloat(dimension, 'value');
-            convertFloat(dimension, Dimension.RANGEMIN);
-            convertFloat(dimension, Dimension.RANGEMAX);
-            convertFloat(dimension, Dimension.INPUTVALUE);
-            convertFloat(dimension, Dimension.INPUTRANGEENDVALUE);
-            convertBoolean(dimension, Dimension.ISIMPRECISE);
-            convertBoolean(dimension, 'isRange');
+            convertFloat(measurement, 'value');
+            convertFloat(measurement, Measurement.RANGEMIN);
+            convertFloat(measurement, Measurement.RANGEMAX);
+            convertFloat(measurement, Measurement.INPUTVALUE);
+            convertFloat(measurement, Measurement.INPUTRANGEENDVALUE);
+            convertBoolean(measurement, Measurement.ISIMPRECISE);
+            convertBoolean(measurement, 'isRange');
         } catch (msgWithParams) {
             throw [msgWithParams[0], msgWithParams[1], fieldName + '.' + i + '.' + msgWithParams[2]];
         }

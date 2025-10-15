@@ -1,8 +1,11 @@
-import { Component, ElementRef, Input, OnChanges } from '@angular/core';
-import { Map } from 'tsfun';
-import { Document, Field, Labels, ProjectConfiguration, Relation, compare } from 'idai-field-core';
+import { Component, ElementRef, EventEmitter, Input, Output, OnChanges, OnDestroy } from '@angular/core';
+import { isArray, Map } from 'tsfun';
+import { Condition, Datastore, Document, Field, Labels, ProjectConfiguration, Relation, Valuelist, ValuelistUtil,
+    compare } from 'idai-field-core';
 import { Language } from '../../../services/languages';
 import { AngularUtility } from '../../../angular/angular-utility';
+import { UtilTranslations } from '../../../util/util-translations';
+import { ConfigurationInfoProvider } from '../../widgets/configuration-info-provider';
 
 
 type StratigraphicalRelationInfo = {
@@ -20,37 +23,92 @@ type StratigraphicalRelationInfo = {
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class EditFormGroup implements OnChanges {
+export class EditFormGroup extends ConfigurationInfoProvider implements OnChanges, OnDestroy {
 
-    @Input() fieldDefinitions: Array<Field>;
+    @Input() groupFields: Array<Field>;
+    @Input() categoryFields: Array<Field>;
     @Input() identifierPrefix: string|undefined;
     @Input() document: Document;
     @Input() originalDocument: Document;
     @Input() languages: Map<Language>;
     @Input() scrollTargetField: string;
+    @Input() disabledRelationFields: string[];
+
+    // Detects changes in fields of input types "dropdown", "radio", "checkboxes" and "boolean"
+    @Output() onChanged: EventEmitter<void> = new EventEmitter<void>();
 
     public labels: { [name: string]: string };
     public descriptions: { [name: string]: string };
 
+    private conditionFieldValuelists: { [fieldName: string]: Valuelist };
+
 
     constructor(private labelsService: Labels,
                 private projectConfiguration: ProjectConfiguration,
-                private elementRef: ElementRef) {}
+                private elementRef: ElementRef,
+                private utilTranslations: UtilTranslations,
+                private datastore: Datastore) {
+
+        super();
+    }
 
 
-    ngOnChanges() {
+    async ngOnChanges() {
 
         this.updateLabelsAndDescriptions();
+        await this.updateConditionFieldValuelists();
         this.autoScroll();
+    }
+
+
+    ngOnDestroy() {
+        
+        this.removeListeners();
     }
 
 
     public getFieldId = (field: Field) => 'edit-form-element-' + field.name.replace(':', '-');
 
+    public isDisabled = (field: Field) => this.disabledRelationFields?.includes(field.name);
+
 
     public shouldShow(field: Field): boolean {
 
-        return field !== undefined && field.editable === true;
+        return field !== undefined
+            && field.editable === true
+            && Condition.isFulfilled(field.condition, this.document.resource, this.categoryFields, 'field');
+    }
+
+
+    public hasInfo(field: Field): boolean {
+        
+        return !!(this.labelsService.getDescription(field) || field.references?.length);
+    }
+
+
+    public isConditionField(field: Field): 'single'|'multiple'|'none' {
+
+        const conditionalFields: Array<Field> = this.categoryFields.filter(categoryField => {
+            return categoryField.condition?.fieldName === field.name;
+        });
+
+        switch (conditionalFields.length) {
+            case 0:
+                return 'none';
+            case 1:
+                return 'single';
+            default:
+                return 'multiple';
+        }
+    }
+
+
+    public getConditionFieldIconClass(field: Field): string {
+
+        return this.categoryFields.find(categoryField => {
+            return categoryField.condition?.fieldName === field.name
+                && Condition.isFulfilled(categoryField.condition, this.document.resource, this.categoryFields, 'field');
+        }) !== undefined ? 'mdi-eye-lock-open-outline' : 'mdi-eye-lock-outline';
     }
 
 
@@ -91,6 +149,31 @@ export class EditFormGroup implements OnChanges {
         }
     }
 
+
+    public getConditionalFieldTooltip(field: Field): string {
+
+        if (!field.condition || !this.conditionFieldValuelists) return '';
+
+        const fieldLabel: string = this.labelsService.getFieldLabel(
+            this.projectConfiguration.getCategory(this.document.resource.category),
+            field.condition.fieldName
+        );
+
+        const conditionLabel: string = Condition.generateLabel(
+            field.condition,
+            key => this.utilTranslations.getTranslation(key),
+            valueId => this.labelsService.getValueLabel(
+                this.conditionFieldValuelists[field.condition.fieldName], valueId
+            )
+        );
+
+        if (isArray(field.condition.values) && (field.condition.values as string[]).length > 1) {
+            return $localize `:@@docedit.conditionalFieldInfo.tooltip.multiple:Dieses Feld wird angezeigt, weil im Feld "${fieldLabel}" einer der folgenden Werte eingetragen ist: ${conditionLabel}`;
+        } else {
+            return $localize `:@@docedit.conditionalFieldInfo.tooltip.single:Dieses Feld wird angezeigt, weil im Feld "${fieldLabel}" der Wert "${conditionLabel}" eingetragen ist.`;
+        }
+    }
+
     
     public isValidFieldData(field: Field): boolean {
 
@@ -109,7 +192,7 @@ export class EditFormGroup implements OnChanges {
 
         return fieldData === undefined
             ? true
-            : Field.isValidFieldData(fieldData, field);
+            : Field.isValidFieldData(fieldData, field, true);
     }
 
 
@@ -118,11 +201,27 @@ export class EditFormGroup implements OnChanges {
         this.labels = {};
         this.descriptions = {};
 
-        this.fieldDefinitions.forEach(field => {
+        this.groupFields.forEach(field => {
             const { label, description } = this.labelsService.getLabelAndDescription(field);
             this.labels[field.name] = label;
             this.descriptions[field.name] = description;
         });
+    }
+
+
+    private async updateConditionFieldValuelists() {
+
+        this.conditionFieldValuelists = {};
+
+        for (let field of this.groupFields) {
+            if (!field.condition) continue;
+            const conditionField: Field = this.categoryFields.find(categoryField => {
+                return categoryField.name === field.condition.fieldName;
+            });
+            this.conditionFieldValuelists[conditionField.name] = ValuelistUtil.getValuelist(
+                conditionField, await this.datastore.get('project')
+            );
+        }
     }
 
 
@@ -140,14 +239,14 @@ export class EditFormGroup implements OnChanges {
 
         await AngularUtility.refresh();
 
-        const field: Field = this.fieldDefinitions.find(fieldDefinition => {
+        const field: Field = this.groupFields.find(fieldDefinition => {
             return fieldDefinition.name === this.scrollTargetField;
         });
         const element: HTMLElement|null = document.getElementById(this.getFieldId(field));
         if (!element) return;
 
         await this.scrollToElement(element);
-        await this.focusField(element);
+        if (field.inputType !== Field.InputType.DATE) await this.focusField(element);
 
         this.scrollTargetField = undefined;
     }

@@ -1,12 +1,8 @@
 defmodule FieldPublicationWeb.Router do
   use FieldPublicationWeb, :router
 
-  alias FieldPublicationWeb.Cantaloupe
-
   import FieldPublicationWeb.UserAuth
   import FieldPublicationWeb.Gettext.Plug
-
-  import FieldPublicationWeb.Cantaloupe, only: [set_forward_headers_for_cantaloupe: 2]
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -29,15 +25,7 @@ defmodule FieldPublicationWeb.Router do
     pipe_through :ensure_image_published
 
     scope "/iiif" do
-      pipe_through :set_forward_headers_for_cantaloupe
-
-      forward("/", ReverseProxyPlug,
-        status_callbacks: %{
-          404 => &Cantaloupe.handle_404/2
-        },
-        upstream: &Cantaloupe.url/0,
-        preserve_host_header: true
-      )
+      forward("/3", FieldPublicationWeb.Api.IIIFImage, %IIIFImagePlug.V3.Options{})
     end
 
     get "/raw/:project_name/:uuid", FieldPublicationWeb.Api.Image, :raw
@@ -84,6 +72,8 @@ defmodule FieldPublicationWeb.Router do
 
       live "/projects/new", Management.OverviewLive, :new_project
       live "/projects/:project_id/edit", Management.OverviewLive, :edit_project
+
+      live "/settings", Management.SettingsView
     end
   end
 
@@ -109,9 +99,6 @@ defmodule FieldPublicationWeb.Router do
 
     live_session :require_published_or_project_access,
       on_mount: [{FieldPublicationWeb.UserAuth, :ensure_project_published_or_project_access}] do
-      live "/:project_id/:draft_date/:language/hierarchy/:uuid",
-           Presentation.HierarchyLive
-
       live "/:project_id", Presentation.DocumentLive
       live "/:project_id/:draft_date/:language", Presentation.DocumentLive
       live "/:project_id/:draft_date/:language/:uuid", Presentation.DocumentLive

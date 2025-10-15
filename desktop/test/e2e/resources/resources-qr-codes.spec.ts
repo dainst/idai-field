@@ -18,7 +18,7 @@ const { test, expect } = require('@playwright/test');
  * @author Danilo Guzzo
  * @author Thomas Kleinke
  */
-test.describe('resources/qr-codes --', () => {
+test.describe('resources/qr codes', () => {
 
     test.beforeAll(async () => {
 

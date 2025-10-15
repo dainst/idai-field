@@ -14,7 +14,7 @@ const { test, expect } = require('@playwright/test');
 /**
  * @author Thomas Kleinke
  */
-test.describe('resources/types --', () => {
+test.describe('resources/types', () => {
 
     test.beforeAll(async () => {
 

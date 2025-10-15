@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Backup } from './backup';
 import { SettingsService } from '../../services/settings/settings-service';
 import { BackupLoadingModalComponent } from './backup-loading-modal.component';
-import { BackupProvider } from './backup-provider';
 import { M } from '../messages/m';
 import { ProjectIdentifierValidation } from '../../model/project-identifier-validation';
 import { TabManager } from '../../services/tabs/tab-manager';
@@ -15,6 +13,7 @@ import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
 import { AppState } from '../../services/app-state';
 import { AngularUtility } from '../../angular/angular-utility';
+import { BackupService, ERROR_FILE_NOT_FOUND, RestoreBackupResult } from '../../services/backup/backup-service';
 
 const remote = window.require('@electron/remote');
 
@@ -45,7 +44,7 @@ export class BackupLoadingComponent {
                 private messages: Messages,
                 private settingsProvider: SettingsProvider,
                 private settingsService: SettingsService,
-                private backupProvider: BackupProvider,
+                private backupService: BackupService,
                 private tabManager: TabManager,
                 private menuService: Menus,
                 private appState: AppState) {}
@@ -120,20 +119,20 @@ export class BackupLoadingComponent {
 
     private async readBackupFile() {
 
-        try {
-            const warnings: MsgWithParams[] = await this.backupProvider.readDump(
-                this.path, this.projectIdentifier, this.settingsService
-            ) as any;
+        const result: RestoreBackupResult = await this.backupService.restore(
+            this.path, this.projectIdentifier, this.settingsService
+        );
+
+        if (result.success) {
             await this.settingsService.addProject(this.projectIdentifier);
-            if (warnings) warnings.forEach(warning => this.messages.add(warning));
-            this.messages.add([M.BACKUP_READ_SUCCESS]);
-        } catch (err) {
-            if (err === Backup.FILE_NOT_EXIST) {
-                this.messages.add([M.BACKUP_READ_ERROR_FILE_NOT_FOUND]);
-            } else {
-                this.messages.add([M.BACKUP_READ_ERROR_GENERIC]);
-                console.error('Error while reading backup file', err);
+            if (result.unsimilarProjectIdentifier) {
+                this.messages.add([M.BACKUP_READ_WARNING_UNSIMILAR_PROJECT_IDENTIFIER]);
             }
+            this.messages.add([M.BACKUP_READ_SUCCESS]);
+        } else if (result.error === ERROR_FILE_NOT_FOUND) {
+            this.messages.add([M.BACKUP_READ_ERROR_FILE_NOT_FOUND]);
+        } else {
+            this.messages.add([M.BACKUP_READ_ERROR_GENERIC]);
         }
     }
 

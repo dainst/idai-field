@@ -1,17 +1,17 @@
-<.header>
-  Publication draft '<%= @publication.draft_date %>' for project '<%= @publication.project_name %>'
-</.header>
+<.document_heading>
+  Publication draft '{@publication.draft_date}' for project '{@publication.project_name}'
+</.document_heading>
 
 <div>
   <.form for={@publication_form} phx-change="validate" phx-submit="save">
     <.list>
-      <:item title="Source URL"><%= @publication.source_url %></:item>
-      <:item title="Source project name"><%= @publication.source_project_name %></:item>
-      <:item title="Draft date"><%= @publication.draft_date %></:item>
-      <:item title="Drafted by"><%= @publication.drafted_by %></:item>
+      <:item title="Source URL">{@publication.source_url}</:item>
+      <:item title="Source project name">{@publication.source_project_name}</:item>
+      <:item title="Draft date">{@publication.draft_date}</:item>
+      <:item title="Drafted by">{@publication.drafted_by}</:item>
       <:item title="Data replication">
         <%= if @publication.replication_finished do %>
-          <div>Replication finished <%= @publication.replication_finished %>.</div>
+          <div>Replication finished {@publication.replication_finished}.</div>
         <% else %>
           <.log_entry_list logs={@replication_logs} />
           <%= if @replication_progress_state do %>
@@ -40,9 +40,9 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="border-2 text-center">
+                <tr class="text-center">
                   <td>Missing raw files</td>
-                  <td><%= Enum.count(@data_state.images.missing_raw_files) %></td>
+                  <td>{Enum.count(@data_state.images.missing_raw_files)}</td>
                   <td>
                     <.link
                       class="font-semibold font-mono"
@@ -54,7 +54,7 @@
                     </.link>
                   </td>
                 </tr>
-                <tr class="border-2">
+                <tr>
                   <td class="text-center">Web images</td>
                   <td>
                     <.progress_bar state={@data_state.images.summary}></.progress_bar>
@@ -79,7 +79,7 @@
                     <% end %>
                   </td>
                 </tr>
-                <tr class="border-2">
+                <tr>
                   <td class="text-center">Map tile images</td>
                   <td>
                     <.progress_bar state={@data_state.tiles.summary}></.progress_bar>
@@ -104,7 +104,7 @@
                     <% end %>
                   </td>
                 </tr>
-                <tr class="border-2">
+                <tr>
                   <td class="text-center">Search index</td>
                   <td>
                     <.progress_bar state={@data_state.search_index}></.progress_bar>
@@ -175,7 +175,7 @@
                 <tr>
                   <td class="pl-4">
                     <.input field={translation[:language]} type="hidden" />
-                    <%= translation[:language].value %>
+                    {translation[:language].value}
                   </td>
                   <td>
                     <.input field={translation[:text]} type="textarea" phx-debounce="2000" />
@@ -189,13 +189,10 @@
           :if={@publication.publication_date && @publication.publication_date <= @today}
           title="Publication date"
         >
-          <.link
-            class="text-sm font-semibold leading-6 text-zinc-900 hover:text-zinc-700"
-            navigate={
-              ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{List.first(@publication.languages)}"
-            }
-          >
-            <.icon name="hero-folder-open" class="h-4 w-4" /> <%= @publication.publication_date %>
+          <.link navigate={
+            ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{List.first(@publication.languages)}"
+          }>
+            <.icon name="hero-folder-open" class="h-4 w-4" /> {@publication.publication_date}
           </.link>
         </:item>
         <:item title="">

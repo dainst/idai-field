@@ -41,30 +41,22 @@ defmodule FieldPublication.Publications.Search do
       :project_name,
       :publication_draft_date,
       :configuration_based_field_mappings,
+      :geo,
       :full_doc,
       :full_doc_as_text
     ]
   end
 
-  def search_document_map_to_struct(%{
-        "id" => id,
-        "identifier" => identifier,
-        "category" => category,
-        "project_name" => project_name,
-        "publication_draft_date" => publication_draft_date,
-        "configuration_based_field_mappings" => configuration_based_field_mappings,
-        "full_doc" => full_doc,
-        "full_doc_as_text" => full_doc_as_text
-      }) do
+  def search_document_map_to_struct(map) do
     %SearchDocument{
-      id: id,
-      identifier: identifier,
-      category: category,
-      project_name: project_name,
-      publication_draft_date: publication_draft_date,
-      configuration_based_field_mappings: configuration_based_field_mappings,
-      full_doc: Data.document_map_to_struct(full_doc),
-      full_doc_as_text: full_doc_as_text
+      id: map["id"],
+      identifier: map["identifier"],
+      category: map["category"],
+      project_name: map["project_name"],
+      publication_draft_date: map["publication_draft_date"],
+      configuration_based_field_mappings: map["configuration_based_field_mappings"] || %{},
+      full_doc: Data.document_map_to_struct(map["full_doc"]),
+      full_doc_as_text: map["full_doc_as_text"]
     }
   end
 
@@ -219,28 +211,70 @@ defmodule FieldPublication.Publications.Search do
     OpenSearchService.insert_documents(docs, index)
   end
 
+  def get_category_count(%Publication{} = pub) do
+    payload = %{
+      size: 0,
+      aggs: %{
+        category_aggregation: %{
+          terms: %{
+            field: "category",
+            size: 1000
+          }
+        }
+      }
+    }
+
+    index = get_search_alias(pub)
+
+    OpenSearchService.run_query(index, payload)
+    |> case do
+      {:ok, %{status: 200, body: body}} ->
+        body
+        |> Jason.decode!()
+        |> get_in(["aggregations", "category_aggregation", "buckets"])
+        |> Enum.reduce(%{}, fn %{"doc_count" => count, "key" => category}, acc ->
+          Map.put(acc, category, count)
+        end)
+
+      _ ->
+        %{}
+    end
+  end
+
   def search(q, filter, from \\ 0, size \\ 100) do
     q =
       case q do
-        "*" ->
-          q
-
         "" ->
           "*"
 
         q ->
-          "#{q}~"
+          q
       end
 
     payload =
       %{
         query: %{
           bool: %{
-            must: %{
-              query_string: %{
-                query: q
+            must: [
+              %{
+                bool: %{
+                  should: [
+                    %{
+                      match_phrase: %{
+                        full_doc: %{
+                          query: q
+                        }
+                      }
+                    },
+                    %{
+                      wildcard: %{
+                        full_doc_as_text: %{value: "*#{q}*", case_insensitive: true, boost: 0.5}
+                      }
+                    }
+                  ]
+                }
               }
-            }
+            ]
           }
         },
         aggs: generate_aggregations_queries(),
@@ -385,11 +419,15 @@ defmodule FieldPublication.Publications.Search do
         type: "date",
         store: true
       },
+      geo: %{
+        type: "geo_shape",
+        store: true
+      },
       full_doc: %{
         type: "flat_object"
       },
       full_doc_as_text: %{
-        type: "text"
+        type: "wildcard"
       }
     }
 
@@ -435,14 +473,31 @@ defmodule FieldPublication.Publications.Search do
     full_doc =
       Data.apply_project_configuration(doc, publication_configuration, publication)
 
+    geo =
+      res["geometry"]
+      |> case do
+        nil ->
+          nil
+
+        val when val == %{} ->
+          nil
+
+        val ->
+          val
+      end
+
     base_document =
       %SearchDocument{
         id: res["id"],
         identifier: res["identifier"],
-        category: res["category"],
+        # Based on the project configuration, we add a category's parent categories' keys to the search
+        # document. As an example, this allows us to return not only "Image" documents when filtering by category key "Image",
+        # but also all documents that are in one of its child categories ("Photo" and "Drawing" by default.).
+        category: [res["category"]] ++ Data.get_parent_categories(publication, res["category"]),
         publication_draft_date: publication.draft_date,
         project_name: publication.project_name,
         configuration_based_field_mappings: %{},
+        geo: geo,
         full_doc: full_doc,
         full_doc_as_text: Jason.encode!(full_doc)
       }

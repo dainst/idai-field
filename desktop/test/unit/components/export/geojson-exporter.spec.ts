@@ -18,7 +18,7 @@ describe('GeojsonExporter', () => {
 
     const performExportAndValidate = async () => {
 
-        await GeoJsonExporter.performExport(mockDatastore, exportFilePath, 'project');
+        await GeoJsonExporter.performExport(mockDatastore, 'project', exportFilePath);
         const geojson: any = fs.readFileSync(exportFilePath).toString();
         expect(geojsonHint.hint(geojson, null)).toEqual([]);
     };

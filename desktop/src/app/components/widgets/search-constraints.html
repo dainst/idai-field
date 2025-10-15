@@ -1,4 +1,4 @@
-<div id="constraints-menu-button"
+<div *ngIf="isConstraintsMenuButtonVisible()" id="constraints-menu-button"
      class="btn btn-outline-primary" [class.focused]="searchBarComponent.focused"
      ngbTooltip="{{getTooltip()}}"
      placement="left" container="body" triggers="manual" #tooltip="ngbTooltip"
@@ -22,7 +22,7 @@
         <span class="mdi mdi-close-circle"></span>
     </div>
 
-    <div *ngIf="fields && fields.length > 0" class="d-flex flex-row align-items-center flex-wrap">
+    <div *ngIf="fields?.length" class="d-flex flex-row align-items-center flex-wrap">
         <select id="constraint-field-select" (change)="selectField($event.target.value)" class="form-control">
             <option value="" [selected]="!selectedField" hidden
                     i18n="@@resources.searchBar.constraints.chooseField">Feld wählen</option>
@@ -64,7 +64,7 @@
         <searchable-select *ngIf="getSearchInputType(selectedField) === 'dropdown'"
                            id="constraint-search-term-select"
                            [selectedValue]="searchTerm === '' ? null : searchTerm"
-                           [values]="getValues()"
+                           [values]="values"
                            [getLabel]="getValueLabel"
                            placeholder="Suchbegriff"
                            i18n-placeholder="@@resources.searchBar.constraints.searchTerm"
@@ -73,7 +73,7 @@
         <searchable-select *ngIf="getSearchInputType(selectedField) === 'boolean'"
                            id="constraint-search-term-boolean-select"
                            [selectedValue]="searchTerm === '' ? null : searchTerm"
-                           [values]="getBooleanValues()"
+                           [values]="booleanValues"
                            [getLabel]="getValueLabel"
                            placeholder="Suchbegriff"
                            i18n-placeholder="@@resources.searchBar.constraints.searchTerm"
@@ -82,7 +82,7 @@
         <searchable-select *ngIf="getSearchInputType(selectedField) === 'exists'"
                            id="constraint-search-term-exists-select"
                            [selectedValue]="searchTerm === '' ? null : searchTerm"
-                           [values]="getExistsValues()"
+                           [values]="existsValues"
                            [getLabel]="getExistsLabel"
                            placeholder="Suchbegriff"
                            i18n-placeholder="@@resources.searchBar.constraints.searchTerm"

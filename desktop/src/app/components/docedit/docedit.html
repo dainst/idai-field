@@ -30,7 +30,7 @@
                         <span class="mdi mdi-content-save"></span>
                         <span class="button-label" i18n="@@buttons.save">Speichern</span>
                     </button>
-                    <div *ngIf="showDuplicateButton()"
+                    <div *ngIf="isDuplicateButtonVisible()"
                          ngbDropdown placement="bottom-right"
                          class="btn-group">
                         <button id="document-edit-button-dropdown"
@@ -71,7 +71,8 @@
                        [originalGroups]="groups"
                        [activeGroup]="activeGroup"
                        [identifierPrefix]="identifierPrefix"
-                       [scrollTargetField]="scrollTargetField">
+                       [scrollTargetField]="scrollTargetField"
+                       [disabledRelationFields]="disabledRelationFields">
             </edit-form>
 
             <div *ngIf="isLoading()" id="loading-icon-container">

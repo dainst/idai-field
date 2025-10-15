@@ -10,6 +10,7 @@ import { Valuelist } from '../model';
 
 
 export interface RawProjectConfiguration {
+
     forms: Forest<CategoryForm>;
     categories: Map<Category>;
     relations: Array<Relation>;
@@ -17,6 +18,7 @@ export interface RawProjectConfiguration {
     valuelists: Map<Valuelist>;
     projectLanguages: string[];
 };
+
 
 const TYPE_CATALOG = 'TypeCatalog';
 const TYPE = 'Type';
@@ -199,6 +201,12 @@ export class ProjectConfiguration {
     }
 
 
+    public getWorkflowCategories(): Array<CategoryForm> {
+
+        return this.getCategoryWithSubcategories('Process');
+    }
+
+
     public getImageCategories(): Array<CategoryForm> {
 
         return this.getCategoryWithSubcategories('Image');
@@ -242,9 +250,7 @@ export class ProjectConfiguration {
     }
 
 
-    public isAllowedRelationDomainCategory(domainCategory: Name, 
-                                           rangeCategory: Name,
-                                           relation: Name): boolean {
+    public isAllowedRelationDomainCategory(domainCategory: Name, rangeCategory: Name, relation: Name): boolean {
 
         return Relation.isAllowedRelationDomainCategory(
             this.relations, domainCategory, rangeCategory, relation
@@ -307,7 +313,7 @@ export class ProjectConfiguration {
     private filterRegularCategories(): Array<CategoryForm> {
 
         return flow(this.categoryForms,
-            removeTrees('Place', 'Project', TYPE_CATALOG, TYPE, 'StoragePlace', 'Image', 'Operation'),
+            removeTrees('Place', 'Project', TYPE_CATALOG, TYPE, 'StoragePlace', 'Process', 'Image', 'Operation'),
             Tree.flatten
         );
     }
@@ -316,7 +322,7 @@ export class ProjectConfiguration {
     private filterFieldCategories(): Array<CategoryForm> {
 
         return flow(this.categoryForms,
-            removeTrees('Image', 'Project', TYPE_CATALOG, TYPE, 'StoragePlace'),
+            removeTrees('Image', 'Project', TYPE_CATALOG, TYPE, 'StoragePlace', 'Process'),
             Tree.flatten
         );
     }

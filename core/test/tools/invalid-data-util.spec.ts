@@ -74,6 +74,9 @@ describe('InvalidDataUtil', () => {
         expect(InvalidDataUtil.generateLabel('value', labels)).toBe('value');
         expect(InvalidDataUtil.generateLabel(7, labels)).toBe('7');
         expect(InvalidDataUtil.generateLabel(['value1', 'value2'], labels)).toBe('value1<hr>value2');
+        expect(InvalidDataUtil.generateLabel({ value: 'A', endValue: 'B' }, labels)).toBe('A - B');
+        expect(InvalidDataUtil.generateLabel({ value: 'A' }, labels)).toBe('A');
+        expect(InvalidDataUtil.generateLabel({ endValue: 'B' }, labels)).toBe('B');
         expect(InvalidDataUtil.generateLabel({}, labels)).toBe('');
         expect(InvalidDataUtil.generateLabel([{}, {}], labels)).toBe('');
         expect(InvalidDataUtil.generateLabel(undefined, labels)).toBe('');

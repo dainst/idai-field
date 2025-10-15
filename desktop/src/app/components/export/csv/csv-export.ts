@@ -1,8 +1,9 @@
-import { flow, includedIn, isDefined, isNot, isnt, map, cond, dense, compose, remove, on, is } from 'tsfun';
+import { flow, includedIn, isDefined, isNot, isnt, map, cond, dense, compose, remove, on, is, isObject } from 'tsfun';
 import { Resource, FieldResource, StringUtils, Relation, Field, ImageResource } from 'idai-field-core';
 import { CSVMatrixExpansion } from './csv-matrix-expansion';
 import { CsvExportUtils } from './csv-export-utils';
 import { CsvExportConsts, Heading, Headings, HeadingsAndMatrix, Matrix } from './csv-export-consts';
+import { ExportResult, InvalidField } from '../export-runner';
 import OBJECT_SEPARATOR = CsvExportConsts.OBJECT_SEPARATOR;
 import RELATIONS_IS_CHILD_OF = CsvExportConsts.RELATIONS_IS_CHILD_OF;
 import ARRAY_SEPARATOR = CsvExportConsts.ARRAY_SEPARATOR;
@@ -10,18 +11,6 @@ import ARRAY_SEPARATOR = CsvExportConsts.ARRAY_SEPARATOR;
 
 const FIELD_NAMES_TO_REMOVE = [Resource.ID, Resource.CATEGORY, FieldResource.GEOMETRY, ImageResource.GEOREFERENCE,
     ImageResource.ORIGINAL_FILENAME, 'filename', 'featureVectors'];
-
-
-export type CSVExportResult = {
-    csvData: string[];
-    invalidFields: Array<InvalidField>;
-};
-
-
-export type InvalidField = {
-    identifier: string;
-    fieldName: string;
-};
 
 
 /**
@@ -38,13 +27,10 @@ export module CSVExport {
      * @param fieldDefinitions
      * @param relations
      */
-    export function createExportable(resources: Array<FieldResource>,
-                                     fieldDefinitions: Array<Field>,
-                                     relations: Array<string>,
-                                     projectLanguages: string[],
-                                     separator: string,
+    export function createExportable(resources: Array<FieldResource>, fieldDefinitions: Array<Field>,
+                                     relations: Array<string>, projectLanguages: string[], separator: string,
                                      combineHierarchicalRelations: boolean = true,
-                                     addScanCode: boolean = false) {
+                                     addScanCode: boolean = false): ExportResult {
 
         fieldDefinitions = fieldDefinitions.filter(field => {
             return !Field.InputType.RELATION_INPUT_TYPES.includes(field.inputType);
@@ -66,15 +52,21 @@ export module CSVExport {
             CSVMatrixExpansion.expandI18nString(fieldDefinitions, projectLanguages, Field.InputType.INPUT),
             CSVMatrixExpansion.expandI18nString(fieldDefinitions, projectLanguages, Field.InputType.TEXT),
             CSVMatrixExpansion.expandI18nStringArray(fieldDefinitions, projectLanguages),
-            CSVMatrixExpansion.expandOptionalRangeVal(fieldDefinitions),
+            CSVMatrixExpansion.expandOptionalRangeValue(fieldDefinitions),
+            CSVMatrixExpansion.expandDate(fieldDefinitions),
             CSVMatrixExpansion.expandDating(fieldDefinitions, projectLanguages),
             CSVMatrixExpansion.expandDimension(fieldDefinitions, projectLanguages),
+            CSVMatrixExpansion.expandWeight(fieldDefinitions, projectLanguages),
+            CSVMatrixExpansion.expandVolume(fieldDefinitions, projectLanguages),
             CSVMatrixExpansion.expandLiterature(fieldDefinitions),
             CSVMatrixExpansion.expandComposite(fieldDefinitions, projectLanguages),
             combine(separator)
         );
 
-        return { csvData, invalidFields };
+        return {
+            exportData: csvData,
+            invalidFields
+        };
     }
 
 
@@ -185,12 +177,22 @@ export module CSVExport {
     }
 
 
-    function getFieldValue(field: any): string {
+    function getFieldValue(fieldContent: any): string {
 
-        const value: string = Array.isArray(field)
-            ? field.join(ARRAY_SEPARATOR)
-            : field + '';   // Convert numbers to strings
+        const value: string = Array.isArray(fieldContent)
+            ? getStringArray(fieldContent).join(ARRAY_SEPARATOR)
+            : fieldContent + '';   // Convert numbers to strings
 
         return value.replace(new RegExp('"', 'g'), '""');
+    }
+
+
+    function getStringArray(fieldContent: any[]): string[] {
+
+        return fieldContent.map(element => {
+            return isObject(element) && element.value
+                ? element.value
+                : element;
+        })
     }
 }

@@ -206,7 +206,7 @@ const renderDescription = (description: string) =>
 
 const renderProjectDetails = (projectDocument: Document, t: TFunction) => {
     
-    const contactMail: FieldValue = getFieldValue(projectDocument, 'contactMail');
+    const contactMail: FieldValue = getTranslation(getFieldValue(projectDocument, 'contactMail') as undefined);
     const homepage: FieldValue = getFieldValue(projectDocument, 'externalReference');
     const gazetteerId: FieldValue = getFieldValue(projectDocument, 'gazId');
 

@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { isEmpty, flow, includedIn, is, left, map, Mapping, on, Pair, pairWith, prune, right, to,
     isUndefinedOrEmpty } from 'tsfun';
 import { CategoryForm, Labels, Constraint, Datastore, Document, FieldDocument, FieldResource, Named,
-    ProjectConfiguration, Query, Resource, Relation } from 'idai-field-core';
+    ProjectConfiguration, Query, Resource, Relation, SortMode } from 'idai-field-core';
 import { ImageRowItem } from '../../../../image/row/image-row';
 import { LinkedImagesUtil } from '../../../../../util/linked-images-util';
 
@@ -219,7 +219,7 @@ export class TypeRelationPickerComponent {
             offset,
             sort: {
                 matchCategory: resource.category,
-                mode: Query.SORT_MODE_EXACTMATCHFIRST,
+                mode: SortMode.ExactMatchFirst,
             },
             constraints: {}
         };

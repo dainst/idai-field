@@ -4,9 +4,9 @@ defmodule FieldPublicationWeb.UserLoginLive do
   def render(assigns) do
     ~H"""
     <div class="mx-auto max-w-sm">
-      <.header class="text-center">
+      <.document_heading class="text-center">
         Sign in to account
-      </.header>
+      </.document_heading>
 
       <.simple_form for={@form} id="login_form" action={~p"/log_in"} phx-update="ignore">
         <.input field={@form[:name]} type="text" label="Name" required />
@@ -26,7 +26,7 @@ defmodule FieldPublicationWeb.UserLoginLive do
   end
 
   def mount(_params, _session, socket) do
-    name = live_flash(socket.assigns.flash, :name)
+    name = Phoenix.Flash.get(socket.assigns.flash, :name)
     form = to_form(%{"name" => name}, as: "user")
     {:ok, assign(socket, form: form), temporary_assigns: [form: form]}
   end

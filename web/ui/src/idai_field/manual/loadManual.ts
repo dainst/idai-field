@@ -1,7 +1,7 @@
 import { flow } from 'tsfun';
-import { getUserInterfaceLanguage } from '../../shared/languages';
 import { Chapter } from './Manual';
 import { getLatestDesktopVersion } from '../getLatestDesktopVersion';
+import { getManualLanguage } from '../../shared/languages';
 
 
 export const loadManual = async (): Promise<{ markdown: string, chapters: Chapter[] }> => {
@@ -27,7 +27,7 @@ const loadMarkdown = (url: string): Promise<string> => {
     return new Promise<string>(resolve => {
         const request = new XMLHttpRequest();
         request.addEventListener('load', () => resolve(request.response));
-        request.open('GET', `${url}/manual.${getUserInterfaceLanguage()}.md`);
+        request.open('GET', `${url}/manual.${getManualLanguage()}.md`);
         request.send();
     });
 };

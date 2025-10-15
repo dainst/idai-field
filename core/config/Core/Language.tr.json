@@ -15,6 +15,12 @@
     },
     "hasChildren": {
       "label": "Alt Girdiler"
+    },
+    "isResultOf": {
+      "label": "Bunun oluşumu"
+    },
+    "isSubjectOf": {
+      "label": "Öznesi"
     }
   },
   "categories": {
@@ -119,6 +125,12 @@
     },
     "isStoredIn": {
       "label": "-de saklanır"
+    },
+    "resultsIn": {
+      "label": "Çıktıları"
+    },
+    "isCarriedOutOn": {
+      "label": "Buna ilişkin uygulandı"
     }
   }
 }

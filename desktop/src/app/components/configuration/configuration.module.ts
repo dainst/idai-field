@@ -36,7 +36,7 @@ import { DeleteValuelistModalComponent } from './delete/delete-valuelist-modal.c
 import { ValuelistSearchBarComponent } from './add/valuelist/valuelist-search-bar.component';
 import { SwapCategoryFormModalComponent } from './add/category/swap-category-form-modal.component';
 import { ExtendValuelistModalComponent } from './add/valuelist/extend-valuelist-modal.component';
-import { ReferencesInputComponent } from './editor/widgets/references-input.component';
+import { SemanticReferencesInputComponent } from './editor/widgets/semantic-references-input.component';
 import { ConfigurationChangeNotifications } from './notifications/configuration-change-notifications';
 import { ConfigurationChangeNotificationModalComponent } from './notifications/configuration-change-notification-modal.component';
 import { DoceditModule } from '../docedit/docedit.module';
@@ -53,6 +53,9 @@ import { InputTypeSelectorComponent } from './editor/field//widgets/input-type-s
 import { I18nSwitchComponent } from './editor/field/widgets/i18n-switch.component';
 import { ValuelistSelectorComponent } from './editor/field/widgets/valuelist-selector.component';
 import { SubfieldsSectionComponent } from './editor/field/widgets/subfields-section.component';
+import { ConditionSectionComponent } from './editor/field/widgets/condition-section.component';
+import { AddProcessSubcategoryModalComponent } from './add/category/add-process-subcategory-modal.component';
+import { ReferencesInputComponent } from './editor/widgets/references-input.component';
 
 
 @NgModule({
@@ -71,6 +74,7 @@ import { SubfieldsSectionComponent } from './editor/field/widgets/subfields-sect
         ConfigurationCategoryComponent,
         MultiLanguageInputComponent,
         ReferencesInputComponent,
+        SemanticReferencesInputComponent,
         AddFieldModalComponent,
         AddGroupModalComponent,
         AddCategoryFormModalComponent,
@@ -109,7 +113,9 @@ import { SubfieldsSectionComponent } from './editor/field/widgets/subfields-sect
         InputTypeSelectorComponent,
         I18nSwitchComponent,
         ValuelistSelectorComponent,
-        SubfieldsSectionComponent
+        SubfieldsSectionComponent,
+        ConditionSectionComponent,
+        AddProcessSubcategoryModalComponent
     ],
     providers: [
         ConfigurationChangeNotifications,

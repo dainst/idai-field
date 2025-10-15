@@ -21,6 +21,7 @@ export module Groups {
     export const PROPERTIES = 'properties';
     export const HIERARCHY = 'hierarchy';
     export const STRATIGRAPHY = 'stratigraphy';
+    export const WORKFLOW = 'workflow';
     export const OTHER = 'other';
 }
 

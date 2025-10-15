@@ -193,6 +193,20 @@ export class ImageStore {
     }
 
 
+    public getDirectoryPath(project: string, type?: ImageVariant): string {
+
+        switch (type) {
+            case ImageVariant.ORIGINAL:
+            case undefined:
+                return this.absolutePath + project + '/';
+            case ImageVariant.THUMBNAIL:
+                return this.absolutePath + project + '/' + thumbnailDirectory;
+            case ImageVariant.DISPLAY:
+                return this.absolutePath + project + '/' + displayDirectory;
+        }
+    }
+
+
     private aggregateFileMap(aggregated: { [uuid: string]: FileInfo; }, fileStatList: FileStat[],
                              variant: ImageVariant): { [uuid: string]: FileInfo; } {
 
@@ -282,20 +296,6 @@ export class ImageStore {
     }
 
 
-    private getDirectoryPath(project: string, type?: ImageVariant): string {
-
-        switch (type) {
-            case ImageVariant.ORIGINAL:
-            case undefined:
-                return this.absolutePath + project + '/';
-            case ImageVariant.THUMBNAIL:
-                return this.absolutePath + project + '/' + thumbnailDirectory;
-            case ImageVariant.DISPLAY:
-                return this.absolutePath + project + '/' + displayDirectory;
-        }
-    }
-
-
     private getFilePath(project: string, type: ImageVariant, uuid: string): string {
 
         return this.getDirectoryPath(project, type) + uuid;
@@ -317,19 +317,5 @@ export class ImageStore {
         }
 
         return sums;
-    }
-
-
-    public static byteCountToDescription(byteCount: number, transform: (value: any) => string|null) {
-
-        byteCount = byteCount * 0.00000095367;
-        let unitTypeOriginal = 'MB';
-
-        if (byteCount > 1000) {
-            byteCount = byteCount * 0.00097656;
-            unitTypeOriginal = 'GB';
-        }
-
-        return `${transform(byteCount.toFixed(2))} ${unitTypeOriginal}`;
     }
 }

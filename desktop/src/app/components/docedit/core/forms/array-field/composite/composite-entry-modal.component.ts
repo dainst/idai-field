@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Map, is, isEmpty, on } from 'tsfun';
-import { Composite, Field, Labels, Named, Resource, Subfield, validateFloat, validateInt, validateUnsignedFloat,
+import { Condition, Field, Labels, Named, Resource, Subfield, validateFloat, validateInt, validateUnsignedFloat,
     validateUnsignedInt, validateUrl } from 'idai-field-core';
 import { Language } from '../../../../../../services/languages';
 import { Menus } from '../../../../../../services/menus';
@@ -50,6 +50,8 @@ export class CompositeEntryModalComponent {
 
         if (event.key === 'Escape' && this.menus.getContext() === MenuContext.MODAL) {
             this.activeModal.dismiss();
+        } else if (event.key === 's' && (event.ctrlKey || event.metaKey)) {
+            this.confirm();
         }
     }
 
@@ -58,12 +60,14 @@ export class CompositeEntryModalComponent {
         
         return this.subfields?.filter(subfield => {
             return Field.InputType.SUBFIELD_INPUT_TYPES.includes(subfield.inputType)
-                && Composite.isConditionFulfilled(this.entry, subfield, this.subfields);
+                && Condition.isFulfilled(subfield.condition, this.entry, this.subfields, 'subfield');
         });
     }
 
 
     public confirm() {
+
+        if (this.isEmpty()) return;
 
         const cleanedUpEntry: any = this.cleanUpEntry(this.entry);
 

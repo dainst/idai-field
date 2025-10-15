@@ -3,10 +3,11 @@ import { SortUtil } from '../../src/tools/sort-util';
 
 /**
  * @author Sebastian Cuy
+ * @author Thomas Kleinke
  */
 describe('SortUtil', () => {
 
-    it('should sort strings alphanumerically', () => {
+    it('sort strings alphanumerically', () => {
 
         expect(SortUtil.alnumCompare('abc', 'abd')).toEqual(-1);
         expect(SortUtil.alnumCompare('abd', 'abc')).toEqual(1);
@@ -33,19 +34,11 @@ describe('SortUtil', () => {
         expect(SortUtil.alnumCompare('asdfghjkl', 'a1b2c3d4')).toEqual(1);
     });
 
-    it('should sort strings alphabetically', () => {
 
-        expect(SortUtil.compare('abc', 'abd')).toEqual(-1);
-        expect(SortUtil.compare('abd', 'abc')).toEqual(1);
-        expect(SortUtil.compare('abc', 'abc')).toEqual(0);
-    });
+    it('sort numbers', () => {
 
-    it('should sort strings alphabetically and descending', () => {
-
-        let comp = SortUtil.compareDescending(SortUtil.compare);
-        expect(comp('abc', 'abd')).toEqual(1);
-        expect(comp('abd', 'abc')).toEqual(-1);
-        expect(comp('abc', 'abc')).toBe(0); // "toBe" necessary since -0 does not equal 0
-    });
-
+        expect(SortUtil.numberCompare(1, 2)).toEqual(-1);
+        expect(SortUtil.numberCompare(2, 2)).toEqual(0);
+        expect(SortUtil.numberCompare(2, 1)).toEqual(1);
+    })
 });

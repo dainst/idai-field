@@ -14,6 +14,10 @@
           "fields": ["hasChildren"]
         },
         {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "material"]
         },
@@ -46,6 +50,10 @@
           "fields": ["hasChildren"]
         },
         {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "material"]
         },
@@ -76,6 +84,10 @@
         {
           "name": "hierarchy",
           "fields": ["hasChildren"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -124,6 +136,10 @@
           "fields": ["hasChildren"]
         },
         {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "material"]
         },
@@ -156,6 +172,10 @@
           "fields": ["hasChildren"]
         },
         {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "material"]
         },
@@ -186,6 +206,10 @@
         {
           "name": "hierarchy",
           "fields": ["hasChildren"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -234,6 +258,10 @@
           "fields": ["hasChildren"]
         },
         {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "material"]
         },
@@ -260,6 +288,10 @@
         {
           "name": "stem",
           "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -489,12 +521,15 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "supervisor", "processor", "campaign", "beginningDate",
-            "endDate"]
+          "fields": ["identifier", "category", "shortDescription", "supervisor", "processor", "campaign", "date"]
         },
         {
           "name": "hierarchy",
           "fields": ["hasChildren"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -525,6 +560,10 @@
           "fields": ["hasChildren"]
         },
         {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
           "name": "properties",
           "fields": ["description"]
         },
@@ -547,6 +586,10 @@
         {
           "name": "hierarchy",
           "fields": ["hasChildren"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -577,6 +620,10 @@
         {
           "name": "hierarchy",
           "fields": ["hasChildren"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -612,12 +659,15 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "beginningDate",
-            "endDate", "isSameAs"]
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "date", "isSameAs"]
         },
         {
           "name": "hierarchy",
           "fields": ["hasChildren"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -694,6 +744,10 @@
           "fields": ["hasChildren"]
         },
         {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "featureForm", "featureBorders", "archaeoDox:distinguishingCriterium", "archaeoDox:isNatural",
             "archaeoDox:soilType", "archaeoDox:consistency", "archaeoDox:isArchaeologicallyIrrelevant", "comparison"]
@@ -721,12 +775,15 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "beginningDate",
-            "endDate", "isSameAs"]
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "date", "isSameAs"]
         },
         {
           "name": "hierarchy",
           "fields": ["hasChildren"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -776,6 +833,10 @@
           "fields": ["hasChildren"]
         },
         {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "comparison"]
         },
@@ -797,8 +858,11 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "beginningDate",
-            "endDate", "isSameAs"]
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "date", "isSameAs"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -840,6 +904,10 @@
             "processor", "date", "diary", "isSameAs"]
         },
         {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "featureSegmentForm", "featureSegmentBorders", "comparison"]
         },
@@ -877,6 +945,10 @@
           "fields": ["identifier", "category", "shortDescription", "processor", "campaign"]
         },
         {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "objectType", "condition", "conditionAmount", "conditionComment",
             "language", "content", "comparison"]
@@ -902,6 +974,10 @@
           "fields": ["identifier", "category", "shortDescription", "draughtsmen", "processor", "campaign", "date"]
         },
         {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "height", "width", "literature", "imageRights"]
         }
@@ -916,6 +992,10 @@
         {
           "name": "stem",
           "fields": ["identifier", "category", "shortDescription", "archaeoDox:documentationUnit", "processor", "date"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -1009,6 +1089,10 @@
           "fields": ["hasChildren"]
         },
         {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "material"]
         },
@@ -1039,6 +1123,10 @@
         {
           "name": "hierarchy",
           "fields": ["hasChildren"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -1171,6 +1259,10 @@
           "fields": ["hasChildren"]
         },
         {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
           "name": "identification",
           "fields": ["isInstanceOf"]
         },
@@ -1235,6 +1327,10 @@
           "fields": ["hasChildren"]
         },
         {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
           "name": "identification",
           "fields": ["isInstanceOf"]
         },
@@ -1269,6 +1365,10 @@
         {
           "name": "hierarchy",
           "fields": ["hasChildren"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "inventory",
@@ -1351,6 +1451,10 @@
           "fields": ["hasChildren"]
         },
         {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "material"]
         },
@@ -1373,6 +1477,10 @@
         {
           "name": "hierarchy",
           "fields": ["hasChildren"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -1422,12 +1530,16 @@
           "fields": ["hasChildren"]
         },
         {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
           "name": "inventory",
           "fields": ["isStoredIn", "storagePlace"]
         },
         {
           "name": "properties",
-          "fields": ["description", "sampleType", "labNumber", "weight"]
+          "fields": ["description", "sampleType", "labNumber", "weight", "volume"]
         },
         {
           "name": "position",
@@ -1466,6 +1578,10 @@
         {
           "name": "hierarchy",
           "fields": ["hasChildren"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "inventory",
@@ -1512,12 +1628,12 @@
           "fields": ["identifier", "category", "shortDescription"]
         },
         {
-          "name": "properties",
-          "fields": ["description", "literature"]
-        },
-        {
           "name": "identification",
           "fields": ["hasInstance"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "literature"]
         }
       ]
     },
@@ -1587,8 +1703,11 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary",
-            "beginningDate", "endDate"]
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "date"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -1626,6 +1745,10 @@
           "fields": ["identifier", "category", "shortDescription", "archaeoDox:documentationUnit", "processor", "date", "diary"]
         },
         {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
           "name": "properties",
           "fields": ["description", "archaeoDox:viewingDirection"]
         },
@@ -1643,8 +1766,11 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary",
-            "beginningDate", "endDate"]
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "date"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -1675,12 +1801,435 @@
           "fields": ["identifier", "category", "shortDescription", "archaeoDox:documentationUnit", "processor", "date", "diary"]
         },
         {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
           "name": "properties",
           "fields": ["description"]
         },
         {
           "name": "position",
           "fields": ["geometry", "dimensionVerticalExtent", "includesStratigraphicalUnits"]
+        }
+      ]
+    },
+    "Process:default": {
+      "description": {},
+      "createdBy": "",
+      "creationDate": "",
+      "categoryName": "Process",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "state", "date"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "notes"]
+        }
+      ]
+    },
+    "Sampling:default": {
+      "description": {},
+      "createdBy": "",
+      "creationDate": "2025",
+      "categoryName": "Sampling",
+      "fields": {
+        "horizontalSamplingStrategy": {
+          "condition": {
+            "fieldName": "samplingStrategy",
+            "values": ["horizontal"]
+          }
+        },
+        "systematicSamplingStrategy": {
+          "condition": {
+            "fieldName": "horizontalSamplingStrategy",
+            "values": ["systematicSample"]
+          }
+        },
+        "proportionSystematicSampling": {
+          "condition": {
+            "fieldName": "systematicSamplingStrategy",
+            "values": ["probabilistic"]
+          }
+        },
+        "quadrantDimensionsSystematicSampling": {
+          "condition": {
+            "fieldName": "systematicSamplingStrategy",
+            "values": ["eachQuadrant", "everyOtherQuadrant"]
+          }
+        },
+        "verticalSamplingStrategy": {
+          "condition": {
+            "fieldName": "samplingStrategy",
+            "values": ["vertical"]
+          }
+        },
+        "profileSamplingStrategy": {
+          "condition": {
+            "fieldName": "verticalSamplingStrategy",
+            "values": ["profile"]
+          }
+        }
+      },
+      "groups": [
+        {
+          "name": "properties",
+          "fields": ["samplingStrategy", "horizontalSamplingStrategy", "systematicSamplingStrategy",
+            "proportionSystematicSampling", "quadrantDimensionsSystematicSampling", "verticalSamplingStrategy",
+            "profileSamplingStrategy", "description", "notes"]
+        }
+      ]
+    },
+    "Sieving:default": {
+      "description": {},
+      "createdBy": "",
+      "creationDate": "2025",
+      "categoryName": "Sieving",
+      "fields": {
+        "waterOrigin": {
+          "condition": {
+            "values": [
+              "flotation",
+              "flotationAirCompressor",
+              "bucketFlotation",
+              "washOver",
+              "waterScreening"
+            ],
+            "fieldName": "sievingMethod"
+          }
+        },
+        "waterChangeFrequency": {
+          "condition": {
+            "fieldName": "waterOrigin",
+            "values": ["recycledSystem"]
+          }
+        },
+        "pretreatmentType": {
+          "condition": {
+            "fieldName": "samplePretreated",
+            "values": true
+          }
+        },
+        "pretreatmentChemicals": {
+          "condition": {
+            "fieldName": "pretreatmentType",
+            "values": ["soakingWithChemicals"]
+          }
+        }
+      },
+      "groups": [
+        {
+          "name": "properties",
+          "fields": ["sievingMethod", "sievingMeshes", "waterOrigin", "waterChangeFrequency", "samplePretreated",
+            "pretreatmentType", "pretreatmentChemicals", "description", "notes"]
+        }
+      ]
+    },
+    "SievedFractionProcessing:default": {
+      "description": {},
+      "createdBy": "",
+      "creationDate": "2025",
+      "categoryName": "SievedFractionProcessing",
+      "fields": {
+        "organicSubsamplingTechnique": {
+          "condition": {
+            "fieldName": "organicFractionSubsampled",
+            "values": true
+          }
+        },
+        "organicFractionMeasurement8": {
+          "condition": {
+            "fieldName": "organicFractionMeasured",
+            "values": true
+          }
+        },
+        "organicFractionMeasurement4": {
+          "condition": {
+            "fieldName": "organicFractionMeasured",
+            "values": true
+          }
+        },
+        "organicFractionMeasurement2": {
+          "condition": {
+            "fieldName": "organicFractionMeasured",
+            "values": true
+          }
+        },
+        "organicFractionMeasurement05": {
+          "condition": {
+            "fieldName": "organicFractionMeasured",
+            "values": true
+          }
+        },
+        "organicFractionMeasurement035": {
+          "condition": {
+            "fieldName": "organicFractionMeasured",
+            "values": true
+          }
+        },
+        "organicFractionMeasurement025": {
+          "condition": {
+            "fieldName": "organicFractionMeasured",
+            "values": true
+          }
+        },
+        "organicFractionMeasurement0125": {
+          "condition": {
+            "fieldName": "organicFractionMeasured",
+            "values": true
+          }
+        },
+        "organicFractionMeasurementStrain": {
+          "condition": {
+            "fieldName": "organicFractionMeasured",
+            "values": true
+          }
+        },
+        "organicFractionMeasurementUnit": {
+          "condition": {
+            "fieldName": "organicFractionMeasured",
+            "values": true
+          }
+        },
+        "organicFractionVolumeMeasurementTechnique": {
+          "condition": {
+            "fieldName": "organicFractionMeasurementUnit",
+            "values": [
+              "litres",
+              "millilitres"
+            ]
+          }
+        },
+        "organicFractionSubsampledList": {
+          "condition": {
+            "fieldName": "organicFractionSubsampled",
+            "values": true
+          }
+        },
+        "mineralFractionMeasurement8": {
+          "condition": {
+            "fieldName": "mineralFractionMeasured",
+            "values": true
+          }
+        },
+        "mineralFractionMeasurement4": {
+          "condition": {
+            "fieldName": "mineralFractionMeasured",
+            "values": true
+          }
+        },
+        "mineralFractionMeasurement2": {
+          "condition": {
+            "fieldName": "mineralFractionMeasured",
+            "values": true
+          }
+        },
+        "mineralFractionMeasurement1": {
+          "condition": {
+            "fieldName": "mineralFractionMeasured",
+            "values": true
+          }
+        },
+        "mineralFractionMeasurement05": {
+          "condition": {
+            "fieldName": "mineralFractionMeasured",
+            "values": true
+          }
+        },
+        "mineralFractionMeasurementStrain": {
+          "condition": {
+            "fieldName": "mineralFractionMeasured",
+            "values": true
+          }
+        },
+        "mineralFractionMeasurementUnit": {
+          "condition": {
+            "fieldName": "mineralFractionMeasured",
+            "values": true
+          }
+        },
+        "organicMultiplicationFactor4": {
+          "condition": {
+            "fieldName": "organicFractionSubsampledList",
+            "values": [
+              "organic4"
+            ]
+          }
+        },
+        "organicMultiplicationFactor8": {
+          "condition": {
+            "fieldName": "organicFractionSubsampledList",
+            "values": [
+              "organic8"
+            ]
+          }
+        },
+        "organicMultiplicationFactor2": {
+          "condition": {
+            "fieldName": "organicFractionSubsampledList",
+            "values": [
+              "organic2"
+            ]
+          }
+        },
+        "organicMultiplicationFactor05": {
+          "condition": {
+            "fieldName": "organicFractionSubsampledList",
+            "values": [
+              "organic05"
+            ]
+          }
+        },
+        "organicMultiplicationFactor035": {
+          "condition": {
+            "fieldName": "organicFractionSubsampledList",
+            "values": [
+              "organic035"
+            ]
+          }
+        },
+        "organicMultiplicationFactor025": {
+          "condition": {
+            "fieldName": "organicFractionSubsampledList",
+            "values": [
+              "organic025"
+            ]
+          }
+        },
+        "organicMultiplicationFactor0125": {
+          "condition": {
+            "fieldName": "organicFractionSubsampledList",
+            "values": [
+              "organic0125"
+            ]
+          }
+        },
+        "organicMultiplicationFactorStrain": {
+          "condition": {
+            "fieldName": "organicFractionSubsampledList",
+            "values": [
+              "organicStrain"
+            ]
+          }
+        },
+        "mineralSubsamplingTechnique": {
+          "condition": {
+            "fieldName": "mineralFractionSubsampled",
+            "values": true
+          }
+        },
+        "mineralFractionSubsampledList": {
+          "condition": {
+            "fieldName": "mineralFractionSubsampled",
+            "values": true
+          }
+        },
+        "mineralMultiplicationFactor8": {
+          "condition": {
+            "fieldName": "mineralFractionSubsampledList",
+            "values": [
+              "mineral8"
+            ]
+          }
+        },
+        "mineralMultiplicationFactor4": {
+          "condition": {
+            "fieldName": "mineralFractionSubsampledList",
+            "values": [
+              "mineral4"
+            ]
+          }
+        },
+        "mineralMultiplicationFactor2": {
+          "condition": {
+            "fieldName": "mineralFractionSubsampledList",
+            "values": [
+              "mineral2"
+            ]
+          }
+        },
+        "mineralMultiplicationFactor1": {
+          "condition": {
+            "fieldName": "mineralFractionSubsampledList",
+            "values": [
+              "mineral1"
+            ]
+          }
+        },
+        "mineralMultiplicationFactor05": {
+          "condition": {
+            "fieldName": "mineralFractionSubsampledList",
+            "values": [
+              "mineral05"
+            ]
+          }
+        },
+        "mineralMultiplicationFactorStrain": {
+          "condition": {
+            "fieldName": "mineralFractionSubsampledList",
+            "values": [
+              "mineralStrain"
+            ]
+          }
+        }
+      },
+      "groups": [
+        {
+          "name": "mineralFraction",
+          "fields": [
+            "mineralFractionKept",
+            "mineralFractionMeasured",
+            "mineralFractionMeasurementUnit",
+            "mineralFractionMeasurement8",
+            "mineralFractionMeasurement4",
+            "mineralFractionMeasurement2",
+            "mineralFractionMeasurement1",
+            "mineralFractionMeasurement05",
+            "mineralFractionMeasurementStrain",
+            "mineralFractionSubsampled",
+            "mineralSubsamplingTechnique",
+            "mineralFractionSubsampledList",
+            "mineralMultiplicationFactor8",
+            "mineralMultiplicationFactor4",
+            "mineralMultiplicationFactor2",
+            "mineralMultiplicationFactor1",
+            "mineralMultiplicationFactor05",
+            "mineralMultiplicationFactorStrain",
+            "mineralDescription",
+            "mineralNotes"
+          ]
+        },
+        {
+          "name": "organicFraction",
+          "fields": [
+            "organicFractionTreatmentType",
+            "organicFractionMeasured",
+            "organicFractionMeasurementUnit",
+            "organicFractionVolumeMeasurementTechnique",
+            "organicFractionMeasurement8",
+            "organicFractionMeasurement4",
+            "organicFractionMeasurement2",
+            "organicFractionMeasurement05",
+            "organicFractionMeasurement035",
+            "organicFractionMeasurement025",
+            "organicFractionMeasurement0125",
+            "organicFractionMeasurementStrain",
+            "organicFractionSubsampled",
+            "organicSubsamplingTechnique",
+            "organicFractionSubsampledList",
+            "organicMultiplicationFactor8",
+            "organicMultiplicationFactor4",
+            "organicMultiplicationFactor2",
+            "organicMultiplicationFactor05",
+            "organicMultiplicationFactor035",
+            "organicMultiplicationFactor025",
+            "organicMultiplicationFactor0125",
+            "organicMultiplicationFactorStrain",
+            "organicDescription",
+            "organicNotes"
+          ]
         }
       ]
     }

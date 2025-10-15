@@ -11,12 +11,13 @@ import { M } from '../../messages/m';
 import { ImageUploadMetadataModalComponent } from './image-upload-metadata-modal.component';
 import { UploadModalComponent } from './upload-modal.component';
 import { UploadStatus } from './upload-status';
-import { ImageManipulationErrors } from '../../../services/imagestore/image-manipulation';
+import { ImageManipulationErrors } from '../../../services/imagestore/manipulation/image-manipulation';
 import { ImageMetadata, extendMetadataByFileData } from '../../../services/imagestore/file-metadata';
 import { getGeoreferenceFromGeotiff } from '../georeference/geotiff-import';
-import { createDisplayVariant } from '../../../services/imagestore/create-display-variant';
+import { createDisplayVariant } from '../../../services/imagestore/manipulation/create-display-variant';
 import { ImagesState } from '../overview/view/images-state';
 import { getAsynchronousFs } from '../../../services/get-asynchronous-fs';
+import { getSystemTimezone } from '../../../util/timezones';
 
 const path = window.require('path');
 
@@ -258,7 +259,7 @@ export class ImageUploader {
     private async readFile(filePath: string): Promise<Buffer> {
 
         try {
-            return (await getAsynchronousFs().readFile(filePath));
+            return Buffer.from(await getAsynchronousFs().readFile(filePath));
         } catch (err) {
             console.error(err);
             throw [M.IMAGES_ERROR_FILEREADER, path.basename(filePath)];
@@ -308,7 +309,9 @@ export class ImageUploader {
         const category: CategoryForm = this.projectConfiguration.getCategory(extendedMetadata.category);
 
         if (CategoryForm.getField(category, 'date') && extendedMetadata.date) {
-            document.resource.date = formatDate(extendedMetadata.date);
+            document.resource.date = formatDate(
+                extendedMetadata.date, undefined, getSystemTimezone(), 'date'
+            );
         }
         if (CategoryForm.getField(category, 'draughtsmen') && extendedMetadata.draughtsmen?.length) {
             document.resource.draughtsmen = extendedMetadata.draughtsmen;

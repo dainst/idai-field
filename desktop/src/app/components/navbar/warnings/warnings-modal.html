@@ -54,6 +54,14 @@
                               i18n="@@navbar.taskbar.warnings.sectionTitle.invalidField">
                             Ungültige Daten im Feld <b>{{getFieldLabel(section)}}</b>
                         </span>
+                        <span *ngIf="section.type === 'missingMandatoryFields'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.missingMandatoryField">
+                            Nicht ausgefülltes Pflichtfeld <b>{{getFieldLabel(section)}}</b>
+                        </span>
+                        <span *ngIf="section.type === 'unfulfilledConditionFields'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.unfulfilledConditionField">
+                            Nicht erfüllte Anzeigebedingung des Feldes <b>{{getFieldLabel(section)}}</b>
+                        </span>
                         <span *ngIf="section.type === 'outliers' && section.outlierValues.length === 1"
                               i18n="@@navbar.taskbar.warnings.sectionTitle.outlierValues.single">
                             Ungültiger Wert im Feld <b>{{getFieldLabel(section)}}</b>
@@ -98,6 +106,10 @@
                               i18n="@@navbar.taskbar.warnings.sectionTitle.resourceLimitExceeded">
                             Ressourcenlimit für Kategorie <b>{{getCategoryLabel(section)}}</b> überschritten
                         </span>
+                        <span *ngIf="section.type === 'invalidProcessState'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.invalidProcessState">
+                            Ungültiger Status <b>{{getValueLabel(section)}}</b>
+                        </span>
                     </span>
                 </div>
                 <div class="card-block">
@@ -115,10 +127,43 @@
                                 Die in diesem Feld eingetragenen Daten werden daher nicht angezeigt.
                             </span>
                         </span>
-                        <span *ngIf="section.type === 'invalidFields'"
+                        <span *ngIf="section.type === 'invalidFields' && !section.dateValidationError"
                               i18n="@@navbar.taskbar.warnings.info.invalidField">
                             Die in diesem Feld eingetragenen Daten entsprechen nicht dem konfigurierten
                             Eingabetyp <i>{{getInputTypeLabel(section)}}</i>.
+                        </span>
+                        <span *ngIf="section.type === 'invalidFields' && section.dateValidationError">
+                            <span i18n="@@navbar.taskbar.warnings.info.invalidField.date">
+                                Die in diesem Feld eingetragene Datumsangabe ist ungültig.
+                            </span>
+                            <span *ngIf="section.type === 'invalidFields' && section.dateValidationError === 'rangeNotAllowed'"
+                                  i18n="@@navbar.taskbar.warnings.info.invalidField.date.rangeNotAllowed">
+                                Die Angabe eines Datumsbereichs ist für dieses Feld nicht erlaubt.
+                            </span>
+                            <span *ngIf="section.type === 'invalidFields' && section.dateValidationError === 'singleNotAllowed'"
+                                i18n="@@navbar.taskbar.warnings.info.invalidField.date.singleNotAllowed">
+                                Die Angabe eines Einzeldatums ist für dieses Feld nicht erlaubt.
+                            </span>
+                            <span *ngIf="section.type === 'invalidFields' && section.dateValidationError === 'timeNotAllowed'"
+                                i18n="@@navbar.taskbar.warnings.info.invalidField.date.timeNotAllowed">
+                                Die Angabe einer Uhrzeit ist für dieses Feld nicht erlaubt.
+                            </span>
+                            <span *ngIf="section.type === 'invalidFields' && section.dateValidationError === 'timeNotSet'"
+                                i18n="@@navbar.taskbar.warnings.info.invalidField.date.timeNotSet">
+                                Für dieses Feld ist die Angabe einer Uhrzeit erforderlich.
+                            </span>
+                            <span *ngIf="section.type === 'invalidFields' && section.dateValidationError === 'endDateBeforeBeginningDate'"
+                                i18n="@@navbar.taskbar.warnings.info.invalidField.date.endDateBeforeBeginningDate">
+                                Das Enddatum des Datumsbereichs liegt zeitlich vor dem Startdatum.
+                            </span>
+                        </span>
+                        <span *ngIf="section.type === 'missingMandatoryFields'"
+                              i18n="@@navbar.taskbar.warnings.info.missingMandatoryField">
+                            In ein als Pflichtfeld konfiguriertes Feld wurden keine Daten eingetragen.
+                        </span>
+                        <span *ngIf="section.type === 'unfulfilledConditionFields'"
+                              i18n="@@navbar.taskbar.warnings.info.unfulfilledConditionField">
+                            Es sind Daten eingetragen, obwohl die Anzeigebedingung des Feldes nicht erfüllt ist.
                         </span>
                         <span *ngIf="section.type === 'outliers' && section.outlierValues.length === 1"
                               i18n="@@navbar.taskbar.warnings.info.outlierValues.single">
@@ -181,11 +226,26 @@
                             Es dürfen nur <b>{{section.category.resourceLimit}}</b> Ressourcen der Kategorie
                             <i>{{getCategoryLabel(section)}}</i> angelegt werden.
                         </span>
+                        <span *ngIf="section.type === 'invalidProcessState'"
+                            i18n="@@navbar.taskbar.warnings.info.invalidProcessState">
+                            Der für diesen Prozess angegebene Status <i>{{getValueLabel(section)}}</i> widerspricht
+                            dem eingetragenen Datum <i>{{getDateLabel(selectedDocument.resource.date)}}</i>.
+                      </span>
                     </div>
-                    <div *ngIf="section.type === 'unconfiguredFields' || section.type === 'invalidFields' || section.type === 'missingIdentifierPrefix'"
+                    <div *ngIf="section.type === 'unfulfilledConditionFields'" class="data-info">
+                        <div><b i18n="@@navbar.taskbar.warnings.condition">Bedingung für Anzeige des Feldes:</b></div>
+                        <div class="data-info-content">
+                            <i>{{section.conditionFieldLabel}}:</i> {{section.conditionValuesLabel}}
+                        </div>
+                    </div>
+                    <div *ngIf="section.type === 'unconfiguredFields' || section.type === 'invalidFields'
+                                || section.type === 'missingIdentifierPrefix'
+                                || section.type === 'unfulfilledConditionFields'"
                          class="data-info">
                         <div><b i18n="@@navbar.taskbar.warnings.enteredData">Eingetragene Daten:</b></div>
-                        <div *ngIf="section.dataLabel && !section.isRelationField" class="data-info-content" [innerHTML]="section.dataLabel"></div>
+                        <div *ngIf="section.dataLabel && !section.isRelationField"
+                             class="data-info-content"
+                             [innerHTML]="section.dataLabel"></div>
                         <div *ngIf="section.isRelationField" class="data-info-content">
                             <document-teaser *ngFor="let targetDocument of section.relationTargets"
                                              [document]="targetDocument"></document-teaser>
@@ -229,9 +289,11 @@
                                   i18n="@@docedit.tabs.conflicts.resolveConflict">Konflikt lösen</span>
                         </button>
                     </span>
-                    <span *ngIf="section.type === 'invalidFields' || section.type === 'invalidRelationTargets'
-                            || section.type === 'missingIdentifierPrefix' || section.type === 'outliers'
-                            || section.type === 'nonUniqueIdentifier'">
+                    <span *ngIf="section.type === 'invalidFields' || section.type === 'missingMandatoryFields'
+                            || section.type === 'unfulfilledConditionFields'
+                            || section.type === 'invalidRelationTargets' || section.type === 'missingIdentifierPrefix'
+                            || section.type === 'outliers' || section.type === 'nonUniqueIdentifier'
+                            || section.type === 'invalidProcessState'">
                         <button class="btn btn-primary edit-button"
                                 (click)="openDoceditModal(section)">
                             <span class="mdi mdi-pencil"></span>
@@ -289,7 +351,8 @@
                                   i18n="@@navbar.taskbar.warnings.deleteResource">Ressource löschen</span>
                         </button>
                     </span>
-                    <span *ngIf="section.type === 'unconfiguredFields' || section.type === 'invalidFields'">
+                    <span *ngIf="section.type === 'unconfiguredFields' || section.type === 'invalidFields'
+                                 || section.type === 'unfulfilledConditionFields'">
                         <button class="btn btn-danger delete-field-data-button"
                                 (click)="openDeleteFieldDataModal(section)">
                             <span class="mdi mdi-delete"></span>

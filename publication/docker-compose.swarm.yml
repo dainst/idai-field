@@ -1,9 +1,7 @@
-version: '3.5'
-
 services:
 
-  opensearch: 
-    image: opensearchproject/opensearch:2.14.0
+  opensearch:
+    image: opensearchproject/opensearch:2.19.2
     environment:
       - discovery.type=single-node
       - plugins.security.ssl.http.enabled=false
@@ -19,16 +17,6 @@ services:
       nofile:
         soft: 65536 # Maximum number of open files for the opensearch user - set to at least 65536
         hard: 65536
-    networks:
-      - default
-
-  cantaloupe:
-    image: "ghcr.io/dainst/field_publication_cantaloupe:1.1.0"
-    environment:
-      LOG_APPLICATION_LEVEL: warn
-      LOG_ACCESS_CONSOLEAPPENDER_ENABLED: "true"
-    volumes:
-      - "file-data:/files"
     networks:
       - default
 

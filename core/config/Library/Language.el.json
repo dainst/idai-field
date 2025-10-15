@@ -53,14 +53,6 @@
       "label": "",
       "description": ""
     },
-    "beginningDate": {
-      "label": "",
-      "description": ""
-    },
-    "endDate": {
-      "label": "",
-      "description": ""
-    },
     "processor": {
       "label": "",
       "description": ""
@@ -1161,14 +1153,6 @@
         }
       }
     },
-    "ProcessUnit": {
-      "label": "",
-      "fields": {
-        "operationClassification": {
-          "label": ""
-        }
-      }
-    },
     "Terracotta": {
       "label": "",
       "fields": {
@@ -1252,10 +1236,6 @@
       "label": "",
       "fields": {
         "labNumber": {
-          "label": "",
-          "description": ""
-        },
-        "weight": {
           "label": "",
           "description": ""
         },
@@ -1448,10 +1428,6 @@
           "label": "",
           "description": ""
         },
-        "weight": {
-          "label": "",
-          "description": ""
-        },
         "condition": {
           "label": "",
           "description": ""
@@ -1475,10 +1451,6 @@
         },
         "bibliography": {
           "label": ""
-        },
-        "weight": {
-          "label": "",
-          "description": ""
         },
         "storagePlace": {
           "label": "",

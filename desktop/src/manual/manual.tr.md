@@ -16,7 +16,8 @@ Bu listeleri istediğiniz zaman değiştirebilirsiniz.
 <hr>
 
 
-# Girdiler 
+# Girdiler
+
 **(ç.n. Esas uygulamadaki 'Resource' ifadesi 'Girdi' olarak verilmiştir)**
 
 Bir proje oluşturduktan veya mevcut bir projeyi açtıktan sonra, **Genel Bakış** sekmesinden başlayabilirsiniz 

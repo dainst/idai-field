@@ -4,14 +4,14 @@ defmodule FieldPublicationWeb.Presentation.Components.I18n do
   def text(assigns) do
     ~H"""
     <% {status, text} = select_translation(assigns) %>
-    <%= text %>
+    {text}
     <%= if status == :fallback do %>
       <span class="group">
         <sup>
-          <span class="bg-yellow-100 pl-0.5 pr-0.5 text-xs rounded hidden group-hover:inline">
+          <span class="hero-information-circle h-4 w-4"></span>
+          <div class="absolute z-10 bg-yellow-100 pl-1 pr-1 text-xs rounded hidden group-hover:inline">
             No translation for your current selection
-          </span>
-          <span class="hero-information-circle h-4 w-4 group-hover:hidden"></span>
+          </div>
         </sup>
       </span>
     <% end %>
@@ -27,9 +27,9 @@ defmodule FieldPublicationWeb.Presentation.Components.I18n do
       </span>
     <% end %>
     <span class="markdown">
-      <%= text
+      {text
       |> Earmark.as_html!()
-      |> Phoenix.HTML.raw() %>
+      |> Phoenix.HTML.raw()}
     </span>
     """
   end

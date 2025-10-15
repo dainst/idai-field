@@ -9,7 +9,10 @@
     "inventory": "Inventarisierung",
     "hierarchy": "Hierarchie",
     "stratigraphy": "Stratigraphie",
-    "other": "Andere"
+    "workflow": "Workflow",
+    "other": "Andere",
+    "mineralFraction": "Mineralfraktion",
+    "organicFraction": "Organische Fraktion"
   },
   "commons": {
     "dimensionLength": {
@@ -48,6 +51,14 @@
       "label": "Andere Maße",
       "description": "Andere Maße können hier eingegeben werden; bitte kommentieren"
     },
+    "weight": {
+      "label": "Gewicht",
+      "description": "Angabe des Gewichts"
+    },
+    "volume": {
+      "label": "Volumen",
+      "description": "Angabe des Volumens"
+    },
     "area": {
       "label": "Fläche in m2",
       "description": "Flächenangabe in Quadratmetern"
@@ -55,14 +66,6 @@
     "description": {
       "label": "Beschreibung",
       "description": "Freies Beschreibungsfeld"
-    },
-    "beginningDate": {
-      "label": "Startdatum",
-      "description": "Datum, an dem die Aufnahme der Ressource begonnen wurde"
-    },
-    "endDate": {
-      "label": "Enddatum",
-      "description": "Datum, an dem die Aufnahme der Ressource abgeschlossen wurde"
     },
     "processor": {
       "label": "Bearbeiterin/Bearbeiter",
@@ -1167,14 +1170,6 @@
         }
       }
     },
-    "ProcessUnit": {
-      "label": "Arbeitsgang",
-      "fields": {
-        "operationClassification": {
-          "label": "Klassifikation Arbeitsgang"
-        }
-      }
-    },
     "Terracotta": {
       "label": "Terrakotta",
       "fields": {
@@ -1260,10 +1255,6 @@
         "labNumber": {
           "label": "Labornummer",
           "description": "Nummer der Probe, vergeben im untersuchenden Labor"
-        },
-        "weight": {
-          "label": "Gewicht (g)",
-          "description": "Gewicht in Gramm"
         },
         "sampleType": {
           "label": "Art der Probe",
@@ -1454,10 +1445,6 @@
           "label": "Inventarnummer",
           "description": "Vergebene Nummer während der Inventarisierung in einer Sammlung oder einem Depot"
         },
-        "weight": {
-          "label": "Gewicht (g)",
-          "description": "Gewicht in Gramm"
-        },
         "condition": {
           "label": "Erhaltungszustand",
           "description": "Beschreibung des Erhaltungszustandes"
@@ -1481,10 +1468,6 @@
         },
         "bibliography": {
           "label": "Bibliographie"
-        },
-        "weight": {
-          "label": "Gewicht (g)",
-          "description": "Gewicht in Gramm"
         },
         "storagePlace": {
           "label": "Aufbewahrungsort",
@@ -1616,6 +1599,261 @@
     "StorageBag": {
       "label": "Tüte",
       "fields": {}
+    },
+    "Process": {
+      "label": "Prozess",
+      "fields": {
+        "state": {
+          "label": "Status"
+        }
+      }
+    },
+    "Sampling": {
+      "label": "Probenahme",
+      "fields": {
+        "samplingStrategy": {
+          "label": "Art der Probenentnahme",
+          "description": "Hauptkategorie zur Klassifizierung der Art der Sedimentprobenentnahmestrategie, d. h. Priorisierung der vertikalen oder horizontalen Verteilung der Reste"
+        },
+        "horizontalSamplingStrategy": {
+          "label": "Art der horizontalen Probenentnahme",
+          "description": "Strategie zum Sammeln von Proben auf der Oberfläche eines archäologischen Befundes/einer archäologischen Stätte"
+        },
+        "systematicSamplingStrategy": {
+          "label": "Art der systematischen Probenentnahme",
+          "description": "Spezifischer Ansatz beim Sammeln von Sedimentproben nach einer strukturierten, gemusterten Methode"
+        },
+        "proportionSystematicSampling": {
+          "label": "Anteil des Bereichs, der beprobt wird (%)",
+          "description": "Prozentsatz der Fläche/des Sediments, die/das in einer probabilistischen systematischen Strategie beprobt wird"
+        },
+        "quadrantDimensionsSystematicSampling": {
+          "label": "Quadrantenabmessungen (m2)",
+          "description": "Größe des Stichprobenquadranten in einem systematischen Raster"
+        },
+        "verticalSamplingStrategy": {
+          "label": "Art der vertikalen Probenentnahme",
+          "description": "Methode zum Sammeln von Sedimentproben entlang der vertikalen Achse eines archäologischen Kontexts"
+        },
+        "profileSamplingStrategy": {
+          "label": "Art der Profilbeprobung",
+          "description": "Spezielle Technik zum Sammeln von Sedimenten aus einem freiliegenden stratigraphischen Abschnitt"
+        }
+      }
+    },
+    "Sieving": {
+      "label": "Siebung",
+      "fields": {
+        "waterOrigin": {
+          "label": "Wasserherkunft",
+          "description": "Quelle des bei der Probenverarbeitung verwendeten Wassers"
+        },
+        "waterChangeFrequency": {
+          "label": "Häufigkeit des Wasseraustauschs",
+          "description": "Häufigkeit, mit der das bei der Probenverarbeitung verwendete Wasser ausgetauscht wird"
+        },
+        "samplePretreated": {
+          "label": "Vorbehandlung der Probe",
+          "description": "Gibt an, ob die Sedimentprobe vor dem Sieben irgendwelchen Verarbeitungsschritten unterzogen wurde."
+        },
+        "pretreatmentType": {
+          "label": "Art der durchgeführten Vorbehandlung",
+          "description": "Spezifische Methode, die auf die Sedimentprobe vor dem Sieben angewendet wird"
+        },
+        "pretreatmentChemicals": {
+          "label": "Verwendete Chemikalien",
+          "description": "Namen der verwendeten chemischen Substanzen"
+        },
+        "sievingMethod": {
+          "label": "Siebmethode",
+          "description": "Technik zum Sieben und Trennen der mineralischen und organischen Fraktionen von der Probe"
+        },
+        "sievingMeshes": {
+          "label": "Verwendete Siebe",
+          "description": "Maschenweiten zur Materialtrennung beim Sieben"
+        }
+      }
+    },
+    "SievedFractionProcessing": {
+      "label": "Siebfraktionsverarbeitung",
+      "fields": {
+        "organicFractionTreatmentType": {
+          "label": "Art der Behandlung der organischen Fraktion",
+          "description": "Behandlung der gesiebten organischen Fraktionen nach dem Sieben"
+        },
+        "organicFractionSubsampled": {
+          "label": "Unterprobe der organischen Fraktion",
+          "description": "Gibt an, ob die verschiedenen organischen Fraktionen unterteilt wurden, anstatt vollständig analysiert zu werden."
+        },
+        "organicSubsamplingTechnique": {
+          "label": "Durchgeführte Unterprobenentnahmetechnik (Organische Fraktion)",
+          "description": "Verfahren zur Aufteilung der gesiebten organischen Fraktionen in kleinere, repräsentative Portionen für die Analyse"
+        },
+        "organicFractionMeasured": {
+          "label": "Organische Fraktion gemessen",
+          "description": "Gibt an, ob das Volumen/Gewicht der organischen Anteile erfasst wurde."
+        },
+        "organicFractionMeasurement8": {
+          "label": "Fraktionsmessung 8 ORG",
+          "description": "Menge des organischen Materials, das im 8-mm-Sieb zurückgehalten wird"
+        },
+        "organicFractionMeasurement4": {
+          "label": "Fraktionsmessung 4 ORG",
+          "description": "Menge des organischen Materials, das im 4-mm-Sieb zurückgehalten wird"
+        },
+        "organicFractionMeasurement2": {
+          "label": "Fraktionsmessung 2 ORG",
+          "description": "Menge des organischen Materials, das im 2-mm-Sieb zurückgehalten wird"
+        },
+        "organicFractionMeasurement05": {
+          "label": "Fraktionsmessung 0,5 ORG",
+          "description": "Menge des organischen Materials, das im 0,5-mm-Sieb zurückgehalten wird"
+        },
+        "organicFractionMeasurement035": {
+          "label": "Fraktionsmessung 0,35 ORG",
+          "description": "Menge des organischen Materials, das im 0,35-mm-Sieb zurückgehalten wird"
+        },
+        "organicFractionMeasurement025": {
+          "label": "Fraktionsmessung 0,25 ORG",
+          "description": "Menge des organischen Materials, das im 0,25-mm-Sieb zurückgehalten wird"
+        },
+        "organicFractionMeasurement0125": {
+          "label": "Fraktionsmessung 0,125 ORG",
+          "description": "Menge des organischen Materials, das im 0,125-mm-Sieb zurückgehalten wird"
+        },
+        "organicFractionMeasurementStrain": {
+          "label": "Fraktionsmessung Siebung (unbekannte Maschenbreite) ORG",
+          "description": "Menge des organischen Materials, das im Siebrückstand zurückgehalten wird"
+        },
+        "mineralFractionKept": {
+          "label": "Mineralfraktion aufbewahrt",
+          "description": "Gibt an, ob die Mineralfraktion aufbewahrt wurde."
+        },
+        "mineralFractionMeasured": {
+          "label": "Mineralfraktion gemessen",
+          "description": "Gibt an, ob das Volumen/Gewicht der Mineralfraktionen erfasst wurde."
+        },
+        "mineralFractionMeasurementUnit": {
+          "label": "Maßeinheit (Mineralfraktion)",
+          "description": "Einheit, in der die Menge der Mineralfraktion angegeben wird"
+        },
+        "mineralFractionMeasurement8": {
+          "label": "Fraktionsmessung 8 MIN",
+          "description": "Menge des mineralischen Materials, das im 8-mm-Sieb zurückgehalten wird"
+        },
+        "mineralFractionMeasurement4": {
+          "label": "Fraktionsmessung 4 MIN",
+          "description": "Menge des mineralischen Materials, das im 4-mm-Sieb zurückgehalten wird"
+        },
+        "mineralFractionMeasurement2": {
+          "label": "Fraktionsmessung 2 MIN",
+          "description": "Menge des mineralischen Materials, das im 2-mm-Sieb zurückgehalten wird"
+        },
+        "mineralFractionMeasurement1": {
+          "label": "Fraktionsmessung 1 MIN",
+          "description": "Menge des mineralischen Materials, das im 1-mm-Sieb zurückgehalten wird"
+        },
+        "mineralFractionMeasurement05": {
+          "label": "Fraktionsmessung 0,5 MIN",
+          "description": "Menge des mineralischen Materials, das im 0,5-mm-Sieb zurückgehalten wird"
+        },
+        "mineralFractionMeasurementStrain": {
+          "label": "Fraktionsmessung Siebung (unbekannte Maschenbreite) MIN",
+          "description": "Menge des mineralischen Materials, das im Siebrückstand zurückgehalten wird"
+        },
+        "mineralFractionSubsampled": {
+          "label": "Stichprobenentnahme der Mineralfraktion",
+          "description": "Gibt an, ob die verschiedenen Mineralfraktionen unterteilt wurden, anstatt vollständig analysiert zu werden."
+        },
+        "mineralSubsamplingTechnique": {
+          "label": "Durchgeführte Unterprobenentnahmetechnik (Mineralfraktion)",
+          "description": "Verfahren zur Aufteilung der gesiebten Mineralfraktionen in kleinere, repräsentative Portionen für die Analyse"
+        },
+        "mineralFractionSubsampledList": {
+          "label": "Liste der beprobten mineralischen Fraktionen",
+          "description": "Gibt die Mineralfraktionen an, die einer Stichprobenentnahme unterzogen wurden."
+        },
+        "mineralMultiplicationFactor8": {
+          "label": "Multiplikationsfaktor 8 MIN",
+          "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 8-MIN-Fraktion zu verwenden ist"
+        },
+        "mineralMultiplicationFactor4": {
+          "label": "Multiplikationsfaktor 4 MIN",
+          "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 4-MIN-Fraktion zu verwenden ist"
+        },
+        "mineralMultiplicationFactor2": {
+          "label": "Multiplikationsfaktor 2 MIN",
+          "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 2-MIN-Fraktion zu verwenden ist"
+        },
+        "mineralMultiplicationFactor1": {
+          "label": "Multiplikationsfaktor 1 MIN",
+          "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 1-MIN-Fraktion zu verwenden ist"
+        },
+        "mineralMultiplicationFactor05": {
+          "label": "Multiplikationsfaktor 0,5 MIN",
+          "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 0,5-MIN-Fraktion zu verwenden ist"
+        },
+        "mineralMultiplicationFactorStrain": {
+          "label": "Multiplikationsfaktor Siebung (unbekannte Maschenbreite) MIN",
+          "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge an mineralischen Rückständen in der Siebfraktion zu verwenden ist"
+        },
+        "mineralDescription": {
+          "label": "Beschreibung (Mineralfraktion)"
+        },
+        "mineralNotes": {
+          "label": "Notizen (Mineralfraktion)"
+        },
+        "organicFractionMeasurementUnit": {
+          "label": "Maßeinheit (Organische Fraktion)",
+          "description": "Einheit, in der die Menge der organischen Fraktion angegeben wird"
+        },
+        "organicFractionVolumeMeasurementTechnique": {
+          "label": "Volumenmessungstechnik",
+          "description": "Methode zur Bestimmung des Volumens der organischen Fraktion"
+        },
+        "organicFractionSubsampledList": {
+          "label": "Liste der organischen Teilproben",
+          "description": "Gibt die organischen Fraktionen an, die einer Teilprobenahme unterzogen wurden."
+        },
+        "organicMultiplicationFactor8": {
+          "label": "Multiplikationsfaktor 8 ORG",
+          "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 8-ORG-Fraktion zu verwenden ist"
+        },
+        "organicMultiplicationFactor4": {
+          "label": "Multiplikationsfaktor 4 ORG",
+          "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 4-ORG-Fraktion zu verwenden ist"
+        },
+        "organicMultiplicationFactor2": {
+          "label": "Multiplikationsfaktor 2 ORG",
+          "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 2-ORG-Fraktion zu verwenden ist"
+        },
+        "organicMultiplicationFactor05": {
+          "label": "Multiplikationsfaktor 0,5 ORG",
+          "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 0,5-ORG-Fraktion zu verwenden ist"
+        },
+        "organicMultiplicationFactor035": {
+          "label": "Multiplikationsfaktor 0,35 ORG",
+          "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 0,35-ORG-Fraktion zu verwenden ist"
+        },
+        "organicMultiplicationFactor025": {
+          "label": "Multiplikationsfaktor 0,25 ORG",
+          "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 0,25-ORG-Fraktion zu verwenden ist"
+        },
+        "organicMultiplicationFactor0125": {
+          "label": "Multiplikationsfaktor 0,125 ORG",
+          "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge der Rückstände in der 0,125-ORG-Fraktion zu verwenden ist"
+        },
+        "organicMultiplicationFactorStrain": {
+          "label": "Multiplikationsfaktor Siebung ORG (unbekannte Maschenbreite)",
+          "description": "Multiplikationsfaktor, der bei der Schätzung der Gesamtmenge an organischen Rückständen in der Siebfraktion zu verwenden ist"
+        },
+        "organicDescription": {
+          "label": "Beschreibung (Organische Fraktion)"
+        },
+        "organicNotes": {
+          "label": "Notizen (Organische Fraktion)"
+        }
+      }
     }
   },
   "forms": {

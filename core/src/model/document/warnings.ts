@@ -4,6 +4,8 @@ import { Map } from 'tsfun';
 export type WarningType = 'unconfiguredCategory'
     |'unconfiguredFields'
     |'invalidFields'
+    |'missingMandatoryFields'
+    |'unfulfilledConditionFields'
     |'outliers'
     |'missingRelationTargets'
     |'invalidRelationTargets'
@@ -11,13 +13,16 @@ export type WarningType = 'unconfiguredCategory'
     |'missingIdentifierPrefix'
     |'nonUniqueIdentifier'
     |'resourceLimitExceeded'
-    |'missingOrInvalidParent';
+    |'missingOrInvalidParent'
+    |'invalidProcessState'
 
 
 export interface Warnings {
 
     unconfiguredFields: string[];
     invalidFields: string[];
+    missingMandatoryFields?: string[];
+    unfulfilledConditionFields?: string[];
     outliers?: OutlierWarnings;
     missingRelationTargets?: RelationTargetWarnings;
     invalidRelationTargets?: RelationTargetWarnings;
@@ -27,6 +32,7 @@ export interface Warnings {
     nonUniqueIdentifier?: boolean;
     resourceLimitExceeded?: boolean;
     missingOrInvalidParent?: boolean;
+    invalidProcessState?: boolean;
 }
 
 
@@ -53,6 +59,8 @@ export module Warnings {
 
         return warnings.unconfiguredFields.length > 0
             || warnings.invalidFields.length > 0
+            || warnings.missingMandatoryFields.length > 0
+            || warnings.unfulfilledConditionFields.length > 0
             || warnings.outliers !== undefined
             || warnings.missingRelationTargets !== undefined
             || warnings.invalidRelationTargets !== undefined
@@ -61,7 +69,8 @@ export module Warnings {
             || warnings.missingIdentifierPrefix
             || warnings.nonUniqueIdentifier
             || warnings.resourceLimitExceeded
-            || warnings.missingOrInvalidParent;
+            || warnings.missingOrInvalidParent
+            || warnings.invalidProcessState;
     }
 
 
@@ -69,7 +78,9 @@ export module Warnings {
 
         return {
             unconfiguredFields: [],
-            invalidFields: []
+            invalidFields: [],
+            missingMandatoryFields: [],
+            unfulfilledConditionFields: []
         };
     }
 }

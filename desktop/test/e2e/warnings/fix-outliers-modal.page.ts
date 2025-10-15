@@ -1,4 +1,4 @@
-import { click, getLocator, getText, selectSearchableSelectOption, typeIn } from '../app';
+import { click, getLocator, getText, selectSearchableSelectOption } from '../app';
 
 
 /**
@@ -11,6 +11,14 @@ export class FixOutliersModalPage {
     public static async clickSelectValue(valueLabel: string) {
 
         return selectSearchableSelectOption('#fix-outliers-modal-body searchable-select', valueLabel);
+    }
+
+
+    public static async clickCheckboxesValue(checkboxIndex: number) {
+
+        const element = await (await getLocator('.checkbox')).nth(checkboxIndex);
+        
+        return click(element);
     }
 
 

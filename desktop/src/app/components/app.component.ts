@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Event, NavigationStart, Router } from '@angular/router';
-import { Datastore } from 'idai-field-core';
+import { Datastore, ProjectConfiguration, RelationsManager, SyncService } from 'idai-field-core';
 import { Messages } from './messages/messages';
 import { SettingsService } from '../services/settings/settings-service';
 import { SettingsProvider } from '../services/settings/settings-provider';
@@ -12,6 +12,12 @@ import { ImageUrlMaker } from '../services/imagestore/image-url-maker';
 import { ConfigurationChangeNotifications } from './configuration/notifications/configuration-change-notifications';
 import { MenuModalLauncher } from '../services/menu-modal-launcher';
 import { AppState } from '../services/app-state';
+import { AutoBackupService } from '../services/backup/auto-backup/auto-backup-service';
+import { QuittingModalComponent } from './widgets/quitting-modal.component';
+import { Modals } from '../services/modals';
+import { MenuContext } from '../services/menu-context';
+import { ImageToolLauncher } from '../services/imagestore/image-tool-launcher';
+import { ExpressServer } from '../services/express-server/express-server';
 
 const remote = window.require('@electron/remote');
 const ipcRenderer = window.require('electron')?.ipcRenderer;
@@ -31,6 +37,9 @@ export class AppComponent {
 
     public alwaysShowClose = remote.getGlobal('switches').messages_timeout == undefined;
 
+    private closing: boolean = false;
+
+
     constructor(router: Router,
                 menuNavigator: MenuNavigator,
                 appController: AppController,
@@ -38,12 +47,19 @@ export class AppComponent {
                 imageUrlMaker: ImageUrlMaker,
                 settingsService: SettingsService,
                 appState: AppState,
+                imageToolLauncher: ImageToolLauncher,
+                expressServer: ExpressServer,
+                projectConfiguration: ProjectConfiguration,
+                relationsManager: RelationsManager,
                 private messages: Messages,
                 private utilTranslations: UtilTranslations,
                 private settingsProvider: SettingsProvider,
                 private changeDetectorRef: ChangeDetectorRef,
                 private menuModalLauncher: MenuModalLauncher,
-                private datastore: Datastore) {
+                private datastore: Datastore,
+                private autoBackupService: AutoBackupService,
+                private modals: Modals,
+                private syncService: SyncService) {
 
         // To get rid of stale messages when changing routes.
         // Note that if you want show a message to the user
@@ -58,11 +74,16 @@ export class AppComponent {
             }
         });
 
+        expressServer.setDatastore(this.datastore);
+        expressServer.setRelationsManager(relationsManager);
+        expressServer.setProjectConfiguration(projectConfiguration);
+
         appState.load();
         settingsService.setupSync();
         appController.initialize();
         menuNavigator.initialize();
         configurationChangeNotifications.initialize();
+        imageToolLauncher.update();
 
         AppComponent.preventDefaultDragAndDropBehavior();
         this.initializeUtilTranslations();
@@ -72,12 +93,14 @@ export class AppComponent {
         if (!Settings.hasUsername(settingsProvider.getSettings())) {
             this.menuModalLauncher.openUpdateUsernameModal(true);
         }
+
+        this.autoBackupService.start();
     }
 
 
     private listenToSettingsChangesFromMenu() {
 
-        ipcRenderer.on('settingChanged', async (event: any, setting: string, newValue: boolean) => {
+        ipcRenderer.on('settingChanged', async (_: any, setting: string, newValue: boolean) => {
             const settings: Settings = this.settingsProvider.getSettings();
             settings[setting] = newValue;
             this.settingsProvider.setSettingsAndSerialize(settings);
@@ -88,9 +111,26 @@ export class AppComponent {
 
     private handleCloseRequests() {
 
-        ipcRenderer.on('requestClose', () => {
-            if (!this.datastore.updating) ipcRenderer.send('close');
+        ipcRenderer.on('requestClose', async () => {
+            if (this.closing || this.datastore.updating) return;
+
+            this.closing = true;
+            this.syncService.stopSync();
+            this.openQuittingModal();
+            await this.autoBackupService.requestBackupCreation();
+
+            ipcRenderer.send('close');
         });
+    }
+
+
+    private openQuittingModal() {
+
+        setTimeout(() => {
+            this.modals.make<QuittingModalComponent>(
+                QuittingModalComponent, MenuContext.MODAL, undefined, undefined, false
+            )
+        }, 200);
     }
 
 
@@ -112,7 +152,13 @@ export class AppComponent {
             'after', $localize `:@@util.dating.after:Nach`
         );
         this.utilTranslations.addTranslation(
-            'asMeasuredBy', $localize `:@@util.dimension.asMeasuredBy:gemessen an`
+            'asMeasuredBy', $localize `:@@util.dimension.asMeasuredBy:gemessen an:`
+        );
+        this.utilTranslations.addTranslation(
+            'measurementDevice', $localize `:@@util.dimension.measurementDevice:Messgerät:`
+        );
+        this.utilTranslations.addTranslation(
+            'measurementTechnique', $localize `:@@util.volume.measurementTechnique:Messverfahren:`
         );
         this.utilTranslations.addTranslation(
             'zenonId', $localize `:@@util.literature.zenonId:Zenon-ID`
@@ -131,6 +177,12 @@ export class AppComponent {
         );
         this.utilTranslations.addTranslation(
             'to', $localize `:@@util.optionalRange.to:, bis: `
+        );
+        this.utilTranslations.addTranslation(
+            'toDate', $localize `:@@util.date.to:bis`
+        );
+        this.utilTranslations.addTranslation(
+            'unspecifiedDate', $localize `:@@util.date.unspecified:Unbestimmtes Datum`
         );
         this.utilTranslations.addTranslation(
             'true', $localize `:@@boolean.yes:Ja`
@@ -156,6 +208,14 @@ export class AppComponent {
         this.utilTranslations.addTranslation(
             'warnings.invalidFieldData',
             $localize `:@@util.warnings.invalidFieldData:Ungültige Felddaten`
+        );
+        this.utilTranslations.addTranslation(
+            'warnings.missingMandatoryFields',
+            $localize `:@@util.warnings.missingMandatoryFields:Nicht ausgefüllte Pflichtfelder`
+        );
+        this.utilTranslations.addTranslation(
+            'warnings.unfulfilledConditionFields',
+            $localize `:@@util.warnings.unfulfilledConditionFields:Nicht erfüllte Anzeigebedingungen`
         );
         this.utilTranslations.addTranslation(
             'warnings.outlierValues',
@@ -184,6 +244,10 @@ export class AppComponent {
         this.utilTranslations.addTranslation(
             'warnings.resourceLimitExceeded',
             $localize `:@@util.warnings.resourceLimitExceeded:Ressourcenlimit überschritten`
+        );
+        this.utilTranslations.addTranslation(
+            'warnings.invalidProcessState',
+            $localize `:@@util.warnings.invalidProcessState:Ungültiger Status`
         );
         this.utilTranslations.addTranslation(
             'inventoryRegister',
@@ -255,7 +319,15 @@ export class AppComponent {
         );
         this.utilTranslations.addTranslation(
             'inputTypes.dimension',
-            $localize `:@@config.inputType.dimension:Maßangabe`
+            $localize `:@@config.inputType.dimension:Längenangabe`
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.weight',
+            $localize `:@@config.inputType.weight:Gewichtsangabe`
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.volume',
+            $localize `:@@config.inputType.volume:Volumenangabe`
         );
         this.utilTranslations.addTranslation(
             'inputTypes.literature',

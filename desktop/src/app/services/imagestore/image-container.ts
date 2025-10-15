@@ -1,5 +1,5 @@
-import { ImageDocument } from 'idai-field-core';
 import { SafeResourceUrl } from '@angular/platform-browser';
+import { ImageDocument } from 'idai-field-core';
 
 
 export interface ImageContainer {

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { equal, Map, to } from 'tsfun';
 import { ConfigurationDocument, I18N, CustomLanguageConfigurations, CategoryForm, CustomFormDefinition, 
-    Field, Labels, PrintedField, Named, ProjectConfiguration } from 'idai-field-core';
+    Field, Labels, PrintedField, Named, ProjectConfiguration, CustomFieldDefinition, Relation } from 'idai-field-core';
 import { Menus } from '../../../../services/menus';
 import { Messages } from '../../../messages/messages';
 import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
@@ -59,12 +59,12 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             this.clonedConfigurationDocument.resource.forms[this.category.name] = {
                 color: this.category.color,
                 parent: this.category.parentCategory.name,
-                fields: {},
+                fields: CategoryEditorModalComponent.getFieldDefinitions(this.category),
                 groups: CategoryForm.getGroupsConfiguration(
                     this.category,
                     ConfigurationDocument.getPermanentlyHiddenFields(this.category)
                 )
-            }
+            };
         } else {
             if (!this.getClonedFormDefinition().color) {
                 this.getClonedFormDefinition().color = this.currentColor;
@@ -75,6 +75,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
         this.printableFields = this.getPrintableFields();
 
         if (!this.getClonedFormDefinition().references) this.getClonedFormDefinition().references = [];
+        if (!this.getClonedFormDefinition().semanticReferences) this.getClonedFormDefinition().semanticReferences = [];
     }
 
 
@@ -86,6 +87,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
                 this.getClonedFormDefinition().resourceLimit
             );
             ConfigurationUtil.cleanUpAndValidateReferences(this.getClonedFormDefinition());
+            ConfigurationUtil.cleanUpAndValidateSemanticReferences(this.getClonedFormDefinition());
         } catch (errWithParams) {
             return this.messages.add(errWithParams);
         }
@@ -125,6 +127,8 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             || this.getClonedFormDefinition().color.toLowerCase() !== this.currentColor.toLowerCase()
             || this.hasScanCodesConfigurationChanged()
             || ConfigurationUtil.isReferencesArrayChanged(this.getCustomFormDefinition(),
+                this.getClonedFormDefinition())
+            || ConfigurationUtil.isSemanticReferencesArrayChanged(this.getCustomFormDefinition(),
                 this.getClonedFormDefinition());
     }
 
@@ -442,6 +446,25 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
         return !equal(clonedScanCodes)(customScanCodes)
             || !equal(this.printedFields)(this.getPrintedFields());
+    }
+
+
+    private static getFieldDefinitions(category: CategoryForm): Map<CustomFieldDefinition> {
+
+        const result: Map<CustomFieldDefinition> = {};
+
+        category.groups.forEach(group => {
+            group.fields.filter(field => !ConfigurationUtil.isParentField(category, field))
+                .forEach(field => {
+                    const fieldDefinition: CustomFieldDefinition = {
+                        inputType: field.inputType
+                    };
+                    if ((field as Relation).range) fieldDefinition.range = (field as Relation).range;
+                    result[field.name] = fieldDefinition;
+            })
+        });
+
+        return result;
     }
 
 

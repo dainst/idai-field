@@ -416,6 +416,44 @@ describe('mergeResource', () => {
     });
 
 
+    test('merge staff', () => {
+
+        target.category = 'Project';
+        source.category = 'Project';
+
+        target['staff'] = [
+            { value: 'Person A', selectable: true },
+            { value: 'Person B', selectable: false }
+        ];
+        source['staff'] = ['Person B', 'Person C'];
+
+        const result = mergeResource(target, source);
+        expect(result['staff']).toEqual([
+            { value: 'Person B', selectable: false },
+            { value: 'Person C', selectable: true }
+        ]);
+    });
+
+
+    test('merge campaigns', () => {
+
+        target.category = 'Project';
+        source.category = 'Project';
+
+        target['campaigns'] = [
+            { value: 'Campaign A', selectable: true },
+            { value: 'Campaign B', selectable: false }
+        ];
+        source['campaigns'] = ['Campaign B', 'Campaign C'];
+
+        const result = mergeResource(target, source);
+        expect(result['campaigns']).toEqual([
+            { value: 'Campaign B', selectable: false },
+            { value: 'Campaign C', selectable: true }
+        ]);
+    });
+
+
     test('overwrite, do not merge geometry', () => {
 
         target[GEOMETRY] = { a: 1 };

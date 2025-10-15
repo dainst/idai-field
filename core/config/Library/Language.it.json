@@ -56,14 +56,6 @@
       "label": "Descrizione",
       "description": "Campo di descrizione libero"
     },
-    "beginningDate": {
-      "label": "Data di inizio",
-      "description": "Data di inizo della documentazione/scavo"
-    },
-    "endDate": {
-      "label": "Data di fine",
-      "description": "Data in cui è stata completata la documentazione/scavo"
-    },
     "processor": {
       "label": "Responsabile",
       "description": "La persona o le persone responsabili della risorsa o dell'oggetto durante la campagna. Importante: i nomi delle persone che inseriscono o modificano la voce nella banca dati vengono salvati automaticamente e quindi non devono essere inseriti qui."
@@ -1164,14 +1156,6 @@
         }
       }
     },
-    "ProcessUnit": {
-      "label": "Operazione",
-      "fields": {
-        "operationClassification": {
-          "label": "Classificazione dell'operazione"
-        }
-      }
-    },
     "Terracotta": {
       "label": "Terracotta",
       "fields": {
@@ -1257,10 +1241,6 @@
         "labNumber": {
           "label": "Numero di laboratorio",
           "description": "Numero del campione assegnato dal laboratorio di analisi"
-        },
-        "weight": {
-          "label": "Peso (g)",
-          "description": "Peso in grammi"
         },
         "sampleType": {
           "label": "Tipo di campione",
@@ -1451,10 +1431,6 @@
           "label": "Numero inventario",
           "description": "Numero assegnato durante l'inventario in una collezione o in un deposito"
         },
-        "weight": {
-          "label": "Peso (g)",
-          "description": "Peso in grammi"
-        },
         "condition": {
           "label": "Stato di conservazione",
           "description": "Descrizione dello stato di conservazione"
@@ -1478,10 +1454,6 @@
         },
         "bibliography": {
           "label": "Bibliografia"
-        },
-        "weight": {
-          "label": "Peso (g)",
-          "description": "Peso in grammi"
         },
         "storagePlace": {
           "label": "Luogo di conservazione",

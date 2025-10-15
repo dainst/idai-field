@@ -2,6 +2,7 @@ valuelist-view {
   .valuelist-description {
     margin: 0 0.2rem 0.7rem;
     font-size: 0.8rem;
+    user-select: none;
   }
 
   .valuelist {
@@ -18,6 +19,7 @@ valuelist-view {
       border: 1px solid white;
       border-radius: 5px;
       color: black;
+      user-select: none;
 
       code {
         font-size: 11px;

@@ -356,8 +356,7 @@ export class Datastore {
     }
 
 
-    private async getDocumentsForIds(ids: string[], 
-                                     limit?: number,
+    private async getDocumentsForIds(ids: string[], limit?: number,
                                      offset?: number): Promise<{documents: Array<Document>, totalCount: number}> {
 
         let totalCount: number = ids.length;
@@ -428,8 +427,7 @@ export class Datastore {
     }
 
 
-    private mergeDocuments(documentsFromCache: Array<Document>, 
-                           documentsFromDatastore: Array<Document>,
+    private mergeDocuments(documentsFromCache: Array<Document>, documentsFromDatastore: Array<Document>,
                            idsInOrder: string[]): Array<Document> {
 
         const documents = documentsFromCache.concat(documentsFromDatastore);

@@ -1,3 +1,4 @@
+import { Injectable } from '@angular/core';
 import { clone } from 'tsfun';
 import { Datastore, ImageDocument } from 'idai-field-core';
 import { ImagesState } from './images-state';
@@ -7,6 +8,7 @@ import { ImagesState } from './images-state';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
+@Injectable()
 export class ImageDocumentsManager {
 
     public selected: Array<ImageDocument> = [];
@@ -100,7 +102,7 @@ export class ImageDocumentsManager {
         query.constraints['project:exist'] = 'UNKNOWN';
 
         try {
-            const {documents, totalCount} = await this.datastore.find(query);
+            const { documents, totalCount } = await this.datastore.find(query);
             if (queryId !== this.currentQueryId) return;
 
             this.documents = documents as Array<ImageDocument>;

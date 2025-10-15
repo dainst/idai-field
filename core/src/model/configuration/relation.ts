@@ -110,7 +110,6 @@ export namespace Relation {
      */ 
     export const SAME_AS = 'isSameAs';
 
-
     export const UNIDIRECTIONAL = Hierarchy.ALL.concat([IS_PRESENT_IN]);
 
 
@@ -133,6 +132,14 @@ export namespace Relation {
     }
 
 
+    export module Workflow {
+
+        export const IS_CARRIED_OUT_ON = 'isCarriedOutOn';
+        export const RESULTS_IN = 'resultsIn';
+        export const ALL = [IS_CARRIED_OUT_ON, RESULTS_IN];
+    }
+
+
     export module Image {
 
         export const DEPICTS = 'depicts';
@@ -148,10 +155,8 @@ export namespace Relation {
      * @returns {boolean} True if the given domain category is a valid domain name for a relation definition
      * which has the given range category & name
      */
-     export function isAllowedRelationDomainCategory(relations: Array<Relation>,
-                                                     domainCategory: Name, 
-                                                     rangeCategory: Name,
-                                                     relation: Name): boolean {
+     export function isAllowedRelationDomainCategory(relations: Array<Relation>, domainCategory: Name, 
+                                                     rangeCategory: Name, relation: Name): boolean {
 
         const relationDefinitions = getRelations(relations, rangeCategory, true);
 
@@ -165,9 +170,7 @@ export namespace Relation {
     }
 
 
-    export function getRelations(relations: Array<Relation>,
-                                 categoryName: string,
-                                 isRangeCategory: boolean = false) {
+    export function getRelations(relations: Array<Relation>, categoryName: string, isRangeCategory: boolean = false) {
 
         const availableRelationFields: Array<Relation> = [];
 

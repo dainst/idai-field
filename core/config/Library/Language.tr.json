@@ -9,7 +9,10 @@
     "other": "Diğer",
     "hierarchy": "Hiyerarşi",
     "stratigraphy": "Stratigrafi",
-    "inventory": "Envanter"
+    "inventory": "Envanter",
+    "workflow": "İş Akışı",
+    "mineralFraction": "Mineral taneciği",
+    "organicFraction": "Organik tane"
   },
   "commons": {
     "dimensionLength": {
@@ -55,14 +58,6 @@
     "description": {
       "label": "Açıklama",
       "description": "Freeform açıklama alanı"
-    },
-    "beginningDate": {
-      "label": "Başlangıç tarihi",
-      "description": "Çalışmanın kaydedilmeye başladığı tarihtir"
-    },
-    "endDate": {
-      "label": "Bitiş tarihi",
-      "description": "Çalışmanın kaydedilmesinin bittiği tarihtir"
     },
     "processor": {
       "label": "Sorumlu",
@@ -120,6 +115,14 @@
     },
     "phase": {
       "label": "Dönem"
+    },
+    "weight": {
+      "label": "Ağırlık",
+      "description": "Ağırlık birimi"
+    },
+    "volume": {
+      "label": "Hacim",
+      "description": "Hacim göstergesi"
     }
   },
   "categories": {
@@ -267,10 +270,10 @@
       }
     },
     "Mollusk": {
-      "label": "Deniz kabuğu",
+      "label": "Yumuşakçalar",
       "fields": {
         "classification": {
-          "label": "Deniz kabuğu sınıflandırması"
+          "label": "Yumuşakça sınıflandırması"
         }
       }
     },
@@ -1015,7 +1018,7 @@
         },
         "temper": {
           "label": "Katkı",
-          "description": "Esas katkı türü, örn. 'Organik parçacıklar'"
+          "description": "Esas katkı türü, örn. 'Organik katkı'"
         },
         "temperAmount": {
           "label": "Katkı miktarı"
@@ -1064,7 +1067,7 @@
       }
     },
     "Grave": {
-      "label": "Gömüt",
+      "label": "Mezar",
       "fields": {
         "bibliography": {
           "label": "Kaynakça"
@@ -1105,10 +1108,10 @@
           "description": "Stratigrafik birimi sınırlamak için hangi kriter(ler) seçildi?"
         },
         "graveType": {
-          "label": "Gömüt tipi"
+          "label": "Mezar tipi"
         },
         "specificType": {
-          "label": "Özel gömüt tipi"
+          "label": "Özel mezar tipi"
         },
         "soilType": {
           "label": "Toprak tipi",
@@ -1164,16 +1167,8 @@
         }
       }
     },
-    "ProcessUnit": {
-      "label": "Operasyon",
-      "fields": {
-        "operationClassification": {
-          "label": "Operasyon sınıflandırması"
-        }
-      }
-    },
     "Terracotta": {
-      "label": "Pişmiş Toprak",
+      "label": "Terrakotta",
       "fields": {
         "clayColorBreak": {
           "label": "Parça: Hamur rengi ve tonu"
@@ -1186,7 +1181,7 @@
         },
         "clayStructure": {
           "label": "Yapısı",
-          "description": "Pişmiş toprak yapısal türü nedir?"
+          "description": "Terrakotta yapısal türü nedir?"
         },
         "coatColorInside": {
           "label": "Astar (iç): Rengi ve tonu"
@@ -1257,10 +1252,6 @@
         "labNumber": {
           "label": "Laboratuvar numarası",
           "description": "İnceleme laboratuvarında atanan numune numarası"
-        },
-        "weight": {
-          "label": "Ağırlık (gr.)",
-          "description": "Gram cinsinden ağırlık"
         },
         "sampleType": {
           "label": "Numune tipi",
@@ -1451,10 +1442,6 @@
           "label": "Envanter numarası",
           "description": "Bir koleksiyon veya depodaki envanter sırasında atanan numara"
         },
-        "weight": {
-          "label": "Ağırlık (gr.)",
-          "description": "Gram cinsinden ağırlık"
-        },
         "condition": {
           "label": "Durumu",
           "description": "Koruma durumunun açıklaması"
@@ -1478,10 +1465,6 @@
         },
         "bibliography": {
           "label": "Kaynakça"
-        },
-        "weight": {
-          "label": "Ağırlık (gr.)",
-          "description": "Gram cinsinden ağırlık"
         },
         "storagePlace": {
           "label": "Depolandığı yer",
@@ -1604,6 +1587,261 @@
     },
     "StorageBag": {
       "label": "Poşet"
+    },
+    "Process": {
+      "label": "İşlem",
+      "fields": {
+        "state": {
+          "label": "Durum"
+        }
+      }
+    },
+    "SievedFractionProcessing": {
+      "fields": {
+        "organicFractionMeasurement05": {
+          "description": "0,5 mm elekte kalan organik madde miktarı",
+          "label": "Tane ölçümü 0,5 ORG"
+        },
+        "organicFractionMeasurementStrain": {
+          "label": "Tane ölçüm elemesi (bilinmeyen delik açıklığı) ORG",
+          "description": "Elek kalıntısında tutulan organik madde miktarı"
+        },
+        "organicFractionTreatmentType": {
+          "label": "Organik parçacığa uygulanan işlem türü",
+          "description": "Eleme işleminden sonra ayrıştırılan organik parçacığa uygulanan işlem"
+        },
+        "organicFractionSubsampled": {
+          "label": "Organik parçacığın alt örneklemesi",
+          "description": "Farklı organik tanelerin tamamen analizi yerine alt örnekleme yoluyla mı alındığını belirtir."
+        },
+        "organicSubsamplingTechnique": {
+          "label": "Kullanılan alt örnekleme tekniği (organik tane)",
+          "description": "Elenmiş organik tanelerin analiz için daha küçük, temsili porsiyonlara bölünme yöntemi"
+        },
+        "organicFractionMeasured": {
+          "label": "Ölçülen organik tane",
+          "description": "Organik bileşenlerin hacim/ağırlığının kaydedilip kaydedilmediğini gösterir."
+        },
+        "organicFractionMeasurement8": {
+          "label": "Tane ölçümü 8 ORG",
+          "description": "8 mm elekte kalan organik madde miktarı"
+        },
+        "organicFractionMeasurement4": {
+          "label": "Tane ölçümü 4 ORG",
+          "description": "4 mm elekte kalan organik madde miktarı"
+        },
+        "organicFractionMeasurement2": {
+          "label": "Tane ölçümü 2 ORG",
+          "description": "2 mm elekte kalan organik madde miktarı"
+        },
+        "organicFractionMeasurement035": {
+          "label": "Tane ölçümü 0,35 ORG",
+          "description": "0,35 mm elekte kalan organik madde miktarı"
+        },
+        "organicFractionMeasurement025": {
+          "label": "Tane ölçümü 0,25 ORG",
+          "description": "0,25 mm elekte kalan organik madde miktarı"
+        },
+        "organicFractionMeasurement0125": {
+          "label": "Tane ölçümü 0,125 ORG",
+          "description": "0,125 mm elekte kalan organik madde miktarı"
+        },
+        "organicFractionMeasurementUnit": {
+          "label": "Ölçü birimi (Organik tane)",
+          "description": "Organik tane miktarının belirtildiği birim"
+        },
+        "organicFractionVolumeMeasurementTechnique": {
+          "label": "Hacim ölçüm tekniği",
+          "description": "Organik parçacığın hacmini belirlemek için kullanılan yöntem"
+        },
+        "organicFractionSubsampledList": {
+          "label": "Organik alt örneklerin listesi",
+          "description": "Alt örnekleme yapılan organik taneleri gösterir."
+        },
+        "organicMultiplicationFactor8": {
+          "label": "Çarpım katsayısı 8 ORG",
+          "description": "8-ORG tanelerinde toplam kalıntı miktarını tahmin ederken kullanılacak çarpım katsayısı"
+        },
+        "organicMultiplicationFactor4": {
+          "label": "Çarpım katsayısı 4 ORG",
+          "description": "4-ORG tanelerinde toplam kalıntı miktarını tahmin ederken kullanılacak çarpım katsayısı"
+        },
+        "organicMultiplicationFactor2": {
+          "label": "Çarpım katsayısı 2 ORG",
+          "description": "2-ORG tanelerinde toplam kalıntı miktarını tahmin ederken kullanılacak çarpım katsayısı"
+        },
+        "organicMultiplicationFactor05": {
+          "label": "Çarpım katsayısı 0,5 ORG",
+          "description": "0,5-ORG tanelerinde toplam kalıntı miktarını tahmin ederken kullanılacak çarpım katsayısı"
+        },
+        "organicMultiplicationFactorStrain": {
+          "label": "Çarpım katsayısı elek ORG (bilinmeyen gözenek genişliği)",
+          "description": "Elek tanelerinde toplam organik kalıntı miktarının tahmininde kullanılacak çarpım katsayısı"
+        },
+        "organicMultiplicationFactor035": {
+          "label": "Çarpım katsayısı 0,35 ORG",
+          "description": "0,35-ORG tanelerinde toplam kalıntı miktarını tahmin ederken kullanılacak çarpım katsayısı"
+        },
+        "organicMultiplicationFactor025": {
+          "label": "Çarpım katsayısı 0,25 ORG",
+          "description": "0,25-ORG tanelerinde toplam kalıntı miktarını tahmin ederken kullanılacak çarpım katsayısı"
+        },
+        "organicMultiplicationFactor0125": {
+          "label": "Çarpım katsayısı 0,125 ORG",
+          "description": "0,125-ORG tanelerinde toplam kalıntı miktarını tahmin ederken kullanılacak çarpım katsayısı"
+        },
+        "mineralFractionSubsampledList": {
+          "description": "Alt örnekleri alınan mineral tanelerini gösterir.",
+          "label": "Örneklenen mineral tanelerinin listesi"
+        },
+        "mineralDescription": {
+          "label": "Açıklama (mineral tanesi)"
+        },
+        "mineralNotes": {
+          "label": "Notlar (mineral tanesi)"
+        },
+        "organicDescription": {
+          "label": "Açıklama (Organik tane)"
+        },
+        "organicNotes": {
+          "label": "Notlar (Organik tane)"
+        },
+        "mineralFractionKept": {
+          "label": "Kalan mineral tanesi",
+          "description": "Mineral tanesinin kalıp kalmadığını gösterir."
+        },
+        "mineralFractionMeasured": {
+          "label": "Ölçülen mineral tanesi",
+          "description": "Mineral tanelerinin hacim/ağırlıklarının kaydedilip kaydedilmediğini gösterir."
+        },
+        "mineralFractionMeasurementUnit": {
+          "label": "Ölçüm birimi (mineral tanesi)",
+          "description": "Mineral tane miktarının belirtildiği birim"
+        },
+        "mineralFractionMeasurement8": {
+          "label": "Tane ölçümü 8 MIN",
+          "description": "8 mm elekte tutulan mineral madde miktarı"
+        },
+        "mineralFractionMeasurement4": {
+          "label": "Tane ölçümü 4 MIN",
+          "description": "4 mm elekte tutulan mineral madde miktarı"
+        },
+        "mineralFractionMeasurement2": {
+          "label": "Tane ölçümü 2 MIN",
+          "description": "2 mm elekte tutulan mineral madde miktarı"
+        },
+        "mineralFractionMeasurement1": {
+          "label": "Tane ölçümü 1 MIN",
+          "description": "1 mm elekte tutulan mineral madde miktarı"
+        },
+        "mineralFractionMeasurement05": {
+          "label": "Tane ölçümü 0,5 MIN",
+          "description": "0,5 mm elekte tutulan mineral madde miktarı"
+        },
+        "mineralFractionMeasurementStrain": {
+          "label": "Tane ölçümü elek (bilinmeyen delik açıklığı) MIN",
+          "description": "Eleme kalıntısında tutulan mineral madde miktarı"
+        },
+        "mineralFractionSubsampled": {
+          "label": "Mineral tanesinin örneklemesi",
+          "description": "Farklı mineral tanelerinin bütünüyle analiz edilmesi yerine alt örneklere ayrılıp ayrılmadığını gösterir."
+        },
+        "mineralSubsamplingTechnique": {
+          "label": "Kullanılan alt örnekleme tekniği (mineral tanesi)",
+          "description": "Elenmiş mineral tanelerinin analiz için daha küçük, temsili porsiyonlara bölünmesi yöntemi"
+        },
+        "mineralMultiplicationFactor8": {
+          "label": "Çarpım katsayısı 8 MIN",
+          "description": "8 MIN'lik tanede toplam kalıntı miktarını tahmin ederken kullanılacak çarpım katsayısı"
+        },
+        "mineralMultiplicationFactor4": {
+          "label": "Çarpım katsayısı 4 MIN",
+          "description": "4 MIN'lik tanede toplam kalıntı miktarını tahmin ederken kullanılacak çarpım katsayısı"
+        },
+        "mineralMultiplicationFactor2": {
+          "label": "Çarpım katsayısı 2 MIN",
+          "description": "2 MIN'lik tanede toplam kalıntı miktarını tahmin ederken kullanılacak çarpım katsayısı"
+        },
+        "mineralMultiplicationFactor1": {
+          "label": "Çarpım katsayısı 1 MIN",
+          "description": "1 MIN'lik tanede toplam kalıntı miktarını tahmin ederken kullanılacak çarpım katsayısı"
+        },
+        "mineralMultiplicationFactor05": {
+          "label": "Çarpım katsayısı 0,5 MIN",
+          "description": "0,5 MIN'lik tanede toplam kalıntı miktarını tahmin ederken kullanılacak çarpım katsayısı"
+        },
+        "mineralMultiplicationFactorStrain": {
+          "label": "Çarpım katsayısı, elek (bilinmeyen delik açıklığı) MIN",
+          "description": "Elek tanelerinde toplam mineral kalıntısı miktarının tahmininde kullanılacak çarpım katsayısı"
+        }
+      },
+      "label": "Elenen taneyi işleme"
+    },
+    "Sampling": {
+      "fields": {
+        "systematicSamplingStrategy": {
+          "description": "Yapılandırılmış, örüntülü bir yöntem kullanılarak tortu örneklerinin toplanmasına yönelik özel yaklaşım",
+          "label": "Sistematik örnekleme türü"
+        },
+        "samplingStrategy": {
+          "label": "Örnekleme türü",
+          "description": "Tortu örnekleme stratejisinin türünü sınıflandırmak için ana kategoriye, yani kalıntıların dikey veya yatay dağılımına öncelik vermek"
+        },
+        "horizontalSamplingStrategy": {
+          "label": "Yatay örnekleme türü",
+          "description": "Arkeolojik bir tabakanın/alanın yüzeyinden örnek toplama stratejisi"
+        },
+        "proportionSystematicSampling": {
+          "label": "Örnekleme yapılan alanın oranı (%)",
+          "description": "Olasılıksal sistematik bir stratejide örneklenen alan/tortu yüzdesi"
+        },
+        "verticalSamplingStrategy": {
+          "label": "Dikey örnekleme türü",
+          "description": "Arkeolojik bir kontekstin dikey ekseni boyunca tortu örnekleri toplama yöntemi"
+        },
+        "profileSamplingStrategy": {
+          "description": "Açığa çıkarılmış bir stratigrafik kesitten tortu toplamak için özel bir teknik",
+          "label": "Profil örnekleme türü"
+        },
+        "quadrantDimensionsSystematicSampling": {
+          "label": "Kadran ölçüleri (m2)",
+          "description": "Sistematik bir karelajda örnekleme kadranının boyutu"
+        }
+      },
+      "label": "Örnekleme"
+    },
+    "Sieving": {
+      "label": "Eleme",
+      "fields": {
+        "waterOrigin": {
+          "label": "Su kaynağı",
+          "description": "Örnek işlemede kullanılan suyun kaynağı"
+        },
+        "waterChangeFrequency": {
+          "label": "Su değişim sıklığı",
+          "description": "Örnek işlemede kullanılan suyun değiştirilme sıklığı"
+        },
+        "samplePretreated": {
+          "label": "Örneğin ön işlemi",
+          "description": "Tortul örneğinin eleme işleminden önce herhangi bir işleme tabi tutulup tutulmadığını gösterir."
+        },
+        "pretreatmentType": {
+          "label": "Gerçekleştirilen ön işlem türü",
+          "description": "Eleme işleminden önce tortu örneğine uygulanan özel yöntem"
+        },
+        "pretreatmentChemicals": {
+          "label": "Kullanılan kimyasallar",
+          "description": "Kullanılan kimyasal maddelerin adları"
+        },
+        "sievingMethod": {
+          "label": "Eleme yöntemi",
+          "description": "Örnekten mineral ve organik taneleri eleme ve ayırma tekniği"
+        },
+        "sievingMeshes": {
+          "label": "Kullanılan elek",
+          "description": "Eleme sırasında malzemeyi ayırmak için kullanılan elek gözü boyutları"
+        }
+      }
     }
   },
   "forms": {

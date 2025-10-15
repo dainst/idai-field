@@ -1,6 +1,5 @@
 defmodule FieldPublicationWeb.Presentation.DocumentLive do
-  alias FieldPublicationWeb.Presentation.Opengraph
-  alias FieldPublicationWeb.Presentation.Components.I18n
+  alias FieldPublication.Publications.Search
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.Projects
@@ -10,6 +9,9 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
   alias FieldPublication.Publications
   alias FieldPublication.Publications.Data
   alias FieldPublication.Publications.Data.Document
+
+  alias FieldPublicationWeb.Presentation.Opengraph
+  alias FieldPublicationWeb.Presentation.Components.I18n
 
   alias FieldPublicationWeb.Presentation.DocumentComponents
   alias FieldPublicationWeb.Presentation.Components.PublicationSelection
@@ -36,6 +38,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       |> assign(:project_name, project_name)
       |> assign(:publications, publications)
       |> assign(:draft_dates, draft_dates)
+      |> assign(:focus, :default)
     }
   end
 
@@ -56,6 +59,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       |> assign(:publication, current_publication)
       |> evaluate_requested_language(current_publication, params)
       |> evaluate_requested_doc(current_publication, params)
+      |> assign(:focus, parse_focus(Map.get(params, "focus")))
     }
   end
 
@@ -86,13 +90,34 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
   def handle_event(
         "geometry-clicked",
         %{"uuid" => uuid},
-        %{assigns: %{publication: publication, selected_lang: lang}} = socket
+        %{assigns: %{publication: publication, selected_lang: lang, focus: focus}} = socket
       ) do
+    query_params =
+      case focus do
+        :map ->
+          %{focus: "map"}
+
+        _ ->
+          %{}
+      end
+
     {
       :noreply,
       push_patch(socket,
-        to: ~p"/projects/#{publication.project_name}/#{publication.draft_date}/#{lang}/#{uuid}"
+        to:
+          ~p"/projects/#{publication.project_name}/#{publication.draft_date}/#{lang}/#{uuid}?#{query_params}"
       )
+    }
+  end
+
+  def handle_event(
+        "search",
+        %{"search_input" => q},
+        %{assigns: %{publication: %Publication{project_name: project_name}}} = socket
+      ) do
+    {
+      :noreply,
+      redirect(socket, to: ~p"/search?#{%{q: q, filters: %{project_name: project_name}}}")
     }
   end
 
@@ -144,7 +169,8 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
          %{assigns: %{selected_lang: language}} = socket,
          %Publication{} = publication,
          %{"uuid" => uuid}
-       ) do
+       )
+       when uuid != "project" do
     # If a UUID was provided, load its extended document.
     uuid
     |> Publications.Data.get_extended_document(publication, true)
@@ -157,13 +183,19 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
       %Document{} = extended_doc ->
         project_map_layers = Publications.Data.get_project_map_layers(publication)
+        image_categories = Publications.Data.get_image_categories(publication)
 
-        image_categories = Publications.Data.get_all_subcategories(publication, "Image")
+        ancestors =
+          publication
+          |> Publications.get_hierarchy()
+          |> construct_ancestor_tree(uuid, [])
+          |> Data.get_preview_documents(publication)
 
         socket
         |> assign(:uuid, uuid)
         |> assign(:doc, extended_doc)
         |> assign(:image_categories, image_categories)
+        |> assign(:ancestors, ancestors)
         |> assign(:project_map_layers, project_map_layers)
         |> assign(
           :page_title,
@@ -181,9 +213,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
     # If no UUID was provided, load the publication's extended "project" document.
     project_doc = Publications.Data.get_extended_document("project", publication, true)
 
-    project_map_layers =
-      Publications.Data.get_project_map_layers(publication)
-
     top_level_uuids =
       Publications.get_hierarchy(publication)
       |> Enum.filter(fn {_key, values} ->
@@ -193,13 +222,20 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
         key
       end)
 
-    top_level_docs = Data.get_extended_documents(top_level_uuids, publication)
+    top_level_docs = Data.get_preview_documents(top_level_uuids, publication)
+
+    category_hierarchy = Data.get_category_hierarchy(publication)
+    category_usage = Search.get_category_count(publication)
+
+    staff = create_staff_list(project_doc)
 
     socket
     |> assign(:doc, project_doc)
+    |> assign(:staff, staff)
     |> assign(:publication, publication)
     |> assign(:top_level_docs, top_level_docs)
-    |> assign(:project_map_layers, project_map_layers)
+    |> assign(:category_hierarchy, category_hierarchy)
+    |> assign(:category_usage, category_usage)
     |> assign(
       :page_title,
       get_page_title(project_doc)
@@ -219,6 +255,47 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       Gettext.get_locale(FieldPublicationWeb.Gettext)
     else
       List.first(publication.languages)
+    end
+  end
+
+  defp parse_focus("map"), do: :map
+  defp parse_focus(_), do: :default
+
+  defp construct_ancestor_tree(hierarchy, id, children) do
+    Map.get(hierarchy, id, %{})
+    |> case do
+      %{"parent" => nil} ->
+        children
+
+      %{"parent" => parent_id} ->
+        construct_ancestor_tree(hierarchy, parent_id, [parent_id] ++ children)
+
+      _ ->
+        children
+    end
+  end
+
+  defp create_staff_list(doc) do
+    Data.get_field(doc, "staff")
+    |> case do
+      nil ->
+        nil
+
+      %{labels: labels, value: value} ->
+        %{
+          labels: labels,
+          names:
+            Enum.map(value, fn
+              val when is_binary(val) ->
+                # Value is a list of strings.
+                val
+
+              %{"value" => val} ->
+                # Value is a list of maps generated by a checkbox in the UI.
+                val
+            end)
+            |> Enum.join(", ")
+        }
     end
   end
 end

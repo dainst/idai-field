@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { CategoryForm, Datastore, FieldDocument, Query, Labels, Document, Tree, Named,
-    ProjectConfiguration } from 'idai-field-core';
+import { CategoryForm, Datastore, FieldDocument, Query, Labels, Document, Tree, Named, ProjectConfiguration,
+    IndexFacade } from 'idai-field-core';
 import { CatalogExporter, ERROR_FAILED_TO_COPY_IMAGES } from '../../components/export/catalog/catalog-exporter';
 import { ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED } from '../../components/export/catalog/get-export-documents';
 import { CsvExporter } from '../../components/export/csv/csv-exporter';
 import { CategoryCount } from '../../components/export/export-helper';
-import { ExportRunner } from '../../components/export/export-runner';
+import { ExportResult, ExportRunner, InvalidField } from '../../components/export/export-runner';
 import { GeoJsonExporter } from '../../components/export/geojson-exporter';
 import { ShapefileExporter } from './shapefile-exporter';
 import { TabManager } from '../../services/tabs/tab-manager';
@@ -17,7 +17,6 @@ import { SettingsProvider } from '../../services/settings/settings-provider';
 import { ImageRelationsManager } from '../../services/image-relations-manager';
 import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
-import { InvalidField } from './csv/csv-export';
 import { AppState } from '../../services/app-state';
 import { AngularUtility } from '../../angular/angular-utility';
 
@@ -66,7 +65,8 @@ export class ExportComponent implements OnInit {
                 private menuService: Menus,
                 private imageRelationsManager: ImageRelationsManager,
                 private labels: Labels,
-                private appState: AppState) {}
+                private appState: AppState,
+                private indexFacade: IndexFacade) {}
 
 
     public getDocumentLabel = (operation: FieldDocument) => Document.getLabel(
@@ -102,7 +102,7 @@ export class ExportComponent implements OnInit {
     public async setCategoryCounts() {
 
         this.categoryCounts = await ExportRunner.determineCategoryCounts(
-            this.find,
+            this.indexFacade,
             this.getExportContext(),
             Tree.flatten(this.projectConfiguration.getCategories())
         );
@@ -197,8 +197,8 @@ export class ExportComponent implements OnInit {
 
         await GeoJsonExporter.performExport(
             this.datastore,
-            filePath,
-            this.selectedContext
+            this.selectedContext,
+            filePath
         );
     }
 
@@ -219,7 +219,7 @@ export class ExportComponent implements OnInit {
         if (!this.selectedCategory) return console.error('No category selected');
 
         try {
-            this.invalidFields = await ExportRunner.performExport(
+            const result: ExportResult = await ExportRunner.performExport(
                 this.find,
                 (async resourceId => (await this.datastore.get(resourceId)).resource.identifier),
                 this.getExportContext(),
@@ -228,13 +228,14 @@ export class ExportComponent implements OnInit {
                     .getRelationsForDomainCategory(this.selectedCategory.name)
                     .map(_ => _.name),
                 CsvExporter.performExport(
-                    filePath,
                     this.projectConfiguration.getProjectLanguages(),
                     this.csvSeparator,
-                    this.combineHierarchicalRelations
+                    this.combineHierarchicalRelations,
+                    filePath
                 )
             );
 
+            this.invalidFields = result.invalidFields;
             this.showInvalidFieldsWarning();
         } catch(err) {
             console.error(err);

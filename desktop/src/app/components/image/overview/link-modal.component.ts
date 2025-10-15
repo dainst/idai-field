@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { intersection } from 'tsfun';
-import { CategoryForm, ProjectConfiguration, Document, Relation } from 'idai-field-core';
+import { CategoryForm, ProjectConfiguration, Document, Relation, Constraints } from 'idai-field-core';
 
 
 @Component({
@@ -17,6 +17,11 @@ export class LinkModalComponent {
     public imageDocuments: Array<Document>;
     public filterOptions: Array<CategoryForm> = [];
 
+
+    constructor(public activeModal: NgbActiveModal,
+                private projectConfiguration: ProjectConfiguration) {}
+
+
     public getConstraints = () => {
 
         return {
@@ -26,10 +31,6 @@ export class LinkModalComponent {
             }
         };
     }
-
-
-    constructor(public activeModal: NgbActiveModal,
-                private projectConfiguration: ProjectConfiguration) {}
 
 
     public onKeyDown(event: KeyboardEvent) {

@@ -1,14 +1,38 @@
-<div *ngFor="let field of fieldDefinitions" [id]="getFieldId(field)">
-    <div *ngIf="shouldShow(field)" class="card bg-light edit-form-field-container">
-        <div class="card-header h4">
-            <span class="card-title">{{labels[field.name]}}</span>
-
-            <span *ngIf="descriptions[field.name]"
-                    placement="left"
-                    container="body"
-                    ngbTooltip="{{descriptions[field.name]}}"
-                    class="mdi mdi-information-outline float-end"></span>
-
+<div *ngFor="let field of groupFields" [id]="getFieldId(field)">
+    <div *ngIf="shouldShow(field)"
+         class="card bg-light edit-form-field-container"
+         [class.conditional]="field.condition">
+        <div class="card-header h4"
+             [class.with-info]="hasInfo(field)"
+             (contextmenu)="hasInfo(field) && openPopover(fieldInfoPopover)">
+            <span class="card-title"
+                  #fieldInfoPopover="ngbPopover"
+                  [ngbPopover]="infoPopover"
+                  triggers="manual"
+                  [popoverTitle]="labels[field.name]"
+                  popoverClass="configuration-info-popover"
+                  container="body"
+                  [autoClose]="false"
+                  [popoverContext]="{ field, description: descriptions[field.name] }">{{labels[field.name]}}</span>
+            <span class="float-end">
+                <span *ngIf="field.condition"
+                      placement="left"
+                      container="body"
+                      ngbTooltip="{{getConditionalFieldTooltip(field)}}"
+                      class="mdi mdi-eye"></span>
+                <span *ngIf="isConditionField(field) === 'single'"
+                      placement="left"
+                      container="body"
+                      ngbTooltip="Die Sichtbarkeit eines anderen Feldes hängt von den in dieses Feld eingetragenen Daten ab."
+                      i18n-ngbTooltip="@@docedit.conditionInfo.tooltip.single"
+                      class="mdi {{getConditionFieldIconClass(field)}}"></span>
+                <span *ngIf="isConditionField(field) === 'multiple'"
+                      placement="left"
+                      container="body"
+                      ngbTooltip="Die Sichtbarkeit anderer Felder hängt von den in dieses Feld eingetragenen Daten ab."
+                      i18n-ngbTooltip="@@docedit.conditionInfo.tooltip.multiple"
+                      class="mdi {{getConditionFieldIconClass(field)}}"></span>
+            </span>
             <img *ngIf="getStratigraphicalRelationInfo(field)"
                  class="relation-image"
                  [src]="'img/matrix-' + getStratigraphicalRelationInfo(field).imageName + '.png'"
@@ -22,7 +46,9 @@
                              [fieldContainer]="document.resource"
                              [field]="field"
                              [languages]="languages"
-                             [identifierPrefix]="identifierPrefix"></edit-form-field>
+                             [identifierPrefix]="identifierPrefix"
+                             [disabled]="isDisabled(field)"
+                             (onChanged)="onChanged.emit()"></edit-form-field>
         </div>
         <div *ngIf="!isValidFieldData(field)" class="card-block">
             <invalid-field-data [resource]="document['resource']"
@@ -30,3 +56,7 @@
         </div>
     </div>
 </div>
+
+<ng-template #infoPopover let-field="field" let-description="description">
+    <configuration-info [configurationItem]="field" [description]="description ?? ''"></configuration-info>
+</ng-template>

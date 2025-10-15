@@ -36,6 +36,20 @@ defmodule FieldPublication.Publications.Data do
     ]
   end
 
+  defmodule DocumentPreview do
+    @derive Jason.Encoder
+
+    @enforce_keys [:id, :identifier, :category, :project, :publication]
+    defstruct [
+      :id,
+      :identifier,
+      :project,
+      :publication,
+      :category,
+      image_uuids: []
+    ]
+  end
+
   defmodule Category do
     @derive Jason.Encoder
     @enforce_keys [:name, :labels, :color]
@@ -104,17 +118,6 @@ defmodule FieldPublication.Publications.Data do
     }
   end
 
-  def get_all_subcategories(publication, category_name) do
-    publication
-    |> Publications.get_configuration()
-    |> Enum.find(fn %{"item" => item} ->
-      category_name == item["name"]
-    end)
-    |> then(fn entry ->
-      flatten_category_tree(entry)
-    end)
-  end
-
   def document_exists?(uuid, %Publication{database: db}) do
     CouchService.head_document(uuid, db)
     |> case do
@@ -123,6 +126,139 @@ defmodule FieldPublication.Publications.Data do
 
       _ ->
         false
+    end
+  end
+
+  def get_image_categories(publication) do
+    ["Image"] ++ get_child_categories(publication, "Image")
+  end
+
+  def get_flat_category_configs(publication) do
+    publication
+    |> Publications.get_configuration()
+    |> flatten_config()
+  end
+
+  defp flatten_config(config) do
+    config
+    |> Enum.map(&flatten_config_branch/1)
+    |> List.flatten()
+  end
+
+  defp flatten_config_branch(%{"item" => item, "trees" => trees}) do
+    ([item] ++ Enum.map(trees, &flatten_config_branch/1))
+    |> List.flatten()
+  end
+
+  def get_category_hierarchy(publication) do
+    publication
+    |> Publications.get_configuration()
+    |> Enum.map(&extract_category_info/1)
+    |> Enum.into(%{})
+  end
+
+  def extract_category_info(%{
+        "item" => %{"name" => name, "color" => color, "label" => labels},
+        "trees" => trees
+      }) do
+    {name,
+     %{
+       color: color,
+       labels: labels,
+       children:
+         trees
+         |> Enum.map(&extract_category_info/1)
+         |> Enum.into(%{})
+     }}
+  end
+
+  def get_geometries_by_category(%Publication{} = publication) do
+    color_mapping =
+      publication
+      |> get_flat_category_configs()
+      |> Enum.map(fn %{"name" => name, "color" => color} ->
+        {name, color}
+      end)
+      |> Enum.into(%{})
+
+    CouchService.get_document_stream(
+      %{
+        selector: %{},
+        fields: [
+          "resource.id",
+          "resource.category",
+          "resource.geometry"
+        ]
+      },
+      publication.database
+    )
+    |> Stream.filter(fn
+      %{"resource" => %{"geometry" => _}} -> true
+      _ -> false
+    end)
+    |> Enum.reduce(%{}, fn %{
+                             "resource" => %{
+                               "category" => category,
+                               "geometry" => geometry
+                             }
+                           },
+                           acc ->
+      Map.update(
+        acc,
+        category,
+        %{geometries: [geometry], color: color_mapping[category]},
+        fn existing ->
+          Map.put(existing, :geometries, existing.geometries ++ [geometry])
+        end
+      )
+    end)
+  end
+
+  def get_child_categories(publication, category_name) do
+    publication
+    |> Publications.get_configuration()
+    |> search_category_and_accumulate_children(category_name)
+  end
+
+  defp search_category_and_accumulate_children(branch, category_name) do
+    branch
+    |> Enum.find(fn %{"item" => %{"name" => name}} -> category_name == name end)
+    |> case do
+      nil ->
+        Enum.map(branch, fn %{"trees" => deeper_branch} ->
+          search_category_and_accumulate_children(deeper_branch, category_name)
+        end)
+        |> List.flatten()
+
+      %{"trees" => child_categories} ->
+        Enum.map(child_categories, &flatten_category_tree/1)
+        |> List.flatten()
+    end
+  end
+
+  defp flatten_category_tree(%{"item" => %{"name" => name}, "trees" => child_categories}) do
+    ([name] ++ Enum.map(child_categories, &flatten_category_tree/1))
+    |> List.flatten()
+  end
+
+  def get_parent_categories(publication, category_name) do
+    publication
+    |> Publications.get_configuration()
+    |> search_category_and_accumulate_parents(category_name)
+  end
+
+  defp search_category_and_accumulate_parents(branch, category_name, parents \\ []) do
+    branch
+    |> Enum.find(fn %{"item" => %{"name" => name}} -> name == category_name end)
+    |> case do
+      nil ->
+        Enum.map(branch, fn %{"item" => %{"name" => name}, "trees" => deeper_branch} ->
+          search_category_and_accumulate_parents(deeper_branch, category_name, parents ++ [name])
+        end)
+        |> List.flatten()
+
+      _category_config ->
+        parents
     end
   end
 
@@ -195,6 +331,62 @@ defmodule FieldPublication.Publications.Data do
     |> Enum.map(&apply_project_configuration(&1, config, publication, include_relations))
   end
 
+  def get_preview_documents(
+        uuids,
+        %Publication{database: db} = publication
+      ) do
+    pub_id = Publications.get_doc_id(publication)
+
+    cached =
+      Cachex.get(:publication_document_previews, pub_id)
+      |> case do
+        {:ok, documents} when is_list(documents) ->
+          documents
+
+        _ ->
+          []
+      end
+      |> Enum.filter(fn %Document{id: id} ->
+        id in uuids
+      end)
+
+    cached_ids =
+      Enum.map(cached, fn %Document{id: id} -> id end)
+
+    other_ids =
+      Enum.reject(uuids, fn uuid -> uuid in cached_ids end)
+
+    config = Publications.get_configuration(publication)
+
+    loaded =
+      if other_ids != [] do
+        CouchService.get_document_stream(
+          %{
+            selector: %{_id: %{"$in": other_ids}},
+            fields: [
+              "resource.id",
+              "resource.identifier",
+              "resource.relations.isDepictedIn",
+              "resource.category",
+              "resource.shortDescription",
+              "resource.geometry"
+            ]
+          },
+          db
+        )
+        |> Enum.map(&apply_project_configuration(&1, config, publication))
+      else
+        []
+      end
+
+    Cachex.get_and_update(:publication_document_previews, pub_id, fn
+      nil -> {:commit, loaded}
+      existing -> {:commit, existing ++ loaded}
+    end)
+
+    loaded ++ cached
+  end
+
   def get_doc_stream_for_categories(%Publication{database: database}, categories)
       when is_list(categories) do
     query =
@@ -208,6 +400,66 @@ defmodule FieldPublication.Publications.Data do
       }
 
     run_query(query, database)
+  end
+
+  def get_doc_breakdown_by_category(%Publication{database: database} = publication) do
+    configuration =
+      Publications.get_configuration(publication)
+
+    %{
+      selector: %{},
+      fields: [
+        "resource.category",
+        "resource.geometry"
+      ]
+    }
+    |> run_query(database)
+    |> Stream.reject(fn %{
+                          "resource" => %{
+                            "category" => category_key
+                          }
+                        } ->
+      category_key in ["Project", "Configuration"]
+    end)
+    |> Enum.reduce(
+      %{},
+      fn %{
+           "resource" =>
+             %{
+               "category" => category_key
+             } = resource
+         },
+         acc ->
+        accumulated_category_data =
+          Map.get(
+            acc,
+            category_key,
+            Map.merge(
+              %{geometries: []},
+              configuration
+              |> search_category_tree(category_key)
+              |> Map.get("item")
+              |> extend_category(resource)
+            )
+          )
+
+        accumulated_category_data =
+          Map.get(resource, "geometry")
+          |> case do
+            nil ->
+              accumulated_category_data
+
+            geometry ->
+              Map.put(
+                accumulated_category_data,
+                :geometries,
+                accumulated_category_data.geometries ++ [geometry]
+              )
+          end
+
+        Map.put(acc, category_key, accumulated_category_data)
+      end
+    )
   end
 
   def get_doc_stream_for_georeferenced(%Publication{database: database}) do
@@ -309,7 +561,7 @@ defmodule FieldPublication.Publications.Data do
       ) do
     category_configuration = search_category_tree(configuration, resource["category"])
 
-    image_categories = get_all_subcategories(publication, "Image")
+    image_categories = get_image_categories(publication)
 
     image_uuids =
       if resource["category"] in image_categories do
@@ -380,9 +632,9 @@ defmodule FieldPublication.Publications.Data do
     resource_keys = Map.keys(resource)
 
     category_configuration["groups"]
-    |> Enum.map(fn group ->
+    |> Stream.map(fn group ->
       group["fields"]
-      |> Enum.map(&extend_field(&1, resource_keys, resource))
+      |> Stream.map(&extend_field(&1, resource_keys, resource))
       |> Enum.reject(fn val -> val == nil end)
       |> case do
         [] ->
@@ -411,7 +663,25 @@ defmodule FieldPublication.Publications.Data do
           field
           |> Map.get("valuelist", %{})
           |> Map.get("values", %{})
-          |> Enum.map(fn {key, map} -> {key, Map.get(map, "label", %{})} end)
+          |> Stream.map(fn {key, map} -> {key, Map.get(map, "label", %{})} end)
+          |> Stream.filter(fn {key, _val} ->
+            cond do
+              is_list(resource[field["name"]]) ->
+                if field["inputType"] == "dimension" do
+                  key in Enum.map(resource[field["name"]], fn %{"measurementPosition" => position} ->
+                    position
+                  end)
+                else
+                  key in resource[field["name"]]
+                end
+
+              is_map(resource[field["name"]]) ->
+                key == resource[field["name"]]["value"]
+
+              true ->
+                key == resource[field["name"]]
+            end
+          end)
           |> Enum.into(%{})
 
         %Field{base_fields | value_labels: value_labels}
@@ -431,7 +701,7 @@ defmodule FieldPublication.Publications.Data do
       relations
       |> Map.values()
       |> List.flatten()
-      |> get_extended_documents(publication, false)
+      |> get_preview_documents(publication)
 
     # ...then sort them into their respective relation groups, including the translated labels for those groups.
     relation_types = Map.keys(relations)
@@ -468,7 +738,10 @@ defmodule FieldPublication.Publications.Data do
               FieldPublicationWeb.Gettext,
               locale,
               fn ->
-                FieldPublicationWeb.Gettext.gettext("Contains")
+                Gettext.gettext(
+                  FieldPublicationWeb.Gettext,
+                  "Contains"
+                )
               end
             )
           }
@@ -479,21 +752,12 @@ defmodule FieldPublication.Publications.Data do
         |> Publications.get_hierarchy()
         |> Map.get(uuid, %{})
         |> Map.get("children", [])
-        |> get_extended_documents(publication)
+        |> get_preview_documents(publication)
     }
   end
 
   defp run_query(query, database) do
     CouchService.get_document_stream(query, database)
-  end
-
-  defp flatten_category_tree(%{"item" => %{"name" => name}, "trees" => child_categories}) do
-    ([name] ++ Enum.map(child_categories, &flatten_category_tree/1))
-    |> List.flatten()
-  end
-
-  defp flatten_category_tree(nil) do
-    []
   end
 
   defp search_category_tree(configuration, category_name) do

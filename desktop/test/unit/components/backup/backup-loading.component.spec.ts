@@ -1,7 +1,7 @@
 import { nop } from 'tsfun';
 import { BackupLoadingComponent } from '../../../../src/app/components/backup/backup-loading.component';
-import { Backup } from '../../../../src/app/components/backup/backup';
 import { M } from '../../../../src/app/components/messages/m';
+import { ERROR_FILE_NOT_FOUND, ERROR_GENERIC } from '../../../../src/app/services/backup/backup-service';
 
 const PouchDB = require('pouchdb-node');
 
@@ -13,10 +13,10 @@ describe('BackupLoadingComponent', () => {
 
     const databaseName = 'unittestdb';
 
-    let backupLoadingComponent: BackupLoadingComponent;
+    let backupLoadingComponent: any;
     let messages: any;
     let settingsService: any;
-    let backupProvider: any;
+    let backupService: any;
 
 
     beforeAll(() => {
@@ -35,9 +35,9 @@ describe('BackupLoadingComponent', () => {
             addProject: jest.fn()
         };
         
-        backupProvider = {
-            dump: jest.fn(),
-            readDump: jest.fn()
+        backupService = {
+            create: jest.fn(),
+            restore: jest.fn().mockReturnValue(Promise.resolve({ success: true }))
         };
 
         const modalService: any = {
@@ -61,7 +61,7 @@ describe('BackupLoadingComponent', () => {
             messages,
             settingsProvider,
             settingsService,
-            backupProvider,
+            backupService,
             tabManager,
             menuService,
             undefined
@@ -91,24 +91,24 @@ describe('BackupLoadingComponent', () => {
     });
 
 
-    test('load backup: filenotexists', async () => {
+    test('load backup: file not exists', async () => {
 
         backupLoadingComponent.projectIdentifier = databaseName;
         backupLoadingComponent.path = './test/store/backup_test_file.txt';
 
-        backupProvider.readDump.mockReturnValue(Promise.reject(Backup.FILE_NOT_EXIST));
+        backupService.restore.mockReturnValue(Promise.resolve({ success: false, error: ERROR_FILE_NOT_FOUND }));
         await backupLoadingComponent.loadBackup();
 
         expect(messages.add).toHaveBeenCalledWith([M.BACKUP_READ_ERROR_FILE_NOT_FOUND]);
     });
 
 
-    test('load backup: cannotreaddb', async () => {
+    test('load backup: generic error', async () => {
 
         backupLoadingComponent.projectIdentifier = databaseName;
         backupLoadingComponent.path = './package.json';
 
-        backupProvider.readDump.mockReturnValue(Promise.reject('reason'));
+        backupService.restore.mockReturnValue(Promise.resolve({ success: false, error: ERROR_GENERIC }));
         await backupLoadingComponent.loadBackup();
 
         expect(messages.add).toHaveBeenCalledWith([M.BACKUP_READ_ERROR_GENERIC]);

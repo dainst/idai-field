@@ -10,7 +10,7 @@ const { test, expect } = require('@playwright/test');
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-test.describe('import --', () => {
+test.describe('import', () => {
 
     test.beforeAll(async () => {
 

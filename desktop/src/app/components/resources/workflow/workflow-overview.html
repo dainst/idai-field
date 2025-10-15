@@ -1,0 +1,14 @@
+<process-list [processes]="documents"
+              [sortMode]="getSortMode()"
+              (onChanged)="onChanged($event)"
+              (onRelationTargetSelected)="jumpToResource($event)"
+              (onSortModeChanged)="setSortMode($event)"></process-list>
+
+<plus-button *ngIf="isPlusButtonShown()"
+             id="create-document-button"
+             [placement]="'top'"
+             [preselectedGeometryType]="'none'"
+             [preselectedCategory]="getCurrentFilterCategory()"
+             [liesWithin]="getSelectedSegmentDocument()"
+             [isRecordedIn]="viewFacade.getCurrentOperation()"
+             [status]="'enabled'"></plus-button>

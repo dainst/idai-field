@@ -2,6 +2,7 @@
  * Implements utility methods for sorting
  *
  * @author Sebastian Cuy
+ * @author Thomas Kleinke
  */
 export module SortUtil {
 
@@ -50,30 +51,16 @@ export module SortUtil {
     }
 
 
-    /**
-     * Compares two objects with standard comparison operators.
-     *
-     * @param a
-     * @param b
-     * @returns {number}
-     */
-    export function compare(a: any, b: any): number {
+    export function numberCompare(a: number, b: number): number {
 
-        if (a > b) return 1;
-        if (a < b) return -1;
-        return 0;
-    }
+        if (a === undefined) a = 0;
+        if (b === undefined) b = 0;
 
-
-    /**
-     * Wraps a compare function in order to reverse sorting.
-     *
-     * @param compareFunction the compare function to wrap
-     * @returns {(a:any, b:any)=>number} the new compare function
-     */
-    export function compareDescending(compareFunction: Function) {
-
-        return (a: any, b: any) => compareFunction(a, b) * -1;
+        if (a === b) {
+            return 0;
+        } else {
+            return a > b ? 1 : -1;
+        }
     }
 
 

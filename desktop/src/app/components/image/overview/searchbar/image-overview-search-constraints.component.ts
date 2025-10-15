@@ -1,7 +1,7 @@
 import { clone } from 'tsfun';
 import { Component, Renderer2 } from '@angular/core';
 import { Datastore, Field, ProjectConfiguration, Labels } from 'idai-field-core';
-import { ImageOverviewFacade } from '../../../../components/image/overview/view/imageoverview-facade';
+import { ImageOverviewFacade } from '../view/image-overview-facade';
 import { SearchConstraintsComponent } from '../../../widgets/search-constraints.component';
 import { ImageOverviewSearchBarComponent } from './image-overview-search-bar.component';
 

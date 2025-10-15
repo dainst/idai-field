@@ -1,7 +1,9 @@
-import { Component, EventEmitter, Input, OnChanges, SimpleChanges, Output, ElementRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, SimpleChanges, Output, ElementRef, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { ImageDocument, ImageVariant } from 'idai-field-core';
 import { constructGrid } from './construct-grid';
 import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
+import { ImageToolLauncher } from '../../../services/imagestore/image-tool-launcher';
 
 
 const DROPAREA = 'droparea';
@@ -17,7 +19,7 @@ const DROPAREA = 'droparea';
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
-export class ImageGridComponent implements OnChanges {
+export class ImageGridComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() nrOfColumns: number = 1;
     @Input() documents: Array<ImageDocument>;
@@ -42,9 +44,12 @@ export class ImageGridComponent implements OnChanges {
     private calcGridTimeout: any;
     private calcGridPromise: Promise<void>|undefined;
 
+    private downloadSubscription: Subscription;
+
 
     constructor(private element: ElementRef,
-                private imageUrlMaker: ImageUrlMaker) {}
+                private imageUrlMaker: ImageUrlMaker,
+                private imageToolLauncher: ImageToolLauncher) {}
 
 
     public async handleClick(document: ImageDocument, event: MouseEvent) {
@@ -54,6 +59,19 @@ export class ImageGridComponent implements OnChanges {
         } else {
             this.onClick.emit(document);
         }
+    }
+
+
+    ngOnInit() {
+        
+        this.downloadSubscription = this.imageToolLauncher.downloadNotifications()
+            .subscribe(() => this.loadImages(this.rows));
+    }
+
+
+    ngOnDestroy() {
+        
+        if (this.downloadSubscription) this.downloadSubscription.unsubscribe();
     }
 
 

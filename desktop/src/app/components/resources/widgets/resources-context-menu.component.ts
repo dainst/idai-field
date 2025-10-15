@@ -8,7 +8,7 @@ import { UtilTranslations } from '../../../util/util-translations';
 
 
 export type ResourcesContextMenuAction = 'edit'|'move'|'delete'|'warnings'|'edit-qr-code'|'edit-images'
-    |'scan-storage-place'|'create-polygon'|'create-line-string'|'create-point'|'edit-geometry';
+    |'scan-storage-place'|'edit-workflow'|'create-polygon'|'create-line-string'|'create-point'|'edit-geometry';
 
 
 @Component({
@@ -57,7 +57,8 @@ export class ResourcesContextMenuComponent implements OnChanges {
             || this.isWarningsOptionAvailable()
             || this.isAddQRCodeOptionAvailable()
             || this.isEditQRCodeOptionAvailable()
-            || this.isScanStoragePlaceOptionIsAvailable();
+            || this.isScanStoragePlaceOptionIsAvailable()
+            || this.isEditWorkflowOptionAvailable();
     }
 
 
@@ -136,6 +137,22 @@ export class ResourcesContextMenuComponent implements OnChanges {
 
         return this.isQrCodeOptionAvailable()
             && this.contextMenu.documents[0].resource.scanCode;
+    }
+
+
+    public isEditWorkflowOptionAvailable(): boolean {
+
+        const processCategories: Array<CategoryForm> = this.projectConfiguration.getCategory('Process')
+            ?.children ?? [];
+
+        return this.contextMenu.documents.length
+            && this.contextMenu.documents.find(document => {
+                return processCategories.find(category => {
+                    return this.projectConfiguration.isAllowedRelationDomainCategory(
+                        category.name, document.resource.category, Relation.Workflow.IS_CARRIED_OUT_ON
+                    );
+                }) !== undefined;
+            }) !== undefined;
     }
 
 

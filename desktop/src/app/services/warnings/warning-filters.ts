@@ -49,6 +49,12 @@ export module WarningFilters {
                 type: 'invalidFields'
             },
             {
+                label: translations.getTranslation('warnings.missingMandatoryFields'),
+                constraintName: 'missingMandatoryFields:exist',
+                count: 0,
+                type: 'missingMandatoryFields'
+            },
+            {
                 label: translations.getTranslation('warnings.outlierValues'),
                 constraintName: 'outliers:exist',
                 count: 0,
@@ -73,6 +79,12 @@ export module WarningFilters {
                 type: 'missingOrInvalidParent'
             },
             {
+                label: translations.getTranslation('warnings.unfulfilledConditionFields'),
+                constraintName: 'unfulfilledConditionFields:exist',
+                count: 0,
+                type: 'unfulfilledConditionFields'
+            },
+            {
                 label: translations.getTranslation('warnings.missingIdentifierPrefixes'),
                 constraintName: 'missingIdentifierPrefix:exist',
                 count: 0,
@@ -89,6 +101,12 @@ export module WarningFilters {
                 constraintName: 'resourceLimitExceeded:exist',
                 count: 0,
                 type: 'resourceLimitExceeded'
+            },
+            {
+                label: translations.getTranslation('warnings.invalidProcessState'),
+                constraintName: 'invalidProcessState:exist',
+                count: 0,
+                type: 'invalidProcessState'
             }
         ];
 

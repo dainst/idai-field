@@ -50,8 +50,7 @@
             "supervisor",
             "processor",
             "campaign",
-            "beginningDate",
-            "endDate",
+            "date",
             "diary"
           ]
         },
@@ -94,8 +93,7 @@
         "diary",
         "description",
         "area",
-        "beginningDate",
-        "endDate",
+        "date",
         "dimensionWidth",
         "dimensionLength",
         "period"
@@ -161,8 +159,7 @@
             "processor",
             "campaign",
             "diary",
-            "beginningDate",
-            "endDate",
+            "date",
             "isSameAs",
             "date"
           ]

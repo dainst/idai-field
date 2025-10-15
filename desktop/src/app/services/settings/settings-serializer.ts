@@ -44,6 +44,10 @@ export class SettingsSerializer {
             configToWrite['imagestorePath'] = settings.imagestorePath;
         }
 
+        if (settings.backupDirectoryPath) {
+            configToWrite['backupDirectoryPath'] = settings.backupDirectoryPath;
+        }
+
         if (settings.dbs) {
             configToWrite['dbs'] = settings.dbs;
         }
@@ -51,6 +55,10 @@ export class SettingsSerializer {
         if (settings.projectNames) {
             configToWrite['projectNames'] = settings.projectNames;
         }
+
+        if (settings.keepBackups) {
+            configToWrite['keepBackups'] = settings.keepBackups;
+        } 
 
         return this.writeConfigFile(configToWrite);
     }

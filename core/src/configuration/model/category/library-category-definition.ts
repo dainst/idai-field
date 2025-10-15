@@ -14,6 +14,7 @@ export interface LibraryCategoryDefinition extends BaseCategoryDefinition {
     fields: Map<LibraryFieldDefinition>;
     minimalForm?: LibraryFormDefinition;
     description: I18N.String;
+    defaultRange?: { [relationName: string]: string[] };
 }
 
 

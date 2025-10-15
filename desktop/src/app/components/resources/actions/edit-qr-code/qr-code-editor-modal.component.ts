@@ -14,6 +14,7 @@ import { QrCodeService } from '../../service/qr-code-service';
 import { UtilTranslations } from '../../../../util/util-translations';
 import { PrintSettingsModalComponent } from './print-settings/print-settings-modal.component';
 import { PrintSettings } from './print-settings/print-settings';
+import { Settings } from '../../../../services/settings/settings';
 
 
 const QRCode = window.require('qrcode');
@@ -233,13 +234,16 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
         const field: Field = CategoryForm.getField(this.category, fieldName);
         const fieldContent: any = this.document.resource[fieldName];
         const fieldsViewField: FieldsViewField = await FieldsViewUtil.makeField(
-            field, fieldContent, this.document.resource, this.projectConfiguration, {}, this.labels, this.datastore
+            field, fieldContent, this.projectConfiguration, {}, this.labels, this.datastore
         );
 
         return FieldsViewUtil.getLabel(
             fieldsViewField,
             fieldContent,
             this.labels,
+            Intl.DateTimeFormat().resolvedOptions().timeZone,
+            Settings.getLocale(),
+            $localize `:@@revisionLabel.timeSuffix:Uhr`,
             (key: string) => this.utilTranslations.getTranslation(key),
             (value: number) => this.decimalPipe.transform(value)
         );

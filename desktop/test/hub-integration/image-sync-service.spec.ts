@@ -9,7 +9,7 @@ import { SyncTarget } from '../../src/app/services/settings/sync-target';
 import * as schema from '../../../core/api-schemas/files-list.json';
 
 const fs = require('fs');
-const execSync = require('child_process').execSync;
+const axios = require('axios');
 
 
 /**
@@ -21,12 +21,18 @@ describe('ImageSyncService', () => {
     let remoteImageStore: RemoteImageStore;
 
     const mockImage: Buffer = fs.readFileSync(process.cwd() + '/test/test-data/logo.png');
-    const testFilePath = process.cwd() + '/test/test-temp/imagestore/';
+    const imagestorePath = process.cwd() + '/test/test-temp/imagestore/';
+    const backupDirectoryPath = process.cwd() + '/test/test-temp/backups/';
     const testProjectIdentifier = 'test_tmp_project';
-    const hubContainer = 'field-hub-client-integration-test';
 
     const ajv = new Ajv();
     const validate = ajv.compile(schema);
+
+    // see desktop/test/hub-integration/docker-compose.yml
+    const fieldHubAdminCredentials = {
+        username: "client_integration_test",
+        password: "pw"
+    }
 
     const syncTarget: SyncTarget = {
         // see desktop/test/hub-integration/docker-compose.yml
@@ -56,8 +62,16 @@ describe('ImageSyncService', () => {
         username: 'not_relevant_for_the_tests',
         dbs: [],
         selectedProject: 'not_relevant_for_the_tests',
-        imagestorePath: testFilePath,
-        isAutoUpdateActive: true
+        imagestorePath: imagestorePath,
+        backupDirectoryPath,
+        isAutoUpdateActive: true,
+        keepBackups: {
+            custom: 0,
+            customInterval: 0,
+            daily: 0,
+            weekly: 0,
+            monthly: 0
+        }
     };
 
     const settingsProviderMock = new SettingsProvider();
@@ -68,23 +82,23 @@ describe('ImageSyncService', () => {
         settingsProviderMock.setSettings(settingsMock);
 
         imageStore = new ImageStore(new FsAdapter(), new ThumbnailGenerator());
-        await imageStore.init(testFilePath, testProjectIdentifier);
+        await imageStore.init(imagestorePath, testProjectIdentifier);
 
         remoteImageStore = new RemoteImageStore(settingsProviderMock, null);
-
-        const command = `docker exec field-hub-client-integration-test /app/bin/field_hub eval 'FieldHub.CLI.setup()'`;
-        execSync(command);
     });
 
 
     // Re-initialize image store data for each test.
     beforeEach(async () => {
 
-        await imageStore.init(`${testFilePath}imagestore/`, testProjectIdentifier);
+        await imageStore.init(`${imagestorePath}imagestore/`, testProjectIdentifier);
 
-        const command = `docker exec ${hubContainer} /app/bin/field_hub eval `
-            + `'FieldHub.CLI.create_project("${testProjectIdentifier}", "${syncTarget.password}")'`;
-        execSync(command);
+        await axios({
+            method: 'post',
+            baseURL: `${syncTarget.address}/projects/${testProjectIdentifier}`,
+            auth: fieldHubAdminCredentials,
+            data: { password: syncTarget.password }
+        })
     });
 
 
@@ -92,15 +106,17 @@ describe('ImageSyncService', () => {
 
         await imageStore.deleteData(testProjectIdentifier);
 
-        const command = `docker exec ${hubContainer} /app/bin/field_hub eval `
-            + `'FieldHub.CLI.delete_project("${testProjectIdentifier}")'`;
-        execSync(command).toString();
+        await axios({
+            method: 'delete',
+            baseURL: `${syncTarget.address}/projects/${testProjectIdentifier}`,
+            auth: fieldHubAdminCredentials
+        })
     });
 
 
     afterAll(() => {
 
-        fs.rmSync(testFilePath, { recursive: true });
+        fs.rmSync(imagestorePath, { recursive: true });
     });
 
 

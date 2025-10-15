@@ -20,25 +20,28 @@
     [fieldContainer]="fieldContainer" [fieldName]="field.name"></form-field-valuelist-multi-input>
 
 <form-field-dropdown *ngIf="field.inputType === 'dropdown'"
-    [resource]="resource" [fieldContainer]="fieldContainer" [field]="field"></form-field-dropdown>
+    [resource]="resource" [fieldContainer]="fieldContainer" [field]="field"
+    (onChanged)="onChanged.emit()"></form-field-dropdown>
 
 <form-field-dropdown-range *ngIf="field.inputType === 'dropdownRange'"
     [resource]="resource" [fieldContainer]="fieldContainer" [field]="field"></form-field-dropdown-range>
 
 <form-field-radio *ngIf="field.inputType === 'radio'"
-    [resource]="resource" [fieldContainer]="fieldContainer" [field]="field"></form-field-radio>
+    [resource]="resource" [fieldContainer]="fieldContainer" [field]="field"
+    (onChanged)="onChanged.emit()"></form-field-radio>
 
 <form-field-boolean *ngIf="field.inputType === 'boolean'"
-    [fieldContainer]="fieldContainer" [fieldName]="field.name"></form-field-boolean>
+    [fieldContainer]="fieldContainer" [fieldName]="field.name" (onChanged)="onChanged.emit()"></form-field-boolean>
 
 <form-field-checkboxes *ngIf="field.inputType === 'checkboxes'"
-    [resource]="resource" [fieldContainer]="fieldContainer" [field]="field"></form-field-checkboxes>
+    [resource]="resource" [fieldContainer]="fieldContainer" [field]="field"
+    (onChanged)="onChanged.emit()"></form-field-checkboxes>
 
 <form-field-date *ngIf="field.inputType === 'date'"
     [fieldContainer]="fieldContainer" [field]="field"></form-field-date>
 
 <form-field-object-array *ngIf="field.inputType === 'dating' || field.inputType === 'dimension'
-        || field.inputType === 'literature'"
+        || field.inputType === 'weight' || field.inputType === 'volume' || field.inputType === 'literature'"
     [fieldContainer]="fieldContainer" [field]="field" [inputType]="field.inputType"
     [languages]="languages"></form-field-object-array>
 
@@ -48,12 +51,12 @@
 <form-field-geometry *ngIf="field.inputType === 'geometry'"
     [fieldContainer]="fieldContainer"></form-field-geometry>
 
-<form-field-identifier *ngIf="field.inputType === 'identifier'"
+<identifier-input *ngIf="field.inputType === 'identifier'"
     [fieldContainer]="fieldContainer" [fieldName]="field.name"
-    [identifierPrefix]="identifierPrefix"></form-field-identifier>
+    [identifierPrefix]="identifierPrefix"></identifier-input>
 
 <form-field-type-relation *ngIf="field.inputType === 'instanceOf'"
     [resource]="resource"></form-field-type-relation>
 
 <relation-picker-group *ngIf="field.inputType === 'relation'"
-    [resource]="resource" [relationDefinition]="field"></relation-picker-group>
+    [resource]="resource" [relationDefinition]="field" [disabled]="disabled"></relation-picker-group>

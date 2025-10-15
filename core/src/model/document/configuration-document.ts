@@ -4,7 +4,7 @@ import { ConfigurationResource } from './configuration-resource';
 import { CategoryForm } from '../configuration/category-form';
 import { CustomFormDefinition } from '../../configuration/model/form/custom-form-definition';
 import { CustomLanguageConfigurations } from '../configuration/custom-language-configurations';
-import { Group } from '../configuration/group';
+import { Group, GroupDefinition, Groups } from '../configuration/group';
 import { Field } from '../configuration/field';
 import { Resource } from './resource';
 import { FieldResource } from './field-resource';
@@ -14,6 +14,9 @@ import { ConfigReader } from '../../configuration/boot/config-reader';
 import { getConfigurationName } from '../../configuration/project-configuration-names';
 import { sampleDataLabels } from '../../datastore/sampledata/sample-data-labels';
 import { ScanCodeConfiguration } from '../configuration/scan-code-configuration';
+import { ConfigurationMigrator } from '../../configuration/configuration-migrator';
+import { Relation } from '../configuration/relation';
+import { mergeGroupsConfigurations } from '../../configuration/boot/merge-groups-configurations';
 
 
 export const OVERRIDE_VISIBLE_FIELDS = [Resource.IDENTIFIER, FieldResource.SHORTDESCRIPTION, FieldResource.GEOMETRY];
@@ -28,17 +31,22 @@ export interface ConfigurationDocument extends Document {
 export namespace ConfigurationDocument {
 
     export async function getConfigurationDocument(getFunction: (id: string) => Promise<Document>,
-                                                   configReader: ConfigReader,
-                                                   projectIdentifier: string,
+                                                   configReader: ConfigReader, projectIdentifier: string,
                                                    username: string): Promise<ConfigurationDocument> {
 
+        let configurationDocument: ConfigurationDocument;
+
         try {
-            return await getFunction('configuration') as ConfigurationDocument;
+            configurationDocument = await getFunction('configuration') as ConfigurationDocument;
         } catch (_) {
-            return await createConfigurationDocumentFromFile(
+            configurationDocument = await createConfigurationDocumentFromFile(
                 configReader, projectIdentifier, username
             );
         }
+
+        if (configurationDocument) ConfigurationMigrator.migrate(configurationDocument.resource);
+
+        return configurationDocument;
     }
 
 
@@ -92,8 +100,7 @@ export namespace ConfigurationDocument {
     }
 
 
-    export function deleteCategory(customConfigurationDocument: ConfigurationDocument,
-                                   category: CategoryForm,
+    export function deleteCategory(customConfigurationDocument: ConfigurationDocument, category: CategoryForm,
                                    removeFromCategoriesOrder: boolean = true): ConfigurationDocument {
 
         const clonedConfigurationDocument = Document.clone(customConfigurationDocument);
@@ -112,10 +119,8 @@ export namespace ConfigurationDocument {
     }
 
 
-    export function deleteGroup(customConfigurationDocument: ConfigurationDocument,
-                                category: CategoryForm, 
-                                group: Group,
-                                otherCategories: Array<CategoryForm>): ConfigurationDocument {
+    export function deleteGroup(customConfigurationDocument: ConfigurationDocument, category: CategoryForm,
+                                group: Group, otherCategories: Array<CategoryForm>): ConfigurationDocument {
 
         const clonedConfigurationDocument = Document.clone(customConfigurationDocument);
         const clonedCategoryConfiguration = clonedConfigurationDocument.resource
@@ -134,8 +139,7 @@ export namespace ConfigurationDocument {
 
 
     export function deleteField(customConfigurationDocument: ConfigurationDocument,
-                                category: CategoryForm, 
-                                field: Field): ConfigurationDocument {
+                                category: CategoryForm, field: Field): ConfigurationDocument {
 
         const clonedConfigurationDocument = Document.clone(customConfigurationDocument);
         const clonedCategoryConfiguration = clonedConfigurationDocument.resource
@@ -189,12 +193,26 @@ export namespace ConfigurationDocument {
                 fields: {},
                 hidden: []
             };
-            if (form.source === 'custom' && form.parentCategory) {
-                formDefinition.parent = form.parentCategory.name;
-                formDefinition.groups = CategoryForm.getGroupsConfiguration(
-                    newForm, getPermanentlyHiddenFields(newForm)
-                );
+
+            if (form.parentCategory) {
+                if (form.source === 'custom') {
+                    formDefinition.parent = form.parentCategory.name;
+                    formDefinition.groups = CategoryForm.getGroupsConfiguration(
+                        form, getPermanentlyHiddenFields(newForm)
+                    );
+                } else if (form.parentCategory.name === 'Process') {
+                    formDefinition.groups = mergeGroupsConfigurations(
+                        parentForm ? parentForm.originalGroups : newForm.originalGroups,
+                        form.originalGroups
+                    );
+                    addWorkflowRelations(
+                        configurationDocument,
+                        form.name === currentForm.name ? currentForm : form,
+                        formDefinition
+                    );
+                }
             }
+
             clonedConfigurationDocument.resource.forms[form.libraryId] = formDefinition;
         });
 
@@ -205,16 +223,34 @@ export namespace ConfigurationDocument {
 
 
     export function addCategoryForm(configurationDocument: ConfigurationDocument, categoryForm: CategoryForm,
-                                    parentForm?: CategoryForm) {
+                                    parentForm?: CategoryForm): ConfigurationDocument {
 
         const clonedConfigurationDocument = Document.clone(configurationDocument);
 
         clonedConfigurationDocument.resource.forms[categoryForm.libraryId] = {
             fields: {},
             hidden: []
-        }
+        };
         
         if (parentForm) addCustomParentFields(categoryForm, parentForm, clonedConfigurationDocument);
+
+        if (categoryForm.parentCategory?.name === 'Process') {
+            for (let relationName of Relation.Workflow.ALL) {
+                const relation: Relation = CategoryForm.getField(categoryForm, relationName) as Relation;
+                if (!relation) continue;
+                clonedConfigurationDocument.resource.forms[categoryForm.libraryId].fields[relationName] = {
+                    inputType: Field.InputType.RELATION,
+                    range: relation.range
+                };
+                addFieldToGroup(
+                    clonedConfigurationDocument,
+                    categoryForm,
+                    getPermanentlyHiddenFields(categoryForm),
+                    Groups.WORKFLOW,
+                    relationName
+                );
+            }
+        }
 
         return addToCategoriesOrder(
             clonedConfigurationDocument, categoryForm.name, categoryForm.parentCategory?.name
@@ -256,8 +292,7 @@ export namespace ConfigurationDocument {
     }
 
 
-    async function createConfigurationDocumentFromFile(configReader: ConfigReader,
-                                                       projectIdentifier: string,
+    async function createConfigurationDocumentFromFile(configReader: ConfigReader, projectIdentifier: string,
                                                        username: string): Promise<ConfigurationDocument> {
 
         const customConfigurationName: string = getConfigurationName(projectIdentifier);
@@ -313,7 +348,7 @@ export namespace ConfigurationDocument {
             group = { name: groupName, fields: [] };
             form.groups.push(group);
         }
-        group.fields.push(fieldName);
+        if (!group.fields.includes(fieldName)) group.fields.push(fieldName);
     }
 
 
@@ -348,6 +383,29 @@ export namespace ConfigurationDocument {
                     configurationDocument.resource.languages, {}, {}, category, field, subfield
                 );
             });
+        }
+    }
+
+
+    function addWorkflowRelations(configurationDocument: ConfigurationDocument, form: CategoryForm,
+                                  formDefinition: CustomFormDefinition) {
+
+        const currentCategoryDefinition: CustomFormDefinition = getCustomCategoryDefinition(
+            configurationDocument, form
+        );
+
+        for (let relationName of Relation.Workflow.ALL) {
+            if (currentCategoryDefinition.fields[relationName]) {
+                formDefinition.fields[relationName] = currentCategoryDefinition.fields[relationName];
+                const workflowGroup: GroupDefinition = formDefinition.groups.find(group => {
+                    return group.name === Groups.WORKFLOW;
+                });
+                if (!workflowGroup) {
+                    formDefinition.groups.splice(1, 0, { name: Groups.WORKFLOW, fields: [relationName] });
+                } else {
+                    workflowGroup.fields.push(relationName);
+                }
+            }
         }
     }
 }

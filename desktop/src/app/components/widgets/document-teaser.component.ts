@@ -10,6 +10,7 @@ import { Document, Labels, ProjectConfiguration, Resource } from 'idai-field-cor
 export class DocumentTeaserComponent {
 
     @Input() document: Document;
+    @Input() showShortDescription: boolean = true;
 
 
     constructor(private labels: Labels,

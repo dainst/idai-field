@@ -5,50 +5,76 @@
 </div>
 
 <div *ngIf="valuelist" id="fix-outliers-modal-body" class="modal-body warnings-tool-modal-body">
-    <div i18n="@@navbar.taskbar.fixOutliers.info" class="warnings-tool-info">
-        Bitte wählen Sie den korrekten Wert aus der Werteliste aus.
-    </div>
+    @if (field.inputType === 'checkboxes') { 
+        <div i18n="@@navbar.taskbar.fixOutliers.multipleValues.info" class="warnings-tool-info">
+            Bitte wählen Sie die korrekten Werte aus der Werteliste aus.
+        </div>
 
-    <searchable-select [selectedValue]="selectedValue"
-                       [values]="getValues()"
-                       [getLabel]="getValueLabel"
-                       (onValueSelected)="selectedValue = $event"></searchable-select>
+        <div class="replacement-values-container">
+            <span *ngFor="let value of availableValues" class="checkbox form-check form-check-inline">
+                <label class="form-check-label">
+                    <input class="form-check-input" [value]="value" type="checkbox" (click)="toggleCheckboxValue(value)">
+                    {{getValueLabel(value)}}
+                </label>
+            </span>
+        </div>
+    } @else {
+        <div i18n="@@navbar.taskbar.fixOutliers.singleValue.info" class="warnings-tool-info">
+            Bitte wählen Sie den korrekten Wert aus der Werteliste aus.
+        </div>
+        <div class="replacement-values-container">
+            <searchable-select [selectedValue]="selectedValues[0]" 
+                               [values]="availableValues"
+                               [valuelist]="valuelist"
+                               [getLabel]="getValueLabel"
+                               (onValueSelected)="selectedValues = [$event]">
+            </searchable-select>
+        </div>
+    }
 
-    <div *ngIf="selectedValue" 
+    <div *ngIf="isValid()" 
          id="multiple-switch" 
          class="row" 
-         [disableTooltip]="countAffected !== 1" 
-         [class.disabled]="countAffected === 1"
+         [disableTooltip]="getCountAffected() !== 1" 
+         [class.disabled]="getCountAffected() === 1"
          ngbTooltip="Nur diese Ressource ist betroffen." 
          i18n-ngbTooltip="@@navbar.taskbar.warningsModal.singleResourceAffected" 
          container="body">
         <div class="col-auto me-auto">
-            <span i18n="@@navbar.taskbar.fixOutliers.all">Alle Vorkommnisse dieses Werts ersetzen</span>
+            <span i18n="@@navbar.taskbar.fixOutliers.all">Alle Vorkommnisse in kompatiblen Feldern ersetzen</span>
         </div>
         <div class="col-auto"> 
-            <label class="switch" [class.disabled]="countAffected === 1">
+            <label class="switch" [class.disabled]="getCountAffected() === 1">
                 <input type="checkbox" 
                        [checked]="replaceAll" 
                        (change)="replaceAll = !replaceAll" 
-                       [disabled]="countAffected === 1">
+                       [disabled]="getCountAffected() === 1">
                 <span class="slider round"></span>
             </label>
         </div>
     </div>
     
-    <div *ngIf="selectedValue && replaceAll">
-        <div class="text-center alert alert-warning"
-             i18n="@@navbar.taskbar.fixOutliers.all.info">
-            Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert
-            <b>{{outlierValue}}</b> in sämtlichen Feldern aller <b>{{countAffected}}</b> Ressourcen durch den
-            ausgewählten Wert <b>{{getValueLabel(selectedValue)}}</b> ersetzt.
-        </div>
+    <div *ngIf="isValid() && replaceAll">
+        @if (selectedValues.length === 1) {
+            <div class="text-center alert alert-warning"
+             i18n="@@navbar.taskbar.fixOutliers.allSingleValue.info">
+                Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <b>{{outlierValue}}</b> in sämtlichen Feldern aller <b>{{getCountAffected()}}</b> Ressourcen durch den ausgewählten Wert <b>{{getValueLabel(selectedValues[0])}}</b> ersetzt.
+            </div>
+        } @else {
+            <div class="text-center alert alert-warning"
+             i18n="@@navbar.taskbar.fixOutliers.allMultipleValues.info">
+                Bitte beachten Sie: Durch diese Aktion wird der nicht in der Werteliste enthaltene Wert <b>{{outlierValue}}</b> in sämtlichen Feldern aller <b>{{getCountAffected()}}</b> Ressourcen, die in diesem Feld eine Mehrfachauswahl erlauben, durch die ausgewählten Werte
+                @for (value of selectedValues; track value; let isLast = $last) {<b>{{getValueLabel(value)}}@if(!isLast){, }</b>} 
+                ersetzt.
+            </div>
+        }
+        
     </div>
 </div>
 
 <div class="modal-footer">
     <div id="confirm-replacement-button" class="btn btn-primary"
-         [ngClass]="{ 'disabled': !selectedValue }"
+         [ngClass]="{ 'disabled': !isValid() }"
          (click)="performReplacement()">
         <span i18n="@@buttons.ok">OK</span>
     </div>

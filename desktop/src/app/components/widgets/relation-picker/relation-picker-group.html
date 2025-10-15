@@ -1,0 +1,23 @@
+<div class="relations-container">
+     <relation-picker *ngFor="let relation of relations[relationDefinition.name]; let i = index"
+                         [resource]="resource"
+                         [relationDefinition]="relationDefinition"
+                         [relationIndex]="i"
+                         [disabled]="disabled"
+                         (onTargetSelected)="onTargetSelected($event)"></relation-picker>
+</div>
+
+<div *ngIf="isPlusButtonAvailable()"
+     #plusButton
+     class="circular-button add-relation"
+     [class.with-margin]="relations[relationDefinition.name]?.length > 0"
+     type="button"
+     (click)="createRelation()">
+     <span class="mdi mdi-plus"></span>
+</div>
+<div *ngIf="!isPlusButtonAvailable() && relations[relationDefinition.name]?.length > 1"
+     class="relation-picker-group-space"></div>
+
+<div *ngIf="disabled && !relations[relationDefinition.name]?.length"
+     class="disabled-info"
+     i18n="@@docedit.relations.automaticallyFilled">Dieses Feld wird automatisch ausgefüllt.</div>

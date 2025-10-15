@@ -4,8 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content={get_csrf_token()} />
+    <link rel="icon" type="image/x-icon" href={Settings.get_favicon_url()} />
     <.live_title suffix=" · FieldPublication">
-      <%= assigns[:page_title] || "" %>
+      {assigns[:page_title] || ""}
     </.live_title>
 
     <% title =
@@ -15,10 +16,10 @@
         "Field Publication"
       end %>
     <.live_title>
-      <%= title %>
+      {title}
     </.live_title>
     <!-- The Opengraph meta tags are set only once on the initial HTTP page load, later websocket navigation leaves
-    them unchanged. See also https://github.com/phoenixframework/phoenix_live_view/issues/1194. Appropriate values have to 
+    them unchanged. See also https://github.com/phoenixframework/phoenix_live_view/issues/1194. Appropriate values have to
     be set on mount in the different live views. -->
     <meta property="og:title" content={title} />
     <meta property="og:url" content={Phoenix.Controller.current_url(@conn)} />
@@ -30,10 +31,14 @@
     <% end %>
     <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
     <link phx-track-static rel="stylesheet" href={~p"/assets/ol.css"} />
+
+    <style>
+      <%= FieldPublication.Settings.get_customized_css() %>
+    </style>
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
     </script>
   </head>
   <body class="bg-white antialiased">
-    <%= @inner_content %>
+    {@inner_content}
   </body>
 </html>

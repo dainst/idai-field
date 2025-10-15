@@ -8,6 +8,7 @@
     }
 
     .ng-select-container {
+      border-color: #dee2e6;
       border-radius: 0;
       font-size: 13px;
       transition: border-color 0.15s ease-in-out;
@@ -32,7 +33,7 @@
     }
 
     &.ng-select-focused .ng-select-container {
-      border-color: #7998cb !important;
+      border-color: $input-field-focus-color !important;
       box-shadow: none !important;
     }
   }
@@ -54,6 +55,15 @@
 
   .ng-option {
     cursor: default !important;
+    user-select: none;
+
+    .option-element {
+      padding: 8px 10px;
+    }
+
+    &:not(.ng-option-disabled) {
+      padding: 0 !important;
+    }
 
     &.ng-option-marked,
     &.ng-option-selected {

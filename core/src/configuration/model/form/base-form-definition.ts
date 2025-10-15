@@ -1,4 +1,5 @@
 import { Field } from '../../../model/configuration/field';
+import { SemanticReference } from '../../../model/configuration/semantic-reference';
 import { Valuelists } from '../../../model/configuration/valuelist';
 
 
@@ -8,6 +9,7 @@ export interface BaseFormDefinition {
     valuelists?: Valuelists;
     source?: Field.SourceType;
     references?: string[];
+    semanticReferences?: Array<SemanticReference>;
 }
 
 

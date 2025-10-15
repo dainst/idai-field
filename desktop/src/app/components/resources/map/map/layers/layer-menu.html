@@ -13,7 +13,16 @@
                 <div *ngFor="let layerGroup of layerGroups; index as i"
                         [id]="'layer-group-' + i"
                         class="layer-group">
-                    <span class="layer-group-heading">{{getLayerGroupLabel(layerGroup)}}</span>
+                    <span class="layer-group-heading"
+                          [class.with-download-button]="isDownloadImagesButtonVisible(layerGroup)">
+                            {{getLayerGroupLabel(layerGroup)}}
+                    </span>
+                    <span *ngIf="isDownloadImagesButtonVisible(layerGroup)"
+                          class="mdi mdi-cloud-download layer-menu-button layer-menu-default-layer-button
+                                 download-layer-images-button"
+                          ngbTooltip="{{getDownloadTooltip(layerGroup)}}"
+                          placement="top" container="body"
+                          (click)="downloadImages(layerGroup)"></span>
                     <span *ngIf="i === 0 && !isInEditing(layerGroup)" id="layer-menu-edit-button"
                           class="mdi mdi-pencil layer-menu-button layer-group-edit-button"
                           ngbTooltip="Kartenhintergründe bearbeiten"

@@ -20,7 +20,8 @@ export class ConfigurationPage {
 
     public static async clickOpenContextMenuForField(fieldName: string) {
 
-        return rightClick(await this.getField(fieldName));
+        const element = (await this.getField(fieldName)).locator('.card-header');
+        return rightClick(element);
     }
 
 
@@ -62,7 +63,7 @@ export class ConfigurationPage {
 
     public static async clickSelectField(fieldName: string) {
 
-        return click(await this.getField(fieldName));
+        return click(await this.getField(fieldName).locator('b'));
     }
 
 
@@ -81,6 +82,12 @@ export class ConfigurationPage {
     public static clickConfirmFieldDeletionButton() {
 
         return click('#delete-field-button');
+    }
+
+
+    public static clickNextInAddProcessSubcategoryModal() {
+
+        return click('#add-process-subcategory-modal-next-button');
     }
 
     
@@ -135,6 +142,12 @@ export class ConfigurationPage {
     }
 
 
+    public static getFieldConditionLabel() {
+
+        return getLocator('.field-condition-label');
+    }
+
+
     // get text
 
     public static async getValue(index: number) {
@@ -147,6 +160,12 @@ export class ConfigurationPage {
     public static async getInverseRelationLabel(relationName: string) {
 
         return getText(await this.getInverseRelation(relationName));
+    }
+
+
+    public static getConditionLabelText() {
+
+        return getText(this.getFieldConditionLabel());
     }
 
 

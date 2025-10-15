@@ -33,29 +33,30 @@ defmodule FieldPublication.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.7.11"},
+      {:phoenix_live_view, "~> 1.0"},
+      {:phoenix_live_dashboard, "~> 0.8"},
       {:phoenix_ecto, "~> 4.5.1"},
-      {:phoenix_html, "~> 4.1.1"},
       {:phoenix_live_reload, "~> 1.5", only: :dev},
-      {:phoenix_live_view, "~> 0.20.14"},
       {:earmark, "~> 1.4"},
-      {:floki, "~> 0.36", only: :test},
-      {:geo, "~> 3.6"},
-      {:phoenix_live_dashboard, "~> 0.8.3"},
-      {:esbuild, "~> 0.7", runtime: Mix.env() == :dev},
-      {:tailwind, "~> 0.2.2", runtime: Mix.env() == :dev},
-      {:swoosh, "~> 1.3"},
-      {:finch, "~> 0.13"},
+      {:floki, "~> 0.37", only: :test},
+      {:geo, "~> 4.0"},
+      {:esbuild, "~> 0.9", runtime: Mix.env() == :dev},
+      {:tailwind, "~> 0.3", runtime: Mix.env() == :dev},
+      {:swoosh, "~> 1.18"},
+      {:finch, "~> 0.19"},
       # httpoison is required for reverse_proxy_plug, otherwise it duplicates finch
-      {:httpoison, "~> 2.2.1"},
-      {:reverse_proxy_plug, "~> 2.4.1"},
-      {:telemetry_metrics, "~> 0.6"},
-      {:telemetry_poller, "~> 1.0"},
-      {:gettext, "~> 0.20"},
-      {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"},
+      {:httpoison, "~> 2.2"},
+      {:reverse_proxy_plug, "~> 3.0"},
+      {:telemetry_metrics, "~> 1.1"},
+      {:telemetry_poller, "~> 1.1"},
+      {:gettext, "~> 0.26"},
+      {:jason, "~> 1.4"},
+      {:bandit, "~> 1.8"},
       {:iso639_elixir, "~> 0.2.1"},
-      {:cachex, "~> 3.6"}
+      {:cachex, "~> 4.0"},
+      {:vix, "~> 0.33.0"},
+      {:cors_plug, "~> 3.0"},
+      {:iiif_image_plug, "~> 0.7"}
     ]
   end
 

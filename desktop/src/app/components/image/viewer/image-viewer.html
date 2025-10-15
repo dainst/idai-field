@@ -2,23 +2,35 @@
      id="image-container"
      [class.panning-disabled]="!isOriginal"
      [class.panning]="panning">
-    <div *ngIf="isOriginalNotFoundWarningVisible()" class="alert alert-info" role="alert"
-         i18n="@@image.originalNotFoundWarning">
-        Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
-    </div>
-    <div #overlay id="image-overlay"></div>
-    <img *ngIf="isImageContainerVisible()"
-         #image
-         id="image"
-         [src]="imageUrl">
+     <div *ngIf="isOriginalNotFoundWarningVisible()" class="alert alert-info" role="alert"
+          i18n="@@image.originalNotFoundWarning">
+          Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
+     </div>
+     <div #overlay id="image-overlay"></div>
+     <img *ngIf="isImageContainerVisible()"
+          #image
+          id="image"
+          [src]="imageUrl">
      <img *ngIf="isImageContainerVisible()"
           #preloadImage
           id="preload-image"
           [src]="imageUrl"
           (load)="onImageLoaded()">
-    <zoom-buttons [zoomInEnabled]="isOriginal && getScale() < maxZoom"
-                  [zoomOutEnabled]="isOriginal && getScale() > 1"
-                  (onZoomInClicked)="zoomIn()"
-                  (onZoomOutClicked)="zoomOut()"></zoom-buttons>
+     <zoom-buttons [zoomInEnabled]="isOriginal && getScale() < maxZoom"
+                   [zoomOutEnabled]="isOriginal && getScale() > 1"
+                   (onZoomInClicked)="zoomIn()"
+                   (onZoomOutClicked)="zoomOut()"></zoom-buttons>
+     <button *ngIf="isDownloadButtonVisible()" id="download-image-button" type="button" class="btn btn-primary btn-square"
+             (click)="downloadImage()"
+             placement="left" container="body" ngbTooltip="{{getDownloadTooltip()}}">
+          <span class="mdi mdi-cloud-download"></span>
+     </button>
+     <button *ngIf="isExportButtonVisible()" id="export-image-button" type="button" class="btn btn-primary btn-square"
+             (click)="exportImage()"
+             placement="left" container="body" ngbTooltip="Bild exportieren"
+             i18n-ngbTooltip="@@image.export">
+          <span class="mdi mdi-file-export"></span>
+     </button>
+          
     <loading-icon *ngIf="loadingIconVisible" [context]="'image-viewer'"></loading-icon>
 </div>

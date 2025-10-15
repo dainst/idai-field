@@ -1,7 +1,7 @@
 import Ajv from 'ajv';
 import { nop } from 'tsfun';
-import { IdGenerator, PouchdbDatastore, ImageStore, base64Encode} from 'idai-field-core';
-import { ExpressServer } from '../../../src/app/services/express-server';
+import { IdGenerator, PouchdbDatastore, ImageStore, base64Encode } from 'idai-field-core';
+import { ExpressServer } from '../../../src/app/services/express-server/express-server';
 import { FsAdapter } from '../../../src/app/services/imagestore/fs-adapter';
 import { ThumbnailGenerator } from '../../../src/app/services/imagestore/thumbnail-generator';
 import * as schema from '../../../../core/api-schemas/files-list.json';
@@ -35,7 +35,7 @@ describe('ExpressServer', () => {
 
         imageStore = new ImageStore(new FsAdapter(), new ThumbnailGenerator());
 
-        expressServer = new ExpressServer(imageStore, undefined, undefined, undefined);
+        expressServer = new ExpressServer(imageStore, undefined, undefined, undefined, undefined);
         expressServer.setPassword(password);
         expressServer.setAllowLargeFileUploads(true);
 

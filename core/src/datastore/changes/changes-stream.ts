@@ -24,6 +24,7 @@ export type RemoteChangeInfo = {
  */
 export class ChangesStream {
 
+    private changesObservers: Array<Observer<Document>> = [];
     private remoteChangesObservers: Array<Observer<RemoteChangeInfo>> = [];
     private remoteConfigurationChangesObservers: Array<Observer<void>> = [];
     private projectDocumentObservers: Array<Observer<Document>> = [];
@@ -44,14 +45,12 @@ export class ChangesStream {
 
         pouchDbDatastore.changesNotifications().subscribe(async document => {
 
-            if (isProjectDocument(document)) {
-                ObserverUtil.notify(this.projectDocumentObservers, document);
-            }
+            ObserverUtil.notify(this.changesObservers, document);
+            if (isProjectDocument(document)) ObserverUtil.notify(this.projectDocumentObservers, document);
 
             const isRemoteChange: boolean = await ChangesStream.isRemoteChange(document, this.getUsername());
 
-            if (isRemoteChange || !this.documentCache.get(document.resource.id)
-                    || document._conflicts !== undefined) {
+            if (isRemoteChange || !this.documentCache.get(document.resource.id) || document._conflicts !== undefined) {
                 await this.welcomeDocument(document);
             }
 
@@ -61,6 +60,9 @@ export class ChangesStream {
         });
     }
 
+
+    public changesNotifications =
+        (): Observable<Document> => ObserverUtil.register(this.changesObservers);
 
     public remoteChangesNotifications =
         (): Observable<RemoteChangeInfo> => ObserverUtil.register(this.remoteChangesObservers);

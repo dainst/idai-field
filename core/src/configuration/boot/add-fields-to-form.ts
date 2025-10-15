@@ -19,13 +19,13 @@ export function addFieldsToForm(form: TransientFormDefinition, categories: Map<T
                                 relations: Array<Relation>, parentForm?: CustomFormDefinition,
                                 extendedForm?: TransientFormDefinition): TransientFormDefinition {
 
-    const fieldNames: string[] = getFieldNames(form, categories, extendedForm);
+    const fieldNames: string[] = getFieldNames(form, categories, parentForm, extendedForm);
 
     const clonedForm: TransientFormDefinition = clone(form);
     if (extendedForm) Object.assign(clonedForm.fields, extendedForm.fields);
 
     clonedForm.fields = fieldNames.reduce((fields, fieldName) => {
-        const field = getField(
+        const field: Field = getField(
             fieldName, form, categories, builtInFields, commonFields, relations,
             parentForm, extendedForm
         );
@@ -47,17 +47,11 @@ export function addFieldsToForm(form: TransientFormDefinition, categories: Map<T
 
 
 function getFieldNames(form: TransientFormDefinition, categories: Map<TransientCategoryDefinition>,
-                       extendedForm?: TransientFormDefinition): string[] {
+                       parentForm?: CustomFormDefinition, extendedForm?: TransientFormDefinition): string[] {
 
     if (!form.groups) return [];
 
     const minimalForm: BuiltInFormDefinition|undefined = categories[form.categoryName]?.minimalForm;
-
-    const parentForm: BuiltInFormDefinition|undefined = categories[form.categoryName]?.parent
-        ? categories[categories[form.categoryName].parent].minimalForm
-        : form.parent
-            ? categories[form.parent].minimalForm
-            : undefined;
 
     return set(
         flatten(form.groups.map(to('fields')))
@@ -80,7 +74,7 @@ function getField(fieldName: string, form: TransientFormDefinition, categories: 
         ? categories[parentName].fields as Map<Field>
         : {};
 
-    const field: Field = builtInFields[fieldName]
+    let field: Field = builtInFields[fieldName]
         ?? commonFields[fieldName]
         ?? parentCategoryFields[fieldName]
         ?? categories[form.categoryName]?.fields[fieldName] as Field
@@ -91,19 +85,28 @@ function getField(fieldName: string, form: TransientFormDefinition, categories: 
     if ((!field || !field.inputType) && !relations.find(relation => relation.name === fieldName)) {
         throw [[ConfigurationErrors.FIELD_NOT_FOUND, form.categoryName, fieldName]];
     }
+    if (!field) return undefined;
 
-    if (field && !field.name) field.name = fieldName;
+    field = clone(field);
 
-    return clone(field);
+    if (!field.name) field.name = fieldName;
+    if (parentCategoryFields?.[fieldName]?.required || categories?.[form.categoryName]?.fields?.[fieldName]?.required) {
+        field.required = true;
+    }
+    if (field.required) field.mandatory = true;
+
+    return field;
 }
 
 
 function applyFormChanges(clonedForm: TransientFormDefinition, form: TransientFormDefinition,
-                          parentForm?: CustomFormDefinition, extendedForm?: CustomFormDefinition) {
+                          parentForm?: CustomFormDefinition, extendedForm?: TransientFormDefinition) {
 
     if (extendedForm?.fields) {
         Object.keys(extendedForm.fields).forEach(fieldName => {
-            applyFieldChanges(clonedForm.fields[fieldName], extendedForm.fields[fieldName]);
+            const clonedFormField: TransientFieldDefinition = clonedForm.fields[fieldName];
+            applyFieldChanges(clonedFormField, extendedForm.fields[fieldName]);
+            if (clonedFormField.condition) clonedFormField.defaultCondition = clonedFormField.condition;
         });
     }
 
@@ -129,7 +132,25 @@ function applyFieldChanges(field: TransientFieldDefinition, changedField: Custom
         field.inputType = changedField.inputType as Field.InputType;
     }
 
+    if (changedField.mandatory !== undefined && !field.required) {
+        field.mandatory = changedField.mandatory;
+    }
+
     if (changedField.constraintIndexed !== undefined) {
         field.constraintIndexed = changedField.constraintIndexed;
+    }
+
+    if (changedField.condition) {
+        field.condition = changedField.condition;
+    } else if (changedField.condition === null) {
+        delete field.condition;
+    }
+
+    if (changedField.dateConfiguration) {
+        field.dateConfiguration = changedField.dateConfiguration;
+    }
+
+    if (changedField.range) {
+        field.range = changedField.range;
     }
 }

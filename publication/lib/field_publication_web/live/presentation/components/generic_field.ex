@@ -24,8 +24,8 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
     """
   end
 
-  def render(%{field: %Field{input_type: input_type}} = assigns)
-      when input_type in ["checkboxes"] do
+  def render(%{field: %Field{input_type: input_type, value: values}} = assigns)
+      when input_type in ["checkboxes"] and is_list(values) do
     ~H"""
     <%= for value <- @field.value do %>
       <div>
@@ -67,7 +67,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
   def render(%{field: %Field{input_type: input_type}} = assigns)
       when input_type in ["boolean"] do
     ~H"""
-    <%= if @field.value == true, do: gettext("true"), else: gettext("false") %>
+    {if @field.value == true, do: gettext("true"), else: gettext("false")}
     """
   end
 
@@ -80,15 +80,15 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
           <%= cond do %>
             <% Map.has_key?(value, "doi") -> %>
               <li>
-                <a href={value["doi"]} target="_blank"><%= value["quotation"] %></a>
+                <a href={value["doi"]} target="_blank">{value["quotation"]}</a>
               </li>
             <% Map.has_key?(value, "zenonId") -> %>
               <li>
-                <a href={value["zenonId"]} target="_blank"><%= value["quotation"] %></a>
+                <a href={value["zenonId"]} target="_blank">{value["quotation"]}</a>
               </li>
             <% Map.has_key?(value, "quotation") -> %>
               <li>
-                <%= value["quotation"] %>
+                {value["quotation"]}
               </li>
             <% true -> %>
               <li>
@@ -108,8 +108,8 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
     ~H"""
     <%= for %{"inputUnit" => unit, "inputValue" => value, "isImprecise" => imprecise?, "measurementPosition" => position} <- @field.value do %>
       <div>
-        <%= if position != nil and position != "", do: "#{position}: " %><%= "#{value} #{unit}" %><%= if imprecise?,
-          do: " (#{gettext("imprecise")})" %>
+        {if position != nil and position != "", do: "#{position}: "}{"#{value} #{unit}"}{if imprecise?,
+          do: " (#{gettext("imprecise")})"}
       </div>
     <% end %>
     """
@@ -128,11 +128,11 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
     <%= cond do %>
       <% is_search_keyword?(@field.input_type) -> %>
         <.link navigate={~p"/search?#{%{filters: %{"#{@field.name}_keyword" => @value}}}"}>
-          <%= render_slot(@inner_block) %>
+          {render_slot(@inner_block)}
         </.link>
         <!-- TODO: Add further variants? -->
       <% true -> %>
-        <%= render_slot(@inner_block) %>
+        {render_slot(@inner_block)}
     <% end %>
     """
   end
@@ -142,7 +142,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
 
     ~H"""
     <div class="border-yellow-400 border-4 m-2 p-2">
-      Unhandled input type <%= inspect(@field) %>
+      Unhandled input type {inspect(@field)}
     </div>
     """
   end
@@ -152,7 +152,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
 
     ~H"""
     <div class="border-yellow-400 border-4 m-2 p-2">
-      Unhandled input value <%= inspect(@value) %>
+      Unhandled input value {inspect(@value)}
     </div>
     """
   end

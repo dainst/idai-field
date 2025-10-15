@@ -44,7 +44,7 @@ export class PlusButtonComponent implements OnInit, OnChanges, OnDestroy {
     @ViewChild('popover', { static: false }) private popover: any;
 
     public selectedCategory: string|undefined;
-    public toplevelCategoriesArray: Array<CategoryForm>;
+    public topLevelCategoriesArray: Array<CategoryForm>;
 
     private clickEventSubscription: Subscription;
     private changesSubscription: Subscription;
@@ -114,17 +114,16 @@ export class PlusButtonComponent implements OnInit, OnChanges, OnDestroy {
     public reset() {
 
         this.selectedCategory = this.getButtonType() === 'singleCategory'
-            ? this.toplevelCategoriesArray[0].name
+            ? this.topLevelCategoriesArray[0].name
             : this.selectedCategory = undefined;
     }
 
 
     public getButtonType(): 'singleCategory'|'multipleCategories'|'none' {
 
-        if (this.toplevelCategoriesArray.length === 0) return 'none';
+        if (this.topLevelCategoriesArray.length === 0) return 'none';
 
-        if (this.toplevelCategoriesArray.length === 1
-                && (!this.toplevelCategoriesArray[0].children || this.toplevelCategoriesArray[0].children.length === 0)) {
+        if (this.topLevelCategoriesArray.length === 1 && !this.topLevelCategoriesArray[0].children?.length) {
             return 'singleCategory';
         }
 
@@ -171,17 +170,17 @@ export class PlusButtonComponent implements OnInit, OnChanges, OnDestroy {
 
     private async initializeSelectableCategoriesArray(projectConfiguration: ProjectConfiguration) {
 
-        this.toplevelCategoriesArray = [];
+        this.topLevelCategoriesArray = [];
 
         if (this.preselectedCategory) {
             const category: CategoryForm = projectConfiguration.getCategory(this.preselectedCategory);
-            if (category) this.toplevelCategoriesArray.push(category);
+            if (category) this.topLevelCategoriesArray.push(category);
         } else {
             for (let category of Tree.flatten(projectConfiguration.getCategories())) {
                 if (await this.isAllowedCategory(category, projectConfiguration)
                         && (!category.parentCategory
                             || !(await this.isAllowedCategory(category.parentCategory, projectConfiguration)))) {
-                    this.toplevelCategoriesArray.push(category);
+                    this.topLevelCategoriesArray.push(category);
                 }
             }
         }
@@ -211,11 +210,7 @@ export class PlusButtonComponent implements OnInit, OnChanges, OnDestroy {
                 return false;
             }
         } else {
-            const categories: Array<CategoryForm> = this.viewFacade.isInOverview()
-                ? this.projectConfiguration.getConcreteOverviewCategories()
-                : this.viewFacade.isInTypesManagement()
-                    ? this.projectConfiguration.getTypeManagementCategories()
-                    : this.projectConfiguration.getInventoryCategories();
+            const categories: Array<CategoryForm> = this.getCategories();
             if (!categories.map(Named.toName).includes(category.name)) return false;
         }
 
@@ -235,6 +230,23 @@ export class PlusButtonComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         return true;
+    }
+
+
+    private getCategories(): Array<CategoryForm> {
+
+        if (this.viewFacade.isInOverview()) {
+            return this.projectConfiguration.getConcreteOverviewCategories();
+        } else if (this.viewFacade.isInTypesManagement()) {
+            return this.projectConfiguration.getTypeManagementCategories();
+        } else if (this.viewFacade.isInInventoryManagement()) {
+            return this.projectConfiguration.getInventoryCategories();
+        } else if (this.viewFacade.isInWorkflowManagement()) {
+            return this.projectConfiguration.getCategory('Process').children;
+        } else {
+            console.error('Invalid view:', this.viewFacade.getView());
+            return [];
+        }
     }
 
 

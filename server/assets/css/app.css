@@ -156,7 +156,7 @@
 
 header {
   height: var(--header-height);
-  background-image: url(/images/header_background.png);
+  background-image: url(/images/header_background.webp);
   background-position-y: bottom;
   background-position-x: center;
 }
@@ -268,17 +268,17 @@ nav {
 }
 
 .row-compact {
-  color:#3f4246;  
+  color: #3f4246;
   line-height: 0%;
   font-size: small;
 }
 
 
 .column-date-time {
-  width: 11em;  
+  width: 11em;
 }
 
-.row-head{
+.row-head {
   color: #3f4246;
   font-size: small;
 }
@@ -303,4 +303,70 @@ nav {
 
 .slider:hover {
   opacity: 1;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-table;
+   
+}
+
+.tooltiptext {
+  visibility: hidden;
+  width: 1000px;
+  background-color: rgb(242, 248, 249);
+  text-emphasis:unset;  
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1; 
+  margin-top:-1em;
+  opacity: 0;
+  transition: opacity 0.7s;
+  text-align: center;
+}
+
+.tooltiptextleftcolumn {
+  
+  transform:translate(-50%,0);
+}
+
+.tooltiptextrigthcolumn {
+  
+  transform: translate(-48%, 0%);
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+  padding: 1em;
+}
+
+.scrolldown {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+.scrolldown thead , .scrolldown tbody {
+  display: block;
+}
+
+.scrolldown tbody tr, .scrolldown thead tr {
+  display: grid;
+  grid-template-columns: 1.2fr 0.6fr 1.2fr 1fr; 
+}
+
+.scrolldown thead {
+  color: #3f4246;
+  font-size: small;
+}
+
+.scrolldown tbody {
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  color: #3f4246;
+  line-height: 0%;
+  font-size: small;
+  table-layout: fixed;
 }

@@ -577,7 +577,7 @@
       </trans-unit>
       <trans-unit id="import.geojson.info" datatype="html">
         <source>Beim GeoJSON-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> im Objekt <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>properties<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </source>
-        <target state="needs-translation">La importación de GeoJSON no crea nuevos recursos. En su lugar, las geometrías se añaden a los recursos existentes. Tenga en cuenta que las geometrías ya existentes se sobrescriben en este proceso. La asignación de registros se realiza en función del campo<x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identificador<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> del objeto <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>propiedades<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>. Los registros del archivo de importación que no se puedan asignar a un recurso se ignorarán. </target>
+        <target state="translated">La importación de GeoJSON no crea nuevos recursos. En su lugar, las geometrías se añaden a los recursos existentes. Por favor, tenga en cuenta que las geometrías ya existentes se sobrescriben en este proceso. La asignación de registros se realiza en función del campo<x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identificador<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> del objeto <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>propiedades<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>. Los registros del archivo de importación que no se puedan asignar a un recurso se ignorarán. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">233</context>
@@ -2274,7 +2274,7 @@
       </trans-unit>
       <trans-unit id="configuration.deleteGroup.notAllowed" datatype="html">
         <source>Die Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> kann nicht gelöscht werden, solange ihr Felder zugeordnet sind. Bitte verschieben Sie die Felder zunächst in eine andere Gruppe oder löschen Sie sie. </source>
-        <target state="translated">El grupo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> no se puede eliminar mientras tenga campos asignados. Primero, mueva los campos a otro grupo o elimínelos. </target>
+        <target state="translated">El grupo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="kann nicht"/> no se puede eliminar mientras tenga campos asignados. Por favor, primero mueva los campos a otro grupo o elimínelos. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/delete/delete-group-modal.html</context>
           <context context-type="linenumber">27,11</context>
@@ -2498,7 +2498,7 @@
       </trans-unit>
       <trans-unit id="resources.moveModal.chooseParentResource.single" datatype="html">
         <source>Bitte wählen Sie die neue übergeordnete Ressource aus, der die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="zugewiesen we"/> zugewiesen werden soll: </source>
-        <target state="translated">Seleccione el nuevo recurso principal al que se debe asignar el recurso <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="zugewiesen we"/> </target>
+        <target state="translated">Por favor, seleccione el nuevo recurso principal al que se debe asignar el recurso <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="zugewiesen we"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/move-modal.component.ts</context>
           <context context-type="linenumber">52</context>
@@ -2506,7 +2506,7 @@
       </trans-unit>
       <trans-unit id="resources.moveModal.chooseParentResource.multiple" datatype="html">
         <source>Bitte wählen Sie die neue übergeordnete Ressource aus, der die ausgewählten <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> zugewiesen werden sollen: </source>
-        <target state="translated">Seleccione el nuevo recurso principal al que se deben asignar los <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION"/> los recursos seleccionados<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>: </target>
+        <target state="translated">Por favor, seleccione el nuevo recurso principal al que se deben asignar los <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION"/> los recursos seleccionados<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/move-modal.html</context>
           <context context-type="linenumber">20</context>
@@ -4063,7 +4063,7 @@
       </trans-unit>
       <trans-unit id="matrix.view.noOperationsWarning.single" datatype="html">
         <source>Legen Sie eine Maßnahme der Kategorie "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;&gt;"/>Übersicht<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> an, um hier mit ihr arbeiten zu können. </source>
-        <target state="translated">Por favor, creaeuna operación de la categoría "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" en la <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;&gt;"/>visión general<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> para poder trabajar con ella aquí. </target>
+        <target state="translated">Por favor, cree una operación de la categoría "<x id="INTERPOLATION" equiv-text="{{getCategoryLabel(configuredOperationCategories[0])}}"/>" en la <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;&gt;"/>visión general<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> para poder trabajar con ella aquí. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.component.ts</context>
           <context context-type="linenumber">268</context>
@@ -4627,7 +4627,7 @@
       </trans-unit>
       <trans-unit id="messages.backup.read.error.noProjectIdentifier" datatype="html">
         <source>Geben Sie eine Projektkennung an, um fortzufahren.</source>
-        <target state="translated">Introduzca un identificador de proyecto para continuar.</target>
+        <target state="translated">Por favor, introduzca un identificador de proyecto para continuar.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5515,7 +5515,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.error.resolveConflict" datatype="html">
         <source>Der Konflikt konnte nicht gelöst werden. Bitte prüfen Sie, ob der Konflikt bereits von einem anderen Benutzer bzw. einer anderen Benutzerin gelöst wurde.</source>
-        <target state="translated">No se pudo resolver el conflicto. Por favor, comprueba si otro usuario ya lo ha resuelto.</target>
+        <target state="translated">No se pudo resolver el conflicto. Por favor, compruebe si otro usuario ya lo ha resuelto.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7047,7 +7047,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteFieldData.all.confirmInfo" datatype="html">
         <source>Bitte geben Sie den Namen des Feldes ein, um den Vorgang zu bestätigen.</source>
-        <target state="translated">Introduzca el nombre del campo para confirmar.</target>
+        <target state="translated">Por favor, introduzca el nombre del campo para confirmar.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-field-data-modal.html</context>
           <context context-type="linenumber">28,35</context>
@@ -7987,7 +7987,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteResource.all.confirmInfo" datatype="html">
         <source>Bitte geben Sie den Namen der Kategorie ein, um den Vorgang zu bestätigen.</source>
-        <target state="translated">Introduzca el nombre de la categoría para confirmar.</target>
+        <target state="translated">Por favor, introduzca el nombre de la categoría para confirmar.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/delete-resource-modal.html</context>
           <context context-type="linenumber">45,52</context>
@@ -8371,7 +8371,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.selectNewField.confirmation" datatype="html">
         <source>Bitte wählen Sie das Feld aus, in das die im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(fieldName)&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="ein"/> eingetragenen Daten übertragen werden sollen. </source>
-        <target state="translated">Seleccione el campo al que se transferirán los datos introducidos en el campo <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(fieldName)&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>. </target>
+        <target state="translated">Por favor, seleccione el campo al que se transferirán los datos introducidos en el campo <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML(fieldName)&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-field-modal.component.ts</context>
           <context context-type="linenumber">91</context>
@@ -8395,7 +8395,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.deleteResource.single.confirmInfo" datatype="html">
         <source>Bitte geben Sie den Bezeichner der Ressource ein, um den Vorgang zu bestätigen.</source>
-        <target state="translated">Introduzca el identificador del recurso para confirmar.</target>
+        <target state="translated">Por favor, introduzca el identificador del recurso para confirmar.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/delete-resource-modal.html</context>
           <context context-type="linenumber">53</context>
@@ -8411,7 +8411,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.selectNewCategory.confirmation" datatype="html">
         <source>Bitte wählen Sie die Kategorie aus, die für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="geset"/> gesetzt werden soll. </source>
-        <target state="translated">Seleccione la categoría que se establecerá para el recurso <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
+        <target state="translated">Por favor, seleccione la categoría que se establecerá para el recurso <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-category-modal.component.ts</context>
           <context context-type="linenumber">86</context>
@@ -8695,7 +8695,7 @@
       </trans-unit>
       <trans-unit id="matrix.export.selectFormat" datatype="html">
         <source>Bitte wählen Sie das Dateiformat für den Matrix-Export aus.</source>
-        <target state="translated">Seleccione el formato de archivo para la exportación de la matriz.</target>
+        <target state="translated">Por favor, seleccione el formato de archivo para la exportación de la matriz.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
           <context context-type="linenumber">140</context>
@@ -9399,7 +9399,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.fixOutliers.singleValue.info" datatype="html">
         <source>Bitte wählen Sie den korrekten Wert aus der Werteliste aus.</source>
-        <target state="translated">Seleccione el valor correcto de la lista de valores.</target>
+        <target state="translated">Por favor, seleccione el valor correcto de la lista de valores.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
           <context context-type="linenumber">22,24</context>
@@ -9819,7 +9819,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.fixOutliers.multipleValues.info" datatype="html">
         <source>Bitte wählen Sie die korrekten Werte aus der Werteliste aus.</source>
-        <target state="translated">Seleccione los valores correctos de la lista de valores.</target>
+        <target state="translated">Por favor, seleccione los valores correctos de la lista de valores.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/fix-outliers-modal.html</context>
           <context context-type="linenumber">9,11</context>

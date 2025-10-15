@@ -308,7 +308,7 @@
       </trans-unit>
       <trans-unit id="import.mergeOption.deletionsInfo.jsonl" datatype="html">
         <source>Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen, denen in der Importdatei der Wert <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>null<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> zugewiesen ist. Nicht aufgeführte Felder und Relationen bleiben unverändert. </source>
-        <target state="translated">Se esta opção estiver ativada, tanto campos como relações podem ser atualizados ou removidos. Todos os campos e relações com o valor atribuído de <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>zero<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> serão apagados. Campos e relações não definidos não serão alterados. </target>
+        <target state="translated">Se esta opção estiver ativada, tanto campos como relações podem ser atualizados ou removidos. Todos os campos e relações com o valor atribuído de <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>null<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> serão apagados. Campos e relações não definidos não serão alterados. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">137</context>

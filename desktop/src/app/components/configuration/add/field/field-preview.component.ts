@@ -37,6 +37,8 @@ export class FieldPreviewComponent implements OnChanges {
 
     private updateLabelAndDescription() {
 
+        if (!this.field) return;
+
         const { label, description } = this.labels.getLabelAndDescription(this.field);
         this.label = label;
         this.description = description;

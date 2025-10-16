@@ -44,8 +44,11 @@
 </div>
 
 <div class="modal-footer">
-    <button id="startExportButton" type="button" class="btn btn-primary"
-        (click)="startExport()">
+    <button id="startExportButton"
+            type="button"
+            class="btn btn-primary"
+            [disabled]="!targetDirectoryPath"
+            (click)="startExport()">
         <span i18n="@@buttons.ok">OK</span>
     </button>
     <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss('cancel')">

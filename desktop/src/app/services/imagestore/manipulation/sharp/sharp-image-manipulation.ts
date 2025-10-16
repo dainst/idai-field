@@ -19,8 +19,13 @@ export module SharpImageManipulation {
      */
     export function getImageObject(buffer: Buffer): any {
 
-        const sharpImage = sharp(buffer, { limitInputPixels: ImageManipulation.MAX_INPUT_PIXELS });
-        return sharpImage;
+        return sharp(
+            buffer,
+            {
+                limitInputPixels: ImageManipulation.MAX_INPUT_PIXELS,
+                failOn: 'error' // Prevent sharp from failing on warnings for GeoTIFF tags
+            }
+        );
     }
 
 

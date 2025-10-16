@@ -31,14 +31,12 @@ This server runs Field Hub (<small><%= Application.spec(:field_hub, :vsn) %></sm
 
         <%= Enum.map(projects, fn(project) -> %>
           <tr>
-            <td><.link navigate={~p"/ui/projects/show/#{project}"}>{project}</.link></td> 
-     
-            <td><%= database_stats(project)[:doc_counts] %> </td>
-            <td><%= database_stats(project)[:file_size] %> </td>
+            <td><.link navigate={~p"/ui/projects/show/#{project}"}>{project}</.link></td>
 
+            <td>{database_stats(project)[:doc_counts]}</td>
+            <td>{database_stats(project)[:file_size]}</td>
           </tr>
         <% end) %>
       </table>
-
   <% end %>
 <% end %>

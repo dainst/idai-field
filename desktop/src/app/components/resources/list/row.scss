@@ -24,7 +24,7 @@
   }
 
   .input-field {
-    padding: 4px 5px 0 2px;
+    padding: 5px 5px 0 2px;
   }
 
   .hierarchy-button {
@@ -72,10 +72,23 @@
     }
   }
 
-  .identifier-prefix-label {
-    height: 36px;
-    font-size: 16px;
-    border-color: transparent !important;
+  identifier-input {
+    .identifier-prefix-label {
+      padding-left: 6px;
+      padding-top: 3.5px;
+      font-size: 14px;
+      border-color: transparent !important;
+    }
+
+    input {
+      top: -0.5px;
+      padding: 4px 8px 5px 8px;
+      font-size: 14px;
+
+      &:not(.with-prefix) {
+        top: 1px;
+      }
+    }
   }
 
   .dropdown-input-field {
@@ -88,7 +101,6 @@
 
   .ng-select {
     width: 100%;
-    font-size: 14px;
     color: #495057;
     outline: none;
 
@@ -96,13 +108,19 @@
       height: 41px !important;
       border: 0;
 
+      .ng-option {
+        font-size: 14px;
+      }
+
       .ng-value {
+        font-size: 14px;
         z-index: 1;
       }
 
       input {
         position: relative;
         top: 6px;
+        font-size: 14px;
         z-index: 2;
       }
     }
@@ -132,11 +150,8 @@
 }
 
 .ng-dropdown-panel.row-select-panel {
-  &.ng-select-top {
-    margin-bottom: 1px !important;
-  }
-
-  &.ng-select-bottom {
-    margin-top: 1px !important;
-  }
+  margin-left: -1px;
+  font-size: 14px;
+  border-color: #ddd;
+  transition: none;
 }

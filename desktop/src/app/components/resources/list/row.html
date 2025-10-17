@@ -79,6 +79,7 @@
                            [valuelist]="shortDescriptionValuelist"
                            [getLabel]="getValueLabel"
                            [clearable]="!isShortDescriptionMandatory()"
+                           [additionalWidth]="2"
                            customPanelClass="row-select-panel"
                            (onValueSelected)="onShortDescriptionValueChanged($event)"
                            (dblclick)="$event.stopPropagation();"></searchable-select>

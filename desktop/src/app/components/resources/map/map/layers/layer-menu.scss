@@ -19,6 +19,12 @@ $layer-menu-remove-button-color: #c82333;
   top: 10px;
   padding-top: 6px;
 
+  .mdi {
+    position: relative;
+    left: 0.5px;
+    top: 0.5px;
+  }
+
   &.disabled {
     opacity: 1;
   }

@@ -26,6 +26,7 @@ export class SearchableSelectComponent implements OnInit, OnChanges, OnDestroy {
     @Input() valuelist: Valuelist;
     @Input() placeholder: string;
     @Input() customPanelClass: string;
+    @Input() additionalWidth: number = 0;
     @Input() clearable: boolean = true;
     @Input() initiallyOpened: boolean = false;
     @Input() disabled: boolean = false;
@@ -91,7 +92,7 @@ export class SearchableSelectComponent implements OnInit, OnChanges, OnDestroy {
     public async onOpen() {
 
         this.listenToScrollAndResizeEvents();
-        if (this.customPanelClass) this.addCustomPanelClass();
+        this.initializeDropdownPanel();
     }
 
 
@@ -115,14 +116,6 @@ export class SearchableSelectComponent implements OnInit, OnChanges, OnDestroy {
             window.removeEventListener('resize', this.onResizeListener, true);
             this.onResizeListener = undefined;
         }
-    }
-
-
-    public async addCustomPanelClass() {
-
-        await AngularUtility.refresh();
-        this.renderer.addClass(document.querySelector('.ng-dropdown-panel'), this.customPanelClass);
-        this.renderer.addClass(document.querySelector('.ng-dropdown-panel'), 'panel-initialized');
     }
 
 
@@ -159,6 +152,26 @@ export class SearchableSelectComponent implements OnInit, OnChanges, OnDestroy {
         }
         
         this.inputFieldClicked = true;
+    }
+
+
+    private async initializeDropdownPanel() {
+
+        await AngularUtility.refresh();
+
+        const element: HTMLElement = document.querySelector('.ng-dropdown-panel');
+        this.adjustPanelWidth(element);
+        if (this.customPanelClass) this.renderer.addClass(element, this.customPanelClass);
+        this.renderer.addClass(element, 'panel-initialized');
+    }
+
+
+    private adjustPanelWidth(element: HTMLElement) {
+
+        if (this.additionalWidth === 0) return;
+
+        const width: number = parseFloat(element.style.width.replace('px', '')) + this.additionalWidth;
+        element.style.width = width + 'px';
     }
 
 

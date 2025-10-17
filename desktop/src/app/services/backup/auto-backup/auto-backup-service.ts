@@ -92,7 +92,7 @@ export class AutoBackupService {
 
         const cores: any[] = os.cpus() ?? [];
 
-        console.log('CPU Cores:', cores);
+        console.log('Number of CPU Cores:', cores.length);
 
         return cores.length <= 4
             ? 1

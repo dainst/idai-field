@@ -122,6 +122,7 @@ export class SearchableSelectComponent implements OnInit, OnChanges, OnDestroy {
 
         await AngularUtility.refresh();
         this.renderer.addClass(document.querySelector('.ng-dropdown-panel'), this.customPanelClass);
+        this.renderer.addClass(document.querySelector('.ng-dropdown-panel'), 'panel-initialized');
     }
 
 

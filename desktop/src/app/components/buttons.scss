@@ -207,3 +207,18 @@ category-switcher-button {
 .bg-info {
   background-color: $info-button-color !important;
 }
+
+button {
+  .mdi-close,
+  .mdi-cloud-download,
+  .mdi-file-export {
+    position: relative;
+    left: 0.5px;
+  }
+}
+
+@media(-webkit-device-pixel-ratio: 1) {
+  button .mdi-cloud-download {
+    bottom: 0.5px;
+  }
+}

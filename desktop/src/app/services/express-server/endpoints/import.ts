@@ -60,7 +60,7 @@ function getRequestParameters(request: any): RequestParameters {
 
     const operationIdentifier: string = request.query.operation;
     const categoryName: string = request.query.category ?? 'Project';
-    const merge: boolean = request.query.mergeMode === 'true';
+    const merge: boolean = request.query.merge === 'true';
     const permitDeletions: boolean = request.query.permitDeletions === 'true';
     const ignoreUnconfiguredFields: boolean = request.query.ignoreUnconfiguredFields === 'true';
     const separator: string = request.query.separator ?? ',';

@@ -2311,7 +2311,7 @@ Query-Parameter:
 * *merge (Boolean)*: Ergänzt bestehende Ressourcen statt neue Ressourcen anzulegen. Entspricht der Option "Vorhandene Ressourcen ergänzen" in der Benutzeroberfläche. (Standardwert: false)
 * *permitDeletions (Boolean)*: Erlaubt es, Felder beim Import zu entfernen. Entspricht der Checkbox "Löschen erlauben" in der Benutzeroberfläche. (Standardwert: false)
 * *ignoreUnconfiguredFields (Boolean)*: Bricht den Import nicht ab, wenn unkonfigurierte Felder gefunden werden. Entspricht der Checkbox "Nicht konfigurierte Felder ignorieren" in der Benutzeroberfläche. (Standardwert: false)
-* *categoryName (String)*: Der Name der Kategorie, der die zu importierenden Daten angehören. Nur erforderlich beim CSV-Import. Entpricht dem Auswahlfeld "Kategorie" in der Benutzeroberfläche. (Standardwert: "Project")
+* *category (String)*: Der Name der Kategorie, der die zu importierenden Daten angehören. Nur erforderlich beim CSV-Import. Entpricht dem Auswahlfeld "Kategorie" in der Benutzeroberfläche. (Standardwert: "Project")
 * *operationIdentifier (String)*: Der Bezeichner einer Maßnahme, der die importierten Ressourcen zugeordnet werden sollen. Entspricht dem Auswahlfeld "Daten einer Maßnahme zuordnen" in der Benutzeroberfläche. (Standardwert: nicht gesetzt)
 * *separator (String)*: Das Trennzeichen, das in den CSV-Daten verwendet wird. Nur erforderlich beim CSV-Import. Entspricht dem Eingabefeld "Feldtrennzeichen" in der Benutzeroberfläche. (Standardwert: ",")
 
@@ -2326,7 +2326,7 @@ Parameter:
 Query-Parameter:
 * *schemaOnly (Boolean)*: Gibt ausschließlich die Kopfzeile der CSV-Tabelle aus. Nur verfügbar beim CSV-Export. (Standardwert: false)
 * *context (String)*: Gibt den Kontext an, aus dem Ressourcen exportiert werden sollen. Mögliche Werte sind "project" für das gesamte Projekt oder der Bezeichner einer Maßnahme. Entspricht dem Auswahlfeld "Kontext" in der Benutzeroberfläche. (Standardwert: "project")
-* *categoryName (String)*: Der Name der Kategorie, deren Daten exportiert werden sollen. Nur erforderlich beim CSV-Export. Entspricht dem Auswahlfeld "Kategorie" in der Benutzeroberfläche. (Standardwert: "Project")
+* *category (String)*: Der Name der Kategorie, deren Daten exportiert werden sollen. Nur erforderlich beim CSV-Export. Entspricht dem Auswahlfeld "Kategorie" in der Benutzeroberfläche. (Standardwert: "Project")
 * *separator (String)*: Das Trennzeichen, das in den exportierten CSV-Daten verwendet werden soll. Nur erforderlich beim CSV-Export. Entspricht dem Eingabefeld "Feldtrennzeichen" in der Benutzeroberfläche. (Standardwert: ",")
 * *combineHierarchicalRelations (Boolean)*: Fasst hierarchische Relationen zur vereinfachten Relation "isChildOf" zusammen. Nur verfügbar beim CSV-Export. Entspricht der Checkbox "Hierarchische Relationen zusammenfassen" in der Benutzeroberfläche. (Standardwert: true)
 * *formatted (Boolean)*: Setzt Einrückungen zur formatierten Ausgabe der exportierten Daten. Nur verfügbar beim GeoJSON-Export. (Standardwert: true)

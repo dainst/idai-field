@@ -2304,7 +2304,7 @@ Query parameters:
 * *merge (boolean)*: Updates existing resources instead of creating new ones. Corresponds to the option "Update existing resources" in the user interface. (Default value: false)
 * *permitDeletions (boolean)*: Allows fields to be removed during import. Corresponds to the checkbox "Permit deletions" in the user interface. (Default value: false)
 * *ignoreUnconfiguredFields (boolean)*: Does not abort the import if unconfigured fields are found. Corresponds to the checkbox "Ignore unconfigured fields" in the user interface. (Default value: false)
-* *categoryName (string)*: The name of the category to which the data to be imported belongs. Only required for CSV import. Corresponds to the dropdown field "Category" in the user interface. (Default value: "Project")
+* *category (string)*: The name of the category to which the data to be imported belongs. Only required for CSV import. Corresponds to the dropdown field "Category" in the user interface. (Default value: "Project")
 * *operationIdentifier (string)*: The identifier of an operation to which the imported resources are to be assigned. Corresponds to the dropdown field "Assign data to an operation" in the user interface. (Default value: not set)
 * *separator (string)*: The separator used in the CSV data. Only required for CSV import. Corresponds to the input field "Field separator" in the user interface. (Default value: ",")
 
@@ -2319,7 +2319,7 @@ Parameters:
 Query parameters:
 * *schemaOnly (boolean)*: Outputs only the header of the CSV table. Only available for CSV export. (Default value: false)
 * *context (string)*: Specifies the context from which resources are to be exported. Possible values are "project" for the entire project or the identifier of an operation. Corresponds to the dropdown field "Context" in the user interface. (Default value: "project")
-* *categoryName (string)*: The name of the category whose data is to be exported. Only required for CSV export. Corresponds to the dropdown field "Category" in the user interface. (Default value: "Project")
+* *category (string)*: The name of the category whose data is to be exported. Only required for CSV export. Corresponds to the dropdown field "Category" in the user interface. (Default value: "Project")
 * *separator (string)*: The separator to be used in the exported CSV data. Only required for CSV export. Corresponds to the input field "Field separator" in the user interface. (Default value: ",")
 * *combineHierarchicalRelations (boolean)*: Combines hierarchical relations into the simplified relation "isChildOf". Only available for CSV export. Corresponds to the checkbox "Combine hierarchical relations" in the user interface. (Default value: true)
 * *formatted (boolean)*: Sets indentations for formatted output of the exported data. Only available for GeoJSON export. (Default value: true)

@@ -2305,7 +2305,7 @@ Sorgu parametreleri:
 * *merge (boolean)*: Yeni girdiler oluşturmak yerine mevcut girdileri günceller. Kullanıcı arayüzündeki "Mevcut girdileri güncelle" seçeneğine karşılık gelir. (Varsayılan değer: false)
 * *permitDeletions (boolean)*: İçe aktarma sırasında alanların silinmesine izin verir. Kullanıcı arayüzündeki "Silme işlemlerine izin ver" onay kutusuna karşılık gelir. (Varsayılan değer: false)
 * *ignoreUnconfiguredFields (boolean)*: Yapılandırılmamış alanlar bulunursa içe aktarma işlemini iptal etmez. Kullanıcı arayüzündeki "Yapılandırılmamış alanları göz ardı et" onay kutusuna karşılık gelir. (Varsayılan değer: false)
-* *categoryName (string)*: İçe aktarılacak verilerin ait olduğu kategorinin adı. Yalnızca CSV ile içe aktarım için gereklidir. Kullanıcı arayüzündeki "Kategori" açılır alanına karşılık gelir. (Varsayılan değer: "Project")
+* *category (string)*: İçe aktarılacak verilerin ait olduğu kategorinin adı. Yalnızca CSV ile içe aktarım için gereklidir. Kullanıcı arayüzündeki "Kategori" açılır alanına karşılık gelir. (Varsayılan değer: "Project")
 * *operationIdentifier (string)*: İçe aktarılan girdilerin atanacağı bir işlemin tanımlayıcısı. Kullanıcı arayüzündeki "Bir işleme veri ata" açılır alanına karşılık gelir. (Varsayılan değer: not set)
 * *separator (string)*: CSV verilerinde kullanılan ayırıcı. Yalnızca CSV ile içe aktarım için gereklidir. Kullanıcı arayüzündeki "Alan ayırıcı" giriş alanına karşılık gelir. (Varsayılan değer: ",")
 
@@ -2320,7 +2320,7 @@ Parametreler:
 Sorgu parametreleri:
 * *schemaOnly (boolean)*: Yalnızca CSV tablosunun başlığını çıktı olarak verir. Yalnızca CSV olarak dışa aktarım için kullanılabilir. (Varsayılan değer: false)
 * *context (string)*: Girdierin dışa aktarılacağı konteksti belirtir. Olası değerler, tüm proje için "proje" veya bir işlemin tanımlayıcısıdır. Kullanıcı arayüzündeki "Kontekst" açılır alanına karşılık gelir. (Varsayılan değer: "Project")
-* *categoryName (string)*: Verileri dışa aktarılacak kategorinin adı. Yalnızca CSV olarak dışa aktarım için gereklidir. Kullanıcı arayüzündeki "Kategori" açılır alanına karşılık gelir. (Varsayılan değer: "Project")
+* *category (string)*: Verileri dışa aktarılacak kategorinin adı. Yalnızca CSV olarak dışa aktarım için gereklidir. Kullanıcı arayüzündeki "Kategori" açılır alanına karşılık gelir. (Varsayılan değer: "Project")
 * *separator (string)*: Dışa aktarılan CSV verilerinde kullanılacak ayırıcı. Yalnızca CSV olarak dışa aktarım için gereklidir. Kullanıcı arayüzündeki "Alan ayırıcı" giriş alanına karşılık gelir. (Varsayılan değer: ",")
 * *combineHierarchicalRelations (boolean)*: Hiyerarşik ilişkileri basitleştirilmiş "isChildOf" ilişkisine birleştirir. Yalnızca CSV olarak dışa aktarım için kullanılabilir. Kullanıcı arayüzündeki "Hiyerarşik ilişkileri birleştir" onay kutusuna karşılık gelir. (Varsayılan değer: true)
 * *formatted (boolean)*: Dışa aktarılan verilerin biçimlendirilmiş çıktısı için girintileri ayarlar. Yalnızca GeoJSON olarak dışa aktarım için kullanılabilir. (Varsayılan değer: true)

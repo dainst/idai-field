@@ -2312,7 +2312,7 @@ Query-Parameter:
 * *permitDeletions (Boolean)*: Erlaubt es, Felder beim Import zu entfernen. Entspricht der Checkbox "Löschen erlauben" in der Benutzeroberfläche. (Standardwert: false)
 * *ignoreUnconfiguredFields (Boolean)*: Bricht den Import nicht ab, wenn unkonfigurierte Felder gefunden werden. Entspricht der Checkbox "Nicht konfigurierte Felder ignorieren" in der Benutzeroberfläche. (Standardwert: false)
 * *category (String)*: Der Name der Kategorie, der die zu importierenden Daten angehören. Nur erforderlich beim CSV-Import. Entpricht dem Auswahlfeld "Kategorie" in der Benutzeroberfläche. (Standardwert: "Project")
-* *operationIdentifier (String)*: Der Bezeichner einer Maßnahme, der die importierten Ressourcen zugeordnet werden sollen. Entspricht dem Auswahlfeld "Daten einer Maßnahme zuordnen" in der Benutzeroberfläche. (Standardwert: nicht gesetzt)
+* *operation (String)*: Der Bezeichner einer Maßnahme, der die importierten Ressourcen zugeordnet werden sollen. Entspricht dem Auswahlfeld "Daten einer Maßnahme zuordnen" in der Benutzeroberfläche. (Standardwert: nicht gesetzt)
 * *separator (String)*: Das Trennzeichen, das in den CSV-Daten verwendet wird. Nur erforderlich beim CSV-Import. Entspricht dem Eingabefeld "Feldtrennzeichen" in der Benutzeroberfläche. (Standardwert: ",")
 
 

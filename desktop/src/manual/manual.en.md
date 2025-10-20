@@ -2305,7 +2305,7 @@ Query parameters:
 * *permitDeletions (boolean)*: Allows fields to be removed during import. Corresponds to the checkbox "Permit deletions" in the user interface. (Default value: false)
 * *ignoreUnconfiguredFields (boolean)*: Does not abort the import if unconfigured fields are found. Corresponds to the checkbox "Ignore unconfigured fields" in the user interface. (Default value: false)
 * *category (string)*: The name of the category to which the data to be imported belongs. Only required for CSV import. Corresponds to the dropdown field "Category" in the user interface. (Default value: "Project")
-* *operationIdentifier (string)*: The identifier of an operation to which the imported resources are to be assigned. Corresponds to the dropdown field "Assign data to an operation" in the user interface. (Default value: not set)
+* *operation (string)*: The identifier of an operation to which the imported resources are to be assigned. Corresponds to the dropdown field "Assign data to an operation" in the user interface. (Default value: not set)
 * *separator (string)*: The separator used in the CSV data. Only required for CSV import. Corresponds to the input field "Field separator" in the user interface. (Default value: ",")
 
 

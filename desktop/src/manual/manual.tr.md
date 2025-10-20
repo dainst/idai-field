@@ -2306,7 +2306,7 @@ Sorgu parametreleri:
 * *permitDeletions (boolean)*: İçe aktarma sırasında alanların silinmesine izin verir. Kullanıcı arayüzündeki "Silme işlemlerine izin ver" onay kutusuna karşılık gelir. (Varsayılan değer: false)
 * *ignoreUnconfiguredFields (boolean)*: Yapılandırılmamış alanlar bulunursa içe aktarma işlemini iptal etmez. Kullanıcı arayüzündeki "Yapılandırılmamış alanları göz ardı et" onay kutusuna karşılık gelir. (Varsayılan değer: false)
 * *category (string)*: İçe aktarılacak verilerin ait olduğu kategorinin adı. Yalnızca CSV ile içe aktarım için gereklidir. Kullanıcı arayüzündeki "Kategori" açılır alanına karşılık gelir. (Varsayılan değer: "Project")
-* *operationIdentifier (string)*: İçe aktarılan girdilerin atanacağı bir işlemin tanımlayıcısı. Kullanıcı arayüzündeki "Bir işleme veri ata" açılır alanına karşılık gelir. (Varsayılan değer: not set)
+* *operation (string)*: İçe aktarılan girdilerin atanacağı bir işlemin tanımlayıcısı. Kullanıcı arayüzündeki "Bir işleme veri ata" açılır alanına karşılık gelir. (Varsayılan değer: not set)
 * *separator (string)*: CSV verilerinde kullanılan ayırıcı. Yalnızca CSV ile içe aktarım için gereklidir. Kullanıcı arayüzündeki "Alan ayırıcı" giriş alanına karşılık gelir. (Varsayılan değer: ",")
 
 

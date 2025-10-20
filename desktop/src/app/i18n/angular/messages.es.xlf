@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="ngb.carousel.slide-number" datatype="html">
         <source>Slide <x id="INTERPOLATION" equiv-text="ueryList&lt;NgbSli"/> of <x id="INTERPOLATION_1" equiv-text="EventSource = N"/> </source>
-        <target state="needs-translation">Diapositiva<x id="INTERPOLATION" equiv-text="ueryList&lt;NgbSli"/> de <x id="INTERPOLATION_1" equiv-text="EventSource = N"/> </target>
+        <target state="translated">Diapositiva <x id="INTERPOLATION" equiv-text="ueryList&lt;NgbSli"/> de <x id="INTERPOLATION_1" equiv-text="EventSource = N"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/carousel/carousel.ts</context>
           <context context-type="linenumber">109,117</context>
@@ -449,7 +449,7 @@
       </trans-unit>
       <trans-unit id="import.format.info" datatype="html">
         <source>Unterstützte Dateiformate: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb"/> Bildformate können in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../images&quot;&gt;"/>Bilderverwaltung<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> importiert werden. </source>
-        <target state="needs-translation">Formatos de archivo compatibles: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/> Los formatos de imagen pueden importarse mediante <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>gestión de imágenes<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>. </target>
+        <target state="translated">Formatos de archivo compatibles: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/> Los formatos de imagen pueden importarse mediante <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>gestión de imágenes<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
           <context context-type="linenumber">236</context>
@@ -465,7 +465,7 @@
       </trans-unit>
       <trans-unit id="import.defaultOption.info" datatype="html">
         <source>Datensätze, deren Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>) bereits vergeben ist, werden ignoriert. </source>
-        <target state="needs-translation">Los recursos ya existentes, según lo determinado por el campo <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identificador<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>, se ignoran. </target>
+        <target state="translated">Los recursos ya existentes, según lo determinado por el campo <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>, se ignoran. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">89</context>
@@ -497,7 +497,7 @@
       </trans-unit>
       <trans-unit id="import.mergeOption.native.info" datatype="html">
         <source>Ist diese Option aktiviert, so werden bereits existierende Datensätze mit den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </source>
-        <target state="needs-translation">Si esta opción está activa, los recursos ya existentes se fusionarán con los datos del archivo de importación. Los campos del registro de importación sobrescribirán los campos correspondientes del registro existente. Las geometrías del registro de importación sobrescribirán las del registro existente. Los campos existentes en el registro original que no estén definidos en el registro de importación permanecerán intactos. La categoría no se puede cambiar. La asignación de registros se realiza en función del campo<x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identificador<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>. Los registros del archivo de importación que no se puedan asignar a un recurso se ignorarán. </target>
+        <target state="translated">Si esta opción está activa, los recursos ya existentes se fusionarán con los datos del archivo de importación. Los campos del registro de importación sobrescribirán los campos correspondientes del registro existente. Las geometrías del registro de importación sobrescribirán las del registro existente. Los campos existentes en el registro original que no estén definidos en el registro de importación permanecerán intactos. La categoría no se puede cambiar. La asignación de registros se realiza en función del campo <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>. Los registros del archivo de importación que no se puedan asignar a un recurso se ignorarán. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">136</context>
@@ -505,7 +505,7 @@
       </trans-unit>
       <trans-unit id="import.mergeOption.csv.info" datatype="html">
         <source>Ist diese Option aktiviert, so werden bereits existierende Datensätze mit den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben dabei gleichnamige Felder im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Spalte <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </source>
-        <target state="needs-translation">Si esta opción está activa, los recursos ya existentes se fusionarán con los datos del archivo de importación. Los campos del registro de importación sobrescribirán los campos correspondientes del registro existente. Los campos existentes en el registro original que no estén definidos en el registro de importación permanecerán intactos. La categoría no se puede cambiar. La asignación de registros se realiza en función de la columna<x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identificador<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>. Los registros del archivo de importación que no se puedan asignar a un recurso se ignorarán. </target>
+        <target state="translated">Si esta opción está activa, los recursos ya existentes se fusionarán con los datos del archivo de importación. Los campos del registro de importación sobrescribirán los campos correspondientes del registro existente. Los campos existentes en el registro original que no estén definidos en el registro de importación permanecerán intactos. La categoría no se puede cambiar. La asignación de registros se realiza en función de la columna <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>. Los registros del archivo de importación que no se puedan asignar a un recurso se ignorarán. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">119</context>
@@ -521,7 +521,7 @@
       </trans-unit>
       <trans-unit id="import.mergeOption.deletionsInfo.jsonl" datatype="html">
         <source>Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen, denen in der Importdatei der Wert <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>null<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> zugewiesen ist. Nicht aufgeführte Felder und Relationen bleiben unverändert. </source>
-        <target state="needs-translation">Si esta opción está activada, tanto los campos como las relaciones no solo se pueden actualizar, sino también eliminar. Se eliminarán todos los campos y relaciones con el valor asignado <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>null<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>. Los campos y relaciones no definidos no se modificarán en absoluto. </target>
+        <target state="translated">Si esta opción está activada, tanto los campos como las relaciones no solo se pueden actualizar, sino también eliminar. Se eliminarán todos los campos y relaciones con el valor asignado <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>null<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>. Los campos y relaciones no definidos no se modificarán en absoluto. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">138</context>
@@ -561,7 +561,7 @@
       </trans-unit>
       <trans-unit id="import.assignToOperation.noAssignment" datatype="html">
         <source>Keine Zuordnung</source>
-        <target state="translated">Sin asignación</target>
+        <target state="translated">Ninguna asignación</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">203</context>
@@ -577,7 +577,7 @@
       </trans-unit>
       <trans-unit id="import.geojson.info" datatype="html">
         <source>Beim GeoJSON-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> im Objekt <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>properties<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </source>
-        <target state="translated">La importación de GeoJSON no crea nuevos recursos. En su lugar, las geometrías se añaden a los recursos existentes. Por favor, tenga en cuenta que las geometrías ya existentes se sobrescriben en este proceso. La asignación de registros se realiza en función del campo<x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identificador<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> del objeto <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>propiedades<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>. Los registros del archivo de importación que no se puedan asignar a un recurso se ignorarán. </target>
+        <target state="translated">La importación de GeoJSON no crea nuevos recursos. En su lugar, las geometrías se añaden a los recursos existentes. Por favor, tenga en cuenta que las geometrías ya existentes se sobrescriben en este proceso. La asignación de registros se realiza en función del campo<x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identificador <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> del objeto <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>propiedades <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>. Los registros del archivo de importación que no se puedan asignar a un recurso se ignorarán. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">233</context>
@@ -585,7 +585,7 @@
       </trans-unit>
       <trans-unit id="import.shapefile.info" datatype="html">
         <source>Beim Shapefile-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze im Shapefile, die nicht zugeordnet werden können, werden ignoriert. </source>
-        <target state="needs-translation">La importación de archivos Shapefile no crea nuevos recursos. En su lugar, las geometrías se añaden a los recursos existentes. Por favor, tenga en cuenta que las geometrías ya existentes se sobrescriben en este proceso. La asignación de registros se realiza en función del campo <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identificador<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>. Los registros del archivo shapefile que no puedan asignarse a un recurso se ignorarán. </target>
+        <target state="translated">La importación de archivos Shapefile no crea nuevos recursos. En su lugar, las geometrías se añaden a los recursos existentes. Por favor, tenga en cuenta que las geometrías ya existentes se sobrescriben en este proceso. La asignación de registros se realiza en función del campo identificador <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>. Los registros del archivo shapefile que no puedan asignarse a un recurso se ignorarán. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">233</context>
@@ -713,7 +713,7 @@
       </trans-unit>
       <trans-unit id="export.combineHierarchicalRelations.info" datatype="html">
         <source>Ist diese Option aktiviert, werden die hierarchischen Relationen zur vereinfachten Relation <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>isChildOf<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> zusammengefasst, die jeweils die unmittelbar übergeordnete Ressource angibt. Diese Option sollte im Normalfall aktiviert bleiben. </source>
-        <target state="needs-translation">Si esta opción está habilitada, las relaciones jerárquicas se combinan en la relación simplificada <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>isChildOf<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> que especifica el recurso inmediatamente superior. Normalmente, esta opción debe permanecer habilitada. </target>
+        <target state="translated">Si esta opción está habilitada, las relaciones jerárquicas se combinan en la relación simplificada <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>isChildOf<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> que especifica el recurso inmediatamente superior. Normalmente, esta opción debe permanecer habilitada. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">365</context>
@@ -761,7 +761,7 @@
       </trans-unit>
       <trans-unit id="export.geojson.info" datatype="html">
         <source>Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (shortDescription) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (category) der jeweiligen Ressourcen. </source>
-        <target state="needs-translation">Los datos exportados incluyen geometrías y los campos<x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identificador<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>breve descripción<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>(shortDescription) y <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>categoría<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> de los recursos correspondientes. </target>
+        <target state="translated">Los datos exportados incluyen geometrías y los campos <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identificador<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>breve descripción<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>(shortDescription) y <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>categoría<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (category) de los recursos correspondientes. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
           <context context-type="linenumber">147</context>
@@ -801,7 +801,7 @@
       </trans-unit>
       <trans-unit id="backup.creation.info" datatype="html">
         <source>Erstellt ein Backup des aktuell geöffneten Projekts. Regelmäßige Backups erhöhen die Datensicherheit und erlauben es bei Datenverlusten, die Datenbank aus dem letzten gesicherten Zwischenstand wiederherzustellen. <x id="LINE_BREAK" ctype="lb"/><x id="LINE_BREAK" ctype="lb"/> Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich in dem unter <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>Einstellungen<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> angezeigten Pfad und sollten separat gesichert werden. </source>
-        <target state="needs-translation">Crea una copia de seguridad del proyecto actualmente abierto. Las copias de seguridad periódicas aumentan la seguridad de los datos y permiten restaurar la base de datos desde el último estado guardado en caso de pérdida de datos. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/> <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/> Por favor, tenga en cuenta que las imágenes originales no se almacenan en el archivo de copia de seguridad. Estas se pueden encontrar en el directorio especificado en la configuración<x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/> <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> y deben guardarse por separado. </target>
+        <target state="translated">Crea una copia de seguridad del proyecto actualmente abierto. Las copias de seguridad periódicas aumentan la seguridad de los datos y permiten restaurar la base de datos desde el último estado guardado en caso de pérdida de datos. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/> <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/> Por favor, tenga en cuenta que las imágenes originales no se almacenan en el archivo de copia de seguridad. Estas se pueden encontrar en el directorio especificado en la configuración <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/> <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> y deben guardarse por separado. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-creation.component.ts</context>
           <context context-type="linenumber">102</context>
@@ -833,7 +833,7 @@
       </trans-unit>
       <trans-unit id="backup.loading.info.2" datatype="html">
         <source>Hinweis: Nach dem Einspielen eines Backups werden Vorschaubilder erneut aus den Originaldaten errechnet, weshalb die Anwendung zunächst möglicherweise etwas langsamer laufen kann.</source>
-        <target state="translated">Nota: Después de restaurar una copia de seguridad, todas las imágenes en miniatura se volverán a calcular basándose en los datos de la imagen original. Por este motivo, es posible que la aplicación funcione inicialmente más lento de lo habitual.</target>
+        <target state="translated">Por favor, tenga en cuenta que después de restaurar una copia de seguridad, todas las imágenes en miniatura se volverán a calcular basándose en los datos de la imagen original. Por este motivo, es posible que la aplicación funcione inicialmente más lento de lo habitual.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
           <context context-type="linenumber">125</context>
@@ -841,7 +841,7 @@
       </trans-unit>
       <trans-unit id="backup.loading.info.3" datatype="html">
         <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Achtung:<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Beim Einspielen einer Backup-Datei wird eine eventuell vorhandene Zieldatenbank mit der angegebenen Kennung <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>vollständig überschrieben<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </source>
-        <target state="needs-translation"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Atención:<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Al restaurar un archivo de copia de seguridad, cualquier base de datos de destino que pueda existir con el identificador especificado <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>se sobrescribirá por completo<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
+        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Atención:<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Al restaurar un archivo de copia de seguridad, cualquier base de datos de destino que pueda existir con el identificador especificado <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>se sobrescribirá por completo<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
           <context context-type="linenumber">125</context>
@@ -905,7 +905,7 @@
       </trans-unit>
       <trans-unit id="configuration.newField" datatype="html">
         <source>Neues Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyField.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen</source>
-        <target state="needs-translation">Crear nuevo campo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyField.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/></target>
+        <target state="translated">Crear nuevo campo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyField.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/field/field-listing.component.ts</context>
           <context context-type="linenumber">38</context>
@@ -3179,7 +3179,7 @@
       </trans-unit>
       <trans-unit id="resources.searchBar.suggestions.noResourcesFound" datatype="html">
         <source>Keine Ressourcen gefunden.</source>
-        <target state="translated">No se encontraron recursos.</target>
+        <target state="translated">No se han encontrado recursos.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/search-suggestions.component.ts</context>
           <context context-type="linenumber">78</context>
@@ -7279,7 +7279,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.missingRelationTargets.single" datatype="html">
         <source>Fehlende Zielressource der Relation <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
-        <target state="translated">Falta el recurso destino de la relación <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getFieldLabel(section)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></target>
+        <target state="translated">Falta el recurso de destino de la relación <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{getFieldLabel(section)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">68,61</context>
@@ -7303,7 +7303,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.resourceLimitExceeded.single" datatype="html">
         <source>Es darf nur <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>eine<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Ressource der Kategorie <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="tion)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i"/> angelegt werden. </source>
-        <target state="needs-translation">Solo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>un<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>recurso de la categoría<x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> puede crearse. </target>
+        <target state="translated">Solo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>un<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> recurso de la categoría <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getCategoryLabel(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> puede crearse. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">158,135</context>
@@ -7751,7 +7751,7 @@
       </trans-unit>
       <trans-unit id="configuration.autoCreationOptionDisabled" datatype="html">
         <source>Aktivieren Sie die Option "QR-Codes zur Identifikation verwenden", um diese Option zu verwenden.</source>
-        <target state="translated">Habilita la opción "Usar códigos QR para identificación" para utilizar esta opción.</target>
+        <target state="translated">Habilite la opción "Usar códigos QR para identificación" para utilizar esta opción.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -8419,7 +8419,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.selectNewCategory.all" datatype="html">
         <source>Bei allen Ressourcen dieser Kategorie durchführen</source>
-        <target state="translated">Actuar para todos los recursos de esta categoría</target>
+        <target state="translated">Aplicar a todos los recursos de esta categoría</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/select-new-category-modal.html</context>
           <context context-type="linenumber">52</context>
@@ -8535,7 +8535,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.missingOrInvalidParent" datatype="html">
         <source>Fehlende oder ungültige übergeordnete Ressource</source>
-        <target state="translated">Recurso superior ausente o inválido</target>
+        <target state="translated">Recurso principal ausente o no válido</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">82,89</context>
@@ -8599,7 +8599,7 @@
       </trans-unit>
       <trans-unit id="import.csv.info" datatype="html">
         <source>Alle in der CSV-Datei definierten Ressourcen müssen der gleichen Kategorie angehören. Bitte beachten Sie, dass die Spaltenköpfe den Bezeichnern der Felder entsprechen müssen, die für die jeweilige Kategorie konfiguriert wurden. Als Vorlage kann im <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../export&quot;&gt;"/>Export-Menü<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> eine Schemadatei generiert werden. </source>
-        <target state="needs-translation">Todos los recursos definidos en el archivo CSV deben pertenecer a la misma categoría. Por favor, tenga en cuenta que los encabezados de columna deben corresponder a los nombres de los campos que se han configurado para la categoría respectiva. Se puede generar un archivo de esquema como plantilla en <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../export&quot;&gt;"/>menú de exportación<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>. </target>
+        <target state="translated">Todos los recursos definidos en el archivo CSV deben pertenecer a la misma categoría. Por favor, tenga en cuenta que los encabezados de columna deben corresponder a los nombres de los campos que se han configurado para la categoría respectiva. Se puede generar un archivo de esquema como plantilla en <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../export&quot;&gt;"/>menú de exportación <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">73,65</context>
@@ -9775,7 +9775,7 @@
       </trans-unit>
       <trans-unit id="image.export" datatype="html">
         <source>Bild exportieren</source>
-        <target state="translated">Exportando imagen</target>
+        <target state="translated">Exportar imagen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/viewer/image-viewer.html</context>
           <context context-type="linenumber">30</context>

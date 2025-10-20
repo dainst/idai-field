@@ -157,7 +157,7 @@ export class ProcessListComponent implements OnInit, OnChanges, OnDestroy {
             await modalRef.result;
             return true;
         } catch(err) {
-            if (err !== 'cancel') console.error(err);
+            if (err !== 'cancel' && err !== 'discard') console.error(err);
             return false;
         } finally {
             AngularUtility.blurActiveElement();

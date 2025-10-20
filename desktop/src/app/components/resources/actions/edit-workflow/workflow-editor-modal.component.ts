@@ -154,7 +154,7 @@ export class WorkflowEditorModalComponent {
         try {
             return (await modalRef.result).documents;
         } catch(err) {
-            if (err !== 'cancel') console.error(err);
+            if (err !== 'cancel' && err !== 'discard') console.error(err);
         } finally {
             AngularUtility.blurActiveElement();
             this.menus.setContext(context);

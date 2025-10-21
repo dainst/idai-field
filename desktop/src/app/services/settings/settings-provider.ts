@@ -132,6 +132,8 @@ export class SettingsProvider {
 
     private static addPathSeparator(path: string): string {
         
-        return path.endsWith(pathSeparator) ? path : path + pathSeparator;
+        return path.endsWith('/') || path.endsWith('\\')
+            ? path
+            : path + pathSeparator;
     }
 }

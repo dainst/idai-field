@@ -131,13 +131,20 @@ const getDownloadSection = (latestVersion: string, t: TFunction): ReactNode => {
             <h4>{ t('download.installation.update.header') }</h4>
             <p className="mb-5" style={ installationInfoStyle }>{ t('download.installation.update.body') }</p>
             <h4>{ t('download.installation.linux.header') }</h4>
-            <p className="mb-5" style={ installationInfoStyle }>
-                { t('download.installation.linux.info1') }
+            <h5>{ t('download.installation.linux.appImage.header') }</h5>
+            <p className="mb-3" style={ installationInfoStyle }>
+                { t('download.installation.linux.appImage.body1') }
                 <a href="https://docs.appimage.org/user-guide/troubleshooting"
                    target="_blank" rel="noopener noreferrer">
-                    { t('download.installation.linux.link') }
+                    { t('download.installation.linux.appImage.link') }
                 </a>
-                { t('download.installation.linux.info2') }
+                { t('download.installation.linux.appImage.body2') }
+            </p>
+            <h5>{ t('download.installation.linux.imageProcessing.header') }</h5>
+            <p className="mb-5" style={ installationInfoStyle }>
+                { t('download.installation.linux.imageProcessing.body1') }
+                <code>{ t('download.installation.linux.imageProcessing.flag') }</code>
+                { t('download.installation.linux.imageProcessing.body2') }
             </p>
             <hr className="m-5" />
             <p className="mb-5">

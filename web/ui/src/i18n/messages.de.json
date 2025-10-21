@@ -121,10 +121,19 @@
         "body": "Sie können die Installation auch dann durchführen, wenn bereits eine ältere Version der Anwendung installiert ist. In diesem Fall wird Field Desktop auf die neue Version aktualisiert. Existierende Projekte bleiben im Normalfall erhalten. Es wird dennoch dringend empfohlen, vor dem Update Backup-Dateien aller wichtigen Projekte anzulegen, da es in Ausnahmefällen zu Datenverlust kommen kann."
       },
       "linux": {
-        "header": "Installation unter Linux",
-        "info1": "Bei einigen Linux-Betriebssystemen (z. B. neueren Ubuntu-Versionen) kann es bei der Ausführung von AppImage-Dateien zu Fehlern kommen. Hinweise zur Problemlösung finden Sie in der ",
-        "link": "Troubleshooting-Sektion der AppImage-Homepage",
-        "info2": "."
+        "header": "Fehlerbehebung unter Linux",
+        "appImage": {
+          "header": "Die AppImage-Datei kann nicht gestartet werden.",
+          "body1": "Bei einigen Linux-Betriebssystemen (z. B. neueren Ubuntu-Versionen) kann es bei der Ausführung von AppImage-Dateien zu Fehlern kommen. Hinweise zur Problemlösung finden Sie in der ",
+          "link": "Troubleshooting-Sektion der AppImage-Homepage",
+          "body2": "."
+        },
+        "imageProcessing": {
+          "header": "Beim Laden eines Projekts oder dem Import bzw. der Anzeige von Bildern friert die Anwendung ein.",
+          "body1": "Abhängig von den installierten Systembibliotheken kann es bei der automatischen Bildkonvertierung zu diesem Fehler kommen. Sollte das Problem auch nach der Aktualisierung Ihres Systems weiterhin bestehen bleiben, aktivieren Sie die alternative Bildverarbeitung, indem Sie die AppImage-Datei über die Kommandozeile mit dem Flag ",
+          "flag": "--alternativeImageProcessing",
+          "body2": " aufrufen."
+        }
       }
     }
   },

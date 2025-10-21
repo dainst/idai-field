@@ -99,7 +99,7 @@
     "download": "Download Field Desktop",
     "currentVersion": "Current Version:",
     "packageInfo": "The Field desktop application can be used on the following operating systems:",
-    "windowsInfo": "Windows 10 and later",
+    "windowsInfo": "Windows 11",
     "macInfo": "macOS 10.13 and later",
     "linuxInfo": "Linux (Ubuntu 18.04, Fedora 32, Debian 10 and later)",
     "allVersions": "All versions...",

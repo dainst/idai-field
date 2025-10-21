@@ -9,6 +9,7 @@ const remoteMain = require('@electron/remote/main');
 const fs = require('original-fs');
 const os = require('os');
 const url = require('url');
+const pathSeparator = require('path').sep;
 const log = require('electron-log');
 const autoUpdate = require('./auto-update.js');
 
@@ -179,13 +180,12 @@ if (env === 'dev') {
 }
 
 if (['production', 'development'].includes(global.mode)) {
-
     // If we want to go from idai-field-client to idai-field-desktop while keeping the link to the existing dbs, use this:
     // const result = electron.app.getPath('userData').replace("idai-field-desktop", "idai-field-client")
     // electron.app.setPath('userData', result).
     // global.appDataPath = result
     // The next line can then be removed.
-    global.appDataPath = electron.app.getPath('appData') + '/' + electron.app.getName()
+    global.appDataPath = electron.app.getPath('appData') + pathSeparator + electron.app.getName()
 
     copyConfigFile(global.appDataPath + '/config.json', global.appDataPath);
     global.configPath = global.appDataPath + '/config.json';

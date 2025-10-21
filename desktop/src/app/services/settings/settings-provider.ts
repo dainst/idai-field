@@ -6,6 +6,7 @@ import { Settings } from './settings';
 import { SettingsSerializer } from './settings-serializer';
 
 const remote = window.require('@electron/remote');
+const pathSeparator = window.require('path').sep;
 
 
 @Injectable()
@@ -95,13 +96,13 @@ export class SettingsProvider {
         if (settings.imagestorePath) {
             settings.imagestorePath = SettingsProvider.addPathSeparator(settings.imagestorePath);
         } else if (remote.app) {
-            settings.imagestorePath = remote.getGlobal('appDataPath') + '/imagestore/';
+            settings.imagestorePath = remote.getGlobal('appDataPath') + pathSeparator + 'imagestore' + pathSeparator;
         }
 
         if (settings.backupDirectoryPath) {
             settings.backupDirectoryPath = SettingsProvider.addPathSeparator(settings.backupDirectoryPath);
         } else if (remote.app) {
-            settings.backupDirectoryPath = remote.getGlobal('appDataPath') + '/backups/';
+            settings.backupDirectoryPath = remote.getGlobal('appDataPath') + pathSeparator + 'backups' + pathSeparator;
         }
 
         this.settings = settings;
@@ -131,6 +132,6 @@ export class SettingsProvider {
 
     private static addPathSeparator(path: string): string {
         
-        return path.endsWith('/') ? path : path + '/';
+        return path.endsWith(pathSeparator) ? path : path + pathSeparator;
     }
 }

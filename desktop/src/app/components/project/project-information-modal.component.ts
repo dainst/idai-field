@@ -31,6 +31,7 @@ export class ProjectInformationModalComponent implements OnInit {
     public imageDocumentCount: number;
     public typeDocumentCount: number;
     public storagePlaceDocumentCount: number;
+    public processDocumentCount: number;
 
     public lastChangedDocument: Document|undefined;
     public lastChangedDocumentUser: string;
@@ -97,6 +98,7 @@ export class ProjectInformationModalComponent implements OnInit {
         this.imageDocumentCount = await this.getImageDocumentCount();
         this.typeDocumentCount = await this.getTypeDocumentCount();
         this.storagePlaceDocumentCount = await this.getStoragePlaceDocumentCount();
+        this.processDocumentCount = await this.getProcessDocumentCount();
 
         this.lastChangedDocument = await this.getLastChangedDocument();
         if (this.lastChangedDocument) {
@@ -153,6 +155,14 @@ export class ProjectInformationModalComponent implements OnInit {
 
         return await this.getDocumentCountForCategories(
             this.projectConfiguration.getInventoryCategories().map(category => category.name)
+        );
+    }
+
+
+    private async getProcessDocumentCount(): Promise<number> {
+
+        return await this.getDocumentCountForCategories(
+            this.projectConfiguration.getWorkflowCategories().map(category => category.name)
         );
     }
 

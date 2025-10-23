@@ -71,11 +71,11 @@ grid-list {
         position: relative;
 
         #plus-button-container {
+          position: absolute;
+          bottom: -6px;
+          left: calc(50% - 21px);
           height: 63px;
           padding-top: 10px;
-          position: absolute;
-          bottom: 0;
-          left: calc(50% - 21px);
 
           #create-document-button .circular-button {
             margin: auto auto auto auto;

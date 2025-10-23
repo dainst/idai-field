@@ -59,11 +59,11 @@ list {
     }
 
     #list-body {
-      height: calc(100vh - 174px);
+      height: calc(100vh - 158px);
       border: solid 1px rgb(221, 221, 221);
 
       .cdk-virtual-scroll-viewport {
-        height: calc(100vh - 176px);
+        height: calc(100vh - 160px);
         overflow-y: scroll;
       }
 
@@ -83,17 +83,12 @@ list {
   }
 
   #list-background {
-    height: 40px;
+    height: 25px;
 
     #create-document-button .circular-button {
       left: calc(50% - 20px);
-      margin: -20px auto auto auto;
+      margin: -21px auto auto auto;
       z-index: 100;
     }
-  }
-
-  loading-icon {
-    position: relative;
-    bottom: 14px;
   }
 }

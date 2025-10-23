@@ -6,11 +6,12 @@
 
 <div id="workflow-overview-background" class="bg-light">
     <plus-button *ngIf="isPlusButtonShown()"
-                id="create-document-button"
-                [placement]="'top'"
-                [preselectedGeometryType]="'none'"
-                [preselectedCategory]="getCurrentFilterCategory()"
-                [liesWithin]="getSelectedSegmentDocument()"
-                [isRecordedIn]="viewFacade.getCurrentOperation()"
-                [status]="'enabled'"></plus-button>
+                 id="create-document-button"
+                 [placement]="'top'"
+                 [preselectedGeometryType]="'none'"
+                 [preselectedCategory]="getCurrentFilterCategory()"
+                 [liesWithin]="getSelectedSegmentDocument()"
+                 [isRecordedIn]="viewFacade.getCurrentOperation()"
+                 [status]="'enabled'"
+                 [defaultFieldValues]="{ state: 'in progress' }"></plus-button>
 </div>

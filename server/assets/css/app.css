@@ -273,6 +273,13 @@ nav {
   font-size: small;
 }
 
+.column-file-size {
+  width: 8em;
+}
+
+.text-right {
+  text-align: right;
+}
 
 .column-date-time {
   width: 11em;
@@ -351,11 +358,6 @@ nav {
   display: block;
 }
 
-.scrolldown tbody tr, .scrolldown thead tr {
-  display: grid;
-  grid-template-columns: 1.2fr 0.6fr 1.2fr 1fr; 
-}
-
 .scrolldown thead {
   color: #3f4246;
   font-size: small;
@@ -369,4 +371,43 @@ nav {
   line-height: 0%;
   font-size: small;
   table-layout: fixed;
+}
+
+.resources-history thead tr, .resources-history tbody tr{
+  display: grid;
+  grid-template-columns: 1.2fr 0.6fr 1.2fr 1fr; 
+}
+
+.resources-history tbody {
+  color: #3f4246;
+  line-height: 0%;
+  font-size: small;
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+.project-list thead tr, .project-list tbody tr {
+  display: grid;
+  grid-template-columns: 0.8fr 0.5fr 0.7fr 1.6fr; 
+}
+
+.project-list thead{
+  color: #3f4246;
+  font-size: small;
+}
+
+.project-list tbody {
+  color: #3f4246;
+  line-height: 0%;
+  font-size: small;
+  table-layout: fixed;
+}
+
+.click-row:hover{
+  background-color:#0069d9;
+  border-radius: 4px;
+  color: white;
+  text-shadow: #888;
+  text-indent: 2%;
 }

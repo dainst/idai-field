@@ -3,6 +3,7 @@ defmodule FieldHubWeb.Live.ProjectList do
 
   alias FieldHub.{
     Project,
+    ProjectInfo,
     User
   }
 
@@ -15,16 +16,26 @@ defmodule FieldHubWeb.Live.ProjectList do
         user_name when is_binary(user_name) ->
           projects = Project.get_all_for_user(user_name)
 
-          assign(socket, :projects, projects)
+          enriched_projects =
+            Enum.map(projects, &build_enriched_project/1)
+
+          assign(socket, :projects, enriched_projects)
       end
 
     {:ok, assign(socket, :page_title, "Overview")}
   end
 
-  defp database_stats(project) do
-    %{database: %{doc_count: doc_counts, file_size: file_size}} =
-      Project.evaluate_project(project)
+  def handle_event("go_to_project", %{"id" => id}, socket) do
+    {:noreply, redirect(socket, to: ~p"/ui/projects/show/#{id}")}
+  end
 
-    %{doc_counts: doc_counts, file_size: Sizeable.filesize(file_size)}
+  defp build_enriched_project(project_id) do
+    stats = ProjectInfo.database_stats(project_id)
+
+    %{
+      id: project_id,
+      name: project_id
+    }
+    |> Map.merge(stats)
   end
 end

@@ -19,24 +19,31 @@ This server runs Field Hub (<small><%= Application.spec(:field_hub, :vsn) %></sm
   <%= case @projects do %>
     <% [] -> %>
       No projects.
-    <% projects -> %>
-      <table class="scrolldown">
+    <% _projects -> %>
+      <table class="project-list">
         <thead>
           <tr>
-            <th>Project</th>
-            <th>Documents</th>
-            <th>Size</th>
+            <th>Name</th>
+            <th class="text-right">Documents</th>
+            <th class="text-right">Db Size</th>
+            <th>Last action (by)</th>
           </tr>
         </thead>
 
-        <%= Enum.map(projects, fn(project) -> %>
-          <tr>
-            <td><.link navigate={~p"/ui/projects/show/#{project}"}>{project}</.link></td>
-
-            <td>{database_stats(project)[:doc_counts]}</td>
-            <td>{database_stats(project)[:file_size]}</td>
-          </tr>
-        <% end) %>
+        <tbody>
+          <%= for project <- @projects do %>
+            <tr class="click-row" phx-click="go_to_project" phx-value-id={project.id}>
+              <td>{project.name}</td>
+              <td class="text-right">{project.doc_counts}</td>
+              <td class="text-right">{project.file_size}</td>
+              <td>
+                <%= if project.last_change_date != :nil do %>
+                  {Calendar.strftime(project.last_change_date, "%c")} ({project.last_change_user})
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
       </table>
   <% end %>
 <% end %>

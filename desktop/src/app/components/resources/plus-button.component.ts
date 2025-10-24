@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output,
     ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { to } from 'tsfun';
+import { to, Map } from 'tsfun';
 import { CategoryForm, Datastore, Resource, FieldDocument, Name, Named, Tree, ProjectConfiguration, 
     PouchdbDatastore } from 'idai-field-core';
 import { ViewFacade } from '../../components/resources/view/view-facade';
@@ -38,6 +38,7 @@ export class PlusButtonComponent implements OnInit, OnChanges, OnDestroy {
     @Input() preselectedGeometryType: string;
     @Input() skipFormAndReturnNewDocument: boolean = false;
     @Input() status: PlusButtonStatus = 'enabled';
+    @Input() defaultFieldValues: Map<any> = {};
 
     @Output() documentRequested: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
 
@@ -103,6 +104,9 @@ export class PlusButtonComponent implements OnInit, OnChanges, OnDestroy {
                 category: this.selectedCategory
             }
         };
+
+        Object.assign(newDocument.resource, this.defaultFieldValues);
+
         if (this.skipFormAndReturnNewDocument) {
             this.documentRequested.emit(newDocument);
         } else {

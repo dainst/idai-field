@@ -291,7 +291,7 @@ categories, in the image management image categories etc.
 
 ### Text filter
 
-Search terms are currently compared with the resource fields "Identifier" and "Short description".
+Search terms are compared with the resource fields "Identifier" and "Short description".
  
 *Example:*
  
@@ -1280,28 +1280,50 @@ Fields of the input type "Dropdown list (range)" consist of up to two subfields,
 
 ##### Date fields
 
-A value in the format "day.month.year" (DD.MM.YYYY) is entered for fields of the input type "Date". The entries for day and month are optional, so that it is possible to enter only a specific month of a year, or a specific year.
+Fields of the input type "Date" consist of up to three subfields, for each of which a separate column is created:
+
+* *value*: The date specification for a single date; the start date for a date range
+* *endValue*: The end date for a date range
+* *isRange*: Indicates whether the date is a date range. Possible values are: *true* (date range), *false* (single date).
+
+The dates are entered in the format "day.month.year" (DD.MM.YYYY). The entries for day and month are optional, so that it is possible to enter only a specific month of a year or a specific year.
+
+In addition, a time specification in the format "hours:minutes" can be entered (separated by a space) if the entry of a time is permitted for the corresponding field in the project configuration. **Important**: The time is always specified in the time zone UTC (Coordinated Universal Time, corresponds to Western European Time/Greenwich Mean Time).
 
 <div class="table-container">
   <table>
     <thead>
       <tr>
         <th>identifier</th>
-        <th>date</th>
+        <th>date.value</th>
+        <th>date.endValue</th>
+        <th>date.isRange</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
+    <tr>
         <td>A</td>
-        <td>12.01.2025</td>
+        <td>19.08.2017 17:25</td>
+        <td>20.08.2017 11:09</td>
+        <td>true</td>
       </tr>
       <tr>
         <td>B</td>
-        <td>09.2008</td>
+        <td>12.01.2025</td>
+        <td></td>
+        <td>false</td>
       </tr>
       <tr>
         <td>C</td>
+        <td>09.2008</td>
+        <td>11.2008</td>
+        <td>true</td>
+      </tr>
+      <tr>
+        <td>D</td>
         <td>1995</td>
+        <td></td>
+        <td>false</td>
       </tr>
     </tbody>
   </table>
@@ -1880,16 +1902,25 @@ For fields of the input type "Dropdown list (range)", an object is entered that 
 
 ##### Date fields
 
-A value in the format "day.month.year" (DD.MM.YYYY) is entered for fields of the input type "date". The entries for day and month are optional, so that it is possible to enter only a specific month of a year or a specific year.
+For fields of the input type "Date", an object is entered that contains up to three subfields:
+
+* *value*: The date specification for a single date; the start date for a date range
+* *endValue*: The end date for a date range
+* *isRange*: Indicates whether the date is a date range. Possible values are: *true* (date range), *false* (single date).
+
+The dates are entered in the format "day.month.year" (DD.MM.YYYY). The entries for day and month are optional, so that it is possible to enter only a specific month of a year or a specific year.
+
+In addition, a time specification in the format "hours:minutes" can be entered (separated by a space) if the entry of a time is permitted for the corresponding field in the project configuration. **Important**: The time is always specified in the time zone UTC (Coordinated Universal Time, corresponds to Western European Time/Greenwich Mean Time).
 
 *Example:*
 
     {
       "identifier": "A",
       "category": "Feature",
-      "date1": "12.01.2025",
-      "date2": "09.2008",
-      "date3": "1995"
+      "date1": { "value": "19.08.2017 17:25", "endValue": "20.08.2017 11:09", "isRange": true },
+      "date2": { "value": "12.01.2025", "isRange": false },
+      "date3": { "value": "09.2008", "endValue": "11.2008", "isRange": true },
+      "date4": { "value": "1995", "isRange": false }
     }
 
 

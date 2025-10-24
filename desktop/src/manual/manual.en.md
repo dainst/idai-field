@@ -291,7 +291,7 @@ categories, in the image management image categories etc.
 
 ### Text filter
 
-Search terms are currently compared with the resource fields "Identifier" and "Short description".
+Search terms are compared with the resource fields "Identifier" and "Short description".
  
 *Example:*
  

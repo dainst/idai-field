@@ -296,7 +296,7 @@ können Maßnahmenkategorien gewählt werden, in der Bilderverwaltung Bildkatego
 
 ### Textfilter
 
-Suchbegriffe werden derzeit mit den Feldern "Bezeichner" und "Kurzbeschreibung" von Ressourcen abgeglichen. 
+Suchbegriffe werden mit den Feldern "Bezeichner" und "Kurzbeschreibung" von Ressourcen abgeglichen. 
  
 *Beispiel:*
  

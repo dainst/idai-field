@@ -1298,7 +1298,15 @@ Felder des Eingabetyps "Dropdown-Liste (Bereich)" bestehen aus bis zu zwei Unter
 
 ##### Datumsfelder
 
-Für Felder des Eingabetyps "Datum" wird ein Wert im Format "Tag.Monat.Jahr" (TT.MM.JJJJ) eingetragen. Die Angaben für Tag und Monat sind optional, sodass auch lediglich ein bestimmter Monat eines Jahres bzw. ein bestimmtes Jahr angegeben werden kann.
+Felder des Eingabetyps "Datum" bestehen aus bis zu drei Unterfeldern, für die jeweils eine eigene Spalte angelegt wird:
+
+* *value*: Die Datumsangabe bei einem Einzeldatum; das Startdatum bei einem Datumsbereich
+* *endValue*: Das Enddatum bei einem Datumsbereich
+* *isRange*: Gibt an ob es sich um einen Datumsbereich handelt. Mögliche Werte sind: *true* (Datumsbereich), *false* (Einzeldatum).
+
+Die Datumsangaben werden jeweils im Format "Tag.Monat.Jahr" (TT.MM.JJJJ) eingetragen. Die Angaben für Tag und Monat sind optional, sodass auch lediglich ein bestimmter Monat eines Jahres bzw. ein bestimmtes Jahr angegeben werden kann.
+
+Darüber hinaus kann (durch ein Leerzeichen getrennt) optional eine Uhrzeit im Format "Stunden:Minuten" eingetragen werden, sofern die Angabe einer Uhrzeit für das entsprechende Feld in der Projektkonfiguration zugelassen ist. **Wichtig**: Die Uhrzeit wird stets in der Zeitzone UTC (Coordinated Universal Time, entspricht westeuropäischer Zeit/Greenwich Mean Time) angegeben.
 
 *Beispiel:*
 <div class="table-container">
@@ -1306,21 +1314,35 @@ Für Felder des Eingabetyps "Datum" wird ein Wert im Format "Tag.Monat.Jahr" (TT
     <thead>
       <tr>
         <th>identifier</th>
-        <th>date</th>
+        <th>date.value</th>
+        <th>date.endValue</th>
+        <th>date.isRange</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
+    <tr>
         <td>A</td>
-        <td>12.01.2025</td>
+        <td>19.08.2017 17:25</td>
+        <td>20.08.2017 11:09</td>
+        <td>true</td>
       </tr>
       <tr>
         <td>B</td>
-        <td>09.2008</td>
+        <td>12.01.2025</td>
+        <td></td>
+        <td>false</td>
       </tr>
       <tr>
         <td>C</td>
+        <td>09.2008</td>
+        <td>11.2008</td>
+        <td>true</td>
+      </tr>
+      <tr>
+        <td>D</td>
         <td>1995</td>
+        <td></td>
+        <td>false</td>
       </tr>
     </tbody>
   </table>
@@ -1872,7 +1894,7 @@ Für Felder, in denen Werte in verschiedenen Sprachen eingetragen werden können
 
 ##### Dropdown-Listen (Bereich)
 
-Für Felder des Eingabetyps "Dropdown-Liste (Bereich)" wird ein Objekt eingetragen, das die folgenden beiden Unterfeldern enthält:
+Für Felder des Eingabetyps "Dropdown-Liste (Bereich)" wird ein Objekt eingetragen, das die folgenden beiden Unterfelder enthält:
 
 * *value*: Der Bezeichner des ausgewählten Wertes; bei zwei ausgewählten Werten der erste der beiden Werte.
 * *endValue*: Der Bezeichner des zweiten ausgewählten Wertes, falls zwei Werte ausgewählt sind.
@@ -1889,16 +1911,25 @@ Für Felder des Eingabetyps "Dropdown-Liste (Bereich)" wird ein Objekt eingetrag
 
 ##### Datumsfelder
 
-Für Felder des Eingabetyps "Datum" wird ein Wert im Format "Tag.Monat.Jahr" (TT.MM.JJJJ) eingetragen. Die Angaben für Tag und Monat sind optional, sodass auch lediglich ein Monat eines Jahres oder ein Jahr angegeben werden kann.
+Für Felder des Eingabetyps "Datum" wird ein Objekt eingetragen, das bis zu drei Unterfelder enthält:
+
+* *value*: Die Datumsangabe bei einem Einzeldatum; das Startdatum bei einem Datumsbereich
+* *endValue*: Das Enddatum bei einem Datumsbereich
+* *isRange*: Gibt an ob es sich um einen Datumsbereich handelt. Mögliche Werte sind: *true* (Datumsbereich), *false* (Einzeldatum).
+
+Die Datumsangaben werden jeweils im Format "Tag.Monat.Jahr" (TT.MM.JJJJ) eingetragen. Die Angaben für Tag und Monat sind optional, sodass auch lediglich ein bestimmter Monat eines Jahres bzw. ein bestimmtes Jahr angegeben werden kann.
+
+Darüber hinaus kann (durch ein Leerzeichen getrennt) optional eine Uhrzeit im Format "Stunden:Minuten" eingetragen werden, sofern die Angabe einer Uhrzeit für das entsprechende Feld in der Projektkonfiguration zugelassen ist. **Wichtig**: Die Uhrzeit wird stets in der Zeitzone UTC (Coordinated Universal Time, entspricht westeuropäischer Zeit/Greenwich Mean Time) angegeben.
 
 *Beispiel:*
 
     {
       "identifier": "A",
       "category": "Feature",
-      "date1": "12.01.2025",
-      "date2": "09.2008",
-      "date3": "1995"
+      "date1": { "value": "19.08.2017 17:25", "endValue": "20.08.2017 11:09", "isRange": true },
+      "date2": { "value": "12.01.2025", "isRange": false },
+      "date3": { "value": "09.2008", "endValue": "11.2008", "isRange": true },
+      "date4": { "value": "1995", "isRange": false }
     }
 
 ##### Listenfelder

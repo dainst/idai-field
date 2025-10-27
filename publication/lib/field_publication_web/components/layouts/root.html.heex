@@ -5,23 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content={get_csrf_token()} />
     <link rel="icon" type="image/x-icon" href={Settings.get_favicon_url()} />
-    <.live_title suffix=" · FieldPublication">
-      {assigns[:page_title] || ""}
-    </.live_title>
 
-    <% title =
-      if assigns[:page_title] do
-        "#{assigns[:page_title]} | FieldPublication"
-      else
-        "Field Publication"
-      end %>
-    <.live_title>
-      {title}
+    <% page_name = Settings.get_page_name() %>
+
+    <.live_title suffix={" · #{page_name}"}>
+      {assigns[:page_title]}
     </.live_title>
     <!-- The Opengraph meta tags are set only once on the initial HTTP page load, later websocket navigation leaves
     them unchanged. See also https://github.com/phoenixframework/phoenix_live_view/issues/1194. Appropriate values have to
     be set on mount in the different live views. -->
-    <meta property="og:title" content={title} />
+    <meta property="og:title" content={ "#{assigns[:page_title]} · #{page_name}"} />
     <meta property="og:url" content={Phoenix.Controller.current_url(@conn)} />
     <%= if assigns[:page_image] do %>
       <meta property="og:image" content={assigns[:page_image]} />

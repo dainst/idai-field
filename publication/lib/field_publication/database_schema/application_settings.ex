@@ -56,7 +56,7 @@ defmodule FieldPublication.DatabaseSchema.ApplicationSettings do
     field(:doc_type, :string, default: @doc_type)
     field(:logo, :string)
     field(:favicon, :string)
-
+    field(:page_name, :string, default: "FieldPublication")
     embeds_one(:color_scheme, ColorScheme, defaults_to_struct: true, on_replace: :update)
   end
 
@@ -65,7 +65,8 @@ defmodule FieldPublication.DatabaseSchema.ApplicationSettings do
     |> cast(attrs, [
       :_rev,
       :logo,
-      :favicon
+      :favicon,
+      :page_name
     ])
     |> cast_embed(:color_scheme)
     |> Base.validate_doc_type(@doc_type)

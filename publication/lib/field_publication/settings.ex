@@ -192,4 +192,10 @@ defmodule FieldPublication.Settings do
     }
     """
   end
+
+  def get_page_name() do
+    %ApplicationSettings{page_name: name} = get_settings()
+
+    name
+  end
 end

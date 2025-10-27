@@ -33,7 +33,7 @@ defmodule FieldPublication.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix_live_view, "~> 1.0"},
+      {:phoenix_live_view, "~> 1.1"},
       {:phoenix_live_dashboard, "~> 0.8"},
       {:phoenix_ecto, "~> 4.5.1"},
       {:phoenix_live_reload, "~> 1.5", only: :dev},

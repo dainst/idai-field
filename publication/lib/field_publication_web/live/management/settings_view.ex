@@ -67,7 +67,7 @@ defmodule FieldPublicationWeb.Management.SettingsView do
     </div>
 
     <div class="p-4 mt-4 bg-gray-100" phx-drop-target={@uploads.images.ref}>
-      <form id="upload-form" phx-click="save" phx-change="validate">
+      <form id="upload-form" phx-submit="save" phx-change="validate">
         <div>
           <.live_file_input upload={@uploads.images} />
         </div>

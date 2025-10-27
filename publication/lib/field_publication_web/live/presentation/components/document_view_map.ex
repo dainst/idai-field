@@ -37,20 +37,9 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
         <div style={@style} id={"#{@id}-map"} phx-update="ignore">
           <!-- Set pointer-events-none, otherwise the tooltip will block click events on the map -->
           <div class="pointer-events-none text-xs" id={"#{@id}-identifier-tooltip"}>
-            <div class="border-[1px] rounded-sm border-black flex">
-              <div class="saturate-50 pl-2  text-black" id={"#{@id}-identifier-tooltip-category-bar"}>
-                <div
-                  class="h-full bg-white/60 p-1 font-thin"
-                  id={"#{@id}-identifier-tooltip-category-content"}
-                >
-                </div>
-              </div>
-              <div class="grow p-1 h-full bg-white">
-                <div class="pointer-events-none" id={"#{@id}-identifier-tooltip-content"}>
-                  <!-- This div will get repurposed once the map is loaded. -->
-                  Loading map...
-                </div>
-              </div>
+            <div class="grow h-full" id={"#{@id}-identifier-tooltip-content"}>
+              <!-- This div will get repurposed once the map is loaded. -->
+                Loading map...
             </div>
           </div>
         </div>

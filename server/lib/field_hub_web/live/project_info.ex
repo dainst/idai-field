@@ -33,5 +33,4 @@ defmodule FieldHub.ProjectInfo do
       last_change_user: last_change_user
     }
   end
-
 end

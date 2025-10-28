@@ -31,7 +31,7 @@ defmodule FieldHubWeb.Live.ProjectList do
     {:ok, assign(socket, :page_title, "Overview")}
   end
 
-    def handle_event("sort", %{"field" => field}, socket) do
+  def handle_event("sort", %{"field" => field}, socket) do
     field = String.to_atom(field)
 
     {sort_direction, sort_by} =
@@ -73,12 +73,16 @@ defmodule FieldHubWeb.Live.ProjectList do
   end
 
   defp sort_projects(projects, :last_change_date, direction) do
-    Enum.sort_by(projects, fn project ->
-      case project.last_change_date do
-        nil -> direction == :asc && ~U[0000-01-01 00:00:00Z] || ~U[9999-12-31 23:59:59Z]
-        date_time  -> date_time
-      end
-    end, direction)
+    Enum.sort_by(
+      projects,
+      fn project ->
+        case project.last_change_date do
+          nil -> (direction == :asc && ~U[0000-01-01 00:00:00Z]) || ~U[9999-12-31 23:59:59Z]
+          date_time -> date_time
+        end
+      end,
+      direction
+    )
   end
 
   defp build_enriched_project(project_id) do
@@ -94,12 +98,11 @@ defmodule FieldHubWeb.Live.ProjectList do
   defp sort_indicator(current_sort, current_direction, column) do
     if current_sort == column do
       case current_direction do
-        :asc  -> "\u2b61"
+        :asc -> "\u2b61"
         :desc -> "\u2b63"
       end
     else
       "\u2b65"
     end
   end
-
 end

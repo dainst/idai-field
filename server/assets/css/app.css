@@ -397,6 +397,11 @@ nav {
   font-size: small;
 }
 
+.project-list thead th:hover{
+  cursor: pointer;
+  background-color: #f4f8f8;
+}
+
 .project-list tbody {
   color: #3f4246;
   line-height: 0%;
@@ -410,4 +415,5 @@ nav {
   color: white;
   text-shadow: #888;
   text-indent: 2%;
+  cursor: pointer;
 }

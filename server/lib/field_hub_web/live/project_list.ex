@@ -3,12 +3,14 @@ defmodule FieldHubWeb.Live.ProjectList do
 
   alias FieldHub.{
     Project,
-    ProjectInfo,
-    User
+    User,
+    CouchService
   }
 
   @default_sort_by :name
-  @default_sort_diection :asc
+  @default_sort_direction :asc
+
+  require Logger
 
   def mount(_params, _session, %{assigns: %{current_user: current_user}} = socket) do
     socket =
@@ -19,13 +21,66 @@ defmodule FieldHubWeb.Live.ProjectList do
         user_name when is_binary(user_name) ->
           projects = Project.get_all_for_user(user_name)
 
-          enriched_projects =
-            Enum.map(projects, &build_enriched_project/1)
+          {errors, enriched_projects} =
+            Enum.map(projects, fn project_id ->
+              try do
+                %{
+                  database: %{
+                    doc_count: doc_count,
+                    file_size: database_file_size,
+                    last_n_changes: last_n_changes
+                  },
+                  files: %{
+                    thumbnail_image: %{
+                      active: thumbnail_count,
+                      active_size: thumbnail_file_size
+                    },
+                    original_image: %{
+                      active: original_count,
+                      active_size: original_file_size
+                    }
+                  }
+                } = Project.evaluate_project(project_id, 1)
+
+                %{date: last_change_date_time, user: last_change_user} =
+                  case List.first(last_n_changes) do
+                    nil ->
+                      %{date: nil, user: nil}
+
+                    change ->
+                      change
+                      |> CouchService.extract_most_recent_change_info()
+                      |> (fn {_type, date_time, user} -> %{date: date_time, user: user} end).()
+                  end
+
+                {
+                  :ok,
+                  %{
+                    id: project_id,
+                    name: project_id,
+                    doc_count: doc_count,
+                    database_file_size: Sizeable.filesize(database_file_size),
+                    image_file_size: Sizeable.filesize(thumbnail_file_size + original_file_size),
+                    last_change_date: last_change_date_time,
+                    last_change_user: last_change_user
+                  }
+                }
+              rescue
+                error ->
+                  Logger.error(error)
+                  {:error, {error, project_id}}
+              end
+            end)
+            |> Enum.split_with(fn {status, _content} -> status == :error end)
+
+          enriched_projects = Enum.map(enriched_projects, fn {:ok, info} -> info end)
+          errors = Enum.map(errors, fn {:error, info} -> info end)
 
           socket
           |> assign(:projects, enriched_projects)
+          |> assign(:errors, errors)
           |> assign(:sort_by, @default_sort_by)
-          |> assign(:sort_direction, @default_sort_diection)
+          |> assign(:sort_direction, @default_sort_direction)
       end
 
     {:ok, assign(socket, :page_title, "Overview")}
@@ -68,8 +123,12 @@ defmodule FieldHubWeb.Live.ProjectList do
     Enum.sort_by(projects, & &1.doc_count, direction)
   end
 
-  defp sort_projects(projects, :file_size, direction) do
-    Enum.sort_by(projects, & &1.file_size, direction)
+  defp sort_projects(projects, :database_file_size, direction) do
+    Enum.sort_by(projects, & &1.database_file_size, direction)
+  end
+
+  defp sort_projects(projects, :image_file_size, direction) do
+    Enum.sort_by(projects, & &1.image_file_size, direction)
   end
 
   defp sort_projects(projects, :last_change_date, direction) do
@@ -83,16 +142,6 @@ defmodule FieldHubWeb.Live.ProjectList do
       end,
       direction
     )
-  end
-
-  defp build_enriched_project(project_id) do
-    stats = ProjectInfo.database_stats(project_id)
-
-    %{
-      id: project_id,
-      name: project_id
-    }
-    |> Map.merge(stats)
   end
 
   defp sort_indicator(current_sort, current_direction, column) do

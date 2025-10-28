@@ -20,24 +20,30 @@ This server runs Field Hub (<small><%= Application.spec(:field_hub, :vsn) %></sm
     <% [] -> %>
       No projects.
     <% _projects -> %>
+
       <table class="project-list">
         <thead>
           <tr>
             <th phx-click="sort" phx-value-field="name" class="cursor-pointer">
-              Name 
+              Name
               <%= sort_indicator(@sort_by, @sort_direction, :name) %>
             </th>
             <th class="text-right"  phx-click="sort" phx-value-field="doc_count" class="cursor-pointer">
               Documents
                <%= sort_indicator(@sort_by, @sort_direction, :doc_count) %>
             </th>
-            <th class="text-right"  class="text-right"  phx-click="sort" phx-value-field="file_size" class="cursor-pointer">
-              Db Size
-              <%= sort_indicator(@sort_by, @sort_direction, :file_size) %>  
+            <th class="text-right"  class="text-right"  phx-click="sort" phx-value-field="database_file_size" class="cursor-pointer">
+              Database Size
+              <%= sort_indicator(@sort_by, @sort_direction, :database_file_size) %>
+            </th>
+
+            <th class="text-right"  class="text-right"  phx-click="sort" phx-value-field="image_file_size" class="cursor-pointer">
+              Images Size
+              <%= sort_indicator(@sort_by, @sort_direction, :image_file_size) %>
             </th>
             <th phx-click="sort" phx-value-field="last_change_date" class="cursor-pointer">
               Last action (by)
-              <%= sort_indicator(@sort_by, @sort_direction, :last_change_date) %> 
+              <%= sort_indicator(@sort_by, @sort_direction, :last_change_date) %>
             </th>
           </tr>
         </thead>
@@ -45,9 +51,10 @@ This server runs Field Hub (<small><%= Application.spec(:field_hub, :vsn) %></sm
         <tbody>
           <%= for project <- @projects do %>
             <tr class="click-row" phx-click="go_to_project" phx-value-id={project.id}>
-              <td  class="cursor-pointer">{project.name}</td>
+              <td class="cursor-pointer">{project.name}</td>
               <td class="text-right cursor-pointer">{project.doc_count}</td>
-              <td class="text-right cursor-pointer">{project.file_size}</td>
+              <td class="text-right cursor-pointer">{project.database_file_size}</td>
+              <td class="text-right cursor-pointer">{project.image_file_size}</td>
               <td>
                 <%= if project.last_change_date != :nil do %>
                   {Calendar.strftime(project.last_change_date, "%c")} ({project.last_change_user})
@@ -57,5 +64,10 @@ This server runs Field Hub (<small><%= Application.spec(:field_hub, :vsn) %></sm
           <% end %>
         </tbody>
       </table>
+      <%= if User.is_admin?(@current_user) do %>
+        <%= for {error, project_id} <- @errors do %>
+          Project {project_id} has an error: <pre>{inspect(error)}</pre>.
+        <% end %>
+      <% end %>
   <% end %>
 <% end %>

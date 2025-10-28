@@ -69,9 +69,8 @@
                 <section>
                   <tr>
                     <td>History</td>
-                    <td>                       
-                    
-                      <table class="scrolldown">
+                    <td>
+                      <table class="scrolldown resources-history">
                         <thead>
                           <tr>
                             <th>Ressource</th>
@@ -81,35 +80,43 @@
                           </tr>
                         </thead>
                         <tbody>
-                            <%= for change <- last_n_changes do %>
-                              <% {type, date_time, user_name} =
-                                CouchService.extract_most_recent_change_info(change) %>
-                              <tr>                                
-                                <td>
-                                  { change["doc"]["resource"]["identifier"]  |>  String.slice(0..20) }
-                                  <div class="tooltip" :if={ String.length(change["doc"]["resource"]["identifier"]) > 20 } >
-                                  ... 
-                                  <span class="tooltiptext tooltiptextleftcolumn">{ change["doc"]["resource"]["identifier"] } </span>
-                                  </div>
-                                </td>
-                                <td>{type}</td>                             
-                                <td>
-                                  <i>{ user_name  |>  String.slice(0..18) }</i>
-                                  <div class="tooltip" :if={ String.length(user_name) > 18 } >
-                                  ... 
-                                  <span class="tooltiptext tooltiptextrigthcolumn">{ user_name } </span>
-                                  </div>
-                                </td>
-                                <td class="column-date-time">
-                                  {Calendar.strftime(date_time, "%c")}
-                                </td>
-                              </tr>
-                            <% end %>
+                          <%= for change <- last_n_changes do %>
+                            <% {type, date_time, user_name} =
+                              CouchService.extract_most_recent_change_info(change) %>
+                            <tr>
+                              <td>
+                                {change["doc"]["resource"]["identifier"] |> String.slice(0..20)}
+                                <div
+                                  :if={
+                                    String.length(change["doc"]["resource"]["identifier"]) > 20
+                                  }
+                                  class="tooltip"
+                                >
+                                  ...
+                                  <span class="tooltiptext tooltiptextleftcolumn">
+                                    {change["doc"]["resource"]["identifier"]}
+                                  </span>
+                                </div>
+                              </td>
+                              <td>{type}</td>
+                              <td>
+                                <i>{user_name |> String.slice(0..18)}</i>
+                                <div :if={String.length(user_name) > 18} class="tooltip">
+                                  ...
+                                  <span class="tooltiptext tooltiptextrigthcolumn">
+                                    {user_name}
+                                  </span>
+                                </div>
+                              </td>
+                              <td class="column-date-time">
+                                {Calendar.strftime(date_time, "%c")}
+                              </td>
+                            </tr>
+                          <% end %>
                         </tbody>
-                        </table>
-
+                      </table>
                     </td>
-                  </tr>             
+                  </tr>
                 </section>
 
                 <section>

@@ -64,8 +64,8 @@ defmodule FieldHubWeb.Live.ProjectList do
     Enum.sort_by(projects, & &1.name, direction)
   end
 
-  defp sort_projects(projects, :doc_counts, direction) do
-    Enum.sort_by(projects, & &1.doc_counts, direction)
+  defp sort_projects(projects, :doc_count, direction) do
+    Enum.sort_by(projects, & &1.doc_count, direction)
   end
 
   defp sort_projects(projects, :file_size, direction) do

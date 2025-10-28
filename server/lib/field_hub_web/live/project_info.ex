@@ -9,7 +9,7 @@ defmodule FieldHub.ProjectInfo do
   def database_stats(project) do
     %{
       database: %{
-        doc_count: doc_counts,
+        doc_count: doc_count,
         file_size: file_size,
         last_n_changes: last_n_changes
       }
@@ -27,7 +27,7 @@ defmodule FieldHub.ProjectInfo do
       end
 
     %{
-      doc_counts: doc_counts,
+      doc_count: doc_count,
       file_size: Sizeable.filesize(file_size),
       last_change_date: last_change_date_time,
       last_change_user: last_change_user

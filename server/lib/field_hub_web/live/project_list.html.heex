@@ -27,9 +27,9 @@ This server runs Field Hub (<small><%= Application.spec(:field_hub, :vsn) %></sm
               Name 
               <%= sort_indicator(@sort_by, @sort_direction, :name) %>
             </th>
-            <th class="text-right"  phx-click="sort" phx-value-field="doc_counts" class="cursor-pointer">
+            <th class="text-right"  phx-click="sort" phx-value-field="doc_count" class="cursor-pointer">
               Documents
-               <%= sort_indicator(@sort_by, @sort_direction, :doc_counts) %>
+               <%= sort_indicator(@sort_by, @sort_direction, :doc_count) %>
             </th>
             <th class="text-right"  class="text-right"  phx-click="sort" phx-value-field="file_size" class="cursor-pointer">
               Db Size
@@ -46,7 +46,7 @@ This server runs Field Hub (<small><%= Application.spec(:field_hub, :vsn) %></sm
           <%= for project <- @projects do %>
             <tr class="click-row" phx-click="go_to_project" phx-value-id={project.id}>
               <td  class="cursor-pointer">{project.name}</td>
-              <td class="text-right cursor-pointer">{project.doc_counts}</td>
+              <td class="text-right cursor-pointer">{project.doc_count}</td>
               <td class="text-right cursor-pointer">{project.file_size}</td>
               <td>
                 <%= if project.last_change_date != :nil do %>

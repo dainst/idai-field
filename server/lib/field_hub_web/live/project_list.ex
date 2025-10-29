@@ -59,8 +59,8 @@ defmodule FieldHubWeb.Live.ProjectList do
                     id: project_id,
                     name: project_id,
                     doc_count: doc_count,
-                    database_file_size: Sizeable.filesize(database_file_size),
-                    image_file_size: Sizeable.filesize(thumbnail_file_size + original_file_size),
+                    database_file_size: database_file_size,
+                    image_file_size: thumbnail_file_size + original_file_size,
                     last_change_date: last_change_date_time,
                     last_change_user: last_change_user
                   }

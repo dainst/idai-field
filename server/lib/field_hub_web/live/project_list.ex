@@ -21,69 +21,71 @@ defmodule FieldHubWeb.Live.ProjectList do
         user_name when is_binary(user_name) ->
           projects = Project.get_all_for_user(user_name)
 
-          {errors, enriched_projects} =
-            Enum.map(projects, fn project_id ->
-              try do
-                %{
-                  database: %{
-                    doc_count: doc_count,
-                    file_size: database_file_size,
-                    last_n_changes: last_n_changes
-                  },
-                  files: %{
-                    thumbnail_image: %{
-                      active: thumbnail_count,
-                      active_size: thumbnail_file_size
+          socket
+          |> assign_async([:state], fn ->
+            {errors, enriched_projects} =
+              Enum.map(projects, fn project_id ->
+                try do
+                  %{
+                    database: %{
+                      doc_count: doc_count,
+                      file_size: database_file_size,
+                      last_n_changes: last_n_changes
                     },
-                    original_image: %{
-                      active: original_count,
-                      active_size: original_file_size
+                    files: %{
+                      thumbnail_image: %{
+                        active: thumbnail_count,
+                        active_size: thumbnail_file_size
+                      },
+                      original_image: %{
+                        active: original_count,
+                        active_size: original_file_size
+                      }
+                    }
+                  } = Project.evaluate_project(project_id, 1)
+
+                  %{date: last_change_date_time, user: last_change_user} =
+                    case List.first(last_n_changes) do
+                      nil ->
+                        %{date: nil, user: nil}
+
+                      change ->
+                        change
+                        |> CouchService.extract_most_recent_change_info()
+                        |> (fn {_type, date_time, user} -> %{date: date_time, user: user} end).()
+                    end
+
+                  {
+                    :ok,
+                    %{
+                      id: project_id,
+                      name: project_id,
+                      doc_count: doc_count,
+                      database_file_size: database_file_size,
+                      image_file_size: thumbnail_file_size + original_file_size,
+                      last_change_date: last_change_date_time,
+                      last_change_user: last_change_user
                     }
                   }
-                } = Project.evaluate_project(project_id, 1)
+                rescue
+                  error ->
+                    Logger.error(error)
+                    {:error, {error, project_id}}
+                end
+              end)
+              |> Enum.split_with(fn {status, _content} -> status == :error end)
 
-                %{date: last_change_date_time, user: last_change_user} =
-                  case List.first(last_n_changes) do
-                    nil ->
-                      %{date: nil, user: nil}
+            enriched_projects = Enum.map(enriched_projects, fn {:ok, info} -> info end)
+            errors = Enum.map(errors, fn {:error, info} -> info end)
 
-                    change ->
-                      change
-                      |> CouchService.extract_most_recent_change_info()
-                      |> (fn {_type, date_time, user} -> %{date: date_time, user: user} end).()
-                  end
-
-                {
-                  :ok,
-                  %{
-                    id: project_id,
-                    name: project_id,
-                    doc_count: doc_count,
-                    database_file_size: database_file_size,
-                    image_file_size: thumbnail_file_size + original_file_size,
-                    last_change_date: last_change_date_time,
-                    last_change_user: last_change_user
-                  }
-                }
-              rescue
-                error ->
-                  Logger.error(error)
-                  {:error, {error, project_id}}
-              end
-            end)
-            |> Enum.split_with(fn {status, _content} -> status == :error end)
-
-          enriched_projects = Enum.map(enriched_projects, fn {:ok, info} -> info end)
-          errors = Enum.map(errors, fn {:error, info} -> info end)
-
-          socket
-          |> assign(:projects, enriched_projects)
-          |> assign(:errors, errors)
+            {:ok, %{state: %{errors: errors, projects: enriched_projects}}}
+          end)
           |> assign(:sort_by, @default_sort_by)
           |> assign(:sort_direction, @default_sort_direction)
       end
 
     {:ok, assign(socket, :page_title, "Overview")}
+
   end
 
   def handle_event("sort", %{"field" => field}, socket) do

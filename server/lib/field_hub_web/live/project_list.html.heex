@@ -15,35 +15,52 @@ This server runs Field Hub (<small><%= Application.spec(:field_hub, :vsn) %></sm
   <hr />
 
   <h2>Your projects</h2>
+  <%= if User.is_admin?(@current_user) do %>
+    <div class="alert alert-danger">
+      <b>Project errors detected (see list bellow).</b>
+      <br />Please contact the support team to resolve the issue and ensure project integrity.
+    </div>
+  <% end %>
 
   <%= case @projects do %>
     <% [] -> %>
       No projects.
     <% _projects -> %>
-
       <table class="project-list">
         <thead>
           <tr>
             <th phx-click="sort" phx-value-field="name" class="cursor-pointer">
-              Name
-              <%= sort_indicator(@sort_by, @sort_direction, :name) %>
+              Name {sort_indicator(@sort_by, @sort_direction, :name)}
             </th>
-            <th class="text-right"  phx-click="sort" phx-value-field="doc_count" class="cursor-pointer">
-              Documents
-               <%= sort_indicator(@sort_by, @sort_direction, :doc_count) %>
+            <th
+              class="text-right"
+              phx-click="sort"
+              phx-value-field="doc_count"
+              class="cursor-pointer"
+            >
+              Documents {sort_indicator(@sort_by, @sort_direction, :doc_count)}
             </th>
-            <th class="text-right"  class="text-right"  phx-click="sort" phx-value-field="database_file_size" class="cursor-pointer">
-              Database Size
-              <%= sort_indicator(@sort_by, @sort_direction, :database_file_size) %>
+            <th
+              class="text-right"
+              class="text-right"
+              phx-click="sort"
+              phx-value-field="database_file_size"
+              class="cursor-pointer"
+            >
+              Database Size {sort_indicator(@sort_by, @sort_direction, :database_file_size)}
             </th>
 
-            <th class="text-right"  class="text-right"  phx-click="sort" phx-value-field="image_file_size" class="cursor-pointer">
-              Images Size
-              <%= sort_indicator(@sort_by, @sort_direction, :image_file_size) %>
+            <th
+              class="text-right"
+              class="text-right"
+              phx-click="sort"
+              phx-value-field="image_file_size"
+              class="cursor-pointer"
+            >
+              Images Size {sort_indicator(@sort_by, @sort_direction, :image_file_size)}
             </th>
             <th phx-click="sort" phx-value-field="last_change_date" class="cursor-pointer">
-              Last action (by)
-              <%= sort_indicator(@sort_by, @sort_direction, :last_change_date) %>
+              Last action (by) {sort_indicator(@sort_by, @sort_direction, :last_change_date)}
             </th>
           </tr>
         </thead>
@@ -53,8 +70,12 @@ This server runs Field Hub (<small><%= Application.spec(:field_hub, :vsn) %></sm
             <tr class="click-row" phx-click="go_to_project" phx-value-id={project.id}>
               <td class="cursor-pointer">{project.name}</td>
               <td class="text-right cursor-pointer">{project.doc_count}</td>
-              <td class="text-right cursor-pointer">{Sizeable.filesize(project.database_file_size)}</td>
-              <td class="text-right cursor-pointer">{Sizeable.filesize(project.image_file_size)}</td>
+              <td class="text-right cursor-pointer">
+                {Sizeable.filesize(project.database_file_size)}
+              </td>
+              <td class="text-right cursor-pointer">
+                {Sizeable.filesize(project.image_file_size)}
+              </td>
               <td>
                 <%= if project.last_change_date != :nil do %>
                   {Calendar.strftime(project.last_change_date, "%c")} ({project.last_change_user})
@@ -65,9 +86,9 @@ This server runs Field Hub (<small><%= Application.spec(:field_hub, :vsn) %></sm
         </tbody>
       </table>
       <%= if User.is_admin?(@current_user) do %>
-        <p class="alert alert-danger">Project errors detected. Please contact our support team to resolve the issue and ensure project integrity.</p>
         <%= for {error, project_id} <- @errors do %>
-           Project <span class="emphasis-text-error">{project_id}</span> has an error: <pre>{inspect(error)}</pre>.
+          Project <span class="emphasis-text-error">{project_id}</span>
+          has an error: <pre>{inspect(error)}</pre>.
         <% end %>
       <% end %>
   <% end %>

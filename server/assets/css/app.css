@@ -420,3 +420,11 @@ nav {
     text-indent: 2%;
     cursor: pointer;
 }
+
+.emphasis-text-error{
+    background-color: #f5e6e6;
+    color: rgb(253, 53, 53);
+    border-radius: 4px;
+    padding-left: 1ex;
+    padding-right: 1ex;
+}

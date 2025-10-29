@@ -66,8 +66,8 @@ This server runs Field Hub (<small><%= Application.spec(:field_hub, :vsn) %></sm
       </table>
       <%= if User.is_admin?(@current_user) do %>
         <%= for {error, project_id} <- @errors do %>
-          Project <b><.link href={~p"/ui/projects/show/#{project_id}"} >{project_id}</.link></b> has an error: <pre>{inspect(error)}</pre>.
-      
+          <%!-- Project <b><.link href={~p"/ui/projects/show/#{project_id}"} >{project_id}</.link></b> has an error: <pre>{inspect(error)}</pre>. --%>
+           Project <span class="emphasis-text-error">{project_id}</span> has an error: <pre>{inspect(error)}</pre>.
         <% end %>
       <% end %>
   <% end %>

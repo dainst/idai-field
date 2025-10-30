@@ -79,7 +79,7 @@ export module InvalidDataUtil {
 
     function generateObjectLabel(value: any, labels: Labels): string {
 
-        if (value.value || value.endValue) return generateRangeLabel(value);
+        if ((value.value || value.endValue) && !value.inputValue) return generateRangeLabel(value);
 
         const label: string|undefined = labels.getFromI18NString(value);
     

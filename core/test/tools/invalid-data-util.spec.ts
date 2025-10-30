@@ -71,6 +71,10 @@ describe('InvalidDataUtil', () => {
             [{ field1: ['value1', 'value2'] , field2: ['value3', 'value4'] }], labels)
         ).toBe('field1: value1/value2, field2: value3/value4');
 
+        expect(InvalidDataUtil.generateLabel(
+            [{ inputValue: 180, inputUnit: 'g', isImprecise: false, value: 180000000 }], labels)
+        ).toBe('inputValue: 180, inputUnit: g, isImprecise: false, value: 180000000');
+
         expect(InvalidDataUtil.generateLabel('value', labels)).toBe('value');
         expect(InvalidDataUtil.generateLabel(7, labels)).toBe('7');
         expect(InvalidDataUtil.generateLabel(['value1', 'value2'], labels)).toBe('value1<hr>value2');

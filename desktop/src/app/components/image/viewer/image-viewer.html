@@ -2,10 +2,6 @@
      id="image-container"
      [class.panning-disabled]="!isOriginal"
      [class.panning]="panning">
-     <div *ngIf="isOriginalNotFoundWarningVisible()" class="alert alert-info" role="alert"
-          i18n="@@image.originalNotFoundWarning">
-          Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
-     </div>
      <div #overlay id="image-overlay"></div>
      <img *ngIf="isImageContainerVisible()"
           #image
@@ -31,6 +27,13 @@
              i18n-ngbTooltip="@@image.export">
           <span class="mdi mdi-file-export"></span>
      </button>
+     <div *ngIf="isOriginalNotFoundWarningVisible() && !isDownloadButtonVisible() && !isExportButtonVisible()"
+          id="no-original-image-icon"
+          placement="left" container="body"
+          ngbTooltip="Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis."
+          i18n-ngbTooltip="@@image.originalNotFoundWarning">
+          <span class="mdi mdi-image-off"></span>
+     </div>
           
     <loading-icon *ngIf="loadingIconVisible" [context]="'image-viewer'"></loading-icon>
 </div>

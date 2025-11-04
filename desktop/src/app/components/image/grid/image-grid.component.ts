@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnChanges, SimpleChanges, Output, ElementRef, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ImageDocument, ImageVariant } from 'idai-field-core';
+import { FileInfo, ImageDocument, ImageStore, ImageVariant } from 'idai-field-core';
 import { constructGrid } from './construct-grid';
 import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
 import { ImageToolLauncher } from '../../../services/imagestore/image-tool-launcher';
+import { SettingsProvider } from '../../../services/settings/settings-provider';
 
 
 const DROPAREA = 'droparea';
@@ -30,6 +31,7 @@ export class ImageGridComponent implements OnInit, OnChanges, OnDestroy {
     @Input() showIdentifier = true;
     @Input() showShortDescription = true;
     @Input() showGeoIcon = false;
+    @Input() showNoOriginalImageIcon = false;
     @Input() showTooltips = false;
     @Input() showDropArea = false;
     @Input() compressDropArea = false;
@@ -49,7 +51,9 @@ export class ImageGridComponent implements OnInit, OnChanges, OnDestroy {
 
     constructor(private element: ElementRef,
                 private imageUrlMaker: ImageUrlMaker,
-                private imageToolLauncher: ImageToolLauncher) {}
+                private imageToolLauncher: ImageToolLauncher,
+                private imageStore: ImageStore,
+                private settingsProvider: SettingsProvider) {}
 
 
     public async handleClick(document: ImageDocument, event: MouseEvent) {
@@ -119,6 +123,10 @@ export class ImageGridComponent implements OnInit, OnChanges, OnDestroy {
 
     private async loadImages(rows: any) {
 
+        const fileInfos: { [uuid: string]: FileInfo } = await this.imageStore.getFileInfos(
+            this.settingsProvider.getSettings().selectedProject, [ImageVariant.ORIGINAL]
+        );
+
         for (const row of rows) {
             for (const cell of row) {
                 if (
@@ -129,6 +137,9 @@ export class ImageGridComponent implements OnInit, OnChanges, OnDestroy {
                 ) continue;
 
                 cell.imgSrc = await this.imageUrlMaker.getUrl(cell.document.resource.id, ImageVariant.THUMBNAIL);
+                cell.hasOriginalImage = fileInfos[cell.document.resource.id]?.variants.find(variant => {
+                    return variant.name === ImageVariant.ORIGINAL;
+                }) !== undefined;
             }
         }
     }

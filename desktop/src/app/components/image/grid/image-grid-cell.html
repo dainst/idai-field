@@ -14,6 +14,10 @@
           class="badge bg-dark">
         <span class="mdi mdi-map"></span>
     </span>
+    <span *ngIf="showNoOriginalImageIcon && !cell.hasOriginalImage"
+          class="badge bg-secondary">
+        <span class="mdi mdi-image-off"></span>
+    </span>
 </div>
 
 <img *ngIf="cell.imgSrc && !isEmpty()" [src]="cell.imgSrc"
@@ -26,7 +30,9 @@
     <category-icon [category]="cell['document'].resource.category" [size]="60"></category-icon>
 </div>
 
-<div *ngIf="showIdentifier" class="identifier px-1 bg-white text-truncate" [class.small]="nrOfColumns > 5">{{cell['document'].resource.identifier}}</div>
+<div *ngIf="showIdentifier"
+     class="identifier px-1 bg-white text-truncate"
+     [class.small]="nrOfColumns > 5">{{cell['document'].resource.identifier}}</div>
 <div class="title" [class.small]="nrOfColumns > 5">
     <div *ngIf="showLinkBadges && linkedResources.length" class="p-2" align="right">
         <span *ngFor="let resource of linkedResources"

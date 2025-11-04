@@ -54,6 +54,15 @@ image-viewer {
       z-index: 1003;
     }
 
+    #no-original-image-icon {
+      position: absolute;
+      right: 13px;
+      top: 6px;
+      font-size: 26px;
+      color: #ddd;
+      z-index: 1003;
+    }
+
     .alert,
     loading-icon {
       position: absolute;

@@ -17,7 +17,7 @@ export interface FileInfo {
     deleted: boolean;
     useOriginalForDisplay?: boolean;
     types: ImageVariant[]; // TODO: Deprecate in 4.x
-    variants: FileVariantInformation[];
+    variants: Array<FileVariantInformation>;
 }
 
 export const THUMBNAIL_TARGET_HEIGHT: number = 320;
@@ -161,7 +161,7 @@ export class ImageStore {
      * by their variants.
      * @returns Object where each key represents an image UUID and each value is the image's {@link FileInfo}.
      */
-    public async getFileInfos(project: string, types: ImageVariant[] = []): Promise<{ [uuid: string]: FileInfo}> {
+    public async getFileInfos(project: string, types: ImageVariant[] = []): Promise<{ [uuid: string]: FileInfo }> {
 
         let originalFileStats = [];
         let thumbnailFileStats = [];

@@ -7370,8 +7370,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.imagestore.error.delete" datatype="html">
-        <source>Fehler beim Löschen des Bilds '[0]'.</source>
-        <target state="needs-translation">Fehler beim Löschen des Bilds '[0]'.</target>
+        <source>Fehler beim Löschen des Bildes '[0]'.</source>
+        <target state="needs-translation">Fehler beim Löschen des Bildes '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -8698,8 +8698,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="image.originalNotFoundWarning" datatype="html">
-        <source>Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.</source>
-        <target state="needs-translation">Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.</target>
+        <source>Die Original-Version des Bildes befindet sich nicht im Bilderverzeichnis.</source>
+        <target state="needs-translation">Die Original-Version des Bildes befindet sich nicht im Bilderverzeichnis.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/viewer/image-viewer.component.ts</context>
           <context context-type="linenumber">46</context>

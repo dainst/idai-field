@@ -24,6 +24,7 @@ export class ImageGridCellComponent implements OnChanges {
     @Input() showIdentifier: boolean = true;
     @Input() showShortDescription: boolean = true;
     @Input() showGeoIcon: boolean = false;
+    @Input() showNoOriginalImageIcon: boolean = false;
     @Input() resourceIdentifiers: { [id: string]: string } = {};
     @Input() nrOfColumns: number = 0;
 

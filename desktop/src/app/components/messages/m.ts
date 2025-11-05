@@ -1064,7 +1064,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             level: 'danger'
         };
         this.msgs[M.IMAGESTORE_ERROR_DELETE] = {
-            content: $localize `:@@messages.imagestore.error.delete:Fehler beim Löschen des Bilds \'[0]\'.`,
+            content: $localize `:@@messages.imagestore.error.delete:Fehler beim Löschen des Bildes \'[0]\'.`,
             level: 'danger'
         };
         this.msgs[M.IMAGESTORE_ERROR_INVALID_WORLDFILE] = {

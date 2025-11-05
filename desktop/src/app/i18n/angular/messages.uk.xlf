@@ -6745,7 +6745,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="image.originalNotFoundWarning" datatype="html">
-        <source> Die Original-Version des Bildes befindet sich nicht im Bilderverzeichnis. </source>
+        <source>Die Original-Version des Bildes befindet sich nicht im Bilderverzeichnis.</source>
         <target state="translated">Початкової версії (оригіналу) ілюстрації немає в каталозі зображень.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/viewer/image-viewer.component.ts</context>

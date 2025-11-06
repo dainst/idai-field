@@ -4,6 +4,7 @@ defmodule FieldHubWeb.Live.ProjectList do
   alias FieldHub.{
     Project,
     User,
+    # Live.Dashboard,
     CouchService
   }
 
@@ -78,16 +79,65 @@ defmodule FieldHubWeb.Live.ProjectList do
             enriched_projects = Enum.map(enriched_projects, fn {:ok, info} -> info end)
             errors = Enum.map(errors, fn {:error, info} -> info end)
 
-            {:ok, %{state: %{errors: errors, projects: enriched_projects}}}
+            # project_number = length(enriched_projects)
+            # IO.inspect(project_number)
+            # IO.inspect(%{ project_number: project_number})
+            # IO.inspect(enriched_projects)
+
+            total_database_size =
+              enriched_projects
+              |> Enum.map(& &1.database_file_size)
+              |> Enum.sum()
+              |> Sizeable.filesize()
+              |> IO.inspect(label: "*total_database_size")
+
+            total_documents_number =
+              enriched_projects
+              |> Enum.map(& &1.doc_count)
+              |> Enum.sum()
+              |> IO.inspect(label: "*total_documents_number")
+
+            total_images_number =
+              enriched_projects
+              |> Enum.map(& &1.image_file_size)
+              |> Enum.sum()
+              |> IO.inspect(label: "*total_images_number")
+
+            total_images_size =
+              enriched_projects
+              |> Enum.map(& &1.image_file_size)
+              |> Enum.sum()
+              |> Sizeable.filesize()
+              |> IO.inspect(label: "*total_images_size")
+
+            #  {:ok, %{state: %{errors: errors, projects: enriched_projects} }}
+
+            {:ok,
+             %{
+               state: %{
+                 errors: errors,
+                 projects: enriched_projects,
+                 total_database_size: total_database_size,
+                 total_documents_number: total_documents_number,
+                 total_images_number: total_images_number,
+                 total_images_size: total_images_size
+               }
+             }}
           end)
           |> assign(:sort_by, @default_sort_by)
           |> assign(:sort_direction, @default_sort_direction)
+          |> assign(:project_number, length(projects))
+          |> assign(:total_database_size, "92 Mo")
+          |> assign(:total_documents_number, "9898")
+          |> assign(:total_documents_size, " 5 Mo")
+          |> assign(:total_images_number, "454344")
+          |> assign(:total_images_size, "98 To")
       end
 
     {:ok, assign(socket, :page_title, "Overview")}
-
   end
 
+  @spec handle_event(<<_::32, _::_*72>>, map(), map()) :: {:noreply, map()}
   def handle_event("sort", %{"field" => field}, socket) do
     field = String.to_atom(field)
 
@@ -111,6 +161,35 @@ defmodule FieldHubWeb.Live.ProjectList do
 
   def handle_event("go_to_project", %{"id" => id}, socket) do
     {:noreply, redirect(socket, to: ~p"/ui/projects/show/#{id}")}
+  end
+
+  def render_dashboard(assigns) do
+    ~H"""
+    <div class="dashboard">
+      <div class="dashboard-card">
+        <div class="dashboard-card-title">Your projects</div>
+        <div class="dashboard-card-main-number">
+          {@project_number}
+        </div>
+      </div>
+      <div class="dashboard-card">
+        <div class="dashboard-card-title">Used space</div>
+        <div class="dashboard-card-main-number">
+          {@total_database_size}
+        </div>
+      </div>
+      <div class="dashboard-card">
+        <div class="dashboard-card-title">Documents</div>
+        <div class="dashboard-card-main-number">{@total_documents_size}</div>
+        Total: {@total_documents_number}
+      </div>
+      <div class="dashboard-card">
+        <div class="dashboard-card-title">Images</div>
+        <div class="dashboard-card-main-number">{@total_images_size}</div>
+        Total: {@total_images_number}
+      </div>
+    </div>
+    """
   end
 
   defp toggle_direction(:asc), do: :desc

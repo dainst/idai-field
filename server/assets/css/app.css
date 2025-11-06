@@ -428,3 +428,48 @@ nav {
     padding-left: 1ex;
     padding-right: 1ex;
 }
+
+.dashboard{
+    width: 100%;
+    /* position: relative; */
+    float:left;
+    /* position: absolute; */
+    
+}
+
+.dashboard-card{
+    float:left;
+    height: 160px;
+    width: 24%;
+    padding: 1%;
+    margin:0.5%;
+    background-color: rgb(197, 243, 235);
+    border-radius: 2%;
+    border-color: rgb(128, 165, 163);
+    color:#2c5f77;
+    text-align: center;
+    /* border-style:ridge; */
+}
+
+.dashboard-card-section{
+    float:left;
+    width: 30%;
+    margin: 1%;
+    padding: 1%;
+    background-color: rgb(158, 207, 198);
+    border-radius: 2%;
+    border-color: rgb(61, 82, 79);
+    text-align: center;
+}
+
+.dashboard-card-title{    
+    font-size: 18px;
+    font-weight: 500;
+    color:#2c5f77;
+}
+.dashboard-card-main-number{
+    text-shadow: 2px 2px 3px rgb(109, 124, 122);
+    font-size: 38px;
+    font-weight: 700;
+    color:#2c5f77;
+}

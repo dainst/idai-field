@@ -52,10 +52,14 @@ function getFieldNames(form: TransientFormDefinition, categories: Map<TransientC
     if (!form.groups) return [];
 
     const minimalForm: BuiltInFormDefinition|undefined = categories[form.categoryName]?.minimalForm;
+    const parentMinimalForm: BuiltInFormDefinition|undefined = form.parent
+        ? categories[form.parent]?.minimalForm
+        : undefined;
 
     return set(
         flatten(form.groups.map(to('fields')))
             .concat(minimalForm ? flatten(minimalForm.groups.map(to('fields'))) : [])
+            .concat(parentMinimalForm ? flatten(parentMinimalForm.groups.map(to('fields'))) : [])
             .concat(parentForm ? flatten(parentForm.groups.map(to('fields'))) : [])
             .concat(extendedForm ? flatten(extendedForm.groups.map(to('fields'))) : [])
     );

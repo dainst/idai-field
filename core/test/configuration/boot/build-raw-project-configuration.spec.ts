@@ -2101,6 +2101,58 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
+    it('add all fields from built-in parent form even if not selected in custom parent form group', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true,
+                fields: {
+                    field1: { inputType: 'text' }
+                },
+                minimalForm: {
+                    groups: [
+                        { name: Groups.STEM, fields: ['field1'] }
+                    ]
+                }
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A': {
+                fields: {
+                    field2: { inputType: 'text' }
+                },
+                groups: [
+                    { name: Groups.STEM, fields: ['field2'] }
+                ]
+            },
+            'B': {
+                parent: 'A',
+                fields: {
+                    field3: { inputType: 'boolean' }
+                },
+                groups: [
+                    { name: Groups.STEM, fields: ['field3'] }
+                ]
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            {},
+            customForms
+        );
+
+        expect(result['B'].groups[0].name).toBe(Groups.STEM);
+        expect(result['B'].groups[1].name).toBe(Groups.OTHER);
+        expect(result['B'].groups[0].fields[0].name).toBe('field3');
+        expect(result['B'].groups[1].fields[0].name).toBe('field1');
+        expect(result['B'].groups[1].fields[1].name).toBe('field2');
+    });
+
+
     it('add all fields from library parent form even if not selected in custom form group', () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {

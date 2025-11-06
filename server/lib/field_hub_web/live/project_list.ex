@@ -4,7 +4,6 @@ defmodule FieldHubWeb.Live.ProjectList do
   alias FieldHub.{
     Project,
     User,
-    # Live.Dashboard,
     CouchService
   }
 
@@ -23,121 +22,126 @@ defmodule FieldHubWeb.Live.ProjectList do
           projects = Project.get_all_for_user(user_name)
 
           socket
-          |> assign_async([:state], fn ->
-            {errors, enriched_projects} =
-              Enum.map(projects, fn project_id ->
-                try do
-                  %{
-                    database: %{
-                      doc_count: doc_count,
-                      file_size: database_file_size,
-                      last_n_changes: last_n_changes
-                    },
-                    files: %{
-                      thumbnail_image: %{
-                        active: thumbnail_count,
-                        active_size: thumbnail_file_size
+          |> assign_async(
+            [
+              :state,
+              :healthy_projects_number,
+              :total_database_size,
+              :total_documents_number,
+              :total_documents_size,
+              :total_images_number,
+              :total_images_size
+            ],
+            fn ->
+              {errors, enriched_projects} =
+                Enum.map(projects, fn project_id ->
+                  try do
+                    %{
+                      database: %{
+                        doc_count: doc_count,
+                        file_size: database_file_size,
+                        last_n_changes: last_n_changes
                       },
-                      original_image: %{
-                        active: original_count,
-                        active_size: original_file_size
+                      files: %{
+                        thumbnail_image: %{
+                          active: thumbnail_count,
+                          active_size: thumbnail_file_size
+                        },
+                        original_image: %{
+                          active: original_count,
+                          active_size: original_file_size
+                        }
+                      }
+                    } = Project.evaluate_project(project_id, 1)
+
+                    %{date: last_change_date_time, user: last_change_user} =
+                      case List.first(last_n_changes) do
+                        nil ->
+                          %{date: nil, user: nil}
+
+                        change ->
+                          change
+                          |> CouchService.extract_most_recent_change_info()
+                          |> (fn {_type, date_time, user} -> %{date: date_time, user: user} end).()
+                      end
+
+                    {
+                      :ok,
+                      %{
+                        id: project_id,
+                        name: project_id,
+                        doc_count: doc_count,
+                        database_file_size: database_file_size,
+                        image_file_size: thumbnail_file_size + original_file_size,
+                        last_change_date: last_change_date_time,
+                        last_change_user: last_change_user
                       }
                     }
-                  } = Project.evaluate_project(project_id, 1)
+                  rescue
+                    error ->
+                      Logger.error(error)
+                      {:error, {error, project_id}}
+                  end
+                end)
+                |> Enum.split_with(fn {status, _content} -> status == :error end)
 
-                  %{date: last_change_date_time, user: last_change_user} =
-                    case List.first(last_n_changes) do
-                      nil ->
-                        %{date: nil, user: nil}
+              enriched_projects = Enum.map(enriched_projects, fn {:ok, info} -> info end)
+              errors = Enum.map(errors, fn {:error, info} -> info end)
 
-                      change ->
-                        change
-                        |> CouchService.extract_most_recent_change_info()
-                        |> (fn {_type, date_time, user} -> %{date: date_time, user: user} end).()
-                    end
+              healthy_projects_number = length(enriched_projects)
 
-                  {
-                    :ok,
-                    %{
-                      id: project_id,
-                      name: project_id,
-                      doc_count: doc_count,
-                      database_file_size: database_file_size,
-                      image_file_size: thumbnail_file_size + original_file_size,
-                      last_change_date: last_change_date_time,
-                      last_change_user: last_change_user
-                    }
-                  }
-                rescue
-                  error ->
-                    Logger.error(error)
-                    {:error, {error, project_id}}
-                end
-              end)
-              |> Enum.split_with(fn {status, _content} -> status == :error end)
+              total_documents_number =
+                enriched_projects
+                |> Enum.map(& &1.doc_count)
+                |> Enum.sum()
 
-            enriched_projects = Enum.map(enriched_projects, fn {:ok, info} -> info end)
-            errors = Enum.map(errors, fn {:error, info} -> info end)
+              total_documents_size =
+                enriched_projects
+                |> Enum.map(& &1.database_file_size)
+                |> Enum.sum()
 
-            # project_number = length(enriched_projects)
-            # IO.inspect(project_number)
-            # IO.inspect(%{ project_number: project_number})
-            # IO.inspect(enriched_projects)
+              total_images_number =
+                enriched_projects
+                |> Enum.map(& &1.image_file_size)
+                |> Enum.sum()
 
-            total_database_size =
-              enriched_projects
-              |> Enum.map(& &1.database_file_size)
-              |> Enum.sum()
-              |> Sizeable.filesize()
-              |> IO.inspect(label: "*total_database_size")
+              total_images_size =
+                enriched_projects
+                |> Enum.map(& &1.image_file_size)
+                |> Enum.sum()
 
-            total_documents_number =
-              enriched_projects
-              |> Enum.map(& &1.doc_count)
-              |> Enum.sum()
-              |> IO.inspect(label: "*total_documents_number")
+              total_database_size =
+                (total_documents_size + total_images_size)
+                |> Sizeable.filesize()
 
-            total_images_number =
-              enriched_projects
-              |> Enum.map(& &1.image_file_size)
-              |> Enum.sum()
-              |> IO.inspect(label: "*total_images_number")
+              total_documents_size =
+                total_documents_size
+                |> Sizeable.filesize()
 
-            total_images_size =
-              enriched_projects
-              |> Enum.map(& &1.image_file_size)
-              |> Enum.sum()
-              |> Sizeable.filesize()
-              |> IO.inspect(label: "*total_images_size")
+              total_images_size =
+                total_images_size
+                |> Sizeable.filesize()
 
-            #  {:ok, %{state: %{errors: errors, projects: enriched_projects} }}
-
-            {:ok,
-             %{
-               state: %{
-                 errors: errors,
-                 projects: enriched_projects,
+              {:ok,
+               %{
+                 state: %{projects: enriched_projects, errors: errors},
+                 healthy_projects_number: healthy_projects_number,
                  total_database_size: total_database_size,
                  total_documents_number: total_documents_number,
+                 total_documents_size: total_documents_size,
                  total_images_number: total_images_number,
                  total_images_size: total_images_size
-               }
-             }}
-          end)
+               }}
+            end
+          )
           |> assign(:sort_by, @default_sort_by)
           |> assign(:sort_direction, @default_sort_direction)
-          |> assign(:project_number, length(projects))
-          |> assign(:total_database_size, "92 Mo")
-          |> assign(:total_documents_number, "9898")
-          |> assign(:total_documents_size, " 5 Mo")
-          |> assign(:total_images_number, "454344")
-          |> assign(:total_images_size, "98 To")
+          |> assign(:all_projects_number, length(projects))
       end
 
     {:ok, assign(socket, :page_title, "Overview")}
   end
 
-  @spec handle_event(<<_::32, _::_*72>>, map(), map()) :: {:noreply, map()}
   def handle_event("sort", %{"field" => field}, socket) do
     field = String.to_atom(field)
 
@@ -169,24 +173,29 @@ defmodule FieldHubWeb.Live.ProjectList do
       <div class="dashboard-card">
         <div class="dashboard-card-title">Your projects</div>
         <div class="dashboard-card-main-number">
-          {@project_number}
+          {@healthy_projects_number.result}
         </div>
+        <%= if @all_projects_number > @healthy_projects_number.result do %>
+          <div class="dashboard-card-error">
+            +{@all_projects_number - @healthy_projects_number.result} unhealthy
+          </div>
+        <% end %>
       </div>
       <div class="dashboard-card">
         <div class="dashboard-card-title">Used space</div>
         <div class="dashboard-card-main-number">
-          {@total_database_size}
+          {@total_database_size.result}
         </div>
       </div>
       <div class="dashboard-card">
         <div class="dashboard-card-title">Documents</div>
-        <div class="dashboard-card-main-number">{@total_documents_size}</div>
-        Total: {@total_documents_number}
+        <div class="dashboard-card-main-number">{@total_documents_size.result}</div>
+        Total: {@total_documents_number.result}
       </div>
       <div class="dashboard-card">
         <div class="dashboard-card-title">Images</div>
-        <div class="dashboard-card-main-number">{@total_images_size}</div>
-        Total: {@total_images_number}
+        <div class="dashboard-card-main-number">{@total_images_size.result}</div>
+        Total: {@total_images_number.result}
       </div>
     </div>
     """

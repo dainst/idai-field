@@ -431,10 +431,7 @@ nav {
 
 .dashboard{
     width: 100%;
-    /* position: relative; */
     float:left;
-    /* position: absolute; */
-    
 }
 
 .dashboard-card{
@@ -448,18 +445,16 @@ nav {
     border-color: rgb(128, 165, 163);
     color:#2c5f77;
     text-align: center;
-    /* border-style:ridge; */
 }
 
-.dashboard-card-section{
-    float:left;
-    width: 30%;
-    margin: 1%;
-    padding: 1%;
+.dashboard-card-error{
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+    color:rgb(158, 76, 76);
     background-color: rgb(158, 207, 198);
     border-radius: 2%;
     border-color: rgb(61, 82, 79);
-    text-align: center;
 }
 
 .dashboard-card-title{    

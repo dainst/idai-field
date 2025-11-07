@@ -145,6 +145,9 @@ defmodule FieldHubWeb.Live.ProjectList do
   def handle_event("sort", %{"field" => field}, socket) do
     field = String.to_atom(field)
 
+    async_state = socket.assigns.state
+    %{projects: projects, errors: errors} = async_state.result
+
     {sort_direction, sort_by} =
       if socket.assigns.sort_by == field do
         {toggle_direction(socket.assigns.sort_direction), field}
@@ -152,15 +155,17 @@ defmodule FieldHubWeb.Live.ProjectList do
         {:asc, field}
       end
 
-    sorted_projects = sort_projects(socket.assigns.projects, sort_by, sort_direction)
+    sorted_projects = sort_projects(projects, sort_by, sort_direction)
 
-    socket =
+    new_result = %{async_state.result | projects: sorted_projects, errors: errors}
+    new_async_state = %{async_state | result: new_result}
+
+    {:noreply,
       socket
-      |> assign(:projects, sorted_projects)
+      |> assign(:state, new_async_state)
       |> assign(:sort_by, sort_by)
       |> assign(:sort_direction, sort_direction)
-
-    {:noreply, socket}
+    }
   end
 
   def handle_event("go_to_project", %{"id" => id}, socket) do

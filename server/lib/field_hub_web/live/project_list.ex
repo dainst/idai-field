@@ -30,6 +30,8 @@ defmodule FieldHubWeb.Live.ProjectList do
               :total_documents_number,
               :total_documents_size,
               :total_images_number,
+              :total_thumbnails_number,
+              :total_originals_number,
               :total_images_size
             ],
             fn ->
@@ -73,6 +75,8 @@ defmodule FieldHubWeb.Live.ProjectList do
                         doc_count: doc_count,
                         database_file_size: database_file_size,
                         image_file_size: thumbnail_file_size + original_file_size,
+                        original_count: original_count,
+                        thumbnail_count: thumbnail_count,
                         last_change_date: last_change_date_time,
                         last_change_user: last_change_user
                       }
@@ -100,10 +104,18 @@ defmodule FieldHubWeb.Live.ProjectList do
                 |> Enum.map(& &1.database_file_size)
                 |> Enum.sum()
 
-              total_images_number =
+              total_originals_number =
                 enriched_projects
-                |> Enum.map(& &1.image_file_size)
+                |> Enum.map(& &1.original_count)
                 |> Enum.sum()
+
+              total_thumbnails_number =
+                enriched_projects
+                |> Enum.map(& &1.thumbnail_count)
+                |> Enum.sum()
+
+              total_images_number = total_thumbnails_number + total_originals_number
+
 
               total_images_size =
                 enriched_projects
@@ -130,6 +142,8 @@ defmodule FieldHubWeb.Live.ProjectList do
                  total_documents_number: total_documents_number,
                  total_documents_size: total_documents_size,
                  total_images_number: total_images_number,
+                 total_thumbnails_number: total_thumbnails_number,
+                 total_originals_number: total_originals_number,
                  total_images_size: total_images_size
                }}
             end
@@ -195,12 +209,23 @@ defmodule FieldHubWeb.Live.ProjectList do
       <div class="dashboard-card">
         <div class="dashboard-card-title">Documents</div>
         <div class="dashboard-card-main-number">{@total_documents_size.result}</div>
-        Total: {@total_documents_number.result}
+              <b class="info-label">Total:</b>
+              <span class="info-value"><%= @total_documents_number.result %></span>
       </div>
       <div class="dashboard-card">
         <div class="dashboard-card-title">Images</div>
         <div class="dashboard-card-main-number">{@total_images_size.result}</div>
-        Total: {@total_images_number.result}
+        <div class="dashboard-secondary-info">
+          <span class="info-item">
+            <b class="info-label">Thumbnails :</b>
+            <span class="info-value"><%= @total_thumbnails_number.result %></span>
+          </span>
+
+          <span class="info-item">
+            <span class="info-label">Originals :</span>
+            <span class="info-value"><%= @total_originals_number.result %></span>
+          </span>
+        </div>
       </div>
     </div>
     """

@@ -430,8 +430,9 @@ nav {
 }
 
 .dashboard{
-    width: 100%;
-    float:left;
+    display:flex;
+    gap: 5px;                    
+    justify-content: center;  
 }
 
 .dashboard-card{
@@ -441,10 +442,12 @@ nav {
     padding: 1%;
     margin:0.5%;
     background-color: rgb(197, 243, 235);
-    border-radius: 2%;
+    border-radius: 8px;
     border-color: rgb(128, 165, 163);
     color:#2c5f77;
     text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border: 1px solid rgba(128,165,163,0.4);
 }
 
 .dashboard-card-error{
@@ -458,13 +461,39 @@ nav {
 }
 
 .dashboard-card-title{    
-    font-size: 18px;
+    font-size: 16pt;
     font-weight: 500;
     color:#2c5f77;
 }
 .dashboard-card-main-number{
     text-shadow: 2px 2px 3px rgb(109, 124, 122);
-    font-size: 38px;
+    font-size: 28pt;
     font-weight: 700;
     color:#2c5f77;
+}
+
+.dashboard-secondary-info {
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center; 
+    gap: 1pt;  
+    font-size: 11pt;
+    font-weight: 300;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.info-item {
+    display:flex;
+    align-items: baseline;
+    min-width: 10em; 
+}
+.info-label {
+    font-weight: 600;
+}
+
+.info-value {
+    margin-left: auto;
+    text-align: right;
 }

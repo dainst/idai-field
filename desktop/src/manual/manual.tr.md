@@ -1281,28 +1281,50 @@ Field Desktop'ın eski sürümleriyle oluşturulan projelerde ve proje yapıland
 
 ##### Tarih alanları
 
-"Tarih (Date)" giriş türündeki alanlar için "Gün.Ay.Yıl" biçiminde bir değer girilir. Gün ve ay girişleri isteğe bağlıdır, böylece yalnızca belirli bir ay veya yıl girilebilir.
+"Tarih" giriş türündeki alanlar, her biri için ayrı bir sütun oluşturulan en fazla üç alt alandan oluşur:
+
+* *value*: Tekil bir tarih için değer belirtme veya bir tarih aralığı için başlangıç tarihi
+* *endValue*: Bir tarih aralığı için bitiş tarihi
+* *isRange*: Tarihin bir tarih aralığı olup olmadığını belirtir. Olası değerler şunlardır: *true* (tarih aralığı), *false* (tekil tarih).
+
+Tarihler "gün.ay.yıl" (GG.AA.YYYY) biçiminde girilir. Gün ve ay girişleri isteğe bağlıdır, bu nedenle yalnızca yılın belirli bir ayını veya belirli bir yılı girmek mümkündür.
+
+Ayrıca, proje yapılandırmasında ilgili alana bir saat bilgisi girilmesine izin veriliyorsa "saat:dakika" biçiminde (bir boşlukla ayrılmış olarak) saat girilebilir. **Önemli**: Saat bilgisi her zaman UTC (Eşgüdümlü Evrensel Zaman, Batı Avrupa Saati/Greenwich Ortalama Saati'ne karşılık gelen) zaman diliminde belirtilir.
 
 <div class="table-container">
   <table>
     <thead>
       <tr>
         <th>identifier</th>
-        <th>date</th>
+        <th>date.value</th>
+        <th>date.endValue</th>
+        <th>date.isRange</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
+    <tr>
         <td>A</td>
-        <td>12.01.2025</td>
+        <td>19.08.2017 17:25</td>
+        <td>20.08.2017 11:09</td>
+        <td>true</td>
       </tr>
       <tr>
         <td>B</td>
-        <td>09.2008</td>
+        <td>12.01.2025</td>
+        <td></td>
+        <td>false</td>
       </tr>
       <tr>
         <td>C</td>
+        <td>09.2008</td>
+        <td>11.2008</td>
+        <td>true</td>
+      </tr>
+      <tr>
+        <td>D</td>
         <td>1995</td>
+        <td></td>
+        <td>false</td>
       </tr>
     </tbody>
   </table>
@@ -1881,16 +1903,25 @@ Farklı dillerde değer girilebilen alanlarda, kullanılan dillerin kodlarına k
 
 ##### Tarih alanları
 
-"Gün.Ay.Yıl" (GG.AA.YYYY) biçimindeki bir değer, "date" giriş türündeki alanlar için girilir. Gün ve ay girişleri isteğe bağlıdır, böylece yalnızca yılın belirli bir ayını veya belirli bir yılı girmek mümkündür.
+"Tarih" giriş türündeki alanlar için, en fazla üç alt alan içeren bir nesne girilir:
+
+* *value*: Tekil bir tarih için değer belirtme veya bir tarih aralığı için başlangıç tarihi
+* *endValue*: Bir tarih aralığı için bitiş tarihi
+* *isRange*: Tarihin bir tarih aralığı olup olmadığını belirtir. Olası değerler şunlardır: *true* (tarih aralığı), *false* (tekil tarih).
+
+Tarihler "gün.ay.yıl" (GG.AA.YYYY) biçiminde girilir. Gün ve ay girişleri isteğe bağlıdır, bu nedenle yalnızca yılın belirli bir ayını veya belirli bir yılı girmek mümkündür.
+
+Ayrıca, proje yapılandırmasında ilgili alana bir saat bilgisi girilmesine izin veriliyorsa "saat:dakika" biçiminde (bir boşlukla ayrılmış olarak) saat girilebilir. **Önemli**: Saat bilgisi her zaman UTC (Eşgüdümlü Evrensel Zaman, Batı Avrupa Saati/Greenwich Ortalama Saati'ne karşılık gelen) zaman diliminde belirtilir.
 
 *Örnek:*
 
     {
       "identifier": "A",
       "category": "Feature",
-      "date1": "12.01.2025",
-      "date2": "09.2008",
-      "date3": "1995"
+      "date1": { "value": "19.08.2017 17:25", "endValue": "20.08.2017 11:09", "isRange": true },
+      "date2": { "value": "12.01.2025", "isRange": false },
+      "date3": { "value": "09.2008", "endValue": "11.2008", "isRange": true },
+      "date4": { "value": "1995", "isRange": false }
     }
 
 

@@ -17,7 +17,7 @@ import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { ImportState } from './import-state';
 import { MessagesConversion } from './messages-conversion';
-import { UploadModalComponent } from './upload-modal.component';
+import { UploadModalComponent } from '../widgets/upload-modal.component';
 import { AppState } from '../../services/app-state';
 import { Settings } from '../../services/settings/settings';
 import getCategoriesWithoutExcludedCategories = ExportRunner.getCategoriesWithoutExcludedCategories;

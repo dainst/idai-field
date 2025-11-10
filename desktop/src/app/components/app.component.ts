@@ -18,6 +18,7 @@ import { Modals } from '../services/modals';
 import { MenuContext } from '../services/menu-context';
 import { ImageToolLauncher } from '../services/imagestore/image-tool-launcher';
 import { ExpressServer } from '../services/express-server/express-server';
+import { UploadModalComponent } from './widgets/upload-modal.component';
 
 const remote = window.require('@electron/remote');
 const ipcRenderer = window.require('electron')?.ipcRenderer;
@@ -38,6 +39,8 @@ export class AppComponent {
     public alwaysShowClose = remote.getGlobal('switches').messages_timeout == undefined;
 
     private closing: boolean = false;
+    private uploadModal: UploadModalComponent;
+    private closeUploadModalTimeout: any;
 
 
     constructor(router: Router,
@@ -48,9 +51,9 @@ export class AppComponent {
                 settingsService: SettingsService,
                 appState: AppState,
                 imageToolLauncher: ImageToolLauncher,
-                expressServer: ExpressServer,
                 projectConfiguration: ProjectConfiguration,
                 relationsManager: RelationsManager,
+                private expressServer: ExpressServer,
                 private messages: Messages,
                 private utilTranslations: UtilTranslations,
                 private settingsProvider: SettingsProvider,
@@ -74,9 +77,9 @@ export class AppComponent {
             }
         });
 
-        expressServer.setDatastore(this.datastore);
-        expressServer.setRelationsManager(relationsManager);
-        expressServer.setProjectConfiguration(projectConfiguration);
+        this.expressServer.setDatastore(this.datastore);
+        this.expressServer.setRelationsManager(relationsManager);
+        this.expressServer.setProjectConfiguration(projectConfiguration);
 
         appState.load();
         settingsService.setupSync();
@@ -88,6 +91,7 @@ export class AppComponent {
         AppComponent.preventDefaultDragAndDropBehavior();
         this.initializeUtilTranslations();
         this.listenToSettingsChangesFromMenu();
+        this.listenToApiEvents();
         this.handleCloseRequests();
 
         if (!Settings.hasUsername(settingsProvider.getSettings())) {
@@ -106,6 +110,46 @@ export class AppComponent {
             this.settingsProvider.setSettingsAndSerialize(settings);
             this.changeDetectorRef.detectChanges();
         });
+    }
+
+
+    private listenToApiEvents() {
+
+        this.expressServer.apiNotifications().subscribe(state => {
+            if (state === 'import') {
+                if (this.uploadModal) {
+                    this.clearUploadModalTimeout();
+                } else {
+                    const [_, uploadModal] = this.modals.make<UploadModalComponent>(
+                        UploadModalComponent, MenuContext.MODAL
+                    );
+                    this.uploadModal = uploadModal;
+                    this.changeDetectorRef.detectChanges();
+                }
+            } else if (state === 'none') {
+                if (this.uploadModal) this.closeUploadModal();
+            }
+        });
+    }
+
+
+    public closeUploadModal() {
+
+        this.clearUploadModalTimeout();
+        this.closeUploadModalTimeout = setTimeout(() => {
+            this.uploadModal.close();
+            this.uploadModal = undefined;
+            this.changeDetectorRef.detectChanges();
+        }, 1000);
+    }
+
+
+    public clearUploadModalTimeout() {
+
+        if (!this.closeUploadModalTimeout) return;
+        
+        clearTimeout(this.closeUploadModalTimeout);
+        this.closeUploadModalTimeout = undefined;
     }
 
 

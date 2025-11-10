@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
+import { Observable, Observer } from 'rxjs';
 import { ImageStore, ImageVariant, FileInfo, ConfigurationSerializer,
-    ConfigReader, Datastore, ProjectConfiguration, RelationsManager, IdGenerator } from 'idai-field-core';
+    ConfigReader, Datastore, ProjectConfiguration, RelationsManager, IdGenerator, 
+    ObserverUtil } from 'idai-field-core';
 import { SettingsProvider } from '../settings/settings-provider';
 import { exportConfiguration } from './endpoints/configuration';
 import { exportData } from './endpoints/export';
 import { importData } from './endpoints/import';
 import { Settings } from '../settings/settings';
 import { MD } from '../../components/messages/md';
+import { AngularUtility } from '../../angular/angular-utility';
 
 const express = window.require('express');
 const remote = window.require('@electron/remote');
@@ -14,6 +17,9 @@ const expressPouchDB = window.require('express-pouchdb');
 const expressBasicAuth = window.require('express-basic-auth');
 const bodyParser = window.require('body-parser');
 let PouchDB = window.require('pouchdb-browser');
+
+
+export type ApiState = 'none'|'import'|'export';
 
 
 @Injectable()
@@ -26,6 +32,7 @@ export class ExpressServer {
     private datastore: Datastore;
     private relationsManager: RelationsManager;
     private projectConfiguration: ProjectConfiguration;
+    private apiObservers: Array<Observer<ApiState>> = [];
 
 
     constructor(private imagestore: ImageStore,
@@ -52,6 +59,8 @@ export class ExpressServer {
 
     public setProjectConfiguration = (projectConfiguration: ProjectConfiguration) =>
         this.projectConfiguration = projectConfiguration;
+
+    public apiNotifications = (): Observable<ApiState> => ObserverUtil.register(this.apiObservers);
 
 
     /**
@@ -180,14 +189,20 @@ export class ExpressServer {
 
         app.get('/export/:format', async (request: any, response: any) => {
 
+            ObserverUtil.notify(this.apiObservers, 'export');
+            await AngularUtility.refresh();
             await exportData(request, response, this.projectConfiguration, this.datastore, this.messagesDictionary);
+            ObserverUtil.notify(this.apiObservers, 'none');
         });
 
         app.post('/import/:format', this.textBodyParser, async (request: any, response: any) => {
 
+            ObserverUtil.notify(this.apiObservers, 'import');
+            await AngularUtility.refresh();
             await importData(request, response, this.projectConfiguration, this.datastore, this.relationsManager,
                 this.idGenerator, this.settingsProvider.getSettings(), this.messagesDictionary
             );
+            ObserverUtil.notify(this.apiObservers, 'none');
         });
 
         app.get('/info/',  async (_: any, response: any) => {

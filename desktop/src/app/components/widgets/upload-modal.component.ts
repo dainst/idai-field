@@ -13,4 +13,10 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class UploadModalComponent {
 
     constructor(public activeModal: NgbActiveModal) {}
+
+
+    public close() {
+
+        this.activeModal.close();
+    }
 }

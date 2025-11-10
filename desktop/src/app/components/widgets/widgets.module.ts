@@ -36,6 +36,7 @@ import { QuittingModalComponent } from './quitting-modal.component';
 import { ConfigurationInfoComponent } from './configuration-info.component';
 import { ReferencesInfoComponent } from './references-info.component';
 import { IdentifierInputComponent } from './identifier-input.component';
+import { UploadModalComponent } from './upload-modal.component';
 
 
 @NgModule({
@@ -77,6 +78,7 @@ import { IdentifierInputComponent } from './identifier-input.component';
         ConfigurationInfoComponent,
         ReferencesInfoComponent,
         IdentifierInputComponent,
+        UploadModalComponent,
         SearchConstraintsComponent as any // any became necessary after an angular update because class is abstract, which has always been like this and I also saw it being recommended; npm run i18n now works due to this change here
     ],
     providers: [
@@ -104,7 +106,8 @@ import { IdentifierInputComponent } from './identifier-input.component';
         RelationPickerComponent,
         ConfigurationInfoComponent,
         ReferencesInfoComponent,
-        IdentifierInputComponent
+        IdentifierInputComponent,
+        UploadModalComponent
     ]
 })
 

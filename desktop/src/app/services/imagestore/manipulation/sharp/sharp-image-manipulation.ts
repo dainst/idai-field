@@ -29,15 +29,15 @@ export module SharpImageManipulation {
     }
 
 
-    export async function createThumbnail(buffer: Buffer, targetHeight: number,
-                                          targetJpegQuality: number): Promise<Buffer> {
+    export function createThumbnail(buffer: Buffer, targetHeight: number,
+                                    targetJpegQuality: number): Promise<Buffer> {
 
         try {
-            const sharpImage = getImageObject(buffer);
-            const resizedImage = sharpImage.resize(undefined, targetHeight);
-            const jpegImage = resizedImage.jpeg({ quality: targetJpegQuality });
-            const result = await jpegImage.toBuffer();
-            return result;
+            return getImageObject(buffer)
+                .autoOrient()
+                .resize(undefined, targetHeight)
+                .jpeg({ quality: targetJpegQuality })
+                .toBuffer();
         } catch (err) {
             console.error('Failed to generate thumbnail:', err);
             return undefined;

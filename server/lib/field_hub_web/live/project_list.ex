@@ -116,7 +116,6 @@ defmodule FieldHubWeb.Live.ProjectList do
 
               total_images_number = total_thumbnails_number + total_originals_number
 
-
               total_images_size =
                 enriched_projects
                 |> Enum.map(& &1.image_file_size)
@@ -175,11 +174,10 @@ defmodule FieldHubWeb.Live.ProjectList do
     new_async_state = %{async_state | result: new_result}
 
     {:noreply,
-      socket
-      |> assign(:state, new_async_state)
-      |> assign(:sort_by, sort_by)
-      |> assign(:sort_direction, sort_direction)
-    }
+     socket
+     |> assign(:state, new_async_state)
+     |> assign(:sort_by, sort_by)
+     |> assign(:sort_direction, sort_direction)}
   end
 
   def handle_event("go_to_project", %{"id" => id}, socket) do
@@ -209,8 +207,8 @@ defmodule FieldHubWeb.Live.ProjectList do
       <div class="dashboard-card">
         <div class="dashboard-card-title">Documents</div>
         <div class="dashboard-card-main-number">{@total_documents_size.result}</div>
-              <b class="info-label">Total:</b>
-              <span class="info-value"><%= @total_documents_number.result %></span>
+        <b class="info-label">Total:</b>
+        <span class="info-value">{@total_documents_number.result}</span>
       </div>
       <div class="dashboard-card">
         <div class="dashboard-card-title">Images</div>
@@ -218,12 +216,12 @@ defmodule FieldHubWeb.Live.ProjectList do
         <div class="dashboard-secondary-info">
           <span class="info-item">
             <b class="info-label">Thumbnails :</b>
-            <span class="info-value"><%= @total_thumbnails_number.result %></span>
+            <span class="info-value">{@total_thumbnails_number.result}</span>
           </span>
 
           <span class="info-item">
             <span class="info-label">Originals :</span>
-            <span class="info-value"><%= @total_originals_number.result %></span>
+            <span class="info-value">{@total_originals_number.result}</span>
           </span>
         </div>
       </div>

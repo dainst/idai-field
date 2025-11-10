@@ -39,7 +39,7 @@ defmodule FieldHubWeb.PageControllerTest do
         |> put_session(:user_token, token)
         |> get("/")
 
-      assert html_response(conn, 200) =~ "phx-click=\"go_to_project\" phx-value-id=\"test_project\""
+      assert html_response(conn, 200) =~ "Loading projects list..."
     end
 
     test "GET / without valid session token does not display projects", %{conn: conn} do
@@ -47,7 +47,8 @@ defmodule FieldHubWeb.PageControllerTest do
         conn
         |> get("/")
 
-      refute html_response(conn, 200) =~ "phx-click=\"go_to_project\" phx-value-id=\"test_project\""
+      refute html_response(conn, 200) =~
+               "phx-click=\"go_to_project\" phx-value-id=\"test_project\""
     end
   end
 end

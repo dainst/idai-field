@@ -292,7 +292,7 @@ görüntü yönetiminde görüntü kategorilerini vb. düzenleyebilirsiniz.
 
 ### Metin filtresi
 
-Arama terimleri mevcut "Tanımlayıcı" ve "Kısa açıklama" girdi alanlarıyla karşılaştırılır.
+Arama terimleri "Tanımlayıcı" ve "Kısa açıklama" girdi alanlarıyla karşılaştırılır.
  
 *Örnek:*
  

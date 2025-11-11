@@ -431,7 +431,7 @@
           <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="widgets.importModal.info" datatype="html">
+      <trans-unit id="widgets.importExportProcessModal.importInfo" datatype="html">
         <source>Datensätze werden eingelesen...</source>
         <target state="translated">Importation de jeux de données...</target>
         <context-group purpose="location">
@@ -699,7 +699,7 @@
           <context context-type="linenumber">164</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="export.modal.info" datatype="html">
+      <trans-unit id="widgets.importExportProcessModal.exportInfo" datatype="html">
         <source>Daten werden exportiert...</source>
         <target state="needs-translation">Daten werden exportiert...</target>
         <context-group purpose="location">

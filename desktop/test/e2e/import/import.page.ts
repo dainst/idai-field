@@ -55,6 +55,6 @@ export class ImportPage {
 
     public static getImportModal() {
 
-        return getLocator('#import-modal');
+        return getLocator('#import-export-process-modal');
     };
 }

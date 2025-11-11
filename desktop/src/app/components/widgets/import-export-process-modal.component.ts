@@ -3,15 +3,19 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
-    templateUrl: './import-modal.html',
+    templateUrl: './import-export-process-modal.html',
     standalone: false
 })
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
-export class ImportModalComponent {
+export class ImportExportProcessModalComponent {
 
-    constructor(public activeModal: NgbActiveModal) {}
+    public type: 'import'|'export';
+
+
+    constructor(private activeModal: NgbActiveModal) {}
 
 
     public close() {

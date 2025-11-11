@@ -1,0 +1,11 @@
+<div id="import-export-process-modal" class="modal-body process-modal">
+    <div class="process-modal-container">
+        <div class="spinner"></div>
+        <div *ngIf="type === 'import'"
+             class="process-info"
+             i18n="@@widgets.importExportProcessModal.importInfo">Datensätze werden eingelesen...</div>
+        <div *ngIf="type === 'export'"
+             class="process-info"
+             i18n="@@widgets.importExportProcessModal.exportInfo">Daten werden exportiert...</div>
+    </div>
+</div>

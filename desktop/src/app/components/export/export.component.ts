@@ -12,13 +12,13 @@ import { ShapefileExporter } from './shapefile-exporter';
 import { TabManager } from '../../services/tabs/tab-manager';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
-import { ExportModalComponent } from './export-modal.component';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { ImageRelationsManager } from '../../services/image-relations-manager';
 import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
 import { AppState } from '../../services/app-state';
 import { AngularUtility } from '../../angular/angular-utility';
+import { ImportExportProcessModalComponent } from '../widgets/import-export-process-modal.component';
 
 const remote = window.require('@electron/remote');
 
@@ -339,9 +339,10 @@ export class ExportComponent implements OnInit {
         setTimeout(() => {
             if (this.running) {
                 this.modalRef = this.modalService.open(
-                    ExportModalComponent,
+                    ImportExportProcessModalComponent,
                     { backdrop: 'static', keyboard: false, animation: false }
                 );
+                this.modalRef.componentInstance.type = 'export';
             }
         }, ExportComponent.TIMEOUT);
     }

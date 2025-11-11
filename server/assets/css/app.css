@@ -345,6 +345,11 @@ nav {
     padding: 1em;
 }
 
+.resources-history thead th:hover {
+    cursor: pointer;
+    background-color: #f4f8f8;
+}
+
 .scrolldown {
     border-collapse: collapse;
     border-spacing: 0;

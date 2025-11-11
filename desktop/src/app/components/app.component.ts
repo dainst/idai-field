@@ -18,7 +18,7 @@ import { Modals } from '../services/modals';
 import { MenuContext } from '../services/menu-context';
 import { ImageToolLauncher } from '../services/imagestore/image-tool-launcher';
 import { ExpressServer } from '../services/express-server/express-server';
-import { ImportModalComponent } from './widgets/import-modal.component';
+import { ImportExportProcessModalComponent } from './widgets/import-export-process-modal.component';
 
 const remote = window.require('@electron/remote');
 const ipcRenderer = window.require('electron')?.ipcRenderer;
@@ -39,8 +39,8 @@ export class AppComponent {
     public alwaysShowClose = remote.getGlobal('switches').messages_timeout == undefined;
 
     private closing: boolean = false;
-    private importModal: ImportModalComponent;
-    private closeImportModalTimeout: any;
+    private modal: ImportExportProcessModalComponent;
+    private closeModalTimeout: any;
 
 
     constructor(router: Router,
@@ -116,40 +116,45 @@ export class AppComponent {
     private listenToApiEvents() {
 
         this.expressServer.apiNotifications().subscribe(state => {
-            if (state === 'import') {
-                if (this.importModal) {
-                    this.clearImportModalTimeout();
-                } else {
-                    const [_, importModal] = this.modals.make<ImportModalComponent>(
-                        ImportModalComponent, MenuContext.MODAL
-                    );
-                    this.importModal = importModal;
-                    this.changeDetectorRef.detectChanges();
-                }
-            } else if (state === 'none') {
-                if (this.importModal) this.closeImportModal();
+            switch (state) {
+                case 'import':
+                case 'export':
+                    if (this.modal) {
+                        this.clearModalTimeout();
+                    } else {
+                        const [_, modal] = this.modals.make<ImportExportProcessModalComponent>(
+                            ImportExportProcessModalComponent, MenuContext.MODAL
+                        );
+                        this.modal = modal;
+                        this.changeDetectorRef.detectChanges();
+                    }
+                    this.modal.type = state;
+                    break;
+                case 'none':
+                    if (this.modal) this.closeModal();
+                    break;
             }
         });
     }
 
 
-    public closeImportModal() {
+    public closeModal() {
 
-        this.clearImportModalTimeout();
-        this.closeImportModalTimeout = setTimeout(() => {
-            this.importModal.close();
-            this.importModal = undefined;
+        this.clearModalTimeout();
+        this.closeModalTimeout = setTimeout(() => {
+            this.modal.close();
+            this.modal = undefined;
             this.changeDetectorRef.detectChanges();
         }, 1000);
     }
 
 
-    public clearImportModalTimeout() {
+    public clearModalTimeout() {
 
-        if (!this.closeImportModalTimeout) return;
+        if (!this.closeModalTimeout) return;
         
-        clearTimeout(this.closeImportModalTimeout);
-        this.closeImportModalTimeout = undefined;
+        clearTimeout(this.closeModalTimeout);
+        this.closeModalTimeout = undefined;
     }
 
 

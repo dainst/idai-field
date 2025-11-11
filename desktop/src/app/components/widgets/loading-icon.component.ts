@@ -13,8 +13,9 @@ import { Loading } from './loading';
  * @author Daniel de Oliveira
  */
 export class LoadingIconComponent {
-
-    constructor(public loading: Loading) {}
-
+    
     @Input() context: string;
+
+    
+    constructor(public loading: Loading) {}
 }

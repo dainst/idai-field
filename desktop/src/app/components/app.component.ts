@@ -18,7 +18,7 @@ import { Modals } from '../services/modals';
 import { MenuContext } from '../services/menu-context';
 import { ImageToolLauncher } from '../services/imagestore/image-tool-launcher';
 import { ExpressServer } from '../services/express-server/express-server';
-import { UploadModalComponent } from './widgets/upload-modal.component';
+import { ImportModalComponent } from './widgets/import-modal.component';
 
 const remote = window.require('@electron/remote');
 const ipcRenderer = window.require('electron')?.ipcRenderer;
@@ -39,8 +39,8 @@ export class AppComponent {
     public alwaysShowClose = remote.getGlobal('switches').messages_timeout == undefined;
 
     private closing: boolean = false;
-    private uploadModal: UploadModalComponent;
-    private closeUploadModalTimeout: any;
+    private importModal: ImportModalComponent;
+    private closeImportModalTimeout: any;
 
 
     constructor(router: Router,
@@ -117,39 +117,39 @@ export class AppComponent {
 
         this.expressServer.apiNotifications().subscribe(state => {
             if (state === 'import') {
-                if (this.uploadModal) {
-                    this.clearUploadModalTimeout();
+                if (this.importModal) {
+                    this.clearImportModalTimeout();
                 } else {
-                    const [_, uploadModal] = this.modals.make<UploadModalComponent>(
-                        UploadModalComponent, MenuContext.MODAL
+                    const [_, importModal] = this.modals.make<ImportModalComponent>(
+                        ImportModalComponent, MenuContext.MODAL
                     );
-                    this.uploadModal = uploadModal;
+                    this.importModal = importModal;
                     this.changeDetectorRef.detectChanges();
                 }
             } else if (state === 'none') {
-                if (this.uploadModal) this.closeUploadModal();
+                if (this.importModal) this.closeImportModal();
             }
         });
     }
 
 
-    public closeUploadModal() {
+    public closeImportModal() {
 
-        this.clearUploadModalTimeout();
-        this.closeUploadModalTimeout = setTimeout(() => {
-            this.uploadModal.close();
-            this.uploadModal = undefined;
+        this.clearImportModalTimeout();
+        this.closeImportModalTimeout = setTimeout(() => {
+            this.importModal.close();
+            this.importModal = undefined;
             this.changeDetectorRef.detectChanges();
         }, 1000);
     }
 
 
-    public clearUploadModalTimeout() {
+    public clearImportModalTimeout() {
 
-        if (!this.closeUploadModalTimeout) return;
+        if (!this.closeImportModalTimeout) return;
         
-        clearTimeout(this.closeUploadModalTimeout);
-        this.closeUploadModalTimeout = undefined;
+        clearTimeout(this.closeImportModalTimeout);
+        this.closeImportModalTimeout = undefined;
     }
 
 

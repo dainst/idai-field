@@ -283,7 +283,7 @@
           <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="import.uploadModal.info" datatype="html">
+      <trans-unit id="widgets.importModal.info" datatype="html">
         <source>Datensätze werden eingelesen...</source>
         <target state="translated">Importing datasets...</target>
         <context-group purpose="location">

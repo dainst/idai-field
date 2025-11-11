@@ -17,7 +17,7 @@ import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { ImportState } from './import-state';
 import { MessagesConversion } from './messages-conversion';
-import { UploadModalComponent } from '../widgets/upload-modal.component';
+import { ImportModalComponent } from '../widgets/import-modal.component';
 import { AppState } from '../../services/app-state';
 import { Settings } from '../../services/settings/settings';
 import getCategoriesWithoutExcludedCategories = ExportRunner.getCategoriesWithoutExcludedCategories;
@@ -219,8 +219,8 @@ export class ImportComponent implements OnInit {
         this.messages.removeAllMessages();
 
         this.menuService.setContext(MenuContext.MODAL);
-        const uploadModalRef: any = this.modalService.open(
-            UploadModalComponent,
+        const importModalRef: any = this.modalService.open(
+            ImportModalComponent,
             { backdrop: 'static', keyboard: false, animation: false }
         );
 
@@ -238,7 +238,7 @@ export class ImportComponent implements OnInit {
             await this.synchronizationService.startSync();
         }
 
-        uploadModalRef.close();
+        importModalRef.close();
         this.menuService.setContext(MenuContext.DEFAULT);
 
         if (importReport) this.showImportResult(importReport);

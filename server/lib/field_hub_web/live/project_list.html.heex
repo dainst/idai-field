@@ -14,7 +14,7 @@ This server runs Field Hub (<small><%= Application.spec(:field_hub, :vsn) %></sm
 
   <hr />
 
-  <div style="float:left;">
+  <div>
     <.async_result :let={%{projects: projects, errors: errors}} assign={@state}>
       <:loading>Loading projects list...</:loading>
       <:failed :let={_failure}>there was an error loading the projects list</:failed>

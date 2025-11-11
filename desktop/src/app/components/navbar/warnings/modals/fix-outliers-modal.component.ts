@@ -93,6 +93,14 @@ export class FixOutliersModalComponent {
     }
 
 
+    public setSelectedValue(selectedValue: string) {
+
+        this.selectedValues = selectedValue
+            ? [selectedValue]
+            : [];
+    }
+
+
     public async performReplacement() {
 
         if (!this.isValid()) return;

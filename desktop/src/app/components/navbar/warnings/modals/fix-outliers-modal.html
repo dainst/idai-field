@@ -27,7 +27,7 @@
                                [values]="availableValues"
                                [valuelist]="valuelist"
                                [getLabel]="getValueLabel"
-                               (onValueSelected)="selectedValues = [$event]">
+                               (onValueSelected)="setSelectedValue($event)">
             </searchable-select>
         </div>
     }

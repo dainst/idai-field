@@ -15,10 +15,11 @@ export module InvalidDataUtil {
             case Field.InputType.BOOLEAN:
                 return ['true', 'false'].includes(fieldContent.toString().toLowerCase());
             case Field.InputType.CHECKBOXES:
-                return isString(fieldContent);
+                return isString(fieldContent) && fieldContent.length > 0;
             case Field.InputType.DROPDOWN:
             case Field.InputType.RADIO:
-                return isArray(fieldContent) && fieldContent.length === 1 && isString(fieldContent[0]);
+                return isArray(fieldContent) && fieldContent.length === 1
+                    && isString(fieldContent[0]) && fieldContent[0].length > 0;
             case Field.InputType.INPUT:
             case Field.InputType.SIMPLE_INPUT:
                 return isNumber(fieldContent);

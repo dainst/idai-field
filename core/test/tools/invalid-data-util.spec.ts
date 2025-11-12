@@ -34,10 +34,15 @@ describe('InvalidDataUtil', () => {
 
         expect (InvalidDataUtil.isConvertible('value', Field.InputType.BOOLEAN)).toBe(false);
         expect (InvalidDataUtil.isConvertible({ field: 'value' }, Field.InputType.CHECKBOXES)).toBe(false);
+        expect (InvalidDataUtil.isConvertible('', Field.InputType.CHECKBOXES)).toBe(false);
         expect (InvalidDataUtil.isConvertible(['value1', 'value2'], Field.InputType.DROPDOWN)).toBe(false);
         expect (InvalidDataUtil.isConvertible(['value1', 'value2'], Field.InputType.RADIO)).toBe(false);
         expect (InvalidDataUtil.isConvertible([{ field: 'value' }], Field.InputType.DROPDOWN)).toBe(false);
         expect (InvalidDataUtil.isConvertible([{ field: 'value' }], Field.InputType.RADIO)).toBe(false);
+        expect (InvalidDataUtil.isConvertible([''], Field.InputType.DROPDOWN)).toBe(false);
+        expect (InvalidDataUtil.isConvertible([''], Field.InputType.RADIO)).toBe(false);
+        expect (InvalidDataUtil.isConvertible(['', ''], Field.InputType.DROPDOWN)).toBe(false);
+        expect (InvalidDataUtil.isConvertible(['', ''], Field.InputType.RADIO)).toBe(false);
         expect (InvalidDataUtil.isConvertible(['value1', 'value2'], Field.InputType.INPUT)).toBe(false);
         expect (InvalidDataUtil.isConvertible(['value1', 'value2'], Field.InputType.SIMPLE_INPUT)).toBe(false);
     });

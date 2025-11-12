@@ -425,8 +425,11 @@ defmodule FieldHubWeb.Live.ProjectShow do
       changes,
       fn change ->
         case CouchService.extract_most_recent_change_info(change) do
-          {_type, %DateTime{} = date_time, _user} -> date_time
-          _ -> ~U[0001-01-01 00:00:00Z]
+          {_type, %DateTime{} = datetime, _user} ->
+            datetime
+            |> DateTime.to_unix()
+          _ ->
+            0
         end
       end,
       direction

@@ -15,11 +15,5 @@ export class ImportExportProcessModalComponent {
     public type: 'import'|'export';
 
 
-    constructor(private activeModal: NgbActiveModal) {}
-
-
-    public close() {
-
-        this.activeModal.close();
-    }
+    constructor(public activeModal: NgbActiveModal) {}
 }

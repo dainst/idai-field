@@ -142,7 +142,7 @@ export class AppComponent {
 
         this.clearModalTimeout();
         this.closeModalTimeout = setTimeout(() => {
-            this.modal.close();
+            this.modals.closeModal(this.modal);
             this.modal = undefined;
             this.changeDetectorRef.detectChanges();
         }, 1000);

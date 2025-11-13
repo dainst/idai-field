@@ -415,6 +415,7 @@ defmodule FieldHubWeb.Live.ProjectShow do
       fn change ->
         {_type, _date, user} = CouchService.extract_most_recent_change_info(change)
         user
+        |> String.capitalize()
       end,
       direction
     )
@@ -428,6 +429,7 @@ defmodule FieldHubWeb.Live.ProjectShow do
           {_type, %DateTime{} = datetime, _user} ->
             datetime
             |> DateTime.to_unix()
+
           _ ->
             0
         end

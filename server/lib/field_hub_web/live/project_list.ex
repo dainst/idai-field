@@ -254,8 +254,8 @@ defmodule FieldHubWeb.Live.ProjectList do
       projects,
       fn project ->
         case project.last_change_date do
-          nil -> (direction == :asc && ~U[0000-01-01 00:00:00Z]) || ~U[9999-12-31 23:59:59Z]
-          date_time -> date_time
+          nil -> 0
+          datetime -> datetime |> DateTime.to_unix()
         end
       end,
       direction

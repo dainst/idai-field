@@ -73,10 +73,18 @@
                       <table class="scrolldown resources-history">
                         <thead>
                           <tr>
-                            <th>Ressource</th>
-                            <th>Action</th>
-                            <th>User</th>
-                            <th>Time</th>
+                            <th phx-click="sort" phx-value-field="resource" class="cursor-pointer">
+                              Resource {sort_indicator(@sort_by, @sort_direction, :resource)}
+                            </th>
+                            <th phx-click="sort" phx-value-field="action" class="cursor-pointer">
+                              Action {sort_indicator(@sort_by, @sort_direction, :action)}
+                            </th>
+                            <th phx-click="sort" phx-value-field="user" class="cursor-pointer">
+                              User {sort_indicator(@sort_by, @sort_direction, :user)}
+                            </th>
+                            <th phx-click="sort" phx-value-field="time" class="cursor-pointer">
+                              Time {sort_indicator(@sort_by, @sort_direction, :time)}
+                            </th>
                           </tr>
                         </thead>
                         <tbody>

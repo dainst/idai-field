@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { MIN_NUMBER_OF_DUPLICATES } from '../duplication-util';
+import { Menus } from '../../../services/menus';
+import { MenuContext } from '../../../services/menu-context';
 
 
 @Component({
@@ -22,7 +24,8 @@ export class DuplicateModalComponent {
     public newDocument: boolean;
 
 
-    constructor(public activeModal: NgbActiveModal) {}
+    constructor(public activeModal: NgbActiveModal,
+                private menuService: Menus) {}
 
 
     public initialize(newDocument: boolean) {
@@ -34,7 +37,9 @@ export class DuplicateModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.MODAL) {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
 

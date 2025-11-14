@@ -7,6 +7,8 @@ import { exportImages } from '../../../services/imagestore/export-images';
 import { SettingsProvider } from '../../../services/settings/settings-provider';
 import { Messages } from '../../messages/messages';
 import { M } from '../../messages/m';
+import { Menus } from '../../../services/menus';
+import { MenuContext } from '../../../services/menu-context';
 
 const remote = window.require('@electron/remote');
 
@@ -37,7 +39,8 @@ export class ImageExportModalComponent implements OnInit {
                 private appState: AppState,
                 private imageStore: ImageStore,
                 private settingsProvider: SettingsProvider,
-                private messages: Messages) {}
+                private messages: Messages,
+                private menuService: Menus) {}
 
 
 
@@ -50,7 +53,9 @@ export class ImageExportModalComponent implements OnInit {
 
     public onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.IMAGE_TOOL_MODAL) {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
 

@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { intersection } from 'tsfun';
-import { CategoryForm, ProjectConfiguration, Document, Relation, Constraints } from 'idai-field-core';
+import { CategoryForm, ProjectConfiguration, Document, Relation } from 'idai-field-core';
+import { Menus } from '../../../services/menus';
+import { MenuContext } from '../../../services/menu-context';
 
 
 @Component({
@@ -19,7 +21,8 @@ export class LinkModalComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
-                private projectConfiguration: ProjectConfiguration) {}
+                private projectConfiguration: ProjectConfiguration,
+                private menuService: Menus) {}
 
 
     public getConstraints = () => {
@@ -35,7 +38,9 @@ export class LinkModalComponent {
 
     public onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.MODAL) {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
 

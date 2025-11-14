@@ -7,6 +7,8 @@ import { sortProcesses } from '../sort-processes';
 import { getSystemTimezone } from '../../../../../util/timezones';
 import { Settings } from '../../../../../services/settings/settings';
 import { UtilTranslations } from '../../../../../util/util-translations';
+import { Menus } from '../../../../../services/menus';
+import { MenuContext } from '../../../../../services/menu-context';
 
 
 @Component({
@@ -34,7 +36,8 @@ export class LinkProcessModalComponent {
                 private projectConfiguration: ProjectConfiguration,
                 private datastore: Datastore,
                 private labels: Labels,
-                private utilTranslations: UtilTranslations) {}
+                private utilTranslations: UtilTranslations,
+                private menuService: Menus) {}
 
 
     public getCategoryLabel = (process: Document) =>
@@ -45,7 +48,9 @@ export class LinkProcessModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
     
-        if (event.key === 'Escape') this.cancel();
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.MODAL) {
+            this.cancel();
+        }
     }
 
 

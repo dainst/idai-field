@@ -11,6 +11,8 @@ import { Loading } from '../widgets/loading';
 import { AngularUtility } from '../../angular/angular-utility';
 import { Routing } from '../../services/routing';
 import { getFileSizeLabel } from '../../util/get-file-size-label';
+import { MenuContext } from '../../services/menu-context';
+import { Menus } from '../../services/menus';
 
 
 @Component({
@@ -54,7 +56,8 @@ export class ProjectInformationModalComponent implements OnInit {
                 private messages: Messages,
                 private loading: Loading,
                 private routing: Routing,
-                private decimalPipe: DecimalPipe) {}
+                private decimalPipe: DecimalPipe,
+                private menuService: Menus) {}
 
     
     public isLoading = () => this.loading.isLoading('project-information-modal');
@@ -81,7 +84,10 @@ export class ProjectInformationModalComponent implements OnInit {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.close();
+        if (event.key === 'Escape'
+                && [MenuContext.MODAL, MenuContext.CONFIGURATION_MODAL].includes(this.menuService.getContext())) {
+            this.activeModal.close();
+        }
     }
 
 

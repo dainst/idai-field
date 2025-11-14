@@ -12,6 +12,8 @@ import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { ProjectIdentifierValidatorMessagesConversion } from '../messages/project-identifier-validator-messages-conversion';
 import { MsgWithParams } from '../messages/msg-with-params';
+import { Menus } from '../../services/menus';
+import { MenuContext } from '../../services/menu-context';
 
 const remote = window.require('@electron/remote');
 
@@ -49,7 +51,8 @@ export class CreateProjectModalComponent implements OnInit {
                 private messages: Messages,
                 private configurationIndex: ConfigurationIndex,
                 private projectConfiguration: ProjectConfiguration,
-                private labels: Labels) {}
+                private labels: Labels,
+                private menuService: Menus) {}
 
     
     public getTemplateNames = () => Object.keys(this.configurationIndex.getTemplates());
@@ -78,7 +81,10 @@ export class CreateProjectModalComponent implements OnInit {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && !this.modalOpened) this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && !this.modalOpened
+                && [MenuContext.MODAL, MenuContext.CONFIGURATION_MODAL].includes(this.menuService.getContext())) {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
 

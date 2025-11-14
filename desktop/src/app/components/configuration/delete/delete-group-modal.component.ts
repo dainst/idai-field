@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Group } from 'idai-field-core';
+import { MenuContext } from '../../../services/menu-context';
+import { Menus } from '../../../services/menus'
 
 
 @Component({
@@ -18,12 +20,15 @@ export class DeleteGroupModalComponent {
     public group: Group;
 
 
-    constructor(public activeModal: NgbActiveModal) {}
+    constructor(public activeModal: NgbActiveModal,
+                private menuService: Menus) {}
 
     
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.CONFIGURATION_MODAL) {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
 

@@ -5,6 +5,8 @@ import { ConfigurationDocument } from 'idai-field-core';
 import { Language, Languages } from '../../../services/languages';
 import { Messages } from '../../messages/messages';
 import { M } from '../../messages/m';
+import { Menus } from '../../../services/menus';
+import { MenuContext } from '../../../services/menu-context';
 
 
 @Component({
@@ -35,12 +37,16 @@ export class ProjectLanguagesModalComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
-                private messages: Messages) {}
+                private messages: Messages,
+                private menuService: Menus) {}
 
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && !this.modalOpened) this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && !this.modalOpened
+                && this.menuService.getContext() === MenuContext.CONFIGURATION_MODAL) {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
 

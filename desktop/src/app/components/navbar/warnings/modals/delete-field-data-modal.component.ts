@@ -3,6 +3,8 @@ import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstra
 import { CategoryForm, Datastore, Document, Labels, WarningType } from 'idai-field-core';
 import { DeletionInProgressModalComponent } from '../../../widgets/deletion-in-progress-modal.component';
 import { AngularUtility } from '../../../../angular/angular-utility';
+import { Menus } from '../../../../services/menus';
+import { MenuContext } from '../../../../services/menu-context';
 
 
 @Component({
@@ -33,7 +35,8 @@ export class DeleteFieldDataModalComponent {
     constructor(public activeModal: NgbActiveModal,
                 private modalService: NgbModal,
                 private datastore: Datastore,
-                private labels: Labels) {}
+                private labels: Labels,
+                private menuService: Menus) {}
 
 
     public getCategoryLabel = () => this.labels.get(this.category);
@@ -43,7 +46,9 @@ export class DeleteFieldDataModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.MODAL) {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
 

@@ -6,6 +6,8 @@ import { CategoryForm, Labels, Constraint, Datastore, Document, FieldDocument, F
     ProjectConfiguration, Query, Resource, Relation, SortMode } from 'idai-field-core';
 import { ImageRowItem } from '../../../../image/row/image-row';
 import { LinkedImagesUtil } from '../../../../../util/linked-images-util';
+import { Menus } from '../../../../../services/menus';
+import { MenuContext } from '../../../../../services/menu-context';
 
 
 const ALLCATALOGS = 'all-catalogs';
@@ -58,7 +60,8 @@ export class TypeRelationPickerComponent {
     constructor(public activeModal: NgbActiveModal,
                 private datastore: Datastore,
                 private projectConfiguration: ProjectConfiguration,
-                private labels: Labels) {
+                private labels: Labels,
+                private menuService: Menus) {
 
         this.initialize(projectConfiguration.getCategory(TYPECATALOG));
     }
@@ -75,7 +78,9 @@ export class TypeRelationPickerComponent {
 
     public onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.close();
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.MODAL) {
+            this.activeModal.close();
+        }
     }
 
 

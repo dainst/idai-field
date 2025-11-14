@@ -6,6 +6,8 @@ import { ImageGridComponent } from '../../image/grid/image-grid.component';
 import { M } from '../../messages/m';
 import { Messages } from '../../messages/messages';
 import { getImageSuggestions } from './get-image-suggestions';
+import { Menus } from '../../../services/menus';
+import { MenuContext } from '../../../services/menu-context';
 
 
 @Component({
@@ -42,8 +44,9 @@ export class ImagePickerComponent implements OnInit {
     constructor(public activeModal: NgbActiveModal,
                 private messages: Messages,
                 private datastore: Datastore,
-                private el: ElementRef,
-                private projectConfiguration: ProjectConfiguration) {}
+                private elementRef: ElementRef,
+                private projectConfiguration: ProjectConfiguration,
+                private menuService: Menus) {}
 
 
     public getCurrentPage = () => this.currentOffset / ImagePickerComponent.documentLimit + 1;
@@ -59,7 +62,7 @@ export class ImagePickerComponent implements OnInit {
 
         // Listen for transformation of modal to capture finished
         // resizing and invoke recalculation of imageGrid
-        const modalEl = this.el.nativeElement.parentElement.parentElement;
+        const modalEl = this.elementRef.nativeElement.parentElement.parentElement;
         modalEl.addEventListener('transitionend', (event: any) => {
             if (event.propertyName === 'transform') this.onResize();
         });
@@ -68,7 +71,7 @@ export class ImagePickerComponent implements OnInit {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') {
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.IMAGE_PICKER_MODAL) {
             this.activeModal.dismiss('cancel');
         } else if (event.key === 'Enter') {
             this.applySelection();

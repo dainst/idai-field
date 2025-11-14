@@ -121,7 +121,7 @@ export class ProcessListComponent implements OnInit, OnChanges, OnDestroy {
     public async deleteProcess(process: ProcessDocument) {
 
         const context: MenuContext = this.menus.getContext();
-        this.menus.setContext(MenuContext.DOCEDIT);
+        this.menus.setContext(MenuContext.MODAL);
 
         const modalRef: NgbModalRef = this.modalService.open(
             DeleteProcessModalComponent,

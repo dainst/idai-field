@@ -6,6 +6,8 @@ import { BaseField, CategoryForm, Datastore, Measurement, Document, Field,
 import { DeletionInProgressModalComponent } from '../../../widgets/deletion-in-progress-modal.component';
 import { AngularUtility } from '../../../../angular/angular-utility';
 import { AffectedDocument } from '../affected-document';
+import { Menus } from '../../../../services/menus';
+import { MenuContext } from '../../../../services/menu-context';
 
 
 @Component({
@@ -33,7 +35,8 @@ export class DeleteOutliersModalComponent {
     constructor(public activeModal: NgbActiveModal,
                 private modalService: NgbModal,
                 private datastore: Datastore,
-                private projectConfiguration: ProjectConfiguration) {}
+                private projectConfiguration: ProjectConfiguration,
+                private menuService: Menus) {}
 
 
     public cancel = () => this.activeModal.dismiss('cancel');
@@ -41,7 +44,9 @@ export class DeleteOutliersModalComponent {
     
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.MODAL) {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
 

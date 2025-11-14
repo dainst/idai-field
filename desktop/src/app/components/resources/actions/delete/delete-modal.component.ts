@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { to } from 'tsfun';
 import { Document, Named, ProjectConfiguration } from 'idai-field-core';
+import { Menus } from '../../../../services/menus';
+import { MenuContext } from '../../../../services/menu-context';
 
 
 @Component({
@@ -26,7 +28,8 @@ export class DeleteModalComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
-                public projectConfiguration: ProjectConfiguration) {}
+                public projectConfiguration: ProjectConfiguration,
+                private menuService: Menus) {}
 
 
     public showDeleteDescendantWarningSingle = () =>
@@ -122,7 +125,9 @@ export class DeleteModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.MODAL) {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
 

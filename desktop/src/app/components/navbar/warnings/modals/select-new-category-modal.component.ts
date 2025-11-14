@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { CategoryForm, Datastore, Document, DocumentCache, IndexFacade, Labels,
-    ProjectConfiguration } from 'idai-field-core';
+import { CategoryForm, Datastore, Document, Labels, ProjectConfiguration } from 'idai-field-core';
 import { FixingDataInProgressModalComponent } from './fixing-data-in-progress-modal.component';
 import { WarningsService } from '../../../../services/warnings/warnings-service';
 import { AngularUtility } from '../../../../angular/angular-utility';
+import { Menus } from '../../../../services/menus';
+import { MenuContext } from '../../../../services/menu-context';
 
 
 @Component({
@@ -35,8 +36,7 @@ export class SelectNewCategoryModalComponent {
                 private datastore: Datastore,
                 private labels: Labels,
                 private warningsService: WarningsService,
-                private indexFacade: IndexFacade,
-                private documentCache: DocumentCache) {}
+                private menuService: Menus) {}
 
     
     public getCategoryLabel = (category: CategoryForm) => this.labels.get(category);
@@ -48,7 +48,9 @@ export class SelectNewCategoryModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.MODAL) {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
 

@@ -20,7 +20,7 @@ export abstract class ViewModalComponent {
     constructor(protected activeModal: NgbActiveModal,
                 protected modalService: NgbModal,
                 private routingService: Routing,
-                private menuService: Menus,
+                protected menuService: Menus,
                 protected messages: Messages) {}
 
 

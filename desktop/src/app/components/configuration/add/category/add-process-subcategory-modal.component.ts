@@ -3,6 +3,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { flatten, Map, set } from 'tsfun';
 import { CategoryForm, Field, Labels, ProjectConfiguration } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
+import { Menus } from '../../../../services/menus';
+import { MenuContext } from '../../../../services/menu-context';
 
 
 @Component({
@@ -27,12 +29,15 @@ export class AddProcessSubcategoryModalComponent {
 
     constructor(public activeModal: NgbActiveModal,
                 private configurationIndex: ConfigurationIndex,
-                private labels: Labels) {}
+                private labels: Labels,
+                private menuService: Menus) {}
 
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.CONFIGURATION_MODAL) {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
     

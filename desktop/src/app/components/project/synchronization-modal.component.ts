@@ -11,6 +11,8 @@ import { Messages } from '../messages/messages';
 import { M } from '../messages/m';
 import { SettingsErrors } from '../../services/settings/settings-errors';
 import { getFileSizeLabel } from '../../util/get-file-size-label';
+import { MenuContext } from '../../services/menu-context';
+import { Menus } from '../../services/menus';
 
 
 const CREDENTIALS_TIMER_INTERVAL: number = 500;
@@ -50,7 +52,8 @@ export class SynchronizationModalComponent implements OnInit {
                 private settingsProvider: SettingsProvider,
                 private settingsService: SettingsService,
                 private decimalPipe: DecimalPipe,
-                private messages: Messages) {}
+                private messages: Messages,
+                private menuService: Menus) {}
 
 
     async ngOnInit() {
@@ -79,7 +82,8 @@ export class SynchronizationModalComponent implements OnInit {
 
     public onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') {
+        if (event.key === 'Escape'
+                && [MenuContext.MODAL, MenuContext.CONFIGURATION_MODAL].includes(this.menuService.getContext())) {
             this.activeModal.close();
         }
     }

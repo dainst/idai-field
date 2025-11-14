@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryForm, Field } from 'idai-field-core';
+import { Menus } from '../../../services/menus';
+import { MenuContext } from '../../../services/menu-context';
 
 
 @Component({
@@ -19,7 +21,8 @@ export class DeleteFieldModalComponent {
     public category: CategoryForm;
 
 
-    constructor(public activeModal: NgbActiveModal) {}
+    constructor(public activeModal: NgbActiveModal,
+                private menuService: Menus) {}
 
 
     public isInverseRelation = () => this.field['inverse'] !== undefined && this.field['inverse'] !== this.field.name;
@@ -29,7 +32,9 @@ export class DeleteFieldModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.CONFIGURATION_MODAL) {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
 

@@ -6,6 +6,8 @@ import { CategoryForm, Datastore, Document, Field, Labels, OptionalRange, Projec
 import { FixingDataInProgressModalComponent } from './fixing-data-in-progress-modal.component';
 import { AngularUtility } from '../../../../angular/angular-utility';
 import { AffectedDocument } from '../affected-document';
+import { Menus } from '../../../../services/menus';
+import { MenuContext } from '../../../../services/menu-context';
 
 
 @Component({
@@ -37,7 +39,8 @@ export class FixOutliersModalComponent {
                 private modalService: NgbModal,
                 private datastore: Datastore,
                 private projectConfiguration: ProjectConfiguration,
-                private labels: Labels) {}
+                private labels: Labels,
+                private menuService: Menus) {}
 
 
     public getValueLabel = (value: string) => this.labels.getValueLabel(this.valuelist, value);
@@ -49,7 +52,9 @@ export class FixOutliersModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.MODAL) {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
 

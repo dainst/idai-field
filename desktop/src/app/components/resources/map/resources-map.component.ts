@@ -66,9 +66,8 @@ export class ResourcesMapComponent {
     public isEditing = (menuContext = this.menuService.getContext()) =>
         [MenuContext.GEOMETRY_EDIT, MenuContext.MAP_LAYERS_EDIT].includes(menuContext);
 
-    public isModalOpened = () => this.menuService.getContext() === MenuContext.MODAL
-        || this.menuService.getContext() === MenuContext.IMAGE_TOOL_MODAL
-        || this.menuService.getContext() === MenuContext.DOCEDIT;
+    public isModalOpened = () => [MenuContext.MODAL, MenuContext.BLOCKING_MODAL, MenuContext.IMAGE_TOOL_MODAL,
+        MenuContext.DOCEDIT].includes(this.menuService.getContext());
     
     public getPaddingLeft = () => (this.viewFacade.getSelectedDocument()
         && this.resourcesComponent.popoverMenuOpened) ? 258 : 0;

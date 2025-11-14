@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Relation, ProcessDocument } from 'idai-field-core';
+import { MenuContext } from '../../../../services/menu-context';
+import { Menus } from '../../../../services/menus';
 
 
 @Component({
@@ -20,7 +22,8 @@ export class DeleteProcessModalComponent {
     public confirmDeletionIdentifier: string;
 
 
-    constructor(public activeModal: NgbActiveModal) {}
+    constructor(public activeModal: NgbActiveModal,
+                private menuService: Menus) {}
 
 
     public getNumberOfLinkedResources = () => this.process.resource.relations
@@ -29,7 +32,9 @@ export class DeleteProcessModalComponent {
 
     public onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.MODAL) {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
 

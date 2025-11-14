@@ -153,7 +153,7 @@ export class AppComponent {
             this.modal = undefined;
             this.previousMenuContext = undefined;
             this.changeDetectorRef.detectChanges();
-        }, 1000);
+        }, 2000);
     }
 
 

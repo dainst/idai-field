@@ -6,6 +6,7 @@ import { reloadAndSwitchToHomeRoute } from '../services/reload';
 import { SettingsService } from '../services/settings/settings-service';
 import { Menus } from '../services/menus';
 import { MenuModalLauncher } from '../services/menu-modal-launcher';
+import { MenuContext } from '../services/menu-context';
 
 const ipcRenderer = window.require('electron')?.ipcRenderer;
 
@@ -37,6 +38,8 @@ export class MenuNavigator {
 
 
     public async onMenuItemClicked(menuItem: string, projectIdentifier?: string) {
+
+        if (![MenuContext.DEFAULT, MenuContext.CONFIGURATION].includes(this.menuService.getContext())) return;
 
         switch(menuItem) {
             case 'openProject':

@@ -240,6 +240,12 @@ export class SubfieldsSectionComponent {
             delete subfieldDefinition.semanticReferences;
         }
 
+        if (editedSubfieldData.dateConfiguration) {
+            subfieldDefinition.dateConfiguration = editedSubfieldData.dateConfiguration;
+        } else {
+            delete subfieldDefinition.dateConfiguration;
+        }
+
         if (Condition.isValid(editedSubfieldData.condition, 'subfield')) {
             subfieldDefinition.condition = editedSubfieldData.condition;
             clonedSubfield.condition = editedSubfieldData.condition;

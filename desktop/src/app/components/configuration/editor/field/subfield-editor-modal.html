@@ -67,6 +67,8 @@
                             [applyChanges]="applyChanges"
         ></valuelist-selector>
     </div>
+    <date-section *ngIf="isDateSectionVisible()"
+                  [dateConfiguration]="data.dateConfiguration"></date-section>
 </div>
 
 <div class="modal-footer subfield-editor-modal-footer bg-light">

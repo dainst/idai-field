@@ -25,6 +25,7 @@ export interface BaseSubfieldDefinition extends Named {
     references?: string[];
     semanticReferences?: Array<SemanticReference>;
     condition?: Condition;
+    dateConfiguration?: DateConfiguration;
 }
 
 

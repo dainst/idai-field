@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { clone, isArray, subsetOf } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Field, I18N, Labels, Subfield, Condition, Valuelist,
-    SemanticReference } from 'idai-field-core';
+    SemanticReference, DateConfiguration } from 'idai-field-core';
 import { ConfigurationUtil, InputType } from '../../configuration-util';
 import { Messages } from '../../../messages/messages';
 import { M } from '../../../messages/m';
@@ -18,6 +18,7 @@ export type SubfieldEditorData = {
     semanticReferences?: Array<SemanticReference>;
     valuelist: Valuelist;
     condition?: Condition;
+    dateConfiguration?: DateConfiguration;
 }
 
 
@@ -66,6 +67,8 @@ export class SubfieldEditorModalComponent {
 
     public isValuelistSectionVisible = () => Field.InputType.VALUELIST_INPUT_TYPES.includes(this.getInputType());
 
+    public isDateSectionVisible = () => this.getInputType() === Field.InputType.DATE;
+
     public getSubfieldLabel = (subfield: Subfield) => this.labels.get(subfield);
 
 
@@ -86,7 +89,8 @@ export class SubfieldEditorModalComponent {
             references: clone(this.references) ?? [],
             semanticReferences: clone(this.semanticReferences) ?? [],
             valuelist: clone(this.subfield.valuelist),
-            condition: clone(this.subfield.condition) ?? Condition.getEmpty('subfield')
+            condition: clone(this.subfield.condition) ?? Condition.getEmpty('subfield'),
+            dateConfiguration: clone(this.subfield.dateConfiguration) ?? DateConfiguration.getDefault()
         };
     }
 
@@ -95,6 +99,10 @@ export class SubfieldEditorModalComponent {
 
         if (!this.data.valuelist && this.isValuelistSectionVisible()) {
             return this.messages.add([M.CONFIGURATION_ERROR_NO_VALUELIST]);
+        }
+
+        if (this.data.dateConfiguration && !this.isDateSectionVisible()) {
+            delete this.data.dateConfiguration;
         }
 
         try {

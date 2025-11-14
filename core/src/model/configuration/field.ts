@@ -38,7 +38,6 @@ export interface Field extends BaseField {
     source?: Field.SourceType;
     references?: string[];
     semanticReferences?: Array<SemanticReference>;
-    dateConfiguration?: DateConfiguration;  // For input type "date"
     subfields?: Array<Subfield>;            // For input type "composite"
     constraintName?: string;                // For input type "derivedRelation"
 }
@@ -54,6 +53,7 @@ export interface BaseField extends I18N.LabeledValue, I18N.Described {
     defaultDescription?: I18N.String;
     valuelist?: Valuelist;
     condition?: Condition;
+    dateConfiguration?: DateConfiguration;  // For input type "date"
 }
 
 

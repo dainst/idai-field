@@ -5387,7 +5387,7 @@
       </trans-unit>
       <trans-unit id="settings.languages.info" datatype="html">
         <source>Sprachen können nach Priorität sortiert werden. Für fett gedruckte Sprachen ist eine übersetzte Benutzeroberfläche verfügbar. Darüber hinaus können für weitere Sprachen Übersetzungen von Kategorie- und Feldbezeichnungen sowie Wertelisten in der Projektkonfiguration hinterlegt sein.</source>
-        <target state="translated">Línguas podem ser ordenadas por prioridade. Para as línguas em negrito existe uma interface de utilizador. Adicionalmente podem ser depositadas traduções de identificadores de categorias e campos e de listas de valores para outras línguas na configuração de projeto.</target>
+        <target state="translated">Línguas podem ser ordenadas por prioridade. Para as línguas em negrito existe uma interface de utilizador. Adicionalmente podem ser depositadas traduções de identificadores de categorias, de identificadores de campos e de listas de valores para outras línguas na configuração de projeto.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
           <context context-type="linenumber">148</context>
@@ -10155,6 +10155,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/quitting-modal.html</context>
           <context context-type="linenumber">8,10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.informationModal.resourceCount.processes" datatype="html">
+        <source>Davon Prozesse: <x id="INTERPOLATION" equiv-text="{{processDocumentCount}}"/> </source>
+        <target state="translated">Dos quais o seguinte número de processos: <x id="INTERPOLATION" equiv-text="{{processDocumentCount}}"/> </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
+          <context context-type="linenumber">31,33</context>
         </context-group>
       </trans-unit>
     </body>

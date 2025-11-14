@@ -6745,7 +6745,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="image.originalNotFoundWarning" datatype="html">
-        <source> Die Original-Version des Bildes befindet sich nicht im Bilderverzeichnis. </source>
+        <source>Die Original-Version des Bildes befindet sich nicht im Bilderverzeichnis.</source>
         <target state="translated">Початкової версії (оригіналу) ілюстрації немає в каталозі зображень.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/viewer/image-viewer.component.ts</context>
@@ -10191,6 +10191,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/quitting-modal.html</context>
           <context context-type="linenumber">8,10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="project.informationModal.resourceCount.processes" datatype="html">
+        <source>Davon Prozesse: <x id="INTERPOLATION" equiv-text="{{processDocumentCount}}"/> </source>
+        <target state="needs-translation">Davon Prozesse: <x id="INTERPOLATION" equiv-text="{{processDocumentCount}}"/> </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
+          <context context-type="linenumber">31,33</context>
         </context-group>
       </trans-unit>
     </body>

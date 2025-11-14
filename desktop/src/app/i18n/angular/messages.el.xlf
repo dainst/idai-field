@@ -10177,6 +10177,14 @@
           <context context-type="linenumber">8,10</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="project.informationModal.resourceCount.processes" datatype="html">
+        <source>Davon Prozesse: <x id="INTERPOLATION" equiv-text="{{processDocumentCount}}"/> </source>
+        <target state="needs-translation">Davon Prozesse: <x id="INTERPOLATION" equiv-text="{{processDocumentCount}}"/> </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
+          <context context-type="linenumber">31,33</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

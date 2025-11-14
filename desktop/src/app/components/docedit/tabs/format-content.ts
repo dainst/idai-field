@@ -1,6 +1,6 @@
 import { flow, isArray, isObject, isString, map, Map, to } from 'tsfun';
-import { Composite, Dating, Measurement, Field, I18N, Labels, Literature, OptionalRange, Resource,
-    Valuelist } from 'idai-field-core';
+import { Composite, Dating, Measurement, Field, I18N, Labels, Literature, OptionalRange, Resource, Valuelist,
+    DateSpecification } from 'idai-field-core';
 import { Language } from '../../../services/languages';
 import { Settings } from '../../../services/settings/settings';
 import { DifferingField } from './field-diff';
@@ -23,10 +23,8 @@ export function formatContent(resource: Resource, field: DifferingField, timeSuf
             convertArray(field, languages, timeSuffix, getTranslation, transform, labels),
             formatArray)
         : isObject(fieldContent)
-        ? flow(fieldContent,
-            convertObject(field, languages, getTranslation, labels),
-            formatObject)
-        : formatSingleValue(fieldContent, field, getTranslation);
+            ? convertObject(fieldContent, field, languages, timeSuffix, getTranslation, labels)
+            : formatSingleValue(fieldContent, field, getTranslation);
 }
 
 
@@ -42,15 +40,9 @@ function formatArray(fieldContent: Array<string>): InnerHTML {
 }
 
 
-function formatObject(fieldContent: string): InnerHTML {
-
-    return fieldContent; // currently no special handling
-}
-
-
 const formatSingleValue = (fieldContent: any, field: DifferingField, getTranslation: (key: string) => string) => {
 
-    if (field.inputType === 'boolean') {
+    if (field.inputType === Field.InputType.BOOLEAN) {
         return getTranslation(JSON.stringify(fieldContent));
     } else {
         return fieldContent;
@@ -58,22 +50,26 @@ const formatSingleValue = (fieldContent: any, field: DifferingField, getTranslat
 };
 
 
-const convertObject = (field: DifferingField, languages: Map<Language>,
-                       getTranslation: (key: string) => string, labels: Labels) =>
-        (fieldContent: any) => {
+function convertObject(fieldContent: any, field: DifferingField, languages: Map<Language>, timeSuffix: string,
+                       getTranslation: (key: string) => string, labels: Labels) {
 
-    if (field.inputType === 'dropdownRange' && OptionalRange.buildIsOptionalRange(isString)(fieldContent)) {
+    if (field.inputType === Field.InputType.DROPDOWNRANGE
+            && OptionalRange.buildIsOptionalRange(isString)(fieldContent)) {
         return OptionalRange.generateLabel(
             fieldContent,
             getTranslation,
             (value: string) => labels.getValueLabel(field.valuelist, value)
         );
-    } else if (field.inputType === 'input') {
+    } else if (field.inputType === Field.InputType.INPUT) {
         return I18N.getFormattedContent(fieldContent, map(to('label'))(languages));
+    } else if (field.inputType === Field.InputType.DATE) {
+        return DateSpecification.generateLabel(
+            fieldContent, getSystemTimezone(), timeSuffix, Settings.getLocale(), getTranslation, true, false
+        );
     } else {
         return JSON.stringify(fieldContent);
     }
-};
+}
 
 
 const convertArray = (field: DifferingField, languages: Map<Language>, timeSuffix: string,

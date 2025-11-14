@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Event, NavigationStart, Router } from '@angular/router';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Datastore, ProjectConfiguration, RelationsManager, SyncService } from 'idai-field-core';
 import { Messages } from './messages/messages';
 import { SettingsService } from '../services/settings/settings-service';
@@ -14,11 +15,11 @@ import { MenuModalLauncher } from '../services/menu-modal-launcher';
 import { AppState } from '../services/app-state';
 import { AutoBackupService } from '../services/backup/auto-backup/auto-backup-service';
 import { QuittingModalComponent } from './widgets/quitting-modal.component';
-import { Modals } from '../services/modals';
 import { MenuContext } from '../services/menu-context';
 import { ImageToolLauncher } from '../services/imagestore/image-tool-launcher';
 import { ExpressServer } from '../services/express-server/express-server';
 import { ImportExportProcessModalComponent } from './widgets/import-export-process-modal.component';
+import { Menus } from '../services/menus';
 
 const remote = window.require('@electron/remote');
 const ipcRenderer = window.require('electron')?.ipcRenderer;
@@ -41,6 +42,7 @@ export class AppComponent {
     private closing: boolean = false;
     private modal: ImportExportProcessModalComponent;
     private closeModalTimeout: any;
+    private previousMenuContext: MenuContext;
 
 
     constructor(router: Router,
@@ -61,7 +63,8 @@ export class AppComponent {
                 private menuModalLauncher: MenuModalLauncher,
                 private datastore: Datastore,
                 private autoBackupService: AutoBackupService,
-                private modals: Modals,
+                private modalService: NgbModal,
+                private menuService: Menus,
                 private syncService: SyncService) {
 
         // To get rid of stale messages when changing routes.
@@ -122,10 +125,13 @@ export class AppComponent {
                     if (this.modal) {
                         this.clearModalTimeout();
                     } else {
-                        const [_, modal] = this.modals.make<ImportExportProcessModalComponent>(
-                            ImportExportProcessModalComponent, MenuContext.MODAL
+                        this.previousMenuContext = this.menuService.getContext();
+                        this.menuService.setContext(MenuContext.BLOCKING_MODAL);
+                        const modalRef: NgbModalRef = this.modalService.open(
+                            ImportExportProcessModalComponent,
+                            { backdrop: 'static', keyboard: false, animation: false }
                         );
-                        this.modal = modal;
+                        this.modal = modalRef.componentInstance;
                         this.changeDetectorRef.detectChanges();
                     }
                     this.modal.type = state;
@@ -142,8 +148,10 @@ export class AppComponent {
 
         this.clearModalTimeout();
         this.closeModalTimeout = setTimeout(() => {
-            this.modals.closeModal(this.modal);
+            this.menuService.setContext(this.previousMenuContext);
+            this.modal.activeModal.close();
             this.modal = undefined;
+            this.previousMenuContext = undefined;
             this.changeDetectorRef.detectChanges();
         }, 1000);
     }
@@ -176,9 +184,11 @@ export class AppComponent {
     private openQuittingModal() {
 
         setTimeout(() => {
-            this.modals.make<QuittingModalComponent>(
-                QuittingModalComponent, MenuContext.MODAL, undefined, undefined, false
-            )
+            this.menuService.setContext(MenuContext.BLOCKING_MODAL);
+            this.modalService.open(
+                QuittingModalComponent,
+                { backdrop: 'static', keyboard: false, animation: false }
+            );
         }, 200);
     }
 

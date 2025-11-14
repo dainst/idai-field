@@ -7,6 +7,7 @@ import { AngularUtility } from '../../../../../angular/angular-utility';
 import { TimeSpecification } from './time-input.component';
 import { DateParserFormatter } from './date-parser-formatter';
 import { NumberUtil } from '../../../../../util/number-util';
+import { getSystemTimezone } from '../../../../../util/timezones';
 
 
 @Component({
@@ -217,7 +218,7 @@ export class DateValueComponent implements OnInit {
 
     private setSystemTimezone() {
 
-        this.selectedTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        this.selectedTimezone = getSystemTimezone();
         this.dateParserFormatter.setSelectedTimezone(this.selectedTimezone);
     }
 

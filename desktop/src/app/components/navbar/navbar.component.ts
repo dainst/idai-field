@@ -5,6 +5,8 @@ import { Tab } from '../../services/tabs/tab';
 import { TabUtil } from '../../services/tabs/tab-util';
 import { ViewFacade } from '../../components/resources/view/view-facade';
 import { MenuModalLauncher } from '../../services/menu-modal-launcher';
+import { Menus } from '../../services/menus';
+import { MenuContext } from '../../services/menu-context';
 
 
 @Component({
@@ -31,7 +33,8 @@ export class NavbarComponent implements DoCheck {
     constructor(public router: Router,
                 private viewFacade: ViewFacade,
                 private tabManager: TabManager,
-                private menuModalLauncher: MenuModalLauncher) {
+                private menuModalLauncher: MenuModalLauncher,
+                private menuService: Menus) {
 
         this.router.events.subscribe(() => this.activeRoute = this.router.url);
         this.menuModalLauncher.projectPropertiesNotifications().subscribe(() => this.onResize());
@@ -64,6 +67,8 @@ export class NavbarComponent implements DoCheck {
 
 
     public async onKeyDown(event: KeyboardEvent) {
+
+        if (this.menuService.getContext() !== MenuContext.DEFAULT) return;
 
         if ((event.ctrlKey || event.metaKey) && event.key === 'w') {
             await this.closeCurrentTab();

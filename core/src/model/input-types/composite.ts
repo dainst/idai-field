@@ -3,6 +3,7 @@ import { I18N } from '../../tools/i18n';
 import { Field, Subfield } from '../configuration/field';
 import { Valuelist } from '../configuration/valuelist';
 import { Condition } from '../configuration/condition';
+import { DateSpecification } from './date-specification';
 
 
 /**
@@ -26,8 +27,8 @@ export module Composite {
     /**
      * @returns null if no label could be generated because of invalid data
      */
-    export function generateLabel(entry: any, subfields: Array<Subfield>,
-                                  translate: (term: string) => string,
+    export function generateLabel(entry: any, subfields: Array<Subfield>, timezone: string, timeSuffix: string,
+                                  locale: string, translate: (term: string) => string,
                                   getFromLabeledValue: (labeledValue: I18N.LabeledValue) => string,
                                   getFromI18NString: (i18nString: I18N.String|string) => string,
                                   getValueLabel: (valuelist: Valuelist, valueId: string) => string): string|null {
@@ -40,8 +41,8 @@ export module Composite {
                 if (result.length !== 0) result += ', ';
                 return result
                     + getFromLabeledValue(subfield) + ': '
-                    + generateSubfieldLabel(subfieldData, subfield.inputType, translate, getFromI18NString,
-                        getValueLabel, subfield.valuelist);
+                    + generateSubfieldLabel(subfieldData, subfield.inputType, timezone, timeSuffix, locale, translate,
+                        getFromI18NString, getValueLabel, subfield.valuelist);
             }, '');
         } catch (err) {
             console.warn('Failed to generate label.', err);
@@ -50,8 +51,8 @@ export module Composite {
     }
 
 
-    function generateSubfieldLabel(subfieldData: any, inputType: Field.InputType,
-                                   translate: (term: string) => string,
+    function generateSubfieldLabel(subfieldData: any, inputType: Field.InputType, timezone: string, timeSuffix: string,
+                                   locale: string, translate: (term: string) => string,
                                    getFromI18NString: (i18nString: I18N.String|string) => string,
                                    getValueLabel: (valuelist: Valuelist, valueId: string) => string,
                                    valuelist?: Valuelist): string {
@@ -71,6 +72,10 @@ export module Composite {
                 return getValueLabel(valuelist, subfieldData);
             case Field.InputType.CHECKBOXES:
                 return subfieldData.map(valueId => getValueLabel(valuelist, valueId)).join('/');
+            case Field.InputType.DATE:
+                return DateSpecification.generateLabel(
+                    subfieldData, timezone, timeSuffix, locale, (term: string) => translate(term), true, false
+                );
             default:
                 return subfieldData;
         }

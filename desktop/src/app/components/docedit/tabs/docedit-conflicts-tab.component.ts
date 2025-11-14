@@ -53,6 +53,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
     public getFieldContent = (field: DifferingField, revision: Document) => formatContent(
         revision.resource,
         field,
+        $localize `:@@revisionLabel.timeSuffix:Uhr`,
         (key: string) => this.utilTranslations.getTranslation(key),
         (value: string) => this.decimalPipe.transform(value),
         this.labels,

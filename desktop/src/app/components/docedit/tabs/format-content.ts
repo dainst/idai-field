@@ -2,7 +2,9 @@ import { flow, isArray, isObject, isString, map, Map, to } from 'tsfun';
 import { Composite, Dating, Measurement, Field, I18N, Labels, Literature, OptionalRange, Resource,
     Valuelist } from 'idai-field-core';
 import { Language } from '../../../services/languages';
+import { Settings } from '../../../services/settings/settings';
 import { DifferingField } from './field-diff';
+import { getSystemTimezone } from '../../../util/timezones';
 
 export type InnerHTML = string;
 
@@ -10,16 +12,15 @@ export type InnerHTML = string;
 /**
  * @author Daniel de Oliveira
  */
-export function formatContent(resource: Resource, field: DifferingField,
-                              getTranslation: (key: string) => string,
-                              transform: (value: any) => string|null,
+export function formatContent(resource: Resource, field: DifferingField, timeSuffix: string,
+                              getTranslation: (key: string) => string, transform: (value: any) => string|null,
                               labels: Labels, languages: Map<Language>): InnerHTML {
 
     const fieldContent = resource[field.name];
 
     return isArray(fieldContent)
         ? flow(fieldContent,
-            convertArray(field, languages, getTranslation, transform, labels),
+            convertArray(field, languages, timeSuffix, getTranslation, transform, labels),
             formatArray)
         : isObject(fieldContent)
         ? flow(fieldContent,
@@ -75,14 +76,16 @@ const convertObject = (field: DifferingField, languages: Map<Language>,
 };
 
 
-const convertArray = (field: DifferingField, languages: Map<Language>, getTranslation: (key: string) => string,
-                      transform: (value: any) => string|null, labels: Labels) =>
+const convertArray = (field: DifferingField, languages: Map<Language>, timeSuffix: string,
+                      getTranslation: (key: string) => string, transform: (value: any) => string|null,
+                      labels: Labels) =>
         (fieldContent: Array<any>): Array<string> => {
 
     return fieldContent.map(element => {
 
         if (field.inputType === Field.InputType.COMPOSITE) {
-            const label: string|null = Composite.generateLabel(element, field.subfields, getTranslation,
+            const label: string|null = Composite.generateLabel(element, field.subfields,
+                getSystemTimezone(), timeSuffix, Settings.getLocale(), getTranslation,
                 (labeledValue: I18N.LabeledValue) => labels.get(labeledValue),
                 (value: I18N.String|string) => labels.getFromI18NString(value),
                 (valuelist: Valuelist, valueId: string) => labels.getValueLabel(valuelist, valueId));

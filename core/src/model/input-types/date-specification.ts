@@ -79,15 +79,15 @@ export module DateSpecification {
 
     export function generateLabel(date: DateSpecification, timezone: string, timeSuffix: string,
                                   locale: string, translate: (term: string) => string,
-                                  addTimezoneInfo: boolean = true): string {
+                                  addTimezoneInfo: boolean = true, multiLine: boolean = true): string {
 
         try {
             let result: string = date.isRange
-                ? generateRangeLabel(date, timezone, timeSuffix, locale, translate)
+                ? generateRangeLabel(date, timezone, timeSuffix, locale, translate, multiLine)
                 : generateValueLabel(date.value, timezone, timeSuffix, locale);
 
             if (addTimezoneInfo && (date.value?.includes(':') || date.endValue?.includes(':'))) {
-                result += date.isRange ? '\n' : ' ';
+                result += date.isRange && multiLine ? '\n' : ' ';
                 result += '(' + timezone + ')';
             }
 
@@ -100,13 +100,13 @@ export module DateSpecification {
 
 
     function generateRangeLabel(date: DateSpecification, timezone: string, timeSuffix: string,
-                                locale: string, translate: (term: string) => string): string {
+                                locale: string, translate: (term: string) => string, multiLine: boolean): string {
 
         let result: string = date.value
             ? generateValueLabel(date.value, timezone, timeSuffix, locale)
             : translate('unspecifiedDate');
         
-        result += ' ' + translate('toDate') + '\n';
+        result += ' ' + translate('toDate') + (multiLine ? '\n' : ' ');
         result += date.endValue
             ? generateValueLabel(date.endValue, timezone, timeSuffix, locale)
             : translate('unspecifiedDate');

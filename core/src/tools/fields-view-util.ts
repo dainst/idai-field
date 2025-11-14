@@ -145,6 +145,9 @@ export module FieldsViewUtil {
             return Composite.generateLabel(
                 object,
                 (field.definition as Field).subfields,
+                timezone,
+                timeSuffix,
+                locale,
                 getTranslation,
                 (labeledValue: I18N.LabeledValue) => labels.get(labeledValue),
                 (value: I18N.String|string) => labels.getFromI18NString(value),

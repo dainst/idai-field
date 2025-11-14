@@ -80,7 +80,6 @@ export class ExpressServer {
             unauthorizedResponse: () => ({ status: 401, reason: 'Name or password is incorrect.' })
         }));
 
-
         app.get('/files/:project', async (req: any, res: any) => {
 
             try {
@@ -114,7 +113,6 @@ export class ExpressServer {
             }
         });
 
-
         app.get('/files/:project/:uuid', async (req: any, res: any) => {
 
             try {
@@ -137,7 +135,6 @@ export class ExpressServer {
                 }
             }
         });
-
 
         app.put('/files/:project/:uuid', this.binaryBodyParser, async (req: any, res: any) => {
 
@@ -162,7 +159,6 @@ export class ExpressServer {
                 }
             }
         });
-
 
         app.delete('/files/:project/:uuid', async (req: any, res: any) => {
 

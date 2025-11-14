@@ -3,6 +3,8 @@ import { aFilter, clone, is, on } from 'tsfun';
 import { CategoryForm, ConstraintIndex, Datastore, Field, ProjectConfiguration, Valuelist,
     ValuelistUtil, Labels, IndexType } from 'idai-field-core';
 import { SearchBarComponent } from './search-bar.component';
+import { Menus } from '../../services/menus';
+import { MenuContext } from '../../services/menu-context';
 
 
 type ConstraintListItem = {
@@ -52,6 +54,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
                           private projectConfiguration: ProjectConfiguration,
                           private datastore: Datastore,
                           private renderer: Renderer2,
+                          private menuService: Menus,
                           protected labels: Labels) {}
 
 
@@ -203,7 +206,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     public async handleClick(event: Event) {
 
-        if (!this.showConstraintsMenu) return;
+        if (!this.showConstraintsMenu || this.menuService.getContext() !== MenuContext.DEFAULT) return;
 
         let target: any = event.target;
 
@@ -332,6 +335,8 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
 
     private async onKeyDown(event: KeyboardEvent) {
+
+        if (this.menuService.getContext() !== MenuContext.DEFAULT) return;
 
         if (event.key === 'Enter') {
             await this.addConstraint();

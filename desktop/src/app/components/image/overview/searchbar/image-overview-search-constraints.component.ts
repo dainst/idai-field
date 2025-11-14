@@ -4,6 +4,7 @@ import { Datastore, Field, ProjectConfiguration, Labels } from 'idai-field-core'
 import { ImageOverviewFacade } from '../view/image-overview-facade';
 import { SearchConstraintsComponent } from '../../../widgets/search-constraints.component';
 import { ImageOverviewSearchBarComponent } from './image-overview-search-bar.component';
+import { Menus } from '../../../../services/menus';
 
 
 @Component({
@@ -33,9 +34,10 @@ export class ImageOverviewSearchConstraintsComponent extends SearchConstraintsCo
                 datastore: Datastore,
                 renderer: Renderer2,
                 private imageOverviewFacade: ImageOverviewFacade,
+                menuService: Menus,
                 labels: Labels) {
 
-        super(imageOverviewSearchBarComponent, projectConfiguration, datastore, renderer, labels);
+        super(imageOverviewSearchBarComponent, projectConfiguration, datastore, renderer, menuService, labels);
     }
 
 

@@ -100,6 +100,10 @@ export class SubfieldEditorModalComponent {
         if (!this.data.valuelist && this.isValuelistSectionVisible()) {
             return this.messages.add([M.CONFIGURATION_ERROR_NO_VALUELIST]);
         }
+        
+        if (this.data.valuelist && !this.isValuelistSectionVisible()) {
+            delete this.data.valuelist;
+        }
 
         if (this.data.dateConfiguration && !this.isDateSectionVisible()) {
             delete this.data.dateConfiguration;

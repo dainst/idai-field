@@ -160,36 +160,9 @@
         ></valuelist-selector>
     </div>
 
-    <div *ngIf="isDateSectionVisible()">
-        <div class="configuration-editor-section">
-            <div class="configuration-editor-section-title"
-                 i18n="@@configuration.date.dataType">Angabe der Uhrzeit</div>
-            <select class="form-control"
-                    [disabled]="hidden"
-                    (change)="setDateDataType($event.target.value)">
-                <option i18n="@@configuration.date.time.optional" value="optional"
-                        [selected]="getDateConfiguration()?.dataType === 'optional'">Optional</option>
-                <option i18n="@@configuration.date.time.mandatory" value="dateTime"
-                        [selected]="getDateConfiguration()?.dataType === 'dateTime'">Verpflichtend</option>
-                <option i18n="@@configuration.date.time.no" value="date"
-                        [selected]="getDateConfiguration()?.dataType === 'date'">Nicht erlaubt</option>
-            </select>
-        </div>
-        <div class="configuration-editor-section">
-            <div class="configuration-editor-section-title"
-                 i18n="@@configuration.date.inputMode">Eingabemodus</div>
-            <select class="form-control"
-                    [disabled]="hidden"
-                    (change)="setDateInputMode($event.target.value)">
-                <option i18n="@@configuration.date.inputMode.optional" value="optional"
-                        [selected]="getDateConfiguration()?.inputMode === 'optional'">Wählbar</option>
-                <option i18n="@@configuration.date.inputMode.single" value="single"
-                        [selected]="getDateConfiguration()?.inputMode === 'single'">Einzeldatum</option>
-                <option i18n="@@configuration.date.inputMode.range" value="range"
-                        [selected]="getDateConfiguration()?.inputMode === 'range'">Datumsbereich</option>
-            </select>
-        </div>
-    </div>
+    <date-section *ngIf="isDateSectionVisible()"
+                  [dateConfiguration]="getDateConfiguration()"
+                  [disabled]="hidden"></date-section>
 
     <subfields-section *ngIf="isSubfieldsSectionVisible()"
                        [clonedFormDefinition]="getClonedFormDefinition()"

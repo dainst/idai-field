@@ -56,6 +56,7 @@ import { SubfieldsSectionComponent } from './editor/field/widgets/subfields-sect
 import { ConditionSectionComponent } from './editor/field/widgets/condition-section.component';
 import { AddProcessSubcategoryModalComponent } from './add/category/add-process-subcategory-modal.component';
 import { ReferencesInputComponent } from './editor/widgets/references-input.component';
+import { DateSectionComponent } from './editor/field/widgets/date-section.component';
 
 
 @NgModule({
@@ -115,7 +116,8 @@ import { ReferencesInputComponent } from './editor/widgets/references-input.comp
         ValuelistSelectorComponent,
         SubfieldsSectionComponent,
         ConditionSectionComponent,
-        AddProcessSubcategoryModalComponent
+        AddProcessSubcategoryModalComponent,
+        DateSectionComponent
     ],
     providers: [
         ConfigurationChangeNotifications,

@@ -348,18 +348,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     }
 
 
-    public setDateDataType(value: DateConfiguration.DataType) {
-
-        this.getClonedFieldDefinition().dateConfiguration.dataType = value;
-    }
-
-
-    public setDateInputMode(value: DateConfiguration.InputMode) {
-
-        this.getClonedFieldDefinition().dateConfiguration.inputMode = value;
-    }
-
-
     public isChanged(): boolean {
 
         return this.new

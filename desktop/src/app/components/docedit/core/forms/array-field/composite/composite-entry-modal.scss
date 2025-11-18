@@ -21,8 +21,7 @@
   }
 
   .form-check-label,
-  label {
-    font-size: 15px;
+  label { 
     user-select: none;
   }
 
@@ -46,9 +45,24 @@
     width: 34px;
   }
 
-  .mdi-delete {
-    position: relative;
-    bottom: 3px;
-    right: 5px;
+  form-field-date {
+    date-value {
+      .date-picker-input {
+        width: 100px;
+        max-width: 100px;
+      }
+
+      .now-button {
+        width: 34px;
+
+        .mdi {
+          right: 4px;
+        }
+      }
+    }
+
+    .time-suffix {
+      padding-top: 6px;
+    }
   }
 }

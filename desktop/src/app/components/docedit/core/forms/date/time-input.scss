@@ -4,7 +4,7 @@ time-input {
 
   input {
     height: 33px;
-    line-height: 33px;
+    line-height: 33px !important;
     text-align: center;
     cursor: text;
 
@@ -34,7 +34,7 @@ time-input {
     height: 33px;
     position: relative;
     right: 9px;
-    padding-top: 5.5px;
+    padding-top: 6px;
     padding-right: 13px;
     background-color: white;
     border: 1px solid #dee2e6;

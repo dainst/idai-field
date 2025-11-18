@@ -82,7 +82,7 @@ export class EditFormGroup extends ConfigurationInfoProvider implements OnChange
 
     public hasInfo(field: Field): boolean {
         
-        return !!(this.labelsService.getDescription(field) || field.references?.length);
+        return !!(this.descriptions?.[field.name] || field.references?.length);
     }
 
 

@@ -1,5 +1,5 @@
 <select *ngIf="isOptionalRange()" class="form-control"
-     (change)="selectRange($event.target.value)">
+        (change)="selectRange($event.target.value)">
      <option i18n="@@docedit.forms.date.select.single" value="single"
              [selected]="!rangeMode">Einzeldatum</option>
      <option i18n="@@docedit.forms.date.select.range" value="range"

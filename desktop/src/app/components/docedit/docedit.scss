@@ -148,6 +148,8 @@
       }
 
       .ng-value {
+        position: absolute;
+        top: 6px;
         width: calc(100% - 55px);
       }
   
@@ -160,7 +162,6 @@
         }
   
         .ng-value {
-          position: absolute;
           top: 11px;
         }
   

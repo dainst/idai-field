@@ -28,7 +28,9 @@ export class SettingsSerializer {
         configToWrite['languages'] = settings.languages;
         configToWrite['isAutoUpdateActive'] = settings.isAutoUpdateActive;
         configToWrite['hostPassword'] = settings.hostPassword;
+        configToWrite['allowLargeFileUploads'] = settings.allowLargeFileUploads;
         configToWrite['hideHiddenFieldsInConfigurationEditor'] = settings.hideHiddenFieldsInConfigurationEditor;
+        configToWrite['highlightCustomElements'] = settings.highlightCustomElements;
 
         configToWrite['syncTargets'] = Object.keys(settings.syncTargets).reduce((result, projectIdentifier) => {
             const syncTarget = settings.syncTargets[projectIdentifier];
@@ -58,7 +60,7 @@ export class SettingsSerializer {
 
         if (settings.keepBackups) {
             configToWrite['keepBackups'] = settings.keepBackups;
-        } 
+        }
 
         return this.writeConfigFile(configToWrite);
     }

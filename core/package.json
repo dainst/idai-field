@@ -1,7 +1,7 @@
 {
     "name": "idai-field-core",
     "description": "Field Core",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "license": "Apache-2.0",
     "author": "German Archaeological Institute / Head Office of the GBV Common Library Network",
     "main": "dist/index",

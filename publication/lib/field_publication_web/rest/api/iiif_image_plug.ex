@@ -9,12 +9,18 @@ defmodule FieldPublicationWeb.Api.IIIFImage do
 
   alias FieldPublicationWeb.Endpoint
 
+  @response_headers Application.compile_env(:field_publication, :iiif_response_headers, [])
+
   @impl true
   def data_metadata(identifier) do
     path = identifier_to_path(identifier)
 
     if File.exists?(path) do
-      {:ok, %DataRequestMetadata{path: path}}
+      {:ok,
+       %DataRequestMetadata{
+         path: path,
+         response_headers: @response_headers
+       }}
     else
       {:error, %RequestError{status_code: 404, msg: :no_image_data_found}}
     end
@@ -25,7 +31,11 @@ defmodule FieldPublicationWeb.Api.IIIFImage do
     path = identifier_to_path(identifier)
 
     if File.exists?(path) do
-      {:ok, %InfoRequestMetadata{path: path}}
+      {:ok,
+       %InfoRequestMetadata{
+         path: path,
+         response_headers: @response_headers
+       }}
     else
       {:error, %RequestError{status_code: 404, msg: :not_found}}
     end

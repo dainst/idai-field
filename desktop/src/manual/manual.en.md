@@ -1411,8 +1411,8 @@ To link images to the project or set them up as map layers at project level, ent
 Fields of the input type "Dating" are list fields, each of which can contain several dating entries. A dating consists of the following subfields, for which a separate column is created for each dating:
 
 * *type*: The dating type. Possible values are: *range* (Period), *single* (Single year), *before* (Before), *after* (After), *scientific* (Scientific).
-* *begin*: Year specification that is set for the dating type *after* and for the start date for the dating type *range*.
-* *end*: Year specification, which is set for the dating types *single*, *before* and *scientific* as well as for the end date for the dating type *range*.
+* *begin*: Year specification that is set for the dating type *after* and as the start date for the dating type *range*.
+* *end*: Year specification that is set for the dating types *single*, *before* and *scientific* and as the end date for the dating type *range*.
 * *margin*: Tolerance margin in years for dating type *scientific*.
 * *source*: Source of the dating, multilingual text field.
 * *isImprecise*: Specification "Imprecise". Cannot be set for dating type *scientific*. Possible values are: *true* (yes), *false* (no).
@@ -1934,8 +1934,8 @@ Fields of the input types "Single line text (list)", "Checkboxes", "Dating", "Di
 Fields of the input type "Dating" are list fields, each of which can contain several dating entries. A dating is an object that consists of the following subfields:
 
 * *type*: The dating type. Possible values are: *range* (Period), *single* (Single year), *before* (Before), *after* (After), *scientific* (Scientific).
-* *begin*: Year specification that is set for the dating type *after* and for the start date for the dating type *range*.
-* *end*: Year specification, which is set for the dating types *single*, *before* and *scientific* as well as for the end date for the dating type *range*.
+* *begin*: Year specification that is set for the dating type *after* and as the start date for the dating type *range*.
+* *end*: Year specification that is set for the dating types *single*, *before* and *scientific* and as the end date for the dating type *range*.
 * *margin*: Tolerance margin in years for dating type *scientific*.
 * *source*: Source of the dating, multilingual text field.
 * *isImprecise*: Specification "Imprecise". Cannot be set for dating type *scientific*. Possible values are: *true* (yes), *false* (no).

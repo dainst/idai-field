@@ -53,9 +53,9 @@ defmodule FieldPublicationWeb.Gettext do
     do: %{
       "de" => "Deutsch",
       "en" => "English",
-      "el" => "Έλληνικά",
+      # "el" => "Έλληνικά",
       "es" => "Español",
-      "fr" => "Français",
+      # "fr" => "Français",
       "it" => "Italiano",
       "pt" => "Português",
       "tr" => "Türkçe",

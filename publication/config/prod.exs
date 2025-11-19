@@ -19,4 +19,7 @@ config :logger, level: :info
 
 config :field_publication,
   dev_routes: false,
-  file_store_directory_root: "/files"
+  file_store_directory_root: "/files",
+  iiif_response_headers: [
+    {"cache-control", "public, max-age=31536000, immutable"}
+  ]

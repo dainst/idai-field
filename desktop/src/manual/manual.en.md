@@ -1567,7 +1567,7 @@ Fields of the input types "Dimension", "Weight" and "Volume" are list fields, ea
 </div>
 
 
-##### Bibliographic eferences
+##### Bibliographic references
 
 Fields of the input type "Bibliographic reference" are list fields, each of which can contain several reference entries. An entry consists of the following subfields, for which a separate column is created for each bibliographic reference:
 
@@ -1985,7 +1985,7 @@ Fields of the input types "Dimension", "Weight" and "Volume" are list fields, ea
       ]
     }
 
-##### Bibliographic eferences
+##### Bibliographic references
 
 Fields of the input type "Bibliographic reference" are list fields, each of which can contain several reference entries. An entry consists of the following subfields:
 

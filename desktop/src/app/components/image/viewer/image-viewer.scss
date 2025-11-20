@@ -5,6 +5,7 @@ image-viewer {
     background-color: #000;
     overflow: hidden;
     cursor: grab;
+    user-select: none;
 
     &.panning-disabled {
       cursor: default;

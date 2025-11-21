@@ -631,7 +631,19 @@ describe('ConfigLoader', () => {
                 },
                 userDefinedSubcategoriesAllowed: true,
                 supercategory: true
-            }
+            },
+            Parent3: {
+                fields: {
+                    parent3Field1: { inputType: 'input' }
+                },
+                minimalForm: {
+                    groups: [
+                        { name: Groups.STEM, fields: ['parent3Field1']}
+                    ]
+                },
+                userDefinedSubcategoriesAllowed: true,
+                supercategory: true
+            },
         };
 
         const libraryCategories: Map<LibraryCategoryDefinition> = {
@@ -644,6 +656,13 @@ describe('ConfigLoader', () => {
             Parent2: {
                 fields: {
                     parent2Field: { inputType: 'input' }
+                },
+                description: {}
+            },
+            Parent3: {
+                fields: {
+                    parent3Field1: { inputType: 'input' },
+                    parent3Field2: { inputType: 'input' }
                 },
                 description: {}
             },
@@ -682,6 +701,11 @@ describe('ConfigLoader', () => {
                 parent: 'Parent2',
                 fields: {},
                 description: {}
+            },
+            E: {
+                parent: 'Parent3',
+                fields: {},
+                description: {}
             }
         };
 
@@ -700,6 +724,16 @@ describe('ConfigLoader', () => {
                 categoryName: 'Parent2',
                 groups: [
                     { name: Groups.STEM, fields: ['parent2Field'] }
+                ],
+                valuelists: {},
+                description: {},
+                createdBy: '',
+                creationDate: ''
+            },
+            'Parent3:default': {
+                categoryName: 'Parent3',
+                groups: [
+                    { name: Groups.STEM, fields: ['parent3Field1', 'parent3Field2'] }
                 ],
                 valuelists: {},
                 description: {},
@@ -734,8 +768,10 @@ describe('ConfigLoader', () => {
             B: { fields: {} },
             'C:default': { fields: {} },
             D: { fields: {} },
+            E: { fields: {} },
             Parent1: { fields: {} },
-            'Parent2:default': { fields: {} }
+            'Parent2:default': { fields: {} },
+            'Parent3:default': { fields: {} }
         };
 
         applyConfig(
@@ -777,6 +813,11 @@ describe('ConfigLoader', () => {
             expect(result['D'].groups[0].name).toBe(Groups.STEM);
             expect(result['D'].groups[0].fields.length).toBe(1);
             expect(result['D'].groups[0].fields[0].name).toEqual('parent2Field');
+            expect(result['E'].name).toEqual('E');
+            expect(result['E'].groups[0].name).toBe(Groups.STEM);
+            expect(result['E'].groups[0].fields.length).toBe(2);
+            expect(result['E'].groups[0].fields[0].name).toEqual('parent3Field1');
+            expect(result['E'].groups[0].fields[1].name).toEqual('parent3Field2');
         } catch(err) {
             fail(err);
         }

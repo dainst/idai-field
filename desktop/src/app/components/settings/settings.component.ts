@@ -80,8 +80,6 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
         this.isLinux = remote.getGlobal('os') === 'Linux';
         this.settings = this.settingsProvider.getSettings();
         this.originalKeepBackupSettings = clone(this.settings.keepBackups);
-
-        this.initializeBackupValues();
     }
 
 
@@ -122,7 +120,11 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
     public toggleAdvancedSettings() {
 
         this.advancedSettingsCollapsed = !this.advancedSettingsCollapsed;
-        if (!this.advancedSettingsCollapsed) this.scrollToAdvancedSettings = true;
+
+        if (!this.advancedSettingsCollapsed) {
+            this.scrollToAdvancedSettings = true;
+            this.updateBackupValues();
+        }
     }
 
 
@@ -221,7 +223,7 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
     }
 
 
-    private initializeBackupValues() {
+    private updateBackupValues() {
 
         const backupsMap: BackupsMap = getExistingBackups(this.settings.backupDirectoryPath, true);
 

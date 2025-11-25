@@ -1,6 +1,6 @@
-<.header>
+<.document_heading>
   Publication draft '{@publication.draft_date}' for project '{@publication.project_name}'
-</.header>
+</.document_heading>
 
 <div>
   <.form for={@publication_form} phx-change="validate" phx-submit="save">
@@ -40,7 +40,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="border-2 text-center">
+                <tr class="text-center">
                   <td>Missing raw files</td>
                   <td>{Enum.count(@data_state.images.missing_raw_files)}</td>
                   <td>
@@ -54,7 +54,7 @@
                     </.link>
                   </td>
                 </tr>
-                <tr class="border-2">
+                <tr>
                   <td class="text-center">Web images</td>
                   <td>
                     <.progress_bar state={@data_state.images.summary}></.progress_bar>
@@ -79,7 +79,7 @@
                     <% end %>
                   </td>
                 </tr>
-                <tr class="border-2">
+                <tr>
                   <td class="text-center">Map tile images</td>
                   <td>
                     <.progress_bar state={@data_state.tiles.summary}></.progress_bar>
@@ -104,7 +104,7 @@
                     <% end %>
                   </td>
                 </tr>
-                <tr class="border-2">
+                <tr>
                   <td class="text-center">Search index</td>
                   <td>
                     <.progress_bar state={@data_state.search_index}></.progress_bar>
@@ -189,12 +189,9 @@
           :if={@publication.publication_date && @publication.publication_date <= @today}
           title="Publication date"
         >
-          <.link
-            class="text-sm font-semibold leading-6 text-zinc-900 hover:text-zinc-700"
-            navigate={
-              ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{List.first(@publication.languages)}"
-            }
-          >
+          <.link navigate={
+            ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{List.first(@publication.languages)}"
+          }>
             <.icon name="hero-folder-open" class="h-4 w-4" /> {@publication.publication_date}
           </.link>
         </:item>

@@ -1,5 +1,5 @@
 <div class="resources-nav row bg-light">
-    <div class="d-flex"
+    <div *ngIf="!isInWorkflowManagement()" class="d-flex"
          [class.col-md-6]="!isInGridListView() || isInExtendedSearchMode()"
          [class.col-md-12]="isInGridListView() && !isInExtendedSearchMode()">
         <navigation></navigation>
@@ -27,7 +27,9 @@
         </div>
     </div>
 
-    <div *ngIf="!isInGridListView() || isInExtendedSearchMode()" class="col-md-6 me-md-auto">
+    <div *ngIf="!isInGridListView() || isInExtendedSearchMode()" class="me-md-auto"
+         [class.col-md-6]="!isInWorkflowManagement()"
+         [class.col-md-12]="isInWorkflowManagement()">
         <div class="d-flex row">
             <div id="search-bar-container" class="flex-grow-1">
                 <resources-search-bar [filterOptions]="filterOptions"
@@ -39,7 +41,7 @@
                 </resources-search-bar>
             </div>
 
-            <div *ngIf="!isInGridListView()" id="buttons-container">
+            <div *ngIf="!isInGridListView() && !isInWorkflowManagement()" id="buttons-container">
                 <div class="resources-mode-buttons">
                     <button id="map-mode-button"
                             (click)="switchMode('map')"
@@ -83,5 +85,8 @@
               [selectedDocument]="viewFacade.getSelectedDocument()"></list>
         <grid-list *ngIf="viewFacade.getMode() === 'grid'"
                    [documents]="viewFacade.getDocuments()"></grid-list>
+        <workflow-overview *ngIf="viewFacade.getMode() === 'workflow'"
+                           [documents]="viewFacade.getDocuments()"
+                           [selectedDocument]="viewFacade.getSelectedDocument()"></workflow-overview>
     </div>
 </div>

@@ -11,7 +11,7 @@ export function createMockProjectConfiguration(): any {
 
     const projectConfiguration = jasmine.createSpyObj(
         'projectConfiguration',
-        ['getCategory', 'getCategories', 'getTypeCategories']
+        ['getCategory', 'getCategories', 'getTypeCategories', 'getWorkflowCategories']
     );
 
     const defaultCategoryConfiguration = {
@@ -39,10 +39,12 @@ export function createMockProjectConfiguration(): any {
         { item: update('name', 'category2', defaultCategoryConfiguration), trees: [] },
         { item: update('name', 'category3', defaultCategoryConfiguration), trees: [] },
         { item: update('name', 'Find', defaultCategoryConfiguration), trees: [] },
-        { item: update('name', 'Type', defaultCategoryConfiguration), trees: [] }
+        { item: update('name', 'Type', defaultCategoryConfiguration), trees: [] },
+        { item: update('name', 'Process', defaultCategoryConfiguration), trees: [] },
     ]);
 
     projectConfiguration.getTypeCategories.and.returnValue([{ name: 'Type' }]);
+    projectConfiguration.getWorkflowCategories.and.returnValue([{ name: 'Process' }]);
 
     return projectConfiguration;
 }
@@ -178,6 +180,7 @@ export const createCategory = (name: string): Tree<CategoryForm> => ({
                 ]
             }
         ],
+        originalGroups: [],
         mustLieWithin: undefined
     },
     trees: []

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { isEmpty } from 'tsfun';
 import { Datastore, Document, WarningType } from 'idai-field-core';
+import { Menus } from '../../../../services/menus';
+import { MenuContext } from '../../../../services/menu-context';
 
 
 @Component({
@@ -24,7 +26,8 @@ export class CleanUpRelationModalComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
-                private datastore: Datastore) {}
+                private datastore: Datastore,
+                private menuService: Menus) {}
 
 
     public cancel = () => this.activeModal.dismiss('cancel');
@@ -32,7 +35,9 @@ export class CleanUpRelationModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.MODAL) {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
 

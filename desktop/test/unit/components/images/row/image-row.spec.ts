@@ -28,7 +28,7 @@ describe('ImageRow', () => {
 
     test('switch pages', () => {
 
-        const imageRow = new ImageRow(300, 100, 300, imageDocuments);
+        const imageRow = new ImageRow(300, 100, 300, 150, imageDocuments, ['i1', 'i2', 'i3']);
 
         let result = imageRow.nextPage();
         expect(result.newImageIds).toEqual(['i1', 'i2']);
@@ -64,7 +64,7 @@ describe('ImageRow', () => {
 
     test('switch pages to show selected image', () => {
 
-        const imageRow = new ImageRow(300, 100, 300, imageDocuments);
+        const imageRow = new ImageRow(300, 100, 300, 150, imageDocuments, ['i1', 'i2', 'i3']);
 
         let result = imageRow.nextPage();
         expect(result.newImageIds).toEqual(['i1', 'i2']);
@@ -80,7 +80,7 @@ describe('ImageRow', () => {
 
     test('change width', () => {
 
-        const imageRow = new ImageRow(150, 100, 300, imageDocuments);
+        const imageRow = new ImageRow(150, 100, 300, 150, imageDocuments, ['i1', 'i2', 'i3']);
 
         let result = imageRow.nextPage();
         expect(result.newImageIds).toEqual(['i1']);
@@ -96,7 +96,7 @@ describe('ImageRow', () => {
 
     test('return correct values for hasNextPage and hasPreviousPage', () => {
 
-        const imageRow = new ImageRow(300, 100, 300, imageDocuments);
+        const imageRow = new ImageRow(300, 100, 300, 150, imageDocuments, ['i1', 'i2', 'i3']);
 
         imageRow.nextPage();
         expect(imageRow.hasPreviousPage()).toBe(false);
@@ -117,5 +117,30 @@ describe('ImageRow', () => {
         imageRow.previousPage();
         expect(imageRow.hasPreviousPage()).toBe(false);
         expect(imageRow.hasNextPage()).toBe(true);
+    });
+
+
+    test('use correct width value for placeholders', () => {
+
+        // Thumbnails are present: Use image width values
+        let imageRow = new ImageRow(300, 100, 300, 100, imageDocuments, ['i1', 'i2', 'i3']);
+
+        let result = imageRow.nextPage();
+        expect(result.newImageIds).toEqual(['i1', 'i2']);
+        expect(result.firstShownImageIndex).toBe(0);
+        // Show i1 and i2
+
+        result = imageRow.nextPage();
+        expect(result.newImageIds).toEqual(['i3']);
+        expect(result.firstShownImageIndex).toBe(1);
+        // Show i3
+
+        // Thumbnails are not present: Use default placeholder width
+        imageRow = new ImageRow(300, 100, 300, 100, imageDocuments, []);
+
+        result = imageRow.nextPage();
+        expect(result.newImageIds).toEqual(['i1', 'i2', 'i3']);
+        expect(result.firstShownImageIndex).toBe(0);
+        // Show i1, i2 and i3
     });
 });

@@ -4,7 +4,7 @@ defmodule FieldPublicationWeb.Presentation.Components.Image do
   attr :project, :string, required: true
   attr :uuid, :string, required: true
   attr :class, :string, default: ""
-  attr :alt_text, :string, default: ""
+  attr :alt_text, :string, required: true
   attr :region, :string
   attr :size, :string
   attr :rotation, :string

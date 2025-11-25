@@ -1,13 +1,18 @@
 import { isArray, isObject, isString } from 'tsfun';
 import { I18N } from '../../tools/i18n';
-import { validateFloat, validateInt, validateUnsignedFloat, validateUnsignedInt, validateUrl } from '../../tools/validation-util';
-import { parseDate } from '../../tools/parse-date';
+import { validateFloat, validateInt, validateUnsignedFloat, validateUnsignedInt,
+    validateUrl } from '../../tools/validation-util';
 import { Dating } from '../input-types/dating';
-import { Dimension } from '../input-types/dimension';
+import { Measurement } from '../input-types/measurement';
 import { Literature } from '../input-types/literature';
 import { OptionalRange } from '../input-types/optional-range';
 import { Valuelist } from './valuelist';
 import { Composite } from '../input-types/composite';
+import { DateConfiguration } from './date-configuration';
+import { DateSpecification, DateValidationResult } from '../input-types/date-specification';
+import { Condition } from './condition';
+import { Resource } from '../document/resource';
+import { SemanticReference } from './semantic-reference';
 
 
 /**
@@ -24,20 +29,21 @@ export interface Field extends BaseField {
     fulltextIndexed?: boolean;
     constraintIndexed?: boolean;
     defaultConstraintIndexed?: boolean;
-    mandatory?: true;
+    mandatory?: boolean;
+    required?: boolean;
+    onlySubcategory?: boolean;
     fixedInputType?: true;
-    allowOnlyValuesOfParent?: true;
     maxCharacters?: number;
+    defaultCondition?: Condition;
     source?: Field.SourceType;
-    subfields?: Array<Subfield>;
-    constraintName?: string;            // For input type derivedRelation
+    references?: string[];
+    semanticReferences?: Array<SemanticReference>;
+    subfields?: Array<Subfield>;            // For input type "composite"
+    constraintName?: string;                // For input type "derivedRelation"
 }
 
 
-export interface Subfield extends BaseField {
-
-    condition?: SubfieldCondition;
-}
+export interface Subfield extends BaseField {}
 
 
 export interface BaseField extends I18N.LabeledValue, I18N.Described {
@@ -46,13 +52,8 @@ export interface BaseField extends I18N.LabeledValue, I18N.Described {
     defaultLabel?: I18N.String;
     defaultDescription?: I18N.String;
     valuelist?: Valuelist;
-}
-
-
-export interface SubfieldCondition {
-
-    subfieldName: string;
-    values: string[]|boolean;
+    condition?: Condition;
+    dateConfiguration?: DateConfiguration;  // For input type "date"
 }
 
 
@@ -81,7 +82,7 @@ export module Field {
         export const COMMON = 'common';
     }
 
-    export function isValidFieldData(fieldData: any, field: BaseField): boolean {
+    export function isValidFieldData(fieldData: any, field: BaseField, permissive: boolean = false): boolean {
 
         if (fieldData === null || fieldData === undefined) return false;
 
@@ -118,7 +119,7 @@ export module Field {
             case InputType.BOOLEAN:
                 return fieldData === true || fieldData === false;
             case InputType.DATE:
-                return !isNaN(parseDate(fieldData)?.getTime());
+                return DateSpecification.validate(fieldData, field, permissive) === DateValidationResult.VALID;
             case InputType.DROPDOWNRANGE:
                 return OptionalRange.buildIsOptionalRange(isString)(fieldData);
             case InputType.DATING:
@@ -126,8 +127,10 @@ export module Field {
                     return Dating.isDating(element) && Dating.isValid(element);
                 });
             case InputType.DIMENSION:
+            case InputType.WEIGHT:
+            case InputType.VOLUME:
                 return isArray(fieldData) && fieldData.every(element => {
-                    return Dimension.isDimension(element) && Dimension.isValid(element);
+                    return Measurement.isMeasurement(element) && Measurement.isValid(element, field.inputType);
                 });
             case InputType.LITERATURE:
                 return isArray(fieldData) && fieldData.every(element => {
@@ -141,6 +144,16 @@ export module Field {
                 return fieldData.type !== undefined && fieldData.coordinates !== undefined;
             default:
                 return true;
+        }
+    }
+
+
+    export function isFilled(field: Field, resource: Resource): boolean {
+
+        if (Field.InputType.EDITABLE_RELATION_INPUT_TYPES.includes(field.inputType)) {
+            return resource.relations[field.name]?.length > 0;
+        } else {
+            return resource[field.name] !== undefined && resource[field.name] !== '';
         }
     }
 
@@ -164,6 +177,8 @@ export module Field {
         |'dating'
         |'date'
         |'dimension'
+        |'weight'
+        |'volume'
         |'literature'
         |'geometry'
         |'relation'
@@ -197,6 +212,8 @@ export module Field {
         export const DATING = 'dating';
         export const DATE = 'date';
         export const DIMENSION = 'dimension';
+        export const WEIGHT = 'weight';
+        export const VOLUME = 'volume';
         export const LITERATURE = 'literature';
         export const GEOMETRY = 'geometry';
         export const INSTANCE_OF = 'instanceOf';
@@ -208,12 +225,14 @@ export module Field {
         export const NONE = 'none';
         export const DEFAULT = 'default';
 
-        export const VALUELIST_INPUT_TYPES: Array<InputType> = [DROPDOWN, DROPDOWNRANGE, CHECKBOXES, RADIO, DIMENSION];
+        export const VALUELIST_INPUT_TYPES: Array<InputType> = [DROPDOWN, DROPDOWNRANGE, CHECKBOXES, RADIO, DIMENSION,
+            WEIGHT, VOLUME];
         export const NUMBER_INPUT_TYPES: Array<InputType> = [UNSIGNEDINT, UNSIGNEDFLOAT, INT, FLOAT];
         export const I18N_COMPATIBLE_INPUT_TYPES: Array<InputType> = [INPUT, SIMPLE_INPUT, TEXT, MULTIINPUT,
             SIMPLE_MULTIINPUT];
         export const I18N_INPUT_TYPES: Array<InputType> = [INPUT, TEXT, MULTIINPUT];
         export const SIMPLE_INPUT_TYPES: Array<InputType> = [SIMPLE_INPUT, SIMPLE_MULTIINPUT];
+        export const MEASUREMENT_INPUT_TYPES: Array<InputType> = [DIMENSION, WEIGHT, VOLUME];
         export const SUBFIELD_INPUT_TYPES: Array<InputType> = [INPUT, SIMPLE_INPUT, TEXT, BOOLEAN, DROPDOWN, RADIO,
             CHECKBOXES, FLOAT, UNSIGNEDFLOAT, INT, UNSIGNEDINT, DATE, URL];
         export const RELATION_INPUT_TYPES: Array<InputType> = [RELATION, INSTANCE_OF, DERIVED_RELATION];

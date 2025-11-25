@@ -243,6 +243,10 @@
     "StorageBag:default": {
       "hidden": [],
       "fields": {}
+    },
+    "Process:default": {
+      "hidden": [],
+      "fields": {}
     }
   },
   "order": [
@@ -295,6 +299,7 @@
     "FindCollection",
     "Inscription",
     "Sample",
+    "Process",
     "Image",
     "Drawing",
     "Photo",

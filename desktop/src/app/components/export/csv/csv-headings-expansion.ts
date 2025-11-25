@@ -1,5 +1,5 @@
 import { flatMap, range } from 'tsfun';
-import { Field, I18N, OptionalRange, Subfield } from 'idai-field-core';
+import { DateSpecification, Field, I18N, Measurement, OptionalRange, Subfield } from 'idai-field-core';
 import { CsvExportConsts } from './csv-export-consts';
 
 
@@ -46,6 +46,16 @@ export module CSVHeadingsExpansion {
     }
 
 
+    export function expandDateHeadings(fieldName: string) {
+
+        return [
+            fieldName + OBJECT_SEPARATOR + DateSpecification.VALUE,
+            fieldName + OBJECT_SEPARATOR + DateSpecification.END_VALUE,
+            fieldName + OBJECT_SEPARATOR + DateSpecification.IS_RANGE
+        ];
+    }
+
+
     export function expandDatingHeadings(languages: string[]) {
         
         return (n: number) => {
@@ -65,28 +75,6 @@ export module CSVHeadingsExpansion {
                 })).concat([
                     fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isImprecise',
                     fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isUncertain'
-                ]))(range(n));
-            }
-        }
-    }
-
-
-    export function expandDimensionHeadings(languages: string[]) {
-        
-        return (n: number) => {
-
-            return (fieldName: string) => {
-
-                return flatMap(i => [
-                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputValue',
-                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputRangeEndValue',
-                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputUnit',
-                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementPosition'
-                ].concat(languages.map(language => {
-                    return fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementComment'
-                        + (hasNoConfiguredProjectLanguages(languages) ? '' : OBJECT_SEPARATOR + language);
-                })).concat([
-                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isImprecise'
                 ]))(range(n));
             }
         }
@@ -129,6 +117,48 @@ export module CSVHeadingsExpansion {
                     }
                     return result;
                 }, []))(range(n));
+            }
+        }
+    }
+
+
+    export function expandDimensionHeadings(languages: string[]) {
+        
+        return expandMeasurementHeadings(languages, 'dimension');
+    }
+
+
+    export function expandWeightHeadings(languages: string[]) {
+        
+        return expandMeasurementHeadings(languages, 'weight');
+    }
+
+
+    export function expandVolumeHeadings(languages: string[]) {
+        
+        return expandMeasurementHeadings(languages, 'volume');
+    }
+
+
+    function expandMeasurementHeadings(languages: string[], inputType: 'dimension'|'weight'|'volume') {
+
+        const valuelistSubfieldName: string = Measurement.getValuelistSubfieldName(inputType);
+        
+        return (n: number) => {
+
+            return (fieldName: string) => {
+
+                return flatMap(i => [
+                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputValue',
+                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputRangeEndValue',
+                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputUnit'
+                ].concat([fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + valuelistSubfieldName])
+                .concat(languages.map(language => {
+                    return fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementComment'
+                        + (hasNoConfiguredProjectLanguages(languages) ? '' : OBJECT_SEPARATOR + language);
+                })).concat([
+                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isImprecise'
+                ]))(range(n));
             }
         }
     }

@@ -92,6 +92,9 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
         }
 
         if (!this.getClonedValuelistDefinition().references) this.getClonedValuelistDefinition().references = [];
+        if (!this.getClonedValuelistDefinition().semanticReferences) {
+            this.getClonedValuelistDefinition().semanticReferences = [];
+        }
         this.sortAlphanumerically = this.getClonedValuelistDefinition().order === undefined;
         this.order = this.getOrder() ?? this.getSortedValueIds();
     }
@@ -107,6 +110,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
         try {
             ConfigurationUtil.cleanUpAndValidateReferences(clonedValuelistDefinition);
+            ConfigurationUtil.cleanUpAndValidateSemanticReferences(clonedValuelistDefinition);
         } catch (errWithParams) {
             return this.messages.add(errWithParams);
         }
@@ -134,7 +138,9 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
             || (this.sortAlphanumerically && this.getClonedValuelistDefinition().order !== undefined)
             || !this.sortAlphanumerically && (!this.getClonedValuelistDefinition().order
                 || !equal(this.order, this.getClonedValuelistDefinition().order))
-        || ConfigurationUtil.isReferencesArrayChanged(this.getCustomValuelistDefinition(),
+            || ConfigurationUtil.isReferencesArrayChanged(this.getCustomValuelistDefinition(),
+                this.getClonedValuelistDefinition())
+            || ConfigurationUtil.isSemanticReferencesArrayChanged(this.getCustomValuelistDefinition(),
                 this.getClonedValuelistDefinition());
     }
 

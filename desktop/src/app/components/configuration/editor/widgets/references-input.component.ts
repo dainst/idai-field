@@ -1,4 +1,3 @@
-import { isEmpty } from 'tsfun';
 import { Component, Input } from '@angular/core';
 
 
@@ -20,7 +19,7 @@ export class ReferencesInputComponent {
 
     public addReference() {
 
-        if (this.references.length > 0 && isEmpty(this.references[this.references.length - 1])) return;
+        if (this.references.length > 0 && !this.references[this.references.length - 1]?.length) return;
         this.references.push('');
     }
 

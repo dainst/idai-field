@@ -70,7 +70,9 @@ export class ConfigurationConflictsModalComponent {
    
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.onEscapeKeyDown();
+        if (event.key === 'Escape' && this.menus.getContext() === MenuContext.DOCEDIT) {
+            this.onEscapeKeyDown();
+        }
     }
 
 

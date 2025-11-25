@@ -518,12 +518,6 @@
       "diary": {
           "label": "Journal"
       },
-      "beginningDate": {
-          "label": "Date de début"
-      },
-      "endDate": {
-          "label": "Date de fin"
-      },
       "campaign": {
           "label": "Campagne"
       },

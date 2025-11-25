@@ -24,8 +24,8 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
     """
   end
 
-  def render(%{field: %Field{input_type: input_type}} = assigns)
-      when input_type in ["checkboxes"] do
+  def render(%{field: %Field{input_type: input_type, value: values}} = assigns)
+      when input_type in ["checkboxes"] and is_list(values) do
     ~H"""
     <%= for value <- @field.value do %>
       <div>

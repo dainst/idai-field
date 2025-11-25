@@ -31,9 +31,12 @@
       input:not([type]),
       input[type="text"],
       input[type="number"],
-      select,
-      .form-check-label,
-      label {
+      select {
+        font-size: 13px;
+      }
+
+      label,
+      .form-check-label {
         font-size: 15px;
       }
   
@@ -45,7 +48,7 @@
       }
   
       select {
-        line-height: 20px;
+        line-height: 19px;
       }
   
       input[type="checkbox"],

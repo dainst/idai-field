@@ -9,13 +9,15 @@ import { ImageResource } from '../model/document/image-resource';
 import { RelationTargetWarnings, OutlierWarnings, Warnings } from '../model/document/warnings';
 import { IndexFacade } from '../index/index-facade';
 import { Datastore } from './datastore';
-import { Query } from '../model/datastore/query';
+import { Query, SortMode } from '../model/datastore/query';
 import { DocumentCache } from './document-cache';
-import { ProjectConfiguration } from '../services';
 import { Tree } from '../tools/forest';
 import { FieldResource } from '../model/document/field-resource';
 import { Valuelist } from '../model/configuration/valuelist';
 import { Relation } from '../model/configuration/relation';
+import { ProcessResource } from '../model/document/process-resource';
+import { ProjectConfiguration } from '../services/project-configuration';
+import { Condition } from '../model/configuration/condition';
 
 
 /**
@@ -113,7 +115,7 @@ export module WarningsUpdater {
 
         const query: Query = {
             categories: projectConfiguration.getCategoryWithSubcategories(parentCategoryName).map(to(Named.NAME)),
-            sort: { mode: 'none' }
+            sort: { mode: SortMode.None }
         };
 
         if (resourceLimit !== undefined && indexFacade.find(query).length  > resourceLimit) {
@@ -139,7 +141,7 @@ export module WarningsUpdater {
 
         const documents: Array<Document> = (await datastore.find({
             categories: projectConfiguration.getCategoryWithSubcategories(parentCategoryName).map(to(Named.NAME)),
-            sort: { mode: 'none' }
+            sort: { mode: SortMode.None }
         })).documents;
 
         for (let document of documents) {
@@ -278,12 +280,11 @@ export module WarningsUpdater {
             return Field.InputType.VALUELIST_INPUT_TYPES.concat([Field.InputType.COMPOSITE])
                 .includes(field.inputType);
         });
-        const parent: Document = getParentDocument(document, documentCache);
         const outlierWarnings: OutlierWarnings = { fields: {}, values: [] };
 
         for (let field of fields) {
             const outlierValues: Map<string[]>|string[] = getOutlierValues(
-                document.resource, field, documentCache.get('project'), parent?.resource, projectConfiguration
+                document.resource, field, documentCache.get('project')
             );
             if (isArray(outlierValues) && !outlierValues.length) continue;
             if (isObject(outlierValues) && !Object.keys(outlierValues).length) continue;
@@ -310,42 +311,31 @@ export module WarningsUpdater {
             }
         }
 
-        if (updateAll) {
-            if (document.resource.category === 'Project') {
-                await updateProjectFieldOutlierWarnings(datastore, documentCache, indexFacade, projectConfiguration);
-            }
-            await updateOutlierWarningsForChildren(
-                document, datastore, documentCache, indexFacade, projectConfiguration
-            );
+        if (updateAll && document.resource.category === 'Project') {
+            await updateProjectFieldOutlierWarnings(datastore, documentCache, indexFacade, projectConfiguration);
         }
     }
 
 
-    function getOutlierValues(fieldContainer: any, field: BaseField, projectDocument: Document,
-                              parentResource: Resource,
-                              projectConfiguration: ProjectConfiguration): Map<string[]>|string[] {
+    function getOutlierValues(fieldContainer: any, field: BaseField,
+                              projectDocument: Document): Map<string[]>|string[] {
 
         const fieldContent: any = fieldContainer[field.name];
         if (!fieldContent) return [];
 
         if (field.inputType === Field.InputType.COMPOSITE) {
-            return getOutlierValuesForCompositeField(
-                field, fieldContent, projectDocument, parentResource, projectConfiguration
-            );
+            return getOutlierValuesForCompositeField(field, fieldContent, projectDocument);
         }
 
-        const valuelist: Valuelist = ValuelistUtil.getValuelist(
-            field, projectDocument, projectConfiguration, parentResource, [], true
-        );
+        const valuelist: Valuelist = ValuelistUtil.getValuelist(field, projectDocument, [], true);
         return valuelist
             ? set(ValuelistUtil.getValuesNotIncludedInValuelist(fieldContent, valuelist) ?? [])
             : [];
     }
 
 
-    function getOutlierValuesForCompositeField(field: Field, fieldContent: any, projectDocument: Document,
-                                               parentResource: Resource,
-                                               projectConfiguration: ProjectConfiguration): Map<string[]> {
+    function getOutlierValuesForCompositeField(field: Field, fieldContent: any,
+                                               projectDocument: Document): Map<string[]> {
 
         if (!isArray(fieldContent)) return {};
 
@@ -357,9 +347,7 @@ export module WarningsUpdater {
             for (let subfield of field.subfields) {
                 if (!Field.InputType.VALUELIST_INPUT_TYPES.includes(subfield.inputType)) continue;
 
-                const subfieldOutliers: string[] = getOutlierValues(
-                    entry, subfield, projectDocument, parentResource, projectConfiguration
-                ) as string[];
+                const subfieldOutliers: string[] = getOutlierValues(entry, subfield, projectDocument) as string[];
                 if (!subfieldOutliers.length) continue;
 
                 if (outliers[subfield.name]) {
@@ -379,7 +367,7 @@ export module WarningsUpdater {
 
         const documents: Array<Document> = (await datastore.find({
             constraints: { 'identifier:match': identifier },
-            sort: { mode: 'none' }
+            sort: { mode: SortMode.None }
         }, { includeResourcesWithoutValidParent: true })).documents;
 
         for (let document of documents) {
@@ -393,7 +381,7 @@ export module WarningsUpdater {
 
         const documents: Array<Document> = (await datastore.find({
             constraints: { 'missingRelationTargetIds:contain': id },
-            sort: { mode: 'none' }
+            sort: { mode: SortMode.None }
         }, { includeResourcesWithoutValidParent: true })).documents;
 
         for (let document of documents) {
@@ -408,7 +396,7 @@ export module WarningsUpdater {
 
         const documents: Array<Document> = (await datastore.find({
             constraints: { 'invalidRelationTargetIds:contain': id },
-            sort: { mode: 'none' }
+            sort: { mode: SortMode.None }
         }, { includeResourcesWithoutValidParent: true })).documents;
 
         for (let document of documents) {
@@ -426,27 +414,9 @@ export module WarningsUpdater {
         }).map(to(Named.NAME));
 
         const documents: Array<Document> = (await datastore.find(
-            { categories: categoryNames, sort: { mode: 'none' } },
+            { categories: categoryNames, sort: { mode: SortMode.None } },
             { includeResourcesWithoutValidParent: true }
         )).documents;
-
-        for (let document of documents) {
-            const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
-            if (!category) continue;
-
-            await updateOutlierWarning(document, projectConfiguration, category, indexFacade, documentCache, datastore);
-        }
-    }
-
-
-    async function updateOutlierWarningsForChildren(document: Document, datastore: Datastore,
-                                                    documentCache: DocumentCache, indexFacade: IndexFacade,
-                                                    projectConfiguration: ProjectConfiguration) {
-
-        const documents: Array<Document> = (await datastore.find({
-            constraints: { 'isChildOf:contain': document.resource.id },
-            sort: { mode: 'none' }
-        }, { includeResourcesWithoutValidParent: true })).documents;
 
         for (let document of documents) {
             const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
@@ -467,7 +437,7 @@ export module WarningsUpdater {
                 'isChildOf:contain': { value: document.resource.id, searchRecursively: true },
                 'missingOrInvalidParent:exist': 'KNOWN'
             },
-            sort: { mode: 'none' }
+            sort: { mode: SortMode.None }
         }, { includeResourcesWithoutValidParent: true })).documents;
 
         for (let document of documents) {
@@ -488,9 +458,14 @@ export module WarningsUpdater {
         }
 
         const fieldDefinitions: Array<Field> = CategoryForm.getFields(category);
+        updateMandatoryFieldWarnings(warnings, document, fieldDefinitions);
 
         if (document._conflicts) warnings.conflicts = true;
         if (isIdentifierPrefixMissing(document, category)) warnings.missingIdentifierPrefix = true;
+        if (category.parentCategory?.name === 'Process'
+                && !ProcessResource.validateState(document.resource as ProcessResource)) {
+            warnings.invalidProcessState = true;
+        }
 
         return Object.keys(document.resource)
             .concat(Object.keys(document.resource.relations))
@@ -500,7 +475,7 @@ export module WarningsUpdater {
                 const fieldContent: any = field && Field.InputType.EDITABLE_RELATION_INPUT_TYPES.includes(field?.inputType)
                     ? document.resource.relations[fieldName]
                     : document.resource[fieldName];
-                updateWarningsForField(warnings, fieldName, field, fieldContent);
+                updateWarningsForField(warnings, fieldName, field, fieldContent, document.resource, category);
                 return result;
             }, warnings);
     }
@@ -514,12 +489,25 @@ export module WarningsUpdater {
     }
 
 
-    function updateWarningsForField(warnings: Warnings, fieldName: string, field: Field, fieldContent: any) {
+    function updateMandatoryFieldWarnings(warnings: Warnings, document: Document, fieldDefinitions: Array<Field>) {
+
+        fieldDefinitions.filter(field => field.mandatory).forEach(field => {
+            if (!Field.isFilled(field, document.resource)) {
+                warnings.missingMandatoryFields.push(field.name);
+            }
+        });
+    }
+
+
+    function updateWarningsForField(warnings: Warnings, fieldName: string, field: Field, fieldContent: any,
+                                    resource: Resource, category: CategoryForm) {
 
         if (!field) {
             warnings.unconfiguredFields.push(fieldName);
         } else if (!Field.isValidFieldData(fieldContent, field)) {
             warnings.invalidFields.push(fieldName);
+        } else if (!Condition.isFulfilled(field.condition, resource, CategoryForm.getFields(category), 'field')) {
+            warnings.unfulfilledConditionFields.push(fieldName);
         }
     }
 
@@ -531,7 +519,7 @@ export module WarningsUpdater {
     }
 
 
-    function getAncestorDocuments(document: Document, documentCache): Array<Document> {
+    function getAncestorDocuments(document: Document, documentCache: DocumentCache): Array<Document> {
 
         const result: Array<Document> = [];
         let parent: Document;

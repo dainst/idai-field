@@ -1,7 +1,7 @@
 services:
 
   opensearch:
-    image: opensearchproject/opensearch:2.14.0 
+    image: opensearchproject/opensearch:2.19.2 
     container_name: "field_publication_opensearch"
     environment:
       - discovery.type=single-node

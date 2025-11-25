@@ -3,9 +3,11 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { isEmpty, flow, includedIn, is, left, map, Mapping, on, Pair, pairWith, prune, right, to,
     isUndefinedOrEmpty } from 'tsfun';
 import { CategoryForm, Labels, Constraint, Datastore, Document, FieldDocument, FieldResource, Named,
-    ProjectConfiguration, Query, Resource, Relation } from 'idai-field-core';
+    ProjectConfiguration, Query, Resource, Relation, SortMode } from 'idai-field-core';
 import { ImageRowItem } from '../../../../image/row/image-row';
 import { LinkedImagesUtil } from '../../../../../util/linked-images-util';
+import { Menus } from '../../../../../services/menus';
+import { MenuContext } from '../../../../../services/menu-context';
 
 
 const ALLCATALOGS = 'all-catalogs';
@@ -58,7 +60,8 @@ export class TypeRelationPickerComponent {
     constructor(public activeModal: NgbActiveModal,
                 private datastore: Datastore,
                 private projectConfiguration: ProjectConfiguration,
-                private labels: Labels) {
+                private labels: Labels,
+                private menuService: Menus) {
 
         this.initialize(projectConfiguration.getCategory(TYPECATALOG));
     }
@@ -75,7 +78,9 @@ export class TypeRelationPickerComponent {
 
     public onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.close();
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.MODAL) {
+            this.activeModal.close();
+        }
     }
 
 
@@ -219,7 +224,7 @@ export class TypeRelationPickerComponent {
             offset,
             sort: {
                 matchCategory: resource.category,
-                mode: Query.SORT_MODE_EXACTMATCHFIRST,
+                mode: SortMode.ExactMatchFirst,
             },
             constraints: {}
         };

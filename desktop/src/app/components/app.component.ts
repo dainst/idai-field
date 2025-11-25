@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Event, NavigationStart, Router } from '@angular/router';
-import { Datastore } from 'idai-field-core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Datastore, ProjectConfiguration, RelationsManager, SyncService } from 'idai-field-core';
 import { Messages } from './messages/messages';
 import { SettingsService } from '../services/settings/settings-service';
 import { SettingsProvider } from '../services/settings/settings-provider';
@@ -12,6 +13,13 @@ import { ImageUrlMaker } from '../services/imagestore/image-url-maker';
 import { ConfigurationChangeNotifications } from './configuration/notifications/configuration-change-notifications';
 import { MenuModalLauncher } from '../services/menu-modal-launcher';
 import { AppState } from '../services/app-state';
+import { AutoBackupService } from '../services/backup/auto-backup/auto-backup-service';
+import { QuittingModalComponent } from './widgets/quitting-modal.component';
+import { MenuContext } from '../services/menu-context';
+import { ImageToolLauncher } from '../services/imagestore/image-tool-launcher';
+import { ExpressServer } from '../services/express-server/express-server';
+import { ImportExportProcessModalComponent } from './widgets/import-export-process-modal.component';
+import { Menus } from '../services/menus';
 
 const remote = window.require('@electron/remote');
 const ipcRenderer = window.require('electron')?.ipcRenderer;
@@ -31,6 +39,12 @@ export class AppComponent {
 
     public alwaysShowClose = remote.getGlobal('switches').messages_timeout == undefined;
 
+    private closing: boolean = false;
+    private modal: ImportExportProcessModalComponent;
+    private closeModalTimeout: any;
+    private previousMenuContext: MenuContext;
+
+
     constructor(router: Router,
                 menuNavigator: MenuNavigator,
                 appController: AppController,
@@ -38,12 +52,20 @@ export class AppComponent {
                 imageUrlMaker: ImageUrlMaker,
                 settingsService: SettingsService,
                 appState: AppState,
+                imageToolLauncher: ImageToolLauncher,
+                projectConfiguration: ProjectConfiguration,
+                relationsManager: RelationsManager,
+                private expressServer: ExpressServer,
                 private messages: Messages,
                 private utilTranslations: UtilTranslations,
                 private settingsProvider: SettingsProvider,
                 private changeDetectorRef: ChangeDetectorRef,
                 private menuModalLauncher: MenuModalLauncher,
-                private datastore: Datastore) {
+                private datastore: Datastore,
+                private autoBackupService: AutoBackupService,
+                private modalService: NgbModal,
+                private menuService: Menus,
+                private syncService: SyncService) {
 
         // To get rid of stale messages when changing routes.
         // Note that if you want show a message to the user
@@ -58,26 +80,34 @@ export class AppComponent {
             }
         });
 
+        this.expressServer.setDatastore(this.datastore);
+        this.expressServer.setRelationsManager(relationsManager);
+        this.expressServer.setProjectConfiguration(projectConfiguration);
+
         appState.load();
         settingsService.setupSync();
         appController.initialize();
         menuNavigator.initialize();
         configurationChangeNotifications.initialize();
+        imageToolLauncher.update();
 
         AppComponent.preventDefaultDragAndDropBehavior();
         this.initializeUtilTranslations();
         this.listenToSettingsChangesFromMenu();
+        this.listenToApiEvents();
         this.handleCloseRequests();
 
         if (!Settings.hasUsername(settingsProvider.getSettings())) {
             this.menuModalLauncher.openUpdateUsernameModal(true);
         }
+
+        this.autoBackupService.start();
     }
 
 
     private listenToSettingsChangesFromMenu() {
 
-        ipcRenderer.on('settingChanged', async (event: any, setting: string, newValue: boolean) => {
+        ipcRenderer.on('settingChanged', async (_: any, setting: string, newValue: boolean) => {
             const settings: Settings = this.settingsProvider.getSettings();
             settings[setting] = newValue;
             this.settingsProvider.setSettingsAndSerialize(settings);
@@ -86,11 +116,80 @@ export class AppComponent {
     }
 
 
+    private listenToApiEvents() {
+
+        this.expressServer.apiNotifications().subscribe(state => {
+            switch (state) {
+                case 'import':
+                case 'export':
+                    if (this.modal) {
+                        this.clearModalTimeout();
+                    } else {
+                        this.previousMenuContext = this.menuService.getContext();
+                        this.menuService.setContext(MenuContext.BLOCKING_MODAL);
+                        const modalRef: NgbModalRef = this.modalService.open(
+                            ImportExportProcessModalComponent,
+                            { backdrop: 'static', keyboard: false, animation: false }
+                        );
+                        this.modal = modalRef.componentInstance;
+                        this.changeDetectorRef.detectChanges();
+                    }
+                    this.modal.type = state;
+                    break;
+                case 'none':
+                    if (this.modal) this.closeModal();
+                    break;
+            }
+        });
+    }
+
+
+    public closeModal() {
+
+        this.clearModalTimeout();
+        this.closeModalTimeout = setTimeout(() => {
+            this.menuService.setContext(this.previousMenuContext);
+            this.modal.activeModal.close();
+            this.modal = undefined;
+            this.previousMenuContext = undefined;
+            this.changeDetectorRef.detectChanges();
+        }, 2000);
+    }
+
+
+    public clearModalTimeout() {
+
+        if (!this.closeModalTimeout) return;
+        
+        clearTimeout(this.closeModalTimeout);
+        this.closeModalTimeout = undefined;
+    }
+
+
     private handleCloseRequests() {
 
-        ipcRenderer.on('requestClose', () => {
-            if (!this.datastore.updating) ipcRenderer.send('close');
+        ipcRenderer.on('requestClose', async () => {
+            if (this.closing || this.datastore.updating) return;
+
+            this.closing = true;
+            this.syncService.stopSync();
+            this.openQuittingModal();
+            await this.autoBackupService.requestBackupCreation();
+
+            ipcRenderer.send('close');
         });
+    }
+
+
+    private openQuittingModal() {
+
+        setTimeout(() => {
+            this.menuService.setContext(MenuContext.BLOCKING_MODAL);
+            this.modalService.open(
+                QuittingModalComponent,
+                { backdrop: 'static', keyboard: false, animation: false }
+            );
+        }, 200);
     }
 
 
@@ -112,7 +211,13 @@ export class AppComponent {
             'after', $localize `:@@util.dating.after:Nach`
         );
         this.utilTranslations.addTranslation(
-            'asMeasuredBy', $localize `:@@util.dimension.asMeasuredBy:gemessen an`
+            'asMeasuredBy', $localize `:@@util.dimension.asMeasuredBy:gemessen an:`
+        );
+        this.utilTranslations.addTranslation(
+            'measurementDevice', $localize `:@@util.dimension.measurementDevice:Messgerät:`
+        );
+        this.utilTranslations.addTranslation(
+            'measurementTechnique', $localize `:@@util.volume.measurementTechnique:Messverfahren:`
         );
         this.utilTranslations.addTranslation(
             'zenonId', $localize `:@@util.literature.zenonId:Zenon-ID`
@@ -131,6 +236,12 @@ export class AppComponent {
         );
         this.utilTranslations.addTranslation(
             'to', $localize `:@@util.optionalRange.to:, bis: `
+        );
+        this.utilTranslations.addTranslation(
+            'toDate', $localize `:@@util.date.to:bis`
+        );
+        this.utilTranslations.addTranslation(
+            'unspecifiedDate', $localize `:@@util.date.unspecified:Unbestimmtes Datum`
         );
         this.utilTranslations.addTranslation(
             'true', $localize `:@@boolean.yes:Ja`
@@ -156,6 +267,14 @@ export class AppComponent {
         this.utilTranslations.addTranslation(
             'warnings.invalidFieldData',
             $localize `:@@util.warnings.invalidFieldData:Ungültige Felddaten`
+        );
+        this.utilTranslations.addTranslation(
+            'warnings.missingMandatoryFields',
+            $localize `:@@util.warnings.missingMandatoryFields:Nicht ausgefüllte Pflichtfelder`
+        );
+        this.utilTranslations.addTranslation(
+            'warnings.unfulfilledConditionFields',
+            $localize `:@@util.warnings.unfulfilledConditionFields:Nicht erfüllte Anzeigebedingungen`
         );
         this.utilTranslations.addTranslation(
             'warnings.outlierValues',
@@ -184,6 +303,10 @@ export class AppComponent {
         this.utilTranslations.addTranslation(
             'warnings.resourceLimitExceeded',
             $localize `:@@util.warnings.resourceLimitExceeded:Ressourcenlimit überschritten`
+        );
+        this.utilTranslations.addTranslation(
+            'warnings.invalidProcessState',
+            $localize `:@@util.warnings.invalidProcessState:Ungültiger Status`
         );
         this.utilTranslations.addTranslation(
             'inventoryRegister',
@@ -255,7 +378,15 @@ export class AppComponent {
         );
         this.utilTranslations.addTranslation(
             'inputTypes.dimension',
-            $localize `:@@config.inputType.dimension:Maßangabe`
+            $localize `:@@config.inputType.dimension:Längenangabe`
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.weight',
+            $localize `:@@config.inputType.weight:Gewichtsangabe`
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.volume',
+            $localize `:@@config.inputType.volume:Volumenangabe`
         );
         this.utilTranslations.addTranslation(
             'inputTypes.literature',

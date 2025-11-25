@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { nop, to } from 'tsfun';
-import { CategoryForm, ConfigurationDocument, Field, SortUtil, Labels, ProjectConfiguration } from 'idai-field-core';
+import { CategoryForm, ConfigurationDocument, Field, SortUtil, Labels, ProjectConfiguration,
+    Relation } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { Modals } from '../../../../services/modals';
 import { FieldEditorModalComponent } from '../../editor/field/field-editor-modal.component';
@@ -90,17 +91,37 @@ export class AddFieldModalComponent {
 
     public applyFieldNameSearch() {
 
-        this.fields = this.configurationIndex.findFields(
-            this.searchTerm,
-            this.category.source === 'custom' ? this.category.parentCategory.name : this.category.name
-        ).concat(this.configurationIndex.findFields(this.searchTerm, 'commons'))
+        this.fields = this.findFieldsFromCategoryAndParentCategory()
+            .concat(this.configurationIndex.findFields(this.searchTerm, 'commons'))
             .concat(this.configurationIndex.findFields(this.searchTerm, 'customRelations'))
             .filter(field => (field.visible || field.editable)
-                && !CategoryForm.getFields(this.category).map(to('name')).includes(field.name))
+                && !CategoryForm.getFields(this.category).map(to('name')).includes(field.name)
+                && (!field.onlySubcategory || this.category.parentCategory))
             .sort((field1, field2) => SortUtil.alnumCompare(this.labels.get(field1), this.labels.get(field2)));
 
         this.selectedField = this.fields?.[0];
         this.emptyField = this.getEmptyField();
+    }
+
+
+    private findFieldsFromCategoryAndParentCategory(): Array<Field> {
+
+        const parentCategoryFields: Array<Field> = this.category.parentCategory
+            ? this.configurationIndex.findFields(
+                this.searchTerm,
+                this.category.parentCategory.name
+            ) : [];
+
+        if (this.category.source === 'custom') return parentCategoryFields;
+
+        const categoryFields: Array<Field> = this.configurationIndex.findFields(
+            this.searchTerm,
+            this.category.name
+        );
+
+        return categoryFields.concat(parentCategoryFields.filter(field => {
+            return !categoryFields.map(field => field.name).includes(field.name);
+        }));
     }
 
 
@@ -138,7 +159,9 @@ export class AddFieldModalComponent {
             defaultLabel: template?.defaultLabel ?? {},
             description: template?.description ?? {},
             defaultDescription: template?.defaultDescription ?? {},
-            source: 'custom'
+            editable: true,
+            visible: true,
+            source: Relation.Workflow.ALL.includes(template?.name) ? 'common' : 'custom'
         };
         componentInstance.groupName = this.groupName;
         componentInstance.availableInputTypes = this.availableInputTypes;

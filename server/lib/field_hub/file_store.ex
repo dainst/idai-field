@@ -180,6 +180,34 @@ defmodule FieldHub.FileStore do
   end
 
   @doc """
+  Copy a file into the specified project's directory.
+
+  __Parameters__
+
+  - `uuid` the uuid for the file (will be used as its file_name).
+  - `project_identifier` the project's name.
+  - `file_variant` a valid file variant, one of `#{inspect(@valid_file_variants)}`.
+  - `input_path` path to the source file to be copied.
+
+  Returns `:ok` on success or `{:error, posix}` on failure.
+  """
+  def store_by_moving(uuid, project_identifier, file_variant, input_path) do
+    directory = get_variant_directory(project_identifier, file_variant)
+
+    target_path = "#{directory}/#{uuid}"
+
+    result =
+      if File.exists?(target_path) do
+        :ok
+      else
+        File.rename(input_path, target_path)
+      end
+
+    clear_cache(project_identifier)
+    result
+  end
+
+  @doc """
   Open a io_device for a new file.
 
   The io_device can then be used to write chunked/streamed data without having to
@@ -195,8 +223,8 @@ defmodule FieldHub.FileStore do
   """
   def create_write_io_device(uuid, project_identifier, file_variant) do
     directory = get_variant_directory(project_identifier, file_variant)
-    file_path = "#{directory}/#{uuid}"
-    File.open(file_path, [:write])
+    file_path = "#{directory}/#{uuid}.writing"
+    {File.open(file_path, [:write]), file_path}
   end
 
   @doc """
@@ -279,7 +307,8 @@ defmodule FieldHub.FileStore do
     end)
     |> Stream.reject(fn %{stat_type: type} -> type == :directory end)
     |> Stream.reject(fn %{name: file_name} ->
-      # Reject all files containing dots, added to ignore hidden OS files
+      # Reject all files containing dots, added to ignore hidden OS files and files that are currently
+      # being streamed and have a .writing suffix.
       file_name
       |> String.trim_trailing(@tombstone_suffix)
       |> String.contains?(".")

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { filter, flatten, flow, Map, map, set, take, pipe, to } from 'tsfun';
 import { Document, Datastore, FieldDocument, Relation, SyncService, SyncStatus,
@@ -39,7 +39,7 @@ type GridListSection = 'documents'|'linkedDocuments';
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export class GridListComponent extends BaseList implements OnChanges {
+export class GridListComponent extends BaseList implements OnChanges, OnDestroy {
 
     /**
      * These are the documents found at the current level,
@@ -75,17 +75,17 @@ export class GridListComponent extends BaseList implements OnChanges {
                 private viewModalLauncher: ViewModalLauncher,
                 private routingService: Routing,
                 private tabManager: TabManager,
-                private changeDetectorRef: ChangeDetectorRef,
                 private syncService: SyncService,
                 private projectConfiguration: ProjectConfiguration,
                 private messages: Messages,
                 private warningsService: WarningsService,
-                resourcesComponent: ResourcesComponent,
+                private resourcesComponent: ResourcesComponent,
+                changeDetectorRef: ChangeDetectorRef,
                 viewFacade: ViewFacade,
                 loading: Loading,
                 menuService: Menus) {
 
-        super(resourcesComponent, viewFacade, loading, menuService);
+        super(viewFacade, loading, menuService, changeDetectorRef);
         resourcesComponent.listenToClickEvents().subscribe(event => this.handleClick(event));
         this.syncService.statusNotifications().subscribe(() => this.update(this.documents));
     }
@@ -108,6 +108,12 @@ export class GridListComponent extends BaseList implements OnChanges {
         await this.update(changes['documents'].currentValue);
         this.loading.stop();
         this.changeDetectorRef.detectChanges();
+    }
+
+
+    ngOnDestroy() {
+        
+        this.removeListeners();
     }
 
 
@@ -169,6 +175,9 @@ export class GridListComponent extends BaseList implements OnChanges {
                 break;
             case 'edit-qr-code':
                 await this.resourcesComponent.editQRCode(document);
+                break;
+            case 'edit-workflow':
+                await this.resourcesComponent.editWorkflow([document]);
                 break;
             case 'warnings':
                 await this.warningsService.openModal(document);

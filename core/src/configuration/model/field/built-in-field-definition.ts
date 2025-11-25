@@ -7,10 +7,10 @@ export interface BuiltInFieldDefinition extends LibraryFieldDefinition {
     visible?: boolean;
     editable?: boolean;
     selectable?: boolean;
-    mandatory?: true;
+    required?: boolean;
+    onlySubcategory?: boolean;
     fixedInputType?: true;
     valuelistFromProjectField?: string;
-    allowOnlyValuesOfParent?: boolean;
     maxCharacters?: number;
     constraintName?: string; // For input type derivedRelation
 }

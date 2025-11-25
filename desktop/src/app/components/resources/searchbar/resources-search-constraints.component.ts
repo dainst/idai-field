@@ -4,6 +4,7 @@ import { Datastore, Field, ProjectConfiguration, Labels } from 'idai-field-core'
 import { ViewFacade } from '../../../components/resources/view/view-facade';
 import { SearchConstraintsComponent } from '../../widgets/search-constraints.component';
 import { ResourcesSearchBarComponent } from './resources-search-bar.component';
+import { Menus } from '../../../services/menus';
 
 
 @Component({
@@ -26,9 +27,10 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
                 datastore: Datastore,
                 renderer: Renderer2,
                 private viewFacade: ViewFacade,
+                menuService: Menus,
                 labels: Labels) {
 
-        super(resourcesSearchBarComponent, projectConfiguration, datastore, renderer, labels);
+        super(resourcesSearchBarComponent, projectConfiguration, datastore, renderer, menuService, labels);
 
         this.initializeDefaultFields();
 
@@ -67,13 +69,15 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
 
         this.defaultFields = [];
 
+        if (this.viewFacade.isInWorkflowManagement()) return;
+
         this.defaultFields.push({
             name: 'isChildOf',
             inputType: 'default',
             constraintIndexed: true
         });
 
-        if (!this.viewFacade.isInTypesManagement()) {
+        if (!this.viewFacade.isInTypesManagement() && !this.viewFacade.isInInventoryManagement()) {
             this.defaultFields.push({
                 name: 'geometry',
                 inputType: 'default',

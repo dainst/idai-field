@@ -1,6 +1,7 @@
 import { Observer, Observable } from 'rxjs';
 import { to } from 'tsfun';
-import { FieldDocument, ObserverUtil, ProjectConfiguration, IndexFacade, Datastore, Named } from 'idai-field-core'
+import { FieldDocument, ObserverUtil, ProjectConfiguration, IndexFacade, Datastore, Named,
+    SortMode } from 'idai-field-core';
 import { ResourcesState } from './state/resources-state';
 import { StateSerializer } from '../../../services/state-serializer';
 import { ViewState } from './state/view-state';
@@ -50,7 +51,8 @@ export class ResourcesStateManager {
 
     public resetForE2E = () => this.resourcesState = ResourcesState.makeDefaults();
 
-    public isInSpecialView = () => this.isInOverview() || this.isInTypesManagement() || this.isInInventoryManagement();
+    public isInSpecialView = () => this.isInOverview() || this.isInTypesManagement() || this.isInInventoryManagement()
+        || this.isInWorkflowManagement();
 
     public isInOverview = () => this.resourcesState.view === 'project';
 
@@ -59,6 +61,8 @@ export class ResourcesStateManager {
     public isInTypesManagement = () => this.resourcesState.view === 'types';
 
     public isInInventoryManagement = () => this.resourcesState.view === 'inventory';
+
+    public isInWorkflowManagement = () => this.resourcesState.view === 'workflow';
 
     public getCurrentOperation = (): FieldDocument|undefined =>
         ResourcesState.getCurrentOperation(this.resourcesState);
@@ -75,19 +79,21 @@ export class ResourcesStateManager {
     public getInventoryCategoryNames = (): string[] => this.projectConfiguration.getInventoryCategories()
         .map(Named.toName);
 
+    public getWorkflowCategoryNames = (): string[] => this.projectConfiguration.getWorkflowCategories()
+        .map(Named.toName);
+
     public isInExtendedSearchMode = (): boolean => ResourcesState.isInExtendedSearchMode(this.resourcesState);
 
 
-    public async initialize(viewName: 'project'|'types'|'inventory'|string) {
+    public async initialize(viewName: 'project'|'types'|'inventory'|'workflow'|string) {
 
         if (!this.loaded) {
             this.resourcesState = await this.load();
             this.loaded = true;
         }
 
-        let currentMode: ResourcesViewMode = this.getMode();
-        if (currentMode === 'grid' && !this.isInGridListView()) currentMode = 'map';
-
+        const currentMode: ResourcesViewMode = this.getMode();
+        
         this.resourcesState.view = viewName;
 
         if (!this.isInSpecialView()) {
@@ -97,9 +103,11 @@ export class ResourcesStateManager {
 
             const state: ViewState = this.resourcesState.operationViewStates[viewName];
             if (!state.operation) state.operation = (await this.datastore.get(viewName)) as FieldDocument;
-            if (!this.tabManager.isOpen('resources', viewName)) state.mode = currentMode;
+            if (!this.tabManager.isOpen('resources', viewName)) state.mode = this.getViewModeForNewTab(currentMode);
 
             this.serialize();
+        } else if (viewName === 'workflow' && this.resourcesState.workflowState.searchContext.selected) {
+            delete this.resourcesState.workflowState.searchContext.selected;
         }
 
         this.setActiveDocumentViewTab(undefined);
@@ -154,9 +162,15 @@ export class ResourcesStateManager {
     }
 
 
-    public setCustomConstraints(constraints: { [name: string]: string}) {
+    public setCustomConstraints(constraints: { [name: string]: string }) {
 
         ResourcesState.setCustomConstraints(this.resourcesState, constraints);
+    }
+
+
+    public setSortMode(sortMode: SortMode) {
+
+        ResourcesState.setSortMode(this.resourcesState, sortMode);
     }
 
 
@@ -237,7 +251,10 @@ export class ResourcesStateManager {
 
     private notifyNavigationPathObservers() {
 
-        ObserverUtil.notify(this.navigationPathObservers, NavigationPath.clone(ResourcesState.getNavigationPath(this.resourcesState)));
+        ObserverUtil.notify(
+            this.navigationPathObservers,
+            NavigationPath.clone(ResourcesState.getNavigationPath(this.resourcesState))
+        );
     }
 
 
@@ -326,6 +343,17 @@ export class ResourcesStateManager {
         return ['TypeCatalog']
             .concat(this.projectConfiguration.getCategoryWithSubcategories('Place').map(to(Named.NAME)))
             .concat(this.projectConfiguration.getInventoryCategories().map(to(Named.NAME)));
+    }
+
+
+    private getViewModeForNewTab(currentMode: ResourcesViewMode): ResourcesViewMode {
+
+        if ((currentMode === 'grid' && !this.isInGridListView())
+                || (currentMode === 'workflow' && !this.isInWorkflowManagement())) {
+            return 'map';
+        }
+
+        return currentMode;
     }
 
 

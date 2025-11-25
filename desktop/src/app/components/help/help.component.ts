@@ -117,6 +117,8 @@ export class HelpComponent implements OnInit {
 
     public scrollToPreviousSearchResult() {
 
+        if (!this.searchResults?.length) return;
+
         if (this.searchResultIndex > 0) {
             this.scrollToSearchResult(this.searchResultIndex - 1);
         } else {
@@ -126,6 +128,8 @@ export class HelpComponent implements OnInit {
 
 
     public scrollToNextSearchResult() {
+
+        if (!this.searchResults?.length) return;
 
         if (this.searchResultIndex < this.searchResults.length - 1) {
             this.scrollToSearchResult(this.searchResultIndex + 1);

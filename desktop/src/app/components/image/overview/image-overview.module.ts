@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ProjectConfiguration, Datastore } from 'idai-field-core';
 import { imagesRouting } from './image-overview.routing';
 import { ImageOverviewComponent } from './image-overview.component';
 import { WidgetsModule } from '../../widgets/widgets.module';
@@ -14,8 +13,10 @@ import { ImageOverviewTaskbarComponent } from './image-overview-taskbar.componen
 import { ImageOverviewSearchBarComponent } from './searchbar/image-overview-search-bar.component';
 import { ImageOverviewSearchConstraintsComponent } from './searchbar/image-overview-search-constraints.component';
 import { DeleteModalComponent } from './deletion/delete-modal.component';
-import { ImageOverviewFacade } from '../../../components/image/overview/view/imageoverview-facade';
+import { ImageOverviewFacade } from './view/image-overview-facade';
 import { ImageDocumentsManager } from '../../../components/image/overview/view/image-documents-manager';
+import { ImageExportModule } from '../export/image-export.module';
+import { ImageDownloadModule } from '../download/image-download.module';
 
 
 @NgModule({
@@ -25,7 +26,9 @@ import { ImageDocumentsManager } from '../../../components/image/overview/view/i
         NgbModule,
         imagesRouting,
         WidgetsModule,
-        ImageGridModule
+        ImageGridModule,
+        ImageDownloadModule,
+        ImageExportModule
     ],
     declarations: [
         ImageOverviewComponent,
@@ -38,16 +41,8 @@ import { ImageDocumentsManager } from '../../../components/image/overview/view/i
     ],
     providers: [
         ImagesState,
-        {
-            provide: ImageDocumentsManager,
-            useClass: ImageDocumentsManager,
-            deps: [ImagesState, Datastore]
-        },
-        {
-            provide: ImageOverviewFacade,
-            useClass: ImageOverviewFacade,
-            deps: [ImageDocumentsManager, ImagesState, ProjectConfiguration]
-        }
+        ImageDocumentsManager,
+        ImageOverviewFacade
     ]
 })
 

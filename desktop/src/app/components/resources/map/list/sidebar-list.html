@@ -37,7 +37,7 @@
 
 <plus-button *ngIf="isPlusButtonShown()" id="create-document-button" [placement]="'top'"
              [preselectedCategory]="getCurrentFilterCategory()"
-             [liesWithin]="getSelectedSegmentDoc()"
+             [liesWithin]="getSelectedSegmentDocument()"
              [isRecordedIn]="viewFacade.getCurrentOperation()"
              [status]="getPlusButtonStatus()"></plus-button>
 <loading-icon></loading-icon>

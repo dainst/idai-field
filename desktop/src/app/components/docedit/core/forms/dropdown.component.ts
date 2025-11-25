@@ -1,6 +1,5 @@
-import { Component, Input, OnChanges } from '@angular/core';
-import { Datastore, Labels, Field, Valuelist, ValuelistUtil, Hierarchy, Resource,
-    ProjectConfiguration } from 'idai-field-core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Datastore, Labels, Field, Valuelist, ValuelistUtil, Resource } from 'idai-field-core';
 
 
 @Component({
@@ -19,15 +18,15 @@ export class DropdownComponent implements OnChanges {
     @Input() fieldContainer: any;
     @Input() field: Field;
 
+    @Output() onChanged: EventEmitter<void> = new EventEmitter<void>();
+
     public valuelist: Valuelist;
+    public values: string[];
 
 
     constructor(private datastore: Datastore,
-                private labels: Labels,
-                private projectConfiguration: ProjectConfiguration) {}
+                private labels: Labels) {}
 
-
-    public getValues = () => this.valuelist ? this.labels.orderKeysByLabels(this.valuelist) : [];
 
     public getLabel = (valueId: string) => this.labels.getValueLabel(this.valuelist, valueId);
 
@@ -37,10 +36,10 @@ export class DropdownComponent implements OnChanges {
         this.valuelist = ValuelistUtil.getValuelist(
             this.field,
             await this.datastore.get('project'),
-            this.projectConfiguration,
-            await Hierarchy.getParentResource(id => this.datastore.get(id), this.resource),
             this.fieldContainer[this.field.name]
         );
+
+        this.values = this.getValues();
     }
 
 
@@ -51,11 +50,21 @@ export class DropdownComponent implements OnChanges {
         } else {
             this.fieldContainer[this.field.name] = newValue;
         }
+        
+        this.onChanged.emit();
     }
 
 
     public hasEmptyValuelist(): boolean {
 
         return this.valuelist && Object.keys(this.valuelist.values).length === 0;
+    }
+
+
+    private getValues() {
+
+        return this.valuelist
+            ? this.labels.orderKeysByLabels(this.valuelist)
+            : [];
     }
 }

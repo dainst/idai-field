@@ -4,6 +4,8 @@ import { Document, ProjectConfiguration, CategoryForm, Datastore, Labels, Valuel
 import { ImageMetadata } from '../../../services/imagestore/file-metadata';
 import { ImagesState } from '../overview/view/images-state';
 import { AngularUtility } from '../../../angular/angular-utility';
+import { Menus } from '../../../services/menus';
+import { MenuContext } from '../../../services/menu-context';
 
 
 /**
@@ -36,7 +38,8 @@ export class ImageUploadMetadataModalComponent implements OnInit {
                 private projectConfiguration: ProjectConfiguration,
                 private imagesState: ImagesState,
                 private datastore: Datastore,
-                private labels: Labels) {
+                private labels: Labels,
+                private menuService: Menus) {
 
         this.topLevelCategories = [projectConfiguration.getCategory('Image')];
 
@@ -63,7 +66,9 @@ export class ImageUploadMetadataModalComponent implements OnInit {
 
     public onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.MODAL) {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
 

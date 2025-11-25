@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { ChangesStream, Datastore, DocumentCache, IdGenerator, IndexFacade, PouchdbDatastore,
     ProjectConfiguration } from 'idai-field-core';
 import { SettingsProvider } from '../settings/settings-provider';
-import { ExpressServer } from '../express-server';
+import { ExpressServer } from '../express-server/express-server';
 
 const PouchDB = window.require('pouchdb-browser');
 

@@ -149,6 +149,11 @@ const getTemplate = (mainWindow, context, config) => {
             click: () => mainWindow.webContents.send('menuItemClicked', 'resources/inventory'),
             enabled: isDefaultContext(context)
         }, {
+            label: messages.get('menu.tools.workflow'),
+            accelerator: 'CmdOrCtrl+J',
+            click: () => mainWindow.webContents.send('menuItemClicked', 'resources/workflow'),
+            enabled: isDefaultContext(context)
+        }, {
             label: messages.get('menu.tools.matrix'),
             accelerator: 'CmdOrCtrl+Y',
             click: () => mainWindow.webContents.send('menuItemClicked', 'matrix'),
@@ -273,7 +278,7 @@ const getTemplate = (mainWindow, context, config) => {
 
     if (process.platform === 'darwin') {
         // Remove 'Settings' option & separator from 'Tools' menu
-        template[3].submenu.splice(9, 2);
+        template[3].submenu.splice(10, 2);
 
         // Remove 'about' option from 'Help' menu
         template[6].submenu.splice(0, 1);

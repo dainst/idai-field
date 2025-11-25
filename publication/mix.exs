@@ -9,7 +9,8 @@ defmodule FieldPublication.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      listeners: [Phoenix.CodeReloader]
     ]
   end
 
@@ -33,7 +34,7 @@ defmodule FieldPublication.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix_live_view, "~> 1.0"},
+      {:phoenix_live_view, "~> 1.1"},
       {:phoenix_live_dashboard, "~> 0.8"},
       {:phoenix_ecto, "~> 4.5.1"},
       {:phoenix_live_reload, "~> 1.5", only: :dev},
@@ -51,11 +52,12 @@ defmodule FieldPublication.MixProject do
       {:telemetry_poller, "~> 1.1"},
       {:gettext, "~> 0.26"},
       {:jason, "~> 1.4"},
-      {:plug_cowboy, "~> 2.7"},
+      {:bandit, "~> 1.8"},
       {:iso639_elixir, "~> 0.2.1"},
       {:cachex, "~> 4.0"},
       {:vix, "~> 0.33.0"},
-      {:iiif_image_plug, git: "https://github.com/dainst/iiif_image_plug"}
+      {:cors_plug, "~> 3.0"},
+      {:iiif_image_plug, "~> 0.7"}
     ]
   end
 

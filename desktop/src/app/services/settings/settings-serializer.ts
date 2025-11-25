@@ -28,7 +28,9 @@ export class SettingsSerializer {
         configToWrite['languages'] = settings.languages;
         configToWrite['isAutoUpdateActive'] = settings.isAutoUpdateActive;
         configToWrite['hostPassword'] = settings.hostPassword;
+        configToWrite['allowLargeFileUploads'] = settings.allowLargeFileUploads;
         configToWrite['hideHiddenFieldsInConfigurationEditor'] = settings.hideHiddenFieldsInConfigurationEditor;
+        configToWrite['highlightCustomElements'] = settings.highlightCustomElements;
 
         configToWrite['syncTargets'] = Object.keys(settings.syncTargets).reduce((result, projectIdentifier) => {
             const syncTarget = settings.syncTargets[projectIdentifier];
@@ -44,12 +46,20 @@ export class SettingsSerializer {
             configToWrite['imagestorePath'] = settings.imagestorePath;
         }
 
+        if (settings.backupDirectoryPath) {
+            configToWrite['backupDirectoryPath'] = settings.backupDirectoryPath;
+        }
+
         if (settings.dbs) {
             configToWrite['dbs'] = settings.dbs;
         }
 
         if (settings.projectNames) {
             configToWrite['projectNames'] = settings.projectNames;
+        }
+
+        if (settings.keepBackups) {
+            configToWrite['keepBackups'] = settings.keepBackups;
         }
 
         return this.writeConfigFile(configToWrite);

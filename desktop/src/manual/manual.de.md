@@ -1,6 +1,6 @@
 # Erste Schritte
 
-Beim ersten Start der Anwendung werden Sie dazu aufgefordert, Ihren Namen einzugeben. Empfohlen wird, Vor- und Nachnamen anzugeben. Der eingetragene Name wird bei allen von Ihnen vorgenommenen Änderungen in der Datenbank hinterlegt und erleichtert die gemeinsame Bearbeitung von Datensätzen im Projekt, indem bei der Datensynchronisation Änderungen eindeutig zugeordnet werden können. Per Klick auf den Namen oben rechts in der Navigationsleiste oder über das Untermenü **Einstellungen**, das Sie über das Menü "Field" (MacOS) bzw. "Werkzeuge" (Windows) erreichen, können Sie den Namen der Benutzerin/des Benutzers zu einem späteren Zeitpunkt ändern.
+Beim ersten Start der Anwendung werden Sie dazu aufgefordert, Ihren Namen einzugeben. Empfohlen wird, Vor- und Nachnamen anzugeben. Der eingetragene Name wird bei allen von Ihnen vorgenommenen Änderungen in der Datenbank hinterlegt und erleichtert die gemeinsame Bearbeitung von Datensätzen im Projekt, indem bei der Datensynchronisation Änderungen eindeutig zugeordnet werden können. Per Klick auf den Namen oben rechts in der Navigationsleiste oder über das Untermenü **Einstellungen**, das Sie über das Menü "Field" (macOS) bzw. "Werkzeuge" (Windows und Linux) erreichen, können Sie den Namen der Benutzerin/des Benutzers zu einem späteren Zeitpunkt ändern.
 
 Sie befinden sich zunächst im Testprojekt, das es Ihnen ermöglicht, die Funktionen des Programms anhand einiger Beispieldaten auszuprobieren. Bitte beachten Sie, dass neu angelegte Datensätze nach einem Neustart der Anwendung gelöscht und alle Änderungen zurückgesetzt werden, solange das Testprojekt ausgewählt ist. Aus diesem Grund findet im Testprojekt grundsätzlich keine Synchronisation mit anderen Field-Desktop-Installationen oder Field-Servern statt.
 
@@ -9,9 +9,6 @@ Um mit Field Desktop produktiv zu arbeiten und ein eigenes Projekt anzulegen, so
 1. Rufen Sie im Menü "Projekt" den Menüpunkt **Neu...** auf, um ein eigenes Projekt anzulegen. Sie haben die Wahl zwischen mehreren Voreinstellungen für die Projektkonfiguration: Wählen Sie "Standard" für die umfangreiche Field-Standardkonfiguration oder eine der "Basis"-Optionen, wenn Sie lediglich mit einem Grundgerüst an voreingestellten Kategorien und Feldern starten möchten. Legen Sie außerdem die Sprachen fest, in denen innerhalb des Projekts Daten eingegeben werden sollen. Geben Sie zuletzt die gewünschte Projektkennung sowie optional einen Projektnamen für jede der ausgewählten Sprachen ein.
 
 2. Sobald das neue Projekt geladen wurde, können Sie über das Menü "Projekt" ➝ "Eigenschaften" allgemeine Projektdaten eingeben. Hier sollten Sie zunächst die Listen der **Teammitglieder** (Feld "Team" in der Sektion "Projekt") und der **Kampagnen** (Feld "Kampagnen", ebenfalls in der Sektion "Projekt") anlegen. Sie können diese Listen zu einem späteren Zeitpunkt jederzeit erweitern.
-
-Verwenden Sie das Untermenü **Backup erstellen...**, das Sie über das Menü "Projekt" erreichen, um regelmäßig
-Sicherungen Ihrer Projektdaten anzulegen.
 
 
 <hr>
@@ -26,11 +23,7 @@ Verwenden Sie den grünen Plus-Button unten in der Ressourcenliste, um eine neue
 
 <p align="center"><img src="images/de/resources/create_operation.png" alt="Maßnahmen-Ressource erstellen"/></p>
 
-Dabei wählen Sie in einem ersten Schritt die Kategorie der Maßnahme aus und können anschließend optional eine
-Geometrie für die neue Ressource anlegen. Schließlich öffnet sich der Editor, in dem Sie sämtliche Daten der
-Maßnahme eintragen können. Je nach gewählter Maßnahmenkategorie stehen unterschiedliche Felder zur Auswahl,
-die jeweils in Gruppen aufgeteilt sind. Zwischen den Feldgruppen können Sie jederzeit per Klick auf einen der
-Buttons auf der linken Seite wechseln.
+Dabei wählen Sie in einem ersten Schritt die Kategorie der Maßnahme aus (z. B. "Schnitt" oder "Bauwerk") und können anschließend optional eine Geometrie für die neue Ressource auf der Karte anlegen. Schließlich öffnet sich der Editor, in dem Sie sämtliche Daten der Maßnahme eintragen können. Je nach gewählter Maßnahmenkategorie stehen dabei unterschiedliche Felder zur Auswahl (siehe Abschnitt *Ressourcen bearbeiten*).
 
 Bevor die Maßnahme über den grünen Speichern-Button gesichert werden kann, muss in jedem Fall das Feld
 **Bezeichner** in der Gruppe "Stammdaten" ausgefüllt werden.
@@ -67,8 +60,7 @@ sich mehrere Ressourcen gleichzeitig selektieren. Nach einem Rechtsklick auf ein
 Ressourcen öffnet sich ein Kontextmenü, das die folgenden Optionen bereitstellt:
 
 * *Warnungen anzeigen*: Zeigt die für diese Ressource vorliegenden Warnungen an (nur verfügbar für Ressourcen mit Warnungen, siehe Kapitel *Warnungen*)
-* *Bearbeiten*: Öffnet den Editor (alternativ auch per Doppelklick auf den Ressourceneintrag in der Liste
-erreichbar)
+* *Bearbeiten*: Öffnet den Ressourceneditor (siehe Abschnitt *Ressourcen bearbeiten*). Der Editor ist alternativ auch per Doppelklick auf den Ressourceneintrag in der Liste aufrufbar.
 * *Bilder verknüpfen*: Öffnet ein Fenster, in dem Bilder mit der gewählten Ressource verknüpft bzw. verknüpfte Bilder entfernt werden können
 * *QR-Code hinzufügen*: Öffnet ein Fenster, in dem ein neuer QR-Code für die Ressource generiert werden bzw. ein bestehender QR-Code per Kamera-Scan übernommen werden kann
 * *QR-Code verwalten*: Zeigt den QR-Code der Ressource an und erlaubt den Druck eines QR-Code-Etiketts (alternativ auch über den QR-Code-Button rechts im Listenelement der Ressource erreichbar)
@@ -76,12 +68,65 @@ erreichbar)
 Ressource unterzuordnen
 * *Löschen*: Entfernt Ressourcen nach einer Sicherheitsabfrage (optional können außerdem alle Bilder entfernt werden,
 die ausschließlich mit den zu löschenden Ressourcen verknüpft sind)
+* *Workflow dokumentieren*: Zeigt die mit den ausgewählten Ressourcen verknüpften Prozesse an und ermöglicht es, neue Prozesse anzulegen (nur verfügbar für Kategorien, die als Zielkategorie der Relation "Durchgeführt an" einer Prozess-Kategorie konfiguriert wurden)
 * *Aufbewahrungsort scannen*: Setzt einen neuen Aufbewahrungsort für die Ressource, indem der QR-Code des Aufbewahrungsortes per Kamera-Scan eingelesen wird (nur verfügbar für Ressourcen der Kategorien "Fund", "Fundkollektion" und "Probe" sowie der entsprechenden Unterkategorien)
 
 Darüber hinaus stellt das Kontextmenü Funktionen zum Anlegen bzw. Bearbeiten von Geometrien bereit. Bitte beachten Sie,
 dass bei Auswahl mehrerer Ressourcen ausschließlich die Optionen *Verschieben* und *Löschen* verfügbar sind. Optionen zum Hinzufügen oder Verwalten von QR-Codes sind ausschließlich verfügbar, wenn die Verwendung von QR-Codes für die entsprechende Kategorie im Konfigurationseditor eingerichtet wurde (siehe Abschnitt *Kategorien bearbeiten* im Kapitel *Konfiguration*).
 
 <p align="center"><img src="images/de/resources/context_menu.png" alt="Kontextmenü"/></p>
+
+
+## Ressourcen bearbeiten
+
+Über das Kontextmenü oder einen Doppelklick auf einen Eintrag in der Ressourcenliste kann der Editor aufgerufen werden, in dem die Daten der ausgewählten Ressource bearbeitet werden können. Das Eingabeformular richtet sich dabei nach der Kategorie der Ressource (z. B. "Schnitt" oder "Fund") und kann im Konfigurationseditor festgelegt werden (siehe Kapitel *Projektkonfiguration*).
+
+Die für die Kategorie zur Verfügung stehenden Felder sind in mehrere Gruppen eingeteilt (z. B. "Stammdaten", "Maße", "Lage/Kontext"). Klicken Sie auf einen der Gruppen-Buttons im linken Bereich des Editors, werden im rechten Bereich des Editors die Felder der jeweiligen Gruppe angezeigt. Jedem Feld ist in der Projektkonfiguration ein bestimmter Eingabetyp zugeordnet, der bestimmt, welche Art von Daten in das Feld eingetragen werden können (z. B. "Einzeiliges Textfeld", "Datum", "Längenangabe"). Eine Auflistung aller Eingabetypen finden Sie im Unterkapitel *Felder* des Kapitels *Projektkonfiguration*.
+
+Alle Änderungen, die Sie im Editor vornehmen, werden erst gesichert, nachdem Sie den Button "Speichern" betätigt haben.
+
+
+### Informationen über Felder und Werte einsehen
+
+Zu Feldern und Wertelisten können in der Projektkonfiguration Beschreibungstexte sowie Verweise auf Webseiten mit zusätzlichen Informationen hinterlegt werden, die als Hilfestellung bei der Dateneingabe dienen können. Sind solche zusätzlichen Informationen für ein Feld oder einen Wert innerhalb einer Werteliste verfügbar, wird dies durch eine gepunktete Linie angezeigt, die erscheint, wenn Sie mit dem Mauszeiger auf den entsprechenden Feld bzw. Wert zeigen.
+
+<p align="center"><img src="images/de/resources/information_underline.png" alt="Informationen einsehen"/></p>
+
+Durch einen **Rechtsklick** können Sie ein Popup-Fenster öffnen, in dem der Beschreibungstext und/oder als Verweise eingetragene Links zu externen Webseiten angezeigt werden.
+
+
+### Kategorie wechseln
+
+Links in der Kopfzeile des Editors wird das Symbol der Kategorie angezeigt, der die ausgewählte Ressource angehört. Handelt es sich bei der Kategorie um eine Oberkategorie oder eine ihrer Unterkategorien, so können Sie an dieser Stelle zu einer anderen Unterkategorie oder zur Oberkategorie selbst wechseln. Angezeigt wird diese Möglichkeit durch einen kleinen blauen Button mit einem Pfeil-Symbol.
+
+<p align="center"><img src="images/de/resources/change_category.png" alt="Kategorie wechseln"/></p>
+
+Klicken Sie auf den Button, um aus einer Liste die gewünschte Kategorie auszuwählen. Im Editor wird nun das Formular der neu ausgewählten Kategorie angezeigt. Der Wechsel selbst wird allerdings erst beim Klick auf den "Speichern"-Button vollzogen.
+
+*Beispiel*: Die Oberkategorie "Fund" verfügt unter anderem über die Unterkategorien "Ziegel", "Münze" und "Keramik". Gehört eine Ressource der Kategorie "Ziegel" an, können Sie jederzeit zur Oberkategorie "Fund" oder einer der anderen Unterkategorien ("Münze" oder "Keramik") wechseln. Ein Wechsel zu einer anderen Kategorie (z. B. "Schnitt") ist dagegen nicht möglich.
+
+**Wichtig**: Bitte beachten Sie, dass bereits eingetragene Felddaten beim Wechsel der Kategorie verloren gehen können, wenn das entsprechende Feld für das Formular der neu ausgewählten Kategorie nicht konfiguriert ist. In diesem Fall wird beim Wechsel eine Warnung angezeigt. Wechseln Sie vor dem Speichern zur ursprünglichen Kategorie zurück, bleiben alle Felddaten erhalten.
+
+Ein Kategoriewechsel ist nicht möglich, wenn die Kategorie zur Oberkategorie "Maßnahme" oder "Prozess" gehört.
+
+
+### Ressourcen mehrfach erstellen
+
+Beim Anlegen einer neuen Ressource haben Sie die Möglichkeit, mehrere Ressourcen gleichzeitig zu erstellen. Klicken Sie dazu auf den Button mit dem "Pfeil nach unten"-Symbol rechts neben dem "Speichern"-Button und wählen Sie in dem sich öffnenden Dropdown-Menü die Option "Mehrfach erstellen". Geben Sie nun die Anzahl der insgesamt zu erstellenden Ressourcen ein und bestätigen Sie Ihre Eingabe mit einem Klick auf den Button "Ressourcen erstellen".
+
+Bei der mehrfachen Erstellung von Ressourcen werden für jede Ressource diejenigen Felddaten eingetragen, die Sie im Formular des Ressourceneditors eingetragen haben. Eingetragene Relationen werden lediglich für die erste erstellte Ressource gespeichert und **nicht** für angelegte Kopien übernommen.
+
+Der eingetragene Wert im Feld "Bezeichner" wird bei den zusätzlich angelegten Kopien jeweils um einen Zähler ergänzt, um sicherzustellen, dass jede Ressource einen einzigartigen Bezeichner besitzt. Haben Sie im Feld "Bezeichner" bereits einen Wert eingetragen, der einen Zähler enthält, so wird dieser fortgeführt.
+
+*Beispiel*: Sie haben im Feld "Bezeichner" den Wert "ABC" eingegeben und möchten drei Ressourcen anlegen. Die weiteren angelegten Ressourcen erhalten automatisch die Bezeichner "ABC2" und "ABC3".
+Haben Sie dagegen den Wert "ABC15" eingegeben, erhalten die weiteren angelegten Ressourcen die Bezeichner "ABC16" und "ABC17".
+
+
+### Ressourcen vervielfältigen
+
+Sie können Kopien einer bereits bestehenden Ressource anlegen, indem Sie im Ressourceneditor den Button mit dem "Pfeil nach unten"-Symbol rechts neben dem "Speichern"-Button anklicken und in dem sich öffnenden Dropdown-Menü die Option "Vervielfältigen" wählen. Geben Sie nun die Anzahl der anzulegenden Kopien an (die bereits existierende Ressource wird nicht mitgezählt) und bestätigen Sie Ihre Eingabe mit einem Klick auf den Button "Ressourcen speichern".
+
+Wie bei der mehrfachen Erstellung von Ressourcen werden mit Ausnahme von Relationen alle eingetragene Felddaten für die angelegten Kopien übernommen. Der Bezeichner wird entsprechend um einen Zähler ergänzt bzw. ein bereits vorhandener Zähler fortgeführt (siehe Abschnitt *Ressourcen mehrfach erstellen*).
 
 
 <hr>
@@ -107,7 +152,7 @@ Unterstützte Bildformate sind *jpg/jpeg*, *png* und *tif/tiff*.
 
 ## Bildvarianten
 
-Für jedes importierte Bild wird von der Anwendung eine Kopie sowie eine kleinere Version als Vorschaubild erstellt und im **Bilderverzeichnis** gespeichert, dessen Pfad Sie in den Einstellungen unter "Erweiterte Einstellungen" auslesen können. Die Dateien in diesem Ordner werden von der Anwendung verwaltet und dürfen nicht manuell bearbeitet, umbenannt oder gelöscht werden, da es ansonsten zu Fehlern bei der Anzeige oder der Synchronisation von Bildern kommen kann.
+Für jedes importierte Bild wird von der Anwendung eine Kopie sowie eine kleinere Version als Vorschaubild erstellt und im **Bilderverzeichnis** gespeichert, dessen Pfad Sie in den Einstellungen unter "Erweiterte Optionen" auslesen können. Die Dateien in diesem Ordner werden von der Anwendung verwaltet und dürfen nicht manuell bearbeitet, umbenannt oder gelöscht werden, da es ansonsten zu Fehlern bei der Anzeige oder der Synchronisation von Bildern kommen kann.
 
 Insgesamt verwaltet die Anwendung für jedes Bild bis zu drei verschiedene Varianten:
 * *Originalbild*: Die unveränderte Bilddatei, wie sie in das Projekt importiert wurde
@@ -134,6 +179,21 @@ Um importierte Bilder wieder aus dem Projekt zu entfernen, selektieren Sie die e
 <p align="center"><img src="images/de/images/delete_button.png" alt="Button 'Löschen'"/></p>
 
 Beachten Sie, dass dabei auch die entsprechenden Dateien im Bilderverzeichnis des Projekts gelöscht werden (bei einer bestehenden Synchronisationsverbindung auch auf anderen Rechnern). Verknüpfungen mit Ressourcen gehen beim Löschen verloren.
+
+
+### Originalbilder herunterladen
+
+Sollte die Originaldatei eines Bildes nicht auf dem Rechner vorhanden sein, können Sie sie auch einzeln herunterladen, ohne das Herunterladen von Originalbildern für das gesamte Projekt zu aktivieren. Selektieren Sie die gewünschten Bilder dazu in der Bilderverwaltung (oder rufen Sie sie aus einem anderen Teil der Anwendung heraus auf) und klicken Sie den Button "Originalbilder herunterladen". Die Bilddateien werden nun geladen.
+
+Bitte beachten Sie, dass diese Funktion nur dann zur Verfügung steht, wenn über das Menü "Projekt" ➝ "Synchronisieren..." ein gültiges Synchronisationsziel für das Projekt eingetragen wurde (siehe Kapitel *Synchronisation*).
+
+
+### Originalbilder exportieren
+
+Um die Original-Bilddateien aus Field Desktop zu exportieren, selektieren Sie die Bilder zunächst in der Bilderverwaltung (oder rufen Sie sie aus einem anderen Teil der Anwendung heraus auf) und klicken Sie den Button "Exportieren". Es erscheint ein Fenster, in dem Sie das Verzeichnis auswählen können, in das die Bilddateien exportiert werden sollen. Sie haben außerdem die Wahl zwischen zwei verschiedenen Optionen zur Benennung der Dateien:
+
+* *Bezeichner*: Die Dateien erhalten den Bezeichner als Dateinamen, den die entsprechenden Bilder derzeit im Projekt haben.
+* *Ursprünglicher Dateiname*: Die Dateien werden unter denjenigen Namen exportiert, unter denen sie ursprünglich in das Projekt importiert wurden.
 
 
 ## Bilder mit Ressourcen verknüpfen
@@ -236,7 +296,7 @@ können Maßnahmenkategorien gewählt werden, in der Bilderverwaltung Bildkatego
 
 ### Textfilter
 
-Suchbegriffe werden derzeit mit den Feldern "Bezeichner" und "Kurzbeschreibung" von Ressourcen abgeglichen. 
+Suchbegriffe werden mit den Feldern "Bezeichner" und "Kurzbeschreibung" von Ressourcen abgeglichen. 
  
 *Beispiel:*
  
@@ -488,7 +548,8 @@ Bei einem Rechtsklick auf eine Kategorie wird ein Kontextmenü eingeblendet, das
 
 Für von Ihnen angelegte, projektspezifische Kategorien können Sie darüber hinaus folgende Eigenschaften festlegen:
 * *Beschreibung*: Ein Beschreibungstext, der darüber informiert, in welchen Kontexten die Kategorie verwendet werden sollte.
-* *Verweise*: Geben Sie hier URLs an, wenn Sie auf weitere Informationen zur Kategorie oder Kategoriedefinitionen in anderen Systemen verweisen möchten.
+* *Allgemeine Verweise*: URLs zu Webseiten, über die weitere Informationen zur Kategorie abgerufen werden können (siehe Abschnitt *Verweise*).
+* *Semantische Verweise*: Verknüpfungen mit verwandten Konzepten in anderen Systemen (siehe Abschnitt *Verweise*).
 
 
 #### QR-Codes
@@ -560,7 +621,8 @@ Bei einem Rechtsklick auf ein Feld wird ein Kontextmenü eingeblendet, das die f
 
 * *Anzeigename*: Der Name des Feldes, der in allen Bereichen der Anwendung angezeigt wird. Sie können Bezeichnungen für unterschiedliche Sprachen eintragen.
 * *Beschreibung*: Ein Beschreibungstext, der darüber informiert, welche Daten in das Feld eingetragen werden sollen. Dieser Text wird im Ressourceneditor als Tooltip des Info-Icons neben dem Anzeigenamen des Feldes eingeblendet und soll als Hilfestellung bei der Dateneingabe dienen.
-* *Verweise*: Geben Sie hier URLs an, um auf weitere Informationen zum Feld oder zugrunde liegenden Definitionen in anderen Systemen zu verweisen.
+* *Allgemeine Verweise*: URLs zu Webseiten, über die weitere Informationen zum Feld abgerufen werden können (siehe Abschnitt *Verweise*).
+* *Semantische Verweise*: Verknüpfungen mit verwandten Konzepten in anderen Systemen (siehe Abschnitt *Verweise*).
 
 
 ### Eingabetyp ändern
@@ -622,16 +684,26 @@ Auswahl eines oder mehrerer Werte aus einer Werteliste
 <p align="center"><img src="images/de/configuration/input_type_checkboxes.png" alt="Eingabetyp 'Checkboxen'"/></p>
 
 #### Datum
-Auswahl eines Datums aus einem Kalender. Über das Eingabefeld können auch lediglich Monats- oder Jahresangaben eingetragen werden.
+Auswahl eines Datums aus einem Kalender. Über das Eingabefeld können auch lediglich Monats- oder Jahresangaben eingetragen werden. Optional kann auch eine Uhrzeit angegeben werden. Zu den weiteren Konfigurationsmöglichkeiten siehe den Abschnitt *Konfiguration von Datumsfeldern*.
 <p align="center"><img src="images/de/configuration/input_type_date.png" alt="Eingabetyp 'Datum'"/></p>
 
 #### Datierungsangabe
 Angabe einer oder mehrerer Datierungen. Mögliche Datierungstypen sind: Zeitraum, Exakt, Vor, Nach, Naturwissenschaftlich.
 <p align="center"><img src="images/de/configuration/input_type_dating.png" alt="Eingabetyp 'Datierungsangabe'"/></p>
 
-#### Maßangabe
-Angabe einer oder mehrerer Maßangaben. Es kann wahlweise ein Einzelwert oder ein Bereich angegeben werden. Aus der spezifizierten Werteliste werden die Auswahlmöglichkeiten für das Dropdown-Unterfeld "Gemessen an" entnommen.
-<p align="center"><img src="images/de/configuration/input_type_dimension.png" alt="Eingabetyp 'Maßangabe'"/></p>
+#### Längenangabe
+Angabe einer oder mehrerer Längenmessungen. Zur Auswahl stehen die Maßeinheiten "mm", "cm" und "m". Es kann wahlweise ein Einzelwert oder ein Bereich angegeben werden. Aus der spezifizierten Werteliste werden die Auswahlmöglichkeiten für das Dropdown-Unterfeld "Gemessen an" entnommen.
+<p align="center"><img src="images/de/configuration/input_type_dimension.png" alt="Eingabetyp 'Längenangabe'"/></p>
+
+#### Gewichtsangabe
+Angabe einer oder mehrerer Gewichtsmessungen. Zur Auswahl stehen die Maßeinheiten "mg", "g" und "kg". Es kann wahlweise ein Einzelwert oder ein Bereich angegeben werden. Aus der spezifizierten Werteliste werden die Auswahlmöglichkeiten für das Dropdown-Unterfeld "Messgerät" entnommen.
+
+<p align="center"><img src="images/de/configuration/input_type_weight.png" alt="Eingabetyp 'Gewichtsangabe'"/></p>
+
+#### Volumenangabe
+Angabe einer oder mehrerer Volumenmessungen. Zur Auswahl stehen die Maßeinheiten "ml" und "l". Es kann wahlweise ein Einzelwert oder ein Bereich angegeben werden. Aus der spezifizierten Werteliste werden die Auswahlmöglichkeiten für das Dropdown-Unterfeld "Messverfahren" entnommen.
+
+<p align="center"><img src="images/de/configuration/input_type_volume.png" alt="Eingabetyp 'Volumenangabe'"/></p>
 
 #### Literaturangabe
 Angabe eines oder mehrerer bibliographischer Verweise. Optional können Zenon-ID, DOI, Seitenzahl sowie Abbildungsnummer angegeben werden.
@@ -651,6 +723,11 @@ Verweis auf eine oder mehrere andere Ressourcen, die einer der konfigurierten Zi
 Felder können versteckt werden, indem die Einstellung *Feld anzeigen* im Feldeditor deaktiviert wird. Das Feld wird daraufhin weder in der Ressourcenansicht noch im Ressourceneditor angezeigt. Ob versteckte Felder im Konfigurationseditor angezeigt werden, hängt von der Einstellung "Versteckte Felder anzeigen" im Menü "Projektkonfiguration" ab. Bereits eingetragene Daten bleiben auch nach dem Verstecken weiterhin erhalten und werden beim erneuten Aktivieren der Option *Feld anzeigen* wieder eingeblendet. Einige Felder, die für die Funktionalität der Anwendung wesentlich sind, können nicht versteckt werden (etwa der Bezeichner); in diesen Fällen wird die Option nicht angezeigt.
 
 
+### Pflichtfelder
+
+Ein Feld kann als Pflichtfeld konfiguriert werden, indem die Option *Pflichtfeld* im Feldeditor aktiviert wird. Pflichtfelder müssen ausgefüllt werden, bevor die entsprechende Ressource gespeichert werden kann. Sind beim Aktivieren der Option bereits Ressourcen der Kategorie vorhanden, wird jeweils eine Warnung angezeigt, die auf das auszufüllende Pflichtfeld hinweist.
+
+
 ### Eingabe in mehreren Sprachen erlauben
 
 Ist die Option *Eingabe in mehreren Sprachen erlauben* aktiviert, kann für jede der konfigurierten Projektsprachen ein eigener Text in das Feld eingegeben werden. Die Einstellung kann nur für Felder der Eingabetypen "Einzeiliger Text", "Einzeiliger Text mit Mehrfachauswahl" und "Mehrzeiliger Text" ausgewählt werden und ist standardmäßig aktiviert.
@@ -661,11 +738,43 @@ Ist die Option *Eingabe in mehreren Sprachen erlauben* aktiviert, kann für jede
 Die Einstellung *Feldspezifische Suche erlauben* im Feldeditor bestimmt, ob für ein Feld eine feldspezifische Suche im erweiterten Suchmodus durchgeführt werden kann (siehe Abschnitt *Erweiterter Suchmodus* im Kapitel *Suche*). Für Felder der Kategorie "Projekt" sowie für Felder einiger Eingabetypen kann diese Einstellung nicht aktiviert werden; in diesen Fällen ist sie ausgegraut.
 
 
+### Anzeigebedingungen
+
+Über die Einstellung "Bedingung für Anzeige des Feldes" kann die Anzeige des Feldes an ein Bedingung geknüpft werden. Ist eine Bedingung gesetzt, steht das Feld bei der Dateneingabe nur dann zur Verfügung, wenn bei einem anderen Feld der gleichen Ressource ein bestimmter Wert (oder einer von mehreren Werten) gesetzt ist.
+
+Um eine Bedingung zu setzen, wählen Sie im Dropdown-Feld "Bedingung für die Anzeige des Feldes" zunächst ein anderes Feld der gleichen Kategorie aus. Zur Auswahl stehen dabei Felder der Eingabetypen "Dropdown-Liste", "Dropdown-Liste (Bereich)", "Radiobutton", "Ja / Nein" und "Checkboxen". Die möglichen Werte des gewählten Feldes werden nun angezeigt und können selektiert werden. Das aktuelle Feld wird bei der Dateneingabe nur dann angezeigt, wenn beim als Bedingung gewählten Feld mindestens einer der selektierten Werte gesetzt ist.
+
+Bitte beachten Sie, dass keine Anzeigebedingung für ein Feld gesetzt werden kann, solange es als Pflichtfeld konfiguriert ist.
+
+
 ### Werteliste wechseln
 
 Die aktuell ausgewählte Werteliste kann per Klick auf den Button "Werteliste wechseln" durch eine andere Werteliste ausgetauscht werden. Dabei kann entweder eine bestehende Werteliste ausgewählt oder eine neue Liste angelegt werden (siehe Abschnitt *Wertelisten*).
 
 Wurden bereits Daten für das Feld eingetragen, so werden diese auch dann weiterhin angezeigt, wenn die eingetragenen Werte nicht in der neuen Werteliste enthalten sind. Die entsprechenden Werte werden in diesem Fall im Ressourceneditor als inkompatibel markiert und können dort gelöscht werden; darüber hinaus wird eine entsprechende Warnung für die Ressource angezeigt.
+
+
+### Konfiguration von Datumsfeldern
+
+Ist der Eingabetyp "Datum" gewählt, erscheinen zwei zusätzliche Auswahlfelder, die eine weitere Anpassung des Datumsfeldes erlauben.
+
+
+#### Angabe der Uhrzeit
+
+Legen Sie hier fest, ob die Angabe einer Uhrzeit im Datumsfeld erlaubt ist oder nicht.
+
+* *Optional*: Bei der Eingabe kann eine Uhrzeit eingetragen werden, es kann jedoch auch lediglich ein Datum gesetzt werden.
+* *Verpflichtend*: Das Feld kann nur ausgefüllt werden, wenn zusätzlich zum Datum eine Uhrzeit eingetragen wird.
+* *Nicht erlaubt*: Die Eingabe einer Uhrzeit ist nicht möglich. Es kann lediglich ein Datum gesetzt werden.
+
+
+#### Eingabemodus
+
+Legen Sie hier fest, ob in das Feld ein Einzeldatum oder ein Datumsbereich eingetragen werden soll. Ein Datumsbereich besteht aus einem Start- und einem Enddatum.
+
+* *Wählbar*: Bei der Eingabe kann sowohl ein Einzeldatum als auch ein Datumsbereich eingetragen werden.
+* *Einzeldatum*: Es kann ausschließlich ein Einzeldatum eingetragen werden.
+* *Datumsbereich*: Es kann ausschließlich ein Datumsbereich eingetragen werden.
 
 
 ### Unterfelder
@@ -747,7 +856,8 @@ Bei einem Rechtsklick auf eine projektspezifische Werteliste wird ein Kontextmen
 Über das Kontextmenü oder per Doppelklick auf eine Werteliste kann ein Editor geöffnet werden, in dem die Eigenschaften der Werteliste bearbeitet werden können:
 
 * *Beschreibung der Werteliste*: Ein Beschreibungstext, in dem Sie nähere Informationen zur Werteliste angeben können. Dieser Text wird in der Wertelistenverwaltung bei Auswahl der Liste angezeigt.
-* *Verweise*: Geben Sie hier URLs an, um auf weitere Informationen zur Werteliste oder zugrunde liegenden Definitionen in anderen Systemen zu verweisen.
+* *Allgemeine Verweise*: URLs zu Webseiten, über die weitere Informationen zur Werteliste abgerufen werden können (siehe Abschnitt *Verweise*).
+* *Semantische Verweise*: Verknüpfungen mit verwandten Konzepten in anderen Systemen (siehe Abschnitt *Verweise*).
 * *Werte*: Tragen Sie hier über das Textfeld "Neuer Wert" den gewünschten Bezeichner eines neuen Wertes ein, der von der Werteliste angeboten werden soll. Es öffnet sich der Werte-Editor, der auch später per Klick auf den Bearbeiten-Button neben jedem Wert aufgerufen werden kann (siehe Abschnitt *Werte bearbeiten*).
 * *Automatische Sortierung*: Ist diese Option aktiviert, werden die Werte stets in alphanumerischer Reihenfolge angezeigt. Sie können die Option deaktivieren, um die Werte anschließend per Drag & Drop in die gewünschte Reihenfolge zu bringen.
 
@@ -758,7 +868,90 @@ Der Werte-Editor erlaubt es, die Eigenschaften eines Wertes anzupassen:
 
 * *Anzeigetext*: Der Anzeigetext des Wertes. Sie können Texte für unterschiedliche Sprachen eintragen.
 * *Beschreibung*: Ein Beschreibungstext, in dem Sie nähere Informationen zum Wert angeben können. Dieser Text wird im Konfigurationseditor als Tooltip für den entsprechenden Wert angezeigt.
-* *Verweise*: Geben Sie hier URLs an, um auf zugrunde liegende Definitionen in anderen Systemen zu verweisen.
+* *Allgemeine Verweise*: URLs zu Webseiten, über die weitere Informationen zum Wert abgerufen werden können (siehe Abschnitt *Verweise*).
+* *Semantische Verweise*: Verknüpfungen mit verwandten Konzepten in anderen Systemen (siehe Abschnitt *Verweise*).
+
+
+## Verweise
+
+Formulare, Felder, Wertelisten sowie deren Werte können durch Verweise mit externen Ressourcen verknüpft werden. Unterschieden wird dabei zwischen allgemeinen und semantischen Verweisen.
+
+
+### Allgemeine Verweise
+
+Allgemeine Verweise sind URLs zu Webseiten, über die weitere Informationen zum jeweiligen Element der Projektkonfiguration abgerufen werden können. Diese URLs werden im Informations-Popup angezeigt, das im Ressourceneditor über einen Rechtsklick auf das Feld bzw. den Wert eingeblendet werden kann, und können so als Hilfestellung bei der Dateneingabe dienen.
+
+
+### Semantische Verweise
+
+Semantische Verweise stellen Verknüpfungen mit verwandten Konzepten in anderen Systemen (Vokabulare, Ontologien etc.) dar und bestehen aus einem Prädikat sowie einem URI.
+
+
+#### Mapping-Relationen
+
+Als Prädikat kann eine der folgenden Relationen ausgewählt werden:
+
+* skos:exactMatch
+* skos:closeMatch
+* skos:broadMatch
+* skos:narrowMatch
+* skos:relatedMatch
+* idw:unknownMatch
+
+Die ersten fünf Relationen sind Standard-Mapping-Relationen des *Simple Knowledge Organization System (SKOS)*. *idw:unknownMatch* ist eine speziell definierte Ergänzung. Alle Relationen sind Untereigenschaften von *skos:mappingRelation* und sind – gemäß Konvention – für Verknüpfungen zwischen verschiedenen Konzeptschemata vorgesehen.
+
+Die folgenden Erläuterungen orientieren sich an der [SKOS-Referenz](https://www.w3.org/TR/skos-reference/#mapping), in der Sie weitere Informationen finden.
+
+
+##### skos:exactMatch
+
+Die Relation *skos:exactMatch* wird verwendet, um zwei Konzepte zu verknüpfen, wobei ein hohes Maß an Sicherheit angegeben wird, dass die Konzepte in einer Vielzahl von Anwendungen zur Informationsgewinnung austauschbar verwendet werden können.
+
+
+##### skos:closeMatch
+
+Die Relation *skos:closeMatch* wird verwendet, um zwei Konzepte zu verknüpfen, die so ähnlich sind, dass sie in einigen Anwendungen zur Informationsgewinnung austauschbar verwendet werden können.
+
+
+##### skos:broadMatch
+
+Die Relation *skos:broadMatch* wird verwendet, um eine hierarchische Mapping-Verbindung zwischen zwei Konzepten anzugeben, wobei das Zielkonzept als ein weiter gefasstes Konzept ausgewiesen wird (d. h. das verknüpfte Konzept umfasst das Konzept in der Field-Projektkonfiguration).
+
+Wenn [A] das Element (z. B. Feld oder Wert) der Field-Projektkonfiguration ist und [B] das durch den URI identifizierte Konzept:
+
+[A] skos:broadMatch [B] = [B] ist weiter gefasst als [A]
+
+
+##### skos:narrowMatch
+
+Die Relation *skos:narrowMatch* wird verwendet, um eine hierarchische Mapping-Verbindung zwischen zwei Konzepten anzugeben, wobei das Zielkonzept als ein enger gefasstes Konzept ausgewiesen wird (d. h. das Konzept in der Field-Projektkonfiguration umfasst das verknüpfte Konzept).
+
+Wenn [A] das Element (z. B. Feld oder Wert) in der Field-Projektkonfiguration ist und [B] das durch den URI identifizierte Konzept:
+
+[A] skos:narrowMatch [B] = [B] ist enger gefasst als [A]
+
+
+##### skos:relatedMatch
+
+Die Relation *skos:relatedMatch* wird verwendet, um eine assoziative Mapping-Verbindung zwischen zwei Konzepten anzugeben. Sie sollte eingesetzt werden, wenn zwei Konzepte miteinander in Beziehung stehen, aber keines der beiden weiter oder enger gefasst ist und sie nicht gleichwertig sind. Die Relation ist geeignet für thematische, funktionale oder kontextuelle Assoziationen (z. B. eine Verknüpfung zwischen "Amphore" und "Weinhandel").
+
+
+##### idw:unknownMatch
+
+Die Relation *idw:unknownMatch* wird verwendet, um zwei Konzepte zu verknüpfen, wobei angegeben wird, dass die Art der Zuordnung nicht bekannt ist. Sie sollte eingesetzt werden, wenn es hinreichende Anhaltspunkte dafür gibt, dass zwei Konzepte miteinander in Beziehung stehen, die genaue Art der Zuordnung (Äquivalenz, hierarchisch oder assoziativ) jedoch noch nicht festgelegt wurde.
+
+
+##### Entscheidungshilfe
+
+Gleicher Umfang und gleiche Absicht? ➝ *skos:exactMatch*
+
+Sehr ähnlich, aber mit Vorbehalten? ➝ *skos:closeMatch*
+
+Eindeutig allgemeiner/spezifischer? ➝ *skos:broadMatch* / *skos:narrowMatch*
+
+Nur assoziiert, nicht hierarchisch/äquivalent? ➝ *skos:relatedMatch*
+
+Unklar; zur Überprüfung markieren? ➝ *idw:unknownMatch*
 
 
 ## Projektsprachen auswählen
@@ -787,19 +980,75 @@ Rufen Sie die Menüoption "Projektkonfiguration" ➝ "Konfiguration exportieren.
 Über die Menüoption "Projektkonfiguration" ➝ "Konfiguration importieren..." kann die Datei anschließend wieder importiert werden, um die Konfiguration in ein anderes Projekt zu übernehmen oder den gespeicherten Stand der Konfiguration im gleichen Projekt wiederherzustellen.
 
 
-## JSON-Export-API
+<hr>
 
-Über einen API-Endpunkt kann die Projektkonfiguration im JSON-Format abgerufen werden. Während die Konfigurationsdateien, die über die Menüoption "Konfiguration exportieren..." erstellt werden können, ausschließlich den projektspezifischen Teil der Konfiguration enthalten, wird über den API-Endpunkt die komplette Konfiguration inklusive aller im Projekt verwendeten Konfigurationselemente aus den Field-Bibliotheken (Standardformulare, Wertelisten usw.) ausgegeben.
 
-Der Endpunkt ist bei geöffneter Anwendung über die folgende URL verfügbar:
+# Workflow
 
-http://localhost:3000/configuration/PROJECT
+Die Workflow-Funktionalitäten von Field Desktop ermöglichen es, die in einem Projekt durchgeführten Prozesse (z. B. Probenentnahme, Restaurierungsarbeiten, die Anfertigung von Zeichnungen usw.) zu dokumentieren.
 
-Ersetzen Sie "PROJECT" mit dem Namen des Projekts, auf dessen Konfiguration Sie zugreifen möchten.
 
-Beim Zugriff auf den API-Endpunkt muss dasjenige Passwort angegeben werden, das im Menü "Einstellungen" unter "Synchronisation" als "Eigenes Passwort" eingetragen ist. Die Angabe des Passworts erfoglt per *Basic Auth*, beim Aufruf im Browser erscheint dazu ein Eingabefenster. Die Eingabe des Usernamens ist nicht erforderlich, das entsprechende Feld kann leer bleiben.
+## Konfiguration
 
-Bitte beachten Sie, dass die JSON-Ausgabe des API-Endpunkts **nicht** über die Menüoption "Konfiguration importieren..." eingelesen werden kann. Verwenden Sie die Menüoption "Konfiguration exportieren...", um eine für diesen Zweck geeignete Konfigurationsdatei zu erhalten.
+Ein Prozess wird durch eine Ressource der Oberkategorie "Prozess" abgebildet. Die Kategorie "Prozess" selbst ist abstrakt, das heißt es können ausschließlich Ressourcen ihrer Unterkategorien angelegt werden. Um mit der Workflow-Dokumentation zu arbeiten, müssen für das Projekt daher zunächst eine oder mehrere Unterkategorien der Kategorie "Prozess" konfiguriert werden. Die Unterkategorie bestimmt, um welche Art von Prozess es sich handelt.
+
+Um eine Unterkategorie hinzuzufügen, öffnen Sie den Konfigurationseditor über das Menü "Werkzeuge" ➝ "Projektkonfiguration", stellen Sie den Kategoriefilter auf die Option "Workflow" oder "Alle" ein und klicken Sie anschließend auf den Plus-Button neben der Kategorie "Prozess". Es öffnet sich ein Fenster, in dem alle Prozess-Unterkategorien angezeigt werden, die in der Field-Kategoriebibliothek enthalten sind. Wählen Sie das gewünschte Formular einer dieser Kategorien aus oder geben Sie alternativ den Namen einer neuen Kategorie ein, um eine eigene Prozess-Unterkategorie anzulegen.
+
+In beiden Fällen haben Sie nun die Möglichkeit, die erlaubten Zielkategorien für die Relationen "Durchgeführt an" und "Ergibt" einzurichten.
+
+Die Relation "Durchgeführt an" dient zur Verknüpfung des Prozesses mit denjenigen Ressourcen, an denen er **durchgeführt** wird. Diese Relation ist ein Pflichtfeld, weshalb an dieser Stelle die Auswahl mindestens einer Zielkategorie verpflichtend ist. Wählen Sie hier beispielsweise die Kategorie "Fund" aus, dann bedeutet dies, dass Prozesse dieser Kategorie an Funden durchgeführt werden können.
+
+Die Relation "Ergibt" dient zur Verknüpfung des Prozesses mit Ressourcen, die ein **Ergebnis** des Prozesses sind. Die Angabe dieser Relation ist optional. Wenn Sie an dieser Stelle keine Zielkategorien auswählen, dann ist die Relation für diese Prozess-Unterkategorie zunächst nicht verfügbar. Sie können die Relation aber jederzeit später zum Formular hinzufügen (siehe Abschnitt *Hinzufügen von Feldern* im Kapitel *Projektkonfiguration*).
+
+Die erlaubten Zielkategorien der beiden Relationen können nachträglich angepasst werden, indem das entsprechende Relationsfeld ("Durchgeführt an" bzw. "Ergibt") der Kategorie editiert wird. Die beiden Relationsfelder befinden sich standardmäßig in der Gruppe "Workflow".
+
+Weitere Informationen zum Hinzufügen von Unterkategorien finden Sie im Abschnitt *Kategorien und Formulare* des Kapitels *Projektkonfiguration*.
+
+
+## Dokumentation
+
+Prozesse können über zwei verschiedene Wege angelegt und eingesehen werden: über die Workflow-Gesamtübersicht sowie über die Option "Workflow dokumentieren" des Ressourcen-Kontextmenüs.
+
+
+### Gesamtübersicht
+
+Eine Übersicht aller im Projekt dokumentierten Prozesse kann über das Menü "Werkzeuge" ➝ "Workflow" aufgerufen werden. Die Prozesse können wahlweise per Bezeichner oder Datum der Durchführung sortiert werden. Darüber hinaus stehen die gewohnten Möglichkeiten zum Filtern per Kategorie und Bezeichner sowie die feldspezifische Suche zur Verfügung (siehe Kapitel *Suche*). Über den Plus-Button am unteren Bildschirmrand können neue Prozesse angelegt werden.
+
+
+### Workflow für ausgewählte Ressourcen dokumentieren
+
+Um lediglich die an bestimmten Ressourcen durchgeführten Prozesse einzusehen, selektieren Sie die gewünschten Ressourcen (bei gedrückter Strg/Cmd- oder Shift-Taste auch mehrere Ressourcen gleichzeitig) und öffnen Sie per Rechtsklick das Kontextmenü. Über die Option "Workflow dokumentieren" können Sie nun ein Fenster aufrufen, in dem alle Prozesse aufgelistet werden, die an einer oder mehrerer der selektierten Ressourcen durchgeführt wurden. Das Fenster stellt außerdem erweiterte Möglichkeiten zum Anlegen und Verknüpfen von Prozessen bereit.
+
+
+#### Prozesse anlegen
+
+Über den Plus-Button am unteren Rand des Fensters können Sie neue Prozesse anlegen. Wählen Sie dabei zunächst die gewünschte Prozess-Unterkategorie aus. Zur Auswahl stehen ausschließlich Prozess-Unterkategorien, die an allen selektierten Ressourcen durchgeführt werden können. Gibt es keine entsprechende Schnittmenge, wird der Plus-Button nicht angezeigt. Sind mehrere Ressourcen selektiert, können Sie beim Klick auf den Plus-Button zwischen zwei Optionen wählen:
+
+* *Ein gemeinsamer Prozess für alle ausgewählten Ressourcen*: Es wird ein einziger neuer Prozess angelegt. Dieser Prozess wird über die Relation "Durchgeführt an" mit allen ausgewählten Ressourcen verknüpft.
+* *Ein eigener Prozess pro Ressource*: Es wird für jede der selektierten Ressourcen ein eigener neuer Prozess angelegt und jeweils über die Relation "Durchgeführt an" mit der entsprechenden Ressource verknüpft.
+
+
+#### Prozesse verknüpfen
+
+Über den blauen Link-Button am unteren Rand des Fensters können Sie bereits bestehende Prozesse mit den selektierten Ressourcen verknüpfen. Nach dem Klick auf den Button öffnet sich ein Fenster, in dem Sie nach einer Ressource suchen können. Haben Sie eine Ressource ausgewählt, erscheinen alle Prozesse, die über die Relation "Durchgeführt an" mit dieser Ressource verknüpft sind. Wählen Sie einen der Prozesse aus, um ihn mit allen selektierten Ressourcen zu verknüpfen. Bestehende Verknüpfungen des Prozesses bleiben erhalten.
+
+Zur Auswahl stehen ausschließlich Prozesse derjenigen Unterkategorien, die an allen selektierten Ressourcen durchgeführt werden können. Gibt es keine entsprechende Schnittmenge, wird der Link-Button nicht angezeigt.
+
+
+### Felder eines Prozesses
+
+Jeder Prozess verfügt über die beiden Pflichtfelder "Status" und "Datum", die für jeden Prozess ausgefüllt werden müssen.
+
+Das Feld "Status" ist ein Dropdown-Feld, in dem einer der folgenden Werte ausgewählt werden kann:
+
+* *Geplant*: Der Prozess wurde noch nicht durchgeführt, ist aber für die Zukunft geplant.
+* *Laufend*: Der Prozess wird aktuell durchgeführt, ist aber noch nicht abgeschlossen.
+* *Abgeschlossen*: Der Prozess wurde vollständig durchgeführt.
+* *Abgebrochen*: Der Prozess wurde begonnen, aber abgebrochen.
+
+Im Feld "Datum" wird das Datum der Durchführung angegeben (das sich je nach Status in der Vergangenheit, Gegenwart oder Zukunft befinden kann). Die Art der Datumsangabe kann im Konfigurationseditor angepasst werden, indem das Feld "Datum" bearbeitet wird. Standardmäßig kann optional zusätzlich zum Tag auch eine Uhrzeit angegeben werden und es ist sowohl die Angabe eines Einzeldatums als auch eines Datumsbereichs möglich. Weitere Informationen zu den Anpassungsmöglichkeiten für Datumsfelder finden Sie im Abschnitt *Konfiguration von Datumsfeldern* des Kapitels *Projektkonfiguration*.
+
+Bitte beachten Sie, dass das eingetragene Datum zum ausgewählten Status passen muss. Ist dies nicht der Fall (weil etwa der Status "Abgeschlossen" gewählt wurde, aber das eingetragene Datum in der Zukunft liegt), erscheint eine entsprechende Warnung (siehe Abschnitt *Ungültiger Status* im Kapitel *Warnungen*).
 
 
 <hr>
@@ -1049,7 +1298,15 @@ Felder des Eingabetyps "Dropdown-Liste (Bereich)" bestehen aus bis zu zwei Unter
 
 ##### Datumsfelder
 
-Für Felder des Eingabetyps "Datum" wird ein Wert im Format "Tag.Monat.Jahr" (TT.MM.JJJJ) eingetragen. Die Angaben für Tag und Monat sind optional, sodass auch lediglich ein bestimmter Monat eines Jahres bzw. ein bestimmtes Jahr angegeben werden kann.
+Felder des Eingabetyps "Datum" bestehen aus bis zu drei Unterfeldern, für die jeweils eine eigene Spalte angelegt wird:
+
+* *value*: Die Datumsangabe bei einem Einzeldatum; das Startdatum bei einem Datumsbereich
+* *endValue*: Das Enddatum bei einem Datumsbereich
+* *isRange*: Gibt an ob es sich um einen Datumsbereich handelt. Mögliche Werte sind: *true* (Datumsbereich), *false* (Einzeldatum).
+
+Die Datumsangaben werden jeweils im Format "Tag.Monat.Jahr" (TT.MM.JJJJ) eingetragen. Die Angaben für Tag und Monat sind optional, sodass auch lediglich ein bestimmter Monat eines Jahres bzw. ein bestimmtes Jahr angegeben werden kann.
+
+Darüber hinaus kann (durch ein Leerzeichen getrennt) optional eine Uhrzeit im Format "Stunden:Minuten" eingetragen werden, sofern die Angabe einer Uhrzeit für das entsprechende Feld in der Projektkonfiguration zugelassen ist. **Wichtig**: Die Uhrzeit wird stets in der Zeitzone UTC (Coordinated Universal Time, entspricht westeuropäischer Zeit/Greenwich Mean Time) angegeben.
 
 *Beispiel:*
 <div class="table-container">
@@ -1057,21 +1314,35 @@ Für Felder des Eingabetyps "Datum" wird ein Wert im Format "Tag.Monat.Jahr" (TT
     <thead>
       <tr>
         <th>identifier</th>
-        <th>date</th>
+        <th>date.value</th>
+        <th>date.endValue</th>
+        <th>date.isRange</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
+    <tr>
         <td>A</td>
-        <td>12.01.2025</td>
+        <td>19.08.2017 17:25</td>
+        <td>20.08.2017 11:09</td>
+        <td>true</td>
       </tr>
       <tr>
         <td>B</td>
-        <td>09.2008</td>
+        <td>12.01.2025</td>
+        <td></td>
+        <td>false</td>
       </tr>
       <tr>
         <td>C</td>
+        <td>09.2008</td>
+        <td>11.2008</td>
+        <td>true</td>
+      </tr>
+      <tr>
+        <td>D</td>
         <td>1995</td>
+        <td></td>
+        <td>false</td>
       </tr>
     </tbody>
   </table>
@@ -1082,7 +1353,7 @@ Für Felder des Eingabetyps "Datum" wird ein Wert im Format "Tag.Monat.Jahr" (TT
 
 Bei Feldern der Eingabetypen "Checkboxen" und "Einzeiliger Text (Liste)" (ohne Mehrsprachigkeit) wird für das Feld nur eine Spalte angelegt. Die Feldwerte werden jeweils durch ein Semikolon ohne Leerzeichen voneinander getrennt (z. B. "Granit;Kalkstein;Schiefer").
 
-Bei Feldern der Eingabetypen "Datierungsangabe", "Maßangabe", "Literaturangabe", "Kompositfeld" und "Einzeiliger Text (Liste)" (mit Mehrsprachigkeit) werden **für jeden Listeneintrag** die entsprechenden Spalten für die jeweiligen Unterfelder bzw. Sprachen angelegt. Hinter den Feldnamen wird dabei (beginnend bei 0 und durch Punkte getrennt) eine Nummer zur Identifikation des jeweiligen Eintrags eingefügt.
+Bei Feldern der Eingabetypen "Datierungsangabe", "Längenangabe", "Gewichtsangabe", "Volumenangabe", "Literaturangabe", "Kompositfeld" und "Einzeiliger Text (Liste)" (mit Mehrsprachigkeit) werden **für jeden Listeneintrag** die entsprechenden Spalten für die jeweiligen Unterfelder bzw. Sprachen angelegt. Hinter den Feldnamen wird dabei (beginnend bei 0 und durch Punkte getrennt) eine Nummer zur Identifikation des jeweiligen Eintrags eingefügt.
 
 *Beispiel für ein Feld des Eingabetyps "Einzeiliger Text (Liste)" mit Mehrsprachigkeit:*
 <div class="table-container">
@@ -1258,14 +1529,16 @@ Die Jahresangaben *begin* und *end* bestehen wiederum aus zwei Unterfeldern:
 </div>
 
 
-##### Maßangaben
+##### Längen-, Gewichts- und Volumenangaben
 
-Felder des Eingabetyps "Maßangabe" sind Listenfelder, die jeweils mehrere Maßangaben enthalten können. Eine Maßangabe besteht aus folgenden Unterfeldern, für die jeweils pro Maßangabe eine eigene Spalte angelegt wird:
+Felder der Eingabetypen "Längenangabe", "Gewichtsangabe" und "Volumenangabe" sind Listenfelder, die jeweils mehrere Einträge enthalten können. Ein Eintrag besteht aus folgenden Unterfeldern, für die jeweils pro Eintrag eine eigene Spalte angelegt wird:
 
 * *inputValue*: Der gemessene Zahlenwert.
 * *inputRangeEndValue*: Der zweite gemessene Zahlenwert, falls es sich um einen Bereich handelt.
-* *inputUnit*: Die Maßeinheit. Mögliche Werte: *mm*, *cm*, *m*.
-* *measurementPosition*: Feld "Gemessen an". Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
+* *inputUnit*: Die Maßeinheit. Mögliche Werte: *mm*, *cm*, *m* (Längenangabe) / *mg*, *g*, *kg* (Gewichtsangabe) / *ml*, *l* (Volumenangabe).
+* *measurementPosition*: Feld "Gemessen an" (nur bei Längenangaben). Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
+* *measurementDevice*: Feld "Messgerät" (nur bei Gewichtsangaben). Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
+* *measurementTechnique*: Feld "Messverfahren" (nur bei Volumenangaben). Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
 * *measurementComment*: Kommentar, mehrsprachiges Textfeld.
 * *isImprecise*: Angabe "Ungenau". Mögliche Werte sind: *true* (ja), *false* (nein).
 
@@ -1621,7 +1894,7 @@ Für Felder, in denen Werte in verschiedenen Sprachen eingetragen werden können
 
 ##### Dropdown-Listen (Bereich)
 
-Für Felder des Eingabetyps "Dropdown-Liste (Bereich)" wird ein Objekt eingetragen, das die folgenden beiden Unterfeldern enthält:
+Für Felder des Eingabetyps "Dropdown-Liste (Bereich)" wird ein Objekt eingetragen, das die folgenden beiden Unterfelder enthält:
 
 * *value*: Der Bezeichner des ausgewählten Wertes; bei zwei ausgewählten Werten der erste der beiden Werte.
 * *endValue*: Der Bezeichner des zweiten ausgewählten Wertes, falls zwei Werte ausgewählt sind.
@@ -1638,21 +1911,30 @@ Für Felder des Eingabetyps "Dropdown-Liste (Bereich)" wird ein Objekt eingetrag
 
 ##### Datumsfelder
 
-Für Felder des Eingabetyps "Datum" wird ein Wert im Format "Tag.Monat.Jahr" (TT.MM.JJJJ) eingetragen. Die Angaben für Tag und Monat sind optional, sodass auch lediglich ein Monat eines Jahres oder ein Jahr angegeben werden kann.
+Für Felder des Eingabetyps "Datum" wird ein Objekt eingetragen, das bis zu drei Unterfelder enthält:
+
+* *value*: Die Datumsangabe bei einem Einzeldatum; das Startdatum bei einem Datumsbereich
+* *endValue*: Das Enddatum bei einem Datumsbereich
+* *isRange*: Gibt an ob es sich um einen Datumsbereich handelt. Mögliche Werte sind: *true* (Datumsbereich), *false* (Einzeldatum).
+
+Die Datumsangaben werden jeweils im Format "Tag.Monat.Jahr" (TT.MM.JJJJ) eingetragen. Die Angaben für Tag und Monat sind optional, sodass auch lediglich ein bestimmter Monat eines Jahres bzw. ein bestimmtes Jahr angegeben werden kann.
+
+Darüber hinaus kann (durch ein Leerzeichen getrennt) optional eine Uhrzeit im Format "Stunden:Minuten" eingetragen werden, sofern die Angabe einer Uhrzeit für das entsprechende Feld in der Projektkonfiguration zugelassen ist. **Wichtig**: Die Uhrzeit wird stets in der Zeitzone UTC (Coordinated Universal Time, entspricht westeuropäischer Zeit/Greenwich Mean Time) angegeben.
 
 *Beispiel:*
 
     {
       "identifier": "A",
       "category": "Feature",
-      "date1": "12.01.2025",
-      "date2": "09.2008",
-      "date3": "1995"
+      "date1": { "value": "19.08.2017 17:25", "endValue": "20.08.2017 11:09", "isRange": true },
+      "date2": { "value": "12.01.2025", "isRange": false },
+      "date3": { "value": "09.2008", "endValue": "11.2008", "isRange": true },
+      "date4": { "value": "1995", "isRange": false }
     }
 
 ##### Listenfelder
 
-Felder der Eingabetypen "Einzeiliger Text (Liste)", "Checkboxen", "Datierungsangabe", "Maßangabe", "Literaturangabe" und "Kompositfeld" können mehrere Einträge enthalten. Für diese Felder wird daher ein Array eingetragen.
+Felder der Eingabetypen "Einzeiliger Text (Liste)", "Checkboxen", "Datierungsangabe", "Längenangabe", "Gewichtsangabe", "Volumenangabe", "Literaturangabe" und "Kompositfeld" können mehrere Einträge enthalten. Für diese Felder wird daher ein Array eingetragen.
 
 
 ##### Datierungsangaben
@@ -1687,14 +1969,16 @@ Die Jahresangaben *begin* und *end* sind wiederum Objekte, die aus zwei Unterfel
     }
 
 
-##### Maßangaben
+##### Längen-, Gewichts- und Volumenangaben
 
-Felder des Eingabetyps "Maßangabe" sind Listenfelder, die jeweils mehrere Maßangaben enthalten können. Eine Maßangabe ist ein Objekt, das aus folgenden Unterfeldern besteht:
+Felder der Eingabetypen "Längenangabe", "Gewichtsangabe" und "Volumenangabe" sind Listenfelder, die jeweils mehrere Objekte mit den folgenden Unterfeldern enthalten können:
 
 * *inputValue*: Der gemessene Zahlenwert.
 * *inputRangeEndValue*: Der zweite gemessene Zahlenwert, falls es sich um einen Bereich handelt.
-* *inputUnit*: Die Maßeinheit. Mögliche Werte: *mm*, *cm*, *m*.
-* *measurementPosition*: Feld "Gemessen an". Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
+* *inputUnit*: Die Maßeinheit. Mögliche Werte: *mm*, *cm*, *m* (Längenangabe) / *mg*, *g*, *kg* (Gewichtsangabe) / *ml*, *l* (Volumenangabe).
+* *measurementPosition*: Feld "Gemessen an" (nur bei Längenangaben). Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
+* *measurementDevice*: Feld "Messgerät" (nur bei Gewichtsangaben). Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
+* *measurementTechnique*: Feld "Messverfahren" (nur bei Volumenangaben). Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
 * *measurementComment*: Kommentar, mehrsprachiges Textfeld.
 * *isImprecise*: Angabe "Ungenau". Mögliche Werte sind: *true* (ja), *false* (nein).
 
@@ -1772,6 +2056,78 @@ Beim Export von Katalogdateien steht die folgende Option zur Verfügung:
 
 * *Katalog*: Wählen Sie hier den zu exportierenden Typenkatalog aus. Diese Option wird nur angezeigt, wenn im aktuell geöffneten Projekt Typenkataloge vorhanden sind. Aus anderen Projekten importierte Kataloge stehen nicht zur Auswahl.
 
+
+<hr>
+
+
+# Backups
+
+Um Datenverlust zu vermeiden, ist es wichtig, regelmäßig Sicherungskopien der Projektdatenbanken anzulegen. Field Desktop bietet dazu umfangreiche Optionen zur automatischen oder manuellen Erstellung von Backup-Dateien im JSONL-Format an.
+
+**Wichtig**: Die so angelegten Backup-Dateien enthalten sämtliche im Projekt eingetragenen Daten, allerdings **keine Bilder**. Die Bilddateien befinden sich im Bilderverzeichnis, dessen Verzeichnispfad in den Einstellungen unter "Erweiterte Optionen" eingesehen werden kann. Es wird empfohlen, zusätzlich zu den Datenbank-Backups regelmäßig Sicherungskopien des Bilderverzeichnisses anzulegen. Darüber hinaus können Datenbank- sowie Bilddaten durch die Synchronisation mit einem Field-Hub-Server gesichert werden.
+
+Bitte beachten Sie, dass die JSONL-Dateien, die durch die Backup-Funktion angelegt werden, nicht für den Import in bestehende Projekte geeignet sind, sondern ausschließlich über das Menü "Projekt" ➝ "Backup einlesen..." als eigenes Projekt wiederhergestellt werden können.
+
+
+## Automatische Backups
+
+Field Desktop erstellt nach jeder Änderung an den Projektdaten automatisch eine Backup-Datei des entsprechenden Projekts. Standardmäßig wird dabei nur das aktuellste Backup pro Projekt vorgehalten, während ältere Backups gelöscht werden. Dieses Verhalten kann allerdings in den Einstellungen angepasst werden (siehe Abschnitt *Aufbewahrung von Backups*).
+
+Der Dateiname enthält die Projektkennung sowie das Datum und die Uhrzeit, zu der das Backup erstellt wurde (beispielsweise "example-project.2025-05-14.11-28-25.jsonl" für ein Projekt "example-project", das am 14. Mai 2025 um 11:28:25 Uhr gesichert wurde.)
+
+Bitte beachten Sie, dass (unabhängig von den gewählten Einstellungen) stets nur dann ein neues Backup angelegt wird, wenn sich seit der Erstellung des letzten Backups Änderungen an den Projektdaten ergeben haben. Ziel ist die Vermeidung von identischen Kopien zur Einsparung von Speicherplatz.
+
+**Wichtig**: Es werden nur dann Backups angelegt, wenn die Anwendung geöffnet ist. Bei geöffneter Anwendung werden Backups aller Projekte erstellt, nicht nur des aktuell in der Anwendung aufgerufenen Projekts.
+
+Die Optionen zur Konfiguration der automatischen Backups finden Sie in den Einstellungen unter "Erweiterte Optionen".
+
+
+### Verzeichnispfad ändern
+
+Den Pfad des Verzeichnisses, in dem automatisch erstellte Backup-Dateien aufbewahrt werden, können Sie über das Eingabefeld "Pfad" einsehen und ändern. Bitte beachten Sie, dass bestehende Backup-Dateien bei einem Wechsel des Backup-Verzeichnisses nicht automatisch in das neue Verzeichnis verschoben werden. Die Dateien im alten Verzeichnis bleiben bestehen, während die Backup-Dateien im neuen Verzeichnis für alle Projekte neu angelegt werden.
+
+
+### Aufbewahrung von Backups
+
+Zusätzlich zum grundsätzlich gesicherten Backup der aktuellsten Version jedes Projekts können weitere Backup-Dateien aufbewahrt werden. Dazu können in den Einstellungen die Regeln "Backups nach Uhrzeit aufbewahren" und "Backups nach Datum aufbewahren" konfiguriert werden.
+
+
+#### Backups nach Uhrzeit aufbewahren
+
+Diese Regel erlaubt es, Backup-Dateien in einem zeitlichen Abstand (alle X Stunden) aufzubewahren.
+
+* *Abstand in Stunden*: Gibt an, in welchem zeitlichen Abstand Backup-Dateien aufbewahrt werden sollen. Bei einem eingetragenen Wert von "3" wird beispielsweise alle drei Stunden eine Backup-Datei aufbewahrt.
+* *Anzahl*: Gibt an, wieviele Backup-Dateien aufbewahrt werden sollen. Bei einem eingetragenen Wert von "5" werden beispielsweise die fünf zuletzt erstellten Backup-Dateien aufbewahrt.
+
+
+#### Backups nach Datum aufbewahren
+
+Diese Regel erlaubt es, eine Backup-Datei pro Tag, Woche oder Monat aufzubewahren.
+
+* *Tag*: Gibt an, wieviele tägliche Backup-Dateien aufbewahrt werden sollen. Bei einem eingetragenen Wert von "7" werden beispielsweise die sieben aktuellsten täglichen Backups aufbewahrt. Es wird jeweils das erste erstellte Backup des Tages aufbewahrt.
+* *Woche*: Gibt an, wieviele wöchentliche Backup-Dateien aufbewahrt werden sollen. Bei einem eingetragenen Wert von "4" werden beispielsweise die vier aktuellsten wöchentlichen Backups aufbewahrt. Es wird jeweils das erste erstellte Backup der Woche (beginnend am Montag) aufbewahrt.
+* *Monat*: Gibt an, wieviele monatliche Backup-Dateien aufbewahrt werden sollen. Bei einem eingetragenen Wert von "12" werden beispielsweise die zwölf aktuellsten monatlichen Backups aufbewahrt. Es wird jeweils das erste erstellte Backup des Monats aufbewahrt.
+
+Bitte berücksichtigen Sie, dass Backup-Dateien nur angelegt werden, wenn die Anwendung geöffnet ist und sich seit dem letzten Backup Änderungen an den Projektdaten ergeben haben. Daher bedeutet etwa eine Einstellung von "7" bei den täglichen Backups nicht zwingend, dass für jedes Projekt ein Backup-File für jeden Tag der vergangenen Woche vorliegt. Dies ist nur dann der Fall, wenn die Anwendung an jedem Tag der Woche geöffnet war und das entsprechende Projekt an jedem Tag bearbeitet wurde.
+
+
+#### Benötiger Festplattenspeicher
+
+Je mehr Backups aufbewahrt werden, desto größer wird der erforderliche Speicherplatz im ausgewählten Backup-Verzeichnis. In den Einstellungen können Sie den aktuell durch automatische Backups belegten Festplattenspeicher einsehen. Darüber hinaus wird der voraussichtlich in Zukunft beanspruchte Speicherplatz angezeigt: Dabei handelt es sich um den Speicherplatz, der benötigt wird, wenn für die aktuell auf dem Rechner vorhandenen Projekte die maximale Anzahl von Backup-Dateien gemäß der eingestellten Regeln vorgehalten werden. Diese Prognose kann vom tatsächlich nötigen Speicherplatz abweichen, wenn Projekte gelöscht oder neu erstellt werden bzw. wenn sich die Größe bestehender Projekte verändert.
+
+
+## Manuelles Backup anlegen
+
+Über das Menü "Projekt" ➝ "Backup erstellen..." können Backup-Dateien manuell für das aktuell geöffnete Projekt angelegt werden. Verwenden Sie dazu den Button "Backup erstellen" und wählen Sie ein Verzeichnis sowie einen Namen für die zu erstellende Backup-Datei.
+
+
+## Backup einlesen
+
+Um ein Projekt aus einer Backup-Datei wiederherzustellen, rufen Sie das Menü "Projekt" ➝ "Backup einlesen..." auf. Wählen Sie hier zunächst über das Dateiauswahlfeld "Pfad" die gewünschte Backup-Datei aus. Dabei muss es sich um eine per automatischem oder manuellem Backup in Field Desktop erstellte JSONL-Datei handeln. Im Eingabefeld "Projektkennung" können Sie anschließend eine eindeutige Kennung für das neue Projekt angeben, das aus der Backup-Datei erstellt wird. Dabei kann es sich sowohl um die Kennung des ursprünglichen Projekts als auch um eine andere Kennung handeln. Bei einer deutlich abweichenden Projektkennung erscheint eine Warnung, um auf eine mögliche versehentliche Wiederherstellung eines falschen Backups aufmerksam zu machen.
+
+**Wichtig**: Geben Sie die Kennung eines bereits bestehenden Projekts an, so wird dieses Projekt beim Wiederherstellungsprozess überschrieben.
+
+
 <hr>
 
 
@@ -1828,6 +2184,26 @@ Die in ein Feld eingetragenen Daten entsprechen nicht dem Eingabetyp, der für d
 * Button *Bearbeiten*: Öffnen Sie die Ressource im Ressourceneditor, um die ungültigen Felddaten zu entfernen und gegebenenfalls neu einzutragen.
 * Button *Felddaten konvertieren*: Die Daten werden automatisch in das korrekte Format des jeweiligen Eingabetyps konvertiert. Optional können Sie die Daten bei allen Ressourcen konvertieren lassen, bei denen im gleichen Feld ungültige Daten eingetragen sind. Bitte beachten Sie, dass eine automatische Konvertierung nicht in allen Fällen möglich ist und dieser Button daher nicht immer zur Verfügung steht.
 * Button *Neues Feld auswählen*: Wählen Sie eines der für die Kategorie der Ressource konfigurierten Felder aus. Die eingetragenen Daten werden anschließend in dieses Feld verschoben. Bitte beachten Sie, dass eventuell bereits vorhandene Daten im Zielfeld dabei überschrieben werden. Optional können Sie das neue Feld für alle Ressourcen setzen, bei denen im gleichen Feld ungültige Daten eingetragen sind (gültige Daten verbleiben im ursprünglichen Feld).
+
+### Nicht ausgefülltes Pflichtfeld
+In ein als Pflichtfeld konfiguriertes Feld wurden keine Daten eingetragen.
+
+#### Mögliche Ursachen
+* Das Feld wurde im Konfigurationseditor als Pflichtfeld konfiguriert, nachdem die Ressource angelegt wurde.
+
+#### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie die Ressource im Ressourceneditor, um das Pflichtfeld auszufüllen.
+
+### Nicht erfüllte Anzeigebedingung eines Feldes
+Es sind Daten in ein Feld eingetragen, obwohl die Bedingung zur Anzeige dieses Feldes nicht erfüllt ist.
+
+#### Mögliche Ursachen
+* Die Anzeigebedingung wurde im Konfigurationseditor eingerichtet oder geändert, nachdem bereits Daten in das Feld eingetragen wurden.
+
+#### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie die Ressource im Ressourceneditor, um die Daten im Bedingungsfeld so anzupassen, dass die Bedingung erfüllt ist.
+* Button *Felddaten löschen*: Die in das Feld eingetragenen Daten werden vollständig gelöscht.
+* Entfernen Sie die Anzeigebedingung des Feldes im Konfigurationseditor oder passen Sie sie so an, dass die Bedingung für die betroffene Ressource erfüllt ist.
 
 ### Nicht in Werteliste enthaltener Wert
 In einem Feld sind einer oder mehrere Werte eingetragen, die nicht in der für das Feld konfigurierten Werteliste enthalten sind.
@@ -1910,3 +2286,79 @@ Es existieren mehr Ressourcen einer Kategorie, als das für diese Kategorie konf
 #### Mögliche Lösungen
 * Löschen Sie Ressourcen der entsprechenden Kategorie, bis das Ressourcenlimit eingehalten wird.
 * Erhöhen Sie das Ressourcenlimit im Konfigurationseditor.
+
+### Ungültiger Status
+Der Status eines Prozesses widerspricht dem angegebenen Datum. Dies ist beispielsweise der Fall, wenn das Datum eines Prozesses mit dem Status "Geplant" in der Vergangenheit liegt oder das Datum eines Prozesses mit dem Status "Abgeschlossen" in der Zukunft.
+
+#### Mögliche Ursachen
+* Der Status wurde nicht angepasst, nachdem der Arbeitsgang begonnen, abgeschlossen oder abgebrochen wurde.
+* Ein geplanter Prozess wurde zum angegebenen Datum noch nicht durchgeführt.
+
+#### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie den Ressourceneditor, um den Status oder das Datum des Prozesses anzupassen.
+
+
+# API
+
+Field Desktop stellt eine REST-API bereit, über die Daten per HTTP abgefragt und in die Anwendung eingespielt werden können. Bei geöffneter Anwendung erreichen Sie die API über die folgende URL:
+
+http://localhost:3000
+
+Beim Zugriff auf jeden der API-Endpunkte muss per *Basic Auth* dasjenige Passwort angegeben werden, das im Menü "Einstellungen" unter "Synchronisation" als "Eigenes Passwort" eingetragen ist. Die Angabe eines Usernamens ist nicht erforderlich.
+
+## Endpunkte
+
+### GET /info
+
+Dieser API-Endpoint liefert einige Informationen zur laufenden Instanz von Field Desktop im JSON-Format zurück.
+
+Rückgabe:
+* *version (String)*: Die Programmversion der laufenden Anwendung
+* *projects (String-Array)*: Die Kennungen aller Projekte, die auf diesem Rechner derzeit gespeichert sind
+* *activeProject (String)*: Die Kennung des derzeit in der Anwendung geöffneten Projekts
+* *user (String)*: Der Name, der in Field Desktop als "Name der Benutzerin/des Benutzers" eingetragen wurde
+
+
+### GET /configuration/{project}
+
+Über diesen API-Endpunkt kann die Projektkonfiguration im JSON-Format abgerufen werden. Während die Konfigurationsdateien, die über das Menü "Projektkonfiguration" ➝ "Konfiguration exportieren..." erstellt werden können, ausschließlich den projektspezifischen Teil der Konfiguration enthalten, wird über den API-Endpunkt die komplette Konfiguration inklusive aller im Projekt verwendeten Konfigurationselemente aus den Field-Bibliotheken (Standardformulare, Wertelisten usw.) ausgegeben.
+
+Bitte beachten Sie, dass die JSON-Ausgabe des API-Endpunkts **nicht** über das Menü "Projektkonfiguration" ➝ "Konfiguration importieren..." eingelesen werden kann. Verwenden Sie die Menüoption "Projektkonfiguration" ➝ "Konfiguration exportieren...", um eine für diesen Zweck geeignete Konfigurationsdatei zu erhalten.
+
+Parameter:
+* *project*: Der Name des Projekts, dessen Konfiguration abgerufen werden soll
+
+
+### POST /import/{format}
+
+Über diesen API-Endpunkt können Daten in das aktuell in der Anwendung geöffnete Projekt importiert werden. Die Funktionalität entspricht dabei derjenigen des Import-Tools, das über das Menü "Werkzeuge" ➝ "Import" erreicht werden kann. Detaillierte Erklärungen zu den Optionen und Formaten finden Sie im Kapitel "Import und Export".
+
+Die zu importierenden Daten müssen im Request-Body mitgeliefert werden.
+
+Parameter:
+* *format*: Das Format der zu importierenden Daten. Unterstützte Formate: *csv*, *geojson*, *jsonl*
+
+Query-Parameter:
+* *merge (Boolean)*: Ergänzt bestehende Ressourcen statt neue Ressourcen anzulegen. Entspricht der Option "Vorhandene Ressourcen ergänzen" in der Benutzeroberfläche. (Standardwert: false)
+* *permitDeletions (Boolean)*: Erlaubt es, Felder beim Import zu entfernen. Entspricht der Checkbox "Löschen erlauben" in der Benutzeroberfläche. (Standardwert: false)
+* *ignoreUnconfiguredFields (Boolean)*: Bricht den Import nicht ab, wenn unkonfigurierte Felder gefunden werden. Entspricht der Checkbox "Nicht konfigurierte Felder ignorieren" in der Benutzeroberfläche. (Standardwert: false)
+* *category (String)*: Der Name der Kategorie, der die zu importierenden Daten angehören. Nur erforderlich beim CSV-Import. Entpricht dem Auswahlfeld "Kategorie" in der Benutzeroberfläche. (Standardwert: "Project")
+* *operation (String)*: Der Bezeichner einer Maßnahme, der die importierten Ressourcen zugeordnet werden sollen. Entspricht dem Auswahlfeld "Daten einer Maßnahme zuordnen" in der Benutzeroberfläche. (Standardwert: nicht gesetzt)
+* *separator (String)*: Das Trennzeichen, das in den CSV-Daten verwendet wird. Nur erforderlich beim CSV-Import. Entspricht dem Eingabefeld "Feldtrennzeichen" in der Benutzeroberfläche. (Standardwert: ",")
+
+
+### GET /export/{format}
+
+Über diesen API-Endpunkt können Daten aus dem aktuell in der Anwendung geöffneten Projekt exportiert werden. Die Funktionalität entspricht dabei derjenigen des Export-Tools, das über das Menü "Werkzeuge" ➝ "Export" erreicht werden kann. Detaillierte Erklärungen zu den Optionen und Formaten finden Sie im Kapitel "Import und Export".
+
+Parameter:
+* *format*: Das Format, in das die Daten exportiert werden sollen. Unterstützte Formate: *csv*, *geojson*
+
+Query-Parameter:
+* *schemaOnly (Boolean)*: Gibt ausschließlich die Kopfzeile der CSV-Tabelle aus. Nur verfügbar beim CSV-Export. (Standardwert: false)
+* *context (String)*: Gibt den Kontext an, aus dem Ressourcen exportiert werden sollen. Mögliche Werte sind "project" für das gesamte Projekt oder der Bezeichner einer Maßnahme. Entspricht dem Auswahlfeld "Kontext" in der Benutzeroberfläche. (Standardwert: "project")
+* *category (String)*: Der Name der Kategorie, deren Daten exportiert werden sollen. Nur erforderlich beim CSV-Export. Entspricht dem Auswahlfeld "Kategorie" in der Benutzeroberfläche. (Standardwert: "Project")
+* *separator (String)*: Das Trennzeichen, das in den exportierten CSV-Daten verwendet werden soll. Nur erforderlich beim CSV-Export. Entspricht dem Eingabefeld "Feldtrennzeichen" in der Benutzeroberfläche. (Standardwert: ",")
+* *combineHierarchicalRelations (Boolean)*: Fasst hierarchische Relationen zur vereinfachten Relation "isChildOf" zusammen. Nur verfügbar beim CSV-Export. Entspricht der Checkbox "Hierarchische Relationen zusammenfassen" in der Benutzeroberfläche. (Standardwert: true)
+* *formatted (Boolean)*: Setzt Einrückungen zur formatierten Ausgabe der exportierten Daten. Nur verfügbar beim GeoJSON-Export. (Standardwert: true)
+

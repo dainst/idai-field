@@ -1,5 +1,4 @@
 defmodule FieldHubHelper do
-  @retry_timeout 2000
   require Logger
 
   def start() do
@@ -93,6 +92,7 @@ defmodule FieldHubHelper do
     "pw"
   end
 
+  @retry_sleep_time 2000
   defp await_startup(ms_waited \\ 0) do
     if ms_waited > 20000 do
       stop()
@@ -107,15 +107,10 @@ defmodule FieldHubHelper do
     |> Finch.request(FieldPublication.Finch)
     |> case do
       {:error, %Mint.TransportError{reason: :closed}} ->
-        Process.sleep(@retry_timeout)
-        await_startup(ms_waited + @retry_timeout)
+        Process.sleep(@retry_sleep_time)
+        await_startup(ms_waited + @retry_sleep_time)
 
       {:ok, %Finch.Response{status: 200}} ->
-        {_log_output, 0} =
-          System.shell(
-            "docker exec -i fieldhub_integration_test_app /app/bin/field_hub eval 'FieldHub.CLI.setup()'"
-          )
-
         :field_hub_started
     end
   end

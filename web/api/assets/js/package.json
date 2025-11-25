@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "createConfigurationFile",
   "dependencies": {
-    "axios": "0.26.0",
-    "idai-field-core": "1.4.0",
+    "axios": "1.12.2",
+    "idai-field-core": "1.5.0",
     "tsfun": "5.5.38"
   },
   "devDependencies": {

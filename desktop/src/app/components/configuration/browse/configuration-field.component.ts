@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { isArray } from 'tsfun';
+import { CategoryForm, Condition, ConfigurationDocument, CustomFieldDefinition, Datastore, Field, Labels,
+    ProjectConfiguration, Relation, Valuelist, ValuelistUtil } from 'idai-field-core';
 import { SettingsProvider } from '../../../services/settings/settings-provider';
-import { CategoryForm, ConfigurationDocument, CustomFieldDefinition, Field, Labels, ProjectConfiguration,
-    Relation } from 'idai-field-core';
 import { ConfigurationUtil, InputType } from '../configuration-util';
 import { ConfigurationContextMenu } from '../context-menu/configuration-context-menu';
 import { UtilTranslations } from '../../../util/util-translations';
@@ -38,10 +39,13 @@ export class ConfigurationFieldComponent implements OnChanges {
     public label: string;
     public description: string;
 
+    private conditionFieldValuelist: Valuelist;
+
 
     constructor(private labels: Labels,
                 private utilTranslations: UtilTranslations,
-                private settingsProvider: SettingsProvider) {}
+                private settingsProvider: SettingsProvider,
+                private datastore: Datastore) {}
 
 
     public getFieldId = () => 'field-' + this.field.name.replace(':', '-');
@@ -54,11 +58,19 @@ export class ConfigurationFieldComponent implements OnChanges {
         this.clonedProjectConfiguration.getCategory(categoryName)
     );
 
+    public getFieldLabel = (fieldName: string) => this.labels.get(
+        CategoryForm.getField(this.category, fieldName)
+    );
+
     public getRelationLabel = (relationName: string) => this.labels.getRelationLabel(
         relationName, this.clonedProjectConfiguration.getRelations()
     );
 
     public getInverseRelation = () => (this.field as Relation).inverse;
+
+    public getDateDataType = () => this.field.dateConfiguration?.dataType;
+
+    public getDateInputMode = () => this.field.dateConfiguration?.inputMode;
 
     public getCustomLanguageConfigurations = () => this.configurationDocument.resource.languages;
 
@@ -72,12 +84,13 @@ export class ConfigurationFieldComponent implements OnChanges {
     public isContextMenuOpen = () => this.contextMenu.isOpen() && this.contextMenu.field === this.field;
 
 
-    ngOnChanges() {
+    async ngOnChanges() {
 
         if (!this.category || !this.field) return;
 
         this.parentField = ConfigurationUtil.isParentField(this.category, this.field);
         this.updateLabelAndDescription();
+        await this.updateConditionFieldValuelist();
     }
 
 
@@ -100,10 +113,31 @@ export class ConfigurationFieldComponent implements OnChanges {
     }
 
 
+    public getConditionValuesLabel(): string {
+
+        return Condition.generateLabel(
+            this.field.condition,
+            key => this.utilTranslations.getTranslation(key),
+            valueId => this.labels.getValueLabel(this.conditionFieldValuelist, valueId)
+        );
+    }
+
+
     private updateLabelAndDescription() {
 
         const { label, description } = this.labels.getLabelAndDescription(this.field);
         this.label = label;
         this.description = description;
+    }
+
+    
+    private async updateConditionFieldValuelist() {
+
+        if (!this.field.condition || !isArray(this.field.condition.values)) return;
+
+        this.conditionFieldValuelist = ValuelistUtil.getValuelist(
+            CategoryForm.getField(this.category, this.field.condition.fieldName),
+            await this.datastore.get('project')
+        );
     }
 }

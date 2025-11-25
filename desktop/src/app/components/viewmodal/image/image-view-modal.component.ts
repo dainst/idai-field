@@ -11,6 +11,7 @@ import { Menus } from '../../../services/menus';
 import { Routing } from '../../../services/routing';
 import { Messages } from '../../messages/messages';
 import { SavingChangesModal } from '../../widgets/saving-changes-modal.component';
+import { MenuContext } from '../../../services/menu-context';
 
 
 export namespace ImageViewModalComponent {
@@ -162,6 +163,9 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
     public async startEditImages() {
 
+        const menuContext: MenuContext = this.menuService.getContext();
+        this.menuService.setContext(MenuContext.IMAGE_PICKER_MODAL);
+
         const imagePickerModal = this.modalService.open(
             ImagePickerComponent, { size: 'lg', keyboard: false, animation: false }
         );
@@ -172,6 +176,8 @@ export class ImageViewModalComponent extends ViewModalComponent {
             await this.saveChanges(await imagePickerModal.result);
         } catch {
             // modal cancelled
+        } finally {
+            this.menuService.setContext(menuContext);
         }
     }
 

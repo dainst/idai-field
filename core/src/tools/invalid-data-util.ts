@@ -15,10 +15,11 @@ export module InvalidDataUtil {
             case Field.InputType.BOOLEAN:
                 return ['true', 'false'].includes(fieldContent.toString().toLowerCase());
             case Field.InputType.CHECKBOXES:
-                return isString(fieldContent);
+                return isString(fieldContent) && fieldContent.length > 0;
             case Field.InputType.DROPDOWN:
             case Field.InputType.RADIO:
-                return isArray(fieldContent) && fieldContent.length === 1 && isString(fieldContent[0]);
+                return isArray(fieldContent) && fieldContent.length === 1
+                    && isString(fieldContent[0]) && fieldContent[0].length > 0;
             case Field.InputType.INPUT:
             case Field.InputType.SIMPLE_INPUT:
                 return isNumber(fieldContent);
@@ -79,6 +80,8 @@ export module InvalidDataUtil {
 
     function generateObjectLabel(value: any, labels: Labels): string {
 
+        if ((value.value || value.endValue) && !value.inputValue) return generateRangeLabel(value);
+
         const label: string|undefined = labels.getFromI18NString(value);
     
         return label && isString(label)
@@ -86,5 +89,15 @@ export module InvalidDataUtil {
             : Object.keys(value).map(key => {
                 return key + ': ' + generateValueLabel(value[key], labels);
             }).join(', ');
+    }
+
+
+    function generateRangeLabel(value: any): string {
+
+        if (value.value && value.endValue) {
+            return value.value + ' - ' + value.endValue;
+        } else {
+            return value.value ?? value.endValue;
+        }
     }
 }

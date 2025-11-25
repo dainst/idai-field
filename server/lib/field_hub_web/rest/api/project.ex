@@ -32,20 +32,12 @@ defmodule FieldHubWeb.Rest.Api.Rest.Project do
 
   def create(conn, %{"project" => id}) do
     password =
-      conn.body_params
-      |> case do
-        %{"password" => requested_password} ->
-          requested_password
-
+      with {:ok, body, _conn} <- read_body(conn),
+           {:ok, %{"password" => password}} <- JSON.decode(body) do
+        password
+      else
         _ ->
-          :generate
-      end
-      |> case do
-        :generate ->
           CouchService.create_password()
-
-        provided ->
-          provided
       end
 
     cond do

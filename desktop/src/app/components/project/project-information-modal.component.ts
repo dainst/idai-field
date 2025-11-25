@@ -10,6 +10,9 @@ import { RevisionLabels } from '../../services/revision-labels';
 import { Loading } from '../widgets/loading';
 import { AngularUtility } from '../../angular/angular-utility';
 import { Routing } from '../../services/routing';
+import { getFileSizeLabel } from '../../util/get-file-size-label';
+import { MenuContext } from '../../services/menu-context';
+import { Menus } from '../../services/menus';
 
 
 @Component({
@@ -30,6 +33,7 @@ export class ProjectInformationModalComponent implements OnInit {
     public imageDocumentCount: number;
     public typeDocumentCount: number;
     public storagePlaceDocumentCount: number;
+    public processDocumentCount: number;
 
     public lastChangedDocument: Document|undefined;
     public lastChangedDocumentUser: string;
@@ -52,7 +56,8 @@ export class ProjectInformationModalComponent implements OnInit {
                 private messages: Messages,
                 private loading: Loading,
                 private routing: Routing,
-                private decimalPipe: DecimalPipe) {}
+                private decimalPipe: DecimalPipe,
+                private menuService: Menus) {}
 
     
     public isLoading = () => this.loading.isLoading('project-information-modal');
@@ -79,7 +84,10 @@ export class ProjectInformationModalComponent implements OnInit {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.close();
+        if (event.key === 'Escape'
+                && [MenuContext.MODAL, MenuContext.CONFIGURATION_MODAL].includes(this.menuService.getContext())) {
+            this.activeModal.close();
+        }
     }
 
 
@@ -96,6 +104,7 @@ export class ProjectInformationModalComponent implements OnInit {
         this.imageDocumentCount = await this.getImageDocumentCount();
         this.typeDocumentCount = await this.getTypeDocumentCount();
         this.storagePlaceDocumentCount = await this.getStoragePlaceDocumentCount();
+        this.processDocumentCount = await this.getProcessDocumentCount();
 
         this.lastChangedDocument = await this.getLastChangedDocument();
         if (this.lastChangedDocument) {
@@ -156,6 +165,14 @@ export class ProjectInformationModalComponent implements OnInit {
     }
 
 
+    private async getProcessDocumentCount(): Promise<number> {
+
+        return await this.getDocumentCountForCategories(
+            this.projectConfiguration.getWorkflowCategories().map(category => category.name)
+        );
+    }
+
+
     private async getDocumentCountForCategories(categories: string[]): Promise<number> {
 
         return (await this.datastore.findIds({ categories })).totalCount;
@@ -188,7 +205,7 @@ export class ProjectInformationModalComponent implements OnInit {
 
         const sizes = ImageStore.getFileSizeSums(fileList);
 
-        return `${ImageStore.byteCountToDescription(
+        return `${getFileSizeLabel(
             sizes[variant], (value) => this.decimalPipe.transform(value)
         )}`;
     }

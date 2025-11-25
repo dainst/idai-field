@@ -1,0 +1,57 @@
+<div class="modal-header">
+    <h5 *ngIf="images.length === 1" class="modal-title" i18n="@@imageExport.header.single">
+        Bild exportieren
+    </h5>
+    <h5 *ngIf="images.length > 1" class="modal-title" i18n="@@imageExport.header.multiple">
+        {{images.length}} Bilder exportieren
+    </h5>
+</div>
+
+<div class="modal-body" id="image-export-modal-body">
+    <div i18n="@@imageExport.targetDirectory" class="option-header">Zielverzeichnis</div>
+    <div class="input-group"> 
+        <input id="image-export-target-directory-input"
+               [ngModel]="targetDirectoryPath"
+               (ngModelChange)="targetDirectoryPath = $event"
+               class="form-control file-path-input">
+        <label for="image-export-target-directory-input" class="btn btn-secondary"
+               (click)="chooseTargetDirectory()">
+            <span class="mdi mdi-folder"></span>
+        </label>
+    </div>
+
+    <div i18n="@@imageExport.namingOptions" class="option-header">Benennung</div>
+    <div class="form-check">
+        <input id="naming-option-identifier"
+               class="form-check-input"
+               type="radio"
+               (click)="selectedNamingOption = 'identifier'"
+               [checked]="selectedNamingOption === 'identifier'">
+        <label class="form-check-label" for="naming-option-identifier">
+            Bezeichner
+        </label>
+    </div>
+    <div class="form-check">
+        <input id="naming-option-original"
+               class="form-check-input"
+               type="radio"
+               (click)="selectedNamingOption = 'originalFilename'"
+               [checked]="selectedNamingOption === 'originalFilename'">
+        <label class="form-check-label" for="naming-option-original">
+            Ursprünglicher Dateiname
+        </label>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button id="startExportButton"
+            type="button"
+            class="btn btn-primary"
+            [disabled]="!targetDirectoryPath"
+            (click)="startExport()">
+        <span i18n="@@buttons.ok">OK</span>
+    </button>
+    <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss('cancel')">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </button>
+</div>

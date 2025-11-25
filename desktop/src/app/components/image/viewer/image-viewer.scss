@@ -5,6 +5,7 @@ image-viewer {
     background-color: #000;
     overflow: hidden;
     cursor: grab;
+    user-select: none;
 
     &.panning-disabled {
       cursor: default;
@@ -41,8 +42,25 @@ image-viewer {
 
     zoom-buttons {
       position: absolute;
-      top: 8px;
-      left: 8px;
+      top: 7px;
+      left: 7px;
+      z-index: 1003;
+    }
+
+    #download-image-button,
+    #export-image-button {
+      position: absolute;
+      right: 7px;
+      top: 7px;
+      z-index: 1003;
+    }
+
+    #no-original-image-icon {
+      position: absolute;
+      right: 13px;
+      top: 6px;
+      font-size: 26px;
+      color: #ddd;
       z-index: 1003;
     }
 

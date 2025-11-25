@@ -51,5 +51,6 @@
   "info.close": "Chiudi",
   "menu.configuration.exportConfiguration": "Esportare la configurazione...",
   "autoUpdate.available.warning": "Attenzione: si prega si creare un backup di tutti i progetti importanti prima di eseguire l'aggiornamento.",
-  "menu.tools.inventory": "Inventariazione"
+  "menu.tools.inventory": "Inventariazione",
+  "menu.tools.workflow": "Workflow"
 }

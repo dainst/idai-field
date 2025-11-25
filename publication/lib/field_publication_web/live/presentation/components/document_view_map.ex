@@ -2,8 +2,6 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
   require Logger
   use FieldPublicationWeb, :live_component
 
-  import FieldPublicationWeb.Presentation.Components.Typography
-
   alias FieldPublication.DatabaseSchema.Publication
   alias FieldPublication.Publications.Data
 
@@ -18,8 +16,12 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     <div>
       <.group_heading>
         Geometry <span class="text-xs">({@geometry_type})</span>
-        <.link phx-click="toggle-map">
-          <.icon name={if @detail?, do: "hero-arrows-pointing-in", else: "hero-arrows-pointing-out"} />
+        <.link patch={
+          ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@lang}/#{@uuid}?#{if @focus != :map, do: %{focus: "map"}, else: %{}}"
+        }>
+          <.icon name={
+            if @focus != :map, do: "hero-arrows-pointing-out", else: "hero-arrows-pointing-in"
+          } />
         </.link>
       </.group_heading>
       <div
@@ -35,20 +37,9 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
         <div style={@style} id={"#{@id}-map"} phx-update="ignore">
           <!-- Set pointer-events-none, otherwise the tooltip will block click events on the map -->
           <div class="pointer-events-none text-xs" id={"#{@id}-identifier-tooltip"}>
-            <div class="border-[1px] rounded-sm border-black flex">
-              <div class="saturate-50 pl-2  text-black" id={"#{@id}-identifier-tooltip-category-bar"}>
-                <div
-                  class="h-full bg-white/60 p-1 font-thin"
-                  id={"#{@id}-identifier-tooltip-category-content"}
-                >
-                </div>
-              </div>
-              <div class="grow p-1 h-full bg-white">
-                <div class="pointer-events-none" id={"#{@id}-identifier-tooltip-content"}>
-                  <!-- This div will get repurposed once the map is loaded. -->
-                  Loading map...
-                </div>
-              </div>
+            <div class="grow h-full" id={"#{@id}-identifier-tooltip-content"}>
+              <!-- This div will get repurposed once the map is loaded. -->
+                Loading map...
             </div>
           </div>
         </div>
@@ -91,7 +82,13 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
   end
 
   def update(
-        %{id: id, publication: %Publication{} = publication, doc: doc, lang: lang} =
+        %{
+          id: id,
+          publication: %Publication{} = publication,
+          doc: doc,
+          lang: lang,
+          ancestors: ancestors
+        } =
           assigns,
         socket
       ) do
@@ -105,6 +102,15 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
 
     parent_features =
       accumulate_geometries_for_relations(doc, ["isRecordedIn", "liesWithin", "isBelow"], lang)
+
+    parent_uuids =
+      Enum.map(parent_features, fn %{properties: %{uuid: uuid}} -> uuid end)
+
+    ancestor_features =
+      ancestors
+      |> Enum.reject(fn %Document{id: id} -> id in parent_uuids end)
+      |> Enum.map(&create_feature_info(&1, lang))
+      |> Enum.filter(fn feature -> Map.has_key?(feature, :geometry) end)
 
     document_feature = create_feature_info(doc, lang)
 
@@ -133,6 +139,10 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
           parent_features: %{
             type: "FeatureCollection",
             features: parent_features
+          },
+          ancestor_features: %{
+            type: "FeatureCollection",
+            features: ancestor_features
           }
         })
         |> assign(:no_data, false)
@@ -151,7 +161,8 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     |> Map.put_new(:zoom, 2)
     |> Map.put(:no_data, true)
     |> Map.put(:show_layer_select, false)
-    |> Map.put_new(:detail?, false)
+    |> Map.put_new(:focus, :default)
+    |> Map.put(:uuid, assigns.doc.id)
   end
 
   defp create_feature_info(
@@ -203,15 +214,15 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     end
   end
 
-  defp extract_tile_layer_info(%{
-         "resource" => %{
-           "georeference" => georeference,
-           "height" => height,
-           "width" => width,
-           "id" => uuid,
-           "identifier" => identifier
-         }
-       }) do
+  def extract_tile_layer_info(%{
+        "resource" => %{
+          "georeference" => georeference,
+          "height" => height,
+          "width" => width,
+          "id" => uuid,
+          "identifier" => identifier
+        }
+      }) do
     %{
       extent: georeference,
       height: height,
@@ -360,7 +371,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     }
   end
 
-  defp render_tile_layer_selection_group(assigns) do
+  def render_tile_layer_selection_group(assigns) do
     ~H"""
     <%= if @layer_states != [] do %>
       <div class="font-semibold pb-2">

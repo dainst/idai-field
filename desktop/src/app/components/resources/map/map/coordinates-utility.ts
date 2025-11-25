@@ -1,9 +1,8 @@
 export class CoordinatesUtility {
 
-    public static convertPolygonCoordinatesFromLngLatToLatLng(coordinates: Array<Array<Array<number>>>)
-            : Array<Array<Array<number>>> {
+    public static convertPolygonCoordinatesFromLngLatToLatLng(coordinates: number[][][]): number[][][] {
 
-        let result: Array<Array<Array<number>>> = JSON.parse(JSON.stringify(coordinates));
+        let result: number[][][] = JSON.parse(JSON.stringify(coordinates));
 
         for (let pathCoordinates of result) {
             for (let pointCoordinates of pathCoordinates) {
@@ -18,10 +17,10 @@ export class CoordinatesUtility {
         return result;
     }
 
-    public static convertPolylineCoordinatesFromLngLatToLatLng(coordinates: Array<Array<number>>)
-            : Array<Array<number>> {
 
-        let result: Array<Array<number>> = JSON.parse(JSON.stringify(coordinates));
+    public static convertPolylineCoordinatesFromLngLatToLatLng(coordinates: number[][]): number[][] {
+
+        let result: number[][] = JSON.parse(JSON.stringify(coordinates));
 
         for (let pointCoordinates of result) {
             let lng: number = pointCoordinates[0];

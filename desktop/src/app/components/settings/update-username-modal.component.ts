@@ -3,8 +3,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { SettingsService } from '../../services/settings/settings-service';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { Settings } from '../../services/settings/settings';
-import { Messages } from '../messages/messages';
-import { M } from '../messages/m';
+import { MenuContext } from '../../services/menu-context';
+import { Menus } from '../../services/menus';
 
 
 @Component({
@@ -28,7 +28,7 @@ export class UpdateUsernameModalComponent {
     constructor(public activeModal: NgbActiveModal,
                 private settingsService: SettingsService,
                 private settingsProvider: SettingsProvider,
-                private messages: Messages) {
+                private menuService: Menus) {
 
         this.username = this.getUsernameFromSettings();
     }
@@ -40,6 +40,8 @@ export class UpdateUsernameModalComponent {
     
 
     public onKeyDown(event: KeyboardEvent) {
+
+        if (![MenuContext.MODAL, MenuContext.CONFIGURATION_MODAL].includes(this.menuService.getContext())) return;
 
         if (event.key === 'Enter') {
             this.confirm();

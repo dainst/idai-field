@@ -109,7 +109,7 @@
                     <hr>
 
                     <div class="d-grid">
-                        <button id="advanced-settings-button"
+                        <button #advancedSettingsButton id="advanced-settings-button"
                                 type="button" class="btn btn-link" (click)="toggleAdvancedSettings()"
                                 [attr.aria-expanded]="!advancedSettingsCollapsed" aria-controls="advanced-settings">
                             <span *ngIf="advancedSettingsCollapsed"
@@ -121,30 +121,151 @@
                     <div id="advanced-settings" [ngbCollapse]="advancedSettingsCollapsed" [animation]="false">
                         <h5 i18n="@@settings.images">Bilder</h5>
 
-                        <div id="advanced-settings">
-                            <label class="control-label col-form-label"
-                                for="imagestorepath-input"
-                                i18n="@@settings.images.path">
-                                Pfad
+                        <label class="control-label col-form-label"
+                            for="imagestorepath-input"
+                            i18n="@@settings.images.path">
+                            Pfad
+                        </label>
+                        <div class="input-group"> 
+                            <input id="imagestorepath-input"
+                                [ngModel]="settings.imagestorePath"
+                                (ngModelChange)="settings.imagestorePath = $event"
+                                class="form-control file-path-input">
+                            <label for="imagestorepath-input" class="btn btn-secondary"
+                                    (click)="chooseDirectoryPath('imagestorePath')">
+                                <span class="mdi mdi-folder"></span>
                             </label>
-                            <div class="input-group"> 
-                                <input id="imagestorepath-input"
-                                    [ngModel]="settings.imagestorePath"
-                                    (ngModelChange)="settings.imagestorePath = $event"
-                                    class="form-control">
-                                <label for="imagestorepath-input" class="btn btn-secondary"
-                                        (click)="chooseImagestoreDirectory()">
-                                    <span class="mdi mdi-folder"></span>
-                                </label>
+                        </div>
+                        <div class="small-info-text" i18n="@@settings.images.path.info">
+                            Dieser Pfad kann normalerweise auf seiner Grundeinstellung belassen werden. Es kann nötig
+                            sein, ihn zu verändern, wenn das von Field genutzte Bilderverzeichnis auf einem
+                            Netzwerk-Gerät (NAS) liegt, das von verschiedenen Nutzern bzw. Nutzerinnen geteilt wird.
+                            Die Anwendung legt unterhalb dieses Pfades für jedes Projekt ein Unterverzeichnis an.
+                            Die in diesen Verzeichnissen abgelegten Bilddateien werden vollständig durch Field
+                            verwaltet. Bilddateien sollten nicht per Hand dort abgelegt werden, sondern in der
+                            Bilderübersicht oder dem Bilder-Tab der Ressourcenansicht importiert werden.
+                        </div>
+
+                        <h5 i18n="@@settings.backups">Automatische Backups</h5>
+
+                        <label class="control-label col-form-label"
+                            for="backup-directory-path-input"
+                            i18n="@@settings.backups.path">
+                            Pfad
+                        </label>
+                        <div class="input-group"> 
+                            <input id="backup-directory-path-input"
+                                [ngModel]="settings.backupDirectoryPath"
+                                (ngModelChange)="settings.backupDirectoryPath = $event"
+                                class="form-control">
+                            <label for="backup-directory-path-input" class="btn btn-secondary"
+                                    (click)="chooseDirectoryPath('backupDirectoryPath')">
+                                <span class="mdi mdi-folder"></span>
+                            </label>
+                        </div>
+                        <div class="small-info-text" i18n="@@settings.backups.path.info">
+                            Field Desktop erstellt in regelmäßigen Abständen automatisch Sicherungskopien aller
+                            auf diesem Rechner vorliegenden Projektdatenbanken. Dieser Pfad gibt das Verzeichnis an,
+                            in dem die erstellten Backup-Dateien abgelegt werden.
+                        </div>
+                        <label class="control-label col-form-label"
+                               i18n="@@settings.backups.keep.time">Backups nach Uhrzeit aufbewahren</label>
+                        <div class="row">
+                            <div class="col-md-4 form-floating">
+                                <input id="daily-backups-input" type="number" min="0" max="1000000"
+                                       [ngModel]="settings.keepBackups.customInterval"
+                                       (ngModelChange)="setKeepBackupsValue('customInterval', $event)"
+                                       class="form-control">
+                                <label for="daily-backups-input"
+                                        i18n="@@settings.backups.keep.customInterval">Abstand in Stunden</label>
                             </div>
-                            <div class="small-info-text" i18n="@@settings.images.path.info">
-                                Dieser Pfad kann normalerweise auf seiner Grundeinstellung belassen werden. Es kann nötig
-                                sein, ihn zu verändern, wenn das von Field genutzte Bilderverzeichnis auf einem
-                                Netzwerk-Gerät (NAS) liegt, das von verschiedenen Nutzern bzw. Nutzerinnen geteilt wird.
-                                Die Anwendung legt unterhalb dieses Pfades für jedes Projekt ein Unterverzeichnis an.
-                                Die in diesen Verzeichnissen abgelegten Bilddateien werden vollständig durch Field
-                                verwaltet. Bilddateien sollten nicht per Hand dort abgelegt werden, sondern in der
-                                Bilderübersicht oder dem Bilder-Tab der Ressourcenansicht importiert werden.
+                            <div class="col-md-4 form-floating">
+                                <input id="daily-backups-input" type="number" min="0" max="1000000"
+                                       [ngModel]="settings.keepBackups.custom"
+                                       (ngModelChange)="setKeepBackupsValue('custom', $event)"
+                                       class="form-control">
+                                <label for="daily-backups-input"
+                                        i18n="@@settings.backups.keep.custom">Anzahl</label>
+                            </div>
+                        </div>
+                        <label class="control-label col-form-label"
+                               i18n="@@settings.backups.keep.date">Backups nach Datum aufbewahren</label>
+                        <div class="row">
+                            <div class="col-md-4 form-floating">
+                                <input id="daily-backups-input" type="number" min="0" max="1000000"
+                                       [ngModel]="settings.keepBackups.daily"
+                                       (ngModelChange)="setKeepBackupsValue('daily', $event)"
+                                       class="form-control">
+                                <label for="daily-backups-input"
+                                       i18n="@@settings.backups.keep.daily">Tag</label>
+                            </div>
+                            <div class="col-md-4 form-floating">
+                                <input id="weekly-backups-input" type="number" min="0" max="1000000"
+                                       [ngModel]="settings.keepBackups.weekly"
+                                       (ngModelChange)="setKeepBackupsValue('weekly', $event)"
+                                       class="form-control">
+                                <label for="weekly-backups-input"
+                                       i18n="@@settings.backups.keep.weekly">Woche</label>
+                            </div>
+                            <div class="col-md-4 form-floating">
+                                <input id="monthly-backups-input" type="number" min="0" max="1000000"
+                                       [ngModel]="settings.keepBackups.monthly"
+                                       (ngModelChange)="setKeepBackupsValue('monthly', $event)"
+                                       class="form-control">
+                                <label for="monthly-backups-input"
+                                       i18n="@@settings.backups.keep.monthly">Monat</label>
+                            </div>
+                        </div>
+                        <div class="small-info-text">
+                            <span i18n="@@settings.backups.keep.info">
+                                Im Backup-Verzeichnis werden gemäß den aktuell konfigurierten Regeln für jedes Projekt die folgenden Dateien aufbewahrt:
+                            </span>
+
+                            <ul>
+                                <li i18n="@@settings.backups.keep.info.current">
+                                    Eine Backup-Datei der aktuellsten Version jeder Projektdatenbank
+                                </li>
+                                <li *ngIf="hasCustomBackups()">
+                                    <span *ngIf="settings.keepBackups.customInterval === 1"
+                                          i18n="@@settings.backups.keep.info.custom.single">
+                                        Eine Backup-Datei <b>jede</b> Stunde
+                                    </span>
+                                    <span *ngIf="settings.keepBackups.customInterval > 1"
+                                          i18n="@@settings.backups.keep.info.custom.multiple">
+                                        Eine Backup-Datei alle <b>{{settings.keepBackups.customInterval}}</b> Stunden
+                                    </span>
+                                    <ng-container [ngTemplateOutlet]="keepBackupFilesInfo"
+                                                  [ngTemplateOutletContext]="{ amount: settings.keepBackups.custom }"></ng-container>
+                                </li>
+                                <li *ngIf="hasDailyBackups()">
+                                    <span i18n="@@settings.backups.keep.info.daily">Eine Backup-Datei pro Tag</span>
+                                    <ng-container [ngTemplateOutlet]="keepBackupFilesInfo"
+                                                  [ngTemplateOutletContext]="{ amount: settings.keepBackups.daily }"></ng-container>
+                                </li>
+                                <li *ngIf="hasWeeklyBackups()">
+                                    <span i18n="@@settings.backups.keep.info.weekly">Eine Backup-Datei pro Woche</span>
+                                    <ng-container [ngTemplateOutlet]="keepBackupFilesInfo"
+                                                  [ngTemplateOutletContext]="{ amount: settings.keepBackups.weekly }"></ng-container>
+                                </li>
+                                <li *ngIf="hasMonthlyBackups()">
+                                    <span i18n="@@settings.backups.keep.info.monthly">Eine Backup-Datei pro Monat</span>
+                                    <ng-container [ngTemplateOutlet]="keepBackupFilesInfo"
+                                                  [ngTemplateOutletContext]="{ amount: settings.keepBackups.monthly }"></ng-container>
+                                </li>
+                            </ul>
+
+                            <div i18n="@@settings.backups.size.info">
+                                Aktuell beanspruchter Festplattenspeicher: <b>{{ existingBackupsSizeLabel }}</b>
+                            </div>
+
+                            <div i18n="@@settings.backups.estimatedSize.info">
+                                Zukünftig beanspruchter Festplattenspeicher (geschätzt): <b>{{ estimatedBackupsSizeLabel }}</b>
+                            </div>
+
+                            <div *ngIf="isKeepBackupsWarningVisible()" class="alert alert-warning"
+                                  i18n="@@settings.backups.keep.warning">
+                                Bitte beachten Sie, dass bereits bestehende Backup-Dateien nach dem Speichern der Einstellungen
+                                automatisch gelöscht werden, wenn sie den neuen Regeln nicht entsprechen.
                             </div>
                         </div>
                     </div>
@@ -154,3 +275,14 @@
 
     </div>
 </div>
+
+<ng-template #keepBackupFilesInfo let-amount="amount">
+    <span *ngIf="amount === 1"
+            i18n="@@settings.backups.keep.info.file.single">
+            (die <b>aktuellste</b> Datei)
+    </span>
+    <span *ngIf="amount > 1"
+            i18n="@@settings.backups.keep.info.file.multiple">
+        (die <b>{{amount}}</b> aktuellsten Dateien)
+    </span>
+</ng-template>

@@ -13,7 +13,6 @@ import { Field } from 'idai-field-core';
 export class I18nSwitchComponent {
 
     @Input() inputType: Field.InputType;
-    
 
     @Output() onChanged: EventEmitter<string> = new EventEmitter<string>();
 

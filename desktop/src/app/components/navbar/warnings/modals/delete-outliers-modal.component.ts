@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { flatten, isArray, isObject, isString, isEmpty } from 'tsfun';
-import { BaseField, CategoryForm, Datastore, Dimension, Document, Field, ProjectConfiguration } from 'idai-field-core';
+import { BaseField, CategoryForm, Datastore, Measurement, Document, Field,
+    ProjectConfiguration } from 'idai-field-core';
 import { DeletionInProgressModalComponent } from '../../../widgets/deletion-in-progress-modal.component';
 import { AngularUtility } from '../../../../angular/angular-utility';
 import { AffectedDocument } from '../affected-document';
+import { Menus } from '../../../../services/menus';
+import { MenuContext } from '../../../../services/menu-context';
 
 
 @Component({
@@ -32,7 +35,8 @@ export class DeleteOutliersModalComponent {
     constructor(public activeModal: NgbActiveModal,
                 private modalService: NgbModal,
                 private datastore: Datastore,
-                private projectConfiguration: ProjectConfiguration) {}
+                private projectConfiguration: ProjectConfiguration,
+                private menuService: Menus) {}
 
 
     public cancel = () => this.activeModal.dismiss('cancel');
@@ -40,7 +44,9 @@ export class DeleteOutliersModalComponent {
     
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.MODAL) {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
 
@@ -152,8 +158,18 @@ export class DeleteOutliersModalComponent {
     private removeValueFromArray(array: any[], field: BaseField, document: Document): any[] {
 
         if (field.inputType === Field.InputType.DIMENSION) {
-            array.forEach((entry: Dimension) => {
+            array.forEach((entry: Measurement) => {
                 if (entry.measurementPosition === this.outlierValue) delete entry.measurementPosition;
+            });
+            return array;
+        } else if (field.inputType === Field.InputType.WEIGHT) {
+            array.forEach((entry: Measurement) => {
+                if (entry.measurementDevice === this.outlierValue) delete entry.measurementDevice;
+            });
+            return array;
+        } else if (field.inputType === Field.InputType.VOLUME) {
+            array.forEach((entry: Measurement) => {
+                if (entry.measurementTechnique === this.outlierValue) delete entry.measurementTechnique;
             });
             return array;
         } else if (field.inputType === Field.InputType.COMPOSITE) {

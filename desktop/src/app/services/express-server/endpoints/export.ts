@@ -1,0 +1,106 @@
+import { CategoryForm, Datastore, Document, ProjectConfiguration, Query } from 'idai-field-core';
+import { GeoJsonExporter } from '../../../components/export/geojson-exporter';
+import { CsvExporter } from '../../../components/export/csv/csv-exporter';
+import { ExportResult, ExportRunner } from '../../../components/export/export-runner';
+import { MD } from '../../../components/messages/md';
+import { getErrorMessage } from './util/get-error-message';
+
+
+interface RequestParameters {
+    format: string;
+    schemaOnly: boolean;
+    categoryName: string;
+    context: string;
+    separator: string;
+    combineHierarchicalRelations: boolean;
+    formatted: boolean;
+} 
+
+
+/**
+ * @author Thomas Kleinke
+ */
+export async function exportData(request: any, response: any, projectConfiguration: ProjectConfiguration,
+                                 datastore: Datastore, messagesDictionary: MD) {
+    
+    try {
+        const { format, schemaOnly, categoryName, context, separator, combineHierarchicalRelations,
+            formatted } = await getRequestParameters(request, datastore);
+
+        if (!['geojson', 'csv'].includes(format)) throw 'Unsupported format: ' + format;
+
+        const category: CategoryForm = projectConfiguration.getCategory(categoryName);
+        if (!category) throw 'Unconfigured category: ' + categoryName;
+            
+        if (format === 'csv') {
+            const result: ExportResult = await performCsvExport(projectConfiguration, datastore, context, schemaOnly,
+                category, separator, combineHierarchicalRelations
+            );
+            
+            response.header('Content-Type', 'text/csv')
+                .status(200)
+                .send(result.exportData.join('\n'));
+        } else {
+            const geojsonData: string = await GeoJsonExporter.performExport(datastore, context, undefined, formatted);
+
+            response.header('Content-Type', 'application/geo+json')
+                .status(200)
+                .send(geojsonData);
+        }
+    } catch (err) {
+        response.status(400).send({ error: getErrorMessage(err, messagesDictionary) });
+    }
+}
+
+
+async function getRequestParameters(request: any, datastore: Datastore): Promise<RequestParameters> {
+
+    const format: string = request.params.format;
+    const schemaOnly: boolean = request.query.schemaOnly === 'true';
+    const categoryName: string = request.query.category ?? 'Project';
+    const separator: string = request.query.separator ?? ',';
+    const combineHierarchicalRelations: boolean = request.query.combineHierarchicalRelations !== 'false';
+    const formatted: boolean = request.query.formatted !== 'false';
+    const context: string = await getContext(request, datastore);
+
+    return { format, schemaOnly, categoryName, separator, combineHierarchicalRelations, formatted, context };
+}
+
+
+async function getContext(request: any, datastore: Datastore): Promise<string> {
+
+    let context: string = request.query.context ?? 'project';
+
+    if (context !== 'project') {
+        const documents: Array<Document> = (await datastore.find(
+            { constraints: { 'identifier:match': context } }
+        )).documents;
+
+        context = documents.length === 1
+            ? documents[0].resource.id
+            : undefined;
+    }
+
+    return context;
+}
+
+
+async function performCsvExport(projectConfiguration: ProjectConfiguration, datastore: Datastore, context: string,
+                                schemaOnly: boolean, category: CategoryForm, separator: string,
+                                combineHierarchicalRelations: boolean): Promise<ExportResult> {
+
+    return ExportRunner.performExport(
+        (query: Query) => datastore.find(query),
+        (async resourceId => (await datastore.get(resourceId)).resource.identifier),
+        schemaOnly ? undefined : context,
+        category,
+        projectConfiguration
+            .getRelationsForDomainCategory(category.name)
+            .map(relation => relation.name),
+        CsvExporter.performExport(
+            projectConfiguration.getProjectLanguages(),
+            separator,
+            combineHierarchicalRelations
+        )
+    );
+}

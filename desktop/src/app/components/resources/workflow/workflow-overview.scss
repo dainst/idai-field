@@ -1,0 +1,15 @@
+workflow-overview {
+  process-list {
+    height: calc(100vh - #{$navbar-height + $toolbar-height + 24px});
+    margin-bottom: 7px;
+  }
+
+  #workflow-overview-background {
+    height: 24px;
+
+    plus-button .circular-button {
+      bottom: 11px;
+      left: calc(50% - 20px);
+    }
+  }
+}

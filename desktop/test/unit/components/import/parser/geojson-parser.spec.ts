@@ -123,4 +123,37 @@ describe('GeojsonParser', () => {
             ParserErrors.WRONG_IDENTIFIER_FORMAT
         );
     });
+
+
+    test('should close polygon and multipolygon rings', async () => {
+
+        const fileContent: string = '{ "type": "FeatureCollection", "features": ['
+            + '{ "type": "Feature", "geometry": { "type": "Polygon", '
+            + '"coordinates": [[[-7.0, -5.0], [-6.0, -5.0], [7.0, -7.0]]] }, '
+            + '"properties": { "identifier": "1" } }, '
+            + '{ "type": "Feature", "geometry": { "type": "MultiPolygon", '
+            + '"coordinates": [[[[-7.0, -5.0], [-6.0, -5.0], [7.0, -7.0]]], '
+            + '[[[7.0, 5.0], [6.0, 5.0], [-7.0, 7.0]]]] }, '
+            + '"properties" : {"identifier":"2"} }'
+            + ']}';
+
+        const parse = GeojsonParser.getParse(undefined, undefined);
+
+        const documents = await parse(fileContent);
+
+        expect(documents[0].resource['identifier']).toEqual('1');
+        expect(documents[0].resource['geometry']['type']).toEqual('Polygon');
+        expect(documents[0].resource['geometry']['coordinates']).toEqual(
+            [[[-7.0, -5.0], [-6.0, -5.0], [7.0, -7.0], [-7.0, -5.0]]]
+        );
+
+        expect(documents[1].resource['identifier']).toEqual('2');
+        expect(documents[1].resource['geometry']['type']).toEqual('MultiPolygon');
+        expect(documents[1].resource['geometry']['coordinates']).toEqual([
+            [[[-7.0, -5.0], [-6.0, -5.0], [7.0, -7.0], [-7.0, -5.0]]],
+            [[[7.0, 5.0], [6.0, 5.0], [-7.0, 7.0], [7.0, 5.0]]]
+        ]);
+
+        expect(documents.length).toEqual(2);
+    });
 });

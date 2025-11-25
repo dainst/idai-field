@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { SortUtil } from 'idai-field-core';
 import { Language, Languages } from '../../../services/languages';
+import { Menus } from '../../../services/menus';
+import { MenuContext } from '../../../services/menu-context';
 
 
 @Component({
@@ -23,7 +25,8 @@ export class LanguagePickerModalComponent {
     private sortedLanguages: Array<Language>;
 
 
-    constructor(public activeModal: NgbActiveModal) {}
+    constructor(public activeModal: NgbActiveModal,
+                private menuService: Menus) {}
 
 
     public getLanguageCodes = () => Languages.getSortedLanguageCodes(this.languages);
@@ -35,7 +38,7 @@ export class LanguagePickerModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key.length === 1) {
+        if (event.key.length === 1 && this.menuService.getContext() === MenuContext.MODAL) {
             this.searchTerm += event.key;
             this.scrollToSearchTermEntry();
             this.resetTimeout();

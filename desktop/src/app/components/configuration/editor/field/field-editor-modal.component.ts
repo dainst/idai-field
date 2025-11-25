@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { clone, equal, intersection, isEmpty, Map, set, to } from 'tsfun';
+import { clone, equal, intersection, isArray, isEmpty, Map, sameset, set, subsetOf, to } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, I18N, OVERRIDE_VISIBLE_FIELDS,
     CustomLanguageConfigurations, ProjectConfiguration, CategoryForm, Named, Labels, 
-    CustomFieldDefinition } from 'idai-field-core';
+    CustomFieldDefinition, DateConfiguration, Condition, Relation } from 'idai-field-core';
 import { InputType, ConfigurationUtil } from '../../configuration-util';
 import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
 import { Menus } from '../../../../services/menus';
@@ -34,12 +34,15 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public clonedField: Field|undefined;
     public hideable: boolean;
     public hidden: boolean;
+    public condition: Condition;
     public i18nCompatible: boolean;
     public subfieldI18nStrings: Map<{ label?: I18N.String, description?: I18N.String }>;
     public dragging: boolean;
     public selectableTargetCategories: Array<CategoryForm>;
     public selectedTargetCategoryNames: string[];
     public availableInverseRelations: string[];
+
+    private inverseRelation: string|undefined;
 
     protected changeMessage = $localize `:@@configuration.fieldChanged:Das Feld wurde geändert.`;
 
@@ -58,17 +61,36 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public getClonedFieldDefinition = () => this.getClonedFormDefinition().fields[this.field.name];
 
+    public isMandatory = () => this.getClonedFieldDefinition()?.mandatory ?? this.field.required;
+
+    public isMandatoryOptionVisible = () => this.field.editable;
+
+    public isMandatoryOptionEnabled = () => !this.field.required
+        && !Field.InputType.RELATION_INPUT_TYPES.includes(this.getInputType());
+
+    public getDateConfiguration = () => this.getClonedFieldDefinition().dateConfiguration
+
+    public isConditionSectionVisible = () => !this.isMandatory() && !OVERRIDE_VISIBLE_FIELDS.includes(this.field.name)
+        && this.field.name !== 'category';
+
     public isValuelistSectionVisible = () => Field.InputType.VALUELIST_INPUT_TYPES.includes(
         this.getClonedFieldDefinition()?.inputType as Field.InputType ?? this.field.inputType
     ) && !this.field.valuelistFromProjectField;
 
+    public isDateSectionVisible = () => this.getInputType() === Field.InputType.DATE;
+
     public isSubfieldsSectionVisible = () => this.getInputType() === Field.InputType.COMPOSITE;
 
-    public isRelationSectionVisible = () => this.isCustomField() && this.getInputType() === Field.InputType.RELATION;
+    public isRelationSectionVisible = () => this.getInputType() === Field.InputType.RELATION
+        && (this.isCustomField() || Relation.Workflow.ALL.includes(this.field.name));
+
+    public isInverseRelationVisible = () => this.isRelationSectionVisible() && this.isCustomField();
 
     public isI18nCompatible = () => Field.InputType.I18N_COMPATIBLE_INPUT_TYPES.includes(this.getInputType());
 
     public isCustomField = () => this.field.source === 'custom';
+
+    public getAvailableConditionFields = () => CategoryForm.getFields(this.category);
 
 
     public initialize() {
@@ -78,10 +100,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         this.selectableTargetCategories = this.getSelectableTargetCategories();
 
         if (this.new) {
-            this.getClonedFormDefinition().fields[this.field.name] = {
-                inputType: this.field.inputType,
-                constraintIndexed: false
-            };
+            this.getClonedFormDefinition().fields[this.field.name] = this.buildFieldDefinition(this.field);
             this.clonedConfigurationDocument = ConfigurationDocument.addField(
                 this.clonedConfigurationDocument, this.category, this.permanentlyHiddenFields,
                 this.groupName, this.field.name
@@ -91,18 +110,26 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         }
 
         if (!this.getClonedFieldDefinition().references) this.getClonedFieldDefinition().references = [];
+        if (!this.getClonedFieldDefinition().semanticReferences) {
+            this.getClonedFieldDefinition().semanticReferences = [];
+        }
         if (!this.getClonedFieldDefinition().subfields) this.getClonedFieldDefinition().subfields = [];
+        if (!this.getClonedFieldDefinition().condition) {
+            this.getClonedFieldDefinition().condition = clone(this.field.condition) ?? Condition.getEmpty('field');
+        }
 
         this.clonedField = clone(this.field);
 
         this.hideable = this.isHideable();
         this.hidden = this.isHidden();
+        this.inverseRelation = this.getClonedFieldDefinition().inverse;
 
         this.subfieldI18nStrings = this.field.subfields?.reduce((result, subfield) => {
             result[subfield.name] = { label: subfield.label, description: subfield.description };
             return result;
         }, {}) ?? {};
 
+        this.initializeDateConfiguration();
         this.initializeSelectedTargetCategories();
         this.updateAvailableInverseRelations();
     }
@@ -110,27 +137,29 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public async confirm() {
 
-        if (!this.field.valuelist && this.isValuelistSectionVisible()
-                && !this.getClonedFormDefinition().valuelists?.[this.field.name]) {
-            return this.messages.add([M.CONFIGURATION_ERROR_NO_VALUELIST]);
-        }
-
-        if (this.getClonedFieldDefinition().subfields?.length < 2 && this.isSubfieldsSectionVisible()) {
-            return this.messages.add([M.CONFIGURATION_ERROR_NO_SUBFIELDS]);
-        }
-
-        if (this.isRelationSectionVisible() && !this.selectedTargetCategoryNames.length) {
-            return this.messages.add([M.CONFIGURATION_ERROR_NO_ALLOWED_TARGET_CATEGORIES]);
-        }
-
         try {
+            this.assertChangesAreValid();
             ConfigurationUtil.cleanUpAndValidateReferences(this.getClonedFieldDefinition());
+            ConfigurationUtil.cleanUpAndValidateSemanticReferences(this.getClonedFieldDefinition());
         } catch (errWithParams) {
             return this.messages.add(errWithParams);
         }
 
-        if (isEmpty(this.getClonedFieldDefinition())) {
-            delete this.getClonedFormDefinition().fields[this.field.name];
+        const hasValidCondition: boolean = Condition.isValid(this.getClonedFieldDefinition().condition, 'field');
+        if (this.isMandatory() || !hasValidCondition) {
+            delete this.getClonedFieldDefinition().condition;
+        }
+
+        if (this.field.defaultCondition) {
+            if (!hasValidCondition) {
+                this.getClonedFieldDefinition().condition = null;
+            } else if (equal(this.getClonedFieldDefinition().condition)(this.field.defaultCondition)) {
+                delete this.getClonedFieldDefinition().condition;
+            }
+        }
+
+        if (!this.isDateSectionVisible()) {
+            delete this.getClonedFieldDefinition().dateConfiguration;
         }
 
         if (!this.isSubfieldsSectionVisible()) {
@@ -144,10 +173,19 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         if (this.isRelationSectionVisible()) {
             this.getClonedFieldDefinition().range = this.getRange();
-            if (this.getClonedFieldDefinition().inverse) this.updateInverseRelations();
+            if (this.inverseRelation) {
+                this.getClonedFieldDefinition().inverse = this.inverseRelation;
+                this.updateInverseRelations();
+            } else {
+                delete this.getClonedFieldDefinition().inverse
+            }
         } else {
             delete this.getClonedFieldDefinition().range;
             delete this.getClonedFieldDefinition().inverse;
+        }
+
+        if (isEmpty(this.getClonedFieldDefinition())) {
+            delete this.getClonedFormDefinition().fields[this.field.name];
         }
 
         await super.confirm(true);
@@ -173,6 +211,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         if (!this.availableInputTypes.find(inputType => inputType.name === newInputType).searchable) {
             delete this.getClonedFieldDefinition().constraintIndexed;
         }
+
         if (newInputType === this.field.inputType && !this.getCustomFieldDefinition()?.inputType) {
             delete this.getClonedFieldDefinition().inputType;
             this.clonedField.inputType = this.field.inputType;
@@ -182,6 +221,23 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         } else {
             this.getClonedFieldDefinition().inputType = newInputType;
             this.clonedField.inputType = newInputType;
+        }
+
+        if (Field.InputType.RELATION_INPUT_TYPES.includes(newInputType)) {
+            delete this.getClonedFieldDefinition().mandatory;
+        }
+
+        this.initializeDateConfiguration();
+    }
+
+
+    public toggleMandatory() {
+
+        const clonedFieldDefinition: CustomFieldDefinition = this.getClonedFieldDefinition();
+        if (this.isMandatory()) {
+            delete clonedFieldDefinition.mandatory;
+        } else {
+            clonedFieldDefinition.mandatory = true;
         }
     }
 
@@ -228,6 +284,18 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     }
 
 
+    public getMandatoryTooltip(): string {
+
+        if (this.field.required) {
+             return $localize `:@@configuration.mandatoryField.notAllowedForRequiredField:Dieses Feld ist grundsätzlich ein Pflichtfeld.`;
+         } else if (Field.InputType.RELATION_INPUT_TYPES.includes(this.getInputType())) {
+             return $localize `:@@configuration.mandatoryField.notAllowedForInputType:Felder dieses Eingabetyps können nicht als Pflichtfeld konfiguriert werden.`;
+         } else {
+             return '';
+         }
+     }
+
+
     public getConstraintIndexedTooltip(): string {
 
        if (this.category.name === 'Project') {
@@ -268,15 +336,15 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     }
 
 
-    public setInverseRelation(relationName) {
+    public setInverseRelation(relationName: string) {
 
-        this.getClonedFieldDefinition().inverse = relationName;
+        this.inverseRelation = relationName?.length ? relationName : undefined;
     }
 
 
-    public isSelectedInverseRelation(relationName) {
+    public isSelectedInverseRelation(relationName: string) {
 
-        return this.getClonedFieldDefinition().inverse === relationName;
+        return this.inverseRelation === relationName;
     }
 
 
@@ -284,16 +352,22 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         return this.new
             || this.getCustomFieldDefinition()?.inputType !== this.getClonedFieldDefinition()?.inputType
+            || this.getCustomFieldDefinition()?.mandatory !== this.getClonedFieldDefinition()?.mandatory
             || !equal(this.getCustomFormDefinition().hidden)(this.getClonedFormDefinition().hidden)
             || this.isValuelistChanged()
             || this.isConstraintIndexedChanged()
+            || this.isConditionChanged()
+            || this.isDateConfigurationChanged()
             || this.isSubfieldsChanged()
-            || !equal(this.getCustomFieldDefinition()?.range ?? [], this.getRange())
-            || this.getCustomFieldDefinition()?.inverse !== this.getClonedFieldDefinition().inverse
+            || !sameset(this.getCustomFieldDefinition()?.range ?? [], this.getRange())
+            || this.getCustomFieldDefinition()?.inverse !== this.inverseRelation
             || !equal(this.label)(I18N.removeEmpty(this.clonedLabel))
             || !equal(this.description ?? {})(I18N.removeEmpty(this.clonedDescription))
-            || (this.isCustomField() && ConfigurationUtil.isReferencesArrayChanged(this.getCustomFieldDefinition(),
-                    this.getClonedFieldDefinition()));
+            || (this.isCustomField() && (
+                ConfigurationUtil.isReferencesArrayChanged(this.getCustomFieldDefinition(),
+                    this.getClonedFieldDefinition())
+                || ConfigurationUtil.isSemanticReferencesArrayChanged(this.getCustomFieldDefinition(),
+                    this.getClonedFieldDefinition())))
     }
 
 
@@ -314,6 +388,32 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     }
 
 
+    private isConditionChanged(): boolean {
+
+        let condition: Condition = this.getCustomFieldDefinition()?.condition ?? this.field.condition;
+        if (!Condition.isValid(condition, 'field')) condition = Condition.getEmpty('field');
+
+        const clonedCondition: Condition = Condition.isValid(this.getClonedFieldDefinition()?.condition, 'field')
+            ? this.getClonedFieldDefinition().condition
+            : Condition.getEmpty('field');
+
+        return !equal(condition)(clonedCondition);
+    }
+
+
+    private isDateConfigurationChanged(): boolean {
+
+        if (!this.isDateSectionVisible()) return false;
+
+        const configuration: DateConfiguration = this.getCustomFieldDefinition()?.dateConfiguration
+            ?? this.field.dateConfiguration
+            ?? DateConfiguration.getDefault();
+        const clonedConfiguration: DateConfiguration = this.getClonedFieldDefinition()?.dateConfiguration;
+
+        return !equal(configuration, clonedConfiguration);
+    }
+
+
     private isSubfieldsChanged(): boolean {
 
         return !equal(this.getCustomFieldDefinition()?.subfields ?? [],
@@ -329,6 +429,16 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
                 || !equal(subfield.description ?? {})(I18N.removeEmpty(this.subfieldI18nStrings[subfield.name]
                     ?.description ?? {}));
         }).length > 0;
+    }
+
+
+    private initializeDateConfiguration() {
+
+        if (this.isDateSectionVisible() && !this.getClonedFieldDefinition().dateConfiguration) {
+            this.getClonedFieldDefinition().dateConfiguration = this.field.dateConfiguration
+                ? clone(this.field.dateConfiguration)
+                : DateConfiguration.getDefault();
+        }
     }
 
 
@@ -479,10 +589,53 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     }
 
 
+    private assertChangesAreValid() {
+
+        this.assertChangesDoNotViolateConditionalFields();
+
+        if (!this.field.valuelist && this.isValuelistSectionVisible()
+                && !this.getClonedFormDefinition().valuelists?.[this.field.name]) {
+            throw [M.CONFIGURATION_ERROR_NO_VALUELIST];
+        }
+
+        if (this.getClonedFieldDefinition().subfields?.length < 2 && this.isSubfieldsSectionVisible()) {
+            throw [M.CONFIGURATION_ERROR_NO_SUBFIELDS];
+        }
+
+        if (this.isRelationSectionVisible() && !this.selectedTargetCategoryNames.length) {
+            throw [M.CONFIGURATION_ERROR_NO_ALLOWED_TARGET_CATEGORIES];
+        }
+    }
+
+
+    private assertChangesDoNotViolateConditionalFields() {
+
+        const conditionalFields: Array<Field> = CategoryForm.getFields(this.category).filter(field => {
+            return field.condition?.fieldName === this.field.name;
+        });
+
+        const values: string[] = this.clonedField.valuelist
+            ? Object.keys(this.clonedField.valuelist.values)
+            : [];
+
+        for (let field of conditionalFields) {
+            if ((field.condition.values === true || field.condition.values === false)
+                    && this.getInputType() !== Field.InputType.BOOLEAN) {
+                throw [M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_INPUT_TYPE, this.labels.get(field)];
+            } else if (isArray(field.condition.values)
+                && (!Field.InputType.VALUELIST_INPUT_TYPES.includes(this.getInputType())
+                        || !subsetOf(values, field.condition.values))) {
+                throw [M.CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_VALUELISTS, this.labels.get(field)];
+            }
+        }
+    }
+
+
     private isHideable(): boolean {
 
         return !OVERRIDE_VISIBLE_FIELDS.includes(this.field.name)
-            && this.field.source !== 'custom';
+            && this.field.source !== 'custom'
+            && !this.field.required
     }
 
 
@@ -494,7 +647,26 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     private getSelectableTargetCategories(): Array<CategoryForm> {
 
+        let unallowedCategories: string[] = ['Project'];
+        if (Relation.Workflow.ALL.includes(this.field.name)) {
+            unallowedCategories = unallowedCategories.concat(['Process', 'TypeCatalog', 'Type', 'StoragePlace']);
+        }
+
         return this.clonedProjectConfiguration.getTopLevelCategories()
-            .filter(category => category.name !== 'Project');
+            .filter(category => !unallowedCategories.includes(category.name));
+    }
+
+
+    private buildFieldDefinition(field: Field): CustomFieldDefinition {
+
+        const fieldDefinition: CustomFieldDefinition = {
+            inputType: field.inputType
+        };
+
+        if (this.availableInputTypes.find(inputType => inputType.name === field.inputType)?.searchable) {
+            fieldDefinition.constraintIndexed = false;
+        }
+
+        return fieldDefinition;
     }
 }

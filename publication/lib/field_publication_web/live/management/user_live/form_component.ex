@@ -9,9 +9,9 @@ defmodule FieldPublicationWeb.Management.UserLive.FormComponent do
   def render(assigns) do
     ~H"""
     <div>
-      <.header>
+      <.document_heading>
         {@title}
-      </.header>
+      </.document_heading>
 
       <.simple_form
         for={@form}

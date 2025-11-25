@@ -680,12 +680,6 @@
         "area": {
           "label": "Area in m2"
         },
-        "beginningDate": {
-          "label": "Beginning date"
-        },
-        "endDate": {
-          "label": "End date"
-        },
         "comparison": {
           "label": "Comparison"
         },
@@ -824,12 +818,6 @@
     "Excavation": {
       "label": "Excavation",
       "fields": {
-        "beginningDate": {
-          "label": "Beginning date"
-        },
-        "endDate": {
-          "label": "End date"
-        },
         "diary": {
           "label": "Diary"
         },
@@ -858,14 +846,6 @@
       "fields": {
         "area": {
           "label": "Area in m2"
-        },
-        "beginningDate": {
-          "label": "Beginning date",
-          "description": "Date on which the recording of the stratigraphical unit was started"
-        },
-        "endDate": {
-          "label": "End date",
-          "description": "Date on which the recording of the stratigraphical unit was finished"
         },
         "comparison": {
           "label": "Comparison"
@@ -941,14 +921,6 @@
       "fields": {
         "area": {
           "label": "Area in m2"
-        },
-        "beginningDate": {
-          "label": "Beginning date",
-          "description": "Date on which the recording of the stratigraphical unit was started"
-        },
-        "endDate": {
-          "label": "End date",
-          "description": "Date on which the recording of the stratigraphical unit was finished"
         },
         "comparison": {
           "label": "Comparison"

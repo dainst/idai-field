@@ -1,10 +1,15 @@
 'use strict';
 
 const electron = require('electron');
+electron.crashReporter.start({
+    uploadToServer: false
+});
+
 const remoteMain = require('@electron/remote/main');
 const fs = require('original-fs');
 const os = require('os');
 const url = require('url');
+const pathSeparator = require('path').sep;
 const log = require('electron-log');
 const autoUpdate = require('./auto-update.js');
 
@@ -17,7 +22,7 @@ log.info('Working directory:', process.cwd());
 
 let menuContext = 'loading';
 
-const mainLanguages = ['de', 'en', 'it', 'pt', 'tr', 'uk'];
+const mainLanguages = ['de', 'en', 'es', 'it', 'pt', 'tr', 'uk'];
 
 // needed to fix notifications in win 10
 // see https://github.com/electron/electron/issues/10864
@@ -49,6 +54,9 @@ global.setConfigDefaults = config => {
     if (config.highlightCustomElements === undefined) config.highlightCustomElements = true;
     setLanguages(config);
     if (os.type() === 'Linux') config.isAutoUpdateActive = false;
+    if (!config.keepBackups) {
+        config.keepBackups = { custom: 0, customInterval: 0, daily: 0, weekly: 0, monthly: 0 };
+    }
 
     return config;
 };
@@ -172,13 +180,12 @@ if (env === 'dev') {
 }
 
 if (['production', 'development'].includes(global.mode)) {
-
     // If we want to go from idai-field-client to idai-field-desktop while keeping the link to the existing dbs, use this:
     // const result = electron.app.getPath('userData').replace("idai-field-desktop", "idai-field-client")
     // electron.app.setPath('userData', result).
     // global.appDataPath = result
     // The next line can then be removed.
-    global.appDataPath = electron.app.getPath('appData') + '/' + electron.app.getName()
+    global.appDataPath = electron.app.getPath('appData') + pathSeparator + electron.app.getName()
 
     copyConfigFile(global.appDataPath + '/config.json', global.appDataPath);
     global.configPath = global.appDataPath + '/config.json';
@@ -220,6 +227,8 @@ global.manualPath = global.mode === 'production'
     ? electron.app.getAppPath().replace('app.asar', 'manual')
     : './manual';
 
+global.imageProcessing = process.argv.includes('--alternativeImageProcessing') ? 'jimp' : 'sharp';
+
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true;
 
 
@@ -244,6 +253,7 @@ const createWindow = () => {
         minHeight: 600,
         webPreferences: {
             nodeIntegration: true,
+            nodeIntegrationInWorker: true,
             enableRemoteModule: true,
             contextIsolation: false,
             preload: require('path').join(electron.app.getAppPath(), 'electron/preload.js'),

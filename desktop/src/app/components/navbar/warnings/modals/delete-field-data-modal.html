@@ -8,7 +8,7 @@
         Daten wirklich löschen?
     </span>
 
-    <div id="multiple-switch" 
+    <div *ngIf="warningType !== 'unfulfilledConditionFields'" id="multiple-switch" 
          class="row" 
          [disableTooltip]="countAffected !== 1" 
          [class.disabled]="countAffected === 1"

@@ -21,7 +21,7 @@ const { test, expect } = require('@playwright/test');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-test.describe('resources --', () => {
+test.describe('resources', () => {
 
     test.beforeAll(async () => {
 
@@ -166,7 +166,7 @@ test.describe('resources --', () => {
         expect(fieldName).toBe('Tagebuch');
         const fieldValue = await FieldsViewPage.getFieldValue(0, 1);
         expect(fieldValue).toBe('100');
-        const items = await FieldsViewPage.getFields(1);
+        const items = await FieldsViewPage.getFields(0);
         expect(await items.count()).toBe(2);
     });
 
@@ -231,36 +231,6 @@ test.describe('resources --', () => {
     });
 
 
-    test('show only values of parent resource for campaign field in editor', async () => {
-
-        await NavbarPage.clickTab('project');
-        await ResourcesPage.performCreateResource('trench', 'operation-trench');
-        await ResourcesPage.clickHierarchyButton('trench');
-        await ResourcesPage.performCreateResource('feature', 'feature');
-        await ResourcesPage.openEditByDoubleClickResource('feature');
-        let checkboxes = await DoceditPage.getCheckboxes('campaign');
-        expect(await checkboxes.count()).toBe(0);
-
-        await DoceditPage.clickCloseEdit();
-        await NavbarPage.clickTab('project');
-        await ResourcesPage.openEditByDoubleClickResource('trench');
-        checkboxes = await DoceditPage.getCheckboxes('campaign');
-        expect(await checkboxes.count()).toBe(2);
-        expect(await getText(checkboxes.nth(0))).toEqual('Testkampagne 1');
-        expect(await getText(checkboxes.nth(1))).toEqual('Testkampagne 2');
-
-        await DoceditPage.clickCheckbox('campaign', 0);
-        await DoceditPage.clickSaveDocument();
-        await ResourcesPage.clickHierarchyButton('trench');
-        await ResourcesPage.openEditByDoubleClickResource('feature');
-        checkboxes = await DoceditPage.getCheckboxes('campaign');
-        expect(await checkboxes.count()).toBe(1);
-        expect(await getText(checkboxes.nth(0))).toEqual('Testkampagne 1');
-
-        await DoceditPage.clickCloseEdit();
-    });
-
-
     test('do not restrict values of campaign field if the category of the parent resource does not include the field',
             async () => {
 
@@ -302,6 +272,7 @@ test.describe('resources --', () => {
         await navigateTo('configuration');
         await waitForExist(await ConfigurationPage.getConfigurationEditor());
         await navigateTo('projectLanguages');
+        await ProjectLanguagesModalPage.clickDeleteLanguage('es');
         await ProjectLanguagesModalPage.clickDeleteLanguage('it');
         await ProjectLanguagesModalPage.clickDeleteLanguage('pt');
         await ProjectLanguagesModalPage.clickConfirm();
@@ -495,17 +466,18 @@ test.describe('resources --', () => {
         await pause(2000);
         const label = await NavbarPage.getActiveNavLinkLabel();
         expect(label).toContain('S2');
-        await pause(2000);
         let elements = await ResourcesPage.getListItemEls();
         expect(await elements.count()).toBe(7);
         await pause(2000);
 
         await ResourcesPage.clickHierarchyButton('SE0');
+        await pause(1000);
         elements = await ResourcesPage.getListItemEls();
         expect(await elements.count()).toBe(1);
 
         await NavbarPage.clickTab('project');
         await ResourcesPage.clickHierarchyButton('S1');
+        await pause(1000);
         elements = await ResourcesPage.getListItemEls();
         expect(await elements.count()).toBe(0);
     });

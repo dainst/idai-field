@@ -2,9 +2,9 @@ import { sameset } from 'tsfun';
 import { AppConfigurator, ChangesStream, ConfigLoader, ConfigReader, createDocuments, Datastore,
     Document, DocumentCache, NiceDocs, PouchdbDatastore, Query, RelationsManager, Resource, SyncService, ImageStore,
     ImageSyncService, Indexer } from 'idai-field-core';
-import { ExpressServer } from '../../../src/app/services/express-server';
+import { ExpressServer } from '../../../src/app/services/express-server/express-server';
 import { ImageDocumentsManager } from '../../../src/app/components/image/overview/view/image-documents-manager';
-import { ImageOverviewFacade } from '../../../src/app/components/image/overview/view/imageoverview-facade';
+import { ImageOverviewFacade } from '../../../src/app/components/image/overview/view/image-overview-facade';
 import { ImagesState } from '../../../src/app/components/image/overview/view/images-state';
 import { makeDocumentsLookup } from '../../../src/app/components/import/import/utils';
 import { ImageRelationsManager } from '../../../src/app/services/image-relations-manager';
@@ -41,7 +41,7 @@ class IdGenerator {
  */
 export async function setupSettingsService(pouchdbDatastore, projectIdentifier = 'testdb') {
 
-    const pouchdbServer = new ExpressServer(undefined, undefined, undefined, undefined);
+    const pouchdbServer = new ExpressServer(undefined, undefined, undefined, undefined, undefined);
     const settingsProvider = new SettingsProvider();
     const fileSystemAdapter = new FsAdapter();
     const mockMessages = new Messages(undefined, 0);
@@ -75,7 +75,9 @@ export async function setupSettingsService(pouchdbDatastore, projectIdentifier =
         dbs: [projectIdentifier],
         selectedProject: '',
         imagestorePath: process.cwd() + '/test/test-temp/imagestore',
-        username: 'synctestuser'
+        backupDirectoryPath: process.cwd() + '/test/test-temp/backups',
+        username: 'synctestuser',
+        keepBackups: { custom: 0, customInterval: 0, daily: 0, weekly: 0, monthly: 0 }
     });
 
     await settingsService.bootProjectDb(
@@ -120,7 +122,8 @@ export async function createApp(projectIdentifier = 'testdb'): Promise<App> {
         settingsService,
         projectConfiguration,
         settingsProvider,
-        imageStore
+        imageStore,
+        remoteImageStore
     } = await setupSettingsService(pouchdbDatastore, projectIdentifier);
 
     const { createdIndexFacade } = IndexerConfiguration.configureIndexers(projectConfiguration);
@@ -216,7 +219,17 @@ export async function createApp(projectIdentifier = 'testdb'): Promise<App> {
 
     const imagesState = new ImagesState(projectConfiguration, stateSerializer);
     const imageDocumentsManager = new ImageDocumentsManager(imagesState, datastore);
-    const imageOverviewFacade = new ImageOverviewFacade(imageDocumentsManager, imagesState, projectConfiguration);
+
+    const imageToolLauncher: any = {
+        update: jest.fn()
+    };
+
+    const imageOverviewFacade = new ImageOverviewFacade(
+        imageDocumentsManager,
+        imagesState,
+        projectConfiguration,
+        imageToolLauncher
+    );
 
     return {
         remoteChangesStream,

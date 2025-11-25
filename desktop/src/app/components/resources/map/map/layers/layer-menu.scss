@@ -19,6 +19,12 @@ $layer-menu-remove-button-color: #c82333;
   top: 10px;
   padding-top: 6px;
 
+  .mdi {
+    position: relative;
+    left: 0.5px;
+    top: 0.5px;
+  }
+
   &.disabled {
     opacity: 1;
   }
@@ -68,6 +74,17 @@ $layer-menu-remove-button-color: #c82333;
 
         .layer-group-heading {
           font-size: 15px;
+
+          &.with-download-button {
+            position: relative;
+            bottom: 2px;
+          }
+        }
+
+        .download-layer-images-button {
+          position: relative;
+          left: 3px;
+          bottom: 1px;
         }
 
         .no-layers-info {

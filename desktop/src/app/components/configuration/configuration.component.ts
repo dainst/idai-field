@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { nop } from 'tsfun';
@@ -38,6 +38,7 @@ import { exportConfiguration } from './export-configuration';
 import { AppState } from '../../services/app-state';
 import { UtilTranslations } from '../../util/util-translations';
 import { M } from '../messages/m';
+import { ContextMenuProvider } from '../widgets/context-menu-provider';
 
 
 @Component({
@@ -54,7 +55,7 @@ import { M } from '../messages/m';
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
-export class ConfigurationComponent implements OnInit, OnDestroy {
+export class ConfigurationComponent extends ContextMenuProvider implements OnInit, OnDestroy {
 
     public topLevelCategoriesArray: Array<CategoryForm>;
     public filteredTopLevelCategoriesArray: Array<CategoryForm>;
@@ -77,7 +78,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         { name: 'survey', isRecordedInCategory: 'Survey', label: $localize `:@@configuration.categoriesFilter.survey:Survey` },
         { name: 'images', label: $localize `:@@configuration.categoriesFilter.images:Bilderverwaltung` },
         { name: 'types', label: $localize `:@@navbar.tabs.types:Typenverwaltung` },
-        { name: 'inventory', label: $localize `:@@navbar.tabs.inventory:Inventarisierung` }
+        { name: 'inventory', label: $localize `:@@navbar.tabs.inventory:Inventarisierung` },
+        { name: 'workflow', label: $localize `:@@navbar.tabs.workflow:Workflow` }
     ];
 
     public availableInputTypes: Array<InputType> = [
@@ -99,6 +101,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         { name: 'date', customFields: true },
         { name: 'dating', customFields: true },
         { name: 'dimension', customFields: true },
+        { name: 'weight', customFields: true },
+        { name: 'volume', customFields: true },
         { name: 'literature', customFields: true },
         { name: 'composite', customFields: true },
         { name: 'relation', customFields: true },
@@ -134,7 +138,11 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 private pouchdbDatastore: PouchdbDatastore,
                 private configurationState: ConfigurationState,
                 private utilTranslations: UtilTranslations,
-                private appState: AppState) {}
+                private appState: AppState,
+                changeDetectorRef: ChangeDetectorRef) {
+
+        super(changeDetectorRef);
+    }
 
 
     public isShowHiddenFields = () => !this.settingsProvider.getSettings().hideHiddenFieldsInConfigurationEditor;
@@ -170,6 +178,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
         this.menus.setContext(MenuContext.DEFAULT);
         if (this.menuSubscription) this.menuSubscription.unsubscribe();
+        this.removeListeners();
     }
 
 
@@ -198,7 +207,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
     public onClick(event: any, rightClick: boolean = false) {
 
-        if (!this.contextMenu.position) return;
+        if (!this.contextMenu.isOpen()) return;
 
         if (!ComponentHelpers.isInside(event.target, target => target.id === 'context-menu'
             || rightClick && target.id && (
@@ -206,9 +215,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 || target.id.startsWith('category-')
                 || target.id.startsWith('group-')
                 || target.id.startsWith('field-')
-            ))) {
-
-            this.contextMenu.close();
+            )) || ComponentHelpers.isInside(event.target, target => rightClick
+                && (target.classList?.contains('valuelist')))) {
+            this.closeContextMenu();
         }
     }
 
@@ -247,7 +256,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
     public performContextMenuAction(action: ConfigurationContextMenuAction) {
 
-        this.contextMenu.close();
+        this.closeContextMenu();
 
         switch(action) {
             case 'edit':
@@ -471,6 +480,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         componentInstance.customized = ConfigurationDocument.isCustomizedCategory(
             this.configurationDocument, category
         );
+        componentInstance.relations = this.clonedProjectConfiguration.getRelations();
         componentInstance.resourceCount = (await this.datastore.findIds({ categories: [category.name] })).ids.length;
 
         this.modals.awaitResult(result,
@@ -506,6 +516,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
         );
 
         componentInstance.field = field;
+        componentInstance.category = category;
 
         this.modals.awaitResult(result,
             () => this.deleteField(category, field),

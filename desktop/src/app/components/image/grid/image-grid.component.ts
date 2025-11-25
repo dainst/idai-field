@@ -1,7 +1,10 @@
-import { Component, EventEmitter, Input, OnChanges, SimpleChanges, Output, ElementRef } from '@angular/core';
-import { ImageDocument, ImageVariant } from 'idai-field-core';
+import { Component, EventEmitter, Input, OnChanges, SimpleChanges, Output, ElementRef, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { FileInfo, ImageDocument, ImageStore, ImageVariant } from 'idai-field-core';
 import { constructGrid } from './construct-grid';
 import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
+import { ImageToolLauncher } from '../../../services/imagestore/image-tool-launcher';
+import { SettingsProvider } from '../../../services/settings/settings-provider';
 
 
 const DROPAREA = 'droparea';
@@ -17,7 +20,7 @@ const DROPAREA = 'droparea';
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
-export class ImageGridComponent implements OnChanges {
+export class ImageGridComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() nrOfColumns: number = 1;
     @Input() documents: Array<ImageDocument>;
@@ -28,6 +31,7 @@ export class ImageGridComponent implements OnChanges {
     @Input() showIdentifier = true;
     @Input() showShortDescription = true;
     @Input() showGeoIcon = false;
+    @Input() showNoOriginalImageIcon = false;
     @Input() showTooltips = false;
     @Input() showDropArea = false;
     @Input() compressDropArea = false;
@@ -42,9 +46,14 @@ export class ImageGridComponent implements OnChanges {
     private calcGridTimeout: any;
     private calcGridPromise: Promise<void>|undefined;
 
+    private downloadSubscription: Subscription;
+
 
     constructor(private element: ElementRef,
-                private imageUrlMaker: ImageUrlMaker) {}
+                private imageUrlMaker: ImageUrlMaker,
+                private imageToolLauncher: ImageToolLauncher,
+                private imageStore: ImageStore,
+                private settingsProvider: SettingsProvider) {}
 
 
     public async handleClick(document: ImageDocument, event: MouseEvent) {
@@ -54,6 +63,19 @@ export class ImageGridComponent implements OnChanges {
         } else {
             this.onClick.emit(document);
         }
+    }
+
+
+    ngOnInit() {
+        
+        this.downloadSubscription = this.imageToolLauncher.downloadNotifications()
+            .subscribe(() => this.loadImages(this.rows));
+    }
+
+
+    ngOnDestroy() {
+        
+        if (this.downloadSubscription) this.downloadSubscription.unsubscribe();
     }
 
 
@@ -101,6 +123,10 @@ export class ImageGridComponent implements OnChanges {
 
     private async loadImages(rows: any) {
 
+        const fileInfos: { [uuid: string]: FileInfo } = await this.imageStore.getFileInfos(
+            this.settingsProvider.getSettings().selectedProject, [ImageVariant.ORIGINAL]
+        );
+
         for (const row of rows) {
             for (const cell of row) {
                 if (
@@ -111,6 +137,9 @@ export class ImageGridComponent implements OnChanges {
                 ) continue;
 
                 cell.imgSrc = await this.imageUrlMaker.getUrl(cell.document.resource.id, ImageVariant.THUMBNAIL);
+                cell.hasOriginalImage = fileInfos[cell.document.resource.id]?.variants.find(variant => {
+                    return variant.name === ImageVariant.ORIGINAL;
+                }) !== undefined;
             }
         }
     }

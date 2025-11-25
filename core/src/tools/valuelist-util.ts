@@ -1,12 +1,11 @@
-import { filter, includedIn, isArray, isDefined, isNot, isObject, isString } from 'tsfun';
+import { includedIn, isArray, isDefined, isNot, isObject, isString } from 'tsfun';
 import { Document } from '../model/document/document';
-import { Resource } from '../model/document/resource';
 import { Valuelist } from '../model/configuration/valuelist';
 import { OptionalRange } from '../model/input-types/optional-range';
 import { ValuelistValue } from '../model/configuration/valuelist-value';
 import { Field } from '../model/configuration/field';
-import { CategoryForm, Dimension, EditableValue } from '../model';
-import { ProjectConfiguration } from '../services';
+import { Measurement } from '../model/input-types/measurement';
+import { EditableValue } from '../model/input-types/editable-value';
 
 
 /**
@@ -20,7 +19,10 @@ export module ValuelistUtil {
         if (!fieldContent || !valuelist) return undefined;
         
         const valuesToCheck: string[] = isArray(fieldContent)
-            ? fieldContent.map(entry => entry?.[Dimension.MEASUREMENTPOSITION] ?? entry)
+            ? fieldContent.map(entry => entry?.[Measurement.MEASUREMENTPOSITION]
+                    ?? entry?.[Measurement.MEASUREMENTDEVICE]
+                    ?? entry?.[Measurement.MEASUREMENTTECHNIQUE]
+                    ?? entry)
                 .filter(entry => isString(entry))
             : fieldContent[OptionalRange.VALUE]
                 ? [fieldContent[OptionalRange.VALUE], fieldContent[OptionalRange.ENDVALUE]]
@@ -38,26 +40,15 @@ export module ValuelistUtil {
     /**
      * @param valuesToInclude These values will always be kept even if unselectable
      */
-    export function getValuelist(field: Field, projectDocument: Document, projectConfiguration: ProjectConfiguration,
-                                 parentResource?: Resource, valuesToInclude?: string[],
+    export function getValuelist(field: Field, projectDocument: Document, valuesToInclude?: string[],
                                  includeUnselectable: boolean = false): Valuelist {
 
-        const valuelist: Valuelist|string[] = field.valuelist
-            ? field.valuelist
-            : field.valuelistFromProjectField
-                ? getValuelistFromProjectField(
-                    field.valuelistFromProjectField, projectDocument, valuesToInclude, includeUnselectable
-                ) : undefined;
-        if (!valuelist) return undefined;
+        if (field.valuelist) return field.valuelist;
 
-        const parentCategory: CategoryForm = parentResource ?
-            projectConfiguration.getCategory(parentResource.category)
-            : undefined;
-
-        return field.allowOnlyValuesOfParent && parentResource
-                && CategoryForm.getFields(parentCategory).find(parentField => parentField.name === field.name)
-            ? getValuesOfParentField(valuelist, field.name, parentResource)
-            : valuelist;
+        return field.valuelistFromProjectField
+            ? getValuelistFromProjectField(
+                field.valuelistFromProjectField, projectDocument, valuesToInclude, includeUnselectable
+            ) : undefined;
     }
 
 
@@ -81,19 +72,6 @@ export module ValuelistUtil {
         
         return {
             values, id: valuelistId
-        };
-    }
-
-
-    function getValuesOfParentField(valuelist: Valuelist, fieldName: string, parentResource: Resource): Valuelist {
-
-        const parentValues: string[] = parentResource[fieldName] ?? [];
-
-        return {
-            id: valuelist.id,
-            values: filter((_, key: string) => {
-                return parentValues.includes(key);
-            })(valuelist.values) as { [key: string]: ValuelistValue }
         };
     }
 }

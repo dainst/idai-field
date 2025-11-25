@@ -1,4 +1,4 @@
- import { Component } from '@angular/core';
+ import { ChangeDetectorRef, Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { clone } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Field, CustomFormDefinition, SortUtil,
@@ -10,7 +10,6 @@ import { Menus } from '../../../../services/menus';
 import { Messages } from '../../../messages/messages';
 import { SettingsProvider } from '../../../../services/settings/settings-provider';
 import { SubfieldEditorData } from '../../editor/field/subfield-editor-modal.component';
-import { ConfigurationUtil } from '../../configuration-util';
 
 
 @Component({
@@ -38,9 +37,10 @@ export class AddValuelistModalComponent extends ManageValuelistsModalComponent {
                 modals: Modals,
                 menus: Menus,
                 messages: Messages,
-                settingsProvider: SettingsProvider) {
+                settingsProvider: SettingsProvider,
+                changeDetectorRef: ChangeDetectorRef) {
 
-        super(activeModal, configurationIndex, modals, menus, messages, settingsProvider);
+        super(activeModal, configurationIndex, modals, menus, messages, settingsProvider, changeDetectorRef);
     }
 
 

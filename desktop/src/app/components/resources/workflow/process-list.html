@@ -1,0 +1,55 @@
+<div class="processes-headings process">
+    <div class="process-state-header"
+         i18n="@@resources.workflowEditorModal.state">Status</div>
+    <div class="process-carried-out-on"
+         i18n="@@resources.workflowEditorModal.carriedOutOn">Durchgeführt an</div>
+    <div class="process-date" (click)="toggleSortMode('date')">
+        <span i18n="@@resources.workflowEditorModal.date">Datum</span>
+        <span class="mdi"
+              [class.mdi-arrow-down-thin]="sortMode !== 'dateDescending'"
+              [class.mdi-arrow-up-thin]="sortMode === 'dateDescending'"
+              [class.selected]="sortMode === 'date' || sortMode === 'dateDescending'"></span>
+    </div>
+    <div class="process-identifier" (click)="toggleSortMode('identifier')">
+         <span i18n="@@resources.workflowEditorModal.identifier">Bezeichner</span>
+         <span class="mdi"
+              [class.mdi-arrow-down-thin]="sortMode !== 'alphanumericDescending'"
+              [class.mdi-arrow-up-thin]="sortMode === 'alphanumericDescending'"
+              [class.selected]="sortMode === 'alphanumeric' || sortMode === 'alphanumericDescending'"></span>
+    </div>
+    <div class="process-category"
+         i18n="@@resources.workflowEditorModal.category">Kategorie</div>
+    <div class="process-results-in"
+         i18n="@@resources.workflowEditorModal.resultsIn">Ergibt</div>
+    <div class="process-buttons"></div>
+</div>
+<cdk-virtual-scroll-viewport class="processes-body" [itemSize]="itemSize">
+    <div *cdkVirtualFor="let process of processes; trackBy: trackProcess"
+         [id]="'resource-' + process.resource.identifier"
+         class="process process-item">
+        <div class="process-state">
+            <process-state [process]="process"></process-state>
+        </div>
+        <div class="process-carried-out-on">
+            <workflow-relations [relationTargets]="getRelationTargets(process, 'isCarriedOutOn')"
+                                (onRelationTargetSelected)="onRelationTargetSelected.emit($event)">
+            </workflow-relations>
+        </div>
+        <div class="process-date">{{getDateLabel(process)}}</div>
+        <div class="process-identifier">{{process.resource.identifier}}</div>
+        <div class="process-category">{{getCategoryLabel(process)}}</div>
+        <div class="process-results-in">
+            <workflow-relations [relationTargets]="getRelationTargets(process, 'resultsIn')"
+                                (onRelationTargetSelected)="onRelationTargetSelected.emit($event)">
+            </workflow-relations>
+        </div>
+        <div class="process-buttons input-group">
+            <button class="btn btn-danger" (click)="deleteProcess(process)">
+                <span class="mdi mdi-delete"></span>
+            </button>
+            <button class="btn btn-info edit-process-button" (click)="editProcess(process)">
+                <span class="mdi mdi-pencil"></span>
+            </button>
+        </div>
+    </div>
+</cdk-virtual-scroll-viewport>

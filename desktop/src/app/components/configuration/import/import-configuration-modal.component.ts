@@ -8,6 +8,8 @@ import { M } from '../../messages/m';
 import { Messages } from '../../messages/messages';
 import { getAsynchronousFs } from '../../../services/get-asynchronous-fs';
 import { AppState } from '../../../services/app-state';
+import { Menus } from '../../../services/menus';
+import { MenuContext } from '../../../services/menu-context';
 
 const PouchDB = window.require('pouchdb-browser');
 const remote = window.require('@electron/remote');
@@ -40,7 +42,8 @@ export class ImportConfigurationModalComponent {
                 private configReader: ConfigReader,
                 private settingsProvider: SettingsProvider,
                 private messages: Messages,
-                private appState: AppState) {}
+                private appState: AppState,
+                private menuService: Menus) {}
 
 
     public selectProject = (project: string) => this.selectedProject = project;
@@ -57,7 +60,9 @@ export class ImportConfigurationModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.CONFIGURATION_MODAL) {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
 

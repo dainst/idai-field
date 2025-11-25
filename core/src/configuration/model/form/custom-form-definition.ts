@@ -24,8 +24,8 @@ export interface CustomFormDefinition extends BaseFormDefinition {
 
 
 const VALID_CUSTOM_FORM_PROPERTIES = [
-    'valuelists', 'color', 'hidden', 'parent', 'fields', 'groups', 'references', 'identifierPrefix', 'resourceLimit',
-    'scanCodes'
+    'valuelists', 'color', 'hidden', 'parent', 'fields', 'groups', 'references', 'semanticReferences',
+    'identifierPrefix', 'resourceLimit', 'scanCodes', 'range'
 ];
 
 
@@ -33,6 +33,7 @@ export module CustomFormDefinition {
 
     export const VALUELISTS = 'valuelists';
     export const PARENT = 'parent';
+
 
     export function makeAssertIsValid(formNames: string[]) {
 

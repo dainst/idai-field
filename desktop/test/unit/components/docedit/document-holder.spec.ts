@@ -259,4 +259,62 @@ describe('DocumentHolder', () => {
         expect(savedDocument.resource.unsignedFloatField).toBe(7.49);
         expect(savedDocument.resource.floatField).toBe(-7.49);
     });
+
+
+    test('fix multipolygon geometry', async () => {
+
+        const document: Document = {
+            _id: '1',
+            resource: {
+                category: 'Trench',
+                id: '1',
+                identifier: '1',
+                geometry: {
+                    type: 'MultiPolygon',
+                    coordinates: [
+                        [[[-7.0, -5.0], [-6.0, -5.0], [7.0, -7.0]]],
+                        [[[7.0, 5.0], [6.0, 5.0], [-7.0, 7.0]]]
+                    ]
+                },
+                relations: {}
+            } as any,
+            modified: [],
+            created: { user: 'a', date: new Date() }
+        };
+
+        documentHolder.setDocument(document);
+        const savedDocument = await documentHolder.save();
+
+        expect(savedDocument.resource.geometry.coordinates).toEqual([
+            [[[-7.0, -5.0], [-6.0, -5.0], [7.0, -7.0], [-7.0, -5.0]]],
+            [[[7.0, 5.0], [6.0, 5.0], [-7.0, 7.0], [7.0, 5.0]]]
+        ]);
+    });
+
+
+    test('fix polygon geometry', async () => {
+
+        const document: Document = {
+            _id: '1',
+            resource: {
+                category: 'Trench',
+                id: '1',
+                identifier: '1',
+                geometry: {
+                    type: 'Polygon',
+                    coordinates: [[[-7.0, -5.0], [-6.0, -5.0], [7.0, -7.0]]]
+                },
+                relations: {}
+            } as any,
+            modified: [],
+            created: { user: 'a', date: new Date() }
+        };
+
+        documentHolder.setDocument(document);
+        const savedDocument = await documentHolder.save();
+
+        expect(savedDocument.resource.geometry.coordinates).toEqual(
+            [[[-7.0, -5.0], [-6.0, -5.0], [7.0, -7.0], [-7.0, -5.0]]]
+        );
+    });
 });

@@ -17,7 +17,7 @@ export interface FileInfo {
     deleted: boolean;
     useOriginalForDisplay?: boolean;
     types: ImageVariant[]; // TODO: Deprecate in 4.x
-    variants: FileVariantInformation[];
+    variants: Array<FileVariantInformation>;
 }
 
 export const THUMBNAIL_TARGET_HEIGHT: number = 320;
@@ -161,7 +161,7 @@ export class ImageStore {
      * by their variants.
      * @returns Object where each key represents an image UUID and each value is the image's {@link FileInfo}.
      */
-    public async getFileInfos(project: string, types: ImageVariant[] = []): Promise<{ [uuid: string]: FileInfo}> {
+    public async getFileInfos(project: string, types: ImageVariant[] = []): Promise<{ [uuid: string]: FileInfo }> {
 
         let originalFileStats = [];
         let thumbnailFileStats = [];
@@ -190,6 +190,20 @@ export class ImageStore {
         const buffer = await this.converter.generate(data, THUMBNAIL_TARGET_HEIGHT);
         const thumbnailPath = this.getFilePath(project, ImageVariant.THUMBNAIL, imageId);
         await this.filesystem.writeFile(thumbnailPath, buffer);
+    }
+
+
+    public getDirectoryPath(project: string, type?: ImageVariant): string {
+
+        switch (type) {
+            case ImageVariant.ORIGINAL:
+            case undefined:
+                return this.absolutePath + project + '/';
+            case ImageVariant.THUMBNAIL:
+                return this.absolutePath + project + '/' + thumbnailDirectory;
+            case ImageVariant.DISPLAY:
+                return this.absolutePath + project + '/' + displayDirectory;
+        }
     }
 
 
@@ -282,20 +296,6 @@ export class ImageStore {
     }
 
 
-    private getDirectoryPath(project: string, type?: ImageVariant): string {
-
-        switch (type) {
-            case ImageVariant.ORIGINAL:
-            case undefined:
-                return this.absolutePath + project + '/';
-            case ImageVariant.THUMBNAIL:
-                return this.absolutePath + project + '/' + thumbnailDirectory;
-            case ImageVariant.DISPLAY:
-                return this.absolutePath + project + '/' + displayDirectory;
-        }
-    }
-
-
     private getFilePath(project: string, type: ImageVariant, uuid: string): string {
 
         return this.getDirectoryPath(project, type) + uuid;
@@ -317,19 +317,5 @@ export class ImageStore {
         }
 
         return sums;
-    }
-
-
-    public static byteCountToDescription(byteCount: number, transform: (value: any) => string|null) {
-
-        byteCount = byteCount * 0.00000095367;
-        let unitTypeOriginal = 'MB';
-
-        if (byteCount > 1000) {
-            byteCount = byteCount * 0.00097656;
-            unitTypeOriginal = 'GB';
-        }
-
-        return `${transform(byteCount.toFixed(2))} ${unitTypeOriginal}`;
     }
 }

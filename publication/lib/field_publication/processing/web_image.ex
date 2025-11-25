@@ -16,8 +16,8 @@ defmodule FieldPublication.Processing.WebImage do
   require Logger
 
   @moduledoc """
-  This module contains functions for creating JPEG2000 images from raw image data to be served
-  by the external [Canaloupe](https://cantaloupe-project.github.io) IIIF server application.
+  This module contains functions for creating TIFF images from raw image data to be served
+  by the IIIF image plug.
   """
 
   def evaluate_web_images_state(%Publication{project_name: project_name} = publication) do
@@ -25,8 +25,7 @@ defmodule FieldPublication.Processing.WebImage do
 
     current_web_files = FileService.list_web_image_files(project_name)
 
-    image_categories =
-      Publications.Data.get_all_subcategories(publication, "Image")
+    image_categories = Publications.Data.get_image_categories(publication)
 
     {existing, missing} =
       Publications.Data.get_doc_stream_for_categories(publication, image_categories)
@@ -76,6 +75,10 @@ defmodule FieldPublication.Processing.WebImage do
       )
 
       {:ok, file} = Image.new_from_file("#{raw_root}/image/#{uuid}")
+
+      # Apply exif rotation metadata directly to the image data (if present), because we do not
+      # want end user's web browser to rotate image tiles because of the metadata.
+      {:ok, {file, _}} = Operation.autorot(file)
 
       :ok =
         Operation.tiffsave(file, "#{web_root}/#{uuid}.tif",

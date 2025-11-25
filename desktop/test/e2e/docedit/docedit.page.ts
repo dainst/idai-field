@@ -1,5 +1,5 @@
 import { waitForNotExist, click, waitForExist, getLocator, typeIn, getValue, getText, clearText,
-    selectSearchableSelectOption, selectOption } from '../app';
+    selectSearchableSelectOption, pressKey } from '../app';
 import { NavbarPage } from '../navbar.page';
 
 
@@ -272,7 +272,7 @@ export class DoceditPage {
 
     public static async getIdentifierInputFieldValue() {
 
-        const element = (await getLocator('form-field-identifier input')).nth(0);
+        const element = (await getLocator('identifier-input input')).nth(0);
         return getValue(element);
     }
 
@@ -308,6 +308,12 @@ export class DoceditPage {
     public static async getCheckboxes(fieldName: string) {
 
         return (await this.getField(fieldName)).locator('.checkbox');
+    }
+
+
+    public static async getCheckedCheckboxes(fieldName: string) {
+
+        return (await this.getField(fieldName)).locator('.checkbox input:checked');
     }
 
 
@@ -383,6 +389,15 @@ export class DoceditPage {
         const element = await elements.nth(await elements.count() - 1);
 
         return typeIn(element, text);
+    }
+
+
+    public static async typeInDateInputField(fieldName: string, date: string) {
+
+        const element = (await this.getField(fieldName)).locator('input');
+
+        await typeIn(element, date);
+        return pressKey(element, 'Enter');
     }
 
 

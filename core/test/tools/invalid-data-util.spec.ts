@@ -34,10 +34,15 @@ describe('InvalidDataUtil', () => {
 
         expect (InvalidDataUtil.isConvertible('value', Field.InputType.BOOLEAN)).toBe(false);
         expect (InvalidDataUtil.isConvertible({ field: 'value' }, Field.InputType.CHECKBOXES)).toBe(false);
+        expect (InvalidDataUtil.isConvertible('', Field.InputType.CHECKBOXES)).toBe(false);
         expect (InvalidDataUtil.isConvertible(['value1', 'value2'], Field.InputType.DROPDOWN)).toBe(false);
         expect (InvalidDataUtil.isConvertible(['value1', 'value2'], Field.InputType.RADIO)).toBe(false);
         expect (InvalidDataUtil.isConvertible([{ field: 'value' }], Field.InputType.DROPDOWN)).toBe(false);
         expect (InvalidDataUtil.isConvertible([{ field: 'value' }], Field.InputType.RADIO)).toBe(false);
+        expect (InvalidDataUtil.isConvertible([''], Field.InputType.DROPDOWN)).toBe(false);
+        expect (InvalidDataUtil.isConvertible([''], Field.InputType.RADIO)).toBe(false);
+        expect (InvalidDataUtil.isConvertible(['', ''], Field.InputType.DROPDOWN)).toBe(false);
+        expect (InvalidDataUtil.isConvertible(['', ''], Field.InputType.RADIO)).toBe(false);
         expect (InvalidDataUtil.isConvertible(['value1', 'value2'], Field.InputType.INPUT)).toBe(false);
         expect (InvalidDataUtil.isConvertible(['value1', 'value2'], Field.InputType.SIMPLE_INPUT)).toBe(false);
     });
@@ -71,9 +76,16 @@ describe('InvalidDataUtil', () => {
             [{ field1: ['value1', 'value2'] , field2: ['value3', 'value4'] }], labels)
         ).toBe('field1: value1/value2, field2: value3/value4');
 
+        expect(InvalidDataUtil.generateLabel(
+            [{ inputValue: 180, inputUnit: 'g', isImprecise: false, value: 180000000 }], labels)
+        ).toBe('inputValue: 180, inputUnit: g, isImprecise: false, value: 180000000');
+
         expect(InvalidDataUtil.generateLabel('value', labels)).toBe('value');
         expect(InvalidDataUtil.generateLabel(7, labels)).toBe('7');
         expect(InvalidDataUtil.generateLabel(['value1', 'value2'], labels)).toBe('value1<hr>value2');
+        expect(InvalidDataUtil.generateLabel({ value: 'A', endValue: 'B' }, labels)).toBe('A - B');
+        expect(InvalidDataUtil.generateLabel({ value: 'A' }, labels)).toBe('A');
+        expect(InvalidDataUtil.generateLabel({ endValue: 'B' }, labels)).toBe('B');
         expect(InvalidDataUtil.generateLabel({}, labels)).toBe('');
         expect(InvalidDataUtil.generateLabel([{}, {}], labels)).toBe('');
         expect(InvalidDataUtil.generateLabel(undefined, labels)).toBe('');

@@ -6,6 +6,8 @@ import { Loading } from '../loading';
 import { MoveUtility } from './move-utility';
 import { UtilTranslations } from '../../../util/util-translations';
 import { MsgWithParams } from '../../messages/msg-with-params';
+import { Menus } from '../../../services/menus';
+import { MenuContext } from '../../../services/menu-context';
 
 
 export interface MoveResult {
@@ -41,7 +43,8 @@ export class MoveModalComponent {
                 private projectConfiguration: ProjectConfiguration,
                 private datastore: Datastore,
                 private loading: Loading,
-                private utilTranslations: UtilTranslations) {}
+                private utilTranslations: UtilTranslations,
+                private menuService: Menus) {}
 
 
     public isLoading = () => this.loading.isLoading('moveModal');
@@ -74,7 +77,9 @@ export class MoveModalComponent {
 
     public onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && !this.isLoading()) this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && !this.isLoading() && this.menuService.getContext() === MenuContext.MODAL) {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
 

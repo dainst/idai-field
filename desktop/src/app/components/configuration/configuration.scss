@@ -10,11 +10,13 @@
 @import './editor/field/widgets/input-type-selector';
 @import './editor/field/widgets/valuelist-selector';
 @import './editor/field/widgets/subfields-section';
+@import './editor/field/widgets/condition-section';
 @import './editor/category/category-editor-modal';
 @import './editor/valuelist/valuelist-editor-modal';
 @import './editor/valuelist/value-editor-modal';
 @import './editor/widgets/multi-language-input';
 @import './editor/widgets/references-input';
+@import './editor/widgets/semantic-references-input';
 @import './delete/delete-modal';
 @import './add/listing';
 @import './add/preview';
@@ -22,9 +24,9 @@
 @import './add/category/swap-category-form-modal';
 @import './add/category/category-listing';
 @import './add/category/category-preview';
+@import './add/category/add-process-subcategory-modal';
 @import './add/field/add-field-modal';
 @import './add/field/field-listing';
-@import './add/field/field-preview';
 @import './add/group/add-group-modal';
 @import './add/group/group-listing';
 @import './add/valuelist/add-valuelist-modal';
@@ -163,6 +165,11 @@
 
         .category-item {
           transition: background-color .25s ease;
+          padding-right: 0;
+
+          &.short-category-item {
+            padding-right: 25px;
+          }
         }
 
         .selected-category .category-item {
@@ -183,6 +190,7 @@
           .category-label {
             position: relative;
             bottom: 1px;
+            padding-right: 7px;
           }
         }
       }
@@ -198,3 +206,4 @@
     }
   }
 }
+

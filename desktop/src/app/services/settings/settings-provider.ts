@@ -6,6 +6,7 @@ import { Settings } from './settings';
 import { SettingsSerializer } from './settings-serializer';
 
 const remote = window.require('@electron/remote');
+const pathSeparator = window.require('path').sep;
 
 
 @Injectable()
@@ -93,15 +94,17 @@ export class SettingsProvider {
         if (settings.hostPassword === undefined) settings.hostPassword = SettingsProvider.generatePassword();
 
         if (settings.imagestorePath) {
-            let path: string = settings.imagestorePath;
-            if (path.substr(-1) != '/') path += '/';
-            settings.imagestorePath = path;
-        } else {
-            if (remote.app) {
-                settings.imagestorePath = remote.app.getPath('appData') + '/'
-                    + remote.app.getName() + '/imagestore/';
-            }
+            settings.imagestorePath = SettingsProvider.addPathSeparator(settings.imagestorePath);
+        } else if (remote.app) {
+            settings.imagestorePath = remote.getGlobal('appDataPath') + pathSeparator + 'imagestore' + pathSeparator;
         }
+
+        if (settings.backupDirectoryPath) {
+            settings.backupDirectoryPath = SettingsProvider.addPathSeparator(settings.backupDirectoryPath);
+        } else if (remote.app) {
+            settings.backupDirectoryPath = remote.getGlobal('appDataPath') + pathSeparator + 'backups' + pathSeparator;
+        }
+
         this.settings = settings;
     }
 
@@ -124,5 +127,13 @@ export class SettingsProvider {
         }
 
         return password;
+    }
+
+
+    private static addPathSeparator(path: string): string {
+        
+        return path.endsWith('/') || path.endsWith('\\')
+            ? path
+            : path + pathSeparator;
     }
 }

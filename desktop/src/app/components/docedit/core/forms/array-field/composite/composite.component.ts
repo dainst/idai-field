@@ -8,6 +8,8 @@ import { CompositeEntryModalComponent as CompositeEntryModalComponent } from './
 import { MenuContext } from '../../../../../../services/menu-context';
 import { AngularUtility } from '../../../../../../angular/angular-utility';
 import { Menus } from '../../../../../../services/menus';
+import { Settings } from '../../../../../../services/settings/settings';
+import { getSystemTimezone } from '../../../../../../util/timezones';
 
 
 @Component({
@@ -128,6 +130,9 @@ export class CompositeComponent implements OnInit, OnChanges {
         return Composite.generateLabel(
             entry,
             this.field.subfields,
+            getSystemTimezone(),
+            $localize `:@@revisionLabel.timeSuffix:Uhr`,
+            Settings.getLocale(),
             (key: string) => this.utilTranslations.getTranslation(key),
             (labeledValue: I18N.LabeledValue) => this.labels.get(labeledValue),
             (value: I18N.String|string) => this.labels.getFromI18NString(value),

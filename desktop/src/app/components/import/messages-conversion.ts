@@ -50,13 +50,18 @@ export module MessagesConversion {
         if (msg === ValidationErrors.IDENTIFIER_ALREADY_EXISTS) replacement = M.MODEL_VALIDATION_IDENTIFIER_ALREADY_EXISTS;
         if (msg === ValidationErrors.MISSING_PROPERTY) replacement = M.IMPORT_VALIDATION_MISSING_PROPERTY;
         if (msg === ValidationErrors.MAX_CHARACTERS_EXCEEDED) replacement = M.IMPORT_VALIDATION_ERROR_MAX_CHARACTERS_EXCEEDED;
-        if (msg === ValidationErrors.END_DATE_BEFORE_BEGINNING_DATE) replacement = M.IMPORT_VALIDATION_ERROR_END_DATE_BEFORE_BEGINNING_DATE;
         if (msg === ValidationErrors.MISSING_GEOMETRY_TYPE) replacement = M.MODEL_VALIDATION_MISSING_GEOMETRYTYPE;
         if (msg === ValidationErrors.MISSING_COORDINATES) replacement = M.MODEL_VALIDATION_MISSING_COORDINATES;
         if (msg === ValidationErrors.INVALID_COORDINATES) replacement = M.MODEL_VALIDATION_INVALID_COORDINATES;
         if (msg === ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE) replacement = M.MODEL_VALIDATION_UNSUPPORTED_GEOMETRY_TYPE;
         if (msg === ValidationErrors.GENERIC_DATASTORE) replacement = M.IMPORT_READER_GENERIC_DATASTORE;
         if (msg === ValidationErrors.INVALID_MAP_LAYER_RELATION_VALUES) replacement = M.IMPORT_VALIDATION_ERROR_INVALID_MAP_LAYER_RELATION_TARGETS;
+        if (msg === ValidationErrors.INVALID_DATE_RANGE_NOT_ALLOWED) replacement = M.IMPORT_VALIDATION_ERROR_INVALID_DATE_RANGE_NOT_ALLOWED;
+        if (msg === ValidationErrors.INVALID_DATE_SINGLE_NOT_ALLOWED) replacement = M.IMPORT_VALIDATION_ERROR_INVALID_DATE_SINGLE_NOT_ALLOWED;
+        if (msg === ValidationErrors.INVALID_DATE_TIME_NOT_ALLOWED) replacement = M.IMPORT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_ALLOWED;
+        if (msg === ValidationErrors.INVALID_DATE_TIME_NOT_SET) replacement = M.IMPORT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_SET;
+        if (msg === ValidationErrors.INVALID_DATE_END_DATE_BEFORE_BEGINNING_DATE) replacement = M.IMPORT_VALIDATION_ERROR_INVALID_DATE_END_DATE_BEFORE_BEGINNING_DATE;
+        if (msg === ValidationErrors.INVALID_WORKFLOW_RELATION_TARGETS) replacement = M.IMPORT_VALIDATION_ERROR_INVALID_WORKFLOW_RELATION_TARGETS;
 
         if (msg === ImportErrors.INVALID_CATEGORY) replacement = M.IMPORT_VALIDATION_INVALID_CATEGORY;
         if (msg === ImportErrors.EMPTY_RELATION) replacement = M.IMPORT_EXEC_EMPTY_RELATION;
@@ -132,6 +137,16 @@ export module MessagesConversion {
             replacement = msgWithParams.length > 2 && msgWithParams[2].indexOf(',') !== -1
                 ? M.IMPORT_VALIDATION_ERROR_INVALID_DIMENSION_VALUES
                 : M.IMPORT_VALIDATION_ERROR_INVALID_DIMENSION_VALUE
+        }
+        if (msg === ValidationErrors.INVALID_WEIGHT_VALUES) {
+            replacement = msgWithParams.length > 2 && msgWithParams[2].indexOf(',') !== -1
+                ? M.IMPORT_VALIDATION_ERROR_INVALID_WEIGHT_VALUES
+                : M.IMPORT_VALIDATION_ERROR_INVALID_WEIGHT_VALUE
+        }
+        if (msg === ValidationErrors.INVALID_VOLUME_VALUES) {
+            replacement = msgWithParams.length > 2 && msgWithParams[2].indexOf(',') !== -1
+                ? M.IMPORT_VALIDATION_ERROR_INVALID_VOLUME_VALUES
+                : M.IMPORT_VALIDATION_ERROR_INVALID_VOLUME_VALUE
         }
         if (msg === ValidationErrors.INVALID_LITERATURE_VALUES) {
             replacement = msgWithParams.length > 2 && msgWithParams[2].indexOf(',') !== -1

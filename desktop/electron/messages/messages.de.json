@@ -35,6 +35,7 @@
     "menu.tools.images": "Bilderverwaltung",
     "menu.tools.types": "Typenverwaltung",
     "menu.tools.inventory": "Inventarisierung",
+    "menu.tools.workflow": "Workflow",
     "menu.tools.matrix": "Matrix",
     "menu.tools.import": "Import",
     "menu.tools.export": "Export",

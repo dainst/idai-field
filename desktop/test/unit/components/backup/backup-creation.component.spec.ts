@@ -9,14 +9,14 @@ describe('BackupCreationComponent', () => {
     const backupFilePath = 'test/store/backup_test_file.txt';
 
     let backupCreationComponent: BackupCreationComponent;
-    let backupProvider: any;
+    let backupService: any;
 
 
     beforeEach(() => {
 
-        backupProvider = {
-            dump: jest.fn(),
-            readDump: jest.fn()
+        backupService = {
+            create: jest.fn(),
+            restore: jest.fn()
         };
 
         const dialogProvider: any = {
@@ -49,7 +49,7 @@ describe('BackupCreationComponent', () => {
             modalService,
             messages,
             settingsService,
-            backupProvider,
+            backupService,
             tabManager,
             menuService,
             undefined
@@ -62,7 +62,7 @@ describe('BackupCreationComponent', () => {
 
     test('create backup', async () => {
 
-        await backupCreationComponent.createBackup();
-        expect(backupProvider.dump).toHaveBeenCalledWith(backupFilePath, 'selected-project');
+        await backupCreationComponent.startBackupCreation();
+        expect(backupService.create).toHaveBeenCalledWith(backupFilePath, 'selected-project');
     });
 });

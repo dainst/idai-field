@@ -2,15 +2,27 @@
     {{getValuelistDescription(valuelist)}}
 </div>
 <div class="row valuelist">
-    <div *ngFor="let value of getValues(valuelist)"
+    <div *ngFor="let valueId of getValueIds(valuelist)"
          [class.col-2]="!largeList"
          [class.col-12]="largeList"
          class="value-col">
         <span class="badge bg-light value-badge"
-              ngbTooltip="{{valueDescriptions[value]}}"
-              placement="bottom" container="body">
-            {{valueLabels[value]}}
-            <code>{{value}}</code>
+              [class.with-info]="hasInfo(valueId)"
+              #valueInfoPopover="ngbPopover"
+              [ngbPopover]="infoPopover"
+              triggers="manual"
+              [popoverTitle]="valueLabels[valueId]"
+              popoverClass="configuration-info-popover"
+              container="body"
+              (contextmenu)="hasInfo(valueId) && openPopover(valueInfoPopover)"
+              [autoClose]="false"
+              [popoverContext]="{ value: valuelist.values[valueId], description: valueDescriptions[valueId] }">
+            {{valueLabels[valueId]}}
+            <code>{{valueId}}</code>
         </span>
     </div>
 </div>
+
+<ng-template #infoPopover let-value="value" let-description="description">
+    <configuration-info [configurationItem]="value" [description]="description"></configuration-info>
+</ng-template>

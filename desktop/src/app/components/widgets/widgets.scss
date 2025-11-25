@@ -12,7 +12,13 @@
 @import 'edit-save-dialog';
 @import 'searchable-select';
 @import 'qr-code-scanner-modal';
+@import 'configuration-info';
+@import 'references-info';
+@import 'identifier-input';
+@import 'quitting-modal';
 @import 'languages/language-picker-modal';
 @import 'languages/languages-list';
 @import 'document-info/document-info';
 @import 'move-modal/move-modal';
+@import 'relation-picker/relation-picker';
+@import 'relation-picker/relation-picker-group';

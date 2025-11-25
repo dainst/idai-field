@@ -1,4 +1,4 @@
-import { click, getLocator, getText, rightClick } from '../app';
+import { click, getLocator, getText, pause, rightClick } from '../app';
 
 
 /**
@@ -16,7 +16,13 @@ export class CategoryPickerPage {
 
     public static async clickOpenContextMenu(categoryName: string, supercategoryName?: string, containerId?: string) {
 
-        await rightClick(await this.getCategory(categoryName, supercategoryName, containerId));
+        const element = await this.getCategory(categoryName, supercategoryName, containerId)
+        
+        // Left-click the element first to prevent problems with the context menu closing immediately again
+        // due to scrolling
+        await click(element);
+        await pause(1000);
+        await rightClick(element);
     }
 
 

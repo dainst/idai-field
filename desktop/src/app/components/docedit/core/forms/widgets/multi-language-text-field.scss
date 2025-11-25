@@ -60,9 +60,9 @@ multi-language-text-field {
     }
 
     .additional-languages-dropdown-menu {
-      top: -2px !important;
-      border-top: none;
+      margin: 3px 0 !important;
       border-color: $focused-border-color;
+      border-radius: 4px;
 
       .additional-languages-dropdown-list {
         button {

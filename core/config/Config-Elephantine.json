@@ -36,8 +36,7 @@
     "Feature:default": {
       "color": "black",
       "hidden": [
-        "endDate",
-        "beginningDate",
+        "date",
         "color",
         "hasDisturbance",
         "featureForm",
@@ -98,8 +97,7 @@
             "processor",
             "campaign",
             "diary",
-            "beginningDate",
-            "endDate",
+            "date",
             "isSameAs",
             "date"
           ]

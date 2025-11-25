@@ -6,6 +6,8 @@ import { SettingsService } from '../../services/settings/settings-service';
 import { StateSerializer } from '../../services/state-serializer';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
+import { MenuContext } from '../../services/menu-context';
+import { Menus } from '../../services/menus';
 
 
 @Component({
@@ -33,12 +35,16 @@ export class DeleteProjectModalComponent {
                 private stateSerializer: StateSerializer,
                 private settingsService: SettingsService,
                 private settingsProvider: SettingsProvider,
-                private messages: Messages) {}
+                private messages: Messages,
+                private menuService: Menus) {}
 
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape'
+                && [MenuContext.MODAL, MenuContext.CONFIGURATION_MODAL].includes(this.menuService.getContext())) {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
 

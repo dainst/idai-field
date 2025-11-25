@@ -18,6 +18,7 @@ import { CategoryForm } from '../../src/model/configuration/category-form';
         parentCategory: undefined,
         isAbstract: false,
         groups: [],
+        originalGroups: [],
         mustLieWithin: false,
         color: '#fff'
     };

@@ -1,10 +1,11 @@
-<div class="input-group">
+<div *ngIf="valuelist" class="input-group">
     <label *ngIf="showEndElements()">
         <span i18n="@@docedit.forms.dropdownRange.from">von</span>
     </label>
 
     <searchable-select [selectedValue]="fieldContainer[field.name] && fieldContainer[field.name]['value']"
-                       [values]="getValues()"
+                       [values]="values"
+                       [valuelist]="valuelist"
                        [getLabel]="getLabel"
                        [closeOnClear]="showEndElements()"
                        (onValueSelected)="setValue($event)"></searchable-select>
@@ -15,7 +16,8 @@
 
     <searchable-select *ngIf="showEndElements()"
                         [selectedValue]="fieldContainer[field.name] && fieldContainer[field.name]['endValue']"
-                        [values]="getValues()"
+                        [values]="values"
+                        [valuelist]="valuelist"
                         [getLabel]="getLabel"
                         [disabled]="!fieldContainer[field.name]
                                 || !fieldContainer[field.name]['value']

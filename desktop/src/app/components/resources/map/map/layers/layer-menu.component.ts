@@ -10,6 +10,7 @@ import { Menus } from '../../../../../services/menus';
 import { ImagePickerComponent } from '../../../../docedit/widgets/image-picker.component';
 import { LayerUtility } from './layer-utility';
 import { Loading } from '../../../../widgets/loading';
+import { ImageToolLauncher } from '../../../../../services/imagestore/image-tool-launcher';
 
 
 @Component({
@@ -30,10 +31,10 @@ export class LayerMenuComponent extends MenuComponent implements OnChanges {
     @Output() onFocusLayer = new EventEmitter<ImageDocument>();
     @Output() onAddOrRemoveLayers = new EventEmitter<void>();
     @Output() onChangeLayersOrder = new EventEmitter<void>();
+    @Output() onImagesDownloaded = new EventEmitter<void>();
 
     public dragging: boolean = false;
 
-    private modalOpened: boolean = false;
     private editing: boolean = false;
 
 
@@ -42,9 +43,10 @@ export class LayerMenuComponent extends MenuComponent implements OnChanges {
                 private modalService: NgbModal,
                 private loading: Loading,
                 private projectConfiguration: ProjectConfiguration,
+                private labels: Labels,
+                private imageToolLauncher: ImageToolLauncher,
                 renderer: Renderer2,
-                menuService: Menus,
-                private labels: Labels) {
+                menuService: Menus) {
 
         super(renderer, menuService, 'layer-button', 'layer-menu');
     }
@@ -62,7 +64,8 @@ export class LayerMenuComponent extends MenuComponent implements OnChanges {
 
     public isInEditing = (layerGroup: LayerGroup) => this.layerManager.isInEditing(layerGroup);
 
-    public isInEditMode = () => this.menuService.getContext() === MenuContext.MAP_LAYERS_EDIT;
+    public isInEditMode = () => [MenuContext.MAP_LAYERS_EDIT, MenuContext.IMAGE_PICKER_MODAL]
+        .includes(this.menuService.getContext());
 
     public isNoLayersInfoVisible = (layerGroup: LayerGroup) =>
         flatten(this.layerManager.getLayerGroups().map(to('layers'))).length === 0
@@ -87,9 +90,7 @@ export class LayerMenuComponent extends MenuComponent implements OnChanges {
 
     public onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape'
-                && this.menuService.getContext() === MenuContext.MAP_LAYERS_EDIT
-                && !this.modalOpened) {
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.MAP_LAYERS_EDIT) {
             this.abortEditing();
         }
     }
@@ -162,9 +163,34 @@ export class LayerMenuComponent extends MenuComponent implements OnChanges {
     }
 
 
+    public isDownloadImagesButtonVisible(group: LayerGroup): boolean {
+
+        return this.imageToolLauncher.isDownloadPossible(group.layers);
+    }
+
+
+    public async downloadImages(group: LayerGroup) {
+
+        await this.imageToolLauncher.downloadImages(group.layers);
+        this.onImagesDownloaded.emit();
+    }
+
+
+    public getDownloadTooltip(group: LayerGroup) {
+
+        const sizeLabel: string = this.imageToolLauncher.getDownloadSizeLabel(group.layers);
+        
+        const baseTooltip: string = group.layers.length === 1
+            ? $localize `:@@images.download.tooltip.single:Originalbild herunterladen`
+            : $localize `:@@images.download.tooltip.multiple:Originalbilder herunterladen`;
+
+        return baseTooltip + ' (' + sizeLabel + ')';
+    }
+
+
     private async selectNewLayers(group: LayerGroup): Promise<Array<ImageDocument>> {
 
-        this.modalOpened = true;
+        this.menuService.setContext(MenuContext.IMAGE_PICKER_MODAL);
 
         const imagePickerModal: NgbModalRef = this.modalService.open(
             ImagePickerComponent, { size: 'lg', keyboard: false, animation: false }
@@ -178,13 +204,14 @@ export class LayerMenuComponent extends MenuComponent implements OnChanges {
             // Image picker modal has been canceled
             return [];
         } finally {
-            this.modalOpened = false;
+            this.menuService.setContext(MenuContext.MAP_LAYERS_EDIT);
         }
     }
 
 
     protected isClosable(): boolean {
 
-        return ![MenuContext.MODAL, MenuContext.MAP_LAYERS_EDIT].includes(this.menuService.getContext());
+        return ![MenuContext.MODAL, MenuContext.BLOCKING_MODAL, MenuContext.MAP_LAYERS_EDIT,
+            MenuContext.IMAGE_PICKER_MODAL].includes(this.menuService.getContext());
     }
 }

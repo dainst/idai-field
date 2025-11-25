@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FieldDocument, ProjectConfiguration } from 'idai-field-core';
 import { Loading } from '../../widgets/loading';
 import { NavigationPath } from '../../../components/resources/view/state/navigation-path';
@@ -18,7 +18,7 @@ type NavigationButtonLabelMap = { [id: string]: { text: string, fullText: string
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class NavigationComponent {
+export class NavigationComponent implements OnInit {
 
     public navigationPath: NavigationPath = NavigationPath.empty();
     public labels: NavigationButtonLabelMap = {};
@@ -31,11 +31,7 @@ export class NavigationComponent {
                 private navigationService: NavigationService,
                 private loading: Loading) {
 
-        this.viewFacade.navigationPathNotifications().subscribe(path => {
-            this.navigationPath = path;
-            NavigationComponent.maxTotalLabelCharacters = this.getMaxTotalLabelCharacters();
-            this.labels = NavigationComponent.getLabels(this.navigationPath, this.viewFacade.getCurrentOperation());
-        });
+        this.viewFacade.navigationPathNotifications().subscribe(path => this.updateNavigationPath(path));
     }
 
 
@@ -46,6 +42,12 @@ export class NavigationComponent {
     public moveInto = (document: FieldDocument|undefined) => this.navigationService.moveInto(document);
 
     public isSelectedSegment = (id: string) => id === this.navigationPath.selectedSegmentId;
+
+
+    ngOnInit() {
+
+        this.updateNavigationPath(this.viewFacade.getNavigationPath());
+    }
 
 
     public getTooltip() {
@@ -69,6 +71,14 @@ export class NavigationComponent {
         return !this.viewFacade.isInExtendedSearchMode()
             ? this.navigationPath.segments.map(_ => _.document)
             : [];
+    }
+
+
+    private updateNavigationPath(navigationPath: NavigationPath) {
+
+        this.navigationPath = navigationPath;
+        NavigationComponent.maxTotalLabelCharacters = this.getMaxTotalLabelCharacters();
+        this.labels = NavigationComponent.getLabels(this.navigationPath, this.viewFacade.getCurrentOperation());
     }
 
 

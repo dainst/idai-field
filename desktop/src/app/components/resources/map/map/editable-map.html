@@ -4,7 +4,8 @@
             (onToggleLayer)="toggleLayer($event)"
             (onFocusLayer)="focusLayer($event)"
             (onAddOrRemoveLayers)="updateLayers(false)"
-            (onChangeLayersOrder)="updatePaneZIndices()"></layer-menu>
+            (onChangeLayersOrder)="updatePaneZIndices()"
+            (onImagesDownloaded)="updateLayerImages()"></layer-menu>
 
 <div id="map-editor-buttons" *ngIf="isEditing">
     <div *ngIf="mousePositionCoordinates" id="mouse-position-coordinates-x" class="badge bg-secondary">

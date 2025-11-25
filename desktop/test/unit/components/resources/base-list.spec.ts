@@ -26,11 +26,6 @@ describe('BaseList', () => {
             isReady: jest.fn().mockReturnValue(true)
         };
 
-        resourcesComponent = {
-            getViewType: jest.fn(),
-            isEditingGeometry: false
-        };
-
         loading = {
             isLoading: jest.fn().mockReturnValue(false),
             getContext: jest.fn()
@@ -41,7 +36,7 @@ describe('BaseList', () => {
             getContext: jest.fn()
         };
 
-        baseList = new BaseList(resourcesComponent, viewFacade, loading, menuService);
+        baseList = new BaseList(viewFacade, loading, menuService);
     });
 
 

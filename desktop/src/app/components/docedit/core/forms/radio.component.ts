@@ -1,11 +1,11 @@
-import { Component, Input, OnChanges } from '@angular/core';
-import { Datastore, Resource, Valuelist, ValuelistUtil, Labels, Hierarchy,
-    ProjectConfiguration } from 'idai-field-core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output } from '@angular/core';
+import { Datastore, Resource, Valuelist, ValuelistUtil, Labels, ValuelistValue } from 'idai-field-core';
+import { ConfigurationInfoProvider } from '../../../widgets/configuration-info-provider';
 
 
 @Component({
     selector: 'form-field-radio',
-    templateUrl: `./radio.html`,
+    templateUrl: './radio.html',
     standalone: false
 })
 
@@ -14,18 +14,22 @@ import { Datastore, Resource, Valuelist, ValuelistUtil, Labels, Hierarchy,
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class RadioComponent implements OnChanges {
+export class RadioComponent extends ConfigurationInfoProvider implements OnChanges, OnDestroy {
 
     @Input() resource: Resource;
     @Input() fieldContainer: any;
     @Input() field: any;
+    
+    @Output() onChanged: EventEmitter<void> = new EventEmitter<void>();
 
     public valuelist: Valuelist;
 
 
     constructor(private datastore: Datastore,
-                private labels: Labels,
-                private projectConfiguration: ProjectConfiguration) {}
+                private labels: Labels) {
+
+        super();
+    }
 
 
     public getValues = () => this.valuelist ? this.labels.orderKeysByLabels(this.valuelist) : [];
@@ -38,22 +42,35 @@ export class RadioComponent implements OnChanges {
         this.valuelist = ValuelistUtil.getValuelist(
             this.field,
             await this.datastore.get('project'),
-            this.projectConfiguration,
-            await Hierarchy.getParentResource(id => this.datastore.get(id), this.resource),
             this.fieldContainer[this.field.name]
         );
+    }
+
+
+    ngOnDestroy() {
+        
+        this.removeListeners();
+    }
+
+
+    public hasInfo(valueId: string): boolean {
+        
+        const value: ValuelistValue = this.valuelist?.values[valueId];
+        return value && !!(this.labels.getDescription(value) || value.references?.length);
     }
 
 
     public setValue(value: any) {
 
         this.fieldContainer[this.field.name] = value;
+        this.onChanged.emit();
     }
 
 
     public resetValue() {
 
         delete this.fieldContainer[this.field.name];
+        this.onChanged.emit();
     }
 
 

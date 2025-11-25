@@ -1,8 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { on, is, isArray, isString, isEmpty, Map } from 'tsfun';
+import { on, is, isString, isEmpty, Map } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, CustomFieldDefinition, CustomFormDefinition,
-    CustomSubfieldDefinition, Field, I18N, InPlace, Labels, Named, Subfield, SubfieldCondition,
+    CustomSubfieldDefinition, Field, I18N, InPlace, Labels, Named, Subfield, Condition,
     Valuelists } from 'idai-field-core';
 import { InputType } from '../../../configuration-util';
 import { SubfieldEditorData, SubfieldEditorModalComponent } from '../subfield-editor-modal.component';
@@ -12,6 +12,8 @@ import { Modals } from '../../../../../services/modals';
 import { AngularUtility } from '../../../../../angular/angular-utility';
 import { getInputTypeLabel } from '../../../../../util/get-input-type-label';
 import { UtilTranslations } from '../../../../../util/util-translations';
+import { Messages } from '../../../../messages/messages';
+import { M } from '../../../../messages/m';
 
 
 @Component({
@@ -45,7 +47,8 @@ export class SubfieldsSectionComponent {
   
     constructor(private labels: Labels,
                 private modals: Modals,
-                private utilTranslations: UtilTranslations) {}
+                private utilTranslations: UtilTranslations,
+                private messages: Messages) {}
 
 
     public getClonedSubfieldDefinitions = () => this.clonedFieldDefinition.subfields;
@@ -61,7 +64,7 @@ export class SubfieldsSectionComponent {
     }
 
 
-    public getConditionSubfieldLabel(condition: SubfieldCondition): string {
+    public getConditionSubfieldLabel(condition: Condition): string {
 
         const subfield: Subfield = this.clonedField.subfields?.find(on(Named.NAME, is(condition.subfieldName)));
 
@@ -69,7 +72,7 @@ export class SubfieldsSectionComponent {
     }
 
 
-    public getConditionValueLabels(condition: SubfieldCondition): string {
+    public getConditionValueLabels(condition: Condition): string {
 
         const subfield: Subfield = this.clonedField.subfields?.find(on(Named.NAME, is(condition.subfieldName)));
 
@@ -157,6 +160,7 @@ export class SubfieldsSectionComponent {
         componentInstance.parentField = this.clonedField;
         componentInstance.category = this.category;
         componentInstance.references = subfieldDefinition.references;
+        componentInstance.semanticReferences = subfieldDefinition.semanticReferences;
         componentInstance.subfields = this.clonedField.subfields;
         componentInstance.availableInputTypes = this.availableInputTypes;
         componentInstance.projectLanguages = this.projectLanguages;
@@ -175,6 +179,8 @@ export class SubfieldsSectionComponent {
 
     public deleteSubfield(subfieldToDelete: CustomSubfieldDefinition) {
 
+        if (this.showErrorIfConditionSubfield(subfieldToDelete)) return;
+
         this.clonedFieldDefinition.subfields = this.clonedFieldDefinition.subfields.filter(
             subfield => subfield.name !== subfieldToDelete.name
         );
@@ -187,6 +193,24 @@ export class SubfieldsSectionComponent {
     public onDropSubfield(event: CdkDragDrop<any>) {
 
         InPlace.moveInArray(this.clonedFieldDefinition.subfields, event.previousIndex, event.currentIndex);
+    }
+
+
+    private showErrorIfConditionSubfield(subfieldDefinition: CustomSubfieldDefinition): boolean {
+
+        const conditionSubfield: Subfield = this.clonedField.subfields.find(subfield => {
+            return subfield.condition?.subfieldName === subfieldDefinition.name;
+        });
+
+        if (conditionSubfield) {
+            this.messages.add([
+                M.CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_DELETION,
+                this.labels.get(conditionSubfield)
+            ]);
+            return true;
+        } else {
+            return false;
+        }
     }
 
 
@@ -204,13 +228,25 @@ export class SubfieldsSectionComponent {
         subfieldDefinition.inputType = editedSubfieldData.inputType;
         clonedSubfield.inputType = editedSubfieldData.inputType;
 
-        if (editedSubfieldData.references.length > 0) {
+        if (editedSubfieldData.references?.length) {
             subfieldDefinition.references = editedSubfieldData.references;
         } else {
             delete subfieldDefinition.references;
         }
 
-        if (SubfieldsSectionComponent.isValidSubfieldCondition(editedSubfieldData.condition)) {
+        if (editedSubfieldData.semanticReferences?.length) {
+            subfieldDefinition.semanticReferences = editedSubfieldData.semanticReferences;
+        } else {
+            delete subfieldDefinition.semanticReferences;
+        }
+
+        if (editedSubfieldData.dateConfiguration) {
+            subfieldDefinition.dateConfiguration = editedSubfieldData.dateConfiguration;
+        } else {
+            delete subfieldDefinition.dateConfiguration;
+        }
+
+        if (Condition.isValid(editedSubfieldData.condition, 'subfield')) {
             subfieldDefinition.condition = editedSubfieldData.condition;
             clonedSubfield.condition = editedSubfieldData.condition;
         } else {
@@ -265,16 +301,5 @@ export class SubfieldsSectionComponent {
         return this.clonedField.subfields.find(clonedSubfield => {
             return clonedSubfield.name === subfieldDefinition.name;
         });
-    }
-
-
-    private static isValidSubfieldCondition(condition: SubfieldCondition): boolean {
-
-        return condition
-            && condition.subfieldName
-            && (condition.values === true
-                || condition.values === false
-                || isArray(condition.values) && condition.values.length > 0
-            );
     }
 }

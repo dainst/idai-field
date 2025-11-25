@@ -1,6 +1,6 @@
 import { and, equal, filter, flow, includedIn, isEmpty, isNot, isObject, isString, keys } from 'tsfun';
 import { CategoryForm, Document, Datastore, Field, NewDocument, Resource, ProjectConfiguration,
-    RelationsManager, IdGenerator } from 'idai-field-core';
+    RelationsManager, IdGenerator, FieldGeometry } from 'idai-field-core';
 import { Validations } from '../../model/validations';
 import { Validator } from '../../model/validator';
 import { trimFields } from '../../util/trim-fields';
@@ -29,6 +29,8 @@ export class DocumentHolder {
 
     public oldVersion: Document;
 
+    public allowEmptyFields: string[];
+
 
     constructor(private projectConfiguration: ProjectConfiguration,
                 private relationsManager: RelationsManager,
@@ -45,14 +47,14 @@ export class DocumentHolder {
     }
 
 
-    public changeCategories(newCategory: string) {
+    /**
+     * @returns names of invalid fields that would be deleted when saving 
+     */
+    public changeCategories(newCategory: string): string[] {
 
         this.clonedDocument.resource.category = newCategory;
 
-        return {
-            invalidFields: this.validateFields(),
-            invalidRelations: this.validateRelationFields()
-        }
+        return this.validateFields().concat(this.validateRelationFields());
     }
 
 
@@ -79,6 +81,7 @@ export class DocumentHolder {
 
         await this.performAssertions();
         this.convertStringsToNumbers();
+        this.closeGeometryRings();
 
         const savedDocument: Document = await this.relationsManager.update(
             this.cleanup(this.clonedDocument),
@@ -93,10 +96,12 @@ export class DocumentHolder {
     /**
      * @throws [DoceditErrors.NOT_FOUND]
      */
-    public async duplicate(numberOfDuplicates: number): Promise<Document> {
+    public async duplicate(numberOfDuplicates: number): Promise<Array<Document>> {
 
-        const documentAfterSave: Document = await this.save();
-        const template: NewDocument = DuplicationUtil.createTemplate(documentAfterSave);
+        const result: Array<Document> = [];
+        result.push(await this.save());
+
+        const template: NewDocument = DuplicationUtil.createTemplate(result[0]);
 
         let { baseIdentifier, identifierNumber, minDigits } =
             DuplicationUtil.splitIdentifier(template.resource.identifier);
@@ -107,14 +112,16 @@ export class DocumentHolder {
             );
             this.addScanCodeIfConfigured(template);
 
-            await this.relationsManager.update(
+            const duplicatedDocument: Document = await this.relationsManager.update(
                 template,
                 this.oldVersion,
                 []
             );
+
+            result.push(duplicatedDocument);
         }
 
-        return documentAfterSave;
+        return result;
     }
 
 
@@ -131,18 +138,19 @@ export class DocumentHolder {
 
         await this.validator.assertIdentifierIsUnique(this.clonedDocument);
         this.validator.assertHasIsRecordedIn(this.clonedDocument);
-        Validations.assertNoFieldsMissing(this.clonedDocument, this.projectConfiguration);
+        Validations.assertNoFieldsMissing(this.clonedDocument, this.projectConfiguration, this.allowEmptyFields);
         Validations.assertMaxCharactersRespected(this.clonedDocument, this.projectConfiguration);
         Validations.assertCorrectnessOfNumericalValues(this.clonedDocument, this.projectConfiguration, true,
             this.oldVersion);
         Validations.assertCorrectnessOfUrls(this.clonedDocument, this.projectConfiguration, this.oldVersion);
         Validations.assertUsageOfDotAsDecimalSeparator(this.clonedDocument, this.projectConfiguration);
+        Validations.assertCorrectnessOfDates(this.clonedDocument, this.projectConfiguration, this.oldVersion);
         Validations.assertCorrectnessOfDatingValues(this.clonedDocument, this.projectConfiguration, this.oldVersion);
         Validations.assertCorrectnessOfDimensionValues(this.clonedDocument, this.projectConfiguration,
             this.oldVersion);
         Validations.assertCorrectnessOfLiteratureValues(this.clonedDocument, this.projectConfiguration,
             this.oldVersion);
-        Validations.assertCorrectnessOfBeginningAndEndDates(this.clonedDocument);
+        Validations.assertWorkflowRelations(this.clonedDocument);
         await this.validator.assertGeometryIsValid(this.clonedDocument);
     }
 
@@ -161,6 +169,14 @@ export class DocumentHolder {
             } else if (field.inputType === 'float' || field.inputType === 'unsignedFloat') {
                 this.clonedDocument.resource[fieldName] = parseFloat(this.clonedDocument.resource[fieldName]);
             }
+        }
+    }
+
+
+    private closeGeometryRings() {
+
+        if (this.clonedDocument.resource.geometry) {
+            FieldGeometry.closeRings(this.clonedDocument.resource.geometry);
         }
     }
 
@@ -193,7 +209,13 @@ export class DocumentHolder {
 
     private validateFields(): string[] {
 
-        return this.validateButKeepInvalidOldVersionFields(Validations.validateDefinedFields);
+        const validate = (resource: Resource, projectConfiguration: ProjectConfiguration) => {
+            return Validations.validateDefinedFields(resource, projectConfiguration).concat(
+                Validations.validateConditionalFields(resource, projectConfiguration)
+            );
+        };
+
+        return this.validateButKeepInvalidOldVersionFields(validate);
     }
 
 

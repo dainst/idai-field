@@ -4,6 +4,8 @@ import { clone, isEmpty } from 'tsfun';
 import { ValuelistValue } from 'idai-field-core';
 import { Messages } from '../../../messages/messages';
 import { ConfigurationUtil } from '../../configuration-util';
+import { Menus } from '../../../../services/menus';
+import { MenuContext } from '../../../../services/menu-context';
 
 
 @Component({
@@ -27,7 +29,8 @@ export class ValueEditorModalComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
-                private messages: Messages) {}
+                private messages: Messages,
+                private menuService: Menus) {}
 
     
     public cancel = () => this.activeModal.dismiss();
@@ -39,12 +42,15 @@ export class ValueEditorModalComponent {
         if (!this.clonedValue.label) this.clonedValue.label = {};
         if (!this.clonedValue.description) this.clonedValue.description = {};
         if (!this.clonedValue.references) this.clonedValue.references = [];
+        if (!this.clonedValue.semanticReferences) this.clonedValue.semanticReferences = [];
     }
 
 
     public onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss();
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.CONFIGURATION_MODAL) {
+            this.activeModal.dismiss();
+        }
     }
 
 
@@ -52,6 +58,7 @@ export class ValueEditorModalComponent {
 
         try {
             ConfigurationUtil.cleanUpAndValidateReferences(this.clonedValue);
+            ConfigurationUtil.cleanUpAndValidateSemanticReferences(this.clonedValue);
         } catch (errWithParams) {
             return this.messages.add(errWithParams);
         }

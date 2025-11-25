@@ -27,6 +27,9 @@ export module DuplicationUtil {
         if (document.resource.relations.liesWithin) {
             template.resource.relations.liesWithin = document.resource.relations.liesWithin;
         }
+        if (document.resource.relations.resultsIn) {
+            template.resource.relations.resultsIn = document.resource.relations.resultsIn;
+        }
 
         return template;
     }

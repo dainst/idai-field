@@ -149,11 +149,7 @@ category-picker .category-item,
   display: flex;
   align-items: center;
   min-height: 30px;
-  padding: 10px 0 10px 20px;
-
-  &.short-category-item {
-    width: calc(100% - 28px);
-  }
+  padding: 10px 20px;
 
   category-icon {
     position: absolute;
@@ -162,7 +158,6 @@ category-picker .category-item,
   .category-label {
     display: inline-block;
     margin-left: 40px;
-    width: calc(100% - 50px);
     font-size: 15px;
   }
 }

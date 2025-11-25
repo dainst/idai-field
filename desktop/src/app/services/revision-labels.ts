@@ -1,7 +1,6 @@
-import { Document } from 'idai-field-core';
-
-const moment = window.require('moment');
-const remote = window.require('@electron/remote');
+import { Document, formatDate } from 'idai-field-core';
+import { getSystemTimezone } from '../util/timezones';
+import { Settings } from './settings/settings';
 
 
 /**
@@ -19,17 +18,13 @@ export module RevisionLabels {
 
     export function getLastModifiedDateLabel(revision: Document, timeSuffix: string): string {
 
-        // If the translation text for the time suffix is set to '.', this indicates that no time suffix should be used for
-        // the respective language.
-        if (timeSuffix === '.') timeSuffix = '';
-
-        const locale: string = remote.getGlobal('getLocale')();
-        moment.locale(locale);
+        // If the translation text for the time suffix is set to '.', this indicates that no time suffix should be
+        // used for the respective language.
+        timeSuffix = timeSuffix === '.'
+            ? ''
+            : ' ' + timeSuffix;
 
         const lastModifiedDate: Date = Document.getLastModified(revision).date;
-
-        return moment(lastModifiedDate).format('LL') + ' '
-            + moment(lastModifiedDate).format('LTS') + ' '
-            + timeSuffix;
+        return formatDate(lastModifiedDate, Settings.getLocale(), getSystemTimezone()) + timeSuffix;
     }
 }

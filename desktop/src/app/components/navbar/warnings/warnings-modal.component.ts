@@ -3,7 +3,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Map, flatten, intersect, isArray, nop, set } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Datastore, Document, FieldDocument, IndexFacade, Labels,
     ProjectConfiguration, WarningType, ConfigReader, Group, Resource, Field, Tree, InvalidDataUtil, OutlierWarnings,
-    RelationTargetWarnings } from 'idai-field-core';
+    RelationTargetWarnings, DateValidationResult, DateSpecification, Condition, Valuelist,
+    ValuelistUtil } from 'idai-field-core';
 import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
 import { WarningFilter, WarningFilters } from '../../../services/warnings/warning-filters';
@@ -26,6 +27,7 @@ import { SelectNewFieldModalComponent } from './modals/select-new-field-modal.co
 import { SelectNewCategoryModalComponent } from './modals/select-new-category-modal.component';
 import { MoveModalComponent, MoveResult } from '../../widgets/move-modal/move-modal.component';
 import { WarningsService } from '../../../services/warnings/warnings-service';
+import { getSystemTimezone } from '../../../util/timezones';
 
 
 type WarningSection = {
@@ -38,6 +40,9 @@ type WarningSection = {
     dataLabel?: string;
     outlierValues?: string[];
     relationTargets?: Array<Document>;
+    dateValidationError?: DateValidationResult;
+    conditionFieldLabel?: string;
+    conditionValuesLabel?: string;
 }
 
 
@@ -120,6 +125,28 @@ export class WarningsModalComponent {
     public getValuelistId(section: WarningSection): string {
 
         return CategoryForm.getField(section.category, section.fieldName)?.valuelist?.id;
+    }
+
+
+    public getValueLabel(section: WarningSection): string {
+
+        return this.labels.getValueLabel(
+            CategoryForm.getField(section.category, section.fieldName)?.valuelist,
+            this.selectedDocument.resource[section.fieldName]
+        );
+    }
+
+
+    public getDateLabel(date: DateSpecification): string {
+
+        return DateSpecification.generateLabel(
+            date,
+            getSystemTimezone(),
+            $localize `:@@revisionLabel.timeSuffix:Uhr`,
+            Settings.getLocale(),
+            (term: string) => this.utilTranslations.getTranslation(term),
+            true
+        );
     }
 
 
@@ -491,6 +518,8 @@ export class WarningsModalComponent {
                 switch (type) {
                     case 'unconfiguredFields':
                     case 'invalidFields':
+                    case 'missingMandatoryFields':
+                    case 'unfulfilledConditionFields':
                         this.sections = this.sections.concat(
                             await this.createSections(
                                 type as WarningType, document, document.warnings[type] as string[]
@@ -543,6 +572,8 @@ export class WarningsModalComponent {
 
         if (type === 'missingIdentifierPrefix' || type === 'nonUniqueIdentifier') {
             section.fieldName = Resource.IDENTIFIER;
+        } else if (type === 'invalidProcessState') {
+            section.fieldName = 'state';
         } else if (fieldName) {
             section.fieldName = fieldName;
         }
@@ -555,7 +586,13 @@ export class WarningsModalComponent {
             section.inputType = CategoryForm.getField(section.category, fieldName).inputType;
         };
 
-        if (type === 'invalidFields' || type === 'unconfiguredFields') {
+        if (type === 'invalidFields') {
+            section.dateValidationError = this.getDateValidationError(document, fieldName);
+        }
+
+        if (section.dateValidationError && section.dateValidationError !== DateValidationResult.INVALID) {
+            section.dataLabel = this.generateDateLabel(document.resource[fieldName]);
+        } else if (type === 'invalidFields' || type === 'unconfiguredFields' || type === 'unfulfilledConditionFields') {
             section.dataLabel = InvalidDataUtil.generateLabel(document.resource[fieldName], this.labels);
         } else if (type === 'missingIdentifierPrefix') {
             section.dataLabel = document.resource.identifier;
@@ -566,6 +603,12 @@ export class WarningsModalComponent {
             section.outlierValues = isArray(outlierValues)
                 ? outlierValues
                 : set(flatten(Object.values(outlierValues)));
+        }
+
+        if (type === 'unfulfilledConditionFields') {
+            const condition: Condition = CategoryForm.getField(section.category, fieldName).condition;
+            section.conditionFieldLabel = this.generateConditionFieldLabel(condition, section.category);
+            section.conditionValuesLabel = await this.generateConditionValuesLabel(condition, section.category);
         }
 
         if (section.isRelationField) {
@@ -586,8 +629,8 @@ export class WarningsModalComponent {
     }
 
 
-    private fetchRelationTargets(document: FieldDocument, fieldName: string,
-                                 type: WarningType): Promise<Array<Document>> {
+    private async fetchRelationTargets(document: FieldDocument, fieldName: string,
+                                       type: WarningType): Promise<Array<Document>> {
 
         const targetIds: string[] = type === 'invalidRelationTargets'
             ? intersect(
@@ -595,7 +638,55 @@ export class WarningsModalComponent {
                 document.warnings.invalidRelationTargets.targetIds
             ) : document.resource.relations[fieldName];
 
-        return this.datastore.getMultiple(targetIds);
+        return targetIds
+            ? await this.datastore.getMultiple(targetIds)
+            : [];
+    }
+
+
+    private getDateValidationError(document: FieldDocument, fieldName: string): DateValidationResult|undefined {
+
+        const field: Field = CategoryForm.getField(
+            this.projectConfiguration.getCategory(document.resource.category),
+            fieldName
+        );
+
+        return field.inputType === Field.InputType.DATE
+            ? DateSpecification.validate(document.resource[fieldName], field)
+            : undefined;
+    }
+
+
+    private generateDateLabel(date: DateSpecification): string {
+
+        return DateSpecification.generateLabel(
+            date,
+            getSystemTimezone(),
+            $localize `:@@revisionLabel.timeSuffix:Uhr`,
+            Settings.getLocale(),
+            (term: string) => this.utilTranslations.getTranslation(term)
+        );
+    }
+
+
+    private generateConditionFieldLabel(condition: Condition, category: CategoryForm): string {
+
+        return this.labels.getFieldLabel(category, condition.fieldName);
+    }
+
+    
+    private async generateConditionValuesLabel(condition: Condition, category: CategoryForm): Promise<string> {
+
+        const conditionField: Field = CategoryForm.getField(category, condition.fieldName);
+        const valuelist: Valuelist = ValuelistUtil.getValuelist(
+            conditionField, await this.datastore.get('project')
+        );
+
+        return Condition.generateLabel(
+            condition, 
+            (term: string) => this.utilTranslations.getTranslation(term),
+            valueId => this.labels.getValueLabel(valuelist, valueId)
+        );
     }
 
 

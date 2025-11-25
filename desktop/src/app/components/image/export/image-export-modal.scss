@@ -1,0 +1,19 @@
+#image-export-modal-body {
+  .option-header {
+    margin-bottom: 5px;
+    user-select: none;
+
+    &:not(:first-child) {
+      margin-top: 8px;
+    }
+  }
+
+  .form-check-label {
+    margin-bottom: 3px;
+    user-select: none;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+}

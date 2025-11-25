@@ -24,7 +24,7 @@ const { test, expect } = require('@playwright/test');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-test.describe('resources/state --', () => {
+test.describe('resources/state', () => {
 
     test.beforeAll(async () => {
 

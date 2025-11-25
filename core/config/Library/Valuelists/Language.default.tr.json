@@ -1,2219 +1,5710 @@
 {
   "coordinate-reference-system-default-1": {
     "values": {
-      "Eigenes Koordinatenbezugssystem": "Özel koordinat referans sistemi",
-      "EPSG4326 (WGS 84)": "EPSG4326 (WGS 84)",
-      "EPSG3857 (WGS 84 Web Mercator)": "EPSG3857 (WGS 84 Web Mercator)"
+      "Eigenes Koordinatenbezugssystem": {
+        "label": "Özel koordinat referans sistemi"
+      },
+      "EPSG4326 (WGS 84)": {
+        "label": "EPSG4326 (WGS 84)"
+      },
+      "EPSG3857 (WGS 84 Web Mercator)": {
+        "label": "EPSG3857 (WGS 84 Web Mercator)"
+      }
     }
   },
   "position-values-expansion-default": {
     "values": {
-      "Maximale Ausdehnung": "En uzun tarafından",
-      "Minimale Ausdehnung": "En kısa tarafından"
+      "Maximale Ausdehnung": {
+        "label": "En uzun tarafından"
+      },
+      "Minimale Ausdehnung": {
+        "label": "En kısa tarafından"
+      }
     }
   },
   "position-values-edge-default": {
     "values": {
-      "Oberkante": "Üst kenar",
-      "Unterkante": "Alt kenar"
+      "Oberkante": {
+        "label": "Üst kenar"
+      },
+      "Unterkante": {
+        "label": "Alt kenar"
+      }
     }
   },
   "orientation-default-1": {
     "values": {
-      "N-S": "Kuzey-Güney",
-      "NNO - SSW": "KKD-GGB",
-      "NNW-SSO": "KKB-GGD",
-      "NO-SW": "KD-GB",
-      "NW-SO": "KB-GD",
-      "W-O": "Batı-Doğu",
-      "WNW-OSO": "BKB-DGD",
-      "WSW-ONO": "BGB-DKD"
+      "N-S": {
+        "label": "Kuzey-Güney"
+      },
+      "NNO - SSW": {
+        "label": "KKD-GGB"
+      },
+      "NNW-SSO": {
+        "label": "KKB-GGD"
+      },
+      "NO-SW": {
+        "label": "KD-GB"
+      },
+      "NW-SO": {
+        "label": "KB-GD"
+      },
+      "W-O": {
+        "label": "Batı-Doğu"
+      },
+      "WNW-OSO": {
+        "label": "BKB-DGD"
+      },
+      "WSW-ONO": {
+        "label": "BGB-DKD"
+      }
     }
   },
   "provenance-default-1": {
     "values": {
-      "Anatolien": "Anadolu",
-      "Antiochia (Antakya)": "Antakya (Antiocheia)",
-      "Athen": "Atina",
-      "Ägypten": "Mısır",
-      "Attisch": "Attik",
-      "Britannien": "Britanya",
-      "Chios": "Khios",
-      "Deutschland": "Almanya",
-      "Ephesos": "Ephesos",
-      "Etruskisch": "Etrüsk",
-      "Gallien": "Galya",
-      "Ionien": "İonia",
-      "Irland": "İrlanda",
-      "Italien": "İtalya",
-      "Kampanisch": "Kampaniyen",
-      "Karthagisch": "Kartaca",
-      "Kleinasien": "Anadolu",
-      "Knidos": "Knidos",
-      "Korinth": "Korint",
-      "Kos": "Kos",
-      "Lesbos": "Lesbos (Midilli)",
-      "Levante": "Levant",
-      "Lokal": "Yerel",
-      "Lokal/Regional": "Yerel/Bölgesel",
-      "Milet": "Milet",
-      "Mäandertal": "Menderes",
-      "Nordafrika": "Kuzey Afrika",
-      "Nordafrikanisch": "Kuzey Afrikalı",
-      "Palästina": "Filistin",
-      "Pannonien": "Panunya",
-      "Peloponnes": "Peloponnes",
-      "Regional": "Bölgesel",
-      "Rhodos": "Rodos",
-      "Samos": "Samos (Sisam)",
-      "Sizilien": "Sicilya",
-      "Skandinavien": "İskandinavya",
-      "Slawisch": "Slav",
-      "Spanien": "İspanya",
-      "Syrien": "Suriye",
-      "Südtunesisch": "Güney Tunusya",
-      "Südägäis": "Güney Ege"
+      "Anatolien": {
+        "label": "Anadolu"
+      },
+      "Antiochia (Antakya)": {
+        "label": "Antakya (Antiocheia)"
+      },
+      "Athen": {
+        "label": "Atina"
+      },
+      "Ägypten": {
+        "label": "Mısır"
+      },
+      "Attisch": {
+        "label": "Attik"
+      },
+      "Britannien": {
+        "label": "Britanya"
+      },
+      "Chios": {
+        "label": "Khios"
+      },
+      "Deutschland": {
+        "label": "Almanya"
+      },
+      "Ephesos": {
+        "label": "Ephesos"
+      },
+      "Etruskisch": {
+        "label": "Etrüsk"
+      },
+      "Gallien": {
+        "label": "Galya"
+      },
+      "Ionien": {
+        "label": "İonia"
+      },
+      "Irland": {
+        "label": "İrlanda"
+      },
+      "Italien": {
+        "label": "İtalya"
+      },
+      "Kampanisch": {
+        "label": "Kampaniyen"
+      },
+      "Karthagisch": {
+        "label": "Kartaca"
+      },
+      "Kleinasien": {
+        "label": "Anadolu"
+      },
+      "Knidos": {
+        "label": "Knidos"
+      },
+      "Korinth": {
+        "label": "Korint"
+      },
+      "Kos": {
+        "label": "Kos"
+      },
+      "Lesbos": {
+        "label": "Lesbos (Midilli)"
+      },
+      "Levante": {
+        "label": "Levant"
+      },
+      "Lokal": {
+        "label": "Yerel"
+      },
+      "Lokal/Regional": {
+        "label": "Yerel/Bölgesel"
+      },
+      "Milet": {
+        "label": "Milet"
+      },
+      "Mäandertal": {
+        "label": "Menderes"
+      },
+      "Nordafrika": {
+        "label": "Kuzey Afrika"
+      },
+      "Nordafrikanisch": {
+        "label": "Kuzey Afrikalı"
+      },
+      "Palästina": {
+        "label": "Filistin"
+      },
+      "Pannonien": {
+        "label": "Panunya"
+      },
+      "Peloponnes": {
+        "label": "Peloponnes"
+      },
+      "Regional": {
+        "label": "Bölgesel"
+      },
+      "Rhodos": {
+        "label": "Rodos"
+      },
+      "Samos": {
+        "label": "Samos (Sisam)"
+      },
+      "Sizilien": {
+        "label": "Sicilya"
+      },
+      "Skandinavien": {
+        "label": "İskandinavya"
+      },
+      "Slawisch": {
+        "label": "Slav"
+      },
+      "Spanien": {
+        "label": "İspanya"
+      },
+      "Syrien": {
+        "label": "Suriye"
+      },
+      "Südtunesisch": {
+        "label": "Güney Tunusya"
+      },
+      "Südägäis": {
+        "label": "Güney Ege"
+      }
     }
   },
   "periods-default-1": {
     "values": {
-      "Archaisch": "Arkaik",
-      "Bronzezeitlich": "Tunç Çağı",
-      "Byzantinisch": "Bizans",
-      "Eisenzeitlich": "Demir Çağı",
-      "Frühbronzezeitlich": "Erken Tunç Çağı",
-      "Frühbyzantinisch": "Erken Bizans",
-      "Frühhellenistisch": "Erken Hellenistik",
-      "Frühkaiserzeitlich": "Erken İmparatorluk Dönemi",
-      "Frühklassisch": "Erken Klasik Dönem",
-      "Geometrisch": "Geometrik",
-      "Hellenistisch": "Hellenistik",
-      "Kaiserzeitlich": "İmparatorluk Dönemi",
-      "Klassisch": "Klasik Dönem",
-      "Neolithisch": "Neolitik",
-      "Neuzeitlich": "Yakın Çağ",
-      "Osmanisch": "Osmanlı Dönemi",
-      "Pleistozän": "Pleistosen",
-      "Rezent": "Yakın tarih (Holosenden itibaren)",
-      "Römisch": "Roma Dönemi",
-      "Spätantik": "Geç Antik",
-      "Spätbronzezeitlich": "Geç Tunç Çağı",
-      "Spätbyzantinisch": "Geç Bizans Dönemi",
-      "Späthellenistisch": "Geç Hellenistik Dönem",
-      "Spätkaiserzeitlich": "Geç İmparatorluk Dönemi",
-      "Spätklassisch": "Geç Klasik Dönem",
-      "Frühmittelalter": "Erken Orta Çağ",
-      "Hochmittelalter": "Geç Orta Çağ",
-      "Mittelalter": "Orta Çağ",
-      "Spätmittelalter": "Geç Orta Çağ"
+      "Archaisch": {
+        "label": "Arkaik"
+      },
+      "Bronzezeitlich": {
+        "label": "Tunç Çağı"
+      },
+      "Byzantinisch": {
+        "label": "Bizans"
+      },
+      "Eisenzeitlich": {
+        "label": "Demir Çağı"
+      },
+      "Frühbronzezeitlich": {
+        "label": "Erken Tunç Çağı"
+      },
+      "Frühbyzantinisch": {
+        "label": "Erken Bizans"
+      },
+      "Frühhellenistisch": {
+        "label": "Erken Hellenistik"
+      },
+      "Frühkaiserzeitlich": {
+        "label": "Erken İmparatorluk Dönemi"
+      },
+      "Frühklassisch": {
+        "label": "Erken Klasik Dönem"
+      },
+      "Geometrisch": {
+        "label": "Geometrik"
+      },
+      "Hellenistisch": {
+        "label": "Hellenistik"
+      },
+      "Kaiserzeitlich": {
+        "label": "İmparatorluk Dönemi"
+      },
+      "Klassisch": {
+        "label": "Klasik Dönem"
+      },
+      "Neolithisch": {
+        "label": "Neolitik"
+      },
+      "Neuzeitlich": {
+        "label": "Yakın Çağ"
+      },
+      "Osmanisch": {
+        "label": "Osmanlı Dönemi"
+      },
+      "Pleistozän": {
+        "label": "Pleistosen"
+      },
+      "Rezent": {
+        "label": "Yakın tarih (Holosenden itibaren)"
+      },
+      "Römisch": {
+        "label": "Roma Dönemi"
+      },
+      "Spätantik": {
+        "label": "Geç Antik"
+      },
+      "Spätbronzezeitlich": {
+        "label": "Geç Tunç Çağı"
+      },
+      "Spätbyzantinisch": {
+        "label": "Geç Bizans Dönemi"
+      },
+      "Späthellenistisch": {
+        "label": "Geç Hellenistik Dönem"
+      },
+      "Spätkaiserzeitlich": {
+        "label": "Geç İmparatorluk Dönemi"
+      },
+      "Spätklassisch": {
+        "label": "Geç Klasik Dönem"
+      },
+      "Frühmittelalter": {
+        "label": "Erken Orta Çağ"
+      },
+      "Hochmittelalter": {
+        "label": "Geç Orta Çağ"
+      },
+      "Mittelalter": {
+        "label": "Orta Çağ"
+      },
+      "Spätmittelalter": {
+        "label": "Geç Orta Çağ"
+      }
     }
   },
   "colors-default-1": {
     "values": {
-      "beige": "bej",
-      "blass-": "solgun",
-      "blau": "mavi",
-      "braun": "kahverengi",
-      "cremefarben": "krem rengi",
-      "dunkel-": "koyu",
-      "gelb": "sarı",
-      "grau": "gri",
-      "grün": "yeşil",
-      "hell-": "açık",
-      "leuchtend-": "parlak",
-      "ocker": "okra",
-      "orange": "turuncu",
-      "rosa": "pembe",
-      "rot": "kırmızı",
-      "schwarz": "siyah",
-      "türkis": "turkuaz",
-      "violett": "menekşe",
-      "weiß": "beyaz"
+      "beige": {
+        "label": "bej"
+      },
+      "blass-": {
+        "label": "solgun"
+      },
+      "blau": {
+        "label": "mavi"
+      },
+      "braun": {
+        "label": "kahverengi"
+      },
+      "cremefarben": {
+        "label": "krem rengi"
+      },
+      "dunkel-": {
+        "label": "koyu"
+      },
+      "gelb": {
+        "label": "sarı"
+      },
+      "grau": {
+        "label": "gri"
+      },
+      "grün": {
+        "label": "yeşil"
+      },
+      "hell-": {
+        "label": "açık"
+      },
+      "leuchtend-": {
+        "label": "parlak"
+      },
+      "ocker": {
+        "label": "okra"
+      },
+      "orange": {
+        "label": "turuncu"
+      },
+      "rosa": {
+        "label": "pembe"
+      },
+      "rot": {
+        "label": "kırmızı"
+      },
+      "schwarz": {
+        "label": "siyah"
+      },
+      "türkis": {
+        "label": "turkuaz"
+      },
+      "violett": {
+        "label": "menekşe"
+      },
+      "weiß": {
+        "label": "beyaz"
+      }
     },
     "description": "Renk seti 1, çeşitli uygulamalar; IT Departmanı, 2019"
   },
   "colors-default-2": {
     "values": {
-      "beige": "bej",
-      "dunkelbraun": "koyu kahverengi",
-      "dunkelrot": "koyu kırmızı",
-      "gelb": "sarı",
-      "hellbraun": "açık kahverengi",
-      "hellgrau": "açık gri",
-      "mittelbraun": "orta kahverengi",
-      "ocker": "okra",
-      "orange": "turuncu",
-      "orangerot": "kırmızımsı turuncu",
-      "rosa": "pembe",
-      "rot": "kırmızı",
-      "rotbraun": "kızıl kahverengi",
-      "schwarz": "siyah",
-      "weiß": "beyaz"
+      "beige": {
+        "label": "bej"
+      },
+      "dunkelbraun": {
+        "label": "koyu kahverengi"
+      },
+      "dunkelrot": {
+        "label": "koyu kırmızı"
+      },
+      "gelb": {
+        "label": "sarı"
+      },
+      "hellbraun": {
+        "label": "açık kahverengi"
+      },
+      "hellgrau": {
+        "label": "açık gri"
+      },
+      "mittelbraun": {
+        "label": "orta kahverengi"
+      },
+      "ocker": {
+        "label": "okra"
+      },
+      "orange": {
+        "label": "turuncu"
+      },
+      "orangerot": {
+        "label": "kırmızımsı turuncu"
+      },
+      "rosa": {
+        "label": "pembe"
+      },
+      "rot": {
+        "label": "kırmızı"
+      },
+      "rotbraun": {
+        "label": "kızıl kahverengi"
+      },
+      "schwarz": {
+        "label": "siyah"
+      },
+      "weiß": {
+        "label": "beyaz"
+      }
     },
     "description": "Renk seti 2, çeşitli uygulamalar"
   },
   "glass-decorationTechnique-default": {
     "values": {
-      "Bemalung": "Bezeme",
-      "Diatretdekor": "diatret / kafes dekoru",
-      "Emaille": "Emaye",
-      "Facettschliffdekor": "",
-      "Fadendekor (aufgelegt)": "",
-      "Fadendekor (verschmolzen)": "",
-      "Mosaikdekor": "Mozaik Dekor",
-      "Reliefdekor": "Rölyef Dekor",
-      "Reticelladekor": "",
-      "Riefeldekor": "",
-      "Ritzungen": "",
-      "Schlangenfadendekor": "",
-      "Schliffrillendekor": "",
-      "Stempeldekor": "damga bezemeli",
-      "Tupfendekor": "",
-      "Warzendekor": "",
-      "Zwischengoldglas": "",
-      "figürlicher Schliffdekor": ""
+      "Bemalung": {
+        "label": "Bezeme"
+      },
+      "Diatretdekor": {
+        "label": "diatret / kafes dekoru"
+      },
+      "Emaille": {
+        "label": "Emaye"
+      },
+      "Facettschliffdekor": {
+        "label": ""
+      },
+      "Fadendekor (aufgelegt)": {
+        "label": ""
+      },
+      "Fadendekor (verschmolzen)": {
+        "label": ""
+      },
+      "Mosaikdekor": {
+        "label": "Mozaik Dekor"
+      },
+      "Reliefdekor": {
+        "label": "Rölyef Dekor"
+      },
+      "Reticelladekor": {
+        "label": ""
+      },
+      "Riefeldekor": {
+        "label": ""
+      },
+      "Ritzungen": {
+        "label": ""
+      },
+      "Schlangenfadendekor": {
+        "label": ""
+      },
+      "Schliffrillendekor": {
+        "label": ""
+      },
+      "Stempeldekor": {
+        "label": "damga bezemeli"
+      },
+      "Tupfendekor": {
+        "label": ""
+      },
+      "Warzendekor": {
+        "label": ""
+      },
+      "Zwischengoldglas": {
+        "label": ""
+      },
+      "figürlicher Schliffdekor": {
+        "label": ""
+      }
     }
   },
   "glass-formDescription-default": {
     "values": {
-      "ausladend": "",
-      "bauchig": "karınlı",
-      "breitoval": "",
-      "doppelkonisch": "",
-      "halbkugelig": "",
-      "hochoval": "",
-      "konisch": "konik",
-      "kugelförmig": "küresel",
-      "quadratisch": "karesel",
-      "rechteckig": "dikdörtgensel",
-      "rund": "yuvarlak",
-      "schlank": "",
-      "schmal": "dar",
-      "spindelförmig": "",
-      "tonnenförmig": "",
-      "zylinderförmig": ""
+      "ausladend": {
+        "label": ""
+      },
+      "bauchig": {
+        "label": "karınlı"
+      },
+      "breitoval": {
+        "label": ""
+      },
+      "doppelkonisch": {
+        "label": ""
+      },
+      "halbkugelig": {
+        "label": ""
+      },
+      "hochoval": {
+        "label": ""
+      },
+      "konisch": {
+        "label": "konik"
+      },
+      "kugelförmig": {
+        "label": "küresel"
+      },
+      "quadratisch": {
+        "label": "karesel"
+      },
+      "rechteckig": {
+        "label": "dikdörtgensel"
+      },
+      "rund": {
+        "label": "yuvarlak"
+      },
+      "schlank": {
+        "label": ""
+      },
+      "schmal": {
+        "label": "dar"
+      },
+      "spindelförmig": {
+        "label": ""
+      },
+      "tonnenförmig": {
+        "label": ""
+      },
+      "zylinderförmig": {
+        "label": ""
+      }
     }
   },
   "glass-manufacturingMethod-default": {
     "values": {
-      "Formgeblasen (mit Reliefdekor)": "Kalıba Üfleme Tekniği (kabartma dekorlu)",
-      "Formgeschmolzen": "",
-      "Freigeblasen": "Serbest Üfleme Tekniği",
-      "In Vorformen geblasen": "",
-      "In offene Halbformen geblasen": "",
-      "Kerngeformt": "",
-      "Sandkerngeschmolzen": "",
-      "gedreht (auf Drehscheibe)": ""
+      "Formgeblasen (mit Reliefdekor)": {
+        "label": "Kalıba Üfleme Tekniği (kabartma dekorlu)"
+      },
+      "Formgeschmolzen": {
+        "label": ""
+      },
+      "Freigeblasen": {
+        "label": "Serbest Üfleme Tekniği"
+      },
+      "In Vorformen geblasen": {
+        "label": ""
+      },
+      "In offene Halbformen geblasen": {
+        "label": ""
+      },
+      "Kerngeformt": {
+        "label": ""
+      },
+      "Sandkerngeschmolzen": {
+        "label": ""
+      },
+      "gedreht (auf Drehscheibe)": {
+        "label": ""
+      }
     }
   },
   "glass-objectType-default": {
     "values": {
-      "Anhänger": "Pendant",
-      "Armreif": "Bileklik",
-      "Einlage": "Kakma",
-      "Fensterglas": "",
-      "Gefäß": "Kap",
-      "Gemme": "Oymalı mücevher",
-      "Gerät": "Alet",
-      "Glasschlacke": "cam cürufu",
-      "Lampe": "kandil",
-      "Löffel": "kaşık",
-      "Perle": "inci",
-      "Produktionsfragment": "",
-      "Ring": "yüzük",
-      "Rohglas": "",
-      "Rührstab": "",
-      "Scheiben": "",
-      "Schmuck": "Takı",
-      "Spielstein": "Oyun taşı/pulu",
-      "Tessera": "Tessera",
-      "Unsicher bzw. unbestimmbar": "Belirsiz veya belirlenemeyen",
-      "Weinheber": ""
+      "Anhänger": {
+        "label": "Pendant"
+      },
+      "Armreif": {
+        "label": "Bileklik"
+      },
+      "Einlage": {
+        "label": "Kakma"
+      },
+      "Fensterglas": {
+        "label": ""
+      },
+      "Gefäß": {
+        "label": "Kap"
+      },
+      "Gemme": {
+        "label": "Oymalı mücevher"
+      },
+      "Gerät": {
+        "label": "Alet"
+      },
+      "Glasschlacke": {
+        "label": "cam cürufu"
+      },
+      "Lampe": {
+        "label": "kandil"
+      },
+      "Löffel": {
+        "label": "kaşık"
+      },
+      "Perle": {
+        "label": "inci"
+      },
+      "Produktionsfragment": {
+        "label": ""
+      },
+      "Ring": {
+        "label": "yüzük"
+      },
+      "Rohglas": {
+        "label": ""
+      },
+      "Rührstab": {
+        "label": ""
+      },
+      "Scheiben": {
+        "label": ""
+      },
+      "Schmuck": {
+        "label": "Takı"
+      },
+      "Spielstein": {
+        "label": "Oyun taşı/pulu"
+      },
+      "Tessera": {
+        "label": "Tessera"
+      },
+      "Unsicher bzw. unbestimmbar": {
+        "label": "Belirsiz veya belirlenemeyen"
+      },
+      "Weinheber": {
+        "label": ""
+      }
     }
   },
   "glass-transparency-default": {
     "values": {
-      "durchscheinend": "",
-      "durchsichtig": "şeffaf",
-      "opak": "opak",
-      "versintert": ""
+      "durchscheinend": {
+        "label": ""
+      },
+      "durchsichtig": {
+        "label": "şeffaf"
+      },
+      "opak": {
+        "label": "opak"
+      },
+      "versintert": {
+        "label": ""
+      }
     }
   },
   "glass-vesselForm-default": {
     "values": {
-      "Aschenurne": "",
-      "Becher": "",
-      "Deckel": "kapak",
-      "Deckelgefäß": "",
-      "Flasche": "şişe",
-      "Krug": "",
-      "Napf": "",
-      "Schale": "",
-      "Schüssel": "",
-      "Tasse": "Fincan",
-      "Teller": "tabak",
-      "Topf": "",
-      "Unbestimmt": "belirsiz",
-      "Vorratsgefäß": "saklama kabı"
+      "Aschenurne": {
+        "label": ""
+      },
+      "Becher": {
+        "label": ""
+      },
+      "Deckel": {
+        "label": "kapak"
+      },
+      "Deckelgefäß": {
+        "label": ""
+      },
+      "Flasche": {
+        "label": "şişe"
+      },
+      "Krug": {
+        "label": ""
+      },
+      "Napf": {
+        "label": ""
+      },
+      "Schale": {
+        "label": ""
+      },
+      "Schüssel": {
+        "label": ""
+      },
+      "Tasse": {
+        "label": "Fincan"
+      },
+      "Teller": {
+        "label": "tabak"
+      },
+      "Topf": {
+        "label": ""
+      },
+      "Unbestimmt": {
+        "label": "belirsiz"
+      },
+      "Vorratsgefäß": {
+        "label": "saklama kabı"
+      }
     }
   },
   "glass-vesselFormSpecific-default": {
     "values": {
-      "Alabastron": "Alabastron",
-      "Amphoriskos": "Amphoriskos",
-      "Aryballos": "Aryballos",
-      "Balsamarium": "",
-      "Dattelflasche": "Hurma şişesi",
-      "Faltenbecher": "",
-      "Hydria": "Hydria",
-      "Kopfflasche": "",
-      "Kotyle": "Kotyle",
-      "Kragenschale": "",
-      "Krater": "Krater",
-      "Kylix": "Kylix",
-      "Lekythos": "Lekythos",
-      "Luterion": "",
-      "Oinochoe": "Oinochoe",
-      "Pelike": "Pelike",
-      "Rippenschale": "",
-      "Schliffrillenschale": "",
-      "Schöpfer": "",
-      "Skyphos": "Skyphos",
-      "Spitzamphora": "",
-      "Sprenkler": "",
-      "Stamnos": "Stamnos",
-      "Tierflasche": "",
-      "Unguentarium": "Unguentarium",
-      "Vierkantflasche": "",
-      "hexagonale Flasche": "",
-      "zarte Rippenschale": "",
-      "zylindrische Flasche": ""
+      "Alabastron": {
+        "label": "Alabastron"
+      },
+      "Amphoriskos": {
+        "label": "Amphoriskos"
+      },
+      "Aryballos": {
+        "label": "Aryballos"
+      },
+      "Balsamarium": {
+        "label": ""
+      },
+      "Dattelflasche": {
+        "label": "Hurma şişesi"
+      },
+      "Faltenbecher": {
+        "label": ""
+      },
+      "Hydria": {
+        "label": "Hydria"
+      },
+      "Kopfflasche": {
+        "label": ""
+      },
+      "Kotyle": {
+        "label": "Kotyle"
+      },
+      "Kragenschale": {
+        "label": ""
+      },
+      "Krater": {
+        "label": "Krater"
+      },
+      "Kylix": {
+        "label": "Kylix"
+      },
+      "Lekythos": {
+        "label": "Lekythos"
+      },
+      "Luterion": {
+        "label": ""
+      },
+      "Oinochoe": {
+        "label": "Oinochoe"
+      },
+      "Pelike": {
+        "label": "Pelike"
+      },
+      "Rippenschale": {
+        "label": ""
+      },
+      "Schliffrillenschale": {
+        "label": ""
+      },
+      "Schöpfer": {
+        "label": ""
+      },
+      "Skyphos": {
+        "label": "Skyphos"
+      },
+      "Spitzamphora": {
+        "label": ""
+      },
+      "Sprenkler": {
+        "label": ""
+      },
+      "Stamnos": {
+        "label": "Stamnos"
+      },
+      "Tierflasche": {
+        "label": ""
+      },
+      "Unguentarium": {
+        "label": "Unguentarium"
+      },
+      "Vierkantflasche": {
+        "label": ""
+      },
+      "hexagonale Flasche": {
+        "label": ""
+      },
+      "zarte Rippenschale": {
+        "label": ""
+      },
+      "zylindrische Flasche": {
+        "label": ""
+      }
     }
   },
   "Mollusk-classification-default": {
     "values": {
-      "Schuppe": "",
-      "Coxa": "",
-      "Muschelschale (Bivalvia)": "",
-      "Schneckenhaus (Gastropoda)": ""
+      "Schuppe": {
+        "label": ""
+      },
+      "Coxa": {
+        "label": ""
+      },
+      "Muschelschale (Bivalvia)": {
+        "label": ""
+      },
+      "Schneckenhaus (Gastropoda)": {
+        "label": ""
+      }
     }
   },
   "Brick-brickForm-default": {
     "values": {
-      "Bodenziegel": "",
-      "Dachziegel": "(çatı) kiremit",
-      "Flachziegel": "",
-      "Formziegel": "",
-      "Hypokaustziegel": "",
-      "Imbrex": "İmbrex",
-      "Kalyptere": "Kalypter",
-      "Later": "Later",
-      "Leistenziegel": "",
-      "Lochziegel/Hohlziegel": "",
-      "Stroter": "Stroter",
-      "Tegula": "Tegula",
-      "Tonrohr": "künk",
-      "Wandziegel": ""
+      "Bodenziegel": {
+        "label": ""
+      },
+      "Dachziegel": {
+        "label": "(çatı) kiremit"
+      },
+      "Flachziegel": {
+        "label": ""
+      },
+      "Formziegel": {
+        "label": ""
+      },
+      "Hypokaustziegel": {
+        "label": ""
+      },
+      "Imbrex": {
+        "label": "İmbrex"
+      },
+      "Kalyptere": {
+        "label": "Kalypter"
+      },
+      "Later": {
+        "label": "Later"
+      },
+      "Leistenziegel": {
+        "label": ""
+      },
+      "Lochziegel/Hohlziegel": {
+        "label": ""
+      },
+      "Stroter": {
+        "label": "Stroter"
+      },
+      "Tegula": {
+        "label": "Tegula"
+      },
+      "Tonrohr": {
+        "label": "künk"
+      },
+      "Wandziegel": {
+        "label": ""
+      }
     }
   },
   "Brick-brickUsage-default": {
     "values": {
-      "Dach": "çatı",
-      "Decke": "",
-      "Fenster": "pencere",
-      "Fussboden": "",
-      "Gewölbedecke": "",
-      "Klosterformat": "",
-      "Türrahmen": "",
-      "Türsturz": "",
-      "Wandverkleidung": ""
+      "Dach": {
+        "label": "çatı"
+      },
+      "Decke": {
+        "label": ""
+      },
+      "Fenster": {
+        "label": "pencere"
+      },
+      "Fussboden": {
+        "label": ""
+      },
+      "Gewölbedecke": {
+        "label": ""
+      },
+      "Klosterformat": {
+        "label": ""
+      },
+      "Türrahmen": {
+        "label": ""
+      },
+      "Türsturz": {
+        "label": ""
+      },
+      "Wandverkleidung": {
+        "label": ""
+      }
     }
   },
   "Brick-decorationTechnique-default": {
     "values": {
-      "Bemalung": "Bezeme",
-      "Fingerabdruck": "Parmak izi",
-      "Kammritzung": "",
-      "Reliefdekor": "Kabartma dekoru",
-      "Riefeldekor": "",
-      "Ritzungen": "",
-      "Sonstige Abdrücke": "",
-      "Stempel": "damga",
-      "Stempeldekor": "damga bezeme",
-      "Tupfendekor": "",
-      "Wischzeichen": "",
-      "Überzug/Glasur": ""
+      "Bemalung": {
+        "label": "Bezeme"
+      },
+      "Fingerabdruck": {
+        "label": "Parmak izi"
+      },
+      "Kammritzung": {
+        "label": ""
+      },
+      "Reliefdekor": {
+        "label": "Kabartma dekoru"
+      },
+      "Riefeldekor": {
+        "label": ""
+      },
+      "Ritzungen": {
+        "label": ""
+      },
+      "Sonstige Abdrücke": {
+        "label": ""
+      },
+      "Stempel": {
+        "label": "damga"
+      },
+      "Stempeldekor": {
+        "label": "damga bezeme"
+      },
+      "Tupfendekor": {
+        "label": ""
+      },
+      "Wischzeichen": {
+        "label": ""
+      },
+      "Überzug/Glasur": {
+        "label": ""
+      }
     }
   },
   "Brick-manufacturing-default": {
     "values": {
-      "Dickwandig": "",
-      "Dünnwandig": "",
-      "Gebrannt": "",
-      "Hart gebrannt": "",
-      "Luftgetrocknet": "",
-      "Oberfläche glatt": "",
-      "Oberfläche rau": "",
-      "Sekundär gebrannt": "",
-      "Weich gebrannt": ""
+      "Dickwandig": {
+        "label": ""
+      },
+      "Dünnwandig": {
+        "label": ""
+      },
+      "Gebrannt": {
+        "label": ""
+      },
+      "Hart gebrannt": {
+        "label": ""
+      },
+      "Luftgetrocknet": {
+        "label": ""
+      },
+      "Oberfläche glatt": {
+        "label": ""
+      },
+      "Oberfläche rau": {
+        "label": ""
+      },
+      "Sekundär gebrannt": {
+        "label": ""
+      },
+      "Weich gebrannt": {
+        "label": ""
+      }
     }
   },
   "Brick-manufacturingMethod-default": {
     "values": {
-      "gedreht (auf Drehscheibe)": "",
-      "gegossen": "",
-      "gepresst": "",
-      "handgeformt": ""
+      "gedreht (auf Drehscheibe)": {
+        "label": ""
+      },
+      "gegossen": {
+        "label": ""
+      },
+      "gepresst": {
+        "label": ""
+      },
+      "handgeformt": {
+        "label": ""
+      }
     }
   },
   "Brick-specificType-default": {
     "values": {
-      "Abschläge": "",
-      "Berg": "",
-      "Bodenziegel": "",
-      "Bruchstein": "",
-      "Dachziegel": "",
-      "Geröll": "kayşat",
-      "Hohlziegel": "",
-      "Hypokaustziegel": "",
-      "Kanalziegel": "",
-      "Platten": "",
-      "Quader": "",
-      "Tonrohr": "künk",
-      "Variierend": "",
-      "Wandziegel": "",
-      "Ziegelbruch": ""
+      "Abschläge": {
+        "label": ""
+      },
+      "Berg": {
+        "label": ""
+      },
+      "Bodenziegel": {
+        "label": ""
+      },
+      "Bruchstein": {
+        "label": ""
+      },
+      "Dachziegel": {
+        "label": ""
+      },
+      "Geröll": {
+        "label": "kayşat"
+      },
+      "Hohlziegel": {
+        "label": ""
+      },
+      "Hypokaustziegel": {
+        "label": ""
+      },
+      "Kanalziegel": {
+        "label": ""
+      },
+      "Platten": {
+        "label": ""
+      },
+      "Quader": {
+        "label": ""
+      },
+      "Tonrohr": {
+        "label": "künk"
+      },
+      "Variierend": {
+        "label": ""
+      },
+      "Wandziegel": {
+        "label": ""
+      },
+      "Ziegelbruch": {
+        "label": ""
+      }
     }
   },
   "Brick-temper-default": {
     "values": {
-      "Glimmer": "",
-      "Kalk": "Kalker",
-      "Mineralische Partikel": "",
-      "Muschelgrus": "",
-      "Organische Partikel": "",
-      "Quarz": "Kuvarz",
-      "Schamotte": "",
-      "Sonstige": "Diğer",
-      "Steinchen": "",
-      "Stroh/Spreu": "",
-      "Vacua": "",
-      "Vulkanische Partikel": ""
+      "Glimmer": {
+        "label": ""
+      },
+      "Kalk": {
+        "label": "Kalker"
+      },
+      "Mineralische Partikel": {
+        "label": ""
+      },
+      "Muschelgrus": {
+        "label": ""
+      },
+      "Organische Partikel": {
+        "label": ""
+      },
+      "Quarz": {
+        "label": "Kuvarz"
+      },
+      "Schamotte": {
+        "label": ""
+      },
+      "Sonstige": {
+        "label": "Diğer"
+      },
+      "Steinchen": {
+        "label": ""
+      },
+      "Stroh/Spreu": {
+        "label": ""
+      },
+      "Vacua": {
+        "label": ""
+      },
+      "Vulkanische Partikel": {
+        "label": ""
+      }
     }
   },
   "Burial-amountIndividuals-default": {
     "values": {
-      "Doppelbestattung": "",
-      "Dreifachbestattung": "",
-      "Einzelbestattung": "",
-      "Grabdeponat": "",
-      "Kollektivbestattung": "",
-      "Massengrab": "",
-      "Mehrfachbestattung": "",
-      "Unsicher bzw. unbestimmbar": "Belirsiz veya belirlenemeyen",
-      "Wiedergängerbestattung": ""
+      "Doppelbestattung": {
+        "label": ""
+      },
+      "Dreifachbestattung": {
+        "label": ""
+      },
+      "Einzelbestattung": {
+        "label": ""
+      },
+      "Grabdeponat": {
+        "label": ""
+      },
+      "Kollektivbestattung": {
+        "label": ""
+      },
+      "Massengrab": {
+        "label": ""
+      },
+      "Mehrfachbestattung": {
+        "label": ""
+      },
+      "Unsicher bzw. unbestimmbar": {
+        "label": "Belirsiz veya belirlenemeyen"
+      },
+      "Wiedergängerbestattung": {
+        "label": ""
+      }
     }
   },
   "Burial-burialCharacteristic-default": {
     "values": {
-      "Primäre Bestattung": "",
-      "Sekundäre Bestattung": "",
-      "Unsicher bzw. unbestimmbar": "Belirsiz veya belirlenemeyen"
+      "Primäre Bestattung": {
+        "label": ""
+      },
+      "Sekundäre Bestattung": {
+        "label": ""
+      },
+      "Unsicher bzw. unbestimmbar": {
+        "label": "Belirsiz veya belirlenemeyen"
+      }
     }
   },
   "Burial-burialDocumentation-default": {
     "values": {
-      "Endoskopie": "",
-      "Foto": "Foto",
-      "Histologie": "",
-      "LM": "",
-      "REM": "",
-      "Röntgen": ""
+      "Endoskopie": {
+        "label": ""
+      },
+      "Foto": {
+        "label": "Foto"
+      },
+      "Histologie": {
+        "label": ""
+      },
+      "LM": {
+        "label": ""
+      },
+      "REM": {
+        "label": ""
+      },
+      "Röntgen": {
+        "label": ""
+      }
     }
   },
   "Burial-graveFeature-default": {
     "values": {
-      "Brandbestattung": "",
-      "Kenotaph": "Kenotaph",
-      "Körperbestattung": "",
-      "Ossuar": "",
-      "Teil-Körperbestattung": ""
+      "Brandbestattung": {
+        "label": ""
+      },
+      "Kenotaph": {
+        "label": "Kenotaph"
+      },
+      "Körperbestattung": {
+        "label": ""
+      },
+      "Ossuar": {
+        "label": ""
+      },
+      "Teil-Körperbestattung": {
+        "label": ""
+      }
     }
   },
   "Burial-positionArms-default": {
     "values": {
-      "Unsicher bzw. unbestimmbar": "Belirsiz veya belirlenemeyen",
-      "am Kinn": "",
-      "an den Seiten": "",
-      "auf dem Bauch": "",
-      "auf dem Becken": "",
-      "auf der Brust": "",
-      "ungleichmäßig": ""
+      "Unsicher bzw. unbestimmbar": {
+        "label": "Belirsiz veya belirlenemeyen"
+      },
+      "am Kinn": {
+        "label": ""
+      },
+      "an den Seiten": {
+        "label": ""
+      },
+      "auf dem Bauch": {
+        "label": ""
+      },
+      "auf dem Becken": {
+        "label": ""
+      },
+      "auf der Brust": {
+        "label": ""
+      },
+      "ungleichmäßig": {
+        "label": ""
+      }
     }
   },
   "Burial-positionLegs-default": {
     "values": {
-      "Beine angewinkelt": "",
-      "Beinhocker": "",
-      "Extremhocker": "",
-      "Hocker": "Hoker",
-      "Unsicher bzw. unbestimmbar": "Belirsiz veya belirlenemeyen",
-      "gestreckt": ""
+      "Beine angewinkelt": {
+        "label": ""
+      },
+      "Beinhocker": {
+        "label": ""
+      },
+      "Extremhocker": {
+        "label": ""
+      },
+      "Hocker": {
+        "label": "Hoker"
+      },
+      "Unsicher bzw. unbestimmbar": {
+        "label": "Belirsiz veya belirlenemeyen"
+      },
+      "gestreckt": {
+        "label": ""
+      }
     }
   },
   "Burial-positioningIndividuals-default": {
     "values": {
-      "Bauchlage": "",
-      "Rückenlage": "",
-      "Seitenlage, links": "",
-      "Seitenlage, rechts": "",
-      "Unsicher bzw. unbestimmbar": "Belirsiz veya belirlenemeyen"
+      "Bauchlage": {
+        "label": ""
+      },
+      "Rückenlage": {
+        "label": ""
+      },
+      "Seitenlage, links": {
+        "label": ""
+      },
+      "Seitenlage, rechts": {
+        "label": ""
+      },
+      "Unsicher bzw. unbestimmbar": {
+        "label": "Belirsiz veya belirlenemeyen"
+      }
     }
   },
   "Building-architecturalOrders-default": {
     "values": {
-      "Dorische Ordnung": "",
-      "Ionische Ordnung": "",
-      "Komposite Ordnung": "",
-      "Korinthische Ordnung": "",
-      "Toskanische Ordnung": ""
+      "Dorische Ordnung": {
+        "label": ""
+      },
+      "Ionische Ordnung": {
+        "label": ""
+      },
+      "Komposite Ordnung": {
+        "label": ""
+      },
+      "Korinthische Ordnung": {
+        "label": ""
+      },
+      "Toskanische Ordnung": {
+        "label": ""
+      }
     }
   },
   "Building-buildingCategory-default": {
     "values": {
-      "Altar": "Altar",
-      "Amphitheater": "Amfitiyatro",
-      "Basilika": "Bazilika",
-      "Bogen": "Kemer",
-      "Brücke": "Köprü",
-      "Circus": "Sirk",
-      "Grabbau": "Mezar yapısı",
-      "Gymnasium": "Gymnasium",
-      "Mauerkurtine": "",
-      "Nymphäum": "Nymphaeum",
-      "Odeion": "Odeion",
-      "Strasse": "Cadde",
-      "Stützmauer": "İstinat duvarı",
-      "Säulenhalle": "Sütunlu giriş",
-      "Tempel": "Tapınak",
-      "Theater": "Tiyatro",
-      "Therme": "Ilıca",
-      "Toranlage": "Giriş",
-      "Turm": "Kule",
-      "Wohnbau": "Konut yapısı"
+      "Altar": {
+        "label": "Altar"
+      },
+      "Amphitheater": {
+        "label": "Amfitiyatro"
+      },
+      "Basilika": {
+        "label": "Bazilika"
+      },
+      "Bogen": {
+        "label": "Kemer"
+      },
+      "Brücke": {
+        "label": "Köprü"
+      },
+      "Circus": {
+        "label": "Sirk"
+      },
+      "Grabbau": {
+        "label": "Mezar yapısı"
+      },
+      "Gymnasium": {
+        "label": "Gymnasium"
+      },
+      "Mauerkurtine": {
+        "label": ""
+      },
+      "Nymphäum": {
+        "label": "Nymphaeum"
+      },
+      "Odeion": {
+        "label": "Odeion"
+      },
+      "Strasse": {
+        "label": "Cadde"
+      },
+      "Stützmauer": {
+        "label": "İstinat duvarı"
+      },
+      "Säulenhalle": {
+        "label": "Sütunlu giriş"
+      },
+      "Tempel": {
+        "label": "Tapınak"
+      },
+      "Theater": {
+        "label": "Tiyatro"
+      },
+      "Therme": {
+        "label": "Ilıca"
+      },
+      "Toranlage": {
+        "label": "Giriş"
+      },
+      "Turm": {
+        "label": "Kule"
+      },
+      "Wohnbau": {
+        "label": "Konut yapısı"
+      }
     }
   },
   "Building-buildingCategorySpecific-default": {
     "values": {
-      "Aediculabau": "Aedikula",
-      "Atriumhaus": "",
-      "Bogen": "Kemer",
-      "Dipteros": "Dipteros",
-      "Ehrenbogen": "",
-      "Ehrensäule": "",
-      "Hoftempel": "",
-      "Palast": "Saray",
-      "Palästra": "Palaestra",
-      "Peripteros": "Peripteros",
-      "Peripteros sine portico": "",
-      "Peristylhaus": "Peristil ev",
-      "Pseudo-Dipteros": "Pseudo dipteros",
-      "Pseudo-Peripteros": "Pseudo peripteros",
-      "Rednertribüne": "",
-      "Rundbau": "Yuvarlak planlı yapı",
-      "Schatzhaus": "Hazine binası",
-      "Terassenheiligtum": "",
-      "Tholos": "Tholos",
-      "Torbogen": "",
-      "Triumphbogen": "Zafer takı",
-      "Tumulus": "Tümülüs",
-      "Villa": "Villa",
-      "dreischiffig": "",
-      "fünfschiffig": "",
-      "griechisches Theater": "Yunan tiyatrosu",
-      "römisches Theater": "Roma tiyatrosu",
-      "vierschiffig": "",
-      "zweischiffig": ""
+      "Aediculabau": {
+        "label": "Aedikula"
+      },
+      "Atriumhaus": {
+        "label": ""
+      },
+      "Bogen": {
+        "label": "Kemer"
+      },
+      "Dipteros": {
+        "label": "Dipteros"
+      },
+      "Ehrenbogen": {
+        "label": ""
+      },
+      "Ehrensäule": {
+        "label": ""
+      },
+      "Hoftempel": {
+        "label": ""
+      },
+      "Palast": {
+        "label": "Saray"
+      },
+      "Palästra": {
+        "label": "Palaestra"
+      },
+      "Peripteros": {
+        "label": "Peripteros"
+      },
+      "Peripteros sine portico": {
+        "label": ""
+      },
+      "Peristylhaus": {
+        "label": "Peristil ev"
+      },
+      "Pseudo-Dipteros": {
+        "label": "Pseudo dipteros"
+      },
+      "Pseudo-Peripteros": {
+        "label": "Pseudo peripteros"
+      },
+      "Rednertribüne": {
+        "label": ""
+      },
+      "Rundbau": {
+        "label": "Yuvarlak planlı yapı"
+      },
+      "Schatzhaus": {
+        "label": "Hazine binası"
+      },
+      "Terassenheiligtum": {
+        "label": ""
+      },
+      "Tholos": {
+        "label": "Tholos"
+      },
+      "Torbogen": {
+        "label": ""
+      },
+      "Triumphbogen": {
+        "label": "Zafer takı"
+      },
+      "Tumulus": {
+        "label": "Tümülüs"
+      },
+      "Villa": {
+        "label": "Villa"
+      },
+      "dreischiffig": {
+        "label": ""
+      },
+      "fünfschiffig": {
+        "label": ""
+      },
+      "griechisches Theater": {
+        "label": "Yunan tiyatrosu"
+      },
+      "römisches Theater": {
+        "label": "Roma tiyatrosu"
+      },
+      "vierschiffig": {
+        "label": ""
+      },
+      "zweischiffig": {
+        "label": ""
+      }
     }
   },
   "Building-buildingTechnique-default": {
     "values": {
-      "Blockverbandmauerwerk": "",
-      "Bruchsteinmauerwerk": "Moloz taş duvarcılık",
-      "Feldsteinmauerwerk": "",
-      "Kyklopenmauerwerk": "Kiklopik duvar",
-      "Lehmziegelmauerwerk": "Kerpiç tuğla duvarcılık",
-      "Mischform Polygonal-/Quadermauerwerk": "",
-      "Opus Caementitium": "Opus Caementitium",
-      "Polygonalmauerwerk": "",
-      "Quadermauerwerk": "",
-      "Spolienmauerwerk": "Devşirmeli duvar",
-      "Unregelmäßiges Polygonalmauerwerk": "",
-      "Würfel-/Handquadermauerwerk": "",
-      "Ziegelmauerwerk": "Tuğlalı duvar",
-      "irreguläres Mauerwerk": "Düzensiz duvar",
-      "regelmäßiges Polygonalmauerwerk": "",
-      "regelmäßiges Quadermauerwerk": "",
-      "regelmäßiges Trapezoidalmauerwerk": "",
-      "unregelmäßiges Quadermauerwerk": "",
-      "unregelmäßiges Trapezoidalmauerwerk": "",
-      "unspezifisches Mauerwerk": ""
+      "Blockverbandmauerwerk": {
+        "label": ""
+      },
+      "Bruchsteinmauerwerk": {
+        "label": "Moloz taş duvarcılık"
+      },
+      "Feldsteinmauerwerk": {
+        "label": ""
+      },
+      "Kyklopenmauerwerk": {
+        "label": "Kiklopik duvar"
+      },
+      "Lehmziegelmauerwerk": {
+        "label": "Kerpiç tuğla duvarcılık"
+      },
+      "Mischform Polygonal-/Quadermauerwerk": {
+        "label": ""
+      },
+      "Opus Caementitium": {
+        "label": "Opus Caementitium"
+      },
+      "Polygonalmauerwerk": {
+        "label": ""
+      },
+      "Quadermauerwerk": {
+        "label": ""
+      },
+      "Spolienmauerwerk": {
+        "label": "Devşirmeli duvar"
+      },
+      "Unregelmäßiges Polygonalmauerwerk": {
+        "label": ""
+      },
+      "Würfel-/Handquadermauerwerk": {
+        "label": ""
+      },
+      "Ziegelmauerwerk": {
+        "label": "Tuğlalı duvar"
+      },
+      "irreguläres Mauerwerk": {
+        "label": "Düzensiz duvar"
+      },
+      "regelmäßiges Polygonalmauerwerk": {
+        "label": ""
+      },
+      "regelmäßiges Quadermauerwerk": {
+        "label": ""
+      },
+      "regelmäßiges Trapezoidalmauerwerk": {
+        "label": ""
+      },
+      "unregelmäßiges Quadermauerwerk": {
+        "label": ""
+      },
+      "unregelmäßiges Trapezoidalmauerwerk": {
+        "label": ""
+      },
+      "unspezifisches Mauerwerk": {
+        "label": ""
+      }
     }
   },
   "Building-buildingType-default": {
     "values": {
-      "Befestigung": "Tahkimat",
-      "Haus": "Konut",
-      "Lager": "Depo",
-      "Werkstatt": "İşlik"
+      "Befestigung": {
+        "label": "Tahkimat"
+      },
+      "Haus": {
+        "label": "Konut"
+      },
+      "Lager": {
+        "label": "Depo"
+      },
+      "Werkstatt": {
+        "label": "İşlik"
+      }
     }
   },
   "Building-condition-default": {
     "values": {
-      "sehr gut": "Çok iyi",
-      "gut": "İyi",
-      "mittel": "Orta",
-      "schlecht": "Kötü",
-      "sehr schlecht": "Çok kötü"
+      "sehr gut": {
+        "label": "Çok iyi"
+      },
+      "gut": {
+        "label": "İyi"
+      },
+      "mittel": {
+        "label": "Orta"
+      },
+      "schlecht": {
+        "label": "Kötü"
+      },
+      "sehr schlecht": {
+        "label": "Çok kötü"
+      }
     }
   },
   "Building-conditionAmount-default": {
     "values": {
-      "Fragmentarisch": "Parçalı",
-      "Vollständig": "Tam",
-      "Vollständig zerstört": "Tamamen tahrip edilmiş"
+      "Fragmentarisch": {
+        "label": "Parçalı"
+      },
+      "Vollständig": {
+        "label": "Tam"
+      },
+      "Vollständig zerstört": {
+        "label": "Tamamen tahrip edilmiş"
+      }
     }
   },
   "Building-context-default": {
     "values": {
-      "Akropolis": "Akropolis",
-      "Forum": "Forum",
-      "Handwerksviertel": "Atölye alanı",
-      "Heiligtum": "Kutsal alan",
-      "Nekropole": "Nekropol",
-      "Wohnviertel": "Yaşam alanı"
+      "Akropolis": {
+        "label": "Akropolis"
+      },
+      "Forum": {
+        "label": "Forum"
+      },
+      "Handwerksviertel": {
+        "label": "Atölye alanı"
+      },
+      "Heiligtum": {
+        "label": "Kutsal alan"
+      },
+      "Nekropole": {
+        "label": "Nekropol"
+      },
+      "Wohnviertel": {
+        "label": "Yaşam alanı"
+      }
     }
   },
   "Building-material-default": {
     "values": {
-      "Granit": "Granit",
-      "Kalk": "Kalker",
-      "Kalkmörtel": "Kireç harcı",
-      "Kalkstein": "Kireçtaşı",
-      "Kalzit": "Kalsit",
-      "Kreide": "Tebeşir",
-      "Marmor": "Mermer",
-      "Pophyr": "Porfir",
-      "Quarz": "Kuvarz",
-      "Sandstein": "Kumtaşı",
-      "Ziegel": "Tuğla"
+      "Granit": {
+        "label": "Granit"
+      },
+      "Kalk": {
+        "label": "Kalker"
+      },
+      "Kalkmörtel": {
+        "label": "Kireç harcı"
+      },
+      "Kalkstein": {
+        "label": "Kireçtaşı"
+      },
+      "Kalzit": {
+        "label": "Kalsit"
+      },
+      "Kreide": {
+        "label": "Tebeşir"
+      },
+      "Marmor": {
+        "label": "Mermer"
+      },
+      "Pophyr": {
+        "label": "Porfir"
+      },
+      "Quarz": {
+        "label": "Kuvarz"
+      },
+      "Sandstein": {
+        "label": "Kumtaşı"
+      },
+      "Ziegel": {
+        "label": "Tuğla"
+      }
     }
   },
   "Building-material-default-2": {
     "values": {
-      "Beton": "Beton",
-      "Blei": "Kurşun",
-      "Eisen": "Demir",
-      "Erde": "Toprak",
-      "Fliesen": "Fayans",
-      "Gips": "Jips",
-      "Glas": "Cam",
-      "Holz": "Ahşap",
-      "Holzwerkstoff": "Ahşap malzeme",
-      "Kunststoff": "Plastik",
-      "Lehm": "Kil",
-      "Metall": "Metal",
-      "Mörtel": "Harç",
-      "Naturstein": "Doğal kayaç",
-      "Putz": "Alçı",
-      "Stahl": "Çelik",
-      "Stahlbeton": "Betonarme",
-      "Stuck": "Stuko",
-      "Unbekannt/Unerkannt": "Bilinmiyor/Tanınmıyor",
-      "Ziegel": "Tuğla"
+      "Beton": {
+        "label": "Beton"
+      },
+      "Blei": {
+        "label": "Kurşun"
+      },
+      "Eisen": {
+        "label": "Demir"
+      },
+      "Erde": {
+        "label": "Toprak"
+      },
+      "Fliesen": {
+        "label": "Fayans"
+      },
+      "Gips": {
+        "label": "Jips"
+      },
+      "Glas": {
+        "label": "Cam"
+      },
+      "Holz": {
+        "label": "Ahşap"
+      },
+      "Holzwerkstoff": {
+        "label": "Ahşap malzeme"
+      },
+      "Kunststoff": {
+        "label": "Plastik"
+      },
+      "Lehm": {
+        "label": "Kil"
+      },
+      "Metall": {
+        "label": "Metal"
+      },
+      "Mörtel": {
+        "label": "Harç"
+      },
+      "Naturstein": {
+        "label": "Doğal kayaç"
+      },
+      "Putz": {
+        "label": "Alçı"
+      },
+      "Stahl": {
+        "label": "Çelik"
+      },
+      "Stahlbeton": {
+        "label": "Betonarme"
+      },
+      "Stuck": {
+        "label": "Stuko"
+      },
+      "Unbekannt/Unerkannt": {
+        "label": "Bilinmiyor/Tanınmıyor"
+      },
+      "Ziegel": {
+        "label": "Tuğla"
+      }
     }
   },
   "Building-material-default-3": {
     "values": {
-      "Beton": "Beton",
-      "Blei": "Kurşun",
-      "Eisen": "Demir",
-      "Erde": "Toprak",
-      "Fliesen": "Fayans",
-      "Gips": "Jips",
-      "Glas": "Cam",
-      "Holz": "Ahşap",
-      "Holzwerkstoff": "Ahşap malzeme",
-      "Kunststoff": "Plastik",
-      "Lehm": "Kil",
-      "Metall": "Metal",
-      "Mörtel": "Harç",
-      "Naturstein": "Doğal kayaç",
-      "Putz": "Alçı",
-      "Stahl": "Çelik",
-      "Stahlbeton": "Betonarme",
-      "Stuck": "Stuko",
-      "Unbekannt/Unerkannt": "Bilinmiyor/Tanınmıyor",
-      "Granit": "Granit",
-      "Kalk": "Kalker",
-      "Kalkmörtel": "Kireç harcı",
-      "Kalkstein": "Kireçtaşı",
-      "Kalzit": "Kalsit",
-      "Kreide": "Tebeşir",
-      "Marmor": "Mermer",
-      "Pophyr": "Porfir",
-      "Quarz": "Kuvarz",
-      "Sandstein": "Kumtaşı",
-      "Ziegel": "Tuğla"
+      "Beton": {
+        "label": "Beton"
+      },
+      "Blei": {
+        "label": "Kurşun"
+      },
+      "Eisen": {
+        "label": "Demir"
+      },
+      "Erde": {
+        "label": "Toprak"
+      },
+      "Fliesen": {
+        "label": "Fayans"
+      },
+      "Gips": {
+        "label": "Jips"
+      },
+      "Glas": {
+        "label": "Cam"
+      },
+      "Holz": {
+        "label": "Ahşap"
+      },
+      "Holzwerkstoff": {
+        "label": "Ahşap malzeme"
+      },
+      "Kunststoff": {
+        "label": "Plastik"
+      },
+      "Lehm": {
+        "label": "Kil"
+      },
+      "Metall": {
+        "label": "Metal"
+      },
+      "Mörtel": {
+        "label": "Harç"
+      },
+      "Naturstein": {
+        "label": "Doğal kayaç"
+      },
+      "Putz": {
+        "label": "Alçı"
+      },
+      "Stahl": {
+        "label": "Çelik"
+      },
+      "Stahlbeton": {
+        "label": "Betonarme"
+      },
+      "Stuck": {
+        "label": "Stuko"
+      },
+      "Unbekannt/Unerkannt": {
+        "label": "Bilinmiyor/Tanınmıyor"
+      },
+      "Granit": {
+        "label": "Granit"
+      },
+      "Kalk": {
+        "label": "Kalker"
+      },
+      "Kalkmörtel": {
+        "label": "Kireç harcı"
+      },
+      "Kalkstein": {
+        "label": "Kireçtaşı"
+      },
+      "Kalzit": {
+        "label": "Kalsit"
+      },
+      "Kreide": {
+        "label": "Tebeşir"
+      },
+      "Marmor": {
+        "label": "Mermer"
+      },
+      "Pophyr": {
+        "label": "Porfir"
+      },
+      "Quarz": {
+        "label": "Kuvarz"
+      },
+      "Sandstein": {
+        "label": "Kumtaşı"
+      },
+      "Ziegel": {
+        "label": "Tuğla"
+      }
     }
   },
   "Wood-color-default": {
     "values": {
-      "braun": "kahverengi",
-      "haselnuss": "fındık kabuğu",
-      "schwarz": "siyah"
+      "braun": {
+        "label": "kahverengi"
+      },
+      "haselnuss": {
+        "label": "fındık kabuğu"
+      },
+      "schwarz": {
+        "label": "siyah"
+      }
     }
   },
   "Wood-objectType-default": {
     "values": {
-      "Architektur": "Mimari",
-      "Altar": "Altar",
-      "Anhänger": "Pendant",
-      "Gefäß": "Kap",
-      "Gerät": "Alet",
-      "Grabbehältnis": "Sanduka",
-      "Grabmarkierung": "Mezar işareti",
-      "Grabplatte": "Mezar taşı",
-      "Gussform": "Kalıp",
-      "Kasten/Kiste": "Kist",
-      "Löffel": "Kaşık",
-      "Mobiliar": "Mobilya",
-      "Plastik/Skulptur": "Plastik/Heykel",
-      "Produktionsrest": "Üretim artığı",
-      "Ring": "Yüzük",
-      "Sarkophag": "Lahit",
-      "Schmuck": "Takı",
-      "Spielzeug": "",
-      "Unsicher bzw. unbestimmbar": "Belirsiz veya belirlenemeyen"
+      "Architektur": {
+        "label": "Mimari"
+      },
+      "Altar": {
+        "label": "Altar"
+      },
+      "Anhänger": {
+        "label": "Pendant"
+      },
+      "Gefäß": {
+        "label": "Kap"
+      },
+      "Gerät": {
+        "label": "Alet"
+      },
+      "Grabbehältnis": {
+        "label": "Sanduka"
+      },
+      "Grabmarkierung": {
+        "label": "Mezar işareti"
+      },
+      "Grabplatte": {
+        "label": "Mezar taşı"
+      },
+      "Gussform": {
+        "label": "Kalıp"
+      },
+      "Kasten/Kiste": {
+        "label": "Kist"
+      },
+      "Löffel": {
+        "label": "Kaşık"
+      },
+      "Mobiliar": {
+        "label": "Mobilya"
+      },
+      "Plastik/Skulptur": {
+        "label": "Plastik/Heykel"
+      },
+      "Produktionsrest": {
+        "label": "Üretim artığı"
+      },
+      "Ring": {
+        "label": "Yüzük"
+      },
+      "Sarkophag": {
+        "label": "Lahit"
+      },
+      "Schmuck": {
+        "label": "Takı"
+      },
+      "Spielzeug": {
+        "label": ""
+      },
+      "Unsicher bzw. unbestimmbar": {
+        "label": "Belirsiz veya belirlenemeyen"
+      }
     }
   },
   "Wood-typeOfWood-default": {
     "values": {
-      "Ahorn": "Akçaağaç",
-      "Apfel": "Elma",
-      "Birke": "Huş",
-      "Birne": "Armut",
-      "Buche": "Avrupa kayını",
-      "Eibe": "Porsuk (Taxus)",
-      "Eiche": "Meşe",
-      "Erle": "Kızılağaç",
-      "Esche": "Dişbudak",
-      "Fichte": "Ladin",
-      "Kastanie": "Kestane",
-      "Kiefer": "Çam",
-      "Kirsche": "Kiraz",
-      "Lerche": "Larix",
-      "Linde": "Ihlamur",
-      "Nußbaum": "",
-      "Pappel": "",
-      "Tanne": "",
-      "Ulme": "",
-      "Weide": "",
-      "Zeder": ""
+      "Ahorn": {
+        "label": "Akçaağaç"
+      },
+      "Apfel": {
+        "label": "Elma"
+      },
+      "Birke": {
+        "label": "Huş"
+      },
+      "Birne": {
+        "label": "Armut"
+      },
+      "Buche": {
+        "label": "Avrupa kayını"
+      },
+      "Eibe": {
+        "label": "Porsuk (Taxus)"
+      },
+      "Eiche": {
+        "label": "Meşe"
+      },
+      "Erle": {
+        "label": "Kızılağaç"
+      },
+      "Esche": {
+        "label": "Dişbudak"
+      },
+      "Fichte": {
+        "label": "Ladin"
+      },
+      "Kastanie": {
+        "label": "Kestane"
+      },
+      "Kiefer": {
+        "label": "Çam"
+      },
+      "Kirsche": {
+        "label": "Kiraz"
+      },
+      "Lerche": {
+        "label": "Larix"
+      },
+      "Linde": {
+        "label": "Ihlamur"
+      },
+      "Nußbaum": {
+        "label": ""
+      },
+      "Pappel": {
+        "label": ""
+      },
+      "Tanne": {
+        "label": ""
+      },
+      "Ulme": {
+        "label": ""
+      },
+      "Weide": {
+        "label": ""
+      },
+      "Zeder": {
+        "label": ""
+      }
     }
   },
   "Wood-manufacturingMethod-default": {
     "values": {
-      "Gebohrt": "",
-      "Gedämpft": "",
-      "Gedreht": "",
-      "Gefräst": "",
-      "Gehobelt": "",
-      "Gesägt": "",
-      "Geschabt": "",
-      "Geschliffen": "",
-      "Geschnitzt": "",
-      "Gespalten": ""
+      "Gebohrt": {
+        "label": ""
+      },
+      "Gedämpft": {
+        "label": ""
+      },
+      "Gedreht": {
+        "label": ""
+      },
+      "Gefräst": {
+        "label": ""
+      },
+      "Gehobelt": {
+        "label": ""
+      },
+      "Gesägt": {
+        "label": ""
+      },
+      "Geschabt": {
+        "label": ""
+      },
+      "Geschliffen": {
+        "label": ""
+      },
+      "Geschnitzt": {
+        "label": ""
+      },
+      "Gespalten": {
+        "label": ""
+      }
     }
   },
   "Wood-surfaceCondition-default": {
     "values": {
-      "Brandspuren": "",
-      "Keine Brandspuren": "",
-      "Unsicher bzw. unbestimmbar": "Belirsiz veya belirlenemeyen"
+      "Brandspuren": {
+        "label": ""
+      },
+      "Keine Brandspuren": {
+        "label": ""
+      },
+      "Unsicher bzw. unbestimmbar": {
+        "label": "Belirsiz veya belirlenemeyen"
+      }
     }
   },
   "Wood-decorationTechnique-default": {
     "values": {
-      "Applik": "",
-      "Bemalung (Enkaustik)": "",
-      "Bemalung (Eitemperatechnik)": "",
-      "Intarsie": "",
-      "Relief": "",
-      "Ritzung": "",
-      "Schnitzung": "",
-      "Sgraffito": "",
-      "Vergoldung/metallischer Überzug": ""
+      "Applik": {
+        "label": ""
+      },
+      "Bemalung (Enkaustik)": {
+        "label": ""
+      },
+      "Bemalung (Eitemperatechnik)": {
+        "label": ""
+      },
+      "Intarsie": {
+        "label": ""
+      },
+      "Relief": {
+        "label": ""
+      },
+      "Ritzung": {
+        "label": ""
+      },
+      "Schnitzung": {
+        "label": ""
+      },
+      "Sgraffito": {
+        "label": ""
+      },
+      "Vergoldung/metallischer Überzug": {
+        "label": ""
+      }
     }
   },
   "Wood-paintCondition-default": {
     "values": {
-      "gut erhalten": "",
-      "abblätternd": "",
-      "verrieben": "",
-      "verwaschen": "",
-      "stark abgerieben": "",
-      "nicht erhalten": ""
+      "gut erhalten": {
+        "label": ""
+      },
+      "abblätternd": {
+        "label": ""
+      },
+      "verrieben": {
+        "label": ""
+      },
+      "verwaschen": {
+        "label": ""
+      },
+      "stark abgerieben": {
+        "label": ""
+      },
+      "nicht erhalten": {
+        "label": ""
+      }
     }
   },
   "Architecture-blockProcessing-default": {
     "values": {
-      "Bruchsteine": "",
-      "Hausteine": "",
-      "Lesesteine": "",
-      "Werksteine": ""
+      "Bruchsteine": {
+        "label": ""
+      },
+      "Hausteine": {
+        "label": ""
+      },
+      "Lesesteine": {
+        "label": ""
+      },
+      "Werksteine": {
+        "label": ""
+      }
     }
   },
   "Architecture-blockTreatment-default": {
     "values": {
-      "bossiert": "",
-      "bruchbau": "",
-      "fein geglättet": "",
-      "gespitzt": "",
-      "gestockt": "",
-      "grob behauen": "",
-      "grob geglättet": "",
-      "scharriert": "",
-      "unbehauen": ""
+      "bossiert": {
+        "label": ""
+      },
+      "bruchbau": {
+        "label": ""
+      },
+      "fein geglättet": {
+        "label": ""
+      },
+      "gespitzt": {
+        "label": ""
+      },
+      "gestockt": {
+        "label": ""
+      },
+      "grob behauen": {
+        "label": ""
+      },
+      "grob geglättet": {
+        "label": ""
+      },
+      "scharriert": {
+        "label": ""
+      },
+      "unbehauen": {
+        "label": ""
+      }
     }
   },
   "Architecture-brickwork-default": {
     "values": {
-      "Binderverband": "",
-      "Blockverband": "",
-      "Flämischer Verband": "",
-      "Holländischer Verband": "",
-      "Kreuzverband": "",
-      "Läuferverband": "",
-      "Märkischer Verband": ""
+      "Binderverband": {
+        "label": ""
+      },
+      "Blockverband": {
+        "label": ""
+      },
+      "Flämischer Verband": {
+        "label": ""
+      },
+      "Holländischer Verband": {
+        "label": ""
+      },
+      "Kreuzverband": {
+        "label": ""
+      },
+      "Läuferverband": {
+        "label": ""
+      },
+      "Märkischer Verband": {
+        "label": ""
+      }
     }
   },
   "Architecture-construction-default": {
     "values": {
-      "Fundament: Geschüttet": "",
-      "Fundament: gesetzt": "",
-      "Mauerkern: Lesesteine": "",
-      "einschalig vor Feld/Hang": "",
-      "ohne Schalen/keine durchgehenden Lagen": "",
-      "ohne Schalen/nur durchgehende Lagen": "",
-      "zweischalig": "",
-      "zweischalig mit Binderlagen": ""
+      "Fundament: Geschüttet": {
+        "label": ""
+      },
+      "Fundament: gesetzt": {
+        "label": ""
+      },
+      "Mauerkern: Lesesteine": {
+        "label": ""
+      },
+      "einschalig vor Feld/Hang": {
+        "label": ""
+      },
+      "ohne Schalen/keine durchgehenden Lagen": {
+        "label": ""
+      },
+      "ohne Schalen/nur durchgehende Lagen": {
+        "label": ""
+      },
+      "zweischalig": {
+        "label": ""
+      },
+      "zweischalig mit Binderlagen": {
+        "label": ""
+      }
     }
   },
   "Architecture-mark-default": {
     "values": {
-      "A": "",
-      "AC": ""
+      "A": {
+        "label": ""
+      },
+      "AC": {
+        "label": ""
+      }
     }
   },
   "Architecture-mortarBinder-default": {
     "values": {
-      "dominant": "",
-      "gering": "",
-      "hoch": "",
-      "mittel": ""
+      "dominant": {
+        "label": ""
+      },
+      "gering": {
+        "label": ""
+      },
+      "hoch": {
+        "label": ""
+      },
+      "mittel": {
+        "label": ""
+      }
     }
   },
   "Architecture-mortarConsistency-default": {
     "values": {
-      "brüchig": "",
-      "erdig/lehmig": "",
-      "fest": "sıkı",
-      "hart": "sert",
-      "locker": "gevşek",
-      "mittelfein": "orta ince",
-      "pulverig": "toz halinde",
-      "sandig": "kumlu"
+      "brüchig": {
+        "label": ""
+      },
+      "erdig/lehmig": {
+        "label": ""
+      },
+      "fest": {
+        "label": "sıkı"
+      },
+      "hart": {
+        "label": "sert"
+      },
+      "locker": {
+        "label": "gevşek"
+      },
+      "mittelfein": {
+        "label": "orta ince"
+      },
+      "pulverig": {
+        "label": "toz halinde"
+      },
+      "sandig": {
+        "label": "kumlu"
+      }
     }
   },
   "Architecture-wallClassification-default": {
     "values": {
-      "Aufgehendes": "",
-      "Fensterzusetzung": "",
-      "Flickung": "",
-      "Fundament": "Temel",
-      "Gewölbe": "",
-      "Mauer": "Duvar",
-      "Mauerbettung": "",
-      "Mauerdurchbruch": "",
-      "Mosaik": "Mozaik",
-      "Opus sectile": "Opus sectile",
-      "Türzusetzung": "",
-      "Wandgestaltung": ""
+      "Aufgehendes": {
+        "label": ""
+      },
+      "Fensterzusetzung": {
+        "label": ""
+      },
+      "Flickung": {
+        "label": ""
+      },
+      "Fundament": {
+        "label": "Temel"
+      },
+      "Gewölbe": {
+        "label": ""
+      },
+      "Mauer": {
+        "label": "Duvar"
+      },
+      "Mauerbettung": {
+        "label": ""
+      },
+      "Mauerdurchbruch": {
+        "label": ""
+      },
+      "Mosaik": {
+        "label": "Mozaik"
+      },
+      "Opus sectile": {
+        "label": "Opus sectile"
+      },
+      "Türzusetzung": {
+        "label": ""
+      },
+      "Wandgestaltung": {
+        "label": ""
+      }
     }
   },
   "Architecture-wallType-default": {
     "values": {
-      "Außenmauer": "Dış duvar",
-      "Befestigugsmauer": "Tahkimat duvarı",
-      "Blockmauerwerk": "",
-      "Bruchsteinmauer": "Taş duvar",
-      "Fachwerk": "Kargir",
-      "Feldsteinmauer": "",
-      "Grenzmauer": "Çevre duvarı",
-      "Ziegelmauer": "Tuğla duvar"
+      "Außenmauer": {
+        "label": "Dış duvar"
+      },
+      "Befestigugsmauer": {
+        "label": "Tahkimat duvarı"
+      },
+      "Blockmauerwerk": {
+        "label": ""
+      },
+      "Bruchsteinmauer": {
+        "label": "Taş duvar"
+      },
+      "Fachwerk": {
+        "label": "Kargir"
+      },
+      "Feldsteinmauer": {
+        "label": ""
+      },
+      "Grenzmauer": {
+        "label": "Çevre duvarı"
+      },
+      "Ziegelmauer": {
+        "label": "Tuğla duvar"
+      }
     }
   },
   "Place-findspotClassification-default": {
     "values": {
-      "Einzelmauer": "",
-      "Felsabarbeitung": "",
-      "Funderfassung": "Buluntuların kaydedilmesi",
-      "Fundsammlung": "Buluntuların toplanması",
-      "Grab": "Mezar",
-      "Nekropole": "Nekropol",
-      "Spolie in rezenter Mauer": "Modern duvarda devşirme",
-      "Steinbruch": "Taş ocağı",
-      "Straße/Platz": "Cadde/Meydan",
-      "Wein- bzw. Ölpresse": "Şarap veya yağ presi",
-      "einzelnes Steindenkmal": "",
-      "ländliches Gebäude": "Kırsal yapı",
-      "urbanes Gebäude": "Kent yapısı"
+      "Einzelmauer": {
+        "label": ""
+      },
+      "Felsabarbeitung": {
+        "label": ""
+      },
+      "Funderfassung": {
+        "label": "Buluntuların kaydedilmesi"
+      },
+      "Fundsammlung": {
+        "label": "Buluntuların toplanması"
+      },
+      "Grab": {
+        "label": "Mezar"
+      },
+      "Nekropole": {
+        "label": "Nekropol"
+      },
+      "Spolie in rezenter Mauer": {
+        "label": "Modern duvarda devşirme"
+      },
+      "Steinbruch": {
+        "label": "Taş ocağı"
+      },
+      "Straße/Platz": {
+        "label": "Cadde/Meydan"
+      },
+      "Wein- bzw. Ölpresse": {
+        "label": "Şarap veya yağ presi"
+      },
+      "einzelnes Steindenkmal": {
+        "label": ""
+      },
+      "ländliches Gebäude": {
+        "label": "Kırsal yapı"
+      },
+      "urbanes Gebäude": {
+        "label": "Kent yapısı"
+      }
     }
   },
   "Place-siteClassification-default": {
     "values": {
-      "Bestattungsplatz": "Mezar alanı",
-      "Siedlung": "Yerleşme"
+      "Bestattungsplatz": {
+        "label": "Mezar alanı"
+      },
+      "Siedlung": {
+        "label": "Yerleşme"
+      }
     }
   },
   "Layer-consistency-default": {
     "values": {
-      "Durch Brand versiegelt": "",
-      "Oberfläche abgewaschen": "",
-      "Oberfläche verhärtet": "Sertleşmiş yüzey",
-      "fest": "sıkı",
-      "flüssig": "akıcı",
-      "gut formbar": "şekil verilebilir",
-      "hart": "sert",
-      "lehmig": "balçık kıvamında",
-      "locker": "gevşek",
-      "mittel bindend": "orta düzey kompakt",
-      "mittel formbar": "orta derecede şekil verilebilir",
-      "nicht bindend": "sert değil",
-      "nicht formbar": "şekil verilemez",
-      "porös": "gözenekli",
-      "sandig": "kumlu",
-      "schwach bindend": "çok kompakt değil",
-      "schwach formbar": "çok şekil verilebilir değil",
-      "sehr gut formbar": "iyi şekil verilebilir",
-      "sehr hart": "çok sert",
-      "sehr schwach formbar": "çok az şekil verilebilir",
-      "sehr weich": "çok yumuşak",
-      "stark bindend": "son derece kompakt",
-      "steif": "katı",
-      "weich": "yumuşak"
+      "Durch Brand versiegelt": {
+        "label": ""
+      },
+      "Oberfläche abgewaschen": {
+        "label": ""
+      },
+      "Oberfläche verhärtet": {
+        "label": "Sertleşmiş yüzey"
+      },
+      "fest": {
+        "label": "sıkı"
+      },
+      "flüssig": {
+        "label": "akıcı"
+      },
+      "gut formbar": {
+        "label": "şekil verilebilir"
+      },
+      "hart": {
+        "label": "sert"
+      },
+      "lehmig": {
+        "label": "balçık kıvamında"
+      },
+      "locker": {
+        "label": "gevşek"
+      },
+      "mittel bindend": {
+        "label": "orta düzey kompakt"
+      },
+      "mittel formbar": {
+        "label": "orta derecede şekil verilebilir"
+      },
+      "nicht bindend": {
+        "label": "sert değil"
+      },
+      "nicht formbar": {
+        "label": "şekil verilemez"
+      },
+      "porös": {
+        "label": "gözenekli"
+      },
+      "sandig": {
+        "label": "kumlu"
+      },
+      "schwach bindend": {
+        "label": "çok kompakt değil"
+      },
+      "schwach formbar": {
+        "label": "çok şekil verilebilir değil"
+      },
+      "sehr gut formbar": {
+        "label": "iyi şekil verilebilir"
+      },
+      "sehr hart": {
+        "label": "çok sert"
+      },
+      "sehr schwach formbar": {
+        "label": "çok az şekil verilebilir"
+      },
+      "sehr weich": {
+        "label": "çok yumuşak"
+      },
+      "stark bindend": {
+        "label": "son derece kompakt"
+      },
+      "steif": {
+        "label": "katı"
+      },
+      "weich": {
+        "label": "yumuşak"
+      }
     }
   },
   "Layer-distinguishingCriteria-default": {
     "values": {
-      "Farbe": "Rengi",
-      "Form": "Formu",
-      "Grenzen": "Sınırlar",
-      "Konsistenz": "Sağlamlığı",
-      "Komposition": "Kompozisyon"
+      "Farbe": {
+        "label": "Rengi"
+      },
+      "Form": {
+        "label": "Formu"
+      },
+      "Grenzen": {
+        "label": "Sınırlar"
+      },
+      "Konsistenz": {
+        "label": "Sağlamlığı"
+      },
+      "Komposition": {
+        "label": "Kompozisyon"
+      }
     }
   },
   "Layer-layerClassification-default": {
     "values": {
-      "Brandschicht": "Yangın tabakası",
-      "Kulturschicht": "Kültür katmanı",
-      "Laufhorizont": "",
-      "Planierschicht": "Tesviye tabakası"
+      "Brandschicht": {
+        "label": "Yangın tabakası"
+      },
+      "Kulturschicht": {
+        "label": "Kültür katmanı"
+      },
+      "Laufhorizont": {
+        "label": ""
+      },
+      "Planierschicht": {
+        "label": "Tesviye tabakası"
+      }
     }
   },
   "Layer-soilType-default": {
     "values": {
-      "Feinsand": "İnce kum",
-      "Feinstsand": "Çok ince kum",
-      "Grobsand": "Kaba kum",
-      "Lehm": "Kil",
-      "Lehmiger Sand": "Tınlı kum",
-      "Lehmiger Schluff": "Tınlı silt",
-      "Lehmiger Ton": "Tınlı kil",
-      "Mergel": "Marn",
-      "Mittlerer Sand": "Orta kum",
-      "Sand": "Kum",
-      "Sandiger Lehm": "Kumlu balçık",
-      "Sandiger Schluff": "Kumlu silt",
-      "Sandiger Ton": "Kumlu kil",
-      "Schluff": "Silt",
-      "Schluffiger Lehm": "Siltli kil",
-      "Schluffiger Sand": "Siltli kum",
-      "Schluffiger Ton": "Siltli kil",
-      "Ton": "Kil",
-      "Toniger Lehm": "Killi balçık",
-      "Toniger Sand": "Killi kum",
-      "Toniger Schluff": "Killi silt"
+      "Feinsand": {
+        "label": "İnce kum"
+      },
+      "Feinstsand": {
+        "label": "Çok ince kum"
+      },
+      "Grobsand": {
+        "label": "Kaba kum"
+      },
+      "Lehm": {
+        "label": "Kil"
+      },
+      "Lehmiger Sand": {
+        "label": "Tınlı kum"
+      },
+      "Lehmiger Schluff": {
+        "label": "Tınlı silt"
+      },
+      "Lehmiger Ton": {
+        "label": "Tınlı kil"
+      },
+      "Mergel": {
+        "label": "Marn"
+      },
+      "Mittlerer Sand": {
+        "label": "Orta kum"
+      },
+      "Sand": {
+        "label": "Kum"
+      },
+      "Sandiger Lehm": {
+        "label": "Kumlu balçık"
+      },
+      "Sandiger Schluff": {
+        "label": "Kumlu silt"
+      },
+      "Sandiger Ton": {
+        "label": "Kumlu kil"
+      },
+      "Schluff": {
+        "label": "Silt"
+      },
+      "Schluffiger Lehm": {
+        "label": "Siltli kil"
+      },
+      "Schluffiger Sand": {
+        "label": "Siltli kum"
+      },
+      "Schluffiger Ton": {
+        "label": "Siltli kil"
+      },
+      "Ton": {
+        "label": "Kil"
+      },
+      "Toniger Lehm": {
+        "label": "Killi balçık"
+      },
+      "Toniger Sand": {
+        "label": "Killi kum"
+      },
+      "Toniger Schluff": {
+        "label": "Killi silt"
+      }
     }
   },
   "Feature-featureBorders-default": {
     "values": {
-      "deutlich": "belirgin",
-      "diffus": "yaygın",
-      "eben": "düz",
-      "erahnbar": "tahmin edilebilir",
-      "erkennbar": "görünür",
-      "etwas verwaschen": "biraz bulanık",
-      "fließend": "akışkan",
-      "geneigt": "eğimli",
-      "gezackt": "pürüzlü",
-      "regelmäßig": "düzenli",
-      "scharf": "kırıntı",
-      "sehr deutlich": "çok belirgin",
-      "undeutlich": "belirgin değil",
-      "uneben": "düz olmayan",
-      "unklar": "anlaşılır değil",
-      "unregelmäßig": "düzensiz",
-      "verwaschen": "",
-      "wellig": "dalgalı"
+      "deutlich": {
+        "label": "belirgin"
+      },
+      "diffus": {
+        "label": "yaygın"
+      },
+      "eben": {
+        "label": "düz"
+      },
+      "erahnbar": {
+        "label": "tahmin edilebilir"
+      },
+      "erkennbar": {
+        "label": "görünür"
+      },
+      "etwas verwaschen": {
+        "label": "biraz bulanık"
+      },
+      "fließend": {
+        "label": "akışkan"
+      },
+      "geneigt": {
+        "label": "eğimli"
+      },
+      "gezackt": {
+        "label": "pürüzlü"
+      },
+      "regelmäßig": {
+        "label": "düzenli"
+      },
+      "scharf": {
+        "label": "kırıntı"
+      },
+      "sehr deutlich": {
+        "label": "çok belirgin"
+      },
+      "undeutlich": {
+        "label": "belirgin değil"
+      },
+      "uneben": {
+        "label": "düz olmayan"
+      },
+      "unklar": {
+        "label": "anlaşılır değil"
+      },
+      "unregelmäßig": {
+        "label": "düzensiz"
+      },
+      "verwaschen": {
+        "label": ""
+      },
+      "wellig": {
+        "label": "dalgalı"
+      }
     }
   },
   "Feature-featureForm-default": {
     "values": {
-      "Befundrest": "Tabaka artığı",
-      "U-förmig": "U biçimli",
-      "V-förmig": "V biçimli",
-      "annähernd": "yaklaşık",
-      "formlos": "biçimsiz",
-      "halbmondförmig": "hilal biçimli",
-      "kesselförmig": "kazan biçimli",
-      "langgezogen": "ince uzun",
-      "oval": "oval",
-      "rechteckig": "dikdörtgen",
-      "regelmäßig": "düzenli",
-      "rund": "",
-      "sanduhrförmig": "",
-      "trapezförmig": "",
-      "trichterförmig": "",
-      "unregelmäßig": "düzensiz",
-      "wannenförmig": ""
+      "Befundrest": {
+        "label": "Tabaka artığı"
+      },
+      "U-förmig": {
+        "label": "U biçimli"
+      },
+      "V-förmig": {
+        "label": "V biçimli"
+      },
+      "annähernd": {
+        "label": "yaklaşık"
+      },
+      "formlos": {
+        "label": "biçimsiz"
+      },
+      "halbmondförmig": {
+        "label": "hilal biçimli"
+      },
+      "kesselförmig": {
+        "label": "kazan biçimli"
+      },
+      "langgezogen": {
+        "label": "ince uzun"
+      },
+      "oval": {
+        "label": "oval"
+      },
+      "rechteckig": {
+        "label": "dikdörtgen"
+      },
+      "regelmäßig": {
+        "label": "düzenli"
+      },
+      "rund": {
+        "label": ""
+      },
+      "sanduhrförmig": {
+        "label": ""
+      },
+      "trapezförmig": {
+        "label": ""
+      },
+      "trichterförmig": {
+        "label": ""
+      },
+      "unregelmäßig": {
+        "label": "düzensiz"
+      },
+      "wannenförmig": {
+        "label": ""
+      }
     }
   },
   "Floor-floorClassification-default": {
     "values": {
-      "Bastmatten": "",
-      "Korkboden": "",
-      "Mosaik": "Mozaik",
-      "Opus sectile": "Opus sectile",
-      "Opus signinum": "",
-      "Pflaster": "",
-      "Stampflehm": "",
-      "Terrazzo": "",
-      "Webmatten": "",
-      "Ziegel": "Tuğla"
+      "Bastmatten": {
+        "label": ""
+      },
+      "Korkboden": {
+        "label": ""
+      },
+      "Mosaik": {
+        "label": "Mozaik"
+      },
+      "Opus sectile": {
+        "label": "Opus sectile"
+      },
+      "Opus signinum": {
+        "label": ""
+      },
+      "Pflaster": {
+        "label": ""
+      },
+      "Stampflehm": {
+        "label": ""
+      },
+      "Terrazzo": {
+        "label": ""
+      },
+      "Webmatten": {
+        "label": ""
+      },
+      "Ziegel": {
+        "label": "Tuğla"
+      }
     }
   },
   "Inscription-objectType-default": {
     "values": {
-      "Alltäglicher Gebrauch": "",
-      "Bauinschrift": "",
-      "Ehreninschrift": "",
-      "Grabinschrift (Inschrift im Grabkontext)": "",
-      "Private Ausstattung": "",
-      "Sakrale Ausstattung": "",
-      "Unsicher bzw. unbestimmbar": "Belirsiz veya belirlenemeyen",
-      "Urkunde": "",
-      "Wasserversorgung": "",
-      "Weihinschrift": "",
-      "Öffentliche Ausstattung": ""
+      "Alltäglicher Gebrauch": {
+        "label": ""
+      },
+      "Bauinschrift": {
+        "label": ""
+      },
+      "Ehreninschrift": {
+        "label": ""
+      },
+      "Grabinschrift (Inschrift im Grabkontext)": {
+        "label": ""
+      },
+      "Private Ausstattung": {
+        "label": ""
+      },
+      "Sakrale Ausstattung": {
+        "label": ""
+      },
+      "Unsicher bzw. unbestimmbar": {
+        "label": "Belirsiz veya belirlenemeyen"
+      },
+      "Urkunde": {
+        "label": ""
+      },
+      "Wasserversorgung": {
+        "label": ""
+      },
+      "Weihinschrift": {
+        "label": ""
+      },
+      "Öffentliche Ausstattung": {
+        "label": ""
+      }
     }
   },
   "Pottery-clayHardness-default": {
     "values": {
-      "1 (Fingernagel schabt, ritzt leicht)": "",
-      "2 (Fingernagel ritzt)": "",
-      "3 (Messerspitze ritzt leicht)": "",
-      "4 (Messerspitze ritzt)": "",
-      "5 (Messerspitze ritzt schwer)": "",
-      "6 (Fensterglas ritzt schwer, Stahlfeile ritzt)": "",
-      "7-10 (Fensterglas wird geritzt, Stahl schlägt Funken)": ""
+      "1 (Fingernagel schabt, ritzt leicht)": {
+        "label": ""
+      },
+      "2 (Fingernagel ritzt)": {
+        "label": ""
+      },
+      "3 (Messerspitze ritzt leicht)": {
+        "label": ""
+      },
+      "4 (Messerspitze ritzt)": {
+        "label": ""
+      },
+      "5 (Messerspitze ritzt schwer)": {
+        "label": ""
+      },
+      "6 (Fensterglas ritzt schwer, Stahlfeile ritzt)": {
+        "label": ""
+      },
+      "7-10 (Fensterglas wird geritzt, Stahl schlägt Funken)": {
+        "label": ""
+      }
     }
   },
   "Pottery-coatInside-default": {
     "values": {
-      "Glasur": "",
-      "Redslip": "",
-      "Schwarzfirnis": "",
-      "Tongrundig": ""
+      "Glasur": {
+        "label": ""
+      },
+      "Redslip": {
+        "label": ""
+      },
+      "Schwarzfirnis": {
+        "label": ""
+      },
+      "Tongrundig": {
+        "label": ""
+      }
     }
   },
   "Pottery-coatInsideType-default": {
     "values": {
-      "Andere": "",
-      "Bemalung": "Bezeme",
-      "Geglättet": "",
-      "Glasur": "",
-      "Poliert": "",
-      "Verstrichen": "",
-      "Überzug": ""
+      "Andere": {
+        "label": ""
+      },
+      "Bemalung": {
+        "label": "Bezeme"
+      },
+      "Geglättet": {
+        "label": ""
+      },
+      "Glasur": {
+        "label": ""
+      },
+      "Poliert": {
+        "label": ""
+      },
+      "Verstrichen": {
+        "label": ""
+      },
+      "Überzug": {
+        "label": ""
+      }
     }
   },
   "Pottery-decorationTechnique-default": {
     "values": {
-      "Bemalung": "Bezeme",
-      "Fadendekor (aufgelegt)": "",
-      "Reliefdekor": "",
-      "Riefeldekor": "",
-      "Ritzungen": "",
-      "Stempel": "",
-      "Stempeldekor": "",
-      "Tupfendekor": "",
-      "Warzendekor": ""
+      "Bemalung": {
+        "label": "Bezeme"
+      },
+      "Fadendekor (aufgelegt)": {
+        "label": ""
+      },
+      "Reliefdekor": {
+        "label": ""
+      },
+      "Riefeldekor": {
+        "label": ""
+      },
+      "Ritzungen": {
+        "label": ""
+      },
+      "Stempel": {
+        "label": ""
+      },
+      "Stempeldekor": {
+        "label": ""
+      },
+      "Tupfendekor": {
+        "label": ""
+      },
+      "Warzendekor": {
+        "label": ""
+      }
     }
   },
   "Pottery-manufacturingMethod-default": {
     "values": {
-      "gedreht (auf Drehscheibe)": "",
-      "gegossen": "",
-      "gepresst": "",
-      "handgeformt": "",
-      "in Form gedreht": "",
-      "nachgedreht (überdreht)": ""
+      "gedreht (auf Drehscheibe)": {
+        "label": ""
+      },
+      "gegossen": {
+        "label": ""
+      },
+      "gepresst": {
+        "label": ""
+      },
+      "handgeformt": {
+        "label": ""
+      },
+      "in Form gedreht": {
+        "label": ""
+      },
+      "nachgedreht (überdreht)": {
+        "label": ""
+      }
     }
   },
   "Pottery-materialType-default": {
     "values": {
-      "Feinkeramik (Feine Ware)": "",
-      "Gebrauchskeramik (Grobe Ware)": ""
+      "Feinkeramik (Feine Ware)": {
+        "label": ""
+      },
+      "Gebrauchskeramik (Grobe Ware)": {
+        "label": ""
+      }
     }
   },
   "Pottery-objectType-default": {
     "values": {
-      "Altar": "Altar",
-      "Anhänger": "Pendant",
-      "Antefix": "",
-      "Becken": "",
-      "Einlage": "",
-      "Gefäß": "Kap",
-      "Gerät": "Alet",
-      "Gussform": "Kalıp",
-      "Kette": "",
-      "Kohlebecken": "",
-      "Lampe": "",
-      "Löffel": "",
-      "Perle": "",
-      "Plastik/Skulptur": "",
-      "Produktionsfragment": "",
-      "Ring": "",
-      "Sarkophag": "Lahit",
-      "Schmuck": "Takı",
-      "Siegel": "Mühür",
-      "Spielstein": "Oyun taşı/pulu",
-      "Spinnwirtel": "Ağırşak",
-      "Unsicher bzw. unbestimmbar": "Belirsiz veya belirlenemeyen",
-      "Webgewicht": "",
-      "Werkzeug": "Alet"
+      "Altar": {
+        "label": "Altar"
+      },
+      "Anhänger": {
+        "label": "Pendant"
+      },
+      "Antefix": {
+        "label": ""
+      },
+      "Becken": {
+        "label": ""
+      },
+      "Einlage": {
+        "label": ""
+      },
+      "Gefäß": {
+        "label": "Kap"
+      },
+      "Gerät": {
+        "label": "Alet"
+      },
+      "Gussform": {
+        "label": "Kalıp"
+      },
+      "Kette": {
+        "label": ""
+      },
+      "Kohlebecken": {
+        "label": ""
+      },
+      "Lampe": {
+        "label": ""
+      },
+      "Löffel": {
+        "label": ""
+      },
+      "Perle": {
+        "label": ""
+      },
+      "Plastik/Skulptur": {
+        "label": ""
+      },
+      "Produktionsfragment": {
+        "label": ""
+      },
+      "Ring": {
+        "label": ""
+      },
+      "Sarkophag": {
+        "label": "Lahit"
+      },
+      "Schmuck": {
+        "label": "Takı"
+      },
+      "Siegel": {
+        "label": "Mühür"
+      },
+      "Spielstein": {
+        "label": "Oyun taşı/pulu"
+      },
+      "Spinnwirtel": {
+        "label": "Ağırşak"
+      },
+      "Unsicher bzw. unbestimmbar": {
+        "label": "Belirsiz veya belirlenemeyen"
+      },
+      "Webgewicht": {
+        "label": ""
+      },
+      "Werkzeug": {
+        "label": "Alet"
+      }
     }
   },
   "Pottery-specificType-default": {
     "values": {
-      "Arretina schwarz": "",
-      "Attisch farbig aufgehöhte Schwarzglanzton Ware": "",
-      "Attische Keramik": "",
-      "Attische Rotfigurige Keramik": "",
-      "Attische Schwarzfigurige Keramik": "",
-      "Attische Schwarzglanzton Ware": "",
-      "Bemalte Keramik": "",
-      "Bemalte Ware (floral)": "",
-      "Bemalte Ware (linear)": "",
-      "Bichrome Ware": "",
-      "Campana A": "",
-      "Campana B": "",
-      "Campana B Imitation": "",
-      "Campana B-oid": "",
-      "Campana C": "",
-      "Dünnwandige Feinkeramik": "",
-      "Firnisware": "",
-      "Glasierte Keramik": "",
-      "Glattwandige Ware": "",
-      "Hand": "",
-      "Korinthische Keramik": "",
-      "Küchenware": "",
-      "Ostgriechische Keramik": "",
-      "Prähistorische Keramik": "",
-      "Red Slip Ware": "",
-      "Schlichte Ware": "",
-      "Schwarzglanzton Ware": "",
-      "Terra sigilata": ""
+      "Arretina schwarz": {
+        "label": ""
+      },
+      "Attisch farbig aufgehöhte Schwarzglanzton Ware": {
+        "label": ""
+      },
+      "Attische Keramik": {
+        "label": ""
+      },
+      "Attische Rotfigurige Keramik": {
+        "label": ""
+      },
+      "Attische Schwarzfigurige Keramik": {
+        "label": ""
+      },
+      "Attische Schwarzglanzton Ware": {
+        "label": ""
+      },
+      "Bemalte Keramik": {
+        "label": ""
+      },
+      "Bemalte Ware (floral)": {
+        "label": ""
+      },
+      "Bemalte Ware (linear)": {
+        "label": ""
+      },
+      "Bichrome Ware": {
+        "label": ""
+      },
+      "Campana A": {
+        "label": ""
+      },
+      "Campana B": {
+        "label": ""
+      },
+      "Campana B Imitation": {
+        "label": ""
+      },
+      "Campana B-oid": {
+        "label": ""
+      },
+      "Campana C": {
+        "label": ""
+      },
+      "Dünnwandige Feinkeramik": {
+        "label": ""
+      },
+      "Firnisware": {
+        "label": ""
+      },
+      "Glasierte Keramik": {
+        "label": ""
+      },
+      "Glattwandige Ware": {
+        "label": ""
+      },
+      "Hand": {
+        "label": ""
+      },
+      "Korinthische Keramik": {
+        "label": ""
+      },
+      "Küchenware": {
+        "label": ""
+      },
+      "Ostgriechische Keramik": {
+        "label": ""
+      },
+      "Prähistorische Keramik": {
+        "label": ""
+      },
+      "Red Slip Ware": {
+        "label": ""
+      },
+      "Schlichte Ware": {
+        "label": ""
+      },
+      "Schwarzglanzton Ware": {
+        "label": ""
+      },
+      "Terra sigilata": {
+        "label": ""
+      }
     }
   },
   "Pottery-temperAmount-default": {
     "values": {
-      "Keine Einschlüsse": "",
-      "Mittel": "",
-      "Nicht erkennbar": "",
-      "Sehr Viel": "",
-      "Vereinzelt": "",
-      "Viel": "",
-      "Wenig": ""
+      "Keine Einschlüsse": {
+        "label": ""
+      },
+      "Mittel": {
+        "label": ""
+      },
+      "Nicht erkennbar": {
+        "label": ""
+      },
+      "Sehr Viel": {
+        "label": ""
+      },
+      "Vereinzelt": {
+        "label": ""
+      },
+      "Viel": {
+        "label": ""
+      },
+      "Wenig": {
+        "label": ""
+      }
     }
   },
   "Pottery-temperParticles-default": {
     "values": {
-      "fein": "",
-      "grob": "",
-      "mittel": "",
-      "mittelfein": "orta ince",
-      "sehr fein": "",
-      "sehr grob": ""
+      "fein": {
+        "label": ""
+      },
+      "grob": {
+        "label": ""
+      },
+      "mittel": {
+        "label": ""
+      },
+      "mittelfein": {
+        "label": "orta ince"
+      },
+      "sehr fein": {
+        "label": ""
+      },
+      "sehr grob": {
+        "label": ""
+      }
     }
   },
   "Pottery-vesselForm-default": {
     "values": {
-      "Amphore": "Amfora",
-      "Aschenurne": "",
-      "Becher": "Bardak",
-      "Deckel": "Kapak",
-      "Deckelgefäß": "",
-      "Flasche": "Şişe",
-      "Geschlossenes Gefäß": "Kapalı Kap",
-      "Kanne": "Akıtacak Ağızlı Testi",
-      "Kasserole": "Saplı Çanak, Tava",
-      "Kochschüssel": "",
-      "Krug": "Testi",
-      "Napf": "Bardak",
-      "Offenes Gefäß": "Açık Biçimli",
-      "Pfanne": "Tava",
-      "Räuchergefäß": "Tütsü Kabı",
-      "Schale": "Çanak",
-      "Schüssel": "Derin Çanak, Kâse",
-      "Tasse": "Fincan, Kulplu Bardak",
-      "Teller": "Tabak",
-      "Teller/Untersatz": "",
-      "Topf": "Çömlek",
-      "Unbestimmt": "",
-      "Vorratsgefäß": "Küp, Erzak Küpü"
+      "Amphore": {
+        "label": "Amfora"
+      },
+      "Aschenurne": {
+        "label": ""
+      },
+      "Becher": {
+        "label": "Bardak"
+      },
+      "Deckel": {
+        "label": "Kapak"
+      },
+      "Deckelgefäß": {
+        "label": ""
+      },
+      "Flasche": {
+        "label": "Şişe"
+      },
+      "Geschlossenes Gefäß": {
+        "label": "Kapalı Kap"
+      },
+      "Kanne": {
+        "label": "Akıtacak Ağızlı Testi"
+      },
+      "Kasserole": {
+        "label": "Saplı Çanak, Tava"
+      },
+      "Kochschüssel": {
+        "label": ""
+      },
+      "Krug": {
+        "label": "Testi"
+      },
+      "Napf": {
+        "label": "Bardak"
+      },
+      "Offenes Gefäß": {
+        "label": "Açık Biçimli"
+      },
+      "Pfanne": {
+        "label": "Tava"
+      },
+      "Räuchergefäß": {
+        "label": "Tütsü Kabı"
+      },
+      "Schale": {
+        "label": "Çanak"
+      },
+      "Schüssel": {
+        "label": "Derin Çanak, Kâse"
+      },
+      "Tasse": {
+        "label": "Fincan, Kulplu Bardak"
+      },
+      "Teller": {
+        "label": "Tabak"
+      },
+      "Teller/Untersatz": {
+        "label": ""
+      },
+      "Topf": {
+        "label": "Çömlek"
+      },
+      "Unbestimmt": {
+        "label": ""
+      },
+      "Vorratsgefäß": {
+        "label": "Küp, Erzak Küpü"
+      }
     }
   },
   "Pottery-vesselFormSpecific-default": {
     "values": {
-      "Alabastron": "",
-      "Amphoriskos": "",
-      "Aryballos": "",
-      "Balsamarium": "",
-      "Dattelflasche": "",
-      "Faltenbecher": "",
-      "Fischteller": "",
-      "Glockenbecher": "",
-      "Handelsamphore": "",
-      "Hydria": "",
-      "Kopfflasche": "",
-      "Kotyle": "",
-      "Kragenschale": "",
-      "Krater": "",
-      "Kylix": "",
-      "Lekane": "",
-      "Lekythos": "",
-      "Luterion": "",
-      "Lutrophore": "",
-      "Miscellanea": "",
-      "Oinochoe": "",
-      "Pelike": "",
-      "Pithos": "",
-      "Pyxis": "",
-      "Salznapf": "",
-      "Skyphos": "",
-      "Spitzamphora": "",
-      "Sprenkler": "",
-      "Stamnos": "",
-      "Tierflasche": "",
-      "Tischamphore": "",
-      "Tränenfläschchen": "",
-      "Vierkantflasche": "",
-      "hexagonale Flasche": "",
-      "zylindrische Flasche": ""
+      "Alabastron": {
+        "label": ""
+      },
+      "Amphoriskos": {
+        "label": ""
+      },
+      "Aryballos": {
+        "label": ""
+      },
+      "Balsamarium": {
+        "label": ""
+      },
+      "Dattelflasche": {
+        "label": ""
+      },
+      "Faltenbecher": {
+        "label": ""
+      },
+      "Fischteller": {
+        "label": ""
+      },
+      "Glockenbecher": {
+        "label": ""
+      },
+      "Handelsamphore": {
+        "label": ""
+      },
+      "Hydria": {
+        "label": ""
+      },
+      "Kopfflasche": {
+        "label": ""
+      },
+      "Kotyle": {
+        "label": ""
+      },
+      "Kragenschale": {
+        "label": ""
+      },
+      "Krater": {
+        "label": ""
+      },
+      "Kylix": {
+        "label": ""
+      },
+      "Lekane": {
+        "label": ""
+      },
+      "Lekythos": {
+        "label": ""
+      },
+      "Luterion": {
+        "label": ""
+      },
+      "Lutrophore": {
+        "label": ""
+      },
+      "Miscellanea": {
+        "label": ""
+      },
+      "Oinochoe": {
+        "label": ""
+      },
+      "Pelike": {
+        "label": ""
+      },
+      "Pithos": {
+        "label": ""
+      },
+      "Pyxis": {
+        "label": ""
+      },
+      "Salznapf": {
+        "label": ""
+      },
+      "Skyphos": {
+        "label": ""
+      },
+      "Spitzamphora": {
+        "label": ""
+      },
+      "Sprenkler": {
+        "label": ""
+      },
+      "Stamnos": {
+        "label": ""
+      },
+      "Tierflasche": {
+        "label": ""
+      },
+      "Tischamphore": {
+        "label": ""
+      },
+      "Tränenfläschchen": {
+        "label": ""
+      },
+      "Vierkantflasche": {
+        "label": ""
+      },
+      "hexagonale Flasche": {
+        "label": ""
+      },
+      "zylindrische Flasche": {
+        "label": ""
+      }
     }
   },
   "Grave-graveType-default": {
     "values": {
-      "Baumsargbestattung": "",
-      "Brandgrubengrab": "",
-      "Brandschüttung": "",
-      "Doliengrab": "",
-      "Dolmen": "",
-      "Erdgrab": "",
-      "Felsgrab": "",
-      "Felsnischengrab": "",
-      "Flachgrab": "",
-      "Ganggrab": "",
-      "Gefäßbestattung": "",
-      "Gemauertes Grab": "",
-      "Glockengrab": "",
-      "Gruft": "",
-      "Hügelgrab": "",
-      "Kistengrab": "",
-      "Mausoleum": "",
-      "Megalithgrab": "",
-      "Schachthöhlengrab": "",
-      "Steineinfassung": "",
-      "Steinplattengrab": "",
-      "Urnengrab": "",
-      "Ziegelplattengrab": ""
+      "Baumsargbestattung": {
+        "label": ""
+      },
+      "Brandgrubengrab": {
+        "label": ""
+      },
+      "Brandschüttung": {
+        "label": ""
+      },
+      "Doliengrab": {
+        "label": ""
+      },
+      "Dolmen": {
+        "label": ""
+      },
+      "Erdgrab": {
+        "label": ""
+      },
+      "Felsgrab": {
+        "label": ""
+      },
+      "Felsnischengrab": {
+        "label": ""
+      },
+      "Flachgrab": {
+        "label": ""
+      },
+      "Ganggrab": {
+        "label": ""
+      },
+      "Gefäßbestattung": {
+        "label": ""
+      },
+      "Gemauertes Grab": {
+        "label": ""
+      },
+      "Glockengrab": {
+        "label": ""
+      },
+      "Gruft": {
+        "label": ""
+      },
+      "Hügelgrab": {
+        "label": ""
+      },
+      "Kistengrab": {
+        "label": ""
+      },
+      "Mausoleum": {
+        "label": ""
+      },
+      "Megalithgrab": {
+        "label": ""
+      },
+      "Schachthöhlengrab": {
+        "label": ""
+      },
+      "Steineinfassung": {
+        "label": ""
+      },
+      "Steinplattengrab": {
+        "label": ""
+      },
+      "Urnengrab": {
+        "label": ""
+      },
+      "Ziegelplattengrab": {
+        "label": ""
+      }
     }
   },
   "Grave-specificType-default": {
     "values": {
-      "Amphorenbestattung": "",
-      "In Dinos": "",
-      "In Krug": "",
-      "a cappuccina": "",
-      "bruchsteingemauertes Grab": "",
-      "quadergemauertes Grab": "",
-      "ziegelgemauertes Grab": ""
+      "Amphorenbestattung": {
+        "label": ""
+      },
+      "In Dinos": {
+        "label": ""
+      },
+      "In Krug": {
+        "label": ""
+      },
+      "a cappuccina": {
+        "label": ""
+      },
+      "bruchsteingemauertes Grab": {
+        "label": ""
+      },
+      "quadergemauertes Grab": {
+        "label": ""
+      },
+      "ziegelgemauertes Grab": {
+        "label": ""
+      }
     }
   },
   "Grave-tombBuilding-default": {
     "values": {
-      "Bruchsteingemauert": "",
-      "Quadergemauert": "",
-      "Ziegelgemauert": ""
+      "Bruchsteingemauert": {
+        "label": ""
+      },
+      "Quadergemauert": {
+        "label": ""
+      },
+      "Ziegelgemauert": {
+        "label": ""
+      }
     }
   },
   "Bone-biologicalAge-default": {
     "values": {
-      "Adult (18/20-40)": "",
-      "Fetus/Neonatus": "",
-      "Infans I (0-7)": "",
-      "Infans II (7-13)": "",
-      "Juvenil (13-18/20)": "",
-      "Matur (40-60)": "",
-      "Senil (60 <)": ""
+      "Adult (18/20-40)": {
+        "label": ""
+      },
+      "Fetus/Neonatus": {
+        "label": ""
+      },
+      "Infans I (0-7)": {
+        "label": ""
+      },
+      "Infans II (7-13)": {
+        "label": ""
+      },
+      "Juvenil (13-18/20)": {
+        "label": ""
+      },
+      "Matur (40-60)": {
+        "label": ""
+      },
+      "Senil (60 <)": {
+        "label": ""
+      }
     }
   },
   "Bone-boneClassification-default": {
     "values": {
-      "Becken (Pelvis)": "",
-      "Brustbein (Sternum)": "",
-      "Elle (Ulna)": "",
-      "Fingerknochen (Phalanges)": "",
-      "Fußknochen": "",
-      "Handknochen": "",
-      "Kniescheibe (Patella)": "",
-      "Langknochen": "",
-      "Oberarm (Humerus)": "",
-      "Oberschenkel (Femur)": "",
-      "Rippen": "",
-      "Schienenbein (Tibia)": "",
-      "Schlüsselbein (Clavicula)": "",
-      "Schulterblatt (Scapula)": "",
-      "Schädel (Cranium)": "",
-      "Speiche (Radius)": "",
-      "Steißbein": "",
-      "Undefinierbar": "",
-      "Unterkiefer (Mandibula)": "",
-      "Wadenbein (Fibula)": "",
-      "Wirbel": "",
-      "Zahn": ""
+      "Becken (Pelvis)": {
+        "label": ""
+      },
+      "Brustbein (Sternum)": {
+        "label": ""
+      },
+      "Elle (Ulna)": {
+        "label": ""
+      },
+      "Fingerknochen (Phalanges)": {
+        "label": ""
+      },
+      "Fußknochen": {
+        "label": ""
+      },
+      "Handknochen": {
+        "label": ""
+      },
+      "Kniescheibe (Patella)": {
+        "label": ""
+      },
+      "Langknochen": {
+        "label": ""
+      },
+      "Oberarm (Humerus)": {
+        "label": ""
+      },
+      "Oberschenkel (Femur)": {
+        "label": ""
+      },
+      "Rippen": {
+        "label": ""
+      },
+      "Schienenbein (Tibia)": {
+        "label": ""
+      },
+      "Schlüsselbein (Clavicula)": {
+        "label": ""
+      },
+      "Schulterblatt (Scapula)": {
+        "label": ""
+      },
+      "Schädel (Cranium)": {
+        "label": ""
+      },
+      "Speiche (Radius)": {
+        "label": ""
+      },
+      "Steißbein": {
+        "label": ""
+      },
+      "Undefinierbar": {
+        "label": ""
+      },
+      "Unterkiefer (Mandibula)": {
+        "label": ""
+      },
+      "Wadenbein (Fibula)": {
+        "label": ""
+      },
+      "Wirbel": {
+        "label": ""
+      },
+      "Zahn": {
+        "label": ""
+      }
     }
   },
   "Bone-boneType-default": {
     "values": {
-      "Elfenbein": "",
-      "Horn": "",
-      "Menschenknochen": "",
-      "Tierknochen": ""
+      "Elfenbein": {
+        "label": ""
+      },
+      "Horn": {
+        "label": ""
+      },
+      "Menschenknochen": {
+        "label": ""
+      },
+      "Tierknochen": {
+        "label": ""
+      }
     }
   },
   "Bone-burningGrade-default": {
     "values": {
-      "I - 200°-300°C - Verfärbung etwa gelblichweiß-elfenbein glasig": "",
-      "II - 300°-400°C - Verfärbung etwa braun-dunkelbraun/schwarz": "",
-      "III - um 550°C - Verfärbung etwa grau/blaugrau-milchig hellgrau": "",
-      "IV - 650°-750°C - Verfärbung etwa milchig weiß-mattweiß/kreideartig": "",
-      "V - ab 800°C - Verfärbung etwa altweiß/schmutzigweiß": ""
+      "I - 200°-300°C - Verfärbung etwa gelblichweiß-elfenbein glasig": {
+        "label": ""
+      },
+      "II - 300°-400°C - Verfärbung etwa braun-dunkelbraun/schwarz": {
+        "label": ""
+      },
+      "III - um 550°C - Verfärbung etwa grau/blaugrau-milchig hellgrau": {
+        "label": ""
+      },
+      "IV - 650°-750°C - Verfärbung etwa milchig weiß-mattweiß/kreideartig": {
+        "label": ""
+      },
+      "V - ab 800°C - Verfärbung etwa altweiß/schmutzigweiß": {
+        "label": ""
+      }
     }
   },
   "Bone-sex-default": {
     "values": {
-      "Männlich": "",
-      "Weiblich": ""
+      "Männlich": {
+        "label": ""
+      },
+      "Weiblich": {
+        "label": ""
+      }
     }
   },
   "Bone-objectType-default": {
     "values": {
-      "Anhänger": "",
-      "Armreif": "",
-      "Astragal": "",
-      "Bearbeitet (allgemein)": "",
-      "Einlage": "",
-      "Gefäß": "Kap",
-      "Gerät": "Alet",
-      "Kette": "",
-      "Löffel": "",
-      "Perle": "",
-      "Ring": "",
-      "Schmuck": "Takı",
-      "Spielstein": "Oyun taşı/pulu",
-      "Unsicher bzw. unbestimmbar": "Belirsiz veya belirlenemeyen",
-      "Waffe": "",
-      "Weinheber": "",
-      "Werkzeug": "Alet"
+      "Anhänger": {
+        "label": ""
+      },
+      "Armreif": {
+        "label": ""
+      },
+      "Astragal": {
+        "label": ""
+      },
+      "Bearbeitet (allgemein)": {
+        "label": ""
+      },
+      "Einlage": {
+        "label": ""
+      },
+      "Gefäß": {
+        "label": "Kap"
+      },
+      "Gerät": {
+        "label": "Alet"
+      },
+      "Kette": {
+        "label": ""
+      },
+      "Löffel": {
+        "label": ""
+      },
+      "Perle": {
+        "label": ""
+      },
+      "Ring": {
+        "label": ""
+      },
+      "Schmuck": {
+        "label": "Takı"
+      },
+      "Spielstein": {
+        "label": "Oyun taşı/pulu"
+      },
+      "Unsicher bzw. unbestimmbar": {
+        "label": "Belirsiz veya belirlenemeyen"
+      },
+      "Waffe": {
+        "label": ""
+      },
+      "Weinheber": {
+        "label": ""
+      },
+      "Werkzeug": {
+        "label": "Alet"
+      }
     }
   },
   "Bone-species-default": {
     "values": {
-      "Biber": "Kunduz",
-      "Fisch": "Balık",
-      "Gänsevogel (z. B. Gans, Schwan oder Ente)": "Göl kuşları (örn. kaz, kuğu veya ördek)",
-      "Hasenartige (Lagomorpha)  (z. B. Hase, Pfeifhase oder Kaninchen)": "Lagomorpha (örn. dağ tavşanı, pika veya tavşan)",
-      "Hirsch": "Geyik",
-      "Nagetier (z.B. Maus, Ratte etc.)": "Kemirgen (örn. fare, sıçan vb.)",
-      "Rind": "Sığır",
-      "Schwein": "Domuz",
-      "Vogel": "Kuş",
-      "Ziegenartige (z. B. Schaf, Ziege)": "Küçükbaş (örn. koyun, keçi)"
+      "Biber": {
+        "label": "Kunduz"
+      },
+      "Fisch": {
+        "label": "Balık"
+      },
+      "Gänsevogel (z. B. Gans, Schwan oder Ente)": {
+        "label": "Göl kuşları (örn. kaz, kuğu veya ördek)"
+      },
+      "Hasenartige (Lagomorpha)  (z. B. Hase, Pfeifhase oder Kaninchen)": {
+        "label": "Lagomorpha (örn. dağ tavşanı, pika veya tavşan)"
+      },
+      "Hirsch": {
+        "label": "Geyik"
+      },
+      "Nagetier (z.B. Maus, Ratte etc.)": {
+        "label": "Kemirgen (örn. fare, sıçan vb.)"
+      },
+      "Rind": {
+        "label": "Sığır"
+      },
+      "Schwein": {
+        "label": "Domuz"
+      },
+      "Vogel": {
+        "label": "Kuş"
+      },
+      "Ziegenartige (z. B. Schaf, Ziege)": {
+        "label": "Küçükbaş (örn. koyun, keçi)"
+      }
     }
   },
   "Terracotta-clayStructure-default": {
     "values": {
-      "hart": "sert",
-      "klingend hart": "",
-      "mittel": "",
-      "weich": ""
+      "hart": {
+        "label": "sert"
+      },
+      "klingend hart": {
+        "label": ""
+      },
+      "mittel": {
+        "label": ""
+      },
+      "weich": {
+        "label": ""
+      }
     }
   },
   "Terracotta-surfaceCondition-default": {
     "values": {
-      "Brandspuren": "",
-      "Sekundärbrand": "",
-      "abblätternd": "",
-      "gut erhalten": "",
-      "stark abgerieben": "",
-      "starke Sinter- oder Mörtelablagerungen": "",
-      "verrieben": "",
-      "versintert": "",
-      "verwaschen": ""
+      "Brandspuren": {
+        "label": ""
+      },
+      "Sekundärbrand": {
+        "label": ""
+      },
+      "abblätternd": {
+        "label": ""
+      },
+      "gut erhalten": {
+        "label": ""
+      },
+      "stark abgerieben": {
+        "label": ""
+      },
+      "starke Sinter- oder Mörtelablagerungen": {
+        "label": ""
+      },
+      "verrieben": {
+        "label": ""
+      },
+      "versintert": {
+        "label": ""
+      },
+      "verwaschen": {
+        "label": ""
+      }
     }
   },
   "Terracotta-vesselForm-default": {
     "values": {
-      "Amphore": "",
-      "Aschenurne": "",
-      "Becher": "",
-      "Deckel": "",
-      "Deckelgefäß": "",
-      "Flasche": "",
-      "Krug": "",
-      "Napf": "",
-      "Schale": "",
-      "Schüssel": "",
-      "Tasse": "",
-      "Teller": "",
-      "Topf": "",
-      "Unbestimmt": "",
-      "Vorratsgefäß": ""
+      "Amphore": {
+        "label": ""
+      },
+      "Aschenurne": {
+        "label": ""
+      },
+      "Becher": {
+        "label": ""
+      },
+      "Deckel": {
+        "label": ""
+      },
+      "Deckelgefäß": {
+        "label": ""
+      },
+      "Flasche": {
+        "label": ""
+      },
+      "Krug": {
+        "label": ""
+      },
+      "Napf": {
+        "label": ""
+      },
+      "Schale": {
+        "label": ""
+      },
+      "Schüssel": {
+        "label": ""
+      },
+      "Tasse": {
+        "label": ""
+      },
+      "Teller": {
+        "label": ""
+      },
+      "Topf": {
+        "label": ""
+      },
+      "Unbestimmt": {
+        "label": ""
+      },
+      "Vorratsgefäß": {
+        "label": ""
+      }
     }
   },
   "Terracotta-vesselFormSpecific-default": {
     "values": {
-      "Alabastron": "",
-      "Amphoriskos": "",
-      "Aryballos": "",
-      "Balsamarium": "",
-      "Dattelflasche": "",
-      "Faltenbecher": "",
-      "Hydria": "",
-      "Kopfflasche": "",
-      "Kotyle": "",
-      "Kragenschale": "",
-      "Krater": "",
-      "Kylix": "",
-      "Lekythos": "",
-      "Luterion": "",
-      "Lutrophore": "",
-      "Oinochoe": "",
-      "Pelike": "",
-      "Pithos": "",
-      "Skyphos": "",
-      "Spitzamphora": "",
-      "Stamnos": "",
-      "Vierkantflasche": "",
-      "hexagonale Flasche": "",
-      "zylindrische Flasche": ""
+      "Alabastron": {
+        "label": ""
+      },
+      "Amphoriskos": {
+        "label": ""
+      },
+      "Aryballos": {
+        "label": ""
+      },
+      "Balsamarium": {
+        "label": ""
+      },
+      "Dattelflasche": {
+        "label": ""
+      },
+      "Faltenbecher": {
+        "label": ""
+      },
+      "Hydria": {
+        "label": ""
+      },
+      "Kopfflasche": {
+        "label": ""
+      },
+      "Kotyle": {
+        "label": ""
+      },
+      "Kragenschale": {
+        "label": ""
+      },
+      "Krater": {
+        "label": ""
+      },
+      "Kylix": {
+        "label": ""
+      },
+      "Lekythos": {
+        "label": ""
+      },
+      "Luterion": {
+        "label": ""
+      },
+      "Lutrophore": {
+        "label": ""
+      },
+      "Oinochoe": {
+        "label": ""
+      },
+      "Pelike": {
+        "label": ""
+      },
+      "Pithos": {
+        "label": ""
+      },
+      "Skyphos": {
+        "label": ""
+      },
+      "Spitzamphora": {
+        "label": ""
+      },
+      "Stamnos": {
+        "label": ""
+      },
+      "Vierkantflasche": {
+        "label": ""
+      },
+      "hexagonale Flasche": {
+        "label": ""
+      },
+      "zylindrische Flasche": {
+        "label": ""
+      }
     }
   },
   "Drawing-drawingMaterial-default": {
     "values": {
-      "Digitale Datei": "",
-      "Folie": "",
-      "Karton": "",
-      "Lichtpause": "",
-      "Mikrofilm": "",
-      "Millimeterpapier": "",
-      "Papier": "",
-      "Photoabzüge": "",
-      "Transparentfilm": "",
-      "Transparentpapier": ""
+      "Digitale Datei": {
+        "label": ""
+      },
+      "Folie": {
+        "label": ""
+      },
+      "Karton": {
+        "label": ""
+      },
+      "Lichtpause": {
+        "label": ""
+      },
+      "Mikrofilm": {
+        "label": ""
+      },
+      "Millimeterpapier": {
+        "label": ""
+      },
+      "Papier": {
+        "label": ""
+      },
+      "Photoabzüge": {
+        "label": ""
+      },
+      "Transparentfilm": {
+        "label": ""
+      },
+      "Transparentpapier": {
+        "label": ""
+      }
     }
   },
   "Drawing-drawingTool-default": {
     "values": {
-      "Bleistift": "",
-      "Buntstift": "",
-      "Tusche": "",
-      "digital erstellt": ""
+      "Bleistift": {
+        "label": ""
+      },
+      "Buntstift": {
+        "label": ""
+      },
+      "Tusche": {
+        "label": ""
+      },
+      "digital erstellt": {
+        "label": ""
+      }
     }
   },
   "Drawing-drawingType-default": {
     "values": {
-      "AutoCAD Zeichnung (auch TachyCAD)": "",
-      "Handzeichnung": "",
-      "Pantograf": ""
+      "AutoCAD Zeichnung (auch TachyCAD)": {
+        "label": ""
+      },
+      "Handzeichnung": {
+        "label": ""
+      },
+      "Pantograf": {
+        "label": ""
+      }
     }
   },
   "Drawing-scale-default": {
     "values": {
-      "1:1": "",
-      "1:10": "",
-      "1:100": "",
-      "1:1000": "",
-      "1:10000": "",
-      "1:20": "",
-      "1:50": "",
-      "1:500": "",
-      "1:5000": ""
+      "1:1": {
+        "label": ""
+      },
+      "1:10": {
+        "label": ""
+      },
+      "1:100": {
+        "label": ""
+      },
+      "1:1000": {
+        "label": ""
+      },
+      "1:10000": {
+        "label": ""
+      },
+      "1:20": {
+        "label": ""
+      },
+      "1:50": {
+        "label": ""
+      },
+      "1:500": {
+        "label": ""
+      },
+      "1:5000": {
+        "label": ""
+      }
     }
   },
   "Survey-researchMethod-default": {
     "values": {
-      "Befliegung": "",
-      "Begehung": "",
-      "Geoelektrik": "Jeoelektrik",
-      "Geomagnetik": "Jeomanyetik",
-      "Georadar": "Jeoradar",
-      "LIDAR": "LIDAR",
-      "Luft- oder Satellitenbilder": "Hava veya uydu görüntüsü",
-      "Quadratisch": "Plankare",
-      "Regelmäßig": "Düzenli",
-      "Seismik": "Sismik"
+      "Befliegung": {
+        "label": ""
+      },
+      "Begehung": {
+        "label": ""
+      },
+      "Geoelektrik": {
+        "label": "Jeoelektrik"
+      },
+      "Geomagnetik": {
+        "label": "Jeomanyetik"
+      },
+      "Georadar": {
+        "label": "Jeoradar"
+      },
+      "LIDAR": {
+        "label": "LIDAR"
+      },
+      "Luft- oder Satellitenbilder": {
+        "label": "Hava veya uydu görüntüsü"
+      },
+      "Quadratisch": {
+        "label": "Plankare"
+      },
+      "Regelmäßig": {
+        "label": "Düzenli"
+      },
+      "Seismik": {
+        "label": "Sismik"
+      }
     }
   },
   "Stone-architectureElement-default": {
     "values": {
-      "Akroter": "Akroter",
-      "Architrav": "Arşitrav",
-      "Archtitravfriesblock": "Tablatür",
-      "Basis": "Kaide",
-      "Bauplastik": "",
-      "Fries": "",
-      "Gesims": "",
-      "Kapitell": "",
-      "Konsole": "",
-      "Profilstück": "",
-      "Quaderblock": "",
-      "Rinne": "",
-      "Schrankenplatte": "",
-      "Schwellenblock": "",
-      "Sima": "",
-      "Säule": "",
-      "Wandverkleidung": ""
+      "Akroter": {
+        "label": "Akroter"
+      },
+      "Architrav": {
+        "label": "Arşitrav"
+      },
+      "Archtitravfriesblock": {
+        "label": "Tablatür"
+      },
+      "Basis": {
+        "label": "Kaide"
+      },
+      "Bauplastik": {
+        "label": ""
+      },
+      "Fries": {
+        "label": ""
+      },
+      "Gesims": {
+        "label": ""
+      },
+      "Kapitell": {
+        "label": ""
+      },
+      "Konsole": {
+        "label": ""
+      },
+      "Profilstück": {
+        "label": ""
+      },
+      "Quaderblock": {
+        "label": ""
+      },
+      "Rinne": {
+        "label": ""
+      },
+      "Schrankenplatte": {
+        "label": ""
+      },
+      "Schwellenblock": {
+        "label": ""
+      },
+      "Sima": {
+        "label": ""
+      },
+      "Säule": {
+        "label": ""
+      },
+      "Wandverkleidung": {
+        "label": ""
+      }
     }
   },
   "Stone-material-default": {
     "values": {
-      "Andesit": "",
-      "Basalt": "",
-      "Feldspat": "",
-      "Flint": "",
-      "Glimmer": "",
-      "Granit": "Granit",
-      "Kalk": "Kalker",
-      "Kalkmörtel": "Kireç harcı",
-      "Kalkstein": "Kireçtaşı",
-      "Kalzit": "Kalsit",
-      "Kreide": "Tebeşir",
-      "Marmor": "Mermer",
-      "Pophyr": "Porfir",
-      "Quarz": "Kuvarz",
-      "Sandstein": "Kumtaşı",
-      "Sinter": "",
-      "Trachyt": "",
-      "Tuff": ""
+      "Andesit": {
+        "label": ""
+      },
+      "Basalt": {
+        "label": ""
+      },
+      "Feldspat": {
+        "label": ""
+      },
+      "Flint": {
+        "label": ""
+      },
+      "Glimmer": {
+        "label": ""
+      },
+      "Granit": {
+        "label": "Granit"
+      },
+      "Kalk": {
+        "label": "Kalker"
+      },
+      "Kalkmörtel": {
+        "label": "Kireç harcı"
+      },
+      "Kalkstein": {
+        "label": "Kireçtaşı"
+      },
+      "Kalzit": {
+        "label": "Kalsit"
+      },
+      "Kreide": {
+        "label": "Tebeşir"
+      },
+      "Marmor": {
+        "label": "Mermer"
+      },
+      "Pophyr": {
+        "label": "Porfir"
+      },
+      "Quarz": {
+        "label": "Kuvarz"
+      },
+      "Sandstein": {
+        "label": "Kumtaşı"
+      },
+      "Sinter": {
+        "label": ""
+      },
+      "Trachyt": {
+        "label": ""
+      },
+      "Tuff": {
+        "label": ""
+      }
     }
   },
   "Stone-objectType-default": {
     "values": {
-      "Abschlag": "",
-      "Altar": "Altar",
-      "Anhänger": "Pendant",
-      "Architekturdekor": "",
-      "Bauglied": "",
-      "Becken": "",
-      "Einlage": "",
-      "Einsatzkopf": "",
-      "Fußbodenfragment": "",
-      "Gefäß": "Kap",
-      "Gerät": "Alet",
-      "Grabmarkierung": "Mezar işareti",
-      "Grabplatte": "Mezar taşı",
-      "Gussform": "Kalıp",
-      "Herme": "",
-      "Inkrustation": "",
-      "Lampe": "",
-      "Löffel": "",
-      "Mahlstein": "",
-      "Mobiliar": "Mobilya",
-      "Mörser": "",
-      "Perle": "",
-      "Plastik/Skulptur": "",
-      "Produktionsfragment": "",
-      "Reibstein": "",
-      "Ring": "",
-      "Rührstab": "",
-      "Sarkophag": "Lahit",
-      "Schmuck": "Takı",
-      "Siegel": "Mühür",
-      "Spielbrett": "",
-      "Spielstein": "Oyun taşı/pulu",
-      "Spinnwirtel": "Ağırşak",
-      "Spolie": "",
-      "Statuenbasis": "",
-      "Stele": "",
-      "Tessera": "",
-      "Tischfuß": "",
-      "Unsicher bzw. unbestimmbar": "Belirsiz veya belirlenemeyen",
-      "Waffe": "",
-      "Webgewicht": "",
-      "Werkzeug": "Alet",
-      "Ölpresse": ""
+      "Abschlag": {
+        "label": ""
+      },
+      "Altar": {
+        "label": "Altar"
+      },
+      "Anhänger": {
+        "label": "Pendant"
+      },
+      "Architekturdekor": {
+        "label": ""
+      },
+      "Bauglied": {
+        "label": ""
+      },
+      "Becken": {
+        "label": ""
+      },
+      "Einlage": {
+        "label": ""
+      },
+      "Einsatzkopf": {
+        "label": ""
+      },
+      "Fußbodenfragment": {
+        "label": ""
+      },
+      "Gefäß": {
+        "label": "Kap"
+      },
+      "Gerät": {
+        "label": "Alet"
+      },
+      "Grabmarkierung": {
+        "label": "Mezar işareti"
+      },
+      "Grabplatte": {
+        "label": "Mezar taşı"
+      },
+      "Gussform": {
+        "label": "Kalıp"
+      },
+      "Herme": {
+        "label": ""
+      },
+      "Inkrustation": {
+        "label": ""
+      },
+      "Lampe": {
+        "label": ""
+      },
+      "Löffel": {
+        "label": ""
+      },
+      "Mahlstein": {
+        "label": ""
+      },
+      "Mobiliar": {
+        "label": "Mobilya"
+      },
+      "Mörser": {
+        "label": ""
+      },
+      "Perle": {
+        "label": ""
+      },
+      "Plastik/Skulptur": {
+        "label": ""
+      },
+      "Produktionsfragment": {
+        "label": ""
+      },
+      "Reibstein": {
+        "label": ""
+      },
+      "Ring": {
+        "label": ""
+      },
+      "Rührstab": {
+        "label": ""
+      },
+      "Sarkophag": {
+        "label": "Lahit"
+      },
+      "Schmuck": {
+        "label": "Takı"
+      },
+      "Siegel": {
+        "label": "Mühür"
+      },
+      "Spielbrett": {
+        "label": ""
+      },
+      "Spielstein": {
+        "label": "Oyun taşı/pulu"
+      },
+      "Spinnwirtel": {
+        "label": "Ağırşak"
+      },
+      "Spolie": {
+        "label": ""
+      },
+      "Statuenbasis": {
+        "label": ""
+      },
+      "Stele": {
+        "label": ""
+      },
+      "Tessera": {
+        "label": ""
+      },
+      "Tischfuß": {
+        "label": ""
+      },
+      "Unsicher bzw. unbestimmbar": {
+        "label": "Belirsiz veya belirlenemeyen"
+      },
+      "Waffe": {
+        "label": ""
+      },
+      "Webgewicht": {
+        "label": ""
+      },
+      "Werkzeug": {
+        "label": "Alet"
+      },
+      "Ölpresse": {
+        "label": ""
+      }
     }
   },
   "Stone-origin-default": {
     "values": {
-      "Alpen": "",
-      "Anatolien": "",
-      "Chimtou": "",
-      "Harz": "",
-      "Kreta": "",
-      "Sizilien": ""
+      "Alpen": {
+        "label": ""
+      },
+      "Anatolien": {
+        "label": ""
+      },
+      "Chimtou": {
+        "label": ""
+      },
+      "Harz": {
+        "label": ""
+      },
+      "Kreta": {
+        "label": ""
+      },
+      "Sizilien": {
+        "label": ""
+      }
     }
   },
   "Coin-denomination-default": {
     "values": {
-      "1 1/2 Skripula": "",
-      "1 1/2 Solidus": "",
-      "1/2 Stater (Hemistater)": "",
-      "1/30 Drachme": "",
-      "1/4  Stater (Tetarte)": "",
-      "1/4 Einheit": "",
-      "1/5 Drachme": "",
-      "2 Solidus": "",
-      "3 Solidus": "",
-      "4 1/2 Solidus": "",
-      "60 As": "",
-      "9 Siliqua": "",
-      "9 Solidus": "",
-      "AE Gross": "",
-      "AE Klein": "",
-      "AE Medium": "",
-      "Aes 1": "",
-      "Aes 2": "",
-      "Aes 3": "",
-      "Aes 3-4": "",
-      "Aes 4": "",
-      "Antoninian": "",
-      "Argenteus": "",
-      "As": "",
-      "Aureus": "",
-      "Aureus¹": "",
-      "Aureus²": "",
-      "Bruchteil": "",
-      "Cistophor": "",
-      "Denar": "",
-      "Denar (serratus)": "",
-      "Didrachme": "",
-      "Diobol": "",
-      "Distater": "",
-      "Doppelter Sesterz": "",
-      "Drachme": "",
-      "Dupondius": "",
-      "Gold-mehrfaches": "",
-      "Grosser Aes 2": "",
-      "Halber Solidus": "",
-      "Hekte (1/6 Stater)": "",
-      "Hemidrachme": "",
-      "Hemiobol": "",
-      "Kleiner Aes 2": "",
-      "Kontorniat": "",
-      "Litra": "",
-      "Medaillon": "",
-      "Miliarense (leicht)": "",
-      "Miliarense (schwer)": "",
-      "Obolus": "",
-      "Quadrans": "",
-      "Quinar": "",
-      "Quinar Aureus": "",
-      "Reduzierte Siliqua": "",
-      "Reduzierter Aes 2": "",
-      "Semis": "",
-      "Semissis": "",
-      "Semuncia": "",
-      "Sesterz": "",
-      "Sextans": "",
-      "Silber-Mehrfaches": "",
-      "Siliqua": "",
-      "Solidus": "",
-      "Stater": "",
-      "Tetradrachme": "",
-      "Tremissis": "",
-      "Triens": "",
-      "Uncia": "",
-      "Unsicher bzw. unbestimmbar": "Belirsiz veya belirlenemeyen",
-      "Victoriatus": ""
+      "1 1/2 Skripula": {
+        "label": ""
+      },
+      "1 1/2 Solidus": {
+        "label": ""
+      },
+      "1/2 Stater (Hemistater)": {
+        "label": ""
+      },
+      "1/30 Drachme": {
+        "label": ""
+      },
+      "1/4  Stater (Tetarte)": {
+        "label": ""
+      },
+      "1/4 Einheit": {
+        "label": ""
+      },
+      "1/5 Drachme": {
+        "label": ""
+      },
+      "2 Solidus": {
+        "label": ""
+      },
+      "3 Solidus": {
+        "label": ""
+      },
+      "4 1/2 Solidus": {
+        "label": ""
+      },
+      "60 As": {
+        "label": ""
+      },
+      "9 Siliqua": {
+        "label": ""
+      },
+      "9 Solidus": {
+        "label": ""
+      },
+      "AE Gross": {
+        "label": ""
+      },
+      "AE Klein": {
+        "label": ""
+      },
+      "AE Medium": {
+        "label": ""
+      },
+      "Aes 1": {
+        "label": ""
+      },
+      "Aes 2": {
+        "label": ""
+      },
+      "Aes 3": {
+        "label": ""
+      },
+      "Aes 3-4": {
+        "label": ""
+      },
+      "Aes 4": {
+        "label": ""
+      },
+      "Antoninian": {
+        "label": ""
+      },
+      "Argenteus": {
+        "label": ""
+      },
+      "As": {
+        "label": ""
+      },
+      "Aureus": {
+        "label": ""
+      },
+      "Aureus¹": {
+        "label": ""
+      },
+      "Aureus²": {
+        "label": ""
+      },
+      "Bruchteil": {
+        "label": ""
+      },
+      "Cistophor": {
+        "label": ""
+      },
+      "Denar": {
+        "label": ""
+      },
+      "Denar (serratus)": {
+        "label": ""
+      },
+      "Didrachme": {
+        "label": ""
+      },
+      "Diobol": {
+        "label": ""
+      },
+      "Distater": {
+        "label": ""
+      },
+      "Doppelter Sesterz": {
+        "label": ""
+      },
+      "Drachme": {
+        "label": ""
+      },
+      "Dupondius": {
+        "label": ""
+      },
+      "Gold-mehrfaches": {
+        "label": ""
+      },
+      "Grosser Aes 2": {
+        "label": ""
+      },
+      "Halber Solidus": {
+        "label": ""
+      },
+      "Hekte (1/6 Stater)": {
+        "label": ""
+      },
+      "Hemidrachme": {
+        "label": ""
+      },
+      "Hemiobol": {
+        "label": ""
+      },
+      "Kleiner Aes 2": {
+        "label": ""
+      },
+      "Kontorniat": {
+        "label": ""
+      },
+      "Litra": {
+        "label": ""
+      },
+      "Medaillon": {
+        "label": ""
+      },
+      "Miliarense (leicht)": {
+        "label": ""
+      },
+      "Miliarense (schwer)": {
+        "label": ""
+      },
+      "Obolus": {
+        "label": ""
+      },
+      "Quadrans": {
+        "label": ""
+      },
+      "Quinar": {
+        "label": ""
+      },
+      "Quinar Aureus": {
+        "label": ""
+      },
+      "Reduzierte Siliqua": {
+        "label": ""
+      },
+      "Reduzierter Aes 2": {
+        "label": ""
+      },
+      "Semis": {
+        "label": ""
+      },
+      "Semissis": {
+        "label": ""
+      },
+      "Semuncia": {
+        "label": ""
+      },
+      "Sesterz": {
+        "label": ""
+      },
+      "Sextans": {
+        "label": ""
+      },
+      "Silber-Mehrfaches": {
+        "label": ""
+      },
+      "Siliqua": {
+        "label": ""
+      },
+      "Solidus": {
+        "label": ""
+      },
+      "Stater": {
+        "label": ""
+      },
+      "Tetradrachme": {
+        "label": ""
+      },
+      "Tremissis": {
+        "label": ""
+      },
+      "Triens": {
+        "label": ""
+      },
+      "Uncia": {
+        "label": ""
+      },
+      "Unsicher bzw. unbestimmbar": {
+        "label": "Belirsiz veya belirlenemeyen"
+      },
+      "Victoriatus": {
+        "label": ""
+      }
     }
   },
   "Coin-manufacturingMethod-default": {
     "values": {
-      "Gegossen": "",
-      "Geprägt": "",
-      "Plattiert": "",
-      "Unsicher bzw. unbestimmbar": "Belirsiz veya belirlenemeyen"
+      "Gegossen": {
+        "label": ""
+      },
+      "Geprägt": {
+        "label": ""
+      },
+      "Plattiert": {
+        "label": ""
+      },
+      "Unsicher bzw. unbestimmbar": {
+        "label": "Belirsiz veya belirlenemeyen"
+      }
     }
   },
   "Coin-metalMaterial-default": {
     "values": {
-      "Aluminium": "",
-      "Billon": "",
-      "Blei": "Kurşun",
-      "Bronze": "",
-      "Eisen": "Demir",
-      "Gold": "",
-      "Kupfer": "",
-      "Messing": "",
-      "Silber": "",
-      "Stahl": "Çelik",
-      "Unsicher bzw. unbestimmbar": "Belirsiz veya belirlenemeyen",
-      "Zink": "",
-      "Zinn": ""
+      "Aluminium": {
+        "label": ""
+      },
+      "Billon": {
+        "label": ""
+      },
+      "Blei": {
+        "label": "Kurşun"
+      },
+      "Bronze": {
+        "label": ""
+      },
+      "Eisen": {
+        "label": "Demir"
+      },
+      "Gold": {
+        "label": ""
+      },
+      "Kupfer": {
+        "label": ""
+      },
+      "Messing": {
+        "label": ""
+      },
+      "Silber": {
+        "label": ""
+      },
+      "Stahl": {
+        "label": "Çelik"
+      },
+      "Unsicher bzw. unbestimmbar": {
+        "label": "Belirsiz veya belirlenemeyen"
+      },
+      "Zink": {
+        "label": ""
+      },
+      "Zinn": {
+        "label": ""
+      }
     }
   },
   "Coin-mint-default": {
     "values": {
-      "Abdera": "",
-      "Abydos": "",
-      "Afrika": "",
-      "Agrigent": "",
-      "Aigai (Vergina)": "",
-      "Aiolis": "",
-      "Aitolischer Bund": "",
-      "Akanthus": "",
-      "Akkon": "",
-      "Alabanda": "",
-      "Alexandria": "",
-      "Alexandria Troas": "",
-      "Alexandrien": "",
-      "Amasra": "",
-      "Amathus": "",
-      "Ambianum (Amiens)": "",
-      "Ambracia": "",
-      "Amiens": "",
-      "Amisus": "",
-      "Amphipolis": "",
-      "Amrit": "",
-      "Anaktorio": "",
-      "Antiochia": "",
-      "Antiochia (Antakya)": "",
-      "Antiochia am Orontes": "",
-      "Apameia Kibotos": "",
-      "Apameia am Orontes": "",
-      "Apollonia": "",
-      "Apulien": "",
-      "Aquileia": "",
-      "Archaiischer Bund": "",
-      "Arelate (Arles)": "",
-      "Argos": "",
-      "Argos Amphilochicum": "",
-      "Arles": "",
-      "Arpi": "",
-      "Aruad": "",
-      "Asia Minor": "",
-      "Asien": "",
-      "Aspendos": "",
-      "Assos": "",
-      "Astibus": "",
-      "Athen": "",
-      "Aydın": "",
-      "Babylon": "",
-      "Barcino (Barcelona)": "",
-      "Beirut": "",
-      "Bozcaada": "",
-      "Byblos": "",
-      "Byzantion": "",
-      "Böotien": "",
-      "Caesaraugusta": "",
-      "Caesarea in Kappadokien": "",
-      "Cales": "",
-      "Camulodunum (Colchester)": "",
-      "Canosa di Puglia": "",
-      "Carnuntum": "",
-      "Carthago (Tunis)": "",
-      "Catania": "",
-      "Caulonia": "",
-      "Chalcedon": "",
-      "Chalkida": "",
-      "Chalkidiki": "",
-      "Chersones": "",
-      "Chios": "",
-      "Colchester": "",
-      "Colonia Agrippina (Köln)": "",
-      "Colonia Patricia": "",
-      "Comitatenses": "",
-      "Constantinopolis (Istanbul)": "",
-      "Crotone": "",
-      "Cyme": "",
-      "Damaskus": "",
-      "Diesseitiges Gallian / Norditalien": "",
-      "Dionysopolis": "",
-      "Dyrrhachium": "",
-      "Ekbatana": "",
-      "Elea": "",
-      "Elis": "",
-      "Emerita": "",
-      "Empüries": "",
-      "Ephesos": "",
-      "Eretria": "",
-      "Erythrai": "",
-      "Etrurien": "",
-      "Euböa": "",
-      "Foça": "",
-      "Gallien": "",
-      "Gela": "",
-      "Germe": "",
-      "Gortyn": "",
-      "Halikarnassos": "",
-      "Harran": "",
-      "Heraclea": "",
-      "Herakleia": "",
-      "Herakleia Pontike": "",
-      "Himera": "",
-      "Hispanien": "",
-      "Hispanien-Punisch": "",
-      "Histria": "",
-      "Homs": "",
-      "Ibiza": "",
-      "Idalion": "",
-      "Italien": "",
-      "Italien (Südosten)": "",
-      "Kabile": "",
-      "Kamarina": "",
-      "Karien": "",
-      "Karthago": "",
-      "Karystos": "",
-      "Kelenderis": "",
-      "Kertsch": "",
-      "Klazomenai": "",
-      "Knidos": "",
-      "Kolchis": "",
-      "Kolophon": "",
-      "Konstantinopel": "",
-      "Korfu": "",
-      "Korinth": "",
-      "Korinthischer Bund": "",
-      "Kos": "",
-      "Kydonia": "",
-      "Kyrenaika": "",
-      "Kyrene": "",
-      "Kyzikos": "",
-      "Köln": "",
-      "Lampsakos": "",
-      "Laodikeia am Lykos": "",
-      "Lapta": "",
-      "Larissa": "",
-      "Larnaka": "",
-      "Latakia": "",
-      "Lefkada": "",
-      "Lentini": "",
-      "Lete": "",
-      "Locri": "",
-      "Locri Opuntii (Opus)": "",
-      "Londinium": "",
-      "Lucera": "",
-      "Lugdunum": "",
-      "Lydien": "",
-      "Lykien": "",
-      "Lysimacheia": "",
-      "Lyttos": "",
-      "Magnesia am Mäander": "",
-      "Mainz": "",
-      "Makedonien": "",
-      "Makedonien (1. Region)": "",
-      "Mangalia": "",
-      "Marmetini": "",
-      "Maroneia": "",
-      "Marseille": "",
-      "Mediolanum": "",
-      "Megalopoli": "",
-      "Memphis": "",
-      "Messene": "",
-      "Messina": "",
-      "Metapont": "",
-      "Milas": "",
-      "Milet": "",
-      "Mithymna": "",
-      "Mittelitalien": "",
-      "Myriandrus": "",
-      "Myrina": "",
-      "Mytilini": "",
-      "Narbo": "",
-      "Naxos": "",
-      "Neapel": "",
-      "Nessebar": "",
-      "Nikomedia": "",
-      "Nisibis": "",
-      "Nuceria": "",
-      "Olbia": "",
-      "Oreus": "",
-      "Oria": "",
-      "Ostia Antica": "",
-      "Ouranoupolis": "",
-      "Paestum": "",
-      "Paphos": "",
-      "Parion": "",
-      "Paros": "",
-      "Pella": "",
-      "Peloponnes": "",
-      "Pergamon": "",
-      "Perge": "",
-      "Persien": "",
-      "Phanagoria": "",
-      "Phaselis": "",
-      "Phokis": "",
-      "Priene": "",
-      "Prusias ad Hypium": "",
-      "Ravenna": "",
-      "Reggio Calabria": "",
-      "Republik Zypern": "",
-      "Rhodos": "",
-      "Rom": "",
-      "Rouen": "",
-      "Salamis": "",
-      "Samos": "",
-      "Sardes": "",
-      "Sardinien": "",
-      "Segesta": "",
-      "Seleukia Pieria": "",
-      "Seleukia am Tigris": "",
-      "Selinus": "",
-      "Sestos": "",
-      "Side": "",
-      "Sidon": "",
-      "Sikyon": "",
-      "Sinop": "",
-      "Sirmium": "",
-      "Sisak": "",
-      "Sizilien": "",
-      "Sizilien 2 (Republican period)": "",
-      "Sizilisch-Punisch": "",
-      "Smyrna": "",
-      "Sofia": "",
-      "Soloi": "",
-      "Sosopol": "",
-      "Susa (Persien)": "",
-      "Sybaris": "",
-      "Syrakus": "",
-      "Syrien": "",
-      "Südgallische Münzstätte": "",
-      "Tanagra": "",
-      "Taras": "",
-      "Tarraco": "",
-      "Tarsus": "",
-      "Tegea": "",
-      "Temnus": "",
-      "Teos": "",
-      "Terina": "",
-      "Tessin": "",
-      "Thasos": "",
-      "Thessalische Liga": "",
-      "Thessalonica": "",
-      "Thessaloniki": "",
-      "Thiva": "",
-      "Thrakien": "",
-      "Thurioi": "",
-      "Thyrrheium": "",
-      "Trier": "",
-      "Tripoli (Libanon)": "",
-      "Tyros": "",
-      "Unsicher bzw. unbestimmbar": "Belirsiz veya belirlenemeyen",
-      "Viminatium": "",
-      "Vindobona": "",
-      "Warna": "",
-      "Zancle": "",
-      "Äegina": "",
-      "Äeneas": "",
-      "Äetolien": ""
+      "Abdera": {
+        "label": ""
+      },
+      "Abydos": {
+        "label": ""
+      },
+      "Afrika": {
+        "label": ""
+      },
+      "Agrigent": {
+        "label": ""
+      },
+      "Aigai (Vergina)": {
+        "label": ""
+      },
+      "Aiolis": {
+        "label": ""
+      },
+      "Aitolischer Bund": {
+        "label": ""
+      },
+      "Akanthus": {
+        "label": ""
+      },
+      "Akkon": {
+        "label": ""
+      },
+      "Alabanda": {
+        "label": ""
+      },
+      "Alexandria": {
+        "label": ""
+      },
+      "Alexandria Troas": {
+        "label": ""
+      },
+      "Alexandrien": {
+        "label": ""
+      },
+      "Amasra": {
+        "label": ""
+      },
+      "Amathus": {
+        "label": ""
+      },
+      "Ambianum (Amiens)": {
+        "label": ""
+      },
+      "Ambracia": {
+        "label": ""
+      },
+      "Amiens": {
+        "label": ""
+      },
+      "Amisus": {
+        "label": ""
+      },
+      "Amphipolis": {
+        "label": ""
+      },
+      "Amrit": {
+        "label": ""
+      },
+      "Anaktorio": {
+        "label": ""
+      },
+      "Antiochia": {
+        "label": ""
+      },
+      "Antiochia (Antakya)": {
+        "label": ""
+      },
+      "Antiochia am Orontes": {
+        "label": ""
+      },
+      "Apameia Kibotos": {
+        "label": ""
+      },
+      "Apameia am Orontes": {
+        "label": ""
+      },
+      "Apollonia": {
+        "label": ""
+      },
+      "Apulien": {
+        "label": ""
+      },
+      "Aquileia": {
+        "label": ""
+      },
+      "Archaiischer Bund": {
+        "label": ""
+      },
+      "Arelate (Arles)": {
+        "label": ""
+      },
+      "Argos": {
+        "label": ""
+      },
+      "Argos Amphilochicum": {
+        "label": ""
+      },
+      "Arles": {
+        "label": ""
+      },
+      "Arpi": {
+        "label": ""
+      },
+      "Aruad": {
+        "label": ""
+      },
+      "Asia Minor": {
+        "label": ""
+      },
+      "Asien": {
+        "label": ""
+      },
+      "Aspendos": {
+        "label": ""
+      },
+      "Assos": {
+        "label": ""
+      },
+      "Astibus": {
+        "label": ""
+      },
+      "Athen": {
+        "label": ""
+      },
+      "Aydın": {
+        "label": ""
+      },
+      "Babylon": {
+        "label": ""
+      },
+      "Barcino (Barcelona)": {
+        "label": ""
+      },
+      "Beirut": {
+        "label": ""
+      },
+      "Bozcaada": {
+        "label": ""
+      },
+      "Byblos": {
+        "label": ""
+      },
+      "Byzantion": {
+        "label": ""
+      },
+      "Böotien": {
+        "label": ""
+      },
+      "Caesaraugusta": {
+        "label": ""
+      },
+      "Caesarea in Kappadokien": {
+        "label": ""
+      },
+      "Cales": {
+        "label": ""
+      },
+      "Camulodunum (Colchester)": {
+        "label": ""
+      },
+      "Canosa di Puglia": {
+        "label": ""
+      },
+      "Carnuntum": {
+        "label": ""
+      },
+      "Carthago (Tunis)": {
+        "label": ""
+      },
+      "Catania": {
+        "label": ""
+      },
+      "Caulonia": {
+        "label": ""
+      },
+      "Chalcedon": {
+        "label": ""
+      },
+      "Chalkida": {
+        "label": ""
+      },
+      "Chalkidiki": {
+        "label": ""
+      },
+      "Chersones": {
+        "label": ""
+      },
+      "Chios": {
+        "label": ""
+      },
+      "Colchester": {
+        "label": ""
+      },
+      "Colonia Agrippina (Köln)": {
+        "label": ""
+      },
+      "Colonia Patricia": {
+        "label": ""
+      },
+      "Comitatenses": {
+        "label": ""
+      },
+      "Constantinopolis (Istanbul)": {
+        "label": ""
+      },
+      "Crotone": {
+        "label": ""
+      },
+      "Cyme": {
+        "label": ""
+      },
+      "Damaskus": {
+        "label": ""
+      },
+      "Diesseitiges Gallian / Norditalien": {
+        "label": ""
+      },
+      "Dionysopolis": {
+        "label": ""
+      },
+      "Dyrrhachium": {
+        "label": ""
+      },
+      "Ekbatana": {
+        "label": ""
+      },
+      "Elea": {
+        "label": ""
+      },
+      "Elis": {
+        "label": ""
+      },
+      "Emerita": {
+        "label": ""
+      },
+      "Empüries": {
+        "label": ""
+      },
+      "Ephesos": {
+        "label": ""
+      },
+      "Eretria": {
+        "label": ""
+      },
+      "Erythrai": {
+        "label": ""
+      },
+      "Etrurien": {
+        "label": ""
+      },
+      "Euböa": {
+        "label": ""
+      },
+      "Foça": {
+        "label": ""
+      },
+      "Gallien": {
+        "label": ""
+      },
+      "Gela": {
+        "label": ""
+      },
+      "Germe": {
+        "label": ""
+      },
+      "Gortyn": {
+        "label": ""
+      },
+      "Halikarnassos": {
+        "label": ""
+      },
+      "Harran": {
+        "label": ""
+      },
+      "Heraclea": {
+        "label": ""
+      },
+      "Herakleia": {
+        "label": ""
+      },
+      "Herakleia Pontike": {
+        "label": ""
+      },
+      "Himera": {
+        "label": ""
+      },
+      "Hispanien": {
+        "label": ""
+      },
+      "Hispanien-Punisch": {
+        "label": ""
+      },
+      "Histria": {
+        "label": ""
+      },
+      "Homs": {
+        "label": ""
+      },
+      "Ibiza": {
+        "label": ""
+      },
+      "Idalion": {
+        "label": ""
+      },
+      "Italien": {
+        "label": ""
+      },
+      "Italien (Südosten)": {
+        "label": ""
+      },
+      "Kabile": {
+        "label": ""
+      },
+      "Kamarina": {
+        "label": ""
+      },
+      "Karien": {
+        "label": ""
+      },
+      "Karthago": {
+        "label": ""
+      },
+      "Karystos": {
+        "label": ""
+      },
+      "Kelenderis": {
+        "label": ""
+      },
+      "Kertsch": {
+        "label": ""
+      },
+      "Klazomenai": {
+        "label": ""
+      },
+      "Knidos": {
+        "label": ""
+      },
+      "Kolchis": {
+        "label": ""
+      },
+      "Kolophon": {
+        "label": ""
+      },
+      "Konstantinopel": {
+        "label": ""
+      },
+      "Korfu": {
+        "label": ""
+      },
+      "Korinth": {
+        "label": ""
+      },
+      "Korinthischer Bund": {
+        "label": ""
+      },
+      "Kos": {
+        "label": ""
+      },
+      "Kydonia": {
+        "label": ""
+      },
+      "Kyrenaika": {
+        "label": ""
+      },
+      "Kyrene": {
+        "label": ""
+      },
+      "Kyzikos": {
+        "label": ""
+      },
+      "Köln": {
+        "label": ""
+      },
+      "Lampsakos": {
+        "label": ""
+      },
+      "Laodikeia am Lykos": {
+        "label": ""
+      },
+      "Lapta": {
+        "label": ""
+      },
+      "Larissa": {
+        "label": ""
+      },
+      "Larnaka": {
+        "label": ""
+      },
+      "Latakia": {
+        "label": ""
+      },
+      "Lefkada": {
+        "label": ""
+      },
+      "Lentini": {
+        "label": ""
+      },
+      "Lete": {
+        "label": ""
+      },
+      "Locri": {
+        "label": ""
+      },
+      "Locri Opuntii (Opus)": {
+        "label": ""
+      },
+      "Londinium": {
+        "label": ""
+      },
+      "Lucera": {
+        "label": ""
+      },
+      "Lugdunum": {
+        "label": ""
+      },
+      "Lydien": {
+        "label": ""
+      },
+      "Lykien": {
+        "label": ""
+      },
+      "Lysimacheia": {
+        "label": ""
+      },
+      "Lyttos": {
+        "label": ""
+      },
+      "Magnesia am Mäander": {
+        "label": ""
+      },
+      "Mainz": {
+        "label": ""
+      },
+      "Makedonien": {
+        "label": ""
+      },
+      "Makedonien (1. Region)": {
+        "label": ""
+      },
+      "Mangalia": {
+        "label": ""
+      },
+      "Marmetini": {
+        "label": ""
+      },
+      "Maroneia": {
+        "label": ""
+      },
+      "Marseille": {
+        "label": ""
+      },
+      "Mediolanum": {
+        "label": ""
+      },
+      "Megalopoli": {
+        "label": ""
+      },
+      "Memphis": {
+        "label": ""
+      },
+      "Messene": {
+        "label": ""
+      },
+      "Messina": {
+        "label": ""
+      },
+      "Metapont": {
+        "label": ""
+      },
+      "Milas": {
+        "label": ""
+      },
+      "Milet": {
+        "label": ""
+      },
+      "Mithymna": {
+        "label": ""
+      },
+      "Mittelitalien": {
+        "label": ""
+      },
+      "Myriandrus": {
+        "label": ""
+      },
+      "Myrina": {
+        "label": ""
+      },
+      "Mytilini": {
+        "label": ""
+      },
+      "Narbo": {
+        "label": ""
+      },
+      "Naxos": {
+        "label": ""
+      },
+      "Neapel": {
+        "label": ""
+      },
+      "Nessebar": {
+        "label": ""
+      },
+      "Nikomedia": {
+        "label": ""
+      },
+      "Nisibis": {
+        "label": ""
+      },
+      "Nuceria": {
+        "label": ""
+      },
+      "Olbia": {
+        "label": ""
+      },
+      "Oreus": {
+        "label": ""
+      },
+      "Oria": {
+        "label": ""
+      },
+      "Ostia Antica": {
+        "label": ""
+      },
+      "Ouranoupolis": {
+        "label": ""
+      },
+      "Paestum": {
+        "label": ""
+      },
+      "Paphos": {
+        "label": ""
+      },
+      "Parion": {
+        "label": ""
+      },
+      "Paros": {
+        "label": ""
+      },
+      "Pella": {
+        "label": ""
+      },
+      "Peloponnes": {
+        "label": ""
+      },
+      "Pergamon": {
+        "label": ""
+      },
+      "Perge": {
+        "label": ""
+      },
+      "Persien": {
+        "label": ""
+      },
+      "Phanagoria": {
+        "label": ""
+      },
+      "Phaselis": {
+        "label": ""
+      },
+      "Phokis": {
+        "label": ""
+      },
+      "Priene": {
+        "label": ""
+      },
+      "Prusias ad Hypium": {
+        "label": ""
+      },
+      "Ravenna": {
+        "label": ""
+      },
+      "Reggio Calabria": {
+        "label": ""
+      },
+      "Republik Zypern": {
+        "label": ""
+      },
+      "Rhodos": {
+        "label": ""
+      },
+      "Rom": {
+        "label": ""
+      },
+      "Rouen": {
+        "label": ""
+      },
+      "Salamis": {
+        "label": ""
+      },
+      "Samos": {
+        "label": ""
+      },
+      "Sardes": {
+        "label": ""
+      },
+      "Sardinien": {
+        "label": ""
+      },
+      "Segesta": {
+        "label": ""
+      },
+      "Seleukia Pieria": {
+        "label": ""
+      },
+      "Seleukia am Tigris": {
+        "label": ""
+      },
+      "Selinus": {
+        "label": ""
+      },
+      "Sestos": {
+        "label": ""
+      },
+      "Side": {
+        "label": ""
+      },
+      "Sidon": {
+        "label": ""
+      },
+      "Sikyon": {
+        "label": ""
+      },
+      "Sinop": {
+        "label": ""
+      },
+      "Sirmium": {
+        "label": ""
+      },
+      "Sisak": {
+        "label": ""
+      },
+      "Sizilien": {
+        "label": ""
+      },
+      "Sizilien 2 (Republican period)": {
+        "label": ""
+      },
+      "Sizilisch-Punisch": {
+        "label": ""
+      },
+      "Smyrna": {
+        "label": ""
+      },
+      "Sofia": {
+        "label": ""
+      },
+      "Soloi": {
+        "label": ""
+      },
+      "Sosopol": {
+        "label": ""
+      },
+      "Susa (Persien)": {
+        "label": ""
+      },
+      "Sybaris": {
+        "label": ""
+      },
+      "Syrakus": {
+        "label": ""
+      },
+      "Syrien": {
+        "label": ""
+      },
+      "Südgallische Münzstätte": {
+        "label": ""
+      },
+      "Tanagra": {
+        "label": ""
+      },
+      "Taras": {
+        "label": ""
+      },
+      "Tarraco": {
+        "label": ""
+      },
+      "Tarsus": {
+        "label": ""
+      },
+      "Tegea": {
+        "label": ""
+      },
+      "Temnus": {
+        "label": ""
+      },
+      "Teos": {
+        "label": ""
+      },
+      "Terina": {
+        "label": ""
+      },
+      "Tessin": {
+        "label": ""
+      },
+      "Thasos": {
+        "label": ""
+      },
+      "Thessalische Liga": {
+        "label": ""
+      },
+      "Thessalonica": {
+        "label": ""
+      },
+      "Thessaloniki": {
+        "label": ""
+      },
+      "Thiva": {
+        "label": ""
+      },
+      "Thrakien": {
+        "label": ""
+      },
+      "Thurioi": {
+        "label": ""
+      },
+      "Thyrrheium": {
+        "label": ""
+      },
+      "Trier": {
+        "label": ""
+      },
+      "Tripoli (Libanon)": {
+        "label": ""
+      },
+      "Tyros": {
+        "label": ""
+      },
+      "Unsicher bzw. unbestimmbar": {
+        "label": "Belirsiz veya belirlenemeyen"
+      },
+      "Viminatium": {
+        "label": ""
+      },
+      "Vindobona": {
+        "label": ""
+      },
+      "Warna": {
+        "label": ""
+      },
+      "Zancle": {
+        "label": ""
+      },
+      "Äegina": {
+        "label": ""
+      },
+      "Äeneas": {
+        "label": ""
+      },
+      "Äetolien": {
+        "label": ""
+      }
     }
   },
   "Coin-mintingRuler-default": {
     "values": {
-      "Constans": "",
-      "Domitian": "",
-      "Kaiser Nero": "",
-      "Konstantin": "",
-      "Licinius": "",
-      "Myrina": "",
-      "Traian": "",
-      "Türkische Republick": "",
-      "Valentianus III": ""
+      "Constans": {
+        "label": ""
+      },
+      "Domitian": {
+        "label": ""
+      },
+      "Kaiser Nero": {
+        "label": ""
+      },
+      "Konstantin": {
+        "label": ""
+      },
+      "Licinius": {
+        "label": ""
+      },
+      "Myrina": {
+        "label": ""
+      },
+      "Traian": {
+        "label": ""
+      },
+      "Türkische Republick": {
+        "label": ""
+      },
+      "Valentianus III": {
+        "label": ""
+      }
     }
   },
   "Coin-stampPositioning-default": {
     "values": {
-      "- 1 Uhr": "",
-      "- 2 Uhr": "",
-      "- 3 Uhr": "",
-      "- 4 Uhr": "",
-      "- 5 Uhr": "",
-      "- 6 Uhr": "",
-      "- 7 Uhr": "",
-      "- 8 Uhr": "",
-      "- 9 Uhr": "",
-      "- 10 Uhr": "",
-      "- 11 Uhr": "",
-      "- 12 Uhr": ""
+      "- 1 Uhr": {
+        "label": ""
+      },
+      "- 2 Uhr": {
+        "label": ""
+      },
+      "- 3 Uhr": {
+        "label": ""
+      },
+      "- 4 Uhr": {
+        "label": ""
+      },
+      "- 5 Uhr": {
+        "label": ""
+      },
+      "- 6 Uhr": {
+        "label": ""
+      },
+      "- 7 Uhr": {
+        "label": ""
+      },
+      "- 8 Uhr": {
+        "label": ""
+      },
+      "- 9 Uhr": {
+        "label": ""
+      },
+      "- 10 Uhr": {
+        "label": ""
+      },
+      "- 11 Uhr": {
+        "label": ""
+      },
+      "- 12 Uhr": {
+        "label": ""
+      }
     }
   },
   "Find-storagePlace-default": {
     "values": {
-      "Landesamt": "",
-      "Museum": "",
-      "Museum Bergama": "",
-      "Pergamon Depot": "",
-      "Privatbesitz": "",
-      "Regionalverwaltung": "",
-      "Restaurierungswerkstatt": "",
-      "Staatsbesitz": ""
+      "Landesamt": {
+        "label": ""
+      },
+      "Museum": {
+        "label": ""
+      },
+      "Museum Bergama": {
+        "label": ""
+      },
+      "Pergamon Depot": {
+        "label": ""
+      },
+      "Privatbesitz": {
+        "label": ""
+      },
+      "Regionalverwaltung": {
+        "label": ""
+      },
+      "Restaurierungswerkstatt": {
+        "label": ""
+      },
+      "Staatsbesitz": {
+        "label": ""
+      }
     }
   },
   "storagePlace-default": {
     "values": {
-      "Landesamt": "",
-      "Museum": "",
-      "Privatbesitz": "",
-      "Restaurierungswerkstatt": "",
-      "Staatsbesitz": ""
+      "Landesamt": {
+        "label": ""
+      },
+      "Museum": {
+        "label": ""
+      },
+      "Privatbesitz": {
+        "label": ""
+      },
+      "Restaurierungswerkstatt": {
+        "label": ""
+      },
+      "Staatsbesitz": {
+        "label": ""
+      }
     }
   },
   "PlasterFragment-plasterComponents-default": {
     "values": {
-      "Feinsand": "İnce kum",
-      "Grus": "",
-      "Sand": "Kum"
+      "Feinsand": {
+        "label": "İnce kum"
+      },
+      "Grus": {
+        "label": ""
+      },
+      "Sand": {
+        "label": "Kum"
+      }
     }
   },
   "Photo-originalType-default": {
     "values": {
-      "Dia bunt": "",
-      "Digitalfoto": "",
-      "Glasnegativ": "",
-      "Kleinbild bunt": "",
-      "Kleinbild s/w": "",
-      "Messbild": "",
-      "Mittelformat": "",
-      "Scan": ""
+      "Dia bunt": {
+        "label": ""
+      },
+      "Digitalfoto": {
+        "label": ""
+      },
+      "Glasnegativ": {
+        "label": ""
+      },
+      "Kleinbild bunt": {
+        "label": ""
+      },
+      "Kleinbild s/w": {
+        "label": ""
+      },
+      "Messbild": {
+        "label": ""
+      },
+      "Mittelformat": {
+        "label": ""
+      },
+      "Scan": {
+        "label": ""
+      }
     }
   },
   "Metal-decorationTechnique-default": {
     "values": {
-      "Bemalung": "Bezeme",
-      "Beschläge": "",
-      "Emaille": "",
-      "Nielloverzierung": "",
-      "Reliefdekor": "",
-      "Riefeldekor": "",
-      "Ritzungen": "",
-      "Stempel": "",
-      "Stempeldekor": "",
-      "Vergoldung": ""
+      "Bemalung": {
+        "label": "Bezeme"
+      },
+      "Beschläge": {
+        "label": ""
+      },
+      "Emaille": {
+        "label": ""
+      },
+      "Nielloverzierung": {
+        "label": ""
+      },
+      "Reliefdekor": {
+        "label": ""
+      },
+      "Riefeldekor": {
+        "label": ""
+      },
+      "Ritzungen": {
+        "label": ""
+      },
+      "Stempel": {
+        "label": ""
+      },
+      "Stempeldekor": {
+        "label": ""
+      },
+      "Vergoldung": {
+        "label": ""
+      }
     }
   },
   "Metal-manufacturingMethod-default": {
     "values": {
-      "Getrieben": "",
-      "Gußtechnik": "",
-      "Prägearbeit": "",
-      "Schmiedetechnik": "",
-      "Ziehtechnik": ""
+      "Getrieben": {
+        "label": ""
+      },
+      "Gußtechnik": {
+        "label": ""
+      },
+      "Prägearbeit": {
+        "label": ""
+      },
+      "Schmiedetechnik": {
+        "label": ""
+      },
+      "Ziehtechnik": {
+        "label": ""
+      }
     }
   },
   "Metal-objectType-default": {
     "values": {
-      "Anhänger": "Pendant",
-      "Armreif": "",
-      "Barren": "",
-      "Beschlag": "",
-      "Blech": "",
-      "Einlage": "",
-      "Fibel": "",
-      "Gefäß": "Kap",
-      "Gerät": "Alet",
-      "Gewicht": "",
-      "Glocke": "",
-      "Gussform": "Kalıp",
-      "Gusszapfen": "",
-      "Halbfabrikat": "",
-      "Kandelaber": "",
-      "Kette": "",
-      "Klinge": "",
-      "Knopf": "",
-      "Lampe": "",
-      "Löffel": "",
-      "Mobiliar": "Mobilya",
-      "Nadel": "",
-      "Nagel": "",
-      "Perle": "",
-      "Pfeilspitze": "",
-      "Plastik/Skulptur": "",
-      "Produktionsfragment": "",
-      "Projektil": "",
-      "Reibe": "",
-      "Ring": "",
-      "Ringbarren": "",
-      "Rührstab": "",
-      "Sarkophag": "Lahit",
-      "Schild": "",
-      "Schlacke": "",
-      "Schlüssel": "",
-      "Schmiedeabfall": "",
-      "Schmuck": "Takı",
-      "Schnalle": "",
-      "Schreibgerät": "",
-      "Siegel": "Mühür",
-      "Spiegel": "Ayna",
-      "Spielstein": "Oyun taşı/pulu",
-      "Spinnwirtel": "Ağırşak",
-      "Stabbarren": "",
-      "Strigilis": "Strigilis",
-      "Türschloss": "Kapı kilidi",
-      "Unsicher bzw. unbestimmbar": "Belirsiz veya belirlenemeyen",
-      "Waffe": "Savaş aleti",
-      "Wasserleitung": "Su borusu",
-      "Weinheber": "",
-      "Werkzeug": "Alet",
-      "Zierbeschlag": ""
+      "Anhänger": {
+        "label": "Pendant"
+      },
+      "Armreif": {
+        "label": ""
+      },
+      "Barren": {
+        "label": ""
+      },
+      "Beschlag": {
+        "label": ""
+      },
+      "Blech": {
+        "label": ""
+      },
+      "Einlage": {
+        "label": ""
+      },
+      "Fibel": {
+        "label": ""
+      },
+      "Gefäß": {
+        "label": "Kap"
+      },
+      "Gerät": {
+        "label": "Alet"
+      },
+      "Gewicht": {
+        "label": ""
+      },
+      "Glocke": {
+        "label": ""
+      },
+      "Gussform": {
+        "label": "Kalıp"
+      },
+      "Gusszapfen": {
+        "label": ""
+      },
+      "Halbfabrikat": {
+        "label": ""
+      },
+      "Kandelaber": {
+        "label": ""
+      },
+      "Kette": {
+        "label": ""
+      },
+      "Klinge": {
+        "label": ""
+      },
+      "Knopf": {
+        "label": ""
+      },
+      "Lampe": {
+        "label": ""
+      },
+      "Löffel": {
+        "label": ""
+      },
+      "Mobiliar": {
+        "label": "Mobilya"
+      },
+      "Nadel": {
+        "label": ""
+      },
+      "Nagel": {
+        "label": ""
+      },
+      "Perle": {
+        "label": ""
+      },
+      "Pfeilspitze": {
+        "label": ""
+      },
+      "Plastik/Skulptur": {
+        "label": ""
+      },
+      "Produktionsfragment": {
+        "label": ""
+      },
+      "Projektil": {
+        "label": ""
+      },
+      "Reibe": {
+        "label": ""
+      },
+      "Ring": {
+        "label": ""
+      },
+      "Ringbarren": {
+        "label": ""
+      },
+      "Rührstab": {
+        "label": ""
+      },
+      "Sarkophag": {
+        "label": "Lahit"
+      },
+      "Schild": {
+        "label": ""
+      },
+      "Schlacke": {
+        "label": ""
+      },
+      "Schlüssel": {
+        "label": ""
+      },
+      "Schmiedeabfall": {
+        "label": ""
+      },
+      "Schmuck": {
+        "label": "Takı"
+      },
+      "Schnalle": {
+        "label": ""
+      },
+      "Schreibgerät": {
+        "label": ""
+      },
+      "Siegel": {
+        "label": "Mühür"
+      },
+      "Spiegel": {
+        "label": "Ayna"
+      },
+      "Spielstein": {
+        "label": "Oyun taşı/pulu"
+      },
+      "Spinnwirtel": {
+        "label": "Ağırşak"
+      },
+      "Stabbarren": {
+        "label": ""
+      },
+      "Strigilis": {
+        "label": "Strigilis"
+      },
+      "Türschloss": {
+        "label": "Kapı kilidi"
+      },
+      "Unsicher bzw. unbestimmbar": {
+        "label": "Belirsiz veya belirlenemeyen"
+      },
+      "Waffe": {
+        "label": "Savaş aleti"
+      },
+      "Wasserleitung": {
+        "label": "Su borusu"
+      },
+      "Weinheber": {
+        "label": ""
+      },
+      "Werkzeug": {
+        "label": "Alet"
+      },
+      "Zierbeschlag": {
+        "label": ""
+      }
     }
   },
   "Metal-vesselFormSpecific-default": {
     "values": {
-      "Alabastron": "",
-      "Amphoriskos": "",
-      "Aryballos": "",
-      "Balsamarium": "",
-      "Dattelflasche": "",
-      "Faltenbecher": "",
-      "Glockenbecher": "",
-      "Hydria": "",
-      "Kopfflasche": "",
-      "Kotyle": "",
-      "Kragenschale": "",
-      "Krater": "",
-      "Kylix": "",
-      "Lekythos": "",
-      "Luterion": "",
-      "Oinochoe": "",
-      "Pelike": "",
-      "Rippenschale": "",
-      "Schliffrillenschale": "",
-      "Skyphos": "",
-      "Spitzamphora": "",
-      "Sprenkler": "",
-      "Stamnos": "",
-      "Vierkantflasche": "",
-      "hexagonale Flasche": "",
-      "zylindrische Flasche": ""
+      "Alabastron": {
+        "label": ""
+      },
+      "Amphoriskos": {
+        "label": ""
+      },
+      "Aryballos": {
+        "label": ""
+      },
+      "Balsamarium": {
+        "label": ""
+      },
+      "Dattelflasche": {
+        "label": ""
+      },
+      "Faltenbecher": {
+        "label": ""
+      },
+      "Glockenbecher": {
+        "label": ""
+      },
+      "Hydria": {
+        "label": ""
+      },
+      "Kopfflasche": {
+        "label": ""
+      },
+      "Kotyle": {
+        "label": ""
+      },
+      "Kragenschale": {
+        "label": ""
+      },
+      "Krater": {
+        "label": ""
+      },
+      "Kylix": {
+        "label": ""
+      },
+      "Lekythos": {
+        "label": ""
+      },
+      "Luterion": {
+        "label": ""
+      },
+      "Oinochoe": {
+        "label": ""
+      },
+      "Pelike": {
+        "label": ""
+      },
+      "Rippenschale": {
+        "label": ""
+      },
+      "Schliffrillenschale": {
+        "label": ""
+      },
+      "Skyphos": {
+        "label": ""
+      },
+      "Spitzamphora": {
+        "label": ""
+      },
+      "Sprenkler": {
+        "label": ""
+      },
+      "Stamnos": {
+        "label": ""
+      },
+      "Vierkantflasche": {
+        "label": ""
+      },
+      "hexagonale Flasche": {
+        "label": ""
+      },
+      "zylindrische Flasche": {
+        "label": ""
+      }
     }
   },
   "Sample-sampleType-default": {
     "values": {
-      "Bodenprobe": "",
-      "C14-Analyse": "",
-      "Dendroprobe": "",
-      "Hammerschlagsprobe": "",
-      "Phosphatanalyse": "",
-      "Pollenanalyse": ""
+      "Bodenprobe": {
+        "label": ""
+      },
+      "C14-Analyse": {
+        "label": ""
+      },
+      "Dendroprobe": {
+        "label": ""
+      },
+      "Hammerschlagsprobe": {
+        "label": ""
+      },
+      "Phosphatanalyse": {
+        "label": ""
+      },
+      "Pollenanalyse": {
+        "label": ""
+      }
     }
   },
   "TypeCatalog-criterion-default": {
     "values": {
-      "Form": "Formu",
-      "Material": "Malzeme",
-      "Dekoration": "",
-      "Spuren": ""
+      "Form": {
+        "label": "Formu"
+      },
+      "Material": {
+        "label": "Malzeme"
+      },
+      "Dekoration": {
+        "label": ""
+      },
+      "Spuren": {
+        "label": ""
+      }
     }
   },
   "damages-default": {
     "values": {
-      "totalCollapse": "",
-      "partialCollapse": "",
-      "missingconst": "",
-      "looseconst": "",
-      "fractures": "kırık",
-      "riss1": "çatlak (<1mm)",
-      "riss2": "çatlak (1mm-5mm)",
-      "riss3": "çatlak (5mm)",
-      "riss4": "çatlak (>10mm)",
-      "deformationSwelling": "",
-      "delamination": "",
-      "moisture": "Nem",
-      "cavities": "",
-      "exfoliation": "",
-      "spalling": "",
-      "efflorescence": "",
-      "bioSettlement": "",
-      "fireDamage": "",
-      "erosion": "erozyon",
-      "corrosion": "korozyon",
-      "crusting": "",
-      "mechanicDamage": "",
-      "discoloration": "",
-      "contamination": "",
-      "fragmentation": "",
-      "ruin": "",
-      "weathering": "",
-      "rotting": "",
-      "rottingstr": "",
-      "vandalizm": "vandalizm",
-      "fissure": ""
+      "totalCollapse": {
+        "label": ""
+      },
+      "partialCollapse": {
+        "label": ""
+      },
+      "missingconst": {
+        "label": ""
+      },
+      "looseconst": {
+        "label": ""
+      },
+      "fractures": {
+        "label": "kırık"
+      },
+      "riss1": {
+        "label": "çatlak (<1mm)"
+      },
+      "riss2": {
+        "label": "çatlak (1mm-5mm)"
+      },
+      "riss3": {
+        "label": "çatlak (5mm)"
+      },
+      "riss4": {
+        "label": "çatlak (>10mm)"
+      },
+      "deformationSwelling": {
+        "label": ""
+      },
+      "delamination": {
+        "label": ""
+      },
+      "moisture": {
+        "label": "Nem"
+      },
+      "cavities": {
+        "label": ""
+      },
+      "exfoliation": {
+        "label": ""
+      },
+      "spalling": {
+        "label": ""
+      },
+      "efflorescence": {
+        "label": ""
+      },
+      "bioSettlement": {
+        "label": ""
+      },
+      "fireDamage": {
+        "label": ""
+      },
+      "erosion": {
+        "label": "erozyon"
+      },
+      "corrosion": {
+        "label": "korozyon"
+      },
+      "crusting": {
+        "label": ""
+      },
+      "mechanicDamage": {
+        "label": ""
+      },
+      "discoloration": {
+        "label": ""
+      },
+      "contamination": {
+        "label": ""
+      },
+      "fragmentation": {
+        "label": ""
+      },
+      "ruin": {
+        "label": ""
+      },
+      "weathering": {
+        "label": ""
+      },
+      "rotting": {
+        "label": ""
+      },
+      "rottingstr": {
+        "label": ""
+      },
+      "vandalizm": {
+        "label": "vandalizm"
+      },
+      "fissure": {
+        "label": ""
+      }
     }
   },
   "Damage-condition-default": {
     "values": {
-      "CCO": "",
-      "CC1": "",
-      "CC2": "",
-      "CC3": "",
-      "CC4": ""
+      "CCO": {
+        "label": ""
+      },
+      "CC1": {
+        "label": ""
+      },
+      "CC2": {
+        "label": ""
+      },
+      "CC3": {
+        "label": ""
+      },
+      "CC4": {
+        "label": ""
+      }
     }
   },
   "viewingDirection-default": {
     "values": {
-      "N": "K",
-      "NE": "KD",
-      "E": "D",
-      "SE": "GD",
-      "S": "G",
-      "SW": "GB",
-      "W": "B",
-      "NW": "KB"
+      "N": {
+        "label": "K"
+      },
+      "NE": {
+        "label": "KD"
+      },
+      "E": {
+        "label": "D"
+      },
+      "SE": {
+        "label": "GD"
+      },
+      "S": {
+        "label": "G"
+      },
+      "SW": {
+        "label": "GB"
+      },
+      "W": {
+        "label": "B"
+      },
+      "NW": {
+        "label": "KB"
+      }
     }
   },
   "Photo-originalFormat-default": {
     "values": {
-      "Digital": "",
-      "Analog": "",
-      "Dia": "",
-      "S/W": "",
-      "Farbe": "Rengi"
+      "Digital": {
+        "label": ""
+      },
+      "Analog": {
+        "label": ""
+      },
+      "Dia": {
+        "label": ""
+      },
+      "S/W": {
+        "label": ""
+      },
+      "Farbe": {
+        "label": "Rengi"
+      }
+    }
+  },
+  "weight-scale-values-default": {
+    "values": {
+      "Luggage scale": {
+        "label": "El tartısı"
+      },
+      "Kitchen scale": {
+        "label": "Mutfak tartısı"
+      },
+      "Precision scale": {
+        "label": "Hassas tartı"
+      }
+    }
+  },
+  "volume-measurementTechnique-default": {
+    "values": {
+      "classical": {
+        "description": "Hacim, bir ölçüm kabına dökülerek ölçülür",
+        "label": "Toplu hacim"
+      }
+    }
+  },
+  "process-state-default": {
+    "values": {
+      "planned": {
+        "label": "Planlanmış"
+      },
+      "in progress": {
+        "label": "Devam ediyor"
+      },
+      "completed": {
+        "label": "Tamamlanmış"
+      },
+      "canceled": {
+        "label": "İptal edildi"
+      }
     }
   }
 }

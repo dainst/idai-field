@@ -1,6 +1,6 @@
 import { NavbarPage } from '../navbar.page';
 import { ResourcesPage } from '../resources/resources.page';
-import { getText, navigateTo, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
+import { getText, navigateTo, pause, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
 import { ConfigurationPage } from './configuration.page';
 import { AddCategoryFormModalPage } from './add-category-form-modal.page';
 import { EditConfigurationPage } from './edit-configuration.page';
@@ -20,7 +20,7 @@ const { test, expect } = require('@playwright/test');
 /**
  * @author Thomas Kleinke
  */
-test.describe('configuration --', () => {
+test.describe('configuration', () => {
 
     async function createSubfieldAndValuelist(subfieldName: string, valuelistName: string, valueName: string) {
 
@@ -772,6 +772,144 @@ test.describe('configuration --', () => {
     });
 
 
+    test('set field conditions', async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Feature');
+        await ConfigurationPage.clickSelectGroup('properties');
+
+        await ConfigurationPage.clickOpenContextMenuForField('featureForm');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickSelectConditionField('hasDisturbance', 'field');
+        await EditConfigurationPage.clickSelectConditionValue('boolean', 0, 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await ConfigurationPage.clickOpenContextMenuForField('comparison');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickSelectConditionField('featureForm', 'field');
+        await EditConfigurationPage.clickSelectConditionValue('valuelist', 0, 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await ConfigurationPage.clickSelectField('featureForm');
+        expect(await ConfigurationPage.getConditionLabelText()).toEqual('Störung: Ja');
+
+        await ConfigurationPage.clickSelectField('comparison');
+        expect(await ConfigurationPage.getConditionLabelText()).toEqual('Form der stratigraphischen Einheit: annähernd');
+
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.clickHierarchyButton('S1');
+        await ResourcesPage.openEditByDoubleClickResource('SE0');
+        await DoceditPage.clickSelectGroup('properties');
+        
+        await waitForExist(await DoceditPage.getField('hasDisturbance'));
+        await waitForNotExist(await DoceditPage.getField('featureForm'));
+        await waitForNotExist(await DoceditPage.getField('comparison'));
+
+        await DoceditPage.clickBooleanRadioButton('hasDisturbance', 0);
+        await waitForExist(await DoceditPage.getField('featureForm'));
+
+        await DoceditPage.clickCheckbox('featureForm', 0);
+        await waitForExist(await DoceditPage.getField('comparison'));
+
+        await DoceditPage.clickCloseEdit('discard');
+    });
+
+
+    test('change field condition of library field', async () => {
+
+        await ConfigurationPage.clickCreateSubcategory('Process');
+        await AddCategoryFormModalPage.clickSelectForm('Sampling:default');
+        await AddCategoryFormModalPage.clickConfirmSelection();
+        await CategoryPickerPage.clickSelectCategory('Feature', undefined, 'is-carried-out-on-target-container');
+        await ConfigurationPage.clickNextInAddProcessSubcategoryModal();
+        await ConfigurationPage.clickNextInAddProcessSubcategoryModal();
+
+        await ConfigurationPage.clickSelectGroup('properties');
+        await ConfigurationPage.clickSelectField('horizontalSamplingStrategy');
+        expect(await ConfigurationPage.getConditionLabelText()).toEqual('Art der Probenentnahme: Horizontal');
+
+        await ConfigurationPage.clickOpenContextMenuForField('horizontalSamplingStrategy');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickSelectConditionField('state', 'field');
+        await EditConfigurationPage.clickSelectConditionValue('valuelist', 2, 'field');
+        await EditConfigurationPage.clickConfirm();
+        
+        await ConfigurationPage.clickSelectField('horizontalSamplingStrategy');
+        expect(await ConfigurationPage.getConditionLabelText()).toEqual('Status: Abgeschlossen');
+
+        await ConfigurationPage.save();
+    });
+
+
+    test('remove field condition of library field', async () => {
+
+        await ConfigurationPage.clickCreateSubcategory('Process');
+        await AddCategoryFormModalPage.clickSelectForm('Sampling:default');
+        await AddCategoryFormModalPage.clickConfirmSelection();
+        await CategoryPickerPage.clickSelectCategory('Feature', undefined, 'is-carried-out-on-target-container');
+        await ConfigurationPage.clickNextInAddProcessSubcategoryModal();
+        await ConfigurationPage.clickNextInAddProcessSubcategoryModal();
+
+        await ConfigurationPage.clickSelectGroup('properties');
+        await ConfigurationPage.clickSelectField('horizontalSamplingStrategy');
+        expect(await ConfigurationPage.getConditionLabelText()).toEqual('Art der Probenentnahme: Horizontal');
+
+        await ConfigurationPage.clickOpenContextMenuForField('horizontalSamplingStrategy');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickSelectConditionField('', 'field');
+        await EditConfigurationPage.clickConfirm();
+        
+        await ConfigurationPage.clickSelectField('horizontalSamplingStrategy');
+        await pause(1000);
+        waitForNotExist(await ConfigurationPage.getFieldConditionLabel());
+
+        await ConfigurationPage.save();
+    });
+
+
+    test('prevent setting self-referencing conditions', async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Feature');
+        await ConfigurationPage.clickSelectGroup('properties');
+
+        await ConfigurationPage.clickOpenContextMenuForField('featureForm');
+        await ConfigurationPage.clickContextMenuEditOption();
+
+        let availableConditionFields: string[] = await EditConfigurationPage.getConditionSelectValues('field');
+        expect(availableConditionFields).not.toContain('Form der stratigraphischen Einheit');
+        expect(availableConditionFields).toContain('Störung');
+        expect(availableConditionFields).toContain('Grenzen der stratigraphischen Einheit');
+
+        await EditConfigurationPage.clickSelectConditionField('hasDisturbance', 'field');
+        await EditConfigurationPage.clickSelectConditionValue('boolean', 0, 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await ConfigurationPage.clickOpenContextMenuForField('hasDisturbance');
+        await ConfigurationPage.clickContextMenuEditOption();
+
+        availableConditionFields = await EditConfigurationPage.getConditionSelectValues('field');
+        expect(availableConditionFields).not.toContain('Form der stratigraphischen Einheit');
+        expect(availableConditionFields).not.toContain('Störung');
+        expect(availableConditionFields).toContain('Grenzen der stratigraphischen Einheit');
+
+        await EditConfigurationPage.clickSelectConditionField('featureBorders', 'field');
+        await EditConfigurationPage.clickSelectConditionValue('valuelist', 0, 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await ConfigurationPage.clickOpenContextMenuForField('featureBorders');
+        await ConfigurationPage.clickContextMenuEditOption();
+
+        availableConditionFields = await EditConfigurationPage.getConditionSelectValues('field');
+        expect(availableConditionFields).not.toContain('Form der stratigraphischen Einheit');
+        expect(availableConditionFields).not.toContain('Störung');
+        expect(availableConditionFields).not.toContain('Grenzen der stratigraphischen Einheit');
+
+        await EditConfigurationPage.clickCancel();
+        await ConfigurationPage.save();
+    });
+
+
     test('create composite field', async () => {
 
         await CategoryPickerPage.clickSelectCategory('Place');
@@ -827,8 +965,8 @@ test.describe('configuration --', () => {
         await EditConfigurationPage.typeInNewSubfield('subfield2');
         await EditConfigurationPage.clickCreateSubfield();
         await EditConfigurationPage.clickInputTypeSelectOption('dropdown', 'subfield');
-        await EditConfigurationPage.clickSelectConditionSubfield('subfield1');
-        await EditConfigurationPage.clickSelectConditionValue('boolean', 0);
+        await EditConfigurationPage.clickSelectConditionField('subfield1', 'subfield');
+        await EditConfigurationPage.clickSelectConditionValue('boolean', 0, 'subfield');
         await EditConfigurationPage.clickAddValuelist();
         await ManageValuelistsModalPage.typeInSearchFilterInput('periods-default-1');
         await ManageValuelistsModalPage.clickSelectValuelist('periods-default-1');
@@ -838,9 +976,9 @@ test.describe('configuration --', () => {
         await EditConfigurationPage.typeInNewSubfield('subfield3');
         await EditConfigurationPage.clickCreateSubfield();
         await EditConfigurationPage.clickInputTypeSelectOption('input', 'subfield');
-        await EditConfigurationPage.clickSelectConditionSubfield('subfield2');
-        await EditConfigurationPage.clickSelectConditionValue('valuelist', 3);
-        await EditConfigurationPage.clickSelectConditionValue('valuelist', 4);
+        await EditConfigurationPage.clickSelectConditionField('subfield2', 'subfield');
+        await EditConfigurationPage.clickSelectConditionValue('valuelist', 3, 'subfield');
+        await EditConfigurationPage.clickSelectConditionValue('valuelist', 4, 'subfield');
         await EditConfigurationPage.clickConfirmSubfield();
 
         await EditConfigurationPage.clickConfirm();

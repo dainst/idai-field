@@ -46,6 +46,7 @@ import { I18N } from '../../../src/tools/i18n';
         parentCategory: undefined,
         isAbstract: false,
         groups: [],
+        originalGroups: [],
         mustLieWithin: false,
         color: '#fff'
     };

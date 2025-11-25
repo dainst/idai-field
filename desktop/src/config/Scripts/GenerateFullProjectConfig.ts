@@ -107,7 +107,6 @@ function cleanField(field: any): FieldDefinition {
     delete field.group;
     delete field.visible;
     delete field.editable;
-    delete field.allowOnlyValuesOfParent;
     delete field.constraintIndexed;
     delete field.domain;
     delete field.range;

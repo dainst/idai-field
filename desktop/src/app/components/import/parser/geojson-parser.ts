@@ -1,4 +1,4 @@
-import { Document } from 'idai-field-core';
+import { Document, FieldGeometry } from 'idai-field-core';
 import { ParserErrors } from './parser-errors';
 import { Parser } from './parser';
 
@@ -86,8 +86,8 @@ export module GeojsonParser {
             ParserErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'Property "features" not found at top level.'];
 
         let identifiers: string[] = [];
-        for (let feature of geojson.features) {
 
+        for (let feature of geojson.features) {
             if (!feature.properties) return [ParserErrors.MISSING_IDENTIFIER];
             feature.properties.relations = {};
 
@@ -98,6 +98,8 @@ export module GeojsonParser {
 
             const msgWithParams = validateAndTransformFeature(feature);
             if (msgWithParams) return msgWithParams;
+
+            FieldGeometry.closeRings(feature.geometry as FieldGeometry);
         }
     }
 

@@ -21,6 +21,7 @@ import { MsgWithParams } from '../messages/msg-with-params';
 import { QrCodeEditorModalComponent } from './actions/edit-qr-code/qr-code-editor-modal.component';
 import { StoragePlaceScanner } from './actions/scan-storage-place/storage-place-scanner';
 import { WarningsService } from '../../services/warnings/warnings-service';
+import { WorkflowEditorModalComponent } from './actions/edit-workflow/workflow-editor-modal.component';
 
 
 @Component({
@@ -97,6 +98,8 @@ export class ResourcesComponent implements OnDestroy {
 
     public isInGridListView = () => this.viewFacade.isInGridListView();
 
+    public isInWorkflowManagement = () => this.viewFacade.isInWorkflowManagement();
+
     public scanStoragePlace = (documents: Array<FieldDocument>) =>
         this.storagePlaceScanner.scanStoragePlace(documents);
 
@@ -144,6 +147,8 @@ export class ResourcesComponent implements OnDestroy {
             this.filterOptions = this.projectConfiguration.getTypeManagementSupercategories();
         } else if (this.viewFacade.isInInventoryManagement()) {
             this.filterOptions = this.projectConfiguration.getInventorySupercategories();
+        } else if (this.viewFacade.isInWorkflowManagement()) {
+            this.filterOptions = [this.projectConfiguration.getCategory('Process')];
         } else {
             this.filterOptions = this.projectConfiguration.getAllowedRelationDomainCategories(
                 'isRecordedIn',
@@ -201,6 +206,27 @@ export class ResourcesComponent implements OnDestroy {
                 { animation: false, backdrop: 'static', keyboard: false }
             );
             modalRef.componentInstance.document = document;
+            await modalRef.componentInstance.initialize();
+            AngularUtility.blurActiveElement();
+            await modalRef.result;
+        } catch (err) {
+            console.error(err);
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
+        }
+    }
+
+
+    public async editWorkflow(documents: Array<Document>) {
+
+        try {
+            this.menuService.setContext(MenuContext.WORKFLOW_EDITOR);
+
+            const modalRef: NgbModalRef = this.modalService.open(
+                WorkflowEditorModalComponent,
+                { size: 'md', animation: false, backdrop: 'static', keyboard: false }
+            );
+            modalRef.componentInstance.documents = documents.slice();
             await modalRef.componentInstance.initialize();
             AngularUtility.blurActiveElement();
             await modalRef.result;

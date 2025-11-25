@@ -51,5 +51,6 @@
   "info.close": "Закрити",
   "menu.configuration.exportConfiguration": "Експортувати конфігурацію...",
   "autoUpdate.available.warning": "Увага: Будь ласка, створіть резервну копію всіх важливих проектів перед оновленням.",
-  "menu.tools.inventory": "Інвентаризація"
+  "menu.tools.inventory": "Інвентаризація",
+  "menu.tools.workflow": "Workflow"
 }

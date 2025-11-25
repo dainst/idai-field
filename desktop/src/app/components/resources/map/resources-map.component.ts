@@ -12,7 +12,9 @@ import { MenuContext } from '../../../services/menu-context';
 @Component({
     selector: 'resources-map',
     templateUrl: './resources-map.html',
-    host: { '(window:keydown)': 'onKeyDown($event)' },
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    },
     standalone: false
 })
 /**
@@ -64,8 +66,8 @@ export class ResourcesMapComponent {
     public isEditing = (menuContext = this.menuService.getContext()) =>
         [MenuContext.GEOMETRY_EDIT, MenuContext.MAP_LAYERS_EDIT].includes(menuContext);
 
-    public isModalOpened = () => this.menuService.getContext() === MenuContext.MODAL
-        || this.menuService.getContext() === MenuContext.DOCEDIT;
+    public isModalOpened = () => [MenuContext.MODAL, MenuContext.BLOCKING_MODAL, MenuContext.IMAGE_TOOL_MODAL,
+        MenuContext.DOCEDIT].includes(this.menuService.getContext());
     
     public getPaddingLeft = () => (this.viewFacade.getSelectedDocument()
         && this.resourcesComponent.popoverMenuOpened) ? 258 : 0;
@@ -109,6 +111,7 @@ export class ResourcesMapComponent {
         if (!selectedDocument.resource.geometry) return;
 
         if (geometry) {
+            FieldGeometry.closeRings(geometry);
             selectedDocument.resource.geometry = geometry;
         } else if (geometry === null || !selectedDocument.resource.geometry.coordinates
                 || selectedDocument.resource.geometry.coordinates.length === 0) {

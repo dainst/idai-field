@@ -8,7 +8,19 @@
       "description": "Identificador único de este recurso"
     },
     "shortDescription": {
-      "label": "Breve descripción"
+      "label": "Descripción breve"
+    },
+    "isResultOf": {
+      "label": "Resultado de"
+    },
+    "includesStratigraphicalUnits": {
+      "label": "Incluye unidades estratigráficas"
+    },
+    "hasChildren": {
+      "label": "Recursos subordinados"
+    },
+    "isSubjectOf": {
+      "label": "Objeto de"
     }
   },
   "categories": {
@@ -16,7 +28,10 @@
       "label": "Proyecto",
       "fields": {
         "coordinateReferenceSystem": {
-          "label": "Sistema de referencia de coordenadas"
+          "label": "Sistema de coordenadas de referencia"
+        },
+        "shortName": {
+          "label": "Nombre del proyecto"
         }
       }
     },
@@ -27,17 +42,17 @@
           "label": "Altura"
         },
         "width": {
-          "label": "Anchura"
+          "label": "Ancho"
         }
       }
     }
   },
   "relations": {
     "isRecordedIn": {
-      "label": "Tomada en intervención"
+      "label": "Registrado durante la intervención"
     },
     "liesWithin": {
-      "label": "Dentro de"
+      "label": "Dentro de/Contenida en"
     },
     "includes": {
       "label": "Incluye"
@@ -49,7 +64,7 @@
       "label": "Debajo de"
     },
     "isSameAs": {
-      "label": "Lo mismo que"
+      "label": "Igual que"
     },
     "cuts": {
       "label": "Corta"
@@ -64,19 +79,19 @@
       "label": "Se apoya en"
     },
     "isAbuttedBy": {
-      "label": "Se le apoya"
+      "label": "Se le apoya a"
     },
     "bondsWith": {
       "label": "Se une a"
     },
     "isAfter": {
-      "label": "Cronología: después de"
+      "label": "Cronológicamente posterior a"
     },
     "isBefore": {
-      "label": "Cronología: antes de"
+      "label": "Cronológicamente anterior a"
     },
     "isContemporaryWith": {
-      "label": "Cronología: simultáneo con"
+      "label": "Contemporáneo con"
     },
     "depicts": {
       "label": "Representa"
@@ -89,6 +104,33 @@
     },
     "hasInstance": {
       "label": "Hallazgos relacionados"
+    },
+    "isPresentIn": {
+      "label": "Está presente en el perfil/plano"
+    },
+    "fills": {
+      "label": "Relleno"
+    },
+    "isFilledBy": {
+      "label": "Rellenado por"
+    },
+    "resultsIn": {
+      "label": "Resulta en"
+    },
+    "isMapLayerOf": {
+      "label": "Mapa de fondo de"
+    },
+    "hasMapLayer": {
+      "label": "Tiene mapa de fondo"
+    },
+    "isCarriedOutOn": {
+      "label": "Llevado a cabo en"
+    },
+    "isStoredIn": {
+      "label": "Se almacena en"
+    },
+    "isStoragePlaceOf": {
+      "label": "Es el lugar de almacenamiento de"
     }
   }
 }

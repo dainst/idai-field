@@ -6,9 +6,14 @@
 <div class="modal-body configuration-delete-modal-body">
     <span *ngIf="isDeletionAllowed()"
           i18n="@@configuration.deleteField.body">Möchten Sie das Feld <code>{{field.name}}</code> wirklich löschen?</span>
-    <span *ngIf="!isDeletionAllowed()"
-          i18n="@@configuration.deleteField.body.notAllowed">
+    <span *ngIf="isInverseRelation()"
+          i18n="@@configuration.deleteField.body.notAllowed.inverseRelation">
           Das Feld <code>{{field.name}}</code> kann nicht gelöscht werden, solange es als Gegenrelation verwendet wird.
+    </span>
+    <span *ngIf="getConditionalFieldName()"
+          i18n="@@configuration.deleteField.body.notAllowed.conditionalField">
+          Das Feld <code>{{field.name}}</code> kann nicht gelöscht werden, solange es als Bedingungsfeld für das
+          Feld <code>{{getConditionalFieldName()}}</code> konfiguriert ist.
     </span>
 </div>
 

@@ -14,6 +14,7 @@ import Config
 # Configures the endpoint
 config :field_hub, FieldHubWeb.Endpoint,
   url: [host: "localhost"],
+  adapter: Bandit.PhoenixAdapter,
   render_errors: [
     formats: [html: FieldHubWeb.ErrorHTML, json: FieldHubWeb.ErrorJSON],
     layout: false

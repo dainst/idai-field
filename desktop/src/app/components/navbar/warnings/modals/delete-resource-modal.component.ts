@@ -3,6 +3,8 @@ import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstra
 import { Datastore, Document, RelationsManager, WarningType } from 'idai-field-core';
 import { DeletionInProgressModalComponent } from '../../../widgets/deletion-in-progress-modal.component';
 import { AngularUtility } from '../../../../angular/angular-utility';
+import { Menus } from '../../../../services/menus';
+import { MenuContext } from '../../../../services/menu-context';
 
 
 @Component({
@@ -30,7 +32,8 @@ export class DeleteResourceModalComponent {
     constructor(public activeModal: NgbActiveModal,
                 private modalService: NgbModal,
                 private datastore: Datastore,
-                private relationsManager: RelationsManager) {}
+                private relationsManager: RelationsManager,
+                private menuService: Menus) {}
 
 
     public isMultipleSwitchAvailable = () => this.warningType === 'unconfiguredCategory';
@@ -40,7 +43,9 @@ export class DeleteResourceModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.MODAL) {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
     

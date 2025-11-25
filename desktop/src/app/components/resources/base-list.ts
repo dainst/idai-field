@@ -1,7 +1,6 @@
-import { AfterViewChecked, Component, ViewChild } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { FieldDocument } from 'idai-field-core';
-import { ResourcesComponent } from './resources.component';
+import { Document } from 'idai-field-core';
 import { Loading } from '../widgets/loading';
 import { PlusButtonStatus } from './plus-button.component';
 import { NavigationPath } from '../../components/resources/view/state/navigation-path';
@@ -11,6 +10,7 @@ import { Menus } from '../../services/menus';
 import { scrollTo } from '../../angular/scrolling';
 import { NavigationPathSegment } from './view/state/navigation-path-segment';
 import { AngularUtility } from '../../angular/angular-utility';
+import { ContextMenuProvider } from '../widgets/context-menu-provider';
 
 
 @Component({
@@ -21,7 +21,7 @@ import { AngularUtility } from '../../angular/angular-utility';
  * @author Philipp Gerth
  * @author Thomas Kleinke
  */
-export class BaseList implements AfterViewChecked {
+export class BaseList extends ContextMenuProvider implements AfterViewChecked {
 
     @ViewChild(CdkVirtualScrollViewport) scrollViewport: CdkVirtualScrollViewport;
 
@@ -30,16 +30,18 @@ export class BaseList implements AfterViewChecked {
     
     public readonly itemSize: number;
 
-    private scrollTarget: FieldDocument;
+    private scrollTarget: Document;
     private scrollToBottomElement: boolean = false;
     private scrollOnlyIfInvisible: boolean = false;
     private lastSelectedSegment: NavigationPathSegment;
 
 
-    constructor(public resourcesComponent: ResourcesComponent,
-                public viewFacade: ViewFacade,
+    constructor(public viewFacade: ViewFacade,
                 protected loading: Loading,
-                protected menuService: Menus) {
+                protected menuService: Menus,
+                changeDetectorRef: ChangeDetectorRef) {
+
+        super(changeDetectorRef);
 
         this.navigationPath = this.viewFacade.getNavigationPath();
 
@@ -63,14 +65,14 @@ export class BaseList implements AfterViewChecked {
     }
 
 
-    public getCurrentFilterCategory()  {
+    public getCurrentFilterCategory(): string {
 
         const filterCategories = this.viewFacade.getFilterCategories();
         return filterCategories && filterCategories.length > 0 ? filterCategories[0] : undefined;
     }
 
 
-    public getSelectedSegmentDoc() {
+    public getSelectedSegmentDocument(): Document {
 
         const segment = NavigationPath.getSelectedSegment(this.navigationPath);
         return segment ? segment.document : undefined;
@@ -99,7 +101,7 @@ export class BaseList implements AfterViewChecked {
     }
 
 
-    protected scrollTo(scrollTarget: FieldDocument, scrollToBottomElement: boolean = false,
+    protected scrollTo(scrollTarget: Document, scrollToBottomElement: boolean = false,
                        scrollOnlyIfInvisible: boolean = true, waitForScroll: boolean = false) {
 
         if (!scrollTarget) return;

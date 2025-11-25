@@ -1,162 +1,41 @@
+import Map from "ol/Map.js";
+import View from "ol/View.js";
+import { createEmpty, extend } from "ol/extent.js";
+import VectorSource from "ol/source/Vector";
+import VectorLayer from "ol/layer/Vector";
+import GeoJSON from "ol/format/GeoJSON.js";
+import { asArray } from "ol/color";
+import Overlay from "ol/Overlay.js";
 
-import Map from 'ol/Map.js';
-import TileLayer from 'ol/layer/Tile.js';
-import TileGrid from 'ol/tilegrid/TileGrid';
-import View from 'ol/View.js';
-import { createEmpty, extend } from 'ol/extent.js';
-import { TileImage } from 'ol/source.js';
-import { Fill, Stroke, Style, Circle } from 'ol/style.js';
-import VectorSource from 'ol/source/Vector';
-import VectorLayer from 'ol/layer/Vector';
-import GeoJSON from 'ol/format/GeoJSON.js';
-import { asArray } from 'ol/color';
-import Overlay from 'ol/Overlay.js';
+import {
+    createTileLayer,
+    getVisibilityKey,
+    styleFunction,
+} from "./map-helper-functions.js";
 
-const tileSize = 256;
+async function checkForHitInOrder(layers, coords) {
+    let hits = [];
+    for (const layer of layers) {
+        const features = await layer.getFeatures(coords);
 
-function createTileLayer(info, projectName) {
-    const geoReference = info.extent;
-
-    const extent = [
-        geoReference.bottomLeftCoordinates[1],
-        geoReference.bottomLeftCoordinates[0],
-        geoReference.topRightCoordinates[1],
-        geoReference.topRightCoordinates[0]
-    ];
-
-    const pathTemplate = `/api/image/tile/${projectName}/${info.uuid}/{z}/{x}/{y}`;
-
-    const resolutions = getResolutions(extent, tileSize, info.width, info.height)
-
-    const source = new TileImage({
-        tileGrid: new TileGrid({
-            extent,
-            origin: [extent[0], extent[3]],
-            resolutions,
-            tileSize
-        }),
-        tileUrlFunction: (tileCoord) => {
-            return pathTemplate
-                .replace('{z}', String(tileCoord[0]))
-                .replace('{x}', String(tileCoord[1]))
-                .replace('{y}', String(tileCoord[2]));
+        if (features.length) {
+            hits = hits.concat(features);
         }
-    });
+    }
 
-    return new TileLayer({
-        name: info.uuid,
-        source: source,
-        extent,
-        visible: info.visible
-    })
+    return hits;
 }
 
+function setFillForLayer(layer, value) {
+    if (!layer) return;
 
-function getResolutions(
-    extent,
-    tileSize,
-    width, height) {
-
-    const portraitFormat = height > width;
-
-    const result = [];
-    const layerSize = extent[portraitFormat ? 3 : 2] - extent[portraitFormat ? 1 : 0];
-    const imageSize = portraitFormat ? height : width;
-
-    let scale = 1;
-    while (tileSize < imageSize / scale) {
-        result.push(layerSize / imageSize * scale);
-        scale *= 2;
+    let features = layer.getSource().getFeatures();
+    for (let feature of features) {
+        let properties = feature.getProperties();
+        properties.fill = value;
+        feature.setProperties(properties);
     }
-    result.push(layerSize / imageSize * scale);
-
-    return result.reverse();
-};
-
-function getPolygonStyle(featureProperties) {
-    const [r, g, b, a] = asArray(featureProperties.color)
-
-    let style = new Style({
-        stroke: new Stroke({
-            color: `rgba(${r}, ${g}, ${b}, ${a})`,
-            width: 1,
-        })
-    })
-
-    if (featureProperties.fill) {
-        style.setFill(new Fill({
-            color: `rgba(${r * 0.5}, ${g * 0.5}, ${b * 0.5}, 0.5)`,
-        }));
-    } else {
-        style.setFill(new Fill({
-            color: `rgba(${r}, ${g}, ${b}, 0.0)`,
-        }));
-    }
-
-    return style;
 }
-
-const pointRadius = 5;
-const lineWidth = pointRadius * 2;
-
-function getLineStyle(featureProperties) {
-    const [r, g, b, a] = asArray(featureProperties.color)
-
-    let color;
-
-    if (featureProperties.fill) {
-        color = `rgba(${r}, ${g}, ${b}, 1)`
-    } else {
-        color = `rgba(${r}, ${g}, ${b}, 0.5)`
-    }
-
-    return new Style({
-        stroke: new Stroke({
-            color: color,
-            width: lineWidth,
-        })
-    })
-}
-
-function getPointStyle(featureProperties) {
-    const [r, g, b, a] = asArray(featureProperties.color)
-
-    let image = new Circle({
-        radius: pointRadius,
-        stroke: new Stroke({
-            color: `rgba(${r}, ${g}, ${b}, ${a})`,
-            width: 1,
-        })
-    })
-
-    if (featureProperties.fill) {
-        image.setFill(new Fill({
-            color: `rgba(${r * 0.5}, ${g * 0.5}, ${b * 0.5}, 0.5)`,
-        }));
-    } else {
-        image.setFill(new Fill({
-            color: `rgba(${r}, ${g}, ${b}, 0.05)`,
-        }));
-    }
-
-    return new Style({
-        image: image
-    })
-}
-
-const styleFunction = function (feature) {
-    const props = feature.getProperties();
-    if (props.type === "Polygon" || props.type === "MultiPolygon") {
-        return getPolygonStyle(props);
-    } else if (props.type == "LineString" || props.type === "MultiLineString") {
-        return getLineStyle(props);
-    } else if (props.type == "Point") {
-        return getPointStyle(props);
-    } else {
-        console.error(`Unknown feature type ${props.type}, no matching style.`)
-        return null;
-    }
-};
 
 export default getDocumentViewMapHook = () => {
     return {
@@ -168,6 +47,7 @@ export default getDocumentViewMapHook = () => {
         documentTileLayers: [],
         documentTileLayerExtent: null,
         parentLayer: null,
+        ancestorLayer: null,
         docLayer: null,
         childrenLayer: null,
         identifierOverlay: null,
@@ -178,65 +58,87 @@ export default getDocumentViewMapHook = () => {
             this.handleEvent(
                 `document-map-set-project-layers-${this.el.id}`,
                 ({ project, project_tile_layers }) => {
-                    this.setTileLayers(project, project_tile_layers, "project")
-                }
-            )
+                    this.setTileLayers(project, project_tile_layers, "project");
+                },
+            );
             this.handleEvent(
                 `document-map-set-document-layers-${this.el.id}`,
                 ({ project, document_tile_layers }) => {
-                    this.setTileLayers(project, document_tile_layers, "document")
-                }
-            )
+                    this.setTileLayers(
+                        project,
+                        document_tile_layers,
+                        "document",
+                    );
+                },
+            );
             this.handleEvent(
                 `document-map-update-${this.el.id}`,
-                ({ project, document_feature, children_features, parent_features }) => {
-                    this.projectName = project
-                    this.setMapFeatures(parent_features, document_feature, children_features)
-                }
-            )
+                ({
+                    project,
+                    document_feature,
+                    children_features,
+                    parent_features,
+                    ancestor_features,
+                }) => {
+                    this.projectName = project;
+                    this.setMapFeatures(
+                        parent_features,
+                        document_feature,
+                        children_features,
+                        ancestor_features,
+                    );
+                },
+            );
             this.handleEvent(
                 `document-map-set-layer-visibility-${this.el.id}`,
                 ({ uuid, visibility }) => {
-                    this.toggleLayerVisibility(uuid, visibility)
-                }
-            )
+                    this.toggleLayerVisibility(uuid, visibility);
+                },
+            );
 
-            this.handleEvent(`map-highlight-feature-${this.el.id}`, ({ feature_id }) => {
-                this.clearAllHighlights();
-                const vectorLayerFeatures = this.map.getAllLayers().filter(layer => layer instanceof VectorLayer).map(layer => layer.getSource().getFeatures()).flat()
+            this.handleEvent(
+                `map-highlight-feature-${this.el.id}`,
+                ({ feature_id }) => {
+                    this.clearAllHighlights();
+                    const vectorLayerFeatures = this.map
+                        .getAllLayers()
+                        .filter((layer) => layer instanceof VectorLayer)
+                        .map((layer) => layer.getSource().getFeatures())
+                        .flat();
 
-                const feature = vectorLayerFeatures.find(function (f) {
-                    return f.getProperties().uuid == feature_id
-                })
+                    const feature = vectorLayerFeatures.find(function (f) {
+                        return f.getProperties().uuid == feature_id;
+                    });
 
-                if (feature) this.highlightFeature(feature, null)
-            })
+                    if (feature) this.highlightFeature(feature);
+                },
+            );
 
             this.handleEvent(`map-clear-highlights-${this.el.id}`, () => {
                 this.clearAllHighlights();
 
-                this.setFillForParents(false);
-                this.setFillForSelectedDocument(true);
-                this.setFillForChildren(false);
-            })
+                setFillForLayer(this.docLayer, true);
+            });
         },
 
         initialize() {
             const _this = this;
 
             this.identifierOverlayContent = document.getElementById(
-                `${this.el.getAttribute("id")}-identifier-tooltip-content`
-            )
+                `${this.el.getAttribute("id")}-identifier-tooltip-content`,
+            );
             const overlayDiv = document.getElementById(
-                `${this.el.getAttribute("id")}-identifier-tooltip`
+                `${this.el.getAttribute("id")}-identifier-tooltip`,
             );
 
             this.identifierOverlay = new Overlay({
                 element: overlayDiv,
-                offset: [5, 5]
+                offset: [5, 5],
             });
 
-            document.getElementById(`${this.el.getAttribute("id")}-map`).innerHTML = ""
+            document.getElementById(
+                `${this.el.getAttribute("id")}-map`,
+            ).innerHTML = "";
 
             this.map = new Map({
                 target: `${this.el.getAttribute("id")}-map`,
@@ -244,83 +146,103 @@ export default getDocumentViewMapHook = () => {
                 overlays: [this.identifierOverlay],
             });
 
-            _this.identifierOverlay.setPosition(undefined)
+            _this.identifierOverlay.setPosition(undefined);
 
-            this.el.addEventListener('pointerenter', function (e) {
-                _this.setFillForSelectedDocument(false);
+            this.el.addEventListener("pointerenter", function (e) {
+                setFillForLayer(_this.docLayer, false);
             });
 
-            this.el.addEventListener('pointerleave', function (e) {
-                _this.setFillForParents(false);
-                _this.setFillForSelectedDocument(true);
-                _this.setFillForChildren(false);
+            this.el.addEventListener("pointerleave", function (e) {
+                [
+                    _this.ancestorLayer,
+                    _this.parentLayer,
+                    _this.childrenLayer,
+                ].map((layer) => {
+                    setFillForLayer(layer, false);
+                });
+
+                setFillForLayer(_this.docLayer, true);
+                _this.identifierOverlay.setPosition(undefined);
             });
 
-            this.map.on('pointermove', function (e) {
-
-                _this.setFillForChildren(false);
-                _this.setFillForParents(false);
-                _this.identifierOverlay.setPosition(undefined)
-
+            this.map.on("pointermove", async function (e) {
                 if (e.dragging) {
                     return;
                 }
 
-                _this.childrenLayer.getFeatures(e.pixel).then(function (features) {
-                    const childFeature = features.length ? features[0] : undefined;
-                    if (childFeature) {
-                        _this.highlightFeature(childFeature, e.coordinate)
-                    } else {
-                        _this.parentLayer.getFeatures(e.pixel).then(function (features) {
-                            const parentFeature = features.length ? features[0] : undefined;
-                            if (parentFeature) {
-                                _this.highlightFeature(parentFeature, e.coordinate)
-                            };
-                        })
+                [
+                    _this.ancestorLayer,
+                    _this.parentLayer,
+                    _this.childrenLayer,
+                ].map((layer) => {
+                    setFillForLayer(layer, false);
+                });
+
+                _this.identifierOverlay.setPosition(undefined);
+
+                const hitFeatures = await checkForHitInOrder(
+                    [
+                        _this.childrenLayer,
+                        _this.parentLayer,
+                        _this.ancestorLayer,
+                    ],
+                    e.pixel,
+                );
+
+                if (hitFeatures.length != 0) {
+                    _this.highlightFeature(hitFeatures[0], e.coordinate);
+
+                    if (e.coordinate) {
+                        _this.generateTooltip([hitFeatures[0]], e.coordinate);
                     }
-                })
+                }
             });
 
-            this.map.on('singleclick', function (e) {
+            this.map.on("singleclick", async function (e) {
+                const hitFeatures = await checkForHitInOrder(
+                    [
+                        _this.childrenLayer,
+                        _this.parentLayer,
+                        _this.ancestorLayer,
+                    ],
+                    e.pixel,
+                );
 
-                _this.childrenLayer.getFeatures(e.pixel).then(function (features) {
-                    const feature = features.length ? features[0] : undefined;
-                    if (feature) {
-                        let properties = feature.getProperties()
-                        _this.pushEvent("geometry-clicked", { uuid: properties.uuid })
-                    } else {
-                        _this.parentLayer.getFeatures(e.pixel).then(function (features) {
-                            const feature = features.length ? features[0] : undefined;
-                            if (feature) {
-                                let properties = feature.getProperties()
-                                _this.pushEvent("geometry-clicked", { uuid: properties.uuid })
-                            }
-                        })
-                    }
-                })
-            })
+                if (hitFeatures.length > 0) {
+                    let properties = hitFeatures[0].getProperties();
+                    _this.pushEvent("geometry-clicked", {
+                        uuid: properties.uuid,
+                    });
+                }
+            });
         },
         setTileLayers(projectName, tileLayersInfo, groupName) {
             let layerGroup = [];
             let layerGroupExtent = createEmpty();
 
             for (let info of tileLayersInfo) {
-                const layer = createTileLayer(info, projectName)
+                const layer = createTileLayer(info, projectName);
 
                 layerGroup.push(layer);
 
-                const preference = localStorage.getItem(this.getVisibilityKey(this.project, layer.get('name')))
+                const preference = localStorage.getItem(
+                    getVisibilityKey(this.project, layer.get("name")),
+                );
                 let visible = null;
 
                 if (preference == "true") {
-                    visible = true
+                    visible = true;
                 } else if (preference == "false") {
                     visible = false;
                 }
 
                 if (visible != null) {
-                    layer.setVisible(visible)
-                    this.pushEventTo(this.el, "visibility-preference", { uuid: layer.get('name'), group: groupName, value: visible })
+                    layer.setVisible(visible);
+                    this.pushEventTo(this.el, "visibility-preference", {
+                        uuid: layer.get("name"),
+                        group: groupName,
+                        value: visible,
+                    });
                 }
 
                 layerGroupExtent = extend(layerGroupExtent, layer.getExtent());
@@ -339,24 +261,47 @@ export default getDocumentViewMapHook = () => {
         },
 
         updateZIndices() {
-            const layerCount = 0 + this.documentTileLayers.length + this.projectTileLayers.length
-            const combined = this.documentTileLayers.concat(this.projectTileLayers);
+            const layerCount =
+                0 +
+                this.documentTileLayers.length +
+                this.projectTileLayers.length;
+            const combined = this.documentTileLayers.concat(
+                this.projectTileLayers,
+            );
 
             for (let i = 0; i < layerCount; i++) {
                 combined[i].setZIndex(layerCount - i - 200);
             }
         },
 
-        async setMapFeatures(parentFeatures, documentFeature, childrenFeatures) {
+        async setMapFeatures(
+            parentFeatures,
+            documentFeature,
+            childrenFeatures,
+            ancestorFeatures,
+        ) {
             this.docId = documentFeature.properties.uuid;
 
             if (this.childrenLayer) this.map.removeLayer(this.childrenLayer);
             if (this.docLayer) this.map.removeLayer(this.docLayer);
             if (this.parentLayer) this.map.removeLayer(this.parentLayer);
+            if (this.ancestorLayer) this.map.removeLayer(this.ancestorLayer);
+
+            const ancestorVectorSoruce = new VectorSource({
+                features: new GeoJSON().readFeatures(ancestorFeatures),
+            });
+
+            this.ancestorLayer = new VectorLayer({
+                name: "ancestorLayer",
+                source: ancestorVectorSoruce,
+                style: styleFunction,
+            });
+
+            this.map.addLayer(this.ancestorLayer);
 
             const parentVectorSource = new VectorSource({
-                features: new GeoJSON().readFeatures(parentFeatures)
-            })
+                features: new GeoJSON().readFeatures(parentFeatures),
+            });
 
             this.parentLayer = new VectorLayer({
                 name: "parentLayer",
@@ -369,8 +314,8 @@ export default getDocumentViewMapHook = () => {
             documentFeature.properties.fill = true;
 
             const vectorSource = new VectorSource({
-                features: new GeoJSON().readFeatures(documentFeature)
-            })
+                features: new GeoJSON().readFeatures(documentFeature),
+            });
 
             this.docLayer = new VectorLayer({
                 source: vectorSource,
@@ -380,94 +325,127 @@ export default getDocumentViewMapHook = () => {
             this.map.addLayer(this.docLayer);
 
             const childrenVectorSource = new VectorSource({
-                features: new GeoJSON().readFeatures(childrenFeatures)
-            })
+                features: new GeoJSON().readFeatures(childrenFeatures),
+            });
 
             this.childrenLayer = new VectorLayer({
                 name: "childLayer",
                 source: childrenVectorSource,
-                style: styleFunction
+                style: styleFunction,
             });
 
             this.map.addLayer(this.childrenLayer);
 
-            aggregatedExtent = createEmpty()
-            aggregatedExtent = extend(aggregatedExtent, parentVectorSource.getExtent())
-            aggregatedExtent = extend(aggregatedExtent, vectorSource.getExtent())
-            aggregatedExtent = extend(aggregatedExtent, childrenVectorSource.getExtent())
+            aggregatedExtent = createEmpty();
+            aggregatedExtent = extend(
+                aggregatedExtent,
+                parentVectorSource.getExtent(),
+            );
+            aggregatedExtent = extend(
+                aggregatedExtent,
+                vectorSource.getExtent(),
+            );
+            aggregatedExtent = extend(
+                aggregatedExtent,
+                childrenVectorSource.getExtent(),
+            );
 
             let fullExtent = createEmpty();
 
             fullExtent = extend(fullExtent, aggregatedExtent);
 
-            if (this.projectTileLayerExtent) fullExtent = extend(fullExtent, this.projectTileLayerExtent)
-            if (this.documentTileLayerExtent) fullExtent = extend(fullExtent, this.documentTileLayerExtent)
+            if (this.projectTileLayerExtent)
+                fullExtent = extend(fullExtent, this.projectTileLayerExtent);
+            if (this.documentTileLayerExtent)
+                fullExtent = extend(fullExtent, this.documentTileLayerExtent);
 
             this.map.getView().fit(fullExtent, { padding: [10, 10, 10, 10] });
-            this.map.setView(new View({
-                extent: this.map.getView().calculateExtent(this.map.getSize()),
-                maxZoom: 40
-            }));
-            this.map.getView().fit(aggregatedExtent, { padding: [10, 10, 10, 10] });
+            this.map.setView(
+                new View({
+                    extent: this.map
+                        .getView()
+                        .calculateExtent(this.map.getSize()),
+                    maxZoom: 40,
+                }),
+            );
+            this.map
+                .getView()
+                .fit(aggregatedExtent, { padding: [10, 10, 10, 10] });
 
-            this.clearAllHighlights()
+            this.clearAllHighlights();
         },
-        highlightFeature(feature, coordinate) {
-            let properties = feature.getProperties()
+        highlightFeature(feature) {
+            let properties = feature.getProperties();
 
             properties.fill = true;
             feature.setProperties(properties);
-
-            if (coordinate) {
-                this.identifierOverlayContent.innerHTML = `${properties.identifier} | ${properties.description}`;
-
-                const [r, g, b, a] = asArray(properties.color)
-                document.getElementById(`${this.el.getAttribute("id")}-identifier-tooltip-category-bar`).style.background = `rgba(${r}, ${g}, ${b})`
-                document.getElementById(`${this.el.getAttribute("id")}-identifier-tooltip-category-content`).innerHTML = properties.category;
-
-                this.identifierOverlay.setPosition(coordinate);
-            }
         },
-        setFillForParents(val) {
-            if (!this.parentLayer) return;
-            let parentFeatures = this.parentLayer.getSource().getFeatures();
-            for (let parent of parentFeatures) {
-                let properties = parent.getProperties();
-                properties.fill = val;
-                parent.setProperties(properties);
-            }
-        },
-        setFillForSelectedDocument(val) {
-            if (!this.docLayer) return;
-            let docFeature = this.docLayer.getSource().getFeatures()[0];
-            let properties = docFeature.getProperties();
-            properties.fill = val;
-            docFeature.setProperties(properties);
-        },
-        setFillForChildren(val) {
-            if (!this.childrenLayer) return;
-            let childFeatures = this.childrenLayer.getSource().getFeatures();
-            for (let child of childFeatures) {
-                let properties = child.getProperties();
-                properties.fill = val;
-                child.setProperties(properties);
-            }
+        generateTooltip(features, coordinate) {
+            let tooltipContentNode = document.getElementById(
+                `${this.el.getAttribute("id")}-identifier-tooltip-content`,
+            );
+
+            let html = "";
+
+            features.forEach((feature) => {
+                let properties = feature.getProperties();
+
+                const label = `${properties.identifier} | ${properties.description}`;
+                const [r, g, b, a] = asArray(properties.color);
+
+                html += `
+                <div class="first-of-type:mt-0 mt-px border rounded-sm border-black flex">
+                  <div style="background: rgba(${r}, ${g}, ${b})" class="saturate-50 pl-2 text-black"}>
+                    <div class="h-full bg-white/60 p-1 font-thin">
+                        ${properties.category}
+                    </div>
+                  </div>
+                  <div class="grow p-1 h-full bg-white rounded-r-sm">
+                    ${properties.identifier} | ${properties.description}
+                  </div>
+                </div>
+                `;
+            });
+
+            const anchorPixel = this.map.getPixelFromCoordinate(coordinate);
+            const mapSize = this.map.getSize();
+
+            const right = anchorPixel[0] > mapSize[0] * 0.5 ? "right" : "left";
+            const bottom = anchorPixel[1] > mapSize[1] * 0.5 ? "bottom" : "top";
+
+            const offsetX = right == "right" ? -5 : 5;
+            const offsetY = bottom == "bottom" ? -5 : 5;
+
+            this.identifierOverlay.setPositioning(`${bottom}-${right}`);
+            this.identifierOverlay.setOffset([offsetX, offsetY]);
+
+            tooltipContentNode.innerHTML = html;
+            this.identifierOverlay.setPosition(coordinate);
         },
         clearAllHighlights() {
-            this.setFillForParents(false);
-            this.setFillForSelectedDocument(false);
-            this.setFillForChildren(false);
-            this.identifierOverlay.setPosition(undefined)
+            [
+                this.ancestorLayer,
+                this.parentLayer,
+                this.docLayer,
+                this.childrenLayer,
+            ].map((layer) => {
+                setFillForLayer(layer, false);
+            });
+
+            this.identifierOverlay.setPosition(undefined);
         },
         toggleLayerVisibility(uuid, visibility) {
-            const layer = this.map.getLayers().getArray().find(layer => layer.get('name') == uuid)
+            const layer = this.map
+                .getLayers()
+                .getArray()
+                .find((layer) => layer.get("name") == uuid);
             if (layer) {
                 layer.setVisible(visibility);
-                localStorage.setItem(this.getVisibilityKey(this.projectName, layer.get('name')), visibility)
+                localStorage.setItem(
+                    this.getVisibilityKey(this.projectName, layer.get("name")),
+                    visibility,
+                );
             }
         },
-        getVisibilityKey(project, layerName) {
-            `layer-visibility-${project}/${layerName}`
-        }
-    }
-}
+    };
+};

@@ -1,19 +1,16 @@
 # First steps
 
-The first time you start the application, you will be asked to enter your name. It is recommended that you enter your first name and surname. The name you enter is stored in the database for all changes you make and facilitates collaborative work on data records in the project by allowing changes to be clearly assigned during data synchronization. You can change the user name at a later time by clicking on the name in the top right-hand corner of the navigation bar or via the **Settings** submenu, which you can access via the menu "Field" (MacOS) or "Tools" (Windows).
+The first time you start the application, you will be asked to enter your name. It is recommended that you enter your first name and surname. The name you enter is stored in the database for all changes you make and facilitates collaborative work on data records in the project by allowing changes to be clearly assigned during data synchronization. You can change the user name at a later time by clicking on the name in the top right-hand corner of the navigation bar or via the **Settings** submenu, which you can access via the menu "Field" (macOS) or "Tools" (Windows and Linux).
 
 Initially, the test project will be active, allowing you to experiment with the application's functionality using a set of sample data. Please note that as long as the test project is selected, any newly created data sets will be deleted and all changes will be reset when restarting the application. For this reason, synchronization with other Field Desktop instances or databases is not performed for the test project.  
 
 In order to work with Field Desktop productively and create your own project, you should first follow these steps:
 
-1. In the "Project" menu, select the menu item **New...** to create your own project. You have the choice between several presets for the project configuration: Choose "Standard" for the extensive Field default configuration or one of the "Basic" options if you want to start with only a basic framework of preset categories and fields. Also specify the languages in which data will be entered within the project. Finally, enter the desired project identifier and optionally a project name for each of the selected languages.
+1. In the "Project" menu, select the menu item **New...** to create your own project. You have the choice between several presets for the project configuration: Choose "Default" for the extensive Field default configuration or one of the "Basic" options if you want to start with only a basic framework of preset categories and fields. Also specify the languages in which data will be entered within the project. Finally, enter the desired project identifier and optionally a project name for each of the selected languages.
 
 2. As soon as the new project has been loaded, you can enter basic project data via the menu "Project" ➝ "Properties". First of all, you should create the lists of **staff members** (field
 "Staff" of section "Project") and **campaigns** (field "Campaigns", also of section "Project"). You can extend
 these lists at any time.
-
-Use the menu option **Create backup...**, which is accessible via the menu "Project", to create backup files of
-your project data regularly.
 
 
 <hr>
@@ -28,10 +25,8 @@ Use the green plus button at the bottom of the resources list to create a new op
 
 <p align="center"><img src="images/en/resources/create_operation.png" alt="Create operation resource"/></p>
 
-In the process, you firstly choose the category of the operation, before you may optionally create a geometry
-for the new resource. Afterwards the editor is opened, where all data of the operation can be filled in.
-Depending on the chosen operation category, different fields are available, which are arranged in multiple
-groups. You can switch between field groups by clicking the buttons on the left side.
+In the process, you firstly choose the category of the operation (e.g. "Trench" or "Building"), before you may optionally create a geometry for the new resource on the map. Afterwards the editor is opened, where all data of the operation can be filled in.
+Depending on the chosen operation category, different fields are available here (see section *Edit resources*).
 
 Before the resource can be saved via the green save button, at the very least the **identifier** field in the
 core section has to be filled in.
@@ -61,23 +56,77 @@ switch to another level by clicking one of the buttons of the navigation path.
 ## Manage resources
 
 Resources in the list can be selected by clicking. By holding down the Ctrl/Cmd or Shift key, multiple resources
-can be selected simultaneously. Right clicking one or more selected resources in the list opens a context menu
+can be selected simultaneously. Right-clicking one or more selected resources in the list opens a context menu
 providing the following options:
 
 * *Show warnings*: Displays the warnings available for this resource (only available for resources with warnings, see chapter *Warnings*)
-* *Edit*: Opens the editor (also available by doubleclicking the resource entry in the list)
+* *Edit*: Opens the resource editor (see section *Edit resources*). Alternatively, the editor can also be opened by double-clicking on the resource entry in the list.
 * *Link images*: Opens a window where images can be linked to the selected resource or linked images can be removed
 * *Add QR code*: Opens a window in which a new QR code can be generated for the resource or an existing QR code can be linked via camera scan
 * *Manage QR code*: Displays the QR code of the resource and allows printing a QR code label (alternatively also accessible via the QR code button on the right side of the list element of the resource)
 * *Move*: Allows removing resources from their current context and assigning them to another parent resource
 * *Delete*: Removes resources after a security check (optionally, you can also delete all images that are
 exclusively linked to the resources you want to delete)
+* *Document workflow*: Displays the processes linked to the selected resources and allows creating new processes (only available for categories that have been configured as the target category of the relation "Carried out on" of a process category).
 * *Scan storage place*: Sets a new storage place for the resource by scanning the QR code of the storage place via camera scan (only available for resources of the categories "Find", "Find collection" and "Sample" as well as the respective subcategories)
 
 Furthermore, the context menu contains options for creating and editing geometries. Please note that when
 multiple resources are selected, only the *Move* and *Delete* options are available. Options for adding or managing QR codes are only available if the use of QR codes has been set up for the corresponding category in the configuration editor (see section *Edit categories* in chapter *Configuration*).
 
 <p align="center"><img src="images/en/resources/context_menu.png" alt="Kontextmenü"/></p>
+
+
+
+## Edit resources
+
+The resource editor can be opened via the context menu or by double-clicking on an entry in the resource list. Here, you can edit the data of the selected resource. The input form depends on the category of the resource (e.g. "Trench" or "Find") and can be defined in the configuration editor (see chapter *Project configuration*).
+
+The fields available for the category are divided into several groups (e.g. "Core", "Dimensions", "Position / Context"). If you click on one of the group buttons in the left-hand section of the editor, the fields for the respective group will be displayed in the right-hand section of the editor. Each field is assigned a specific input type in the project configuration, which determines the type of data that can be entered in the field (e.g. "Single line text", "Date", "Dimension"). A list of all input types can be found in the subchapter *Fields* of the chapter *Project configuration*.
+
+Any changes you make in the editor are only saved after you click the "Save" button.
+
+
+### View information about fields and values
+
+In the project configuration, you can store descriptive texts and links to websites with additional information for fields and valuelists, which can be helpful when entering data. If such additional information is available for a field or a value within a valuelist, this is indicated by a dotted line that appears when you point the mouse pointer at the corresponding field or value.
+
+<p align="center"><img src="images/en/resources/information_underline.png" alt="View information"/></p>
+
+By **right-clicking**, you can open a pop-up window in which the description text and/or links to external websites entered as references are displayed.
+
+
+### Change category
+
+The symbol for the category to which the selected resource belongs is displayed at the left of the editor header. If the category is a supercategory or one of its subcategories, you can switch to another subcategory or to the supercategory itself. This option is indicated by a small blue button with an arrow symbol.
+
+<p align="center"><img src="images/en/resources/change_category.png" alt="Change category"/></p>
+
+Click on the button to select the desired category from a list. The editor will now display the form for the newly selected category. However, the change will only be actually performed when you click the "Save" button.
+
+*Example*: The supercategory "Find" has the subcategories "Brick", "Coin" and "Pottery", among others. If a resource belongs to the category "Brick", you can switch to the supercategory "Find" or one of the other subcategories ("Coin" or "Pottery") at any time. However, it is not possible to switch to another category (e.g. "Trench").
+
+**Important**: Please note that field data that has already been entered may be lost when changing categories if the corresponding field is not part of the form of the newly selected category. In this case, a warning will be displayed when changing categories. If you switch back to the original category before saving, all field data will be retained.
+
+A category change is not possible if the category belongs to the supercategory "Operation" or "Process".
+
+
+### Create multiple instances of a resource
+
+When creating a new resource, you have the option of creating multiple instances at the same time. To do this, click on the button with the "arrow down" symbol to the right of the "Save" button and select the option "Create multiple instances" from the dropdown menu that opens. Now enter the total number of resources to be created and confirm your entry by clicking the button "Create resources".
+
+When creating multiple resources, the field data you entered in the resource editor form is added to each resource. However, entered relations are only saved for the first resource created and are **not** included in the copies created.
+
+A counter is added to the value entered in the field "Identifier" for each additional copy created to ensure that each resource has a unique identifier. If you have already entered a value containing a counter in the field "Identifier", this one will be continued.
+
+*Example*: You have entered the value "ABC" in the "Identifier" field and want to create three resources. The additional resources created are automatically given the identifiers "ABC2" and "ABC3".
+However, if you have entered the value "ABC15", the additional resources created are given the identifiers "ABC16" and "ABC17".
+
+
+### Duplicate resources
+
+You can create copies of an existing resource by clicking the button with the "arrow down" symbol to the right of the "Save" button in the resource editor and selecting the option "Duplicate" from the dropdown menu that opens. Now enter the number of copies to be created (the existing resource is not counted) and confirm your entry by clicking the button "Save resources".
+
+As with the creation of multiple instances of a resource, all entered field data is added to the created copies, with the exception of relations. The identifier is supplemented by a counter or an existing counter is continued (see section *Creating multiple resources*).
 
 
 <hr>
@@ -129,6 +178,21 @@ To remove imported images from the project, select the corresponding images in t
 <p align="center"><img src="images/en/images/delete_button.png" alt="Button 'Delete'"/></p>
 
 Please note that this will also delete the corresponding files in the project's images directory (and on other computers if a synchronization connection is established). Links to resources will be lost when deleting an image.
+
+
+### Download original images
+
+If the original file of an image is not available on your computer, you can also download it individually without activating the download of original images for the entire project. To do this, select the desired images in the image management (or call them up from another part of the application) and click the button "Download original images". The image files will now be loaded.
+
+Please note that this function is only available if a valid synchronization target for the project has been entered via the menu "Project" ➝ "Synchronize..." (see chapter *Synchronization*).
+
+
+### Export original images
+
+To export the original image files from Field Desktop, first select the images in the image management (or call them up from another part of the application) and click the button "Export". A window will appear in which you can select the directory to which the image files are to be exported. You also can choose between two different options for naming the files:
+
+* *Identifier*: The identifier that the corresponding images currently have in the project is used as a file name for the exported image files.
+* *Original file name*: The files are exported under the names under which they were originally imported into the project.
 
 
 ## Link images to resources
@@ -227,7 +291,7 @@ categories, in the image management image categories etc.
 
 ### Text filter
 
-Search terms are currently compared with the resource fields "Identifier" and "Short description".
+Search terms are compared with the resource fields "Identifier" and "Short description".
  
 *Example:*
  
@@ -474,7 +538,8 @@ Via the context menu or by double-clicking on an entry in the category list, the
 
 You can also specify the following properties for project-specific categories:
 * *Description*: A description text that informs in which contexts the category should be used.
-* *References*: Specify URLs here if you want to reference more information about the category or category definitions in other systems.
+* *General references*: URLs to websites where further information on the category can be found (see section *References*).
+* *Semantic references*: Links to related concepts in other systems (see section *References*).
 
 #### QR codes
 
@@ -545,7 +610,8 @@ Via the context menu or by double-clicking on an entry in the field list, the fi
 
 * *Label*: The display label of the field, which is shown in all areas of the application. You can enter labels for different languages.
 * *Description*: A description text that informs what data should be entered into the field. This text is displayed in the resource editor as a tooltip of the info icon next to the field label and is intended to help with data entry.
-* *References*: Specify URLs here to reference more information about the field or field definitions in other systems.
+* *General references*: URLs to websites where further information on the field can be found (see section *References*).
+* *Semantic references*: Links to related concepts in other systems (see section *References*).
 
 
 ### Change input type
@@ -608,7 +674,7 @@ Selection of one or more values from a valuelist
 <p align="center"><img src="images/en/configuration/input_type_checkboxes.png" alt="Input type 'Checkboxes'"/></p>
 
 #### Date
-Selection of a date from a calendar. The input field can also be used to enter only month or year information.
+Selection of a date from a calendar. The input field can also be used to enter only month or year information. Optionally, you can specify a time as well. For further configuration options, see the section *Configuration of date fields*.
 <p align="center"><img src="images/en/configuration/input_type_date.png" alt="Input type 'Date'"/></p>
 
 #### Dating
@@ -616,8 +682,18 @@ Specification of one or more datings. Possible dating types are: Period, Single 
 <p align="center"><img src="images/en/configuration/input_type_dating.png" alt="Input type 'Dating'"/></p>
 
 #### Dimension
-Specification of one or more dimensions. Either a single value or a range can be specified. The selection options for the dropdown subfield "As measured by" are taken from the specified valuelist.
+Specification of one or more dimension measurements. The units of measurement available are "mm", "cm" and "m". Either a single value or a range can be specified. The selection options for the dropdown subfield "As measured by" are taken from the specified valuelist.
 <p align="center"><img src="images/en/configuration/input_type_dimension.png" alt="Input type 'Dimension'"/></p>
+
+#### Weight
+Specification of one or more weight measurements. The units of measurement available are "mg", "g" and "kg". Either a single value or a range can be specified. The selection options for the dropdown subfield "Measurement device" are taken from the specified valuelist.
+
+<p align="center"><img src="images/en/configuration/input_type_weight.png" alt="Input type 'Weight'"/></p>
+
+#### Volume
+Specification of one or more volume measurements. The units of measurement available are "ml" and "l". Either a single value or a range can be specified. The selection options for the dropdown subfield "Measurement technique" are taken from the specified valuelist.
+
+<p align="center"><img src="images/en/configuration/input_type_volume.png" alt="Input type 'Volume'"/></p>
 
 #### Bibliographic reference
 Specification of one or more bibliographic references. Optionally, the Zenon ID, DOI, page number and figure number can be specified.
@@ -638,6 +714,11 @@ Reference to one or more other resources that belong to one of the configured ta
 Fields can be hidden by deactivating the *Show field* setting in the field editor. The field is then neither displayed in the resource view nor in the resource editor. Whether hidden fields are displayed in the configuration editor depends on the "Show hidden fields" setting in the "Project configuration" menu. Data that has already been entered is still retained after hiding and is displayed again when the *Show field* option is activated again. Some fields that are essential to the functionality of the application cannot be hidden (such as the resource identifier); in these cases, the option is not displayed.
 
 
+### Mandatory fields
+
+A field can be configured as mandatory by activating the option *Mandatory field* in the field editor. Mandatory fields must be filled in before the corresponding resource can be saved. If there are already existing resources of the category when the option is activated, a warning is displayed making the user aware of the mandatory field that must be filled in.
+
+
 ### Allow input in multiple languages
 
 If the option *Allow input in multiple languages* is enabled, a separate text can be entered in the field for each of the configured project languages. The setting is only available for fields of the input types "Single line text", "Single line text with multiple selection" and "Multiline text" and is activated by default.
@@ -648,11 +729,43 @@ If the option *Allow input in multiple languages* is enabled, a separate text ca
 The setting *Allow field specific search* in the field editor determines whether a field specific search can be performed for a field in extended search mode (see the *Extended search mode* section in the *Search* chapter). For fields of the category "Project" as well as for fields of some input types this setting cannot be activated; in these cases it is grayed out.
 
 
+### Display conditions
+
+The setting "Condition for display of field" can be used to define a condition for displaying the field. If a condition is set, the field is only available during data entry if a specific value (or one of several values) is set in another field of the same resource.
+
+To set a condition, first select another field from the same category in the dropdown field "Condition for displaying the field". You can choose from fields of the input types "Dropdown list", "Dropdown list (range)", "Radiobutton", "Yes/No" and "Checkboxes". The possible values for the chosen field are now displayed and can be selected. The current field is only displayed during data entry if at least one of the selected values is set in the field used as the condition.
+
+Please note that no display condition can be set for a field as long as it is configured as a mandatory field.
+
+
 ### Replace valuelist
 
 The currently selected valuelist can be replaced by another one by clicking the "Replace valuelist" button. Either an existing valuelist can be selected or a new list can be created (see section *Valuelists*).
 
 If data has already been entered for the field, it will continue to be displayed even if the values entered are not included in the new valuelist. In this case, the corresponding values are marked as incompatible in the resource editor and can be deleted there.
+
+
+### Configuration of date fields
+
+If the input type "Date" is selected, two additional selection fields appear, allowing further customization of the date field.
+
+
+#### Time specification
+
+Here you can specify whether or not it is permitted to enter a time in the date field.
+
+* *Optional*: A time can be entered, but it's also possibly to enter only a date.
+* *Mandatory*: The field can only be filled in if a time is entered in addition to the date.
+* *Not allowed*: It is not possible to enter a time. Only a date can be set.
+
+
+#### Input mode
+
+Here you can specify whether a single date or a date range should be entered in the field. A date range consists of a start and end date.
+
+* *Arbitrary*: Both a single date and a date range can be entered.
+* *Single date*: Only a single date can be entered.
+* *Date range*: Only a date range can be entered.
 
 
 ### Subfields
@@ -734,7 +847,8 @@ Right-clicking on a project specific valuelist brings up a context menu that pro
 Via the context menu or by double-clicking on a valuelist, an editor can be opened in which the properties of the list can be edited:
 
 * *Valuelist description*: A description text where you can specify more detailed information about the valuelist. This text is displayed in valuelist management when the list is selected.
-* *References*: Specify URLs here to reference more information about the valuelist or definitions in other systems.
+* *General references*: URLs to websites where further information on the valuelist can be found (see section *References*).
+* *Semantic references*: Links to related concepts in other systems (see section *References*).
 * *Values*: Use the text field "New value" to enter the desired identifier of a new value to be included in the valuelist. The value editor opens in each case, which can also be called later by clicking on the edit button next to each value (see section *Edit values*).
 * *Automatic sorting*: If this option is enabled, the values will always be displayed in alphanumeric order. You can deactivate the option in order to subsequently drag and drop the values into the desired order.
 
@@ -745,7 +859,90 @@ The value editor allows you to customize the properties of a value:
 
 * *Label*: The display label of the value. You can enter labels for different languages.
 * *Description*: A description text where you can specify more detailed information about the value. This text is displayed in the configuration editor as a tooltip for the corresponding value.
-* *References*: Specify URLs here to reference definitions in other systems.
+* *General references*: URLs to websites where further information on the value can be found (see section *References*).
+* *Semantic references*: Links to related concepts in other systems (see section *References*).
+
+
+## References
+
+Forms, fields, valuelists as well as their values can be linked to external resources via references. A distinction is made between general and semantic references.
+
+
+### General references
+
+General references are URLs to web pages where further information on the respective element of the project configuration can be accessed. These URLs are displayed in the information pop-up that can be displayed in the resource editor by right-clicking on a field or value, and can thus serve as an aid for data entry.
+
+
+### Semantic references
+
+Semantic references represent links to related concepts in other systems (vocabularies, ontologies, etc.) and consist of a predicate and a URI.
+
+
+#### Mapping relations
+
+One of the following relations can be selected as a predicate:
+
+* skos:exactMatch
+* skos:closeMatch
+* skos:broadMatch
+* skos:narrowMatch
+* skos:relatedMatch
+* idw:unknownMatch
+
+The first five relations are standard mapping relations of the *Simple Knowledge Organization System (SKOS)*. *idw:unknownMatch* is a specifically defined addition. All relations are sub-properties of *skos:mappingRelation* and are intended - by convention - for links between different concept schemes.
+
+The following explanations are based on the [SKOS reference](https://www.w3.org/TR/skos-reference/#mapping), where you can find further information.
+
+
+##### skos:exactMatch
+
+The relation *skos:exactMatch* is used to link two concepts, indicating a high degree of confidence that the concepts can be used interchangeably across a wide range of information retrieval applications.
+
+
+##### skos:closeMatch
+
+The relation *skos:closeMatch* is used to link two concepts that are sufficiently similar that they can be used interchangeably in some information retrieval applications.
+
+
+##### skos:broadMatch
+
+The relation *skos:broadMatch* is used to state a hierarchical mapping link between two concepts, with the target concept being identified as a broader concept (i.e. the linked concept encompasses the concept in the Field project configuration).
+
+If [A] is the element (e.g. field or value) of the Field project configuration and [B] is the concept identified by the URI:
+
+[A] skos:broadMatch [B] = [B] is broader than [A]
+
+
+##### skos:narrowMatch
+
+The relation *skos:narrowMatch* is used to state a hierarchical mapping link between two concepts, with the target concept being identified as a narrower concept (i.e. the concept in the Field project configuration encompasses the linked concept).
+
+If [A] is the element (e.g. field or value) in the Field project configuration and [B] is the concept identified by the URI:
+
+[A] skos:narrowMatch [B] = [B] is narrower than [A]
+
+
+##### skos:relatedMatch
+
+The relation *skos:relatedMatch* is used to state an associative mapping link between two concepts. It should be used when two concepts are related but neither is broader or narrower than the other and they are not equivalent. The relation is appropriate for topical, functional, or contextual associations (e.g. a link between "Amphora" and "Wine trade").
+
+
+##### idw:unknownMatch
+
+The relation *idw:unknownMatch* is used to link two concepts, stating that the type of mapping is not known. It should be used when there is reasonable evidence that two concepts are related, but the exact mapping kind (equivalence, hierarchical, or associative) has not yet been determined.
+
+
+##### Decision guide
+
+Same scope and intent? ➝ *skos:exactMatch*
+
+Very close, but caveats remain? ➝ *skos:closeMatch*
+
+Strictly more general/specific? ➝ *skos:broadMatch* / *skos:narrowMatch*
+
+Only associated, not hierarchical/equivalent? ➝ *skos:relatedMatch*
+
+Unclear; mark for curation? ➝ *idw:unknownMatch*
 
 
 ## Select project languages
@@ -774,19 +971,75 @@ Use the menu option "Project configuration" ➝ "Export configuration..." to sav
 The file can then be imported again via the menu option "Project configuration" ➝ "Import configuration..." in order to transfer the configuration to another project or restore the saved configuration state in the same project.
 
 
-## JSON export API
+<hr>
 
-The project configuration can be retrieved in JSON format via an API endpoint. While the configuration files that can be created via the menu option "Export configuration..." only contain the project-specific part of the configuration, the API endpoint outputs the complete configuration, including all configuration elements from the Field libraries (standard forms, valuelists, etc.) used in the project.
 
-The endpoint is available via the following URL when the application is open:
+# Workflow
 
-http://localhost:3000/configuration/PROJECT
+The workflow functionality in Field Desktop enables you to document the processes carried out in a project (e.g. sampling, restoration, the creation of drawings, etc.).
 
-Replace "PROJECT" with the name of the project whose configuration you want to access.
 
-When accessing the API endpoint, the password that is entered as "Your password" in the section "Synchronization" of the menu "Settings" must be entered. The password is transmitted via *Basic Auth*; when the URL is entered in the browser, an input dialog appears. It is not necessary to enter the user name, the corresponding field can remain empty.
+## Configuration
 
-Please note that the JSON output of the API endpoint **cannot** be imported via the menu option "Import configuration...". Use the menu option "Export configuration..." to obtain a configuration file suitable for this purpose.
+A process is represented by a resource of the supercategory "Process". The category "Process" itself is abstract, meaning that only resources of its subcategories can be created. To work with workflow documentation, one or more subcategories of the category "Process" must first be configured for the project. The subcategory determines the type of process.
+
+To add a subcategory, open the configuration editor via the menu "Tools" ➝ "Project Configuration", set the category filter to the option "Workflow" or "All", and then click on the plus button next to the category "Process". A window opens showing all process subcategories contained in the Field category library. Select the desired form for one of these categories or, alternatively, enter the name of a new category to create your own process subcategory.
+
+In both cases, you can now set up the allowed target categories for the relations "Carried out on" and "Results in" .
+
+The relation "Carried out on" is used to link the process to the resources on which it is **carried out on**. This relation is a mandatory field, which is why you have to select at least one target category at this point. For example, if you select the category "Find" here, this means that processes of this category can be carried out on finds.
+
+The relation "Results in" is used to link the process to resources that are a **result** of the process. Specifying this relation is optional. If you do not select any target categories at this point, the relation will not be available for this process subcategory at first. However, you can add the relation to the form at any later point in time (see section *Add fields* of chapter *Project configuration*).
+
+The allowed target categories for both relations can be adjusted later by editing the corresponding relation field ("Carried out on" or "Results in") for the category. By default, both relation fields are located in the group "Workflow".
+
+For more information on adding subcategories, see the section *Categories and forms* of chapter *Project configuration*.
+
+
+## Documentation
+
+Processes can be created and viewed in two different ways: via the workflow overview and via the "Document workflow" option in the resource context menu.
+
+
+### Overview
+
+An overview of all processes documented in the project can be accessed via the menu "Tools" ➝ "Workflow". The processes can be sorted either by identifier or date of execution. In addition, the usual options for filtering by category and identifier as well as field specific search are available (see chapter *Search*). New processes can be created using the plus button at the bottom of the screen.
+
+
+### Document workflow for selected resources
+
+To view only the processes carried out on specific resources, select the desired resources (hold down the Ctrl/Cmd or Shift key to select multiple resources at once) and open the context menu by right-clicking. By selecting the option "Document workflow", you can now open a window listing all processes that have been carried out on one or more of the selected resources. The window also provides advanced options for creating and linking processes.
+
+
+#### Create processes
+
+You can create new processes using the plus button at the bottom of the window. First, select the desired process subcategory. Only process subcategories that can be performed on all selected resources are available. If there is no corresponding intersection, the plus button will not be displayed. If multiple resources are selected, you can choose between two options after clicking the plus button:
+
+* *One common process for all selected resources*: A single new process is created. This process is linked to all selected resources via the relation "Carried out on".
+* *One process per resource*: A separate new process is created for each of the selected resources and linked to the corresponding resource via the relation "Carried out on".
+
+
+#### Link processes
+
+You can link existing processes to the selected resources using the blue link button at the bottom of the window. After clicking the button, a window opens in which you can search for a resource. Once you have selected a resource, all processes that are currently linked to this resource via the relation "Carried out on" are displayed. Select one of the processes to link it to all selected resources. Existing links for the process are retained.
+
+Only processes from those subcategories that can be performed on all selected resources are available for selection. If there is no corresponding intersection, the link button will not be displayed.
+
+
+### Fields of a process
+
+Each process has two mandatory fields, "State" and "Date", which must be filled in for each process.
+
+The field "State" is a dropdown field in which one of the following values can be selected:
+
+* *Planned*: The process has not yet been carried out, but is planned for the future.
+* *In progress*: The process is currently being carried out but has not yet been completed.
+* *Completed*: The process has been completed.
+* *Canceled*: The process was started but cancelled.
+
+The field "Date" specifies the date of execution (which may be in the past, present or future, depending on the state). The type of date specification can be adjusted in the configuration editor by editing the field "Date". By default, a time can also be specified in addition to the day, and it is possible to specify both a single date and a date range. For more information on the customization options for date fields, see section *Configuration of date fields* of chapter *Project configuration*.
+
+Please note that the date entered must match the selected state. If this is not the case (for example, because the state "Completed" was selected, but the date entered is in the future), a corresponding warning will appear (see section *Invalid state* of chapter *Warnings*).
 
 
 <hr>
@@ -1027,28 +1280,50 @@ Fields of the input type "Dropdown list (range)" consist of up to two subfields,
 
 ##### Date fields
 
-A value in the format "day.month.year" (DD.MM.YYYY) is entered for fields of the input type "Date". The entries for day and month are optional, so that it is possible to enter only a specific month of a year, or a specific year.
+Fields of the input type "Date" consist of up to three subfields, for each of which a separate column is created:
+
+* *value*: The date specification for a single date; the start date for a date range
+* *endValue*: The end date for a date range
+* *isRange*: Indicates whether the date is a date range. Possible values are: *true* (date range), *false* (single date).
+
+The dates are entered in the format "day.month.year" (DD.MM.YYYY). The entries for day and month are optional, so that it is possible to enter only a specific month of a year or a specific year.
+
+In addition, a time specification in the format "hours:minutes" can be entered (separated by a space) if the entry of a time is permitted for the corresponding field in the project configuration. **Important**: The time is always specified in the time zone UTC (Coordinated Universal Time, corresponds to Western European Time/Greenwich Mean Time).
 
 <div class="table-container">
   <table>
     <thead>
       <tr>
         <th>identifier</th>
-        <th>date</th>
+        <th>date.value</th>
+        <th>date.endValue</th>
+        <th>date.isRange</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
+    <tr>
         <td>A</td>
-        <td>12.01.2025</td>
+        <td>19.08.2017 17:25</td>
+        <td>20.08.2017 11:09</td>
+        <td>true</td>
       </tr>
       <tr>
         <td>B</td>
-        <td>09.2008</td>
+        <td>12.01.2025</td>
+        <td></td>
+        <td>false</td>
       </tr>
       <tr>
         <td>C</td>
+        <td>09.2008</td>
+        <td>11.2008</td>
+        <td>true</td>
+      </tr>
+      <tr>
+        <td>D</td>
         <td>1995</td>
+        <td></td>
+        <td>false</td>
       </tr>
     </tbody>
   </table>
@@ -1059,7 +1334,7 @@ A value in the format "day.month.year" (DD.MM.YYYY) is entered for fields of the
 
 For fields of the input types "Checkboxes" and "Single line text (List)" (without input in multiple languages), only one column is created for the field. The field values are separated from each other by a semicolon without space between values (e.g. "Granite;Limestone;Slate").
 
-For fields of the input types "Dating", "Dimension", "Bibliographic reference", "Composite field" and "Single line text (List)" (with input in multiple languages), the corresponding columns for the respective subfields or languages are created **for each list entry**. A number is inserted after the field name (starting at 0 and separated by dots) to identify the respective entry.
+For fields of the input types "Dating", "Dimension", "Weight", "Volume", "Bibliographic reference", "Composite field" and "Single line text (List)" (with input in multiple languages), the corresponding columns for the respective subfields or languages are created **for each list entry**. A number is inserted after the field name (starting at 0 and separated by dots) to identify the respective entry.
 
 *Example of a field of the input type "Single line text (List)" with input in multiple languages:*
 
@@ -1136,8 +1411,8 @@ To link images to the project or set them up as map layers at project level, ent
 Fields of the input type "Dating" are list fields, each of which can contain several dating entries. A dating consists of the following subfields, for which a separate column is created for each dating:
 
 * *type*: The dating type. Possible values are: *range* (Period), *single* (Single year), *before* (Before), *after* (After), *scientific* (Scientific).
-* *begin*: Year specification that is set for the dating type *after* and for the start date for the dating type *range*.
-* *end*: Year specification, which is set for the dating types *single*, *before* and *scientific* as well as for the end date for the dating type *range*.
+* *begin*: Year specification that is set for the dating type *after* and as the start date for the dating type *range*.
+* *end*: Year specification that is set for the dating types *single*, *before* and *scientific* and as the end date for the dating type *range*.
 * *margin*: Tolerance margin in years for dating type *scientific*.
 * *source*: Source of the dating, multilingual text field.
 * *isImprecise*: Specification "Imprecise". Cannot be set for dating type *scientific*. Possible values are: *true* (yes), *false* (no).
@@ -1238,14 +1513,16 @@ The year specifications *begin* and *end* consist of two subfields:
 </div>
 
 
-##### Dimensions
+##### Dimensions, weights and volumes
 
-Fields of the input type "Dimension" are list fields, each of which can contain several dimension entries. A dimension entry consists of the following subfields, for which a separate column is created for each dimension:
+Fields of the input types "Dimension", "Weight" and "Volume" are list fields, each of which can contain several entries. An entry consists of the following subfields, for which a separate column is created for each entry:
 
 * *inputValue*: The measured numerical value.
-* *inputRangeEndValue*: The second measured numerical value, if it is a range dimension.
-* *inputUnit*: The unit of measurement. Possible values: *mm*, *cm*, *m*.
-* *measurementPosition*: Field "As measured by". The identifier of a value from the valuelist configured for the field must be entered.
+* *inputRangeEndValue*: The second measured numerical value, if it is a range.
+* *inputUnit*: The unit of measurement. Possible values: *mm*, *cm*, *m* (Dimension) / *mg*, *g*, *kg* (Weight) / *ml*, *l* (Volume).
+* *measurementPosition*: Field "As measured by" (only for dimension specifications). The identifier of a value from the valuelist configured for the field must be entered.
+* *measurementDevice*: Field "Measurement device" (only for weight specifications). The identifier of a value from the valuelist configured for the field must be entered.
+* *measurementTechnique*: Field "Measurement technique" (only for volume specifications). The identifier of a value from the valuelist configured for the field must be entered.
 * *measurementComment*: Comment, multilingual text field.
 * *isImprecise*: Specification "Imprecise". Possible values are: *true* (yes), *false* (no).
 
@@ -1290,7 +1567,7 @@ Fields of the input type "Dimension" are list fields, each of which can contain 
 </div>
 
 
-##### Bibliographic eferences
+##### Bibliographic references
 
 Fields of the input type "Bibliographic reference" are list fields, each of which can contain several reference entries. An entry consists of the following subfields, for which a separate column is created for each bibliographic reference:
 
@@ -1625,22 +1902,31 @@ For fields of the input type "Dropdown list (range)", an object is entered that 
 
 ##### Date fields
 
-A value in the format "day.month.year" (DD.MM.YYYY) is entered for fields of the input type "date". The entries for day and month are optional, so that it is possible to enter only a specific month of a year or a specific year.
+For fields of the input type "Date", an object is entered that contains up to three subfields:
+
+* *value*: The date specification for a single date; the start date for a date range
+* *endValue*: The end date for a date range
+* *isRange*: Indicates whether the date is a date range. Possible values are: *true* (date range), *false* (single date).
+
+The dates are entered in the format "day.month.year" (DD.MM.YYYY). The entries for day and month are optional, so that it is possible to enter only a specific month of a year or a specific year.
+
+In addition, a time specification in the format "hours:minutes" can be entered (separated by a space) if the entry of a time is permitted for the corresponding field in the project configuration. **Important**: The time is always specified in the time zone UTC (Coordinated Universal Time, corresponds to Western European Time/Greenwich Mean Time).
 
 *Example:*
 
     {
       "identifier": "A",
       "category": "Feature",
-      "date1": "12.01.2025",
-      "date2": "09.2008",
-      "date3": "1995"
+      "date1": { "value": "19.08.2017 17:25", "endValue": "20.08.2017 11:09", "isRange": true },
+      "date2": { "value": "12.01.2025", "isRange": false },
+      "date3": { "value": "09.2008", "endValue": "11.2008", "isRange": true },
+      "date4": { "value": "1995", "isRange": false }
     }
 
 
 ##### List fields
 
-Fields of the input types "Single line text (list)", "Checkboxes", "Dating", "Dimension", "Bibliographic reference" and "Composite field" can contain several entries. An array is therefore entered for these fields.
+Fields of the input types "Single line text (list)", "Checkboxes", "Dating", "Dimension", "Weight", "Volume", "Bibliographic reference" and "Composite field" can contain several entries. An array is therefore entered for these fields.
 
 
 ##### Datings
@@ -1648,8 +1934,8 @@ Fields of the input types "Single line text (list)", "Checkboxes", "Dating", "Di
 Fields of the input type "Dating" are list fields, each of which can contain several dating entries. A dating is an object that consists of the following subfields:
 
 * *type*: The dating type. Possible values are: *range* (Period), *single* (Single year), *before* (Before), *after* (After), *scientific* (Scientific).
-* *begin*: Year specification that is set for the dating type *after* and for the start date for the dating type *range*.
-* *end*: Year specification, which is set for the dating types *single*, *before* and *scientific* as well as for the end date for the dating type *range*.
+* *begin*: Year specification that is set for the dating type *after* and as the start date for the dating type *range*.
+* *end*: Year specification that is set for the dating types *single*, *before* and *scientific* and as the end date for the dating type *range*.
 * *margin*: Tolerance margin in years for dating type *scientific*.
 * *source*: Source of the dating, multilingual text field.
 * *isImprecise*: Specification "Imprecise". Cannot be set for dating type *scientific*. Possible values are: *true* (yes), *false* (no).
@@ -1675,14 +1961,16 @@ The year specifications *begin* and *end* consist of two subfields:
     }
 
 
-##### Dimensions
+##### Dimensions, weights and volumes
 
-Fields of the input type "Dimension" are list fields, each of which can contain several dimension entries. A dimension entry is an object that consists of the following subfields:
+Fields of the input types "Dimension", "Weight" and "Volume" are list fields, each of which can contain several objects consisting of the following subfields:
 
 * *inputValue*: The measured numerical value.
 * *inputRangeEndValue*: The second measured numerical value, if it is a range dimension.
-* *inputUnit*: The unit of measurement. Possible values: *mm*, *cm*, *m*.
-* *measurementPosition*: Field "As measured by". The identifier of a value from the valuelist configured for the field must be entered.
+* *inputUnit*: The unit of measurement. Possible values: *mm*, *cm*, *m* (Dimension) / *mg*, *g*, *kg* (Weight) / *ml*, *l* (Volume).
+* *measurementPosition*: Field "As measured by" (only for dimension specifications). The identifier of a value from the valuelist configured for the field must be entered.
+* *measurementDevice*: Field "Measurement device" (only for weight specifications). The identifier of a value from the valuelist configured for the field must be entered.
+* *measurementTechnique*: Field "Measurement technique" (only for volume specifications). The identifier of a value from the valuelist configured for the field must be entered.
 * *measurementComment*: Comment, multilingual text field.
 * *isImprecise*: Specification "Imprecise". Possible values are: *true* (yes), *false* (no).
 
@@ -1697,7 +1985,7 @@ Fields of the input type "Dimension" are list fields, each of which can contain 
       ]
     }
 
-##### Bibliographic eferences
+##### Bibliographic references
 
 Fields of the input type "Bibliographic reference" are list fields, each of which can contain several reference entries. An entry consists of the following subfields:
 
@@ -1764,6 +2052,77 @@ The following option is available when exporting catalog files:
 <hr>
 
 
+# Backups
+
+To avoid data loss, it is important to regularly create backup copies of the project databases. Field Desktop offers extensive options for automatically or manually creating backup files in JSONL format.
+
+**Important**: The backup files created in this way contain all data entered in the project, but **no images**. The image files are located in the image directory, the path to which can be found in the settings under "Advanced settings". It is recommended to create regular backup copies of the image directory in addition to the database backups. Also, database and image data can be backed up by synchronizing with a Field Hub server.
+
+Please note that the JSONL files created by the backup function are not suitable for importing into existing projects, but can only be restored as a separate project via the menu "Project" ➝ "Import backup...".
+
+
+## Automatic backups
+
+After every change to the project data, Field Desktop automatically creates a backup file for the corresponding project. By default, only the most recent backup per project is retained, while older backups are deleted. However, this behaviour can be adjusted in the settings (see section *Storage of backups*).
+
+The file name contains the project identifier as well as the date and time when the backup was created (for example, "example-project.2025-05-14.11-28-25.jsonl" for a project named "example-project" that was backed up on the 14th of May 2025 at 11:28:25).
+
+Please note that (regardless of the settings chosen) a new backup is only created if changes have been made to the project data since the last backup was created. The aim is to avoid identical copies in order to save storage space.
+
+**Important**: Backups are only created when the application is open. Backups are then created for all projects, not just the project currently open in the application.
+
+The options for configuring automatic backups can be found in the settings under "Advanced settings".
+
+
+### Change directory path
+
+You can view and change the path of the directory in which automatically created backup files are stored using the input field "Path". Please note that existing backup files are not automatically moved to the new directory when the backup directory is changed. The files in the old directory remain in place, while the backup files are recreated in the new directory for all projects.
+
+
+### Storage of backups
+
+In addition to the backup of the latest version of each project (which is always retained), additional backup files can be stored. To do this, you can configure the rules "Keep backups according to time" and "Keep backups according to date" in the settings.
+
+
+#### Keep backups by time
+
+This rule allows you to keep backup files at a specific time interval (every X hours).
+
+* *Interval in hours*: Specifies the time interval at which backup files should be kept. For example, if the value entered is "3", a backup file is kept every three hours.
+* *Number*: Specifies how many backup files should be kept. For example, if the value entered is "5", the five most recently created backup files will be kept.
+
+
+#### Keep backups by date
+
+This rule allows you to keep one backup file per day, week or month.
+
+* *Day*: Specifies how many daily backup files should be retained. For example, if the value entered is "7", the seven most recent daily backups will be kept. The first backup created each day will be kept.
+* *Week*: Specifies how many weekly backup files should be retained. For example, if the value entered is "4", the four most recent weekly backups are kept. The first backup created each week (starting with Monday) is kept.
+* *Month*: Specifies how many monthly backup files should be retained. If the value entered is "12", for example, the twelve most recent monthly backups are kept. The first backup created in each month is kept.
+
+Please note that backup files are only created if the application is open and changes have been made to the project data since the last backup. Therefore, a setting of "7" for daily backups does not necessarily mean that a backup file is available for each project for every day of the past week. This is only the case if the application was open every day of the week and the corresponding project was edited every day.
+
+
+#### Hard disk space required
+
+The more backups you keep, the more storage space you will need in the selected backup directory. In the settings, you can view the hard disk space currently occupied by automatic backups. In addition, the estimated disk space required in the future is displayed: This is the disk space that will be required if the maximum number of backup files is retained (in accordance with the specified rules) for the projects currently on the computer. This estimate may differ from the actual storage space required if projects are deleted or newly created, or if the size of existing projects changes.
+
+
+## Creating a manual backup
+
+Backup files for the currently opened project can be created manually via the menu "Project" ➝ "Create backup...". Use the "Create backup" button and select a directory and a name for the backup file to be created.
+
+
+## Restoring a backup
+
+To restore a project from a backup file, open the menu "Project" ➝ "Restore backup...". First, select the desired backup file using the file selection field "Path". The selected file must be a JSONL file created by automatic or manual backup in Field Desktop. In the input field "Project identifier", you can then enter a unique identifier for the new project that will be created from the backup file. This can be either the identifier of the original project or a different one. If the entered identifier differs significantly from the original one, a warning appears to alert you to the possibility of accidentally restoring the wrong backup.
+
+**Important**: If you enter the identifier of an existing project, this project will be overwritten during the restoration process.
+
+
+<hr>
+
+
 # Warnings
 
 For various reasons, such as changes to the project configuration, inconsistent or otherwise incorrect data may occur in a project. In these cases, the application displays a warning and provides options for solving the problem. Faulty resources are marked with a red bar next to the list entry of the corresponding resource. Furthermore, an icon is displayed in the navigation bar at the top right, indicating the number of resources for which there are warnings due to data problems:
@@ -1817,6 +2176,26 @@ The data entered in a field does not correspond to the input type selected for t
 * Button *Edit*: Open the resource in the resource editor to remove the invalid field data and re-enter it if necessary.
 * Button *Convert field data*: The data is automatically converted to the correct format for the respective input type. Optionally, you can have the data converted for all resources where invalid data has been entered in the same field. Please note that automatic conversion is not possible in all cases and this button is therefore not always available.
 * Button *Select new field*: Select one of the fields configured for the category of the resource. The data entered will then be moved to this field. Please note that any existing data in the target field will be overwritten. Optionally, you can set the new field for all resources for which invalid data has been entered in the same field (valid data remains in the original field).
+
+### Missing mandatory field
+No data has been entered in a field configured as mandatory.
+
+#### Possible causes
+* The field was configured as mandatory in the configuration editor after resource creation.
+
+#### Possible solutions
+* Button *Edit*: Open the resource in the resource editor to fill in the mandatory field.
+
+### Unfulfilled display condition of a field
+Data has been entered in a field although the condition for displaying this field has not been fulfilled.
+
+#### Possible causes
+* The display condition was set up or changed in the configuration editor after data had already been entered in the field.
+
+#### Possible solutions
+* Button *Edit*: Open the resource in the resource editor to adjust the data in the condition field so that the condition is fulfilled.
+* Button *Delete field data*: The data entered in the field is deleted completely.
+* Remove the display condition for the field in the configuration editor or adjust it so that the condition is fulfilled for the affected resource.
 
 ### Value not included in valuelist
 One or more values are entered in a field that are not contained in the valuelist configured for the field.
@@ -1899,3 +2278,79 @@ There are more resources of a particular category than the resource limit config
 #### Possible solutions
 * Delete resources of the corresponding category until the resource limit is met.
 * Increase the resource limit in the configuration editor.
+
+### Invalid state
+The state of a process contradicts the specified date. This is the case, for example, if the date of a process with the state "Planned" is in the past or the date of a process with the state "Completed" is in the future.
+
+#### Possible causes
+* The state has not been updated after the process has been started, completed or canceled.
+* A planned process has not yet been carried out on the specified date.
+
+#### Possible solutions
+* Button *Edit*: Open the resource editor to adjust the state or date of the process.
+
+
+# API
+
+Field Desktop provides a REST API that can be used to access and import data via HTTP. When the application is open, you can use the API via the following URL:
+
+http://localhost:3000
+
+When accessing each of the API endpoints, the password entered as "Your password" in the menu "Settings" under "Synchronization" must be given via *Basic Auth*. It is not necessary to enter a user name.
+
+
+## Endpoints
+
+### GET /info
+
+This API endpoint returns some information about the running instance of Field Desktop in JSON format.
+
+Return:
+* *version (string)*: The version of the running application
+* *projects (string array)*: The identifiers of all projects currently stored on this computer
+* *activeProject (string)*: The identifier of the project currently opened in the application
+* *user (string)*: The name entered in Field Desktop as "User name"
+
+
+### GET /configuration/{project}
+
+This API endpoint can be used to retrieve the project configuration in JSON format. While the configuration files that can be created via the menu "Project configuration" ➝ "Export configuration..." contain only the project-specific part of the configuration, this API endpoint outputs the complete configuration, including all configuration elements used in the project from the Field libraries (default forms, valuelists, etc.).
+
+Please note that the JSON output of the API endpoint **cannot** be imported via the menu "Project configuration" ➝ "Import configuration...". Use the menu option "Project configuration" ➝ "Export configuration..." to obtain a configuration file suitable for this purpose.
+
+Parameters:
+* *project*: The name of the project whose configuration is to be retrieved
+
+
+### POST /import/{format}
+
+This API endpoint can be used to import data into the project currently opened in the application. The functionality corresponds to that of the import tool that can be accessed via the menu "Tools" ➝ "Import". Detailed explanations of the options and formats can be found in the chapter "Import and Export".
+
+The data to be imported must be included in the request body.
+
+Parameters:
+* *format*: The format of the data to be imported. Supported formats: *csv*, *geojson*, *jsonl*
+
+Query parameters:
+* *merge (boolean)*: Updates existing resources instead of creating new ones. Corresponds to the option "Update existing resources" in the user interface. (Default value: false)
+* *permitDeletions (boolean)*: Allows fields to be removed during import. Corresponds to the checkbox "Permit deletions" in the user interface. (Default value: false)
+* *ignoreUnconfiguredFields (boolean)*: Does not abort the import if unconfigured fields are found. Corresponds to the checkbox "Ignore unconfigured fields" in the user interface. (Default value: false)
+* *category (string)*: The name of the category to which the data to be imported belongs. Only required for CSV import. Corresponds to the dropdown field "Category" in the user interface. (Default value: "Project")
+* *operation (string)*: The identifier of an operation to which the imported resources are to be assigned. Corresponds to the dropdown field "Assign data to an operation" in the user interface. (Default value: not set)
+* *separator (string)*: The separator used in the CSV data. Only required for CSV import. Corresponds to the input field "Field separator" in the user interface. (Default value: ",")
+
+
+### GET /export/{format}
+
+This API endpoint can be used to export data from the project currently opened in the application. The functionality corresponds to that of the export tool that can be accessed via the menu "Tools" ➝ "Export". Detailed explanations of the options and formats can be found in the chapter "Import and Export".
+
+Parameters:
+* *format*: The format in which the data is to be exported. Supported formats: *csv*, *geojson*
+
+Query parameters:
+* *schemaOnly (boolean)*: Outputs only the header of the CSV table. Only available for CSV export. (Default value: false)
+* *context (string)*: Specifies the context from which resources are to be exported. Possible values are "project" for the entire project or the identifier of an operation. Corresponds to the dropdown field "Context" in the user interface. (Default value: "project")
+* *category (string)*: The name of the category whose data is to be exported. Only required for CSV export. Corresponds to the dropdown field "Category" in the user interface. (Default value: "Project")
+* *separator (string)*: The separator to be used in the exported CSV data. Only required for CSV export. Corresponds to the input field "Field separator" in the user interface. (Default value: ",")
+* *combineHierarchicalRelations (boolean)*: Combines hierarchical relations into the simplified relation "isChildOf". Only available for CSV export. Corresponds to the checkbox "Combine hierarchical relations" in the user interface. (Default value: true)
+* *formatted (boolean)*: Sets indentations for formatted output of the exported data. Only available for GeoJSON export. (Default value: true)

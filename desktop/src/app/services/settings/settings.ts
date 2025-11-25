@@ -1,5 +1,6 @@
 import { I18N } from 'idai-field-core';
 import { SyncTarget } from './sync-target';
+import { KeepBackupsSettings } from './keep-backups-settings';
 
 const remote = window.require('@electron/remote');
 
@@ -15,9 +16,11 @@ export interface Settings {
     projectNames?: { [projectIdentifier: string]: I18N.String };
     selectedProject: string;
     imagestorePath: string;
+    backupDirectoryPath: string;
     hideHiddenFieldsInConfigurationEditor?: boolean;
     highlightCustomElements?: boolean;
     allowLargeFileUploads?: boolean;
+    keepBackups: KeepBackupsSettings;
 }
 
 

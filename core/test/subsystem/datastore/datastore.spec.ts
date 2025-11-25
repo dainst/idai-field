@@ -1,4 +1,5 @@
 import { Document } from '../../../src/model';
+import { SortMode } from '../../../src/model/datastore/query';
 import { doc, doc1 } from '../../test-helpers';
 import { CoreApp, createCoreApp, createHelpers } from '../subsystem-helper';
 
@@ -81,7 +82,7 @@ describe('subsystem/datastore', () => {
         await app.datastore.create(doc3);
 
         const { documents: documents1, totalCount: totalCount1 } = await app.datastore.find(
-            { q: 'B-100', sort: { mode: 'default' } },
+            { q: 'B-100', sort: { mode: SortMode.Alphanumeric } },
             { includeResourcesWithoutValidParent: true }
         );
 
@@ -92,7 +93,7 @@ describe('subsystem/datastore', () => {
         expect(documents1[1].resource.id).toBe('2');
 
         const { documents: documents2, totalCount: totalCount2 } = await app.datastore.find(
-            { q: 'B-100', sort: { mode: 'exactMatchFirst' } },
+            { q: 'B-100', sort: { mode: SortMode.ExactMatchFirst } },
             { includeResourcesWithoutValidParent: true }
         );
 

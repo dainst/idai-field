@@ -1,4 +1,4 @@
-<.header>{gettext("home_title")}</.header>
+<.document_heading>{gettext("home_title")}</.document_heading>
 
 <div class="flex flex-row">
   <div class="basis-1/3 mr-2">
@@ -19,7 +19,7 @@
               with standard liveview attributes. -->
             <.link navigate={~p"/projects/#{project[:name]}"}>
               <div
-                class={"rounded #{if @highlighted == project[:name] do "bg-indigo-500" else "bg-slate-300" end} p-2 mt-2 cursor-pointer text-black"}
+                class={"rounded #{if @highlighted == project[:name] do "bg-primary-hover text-primary-negative-hover" else "bg-primary text-primary-negative" end}  p-2 mt-2 cursor-pointer"}
                 phx-value-id={project[:name]}
               >
                 <div class="text-center">

@@ -401,7 +401,7 @@ defmodule FieldPublicationWeb.CoreComponents do
         id={@id}
         value={Phoenix.HTML.Form.normalize_value(@type, @value)}
         class={[
-          "mt-2 block w-full text-zinc-900 #{if @type == "text", do: "p-2 "}focus:ring-0 border sm:text-sm sm:leading-6",
+          "mt-2 block w-full text-zinc-900 #{if @type in ["text", "password"], do: "p-2 "}focus:ring-0 border sm:text-sm sm:leading-6",
           "phx-no-feedback:border-zinc-300 phx-no-feedback:focus:border-zinc-400",
           @errors == [] && "border-zinc-300 focus:border-zinc-400",
           @errors != [] && "border-rose-400 focus:border-rose-400"

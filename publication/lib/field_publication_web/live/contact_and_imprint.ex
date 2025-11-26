@@ -10,43 +10,57 @@ defmodule FieldPublicationWeb.ContactAndImprintLive do
 
   def render(assigns) do
     ~H"""
-    <div class="flex gap-2 ">
-      <%= for %Translation{language: language} <- @imprints do %>
-          <div class={"cursor-pointer p-2 #{if @selected_language == language, do: "border"} border-(--primary-color)"} phx-click="select" phx-value-language={language}>
+    <%= if @contact != nil do %><div class="flex gap-2 ">
+      <%= for %Translation{language: language} <- @contact do %>
+          <div class={"cursor-pointer p-2 #{if @selected_language == language, do: "bg-gray-100 rounded-t"} border-(--primary-color)"} phx-click="select" phx-value-language={language}>
         {FieldPublicationWeb.Gettext.get_locale_labels() |> Map.get(language)}
 
         </div>
       <% end %>
     </div>
-
-    <%= if @imprints == [] do %>
-      Contact and imprint missing.
-    <% else %>
-      <div class="markdown">
+      <div class="markdown bg-gray-100 p-4">
         {@selected_text}
+      </div>
+    <% else %>
+    <div class="p-8">
+      <span class="text-red-700"><.icon name="hero-exclamation-triangle" /> No contact or imprint defined.</span>
+
+        <.link class="pl-4 text-sm" :if={FieldPublication.Users.is_admin?(@current_user)} navigate={~p"/management/settings"}>
+          Open settings
+        </.link>
       </div>
     <% end %>
     """
   end
 
   def mount(_params, _session, socket) do
-    %ApplicationSettings{imprints: imprints} = Settings.get_settings()
-    selected_ui_language = Gettext.get_locale(FieldPublicationWeb.Gettext)
+    %ApplicationSettings{contact: contact} = Settings.get_settings()
 
-    %Translation{language: language} =
-      Enum.find(
-        imprints,
-        List.first(imprints),
-        fn %Translation{language: language} -> language == selected_ui_language end
-      )
+    case contact do
+      val when is_list(val) and val != [] ->
 
-    {
-      :ok,
-      socket
-      |> assign(:page_title, "Contact and imprint")
-      |> assign(:imprints, imprints)
-      |> set_selected(language)
-    }
+        selected_ui_language = Gettext.get_locale(FieldPublicationWeb.Gettext)
+
+        %Translation{language: language} =
+          Enum.find(
+            contact,
+            List.first(contact),
+            fn %Translation{language: language} -> language == selected_ui_language end
+          )
+
+          language
+
+          {
+            :ok,
+            socket
+            |> assign(:page_title, "Contact and imprint")
+            |> assign(:contact, contact)
+            |> set_selected(language)
+          }
+      _ ->
+        {:ok, socket |> assign(:page_title, "Contact and imprint") |> assign(:contact, nil)}
+    end
+
   end
 
   def handle_event(
@@ -60,11 +74,11 @@ defmodule FieldPublicationWeb.ContactAndImprintLive do
     }
   end
 
-  defp set_selected(%{assigns: %{imprints: imprints}} = socket, selected_language) do
+  defp set_selected(%{assigns: %{contact: contact}} = socket, selected_language) do
     selected_text =
       Enum.find(
-        imprints,
-        List.first(imprints),
+        contact,
+        List.first(contact),
         fn %Translation{language: language} -> language == selected_language end
       )
       |> then(fn %Translation{text: text} -> text end)

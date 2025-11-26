@@ -100,7 +100,7 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
         Imprint
         <button
           type="button"
-          name="application_settings[imprints_sort][]"
+          name="application_settings[contact_sort][]"
           value="new"
           class="cursor-pointer"
           phx-click={JS.dispatch("change")}
@@ -111,24 +111,24 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
 
       <%= for error <- @setting_form.source.errors do %>
         <%= case error do %>
-          <% {:imprints, {msg, _opts}} -> %>
+          <% {:contact, {msg, _opts}} -> %>
             <div class="p-2 text-red-700"><.icon name="hero-exclamation-circle-mini" /> {msg}</div>
           <% _ -> %>
             {inspect(error)}
         <% end %>
       <% end %>
 
-      <div :if={@setting_form[:imprints].value == []} class="p-2 italic">
+      <div :if={@setting_form[:contact].value == []} class="p-2 italic">
         <.icon name="hero-exclamation-triangle" /> You currently have no imprint.
       </div>
-      <.inputs_for :let={imprint} field={@setting_form[:imprints]}>
+      <.inputs_for :let={imprint} field={@setting_form[:contact]}>
         <div class="flex gap-2 mt-2">
           <div class="basis-1/2">
-            <input type="hidden" name="application_settings[imprints_sort][]" value={imprint.index} />
+            <input type="hidden" name="application_settings[contact_sort][]" value={imprint.index} />
             <div class="flex gap-1">
               <button
                 type="button"
-                name="application_settings[imprints_drop][]"
+                name="application_settings[contact_drop][]"
                 class="cursor-pointer"
                 value={imprint.index}
                 phx-click={JS.dispatch("change")}
@@ -156,7 +156,7 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
         </div>
       </.inputs_for>
 
-      <input type="hidden" name="application_settings[imprints_drop][]" />
+      <input type="hidden" name="application_settings[contact_drop][]" />
     </section>
     """
   end

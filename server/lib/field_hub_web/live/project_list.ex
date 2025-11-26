@@ -186,46 +186,49 @@ defmodule FieldHubWeb.Live.ProjectList do
 
   def render_dashboard(assigns) do
     ~H"""
-    <div class="dashboard">
-      <div class="dashboard-card">
-        <div class="dashboard-card-title">Your projects</div>
-        <div class="dashboard-card-main-number">
-          {@healthy_projects_number.result}
-        </div>
-        <%= if @all_projects_number > @healthy_projects_number.result do %>
-          <div class="dashboard-card-error">
-            +{@all_projects_number - @healthy_projects_number.result} unhealthy
+    <%= if @all_projects_number > 1 do %>
+      <div class="dashboard">
+        <div class="dashboard-card">
+          <div class="dashboard-card-title">Your projects</div>
+          <div class="dashboard-card-main-number">
+            {@healthy_projects_number.result}
           </div>
-        <% end %>
-      </div>
-      <div class="dashboard-card">
-        <div class="dashboard-card-title">Used space</div>
-        <div class="dashboard-card-main-number">
-          {@total_database_size.result}
+          <%= if @all_projects_number > @healthy_projects_number.result do %>
+            <div class="dashboard-card-error">
+              +{@all_projects_number - @healthy_projects_number.result} unhealthy
+            </div>
+          <% end %>
         </div>
-      </div>
-      <div class="dashboard-card">
-        <div class="dashboard-card-title">Documents</div>
-        <div class="dashboard-card-main-number">{@total_documents_size.result}</div>
-        <b class="info-label">Total:</b>
-        <span class="info-value">{@total_documents_number.result}</span>
-      </div>
-      <div class="dashboard-card">
-        <div class="dashboard-card-title">Images</div>
-        <div class="dashboard-card-main-number">{@total_images_size.result}</div>
-        <div class="dashboard-secondary-info">
-          <span class="info-item">
-            <b class="info-label">Thumbnails :</b>
-            <span class="info-value">{@total_thumbnails_number.result}</span>
-          </span>
+        <div class="dashboard-card">
+          <div class="dashboard-card-title">Used space</div>
+          <div class="dashboard-card-main-number">
+            {@total_database_size.result}
+          </div>
+        </div>
+        <div class="dashboard-card">
+          <div class="dashboard-card-title">Documents</div>
+          <div class="dashboard-card-main-number">{@total_documents_size.result}</div>
+          <b class="info-label">Total:</b>
+          <span class="info-value">{@total_documents_number.result}</span>
+        </div>
+        <div class="dashboard-card">
+          <div class="dashboard-card-title">Images</div>
+          <div class="dashboard-card-main-number">{@total_images_size.result}</div>
+          <div class="dashboard-secondary-info">
+            <span class="info-item">
+              <b class="info-label">Thumbnails :</b>
+              <span class="info-value">{@total_thumbnails_number.result}</span>
+            </span>
 
-          <span class="info-item">
-            <span class="info-label">Originals :</span>
-            <span class="info-value">{@total_originals_number.result}</span>
-          </span>
+            <span class="info-item">
+              <span class="info-label">Originals :</span>
+              <span class="info-value">{@total_originals_number.result}</span>
+            </span>
+          </div>
         </div>
       </div>
-    </div>
+
+    <% end %>
     """
   end
 

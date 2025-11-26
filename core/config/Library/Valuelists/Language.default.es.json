@@ -75,7 +75,7 @@
         "label": "Egipto"
       },
       "Attisch": {
-        "label": "Ático"
+        "label": "ático"
       },
       "Britannien": {
         "label": "Gran Bretaña"
@@ -196,7 +196,7 @@
         "label": "Edad del Bronce"
       },
       "Byzantinisch": {
-        "label": "bizantino"
+        "label": "Bizantino"
       },
       "Eisenzeitlich": {
         "label": "Edad del hierro"
@@ -244,7 +244,7 @@
         "label": "Reciente"
       },
       "Römisch": {
-        "label": "romano"
+        "label": "Romano"
       },
       "Spätantik": {
         "label": "Antigüedad tardía"
@@ -338,7 +338,7 @@
         "label": "blanco"
       }
     },
-    "description": "Conjunto de colores 1, diversas aplicaciones; Departamento de TI, 2019"
+    "description": "Conjunto de colores 1, diversas aplicaciones; Departamento de IT, 2019"
   },
   "colors-default-2": {
     "values": {
@@ -503,7 +503,7 @@
   "glass-manufacturingMethod-default": {
     "values": {
       "Formgeblasen (mit Reliefdekor)": {
-        "label": "Soplado en molde (con decoración en relieve)"
+        "label": "soplado en molde (con decoración en relieve)"
       },
       "Formgeschmolzen": {
         "label": "fundido en molde"
@@ -714,7 +714,7 @@
         "label": "cuenco con franja pulida"
       },
       "Schöpfer": {
-        "label": "cucharón"
+        "label": "Cucharón"
       },
       "Skyphos": {
         "label": "escifo"

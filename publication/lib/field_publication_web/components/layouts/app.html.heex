@@ -4,7 +4,7 @@
       <img src={Settings.get_logo_url()} class="h-12" />
       <p class="rounded-full px-4 font-medium leading-6 bg-primary text-primary-negative">
         {Settings.get_page_name()}
-        
+
 <!-- Field Publication v{Application.spec(:field_publication, :vsn)} -->
       </p>
     </.link>
@@ -52,3 +52,6 @@
   <.flash_group flash={@flash} />
   {@inner_content}
 </main>
+<footer class="w-full fixed bottom-0 flex justify-center bg-white z-100">
+  <.link navigate={~p"/contact"}>Contact and imprint</.link>
+</footer>

@@ -46,11 +46,13 @@ defmodule FieldPublication.DatabaseSchema.ApplicationSettings do
 
   import Ecto.Changeset
 
-  alias FieldPublication.DatabaseSchema.Base
+  alias FieldPublication.DatabaseSchema.{
+    Base,
+    Translation
+  }
 
   @doc_type "application_settings"
   @primary_key false
-
   embedded_schema do
     field(:_rev, :string)
     field(:doc_type, :string, default: @doc_type)
@@ -58,6 +60,7 @@ defmodule FieldPublication.DatabaseSchema.ApplicationSettings do
     field(:favicon, :string)
     field(:page_name, :string, default: "FieldPublication")
     embeds_one(:color_scheme, ColorScheme, defaults_to_struct: true, on_replace: :update)
+    embeds_many(:imprints, Translation, on_replace: :delete)
   end
 
   def changeset(settings, attrs \\ %{}) do
@@ -69,6 +72,26 @@ defmodule FieldPublication.DatabaseSchema.ApplicationSettings do
       :page_name
     ])
     |> cast_embed(:color_scheme)
+    |> cast_embed(:imprints,
+      sort_param: :imprints_sort,
+      drop_param: :imprints_drop
+    )
+    |> ensure_no_language_duplicate()
     |> Base.validate_doc_type(@doc_type)
+  end
+
+  defp ensure_no_language_duplicate(changeset) do
+    imprints = get_field(changeset, :imprints)
+
+    invalid =
+      Enum.map(imprints, fn %Translation{language: language} -> language end)
+      |> Enum.frequencies()
+      |> Enum.any?(fn {key, count} -> count > 1 end)
+
+    if invalid do
+      add_error(changeset, :imprints, "only one imprint per language allowed")
+    else
+      changeset
+    end
   end
 end

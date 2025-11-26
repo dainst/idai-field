@@ -73,7 +73,7 @@ defmodule FieldPublicationWeb.Router do
       live "/projects/new", Management.OverviewLive, :new_project
       live "/projects/:project_id/edit", Management.OverviewLive, :edit_project
 
-      live "/settings", Management.SettingsView
+      live "/settings", Management.SettingsLive
     end
   end
 
@@ -114,8 +114,9 @@ defmodule FieldPublicationWeb.Router do
 
     live_session :mount_user,
       on_mount: [{FieldPublicationWeb.UserAuth, :mount_current_user}] do
-      live "/", Presentation.HomeLive
+      live "/contact", ContactAndImprintLive
       live "/search", Presentation.SearchLive
+      live "/", Presentation.HomeLive
     end
   end
 

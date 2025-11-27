@@ -1,9 +1,11 @@
 <div class="container">
-  <.link navigate={~p"/"}>Back to overview</.link>
+  <%= if User.is_admin?(@current_user) do %>
+    <.link navigate={~p"/"}>Back to overview</.link>
+  <% end %>
 
   <h1>Project <i>{@project}</i></h1>
 
-  <p class="alert alert-info">{Phoenix.Flash.get(@flash, :info)}</p>
+  <%!-- <p class="alert alert-info">{Phoenix.Flash.get(@flash, :info)}</p> --%>
   <p class="alert alert-danger">{Phoenix.Flash.get(@flash, :error)}</p>
 
   <section>

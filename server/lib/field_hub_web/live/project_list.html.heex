@@ -20,11 +20,12 @@ This server runs Field Hub (<small><%= Application.spec(:field_hub, :vsn) %></sm
       <:failed :let={_failure}>there was an error loading the projects list</:failed>
 
       <%= if length(errors)>0 do %>
-        <div class="alert alert-danger">
+        <p class="alert alert-danger">
           <b>Project errors detected.</b>
           <br />Please contact the administrators to resolve the issue and ensure project integrity.
-        </div>
+        </p>
       <% end %>
+      <%!-- <p class="alert alert-danger">{Phoenix.Flash.get(@flash, :error)}</p> --%>
 
       <%= case projects do %>
         <% [] -> %>
@@ -101,9 +102,7 @@ This server runs Field Hub (<small><%= Application.spec(:field_hub, :vsn) %></sm
           Project <span class="emphasis-text-error">{project_id}</span>
           has an error: <pre>{inspect(error)}</pre>.
         <% end %>
-      <% else %>         
-        <% [project] = projects %> <button phx-click="go_to_project" phx-value-id={project.id} >Project details page ({project.name})</button>
-      <% end %> 
+      <% end %>
     </.async_result>
   </div>
 <% end %>

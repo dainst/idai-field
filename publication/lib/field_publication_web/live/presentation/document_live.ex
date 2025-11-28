@@ -233,7 +233,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
     |> assign(:doc, project_doc)
     |> assign(:staff, staff)
     |> assign(:publication, publication)
-    |> assign(:top_level_docs, top_level_docs)
+    # |> assign(:top_level_docs, top_level_docs)
     |> assign(:category_hierarchy, category_hierarchy)
     |> assign(:category_usage, category_usage)
     |> assign(

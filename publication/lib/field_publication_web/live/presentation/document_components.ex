@@ -369,7 +369,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           <.group_heading>
             {gettext("project_doc_about_project")}
           </.group_heading>
-          <div class="bg-gray-50 p-2 rounded">
+          <div class="bg-panel p-2 rounded">
             <% depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
             <%= if depicted_in != nil do %>
               <div class="float-left overflow-auto overscroll-contain max-h-[310px] mr-3 mb-2">
@@ -397,7 +397,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           <.group_heading class="mt-3">
             {gettext("project_doc_about_publication")}
           </.group_heading>
-          <div class="bg-gray-50 p-2 rounded">
+          <div class="bg-panel p-2 rounded">
             <I18n.markdown
               values={
                 @publication.comments
@@ -406,6 +406,17 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
               }
               lang={@lang}
             />
+          </div>
+          <div class="bg-panel p-2 mt-2 grid justify-items-center">
+            <div class="w-[600px]">
+              <.live_component
+                module={FieldPublicationWeb.Presentation.Components.ProjectViewMap}
+                id="project_doc_map"
+                style="height: 600px; background-color: white"
+                publication={@publication}
+                lang={@lang}
+              />
+            </div>
           </div>
         </div>
 
@@ -459,20 +470,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
               </dd>
             <% end %>
           </dl>
-
-          <div>
-            <.group_heading>
-              {gettext("Browse by document hierarchy")}
-            </.group_heading>
-            <%= for %Document{} = doc <- @top_level_docs do %>
-              <DocumentLink.show lang={@lang} doc={doc} />
-            <% end %>
-          </div>
-        </div>
-      </div>
-
-      <section class="flex m-5 ">
-        <div class="p-4 border border-black mr-4">
           <.group_heading>
             {gettext("Documents")}
           </.group_heading>
@@ -484,16 +481,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             />
           </div>
         </div>
-        <div class="w-full p-8 bg-gray-50 border border-black">
-          <.live_component
-            module={FieldPublicationWeb.Presentation.Components.ProjectViewMap}
-            id="project_doc_map"
-            style="width: 100%; height: calc(100dvh - 300px); background-color: white"
-            publication={@publication}
-            lang={@lang}
-          />
-        </div>
-      </section>
+      </div>
     </div>
     """
   end
@@ -521,7 +509,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
               <span style={"color: #{desaturate_category_color(color)}"}>
                 <.icon name="hero-document-solid" />
               </span>
-              <div class="font-thin pl-1 hover:text-black text-gray-800">
+              <div class="pl-1 text-primary hover:text-primary-hover">
                 <I18n.text values={labels} /> ({count})
               </div>
             </div>

@@ -281,7 +281,8 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
     }
   end
 
-  def handle_event("validate", %{"application_settings" => params} = all, socket) do
+  @impl true
+  def handle_event("validate", %{"application_settings" => params}, socket) do
     changeset =
       %ApplicationSettings{}
       |> ApplicationSettings.changeset(params)

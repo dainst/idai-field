@@ -86,7 +86,7 @@ defmodule FieldPublication.DatabaseSchema.ApplicationSettings do
     invalid =
       Enum.map(contact, fn %Translation{language: language} -> language end)
       |> Enum.frequencies()
-      |> Enum.any?(fn {key, count} -> count > 1 end)
+      |> Enum.any?(fn {_key, count} -> count > 1 end)
 
     if invalid do
       add_error(changeset, :contact, "only one imprint per language allowed")

@@ -10,22 +10,32 @@ defmodule FieldPublicationWeb.ContactAndImprintLive do
 
   def render(assigns) do
     ~H"""
-    <%= if @contact != nil do %><div class="flex gap-2 ">
-      <%= for %Translation{language: language} <- @contact do %>
-          <div class={"cursor-pointer p-2 #{if @selected_language == language, do: "bg-gray-100 rounded-t"} border-(--primary-color)"} phx-click="select" phx-value-language={language}>
-        {FieldPublicationWeb.Gettext.get_locale_labels() |> Map.get(language)}
-
-        </div>
-      <% end %>
-    </div>
+    <%= if @contact != nil do %>
+      <div class="flex gap-2 ">
+        <%= for %Translation{language: language} <- @contact do %>
+          <div
+            class={"cursor-pointer p-2 #{if @selected_language == language, do: "bg-gray-100 rounded-t"} border-(--primary-color)"}
+            phx-click="select"
+            phx-value-language={language}
+          >
+            {FieldPublicationWeb.Gettext.get_locale_labels() |> Map.get(language)}
+          </div>
+        <% end %>
+      </div>
       <div class="markdown bg-gray-100 p-4">
         {@selected_text}
       </div>
     <% else %>
-    <div class="p-8">
-      <span class="text-red-700"><.icon name="hero-exclamation-triangle" /> No contact or imprint defined.</span>
+      <div class="p-8">
+        <span class="text-red-700">
+          <.icon name="hero-exclamation-triangle" /> No contact or imprint defined.
+        </span>
 
-        <.link class="pl-4 text-sm" :if={FieldPublication.Users.is_admin?(@current_user)} navigate={~p"/management/settings"}>
+        <.link
+          :if={FieldPublication.Users.is_admin?(@current_user)}
+          class="pl-4 text-sm"
+          navigate={~p"/management/settings"}
+        >
           Open settings
         </.link>
       </div>
@@ -34,11 +44,10 @@ defmodule FieldPublicationWeb.ContactAndImprintLive do
   end
 
   def mount(_params, _session, socket) do
-    %ApplicationSettings{contact: contact} = Settings.get_settings()
+    %ApplicationSettings{contact: contact} = Settings.get()
 
     case contact do
       val when is_list(val) and val != [] ->
-
         selected_ui_language = Gettext.get_locale(FieldPublicationWeb.Gettext)
 
         %Translation{language: language} =
@@ -48,19 +57,17 @@ defmodule FieldPublicationWeb.ContactAndImprintLive do
             fn %Translation{language: language} -> language == selected_ui_language end
           )
 
-          language
+        {
+          :ok,
+          socket
+          |> assign(:page_title, "Contact and imprint")
+          |> assign(:contact, contact)
+          |> set_selected(language)
+        }
 
-          {
-            :ok,
-            socket
-            |> assign(:page_title, "Contact and imprint")
-            |> assign(:contact, contact)
-            |> set_selected(language)
-          }
       _ ->
         {:ok, socket |> assign(:page_title, "Contact and imprint") |> assign(:contact, nil)}
     end
-
   end
 
   def handle_event(

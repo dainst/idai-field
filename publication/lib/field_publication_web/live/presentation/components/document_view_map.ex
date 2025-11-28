@@ -25,7 +25,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
         </.link>
       </.group_heading>
       <div
-        class="relative"
+        class="relative bg-panel"
         id={@id}
         centerLon={@centerLon}
         centerLat={@centerLat}

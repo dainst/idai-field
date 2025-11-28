@@ -29,7 +29,7 @@
         <% end %>
 
         <.group_heading>Available filters</.group_heading>
-        <div class="h-[70vh] overflow-auto">
+        <div class="max-h-[600px] mt-2 p-1 bg-panel overflow-auto">
           <%= for {field, buckets} <- aggregations do %>
             <%= if !(Enum.find(@url_parameters.filters, fn({already_filtered_field, _value}) -> already_filtered_field == field end ) ) and buckets != [] do %>
               <.aggregation_selection field_name={field} buckets={buckets} />

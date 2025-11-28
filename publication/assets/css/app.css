@@ -17,6 +17,7 @@
     --main-navbar-height: 50px;
     --background: #ffffff;
     --main-text: #000000;
+    --panel-color: #f2f2f2;
 
     /*
     The following variables are set here only to be able to compile the @theme below
@@ -24,8 +25,8 @@
     */
     --primary-color: #5882c2;
     --primary-color-hover: #375d97;
-    --primary-color-negative: #ffffff;
-    --primary-color-hover-negative: #ffffff;
+    --primary-color-inverse: #ffffff;
+    --primary-color-hover-inverse: #ffffff;
     /*
     ^---- until here.
     */
@@ -44,8 +45,9 @@
 @theme {
     --color-primary: var(--primary-color);
     --color-primary-hover: var(--primary-color-hover);
-    --color-primary-negative: var(--primary-color-negative);
-    --color-primary-negative-hover: var(--primary-color-hover-negative);
+    --color-primary-inverse: var(--primary-color-inverse);
+    --color-primary-inverse-hover: var(--primary-color-hover-inverse);
+    --color-panel: var(--panel-color);
 }
 
 /* This file is for your main application CSS */

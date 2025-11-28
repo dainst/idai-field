@@ -80,14 +80,11 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             <.group_heading>
               <I18n.text values={depicted_in.labels} /> ({Enum.count(depicted_in.docs)})
             </.group_heading>
-            <div class="overflow-auto overscroll-contain grid grid-cols-3 gap-1 mt-2 max-h-[300px] mb-5">
+            <div class="p-2 bg-panel overflow-auto overscroll-contain grid grid-cols-3 gap-1 mt-2 max-h-[300px] mb-5">
               <%= for %Document{} = doc <- depicted_in.docs do %>
-                <.link
-                  patch={
-                    ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@lang}/#{doc.id}"
-                  }
-                  class="p-1"
-                >
+                <.link patch={
+                  ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@lang}/#{doc.id}"
+                }>
                   <div class="max-w-[250px]">
                     <Image.show
                       size="^250,"
@@ -344,7 +341,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
         </div>
         <div class="basis-full lg:basis-2/3 m-5">
           <.live_component
-            class="h-(--ol-full-height)"
+            class="h-(--ol-full-height) p-2 bg-panel"
             id="iiif_viewer"
             project={@publication.project_name}
             uuid={@doc.id}

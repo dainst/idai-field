@@ -1,7 +1,6 @@
 defmodule FieldPublicationWeb.Management.SettingsLive do
   alias FieldPublication.DatabaseSchema.{
-    ApplicationSettings,
-    Translation
+    ApplicationSettings
   }
 
   alias FieldPublication.Settings
@@ -18,7 +17,7 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
       <.button class="w-full" disabled={@setting_form.source.changes == %{}}>
         Save changes
       </.button>
-
+      
     <!-- Logo and favicon are not changed by this form, instead they have their own events
      that get triggered when clicking in the uploaded images panel below. -->
       <.input type="hidden" field={@setting_form[:logo]} />
@@ -258,7 +257,7 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
   @impl Phoenix.LiveView
   def mount(_params, _session, socket) do
     changeset =
-      Settings.get_settings()
+      Settings.get()
       |> ApplicationSettings.changeset()
 
     imprint_options =
@@ -272,7 +271,7 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
       socket
       |> assign(
         :imprint_options,
-        ([[key: "Please select a language", value: nil]] ++ imprint_options)
+        [[key: "Please select a language", value: nil]] ++ imprint_options
       )
       |> update_form(changeset)
       |> assign(:existing_images, Settings.list_images())

@@ -1,4 +1,8 @@
 defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
+  alias FieldPublicationWeb.Presentation.Components.GenericField
+  alias FieldPublicationWeb.Presentation.Components.I18n
+  alias FieldPublication.Publications.Data.Field
+  alias FieldPublication.Publications.Data.FieldGroup
   alias FieldPublicationWeb.Presentation.Components.DocumentLink
   alias FieldPublication.Publications.Data
   alias FieldPublication.Publications.Data.Document
@@ -17,8 +21,34 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
     ~H"""
     <%= case @nodes do %>
       <% [main_document] -> %>
-        <div class="bg-slate-200">
+        <div class="p-2 border-2 border-primary bg-panel">
           <.render_link doc={main_document} hover_target={@map_id} lang={@lang} focus={@focus} />
+          <div class="max-h-96 overflow-auto overscroll-contain">
+            <%= for %FieldGroup{} = group <- main_document.groups do %>
+              <% fields =
+                Enum.reject(group.fields, fn %Field{name: name} ->
+                  name in ["identifier", "category", "geometry"]
+                end) %>
+              <%= unless fields == [] do %>
+                <section>
+                  <.group_heading>
+                    <I18n.text values={group.labels} />
+                  </.group_heading>
+
+                  <dl class="mt-2">
+                    <%= for %Field{} = field <- fields do %>
+                      <div>
+                        <dt class="font-bold"><I18n.text values={field.labels} /></dt>
+                        <dd class="pl-4">
+                          <GenericField.render field={field} lang={@lang} />
+                        </dd>
+                      </div>
+                    <% end %>
+                  </dl>
+                </section>
+              <% end %>
+            <% end %>
+          </div>
         </div>
         <% contains = Data.get_relation(main_document, "contains") %>
         <%= if contains do %>

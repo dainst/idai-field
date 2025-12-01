@@ -226,7 +226,7 @@ export default getDocumentViewMapHook = () => {
                 layerGroup.push(layer);
 
                 const preference = localStorage.getItem(
-                    getVisibilityKey(this.project, layer.get("name")),
+                    getVisibilityKey(projectName, layer.get("name")),
                 );
                 let visible = null;
 
@@ -442,7 +442,7 @@ export default getDocumentViewMapHook = () => {
             if (layer) {
                 layer.setVisible(visibility);
                 localStorage.setItem(
-                    this.getVisibilityKey(this.projectName, layer.get("name")),
+                    getVisibilityKey(this.projectName, layer.get("name")),
                     visibility,
                 );
             }

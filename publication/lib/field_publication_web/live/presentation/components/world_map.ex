@@ -1,6 +1,8 @@
 defmodule FieldPublicationWeb.Presentation.Components.WorldMap do
   use FieldPublicationWeb, :live_component
 
+  alias FieldPublication.Settings
+
   @impl true
   def render(assigns) do
     ~H"""
@@ -10,6 +12,8 @@ defmodule FieldPublicationWeb.Presentation.Components.WorldMap do
       centerLon={@centerLon}
       centerLat={@centerLat}
       zoom={@zoom}
+      color={@color}
+      color_highlight={@color_highlight}
       phx-hook="WorldMap"
     >
     </div>
@@ -19,6 +23,8 @@ defmodule FieldPublicationWeb.Presentation.Components.WorldMap do
   @impl true
   def update(%{id: id, projects: projects} = assigns, socket) do
     assigns = set_defaults(assigns)
+
+    %{color_scheme: %{primary: primary, primary_hover: primary_hover}} = Settings.get()
 
     features =
       projects
@@ -36,6 +42,8 @@ defmodule FieldPublicationWeb.Presentation.Components.WorldMap do
     socket =
       socket
       |> assign(assigns)
+      |> assign(:color, primary)
+      |> assign(:color_highlight, primary_hover)
       |> push_event("map-set-features-#{id}", %{target: id, features: features})
 
     {:ok, socket}

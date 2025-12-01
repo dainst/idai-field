@@ -31,9 +31,9 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
         </div>
       </.link>
       <.link
-        class="grow p-3 rounded-tr rounded-br hover:bg-(--primary-color)/10 "
+        class="grow p-3 rounded-tr rounded-br hover:bg-(--primary-color)/10"
         style={"border-color: #{desaturate_category_color(@doc.category.color)}; border-width: 1px 1px 1px 0px;"}
-        patch={construct_doc_link(@doc.project, @doc.publication, @lang, @doc.id, @focus)}
+        navigate={construct_doc_link(@doc.project, @doc.publication, @lang, @doc.id, @focus)}
       >
         <div>
           <span class="text-slate-600">{@doc.identifier}</span>

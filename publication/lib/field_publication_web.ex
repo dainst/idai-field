@@ -18,7 +18,7 @@ defmodule FieldPublicationWeb do
   """
 
   def static_paths,
-    do: ~w(assets fonts images favicon.ico robots.txt)
+    do: ~w(assets fonts images robots.txt)
 
   def router do
     quote do
@@ -103,7 +103,7 @@ defmodule FieldPublicationWeb do
       use Phoenix.VerifiedRoutes,
         endpoint: FieldPublicationWeb.Endpoint,
         router: FieldPublicationWeb.Router,
-        statics: FieldPublicationWeb.static_paths() ++ ["custom"]
+        statics: FieldPublicationWeb.static_paths() ++ ["custom", "favicon.ico"]
     end
   end
 

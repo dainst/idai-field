@@ -925,7 +925,23 @@ defmodule FieldPublication.Publications.Search do
 
       index_documents(doc_batch, publication)
       |> case do
-        {:ok, %{status: 200}} ->
+        {:ok, %{status: 200, body: body}} ->
+          Jason.decode!(body)
+          |> case do
+            %{"errors" => true} = result ->
+              Enum.map(result["items"], fn
+                %{"index" => %{"status" => 400} = item} ->
+                  inspect(item)
+                  |> Logger.error()
+
+                _ ->
+                  :ok
+              end)
+
+            _ ->
+              :ok
+          end
+
           :ok
 
         {:ok, %{status: 400, body: body}} ->

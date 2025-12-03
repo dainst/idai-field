@@ -931,8 +931,9 @@ defmodule FieldPublication.Publications.Search do
             %{"errors" => true} = result ->
               Enum.map(result["items"], fn
                 %{"index" => %{"status" => 400} = item} ->
-                  inspect(item)
-                  |> Logger.error()
+                  msg = inspect(item)
+                  Logger.warning("Failed to add document to the search index:")
+                  Logger.warning(msg)
 
                 _ ->
                   :ok
@@ -945,10 +946,13 @@ defmodule FieldPublication.Publications.Search do
           :ok
 
         {:ok, %{status: 400, body: body}} ->
-          body
-          |> Jason.decode!()
-          |> inspect()
-          |> Logger.error()
+          msg =
+            body
+            |> Jason.decode!()
+            |> inspect()
+
+          Logger.error("Failed to add document batch to search index:")
+          Logger.error(msg)
 
           :error
       end

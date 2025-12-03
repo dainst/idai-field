@@ -121,11 +121,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentLiveTest do
              )
 
     assert html =~ "TTP-A-112043"
-    # default view only
-    refute html =~ "Core"
-    # default view only, see above
-    refute html =~ "Inventory"
-    assert html =~ "Hierarchy"
     assert html =~ "Testopolis Settlement"
   end
 

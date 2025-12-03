@@ -155,7 +155,7 @@ defmodule FieldPublication.Settings do
     |> Map.get(:favicon)
     |> case do
       nil ->
-        ~p"/favicon.ico"
+        ~p"/images/favicon.ico"
 
       value ->
         ~p"/custom/images/#{value}"
@@ -176,8 +176,8 @@ defmodule FieldPublication.Settings do
     :root {
       #{if is_nil(primary), do: "", else: "--primary-color: #{primary};"}
       #{if is_nil(primary_hover), do: "", else: "--primary-color-hover: #{primary_hover};"}
-      #{if is_nil(primary_inverse), do: "", else: "--primary-color-negative: #{primary_inverse};"}
-      #{if is_nil(primary_inverse_hover), do: "", else: "--primary-color-hover-negative: #{primary_inverse_hover};"}
+      #{if is_nil(primary_inverse), do: "", else: "--primary-color-inverse: #{primary_inverse};"}
+      #{if is_nil(primary_inverse_hover), do: "", else: "--primary-color-hover-inverse: #{primary_inverse_hover};"}
     }
     """
   end

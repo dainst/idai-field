@@ -20,10 +20,6 @@ defmodule FieldPublicationWeb.Endpoint do
     from: FileService.custom_assets_path(),
     only: ["images", "css"]
 
-  plug Plug.Static,
-    at: "/favicon.ico",
-    from: Application.app_dir(:field_publication, "priv/static/favicon.ico")
-
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phx.digest

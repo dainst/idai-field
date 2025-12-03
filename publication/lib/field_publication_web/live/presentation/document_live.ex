@@ -222,7 +222,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
         key
       end)
 
-    top_level_docs = Data.get_preview_documents(top_level_uuids, publication)
+    # top_level_docs = Data.get_preview_documents(top_level_uuids, publication)
 
     category_hierarchy = Data.get_category_hierarchy(publication)
     category_usage = Search.get_category_count(publication)

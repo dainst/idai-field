@@ -42,7 +42,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLiveTest do
     conn: conn,
     publication: publication
   } do
-    assert {:ok, live_view_pid, html} =
+    assert {:ok, _live_view_pid, html} =
              live(conn, ~p"/projects/#{publication.project_name}/#{publication.draft_date}/en")
 
     doc = Data.get_extended_document("project", publication)

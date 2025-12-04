@@ -15,6 +15,12 @@
     },
     "hasChildren": {
       "label": "Risorse subordinate"
+    },
+    "isResultOf": {
+      "label": "Risultato di"
+    },
+    "isSubjectOf": {
+      "label": "Oggetto di"
     }
   },
   "categories": {
@@ -119,6 +125,12 @@
     },
     "isStoragePlaceOf": {
       "label": "È il luogo di conservazione di"
+    },
+    "resultsIn": {
+      "label": "Risulta in"
+    },
+    "isCarriedOutOn": {
+      "label": "Eseguito il"
     }
   }
 }

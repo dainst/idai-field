@@ -100,7 +100,8 @@ defmodule FieldHubWeb.Live.ProjectShowTest do
         supervisor: :loading,
         contact: :loading,
         staff: :loading,
-        stats: :loading
+        stats: :loading,
+        state: :loading
       })
 
     assert html =~ "Project file directory not found (1)"

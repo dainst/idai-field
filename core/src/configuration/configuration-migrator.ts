@@ -42,7 +42,8 @@ export module ConfigurationMigrator {
                 .forEach(addDefaultDateConfiguration);
 
             fields.filter(field => field.inputType === Field.InputType.COMPOSITE)
-                .forEach(field => field.subfields?.forEach(addDefaultDateConfiguration));
+                .forEach(field => field.subfields?.filter(subfield => subfield.inputType === Field.InputType.DATE)
+                    .forEach(addDefaultDateConfiguration));
         });
     }
 

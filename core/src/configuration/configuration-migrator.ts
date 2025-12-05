@@ -1,6 +1,7 @@
 import { DateConfiguration } from '../model/configuration/date-configuration';
 import { Field } from '../model/configuration/field';
 import { ConfigurationResource } from '../model/document/configuration-resource';
+import { CustomFieldDefinition, CustomSubfieldDefinition } from './model/field/custom-field-definition';
 
 
 /**
@@ -35,16 +36,24 @@ export module ConfigurationMigrator {
                 }
             });
 
-            Object.values(form.fields)
-                .filter(field => field.inputType === Field.InputType.DATE)
-                .forEach(field => {
-                    if (!field.dateConfiguration) {
-                        field.dateConfiguration = {
-                            dataType: DateConfiguration.DataType.OPTIONAL,
-                            inputMode: DateConfiguration.InputMode.OPTIONAL
-                        };
-                    }
-                });
+            const fields: Array<CustomFieldDefinition> = Object.values(form.fields);
+
+            fields.filter(field => field.inputType === Field.InputType.DATE)
+                .forEach(addDefaultDateConfiguration);
+
+            fields.filter(field => field.inputType === Field.InputType.COMPOSITE)
+                .forEach(field => field.subfields?.forEach(addDefaultDateConfiguration));
         });
+    }
+
+
+    function addDefaultDateConfiguration(field: CustomFieldDefinition|CustomSubfieldDefinition) {
+
+        if (!field.dateConfiguration) {
+            field.dateConfiguration = {
+                dataType: DateConfiguration.DataType.OPTIONAL,
+                inputMode: DateConfiguration.InputMode.OPTIONAL
+            };
+        }
     }
 }

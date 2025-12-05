@@ -27,9 +27,7 @@
                type="radio"
                (click)="selectedNamingOption = 'identifier'"
                [checked]="selectedNamingOption === 'identifier'">
-        <label class="form-check-label" for="naming-option-identifier">
-            Bezeichner
-        </label>
+        <label class="form-check-label" for="naming-option-identifier">{{getIdentifierLabel()}}</label>
     </div>
     <div class="form-check">
         <input id="naming-option-original"
@@ -37,7 +35,7 @@
                type="radio"
                (click)="selectedNamingOption = 'originalFilename'"
                [checked]="selectedNamingOption === 'originalFilename'">
-        <label class="form-check-label" for="naming-option-original">
+        <label class="form-check-label" for="naming-option-original" i18n="@@imageExport.originalFileame">
             Ursprünglicher Dateiname
         </label>
     </div>

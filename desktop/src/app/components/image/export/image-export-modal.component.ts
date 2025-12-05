@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ImageStore, ImageDocument } from 'idai-field-core';
+import { ImageStore, ImageDocument, ProjectConfiguration, Labels, Resource } from 'idai-field-core';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { AppState } from '../../../services/app-state';
 import { exportImages } from '../../../services/imagestore/export-images';
@@ -40,8 +40,15 @@ export class ImageExportModalComponent implements OnInit {
                 private imageStore: ImageStore,
                 private settingsProvider: SettingsProvider,
                 private messages: Messages,
-                private menuService: Menus) {}
+                private menuService: Menus,
+                private projectConfiguration: ProjectConfiguration,
+                private labels: Labels) {}
 
+
+    public getIdentifierLabel = () => this.labels.getFieldLabel(
+        this.projectConfiguration.getCategory('Image'),
+        Resource.IDENTIFIER
+    );
 
 
     ngOnInit() {

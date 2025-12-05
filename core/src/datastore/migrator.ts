@@ -2,7 +2,7 @@ import { isArray, isNumber, isObject, isString } from 'tsfun';
 import { Document } from '../model/document/document';
 import { OptionalRange } from '../model/input-types/optional-range';
 import { CategoryForm } from '../model/configuration/category-form';
-import { Field } from '../model/configuration/field';
+import { Field, Subfield } from '../model/configuration/field';
 import { ProjectConfiguration } from '../services';
 import { DateSpecification } from '../model/input-types/date-specification';
 import { Measurement } from '../model/input-types/measurement';
@@ -155,12 +155,39 @@ export module Migrator {
         const category: CategoryForm = projectConfiguration.getCategory(document);
         if (!category) return;
 
-        CategoryForm.getFields(category)
-            .filter(field => field.inputType === Field.InputType.DATE)
+        const fields: Array<Field> = CategoryForm.getFields(category);
+
+        fields.filter(field => field.inputType === Field.InputType.DATE)
             .forEach(field => {
-                const date: any = document.resource[field.name];
-                if (date && isString(date)) document.resource[field.name] = { value: date, isRange: false };
+                const migratedDate: DateSpecification = getMigratedDate(document.resource[field.name]);
+                if (migratedDate) document.resource[field.name] = migratedDate;
             });
+
+        fields.filter(field => field.inputType === Field.InputType.COMPOSITE)
+            .forEach(field => {
+                field.subfields.filter(subfield => subfield.inputType === Field.InputType.DATE)
+                    .forEach(subfield => migrateSubfieldDate(document, field, subfield));
+            });
+    }
+
+
+    function migrateSubfieldDate(document: Document, field: Field, subfield: Subfield) {
+
+        const compositeEntries: any[] = document.resource[field.name];
+        if (!compositeEntries || !isArray(compositeEntries)) return;
+
+        compositeEntries.forEach(entry => {
+            const migratedDate: DateSpecification = getMigratedDate(entry[subfield.name]);
+            if (migratedDate) entry[subfield.name] = migratedDate;
+        });
+    }
+
+
+    function getMigratedDate(date: any): DateSpecification {
+
+        if (!date || !isString(date)) return undefined;
+        
+        return { value: date, isRange: false };
     }
 
 

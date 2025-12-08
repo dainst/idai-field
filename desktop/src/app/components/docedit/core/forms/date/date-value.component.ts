@@ -131,7 +131,7 @@ export class DateValueComponent implements OnInit {
 
         await AngularUtility.refresh();
 
-        await this.toggleDatePicker();
+        this.toggleDatePicker();
     }
 
 
@@ -150,11 +150,18 @@ export class DateValueComponent implements OnInit {
     }
 
 
-    public async toggleDatePicker() {
+    public openDatePicker() {
+
+        this.datePicker.open();
+        this.focusInputField();
+        this.listenToScrollEvents();
+    }
+
+
+    public toggleDatePicker() {
 
         this.datePicker.toggle();
-
-        await this.focusInputField();
+        this.focusInputField();
         this.listenToScrollEvents();
     }
 

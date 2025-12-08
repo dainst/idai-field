@@ -236,7 +236,7 @@ export class TabManager {
             this.activeTab = tab;
             this.activeTab.shown = true;
             this.validateTabSpace();
-        } else if (route === '/resources/project') {
+        } else if (route === '/resources/project' || route === '/') {
             this.activeTab = undefined;
             this.validateTabSpace();
         }

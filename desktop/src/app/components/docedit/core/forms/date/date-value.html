@@ -14,6 +14,7 @@
            [firstDayOfWeek]="1"
            placeholder="dd.mm.yyyy"
            container="body"
+           (click)="openDatePicker()"
            (blur)="onDateInputBlurred()"
            (dateSelect)="update()"
            (closed)="onDatePickerClosed()"

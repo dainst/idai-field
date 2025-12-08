@@ -182,7 +182,7 @@
     "@angular/compiler-cli": "19.2.17",
     "@electron/notarize": "2.5.0",
     "@mapbox/geojsonhint": "3.3.0",
-    "@playwright/test": "1.44.1",
+    "@playwright/test": "1.56.1",
     "@types/geojson": "0.0.32",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",

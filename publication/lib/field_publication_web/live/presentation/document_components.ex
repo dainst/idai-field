@@ -364,40 +364,39 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
       <.document_heading>
         <I18n.text values={Data.get_field_value(@doc, "shortName")} lang={@lang} />
       </.document_heading>
-      <div class="flex flex-row">
-        <div class="basis-2/3 m-5">
+      <% depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
+      <%= if depicted_in != nil do %>
+        <div class="pt-4 pb-4 w-full gap-2 flex flex-row justify-center overflow-x-auto">
+          <%= for %Data.Document{} = doc <- depicted_in.docs do %>
+            <.link
+              patch={
+                ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@lang}/#{doc.id}"
+              }
+              class="p-2 border border-primary h-[310px]"
+            >
+              <Image.show
+                size="^,300"
+                project={@publication.project_name}
+                uuid={doc.id}
+                alt_text={doc.identifier}
+              />
+            </.link>
+          <% end %>
+        </div>
+      <% end %>
+
+      <div class="flex flex-row gap-4">
+        <div class="basis-2/3">
           <.group_heading>
             {gettext("project_doc_about_project")}
           </.group_heading>
-          <div class="bg-panel p-2 rounded">
-            <% depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
-            <%= if depicted_in != nil do %>
-              <div class="float-left overflow-auto overscroll-contain max-h-[310px] mr-3 mb-2">
-                <%= for %Data.Document{} = doc <- depicted_in.docs do %>
-                  <.link
-                    patch={
-                      ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@lang}/#{doc.id}"
-                    }
-                    class="p-1"
-                  >
-                    <div class="w-[300px] pr-1">
-                      <Image.show
-                        size="^300,"
-                        project={@publication.project_name}
-                        uuid={doc.id}
-                        alt_text={doc.identifier}
-                      />
-                    </div>
-                  </.link>
-                <% end %>
-              </div>
-            <% end %>
+          <div class="bg-panel p-2">
             <I18n.markdown values={Data.get_field_value(@doc, "description")} lang={@lang} />
           </div>
           <.group_heading class="mt-3">
             {gettext("project_doc_about_publication")}
           </.group_heading>
-          <div class="bg-panel p-2 rounded">
+          <div class="bg-panel p-2">
             <I18n.markdown
               values={
                 @publication.comments
@@ -407,20 +406,9 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
               lang={@lang}
             />
           </div>
-          <div class="bg-panel p-2 mt-2 grid justify-items-center">
-            <div class="w-[600px]">
-              <.live_component
-                module={FieldPublicationWeb.Presentation.Components.ProjectViewMap}
-                id="project_doc_map"
-                style="height: 600px; background-color: white"
-                publication={@publication}
-                lang={@lang}
-              />
-            </div>
-          </div>
         </div>
 
-        <div class="basis-1/3 m-5">
+        <div class="basis-1/3">
           <dl>
             <% institution = Data.get_field(@doc, "institution") %>
             <%= if institution do %>
@@ -470,10 +458,24 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
               </dd>
             <% end %>
           </dl>
+        </div>
+      </div>
+      <div class="flex flex-row gap-4 mt-4">
+        <div class="basis-2/3 flex-none p-2">
+          <.live_component
+            module={FieldPublicationWeb.Presentation.Components.ProjectViewMap}
+            id="project_doc_map"
+            style="height: 600px; background-color: var(--panel-color)"
+            publication={@publication}
+            lang={@lang}
+          />
+        </div>
+
+        <div class="basis-1/3 h-[600px] overflow-y-scroll">
           <.group_heading>
             {gettext("Documents")}
           </.group_heading>
-          <div class="mt-8 max-h-[calc(100dvh-300px)] overflow-y-scroll">
+          <div class="">
             <.display_category_hierarchy
               publication={@publication}
               hierarchy={@category_hierarchy}

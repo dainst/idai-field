@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Document, ProjectConfiguration, CategoryForm, Datastore, Labels, ValuelistUtil, Valuelist } from 'idai-field-core';
+import { Document, ProjectConfiguration, CategoryForm, Datastore, Labels, ValuelistUtil,
+    Valuelist } from 'idai-field-core';
 import { ImageMetadata } from '../../../services/imagestore/file-metadata';
 import { ImagesState } from '../overview/view/images-state';
 import { AngularUtility } from '../../../angular/angular-utility';

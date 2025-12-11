@@ -92,7 +92,6 @@ defmodule FieldHubWeb.Live.ProjectList do
 
                 enriched_projects = Enum.map(enriched_projects, fn {:ok, info} -> info end)
                 errors = Enum.map(errors, fn {:error, info} -> info end)
-
                 healthy_projects_number = length(enriched_projects)
 
                 total_documents_number =
@@ -153,31 +152,29 @@ defmodule FieldHubWeb.Live.ProjectList do
             |> assign(:all_projects_number, length(projects))
           else
             push_navigate(socket, to: "/ui/projects/show/#{user_name}")
+            # TODO if error don't redirect and display message
+            #   errors = Map.get(async_result, :errors, [])
+
+            #   socket =
+            #     if length(errors) > 0 do
+            #       socket
+            #       |> put_flash(
+            #         :error,
+            #         """
+            #         <b>Project errors detected.</b>
+            #         <br />Please contact the administrators to resolve the issue and ensure project integrity.
+            #         """
+            #       )
+            #     else
+            #       socket
+            #     end
+
+            #   {:noreply, assign(socket, :state, async_result)}
           end
       end
 
     {:ok, assign(socket, :page_title, "Overview")}
   end
-
-  # def handle_async(:state, async_result, socket) do
-  #   errors = Map.get(async_result, :errors, [])
-
-  #   socket =
-  #     if length(errors) > 0 do
-  #       socket
-  #       |> put_flash(
-  #         :error,
-  #         """
-  #         <b>Project errors detected.</b>
-  #         <br />Please contact the administrators to resolve the issue and ensure project integrity.
-  #         """
-  #       )
-  #     else
-  #       socket
-  #     end
-
-  #   {:noreply, assign(socket, :state, async_result)}
-  # end
 
   def handle_event("sort", %{"field" => field}, socket) do
     field = String.to_atom(field)

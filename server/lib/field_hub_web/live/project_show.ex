@@ -414,6 +414,7 @@ defmodule FieldHubWeb.Live.ProjectShow do
       changes,
       fn change ->
         {_type, _date, user} = CouchService.extract_most_recent_change_info(change)
+
         user
         |> String.capitalize()
       end,

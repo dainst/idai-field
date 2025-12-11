@@ -34,7 +34,7 @@ This server runs Field Hub (<small><%= Application.spec(:field_hub, :vsn) %></sm
           <% end %>
         <% _projects -> %>
           <%= if @all_projects_number == 1 do %>
-            <.link navigate={~p"/ui/projects/show/aa"}>
+            <.link navigate={~p"/ui/projects/show/#{List.first(projects).name}"}>
               Project <b>{List.first(projects).name}</b> page
             </.link>
           <% end %>

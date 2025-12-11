@@ -9619,7 +9619,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.file.single" datatype="html">
         <source> (die <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>aktuellste<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Datei) </source>
-        <target state="translated"> (o ficheiro <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>mais atual<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ) </target>
+        <target state="translated">(o ficheiro <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>mais atual<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ) </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">281,283</context>
@@ -9627,7 +9627,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.file.multiple" datatype="html">
         <source> (die <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt; aktue"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="aktuellsten D"/> aktuellsten Dateien) </source>
-        <target state="translated"> (os <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt; aktue"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="aktuellsten D"/> ficheiros mais atuais) </target>
+        <target state="translated">(os <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt; aktue"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="aktuellsten D"/> ficheiros mais atuais) </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">285,287</context>
@@ -10167,7 +10167,7 @@
       </trans-unit>
       <trans-unit id="imageExport.originalFileame" datatype="html">
         <source>Ursprünglicher Dateiname</source>
-        <target state="needs-translation">Ursprünglicher Dateiname</target>
+        <target state="translated">nome de ficheiro original</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/export/image-export-modal.html</context>
           <context context-type="linenumber">38,40</context>

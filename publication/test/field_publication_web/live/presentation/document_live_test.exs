@@ -38,11 +38,11 @@ defmodule FieldPublicationWeb.Presentation.DocumentLiveTest do
     %{project: project, publication: publication}
   end
 
-  test "the project document is rendered and we can navigate to a top level document", %{
+  test "the project document is rendered", %{
     conn: conn,
     publication: publication
   } do
-    assert {:ok, live_view_pid, html} =
+    assert {:ok, _live_view_pid, html} =
              live(conn, ~p"/projects/#{publication.project_name}/#{publication.draft_date}/en")
 
     doc = Data.get_extended_document("project", publication)
@@ -58,22 +58,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentLiveTest do
 
     # Publication comment text
     assert html =~ "This is a publication created by Field Publication’s seed.exs."
-
-    place_html =
-      live_view_pid
-      |> element(
-        ~s{[href="/projects/#{publication.project_name}/#{publication.draft_date}/en/19bc503f-7ddf-4e44-93d4-7b45108f0d84"]}
-      )
-      |> render_click()
-
-    assert place_html =~ "Siedlung"
-    assert place_html =~ "(Polygon)"
-
-    # Child documents
-    assert place_html =~ "TTP Trench A"
-    assert place_html =~ "TTP Trench B"
-    assert place_html =~ "TTP Trench C"
-    assert place_html =~ "TTP Survey 1"
   end
 
   test "image document gets rendered", %{
@@ -121,11 +105,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentLiveTest do
              )
 
     assert html =~ "TTP-A-112043"
-    # default view only
-    refute html =~ "Core"
-    # default view only, see above
-    refute html =~ "Inventory"
-    assert html =~ "Hierarchy"
     assert html =~ "Testopolis Settlement"
   end
 

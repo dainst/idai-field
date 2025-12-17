@@ -222,7 +222,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
         key
       end)
 
-    top_level_docs = Data.get_preview_documents(top_level_uuids, publication)
+    # top_level_docs = Data.get_preview_documents(top_level_uuids, publication)
 
     category_hierarchy = Data.get_category_hierarchy(publication)
     category_usage = Search.get_category_count(publication)
@@ -233,7 +233,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
     |> assign(:doc, project_doc)
     |> assign(:staff, staff)
     |> assign(:publication, publication)
-    |> assign(:top_level_docs, top_level_docs)
+    # |> assign(:top_level_docs, top_level_docs)
     |> assign(:category_hierarchy, category_hierarchy)
     |> assign(:category_usage, category_usage)
     |> assign(

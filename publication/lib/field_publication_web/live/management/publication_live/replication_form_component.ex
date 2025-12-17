@@ -41,7 +41,7 @@ defmodule FieldPublicationWeb.Management.PublicationLive.ReplicationFormComponen
         <.input
           field={@form[:delete_existing_publication]}
           type="checkbox"
-          label="Delete existing publication"
+          label="Override existing draft"
         />
 
         <.input

@@ -10,7 +10,13 @@ defmodule FieldPublicationWeb.Management.ProjectFormComponent do
     ~H"""
     <div>
       <.document_heading>
-        Create a new project
+        <%= case @action do %>
+          <% :edit_project -> %>
+            Edit project
+          <% :new_project -> %>
+            Create a new project
+          <% _ -> %>
+        <% end %>
       </.document_heading>
 
       <.simple_form
@@ -24,16 +30,15 @@ defmodule FieldPublicationWeb.Management.ProjectFormComponent do
 
         <%= case @action do %>
           <% :edit_project -> %>
-            <h1>{@project.name}</h1>
+            <.group_heading>{@project.name}</.group_heading>
           <% :new_project -> %>
             <.input field={@form[:name]} type="text" label="Project key" />
           <% _ -> %>
         <% end %>
-        <pre class="text-black">
-        </pre>
         <%= if @users != [] do %>
           <.checkgroup field={@form[:editors]} label="Editors" options={@users} />
         <% else %>
+          There are no editor users setup in your system.
           <.input field={@form[:editors]} type="hidden" />
         <% end %>
         <:actions>

@@ -114,7 +114,7 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
     </strong>
     <%= for %{count: count, key: key} <- @buckets do %>
       <div
-        class="pl-2 mt-1 cursor-pointer hover:bg-slate-200 rounded "
+        class="pl-2 mt-1 cursor-pointer border border-gray-100 hover:border-primary rounded "
         phx-click="toggle_filter"
         phx-value-key={@field_name}
         phx-value-value={key}
@@ -131,7 +131,7 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
   def aggregation_deselection(assigns) do
     ~H"""
     <div
-      class="pl-2 mt-1 cursor-pointer bg-(--primary-color) hover:bg-slate-200 hover:line-through rounded"
+      class="pl-2 mt-1 text-primary-inverse hover:text-primary-hover-inverse cursor-pointer bg-primary hover:bg-primary-hover hover:line-through rounded"
       phx-click="toggle_filter"
       phx-value-key={@field_name}
       phx-value-value={@value}

@@ -5654,5 +5654,18 @@
         "label": "Colori"
       }
     }
+  },
+  "process-state-default": {
+    "values": {
+      "planned": {
+        "label": "Pianificato"
+      },
+      "in progress": {
+        "label": "In corso"
+      },
+      "completed": {
+        "label": "Completato"
+      }
+    }
   }
 }

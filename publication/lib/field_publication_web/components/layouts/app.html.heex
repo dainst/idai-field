@@ -1,13 +1,11 @@
 <header class="px-4 sm:px-6 lg:px-8 h-(--main-navbar-height)">
   <div class="flex items-center justify-between border-b border-zinc-100 text-sm">
-    <div class="flex items-center gap-4">
-      <.link navigate={~p"/"}>
-        <img src={Settings.get_logo_url()} class="h-12" />
-      </.link>
-      <p class="rounded-full px-2 font-medium leading-6">
-        Field Publication v{Application.spec(:field_publication, :vsn)}
+    <.link class="flex items-center gap-4 text-primary hover:text-primary-hover" navigate={~p"/"}>
+      <img src={Settings.get_logo_url()} class="h-12" />
+      <p class="px-4 font-medium leading-6">
+        {Settings.get_page_name()} v{Application.spec(:field_publication, :vsn)}
       </p>
-    </div>
+    </.link>
     <div class="flex items-center gap-4">
       <%= if @current_user do %>
         <.link navigate="/management" class="text-[0.8125rem]">
@@ -48,7 +46,11 @@
     </div>
   </div>
 </header>
-<main class="mx-auto w-full pt-2 px-4 sm:px-6 lg:px-8">
+<main class="mx-auto  h-full w-full pb-24 pt-2 px-4 sm:px-6 lg:px-8">
   <.flash_group flash={@flash} />
   {@inner_content}
 </main>
+<footer class="w-full flex gap-2 absolute h-16 bottom-0 justify-center z-100 border-t pt-2">
+  <.link navigate={~p"/contact"}>Contact</.link>
+  | <a target="_blank" href="https://github.com/dainst/idai-field">The Field software system</a>
+</footer>

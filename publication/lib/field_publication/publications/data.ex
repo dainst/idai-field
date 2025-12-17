@@ -360,20 +360,16 @@ defmodule FieldPublication.Publications.Data do
 
     loaded =
       if other_ids != [] do
-        CouchService.get_document_stream(
-          %{
-            selector: %{_id: %{"$in": other_ids}},
-            fields: [
-              "resource.id",
-              "resource.identifier",
-              "resource.relations.isDepictedIn",
-              "resource.category",
-              "resource.shortDescription",
-              "resource.geometry"
-            ]
-          },
-          db
-        )
+        CouchService.get_documents(other_ids, db)
+        |> case do
+          {:ok, %Finch.Response{status: 200, body: body}} ->
+            body
+            |> Jason.decode!()
+            |> Map.get("results")
+            |> Enum.map(fn %{"docs" => [%{"ok" => doc}]} ->
+              doc
+            end)
+        end
         |> Enum.map(&apply_project_configuration(&1, config, publication))
       else
         []

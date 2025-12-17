@@ -9,7 +9,10 @@
     "other": "Altri",
     "hierarchy": "Gerarchia",
     "stratigraphy": "Stratigrafia",
-    "inventory": "Inventariazione"
+    "inventory": "Inventariazione",
+    "workflow": "Workflow",
+    "organicFraction": "Frazione organica",
+    "mineralFraction": "Frazione minerale"
   },
   "commons": {
     "dimensionLength": {
@@ -112,6 +115,9 @@
     },
     "phase": {
       "label": "Fase"
+    },
+    "weight": {
+      "label": "Peso"
     }
   },
   "categories": {

@@ -49,18 +49,19 @@ defmodule FieldPublicationWeb.Gettext do
     {:cont, socket}
   end
 
-  def get_locale_labels(),
-    do: %{
+  def get_locale_labels() do
+    %{
       "de" => "Deutsch",
       "en" => "English",
-      "el" => "Έλληνικά",
+      # "el" => "Έλληνικά",
       "es" => "Español",
-      "fr" => "Français",
+      # "fr" => "Français",
       "it" => "Italiano",
       "pt" => "Português",
       "tr" => "Türkçe",
       "uk" => "Українська"
     }
+  end
 end
 
 defmodule FieldPublicationWeb.Gettext.Plug do

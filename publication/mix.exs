@@ -9,7 +9,8 @@ defmodule FieldPublication.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      listeners: [Phoenix.CodeReloader]
     ]
   end
 
@@ -33,17 +34,17 @@ defmodule FieldPublication.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix_live_view, "~> 1.0"},
+      {:phoenix_live_view, "~> 1.1"},
       {:phoenix_live_dashboard, "~> 0.8"},
       {:phoenix_ecto, "~> 4.5.1"},
       {:phoenix_live_reload, "~> 1.5", only: :dev},
       {:earmark, "~> 1.4"},
-      {:floki, "~> 0.37", only: :test},
       {:geo, "~> 4.0"},
       {:esbuild, "~> 0.9", runtime: Mix.env() == :dev},
       {:tailwind, "~> 0.3", runtime: Mix.env() == :dev},
       {:swoosh, "~> 1.18"},
       {:finch, "~> 0.19"},
+      {:lazy_html, "~> 0.1.8", only: :test},
       # httpoison is required for reverse_proxy_plug, otherwise it duplicates finch
       {:httpoison, "~> 2.2"},
       {:reverse_proxy_plug, "~> 3.0"},

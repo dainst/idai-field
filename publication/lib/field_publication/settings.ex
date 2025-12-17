@@ -10,24 +10,6 @@ defmodule FieldPublication.Settings do
 
   @setting_doc_name "field_publication_settings"
 
-  # get setting
-  ## check cache
-  ## if present -> return
-  ## else -> load from db
-
-  # update setting
-  ## check cache
-  ## if present -> load struct, apply changeset
-  ### if valid -> save to db, return updated struct
-  ### else -> return error tuple
-  ## else -> load from db, apply changeset
-  ### if valid -> save to db, return updated struct
-  ### else -> return error tuple
-
-  # load from db
-  ## if present -> parse & return struct
-  ## else -> create new, put and return struct
-
   def load() do
     doc =
       CouchService.get_document(@setting_doc_name)
@@ -54,7 +36,21 @@ defmodule FieldPublication.Settings do
           doc
       end
 
-    update_cache(doc)
+    set_cache(doc)
+
+    {:ok, doc}
+  end
+
+  def get() do
+    Cachex.get(:application_documents, @setting_doc_name)
+    |> case do
+      {:ok, nil} ->
+        load()
+
+      {:ok, %ApplicationSettings{} = settings} ->
+        {:ok, settings}
+    end
+    |> then(fn {:ok, settings} -> settings end)
   end
 
   def update(params) do
@@ -86,20 +82,13 @@ defmodule FieldPublication.Settings do
         error
 
       {{:ok, %{status: 201}}, %ApplicationSettings{} = doc} ->
-        update_cache(doc)
+        clear_cache()
+
+        Cachex.get(:application_documents, @setting_doc_name)
 
         {:ok, doc}
     end
   end
-
-  def get_settings(), do: Cachex.get!(:application_documents, @setting_doc_name)
-
-  defp update_cache(doc), do: Cachex.put(:application_documents, @setting_doc_name, doc)
-
-  # def get_setting(key) do
-  #   Cachex.get!(:application_documents, @setting_doc_name)
-  #   |> Map.get(key)
-  # end
 
   def save_image(input_path, file_name) do
     FileService.store_admin_image_upload(input_path, file_name)
@@ -150,7 +139,7 @@ defmodule FieldPublication.Settings do
   end
 
   def get_logo_url() do
-    get_settings()
+    get()
     |> Map.get(:logo)
     |> case do
       nil ->
@@ -162,11 +151,11 @@ defmodule FieldPublication.Settings do
   end
 
   def get_favicon_url() do
-    get_settings()
+    get()
     |> Map.get(:favicon)
     |> case do
       nil ->
-        ~p"/favicon.ico"
+        ~p"/images/favicon.ico"
 
       value ->
         ~p"/custom/images/#{value}"
@@ -181,15 +170,24 @@ defmodule FieldPublication.Settings do
         primary_inverse: primary_inverse,
         primary_inverse_hover: primary_inverse_hover
       }
-    } = get_settings()
+    } = get()
 
     """
     :root {
       #{if is_nil(primary), do: "", else: "--primary-color: #{primary};"}
       #{if is_nil(primary_hover), do: "", else: "--primary-color-hover: #{primary_hover};"}
-      #{if is_nil(primary_inverse), do: "", else: "--primary-color-negative: #{primary_inverse};"}
-      #{if is_nil(primary_inverse_hover), do: "", else: "--primary-color-hover-negative: #{primary_inverse_hover};"}
+      #{if is_nil(primary_inverse), do: "", else: "--primary-color-inverse: #{primary_inverse};"}
+      #{if is_nil(primary_inverse_hover), do: "", else: "--primary-color-hover-inverse: #{primary_inverse_hover};"}
     }
     """
   end
+
+  def get_page_name() do
+    %ApplicationSettings{page_name: name} = get()
+
+    name
+  end
+
+  defp set_cache(doc), do: Cachex.put(:application_documents, @setting_doc_name, doc)
+  defp clear_cache(), do: Cachex.del(:application_documents, @setting_doc_name)
 end

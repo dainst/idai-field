@@ -7599,7 +7599,7 @@
       </trans-unit>
       <trans-unit id="resources.scanStoragePlaceModal.editMode.multipleDocuments.singleStoragePlace" datatype="html">
         <source>Für <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen ist bereits der Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="nts[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> gesetzt. </source>
-        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="nts[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.&lt;/"/> depolama konumu zaten <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> girdileri için ayarlanmıştır. </target>
+        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{storagePlaceDocuments[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> depolama konumu zaten <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> girdileri için ayarlanmıştır. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.html</context>
           <context context-type="linenumber">36,24</context>
@@ -9347,7 +9347,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.file.multiple" datatype="html">
         <source> (die <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt; aktue"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="aktuellsten D"/> aktuellsten Dateien) </source>
-        <target state="translated"> (<x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt; aktue"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="aktuellsten D"/> en son dosyalar) </target>
+        <target state="translated">(<x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt; aktue"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="aktuellsten D"/> en son dosyalar) </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">285,287</context>
@@ -9755,7 +9755,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.file.single" datatype="html">
         <source> (die <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>aktuellste<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Datei) </source>
-        <target state="translated"> (<x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>en sonuncu<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> dosya) </target>
+        <target state="translated">(<x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>en sonuncu<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> dosya) </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">281,283</context>
@@ -10195,6 +10195,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">31,33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageExport.originalFileame" datatype="html">
+        <source>Ursprünglicher Dateiname</source>
+        <target state="translated">Orijinal dosya adı</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/export/image-export-modal.html</context>
+          <context context-type="linenumber">38,40</context>
         </context-group>
       </trans-unit>
     </body>

@@ -134,10 +134,14 @@ export function createDocuments(documents: NiceDocs, project?: string) {
     }
     for (const [id, type, targets] of documents) {
         if (targets) {
-            if (type === 'Image') relationsLookup[id][Relation.Image.DEPICTS] = targets;
+            if (type === 'Image') {
+                relationsLookup[id][Relation.Image.DEPICTS]
+                    = (relationsLookup[id][Relation.Image.DEPICTS] ?? []).concat(targets);
+            }
             
             for (const target of targets) {
-                relationsLookup[target][type === 'Image' ? Relation.Image.ISDEPICTEDIN : Relation.Hierarchy.LIESWITHIN] = [id];
+                const relation = type === 'Image' ? Relation.Image.ISDEPICTEDIN : Relation.Hierarchy.LIESWITHIN;
+                relationsLookup[target][relation] = (relationsLookup[target][relation] ?? []).concat([id]);
                 if (type === 'Trench') {
                     relationsLookup[target][Relation.Hierarchy.RECORDEDIN] = [id];
                     delete relationsLookup[target][Relation.Hierarchy.LIESWITHIN];

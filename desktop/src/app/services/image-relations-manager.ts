@@ -61,17 +61,18 @@ export class ImageRelationsManager {
         if (this.imagestore.getAbsoluteRootPath() === undefined) {
             throw [ImageRelationsManagerErrors.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
         }
-        const [imageDocuments, nonImageDocuments] = separate(documents,
-                document => this.projectConfiguration.getImageCategories().map(Named.toName).includes(document.resource.category));
+        const [imageDocuments, nonImageDocuments] = separate(
+            documents,
+            document => this.projectConfiguration.getImageCategories()
+                .map(Named.toName)
+                .includes(document.resource.category)
+        );
         await this.removeImages(imageDocuments as any);
 
         const documentsToBeDeleted = await Hierarchy.getWithDescendants(this.datastore.find, nonImageDocuments);
         for (const d of documentsToBeDeleted) await this.relationsManager.remove(d);
         const imagesToBeDeleted = set(ON_RESOURCE_ID, await this.getLeftovers(documentsToBeDeleted));
-        for (let image of imagesToBeDeleted) {
-            await this.imagestore.remove(image.resource.id);
-            await this.datastore.remove(image);
-        }
+        await this.removeImages(imagesToBeDeleted);
     }
 
 

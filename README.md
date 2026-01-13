@@ -26,13 +26,14 @@ We are always happy to hear about your Field projects! If you are using Field in
 
 ## Information for developers and collaborators
 
-This is a monorepo containing five packages:
+This is a monorepo containing six packages:
 
 * [Field Desktop](desktop): The Field Desktop application based on Angular and Electron
 * [Field Mobile](mobile): The Field Mobile application based on React Native (early development, no release yet)
 * [Field Hub](server): The (optional) synchronisation server application.
 * [Field Core](core): Shared TypeScript modules
-* [iDAI.field Web](web): The iDAI.field Web publication platform
+* [iDAI.field Web](web): The [iDAI.field Web publication platform](https://field.idai.world)
+* [Field Publication](publication): The new Field publication platform (in development, no release yet)
 
 ## Usage
 

@@ -78,9 +78,9 @@ export class RelationsManager {
             return;
         }
 
-        const descendants = (await this.datastore.find(childrenOf(document.resource.id))).documents;
+        const descendants: Array<Document> = (await this.datastore.find(childrenOf(document.resource.id))).documents;
 
-        const documentsToBeDeleted = flow(
+        const documentsToBeDeleted: Array<Document> = flow(
             descendants,
             subtract(ON_RESOURCE_ID, options.descendantsToKeep ?? []),
             append(document)

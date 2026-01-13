@@ -41,33 +41,33 @@ export namespace ConnectedDocs {
             await datastore.convert(document);
         }
 
-        await updateDocs(datastore, docsToUpdate);
+        await updateDocuments(datastore, docsToUpdate);
     }
 
 
-    export async function updateForRemove(datastore: Datastore,
-                                          relationNames: Array<Name>,
-                                          inverseRelationsMap: Relation.InverseRelationsMap,
-                                          document: Document) {
+    export async function updateForRemove(datastore: Datastore, relationNames: Array<Name>,
+                                          inverseRelationsMap: Relation.InverseRelationsMap, document: Document) {
 
-        const connectedDocs = await getExistingConnectedDocsForRemove(datastore, relationNames, document);
+        const connectedDocuments: Array<Document> = await getExistingConnectedDocsForRemove(
+            datastore, relationNames, document
+        );
 
-        const docsToUpdate = updateRelations(
+        const documentsToUpdate: Array<Document> = updateRelations(
             document,
-            connectedDocs,
+            connectedDocuments,
             inverseRelationsMap,
             false
         );
 
-        await updateDocs(datastore, docsToUpdate);
+        await updateDocuments(datastore, documentsToUpdate);
     }
 
 
-    async function updateDocs(datastore: Datastore, docsToUpdate: Array<Document>) {
+    async function updateDocuments(datastore: Datastore, documentsToUpdate: Array<Document>) {
 
         // Note that this does not update a document for being target of isRecordedIn
-        for (let docToUpdate of docsToUpdate) {
-            await datastore.update(docToUpdate, undefined);
+        for (let document of documentsToUpdate) {
+            await datastore.update(document, undefined);
         }
     }
 
@@ -84,14 +84,16 @@ export namespace ConnectedDocs {
 
 
     async function getExistingConnectedDocsForRemove(datastore: Datastore, relationNames: Array<Name>,
-                                                     document: Document) {
+                                                     document: Document): Promise<Array<Document>> {
 
-        const uniqueConnectedDocIds = getUniqueConnectedDocumentsIds([document], relationNames, datastore);
+        const uniqueConnectedDocumentIds: string[] = getUniqueConnectedDocumentsIds(
+            [document], relationNames, datastore
+        );
 
-        const liesWithinTargets = Resource.getRelationTargets(document.resource, ['liesWithin']);
-        const recordedInTargets = Resource.getRelationTargets(document.resource, ['isRecordedIn']);
+        const liesWithinTargets: string[] = Resource.getRelationTargets(document.resource, ['liesWithin']);
+        const recordedInTargets: string[] = Resource.getRelationTargets(document.resource, ['isRecordedIn']);
 
-        return getDocumentsForIds(datastore, uniqueConnectedDocIds, id => {
+        return getDocumentsForIds(datastore, uniqueConnectedDocumentIds, id => {
             if (liesWithinTargets.includes(id) || recordedInTargets.includes(id)) {
                 // this can happen due to deletion order during deletion with descendants
             } else {
@@ -101,7 +103,8 @@ export namespace ConnectedDocs {
     }
 
 
-    async function getDocumentsForIds(datastore: Datastore,  ids: string[], handleError: (id: string) => void) {
+    async function getDocumentsForIds(datastore: Datastore,  ids: string[],
+                                      handleError: (id: string) => void): Promise<Array<Document>> {
 
         const connectedDocuments: Array<Document> = [];
         for (let id of ids) {

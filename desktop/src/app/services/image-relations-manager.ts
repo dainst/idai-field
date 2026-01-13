@@ -4,6 +4,7 @@ import { Document, Datastore, FieldDocument, ImageDocument, Relation, ProjectCon
     ON_RESOURCE_ID, Resource, toResourceId, RelationsManager, Named, Hierarchy, ImageStore } from 'idai-field-core';
 import DEPICTS = Relation.Image.DEPICTS;
 import ISDEPICTEDIN = Relation.Image.ISDEPICTEDIN;
+import ISMAPLAYEROF = Relation.Image.ISMAPLAYEROF;
 
 
 export namespace ImageRelationsManagerErrors {
@@ -35,8 +36,8 @@ export class ImageRelationsManager {
         const result = (await this.datastore.getMultiple(idsOfRelatedDocuments));
 
         return onlyExclusivelyRelated
-            ? result.filter(imageDocument => {
-                return subtract(documentsIds)(imageDocument.resource.relations[DEPICTS] ?? []).length === 0;
+            ? result.filter((imageDocument: ImageDocument) => {
+                return subtract(documentsIds)(this.getImageRelationTargetIds(imageDocument) ?? []).length === 0;
             })
             : result;
     }
@@ -158,5 +159,16 @@ export class ImageRelationsManager {
             }
             await this.relationsManager.remove(imageDocument);
         }
+    }
+
+
+    private getImageRelationTargetIds(imageDocument: ImageDocument): string[] {
+
+        const relations: Resource.Relations = imageDocument.resource.relations;
+        const depictsTargetIds: string[] = relations[DEPICTS] ?? [];
+
+        return relations[ISMAPLAYEROF]
+            ? depictsTargetIds.concat(relations[ISMAPLAYEROF])
+            : depictsTargetIds;
     }
 }

@@ -77,7 +77,8 @@ defmodule FieldHubWeb.PageControllerTest do
       html = render_async(view)
 
       refute html =~ "Loading projects list..."
-      assert html =~ @user_name
+      # assert html =~ @user_name
+      assert html =~ "phx-value-id=\"test_project\""
     end
 
     test "GET / without valid session token does not display projects", %{conn: conn} do

@@ -33,12 +33,6 @@ This server runs Field Hub (<small><%= Application.spec(:field_hub, :vsn) %></sm
             You don't have a project yet.
           <% end %>
         <% _projects -> %>
-          <%= if @all_projects_number == 1 do %>
-            <.link navigate={~p"/ui/projects/show/#{List.first(projects).name}"}>
-              Project <b>{List.first(projects).name}</b> page
-            </.link>
-          <% end %>
-          <%= if @all_projects_number > 1 do %>
             {render_dashboard(assigns)}
             <table class="project-list">
               <thead>
@@ -100,7 +94,6 @@ This server runs Field Hub (<small><%= Application.spec(:field_hub, :vsn) %></sm
               </tbody>
             </table>
           <% end %>
-      <% end %>
       <%= if User.is_admin?(@current_user) do %>
         <%= for {error, project_id} <- errors do %>
           Project <span class="emphasis-text-error">{project_id}</span>

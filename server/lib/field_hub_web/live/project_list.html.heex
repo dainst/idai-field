@@ -19,7 +19,7 @@ This server runs Field Hub (<small><%= Application.spec(:field_hub, :vsn) %></sm
       <:loading>Loading projects list...</:loading>
       <:failed :let={_failure}>there was an error loading the projects list</:failed>
 
-      <%= if length(errors)>0 do %>
+      <%= if length(errors) > 0 do %>
         <p class="alert alert-danger">
           <b>Project errors detected.</b>
           <br />Please contact the administrators to resolve the issue and ensure project integrity.
@@ -104,7 +104,7 @@ This server runs Field Hub (<small><%= Application.spec(:field_hub, :vsn) %></sm
       <%= if User.is_admin?(@current_user) do %>
         <%= for {error, project_id} <- errors do %>
           Project <span class="emphasis-text-error">{project_id}</span>
-          has an error: <pre>{inspect(error)}</pre>.
+          has an error: <pre>{inspect(error)}</pre>
         <% end %>
       <% end %>
     </.async_result>

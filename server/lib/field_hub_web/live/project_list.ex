@@ -152,24 +152,6 @@ defmodule FieldHubWeb.Live.ProjectList do
             |> assign(:all_projects_number, length(projects))
           else
             push_navigate(socket, to: "/ui/projects/show/#{user_name}")
-            # TODO if error don't redirect and display message
-            #   errors = Map.get(async_result, :errors, [])
-
-            #   socket =
-            #     if length(errors) > 0 do
-            #       socket
-            #       |> put_flash(
-            #         :error,
-            #         """
-            #         <b>Project errors detected.</b>
-            #         <br />Please contact the administrators to resolve the issue and ensure project integrity.
-            #         """
-            #       )
-            #     else
-            #       socket
-            #     end
-
-            #   {:noreply, assign(socket, :state, async_result)}
           end
       end
 
@@ -210,7 +192,7 @@ defmodule FieldHubWeb.Live.ProjectList do
     <%!-- <%= if @all_projects_number > 1 do %> --%>
     <div class="dashboard">
       <div class="dashboard-card">
-        <div class="dashboard-card-title">Your projects</div>
+        <div class="dashboard-card-title">Number of projects</div>
         <div class="dashboard-card-main-number">
           {@healthy_projects_number.result}
         </div>
@@ -219,12 +201,6 @@ defmodule FieldHubWeb.Live.ProjectList do
             +{@all_projects_number - @healthy_projects_number.result} unhealthy
           </div>
         <% end %>
-      </div>
-      <div class="dashboard-card">
-        <div class="dashboard-card-title">Used space</div>
-        <div class="dashboard-card-main-number">
-          {@total_database_size.result}
-        </div>
       </div>
       <div class="dashboard-card">
         <div class="dashboard-card-title">Documents</div>

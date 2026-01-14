@@ -68,7 +68,7 @@
                 } -> %>
                 <section>Database documents: {db_doc_count}</section>
 
-                <section>
+                <section :if={db_doc_count > 0}>
                   <tr>
                     <td>History</td>
                     <td>

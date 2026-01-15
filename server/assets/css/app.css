@@ -345,6 +345,11 @@ nav {
     padding: 1em;
 }
 
+.resources-history thead th:hover {
+    cursor: pointer;
+    background-color: #f4f8f8;
+}
+
 .scrolldown {
     border-collapse: collapse;
     border-spacing: 0;
@@ -371,6 +376,10 @@ nav {
     table-layout: fixed;
 }
 
+.resources-history {
+    width: 100%;
+} 
+
 .resources-history thead tr,
 .resources-history tbody tr {
     display: grid;
@@ -383,7 +392,6 @@ nav {
     font-size: small;
     border-collapse: collapse;
     border-spacing: 0;
-    width: 100%;
 }
 
 .project-list {
@@ -427,4 +435,76 @@ nav {
     border-radius: 4px;
     padding-left: 1ex;
     padding-right: 1ex;
+}
+
+.dashboard{
+    display:flex;
+    gap: 5px;                    
+    justify-content: center;  
+}
+
+.dashboard-card{
+    float:left;
+    width: 24%;
+    padding: 1%;
+    margin:0.5%;
+    background-color: rgb(230, 247, 244);
+    border-radius: 8px;
+    border-color: rgb(128, 165, 163);
+    color:#2c5f77;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border: 1px solid rgba(128,165,163,0.4);
+}
+
+.dashboard-card-error{
+    text-align: center;
+    font-size: 12pt;
+    font-weight: 600;
+    color:rgb(158, 76, 76);
+    padding-left: 4px;
+    padding-right: 4px;
+    background-color: rgb(192, 211, 207);
+    border-radius: 4px;
+    border-color: rgb(62, 63, 63);
+}
+
+.dashboard-card-title{    
+    font-size: 12pt;
+    font-weight: 500;
+    color:#2c5f77;
+}
+.dashboard-card-main-number{
+    text-shadow: 1px 1px 2px rgb(109, 124, 122);
+    font-size-adjust: 0.7;
+    padding-top: 0.7em;
+    padding-bottom: 0.7em;
+    font-weight: 700;
+    color:#2c5f77;
+}
+
+.dashboard-secondary-info {
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center; 
+    gap: 1pt;  
+    font-size: 11pt;
+    font-weight: 300;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.info-item {
+    display:flex;
+    align-items: baseline;
+    min-width: 10em; 
+}
+.info-label {
+    font-weight: 600;
+}
+
+.info-value {
+    margin-left: auto;
+    text-align: right;
 }

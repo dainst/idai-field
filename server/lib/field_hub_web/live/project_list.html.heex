@@ -25,75 +25,74 @@ This server runs Field Hub (<small><%= Application.spec(:field_hub, :vsn) %></sm
           <br />Please contact the administrators to resolve the issue and ensure project integrity.
         </p>
       <% end %>
-      <%!-- <p class="alert alert-danger">{Phoenix.Flash.get(@flash, :error)}</p> --%>
 
       <%= case projects do %>
         <% [] -> %>
-          <%= if !errors do %>
+          <%= if errors != [] do %>
             You don't have a project yet.
           <% end %>
         <% _projects -> %>
-            {render_dashboard(assigns)}
-            <table class="project-list">
-              <thead>
-                <tr>
-                  <th phx-click="sort" phx-value-field="name" class="cursor-pointer">
-                    Name {sort_indicator(@sort_by, @sort_direction, :name)}
-                  </th>
-                  <th
-                    class="text-right"
-                    phx-click="sort"
-                    phx-value-field="doc_count"
-                    class="cursor-pointer"
-                  >
-                    Documents {sort_indicator(@sort_by, @sort_direction, :doc_count)}
-                  </th>
-                  <th
-                    class="text-right"
-                    class="text-right"
-                    phx-click="sort"
-                    phx-value-field="database_file_size"
-                    class="cursor-pointer"
-                  >
-                    Database Size {sort_indicator(@sort_by, @sort_direction, :database_file_size)}
-                  </th>
+          {render_dashboard(assigns)}
+          <table class="project-list">
+            <thead>
+              <tr>
+                <th phx-click="sort" phx-value-field="name" class="cursor-pointer">
+                  Name {sort_indicator(@sort_by, @sort_direction, :name)}
+                </th>
+                <th
+                  class="text-right"
+                  phx-click="sort"
+                  phx-value-field="doc_count"
+                  class="cursor-pointer"
+                >
+                  Documents {sort_indicator(@sort_by, @sort_direction, :doc_count)}
+                </th>
+                <th
+                  class="text-right"
+                  class="text-right"
+                  phx-click="sort"
+                  phx-value-field="database_file_size"
+                  class="cursor-pointer"
+                >
+                  Database Size {sort_indicator(@sort_by, @sort_direction, :database_file_size)}
+                </th>
 
-                  <th
-                    class="text-right"
-                    class="text-right"
-                    phx-click="sort"
-                    phx-value-field="image_file_size"
-                    class="cursor-pointer"
-                  >
-                    Images Size {sort_indicator(@sort_by, @sort_direction, :image_file_size)}
-                  </th>
-                  <th phx-click="sort" phx-value-field="last_change_date" class="cursor-pointer">
-                    Last action (by) {sort_indicator(@sort_by, @sort_direction, :last_change_date)}
-                  </th>
+                <th
+                  class="text-right"
+                  class="text-right"
+                  phx-click="sort"
+                  phx-value-field="image_file_size"
+                  class="cursor-pointer"
+                >
+                  Images Size {sort_indicator(@sort_by, @sort_direction, :image_file_size)}
+                </th>
+                <th phx-click="sort" phx-value-field="last_change_date" class="cursor-pointer">
+                  Last action (by) {sort_indicator(@sort_by, @sort_direction, :last_change_date)}
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <%= for project <- projects do %>
+                <tr class="click-row" phx-click="go_to_project" phx-value-id={project.id}>
+                  <td class="cursor-pointer">{project.name}</td>
+                  <td class="text-right cursor-pointer">{project.doc_count}</td>
+                  <td class="text-right cursor-pointer">
+                    {Sizeable.filesize(project.database_file_size)}
+                  </td>
+                  <td class="text-right cursor-pointer">
+                    {Sizeable.filesize(project.image_file_size)}
+                  </td>
+                  <td>
+                    <%= if project.last_change_date != :nil do %>
+                      {Calendar.strftime(project.last_change_date, "%c")} ({project.last_change_user})
+                    <% end %>
+                  </td>
                 </tr>
-              </thead>
-
-              <tbody>
-                <%= for project <- projects do %>
-                  <tr class="click-row" phx-click="go_to_project" phx-value-id={project.id}>
-                    <td class="cursor-pointer">{project.name}</td>
-                    <td class="text-right cursor-pointer">{project.doc_count}</td>
-                    <td class="text-right cursor-pointer">
-                      {Sizeable.filesize(project.database_file_size)}
-                    </td>
-                    <td class="text-right cursor-pointer">
-                      {Sizeable.filesize(project.image_file_size)}
-                    </td>
-                    <td>
-                      <%= if project.last_change_date != :nil do %>
-                        {Calendar.strftime(project.last_change_date, "%c")} ({project.last_change_user})
-                      <% end %>
-                    </td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
-          <% end %>
+              <% end %>
+            </tbody>
+          </table>
+      <% end %>
       <%= if User.is_admin?(@current_user) do %>
         <%= for {error, project_id} <- errors do %>
           Project <span class="emphasis-text-error">{project_id}</span>

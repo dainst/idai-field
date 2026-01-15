@@ -36,115 +36,7 @@ defmodule FieldHubWeb.Live.ProjectList do
                 :total_images_size
               ],
               fn ->
-                {errors, enriched_projects} =
-                  Enum.map(projects, fn project_id ->
-                    try do
-                      %{
-                        database: %{
-                          doc_count: doc_count,
-                          file_size: database_file_size,
-                          last_n_changes: last_n_changes
-                        },
-                        files: %{
-                          thumbnail_image: %{
-                            active: thumbnail_count,
-                            active_size: thumbnail_file_size
-                          },
-                          original_image: %{
-                            active: original_count,
-                            active_size: original_file_size
-                          }
-                        }
-                      } = Project.evaluate_project(project_id, 1)
-
-                      %{date: last_change_date_time, user: last_change_user} =
-                        case List.first(last_n_changes) do
-                          nil ->
-                            %{date: nil, user: nil}
-
-                          change ->
-                            change
-                            |> CouchService.extract_most_recent_change_info()
-                            |> (fn {_type, date_time, user} -> %{date: date_time, user: user} end).()
-                        end
-
-                      {
-                        :ok,
-                        %{
-                          id: project_id,
-                          name: project_id,
-                          doc_count: doc_count,
-                          database_file_size: database_file_size,
-                          image_file_size: thumbnail_file_size + original_file_size,
-                          original_count: original_count,
-                          thumbnail_count: thumbnail_count,
-                          last_change_date: last_change_date_time,
-                          last_change_user: last_change_user
-                        }
-                      }
-                    rescue
-                      error ->
-                        Logger.error(error)
-                        {:error, {error, project_id}}
-                    end
-                  end)
-                  |> Enum.split_with(fn {status, _content} -> status == :error end)
-
-                enriched_projects = Enum.map(enriched_projects, fn {:ok, info} -> info end)
-                errors = Enum.map(errors, fn {:error, info} -> info end)
-                healthy_projects_number = length(enriched_projects)
-
-                total_documents_number =
-                  enriched_projects
-                  |> Enum.map(& &1.doc_count)
-                  |> Enum.sum()
-
-                total_documents_size =
-                  enriched_projects
-                  |> Enum.map(& &1.database_file_size)
-                  |> Enum.sum()
-
-                total_originals_number =
-                  enriched_projects
-                  |> Enum.map(& &1.original_count)
-                  |> Enum.sum()
-
-                total_thumbnails_number =
-                  enriched_projects
-                  |> Enum.map(& &1.thumbnail_count)
-                  |> Enum.sum()
-
-                total_images_number = total_thumbnails_number + total_originals_number
-
-                total_images_size =
-                  enriched_projects
-                  |> Enum.map(& &1.image_file_size)
-                  |> Enum.sum()
-
-                total_database_size =
-                  (total_documents_size + total_images_size)
-                  |> Sizeable.filesize()
-
-                total_documents_size =
-                  total_documents_size
-                  |> Sizeable.filesize()
-
-                total_images_size =
-                  total_images_size
-                  |> Sizeable.filesize()
-
-                {:ok,
-                 %{
-                   state: %{projects: enriched_projects, errors: errors},
-                   healthy_projects_number: healthy_projects_number,
-                   total_database_size: total_database_size,
-                   total_documents_number: total_documents_number,
-                   total_documents_size: total_documents_size,
-                   total_images_number: total_images_number,
-                   total_thumbnails_number: total_thumbnails_number,
-                   total_originals_number: total_originals_number,
-                   total_images_size: total_images_size
-                 }}
+                load_stats(projects)
               end
             )
             |> assign(:sort_by, @default_sort_by)
@@ -270,5 +162,122 @@ defmodule FieldHubWeb.Live.ProjectList do
     else
       "\u2b65"
     end
+  end
+
+  defp load_stats(projects) do
+    {errors, enriched_projects} =
+      Enum.map(projects, fn project_id ->
+        try do
+          %{
+            database: %{
+              doc_count: doc_count,
+              file_size: database_file_size,
+              last_n_changes: last_n_changes
+            },
+            files: %{
+              thumbnail_image: %{
+                active: thumbnail_count,
+                active_size: thumbnail_file_size
+              },
+              original_image: %{
+                active: original_count,
+                active_size: original_file_size
+              }
+            }
+          } = Project.evaluate_project(project_id, 1)
+
+          %{date: last_change_date_time, user: last_change_user} =
+            case List.first(last_n_changes) do
+              nil ->
+                %{date: nil, user: nil}
+
+              change ->
+                change
+                |> CouchService.extract_most_recent_change_info()
+                |> (fn {_type, date_time, user} -> %{date: date_time, user: user} end).()
+            end
+
+          {
+            :ok,
+            %{
+              id: project_id,
+              name: project_id,
+              doc_count: doc_count,
+              database_file_size: database_file_size,
+              image_file_size: thumbnail_file_size + original_file_size,
+              original_count: original_count,
+              thumbnail_count: thumbnail_count,
+              last_change_date: last_change_date_time,
+              last_change_user: last_change_user
+            }
+          }
+        rescue
+          error ->
+            Logger.error(error)
+            {:error, {error, project_id}}
+        end
+      end)
+      |> Enum.split_with(fn {status, _content} -> status == :error end)
+
+    enriched_projects = Enum.map(enriched_projects, fn {:ok, info} -> info end)
+    errors = Enum.map(errors, fn {:error, info} -> info end)
+    healthy_projects_number = length(enriched_projects)
+
+    total_documents_number =
+      enriched_projects
+      |> Enum.map(& &1.doc_count)
+      |> Enum.sum()
+
+    total_documents_size =
+      enriched_projects
+      |> Enum.map(& &1.database_file_size)
+      |> Enum.sum()
+
+    total_originals_number =
+      enriched_projects
+      |> Enum.map(& &1.original_count)
+      |> Enum.sum()
+
+    total_thumbnails_number =
+      enriched_projects
+      |> Enum.map(& &1.thumbnail_count)
+      |> Enum.sum()
+
+    total_images_number = total_thumbnails_number + total_originals_number
+
+    total_images_size =
+      enriched_projects
+      |> Enum.map(& &1.image_file_size)
+      |> Enum.sum()
+
+    total_database_size =
+      (total_documents_size + total_images_size)
+      |> Sizeable.filesize()
+
+    total_documents_size =
+      total_documents_size
+      |> Sizeable.filesize()
+
+    total_images_size =
+      total_images_size
+      |> Sizeable.filesize()
+
+    {
+      :ok,
+      %{
+        state: %{
+          projects: enriched_projects,
+          errors: errors
+        },
+        healthy_projects_number: healthy_projects_number,
+        total_database_size: total_database_size,
+        total_documents_number: total_documents_number,
+        total_documents_size: total_documents_size,
+        total_images_number: total_images_number,
+        total_thumbnails_number: total_thumbnails_number,
+        total_originals_number: total_originals_number,
+        total_images_size: total_images_size
+      }
+    }
   end
 end

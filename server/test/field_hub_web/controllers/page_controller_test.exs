@@ -3,6 +3,7 @@ defmodule FieldHubWeb.PageControllerTest do
 
   import Phoenix.ConnTest
   import Phoenix.LiveViewTest
+  import ExUnit.CaptureLog
 
   alias FieldHub.TestHelper
   alias FieldHubWeb.UserAuth
@@ -62,16 +63,21 @@ defmodule FieldHubWeb.PageControllerTest do
 
     assert html =~ "Loading projects list..."
 
-    html = render_async(view)
+    capture_log(fn ->
+      # Capture error logs produced by development projects that miss their
+      # image directory (because the test image directory is a different one).
+      # TODO: Make this not hacky, see https://github.com/dainst/idai-field/issues/377.
+      html = render_async(view)
 
-    assert html =~ "Number of projects"
-    assert html =~ "Documents"
-    assert html =~ "Images"
-    assert html =~ "<div class=\"dashboard-card-main-number\">\n      1\n    </div>"
-    assert html =~ "<div class=\"dashboard-card-main-number\">32.3 KB</div>"
-    assert html =~ "<div class=\"dashboard-card-main-number\">0 B</div>"
+      assert html =~ "Number of projects"
+      assert html =~ "Documents"
+      assert html =~ "Images"
+      assert html =~ "<div class=\"dashboard-card-main-number\">\n      1\n    </div>"
+      assert html =~ "<div class=\"dashboard-card-main-number\">32.3 KB</div>"
+      assert html =~ "<div class=\"dashboard-card-main-number\">0 B</div>"
 
-    assert html =~ "<td class=\"cursor-pointer\">#{@project_key}</td>"
+      assert html =~ "<td class=\"cursor-pointer\">#{@project_key}</td>"
+    end)
   end
 
   # describe "admin users" do

@@ -46,7 +46,8 @@ defmodule FieldHubWeb.UserSessionControllerTest do
       |> recycle()
       |> get(redir_path)
 
-    assert html_response(conn, 302) =~ "You are being <a href=\"/ui/projects/show/#{@project_key}\">redirected</a>"
+    assert html_response(conn, 302) =~
+             "You are being <a href=\"/ui/projects/show/#{@project_key}\">redirected</a>"
   end
 
   # TODO: Admin sees project list
@@ -121,7 +122,8 @@ defmodule FieldHubWeb.UserSessionControllerTest do
 
     assert %{assigns: %{current_user: @project_key}} = UserAuth.fetch_current_user(conn, %{})
 
-    assert html_response(conn, 302) =~ "<html><body>You are being <a href=\"/ui/projects/show/#{@project_key}\">redirected</a>.</body></html>"
+    assert html_response(conn, 302) =~
+             "<html><body>You are being <a href=\"/ui/projects/show/#{@project_key}\">redirected</a>.</body></html>"
 
     conn =
       conn

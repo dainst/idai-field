@@ -116,8 +116,6 @@ export class ImageUploader {
     private async selectMetadata(fileCount: number,
                                  depictsRelationTarget?: Document): Promise<ImageMetadata|undefined> {
 
-        this.projectConfiguration.getCategory('Image');
-
         const menuContext: MenuContext = this.menuService.getContext();
         this.menuService.setContext(MenuContext.MODAL);
         const modal: NgbModalRef = this.modalService.open(

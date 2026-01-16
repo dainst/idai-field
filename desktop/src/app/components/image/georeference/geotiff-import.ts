@@ -10,7 +10,7 @@ export async function getGeoreferenceFromGeotiff(buffer: Buffer): Promise<ImageG
 
     let tiff;
     try {
-        tiff = await GeoTIFF.fromBlob(new Blob([buffer]));
+        tiff = await GeoTIFF.fromBlob(new Blob([buffer as BlobPart]));
     } catch (err) {
         console.warn('Failed to parse georeference. The file is probably not a tiff file.', err);
         return undefined;

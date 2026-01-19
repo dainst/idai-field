@@ -566,37 +566,79 @@
         },
         "FeatureGroup:archaeoDox": {
           "hidden": [],
-          "fields": {},
+          "fields": {
+            "date": {
+              "dateConfiguration": {
+                "dataType": "date",
+                "inputMode": "single"
+              }
+            }
+          },
           "identifierPrefix": "BK",
           "color": "#ff00ff"
         },
         "Feature:archaeoDox": {
           "hidden": ["borders"],
-          "fields": {},
+          "fields": {
+            "date": {
+              "dateConfiguration": {
+                "dataType": "date",
+                "inputMode": "single"
+              }
+            }
+          },
           "identifierPrefix": "B",
           "color": "#ffff00"
         },
         "FeatureSegment:archaeoDox": {
           "hidden": [],
-          "fields": {},
+          "fields": {
+            "date": {
+              "dateConfiguration": {
+                "dataType": "date",
+                "inputMode": "single"
+              }
+            }
+          },
           "identifierPrefix": "BA",
           "color": "#969696"
         },
         "Find:archaeoDox": {
           "hidden": [],
-          "fields": {},
+          "fields": {
+            "date": {
+              "dateConfiguration": {
+                "dataType": "date",
+                "inputMode": "single"
+              }
+            }
+          },
           "identifierPrefix": "F",
           "color": "#ff0000"
         },
         "Sample:archaeoDox": {
           "hidden": [],
-          "fields": {},
+          "fields": {
+            "date": {
+              "dateConfiguration": {
+                "dataType": "date",
+                "inputMode": "single"
+              }
+            }
+          },
           "identifierPrefix": "P",
           "color": "#ff0000"
         },
         "Image:archaeoDox": {
           "hidden": [],
-          "fields": {},
+          "fields": {
+            "date": {
+              "dateConfiguration": {
+                "dataType": "date",
+                "inputMode": "single"
+              }
+            }
+          },
           "color": "#dcdcdc"
         },
         "Photo:archaeoDox": {
@@ -616,19 +658,29 @@
         },
         "Planum:archaeoDox": {
           "hidden": [],
-          "fields": {},
+          "fields": {
+            "date": {
+              "dateConfiguration": {
+                "dataType": "date",
+                "inputMode": "single"
+              }
+            }
+          },
           "identifierPrefix": "FLZ",
           "color": "#0000ff"
         },
         "Profile:archaeoDox": {
           "hidden": [],
-          "fields": {},
+          "fields": {
+            "date": {
+              "dateConfiguration": {
+                "dataType": "date",
+                "inputMode": "single"
+              }
+            }
+          },
           "identifierPrefix": "PRZ",
           "color": "#00ff00"
-        },
-        "Process:default": {
-          "hidden": [],
-          "fields": {}
         }
       },
       "order": [
@@ -641,7 +693,6 @@
         "FeatureSegment",
         "Find",
         "Sample",
-        "Process",
         "Image",
         "Photo",
         "PlanDrawing",

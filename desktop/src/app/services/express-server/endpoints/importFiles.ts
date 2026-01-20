@@ -1,7 +1,7 @@
 import { ProjectConfiguration } from 'idai-field-core';
 import { MD } from '../../../components/messages/md';
 import { getErrorMessage } from './util/get-error-message';
-import { ImageUploader } from '../../../components/image/upload/image-uploader';
+import { ImageUploader, ImageUploadResult } from '../../../components/image/upload/image-uploader';
 import { UploadStatus } from '../../../components/image/upload/upload-status';
 import { ImageMetadata } from '../../imagestore/file-metadata';
 
@@ -25,7 +25,9 @@ export async function importFiles(request: any, response: any, projectConfigurat
 
         if (uploadStatus.running) throw 'File import is already running';
 
-        const result = await imageUploader.startUpload(filePaths, undefined, metadata, parseDraughtsmen, true);
+        const result: ImageUploadResult = await imageUploader.startUpload(
+            filePaths, undefined, metadata, parseDraughtsmen, true
+        );
         result.messages = result.messages.map(message => getErrorMessage(message, messagesDictionary));
 
         response.status(200).send({

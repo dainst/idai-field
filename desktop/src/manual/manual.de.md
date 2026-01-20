@@ -2306,6 +2306,8 @@ http://localhost:3000
 
 Beim Zugriff auf jeden der API-Endpunkte muss per *Basic Auth* dasjenige Passwort angegeben werden, das im Menü "Einstellungen" unter "Synchronisation" als "Eigenes Passwort" eingetragen ist. Die Angabe eines Usernamens ist nicht erforderlich.
 
+Wenn nicht anders angegeben, werden Daten im JSON-Format zurückgegeben und auch im Request-Body von POST-Requests als JSON erwartet.
+
 ## Endpunkte
 
 ### GET /info
@@ -2362,3 +2364,20 @@ Query-Parameter:
 * *combineHierarchicalRelations (Boolean)*: Fasst hierarchische Relationen zur vereinfachten Relation "isChildOf" zusammen. Nur verfügbar beim CSV-Export. Entspricht der Checkbox "Hierarchische Relationen zusammenfassen" in der Benutzeroberfläche. (Standardwert: true)
 * *formatted (Boolean)*: Setzt Einrückungen zur formatierten Ausgabe der exportierten Daten. Nur verfügbar beim GeoJSON-Export. (Standardwert: true)
 
+
+### POST /importFiles
+
+Über diesen API-Endpunkt können Bilddateien und World-Files in das aktuell in der Anwendung geöffnete Projekt importiert werden, indem eine Importanfrage im JSON-Format übergeben wird. Die Funktionalität entspricht dabei dem Import von Dateien über das Menü "Werkzeuge" ➝ "Bilderverwaltung".
+Detaillierte Erklärungen zum Importvorgang finden Sie im Kapitel "Bilder".
+
+Im Request-Body werden JSON-Daten erwartet. Die Antwort wird ebenfalls im JSON-Format zurückgegeben.
+
+Request-Body:
+* *filePaths (String-Array)*: Die Dateipfade der zu importierenden Dateien
+* *category (String)*: Der Name der Kategorie, die für importierte Bilder gesetzt werden soll (Standardwert: "Image")
+* *readCreatorsFromMetadata (Boolean)*: Liest die Metadaten von Bilddateien aus, um das Feld "Bildersteller/Bilderstellerin" automatisch auszufüllen
+
+Rückgabe:
+* *importedImages (Integer)*: Die Anzahl der erfolgreich importierten Bilddateien
+* *importedWorldFiles (Integer)*: Die Anzahl der erfolgreich importierten World-Files
+* *messages* (String-Array): Meldungen, die während des Importvorgangs aufgetreten sind

@@ -2298,6 +2298,8 @@ http://localhost:3000
 
 When accessing each of the API endpoints, the password entered as "Your password" in the menu "Settings" under "Synchronization" must be given via *Basic Auth*. It is not necessary to enter a user name.
 
+Unless otherwise specified, data is returned in JSON format and is also expected in the request body of POST requests as JSON.
+
 
 ## Endpoints
 
@@ -2305,7 +2307,7 @@ When accessing each of the API endpoints, the password entered as "Your password
 
 This API endpoint returns some information about the running instance of Field Desktop in JSON format.
 
-Return:
+Response:
 * *version (string)*: The version of the running application
 * *projects (string array)*: The identifiers of all projects currently stored on this computer
 * *activeProject (string)*: The identifier of the project currently opened in the application
@@ -2354,3 +2356,18 @@ Query parameters:
 * *separator (string)*: The separator to be used in the exported CSV data. Only required for CSV export. Corresponds to the input field "Field separator" in the user interface. (Default value: ",")
 * *combineHierarchicalRelations (boolean)*: Combines hierarchical relations into the simplified relation "isChildOf". Only available for CSV export. Corresponds to the checkbox "Combine hierarchical relations" in the user interface. (Default value: true)
 * *formatted (boolean)*: Sets indentations for formatted output of the exported data. Only available for GeoJSON export. (Default value: true)
+
+
+### POST /importFiles
+
+This API endpoint can be used to import image files and world files into the project currently opened in the application by passing an import request in JSON format. The functionality corresponds to importing files via the menu "Tools" ➝ "Image Management". Detailed explanations of the import process can be found in the chapter "Images".
+
+Request body:
+* *filePaths (string array)*: The file paths of the files to be imported
+* *category (string)*: The name of the category to be set for imported images (Default value: "Image")
+* *readCreatorsFromMetadata (boolean)*: Reads the metadata from image files to automatically fill in the field "Creator"
+
+Response:
+* *importedImages (integer)*: The number of successfully imported image files
+* *importedWorldFiles (integer)*: The number of successfully imported world files 
+* *messages* (string array): Messages that occurred during the import process

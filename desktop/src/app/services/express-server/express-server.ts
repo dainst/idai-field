@@ -11,6 +11,7 @@ import { MD } from '../../components/messages/md';
 import { AngularUtility } from '../../angular/angular-utility';
 import { importFiles } from './endpoints/importFiles';
 import { ImageUploader } from '../../components/image/upload/image-uploader';
+import { UploadStatus } from '../../components/image/upload/upload-status';
 
 const express = window.require('express');
 const remote = window.require('@electron/remote');
@@ -35,6 +36,7 @@ export class ExpressServer {
     private relationsManager: RelationsManager;
     private projectConfiguration: ProjectConfiguration;
     private imageUploader: ImageUploader;
+    private uploadStatus: UploadStatus;
     private apiObservers: Array<Observer<ApiState>> = [];
 
 
@@ -64,6 +66,8 @@ export class ExpressServer {
         this.projectConfiguration = projectConfiguration;
 
     public setImageUploader = (imageUploader: ImageUploader) => this.imageUploader = imageUploader;
+
+    public setUploadStatus = (uploadStatus: UploadStatus) => this.uploadStatus = uploadStatus;
 
     public apiNotifications = (): Observable<ApiState> => ObserverUtil.register(this.apiObservers);
 
@@ -214,7 +218,7 @@ export class ExpressServer {
 
             ObserverUtil.notify(this.apiObservers, 'importFiles');
             await AngularUtility.refresh();
-            await importFiles(request, response, this.projectConfiguration, this.imageUploader,
+            await importFiles(request, response, this.projectConfiguration, this.imageUploader, this.uploadStatus,
                 this.messagesDictionary);
             ObserverUtil.notify(this.apiObservers, 'none');
         });

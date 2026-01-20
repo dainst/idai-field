@@ -90,6 +90,8 @@ export class ImageUploader {
                 );
             }
 
+            this.uploadStatus.running = true;
+
             uploadResult = await this.uploadImageFiles(
                 filePaths, metadata, uploadResult, depictsRelationTarget, parseDraughtsmen
             );
@@ -105,6 +107,8 @@ export class ImageUploader {
         if (wldFilePaths.length) {
             uploadResult.messages = uploadResult.messages.concat(await this.uploadWldFiles(wldFilePaths));
         }
+
+        this.uploadStatus.running = false;
 
         return uploadResult;
     }

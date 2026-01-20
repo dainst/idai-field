@@ -22,6 +22,7 @@ import { ImportExportProcessModalComponent } from './widgets/import-export-proce
 import { Menus } from '../services/menus';
 import { ImageUploader } from './image/upload/image-uploader';
 import { UploadModalComponent } from './image/upload/upload-modal.component';
+import { UploadStatus } from './image/upload/upload-status';
 
 const remote = window.require('@electron/remote');
 const ipcRenderer = window.require('electron')?.ipcRenderer;
@@ -58,6 +59,7 @@ export class AppComponent {
                 projectConfiguration: ProjectConfiguration,
                 relationsManager: RelationsManager,
                 imageUploader: ImageUploader,
+                uploadStatus: UploadStatus,
                 private expressServer: ExpressServer,
                 private messages: Messages,
                 private utilTranslations: UtilTranslations,
@@ -87,6 +89,7 @@ export class AppComponent {
         this.expressServer.setRelationsManager(relationsManager);
         this.expressServer.setProjectConfiguration(projectConfiguration);
         this.expressServer.setImageUploader(imageUploader);
+        this.expressServer.setUploadStatus(uploadStatus);
 
         appState.load();
         settingsService.setupSync();

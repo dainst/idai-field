@@ -2,6 +2,7 @@ import { ProjectConfiguration } from 'idai-field-core';
 import { MD } from '../../../components/messages/md';
 import { getErrorMessage } from './util/get-error-message';
 import { ImageUploader } from '../../../components/image/upload/image-uploader';
+import { UploadStatus } from '../../../components/image/upload/upload-status';
 import { ImageMetadata } from '../../imagestore/file-metadata';
 
 
@@ -9,7 +10,7 @@ import { ImageMetadata } from '../../imagestore/file-metadata';
  * @author Thomas Kleinke
  */
 export async function importFiles(request: any, response: any, projectConfiguration: ProjectConfiguration,
-                                  imageUploader: ImageUploader, messagesDictionary: MD) {
+                                  imageUploader: ImageUploader, uploadStatus: UploadStatus, messagesDictionary: MD) {
 
     try {
         const filePaths: string[] = request.body.filePaths;
@@ -21,6 +22,8 @@ export async function importFiles(request: any, response: any, projectConfigurat
         if (!projectConfiguration.getCategory(category)) throw 'Unconfigured category: ' + request.body.category;
 
         const metadata: ImageMetadata = { category, draughtsmen: [] };
+
+        if (uploadStatus.running) throw 'File import is already running';
 
         const result = await imageUploader.startUpload(filePaths, undefined, metadata, parseDraughtsmen, true);
         result.messages = result.messages.map(message => getErrorMessage(message, messagesDictionary));

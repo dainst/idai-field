@@ -57,7 +57,9 @@ export class ImageUploader {
      * @param depictsRelationTarget If this parameter is set, each of the newly created image documents will contain
      *  a depicts relation to the specified document.
      */
-    public async startUpload(filePaths: string[], depictsRelationTarget?: Document): Promise<ImageUploadResult> {
+    public async startUpload(filePaths: string[], depictsRelationTarget?: Document, metadata?: ImageMetadata,
+                             parseDraughtsmen?: boolean,
+                             calledViaRestApi: boolean = false): Promise<ImageUploadResult> {
 
         let uploadResult: ImageUploadResult = { uploadedImages: 0, messages: [] };
 
@@ -72,20 +74,30 @@ export class ImageUploader {
         const imageFilePaths: string[] = filePaths.filter(filePath =>
             ImageUploader.supportedImageFileTypes.includes(ExtensionUtil.getExtension(path.basename(filePath))));
         if (imageFilePaths.length) {
-            const metadata: ImageMetadata|undefined
-                = await this.selectMetadata(imageFilePaths.length, depictsRelationTarget);
-            if (!metadata) return uploadResult;
+            if (!metadata) {
+                metadata = await this.selectMetadata(imageFilePaths.length, depictsRelationTarget);
+                if (!metadata) return uploadResult;
+            }
 
-            const menuContext: MenuContext = this.menuService.getContext();
-            this.menuService.setContext(MenuContext.MODAL);
-            const uploadModalRef = this.modalService.open(
-                UploadModalComponent, { backdrop: 'static', keyboard: false, animation: false }
-            );
+            let menuContext: MenuContext;
+            let uploadModalRef: NgbModalRef;
+
+            if (!calledViaRestApi) {
+                menuContext = this.menuService.getContext();
+                this.menuService.setContext(MenuContext.MODAL);
+                uploadModalRef = this.modalService.open(
+                    UploadModalComponent, { backdrop: 'static', keyboard: false, animation: false }
+                );
+            }
+
             uploadResult = await this.uploadImageFiles(
-                filePaths, metadata, uploadResult, depictsRelationTarget
+                filePaths, metadata, uploadResult, depictsRelationTarget, parseDraughtsmen
             );
-            uploadModalRef.close();
-            this.menuService.setContext(menuContext);
+    
+            if (!calledViaRestApi) {
+                uploadModalRef.close();
+                this.menuService.setContext(menuContext);
+            }
         }
 
         const wldFilePaths: string[] = filePaths.filter(filePath =>
@@ -136,7 +148,8 @@ export class ImageUploader {
 
 
     private async uploadImageFiles(filePaths: string[], metadata: ImageMetadata, uploadResult: ImageUploadResult,
-                                   depictsRelationTarget?: Document): Promise<ImageUploadResult> {
+                                   depictsRelationTarget?: Document,
+                                   parseDraughtsmen?: boolean): Promise<ImageUploadResult> {
 
         if (!filePaths) return uploadResult;
 
@@ -154,7 +167,7 @@ export class ImageUploader {
                     if (result.totalCount > 0) {
                         duplicateFilenames.push(path.basename(filePath));
                     } else {
-                        await this.uploadFile(filePath, metadata, depictsRelationTarget);
+                        await this.uploadFile(filePath, metadata, depictsRelationTarget, parseDraughtsmen);
                     }
                     this.uploadStatus.setHandledImages(this.uploadStatus.getHandledImages() + 1);
                 } catch (e) {
@@ -174,7 +187,7 @@ export class ImageUploader {
     }
 
 
-    private async uploadWldFiles(filePaths: string[]) {
+    private async uploadWldFiles(filePaths: string[]): Promise<string[][]> {
 
         const messages: string[][] = [];
         const unmatchedWldFiles = [];
@@ -224,8 +237,8 @@ export class ImageUploader {
     }
 
 
-    private async uploadFile(filePath: string, metadata: ImageMetadata,
-                             depictsRelationTarget?: Document): Promise<any> {
+    private async uploadFile(filePath: string, metadata: ImageMetadata, depictsRelationTarget?: Document,
+                             parseDraughtsmen?: boolean): Promise<any> {
 
         const buffer: Buffer = await this.readFile(filePath);
         
@@ -233,7 +246,7 @@ export class ImageUploader {
         
         try {
             document = await this.createImageDocument(
-                path.basename(filePath), buffer, metadata, depictsRelationTarget
+                path.basename(filePath), buffer, metadata, depictsRelationTarget, parseDraughtsmen
             );
         } catch (err) {
             if (isArray(err) && err[0] === ImageManipulationErrors.MAX_INPUT_PIXELS_EXCEEDED) {
@@ -267,13 +280,13 @@ export class ImageUploader {
 
 
     private async createImageDocument(fileName: string, buffer: Buffer, metadata: ImageMetadata,
-                                      depictsRelationTarget?: Document): Promise<any> {
+                                      depictsRelationTarget?: Document, parseDraughtsmen?: boolean): Promise<any> {
                                         
+        if (parseDraughtsmen === undefined) parseDraughtsmen = this.imagesState.getParseFileMetadata('draughtsmen');
+        
         // Try to extend metadata set explicitely by the user with metadata contained within the image file
         // itself (exif/xmp/iptc).
-        const extendedMetadata: ImageMetadata = await extendMetadataByFileData(
-            metadata, buffer, this.imagesState.getParseFileMetadata('draughtsmen')
-        );
+        const extendedMetadata: ImageMetadata = await extendMetadataByFileData(metadata, buffer, parseDraughtsmen);
 
         const document: NewImageDocument = {
             resource: {

@@ -20,6 +20,7 @@ import { ImageToolLauncher } from '../services/imagestore/image-tool-launcher';
 import { ExpressServer } from '../services/express-server/express-server';
 import { ImportExportProcessModalComponent } from './widgets/import-export-process-modal.component';
 import { Menus } from '../services/menus';
+import { ImageUploader } from './image/upload/image-uploader';
 
 const remote = window.require('@electron/remote');
 const ipcRenderer = window.require('electron')?.ipcRenderer;
@@ -55,6 +56,7 @@ export class AppComponent {
                 imageToolLauncher: ImageToolLauncher,
                 projectConfiguration: ProjectConfiguration,
                 relationsManager: RelationsManager,
+                imageUploader: ImageUploader,
                 private expressServer: ExpressServer,
                 private messages: Messages,
                 private utilTranslations: UtilTranslations,
@@ -83,6 +85,7 @@ export class AppComponent {
         this.expressServer.setDatastore(this.datastore);
         this.expressServer.setRelationsManager(relationsManager);
         this.expressServer.setProjectConfiguration(projectConfiguration);
+        this.expressServer.setImageUploader(imageUploader);
 
         appState.load();
         settingsService.setupSync();

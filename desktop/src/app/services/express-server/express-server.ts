@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
-import { ImageStore, ImageVariant, FileInfo, ConfigurationSerializer,
-    ConfigReader, Datastore, ProjectConfiguration, RelationsManager, IdGenerator, 
-    ObserverUtil } from 'idai-field-core';
+import { ImageStore, ImageVariant, FileInfo, ConfigurationSerializer, ConfigReader, Datastore, ProjectConfiguration,
+    RelationsManager, IdGenerator, ObserverUtil } from 'idai-field-core';
 import { SettingsProvider } from '../settings/settings-provider';
 import { exportConfiguration } from './endpoints/configuration';
 import { exportData } from './endpoints/export';
-import { importData } from './endpoints/import';
+import { importData } from './endpoints/importData';
 import { Settings } from '../settings/settings';
 import { MD } from '../../components/messages/md';
 import { AngularUtility } from '../../angular/angular-utility';
+import { importFiles } from './endpoints/importFiles';
+import { ImageUploader } from '../../components/image/upload/image-uploader';
 
 const express = window.require('express');
 const remote = window.require('@electron/remote');
@@ -29,9 +30,11 @@ export class ExpressServer {
     private allowLargeFileUploads: boolean;
     private binaryBodyParser = bodyParser.raw({ type: '*/*', limit: '1gb' });
     private textBodyParser = bodyParser.text({ type: '*/*', limit: '1gb' });
+    private jsonBodyParser = bodyParser.json({ type: '*/*', limit: '1gb' });
     private datastore: Datastore;
     private relationsManager: RelationsManager;
     private projectConfiguration: ProjectConfiguration;
+    private imageUploader: ImageUploader;
     private apiObservers: Array<Observer<ApiState>> = [];
 
 
@@ -59,6 +62,8 @@ export class ExpressServer {
 
     public setProjectConfiguration = (projectConfiguration: ProjectConfiguration) =>
         this.projectConfiguration = projectConfiguration;
+
+    public setImageUploader = (imageUploader: ImageUploader) => this.imageUploader = imageUploader;
 
     public apiNotifications = (): Observable<ApiState> => ObserverUtil.register(this.apiObservers);
 
@@ -203,6 +208,16 @@ export class ExpressServer {
                 this.idGenerator, this.settingsProvider.getSettings(), this.messagesDictionary
             );
             ObserverUtil.notify(this.apiObservers, 'none');
+        });
+
+        app.post('/importFiles', this.jsonBodyParser, async (request: any, response: any) => {
+
+            ObserverUtil.notify(this.apiObservers, 'importFiles');
+            await AngularUtility.refresh();
+            await importFiles(request, response, this.projectConfiguration, this.imageUploader,
+                this.messagesDictionary);
+
+            response.status(200).send();
         });
 
         app.get('/info/',  async (_: any, response: any) => {

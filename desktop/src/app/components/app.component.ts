@@ -21,6 +21,7 @@ import { ExpressServer } from '../services/express-server/express-server';
 import { ImportExportProcessModalComponent } from './widgets/import-export-process-modal.component';
 import { Menus } from '../services/menus';
 import { ImageUploader } from './image/upload/image-uploader';
+import { UploadModalComponent } from './image/upload/upload-modal.component';
 
 const remote = window.require('@electron/remote');
 const ipcRenderer = window.require('electron')?.ipcRenderer;
@@ -124,6 +125,7 @@ export class AppComponent {
         this.expressServer.apiNotifications().subscribe(state => {
             switch (state) {
                 case 'import':
+                case 'importFiles':
                 case 'export':
                     if (this.modal) {
                         this.clearModalTimeout();
@@ -131,13 +133,13 @@ export class AppComponent {
                         this.previousMenuContext = this.menuService.getContext();
                         this.menuService.setContext(MenuContext.BLOCKING_MODAL);
                         const modalRef: NgbModalRef = this.modalService.open(
-                            ImportExportProcessModalComponent,
+                            state === 'importFiles' ? UploadModalComponent : ImportExportProcessModalComponent,
                             { backdrop: 'static', keyboard: false, animation: false }
                         );
                         this.modal = modalRef.componentInstance;
                         this.changeDetectorRef.detectChanges();
                     }
-                    this.modal.type = state;
+                    if (state !== 'importFiles') this.modal.type = state;
                     break;
                 case 'none':
                     if (this.modal) this.closeModal();

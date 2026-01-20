@@ -18,7 +18,7 @@ export async function importFiles(request: any, response: any, projectConfigurat
 
         const parseDraughtsmen: boolean = request.body.readCreatorsFromMetadata === true ? true : false;
 
-        const category: string = request.body.category;
+        const category: string = request.body.category ?? 'Image';
         if (!projectConfiguration.getCategory(category)) throw 'Unconfigured category: ' + request.body.category;
 
         const metadata: ImageMetadata = { category, draughtsmen: [] };

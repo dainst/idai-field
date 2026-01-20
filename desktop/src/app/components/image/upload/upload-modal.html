@@ -2,7 +2,10 @@
     <div class="process-modal-container">
         <div class="spinner"></div>
         <div class="process-info">
-            <span *ngIf="uploadStatus.getTotalImages() == 1" i18n="@@imageUpload.uploadModal.info.single">
+            <span *ngIf="!uploadStatus.getTotalImages()" i18n="@@imageUpload.uploadModal.info.generic">
+                Daten werden eingelesen...
+            </span>
+            <span *ngIf="uploadStatus.getTotalImages() === 1" i18n="@@imageUpload.uploadModal.info.single">
                 Bild wird eingelesen...
             </span>
             <span *ngIf="uploadStatus.getTotalImages() > 1" i18n="@@imageUpload.uploadModal.info.multiple">

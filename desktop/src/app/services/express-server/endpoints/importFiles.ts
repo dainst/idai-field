@@ -28,7 +28,11 @@ export async function importFiles(request: any, response: any, projectConfigurat
         const result = await imageUploader.startUpload(filePaths, undefined, metadata, parseDraughtsmen, true);
         result.messages = result.messages.map(message => getErrorMessage(message, messagesDictionary));
 
-        response.status(200).send(result);
+        response.status(200).send({
+            importedImages: result.uploadedImages,
+            importedWorldFiles: result.uploadedWorldFiles,
+            messages: result.messages
+        });
     } catch (err) {
         response.status(400).send({ error: getErrorMessage(err, messagesDictionary) });
     }

@@ -26,6 +26,7 @@ const path = window.require('path');
 export interface ImageUploadResult {
 
     uploadedImages: number;
+    uploadedWorldFiles: number;
     messages: string[][];
 }
 
@@ -61,7 +62,7 @@ export class ImageUploader {
                              parseDraughtsmen?: boolean,
                              calledViaRestApi: boolean = false): Promise<ImageUploadResult> {
 
-        let uploadResult: ImageUploadResult = { uploadedImages: 0, messages: [] };
+        let uploadResult: ImageUploadResult = { uploadedImages: 0, uploadedWorldFiles: 0, messages: [] };
 
         if (!this.imagestore.getAbsoluteRootPath()) {
             uploadResult.messages.push([M.IMAGESTORE_ERROR_INVALID_PATH_WRITE]);
@@ -105,7 +106,7 @@ export class ImageUploader {
         const wldFilePaths: string[] = filePaths.filter(filePath =>
             ImageUploader.supportedWorldFileTypes.includes(ExtensionUtil.getExtension(path.basename(filePath))));
         if (wldFilePaths.length) {
-            uploadResult.messages = uploadResult.messages.concat(await this.uploadWldFiles(wldFilePaths));
+            await this.uploadWldFiles(wldFilePaths, uploadResult);
         }
 
         this.uploadStatus.running = false;
@@ -191,7 +192,7 @@ export class ImageUploader {
     }
 
 
-    private async uploadWldFiles(filePaths: string[]): Promise<string[][]> {
+    private async uploadWldFiles(filePaths: string[], uploadResult: ImageUploadResult) {
 
         const messages: string[][] = [];
         const unmatchedWldFiles = [];
@@ -203,6 +204,7 @@ export class ImageUploader {
                 if (result.totalCount > 0) {
                     try {
                         await this.saveWldFile(filePath, result.documents[0]);
+                        uploadResult.uploadedWorldFiles++;
                         continue outer;
                     } catch (e) {
                         messages.push(e);
@@ -220,7 +222,7 @@ export class ImageUploader {
         if (matchedFiles === 1) messages.push([M.IMAGES_SUCCESS_WLD_FILE_UPLOADED, matchedFiles.toString()]);
         if (matchedFiles > 1) messages.push([M.IMAGES_SUCCESS_WLD_FILES_UPLOADED, matchedFiles.toString()]);
 
-        return messages;
+        uploadResult.messages = uploadResult.messages.concat(messages);
     }
 
 

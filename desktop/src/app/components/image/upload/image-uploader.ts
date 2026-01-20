@@ -4,7 +4,7 @@ import { isArray } from 'tsfun';
 import { Document, Datastore, NewImageDocument, ProjectConfiguration, RelationsManager, 
     ImageStore, ImageGeoreference, ImageDocument, CategoryForm, formatDate, Field,
     DateConfiguration } from 'idai-field-core';
-import { readWldFile } from '../georeference/wld-import';
+import { Errors, readWldFile } from '../georeference/wld-import';
 import { ExtensionUtil } from '../../../util/extension-util';
 import { MenuContext } from '../../../services/menu-context';
 import { Menus } from '../../../services/menus';
@@ -206,8 +206,15 @@ export class ImageUploader {
                         await this.saveWldFile(filePath, result.documents[0]);
                         uploadResult.uploadedWorldFiles++;
                         continue outer;
-                    } catch (e) {
-                        messages.push(e);
+                    } catch (err) {
+                        if (err === Errors.FileReaderError) {
+                            messages.push([M.IMAGES_ERROR_FILEREADER, path.basename(filePath)]);
+                        } else if (err === Errors.InvalidWldFileError) {
+                            messages.push([M.IMAGESTORE_ERROR_INVALID_WORLDFILE, path.basename(filePath)]);
+                        } else {
+                            messages.push(err);
+                        }
+                        continue outer;
                     }
                 }
             }
@@ -218,9 +225,12 @@ export class ImageUploader {
             messages.push([M.IMAGES_ERROR_UNMATCHED_WLD_FILES, unmatchedWldFiles.join(', ')]);
         }
 
-        const matchedFiles = filePaths.length - unmatchedWldFiles.length;
-        if (matchedFiles === 1) messages.push([M.IMAGES_SUCCESS_WLD_FILE_UPLOADED, matchedFiles.toString()]);
-        if (matchedFiles > 1) messages.push([M.IMAGES_SUCCESS_WLD_FILES_UPLOADED, matchedFiles.toString()]);
+        const matchedFiles: number = filePaths.length - unmatchedWldFiles.length;
+        if (uploadResult.uploadedWorldFiles === 1) {
+            messages.push([M.IMAGES_SUCCESS_WLD_FILE_UPLOADED, matchedFiles.toString()]);
+        } else if (uploadResult.uploadedWorldFiles > 1) {
+            messages.push([M.IMAGES_SUCCESS_WLD_FILES_UPLOADED, matchedFiles.toString()]);
+        }
 
         uploadResult.messages = uploadResult.messages.concat(messages);
     }

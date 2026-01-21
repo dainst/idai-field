@@ -415,12 +415,14 @@ nav {
     table-layout: fixed;
 }
 
+.project-list td:hover {
+    text-indent: 2%;
+}
 .click-row:hover {
     background-color: #0069d9;
     border-radius: 4px;
     color: white;
     text-shadow: #888;
-    text-indent: 2%;
     cursor: pointer;
 }
 

@@ -398,11 +398,6 @@ nav {
     width: 100%;
 }
 
-.project-list tbody tr td {
-    overflow-x: scroll;
-    white-space: nowrap;
-}
-
 .project-list thead {
     color: #3f4246;
     font-size: small;

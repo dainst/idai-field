@@ -408,11 +408,6 @@ nav {
     background-color: #f4f8f8;
 }
 
-.project-list tr {   
-    display: grid;
-    grid-template-columns: 20% 17% 17% 17% 29% ;
-}
-
 .project-list tbody {
     color: #3f4246;
     line-height: 0%;

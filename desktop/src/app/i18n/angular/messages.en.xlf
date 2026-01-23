@@ -5494,7 +5494,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.parser.csv.notanumber" datatype="html">
         <source>CSV fehlerhaft: Wert "[0]" in Spalte "[1]" ist keine Zahl.</source>
-        <target state="translated">Erroneous CSV: Value "[0]" in column "[1]" is not a boolean.</target>
+        <target state="translated">Erroneous CSV: Value "[0]" in column "[1]" is not a number.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -9398,7 +9398,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.file.single" datatype="html">
         <source> (die <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>aktuellste<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Datei) </source>
-        <target state="translated"> (the <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>most recent<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> file) </target>
+        <target state="translated">(the <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>most recent<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> file) </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">281,283</context>
@@ -9802,7 +9802,7 @@
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.file.multiple" datatype="html">
         <source> (die <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt; aktue"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="aktuellsten D"/> aktuellsten Dateien) </source>
-        <target state="translated"> (the <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt; aktue"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="aktuellsten D"/> most recent files) </target>
+        <target state="translated">(the <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt; aktue"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="aktuellsten D"/> most recent files) </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">285,287</context>

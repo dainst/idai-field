@@ -1,10 +1,12 @@
 <div class="container">
-  <.link navigate={~p"/"}>Back to overview</.link>
+  <%= if User.is_admin?(@current_user) do %>
+    <.link navigate={~p"/"}>Back to overview</.link>
+  <% end %>
 
   <h1>Project <i>{@project}</i></h1>
 
-  <p class="alert alert-info">{Phoenix.Flash.get(@flash, :info)}</p>
-  <p class="alert alert-danger">{Phoenix.Flash.get(@flash, :error)}</p>
+  <%!-- <p class="alert alert-info">{Phoenix.Flash.get(@flash, :info)}</p> --%>
+  <%!-- <p class="alert alert-danger">{Phoenix.Flash.get(@flash, :error)}</p> --%>
 
   <section>
     <h2>Overview</h2>
@@ -66,17 +68,25 @@
                 } -> %>
                 <section>Database documents: {db_doc_count}</section>
 
-                <section>
+                <section :if={db_doc_count > 0}>
                   <tr>
                     <td>History</td>
                     <td>
                       <table class="scrolldown resources-history">
                         <thead>
                           <tr>
-                            <th>Ressource</th>
-                            <th>Action</th>
-                            <th>User</th>
-                            <th>Time</th>
+                            <th phx-click="sort" phx-value-field="resource" class="cursor-pointer">
+                              Resource {sort_indicator(@sort_by, @sort_direction, :resource)}
+                            </th>
+                            <th phx-click="sort" phx-value-field="action" class="cursor-pointer">
+                              Action {sort_indicator(@sort_by, @sort_direction, :action)}
+                            </th>
+                            <th phx-click="sort" phx-value-field="user" class="cursor-pointer">
+                              User {sort_indicator(@sort_by, @sort_direction, :user)}
+                            </th>
+                            <th phx-click="sort" phx-value-field="time" class="cursor-pointer">
+                              Time {sort_indicator(@sort_by, @sort_direction, :time)}
+                            </th>
                           </tr>
                         </thead>
                         <tbody>

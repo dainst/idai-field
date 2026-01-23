@@ -49,4 +49,8 @@
       margin-top: 13px;
     }
   }
+
+  .most-recent-files-info:before {
+    content: '\00a0';
+  }
 }

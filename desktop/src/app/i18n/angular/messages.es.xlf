@@ -4915,7 +4915,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.parser.csv.notanumber" datatype="html">
         <source>CSV fehlerhaft: Wert "[0]" in Spalte "[1]" ist keine Zahl.</source>
-        <target state="needs-translation">CSV erróneo: el valor "[0]" en la columna "[1]" no es booleano.</target>
+        <target state="translated">CSV erróneo: el valor "[0]" en la columna "[1]" no es un número.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

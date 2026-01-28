@@ -167,6 +167,7 @@ body {
 
 nav {
     top: calc(var(--header-height));
+    margin-top: -10ex;
     right: 50px;
     position: absolute;
     z-index: 1;

@@ -97,6 +97,12 @@ export module WarningFilters {
                 type: 'nonUniqueIdentifier'
             },
             {
+                label: translations.getTranslation('warnings.nonUniqueQrCodes'),
+                constraintName: 'nonUniqueQrCode:exist',
+                count: 0,
+                type: 'nonUniqueQrCode'
+            },
+            {
                 label: translations.getTranslation('warnings.resourceLimitExceeded'),
                 constraintName: 'resourceLimitExceeded:exist',
                 count: 0,

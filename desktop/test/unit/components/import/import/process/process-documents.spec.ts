@@ -26,7 +26,7 @@ describe('processDocuments', () => {
     });
 
 
-    test('merge, add field', () => {
+    test('merge, add field', async () => {
 
         const document: Document = {
             _id: '1',
@@ -42,7 +42,7 @@ describe('processDocuments', () => {
             }
         };
 
-        const result = processDocuments(
+        const result = await processDocuments(
             [document],
             { '1': existingFeature } as any,
             validator,
@@ -57,7 +57,7 @@ describe('processDocuments', () => {
     });
 
 
-    test('merge, multiple times', () => {
+    test('merge, multiple times', async () => {
 
         const document1: Document = {
             _id: '1',
@@ -87,7 +87,7 @@ describe('processDocuments', () => {
             }
         };
 
-        const result = processDocuments(
+        const result = await processDocuments(
             [document1, document2],
             { 'ef1': existingFeature } as any,
             validator,
@@ -102,14 +102,14 @@ describe('processDocuments', () => {
     });
 
 
-    test('validation error - not wellformed', () => {
+    test('validation error - not wellformed', async () => {
 
         validator.assertFieldsDefined.mockImplementation(() => {
             throw [ValidationErrors.MISSING_PROPERTY, 'Feature', 'invalidField'];
         });
 
         try {
-            processDocuments(
+            await processDocuments(
                 [d('nf1', 'Feature', 'one')], {}, validator, false
             );
             throw new Error('Test failure');
@@ -121,14 +121,14 @@ describe('processDocuments', () => {
     });
 
 
-    test('validation error - invalid identifier prefix', () => {
+    test('validation error - invalid identifier prefix', async () => {
 
         validator.assertIdentifierPrefixIsValid.mockImplementation(() => {
             throw [E.INVALID_IDENTIFIER_PREFIX, 'one', 'Feature', 'F'];
         });
 
         try {
-            processDocuments(
+            await processDocuments(
                 [d('nf1', 'Feature', 'one')], {}, validator, false
             );
             throw new Error('Test failure');
@@ -141,10 +141,10 @@ describe('processDocuments', () => {
     });
 
 
-    test('duplicate identifiers in import file', () => {
+    test('duplicate identifiers in import file', async () => {
 
         try {
-            processDocuments(
+            await processDocuments(
                 <any>[
                     d('nf1', 'Feature', 'dup', { liesWithin: ['etc1'] }),
                     d('nf2', 'Feature', 'dup', { liesWithin: ['etc1'] }),
@@ -159,12 +159,12 @@ describe('processDocuments', () => {
     });
 
 
-    test('report invalid fields', () => {
+    test('report invalid fields', async () => {
 
         validator.assertFieldsDefined.mockImplementation(() => { throw [E.INVALID_FIELDS]; });
 
         try {
-            processDocuments(
+            await processDocuments(
                 [d('nfi1', 'Find', 'one', { isChildOf: 'et1'})], {}, validator, false
             );
             throw new Error('Test failure');
@@ -174,20 +174,20 @@ describe('processDocuments', () => {
     });
 
 
-    test('ignore invalid fields', () => {
+    test('ignore invalid fields', async () => {
 
         const document = d('nf1', 'Feature', 'one');
         document.resource.invalidField = 'value';
 
         validator.getUndefinedFields.mockReturnValue(['invalidField']);
 
-        const result = processDocuments([document], {}, validator, true);
+        const result = await processDocuments([document], {}, validator, true);
 
         expect(result[0].resource.invalidField).toBeUndefined();
     });
 
 
-    test('ignore invalid fields in merge mode', () => {
+    test('ignore invalid fields in merge mode', async () => {
 
         const document: Document = {
             _id: '1',
@@ -206,7 +206,7 @@ describe('processDocuments', () => {
 
         validator.getUndefinedFields.mockReturnValue(['invalidField']);
 
-        const result = processDocuments([document], { '1': existingFeature } as any, validator, true);
+        const result = await processDocuments([document], { '1': existingFeature } as any, validator, true);
 
         expect(result[0].resource.invalidField).toBeUndefined();
     });

@@ -271,4 +271,25 @@ export class ImportValidator extends Validator {
             }
         }
     }
+
+
+    public async assertQrCodesAreUnique(documents: Array<Document>) {
+
+        for (let document of documents) {
+            if (!document.resource.scanCode) continue;
+
+            if (documents.filter(doc => doc.resource.scanCode === document.resource.scanCode).length > 1) {
+                throw [E.DUPLICATE_QR_CODE_IN_IMPORT_FILE, document.resource.scanCode];
+            }
+            
+            const existingDocumentIds: string[] = this.datastore.findIds({
+                constraints: { 'scanCode:match': document.resource.scanCode }
+            }).ids;
+
+            if (existingDocumentIds.length > 0 && !existingDocumentIds.includes(document.resource.id)) {
+                const existingDocument: Document = await this.datastore.get(existingDocumentIds[0]);
+                throw [E.DUPLICATE_QR_CODE_IN_PROJECT, document.resource.scanCode, existingDocument.resource.identifier];
+            }
+        }
+    }
 }

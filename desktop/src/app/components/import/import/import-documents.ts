@@ -107,7 +107,7 @@ async function importDocuments(services: ImportServices, context: ImportContext,
         preprocessFields(documentsToImport, options);
         await preprocessRelations(documentsToImport, helpers, options);
         const mergeDocs = preprocessDocuments(existingImportDocuments, helpers, options, documentsToImport);
-        const processedDocuments = processDocuments(
+        const processedDocuments = await processDocuments(
             documentsToImport, mergeDocs, services.validator, options.ignoreUnconfiguredFields
         );
         const targetDocuments = await processRelations(

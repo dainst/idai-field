@@ -14,6 +14,7 @@ describe('ImportValidator', () => {
         forms: Forest.build([
             [ {
                 name: 'T',
+                scanCodesAllowed: true,
                 groups: [{ name: 'stem', fields: [
                     { name: 'id' },
                     { name: 'identifier' },
@@ -672,6 +673,48 @@ describe('ImportValidator', () => {
             throw new Error('Test failure');
         } catch (expected) {
             expect(expected).toEqual([ImportErrors.RESOURCE_LIMIT_EXCEEDED, 'T5', 3]);
+        }
+    });
+
+
+    test('duplicate QR codes in import file', async () => {
+
+        const datastore = { findIds: jest.fn().mockReturnValue({ ids: [] }) } as any;
+        
+        const validator: ImportValidator = new ImportValidator(projectConfiguration, datastore);
+
+        const documents: Array<Document> = [
+            { resource: { id: '1', category: 'T', scanCode: 'a' } },
+            { resource: { id: '2', category: 'T', scanCode: 'a' } }
+        ] as unknown as Array<Document>;
+
+        try {
+            await validator.assertQrCodesAreUnique(documents);
+            throw new Error('Test failure');
+        } catch (err) {
+            expect(err).toEqual([ImportErrors.DUPLICATE_QR_CODE_IN_IMPORT_FILE, 'a'])
+        }
+    });
+
+
+    test('QR code already exists in project', async () => {
+
+        const datastore = {
+            findIds: jest.fn().mockReturnValue({ ids: ['1'] }),
+            get: jest.fn().mockReturnValue(Promise.resolve({ resource: { id: '1', identifier: '1' } }))
+        } as any;
+        
+        const validator: ImportValidator = new ImportValidator(projectConfiguration, datastore);
+
+        const documents: Array<Document> = [
+            { resource: { id: '2', category: 'T', scanCode: 'a' } }
+        ] as unknown as Array<Document>;
+
+        try {
+            await validator.assertQrCodesAreUnique(documents);
+            throw new Error('Test failure');
+        } catch (err) {
+            expect(err).toEqual([ImportErrors.DUPLICATE_QR_CODE_IN_PROJECT, 'a', '1'])
         }
     });
 });

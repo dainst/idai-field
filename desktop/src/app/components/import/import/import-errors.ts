@@ -8,6 +8,8 @@ export module ImportErrors {
     export const OPERATIONS_NOT_ALLOWED = 'ImportErrors.operationsNotAllowed';
     export const NO_PARENT_ASSIGNED = 'ImportErrors.noParentAssigned';
     export const DUPLICATE_IDENTIFIER = 'ImportErrors.duplicateIdentifier';
+    export const DUPLICATE_QR_CODE_IN_IMPORT_FILE = 'ImportErrors.duplicateQrCodeInImportFile';
+    export const DUPLICATE_QR_CODE_IN_PROJECT = 'ImportErrors.duplicateQrCodeInProject';
     export const PREVALIDATION_MISSING_RELATION_TARGET = 'ImportErrors.prevalidationMissingRelationTarget'; // by identifier
     export const MISSING_RELATION_TARGET = 'ImportErrors.missingRelationTarget';
     export const CATEGORY_NOT_ALLOWED = 'ImportErrors.categoryNotAllowed';

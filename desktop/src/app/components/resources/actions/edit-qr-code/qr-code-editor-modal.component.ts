@@ -281,14 +281,17 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
 
         this.saving = true;
 
+        const editedDocument: FieldDocument = Document.clone(this.document);
+
         if (newCode) {
-            this.document.resource.scanCode = newCode;
+            editedDocument.resource.scanCode = newCode;
         } else {
-            delete this.document.resource.scanCode;
+            delete editedDocument.resource.scanCode;
         }
 
         try {
-            await this.datastore.update(this.document);
+            await this.datastore.update(editedDocument);
+            await AngularUtility.refresh();
             if (newCode) this.renderCode();
             return true;
         } catch (errWithParams) {

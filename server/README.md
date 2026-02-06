@@ -4,7 +4,7 @@ Field Hub serves as a central synchronisation server for [Field Desktop](../desk
 
 ## Usage
 
-Please refer to the [wiki](https://github.com/dainst/idai-field/wiki/FieldHub).
+Please refer to the [wiki](https://github.com/dainst/idai-field/wiki/Field-Hub).
 
 ## Development
 

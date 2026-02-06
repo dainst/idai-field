@@ -2371,3 +2371,18 @@ Response:
 * *importedImages (integer)*: The number of successfully imported image files
 * *importedWorldFiles (integer)*: The number of successfully imported world files 
 * *messages* (string array): Messages that occurred during the import process
+
+
+### GET /fileExport/:format/:identifier
+
+This API endpoint can be used to retrieve image files and world files from the project currently opened in the application.
+
+Parameters:
+* *format*: Specifies whether the image file itself or the associated georeferencing information should be exported. Possible values: *image* (export of the image file), *worldFile* (export of the georeference data in world file format)
+* *identifier*: The identifier of the image resource whose data is to be retrieved
+
+The format of the returned data depends on the corresponding file format. One of the following MIME types is set in the "Content-Type" header:
+* *image/jpeg*: Image in JPG format
+* *image/png*: Image in PNG format
+* *image/tiff*: Image in TIFF format
+* *text/plain*: World file

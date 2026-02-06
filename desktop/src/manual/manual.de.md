@@ -2381,3 +2381,18 @@ Rückgabe:
 * *importedImages (Integer)*: Die Anzahl der erfolgreich importierten Bilddateien
 * *importedWorldFiles (Integer)*: Die Anzahl der erfolgreich importierten World-Files
 * *messages* (String-Array): Meldungen, die während des Importvorgangs aufgetreten sind
+
+
+### GET /fileExport/:format/:identifier
+
+Über diesen API-Endpunkt können Bilddateien und World-Files aus dem aktuell in der Anwendung geöffneten Projekt abgerufen werden.
+
+Parameter:
+* *format*: Gibt an, ob die Bilddatei selbst oder die dazugehörigen Georeferenzierungsinformationen exportiert werden sollen. Mögliche Werte: *image* (Export der Bilddatei), *worldFile* (Export der Georeferenzierungsdaten im World-File-Format)
+* *identifier*: Der Bezeichner der Bildressource, deren Daten abgerufen werden sollen
+
+Das Format der zurückgelieferten Daten richtet sich nach dem entsprechenden Dateiformat. Gesetzt wird jeweils einer der folgenden MIME-Types im Header "Content-Type":
+* *image/jpeg*: Bild im JPG-Format
+* *image/png*: Bild im PNG-Format
+* *image/tiff*: Bild im TIFF-Format
+* *text/plain*: World File

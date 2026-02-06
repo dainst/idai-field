@@ -2268,6 +2268,15 @@ The identifier of the resource is also used by one or more other resources. Ther
 #### Possible solutions
 * Button *Edit*: Open the resource editor to enter a new identifier.
 
+### Ambiguous QR code
+The QR code set for the resource is also used by one or more other resources. Therefore, the affected resources cannot be uniquely identified by their QR code.
+
+#### Possible causes
+* The QR code was linked to different resources on different computers without an existing synchronization connection; the data was then synchronized at a later point in time.
+
+#### Possible solutions
+* Button *Edit QR code*: Open the QR code editor to delete the QR code and, if necessary, link or generate a new QR code.
+
 ### Resource limit exceeded
 There are more resources of a particular category than the resource limit configured for this category allows.
 

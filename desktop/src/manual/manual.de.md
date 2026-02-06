@@ -2276,6 +2276,15 @@ Der Bezeichner der Ressource wird auch von einer oder mehreren anderen Ressource
 #### Mögliche Lösungen
 * Button *Bearbeiten*: Öffnen Sie den Ressourceneditor, um einen neuen Bezeichner einzutragen.
 
+### Uneindeutiger QR-Code
+Der für die Ressource gesetzte QR-Code wird auch von einer oder mehreren anderen Ressourcen verwendet. Die betroffenen Ressourcen können daher nicht eindeutig über ihren QR-Code identifiziert werden.
+
+#### Mögliche Ursachen
+* Der QR-Code wurde auf verschiedenen Rechnern ohne bestehende Synchronisationsverbindung mit unterschiedlichen Ressourcen verknüpft; erst zu einem späteren Zeitpunkt wurden die Daten synchronisiert.
+
+#### Mögliche Lösungen
+* Button *QR-Code bearbeiten*: Öffnen Sie den QR-Code-Editor, um den QR-Code zu löschen und gegebenenfalls einen anderen  QR-Code zu verknüpfen bzw. neu zu erzeugen.
+
 ### Ressourcenlimit überschritten
 Es existieren mehr Ressourcen einer Kategorie, als das für diese Kategorie konfigurierte Ressourcenlimit erlaubt.
 

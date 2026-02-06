@@ -1,4 +1,4 @@
-import { Locale, de, enUS, it, pt, tr, uk } from 'date-fns/locale'
+import { Locale, de, enUS, es, it, pt, tr, uk } from 'date-fns/locale'
 import { formatInTimeZone } from 'date-fns-tz';
 
 
@@ -36,6 +36,8 @@ function getLocaleObject(locale: string): Locale {
     switch (locale) {
         case 'de':
             return de;
+        case 'es':
+            return es;
         case 'it':
             return it;
         case 'pt':

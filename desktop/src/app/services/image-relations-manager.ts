@@ -4,6 +4,7 @@ import { Document, Datastore, FieldDocument, ImageDocument, Relation, ProjectCon
     ON_RESOURCE_ID, Resource, toResourceId, RelationsManager, Named, Hierarchy, ImageStore } from 'idai-field-core';
 import DEPICTS = Relation.Image.DEPICTS;
 import ISDEPICTEDIN = Relation.Image.ISDEPICTEDIN;
+import ISMAPLAYEROF = Relation.Image.ISMAPLAYEROF;
 
 
 export namespace ImageRelationsManagerErrors {
@@ -35,8 +36,8 @@ export class ImageRelationsManager {
         const result = (await this.datastore.getMultiple(idsOfRelatedDocuments));
 
         return onlyExclusivelyRelated
-            ? result.filter(imageDocument => {
-                return subtract(documentsIds)(imageDocument.resource.relations[DEPICTS] ?? []).length === 0;
+            ? result.filter((imageDocument: ImageDocument) => {
+                return subtract(documentsIds)(this.getImageRelationTargetIds(imageDocument) ?? []).length === 0;
             })
             : result;
     }
@@ -61,17 +62,18 @@ export class ImageRelationsManager {
         if (this.imagestore.getAbsoluteRootPath() === undefined) {
             throw [ImageRelationsManagerErrors.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
         }
-        const [imageDocuments, nonImageDocuments] = separate(documents,
-                document => this.projectConfiguration.getImageCategories().map(Named.toName).includes(document.resource.category));
+        const [imageDocuments, nonImageDocuments] = separate(
+            documents,
+            document => this.projectConfiguration.getImageCategories()
+                .map(Named.toName)
+                .includes(document.resource.category)
+        );
         await this.removeImages(imageDocuments as any);
 
         const documentsToBeDeleted = await Hierarchy.getWithDescendants(this.datastore.find, nonImageDocuments);
         for (const d of documentsToBeDeleted) await this.relationsManager.remove(d);
         const imagesToBeDeleted = set(ON_RESOURCE_ID, await this.getLeftovers(documentsToBeDeleted));
-        for (let image of imagesToBeDeleted) {
-            await this.imagestore.remove(image.resource.id);
-            await this.datastore.remove(image);
-        }
+        await this.removeImages(imagesToBeDeleted);
     }
 
 
@@ -157,5 +159,16 @@ export class ImageRelationsManager {
             }
             await this.relationsManager.remove(imageDocument);
         }
+    }
+
+
+    private getImageRelationTargetIds(imageDocument: ImageDocument): string[] {
+
+        const relations: Resource.Relations = imageDocument.resource.relations;
+        const depictsTargetIds: string[] = relations[DEPICTS] ?? [];
+
+        return relations[ISMAPLAYEROF]
+            ? depictsTargetIds.concat(relations[ISMAPLAYEROF])
+            : depictsTargetIds;
     }
 }

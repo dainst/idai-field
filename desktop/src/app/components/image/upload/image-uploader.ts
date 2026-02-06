@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { isArray } from 'tsfun';
 import { Document, Datastore, NewImageDocument, ProjectConfiguration, RelationsManager, 
-    ImageStore, ImageGeoreference, ImageDocument, CategoryForm, formatDate } from 'idai-field-core';
+    ImageStore, ImageGeoreference, ImageDocument, CategoryForm, formatDate, Field,
+    DateConfiguration } from 'idai-field-core';
 import { readWldFile } from '../georeference/wld-import';
 import { ExtensionUtil } from '../../../util/extension-util';
 import { MenuContext } from '../../../services/menu-context';
@@ -114,8 +115,6 @@ export class ImageUploader {
 
     private async selectMetadata(fileCount: number,
                                  depictsRelationTarget?: Document): Promise<ImageMetadata|undefined> {
-
-        this.projectConfiguration.getCategory('Image');
 
         const menuContext: MenuContext = this.menuService.getContext();
         this.menuService.setContext(MenuContext.MODAL);
@@ -308,12 +307,21 @@ export class ImageUploader {
 
         const category: CategoryForm = this.projectConfiguration.getCategory(extendedMetadata.category);
 
-        if (CategoryForm.getField(category, 'date') && extendedMetadata.date) {
-            document.resource.date = formatDate(
-                extendedMetadata.date, undefined, getSystemTimezone(), 'date'
-            );
+        const dateField: Field = CategoryForm.getField(category, 'date');
+        const draughtsmenField: Field = CategoryForm.getField(category, 'draughtsmen');
+
+        if (dateField && extendedMetadata.date) {
+            document.resource.date = {
+                value: formatDate(
+                    extendedMetadata.date,
+                    undefined,
+                    getSystemTimezone(),
+                    dateField.dateConfiguration.dataType === DateConfiguration.DataType.DATE ? 'date' : 'shortTime'
+                ),
+                isRange: false
+            };
         }
-        if (CategoryForm.getField(category, 'draughtsmen') && extendedMetadata.draughtsmen?.length) {
+        if (draughtsmenField && extendedMetadata.draughtsmen?.length) {
             document.resource.draughtsmen = extendedMetadata.draughtsmen;
         }
     }

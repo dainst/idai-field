@@ -1,7 +1,7 @@
 {
   "name": "idai-field-client",
   "description": "Field Desktop",
-  "version": "3.7.0",
+  "version": "3.6.3",
   "main": "electron/main.js",
   "license": "Apache-2.0",
   "author": "German Archaeological Institute / Head Office of the GBV Common Library Network",
@@ -193,7 +193,7 @@
     "@types/showdown": "1.7.5",
     "ajv": "^8.16.0",
     "cross-var": "^1.1.0",
-    "electron": "39.2.1",
+    "electron": "39.2.6",
     "electron-builder": "26.0.18",
     "file-api": "0.10.4",
     "file-url": "2.0.2",

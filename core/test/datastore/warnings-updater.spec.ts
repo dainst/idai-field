@@ -168,7 +168,7 @@ describe('WarningsUpdater', () => {
     });
 
     
-    it('set non-unique identifier warnings', async done => {
+    it('set non-unique field warnings', async done => {
 
         const documents = [
             createDocument('1'),
@@ -181,8 +181,8 @@ describe('WarningsUpdater', () => {
         const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
         mockDatastore.find.and.returnValue(Promise.resolve({ documents: [documents[1]] }));
 
-        await WarningsUpdater.updateNonUniqueIdentifierWarning(
-            documents[0], mockIndexFacade, mockDatastore, undefined, true
+        await WarningsUpdater.updateNonUniqueFieldWarning(
+            documents[0], mockIndexFacade, 'identifier', 'nonUniqueIdentifier', mockDatastore, undefined, true
         );
 
         expect(documents[0].warnings?.nonUniqueIdentifier).toBe(true);
@@ -196,7 +196,7 @@ describe('WarningsUpdater', () => {
     });
 
 
-    it('remove non-unique identifier warnings', async done => {
+    it('remove non-unique field warnings', async done => {
 
         const documents = [
             createDocument('1'),
@@ -214,8 +214,8 @@ describe('WarningsUpdater', () => {
         const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
         mockDatastore.find.and.returnValue(Promise.resolve({ documents: [documents[1]] }));
 
-        await WarningsUpdater.updateNonUniqueIdentifierWarning(
-            documents[0], mockIndexFacade, mockDatastore, 'previousIdentifier', true
+        await WarningsUpdater.updateNonUniqueFieldWarning(
+            documents[0], mockIndexFacade, 'identifier', 'nonUniqueIdentifier', mockDatastore, 'previousIdentifier', true
         );
 
         expect(documents[0].warnings).toBeUndefined();

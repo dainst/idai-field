@@ -22,6 +22,51 @@ describe('subsystem/image-relations-manager', () => {
     });
 
 
+    test('get linked images', async () => {
+
+        const documentsLookup = await helpers.createDocuments(
+            [
+                ['p1', 'Place'],
+                ['p2', 'Place'],
+                ['i1', 'Image', ['p1']],
+                ['i2', 'Image', ['p1', 'p2']]
+            ]
+        );
+
+        let result = await app.imageRelationsManager.getLinkedImages([documentsLookup.p1]);
+        expect(result.map(document => document.resource.id)).toEqual(['i1', 'i2']);
+
+        result = await app.imageRelationsManager.getLinkedImages([documentsLookup.p2]);
+        expect(result.map(document => document.resource.id)).toEqual(['i2']);
+
+        result = await app.imageRelationsManager.getLinkedImages([documentsLookup.p1, documentsLookup.p2]);
+        expect(result.map(document => document.resource.id)).toEqual(['i1', 'i2']);
+    });
+
+
+    test('get exclusively linked images', async () => {
+
+        const documentsLookup = await helpers.createDocuments(
+            [
+                ['p1', 'Place'],
+                ['p2', 'Place'],
+                ['i1', 'Image', ['p1']],
+                ['i2', 'Image', ['p1', 'p2']]
+            ]
+        );
+
+        let result = await app.imageRelationsManager.getLinkedImages([documentsLookup.p1], true);
+        expect(result.map(document => document.resource.id)).toEqual(['i1']);
+
+        documentsLookup.i1.resource.relations.isMapLayerOf = ['project'];
+        const projectDocument = await app.datastore.get('project');
+        projectDocument.resource.relations.hasMapLayer = ['i1'];
+
+        result = await app.imageRelationsManager.getLinkedImages([documentsLookup.p1], true);
+        expect(result.map(document => document.resource.id)).toEqual([]);
+    });
+
+
     test('remove TypeCatalog with images', async () => {
 
         const documentsLookup = await helpers.createDocuments(

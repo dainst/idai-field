@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { flatten, subtract, set, to } from 'tsfun';
 import { FieldDocument, ImageDocument, Relation, InPlace, Datastore, Document,
-    RelationsManager } from 'idai-field-core';
+    RelationsManager, Resource } from 'idai-field-core';
 import { ViewFacade } from '../../../../../components/resources/view/view-facade';
 
 
@@ -175,10 +175,10 @@ export class LayerManager {
 
         if (!this.layerGroupInEditing) return;
 
-        this.layerGroupInEditing.document.resource.relations[Relation.Image.HASMAPLAYER]
-            = this.layerGroupInEditing.document.resource.relations[Relation.Image.HASMAPLAYER].filter(id => {
-                return id !== layerToRemove.resource.id;
-            });
+        const relations: Resource.Relations = this.layerGroupInEditing.document.resource.relations;
+        for (let relationName of [Relation.Image.HASMAPLAYER, Relation.Image.HASDEFAULTMAPLAYER]) {
+            relations[relationName] = relations[relationName].filter(id => id !== layerToRemove.resource.id);
+        }
         this.layerGroupInEditing.layers = this.layerGroupInEditing.layers.filter(layer => layer !== layerToRemove);
 
         if (this.isActiveLayer(layerToRemove.resource.id)) {

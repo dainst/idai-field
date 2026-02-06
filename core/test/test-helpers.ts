@@ -125,20 +125,24 @@ export function createDocuments(documents: NiceDocs, project?: string) {
     const documentsLookup: Lookup<FieldDocument> = {}
     const relationsLookup = {};
 
-    for (const [id, type, _] of documents) {
-        const d = doc('', 'identifier' + id, type, id) as FieldDocument;
+    for (const [id, category, _] of documents) {
+        const d = doc('', 'identifier' + id, category, id) as FieldDocument;
         if (project) d.project = project;
-        if (type !== 'Image') d.resource.relations = { isRecordedIn: [] };
+        if (category !== 'Image') d.resource.relations = { isRecordedIn: [] };
         relationsLookup[id] = d.resource.relations;
         documentsLookup[id] = d;
     }
-    for (const [id, type, targets] of documents) {
+    for (const [id, category, targets] of documents) {
         if (targets) {
-            if (type === 'Image') relationsLookup[id][Relation.Image.DEPICTS] = targets;
+            if (category === 'Image') {
+                relationsLookup[id][Relation.Image.DEPICTS]
+                    = (relationsLookup[id][Relation.Image.DEPICTS] ?? []).concat(targets);
+            }
             
             for (const target of targets) {
-                relationsLookup[target][type === 'Image' ? Relation.Image.ISDEPICTEDIN : Relation.Hierarchy.LIESWITHIN] = [id];
-                if (type === 'Trench') {
+                const relation = category === 'Image' ? Relation.Image.ISDEPICTEDIN : Relation.Hierarchy.LIESWITHIN;
+                relationsLookup[target][relation] = (relationsLookup[target][relation] ?? []).concat([id]);
+                if (category === 'Trench') {
                     relationsLookup[target][Relation.Hierarchy.RECORDEDIN] = [id];
                     delete relationsLookup[target][Relation.Hierarchy.LIESWITHIN];
                 }

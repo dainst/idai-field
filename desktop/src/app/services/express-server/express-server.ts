@@ -117,7 +117,9 @@ export class ExpressServer {
 
             try {
                 if (req.query.type === undefined) {
-                    res.status(400).send({ reason: `Please provide a 'type', possible values: ${ImageVariant}`});
+                    res.status(400).send({
+                        reason: `Please provide a 'type', possible values: ${Object.values(ImageVariant).join(', ')}`
+                    });
                 } else if (Object.values(ImageVariant).includes(req.query.type)) {
                     const data = await self.imagestore.getData(req.params.uuid, req.query.type, req.params.project);
                     res.header('Content-Type', 'image/*').status(200).send(
@@ -140,7 +142,9 @@ export class ExpressServer {
 
             try {
                 if (req.query.type === undefined) {
-                    res.status(400).send({ reason: `Please provide a type, possible values: ${ImageVariant}`});
+                    res.status(400).send({
+                        reason: `Please provide a type, possible values: ${Object.values(ImageVariant).join(', ')}`
+                    });
                 }
                 else if (Object.values(ImageVariant).includes(req.query.type)) {
                     if (req.query.type === ImageVariant.ORIGINAL && !this.allowLargeFileUploads) {

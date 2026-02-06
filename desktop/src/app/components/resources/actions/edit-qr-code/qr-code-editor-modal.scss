@@ -36,6 +36,7 @@
     .badge {
       position: relative;
       top: 42px;
+      min-width: 100px;
       max-width: 270px;
       padding: 3px 7px;
       overflow: hidden;

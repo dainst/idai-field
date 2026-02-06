@@ -1406,6 +1406,30 @@ To link images to the project or set them up as map layers at project level, ent
 </div>
 
 
+##### QR codes
+
+In the column *scanCode*, you can enter a string of characters that uniquely identifies the resource and is to be displayed as a QR code in the application. Usage of QR codes must first be enabled for the corresponding category in the configuration editor.
+
+*Example:*
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>scanCode</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>06ad7807-b363-4609-8db8-e33779faecf7</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
 ##### Datings
 
 Fields of the input type "Dating" are list fields, each of which can contain several dating entries. A dating consists of the following subfields, for which a separate column is created for each dating:
@@ -1817,6 +1841,19 @@ To link images to the project or set them up as map layers at project level, add
       "identifier": "A",
       "category": "Feature",
       "relations": { "isAbove": ["B", "C", "D"], "isChildOf": ["E"], "isDepictedIn": ["Image1.png", "Image2.png"] }
+    }
+
+
+##### QR codes
+
+In the field *scanCode*, you can enter a string of characters that uniquely identifies the resource and is to be displayed as a QR code in the application. Usage of QR codes must first be enabled for the corresponding category in the configuration editor.
+
+*Example:*
+
+    {
+      "identifier": "A",
+      "category": "Find",
+      "scanCode": "06ad7807-b363-4609-8db8-e33779faecf7"
     }
 
 
@@ -2267,6 +2304,15 @@ The identifier of the resource is also used by one or more other resources. Ther
 
 #### Possible solutions
 * Button *Edit*: Open the resource editor to enter a new identifier.
+
+### Ambiguous QR code
+The QR code set for the resource is also used by one or more other resources. Therefore, the affected resources cannot be uniquely identified by their QR code.
+
+#### Possible causes
+* The QR code was linked to different resources on different computers without an existing synchronization connection; the data was then synchronized at a later point in time.
+
+#### Possible solutions
+* Button *Edit QR code*: Open the QR code editor to delete the QR code and, if necessary, link or generate a new QR code.
 
 ### Resource limit exceeded
 There are more resources of a particular category than the resource limit configured for this category allows.

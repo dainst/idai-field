@@ -310,6 +310,14 @@
                                   i18n="@@resources.contextMenu.edit">Bearbeiten</span>
                         </button>
                     </span>
+                    <span *ngIf="section.type === 'nonUniqueQrCode'">
+                        <button class="btn btn-primary edit-qr-code-button"
+                                (click)="openQrCodeEditorModal()">
+                            <span class="mdi mdi-qrcode"></span>
+                            <span class="button-label"
+                                  i18n="@@resources.contextMenu.edit">QR-Code bearbeiten</span>
+                        </button>
+                    </span>
                     <span *ngIf="section.type === 'invalidFields' && isConvertible(section)">
                         <button class="btn btn-primary convert-field-data-button"
                                 (click)="openConvertFieldDataModal(section)">

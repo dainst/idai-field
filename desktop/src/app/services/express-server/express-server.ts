@@ -12,6 +12,7 @@ import { AngularUtility } from '../../angular/angular-utility';
 import { importFiles } from './endpoints/importFiles';
 import { ImageUploader } from '../../components/image/upload/image-uploader';
 import { UploadStatus } from '../../components/image/upload/upload-status';
+import { exportFile } from './endpoints/exportFile';
 
 const express = window.require('express');
 const remote = window.require('@electron/remote');
@@ -131,9 +132,7 @@ export class ExpressServer {
                     });
                 } else if (Object.values(ImageVariant).includes(req.query.type)) {
                     const data = await self.imagestore.getData(req.params.uuid, req.query.type, req.params.project);
-                    res.header('Content-Type', 'image/*').status(200).send(
-                        data
-                    );
+                    res.header('Content-Type', 'image/*').status(200).send(data);
                 } else {
                     res.status(400).send({ reason: 'Invalid parameter for type: "' + req.query.type + '"' });
                 }
@@ -212,6 +211,12 @@ export class ExpressServer {
                 this.idGenerator, this.settingsProvider.getSettings(), this.messagesDictionary
             );
             ObserverUtil.notify(this.apiObservers, 'none');
+        });
+
+        app.get('/fileExport/:format/:identifier', async (request: any, response: any) => {
+
+            await exportFile(request, response, this.datastore, this.imagestore, this.settingsProvider.getSettings(),
+                this.messagesDictionary);
         });
 
         app.post('/importFiles', this.jsonBodyParser, async (request: any, response: any) => {

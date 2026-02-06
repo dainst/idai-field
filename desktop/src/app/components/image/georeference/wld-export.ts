@@ -23,19 +23,7 @@ function getWldFileContent(imageDocument: ImageDocument): string {
         throw Error('No georeference present in the document');
     }
 
-    let lines: number[] = [];
-    const georef = imageDocument.resource.georeference;
-    const width = imageDocument.resource.width - 1;
-    const height = imageDocument.resource.height - 1;
-
-    lines[0] = (georef.topRightCoordinates[1] - georef.topLeftCoordinates[1]) / width;
-    lines[1] = (georef.topRightCoordinates[0] - georef.topLeftCoordinates[0]) / height;
-    lines[2] = (georef.bottomLeftCoordinates[1] - georef.topLeftCoordinates[1]) / width;
-    lines[3] = (georef.bottomLeftCoordinates[0] - georef.topLeftCoordinates[0]) / height;
-    lines[4] = georef.topLeftCoordinates[1];
-    lines[5] = georef.topLeftCoordinates[0];
-
-    return lines.map((x: number) => x).join('\n');
+    return ImageDocument.getWldFileContent(imageDocument);
 }
 
 

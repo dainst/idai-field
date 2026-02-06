@@ -1406,6 +1406,30 @@ To link images to the project or set them up as map layers at project level, ent
 </div>
 
 
+##### QR codes
+
+In the column *scanCode*, you can enter a string of characters that uniquely identifies the resource and is to be displayed as a QR code in the application. Usage of QR codes must first be enabled for the corresponding category in the configuration editor.
+
+*Example:*
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>scanCode</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>06ad7807-b363-4609-8db8-e33779faecf7</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
 ##### Datings
 
 Fields of the input type "Dating" are list fields, each of which can contain several dating entries. A dating consists of the following subfields, for which a separate column is created for each dating:
@@ -1817,6 +1841,19 @@ To link images to the project or set them up as map layers at project level, add
       "identifier": "A",
       "category": "Feature",
       "relations": { "isAbove": ["B", "C", "D"], "isChildOf": ["E"], "isDepictedIn": ["Image1.png", "Image2.png"] }
+    }
+
+
+##### QR codes
+
+In the field *scanCode*, you can enter a string of characters that uniquely identifies the resource and is to be displayed as a QR code in the application. Usage of QR codes must first be enabled for the corresponding category in the configuration editor.
+
+*Example:*
+
+    {
+      "identifier": "A",
+      "category": "Find",
+      "scanCode": "06ad7807-b363-4609-8db8-e33779faecf7"
     }
 
 

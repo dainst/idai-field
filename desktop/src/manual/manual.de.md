@@ -1423,6 +1423,30 @@ Um Bilder mit dem Projekt zu verknüpfen oder auf Projektebene als Kartenhinterg
 </div>
 
 
+##### QR-Codes
+
+In der Spalte *scanCode* kann eine Zeichenkette eingetragen werden, mit der die Ressource eindeutig identifiziert werden kann und die als QR-Code in der Anwendung angezeigt werden soll. Die Verwendung von QR-Codes muss für die entsprechende Kategorie zuvor im Konfigurationseditor aktiviert worden sein.
+
+*Beispiel:*
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>scanCode</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>06ad7807-b363-4609-8db8-e33779faecf7</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
 ##### Datierungsangaben
 
 Felder des Eingabetyps "Datierungsangabe" sind Listenfelder, die jeweils mehrere Datierungen enthalten können. Eine Datierung besteht aus folgenden Unterfeldern, für die jeweils pro Datierung eine eigene Spalte angelegt wird:
@@ -1848,6 +1872,18 @@ Geometrien können gemäß der GeoJSON-Spezifikation angegeben werden. Im Feld *
       }
     }
 
+
+##### QR-Code
+
+Im Feld *scanCode* kann eine Zeichenkette eingetragen werden, mit der die Ressource eindeutig identifiziert werden kann und die als QR-Code in der Anwendung angezeigt werden soll. Die Verwendung von QR-Codes muss für die entsprechende Kategorie zuvor im Konfigurationseditor aktiviert worden sein.
+
+*Beispiel:*
+
+    {
+      "identifier": "A",
+      "category": "Find",
+      "scanCode": "06ad7807-b363-4609-8db8-e33779faecf7"
+    }
 
 ##### Wertelistenfelder
 

@@ -22,7 +22,7 @@ const bodyParser = window.require('body-parser');
 let PouchDB = window.require('pouchdb-browser');
 
 
-export type ApiState = 'none'|'import'|'importFiles'|'export';
+export type ApiState = 'none'|'import'|'fileImport'|'export';
 
 
 @Injectable()
@@ -219,9 +219,9 @@ export class ExpressServer {
                 this.messagesDictionary);
         });
 
-        app.post('/importFiles', this.jsonBodyParser, async (request: any, response: any) => {
+        app.post('/fileImport', this.jsonBodyParser, async (request: any, response: any) => {
 
-            ObserverUtil.notify(this.apiObservers, 'importFiles');
+            ObserverUtil.notify(this.apiObservers, 'fileImport');
             await AngularUtility.refresh();
             await importFiles(request, response, this.projectConfiguration, this.imageUploader, this.uploadStatus,
                 this.messagesDictionary);

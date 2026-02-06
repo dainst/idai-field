@@ -2358,7 +2358,7 @@ Query parameters:
 * *formatted (boolean)*: Sets indentations for formatted output of the exported data. Only available for GeoJSON export. (Default value: true)
 
 
-### POST /importFiles
+### POST /fileImport
 
 This API endpoint can be used to import image files and world files into the project currently opened in the application by passing an import request in JSON format. The functionality corresponds to importing files via the menu "Tools" ➝ "Image Management". Detailed explanations of the import process can be found in the chapter "Images".
 

@@ -2365,7 +2365,7 @@ Query-Parameter:
 * *formatted (Boolean)*: Setzt Einrückungen zur formatierten Ausgabe der exportierten Daten. Nur verfügbar beim GeoJSON-Export. (Standardwert: true)
 
 
-### POST /importFiles
+### POST /fileImport
 
 Über diesen API-Endpunkt können Bilddateien und World-Files in das aktuell in der Anwendung geöffnete Projekt importiert werden, indem eine Importanfrage im JSON-Format übergeben wird. Die Funktionalität entspricht dabei dem Import von Dateien über das Menü "Werkzeuge" ➝ "Bilderverwaltung".
 Detaillierte Erklärungen zum Importvorgang finden Sie im Kapitel "Bilder".

@@ -10175,7 +10175,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.nonUniqueQrCode" datatype="html">
         <source>Uneindeutiger <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>QR-Code<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></source>
-        <target state="needs-translation">Uneindeutiger <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>QR-Code<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></target>
+        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Código QR<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ambíguo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">106,108</context>
@@ -10183,7 +10183,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.nonUniqueQrCode" datatype="html">
         <source>Der QR-Code dieser Ressource wird mehrfach verwendet und kann daher nicht zum eindeutigen Zugriff auf die Ressource verwendet werden.</source>
-        <target state="needs-translation">Der QR-Code dieser Ressource wird mehrfach verwendet und kann daher nicht zum eindeutigen Zugriff auf die Ressource verwendet werden.</target>
+        <target state="translated">O código QR deste recurso está a ser utilisado multiplas vezes e por isso não pode ser utilisado para um acesso único para este recurso.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">224,227</context>
@@ -10191,7 +10191,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.editQrCode" datatype="html">
         <source>QR-Code bearbeiten</source>
-        <target state="needs-translation">QR-Code bearbeiten</target>
+        <target state="translated">Editar código QR</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">318</context>
@@ -10199,7 +10199,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.duplicateQrCodeInProject" datatype="html">
         <source>Der QR-Code '[0]' ist bereits der Ressource '[1]' zugeordnet.</source>
-        <target state="needs-translation">Der QR-Code '[0]' ist bereits der Ressource '[1]' zugeordnet.</target>
+        <target state="translated">O código QR '[0]' já foi atribuido ao recurso '[1]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">749</context>
@@ -10207,7 +10207,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.duplicateQrCodeInImportFile" datatype="html">
         <source>Der QR-Code '[0]' ist in mehr als einem Importdatensatz eingetragen.</source>
-        <target state="needs-translation">Der QR-Code '[0]' ist in mehr als einem Importdatensatz eingetragen.</target>
+        <target state="translated">O código QR '[0]' foi registado em mais que um registo a importar.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">745</context>

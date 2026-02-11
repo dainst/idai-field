@@ -5494,7 +5494,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.parser.csv.notanumber" datatype="html">
         <source>CSV fehlerhaft: Wert "[0]" in Spalte "[1]" ist keine Zahl.</source>
-        <target state="translated">Erroneous CSV: Value "[0]" in column "[1]" is not a boolean.</target>
+        <target state="translated">Erroneous CSV: Value "[0]" in column "[1]" is not a number.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -9397,8 +9397,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.file.single" datatype="html">
-        <source> (die <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>aktuellste<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Datei) </source>
-        <target state="translated"> (the <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>most recent<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> file) </target>
+        <source>(die <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>aktuellste<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Datei)</source>
+        <target state="translated">(the <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>most recent<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> file)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">281,283</context>
@@ -9801,8 +9801,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="settings.backups.keep.info.file.multiple" datatype="html">
-        <source> (die <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt; aktue"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="aktuellsten D"/> aktuellsten Dateien) </source>
-        <target state="translated"> (the <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt; aktue"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="aktuellsten D"/> most recent files) </target>
+        <source>(die <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt; aktue"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="aktuellsten D"/> aktuellsten Dateien)</source>
+        <target state="translated">(the <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/b&gt; aktue"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="aktuellsten D"/> most recent files)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">285,287</context>
@@ -10206,6 +10206,46 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/export/image-export-modal.html</context>
           <context context-type="linenumber">38,40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.sectionTitle.nonUniqueQrCode" datatype="html">
+        <source>Uneindeutiger <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>QR-Code<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></source>
+        <target state="translated">Ambiguous <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>QR code<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">106,108</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.info.nonUniqueQrCode" datatype="html">
+        <source>Der QR-Code dieser Ressource wird mehrfach verwendet und kann daher nicht zum eindeutigen Zugriff auf die Ressource verwendet werden.</source>
+        <target state="translated">The QR code for this resource is used multiple times and therefore cannot be used to uniquely access the resource.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">224,227</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.editQrCode" datatype="html">
+        <source>QR-Code bearbeiten</source>
+        <target state="translated">Edit QR code</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">318</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.validation.error.duplicateQrCodeInImportFile" datatype="html">
+        <source>Der QR-Code '[0]' ist in mehr als einem Importdatensatz eingetragen.</source>
+        <target state="translated">The QR code '[0]' is entered in more than one import record.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">745</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.validation.error.duplicateQrCodeInProject" datatype="html">
+        <source>Der QR-Code '[0]' ist bereits der Ressource '[1]' zugeordnet.</source>
+        <target state="translated">The QR code '[0]' is already assigned to the resource '[1]'.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">749</context>
         </context-group>
       </trans-unit>
     </body>

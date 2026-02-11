@@ -278,11 +278,9 @@
 
 <ng-template #keepBackupFilesInfo let-amount="amount">
     <span *ngIf="amount === 1"
-            i18n="@@settings.backups.keep.info.file.single">
-            (die <b>aktuellste</b> Datei)
-    </span>
+          class="most-recent-files-info"
+          i18n="@@settings.backups.keep.info.file.single">(die <b>aktuellste</b> Datei)</span>
     <span *ngIf="amount > 1"
-            i18n="@@settings.backups.keep.info.file.multiple">
-        (die <b>{{amount}}</b> aktuellsten Dateien)
-    </span>
+          class="most-recent-files-info"
+          i18n="@@settings.backups.keep.info.file.multiple">(die <b>{{amount}}</b> aktuellsten Dateien)</span>
 </ng-template>

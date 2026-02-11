@@ -14,6 +14,9 @@ defmodule FieldHubWeb.Live.ProjectShow do
 
   require Logger
 
+  @default_sort_by :time
+  @default_sort_direction :desc
+
   def mount(%{"project" => project} = _params, %{"user_token" => user_token} = _session, socket) do
     # TODO: In newer Phoenix version use an `on_mount` plug. This check prevents direct unauthorized
     # access via websocket. In the normal application flow this will be unnesseary
@@ -47,6 +50,8 @@ defmodule FieldHubWeb.Live.ProjectShow do
           |> assign(:n_changes_to_display, 100)
           |> assign(:page_title, project)
           |> read_project_doc()
+          |> assign(:sort_by, @default_sort_by)
+          |> assign(:sort_direction, @default_sort_direction)
         }
 
       _ ->
@@ -74,11 +79,22 @@ defmodule FieldHubWeb.Live.ProjectShow do
     # Reschedule the task to be run again in 10 seconds, see above.
     Process.send_after(self(), :update_overview, 10000)
 
+    sorted_changes =
+      sort_changes(
+        Map.get(stats, :database, %{}) |> Map.get(:last_n_changes, []),
+        socket.assigns.sort_by,
+        socket.assigns.sort_direction
+      )
+
+    sorted_stats =
+      Map.update!(stats, :database, fn db ->
+        Map.put(db, :last_n_changes, sorted_changes)
+      end)
+
     {
       :noreply,
       socket
-      |> read_project_doc()
-      |> assign(:stats, stats)
+      |> assign(:stats, sorted_stats)
     }
   end
 
@@ -95,6 +111,41 @@ defmodule FieldHubWeb.Live.ProjectShow do
       |> assign(:issues_evaluating?, false)
       |> assign(:issue_count, issue_count)
     }
+  end
+
+  def handle_event("sort", %{"field" => field}, socket) do
+    field = String.to_atom(field)
+
+    case socket.assigns.stats do
+      :loading ->
+        {:noreply, socket}
+
+      stats when is_map(stats) ->
+        changes =
+          stats
+          |> Map.get(:database, %{})
+          |> Map.get(:last_n_changes, [])
+
+        {sort_direction, sort_by} =
+          if socket.assigns.sort_by == field do
+            {toggle_direction(socket.assigns.sort_direction), field}
+          else
+            {:desc, field}
+          end
+
+        sorted_changes = sort_changes(changes, sort_by, sort_direction)
+
+        sorted_stats =
+          Map.update!(stats, :database, fn db ->
+            Map.put(db, :last_n_changes, sorted_changes)
+          end)
+
+        {:noreply,
+         socket
+         |> assign(:stats, sorted_stats)
+         |> assign(:sort_by, sort_by)
+         |> assign(:sort_direction, sort_direction)}
+    end
   end
 
   def handle_event(
@@ -324,6 +375,78 @@ defmodule FieldHubWeb.Live.ProjectShow do
 
       combined_names ->
         combined_names
+    end
+  end
+
+  defp toggle_direction(:desc), do: :asc
+
+  defp toggle_direction(:asc), do: :desc
+
+  defp sort_changes(changes, :resource, direction) do
+    Enum.sort_by(
+      changes,
+      fn change ->
+        change
+        |> Map.get("doc", %{})
+        |> Map.get("resource", %{})
+        |> Map.get("identifier", "")
+
+        # |> String.capitalize()
+      end,
+      direction
+    )
+  end
+
+  defp sort_changes(changes, :action, direction) do
+    Enum.sort_by(
+      changes,
+      fn change ->
+        change
+        |> Map.get("doc", %{})
+        |> Map.get("modified", [])
+      end,
+      direction
+    )
+  end
+
+  defp sort_changes(changes, :user, direction) do
+    Enum.sort_by(
+      changes,
+      fn change ->
+        {_type, _date, user} = CouchService.extract_most_recent_change_info(change)
+
+        user
+        |> String.capitalize()
+      end,
+      direction
+    )
+  end
+
+  defp sort_changes(changes, :time, direction) do
+    Enum.sort_by(
+      changes,
+      fn change ->
+        case CouchService.extract_most_recent_change_info(change) do
+          {_type, %DateTime{} = datetime, _user} ->
+            datetime
+            |> DateTime.to_unix()
+
+          _ ->
+            0
+        end
+      end,
+      direction
+    )
+  end
+
+  defp sort_indicator(current_sort, current_direction, column) do
+    if current_sort == column do
+      case current_direction do
+        :asc -> "\u2b61"
+        :desc -> "\u2b63"
+      end
+    else
+      "\u2b65"
     end
   end
 end

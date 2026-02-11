@@ -120,6 +120,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_VALIDATION_ERROR_INVALID_WORKFLOW_RELATION_TARGETS = 'M.Import.ValidationErrors.invalidWorkflowRelationTargets';
     public static IMPORT_VALIDATION_ERROR_MAX_CHARACTERS_EXCEEDED = 'M.Import.ValidationErrors.maxCharactersExceeded';
     public static IMPORT_VALIDATION_ERROR_RESOURCE_LIMIT_EXCEEDED = 'M.Import.ValidationErrors.resourceLimitExceeded';
+    public static IMPORT_VALIDATION_DUPLICATE_QR_CODE_IN_IMPORT_FILE = 'M.Import.ValidationErrors.duplicateQrCodeInImportFile';
+    public static IMPORT_VALIDATION_DUPLICATE_QR_CODE_IN_PROJECT = 'M.Import.ValidationErrors.duplicateQrCodeInProject';
 
     // Import Package - ImportErrors
     public static IMPORT_NO_OPERATION_ASSIGNABLE = 'M.Import.ImportErrors.noOperationAssignable';
@@ -737,6 +739,14 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_RESOURCE_LIMIT_EXCEEDED] = {
             content: $localize `:@@messages.import.validation.error.resourceLimitExceeded:In diesem Projekt dürfen maximal [1] Ressourcen der Kategorie \'[0]\' angelegt werden.`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_VALIDATION_DUPLICATE_QR_CODE_IN_IMPORT_FILE] = {
+            content: $localize `:@@messages.import.validation.error.duplicateQrCodeInImportFile:Der QR-Code \'[0]\' ist in mehr als einem Importdatensatz eingetragen.`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_VALIDATION_DUPLICATE_QR_CODE_IN_PROJECT] = {
+            content: $localize `:@@messages.import.validation.error.duplicateQrCodeInProject:Der QR-Code \'[0]\' ist bereits der Ressource \'[1]\' zugeordnet.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_ERROR_CATEGORY_NOT_ALLOWED] = {

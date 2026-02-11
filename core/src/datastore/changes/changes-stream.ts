@@ -82,6 +82,7 @@ export class ChangesStream {
 
         const previousVersion: Document|undefined = this.documentCache.get(document.resource.id);
         const previousIdentifier: string|undefined = previousVersion?.resource.identifier;
+        const previousScanCode: string|undefined = previousVersion?.resource.scanCode;
 
         if (previousVersion) {
             document = this.documentCache.reassign(document);
@@ -91,7 +92,7 @@ export class ChangesStream {
 
         await WarningsUpdater.updateIndexDependentWarnings(
             document, this.indexFacade, this.documentCache, this.projectConfiguration, this.datastore,
-            previousIdentifier, true
+            previousIdentifier, previousScanCode, true
         );
 
         ObserverUtil.notify(

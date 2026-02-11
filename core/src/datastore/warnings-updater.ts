@@ -9,7 +9,7 @@ import { ImageResource } from '../model/document/image-resource';
 import { RelationTargetWarnings, OutlierWarnings, Warnings } from '../model/document/warnings';
 import { IndexFacade } from '../index/index-facade';
 import { Datastore } from './datastore';
-import { Query, SortMode } from '../model/datastore/query';
+import { Constraints, Query, SortMode } from '../model/datastore/query';
 import { DocumentCache } from './document-cache';
 import { Tree } from '../tools/forest';
 import { FieldResource } from '../model/document/field-resource';
@@ -58,12 +58,15 @@ export module WarningsUpdater {
                                                        documentCache: DocumentCache,
                                                        projectConfiguration: ProjectConfiguration,
                                                        datastore?: Datastore, previousIdentifier?: string,
-                                                       updateAll: boolean = false) {
+                                                       previousScanCode?: string, updateAll: boolean = false) {
 
         const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
         if (!category || document.project) return;
 
-        await updateNonUniqueIdentifierWarning(document, indexFacade, datastore, previousIdentifier, updateAll);
+        await updateNonUniqueFieldWarning(document, indexFacade, 'identifier', 'nonUniqueIdentifier', datastore,
+            previousIdentifier, updateAll);
+        await updateNonUniqueFieldWarning(document, indexFacade, 'scanCode', 'nonUniqueQrCode', datastore,
+            previousScanCode, updateAll);
         await updateResourceLimitWarning(document, category, indexFacade, projectConfiguration, datastore, updateAll);
         await updateMissingRelationTargetWarning(document, indexFacade, documentCache, datastore, updateAll);
         await updateInvalidRelationTargetWarning(document, indexFacade, projectConfiguration, documentCache, datastore,
@@ -75,30 +78,33 @@ export module WarningsUpdater {
     }
 
 
-    export async function updateNonUniqueIdentifierWarning(document: Document, indexFacade: IndexFacade,
-                                                           datastore?: Datastore, previousIdentifier?: string,
-                                                           updateAll: boolean = false) {
+    export async function updateNonUniqueFieldWarning(document: Document, indexFacade: IndexFacade,
+                                                      fieldName: string, warningName: string, 
+                                                      datastore?: Datastore, previousFieldValue?: string,
+                                                      updateAll: boolean = false) {
 
-        if (indexFacade.getCount('identifier:match', document.resource.identifier) > 1) {
+        const fieldValue: string = document.resource[fieldName];
+
+        if (fieldValue && indexFacade.getCount(fieldName + ':match', fieldValue) > 1) {
             if (!document.warnings) document.warnings = Warnings.createDefault();
-            if (!document.warnings.nonUniqueIdentifier) {
-                document.warnings.nonUniqueIdentifier = true;
-                updateIndex(indexFacade, document, ['nonUniqueIdentifier:exist']);
+            if (!document.warnings[warningName]) {
+                document.warnings[warningName] = true;
+                updateIndex(indexFacade, document, [warningName + ':exist']);
                 if (updateAll) {
-                    await updateNonUniqueIdentifierWarnings(
-                        datastore, indexFacade, document.resource.identifier
+                    await updateNonUniqueFieldWarnings(
+                        datastore, indexFacade, fieldName, warningName, fieldValue
                     );
                 }
             }
-        } else if (document.warnings?.nonUniqueIdentifier) {
-            delete document.warnings.nonUniqueIdentifier;
+        } else if (document.warnings?.[warningName]) {
+            delete document.warnings[warningName];
             if (!Warnings.hasWarnings(document.warnings)) delete document.warnings;
-            updateIndex(indexFacade, document, ['nonUniqueIdentifier:exist']);
+            updateIndex(indexFacade, document, [warningName + ':exist']);
         }
-        
-        if (updateAll && previousIdentifier && previousIdentifier !== document.resource.identifier
-                && indexFacade.getCount('identifier:match', previousIdentifier) > 0) {
-            await updateNonUniqueIdentifierWarnings(datastore, indexFacade, previousIdentifier);
+
+        if (updateAll && previousFieldValue && previousFieldValue !== fieldValue
+                && indexFacade.getCount(fieldName + ':match', previousFieldValue) > 0) {
+            await updateNonUniqueFieldWarnings(datastore, indexFacade, fieldName, warningName, previousFieldValue);
         }
     }
 
@@ -362,16 +368,19 @@ export module WarningsUpdater {
     }
 
 
-    async function updateNonUniqueIdentifierWarnings(datastore: Datastore, indexFacade: IndexFacade,
-                                                     identifier: string) {
+    async function updateNonUniqueFieldWarnings(datastore: Datastore, indexFacade: IndexFacade, fieldName: string,
+                                                warningName: string, fieldValue: string) {
+
+        const constraints: Constraints = {};
+        constraints[fieldName + ':match'] = fieldValue;
 
         const documents: Array<Document> = (await datastore.find({
-            constraints: { 'identifier:match': identifier },
+            constraints,
             sort: { mode: SortMode.None }
         }, { includeResourcesWithoutValidParent: true })).documents;
 
         for (let document of documents) {
-            await updateNonUniqueIdentifierWarning(document, indexFacade);
+            await updateNonUniqueFieldWarning(document, indexFacade, fieldName, warningName);
         }
     }
 

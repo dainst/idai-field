@@ -36,6 +36,7 @@ export module Migrator {
         migrateDates(document, projectConfiguration);
         migrateProjectValuelistFields(document);
         fixGeometry(document);
+        removeAmbiguousHierarchicalRelations(document);
     }
 
 
@@ -195,6 +196,21 @@ export module Migrator {
 
         if (document.resource.geometry) {
             FieldGeometry.closeRings(document.resource.geometry);
+        }
+    }
+
+
+    /**
+     * If more than one parent resource is set via liesWithin/isRecordedIn relations, the relation targets are
+     * removed from both relations so that no parent resource is set at all. This leads to a warning which
+     * allows users to set a new parent resource.
+     */
+    function removeAmbiguousHierarchicalRelations(document: Document) {
+
+        if (document.resource.relations.liesWithin?.length > 1
+                || document.resource.relations.isRecordedIn?.length > 1) {
+            document.resource.relations.liesWithin = [];
+            document.resource.relations.isRecordedIn = [];
         }
     }
 }

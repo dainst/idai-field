@@ -20,8 +20,9 @@ export const UNKNOWN = 'UNKNOWN';
 
 
 export const basicIndexConfiguration: Map<IndexDefinition> = {
-    'identifier:match': { path: 'resource.identifier', pathArray: ['resource', 'identifier'], type: 'match' },
     'id:match': { path: 'resource.id', pathArray: ['resource', 'id'], type: 'match' },
+    'identifier:match': { path: 'resource.identifier', pathArray: ['resource', 'identifier'], type: 'match' },
+    'scanCode:match': { path: 'resource.scanCode', pathArray: ['resource', 'scanCode'], type: 'match' },
     'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', pathArray: ['resource', 'relations', 'isRecordedIn'], type: 'contain' },
     'isChildOf:contain': { path: 'resource.relations.isChildOf', pathArray: ['resource', 'relations', 'isChildOf'], type: 'contain', recursivelySearchable: true },
     'isChildOf:contained': { path: 'resource.relations.isChildOf', pathArray: ['resource', 'relations', 'isChildOf'], type: 'contained' },
@@ -46,6 +47,7 @@ export const basicIndexConfiguration: Map<IndexDefinition> = {
     'invalidRelationTargetIds:contain': { path: 'warnings.invalidRelationTargets.targetIds', pathArray: ['warnings', 'invalidRelationTargets', 'targetIds'], type: 'contain' },
     'missingIdentifierPrefix:exist': { path: 'warnings.missingIdentifierPrefix', pathArray: ['warnings', 'missingIdentifierPrefix'], type: 'exist' },
     'nonUniqueIdentifier:exist': { path: 'warnings.nonUniqueIdentifier', pathArray: ['warnings', 'nonUniqueIdentifier'], type: 'exist' },
+    'nonUniqueQrCode:exist': { path: 'warnings.nonUniqueQrCode', pathArray: ['warnings', 'nonUniqueQrCode'], type: 'exist' },
     'resourceLimitExceeded:exist': { path: 'warnings.resourceLimitExceeded', pathArray: ['warnings', 'resourceLimitExceeded'], type: 'exist' },
     'missingOrInvalidParent:exist': { path: 'warnings.missingOrInvalidParent', pathArray: ['warnings', 'missingOrInvalidParent'], type: 'exist' },
     'invalidProcessState:exist': { path: 'warnings.invalidProcessState', pathArray: ['warnings', 'invalidProcessState'], type: 'exist' }

@@ -12,6 +12,7 @@ export type WarningType = 'unconfiguredCategory'
     |'conflicts'
     |'missingIdentifierPrefix'
     |'nonUniqueIdentifier'
+    |'nonUniqueQrCode'
     |'resourceLimitExceeded'
     |'missingOrInvalidParent'
     |'invalidProcessState'
@@ -30,6 +31,7 @@ export interface Warnings {
     conflicts?: boolean;
     missingIdentifierPrefix?: boolean;
     nonUniqueIdentifier?: boolean;
+    nonUniqueQrCode?: boolean;
     resourceLimitExceeded?: boolean;
     missingOrInvalidParent?: boolean;
     invalidProcessState?: boolean;
@@ -68,6 +70,7 @@ export module Warnings {
             || warnings.conflicts
             || warnings.missingIdentifierPrefix
             || warnings.nonUniqueIdentifier
+            || warnings.nonUniqueQrCode
             || warnings.resourceLimitExceeded
             || warnings.missingOrInvalidParent
             || warnings.invalidProcessState;

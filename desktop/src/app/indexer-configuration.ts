@@ -26,7 +26,6 @@ export module IndexerConfiguration {
             'geometry:exist': { path: 'resource.geometry', pathArray: ['resource', 'geometry'], type: 'exist' },
             'georeference:exist': { path: 'resource.georeference', pathArray: ['resource', 'georeference'], type: 'exist' },
             'conflicts:exist': { path: '_conflicts', pathArray: ['_conflicts'], type: 'exist' },
-            'scanCode:match': { path: 'resource.scanCode', pathArray: ['resource', 'scanCode'], type: 'match' },
             'project:exist': { path: 'project', pathArray: ['project'], type: 'exist' } // *project* property is set for documents which are not "owned" by the current project. This is the case for images of imported type catalogs, for example.
         }, Tree.flatten(projectConfiguration.getCategories()));
 

@@ -156,12 +156,14 @@ export class Datastore {
 
     private async updateIndex(document: Document, notifyObservers: boolean = true): Promise<Document> {
 
-        const previousIdentifier: string|undefined = this.documentCache.get(document.resource.id)?.resource.identifier;
+        const previousVersion: Document = this.documentCache.get(document.resource.id);
+        const previousIdentifier: string|undefined = previousVersion?.resource.identifier;
+        const previousScanCode: string|undefined = previousVersion?.resource.scanCode;
     
         document = this.updateCache(document);
 
         Migrator.migrate(document, this.projectConfiguration);
-        await this.updateWarnings(document, notifyObservers, previousIdentifier);
+        await this.updateWarnings(document, notifyObservers, previousIdentifier, previousScanCode);
 
         return this.updateCache(document);
     }
@@ -442,7 +444,8 @@ export class Datastore {
     }
 
 
-    private async updateWarnings(document: Document, notifyObservers: boolean, previousIdentifier?: string) {
+    private async updateWarnings(document: Document, notifyObservers: boolean, previousIdentifier?: string,
+                                 previousScanCode?: string) {
 
         WarningsUpdater.updateIndexIndependentWarnings(document, this.projectConfiguration);
 
@@ -450,11 +453,12 @@ export class Datastore {
 
         if (!previousIdentifier) {
             previousIdentifier = this.documentCache.get(document.resource.id)?.resource.identifier;
+            previousScanCode = this.documentCache.get(document.resource.id)?.resource.scanCode;
         }
 
         await WarningsUpdater.updateIndexDependentWarnings(
             document, this.indexFacade, this.documentCache, this.projectConfiguration, this,
-            previousIdentifier, true
+            previousIdentifier, previousScanCode, true
         );
         if (notifyObservers) this.indexFacade.notifyObservers();
     }

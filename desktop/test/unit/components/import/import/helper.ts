@@ -20,6 +20,7 @@ export function createMockValidator() {
         assertNoForbiddenRelations: jest.fn(),
         assertIdentifierPrefixIsValid: jest.fn(),
         assertResourceLimitNotExceeded: jest.fn(),
+        assertQrCodesAreUnique: jest.fn(),
         getUndefinedFields: jest.fn()
     };
 }

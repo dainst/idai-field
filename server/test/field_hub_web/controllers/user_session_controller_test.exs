@@ -6,15 +6,14 @@ defmodule FieldHubWeb.UserSessionControllerTest do
   alias FieldHub.TestHelper
   alias FieldHubWeb.UserAuth
 
-  @project "test_project"
-  @user_name "test_user"
-  @user_password "test_password"
+  @project_key "test_project"
+  @project_password "test_password"
 
   setup_all %{} do
-    TestHelper.create_test_db_and_user(@project, @user_name, @user_password)
+    TestHelper.create_test_db_and_user(@project_key, @project_key, @project_password)
 
     on_exit(fn ->
-      TestHelper.remove_test_db_and_user(@project, @user_name)
+      TestHelper.remove_test_db_and_user(@project_key, @project_key)
     end)
   end
 
@@ -23,7 +22,7 @@ defmodule FieldHubWeb.UserSessionControllerTest do
     assert html_response(conn, 200) =~ "Log in"
   end
 
-  test "login with valid credentials", %{conn: conn} do
+  test "project user with valid credentials gets redirected to project view", %{conn: conn} do
     conn = get(conn, ~p"/ui/session/log_in")
 
     assert html_response(conn, 200) =~ "Log in"
@@ -35,21 +34,23 @@ defmodule FieldHubWeb.UserSessionControllerTest do
       conn
       |> recycle()
       |> post(~p"/ui/session/log_in", %{
-        "user" => %{"name" => @user_name, "password" => @user_password}
+        "user" => %{"name" => @project_key, "password" => @project_password}
       })
 
     assert "/" = redir_path = redirected_to(conn, 302)
 
-    assert %{assigns: %{current_user: @user_name}} = UserAuth.fetch_current_user(conn, %{})
+    assert %{assigns: %{current_user: @project_key}} = UserAuth.fetch_current_user(conn, %{})
 
     conn =
       conn
       |> recycle()
       |> get(redir_path)
 
-    assert not (html_response(conn, 200) =~ "Log in")
-    assert html_response(conn, 200) =~ "Log out"
+    assert html_response(conn, 302) =~
+             "You are being <a href=\"/ui/projects/show/#{@project_key}\">redirected</a>"
   end
+
+  # TODO: Admin sees project list
 
   test "login with unknown user is rejected", %{conn: conn} do
     conn = get(conn, ~p"/ui/session/log_in")
@@ -61,7 +62,7 @@ defmodule FieldHubWeb.UserSessionControllerTest do
       conn
       |> recycle()
       |> post(~p"/ui/session/log_in", %{
-        "user" => %{"name" => "unknown", "password" => @user_password}
+        "user" => %{"name" => "unknown", "password" => @project_password}
       })
 
     assert %{assigns: %{current_user: nil}} = UserAuth.fetch_current_user(conn, %{})
@@ -90,7 +91,7 @@ defmodule FieldHubWeb.UserSessionControllerTest do
       conn
       |> recycle()
       |> post(~p"/ui/session/log_in", %{
-        "user" => %{"name" => @user_name, "password" => "invalid"}
+        "user" => %{"name" => @project_key, "password" => "invalid"}
       })
 
     assert %{assigns: %{current_user: nil}} = UserAuth.fetch_current_user(conn, %{})
@@ -110,7 +111,7 @@ defmodule FieldHubWeb.UserSessionControllerTest do
   end
 
   test "logout with valid credentials", %{conn: conn} do
-    token = UserAuth.generate_user_session_token(@user_name)
+    token = UserAuth.generate_user_session_token(@project_key)
 
     conn =
       conn
@@ -119,10 +120,10 @@ defmodule FieldHubWeb.UserSessionControllerTest do
       |> put_session(:user_token, token)
       |> get(~p"/")
 
-    assert %{assigns: %{current_user: @user_name}} = UserAuth.fetch_current_user(conn, %{})
+    assert %{assigns: %{current_user: @project_key}} = UserAuth.fetch_current_user(conn, %{})
 
-    assert not (html_response(conn, 200) =~ "Log in")
-    assert html_response(conn, 200) =~ "Log out"
+    assert html_response(conn, 302) =~
+             "<html><body>You are being <a href=\"/ui/projects/show/#{@project_key}\">redirected</a>.</body></html>"
 
     conn =
       conn

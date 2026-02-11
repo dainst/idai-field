@@ -28,6 +28,7 @@ import { SelectNewCategoryModalComponent } from './modals/select-new-category-mo
 import { MoveModalComponent, MoveResult } from '../../widgets/move-modal/move-modal.component';
 import { WarningsService } from '../../../services/warnings/warnings-service';
 import { getSystemTimezone } from '../../../util/timezones';
+import { QrCodeEditorModalComponent } from '../../resources/actions/edit-qr-code/qr-code-editor-modal.component';
 
 
 type WarningSection = {
@@ -263,6 +264,25 @@ export class WarningsModalComponent {
             if (group) componentInstance.activeGroup = group.name;
         }        
 
+        await this.modals.awaitResult(
+            result,
+            () => this.update(),
+            nop
+        );
+
+        AngularUtility.blurActiveElement();
+    }
+
+
+    public async openQrCodeEditorModal() {
+
+        const [result, componentInstance] = this.modals.make<QrCodeEditorModalComponent>(
+            QrCodeEditorModalComponent,
+            MenuContext.QR_CODE_EDITOR
+        );
+        componentInstance.document = this.selectedDocument;
+        await componentInstance.initialize();
+        
         await this.modals.awaitResult(
             result,
             () => this.update(),

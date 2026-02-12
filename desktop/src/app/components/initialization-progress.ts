@@ -5,6 +5,8 @@ import { getMessage } from './initialization-messages';
 import { reload } from '../services/reload';
 import { SettingsService } from '../services/settings/settings-service';
 
+const remote = window.require('@electron/remote');
+
 
 type InitializationPhase =
      'settingUpServer'
@@ -32,7 +34,10 @@ export class InitializationProgress {
     private error: boolean = false;
 
 
-    constructor(private settingsService: SettingsService) {}
+    constructor(private settingsService: SettingsService) {
+
+        InitializationProgress.setElementText('version-info-number', remote.app.getVersion());
+    }
 
 
     public async setPhase(phase: InitializationPhase) {

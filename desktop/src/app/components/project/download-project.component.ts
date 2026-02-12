@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Menus } from '../../services/menus';
-import { FileInfo, ImageStore, ImageVariant, FileSyncPreference, PouchdbDatastore, SyncService } from 'idai-field-core';
+import { FileInfo, ImageStore, ImageVariant, FileSyncPreference, PouchdbDatastore,
+    SyncService } from 'idai-field-core';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { DownloadProjectProgressModalComponent } from './download-project-progress-modal.component';
@@ -108,7 +109,7 @@ export class DownloadProjectComponent {
                     preferences.map(preference => preference.variant)
                 ) : undefined;
 
-            await this.syncDatabase(progressModalRef, databaseSteps, destroyExisting);
+            await this.downloadDatabase(progressModalRef, databaseSteps, destroyExisting);
             progressModalRef.componentInstance.databaseProgressPercent = 100;
     
             if (fileList) {
@@ -229,8 +230,8 @@ export class DownloadProjectComponent {
     }
 
 
-    private async syncDatabase(progressModalRef: NgbModalRef, databaseSteps: number,
-                               destroyExisting: boolean): Promise<void> {
+    private async downloadDatabase(progressModalRef: NgbModalRef, databaseSteps: number,
+                                   destroyExisting: boolean): Promise<void> {
 
         return new Promise(async (resolve, reject) => {
             try {

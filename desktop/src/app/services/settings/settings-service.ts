@@ -161,7 +161,8 @@ export class SettingsService {
             SyncTarget.getAddress(syncTarget),
             settings.selectedProject,
             syncTarget?.password,
-            SettingsService.checkDatabaseExistence
+            SettingsService.checkDatabaseExistence,
+            syncTarget?.startSequence
         );
 
         if (await this.synchronizationService.startSync()) {

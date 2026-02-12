@@ -16,6 +16,7 @@ export class SyncService {
     private syncTarget: string;
     private project: string;
     private password: string = '';
+    private startSequence?: string|number;
     private currentSyncTimeout: any;
     private checkDatabaseExistence: (url: string) => Promise<boolean>;
 
@@ -33,12 +34,13 @@ export class SyncService {
 
 
     public init(syncTarget: string, project: string, password: string,
-                checkDatabaseExistence: (url: string) => Promise<boolean>) {
+                checkDatabaseExistence: (url: string) => Promise<boolean>, startSequence?: string|number) {
 
         this.syncTarget = syncTarget;
         this.project = project;
         this.password = password;
         this.checkDatabaseExistence = checkDatabaseExistence;
+        this.startSequence = startSequence;
     }
 
 
@@ -169,17 +171,17 @@ export class SyncService {
 
         console.log('Start syncing', url);
 
-        this.sync = this.pouchdbDatastore.getDb().sync(
-            url,
-            {
-                live: true,
-                retry: false,
-                batch_size: 50,
-                batches_limit: 1,
-                timeout: 600000,
-                filter
-            }
-        );
+        const options: any = {
+            live: true,
+            retry: false,
+            batch_size: 50,
+            batches_limit: 1,
+            timeout: 600000,
+            filter
+        };
+        if (this.startSequence) options.since = this.startSequence;
+
+        this.sync = this.pouchdbDatastore.getDb().sync(url, options);
 
         return Observable.create((obs: Observer<SyncStatus>) => {
             this.sync.on('change', (info: any) => obs.next(SyncService.getStatusFromInfo(info)))

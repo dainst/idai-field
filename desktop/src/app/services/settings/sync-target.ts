@@ -8,6 +8,7 @@ export interface SyncTarget {
     address: string;
     password: string;
     isSyncActive: boolean;
+    startSequence?: string|number;
     fileSyncPreferences: Array<FileSyncPreference>;
 }
 

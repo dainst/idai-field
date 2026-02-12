@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Menus } from '../../services/menus';
+import { Map } from 'tsfun';
 import { FileInfo, ImageStore, ImageVariant, FileSyncPreference, PouchdbDatastore,
     SyncService } from 'idai-field-core';
 import { M } from '../messages/m';
@@ -101,7 +102,7 @@ export class DownloadProjectComponent {
 
             const preferences: Array<FileSyncPreference> = this.getSelectedFileSyncPreferences();
 
-            const fileList = preferences.length > 0
+            const fileList: Map<FileInfo> = preferences.length > 0
                 ? await this.remoteImageStore.getFileInfosUsingCredentials(
                     this.getUrl(),
                     this.getPassword(),
@@ -109,7 +110,9 @@ export class DownloadProjectComponent {
                     preferences.map(preference => preference.variant)
                 ) : undefined;
 
-            await this.downloadDatabase(progressModalRef, databaseSteps, destroyExisting);
+            const lastUpdateSequence: string|number = await this.downloadDatabase(
+                progressModalRef, databaseSteps, destroyExisting
+            );
             progressModalRef.componentInstance.databaseProgressPercent = 100;
     
             if (fileList) {
@@ -131,7 +134,8 @@ export class DownloadProjectComponent {
                     isSyncActive: true,
                     address: this.getUrl(),
                     password: this.getPassword(),
-                    fileSyncPreferences: preferences
+                    fileSyncPreferences: preferences,
+                    startSequence: lastUpdateSequence
                 }
             ).then(() => {
                 reloadAndSwitchToHomeRoute();
@@ -231,21 +235,23 @@ export class DownloadProjectComponent {
 
 
     private async downloadDatabase(progressModalRef: NgbModalRef, databaseSteps: number,
-                                   destroyExisting: boolean): Promise<void> {
+                                   destroyExisting: boolean): Promise<string|number> {
 
         return new Promise(async (resolve, reject) => {
+            let lastUpdateSequence: string|number;
             try {
                 (await this.syncService.startReplication(
                     this.getUrl(), this.getPassword(), this.getProjectIdentifier(), databaseSteps, destroyExisting
                 )).subscribe({
                     next: lastSequence => {
+                        lastUpdateSequence = lastSequence;
                         const databaseProgress: number = DownloadProjectComponent.parseSequenceNumber(lastSequence);
                         progressModalRef.componentInstance.setDatabaseProgressPercent(
                             Math.min((databaseProgress / databaseSteps * 100), 100)
                         );
                     },
                     error: err => reject(err),
-                    complete: () => resolve()
+                    complete: () => resolve(lastUpdateSequence)
                 });
             } catch (e) {
                 reject(e);
@@ -388,7 +394,7 @@ export class DownloadProjectComponent {
     }
 
 
-    private static parseSequenceNumber(updateSequence: number | string): number {
+    private static parseSequenceNumber(updateSequence: string|number): number {
 
         return Number.parseInt((updateSequence + '').split('-')[0], 10);
     }

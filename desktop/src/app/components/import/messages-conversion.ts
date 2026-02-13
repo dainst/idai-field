@@ -93,7 +93,6 @@ export module MessagesConversion {
         if (msg === ImportErrors.RESOURCE_LIMIT_EXCEEDED) replacement = M.IMPORT_VALIDATION_ERROR_RESOURCE_LIMIT_EXCEEDED;
         if (msg === ImportErrors.DUPLICATE_QR_CODE_IN_IMPORT_FILE) replacement = M.IMPORT_VALIDATION_DUPLICATE_QR_CODE_IN_IMPORT_FILE;
         if (msg === ImportErrors.DUPLICATE_QR_CODE_IN_PROJECT) replacement = M.IMPORT_VALIDATION_DUPLICATE_QR_CODE_IN_PROJECT;
-        if (msg === ImportErrors.WARNINGS_EXIST) replacement = M.IMPORT_ERROR_WARNINGS_EXIST;
 
         if (msg === ImportCatalogErrors.CATALOG_DOCUMENTS_IDENTIFIER_CLASH) replacement = M.IMPORT_CATALOG_ERROR_IDENTIFIER_CLASH;
         if (msg === ImportCatalogErrors.CATALOG_OWNER_MUST_NOT_REIMPORT_CATALOG) replacement = M.IMPORT_CATALOG_ERROR_OWNER_MUST_NOT_REIMPORT_CATALOG;

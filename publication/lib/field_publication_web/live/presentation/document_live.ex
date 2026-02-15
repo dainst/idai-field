@@ -128,20 +128,10 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
     short_description
   end
 
-  defp get_page_title(%Document{} = doc) do
-    short_descriptions =
-      Data.get_field_value(doc, "shortDescription")
-      |> case do
-        nil ->
-          Data.get_field_value(doc, "identifier")
+  defp get_page_title(%Document{identifier: identifier, category: %{labels: labels}} = doc) do
+    {_info, category} = I18n.select_translation(%{values: labels})
 
-        val ->
-          val
-      end
-
-    {_translation_info, value} = I18n.select_translation(%{values: short_descriptions})
-
-    value
+    "#{doc.identifier} (#{category})"
   end
 
   defp evaluate_requested_language(

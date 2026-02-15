@@ -74,7 +74,6 @@
       <div :for={%SearchDocument{full_doc: doc} <- docs}>
         <DocumentLink.show
           doc={doc}
-          lang={Gettext.get_locale(FieldPublicationWeb.Gettext)}
           image_count={10}
           image_height={128}
         />

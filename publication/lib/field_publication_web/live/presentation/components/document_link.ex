@@ -12,7 +12,6 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
 
   attr :id, :string, default: nil
   attr :doc, Document, required: true
-  attr :lang, :string, required: true
   attr :image_count, :integer, default: 0
   attr :image_height, :integer, default: 64
   attr :geometry_indicator, :boolean, default: false
@@ -33,7 +32,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
       <.link
         class="grow p-3 rounded-tr rounded-br hover:bg-(--primary-color)/10"
         style={"border-color: #{desaturate_category_color(@doc.category.color)}; border-width: 1px 1px 1px 0px;"}
-        navigate={construct_doc_link(@doc.project, @doc.publication, @lang, @doc.id, @focus)}
+        navigate={construct_doc_link(@doc.project, @doc.publication, @doc.id, @focus)}
       >
         <div>
           <span class="text-slate-600">{@doc.identifier}</span>
@@ -69,7 +68,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
     """
   end
 
-  defp construct_doc_link(project_name, draft_date, lang, uuid, focus_parameter) do
+  defp construct_doc_link(project_name, draft_date, uuid, focus_parameter) do
     uuid = if uuid == "project", do: "", else: uuid
 
     query =
@@ -81,7 +80,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
           %{}
       end
 
-    ~p"/projects/#{project_name}/#{draft_date}/#{lang}/#{uuid}?#{query}"
+    ~p"/projects/#{project_name}/#{draft_date}/#{uuid}?#{query}"
   end
 
   def desaturate_category_color(color) do

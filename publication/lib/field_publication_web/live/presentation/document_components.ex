@@ -34,7 +34,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
     ~H"""
     <div class="mb-4">
       <.document_heading>
-        <DocumentLink.show lang={@lang} doc={@doc} />
+        <DocumentLink.show doc={@doc} />
       </.document_heading>
       <%= case @focus do %>
         <% :map -> %>
@@ -66,7 +66,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                   <div class="border p-0.5 border-black/20">
                     <dt class="font-bold"><I18n.text values={field.labels} /></dt>
                     <dd class="pl-4">
-                      <GenericField.render field={field} lang={@lang} />
+                      <GenericField.render field={field} />
                     </dd>
                   </div>
                 <% end %>
@@ -83,7 +83,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             <div class="p-2 bg-panel overflow-auto overscroll-contain grid grid-cols-3 gap-1 mt-2 max-h-[300px] mb-5">
               <%= for %Document{} = doc <- depicted_in.docs do %>
                 <.link navigate={
-                  ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@lang}/#{doc.id}"
+                  ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{doc.id}"
                 }>
                   <div class="max-w-[250px]">
                     <Image.show
@@ -141,7 +141,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             </.group_heading>
             <div class="overflow-auto overscroll-contain max-h-[200px]">
               <%= for %Document{} = doc <- other_relation.docs do %>
-                <DocumentLink.show lang={@lang} doc={doc} image_count={2} geometry_indicator={true} />
+                <DocumentLink.show doc={doc} image_count={2} geometry_indicator={true} />
               <% end %>
             </div>
           </section>
@@ -154,7 +154,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             doc={@doc}
             ancestors={@ancestors}
             publication={@publication}
-            lang={@lang}
           />
         </div>
       </div>
@@ -176,7 +175,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             doc={@doc}
             ancestors={@ancestors}
             publication={@publication}
-            lang={@lang}
             focus={:map}
             map_id="generic_doc_map_detail"
           />
@@ -199,7 +197,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                     target_id={doc.id}
                   >
                     <DocumentLink.show
-                      lang={@lang}
                       doc={doc}
                       image_count={10}
                       geometry_indicator={true}
@@ -209,7 +206,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                 <% else %>
                   <div>
                     <DocumentLink.show
-                      lang={@lang}
                       doc={doc}
                       image_count={10}
                       geometry_indicator={true}
@@ -231,7 +227,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             doc={@doc}
             ancestors={@ancestors}
             publication={@publication}
-            lang={@lang}
             focus={@focus}
           />
         </div>
@@ -242,13 +237,12 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
 
   attr :publication, Publication, required: true
   attr :doc, Document, required: true
-  attr :lang, :string, required: true
 
   def image(assigns) do
     ~H"""
     <div>
       <.document_heading>
-        <DocumentLink.show lang={@lang} doc={@doc} />
+        <DocumentLink.show doc={@doc} />
       </.document_heading>
 
       <div class="flex flex-col-reverse lg:flex-row">
@@ -259,7 +253,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             </.group_heading>
             <div class="overflow-auto overscroll-contain max-h-[200px]">
               <%= for %Document{} = doc <- relation_group.docs do %>
-                <DocumentLink.show lang={@lang} doc={doc} image_count={0} />
+                <DocumentLink.show doc={doc} image_count={0} />
               <% end %>
             </div>
           <% end %>
@@ -279,7 +273,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                     <div>
                       <dt class="font-bold"><I18n.text values={field.labels} /></dt>
                       <dd class="pl-4">
-                        <GenericField.render field={field} lang={@lang} />
+                        <GenericField.render field={field} />
                       </dd>
                     </div>
                   <% end %>
@@ -362,16 +356,14 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
     ~H"""
     <div>
       <.document_heading>
-        <I18n.text values={Data.get_field_value(@doc, "shortName")} lang={@lang} />
+        <I18n.text values={Data.get_field_value(@doc, "shortName")} />
       </.document_heading>
       <% depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
       <%= if depicted_in != nil do %>
         <div class="pt-4 pb-4 w-full gap-2 flex flex-row justify-center overflow-x-auto">
           <%= for %Data.Document{} = doc <- depicted_in.docs do %>
             <.link
-              patch={
-                ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@lang}/#{doc.id}"
-              }
+              patch={~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{doc.id}"}
               class="p-2 border border-primary h-[310px]"
             >
               <Image.show
@@ -391,20 +383,17 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             {gettext("project_doc_about_project")}
           </.group_heading>
           <div class="bg-panel p-2">
-            <I18n.markdown values={Data.get_field_value(@doc, "description")} lang={@lang} />
+            <I18n.markdown values={Data.get_field_value(@doc, "description")} />
           </div>
           <.group_heading class="mt-3">
             {gettext("project_doc_about_publication")}
           </.group_heading>
           <div class="bg-panel p-2">
-            <I18n.markdown
-              values={
-                @publication.comments
-                |> Enum.map(fn %{language: lang, text: text} -> {lang, text} end)
-                |> Enum.into(%{})
-              }
-              lang={@lang}
-            />
+            <I18n.markdown values={
+              @publication.comments
+              |> Enum.map(fn %{language: lang, text: text} -> {lang, text} end)
+              |> Enum.into(%{})
+            } />
           </div>
         </div>
 
@@ -413,7 +402,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             <% institution = Data.get_field(@doc, "institution") %>
             <%= if institution do %>
               <dt class="font-bold"><I18n.text values={institution.labels} /></dt>
-              <GenericField.render field={institution} lang={@lang} />
+              <GenericField.render field={institution} />
             <% end %>
 
             <% contact_mail = Data.get_field(@doc, "contactMail") %>
@@ -435,18 +424,18 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             <% supervisor = Data.get_field(@doc, "projectSupervisor") %>
             <%= if supervisor do %>
               <dt class="font-bold"><I18n.text values={supervisor.labels} /></dt>
-              <GenericField.render field={supervisor} lang={@lang} />
+              <GenericField.render field={supervisor} />
             <% end %>
 
             <%= if @staff do %>
-              <dt class="font-bold"><I18n.text values={@staff.labels} lang={@lang} /></dt>
+              <dt class="font-bold"><I18n.text values={@staff.labels} /></dt>
               <dd class="ml-4">{@staff.names}</dd>
             <% end %>
 
             <% bibliographic_references = Data.get_field(@doc, "bibliographicReferences") %>
             <%= if bibliographic_references do %>
               <dt class="font-bold"><I18n.text values={bibliographic_references.labels} /></dt>
-              <GenericField.render field={bibliographic_references} lang={@lang} />
+              <GenericField.render field={bibliographic_references} />
             <% end %>
             <% url = Data.get_field_value(@doc, "projectURI") %>
             <%= if url do %>
@@ -467,7 +456,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             id="project_doc_map"
             style="height: 600px; background-color: var(--panel-color)"
             publication={@publication}
-            lang={@lang}
           />
         </div>
 

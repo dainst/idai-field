@@ -50,7 +50,6 @@ defmodule FieldPublicationWeb.Presentation.Components.ProjectViewMap do
         <div id={"#{@id}-layer-select"} class="bg-white p-2 pr-8 max-h-64 overflow-auto hidden">
           <DocumentViewMap.render_tile_layer_selection_group
             target={@myself}
-            lang={@lang}
             publication={@publication}
             group={:project}
             layer_states={@project_tile_layers_state}

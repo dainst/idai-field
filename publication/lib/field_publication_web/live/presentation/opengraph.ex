@@ -4,8 +4,9 @@ defmodule FieldPublicationWeb.Presentation.Opengraph do
   alias FieldPublication.Publications.Data
   alias FieldPublication.Publications.Data.Document
   alias FieldPublicationWeb.Presentation.Components.Image
+  alias FieldPublicationWeb.Presentation.Components.I18n
 
-  def add_opengraph_tags(socket, publication, doc, lang) do
+  def add_opengraph_tags(socket, publication, doc) do
     socket
     |> assign(
       :page_image,
@@ -13,22 +14,19 @@ defmodule FieldPublicationWeb.Presentation.Opengraph do
     )
     |> assign(
       :page_description,
-      create_description(doc, lang)
+      create_description(doc)
     )
   end
 
-  defp create_description(doc, lang) do
+  defp create_description(doc) do
     Data.get_field_value(doc, "shortDescription")
     |> case do
       value when is_binary(value) ->
         value
 
-      value when is_map(value) ->
-        Map.get(
-          value,
-          lang,
-          Map.get(value, List.first(Map.keys(value)))
-        )
+      values when is_map(values) ->
+        {_, value } = I18n.select_translation(%{values: values})
+        value
 
       nil ->
         nil

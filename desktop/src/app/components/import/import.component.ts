@@ -190,14 +190,16 @@ export class ImportComponent implements OnInit {
     }
 
 
-    public updateCategories() {
+    private updateCategories() {
 
         this.importState.categories = getCategoriesWithoutExcludedCategories(
             Tree.flatten(this.projectConfiguration.getCategories()), this.getCategoriesToExclude()
         );
 
         if (!this.importState.categories.includes(this.importState.selectedCategory)) {
-            this.importState.selectedCategory = undefined;
+            this.importState.selectedCategory = this.importState.filePath
+                ? this.getCategoryFromFileName(path.basename(this.importState.filePath))
+                : undefined;
         }
     }
 

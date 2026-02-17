@@ -1428,7 +1428,7 @@
       </trans-unit>
       <trans-unit id="project.deleteModal.confirmDeleteInfo" datatype="html">
         <source>Bitte geben Sie die Projektkennung ein, um den Löschvorgang zu bestätigen.</source>
-        <target state="translated">Por favor, introduza o identificador de projeto para confirmar processo de apagamento.</target>
+        <target state="translated">Por favor, introduza o identificador do projeto para confirmar processo de apagamento.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/delete-project-modal.html</context>
           <context context-type="linenumber">41</context>
@@ -2596,7 +2596,7 @@
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.identifierStartingCharacter" datatype="html">
         <source>Die Projektkennung muss mit einem Kleinbuchstaben beginnen.</source>
-        <target state="translated">O identificador de projeto deve começar por uma letra minúscula.</target>
+        <target state="translated">O identificador do projeto deve começar por uma letra minúscula.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2604,7 +2604,7 @@
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.nameLength" datatype="html">
         <source>Der angegebene Projektname für die Sprache [0] ist um [1] Zeichen zu lang.</source>
-        <target state="translated">O nome de projeto para a língua [0] tem [1] caracteres a mais.</target>
+        <target state="translated">O nome do projeto para a língua [0] tem [1] caracteres a mais.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2660,7 +2660,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.importFailure" datatype="html">
         <source>Die Projektkonfiguration konnte nicht importiert werden.</source>
-        <target state="translated">A configuração de projeto não pode ser importada.</target>
+        <target state="translated">A configuração do projeto não pode ser importada.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -2724,7 +2724,7 @@
       </trans-unit>
       <trans-unit id="navbar.tabs.configuration" datatype="html">
         <source>Projektkonfiguration</source>
-        <target state="translated">Configuração de projeto</target>
+        <target state="translated">Configuração do projeto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">89</context>
@@ -2740,7 +2740,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.projectProperties" datatype="html">
         <source>Projekteigenschaften</source>
-        <target state="translated">Propriedades de projeto</target>
+        <target state="translated">Propriedades do projeto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">89</context>
@@ -2876,7 +2876,7 @@
       </trans-unit>
       <trans-unit id="messages.backup.read.error.noProjectIdentifier" datatype="html">
         <source>Geben Sie eine Projektkennung an, um fortzufahren.</source>
-        <target state="translated">Por favor insira o identificador de projeto para proceder.</target>
+        <target state="translated">Por favor insira o identificador do projeto para proceder.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3000,7 +3000,7 @@
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.identifierCharacters" datatype="html">
         <source>Die angegebene Projektkennung enthält nicht erlaubte Zeichen.</source>
-        <target state="translated">O identificador de projeto contém caracteres não permitidos.</target>
+        <target state="translated">O identificador do projeto contém caracteres não permitidos.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3120,7 +3120,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.projectName.info" datatype="html">
         <source>Optional können Sie für jede Sprache einen Projektnamen angeben. Der Name darf beliebige Zeichen enthalten und maximal <x id="INTERPOLATION" equiv-text="{{getNameMaxLength()}}"/> Zeichen lang sein. Er kann jederzeit in den Projekteigenschaften geändert werden. </source>
-        <target state="translated">É possível inserir um nome de projeto para cada língua. O nome pode conter qualquer número de caracteres e no máximo <x id="INTERPOLATION" equiv-text="{{getNameMaxLength()}}"/> caracteres. Pode ser alterado a qualquer momento nas propriedades de projeto. </target>
+        <target state="translated">É possível inserir um nome de projeto para cada língua. O nome pode conter qualquer número de caracteres e no máximo <x id="INTERPOLATION" equiv-text="{{getNameMaxLength()}}"/> caracteres. Pode ser alterado a qualquer momento nas propriedades do projeto. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.html</context>
           <context context-type="linenumber">86</context>
@@ -3136,7 +3136,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.languages.info" datatype="html">
         <source>Wählen Sie hier die Sprachen aus, in denen innerhalb des Projekts Daten eingetragen werden sollen. Bitte wählen Sie mindestens eine Sprache aus.</source>
-        <target state="translated">Selecione as línguas em que devem ser inseridos os dados de projeto. Por favor selecione pelo menos uma língua.</target>
+        <target state="translated">Selecione as línguas em que devem ser inseridos os dados do projeto. Por favor selecione pelo menos uma língua.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">199</context>
@@ -3144,7 +3144,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.identifier.info" datatype="html">
         <source>Geben Sie hier eine eindeutige Kennung des neuen Projekts ein. Erlaubte Zeichen sind Kleinbuchstaben des lateinischen Alphabets, Ziffern, Unterstriche und Bindestriche. Die Kennung muss mit einem Buchstaben beginnen und darf maximal <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> Zeichen lang sein. Sie kann zu einem späteren Zeitpunkt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>nicht<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> mehr geändert werden. </source>
-        <target state="translated">Inserir aqui um identificador único do novo projeto. Caracteres permitidos são minúsculas do alfabeto latino, números, subtraços e hífens. O identificador deve começar por uma letra e pode ter no máximo <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> caracteres. <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Não<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> pode ser alterada mais tarde. </target>
+        <target state="translated">Inserir aqui um identificador único do novo projeto. Caracteres permitidos são minúsculas do alfabeto latino, números, subtraços e hífens. O identificador deve começar por uma letra e pode ter no máximo <x id="INTERPOLATION" equiv-text="{{getIdentifierMaxLength()}}"/> caracteres. <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Não<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> pode ser alterado mais tarde. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">199</context>
@@ -3333,8 +3333,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.missingValuelistInfo.projectDocumentField" datatype="html">
-        <source>Bitte tragen Sie die erlaubten Werte für dieses Feld in den Projektdaten (Feld <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getProjectDocumentFieldLabel()}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>) ein. </source>
-        <target state="translated">Por favor insira os valores permitidos para este campo nos dados de projeto (campo <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getProjectDocumentFieldLabel()}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>). </target>
+        <source>Bitte tragen Sie die erlaubten Werte für dieses Feld in den Projektdaten (Feld <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="eldLabel()}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text=") ein. &lt;/span&gt;"/>) ein. </source>
+        <target state="translated">Por favor insira os valores permitidos para este campo nos dados do projeto (campo <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getProjectDocumentFieldLabel()}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>). </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/widgets/empty-valuelist-info.component.ts</context>
           <context context-type="linenumber">68</context>
@@ -3381,8 +3381,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.field.valuelistFromProjectField" datatype="html">
-        <source>Die Werteliste für dieses Feld entspricht den Einträgen im Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.valuelistFromProjectField}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> der Projekteinstellungen. </source>
-        <target state="translated">A lista de valores deste campo corresponde às entradas no campo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.valuelistFromProjectField}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> das definições de projeto. </target>
+        <source>Die Werteliste für dieses Feld entspricht den Einträgen im Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="omProjectField}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="der Projek"/> der Projekteinstellungen. </source>
+        <target state="translated">A lista de valores deste campo corresponde às entradas no campo <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.valuelistFromProjectField}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> das definições do projeto. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.component.ts</context>
           <context context-type="linenumber">80</context>
@@ -3903,7 +3903,7 @@
       </trans-unit>
       <trans-unit id="project.identifier" datatype="html">
         <source>Projektkennung</source>
-        <target state="translated">Identificador de projeto</target>
+        <target state="translated">Identificador do projeto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.html</context>
           <context context-type="linenumber">60</context>
@@ -4327,7 +4327,7 @@
       </trans-unit>
       <trans-unit id="project.createModal.identifier" datatype="html">
         <source>Projektkennung:</source>
-        <target state="translated">Identificador de projeto:</target>
+        <target state="translated">Identificador do projeto:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/create-project-modal.component.ts</context>
           <context context-type="linenumber">199</context>
@@ -4342,8 +4342,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="project.download.progressInfo.databaseFinished" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{getRoundedProgress(databaseProgressPercent)}}"/>% der Projektdaten geladen. </source>
-        <target state="translated"><x id="INTERPOLATION" equiv-text="{{getRoundedProgress(databaseProgressPercent)}}"/>% dos dados de projeto carregados. </target>
+        <source><x id="INTERPOLATION" equiv-text="% der Projektdaten geladen. &lt;/div&gt;         &lt;div *ngIf=&quot;filesProgres"/>% der Projektdaten geladen. </source>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{getRoundedProgress(databaseProgressPercent)}}"/>% dos dados do projeto carregados. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.html</context>
           <context context-type="linenumber">20</context>
@@ -4362,8 +4362,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="project.download.progressInfo.database" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{getRoundedProgress(databaseProgressPercent)}}"/>% der Projektdaten geladen... </source>
-        <target state="translated"><x id="INTERPOLATION" equiv-text="{{getRoundedProgress(databaseProgressPercent)}}"/>% dos dados de projeto carregados... </target>
+        <source><x id="INTERPOLATION" equiv-text="% der Projektdaten geladen... &lt;/div&gt;         &lt;div *ngIf=&quot;fi"/>% der Projektdaten geladen... </source>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{getRoundedProgress(databaseProgressPercent)}}"/>% dos dados do projeto carregados... </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/download-project-progress-modal.component.ts</context>
           <context context-type="linenumber">58</context>
@@ -4379,7 +4379,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.header" datatype="html">
         <source>Projektdatenübersicht</source>
-        <target state="translated">Apresentação de dados de projeto</target>
+        <target state="translated">Apresentação de dados do projeto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.component.ts</context>
           <context context-type="linenumber">48</context>
@@ -5387,7 +5387,7 @@
       </trans-unit>
       <trans-unit id="settings.languages.info" datatype="html">
         <source>Sprachen können nach Priorität sortiert werden. Für fett gedruckte Sprachen ist eine übersetzte Benutzeroberfläche verfügbar. Darüber hinaus können für weitere Sprachen Übersetzungen von Kategorie- und Feldbezeichnungen sowie Wertelisten in der Projektkonfiguration hinterlegt sein.</source>
-        <target state="translated">Línguas podem ser ordenadas por prioridade. Para as línguas em negrito existe uma interface de utilizador. Adicionalmente podem ser depositadas traduções de identificadores de categorias, de identificadores de campos e de listas de valores para outras línguas na configuração de projeto.</target>
+        <target state="translated">Línguas podem ser ordenadas por prioridade. Para as línguas em negrito existe uma interface de utilizador. Adicionalmente podem ser depositadas traduções de identificadores de categorias, de identificadores de campos e de listas de valores para outras línguas na configuração do projeto.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.component.ts</context>
           <context context-type="linenumber">148</context>
@@ -5883,7 +5883,7 @@
       </trans-unit>
       <trans-unit id="configuration.conflicts.header" datatype="html">
         <source>Konflikte in der Projektkonfiguration</source>
-        <target state="translated">Conflitos na configuração de projeto</target>
+        <target state="translated">Conflitos na configuração do projeto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
           <context context-type="linenumber">50</context>
@@ -6095,7 +6095,7 @@
       </trans-unit>
       <trans-unit id="messages.backup.read.warning.unsimilarProjectIdentifier" datatype="html">
         <source>Die von Ihnen gewählte Projektkennung unterscheidet sich stark von der Kennung des Originalprojekts. Bitte prüfen Sie, ob Sie die korrekte Backup-Datei ausgewählt haben, bevor Sie Daten aus dem wiederhergestellten Projekt mit anderen Field-Desktop-Instanzen oder Field-Servern synchronisieren.</source>
-        <target state="translated">O identificador de projeto difere muito do identificador do projeto original. Por favor verifique se escolheu o ficheiro da cópia de segurança correto antes de sincronizar dados do projeto recuperado com outras instâncias de Field Desktop ou servidores de Field.</target>
+        <target state="translated">O identificador do projeto difere muito do identificador do projeto original. Por favor verifique se escolheu o ficheiro da cópia de segurança correto antes de sincronizar dados do projeto recuperado com outras instâncias de Field Desktop ou servidores de Field.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6927,7 +6927,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.warning.projectIdentifierNotSame" datatype="html">
         <source>Die Projektkennungen stimmen nicht miteinander überein. Das Projekt wird nicht gelöscht.</source>
-        <target state="translated">Os identificadores de projeto não são idênticos. O projeto não vai ser apagado.</target>
+        <target state="translated">Os identificadores do projeto não são idênticos. O projeto não vai ser apagado.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6983,7 +6983,7 @@
       </trans-unit>
       <trans-unit id="messages.projectCreation.error.identifierLength" datatype="html">
         <source>Die angegebene Projektkennung ist um [0] Zeichen zu lang.</source>
-        <target state="translated">A identificador de projeto inserido tem [0] caracteres a mais.</target>
+        <target state="translated">A identificador do projeto inserido tem [0] caracteres a mais.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -8447,7 +8447,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.success.import" datatype="html">
         <source>Die Projektkonfiguration wurde erfolgreich importiert.</source>
-        <target state="translated">A configuração de projeto foi importada com sucesso.</target>
+        <target state="translated">A configuração do projeto foi importada com sucesso.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -10175,7 +10175,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.nonUniqueQrCode" datatype="html">
         <source>Uneindeutiger <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>QR-Code<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></source>
-        <target state="needs-translation">Uneindeutiger <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>QR-Code<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></target>
+        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Código QR<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ambíguo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">106,108</context>
@@ -10183,7 +10183,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.nonUniqueQrCode" datatype="html">
         <source>Der QR-Code dieser Ressource wird mehrfach verwendet und kann daher nicht zum eindeutigen Zugriff auf die Ressource verwendet werden.</source>
-        <target state="needs-translation">Der QR-Code dieser Ressource wird mehrfach verwendet und kann daher nicht zum eindeutigen Zugriff auf die Ressource verwendet werden.</target>
+        <target state="translated">O código QR deste recurso está a ser utilisado multiplas vezes e por isso não pode ser utilisado para um acesso único para este recurso.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">224,227</context>
@@ -10191,7 +10191,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.editQrCode" datatype="html">
         <source>QR-Code bearbeiten</source>
-        <target state="needs-translation">QR-Code bearbeiten</target>
+        <target state="translated">Editar código QR</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">318</context>
@@ -10199,7 +10199,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.duplicateQrCodeInProject" datatype="html">
         <source>Der QR-Code '[0]' ist bereits der Ressource '[1]' zugeordnet.</source>
-        <target state="needs-translation">Der QR-Code '[0]' ist bereits der Ressource '[1]' zugeordnet.</target>
+        <target state="translated">O código QR '[0]' já foi atribuido ao recurso '[1]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">749</context>
@@ -10207,7 +10207,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.duplicateQrCodeInImportFile" datatype="html">
         <source>Der QR-Code '[0]' ist in mehr als einem Importdatensatz eingetragen.</source>
-        <target state="needs-translation">Der QR-Code '[0]' ist in mehr als einem Importdatensatz eingetragen.</target>
+        <target state="translated">O código QR '[0]' foi registado em mais que um registo a importar.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">745</context>

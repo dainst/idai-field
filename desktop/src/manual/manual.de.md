@@ -1461,7 +1461,7 @@ Felder des Eingabetyps "Datierungsangabe" sind Listenfelder, die jeweils mehrere
 
 Die Jahresangaben *begin* und *end* bestehen wiederum aus zwei Unterfeldern:
 
-* *inputType*: Die Zeitrechnung. Mögliche Werte sind: *bce* (v. Chr), *ce* (n. Chr.), *bp* (BP).
+* *inputType*: Die Zeitrechnung. Mögliche Werte sind: *bce* (v. Chr.), *ce* (n. Chr.), *bp* (BP).
 * *inputYear*: Die Jahreszahl.
 
 *Beispiel:*
@@ -1987,7 +1987,7 @@ Felder des Eingabetyps "Datierungsangabe" sind Listenfelder, die jeweils mehrere
 
 Die Jahresangaben *begin* und *end* sind wiederum Objekte, die aus zwei Unterfeldern bestehen:
 
-* *inputType*: Die Zeitrechnung. Mögliche Werte sind: *bce* (v. Chr), *ce* (n. Chr.), *bp* (BP).
+* *inputType*: Die Zeitrechnung. Mögliche Werte sind: *bce* (v. Chr.), *ce* (n. Chr.), *bp* (BP).
 * *inputYear*: Die Jahreszahl.
 
 *Beispiel:*

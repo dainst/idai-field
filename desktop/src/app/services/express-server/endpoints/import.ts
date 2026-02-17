@@ -90,7 +90,7 @@ async function getImporterOptions(format: ImporterFormat, mergeMode: boolean, pe
     const options: ImporterOptions = {
         format,
         mergeMode,
-        permitDeletions,
+        permitDeletions: permitDeletions && mergeMode,
         selectedOperationId: await getOperationId(operationIdentifier, datastore),
         ignoreUnconfiguredFields,
         selectedCategory: category,

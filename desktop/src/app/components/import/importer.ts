@@ -177,9 +177,8 @@ export module Importer {
 
         const selectedCategory = options.format === 'csv' ? options.selectedCategory : undefined;
         const separator = options.format === 'csv' ? options.separator : undefined;
-        const operationId_ = options.mergeMode ? '' : options.selectedOperationId;
 
-        const parse = createParser(options.format, operationId_, selectedCategory, separator);
+        const parse = createParser(options.format, selectedCategory, separator);
         const documents: Document[] = [];
 
         (await parse(fileContent)).forEach((resultDocument: Document) => documents.push(resultDocument));
@@ -206,14 +205,13 @@ export module Importer {
     }
 
 
-    function createParser(format: ImporterFormat, operationId: string, selectedCategory?: CategoryForm,
-                          separator?: string): any {
+    function createParser(format: ImporterFormat, selectedCategory?: CategoryForm, separator?: string): any {
 
         switch (format) {
             case 'csv':
                 if (!selectedCategory) throw 'Selected category must be set for csv import';
                 if (!separator) throw 'Separator must be set for csv import';
-                return CsvParser.build(selectedCategory, operationId, separator);
+                return CsvParser.build(selectedCategory, separator);
             case 'geojson-gazetteer':
                 return GeojsonParser.getParse(
                     GazGeojsonParserAddOn.preValidateAndTransformFeature,

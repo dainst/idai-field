@@ -2384,6 +2384,8 @@ Query parameters:
 * *category (string)*: The name of the category to which the data to be imported belongs. Only required for CSV import. Corresponds to the dropdown field "Category" in the user interface. (Default value: "Project")
 * *operation (string)*: The identifier of an operation to which the imported resources are to be assigned. Corresponds to the dropdown field "Assign data to an operation" in the user interface. (Default value: not set)
 * *separator (string)*: The separator used in the CSV data. Only required for CSV import. Corresponds to the input field "Field separator" in the user interface. (Default value: ",")
+* *command (string)*: Specifies whether the import should be started immediately or whether the import data should be queued for an import process that can be started later with another request to the same API endpoint. Possible values are "start" to execute the import and "add" to add the data from the request body to the import process identified by the ID in the query parameter "importId". (Default value: "start")
+* *importId (string)*: Specifies which import process the request refers to. Only required if CSV data is added across multiple requests with *command=add*.
 
 
 ### GET /export/{format}

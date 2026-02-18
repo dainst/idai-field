@@ -2390,6 +2390,8 @@ Query-Parameter:
 * *category (String)*: Der Name der Kategorie, der die zu importierenden Daten angehören. Nur erforderlich beim CSV-Import. Entspricht dem Auswahlfeld "Kategorie" in der Benutzeroberfläche. (Standardwert: "Project")
 * *operation (String)*: Der Bezeichner einer Maßnahme, der die importierten Ressourcen zugeordnet werden sollen. Entspricht dem Auswahlfeld "Daten einer Maßnahme zuordnen" in der Benutzeroberfläche. (Standardwert: nicht gesetzt)
 * *separator (String)*: Das Trennzeichen, das in den CSV-Daten verwendet wird. Nur erforderlich beim CSV-Import. Entspricht dem Eingabefeld "Feldtrennzeichen" in der Benutzeroberfläche. (Standardwert: ",")
+* *command (String)*: Gibt an, ob der Import unmittelbar gestartet oder die Importdaten für einen Importvorgang vorgemerkt werden sollen, der später mit einer weiteren Anfrage an den gleichen API-Endpunkt gestartet werden kann. Mögliche Werte sind "start" für die Durchführung des Imports und "add" für das Hinzufügen der Daten des Request-Bodys zu demjenigen Importvorgang, der durch die ID im Query-Parameter "importId" identifiziert wird. (Standardwert: "start")
+* *importId (String)*: Gibt an, auf welchen Importvorgang sich die Anfrage bezieht. Nur erforderlich, wenn über mehrere Anfragen hinweg CSV-Daten mit *command=add* hinzugefügt werden.
 
 
 ### GET /export/{format}

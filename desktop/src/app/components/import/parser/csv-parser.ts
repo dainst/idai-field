@@ -16,7 +16,7 @@ export module CsvParser {
     };
 
 
-    const insertRelations = assoc(
+    const insertRelations = assoc( 
         'relations',
         (relations: Resource.Relations|undefined) => relations ? relations : {}
     );

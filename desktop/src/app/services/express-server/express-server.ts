@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
+import { Map } from 'tsfun';
 import { ImageStore, ImageVariant, FileInfo, ConfigurationSerializer, ConfigReader, Datastore, ProjectConfiguration,
-    RelationsManager, IdGenerator, ObserverUtil } from 'idai-field-core';
+    RelationsManager, IdGenerator, ObserverUtil, Document } from 'idai-field-core';
 import { SettingsProvider } from '../settings/settings-provider';
 import { exportConfiguration } from './endpoints/configuration';
 import { exportData } from './endpoints/export';
@@ -39,6 +40,7 @@ export class ExpressServer {
     private imageUploader: ImageUploader;
     private uploadStatus: UploadStatus;
     private apiObservers: Array<Observer<ApiState>> = [];
+    private preparedImportDocuments: Map<Array<Document>> = {};
 
 
     constructor(private imagestore: ImageStore,
@@ -207,8 +209,8 @@ export class ExpressServer {
 
             ObserverUtil.notify(this.apiObservers, 'import');
             await AngularUtility.refresh();
-            await importData(request, response, this.projectConfiguration, this.datastore, this.relationsManager,
-                this.idGenerator, this.settingsProvider.getSettings(), this.messagesDictionary
+            await importData(request, response, this.preparedImportDocuments, this.projectConfiguration, this.datastore,
+                this.relationsManager, this.idGenerator, this.settingsProvider.getSettings(), this.messagesDictionary
             );
             ObserverUtil.notify(this.apiObservers, 'none');
         });

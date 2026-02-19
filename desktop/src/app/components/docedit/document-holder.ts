@@ -140,6 +140,7 @@ export class DocumentHolder {
         this.validator.assertHasIsRecordedIn(this.clonedDocument);
         Validations.assertNoFieldsMissing(this.clonedDocument, this.projectConfiguration, this.allowEmptyFields);
         Validations.assertMaxCharactersRespected(this.clonedDocument, this.projectConfiguration);
+        Validations.assertNoUnallowedCharactersUsed(this.clonedDocument, this.projectConfiguration);
         Validations.assertCorrectnessOfNumericalValues(this.clonedDocument, this.projectConfiguration, true,
             this.oldVersion);
         Validations.assertCorrectnessOfUrls(this.clonedDocument, this.projectConfiguration, this.oldVersion);

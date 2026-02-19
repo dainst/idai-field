@@ -214,6 +214,9 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN = 'docedit.validation.error.noRecordedIn';
     public static DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET = 'docedit.validation.error.noRecordedInTarget';
     public static DOCEDIT_VALIDATION_ERROR_MAX_CHARACTERS_EXCEEDED = 'docedit.validation.error.maxCharactersExceeded';
+    public static DOCEDIT_VALIDATION_ERROR_UNALLOWED_CHARACTER_IN_FIELD = 'docedit.validation.error.unallowedCharacterInField';
+    public static DOCEDIT_VALIDATION_ERROR_UNALLOWED_CHARACTER_IN_FIELDS = 'docedit.validation.error.unallowedCharacterInFields';
+    
 
     // Images Package
     public static IMAGES_SUCCESS_IMAGES_UPLOADED = 'images.success.imagesUploaded';
@@ -978,6 +981,14 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_MAX_CHARACTERS_EXCEEDED] = {
             content: $localize `:@@messages.docedit.validation.error.maxCharactersExceeded:Im Feld \'[1]\' dürfen maximal [2] Zeichen eingetragen werden.`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_UNALLOWED_CHARACTER_IN_FIELD] = {
+            content: $localize `:@@messages.docedit.validation.error.unallowedCharacterInField:Das Zeichen \';\' ist im Feld \'[0]\' nicht erlaubt.`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_UNALLOWED_CHARACTER_IN_FIELDS] = {
+            content: $localize `:@@messages.docedit.validation.error.unallowedCharacterInFields:Das Zeichen \';\' ist in den folgenden Feldern nicht erlaubt: [0]`,
             level: 'danger'
         };
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN] = {

@@ -294,7 +294,9 @@ export module Validations {
     export function assertNoFieldsMissing(document: Document|NewDocument, projectConfiguration: ProjectConfiguration,
                                           allowEmptyFields: string[] = []): void {
 
-        const missingProperties = Validations.getMissingProperties(document.resource, projectConfiguration, allowEmptyFields);
+        const missingProperties: string[] = Validations.getMissingProperties(
+            document.resource, projectConfiguration, allowEmptyFields
+        );
 
         if (missingProperties.length > 0) {
             throw [
@@ -317,6 +319,21 @@ export module Validations {
                 document.resource.category,
                 result.fieldName,
                 result.maxCharacters
+            ];
+        }
+    }
+
+
+    export function assertNoUnallowedCharactersUsed(document: Document|NewDocument,
+                                                    projectConfiguration: ProjectConfiguration): void {
+
+        const result: string[] = Validations.validateCharacters(document.resource, projectConfiguration);
+
+        if (result.length) {
+            throw [
+                ValidationErrors.UNALLOWED_CHARACTERS,
+                document.resource.category,
+                result.join(', ')
             ];
         }
     }
@@ -393,7 +410,7 @@ export module Validations {
 
 
     export function getMissingProperties(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration,
-                                         allowEmptyFields: string[]) {
+                                         allowEmptyFields: string[]): string[] {
 
         const missingFields: string[] = [];
         const fieldDefinitions: Array<Field>
@@ -431,6 +448,23 @@ export module Validations {
         }
 
         return undefined;
+    }
+
+
+    export function validateCharacters(resource: Resource|NewResource,
+                                       projectConfiguration: ProjectConfiguration): string[] {
+
+        const result: string[] = [];
+
+        const fieldDefinitions: Array<Field>
+            = CategoryForm.getFields(projectConfiguration.getCategory(resource.category));
+
+        for (let fieldDefinition of fieldDefinitions) {
+            const fieldValue = resource[fieldDefinition.name];
+            if (Field.hasUnallowedCharacters(fieldValue, fieldDefinition)) result.push(fieldDefinition.name);
+        }
+
+        return result;
     }
 
 

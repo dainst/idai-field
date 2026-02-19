@@ -17,7 +17,7 @@ describe('Validations', () => {
                 groups: [{
                     name: 'stem', fields: [
                         { name: 'id' },
-                        { name: 'identifier' },
+                        { name: 'identifier', inputType: 'identifier' },
                         { name: 'category' },
                         { name: 'optional' },
                         { name: 'mandatory', mandatory: true },
@@ -1103,6 +1103,29 @@ describe('Validations', () => {
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
                 [ValidationErrors.MAX_CHARACTERS_EXCEEDED, 'T', 'shortInput', 10]
+            );
+        }
+    });
+
+
+    test('should report fields with unallowed characters', async () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                identifier: 'identifier;with;semicolons',
+                category: 'T',
+                mandatory: 'm',
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            Validations.assertNoUnallowedCharactersUsed(document as any, projectConfiguration);
+            throw new Error('Test failure');
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(
+                [ValidationErrors.UNALLOWED_CHARACTERS, 'T', 'identifier']
             );
         }
     });

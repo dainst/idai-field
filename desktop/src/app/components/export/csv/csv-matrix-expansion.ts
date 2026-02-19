@@ -73,7 +73,28 @@ export module CSVMatrixExpansion {
                     headingsAndMatrix,
                     projectLanguages,
                     undefined,
-                    CSVHeadingsExpansion.expandI18nStringArrayHeadings,
+                    CSVHeadingsExpansion.expandStringArrayHeadings,
+                    expandI18nStrings
+                )
+            );
+        };
+    }
+
+
+    export function expandStringArray(fieldDefinitions: Array<Field>) {
+
+        return (headingsAndMatrix: HeadingsAndMatrix) => {
+
+            return flow(
+                headingsAndMatrix,
+                left,
+                CsvExportUtils.getIndices(fieldDefinitions, Field.InputType.SIMPLE_MULTIINPUT),
+                reverse,
+                CSVExpansion.objectArrayExpand(
+                    headingsAndMatrix,
+                    [],
+                    undefined,
+                    CSVHeadingsExpansion.expandStringArrayHeadings,
                     expandI18nStrings
                 )
             );

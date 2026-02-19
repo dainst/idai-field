@@ -33,7 +33,7 @@ export class ExpressServer {
     private relationsManager: RelationsManager;
     private projectConfiguration: ProjectConfiguration;
     private apiObservers: Array<Observer<ApiState>> = [];
-    private preparedImportDocuments: Map<Array<Document>> = {};
+    private preparedImportDocuments: Map<Map<Array<Document>>> = { csv: {}, native: {}, geojson: {} };
 
 
     constructor(private imagestore: ImageStore,

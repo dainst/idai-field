@@ -85,6 +85,12 @@ export module WarningFilters {
                 type: 'unfulfilledConditionFields'
             },
             {
+                label: translations.getTranslation('warnings.unallowedCharacterFields'),
+                constraintName: 'unallowedCharacterFields:exist',
+                count: 0,
+                type: 'unallowedCharacterFields'
+            },
+            {
                 label: translations.getTranslation('warnings.missingIdentifierPrefixes'),
                 constraintName: 'missingIdentifierPrefix:exist',
                 count: 0,

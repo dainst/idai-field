@@ -148,6 +148,18 @@ export module Field {
     }
 
 
+    export function hasUnallowedCharacters(fieldData: any, field: Field): boolean {
+
+        if ([Field.InputType.IDENTIFIER, Field.InputType.VALUELIST_MULTIINPUT].includes(field.inputType)) {
+            return isArray(fieldData)
+                ? fieldData.find(entry => isString(entry) ? entry.includes(';') : entry.value.includes(';'))
+                : fieldData.includes(';');
+        }
+
+        return false;
+    }
+
+
     export function isFilled(field: Field, resource: Resource): boolean {
 
         if (Field.InputType.EDITABLE_RELATION_INPUT_TYPES.includes(field.inputType)) {

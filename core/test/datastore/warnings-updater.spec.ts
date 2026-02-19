@@ -26,8 +26,8 @@ function getMockProjectConfiguration(categoryDefinition, parentCategoryDefinitio
         mockProjectConfiguration.getCategories.and.returnValue([{
             item: parentCategoryDefinition, trees: [
                 { item: categoryDefinition, trees: [] }
-            ] }
-        ]);
+            ]
+        }]);
     } else {
         mockProjectConfiguration.getCategories.and.returnValue([{ item: categoryDefinition, trees: [] }]);
     }
@@ -75,6 +75,10 @@ describe('WarningsUpdater', () => {
             groups: [
                 {
                     fields: [
+                        {
+                            name: 'identifier',
+                            inputType: Field.InputType.IDENTIFIER
+                        },
                         {
                             name: 'shortDescription',
                             inputType: Field.InputType.INPUT
@@ -124,7 +128,7 @@ describe('WarningsUpdater', () => {
             createDocument('3')
         ];
         documents[0]._conflicts = ['123'];
-        documents[0].resource.identifier = '1';
+        documents[0].resource.identifier = '1;';
         documents[0].resource.number = 'text';
         documents[0].resource.unconfiguredField = 'text';
         documents[0].resource.state = 'planned';
@@ -138,7 +142,7 @@ describe('WarningsUpdater', () => {
         documents[2].resource.identifier = 'C3';
         documents[2].resource.number = 1;
         documents[2].resource.mandatoryField = 'text';
-        documents[2].resource.relations.mandatoryRelation = ['1'];
+        documents[2].resource.relations.mandatoryRelation = ['C2'];
         documents[2].resource.state = 'completed';
         documents[2].resource.date = { value: '01.01.1990', isRange: false };
 
@@ -153,6 +157,7 @@ describe('WarningsUpdater', () => {
             invalidFields: ['number'],
             missingMandatoryFields: ['mandatoryField', 'mandatoryRelation'],
             unfulfilledConditionFields: ['conditionalField'],
+            unallowedCharacterFields: ['identifier'],
             conflicts: true,
             missingIdentifierPrefix: true,
             invalidProcessState: true
@@ -162,6 +167,7 @@ describe('WarningsUpdater', () => {
             invalidFields: [],
             missingMandatoryFields: [],
             unfulfilledConditionFields: [],
+            unallowedCharacterFields: [],
             unconfiguredCategory: true
         });
         expect(documents[2].warnings).toBeUndefined();

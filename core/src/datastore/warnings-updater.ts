@@ -26,8 +26,8 @@ import { Condition } from '../model/configuration/condition';
 export module WarningsUpdater {
 
     const FIELDS_TO_SKIP = [
-        Resource.ID, Resource.IDENTIFIER, Resource.CATEGORY, Resource.RELATIONS, FieldResource.SCANCODE,
-        ImageResource.GEOREFERENCE, ImageResource.ORIGINAL_FILENAME
+        Resource.ID, Resource.CATEGORY, Resource.RELATIONS, FieldResource.SCANCODE, ImageResource.GEOREFERENCE,
+        ImageResource.ORIGINAL_FILENAME
     ].concat(Relation.Hierarchy.ALL)
     .concat(Relation.Image.ALL);
 
@@ -511,12 +511,19 @@ export module WarningsUpdater {
     function updateWarningsForField(warnings: Warnings, fieldName: string, field: Field, fieldContent: any,
                                     resource: Resource, category: CategoryForm) {
 
+        if (fieldName === Resource.IDENTIFIER && category.name === 'Project') return;
+
         if (!field) {
             warnings.unconfiguredFields.push(fieldName);
         } else if (!Field.isValidFieldData(fieldContent, field)) {
             warnings.invalidFields.push(fieldName);
-        } else if (!Condition.isFulfilled(field.condition, resource, CategoryForm.getFields(category), 'field')) {
-            warnings.unfulfilledConditionFields.push(fieldName);
+        } else {
+            if (!Condition.isFulfilled(field.condition, resource, CategoryForm.getFields(category), 'field')) {
+                warnings.unfulfilledConditionFields.push(fieldName);
+            }
+            if (Field.hasUnallowedCharacters(fieldContent, field)) {
+                warnings.unallowedCharacterFields.push(fieldName);
+            }
         }
     }
 

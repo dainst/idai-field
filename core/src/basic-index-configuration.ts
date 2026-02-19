@@ -39,6 +39,8 @@ export const basicIndexConfiguration: Map<IndexDefinition> = {
     'unconfiguredFields:contain': { path: 'warnings.unconfiguredFields', pathArray: ['warnings', 'unconfiguredFields'], type: 'contain' },
     'unfulfilledConditionFields:exist': { path: 'warnings.unfulfilledConditionFields', pathArray: ['warnings', 'unfulfilledConditionFields'], type: 'exist' },
     'unfulfilledConditionFields:contain': { path: 'warnings.unfulfilledConditionFields', pathArray: ['warnings', 'unfulfilledConditionFields'], type: 'contain' },
+    'unallowedCharacterFields:exist': { path: 'warnings.unallowedCharacterFields', pathArray: ['warnings', 'unallowedCharacterFields'], type: 'exist' },
+    'unallowedCharacterFields:contain': { path: 'warnings.unallowedCharacterFields', pathArray: ['warnings', 'unallowedCharacterFields'], type: 'contain' },
     'outliers:exist': { path: 'warnings.outliers', pathArray: ['warnings', 'outliers'], type: 'exist' },
     'outlierValues:contain': { path: 'warnings.outliers.values', pathArray: ['warnings', 'outliers', 'values'], type: 'contain' },
     'missingRelationTargets:exist': { path: 'warnings.missingRelationTargets', pathArray: ['warnings', 'missingRelationTargets'], type: 'exist' },

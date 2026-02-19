@@ -62,6 +62,10 @@
                               i18n="@@navbar.taskbar.warnings.sectionTitle.unfulfilledConditionField">
                             Nicht erfüllte Anzeigebedingung des Feldes <b>{{getFieldLabel(section)}}</b>
                         </span>
+                        <span *ngIf="section.type === 'unallowedCharacterFields'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.unallowedCharacterField">
+                            Nicht erlaubtes Zeichen im Feld <b>{{getFieldLabel(section)}}</b>
+                        </span>
                         <span *ngIf="section.type === 'outliers' && section.outlierValues.length === 1"
                               i18n="@@navbar.taskbar.warnings.sectionTitle.outlierValues.single">
                             Ungültiger Wert im Feld <b>{{getFieldLabel(section)}}</b>
@@ -168,6 +172,10 @@
                         <span *ngIf="section.type === 'unfulfilledConditionFields'"
                               i18n="@@navbar.taskbar.warnings.info.unfulfilledConditionField">
                             Es sind Daten eingetragen, obwohl die Anzeigebedingung des Feldes nicht erfüllt ist.
+                        </span>
+                        <span *ngIf="section.type === 'unallowedCharacterFields'"
+                              i18n="@@navbar.taskbar.warnings.info.unallowedCharacterField">
+                            Das Zeichen <b>;</b> ist in Feldern des Eingabetyps <i>{{getInputTypeLabel(section)}}</i> nicht erlaubt.
                         </span>
                         <span *ngIf="section.type === 'outliers' && section.outlierValues.length === 1"
                               i18n="@@navbar.taskbar.warnings.info.outlierValues.single">
@@ -300,9 +308,9 @@
                     </span>
                     <span *ngIf="section.type === 'invalidFields' || section.type === 'missingMandatoryFields'
                             || section.type === 'unfulfilledConditionFields'
-                            || section.type === 'invalidRelationTargets' || section.type === 'missingIdentifierPrefix'
-                            || section.type === 'outliers' || section.type === 'nonUniqueIdentifier'
-                            || section.type === 'invalidProcessState'">
+                            || section.type === 'unallowedCharacterFields' || section.type === 'invalidRelationTargets'
+                            || section.type === 'missingIdentifierPrefix' || section.type === 'outliers'
+                            || section.type === 'nonUniqueIdentifier' || section.type === 'invalidProcessState'">
                         <button class="btn btn-primary edit-button"
                                 (click)="openDoceditModal(section)">
                             <span class="mdi mdi-pencil"></span>

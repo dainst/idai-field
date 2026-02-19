@@ -40,7 +40,7 @@ export class ExpressServer {
     private imageUploader: ImageUploader;
     private uploadStatus: UploadStatus;
     private apiObservers: Array<Observer<ApiState>> = [];
-    private preparedImportDocuments: Map<Array<Document>> = {};
+    private preparedImportDocuments: Map<Map<Array<Document>>> = { csv: {}, native: {}, geojson: {} };
 
 
     constructor(private imagestore: ImageStore,

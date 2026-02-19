@@ -1,4 +1,4 @@
-import { to, Map } from 'tsfun';
+import { to, Map, isEmpty } from 'tsfun';
 import { CategoryForm, Datastore, Document, IdGenerator, Named, ProjectConfiguration,
     RelationsManager } from 'idai-field-core';
 import { Importer, ImporterFormat, ImporterOptions, ImporterReport } from '../../../components/import/importer';
@@ -26,7 +26,7 @@ type ImportCommand = 'add'|'start';
 /**
  * @author Thomas Kleinke
  */
-export async function importData(request: any, response: any, preparedImportDocuments: Map<Array<Document>>,
+export async function importData(request: any, response: any, preparedImportDocuments: Map<Map<Array<Document>>>,
                                  projectConfiguration: ProjectConfiguration, datastore: Datastore,
                                  relationsManager: RelationsManager, idGenerator: IdGenerator, settings: Settings,
                                  messagesDictionary: MD) {
@@ -40,7 +40,7 @@ export async function importData(request: any, response: any, preparedImportDocu
 
         const options: ImporterOptions = await getImporterOptions(format, merge, permitDeletions,
             operationIdentifier, ignoreUnconfiguredFields, category, separator, datastore);
-        const documents: Array<Document> = await parse(request.body, options, preparedImportDocuments, importId);
+        const documents: Array<Document> = await parse(request.body, options, preparedImportDocuments[format], importId);
 
         if (command !== 'start') return response.status(200).send();
 
@@ -48,7 +48,7 @@ export async function importData(request: any, response: any, preparedImportDocu
             idGenerator, settings, options, documents
         );
 
-        if (importId && preparedImportDocuments[importId]) delete preparedImportDocuments[importId];
+        if (importId && preparedImportDocuments[format][importId]) delete preparedImportDocuments[format][importId];
 
         if (report.errors?.length) {
             response.status(400).send({
@@ -67,14 +67,16 @@ export async function importData(request: any, response: any, preparedImportDocu
 }
 
 
-async function parse(importData: any, options: ImporterOptions, documentsToImport: Map<Array<Document>>,
+async function parse(importData: any, options: ImporterOptions, preparedImportDocuments: Map<Array<Document>>,
                      importId?: string): Promise<Array<Document>> {
 
-    const documents: Array<Document> = await Importer.doParse(options, importData);
+    const documents: Array<Document> = !isEmpty(importData)
+        ? await Importer.doParse(options, importData)
+        : [];
 
     if (importId) {
-        documentsToImport[importId] = (documentsToImport[importId] ?? []).concat(documents);
-        return documentsToImport[importId];
+        preparedImportDocuments[importId] = (preparedImportDocuments[importId] ?? []).concat(documents);
+        return preparedImportDocuments[importId];
     } else {
         return documents;
     }

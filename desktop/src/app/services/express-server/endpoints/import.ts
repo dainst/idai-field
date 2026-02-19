@@ -1,4 +1,4 @@
-import { to, Map } from 'tsfun';
+import { to, Map, isEmpty } from 'tsfun';
 import { CategoryForm, Datastore, Document, IdGenerator, Named, ProjectConfiguration,
     RelationsManager } from 'idai-field-core';
 import { Importer, ImporterFormat, ImporterOptions, ImporterReport } from '../../../components/import/importer';
@@ -70,7 +70,9 @@ export async function importData(request: any, response: any, preparedImportDocu
 async function parse(importData: any, options: ImporterOptions, documentsToImport: Map<Array<Document>>,
                      importId?: string): Promise<Array<Document>> {
 
-    const documents: Array<Document> = await Importer.doParse(options, importData);
+    const documents: Array<Document> = !isEmpty(importData)
+        ? await Importer.doParse(options, importData)
+        : [];
 
     if (importId) {
         documentsToImport[importId] = (documentsToImport[importId] ?? []).concat(documents);

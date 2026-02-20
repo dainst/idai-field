@@ -164,7 +164,7 @@ export class RowComponent implements AfterViewChecked, OnChanges {
         return isObject(shortDescription)
             ? (shortDescription[this.selectedLanguage.code] ?? '')
             : !this.selectedLanguage || this.selectedLanguage.code === I18N.UNSPECIFIED_LANGUAGE
-                ? (shortDescription ?? '')
+                ? (shortDescription as string ?? '')
                 : '';
     }
 

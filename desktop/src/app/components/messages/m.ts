@@ -214,6 +214,9 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN = 'docedit.validation.error.noRecordedIn';
     public static DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET = 'docedit.validation.error.noRecordedInTarget';
     public static DOCEDIT_VALIDATION_ERROR_MAX_CHARACTERS_EXCEEDED = 'docedit.validation.error.maxCharactersExceeded';
+    public static DOCEDIT_VALIDATION_ERROR_UNALLOWED_CHARACTER_IN_FIELD = 'docedit.validation.error.unallowedCharacterInField';
+    public static DOCEDIT_VALIDATION_ERROR_UNALLOWED_CHARACTER_IN_FIELDS = 'docedit.validation.error.unallowedCharacterInFields';
+    
 
     // Images Package
     public static IMAGES_SUCCESS_IMAGES_UPLOADED = 'images.success.imagesUploaded';
@@ -226,6 +229,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMAGES_ERROR_FILEREADER = 'images.error.fileReader';
     public static IMAGES_ERROR_DUPLICATE_FILENAME = 'images.error.duplicateFilename';
     public static IMAGES_ERROR_DUPLICATE_FILENAMES = 'images.error.duplicateFilenames';
+    public static IMAGES_ERROR_UNALLOWED_CHARACTER_IN_FILENAME = 'images.error.unallowedCharacterInFilename';
     public static IMAGES_ERROR_UNMATCHED_WLD_FILES = 'images.error.unmatchedWldFiles';
     public static IMAGES_ERROR_EXPORT_FAILED = 'images.error.exportFailed';
     public static IMAGES_ERROR_DOWNLOAD_FAILED = 'images.error.downloadFailed';
@@ -980,6 +984,14 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: $localize `:@@messages.docedit.validation.error.maxCharactersExceeded:Im Feld \'[1]\' dürfen maximal [2] Zeichen eingetragen werden.`,
             level: 'danger'
         };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_UNALLOWED_CHARACTER_IN_FIELD] = {
+            content: $localize `:@@messages.docedit.validation.error.unallowedCharacterInField:Das Zeichen \';\' ist im Feld \'[0]\' nicht erlaubt.`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_UNALLOWED_CHARACTER_IN_FIELDS] = {
+            content: $localize `:@@messages.docedit.validation.error.unallowedCharacterInFields:Das Zeichen \';\' ist in den folgenden Feldern nicht erlaubt: [0]`,
+            level: 'danger'
+        };
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN] = {
             content: $localize `:@@messages.docedit.validation.error.noRecordedIn:Bitte wählen Sie eine Zielressource für die Relation \'Aufgenommen in Maßnahme\' aus.`,
             level: 'danger'
@@ -1026,6 +1038,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.IMAGES_ERROR_DUPLICATE_FILENAMES] = {
             content: $localize `:@@messages.images.error.duplicateFilenames:Die folgenden Bilddateien konnten nicht hinzugefügt werden, da Bilder mit identischen Dateinamen bereits existieren: [0]`,
+            level: 'danger'
+        };
+        this.msgs[M.IMAGES_ERROR_UNALLOWED_CHARACTER_IN_FILENAME] = {
+            content: $localize `:@@messages.images.error.unallowedCharacterInFilename:Die Bilddatei '\[0]\' konnte nicht hinzugefügt werden. Das Zeichen \';\' ist in Dateinamen nicht erlaubt.`,
             level: 'danger'
         };
         this.msgs[M.IMAGES_ERROR_UNMATCHED_WLD_FILES] = {

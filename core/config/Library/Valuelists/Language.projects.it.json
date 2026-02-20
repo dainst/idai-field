@@ -1530,7 +1530,7 @@
       "Siedlung": {
         "label": "Insediamento"
       },
-      "Baukomplex ": {
+      "Baukomplex": {
         "label": "Complesso edilizio"
       },
       "Einzelnes Bauwerk": {
@@ -1844,7 +1844,7 @@
   },
   "periods-Postumii-1": {
     "values": {
-      "Frühbronzezeitlich ": {
+      "Frühbronzezeitlich": {
         "label": "Bronzo antico"
       },
       "Bronzezeitlich": {
@@ -2216,7 +2216,7 @@
       "Graffito": {
         "label": "Graffito"
       },
-      "Aufschrift ": {
+      "Aufschrift": {
         "label": "Scritta"
       },
       "Stempel": {
@@ -2445,7 +2445,7 @@
         "label": "1B. Corinzia"
       },
       "Ionisch": {
-        "label": "1C. Greco-orientale"
+        "label": "1C. Ionio"
       },
       "Punisch": {
         "label": "1D. Punica"
@@ -2475,14 +2475,14 @@
   },
   "Pottery-Amphorae-Provenance-Postumii": {
     "values": {
-      "Westgriechisch ": {
+      "Westgriechisch": {
         "label": "2A. Greco-occidentale"
       },
       "MGS": {
         "label": "2B. MGS"
       },
       "Ionisch-adriatisch": {
-        "label": "2C. Greco-orientale"
+        "label": "2C. Ionio-adriatico"
       },
       "Attisch": {
         "label": "2D. Attica"
@@ -2870,7 +2870,7 @@
       "Siedlung": {
         "label": "Insediamento"
       },
-      "Baukomplex ": {
+      "Baukomplex": {
         "label": "Complesso edilizio"
       },
       "Einzelnes Bauwerk": {
@@ -3184,7 +3184,7 @@
   },
   "periods-Selinunt-1": {
     "values": {
-      "Frühbronzezeitlich ": {
+      "Frühbronzezeitlich": {
         "label": "Bronzo antico"
       },
       "Bronzezeitlich": {
@@ -3560,7 +3560,7 @@
       "Graffito": {
         "label": "Graffito"
       },
-      "Aufschrift ": {
+      "Aufschrift": {
         "label": "Scritta"
       },
       "Stempel": {
@@ -3889,7 +3889,7 @@
         "label": "1B. Corinzia"
       },
       "Ionisch": {
-        "label": "1C. Greco-orientale"
+        "label": "1C. Ionio"
       },
       "Punisch": {
         "label": "1D. Punica"
@@ -3928,14 +3928,14 @@
   },
   "Pottery-Amphorae-Provenance-Selinunt": {
     "values": {
-      "Westgriechisch ": {
+      "Westgriechisch": {
         "label": "2A. Greco-occidentale"
       },
       "MGS": {
         "label": "2B. MGS"
       },
       "Ionisch-adriatisch": {
-        "label": "2C. Greco-orientale"
+        "label": "2C. Ionio-adriatico"
       },
       "Attisch": {
         "label": "2D. Attica"
@@ -4710,7 +4710,7 @@
       "hellenisticPeriod": {
         "label": "periodo ellenistico"
       },
-      "imperialPeriod ": {
+      "imperialPeriod": {
         "label": "età imperiale"
       },
       "lateAntiquity": {
@@ -4868,7 +4868,7 @@
       "pebbles": {
         "label": "ciottioli"
       },
-      "limePlaster ": {
+      "limePlaster": {
         "label": "intonaco a calce"
       },
       "clayPlaster": {

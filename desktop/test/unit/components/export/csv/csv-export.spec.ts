@@ -11,6 +11,7 @@ export function makeFieldDefinitions(fieldNames: string[]) {
             inputType = Field.InputType.INPUT;
         }
         if (fieldName.startsWith('multiInput')) inputType = Field.InputType.MULTIINPUT;
+        if (fieldName.startsWith('simpleMultiInput')) inputType = Field.InputType.SIMPLE_MULTIINPUT;
         if (fieldName.startsWith('date')) inputType = Field.InputType.DATE;
         if (fieldName.startsWith('dimension')) inputType = Field.InputType.DIMENSION;
         if (fieldName.startsWith('weight')) inputType = Field.InputType.WEIGHT;
@@ -1087,6 +1088,42 @@ describe('CSVExport', () => {
         expect(result[2][10]).toBe('""');
         expect(result[2][11]).toBe('""');
         expect(result[2][12]).toBe('"K"');
+    });
+
+
+    test('expand simple string arrays', () => {
+
+        const t = makeFieldDefinitions(['identifier', 'simpleMultiInput1', 'simpleMultiInput2']);
+
+        const resources = [
+            ifResource('i1', 'identifier1', { en: 'shortDescription1' }, 'category'),
+            ifResource('i2', 'identifier2', { en: 'shortDescription2' }, 'category'),
+        ];
+        resources[0].simpleMultiInput1 = ['A', 'B'];
+        resources[0].simpleMultiInput2 = ['C'];
+        resources[1].simpleMultiInput1 = ['D', 'E'];
+        resources[1].simpleMultiInput2 = ['F', 'G', 'H'];
+
+        const result = CSVExport.createExportable(resources, t, [], ['de', 'en'], ',').exportData
+            .map(row => row.split(','));
+
+        expect(result[0][1]).toBe('"simpleMultiInput1.0"');
+        expect(result[0][2]).toBe('"simpleMultiInput1.1"');
+        expect(result[0][3]).toBe('"simpleMultiInput2.0"');
+        expect(result[0][4]).toBe('"simpleMultiInput2.1"');
+        expect(result[0][5]).toBe('"simpleMultiInput2.2"');
+
+        expect(result[1][1]).toBe('"A"');
+        expect(result[1][2]).toBe('"B"');
+        expect(result[1][3]).toBe('"C"');
+        expect(result[1][4]).toBe('""');
+        expect(result[1][5]).toBe('""');
+
+        expect(result[2][1]).toBe('"D"');
+        expect(result[2][2]).toBe('"E"');
+        expect(result[2][3]).toBe('"F"');
+        expect(result[2][4]).toBe('"G"');
+        expect(result[2][5]).toBe('"H"');
     });
 
 

@@ -285,6 +285,10 @@ export class AppComponent {
             $localize `:@@util.warnings.unfulfilledConditionFields:Nicht erfüllte Anzeigebedingungen`
         );
         this.utilTranslations.addTranslation(
+            'warnings.unallowedCharacterFields',
+            $localize `:@@util.warnings.unallowedCharacterFields:Nicht erlaubte Zeichen`
+        );
+        this.utilTranslations.addTranslation(
             'warnings.outlierValues',
             $localize `:@@util.warnings.outlierValues:Nicht in Werteliste enthaltene Werte`
         );

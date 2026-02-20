@@ -540,6 +540,7 @@ export class WarningsModalComponent {
                     case 'invalidFields':
                     case 'missingMandatoryFields':
                     case 'unfulfilledConditionFields':
+                    case 'unallowedCharacterFields':
                         this.sections = this.sections.concat(
                             await this.createSections(
                                 type as WarningType, document, document.warnings[type] as string[]

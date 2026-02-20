@@ -26,5 +26,6 @@ export module ValidationErrors {
     export const INVALID_MAP_LAYER_RELATION_VALUES = 'validationerror/invalidmaplayerrelationvalues';
     export const INVALID_WORKFLOW_RELATION_TARGETS = 'validationerror/invalidworkflowrelationtargets';
     export const MAX_CHARACTERS_EXCEEDED = 'validationerror/maxcharactersexceeded';
+    export const UNALLOWED_CHARACTERS = 'validationerror/unallowedcharacters';
     export const GENERIC_DATASTORE = 'importerrors/exec/genericdatastore';
 }

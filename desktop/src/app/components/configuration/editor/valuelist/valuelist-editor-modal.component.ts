@@ -214,7 +214,9 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
     public isValidValue(valueId: string): boolean {
 
-        return valueId && !Object.keys(this.getClonedValuelistDefinition().values).includes(valueId.trim());
+        return valueId
+            && !valueId.includes(';')
+            && !Object.keys(this.getClonedValuelistDefinition().values).includes(valueId.trim());
     }
 
 

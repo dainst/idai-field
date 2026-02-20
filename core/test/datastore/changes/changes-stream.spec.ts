@@ -1,5 +1,6 @@
 import { ChangesStream } from '../../../src/datastore/changes/changes-stream';
-import { Document } from '../../../src/model';
+import { Field } from '../../../src/model/configuration/field';
+import { Document } from '../../../src/model/document/document';
 
 
 /**
@@ -61,11 +62,22 @@ describe('ChangesStream', () => {
         datastore = jasmine.createSpyObj('MockDatastore', ['find'])
         datastore.find.and.returnValue(Promise.resolve({ documents: [] }));
 
+        const category = {
+            name: 'Object',
+            groups: [{
+                name: 'stem',
+                fields: [{
+                    name: 'identifier',
+                    inputType: Field.InputType.IDENTIFIER
+                }]
+            }]
+        };
+
         projectConfiguration = jasmine.createSpyObj(['MockProjectConfiguration'],
             ['getCategory', 'getRegularCategories', 'getCategoryWithSubcategories']);
-        projectConfiguration.getCategory.and.returnValue({ name: 'Object', groups: [] });
+        projectConfiguration.getCategory.and.returnValue(category);
         projectConfiguration.getRegularCategories.and.returnValue([]);
-        projectConfiguration.getCategoryWithSubcategories.and.returnValue([{ name: 'Object', groups: [] }]);
+        projectConfiguration.getCategoryWithSubcategories.and.returnValue([category]);
 
         rcs = new ChangesStream(
             pouchdbDatastore,

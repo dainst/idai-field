@@ -19,6 +19,8 @@ import { createDisplayVariant } from '../../../services/imagestore/manipulation/
 import { ImagesState } from '../overview/view/images-state';
 import { getAsynchronousFs } from '../../../services/get-asynchronous-fs';
 import { getSystemTimezone } from '../../../util/timezones';
+import { Validations } from '../../../model/validations';
+import { ValidationErrors } from '../../../model/validation-errors';
 
 const path = window.require('path');
 
@@ -257,16 +259,19 @@ export class ImageUploader {
                              parseDraughtsmen?: boolean): Promise<any> {
 
         const buffer: Buffer = await this.readFile(filePath);
+        const fileName: string = path.basename(filePath);
         
         let document: ImageDocument;
         
         try {
             document = await this.createImageDocument(
-                path.basename(filePath), buffer, metadata, depictsRelationTarget, parseDraughtsmen
+                fileName, buffer, metadata, depictsRelationTarget, parseDraughtsmen
             );
         } catch (err) {
             if (isArray(err) && err[0] === ImageManipulationErrors.MAX_INPUT_PIXELS_EXCEEDED) {
                 throw [M.IMAGESTORE_ERROR_UPLOAD_PIXEL_LIMIT_EXCEEDED, path.basename(filePath), err[1]];
+            } else if (isArray(err) && err[0] === ValidationErrors.UNALLOWED_CHARACTERS) {
+                throw [M.IMAGES_ERROR_UNALLOWED_CHARACTER_IN_FILENAME, fileName];
             } else {
                 console.error(err);
                 throw [M.IMAGESTORE_ERROR_UPLOAD, path.basename(filePath)];
@@ -316,6 +321,8 @@ export class ImageUploader {
                 }
             }
         };
+
+        Validations.assertNoUnallowedCharactersUsed(document, this.projectConfiguration);
 
         await this.setOptionalMetadata(document, extendedMetadata);
 

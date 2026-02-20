@@ -47,6 +47,16 @@ export module MessagesConversion {
             msgWithParams[1] = labels.get(projectConfiguration.getCategory(msgWithParams[1]));
         }
 
+        if (msg === ValidationErrors.UNALLOWED_CHARACTERS) {
+            if (msgWithParams.length > 2 && msgWithParams[2].includes(',')) {
+                msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_UNALLOWED_CHARACTER_IN_FIELDS;
+                msgWithParams[1] = replaceFieldNamesWithLabels(msgWithParams[2], msgWithParams[1], projectConfiguration, labels);
+            } else {
+                msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_UNALLOWED_CHARACTER_IN_FIELD;
+                msgWithParams[1] = labels.getFieldLabel(projectConfiguration.getCategory(msgWithParams[1]), msgWithParams[2]);
+            }
+        }
+
         if (msg === ValidationErrors.INVALID_NUMERICAL_VALUES) {
             if (msgWithParams.length > 2 && msgWithParams[2].includes(',')) {
                 msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES;

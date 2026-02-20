@@ -6,6 +6,7 @@ export type WarningType = 'unconfiguredCategory'
     |'invalidFields'
     |'missingMandatoryFields'
     |'unfulfilledConditionFields'
+    |'unallowedCharacterFields'
     |'outliers'
     |'missingRelationTargets'
     |'invalidRelationTargets'
@@ -24,6 +25,7 @@ export interface Warnings {
     invalidFields: string[];
     missingMandatoryFields?: string[];
     unfulfilledConditionFields?: string[];
+    unallowedCharacterFields?: string[];
     outliers?: OutlierWarnings;
     missingRelationTargets?: RelationTargetWarnings;
     invalidRelationTargets?: RelationTargetWarnings;
@@ -63,6 +65,7 @@ export module Warnings {
             || warnings.invalidFields.length > 0
             || warnings.missingMandatoryFields.length > 0
             || warnings.unfulfilledConditionFields.length > 0
+            || warnings.unallowedCharacterFields.length > 0
             || warnings.outliers !== undefined
             || warnings.missingRelationTargets !== undefined
             || warnings.invalidRelationTargets !== undefined
@@ -83,7 +86,8 @@ export module Warnings {
             unconfiguredFields: [],
             invalidFields: [],
             missingMandatoryFields: [],
-            unfulfilledConditionFields: []
+            unfulfilledConditionFields: [],
+            unallowedCharacterFields: []
         };
     }
 }

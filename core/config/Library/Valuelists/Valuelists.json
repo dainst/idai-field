@@ -9932,7 +9932,7 @@
     "createdBy": "CSGIS",
     "values": {
       "Siedlung": {},
-      "Baukomplex ": {},
+      "Baukomplex": {},
       "Einzelnes Bauwerk": {},
       "Bestattungsplatz": {},
       "Produktionsplatz": {},
@@ -10083,7 +10083,7 @@
     "createdBy": "CSGIS",
     "creationDate": "15-03-2021",
     "values": {
-      "Frühbronzezeitlich ": {},
+      "Frühbronzezeitlich": {},
       "Bronzezeitlich": {},
       "Eisenzeitlich": {},
       "Archaisch": {},
@@ -10346,7 +10346,7 @@
       "Eingetaucht": {},
       "Bemalt": {},
       "Graffito": {},
-      "Aufschrift ": {},
+      "Aufschrift": {},
       "Stempel": {},
       "Anderes": {}
     }
@@ -10921,7 +10921,7 @@
     "createdBy": "CSGIS",
     "creationDate": "15-03-2021",
     "values": {
-      "Westgriechisch ": {},
+      "Westgriechisch": {},
       "MGS": {},
       "Ionisch-adriatisch": {},
       "Attisch": {},
@@ -14693,7 +14693,7 @@
       "einschalig": {},
       "geschüttet (bei Fundament)": {},
       "zweischalig mit Mauerkern": {},
-      "zweischalig ohne Mauerkern ": {},
+      "zweischalig ohne Mauerkern": {},
       "nicht anwendbar": {}
     },
     "order": [
@@ -15204,7 +15204,7 @@
     "createdBy": "Melanie Jonasch / Fabian Riebschläger",
     "values": {
       "Siedlung": {},
-      "Baukomplex ": {},
+      "Baukomplex": {},
       "Einzelnes Bauwerk": {},
       "Bestattungsplatz": {},
       "Produktionsplatz": {},
@@ -15355,7 +15355,7 @@
     "createdBy": "Melanie Jonasch / Fabian Riebschläger",
     "creationDate": "26-6-2020",
     "values": {
-      "Frühbronzezeitlich ": {},
+      "Frühbronzezeitlich": {},
       "Bronzezeitlich": {},
       "Eisenzeitlich": {},
       "Archaisch": {},
@@ -15615,7 +15615,7 @@
       "Eingetaucht": {},
       "Bemalt": {},
       "Graffito": {},
-      "Aufschrift ": {},
+      "Aufschrift": {},
       "Stempel": {},
       "Anderes": {}
     }
@@ -16346,7 +16346,7 @@
     "createdBy": "Melanie Jonasch / Fabian Riebschläger",
     "creationDate": "",
     "values": {
-      "Westgriechisch ": {},
+      "Westgriechisch": {},
       "MGS": {},
       "Ionisch-adriatisch": {},
       "Attisch": {},
@@ -17342,7 +17342,7 @@
       "ironAge": {},
       "greekPeriod": {},
       "hellenisticPeriod": {},
-      "imperialPeriod ": {},
+      "imperialPeriod": {},
       "lateAntiquity": {},
       "middleAges": {},
       "modernPeriod": {},
@@ -17451,7 +17451,7 @@
       "terrakotta": {},
       "wood": {},
       "pebbles": {},
-      "limePlaster ": {},
+      "limePlaster": {},
       "clayPlaster": {},
       "cement": {},
       "Tesserae": {}
@@ -17834,11 +17834,11 @@
       "Puzzolanmörtel": {},
       "Zementmörtel": {},
       "Erde / Lehm": {},
-      "Gips ": {},
+      "Gips": {},
       "Glas": {},
       "Kalk": {},
       "Puzzolanerde": {},
-      "Sand ": {},
+      "Sand": {},
       "Ton": {},
       "Pflaster": {},
       "Gipspflaster": {},
@@ -17869,11 +17869,11 @@
       "Lesesteinverband / Feldsteinmauerwerk": {},
       "Polygonalmauerwerk": {},
       "Quadermauerwerk": {},
-      "Trapezoidalmauerwerk  ": {},
+      "Trapezoidalmauerwerk": {},
       "Lehmziegelmauerwerk": {},
-      "Ziegelmauerwerk  ": {},
+      "Ziegelmauerwerk": {},
       "Gußmauerwerk / opus caementitium": {},
-      "Mischverband / opus mixtum  ": {},
+      "Mischverband / opus mixtum": {},
       "Verschalung": {},
       "opus incertum": {},
       "opus latericum": {},

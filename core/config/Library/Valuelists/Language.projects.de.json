@@ -11153,7 +11153,7 @@
       "Siedlung": {
         "label": "Siedlung"
       },
-      "Baukomplex ": {
+      "Baukomplex": {
         "label": "Baukomplex"
       },
       "Einzelnes Bauwerk": {
@@ -11475,7 +11475,7 @@
   },
   "periods-Postumii-1": {
     "values": {
-      "Frühbronzezeitlich ": {
+      "Frühbronzezeitlich": {
         "label": "Frühbronzezeit"
       },
       "Bronzezeitlich": {
@@ -12087,7 +12087,7 @@
       "Graffito": {
         "label": "Graffito"
       },
-      "Aufschrift ": {
+      "Aufschrift": {
         "label": "Aufschrift"
       },
       "Stempel": {
@@ -13352,7 +13352,7 @@
   },
   "Pottery-Amphorae-Provenance-Postumii": {
     "values": {
-      "Westgriechisch ": {
+      "Westgriechisch": {
         "label": "2A. Westgriechisch"
       },
       "MGS": {
@@ -18330,7 +18330,7 @@
       "zweischalig mit Mauerkern": {
         "label": "zweischalig mit Mauerkern"
       },
-      "zweischalig ohne Mauerkern ": {
+      "zweischalig ohne Mauerkern": {
         "label": "zweischalig ohne Mauerkern "
       },
       "nicht anwendbar": {
@@ -18711,7 +18711,7 @@
       "Siedlung": {
         "label": "Siedlung"
       },
-      "Baukomplex ": {
+      "Baukomplex": {
         "label": "Baukomplex"
       },
       "Einzelnes Bauwerk": {
@@ -19033,7 +19033,7 @@
   },
   "periods-Selinunt-1": {
     "values": {
-      "Frühbronzezeitlich ": {
+      "Frühbronzezeitlich": {
         "label": "Frühbronzezeit"
       },
       "Bronzezeitlich": {
@@ -19636,7 +19636,7 @@
       "Graffito": {
         "label": "Graffito"
       },
-      "Aufschrift ": {
+      "Aufschrift": {
         "label": "Aufschrift"
       },
       "Stempel": {
@@ -21157,7 +21157,7 @@
   },
   "Pottery-Amphorae-Provenance-Selinunt": {
     "values": {
-      "Westgriechisch ": {
+      "Westgriechisch": {
         "label": "2A. Westgriechisch"
       },
       "MGS": {
@@ -22415,7 +22415,7 @@
       "hellenisticPeriod": {
         "label": "Hellenismus"
       },
-      "imperialPeriod ": {
+      "imperialPeriod": {
         "label": "Kaiserzeit"
       },
       "lateAntiquity": {
@@ -22573,7 +22573,7 @@
       "pebbles": {
         "label": "Kiesel"
       },
-      "limePlaster ": {
+      "limePlaster": {
         "label": "Kalkputz"
       },
       "clayPlaster": {
@@ -23327,7 +23327,7 @@
       "Erde / Lehm": {
         "label": "Erde / Lehm"
       },
-      "Gips ": {
+      "Gips": {
         "label": "Gips "
       },
       "Glas": {
@@ -23339,7 +23339,7 @@
       "Puzzolanerde": {
         "label": "Puzzolanerde"
       },
-      "Sand ": {
+      "Sand": {
         "label": "Sand "
       },
       "Ton": {
@@ -23418,19 +23418,19 @@
       "Quadermauerwerk": {
         "label": "Quadermauerwerk"
       },
-      "Trapezoidalmauerwerk  ": {
+      "Trapezoidalmauerwerk": {
         "label": "Trapezoidalmauerwerk"
       },
       "Lehmziegelmauerwerk": {
         "label": "Lehmziegelmauerwerk"
       },
-      "Ziegelmauerwerk  ": {
+      "Ziegelmauerwerk": {
         "label": "Ziegelmauerwerk"
       },
       "Gußmauerwerk / opus caementitium": {
         "label": "Gußmauerwerk / opus caementitium"
       },
-      "Mischverband / opus mixtum  ": {
+      "Mischverband / opus mixtum": {
         "label": "Mischverband / opus mixtum"
       },
       "Verschalung": {

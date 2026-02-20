@@ -56,8 +56,7 @@ export class Validator {
     public assertGeometryIsValid(document: Document) {
 
         if (document.resource.geometry) {
-            const errWithParam: string[]|null
-                = Validations.validateStructureOfGeometry(document.resource.geometry);
+            const errWithParam: string[]|null = Validations.validateGeometry(document, this.projectConfiguration);
             if (errWithParam) throw(errWithParam);
         }
     }

@@ -2,7 +2,7 @@ import { is, isArray, isString, and, isObject, to, equal, intersect } from 'tsfu
 import { Dating, Measurement, Literature, Document, NewDocument, NewResource, Resource, OptionalRange,
     CategoryForm, Tree, FieldGeometry, ProjectConfiguration, Named, Field, Relation, validateFloat,
     validateUnsignedFloat, validateUnsignedInt, validateUrl, validateInt, Composite,  DateSpecification,
-    DateValidationResult, Condition } from 'idai-field-core';
+    DateValidationResult, Condition, FieldGeometryType, FieldResource } from 'idai-field-core';
 import { ValidationErrors } from './validation-errors';
 
 
@@ -360,52 +360,6 @@ export module Validations {
         if (intersect(carriedOutOnTargetIds)(resultsInTargetIds).length) {
             throw [ValidationErrors.INVALID_WORKFLOW_RELATION_TARGETS];
         }
-    }
-
-
-    export function validateStructureOfGeometry(geometry: FieldGeometry): Array<string>|null {
-
-        if (!geometry) return null;
-
-        if (!geometry.type) return [ValidationErrors.MISSING_GEOMETRY_TYPE];
-        if (!geometry.coordinates) return [ValidationErrors.MISSING_COORDINATES];
-
-        switch(geometry.type) {
-            case 'Point':
-                if (!Validations.validatePointCoordinates(geometry.coordinates)) {
-                    return [ValidationErrors.INVALID_COORDINATES, 'Point'];
-                }
-                break;
-            case 'MultiPoint':
-                if (!Validations.validateMultiPointCoordinates(geometry.coordinates)) {
-                    return [ValidationErrors.INVALID_COORDINATES, 'MultiPoint'];
-                }
-                break;
-            case 'LineString':
-                if (!Validations.validatePolylineCoordinates(geometry.coordinates)) {
-                    return [ValidationErrors.INVALID_COORDINATES, 'LineString'];
-                }
-                break;
-            case 'MultiLineString':
-                if (!Validations.validateMultiPolylineCoordinates(geometry.coordinates)) {
-                    return [ValidationErrors.INVALID_COORDINATES, 'MultiLineString'];
-                }
-                break;
-            case 'Polygon':
-                if (!Validations.validatePolygonCoordinates(geometry.coordinates)) {
-                    return [ValidationErrors.INVALID_COORDINATES, 'Polygon'];
-                }
-                break;
-            case 'MultiPolygon':
-                if (!Validations.validateMultiPolygonCoordinates(geometry.coordinates)) {
-                    return [ValidationErrors.INVALID_COORDINATES, 'MultiPolygon'];
-                }
-                break;
-            default:
-                return [ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE, geometry.type];
-        }
-
-        return null;
     }
 
 
@@ -774,6 +728,73 @@ export module Validations {
             .filter(field => resource[field.name] !== undefined)
             .filter(field => !isValid(resource[field.name], field, field.inputTypeOptions?.validation))
             .map(field => field.name);
+    }
+
+
+    export function validateGeometry(document: Document|NewDocument,
+                                     projectConfiguration: ProjectConfiguration): string[]|null {
+
+        const errorWithParams: string[]|null = validateGeometryStructure(document.resource.geometry);
+        if (errorWithParams) return errorWithParams;
+
+        const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
+        const geometryField: Field = CategoryForm.getField(category, FieldResource.GEOMETRY);
+        if (document.resource.geometry && !geometryField) {
+            return [ValidationErrors.GEOMETRY_NOT_ALLOWED, category.name];
+        }
+
+        const allowedGeometryTypes: Array<FieldGeometryType> = geometryField?.geometryTypes;
+        if (allowedGeometryTypes && !allowedGeometryTypes?.includes(document.resource.geometry.type)) {
+            return [ValidationErrors.UNALLOWED_GEOMETRY_TYPE, category.name, document.resource.geometry.type];
+        }
+
+        return null;
+    }
+
+
+    function validateGeometryStructure(geometry: FieldGeometry): string[]|null {
+
+        if (!geometry) return null;
+
+        if (!geometry.type) return [ValidationErrors.MISSING_GEOMETRY_TYPE];
+        if (!geometry.coordinates) return [ValidationErrors.MISSING_COORDINATES];
+
+        switch(geometry.type) {
+            case 'Point':
+                if (!Validations.validatePointCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'Point'];
+                }
+                break;
+            case 'MultiPoint':
+                if (!Validations.validateMultiPointCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'MultiPoint'];
+                }
+                break;
+            case 'LineString':
+                if (!Validations.validatePolylineCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'LineString'];
+                }
+                break;
+            case 'MultiLineString':
+                if (!Validations.validateMultiPolylineCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'MultiLineString'];
+                }
+                break;
+            case 'Polygon':
+                if (!Validations.validatePolygonCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'Polygon'];
+                }
+                break;
+            case 'MultiPolygon':
+                if (!Validations.validateMultiPolygonCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'MultiPolygon'];
+                }
+                break;
+            default:
+                return [ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE, geometry.type];
+        }
+
+        return null;
     }
 
 

@@ -19,6 +19,7 @@ describe('Validations', () => {
                         { name: 'id' },
                         { name: 'identifier', inputType: 'identifier' },
                         { name: 'category' },
+                        { name: 'geometry', inputType: 'geometry' },
                         { name: 'optional' },
                         { name: 'mandatory', mandatory: true },
                         { name: 'number1', label: 'number1', inputType: 'float' },
@@ -1180,7 +1181,7 @@ describe('Validations', () => {
             }
         };
 
-        expect(Validations.validateStructureOfGeometry(document.resource.geometry as unknown as FieldGeometry))
+        expect(Validations.validateGeometry(document as any, projectConfiguration))
             .toEqual([ValidationErrors.INVALID_COORDINATES, 'Point']);
     });
 
@@ -1197,7 +1198,7 @@ describe('Validations', () => {
             }
         };
 
-        expect(Validations.validateStructureOfGeometry(document.resource.geometry as FieldGeometry))
+        expect(Validations.validateGeometry(document as any, projectConfiguration))
             .toEqual([ValidationErrors.INVALID_COORDINATES, 'LineString']);
     });
 
@@ -1214,7 +1215,7 @@ describe('Validations', () => {
             }
         };
 
-        expect(Validations.validateStructureOfGeometry(document.resource.geometry as FieldGeometry))
+        expect(Validations.validateGeometry(document as any, projectConfiguration))
             .toEqual([ValidationErrors.INVALID_COORDINATES, 'Polygon']);
     });
 
@@ -1231,7 +1232,7 @@ describe('Validations', () => {
             }
         };
 
-        expect(Validations.validateStructureOfGeometry(document.resource.geometry as FieldGeometry))
+        expect(Validations.validateGeometry(document as any, projectConfiguration))
             .toEqual([ValidationErrors.INVALID_COORDINATES, 'MultiPoint']);
     });
 
@@ -1248,7 +1249,7 @@ describe('Validations', () => {
             }
         };
 
-        expect(Validations.validateStructureOfGeometry(document.resource.geometry as FieldGeometry))
+        expect(Validations.validateGeometry(document as any, projectConfiguration))
             .toEqual([ValidationErrors.INVALID_COORDINATES, 'MultiLineString']);
     });
 
@@ -1265,7 +1266,7 @@ describe('Validations', () => {
             }
         };
 
-        expect(Validations.validateStructureOfGeometry(document.resource.geometry as FieldGeometry))
+        expect(Validations.validateGeometry(document as any, projectConfiguration))
             .toEqual([ValidationErrors.INVALID_COORDINATES, 'MultiPolygon']);
     });
 
@@ -1282,8 +1283,7 @@ describe('Validations', () => {
             }
         };
 
-        expect(Validations.validateStructureOfGeometry(document.resource.geometry as FieldGeometry))
-            .toBeNull();
+        expect(Validations.validateGeometry(document as any, projectConfiguration)).toBeNull();
     });
 
 
@@ -1299,8 +1299,7 @@ describe('Validations', () => {
             }
         };
 
-        expect(Validations.validateStructureOfGeometry(document.resource.geometry as FieldGeometry))
-            .toBeNull();
+        expect(Validations.validateGeometry(document as any, projectConfiguration)).toBeNull();
     });
 
 
@@ -1316,8 +1315,7 @@ describe('Validations', () => {
             }
         };
 
-        expect(Validations.validateStructureOfGeometry(document.resource.geometry as FieldGeometry))
-            .toBeNull();
+        expect(Validations.validateGeometry(document as any, projectConfiguration)).toBeNull();
     });
 
 
@@ -1333,8 +1331,7 @@ describe('Validations', () => {
             }
         };
 
-        expect(Validations.validateStructureOfGeometry(document.resource.geometry as FieldGeometry))
-            .toBeNull();
+        expect(Validations.validateGeometry(document as any, projectConfiguration)).toBeNull();
     });
 
 
@@ -1353,8 +1350,7 @@ describe('Validations', () => {
             }
         };
 
-        expect(Validations.validateStructureOfGeometry(document.resource.geometry as FieldGeometry))
-            .toBeNull();
+        expect(Validations.validateGeometry(document as any, projectConfiguration)).toBeNull();
     });
 
 
@@ -1373,7 +1369,6 @@ describe('Validations', () => {
             }
         };
 
-        expect(Validations.validateStructureOfGeometry(document.resource.geometry as FieldGeometry))
-            .toBeNull();
+        expect(Validations.validateGeometry(document as any, projectConfiguration)).toBeNull();
     });
 });

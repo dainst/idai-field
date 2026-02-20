@@ -54,6 +54,8 @@ export module MessagesConversion {
         if (msg === ValidationErrors.MISSING_COORDINATES) replacement = M.MODEL_VALIDATION_MISSING_COORDINATES;
         if (msg === ValidationErrors.INVALID_COORDINATES) replacement = M.MODEL_VALIDATION_INVALID_COORDINATES;
         if (msg === ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE) replacement = M.MODEL_VALIDATION_UNSUPPORTED_GEOMETRY_TYPE;
+        if (msg === ValidationErrors.UNALLOWED_GEOMETRY_TYPE) replacement = M.MODEL_VALIDATION_UNALLOWED_GEOMETRY_TYPE;
+        if (msg === ValidationErrors.GEOMETRY_NOT_ALLOWED) replacement = M.MODEL_VALIDATION_GEOMETRY_NOT_ALLOWED;
         if (msg === ValidationErrors.GENERIC_DATASTORE) replacement = M.IMPORT_READER_GENERIC_DATASTORE;
         if (msg === ValidationErrors.INVALID_MAP_LAYER_RELATION_VALUES) replacement = M.IMPORT_VALIDATION_ERROR_INVALID_MAP_LAYER_RELATION_TARGETS;
         if (msg === ValidationErrors.INVALID_DATE_RANGE_NOT_ALLOWED) replacement = M.IMPORT_VALIDATION_ERROR_INVALID_DATE_RANGE_NOT_ALLOWED;

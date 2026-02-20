@@ -38,6 +38,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static MODEL_VALIDATION_INVALID_COORDINATES = 'model.validation.error.invalidCoordinates';
     public static MODEL_VALIDATION_MISSING_GEOMETRYTYPE = 'model.validation.error.missingGeometryType';
     public static MODEL_VALIDATION_UNSUPPORTED_GEOMETRY_TYPE = 'model.validation.error.unsupportedGeometryType';
+    public static MODEL_VALIDATION_UNALLOWED_GEOMETRY_TYPE = 'model.validation.error.unallowedGeometryType';
+    public static MODEL_VALIDATION_GEOMETRY_NOT_ALLOWED = 'model.validation.error.geometryNotAllowed';
 
     // Backup Package
     public static BACKUP_WRITE_SUCCESS = 'backup.write.success';
@@ -411,6 +413,14 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.MODEL_VALIDATION_UNSUPPORTED_GEOMETRY_TYPE] = {
             content: $localize `:@@messages.model.validation.error.unsupportedGeometryType:Der Geometrietyp [0] wird von der Anwendung nicht unterstützt.`,
+            level: 'danger'
+        };
+        this.msgs[M.MODEL_VALIDATION_UNALLOWED_GEOMETRY_TYPE] = {
+            content: $localize `:@@messages.model.validation.error.unsupportedGeometryType:Der Geometrietyp [1] ist für Ressourcen der Kategorie [0] nicht erlaubt.`,
+            level: 'danger'
+        };
+        this.msgs[M.MODEL_VALIDATION_GEOMETRY_NOT_ALLOWED] = {
+            content: $localize `:@@messages.model.validation.error.geometryNotAllowed:Für Ressourcen der Kategorie [0] können keine Geometrien angelegt werden.`,
             level: 'danger'
         };
         this.msgs[M.INITIAL_SYNC_DB_NOT_EMPTY] = {

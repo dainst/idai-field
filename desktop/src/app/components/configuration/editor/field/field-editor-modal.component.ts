@@ -676,6 +676,10 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         if (this.isRelationSectionVisible() && !this.selectedTargetCategoryNames.length) {
             throw [M.CONFIGURATION_ERROR_NO_ALLOWED_TARGET_CATEGORIES];
         }
+
+        if (this.isGeometrySectionVisible() && !this.getClonedFieldDefinition().geometryTypes.length) {
+            throw [M.CONFIGURATION_ERROR_NO_ALLOWED_GEOMETRY_TYPES];
+        }
     }
 
 

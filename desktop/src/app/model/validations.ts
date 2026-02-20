@@ -363,7 +363,7 @@ export module Validations {
     }
 
 
-    export function validateStructureOfGeometries(geometry: FieldGeometry): Array<string>|null {
+    export function validateStructureOfGeometry(geometry: FieldGeometry): Array<string>|null {
 
         if (!geometry) return null;
 

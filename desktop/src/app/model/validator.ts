@@ -57,7 +57,7 @@ export class Validator {
 
         if (document.resource.geometry) {
             const errWithParam: string[]|null
-                = Validations.validateStructureOfGeometries(document.resource.geometry);
+                = Validations.validateStructureOfGeometry(document.resource.geometry);
             if (errWithParam) throw(errWithParam);
         }
     }

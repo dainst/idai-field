@@ -229,6 +229,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMAGES_ERROR_FILEREADER = 'images.error.fileReader';
     public static IMAGES_ERROR_DUPLICATE_FILENAME = 'images.error.duplicateFilename';
     public static IMAGES_ERROR_DUPLICATE_FILENAMES = 'images.error.duplicateFilenames';
+    public static IMAGES_ERROR_UNALLOWED_CHARACTER_IN_FILENAME = 'images.error.unallowedCharacterInFilename';
     public static IMAGES_ERROR_UNMATCHED_WLD_FILES = 'images.error.unmatchedWldFiles';
     public static IMAGES_ERROR_EXPORT_FAILED = 'images.error.exportFailed';
     public static IMAGES_ERROR_DOWNLOAD_FAILED = 'images.error.downloadFailed';
@@ -1037,6 +1038,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.IMAGES_ERROR_DUPLICATE_FILENAMES] = {
             content: $localize `:@@messages.images.error.duplicateFilenames:Die folgenden Bilddateien konnten nicht hinzugefügt werden, da Bilder mit identischen Dateinamen bereits existieren: [0]`,
+            level: 'danger'
+        };
+        this.msgs[M.IMAGES_ERROR_UNALLOWED_CHARACTER_IN_FILENAME] = {
+            content: $localize `:@@messages.images.error.unallowedCharacterInFilename:Die Bilddatei '\[0]\' konnte nicht hinzugefügt werden. Das Zeichen \';\' ist in Dateinamen nicht erlaubt.`,
             level: 'danger'
         };
         this.msgs[M.IMAGES_ERROR_UNMATCHED_WLD_FILES] = {

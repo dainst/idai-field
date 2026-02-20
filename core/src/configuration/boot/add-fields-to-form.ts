@@ -154,6 +154,10 @@ function applyFieldChanges(field: TransientFieldDefinition, changedField: Custom
         field.dateConfiguration = changedField.dateConfiguration;
     }
 
+    if (changedField.geometryTypes) {
+        field.geometryTypes = changedField.geometryTypes;
+    }
+
     if (changedField.range) {
         field.range = changedField.range;
     }

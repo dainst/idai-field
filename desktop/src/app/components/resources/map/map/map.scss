@@ -44,8 +44,11 @@
 #map-editor-button-delete,
 #map-editor-button-delete-disabled,
 #map-editor-button-add-polygon,
+#map-editor-button-add-polygon-disabled,
 #map-editor-button-add-polyline,
+#map-editor-button-add-polyline-disabled,
 #map-editor-button-add-point,
+#map-editor-button-add-point-disabled,
 #map-editor-button-drag {
   position: absolute;
   z-index: 1008;
@@ -90,8 +93,11 @@
   #map-editor-button-delete,
   #map-editor-button-delete-disabled,
   #map-editor-button-add-polygon,
+  #map-editor-button-add-polygon-disabled,
   #map-editor-button-add-polyline,
+  #map-editor-button-add-polyline-disabled,
   #map-editor-button-add-point,
+  #map-editor-button-add-point-disabled,
   #map-editor-button-drag {
     bottom: 8px;
     height: 38px;
@@ -105,8 +111,11 @@
   }
 
   #map-editor-button-add-polygon,
+  #map-editor-button-add-polygon-disabled,
   #map-editor-button-add-polyline,
-  #map-editor-button-add-point {
+  #map-editor-button-add-polyline-disabled,
+  #map-editor-button-add-point,
+  #map-editor-button-add-point-disabled {
     left: 56px;
   }
 

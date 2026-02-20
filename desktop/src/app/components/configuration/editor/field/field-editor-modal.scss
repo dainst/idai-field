@@ -17,4 +17,10 @@
     height: 350px;
     overflow-y: scroll;
   }
+
+  .geometry-types-container {
+    label {
+      user-select: none;
+    }
+  }
 }

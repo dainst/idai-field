@@ -164,6 +164,24 @@
                   [dateConfiguration]="getDateConfiguration()"
                   [disabled]="hidden"></date-section>
 
+    <div *ngIf="isGeometrySectionVisible()"
+         id="field-editor-geometry-section"
+         class="configuration-editor-section">
+        <div class="configuration-editor-section-title"
+             i18n="@@configuration.allowedGeometryTypes">Erlaubte Geometrietypen</div>
+        <div class="geometry-types-container">
+            <span *ngFor="let geometryType of getAvailableGeometryTypes()"
+                  class="checkbox form-check form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" [checked]="isGeometryTypeAllowed(geometryType)"
+                           [disabled]="!isGeometryOptionEnabled(geometryType)"
+                           (click)="toggleGeometryType(geometryType)">
+                    {{getGeometryTypeLabel(geometryType)}}
+                </label>
+            </span>
+        </div>
+    </div>
+
     <subfields-section *ngIf="isSubfieldsSectionVisible()"
                        [clonedFormDefinition]="getClonedFormDefinition()"
                        [clonedFieldDefinition]="getClonedFieldDefinition()"

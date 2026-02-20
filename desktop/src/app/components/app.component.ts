@@ -427,6 +427,30 @@ export class AppComponent {
         this.utilTranslations.addTranslation(
             'configurationFile', $localize `:@@config.configurationFile:Field-Konfigurationsdatei`
         );
+        this.utilTranslations.addTranslation(
+            'geometry.Point',
+            $localize `:@@geometry.point:Punkt`
+        );
+        this.utilTranslations.addTranslation(
+            'geometry.MultiPoint',
+            $localize `:@@geometry.point:Multipunkt`
+        );
+        this.utilTranslations.addTranslation(
+            'geometry.LineString',
+            $localize `:@@geometry.polyline:Polyline`
+        );
+        this.utilTranslations.addTranslation(
+            'geometry.MultiLineString',
+            $localize `:@@geometry.multiPolyline:Multipolyline`
+        );
+        this.utilTranslations.addTranslation(
+            'geometry.Polygon',
+            $localize `:@@geometry.polygon:Polygon`
+        );
+        this.utilTranslations.addTranslation(
+            'geometry.MultiPolygon',
+            $localize `:@@geometry.multiPolygon:Multipolygon`
+        );
     }
 
 

@@ -7,6 +7,7 @@ import { Group, GroupDefinition } from './group';
 import { Valuelist } from './valuelist';
 import { ScanCodeConfiguration } from './scan-code-configuration';
 import { SemanticReference } from './semantic-reference';
+import { FieldGeometryType } from '../document/field-geometry';
 
 
 export interface CategoryForm {
@@ -175,6 +176,16 @@ export namespace CategoryForm {
 
         const shortDescriptionField: Field = fields.find(field => field.name === FieldResource.SHORTDESCRIPTION);
         return shortDescriptionField.valuelist;
+    }
+
+
+    export function isAllowedGeometryType(category: CategoryForm, geometryType: FieldGeometryType): boolean {
+
+        const field: Field = CategoryForm.getFields(category).find(field => field.name === FieldResource.GEOMETRY);
+
+        return field.geometryTypes
+            ? field.geometryTypes.includes(geometryType)
+            : true;
     }
 
 

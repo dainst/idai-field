@@ -2,8 +2,9 @@ import { to, Map, isEmpty } from 'tsfun';
 import { CategoryForm, Datastore, Document, IdGenerator, Named, ProjectConfiguration,
     RelationsManager } from 'idai-field-core';
 import { Importer, ImporterFormat, ImporterOptions, ImporterReport } from '../../../components/import/importer';
-import { Settings } from '../../settings/settings';
 import { MD } from '../../../components/messages/md';
+import { M } from '../../../components/messages/m';
+import { Settings } from '../../settings/settings';
 import { getErrorMessage } from './util/get-error-message';
 
 
@@ -52,7 +53,7 @@ export async function importData(request: any, response: any, preparedImportDocu
 
         if (report.errors?.length) {
             response.status(400).send({
-                error: 'Import failed',
+                error: messagesDictionary.msgs[M.IMPORT_ERROR_GENERIC].content,
                 importErrors: report.errors?.map(error => getErrorMessage(error, messagesDictionary))
             })
         } else {

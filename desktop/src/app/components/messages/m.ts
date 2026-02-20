@@ -124,6 +124,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_VALIDATION_DUPLICATE_QR_CODE_IN_PROJECT = 'M.Import.ValidationErrors.duplicateQrCodeInProject';
 
     // Import Package - ImportErrors
+    public static IMPORT_ERROR_GENERIC = 'M.Import.ImportErrors.Generic';
     public static IMPORT_NO_OPERATION_ASSIGNABLE = 'M.Import.ImportErrors.noOperationAssignable';
     public static IMPORT_NO_FEATURE_ASSIGNABLE = 'M.Import.ImportErrors.noFeatureAssignable';
     public static IMPORT_EXEC_NO_LIES_WITHIN_SET = 'M.Import.ImportErrors.onlyPlaceAndOperationWithoutRecordedInAllowed';
@@ -155,7 +156,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_ERROR_EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN = 'M.Import.ImportErrors.emptySlotsInArraysForbidden';
     public static IMPORT_ERROR_ARRAY_OF_HETEROGENEOUS_TYPES = 'M.Import.ImportErrors.arrayOfHeterogeneousType';
     public static IMPORT_ERROR_INVALID_FILE_FORMAT = 'M.Import.ImportErrors.invalidFileFormat';
-    public static IMPORT_ERROR_EMPTY_OBJECT_IN_RESOURCE = 'M.Import.ImportErros.emptyObjectInResource';
+    public static IMPORT_ERROR_EMPTY_OBJECT_IN_RESOURCE = 'M.Import.ImportErrors.emptyObjectInResource';
 
     // Import Package - ImportCatalogErrors
     public static IMPORT_CATALOG_ERROR_IDENTIFIER_CLASH = 'M.Import.ImportCatalogErrors.identifierClash';
@@ -582,6 +583,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.IMPORT_PREVALIDATION_MISSING_RELATION_TARGET] = {
             content: $localize `:@@messages.import.error.prevalidation.missingRelationTarget:Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit dem Bezeichner \'[0]\' konnte nicht gefunden werden.`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_ERROR_GENERIC] = {
+            content: $localize `:@@messages.import.error.generic:Import fehlgeschlagen.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_NO_OPERATION_ASSIGNABLE] = {

@@ -118,6 +118,10 @@
                               i18n="@@navbar.taskbar.warnings.sectionTitle.invalidProcessState">
                             Ungültiger Status <b>{{getValueLabel(section)}}</b>
                         </span>
+                        <span *ngIf="section.type === 'unallowedGeometryType'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.unallowedGeometryType">
+                            Nicht erlaubter Geometrietyp <b>{{section.geometryTypeLabel}}</b>
+                        </span>
                     </span>
                 </div>
                 <div class="card-block">
@@ -247,7 +251,12 @@
                             i18n="@@navbar.taskbar.warnings.info.invalidProcessState">
                             Der für diesen Prozess angegebene Status <i>{{getValueLabel(section)}}</i> widerspricht
                             dem eingetragenen Datum <i>{{getDateLabel(selectedDocument.resource.date)}}</i>.
-                      </span>
+                        </span>
+                        <span *ngIf="section.type === 'unallowedGeometryType'"
+                            i18n="@@navbar.taskbar.warnings.info.unallowedGeometryType">
+                            Geometrien des Typs <i>{{section.geometryTypeLabel}}</i> sind für Ressourcen der Kategorie
+                            <i>{{getCategoryLabel(section)}}</i> nicht erlaubt.
+                        </span>
                     </div>
                     <div *ngIf="section.type === 'unfulfilledConditionFields'" class="data-info">
                         <div><b i18n="@@navbar.taskbar.warnings.condition">Bedingung für Anzeige des Feldes:</b></div>
@@ -310,7 +319,8 @@
                             || section.type === 'unfulfilledConditionFields'
                             || section.type === 'unallowedCharacterFields' || section.type === 'invalidRelationTargets'
                             || section.type === 'missingIdentifierPrefix' || section.type === 'outliers'
-                            || section.type === 'nonUniqueIdentifier' || section.type === 'invalidProcessState'">
+                            || section.type === 'nonUniqueIdentifier' || section.type === 'invalidProcessState'
+                            || section.type === 'unallowedGeometryType'">
                         <button class="btn btn-primary edit-button"
                                 (click)="openDoceditModal(section)">
                             <span class="mdi mdi-pencil"></span>

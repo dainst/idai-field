@@ -52,5 +52,6 @@ export const basicIndexConfiguration: Map<IndexDefinition> = {
     'nonUniqueQrCode:exist': { path: 'warnings.nonUniqueQrCode', pathArray: ['warnings', 'nonUniqueQrCode'], type: 'exist' },
     'resourceLimitExceeded:exist': { path: 'warnings.resourceLimitExceeded', pathArray: ['warnings', 'resourceLimitExceeded'], type: 'exist' },
     'missingOrInvalidParent:exist': { path: 'warnings.missingOrInvalidParent', pathArray: ['warnings', 'missingOrInvalidParent'], type: 'exist' },
-    'invalidProcessState:exist': { path: 'warnings.invalidProcessState', pathArray: ['warnings', 'invalidProcessState'], type: 'exist' }
+    'invalidProcessState:exist': { path: 'warnings.invalidProcessState', pathArray: ['warnings', 'invalidProcessState'], type: 'exist' },
+    'unallowedGeometryType:exist': { path: 'warnings.unallowedGeometryType', pathArray: ['warnings', 'unallowedGeometryType'], type: 'exist' }
 };

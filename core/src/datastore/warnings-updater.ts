@@ -524,6 +524,11 @@ export module WarningsUpdater {
             if (Field.hasUnallowedCharacters(fieldContent, field)) {
                 warnings.unallowedCharacterFields.push(fieldName);
             }
+
+            if (field.inputType === Field.InputType.GEOMETRY && field.geometryTypes
+                    && !field.geometryTypes.includes(fieldContent.type)) {
+                warnings.unallowedGeometryType = true;
+            }
         }
     }
 

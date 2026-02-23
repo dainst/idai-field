@@ -27,25 +27,40 @@
          class="btn btn-danger disabled">
         <span class="mdi mdi-delete mdi-24px"></span>
     </div>
-    <div *ngIf="getEditorType() === 'polygon'" id="map-editor-button-add-polygon"
+    <div *ngIf="getEditorType() === 'polygon' && isAddPolygonButtonEnabled()" id="map-editor-button-add-polygon"
          class="btn btn-success" (click)="addPolygon()"
          ngbTooltip="Polygon hinzufügen"
          i18n-ngbTooltip="@@resources.map.addPolygon"
          placement="top" container="body">
         <span class="mdi mdi-shape-polygon-plus mdi-24px"></span>
     </div>
-    <div *ngIf="getEditorType() === 'polyline'" id="map-editor-button-add-polyline"
+    <div *ngIf="getEditorType() === 'polygon' && !isAddPolygonButtonEnabled()"
+         id="map-editor-button-add-polygon-disabled"
+         class="btn btn-success disabled">
+        <span class="mdi mdi-shape-polygon-plus mdi-24px"></span>
+    </div>
+    <div *ngIf="getEditorType() === 'polyline' && isAddPolylineButtonEnabled()" id="map-editor-button-add-polyline"
          class="btn btn-success" (click)="addPolyline()"
          ngbTooltip="Polyline hinzufügen"
          i18n-ngbTooltip="@@resources.map.addPolyline"
          placement="top" container="body">
         <span class="mdi mdi-vector-polyline-plus mdi-24px"></span>
     </div>
-    <div *ngIf="getEditorType() === 'point'" id="map-editor-button-add-point"
+    <div *ngIf="getEditorType() === 'polyline' && !isAddPolylineButtonEnabled()"
+         id="map-editor-button-add-polyline-disabled"
+         class="btn btn-success disabled">
+        <span class="mdi mdi-vector-polyline-plus mdi-24px"></span>
+    </div>
+    <div *ngIf="getEditorType() === 'point' && isAddPointButtonEnabled()" id="map-editor-button-add-point"
          class="btn btn-success" (click)="addMarker()"
          ngbTooltip="Punkt hinzufügen"
          i18n-ngbTooltip="@@resources.map.addPoint"
          placement="top" container="body">
+        <span class="mdi mdi-map-marker-plus mdi-24px"></span>
+    </div>
+    <div *ngIf="getEditorType() === 'point' && !isAddPointButtonEnabled()"
+         id="map-editor-button-add-point-disabled"
+         class="btn btn-success disabled">
         <span class="mdi mdi-map-marker-plus mdi-24px"></span>
     </div>
     <div *ngIf="getEditorType() === 'polygon' || getEditorType() === 'polyline'" id="map-editor-button-drag"

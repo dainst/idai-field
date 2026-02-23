@@ -44,6 +44,7 @@ type WarningSection = {
     dateValidationError?: DateValidationResult;
     conditionFieldLabel?: string;
     conditionValuesLabel?: string;
+    geometryTypeLabel?: string;
 }
 
 
@@ -613,7 +614,8 @@ export class WarningsModalComponent {
 
         if (section.dateValidationError && section.dateValidationError !== DateValidationResult.INVALID) {
             section.dataLabel = this.generateDateLabel(document.resource[fieldName]);
-        } else if (type === 'invalidFields' || type === 'unconfiguredFields' || type === 'unfulfilledConditionFields') {
+        } else if (type === 'invalidFields' || type === 'unconfiguredFields'
+                || type === 'unfulfilledConditionFields') {
             section.dataLabel = InvalidDataUtil.generateLabel(document.resource[fieldName], this.labels);
         } else if (type === 'missingIdentifierPrefix') {
             section.dataLabel = document.resource.identifier;
@@ -630,6 +632,12 @@ export class WarningsModalComponent {
             const condition: Condition = CategoryForm.getField(section.category, fieldName).condition;
             section.conditionFieldLabel = this.generateConditionFieldLabel(condition, section.category);
             section.conditionValuesLabel = await this.generateConditionValuesLabel(condition, section.category);
+        }
+
+        if (type === 'unallowedGeometryType') {
+            section.geometryTypeLabel = this.utilTranslations.getTranslation(
+                'geometry.' + document.resource.geometry.type
+            );
         }
 
         if (section.isRelationField) {

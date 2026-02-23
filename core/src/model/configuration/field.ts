@@ -13,6 +13,7 @@ import { DateSpecification, DateValidationResult } from '../input-types/date-spe
 import { Condition } from './condition';
 import { Resource } from '../document/resource';
 import { SemanticReference } from './semantic-reference';
+import { FieldGeometryType } from '../document/field-geometry';
 
 
 /**
@@ -38,8 +39,9 @@ export interface Field extends BaseField {
     source?: Field.SourceType;
     references?: string[];
     semanticReferences?: Array<SemanticReference>;
-    subfields?: Array<Subfield>;            // For input type "composite"
-    constraintName?: string;                // For input type "derivedRelation"
+    subfields?: Array<Subfield>;                // For input type "composite"
+    constraintName?: string;                    // For input type "derivedRelation"
+    geometryTypes?: Array<FieldGeometryType>;   // For input type "geometry"
 }
 
 

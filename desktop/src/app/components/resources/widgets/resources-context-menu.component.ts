@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { to } from 'tsfun';
-import { FieldDocument, Named, ProjectConfiguration, CategoryForm, Relation } from 'idai-field-core';
+import { FieldDocument, Named, ProjectConfiguration, CategoryForm, Relation,
+    FieldGeometryType } from 'idai-field-core';
 import { ResourcesContextMenu } from './resources-context-menu';
 import { ContextMenuOrientation } from '../../widgets/context-menu';
 import { MoveUtility } from '../../widgets/move-modal/move-utility';
@@ -88,13 +89,17 @@ export class ResourcesContextMenuComponent implements OnChanges {
     }
 
 
-    public isCreateGeometryOptionAvailable(): boolean {
+    public isCreateGeometryOptionAvailable(geometryType?: FieldGeometryType): boolean {
 
         if (this.isReadonly()) return false;
+
         return this.contextMenu.documents.length === 1
             && this.projectConfiguration.isGeometryCategory(
                 this.contextMenu.documents[0].resource.category)
-            && !this.contextMenu.documents[0].resource.geometry;
+            && (!geometryType || CategoryForm.isAllowedGeometryType(
+                this.projectConfiguration.getCategory(this.contextMenu.documents[0].resource.category),
+                geometryType
+            )) && !this.contextMenu.documents[0].resource.geometry;
     }
 
 

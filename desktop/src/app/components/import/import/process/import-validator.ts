@@ -190,9 +190,6 @@ export class ImportValidator extends Validator {
         Validations.assertCorrectnessOfDates(document, this.projectConfiguration);
         Validations.assertMapLayerRelations(document);
         Validations.assertWorkflowRelations(document);
-
-        const errWithParams = Validations.validateStructureOfGeometries(document.resource.geometry as any);
-        if (errWithParams) throw errWithParams;
     }
 
 

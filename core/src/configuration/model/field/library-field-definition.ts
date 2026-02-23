@@ -23,5 +23,6 @@ export const VALID_LIBRARY_FIELD_PROPERTIES = [
     'semanticReferences',
     'selectable',
     'subfields',
-    'dateConfiguration'
+    'dateConfiguration',
+    'geometryTypes'
 ];

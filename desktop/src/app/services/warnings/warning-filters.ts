@@ -119,6 +119,12 @@ export module WarningFilters {
                 constraintName: 'invalidProcessState:exist',
                 count: 0,
                 type: 'invalidProcessState'
+            },
+            {
+                label: translations.getTranslation('warnings.unallowedGeometryType'),
+                constraintName: 'unallowedGeometryType:exist',
+                count: 0,
+                type: 'unallowedGeometryType'
             }
         ];
 

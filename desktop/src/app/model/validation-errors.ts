@@ -7,6 +7,8 @@ export module ValidationErrors {
     export const MISSING_COORDINATES = 'validationerror/missingcoordinates';
     export const INVALID_COORDINATES = 'validationerror/invalidcoordinates';
     export const UNSUPPORTED_GEOMETRY_TYPE = 'validationerror/unsupportedgeometrytype';
+    export const UNALLOWED_GEOMETRY_TYPE = 'validationerror/unallowedgeometrytype';
+    export const GEOMETRY_NOT_ALLOWED = 'validationerror/geometrynotallowed';
     export const INVALID_NUMERICAL_VALUES = 'validationerror/invalidnumericalvalues';
     export const INVALID_URLS = 'validationerror/invalidurls';
     export const INVALID_DATES = 'validationerror/invaliddates';

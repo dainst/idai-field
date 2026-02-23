@@ -1,7 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
-
-
-type GeometryType = 'Point'|'MultiPoint'|'LineString'|'MultiLineString'|'Polygon'|'MultiPolygon';
+import { Field, FieldGeometry, FieldGeometryType } from 'idai-field-core';
+import { UtilTranslations } from '../../../../util/util-translations';
 
 
 @Component({
@@ -15,44 +14,32 @@ type GeometryType = 'Point'|'MultiPoint'|'LineString'|'MultiLineString'|'Polygon
 export class GeometryComponent implements OnChanges {
 
     @Input() fieldContainer: any;
+    @Input() field: Field;
 
     public coordinates: string;
+    public geometryTypes: Array<FieldGeometryType> = [];
     public edit: boolean;
 
 
-    constructor() {}
+    constructor(private utilTranslations: UtilTranslations) {}
 
 
     ngOnChanges() {
 
         this.resetCoordinates();
+        this.geometryTypes = this.getGeometryTypes();
     }
 
 
-    public getGeometryTypeLabel(): string {
+    public getGeometryTypeLabel(geometryType: FieldGeometryType = this.fieldContainer.geometry?.type): string {
 
-        if (!this.fieldContainer.geometry) return $localize `:@@geometry.none:Keine Geometrie`;
-
-        switch(this.fieldContainer.geometry.type) {
-            case 'Point':
-                return $localize `:@@geometry.point:Punkt`;
-            case 'MultiPoint':
-                return $localize `:@@geometry.multiPoint:Multipunkt`;
-            case 'LineString':
-                return $localize `:@@geometry.polyline:Polyline`;
-            case 'MultiLineString':
-                return $localize `:@@geometry.multiPolyline:Multipolyline`;
-            case 'Polygon':
-                return $localize `:@@geometry.polygon:Polygon`;
-            case 'MultiPolygon':
-                return $localize `:@@geometry.multiPolygon:Multipolygon`;
-            default:
-                return '';
-        }
+        return geometryType
+            ? this.utilTranslations.getTranslation('geometry.' + geometryType)
+            : $localize `:@@geometry.none:Keine Geometrie`;
     }
 
 
-    public setGeometryType(type: ''|GeometryType) {
+    public setGeometryType(type: ''|FieldGeometryType) {
 
         if (!this.fieldContainer.geometry) {
             this.fieldContainer.geometry = { type: type, coordinates: [] };
@@ -82,5 +69,17 @@ export class GeometryComponent implements OnChanges {
             // Do nothing
             if (resetIfInvalid) this.resetCoordinates();
         }
+    }
+
+
+    private getGeometryTypes(): Array<FieldGeometryType> {
+
+        const geometryTypes: Array<FieldGeometryType> = FieldGeometry.getAvailableGeometryTypes();
+        if (!this.field.geometryTypes) return geometryTypes;
+
+        return geometryTypes.filter(geometryType => {
+            return geometryType === this.fieldContainer.geometry?.type
+                || this.field.geometryTypes.includes(geometryType);
+        });
     }
 }

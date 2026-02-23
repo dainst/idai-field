@@ -5,6 +5,7 @@ export function createMockValidator() {
 
     return {
         assertIsRecordedInTargetsExist: jest.fn(),
+        assertGeometryIsValid: jest.fn(),
         assertIsWellformed: jest.fn(),
         assertFieldsDefined: jest.fn(),
         assertLiesWithinCorrectness: jest.fn(),

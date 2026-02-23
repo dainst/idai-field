@@ -1,4 +1,4 @@
-import { Field, ProjectConfiguration, Forest, DateConfiguration, FieldGeometry } from 'idai-field-core';
+import { Field, ProjectConfiguration, Forest, DateConfiguration, CategoryForm, FieldResource } from 'idai-field-core';
 import { ValidationErrors } from '../../../../src/app/model/validation-errors';
 import { Validations } from '../../../../src/app/model/validations';
 
@@ -10,207 +10,214 @@ import { Validations } from '../../../../src/app/model/validations';
  */
 describe('Validations', () => {
 
-    const projectConfiguration = new ProjectConfiguration({
-        forms: Forest.build(
-            [[{
-                name: 'T',
-                groups: [{
-                    name: 'stem', fields: [
-                        { name: 'id' },
-                        { name: 'identifier', inputType: 'identifier' },
-                        { name: 'category' },
-                        { name: 'optional' },
-                        { name: 'mandatory', mandatory: true },
-                        { name: 'number1', label: 'number1', inputType: 'float' },
-                        { name: 'number2', label: 'number2', inputType: 'float' },
-                        { name: 'number3', label: 'number3', inputType: 'float' },
-                        { name: 'url1', label: 'url1', inputType: 'url' },
-                        { name: 'url2', label: 'url2', inputType: 'url' },
-                        { name: 'url3', label: 'url3', inputType: 'url' },
-                        { name: 'dating1', label: 'dating1', inputType: 'dating' },
-                        { name: 'dating2', label: 'dating2', inputType: 'dating' },
-                        { name: 'dating3', label: 'dating3', inputType: 'dating' },
-                        { name: 'dating4', label: 'dating4', inputType: 'dating' },
-                        { name: 'dating5', label: 'dating5', inputType: 'dating' },
-                        { name: 'dating6', label: 'dating6', inputType: 'dating' },
-                        { name: 'dating7', label: 'dating7', inputType: 'dating' },
-                        { name: 'dating8', label: 'dating8', inputType: 'dating' },
-                        { name: 'dating9', label: 'dating9', inputType: 'dating' },
-                        { name: 'dimension1', label: 'dimension1', inputType: 'dimension' },
-                        { name: 'dimension2', label: 'dimension2', inputType: 'dimension' },
-                        { name: 'dimension3', label: 'dimension3', inputType: 'dimension' },
-                        { name: 'dimension4', label: 'dimension4', inputType: 'dimension' },
-                        { name: 'dimension5', label: 'dimension5', inputType: 'dimension' },
-                        { name: 'dimension6', label: 'dimension6', inputType: 'dimension' },
-                        { name: 'dimension7', label: 'dimension7', inputType: 'dimension' },
-                        { name: 'dimension8', label: 'dimension8', inputType: 'dimension' },
-                        { name: 'dimension9', label: 'dimension9', inputType: 'dimension' },
-                        { name: 'dimension10', label: 'dimension10', inputType: 'dimension'},
-                        { name: 'dimension11', label: 'dimension11', inputType: 'dimension',
-                            inputTypeOptions: { validation: { permissive: true }} },
-                        { name: 'dimension12', label: 'dimension12', inputType: 'dimension' },
-                        { name: 'literature1', label: 'literature1', inputType: 'literature' },
-                        { name: 'literature2', label: 'literature2', inputType: 'literature' },
-                        { name: 'literature3', label: 'literature3', inputType: 'literature' },
-                        { name: 'literature4', label: 'literature4', inputType: 'literature' },
-                        { name: 'literature5', label: 'literature5', inputType: 'literature' },
-                        { name: 'period1', label: 'period1', inputType: Field.InputType.DROPDOWNRANGE },
-                        { name: 'period2', label: 'period2', inputType: Field.InputType.DROPDOWNRANGE },
-                        { name: 'period3', label: 'period3', inputType: Field.InputType.DROPDOWNRANGE },
-                        { name: 'period4', label: 'period4', inputType: Field.InputType.DROPDOWNRANGE },
-                        {
-                            name: 'date1', label: 'date1', inputType: 'date',
-                            dateConfiguration: {
-                                dataType: DateConfiguration.DataType.OPTIONAL,
-                                inputMode: DateConfiguration.InputMode.OPTIONAL
-                            }
-                        },
-                        {
-                            name: 'date2', label: 'date2', inputType: 'date',
-                            dateConfiguration: {
-                                dataType: DateConfiguration.DataType.OPTIONAL,
-                                inputMode: DateConfiguration.InputMode.SINGLE
-                            }
-                        },
-                        {
-                            name: 'date3', label: 'date3', inputType: 'date',
-                            dateConfiguration: {
-                                dataType: DateConfiguration.DataType.OPTIONAL,
-                                inputMode: DateConfiguration.InputMode.RANGE
-                            }
-                        },
-                        {
-                            name: 'date4', label: 'date4', inputType: 'date',
-                            dateConfiguration: {
-                                dataType: DateConfiguration.DataType.DATE,
-                                inputMode: DateConfiguration.InputMode.OPTIONAL
-                            }
-                        },
-                        {
-                            name: 'date5', label: 'date5', inputType: 'date',
-                            dateConfiguration: {
-                                dataType: DateConfiguration.DataType.DATE_TIME,
-                                inputMode: DateConfiguration.InputMode.OPTIONAL
-                            }
-                        },
-                        {
-                            name: 'date6', label: 'date6', inputType: 'date',
-                            dateConfiguration: {
-                                dataType: DateConfiguration.DataType.OPTIONAL,
-                                inputMode: DateConfiguration.InputMode.OPTIONAL
-                            }
-                        },
-                        {
-                            name: 'date7', label: 'date7', inputType: 'date',
-                            dateConfiguration: {
-                                dataType: DateConfiguration.DataType.OPTIONAL,
-                                inputMode: DateConfiguration.InputMode.OPTIONAL
-                            }
-                        },
-                        {
-                            name: 'composite1', label: 'composite1', inputType: 'composite',
-                            subfields: [
-                                { name: 'subfield1', inputType: 'boolean' }, { name: 'subfield2', inputType: 'int' }
-                            ]
-                        },
-                        {
-                            name: 'composite2', label: 'composite2', inputType: 'composite',
-                            subfields: [
-                                { name: 'subfield1', inputType: 'boolean' },
-                                { name: 'subfield2', inputType: 'int' }
-                            ]
-                        },
-                        {
-                            name: 'composite3', label: 'composite2', inputType: 'composite',
-                            subfields: [
-                                { name: 'subfield1', inputType: 'boolean' },
-                                { name: 'subfield2', inputType: 'int' }
-                            ]
-                        },
-                        {
-                            name: 'composite4', label: 'composite2', inputType: 'composite',
-                            subfields: [
-                                { name: 'subfield1', inputType: 'boolean' },
-                                { name: 'subfield2', inputType: 'int' }
-                            ]
-                        },
-                        {
-                            name: 'composite5', label: 'composite2', inputType: 'composite',
-                            subfields: [
-                                { name: 'subfield1', inputType: 'boolean' },
-                                {
-                                    name: 'subfield2', inputType: 'int',
-                                    condition: { subfieldName: 'subfield1', values: true }
-                                }
-                            ]
-                        },
-                        { name: 'shortInput', label: 'shortInput', inputType: 'input', maxCharacters: 10 },
-                        { name: 'isBelow', label: 'isBelow', inputType: 'relation' },
-                        { name: 'boolean', label: 'boolean', inputType: 'boolean' },
-                        { 
-                            name: 'conditional', label: 'conditional', inputType: 'input',
-                            condition: { fieldName: 'boolean', values: true }
-                        }
-                    ]
+    let projectConfiguration: ProjectConfiguration;
 
-            }]}, []],
-            [{
-                name: 'T2',
-                groups: [{ name: 'stem', fields: [
-                    { name: 'id' },
-                    { name: 'category' }
-                ]}]
-            }, []],
-            [{
-                name: 'T3',
-                groups: [{ name: 'stem', fields: [
-                    { name: 'id' },
-                    { name: 'category' },
-                    { name: 'dating' },
-                    { name: 'period', inputType: 'dropdownRange' }
-                ]}]
-            }, []],
-            [{
-                name: 'Image',
-                groups: [{ name: 'stem', fields: [
-                    { name: 'id' },
-                    { name: 'category' }
-                ]}]
-            }, []],
-        ] as any),
-        categories: {},
-        relations: [
-            {
-                name: 'isRelatedTo',
-                domain: ['T'],
-                range: ['T'],
-                inverse: 'NO-INVERSE',
-                editable: false,
-                visible: false,
-                inputType: 'relation'
-            },
-            {
-                name: 'isDepictedIn',
-                domain: ['T'],
-                range: ['T2'],
-                inverse: 'NO-INVERSE',
-                editable: false,
-                visible: false,
-                inputType: 'relation'
-            },
-            {
-                name: 'isRecordedIn',
-                domain: ['T'],
-                range: ['T2'],
-                inverse: 'NO-INVERSE',
-                editable: false,
-                visible: false,
-                inputType: 'relation'
-            }
-        ],
-        commonFields: {},
-        valuelists: {},
-        projectLanguages: []
+
+    beforeEach(() => {
+
+        projectConfiguration = new ProjectConfiguration({
+            forms: Forest.build(
+                [[{
+                    name: 'T',
+                    groups: [{
+                        name: 'stem', fields: [
+                            { name: 'id' },
+                            { name: 'identifier', inputType: 'identifier' },
+                            { name: 'category' },
+                            { name: 'geometry', inputType: 'geometry' },
+                            { name: 'optional' },
+                            { name: 'mandatory', mandatory: true },
+                            { name: 'number1', label: 'number1', inputType: 'float' },
+                            { name: 'number2', label: 'number2', inputType: 'float' },
+                            { name: 'number3', label: 'number3', inputType: 'float' },
+                            { name: 'url1', label: 'url1', inputType: 'url' },
+                            { name: 'url2', label: 'url2', inputType: 'url' },
+                            { name: 'url3', label: 'url3', inputType: 'url' },
+                            { name: 'dating1', label: 'dating1', inputType: 'dating' },
+                            { name: 'dating2', label: 'dating2', inputType: 'dating' },
+                            { name: 'dating3', label: 'dating3', inputType: 'dating' },
+                            { name: 'dating4', label: 'dating4', inputType: 'dating' },
+                            { name: 'dating5', label: 'dating5', inputType: 'dating' },
+                            { name: 'dating6', label: 'dating6', inputType: 'dating' },
+                            { name: 'dating7', label: 'dating7', inputType: 'dating' },
+                            { name: 'dating8', label: 'dating8', inputType: 'dating' },
+                            { name: 'dating9', label: 'dating9', inputType: 'dating' },
+                            { name: 'dimension1', label: 'dimension1', inputType: 'dimension' },
+                            { name: 'dimension2', label: 'dimension2', inputType: 'dimension' },
+                            { name: 'dimension3', label: 'dimension3', inputType: 'dimension' },
+                            { name: 'dimension4', label: 'dimension4', inputType: 'dimension' },
+                            { name: 'dimension5', label: 'dimension5', inputType: 'dimension' },
+                            { name: 'dimension6', label: 'dimension6', inputType: 'dimension' },
+                            { name: 'dimension7', label: 'dimension7', inputType: 'dimension' },
+                            { name: 'dimension8', label: 'dimension8', inputType: 'dimension' },
+                            { name: 'dimension9', label: 'dimension9', inputType: 'dimension' },
+                            { name: 'dimension10', label: 'dimension10', inputType: 'dimension'},
+                            { name: 'dimension11', label: 'dimension11', inputType: 'dimension',
+                                inputTypeOptions: { validation: { permissive: true }} },
+                            { name: 'dimension12', label: 'dimension12', inputType: 'dimension' },
+                            { name: 'literature1', label: 'literature1', inputType: 'literature' },
+                            { name: 'literature2', label: 'literature2', inputType: 'literature' },
+                            { name: 'literature3', label: 'literature3', inputType: 'literature' },
+                            { name: 'literature4', label: 'literature4', inputType: 'literature' },
+                            { name: 'literature5', label: 'literature5', inputType: 'literature' },
+                            { name: 'period1', label: 'period1', inputType: Field.InputType.DROPDOWNRANGE },
+                            { name: 'period2', label: 'period2', inputType: Field.InputType.DROPDOWNRANGE },
+                            { name: 'period3', label: 'period3', inputType: Field.InputType.DROPDOWNRANGE },
+                            { name: 'period4', label: 'period4', inputType: Field.InputType.DROPDOWNRANGE },
+                            {
+                                name: 'date1', label: 'date1', inputType: 'date',
+                                dateConfiguration: {
+                                    dataType: DateConfiguration.DataType.OPTIONAL,
+                                    inputMode: DateConfiguration.InputMode.OPTIONAL
+                                }
+                            },
+                            {
+                                name: 'date2', label: 'date2', inputType: 'date',
+                                dateConfiguration: {
+                                    dataType: DateConfiguration.DataType.OPTIONAL,
+                                    inputMode: DateConfiguration.InputMode.SINGLE
+                                }
+                            },
+                            {
+                                name: 'date3', label: 'date3', inputType: 'date',
+                                dateConfiguration: {
+                                    dataType: DateConfiguration.DataType.OPTIONAL,
+                                    inputMode: DateConfiguration.InputMode.RANGE
+                                }
+                            },
+                            {
+                                name: 'date4', label: 'date4', inputType: 'date',
+                                dateConfiguration: {
+                                    dataType: DateConfiguration.DataType.DATE,
+                                    inputMode: DateConfiguration.InputMode.OPTIONAL
+                                }
+                            },
+                            {
+                                name: 'date5', label: 'date5', inputType: 'date',
+                                dateConfiguration: {
+                                    dataType: DateConfiguration.DataType.DATE_TIME,
+                                    inputMode: DateConfiguration.InputMode.OPTIONAL
+                                }
+                            },
+                            {
+                                name: 'date6', label: 'date6', inputType: 'date',
+                                dateConfiguration: {
+                                    dataType: DateConfiguration.DataType.OPTIONAL,
+                                    inputMode: DateConfiguration.InputMode.OPTIONAL
+                                }
+                            },
+                            {
+                                name: 'date7', label: 'date7', inputType: 'date',
+                                dateConfiguration: {
+                                    dataType: DateConfiguration.DataType.OPTIONAL,
+                                    inputMode: DateConfiguration.InputMode.OPTIONAL
+                                }
+                            },
+                            {
+                                name: 'composite1', label: 'composite1', inputType: 'composite',
+                                subfields: [
+                                    { name: 'subfield1', inputType: 'boolean' }, { name: 'subfield2', inputType: 'int' }
+                                ]
+                            },
+                            {
+                                name: 'composite2', label: 'composite2', inputType: 'composite',
+                                subfields: [
+                                    { name: 'subfield1', inputType: 'boolean' },
+                                    { name: 'subfield2', inputType: 'int' }
+                                ]
+                            },
+                            {
+                                name: 'composite3', label: 'composite2', inputType: 'composite',
+                                subfields: [
+                                    { name: 'subfield1', inputType: 'boolean' },
+                                    { name: 'subfield2', inputType: 'int' }
+                                ]
+                            },
+                            {
+                                name: 'composite4', label: 'composite2', inputType: 'composite',
+                                subfields: [
+                                    { name: 'subfield1', inputType: 'boolean' },
+                                    { name: 'subfield2', inputType: 'int' }
+                                ]
+                            },
+                            {
+                                name: 'composite5', label: 'composite2', inputType: 'composite',
+                                subfields: [
+                                    { name: 'subfield1', inputType: 'boolean' },
+                                    {
+                                        name: 'subfield2', inputType: 'int',
+                                        condition: { subfieldName: 'subfield1', values: true }
+                                    }
+                                ]
+                            },
+                            { name: 'shortInput', label: 'shortInput', inputType: 'input', maxCharacters: 10 },
+                            { name: 'isBelow', label: 'isBelow', inputType: 'relation' },
+                            { name: 'boolean', label: 'boolean', inputType: 'boolean' },
+                            { 
+                                name: 'conditional', label: 'conditional', inputType: 'input',
+                                condition: { fieldName: 'boolean', values: true }
+                            }
+                        ]
+
+                }]}, []],
+                [{
+                    name: 'T2',
+                    groups: [{ name: 'stem', fields: [
+                        { name: 'id' },
+                        { name: 'category' }
+                    ]}]
+                }, []],
+                [{
+                    name: 'T3',
+                    groups: [{ name: 'stem', fields: [
+                        { name: 'id' },
+                        { name: 'category' },
+                        { name: 'dating' },
+                        { name: 'period', inputType: 'dropdownRange' }
+                    ]}]
+                }, []],
+                [{
+                    name: 'Image',
+                    groups: [{ name: 'stem', fields: [
+                        { name: 'id' },
+                        { name: 'category' }
+                    ]}]
+                }, []],
+            ] as any),
+            categories: {},
+            relations: [
+                {
+                    name: 'isRelatedTo',
+                    domain: ['T'],
+                    range: ['T'],
+                    inverse: 'NO-INVERSE',
+                    editable: false,
+                    visible: false,
+                    inputType: 'relation'
+                },
+                {
+                    name: 'isDepictedIn',
+                    domain: ['T'],
+                    range: ['T2'],
+                    inverse: 'NO-INVERSE',
+                    editable: false,
+                    visible: false,
+                    inputType: 'relation'
+                },
+                {
+                    name: 'isRecordedIn',
+                    domain: ['T'],
+                    range: ['T2'],
+                    inverse: 'NO-INVERSE',
+                    editable: false,
+                    visible: false,
+                    inputType: 'relation'
+                }
+            ],
+            commonFields: {},
+            valuelists: {},
+            projectLanguages: []
+        });
     });
 
 
@@ -1180,7 +1187,7 @@ describe('Validations', () => {
             }
         };
 
-        expect(Validations.validateStructureOfGeometries(document.resource.geometry as unknown as FieldGeometry))
+        expect(Validations.validateGeometry(document as any, projectConfiguration))
             .toEqual([ValidationErrors.INVALID_COORDINATES, 'Point']);
     });
 
@@ -1197,7 +1204,7 @@ describe('Validations', () => {
             }
         };
 
-        expect(Validations.validateStructureOfGeometries(document.resource.geometry as FieldGeometry))
+        expect(Validations.validateGeometry(document as any, projectConfiguration))
             .toEqual([ValidationErrors.INVALID_COORDINATES, 'LineString']);
     });
 
@@ -1214,7 +1221,7 @@ describe('Validations', () => {
             }
         };
 
-        expect(Validations.validateStructureOfGeometries(document.resource.geometry as FieldGeometry))
+        expect(Validations.validateGeometry(document as any, projectConfiguration))
             .toEqual([ValidationErrors.INVALID_COORDINATES, 'Polygon']);
     });
 
@@ -1231,7 +1238,7 @@ describe('Validations', () => {
             }
         };
 
-        expect(Validations.validateStructureOfGeometries(document.resource.geometry as FieldGeometry))
+        expect(Validations.validateGeometry(document as any, projectConfiguration))
             .toEqual([ValidationErrors.INVALID_COORDINATES, 'MultiPoint']);
     });
 
@@ -1248,7 +1255,7 @@ describe('Validations', () => {
             }
         };
 
-        expect(Validations.validateStructureOfGeometries(document.resource.geometry as FieldGeometry))
+        expect(Validations.validateGeometry(document as any, projectConfiguration))
             .toEqual([ValidationErrors.INVALID_COORDINATES, 'MultiLineString']);
     });
 
@@ -1265,7 +1272,7 @@ describe('Validations', () => {
             }
         };
 
-        expect(Validations.validateStructureOfGeometries(document.resource.geometry as FieldGeometry))
+        expect(Validations.validateGeometry(document as any, projectConfiguration))
             .toEqual([ValidationErrors.INVALID_COORDINATES, 'MultiPolygon']);
     });
 
@@ -1282,8 +1289,7 @@ describe('Validations', () => {
             }
         };
 
-        expect(Validations.validateStructureOfGeometries(document.resource.geometry as FieldGeometry))
-            .toBeNull();
+        expect(Validations.validateGeometry(document as any, projectConfiguration)).toBeNull();
     });
 
 
@@ -1299,8 +1305,7 @@ describe('Validations', () => {
             }
         };
 
-        expect(Validations.validateStructureOfGeometries(document.resource.geometry as FieldGeometry))
-            .toBeNull();
+        expect(Validations.validateGeometry(document as any, projectConfiguration)).toBeNull();
     });
 
 
@@ -1316,8 +1321,7 @@ describe('Validations', () => {
             }
         };
 
-        expect(Validations.validateStructureOfGeometries(document.resource.geometry as FieldGeometry))
-            .toBeNull();
+        expect(Validations.validateGeometry(document as any, projectConfiguration)).toBeNull();
     });
 
 
@@ -1333,8 +1337,7 @@ describe('Validations', () => {
             }
         };
 
-        expect(Validations.validateStructureOfGeometries(document.resource.geometry as FieldGeometry))
-            .toBeNull();
+        expect(Validations.validateGeometry(document as any, projectConfiguration)).toBeNull();
     });
 
 
@@ -1353,8 +1356,7 @@ describe('Validations', () => {
             }
         };
 
-        expect(Validations.validateStructureOfGeometries(document.resource.geometry as FieldGeometry))
-            .toBeNull();
+        expect(Validations.validateGeometry(document as any, projectConfiguration)).toBeNull();
     });
 
 
@@ -1373,7 +1375,49 @@ describe('Validations', () => {
             }
         };
 
-        expect(Validations.validateStructureOfGeometries(document.resource.geometry as FieldGeometry))
-            .toBeNull();
+        expect(Validations.validateGeometry(document as any, projectConfiguration)).toBeNull();
+    });
+
+
+    test('should report geometry of unallowed geometry type', () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                geometry: { type: 'MultiPoint', coordinates: [[10.5, 25.3], [11.0, 30.4]] },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+        
+        const geometryField: Field = CategoryForm.getField(
+            projectConfiguration.getCategory('T'), FieldResource.GEOMETRY
+        );
+        geometryField.geometryTypes = ['Point'];
+
+        expect(Validations.validateGeometry(document as any, projectConfiguration))
+            .toEqual([ValidationErrors.UNALLOWED_GEOMETRY_TYPE, 'T', 'MultiPoint']);
+    });
+
+
+    test('should not report geometry of allowed geometry type', () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                geometry: { type: 'MultiPoint', coordinates: [[10.5, 25.3], [11.0, 30.4]] },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+        
+        const geometryField: Field = CategoryForm.getField(
+            projectConfiguration.getCategory('T'), FieldResource.GEOMETRY
+        );
+        geometryField.geometryTypes = ['MultiPoint'];
+
+        expect(Validations.validateGeometry(document as any, projectConfiguration)).toBeNull();
     });
 });

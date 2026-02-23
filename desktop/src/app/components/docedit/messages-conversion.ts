@@ -28,6 +28,7 @@ export module MessagesConversion {
         if (msg === ValidationErrors.MISSING_COORDINATES) msgWithParams[0] = M.MODEL_VALIDATION_MISSING_COORDINATES;
         if (msg === ValidationErrors.MISSING_GEOMETRY_TYPE) msgWithParams[0] = M.MODEL_VALIDATION_MISSING_GEOMETRYTYPE;
         if (msg === ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE) msgWithParams[0] = M.MODEL_VALIDATION_UNSUPPORTED_GEOMETRY_TYPE;
+        if (msg === ValidationErrors.UNALLOWED_GEOMETRY_TYPE) msgWithParams[0] = M.MODEL_VALIDATION_UNALLOWED_GEOMETRY_TYPE;
 
         if (msg === ValidationErrors.MISSING_PROPERTY) {
             if (msgWithParams.length > 2 && msgWithParams[2].includes(',')) {

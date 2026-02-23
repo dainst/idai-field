@@ -17,6 +17,7 @@ export type WarningType = 'unconfiguredCategory'
     |'resourceLimitExceeded'
     |'missingOrInvalidParent'
     |'invalidProcessState'
+    |'unallowedGeometryType'
 
 
 export interface Warnings {
@@ -37,6 +38,7 @@ export interface Warnings {
     resourceLimitExceeded?: boolean;
     missingOrInvalidParent?: boolean;
     invalidProcessState?: boolean;
+    unallowedGeometryType?: boolean;
 }
 
 
@@ -76,7 +78,8 @@ export module Warnings {
             || warnings.nonUniqueQrCode
             || warnings.resourceLimitExceeded
             || warnings.missingOrInvalidParent
-            || warnings.invalidProcessState;
+            || warnings.invalidProcessState
+            || warnings.unallowedGeometryType;
     }
 
 

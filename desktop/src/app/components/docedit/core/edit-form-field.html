@@ -49,7 +49,7 @@
     [resource]="resource" [field]="field" [languages]="languages"></form-field-composite>
 
 <form-field-geometry *ngIf="field.inputType === 'geometry'"
-    [fieldContainer]="fieldContainer"></form-field-geometry>
+    [fieldContainer]="fieldContainer" [field]="field"></form-field-geometry>
 
 <identifier-input *ngIf="field.inputType === 'identifier'"
     [fieldContainer]="fieldContainer" [fieldName]="field.name"

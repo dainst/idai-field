@@ -4,7 +4,7 @@ import { Map, flatten, intersect, isArray, nop, set } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Datastore, Document, FieldDocument, IndexFacade, Labels,
     ProjectConfiguration, WarningType, ConfigReader, Group, Resource, Field, Tree, InvalidDataUtil, OutlierWarnings,
     RelationTargetWarnings, DateValidationResult, DateSpecification, Condition, Valuelist,
-    ValuelistUtil } from 'idai-field-core';
+    ValuelistUtil, FieldResource } from 'idai-field-core';
 import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
 import { WarningFilter, WarningFilters } from '../../../services/warnings/warning-filters';
@@ -596,6 +596,8 @@ export class WarningsModalComponent {
             section.fieldName = Resource.IDENTIFIER;
         } else if (type === 'invalidProcessState') {
             section.fieldName = 'state';
+        } else if (type === 'unallowedGeometryType') {
+            section.fieldName = FieldResource.GEOMETRY;
         } else if (fieldName) {
             section.fieldName = fieldName;
         }

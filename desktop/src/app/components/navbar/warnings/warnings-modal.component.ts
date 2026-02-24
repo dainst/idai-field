@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Map, flatten, intersect, isArray, nop, set } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Datastore, Document, FieldDocument, IndexFacade, Labels,
@@ -29,6 +29,11 @@ import { MoveModalComponent, MoveResult } from '../../widgets/move-modal/move-mo
 import { WarningsService } from '../../../services/warnings/warnings-service';
 import { getSystemTimezone } from '../../../util/timezones';
 import { QrCodeEditorModalComponent } from '../../resources/actions/edit-qr-code/qr-code-editor-modal.component';
+import { ContextMenuProvider } from '../../widgets/context-menu-provider';
+import { WarningsContextMenu } from './context-menu/warnings-context-menu';
+import { WarningsContextMenuAction } from './context-menu/warnings-context-menu.component';
+import { Routing } from '../../../services/routing';
+import { ComponentHelpers } from '../../component-helpers';
 
 
 type WarningSection = {
@@ -51,14 +56,15 @@ type WarningSection = {
 @Component({
     templateUrl: './warnings-modal.html',
     host: {
-        '(window:keydown)': 'onKeyDown($event)'
+        '(window:keydown)': 'onKeyDown($event)',
+        '(window:click)': 'onClick($event)'
     },
     standalone: false
 })
 /**
  * @author Thomas Kleinke
  */
-export class WarningsModalComponent {
+export class WarningsModalComponent extends ContextMenuProvider {
 
     public warningFilters: Array<WarningFilter>;
     public getConstraints: () => Map<string>;
@@ -69,6 +75,7 @@ export class WarningsModalComponent {
     public selectedDocument: FieldDocument|undefined;
     public sections: Array<WarningSection> = [];
     public hasConfigurationConflict: boolean;
+    public contextMenu: WarningsContextMenu = new WarningsContextMenu();
 
 
     constructor(private activeModal: NgbActiveModal,
@@ -82,12 +89,19 @@ export class WarningsModalComponent {
                 private settingsProvider: SettingsProvider,
                 private configReader: ConfigReader,
                 private labels: Labels,
-                private warningsService: WarningsService) {}
+                private warningsService: WarningsService,
+                private routingService: Routing,
+                changeDetectorRef: ChangeDetectorRef) {
+
+        super(changeDetectorRef);
+    }
 
         
     public getSections = () => this.sections.filter(section => this.isSectionVisible(section));
 
     public isModalOpened = () => this.menus.getContext() !== MenuContext.WARNINGS;
+
+    public close = () => this.activeModal.dismiss('cancel');
 
 
     public initialize() {
@@ -457,9 +471,28 @@ export class WarningsModalComponent {
     }
 
 
-    public close() {
+    public onClick(event: MouseEvent, rightClick: boolean = false) {
 
-        this.activeModal.dismiss('cancel');
+        if (!this.contextMenu.position) return;
+
+        if (!ComponentHelpers.isInside(event.target, target => target.id === 'context-menu'
+                || (rightClick && target.id && target.id.startsWith('document-picker-resource-')))) {
+            this.contextMenu.close();
+        }
+    }
+
+
+    public async performContextMenuAction(action: WarningsContextMenuAction) {
+
+        switch (action) {
+            case 'view':
+                this.close();
+                await this.routingService.jumpToResource(this.contextMenu.document);
+                break;
+            case 'edit':
+                await this.openDoceditModal();
+                break;
+        }
     }
 
 

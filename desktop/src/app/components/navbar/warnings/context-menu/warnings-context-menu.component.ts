@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { ContextMenuOrientation } from '../../../widgets/context-menu';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { WarningsContextMenu } from './warnings-context-menu';
 
 
@@ -14,24 +13,16 @@ export type WarningsContextMenuAction = 'view'|'edit';
 /**
  * @author Thomas Kleinke
  */
-export class WarningsContextMenuComponent implements OnChanges {
+export class WarningsContextMenuComponent {
 
     @Input() contextMenu: WarningsContextMenu;
 
     @Output() onSelectAction: EventEmitter<WarningsContextMenuAction> = new EventEmitter<WarningsContextMenuAction>();
 
-    public orientation: ContextMenuOrientation = 'top';
-
 
     public selectAction = (action: WarningsContextMenuAction) => this.onSelectAction.emit(action);
 
     public getBottomPosition = (yPosition: number) => WarningsContextMenu.getBottomPosition(yPosition);
-
-
-    ngOnChanges() {
-
-        this.orientation = WarningsContextMenu.computeOrientation(this.contextMenu.position?.y);
-    }
 
 
     public areOptionsAvailable(): boolean {

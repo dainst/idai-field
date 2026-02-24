@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ConfigurationContextMenu } from './configuration-context-menu';
-import { ContextMenuOrientation } from '../../widgets/context-menu';
 
 
 export type ConfigurationContextMenuAction = 'edit'|'extend'|'swap'|'delete';
@@ -15,25 +14,17 @@ export type ConfigurationContextMenuAction = 'edit'|'extend'|'swap'|'delete';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class ConfigurationContextMenuComponent implements OnChanges {
+export class ConfigurationContextMenuComponent {
 
     @Input() contextMenu: ConfigurationContextMenu;
 
     @Output() onSelectAction: EventEmitter<ConfigurationContextMenuAction>
         = new EventEmitter<ConfigurationContextMenuAction>();
 
-    public orientation: ContextMenuOrientation = 'top';
-
 
     public selectAction = (action: ConfigurationContextMenuAction) => this.onSelectAction.emit(action);
 
     public getBottomPosition = (yPosition: number) => ConfigurationContextMenu.getBottomPosition(yPosition);
-
-
-    ngOnChanges() {
-
-        this.orientation = ConfigurationContextMenu.computeOrientation(this.contextMenu.position?.y);
-    }
 
 
     public areAnyOptionsAvailable(): boolean {

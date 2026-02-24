@@ -2,8 +2,8 @@
 <div *ngIf="contextMenu && areOptionsAvailable()"
      id="context-menu"
      class="dropdown-menu show"
-     [class.orientation-top]="orientation === 'top'"
-     [class.orientation-bottom]="orientation === 'bottom'"
+     [class.orientation-top]="contextMenu.orientation === 'top'"
+     [class.orientation-bottom]="contextMenu.orientation === 'bottom'"
      [style.left]="contextMenu.position.x + 'px'"
      [style.top]="contextMenu.position.y + 'px'"
      [style.bottom]="getBottomPosition(contextMenu.position.y) + 'px'">

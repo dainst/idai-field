@@ -22,6 +22,7 @@ import { QrCodeEditorModalComponent } from './actions/edit-qr-code/qr-code-edito
 import { StoragePlaceScanner } from './actions/scan-storage-place/storage-place-scanner';
 import { WarningsService } from '../../services/warnings/warnings-service';
 import { WorkflowEditorModalComponent } from './actions/edit-workflow/workflow-editor-modal.component';
+import { ApiState, ExpressServer } from '../../services/express-server/express-server';
 
 
 @Component({
@@ -43,11 +44,14 @@ export class ResourcesComponent implements OnDestroy {
 
     private clickEventObservers: Array<any> = [];
 
+    private apiState: ApiState = 'none';
+
     private deselectionSubscription: Subscription;
     private populateDocumentsSubscription: Subscription;
     private changedDocumentFromRemoteSubscription: Subscription;
     private selectViaResourceLinkSubscription: Subscription;
     private warningsResolvedSubscription: Subscription;
+    private apiSubscription: Subscription;
 
 
     constructor(route: ActivatedRoute,
@@ -65,7 +69,8 @@ export class ResourcesComponent implements OnDestroy {
                 private projectConfiguration: ProjectConfiguration,
                 private menuService: Menus,
                 private storagePlaceScanner: StoragePlaceScanner,
-                private warningsService: WarningsService) {
+                private warningsService: WarningsService,
+                private expressServer: ExpressServer) {
 
         routingService.routeParams(route).subscribe(async (params: any) => {
             this.quitGeometryEditing();
@@ -111,6 +116,7 @@ export class ResourcesComponent implements OnDestroy {
         if (this.changedDocumentFromRemoteSubscription) this.changedDocumentFromRemoteSubscription.unsubscribe();
         if (this.selectViaResourceLinkSubscription) this.selectViaResourceLinkSubscription.unsubscribe();
         if (this.warningsResolvedSubscription) this.warningsResolvedSubscription.unsubscribe();
+        if (this.apiSubscription) this.apiSubscription.unsubscribe();
     }
 
 
@@ -454,6 +460,13 @@ export class ResourcesComponent implements OnDestroy {
             this.warningsService.warningsResolvedNotifications().subscribe(async () => {
                 await this.viewFacade.populateDocumentList();
             });
+        
+        this.apiSubscription = this.expressServer.apiNotifications().subscribe(async apiState => {
+            if (this.apiState === 'import' && apiState !== 'import') {
+                await this.viewFacade.populateDocumentList();
+            }
+            this.apiState = apiState;
+        });
     }
 
 

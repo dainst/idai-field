@@ -550,13 +550,21 @@
         },
         "Place:archaeoDox": {
           "hidden": ["gazId"],
-          "fields": {},
+          "fields": {
+            "geometry": {
+              "geometryTypes": ["Polygon", "MultiPolygon"]
+            }
+          },
           "color": "#9cbde8",
           "resourceLimit": 1
         },
         "Operation:archaeoDox": {
           "hidden": [],
-          "fields": {}
+          "fields": {
+            "geometry": {
+              "geometryTypes": ["Polygon", "MultiPolygon"]
+            }
+          }
         },
         "ExcavationArea:archaeoDox": {
           "hidden": [],
@@ -572,6 +580,9 @@
                 "dataType": "date",
                 "inputMode": "single"
               }
+            },
+            "geometry": {
+              "geometryTypes": ["Polygon", "MultiPolygon"]
             }
           },
           "identifierPrefix": "BK",
@@ -585,6 +596,9 @@
                 "dataType": "date",
                 "inputMode": "single"
               }
+            },
+            "geometry": {
+              "geometryTypes": ["Polygon", "MultiPolygon"]
             }
           },
           "identifierPrefix": "B",
@@ -598,6 +612,9 @@
                 "dataType": "date",
                 "inputMode": "single"
               }
+            },
+            "geometry": {
+              "geometryTypes": ["Polygon", "MultiPolygon"]
             }
           },
           "identifierPrefix": "BA",
@@ -611,6 +628,9 @@
                 "dataType": "date",
                 "inputMode": "single"
               }
+            },
+            "geometry": {
+              "geometryTypes": ["Point", "MultiPoint"]
             }
           },
           "identifierPrefix": "F",
@@ -624,6 +644,9 @@
                 "dataType": "date",
                 "inputMode": "single"
               }
+            },
+            "geometry": {
+              "geometryTypes": ["Point", "MultiPoint"]
             }
           },
           "identifierPrefix": "P",
@@ -664,6 +687,9 @@
                 "dataType": "date",
                 "inputMode": "single"
               }
+            },
+            "geometry": {
+              "geometryTypes": ["Polygon", "MultiPolygon"]
             }
           },
           "identifierPrefix": "FLZ",
@@ -677,6 +703,9 @@
                 "dataType": "date",
                 "inputMode": "single"
               }
+            },
+            "geometry": {
+              "geometryTypes": ["LineString", "MultiLineString"]
             }
           },
           "identifierPrefix": "PRZ",

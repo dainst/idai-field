@@ -777,6 +777,20 @@ Legen Sie hier fest, ob in das Feld ein Einzeldatum oder ein Datumsbereich einge
 * *Datumsbereich*: Es kann ausschließlich ein Datumsbereich eingetragen werden.
 
 
+### Konfiguration von Geometriefeldern
+
+Das Formular jeder Kategorie, für die Geometrien angelegt werden können, enthält immer ein Feld des Eingabetyps "Geometrie". Im Feldeditor können Sie die erlaubten Geometrietypen für dieses Feld auswählen. Beim Anlegen von Geometrien für Ressourcen der entsprechenden Kategorie stehen anschließend nur die ausgewählten Geometrietypen zur Auswahl. Standardmäßig sind alle Geometrietypen erlaubt.
+
+Field Desktop unterstützt die folgenden Geometrietypen:
+
+* *Polygon* (immer automatisch ausgewählt, wenn "Multipolygon" ausgewählt wurde)
+* *Multipolygon*
+* *Polyline* (immer automatisch ausgewählt, wenn "Multipolyline" ausgewählt wurde)
+* *Multipolyline*
+* *Punkt* (immer automatisch ausgewählt, wenn "Multipunkt" ausgewählt wurde)
+* *Multipunkt*
+
+
 ### Unterfelder
 
 Dieser Abschnitt erscheint ausschließlich dann, wenn der Eingabetyp "Kompositfeld" gewählt ist. Legen Sie hier fest, aus welchen Unterfeldern jeder Eintrag des Kompositfelds besteht. Die Reihenfolge der Unterfelder lässt sich per Drag & Drop ändern.
@@ -2320,6 +2334,25 @@ Der für die Ressource gesetzte QR-Code wird auch von einer oder mehreren andere
 
 #### Mögliche Lösungen
 * Button *QR-Code bearbeiten*: Öffnen Sie den QR-Code-Editor, um den QR-Code zu löschen und gegebenenfalls einen anderen  QR-Code zu verknüpfen bzw. neu zu erzeugen.
+
+### Nicht erlaubte Zeichen
+Eines oder mehrere der in das Feld eingetragenen Zeichen sind in Feldern des entsprechenden Eingabetyps nicht erlaubt.
+
+#### Mögliche Ursachen
+* Das Feld wurde mit einer veralteten Version von Field Desktop ausgefüllt.
+
+#### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie den Ressourceneditor, um nicht erlaubte Zeichen aus dem Feld zu entfernen.
+
+### Nicht erlaubter Geometrietyp
+Die Geometrie der Ressource entspricht keinem Geometrietyp, der für die entsprechende Kategorie erlaubt ist.
+
+#### Mögliche Ursachen
+* Der Geometrietyp wurde als erlaubter Geometrietyp für die entsprechende Kategorie abgewählt, nachdem die Geometrie zur Ressource hinzugefügt wurde.
+
+#### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie den Ressourceneditor, um die Geometrie anzupassen und einen erlaubten Geometrietyp zu wählen.
+* Bearbeiten Sie das Feld *Geometrie* der entsprechenden Kategorie im Konfigurationseditor und wählen Sie den Geometrietyp der Ressource dabei als erlaubten Geometrietyp aus.
 
 ### Ressourcenlimit überschritten
 Es existieren mehr Ressourcen einer Kategorie, als das für diese Kategorie konfigurierte Ressourcenlimit erlaubt.

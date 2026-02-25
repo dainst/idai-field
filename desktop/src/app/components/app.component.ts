@@ -44,7 +44,6 @@ export class AppComponent {
 
     private closing: boolean = false;
     private modal: ImportExportProcessModalComponent;
-    private closeModalTimeout: any;
     private previousMenuContext: MenuContext;
 
 
@@ -130,9 +129,7 @@ export class AppComponent {
                 case 'import':
                 case 'fileImport':
                 case 'export':
-                    if (this.modal) {
-                        this.clearModalTimeout();
-                    } else {
+                    if (!this.modal) {
                         this.previousMenuContext = this.menuService.getContext();
                         this.menuService.setContext(MenuContext.BLOCKING_MODAL);
                         const modalRef: NgbModalRef = this.modalService.open(
@@ -154,23 +151,11 @@ export class AppComponent {
 
     public closeModal() {
 
-        this.clearModalTimeout();
-        this.closeModalTimeout = setTimeout(() => {
-            this.menuService.setContext(this.previousMenuContext);
-            this.modal.activeModal.close();
-            this.modal = undefined;
-            this.previousMenuContext = undefined;
-            this.changeDetectorRef.detectChanges();
-        }, 2000);
-    }
-
-
-    public clearModalTimeout() {
-
-        if (!this.closeModalTimeout) return;
-        
-        clearTimeout(this.closeModalTimeout);
-        this.closeModalTimeout = undefined;
+        this.menuService.setContext(this.previousMenuContext);
+        this.modal.activeModal.close();
+        this.modal = undefined;
+        this.previousMenuContext = undefined;
+        this.changeDetectorRef.detectChanges();
     }
 
 

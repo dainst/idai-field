@@ -768,6 +768,20 @@ Here you can specify whether a single date or a date range should be entered in 
 * *Date range*: Only a date range can be entered.
 
 
+### Configuration of geometry fields
+
+The form of each category for which geometries can be created always contains a field of the input type "Geometry". In the field editor, you can select the allowed geometry types for this field. When creating geometries for resources of the corresponding category, only the selected geometry types are available for selection. By default, all geometry types are allowed.
+
+Field Desktop supports the following geometry types:
+
+* *Polygon* (always selected automatically when "Multipolygon" is selected)
+* *Multipolygon*
+* *Polyline* (always selected automatically when "Multipolyline" is selected)
+* *Multipolyline*
+* *Point* (always automatically selected when "Multipoint" is selected)
+* *Multipoint*
+
+
 ### Subfields
 
 This section appears only if the input type "Composite field" is selected and allows defining the subfields each entry of the composite field consists of. The order of the subfields can be changed via drag & drop.
@@ -2313,6 +2327,25 @@ The QR code set for the resource is also used by one or more other resources. Th
 
 #### Possible solutions
 * Button *Edit QR code*: Open the QR code editor to delete the QR code and, if necessary, link or generate a new QR code.
+
+### Unallowed characters
+One or more characters entered in the field are not allowed in fields of the corresponding input type.
+
+#### Possible causes
+* The field was filled in with an outdated version of Field Desktop.
+
+#### Possible solutions
+* Button *Edit*: Open the resource editor to remove unallowed characters from the field.
+
+### Unallowed geometry type
+The geometry of the resource does not correspond to a geometry type that is allowed for the corresponding category.
+
+#### Possible causes
+* The geometry type was deselected as an allowed geometry type for the corresponding category after the geometry was added to the resource.
+
+#### Possible solutions
+* Button *Edit*: Open the resource editor to adjust the geometry and select an allowed geometry type.
+* Edit the field *Geometry* of the corresponding category in the configuration editor and select the geometry type of the resource as an allowed geometry type.
 
 ### Resource limit exceeded
 There are more resources of a particular category than the resource limit configured for this category allows.

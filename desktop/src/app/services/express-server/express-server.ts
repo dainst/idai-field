@@ -41,6 +41,7 @@ export class ExpressServer {
     private uploadStatus: UploadStatus;
     private apiObservers: Array<Observer<ApiState>> = [];
     private preparedImportDocuments: Map<Map<Array<Document>>> = { csv: {}, native: {}, geojson: {} };
+    private notificationTimeout: any;
 
 
     constructor(private imagestore: ImageStore,
@@ -199,20 +200,20 @@ export class ExpressServer {
 
         app.get('/export/:format', async (request: any, response: any) => {
 
-            ObserverUtil.notify(this.apiObservers, 'export');
+            this.notifyObservers('export');
             await AngularUtility.refresh();
             await exportData(request, response, this.projectConfiguration, this.datastore, this.messagesDictionary);
-            ObserverUtil.notify(this.apiObservers, 'none');
+            this.notifyObservers('none');
         });
 
         app.post('/import/:format', this.textBodyParser, async (request: any, response: any) => {
 
-            ObserverUtil.notify(this.apiObservers, 'import');
+            this.notifyObservers('import');
             await AngularUtility.refresh();
             await importData(request, response, this.preparedImportDocuments, this.projectConfiguration, this.datastore,
                 this.relationsManager, this.idGenerator, this.settingsProvider.getSettings(), this.messagesDictionary
             );
-            ObserverUtil.notify(this.apiObservers, 'none');
+            this.notifyObservers('none');
         });
 
         app.get('/fileExport/:format/:identifier', async (request: any, response: any) => {
@@ -324,5 +325,23 @@ export class ExpressServer {
         });
 
         return [mainAppHandle, fauxtonAppHandle];
+    }
+
+
+    private notifyObservers(state: ApiState) {
+
+        if (this.notificationTimeout) {
+            clearTimeout(this.notificationTimeout);
+            this.notificationTimeout = undefined;
+        }
+
+        if (state === 'none') {
+            this.notificationTimeout = setTimeout(() => {
+                ObserverUtil.notify(this.apiObservers, state);
+                this.notificationTimeout = undefined;
+            }, 2000);
+        } else {
+            ObserverUtil.notify(this.apiObservers, state);
+        }
     }
 }

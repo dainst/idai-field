@@ -1,3 +1,7 @@
+<warnings-context-menu *ngIf="contextMenu.isOpen()"
+                       [contextMenu]="contextMenu"
+                       (onSelectAction)="performContextMenuAction($event)"></warnings-context-menu>
+
 <div class="modal-header warnings-modal-header">
     <h5 class="modal-title"
         i18n="@@navbar.taskbar.warnings.header">Warnungen</h5>
@@ -25,6 +29,7 @@
                         [waitForUserInput]="false"
                         [markSelected]="true"
                         [autoSelect]="true"
+                        [selectOnRightClick]="true"
                         [allowKeyboardNavigation]="!isModalOpened()"
                         [preselectedDocumentId]="preselectedDocumentId"
                         [showConfigurationOption]="isConfigurationOptionVisible()"
@@ -32,7 +37,8 @@
                         [showLoadingIcon]="warningFilters[0].count >= 1000"
                         [includeBrokenDocuments]="true"
                         (documentSelected)="selectDocument($event)"
-                        (documentDoubleClicked)="openDoceditModal()"></document-picker>
+                        (documentDoubleClicked)="openDoceditModal()"
+                        (documentRightClicked)="contextMenu?.open($event.event, $event.document)"></document-picker>
     </div>
     <div *ngIf="selectedDocument" id="document-warnings-container" class="col-md-7">
         <div id="document-warnings-header">

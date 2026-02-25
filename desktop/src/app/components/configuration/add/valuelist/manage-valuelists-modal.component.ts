@@ -79,7 +79,7 @@ export class ManageValuelistsModalComponent extends ContextMenuProvider implemen
     }
 
 
-    public onClick(event: any, rightClick: boolean = false) {
+    public onClick(event: MouseEvent, rightClick: boolean = false) {
 
         if (!this.contextMenu.position) return;
 

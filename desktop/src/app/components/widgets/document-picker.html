@@ -10,6 +10,7 @@
             <li *cdkVirtualFor="let document of documents; trackBy: trackDocument"
                 (click)="select(document)"
                 (dblclick)="doubleClick(document)"
+                (contextmenu)="rightClick($event, document)"
                 class="list-group-item"
                 [class.selected]="selectedDocument === document"
                 [id]="getElementId(document)">

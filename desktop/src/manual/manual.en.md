@@ -768,6 +768,20 @@ Here you can specify whether a single date or a date range should be entered in 
 * *Date range*: Only a date range can be entered.
 
 
+### Configuration of geometry fields
+
+The form of each category for which geometries can be created always contains a field of the input type "Geometry". In the field editor, you can select the allowed geometry types for this field. When creating geometries for resources of the corresponding category, only the selected geometry types are available for selection. By default, all geometry types are allowed.
+
+Field Desktop supports the following geometry types:
+
+* *Polygon* (always selected automatically when "Multipolygon" is selected)
+* *Multipolygon*
+* *Polyline* (always selected automatically when "Multipolyline" is selected)
+* *Multipolyline*
+* *Point* (always automatically selected when "Multipoint" is selected)
+* *Multipoint*
+
+
 ### Subfields
 
 This section appears only if the input type "Composite field" is selected and allows defining the subfields each entry of the composite field consists of. The order of the subfields can be changed via drag & drop.

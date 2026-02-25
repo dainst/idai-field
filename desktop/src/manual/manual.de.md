@@ -777,6 +777,20 @@ Legen Sie hier fest, ob in das Feld ein Einzeldatum oder ein Datumsbereich einge
 * *Datumsbereich*: Es kann ausschließlich ein Datumsbereich eingetragen werden.
 
 
+### Konfiguration von Geometriefeldern
+
+Das Formular jeder Kategorie, für die Geometrien angelegt werden können, enthält immer ein Feld des Eingabetyps "Geometrie". Im Feldeditor können Sie die erlaubten Geometrietypen für dieses Feld auswählen. Beim Anlegen von Geometrien für Ressourcen der entsprechenden Kategorie stehen anschließend nur die ausgewählten Geometrietypen zur Auswahl. Standardmäßig sind alle Geometrietypen erlaubt.
+
+Field Desktop unterstützt die folgenden Geometrietypen:
+
+* *Polygon* (immer automatisch ausgewählt, wenn "Multipolygon" ausgewählt wurde)
+* *Multipolygon*
+* *Polyline* (immer automatisch ausgewählt, wenn "Multipolyline" ausgewählt wurde)
+* *Multipolyline*
+* *Punkt* (immer automatisch ausgewählt, wenn "Multipunkt" ausgewählt wurde)
+* *Multipunkt*
+
+
 ### Unterfelder
 
 Dieser Abschnitt erscheint ausschließlich dann, wenn der Eingabetyp "Kompositfeld" gewählt ist. Legen Sie hier fest, aus welchen Unterfeldern jeder Eintrag des Kompositfelds besteht. Die Reihenfolge der Unterfelder lässt sich per Drag & Drop ändern.

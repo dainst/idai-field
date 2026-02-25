@@ -1365,9 +1365,9 @@ Darüber hinaus kann (durch ein Leerzeichen getrennt) optional eine Uhrzeit im F
 
 ##### Listenfelder
 
-Bei Feldern der Eingabetypen "Checkboxen" und "Einzeiliger Text (Liste)" (ohne Mehrsprachigkeit) wird für das Feld nur eine Spalte angelegt. Die Feldwerte werden jeweils durch ein Semikolon ohne Leerzeichen voneinander getrennt (z. B. "Granit;Kalkstein;Schiefer").
+Bei Feldern des Eingabetyps "Checkboxen" wird für das Feld nur eine Spalte angelegt. Die Feldwerte werden jeweils durch ein Semikolon ohne Leerzeichen voneinander getrennt (z. B. "Granit;Kalkstein;Schiefer").
 
-Bei Feldern der Eingabetypen "Datierungsangabe", "Längenangabe", "Gewichtsangabe", "Volumenangabe", "Literaturangabe", "Kompositfeld" und "Einzeiliger Text (Liste)" (mit Mehrsprachigkeit) werden **für jeden Listeneintrag** die entsprechenden Spalten für die jeweiligen Unterfelder bzw. Sprachen angelegt. Hinter den Feldnamen wird dabei (beginnend bei 0 und durch Punkte getrennt) eine Nummer zur Identifikation des jeweiligen Eintrags eingefügt.
+Bei Feldern der Eingabetypen "Datierungsangabe", "Längenangabe", "Gewichtsangabe", "Volumenangabe", "Literaturangabe", "Kompositfeld" und "Einzeiliger Text (Liste)" werden **für jeden Listeneintrag** die entsprechenden Spalten für die jeweiligen Unterfelder bzw. Sprachen angelegt. Hinter den Feldnamen wird dabei (beginnend bei 0 und durch Punkte getrennt) eine Nummer zur Identifikation des jeweiligen Eintrags eingefügt.
 
 *Beispiel für ein Feld des Eingabetyps "Einzeiliger Text (Liste)" mit Mehrsprachigkeit:*
 <div class="table-container">

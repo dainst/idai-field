@@ -1346,9 +1346,9 @@ In addition, a time specification in the format "hours:minutes" can be entered (
 
 ##### List fields
 
-For fields of the input types "Checkboxes" and "Single line text (List)" (without input in multiple languages), only one column is created for the field. The field values are separated from each other by a semicolon without space between values (e.g. "Granite;Limestone;Slate").
+For fields of the input type "Checkboxes", only one column is created for the field. The field values are separated from each other by a semicolon without space between values (e.g. "Granite;Limestone;Slate").
 
-For fields of the input types "Dating", "Dimension", "Weight", "Volume", "Bibliographic reference", "Composite field" and "Single line text (List)" (with input in multiple languages), the corresponding columns for the respective subfields or languages are created **for each list entry**. A number is inserted after the field name (starting at 0 and separated by dots) to identify the respective entry.
+For fields of the input types "Dating", "Dimension", "Weight", "Volume", "Bibliographic reference", "Composite field" and "Single line text (List)", the corresponding columns for the respective subfields or languages are created **for each list entry**. A number is inserted after the field name (starting at 0 and separated by dots) to identify the respective entry.
 
 *Example of a field of the input type "Single line text (List)" with input in multiple languages:*
 

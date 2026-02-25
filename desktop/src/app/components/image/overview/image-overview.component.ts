@@ -15,6 +15,7 @@ import { TabManager } from '../../../services/tabs/tab-manager';
 import { ViewFacade } from '../../../components/resources/view/view-facade';
 import { Messages } from '../../messages/messages';
 import { Routing } from '../../../services/routing';
+import { ApiState, ExpressServer } from '../../../services/express-server/express-server';
 
 
 @Component({
@@ -38,6 +39,8 @@ export class ImageOverviewComponent implements OnInit, OnDestroy {
 
     private selectViaImageLinkSubscription: Subscription;
     private intitialization: Promise<void>;
+    private apiSubscription: Subscription;
+    private apiState: ApiState;
 
 
     constructor(route: ActivatedRoute,
@@ -51,12 +54,14 @@ export class ImageOverviewComponent implements OnInit, OnDestroy {
                 private modalService: NgbModal,
                 private menuService: Menus,
                 private router: Router,
-                private routing: Routing) {
+                private routing: Routing,
+                private expressServer: ExpressServer) {
 
         this.intitialization = this.imageOverviewFacade.initialize();
-        this.intitialization.then(() => this.setUpRouting(route, location));
-        this.selectViaImageLinkSubscription =
-            this.routing.selectViaImageLinkNotifications().subscribe(document => this.showImage(document));
+        this.intitialization.then(() => {
+            this.setUpRouting(route, location);
+            this.initializeSubscriptions();
+        });
     }
 
 
@@ -119,6 +124,7 @@ export class ImageOverviewComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
 
         if (this.selectViaImageLinkSubscription) this.selectViaImageLinkSubscription.unsubscribe();
+        if (this.apiSubscription) this.apiSubscription.unsubscribe();
     }
 
 
@@ -192,5 +198,19 @@ export class ImageOverviewComponent implements OnInit, OnDestroy {
 
         const image = (await this.datastore.get(id)) as ImageDocument;
         this.showImage(image, true, this.router.url.includes('conflicts'));
+    }
+
+
+    private initializeSubscriptions() {
+
+        this.selectViaImageLinkSubscription =
+            this.routing.selectViaImageLinkNotifications().subscribe(document => this.showImage(document));
+
+        this.apiSubscription = this.expressServer.apiNotifications().subscribe(async apiState => {
+            if (this.apiState === 'fileImport' && apiState !== 'fileImport') {
+                await this.imageOverviewFacade.fetchDocuments();
+            }
+            this.apiState = apiState;
+        });
     }
 }

@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
-import { ImageStore, ImageVariant, FileInfo, ConfigurationSerializer,
-    ConfigReader, Datastore, ProjectConfiguration, RelationsManager, IdGenerator, 
-    ObserverUtil } from 'idai-field-core';
+import { Map } from 'tsfun';
+import { ImageStore, ImageVariant, FileInfo, ConfigurationSerializer, ConfigReader, Datastore, ProjectConfiguration,
+    RelationsManager, IdGenerator, ObserverUtil, Document } from 'idai-field-core';
 import { SettingsProvider } from '../settings/settings-provider';
 import { exportConfiguration } from './endpoints/configuration';
 import { exportData } from './endpoints/export';
-import { importData } from './endpoints/import';
+import { importData } from './endpoints/importData';
 import { Settings } from '../settings/settings';
 import { MD } from '../../components/messages/md';
 import { AngularUtility } from '../../angular/angular-utility';
+import { importFiles } from './endpoints/importFiles';
+import { ImageUploader } from '../../components/image/upload/image-uploader';
+import { UploadStatus } from '../../components/image/upload/upload-status';
+import { exportFile } from './endpoints/exportFile';
 
 const express = window.require('express');
 const remote = window.require('@electron/remote');
@@ -19,7 +23,7 @@ const bodyParser = window.require('body-parser');
 let PouchDB = window.require('pouchdb-browser');
 
 
-export type ApiState = 'none'|'import'|'export';
+export type ApiState = 'none'|'import'|'fileImport'|'export';
 
 
 @Injectable()
@@ -29,10 +33,15 @@ export class ExpressServer {
     private allowLargeFileUploads: boolean;
     private binaryBodyParser = bodyParser.raw({ type: '*/*', limit: '1gb' });
     private textBodyParser = bodyParser.text({ type: '*/*', limit: '1gb' });
+    private jsonBodyParser = bodyParser.json({ type: '*/*', limit: '1gb' });
     private datastore: Datastore;
     private relationsManager: RelationsManager;
     private projectConfiguration: ProjectConfiguration;
+    private imageUploader: ImageUploader;
+    private uploadStatus: UploadStatus;
     private apiObservers: Array<Observer<ApiState>> = [];
+    private preparedImportDocuments: Map<Map<Array<Document>>> = { csv: {}, native: {}, geojson: {} };
+    private notificationTimeout: any;
 
 
     constructor(private imagestore: ImageStore,
@@ -59,6 +68,10 @@ export class ExpressServer {
 
     public setProjectConfiguration = (projectConfiguration: ProjectConfiguration) =>
         this.projectConfiguration = projectConfiguration;
+
+    public setImageUploader = (imageUploader: ImageUploader) => this.imageUploader = imageUploader;
+
+    public setUploadStatus = (uploadStatus: UploadStatus) => this.uploadStatus = uploadStatus;
 
     public apiNotifications = (): Observable<ApiState> => ObserverUtil.register(this.apiObservers);
 
@@ -122,9 +135,7 @@ export class ExpressServer {
                     });
                 } else if (Object.values(ImageVariant).includes(req.query.type)) {
                     const data = await self.imagestore.getData(req.params.uuid, req.query.type, req.params.project);
-                    res.header('Content-Type', 'image/*').status(200).send(
-                        data
-                    );
+                    res.header('Content-Type', 'image/*').status(200).send(data);
                 } else {
                     res.status(400).send({ reason: 'Invalid parameter for type: "' + req.query.type + '"' });
                 }
@@ -189,19 +200,34 @@ export class ExpressServer {
 
         app.get('/export/:format', async (request: any, response: any) => {
 
-            ObserverUtil.notify(this.apiObservers, 'export');
+            this.notifyObservers('export');
             await AngularUtility.refresh();
             await exportData(request, response, this.projectConfiguration, this.datastore, this.messagesDictionary);
-            ObserverUtil.notify(this.apiObservers, 'none');
+            this.notifyObservers('none');
         });
 
         app.post('/import/:format', this.textBodyParser, async (request: any, response: any) => {
 
-            ObserverUtil.notify(this.apiObservers, 'import');
+            this.notifyObservers('import');
             await AngularUtility.refresh();
-            await importData(request, response, this.projectConfiguration, this.datastore, this.relationsManager,
-                this.idGenerator, this.settingsProvider.getSettings(), this.messagesDictionary
+            await importData(request, response, this.preparedImportDocuments, this.projectConfiguration, this.datastore,
+                this.relationsManager, this.idGenerator, this.settingsProvider.getSettings(), this.messagesDictionary
             );
+            this.notifyObservers('none');
+        });
+
+        app.get('/fileExport/:format/:identifier', async (request: any, response: any) => {
+
+            await exportFile(request, response, this.datastore, this.imagestore, this.settingsProvider.getSettings(),
+                this.messagesDictionary);
+        });
+
+        app.post('/fileImport', this.jsonBodyParser, async (request: any, response: any) => {
+
+            ObserverUtil.notify(this.apiObservers, 'fileImport');
+            await AngularUtility.refresh();
+            await importFiles(request, response, this.projectConfiguration, this.imageUploader, this.uploadStatus,
+                this.messagesDictionary);
             ObserverUtil.notify(this.apiObservers, 'none');
         });
 
@@ -299,5 +325,23 @@ export class ExpressServer {
         });
 
         return [mainAppHandle, fauxtonAppHandle];
+    }
+
+
+    private notifyObservers(state: ApiState) {
+
+        if (this.notificationTimeout) {
+            clearTimeout(this.notificationTimeout);
+            this.notificationTimeout = undefined;
+        }
+
+        if (state === 'none') {
+            this.notificationTimeout = setTimeout(() => {
+                ObserverUtil.notify(this.apiObservers, state);
+                this.notificationTimeout = undefined;
+            }, 2000);
+        } else {
+            ObserverUtil.notify(this.apiObservers, state);
+        }
     }
 }

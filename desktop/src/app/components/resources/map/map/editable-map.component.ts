@@ -2,7 +2,8 @@ import { ChangeDetectorRef, Component, EventEmitter, HostListener, Input, NgZone
     SimpleChanges } from '@angular/core';
 import L from 'leaflet';
 import '@geoman-io/leaflet-geoman-free';
-import { FieldDocument, FieldGeometry, Labels, PouchdbDatastore, ProjectConfiguration } from 'idai-field-core';
+import { CategoryForm, FieldDocument, FieldGeometry, Labels, PouchdbDatastore,
+    ProjectConfiguration } from 'idai-field-core';
 import { Menus } from '../../../../services/menus';
 import { SettingsProvider } from '../../../../services/settings/settings-provider';
 import { Messages } from '../../../messages/messages';
@@ -74,6 +75,36 @@ export class EditableMapComponent extends LayerMapComponent {
     public handleKeyEvent(event: KeyboardEvent) {
 
         if (event.key == 'Escape') this.finishDrawing();
+    }
+
+
+    public isAddPolygonButtonEnabled(): boolean {
+
+        return (!this.editablePolygons.length && this.drawMode === 'None')
+            || CategoryForm.isAllowedGeometryType(
+                this.projectConfiguration.getCategory(this.selectedDocument.resource.category),
+                'MultiPolygon'
+            );
+    }
+
+
+    public isAddPolylineButtonEnabled(): boolean {
+
+        return (!this.editablePolylines.length && this.drawMode === 'None')
+            || CategoryForm.isAllowedGeometryType(
+                this.projectConfiguration.getCategory(this.selectedDocument.resource.category),
+                'MultiLineString'
+            );
+    }
+
+
+    public isAddPointButtonEnabled(): boolean {
+
+        return !this.editableMarkers.length
+            || CategoryForm.isAllowedGeometryType(
+                this.projectConfiguration.getCategory(this.selectedDocument.resource.category),
+                'MultiPoint'
+            );
     }
 
 

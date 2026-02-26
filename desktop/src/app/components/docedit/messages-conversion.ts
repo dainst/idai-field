@@ -28,6 +28,7 @@ export module MessagesConversion {
         if (msg === ValidationErrors.MISSING_COORDINATES) msgWithParams[0] = M.MODEL_VALIDATION_MISSING_COORDINATES;
         if (msg === ValidationErrors.MISSING_GEOMETRY_TYPE) msgWithParams[0] = M.MODEL_VALIDATION_MISSING_GEOMETRYTYPE;
         if (msg === ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE) msgWithParams[0] = M.MODEL_VALIDATION_UNSUPPORTED_GEOMETRY_TYPE;
+        if (msg === ValidationErrors.UNALLOWED_GEOMETRY_TYPE) msgWithParams[0] = M.MODEL_VALIDATION_UNALLOWED_GEOMETRY_TYPE;
 
         if (msg === ValidationErrors.MISSING_PROPERTY) {
             if (msgWithParams.length > 2 && msgWithParams[2].includes(',')) {
@@ -45,6 +46,16 @@ export module MessagesConversion {
             msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_MAX_CHARACTERS_EXCEEDED;
             msgWithParams[2] = labels.getFieldLabel(projectConfiguration.getCategory(msgWithParams[1]), msgWithParams[2]);
             msgWithParams[1] = labels.get(projectConfiguration.getCategory(msgWithParams[1]));
+        }
+
+        if (msg === ValidationErrors.UNALLOWED_CHARACTERS) {
+            if (msgWithParams.length > 2 && msgWithParams[2].includes(',')) {
+                msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_UNALLOWED_CHARACTER_IN_FIELDS;
+                msgWithParams[1] = replaceFieldNamesWithLabels(msgWithParams[2], msgWithParams[1], projectConfiguration, labels);
+            } else {
+                msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_UNALLOWED_CHARACTER_IN_FIELD;
+                msgWithParams[1] = labels.getFieldLabel(projectConfiguration.getCategory(msgWithParams[1]), msgWithParams[2]);
+            }
         }
 
         if (msg === ValidationErrors.INVALID_NUMERICAL_VALUES) {

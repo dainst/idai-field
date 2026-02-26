@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { isArray } from 'tsfun';
-import { CategoryForm, Condition, ConfigurationDocument, CustomFieldDefinition, Datastore, Field, Labels,
-    ProjectConfiguration, Relation, Valuelist, ValuelistUtil } from 'idai-field-core';
+import { CategoryForm, Condition, ConfigurationDocument, CustomFieldDefinition, Datastore, Field, FieldGeometry,
+    FieldGeometryType, Labels, ProjectConfiguration, Relation, Valuelist, ValuelistUtil } from 'idai-field-core';
 import { SettingsProvider } from '../../../services/settings/settings-provider';
 import { ConfigurationUtil, InputType } from '../configuration-util';
 import { ConfigurationContextMenu } from '../context-menu/configuration-context-menu';
@@ -38,6 +38,9 @@ export class ConfigurationFieldComponent implements OnChanges {
 
     public label: string;
     public description: string;
+
+    public allowedGeometryTypes: Array<FieldGeometryType>;
+    public allowedGeometryTypesLabel: string;
 
     private conditionFieldValuelist: Valuelist;
 
@@ -91,6 +94,7 @@ export class ConfigurationFieldComponent implements OnChanges {
         this.parentField = ConfigurationUtil.isParentField(this.category, this.field);
         this.updateLabelAndDescription();
         await this.updateConditionFieldValuelist();
+        this.updateAllowedGeometryTypes();
     }
 
 
@@ -139,5 +143,20 @@ export class ConfigurationFieldComponent implements OnChanges {
             CategoryForm.getField(this.category, this.field.condition.fieldName),
             await this.datastore.get('project')
         );
+    }
+
+
+    private updateAllowedGeometryTypes() {
+
+        if (this.field.inputType !== Field.InputType.GEOMETRY) {
+            this.allowedGeometryTypes = undefined;
+            this.allowedGeometryTypesLabel = undefined;
+            return;
+        }
+
+        this.allowedGeometryTypes = this.field.geometryTypes ?? FieldGeometry.getAvailableGeometryTypes();
+        this.allowedGeometryTypesLabel = this.allowedGeometryTypes.map(geometryType => {
+            return this.utilTranslations.getTranslation('geometry.' + geometryType);
+        }).join(', ');
     }
 }

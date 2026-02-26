@@ -1,7 +1,7 @@
 import { equal, isArray } from 'tsfun';
 
 
-export type FieldGeometryType = 'Polygon' | 'MultiPolygon' | 'LineString' | 'MultiLineString' | 'Point' | 'MultiPoint';
+export type FieldGeometryType = 'Polygon'|'MultiPolygon'|'LineString'|'MultiLineString'|'Point'|'MultiPoint';
 
 
 export interface FieldGeometry {
@@ -15,6 +15,12 @@ export interface FieldGeometry {
  * @author Thomas Kleinke
  */
 export module FieldGeometry {
+
+    export function getAvailableGeometryTypes(): Array<FieldGeometryType> {
+
+        return ['Polygon', 'MultiPolygon', 'LineString', 'MultiLineString', 'Point', 'MultiPoint'];
+    }
+
 
     export function closeRings(geometry: FieldGeometry) {
 

@@ -10,23 +10,13 @@
     <select (change)="setGeometryType($event.target.value)" class="form-control">
         <option value="" [selected]="!fieldContainer.hasOwnProperty(fieldContainer.geometry)"
                 i18n="@@geometry.none">Keine Geometrie</option>
-        <option value="Point" [selected]="fieldContainer.geometry && fieldContainer.geometry.type === 'Point'"
-                i18n="@@geometry.point">Punkt</option>
-        <option value="MultiPoint" [selected]="fieldContainer.geometry && fieldContainer.geometry.type === 'MultiPoint'"
-                i18n="@@geometry.multiPoint">Multipunkt</option>
-        <option value="LineString" [selected]="fieldContainer.geometry && fieldContainer.geometry.type === 'LineString'"
-                i18n="@@geometry.polyline">Polyline</option>
-        <option value="MultiLineString"
-                [selected]="fieldContainer.geometry && fieldContainer.geometry.type === 'MultiLineString'"
-                i18n="@@geometry.multiPolyline">Multipolyline</option>
-        <option value="Polygon" [selected]="fieldContainer.geometry && fieldContainer.geometry.type === 'Polygon'"
-                i18n="@@geometry.polygon">Polygon</option>
-        <option value="MultiPolygon"
-                [selected]="fieldContainer.geometry && fieldContainer.geometry.type === 'MultiPolygon'"
-                i18n="@@geometry.multiPolygon">Multipolygon</option>
+        <option *ngFor="let geometryType of geometryTypes" [value]="geometryType"
+                [selected]="fieldContainer.geometry?.type === geometryType">
+            {{getGeometryTypeLabel(geometryType)}}
+        </option>
     </select>
 
-    <textarea *ngIf="fieldContainer.geometry && fieldContainer.geometry.type !== ''"
+    <textarea *ngIf="fieldContainer.geometry?.type !== ''"
               class="form-control geometry-coordinates-textarea"
               [(ngModel)]="coordinates"
               (input)="parseCoordinates(false)"

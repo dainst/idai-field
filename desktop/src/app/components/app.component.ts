@@ -20,6 +20,9 @@ import { ImageToolLauncher } from '../services/imagestore/image-tool-launcher';
 import { ExpressServer } from '../services/express-server/express-server';
 import { ImportExportProcessModalComponent } from './widgets/import-export-process-modal.component';
 import { Menus } from '../services/menus';
+import { ImageUploader } from './image/upload/image-uploader';
+import { UploadModalComponent } from './image/upload/upload-modal.component';
+import { UploadStatus } from './image/upload/upload-status';
 
 const remote = window.require('@electron/remote');
 const ipcRenderer = window.require('electron')?.ipcRenderer;
@@ -41,7 +44,6 @@ export class AppComponent {
 
     private closing: boolean = false;
     private modal: ImportExportProcessModalComponent;
-    private closeModalTimeout: any;
     private previousMenuContext: MenuContext;
 
 
@@ -55,6 +57,8 @@ export class AppComponent {
                 imageToolLauncher: ImageToolLauncher,
                 projectConfiguration: ProjectConfiguration,
                 relationsManager: RelationsManager,
+                imageUploader: ImageUploader,
+                uploadStatus: UploadStatus,
                 private expressServer: ExpressServer,
                 private messages: Messages,
                 private utilTranslations: UtilTranslations,
@@ -83,6 +87,8 @@ export class AppComponent {
         this.expressServer.setDatastore(this.datastore);
         this.expressServer.setRelationsManager(relationsManager);
         this.expressServer.setProjectConfiguration(projectConfiguration);
+        this.expressServer.setImageUploader(imageUploader);
+        this.expressServer.setUploadStatus(uploadStatus);
 
         appState.load();
         settingsService.setupSync();
@@ -121,20 +127,19 @@ export class AppComponent {
         this.expressServer.apiNotifications().subscribe(state => {
             switch (state) {
                 case 'import':
+                case 'fileImport':
                 case 'export':
-                    if (this.modal) {
-                        this.clearModalTimeout();
-                    } else {
+                    if (!this.modal) {
                         this.previousMenuContext = this.menuService.getContext();
                         this.menuService.setContext(MenuContext.BLOCKING_MODAL);
                         const modalRef: NgbModalRef = this.modalService.open(
-                            ImportExportProcessModalComponent,
+                            state === 'fileImport' ? UploadModalComponent : ImportExportProcessModalComponent,
                             { backdrop: 'static', keyboard: false, animation: false }
                         );
                         this.modal = modalRef.componentInstance;
                         this.changeDetectorRef.detectChanges();
                     }
-                    this.modal.type = state;
+                    if (state !== 'fileImport') this.modal.type = state;
                     break;
                 case 'none':
                     if (this.modal) this.closeModal();
@@ -146,23 +151,11 @@ export class AppComponent {
 
     public closeModal() {
 
-        this.clearModalTimeout();
-        this.closeModalTimeout = setTimeout(() => {
-            this.menuService.setContext(this.previousMenuContext);
-            this.modal.activeModal.close();
-            this.modal = undefined;
-            this.previousMenuContext = undefined;
-            this.changeDetectorRef.detectChanges();
-        }, 2000);
-    }
-
-
-    public clearModalTimeout() {
-
-        if (!this.closeModalTimeout) return;
-        
-        clearTimeout(this.closeModalTimeout);
-        this.closeModalTimeout = undefined;
+        this.menuService.setContext(this.previousMenuContext);
+        this.modal.activeModal.close();
+        this.modal = undefined;
+        this.previousMenuContext = undefined;
+        this.changeDetectorRef.detectChanges();
     }
 
 
@@ -275,6 +268,10 @@ export class AppComponent {
         this.utilTranslations.addTranslation(
             'warnings.unfulfilledConditionFields',
             $localize `:@@util.warnings.unfulfilledConditionFields:Nicht erfüllte Anzeigebedingungen`
+        );
+        this.utilTranslations.addTranslation(
+            'warnings.unallowedCharacterFields',
+            $localize `:@@util.warnings.unallowedCharacterFields:Nicht erlaubte Zeichen`
         );
         this.utilTranslations.addTranslation(
             'warnings.outlierValues',
@@ -422,6 +419,30 @@ export class AppComponent {
         );
         this.utilTranslations.addTranslation(
             'configurationFile', $localize `:@@config.configurationFile:Field-Konfigurationsdatei`
+        );
+        this.utilTranslations.addTranslation(
+            'geometry.Point',
+            $localize `:@@geometry.point:Punkt`
+        );
+        this.utilTranslations.addTranslation(
+            'geometry.MultiPoint',
+            $localize `:@@geometry.point:Multipunkt`
+        );
+        this.utilTranslations.addTranslation(
+            'geometry.LineString',
+            $localize `:@@geometry.polyline:Polyline`
+        );
+        this.utilTranslations.addTranslation(
+            'geometry.MultiLineString',
+            $localize `:@@geometry.multiPolyline:Multipolyline`
+        );
+        this.utilTranslations.addTranslation(
+            'geometry.Polygon',
+            $localize `:@@geometry.polygon:Polygon`
+        );
+        this.utilTranslations.addTranslation(
+            'geometry.MultiPolygon',
+            $localize `:@@geometry.multiPolygon:Multipolygon`
         );
     }
 

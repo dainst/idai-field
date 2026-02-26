@@ -777,6 +777,20 @@ Legen Sie hier fest, ob in das Feld ein Einzeldatum oder ein Datumsbereich einge
 * *Datumsbereich*: Es kann ausschließlich ein Datumsbereich eingetragen werden.
 
 
+### Konfiguration von Geometriefeldern
+
+Das Formular jeder Kategorie, für die Geometrien angelegt werden können, enthält immer ein Feld des Eingabetyps "Geometrie". Im Feldeditor können Sie die erlaubten Geometrietypen für dieses Feld auswählen. Beim Anlegen von Geometrien für Ressourcen der entsprechenden Kategorie stehen anschließend nur die ausgewählten Geometrietypen zur Auswahl. Standardmäßig sind alle Geometrietypen erlaubt.
+
+Field Desktop unterstützt die folgenden Geometrietypen:
+
+* *Polygon* (immer automatisch ausgewählt, wenn "Multipolygon" ausgewählt wurde)
+* *Multipolygon*
+* *Polyline* (immer automatisch ausgewählt, wenn "Multipolyline" ausgewählt wurde)
+* *Multipolyline*
+* *Punkt* (immer automatisch ausgewählt, wenn "Multipunkt" ausgewählt wurde)
+* *Multipunkt*
+
+
 ### Unterfelder
 
 Dieser Abschnitt erscheint ausschließlich dann, wenn der Eingabetyp "Kompositfeld" gewählt ist. Legen Sie hier fest, aus welchen Unterfeldern jeder Eintrag des Kompositfelds besteht. Die Reihenfolge der Unterfelder lässt sich per Drag & Drop ändern.
@@ -1351,9 +1365,9 @@ Darüber hinaus kann (durch ein Leerzeichen getrennt) optional eine Uhrzeit im F
 
 ##### Listenfelder
 
-Bei Feldern der Eingabetypen "Checkboxen" und "Einzeiliger Text (Liste)" (ohne Mehrsprachigkeit) wird für das Feld nur eine Spalte angelegt. Die Feldwerte werden jeweils durch ein Semikolon ohne Leerzeichen voneinander getrennt (z. B. "Granit;Kalkstein;Schiefer").
+Bei Feldern des Eingabetyps "Checkboxen" wird für das Feld nur eine Spalte angelegt. Die Feldwerte werden jeweils durch ein Semikolon ohne Leerzeichen voneinander getrennt (z. B. "Granit;Kalkstein;Schiefer").
 
-Bei Feldern der Eingabetypen "Datierungsangabe", "Längenangabe", "Gewichtsangabe", "Volumenangabe", "Literaturangabe", "Kompositfeld" und "Einzeiliger Text (Liste)" (mit Mehrsprachigkeit) werden **für jeden Listeneintrag** die entsprechenden Spalten für die jeweiligen Unterfelder bzw. Sprachen angelegt. Hinter den Feldnamen wird dabei (beginnend bei 0 und durch Punkte getrennt) eine Nummer zur Identifikation des jeweiligen Eintrags eingefügt.
+Bei Feldern der Eingabetypen "Datierungsangabe", "Längenangabe", "Gewichtsangabe", "Volumenangabe", "Literaturangabe", "Kompositfeld" und "Einzeiliger Text (Liste)" werden **für jeden Listeneintrag** die entsprechenden Spalten für die jeweiligen Unterfelder bzw. Sprachen angelegt. Hinter den Feldnamen wird dabei (beginnend bei 0 und durch Punkte getrennt) eine Nummer zur Identifikation des jeweiligen Eintrags eingefügt.
 
 *Beispiel für ein Feld des Eingabetyps "Einzeiliger Text (Liste)" mit Mehrsprachigkeit:*
 <div class="table-container">
@@ -1461,7 +1475,7 @@ Felder des Eingabetyps "Datierungsangabe" sind Listenfelder, die jeweils mehrere
 
 Die Jahresangaben *begin* und *end* bestehen wiederum aus zwei Unterfeldern:
 
-* *inputType*: Die Zeitrechnung. Mögliche Werte sind: *bce* (v. Chr), *ce* (n. Chr.), *bp* (BP).
+* *inputType*: Die Zeitrechnung. Mögliche Werte sind: *bce* (v. Chr.), *ce* (n. Chr.), *bp* (BP).
 * *inputYear*: Die Jahreszahl.
 
 *Beispiel:*
@@ -1987,7 +2001,7 @@ Felder des Eingabetyps "Datierungsangabe" sind Listenfelder, die jeweils mehrere
 
 Die Jahresangaben *begin* und *end* sind wiederum Objekte, die aus zwei Unterfeldern bestehen:
 
-* *inputType*: Die Zeitrechnung. Mögliche Werte sind: *bce* (v. Chr), *ce* (n. Chr.), *bp* (BP).
+* *inputType*: Die Zeitrechnung. Mögliche Werte sind: *bce* (v. Chr.), *ce* (n. Chr.), *bp* (BP).
 * *inputYear*: Die Jahreszahl.
 
 *Beispiel:*
@@ -2321,6 +2335,25 @@ Der für die Ressource gesetzte QR-Code wird auch von einer oder mehreren andere
 #### Mögliche Lösungen
 * Button *QR-Code bearbeiten*: Öffnen Sie den QR-Code-Editor, um den QR-Code zu löschen und gegebenenfalls einen anderen  QR-Code zu verknüpfen bzw. neu zu erzeugen.
 
+### Nicht erlaubte Zeichen
+Eines oder mehrere der in das Feld eingetragenen Zeichen sind in Feldern des entsprechenden Eingabetyps nicht erlaubt.
+
+#### Mögliche Ursachen
+* Das Feld wurde mit einer veralteten Version von Field Desktop ausgefüllt.
+
+#### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie den Ressourceneditor, um nicht erlaubte Zeichen aus dem Feld zu entfernen.
+
+### Nicht erlaubter Geometrietyp
+Die Geometrie der Ressource entspricht keinem Geometrietyp, der für die entsprechende Kategorie erlaubt ist.
+
+#### Mögliche Ursachen
+* Der Geometrietyp wurde als erlaubter Geometrietyp für die entsprechende Kategorie abgewählt, nachdem die Geometrie zur Ressource hinzugefügt wurde.
+
+#### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie den Ressourceneditor, um die Geometrie anzupassen und einen erlaubten Geometrietyp zu wählen.
+* Bearbeiten Sie das Feld *Geometrie* der entsprechenden Kategorie im Konfigurationseditor und wählen Sie den Geometrietyp der Ressource dabei als erlaubten Geometrietyp aus.
+
 ### Ressourcenlimit überschritten
 Es existieren mehr Ressourcen einer Kategorie, als das für diese Kategorie konfigurierte Ressourcenlimit erlaubt.
 
@@ -2350,6 +2383,8 @@ Field Desktop stellt eine REST-API bereit, über die Daten per HTTP abgefragt un
 http://localhost:3000
 
 Beim Zugriff auf jeden der API-Endpunkte muss per *Basic Auth* dasjenige Passwort angegeben werden, das im Menü "Einstellungen" unter "Synchronisation" als "Eigenes Passwort" eingetragen ist. Die Angabe eines Usernamens ist nicht erforderlich.
+
+Wenn nicht anders angegeben, werden Daten im JSON-Format zurückgegeben und auch im Request-Body von POST-Requests als JSON erwartet.
 
 ## Endpunkte
 
@@ -2390,6 +2425,8 @@ Query-Parameter:
 * *category (String)*: Der Name der Kategorie, der die zu importierenden Daten angehören. Nur erforderlich beim CSV-Import. Entspricht dem Auswahlfeld "Kategorie" in der Benutzeroberfläche. (Standardwert: "Project")
 * *operation (String)*: Der Bezeichner einer Maßnahme, der die importierten Ressourcen zugeordnet werden sollen. Entspricht dem Auswahlfeld "Daten einer Maßnahme zuordnen" in der Benutzeroberfläche. (Standardwert: nicht gesetzt)
 * *separator (String)*: Das Trennzeichen, das in den CSV-Daten verwendet wird. Nur erforderlich beim CSV-Import. Entspricht dem Eingabefeld "Feldtrennzeichen" in der Benutzeroberfläche. (Standardwert: ",")
+* *command (String)*: Gibt an, ob der Import unmittelbar gestartet oder die Importdaten für einen Importvorgang vorgemerkt werden sollen, der später mit einer weiteren Anfrage an den gleichen API-Endpunkt gestartet werden kann. Mögliche Werte sind "start" für die Durchführung des Imports und "add" für das Hinzufügen der Daten des Request-Bodys zu demjenigen Importvorgang, der durch die ID im Query-Parameter "importId" identifiziert wird. (Standardwert: "start")
+* *importId (String)*: Gibt an, auf welchen Importvorgang sich die Anfrage bezieht. Nur erforderlich, wenn über mehrere Anfragen hinweg CSV-Daten mit *command=add* hinzugefügt werden.
 
 
 ### GET /export/{format}
@@ -2407,3 +2444,35 @@ Query-Parameter:
 * *combineHierarchicalRelations (Boolean)*: Fasst hierarchische Relationen zur vereinfachten Relation "isChildOf" zusammen. Nur verfügbar beim CSV-Export. Entspricht der Checkbox "Hierarchische Relationen zusammenfassen" in der Benutzeroberfläche. (Standardwert: true)
 * *formatted (Boolean)*: Setzt Einrückungen zur formatierten Ausgabe der exportierten Daten. Nur verfügbar beim GeoJSON-Export. (Standardwert: true)
 
+
+### POST /fileImport
+
+Über diesen API-Endpunkt können Bilddateien und World-Files in das aktuell in der Anwendung geöffnete Projekt importiert werden, indem eine Importanfrage im JSON-Format übergeben wird. Die Funktionalität entspricht dabei dem Import von Dateien über das Menü "Werkzeuge" ➝ "Bilderverwaltung".
+Detaillierte Erklärungen zum Importvorgang finden Sie im Kapitel "Bilder".
+
+Im Request-Body werden JSON-Daten erwartet. Die Antwort wird ebenfalls im JSON-Format zurückgegeben.
+
+Request-Body:
+* *filePaths (String-Array)*: Die Dateipfade der zu importierenden Dateien
+* *category (String)*: Der Name der Kategorie, die für importierte Bilder gesetzt werden soll (Standardwert: "Image")
+* *readCreatorsFromMetadata (Boolean)*: Liest die Metadaten von Bilddateien aus, um das Feld "Bildersteller/Bilderstellerin" automatisch auszufüllen
+
+Rückgabe:
+* *importedImages (Integer)*: Die Anzahl der erfolgreich importierten Bilddateien
+* *importedWorldFiles (Integer)*: Die Anzahl der erfolgreich importierten World-Files
+* *messages* (String-Array): Meldungen, die während des Importvorgangs aufgetreten sind
+
+
+### GET /fileExport/:format/:identifier
+
+Über diesen API-Endpunkt können Bilddateien und World-Files aus dem aktuell in der Anwendung geöffneten Projekt abgerufen werden.
+
+Parameter:
+* *format*: Gibt an, ob die Bilddatei selbst oder die dazugehörigen Georeferenzierungsinformationen exportiert werden sollen. Mögliche Werte: *image* (Export der Bilddatei), *worldFile* (Export der Georeferenzierungsdaten im World-File-Format)
+* *identifier*: Der Bezeichner der Bildressource, deren Daten abgerufen werden sollen
+
+Das Format der zurückgelieferten Daten richtet sich nach dem entsprechenden Dateiformat. Gesetzt wird jeweils einer der folgenden MIME-Types im Header "Content-Type":
+* *image/jpeg*: Bild im JPG-Format
+* *image/png*: Bild im PNG-Format
+* *image/tiff*: Bild im TIFF-Format
+* *text/plain*: World File

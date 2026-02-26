@@ -35,7 +35,8 @@ describe('DeleteProjectModalComponent', () => {
             new StateSerializer(),
             settingsService,
             settingsProvider,
-            messages
+            messages,
+            undefined
         );
     });
 

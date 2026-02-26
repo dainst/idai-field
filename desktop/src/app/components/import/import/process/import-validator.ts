@@ -174,6 +174,7 @@ export class ImportValidator extends Validator {
      * @throws [ValidationErrors.INVALID_LITERATURE_VALUES]
      * @throws [ValidationErrors.INVALID_OPTIONALRANGE_VALUES]
      * @throws [ValidationErrors.INVALID_MAP_LAYER_RELATION_VALUES]
+     * @throws [ValidationErrors.MAX_CHARACTERS_EXCEEDED]
      */
     public assertIsWellformed(document: Document|NewDocument): void {
 
@@ -189,9 +190,6 @@ export class ImportValidator extends Validator {
         Validations.assertCorrectnessOfDates(document, this.projectConfiguration);
         Validations.assertMapLayerRelations(document);
         Validations.assertWorkflowRelations(document);
-
-        const errWithParams = Validations.validateStructureOfGeometries(document.resource.geometry as any);
-        if (errWithParams) throw errWithParams;
     }
 
 

@@ -2,8 +2,8 @@ import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnIni
     ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { to, Map } from 'tsfun';
-import { CategoryForm, Datastore, Resource, FieldDocument, Name, Named, Tree, ProjectConfiguration, 
-    PouchdbDatastore } from 'idai-field-core';
+import { CategoryForm, Datastore, Resource, FieldDocument, Name, Named, Tree, ProjectConfiguration, PouchdbDatastore, 
+    FieldGeometryType } from 'idai-field-core';
 import { ViewFacade } from '../../components/resources/view/view-facade';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
@@ -44,7 +44,7 @@ export class PlusButtonComponent implements OnInit, OnChanges, OnDestroy {
 
     @ViewChild('popover', { static: false }) private popover: any;
 
-    public selectedCategory: string|undefined;
+    public selectedCategory: CategoryForm|undefined;
     public topLevelCategoriesArray: Array<CategoryForm>;
 
     private clickEventSubscription: Subscription;
@@ -101,7 +101,7 @@ export class PlusButtonComponent implements OnInit, OnChanges, OnDestroy {
         const newDocument: FieldDocument = <FieldDocument> {
             resource: {
                 relations: this.createRelations(),
-                category: this.selectedCategory
+                category: this.selectedCategory.name
             }
         };
 
@@ -118,8 +118,8 @@ export class PlusButtonComponent implements OnInit, OnChanges, OnDestroy {
     public reset() {
 
         this.selectedCategory = this.getButtonType() === 'singleCategory'
-            ? this.topLevelCategoriesArray[0].name
-            : this.selectedCategory = undefined;
+            ? this.topLevelCategoriesArray[0]
+            : undefined;
     }
 
 
@@ -137,11 +137,11 @@ export class PlusButtonComponent implements OnInit, OnChanges, OnDestroy {
 
     public chooseCategory(category: CategoryForm) {
 
-        this.selectedCategory = category.name;
+        this.selectedCategory = category;
 
         if (this.preselectedGeometryType) {
             this.startDocumentCreation();
-        } else if (!this.isGeometryCategory(this.selectedCategory)) {
+        } else if (!this.isGeometryCategory(this.selectedCategory.name)) {
             this.startDocumentCreation('none');
         }
     }
@@ -155,6 +155,12 @@ export class PlusButtonComponent implements OnInit, OnChanges, OnDestroy {
             case 'disabled-hierarchy':
                 return $localize `:@@resources.plusButton.tooltip.deactivated:Bitte deaktivieren Sie den erweiterten Suchmodus, um neue Ressourcen anlegen zu können.`;
         }
+    }
+
+
+    public isAllowedGeometryType(geometryType: FieldGeometryType) {
+        
+        return CategoryForm.isAllowedGeometryType(this.selectedCategory, geometryType);
     }
 
 

@@ -768,6 +768,20 @@ Here you can specify whether a single date or a date range should be entered in 
 * *Date range*: Only a date range can be entered.
 
 
+### Configuration of geometry fields
+
+The form of each category for which geometries can be created always contains a field of the input type "Geometry". In the field editor, you can select the allowed geometry types for this field. When creating geometries for resources of the corresponding category, only the selected geometry types are available for selection. By default, all geometry types are allowed.
+
+Field Desktop supports the following geometry types:
+
+* *Polygon* (always selected automatically when "Multipolygon" is selected)
+* *Multipolygon*
+* *Polyline* (always selected automatically when "Multipolyline" is selected)
+* *Multipolyline*
+* *Point* (always automatically selected when "Multipoint" is selected)
+* *Multipoint*
+
+
 ### Subfields
 
 This section appears only if the input type "Composite field" is selected and allows defining the subfields each entry of the composite field consists of. The order of the subfields can be changed via drag & drop.
@@ -1332,9 +1346,9 @@ In addition, a time specification in the format "hours:minutes" can be entered (
 
 ##### List fields
 
-For fields of the input types "Checkboxes" and "Single line text (List)" (without input in multiple languages), only one column is created for the field. The field values are separated from each other by a semicolon without space between values (e.g. "Granite;Limestone;Slate").
+For fields of the input type "Checkboxes", only one column is created for the field. The field values are separated from each other by a semicolon without space between values (e.g. "Granite;Limestone;Slate").
 
-For fields of the input types "Dating", "Dimension", "Weight", "Volume", "Bibliographic reference", "Composite field" and "Single line text (List)" (with input in multiple languages), the corresponding columns for the respective subfields or languages are created **for each list entry**. A number is inserted after the field name (starting at 0 and separated by dots) to identify the respective entry.
+For fields of the input types "Dating", "Dimension", "Weight", "Volume", "Bibliographic reference", "Composite field" and "Single line text (List)", the corresponding columns for the respective subfields or languages are created **for each list entry**. A number is inserted after the field name (starting at 0 and separated by dots) to identify the respective entry.
 
 *Example of a field of the input type "Single line text (List)" with input in multiple languages:*
 
@@ -2314,6 +2328,25 @@ The QR code set for the resource is also used by one or more other resources. Th
 #### Possible solutions
 * Button *Edit QR code*: Open the QR code editor to delete the QR code and, if necessary, link or generate a new QR code.
 
+### Unallowed characters
+One or more characters entered in the field are not allowed in fields of the corresponding input type.
+
+#### Possible causes
+* The field was filled in with an outdated version of Field Desktop.
+
+#### Possible solutions
+* Button *Edit*: Open the resource editor to remove unallowed characters from the field.
+
+### Unallowed geometry type
+The geometry of the resource does not correspond to a geometry type that is allowed for the corresponding category.
+
+#### Possible causes
+* The geometry type was deselected as an allowed geometry type for the corresponding category after the geometry was added to the resource.
+
+#### Possible solutions
+* Button *Edit*: Open the resource editor to adjust the geometry and select an allowed geometry type.
+* Edit the field *Geometry* of the corresponding category in the configuration editor and select the geometry type of the resource as an allowed geometry type.
+
 ### Resource limit exceeded
 There are more resources of a particular category than the resource limit configured for this category allows.
 
@@ -2344,6 +2377,8 @@ http://localhost:3000
 
 When accessing each of the API endpoints, the password entered as "Your password" in the menu "Settings" under "Synchronization" must be given via *Basic Auth*. It is not necessary to enter a user name.
 
+Unless otherwise specified, data is returned in JSON format and is also expected in the request body of POST requests as JSON.
+
 
 ## Endpoints
 
@@ -2351,7 +2386,7 @@ When accessing each of the API endpoints, the password entered as "Your password
 
 This API endpoint returns some information about the running instance of Field Desktop in JSON format.
 
-Return:
+Response:
 * *version (string)*: The version of the running application
 * *projects (string array)*: The identifiers of all projects currently stored on this computer
 * *activeProject (string)*: The identifier of the project currently opened in the application
@@ -2384,6 +2419,8 @@ Query parameters:
 * *category (string)*: The name of the category to which the data to be imported belongs. Only required for CSV import. Corresponds to the dropdown field "Category" in the user interface. (Default value: "Project")
 * *operation (string)*: The identifier of an operation to which the imported resources are to be assigned. Corresponds to the dropdown field "Assign data to an operation" in the user interface. (Default value: not set)
 * *separator (string)*: The separator used in the CSV data. Only required for CSV import. Corresponds to the input field "Field separator" in the user interface. (Default value: ",")
+* *command (string)*: Specifies whether the import should be started immediately or whether the import data should be queued for an import process that can be started later with another request to the same API endpoint. Possible values are "start" to execute the import and "add" to add the data from the request body to the import process identified by the ID in the query parameter "importId". (Default value: "start")
+* *importId (string)*: Specifies which import process the request refers to. Only required if CSV data is added across multiple requests with *command=add*.
 
 
 ### GET /export/{format}
@@ -2400,3 +2437,33 @@ Query parameters:
 * *separator (string)*: The separator to be used in the exported CSV data. Only required for CSV export. Corresponds to the input field "Field separator" in the user interface. (Default value: ",")
 * *combineHierarchicalRelations (boolean)*: Combines hierarchical relations into the simplified relation "isChildOf". Only available for CSV export. Corresponds to the checkbox "Combine hierarchical relations" in the user interface. (Default value: true)
 * *formatted (boolean)*: Sets indentations for formatted output of the exported data. Only available for GeoJSON export. (Default value: true)
+
+
+### POST /fileImport
+
+This API endpoint can be used to import image files and world files into the project currently opened in the application by passing an import request in JSON format. The functionality corresponds to importing files via the menu "Tools" ➝ "Image Management". Detailed explanations of the import process can be found in the chapter "Images".
+
+Request body:
+* *filePaths (string array)*: The file paths of the files to be imported
+* *category (string)*: The name of the category to be set for imported images (Default value: "Image")
+* *readCreatorsFromMetadata (boolean)*: Reads the metadata from image files to automatically fill in the field "Creator"
+
+Response:
+* *importedImages (integer)*: The number of successfully imported image files
+* *importedWorldFiles (integer)*: The number of successfully imported world files 
+* *messages* (string array): Messages that occurred during the import process
+
+
+### GET /fileExport/:format/:identifier
+
+This API endpoint can be used to retrieve image files and world files from the project currently opened in the application.
+
+Parameters:
+* *format*: Specifies whether the image file itself or the associated georeferencing information should be exported. Possible values: *image* (export of the image file), *worldFile* (export of the georeference data in world file format)
+* *identifier*: The identifier of the image resource whose data is to be retrieved
+
+The format of the returned data depends on the corresponding file format. One of the following MIME types is set in the "Content-Type" header:
+* *image/jpeg*: Image in JPG format
+* *image/png*: Image in PNG format
+* *image/tiff*: Image in TIFF format
+* *text/plain*: World file

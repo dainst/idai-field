@@ -2,6 +2,7 @@ import { Condition } from '../../../model/configuration/condition';
 import { DateConfiguration } from '../../../model/configuration/date-configuration';
 import { Field } from '../../../model/configuration/field';
 import { SemanticReference } from '../../../model/configuration/semantic-reference';
+import { FieldGeometryType } from '../../../model/document/field-geometry';
 import { Named } from '../../../tools/named';
 
 
@@ -16,6 +17,7 @@ export interface BaseFieldDefinition {
     condition?: Condition;
     subfields?: Array<BaseSubfieldDefinition>;
     dateConfiguration?: DateConfiguration;
+    geometryTypes?: Array<FieldGeometryType>;
 }
 
 

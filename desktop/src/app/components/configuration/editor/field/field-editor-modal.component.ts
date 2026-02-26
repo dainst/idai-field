@@ -2,14 +2,15 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { clone, equal, intersection, isArray, isEmpty, Map, sameset, set, subsetOf, to } from 'tsfun';
 import { ConfigurationDocument, CustomFormDefinition, Field, I18N, OVERRIDE_VISIBLE_FIELDS,
-    CustomLanguageConfigurations, ProjectConfiguration, CategoryForm, Named, Labels, 
-    CustomFieldDefinition, DateConfiguration, Condition, Relation } from 'idai-field-core';
+    CustomLanguageConfigurations, ProjectConfiguration, CategoryForm, Named, Labels,  CustomFieldDefinition,
+    DateConfiguration, Condition, Relation, FieldGeometry, FieldGeometryType } from 'idai-field-core';
 import { InputType, ConfigurationUtil } from '../../configuration-util';
 import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
 import { Menus } from '../../../../services/menus';
 import { Messages } from '../../../messages/messages';
 import { Modals } from '../../../../services/modals';
 import { M } from '../../../messages/m';
+import { UtilTranslations } from '../../../../util/util-translations';
 
 
 @Component({
@@ -51,7 +52,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
                 modals: Modals,
                 menuService: Menus,
                 messages: Messages,
-                private labels: Labels) {
+                private labels: Labels,
+                private utilTranslations: UtilTranslations) {
 
         super(activeModal, modals, menuService, messages);
     }
@@ -79,6 +81,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public isDateSectionVisible = () => this.getInputType() === Field.InputType.DATE;
 
+    public isGeometrySectionVisible = () => this.getInputType() === Field.InputType.GEOMETRY;
+
     public isSubfieldsSectionVisible = () => this.getInputType() === Field.InputType.COMPOSITE;
 
     public isRelationSectionVisible = () => this.getInputType() === Field.InputType.RELATION
@@ -91,6 +95,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public isCustomField = () => this.field.source === 'custom';
 
     public getAvailableConditionFields = () => CategoryForm.getFields(this.category);
+
+    public getAvailableGeometryTypes = () => FieldGeometry.getAvailableGeometryTypes();
 
 
     public initialize() {
@@ -116,6 +122,9 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         if (!this.getClonedFieldDefinition().subfields) this.getClonedFieldDefinition().subfields = [];
         if (!this.getClonedFieldDefinition().condition) {
             this.getClonedFieldDefinition().condition = clone(this.field.condition) ?? Condition.getEmpty('field');
+        }
+        if (!this.getClonedFieldDefinition().geometryTypes) {
+            this.getClonedFieldDefinition().geometryTypes = FieldGeometry.getAvailableGeometryTypes().slice();
         }
 
         this.clonedField = clone(this.field);
@@ -167,6 +176,11 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             Object.keys(this.subfieldI18nStrings).forEach(subfieldName => {
                 this.subfieldI18nStrings[subfieldName] = {};
             });
+        }
+
+        if (this.getInputType() !== Field.InputType.GEOMETRY
+                || equal(this.getClonedFieldDefinition().geometryTypes)(FieldGeometry.getAvailableGeometryTypes())) {
+            delete this.getClonedFieldDefinition().geometryTypes;
         }
 
         if (this.getCustomFieldDefinition()?.inverse) this.deleteInverseRelations();
@@ -348,6 +362,51 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     }
 
 
+    public getGeometryTypeLabel(geometryType: FieldGeometryType): string {
+
+        return this.utilTranslations.getTranslation('geometry.' + geometryType);
+    }
+
+    
+    public toggleGeometryType(geometryType: FieldGeometryType) {
+
+        const geometryTypes: Array<FieldGeometryType> = this.getClonedFieldDefinition().geometryTypes;
+
+        this.getClonedFieldDefinition().geometryTypes = geometryTypes.includes(geometryType)
+            ? geometryTypes.filter(type => type !== geometryType)
+            : this.getClonedFieldDefinition().geometryTypes = FieldGeometry.getAvailableGeometryTypes().filter(type => {
+                return geometryTypes.includes(type)
+                    || type === geometryType
+                    || (type === 'Polygon' && geometryType === 'MultiPolygon')
+                    || (type === 'LineString' && geometryType === 'MultiLineString')
+                    || (type === 'Point' && geometryType === 'MultiPoint');
+            });
+    }
+
+
+    public isGeometryTypeAllowed(geometryType: FieldGeometryType): boolean {
+        
+        return this.getClonedFieldDefinition().geometryTypes.includes(geometryType);
+    }
+
+
+    public isGeometryOptionEnabled(geometryType: FieldGeometryType): boolean {
+
+        const geometryTypes: Array<FieldGeometryType> = this.getClonedFieldDefinition().geometryTypes;
+
+        switch (geometryType) {
+            case 'Polygon':
+                return !geometryTypes.includes('MultiPolygon');
+            case 'LineString':
+                return !geometryTypes.includes('MultiLineString');
+            case 'Point':
+                return !geometryTypes.includes('MultiPoint');
+            default:
+                return true;
+        }
+    }
+
+
     public isChanged(): boolean {
 
         return this.new
@@ -359,6 +418,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             || this.isConditionChanged()
             || this.isDateConfigurationChanged()
             || this.isSubfieldsChanged()
+            || this.isGeometryTypesChanged()
             || !sameset(this.getCustomFieldDefinition()?.range ?? [], this.getRange())
             || this.getCustomFieldDefinition()?.inverse !== this.inverseRelation
             || !equal(this.label)(I18N.removeEmpty(this.clonedLabel))
@@ -429,6 +489,17 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
                 || !equal(subfield.description ?? {})(I18N.removeEmpty(this.subfieldI18nStrings[subfield.name]
                     ?.description ?? {}));
         }).length > 0;
+    }
+
+
+    private isGeometryTypesChanged(): boolean {
+
+        const geometryTypes: Array<FieldGeometryType> = this.getCustomFieldDefinition()?.geometryTypes
+            ?? FieldGeometry.getAvailableGeometryTypes();
+        const clonedGeometryTypes: Array<FieldGeometryType> = this.getClonedFieldDefinition()?.geometryTypes
+            ?? FieldGeometry.getAvailableGeometryTypes();
+
+        return !equal(geometryTypes)(clonedGeometryTypes);
     }
 
 
@@ -604,6 +675,10 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
         if (this.isRelationSectionVisible() && !this.selectedTargetCategoryNames.length) {
             throw [M.CONFIGURATION_ERROR_NO_ALLOWED_TARGET_CATEGORIES];
+        }
+
+        if (this.isGeometrySectionVisible() && !this.getClonedFieldDefinition().geometryTypes.length) {
+            throw [M.CONFIGURATION_ERROR_NO_ALLOWED_GEOMETRY_TYPES];
         }
     }
 

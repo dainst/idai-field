@@ -9,6 +9,12 @@ import { getDocumentSuggestions } from './get-document-suggestions';
 import { scrollTo } from '../../angular/scrolling';
 
 
+export type DocumentPickerClickEvent = {
+    event: MouseEvent;
+    document: Document;
+};
+
+
 @Component({
     selector: 'document-picker',
     templateUrl: './document-picker.html',
@@ -35,12 +41,15 @@ export class DocumentPickerComponent implements OnChanges {
     @Input() waitForUserInput: boolean = true;
     @Input() markSelected: boolean = false;
     @Input() autoSelect: boolean = false;
+    @Input() selectOnRightClick: boolean = false;
     @Input() allowKeyboardNavigation: boolean = false;
     @Input() showNoQueryMessage: boolean = true;
     @Input() preselectedDocumentId: string;
 
     @Output() documentSelected: EventEmitter<Document> = new EventEmitter<Document>();
     @Output() documentDoubleClicked: EventEmitter<Document> = new EventEmitter<Document>();
+    @Output() documentRightClicked: EventEmitter<DocumentPickerClickEvent>
+        = new EventEmitter<DocumentPickerClickEvent>();
 
     @ViewChild(CdkVirtualScrollViewport) scrollViewport: CdkVirtualScrollViewport;
 
@@ -100,6 +109,13 @@ export class DocumentPickerComponent implements OnChanges {
     public doubleClick(document: Document) {
 
         this.documentDoubleClicked.emit(document);
+    }
+
+
+    public rightClick(event: MouseEvent, document: Document) {
+
+        this.documentRightClicked.emit({ event, document });
+        if (this.selectOnRightClick) this.select(document);
     }
 
 

@@ -6,6 +6,7 @@ export type WarningType = 'unconfiguredCategory'
     |'invalidFields'
     |'missingMandatoryFields'
     |'unfulfilledConditionFields'
+    |'unallowedCharacterFields'
     |'outliers'
     |'missingRelationTargets'
     |'invalidRelationTargets'
@@ -16,6 +17,7 @@ export type WarningType = 'unconfiguredCategory'
     |'resourceLimitExceeded'
     |'missingOrInvalidParent'
     |'invalidProcessState'
+    |'unallowedGeometryType'
 
 
 export interface Warnings {
@@ -24,6 +26,7 @@ export interface Warnings {
     invalidFields: string[];
     missingMandatoryFields?: string[];
     unfulfilledConditionFields?: string[];
+    unallowedCharacterFields?: string[];
     outliers?: OutlierWarnings;
     missingRelationTargets?: RelationTargetWarnings;
     invalidRelationTargets?: RelationTargetWarnings;
@@ -35,6 +38,7 @@ export interface Warnings {
     resourceLimitExceeded?: boolean;
     missingOrInvalidParent?: boolean;
     invalidProcessState?: boolean;
+    unallowedGeometryType?: boolean;
 }
 
 
@@ -63,6 +67,7 @@ export module Warnings {
             || warnings.invalidFields.length > 0
             || warnings.missingMandatoryFields.length > 0
             || warnings.unfulfilledConditionFields.length > 0
+            || warnings.unallowedCharacterFields.length > 0
             || warnings.outliers !== undefined
             || warnings.missingRelationTargets !== undefined
             || warnings.invalidRelationTargets !== undefined
@@ -73,7 +78,8 @@ export module Warnings {
             || warnings.nonUniqueQrCode
             || warnings.resourceLimitExceeded
             || warnings.missingOrInvalidParent
-            || warnings.invalidProcessState;
+            || warnings.invalidProcessState
+            || warnings.unallowedGeometryType;
     }
 
 
@@ -83,7 +89,8 @@ export module Warnings {
             unconfiguredFields: [],
             invalidFields: [],
             missingMandatoryFields: [],
-            unfulfilledConditionFields: []
+            unfulfilledConditionFields: [],
+            unallowedCharacterFields: []
         };
     }
 }

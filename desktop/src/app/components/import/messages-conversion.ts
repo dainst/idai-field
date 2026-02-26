@@ -54,6 +54,8 @@ export module MessagesConversion {
         if (msg === ValidationErrors.MISSING_COORDINATES) replacement = M.MODEL_VALIDATION_MISSING_COORDINATES;
         if (msg === ValidationErrors.INVALID_COORDINATES) replacement = M.MODEL_VALIDATION_INVALID_COORDINATES;
         if (msg === ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE) replacement = M.MODEL_VALIDATION_UNSUPPORTED_GEOMETRY_TYPE;
+        if (msg === ValidationErrors.UNALLOWED_GEOMETRY_TYPE) replacement = M.MODEL_VALIDATION_UNALLOWED_GEOMETRY_TYPE;
+        if (msg === ValidationErrors.GEOMETRY_NOT_ALLOWED) replacement = M.MODEL_VALIDATION_GEOMETRY_NOT_ALLOWED;
         if (msg === ValidationErrors.GENERIC_DATASTORE) replacement = M.IMPORT_READER_GENERIC_DATASTORE;
         if (msg === ValidationErrors.INVALID_MAP_LAYER_RELATION_VALUES) replacement = M.IMPORT_VALIDATION_ERROR_INVALID_MAP_LAYER_RELATION_TARGETS;
         if (msg === ValidationErrors.INVALID_DATE_RANGE_NOT_ALLOWED) replacement = M.IMPORT_VALIDATION_ERROR_INVALID_DATE_RANGE_NOT_ALLOWED;
@@ -93,7 +95,6 @@ export module MessagesConversion {
         if (msg === ImportErrors.RESOURCE_LIMIT_EXCEEDED) replacement = M.IMPORT_VALIDATION_ERROR_RESOURCE_LIMIT_EXCEEDED;
         if (msg === ImportErrors.DUPLICATE_QR_CODE_IN_IMPORT_FILE) replacement = M.IMPORT_VALIDATION_DUPLICATE_QR_CODE_IN_IMPORT_FILE;
         if (msg === ImportErrors.DUPLICATE_QR_CODE_IN_PROJECT) replacement = M.IMPORT_VALIDATION_DUPLICATE_QR_CODE_IN_PROJECT;
-        if (msg === ImportErrors.WARNINGS_EXIST) replacement = M.IMPORT_ERROR_WARNINGS_EXIST;
 
         if (msg === ImportCatalogErrors.CATALOG_DOCUMENTS_IDENTIFIER_CLASH) replacement = M.IMPORT_CATALOG_ERROR_IDENTIFIER_CLASH;
         if (msg === ImportCatalogErrors.CATALOG_OWNER_MUST_NOT_REIMPORT_CATALOG) replacement = M.IMPORT_CATALOG_ERROR_OWNER_MUST_NOT_REIMPORT_CATALOG;

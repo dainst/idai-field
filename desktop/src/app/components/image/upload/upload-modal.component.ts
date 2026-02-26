@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { UploadStatus } from './upload-status';
 
 
@@ -13,7 +14,6 @@ import { UploadStatus } from './upload-status';
  */
 export class UploadModalComponent {
 
-    constructor(
-        public uploadStatus: UploadStatus
-    ) {}
+    constructor(public activeModal: NgbActiveModal,
+                public uploadStatus: UploadStatus) {}
 }

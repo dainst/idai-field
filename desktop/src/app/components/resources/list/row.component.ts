@@ -12,6 +12,7 @@ import { NavigationService } from '../navigation/navigation-service';
 import { Messages } from '../../messages/messages';
 import { Language } from '../../../services/languages';
 import { IdentifierInputComponent } from '../../widgets/identifier-input.component';
+import { Validations } from '../../../model/validations';
 
 
 @Component({
@@ -164,7 +165,7 @@ export class RowComponent implements AfterViewChecked, OnChanges {
         return isObject(shortDescription)
             ? (shortDescription[this.selectedLanguage.code] ?? '')
             : !this.selectedLanguage || this.selectedLanguage.code === I18N.UNSPECIFIED_LANGUAGE
-                ? (shortDescription ?? '')
+                ? (shortDescription as string ?? '')
                 : '';
     }
 
@@ -238,6 +239,7 @@ export class RowComponent implements AfterViewChecked, OnChanges {
 
         try {
             await this.validator.assertIdentifierIsUnique(this.document);
+            Validations.assertNoUnallowedCharactersUsed(this.document, this.projectConfiguration);
         } catch(msgWithParams) {
             this.messages.add(MessagesConversion.convertMessage(msgWithParams, this.projectConfiguration, this.labels));
             if (!this.isNewResource()) await this.restorePreviousVersion();

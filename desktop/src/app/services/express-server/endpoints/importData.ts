@@ -1,9 +1,10 @@
-import { to } from 'tsfun';
+import { to, Map, isEmpty } from 'tsfun';
 import { CategoryForm, Datastore, Document, IdGenerator, Named, ProjectConfiguration,
     RelationsManager } from 'idai-field-core';
 import { Importer, ImporterFormat, ImporterOptions, ImporterReport } from '../../../components/import/importer';
-import { Settings } from '../../settings/settings';
 import { MD } from '../../../components/messages/md';
+import { M } from '../../../components/messages/m';
+import { Settings } from '../../settings/settings';
 import { getErrorMessage } from './util/get-error-message';
 
 
@@ -15,33 +16,44 @@ interface RequestParameters {
     permitDeletions: boolean;
     ignoreUnconfiguredFields: boolean;
     separator: string;
+    command: ImportCommand;
+    importId?: string;
 }
+
+
+type ImportCommand = 'add'|'start';
 
 
 /**
  * @author Thomas Kleinke
  */
-export async function importData(request: any, response: any, projectConfiguration: ProjectConfiguration,
-                                 datastore: Datastore, relationsManager: RelationsManager, idGenerator: IdGenerator,
-                                 settings: Settings, messagesDictionary: MD) {
+export async function importData(request: any, response: any, preparedImportDocuments: Map<Map<Array<Document>>>,
+                                 projectConfiguration: ProjectConfiguration, datastore: Datastore,
+                                 relationsManager: RelationsManager, idGenerator: IdGenerator, settings: Settings,
+                                 messagesDictionary: MD) {
 
     try {
         const { operationIdentifier, categoryName, merge, permitDeletions, ignoreUnconfiguredFields,
-            separator, format } = getRequestParameters(request);
+            separator, format, importId, command } = getRequestParameters(request);
 
         const category: CategoryForm = projectConfiguration.getCategory(categoryName);
         if (!category) throw 'Unconfigured category: ' + categoryName;
 
         const options: ImporterOptions = await getImporterOptions(format, merge, permitDeletions,
             operationIdentifier, ignoreUnconfiguredFields, category, separator, datastore);
-        const documents: Array<Document> = await Importer.doParse(options, request.body);
+        const documents: Array<Document> = await parse(request.body, options, preparedImportDocuments[format], importId);
+
+        if (command !== 'start') return response.status(200).send();
+
         const report: ImporterReport = await performImport(projectConfiguration, datastore, relationsManager,
             idGenerator, settings, options, documents
         );
 
+        if (importId && preparedImportDocuments[format][importId]) delete preparedImportDocuments[format][importId];
+
         if (report.errors?.length) {
             response.status(400).send({
-                error: 'Import failed',
+                error: messagesDictionary.msgs[M.IMPORT_ERROR_GENERIC].content,
                 importErrors: report.errors?.map(error => getErrorMessage(error, messagesDictionary))
             })
         } else {
@@ -56,6 +68,22 @@ export async function importData(request: any, response: any, projectConfigurati
 }
 
 
+async function parse(importData: any, options: ImporterOptions, preparedImportDocuments: Map<Array<Document>>,
+                     importId?: string): Promise<Array<Document>> {
+
+    const documents: Array<Document> = !isEmpty(importData)
+        ? await Importer.doParse(options, importData)
+        : [];
+
+    if (importId) {
+        preparedImportDocuments[importId] = (preparedImportDocuments[importId] ?? []).concat(documents);
+        return preparedImportDocuments[importId];
+    } else {
+        return documents;
+    }
+}
+
+
 function getRequestParameters(request: any): RequestParameters {
 
     const operationIdentifier: string = request.query.operation;
@@ -65,9 +93,11 @@ function getRequestParameters(request: any): RequestParameters {
     const ignoreUnconfiguredFields: boolean = request.query.ignoreUnconfiguredFields === 'true';
     const separator: string = request.query.separator ?? ',';
     const format: ImporterFormat = getFormat(request);
+    const importId: string|undefined = request.query.importId;
+    const command: ImportCommand = request.query.command ?? 'start';
 
     return { operationIdentifier, categoryName, merge, permitDeletions, ignoreUnconfiguredFields,
-        separator, format };
+        separator, format, importId, command };
 }
 
 
@@ -90,7 +120,7 @@ async function getImporterOptions(format: ImporterFormat, mergeMode: boolean, pe
     const options: ImporterOptions = {
         format,
         mergeMode,
-        permitDeletions,
+        permitDeletions: permitDeletions && mergeMode,
         selectedOperationId: await getOperationId(operationIdentifier, datastore),
         ignoreUnconfiguredFields,
         selectedCategory: category,

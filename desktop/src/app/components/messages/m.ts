@@ -38,6 +38,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static MODEL_VALIDATION_INVALID_COORDINATES = 'model.validation.error.invalidCoordinates';
     public static MODEL_VALIDATION_MISSING_GEOMETRYTYPE = 'model.validation.error.missingGeometryType';
     public static MODEL_VALIDATION_UNSUPPORTED_GEOMETRY_TYPE = 'model.validation.error.unsupportedGeometryType';
+    public static MODEL_VALIDATION_UNALLOWED_GEOMETRY_TYPE = 'model.validation.error.unallowedGeometryType';
+    public static MODEL_VALIDATION_GEOMETRY_NOT_ALLOWED = 'model.validation.error.geometryNotAllowed';
 
     // Backup Package
     public static BACKUP_WRITE_SUCCESS = 'backup.write.success';
@@ -124,6 +126,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_VALIDATION_DUPLICATE_QR_CODE_IN_PROJECT = 'M.Import.ValidationErrors.duplicateQrCodeInProject';
 
     // Import Package - ImportErrors
+    public static IMPORT_ERROR_GENERIC = 'M.Import.ImportErrors.Generic';
     public static IMPORT_NO_OPERATION_ASSIGNABLE = 'M.Import.ImportErrors.noOperationAssignable';
     public static IMPORT_NO_FEATURE_ASSIGNABLE = 'M.Import.ImportErrors.noFeatureAssignable';
     public static IMPORT_EXEC_NO_LIES_WITHIN_SET = 'M.Import.ImportErrors.onlyPlaceAndOperationWithoutRecordedInAllowed';
@@ -155,8 +158,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_ERROR_EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN = 'M.Import.ImportErrors.emptySlotsInArraysForbidden';
     public static IMPORT_ERROR_ARRAY_OF_HETEROGENEOUS_TYPES = 'M.Import.ImportErrors.arrayOfHeterogeneousType';
     public static IMPORT_ERROR_INVALID_FILE_FORMAT = 'M.Import.ImportErrors.invalidFileFormat';
-    public static IMPORT_ERROR_EMPTY_OBJECT_IN_RESOURCE = 'M.Import.ImportErros.emptyObjectInResource';
-    public static IMPORT_ERROR_WARNINGS_EXIST = 'M.Import.ImportErros.warningsExist';
+    public static IMPORT_ERROR_EMPTY_OBJECT_IN_RESOURCE = 'M.Import.ImportErrors.emptyObjectInResource';
 
     // Import Package - ImportCatalogErrors
     public static IMPORT_CATALOG_ERROR_IDENTIFIER_CLASH = 'M.Import.ImportCatalogErrors.identifierClash';
@@ -215,6 +217,9 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN = 'docedit.validation.error.noRecordedIn';
     public static DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET = 'docedit.validation.error.noRecordedInTarget';
     public static DOCEDIT_VALIDATION_ERROR_MAX_CHARACTERS_EXCEEDED = 'docedit.validation.error.maxCharactersExceeded';
+    public static DOCEDIT_VALIDATION_ERROR_UNALLOWED_CHARACTER_IN_FIELD = 'docedit.validation.error.unallowedCharacterInField';
+    public static DOCEDIT_VALIDATION_ERROR_UNALLOWED_CHARACTER_IN_FIELDS = 'docedit.validation.error.unallowedCharacterInFields';
+    
 
     // Images Package
     public static IMAGES_SUCCESS_IMAGES_UPLOADED = 'images.success.imagesUploaded';
@@ -227,6 +232,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMAGES_ERROR_FILEREADER = 'images.error.fileReader';
     public static IMAGES_ERROR_DUPLICATE_FILENAME = 'images.error.duplicateFilename';
     public static IMAGES_ERROR_DUPLICATE_FILENAMES = 'images.error.duplicateFilenames';
+    public static IMAGES_ERROR_UNALLOWED_CHARACTER_IN_FILENAME = 'images.error.unallowedCharacterInFilename';
     public static IMAGES_ERROR_UNMATCHED_WLD_FILES = 'images.error.unmatchedWldFiles';
     public static IMAGES_ERROR_EXPORT_FAILED = 'images.error.exportFailed';
     public static IMAGES_ERROR_DOWNLOAD_FAILED = 'images.error.downloadFailed';
@@ -293,6 +299,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static CONFIGURATION_ERROR_IMPORT_UNSUPPORTED_VERSION = 'configuration.error.unsupportedVersion';
     public static CONFIGURATION_ERROR_NO_PROJECT_LANGUAGES = 'configuration.error.noProjectLanguages';
     public static CONFIGURATION_ERROR_NO_ALLOWED_TARGET_CATEGORIES = 'configuration.error.noAllowedTargetCategories';
+    public static CONFIGURATION_ERROR_NO_ALLOWED_GEOMETRY_TYPES = 'configuration.error.noAllowedGeometryTypes';
 
     // Matrix Package
     public static MATRIX_ERROR_GENERIC = 'matrix.error.generic';
@@ -406,6 +413,14 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.MODEL_VALIDATION_UNSUPPORTED_GEOMETRY_TYPE] = {
             content: $localize `:@@messages.model.validation.error.unsupportedGeometryType:Der Geometrietyp [0] wird von der Anwendung nicht unterstützt.`,
+            level: 'danger'
+        };
+        this.msgs[M.MODEL_VALIDATION_UNALLOWED_GEOMETRY_TYPE] = {
+            content: $localize `:@@messages.model.validation.error.unsupportedGeometryType:Der Geometrietyp [1] ist für Ressourcen der Kategorie [0] nicht erlaubt.`,
+            level: 'danger'
+        };
+        this.msgs[M.MODEL_VALIDATION_GEOMETRY_NOT_ALLOWED] = {
+            content: $localize `:@@messages.model.validation.error.geometryNotAllowed:Für Ressourcen der Kategorie [0] können keine Geometrien angelegt werden.`,
             level: 'danger'
         };
         this.msgs[M.INITIAL_SYNC_DB_NOT_EMPTY] = {
@@ -579,6 +594,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.IMPORT_PREVALIDATION_MISSING_RELATION_TARGET] = {
             content: $localize `:@@messages.import.error.prevalidation.missingRelationTarget:Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit dem Bezeichner \'[0]\' konnte nicht gefunden werden.`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_ERROR_GENERIC] = {
+            content: $localize `:@@messages.import.error.generic:Import fehlgeschlagen.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_NO_OPERATION_ASSIGNABLE] = {
@@ -781,10 +800,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: $localize `:@@messages.import.error.emptyObjectInResource:Leere Objekte sind in Importdatensätzen nicht erlaubt (Ausnahme: Feld "relations").`,
             level: 'danger'
         };
-        this.msgs[M.IMPORT_ERROR_WARNINGS_EXIST] = {
-            content: $localize `:@@messages.import.error.warningsExist:Es liegen Warnungen für die Ressource [0] vor. Bitte beheben Sie die zugrundeliegenden Probleme und starten den Import anschließend neu.`,
-            level: 'danger'
-        };
         this.msgs[M.IMPORT_CATALOG_ERROR_CONNECTED_TYPE_DELETED] = {
             content: $localize `:@@messages.import.catalog.error.connected_type_deleted:Update eines bestehenden Katalogs abgebrochen. Die bestehende Version enthält mit Funden verknüpfte Typen, die in der Import-Datei nicht mehr vorhanden sind. Bitte entfernen Sie die Verknüpfungen und starten den Import anschließend erneut. Betroffene Typen: [0]`,
             level: 'danger'
@@ -985,6 +1000,14 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: $localize `:@@messages.docedit.validation.error.maxCharactersExceeded:Im Feld \'[1]\' dürfen maximal [2] Zeichen eingetragen werden.`,
             level: 'danger'
         };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_UNALLOWED_CHARACTER_IN_FIELD] = {
+            content: $localize `:@@messages.docedit.validation.error.unallowedCharacterInField:Das Zeichen \';\' ist im Feld \'[0]\' nicht erlaubt.`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_UNALLOWED_CHARACTER_IN_FIELDS] = {
+            content: $localize `:@@messages.docedit.validation.error.unallowedCharacterInFields:Das Zeichen \';\' ist in den folgenden Feldern nicht erlaubt: [0]`,
+            level: 'danger'
+        };
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN] = {
             content: $localize `:@@messages.docedit.validation.error.noRecordedIn:Bitte wählen Sie eine Zielressource für die Relation \'Aufgenommen in Maßnahme\' aus.`,
             level: 'danger'
@@ -1031,6 +1054,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.IMAGES_ERROR_DUPLICATE_FILENAMES] = {
             content: $localize `:@@messages.images.error.duplicateFilenames:Die folgenden Bilddateien konnten nicht hinzugefügt werden, da Bilder mit identischen Dateinamen bereits existieren: [0]`,
+            level: 'danger'
+        };
+        this.msgs[M.IMAGES_ERROR_UNALLOWED_CHARACTER_IN_FILENAME] = {
+            content: $localize `:@@messages.images.error.unallowedCharacterInFilename:Die Bilddatei '\[0]\' konnte nicht hinzugefügt werden. Das Zeichen \';\' ist in Dateinamen nicht erlaubt.`,
             level: 'danger'
         };
         this.msgs[M.IMAGES_ERROR_UNMATCHED_WLD_FILES] = {
@@ -1260,6 +1287,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.CONFIGURATION_ERROR_NO_ALLOWED_TARGET_CATEGORIES] = {
             content: $localize `:@@configuration.error.noAllowedTargetCategories:Bitte wählen Sie mindestens eine Kategorie als erlaubte Zielkategorie aus.`,
+            level: 'danger'
+        };
+        this.msgs[M.CONFIGURATION_ERROR_NO_ALLOWED_GEOMETRY_TYPES] = {
+            content: $localize `:@@configuration.error.noAllowedGeometryTypes:Bitte wählen Sie mindestens einen erlaubten Geometrietyp aus.`,
             level: 'danger'
         };
         this.msgs[M.MATRIX_ERROR_GENERIC] = {

@@ -9066,7 +9066,7 @@
       "zweischalig mit Mauerkern": {
         "label": "double-faced with core"
       },
-      "zweischalig ohne Mauerkern ": {
+      "zweischalig ohne Mauerkern": {
         "label": "double-faced without core "
       },
       "nicht anwendbar": {
@@ -10351,7 +10351,7 @@
       "hellenisticPeriod": {
         "label": "hellenistic period"
       },
-      "imperialPeriod ": {
+      "imperialPeriod": {
         "label": "imperial period"
       },
       "lateAntiquity": {
@@ -10442,7 +10442,7 @@
       "pebbles": {
         "label": "pebbles"
       },
-      "limePlaster ": {
+      "limePlaster": {
         "label": "lime plaster"
       },
       "clayPlaster": {

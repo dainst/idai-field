@@ -26,8 +26,8 @@ function getMockProjectConfiguration(categoryDefinition, parentCategoryDefinitio
         mockProjectConfiguration.getCategories.and.returnValue([{
             item: parentCategoryDefinition, trees: [
                 { item: categoryDefinition, trees: [] }
-            ] }
-        ]);
+            ]
+        }]);
     } else {
         mockProjectConfiguration.getCategories.and.returnValue([{ item: categoryDefinition, trees: [] }]);
     }
@@ -76,8 +76,17 @@ describe('WarningsUpdater', () => {
                 {
                     fields: [
                         {
+                            name: 'identifier',
+                            inputType: Field.InputType.IDENTIFIER
+                        },
+                        {
                             name: 'shortDescription',
                             inputType: Field.InputType.INPUT
+                        },
+                        {
+                            name: 'geometry',
+                            inputType: Field.InputType.GEOMETRY,
+                            geometryTypes: ['Polygon']
                         },
                         {
                             name: 'number',
@@ -124,13 +133,14 @@ describe('WarningsUpdater', () => {
             createDocument('3')
         ];
         documents[0]._conflicts = ['123'];
-        documents[0].resource.identifier = '1';
+        documents[0].resource.identifier = '1;';
         documents[0].resource.number = 'text';
         documents[0].resource.unconfiguredField = 'text';
         documents[0].resource.state = 'planned';
         documents[0].resource.date = { value: '01.01.1990', isRange: false };
         documents[0].resource.conditionalField = 'text';
         documents[0].resource.relations.unconfiguredRelation = ['target'];
+        documents[0].resource.geometry = { type: 'Point', coordinates: [1.0, 2.0] };
 
         documents[1].resource.identifier = 'C2';
         delete documents[1].resource.category;
@@ -138,9 +148,13 @@ describe('WarningsUpdater', () => {
         documents[2].resource.identifier = 'C3';
         documents[2].resource.number = 1;
         documents[2].resource.mandatoryField = 'text';
-        documents[2].resource.relations.mandatoryRelation = ['1'];
+        documents[2].resource.relations.mandatoryRelation = ['C2'];
         documents[2].resource.state = 'completed';
         documents[2].resource.date = { value: '01.01.1990', isRange: false };
+        documents[2].resource.geometry = {
+            type: 'Polygon',
+            coordinates: [[[10.5, 25.3], [10.7, 25.4], [11.5, 26.6], [10.5, 25.3]]]
+        };
 
         const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition, parentCategoryDefinition);
 
@@ -153,15 +167,18 @@ describe('WarningsUpdater', () => {
             invalidFields: ['number'],
             missingMandatoryFields: ['mandatoryField', 'mandatoryRelation'],
             unfulfilledConditionFields: ['conditionalField'],
+            unallowedCharacterFields: ['identifier'],
             conflicts: true,
             missingIdentifierPrefix: true,
-            invalidProcessState: true
+            invalidProcessState: true,
+            unallowedGeometryType: true
         });
         expect(documents[1].warnings).toEqual({
             unconfiguredFields: [],
             invalidFields: [],
             missingMandatoryFields: [],
             unfulfilledConditionFields: [],
+            unallowedCharacterFields: [],
             unconfiguredCategory: true
         });
         expect(documents[2].warnings).toBeUndefined();

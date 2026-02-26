@@ -444,27 +444,6 @@ describe('convertFields', () => {
     });
 
 
-    test('input type simple multi input', () => {
-
-        const category = {
-            name: 'Category',
-            groups: [{ fields: [{
-                name: 'CB',
-                inputType: 'simpleMultiInput'
-            }] }],
-        } as CategoryForm;
-
-        const resource = convertFields(category)({
-            CB: 'a;b;c',
-            relations: {}
-        } as unknown as Resource);
-
-        const cb = resource['CB'];
-
-        expect(cb).toEqual(['a', 'b', 'c']);
-    });
-
-
     test('input type int', () => {
 
         const category = {

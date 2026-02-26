@@ -7,6 +7,8 @@ export module ValidationErrors {
     export const MISSING_COORDINATES = 'validationerror/missingcoordinates';
     export const INVALID_COORDINATES = 'validationerror/invalidcoordinates';
     export const UNSUPPORTED_GEOMETRY_TYPE = 'validationerror/unsupportedgeometrytype';
+    export const UNALLOWED_GEOMETRY_TYPE = 'validationerror/unallowedgeometrytype';
+    export const GEOMETRY_NOT_ALLOWED = 'validationerror/geometrynotallowed';
     export const INVALID_NUMERICAL_VALUES = 'validationerror/invalidnumericalvalues';
     export const INVALID_URLS = 'validationerror/invalidurls';
     export const INVALID_DATES = 'validationerror/invaliddates';
@@ -26,5 +28,6 @@ export module ValidationErrors {
     export const INVALID_MAP_LAYER_RELATION_VALUES = 'validationerror/invalidmaplayerrelationvalues';
     export const INVALID_WORKFLOW_RELATION_TARGETS = 'validationerror/invalidworkflowrelationtargets';
     export const MAX_CHARACTERS_EXCEEDED = 'validationerror/maxcharactersexceeded';
+    export const UNALLOWED_CHARACTERS = 'validationerror/unallowedcharacters';
     export const GENERIC_DATASTORE = 'importerrors/exec/genericdatastore';
 }

@@ -14,9 +14,7 @@ describe('CsvParser', () => {
         const category = makeFieldDefinitions(['custom1, custom2']);
 
         const parse = CsvParser.build({
-            name: 'Feature', groups: [{ fields: category }] } as CategoryForm,
-            'opId1',
-            ','
+            name: 'Feature', groups: [{ fields: category }] } as CategoryForm, ','
         );
         const docs = await parse('custom1,custom2\n1,2');
 
@@ -32,9 +30,7 @@ describe('CsvParser', () => {
         const category = makeFieldDefinitions(['custom1, custom2']);
 
         const parse = CsvParser.build({
-            name: 'Feature', groups: [{ fields: category }] } as CategoryForm,
-            '',
-            ','
+            name: 'Feature', groups: [{ fields: category }] } as CategoryForm, ','
         );
         const docs = await parse('custom1,custom2\n1,2');
 
@@ -47,9 +43,7 @@ describe('CsvParser', () => {
         const category = makeFieldDefinitions([]);
 
         const parse = CsvParser.build({
-            name: 'Feature', groups: [{ fields: category }] } as CategoryForm,
-            '',
-            ','
+            name: 'Feature', groups: [{ fields: category }] } as CategoryForm, ','
         );
         const docs = await parse('relations.isChildOf\nopId1');
 
@@ -62,9 +56,7 @@ describe('CsvParser', () => {
         const category = makeFieldDefinitions([]);
 
         const parse = CsvParser.build(
-            { name: 'Feature', groups: [{ fields: category }] } as CategoryForm,
-            'opId1',
-            ','
+            { name: 'Feature', groups: [{ fields: category }] } as CategoryForm, ','
         );
         const docs = await parse('relations.isChildOf\nfeatureId1');
 
@@ -84,11 +76,7 @@ describe('CsvParser', () => {
             }]
         } as CategoryForm;
 
-        const parse = CsvParser.build(
-            category,
-            '',
-            ','
-        );
+        const parse = CsvParser.build(category, ',');
 
         try {
             await parse('uf\na100.0');
@@ -111,11 +99,7 @@ describe('CsvParser', () => {
             }]
         } as CategoryForm;
 
-        const parse = CsvParser.build(
-            category,
-            '',
-            ','
-        );
+        const parse = CsvParser.build(category, ',');
 
         try {
             await parse('dim.0,dim.0.a\n,');

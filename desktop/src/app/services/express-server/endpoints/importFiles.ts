@@ -1,0 +1,41 @@
+import { ProjectConfiguration } from 'idai-field-core';
+import { MD } from '../../../components/messages/md';
+import { getErrorMessage } from './util/get-error-message';
+import { ImageUploader, ImageUploadResult } from '../../../components/image/upload/image-uploader';
+import { UploadStatus } from '../../../components/image/upload/upload-status';
+import { ImageMetadata } from '../../imagestore/file-metadata';
+
+
+/**
+ * @author Thomas Kleinke
+ */
+export async function importFiles(request: any, response: any, projectConfiguration: ProjectConfiguration,
+                                  imageUploader: ImageUploader, uploadStatus: UploadStatus, messagesDictionary: MD) {
+
+    try {
+        const filePaths: string[] = request.body.filePaths;
+        if (!filePaths?.length) throw 'No file paths specified';
+
+        const parseDraughtsmen: boolean = request.body.readCreatorsFromMetadata === true ? true : false;
+
+        const category: string = request.body.category ?? 'Image';
+        if (!projectConfiguration.getCategory(category)) throw 'Unconfigured category: ' + request.body.category;
+
+        const metadata: ImageMetadata = { category, draughtsmen: [] };
+
+        if (uploadStatus.running) throw 'File import is already running';
+
+        const result: ImageUploadResult = await imageUploader.startUpload(
+            filePaths, undefined, metadata, parseDraughtsmen, true
+        );
+        result.messages = result.messages.map(message => getErrorMessage(message, messagesDictionary));
+
+        response.status(200).send({
+            importedImages: result.uploadedImages,
+            importedWorldFiles: result.uploadedWorldFiles,
+            messages: result.messages
+        });
+    } catch (err) {
+        response.status(400).send({ error: getErrorMessage(err, messagesDictionary) });
+    }
+}

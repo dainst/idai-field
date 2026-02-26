@@ -39,6 +39,8 @@ export const basicIndexConfiguration: Map<IndexDefinition> = {
     'unconfiguredFields:contain': { path: 'warnings.unconfiguredFields', pathArray: ['warnings', 'unconfiguredFields'], type: 'contain' },
     'unfulfilledConditionFields:exist': { path: 'warnings.unfulfilledConditionFields', pathArray: ['warnings', 'unfulfilledConditionFields'], type: 'exist' },
     'unfulfilledConditionFields:contain': { path: 'warnings.unfulfilledConditionFields', pathArray: ['warnings', 'unfulfilledConditionFields'], type: 'contain' },
+    'unallowedCharacterFields:exist': { path: 'warnings.unallowedCharacterFields', pathArray: ['warnings', 'unallowedCharacterFields'], type: 'exist' },
+    'unallowedCharacterFields:contain': { path: 'warnings.unallowedCharacterFields', pathArray: ['warnings', 'unallowedCharacterFields'], type: 'contain' },
     'outliers:exist': { path: 'warnings.outliers', pathArray: ['warnings', 'outliers'], type: 'exist' },
     'outlierValues:contain': { path: 'warnings.outliers.values', pathArray: ['warnings', 'outliers', 'values'], type: 'contain' },
     'missingRelationTargets:exist': { path: 'warnings.missingRelationTargets', pathArray: ['warnings', 'missingRelationTargets'], type: 'exist' },
@@ -50,5 +52,6 @@ export const basicIndexConfiguration: Map<IndexDefinition> = {
     'nonUniqueQrCode:exist': { path: 'warnings.nonUniqueQrCode', pathArray: ['warnings', 'nonUniqueQrCode'], type: 'exist' },
     'resourceLimitExceeded:exist': { path: 'warnings.resourceLimitExceeded', pathArray: ['warnings', 'resourceLimitExceeded'], type: 'exist' },
     'missingOrInvalidParent:exist': { path: 'warnings.missingOrInvalidParent', pathArray: ['warnings', 'missingOrInvalidParent'], type: 'exist' },
-    'invalidProcessState:exist': { path: 'warnings.invalidProcessState', pathArray: ['warnings', 'invalidProcessState'], type: 'exist' }
+    'invalidProcessState:exist': { path: 'warnings.invalidProcessState', pathArray: ['warnings', 'invalidProcessState'], type: 'exist' },
+    'unallowedGeometryType:exist': { path: 'warnings.unallowedGeometryType', pathArray: ['warnings', 'unallowedGeometryType'], type: 'exist' }
 };

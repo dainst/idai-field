@@ -54,8 +54,8 @@ export module Dating {
 
     const VALID_FIELDS = [TYPE, BEGIN, END, MARGIN, SOURCE, IS_IMPRECISE, IS_UNCERTAIN, LABEL];
     const VALID_ELEMENT_FIELDS = [YEAR, INPUT_YEAR, INPUT_TYPE];
-    export const VALID_DATING_TYPES = ['bce','ce','bp'];
-    export const VALID_TYPES = ['range','single','before','after','scientific']
+    export const VALID_DATING_TYPES = ['bce', 'ce', 'bp'];
+    export const VALID_TYPES = ['range', 'single', 'before', 'after', 'scientific']
 
     export type Type = 'range'|'single'|'before'|'after'|'scientific'
     export type Translations = 'bce'|'ce'|'bp'|'before'|'after';
@@ -85,9 +85,8 @@ export module Dating {
     export function isValid(dating: Dating) {
 
         if (dating.label) return true; // Support datings in deprecated format
-        if (['range', 'after', 'scientific'].includes(dating.type) && !dating.begin) return false;
-        if (['range', 'single', 'before', 'scientific'].includes(dating.type) && !dating.end) return false;
-        if (dating.type === 'scientific' && !dating.margin) return false;
+
+        if (!validateFields(dating)) return false;
 
         if (dating.begin && (!dating.begin.inputYear || !dating.begin.inputType
             || !Number.isInteger(dating.begin.inputYear)
@@ -97,6 +96,38 @@ export module Dating {
             || dating.end.inputYear < 0)) return false;
 
         return dating.type !== 'range' || validateRangeDating(dating);
+    }
+
+
+    function validateFields(dating: Dating): boolean {
+
+        switch (dating.type) {
+            case 'range':
+                return hasExpectedFields(dating, [TYPE, BEGIN, END], [SOURCE, IS_IMPRECISE, IS_UNCERTAIN]);
+            case 'single':
+            case 'before':
+                return hasExpectedFields(dating, [TYPE, END], [SOURCE, IS_IMPRECISE, IS_UNCERTAIN]);
+            case 'after':
+                return hasExpectedFields(dating, [TYPE, BEGIN], [SOURCE, IS_IMPRECISE, IS_UNCERTAIN]);
+            case 'scientific':
+                return hasExpectedFields(dating, [TYPE, BEGIN, END, MARGIN], [SOURCE]);
+            default:
+                return false;
+        }
+    }
+
+    
+    function hasExpectedFields(dating: Dating, mandatoryFieldNames: string[], optionalFieldNames: string[]): boolean {
+
+        if (!mandatoryFieldNames.every(fieldName => dating[fieldName] !== undefined)) return false;
+    
+        if (!Object.keys(dating).every(fieldName => {
+            return !dating[fieldName] || (mandatoryFieldNames.includes(fieldName) || optionalFieldNames.includes(fieldName));
+        })) {
+            return false;
+        }
+
+        return true;
     }
 
 

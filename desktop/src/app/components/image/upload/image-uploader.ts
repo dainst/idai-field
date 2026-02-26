@@ -4,7 +4,7 @@ import { isArray } from 'tsfun';
 import { Document, Datastore, NewImageDocument, ProjectConfiguration, RelationsManager, 
     ImageStore, ImageGeoreference, ImageDocument, CategoryForm, formatDate, Field,
     DateConfiguration } from 'idai-field-core';
-import { readWldFile } from '../georeference/wld-import';
+import { Errors, readWldFile } from '../georeference/wld-import';
 import { ExtensionUtil } from '../../../util/extension-util';
 import { MenuContext } from '../../../services/menu-context';
 import { Menus } from '../../../services/menus';
@@ -19,6 +19,8 @@ import { createDisplayVariant } from '../../../services/imagestore/manipulation/
 import { ImagesState } from '../overview/view/images-state';
 import { getAsynchronousFs } from '../../../services/get-asynchronous-fs';
 import { getSystemTimezone } from '../../../util/timezones';
+import { Validations } from '../../../model/validations';
+import { ValidationErrors } from '../../../model/validation-errors';
 
 const path = window.require('path');
 
@@ -26,6 +28,7 @@ const path = window.require('path');
 export interface ImageUploadResult {
 
     uploadedImages: number;
+    uploadedWorldFiles: number;
     messages: string[][];
 }
 
@@ -57,9 +60,11 @@ export class ImageUploader {
      * @param depictsRelationTarget If this parameter is set, each of the newly created image documents will contain
      *  a depicts relation to the specified document.
      */
-    public async startUpload(filePaths: string[], depictsRelationTarget?: Document): Promise<ImageUploadResult> {
+    public async startUpload(filePaths: string[], depictsRelationTarget?: Document, metadata?: ImageMetadata,
+                             parseDraughtsmen?: boolean,
+                             calledViaRestApi: boolean = false): Promise<ImageUploadResult> {
 
-        let uploadResult: ImageUploadResult = { uploadedImages: 0, messages: [] };
+        let uploadResult: ImageUploadResult = { uploadedImages: 0, uploadedWorldFiles: 0, messages: [] };
 
         if (!this.imagestore.getAbsoluteRootPath()) {
             uploadResult.messages.push([M.IMAGESTORE_ERROR_INVALID_PATH_WRITE]);
@@ -72,27 +77,41 @@ export class ImageUploader {
         const imageFilePaths: string[] = filePaths.filter(filePath =>
             ImageUploader.supportedImageFileTypes.includes(ExtensionUtil.getExtension(path.basename(filePath))));
         if (imageFilePaths.length) {
-            const metadata: ImageMetadata|undefined
-                = await this.selectMetadata(imageFilePaths.length, depictsRelationTarget);
-            if (!metadata) return uploadResult;
+            if (!metadata) {
+                metadata = await this.selectMetadata(imageFilePaths.length, depictsRelationTarget);
+                if (!metadata) return uploadResult;
+            }
 
-            const menuContext: MenuContext = this.menuService.getContext();
-            this.menuService.setContext(MenuContext.MODAL);
-            const uploadModalRef = this.modalService.open(
-                UploadModalComponent, { backdrop: 'static', keyboard: false, animation: false }
-            );
+            let menuContext: MenuContext;
+            let uploadModalRef: NgbModalRef;
+
+            if (!calledViaRestApi) {
+                menuContext = this.menuService.getContext();
+                this.menuService.setContext(MenuContext.MODAL);
+                uploadModalRef = this.modalService.open(
+                    UploadModalComponent, { backdrop: 'static', keyboard: false, animation: false }
+                );
+            }
+
+            this.uploadStatus.running = true;
+
             uploadResult = await this.uploadImageFiles(
-                filePaths, metadata, uploadResult, depictsRelationTarget
+                filePaths, metadata, uploadResult, depictsRelationTarget, parseDraughtsmen
             );
-            uploadModalRef.close();
-            this.menuService.setContext(menuContext);
+    
+            if (!calledViaRestApi) {
+                uploadModalRef.close();
+                this.menuService.setContext(menuContext);
+            }
         }
 
         const wldFilePaths: string[] = filePaths.filter(filePath =>
             ImageUploader.supportedWorldFileTypes.includes(ExtensionUtil.getExtension(path.basename(filePath))));
         if (wldFilePaths.length) {
-            uploadResult.messages = uploadResult.messages.concat(await this.uploadWldFiles(wldFilePaths));
+            await this.uploadWldFiles(wldFilePaths, uploadResult);
         }
+
+        this.uploadStatus.running = false;
 
         return uploadResult;
     }
@@ -136,7 +155,8 @@ export class ImageUploader {
 
 
     private async uploadImageFiles(filePaths: string[], metadata: ImageMetadata, uploadResult: ImageUploadResult,
-                                   depictsRelationTarget?: Document): Promise<ImageUploadResult> {
+                                   depictsRelationTarget?: Document,
+                                   parseDraughtsmen?: boolean): Promise<ImageUploadResult> {
 
         if (!filePaths) return uploadResult;
 
@@ -154,7 +174,7 @@ export class ImageUploader {
                     if (result.totalCount > 0) {
                         duplicateFilenames.push(path.basename(filePath));
                     } else {
-                        await this.uploadFile(filePath, metadata, depictsRelationTarget);
+                        await this.uploadFile(filePath, metadata, depictsRelationTarget, parseDraughtsmen);
                     }
                     this.uploadStatus.setHandledImages(this.uploadStatus.getHandledImages() + 1);
                 } catch (e) {
@@ -174,7 +194,7 @@ export class ImageUploader {
     }
 
 
-    private async uploadWldFiles(filePaths: string[]) {
+    private async uploadWldFiles(filePaths: string[], uploadResult: ImageUploadResult) {
 
         const messages: string[][] = [];
         const unmatchedWldFiles = [];
@@ -186,9 +206,17 @@ export class ImageUploader {
                 if (result.totalCount > 0) {
                     try {
                         await this.saveWldFile(filePath, result.documents[0]);
+                        uploadResult.uploadedWorldFiles++;
                         continue outer;
-                    } catch (e) {
-                        messages.push(e);
+                    } catch (err) {
+                        if (err === Errors.FileReaderError) {
+                            messages.push([M.IMAGES_ERROR_FILEREADER, path.basename(filePath)]);
+                        } else if (err === Errors.InvalidWldFileError) {
+                            messages.push([M.IMAGESTORE_ERROR_INVALID_WORLDFILE, path.basename(filePath)]);
+                        } else {
+                            messages.push(err);
+                        }
+                        continue outer;
                     }
                 }
             }
@@ -199,11 +227,14 @@ export class ImageUploader {
             messages.push([M.IMAGES_ERROR_UNMATCHED_WLD_FILES, unmatchedWldFiles.join(', ')]);
         }
 
-        const matchedFiles = filePaths.length - unmatchedWldFiles.length;
-        if (matchedFiles === 1) messages.push([M.IMAGES_SUCCESS_WLD_FILE_UPLOADED, matchedFiles.toString()]);
-        if (matchedFiles > 1) messages.push([M.IMAGES_SUCCESS_WLD_FILES_UPLOADED, matchedFiles.toString()]);
+        const matchedFiles: number = filePaths.length - unmatchedWldFiles.length;
+        if (uploadResult.uploadedWorldFiles === 1) {
+            messages.push([M.IMAGES_SUCCESS_WLD_FILE_UPLOADED, matchedFiles.toString()]);
+        } else if (uploadResult.uploadedWorldFiles > 1) {
+            messages.push([M.IMAGES_SUCCESS_WLD_FILES_UPLOADED, matchedFiles.toString()]);
+        }
 
-        return messages;
+        uploadResult.messages = uploadResult.messages.concat(messages);
     }
 
 
@@ -224,20 +255,23 @@ export class ImageUploader {
     }
 
 
-    private async uploadFile(filePath: string, metadata: ImageMetadata,
-                             depictsRelationTarget?: Document): Promise<any> {
+    private async uploadFile(filePath: string, metadata: ImageMetadata, depictsRelationTarget?: Document,
+                             parseDraughtsmen?: boolean): Promise<any> {
 
         const buffer: Buffer = await this.readFile(filePath);
+        const fileName: string = path.basename(filePath);
         
         let document: ImageDocument;
         
         try {
             document = await this.createImageDocument(
-                path.basename(filePath), buffer, metadata, depictsRelationTarget
+                fileName, buffer, metadata, depictsRelationTarget, parseDraughtsmen
             );
         } catch (err) {
             if (isArray(err) && err[0] === ImageManipulationErrors.MAX_INPUT_PIXELS_EXCEEDED) {
                 throw [M.IMAGESTORE_ERROR_UPLOAD_PIXEL_LIMIT_EXCEEDED, path.basename(filePath), err[1]];
+            } else if (isArray(err) && err[0] === ValidationErrors.UNALLOWED_CHARACTERS) {
+                throw [M.IMAGES_ERROR_UNALLOWED_CHARACTER_IN_FILENAME, fileName];
             } else {
                 console.error(err);
                 throw [M.IMAGESTORE_ERROR_UPLOAD, path.basename(filePath)];
@@ -267,13 +301,13 @@ export class ImageUploader {
 
 
     private async createImageDocument(fileName: string, buffer: Buffer, metadata: ImageMetadata,
-                                      depictsRelationTarget?: Document): Promise<any> {
+                                      depictsRelationTarget?: Document, parseDraughtsmen?: boolean): Promise<any> {
                                         
+        if (parseDraughtsmen === undefined) parseDraughtsmen = this.imagesState.getParseFileMetadata('draughtsmen');
+        
         // Try to extend metadata set explicitely by the user with metadata contained within the image file
         // itself (exif/xmp/iptc).
-        const extendedMetadata: ImageMetadata = await extendMetadataByFileData(
-            metadata, buffer, this.imagesState.getParseFileMetadata('draughtsmen')
-        );
+        const extendedMetadata: ImageMetadata = await extendMetadataByFileData(metadata, buffer, parseDraughtsmen);
 
         const document: NewImageDocument = {
             resource: {
@@ -287,6 +321,8 @@ export class ImageUploader {
                 }
             }
         };
+
+        Validations.assertNoUnallowedCharactersUsed(document, this.projectConfiguration);
 
         await this.setOptionalMetadata(document, extendedMetadata);
 

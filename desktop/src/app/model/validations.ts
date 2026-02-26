@@ -2,7 +2,7 @@ import { is, isArray, isString, and, isObject, to, equal, intersect } from 'tsfu
 import { Dating, Measurement, Literature, Document, NewDocument, NewResource, Resource, OptionalRange,
     CategoryForm, Tree, FieldGeometry, ProjectConfiguration, Named, Field, Relation, validateFloat,
     validateUnsignedFloat, validateUnsignedInt, validateUrl, validateInt, Composite,  DateSpecification,
-    DateValidationResult, Condition } from 'idai-field-core';
+    DateValidationResult, Condition, FieldGeometryType, FieldResource } from 'idai-field-core';
 import { ValidationErrors } from './validation-errors';
 
 
@@ -294,7 +294,9 @@ export module Validations {
     export function assertNoFieldsMissing(document: Document|NewDocument, projectConfiguration: ProjectConfiguration,
                                           allowEmptyFields: string[] = []): void {
 
-        const missingProperties = Validations.getMissingProperties(document.resource, projectConfiguration, allowEmptyFields);
+        const missingProperties: string[] = Validations.getMissingProperties(
+            document.resource, projectConfiguration, allowEmptyFields
+        );
 
         if (missingProperties.length > 0) {
             throw [
@@ -317,6 +319,21 @@ export module Validations {
                 document.resource.category,
                 result.fieldName,
                 result.maxCharacters
+            ];
+        }
+    }
+
+
+    export function assertNoUnallowedCharactersUsed(document: Document|NewDocument,
+                                                    projectConfiguration: ProjectConfiguration): void {
+
+        const result: string[] = Validations.validateCharacters(document.resource, projectConfiguration);
+
+        if (result.length) {
+            throw [
+                ValidationErrors.UNALLOWED_CHARACTERS,
+                document.resource.category,
+                result.join(', ')
             ];
         }
     }
@@ -346,54 +363,8 @@ export module Validations {
     }
 
 
-    export function validateStructureOfGeometries(geometry: FieldGeometry): Array<string>|null {
-
-        if (!geometry) return null;
-
-        if (!geometry.type) return [ValidationErrors.MISSING_GEOMETRY_TYPE];
-        if (!geometry.coordinates) return [ValidationErrors.MISSING_COORDINATES];
-
-        switch(geometry.type) {
-            case 'Point':
-                if (!Validations.validatePointCoordinates(geometry.coordinates)) {
-                    return [ValidationErrors.INVALID_COORDINATES, 'Point'];
-                }
-                break;
-            case 'MultiPoint':
-                if (!Validations.validateMultiPointCoordinates(geometry.coordinates)) {
-                    return [ValidationErrors.INVALID_COORDINATES, 'MultiPoint'];
-                }
-                break;
-            case 'LineString':
-                if (!Validations.validatePolylineCoordinates(geometry.coordinates)) {
-                    return [ValidationErrors.INVALID_COORDINATES, 'LineString'];
-                }
-                break;
-            case 'MultiLineString':
-                if (!Validations.validateMultiPolylineCoordinates(geometry.coordinates)) {
-                    return [ValidationErrors.INVALID_COORDINATES, 'MultiLineString'];
-                }
-                break;
-            case 'Polygon':
-                if (!Validations.validatePolygonCoordinates(geometry.coordinates)) {
-                    return [ValidationErrors.INVALID_COORDINATES, 'Polygon'];
-                }
-                break;
-            case 'MultiPolygon':
-                if (!Validations.validateMultiPolygonCoordinates(geometry.coordinates)) {
-                    return [ValidationErrors.INVALID_COORDINATES, 'MultiPolygon'];
-                }
-                break;
-            default:
-                return [ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE, geometry.type];
-        }
-
-        return null;
-    }
-
-
     export function getMissingProperties(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration,
-                                         allowEmptyFields: string[]) {
+                                         allowEmptyFields: string[]): string[] {
 
         const missingFields: string[] = [];
         const fieldDefinitions: Array<Field>
@@ -431,6 +402,23 @@ export module Validations {
         }
 
         return undefined;
+    }
+
+
+    export function validateCharacters(resource: Resource|NewResource,
+                                       projectConfiguration: ProjectConfiguration): string[] {
+
+        const result: string[] = [];
+
+        const fieldDefinitions: Array<Field>
+            = CategoryForm.getFields(projectConfiguration.getCategory(resource.category));
+
+        for (let fieldDefinition of fieldDefinitions) {
+            const fieldValue = resource[fieldDefinition.name];
+            if (Field.hasUnallowedCharacters(fieldValue, fieldDefinition)) result.push(fieldDefinition.name);
+        }
+
+        return result;
     }
 
 
@@ -740,6 +728,73 @@ export module Validations {
             .filter(field => resource[field.name] !== undefined)
             .filter(field => !isValid(resource[field.name], field, field.inputTypeOptions?.validation))
             .map(field => field.name);
+    }
+
+
+    export function validateGeometry(document: Document|NewDocument,
+                                     projectConfiguration: ProjectConfiguration): string[]|null {
+
+        const errorWithParams: string[]|null = validateGeometryStructure(document.resource.geometry);
+        if (errorWithParams) return errorWithParams;
+
+        const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
+        const geometryField: Field = CategoryForm.getField(category, FieldResource.GEOMETRY);
+        if (document.resource.geometry && !geometryField) {
+            return [ValidationErrors.GEOMETRY_NOT_ALLOWED, category.name];
+        }
+
+        const allowedGeometryTypes: Array<FieldGeometryType> = geometryField?.geometryTypes;
+        if (allowedGeometryTypes && !allowedGeometryTypes?.includes(document.resource.geometry.type)) {
+            return [ValidationErrors.UNALLOWED_GEOMETRY_TYPE, category.name, document.resource.geometry.type];
+        }
+
+        return null;
+    }
+
+
+    function validateGeometryStructure(geometry: FieldGeometry): string[]|null {
+
+        if (!geometry) return null;
+
+        if (!geometry.type) return [ValidationErrors.MISSING_GEOMETRY_TYPE];
+        if (!geometry.coordinates) return [ValidationErrors.MISSING_COORDINATES];
+
+        switch(geometry.type) {
+            case 'Point':
+                if (!Validations.validatePointCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'Point'];
+                }
+                break;
+            case 'MultiPoint':
+                if (!Validations.validateMultiPointCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'MultiPoint'];
+                }
+                break;
+            case 'LineString':
+                if (!Validations.validatePolylineCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'LineString'];
+                }
+                break;
+            case 'MultiLineString':
+                if (!Validations.validateMultiPolylineCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'MultiLineString'];
+                }
+                break;
+            case 'Polygon':
+                if (!Validations.validatePolygonCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'Polygon'];
+                }
+                break;
+            case 'MultiPolygon':
+                if (!Validations.validateMultiPolygonCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'MultiPolygon'];
+                }
+                break;
+            default:
+                return [ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE, geometry.type];
+        }
+
+        return null;
     }
 
 

@@ -22,7 +22,9 @@ export module CSVHeadingsExpansion {
     }
 
 
-    export function expandI18nStringArrayHeadings(languages: string[]) {
+    export function expandStringArrayHeadings(languages?: string[]) {
+
+        if (!languages) languages = [I18N.UNSPECIFIED_LANGUAGE];
 
         return (n: number) => {
         

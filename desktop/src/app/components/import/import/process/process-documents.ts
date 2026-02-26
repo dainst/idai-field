@@ -35,6 +35,8 @@ export async function processDocuments(documents: Array<Document>,
         // We need to make sure the category is set in any case.
         document.resource.category = finalDocument.resource.category;
 
+        validator.assertGeometryIsValid(finalDocument);
+
         if (ignoreUnconfiguredFields) {
             validator.getUndefinedFields(finalDocument).forEach(fieldName => delete finalDocument.resource[fieldName]);
         } else {

@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { to } from 'tsfun';
-import { FieldDocument, Named, ProjectConfiguration, CategoryForm, Relation } from 'idai-field-core';
+import { FieldDocument, Named, ProjectConfiguration, CategoryForm, Relation,
+    FieldGeometryType } from 'idai-field-core';
 import { ResourcesContextMenu } from './resources-context-menu';
-import { ContextMenuOrientation } from '../../widgets/context-menu';
 import { MoveUtility } from '../../widgets/move-modal/move-utility';
 import { UtilTranslations } from '../../../util/util-translations';
 
@@ -20,15 +20,13 @@ export type ResourcesContextMenuAction = 'edit'|'move'|'delete'|'warnings'|'edit
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class ResourcesContextMenuComponent implements OnChanges {
+export class ResourcesContextMenuComponent {
 
     @Input() contextMenu: ResourcesContextMenu;
     @Input() showViewOption: boolean = false;
 
     @Output() onSelectAction: EventEmitter<ResourcesContextMenuAction>
         = new EventEmitter<ResourcesContextMenuAction>();
-
-    public orientation: ContextMenuOrientation = 'top';
     
 
     constructor(private projectConfiguration: ProjectConfiguration,
@@ -38,12 +36,6 @@ export class ResourcesContextMenuComponent implements OnChanges {
     public selectAction = (action: ResourcesContextMenuAction) => this.onSelectAction.emit(action);
 
     public getBottomPosition = (yPosition: number) => ResourcesContextMenu.getBottomPosition(yPosition);
-
-
-    ngOnChanges() {
-
-        this.orientation = ResourcesContextMenu.computeOrientation(this.contextMenu.position?.y);
-    }
 
 
     public areAnyOptionsAvailable(): boolean {
@@ -88,13 +80,17 @@ export class ResourcesContextMenuComponent implements OnChanges {
     }
 
 
-    public isCreateGeometryOptionAvailable(): boolean {
+    public isCreateGeometryOptionAvailable(geometryType?: FieldGeometryType): boolean {
 
         if (this.isReadonly()) return false;
+
         return this.contextMenu.documents.length === 1
             && this.projectConfiguration.isGeometryCategory(
                 this.contextMenu.documents[0].resource.category)
-            && !this.contextMenu.documents[0].resource.geometry;
+            && (!geometryType || CategoryForm.isAllowedGeometryType(
+                this.projectConfiguration.getCategory(this.contextMenu.documents[0].resource.category),
+                geometryType
+            )) && !this.contextMenu.documents[0].resource.geometry;
     }
 
 

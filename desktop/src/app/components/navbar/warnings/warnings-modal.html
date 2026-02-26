@@ -1,3 +1,7 @@
+<warnings-context-menu *ngIf="contextMenu.isOpen()"
+                       [contextMenu]="contextMenu"
+                       (onSelectAction)="performContextMenuAction($event)"></warnings-context-menu>
+
 <div class="modal-header warnings-modal-header">
     <h5 class="modal-title"
         i18n="@@navbar.taskbar.warnings.header">Warnungen</h5>
@@ -25,6 +29,7 @@
                         [waitForUserInput]="false"
                         [markSelected]="true"
                         [autoSelect]="true"
+                        [selectOnRightClick]="true"
                         [allowKeyboardNavigation]="!isModalOpened()"
                         [preselectedDocumentId]="preselectedDocumentId"
                         [showConfigurationOption]="isConfigurationOptionVisible()"
@@ -32,7 +37,8 @@
                         [showLoadingIcon]="warningFilters[0].count >= 1000"
                         [includeBrokenDocuments]="true"
                         (documentSelected)="selectDocument($event)"
-                        (documentDoubleClicked)="openDoceditModal()"></document-picker>
+                        (documentDoubleClicked)="openDoceditModal()"
+                        (documentRightClicked)="contextMenu?.open($event.event, $event.document)"></document-picker>
     </div>
     <div *ngIf="selectedDocument" id="document-warnings-container" class="col-md-7">
         <div id="document-warnings-header">
@@ -61,6 +67,10 @@
                         <span *ngIf="section.type === 'unfulfilledConditionFields'"
                               i18n="@@navbar.taskbar.warnings.sectionTitle.unfulfilledConditionField">
                             Nicht erfüllte Anzeigebedingung des Feldes <b>{{getFieldLabel(section)}}</b>
+                        </span>
+                        <span *ngIf="section.type === 'unallowedCharacterFields'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.unallowedCharacterField">
+                            Nicht erlaubtes Zeichen im Feld <b>{{getFieldLabel(section)}}</b>
                         </span>
                         <span *ngIf="section.type === 'outliers' && section.outlierValues.length === 1"
                               i18n="@@navbar.taskbar.warnings.sectionTitle.outlierValues.single">
@@ -113,6 +123,10 @@
                         <span *ngIf="section.type === 'invalidProcessState'"
                               i18n="@@navbar.taskbar.warnings.sectionTitle.invalidProcessState">
                             Ungültiger Status <b>{{getValueLabel(section)}}</b>
+                        </span>
+                        <span *ngIf="section.type === 'unallowedGeometryType'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.unallowedGeometryType">
+                            Nicht erlaubter Geometrietyp <b>{{section.geometryTypeLabel}}</b>
                         </span>
                     </span>
                 </div>
@@ -168,6 +182,10 @@
                         <span *ngIf="section.type === 'unfulfilledConditionFields'"
                               i18n="@@navbar.taskbar.warnings.info.unfulfilledConditionField">
                             Es sind Daten eingetragen, obwohl die Anzeigebedingung des Feldes nicht erfüllt ist.
+                        </span>
+                        <span *ngIf="section.type === 'unallowedCharacterFields'"
+                              i18n="@@navbar.taskbar.warnings.info.unallowedCharacterField">
+                            Das Zeichen <b>;</b> ist in Feldern des Eingabetyps <i>{{getInputTypeLabel(section)}}</i> nicht erlaubt.
                         </span>
                         <span *ngIf="section.type === 'outliers' && section.outlierValues.length === 1"
                               i18n="@@navbar.taskbar.warnings.info.outlierValues.single">
@@ -239,7 +257,12 @@
                             i18n="@@navbar.taskbar.warnings.info.invalidProcessState">
                             Der für diesen Prozess angegebene Status <i>{{getValueLabel(section)}}</i> widerspricht
                             dem eingetragenen Datum <i>{{getDateLabel(selectedDocument.resource.date)}}</i>.
-                      </span>
+                        </span>
+                        <span *ngIf="section.type === 'unallowedGeometryType'"
+                            i18n="@@navbar.taskbar.warnings.info.unallowedGeometryType">
+                            Geometrien des Typs <i>{{section.geometryTypeLabel}}</i> sind für Ressourcen der Kategorie
+                            <i>{{getCategoryLabel(section)}}</i> nicht erlaubt.
+                        </span>
                     </div>
                     <div *ngIf="section.type === 'unfulfilledConditionFields'" class="data-info">
                         <div><b i18n="@@navbar.taskbar.warnings.condition">Bedingung für Anzeige des Feldes:</b></div>
@@ -300,9 +323,10 @@
                     </span>
                     <span *ngIf="section.type === 'invalidFields' || section.type === 'missingMandatoryFields'
                             || section.type === 'unfulfilledConditionFields'
-                            || section.type === 'invalidRelationTargets' || section.type === 'missingIdentifierPrefix'
-                            || section.type === 'outliers' || section.type === 'nonUniqueIdentifier'
-                            || section.type === 'invalidProcessState'">
+                            || section.type === 'unallowedCharacterFields' || section.type === 'invalidRelationTargets'
+                            || section.type === 'missingIdentifierPrefix' || section.type === 'outliers'
+                            || section.type === 'nonUniqueIdentifier' || section.type === 'invalidProcessState'
+                            || section.type === 'unallowedGeometryType'">
                         <button class="btn btn-primary edit-button"
                                 (click)="openDoceditModal(section)">
                             <span class="mdi mdi-pencil"></span>

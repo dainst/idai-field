@@ -52,6 +52,7 @@ export module CSVExport {
             CSVMatrixExpansion.expandI18nString(fieldDefinitions, projectLanguages, Field.InputType.INPUT),
             CSVMatrixExpansion.expandI18nString(fieldDefinitions, projectLanguages, Field.InputType.TEXT),
             CSVMatrixExpansion.expandI18nStringArray(fieldDefinitions, projectLanguages),
+            CSVMatrixExpansion.expandStringArray(fieldDefinitions),
             CSVMatrixExpansion.expandOptionalRangeValue(fieldDefinitions),
             CSVMatrixExpansion.expandDate(fieldDefinitions),
             CSVMatrixExpansion.expandDating(fieldDefinitions, projectLanguages),

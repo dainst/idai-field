@@ -158,7 +158,7 @@
     "leaflet": "1.7.1",
     "panzoom": "9.4.3",
     "pouchdb-browser": "9.0.0",
-    "pouchdb-load": "1.4.6",
+    "pouchdb-load": "2.0.0",
     "pouchdb-replication-stream": "1.2.9",
     "qr-scanner": "^1.4.2",
     "qrcode": "^1.5.3",

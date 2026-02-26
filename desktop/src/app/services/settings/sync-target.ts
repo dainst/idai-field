@@ -8,7 +8,7 @@ export interface SyncTarget {
     address: string;
     password: string;
     isSyncActive: boolean;
-    startSequence?: string|number;
+    startSequence?: string|number;  // Only used for the first synchronization after downloading a project database
     fileSyncPreferences: Array<FileSyncPreference>;
 }
 

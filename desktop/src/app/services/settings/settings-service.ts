@@ -161,11 +161,17 @@ export class SettingsService {
             SyncTarget.getAddress(syncTarget),
             settings.selectedProject,
             syncTarget?.password,
-            SettingsService.checkDatabaseExistence,
-            syncTarget?.startSequence
+            SettingsService.checkDatabaseExistence
         );
 
-        if (await this.synchronizationService.startSync()) {
+        const startSequence: number|string = syncTarget?.startSequence;
+        if (startSequence) {
+            // The start sequence is only used for the first synchronization after downloading a project database
+            delete syncTarget.startSequence;
+            this.settingsProvider.setSettingsAndSerialize(settings);
+        }
+
+        if (await this.synchronizationService.startSync(startSequence)) {
             for (const preferences of syncTarget.fileSyncPreferences) {
                 this.imageSyncService.startSync(preferences);
             }

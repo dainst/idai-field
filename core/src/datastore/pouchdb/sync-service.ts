@@ -16,7 +16,6 @@ export class SyncService {
     private syncTarget: string;
     private project: string;
     private password: string = '';
-    private startSequence?: string|number;
     private currentSyncTimeout: any;
     private checkDatabaseExistence: (url: string) => Promise<boolean>;
 
@@ -34,13 +33,12 @@ export class SyncService {
 
 
     public init(syncTarget: string, project: string, password: string,
-                checkDatabaseExistence: (url: string) => Promise<boolean>, startSequence?: string|number) {
+                checkDatabaseExistence: (url: string) => Promise<boolean>) {
 
         this.syncTarget = syncTarget;
         this.project = project;
         this.password = password;
         this.checkDatabaseExistence = checkDatabaseExistence;
-        this.startSequence = startSequence;
     }
 
 
@@ -115,7 +113,8 @@ export class SyncService {
     }
 
 
-    public async startSync(setConnectingStatus: boolean = true, filter?: (doc: any) => boolean): Promise<boolean> {
+    public async startSync(startSequence?: string|number, setConnectingStatus: boolean = true,
+                           filter?: (doc: any) => boolean): Promise<boolean> {
 
         if (!this.syncTarget || !this.project) return false;
 
@@ -135,7 +134,7 @@ export class SyncService {
             return false;
         }
         
-        const syncStatusObserver: Observable<SyncStatus> = await this.setupSync(url, filter);
+        const syncStatusObserver: Observable<SyncStatus> = await this.setupSync(url, startSequence, filter);
         this.syncStatusSubscription = syncStatusObserver.subscribe(
             status => this.setStatus(status),
             err => {
@@ -145,7 +144,7 @@ export class SyncService {
                 }
                 this.cancelSync();
                 this.setStatus(syncStatus);
-                this.currentSyncTimeout = setTimeout(() => this.startSync(false), 5000); // retry
+                this.currentSyncTimeout = setTimeout(() => this.startSync(startSequence, false), 5000); // retry
             }
         );
 
@@ -167,7 +166,8 @@ export class SyncService {
     }
 
 
-    private setupSync(url: string, filter?: (doc: any) => boolean): Observable<SyncStatus> {
+    private async setupSync(url: string, remoteStartSequence?: string|number,
+                  filter?: (doc: any) => boolean): Promise<Observable<SyncStatus>> {
 
         console.log('Start syncing', url);
 
@@ -179,7 +179,16 @@ export class SyncService {
             timeout: 600000,
             filter
         };
-        if (this.startSequence) options.since = this.startSequence;
+
+        if (remoteStartSequence) {
+            const localStartSequence: string|number = (await this.pouchdbDatastore.getDb().info()).update_seq;
+            options.pull = {
+                since: remoteStartSequence
+            };
+            options.push = {
+                since: localStartSequence
+            }
+        }
 
         this.sync = this.pouchdbDatastore.getDb().sync(url, options);
 

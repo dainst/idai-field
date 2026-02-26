@@ -78,6 +78,13 @@
                 <span *ngIf="getDateInputMode() === 'range'"
                       i18n="@@configuration.date.inputMode.range">Datumsbereich</span>
             </li> 
+            <li *ngIf="allowedGeometryTypesLabel" class="list-group-item">
+                <b *ngIf="allowedGeometryTypes.length === 1"
+                   i18n="@@configuration.allowedGeometryType">Erlaubter Geometrietyp</b>
+                <b *ngIf="allowedGeometryTypes.length > 1"
+                   i18n="@@configuration.allowedGeometryTypes">Erlaubte Geometrietypen</b>
+                <span class="oneliner-colon">:</span>{{allowedGeometryTypesLabel}}
+            </li>
         </ul>
     </div>
 </div>

@@ -8809,14 +8809,6 @@
           <context context-type="linenumber">144</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.import.error.warningsExist" datatype="html">
-        <source>Es liegen Warnungen für die Ressource [0] vor. Bitte beheben Sie die zugrundeliegenden Probleme und starten den Import anschließend neu.</source>
-        <target state="translated">Для ресурсу [0] є попередження. Будь ласка, виправте основні проблеми, а потім перезапустіть імпорт.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">700</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="docedit.forms.valuelistMultiInput.selectable" datatype="html">
         <source>Dieser Wert steht bei der Dateneingabe zur Auswahl.</source>
         <target state="translated">Це значення доступне для вибору при введенні даних.</target>

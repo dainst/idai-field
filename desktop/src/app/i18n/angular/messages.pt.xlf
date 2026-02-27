@@ -8773,14 +8773,6 @@
           <context context-type="linenumber">144</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.import.error.warningsExist" datatype="html">
-        <source>Es liegen Warnungen für die Ressource [0] vor. Bitte beheben Sie die zugrundeliegenden Probleme und starten den Import anschließend neu.</source>
-        <target state="translated">Existem aviso para o recurso [0]. Por favor corrija os problemas e importe de novo.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">700</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="docedit.forms.objectArray.add" datatype="html">
         <source>Hinzufügen...</source>
         <target state="translated">Adicionar...</target>

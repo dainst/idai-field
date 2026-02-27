@@ -8688,14 +8688,6 @@
           <context context-type="linenumber">147</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.import.error.warningsExist" datatype="html">
-        <source>Es liegen Warnungen für die Ressource [0] vor. Bitte beheben Sie die zugrundeliegenden Probleme und starten den Import anschließend neu.</source>
-        <target state="translated">Warnings exist for resource [0]. Please solve the underlying problems and then restart the import.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">700</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="navbar.taskbar.cleanUpRelation.confirmation.question" datatype="html">
         <source>Möchten Sie die Relation <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getRelationLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="wirklich be"/> wirklich bereinigen? </source>
         <target state="translated">Do you really want to clean up the relation <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getRelationLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="wirklich be"/>? </target>

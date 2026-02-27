@@ -416,7 +416,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             level: 'danger'
         };
         this.msgs[M.MODEL_VALIDATION_UNALLOWED_GEOMETRY_TYPE] = {
-            content: $localize `:@@messages.model.validation.error.unsupportedGeometryType:Der Geometrietyp [1] ist für Ressourcen der Kategorie [0] nicht erlaubt.`,
+            content: $localize `:@@messages.model.validation.error.unallowedGeometryType:Der Geometrietyp [1] ist für Ressourcen der Kategorie [0] nicht erlaubt.`,
             level: 'danger'
         };
         this.msgs[M.MODEL_VALIDATION_GEOMETRY_NOT_ALLOWED] = {

@@ -426,7 +426,7 @@ export class AppComponent {
         );
         this.utilTranslations.addTranslation(
             'geometry.MultiPoint',
-            $localize `:@@geometry.point:Multipunkt`
+            $localize `:@@geometry.multiPoint:Multipunkt`
         );
         this.utilTranslations.addTranslation(
             'geometry.LineString',

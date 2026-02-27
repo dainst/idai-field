@@ -56,10 +56,7 @@ export class SyncService {
             return;
         }
 
-        this.stopSync();
-
         const url: string = SyncService.generateUrl(target, project, password);
-
         const db = await this.pouchdbDatastore.createEmptyDb(project, destroyExisting); // may throw, if not empty
 
         this.replication = db.replicate.from(
@@ -82,7 +79,6 @@ export class SyncService {
                         this.pouchdbDatastore.destroyDb(project);
                         obs.error('canceled');
                     }
-                    this.startSync();
                 })
                 .on('denied', (err: any) => {
                     this.handleReplicationError(obs, err, project);
@@ -99,7 +95,6 @@ export class SyncService {
         // it's ok to remove db, because we know it was a new one
         this.pouchdbDatastore.destroyDb(project);
         this.replication = undefined;
-        this.startSync();
         observer.error(error);
     }
 

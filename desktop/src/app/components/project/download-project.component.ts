@@ -16,6 +16,7 @@ import { SettingsProvider } from '../../services/settings/settings-provider';
 import { RemoteImageStore } from '../../services/imagestore/remote-image-store';
 import { AngularUtility } from '../../angular/angular-utility';
 import { getFileSizeLabel } from '../../util/get-file-size-label';
+import { Settings } from '../../services/settings/settings';
 
 const PouchDB = window.require('pouchdb-browser');
 const address = window.require('address');
@@ -81,6 +82,8 @@ export class DownloadProjectComponent {
 
         this.menuService.setContext(MenuContext.MODAL);
 
+        const settings: Settings = this.settingsProvider.getSettings();
+
         const progressModalRef: NgbModalRef = this.modalService.open(
             DownloadProjectProgressModalComponent,
             { backdrop: 'static', keyboard: false, animation: false }
@@ -90,8 +93,7 @@ export class DownloadProjectComponent {
         progressModalRef.componentInstance.filesProgressPercent = -1;
         progressModalRef.componentInstance.cancelFunction = () => this.cancel(progressModalRef);
 
-        const destroyExisting: boolean = this.overwriteProject
-            || !this.settingsProvider.getSettings().dbs.includes(this.getProjectIdentifier());
+        const destroyExisting: boolean = this.overwriteProject || !settings.dbs.includes(this.getProjectIdentifier());
 
         try {
             const databaseSteps: number = await this.getUpdateSequence();
@@ -109,6 +111,8 @@ export class DownloadProjectComponent {
                     this.getProjectIdentifier(),
                     preferences.map(preference => preference.variant)
                 ) : undefined;
+
+            if (Settings.isSynchronizationActive(settings)) this.syncService.stopSync();
 
             const lastUpdateSequence: string|number = await this.downloadDatabase(
                 progressModalRef, databaseSteps, destroyExisting
@@ -159,7 +163,10 @@ export class DownloadProjectComponent {
                 console.error('Error while downloading project', e);
             }
 
-            if (e !== 'canceled') this.closeModal(progressModalRef);
+            if (e !== 'canceled') {
+                this.closeModal(progressModalRef);
+                if (Settings.isSynchronizationActive(settings)) this.syncService.startSync();
+            }
         }
     }
 
@@ -333,6 +340,7 @@ export class DownloadProjectComponent {
             await this.imageStore.deleteData(this.getProjectIdentifier());
             this.cancelling = false;
             this.closeModal(progressModalRef);
+            if (Settings.isSynchronizationActive(this.settingsProvider.getSettings())) this.syncService.startSync();
         }
     }
 

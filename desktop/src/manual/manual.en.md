@@ -2328,16 +2328,16 @@ The QR code set for the resource is also used by one or more other resources. Th
 #### Possible solutions
 * Button *Edit QR code*: Open the QR code editor to delete the QR code and, if necessary, link or generate a new QR code.
 
-### Unallowed characters
+### Not allowed characters
 One or more characters entered in the field are not allowed in fields of the corresponding input type.
 
 #### Possible causes
 * The field was filled in with an outdated version of Field Desktop.
 
 #### Possible solutions
-* Button *Edit*: Open the resource editor to remove unallowed characters from the field.
+* Button *Edit*: Open the resource editor to remove not allowed characters from the field.
 
-### Unallowed geometry type
+### Not allowed geometry type
 The geometry of the resource does not correspond to a geometry type that is allowed for the corresponding category.
 
 #### Possible causes

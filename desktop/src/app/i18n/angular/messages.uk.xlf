@@ -8809,14 +8809,6 @@
           <context context-type="linenumber">144</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.import.error.warningsExist" datatype="html">
-        <source>Es liegen Warnungen für die Ressource [0] vor. Bitte beheben Sie die zugrundeliegenden Probleme und starten den Import anschließend neu.</source>
-        <target state="translated">Для ресурсу [0] є попередження. Будь ласка, виправте основні проблеми, а потім перезапустіть імпорт.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">700</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="docedit.forms.valuelistMultiInput.selectable" datatype="html">
         <source>Dieser Wert steht bei der Dateneingabe zur Auswahl.</source>
         <target state="translated">Це значення доступне для вибору при введенні даних.</target>
@@ -10247,6 +10239,130 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">224,227</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.sectionTitle.unallowedCharacterField" datatype="html">
+        <source>Nicht erlaubtes Zeichen im Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
+        <target state="needs-translation">Nicht erlaubtes Zeichen im Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">72,74</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.sectionTitle.unallowedGeometryType" datatype="html">
+        <source>Nicht erlaubter Geometrietyp <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="peLabel}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
+        <target state="needs-translation">Nicht erlaubter Geometrietyp <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="peLabel}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">128,130</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.info.unallowedGeometryType" datatype="html">
+        <source>Geometrien des Typs <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="Label}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="nicht erlaubt."/> sind für Ressourcen der Kategorie <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="tion)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="nicht erlaubt."/> nicht erlaubt. </source>
+        <target state="needs-translation">Geometrien des Typs <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="Label}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="nicht erlaubt."/> sind für Ressourcen der Kategorie <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="tion)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="nicht erlaubt."/> nicht erlaubt. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">262,265</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageUpload.uploadModal.info.generic" datatype="html">
+        <source>Daten werden eingelesen...</source>
+        <target state="needs-translation">Daten werden eingelesen...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/upload/upload-modal.html</context>
+          <context context-type="linenumber">5,7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.warnings.unallowedCharacterFields" datatype="html">
+        <source>Nicht erlaubte Zeichen</source>
+        <target state="needs-translation">Nicht erlaubte Zeichen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/app.component.ts</context>
+          <context context-type="linenumber">274</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.allowedGeometryType" datatype="html">
+        <source>Erlaubter Geometrietyp</source>
+        <target state="needs-translation">Erlaubter Geometrietyp</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
+          <context context-type="linenumber">83</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.allowedGeometryTypes" datatype="html">
+        <source>Erlaubte Geometrietypen</source>
+        <target state="needs-translation">Erlaubte Geometrietypen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
+          <context context-type="linenumber">85</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
+          <context context-type="linenumber">171</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.model.validation.error.geometryNotAllowed" datatype="html">
+        <source>Für Ressourcen der Kategorie [0] können keine Geometrien angelegt werden.</source>
+        <target state="needs-translation">Für Ressourcen der Kategorie [0] können keine Geometrien angelegt werden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">423</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.error.generic" datatype="html">
+        <source>Import fehlgeschlagen.</source>
+        <target state="needs-translation">Import fehlgeschlagen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">600</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.unallowedCharacterInFields" datatype="html">
+        <source>Das Zeichen ';' ist in den folgenden Feldern nicht erlaubt: [0]</source>
+        <target state="needs-translation">Das Zeichen ';' ist in den folgenden Feldern nicht erlaubt: [0]</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1008</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.error.noAllowedGeometryTypes" datatype="html">
+        <source>Bitte wählen Sie mindestens einen erlaubten Geometrietyp aus.</source>
+        <target state="needs-translation">Bitte wählen Sie mindestens einen erlaubten Geometrietyp aus.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1293</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.warnings.info.unallowedCharacterField" datatype="html">
+        <source>Das Zeichen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>;<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ist in Feldern des Eingabetyps <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="ction)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="nicht erlaubt"/> nicht erlaubt. </source>
+        <target state="needs-translation">Das Zeichen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>;<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ist in Feldern des Eingabetyps <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="ction)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="nicht erlaubt"/> nicht erlaubt. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
+          <context context-type="linenumber">187,189</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.model.validation.error.unallowedGeometryType" datatype="html">
+        <source>Der Geometrietyp [1] ist für Ressourcen der Kategorie [0] nicht erlaubt.</source>
+        <target state="needs-translation">Der Geometrietyp [1] ist für Ressourcen der Kategorie [0] nicht erlaubt.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">419</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.unallowedCharacterInField" datatype="html">
+        <source>Das Zeichen ';' ist im Feld '[0]' nicht erlaubt.</source>
+        <target state="needs-translation">Das Zeichen ';' ist im Feld '[0]' nicht erlaubt.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1004</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.images.error.unallowedCharacterInFilename" datatype="html">
+        <source>Die Bilddatei '[0]' konnte nicht hinzugefügt werden. Das Zeichen ';' ist in Dateinamen nicht erlaubt.</source>
+        <target state="needs-translation">Die Bilddatei '[0]' konnte nicht hinzugefügt werden. Das Zeichen ';' ist in Dateinamen nicht erlaubt.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1060</context>
         </context-group>
       </trans-unit>
     </body>

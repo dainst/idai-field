@@ -256,12 +256,18 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static RESOURCES_SUCCESS_IMAGES_UPLOADED = 'resources.success.imagesImported';
     public static RESOURCES_SUCCESS_STORAGE_PLACE_SAVED_SINGLE = 'resources.success.storagePlaceSaved.single';
     public static RESOURCES_SUCCESS_STORAGE_PLACE_SAVED_MULTIPLE = 'resources.success.storagePlaceSaved.multiple';
+    public static RESOURCES_SUCCESS_TYPE_SAVED_SINGLE = 'resources.success.typeSaved.single';
+    public static RESOURCES_SUCCESS_TYPES_SAVED_MULTIPLE = 'resources.success.typeSaved.multiple';
     public static RESOURCES_SUCCESS_GENERATED_QR_CODE_SAVED = 'resources.success.generatedQrCodeSaved';
     public static RESOURCES_SUCCESS_EXISTING_QR_CODE_SAVED = 'resources.success.existingQrCodeSaved';
     public static RESOURCES_SUCCESS_QR_CODE_DELETED = 'resources.success.qrCodeDeleted';
     public static RESOURCES_INFO_STORAGE_PLACE_ALREADY_SET_SINGLE = 'resources.info.storagePlaceAlreadySet.single';
     public static RESOURCES_INFO_STORAGE_PLACE_ALREADY_SET_MULTIPLE = 'resources.info.storagePlaceAlreadySet.multiple';
+    public static RESOURCES_INFO_TYPE_ALREADY_SET_SINGLE = 'resources.info.typeAlreadySet.single';
+    public static RESOURCES_INFO_TYPE_ALREADY_SET_MULTIPLE = 'resources.info.typeAlreadySet.multiple';
     public static RESOURCES_ERROR_NO_STORAGE_PLACE_CATEGORY = 'resources.error.noStoragePlaceCategory';
+    public static RESOURCES_ERROR_NO_TYPE_CATEGORY = 'resources.error.noTypeCategory';
+    public static RESOURCES_ERROR_NO_STORAGE_PLACE_OR_TYPE_CATEGORY = 'resources.error.noStoragePlaceOrTypeCategory';
     public static RESOURCES_WARNING_PROJECT_IDENTIFIER_NOT_SAME = 'resources.error.projectIdentifierNotSame';
     public static RESOURCES_ERROR_ONE_PROJECT_MUST_EXIST = 'resources.error.oneProjectMustExist'; // TODO Rename
     public static RESOURCES_ERROR_RESOURCE_DELETED = 'resources.error.resourceDeleted';
@@ -1130,6 +1136,16 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             level: 'success',
             extendedTimeout: true
         };
+        this.msgs[M.RESOURCES_SUCCESS_TYPE_SAVED_SINGLE] = {
+            content: $localize `:@@messages.resources.success.typeSaved.single:Für die Ressource [0] wurde erfolgreich der Typ [1] gespeichert.`,
+            level: 'success',
+            extendedTimeout: true
+        };
+        this.msgs[M.RESOURCES_SUCCESS_TYPES_SAVED_MULTIPLE] = {
+            content: $localize `:@@messages.resources.success.typeSaved.multiple:Für [0] Ressourcen wurde erfolgreich der Typ [1] gespeichert.`,
+            level: 'success',
+            extendedTimeout: true
+        };
         this.msgs[M.RESOURCES_SUCCESS_GENERATED_QR_CODE_SAVED] = {
             content: $localize `:@@messages.resources.success.qrCodeSaved:Der neu generierte QR-Code wurde erfolgreich gespeichert.`,
             level: 'success'
@@ -1152,8 +1168,28 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             level: 'info',
             extendedTimeout: true
         };
+        this.msgs[M.RESOURCES_INFO_TYPE_ALREADY_SET_SINGLE] = {
+            content: $localize `:@@messages.resources.info.typeAlreadySet.single:Der Typ [1] ist für die Ressource [0] bereits gesetzt.`,
+            level: 'info',
+            extendedTimeout: true
+        };
+        this.msgs[M.RESOURCES_INFO_TYPE_ALREADY_SET_MULTIPLE] = {
+            content: $localize `:@@messages.resources.info.typeAlreadySet.multiple:Der Typ [1] ist für die ausgewählten [0] Ressourcen bereits gesetzt.`,
+            level: 'info',
+            extendedTimeout: true
+        };
         this.msgs[M.RESOURCES_ERROR_NO_STORAGE_PLACE_CATEGORY] = {
             content: $localize `:@@messages.resources.error.noStoragePlaceCategory:Die Ressource [0] der Kategorie [1] ist kein gültiger Aufbewahrungsort.`,
+            level: 'danger',
+            extendedTimeout: true
+        };
+        this.msgs[M.RESOURCES_ERROR_NO_TYPE_CATEGORY] = {
+            content: $localize `:@@messages.resources.error.noTypeCategory:Die Ressource [0] der Kategorie [1] ist kein gültiger Typ.`,
+            level: 'danger',
+            extendedTimeout: true
+        };
+        this.msgs[M.RESOURCES_ERROR_NO_STORAGE_PLACE_OR_TYPE_CATEGORY] = {
+            content: $localize `:@@messages.resources.error.noStoragePlaceOrTypeCategory:Die Ressource [0] der Kategorie [1] ist kein gültiger Typ oder Aufbewahrungsort.`,
             level: 'danger',
             extendedTimeout: true
         };

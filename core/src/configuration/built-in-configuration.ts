@@ -900,6 +900,7 @@ export class BuiltInConfiguration {
             supercategory: true,
             userDefinedSubcategoriesAllowed: true,
             mustLieWithin: true,
+            scanCodesAllowed: true,
             fields: {},
             minimalForm: {
                 groups: [

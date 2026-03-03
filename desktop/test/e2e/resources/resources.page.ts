@@ -63,9 +63,9 @@ export class ResourcesPage {
     }
 
 
-    public static clickContextMenuScanStoragePlaceButton() {
+    public static clickContextMenuScanResourceButton() {
 
-        return click('#context-menu-scan-storage-place-button');
+        return click('#context-menu-scan-resource-button');
     }
 
 
@@ -180,6 +180,24 @@ export class ResourcesPage {
     public static clickCancelScanStoragePlaceModal() {
 
         return click('#cancel-scan-storage-place-modal-button');
+    }
+
+
+    public static clickConfirmReplacingType() {
+
+        return click('#replace-type-button');
+    }
+
+
+    public static clickConfirmAddingType() {
+
+        return click('#add-type-button');
+    }
+
+
+    public static clickCancelScanTypeModal() {
+
+        return click('#cancel-scan-type-modal-button');
     }
 
 

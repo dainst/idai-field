@@ -8,7 +8,7 @@ import { UtilTranslations } from '../../../util/util-translations';
 
 
 export type ResourcesContextMenuAction = 'edit'|'move'|'delete'|'warnings'|'edit-qr-code'|'edit-images'
-    |'scan-storage-place'|'edit-workflow'|'create-polygon'|'create-line-string'|'create-point'|'edit-geometry';
+    |'scan-resource'|'edit-workflow'|'create-polygon'|'create-line-string'|'create-point'|'edit-geometry';
 
 
 @Component({
@@ -49,7 +49,7 @@ export class ResourcesContextMenuComponent {
             || this.isWarningsOptionAvailable()
             || this.isAddQRCodeOptionAvailable()
             || this.isEditQRCodeOptionAvailable()
-            || this.isScanStoragePlaceOptionIsAvailable()
+            || this.isScanResourceOptionIsAvailable()
             || this.isEditWorkflowOptionAvailable();
     }
 
@@ -114,11 +114,26 @@ export class ResourcesContextMenuComponent {
     }
 
 
+    public isScanResourceOptionIsAvailable(): boolean {
+
+        return this.isScanStoragePlaceOptionIsAvailable()
+            || this.isScanTypeOptionIsAvailable();
+    }
+
+
     public isScanStoragePlaceOptionIsAvailable(): boolean {
 
         if (this.isReadonly() || !this.isStoredInRelationAllowed()) return false;
 
         return this.projectConfiguration.getInventoryCategories().filter(category => category.scanCodes).length > 0;
+    }
+
+
+    public isScanTypeOptionIsAvailable(): boolean {
+
+        if (this.isReadonly() || !this.isInstanceOfRelationAllowed()) return false;
+
+        return this.projectConfiguration.getTypeCategories().filter(category => category.scanCodes).length > 0;
     }
 
 
@@ -172,11 +187,21 @@ export class ResourcesContextMenuComponent {
 
     private isStoredInRelationAllowed(): boolean {
 
-        return this.contextMenu.documents.find(document => {
-            return !this.projectConfiguration.isAllowedRelationDomainCategory(
+        return this.contextMenu.documents.every(document => {
+            return this.projectConfiguration.isAllowedRelationDomainCategory(
                 document.resource.category, 'StoragePlace', Relation.Inventory.ISSTOREDIN
             );
-        }) === undefined;
+        });
+    }
+
+
+    private isInstanceOfRelationAllowed(): boolean {
+
+        return this.contextMenu.documents.every(document => {
+            return this.projectConfiguration.isAllowedRelationDomainCategory(
+                document.resource.category, 'Type', Relation.Type.INSTANCEOF
+            );
+        });
     }
 
 

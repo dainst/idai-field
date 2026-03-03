@@ -169,8 +169,8 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
             case 'edit-qr-code':
                 await this.resourcesComponent.editQRCode(this.selectedDocument);
                 break;
-            case 'scan-storage-place':
-                await this.resourcesComponent.scanStoragePlace(this.contextMenu.documents as Array<FieldDocument>);
+            case 'scan-resource':
+                await this.resourcesComponent.scanResource(this.contextMenu.documents as Array<FieldDocument>);
                 break;
             case 'edit-workflow':
                 await this.resourcesComponent.editWorkflow(this.contextMenu.documents);

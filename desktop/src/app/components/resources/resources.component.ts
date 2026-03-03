@@ -19,7 +19,7 @@ import { NavigationPath } from '../../components/resources/view/state/navigation
 import { ViewModalLauncher } from '../viewmodal/view-modal-launcher';
 import { MsgWithParams } from '../messages/msg-with-params';
 import { QrCodeEditorModalComponent } from './actions/edit-qr-code/qr-code-editor-modal.component';
-import { StoragePlaceScanner } from './actions/scan-storage-place/storage-place-scanner';
+import { ResourceScanner } from './actions/scan-resource/resource-scanner';
 import { WarningsService } from '../../services/warnings/warnings-service';
 import { WorkflowEditorModalComponent } from './actions/edit-workflow/workflow-editor-modal.component';
 import { ApiState, ExpressServer } from '../../services/express-server/express-server';
@@ -68,7 +68,7 @@ export class ResourcesComponent implements OnDestroy {
                 private tabManager: TabManager,
                 private projectConfiguration: ProjectConfiguration,
                 private menuService: Menus,
-                private storagePlaceScanner: StoragePlaceScanner,
+                private storagePlaceScanner: ResourceScanner,
                 private warningsService: WarningsService,
                 private expressServer: ExpressServer) {
 
@@ -105,8 +105,7 @@ export class ResourcesComponent implements OnDestroy {
 
     public isInWorkflowManagement = () => this.viewFacade.isInWorkflowManagement();
 
-    public scanStoragePlace = (documents: Array<FieldDocument>) =>
-        this.storagePlaceScanner.scanStoragePlace(documents);
+    public scanResource = (documents: Array<FieldDocument>) => this.storagePlaceScanner.scanResources(documents);
 
 
     ngOnDestroy() {

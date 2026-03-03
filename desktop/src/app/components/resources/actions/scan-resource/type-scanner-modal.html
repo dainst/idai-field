@@ -1,0 +1,56 @@
+<div class="modal-header">
+    <h5 *ngIf="typeDocuments.length === 1" class="modal-title"
+        i18n="@@resources.typeScannerModal.header.single">
+        Bisherigen Aufbewahrungsort ersetzen?
+    </h5>
+    <h5 *ngIf="typeDocuments.length > 1" class="modal-title"
+        i18n="@@resources.typeScannerModal.header.multiple">
+        Bisherige Aufbewahrungsorte ersetzen?
+    </h5>
+</div>
+
+<div class="modal-body scanner-modal-body">
+    <div *ngIf="documents.length === 1 && typeDocuments.length === 1"
+         i18n="@@resources.typeScannerModal.editMode.singleDocument.singleType">
+        Für die Ressource <b>{{documents[0].resource.identifier}}</b> ist bereits der Typ
+        <b>{{typeDocuments[0].resource.identifier}}</b> gesetzt.
+    </div>
+    <div *ngIf="documents.length === 1 && typeDocuments.length > 1"
+         i18n="@@resources.typeScannerModal.editMode.singleDocument.multipleTypes">
+        Für die Ressource <b>{{documents[0].resource.identifier}}</b> sind bereits mehrere Typen gesetzt.
+    </div>
+    <div *ngIf="documents.length > 1 && typeDocuments.length === 1"
+         i18n="@@resources.typeScannerModal.editMode.multipleDocuments.singleType">
+        Für {{documents.length}} Ressourcen ist bereits der Typ
+        <b>{{typeDocuments[0].resource.identifier}}</b> gesetzt.
+    </div>
+    <div *ngIf="documents.length > 1 && typeDocuments.length > 1"
+        i18n="@@resources.typeScannerModal.editMode.multipleDocuments.multipleTypes">
+       Für {{documents.length}} Ressourcen sind bereits Typen gesetzt.
+    </div>
+    <div *ngIf="typeDocuments.length === 1"
+         i18n="@@resources.typeScannerModal.editMode.question.single">
+        Möchten Sie den bisherigen Typ entfernen oder zusätzlich zum neuen Typ
+        <b>{{newTypeDocument.resource.identifier}}</b> beibehalten?
+    </div>
+    <div *ngIf="typeDocuments.length > 1"
+         i18n="@@resources.typeScannerModal.editMode.question.multiple">
+        Möchten Sie die bisherigen Typen entfernen oder zusätzlich zum neuen Typ
+        <b>{{newTypeDocument.resource.identifier}}</b> beibehalten?
+    </div>
+</div>
+
+<div class="modal-footer" *ngIf="documents">
+    <button id="replace-type-button" class="btn btn-danger" type="button"
+            (click)="selectEditMode('replace')">
+        <span i18n="@@resources.scanStoragePlaceModal.remove">Entfernen</span>
+    </button>
+    <button id="add-type-button" class="btn btn-primary" type="button"
+            (click)="selectEditMode('add')">
+        <span i18n="@@resources.scanStoragePlaceModal.keep">Beibehalten</span>
+    </button>
+    <button id="cancel-scan-type-modal-button" type="button" class="btn btn-secondary"
+            (click)="activeModal.dismiss('cancel')">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </button>
+</div>

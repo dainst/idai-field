@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FieldDocument } from 'idai-field-core';
-import { StoragePlaceEditMode } from './storage-place-scanner';
+import { ResourceEditMode } from './resource-scanner';
 import { Menus } from '../../../../services/menus';
 import { MenuContext } from '../../../../services/menu-context';
 
 
 @Component({
-    templateUrl: './scan-storage-place-modal.html',
+    templateUrl: './storage-place-scanner-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
     },
@@ -17,7 +17,7 @@ import { MenuContext } from '../../../../services/menu-context';
 /**
  * @author Thomas Kleinke
  */
-export class ScanStoragePlaceModalComponent {
+export class StoragePlaceScannerModalComponent {
 
     public documents: Array<FieldDocument>;
     public storagePlaceDocuments: Array<FieldDocument>;
@@ -36,7 +36,7 @@ export class ScanStoragePlaceModalComponent {
     }
 
 
-    public selectEditMode(editMode: StoragePlaceEditMode) {
+    public selectEditMode(editMode: ResourceEditMode) {
 
         this.activeModal.close(editMode);
     }

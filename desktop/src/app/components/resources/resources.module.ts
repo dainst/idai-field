@@ -50,8 +50,8 @@ import { SettingsProvider } from '../../services/settings/settings-provider';
 import { QrCodeEditorModalComponent } from './actions/edit-qr-code/qr-code-editor-modal.component';
 import { DeleteQrCodeModalComponent } from './actions/edit-qr-code/delete-qr-code-modal.component';
 import { QrCodeService } from './service/qr-code-service';
-import { StoragePlaceScanner } from './actions/scan-storage-place/storage-place-scanner';
-import { ScanStoragePlaceModalComponent } from './actions/scan-storage-place/scan-storage-place-modal.component';
+import { ResourceScanner } from './actions/scan-resource/resource-scanner';
+import { StoragePlaceScannerModalComponent } from './actions/scan-resource/storage-place-scanner-modal.component';
 import { PrintSettingsModalComponent } from './actions/edit-qr-code/print-settings/print-settings-modal.component';
 import { CreatePrintSettingsProfileModalComponent } from './actions/edit-qr-code/print-settings/create-print-settings-profile-modal.component';
 import { WorkflowEditorModalComponent } from './actions/edit-workflow/workflow-editor-modal.component';
@@ -63,6 +63,7 @@ import { DeleteProcessModalComponent } from './workflow/delete/delete-process-mo
 import { ProcessStateComponent } from './workflow/state/process-state.component';
 import { ProcessListComponent } from './workflow/process-list.component';
 import { WorkflowOverviewComponent } from './workflow/workflow-overview.component';
+import { TypeScannerModalComponent } from './actions/scan-resource/type-scanner-modal.component';
 
 
 const remote = window.require('@electron/remote');
@@ -108,7 +109,8 @@ const remote = window.require('@electron/remote');
         PrintSettingsModalComponent,
         CreatePrintSettingsProfileModalComponent,
         DeleteQrCodeModalComponent,
-        ScanStoragePlaceModalComponent,
+        StoragePlaceScannerModalComponent,
+        TypeScannerModalComponent,
         WorkflowOverviewComponent,
         WorkflowEditorModalComponent,
         ProcessPlusButtonComponent,
@@ -127,7 +129,7 @@ const remote = window.require('@electron/remote');
         LayerImageProvider,
         ResourceDeletion,
         QrCodeService,
-        StoragePlaceScanner,
+        ResourceScanner,
         {
             provide: NavigationService,
             useFactory: (projectConfiguration: ProjectConfiguration, routingService: Routing, viewFacade: ViewFacade, messages: Messages) => {

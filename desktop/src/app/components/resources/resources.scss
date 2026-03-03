@@ -13,7 +13,7 @@
 @import 'actions/edit-qr-code/qr-code-editor-modal';
 @import 'actions/edit-qr-code/delete-qr-code-modal';
 @import 'actions/edit-qr-code/print-settings/print-settings-modal';
-@import 'actions/scan-storage-place/scan-storage-place-modal';
+@import 'actions/scan-resource/scanner-modal';
 @import 'actions/edit-workflow/workflow-editor-modal';
 @import 'actions/edit-workflow/plus-button/process-plus-button';
 @import 'actions/edit-workflow/link-button/link-process-button';
@@ -26,7 +26,6 @@
 @import 'searchbar/search-suggestions';
 @import 'widgets/list-button-group';
 @import 'widgets/popover-menu';
-@import 'actions/edit-workflow/workflow-editor-modal';
 @import 'workflow/workflow-overview';
 @import 'workflow/process-list';
 @import 'workflow/relations/workflow-relations';

@@ -96,11 +96,19 @@
         </span>
     </div>
 
-    <hr *ngIf="isScanStoragePlaceOptionIsAvailable()">
+    <hr *ngIf="isScanResourceOptionIsAvailable()">
 
-    <div *ngIf="isScanStoragePlaceOptionIsAvailable()" id="context-menu-scan-storage-place-button"
-         class="dropdown-item" (click)="selectAction('scan-storage-place')">
+    <div *ngIf="isScanResourceOptionIsAvailable()" id="context-menu-scan-resource-button"
+         class="dropdown-item" (click)="selectAction('scan-resource')">
         <span class="mdi mdi-qrcode-scan"></span>
-        <span class="dropdown-entry-label" i18n="@@resources.contextMenu.scanStoragePlace">Aufbewahrungsort scannen</span>
+        <span *ngIf="isScanStoragePlaceOptionIsAvailable() && !isScanTypeOptionIsAvailable()"
+              class="dropdown-entry-label"
+              i18n="@@resources.contextMenu.scanStoragePlace">Aufbewahrungsort scannen</span>
+        <span *ngIf="!isScanStoragePlaceOptionIsAvailable() && isScanTypeOptionIsAvailable()"
+              class="dropdown-entry-label"
+              i18n="@@resources.contextMenu.scanType">Typ scannen</span>
+        <span *ngIf="isScanStoragePlaceOptionIsAvailable() && isScanTypeOptionIsAvailable()"
+              class="dropdown-entry-label"
+              i18n="@@resources.contextMenu.scanTypeOrStoragePlace">Typ oder Aufbewahrungsort scannen</span>
     </div>
 </div>

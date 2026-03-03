@@ -28,7 +28,7 @@ defmodule FieldPublication.Publications.Search do
       :id,
       :identifier,
       :category,
-      :project_name,
+      :project_key,
       :publication_draft_date,
       :configuration_based_field_mappings,
       :full_doc,
@@ -38,10 +38,10 @@ defmodule FieldPublication.Publications.Search do
       :id,
       :identifier,
       :category,
-      :project_name,
+      :project_key,
       :publication_draft_date,
       :configuration_based_field_mappings,
-      :geo,
+      :geometry,
       :full_doc,
       :full_doc_as_text
     ]
@@ -52,7 +52,7 @@ defmodule FieldPublication.Publications.Search do
       id: map["id"],
       identifier: map["identifier"],
       category: map["category"],
-      project_name: map["project_name"],
+      project_key: map["project_key"],
       publication_draft_date: map["publication_draft_date"],
       configuration_based_field_mappings: map["configuration_based_field_mappings"] || %{},
       full_doc: Data.document_map_to_struct(map["full_doc"]),
@@ -285,7 +285,7 @@ defmodule FieldPublication.Publications.Search do
     filter_params =
       Enum.map(filter, fn {key, value} ->
         cond do
-          key in ["category", "project_name"] ->
+          key in ["category", "project_key"] ->
             %{term: %{key => value}}
 
           true ->
@@ -371,7 +371,7 @@ defmodule FieldPublication.Publications.Search do
       end)
       |> Stream.map(fn key ->
         cond do
-          key in ["category", "project_name"] ->
+          key in ["category", "project_key"] ->
             {key, %{terms: %{field: key, size: 200}}}
 
           true ->
@@ -411,7 +411,7 @@ defmodule FieldPublication.Publications.Search do
         type: "keyword",
         store: true
       },
-      project_name: %{
+      project_key: %{
         type: "keyword",
         store: true
       },
@@ -419,7 +419,7 @@ defmodule FieldPublication.Publications.Search do
         type: "date",
         store: true
       },
-      geo: %{
+      geometry: %{
         type: "geo_shape",
         store: true
       },
@@ -495,9 +495,9 @@ defmodule FieldPublication.Publications.Search do
         # but also all documents that are in one of its child categories ("Photo" and "Drawing" by default.).
         category: [res["category"]] ++ Data.get_parent_categories(publication, res["category"]),
         publication_draft_date: publication.draft_date,
-        project_name: publication.project_name,
+        project_key: publication.project_name,
         configuration_based_field_mappings: %{},
-        geo: geo,
+        geometry: geo,
         full_doc: full_doc,
         full_doc_as_text: Jason.encode!(full_doc)
       }

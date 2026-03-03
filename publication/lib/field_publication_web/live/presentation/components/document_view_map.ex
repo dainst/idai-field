@@ -107,7 +107,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
 
     ancestor_features =
       ancestors
-      |> Enum.reject(fn %Document{id: id} -> id in parent_uuids end)
+      |> Enum.reject(fn %{id: id} -> id in parent_uuids end)
       |> Enum.map(&create_feature_info(&1))
       |> Enum.filter(fn feature -> Map.has_key?(feature, :geometry) end)
 
@@ -165,7 +165,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
   end
 
   defp create_feature_info(
-         %Document{
+         %{
            category: %Category{color: color, labels: category_labels},
            id: uuid,
            identifier: identifier
@@ -182,7 +182,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
           value
 
         values when is_map(values) ->
-          {_status, value } = I18n.select_translation(%{values: values})
+          {_status, value} = I18n.select_translation(%{values: values})
 
           value
       end
@@ -279,7 +279,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     end
   end
 
-  defp process_document_tile_layers(socket, publication, %Document{} = doc, hook_id) do
+  defp process_document_tile_layers(socket, publication, %{} = doc, hook_id) do
     Logger.debug("Setting document level background layers.")
 
     default_map_layers =
@@ -399,7 +399,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     """
   end
 
-  defp accumulate_geometries_for_relations(%Document{} = doc, relation_names) do
+  defp accumulate_geometries_for_relations(%{} = doc, relation_names) do
     relation_names
     |> Enum.map(fn relation_name ->
       doc

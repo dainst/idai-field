@@ -139,7 +139,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             <.group_heading>
               <I18n.text values={other_relation.labels} /> ({Enum.count(other_relation.docs)})
             </.group_heading>
-            <div class="overflow-auto overscroll-contain max-h-[200px]">
+            <div class="overflow-auto overscroll-contain max-h-[400px]">
               <%= for %Document{} = doc <- other_relation.docs do %>
                 <DocumentLink.show doc={doc} image_count={2} geometry_indicator={true} />
               <% end %>
@@ -493,7 +493,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           target_id={"#{Enum.join(get_child_category_names(children) ++ [category_name], ",")}"}
         >
           <.link navigate={
-            ~p"/search?#{%{filters: %{category: category_name, project_name: @publication.project_name}}}"
+            ~p"/search?#{%{filters: %{category: category_name, project_key: @publication.project_name}}}"
           }>
             <div class="flex flex-row mb-[2px] p-1">
               <span style={"color: #{desaturate_category_color(color)}"}>

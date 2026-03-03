@@ -171,7 +171,7 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
     """
   end
 
-  defp get_filter_label("project_name") do
+  defp get_filter_label("project_key") do
     %{primary: Gettext.gettext(FieldPublicationWeb.Gettext, "Project")}
   end
 

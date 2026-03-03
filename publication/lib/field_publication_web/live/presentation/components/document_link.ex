@@ -32,7 +32,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
       <.link
         class="grow p-3 rounded-tr rounded-br hover:bg-(--primary-color)/10"
         style={"border-color: #{desaturate_category_color(@doc.category.color)}; border-width: 1px 1px 1px 0px;"}
-        navigate={construct_doc_link(@doc.project, @doc.publication, @doc.id, @focus)}
+        navigate={construct_doc_link(@doc.project_key, @doc.publication_draft_date, @doc.id, @focus)}
       >
         <div>
           <span class="text-slate-600">{@doc.identifier}</span>
@@ -53,7 +53,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
               <Image.show
                 size={"^,#{@image_height}"}
                 class="p-1 inline"
-                project={@doc.project}
+                project={@doc.project_key}
                 uuid={uuid}
                 alt_text={"An image depicting '#{@doc.identifier}'"}
               />

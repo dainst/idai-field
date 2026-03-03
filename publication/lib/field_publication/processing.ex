@@ -53,6 +53,7 @@ defmodule FieldPublication.Processing do
     GenServer.call(__MODULE__, {:start, publication, :web_images})
     GenServer.call(__MODULE__, {:start, publication, :tile_images})
     GenServer.call(__MODULE__, {:start, publication, :search_index})
+    # TODO: Start creating preview docs?
   end
 
   @doc """

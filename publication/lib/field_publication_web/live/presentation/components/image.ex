@@ -12,7 +12,7 @@ defmodule FieldPublicationWeb.Presentation.Components.Image do
 
   def show(assigns) do
     ~H"""
-    <img class={@class} alt={@alt_text} src={construct_url(assigns)} />
+    <img class={@class} alt={@alt_text} loading="lazy" src={construct_url(assigns)} />
     """
   end
 

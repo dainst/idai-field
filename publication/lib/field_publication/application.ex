@@ -32,9 +32,6 @@ defmodule FieldPublication.Application do
         id: :document_cache
       ),
       Supervisor.child_spec({Cachex, name: :application_documents}, id: :application_documents),
-      Supervisor.child_spec({Cachex, name: :publication_document_previews},
-        id: :publication_document_previews
-      ),
       Supervisor.child_spec({Cachex, name: :published_images}, id: :published_images)
     ]
 

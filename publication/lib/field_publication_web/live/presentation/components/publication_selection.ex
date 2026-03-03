@@ -39,7 +39,7 @@ defmodule FieldPublicationWeb.Presentation.Components.PublicationSelection do
           <div class="font-semibold mb-2">Available publications</div>
           <%= for publication <- @publications do %>
             <% url =
-              ~p"/projects/#{publication.project_name}/#{publication.draft_date}/#{@selected_lang}"
+              ~p"/projects/#{publication.project_name}/#{publication.draft_date}"
 
             url =
               if Map.has_key?(assigns, :uuid) do

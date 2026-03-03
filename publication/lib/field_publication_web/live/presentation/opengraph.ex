@@ -25,7 +25,7 @@ defmodule FieldPublicationWeb.Presentation.Opengraph do
         value
 
       values when is_map(values) ->
-        {_, value } = I18n.select_translation(%{values: values})
+        {_, value} = I18n.select_translation(%{values: values})
         value
 
       nil ->

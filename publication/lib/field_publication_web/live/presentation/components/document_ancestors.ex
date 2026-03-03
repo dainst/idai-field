@@ -82,7 +82,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
 
   def render_link(assigns) do
     ~H"""
-    <% geometry = Data.get_field(@doc, "geometry") %>
+    <% geometry = @doc.geometry %>
 
     <%= if geometry do %>
       <div

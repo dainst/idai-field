@@ -165,10 +165,11 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
   end
 
   defp create_feature_info(
-         %{
+         %Document{
            category: %Category{color: color, labels: category_labels},
            id: uuid,
-           identifier: identifier
+           identifier: identifier,
+           geometry: geometry
          } = doc
        ) do
     description =
@@ -205,7 +206,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
       }
     }
 
-    if geometry = Data.get_field_value(doc, "geometry") do
+    if geometry do
       base
       |> put_in([:geometry], geometry)
       |> put_in([:properties, :type], geometry["type"])

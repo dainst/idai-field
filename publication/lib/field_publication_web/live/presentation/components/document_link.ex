@@ -42,7 +42,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
               <I18n.text values={shortdescription.value} />
             <% end %>
             <.icon
-              :if={@geometry_indicator and Data.get_field(@doc, "geometry") != nil}
+              :if={@geometry_indicator and @doc.geometry != nil}
               name="hero-map"
               class="mb-1"
             />

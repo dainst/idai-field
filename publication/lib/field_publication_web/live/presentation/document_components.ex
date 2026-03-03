@@ -140,8 +140,23 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
               <I18n.text values={other_relation.labels} /> ({Enum.count(other_relation.docs)})
             </.group_heading>
             <div class="overflow-auto overscroll-contain max-h-[400px]">
-              <%= for %Document{} = doc <- other_relation.docs do %>
-                <DocumentLink.show doc={doc} image_count={2} geometry_indicator={true} />
+              <%= for %Document{geometry: geometry} = doc <- other_relation.docs do %>
+                <%= if geometry do %>
+                  <div
+                    id={"relations_map_highlighter_#{doc.id}"}
+                    phx-hook="HoverHighlightMapFeature"
+                    target_dom_element="generic_doc_map"
+                    target_id={doc.id}
+                  >
+                    <DocumentLink.show
+                      doc={doc}
+                      image_count={10}
+                      geometry_indicator={true}
+                    />
+                  </div>
+                <% else %>
+                  <DocumentLink.show doc={doc} image_count={10} geometry_indicator={true} />
+                <% end %>
               <% end %>
             </div>
           </section>
@@ -186,9 +201,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
               <I18n.text values={other_relation.labels} /> ({Enum.count(other_relation.docs)})
             </.group_heading>
             <div class="overflow-auto overscroll-contain">
-              <%= for %Document{} = doc <- other_relation.docs do %>
-                <% geometry = Data.get_field(doc, "geometry") %>
-
+              <%= for %Document{geometry: geometry} = doc <- other_relation.docs do %>
                 <%= if geometry do %>
                   <div
                     id={"ancester_link_#{doc.id}"}

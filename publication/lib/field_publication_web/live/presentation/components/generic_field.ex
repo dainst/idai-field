@@ -19,7 +19,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
       when input_type in ["input", "simpleInput", "text", "unsignedInt", "unsignedFloat", "date"] do
     ~H"""
     <.construct_search_link field={@field} value={@field.value}>
-      <I18n.text values={@field.value} lang={@lang} />
+      <I18n.tabbed_text values={@field.value} field_name={@field.name} lang={@lang} />
     </.construct_search_link>
     """
   end

@@ -363,13 +363,13 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
   attr :publication, Publication, required: true
   attr :doc, Document, required: true
   attr :lang, :string, required: true
-  attr :top_level_docs, :list, default: []
+  attr :top_level_docs, :list, required: true
 
   def project(assigns) do
     ~H"""
     <div>
       <.document_heading>
-        <I18n.text values={Data.get_field_value(@doc, "shortName")} />
+        <GenericField.render field={Data.get_field(@doc, "shortName")} />
       </.document_heading>
       <% depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
       <%= if depicted_in != nil do %>

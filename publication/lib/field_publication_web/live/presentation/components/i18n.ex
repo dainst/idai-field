@@ -1,6 +1,47 @@
 defmodule FieldPublicationWeb.Presentation.Components.I18n do
   use Phoenix.Component
 
+  def tabbed_text(%{values: values} = assigns) when is_binary(values) do
+    ~H"""
+    {@values}
+    """
+  end
+
+  def tabbed_text(%{values: values} = assigns) when is_map(values) do
+    ~H"""
+    <div>
+      <div class="flex relative">
+        <%= for {key, value} <- @values do %>
+          <details
+            class="m-1 p-1 open:bg-gray-300"
+            name={"i18n_tab_#{@field_name}"}
+            open={Gettext.get_locale(FieldPublicationWeb.Gettext) |> IO.inspect() == key}
+          >
+            <summary class="text-xs cursor-pointer text-primary-hover">{key}</summary>
+            <p class="absolute left-0 bg-gray-300">
+              {value}
+            </p>
+          </details>
+        <% end %>
+      </div>
+    </div>
+    """
+
+    # ~H"""
+    # <div class="i18n-tabs">
+    #
+    #     <div class="i18n-tab">
+    #       <input type="radio" id={"#{key}_#{@field_name}"} name={"tab_#{@field_name}"} checked />
+    #       <label for={"#{key}_#{@field_name}"}>{key}</label>
+    #       <div class="i18n-tab-content">
+    #         <p>{value}</p>
+    #       </div>
+    #     </div>
+    #   <% end %>
+    # </div>
+    # """
+  end
+
   def text(assigns) do
     ~H"""
     <% {status, text} = select_translation(assigns) %>
@@ -32,6 +73,19 @@ defmodule FieldPublicationWeb.Presentation.Components.I18n do
       |> Phoenix.HTML.raw()}
     </span>
     """
+  end
+
+  def best_fit_language(translations) do
+    selected_language = Gettext.get_locale(FieldPublicationWeb.Gettext)
+
+    Map.get(translations, selected_language)
+    |> case do
+      nil ->
+        Map.get(translations, "en")
+
+      val ->
+        val
+    end
   end
 
   def select_translation(%{values: translations} = assigns) do

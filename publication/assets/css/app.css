@@ -13,6 +13,10 @@
     font-style: normal;
 }
 
+summary::marker {
+    content: "";
+}
+
 :root {
     --main-navbar-height: 50px;
     --background: #ffffff;

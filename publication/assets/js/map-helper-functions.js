@@ -74,7 +74,7 @@ export const styleFunction = function (feature) {
         return getPolygonStyle(props);
     } else if (props.type == "LineString" || props.type === "MultiLineString") {
         return getLineStyle(props);
-    } else if (props.type == "Point") {
+    } else if (props.type == "Point" || props.type === "MultiPoint") {
         return getPointStyle(props);
     } else {
         console.error(`Unknown feature type ${props.type}, no matching style.`)

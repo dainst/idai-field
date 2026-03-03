@@ -462,6 +462,17 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           </dl>
         </div>
       </div>
+
+      <div>
+        <.group_heading>
+          {gettext("Main documents")}
+        </.group_heading>
+        <div class="grid grid-cols-4 gap-1">
+          <%= for doc <- @top_level_docs do %>
+            <DocumentLink.show doc={doc} />
+          <% end %>
+        </div>
+      </div>
       <div class="flex flex-row gap-4 mt-4">
         <div class="basis-2/3 flex-none p-2">
           <.live_component

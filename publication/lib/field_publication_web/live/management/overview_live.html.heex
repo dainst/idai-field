@@ -149,9 +149,7 @@
                         </td>
                         <td>
                           <.icon name="hero-eye" class="bg-green-600 mb-1" />
-                          <.link navigate={
-                            ~p"/projects/#{project}/#{publication.draft_date}/#{List.first(publication.languages)}"
-                          }>
+                          <.link navigate={~p"/projects/#{project}/#{publication.draft_date}"}>
                             {publication.publication_date}
                           </.link>
                         </td>

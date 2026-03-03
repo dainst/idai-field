@@ -85,7 +85,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
         %{
           id: id,
           publication: %Publication{} = publication,
-          doc: doc,
+          doc: %Document{} = doc,
           ancestors: ancestors
         } =
           assigns,

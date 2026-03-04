@@ -332,6 +332,7 @@ defmodule FieldPublication.Replication do
   end
 
   def reconstruct_project_configuraton(%Publication{
+        source_project_name: source_project_name,
         database: database_name,
         configuration_doc: configuration_doc_name
       }) do
@@ -353,7 +354,8 @@ defmodule FieldPublication.Replication do
           database_name,
           Application.get_env(:field_publication, :couchdb_url),
           Application.get_env(:field_publication, :couchdb_admin_name),
-          Application.get_env(:field_publication, :couchdb_admin_password)
+          Application.get_env(:field_publication, :couchdb_admin_password),
+          source_project_name
         ]
       )
       |> then(fn {full_configuration, 0} ->

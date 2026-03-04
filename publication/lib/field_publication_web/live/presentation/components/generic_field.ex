@@ -8,6 +8,8 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
   alias FieldPublicationWeb.Presentation.Components.I18n
   alias FieldPublication.Publications.Search
 
+  import I18n
+
   defp is_search_keyword?(input_type) do
     input_type in (Search.get_keyword_inputs() ++ Search.get_keyword_multi_inputs())
   end
@@ -16,58 +18,121 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
   attr :lang, :string, default: Gettext.get_locale(FieldPublicationWeb.Gettext)
 
   def render(%{field: %Field{input_type: input_type}} = assigns)
-      when input_type in ["input", "simpleInput", "text", "unsignedInt", "unsignedFloat", "date"] do
-    ~H"""
-    <.construct_search_link field={@field} value={@field.value}>
-      <I18n.tabbed_text values={@field.value} field_name={@field.name} lang={@lang} />
-    </.construct_search_link>
-    """
-  end
-
-  def render(%{field: %Field{input_type: input_type, value: values}} = assigns)
-      when input_type in ["checkboxes"] and is_list(values) do
-    ~H"""
-    <%= for value <- @field.value do %>
-      <div>
-        <.construct_search_link field={@field} value={value}>
-          <I18n.text values={value} lang={@lang} />
-        </.construct_search_link>
-      </div>
-    <% end %>
-    """
-  end
-
-  def render(%{field: %Field{input_type: input_type}} = assigns)
-      when input_type in ["dropdown", "radio"] do
-    ~H"""
-    <.construct_search_link field={@field} value={@field.value}>
-      <I18n.text values={Map.get(@field.value_labels, @field.value, @field.value)} />
-    </.construct_search_link>
-    """
-  end
-
-  def render(%{field: %Field{input_type: input_type}} = assigns)
-      when input_type in ["dropdownRange"] do
-    ~H"""
-    <.construct_search_link field={@field} value={@field.value["value"]}>
-      <I18n.text values={Map.get(@field.value_labels, @field.value["value"], @field.value["value"])} />
-    </.construct_search_link>
-    <%= if @field.value["endValue"] do %>
-      -
-      <.construct_search_link field={@field} value={@field.value["endValue"]}>
-        <I18n.text
-          values={Map.get(@field.value_labels, @field.value["endValue"], @field.value["endValue"])}
-          lang={@lang}
-        />
-      </.construct_search_link>
-    <% end %>
-    """
-  end
-
-  def render(%{field: %Field{input_type: input_type}} = assigns)
       when input_type in ["boolean"] do
+    # Explictly calling gettext("true") and gettext("false") to enable the Gettext to pickup the value
+    # just doing {gettext("#{@field.value})} would make it impossible for Gettext
+    # to extract the key.
     ~H"""
     {if @field.value == true, do: gettext("true"), else: gettext("false")}
+    """
+  end
+
+  def render(%{field: %Field{input_type: input_type}} = assigns)
+      when input_type in ["input", "simpleInput", "text"] do
+    ~H"""
+    <.tabbed_text :let={text} values={@field.value} field_name={@field.name}>
+      {text}
+    </.tabbed_text>
+    """
+  end
+
+  def render(%{field: %Field{input_type: input_type, value_labels: value_labels}} = assigns)
+      when input_type in ["dropdown", "radio"] and is_map(value_labels) do
+    ~H"""
+    <.tabbed_text
+      :let={text}
+      values={@field.value_labels[@field.value] || @field.value}
+      field_name={@field.name}
+    >
+      <.maybe_search_link field={@field}>
+        {text}
+      </.maybe_search_link>
+    </.tabbed_text>
+    """
+  end
+
+  def render(%{field: %Field{input_type: input_type, value_labels: value_labels}} = assigns)
+      when input_type == "checkboxes" and (is_nil(value_labels) or value_labels == %{}) do
+    # Checkboxes where the selected value is also what should be displayed (because there are no labels).
+    ~H"""
+    <%= for value <- @field.value do %>
+      <.tabbed_text :let={text} values={value} field_name={@field.name}>
+        <.maybe_search_link field={@field} value={value}>
+          {text}
+        </.maybe_search_link>
+      </.tabbed_text>
+    <% end %>
+    """
+  end
+
+  def render(%{field: %Field{input_type: input_type, value_labels: value_labels}} = assigns)
+      when input_type == "checkboxes" and is_map(value_labels) do
+    # Checkboxes where the selected value is mapped to a label.
+    ~H"""
+    <%= for value <- @field.value do %>
+      <.tabbed_text
+        :let={text}
+        values={@field.value_labels[value] || value}
+        field_name={"#{@field.name}_#{value}"}
+      >
+        <.maybe_search_link field={@field} value={value}>
+          {text}
+        </.maybe_search_link>
+      </.tabbed_text>
+    <% end %>
+    """
+  end
+
+  def render(%{field: %Field{input_type: input_type, value_labels: value_labels}} = assigns)
+      when input_type in ["dropdownRange"] and is_map(value_labels) do
+    ~H"""
+    <% start_value = @field.value["value"] %>
+    <% end_value = @field.value["endValue"] %>
+    <.tabbed_text
+      :let={text}
+      values={@field.value_labels[start_value] || start_value}
+      field_name={"#{@field.name}_#{start_value}"}
+    >
+      <.maybe_search_link field={@field} value={start_value}>
+        {text}
+      </.maybe_search_link>
+    </.tabbed_text>
+
+    <%= if end_value do %>
+      -
+      <.tabbed_text
+        :let={text}
+        values={@field.value_labels[end_value] || end_value}
+        field_name={"#{@field.name}_#{end_value}"}
+      >
+        <.maybe_search_link field={@field} value={end_value}>
+          {text}
+        </.maybe_search_link>
+      </.tabbed_text>
+    <% end %>
+    """
+  end
+
+  def render(%{field: %Field{input_type: input_type}} = assigns)
+      when input_type in ["unsignedInt", "unsignedFloat"] do
+    ~H"""
+    {@field.value}
+    """
+  end
+
+  def render(%{field: %Field{input_type: input_type, value: value}} = assigns)
+      when input_type == "date" and is_binary(value) do
+    ~H"""
+    {@field.value}
+    """
+  end
+
+  def render(
+        %{field: %Field{input_type: input_type, value: %{"isRange" => false} = value}} = assigns
+      )
+      when input_type == "date" and is_map(value) do
+    ~H"""
+    {@field.value["value"]}
     """
   end
 
@@ -120,14 +185,20 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
   end
 
   attr :field, Field, required: true
-  attr :value, :any, required: true
-  slot :inner_block
 
-  defp construct_search_link(assigns) do
+  attr :value, :string,
+    default: nil,
+    doc:
+      "Explicitly define which value to use, for example if the field's `value` key is a list of selected values."
+
+  slot :inner_block, required: true
+
+  defp maybe_search_link(assigns) do
     ~H"""
+    <% value = if @value, do: @value, else: @field.value %>
     <%= cond do %>
       <% is_search_keyword?(@field.input_type) -> %>
-        <.link navigate={~p"/search?#{%{filters: %{"#{@field.name}_keyword" => @value}}}"}>
+        <.link navigate={~p"/search?#{%{filters: %{"#{@field.name}_keyword" => value}}}"}>
           {render_slot(@inner_block)}
         </.link>
         <!-- TODO: Add further variants? -->

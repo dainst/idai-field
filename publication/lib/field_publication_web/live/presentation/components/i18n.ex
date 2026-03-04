@@ -1,30 +1,67 @@
 defmodule FieldPublicationWeb.Presentation.Components.I18n do
   use Phoenix.Component
 
+  attr :field_name, :string, required: true
+  attr :values, :any, required: true
+  attr :height, :string, default: "h-14"
+  slot :inner_block, required: true
+
   def tabbed_text(%{values: values} = assigns) when is_binary(values) do
+    # Fallback if assigned `values` is just a binary string.
     ~H"""
-    {@values}
+    {render_slot(@inner_block, @values)}
     """
   end
 
   def tabbed_text(%{values: values} = assigns) when is_map(values) do
     ~H"""
-    <div>
-      <div class="flex relative">
-        <%= for {key, value} <- @values do %>
-          <details
-            class="m-1 p-1 open:bg-gray-300"
-            name={"i18n_tab_#{@field_name}"}
-            open={Gettext.get_locale(FieldPublicationWeb.Gettext) |> IO.inspect() == key}
-          >
-            <summary class="text-xs cursor-pointer text-primary-hover">{key}</summary>
-            <p class="absolute left-0 bg-gray-300">
-              {value}
-            </p>
-          </details>
-        <% end %>
-      </div>
-    </div>
+    <% user_ui_language = Gettext.get_locale(FieldPublicationWeb.Gettext) %>
+
+    <%= case Map.keys(@values) do %>
+      <% [the_only_key] -> %>
+        <!-- Use the fallback, not creating a tabbed selection (see above) -->
+        <.tabbed_text
+          :let={text}
+          values={@values[the_only_key]}
+          field_name={@field_name}
+        >
+          {text}
+        </.tabbed_text>
+      <% multiple_keys -> %>
+        <% initial =
+          cond do
+            user_ui_language in multiple_keys ->
+              user_ui_language
+
+            "en" in multiple_keys ->
+              "en"
+
+            true ->
+              List.first(multiple_keys)
+          end %>
+
+        <div class={"flex relative #{@height}"}>
+          <%= for {lang, text} <- @values do %>
+            <details
+              class="m-1 p-1 rounded-t  open:bg-panel open:pointer-events-none overflow-x-auto"
+              name={"i18n_tab_#{@field_name}"}
+              open={
+                # sets the initially selected value
+                initial == lang
+              }
+            >
+              <summary class="font-thin text-[12px] text-primary hover:text-primary-hover cursor-pointer">
+                <span id={"i18n_tab_#{@field_name}_#{lang}"} phx-hook="DisplayLanguage" lang={lang}>
+                  {lang}
+                </span>
+              </summary>
+              <div class="absolute left-0 w-full text-nowrap p-1 overflow-x-auto bg-panel pointer-events-auto">
+                {render_slot(@inner_block, text)}
+              </div>
+            </details>
+          <% end %>
+        </div>
+    <% end %>
     """
 
     # ~H"""

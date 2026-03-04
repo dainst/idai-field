@@ -74,6 +74,13 @@ Hooks.CopyToClipboard = {
     },
 };
 
+Hooks.DisplayLanguage = {
+    mounted() {
+        const lang = this.el.lang;
+        let languageNames = new Intl.DisplayNames([lang], { type: "language" });
+        this.el.innerHTML = languageNames.of(lang);
+    },
+};
 let liveSocket = new LiveSocket("/live", Socket, {
     hooks: Hooks,
     params: { _csrf_token: csrfToken },

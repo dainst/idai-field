@@ -65,7 +65,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                 <%= for %Field{} = field <- fields do %>
                   <div class="border p-0.5 border-black/20">
                     <dt class="font-bold"><I18n.text values={field.labels} /></dt>
-                    <dd class="pl-4">
+                    <dd class="pl-4 pr-4 pb-1">
                       <GenericField.render field={field} />
                     </dd>
                   </div>
@@ -285,7 +285,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                   <%= for %Field{} = field <- fields do %>
                     <div>
                       <dt class="font-bold"><I18n.text values={field.labels} /></dt>
-                      <dd class="pl-4">
+                      <dd class="pl-4 pr-4">
                         <GenericField.render field={field} />
                       </dd>
                     </div>

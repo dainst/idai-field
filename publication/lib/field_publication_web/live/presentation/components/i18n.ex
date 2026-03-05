@@ -63,20 +63,6 @@ defmodule FieldPublicationWeb.Presentation.Components.I18n do
         </div>
     <% end %>
     """
-
-    # ~H"""
-    # <div class="i18n-tabs">
-    #
-    #     <div class="i18n-tab">
-    #       <input type="radio" id={"#{key}_#{@field_name}"} name={"tab_#{@field_name}"} checked />
-    #       <label for={"#{key}_#{@field_name}"}>{key}</label>
-    #       <div class="i18n-tab-content">
-    #         <p>{value}</p>
-    #       </div>
-    #     </div>
-    #   <% end %>
-    # </div>
-    # """
   end
 
   def text(assigns) do

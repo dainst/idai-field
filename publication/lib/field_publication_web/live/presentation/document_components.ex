@@ -5,12 +5,14 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
 
   alias FieldPublicationWeb.Presentation.Components.{
     I18n,
-    Image,
-    GenericField,
-    DocumentLink,
     DocumentAncestors,
-    IIIFViewer,
     ClipboardCopy
+  }
+
+  import FieldPublicationWeb.Components.Data.{
+    DocumentLink,
+    Field,
+    Image
   }
 
   alias FieldPublication.Publications.Data
@@ -22,9 +24,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
     RelationGroup
   }
 
-  import FieldPublicationWeb.Presentation.Components.DocumentLink,
-    only: [desaturate_category_color: 1]
-
   attr :publication, Publication, required: true
   attr :doc, Document, required: true
   attr :lang, :string, required: true
@@ -34,7 +33,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
     ~H"""
     <div class="mb-4">
       <.document_heading>
-        <DocumentLink.show doc={@doc} />
+        <.document_link doc={@doc} />
       </.document_heading>
       <%= case @focus do %>
         <% :map -> %>
@@ -66,7 +65,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                   <div class="border p-0.5 border-black/20">
                     <dt class="font-bold"><I18n.text values={field.labels} /></dt>
                     <dd class="pl-4 pr-4 pb-1">
-                      <GenericField.render field={field} />
+                      <.render_data_field field={field} />
                     </dd>
                   </div>
                 <% end %>
@@ -86,11 +85,11 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                   ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{doc.id}"
                 }>
                   <div class="max-w-[250px]">
-                    <Image.show
+                    <.img_element
                       size="^250,"
                       project={@publication.project_name}
                       uuid={doc.id}
-                      alt_text={"Project image '#{doc.identifier}' (#{I18n.select_translation(%{values: doc.category.labels}) |> then(fn {_, text} -> text end)})"}
+                      alt={"Project image '#{doc.identifier}' (#{I18n.select_translation(%{values: doc.category.labels}) |> then(fn {_, text} -> text end)})"}
                     />
                   </div>
                 </.link>
@@ -148,14 +147,14 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                     target_dom_element="generic_doc_map"
                     target_id={doc.id}
                   >
-                    <DocumentLink.show
+                    <.document_link
                       doc={doc}
                       image_count={10}
                       geometry_indicator={true}
                     />
                   </div>
                 <% else %>
-                  <DocumentLink.show doc={doc} image_count={10} geometry_indicator={true} />
+                  <.document_link doc={doc} image_count={10} geometry_indicator={true} />
                 <% end %>
               <% end %>
             </div>
@@ -209,7 +208,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                     target_dom_element="generic_doc_map_detail"
                     target_id={doc.id}
                   >
-                    <DocumentLink.show
+                    <.document_link
                       doc={doc}
                       image_count={10}
                       geometry_indicator={true}
@@ -218,7 +217,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                   </div>
                 <% else %>
                   <div>
-                    <DocumentLink.show
+                    <.document_link
                       doc={doc}
                       image_count={10}
                       geometry_indicator={true}
@@ -255,7 +254,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
     ~H"""
     <div>
       <.document_heading>
-        <DocumentLink.show doc={@doc} />
+        <.document_link doc={@doc} />
       </.document_heading>
 
       <div class="flex flex-col-reverse lg:flex-row">
@@ -266,7 +265,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             </.group_heading>
             <div class="overflow-auto overscroll-contain max-h-[200px]">
               <%= for %Document{} = doc <- relation_group.docs do %>
-                <DocumentLink.show doc={doc} image_count={0} />
+                <.document_link doc={doc} image_count={0} />
               <% end %>
             </div>
           <% end %>
@@ -286,7 +285,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                     <div>
                       <dt class="font-bold"><I18n.text values={field.labels} /></dt>
                       <dd class="pl-4 pr-4">
-                        <GenericField.render field={field} />
+                        <.render_data_field field={field} />
                       </dd>
                     </div>
                   <% end %>
@@ -335,9 +334,10 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                 <a href="https://iiif.io" target="_blank">
                   <img src="/images/iiif-logo.png" class="inline h-4" />
                 </a>
+
                 <.live_component
                   id="iiif-link"
-                  copy_value={"#{FieldPublicationWeb.Endpoint.url()}/#{IIIFViewer.construct_url(@publication.project_name, @doc.id)}"}
+                  copy_value={"#{FieldPublicationWeb.Endpoint.url()}/#{construct_iiif_info_url(@publication.project_name, @doc.id)}"}
                   module={ClipboardCopy}
                 >
                   Copy IIIF link
@@ -347,12 +347,11 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           </ul>
         </div>
         <div class="basis-full lg:basis-2/3 m-5">
-          <.live_component
+          <.iiif_viewer
             class="h-(--ol-full-height) p-2 bg-panel"
             id="iiif_viewer"
             project={@publication.project_name}
             uuid={@doc.id}
-            module={IIIFViewer}
           />
         </div>
       </div>
@@ -369,7 +368,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
     ~H"""
     <div>
       <.document_heading>
-        <GenericField.render field={Data.get_field(@doc, "shortName")} />
+        <.render_data_field field={Data.get_field(@doc, "shortName")} />
       </.document_heading>
       <% depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
       <%= if depicted_in != nil do %>
@@ -379,11 +378,11 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
               patch={~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{doc.id}"}
               class="p-2 border border-primary h-[310px]"
             >
-              <Image.show
+              <.img_element
                 size="^,300"
                 project={@publication.project_name}
                 uuid={doc.id}
-                alt_text={doc.identifier}
+                alt={doc.identifier}
               />
             </.link>
           <% end %>
@@ -415,7 +414,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             <% institution = Data.get_field(@doc, "institution") %>
             <%= if institution do %>
               <dt class="font-bold"><I18n.text values={institution.labels} /></dt>
-              <GenericField.render field={institution} />
+              <.render_data_field field={institution} />
             <% end %>
 
             <% contact_mail = Data.get_field(@doc, "contactMail") %>
@@ -437,7 +436,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             <% supervisor = Data.get_field(@doc, "projectSupervisor") %>
             <%= if supervisor do %>
               <dt class="font-bold"><I18n.text values={supervisor.labels} /></dt>
-              <GenericField.render field={supervisor} />
+              <.render_data_field field={supervisor} />
             <% end %>
 
             <%= if @staff do %>
@@ -448,7 +447,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             <% bibliographic_references = Data.get_field(@doc, "bibliographicReferences") %>
             <%= if bibliographic_references do %>
               <dt class="font-bold"><I18n.text values={bibliographic_references.labels} /></dt>
-              <GenericField.render field={bibliographic_references} />
+              <.render_data_field field={bibliographic_references} />
             <% end %>
             <% url = Data.get_field_value(@doc, "projectURI") %>
             <%= if url do %>
@@ -469,7 +468,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
         </.group_heading>
         <div class="grid grid-cols-4 gap-1">
           <%= for doc <- @top_level_docs do %>
-            <DocumentLink.show doc={doc} />
+            <.document_link doc={doc} />
           <% end %>
         </div>
       </div>

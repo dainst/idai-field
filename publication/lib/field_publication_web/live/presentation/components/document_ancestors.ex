@@ -1,11 +1,14 @@
 defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
-  alias FieldPublicationWeb.Presentation.Components.GenericField
   alias FieldPublicationWeb.Presentation.Components.I18n
   alias FieldPublication.Publications.Data.Field
   alias FieldPublication.Publications.Data.FieldGroup
-  alias FieldPublicationWeb.Presentation.Components.DocumentLink
   alias FieldPublication.Publications.Data
   alias FieldPublication.Publications.Data.Document
+
+  import FieldPublicationWeb.Components.Data.{
+    DocumentLink,
+    Field
+  }
 
   use FieldPublicationWeb, :live_component
 
@@ -40,7 +43,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
                       <div>
                         <dt class="font-bold"><I18n.text values={field.labels} /></dt>
                         <dd class="pl-4">
-                          <GenericField.render field={field} />
+                          <.render_data_field field={field} />
                         </dd>
                       </div>
                     <% end %>
@@ -91,7 +94,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
         target_dom_element={@hover_target}
         target_id={@doc.id}
       >
-        <DocumentLink.show
+        <.document_link
           id={"#{@doc.id}_ancestor_view_link"}
           doc={@doc}
           image_count={10}
@@ -101,7 +104,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
       </div>
     <% else %>
       <div>
-        <DocumentLink.show
+        <.document_link
           id={"#{@doc.id}_ancestor_view_link"}
           doc={@doc}
           image_count={10}

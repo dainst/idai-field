@@ -78,7 +78,8 @@ Hooks.DisplayLanguage = {
     mounted() {
         const lang = this.el.lang;
         let languageNames = new Intl.DisplayNames([lang], { type: "language" });
-        this.el.innerHTML = languageNames.of(lang);
+        //this.el.innerHTML = languageNames.of(lang);
+        this.el.innerHTML = lang;
     },
 };
 let liveSocket = new LiveSocket("/live", Socket, {

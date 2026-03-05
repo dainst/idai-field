@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.Presentation.Components.GenericField do
+defmodule FieldPublicationWeb.Components.Data.Field do
   use Phoenix.Component
   use FieldPublicationWeb, :verified_routes
   use FieldPublicationWeb, :html
@@ -17,7 +17,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
   attr :field, Field, required: true
   attr :lang, :string, default: Gettext.get_locale(FieldPublicationWeb.Gettext)
 
-  def render(%{field: %Field{input_type: input_type}} = assigns)
+  def render_data_field(%{field: %Field{input_type: input_type}} = assigns)
       when input_type in ["boolean"] do
     # Explictly calling gettext("true") and gettext("false") to enable the Gettext to pickup the value
     # just doing {gettext("#{@field.value})} would make it impossible for Gettext
@@ -27,7 +27,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
     """
   end
 
-  def render(%{field: %Field{input_type: input_type}} = assigns)
+  def render_data_field(%{field: %Field{input_type: input_type}} = assigns)
       when input_type in ["input", "simpleInput", "text"] do
     ~H"""
     <.tabbed_text :let={text} values={@field.value} field_name={@field.name}>
@@ -36,7 +36,9 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
     """
   end
 
-  def render(%{field: %Field{input_type: input_type, value_labels: value_labels}} = assigns)
+  def render_data_field(
+        %{field: %Field{input_type: input_type, value_labels: value_labels}} = assigns
+      )
       when input_type in ["dropdown", "radio"] and is_map(value_labels) do
     ~H"""
     <.tabbed_text
@@ -51,21 +53,27 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
     """
   end
 
-  def render(%{field: %Field{input_type: input_type, value_labels: value_labels}} = assigns)
+  def render_data_field(
+        %{field: %Field{input_type: input_type, value_labels: value_labels}} = assigns
+      )
       when input_type == "checkboxes" and (is_nil(value_labels) or value_labels == %{}) do
     # Checkboxes where the selected value is also what should be displayed (because there are no labels).
     ~H"""
     <%= for value <- @field.value do %>
-      <.tabbed_text :let={text} values={value} field_name={@field.name}>
-        <.maybe_search_link field={@field} value={value}>
-          {text}
-        </.maybe_search_link>
-      </.tabbed_text>
+      <div>
+        <.tabbed_text :let={text} values={value} field_name={@field.name}>
+          <.maybe_search_link field={@field} value={value}>
+            {text}
+          </.maybe_search_link>
+        </.tabbed_text>
+      </div>
     <% end %>
     """
   end
 
-  def render(%{field: %Field{input_type: input_type, value_labels: value_labels}} = assigns)
+  def render_data_field(
+        %{field: %Field{input_type: input_type, value_labels: value_labels}} = assigns
+      )
       when input_type == "checkboxes" and is_map(value_labels) do
     # Checkboxes where the selected value is mapped to a label.
     ~H"""
@@ -83,7 +91,9 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
     """
   end
 
-  def render(%{field: %Field{input_type: input_type, value_labels: value_labels}} = assigns)
+  def render_data_field(
+        %{field: %Field{input_type: input_type, value_labels: value_labels}} = assigns
+      )
       when input_type in ["dropdownRange"] and is_map(value_labels) do
     ~H"""
     <% start_value = @field.value["value"] %>
@@ -113,21 +123,21 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
     """
   end
 
-  def render(%{field: %Field{input_type: input_type}} = assigns)
+  def render_data_field(%{field: %Field{input_type: input_type}} = assigns)
       when input_type in ["unsignedInt", "unsignedFloat"] do
     ~H"""
     {@field.value}
     """
   end
 
-  def render(%{field: %Field{input_type: input_type, value: value}} = assigns)
+  def render_data_field(%{field: %Field{input_type: input_type, value: value}} = assigns)
       when input_type == "date" and is_binary(value) do
     ~H"""
     {@field.value}
     """
   end
 
-  def render(
+  def render_data_field(
         %{field: %Field{input_type: input_type, value: %{"isRange" => false} = value}} = assigns
       )
       when input_type == "date" and is_map(value) do
@@ -136,7 +146,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
     """
   end
 
-  def render(%{field: %Field{input_type: input_type}} = assigns)
+  def render_data_field(%{field: %Field{input_type: input_type}} = assigns)
       when input_type in ["literature"] do
     ~H"""
     <%= if is_list(@field.value) do %>
@@ -168,7 +178,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
     """
   end
 
-  def render(%{field: %Field{input_type: input_type}} = assigns)
+  def render_data_field(%{field: %Field{input_type: input_type}} = assigns)
       when input_type in ["dimension"] do
     ~H"""
     <%= for %{"inputUnit" => unit, "inputValue" => value, "isImprecise" => imprecise?, "measurementPosition" => position} <- @field.value do %>
@@ -180,7 +190,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
     """
   end
 
-  def render(assigns) do
+  def render_data_field(assigns) do
     render_warning(assigns)
   end
 
@@ -201,7 +211,7 @@ defmodule FieldPublicationWeb.Presentation.Components.GenericField do
         <.link navigate={~p"/search?#{%{filters: %{"#{@field.name}_keyword" => value}}}"}>
           {render_slot(@inner_block)}
         </.link>
-        <!-- TODO: Add further variants? -->
+        <!-- TODO: Add further variants that are not keywords? -->
       <% true -> %>
         {render_slot(@inner_block)}
     <% end %>

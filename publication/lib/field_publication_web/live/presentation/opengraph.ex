@@ -3,7 +3,7 @@ defmodule FieldPublicationWeb.Presentation.Opengraph do
 
   alias FieldPublication.Publications.Data
   alias FieldPublication.Publications.Data.Document
-  alias FieldPublicationWeb.Presentation.Components.Image
+  alias FieldPublicationWeb.Components.Data.Image
   alias FieldPublicationWeb.Presentation.Components.I18n
 
   def add_opengraph_tags(socket, publication, doc) do
@@ -39,7 +39,7 @@ defmodule FieldPublicationWeb.Presentation.Opengraph do
         nil
 
       first_image_uuid ->
-        "#{FieldPublicationWeb.Endpoint.url()}/#{Image.construct_url(%{uuid: first_image_uuid, project: project_name})}"
+        "#{FieldPublicationWeb.Endpoint.url()}/#{Image.construct_url(project_name, first_image_uuid)}"
     end
   end
 end

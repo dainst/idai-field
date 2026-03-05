@@ -1,14 +1,13 @@
-defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
+defmodule FieldPublicationWeb.Components.Data.DocumentLink do
   use FieldPublicationWeb, :html
   use FieldPublicationWeb, :verified_routes
 
   alias FieldPublication.Publications.Data
   alias FieldPublication.Publications.Data.Document
 
-  alias FieldPublicationWeb.Presentation.Components.{
-    Image,
-    I18n
-  }
+  import FieldPublicationWeb.Components.Data.Image
+
+  alias FieldPublicationWeb.Presentation.Components.I18n
 
   attr :id, :string, default: nil
   attr :doc, Document, required: true
@@ -17,7 +16,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
   attr :geometry_indicator, :boolean, default: false
   attr :focus, :atom, default: :default
 
-  def show(assigns) do
+  def document_link(assigns) do
     ~H"""
     <div class="flex mb-[2px]" id={if @id, do: @id, else: "#{@doc.id}_link"}>
       <.link
@@ -50,12 +49,12 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
           <% uuids = Enum.take(@doc.image_uuids, @image_count) %>
           <div id={"#{@doc.id}-images"} class="flex items-center overflow-x-auto">
             <%= for uuid <- uuids do %>
-              <Image.show
+              <.img_element
                 size={"^,#{@image_height}"}
                 class="p-1 inline"
                 project={@doc.project_key}
                 uuid={uuid}
-                alt_text={"An image depicting '#{@doc.identifier}'"}
+                alt={"An image depicting '#{@doc.identifier}'"}
               />
             <% end %>
             <%= if uuids== [] and @image_count > 0 do %>

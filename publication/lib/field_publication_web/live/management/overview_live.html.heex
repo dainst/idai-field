@@ -12,7 +12,12 @@
       </li>
       <li>
         <.link phx-click={JS.push("reindex_all_search_indices")} data-confirm="Are you sure?">
-          Trigger search reindex for all publications
+          Recreate search indices
+        </.link>
+      </li>
+      <li>
+        <.link phx-click={JS.push("recreate_previews")} data-confirm="Are you sure?">
+          Recreate all preview documents
         </.link>
       </li>
       <li>

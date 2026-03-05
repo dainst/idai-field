@@ -381,7 +381,7 @@ defmodule FieldPublication.CouchService do
       :post,
       "#{local_url()}/#{database_name}/_bulk_docs",
       headers(),
-      Jason.encode!(%{docs: docs}) |> IO.inspect()
+      Jason.encode!(%{docs: docs})
     )
     |> Finch.request(FieldPublication.Finch)
   end

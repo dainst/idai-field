@@ -130,6 +130,9 @@ defmodule FieldPublication.Publications.Data do
         |> Map.get("rows", [])
     end
     |> Enum.reject(fn
+      %{"doc" => %{"resource" => %{"category" => "Configuration"}}} ->
+        true
+
       %{"doc" => %{"resource" => _}} ->
         false
 

@@ -13,7 +13,7 @@ import { ProjectConfiguration } from '../services';
  */
  export module Indexer {
  
-    export async function reindex(indexFacade: IndexFacade, db: PouchDB.Database, documentCache: DocumentCache,
+    export async function reindex(indexFacade: IndexFacade, db: any, documentCache: DocumentCache,
                                   projectConfiguration: ProjectConfiguration, keepCachedInstances: boolean,
                                   setProgress?: (progress: number) => Promise<void>, setIndexing?: () => Promise<void>,
                                   setError?: (error: string) => Promise<void>) {
@@ -58,7 +58,7 @@ import { ProjectConfiguration } from '../services';
     }
 
 
-    async function fetchAll(db: PouchDB.Database) {
+    async function fetchAll(db: any) {
 
         return (await db
             .allDocs({

@@ -38,7 +38,8 @@ export async function createCoreApp(user: Name = 'testuser', db: Name = 'testdb'
 
     const pouchdbDatastore = new PouchdbDatastore(
         (name: string) => new PouchDB(name),
-        new IdGenerator());
+        new IdGenerator()
+    );
 
     const projectDocument = {
         _id: 'project',

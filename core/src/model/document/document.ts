@@ -71,7 +71,7 @@ export module Document {
         if (isPrimitive(document)) return document;
         
         return (document as any) instanceof Date
-            ? new Date(document)
+            ? new Date(document) as any
             : ObjectUtils.jsonClone(document);
     }
 

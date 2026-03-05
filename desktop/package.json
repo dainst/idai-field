@@ -187,8 +187,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/jest": "~29.5.12",
     "@types/leaflet": "1.0.69",
-    "@types/node": "^22.13.10",
-    "@types/pouchdb": "6.4.2",
+    "@types/node": "25.3.3",
     "@types/showdown": "1.7.5",
     "ajv": "^8.16.0",
     "electron": "40.6.1",
@@ -210,7 +209,7 @@
     "supertest": "^6.2.2",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
-    "typescript": "~5.6.3",
+    "typescript": "5.9.3",
     "wait-on": "8.0.5"
   },
   "browser": {

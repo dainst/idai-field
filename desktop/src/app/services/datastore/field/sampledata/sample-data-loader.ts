@@ -22,7 +22,7 @@ export class SampleDataLoader extends SampleDataLoaderBase {
     }
 
 
-    public async go(db: PouchDB.Database, project: string) {
+    public async go(db: any, project: string) {
 
         try {
             await this.loadSampleDocuments(db);

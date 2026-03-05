@@ -3,8 +3,6 @@ import { ObserverUtil } from '../../tools/observer-util';
 import { PouchdbDatastore } from './pouchdb-datastore';
 import { SyncStatus } from '../sync-status';
 
-type ReplicationHandle = PouchDB.Replication.ReplicationEventEmitter<unknown, unknown, unknown>;
-
 
 /**
  * @author Thomas Kleinke
@@ -19,8 +17,8 @@ export class SyncService {
     private currentSyncTimeout: any;
     private checkDatabaseExistence: (url: string) => Promise<boolean>;
 
-    private sync: ReplicationHandle = null;
-    private replication: ReplicationHandle = null;
+    private sync: any = null;
+    private replication: any = null;
 
     private syncStatusSubscription: Subscription = null;
     private statusObservers: Array<Observer<SyncStatus>> = [];

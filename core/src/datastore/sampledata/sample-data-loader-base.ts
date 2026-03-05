@@ -7,7 +7,7 @@ export class SampleDataLoaderBase {
     constructor(private locale: string) {}
     
 
-    public async go(db: PouchDB.Database, project: string) {
+    public async go(db: any, project: string) {
         try {
             await this.loadSampleDocuments(db);
         } catch(err) {
@@ -33,7 +33,7 @@ export class SampleDataLoaderBase {
     }
 
 
-    protected static createDocument(document: NewDocument, db: PouchDB.Database): Document {
+    protected static createDocument(document: NewDocument, db: any): Document {
 
         const result: Document = Document.clone(document as Document);
 

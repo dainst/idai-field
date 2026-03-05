@@ -6,7 +6,6 @@ import { ObserverUtil } from '../../tools';
 import { DatastoreErrors } from '../datastore-errors';
 import { ChangeHistoryMerge } from './change-history-merge';
 import { IdGenerator } from './id-generator';
-import { PouchDbFactory } from './types';
 
 
 /**
@@ -16,7 +15,7 @@ import { PouchDbFactory } from './types';
  */
 export class PouchdbDatastore {
 
-    private db: PouchDB.Database;
+    private db: any;
 
     private changesObservers = [];
     private deletedObservers = [];
@@ -29,19 +28,19 @@ export class PouchdbDatastore {
     private deletedOnes = [];
 
 
-    constructor(private pouchDbFactory: PouchDbFactory,
+    constructor(private createPouchDB: (dbName: string) => any,
                 private idGenerator: IdGenerator) {}
 
 
-    public getDb = (): PouchDB.Database => this.db;
+    public getDb = (): any => this.db;
 
 
-    public destroyDb = (dbName: string) => this.pouchDbFactory(dbName).destroy();
+    public destroyDb = (dbName: string) => this.createPouchDB(dbName).destroy();
 
     
     public async createEmptyDb(name: string, destroyExisting: boolean = false) {
 
-        const db = this.pouchDbFactory(name);
+        const db = this.createPouchDB(name);
         const info = await db.info();
 
         if (info.update_seq !== 0) {
@@ -58,11 +57,11 @@ export class PouchdbDatastore {
 
     public createDbForTesting(dbName: string) {
      
-        this.db = this.pouchDbFactory(dbName);
+        this.db = this.createPouchDB(dbName);
         return this.db;
     }
 
-    public setDb_e2e = (db: PouchDB.Database) => this.db = db;
+    public setDb_e2e = (db: any) => this.db = db;
 
 
     /**
@@ -72,13 +71,13 @@ export class PouchdbDatastore {
      * and not overwritten.
      */
     public async createDb(name: string, projectDocument?: Document, configurationDocument?: ConfigurationDocument,
-                          destroyBeforeCreate: boolean = false): Promise<PouchDB.Database> {
+                          destroyBeforeCreate: boolean = false): Promise<any> {
 
-        let db = this.pouchDbFactory(name);
+        let db = this.createPouchDB(name);
 
         if (destroyBeforeCreate) {
             await db.destroy();
-            db = this.pouchDbFactory(name);
+            db = this.createPouchDB(name);
         }
 
         // Create project & configuration documents only if they do not exist,

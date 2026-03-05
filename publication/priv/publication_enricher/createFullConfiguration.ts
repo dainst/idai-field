@@ -1,73 +1,74 @@
 import {
-    AppConfigurator, CategoryForm, ConfigLoader, ConfigReader, ConfigurationDocument, Forest,
-    getConfigurationName, ProjectConfiguration
-} from 'idai-field-core';
+    AppConfigurator,
+    CategoryForm,
+    ConfigLoader,
+    ConfigReader,
+    ConfigurationDocument,
+    Forest,
+    getConfigurationName,
+    ProjectConfiguration,
+} from "idai-field-core";
 
-import axios from 'axios';
+import axios from "axios";
 
-const projectName = process.argv[2];
+const couchdbDatabase = process.argv[2];
 const couchdbUrl = process.argv[3];
 const couchdbUser = process.argv[4];
 const couchdbPassword = process.argv[5];
-
+const originalProjectKey = process.argv[6];
 
 async function start() {
+    const configurationDocument = await getConfigurationDocument();
 
-    const configurationDocument = await getConfigurationDocument(
-        couchdbUrl, couchdbUser, couchdbPassword, projectName
+    const appConfigurator = new AppConfigurator(
+        new ConfigLoader(new ConfigReader()),
     );
-
-    const appConfigurator = new AppConfigurator(new ConfigLoader(new ConfigReader()));
     let fullConfiguration;
     try {
         fullConfiguration = getForest(
             await appConfigurator.go(
-                getConfigurationName(projectName),
+                getConfigurationName(originalProjectKey),
                 configurationDocument,
-                true
-            )
+                true,
+            ),
         );
     } catch (err) {
-        console.error(`Error while trying to generate configuration file for project ${projectName}: `, err);
+        console.error(
+            `Error while trying to generate configuration file for project ${originalProjectKey}: `,
+            err,
+        );
     }
 
-
-    return JSON.stringify(fullConfiguration)
+    return JSON.stringify(fullConfiguration);
 }
 
-
-async function getConfigurationDocument(couchdbUrl: string, couchdbUser: string, couchdbPassword: string,
-    projectName: string): Promise<ConfigurationDocument> {
-
+async function getConfigurationDocument(): Promise<ConfigurationDocument> {
     return ConfigurationDocument.getConfigurationDocument(
         (_) => {
-            return fetchConfigurationDocumentFromCouchdb(couchdbUrl, couchdbUser, couchdbPassword, projectName);
+            return fetchConfigurationDocumentFromCouchdb();
         },
         new ConfigReader(),
-        projectName,
-        'user'
+        originalProjectKey,
+        "user",
     );
 }
 
-
-async function fetchConfigurationDocumentFromCouchdb(couchdbUrl: string, couchdbUser: string, couchdbPassword: string,
-    projectName: string): Promise<ConfigurationDocument> {
-
+async function fetchConfigurationDocumentFromCouchdb(): Promise<ConfigurationDocument> {
     let result;
 
     try {
         result = await axios.get(
-            couchdbUrl + '/' + projectName + '/configuration',
+            couchdbUrl + "/" + couchdbDatabase + "/configuration",
             {
                 auth: {
                     username: couchdbUser,
-                    password: couchdbPassword
-                }
-            }
+                    password: couchdbPassword,
+                },
+            },
         );
     } catch (err) {
         if (err.response.status === 404) {
-            throw ''; // Do not log 404 errors, as they are expected for older projects without configuration document
+            throw ""; // Do not log 404 errors, as they are expected for older projects without configuration document
         } else {
             throw err;
         }
@@ -76,10 +77,9 @@ async function fetchConfigurationDocumentFromCouchdb(couchdbUrl: string, couchdb
     return result.data;
 }
 
-
-
-function getForest(projectConfiguration: ProjectConfiguration): Forest<CategoryForm> {
-
+function getForest(
+    projectConfiguration: ProjectConfiguration,
+): Forest<CategoryForm> {
     return Forest.map((category: CategoryForm) => {
         category.children = [];
         delete category.parentCategory;
@@ -87,6 +87,6 @@ function getForest(projectConfiguration: ProjectConfiguration): Forest<CategoryF
     }, projectConfiguration.getCategories());
 }
 
-start().then(result => {
+start().then((result) => {
     console.log(result);
 });

@@ -11,13 +11,15 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     Document
   }
 
+  alias FieldPublicationWeb.Presentation.Components.I18n
+
   def render(assigns) do
     ~H"""
     <div>
       <.group_heading>
         Geometry <span class="text-xs">({@geometry_type})</span>
         <.link patch={
-          ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@lang}/#{@uuid}?#{if @focus != :map, do: %{focus: "map"}, else: %{}}"
+          ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@uuid}?#{if @focus != :map, do: %{focus: "map"}, else: %{}}"
         }>
           <.icon name={
             if @focus != :map, do: "hero-arrows-pointing-out", else: "hero-arrows-pointing-in"
@@ -56,14 +58,12 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
           <div id={"#{@id}-layer-select"} class="bg-white p-2 pr-8 max-h-64 overflow-auto hidden">
             <.render_tile_layer_selection_group
               target={@myself}
-              lang={@lang}
               publication={@publication}
               group={:document}
               layer_states={@document_tile_layers_state}
             />
             <.render_tile_layer_selection_group
               target={@myself}
-              lang={@lang}
               publication={@publication}
               group={:project}
               layer_states={@project_tile_layers_state}
@@ -85,8 +85,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
         %{
           id: id,
           publication: %Publication{} = publication,
-          doc: doc,
-          lang: lang,
+          doc: %Document{} = doc,
           ancestors: ancestors
         } =
           assigns,
@@ -98,21 +97,21 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     socket = process_document_tile_layers(socket, publication, doc, id)
 
     children_features =
-      accumulate_geometries_for_relations(doc, ["contains", "isAbove", "cuts", "isCutBy"], lang)
+      accumulate_geometries_for_relations(doc, ["contains", "isAbove", "cuts", "isCutBy"])
 
     parent_features =
-      accumulate_geometries_for_relations(doc, ["isRecordedIn", "liesWithin", "isBelow"], lang)
+      accumulate_geometries_for_relations(doc, ["isRecordedIn", "liesWithin", "isBelow"])
 
     parent_uuids =
       Enum.map(parent_features, fn %{properties: %{uuid: uuid}} -> uuid end)
 
     ancestor_features =
       ancestors
-      |> Enum.reject(fn %Document{id: id} -> id in parent_uuids end)
-      |> Enum.map(&create_feature_info(&1, lang))
+      |> Enum.reject(fn %{id: id} -> id in parent_uuids end)
+      |> Enum.map(&create_feature_info(&1))
       |> Enum.filter(fn feature -> Map.has_key?(feature, :geometry) end)
 
-    document_feature = create_feature_info(doc, lang)
+    document_feature = create_feature_info(doc)
 
     assigns =
       Map.put(
@@ -169,9 +168,9 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
          %Document{
            category: %Category{color: color, labels: category_labels},
            id: uuid,
-           identifier: identifier
-         } = doc,
-         lang
+           identifier: identifier,
+           geometry: geometry
+         } = doc
        ) do
     description =
       doc
@@ -183,8 +182,10 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
         value when is_binary(value) ->
           value
 
-        value when is_map(value) ->
-          Map.get(value, lang, Map.get(value, List.first(Map.keys(value))))
+        values when is_map(values) ->
+          {_status, value} = I18n.select_translation(%{values: values})
+
+          value
       end
 
     category =
@@ -205,7 +206,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
       }
     }
 
-    if geometry = Data.get_field_value(doc, "geometry") do
+    if geometry do
       base
       |> put_in([:geometry], geometry)
       |> put_in([:properties, :type], geometry["type"])
@@ -279,7 +280,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     end
   end
 
-  defp process_document_tile_layers(socket, publication, %Document{} = doc, hook_id) do
+  defp process_document_tile_layers(socket, publication, %{} = doc, hook_id) do
     Logger.debug("Setting document level background layers.")
 
     default_map_layers =
@@ -389,7 +390,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
             <.icon class="mb-1" name={if layer.visible, do: "hero-eye", else: "hero-eye-slash"} />
           </span>
           <.link patch={
-            ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@lang}/#{layer.uuid}"
+            ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{layer.uuid}"
           }>
             {layer.identifier}
           </.link>
@@ -399,7 +400,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     """
   end
 
-  defp accumulate_geometries_for_relations(%Document{} = doc, relation_names, lang) do
+  defp accumulate_geometries_for_relations(%{} = doc, relation_names) do
     relation_names
     |> Enum.map(fn relation_name ->
       doc
@@ -409,7 +410,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
           []
 
         %RelationGroup{} = relation_group ->
-          Enum.map(relation_group.docs, &create_feature_info(&1, lang))
+          Enum.map(relation_group.docs, &create_feature_info/1)
       end
       |> Enum.filter(fn feature -> Map.has_key?(feature, :geometry) end)
     end)

@@ -21,32 +21,19 @@ defmodule FieldPublication.Publications.Data do
 
   defmodule Document do
     @derive Jason.Encoder
-    @enforce_keys [:id, :identifier, :category, :project, :publication]
+    @enforce_keys [:id, :identifier, :category, :project_key, :publication_draft_date]
     defstruct [
       :id,
       :identifier,
-      :project,
-      :publication,
+      :project_key,
+      :publication_draft_date,
       :category,
+      :geometry,
       groups: [],
       relations: [],
       image_uuids: [],
       default_map_layers: [],
       map_layers: []
-    ]
-  end
-
-  defmodule DocumentPreview do
-    @derive Jason.Encoder
-
-    @enforce_keys [:id, :identifier, :category, :project, :publication]
-    defstruct [
-      :id,
-      :identifier,
-      :project,
-      :publication,
-      :category,
-      image_uuids: []
     ]
   end
 
@@ -78,13 +65,14 @@ defmodule FieldPublication.Publications.Data do
     %Document{
       id: map["id"],
       identifier: map["identifier"],
-      project: map["project"],
-      publication: map["publication"],
+      project_key: map["project_key"],
+      publication_draft_date: map["publication_draft_date"],
       category: %Category{
         name: map["category"]["name"],
         labels: map["category"]["labels"],
         color: map["category"]["color"]
       },
+      geometry: map["geometry"],
       groups:
         map
         |> Map.get("groups", [])
@@ -127,6 +115,63 @@ defmodule FieldPublication.Publications.Data do
       _ ->
         false
     end
+  end
+
+  def regenerate_document_previews(%Publication{database: db} = publication) do
+    config = Publications.get_configuration(publication)
+
+    pub_id = Publications.get_doc_id(publication)
+
+    CouchService.all_docs(db)
+    |> case do
+      {:ok, %{status: 200, body: body}} ->
+        body
+        |> Jason.decode!()
+        |> Map.get("rows", [])
+    end
+    |> Enum.reject(fn
+      %{"doc" => %{"resource" => %{"category" => "Configuration"}}} ->
+        true
+
+      %{"doc" => %{"resource" => _}} ->
+        false
+
+      _ ->
+        true
+    end)
+    |> Enum.map(fn %{"doc" => raw_doc} ->
+      {raw_doc, apply_project_configuration(raw_doc, config, publication)}
+    end)
+    |> Enum.filter(fn
+      {_raw_doc, %Document{} = _full} ->
+        true
+
+      {raw_doc, error} ->
+        Logger.warning(
+          "Failed to apply project configuration to `#{raw_doc["_id"]}` (`#{pub_id}`)"
+        )
+
+        Logger.warning(inspect(error))
+        false
+    end)
+    |> Enum.map(fn {_raw_doc, %Document{} = doc} ->
+      # Remove groups and relations from doc
+      %{doc | groups: [], relations: []}
+    end)
+    |> then(fn
+      documents ->
+        cache_database = "previews_#{pub_id}"
+
+        CouchService.delete_database(cache_database)
+        CouchService.put_database(cache_database)
+
+        payload =
+          Enum.map(documents, fn %Document{id: id} = document ->
+            %{_id: id, preview: document}
+          end)
+
+        CouchService.post_documents(payload, cache_database)
+    end)
   end
 
   def get_image_categories(publication) do
@@ -181,28 +226,12 @@ defmodule FieldPublication.Publications.Data do
       end)
       |> Enum.into(%{})
 
-    CouchService.get_document_stream(
-      %{
-        selector: %{},
-        fields: [
-          "resource.id",
-          "resource.category",
-          "resource.geometry"
-        ]
-      },
-      publication.database
-    )
-    |> Stream.filter(fn
-      %{"resource" => %{"geometry" => _}} -> true
+    get_preview_documents(publication)
+    |> Enum.reject(fn
+      %Document{geometry: nil} -> true
       _ -> false
     end)
-    |> Enum.reduce(%{}, fn %{
-                             "resource" => %{
-                               "category" => category,
-                               "geometry" => geometry
-                             }
-                           },
-                           acc ->
+    |> Enum.reduce(%{}, fn %Document{category: %{name: category}, geometry: geometry}, acc ->
       Map.update(
         acc,
         category,
@@ -331,56 +360,49 @@ defmodule FieldPublication.Publications.Data do
     |> Enum.map(&apply_project_configuration(&1, config, publication, include_relations))
   end
 
+  def get_preview_documents(%Publication{} = publication) do
+    pub_id = Publications.get_doc_id(publication)
+    cache_database = "previews_#{pub_id}"
+
+    CouchService.all_docs(cache_database)
+    |> case do
+      {:ok, %Finch.Response{status: 200, body: body}} ->
+        body
+        |> Jason.decode!()
+        |> Map.get("rows", [])
+        |> Enum.map(fn %{"doc" => %{"preview" => preview}} -> preview end)
+        |> Enum.map(fn doc -> document_map_to_struct(doc) end)
+
+      error ->
+        Logger.error("No preview documents for `pub_id`.")
+        Logger.error(error)
+        []
+    end
+  end
+
   def get_preview_documents(
         uuids,
-        %Publication{database: db} = publication
+        %Publication{} = publication
       ) do
     pub_id = Publications.get_doc_id(publication)
+    cache_database = "previews_#{pub_id}"
 
-    cached =
-      Cachex.get(:publication_document_previews, pub_id)
-      |> case do
-        {:ok, documents} when is_list(documents) ->
-          documents
+    CouchService.get_documents(uuids, cache_database)
+    |> case do
+      {:ok, %Finch.Response{status: 200, body: body}} ->
+        body
+        |> Jason.decode!()
+        |> Map.get("results")
+        |> Enum.map(fn %{"docs" => [%{"ok" => %{"preview" => preview}}]} ->
+          preview
+        end)
+        |> Enum.map(fn doc -> document_map_to_struct(doc) end)
 
-        _ ->
-          []
-      end
-      |> Enum.filter(fn %Document{id: id} ->
-        id in uuids
-      end)
-
-    cached_ids =
-      Enum.map(cached, fn %Document{id: id} -> id end)
-
-    other_ids =
-      Enum.reject(uuids, fn uuid -> uuid in cached_ids end)
-
-    config = Publications.get_configuration(publication)
-
-    loaded =
-      if other_ids != [] do
-        CouchService.get_documents(other_ids, db)
-        |> case do
-          {:ok, %Finch.Response{status: 200, body: body}} ->
-            body
-            |> Jason.decode!()
-            |> Map.get("results")
-            |> Enum.map(fn %{"docs" => [%{"ok" => doc}]} ->
-              doc
-            end)
-        end
-        |> Enum.map(&apply_project_configuration(&1, config, publication))
-      else
+      error ->
+        Logger.error("No preview documents for `pub_id`.")
+        Logger.error(error)
         []
-      end
-
-    Cachex.get_and_update(:publication_document_previews, pub_id, fn
-      nil -> {:commit, loaded}
-      existing -> {:commit, existing ++ loaded}
-    end)
-
-    loaded ++ cached
+    end
   end
 
   def get_doc_stream_for_categories(%Publication{database: database}, categories)
@@ -555,64 +577,70 @@ defmodule FieldPublication.Publications.Data do
         %Publication{} = publication,
         include_relations \\ false
       ) do
-    category_configuration = search_category_tree(configuration, resource["category"])
+    case search_category_tree(configuration, resource["category"]) do
+      {:ok, category_configuration} ->
+        image_categories = get_image_categories(publication)
 
-    image_categories = get_image_categories(publication)
+        image_uuids =
+          if resource["category"] in image_categories do
+            # Add own uuid as shorthand list
+            [resource["id"]]
+          else
+            # Otherwise evaluate the isDepictedIn relations
+            resource
+            |> Map.get("relations", %{})
+            |> Map.get("isDepictedIn", [])
+          end
 
-    image_uuids =
-      if resource["category"] in image_categories do
-        # Add own uuid as shorthand list
-        [resource["id"]]
-      else
-        # Otherwise evaluate the isDepictedIn relations
-        resource
-        |> Map.get("relations", %{})
-        |> Map.get("isDepictedIn", [])
-      end
+        default_map_layers =
+          resource
+          |> Map.get("relations", %{})
+          |> Map.get("hasDefaultMapLayer", [])
 
-    default_map_layers =
-      resource
-      |> Map.get("relations", %{})
-      |> Map.get("hasDefaultMapLayer", [])
+        map_layers =
+          resource
+          |> Map.get("relations", %{})
+          |> Map.get("hasMapLayer", [])
 
-    map_layers =
-      resource
-      |> Map.get("relations", %{})
-      |> Map.get("hasMapLayer", [])
+        doc =
+          %Document{
+            id: resource["id"],
+            identifier: resource["identifier"],
+            project_key: publication.project_name,
+            publication_draft_date: publication.draft_date,
+            category: extend_category(category_configuration["item"], resource),
+            groups: extend_field_groups(category_configuration["item"], resource),
+            image_uuids: image_uuids,
+            default_map_layers: default_map_layers,
+            map_layers: map_layers,
+            geometry: resource["geometry"]
+          }
 
-    doc =
-      %Document{
-        id: resource["id"],
-        identifier: resource["identifier"],
-        project: publication.project_name,
-        publication: publication.draft_date,
-        category: extend_category(category_configuration["item"], resource),
-        groups: extend_field_groups(category_configuration["item"], resource),
-        image_uuids: image_uuids,
-        default_map_layers: default_map_layers,
-        map_layers: map_layers
-      }
+        if include_relations do
+          child_task_pid =
+            Task.async(fn ->
+              create_child_relations(resource["id"], publication)
+            end)
 
-    if include_relations do
-      child_task_pid =
-        Task.async(fn ->
-          create_child_relations(resource["id"], publication)
-        end)
+          other_relations =
+            extend_relations(category_configuration["item"], resource, publication)
 
-      other_relations = extend_relations(category_configuration["item"], resource, publication)
+          child_relations = Task.await(child_task_pid, 1000 * 60)
 
-      child_relations = Task.await(child_task_pid)
+          all_relations =
+            if child_relations.docs != [] do
+              other_relations ++ [child_relations]
+            else
+              other_relations
+            end
 
-      all_relations =
-        if child_relations.docs != [] do
-          other_relations ++ [child_relations]
+          %Document{doc | relations: all_relations}
         else
-          other_relations
+          doc
         end
 
-      %Document{doc | relations: all_relations}
-    else
-      doc
+      {:error, :unknown_category} ->
+        {:error, :unknown_category}
     end
   end
 
@@ -664,8 +692,12 @@ defmodule FieldPublication.Publications.Data do
             cond do
               is_list(resource[field["name"]]) ->
                 if field["inputType"] == "dimension" do
-                  key in Enum.map(resource[field["name"]], fn %{"measurementPosition" => position} ->
-                    position
+                  key in Enum.map(resource[field["name"]], fn
+                    %{"measurementPosition" => position} ->
+                      position
+
+                    other ->
+                      other
                   end)
                 else
                   key in resource[field["name"]]
@@ -711,7 +743,7 @@ defmodule FieldPublication.Publications.Data do
             name: group_field["name"],
             labels: group_field["label"],
             docs:
-              Enum.filter(related_documents, fn %Document{id: uuid} ->
+              Enum.filter(related_documents, fn %{id: uuid} ->
                 uuid in relations[group_field["name"]]
               end)
           }
@@ -760,7 +792,14 @@ defmodule FieldPublication.Publications.Data do
     configuration
     |> Stream.map(&search_category_branch(&1, category_name))
     |> Enum.filter(fn val -> val != :not_found end)
-    |> List.first(:not_found)
+    |> List.first(nil)
+    |> case do
+      nil ->
+        {:error, :unknown_category}
+
+      category_config ->
+        {:ok, category_config}
+    end
   end
 
   defp search_category_branch(

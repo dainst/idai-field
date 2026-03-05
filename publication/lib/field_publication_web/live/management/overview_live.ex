@@ -91,11 +91,15 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
   end
 
   def handle_event("reindex_all_search_indices", _, socket) do
-    Projects.list()
-    |> Stream.map(fn %{name: name} -> name end)
-    |> Stream.map(&Publications.get_current_published(&1))
-    |> Stream.reject(fn val -> val == :none end)
+    Publications.list()
     |> Enum.each(&Processing.start(&1, :search_index))
+
+    {:noreply, socket}
+  end
+
+  def handle_event("recreate_previews", _, socket) do
+    Publications.list()
+    |> Enum.each(&Processing.start(&1, :preview_documents))
 
     {:noreply, socket}
   end

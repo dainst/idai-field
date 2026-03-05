@@ -57,7 +57,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       :noreply,
       socket
       |> assign(:publication, current_publication)
-      |> evaluate_requested_language(current_publication, params)
       |> evaluate_requested_doc(current_publication, params)
       |> assign(:focus, parse_focus(Map.get(params, "focus")))
     }
@@ -74,14 +73,13 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
     # The patch will then get handled by another handle_params/3 above.
 
     publication = List.last(publications)
-    language = pick_default_language(publication)
 
     {
       :noreply,
       socket
       |> assign(:publication, publication)
       |> push_patch(
-        to: ~p"/projects/#{project_name}/#{publication.draft_date}/#{language}",
+        to: ~p"/projects/#{project_name}/#{publication.draft_date}",
         replace: true
       )
     }
@@ -90,7 +88,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
   def handle_event(
         "geometry-clicked",
         %{"uuid" => uuid},
-        %{assigns: %{publication: publication, selected_lang: lang, focus: focus}} = socket
+        %{assigns: %{publication: publication, focus: focus}} = socket
       ) do
     query_params =
       case focus do
@@ -105,7 +103,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       :noreply,
       push_patch(socket,
         to:
-          ~p"/projects/#{publication.project_name}/#{publication.draft_date}/#{lang}/#{uuid}?#{query_params}"
+          ~p"/projects/#{publication.project_name}/#{publication.draft_date}/#{uuid}?#{query_params}"
       )
     }
   end
@@ -117,7 +115,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       ) do
     {
       :noreply,
-      redirect(socket, to: ~p"/search?#{%{q: q, filters: %{project_name: project_name}}}")
+      redirect(socket, to: ~p"/search?#{%{q: q, filters: %{project_key: project_name}}}")
     }
   end
 
@@ -128,45 +126,14 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
     short_description
   end
 
-  defp get_page_title(%Document{} = doc) do
-    short_descriptions =
-      Data.get_field_value(doc, "shortDescription")
-      |> case do
-        nil ->
-          Data.get_field_value(doc, "identifier")
+  defp get_page_title(%Document{identifier: identifier, category: %{labels: labels}}) do
+    {_info, category} = I18n.select_translation(%{values: labels})
 
-        val ->
-          val
-      end
-
-    {_translation_info, value} = I18n.select_translation(%{values: short_descriptions})
-
-    value
-  end
-
-  defp evaluate_requested_language(
-         socket,
-         %Publication{} = publication,
-         %{"language" => language} = params
-       )
-       when is_binary(language) do
-    # In cases the user switched the publication version (to one earlier or later) and the
-    # previously selected language is not supported, we select a new default and patch accordingly.
-    if language in publication.languages do
-      assign(socket, :selected_lang, language)
-    else
-      default = pick_default_language(publication)
-
-      push_patch(socket,
-        to:
-          ~p"/projects/#{publication.project_name}/#{publication.draft_date}/#{default}/#{Map.get(params, "uuid", "")}",
-        replace: true
-      )
-    end
+    "#{identifier} (#{category})"
   end
 
   defp evaluate_requested_doc(
-         %{assigns: %{selected_lang: language}} = socket,
+         socket,
          %Publication{} = publication,
          %{"uuid" => uuid}
        )
@@ -201,12 +168,12 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
           :page_title,
           get_page_title(extended_doc)
         )
-        |> Opengraph.add_opengraph_tags(publication, extended_doc, language)
+        |> Opengraph.add_opengraph_tags(publication, extended_doc)
     end
   end
 
   defp evaluate_requested_doc(
-         %{assigns: %{selected_lang: _language}} = socket,
+         socket,
          %Publication{} = publication,
          _params
        ) do
@@ -222,7 +189,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
         key
       end)
 
-    # top_level_docs = Data.get_preview_documents(top_level_uuids, publication)
+    top_level_docs = Data.get_preview_documents(top_level_uuids, publication)
 
     category_hierarchy = Data.get_category_hierarchy(publication)
     category_usage = Search.get_category_count(publication)
@@ -233,7 +200,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
     |> assign(:doc, project_doc)
     |> assign(:staff, staff)
     |> assign(:publication, publication)
-    # |> assign(:top_level_docs, top_level_docs)
+    |> assign(:top_level_docs, top_level_docs)
     |> assign(:category_hierarchy, category_hierarchy)
     |> assign(:category_usage, category_usage)
     |> assign(
@@ -241,21 +208,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       get_page_title(project_doc)
     )
     |> assign(:uuid, "")
-  end
-
-  defp evaluate_requested_doc(socket, _, _) do
-    # If the socket does not contain :selected_lang at this point, this means the selected language was
-    # unsupport by the selected publication and the url got patched. No sense in evaluating the document
-    # at this point.
-    socket
-  end
-
-  defp pick_default_language(%Publication{} = publication) do
-    if Gettext.get_locale(FieldPublicationWeb.Gettext) in publication.languages do
-      Gettext.get_locale(FieldPublicationWeb.Gettext)
-    else
-      List.first(publication.languages)
-    end
   end
 
   defp parse_focus("map"), do: :map

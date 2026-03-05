@@ -1,24 +1,22 @@
-defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
+defmodule FieldPublicationWeb.Components.Data.DocumentLink do
   use FieldPublicationWeb, :html
   use FieldPublicationWeb, :verified_routes
 
   alias FieldPublication.Publications.Data
   alias FieldPublication.Publications.Data.Document
 
-  alias FieldPublicationWeb.Presentation.Components.{
-    Image,
-    I18n
-  }
+  import FieldPublicationWeb.Components.Data.Image
+
+  alias FieldPublicationWeb.Presentation.Components.I18n
 
   attr :id, :string, default: nil
   attr :doc, Document, required: true
-  attr :lang, :string, required: true
   attr :image_count, :integer, default: 0
   attr :image_height, :integer, default: 64
   attr :geometry_indicator, :boolean, default: false
   attr :focus, :atom, default: :default
 
-  def show(assigns) do
+  def document_link(assigns) do
     ~H"""
     <div class="flex mb-[2px]" id={if @id, do: @id, else: "#{@doc.id}_link"}>
       <.link
@@ -33,7 +31,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
       <.link
         class="grow p-3 rounded-tr rounded-br hover:bg-(--primary-color)/10"
         style={"border-color: #{desaturate_category_color(@doc.category.color)}; border-width: 1px 1px 1px 0px;"}
-        navigate={construct_doc_link(@doc.project, @doc.publication, @lang, @doc.id, @focus)}
+        navigate={construct_doc_link(@doc.project_key, @doc.publication_draft_date, @doc.id, @focus)}
       >
         <div>
           <span class="text-slate-600">{@doc.identifier}</span>
@@ -43,7 +41,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
               <I18n.text values={shortdescription.value} />
             <% end %>
             <.icon
-              :if={@geometry_indicator and Data.get_field(@doc, "geometry") != nil}
+              :if={@geometry_indicator and @doc.geometry != nil}
               name="hero-map"
               class="mb-1"
             />
@@ -51,12 +49,12 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
           <% uuids = Enum.take(@doc.image_uuids, @image_count) %>
           <div id={"#{@doc.id}-images"} class="flex items-center overflow-x-auto">
             <%= for uuid <- uuids do %>
-              <Image.show
+              <.img_element
                 size={"^,#{@image_height}"}
                 class="p-1 inline"
-                project={@doc.project}
+                project={@doc.project_key}
                 uuid={uuid}
-                alt_text={"An image depicting '#{@doc.identifier}'"}
+                alt={"An image depicting '#{@doc.identifier}'"}
               />
             <% end %>
             <%= if uuids== [] and @image_count > 0 do %>
@@ -69,7 +67,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
     """
   end
 
-  defp construct_doc_link(project_name, draft_date, lang, uuid, focus_parameter) do
+  defp construct_doc_link(project_name, draft_date, uuid, focus_parameter) do
     uuid = if uuid == "project", do: "", else: uuid
 
     query =
@@ -81,7 +79,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentLink do
           %{}
       end
 
-    ~p"/projects/#{project_name}/#{draft_date}/#{lang}/#{uuid}?#{query}"
+    ~p"/projects/#{project_name}/#{draft_date}/#{uuid}?#{query}"
   end
 
   def desaturate_category_color(color) do

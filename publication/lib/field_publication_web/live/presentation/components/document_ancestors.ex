@@ -1,18 +1,21 @@
 defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
-  alias FieldPublicationWeb.Presentation.Components.GenericField
   alias FieldPublicationWeb.Presentation.Components.I18n
   alias FieldPublication.Publications.Data.Field
   alias FieldPublication.Publications.Data.FieldGroup
-  alias FieldPublicationWeb.Presentation.Components.DocumentLink
   alias FieldPublication.Publications.Data
   alias FieldPublication.Publications.Data.Document
+
+  import FieldPublicationWeb.Components.Data.{
+    DocumentLink,
+    Field
+  }
 
   use FieldPublicationWeb, :live_component
 
   def render(assigns) do
     ~H"""
     <div>
-      <.render_step nodes={@nodes} lang={@lang} map_id={@map_id} focus={@focus} />
+      <.render_step nodes={@nodes} map_id={@map_id} focus={@focus} />
     </div>
     """
   end
@@ -22,7 +25,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
     <%= case @nodes do %>
       <% [main_document] -> %>
         <div class="p-2 border-2 border-primary bg-panel">
-          <.render_link doc={main_document} hover_target={@map_id} lang={@lang} focus={@focus} />
+          <.render_link doc={main_document} hover_target={@map_id} focus={@focus} />
           <div class="max-h-96 overflow-auto overscroll-contain">
             <%= for %FieldGroup{} = group <- main_document.groups do %>
               <% fields =
@@ -40,7 +43,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
                       <div>
                         <dt class="font-bold"><I18n.text values={field.labels} /></dt>
                         <dd class="pl-4">
-                          <GenericField.render field={field} lang={@lang} />
+                          <.render_data_field field={field} />
                         </dd>
                       </div>
                     <% end %>
@@ -56,18 +59,18 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
             <.icon name="hero-arrow-turn-down-right" class="min-w-8" />
             <div>
               <%= for main_doc_child <- contains.docs do %>
-                <.render_link doc={main_doc_child} hover_target={@map_id} lang={@lang} focus={@focus} />
+                <.render_link doc={main_doc_child} hover_target={@map_id} focus={@focus} />
               <% end %>
             </div>
           </div>
         <% end %>
       <% [current | rest] -> %>
-        <.render_link doc={current} hover_target={@map_id} lang={@lang} focus={@focus} />
+        <.render_link doc={current} hover_target={@map_id} focus={@focus} />
 
         <div class="flex flex-row">
           <.icon name="hero-arrow-turn-down-right min-w-8" />
           <div>
-            <.render_step nodes={rest} lang={@lang} map_id={@map_id} focus={@focus} />
+            <.render_step nodes={rest} map_id={@map_id} focus={@focus} />
           </div>
         </div>
       <% [] -> %>
@@ -78,12 +81,11 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
 
   attr :doc, Document, required: true
   attr :hover_target, :string, required: true
-  attr :lang, :string, required: true
   attr :focus, :atom, required: true
 
   def render_link(assigns) do
     ~H"""
-    <% geometry = Data.get_field(@doc, "geometry") %>
+    <% geometry = @doc.geometry %>
 
     <%= if geometry do %>
       <div
@@ -92,9 +94,8 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
         target_dom_element={@hover_target}
         target_id={@doc.id}
       >
-        <DocumentLink.show
+        <.document_link
           id={"#{@doc.id}_ancestor_view_link"}
-          lang={@lang}
           doc={@doc}
           image_count={10}
           geometry_indicator={true}
@@ -103,9 +104,8 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
       </div>
     <% else %>
       <div>
-        <DocumentLink.show
+        <.document_link
           id={"#{@doc.id}_ancestor_view_link"}
-          lang={@lang}
           doc={@doc}
           image_count={10}
           geometry_indicator={true}
@@ -119,7 +119,6 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
   def update(
         %{
           doc: %Document{} = doc,
-          lang: lang,
           map_id: map_id,
           ancestors: ancestors
         } = params,
@@ -129,7 +128,6 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
       :ok,
       socket
       |> assign(:nodes, ancestors ++ [doc])
-      |> assign(:lang, lang)
       |> assign(:map_id, map_id)
       |> assign(:focus, Map.get(params, :focus, :default))
     }

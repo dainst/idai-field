@@ -7,7 +7,11 @@
     <:loading>Searching...</:loading>
     <div class="w-64">
       <div class="sticky top-4">
-        <form phx-change="search" phx-submit="search" class="pb-2">
+        <form
+          phx-change="search"
+          phx-submit="search"
+          class="pb-2"
+        >
           <input
             class="w-full border p-2"
             type="text"
@@ -24,7 +28,10 @@
         <%= if @url_parameters.filters != %{} do %>
           <.group_heading>Active filters</.group_heading>
           <%= for {field, value} <- @url_parameters.filters do %>
-            <.aggregation_deselection field_name={field} value={value} />
+            <.aggregation_deselection
+          field_name={field}
+          value={value}
+        />
           <% end %>
         <% end %>
 
@@ -32,11 +39,14 @@
         <div class="max-h-[600px] mt-2 p-1 bg-panel overflow-auto">
           <%= for {field, buckets} <- aggregations do %>
             <%= if !(Enum.find(@url_parameters.filters, fn({already_filtered_field, _value}) -> already_filtered_field == field end ) ) and buckets != [] do %>
-              <.aggregation_selection field_name={field} buckets={buckets} />
+              <.aggregation_selection
+            field_name={field}
+            buckets={buckets}
+          />
             <% end %>
           <% end %>
         </div>
-      </div>
+      </div>c
     </div>
 
     <div class="ml-4 w-full" id="result_list">
@@ -72,9 +82,8 @@
         </.link>
       </div>
       <div :for={%SearchDocument{full_doc: doc} <- docs}>
-        <DocumentLink.show
+        <.document_link
           doc={doc}
-          lang={Gettext.get_locale(FieldPublicationWeb.Gettext)}
           image_count={10}
           image_height={128}
         />

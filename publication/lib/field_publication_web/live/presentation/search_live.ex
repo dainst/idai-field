@@ -2,8 +2,9 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.Publications.Search
-  alias FieldPublicationWeb.Presentation.Components.DocumentLink
   alias FieldPublication.Publications.Search.SearchDocument
+
+  import FieldPublicationWeb.Components.Data.DocumentLink
 
   @search_batch_limit 20
 
@@ -171,7 +172,7 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
     """
   end
 
-  defp get_filter_label("project_name") do
+  defp get_filter_label("project_key") do
     %{primary: Gettext.gettext(FieldPublicationWeb.Gettext, "Project")}
   end
 

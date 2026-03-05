@@ -5,12 +5,14 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
 
   alias FieldPublicationWeb.Presentation.Components.{
     I18n,
-    Image,
-    GenericField,
-    DocumentLink,
     DocumentAncestors,
-    IIIFViewer,
     ClipboardCopy
+  }
+
+  import FieldPublicationWeb.Components.Data.{
+    DocumentLink,
+    Field,
+    Image
   }
 
   alias FieldPublication.Publications.Data
@@ -22,9 +24,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
     RelationGroup
   }
 
-  import FieldPublicationWeb.Presentation.Components.DocumentLink,
-    only: [desaturate_category_color: 1]
-
   attr :publication, Publication, required: true
   attr :doc, Document, required: true
   attr :lang, :string, required: true
@@ -34,7 +33,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
     ~H"""
     <div class="mb-4">
       <.document_heading>
-        <DocumentLink.show lang={@lang} doc={@doc} />
+        <.document_link doc={@doc} />
       </.document_heading>
       <%= case @focus do %>
         <% :map -> %>
@@ -65,8 +64,8 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                 <%= for %Field{} = field <- fields do %>
                   <div class="border p-0.5 border-black/20">
                     <dt class="font-bold"><I18n.text values={field.labels} /></dt>
-                    <dd class="pl-4">
-                      <GenericField.render field={field} lang={@lang} />
+                    <dd class="pl-4 pr-4 pb-1">
+                      <.render_data_field field={field} />
                     </dd>
                   </div>
                 <% end %>
@@ -83,14 +82,14 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             <div class="p-2 bg-panel overflow-auto overscroll-contain grid grid-cols-3 gap-1 mt-2 max-h-[300px] mb-5">
               <%= for %Document{} = doc <- depicted_in.docs do %>
                 <.link navigate={
-                  ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@lang}/#{doc.id}"
+                  ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{doc.id}"
                 }>
                   <div class="max-w-[250px]">
-                    <Image.show
+                    <.img_element
                       size="^250,"
                       project={@publication.project_name}
                       uuid={doc.id}
-                      alt_text={"Project image '#{doc.identifier}' (#{I18n.select_translation(%{values: doc.category.labels}) |> then(fn {_, text} -> text end)})"}
+                      alt={"Project image '#{doc.identifier}' (#{I18n.select_translation(%{values: doc.category.labels}) |> then(fn {_, text} -> text end)})"}
                     />
                   </div>
                 </.link>
@@ -139,9 +138,24 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             <.group_heading>
               <I18n.text values={other_relation.labels} /> ({Enum.count(other_relation.docs)})
             </.group_heading>
-            <div class="overflow-auto overscroll-contain max-h-[200px]">
-              <%= for %Document{} = doc <- other_relation.docs do %>
-                <DocumentLink.show lang={@lang} doc={doc} image_count={2} geometry_indicator={true} />
+            <div class="overflow-auto overscroll-contain max-h-[400px]">
+              <%= for %Document{geometry: geometry} = doc <- other_relation.docs do %>
+                <%= if geometry do %>
+                  <div
+                    id={"relations_map_highlighter_#{doc.id}"}
+                    phx-hook="HoverHighlightMapFeature"
+                    target_dom_element="generic_doc_map"
+                    target_id={doc.id}
+                  >
+                    <.document_link
+                      doc={doc}
+                      image_count={10}
+                      geometry_indicator={true}
+                    />
+                  </div>
+                <% else %>
+                  <.document_link doc={doc} image_count={10} geometry_indicator={true} />
+                <% end %>
               <% end %>
             </div>
           </section>
@@ -154,7 +168,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             doc={@doc}
             ancestors={@ancestors}
             publication={@publication}
-            lang={@lang}
           />
         </div>
       </div>
@@ -176,7 +189,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             doc={@doc}
             ancestors={@ancestors}
             publication={@publication}
-            lang={@lang}
             focus={:map}
             map_id="generic_doc_map_detail"
           />
@@ -188,9 +200,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
               <I18n.text values={other_relation.labels} /> ({Enum.count(other_relation.docs)})
             </.group_heading>
             <div class="overflow-auto overscroll-contain">
-              <%= for %Document{} = doc <- other_relation.docs do %>
-                <% geometry = Data.get_field(doc, "geometry") %>
-
+              <%= for %Document{geometry: geometry} = doc <- other_relation.docs do %>
                 <%= if geometry do %>
                   <div
                     id={"ancester_link_#{doc.id}"}
@@ -198,8 +208,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                     target_dom_element="generic_doc_map_detail"
                     target_id={doc.id}
                   >
-                    <DocumentLink.show
-                      lang={@lang}
+                    <.document_link
                       doc={doc}
                       image_count={10}
                       geometry_indicator={true}
@@ -208,8 +217,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                   </div>
                 <% else %>
                   <div>
-                    <DocumentLink.show
-                      lang={@lang}
+                    <.document_link
                       doc={doc}
                       image_count={10}
                       geometry_indicator={true}
@@ -231,7 +239,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             doc={@doc}
             ancestors={@ancestors}
             publication={@publication}
-            lang={@lang}
             focus={@focus}
           />
         </div>
@@ -242,13 +249,12 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
 
   attr :publication, Publication, required: true
   attr :doc, Document, required: true
-  attr :lang, :string, required: true
 
   def image(assigns) do
     ~H"""
     <div>
       <.document_heading>
-        <DocumentLink.show lang={@lang} doc={@doc} />
+        <.document_link doc={@doc} />
       </.document_heading>
 
       <div class="flex flex-col-reverse lg:flex-row">
@@ -259,7 +265,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             </.group_heading>
             <div class="overflow-auto overscroll-contain max-h-[200px]">
               <%= for %Document{} = doc <- relation_group.docs do %>
-                <DocumentLink.show lang={@lang} doc={doc} image_count={0} />
+                <.document_link doc={doc} image_count={0} />
               <% end %>
             </div>
           <% end %>
@@ -278,8 +284,8 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                   <%= for %Field{} = field <- fields do %>
                     <div>
                       <dt class="font-bold"><I18n.text values={field.labels} /></dt>
-                      <dd class="pl-4">
-                        <GenericField.render field={field} lang={@lang} />
+                      <dd class="pl-4 pr-4">
+                        <.render_data_field field={field} />
                       </dd>
                     </div>
                   <% end %>
@@ -328,9 +334,10 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                 <a href="https://iiif.io" target="_blank">
                   <img src="/images/iiif-logo.png" class="inline h-4" />
                 </a>
+
                 <.live_component
                   id="iiif-link"
-                  copy_value={"#{FieldPublicationWeb.Endpoint.url()}/#{IIIFViewer.construct_url(@publication.project_name, @doc.id)}"}
+                  copy_value={"#{FieldPublicationWeb.Endpoint.url()}/#{construct_iiif_info_url(@publication.project_name, @doc.id)}"}
                   module={ClipboardCopy}
                 >
                   Copy IIIF link
@@ -340,12 +347,11 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           </ul>
         </div>
         <div class="basis-full lg:basis-2/3 m-5">
-          <.live_component
+          <.iiif_viewer
             class="h-(--ol-full-height) p-2 bg-panel"
             id="iiif_viewer"
             project={@publication.project_name}
             uuid={@doc.id}
-            module={IIIFViewer}
           />
         </div>
       </div>
@@ -356,29 +362,27 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
   attr :publication, Publication, required: true
   attr :doc, Document, required: true
   attr :lang, :string, required: true
-  attr :top_level_docs, :list, default: []
+  attr :top_level_docs, :list, required: true
 
   def project(assigns) do
     ~H"""
     <div>
       <.document_heading>
-        <I18n.text values={Data.get_field_value(@doc, "shortName")} lang={@lang} />
+        <.render_data_field field={Data.get_field(@doc, "shortName")} />
       </.document_heading>
       <% depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
       <%= if depicted_in != nil do %>
         <div class="pt-4 pb-4 w-full gap-2 flex flex-row justify-center overflow-x-auto">
           <%= for %Data.Document{} = doc <- depicted_in.docs do %>
             <.link
-              patch={
-                ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@lang}/#{doc.id}"
-              }
+              patch={~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{doc.id}"}
               class="p-2 border border-primary h-[310px]"
             >
-              <Image.show
+              <.img_element
                 size="^,300"
                 project={@publication.project_name}
                 uuid={doc.id}
-                alt_text={doc.identifier}
+                alt={doc.identifier}
               />
             </.link>
           <% end %>
@@ -391,20 +395,17 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             {gettext("project_doc_about_project")}
           </.group_heading>
           <div class="bg-panel p-2">
-            <I18n.markdown values={Data.get_field_value(@doc, "description")} lang={@lang} />
+            <I18n.markdown values={Data.get_field_value(@doc, "description")} />
           </div>
           <.group_heading class="mt-3">
             {gettext("project_doc_about_publication")}
           </.group_heading>
           <div class="bg-panel p-2">
-            <I18n.markdown
-              values={
-                @publication.comments
-                |> Enum.map(fn %{language: lang, text: text} -> {lang, text} end)
-                |> Enum.into(%{})
-              }
-              lang={@lang}
-            />
+            <I18n.markdown values={
+              @publication.comments
+              |> Enum.map(fn %{language: lang, text: text} -> {lang, text} end)
+              |> Enum.into(%{})
+            } />
           </div>
         </div>
 
@@ -413,7 +414,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             <% institution = Data.get_field(@doc, "institution") %>
             <%= if institution do %>
               <dt class="font-bold"><I18n.text values={institution.labels} /></dt>
-              <GenericField.render field={institution} lang={@lang} />
+              <.render_data_field field={institution} />
             <% end %>
 
             <% contact_mail = Data.get_field(@doc, "contactMail") %>
@@ -435,18 +436,18 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             <% supervisor = Data.get_field(@doc, "projectSupervisor") %>
             <%= if supervisor do %>
               <dt class="font-bold"><I18n.text values={supervisor.labels} /></dt>
-              <GenericField.render field={supervisor} lang={@lang} />
+              <.render_data_field field={supervisor} />
             <% end %>
 
             <%= if @staff do %>
-              <dt class="font-bold"><I18n.text values={@staff.labels} lang={@lang} /></dt>
+              <dt class="font-bold"><I18n.text values={@staff.labels} /></dt>
               <dd class="ml-4">{@staff.names}</dd>
             <% end %>
 
             <% bibliographic_references = Data.get_field(@doc, "bibliographicReferences") %>
             <%= if bibliographic_references do %>
               <dt class="font-bold"><I18n.text values={bibliographic_references.labels} /></dt>
-              <GenericField.render field={bibliographic_references} lang={@lang} />
+              <.render_data_field field={bibliographic_references} />
             <% end %>
             <% url = Data.get_field_value(@doc, "projectURI") %>
             <%= if url do %>
@@ -460,6 +461,17 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           </dl>
         </div>
       </div>
+
+      <div>
+        <.group_heading>
+          {gettext("Main documents")}
+        </.group_heading>
+        <div class="grid grid-cols-4 gap-1">
+          <%= for doc <- @top_level_docs do %>
+            <.document_link doc={doc} />
+          <% end %>
+        </div>
+      </div>
       <div class="flex flex-row gap-4 mt-4">
         <div class="basis-2/3 flex-none p-2">
           <.live_component
@@ -467,7 +479,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             id="project_doc_map"
             style="height: 600px; background-color: var(--panel-color)"
             publication={@publication}
-            lang={@lang}
           />
         </div>
 
@@ -505,7 +516,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           target_id={"#{Enum.join(get_child_category_names(children) ++ [category_name], ",")}"}
         >
           <.link navigate={
-            ~p"/search?#{%{filters: %{category: category_name, project_name: @publication.project_name}}}"
+            ~p"/search?#{%{filters: %{category: category_name, project_key: @publication.project_name}}}"
           }>
             <div class="flex flex-row mb-[2px] p-1">
               <span style={"color: #{desaturate_category_color(color)}"}>

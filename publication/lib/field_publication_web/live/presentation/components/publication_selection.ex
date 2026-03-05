@@ -13,10 +13,8 @@ defmodule FieldPublicationWeb.Presentation.Components.PublicationSelection do
       <div>/</div>
       {render_publication_dropdown(assigns)}
       <div>/</div>
-      {render_language_dropdown(assigns)}
-      <div>/</div>
       <.link patch={
-        ~p"/projects/#{@current_publication.project_name}/#{@current_publication.draft_date}/#{@selected_lang}"
+        ~p"/projects/#{@current_publication.project_name}/#{@current_publication.draft_date}"
       }>
         <.icon name="hero-home-solid" />
       </.link>
@@ -41,7 +39,7 @@ defmodule FieldPublicationWeb.Presentation.Components.PublicationSelection do
           <div class="font-semibold mb-2">Available publications</div>
           <%= for publication <- @publications do %>
             <% url =
-              ~p"/projects/#{publication.project_name}/#{publication.draft_date}/#{@selected_lang}"
+              ~p"/projects/#{publication.project_name}/#{publication.draft_date}"
 
             url =
               if Map.has_key?(assigns, :uuid) do
@@ -57,38 +55,6 @@ defmodule FieldPublicationWeb.Presentation.Components.PublicationSelection do
                 <% else %>
                   <span>, not yet published.</span>
                 <% end %>
-              </.link>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
-    """
-  end
-
-  defp render_language_dropdown(assigns) do
-    ~H"""
-    <div class="group relative text-nowrap">
-      {@selected_lang}
-
-      <%= if Enum.count(@current_publication.languages) > 1 do %>
-        <.icon name="hero-chevron-down-mini" />
-        <div class="z-10 bg-white p-2 outline-1 absolute hidden group-hover:block w-max">
-          <div class="font-semibold mb-2">Available languages</div>
-          <%= for language <- @current_publication.languages do %>
-            <% url =
-              ~p"/projects/#{@current_publication.project_name}/#{@current_publication.draft_date}/#{language}"
-
-            url =
-              if Map.has_key?(assigns, :uuid) do
-                "#{url}/#{@uuid}"
-              else
-                url
-              end %>
-
-            <div class={"#{if language == @selected_lang, do: "bg-slate-100 outline-1 outline-slate-500", else: ""} p-1"}>
-              <.link patch={url}>
-                {language}
               </.link>
             </div>
           <% end %>

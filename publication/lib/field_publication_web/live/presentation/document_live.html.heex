@@ -3,7 +3,6 @@
     <PublicationSelection.render
       publications={@publications}
       current_publication={@publication}
-      selected_lang={@selected_lang}
       uuid={@uuid}
       identifier={
         if Data.get_field_value(@doc, "category") != "Project",
@@ -30,8 +29,7 @@
         doc: @doc,
         staff: @staff,
         publication: @publication,
-        lang: @selected_lang,
-        # top_level_docs: @top_level_docs,
+        top_level_docs: @top_level_docs,
         category_hierarchy: @category_hierarchy,
         category_usage: @category_usage
       })
@@ -39,8 +37,7 @@
     category in @image_categories ->
       DocumentComponents.image(%{
         doc: @doc,
-        publication: @publication,
-        lang: @selected_lang
+        publication: @publication
       })
 
     true ->
@@ -48,7 +45,6 @@
         doc: @doc,
         ancestors: @ancestors,
         publication: @publication,
-        lang: @selected_lang,
         focus: @focus
       })
   end}

@@ -280,6 +280,15 @@ defmodule FieldPublication.CouchService do
     |> Finch.request(FieldPublication.Finch)
   end
 
+  def all_docs(database_name \\ @core_database) do
+    Finch.build(
+      :get,
+      "#{local_url()}/#{database_name}/_all_docs?include_docs=true",
+      headers()
+    )
+    |> Finch.request(FieldPublication.Finch)
+  end
+
   def get_documents(doc_ids, database_name \\ @core_database) do
     Finch.build(
       :post,
@@ -363,6 +372,16 @@ defmodule FieldPublication.CouchService do
       "#{local_url()}/#{database_name}",
       headers(),
       Jason.encode!(doc)
+    )
+    |> Finch.request(FieldPublication.Finch)
+  end
+
+  def post_documents(docs, database_name) do
+    Finch.build(
+      :post,
+      "#{local_url()}/#{database_name}/_bulk_docs",
+      headers(),
+      Jason.encode!(%{docs: docs})
     )
     |> Finch.request(FieldPublication.Finch)
   end

@@ -100,8 +100,8 @@ defmodule FieldPublicationWeb.Router do
     live_session :require_published_or_project_access,
       on_mount: [{FieldPublicationWeb.UserAuth, :ensure_project_published_or_project_access}] do
       live "/:project_id", Presentation.DocumentLive
-      live "/:project_id/:draft_date/:language", Presentation.DocumentLive
-      live "/:project_id/:draft_date/:language/:uuid", Presentation.DocumentLive
+      live "/:project_id/:draft_date", Presentation.DocumentLive
+      live "/:project_id/:draft_date/:uuid", Presentation.DocumentLive
     end
   end
 

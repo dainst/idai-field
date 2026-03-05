@@ -12,7 +12,12 @@
       </li>
       <li>
         <.link phx-click={JS.push("reindex_all_search_indices")} data-confirm="Are you sure?">
-          Trigger search reindex for all publications
+          Recreate search indices
+        </.link>
+      </li>
+      <li>
+        <.link phx-click={JS.push("recreate_previews")} data-confirm="Are you sure?">
+          Recreate all preview documents
         </.link>
       </li>
       <li>
@@ -32,8 +37,8 @@
 <%= if @projects != [] do %>
   <div class="grid lg:grid-cols-2 2xl:grid-cols-3">
     <%= for %{project: project, publications: publications, search_aliased_publication: search_aliased_publication} <- @projects do %>
-      <div class="bg-slate-100 m-4" id={"project-panel-#{project.name}"}>
-        <div class="bg-slate-200 p-3 m-4 text-center rounded-t text-lg">
+      <div class="border border-primary m-4" id={"project-panel-#{project.name}"}>
+        <div class="bg-panel p-3 m-4 text-center text-lg">
           Project: '{project.name}'
         </div>
 
@@ -88,7 +93,7 @@
         </div>
 
         <%= if {:error, :alias_not_set} == search_aliased_publication do %>
-          <div class="m-4 p-2 rounded bg-white">
+          <div class="m-4 p-2 rounded">
             <.icon name="hero-exclamation-circle" class="bg-yellow-500 mb-1" />
             No publication is set to be included in application wide search.
           </div>
@@ -149,9 +154,7 @@
                         </td>
                         <td>
                           <.icon name="hero-eye" class="bg-green-600 mb-1" />
-                          <.link navigate={
-                            ~p"/projects/#{project}/#{publication.draft_date}/#{List.first(publication.languages)}"
-                          }>
+                          <.link navigate={~p"/projects/#{project}/#{publication.draft_date}"}>
                             {publication.publication_date}
                           </.link>
                         </td>

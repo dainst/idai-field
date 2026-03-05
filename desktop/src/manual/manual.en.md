@@ -68,7 +68,9 @@ providing the following options:
 * *Delete*: Removes resources after a security check (optionally, you can also delete all images that are
 exclusively linked to the resources you want to delete)
 * *Document workflow*: Displays the processes linked to the selected resources and allows creating new processes (only available for categories that have been configured as the target category of the relation "Carried out on" of a process category).
-* *Scan storage place*: Sets a new storage place for the resource by scanning the QR code of the storage place via camera scan (only available for resources of the categories "Find", "Find collection" and "Sample" as well as the respective subcategories)
+* *Scan type*: Links the resource to a type by reading the QR code of the type via camera scan (only available for resources of the category "Find" and its subcategories)
+* *Scan storage place*: Sets a new storage place for the resource by reading the QR code of the storage place via camera scan (only available for resources of the categories "Find", "Find collection" and "Sample" as well as the respective subcategories)
+* *Scan type or storage place*: If QR codes are enabled in the project configuration for both types and storage places, links to resources of both categories can be created using this option by reading the QR code via camera scan (only available for resources of the category "Find" and its subcategories)
 
 Furthermore, the context menu contains options for creating and editing geometries. Please note that when
 multiple resources are selected, only the *Move* and *Delete* options are available. Options for adding or managing QR codes are only available if the use of QR codes has been set up for the corresponding category in the configuration editor (see section *Edit categories* in chapter *Configuration*).
@@ -547,7 +549,7 @@ If the use of QR codes is enabled for a category, a unique QR code can be assign
 * Accessing the resource by camera scan (via the QR code button in the search bar)
 * Printing QR code labels (via the context menu of the resource)
 * Setting the storage location of a resource via camera scan of the QR code linked to the storage location (via the context menu of the resource)
-Please note that QR codes can only be used for the categories "Find", "Find collection", "Sample" and "Storage location" as well as the respective subcategories.
+Please note that QR codes can only be used for the categories "Find", "Find collection", "Sample", "Type" and "Storage location" as well as the respective subcategories.
 
 The following options are available in the category editor for configuring QR codes:
 * *Use QR codes for identification*: Enable this option to allow the use of QR codes for resources of the category

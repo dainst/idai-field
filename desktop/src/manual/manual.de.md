@@ -69,7 +69,9 @@ Ressource unterzuordnen
 * *Löschen*: Entfernt Ressourcen nach einer Sicherheitsabfrage (optional können außerdem alle Bilder entfernt werden,
 die ausschließlich mit den zu löschenden Ressourcen verknüpft sind)
 * *Workflow dokumentieren*: Zeigt die mit den ausgewählten Ressourcen verknüpften Prozesse an und ermöglicht es, neue Prozesse anzulegen (nur verfügbar für Kategorien, die als Zielkategorie der Relation "Durchgeführt an" einer Prozess-Kategorie konfiguriert wurden)
+* *Typ scannen*: Verknüpft die Ressource mit einem Typ, indem der QR-Code des Typs per Kamera-Scan eingelesen wird (nur verfügbar für Ressourcen der Kategorie "Fund" und deren Unterkategorien)
 * *Aufbewahrungsort scannen*: Setzt einen neuen Aufbewahrungsort für die Ressource, indem der QR-Code des Aufbewahrungsortes per Kamera-Scan eingelesen wird (nur verfügbar für Ressourcen der Kategorien "Fund", "Fundkollektion" und "Probe" sowie der entsprechenden Unterkategorien)
+* *Typ oder Aufbewahrungsort scannen*: Sind QR-Codes in der Projektkonfiguration sowohl für Typen als auch für Aufbewahrungsorte aktiviert, können Verknüpfungen mit Ressourcen beider Kategorien per Kamera-Scan des QR-Codes über diese Option hergestellt werden (nur verfügbar für Ressourcen der Kategorie "Fund" und deren Unterkategorien)
 
 Darüber hinaus stellt das Kontextmenü Funktionen zum Anlegen bzw. Bearbeiten von Geometrien bereit. Bitte beachten Sie,
 dass bei Auswahl mehrerer Ressourcen ausschließlich die Optionen *Verschieben* und *Löschen* verfügbar sind. Optionen zum Hinzufügen oder Verwalten von QR-Codes sind ausschließlich verfügbar, wenn die Verwendung von QR-Codes für die entsprechende Kategorie im Konfigurationseditor eingerichtet wurde (siehe Abschnitt *Kategorien bearbeiten* im Kapitel *Konfiguration*).
@@ -558,7 +560,7 @@ Ist die Verwendung von QR-Codes für eine Kategorie aktiviert, kann jeder Ressou
 * Aufrufen der Ressource per Kamera-Scan (über den QR-Code-Button der Suchleiste)
 * Druck von QR-Code-Etiketten (über das Kontextmenü der Ressource)
 * Setzen des Aufbewahrungsortes einer Ressource per Kamera-Scan des mit dem Aufbewahrungsort verknüpften QR-Codes (über das Kontextmenü der Ressource)
-Bitte beachten Sie, dass QR-Codes nur für die Kategorien "Fund", "Fundkollektion", "Probe" und "Aufbewahrungsort" sowie die jeweiligen Unterkategorien verwendet werden können.
+Bitte beachten Sie, dass QR-Codes nur für die Kategorien "Fund", "Fundkollektion", "Probe", "Typ" und "Aufbewahrungsort" sowie die jeweiligen Unterkategorien verwendet werden können.
 
 Zur Konfiguration von QR-Codes stehen im Kategorieeditor folgende Optionen bereit:
 * *QR-Codes zur Identifikation verwenden*: Aktivieren Sie diese Option, um die Verwendung von QR-Codes für Ressourcen der Kategorie zu erlauben

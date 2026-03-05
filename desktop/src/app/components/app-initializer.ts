@@ -194,7 +194,7 @@ const setUpDatabase = async (settingsService: SettingsService, settings: Setting
 };
 
 
-const loadSampleData = async (settings: Settings, db: PouchDB.Database, thumbnailGenerator: ThumbnailGenerator,
+const loadSampleData = async (settings: Settings, db: any, thumbnailGenerator: ThumbnailGenerator,
                               imagestore: ImageStore, progress: InitializationProgress) => {
 
     if (settings.selectedProject !== 'test') return;
@@ -209,7 +209,7 @@ const loadSampleData = async (settings: Settings, db: PouchDB.Database, thumbnai
 
 const loadConfiguration = async (settingsService: SettingsService, progress: InitializationProgress,
                                  configReader: ConfigReader, configLoader: ConfigLoader,
-                                 db: PouchDB.Database, projectIdentifier: string, username: string): Promise<Services> => {
+                                 db: any, projectIdentifier: string, username: string): Promise<Services> => {
 
     await progress.setPhase('loadingConfiguration');
 
@@ -238,9 +238,7 @@ const loadConfiguration = async (settingsService: SettingsService, progress: Ini
 };
 
 
-const loadDocuments = async (serviceLocator: AppInitializerServiceLocator,
-                             db: PouchDB.Database<{}>,
-                             documentCache: DocumentCache,
+const loadDocuments = async (serviceLocator: AppInitializerServiceLocator, db: any, documentCache: DocumentCache,
                              progress: InitializationProgress) => {
 
     await progress.setPhase('loadingDocuments');
@@ -259,15 +257,14 @@ const loadDocuments = async (serviceLocator: AppInitializerServiceLocator,
 };
 
 
-const updateProjectNameInSettings = async (settingsService: SettingsService,
-                                           db: PouchDB.Database<{}>): Promise<Settings> => {
+const updateProjectNameInSettings = async (settingsService: SettingsService, db: any): Promise<Settings> => {
 
     const projectDocument = await db.get('project') as Document;
     return await settingsService.updateProjectName(projectDocument);
 };
 
 
-const buildConfigurationIndex = async (configReader: ConfigReader, configLoader: ConfigLoader, db: PouchDB.Database,
+const buildConfigurationIndex = async (configReader: ConfigReader, configLoader: ConfigLoader, db: any,
                                        configuration: ProjectConfiguration, projectIdentifier: string,
                                        username: string): Promise<ConfigurationIndex> => {
 
@@ -284,7 +281,7 @@ const buildConfigurationIndex = async (configReader: ConfigReader, configLoader:
 };
 
 
-const createDisplayImages = async (imagestore: ImageStore, db: PouchDB.Database, projectIdentifier: string,
+const createDisplayImages = async (imagestore: ImageStore, db: any, projectIdentifier: string,
                                    progress: InitializationProgress) => {
 
     const fileInfos: Map<FileInfo> = await imagestore.getFileInfos(
@@ -311,7 +308,7 @@ const createDisplayImages = async (imagestore: ImageStore, db: PouchDB.Database,
 }
 
 
-const createDisplayImage = async (imageId: string, imagestore: ImageStore, db: PouchDB.Database) => {
+const createDisplayImage = async (imageId: string, imagestore: ImageStore, db: any) => {
 
     try {
         await createDisplayVariant(

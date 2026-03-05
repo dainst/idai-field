@@ -52,7 +52,7 @@ export class BackupService {
         }
 
         try {
-            const restoredDatabase: PouchDB.Database = await this.loadBackupFile(filePath, project);
+            const restoredDatabase: any = await this.loadBackupFile(filePath, project);
             const projectDocument: Document = await restoredDatabase.get('project');
 
             const unsimilarProjectIdentifier: boolean = !ProjectIdentifierValidation.isSimilar(
@@ -73,9 +73,9 @@ export class BackupService {
     }
 
 
-    private async loadBackupFile(filePath: string, project: string): Promise<PouchDB.Database> {
+    private async loadBackupFile(filePath: string, project: string): Promise<any> {
 
-        let database: PouchDB.Database = new PouchDB(project);
+        let database: any = new PouchDB(project);
         
         // to prevent pouchdb-load's incremental loading and force a true overwrite of the old db
         await database.destroy();
@@ -89,8 +89,7 @@ export class BackupService {
     }
 
 
-    private async updateProjectIdentifier(projectDocument: Document, project: string,
-                                          restoredDatabase: PouchDB.Database) {
+    private async updateProjectIdentifier(projectDocument: Document, project: string, restoredDatabase: any) {
 
         projectDocument.resource.identifier = project;
         await restoredDatabase.put(projectDocument, { force: true });

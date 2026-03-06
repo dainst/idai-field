@@ -9,6 +9,7 @@ import { MenuContext } from '../../../../services/menu-context';
 @Component({
     templateUrl: './type-scanner-modal.html',
     host: {
+        'data-component-id': 'TypeScannerModalComponent',
         '(window:keydown)': 'onKeyDown($event)',
     },
     standalone: false

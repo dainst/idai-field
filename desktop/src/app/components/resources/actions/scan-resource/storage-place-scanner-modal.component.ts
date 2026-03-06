@@ -9,6 +9,7 @@ import { MenuContext } from '../../../../services/menu-context';
 @Component({
     templateUrl: './storage-place-scanner-modal.html',
     host: {
+        'data-component-id': 'StoragePlaceScannerModalComponent',
         '(window:keydown)': 'onKeyDown($event)',
     },
     standalone: false

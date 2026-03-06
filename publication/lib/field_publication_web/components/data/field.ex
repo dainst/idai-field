@@ -7,6 +7,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
   alias FieldPublication.Publications.Data.Field
   alias FieldPublicationWeb.Presentation.Components.I18n
   alias FieldPublication.Publications.Search
+  alias FieldPublicationWeb.Components.Data.LanguageSelection
 
   import I18n
 
@@ -30,9 +31,11 @@ defmodule FieldPublicationWeb.Components.Data.Field do
   def render_data_field(%{field: %Field{input_type: input_type}} = assigns)
       when input_type in ["input", "simpleInput", "text"] do
     ~H"""
-    <.tabbed_text :let={text} values={@field.value} field_name={@field.name}>
-      {text}
-    </.tabbed_text>
+    <.live_component :let={text} module={LanguageSelection} id={@field.name} field={@field}>
+      <.maybe_search_link field={@field}>
+        {text}
+      </.maybe_search_link>
+    </.live_component>
     """
   end
 
@@ -41,15 +44,11 @@ defmodule FieldPublicationWeb.Components.Data.Field do
       )
       when input_type in ["dropdown", "radio"] and is_map(value_labels) do
     ~H"""
-    <.tabbed_text
-      :let={text}
-      values={@field.value_labels[@field.value] || @field.value}
-      field_name={@field.name}
-    >
+    <.live_component :let={text} module={LanguageSelection} id={@field.name} field={@field}>
       <.maybe_search_link field={@field}>
         {text}
       </.maybe_search_link>
-    </.tabbed_text>
+    </.live_component>
     """
   end
 
@@ -60,13 +59,17 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     # Checkboxes where the selected value is also what should be displayed (because there are no labels).
     ~H"""
     <%= for value <- @field.value do %>
-      <div>
-        <.tabbed_text :let={text} values={value} field_name={@field.name}>
-          <.maybe_search_link field={@field} value={value}>
-            {text}
-          </.maybe_search_link>
-        </.tabbed_text>
-      </div>
+      <.live_component
+        :let={text}
+        module={LanguageSelection}
+        id={"#{@field.name}_#{value}"}
+        specific_value={value}
+        field={@field}
+      >
+        <.maybe_search_link field={@field}>
+          {text}
+        </.maybe_search_link>
+      </.live_component>
     <% end %>
     """
   end
@@ -78,15 +81,17 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     # Checkboxes where the selected value is mapped to a label.
     ~H"""
     <%= for value <- @field.value do %>
-      <.tabbed_text
+      <.live_component
         :let={text}
-        values={@field.value_labels[value] || value}
-        field_name={"#{@field.name}_#{value}"}
+        module={LanguageSelection}
+        id={"#{@field.name}_#{value}"}
+        specific_value={value}
+        field={@field}
       >
-        <.maybe_search_link field={@field} value={value}>
+        <.maybe_search_link field={@field}>
           {text}
         </.maybe_search_link>
-      </.tabbed_text>
+      </.live_component>
     <% end %>
     """
   end
@@ -98,7 +103,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     ~H"""
     <% start_value = @field.value["value"] %>
     <% end_value = @field.value["endValue"] %>
-    <.tabbed_text
+    <.language_selection_text
       :let={text}
       values={@field.value_labels[start_value] || start_value}
       field_name={"#{@field.name}_#{start_value}"}
@@ -106,11 +111,11 @@ defmodule FieldPublicationWeb.Components.Data.Field do
       <.maybe_search_link field={@field} value={start_value}>
         {text}
       </.maybe_search_link>
-    </.tabbed_text>
+    </.language_selection_text>
 
     <%= if end_value do %>
       -
-      <.tabbed_text
+      <.language_selection_text
         :let={text}
         values={@field.value_labels[end_value] || end_value}
         field_name={"#{@field.name}_#{end_value}"}
@@ -118,7 +123,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
         <.maybe_search_link field={@field} value={end_value}>
           {text}
         </.maybe_search_link>
-      </.tabbed_text>
+      </.language_selection_text>
     <% end %>
     """
   end

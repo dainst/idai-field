@@ -11,7 +11,7 @@ import { AngularUtility } from '../../angular/angular-utility';
     selector: 'searchable-select',
     templateUrl: './searchable-select.html',
     host: {
-        '(window:contextmenu)': 'closePopover($event)'
+        '(window:contextmenu)': 'closePopover()'
     },
     standalone: false
 })

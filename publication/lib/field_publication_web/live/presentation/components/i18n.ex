@@ -1,10 +1,66 @@
 defmodule FieldPublicationWeb.Presentation.Components.I18n do
-  use Phoenix.Component
+  use FieldPublicationWeb, :html
 
   attr :field_name, :string, required: true
   attr :values, :any, required: true
   attr :height, :string, default: "h-14"
   slot :inner_block, required: true
+
+  def language_selection_text(%{values: values} = assigns) when is_binary(values) do
+    # Fallback if assigned `values` is just a binary string.
+    ~H"""
+    {render_slot(@inner_block, @values)}
+    """
+  end
+
+  def language_selection_text(%{values: values} = assigns) when is_map(values) do
+    ~H"""
+    <% user_ui_language = Gettext.get_locale(FieldPublicationWeb.Gettext) %>
+
+    <%= case Map.keys(@values) do %>
+      <% [the_only_key] -> %>
+        <!-- Use the fallback, not creating a tabbed selection (see above) -->
+        <.language_selection_text
+          :let={text}
+          values={@values[the_only_key]}
+          field_name={@field_name}
+        >
+          {text}
+        </.language_selection_text>
+      <% multiple_keys -> %>
+        <% initial =
+          cond do
+            user_ui_language in multiple_keys ->
+              user_ui_language
+
+            "en" in multiple_keys ->
+              "en"
+
+            true ->
+              List.first(multiple_keys)
+          end %>
+
+        <div
+          class="flex"
+          id={"language_select_#{@field_name}"}
+          phx-hook="LanguageSelection"
+          values={JSON.encode!(@values)}
+        >
+          <div class="flex flex-col">
+            <button>{initial}</button>
+            <div class="hidden">
+              <%= for lang <- Map.keys(@values) do %>
+                {lang}
+              <% end %>
+            </div>
+          </div>
+          <div>
+            {render_slot(@inner_block, @values[initial])}
+          </div>
+        </div>
+    <% end %>
+    """
+  end
 
   def tabbed_text(%{values: values} = assigns) when is_binary(values) do
     # Fallback if assigned `values` is just a binary string.
@@ -43,14 +99,14 @@ defmodule FieldPublicationWeb.Presentation.Components.I18n do
         <div class={"flex relative #{@height}"}>
           <%= for {lang, text} <- @values do %>
             <details
-              class="m-1 p-1 rounded-t  open:bg-panel open:pointer-events-none overflow-x-auto"
+              class="m-1 p-1 rounded-t open:bg-panel open:pointer-events-none overflow-x-auto"
               name={"i18n_tab_#{@field_name}"}
               open={
                 # sets the initially selected value
                 initial == lang
               }
             >
-              <summary class="font-thin text-[12px] text-primary hover:text-primary-hover cursor-pointer">
+              <summary class="font-thin text-[12px] text-primary hover:text-primary-hover cursor-pointer language_tab">
                 <span id={"i18n_tab_#{@field_name}_#{lang}"} phx-hook="DisplayLanguage" lang={lang}>
                   {lang}
                 </span>

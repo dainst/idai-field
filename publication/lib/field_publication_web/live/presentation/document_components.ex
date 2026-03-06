@@ -110,8 +110,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                   ~p"/api/json/raw/#{@publication.project_name}/#{@publication.draft_date}/#{@doc.id}"
                 }
               >
-                <span class="text-center inline-block w-[20px]" style="block">{"{}"}</span>
-                View JSON (raw)
+                <span class="text-center inline-block w-5" style="block">{"{}"}</span> View JSON (raw)
               </a>
             </li>
             <li>
@@ -122,7 +121,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                   ~p"/api/json/extended/#{@publication.project_name}/#{@publication.draft_date}/#{@doc.id}"
                 }
               >
-                <span class="text-center inline-block w-[20px]" style="block">{"{}"}</span>
+                <span class="text-center inline-block w-5" style="block">{"{}"}</span>
                 View JSON (extended)
               </a>
             </li>
@@ -314,7 +313,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                   ~p"/api/json/raw/#{@publication.project_name}/#{@publication.draft_date}/#{@doc.id}"
                 }
               >
-                <span class="text-center inline-block w-[20px]" style="block">{"{}"}</span>
+                <span class="text-center inline-block w-5]" style="block">{"{}"}</span>
                 View JSON (raw)
               </a>
             </li>
@@ -325,7 +324,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                   ~p"/api/json/extended/#{@publication.project_name}/#{@publication.draft_date}/#{@doc.id}"
                 }
               >
-                <span class="text-center inline-block w-[20px]" style="block">{"{}"}</span>
+                <span class="text-center inline-block w-5" style="block">{"{}"}</span>
                 View JSON (extended)
               </a>
             </li>
@@ -518,7 +517,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           <.link navigate={
             ~p"/search?#{%{filters: %{category: category_name, project_key: @publication.project_name}}}"
           }>
-            <div class="flex flex-row mb-[2px] p-1">
+            <div class="flex flex-row mb-0.5 p-1">
               <span style={"color: #{desaturate_category_color(color)}"}>
                 <.icon name="hero-document-solid" />
               </span>

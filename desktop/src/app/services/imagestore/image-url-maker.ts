@@ -47,7 +47,7 @@ export class ImageUrlMaker {
         if (!displayData) return ImageUrlMaker.blackImg;
 
         relevantList[imageId] = this.sanitizer.bypassSecurityTrustResourceUrl(
-            URL.createObjectURL(new Blob([displayData]))
+            URL.createObjectURL(new Blob([displayData as any]))
         );
 
         return relevantList[imageId];

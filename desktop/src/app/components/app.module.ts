@@ -6,7 +6,8 @@ import localeIt from '@angular/common/locales/it';
 import localePt from '@angular/common/locales/pt';
 import localeTr from '@angular/common/locales/tr';
 import localeUk from '@angular/common/locales/uk';
-import { LOCALE_ID, NgModule, TRANSLATIONS, TRANSLATIONS_FORMAT, inject, provideAppInitializer } from '@angular/core';
+import { LOCALE_ID, NgModule, TRANSLATIONS, TRANSLATIONS_FORMAT, inject, provideAppInitializer,
+    provideZoneChangeDetection } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { Router, NavigationEnd } from '@angular/router';
@@ -271,7 +272,8 @@ registerLocaleData(localeUk, 'uk');
         AppState,
         ImageToolLauncher,
         { provide: IMAGE_CONFIG, useValue: { disableImageSizeWarning: true, disableImageLazyLoadWarning: true } },
-        provideHttpClient(withInterceptorsFromDi())
+        provideHttpClient(withInterceptorsFromDi()),
+        provideZoneChangeDetection()
     ],
     bootstrap: [AppComponent]
 })

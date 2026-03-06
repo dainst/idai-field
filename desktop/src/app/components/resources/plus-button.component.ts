@@ -158,7 +158,7 @@ export class PlusButtonComponent implements OnInit, OnChanges, OnDestroy {
     }
 
 
-    public isAllowedGeometryType(geometryType: FieldGeometryType) {
+    public isAllowedGeometryType(geometryType: FieldGeometryType): boolean {
         
         return CategoryForm.isAllowedGeometryType(this.selectedCategory, geometryType);
     }

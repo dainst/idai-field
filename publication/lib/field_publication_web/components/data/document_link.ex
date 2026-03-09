@@ -18,7 +18,7 @@ defmodule FieldPublicationWeb.Components.Data.DocumentLink do
 
   def document_link(assigns) do
     ~H"""
-    <div class="flex mb-[2px]" id={if @id, do: @id, else: "#{@doc.id}_link"}>
+    <div class="flex mb-0.5" id={if @id, do: @id, else: "#{@doc.id}_link"}>
       <.link
         navigate={~p"/search?#{%{filters: %{"category" => @doc.category.name}}}"}
         class="rounded-tl pl-2 rounded-bl"

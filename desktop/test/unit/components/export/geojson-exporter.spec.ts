@@ -2,7 +2,7 @@ import { featureDoc } from 'idai-field-core';
 import { GeoJsonExporter } from '../../../../src/app/components/export/geojson-exporter';
 
 const fs = require('fs');
-const rimraf = require('rimraf');
+const { rimraf } = require('rimraf');
 const geojsonHint = require('@mapbox/geojsonhint');
 
 
@@ -32,9 +32,9 @@ describe('GeojsonExporter', () => {
     });
 
 
-    afterEach(done => {
+    afterEach(async () => {
 
-        rimraf(exportFilePath, () => done());
+        await rimraf(exportFilePath);
     });
 
 

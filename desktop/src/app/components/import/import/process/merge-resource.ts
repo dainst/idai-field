@@ -187,28 +187,30 @@ function overwriteOrDeleteProperties(target: Map<any>|undefined, source: Map<any
 
 function mergeStringArrays(sourceArray: string[], targetArray: string[]): string[] {
 
+    assertNoEmptySlotsInArray(sourceArray);
+
     if (!isArray(targetArray)) targetArray = [];
 
     if (sourceArray.includes(undefined)) {
         for (let i = 0; i <= sourceArray.length; i++) {
-            if (sourceArray[i]) {
-                if (i < targetArray.length) {
-                    targetArray[i] = sourceArray[i];
-                } else {
-                    targetArray.push(sourceArray[i]);
-                }
+            if (!sourceArray[i]) continue;
+
+            if (i < targetArray.length) {
+                targetArray[i] = sourceArray[i];
+            } else {
+                targetArray.push(sourceArray[i]);
             }
         }
         return targetArray;
     } else {
-        const result: string[] = dropRightWhile(is(null))(sourceArray);
-        if (result.includes(null)) throw [ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN];
-        return result;
+        return dropRightWhile(is(null))(sourceArray);
     }
 }
 
 
 function expandObjectArray(target: Array<any>, source: Array<any>) {
+
+    assertNoEmptySlotsInArray(source);
 
     Object.keys(source).forEach(index => {
         // This can happen if deletions are not permitted and
@@ -236,6 +238,13 @@ function expandObjectArray(target: Array<any>, source: Array<any>) {
     const result = dropRightWhile(is(null))(target);
     if (result.includes(null)) throw [ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN];
     return result;
+}
+
+
+function assertNoEmptySlotsInArray(array: Array<any>) {
+
+    const result = dropRightWhile(element => element === null || element === undefined)(array);
+    if (result.includes(null) || result.includes(undefined)) throw [ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN];
 }
 
 

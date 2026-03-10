@@ -5,7 +5,7 @@ import { InitializationProgress } from './app/components/initialization-progress
 import { Settings } from './app/services/settings/settings';
 import { environment } from './environments/environment';
 
-const detectPort = window.require('detect-port');
+const { detect } = window.require('detect-port');
 const log = window.require('electron-log');
 
 
@@ -29,7 +29,7 @@ async function start() {
 
 async function isAlreadyOpen(): Promise<boolean> {
 
-    return await detectPort(3000) !== 3000;
+    return await detect(3000) !== 3000;
 }
 
 

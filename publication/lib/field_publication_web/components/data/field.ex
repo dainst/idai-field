@@ -7,16 +7,14 @@ defmodule FieldPublicationWeb.Components.Data.Field do
   alias FieldPublication.Publications.Data.Field
   alias FieldPublicationWeb.Presentation.Components.I18n
   alias FieldPublication.Publications.Search
-  alias FieldPublicationWeb.Components.Data.LanguageSelection
-
-  import I18n
+  alias FieldPublicationWeb.Components.LanguageSelection
 
   defp is_search_keyword?(input_type) do
     input_type in (Search.get_keyword_inputs() ++ Search.get_keyword_multi_inputs())
   end
 
   attr :field, Field, required: true
-  attr :lang, :string, default: Gettext.get_locale(FieldPublicationWeb.Gettext)
+  attr :markdown, :boolean, default: false
 
   def render_data_field(%{field: %Field{input_type: input_type}} = assigns)
       when input_type in ["boolean"] do
@@ -31,11 +29,11 @@ defmodule FieldPublicationWeb.Components.Data.Field do
   def render_data_field(%{field: %Field{input_type: input_type}} = assigns)
       when input_type in ["input", "simpleInput", "text"] do
     ~H"""
-    <.live_component :let={text} module={LanguageSelection} id={@field.name} field={@field}>
+    <.maybe_language_select :let={text} field={@field} value={@field.value} id={@field.name}>
       <.maybe_search_link field={@field}>
         {text}
       </.maybe_search_link>
-    </.live_component>
+    </.maybe_language_select>
     """
   end
 
@@ -44,54 +42,24 @@ defmodule FieldPublicationWeb.Components.Data.Field do
       )
       when input_type in ["dropdown", "radio"] and is_map(value_labels) do
     ~H"""
-    <.live_component :let={text} module={LanguageSelection} id={@field.name} field={@field}>
+    <.maybe_language_select :let={text} field={@field} value={@field.value} id={@field.name}>
       <.maybe_search_link field={@field}>
         {text}
       </.maybe_search_link>
-    </.live_component>
+    </.maybe_language_select>
     """
   end
 
-  def render_data_field(
-        %{field: %Field{input_type: input_type, value_labels: value_labels}} = assigns
-      )
-      when input_type == "checkboxes" and (is_nil(value_labels) or value_labels == %{}) do
-    # Checkboxes where the selected value is also what should be displayed (because there are no labels).
-    ~H"""
-    <%= for value <- @field.value do %>
-      <.live_component
-        :let={text}
-        module={LanguageSelection}
-        id={"#{@field.name}_#{value}"}
-        specific_value={value}
-        field={@field}
-      >
-        <.maybe_search_link field={@field}>
-          {text}
-        </.maybe_search_link>
-      </.live_component>
-    <% end %>
-    """
-  end
-
-  def render_data_field(
-        %{field: %Field{input_type: input_type, value_labels: value_labels}} = assigns
-      )
-      when input_type == "checkboxes" and is_map(value_labels) do
+  def render_data_field(%{field: %Field{input_type: input_type}} = assigns)
+      when input_type == "checkboxes" do
     # Checkboxes where the selected value is mapped to a label.
     ~H"""
     <%= for value <- @field.value do %>
-      <.live_component
-        :let={text}
-        module={LanguageSelection}
-        id={"#{@field.name}_#{value}"}
-        specific_value={value}
-        field={@field}
-      >
+      <.maybe_language_select :let={text} field={@field} value={value} id={"#{@field.name}_#{value}"}>
         <.maybe_search_link field={@field}>
           {text}
         </.maybe_search_link>
-      </.live_component>
+      </.maybe_language_select>
     <% end %>
     """
   end
@@ -103,27 +71,32 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     ~H"""
     <% start_value = @field.value["value"] %>
     <% end_value = @field.value["endValue"] %>
-    <.language_selection_text
+
+    <.maybe_language_select
       :let={text}
-      values={@field.value_labels[start_value] || start_value}
-      field_name={"#{@field.name}_#{start_value}"}
+      field={@field}
+      value={start_value}
+      id={"#{@field.name}_#{start_value}"}
     >
-      <.maybe_search_link field={@field} value={start_value}>
+      <.maybe_search_link field={@field}>
         {text}
       </.maybe_search_link>
-    </.language_selection_text>
+    </.maybe_language_select>
 
     <%= if end_value do %>
       -
-      <.language_selection_text
+      <.maybe_language_select
         :let={text}
-        values={@field.value_labels[end_value] || end_value}
-        field_name={"#{@field.name}_#{end_value}"}
+        field={@field}
+        value={end_value}
+        id={
+          "#{@field.name}_#{end_value}" |> Base.encode16() |> String.replace_prefix("", "language_")
+        }
       >
-        <.maybe_search_link field={@field} value={end_value}>
+        <.maybe_search_link field={@field}>
           {text}
         </.maybe_search_link>
-      </.language_selection_text>
+      </.maybe_language_select>
     <% end %>
     """
   end
@@ -199,6 +172,70 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     render_warning(assigns)
   end
 
+  attr :id, :string, required: true
+  attr :field, Field, required: true
+  attr :value, :any, required: true
+  slot :inner_block, required: true
+
+  defp maybe_language_select(
+         %{
+           field: %Field{value_labels: value_labels},
+           value: value
+         } = assigns
+       )
+       when is_binary(value) and (value_labels == %{} or is_nil(value_labels)) do
+    # The field's "value" is just a single binary value.
+    # There are also no translated labels for the value.
+
+    ~H"""
+    <div>
+      {render_slot(@inner_block, @value)}
+    </div>
+    """
+  end
+
+  defp maybe_language_select(%{value: value} = assigns) when is_map(value) do
+    ~H"""
+    <%= case Map.keys(@value) do %>
+      <% [one_language_key] -> %>
+        {# If there is only one key, just show that single value.
+        render_slot(@inner_block, @value[one_language_key])}
+      <% _multiple_language_keys -> %>
+        <.live_component
+          :let={text}
+          module={LanguageSelection}
+          id={ensure_valid_id(@id)}
+          translations={@value}
+        >
+          {render_slot(@inner_block, text)}
+        </.live_component>
+    <% end %>
+    """
+  end
+
+  defp maybe_language_select(%{value: value, field: %Field{value_labels: value_labels}} = assigns)
+       when is_binary(value) and is_map(value_labels) do
+    # The field's "value" is just a single binary value.
+    # There are also no translated labels for the value.
+
+    ~H"""
+    <.live_component
+      :let={text}
+      module={LanguageSelection}
+      id={ensure_valid_id(@id)}
+      translations={@field.value_labels[@value]}
+    >
+      {render_slot(@inner_block, text)}
+    </.live_component>
+    """
+  end
+
+  defp maybe_language_select(assigns) do
+    ~H"""
+    <.render_warning {assigns} />
+    """
+  end
+
   attr :field, Field, required: true
 
   attr :value, :string,
@@ -242,4 +279,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     </div>
     """
   end
+
+  @regex ~r/[^\d\w_:.]/
+  def ensure_valid_id(input) when is_binary(input), do: String.replace(input, @regex, "_")
 end

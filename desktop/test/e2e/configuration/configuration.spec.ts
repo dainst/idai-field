@@ -49,7 +49,6 @@ test.describe('configuration', () => {
         await ManageValuelistsModalPage.clickSelectValuelist(valuelistName);
         await ManageValuelistsModalPage.clickConfirmSelection();
         await EditConfigurationPage.clickConfirmSubfield();
-
     }
 
 

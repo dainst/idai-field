@@ -32,7 +32,8 @@ export function removeNullProperties(struct: Map<any>|Array<any>): Map<any>|Arra
         }
     });
 
-    if (isArray(struct_)) struct_ = dropRightWhile(not(isDefined))(struct_);
+    if (isArray(struct_) && struct_.every(element => element === undefined)) return undefined;
+
     return isEmpty(struct_)
         ? undefined
         : struct_;

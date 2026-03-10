@@ -15,7 +15,9 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
     Image
   }
 
+  alias FieldPublication.DatabaseSchema.Translation
   alias FieldPublication.Publications.Data
+  alias FieldPublicationWeb.Components.LanguageSelection
 
   alias FieldPublication.Publications.Data.{
     Document,
@@ -367,7 +369,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
     ~H"""
     <div>
       <.document_heading>
-        <.render_data_field field={Data.get_field(@doc, "shortName")} />
+        <.render_data_field field={Data.get_field(@doc, "shortName") |> IO.inspect()} />
       </.document_heading>
       <% depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
       <%= if depicted_in != nil do %>
@@ -394,17 +396,41 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             {gettext("project_doc_about_project")}
           </.group_heading>
           <div class="bg-panel p-2">
-            <I18n.markdown values={Data.get_field_value(@doc, "description")} />
+            <.live_component
+              :let={comment}
+              module={LanguageSelection}
+              id="project_description"
+              translations={Data.get_field_value(@doc, "description")}
+            >
+              <span class="markdown">
+                {comment
+                |> Earmark.as_html!()
+                |> Phoenix.HTML.raw()}
+              </span>
+            </.live_component>
+            
+    <!--<I18n.markdown values={Data.get_field_value(@doc, "description")} />-->
           </div>
           <.group_heading class="mt-3">
             {gettext("project_doc_about_publication")}
           </.group_heading>
           <div class="bg-panel p-2">
-            <I18n.markdown values={
-              @publication.comments
-              |> Enum.map(fn %{language: lang, text: text} -> {lang, text} end)
-              |> Enum.into(%{})
-            } />
+            <.live_component
+              :let={comment}
+              module={LanguageSelection}
+              id="publication_comments"
+              translations={
+                @publication.comments
+                |> Enum.map(fn %Translation{language: lang, text: text} -> {lang, text} end)
+                |> Enum.into(%{})
+              }
+            >
+              <span class="markdown">
+                {comment
+                |> Earmark.as_html!()
+                |> Phoenix.HTML.raw()}
+              </span>
+            </.live_component>
           </div>
         </div>
 

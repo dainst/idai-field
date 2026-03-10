@@ -7,8 +7,6 @@ defmodule FieldPublicationWeb.Components.Data.DocumentLink do
 
   import FieldPublicationWeb.Components.Data.Image
 
-  alias FieldPublicationWeb.Presentation.Components.I18n
-
   attr :id, :string, default: nil
   attr :doc, Document, required: true
   attr :image_count, :integer, default: 0
@@ -38,6 +36,7 @@ defmodule FieldPublicationWeb.Components.Data.DocumentLink do
           <% shortdescription = Data.get_field(@doc, "shortDescription") %>
           <small class="ml-2 text-slate-600">
             <%= if shortdescription do %>
+
               <I18n.text values={shortdescription.value} />
             <% end %>
             <.icon

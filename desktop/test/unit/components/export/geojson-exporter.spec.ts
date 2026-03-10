@@ -1,9 +1,9 @@
+import { getIssues } from '@placemarkio/check-geojson';
 import { featureDoc } from 'idai-field-core';
 import { GeoJsonExporter } from '../../../../src/app/components/export/geojson-exporter';
 
 const fs = require('fs');
 const { rimraf } = require('rimraf');
-const geojsonHint = require('@mapbox/geojsonhint');
 
 
 /**
@@ -19,8 +19,9 @@ describe('GeojsonExporter', () => {
     const performExportAndValidate = async () => {
 
         await GeoJsonExporter.performExport(mockDatastore, 'project', exportFilePath);
-        const geojson: any = fs.readFileSync(exportFilePath).toString();
-        expect(geojsonHint.hint(geojson, null)).toEqual([]);
+        const geojson: string = fs.readFileSync(exportFilePath).toString();
+
+        expect(getIssues(geojson).length).toBe(0);
     };
 
 

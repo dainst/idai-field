@@ -10207,7 +10207,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.unallowedCharacterField" datatype="html">
         <source>Nicht erlaubtes Zeichen im Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
-        <target state="needs-translation">Nicht erlaubtes Zeichen im Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
+        <target state="translated">Caracteres não permitidos no campo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">72,74</context>
@@ -10215,7 +10215,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.unallowedGeometryType" datatype="html">
         <source>Nicht erlaubter Geometrietyp <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="peLabel}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
-        <target state="needs-translation">Nicht erlaubter Geometrietyp <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="peLabel}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
+        <target state="translated">Tipo de geometria <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="peLabel}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/> não permitido</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">128,130</context>
@@ -10223,7 +10223,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.unallowedCharacterField" datatype="html">
         <source>Das Zeichen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>;<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ist in Feldern des Eingabetyps <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="ction)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="nicht erlaubt"/> nicht erlaubt. </source>
-        <target state="needs-translation">Das Zeichen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>;<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ist in Feldern des Eingabetyps <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="ction)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="nicht erlaubt"/> nicht erlaubt. </target>
+        <target state="translated">O carácter <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>;<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> não é permitido nos campos de tipo de entrada <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="ction)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="nicht erlaubt"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">187,189</context>
@@ -10231,7 +10231,7 @@
       </trans-unit>
       <trans-unit id="imageUpload.uploadModal.info.generic" datatype="html">
         <source>Daten werden eingelesen...</source>
-        <target state="needs-translation">Daten werden eingelesen...</target>
+        <target state="translated">Dados estão a ser lidos...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/upload-modal.html</context>
           <context context-type="linenumber">5,7</context>
@@ -10239,7 +10239,7 @@
       </trans-unit>
       <trans-unit id="util.warnings.unallowedCharacterFields" datatype="html">
         <source>Nicht erlaubte Zeichen</source>
-        <target state="needs-translation">Nicht erlaubte Zeichen</target>
+        <target state="translated">Caracteres não permitidos</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">274</context>
@@ -10247,7 +10247,7 @@
       </trans-unit>
       <trans-unit id="configuration.allowedGeometryType" datatype="html">
         <source>Erlaubter Geometrietyp</source>
-        <target state="needs-translation">Erlaubter Geometrietyp</target>
+        <target state="translated">Tipo de geometria permitido</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
           <context context-type="linenumber">83</context>
@@ -10255,7 +10255,7 @@
       </trans-unit>
       <trans-unit id="configuration.allowedGeometryTypes" datatype="html">
         <source>Erlaubte Geometrietypen</source>
-        <target state="needs-translation">Erlaubte Geometrietypen</target>
+        <target state="translated">Tipos de geometria permitidos</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
           <context context-type="linenumber">85</context>
@@ -10267,7 +10267,7 @@
       </trans-unit>
       <trans-unit id="messages.model.validation.error.unallowedGeometryType" datatype="html">
         <source>Der Geometrietyp [1] ist für Ressourcen der Kategorie [0] nicht erlaubt.</source>
-        <target state="needs-translation">Der Geometrietyp [1] ist für Ressourcen der Kategorie [0] nicht erlaubt.</target>
+        <target state="translated">O tipo de geometria [1] não é permitido para o recurso da categoria [0].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">419</context>
@@ -10275,7 +10275,7 @@
       </trans-unit>
       <trans-unit id="messages.model.validation.error.geometryNotAllowed" datatype="html">
         <source>Für Ressourcen der Kategorie [0] können keine Geometrien angelegt werden.</source>
-        <target state="needs-translation">Für Ressourcen der Kategorie [0] können keine Geometrien angelegt werden.</target>
+        <target state="translated">Para os recursos da categoria [0] não podem ser criadas geometrias.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">423</context>
@@ -10283,7 +10283,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.generic" datatype="html">
         <source>Import fehlgeschlagen.</source>
-        <target state="needs-translation">Import fehlgeschlagen.</target>
+        <target state="translated">Importação falhou.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">600</context>
@@ -10291,7 +10291,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.unallowedCharacterInField" datatype="html">
         <source>Das Zeichen ';' ist im Feld '[0]' nicht erlaubt.</source>
-        <target state="needs-translation">Das Zeichen ';' ist im Feld '[0]' nicht erlaubt.</target>
+        <target state="translated">O carácter ';' no campo '[0]' não é permitido.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1004</context>
@@ -10299,7 +10299,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.unallowedCharacterInFields" datatype="html">
         <source>Das Zeichen ';' ist in den folgenden Feldern nicht erlaubt: [0]</source>
-        <target state="needs-translation">Das Zeichen ';' ist in den folgenden Feldern nicht erlaubt: [0]</target>
+        <target state="translated">O carácter ';' não é permitido nos seguintes campos: [0]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1008</context>
@@ -10307,7 +10307,7 @@
       </trans-unit>
       <trans-unit id="messages.images.error.unallowedCharacterInFilename" datatype="html">
         <source>Die Bilddatei '[0]' konnte nicht hinzugefügt werden. Das Zeichen ';' ist in Dateinamen nicht erlaubt.</source>
-        <target state="needs-translation">Die Bilddatei '[0]' konnte nicht hinzugefügt werden. Das Zeichen ';' ist in Dateinamen nicht erlaubt.</target>
+        <target state="translated">O ficheiro de imagem '[0]' não pode ser adicionado. O carácter ';' não é permitido em nomes de ficheiro.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1060</context>
@@ -10315,7 +10315,7 @@
       </trans-unit>
       <trans-unit id="configuration.error.noAllowedGeometryTypes" datatype="html">
         <source>Bitte wählen Sie mindestens einen erlaubten Geometrietyp aus.</source>
-        <target state="needs-translation">Bitte wählen Sie mindestens einen erlaubten Geometrietyp aus.</target>
+        <target state="translated">Por favor selecione pelo menos um tipo de geometria permitido.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1293</context>
@@ -10323,7 +10323,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.unallowedGeometryType" datatype="html">
         <source>Geometrien des Typs <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="Label}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="nicht erlaubt."/> sind für Ressourcen der Kategorie <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="tion)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="nicht erlaubt."/> nicht erlaubt. </source>
-        <target state="needs-translation">Geometrien des Typs <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="Label}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="nicht erlaubt."/> sind für Ressourcen der Kategorie <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="tion)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="nicht erlaubt."/> nicht erlaubt. </target>
+        <target state="translated">Geometrias do tipo <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="Label}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="nicht erlaubt."/> não são permitidos para recursos do tipo <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="tion)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="nicht erlaubt."/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">262,265</context>
@@ -10331,7 +10331,7 @@
       </trans-unit>
       <trans-unit id="resources.typeScannerModal.header.single" datatype="html">
         <source>Bisherigen Typ ersetzen?</source>
-        <target state="needs-translation">Bisherigen Typ ersetzen?</target>
+        <target state="translated">Substituir tipo existente?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-resource/type-scanner-modal.html</context>
           <context context-type="linenumber">3,5</context>
@@ -10339,7 +10339,7 @@
       </trans-unit>
       <trans-unit id="resources.typeScannerModal.header.multiple" datatype="html">
         <source>Bisherige Typen ersetzen?</source>
-        <target state="needs-translation">Bisherige Typen ersetzen?</target>
+        <target state="translated">Substituir tipos existentes?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-resource/type-scanner-modal.html</context>
           <context context-type="linenumber">7,9</context>
@@ -10347,7 +10347,7 @@
       </trans-unit>
       <trans-unit id="resources.typeScannerModal.editMode.singleDocument.multipleTypes" datatype="html">
         <source>Für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sind bereits"/> sind bereits mehrere Typen gesetzt. </source>
-        <target state="needs-translation">Für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sind bereits"/> sind bereits mehrere Typen gesetzt. </target>
+        <target state="translated">Para o recurso <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sind bereits"/> já estão definidos vários tipos. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-resource/type-scanner-modal.html</context>
           <context context-type="linenumber">19,21</context>
@@ -10355,7 +10355,7 @@
       </trans-unit>
       <trans-unit id="resources.typeScannerModal.editMode.multipleDocuments.singleType" datatype="html">
         <source>Für <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen ist bereits der Typ <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="esource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> gesetzt. </source>
-        <target state="needs-translation">Für <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen ist bereits der Typ <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="esource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> gesetzt. </target>
+        <target state="translated">Para <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> recursos já estão definidos o tipo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="esource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-resource/type-scanner-modal.html</context>
           <context context-type="linenumber">23,26</context>
@@ -10363,7 +10363,7 @@
       </trans-unit>
       <trans-unit id="resources.typeScannerModal.editMode.multipleDocuments.multipleTypes" datatype="html">
         <source>Für <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen sind bereits Typen gesetzt. </source>
-        <target state="needs-translation">Für <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen sind bereits Typen gesetzt. </target>
+        <target state="translated">Para <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> recursos já estão definidos os tipos. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-resource/type-scanner-modal.html</context>
           <context context-type="linenumber">28,30</context>
@@ -10371,7 +10371,7 @@
       </trans-unit>
       <trans-unit id="resources.typeScannerModal.editMode.question.multiple" datatype="html">
         <source>Möchten Sie die bisherigen Typen entfernen oder zusätzlich zum neuen Typ <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="source.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="beibehalten?"/> beibehalten? </source>
-        <target state="needs-translation">Möchten Sie die bisherigen Typen entfernen oder zusätzlich zum neuen Typ <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="source.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="beibehalten?"/> beibehalten? </target>
+        <target state="translated">Quer eliminar os existentes tipos ou manter adicionalmente ao novo tipo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="source.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="beibehalten?"/> ? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-resource/type-scanner-modal.html</context>
           <context context-type="linenumber">37,40</context>
@@ -10379,7 +10379,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.scanType" datatype="html">
         <source>Typ scannen</source>
-        <target state="needs-translation">Typ scannen</target>
+        <target state="translated">Escanear tipo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.html</context>
           <context context-type="linenumber">109</context>
@@ -10387,7 +10387,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.scanTypeOrStoragePlace" datatype="html">
         <source>Typ oder Aufbewahrungsort scannen</source>
-        <target state="needs-translation">Typ oder Aufbewahrungsort scannen</target>
+        <target state="translated">Escanear tipo ou depósito</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.html</context>
           <context context-type="linenumber">112</context>
@@ -10395,7 +10395,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.info.typeAlreadySet.multiple" datatype="html">
         <source>Der Typ [1] ist für die ausgewählten [0] Ressourcen bereits gesetzt.</source>
-        <target state="needs-translation">Der Typ [1] ist für die ausgewählten [0] Ressourcen bereits gesetzt.</target>
+        <target state="translated">O tipo [1] já foi definido para os [0] recursos selecionados.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1177</context>
@@ -10403,7 +10403,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.noTypeCategory" datatype="html">
         <source>Die Ressource [0] der Kategorie [1] ist kein gültiger Typ.</source>
-        <target state="needs-translation">Die Ressource [0] der Kategorie [1] ist kein gültiger Typ.</target>
+        <target state="translated">O recurso [0] da categoria [1] não é um tipo válido.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1187</context>
@@ -10411,7 +10411,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.noStoragePlaceOrTypeCategory" datatype="html">
         <source>Die Ressource [0] der Kategorie [1] ist kein gültiger Typ oder Aufbewahrungsort.</source>
-        <target state="needs-translation">Die Ressource [0] der Kategorie [1] ist kein gültiger Typ oder Aufbewahrungsort.</target>
+        <target state="translated">O recurso [0] da categoria [1] não é um tipo ou depósito válido.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1192</context>
@@ -10419,7 +10419,7 @@
       </trans-unit>
       <trans-unit id="resources.typeScannerModal.editMode.question.single" datatype="html">
         <source>Möchten Sie den bisherigen Typ entfernen oder zusätzlich zum neuen Typ <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="source.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="beibehalten?"/> beibehalten? </source>
-        <target state="needs-translation">Möchten Sie den bisherigen Typ entfernen oder zusätzlich zum neuen Typ <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="source.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="beibehalten?"/> beibehalten? </target>
+        <target state="translated">Quer eliminar o existente tipo ou manter adicionalmente ao novo tipo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="source.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="beibehalten?"/> ? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-resource/type-scanner-modal.html</context>
           <context context-type="linenumber">32,35</context>
@@ -10427,7 +10427,7 @@
       </trans-unit>
       <trans-unit id="resources.typeScannerModal.editMode.singleDocument.singleType" datatype="html">
         <source>Für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> ist bereits der Typ <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="esource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> gesetzt. </source>
-        <target state="needs-translation">Für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> ist bereits der Typ <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="esource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> gesetzt. </target>
+        <target state="translated">Para o recurso <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> já está definido o tipo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="esource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-resource/type-scanner-modal.html</context>
           <context context-type="linenumber">14,17</context>
@@ -10435,7 +10435,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.success.typeSaved.single" datatype="html">
         <source>Für die Ressource [0] wurde erfolgreich der Typ [1] gespeichert.</source>
-        <target state="needs-translation">Für die Ressource [0] wurde erfolgreich der Typ [1] gespeichert.</target>
+        <target state="translated">Para o recurso [0] foi guardado o tipo [1] com sucesso.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1140</context>
@@ -10443,7 +10443,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.success.typeSaved.multiple" datatype="html">
         <source>Für [0] Ressourcen wurde erfolgreich der Typ [1] gespeichert.</source>
-        <target state="needs-translation">Für [0] Ressourcen wurde erfolgreich der Typ [1] gespeichert.</target>
+        <target state="translated">Para [0] recursos foram guardados o tipo [1] com sucesso.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1145</context>
@@ -10451,7 +10451,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.info.typeAlreadySet.single" datatype="html">
         <source>Der Typ [1] ist für die Ressource [0] bereits gesetzt.</source>
-        <target state="needs-translation">Der Typ [1] ist für die Ressource [0] bereits gesetzt.</target>
+        <target state="translated">O tipo [1] já foi definido para o recurso [0].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1172</context>

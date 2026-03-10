@@ -131,6 +131,13 @@ export class EditConfigurationPage {
     }
 
 
+    public static async clickDeleteSubfield(subfieldIndex: number) {
+
+        const subfieldElement = await getLocator('.subfield-container').nth(subfieldIndex);
+        return click(await subfieldElement.locator('.delete-subfield-button'));
+    }
+
+
     public static clickInputTypeSelectOption(optionValue: string, modalContext: ModalContext) {
 
         return selectOption(this.getModalClass(modalContext) + ' .input-type-select', optionValue);

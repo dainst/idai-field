@@ -39,6 +39,20 @@ test.describe('configuration', () => {
     }
 
 
+    async function createSubfieldWithExistingValuelist(subfieldName: string, valuelistName: string) {
+
+        await EditConfigurationPage.typeInNewSubfield(subfieldName);
+        await EditConfigurationPage.clickCreateSubfield();
+        await EditConfigurationPage.clickInputTypeSelectOption('dropdown', 'subfield');
+        await EditConfigurationPage.clickAddValuelist();
+        await ManageValuelistsModalPage.typeInSearchFilterInput(valuelistName);
+        await ManageValuelistsModalPage.clickSelectValuelist(valuelistName);
+        await ManageValuelistsModalPage.clickConfirmSelection();
+        await EditConfigurationPage.clickConfirmSubfield();
+
+    }
+
+
     async function addValueToValuelist(subfieldIndex: number, newValueName: string) {
 
         await EditConfigurationPage.clickEditSubfield(subfieldIndex);
@@ -1084,6 +1098,33 @@ test.describe('configuration', () => {
         await EditConfigurationPage.clickConfirmSubfield();
         await EditConfigurationPage.clickConfirm();
         await ConfigurationPage.save();
+    });
+
+
+    test('remove subfield with valuelist while editing composite field', async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('compositeField');
+        await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickInputTypeSelectOption('composite', 'field');
+        await createSubfieldWithExistingValuelist('subfield1', 'provenance-default-1');
+        await EditConfigurationPage.clickDeleteSubfield(0);
+        await createSubfieldWithExistingValuelist('subfield2', 'periods-default-1');
+        await createSubfieldWithExistingValuelist('subfield3', 'colors-default-1');
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.performCreateResource('P1', 'place');
+        await ResourcesPage.openEditByDoubleClickResource('P1');
+        await DoceditPage.clickCreateCompositeEntry('test-compositeField');
+        await waitForExist(await DoceditCompositeEntryModalPage.getSubfieldSelectOption(0, 'Archaisch'));
+        await waitForExist(await DoceditCompositeEntryModalPage.getSubfieldSelectOption(1, 'beige'));
+        
+        await DoceditCompositeEntryModalPage.clickSelectSubfieldSelectOption(0, 'Archaisch');
+        await DoceditCompositeEntryModalPage.clickCancel();
+        await DoceditPage.clickCloseEdit();
     });
 
 

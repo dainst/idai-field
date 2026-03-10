@@ -3,7 +3,7 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { on, is, isString, isEmpty, Map } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, CustomFieldDefinition, CustomFormDefinition,
     CustomSubfieldDefinition, Field, I18N, InPlace, Labels, Named, Subfield, Condition,
-    Valuelists } from 'idai-field-core';
+    Valuelists, Valuelist } from 'idai-field-core';
 import { InputType } from '../../../configuration-util';
 import { SubfieldEditorData, SubfieldEditorModalComponent } from '../subfield-editor-modal.component';
 import { MenuContext } from '../../../../../services/menu-context';
@@ -187,6 +187,8 @@ export class SubfieldsSectionComponent {
         this.clonedField.subfields = this.clonedField.subfields.filter(
             subfield => subfield.name !== subfieldToDelete.name
         );
+
+        this.setValuelistForEditedSubfield(null, subfieldToDelete);
     }
 
 
@@ -254,31 +256,31 @@ export class SubfieldsSectionComponent {
             delete clonedSubfield.condition;
         }
 
-        this.setValuelistForEditedSubfield(editedSubfieldData, subfieldDefinition, clonedSubfield);
+        this.setValuelistForEditedSubfield(editedSubfieldData.valuelist, subfieldDefinition, clonedSubfield);
         this.setLabelsForEditedSubfield(editedSubfieldData, subfieldDefinition, clonedSubfield);
     }
 
 
-    private setValuelistForEditedSubfield(editedSubfieldData: SubfieldEditorData,
-                                          subfieldDefinition: CustomSubfieldDefinition, clonedSubfield: Subfield) {
+    private setValuelistForEditedSubfield(valuelist: Valuelist|null, subfieldDefinition: CustomSubfieldDefinition,
+                                          clonedSubfield?: Subfield) {
 
         if (!this.clonedFormDefinition.valuelists) this.clonedFormDefinition.valuelists = {};
 
         const valuelists: Valuelists = this.clonedFormDefinition.valuelists;
-        if (editedSubfieldData.valuelist) {
+        if (valuelist) {
             if (!valuelists[this.clonedField.name]
                     || isString(valuelists[this.clonedField.name])) {
                 valuelists[this.clonedField.name] = {};
             }
-            valuelists[this.clonedField.name][subfieldDefinition.name] = editedSubfieldData.valuelist.id;
+            valuelists[this.clonedField.name][subfieldDefinition.name] = valuelist.id;
+            clonedSubfield.valuelist = valuelist;
         } else if (valuelists[this.clonedField.name]?.[subfieldDefinition.name]) {
             delete valuelists[this.clonedField.name][subfieldDefinition.name];
             if (isEmpty(valuelists[this.clonedField.name])) {
                 delete valuelists[this.clonedField.name];
             }
+            if (clonedSubfield) delete clonedSubfield.valuelist;
         }
-
-        clonedSubfield.valuelist = editedSubfieldData.valuelist;
     }
 
 

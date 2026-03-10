@@ -436,6 +436,26 @@ describe('mergeResource', () => {
     });
 
 
+    test('merge string array fields: replace arrays if source contains no undefined', () => {
+
+        target['array'] = ['A', 'B', 'C'];
+        source['array'] = ['A', 'B'];
+
+        const result = mergeResource(target, source);
+        expect(result['array']).toEqual(['A', 'B']);
+    });
+
+
+    test('merge string array fields: keep original entry if source contains undefined', () => {
+
+        target['array'] = ['A', 'B', 'C'];
+        source['array'] = ['A', 'D', undefined];
+
+        const result = mergeResource(target, source);
+        expect(result['array']).toEqual(['A', 'D', 'C']);
+    });
+
+
     test('merge staff', () => {
 
         target.category = 'Project';

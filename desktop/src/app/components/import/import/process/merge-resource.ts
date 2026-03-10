@@ -1,5 +1,6 @@
 import { Associative, cond, detach, dropRightWhile, filter, flow, forEach, includedIn, is, isArray,
-    isAssociative, isEmpty, isNot, isnt, isObject, Map, update, values, clone } from 'tsfun';
+    isAssociative, isEmpty, isNot, isnt, isObject, Map, update, values, clone, 
+    isString } from 'tsfun';
 import { Relation, typeOf, NewResource, Resource, EditableValue } from 'idai-field-core';
 import { hasEmptyAssociatives } from '../../util';
 import { ImportErrors } from '../import-errors';
@@ -64,11 +65,14 @@ function appendIdentifier(err: any, identifier: string) {
 
 const assertArrayHomogeneouslyTyped =
     as => as.reduce((arrayItemsType: string|undefined, arrayItem) => {
-        // typeof null -> 'object', typeof undefined -> 'undefined'
-        const t = typeof arrayItem === 'undefined' ? 'object' : typeof arrayItem;
+        if (arrayItem === null || arrayItem === undefined) return arrayItemsType;
 
-        if (arrayItemsType !== undefined && t !== arrayItemsType) throw [ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES];
-        return t;
+        const type: string = typeof arrayItem;
+
+        if (arrayItemsType !== undefined && type !== arrayItemsType) {
+            throw [ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES];
+        }
+        return type;
     }, undefined);
 
 
@@ -170,12 +174,37 @@ function overwriteOrDeleteProperties(target: Map<any>|undefined, source: Map<any
                 if (Object.values(source[property]).filter(isnt(null)).length > 0) {
                     target[property] = filter(source[property], isnt(null));
                 }
+            } else if (isArray(source[property]) && source[property].every(entry => !entry || isString(entry))) {
+                target[property] = mergeStringArrays(source[property], target[property]);
             } else {
                 target[property] = source[property];
             }
 
             return target;
         }, target ? target : {});
+}
+
+
+function mergeStringArrays(sourceArray: string[], targetArray: string[]): string[] {
+
+    if (!isArray(targetArray)) targetArray = [];
+
+    if (sourceArray.includes(undefined)) {
+        for (let i = 0; i <= sourceArray.length; i++) {
+            if (sourceArray[i]) {
+                if (i < targetArray.length) {
+                    targetArray[i] = sourceArray[i];
+                } else {
+                    targetArray.push(sourceArray[i]);
+                }
+            }
+        }
+        return targetArray;
+    } else {
+        const result: string[] = dropRightWhile(is(null))(sourceArray);
+        if (result.includes(null)) throw [ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN];
+        return result;
+    }
 }
 
 

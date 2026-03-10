@@ -45,6 +45,15 @@ describe('removeNullProperties', () => {
     });
 
 
+    test('string array - convert null to undefined and remove undefined values of the right hand side', () => {
+
+        const resource = { aField: [null, 'A', null] };
+
+        const result = removeNullProperties(resource);
+        expect(result['aField']).toEqual([undefined, 'A']);
+    });
+
+
     test('objectArray - convert null to undefined and remove undefined values of the right hand side', () => {
 
         const resource = { aField: [null, { aField: 'aValue'}, null] };

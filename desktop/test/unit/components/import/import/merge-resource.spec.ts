@@ -416,6 +416,26 @@ describe('mergeResource', () => {
     });
 
 
+    test('merge string array fields: remove null value', () => {
+
+        target['array'] = ['A', 'B', 'C'];
+        source['array'] = ['A', 'B', null];
+
+        const result = mergeResource(target, source);
+        expect(result['array']).toEqual(['A', 'B']);
+    });
+
+
+    test('merge string array fields: ignore undefined value', () => {
+
+        target['array'] = ['A', 'B', 'C'];
+        source['array'] = ['A', undefined, 'C', 'D'];
+
+        const result = mergeResource(target, source);
+        expect(result['array']).toEqual(['A', 'B', 'C', 'D']);
+    });
+
+
     test('merge staff', () => {
 
         target.category = 'Project';
@@ -540,50 +560,6 @@ describe('mergeResource', () => {
     test('array of heterogeneous categories - nested', () => {
 
         source['array'] = { b: [{ a: 1 }, 2] };
-
-        try {
-            mergeResource(target, source);
-            throw new Error('Test failure');
-        } catch (expected) {
-            expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES, identifier]);
-        }
-    });
-
-
-    test('array of heterogeneous categories - non-object array must not contain undefined', () => {
-
-        source['array'] = [2, undefined];
-
-        try {
-            mergeResource(target, source);
-            throw new Error('Test failure');
-        } catch (expected) {
-            expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES, identifier]);
-        }
-
-        source['array'] = [undefined, 2];
-
-        try {
-            mergeResource(target, source);
-            throw new Error('Test failure');
-        } catch (expected) {
-            expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES, identifier]);
-        }
-    });
-
-
-    test('array of heterogeneous categories - non-object array cannot contain null', () => {
-
-        source['array'] = [2, null];
-
-        try {
-            mergeResource(target, source);
-            throw new Error('Test failure');
-        } catch (expected) {
-            expect(expected).toEqual([ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES, identifier]);
-        }
-
-        source['array'] = [null, 2];
 
         try {
             mergeResource(target, source);

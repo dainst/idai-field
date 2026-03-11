@@ -8638,16 +8638,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.emptySlotsInArraysForbidden" datatype="html">
-        <source>Leere Array-Felder sind nicht erlaubt. Betroffen ist: '[0]'</source>
-        <target state="final">Leere Array-Felder sind nicht erlaubt. Betroffen ist: '[0]'</target>
+        <source>Leere Listeneinträge sind nur am Ende der Liste erlaubt. Betroffen ist: '[0]'</source>
+        <target state="final">Leere Listeneinträge sind nur am Ende der Liste erlaubt. Betroffen ist: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">790</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.arrayOfHeterogeneousTypes" datatype="html">
-        <source>Arrays müssen konsistent Felder vom gleichen Typ beinhalten. Betroffen ist: '[0]'</source>
-        <target state="final">Arrays müssen konsistent Felder vom gleichen Typ beinhalten. Betroffen ist: '[0]'</target>
+        <source>Listenfelder müssen konsistent Einträge des gleichen Typs beinhalten. Betroffen ist: '[0]'</source>
+        <target state="final">Listenfelder müssen konsistent Einträge des gleichen Typs beinhalten. Betroffen ist: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">794</context>

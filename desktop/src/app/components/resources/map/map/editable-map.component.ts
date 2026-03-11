@@ -54,6 +54,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private documentInEditing: FieldDocument;
     private drawMode: DrawMode = 'None';
+    private editorInitialized: boolean = false;
 
 
     constructor(projectConfiguration: ProjectConfiguration,
@@ -76,6 +77,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         if (this.isEditing && (changes['isEditing'] || changes['selectedDocument'])) {
             this.documentInEditing = this.selectedDocument ? Document.clone(this.selectedDocument) : undefined;
+            this.editorInitialized = false;
         } else if (!this.isEditing) {
             this.documentInEditing = undefined;
         }
@@ -454,7 +456,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     protected async updateMap(changes: SimpleChanges): Promise<void> {
 
-        if (!this.update) return Promise.resolve();
+        if (!this.update || (this.isEditing && this.editorInitialized)) return Promise.resolve();
 
         if (!changes['isEditing'] || !this.isEditing || EditableMapComponent.hasGeometry(this.documentInEditing)) {
             await super.updateMap(changes);
@@ -486,6 +488,7 @@ export class EditableMapComponent extends LayerMapComponent {
                         break;
                 }
             }
+            this.editorInitialized = true;
         } else {
             this.map.doubleClickZoom.enable();
             this.hideMousePositionCoordinates();

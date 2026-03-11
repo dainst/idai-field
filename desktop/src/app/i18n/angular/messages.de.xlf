@@ -8318,8 +8318,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.mustHaveLiesWithin" datatype="html">
-        <source>Ressourcen der Kategorie '[0]' müssen innerhalb von anderen Ressourcen angelegt werden. Betroffen ist: '[1]'.</source>
-        <target state="final">Ressourcen der Kategorie '[0]' müssen innerhalb von anderen Ressourcen angelegt werden. Betroffen ist: '[1]'.</target>
+        <source>Ressourcen der Kategorie '[0]' müssen innerhalb von anderen Ressourcen angelegt werden. Betroffene Ressource: '[1]'.</source>
+        <target state="final">Ressourcen der Kategorie '[0]' müssen innerhalb von anderen Ressourcen angelegt werden. Betroffene Ressource: '[1]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">630</context>
@@ -8630,24 +8630,24 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.categoryCannotBeChanged" datatype="html">
-        <source>Die Kategorie kann beim Import nicht geändert werden. Betroffen ist: '[0]'</source>
-        <target state="final">Die Kategorie kann beim Import nicht geändert werden. Betroffen ist: '[0]'</target>
+        <source>Die Kategorie kann beim Import nicht geändert werden. Betroffene Ressource: '[0]'</source>
+        <target state="final">Die Kategorie kann beim Import nicht geändert werden. Betroffene Ressource: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">786</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.emptySlotsInArraysForbidden" datatype="html">
-        <source>Leere Listeneinträge sind nur am Ende der Liste erlaubt. Betroffen ist: '[0]'</source>
-        <target state="final">Leere Listeneinträge sind nur am Ende der Liste erlaubt. Betroffen ist: '[0]'</target>
+        <source>Leere Listeneinträge sind nur am Ende der Liste erlaubt. Betroffene Ressource: '[0]'</source>
+        <target state="final">Leere Listeneinträge sind nur am Ende der Liste erlaubt. Betroffene Ressource: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">790</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.arrayOfHeterogeneousTypes" datatype="html">
-        <source>Listenfelder müssen konsistent Einträge des gleichen Typs beinhalten. Betroffen ist: '[0]'</source>
-        <target state="final">Listenfelder müssen konsistent Einträge des gleichen Typs beinhalten. Betroffen ist: '[0]'</target>
+        <source>Listenfelder müssen konsistent Einträge des gleichen Typs beinhalten. Betroffene Ressource: '[0]'</source>
+        <target state="final">Listenfelder müssen konsistent Einträge des gleichen Typs beinhalten. Betroffene Ressource: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">794</context>

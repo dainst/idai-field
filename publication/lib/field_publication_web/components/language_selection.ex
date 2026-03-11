@@ -98,7 +98,7 @@ defmodule FieldPublicationWeb.Components.LanguageSelection do
   #   """
   # end
 
-  def update(%{id: id, inner_block: inner_block, translations: translations} = assigns, socket) do
+  def update(%{id: id, inner_block: inner_block, translations: translations} = _assigns, socket) do
     language_keys = Map.keys(translations)
 
     initial_selection = pick_default_translation(Map.keys(translations))
@@ -237,16 +237,17 @@ defmodule FieldPublicationWeb.Components.LanguageSelection do
 
   def pick_default_translation(options) when is_list(options) do
     user_ui_language = Gettext.get_locale(FieldPublicationWeb.Gettext)
-      cond do
-        user_ui_language in options ->
-          user_ui_language
 
-        "en" in options ->
-          "en"
+    cond do
+      user_ui_language in options ->
+        user_ui_language
 
-        true ->
-          List.first(options)
-      end
+      "en" in options ->
+        "en"
+
+      true ->
+        List.first(options)
+    end
   end
 
   def handle_event("select", %{"new" => lang}, socket) do

@@ -1,9 +1,10 @@
 defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
-  alias FieldPublicationWeb.Presentation.Components.I18n
   alias FieldPublication.Publications.Data.Field
   alias FieldPublication.Publications.Data.FieldGroup
   alias FieldPublication.Publications.Data
   alias FieldPublication.Publications.Data.Document
+
+  import FieldPublicationWeb.Components.LanguageDefault
 
   import FieldPublicationWeb.Components.Data.{
     DocumentLink,
@@ -35,13 +36,13 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
               <%= unless fields == [] do %>
                 <section>
                   <.group_heading>
-                    <I18n.text values={group.labels} />
+                    <.pick_language values={group.labels} />
                   </.group_heading>
 
                   <dl class="mt-2">
                     <%= for %Field{} = field <- fields do %>
                       <div>
-                        <dt class="font-bold"><I18n.text values={field.labels} /></dt>
+                        <dt class="font-bold"><.pick_language values={field.labels} /></dt>
                         <dd class="pl-4">
                           <.render_data_field field={field} />
                         </dd>

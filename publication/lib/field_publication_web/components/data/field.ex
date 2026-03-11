@@ -1,11 +1,9 @@
 defmodule FieldPublicationWeb.Components.Data.Field do
-  use Phoenix.Component
   use FieldPublicationWeb, :verified_routes
   use FieldPublicationWeb, :html
 
   require Logger
   alias FieldPublication.Publications.Data.Field
-  alias FieldPublicationWeb.Presentation.Components.I18n
   alias FieldPublication.Publications.Search
   alias FieldPublicationWeb.Components.LanguageSelection
 

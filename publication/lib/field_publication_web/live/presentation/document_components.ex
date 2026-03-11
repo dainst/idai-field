@@ -371,7 +371,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
     ~H"""
     <div>
       <.document_heading>
-        <.render_data_field field={Data.get_field(@doc, "shortName") |> IO.inspect()} />
+        <.render_data_field field={Data.get_field(@doc, "shortName")} hide_language_selection?={true} />
       </.document_heading>
       <% depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
       <%= if depicted_in != nil do %>

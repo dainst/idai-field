@@ -12,6 +12,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
   end
 
   attr :field, Field, required: true
+  attr :hide_language_selection?, :boolean, default: false
   attr :markdown, :boolean, default: false
 
   def render_data_field(%{field: %Field{input_type: input_type}} = assigns)
@@ -27,7 +28,13 @@ defmodule FieldPublicationWeb.Components.Data.Field do
   def render_data_field(%{field: %Field{input_type: input_type}} = assigns)
       when input_type in ["input", "simpleInput", "text"] do
     ~H"""
-    <.maybe_language_select :let={text} field={@field} value={@field.value} id={@field.name}>
+    <.maybe_language_select
+      :let={text}
+      hide_selection?={@hide_language_selection?}
+      field={@field}
+      value={@field.value}
+      id={@field.name}
+    >
       <.maybe_search_link field={@field}>
         {text}
       </.maybe_search_link>
@@ -40,7 +47,13 @@ defmodule FieldPublicationWeb.Components.Data.Field do
       )
       when input_type in ["dropdown", "radio"] and is_map(value_labels) do
     ~H"""
-    <.maybe_language_select :let={text} field={@field} value={@field.value} id={@field.name}>
+    <.maybe_language_select
+      :let={text}
+      hide_selection?={@hide_language_selection?}
+      field={@field}
+      value={@field.value}
+      id={@field.name}
+    >
       <.maybe_search_link field={@field}>
         {text}
       </.maybe_search_link>
@@ -53,7 +66,13 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     # Checkboxes where the selected value is mapped to a label.
     ~H"""
     <%= for value <- @field.value do %>
-      <.maybe_language_select :let={text} field={@field} value={value} id={"#{@field.name}_#{value}"}>
+      <.maybe_language_select
+        :let={text}
+        field={@field}
+        hide_selection?={@hide_language_selection?}
+        value={value}
+        id={"#{@field.name}_#{value}"}
+      >
         <.maybe_search_link field={@field}>
           {text}
         </.maybe_search_link>
@@ -73,6 +92,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     <.maybe_language_select
       :let={text}
       field={@field}
+      hide_selection?={@hide_language_selection?}
       value={start_value}
       id={"#{@field.name}_#{start_value}"}
     >
@@ -86,6 +106,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
       <.maybe_language_select
         :let={text}
         field={@field}
+        hide_selection?={@hide_language_selection?}
         value={end_value}
         id={
           "#{@field.name}_#{end_value}" |> Base.encode16() |> String.replace_prefix("", "language_")
@@ -172,6 +193,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
 
   attr :id, :string, required: true
   attr :field, Field, required: true
+  attr :hide_selection?, :boolean, default: false
   attr :value, :any, required: true
   slot :inner_block, required: true
 
@@ -204,6 +226,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
           module={LanguageSelection}
           id={ensure_valid_id(@id)}
           translations={@value}
+          hide_selection?={@hide_selection?}
         >
           {render_slot(@inner_block, text)}
         </.live_component>
@@ -222,6 +245,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
       module={LanguageSelection}
       id={ensure_valid_id(@id)}
       translations={@field.value_labels[@value]}
+      hide_selection?={@hide_selection?}
     >
       {render_slot(@inner_block, text)}
     </.live_component>

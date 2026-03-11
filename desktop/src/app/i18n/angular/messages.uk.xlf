@@ -5133,8 +5133,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.mustHaveLiesWithin" datatype="html">
-        <source>Ressourcen der Kategorie '[0]' müssen innerhalb von anderen Ressourcen angelegt werden. Betroffen ist: '[1]'.</source>
-        <target state="translated">Ресурси категорії '[0]' повинні бути створені в інших ресурсах. Це стосується: '[1]'.</target>
+        <source>Ressourcen der Kategorie '[0]' müssen innerhalb von anderen Ressourcen angelegt werden. Betroffene Ressource: '[1]'.</source>
+        <target state="needs-translation">Ресурси категорії '[0]' повинні бути створені в інших ресурсах. Це стосується: '[1]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5333,24 +5333,24 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.categoryCannotBeChanged" datatype="html">
-        <source>Die Kategorie kann beim Import nicht geändert werden. Betroffen ist: '[0]'</source>
-        <target state="translated">Категорію не можна змінити під час імпорту. Стосується: '[0]'</target>
+        <source>Die Kategorie kann beim Import nicht geändert werden. Betroffene Ressource: '[0]'</source>
+        <target state="needs-translation">Категорію не можна змінити під час імпорту. Стосується: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.emptySlotsInArraysForbidden" datatype="html">
-        <source>Leere Array-Felder sind nicht erlaubt. Betroffen ist: '[0]'</source>
-        <target state="translated">Порожні поля Array-Felder не допускаються. Стосується: '[0]'</target>
+        <source>Leere Listeneinträge sind nur am Ende der Liste erlaubt. Betroffene Ressource: '[0]'</source>
+        <target state="needs-translation">Порожні поля Array-Felder не допускаються. Стосується: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.arrayOfHeterogeneousTypes" datatype="html">
-        <source>Arrays müssen konsistent Felder vom gleichen Typ beinhalten. Betroffen ist: '[0]'</source>
-        <target state="translated">Масиви Arrays повинні послідовно містити поля одного типу. Стосується: '[0]'</target>
+        <source>Listenfelder müssen konsistent Einträge des gleichen Typs beinhalten. Betroffene Ressource: '[0]'</source>
+        <target state="needs-translation">Масиви Arrays повинні послідовно містити поля одного типу. Стосується: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

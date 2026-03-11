@@ -145,7 +145,7 @@
     "electron-updater": "6.6.5",
     "es6-shim": "0.35.8",
     "exifreader": "4.6.0",
-    "express": "5.2.1",
+    "express": "4.22.1",
     "express-basic-auth": "1.2.1",
     "express-pouchdb": "5.0.1-rc1.0",
     "extract-zip": "2.0.1",

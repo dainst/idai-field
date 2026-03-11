@@ -209,6 +209,8 @@ export class DocumentsManager {
         this.populateInProgress = true;
         if (this.loading) this.loading.start();
 
+        const newDocument: FieldDocument = this.documents?.find(document => !NewDocument.hasId(document));
+
         if (reset) {
             this.newDocumentsFromRemote = [];
             this.documents = [];
@@ -228,7 +230,7 @@ export class DocumentsManager {
             return;
         }
 
-        this.documents = result.documents as Array<FieldDocument>;
+        this.documents = (newDocument ? [newDocument] : []).concat(result.documents as Array<FieldDocument>);
         this.totalDocumentCount = result.totalCount;
 
         this.populateInProgress = false;

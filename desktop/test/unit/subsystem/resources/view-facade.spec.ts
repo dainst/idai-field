@@ -456,4 +456,22 @@ describe('ViewFacade/Subsystem', () => {
         await viewFacade.setCustomConstraints({ 'processor:contain': 'wrongPerson' });
         expect(viewFacade.getDocuments().length).toBe(0);
     });
+
+
+    test('keep new document placeholder when populating document list', async () => {
+
+        const newDocument: FieldDocument = fieldDoc('newFeature', 'newFeature', 'Feature', 'nf');
+        delete newDocument._id;
+        delete newDocument.resource.id;
+
+        await viewFacade.selectView('t1');
+        await viewFacade.addNewDocument(newDocument);
+        await viewFacade.populateDocumentList();
+
+        const documents: Array<Document> = viewFacade.getDocuments();
+        expect(documents.length).toBe(3);
+        expect(documents[0].resource.id).toBeUndefined();
+        expect(documents[1].resource.id).toEqual(featureDocument1.resource.id);
+        expect(documents[2].resource.id).toEqual(featureDocument2.resource.id);
+    });
 });

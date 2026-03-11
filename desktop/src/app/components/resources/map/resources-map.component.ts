@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { ChangesStream, Datastore, FieldDocument, FieldGeometry, RelationsManager } from 'idai-field-core';
+import { isArray } from 'tsfun';
+import { ChangesStream, Datastore, DatastoreErrors, FieldDocument, RelationsManager } from 'idai-field-core';
 import { Menus } from '../../../services/menus';
 import { NavigationPath } from '../../../components/resources/view/state/navigation-path';
 import { ViewFacade } from '../../../components/resources/view/view-facade';
@@ -7,6 +8,7 @@ import { Messages } from '../../messages/messages';
 import { Loading } from '../../widgets/loading';
 import { ResourcesComponent } from '../resources.component';
 import { MenuContext } from '../../../services/menu-context';
+import { M } from '../../messages/m';
 
 
 @Component({
@@ -125,8 +127,12 @@ export class ResourcesMapComponent {
             await this.viewFacade.setSelectedDocument(
                 (await this.relationsManager.update(document)).resource.id
             );
-        } catch (msgWithParams) {
-            this.messages.add(msgWithParams);
+        } catch (errWithParams) {
+            if (isArray(errWithParams) && errWithParams[0] === DatastoreErrors.DOCUMENT_NOT_FOUND) {
+                this.messages.add([M.RESOURCES_ERROR_RESOURCE_DELETED, document.resource.identifier]);
+            } else {
+                this.messages.add(errWithParams);
+            }
         }
     }
 

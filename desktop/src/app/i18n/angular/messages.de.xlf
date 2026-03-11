@@ -3768,8 +3768,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.conflictDeletedModal.close" datatype="html">
-        <source> Zurück zur Editieransicht </source>
-        <target state="final"> Zurück zur Editieransicht </target>
+        <source> Zurück zum Editor </source>
+        <target state="final"> Zurück zum Editor </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/conflict-deleted-modal.html</context>
           <context context-type="linenumber">15</context>
@@ -7602,7 +7602,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.component.ts</context>
-          <context context-type="linenumber">729</context>
+          <context context-type="linenumber">736</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.component.ts</context>
@@ -9826,7 +9826,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.component.ts</context>
-          <context context-type="linenumber">530</context>
+          <context context-type="linenumber">537</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>

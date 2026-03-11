@@ -627,7 +627,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             level: 'danger'
         };
         this.msgs[M.IMPORT_ERROR_MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE] = {
-            content: $localize `:@@messages.import.validation.error.mustHaveLiesWithin:Ressourcen der Kategorie \'[0]\' müssen innerhalb von anderen Ressourcen angelegt werden. Betroffen ist: \'[1]\'.`,
+            content: $localize `:@@messages.import.validation.error.mustHaveLiesWithin:Ressourcen der Kategorie \'[0]\' müssen innerhalb von anderen Ressourcen angelegt werden. Betroffene Ressource: \'[1]\'.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_ERROR_TARGET_CATEGORY_RANGE_MISMATCH] = {
@@ -783,15 +783,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             level: 'danger'
         };
         this.msgs[M.IMPORT_ERROR_CATEGORY_CANNOT_BE_CHANGED] = {
-            content: $localize `:@@messages.import.error.categoryCannotBeChanged:Die Kategorie kann beim Import nicht geändert werden. Betroffen ist: \'[0]\'`,
+            content: $localize `:@@messages.import.error.categoryCannotBeChanged:Die Kategorie kann beim Import nicht geändert werden. Betroffene Ressource: \'[0]\'`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_ERROR_EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN] = {
-            content: $localize `:@@messages.import.error.emptySlotsInArraysForbidden:Leere Listeneinträge sind nur am Ende der Liste erlaubt. Betroffen ist: \'[0]\'`,
+            content: $localize `:@@messages.import.error.emptySlotsInArraysForbidden:Leere Listeneinträge sind nur am Ende der Liste erlaubt. Betroffene Ressource: \'[0]\'`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_ERROR_ARRAY_OF_HETEROGENEOUS_TYPES] = {
-            content: $localize `:@@messages.import.error.arrayOfHeterogeneousTypes:Listenfelder müssen konsistent Einträge des gleichen Typs beinhalten. Betroffen ist: \'[0]\'`,
+            content: $localize `:@@messages.import.error.arrayOfHeterogeneousTypes:Listenfelder müssen konsistent Einträge des gleichen Typs beinhalten. Betroffene Ressource: \'[0]\'`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_ERROR_MUST_NOT_BE_EMPTY_STRING] = {

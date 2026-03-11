@@ -5090,8 +5090,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.mustHaveLiesWithin" datatype="html">
-        <source>Ressourcen der Kategorie '[0]' müssen innerhalb von anderen Ressourcen angelegt werden. Betroffen ist: '[1]'.</source>
-        <target state="translated">Los recursos de la categoría '[0]' deben colocarse dentro de otros recursos. Identificador del recurso: '[1]'.</target>
+        <source>Ressourcen der Kategorie '[0]' müssen innerhalb von anderen Ressourcen angelegt werden. Betroffene Ressource: '[1]'.</source>
+        <target state="needs-translation">Los recursos de la categoría '[0]' deben colocarse dentro de otros recursos. Identificador del recurso: '[1]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5290,24 +5290,24 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.categoryCannotBeChanged" datatype="html">
-        <source>Die Kategorie kann beim Import nicht geändert werden. Betroffen ist: '[0]'</source>
-        <target state="translated">La categoría no se puede cambiar durante la importación. Identificador del recurso: '[0]'</target>
+        <source>Die Kategorie kann beim Import nicht geändert werden. Betroffene Ressource: '[0]'</source>
+        <target state="needs-translation">La categoría no se puede cambiar durante la importación. Identificador del recurso: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.emptySlotsInArraysForbidden" datatype="html">
-        <source>Leere Array-Felder sind nicht erlaubt. Betroffen ist: '[0]'</source>
-        <target state="translated">No se permiten campos de matriz vacíos. Identificador del recurso: '[0]'</target>
+        <source>Leere Listeneinträge sind nur am Ende der Liste erlaubt. Betroffene Ressource: '[0]'</source>
+        <target state="needs-translation">No se permiten campos de matriz vacíos. Identificador del recurso: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.arrayOfHeterogeneousTypes" datatype="html">
-        <source>Arrays müssen konsistent Felder vom gleichen Typ beinhalten. Betroffen ist: '[0]'</source>
-        <target state="translated">Los campos de una matriz deben ser todos del mismo tipo. Identificador del recurso: '[0]'</target>
+        <source>Listenfelder müssen konsistent Einträge des gleichen Typs beinhalten. Betroffene Ressource: '[0]'</source>
+        <target state="needs-translation">Los campos de una matriz deben ser todos del mismo tipo. Identificador del recurso: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

@@ -472,6 +472,14 @@ defmodule FieldPublication.Publications.Search do
 
     full_doc =
       Data.apply_project_configuration(doc, publication_configuration, publication)
+      |> case do
+        {:error, :unknown_category} ->
+          Logger.warning("Unknown category for document #{doc["id"]}")
+          doc
+
+        doc ->
+          doc
+      end
 
     geo =
       res["geometry"]

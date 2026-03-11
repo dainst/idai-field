@@ -15,6 +15,8 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
     Image
   }
 
+  import FieldPublicationWeb.Components.LanguageDefault
+
   alias FieldPublication.DatabaseSchema.Translation
   alias FieldPublication.Publications.Data
   alias FieldPublicationWeb.Components.LanguageSelection
@@ -59,13 +61,13 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           <%= unless fields == [] do %>
             <section>
               <.group_heading>
-                <I18n.text values={group.labels} />
+                <.pick_language values={group.labels} />
               </.group_heading>
 
               <dl class="grid grid-cols-2 gap-1 mt-2">
                 <%= for %Field{} = field <- fields do %>
                   <div class="border p-0.5 border-black/20">
-                    <dt class="font-bold"><I18n.text values={field.labels} /></dt>
+                    <dt class="font-bold"><.pick_language values={field.labels} /></dt>
                     <dd class="pl-4 pr-4 pb-1">
                       <.render_data_field field={field} />
                     </dd>
@@ -79,7 +81,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
         <%= if depicted_in do %>
           <section>
             <.group_heading>
-              <I18n.text values={depicted_in.labels} /> ({Enum.count(depicted_in.docs)})
+              <.pick_language values={depicted_in.labels} /> ({Enum.count(depicted_in.docs)})
             </.group_heading>
             <div class="p-2 bg-panel overflow-auto overscroll-contain grid grid-cols-3 gap-1 mt-2 max-h-[300px] mb-5">
               <%= for %Document{} = doc <- depicted_in.docs do %>
@@ -137,7 +139,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
       )  do %>
           <section>
             <.group_heading>
-              <I18n.text values={other_relation.labels} /> ({Enum.count(other_relation.docs)})
+              <.pick_language values={other_relation.labels} /> ({Enum.count(other_relation.docs)})
             </.group_heading>
             <div class="overflow-auto overscroll-contain max-h-[400px]">
               <%= for %Document{geometry: geometry} = doc <- other_relation.docs do %>
@@ -198,7 +200,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           fn %RelationGroup{name: relation_name} -> relation_name in ["isDepictedIn", "hasDefaultMapLayer", "hasMapLayer", "isRecordedIn", "liesWithin", "contains"] end
           )  do %>
             <.group_heading>
-              <I18n.text values={other_relation.labels} /> ({Enum.count(other_relation.docs)})
+              <.pick_language values={other_relation.labels} /> ({Enum.count(other_relation.docs)})
             </.group_heading>
             <div class="overflow-auto overscroll-contain">
               <%= for %Document{geometry: geometry} = doc <- other_relation.docs do %>
@@ -262,7 +264,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
         <div class="basis-full lg:basis-1/3 m-5">
           <%= for %RelationGroup{} = relation_group <- @doc.relations do %>
             <.group_heading>
-              <I18n.text values={relation_group.labels} /> ({Enum.count(relation_group.docs)})
+              <.pick_language values={relation_group.labels} /> ({Enum.count(relation_group.docs)})
             </.group_heading>
             <div class="overflow-auto overscroll-contain max-h-[200px]">
               <%= for %Document{} = doc <- relation_group.docs do %>
@@ -278,13 +280,13 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             <%= unless fields == [] do %>
               <section>
                 <.group_heading>
-                  <I18n.text values={group.labels} />
+                  <.pick_language values={group.labels} />
                 </.group_heading>
 
                 <dl>
                   <%= for %Field{} = field <- fields do %>
                     <div>
-                      <dt class="font-bold"><I18n.text values={field.labels} /></dt>
+                      <dt class="font-bold"><.pick_language values={field.labels} /></dt>
                       <dd class="pl-4 pr-4">
                         <.render_data_field field={field} />
                       </dd>
@@ -438,14 +440,14 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           <dl>
             <% institution = Data.get_field(@doc, "institution") %>
             <%= if institution do %>
-              <dt class="font-bold"><I18n.text values={institution.labels} /></dt>
+              <dt class="font-bold"><.pick_language values={institution.labels} /></dt>
               <.render_data_field field={institution} />
             <% end %>
 
             <% contact_mail = Data.get_field(@doc, "contactMail") %>
             <% contact_person = Data.get_field(@doc, "contactPerson") %>
             <%= if contact_mail do %>
-              <dt class="font-bold"><I18n.text values={contact_person.labels} /></dt>
+              <dt class="font-bold"><.pick_language values={contact_person.labels} /></dt>
               <dd class="ml-4">
                 <a href={"mailto:#{contact_mail.value}"}>
                   <.icon name="hero-envelope" class="h-6 w-6 mr-1" />
@@ -460,18 +462,18 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
 
             <% supervisor = Data.get_field(@doc, "projectSupervisor") %>
             <%= if supervisor do %>
-              <dt class="font-bold"><I18n.text values={supervisor.labels} /></dt>
+              <dt class="font-bold"><.pick_language values={supervisor.labels} /></dt>
               <.render_data_field field={supervisor} />
             <% end %>
 
             <%= if @staff do %>
-              <dt class="font-bold"><I18n.text values={@staff.labels} /></dt>
+              <dt class="font-bold"><.pick_language values={@staff.labels} /></dt>
               <dd class="ml-4">{@staff.names}</dd>
             <% end %>
 
             <% bibliographic_references = Data.get_field(@doc, "bibliographicReferences") %>
             <%= if bibliographic_references do %>
-              <dt class="font-bold"><I18n.text values={bibliographic_references.labels} /></dt>
+              <dt class="font-bold"><.pick_language values={bibliographic_references.labels} /></dt>
               <.render_data_field field={bibliographic_references} />
             <% end %>
             <% url = Data.get_field_value(@doc, "projectURI") %>
@@ -548,7 +550,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                 <.icon name="hero-document-solid" />
               </span>
               <div class="pl-1 text-primary hover:text-primary-hover">
-                <I18n.text values={labels} /> ({count})
+                <.pick_language values={labels} /> ({count})
               </div>
             </div>
           </.link>
@@ -582,7 +584,7 @@ end
 # }
 # >
 # <div class="h-full bg-white/70 hover:bg-white/40 pl-2 pr-2 pt-3 pb-3 font-thin hover:text-black text-gray-800">
-# <I18n.text values={labels} /> ({count})
+# <.pick_language values={labels} /> ({count})
 # </div>
 # </.link>
 # <% end %>

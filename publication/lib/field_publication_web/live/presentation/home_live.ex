@@ -7,8 +7,8 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
   alias FieldPublication.Publications.Data
   alias FieldPublication.Publications.Data.Document
 
-  alias FieldPublicationWeb.Presentation.Components.{
-    I18n
+  import FieldPublicationWeb.Components.{
+    LanguageDefault
   }
 
   require Logger

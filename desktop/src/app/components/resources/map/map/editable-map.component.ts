@@ -458,7 +458,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         if (!this.update || (this.isEditing && this.editorInitialized)) return Promise.resolve();
 
-        if (!changes['isEditing'] || !this.isEditing || EditableMapComponent.hasGeometry(this.documentInEditing)) {
+        if (!changes['isEditing'] || !this.isEditing || this.documentInEditing?.resource?.geometry?.coordinates) {
             await super.updateMap(changes);
         }
 
@@ -798,12 +798,5 @@ export class EditableMapComponent extends LayerMapComponent {
                 list.splice(list.indexOf(element), 1);
             }
         }
-    }
-
-
-    private static hasGeometry(document: FieldDocument): boolean {
-
-        return document !== undefined && document.resource.geometry !== undefined
-            && document.resource.geometry.coordinates !== undefined;
     }
 }

@@ -787,7 +787,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             level: 'danger'
         };
         this.msgs[M.IMPORT_ERROR_EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN] = {
-            content: $localize `:@@messages.import.error.emptySlotsInArraysForbidden:Listenfelder dürfen keine Lücken aufweisen. Betroffen ist: \'[0]\'`,
+            content: $localize `:@@messages.import.error.emptySlotsInArraysForbidden:Leere Listeneinträge sind nur am Ende der Liste erlaubt. Betroffen ist: \'[0]\'`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_ERROR_ARRAY_OF_HETEROGENEOUS_TYPES] = {

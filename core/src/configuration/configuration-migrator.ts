@@ -18,6 +18,9 @@ export module ConfigurationMigrator {
     function migrateDates(configurationResource: ConfigurationResource) {
 
         Object.values(configurationResource.forms).forEach(form => {
+            delete form.fields['beginningDate'];
+            delete form.fields['endDate'];
+
             if (!form.groups) return;
 
             form.groups.forEach(group => {

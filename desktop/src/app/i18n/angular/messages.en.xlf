@@ -5669,8 +5669,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.mustHaveLiesWithin" datatype="html">
-        <source>Ressourcen der Kategorie '[0]' müssen innerhalb von anderen Ressourcen angelegt werden. Betroffen ist: '[1]'.</source>
-        <target state="translated">Resources of category '[0]' must be placed within other resources. Identifier of resource: '[1]'.</target>
+        <source>Ressourcen der Kategorie '[0]' müssen innerhalb von anderen Ressourcen angelegt werden. Betroffene Ressource: '[1]'.</source>
+        <target state="translated">Resources of category '[0]' must be placed within other resources. Affected resource: '[1]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5869,24 +5869,24 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.categoryCannotBeChanged" datatype="html">
-        <source>Die Kategorie kann beim Import nicht geändert werden. Betroffen ist: '[0]'</source>
-        <target state="translated">The category cannot be changed in import. Resource identifier: '[0]'</target>
+        <source>Die Kategorie kann beim Import nicht geändert werden. Betroffene Ressource: '[0]'</source>
+        <target state="translated">The category cannot be changed via import. Affected resource: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.emptySlotsInArraysForbidden" datatype="html">
-        <source>Leere Array-Felder sind nicht erlaubt. Betroffen ist: '[0]'</source>
-        <target state="translated">Empty array fields not allowed. Resource identifier: '[0]'</target>
+        <source>Leere Listeneinträge sind nur am Ende der Liste erlaubt. Betroffene Ressource: '[0]'</source>
+        <target state="translated">Empty list entries are only allowed at the end of the list. Affected resource: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.arrayOfHeterogeneousTypes" datatype="html">
-        <source>Arrays müssen konsistent Felder vom gleichen Typ beinhalten. Betroffen ist: '[0]'</source>
-        <target state="translated">Fields of an array must all of the same type. Resource identifier: '[0]'</target>
+        <source>Listenfelder müssen konsistent Einträge des gleichen Typs beinhalten. Betroffene Ressource: '[0]'</source>
+        <target state="translated">List fields must contain entries of the same type consistently. Affected resource: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -10470,7 +10470,7 @@
       </trans-unit>
       <trans-unit id="resources.typeScannerModal.editMode.multipleDocuments.singleType" datatype="html">
         <source>Für <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen ist bereits der Typ <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="esource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> gesetzt. </source>
-        <target state="translated">The type <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="esource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> is already set for <x id="INTERPOLATION" equiv-text="{{documents.length}}"/>  resources. </target>
+        <target state="translated">The type <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="esource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> is already set for <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> resources. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-resource/type-scanner-modal.html</context>
           <context context-type="linenumber">23,26</context>

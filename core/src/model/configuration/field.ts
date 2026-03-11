@@ -152,6 +152,8 @@ export module Field {
 
     export function hasUnallowedCharacters(fieldData: any, field: Field): boolean {
 
+        if (fieldData === undefined) return false;
+
         if ([Field.InputType.IDENTIFIER, Field.InputType.VALUELIST_MULTIINPUT].includes(field.inputType)) {
             return isArray(fieldData)
                 ? fieldData.find(entry => isString(entry) ? entry.includes(';') : entry.value.includes(';'))

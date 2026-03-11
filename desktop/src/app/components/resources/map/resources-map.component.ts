@@ -100,47 +100,30 @@ export class ResourcesMapComponent {
 
 
     /**
-     * @param geometry
-     *   <code>null</code> indicates geometry should get deleted.
+     * @param editedDocument
      *   <code>undefined</code> indicates editing operation aborted.
      */
-    public async quitEditing(geometry: FieldGeometry|undefined) {
-
-        const selectedDocument = this.viewFacade.getSelectedDocument();
-        if (!selectedDocument) return;
-        if (!selectedDocument.resource.geometry) return;
-
-        if (geometry) {
-            FieldGeometry.closeRings(geometry);
-            selectedDocument.resource.geometry = geometry;
-        } else if (geometry === null || !selectedDocument.resource.geometry.coordinates
-                || selectedDocument.resource.geometry.coordinates.length === 0) {
-            delete selectedDocument.resource.geometry;
-        }
+    public async quitEditing(editedDocument: FieldDocument|undefined) {
 
         if (this.selectedDocumentIsNew()) {
-            if (geometry !== undefined) {
-                const selectedDocument = this.viewFacade.getSelectedDocument();
-                if (selectedDocument) await this.resourcesComponent.editDocument(selectedDocument);
+            if (editedDocument) {
+                await this.resourcesComponent.editDocument(editedDocument);
             } else {
                 this.viewFacade.deselect();
                 this.resourcesComponent.quitGeometryEditing();
             }
         } else {
-            if (geometry !== undefined) await this.save();
+            if (editedDocument) await this.save(editedDocument);
             this.resourcesComponent.quitGeometryEditing();
         }
     }
 
 
-    private async save() {
-
-        const selectedDocument = this.viewFacade.getSelectedDocument();
-        if (!selectedDocument) return;
+    private async save(document: FieldDocument) {
 
         try {
             await this.viewFacade.setSelectedDocument(
-                (await this.relationsManager.update(selectedDocument)).resource.id
+                (await this.relationsManager.update(document)).resource.id
             );
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);

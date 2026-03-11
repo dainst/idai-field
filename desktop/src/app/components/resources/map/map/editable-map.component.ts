@@ -3,7 +3,7 @@ import { ChangeDetectorRef, Component, EventEmitter, HostListener, Input, NgZone
 import L from 'leaflet';
 import '@geoman-io/leaflet-geoman-free';
 import { CategoryForm, FieldDocument, FieldGeometry, Labels, PouchdbDatastore,
-    ProjectConfiguration } from 'idai-field-core';
+    ProjectConfiguration, Document } from 'idai-field-core';
 import { Menus } from '../../../../services/menus';
 import { SettingsProvider } from '../../../../services/settings/settings-provider';
 import { Messages } from '../../../messages/messages';
@@ -36,8 +36,8 @@ export class EditableMapComponent extends LayerMapComponent {
 
     @Input() isEditing: boolean;
 
-    @Output() onQuitEditing: EventEmitter<FieldGeometry> =
-        new EventEmitter<FieldGeometry>();
+    @Output() onQuitEditing: EventEmitter<FieldDocument> =
+        new EventEmitter<FieldDocument>();
 
     public mousePositionCoordinates: string[]|undefined;
 
@@ -52,6 +52,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     public dragging: boolean = false;
 
+    private documentInEditing: FieldDocument;
     private drawMode: DrawMode = 'None';
 
 
@@ -71,6 +72,18 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
+    async ngOnChanges(changes: SimpleChanges) {
+
+        if (this.isEditing && (changes['isEditing'] || changes['selectedDocument'])) {
+            this.documentInEditing = this.selectedDocument ? Document.clone(this.selectedDocument) : undefined;
+        } else if (!this.isEditing) {
+            this.documentInEditing = undefined;
+        }
+
+        await super.ngOnChanges(changes);
+    }
+
+
     @HostListener('document:keyup', ['$event'])
     public handleKeyEvent(event: KeyboardEvent) {
 
@@ -82,7 +95,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         return (!this.editablePolygons.length && this.drawMode === 'None')
             || CategoryForm.isAllowedGeometryType(
-                this.projectConfiguration.getCategory(this.selectedDocument.resource.category),
+                this.projectConfiguration.getCategory(this.documentInEditing.resource.category),
                 'MultiPolygon'
             );
     }
@@ -92,7 +105,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         return (!this.editablePolylines.length && this.drawMode === 'None')
             || CategoryForm.isAllowedGeometryType(
-                this.projectConfiguration.getCategory(this.selectedDocument.resource.category),
+                this.projectConfiguration.getCategory(this.documentInEditing.resource.category),
                 'MultiLineString'
             );
     }
@@ -102,7 +115,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         return !this.editableMarkers.length
             || CategoryForm.isAllowedGeometryType(
-                this.projectConfiguration.getCategory(this.selectedDocument.resource.category),
+                this.projectConfiguration.getCategory(this.documentInEditing.resource.category),
                 'MultiPoint'
             );
     }
@@ -158,7 +171,14 @@ export class EditableMapComponent extends LayerMapComponent {
             this.resetEditing();
         });
 
-        this.onQuitEditing.emit(geometry);
+        if (geometry) {
+            FieldGeometry.closeRings(geometry);
+            this.documentInEditing.resource.geometry = geometry;
+        } else {
+            delete this.documentInEditing.resource.geometry;
+        }
+
+        this.onQuitEditing.emit(this.documentInEditing);
     }
 
 
@@ -202,12 +222,11 @@ export class EditableMapComponent extends LayerMapComponent {
 
     public getEditorType(): string|undefined {
 
-        if (!this.isEditing || !this.selectedDocument || !this.selectedDocument.resource
-            || !this.selectedDocument.resource.geometry) {
+        if (!this.isEditing || !this.documentInEditing?.resource?.geometry) {
             return 'none';
         }
 
-        switch(this.selectedDocument.resource.geometry.type) {
+        switch(this.documentInEditing.resource.geometry.type) {
             case 'Polygon':
             case 'MultiPolygon':
                 return 'polygon';
@@ -306,7 +325,7 @@ export class EditableMapComponent extends LayerMapComponent {
     private createEditableMarker(position: L.LatLng): L.CircleMarker {
 
         const editableMarker: L.CircleMarker = L.circleMarker(
-            position, this.getMarkerOptions(this.selectedDocument)
+            position, this.getMarkerOptions(this.documentInEditing)
         );
         this.setupMouseDownEvent(editableMarker);
         editableMarker.addTo(this.map);
@@ -331,7 +350,7 @@ export class EditableMapComponent extends LayerMapComponent {
             templineStyle: { color: 'blue', weight: 1 },
             hintlineStyle: { color: 'blue', weight: 1, dashArray: '5' },
             pathOptions: {
-                color: this.projectConfiguration.getCategory(this.selectedDocument).color,
+                color: this.projectConfiguration.getCategory(this.documentInEditing).color,
                 weight: drawMode === 'Line' ? 2 : 1
             },
             tooltips: false
@@ -383,7 +402,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private fadeOutMapElements() {
 
-        if (!this.selectedDocument) return;
+        if (!this.documentInEditing) return;
 
         this.callForUnselected(this.polygons, (polygon: FieldPolygon) => {
             polygon.setStyle({ opacity: 0.25, fillOpacity: 0.1, interactive: false });
@@ -429,7 +448,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private isUnselected(element: FieldPolygon|FieldPolyline|FieldMarker) {
 
-        return element.document && element.document.resource.id !== this.selectedDocument.resource.id;
+        return element.document && element.document.resource.id !== this.documentInEditing.resource.id;
     }
 
 
@@ -437,8 +456,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         if (!this.update) return Promise.resolve();
 
-        if (!changes['isEditing'] || !this.isEditing
-                || EditableMapComponent.hasGeometry(this.selectedDocument)) {
+        if (!changes['isEditing'] || !this.isEditing || EditableMapComponent.hasGeometry(this.documentInEditing)) {
             await super.updateMap(changes);
         }
 
@@ -448,7 +466,7 @@ export class EditableMapComponent extends LayerMapComponent {
             this.map.doubleClickZoom.disable();
             this.showMousePositionCoordinates();
 
-            if ((this.selectedDocument.resource.geometry as any).coordinates) {
+            if (this.documentInEditing.resource.geometry.coordinates) {
                 this.fadeOutMapElements();
                 this.editExistingGeometry();
                 this.redrawGeometries();
@@ -531,7 +549,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         this.setupPolygonCreation();
 
-        this.editablePolygons = this.polygons[this.selectedDocument.resource.id as any];
+        this.editablePolygons = this.polygons[this.documentInEditing.resource.id as any];
 
         if (!this.editablePolygons) return;
 
@@ -605,7 +623,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         this.setupPolylineCreation();
 
-        this.editablePolylines = this.polylines[this.selectedDocument.resource.id as any];
+        this.editablePolylines = this.polylines[this.documentInEditing.resource.id as any];
 
         for (let polyline of this.editablePolylines) {
             polyline.unbindTooltip();
@@ -672,7 +690,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private startPointEditing() {
 
-        this.editableMarkers = this.markers[this.selectedDocument.resource.id];
+        this.editableMarkers = this.markers[this.documentInEditing.resource.id];
 
         for (let editableMarker of this.editableMarkers) {
             editableMarker.setStyle({ stroke: false });

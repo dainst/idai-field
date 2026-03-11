@@ -251,6 +251,7 @@ export class WarningsModalComponent extends ContextMenuProvider {
         }
 
         AngularUtility.blurActiveElement();
+        this.warningsService.reportWarningsResolved();
         await this.update();
     };
 
@@ -281,7 +282,10 @@ export class WarningsModalComponent extends ContextMenuProvider {
 
         await this.modals.awaitResult(
             result,
-            () => this.update(),
+            () => {
+                this.warningsService.reportWarningsResolved();
+                this.update();
+            },
             nop
         );
 
@@ -391,7 +395,10 @@ export class WarningsModalComponent extends ContextMenuProvider {
 
         await this.modals.awaitResult(
             result,
-            () => this.update(),
+            () => {
+                this.warningsService.reportWarningsResolved();
+                this.update();
+            },
             nop
         );
 

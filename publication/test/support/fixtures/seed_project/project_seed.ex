@@ -70,6 +70,8 @@ defmodule FieldPublication.Test.ProjectSeed do
     {:ok, %Finch.Response{status: 201}} =
       Replication.reconstruct_project_configuraton(publication)
 
+    Publications.Data.regenerate_document_previews(publication)
+
     seed_image_directory = "test/support/fixtures/seed_project/images/"
 
     project_languages =

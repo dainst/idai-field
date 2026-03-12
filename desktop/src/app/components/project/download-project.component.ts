@@ -347,11 +347,10 @@ export class DownloadProjectComponent {
 
     private async getUpdateSequence(): Promise<number> {
 
-        let database: any;
-        let info: any;
+        let info;
 
         try {
-            database = new PouchDB(
+            info = await new PouchDB(
                 SyncService.generateUrl(this.getUrl(), this.getProjectIdentifier()),
                 {
                     skip_setup: true,
@@ -360,12 +359,9 @@ export class DownloadProjectComponent {
                         password: this.getPassword()
                     }
                 }
-            );
-            info = await database.info();
+            ).info();
         } catch (err) {
             throw 'invalidCredentials';
-        } finally {
-            if (database) await database.close();
         }
 
         // tslint:disable-next-line: no-string-throw

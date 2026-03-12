@@ -9,12 +9,10 @@ const PouchDB = window.require('pouchdb-browser');
 export async function exportConfiguration(request: any, response: any, configReader: ConfigReader,
                                           configurationSerializer: ConfigurationSerializer, username: string) {
 
-    let database: any;
-
     try {
         const projectIdentifier: string = request.params.project;
         const formatted: boolean = request.query.formatted !== 'false';
-        database = new PouchDB(projectIdentifier);
+        const database = new PouchDB(projectIdentifier);
         const info = await database.info();
 
         if (info.update_seq === 0) {
@@ -35,7 +33,5 @@ export async function exportConfiguration(request: any, response: any, configRea
     } catch (err) {
         console.error(err);
         response.status(500).send({ reason: 'An unknown error occurred.' });
-    } finally {
-        if (database) await database.close();
     }
 }

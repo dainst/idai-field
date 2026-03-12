@@ -84,9 +84,10 @@ export class BackupService {
         database = new PouchDB(project);
         PouchDB.plugin(pouchDBLoad);
 
-        await (database as any).load('file://' + filePath);
+        await database.load('file://' + filePath);
+        await database.close();
 
-        return database;
+        return new PouchDB(project);
     }
 
 

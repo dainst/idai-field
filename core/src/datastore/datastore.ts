@@ -52,6 +52,9 @@ export class Datastore {
                 private documentCache: DocumentCache,
                 private projectConfiguration: ProjectConfiguration,
                 private getUser: () => Name) {}
+
+
+    public close = async () => await this.datastore.close();
     
 
     /**

@@ -168,6 +168,7 @@ export class AppComponent {
             this.syncService.stopSync();
             this.openQuittingModal();
             await this.autoBackupService.requestBackupCreation();
+            await this.datastore.close();
 
             ipcRenderer.send('close');
         });

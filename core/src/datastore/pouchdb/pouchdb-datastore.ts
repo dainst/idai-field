@@ -105,9 +105,9 @@ export class PouchdbDatastore {
     }
 
     
-    public close() {
+    public async close() {
 
-        if (this.db) this.db.close();
+        if (this.db) await this.db.close();
     }
 
     

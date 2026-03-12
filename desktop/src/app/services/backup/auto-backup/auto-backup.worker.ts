@@ -25,8 +25,6 @@ const recentlyCreatedBackups: { [project: string]: Array<Backup> } = {};
 const idleWorkers: Array<Worker> = [];
 const activeWorkers: Array<Worker> = [];
 
-const databases: { [projectName: string]: any } = {};
-
 
 addEventListener('message', ({ data }) => {
 
@@ -236,15 +234,15 @@ function updateListOfRecentlyUpdatedBackups() {
 
 async function getUpdateSequence(project: string): Promise<number|undefined> {
 
-    const database = getDatabase(project);
-    
-    return (await database.info()).update_seq;
-}
+    let database: any;
+    let updateSequence: number;
 
+    try {
+        database = new PouchDb(project);
+        updateSequence = (await database.info()).update_seq;
+    } finally {
+        await database.close();
+    }
 
-function getDatabase(project: string): any {
-
-    if (!databases[project]) databases[project] = new PouchDb(project);
-
-    return databases[project];
+    return updateSequence;
 }

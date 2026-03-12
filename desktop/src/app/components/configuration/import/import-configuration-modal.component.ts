@@ -150,16 +150,20 @@ export class ImportConfigurationModalComponent {
     }
 
 
-    private fetchConfigurationDocument(project: string): Promise<ConfigurationDocument> {
+    private async fetchConfigurationDocument(project: string): Promise<ConfigurationDocument> {
 
         const db = new PouchDB(project);
 
-        return ConfigurationDocument.getConfigurationDocument(
+        const result: ConfigurationDocument = await ConfigurationDocument.getConfigurationDocument(
             id => db.get(id),
             this.configReader,
             project,
             this.settingsProvider.getSettings().username
         );
+
+        await db.close();
+
+        return result;
     }
 
 

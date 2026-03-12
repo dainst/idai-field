@@ -304,11 +304,16 @@ export class SettingsService {
 
     private static async checkDatabaseExistence(url: string): Promise<boolean> {
 
+        let database: any;
+
         try {
-            const info = await new PouchDB(url, { skip_setup: true }).info();
+            const database = new PouchDB(url, { skip_setup: true });
+            const info = await database.info();
             if (info.error) return false;
         } catch (err) {
             return false;
+        } finally {
+            if (database) await database.close();
         }
 
         return true;

@@ -61,7 +61,6 @@ export class BackupService {
 
             await this.updateProjectIdentifier(projectDocument, project, restoredDatabase);
             await settingsService.updateProjectName(projectDocument);
-            await restoredDatabase.close();
 
             return {
                 success: true,

@@ -4,8 +4,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
   use FieldPublicationWeb, :verified_routes
 
   alias FieldPublicationWeb.Presentation.Components.{
-    DocumentAncestors,
-    ClipboardCopy
+    DocumentAncestors
   }
 
   import FieldPublicationWeb.Components.Data.{
@@ -16,7 +15,11 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
 
   alias FieldPublication.DatabaseSchema.Translation
   alias FieldPublication.Publications.Data
-  alias FieldPublicationWeb.Components.LanguageSelection
+
+  alias FieldPublicationWeb.Components.{
+    LanguageSelection,
+    ClipboardCopy
+  }
 
   alias FieldPublication.Publications.Data.{
     Document,

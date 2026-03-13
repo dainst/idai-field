@@ -16,7 +16,7 @@ import { copyThumbnailsFromDatabase } from '../migration/thumbnail-copy';
 import { Languages } from '../services/languages';
 import { createDisplayVariant } from '../services/imagestore/manipulation/create-display-variant';
 import { Backup } from '../services/backup/model/backup';
-import { BackupService, RestoreBackupResult } from '../services/backup/backup-service';
+import { BackupService } from '../services/backup/backup-service';
 import { getExistingBackups } from '../services/backup/auto-backup/get-existing-backups';
 
 const ipcRenderer = window.require('electron')?.ipcRenderer;
@@ -326,11 +326,15 @@ const restoreLatestBackup = async (settingsService: SettingsService, settings: S
 
     const backupFilePath: string = getPathToLatestBackupFile(settings);
 
-    const result: RestoreBackupResult = await new BackupService().restore(
-        backupFilePath, settings.selectedProject, settingsService
-    );
-
-    return result.success;
+    try {
+        await new BackupService().restore(
+            backupFilePath, settings.selectedProject, settingsService
+        );
+        return true;
+    } catch (err) {
+        console.error(err);
+        return false;
+    }
 }
 
 

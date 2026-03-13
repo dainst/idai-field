@@ -43,7 +43,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     // Backup Package
     public static BACKUP_WRITE_SUCCESS = 'backup.write.success';
-    public static BACKUP_READ_SUCCESS = 'backup.read.success';
     public static BACKUP_WRITE_ERROR_GENERIC = 'backup.write.error.generic';
     public static BACKUP_READ_ERROR_GENERIC = 'backup.read.error.generic';
     public static BACKUP_READ_ERROR_FILE_NOT_FOUND = 'backup.read.error.fileNotFound';
@@ -359,10 +358,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.BACKUP_WRITE_SUCCESS] = {
             content: $localize `:@@messages.backup.write.success:Die Datenbank wurde erfolgreich gesichert.`,
-            level: 'success'
-        };
-        this.msgs[M.BACKUP_READ_SUCCESS] = {
-            content: $localize `:@@messages.backup.read.success:Das Backup wurde erfolgreich eingelesen.`,
             level: 'success'
         };
         this.msgs[M.BACKUP_WRITE_ERROR_GENERIC] = {

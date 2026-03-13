@@ -13,7 +13,11 @@ import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
 import { AppState } from '../../services/app-state';
 import { AngularUtility } from '../../angular/angular-utility';
-import { BackupService, ERROR_FILE_NOT_FOUND, RestoreBackupResult } from '../../services/backup/backup-service';
+import { BackupService, ERROR_FILE_NOT_FOUND, ERROR_INVALID_BACKUP_FORMAT,
+    ERROR_UNSIMILAR_PROJECT_IDENTIFIER } from '../../services/backup/backup-service';
+import { ConfirmBackupLoadingModalComponent } from './confirm-backup-loading-modal.component';
+import { reloadAndSwitchToHomeRoute } from '../../services/reload';
+import { isArray } from 'tsfun';
 
 const remote = window.require('@electron/remote');
 
@@ -91,15 +95,7 @@ export class BackupLoadingComponent {
         const errorMessage: MsgWithParams|undefined = this.validateInputs();
         if (errorMessage) return this.messages.add(errorMessage);
 
-        this.running = true;
-        this.menuService.setContext(MenuContext.MODAL);
-        this.openModal();
-
         await this.readBackupFile();
-
-        this.running = false;
-        this.menuService.setContext(MenuContext.DEFAULT);
-        this.closeModal();
     }
 
 
@@ -117,33 +113,89 @@ export class BackupLoadingComponent {
     }
 
 
-    private async readBackupFile() {
+    private async readBackupFile(checkProjectIdentifier: boolean = true) {
 
-        const result: RestoreBackupResult = await this.backupService.restore(
-            this.path, this.projectIdentifier, this.settingsService
-        );
+        this.startLoading();
 
-        if (result.success) {
+        try {
+            await this.backupService.restore(
+                this.path, this.projectIdentifier, this.settingsService, checkProjectIdentifier
+            );
             await this.settingsService.addProject(this.projectIdentifier);
-            if (result.unsimilarProjectIdentifier) {
-                this.messages.add([M.BACKUP_READ_WARNING_UNSIMILAR_PROJECT_IDENTIFIER]);
+            reloadAndSwitchToHomeRoute();
+        } catch (errWithParams) {
+            this.stopLoading();
+            if (!isArray(errWithParams)) {
+                this.messages.add([M.BACKUP_READ_ERROR_GENERIC]);
+                return;
             }
-            this.messages.add([M.BACKUP_READ_SUCCESS]);
-        } else if (result.error === ERROR_FILE_NOT_FOUND) {
-            this.messages.add([M.BACKUP_READ_ERROR_FILE_NOT_FOUND]);
-        } else {
-            this.messages.add([M.BACKUP_READ_ERROR_GENERIC]);
+            switch (errWithParams[0]) {
+                case ERROR_FILE_NOT_FOUND:
+                    this.messages.add([M.BACKUP_READ_ERROR_FILE_NOT_FOUND]);
+                    break;
+                case ERROR_INVALID_BACKUP_FORMAT:
+                    // TODO Implement
+                    break;
+                case ERROR_UNSIMILAR_PROJECT_IDENTIFIER:
+                    if (await this.openConfirmModal('unsimilarProjectIdentifier', errWithParams[1])) {
+                        await this.readBackupFile(false);
+                    }
+                    break;
+                default:
+                    this.messages.add([M.BACKUP_READ_ERROR_GENERIC]);
+                    break;   
+            }
         }
     }
 
 
-    private openModal() {
+    private startLoading() {
+
+        this.running = true;
+        this.menuService.setContext(MenuContext.MODAL);
+        this.openProgressModal();
+    }
+
+
+    private stopLoading() {
+
+        this.running = false;
+        this.menuService.setContext(MenuContext.DEFAULT);
+        this.closeModal();
+    }
+
+
+    private openProgressModal() {
 
         setTimeout(() => {
-            if (this.running) this.modalRef = this.modalService.open(
-                BackupLoadingModalComponent,
-                { backdrop: 'static', keyboard: false, animation: false });
+            if (this.running) {
+                this.modalRef = this.modalService.open(
+                    BackupLoadingModalComponent,
+                    { backdrop: 'static', keyboard: false, animation: false }
+                );
+            }
         }, BackupLoadingComponent.TIMEOUT);
+    }
+
+
+    private async openConfirmModal(warningType: 'unsimilarProjectIdentifier',
+                                   originalProjectIdentifier?: string): Promise<boolean> {
+
+        const modalRef: NgbModalRef = this.modalService.open(
+            ConfirmBackupLoadingModalComponent,
+            { backdrop: 'static', keyboard: false, animation: false }
+        );
+
+        modalRef.componentInstance.warningType = warningType;
+        modalRef.componentInstance.newProjectIdentifier = this.projectIdentifier;
+        modalRef.componentInstance.originalProjectIdentifier = originalProjectIdentifier;
+
+        try {
+            await modalRef.result;
+            return true;
+        } catch (err) {
+            return false;
+        }
     }
 
 

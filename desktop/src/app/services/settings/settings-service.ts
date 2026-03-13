@@ -181,15 +181,10 @@ export class SettingsService {
 
     public async addProject(project: Name, syncTarget?: SyncTarget) {
 
-        if (!syncTarget) {
-            await this.settingsProvider.addProjectAndSerialize(project);
-            return;
-        } else {
-            const settings = this.settingsProvider.getSettings();
-            settings.syncTargets[project] = syncTarget;
-            settings.dbs = [project].concat(settings.dbs);
-            await this.settingsProvider.setSettingsAndSerialize(settings);
-        }
+        const settings = this.settingsProvider.getSettings();
+        if (syncTarget) settings.syncTargets[project] = syncTarget;
+        settings.dbs = [project].concat(settings.dbs);
+        await this.settingsProvider.setSettingsAndSerialize(settings);
     }
 
 

@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@resources.confirmBackupLoading.header">
+        Backup einlesen?
+    </h5>
+</div>
+
+<div id="confirm-backup-modal-body" class="modal-body">
+    <div *ngIf="warningType === 'unsimilarProjectIdentifier'" class="alert alert-warning"
+         i18n="@@backup.loading.confirm.unsimilarProjectIdentifier">
+        Die von Ihnen gewählte Projektkennung <b>{{newProjectIdentifier}}</b> unterscheidet sich stark von der Kennung
+        des Originalprojekts <b>{{originalProjectIdentifier}}</b>.
+    </div>
+
+    <div i18n="@@backup.loading.confirm.unsimilarProjectIdentifier">
+        Möchten Sie das Backup wirklich einlesen?
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary"
+            (click)="confirm()" i18n="@@buttons.ok">OK</button>
+    <button type="button" class="btn btn-secondary"
+            (click)="cancel()" i18n="@@buttons.cancel">Abbrechen</button>
+</div>

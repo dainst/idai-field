@@ -815,14 +815,6 @@
           <context context-type="linenumber">83</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="backup.loading.info.2" datatype="html">
-        <source>Hinweis: Nach dem Einspielen eines Backups werden Vorschaubilder erneut aus den Originaldaten errechnet, weshalb die Anwendung zunächst möglicherweise etwas langsamer laufen kann.</source>
-        <target state="needs-translation">Hinweis: Nach dem Einspielen eines Backups werden Vorschaubilder erneut aus den Originaldaten errechnet, weshalb die Anwendung zunächst möglicherweise etwas langsamer laufen kann.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
-          <context context-type="linenumber">125</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="backup.loading.info.3" datatype="html">
         <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Achtung:<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Beim Einspielen einer Backup-Datei wird eine eventuell vorhandene Zieldatenbank mit der angegebenen Kennung <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>vollständig überschrieben<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </source>
         <target state="needs-translation"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Achtung:<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Beim Einspielen einer Backup-Datei wird eine eventuell vorhandene Zieldatenbank mit der angegebenen Kennung <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>vollständig überschrieben<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
@@ -4689,14 +4681,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.backup.read.success" datatype="html">
-        <source>Das Backup wurde erfolgreich eingelesen.</source>
-        <target state="needs-translation">Das Backup wurde erfolgreich eingelesen.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.backup.write.error.generic" datatype="html">
         <source>Beim Sichern der Datenbank ist ein Fehler aufgetreten.</source>
         <target state="needs-translation">Beim Sichern der Datenbank ist ein Fehler aufgetreten.</target>
@@ -4721,25 +4705,9 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.backup.read.error.noProjectIdentifier" datatype="html">
-        <source>Geben Sie eine Projektkennung an, um fortzufahren.</source>
-        <target state="needs-translation">Geben Sie eine Projektkennung an, um fortzufahren.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.backup.read.error.sameProjectIdentifier" datatype="html">
         <source>Bitte wählen Sie als Ziel ein anderes als das gerade ausgewählte Projekt.</source>
         <target state="needs-translation">Bitte wählen Sie als Ziel ein anderes als das gerade ausgewählte Projekt.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="messages.backup.read.warning.unsimilarProjectIdentifier" datatype="html">
-        <source>Die von Ihnen gewählte Projektkennung unterscheidet sich stark von der Kennung des Originalprojekts. Bitte prüfen Sie, ob Sie die korrekte Backup-Datei ausgewählt haben, bevor Sie Daten aus dem wiederhergestellten Projekt mit anderen Field-Desktop-Instanzen oder Field-Servern synchronisieren.</source>
-        <target state="needs-translation">Die von Ihnen gewählte Projektkennung unterscheidet sich stark von der Kennung des Originalprojekts. Bitte prüfen Sie, ob Sie die korrekte Backup-Datei ausgewählt haben, bevor Sie Daten aus dem wiederhergestellten Projekt mit anderen Field-Desktop-Instanzen oder Field-Servern synchronisieren.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -10475,6 +10443,46 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-resource/type-scanner-modal.html</context>
           <context context-type="linenumber">32,35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.confirmBackupLoading.header" datatype="html">
+        <source>Backup einlesen?</source>
+        <target state="needs-translation">Backup einlesen?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/backup/confirm-backup-loading-modal.html</context>
+          <context context-type="linenumber">2,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="backup.loading.confirm.existingProject" datatype="html">
+        <source>Das Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newProjectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> existiert bereits und wird beim Einlesen des Backups überschrieben. </source>
+        <target state="needs-translation">Das Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newProjectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> existiert bereits und wird beim Einlesen des Backups überschrieben. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/backup/confirm-backup-loading-modal.html</context>
+          <context context-type="linenumber">9,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="backup.loading.confirm.unsimilarProjectIdentifier" datatype="html">
+        <source>Die von Ihnen gewählte Projektkennung <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newProjectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> unterscheidet sich stark von der Kennung des Originalprojekts <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{originalProjectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </source>
+        <target state="needs-translation">Die von Ihnen gewählte Projektkennung <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newProjectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> unterscheidet sich stark von der Kennung des Originalprojekts <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{originalProjectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/backup/confirm-backup-loading-modal.html</context>
+          <context context-type="linenumber">13,16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="backup.loading.confirm.question" datatype="html">
+        <source>Möchten Sie das Backup wirklich einlesen?</source>
+        <target state="needs-translation">Möchten Sie das Backup wirklich einlesen?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/backup/confirm-backup-loading-modal.html</context>
+          <context context-type="linenumber">18,20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.backup.read.error.invalidFileFormat" datatype="html">
+        <source>Die angegebene Datei ist keine gültige Backup-Datei.</source>
+        <target state="needs-translation">Die angegebene Datei ist keine gültige Backup-Datei.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">375</context>
         </context-group>
       </trans-unit>
     </body>

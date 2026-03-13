@@ -42,8 +42,6 @@ export class BackupLoadingComponent {
 
     private modalRef: NgbModalRef|undefined;
 
-    private static TIMEOUT: number = 200;
-
 
     constructor(private modalService: NgbModal,
                 private messages: Messages,
@@ -120,6 +118,7 @@ export class BackupLoadingComponent {
     private async readBackupFile(checkProjectIdentifier: boolean = true) {
 
         this.startLoading();
+        await AngularUtility.refresh(500);
 
         try {
             await this.backupService.restore(
@@ -177,14 +176,10 @@ export class BackupLoadingComponent {
 
     private openProgressModal() {
 
-        setTimeout(() => {
-            if (this.running) {
-                this.modalRef = this.modalService.open(
-                    BackupLoadingModalComponent,
-                    { backdrop: 'static', keyboard: false, animation: false }
-                );
-            }
-        }, BackupLoadingComponent.TIMEOUT);
+        this.modalRef = this.modalService.open(
+            BackupLoadingModalComponent,
+            { backdrop: 'static', keyboard: false, animation: false }
+        );
     }
 
 

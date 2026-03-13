@@ -8,6 +8,7 @@ import { Menus } from '../../../../services/menus';
 @Component({
     templateUrl: './delete-qr-code-modal.html',
     host: {
+        'data-component-id': 'DeleteQrCodeModalComponent',
         '(window:keydown)': 'onKeyDown($event)'
     },
     standalone: false
@@ -21,8 +22,7 @@ export class DeleteQrCodeModalComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
-                private menuService: Menus
-    ) {}
+                private menuService: Menus) {}
 
 
     public onKeyDown(event: KeyboardEvent) {

@@ -7,6 +7,7 @@ import { MenuContext } from '../../services/menu-context';
 @Component({
     templateUrl: './confirm-backup-loading-modal.html',
     host: {
+        'data-component-id': 'ConfirmBackupLoadingModalComponent',
         '(window:keydown)': 'onKeyDown($event)'
     },
     standalone: false

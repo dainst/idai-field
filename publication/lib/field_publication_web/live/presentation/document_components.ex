@@ -398,20 +398,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             {gettext("project_doc_about_project")}
           </.group_heading>
           <div class="bg-panel p-2">
-            <.live_component
-              :let={comment}
-              module={LanguageSelection}
-              id="project_description"
-              translations={Data.get_field_value(@doc, "description")}
-            >
-              <span class="markdown">
-                {comment
-                |> Earmark.as_html!()
-                |> Phoenix.HTML.raw()}
-              </span>
-            </.live_component>
-            
-    <!--<I18n.markdown values={Data.get_field_value(@doc, "description")} />-->
+            <.render_data_field_as_markdown field={Data.get_field(@doc, "description")} />
           </div>
           <.group_heading class="mt-3">
             {gettext("project_doc_about_publication")}

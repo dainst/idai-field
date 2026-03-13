@@ -13,7 +13,6 @@ defmodule FieldPublicationWeb.Components.Data.Field do
 
   attr :field, Field, required: true
   attr :hide_language_selection?, :boolean, default: false
-  attr :markdown, :boolean, default: false
 
   def render_data_field(%{field: %Field{input_type: input_type}} = assigns)
       when input_type in ["boolean"] do
@@ -189,6 +188,30 @@ defmodule FieldPublicationWeb.Components.Data.Field do
 
   def render_data_field(assigns) do
     render_warning(assigns)
+  end
+
+  attr :field, Field, required: true
+  attr :hide_language_selection?, :boolean, default: false
+
+  def render_data_field_as_markdown(%{field: %Field{input_type: input_type}} = assigns)
+      when input_type in ["input", "simpleInput", "text"] do
+    ~H"""
+    <.maybe_language_select
+      :let={text}
+      hide_selection?={@hide_language_selection?}
+      field={@field}
+      value={@field.value}
+      id={@field.name}
+    >
+      <.maybe_search_link field={@field}>
+        <span class="markdown">
+          {text
+          |> Earmark.as_html!()
+          |> Phoenix.HTML.raw()}
+        </span>
+      </.maybe_search_link>
+    </.maybe_language_select>
+    """
   end
 
   attr :id, :string, required: true

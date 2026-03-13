@@ -187,6 +187,8 @@ export class BackupLoadingComponent {
     private async openConfirmModal(warningType: BackupLoadingWarningType,
                                    originalProjectIdentifier?: string): Promise<boolean> {
 
+        this.menuService.setContext(MenuContext.MODAL);
+
         const modalRef: NgbModalRef = this.modalService.open(
             ConfirmBackupLoadingModalComponent,
             { backdrop: 'static', keyboard: false, animation: false }
@@ -201,6 +203,8 @@ export class BackupLoadingComponent {
             return true;
         } catch (err) {
             return false;
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
         }
     }
 

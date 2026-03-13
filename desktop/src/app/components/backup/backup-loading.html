@@ -4,7 +4,7 @@
             <div class="col default-nav bg-light text-end">
                 <button id="loadBackupButton"
                         class="btn btn-primary"
-                        [ngClass]="{ 'disabled': running }"
+                        [ngClass]="{ 'disabled': !isStartButtonEnabled() }"
                         (click)="loadBackup()">
                     <span class="mdi mdi-database-import"></span>
                     <span class="button-label" i18n="@@backup.loading.loadBackup">Backup einlesen</span>

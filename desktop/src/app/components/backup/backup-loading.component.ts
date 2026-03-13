@@ -53,6 +53,9 @@ export class BackupLoadingComponent {
                 private appState: AppState) {}
 
 
+    public isStartButtonEnabled = () => !this.running && this.path && this.projectIdentifier;
+
+
     public async onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.DEFAULT) {
@@ -103,8 +106,6 @@ export class BackupLoadingComponent {
 
     private validateInputs(): MsgWithParams|undefined {
 
-        if (!this.path) return [M.BACKUP_READ_ERROR_FILE_NOT_FOUND];
-        if (!this.projectIdentifier) return [M.BACKUP_READ_ERROR_NO_PROJECT_IDENTIFIER];
         if (this.projectIdentifier === this.settingsProvider.getSettings().selectedProject) {
             return [M.BACKUP_READ_ERROR_SAME_PROJECT_IDENTIFIER];
         }

@@ -61,16 +61,9 @@ export class BackupService {
 
 
     private assertProjectIdentifierIsValid(filePath: string, project: string) {
-
-        let projectDocument: Document;
-    
-        try {
-            projectDocument = this.getProjectDocument(filePath);
-            if (!projectDocument) throw [ERROR_INVALID_FILE_FORMAT];
-        } catch(err) {
-            console.warn(err);
-            throw [ERROR_INVALID_FILE_FORMAT];
-        }
+        
+        const projectDocument: Document = this.getProjectDocument(filePath);
+        if (!projectDocument) throw [ERROR_INVALID_FILE_FORMAT];
 
         if (!ProjectIdentifierValidation.isSimilar(projectDocument.resource.identifier, project)) {
             throw [ERROR_UNSIMILAR_PROJECT_IDENTIFIER, projectDocument.resource.identifier];
@@ -80,11 +73,16 @@ export class BackupService {
 
     private getProjectDocument(filePath: string): Document {
 
-        const fileContent = fs.readFileSync(filePath, 'utf8');
-        return fileContent.split('\n')
-            .filter(line => line?.length)
-            .map(line => JSON.parse(line)?.docs?.find(document => document.resource.id === 'project'))
-            .filter(document => document !== undefined)[0];
+        try {
+            const fileContent = fs.readFileSync(filePath, 'utf8');
+            return fileContent.split('\n')
+                .filter(line => line?.length)
+                .map(line => JSON.parse(line)?.docs?.find(document => document?.resource?.id === 'project'))
+                .filter(document => document !== undefined)?.[0];
+        } catch (err) {
+            console.warn('Failed to read project document from backup file:', err);
+            return undefined;
+        }
     }
 
 

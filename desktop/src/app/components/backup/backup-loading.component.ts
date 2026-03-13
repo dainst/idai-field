@@ -15,7 +15,8 @@ import { AppState } from '../../services/app-state';
 import { AngularUtility } from '../../angular/angular-utility';
 import { BackupService, ERROR_FILE_NOT_FOUND, ERROR_INVALID_FILE_FORMAT,
     ERROR_UNSIMILAR_PROJECT_IDENTIFIER } from '../../services/backup/backup-service';
-import { ConfirmBackupLoadingModalComponent } from './confirm-backup-loading-modal.component';
+import { BackupLoadingWarningType,
+    ConfirmBackupLoadingModalComponent } from './confirm-backup-loading-modal.component';
 import { reloadAndSwitchToHomeRoute } from '../../services/reload';
 import { isArray } from 'tsfun';
 
@@ -95,7 +96,10 @@ export class BackupLoadingComponent {
         const errorMessage: MsgWithParams|undefined = this.validateInputs();
         if (errorMessage) return this.messages.add(errorMessage);
 
-        await this.readBackupFile();
+        if (!this.settingsProvider.getSettings().dbs.includes(this.projectIdentifier)
+                || await this.openConfirmModal('existingProject')) {
+            await this.readBackupFile();
+        }
     }
 
 
@@ -178,7 +182,7 @@ export class BackupLoadingComponent {
     }
 
 
-    private async openConfirmModal(warningType: 'unsimilarProjectIdentifier',
+    private async openConfirmModal(warningType: BackupLoadingWarningType,
                                    originalProjectIdentifier?: string): Promise<boolean> {
 
         const modalRef: NgbModalRef = this.modalService.open(

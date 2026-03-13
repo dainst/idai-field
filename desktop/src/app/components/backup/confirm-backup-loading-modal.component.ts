@@ -4,6 +4,9 @@ import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
 
 
+export type BackupLoadingWarningType = 'existingProject'|'unsimilarProjectIdentifier';
+
+
 @Component({
     templateUrl: './confirm-backup-loading-modal.html',
     host: {
@@ -17,7 +20,7 @@ import { MenuContext } from '../../services/menu-context';
  */
 export class ConfirmBackupLoadingModalComponent {
 
-    public warningType: 'unsimilarProjectIdentifier';
+    public warningType: BackupLoadingWarningType;
     public newProjectIdentifier: string;
     public originalProjectIdentifier: string;
 

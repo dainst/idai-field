@@ -5,6 +5,10 @@
 </div>
 
 <div id="confirm-backup-modal-body" class="modal-body">
+    <div *ngIf="warningType === 'existingProject'" class="alert alert-warning"
+         i18n="@@backup.loading.confirm.existingProject">
+        Das Projekt <b>{{newProjectIdentifier}}</b> existiert bereits und wird beim Einlesen des Backups überschrieben.
+    </div>
     <div *ngIf="warningType === 'unsimilarProjectIdentifier'" class="alert alert-warning"
          i18n="@@backup.loading.confirm.unsimilarProjectIdentifier">
         Die von Ihnen gewählte Projektkennung <b>{{newProjectIdentifier}}</b> unterscheidet sich stark von der Kennung

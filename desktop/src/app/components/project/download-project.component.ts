@@ -132,7 +132,7 @@ export class DownloadProjectComponent {
 
             await AngularUtility.refresh(1000);
 
-            this.settingsService.addProject(
+            await this.settingsService.addProject(
                 this.getProjectIdentifier(),
                 {
                     isSyncActive: true,
@@ -141,9 +141,8 @@ export class DownloadProjectComponent {
                     fileSyncPreferences: preferences,
                     startSequence: lastUpdateSequence
                 }
-            ).then(() => {
-                reloadAndSwitchToHomeRoute();
-            });
+            );
+            reloadAndSwitchToHomeRoute();
         } catch (e) {
             if (e === 'DB not empty') {
                 this.messages.add([M.INITIAL_SYNC_DB_NOT_EMPTY]);

@@ -48,7 +48,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static BACKUP_READ_ERROR_FILE_NOT_FOUND = 'backup.read.error.fileNotFound';
     public static BACKUP_READ_ERROR_NO_PROJECT_IDENTIFIER = 'backup.read.error.noProjectIdentifier';
     public static BACKUP_READ_ERROR_SAME_PROJECT_IDENTIFIER = 'backup.read.error.sameProjectIdentifier';
-    public static BACKUP_READ_WARNING_UNSIMILAR_PROJECT_IDENTIFIER = 'backup.read.warning.unsimilarProjectIdentifier';
     public static BACKUP_INVALID_AUTO_BACKUP_DIRECTORY = 'backup.error.invalidAutoBackupDirectory';
     public static BACKUP_AUTOMATIC_FILE_CREATION_FAILED = 'backup.error.automaticFileCreationFailed';
 
@@ -379,10 +378,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.BACKUP_READ_ERROR_SAME_PROJECT_IDENTIFIER] = {
             content: $localize `:@@messages.backup.read.error.sameProjectIdentifier:Bitte wählen Sie als Ziel ein anderes als das gerade ausgewählte Projekt.`,
             level: 'danger'
-        };
-        this.msgs[M.BACKUP_READ_WARNING_UNSIMILAR_PROJECT_IDENTIFIER] = {
-            content: $localize `:@@messages.backup.read.warning.unsimilarProjectIdentifier:Die von Ihnen gewählte Projektkennung unterscheidet sich stark von der Kennung des Originalprojekts. Bitte prüfen Sie, ob Sie die korrekte Backup-Datei ausgewählt haben, bevor Sie Daten aus dem wiederhergestellten Projekt mit anderen Field-Desktop-Instanzen oder Field-Servern synchronisieren.`,
-            level: 'warning'
         };
         this.msgs[M.BACKUP_INVALID_AUTO_BACKUP_DIRECTORY] = {
             content: $localize `:@@messages.backup.error.invalidAutoBackupDirectory:Es konnten keine automatischen Backups erstellt werden. Der in den Einstellungen angegebene Verzeichnispfad ist ungültig.`,

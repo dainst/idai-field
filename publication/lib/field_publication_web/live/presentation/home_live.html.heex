@@ -23,7 +23,10 @@
                 phx-value-id={project[:name]}
               >
                 <div class="text-center">
-                  <.pick_language values={Data.get_field_value(doc, "shortName")} />
+                  <.render_data_field
+                    field={Data.get_field(doc, "shortName")}
+                    hide_language_selection?={true}
+                  />
                 </div>
               </div>
             </.link>

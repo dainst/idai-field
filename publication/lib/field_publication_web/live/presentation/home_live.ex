@@ -11,6 +11,8 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
     LanguageDefault
   }
 
+  import FieldPublicationWeb.Components.Data.Field
+
   require Logger
 
   def mount(_assigns, _session, socket) do

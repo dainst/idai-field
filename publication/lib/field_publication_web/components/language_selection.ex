@@ -34,7 +34,7 @@ defmodule FieldPublicationWeb.Components.LanguageSelection do
           </span>
         </button>
       </div>
-      <div>
+      <div class="grow">
         {render_slot(@inner_block, @translations[@selected])}
       </div>
     </div>

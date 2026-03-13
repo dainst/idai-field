@@ -372,7 +372,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             level: 'danger'
         };
         this.msgs[M.BACKUP_READ_ERROR_INVALID_FILE_FORMAT] = {
-            content: $localize `:@@messages.backup.read.error.fileNotFound:Die angegebene Datei ist keine gültige Backup-Datei.`,
+            content: $localize `:@@messages.backup.read.error.invalidFileFormat:Die angegebene Datei ist keine gültige Backup-Datei.`,
             level: 'danger'
         };
         this.msgs[M.BACKUP_READ_ERROR_SAME_PROJECT_IDENTIFIER] = {

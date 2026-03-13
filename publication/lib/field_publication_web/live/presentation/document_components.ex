@@ -263,7 +263,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
         <div class="basis-full lg:basis-1/3 m-5">
           <%= for %RelationGroup{} = relation_group <- @doc.relations do %>
             <.group_heading>
-              {pick_default_translation(relation_group.labels)} /> ({Enum.count(relation_group.docs)})
+              {pick_default_translation(relation_group.labels)} ({Enum.count(relation_group.docs)})
             </.group_heading>
             <div class="overflow-auto overscroll-contain max-h-[200px]">
               <%= for %Document{} = doc <- relation_group.docs do %>

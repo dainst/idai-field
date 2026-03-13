@@ -831,14 +831,6 @@
           <context context-type="linenumber">83</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="backup.loading.info.2" datatype="html">
-        <source>Hinweis: Nach dem Einspielen eines Backups werden Vorschaubilder erneut aus den Originaldaten errechnet, weshalb die Anwendung zunächst möglicherweise etwas langsamer laufen kann.</source>
-        <target state="translated">Por favor, tenga en cuenta que después de restaurar una copia de seguridad, todas las imágenes en miniatura se volverán a calcular basándose en los datos de la imagen original. Por este motivo, es posible que la aplicación funcione inicialmente más lento de lo habitual.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
-          <context context-type="linenumber">125</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="backup.loading.info.3" datatype="html">
         <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Achtung:<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Beim Einspielen einer Backup-Datei wird eine eventuell vorhandene Zieldatenbank mit der angegebenen Kennung <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>vollständig überschrieben<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </source>
         <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Atención:<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Al restaurar un archivo de copia de seguridad, cualquier base de datos de destino que pueda existir con el identificador especificado <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>se sobrescribirá por completo<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
@@ -4593,14 +4585,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.backup.read.success" datatype="html">
-        <source>Das Backup wurde erfolgreich eingelesen.</source>
-        <target state="translated">La copia de seguridad se ha restaurado correctamente.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.backup.write.error.generic" datatype="html">
         <source>Beim Sichern der Datenbank ist ein Fehler aufgetreten.</source>
         <target state="translated">Se ha producido un error al crear una copia de seguridad de la base de datos.</target>
@@ -4625,25 +4609,9 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.backup.read.error.noProjectIdentifier" datatype="html">
-        <source>Geben Sie eine Projektkennung an, um fortzufahren.</source>
-        <target state="translated">Por favor, introduzca un identificador de proyecto para continuar.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="messages.backup.read.error.sameProjectIdentifier" datatype="html">
         <source>Bitte wählen Sie als Ziel ein anderes als das gerade ausgewählte Projekt.</source>
         <target state="translated">Por favor, seleccione un objetivo distinto al proyecto seleccionado actualmente.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="messages.backup.read.warning.unsimilarProjectIdentifier" datatype="html">
-        <source>Die von Ihnen gewählte Projektkennung unterscheidet sich stark von der Kennung des Originalprojekts. Bitte prüfen Sie, ob Sie die korrekte Backup-Datei ausgewählt haben, bevor Sie Daten aus dem wiederhergestellten Projekt mit anderen Field-Desktop-Instanzen oder Field-Servern synchronisieren.</source>
-        <target state="translated">El identificador del proyecto que ha introducido difiere considerablemente del identificador del proyecto original. Por favor, compruebe que ha seleccionado el archivo de copia de seguridad correcto antes de sincronizar los datos del proyecto restaurado con otras instancias de Field Desktop o servidores de Field.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

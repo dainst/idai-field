@@ -9,7 +9,7 @@ defmodule FieldPublication.Publications.Data do
   `FieldPublication.Publications.Data.Document` struct definition below.
   """
 
-  require FieldPublicationWeb.Gettext
+  require FieldPublicationWeb.Translate
   require Logger
 
   alias FieldPublication.{
@@ -758,16 +758,16 @@ defmodule FieldPublication.Publications.Data do
     %RelationGroup{
       name: "contains",
       labels:
-        Gettext.known_locales(FieldPublicationWeb.Gettext)
+        Gettext.known_locales(FieldPublicationWeb.Translate)
         |> Enum.map(fn locale ->
           {
             locale,
             Gettext.with_locale(
-              FieldPublicationWeb.Gettext,
+              FieldPublicationWeb.Translate,
               locale,
               fn ->
                 Gettext.gettext(
-                  FieldPublicationWeb.Gettext,
+                  FieldPublicationWeb.Translate,
                   "Contains"
                 )
               end

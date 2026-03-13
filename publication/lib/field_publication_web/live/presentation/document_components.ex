@@ -4,7 +4,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
   use FieldPublicationWeb, :verified_routes
 
   alias FieldPublicationWeb.Presentation.Components.{
-    I18n,
     DocumentAncestors,
     ClipboardCopy
   }
@@ -14,8 +13,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
     Field,
     Image
   }
-
-  import FieldPublicationWeb.Components.LanguageDefault
 
   alias FieldPublication.DatabaseSchema.Translation
   alias FieldPublication.Publications.Data
@@ -61,7 +58,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           <%= unless fields == [] do %>
             <section>
               <.group_heading>
-                <.pick_language values={group.labels} />
+                {pick_default_translation(group.labels)}
               </.group_heading>
 
               <dl class="grid grid-cols-2 gap-1 mt-2">
@@ -83,7 +80,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
         <%= if depicted_in do %>
           <section>
             <.group_heading>
-              <.pick_language values={depicted_in.labels} /> ({Enum.count(depicted_in.docs)})
+              {pick_default_translation(depicted_in.labels)} ({Enum.count(depicted_in.docs)})
             </.group_heading>
             <div class="p-2 bg-panel overflow-auto overscroll-contain grid grid-cols-3 gap-1 mt-2 max-h-[300px] mb-5">
               <%= for %Document{} = doc <- depicted_in.docs do %>
@@ -95,7 +92,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                       size="^250,"
                       project={@publication.project_name}
                       uuid={doc.id}
-                      alt={"Project image '#{doc.identifier}' (#{I18n.select_translation(%{values: doc.category.labels}) |> then(fn {_, text} -> text end)})"}
+                      alt={"Project image '#{doc.identifier}' (#{pick_default_translation(doc.category.labels)})"}
                     />
                   </div>
                 </.link>
@@ -141,7 +138,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
       )  do %>
           <section>
             <.group_heading>
-              <.pick_language values={other_relation.labels} /> ({Enum.count(other_relation.docs)})
+              {pick_default_translation(other_relation.labels)} ({Enum.count(other_relation.docs)})
             </.group_heading>
             <div class="overflow-auto overscroll-contain max-h-[400px]">
               <%= for %Document{geometry: geometry} = doc <- other_relation.docs do %>
@@ -202,7 +199,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           fn %RelationGroup{name: relation_name} -> relation_name in ["isDepictedIn", "hasDefaultMapLayer", "hasMapLayer", "isRecordedIn", "liesWithin", "contains"] end
           )  do %>
             <.group_heading>
-              <.pick_language values={other_relation.labels} /> ({Enum.count(other_relation.docs)})
+              {pick_default_translation(other_relation.labels)} ({Enum.count(other_relation.docs)})
             </.group_heading>
             <div class="overflow-auto overscroll-contain">
               <%= for %Document{geometry: geometry} = doc <- other_relation.docs do %>
@@ -266,7 +263,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
         <div class="basis-full lg:basis-1/3 m-5">
           <%= for %RelationGroup{} = relation_group <- @doc.relations do %>
             <.group_heading>
-              <.pick_language values={relation_group.labels} /> ({Enum.count(relation_group.docs)})
+              {pick_default_translation(relation_group.labels)} /> ({Enum.count(relation_group.docs)})
             </.group_heading>
             <div class="overflow-auto overscroll-contain max-h-[200px]">
               <%= for %Document{} = doc <- relation_group.docs do %>
@@ -282,7 +279,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             <%= unless fields == [] do %>
               <section>
                 <.group_heading>
-                  <.pick_language values={group.labels} />
+                  {pick_default_translation(group.labels)}
                 </.group_heading>
 
                 <dl>
@@ -550,7 +547,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                 <.icon name="hero-document-solid" />
               </span>
               <div class="pl-1 text-primary hover:text-primary-hover">
-                <.pick_language values={labels} /> ({count})
+                {pick_default_translation(labels)} ({count})
               </div>
             </div>
           </.link>

@@ -1,10 +1,10 @@
 defmodule FieldPublicationWeb.Presentation.Opengraph do
   import Phoenix.Component, only: [assign: 3]
 
+  use FieldPublicationWeb, :html
   alias FieldPublication.Publications.Data
   alias FieldPublication.Publications.Data.Document
   alias FieldPublicationWeb.Components.Data.Image
-  alias FieldPublicationWeb.Presentation.Components.I18n
 
   def add_opengraph_tags(socket, publication, doc) do
     socket
@@ -25,8 +25,7 @@ defmodule FieldPublicationWeb.Presentation.Opengraph do
         value
 
       values when is_map(values) ->
-        {_, value} = I18n.select_translation(%{values: values})
-        value
+        pick_default_translation(values)
 
       nil ->
         nil

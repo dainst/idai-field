@@ -44,7 +44,7 @@ defmodule FieldPublicationWeb do
         layouts: [html: FieldPublicationWeb.Layouts]
 
       import Plug.Conn
-      use Gettext, backend: FieldPublicationWeb.Gettext
+      use Gettext, backend: FieldPublicationWeb.Translate
 
       unquote(verified_routes())
     end
@@ -55,7 +55,7 @@ defmodule FieldPublicationWeb do
       use Phoenix.LiveView,
         layout: {FieldPublicationWeb.Layouts, :app}
 
-      on_mount(FieldPublicationWeb.Gettext)
+      on_mount(FieldPublicationWeb.Translate)
       unquote(html_helpers())
     end
   end
@@ -87,8 +87,9 @@ defmodule FieldPublicationWeb do
       import Phoenix.HTML
       # Core UI components and translation
       import FieldPublicationWeb.CoreComponents
+      import FieldPublicationWeb.Translate
 
-      use Gettext, backend: FieldPublicationWeb.Gettext
+      use Gettext, backend: FieldPublicationWeb.Translate
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS

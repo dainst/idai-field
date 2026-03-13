@@ -4,8 +4,6 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
   alias FieldPublication.Publications.Data
   alias FieldPublication.Publications.Data.Document
 
-  import FieldPublicationWeb.Components.LanguageDefault
-
   import FieldPublicationWeb.Components.Data.{
     DocumentLink,
     Field
@@ -36,13 +34,15 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
               <%= unless fields == [] do %>
                 <section>
                   <.group_heading>
-                    <.pick_language values={group.labels} />
+                    {pick_default_translation(group.labels)}
                   </.group_heading>
 
                   <dl class="mt-2">
                     <%= for %Field{} = field <- fields do %>
                       <div>
-                        <dt class="font-bold"><.pick_language values={field.labels} /></dt>
+                        <dt class="font-bold">
+                          {pick_default_translation(field.labels)}
+                        </dt>
                         <dd class="pl-4">
                           <.render_field_data field={field} />
                         </dd>

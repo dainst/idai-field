@@ -11,7 +11,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
   alias FieldPublication.Publications.Data.Document
 
   alias FieldPublicationWeb.Presentation.Opengraph
-  alias FieldPublicationWeb.Presentation.Components.I18n
 
   alias FieldPublicationWeb.Presentation.DocumentComponents
   alias FieldPublicationWeb.Presentation.Components.PublicationSelection
@@ -120,16 +119,11 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
   end
 
   defp get_page_title(%Document{id: "project"} = doc) do
-    {_, short_description} =
-      I18n.select_translation(%{values: Data.get_field_value(doc, "shortName")})
-
-    short_description
+    pick_default_translation(Data.get_field_value(doc, "shortName"))
   end
 
   defp get_page_title(%Document{identifier: identifier, category: %{labels: labels}}) do
-    {_info, category} = I18n.select_translation(%{values: labels})
-
-    "#{identifier} (#{category})"
+    "#{identifier} (#{pick_default_translation(labels)})"
   end
 
   defp evaluate_requested_doc(

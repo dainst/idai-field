@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.Gettext do
+defmodule FieldPublicationWeb.Translate do
   @moduledoc """
   A module providing Internationalization with a gettext-based API.
 
@@ -30,7 +30,7 @@ defmodule FieldPublicationWeb.Gettext do
         %{"locale" => locale} = _session,
         socket
       ) do
-    Gettext.put_locale(FieldPublicationWeb.Gettext, locale)
+    Gettext.put_locale(FieldPublicationWeb.Translate, locale)
 
     # Put the current path into the assigns of any live view in the application. This is required for the
     # `return_to` parameter in the UI language switch form (see app.html.heex).
@@ -62,6 +62,35 @@ defmodule FieldPublicationWeb.Gettext do
       "uk" => "Українська"
     }
   end
+
+  def pick_default_translation(options) when is_map(options) do
+    key = pick_default_language_key(options)
+
+    Map.get(options, key)
+  end
+
+  def pick_default_translation(value) when is_binary(value) do
+    value
+  end
+
+  def pick_default_language_key(options) when is_map(options) do
+    pick_default_language_key(Map.keys(options))
+  end
+
+  def pick_default_language_key(options) when is_list(options) do
+    user_ui_language = Gettext.get_locale(FieldPublicationWeb.Translate)
+
+    cond do
+      user_ui_language in options ->
+        user_ui_language
+
+      "en" in options ->
+        "en"
+
+      true ->
+        List.first(options)
+    end
+  end
 end
 
 defmodule FieldPublicationWeb.Gettext.Plug do
@@ -80,13 +109,13 @@ defmodule FieldPublicationWeb.Gettext.Plug do
         set_locale(conn, locale)
 
       locale ->
-        Gettext.put_locale(FieldPublicationWeb.Gettext, locale)
+        Gettext.put_locale(FieldPublicationWeb.Translate, locale)
         conn
     end
   end
 
   def set_locale(conn, locale) do
-    Gettext.put_locale(FieldPublicationWeb.Gettext, locale)
+    Gettext.put_locale(FieldPublicationWeb.Translate, locale)
     put_session(conn, :locale, locale)
   end
 
@@ -113,7 +142,7 @@ defmodule FieldPublicationWeb.Gettext.Plug do
       end
     end)
     |> Enum.filter(fn {_weight, lang} ->
-      lang in Gettext.known_locales(FieldPublicationWeb.Gettext)
+      lang in Gettext.known_locales(FieldPublicationWeb.Translate)
     end)
     |> Enum.sort()
     |> List.last()

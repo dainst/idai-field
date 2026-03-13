@@ -261,7 +261,7 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
       |> ApplicationSettings.changeset()
 
     imprint_options =
-      FieldPublicationWeb.Gettext.get_locale_labels()
+      FieldPublicationWeb.Translate.get_locale_labels()
       |> Enum.map(fn {language_key, label} ->
         [key: label, value: language_key]
       end)

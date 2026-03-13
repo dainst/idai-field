@@ -18,7 +18,7 @@ defmodule FieldPublicationWeb.ContactAndImprintLive do
             phx-click="select"
             phx-value-language={language}
           >
-            {FieldPublicationWeb.Gettext.get_locale_labels() |> Map.get(language)}
+            {get_locale_labels() |> Map.get(language)}
           </div>
         <% end %>
       </div>
@@ -48,7 +48,7 @@ defmodule FieldPublicationWeb.ContactAndImprintLive do
 
     case contact do
       val when is_list(val) and val != [] ->
-        selected_ui_language = Gettext.get_locale(FieldPublicationWeb.Gettext)
+        selected_ui_language = Gettext.get_locale(FieldPublicationWeb.Translate)
 
         %Translation{language: language} =
           Enum.find(

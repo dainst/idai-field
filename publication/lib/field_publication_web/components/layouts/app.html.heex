@@ -30,12 +30,12 @@
             id="locale-select"
             phx-change={JS.dispatch("click", to: "#submit_language_selection")}
           >
-            <%= for lang <- Gettext.known_locales(FieldPublicationWeb.Gettext) do %>
+            <%= for lang <- Gettext.known_locales(FieldPublicationWeb.Translate) do %>
               <option
                 value={lang}
-                selected={Gettext.get_locale(FieldPublicationWeb.Gettext) == lang}
+                selected={Gettext.get_locale(FieldPublicationWeb.Translate) == lang}
               >
-                {Map.get(FieldPublicationWeb.Gettext.get_locale_labels(), lang, lang)}
+                {Map.get(FieldPublicationWeb.Translate.get_locale_labels(), lang, lang)}
               </option>
             <% end %>
           </select>

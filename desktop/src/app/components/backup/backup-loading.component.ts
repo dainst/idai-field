@@ -129,26 +129,7 @@ export class BackupLoadingComponent {
             reloadAndSwitchToHomeRoute();
         } catch (errWithParams) {
             this.stopLoading();
-            if (!isArray(errWithParams)) {
-                this.messages.add([M.BACKUP_READ_ERROR_GENERIC]);
-                return;
-            }
-            switch (errWithParams[0]) {
-                case ERROR_FILE_NOT_FOUND:
-                    this.messages.add([M.BACKUP_READ_ERROR_FILE_NOT_FOUND]);
-                    break;
-                case ERROR_INVALID_FILE_FORMAT:
-                    this.messages.add([M.BACKUP_READ_ERROR_INVALID_FILE_FORMAT]);
-                    break;
-                case ERROR_UNSIMILAR_PROJECT_IDENTIFIER:
-                    if (await this.openConfirmModal('unsimilarProjectIdentifier', errWithParams[1])) {
-                        await this.readBackupFile(false);
-                    }
-                    break;
-                default:
-                    this.messages.add([M.BACKUP_READ_ERROR_GENERIC]);
-                    break;   
-            }
+            await this.handleError(errWithParams);
         }
     }
 
@@ -166,6 +147,31 @@ export class BackupLoadingComponent {
         this.running = false;
         this.menuService.setContext(MenuContext.DEFAULT);
         this.closeModal();
+    }
+
+
+    private async handleError(errWithParams: string[]|any) {
+
+        if (!isArray(errWithParams)) {
+            this.messages.add([M.BACKUP_READ_ERROR_GENERIC]);
+            return;
+        }
+
+        switch (errWithParams[0]) {
+            case ERROR_FILE_NOT_FOUND:
+                this.messages.add([M.BACKUP_READ_ERROR_FILE_NOT_FOUND]);
+                break;
+            case ERROR_INVALID_FILE_FORMAT:
+                this.messages.add([M.BACKUP_READ_ERROR_INVALID_FILE_FORMAT]);
+                break;
+            case ERROR_UNSIMILAR_PROJECT_IDENTIFIER:
+                if (await this.openConfirmModal('unsimilarProjectIdentifier', errWithParams[1])) {
+                    await this.readBackupFile(false);
+                }
+                break;
+            default:
+                this.messages.add([M.BACKUP_READ_ERROR_GENERIC]);
+        }
     }
 
 

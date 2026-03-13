@@ -13,7 +13,7 @@ import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
 import { AppState } from '../../services/app-state';
 import { AngularUtility } from '../../angular/angular-utility';
-import { BackupService, ERROR_FILE_NOT_FOUND, ERROR_INVALID_BACKUP_FORMAT,
+import { BackupService, ERROR_FILE_NOT_FOUND, ERROR_INVALID_FILE_FORMAT,
     ERROR_UNSIMILAR_PROJECT_IDENTIFIER } from '../../services/backup/backup-service';
 import { ConfirmBackupLoadingModalComponent } from './confirm-backup-loading-modal.component';
 import { reloadAndSwitchToHomeRoute } from '../../services/reload';
@@ -133,8 +133,8 @@ export class BackupLoadingComponent {
                 case ERROR_FILE_NOT_FOUND:
                     this.messages.add([M.BACKUP_READ_ERROR_FILE_NOT_FOUND]);
                     break;
-                case ERROR_INVALID_BACKUP_FORMAT:
-                    // TODO Implement
+                case ERROR_INVALID_FILE_FORMAT:
+                    this.messages.add([M.BACKUP_READ_ERROR_INVALID_FILE_FORMAT]);
                     break;
                 case ERROR_UNSIMILAR_PROJECT_IDENTIFIER:
                     if (await this.openConfirmModal('unsimilarProjectIdentifier', errWithParams[1])) {

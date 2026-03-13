@@ -46,6 +46,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static BACKUP_WRITE_ERROR_GENERIC = 'backup.write.error.generic';
     public static BACKUP_READ_ERROR_GENERIC = 'backup.read.error.generic';
     public static BACKUP_READ_ERROR_FILE_NOT_FOUND = 'backup.read.error.fileNotFound';
+    public static BACKUP_READ_ERROR_INVALID_FILE_FORMAT = 'backup.read.error.invalidFileFormat';
     public static BACKUP_READ_ERROR_NO_PROJECT_IDENTIFIER = 'backup.read.error.noProjectIdentifier';
     public static BACKUP_READ_ERROR_SAME_PROJECT_IDENTIFIER = 'backup.read.error.sameProjectIdentifier';
     public static BACKUP_INVALID_AUTO_BACKUP_DIRECTORY = 'backup.error.invalidAutoBackupDirectory';
@@ -369,6 +370,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.BACKUP_READ_ERROR_FILE_NOT_FOUND] = {
             content: $localize `:@@messages.backup.read.error.fileNotFound:Die angegebene Datei konnte nicht gefunden werden.`,
+            level: 'danger'
+        };
+        this.msgs[M.BACKUP_READ_ERROR_INVALID_FILE_FORMAT] = {
+            content: $localize `:@@messages.backup.read.error.fileNotFound:Die angegebene Datei ist keine gültige Backup-Datei.`,
             level: 'danger'
         };
         this.msgs[M.BACKUP_READ_ERROR_NO_PROJECT_IDENTIFIER] = {

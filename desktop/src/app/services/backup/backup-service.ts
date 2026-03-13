@@ -8,11 +8,11 @@ const PouchDB = window.require('pouchdb-browser');
 const pouchDBLoad = require('pouchdb-load');
 
 
-export type RestoreBackupError = 'fileNotFound'|'unsimilarProjectIdentifier'|'invalidBackupFormat'|'generic';
+export type RestoreBackupError = 'fileNotFound'|'unsimilarProjectIdentifier'|'invalidFileFormat'|'generic';
 
 export const ERROR_FILE_NOT_FOUND: RestoreBackupError = 'fileNotFound';
 export const ERROR_UNSIMILAR_PROJECT_IDENTIFIER: RestoreBackupError = 'unsimilarProjectIdentifier'
-export const ERROR_INVALID_BACKUP_FORMAT: RestoreBackupError = 'invalidBackupFormat';
+export const ERROR_INVALID_FILE_FORMAT: RestoreBackupError = 'invalidFileFormat';
 export const ERROR_GENERIC: RestoreBackupError = 'generic';
 
 
@@ -66,9 +66,10 @@ export class BackupService {
     
         try {
             projectDocument = this.getProjectDocument(filePath);
+            if (!projectDocument) throw [ERROR_INVALID_FILE_FORMAT];
         } catch(err) {
             console.warn(err);
-            throw [ERROR_INVALID_BACKUP_FORMAT];
+            throw [ERROR_INVALID_FILE_FORMAT];
         }
 
         if (!ProjectIdentifierValidation.isSimilar(projectDocument.resource.identifier, project)) {

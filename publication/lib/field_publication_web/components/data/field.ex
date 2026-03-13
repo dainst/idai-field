@@ -14,7 +14,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
   attr :field, Field, required: true
   attr :hide_language_selection?, :boolean, default: false
 
-  def render_data_field(%{field: %Field{input_type: input_type}} = assigns)
+  def render_field_data(%{field: %Field{input_type: input_type}} = assigns)
       when input_type in ["boolean"] do
     # Explictly calling gettext("true") and gettext("false") to enable the Gettext to pickup the value
     # just doing {gettext("#{@field.value})} would make it impossible for Gettext
@@ -24,7 +24,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     """
   end
 
-  def render_data_field(%{field: %Field{input_type: input_type}} = assigns)
+  def render_field_data(%{field: %Field{input_type: input_type}} = assigns)
       when input_type in ["input", "simpleInput", "text"] do
     ~H"""
     <.maybe_language_select
@@ -41,7 +41,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     """
   end
 
-  def render_data_field(
+  def render_field_data(
         %{field: %Field{input_type: input_type, value_labels: value_labels}} = assigns
       )
       when input_type in ["dropdown", "radio"] and is_map(value_labels) do
@@ -60,7 +60,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     """
   end
 
-  def render_data_field(%{field: %Field{input_type: input_type}} = assigns)
+  def render_field_data(%{field: %Field{input_type: input_type}} = assigns)
       when input_type == "checkboxes" do
     # Checkboxes where the selected value is mapped to a label.
     ~H"""
@@ -80,7 +80,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     """
   end
 
-  def render_data_field(
+  def render_field_data(
         %{field: %Field{input_type: input_type, value_labels: value_labels}} = assigns
       )
       when input_type in ["dropdownRange"] and is_map(value_labels) do
@@ -119,21 +119,21 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     """
   end
 
-  def render_data_field(%{field: %Field{input_type: input_type}} = assigns)
+  def render_field_data(%{field: %Field{input_type: input_type}} = assigns)
       when input_type in ["unsignedInt", "unsignedFloat"] do
     ~H"""
     {@field.value}
     """
   end
 
-  def render_data_field(%{field: %Field{input_type: input_type, value: value}} = assigns)
+  def render_field_data(%{field: %Field{input_type: input_type, value: value}} = assigns)
       when input_type == "date" and is_binary(value) do
     ~H"""
     {@field.value}
     """
   end
 
-  def render_data_field(
+  def render_field_data(
         %{field: %Field{input_type: input_type, value: %{"isRange" => false} = value}} = assigns
       )
       when input_type == "date" and is_map(value) do
@@ -142,7 +142,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     """
   end
 
-  def render_data_field(%{field: %Field{input_type: input_type}} = assigns)
+  def render_field_data(%{field: %Field{input_type: input_type}} = assigns)
       when input_type in ["literature"] do
     ~H"""
     <%= if is_list(@field.value) do %>
@@ -174,7 +174,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     """
   end
 
-  def render_data_field(%{field: %Field{input_type: input_type}} = assigns)
+  def render_field_data(%{field: %Field{input_type: input_type}} = assigns)
       when input_type in ["dimension"] do
     ~H"""
     <%= for %{"inputUnit" => unit, "inputValue" => value, "isImprecise" => imprecise?, "measurementPosition" => position} <- @field.value do %>
@@ -186,14 +186,14 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     """
   end
 
-  def render_data_field(assigns) do
+  def render_field_data(assigns) do
     render_warning(assigns)
   end
 
   attr :field, Field, required: true
   attr :hide_language_selection?, :boolean, default: false
 
-  def render_data_field_as_markdown(%{field: %Field{input_type: input_type}} = assigns)
+  def render_field_data_as_markdown(%{field: %Field{input_type: input_type}} = assigns)
       when input_type in ["input", "simpleInput", "text"] do
     ~H"""
     <.maybe_language_select
@@ -211,6 +211,54 @@ defmodule FieldPublicationWeb.Components.Data.Field do
         </span>
       </.maybe_search_link>
     </.maybe_language_select>
+    """
+  end
+
+  attr :field, Field, required: true
+
+  def render_field_label(%{field: %Field{labels: labels}} = assigns) when is_map(labels) do
+    ~H"""
+    <% language_keys = Map.keys(@field.labels) %>
+    <% ui_lang = LanguageSelection.pick_default_translation(language_keys) %>
+    <% rendered_order =  Enum.reject(language_keys, fn(key) -> key == ui_lang end) %>
+    {@field.labels[ui_lang]}
+    <!-- <div aria-describedby={description_id}>
+      {@field.labels[ui_lang]}
+    </div>
+    <div id={description_id} role="tooltip" class="hidden">
+      <%= for language_key <- rendered_order do %>
+        <div class={"#{if language_key == ui_lang, do: "bg-primary/20"}"}>
+          {Map.get(@field.labels, language_key)} <span class="text-xs" phx-hook="DisplayLanguage" id={"#{description_id}_#{language_key}"} lang={language_key}>{language_key}</span>
+        </div>
+      <% end %>
+    </div> -->
+    <!-- <div class="relative">
+
+
+
+        <button
+          class="cursor-pointer"
+          phx-click={JS.show(to: "#field_#{@field.name}_label_translations")}
+        >
+            {@field.labels[ui_lang]}
+
+            <div class="absolute bg-white left-8 z-55 hidden" id={"field_#{@field.name}_label_translations"}
+              phx-click={JS.hide(to: "#field_#{@field.name}_label_translations")}>
+              <%= for language_key <- rendered_order do %>
+                <div class={"#{if language_key == ui_lang, do: "bg-primary/20"}"}>
+                  {Map.get(@field.labels, language_key)} <span class="text-xs" phx-hook="DisplayLanguage" id={"field_#{@field.name}_label_translations_#{language_key}"} lang={language_key}>{language_key}</span>
+                </div>
+              <% end %>
+            </div>
+        </button>
+
+    </div>-->
+    """
+  end
+
+  def render_field_label(assigns) do
+    ~H"""
+    <.render_warning {assigns} />
     """
   end
 
@@ -260,18 +308,26 @@ defmodule FieldPublicationWeb.Components.Data.Field do
   defp maybe_language_select(%{value: value, field: %Field{value_labels: value_labels}} = assigns)
        when is_binary(value) and is_map(value_labels) do
     # The field's "value" is just a single binary value.
-    # There are also no translated labels for the value.
+    # There are also translated labels for the value.
 
     ~H"""
-    <.live_component
-      :let={text}
-      module={LanguageSelection}
-      id={ensure_valid_id(@id)}
-      translations={@field.value_labels[@value]}
-      hide_selection?={@hide_selection?}
-    >
-      {render_slot(@inner_block, text)}
-    </.live_component>
+    <% value_translations = @field.value_labels[@value] %>
+
+    <%= if value_translations do %>
+      <.live_component
+        :let={text}
+        module={LanguageSelection}
+        id={ensure_valid_id(@id)}
+        translations={value_translations}
+        hide_selection?={@hide_selection?}
+      >
+        {render_slot(@inner_block, text)}
+      </.live_component>
+    <% else %>
+      {# there was a map of translations, but this specific value was not
+      # translated so we fallback to just rendering the value
+      render_slot(@inner_block, @value)}
+    <% end %>
     """
   end
 
@@ -305,22 +361,12 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     """
   end
 
-  defp render_warning(%{field: _field} = assigns) do
-    Logger.warning("Unhandled field type: #{inspect(assigns)}")
+  defp render_warning(assigns) do
+    Logger.warning("Unhandled field data: #{inspect(assigns)}")
 
     ~H"""
     <div class="border-yellow-400 border-4 m-2 p-2">
       Unhandled input type {inspect(@field)}
-    </div>
-    """
-  end
-
-  defp render_warning(%{value: _value} = assigns) do
-    Logger.warning("Unhandled field value: #{inspect(assigns)}")
-
-    ~H"""
-    <div class="border-yellow-400 border-4 m-2 p-2">
-      Unhandled input value {inspect(@value)}
     </div>
     """
   end

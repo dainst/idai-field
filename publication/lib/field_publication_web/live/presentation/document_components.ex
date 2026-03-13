@@ -67,9 +67,11 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
               <dl class="grid grid-cols-2 gap-1 mt-2">
                 <%= for %Field{} = field <- fields do %>
                   <div class="border p-0.5 border-black/20">
-                    <dt class="font-bold"><.pick_language values={field.labels} /></dt>
+                    <dt class="font-bold">
+                      <.render_field_label field={field} />
+                    </dt>
                     <dd class="pl-4 pr-4 pb-1">
-                      <.render_data_field field={field} />
+                      <.render_field_data field={field} />
                     </dd>
                   </div>
                 <% end %>
@@ -286,9 +288,11 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                 <dl>
                   <%= for %Field{} = field <- fields do %>
                     <div>
-                      <dt class="font-bold"><.pick_language values={field.labels} /></dt>
+                      <dt class="font-bold">
+                        <.render_field_label field={field} />
+                      </dt>
                       <dd class="pl-4 pr-4">
-                        <.render_data_field field={field} />
+                        <.render_field_data field={field} />
                       </dd>
                     </div>
                   <% end %>
@@ -371,7 +375,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
     ~H"""
     <div>
       <.document_heading>
-        <.render_data_field field={Data.get_field(@doc, "shortName")} hide_language_selection?={true} />
+        <.render_field_data field={Data.get_field(@doc, "shortName")} hide_language_selection?={true} />
       </.document_heading>
       <% depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
       <%= if depicted_in != nil do %>
@@ -398,7 +402,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             {gettext("project_doc_about_project")}
           </.group_heading>
           <div class="bg-panel p-2">
-            <.render_data_field_as_markdown field={Data.get_field(@doc, "description")} />
+            <.render_field_data_as_markdown field={Data.get_field(@doc, "description")} />
           </div>
           <.group_heading class="mt-3">
             {gettext("project_doc_about_publication")}
@@ -427,14 +431,16 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           <dl>
             <% institution = Data.get_field(@doc, "institution") %>
             <%= if institution do %>
-              <dt class="font-bold"><.pick_language values={institution.labels} /></dt>
-              <.render_data_field field={institution} />
+              <dt class="font-bold"><.render_field_label field={institution} /></dt>
+              <.render_field_data field={institution} />
             <% end %>
 
             <% contact_mail = Data.get_field(@doc, "contactMail") %>
             <% contact_person = Data.get_field(@doc, "contactPerson") %>
             <%= if contact_mail do %>
-              <dt class="font-bold"><.pick_language values={contact_person.labels} /></dt>
+              <dt class="font-bold">
+                <.render_field_label field={contact_person} />
+              </dt>
               <dd class="ml-4">
                 <a href={"mailto:#{contact_mail.value}"}>
                   <.icon name="hero-envelope" class="h-6 w-6 mr-1" />
@@ -449,19 +455,26 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
 
             <% supervisor = Data.get_field(@doc, "projectSupervisor") %>
             <%= if supervisor do %>
-              <dt class="font-bold"><.pick_language values={supervisor.labels} /></dt>
-              <.render_data_field field={supervisor} />
+              <dt class="font-bold">
+                <.render_field_label field={supervisor} />
+              </dt>
+              <.render_field_data field={supervisor} />
             <% end %>
 
-            <%= if @staff do %>
-              <dt class="font-bold"><.pick_language values={@staff.labels} /></dt>
-              <dd class="ml-4">{@staff.names}</dd>
+            <% staff = Data.get_field(@doc, "staff") %>
+            <%= if staff do %>
+              <dt class="font-bold">
+                <.render_field_label field={staff} />
+              </dt>
+              <dd class="ml-4">{concat_staff_list(staff)}</dd>
             <% end %>
 
             <% bibliographic_references = Data.get_field(@doc, "bibliographicReferences") %>
             <%= if bibliographic_references do %>
-              <dt class="font-bold"><.pick_language values={bibliographic_references.labels} /></dt>
-              <.render_data_field field={bibliographic_references} />
+              <dt class="font-bold">
+                <.render_field_label field={bibliographic_references} />
+              </dt>
+              <.render_field_data field={bibliographic_references} />
             <% end %>
             <% url = Data.get_field_value(@doc, "projectURI") %>
             <%= if url do %>
@@ -556,23 +569,26 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
     end)
     |> List.flatten()
   end
+
+  defp concat_staff_list(field) do
+    case field do
+      %{value: value} ->
+        Enum.map(value, fn
+          val when is_binary(val) ->
+            # Value is a list of strings.
+            val
+
+          %{"value" => val} when is_binary(val) ->
+            # value is a list of maps generated by a checkbox in the UI.
+            val
+
+          _ ->
+            ["-"]
+        end)
+        |> Enum.join(", ")
+
+      _ ->
+        "-"
+    end
+  end
 end
-
-# color-mix(in oklab, #{desaturate_category_color(color)} 40%, transparent);
-#  style={"background-color: color-mix(in oklab, #{desaturate_category_color(color)} 20%, transparent);"}
-
-# <div class="flex flex-wrap gap-1">
-# <%= for {category, %{count: count, labels: labels, color: color}} <- @category_breakdown |> IO.inspect() do %>
-# <.link
-# class="pl-2 pr-2 rounded-tl rounded"
-# style={"background-color: #{desaturate_category_color(color)}; border-color: #{desaturate_category_color(color)}; border-width: 1px 0px 1px 0px;"}
-# navigate={
-# ~p"/search?#{%{filters: %{category: category, project_name: @publication.project_name}}}"
-# }
-# >
-# <div class="h-full bg-white/70 hover:bg-white/40 pl-2 pr-2 pt-3 pb-3 font-thin hover:text-black text-gray-800">
-# <.pick_language values={labels} /> ({count})
-# </div>
-# </.link>
-# <% end %>
-# </div>

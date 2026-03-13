@@ -44,7 +44,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
                       <div>
                         <dt class="font-bold"><.pick_language values={field.labels} /></dt>
                         <dd class="pl-4">
-                          <.render_data_field field={field} />
+                          <.render_field_data field={field} />
                         </dd>
                       </div>
                     <% end %>

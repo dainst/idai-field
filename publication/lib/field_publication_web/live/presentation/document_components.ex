@@ -64,7 +64,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                 {pick_default_translation(group.labels)}
               </.group_heading>
 
-              <dl class="grid grid-cols-2 gap-1 mt-2">
+              <dl class="grid max-md:grid-cols-1 md:grid-cols-2 gap-1 mt-2">
                 <%= for %Field{} = field <- fields do %>
                   <div class="border p-0.5 border-black/20">
                     <dt class="font-bold">

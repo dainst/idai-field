@@ -15,30 +15,14 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
       |> Task.async_stream(fn %Publication{} = publication ->
         {publication, Publications.Data.get_extended_document("project", publication)}
       end)
-      |> Enum.map(fn {:ok, {%Publication{project_name: project_name}, %Document{} = doc}} ->
-        longitude =
-          Data.get_field_value(
-            doc,
-            "longitude"
-          )
-
-        latitude =
-          Data.get_field_value(
-            doc,
-            "latitude"
-          )
-
-        metadata = %{
-          name: project_name,
-          doc: doc
-        }
-
-        if !is_nil(latitude) and !is_nil(longitude) do
-          Map.put(metadata, :coordinates, %{longitude: longitude, latitude: latitude})
-        else
-          metadata
-        end
+      |> Enum.map(fn
+        {:ok, {%Publication{} = pub, %Document{} = doc}} ->
+          create_metadata(pub, doc)
+        {:ok, {%Publication{} = pub, _} } ->
+          Logger.error("Failed to load project document for '#{Publications.get_doc_id(pub)}'.")
+          :error
       end)
+      |> Enum.reject(fn val -> val == :error end)
 
     {
       :ok,
@@ -74,5 +58,30 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
     socket = push_navigate(socket, to: ~p"/projects/#{project_name}")
 
     {:noreply, socket}
+  end
+
+  defp create_metadata(%Publication{project_name: project_name}, %Document{} = doc) do
+    longitude =
+    Data.get_field_value(
+      doc,
+      "longitude"
+    )
+
+  latitude =
+    Data.get_field_value(
+      doc,
+      "latitude"
+    )
+
+  metadata = %{
+    name: project_name,
+    doc: doc
+  }
+
+  if !is_nil(latitude) and !is_nil(longitude) do
+    Map.put(metadata, :coordinates, %{longitude: longitude, latitude: latitude})
+  else
+    metadata
+  end
   end
 end

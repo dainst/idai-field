@@ -3,6 +3,8 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
     ApplicationSettings
   }
 
+  import FieldPublicationWeb.Components.TranslationInput
+
   alias FieldPublication.Settings
   alias Ecto.Changeset
   alias Phoenix.HTML
@@ -25,7 +27,14 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
 
       <.page_name_setting {assigns} />
       <.color_scheme_settings {assigns} />
-      <.imprint_settings {assigns} />
+
+      <.translation_input
+        field={@setting_form[:contact]}
+        language_options={@imprint_options}
+      >
+        <:heading>Imprint</:heading>
+        <:no_translations>You currently have no imprint.</:no_translations>
+      </.translation_input>
     </.form>
     <.image_settings {assigns} />
     """
@@ -88,74 +97,6 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
           </div>
         </div>
       </.inputs_for>
-    </section>
-    """
-  end
-
-  def imprint_settings(assigns) do
-    ~H"""
-    <section>
-      <.group_heading>
-        Imprint
-        <button
-          type="button"
-          name="application_settings[contact_sort][]"
-          value="new"
-          class="cursor-pointer"
-          phx-click={JS.dispatch("change")}
-        >
-          <.icon name="hero-document-plus" class="w-6 h-6 relative" />
-        </button>
-      </.group_heading>
-
-      <%= for error <- @setting_form.source.errors do %>
-        <%= case error do %>
-          <% {:contact, {msg, _opts}} -> %>
-            <div class="p-2 text-red-700"><.icon name="hero-exclamation-circle-mini" /> {msg}</div>
-          <% _ -> %>
-            {inspect(error)}
-        <% end %>
-      <% end %>
-
-      <div :if={@setting_form[:contact].value == []} class="p-2 italic">
-        <.icon name="hero-exclamation-triangle" /> You currently have no imprint.
-      </div>
-      <.inputs_for :let={imprint} field={@setting_form[:contact]}>
-        <div class="flex gap-2 mt-2">
-          <div class="basis-1/2">
-            <input type="hidden" name="application_settings[contact_sort][]" value={imprint.index} />
-            <div class="flex gap-1">
-              <button
-                type="button"
-                name="application_settings[contact_drop][]"
-                class="cursor-pointer"
-                value={imprint.index}
-                phx-click={JS.dispatch("change")}
-              >
-                <.icon name="hero-document-minus" class="w-6 h-6 relative" />
-              </button>
-              <.input
-                type="select"
-                field={imprint[:language]}
-                options={@imprint_options}
-              />
-            </div>
-
-            <.input type="textarea" field={imprint[:text]} placeholder="Add some markdown here" />
-          </div>
-
-          <div class="ml-2 p-2 bg-gray-100 border border-black basis-1/2">
-            <div class="text-lg mb-8 font-thin">Preview</div>
-            <div class="markdown">
-              <% text = Phoenix.HTML.Form.input_value(imprint, :text) || "" %>
-              {Earmark.as_html!(text)
-              |> Phoenix.HTML.raw()}
-            </div>
-          </div>
-        </div>
-      </.inputs_for>
-
-      <input type="hidden" name="application_settings[contact_drop][]" />
     </section>
     """
   end

@@ -95,7 +95,9 @@ defmodule FieldPublication.Publications do
           {:ok, %{status: 200, body: body}} ->
             json_doc = Jason.decode!(body)
 
-            publication = apply_changes(Publication.changeset(%Publication{}, json_doc))
+            publication =
+              apply_changes(Publication.changeset(%Publication{}, json_doc))
+
             Cachex.put(:document_cache, doc_id, publication, ttl: 1000 * 60 * 60 * 24 * 7)
 
             {:ok, publication}

@@ -4,6 +4,36 @@
 
 <div>
   <.form for={@publication_form} phx-change="validate" phx-submit="save">
+    <.input type="hidden" field={@publication_form[:project_name]} />
+    <.input type="hidden" field={@publication_form[:source_url]} />
+    <.input type="hidden" field={@publication_form[:source_project_name]} />
+    <.input type="hidden" field={@publication_form[:draft_date]} />
+    <.input type="hidden" field={@publication_form[:drafted_by]} />
+    <.input type="hidden" field={@publication_form[:replication_finished]} />
+    <.input type="hidden" field={@publication_form[:configuration_doc]} />
+    <.input type="hidden" field={@publication_form[:hierarchy_doc]} />
+    <.input type="hidden" field={@publication_form[:database]} />
+    <.input type="hidden" field={@publication_form[:publication_date]} />
+
+    <%= for {language, index} <- Enum.with_index(@publication_form[:languages].value) do %>
+      <input
+        type="hidden"
+        name={"#{@publication_form[:languages].name}[]"}
+        value={language}
+      />
+    <% end %>
+
+    <.inputs_for :let={field} field={@publication_form[:replication_logs]}>
+      <.input type="hidden" field={field[:severity]} />
+      <.input type="hidden" field={field[:timestamp]} />
+      <.input type="hidden" field={field[:message]} />
+    </.inputs_for>
+
+    <.inputs_for :let={field} field={@publication_form[:processing_logs]}>
+      <.input type="hidden" field={field[:severity]} />
+      <.input type="hidden" field={field[:timestamp]} />
+      <.input type="hidden" field={field[:message]} />
+    </.inputs_for>
     <.list>
       <:item title="Source URL">{@publication.source_url}</:item>
       <:item title="Source project name">{@publication.source_project_name}</:item>
@@ -163,27 +193,13 @@
           <.input type="select" field={@publication_form[:version]} options={[:major, :revision]} />
         </:item>
         <:item title="Comments">
-          <table class="w-full table-auto">
-            <thead>
-              <tr>
-                <th class="w-28 text-left">Language</th>
-                <th class="text-left">Text</th>
-              </tr>
-            </thead>
-            <tbody>
-              <.inputs_for :let={translation} field={@publication_form[:comments]}>
-                <tr>
-                  <td class="pl-4">
-                    <.input field={translation[:language]} type="hidden" />
-                    {translation[:language].value}
-                  </td>
-                  <td>
-                    <.input field={translation[:text]} type="textarea" phx-debounce="2000" />
-                  </td>
-                </tr>
-              </.inputs_for>
-            </tbody>
-          </table>
+          <.translation_input
+            field={@publication_form[:comments]}
+            language_options={["en", "de"]}
+          >
+            <:heading>Publication comments</:heading>
+            <:no_translations>No comments for this publication</:no_translations>
+          </.translation_input>
         </:item>
         <:item
           :if={@publication.publication_date && @publication.publication_date <= @today}

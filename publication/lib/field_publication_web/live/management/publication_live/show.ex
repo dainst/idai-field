@@ -1,4 +1,6 @@
 defmodule FieldPublicationWeb.Management.PublicationLive.Show do
+  import FieldPublicationWeb.Components.TranslationInput
+
   alias FieldPublication.Processing.{
     MapTiles,
     WebImage
@@ -51,11 +53,9 @@ defmodule FieldPublicationWeb.Management.PublicationLive.Show do
         type == :search_index
       end)
 
-    initialized_comments = initialize_missing_comments(publication)
-
     publication_form =
       publication
-      |> Publication.changeset(%{comments: initialized_comments})
+      |> Publication.changeset()
       |> to_form
 
     {
@@ -154,18 +154,16 @@ defmodule FieldPublicationWeb.Management.PublicationLive.Show do
 
   def handle_event(
         "validate",
-        %{
-          "publication" => publication_form_parameters
-        },
-        %{assigns: %{publication: publication}} = socket
+        %{"publication" => form_parameters},
+        socket
       ) do
     {
       :noreply,
       assign(
         socket,
         :publication_form,
-        publication
-        |> Publication.changeset(publication_form_parameters)
+        %Publication{}
+        |> Publication.changeset(form_parameters)
         |> to_form()
       )
     }

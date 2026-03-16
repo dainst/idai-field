@@ -50,7 +50,10 @@ defmodule FieldPublication.DatabaseSchema.Publication do
       :languages,
       :version
     ])
-    |> cast_embed(:comments)
+    |> cast_embed(:comments,
+      sort_param: :comments_sort,
+      drop_param: :comments_drop
+    )
     |> cast_embed(:replication_logs)
     |> cast_embed(:processing_logs)
     |> validate_required([

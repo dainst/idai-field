@@ -3470,7 +3470,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.mustHaveLiesWithin" datatype="html">
         <source>Ressourcen der Kategorie '[0]' müssen innerhalb von anderen Ressourcen angelegt werden. Betroffene Ressource: '[1]'.</source>
-        <target state="needs-translation">Recursos da categoria "[0]" devem ser criadas dentro de outros recursos. É afetado : "[1]".</target>
+        <target state="translated">Recursos da categoria "[0]" devem ser criadas dentro de outros recursos. Recurso afetado : "[1]".</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3526,7 +3526,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.arrayOfHeterogeneousTypes" datatype="html">
         <source>Listenfelder müssen konsistent Einträge des gleichen Typs beinhalten. Betroffene Ressource: '[0]'</source>
-        <target state="needs-translation">Arrays devem conter campos consistentes do mesmo tipo. É afetado: '[0]'</target>
+        <target state="translated">Arrays devem conter campos consistentes do mesmo tipo. Recurso afetado: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6647,7 +6647,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.categoryCannotBeChanged" datatype="html">
         <source>Die Kategorie kann beim Import nicht geändert werden. Betroffene Ressource: '[0]'</source>
-        <target state="needs-translation">A categoria não pode ser mudada durante a importação. É afetado: '[0]'</target>
+        <target state="translated">A categoria não pode ser mudada durante a importação. Recurso afetado: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -6655,7 +6655,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.emptySlotsInArraysForbidden" datatype="html">
         <source>Leere Listeneinträge sind nur am Ende der Liste erlaubt. Betroffene Ressource: '[0]'</source>
-        <target state="needs-translation">Campos Array vazios não são permitidos. É afetado: '[0]'</target>
+        <target state="translated">Campos Array vazios não são permitidos. Recurso afetado: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -10427,7 +10427,7 @@
       </trans-unit>
       <trans-unit id="resources.confirmBackupLoading.header" datatype="html">
         <source>Backup einlesen?</source>
-        <target state="needs-translation">Backup einlesen?</target>
+        <target state="translated">Ler a cópia de segurança?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/confirm-backup-loading-modal.html</context>
           <context context-type="linenumber">2,4</context>
@@ -10435,7 +10435,7 @@
       </trans-unit>
       <trans-unit id="backup.loading.confirm.question" datatype="html">
         <source>Möchten Sie das Backup wirklich einlesen?</source>
-        <target state="needs-translation">Möchten Sie das Backup wirklich einlesen?</target>
+        <target state="translated">Tem a certeza que quer ler a cópia de segurança?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/confirm-backup-loading-modal.html</context>
           <context context-type="linenumber">18,20</context>
@@ -10443,7 +10443,7 @@
       </trans-unit>
       <trans-unit id="messages.backup.read.error.invalidFileFormat" datatype="html">
         <source>Die angegebene Datei ist keine gültige Backup-Datei.</source>
-        <target state="needs-translation">Die angegebene Datei ist keine gültige Backup-Datei.</target>
+        <target state="translated">O ficheiro escolhido não é um ficheiro de cópia de segurança válido.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">375</context>
@@ -10451,7 +10451,7 @@
       </trans-unit>
       <trans-unit id="backup.loading.confirm.existingProject" datatype="html">
         <source>Das Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newProjectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> existiert bereits und wird beim Einlesen des Backups überschrieben. </source>
-        <target state="needs-translation">Das Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newProjectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> existiert bereits und wird beim Einlesen des Backups überschrieben. </target>
+        <target state="translated">O projeto <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newProjectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> já existe e vai ser substituido ao ler a cópia de segurança. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/confirm-backup-loading-modal.html</context>
           <context context-type="linenumber">9,11</context>
@@ -10459,7 +10459,7 @@
       </trans-unit>
       <trans-unit id="backup.loading.confirm.unsimilarProjectIdentifier" datatype="html">
         <source>Die von Ihnen gewählte Projektkennung <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newProjectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> unterscheidet sich stark von der Kennung des Originalprojekts <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{originalProjectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </source>
-        <target state="needs-translation">Die von Ihnen gewählte Projektkennung <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newProjectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> unterscheidet sich stark von der Kennung des Originalprojekts <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{originalProjectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
+        <target state="translated">O identificador do projeto escolhido <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newProjectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> difere consideravelmente do identificador do projeto original <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{originalProjectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/confirm-backup-loading-modal.html</context>
           <context context-type="linenumber">13,16</context>

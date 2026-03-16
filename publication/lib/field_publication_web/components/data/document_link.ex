@@ -7,7 +7,8 @@ defmodule FieldPublicationWeb.Components.Data.DocumentLink do
 
   import FieldPublicationWeb.Components.Data.Image
 
-  import FieldPublicationWeb.Components.LanguageDefault
+  import FieldPublicationWeb.Components.LanguageSelection
+  import FieldPublicationWeb.Components.Data.Field
 
   attr :id, :string, default: nil
   attr :doc, Document, required: true
@@ -25,7 +26,7 @@ defmodule FieldPublicationWeb.Components.Data.DocumentLink do
         style={"background-color: #{desaturate_category_color(@doc.category.color)}; border-color: #{desaturate_category_color(@doc.category.color)}; border-width: 1px 1px 1px 0px;"}
       >
         <div class="h-full bg-white/70 hover:bg-white/40  pl-2 pr-2 pt-3 pb-3 font-thin hover:text-black text-gray-800">
-          <.pick_language values={@doc.category.labels} />
+          {Map.get(@doc.category, pick_default_translation(Map.keys(@doc.category)))}
         </div>
       </.link>
       <.link
@@ -38,7 +39,7 @@ defmodule FieldPublicationWeb.Components.Data.DocumentLink do
           <% shortdescription = Data.get_field(@doc, "shortDescription") %>
           <small class="ml-2 text-slate-600">
             <%= if shortdescription do %>
-              <.pick_language values={shortdescription.value} />
+              <.render_field_label field={shortdescription} />
             <% end %>
             <.icon
               :if={@geometry_indicator and @doc.geometry != nil}

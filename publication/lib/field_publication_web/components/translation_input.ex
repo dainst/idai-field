@@ -1,6 +1,4 @@
 defmodule FieldPublicationWeb.Components.TranslationInput do
-  alias FieldPublication.DatabaseSchema.Translation
-
   @moduledoc """
   Input component for adding embedded `Translation{}` items
   to a parent document.

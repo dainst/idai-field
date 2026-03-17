@@ -1,6 +1,8 @@
 defmodule FieldPublication.Publications do
   import Ecto.Changeset
 
+  alias Phoenix.PubSub
+
   alias FieldPublication.CouchService
   alias FieldPublication.Projects
   alias FieldPublication.Publications.Search
@@ -362,5 +364,13 @@ defmodule FieldPublication.Publications do
 
   def get_doc_id(%Publication{} = publication) do
     Base.construct_doc_id(publication, Publication)
+  end
+
+  def broadcast(%Publication{} = publication, msg) do
+    PubSub.broadcast(
+      FieldPublication.PubSub,
+      get_doc_id(publication),
+      msg
+    )
   end
 end

@@ -117,7 +117,80 @@ defmodule FieldPublication.Publications.Data do
     end
   end
 
-  def regenerate_document_previews(%Publication{database: db} = publication) do
+  def recreate_hierarchy_doc(%Publication{} = publication) do
+    hierarchy_mapping =
+      publication
+      |> get_doc_stream_for_all()
+      |> Enum.reduce(%{}, fn doc, acc ->
+        uuid = doc["_id"]
+
+        {_key, [parent_uuid]} =
+          Enum.find(doc["resource"]["relations"], nil, fn {key, _val} ->
+            key == "liesWithin"
+          end)
+          |> case do
+            nil ->
+              Enum.find(doc["resource"]["relations"], {nil, [nil]}, fn {key, _val} ->
+                key == "isRecordedIn"
+              end)
+
+            {"liesWithin", [_single_relation_uuid]} = val ->
+              val
+
+            _other_val ->
+              # Temporary (fingers crossed) hack for meninx
+              Logger.error(
+                "Encountered invalid 'liesWithin' relation for document '#{uuid}'. Falling back to 'isRecordedIn' in hierarchy document."
+              )
+
+              Enum.find(doc["resource"]["relations"], {nil, [nil]}, fn {key, _val} ->
+                key == "isRecordedIn"
+              end)
+          end
+
+        # Update or initialize self
+        acc =
+          Map.update(acc, doc["_id"], %{children: [], parent: parent_uuid}, fn existing ->
+            Map.put(existing, :parent, parent_uuid)
+          end)
+
+        # Update or initialize the parent
+        if parent_uuid != nil do
+          Map.update(
+            acc,
+            parent_uuid,
+            %{children: [uuid], parent: nil},
+            fn %{
+                 children: existing_children
+               } = existing ->
+              Map.put(existing, :children, existing_children ++ [uuid])
+            end
+          )
+        else
+          acc
+        end
+      end)
+      |> Enum.reject(fn {_key, value} ->
+        value[:parent] == nil and value[:children] == []
+      end)
+      |> Enum.into(%{})
+
+    document_content =
+      CouchService.get_document(publication.hierarchy_doc)
+      |> case do
+        {:ok, %{status: 200, body: body}} ->
+          doc = Jason.decode!(body)
+          Map.put(doc, "_rev", doc["_rev"])
+          Map.put(doc, "hierarchy", hierarchy_mapping)
+
+        _ ->
+          %{"hierarchy" => hierarchy_mapping}
+      end
+
+    CouchService.put_document(publication.hierarchy_doc, document_content)
+  end
+
+  def recreate_document_previews(%Publication{database: db} = publication) do
     config = Publications.get_configuration(publication)
 
     pub_id = Publications.get_doc_id(publication)

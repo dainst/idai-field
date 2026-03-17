@@ -2,14 +2,16 @@ defmodule FieldPublication.Replication.CouchReplication do
   @fix_source_url Application.compile_env(:field_publication, :dev_routes)
   @poll_frequency 1000
 
-  alias Phoenix.PubSub
-
   alias FieldPublication.{
     CouchService,
-    Replication
+    Replication,
+    Publications
   }
 
-  alias FieldPublication.DatabaseSchema.ReplicationInput
+  alias FieldPublication.DatabaseSchema.{
+    ReplicationInput,
+    Publication
+  }
 
   require Logger
 
@@ -24,7 +26,7 @@ defmodule FieldPublication.Replication.CouchReplication do
     with {:ok, source_doc_count} <- source_doc_count(input, parameters),
          {:ok, %{status: 201}} <- put_replication_doc(target_database_name, replication_doc) do
       # Once the document has been committed, poll the progress in regular intervals.
-      poll_replication_status!(target_database_name, source_doc_count, parameters)
+      poll_replication_status!(source_doc_count, parameters)
     else
       error ->
         CouchService.delete_document(target_database_name, "_replicator")
@@ -103,31 +105,35 @@ defmodule FieldPublication.Replication.CouchReplication do
     end
   end
 
-  defp poll_replication_status!(database_name, source_doc_count, %{id: id} = parameters) do
+  defp poll_replication_status!(
+         source_doc_count,
+         %{
+           input: %ReplicationInput{} = user_input,
+           publication: %Publication{database: database_name} = publication
+         } = parameters
+       ) do
     {:ok, %{status: 200, body: body}} =
       CouchService.get_document(database_name, "/_scheduler/docs/_replicator")
 
     Jason.decode!(body)
     |> case do
       %{"state" => "running", "info" => %{"docs_written" => docs_written}} ->
-        PubSub.broadcast(
-          FieldPublication.PubSub,
-          id,
+        Publications.broadcast(
+          publication,
           {:document_replication_count, %{counter: docs_written, overall: source_doc_count}}
         )
 
         Process.sleep(@poll_frequency)
-        poll_replication_status!(database_name, source_doc_count, parameters)
+        poll_replication_status!(source_doc_count, parameters)
 
       %{"state" => couch_state} when couch_state in [nil, "initializing", "running"] ->
         # Different cases shortly after the replication document has been committed.
         Process.sleep(@poll_frequency)
-        poll_replication_status!(database_name, source_doc_count, parameters)
+        poll_replication_status!(source_doc_count, parameters)
 
       %{"state" => "completed"} ->
-        PubSub.broadcast(
-          FieldPublication.PubSub,
-          id,
+        Publications.broadcast(
+          publication,
           {:document_replication_count, %{counter: source_doc_count, overall: source_doc_count}}
         )
 
@@ -139,7 +145,7 @@ defmodule FieldPublication.Replication.CouchReplication do
 
         %{ok: _successes, errors: errors} = transform_legacy_data(database_name)
 
-        put_design_documents(database_name)
+        # put_design_documents(database_name)
 
         Enum.map(errors, fn error ->
           Replication.log(
@@ -149,7 +155,14 @@ defmodule FieldPublication.Replication.CouchReplication do
           )
         end)
 
-        {:ok, {id, :couch_replication}}
+        {
+          :ok,
+          %{
+            finished: :replicating_database,
+            user_input: user_input,
+            publication: publication
+          }
+        }
 
       %{"state" => "crashing"} = error ->
         Replication.log(
@@ -339,24 +352,24 @@ defmodule FieldPublication.Replication.CouchReplication do
   end
 
   defp put_design_documents(database) do
-    CouchService.put_design_documents(
-      [
-        %{
-          index: %{
-            fields: ["resource.relations.isMapLayerOf"]
-          },
-          name: "map_layer-index",
-          type: "json"
-        }
-      ],
-      database
-    )
-    |> Enum.map(fn {:ok, {:ok, %Finch.Response{status: 200, body: body}}} ->
-      %{"result" => "created", "name" => name} = Jason.decode!(body)
+    # CouchService.put_design_documents(
+    #   [
+    #     %{
+    #       index: %{
+    #         fields: ["resource.relations.isMapLayerOf"]
+    #       },
+    #       name: "map_layer-index",
+    #       type: "json"
+    #     }
+    #   ],
+    #   database
+    # )
+    # |> Enum.map(fn {:ok, {:ok, %Finch.Response{status: 200, body: body}}} ->
+    #   %{"result" => "created", "name" => name} = Jason.decode!(body)
 
-      Logger.debug("Design document '#{name}' created.")
-      :ok
-    end)
+    #   Logger.debug("Design document '#{name}' created.")
+    #   :ok
+    # end)
   end
 
   @dialyzer {:nowarn_function, source_url_fix: 1}

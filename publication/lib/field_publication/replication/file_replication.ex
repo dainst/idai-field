@@ -1,7 +1,9 @@
 defmodule FieldPublication.Replication.FileReplication do
-  alias Phoenix.PubSub
-  alias FieldPublication.FileService
-  alias FieldPublication.Replication
+  alias FieldPublication.{
+    FileService,
+    Replication,
+    Publications
+  }
 
   alias FieldPublication.DatabaseSchema.{
     ReplicationInput,
@@ -17,14 +19,14 @@ defmodule FieldPublication.Replication.FileReplication do
 
   def start(
         %{
-          input: %ReplicationInput{
-            source_url: source_url,
-            source_project_name: source_project_name,
-            source_user: source_user,
-            source_password: source_password
-          },
-          publication: %Publication{} = publication,
-          id: id
+          input:
+            %ReplicationInput{
+              source_url: source_url,
+              source_project_name: source_project_name,
+              source_user: source_user,
+              source_password: source_password
+            } = input,
+          publication: %Publication{} = publication
         } = parameters
       ) do
     headers = [
@@ -34,24 +36,29 @@ defmodule FieldPublication.Replication.FileReplication do
 
     base_file_url = "#{source_url}/files/#{source_project_name}"
 
-    file_lists_by_variant =
+    uuid_lists_by_variant =
       @file_variants_to_replicate
-      |> Stream.map(&get_file_list(&1, base_file_url, headers))
-      |> Enum.map(fn {variant, result} ->
+      |> Enum.map(fn {variant_name, local_variant_name} ->
+        {get_file_list(variant_name, base_file_url, headers), variant_name, local_variant_name}
+      end)
+      |> Enum.map(fn {result, variant_name, local_variant_name} ->
         # Reject all files, that are already present in file system
         filtered =
           result
-          |> Enum.reject(fn {uuid, _} ->
-            FileService.raw_data_file_exists?(publication.project_name, uuid, :image)
+          |> Stream.map(fn {uuid, _file_metadata} ->
+            uuid
+          end)
+          |> Enum.reject(fn uuid ->
+            FileService.raw_data_file_exists?(publication.project_name, uuid, local_variant_name)
           end)
 
-        {variant, filtered}
+        {filtered, variant_name, local_variant_name}
       end)
 
     overall_file_count =
-      file_lists_by_variant
-      |> Stream.map(fn {_variant, map} ->
-        Enum.count(map)
+      uuid_lists_by_variant
+      |> Stream.map(fn {result, _variant_name, _local_variant_name} ->
+        Enum.count(result)
       end)
       |> Enum.reduce(fn val, sum ->
         sum + val
@@ -62,12 +69,33 @@ defmodule FieldPublication.Replication.FileReplication do
 
     Replication.log(parameters, :info, "#{overall_file_count} files need replication.")
 
-    file_processing_parameters = {counter_pid, parameters}
+    Enum.each(
+      uuid_lists_by_variant,
+      fn {uuid_list, variant_name, local_variant_name} ->
+        uuid_list
+        |> Task.async_stream(fn uuid ->
+          copy_file(%{
+            uuid: uuid,
+            variant_name: variant_name,
+            local_variant_name: local_variant_name,
+            headers: headers,
+            base_url: base_file_url,
+            counter_pid: counter_pid,
+            publication: publication
+          })
+        end)
+        |> Enum.to_list()
+      end
+    )
 
-    file_lists_by_variant
-    |> Enum.map(&copy_files(&1, base_file_url, headers, file_processing_parameters))
-
-    {:ok, {id, :file_replication}}
+    {
+      :ok,
+      %{
+        finished: :replicating_files,
+        publication: publication,
+        user_input: input
+      }
+    }
   end
 
   defp get_file_list(file_variant, base_url, headers) do
@@ -86,7 +114,7 @@ defmodule FieldPublication.Replication.FileReplication do
             deleted
           end)
 
-        {file_variant, result}
+        result
 
       {:ok, %Finch.Response{status: 401}} ->
         {:error, :invalid}
@@ -96,49 +124,30 @@ defmodule FieldPublication.Replication.FileReplication do
     end
   end
 
-  defp copy_files(
-         {variant, file_list},
-         base_file_url,
-         headers,
-         parameters
-       ) do
-    file_list
-    |> Task.async_stream(&copy_file(&1, variant, base_file_url, headers, parameters),
-      timeout: 1000 * 60 * 20
-    )
-    |> Enum.to_list()
-  end
-
-  # TODO: Refactor messy parameters
-  defp copy_file(
-         {uuid, _metadata},
-         variant,
-         base_url,
-         headers,
-         {
-           counter_pid,
-           %{
-             id: channel,
-             publication: %Publication{} = publication
-           }
-         }
-       ) do
+  defp copy_file(%{
+         uuid: uuid,
+         variant_name: variant_name,
+         local_variant_name: local_variant_name,
+         base_url: base_url,
+         headers: headers,
+         counter_pid: counter_pid,
+         publication: publication
+       }) do
     Finch.build(
       :get,
-      "#{base_url}/#{uuid}?type=#{variant}",
+      "#{base_url}/#{uuid}?type=#{variant_name}",
       headers
     )
     |> Finch.request(FieldPublication.Finch, receive_timeout: 1000 * 60 * 5)
     |> case do
       {:ok, %Finch.Response{status: 200, body: data}} ->
-        FileService.write_raw_data(publication.project_name, uuid, data, :image)
+        FileService.write_raw_data(publication.project_name, uuid, data, local_variant_name)
     end
 
     Agent.update(counter_pid, fn state -> Map.put(state, :counter, state[:counter] + 1) end)
 
-    PubSub.broadcast(
-      FieldPublication.PubSub,
-      channel,
+    Publications.broadcast(
+      publication,
       {
         :file_replication_count,
         Agent.get(counter_pid, fn state -> state end)

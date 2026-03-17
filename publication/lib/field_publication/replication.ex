@@ -1,16 +1,13 @@
 defmodule FieldPublication.Replication do
   use GenServer
 
-  require Logger
-
-  alias FieldPublication.Processing
-  alias FieldPublication.Publications.Data
   alias Phoenix.PubSub
 
   alias FieldPublication.{
     CouchService,
     Replication.CouchReplication,
     Replication.FileReplication,
+    Processing,
     Publications
   }
 
@@ -19,6 +16,8 @@ defmodule FieldPublication.Replication do
     Publication,
     LogEntry
   }
+
+  require Logger
 
   @moduledoc """
   This GenServer is used to start, stop and track data replications.
@@ -150,7 +149,71 @@ defmodule FieldPublication.Replication do
 
       task =
         Task.Supervisor.async_nolink(FieldPublication.TaskSupervisor, fn ->
-          start(parameters)
+          log(parameters, :info, "Replicating database for #{publication_id}.")
+          CouchReplication.start(parameters)
+
+          log(parameters, :info, "Replicating files for #{publication_id}.")
+          FileReplication.start(parameters)
+
+          config_task =
+            Task.async(fn ->
+              log(
+                parameters,
+                :info,
+                "Reconstructing project configuration for '#{publication_id}'."
+              )
+
+              reconstruct_project_configuraton(publication)
+            end)
+
+          hierarchy_doc_task =
+            Task.async(fn ->
+              log(parameters, :info, "Creating hierarchy document for '#{publication_id}'.")
+              Publications.Data.recreate_hierarchy_doc(publication)
+            end)
+
+          preview_docs_task =
+            Task.async(fn ->
+              log(parameters, :info, "Creating preview documents for '#{publication_id}'.")
+              Publications.Data.recreate_document_previews(publication)
+            end)
+
+          [
+            {:ok, %{status: 201}},
+            {:ok, %{status: 201}},
+            {:ok, %{status: 201}}
+          ] =
+            Task.await_many([
+              config_task,
+              hierarchy_doc_task,
+              preview_docs_task
+            ])
+
+          languages =
+            CouchService.get_document("configuration", publication.database)
+            |> case do
+              {:ok, %{status: 200, body: body}} ->
+                body
+                |> Jason.decode!()
+                |> Map.get("resource", %{})
+                |> Map.get("projectLanguages", [])
+
+              _ ->
+                # Projects created before Field Desktop 3 do not have a
+                # configuration document.
+                []
+            end
+
+          log(parameters, :info, "Draft creation finished.")
+
+          {:ok, %Publication{} = final_publication} =
+            Publications.get!(publication.project_name, publication.draft_date)
+            |> Publications.put(%{
+              "replication_finished" => DateTime.utc_now(),
+              "languages" => languages
+            })
+
+          {:ok, {:draft_created, final_publication}}
         end)
 
       {:reply, :ok, Map.put(running_replications, publication_id, {task, parameters})}
@@ -197,76 +260,23 @@ defmodule FieldPublication.Replication do
     end
   end
 
-  defp start(
-         %{
-           publication: %Publication{} = publication,
-           id: publication_id
-         } = parameters
-       ) do
-    log(
-      parameters,
-      :info,
-      "Starting replication for #{publication_id} by first replicating the database."
-    )
-
-    CouchReplication.start(parameters)
-
-    log(parameters, :info, "Replicating files for #{publication_id}.")
-
-    FileReplication.start(parameters)
-
-    {:ok, %{status: 201}} = reconstruct_project_configuraton(publication)
-
-    create_hierarchy_doc(publication)
-
-    # The reconstructed project configuration does not retain a simple list of the languages used for the
-    # publication. We read that information from the "configuration" document (pre-reconstruction) and save it
-    # in our `Publication` document as a shorthand.
-    language_default = ["en"]
-
-    languages =
-      CouchService.get_document("configuration", publication.database)
-      |> case do
-        {:ok, %{status: 200, body: body}} ->
-          body
-          |> Jason.decode!()
-          |> Map.get("resource", %{})
-          |> Map.get("projectLanguages", language_default)
-
-        _ ->
-          language_default
-      end
-
-    log(parameters, :info, "Replication finished.")
-
-    {:ok, final_publication} =
-      Publications.get!(publication.project_name, publication.draft_date)
-      |> Publications.put(%{
-        "replication_finished" => DateTime.utc_now(),
-        "languages" => languages
-      })
-
-    {:ok, {publication_id, final_publication, :replication_done}}
-  end
-
   def handle_info(
-        {_ref, {:ok, {publication_id, final_publication, :replication_done}}},
+        {_ref, {:ok, {:draft_created, publication}}},
         running_replications
       ) do
-    {_finished_task,
-     %{
-       input: %{processing: start_processing_immediately}
-     }} =
+    publication_id = Publications.get_doc_id(publication)
+
+    {_finished_task, %{input: %{processing: start_processing_immediately}}} =
       Map.get(running_replications, publication_id)
 
     if start_processing_immediately do
-      Processing.start(final_publication)
+      Processing.start(publication)
     end
 
     PubSub.broadcast(
       FieldPublication.PubSub,
       publication_id,
-      {:replication_result, final_publication}
+      {:replication_result, publication}
     )
 
     {:noreply, Map.delete(running_replications, publication_id)}
@@ -305,7 +315,7 @@ defmodule FieldPublication.Replication do
     {:noreply, cleanup(ref, running_replications)}
   end
 
-  def log(%{publication: %Publication{} = publication, id: publication_id}, severity, msg) do
+  def log(%{publication: %Publication{} = publication}, severity, msg) do
     case severity do
       :error ->
         Logger.error(msg)
@@ -328,7 +338,10 @@ defmodule FieldPublication.Replication do
     |> Map.update(:replication_logs, [], fn existing -> existing ++ [log_entry] end)
     |> Publications.put(%{})
 
-    PubSub.broadcast(FieldPublication.PubSub, publication_id, {:replication_log, log_entry})
+    Publications.broadcast(
+      publication,
+      {:replication_log, log_entry}
+    )
   end
 
   def reconstruct_project_configuraton(%Publication{
@@ -363,79 +376,6 @@ defmodule FieldPublication.Replication do
       end)
 
     CouchService.put_document(configuration_doc_name, full_config)
-  end
-
-  def create_hierarchy_doc(%Publication{} = publication) do
-    hierarchy_mapping =
-      publication
-      |> Data.get_doc_stream_for_all()
-      |> Enum.reduce(%{}, fn doc, acc ->
-        uuid = doc["_id"]
-
-        {_key, [parent_uuid]} =
-          Enum.find(doc["resource"]["relations"], nil, fn {key, _val} ->
-            key == "liesWithin"
-          end)
-          |> case do
-            nil ->
-              Enum.find(doc["resource"]["relations"], {nil, [nil]}, fn {key, _val} ->
-                key == "isRecordedIn"
-              end)
-
-            {"liesWithin", [_single_relation_uuid]} = val ->
-              val
-
-            _other_val ->
-              # Temporary (fingers crossed) hack for meninx
-              Logger.error(
-                "Encountered invalid 'liesWithin' relation for document '#{uuid}'. Falling back to 'isRecordedIn' in hierarchy document."
-              )
-
-              Enum.find(doc["resource"]["relations"], {nil, [nil]}, fn {key, _val} ->
-                key == "isRecordedIn"
-              end)
-          end
-
-        # Update or initialize self
-        acc =
-          Map.update(acc, doc["_id"], %{children: [], parent: parent_uuid}, fn existing ->
-            Map.put(existing, :parent, parent_uuid)
-          end)
-
-        # Update or initialize the parent
-        if parent_uuid != nil do
-          Map.update(
-            acc,
-            parent_uuid,
-            %{children: [uuid], parent: nil},
-            fn %{
-                 children: existing_children
-               } = existing ->
-              Map.put(existing, :children, existing_children ++ [uuid])
-            end
-          )
-        else
-          acc
-        end
-      end)
-      |> Enum.reject(fn {_key, value} ->
-        value[:parent] == nil and value[:children] == []
-      end)
-      |> Enum.into(%{})
-
-    document_content =
-      CouchService.get_document(publication.hierarchy_doc)
-      |> case do
-        {:ok, %{status: 200, body: body}} ->
-          doc = Jason.decode!(body)
-          Map.put(doc, "_rev", doc["_rev"])
-          Map.put(doc, "hierarchy", hierarchy_mapping)
-
-        _ ->
-          %{"hierarchy" => hierarchy_mapping}
-      end
-
-    CouchService.put_document(publication.hierarchy_doc, document_content)
   end
 
   defp cleanup(ref, running_replications) do

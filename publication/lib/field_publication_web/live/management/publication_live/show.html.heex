@@ -1,5 +1,5 @@
 <.document_heading>
-  Publication draft '{@publication.draft_date}' for project '{@publication.project_name}'
+  Publication '{@publication.draft_date}' for project '{@publication.project_name}'
 </.document_heading>
 
 <div>
@@ -34,6 +34,7 @@
       <.input type="hidden" field={field[:timestamp]} />
       <.input type="hidden" field={field[:message]} />
     </.inputs_for>
+
     <.list>
       <:item title="Source URL">{@publication.source_url}</:item>
       <:item title="Source project name">{@publication.source_project_name}</:item>

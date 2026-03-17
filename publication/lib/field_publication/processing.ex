@@ -53,14 +53,13 @@ defmodule FieldPublication.Processing do
     GenServer.call(__MODULE__, {:start, publication, :web_images})
     GenServer.call(__MODULE__, {:start, publication, :tile_images})
     GenServer.call(__MODULE__, {:start, publication, :search_index})
-    GenServer.call(__MODULE__, {:start, publication, :preview_documents})
   end
 
   @doc """
   Start a processing task as defined by `type` for the given publication.
   """
   def start(%Publication{} = publication, type)
-      when type in [:web_images, :tile_images, :search_index, :preview_documents] do
+      when type in [:web_images, :tile_images, :search_index] do
     # Extend the list of atoms in the guard above to support additional processing steps. You
     # still need to implement the  appropriate `handle_call/3` below.
     GenServer.call(__MODULE__, {:start, publication, type})
@@ -84,7 +83,7 @@ defmodule FieldPublication.Processing do
   Get information about the currently running processing task as defined by `type` for the given publication.
   """
   def show(%Publication{} = publication, type)
-      when type in [:web_images, :tile_images, :search_index, :preview_documents] do
+      when type in [:web_images, :tile_images, :search_index] do
     GenServer.call(__MODULE__, {:show, Publications.get_doc_id(publication), type})
   end
 
@@ -106,7 +105,7 @@ defmodule FieldPublication.Processing do
   Stop the currently running processing task as defined by `type` for the given publication.
   """
   def stop(%Publication{} = publication, type)
-      when type in [:web_images, :tile_images, :search_index, :preview_documents] do
+      when type in [:web_images, :tile_images, :search_index] do
     GenServer.call(__MODULE__, {:stop, Publications.get_doc_id(publication), type})
   end
 
@@ -205,38 +204,6 @@ defmodule FieldPublication.Processing do
       broadcast(publication_id, :search_index, :processing_started)
 
       {:reply, :ok, running_tasks ++ [{task, :search_index, publication_id}]}
-    end
-  end
-
-  def handle_call(
-        {:start, %Publication{} = publication, :preview_documents},
-        _from,
-        running_tasks
-      ) do
-    publication_id = Publications.get_doc_id(publication)
-
-    Enum.any?(running_tasks, fn {_task, type, context} ->
-      publication_id == context and type == :preview_documents
-    end)
-    |> if do
-      # The `:preview_documents` task is already running for the given publication, keep the state as-is and return a
-      # `:already_running` atom to the caller.
-      {:reply, :already_running, running_tasks}
-    else
-      task =
-        Task.Supervisor.async_nolink(
-          FieldPublication.ProcessingSupervisor,
-          # Module that implements the actual processing.
-          Publications.Data,
-          # Function within that module to start the processing.
-          :regenerate_document_previews,
-          # Parameters for that function.
-          [publication]
-        )
-
-      broadcast(publication_id, :preview_documents, :processing_started)
-
-      {:reply, :ok, running_tasks ++ [{task, :preview_documents, publication_id}]}
     end
   end
 

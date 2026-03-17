@@ -402,28 +402,37 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             {gettext("project_doc_about_project")}
           </.group_heading>
           <div class="bg-panel p-2">
-            <.render_field_data_as_markdown field={Data.get_field(@doc, "description")} />
+            <% description = Data.get_field(@doc, "description") %>
+            <%= if description do %>
+              <.render_field_data_as_markdown field={description} />
+            <% else %>
+              -
+            <% end %>
           </div>
           <.group_heading class="mt-3">
             {gettext("project_doc_about_publication")}
           </.group_heading>
+          <% comments =
+            @publication.comments
+            |> Enum.map(fn %Translation{language: lang, text: text} -> {lang, text} end)
+            |> Enum.into(%{}) %>
           <div class="bg-panel p-2">
-            <.live_component
-              :let={comment}
-              module={LanguageSelection}
-              id="publication_comments"
-              translations={
-                @publication.comments
-                |> Enum.map(fn %Translation{language: lang, text: text} -> {lang, text} end)
-                |> Enum.into(%{})
-              }
-            >
-              <span class="markdown">
-                {comment
-                |> Earmark.as_html!()
-                |> Phoenix.HTML.raw()}
-              </span>
-            </.live_component>
+            <%= if comments != %{} do %>
+              <.live_component
+                :let={comment}
+                module={LanguageSelection}
+                id="publication_comments"
+                translations={}
+              >
+                <span class="markdown">
+                  {comment
+                  |> Earmark.as_html!()
+                  |> Phoenix.HTML.raw()}
+                </span>
+              </.live_component>
+            <% else %>
+              -
+            <% end %>
           </div>
         </div>
 

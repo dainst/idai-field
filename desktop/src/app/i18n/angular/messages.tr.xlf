@@ -2710,7 +2710,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModel.warning.importedCatalog" datatype="html">
         <source>Dies ist ein importierter Katalog. Bitte beachten Sie, dass beim Löschen auch Zuordnungen von Funden zu Typen des Katalogs entfernt werden.</source>
-        <target state="translated">Bu içe aktarılmış bir katalogdur. Bu kataloğun türleri ile buluntular arasındaki ilişkilerin de kaldırılacağını lütfen unutmayın.</target>
+        <target state="translated">Bu içe aktarılmış bir katalogdur. Bu kataloğun tipleri ile buluntular arasındaki ilişkilerin de kaldırılacağını lütfen unutmayın.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">42</context>
@@ -2718,7 +2718,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModel.warning.ownedCatalog" datatype="html">
         <source>Bitte beachten Sie, dass beim Löschen von Katalogen sämtliche enthaltenen Typen sowie Zuordnungen von Funden zu Typen des Katalogs entfernt werden.</source>
-        <target state="translated">Bir kataloğun silinmesinin, o katalogda yer alan tüm türlerin silinmesini gerektirdiğini lütfen unutmayın. Buna ek olarak katalog türleri ile buluntular arasındaki tüm ilişkiler de kaldırılacak.</target>
+        <target state="needs-translation">Bir kataloğun silinmesinin, o katalogda yer alan tüm tiplerin silinmesini gerektirdiğini lütfen unutmayın. Buna ek olarak katalog tipleri ile buluntular arasındaki tüm ilişkiler de kaldırılacak.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">72</context>
@@ -10331,7 +10331,7 @@
       </trans-unit>
       <trans-unit id="resources.typeScannerModal.header.single" datatype="html">
         <source>Bisherigen Typ ersetzen?</source>
-        <target state="translated">Mevcut türü değiştirsin mi?</target>
+        <target state="needs-translation">Mevcut tipi değiştirsin mi?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-resource/type-scanner-modal.html</context>
           <context context-type="linenumber">3,5</context>
@@ -10339,7 +10339,7 @@
       </trans-unit>
       <trans-unit id="resources.typeScannerModal.header.multiple" datatype="html">
         <source>Bisherige Typen ersetzen?</source>
-        <target state="translated">Mevcut türleri değiştirsin mi?</target>
+        <target state="translated">Mevcut tipleri değiştirsin mi?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-resource/type-scanner-modal.html</context>
           <context context-type="linenumber">7,9</context>
@@ -10347,7 +10347,7 @@
       </trans-unit>
       <trans-unit id="resources.typeScannerModal.editMode.singleDocument.singleType" datatype="html">
         <source>Für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> ist bereits der Typ <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="esource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> gesetzt. </source>
-        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> girdisi zaten <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="esource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> türüne ayarlanmış durumda. </target>
+        <target state="needs-translation"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> girdisi zaten <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="esource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> tipine ayarlanmış durumda. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-resource/type-scanner-modal.html</context>
           <context context-type="linenumber">14,17</context>
@@ -10355,7 +10355,7 @@
       </trans-unit>
       <trans-unit id="resources.typeScannerModal.editMode.singleDocument.multipleTypes" datatype="html">
         <source>Für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sind bereits"/> sind bereits mehrere Typen gesetzt. </source>
-        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sind bereits"/> girdisi için çoklu türler zaten ayarlanmış durumda. </target>
+        <target state="needs-translation"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sind bereits"/> girdisi için çoklu tipler zaten ayarlanmış durumda. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-resource/type-scanner-modal.html</context>
           <context context-type="linenumber">19,21</context>
@@ -10363,7 +10363,7 @@
       </trans-unit>
       <trans-unit id="resources.typeScannerModal.editMode.multipleDocuments.multipleTypes" datatype="html">
         <source>Für <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen sind bereits Typen gesetzt. </source>
-        <target state="translated"><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> girdileri için türler zaten ayarlanmış durumda. </target>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> girdileri için tipler zaten ayarlanmış durumda. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-resource/type-scanner-modal.html</context>
           <context context-type="linenumber">28,30</context>
@@ -10371,7 +10371,7 @@
       </trans-unit>
       <trans-unit id="resources.typeScannerModal.editMode.question.single" datatype="html">
         <source>Möchten Sie den bisherigen Typ entfernen oder zusätzlich zum neuen Typ <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="source.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="beibehalten?"/> beibehalten? </source>
-        <target state="translated">Mevcut türü kaldırmak mı yoksa yeni <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="source.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="beibehalten?"/> türüne ek olarak mevcut türü korumak mı istiyorsunuz? </target>
+        <target state="needs-translation">Mevcut tipi kaldırmak mı yoksa yeni <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="source.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="beibehalten?"/> tipine ek olarak mevcut tipi korumak mı istiyorsunuz? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-resource/type-scanner-modal.html</context>
           <context context-type="linenumber">32,35</context>
@@ -10379,7 +10379,7 @@
       </trans-unit>
       <trans-unit id="resources.typeScannerModal.editMode.question.multiple" datatype="html">
         <source>Möchten Sie die bisherigen Typen entfernen oder zusätzlich zum neuen Typ <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="source.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="beibehalten?"/> beibehalten? </source>
-        <target state="translated">Mevcut türleri kaldırmak mı yoksa yeni <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="source.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="beibehalten?"/> türüne ek olarak onları korumak mı istiyorsunuz? </target>
+        <target state="needs-translation">Mevcut tipleri kaldırmak mı yoksa yeni <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="source.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="beibehalten?"/> tipine ek olarak onları korumak mı istiyorsunuz? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-resource/type-scanner-modal.html</context>
           <context context-type="linenumber">37,40</context>
@@ -10435,7 +10435,7 @@
       </trans-unit>
       <trans-unit id="resources.typeScannerModal.editMode.multipleDocuments.singleType" datatype="html">
         <source>Für <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen ist bereits der Typ <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="esource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> gesetzt. </source>
-        <target state="translated"><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> girdileri için <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="esource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> türü zaten ayarlanmış durumda. </target>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> girdileri için <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="esource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> tipi zaten ayarlanmış durumda. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-resource/type-scanner-modal.html</context>
           <context context-type="linenumber">23,26</context>
@@ -10451,7 +10451,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.info.typeAlreadySet.single" datatype="html">
         <source>Der Typ [1] ist für die Ressource [0] bereits gesetzt.</source>
-        <target state="translated">[1] türü, [0] girdisi için zaten ayarlanmış durumda.</target>
+        <target state="translated">[1] tipi, [0] girdisi için zaten ayarlanmış durumda.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1172</context>

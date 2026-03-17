@@ -70,7 +70,9 @@ bir içerik menüsü açılır:
 * *Sil*: Bir güvenlik kontrolünden sonra girdileri kaldırır (isteğe bağlı olarak, yalnızca silmek istediğiniz girdilere bağlı
 tüm görselleri de silebilirsiniz)
 * *İş akışını belgele*: Seçili girdilere bağlı işlemleri görüntüler ve yeni işlemler oluşturulmasına olanak tanır (yalnızca bir işlem kategorisinin "Buna ilişkin uygulandı" ilişkisinin hedef kategorisi olarak yapılandırılmış kategorileri için kullanılabilir).
-* *Depolama yerini tara*: Kamera taramasıyla depolama yerinin QR kodunu tarayarak girdi için yeni bir depolama yeri ayarlar (yalnızca "Bul", "Koleksiyonu bul" ve "Örnek" kategorilerinin girdileri ile ilgili alt kategoriler için kullanılabilir)
+* *Türü Tara*: Girdiyi, kamera taraması yoluyla türün QR kodunu okuyarak bir türe bağlar (yalnızca "Bul" kategorisi ve alt kategorilerindeki girdiler için geçerlidir)
+* *Depolama Konumunu Tara*: Girdi için, kamera taraması yoluyla depolama yerinin QR kodunu okuyarak yeni bir depolama yeri belirler (yalnızca "Bul", "Bul koleksiyonu" ve "Örnek" kategorileri ile ilgili alt kategorilerdeki girdiler için geçerlidir)
+* *Türü veya Depolama Konumunu Tara*: Proje yapılandırmasında hem türler hem de depolama yerleri için QR kodları etkinleştirilmişse, bu seçenek kullanılarak kamera taraması yoluyla QR kodunu okuyarak her iki kategorideki girdilere bağlantılar oluşturulabilir (yalnızca "Bul" kategorisi ve alt kategorilerindeki girdiler için geçerlidir)
 
 Ayrıca, içerik menüsü geometrileri oluşturma ve düzenleme seçenekleri içerir. Lütfen şunu unutmayın:
 birden fazla girdi seçildiğinde, yalnızca *Taşı* ve *Sil* seçenekleri kullanılabilir. QR kodlarını ekleme veya yönetme seçenekleri yalnızca yapılandırma düzenleyicisinde karşılık gelen kategori için QR kodlarının kullanımı ayarlanmışsa kullanılabilir (bkz. *Yapılandırma* bölümündeki *Kategorileri düzenle* bölümü).
@@ -548,7 +550,7 @@ Bir kategori için QR kodlarının kullanımı etkinleştirilirse, kategorinin h
 * Kamera taramasıyla (arama çubuğundaki QR kod butonu) girdiye erişim
 * QR kod etiketlerinin yazdırılması (girdinin içerik menüsü aracılığıyla)
 * Depolama yerine bağlı QR kodunun (girdinin içerik menüsü üzerinden) kamera taraması yoluyla bir girdinin depodaki yerinin ayarlanması
-Lütfen unutmayın; QR kodları yalnızca "Buluntu", "Buluntu Koleksiyonu", "Numune" ve "Depolama yeri" kategorileri ile bunların alt kategorileri için kullanılabilecektir.
+Lütfen unutmayın; QR kodları yalnızca "Buluntu", "Buluntu Koleksiyonu", "Numune", "Tür" ve "Depolama yeri" kategorileri ile bunların alt kategorileri için kullanılabilecektir.
 
 QR kodlarını yapılandırmak için kategori düzenleyicide aşağıdaki seçenekler kullanılabilir:
 * *Tanımlama için QR kodlarını kullan*: Kategorinin girdilerinde QR kodlarının kullanılmasına izin vermek için bu seçeneği etkinleştirin
@@ -767,6 +769,18 @@ Burada alana tekil bir tarih mi yoksa bir tarih aralığı mı girileceğini bel
 * *Seçilebilir*: Hem tek bir tarih hem de bir tarih aralığı girilebilir.
 * *Tekil tarih*: Yalnızca tek bir tarih girilebilir.
 * *Tarih aralığı*: Yalnızca bir tarih aralığı girilebilir.
+
+### Geometri alanlarının yapılandırılması
+Geometri oluşturulabilen her kategoriye ait formda her zaman "Geometri" giriş türünde bir alan bulunur. Alan düzenleyicisinde, bu alan için izin verilen geometri türlerini seçebilirsiniz. İlgili kategoriye ait girdiler için geometri oluştururken, yalnızca seçilen geometri türleri seçilebilir durumdadır. Varsayılan olarak, tüm geometri türlerine izin verilir.
+
+Field Desktop aşağıdaki geometri türlerini destekler:
+
+* *Poligon* ("Çoklu Poligon" seçildiğinde her zaman otomatik olarak seçilir)
+* *Çoklu Poligon*
+* *Çizgi (Polyline)* ("Çoklu Çizgi" seçildiğinde her zaman otomatik olarak seçilir)
+* *Çoklu Çizgi (Multipolyline)*
+* *Nokta* ("Çoklu Nokta" seçildiğinde her zaman otomatik olarak seçilir)
+* *Çoklu Nokta (Multipoint)*
 
 
 ### Alt alanlar
@@ -1333,9 +1347,9 @@ Ayrıca, proje yapılandırmasında ilgili alana bir saat bilgisi girilmesine iz
 
 ##### Liste alanları
 
-"Onay kutuları" ve "Tek satırlık metin (Liste)" (birden fazla dilde giriş olmadan) giriş türlerindeki alanlar için, alan için yalnızca bir sütun oluşturulur. Alan değerleri birbirinden noktalı virgülle ayrılır (örneğin "Granit; Kireçtaşı; Kayrak Taşı").
+"Onay kutuları" giriş türündeki alanlar için, alan başına yalnızca bir sütun oluşturulur. Alan değerleri, aralarında boşluk bırakılmadan noktalı virgülle ayrılır (örneğin, "Granit;Kireçtaşı;Kayrak").
 
-"Tarih", "Boyut", "Ağırlık", "Hacim", "Bibliyografik referans", "Bileşik alan" ve "Tek satırlık metin (Liste)" (birden fazla dilde giriş yapıldığında) giriş türlerindeki alanlar için, ilgili alt alanlar veya diller için ilgili sütunlar **her liste girişi için** oluşturulur. Alan adından sonra, ilgili girişi tanımlamak için bir sayı eklenir (0'dan başlayıp noktalarla ayrılır).
+"Tarihleme", "Boyut", "Ağırlık", "Hacim", "Bibliyografik referans", "Bileşik alan" ve "Tek satırlık metin (Liste)" giriş türlerindeki alanlar için, ilgili alt alanlar veya diller için karşılık gelen sütunlar **her liste girişi için** oluşturulur. İlgili girişi tanımlamak için alan adından sonra (0'dan başlayarak ve noktalarla ayrılmış) bir sayı eklenir.
 
 *Birden fazla dilde giriş ile "Tek satırlık metin (Liste)" giriş türündeki bir alana örnek:*
 
@@ -1407,15 +1421,39 @@ Görüntüleri projeye bağlamak veya proje düzeyinde harita katmanları olarak
 </div>
 
 
-##### Tarihlendirme
+##### QR kodları
 
-"Tarihlendirme" giriş türündeki alanlar, her biri birkaç tarihlendirme girişi içerebilen liste alanlarıdır. Bir tarihlendirme, her tarihlendirme değeri için ayrı bir sütun oluşturulan aşağıdaki alt alanlardan oluşur:
+*scanCode* sütununa, girdiyi benzersiz şekilde tanımlayan ve uygulamada QR kodu olarak görüntülenecek bir karakter dizisi girebilirsiniz. QR kodlarının kullanımı, öncelikle yapılandırma düzenleyicisinde ilgili kategori için etkinleştirilmelidir.
 
-* *type*: Tarihlendirme türü. Olası değerler şunlardır: *range* (Dönem), *single* (Tek yıl), *before* (Önce), *after* (Sonra), *scientific* (Bilimsel)
-* *begin*: Tarihlendirme türü *after* ve tarihlendirme türü *range* için başlangıç ​​tarihi için ayarlanan yıl belirtimi
-* *end*: Tarihlendirme türü *single*, *before* ve *scientific* için ve tarihlendirme türü *range* için bitiş tarihi için ayarlanan yıl belirtimi
-* *margin*: Tarihlendirme türü *scientific* için yıl cinsinden tolerans aralığı
-* *source*: Tarihlendirmenin kaynağı, çok dilli metin alanı
+*Örnek:*
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>scanCode</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>06ad7807-b363-4609-8db8-e33779faecf7</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+##### Tarihleme
+
+"Tarihleme" giriş türündeki alanlar, her biri birkaç tarihleme girişi içerebilen liste alanlarıdır. Bir tarihleme, her tarihleme değeri için ayrı bir sütun oluşturulan aşağıdaki alt alanlardan oluşur:
+
+* *type*: Tarihleme türü. Olası değerler şunlardır: *range* (Dönem), *single* (Tek yıl), *before* (Önce), *after* (Sonra), *scientific* (Bilimsel)
+* *begin*: Tarihleme türü *after* ve tarihleme türü *range* için için başlangıç ​​tarihi olarak belirlenen yıl.
+* *end*: Tarihleme türü *single*, *before*, *scientific* ve *range* için bitiş tarihi olarak belirlenen yıl.
+* *margin*: Tarihleme türü *scientific* için yıl cinsinden tolerans aralığı
+* *source*: Tarihlemenin kaynağı, çok dilli metin alanı
 * *isImprecise*: "Hassas olmayan". *scientific* (Bilimsel) tarihleme türü için ayarlanamaz. Olası değerler şunlardır: *true* (evet), *false* (hayır)
 * *isUncertain*: "Belirsiz". *scientific* (Bilimsel) tarihleme türü için ayarlanamaz. Olası değerler şunlardır: *true* (evet), *false* (hayır)
 
@@ -1821,6 +1859,19 @@ Görüntüleri projeye bağlamak veya proje düzeyinde harita katmanları olarak
     }
 
 
+##### QR Kodları
+
+*scanCode* alanına, girdiyi benzersiz şekilde tanımlayan ve uygulamada QR kodu olarak görüntülenecek bir karakter dizisi girebilirsiniz. QR kodlarının kullanımı, öncelikle yapılandırma düzenleyicisinde ilgili kategori için etkinleştirilmelidir.
+
+*Örnek:*
+
+{
+      "identifier": "A",
+      "category": "Find",
+      "scanCode": "06ad7807-b363-4609-8db8-e33779faecf7"
+    }
+
+
 ##### Geometri
 
 Geometriler GeoJSON şartnamesine uygun olarak belirtilebilir. *Geometri* alanına, bir GeoJSON özelliği içindeki *geometry* nesnesinin yapısına karşılık gelen bir nesne girilir (bkz. *GeoJSON* bölümü).
@@ -1930,15 +1981,15 @@ Ayrıca, proje yapılandırmasında ilgili alana bir saat bilgisi girilmesine iz
 "Tek satır metin (liste)", "Onay kutuları", "Tarih", "Boyut", "Bibliyografik referans" ve "Bileşik alan" giriş türlerinin alanları birkaç giriş içerebilir. Bu nedenle bu alanlar için bir dizi girilir.
 
 
-##### Tarihlendirme
+##### Tarihleme
 
-"Tarihlendirme" giriş türündeki alanlar, her biri birkaç tarihlendirme girişi içerebilen liste alanlarıdır. Tarihlendirme, aşağıdaki alt alanlardan oluşan bir nesnedir:
+"Tarihleme" giriş türündeki alanlar, her biri birkaç tarihleme girişi içerebilen liste alanlarıdır. Tarihleme, aşağıdaki alt alanlardan oluşan bir nesnedir:
 
-* *type*: Tarihlendirme türü. Olası değerler şunlardır: *range* (Dönem), *single* (Tek yıl), *before* (Önce), *after* (Sonra), *scientific* (Bilimsel)
-* *begin*: Tarihlendirme türü *after* ve tarihlendirme türü *range* için başlangıç tarihi için ayarlanan yıl belirtimi
-* *end*: Tarihlendirme türü *single*, *before* ve *scientific* için ve tarihlendirme türü *range* için bitiş tarihi için ayarlanan yıl belirtimi
-* *margin*: Tarihlendirme türü *scientific* için yıl cinsinden tolerans aralığı
-* *source*: Tarihlendirmenin kaynağı, çok dilli metin alanı
+* *type*: Tarihleme türü. Olası değerler şunlardır: *range* (Dönem), *single* (Tek yıl), *before* (Önce), *after* (Sonra), *scientific* (Bilimsel)
+* *begin*: Tarihleme türleri *after* ve *range* için başlangıç ​​tarihi olarak belirlenen yıl.
+* *end*: Tarihleme türleri *single*, *before*, *scientific* ve *range* için bitiş tarihi olarak belirlenen yıl.
+* *margin*: Tarihleme türü *scientific* için yıl cinsinden tolerans aralığı
+* *source*: Tarihlemenin kaynağı, çok dilli metin alanı
 * *isImprecise*: "Hassas olmayan". *scientific* (Bilimsel) tarihleme türü için ayarlanamaz. Olası değerler şunlardır: *true* (evet), *false* (hayır)
 * *isUncertain*: "Belirsiz". *scientific* (Bilimsel) tarihleme türü için ayarlanamaz. Olası değerler şunlardır: *true* (evet), *false* (hayır)
 
@@ -2269,6 +2320,34 @@ Girdinin tanımlayıcısı bir veya daha fazla başka girdi tarafından kullanı
 #### Olası çözümler
 * *Düzenle* Butonu: Yeni bir tanımlayıcı girmek için girdi düzenleyicisini açın.
 
+### Belirsiz QR kodu
+Girdi için oluşturulan QR kodu, bir veya daha fazla başka girdi tarafından da kullanılmaktadır. Bu nedenle, etkilenen girdiler, QR kodlarıyla benzersiz bir şekilde tanımlanamaz.
+
+#### Olası nedenler
+* QR kodu, mevcut bir senkronizasyon bağlantısı olmaksızın farklı bilgisayarlardaki farklı girdilere bağlandı; veriler daha sonra bir zaman diliminde senkronize edildi.
+
+#### Olası çözümler
+* *QR kodunu düzenle* Butonu: QR kodunu silmek ve gerekirse yeni bir QR kodu bağlamak veya oluşturmak için QR kod düzenleyicisini açın.
+
+### İzin verilmeyen karakterler
+Alana girilen bir veya daha fazla karakterin, ilgili giriş türündeki alanlarda kullanılmasına izin verilmez.
+
+#### Olası nedenler
+* Alan kaydı, Field Desktop'ın eski bir sürümüyle doldurulmuş olabilir.
+
+#### Olası çözümler
+* *Düzenle* Butonu: Alandan izin verilmeyen karakterleri kaldırmak için girdi düzenleyiciyi açın.
+
+### İzin verilmeyen geometri türü
+Girdinin geometrisi, ilgili kategori için izin verilen bir geometri türüne uymuyor.
+
+#### Olası nedenler
+* Geometri girdiye eklendikten sonra, ilgili kategori için izin verilen geometri türü seçimi kaldırıldı.
+
+#### Olası çözümler
+* *Düzenle* Butonu: Geometriyi ayarlamak ve izin verilen bir geometri türü seçmek için kaynak düzenleyiciyi açın.
+* Yapılandırma düzenleyicisinde ilgili kategorinin *Geometri* alanını düzenleyin ve girdinin geometri türünü izin verilen bir geometri türü olarak seçin.
+
 ### Girdi sınırı aşıldı
 Bu kategori için yapılandırılmış girdi sınırının izin verdiğinden daha fazla girdi var.
 
@@ -2298,6 +2377,8 @@ Field Desktop, HTTP üzerinden verilere erişmek ve içe aktarmak için kullanı
 http://localhost:3000
 
 Her API uç noktasına erişimde, "Senkronizasyon" altındaki "Ayarlar" menüsünde "Şifreniz" olarak girilen şifrenin *Temel Kimlik Doğrulama* ile girilmesi gerekmektedir. Kullanıcı adı girilmesine gerek yoktur.
+
+Aksi belirtilmedikçe, veriler JSON formatında döndürülür ve POST isteklerinin gövdesinde de JSON formatında olması beklenir.
 
 
 ## Uç Noktalar
@@ -2339,6 +2420,8 @@ Sorgu parametreleri:
 * *category (string)*: İçe aktarılacak verilerin ait olduğu kategorinin adı. Yalnızca CSV ile içe aktarım için gereklidir. Kullanıcı arayüzündeki "Kategori" açılır alanına karşılık gelir. (Varsayılan değer: "Project")
 * *operation (string)*: İçe aktarılan girdilerin atanacağı bir işlemin tanımlayıcısı. Kullanıcı arayüzündeki "Bir işleme veri ata" açılır alanına karşılık gelir. (Varsayılan değer: not set)
 * *separator (string)*: CSV verilerinde kullanılan ayırıcı. Yalnızca CSV ile içe aktarım için gereklidir. Kullanıcı arayüzündeki "Alan ayırıcı" giriş alanına karşılık gelir. (Varsayılan değer: ",")
+* *command (string)*: İçe aktarma işleminin hemen başlatılıp başlatılmayacağını veya içe aktarılan verilerin, aynı API uç noktasına yapılan başka bir istekle daha sonra başlatılabilecek bir içe aktarma işlemi için sıraya alınıp alınmayacağını belirtir. Olası değerler, içe aktarmayı yürütmek için "start" ve istek gövdesindeki verileri sorgu parametresi "importId" içindeki kimlikle tanımlanan içe aktarma işlemine eklemek için "add" şeklindedir. (Varsayılan değer: "start")
+* *importId (string)*: İsteğin hangi içe aktarma işlemine atıfta bulunduğunu belirtir. Yalnızca CSV verileri *command=add* ile birden fazla istekte ekleniyorsa gereklidir.
 
 
 ### GET /export/{format}
@@ -2355,3 +2438,33 @@ Sorgu parametreleri:
 * *separator (string)*: Dışa aktarılan CSV verilerinde kullanılacak ayırıcı. Yalnızca CSV olarak dışa aktarım için gereklidir. Kullanıcı arayüzündeki "Alan ayırıcı" giriş alanına karşılık gelir. (Varsayılan değer: ",")
 * *combineHierarchicalRelations (boolean)*: Hiyerarşik ilişkileri basitleştirilmiş "isChildOf" ilişkisine birleştirir. Yalnızca CSV olarak dışa aktarım için kullanılabilir. Kullanıcı arayüzündeki "Hiyerarşik ilişkileri birleştir" onay kutusuna karşılık gelir. (Varsayılan değer: true)
 * *formatted (boolean)*: Dışa aktarılan verilerin biçimlendirilmiş çıktısı için girintileri ayarlar. Yalnızca GeoJSON olarak dışa aktarım için kullanılabilir. (Varsayılan değer: true)
+
+
+### POST /fileImport
+
+Bu API uç noktası, JSON formatında bir içe aktarma isteği göndererek, uygulamada şu anda açık olan projeye görüntü dosyalarını ve 'world' dosyalarını içe aktarmak için kullanılabilir. İşlevi, "Araçlar" ➝ "Görüntü Yönetimi" menüsü aracılığıyla dosya içe aktarmaya karşılık gelir. İçe aktarma süreciyle ilgili ayrıntılı açıklamalar "Görüntüler" bölümünde bulunabilir.
+
+İstek metni:
+* *filePaths (string array)*: İçe aktarılacak dosyaların dosya yolları
+* *category (string)*: İçe aktarılan resimler için ayarlanacak kategori adı (Varsayılan değer: "Görüntü")
+* *readCreatorsFromMetadata (boolean)*: "Oluşturan" alanını otomatik olarak doldurmak için görüntü dosyalarından meta verileri okur
+
+Çıktı:
+* *importedImages (integer)*: Başarıyla içe aktarılan görüntü dosyalarının sayısı
+* *importedWorldFiles (integer)*: Başarıyla içe aktarılan world dosyalarının sayısı 
+* *messages* (string array): İçe aktarma işlemi sırasında oluşan mesajlar
+
+
+### GET /fileExport/:format/:identifier
+
+Bu API uç noktası, uygulamada şu anda açık olan projeden görüntü dosyalarını ve world dosyalarını almak için kullanılabilir.
+
+Parametreler:
+* *format*: Görüntü dosyasının kendisinin mi yoksa ilişkili coğrafi referans bilgilerinin mi dışa aktarılacağını belirtir. Olası değerler: *image* (görüntü dosyasının dışa aktarılması), *worldFile* (coğrafi referans verilerinin world dosyası biçiminde dışa aktarılması)
+* *identifier*: Verileri alınacak görüntü kaynağının tanımlayıcısı
+
+Döndürülen verilerin biçimi, ilgili dosya biçimine bağlıdır. "Content-Type" başlığında aşağıdaki MIME türlerinden biri ayarlanır:
+* *image/jpeg*: JPG formatında görüntü
+* *image/png*: PNG formatında görüntü
+* *image/tiff*: TIFF formatında görüntü
+* *text/plain*: World dosyası

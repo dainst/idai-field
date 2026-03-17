@@ -25,7 +25,11 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
       <.input type="hidden" field={@setting_form[:logo]} />
       <.input type="hidden" field={@setting_form[:favicon]} />
 
-      <.page_name_setting {assigns} />
+      <section>
+        <.group_heading>Page name</.group_heading>
+        <.input type="text" field={@setting_form[:page_name]} />
+      </section>
+
       <.color_scheme_settings {assigns} />
 
       <.translation_input
@@ -37,15 +41,6 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
       </.translation_input>
     </.form>
     <.image_settings {assigns} />
-    """
-  end
-
-  def page_name_setting(assigns) do
-    ~H"""
-    <section>
-      <.group_heading>Page name</.group_heading>
-      <.input type="text" field={@setting_form[:page_name]} />
-    </section>
     """
   end
 

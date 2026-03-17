@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.Management.PublicationLive.ReplicationFormComponent do
+defmodule FieldPublicationWeb.Management.Modals.ReplicationFormComponent do
   alias FieldPublication.Replication
   use FieldPublicationWeb, :live_component
 

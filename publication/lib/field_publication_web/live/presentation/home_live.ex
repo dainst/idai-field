@@ -5,7 +5,6 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
   alias FieldPublication.DatabaseSchema.Publication
 
   alias FieldPublication.Publications.Data
-  alias FieldPublication.Publications.Data.Document
 
   require Logger
 

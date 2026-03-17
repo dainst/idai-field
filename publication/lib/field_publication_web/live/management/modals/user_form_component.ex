@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.Management.UserLive.FormComponent do
+defmodule FieldPublicationWeb.Management.Modals.UserFormComponent do
   use FieldPublicationWeb, :live_component
 
   alias FieldPublication.CouchService

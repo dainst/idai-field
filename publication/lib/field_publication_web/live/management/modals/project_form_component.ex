@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.Management.ProjectFormComponent do
+defmodule FieldPublicationWeb.Management.Modals.ProjectFormComponent do
   use FieldPublicationWeb, :live_component
 
   alias FieldPublication.DatabaseSchema.Project

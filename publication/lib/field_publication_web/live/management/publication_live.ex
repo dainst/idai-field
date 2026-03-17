@@ -1,5 +1,9 @@
-defmodule FieldPublicationWeb.Management.PublicationLive.Show do
+defmodule FieldPublicationWeb.Management.PublicationLive do
+  use FieldPublicationWeb, :live_view
+
   import FieldPublicationWeb.Components.TranslationInput
+
+  alias Phoenix.PubSub
 
   alias FieldPublication.Processing.{
     MapTiles,
@@ -18,9 +22,6 @@ defmodule FieldPublicationWeb.Management.PublicationLive.Show do
     Translation
   }
 
-  alias Phoenix.PubSub
-
-  use FieldPublicationWeb, :live_view
   require Logger
 
   @impl true

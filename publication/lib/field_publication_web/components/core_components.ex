@@ -658,9 +658,9 @@ defmodule FieldPublicationWeb.CoreComponents do
     # with our gettext backend as first argument. Translations are
     # available in the errors.po file (as we use the "errors" domain).
     if count = opts[:count] do
-      Gettext.dngettext(FieldPublicationWeb.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(FieldPublicationWeb.Translate, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(FieldPublicationWeb.Gettext, "errors", msg, opts)
+      Gettext.dgettext(FieldPublicationWeb.Translate, "errors", msg, opts)
     end
   end
 

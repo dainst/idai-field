@@ -875,7 +875,7 @@
     "Image": {
       "fields": {
         "draughtsmen": {
-          "label": "Yaratıcı",
+          "label": "Oluşturan",
           "description": "Görselin yaratıcısı, fotoğrafçı ve/veya çizer"
         },
         "processor": {

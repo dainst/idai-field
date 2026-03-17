@@ -351,27 +351,6 @@ defmodule FieldPublication.Replication.CouchReplication do
     doc
   end
 
-  defp put_design_documents(database) do
-    # CouchService.put_design_documents(
-    #   [
-    #     %{
-    #       index: %{
-    #         fields: ["resource.relations.isMapLayerOf"]
-    #       },
-    #       name: "map_layer-index",
-    #       type: "json"
-    #     }
-    #   ],
-    #   database
-    # )
-    # |> Enum.map(fn {:ok, {:ok, %Finch.Response{status: 200, body: body}}} ->
-    #   %{"result" => "created", "name" => name} = Jason.decode!(body)
-
-    #   Logger.debug("Design document '#{name}' created.")
-    #   :ok
-    # end)
-  end
-
   @dialyzer {:nowarn_function, source_url_fix: 1}
   defp source_url_fix(url) do
     # If we want to connect to FieldHub running at localhost:4000 in development or test

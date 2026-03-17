@@ -173,7 +173,7 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
   end
 
   defp get_filter_label("project_key") do
-    %{primary: Gettext.gettext(FieldPublicationWeb.Gettext, "Project")}
+    %{primary: Gettext.gettext(FieldPublicationWeb.Translate, "Project")}
   end
 
   defp get_filter_label(opensearch_field_name) do
@@ -188,7 +188,7 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
       labels ->
         Map.get(
           labels,
-          Gettext.get_locale(FieldPublicationWeb.Gettext),
+          Gettext.get_locale(FieldPublicationWeb.Translate),
           data_field_name
         )
     end
@@ -214,7 +214,7 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
       values ->
         Map.get(
           values,
-          Gettext.get_locale(FieldPublicationWeb.Gettext),
+          Gettext.get_locale(FieldPublicationWeb.Translate),
           opensearch_field_value
         )
     end
@@ -251,7 +251,7 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
       value_labels ->
         Map.get(
           value_labels,
-          Gettext.get_locale(FieldPublicationWeb.Gettext),
+          Gettext.get_locale(FieldPublicationWeb.Translate),
           opensearch_field_value
         )
     end

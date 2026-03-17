@@ -422,7 +422,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                 :let={comment}
                 module={LanguageSelection}
                 id="publication_comments"
-                translations={}
+                translations={comments}
               >
                 <span class="markdown">
                   {comment

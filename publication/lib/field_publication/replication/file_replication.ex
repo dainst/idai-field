@@ -12,10 +12,10 @@ defmodule FieldPublication.Replication.FileReplication do
 
   require Logger
 
-  @file_variants_to_replicate Application.compile_env(
-                                :field_publication,
-                                :file_variants_to_replicate
-                              )
+  @field_hub_to_publication_file_mapping Application.compile_env(
+                                           :field_publication,
+                                           :field_hub_to_publication_file_mapping
+                                         )
 
   def start(
         %{
@@ -37,7 +37,7 @@ defmodule FieldPublication.Replication.FileReplication do
     base_file_url = "#{source_url}/files/#{source_project_name}"
 
     uuid_lists_by_variant =
-      @file_variants_to_replicate
+      @field_hub_to_publication_file_mapping
       |> Enum.map(fn {variant_name, local_variant_name} ->
         {get_file_list(variant_name, base_file_url, headers), variant_name, local_variant_name}
       end)

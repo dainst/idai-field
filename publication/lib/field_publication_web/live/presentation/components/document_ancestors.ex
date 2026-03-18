@@ -37,18 +37,12 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
                     {pick_default_translation(group.labels)}
                   </.group_heading>
 
-                  <dl class="mt-2">
-                    <%= for %Field{} = field <- fields do %>
-                      <div>
-                        <dt class="font-bold">
-                          {pick_default_translation(field.labels)}
-                        </dt>
-                        <dd class="pl-4">
-                          <.render_field_data field={field} />
-                        </dd>
-                      </div>
-                    <% end %>
-                  </dl>
+                  <%= for %Field{} = field <- fields do %>
+                    <.labeled_value class="p-0.5">
+                      <:label><.render_field_label field={field} /></:label>
+                      <.render_field_data field={field} />
+                    </.labeled_value>
+                  <% end %>
                 </section>
               <% end %>
             <% end %>

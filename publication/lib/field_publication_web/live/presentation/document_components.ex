@@ -64,18 +64,14 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                 {pick_default_translation(group.labels)}
               </.group_heading>
 
-              <dl class="grid max-md:grid-cols-1 md:grid-cols-2 gap-1 mt-2">
+              <div class="grid max-md:grid-cols-1 md:grid-cols-2 gap-1 mt-2">
                 <%= for %Field{} = field <- fields do %>
-                  <div class="border p-0.5 border-black/20">
-                    <dt class="font-bold">
-                      <.render_field_label field={field} />
-                    </dt>
-                    <dd class="pl-4 pr-4 pb-1">
-                      <.render_field_data field={field} />
-                    </dd>
-                  </div>
+                  <.labeled_value class="border p-0.5 border-black/20">
+                    <:label><.render_field_label field={field} /></:label>
+                    <.render_field_data field={field} />
+                  </.labeled_value>
                 <% end %>
-              </dl>
+              </div>
             </section>
           <% end %>
         <% end %>
@@ -285,18 +281,12 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                   {pick_default_translation(group.labels)}
                 </.group_heading>
 
-                <dl>
-                  <%= for %Field{} = field <- fields do %>
-                    <div>
-                      <dt class="font-bold">
-                        <.render_field_label field={field} />
-                      </dt>
-                      <dd class="pl-4 pr-4">
-                        <.render_field_data field={field} />
-                      </dd>
-                    </div>
-                  <% end %>
-                </dl>
+                <%= for %Field{} = field <- fields do %>
+                  <.labeled_value class="p-0.5">
+                    <:label><.render_field_label field={field} /></:label>
+                    <.render_field_data field={field} />
+                  </.labeled_value>
+                <% end %>
               </section>
             <% end %>
           <% end %>
@@ -437,64 +427,62 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
         </div>
 
         <div class="basis-1/3">
-          <dl>
-            <% institution = Data.get_field(@doc, "institution") %>
-            <%= if institution do %>
-              <dt class="font-bold"><.render_field_label field={institution} /></dt>
+          <% institution = Data.get_field(@doc, "institution") %>
+          <%= if institution do %>
+            <.labeled_value>
+              <:label><.render_field_label field={institution} /></:label>
               <.render_field_data field={institution} />
-            <% end %>
+            </.labeled_value>
+          <% end %>
 
-            <% contact_mail = Data.get_field(@doc, "contactMail") %>
-            <% contact_person = Data.get_field(@doc, "contactPerson") %>
-            <%= if contact_mail do %>
-              <dt class="font-bold">
-                <.render_field_label field={contact_person} />
-              </dt>
-              <dd class="ml-4">
-                <a href={"mailto:#{contact_mail.value}"}>
-                  <.icon name="hero-envelope" class="h-6 w-6 mr-1" />
-                  <%= if contact_person do %>
-                    {contact_person.value}
-                  <% else %>
-                    {gettext("contact_email")}
-                  <% end %>
-                </a>
-              </dd>
-            <% end %>
+          <% contact_mail = Data.get_field(@doc, "contactMail") %>
+          <% contact_person = Data.get_field(@doc, "contactPerson") %>
+          <%= if contact_mail do %>
+            <.labeled_value>
+              <:label><.render_field_label field={contact_person} /></:label>
+              <a href={"mailto:#{contact_mail.value}"}>
+                <.icon name="hero-envelope" class="h-6 w-6 mr-1" />
+                <%= if contact_person do %>
+                  {contact_person.value}
+                <% else %>
+                  {gettext("contact_email")}
+                <% end %>
+              </a>
+            </.labeled_value>
+          <% end %>
 
-            <% supervisor = Data.get_field(@doc, "projectSupervisor") %>
-            <%= if supervisor do %>
-              <dt class="font-bold">
-                <.render_field_label field={supervisor} />
-              </dt>
+          <% supervisor = Data.get_field(@doc, "projectSupervisor") %>
+          <%= if supervisor do %>
+            <.labeled_value>
+              <:label><.render_field_label field={supervisor} /></:label>
               <.render_field_data field={supervisor} />
-            <% end %>
+            </.labeled_value>
+          <% end %>
 
-            <% staff = Data.get_field(@doc, "staff") %>
-            <%= if staff do %>
-              <dt class="font-bold">
-                <.render_field_label field={staff} />
-              </dt>
-              <dd class="ml-4">{concat_staff_list(staff)}</dd>
-            <% end %>
+          <% staff = Data.get_field(@doc, "staff") %>
+          <%= if staff do %>
+            <.labeled_value>
+              <:label><.render_field_label field={staff} /></:label>
+              {concat_staff_list(staff)}
+            </.labeled_value>
+          <% end %>
 
-            <% bibliographic_references = Data.get_field(@doc, "bibliographicReferences") %>
-            <%= if bibliographic_references do %>
-              <dt class="font-bold">
-                <.render_field_label field={bibliographic_references} />
-              </dt>
+          <% bibliographic_references = Data.get_field(@doc, "bibliographicReferences") %>
+          <%= if bibliographic_references do %>
+            <.labeled_value>
+              <:label><.render_field_label field={bibliographic_references} /></:label>
               <.render_field_data field={bibliographic_references} />
-            <% end %>
-            <% url = Data.get_field_value(@doc, "projectURI") %>
-            <%= if url do %>
-              <dt class="font-bold">{gettext("further_links")}</dt>
-              <dd class="ml-4">
-                <a href={url}>
-                  <.icon name="hero-link" class="h-6 w-6 mr-1" />{gettext("project_home_page")}
-                </a>
-              </dd>
-            <% end %>
-          </dl>
+            </.labeled_value>
+          <% end %>
+          <% url = Data.get_field_value(@doc, "projectURI") %>
+          <%= if url do %>
+            <.labeled_value>
+              <:label>{gettext("further_links")}</:label>
+              <a href={url}>
+                <.icon name="hero-link" class="h-6 w-6 mr-1" />{gettext("project_home_page")}
+              </a>
+            </.labeled_value>
+          <% end %>
         </div>
       </div>
 

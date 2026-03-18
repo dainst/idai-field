@@ -1009,7 +1009,7 @@
       </trans-unit>
       <trans-unit id="configuration.field.inputType" datatype="html">
         <source>Eingabetyp</source>
-        <target state="translated">Giriş tipi</target>
+        <target state="translated">Giriş türü</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/field/field-preview.component.ts</context>
           <context context-type="linenumber">32</context>
@@ -4287,7 +4287,7 @@
       </trans-unit>
       <trans-unit id="configuration.fieldSpecificSearch.notAllowedForInputType" datatype="html">
         <source>Eine feldspezifische Suche ist für Felder dieses Eingabetyps nicht möglich.</source>
-        <target state="translated">Bu giriş tipindeki alanlar için alana özel arama mümkün değildir.</target>
+        <target state="translated">Bu giriş türündeki alanlar için alana özel arama mümkün değildir.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4651,7 +4651,7 @@
       </trans-unit>
       <trans-unit id="messages.model.validation.error.missingGeometryType" datatype="html">
         <source>Der Typ einer Geometrie ist nicht definiert.</source>
-        <target state="translated">Bir geometrinin türü tanımlanmamıştır.</target>
+        <target state="translated">Bir geometrinin tipi tanımlanmamıştır.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -4659,7 +4659,7 @@
       </trans-unit>
       <trans-unit id="messages.model.validation.error.unsupportedGeometryType" datatype="html">
         <source>Der Geometrietyp [0] wird von der Anwendung nicht unterstützt.</source>
-        <target state="translated">Geometri türü [0] uygulama tarafından desteklenmiyor.</target>
+        <target state="translated">Geometri tipi [0] uygulama tarafından desteklenmiyor.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5371,7 +5371,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.noRecordedInTarget" datatype="html">
         <source>Fehlendes Ziel einer Relation vom Typ 'Aufgenommen in Maßnahme'. Ziel-ID: [0].</source>
-        <target state="translated">'Çalışmada kaydedildi' türündeki bir ilişki için hedef eksik. Hedef kimliği: [0].</target>
+        <target state="translated">'Çalışmada kaydedildi' tipindeki bir ilişki için hedef eksik. Hedef kimliği: [0].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7995,7 +7995,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.invalidField" datatype="html">
         <source>Die in diesem Feld eingetragenen Daten entsprechen nicht dem konfigurierten Eingabetyp <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="ction)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="."/>. </source>
-        <target state="translated">Bu alana girilen veriler, yapılandırılmış <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getInputTypeLabel(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> giriş tipine karşılık gelmiyor. </target>
+        <target state="translated">Bu alana girilen veriler, yapılandırılmış <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getInputTypeLabel(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> giriş türüne karşılık gelmiyor. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">110,105</context>
@@ -8306,8 +8306,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.convertFieldData.info" datatype="html">
-        <source>Die im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> eingetragenen Daten können automatisch konvertiert werden, so dass sie dem Eingabetyp <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{inputTypeLabel}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> entsprechen. </source>
-        <target state="translated"><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> alanına girilen veriler, <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{inputTypeLabel}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> giriş tipine karşılık gelecek şekilde otomatik olarak dönüştürülebilir. </target>
+        <source>Die im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="eingetragen"/> eingetragenen Daten können automatisch konvertiert werden, so dass sie dem Eingabetyp <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="entsprechen."/> entsprechen. </source>
+        <target state="translated"><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> alanına girilen veriler, <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{inputTypeLabel}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> giriş türüne karşılık gelecek şekilde otomatik olarak dönüştürülebilir. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/convert-field-data-modal.component.ts</context>
           <context context-type="linenumber">91</context>
@@ -8847,7 +8847,7 @@
       </trans-unit>
       <trans-unit id="messages.import.catalog.error.unconfiguredCategory" datatype="html">
         <source>Katalogimport abgebrochen. Die Kategorie '[0]' ist keine konfigurierte Unterkategorie von 'Typ' oder 'Abbildung'.</source>
-        <target state="translated">Katalog içe aktarımı durduruldu. '[0]' kategorisi 'Tür' veya 'Görüntü'nün yapılandırılmış bir alt kategorisi değildir.</target>
+        <target state="translated">Katalog içe aktarımı durduruldu. '[0]' kategorisi 'Tip' veya 'Görüntü'nün yapılandırılmış bir alt kategorisi değildir.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">733</context>
@@ -10223,7 +10223,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.unallowedCharacterField" datatype="html">
         <source>Das Zeichen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>;<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ist in Feldern des Eingabetyps <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="ction)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="nicht erlaubt"/> nicht erlaubt. </source>
-        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>;<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> karakterinin <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="ction)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="nicht erlaubt"/> giriş tipi alanlarında kullanılmasına izin verilmez. </target>
+        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>;<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> karakterinin <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="ction)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="nicht erlaubt"/> giriş türü alanlarında kullanılmasına izin verilmez. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">187,189</context>
@@ -10247,7 +10247,7 @@
       </trans-unit>
       <trans-unit id="configuration.allowedGeometryType" datatype="html">
         <source>Erlaubter Geometrietyp</source>
-        <target state="translated">İzin verilen geometri türü</target>
+        <target state="translated">İzin verilen geometri tipi</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
           <context context-type="linenumber">83</context>
@@ -10255,7 +10255,7 @@
       </trans-unit>
       <trans-unit id="configuration.allowedGeometryTypes" datatype="html">
         <source>Erlaubte Geometrietypen</source>
-        <target state="translated">İzin verilen geometri türleri</target>
+        <target state="translated">İzin verilen geometri tipleri</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
           <context context-type="linenumber">85</context>
@@ -10267,7 +10267,7 @@
       </trans-unit>
       <trans-unit id="messages.model.validation.error.unallowedGeometryType" datatype="html">
         <source>Der Geometrietyp [1] ist für Ressourcen der Kategorie [0] nicht erlaubt.</source>
-        <target state="translated">[1] geometri türüne, [0] kategorisindeki girdilerde izin verilmez.</target>
+        <target state="translated">[1] geometri tipine, [0] kategorisindeki girdilerde izin verilmez.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">419</context>
@@ -10315,7 +10315,7 @@
       </trans-unit>
       <trans-unit id="configuration.error.noAllowedGeometryTypes" datatype="html">
         <source>Bitte wählen Sie mindestens einen erlaubten Geometrietyp aus.</source>
-        <target state="translated">Lütfen izin verilen geometri türlerinden en az birini seçin.</target>
+        <target state="translated">Lütfen izin verilen geometri tiplerinden en az birini seçin.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1293</context>
@@ -10403,7 +10403,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.success.typeSaved.multiple" datatype="html">
         <source>Für [0] Ressourcen wurde erfolgreich der Typ [1] gespeichert.</source>
-        <target state="translated">[1] türü [0] girdi için başarıyla kaydedildi.</target>
+        <target state="translated">[1] tipi [0] girdi için başarıyla kaydedildi.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1145</context>
@@ -10419,7 +10419,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.noTypeCategory" datatype="html">
         <source>Die Ressource [0] der Kategorie [1] ist kein gültiger Typ.</source>
-        <target state="translated">[1] kategorisinin [0] girdisi geçerli bir tür değil.</target>
+        <target state="translated">[1] kategorisinin [0] girdisi geçerli bir tip değil.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1187</context>
@@ -10427,7 +10427,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.noStoragePlaceOrTypeCategory" datatype="html">
         <source>Die Ressource [0] der Kategorie [1] ist kein gültiger Typ oder Aufbewahrungsort.</source>
-        <target state="translated">[1] kategorisinin [0] girdisi geçerli bir tür veya depolama yeri değildir.</target>
+        <target state="translated">[1] kategorisinin [0] girdisi geçerli bir tip veya depolama yeri değildir.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1192</context>

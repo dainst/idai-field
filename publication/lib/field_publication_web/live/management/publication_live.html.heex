@@ -36,14 +36,31 @@
     </.inputs_for>
 
     <.list>
-      <:item title="Source URL">{@publication.source_url}</:item>
-      <:item title="Source project name">{@publication.source_project_name}</:item>
-      <:item title="Draft date">{@publication.draft_date}</:item>
-      <:item title="Drafted by">{@publication.drafted_by}</:item>
-      <:item title="Data replication">
-        <%= if @publication.replication_finished do %>
-          <div>Replication finished {@publication.replication_finished}.</div>
-        <% else %>
+      <:item title="Replication">
+        <div if={@publication.replication_finished}>
+          Replication finished {@publication.replication_finished}.
+        </div>
+        <div class="flex flex-wrap gap-2 w-full">
+          <.labeled_value>
+            <:label>Source URL</:label>
+            {@publication.source_url}
+          </.labeled_value>
+          <.labeled_value>
+            <:label>Source project name</:label>
+            {@publication.source_project_name}
+          </.labeled_value>
+          <.labeled_value>
+            <:label>Draft date</:label>
+            {@publication.draft_date}
+          </.labeled_value>
+
+          <.labeled_value>
+            <:label>Draft created by</:label>
+            {@publication.drafted_by}
+          </.labeled_value>
+        </div>
+
+        <%= if is_nil(@publication.replication_finished) do %>
           <.log_entry_list logs={@replication_logs} />
           <%= if @replication_progress_state do %>
             <.progress_bar state={@replication_progress_state}></.progress_bar>
@@ -57,166 +74,150 @@
           </button>
         <% end %>
       </:item>
-    </.list>
-    <%= if @publication.replication_finished do %>
-      <.list>
-        <:item title="Data processing">
-          <%= if @data_state do %>
-            <table class="w-full">
-              <thead class="bg-slate-700">
-                <tr class="text-slate-50">
-                  <th class="w-1/6">Type</th>
-                  <th class="w-4/6">Info</th>
-                  <th class="w-1/6">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="text-center">
-                  <td>Missing raw files</td>
-                  <td>{Enum.count(@data_state.images.missing_raw_files)}</td>
-                  <td>
+      <:item title="Preprocessing">
+        <%= if @data_state do %>
+          <table class="w-full">
+            <thead class="bg-slate-700">
+              <tr class="text-slate-50">
+                <th class="w-1/6">Type</th>
+                <th class="w-4/6">Info</th>
+                <th class="w-1/6">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="text-center">
+                <td>Missing raw files</td>
+                <td>{Enum.count(@data_state.images.missing_raw_files)}</td>
+                <td>
+                  <.link
+                    class="font-semibold font-mono"
+                    navigate={
+                      ~p"/management/projects/#{@publication.project_name}/publication/new"
+                    }
+                  >
+                    Redraft publication
+                  </.link>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-center">Web images</td>
+                <td>
+                  <.progress_bar state={@data_state.images.summary}></.progress_bar>
+                </td>
+                <td class="text-center">
+                  <%= if @web_images_processing? do %>
                     <.link
                       class="font-semibold font-mono"
-                      navigate={
-                        ~p"/management/projects/#{@publication.project_name}/publication/new"
-                      }
+                      type="button"
+                      phx-click="stop_web_images_processing"
                     >
-                      Redraft publication
+                      Stop
                     </.link>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-center">Web images</td>
-                  <td>
-                    <.progress_bar state={@data_state.images.summary}></.progress_bar>
-                  </td>
-                  <td class="text-center">
-                    <%= if @web_images_processing? do %>
-                      <.link
-                        class="font-semibold font-mono"
-                        type="button"
-                        phx-click="stop_web_images_processing"
-                      >
-                        Stop
-                      </.link>
-                    <% else %>
-                      <.link
-                        class="font-semibold font-mono"
-                        type="button"
-                        phx-click="start_web_images_processing"
-                      >
-                        Start
-                      </.link>
-                    <% end %>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-center">Map tile images</td>
-                  <td>
-                    <.progress_bar state={@data_state.tiles.summary}></.progress_bar>
-                  </td>
-                  <td class="text-center">
-                    <%= if @tile_images_processing? do %>
-                      <.link
-                        class="font-semibold font-mono"
-                        type="button"
-                        phx-click="stop_tile_images_processing"
-                      >
-                        Stop
-                      </.link>
-                    <% else %>
-                      <.link
-                        class="font-semibold font-mono"
-                        type="button"
-                        phx-click="start_tile_images_processing"
-                      >
-                        Start
-                      </.link>
-                    <% end %>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="text-center">Search index</td>
-                  <td>
-                    <.progress_bar state={@data_state.search_index}></.progress_bar>
-                  </td>
-                  <td class="text-center">
-                    <%= if @search_indexing? do %>
-                      <.link
-                        class="font-semibold font-mono"
-                        type="button"
-                        phx-click="stop_search_indexing"
-                      >
-                        Stop
-                      </.link>
-                    <% else %>
-                      <.link
-                        class="font-semibold font-mono"
-                        type="button"
-                        phx-click="start_search_indexing"
-                      >
-                        Start
-                      </.link>
-                    <% end %>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          <% else %>
-            <div class="inline-flex items-center">
-              <svg
-                class="animate-spin -ml-1 mr-3 h-5 w-5 text-black"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
+                  <% else %>
+                    <.link
+                      class="font-semibold font-mono"
+                      type="button"
+                      phx-click="start_web_images_processing"
+                    >
+                      Start
+                    </.link>
+                  <% end %>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-center">Map tile images</td>
+                <td>
+                  <.progress_bar state={@data_state.tiles.summary}></.progress_bar>
+                </td>
+                <td class="text-center">
+                  <%= if @tile_images_processing? do %>
+                    <.link
+                      class="font-semibold font-mono"
+                      type="button"
+                      phx-click="stop_tile_images_processing"
+                    >
+                      Stop
+                    </.link>
+                  <% else %>
+                    <.link
+                      class="font-semibold font-mono"
+                      type="button"
+                      phx-click="start_tile_images_processing"
+                    >
+                      Start
+                    </.link>
+                  <% end %>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-center">Search index</td>
+                <td>
+                  <.progress_bar state={@data_state.search_index}></.progress_bar>
+                </td>
+                <td class="text-center">
+                  <%= if @search_indexing? do %>
+                    <.link
+                      class="font-semibold font-mono"
+                      type="button"
+                      phx-click="stop_search_indexing"
+                    >
+                      Stop
+                    </.link>
+                  <% else %>
+                    <.link
+                      class="font-semibold font-mono"
+                      type="button"
+                      phx-click="start_search_indexing"
+                    >
+                      Start
+                    </.link>
+                  <% end %>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        <% else %>
+          <div class="inline-flex items-center">
+            <svg
+              class="animate-spin -ml-1 mr-3 h-5 w-5 text-black"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
               >
-                <circle
-                  class="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  stroke-width="4"
-                >
-                </circle>
-                <path
-                  class="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                >
-                </path>
-              </svg>
-              Evaluating data...
-            </div>
-          <% end %>
-        </:item>
-        <:item title="Version type">
-          <.input type="select" field={@publication_form[:version]} options={[:major, :revision]} />
-        </:item>
-        <:item title="Comments">
-          <.translation_input
-            field={@publication_form[:comments]}
-            language_options={["en", "de"]}
-          >
-            <:heading>Publication comments</:heading>
-            <:no_translations>No comments for this publication</:no_translations>
-          </.translation_input>
-        </:item>
-        <:item
-          :if={@publication.publication_date && @publication.publication_date <= @today}
-          title="Publication date"
+              </circle>
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              >
+              </path>
+            </svg>
+            Evaluating data...
+          </div>
+        <% end %>
+      </:item>
+
+      <:item title="Additional metadata">
+        <.input type="select" field={@publication_form[:version]} options={[:major, :revision]} />
+        <.translation_input
+          field={@publication_form[:comments]}
+          language_options={["en", "de"]}
         >
-          <.link navigate={
-            ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{List.first(@publication.languages)}"
-          }>
-            <.icon name="hero-folder-open" class="h-4 w-4" /> {@publication.publication_date}
-          </.link>
-        </:item>
-        <:item title="">
-          <.button>Save changes</.button>
-        </:item>
-      </.list>
-    <% end %>
+          <:heading>Publication comments</:heading>
+          <:no_translations>No comments for this publication</:no_translations>
+        </.translation_input>
+
+        <.button>Save changes</.button>
+      </:item>
+    </.list>
   </.form>
   <%= unless @publication.publication_date do %>
     <.button

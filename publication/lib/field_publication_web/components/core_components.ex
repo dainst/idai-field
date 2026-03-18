@@ -760,4 +760,19 @@ defmodule FieldPublicationWeb.CoreComponents do
     </h2>
     """
   end
+
+  attr(:rest, :global)
+  slot(:label, required: true)
+  slot(:inner_block, required: true)
+
+  def labeled_value(assigns) do
+    ~H"""
+    <div {@rest}>
+      <label class="font-bold">
+        {render_slot(@label)}
+      </label>
+      <div class="pl-4 pr-4 pb-1">{render_slot(@inner_block)}</div>
+    </div>
+    """
+  end
 end

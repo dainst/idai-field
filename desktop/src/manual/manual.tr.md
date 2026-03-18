@@ -812,7 +812,7 @@ Bu bölüm yalnızca "İlişki" giriş türü seçildiğinde görünür. İsteğ
 
 *Ters ilişki* seçim alanında yalnızca daha önce oluşturulmuş ve aşağıdaki ölçütleri karşılayan alanlar görünür:
 
-* Söz konusu alanın giriş tipi "İlişki" olmalıdır.
+* Söz konusu alanın giriş türü "İlişki" olmalıdır.
 * Düzenlenen alanın tüm izin verilen hedef kategorileri, söz konusu alanın aynı tanımlayıcısı altında yapılandırması gerekir.
 * Düzenlenen alanın ait olduğu kategori, söz konusu alan için izin verilen hedef kategori olarak ayarlanmalıdır.
 * Düzenlenmekte olan alanın, bu kriterlere uygun olarak söz konusu alanın tüm izin verilen hedef kategorileri için ters ilişki olarak girilmesine izin verilmesi gerekmektedir.

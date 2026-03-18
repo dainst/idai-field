@@ -71,8 +71,8 @@ bir içerik menüsü açılır:
 tüm görselleri de silebilirsiniz)
 * *İş akışını belgele*: Seçili girdilere bağlı işlemleri görüntüler ve yeni işlemler oluşturulmasına olanak tanır (yalnızca bir işlem kategorisinin "Buna ilişkin uygulandı" ilişkisinin hedef kategorisi olarak yapılandırılmış kategorileri için kullanılabilir).
 * *Türü Tara*: Girdiyi, kamera taraması yoluyla türün QR kodunu okuyarak bir türe bağlar (yalnızca "Bul" kategorisi ve alt kategorilerindeki girdiler için geçerlidir)
-* *Depolama Konumunu Tara*: Girdi için, kamera taraması yoluyla depolama yerinin QR kodunu okuyarak yeni bir depolama yeri belirler (yalnızca "Bul", "Bul koleksiyonu" ve "Örnek" kategorileri ile ilgili alt kategorilerdeki girdiler için geçerlidir)
-* *Türü veya Depolama Konumunu Tara*: Proje yapılandırmasında hem türler hem de depolama yerleri için QR kodları etkinleştirilmişse, bu seçenek kullanılarak kamera taraması yoluyla QR kodunu okuyarak her iki kategorideki girdilere bağlantılar oluşturulabilir (yalnızca "Bul" kategorisi ve alt kategorilerindeki girdiler için geçerlidir)
+* *Depolama Yerini Tara*: Girdi için, kamera taraması yoluyla depolama yerinin QR kodunu okuyarak yeni bir depolama yeri belirler (yalnızca "Bul", "Bul koleksiyonu" ve "Örnek" kategorileri ile ilgili alt kategorilerdeki girdiler için geçerlidir)
+* *Türü veya Depolama Yerini Tara*: Proje yapılandırmasında hem türler hem de depolama yerleri için QR kodları etkinleştirilmişse, bu seçenek kullanılarak kamera taraması yoluyla QR kodunu okuyarak her iki kategorideki girdilere bağlantılar oluşturulabilir (yalnızca "Bul" kategorisi ve alt kategorilerindeki girdiler için geçerlidir)
 
 Ayrıca, içerik menüsü geometrileri oluşturma ve düzenleme seçenekleri içerir. Lütfen şunu unutmayın:
 birden fazla girdi seçildiğinde, yalnızca *Taşı* ve *Sil* seçenekleri kullanılabilir. QR kodlarını ekleme veya yönetme seçenekleri yalnızca yapılandırma düzenleyicisinde karşılık gelen kategori için QR kodlarının kullanımı ayarlanmışsa kullanılabilir (bkz. *Yapılandırma* bölümündeki *Kategorileri düzenle* bölümü).

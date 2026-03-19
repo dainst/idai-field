@@ -70,7 +70,7 @@ bir içerik menüsü açılır:
 * *Sil*: Bir güvenlik kontrolünden sonra girdileri kaldırır (isteğe bağlı olarak, yalnızca silmek istediğiniz girdilere bağlı
 tüm görselleri de silebilirsiniz)
 * *İş akışını belgele*: Seçili girdilere bağlı işlemleri görüntüler ve yeni işlemler oluşturulmasına olanak tanır (yalnızca bir işlem kategorisinin "Buna ilişkin uygulandı" ilişkisinin hedef kategorisi olarak yapılandırılmış kategorileri için kullanılabilir).
-* *Tipi Tara*: Girdiyi, kamera taraması yoluyla türün QR kodunu okuyarak bir türe bağlar (yalnızca "Buluntu" kategorisi ve alt kategorilerindeki girdiler için geçerlidir)
+* *Tipi Tara*: Girdiyi, kamera taraması yoluyla tipinin QR kodunu okuyarak bir tipe bağlar (yalnızca "Buluntu" kategorisi ve alt kategorilerindeki girdiler için geçerlidir)
 * *Depolama Yerini Tara*: Girdi için, kamera taraması yoluyla depolama yerinin QR kodunu okuyarak yeni bir depolama yeri belirler (yalnızca "Buluntu", "Buluntu koleksiyonu" ve "Örnek" kategorileri ile ilgili alt kategorilerdeki girdiler için geçerlidir)
 * *Tipi veya Depolama Yerini Tara*: Proje yapılandırmasında hem tipler hem de depolama yerleri için QR kodları etkinleştirilmişse, bu seçenek kullanılarak kamera taraması yoluyla QR kodunu okuyarak her iki kategorideki girdilere bağlantılar oluşturulabilir (yalnızca "Buluntu" kategorisi ve alt kategorilerindeki girdiler için geçerlidir)
 

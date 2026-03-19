@@ -843,4 +843,40 @@ describe('Import/Subsystem', () => {
         const trench2 = (await helpers.getDocument('tr2'));
         expect(trench2.modified.length).toBe(1);
     });
+
+
+     test('ignore attempts to change image width, height or originalFileName via import', async () => {
+
+        await datastore.create({
+            resource: {
+                id: 'i',
+                identifier: 'Example image',
+                shortDescription: 'Original short description',
+                category: 'Image',
+                width: 100,
+                height: 200,
+                originalFilename: 'example.jpg',
+                relations: {}
+            }
+        });
+
+        await parseAndImport(
+            {
+                separator: '',
+                sourceType: '',
+                format: 'native',
+                mergeMode: true,
+                permitDeletions: false,
+                selectedOperationId: undefined
+            },
+            '{ "category": "Image", "identifier": "Example image", "shortDescription": "Edited short description", '
+                + '"width": "400", "height": "700", "originalFilename": "ABC" }'
+        );
+
+        const document = await datastore.get('i');
+        expect(document.resource.shortDescription).toBe('Edited short description');
+        expect(document.resource.width).toBe(100);
+        expect(document.resource.height).toBe(200);
+        expect(document.resource.originalFilename).toBe('example.jpg');
+    });
 });

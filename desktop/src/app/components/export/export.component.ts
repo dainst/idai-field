@@ -103,6 +103,7 @@ export class ExportComponent implements OnInit {
 
         this.categoryCounts = await ExportRunner.determineCategoryCounts(
             this.indexFacade,
+            this.datastore,
             this.getExportContext(),
             Tree.flatten(this.projectConfiguration.getCategories())
         );

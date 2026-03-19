@@ -1009,7 +1009,7 @@
       </trans-unit>
       <trans-unit id="configuration.field.inputType" datatype="html">
         <source>Eingabetyp</source>
-        <target state="translated">Giriş tipi</target>
+        <target state="translated">Giriş türü</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/field/field-preview.component.ts</context>
           <context context-type="linenumber">32</context>
@@ -2710,7 +2710,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModel.warning.importedCatalog" datatype="html">
         <source>Dies ist ein importierter Katalog. Bitte beachten Sie, dass beim Löschen auch Zuordnungen von Funden zu Typen des Katalogs entfernt werden.</source>
-        <target state="translated">Bu içe aktarılmış bir katalogdur. Bu kataloğun türleri ile buluntular arasındaki ilişkilerin de kaldırılacağını lütfen unutmayın.</target>
+        <target state="translated">Bu içe aktarılmış bir katalogdur. Bu kataloğun tipleri ile buluntular arasındaki ilişkilerin de kaldırılacağını lütfen unutmayın.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">42</context>
@@ -2718,7 +2718,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModel.warning.ownedCatalog" datatype="html">
         <source>Bitte beachten Sie, dass beim Löschen von Katalogen sämtliche enthaltenen Typen sowie Zuordnungen von Funden zu Typen des Katalogs entfernt werden.</source>
-        <target state="translated">Bir kataloğun silinmesinin, o katalogda yer alan tüm türlerin silinmesini gerektirdiğini lütfen unutmayın. Buna ek olarak katalog türleri ile buluntular arasındaki tüm ilişkiler de kaldırılacak.</target>
+        <target state="translated">Bir kataloğun silinmesinin, o katalogda yer alan tüm tiplerin silinmesini gerektirdiğini lütfen unutmayın. Buna ek olarak katalog tipleri ile buluntular arasındaki tüm ilişkiler de kaldırılacak.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">72</context>
@@ -2726,7 +2726,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModel.warning.ownedType" datatype="html">
         <source>Bitte beachten Sie, dass beim Löschen von Typen sämtliche Untertypen sowie Zuordnungen von Funden zu Typen und Untertypen entfernt werden.</source>
-        <target state="translated">Bir türün silinmesinin tüm alt türlerin silinmesini gerektirdiğini lütfen unutmayın. Buna ek olarak buluntular ve türler (buluntular ile alt türler) arasındaki tüm ilişkiler kaldırılacaktır.</target>
+        <target state="translated">Bir tipin silinmesinin tüm alt tiplerin silinmesini gerektirdiğini lütfen unutmayın. Buna ek olarak, buluntular ve tipler (buluntular ile alt tipler) arasındaki tüm ilişkiler kaldırılacaktır.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">100</context>
@@ -4287,7 +4287,7 @@
       </trans-unit>
       <trans-unit id="configuration.fieldSpecificSearch.notAllowedForInputType" datatype="html">
         <source>Eine feldspezifische Suche ist für Felder dieses Eingabetyps nicht möglich.</source>
-        <target state="translated">Bu giriş tipindeki alanlar için alana özel arama mümkün değildir.</target>
+        <target state="translated">Bu giriş türündeki alanlar için alana özel arama mümkün değildir.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field-editor-modal.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4651,7 +4651,7 @@
       </trans-unit>
       <trans-unit id="messages.model.validation.error.missingGeometryType" datatype="html">
         <source>Der Typ einer Geometrie ist nicht definiert.</source>
-        <target state="translated">Bir geometrinin türü tanımlanmamıştır.</target>
+        <target state="translated">Bir geometrinin tipi tanımlanmamıştır.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -4659,7 +4659,7 @@
       </trans-unit>
       <trans-unit id="messages.model.validation.error.unsupportedGeometryType" datatype="html">
         <source>Der Geometrietyp [0] wird von der Anwendung nicht unterstützt.</source>
-        <target state="translated">Geometri türü [0] uygulama tarafından desteklenmiyor.</target>
+        <target state="translated">Geometri tipi [0] uygulama tarafından desteklenmiyor.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5059,7 +5059,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.mustHaveLiesWithin" datatype="html">
         <source>Ressourcen der Kategorie '[0]' müssen innerhalb von anderen Ressourcen angelegt werden. Betroffene Ressource: '[1]'.</source>
-        <target state="needs-translation">'[0]' kategorisindeki girdiler diğer girdilerin içine yerleştirilmelidir. Girdinin tanımlayıcısı: '[1]'.</target>
+        <target state="translated">'[0]' kategorisindeki girdiler diğer girdiler içinde oluşturulmalıdır. Etkilenen girdi: '[1]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5259,7 +5259,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.categoryCannotBeChanged" datatype="html">
         <source>Die Kategorie kann beim Import nicht geändert werden. Betroffene Ressource: '[0]'</source>
-        <target state="needs-translation">Kategori içe aktarma sırasında değiştirilemez. Girdi tanımlayıcı: '[0]'</target>
+        <target state="translated">İçe aktarma sırasında kategori değiştirilemez. Etkilenen girdi: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5267,7 +5267,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.emptySlotsInArraysForbidden" datatype="html">
         <source>Leere Listeneinträge sind nur am Ende der Liste erlaubt. Betroffene Ressource: '[0]'</source>
-        <target state="needs-translation">Boş dizi (array) alanlarına izin verilmiyor. Girdi tanımlayıcı: '[0]'</target>
+        <target state="translated">Boş liste girişlerine yalnızca listenin sonunda izin verilir. Etkilenen girdi: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5275,7 +5275,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.arrayOfHeterogeneousTypes" datatype="html">
         <source>Listenfelder müssen konsistent Einträge des gleichen Typs beinhalten. Betroffene Ressource: '[0]'</source>
-        <target state="needs-translation">Bir dizinin alanlarının tümü aynı türde olmalıdır. Girdi tanımlayıcı: '[0]'</target>
+        <target state="translated">Liste alanları tutarlı bir şekilde aynı türden girişler içermelidir. Etkilenen girdi: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5371,7 +5371,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.noRecordedInTarget" datatype="html">
         <source>Fehlendes Ziel einer Relation vom Typ 'Aufgenommen in Maßnahme'. Ziel-ID: [0].</source>
-        <target state="translated">'Çalışmada kaydedildi' türündeki bir ilişki için hedef eksik. Hedef kimliği: [0].</target>
+        <target state="translated">'Çalışmada kaydedildi' tipindeki bir ilişki için hedef eksik. Hedef kimliği: [0].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7327,7 +7327,7 @@
       </trans-unit>
       <trans-unit id="resources.scanStoragePlaceModal.header.single" datatype="html">
         <source>Bisherigen Aufbewahrungsort ersetzen?</source>
-        <target state="translated">Mevcut depolama konumu değiştirilsin mi?</target>
+        <target state="translated">Mevcut depolama yeri değiştirilsin mi?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.component.ts</context>
           <context context-type="linenumber">38</context>
@@ -7335,15 +7335,15 @@
       </trans-unit>
       <trans-unit id="resources.scanStoragePlaceModal.editMode.multipleDocuments.multipleStoragePlaces" datatype="html">
         <source>Für <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen sind bereits Aufbewahrungsorte gesetzt. </source>
-        <target state="translated"><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> girdileri için depolama konumu zaten ayarlanmıştır. </target>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> girdileri için depolama yeri zaten ayarlanmıştır. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.html</context>
           <context context-type="linenumber">39,29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.scanStoragePlaceModal.editMode.question.single" datatype="html">
-        <source>Möchten Sie den bisherigen Aufbewahrungsort entfernen oder zusätzlich zum neuen Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newStoragePlaceDocument.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> beibehalten? </source>
-        <target state="translated">Mevcut depolama konumunu kaldırmak mı yoksa yeni depolama konumuna ek olarak <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newStoragePlaceDocument.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>'yı da tutmak mı istiyorsunuz? </target>
+        <source>Möchten Sie den bisherigen Aufbewahrungsort entfernen oder zusätzlich zum neuen Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ument.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="beibehalten?"/> beibehalten? </source>
+        <target state="translated">Mevcut depolama yerini kaldırmak mı yoksa yeni depolama yerine ek olarak <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newStoragePlaceDocument.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>'yı da tutmak mı istiyorsunuz? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.html</context>
           <context context-type="linenumber">47,34</context>
@@ -7383,7 +7383,7 @@
       </trans-unit>
       <trans-unit id="resources.navigation.storagePlaces" datatype="html">
         <source>Aufbewahrungsorte</source>
-        <target state="translated">Depolama konumları</target>
+        <target state="translated">Depolama yerleri</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/grid-list/grid-list.component.ts</context>
           <context context-type="linenumber">109,123</context>
@@ -7447,7 +7447,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.scanStoragePlace" datatype="html">
         <source>Aufbewahrungsort scannen</source>
-        <target state="translated">Depolama konumunu tarayın</target>
+        <target state="translated">Depolama yerini tara</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.component.ts</context>
           <context context-type="linenumber">181</context>
@@ -7463,7 +7463,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.success.storagePlaceSaved.single" datatype="html">
         <source>Für die Ressource [0] wurde erfolgreich der Aufbewahrungsort [1] gespeichert.</source>
-        <target state="translated">Girdi [0] başarıyla depolama konumuna [1] kaydedildi.</target>
+        <target state="translated">Girdi [0] başarıyla depolama yerine [1] kaydedildi.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7471,7 +7471,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.info.storagePlaceAlreadySet.single" datatype="html">
         <source>Der Aufbewahrungsort [1] ist für die Ressource [0] bereits gesetzt.</source>
-        <target state="translated">Depolama konumu [1], girdi [0] için zaten ayarlanmıştır.</target>
+        <target state="translated">Depolama yeri [1], girdi [0] için zaten ayarlanmıştır.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7479,7 +7479,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.info.storagePlaceAlreadySet.multiple" datatype="html">
         <source>Der Aufbewahrungsort [1] ist für die ausgewählten [0] Ressourcen bereits gesetzt.</source>
-        <target state="translated">Seçilen [0] girdiler için depolama konumu [1] zaten ayarlanmıştır.</target>
+        <target state="translated">Seçilen [0] girdiler için depolama yeri [1] zaten ayarlanmıştır.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7511,7 +7511,7 @@
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.isStoredIn" datatype="html">
         <source>Verknüpfter Aufbewahrungsort</source>
-        <target state="translated">Bağlantılı depolama konumu</target>
+        <target state="translated">Bağlantılı depolama yeri</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -7543,23 +7543,23 @@
       </trans-unit>
       <trans-unit id="resources.scanStoragePlaceModal.header.multiple" datatype="html">
         <source>Bisherige Aufbewahrungsorte ersetzen?</source>
-        <target state="translated">Mevcut depolama konumları değiştirilsin mi?</target>
+        <target state="translated">Mevcut depolama yerleri değiştirilsin mi?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.component.ts</context>
           <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.scanStoragePlaceModal.editMode.singleDocument.singleStoragePlace" datatype="html">
-        <source>Für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ist bereits der Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{storagePlaceDocuments[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> gesetzt. </source>
-        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{storagePlaceDocuments[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> depolama konumu <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> girdisi için zaten ayarlanmıştır. </target>
+        <source>Für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> ist bereits der Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="nts[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> gesetzt. </source>
+        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{storagePlaceDocuments[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> depolama yeri <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> girdisi için zaten ayarlanmıştır. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.component.ts</context>
           <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.scanStoragePlaceModal.editMode.singleDocument.multipleStoragePlaces" datatype="html">
-        <source>Für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> sind bereits mehrere Aufbewahrungsorte gesetzt. </source>
-        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> girdisi için birden fazla depolama konumu zaten ayarlanmıştır. </target>
+        <source>Für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sind bereits"/> sind bereits mehrere Aufbewahrungsorte gesetzt. </source>
+        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> girdisi için birden fazla depolama yeri zaten ayarlanmıştır. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.html</context>
           <context context-type="linenumber">32,20</context>
@@ -7567,15 +7567,15 @@
       </trans-unit>
       <trans-unit id="resources.scanStoragePlaceModal.editMode.multipleDocuments.singleStoragePlace" datatype="html">
         <source>Für <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen ist bereits der Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="nts[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> gesetzt. </source>
-        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{storagePlaceDocuments[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> depolama konumu zaten <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> girdileri için ayarlanmıştır. </target>
+        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{storagePlaceDocuments[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> depolama yeri zaten <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> girdileri için ayarlanmıştır. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.html</context>
           <context context-type="linenumber">36,24</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.scanStoragePlaceModal.editMode.question.multiple" datatype="html">
-        <source>Möchten Sie die bisherigen Aufbewahrungsorte entfernen oder zusätzlich zum neuen Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newStoragePlaceDocument.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> beibehalten? </source>
-        <target state="translated">Mevcut depolama konumlarını kaldırmak mı yoksa yeni depolama konumuna ek olarak <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newStoragePlaceDocument.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>'yı da tutmak mı istiyorsunuz? </target>
+        <source>Möchten Sie die bisherigen Aufbewahrungsorte entfernen oder zusätzlich zum neuen Aufbewahrungsort <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ument.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="beibehalten?"/> beibehalten? </source>
+        <target state="translated">Mevcut depolama yerlerini kaldırmak mı yoksa yeni depolama yerlerine ek olarak <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newStoragePlaceDocument.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>'yı da tutmak mı istiyorsunuz? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-storage-place/scan-storage-place-modal.html</context>
           <context context-type="linenumber">53,39</context>
@@ -7623,7 +7623,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.success.storagePlaceSaved.multiple" datatype="html">
         <source>Für [0] Ressourcen wurde erfolgreich der Aufbewahrungsort [1] gespeichert.</source>
-        <target state="translated">[0] girdi başarıyla depolama konumuna [1] kaydedildi.</target>
+        <target state="translated">[0] girdi başarıyla depolama yerine [1] kaydedildi.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7647,7 +7647,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.noStoragePlaceCategory" datatype="html">
         <source>Die Ressource [0] der Kategorie [1] ist kein gültiger Aufbewahrungsort.</source>
-        <target state="translated">Kategori [1]'in girdisi [0] geçerli bir depolama konumu değil.</target>
+        <target state="translated">Kategori [1]'in girdisi [0] geçerli bir depolama yeri değil.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -7875,7 +7875,7 @@
       </trans-unit>
       <trans-unit id="project.informationModal.resourceCount.storagePlaces" datatype="html">
         <source>Davon Aufbewahrungsorte: <x id="INTERPOLATION" equiv-text="{{storagePlaceDocumentCount}}"/> </source>
-        <target state="translated">Depolama konumlarından: <x id="INTERPOLATION" equiv-text="{{storagePlaceDocumentCount}}"/> </target>
+        <target state="translated">Depolama yerlerinden: <x id="INTERPOLATION" equiv-text="{{storagePlaceDocumentCount}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/project/project-information-modal.html</context>
           <context context-type="linenumber">38,29</context>
@@ -7995,7 +7995,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.invalidField" datatype="html">
         <source>Die in diesem Feld eingetragenen Daten entsprechen nicht dem konfigurierten Eingabetyp <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="ction)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="."/>. </source>
-        <target state="translated">Bu alana girilen veriler, yapılandırılmış <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getInputTypeLabel(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> giriş tipine karşılık gelmiyor. </target>
+        <target state="translated">Bu alana girilen veriler, yapılandırılmış <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="{{getInputTypeLabel(section)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> giriş türüne karşılık gelmiyor. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">110,105</context>
@@ -8306,8 +8306,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.convertFieldData.info" datatype="html">
-        <source>Die im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> eingetragenen Daten können automatisch konvertiert werden, so dass sie dem Eingabetyp <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{inputTypeLabel}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> entsprechen. </source>
-        <target state="translated"><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> alanına girilen veriler, <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{inputTypeLabel}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> giriş tipine karşılık gelecek şekilde otomatik olarak dönüştürülebilir. </target>
+        <source>Die im Feld <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="eingetragen"/> eingetragenen Daten können automatisch konvertiert werden, so dass sie dem Eingabetyp <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="entsprechen."/> entsprechen. </source>
+        <target state="translated"><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [innerHTML]=&quot;getFieldLabelHTML()&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> alanına girilen veriler, <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{inputTypeLabel}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> giriş türüne karşılık gelecek şekilde otomatik olarak dönüştürülebilir. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/modals/convert-field-data-modal.component.ts</context>
           <context context-type="linenumber">91</context>
@@ -8847,7 +8847,7 @@
       </trans-unit>
       <trans-unit id="messages.import.catalog.error.unconfiguredCategory" datatype="html">
         <source>Katalogimport abgebrochen. Die Kategorie '[0]' ist keine konfigurierte Unterkategorie von 'Typ' oder 'Abbildung'.</source>
-        <target state="translated">Katalog içe aktarımı durduruldu. '[0]' kategorisi 'Tür' veya 'Görüntü'nün yapılandırılmış bir alt kategorisi değildir.</target>
+        <target state="translated">Katalog içe aktarımı durduruldu. '[0]' kategorisi 'Tip' veya 'Görüntü'nün yapılandırılmış bir alt kategorisi değildir.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">733</context>
@@ -10167,7 +10167,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.nonUniqueQrCode" datatype="html">
         <source>Uneindeutiger <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>QR-Code<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></source>
-        <target state="needs-translation">Uneindeutiger <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>QR-Code<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></target>
+        <target state="translated">Belirsiz <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>QR Kodu<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">106,108</context>
@@ -10175,7 +10175,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.nonUniqueQrCode" datatype="html">
         <source>Der QR-Code dieser Ressource wird mehrfach verwendet und kann daher nicht zum eindeutigen Zugriff auf die Ressource verwendet werden.</source>
-        <target state="needs-translation">Der QR-Code dieser Ressource wird mehrfach verwendet und kann daher nicht zum eindeutigen Zugriff auf die Ressource verwendet werden.</target>
+        <target state="translated">Bu girdiye ait QR kodu birden fazla kez kullanıldığı için, girdiye tekil erişim sağlamak amacıyla kullanılamaz.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">224,227</context>
@@ -10183,7 +10183,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.editQrCode" datatype="html">
         <source>QR-Code bearbeiten</source>
-        <target state="needs-translation">QR-Code bearbeiten</target>
+        <target state="translated">QR kodunu düzenle</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">318</context>
@@ -10191,7 +10191,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.duplicateQrCodeInImportFile" datatype="html">
         <source>Der QR-Code '[0]' ist in mehr als einem Importdatensatz eingetragen.</source>
-        <target state="needs-translation">Der QR-Code '[0]' ist in mehr als einem Importdatensatz eingetragen.</target>
+        <target state="translated">QR kodu '[0]' birden fazla içe aktarma kaydına girilmiştir.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">745</context>
@@ -10199,7 +10199,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.duplicateQrCodeInProject" datatype="html">
         <source>Der QR-Code '[0]' ist bereits der Ressource '[1]' zugeordnet.</source>
-        <target state="needs-translation">Der QR-Code '[0]' ist bereits der Ressource '[1]' zugeordnet.</target>
+        <target state="translated">QR kodu '[0]' zaten '[1]' girdisine atanmış durumda.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">749</context>
@@ -10207,7 +10207,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.unallowedCharacterField" datatype="html">
         <source>Nicht erlaubtes Zeichen im Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
-        <target state="needs-translation">Nicht erlaubtes Zeichen im Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
+        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="ion)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/> alanında geçersiz karakter</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">72,74</context>
@@ -10215,7 +10215,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.sectionTitle.unallowedGeometryType" datatype="html">
         <source>Nicht erlaubter Geometrietyp <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="peLabel}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></source>
-        <target state="needs-translation">Nicht erlaubter Geometrietyp <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="peLabel}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/></target>
+        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="peLabel}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/> geometri tipine izin verilmiyor</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">128,130</context>
@@ -10223,7 +10223,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.unallowedCharacterField" datatype="html">
         <source>Das Zeichen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>;<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ist in Feldern des Eingabetyps <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="ction)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="nicht erlaubt"/> nicht erlaubt. </source>
-        <target state="needs-translation">Das Zeichen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>;<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ist in Feldern des Eingabetyps <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="ction)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="nicht erlaubt"/> nicht erlaubt. </target>
+        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>;<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> karakterinin <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="ction)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="nicht erlaubt"/> giriş türü alanlarında kullanılmasına izin verilmez. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">187,189</context>
@@ -10231,7 +10231,7 @@
       </trans-unit>
       <trans-unit id="imageUpload.uploadModal.info.generic" datatype="html">
         <source>Daten werden eingelesen...</source>
-        <target state="needs-translation">Daten werden eingelesen...</target>
+        <target state="translated">Veriler okunuyor...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/upload-modal.html</context>
           <context context-type="linenumber">5,7</context>
@@ -10239,7 +10239,7 @@
       </trans-unit>
       <trans-unit id="util.warnings.unallowedCharacterFields" datatype="html">
         <source>Nicht erlaubte Zeichen</source>
-        <target state="needs-translation">Nicht erlaubte Zeichen</target>
+        <target state="translated">İzin verilmeyen karakterler</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">274</context>
@@ -10247,7 +10247,7 @@
       </trans-unit>
       <trans-unit id="configuration.allowedGeometryType" datatype="html">
         <source>Erlaubter Geometrietyp</source>
-        <target state="needs-translation">Erlaubter Geometrietyp</target>
+        <target state="translated">İzin verilen geometri tipi</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
           <context context-type="linenumber">83</context>
@@ -10255,7 +10255,7 @@
       </trans-unit>
       <trans-unit id="configuration.allowedGeometryTypes" datatype="html">
         <source>Erlaubte Geometrietypen</source>
-        <target state="needs-translation">Erlaubte Geometrietypen</target>
+        <target state="translated">İzin verilen geometri tipleri</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
           <context context-type="linenumber">85</context>
@@ -10267,7 +10267,7 @@
       </trans-unit>
       <trans-unit id="messages.model.validation.error.unallowedGeometryType" datatype="html">
         <source>Der Geometrietyp [1] ist für Ressourcen der Kategorie [0] nicht erlaubt.</source>
-        <target state="needs-translation">Der Geometrietyp [1] ist für Ressourcen der Kategorie [0] nicht erlaubt.</target>
+        <target state="translated">[1] geometri tipine, [0] kategorisindeki girdilerde izin verilmez.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">419</context>
@@ -10275,7 +10275,7 @@
       </trans-unit>
       <trans-unit id="messages.model.validation.error.geometryNotAllowed" datatype="html">
         <source>Für Ressourcen der Kategorie [0] können keine Geometrien angelegt werden.</source>
-        <target state="needs-translation">Für Ressourcen der Kategorie [0] können keine Geometrien angelegt werden.</target>
+        <target state="translated">[0] kategorisindeki girdilerde hiçbir geometri oluşturulamaz.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">423</context>
@@ -10283,7 +10283,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.generic" datatype="html">
         <source>Import fehlgeschlagen.</source>
-        <target state="needs-translation">Import fehlgeschlagen.</target>
+        <target state="translated">İçe aktarma başarısız oldu.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">600</context>
@@ -10291,7 +10291,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.unallowedCharacterInField" datatype="html">
         <source>Das Zeichen ';' ist im Feld '[0]' nicht erlaubt.</source>
-        <target state="needs-translation">Das Zeichen ';' ist im Feld '[0]' nicht erlaubt.</target>
+        <target state="translated">'[0]' alanında ';' karakterine izin verilmiyor.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1004</context>
@@ -10299,7 +10299,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.validation.error.unallowedCharacterInFields" datatype="html">
         <source>Das Zeichen ';' ist in den folgenden Feldern nicht erlaubt: [0]</source>
-        <target state="needs-translation">Das Zeichen ';' ist in den folgenden Feldern nicht erlaubt: [0]</target>
+        <target state="translated">Aşağıdaki alanlarda ';' karakterine izin verilmez: [0]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1008</context>
@@ -10307,7 +10307,7 @@
       </trans-unit>
       <trans-unit id="messages.images.error.unallowedCharacterInFilename" datatype="html">
         <source>Die Bilddatei '[0]' konnte nicht hinzugefügt werden. Das Zeichen ';' ist in Dateinamen nicht erlaubt.</source>
-        <target state="needs-translation">Die Bilddatei '[0]' konnte nicht hinzugefügt werden. Das Zeichen ';' ist in Dateinamen nicht erlaubt.</target>
+        <target state="translated">'[0]' görüntü dosyası eklenemedi. Dosya adlarında ';' karakterine izin verilmiyor.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1060</context>
@@ -10315,7 +10315,7 @@
       </trans-unit>
       <trans-unit id="configuration.error.noAllowedGeometryTypes" datatype="html">
         <source>Bitte wählen Sie mindestens einen erlaubten Geometrietyp aus.</source>
-        <target state="needs-translation">Bitte wählen Sie mindestens einen erlaubten Geometrietyp aus.</target>
+        <target state="translated">Lütfen izin verilen geometri tiplerinden en az birini seçin.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1293</context>
@@ -10323,7 +10323,7 @@
       </trans-unit>
       <trans-unit id="navbar.taskbar.warnings.info.unallowedGeometryType" datatype="html">
         <source>Geometrien des Typs <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="Label}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="nicht erlaubt."/> sind für Ressourcen der Kategorie <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="tion)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="nicht erlaubt."/> nicht erlaubt. </source>
-        <target state="needs-translation">Geometrien des Typs <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="Label}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="nicht erlaubt."/> sind für Ressourcen der Kategorie <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="tion)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="nicht erlaubt."/> nicht erlaubt. </target>
+        <target state="translated"><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION" equiv-text="Label}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="nicht erlaubt."/> tipindeki geometriler, <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="INTERPOLATION_1" equiv-text="tion)}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="nicht erlaubt."/> kategorisindeki girdiler için kullanılamaz. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/warnings/warnings-modal.html</context>
           <context context-type="linenumber">262,265</context>
@@ -10331,7 +10331,7 @@
       </trans-unit>
       <trans-unit id="resources.typeScannerModal.header.single" datatype="html">
         <source>Bisherigen Typ ersetzen?</source>
-        <target state="needs-translation">Bisherigen Typ ersetzen?</target>
+        <target state="translated">Mevcut tipi değiştirsin mi?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-resource/type-scanner-modal.html</context>
           <context context-type="linenumber">3,5</context>
@@ -10339,7 +10339,7 @@
       </trans-unit>
       <trans-unit id="resources.typeScannerModal.header.multiple" datatype="html">
         <source>Bisherige Typen ersetzen?</source>
-        <target state="needs-translation">Bisherige Typen ersetzen?</target>
+        <target state="translated">Mevcut tipleri değiştirsin mi?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-resource/type-scanner-modal.html</context>
           <context context-type="linenumber">7,9</context>
@@ -10347,7 +10347,7 @@
       </trans-unit>
       <trans-unit id="resources.typeScannerModal.editMode.singleDocument.singleType" datatype="html">
         <source>Für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> ist bereits der Typ <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="esource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> gesetzt. </source>
-        <target state="needs-translation">Für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> ist bereits der Typ <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="esource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> gesetzt. </target>
+        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> girdisi zaten <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="esource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> tipine ayarlanmış durumda. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-resource/type-scanner-modal.html</context>
           <context context-type="linenumber">14,17</context>
@@ -10355,7 +10355,7 @@
       </trans-unit>
       <trans-unit id="resources.typeScannerModal.editMode.singleDocument.multipleTypes" datatype="html">
         <source>Für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sind bereits"/> sind bereits mehrere Typen gesetzt. </source>
-        <target state="needs-translation">Für die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sind bereits"/> sind bereits mehrere Typen gesetzt. </target>
+        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="sind bereits"/> girdisi için çoklu tipler zaten ayarlanmış durumda. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-resource/type-scanner-modal.html</context>
           <context context-type="linenumber">19,21</context>
@@ -10363,7 +10363,7 @@
       </trans-unit>
       <trans-unit id="resources.typeScannerModal.editMode.multipleDocuments.multipleTypes" datatype="html">
         <source>Für <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen sind bereits Typen gesetzt. </source>
-        <target state="needs-translation">Für <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen sind bereits Typen gesetzt. </target>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> girdileri için tipler zaten ayarlanmış durumda. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-resource/type-scanner-modal.html</context>
           <context context-type="linenumber">28,30</context>
@@ -10371,7 +10371,7 @@
       </trans-unit>
       <trans-unit id="resources.typeScannerModal.editMode.question.single" datatype="html">
         <source>Möchten Sie den bisherigen Typ entfernen oder zusätzlich zum neuen Typ <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="source.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="beibehalten?"/> beibehalten? </source>
-        <target state="needs-translation">Möchten Sie den bisherigen Typ entfernen oder zusätzlich zum neuen Typ <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="source.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="beibehalten?"/> beibehalten? </target>
+        <target state="translated">Mevcut tipi kaldırmak mı yoksa yeni <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="source.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="beibehalten?"/> tipine ek olarak mevcut tipi korumak mı istiyorsunuz? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-resource/type-scanner-modal.html</context>
           <context context-type="linenumber">32,35</context>
@@ -10379,7 +10379,7 @@
       </trans-unit>
       <trans-unit id="resources.typeScannerModal.editMode.question.multiple" datatype="html">
         <source>Möchten Sie die bisherigen Typen entfernen oder zusätzlich zum neuen Typ <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="source.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="beibehalten?"/> beibehalten? </source>
-        <target state="needs-translation">Möchten Sie die bisherigen Typen entfernen oder zusätzlich zum neuen Typ <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="source.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="beibehalten?"/> beibehalten? </target>
+        <target state="translated">Mevcut tipleri kaldırmak mı yoksa yeni <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="source.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="beibehalten?"/> tipine ek olarak onları korumak mı istiyorsunuz? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-resource/type-scanner-modal.html</context>
           <context context-type="linenumber">37,40</context>
@@ -10387,7 +10387,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.scanType" datatype="html">
         <source>Typ scannen</source>
-        <target state="needs-translation">Typ scannen</target>
+        <target state="translated">Tipi tara</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.html</context>
           <context context-type="linenumber">109</context>
@@ -10395,7 +10395,7 @@
       </trans-unit>
       <trans-unit id="resources.contextMenu.scanTypeOrStoragePlace" datatype="html">
         <source>Typ oder Aufbewahrungsort scannen</source>
-        <target state="needs-translation">Typ oder Aufbewahrungsort scannen</target>
+        <target state="translated">Tipi veya depolama yerini tara</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/resources-context-menu.html</context>
           <context context-type="linenumber">112</context>
@@ -10403,7 +10403,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.success.typeSaved.multiple" datatype="html">
         <source>Für [0] Ressourcen wurde erfolgreich der Typ [1] gespeichert.</source>
-        <target state="needs-translation">Für [0] Ressourcen wurde erfolgreich der Typ [1] gespeichert.</target>
+        <target state="translated">[1] tipi [0] girdi için başarıyla kaydedildi.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1145</context>
@@ -10411,7 +10411,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.info.typeAlreadySet.multiple" datatype="html">
         <source>Der Typ [1] ist für die ausgewählten [0] Ressourcen bereits gesetzt.</source>
-        <target state="needs-translation">Der Typ [1] ist für die ausgewählten [0] Ressourcen bereits gesetzt.</target>
+        <target state="translated">[1] tipi, seçilen [0] girdiler için zaten ayarlanmıştır.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1177</context>
@@ -10419,7 +10419,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.noTypeCategory" datatype="html">
         <source>Die Ressource [0] der Kategorie [1] ist kein gültiger Typ.</source>
-        <target state="needs-translation">Die Ressource [0] der Kategorie [1] ist kein gültiger Typ.</target>
+        <target state="translated">[1] kategorisinin [0] girdisi geçerli bir tip değil.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1187</context>
@@ -10427,7 +10427,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.noStoragePlaceOrTypeCategory" datatype="html">
         <source>Die Ressource [0] der Kategorie [1] ist kein gültiger Typ oder Aufbewahrungsort.</source>
-        <target state="needs-translation">Die Ressource [0] der Kategorie [1] ist kein gültiger Typ oder Aufbewahrungsort.</target>
+        <target state="translated">[1] kategorisinin [0] girdisi geçerli bir tip veya depolama yeri değildir.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1192</context>
@@ -10435,7 +10435,7 @@
       </trans-unit>
       <trans-unit id="resources.typeScannerModal.editMode.multipleDocuments.singleType" datatype="html">
         <source>Für <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen ist bereits der Typ <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="esource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> gesetzt. </source>
-        <target state="needs-translation">Für <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen ist bereits der Typ <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="esource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> gesetzt. </target>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> girdileri için <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="esource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="gesetzt.     &lt;/"/> tipi zaten ayarlanmış durumda. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/actions/scan-resource/type-scanner-modal.html</context>
           <context context-type="linenumber">23,26</context>
@@ -10443,7 +10443,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.success.typeSaved.single" datatype="html">
         <source>Für die Ressource [0] wurde erfolgreich der Typ [1] gespeichert.</source>
-        <target state="needs-translation">Für die Ressource [0] wurde erfolgreich der Typ [1] gespeichert.</target>
+        <target state="translated">[0] numaralı girdi [1] tipinde başarıyla kaydedildi.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1140</context>
@@ -10451,7 +10451,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.info.typeAlreadySet.single" datatype="html">
         <source>Der Typ [1] ist für die Ressource [0] bereits gesetzt.</source>
-        <target state="needs-translation">Der Typ [1] ist für die Ressource [0] bereits gesetzt.</target>
+        <target state="translated">[1] tipi, [0] girdisi için zaten ayarlanmış durumda.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1172</context>
@@ -10459,7 +10459,7 @@
       </trans-unit>
       <trans-unit id="resources.confirmBackupLoading.header" datatype="html">
         <source>Backup einlesen?</source>
-        <target state="needs-translation">Backup einlesen?</target>
+        <target state="translated">Yedekleme geri yüklensin mi?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/confirm-backup-loading-modal.html</context>
           <context context-type="linenumber">2,4</context>
@@ -10467,7 +10467,7 @@
       </trans-unit>
       <trans-unit id="backup.loading.confirm.existingProject" datatype="html">
         <source>Das Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newProjectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> existiert bereits und wird beim Einlesen des Backups überschrieben. </source>
-        <target state="needs-translation">Das Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newProjectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> existiert bereits und wird beim Einlesen des Backups überschrieben. </target>
+        <target state="translated">Proje <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newProjectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> zaten mevcuttur ve yedekleme geri yüklendiğinde üzerine yazılacaktır. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/confirm-backup-loading-modal.html</context>
           <context context-type="linenumber">9,11</context>
@@ -10475,7 +10475,7 @@
       </trans-unit>
       <trans-unit id="backup.loading.confirm.question" datatype="html">
         <source>Möchten Sie das Backup wirklich einlesen?</source>
-        <target state="needs-translation">Möchten Sie das Backup wirklich einlesen?</target>
+        <target state="translated">Yedeklemeyi gerçekten içe aktarmak istiyor musunuz?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/confirm-backup-loading-modal.html</context>
           <context context-type="linenumber">18,20</context>
@@ -10483,7 +10483,7 @@
       </trans-unit>
       <trans-unit id="messages.backup.read.error.invalidFileFormat" datatype="html">
         <source>Die angegebene Datei ist keine gültige Backup-Datei.</source>
-        <target state="needs-translation">Die angegebene Datei ist keine gültige Backup-Datei.</target>
+        <target state="translated">Belirtilen dosya geçerli bir yedekleme dosyası değil.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">375</context>
@@ -10491,7 +10491,7 @@
       </trans-unit>
       <trans-unit id="backup.loading.confirm.unsimilarProjectIdentifier" datatype="html">
         <source>Die von Ihnen gewählte Projektkennung <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newProjectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> unterscheidet sich stark von der Kennung des Originalprojekts <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{originalProjectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </source>
-        <target state="needs-translation">Die von Ihnen gewählte Projektkennung <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newProjectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> unterscheidet sich stark von der Kennung des Originalprojekts <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{originalProjectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
+        <target state="translated">Seçtiğiniz proje tanımlayıcısı olan <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newProjectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>, orijinal projenin tanımlayıcısı olan <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{originalProjectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>'dan önemli ölçüde farklıdır. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/confirm-backup-loading-modal.html</context>
           <context context-type="linenumber">13,16</context>

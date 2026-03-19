@@ -201,7 +201,7 @@
           "label": "Durum"
         },
         "damageType": {
-          "label": "Tahribat türü"
+          "label": "Tahribat tipi"
         }
       }
     },
@@ -875,7 +875,7 @@
     "Image": {
       "fields": {
         "draughtsmen": {
-          "label": "Yaratıcı",
+          "label": "Oluşturan",
           "description": "Görselin yaratıcısı, fotoğrafçı ve/veya çizer"
         },
         "processor": {

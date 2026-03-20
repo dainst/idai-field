@@ -106,6 +106,12 @@ export class EditConfigurationPage {
     }
 
 
+    public static async clickGeometryTypeCheckbox(index: number) {
+
+        return click(await this.getGeometryTypeCheckbox(index));
+    }
+
+
     public static clickConfirmSubfield() {
 
         return click('#confirm-subfield-button');
@@ -174,6 +180,12 @@ export class EditConfigurationPage {
     public static async getInverseRelationOptions() {
 
         return getLocator('#inverse-relation-select option');
+    }
+
+
+    public static async getGeometryTypeCheckbox(index: number) {
+
+        return await getLocator('.geometry-type-checkbox').nth(index);
     }
 
 

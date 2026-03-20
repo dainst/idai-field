@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnChanges, SimpleChanges, Output, ElementRef, OnInit, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, SimpleChanges, Output, ElementRef, OnInit, OnDestroy,
+    ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FileInfo, ImageDocument, ImageStore, ImageVariant } from 'idai-field-core';
 import { constructGrid } from './construct-grid';
@@ -53,7 +54,8 @@ export class ImageGridComponent implements OnInit, OnChanges, OnDestroy {
                 private imageUrlMaker: ImageUrlMaker,
                 private imageToolLauncher: ImageToolLauncher,
                 private imageStore: ImageStore,
-                private settingsProvider: SettingsProvider) {}
+                private settingsProvider: SettingsProvider,
+                private changeDetectorRef: ChangeDetectorRef) {}
 
 
     public async handleClick(document: ImageDocument, event: MouseEvent) {
@@ -84,18 +86,18 @@ export class ImageGridComponent implements OnInit, OnChanges, OnDestroy {
         if (!changes['documents']) return;
 
         if (this.showDropArea) this.insertStubForDropArea();
-        this.calcGrid();
+        await this.triggerGridCalculation();
     }
 
 
-    public async calcGrid() {
+    public async triggerGridCalculation() {
 
         if (this.calcGridTimeout) clearTimeout(this.calcGridTimeout);
 
         this.calcGridTimeout = setTimeout(async () => {
             this.calcGridPromise = this.calcGridPromise
-                ? this.calcGridPromise.then(() => this._calcGrid())
-                : this._calcGrid();
+                ? this.calcGridPromise.then(() => this.calculateGrid())
+                : this.calculateGrid();
 
             await this.calcGridPromise;
 
@@ -105,8 +107,8 @@ export class ImageGridComponent implements OnInit, OnChanges, OnDestroy {
     }
 
 
-    private async _calcGrid() {
-
+    private async calculateGrid() {
+        
         if (!this.documents) return;
 
         const rows = constructGrid(
@@ -118,6 +120,8 @@ export class ImageGridComponent implements OnInit, OnChanges, OnDestroy {
 
         await this.loadImages(rows);
         this.rows = rows;
+
+        this.changeDetectorRef.detectChanges();
     }
 
 

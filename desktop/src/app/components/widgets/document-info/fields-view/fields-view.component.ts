@@ -35,26 +35,23 @@ export class FieldsViewComponent implements OnChanges {
 
     async ngOnChanges(changes: SimpleChanges) {
 
-        if (!this.resource) return;
-
-        if (changes['resource']) {
+        if (this.resource && changes['resource']) {
             this.groups = await FieldsViewUtil.getGroupsForResource(
                 this.resource, this.projectConfiguration, this.datastore, this.labels
             );
-            if (!this.openSection && this.groups.length > 0) this.openSection = this.groups[0].name;
         }
     }
 
 
-    public showGroupSection(group: Name) {
+    public isGroupSectionOpened(group: Name): boolean {
 
-        return this.expandAllGroups || this.openSection === group;
+        return this.expandAllGroups || this.getOpenSection() === group;
     }
 
 
     public toggleGroupSection(group: FieldsViewGroup) {
 
-        this.openSection = this.openSection === group.name && !this.expandAllGroups
+        this.openSection = this.getOpenSection() === group.name && !this.expandAllGroups
             ? undefined
             : group.name;
 
@@ -65,5 +62,15 @@ export class FieldsViewComponent implements OnChanges {
     public async jumpToResource(document: FieldDocument) {
 
         this.onJumpToResource.emit(document);
+    }
+
+
+    private getOpenSection(): string {
+
+        return this.openSection
+            ? this.openSection
+            : this.groups.length > 0
+                ? this.groups[0].name
+                : undefined;
     }
 }

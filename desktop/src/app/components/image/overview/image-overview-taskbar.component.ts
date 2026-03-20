@@ -209,7 +209,7 @@ export class ImageOverviewTaskbarComponent {
             await this.removeDepictsRelationsOnSelectedDocuments();
             this.imageOverviewFacade.clearSelection();
             await this.imageOverviewFacade.fetchDocuments();
-            this.imageGrid.calcGrid();
+            this.imageGrid.triggerGridCalculation();
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
         } finally {

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -55,7 +55,8 @@ export class ImageOverviewComponent implements OnInit, OnDestroy {
                 private menuService: Menus,
                 private router: Router,
                 private routing: Routing,
-                private expressServer: ExpressServer) {
+                private expressServer: ExpressServer,
+                private changeDetectorRef: ChangeDetectorRef) {
 
         this.intitialization = this.imageOverviewFacade.initialize();
         this.intitialization.then(() => {
@@ -94,7 +95,7 @@ export class ImageOverviewComponent implements OnInit, OnDestroy {
 
     public setQueryString = (q: string) => this.imageOverviewFacade.setQueryString(q);
 
-    public onResize = () => this.imageGrid.calcGrid();
+    public onResize = () => this.imageGrid.triggerGridCalculation();
 
     public refreshGrid = () => this.imageOverviewFacade.fetchDocuments();
 
@@ -208,6 +209,9 @@ export class ImageOverviewComponent implements OnInit, OnDestroy {
 
         this.apiSubscription = this.expressServer.apiNotifications().subscribe(async apiState => {
             if (this.apiState === 'fileImport' && apiState !== 'fileImport') {
+                // Calling fetchDocuments twice is necessary to prevent ExpressionChangedAfterItHasBeenCheckedError
+                await this.imageOverviewFacade.fetchDocuments();
+                this.changeDetectorRef.detectChanges();
                 await this.imageOverviewFacade.fetchDocuments();
             }
             this.apiState = apiState;

@@ -845,7 +845,7 @@ describe('Import/Subsystem', () => {
     });
 
 
-     test('ignore attempts to change image width, height or originalFileName via import', async () => {
+     test('ignore attempts to change image width, height or originalFilename via import', async () => {
 
         await datastore.create({
             resource: {

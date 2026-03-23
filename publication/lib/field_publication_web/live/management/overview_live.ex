@@ -55,7 +55,7 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
 
   @impl true
   def handle_info(
-        {FieldPublicationWeb.Management.ProjectFormComponent, {:saved, _project}},
+        {FieldPublicationWeb.Management.Modals.ProjectFormComponent, {:saved, _project}},
         socket
       ) do
     {:noreply, assign_projects(socket)}
@@ -63,7 +63,7 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
 
   @impl true
   def handle_info(
-        {FieldPublicationWeb.Management.PublicationLive.ReplicationFormComponent,
+        {FieldPublicationWeb.Management.Modals.ReplicationFormComponent,
          {%ReplicationInput{} = params, %Publication{} = publication}},
         socket
       ) do

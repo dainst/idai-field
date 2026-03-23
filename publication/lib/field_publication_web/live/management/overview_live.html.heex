@@ -2,50 +2,55 @@
 
 <%= if FieldPublication.Users.is_admin?(@current_user) do %>
   <.group_heading>Administration</.group_heading>
-  <div>
-    <p class="font-semibold">Actions</p>
-    <ul class="mb-8">
-      <li>
-        <.link navigate={~p"/management/projects/new"}>
-          Create new project
-        </.link>
-      </li>
-      <li>
-        <.link phx-click={JS.push("reindex_all_search_indices")} data-confirm="Are you sure?">
-          Recreate search indices
-        </.link>
-      </li>
-      <li>
-        <.link phx-click={JS.push("recreate_previews")} data-confirm="Are you sure?">
-          Recreate all preview documents
-        </.link>
-      </li>
-      <li>
-        <.link navigate={~p"/management/users"}>
-          Manage users
-        </.link>
-      </li>
-      <li>
-        <.link navigate={~p"/management/settings"}>
-          Settings
-        </.link>
-      </li>
-    </ul>
-  </div>
+  <ul class="p-4 list-disc list-inside">
+    <li>
+      <.link navigate={~p"/management/projects/new"}>
+        Create new project
+      </.link>
+    </li>
+    <li>
+      <button
+        class="text-primary hover:text-primary-hover cursor-pointer"
+        phx-click={JS.push("reindex_all_search_indices")}
+        data-confirm="Are you sure?"
+      >
+        Recreate search indices
+      </button>
+    </li>
+    <li>
+      <button
+        class="text-primary hover:text-primary-hover cursor-pointer"
+        phx-click={JS.push("recreate_previews")}
+        data-confirm="Are you sure?"
+      >
+        Recreate all preview documents
+      </button>
+    </li>
+    <li>
+      <.link navigate={~p"/management/users"}>
+        Manage users
+      </.link>
+    </li>
+    <li>
+      <.link navigate={~p"/management/settings"}>
+        Settings
+      </.link>
+    </li>
+  </ul>
 <% end %>
 <.group_heading>Projects</.group_heading>
 <%= if @projects != [] do %>
-  <div class="grid lg:grid-cols-2 2xl:grid-cols-3">
+  <section class="grid lg:grid-cols-2 2xl:grid-cols-3">
     <%= for %{project: project, publications: publications, search_aliased_publication: search_aliased_publication} <- @projects do %>
-      <div class="border border-primary m-4" id={"project-panel-#{project.name}"}>
-        <div class="bg-panel p-3 m-4 text-center text-lg">
-          Project: '{project.name}'
-        </div>
+      <article class="border border-primary m-4" id={"project-panel-#{project.name}"}>
+        <h3 class="bg-panel p-4 m-2 text-center text-lg">
+          Project '{project.name}'
+        </h3>
 
         <div class="m-4 grid grid-cols-2">
           <div>
             <p class="font-semibold">Actions</p>
-            <ul>
+            <ul class="list-disc list-inside">
               <li>
                 <.link navigate={~p"/management/projects/#{project.name}/publication/new"}>
                   Draft new publication
@@ -193,9 +198,9 @@
             </div>
           <% end %>
         </div>
-      </div>
+      </article>
     <% end %>
-  </div>
+  </section>
 <% else %>
   There are no projects or you are not added as an editor.
 <% end %>
@@ -208,7 +213,7 @@
 >
   <%= if FieldPublication.Users.is_admin?(@current_user) do %>
     <.live_component
-      module={FieldPublicationWeb.Management.ProjectFormComponent}
+      module={FieldPublicationWeb.Management.Modals.ProjectFormComponent}
       id={@project.name || :new}
       title={@page_title}
       action={@live_action}
@@ -226,7 +231,7 @@
   on_cancel={JS.patch(~p"/management")}
 >
   <.live_component
-    module={FieldPublicationWeb.Management.PublicationLive.ReplicationFormComponent}
+    module={FieldPublicationWeb.Management.Modals.ReplicationFormComponent}
     id="publication_draft"
     action={:new}
     project_name={@project.name}

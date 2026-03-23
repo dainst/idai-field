@@ -61,6 +61,11 @@ defmodule FieldPublication.Processing.WebImage do
     raw_root = FileService.get_raw_data_path(project_name)
     web_root = FileService.get_web_images_path(project_name)
 
+    quarter_of_all_schedulers = trunc(System.schedulers() * 0.25)
+
+    concurrent_processes =
+      if quarter_of_all_schedulers >= 1, do: quarter_of_all_schedulers, else: 1
+
     # TODO: Log missing raw files
 
     {:ok, counter_pid} =
@@ -69,46 +74,50 @@ defmodule FieldPublication.Processing.WebImage do
     doc_id = Publications.get_doc_id(publication)
 
     existing_raw_files
-    |> Enum.map(fn uuid ->
-      Logger.debug(
-        "Creating web image (pyramid TIFF) for '#{uuid}' in project '#{publication.project_name}'..."
-      )
-
-      {:ok, file} = Image.new_from_file("#{raw_root}/image/#{uuid}")
-
-      # Apply exif rotation metadata directly to the image data (if present), because we do not
-      # want end user's web browser to rotate image tiles because of the metadata.
-      {:ok, {file, _}} = Operation.autorot(file)
-
-      :ok =
-        Operation.tiffsave(file, "#{web_root}/#{uuid}.tif",
-          pyramid: true,
-          "tile-height": 256,
-          "tile-width": 256,
-          tile: true,
-          # See https://iipimage.sourceforge.io/2024/12/tiff-image-encoding-optimizing-for-size-speed-and-quality
-          compression: :VIPS_FOREIGN_TIFF_COMPRESSION_DEFLATE
+    |> Task.async_stream(
+      fn uuid ->
+        Logger.debug(
+          "Creating web image (pyramid TIFF) for '#{uuid}' in project '#{publication.project_name}'..."
         )
 
-      updated_state =
-        Agent.get_and_update(counter_pid, fn %{counter: counter, overall: overall} = state ->
-          state =
-            state
-            |> Map.put(:counter, counter + 1)
-            |> Map.put(:percentage, (counter + 1) / overall * 100)
+        {:ok, file} = Image.new_from_file("#{raw_root}/image/#{uuid}")
 
-          {state, state}
-        end)
+        # Apply exif rotation metadata directly to the image data (if present), because we do not
+        # want end user's web browser to rotate image tiles because of the metadata.
+        {:ok, {file, _}} = Operation.autorot(file)
 
-      PubSub.broadcast(
-        FieldPublication.PubSub,
-        doc_id,
-        {
-          :web_image_processing_count,
-          updated_state
-        }
-      )
-    end)
+        :ok =
+          Operation.tiffsave(file, "#{web_root}/#{uuid}.tif",
+            pyramid: true,
+            "tile-height": 256,
+            "tile-width": 256,
+            tile: true,
+            # See https://iipimage.sourceforge.io/2024/12/tiff-image-encoding-optimizing-for-size-speed-and-quality
+            compression: :VIPS_FOREIGN_TIFF_COMPRESSION_DEFLATE
+          )
+
+        updated_state =
+          Agent.get_and_update(counter_pid, fn %{counter: counter, overall: overall} = state ->
+            state =
+              state
+              |> Map.put(:counter, counter + 1)
+              |> Map.put(:percentage, (counter + 1) / overall * 100)
+
+            {state, state}
+          end)
+
+        PubSub.broadcast(
+          FieldPublication.PubSub,
+          doc_id,
+          {
+            :web_image_processing_count,
+            updated_state
+          }
+        )
+      end,
+      max_concurrency: concurrent_processes,
+      timeout: 1000 * 60 * 5
+    )
     |> Enum.to_list()
   end
 end

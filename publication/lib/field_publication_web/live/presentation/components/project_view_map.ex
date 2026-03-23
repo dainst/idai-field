@@ -23,7 +23,7 @@ defmodule FieldPublicationWeb.Presentation.Components.ProjectViewMap do
       <div style={@style} id={"#{@id}-map"} phx-update="ignore">
         <!-- Set pointer-events-none, otherwise the tooltip will block click events on the map -->
         <div class="pointer-events-none text-xs" id={"#{@id}-identifier-tooltip"}>
-          <div class="border-[1px] rounded-sm border-black flex">
+          <div class="border rounded-sm border-black flex">
             <div class="saturate-50 pl-2  text-black" id={"#{@id}-identifier-tooltip-category-bar"}>
               <div
                 class="h-full bg-white/60 p-1 font-thin"
@@ -42,7 +42,7 @@ defmodule FieldPublicationWeb.Presentation.Components.ProjectViewMap do
       </div>
       <div :if={@project_tile_layers_state != []} class="absolute p-1 top-1 right-1">
         <div
-          class="right-1 absolute rounded w-8 h-8 text-center pt-[2px] bg-white"
+          class="right-1 absolute rounded w-8 h-8 text-center pt-0.5 bg-white"
           phx-click={Phoenix.LiveView.JS.toggle(to: "##{@id}-layer-select")}
         >
           <.icon name="hero-square-3-stack-3d" />

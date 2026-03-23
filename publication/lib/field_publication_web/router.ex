@@ -90,7 +90,7 @@ defmodule FieldPublicationWeb.Router do
            Management.OverviewLive,
            :new_publication
 
-      live "/projects/:project_id/publication/:draft_date", Management.PublicationLive.Show
+      live "/projects/:project_id/publication/:draft_date", Management.PublicationLive
     end
   end
 

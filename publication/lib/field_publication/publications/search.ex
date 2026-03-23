@@ -873,13 +873,21 @@ defmodule FieldPublication.Publications.Search do
         do: database_count - Enum.count(@not_indexed_document_uuids),
         else: 0
 
-    indexed_count = get_doc_count(publication)
+    if database_count == 0 do
+      %{
+        counter: 0,
+        percentage: 0,
+        overall: 0
+      }
+    else
+      indexed_count = get_doc_count(publication)
 
-    %{
-      counter: indexed_count,
-      percentage: indexed_count / database_count * 100,
-      overall: database_count
-    }
+      %{
+        counter: indexed_count,
+        percentage: indexed_count / database_count * 100,
+        overall: database_count
+      }
+    end
   end
 
   def index_documents(%Publication{} = publication) do

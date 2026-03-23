@@ -2448,6 +2448,7 @@ Bu API uç noktası, JSON formatında bir içe aktarma isteği göndererek, uygu
 * *filePaths (string array)*: İçe aktarılacak dosyaların dosya yolları
 * *category (string)*: İçe aktarılan resimler için ayarlanacak kategori adı (Varsayılan değer: "Görüntü")
 * *readCreatorsFromMetadata (boolean)*: "Oluşturan" alanını otomatik olarak doldurmak için görüntü dosyalarından meta verileri okur
+* *checkOriginalFilename (boolean)*: Projede aynı tanımlayıcıya sahip bir görüntü zaten varsa, görüntü dosyaları hiçbir zaman içe aktarılmaz. Bu seçenek aktifse, ayrıca aynı orijinal dosya adına sahip bir görüntü zaten varsa içe aktarma işlemi de reddedilir.
 
 Çıktı:
 * *importedImages (integer)*: Başarıyla içe aktarılan görüntü dosyalarının sayısı

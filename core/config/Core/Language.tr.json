@@ -32,9 +32,6 @@
         },
         "shortName": {
           "label": "Proje adı"
-        },
-        "originalFilename": {
-          "label": "Orijinal dosya adı"
         }
       }
     },
@@ -46,6 +43,9 @@
         },
         "width": {
           "label": "Eni"
+        },
+        "originalFilename": {
+          "label": "Orijinal dosya adı"
         }
       }
     }

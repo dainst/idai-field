@@ -32,9 +32,6 @@
         },
         "shortName": {
           "label": "Nombre del proyecto"
-        },
-        "originalFilename": {
-          "label": "Nombre original del archivo"
         }
       }
     },
@@ -46,6 +43,9 @@
         },
         "width": {
           "label": "Ancho"
+        },
+        "originalFilename": {
+          "label": "Nombre original del archivo"
         }
       }
     }

@@ -240,7 +240,6 @@ defmodule FieldPublication.Processing do
     end
   end
 
-
   def handle_call(:show, _from, running_tasks) do
     {:reply, running_tasks, running_tasks}
   end

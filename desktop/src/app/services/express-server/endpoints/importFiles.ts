@@ -17,6 +17,7 @@ export async function importFiles(request: any, response: any, projectConfigurat
         if (!filePaths?.length) throw 'No file paths specified';
 
         const parseDraughtsmen: boolean = request.body.readCreatorsFromMetadata === true ? true : false;
+        const checkOriginalFilename: boolean = request.body.checkOriginalFilename === true ? true: false;
 
         const category: string = request.body.category ?? 'Image';
         if (!projectConfiguration.getCategory(category)) throw 'Unconfigured category: ' + request.body.category;
@@ -26,7 +27,7 @@ export async function importFiles(request: any, response: any, projectConfigurat
         if (uploadStatus.running) throw 'File import is already running';
 
         const result: ImageUploadResult = await imageUploader.startUpload(
-            filePaths, undefined, metadata, parseDraughtsmen, true
+            filePaths, undefined, metadata, parseDraughtsmen, checkOriginalFilename, true
         );
         result.messages = result.messages.map(message => getErrorMessage(message, messagesDictionary));
 

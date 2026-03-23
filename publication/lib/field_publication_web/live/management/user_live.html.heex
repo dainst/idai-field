@@ -1,3 +1,4 @@
+<.back navigate={~p"/management"}>{gettext("Back to management")}</.back>
 <.document_heading>Manage users</.document_heading>
 
 <p class="font-semibold">{gettext("Actions")}</p>
@@ -14,8 +15,8 @@
   <table class="w-full mt-8">
     <thead>
       <tr>
-        <th class="text-left">{gettext("Name")}</th>
-        <th class="text-left">{gettext("Label")}</th>
+        <th class="text-left">{gettext("User name")}</th>
+        <th class="text-left">{gettext("Full name")}</th>
         <th class="text-right">{gettext("Actions")}</th>
       </tr>
     </thead>
@@ -49,8 +50,6 @@
     </tbody>
   </table>
 <% end %>
-
-<.back navigate={~p"/management"}>{gettext("Back to management")}</.back>
 
 <.modal
   :if={@live_action in [:new, :edit]}

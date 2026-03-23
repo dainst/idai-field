@@ -42,8 +42,7 @@ defmodule FieldPublication.Users do
   """
   def create(params) do
     %User{}
-    |> User.changeset(params)
-    |> validate_required([:password])
+    |> User.changeset(params, true)
     |> apply_action(:create)
     |> case do
       {:error, _changeset} = error ->

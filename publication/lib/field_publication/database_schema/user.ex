@@ -11,9 +11,11 @@ defmodule FieldPublication.DatabaseSchema.User do
   end
 
   @doc false
-  def changeset(%__MODULE__{} = user, attrs \\ %{}) do
+  def changeset(%__MODULE__{} = user, attrs \\ %{}, create? \\ false) do
+    required_fields = [:name, :label] ++ if create?, do: [:password], else: []
+
     user
     |> cast(attrs, [:name, :password, :label])
-    |> validate_required([:name, :label])
+    |> validate_required(required_fields)
   end
 end

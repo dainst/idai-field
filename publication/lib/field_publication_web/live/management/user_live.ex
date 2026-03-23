@@ -48,7 +48,7 @@ defmodule FieldPublicationWeb.Management.UserLive do
   end
 
   @impl true
-  def handle_info({FormComponent, {:saved, _user}}, socket) do
+  def handle_info({UserFormComponent, {:saved, _user}}, socket) do
     {:noreply, assign(socket, :users, Users.list())}
   end
 end

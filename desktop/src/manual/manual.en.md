@@ -2449,7 +2449,7 @@ Request body:
 * *filePaths (string array)*: The file paths of the files to be imported
 * *category (string)*: The name of the category to be set for imported images (Default value: "Image")
 * *readCreatorsFromMetadata (boolean)*: Reads the metadata from image files to automatically fill in the field "Creator"
-* *matchOriginalFilename (Boolean)*: Image files are never imported if the project already contains an image with the same identifier. If this option is enabled, the import will also be rejected if there is already an image with the same original filename.
+* *checkOriginalFilename (Boolean)*: Image files are never imported if the project already contains an image with the same identifier. If this option is enabled, the import will also be rejected if there is already an image with the same original filename.
 
 Response:
 * *importedImages (integer)*: The number of successfully imported image files

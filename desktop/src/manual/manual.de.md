@@ -2458,7 +2458,7 @@ Request-Body:
 * *filePaths (String-Array)*: Die Dateipfade der zu importierenden Dateien
 * *category (String)*: Der Name der Kategorie, die für importierte Bilder gesetzt werden soll (Standardwert: "Image")
 * *readCreatorsFromMetadata (Boolean)*: Liest die Metadaten von Bilddateien aus, um das Feld "Bildersteller/Bilderstellerin" automatisch auszufüllen
-* *matchOriginalFilename (Boolean)*: Bilddateien werden grundsätzlich nicht importiert, wenn es im Projekt bereits ein Bild mit dem gleichen Bezeichner gibt. Ist diese Option aktiviert, wird der Import darüber hinaus auch dann abgelehnt, wenn es bereits ein Bild mit dem gleichen ursprünglichen Dateinamen gibt.
+* *checkOriginalFilename (Boolean)*: Bilddateien werden grundsätzlich nicht importiert, wenn es im Projekt bereits ein Bild mit dem gleichen Bezeichner gibt. Ist diese Option aktiviert, wird der Import darüber hinaus auch dann abgelehnt, wenn es bereits ein Bild mit dem gleichen ursprünglichen Dateinamen gibt.
 
 Rückgabe:
 * *importedImages (Integer)*: Die Anzahl der erfolgreich importierten Bilddateien

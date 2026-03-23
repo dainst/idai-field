@@ -172,21 +172,13 @@ defmodule FieldPublication.Replication do
               Publications.Data.recreate_hierarchy_doc(publication)
             end)
 
-          preview_docs_task =
-            Task.async(fn ->
-              log(parameters, :info, "Creating preview documents for '#{publication_id}'.")
-              Publications.Data.recreate_document_previews(publication)
-            end)
-
           [
-            {:ok, %{status: 201}},
             {:ok, %{status: 201}},
             {:ok, %{status: 201}}
           ] =
             Task.await_many([
               config_task,
-              hierarchy_doc_task,
-              preview_docs_task
+              hierarchy_doc_task
             ])
 
           languages =

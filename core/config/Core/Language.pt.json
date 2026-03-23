@@ -32,6 +32,9 @@
         },
         "shortName": {
           "label": "Nome do projeto"
+        },
+        "originalFilename": {
+          "label": "Nome de ficheiro original"
         }
       }
     },

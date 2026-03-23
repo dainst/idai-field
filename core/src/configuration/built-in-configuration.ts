@@ -979,6 +979,11 @@ export class BuiltInConfiguration {
                     inputType: Field.InputType.UNSIGNEDINT,
                     editable: false
                 },
+                originalFilename: {
+                    inputType: Field.InputType.SIMPLE_INPUT,
+                    editable: false,
+                    constraintIndexed: true
+                },
                 draughtsmen: {
                     inputType: Field.InputType.CHECKBOXES,
                     valuelistFromProjectField: 'staff',
@@ -1000,7 +1005,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.PROPERTIES,
-                        fields: ['height', 'width']
+                        fields: ['height', 'width', 'originalFilename']
                     }
                 ]
             }

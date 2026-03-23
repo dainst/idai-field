@@ -43,6 +43,9 @@
         },
         "width": {
           "label": "Breite"
+        },
+        "originalFilename": {
+          "label": "Ursprünglicher Dateiname"
         }
       }
     }

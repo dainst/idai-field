@@ -32,6 +32,9 @@
         },
         "shortName": {
           "label": "Proje adı"
+        },
+        "originalFilename": {
+          "label": "Orijinal dosya adı"
         }
       }
     },

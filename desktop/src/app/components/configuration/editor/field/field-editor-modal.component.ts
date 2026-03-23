@@ -90,7 +90,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public isInverseRelationVisible = () => this.isRelationSectionVisible() && this.isCustomField();
 
-    public isI18nCompatible = () => Field.InputType.I18N_COMPATIBLE_INPUT_TYPES.includes(this.getInputType());
+    public isI18nCompatible = () => Field.InputType.I18N_COMPATIBLE_INPUT_TYPES.includes(this.getInputType())
+        && this.field.editable;
 
     public isCustomField = () => this.field.source === 'custom';
 

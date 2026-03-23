@@ -23,7 +23,7 @@
     <input-type-selector [selectedInputType]="getInputType()"
                          [availableInputTypes]="availableInputTypes"
                          [isCustomField]="isCustomField()"
-                         [isFixedInputType]="field.fixedInputType"
+                         [isFixedInputType]="field.fixedInputType || !field.editable"
                          [disabled]="hidden"
                          (onChanged)="setInputType($event)">
     </input-type-selector>

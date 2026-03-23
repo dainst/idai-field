@@ -1,5 +1,6 @@
-<!-- TODO: General heading? -->
+<.back navigate={~p"/"}>{gettext("Back to landing page")}</.back>
 
+<.document_heading>Management</.document_heading>
 <%= if FieldPublication.Users.is_admin?(@current_user) do %>
   <.group_heading>Administration</.group_heading>
   <ul class="p-4 list-disc list-inside">

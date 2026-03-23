@@ -13,13 +13,14 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
   @impl true
   def render(assigns) do
     ~H"""
+    <.back navigate={~p"/management"}>{gettext("Back to management")}</.back>
     <.document_heading>Settings</.document_heading>
 
     <.form for={@setting_form} phx-submit="save" phx-change="validate">
       <.button class="w-full" disabled={@setting_form.source.changes == %{}}>
         Save changes
       </.button>
-      
+
     <!-- Logo and favicon are not changed by this form, instead they have their own events
      that get triggered when clicking in the uploaded images panel below. -->
       <.input type="hidden" field={@setting_form[:logo]} />

@@ -194,7 +194,7 @@ Please note that this function is only available if a valid synchronization targ
 To export the original image files from Field Desktop, first select the images in the image management (or call them up from another part of the application) and click the button "Export". A window will appear in which you can select the directory to which the image files are to be exported. You also can choose between two different options for naming the files:
 
 * *Identifier*: The identifier that the corresponding images currently have in the project is used as a file name for the exported image files.
-* *Original file name*: The files are exported under the names under which they were originally imported into the project.
+* *Original filename*: The files are exported under the names under which they were originally imported into the project.
 
 
 ## Link images to resources

@@ -3491,7 +3491,7 @@
           <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="imageExport.originalFileame" datatype="html">
+      <trans-unit id="imageExport.originalFilename" datatype="html">
         <source> Ursprünglicher Dateiname </source>
         <target state="final"> Ursprünglicher Dateiname </target>
         <context-group purpose="location">

@@ -10157,7 +10157,7 @@
           <context context-type="linenumber">31,33</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="imageExport.originalFileame" datatype="html">
+      <trans-unit id="imageExport.originalFilename" datatype="html">
         <source>Ursprünglicher Dateiname</source>
         <target state="translated">Orijinal dosya adı</target>
         <context-group purpose="location">

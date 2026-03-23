@@ -219,8 +219,8 @@ defmodule FieldPublicationWeb.Components.Data.Field do
   def render_field_label(%{field: %Field{labels: labels}} = assigns) when is_map(labels) do
     ~H"""
     <% language_keys = Map.keys(@field.labels) %>
-    <% ui_lang = LanguageSelection.pick_default_translation(language_keys) %>
-    <% rendered_order =  Enum.reject(language_keys, fn(key) -> key == ui_lang end) %>
+    <% ui_lang = pick_default_language_key(language_keys) %>
+    <% rendered_order = Enum.reject(language_keys, fn key -> key == ui_lang end) %>
     {@field.labels[ui_lang]}
     <!-- <div aria-describedby={description_id}>
       {@field.labels[ui_lang]}
@@ -244,13 +244,13 @@ defmodule FieldPublicationWeb.Components.Data.Field do
 
             <div class="absolute bg-white left-8 z-55 hidden" id={"field_#{@field.name}_label_translations"}
               phx-click={JS.hide(to: "#field_#{@field.name}_label_translations")}>
-              <%= for language_key <- rendered_order do %>
-                <div class={"#{if language_key == ui_lang, do: "bg-primary/20"}"}>
-                  {Map.get(@field.labels, language_key)} <span class="text-xs" phx-hook="DisplayLanguage" id={"field_#{@field.name}_label_translations_#{language_key}"} lang={language_key}>{language_key}</span>
-                </div>
-              <% end %>
-            </div>
-        </button>
+    <%= for language_key <- rendered_order do %>
+      <div class={"#{if language_key == ui_lang, do: "bg-primary/20"}"}>
+      {Map.get(@field.labels, language_key)} <span class="text-xs" phx-hook="DisplayLanguage" id={"field_#{@field.name}_label_translations_#{language_key}"} lang={language_key}>{language_key}</span>
+      </div>
+    <% end %>
+    </div>
+    </button>
 
     </div>-->
     """

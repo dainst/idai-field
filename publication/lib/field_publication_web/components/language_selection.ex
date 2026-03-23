@@ -51,7 +51,7 @@ defmodule FieldPublicationWeb.Components.LanguageSelection do
       ) do
     language_keys = Map.keys(translations)
 
-    initial_selection = pick_default_translation(Map.keys(translations))
+    initial_selection = pick_default_language_key(translations)
 
     {
       :ok,
@@ -63,21 +63,6 @@ defmodule FieldPublicationWeb.Components.LanguageSelection do
       |> assign(:translations, translations)
       |> assign(:selected, initial_selection)
     }
-  end
-
-  def pick_default_translation(options) when is_list(options) do
-    user_ui_language = Gettext.get_locale(FieldPublicationWeb.Gettext)
-
-    cond do
-      user_ui_language in options ->
-        user_ui_language
-
-      "en" in options ->
-        "en"
-
-      true ->
-        List.first(options)
-    end
   end
 
   def handle_event("select", %{"new" => lang}, socket) do

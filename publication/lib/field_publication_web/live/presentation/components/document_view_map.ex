@@ -1,6 +1,7 @@
 defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
-  require Logger
   use FieldPublicationWeb, :live_component
+
+  require Logger
 
   alias FieldPublication.DatabaseSchema.Publication
   alias FieldPublication.Publications.Data
@@ -10,8 +11,6 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     Category,
     Document
   }
-
-  alias FieldPublicationWeb.Presentation.Components.I18n
 
   def render(assigns) do
     ~H"""
@@ -50,7 +49,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
           class="absolute p-1 top-1 right-1"
         >
           <div
-            class="right-1 absolute rounded w-8 h-8 text-center pt-[2px] bg-white"
+            class="right-1 absolute rounded w-8 h-8 text-center pt-0.5 bg-white"
             phx-click={Phoenix.LiveView.JS.toggle(to: "##{@id}-layer-select")}
           >
             <.icon name="hero-square-3-stack-3d" />
@@ -183,17 +182,10 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
           value
 
         values when is_map(values) ->
-          {_status, value} = I18n.select_translation(%{values: values})
-
-          value
+          pick_default_translation(values)
       end
 
-    category =
-      Map.get(
-        category_labels,
-        Gettext.get_locale(FieldPublicationWeb.Gettext),
-        Map.get(category_labels, List.first(Map.keys(category_labels)))
-      )
+    category = pick_default_translation(category_labels)
 
     base = %{
       type: "Feature",

@@ -30,12 +30,12 @@
             id="locale-select"
             phx-change={JS.dispatch("click", to: "#submit_language_selection")}
           >
-            <%= for lang <- Gettext.known_locales(FieldPublicationWeb.Gettext) do %>
+            <%= for lang <- Gettext.known_locales(FieldPublicationWeb.Translate) do %>
               <option
                 value={lang}
-                selected={Gettext.get_locale(FieldPublicationWeb.Gettext) == lang}
+                selected={Gettext.get_locale(FieldPublicationWeb.Translate) == lang}
               >
-                {Map.get(FieldPublicationWeb.Gettext.get_locale_labels(), lang, lang)}
+                {Map.get(FieldPublicationWeb.Translate.get_locale_labels(), lang, lang)}
               </option>
             <% end %>
           </select>
@@ -50,7 +50,7 @@
   <.flash_group flash={@flash} />
   {@inner_content}
 </main>
-<footer class="w-full flex gap-2 absolute h-16 bottom-0 justify-center z-100 border-t pt-2">
+<footer class="w-full flex gap-2 absolute h-16 bottom-0 justify-center border-t pt-2">
   <.link navigate={~p"/contact"}>Contact</.link>
   | <a target="_blank" href="https://github.com/dainst/idai-field">The Field software system</a>
 </footer>

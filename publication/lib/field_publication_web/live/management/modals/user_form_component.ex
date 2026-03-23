@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.Management.UserLive.FormComponent do
+defmodule FieldPublicationWeb.Management.Modals.UserFormComponent do
   use FieldPublicationWeb, :live_component
 
   alias FieldPublication.CouchService
@@ -20,26 +20,25 @@ defmodule FieldPublicationWeb.Management.UserLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-        <div class="relative">
           <%= case @action do %>
             <% :edit -> %>
               <.input field={@form[:name]} type="hidden" />
             <% :new -> %>
-              <.input field={@form[:name]} type="text" label="Name" />
+              <.input field={@form[:name]} type="text" label="User name" />
           <% end %>
-          <.input field={@form[:label]} type="text" label="Label" />
-          <.input class="relative" field={@form[:password]} type="text" label="New Password" />
-          <.button
+          <.input field={@form[:label]} type="text" label="Full name" />
+          <.input field={@form[:password]} type="text" label="New Password" />
+
+          <button
+            class="border cursor-pointer border-primary hover:border-primary-hover p-2 w-full"
             type="button"
             phx-click="generate_password"
             phx-target={@myself}
-            class="absolute right-0 bottom-0 border-2 rounded-l-none"
           >
-            Generate
-          </.button>
-        </div>
+            Generate new password
+          </button>
         <:actions>
-          <.button phx-disable-with="Saving...">Save User</.button>
+          <.button class="w-full" phx-disable-with="Saving...">Save User</.button>
         </:actions>
       </.simple_form>
     </div>

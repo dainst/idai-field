@@ -1,6 +1,8 @@
 defmodule FieldPublication.Publications do
   import Ecto.Changeset
 
+  alias Phoenix.PubSub
+
   alias FieldPublication.CouchService
   alias FieldPublication.Projects
   alias FieldPublication.Publications.Search
@@ -95,7 +97,9 @@ defmodule FieldPublication.Publications do
           {:ok, %{status: 200, body: body}} ->
             json_doc = Jason.decode!(body)
 
-            publication = apply_changes(Publication.changeset(%Publication{}, json_doc))
+            publication =
+              apply_changes(Publication.changeset(%Publication{}, json_doc))
+
             Cachex.put(:document_cache, doc_id, publication, ttl: 1000 * 60 * 60 * 24 * 7)
 
             {:ok, publication}
@@ -360,5 +364,13 @@ defmodule FieldPublication.Publications do
 
   def get_doc_id(%Publication{} = publication) do
     Base.construct_doc_id(publication, Publication)
+  end
+
+  def broadcast(%Publication{} = publication, msg) do
+    PubSub.broadcast(
+      FieldPublication.PubSub,
+      get_doc_id(publication),
+      msg
+    )
   end
 end

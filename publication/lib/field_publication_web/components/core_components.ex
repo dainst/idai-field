@@ -17,7 +17,7 @@ defmodule FieldPublicationWeb.CoreComponents do
   use Phoenix.Component
 
   alias Phoenix.LiveView.JS
-  use Gettext, backend: FieldPublicationWeb.Gettext
+  use Gettext, backend: FieldPublicationWeb.Translate
 
   @doc """
   Renders a modal.
@@ -351,7 +351,7 @@ defmodule FieldPublicationWeb.CoreComponents do
         name={@name}
         class={[
           "mt-2 block w-full border p-2 text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6",
-          "min-h-[6rem] phx-no-feedback:border-zinc-300 phx-no-feedback:focus:border-zinc-400",
+          "min-h-24] phx-no-feedback:border-zinc-300 phx-no-feedback:focus:border-zinc-400",
           @errors == [] && "border-zinc-300 focus:border-zinc-400",
           @errors != [] && "border-rose-400 focus:border-rose-400"
         ]}
@@ -401,7 +401,7 @@ defmodule FieldPublicationWeb.CoreComponents do
         id={@id}
         value={Phoenix.HTML.Form.normalize_value(@type, @value)}
         class={[
-          "mt-2 block w-full text-zinc-900 #{if @type in ["text", "password"], do: "p-2 "}focus:ring-0 border sm:text-sm sm:leading-6",
+          "mt-2 block w-full text-zinc-900 #{if @type in ["text", "password", "url"], do: "p-2 "}focus:ring-0 border sm:text-sm sm:leading-6",
           "phx-no-feedback:border-zinc-300 phx-no-feedback:focus:border-zinc-400",
           @errors == [] && "border-zinc-300 focus:border-zinc-400",
           @errors != [] && "border-rose-400 focus:border-rose-400"
@@ -475,7 +475,7 @@ defmodule FieldPublicationWeb.CoreComponents do
 
     ~H"""
     <div class="overflow-y-auto px-4 sm:overflow-visible sm:px-0">
-      <table class="w-[40rem] mt-11 sm:w-full">
+      <table class="w-160 mt-11 sm:w-full">
         <thead class="text-sm text-left leading-6 text-zinc-500">
           <tr>
             <th :for={col <- @col} class="p-0 pr-6 pb-4 font-normal">{col[:label]}</th>
@@ -658,9 +658,9 @@ defmodule FieldPublicationWeb.CoreComponents do
     # with our gettext backend as first argument. Translations are
     # available in the errors.po file (as we use the "errors" domain).
     if count = opts[:count] do
-      Gettext.dngettext(FieldPublicationWeb.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(FieldPublicationWeb.Translate, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(FieldPublicationWeb.Gettext, "errors", msg, opts)
+      Gettext.dgettext(FieldPublicationWeb.Translate, "errors", msg, opts)
     end
   end
 
@@ -758,6 +758,21 @@ defmodule FieldPublicationWeb.CoreComponents do
     <h2 class="text-2xl mt-3">
       {render_slot(@inner_block)}
     </h2>
+    """
+  end
+
+  attr(:rest, :global)
+  slot(:label, required: true)
+  slot(:inner_block, required: true)
+
+  def labeled_value(assigns) do
+    ~H"""
+    <div {@rest}>
+      <label class="font-bold">
+        {render_slot(@label)}
+      </label>
+      <div class="pl-4 pr-4 pb-1">{render_slot(@inner_block)}</div>
+    </div>
     """
   end
 end

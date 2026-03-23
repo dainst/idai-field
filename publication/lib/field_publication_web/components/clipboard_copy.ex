@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.Presentation.Components.ClipboardCopy do
+defmodule FieldPublicationWeb.Components.ClipboardCopy do
   use FieldPublicationWeb, :live_component
 
   attr :id, :string, required: true

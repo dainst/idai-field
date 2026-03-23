@@ -4,9 +4,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
   use FieldPublicationWeb, :verified_routes
 
   alias FieldPublicationWeb.Presentation.Components.{
-    I18n,
-    DocumentAncestors,
-    ClipboardCopy
+    DocumentAncestors
   }
 
   import FieldPublicationWeb.Components.Data.{
@@ -15,11 +13,13 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
     Image
   }
 
-  import FieldPublicationWeb.Components.LanguageDefault
-
   alias FieldPublication.DatabaseSchema.Translation
   alias FieldPublication.Publications.Data
-  alias FieldPublicationWeb.Components.LanguageSelection
+
+  alias FieldPublicationWeb.Components.{
+    LanguageSelection,
+    ClipboardCopy
+  }
 
   alias FieldPublication.Publications.Data.{
     Document,
@@ -61,21 +61,17 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           <%= unless fields == [] do %>
             <section>
               <.group_heading>
-                <.pick_language values={group.labels} />
+                {pick_default_translation(group.labels)}
               </.group_heading>
 
-              <dl class="grid grid-cols-2 gap-1 mt-2">
+              <div class="grid max-md:grid-cols-1 md:grid-cols-2 gap-1 mt-2">
                 <%= for %Field{} = field <- fields do %>
-                  <div class="border p-0.5 border-black/20">
-                    <dt class="font-bold">
-                      <.render_field_label field={field} />
-                    </dt>
-                    <dd class="pl-4 pr-4 pb-1">
-                      <.render_field_data field={field} />
-                    </dd>
-                  </div>
+                  <.labeled_value class="border p-0.5 border-black/20">
+                    <:label><.render_field_label field={field} /></:label>
+                    <.render_field_data field={field} />
+                  </.labeled_value>
                 <% end %>
-              </dl>
+              </div>
             </section>
           <% end %>
         <% end %>
@@ -83,7 +79,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
         <%= if depicted_in do %>
           <section>
             <.group_heading>
-              <.pick_language values={depicted_in.labels} /> ({Enum.count(depicted_in.docs)})
+              {pick_default_translation(depicted_in.labels)} ({Enum.count(depicted_in.docs)})
             </.group_heading>
             <div class="p-2 bg-panel overflow-auto overscroll-contain grid grid-cols-3 gap-1 mt-2 max-h-[300px] mb-5">
               <%= for %Document{} = doc <- depicted_in.docs do %>
@@ -95,7 +91,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                       size="^250,"
                       project={@publication.project_name}
                       uuid={doc.id}
-                      alt={"Project image '#{doc.identifier}' (#{I18n.select_translation(%{values: doc.category.labels}) |> then(fn {_, text} -> text end)})"}
+                      alt={"Project image '#{doc.identifier}' (#{pick_default_translation(doc.category.labels)})"}
                     />
                   </div>
                 </.link>
@@ -141,7 +137,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
       )  do %>
           <section>
             <.group_heading>
-              <.pick_language values={other_relation.labels} /> ({Enum.count(other_relation.docs)})
+              {pick_default_translation(other_relation.labels)} ({Enum.count(other_relation.docs)})
             </.group_heading>
             <div class="overflow-auto overscroll-contain max-h-[400px]">
               <%= for %Document{geometry: geometry} = doc <- other_relation.docs do %>
@@ -202,7 +198,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           fn %RelationGroup{name: relation_name} -> relation_name in ["isDepictedIn", "hasDefaultMapLayer", "hasMapLayer", "isRecordedIn", "liesWithin", "contains"] end
           )  do %>
             <.group_heading>
-              <.pick_language values={other_relation.labels} /> ({Enum.count(other_relation.docs)})
+              {pick_default_translation(other_relation.labels)} ({Enum.count(other_relation.docs)})
             </.group_heading>
             <div class="overflow-auto overscroll-contain">
               <%= for %Document{geometry: geometry} = doc <- other_relation.docs do %>
@@ -266,7 +262,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
         <div class="basis-full lg:basis-1/3 m-5">
           <%= for %RelationGroup{} = relation_group <- @doc.relations do %>
             <.group_heading>
-              <.pick_language values={relation_group.labels} /> ({Enum.count(relation_group.docs)})
+              {pick_default_translation(relation_group.labels)} ({Enum.count(relation_group.docs)})
             </.group_heading>
             <div class="overflow-auto overscroll-contain max-h-[200px]">
               <%= for %Document{} = doc <- relation_group.docs do %>
@@ -282,21 +278,15 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             <%= unless fields == [] do %>
               <section>
                 <.group_heading>
-                  <.pick_language values={group.labels} />
+                  {pick_default_translation(group.labels)}
                 </.group_heading>
 
-                <dl>
-                  <%= for %Field{} = field <- fields do %>
-                    <div>
-                      <dt class="font-bold">
-                        <.render_field_label field={field} />
-                      </dt>
-                      <dd class="pl-4 pr-4">
-                        <.render_field_data field={field} />
-                      </dd>
-                    </div>
-                  <% end %>
-                </dl>
+                <%= for %Field{} = field <- fields do %>
+                  <.labeled_value class="p-0.5">
+                    <:label><.render_field_label field={field} /></:label>
+                    <.render_field_data field={field} />
+                  </.labeled_value>
+                <% end %>
               </section>
             <% end %>
           <% end %>
@@ -402,90 +392,97 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             {gettext("project_doc_about_project")}
           </.group_heading>
           <div class="bg-panel p-2">
-            <.render_field_data_as_markdown field={Data.get_field(@doc, "description")} />
+            <% description = Data.get_field(@doc, "description") %>
+            <%= if description do %>
+              <.render_field_data_as_markdown field={description} />
+            <% else %>
+              -
+            <% end %>
           </div>
           <.group_heading class="mt-3">
             {gettext("project_doc_about_publication")}
           </.group_heading>
+          <% comments =
+            @publication.comments
+            |> Enum.map(fn %Translation{language: lang, text: text} -> {lang, text} end)
+            |> Enum.into(%{}) %>
           <div class="bg-panel p-2">
-            <.live_component
-              :let={comment}
-              module={LanguageSelection}
-              id="publication_comments"
-              translations={
-                @publication.comments
-                |> Enum.map(fn %Translation{language: lang, text: text} -> {lang, text} end)
-                |> Enum.into(%{})
-              }
-            >
-              <span class="markdown">
-                {comment
-                |> Earmark.as_html!()
-                |> Phoenix.HTML.raw()}
-              </span>
-            </.live_component>
+            <%= if comments != %{} do %>
+              <.live_component
+                :let={comment}
+                module={LanguageSelection}
+                id="publication_comments"
+                translations={comments}
+              >
+                <span class="markdown">
+                  {comment
+                  |> Earmark.as_html!()
+                  |> Phoenix.HTML.raw()}
+                </span>
+              </.live_component>
+            <% else %>
+              -
+            <% end %>
           </div>
         </div>
 
         <div class="basis-1/3">
-          <dl>
-            <% institution = Data.get_field(@doc, "institution") %>
-            <%= if institution do %>
-              <dt class="font-bold"><.render_field_label field={institution} /></dt>
+          <% institution = Data.get_field(@doc, "institution") %>
+          <%= if institution do %>
+            <.labeled_value>
+              <:label><.render_field_label field={institution} /></:label>
               <.render_field_data field={institution} />
-            <% end %>
+            </.labeled_value>
+          <% end %>
 
-            <% contact_mail = Data.get_field(@doc, "contactMail") %>
-            <% contact_person = Data.get_field(@doc, "contactPerson") %>
-            <%= if contact_mail do %>
-              <dt class="font-bold">
-                <.render_field_label field={contact_person} />
-              </dt>
-              <dd class="ml-4">
-                <a href={"mailto:#{contact_mail.value}"}>
-                  <.icon name="hero-envelope" class="h-6 w-6 mr-1" />
-                  <%= if contact_person do %>
-                    {contact_person.value}
-                  <% else %>
-                    {gettext("contact_email")}
-                  <% end %>
-                </a>
-              </dd>
-            <% end %>
+          <% contact_mail = Data.get_field(@doc, "contactMail") %>
+          <% contact_person = Data.get_field(@doc, "contactPerson") %>
+          <%= if contact_mail do %>
+            <.labeled_value>
+              <:label><.render_field_label field={contact_person} /></:label>
+              <a href={"mailto:#{contact_mail.value}"}>
+                <.icon name="hero-envelope" class="h-6 w-6 mr-1" />
+                <%= if contact_person do %>
+                  {contact_person.value}
+                <% else %>
+                  {gettext("contact_email")}
+                <% end %>
+              </a>
+            </.labeled_value>
+          <% end %>
 
-            <% supervisor = Data.get_field(@doc, "projectSupervisor") %>
-            <%= if supervisor do %>
-              <dt class="font-bold">
-                <.render_field_label field={supervisor} />
-              </dt>
+          <% supervisor = Data.get_field(@doc, "projectSupervisor") %>
+          <%= if supervisor do %>
+            <.labeled_value>
+              <:label><.render_field_label field={supervisor} /></:label>
               <.render_field_data field={supervisor} />
-            <% end %>
+            </.labeled_value>
+          <% end %>
 
-            <% staff = Data.get_field(@doc, "staff") %>
-            <%= if staff do %>
-              <dt class="font-bold">
-                <.render_field_label field={staff} />
-              </dt>
-              <dd class="ml-4">{concat_staff_list(staff)}</dd>
-            <% end %>
+          <% staff = Data.get_field(@doc, "staff") %>
+          <%= if staff do %>
+            <.labeled_value>
+              <:label><.render_field_label field={staff} /></:label>
+              {concat_staff_list(staff)}
+            </.labeled_value>
+          <% end %>
 
-            <% bibliographic_references = Data.get_field(@doc, "bibliographicReferences") %>
-            <%= if bibliographic_references do %>
-              <dt class="font-bold">
-                <.render_field_label field={bibliographic_references} />
-              </dt>
+          <% bibliographic_references = Data.get_field(@doc, "bibliographicReferences") %>
+          <%= if bibliographic_references do %>
+            <.labeled_value>
+              <:label><.render_field_label field={bibliographic_references} /></:label>
               <.render_field_data field={bibliographic_references} />
-            <% end %>
-            <% url = Data.get_field_value(@doc, "projectURI") %>
-            <%= if url do %>
-              <dt class="font-bold">{gettext("further_links")}</dt>
-              <dd class="ml-4">
-                <a href={url}>
-                  <.icon name="hero-link" class="h-6 w-6 mr-1" />{gettext("project_home_page")}
-                </a>
-              </dd>
-            <% end %>
-          </dl>
+            </.labeled_value>
+          <% end %>
+          <% url = Data.get_field_value(@doc, "projectURI") %>
+          <%= if url do %>
+            <.labeled_value>
+              <:label>{gettext("further_links")}</:label>
+              <a href={url}>
+                <.icon name="hero-link" class="h-6 w-6 mr-1" />{gettext("project_home_page")}
+              </a>
+            </.labeled_value>
+          <% end %>
         </div>
       </div>
 
@@ -550,7 +547,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                 <.icon name="hero-document-solid" />
               </span>
               <div class="pl-1 text-primary hover:text-primary-hover">
-                <.pick_language values={labels} /> ({count})
+                {pick_default_translation(labels)} ({count})
               </div>
             </div>
           </.link>

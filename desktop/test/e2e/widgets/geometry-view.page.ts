@@ -9,14 +9,9 @@ export class GeometryViewPage {
 
     public static async clickCreateGeometry(identifier, type) {
 
-        let number = '0';
-        if (type === 'polygon') number = '1';
-        if (type === 'polyline') number = '2';
-        if (type === 'point') number = '3';
-
         await this.waitForLayoverToDisappear();
         await ResourcesPage.clickOpenContextMenu(identifier);
-        return click('#context-menu #context-menu-create-geo-' + number + '-button');
+        return click('#context-menu #context-menu-create-' + type + '-button');
     };
 
 

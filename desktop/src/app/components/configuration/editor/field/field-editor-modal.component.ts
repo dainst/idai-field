@@ -387,13 +387,15 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public isGeometryTypeAllowed(geometryType: FieldGeometryType): boolean {
         
-        return this.getClonedFieldDefinition().geometryTypes.includes(geometryType);
+        return this.getClonedFieldDefinition()?.geometryTypes.includes(geometryType);
     }
 
 
     public isGeometryOptionEnabled(geometryType: FieldGeometryType): boolean {
 
-        const geometryTypes: Array<FieldGeometryType> = this.getClonedFieldDefinition().geometryTypes;
+        if (!this.getClonedFieldDefinition()) return false;
+
+        const geometryTypes: Array<FieldGeometryType> = this.getClonedFieldDefinition()?.geometryTypes;
 
         switch (geometryType) {
             case 'Polygon':

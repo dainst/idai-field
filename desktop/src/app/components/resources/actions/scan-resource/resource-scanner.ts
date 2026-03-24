@@ -46,7 +46,6 @@ export class ResourceScanner {
         if (!targetDocument) return;
 
         const validTargetCategoryNames: string[] = this.getValidTargetCategoryNames(documents);
-        console.log({ validTargetCategoryNames });
 
         if (!validTargetCategoryNames.includes(targetDocument.resource.category)) {
             return this.showInvalidTargetCategoryMessage(targetDocument, validTargetCategoryNames);

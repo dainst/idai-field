@@ -527,28 +527,32 @@ defmodule FieldPublication.Publications.Data do
     preview_db_name = get_preview_database_name(publication)
     primary_db_name = Publications.get_doc_id(publication)
 
-    with {:ok, %{status: 200, body: preview_response}} <- CouchService.get_database(preview_db_name),
-      {:ok, %{status: 200, body: primary_response}} <- CouchService.get_database(primary_db_name),
-     {:ok, %{status: configuration_doc_status}} <- CouchService.head_document("configuration", primary_db_name) do
+    with {:ok, %{status: 200, body: preview_response}} <-
+           CouchService.get_database(preview_db_name),
+         {:ok, %{status: 200, body: primary_response}} <-
+           CouchService.get_database(primary_db_name),
+         {:ok, %{status: configuration_doc_status}} <-
+           CouchService.head_document("configuration", primary_db_name) do
+      adjustment = if configuration_doc_status == 200, do: 1, else: 0
 
-       adjustment =  if configuration_doc_status == 200, do: 1, else: 0
+      %{"doc_count" => preview_doc_count} = Jason.decode!(preview_response)
+      %{"doc_count" => primary_doc_count} = Jason.decode!(primary_response)
 
-        %{"doc_count" => preview_doc_count} = Jason.decode!(preview_response)
-        %{"doc_count" => primary_doc_count} = Jason.decode!(primary_response)
+      primary_doc_count = primary_doc_count - adjustment
 
-        primary_doc_count = primary_doc_count - adjustment
-
+      %{
+        counter: preview_doc_count,
+        percentage: preview_doc_count / primary_doc_count * 100,
+        overall: primary_doc_count
+      }
+    else
+      _error ->
         %{
-          counter: preview_doc_count,
-          percentage: preview_doc_count / primary_doc_count * 100,
-          overall: primary_doc_count
+          counter: 0,
+          percentage: 0,
+          overall: 0
         }
-      else
-        error ->
-          Logger.error(inspect(error))
-
-          %{counter: 0, percentage: 0, overall: 0}
-      end
+    end
   end
 
   def get_doc_stream_for_categories(%Publication{database: database}, categories)

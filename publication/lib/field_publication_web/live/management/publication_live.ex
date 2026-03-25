@@ -54,12 +54,10 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
         type == :search_index
       end)
 
-
-      creating_previews? =
-        Enum.any?(processing_tasks_running, fn {_task_ref, type, _publication_id} ->
-          type == :preview_documents
-        end)
-
+    creating_previews? =
+      Enum.any?(processing_tasks_running, fn {_task_ref, type, _publication_id} ->
+        type == :preview_documents
+      end)
 
     publication_form =
       publication
@@ -180,7 +178,6 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
 
     {:noreply, socket}
   end
-
 
   def handle_event(
         "validate",

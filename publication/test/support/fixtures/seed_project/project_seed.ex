@@ -121,11 +121,11 @@ defmodule FieldPublication.Test.ProjectSeed do
     if process_images do
       [] =
         Processing.MapTiles.start(publication)
-        |> Enum.reject(fn val -> val == :ok end)
+        |> Enum.reject(fn {val, val} -> val == :ok end)
 
       [] =
         Processing.WebImage.start(publication)
-        |> Enum.reject(fn val -> val == :ok end)
+        |> Enum.reject(fn {val, val} -> val == :ok end)
     end
 
     {project, publication}

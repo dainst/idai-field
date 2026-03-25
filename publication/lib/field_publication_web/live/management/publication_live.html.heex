@@ -14,7 +14,6 @@
   <.input type="hidden" field={@publication_form[:hierarchy_doc]} />
   <.input type="hidden" field={@publication_form[:database]} />
   <.input type="hidden" field={@publication_form[:publication_date]} />
-
   <%= for {language, index} <- Enum.with_index(@publication_form[:languages].value) do %>
     <input
       type="hidden"

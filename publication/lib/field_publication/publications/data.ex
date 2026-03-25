@@ -233,18 +233,63 @@ defmodule FieldPublication.Publications.Data do
     end)
     |> then(fn
       documents ->
-        cache_database = "previews_#{pub_id}"
-
-        CouchService.delete_database(cache_database)
-        CouchService.put_database(cache_database)
+        {:ok, _cache_database_name} = delete_preview_database(publication)
+        {:ok, cache_database_name} = create_preview_database(publication)
 
         payload =
           Enum.map(documents, fn %Document{id: id} = document ->
             %{_id: id, preview: document}
           end)
 
-        CouchService.post_documents(payload, cache_database)
+        CouchService.post_documents(payload, cache_database_name)
     end)
+  end
+
+  def create_preview_database(%Publication{} = publication) do
+    name = get_preview_database_name(publication)
+
+    name
+    |> CouchService.put_database()
+    |> case do
+      {:ok, %{status: status}} when status in [201, 202] ->
+        {:ok, name}
+
+      {:ok, %{status: 400}} ->
+        {:error, :invalid_name}
+
+      {:ok, %{status: 401}} ->
+        {:error, :not_authorized}
+
+      {:ok, %{status: 403}} ->
+        {:error, :forbidden}
+
+      {:ok, %{status: 412}} ->
+        {:error, :already_exists}
+    end
+  end
+
+  def delete_preview_database(%Publication{} = publication) do
+    name = get_preview_database_name(publication)
+
+    name
+    |> CouchService.delete_database()
+    |> case do
+      {:ok, %{status: status}} when status in [200, 202, 404] ->
+        {:ok, name}
+
+      {:ok, %{status: 400}} ->
+        {:error, :invalid_name}
+
+      {:ok, %{status: 401}} ->
+        {:error, :not_authorized}
+
+      {:ok, %{status: 403}} ->
+        {:error, :forbidden}
+    end
+  end
+
+  defp get_preview_database_name(%Publication{} = publication) do
+    "previews_#{Publications.get_doc_id(publication)}"
   end
 
   def get_image_categories(publication) do

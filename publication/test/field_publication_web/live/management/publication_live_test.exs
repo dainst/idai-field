@@ -120,7 +120,10 @@ defmodule FieldPublicationWeb.Management.PublicationLiveTest do
     pid = live_process.pid
     :erlang.trace(pid, true, [:receive])
 
-    assert html =~ "Publication draft"
+    assert html =~
+             LazyHTML.html_escape(
+               "Publication '#{Date.utc_today()}' for project '#{@test_project_name}'"
+             )
 
     assert_receive {
       :replication_log,
@@ -128,7 +131,7 @@ defmodule FieldPublicationWeb.Management.PublicationLiveTest do
         severity: :info,
         timestamp: _,
         # The rest would be something containing a date like: "publication_test_project_a_2024-06-17 by first replicating the database."
-        message: "Starting replication for " <> _rest
+        message: "Replicating database for " <> _rest
       }
     }
 
@@ -164,14 +167,14 @@ defmodule FieldPublicationWeb.Management.PublicationLiveTest do
     )
 
     assert %LogEntry{
-             # The rest would be something containing a date like: "Starting replication for publication_test_project_a_2024-06-17 by first replicating the database."
-             message: "Starting replication for publication" <> _rest,
+             # The rest would be something containing a date like: ""Replicating database for publication_test_project_a_<current date> by first replicating the database."
+             message: "Replicating database for " <> _rest,
              timestamp: _,
              severity: :info
            } = List.first(logs)
 
     assert %LogEntry{
-             message: "Replication finished.",
+             message: "Draft creation finished.",
              timestamp: _,
              severity: :info
            } = List.last(logs)
@@ -208,7 +211,6 @@ defmodule FieldPublicationWeb.Management.PublicationLiveTest do
 
     html = render(live_process)
 
-    assert html =~ "Publication draft"
     # save button is only visible after replication
     assert html =~ "Save changes"
   end

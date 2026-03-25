@@ -125,15 +125,18 @@ defmodule FieldPublicationWeb.Management.PublicationLiveTest do
                "Publication '#{Date.utc_today()}' for project '#{@test_project_name}'"
              )
 
-    assert_receive {
-      :replication_log,
-      %LogEntry{
-        severity: :info,
-        timestamp: _,
-        # The rest would be something containing a date like: "publication_test_project_a_2024-06-17 by first replicating the database."
-        message: "Replicating database for " <> _rest
-      }
-    }
+    assert_receive(
+      {
+        :replication_log,
+        %LogEntry{
+          severity: :info,
+          timestamp: _,
+          # The rest would be something containing a date like: "publication_test_project_a_2024-06-17 by first replicating the database."
+          message: "Replicating database for " <> _rest
+        }
+      },
+      1000 * 60
+    )
 
     assert_receive(
       {

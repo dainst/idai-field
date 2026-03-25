@@ -2,22 +2,7 @@ defmodule FieldHubHelper do
   require Logger
 
   def start() do
-    {"", 0} =
-      System.cmd("docker", [
-        "compose",
-        "-f",
-        "test/support/field_hub/docker-compose.yml",
-        "pull"
-      ])
-
-    {"", 0} =
-      System.cmd("docker", [
-        "compose",
-        "-f",
-        "test/support/field_hub/docker-compose.yml",
-        "up",
-        "-d"
-      ])
+    {"", 0} = System.cmd("bash", ["./startup.sh"], cd: "test/support/field_hub")
 
     await_startup()
 
@@ -67,13 +52,7 @@ defmodule FieldHubHelper do
   end
 
   def stop() do
-    {"", 0} =
-      System.cmd("docker", [
-        "compose",
-        "-f",
-        "test/support/field_hub/docker-compose.yml",
-        "down"
-      ])
+    {"", 0} = System.cmd("bash", ["./teardown.sh"], cd: "test/support/field_hub")
   end
 
   def get_project_password() do

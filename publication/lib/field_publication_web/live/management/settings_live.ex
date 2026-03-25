@@ -13,6 +13,7 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
   @impl true
   def render(assigns) do
     ~H"""
+    <.back navigate={~p"/management"}>{gettext("Back to management")}</.back>
     <.document_heading>Settings</.document_heading>
 
     <.form for={@setting_form} phx-submit="save" phx-change="validate">

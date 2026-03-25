@@ -367,6 +367,20 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
     }
   end
 
+  def handle_info({:processing_started, :preview_documents}, socket) do
+    {
+      :noreply,
+      assign(socket, :creating_previews, true)
+    }
+  end
+
+  def handle_info({:processing_stopped, :preview_documents}, socket) do
+    {
+      :noreply,
+      assign(socket, :creating_previews, false)
+    }
+  end
+
   defp start_data_state_evaluation(%Publication{} = publication) do
     # The result of the async task will get picked up by a `handle_info/2` above.
     Task.async(fn ->

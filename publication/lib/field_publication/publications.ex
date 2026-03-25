@@ -5,7 +5,7 @@ defmodule FieldPublication.Publications do
 
   alias FieldPublication.CouchService
   alias FieldPublication.Projects
-  alias FieldPublication.Publications.Search
+  alias FieldPublication.Publications.{Data, Search}
 
   alias FieldPublication.DatabaseSchema.{
     ReplicationInput,
@@ -310,15 +310,17 @@ defmodule FieldPublication.Publications do
     doc_id = get_doc_id(publication)
     Cachex.del(:document_cache, doc_id)
 
-    with {:ok, %{status: status}} when status in [200, 404] <-
-           CouchService.delete_document(doc_id, rev),
+    with {:ok, _preview_database_name} <-
+           Data.delete_preview_database(publication),
          {:ok, %{status: status}} when status in [200, 404] <-
            delete_configuration_doc(publication),
          {:ok, %{status: status}} when status in [200, 404] <-
            delete_hierarchy_doc(publication),
+         :ok <- Search.delete_search_indices(publication),
          {:ok, %{status: status}} when status in [200, 404] <-
-           CouchService.delete_database(database),
-         :ok <- Search.delete_search_indices(publication) do
+           CouchService.delete_document(doc_id, rev),
+         {:ok, %{status: status}} when status in [200, 404] <-
+           CouchService.delete_database(database) do
       {:ok, :deleted}
     else
       error ->

@@ -38,7 +38,7 @@ defmodule FieldPublicationWeb.Components.Data.DocumentLink do
           <% shortdescription = Data.get_field(@doc, "shortDescription") %>
           <small class="ml-2 text-slate-600">
             <%= if shortdescription do %>
-              <.render_field_label field={shortdescription} />
+              <.render_field_data field={shortdescription} />
             <% end %>
             <.icon
               :if={@geometry_indicator and @doc.geometry != nil}

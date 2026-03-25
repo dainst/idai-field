@@ -43,7 +43,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLiveTest do
     publication: publication
   } do
     assert {:ok, _live_view_pid, html} =
-             live(conn, ~p"/projects/#{publication.project_name}/#{publication.draft_date}/en")
+             live(conn, ~p"/projects/#{publication.project_name}/#{publication.draft_date}")
 
     doc = Data.get_extended_document("project", publication)
     short_description = Data.get_field_value(doc, "shortName") |> Map.get("en")
@@ -67,7 +67,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLiveTest do
     assert {:ok, _live_view_pid, html} =
              live(
                conn,
-               ~p"/projects/#{publication.project_name}/#{publication.draft_date}/en/9579212f-6342-49bd-900f-e13fd70f6a80"
+               ~p"/projects/#{publication.project_name}/#{publication.draft_date}/9579212f-6342-49bd-900f-e13fd70f6a80"
              )
 
     assert html =~ "Depicts"
@@ -82,7 +82,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLiveTest do
     assert {:ok, _live_view_pid, html} =
              live(
                conn,
-               ~p"/projects/#{publication.project_name}/#{publication.draft_date}/en/1b5885eb-2082-477c-936a-e1ecb6d051f3"
+               ~p"/projects/#{publication.project_name}/#{publication.draft_date}/1b5885eb-2082-477c-936a-e1ecb6d051f3"
              )
 
     assert html =~ "TTP-A-112043"
@@ -101,7 +101,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLiveTest do
     assert {:ok, _live_view_pid, html} =
              live(
                conn,
-               ~p"/projects/#{publication.project_name}/#{publication.draft_date}/en/1b5885eb-2082-477c-936a-e1ecb6d051f3?focus=map"
+               ~p"/projects/#{publication.project_name}/#{publication.draft_date}/1b5885eb-2082-477c-936a-e1ecb6d051f3?focus=map"
              )
 
     assert html =~ "TTP-A-112043"
@@ -113,7 +113,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLiveTest do
     publication: publication
   } do
     path =
-      ~p"/projects/#{publication.project_name}/#{publication.draft_date}/en/1b5885eb-2082-477c-936a-e1ecb6d051f3"
+      ~p"/projects/#{publication.project_name}/#{publication.draft_date}/1b5885eb-2082-477c-936a-e1ecb6d051f3"
 
     assert {:ok, live_view, html} =
              live(
@@ -143,37 +143,23 @@ defmodule FieldPublicationWeb.Presentation.DocumentLiveTest do
     # Unknown project
     assert get(
              conn,
-             ~p"/projects/does_not_exist/#{publication.draft_date}/en/#{@uuid}"
+             ~p"/projects/does_not_exist/#{publication.draft_date}/#{@uuid}"
            )
            |> response(404)
 
     # Not a date
     assert get(
              conn,
-             ~p"/projects/#{publication.project_name}/not_a_date/en/#{@uuid}"
+             ~p"/projects/#{publication.project_name}/not_a_date/#{@uuid}"
            )
            |> response(404)
 
     # Unknown date
     assert get(
              conn,
-             ~p"/projects/#{publication.project_name}/2000-01-01/en/#{@uuid}"
+             ~p"/projects/#{publication.project_name}/2000-01-01/#{@uuid}"
            )
            |> response(404)
-  end
-
-  test "trying an unknown publication language will fallback to the default", %{
-    conn: conn,
-    publication: publication
-  } do
-    expected_redirect =
-      "/projects/#{publication.project_name}/#{publication.draft_date}/en/#{@uuid}"
-
-    assert {:error, {:live_redirect, %{to: ^expected_redirect}}} =
-             live(
-               conn,
-               ~p"/projects/#{publication.project_name}/#{publication.draft_date}/eo/#{@uuid}"
-             )
   end
 
   test "trying an unknown uuid will display corresponding error", %{
@@ -183,7 +169,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLiveTest do
     assert {:ok, _live_view_pid, html} =
              live(
                conn,
-               ~p"/projects/#{publication.project_name}/#{publication.draft_date}/en/not_existing"
+               ~p"/projects/#{publication.project_name}/#{publication.draft_date}/not_existing"
              )
 
     assert html =~ "Document not found in selected publication."

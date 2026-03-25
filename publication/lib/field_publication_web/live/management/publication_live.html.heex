@@ -171,6 +171,40 @@
                 <% end %>
               </td>
             </tr>
+            <tr>
+              <td class="text-center">Preview documents</td>
+              <td>
+                <%= if @creating_previews? do %>
+                  <div class="text-center ">
+                    <.icon
+                      name="hero-cog-8-tooth-solid"
+                      class="h-4 w-4 animate-spin-slow text-primary"
+                    /> Populating preview document database...
+                  </div>
+                <% else %>
+                  <.progress_bar state={@data_state.preview_documents}></.progress_bar>
+                <% end %>
+              </td>
+              <td class="text-center">
+                <%= if @creating_previews? do %>
+                  <.link
+                    class="font-semibold font-mono"
+                    type="button"
+                    phx-click="stop_preview_creation"
+                  >
+                    Stop
+                  </.link>
+                <% else %>
+                  <.link
+                    class="font-semibold font-mono"
+                    type="button"
+                    phx-click="start_preview_creation"
+                  >
+                    Start
+                  </.link>
+                <% end %>
+              </td>
+            </tr>
           </tbody>
         </table>
       <% else %>

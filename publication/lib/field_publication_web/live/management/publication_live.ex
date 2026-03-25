@@ -54,6 +54,13 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
         type == :search_index
       end)
 
+
+      creating_previews? =
+        Enum.any?(processing_tasks_running, fn {_task_ref, type, _publication_id} ->
+          type == :preview_documents
+        end)
+
+
     publication_form =
       publication
       |> Publication.changeset()
@@ -72,6 +79,7 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
       |> assign(:web_images_processing?, web_images_processing?)
       |> assign(:tile_images_processing?, tile_images_processing?)
       |> assign(:search_indexing?, search_indexing?)
+      |> assign(:creating_previews?, creating_previews?)
       |> assign(:publication_form, publication_form)
     }
   end
@@ -152,6 +160,27 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
 
     {:noreply, socket}
   end
+
+  def handle_event(
+        "start_preview_creation",
+        _,
+        %{assigns: %{publication: publication}} = socket
+      ) do
+    Processing.start(publication, :preview_documents)
+
+    {:noreply, socket}
+  end
+
+  def handle_event(
+        "stop_preview_creation",
+        _,
+        %{assigns: %{publication: publication}} = socket
+      ) do
+    Processing.stop(publication, :preview_documents)
+
+    {:noreply, socket}
+  end
+
 
   def handle_event(
         "validate",
@@ -370,14 +399,14 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
   def handle_info({:processing_started, :preview_documents}, socket) do
     {
       :noreply,
-      assign(socket, :creating_previews, true)
+      assign(socket, :creating_previews?, true)
     }
   end
 
   def handle_info({:processing_stopped, :preview_documents}, socket) do
     {
       :noreply,
-      assign(socket, :creating_previews, false)
+      assign(socket, :creating_previews?, false)
     }
   end
 
@@ -389,7 +418,8 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
         %{
           images: WebImage.evaluate_web_images_state(publication),
           tiles: MapTiles.evaluate_state(publication),
-          search_index: Publications.Search.evaluate_active_index_state(publication)
+          search_index: Publications.Search.evaluate_active_index_state(publication),
+          preview_documents: Publications.Data.get_preview_document_state(publication)
         }
       }
     end)

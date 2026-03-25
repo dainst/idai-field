@@ -233,13 +233,13 @@ defmodule FieldPublication.Publications.Data do
     end)
     |> then(fn
       documents ->
-        {:ok, _cache_database_name} = delete_preview_database(publication)
-        {:ok, cache_database_name} = create_preview_database(publication)
-
         payload =
           Enum.map(documents, fn %Document{id: id} = document ->
             %{_id: id, preview: document}
           end)
+
+        {:ok, _cache_database_name} = delete_preview_database(publication)
+        {:ok, cache_database_name} = create_preview_database(publication)
 
         CouchService.post_documents(payload, cache_database_name)
     end)
@@ -521,6 +521,34 @@ defmodule FieldPublication.Publications.Data do
         Logger.error(error)
         []
     end
+  end
+
+  def get_preview_document_state(%Publication{} = publication) do
+    preview_db_name = get_preview_database_name(publication)
+    primary_db_name = Publications.get_doc_id(publication)
+
+    with {:ok, %{status: 200, body: preview_response}} <- CouchService.get_database(preview_db_name),
+      {:ok, %{status: 200, body: primary_response}} <- CouchService.get_database(primary_db_name),
+     {:ok, %{status: configuration_doc_status}} <- CouchService.head_document("configuration", primary_db_name) do
+
+       adjustment =  if configuration_doc_status == 200, do: 1, else: 0
+
+        %{"doc_count" => preview_doc_count} = Jason.decode!(preview_response)
+        %{"doc_count" => primary_doc_count} = Jason.decode!(primary_response)
+
+        primary_doc_count = primary_doc_count - adjustment
+
+        %{
+          counter: preview_doc_count,
+          percentage: preview_doc_count / primary_doc_count * 100,
+          overall: primary_doc_count
+        }
+      else
+        error ->
+          Logger.error(inspect(error))
+
+          %{counter: 0, percentage: 0, overall: 0}
+      end
   end
 
   def get_doc_stream_for_categories(%Publication{database: database}, categories)

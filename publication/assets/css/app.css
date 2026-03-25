@@ -48,6 +48,7 @@
     --color-primary-inverse: var(--primary-color-inverse);
     --color-primary-inverse-hover: var(--primary-color-hover-inverse);
     --color-panel: var(--panel-color);
+    --animate-spin-slow: spin 3s linear infinite;
 }
 
 /* This file is for your main application CSS */

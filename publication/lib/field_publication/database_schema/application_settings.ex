@@ -76,22 +76,7 @@ defmodule FieldPublication.DatabaseSchema.ApplicationSettings do
       sort_param: :contact_sort,
       drop_param: :contact_drop
     )
-    |> ensure_no_language_duplicate()
+    |> Translation.language_unique_constraint(:contact)
     |> Base.validate_doc_type(@doc_type)
-  end
-
-  defp ensure_no_language_duplicate(changeset) do
-    contact = get_field(changeset, :contact)
-
-    invalid =
-      Enum.map(contact, fn %Translation{language: language} -> language end)
-      |> Enum.frequencies()
-      |> Enum.any?(fn {_key, count} -> count > 1 end)
-
-    if invalid do
-      add_error(changeset, :contact, "only one imprint per language allowed")
-    else
-      changeset
-    end
   end
 end

@@ -2,12 +2,9 @@ defmodule FieldPublicationWeb.Components.Data.DocumentLink do
   use FieldPublicationWeb, :html
   use FieldPublicationWeb, :verified_routes
 
-  alias FieldPublication.Publications.Data
   alias FieldPublication.Publications.Data.Document
 
   import FieldPublicationWeb.Components.Data.Image
-
-  import FieldPublicationWeb.Components.Data.Field
 
   attr :id, :string, default: nil
   attr :doc, Document, required: true

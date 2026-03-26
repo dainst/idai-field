@@ -63,7 +63,10 @@
       <%= if is_nil(@publication.replication_finished) do %>
         <.log_entry_list logs={@replication_logs} />
         <%= if @replication_progress_state do %>
-          <.progress_bar state={@replication_progress_state}></.progress_bar>
+          <.progress_bar
+            count={@replication_progress_state.counter}
+            max={@replication_progress_state.overall}
+          />
         <% end %>
         <button
           class="font-bold font-mono float-right"
@@ -100,7 +103,10 @@
             <tr>
               <td class="text-center">Web images</td>
               <td>
-                <.progress_bar state={@data_state.images.summary}></.progress_bar>
+                <.progress_bar
+                  count={@data_state.images.summary.counter}
+                  max={@data_state.images.summary.overall}
+                />
               </td>
               <td class="text-center">
                 <%= if @web_images_processing? do %>
@@ -125,7 +131,10 @@
             <tr>
               <td class="text-center">Map tile images</td>
               <td>
-                <.progress_bar state={@data_state.tiles.summary}></.progress_bar>
+                <.progress_bar
+                  count={@data_state.tiles.summary.counter}
+                  max={@data_state.tiles.summary.overall}
+                />
               </td>
               <td class="text-center">
                 <%= if @tile_images_processing? do %>
@@ -150,7 +159,10 @@
             <tr>
               <td class="text-center">Search index</td>
               <td>
-                <.progress_bar state={@data_state.search_index}></.progress_bar>
+                <.progress_bar
+                  count={@data_state.search_index.counter}
+                  max={@data_state.search_index.overall}
+                />
               </td>
               <td class="text-center">
                 <%= if @search_indexing? do %>
@@ -183,7 +195,10 @@
                     /> Populating preview document database...
                   </div>
                 <% else %>
-                  <.progress_bar state={@data_state.preview_documents}></.progress_bar>
+                  <.progress_bar
+                    count={@data_state.preview_documents.counter}
+                    max={@data_state.preview_documents.overall}
+                  />
                 <% end %>
               </td>
               <td class="text-center">

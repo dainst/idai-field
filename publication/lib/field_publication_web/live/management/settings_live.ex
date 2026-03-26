@@ -103,10 +103,10 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
             <div class="mt-2">
               Example progress bars
               <div class="flex flex-col gap-1">
-                <.progress_bar state={%{counter: 0, percentage: 0, overall: 100}} />
-                <.progress_bar state={%{counter: 25, percentage: 25, overall: 100}} />
-                <.progress_bar state={%{counter: 50, percentage: 50, overall: 100}} />
-                <.progress_bar state={%{counter: 100, percentage: 100, overall: 100}} />
+                <.progress_bar count={0} max={100} />
+                <.progress_bar count={25} max={100} />
+                <.progress_bar count={50} max={100} />
+                <.progress_bar count={100} max={100} />
               </div>
             </div>
           </div>

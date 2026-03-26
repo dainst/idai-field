@@ -701,23 +701,20 @@ defmodule FieldPublicationWeb.CoreComponents do
   @doc """
   Component for displaying a progress bar. If state is nil, the inner slot is rendered as a placeholder.
   """
-  attr(:state, :map, required: true)
-  slot(:inner_block, required: true)
+  attr(:count, :integer, required: true)
+  attr(:max, :integer, required: true)
 
   def progress_bar(assigns) do
     ~H"""
+    <% percentage = if @max > 0 and @count >= 0, do: trunc(@count / @max * 100), else: 0 %>
     <div class="bg-primary-hover relative h-4 w-full text-xs font-semibold text-primary-inverse bar-background">
       <div
         class="bg-primary absolute top-0 left-0 flex h-full items-center justify-center bar-progress"
-        style={"width: #{if @state != nil, do: @state.percentage, else: 0}%"}
+        style={"width: #{percentage}%"}
       >
       </div>
       <div class="w-full absolute text-center">
-        <%= if @state do %>
-          {@state.counter} / {@state.overall}
-        <% else %>
-          {render_slot(@inner_block)}
-        <% end %>
+        {@count} / {@max}
       </div>
     </div>
     """

@@ -1,4 +1,5 @@
 defmodule FieldPublicationWeb.Management.PublicationLive do
+  alias FieldPublicationWeb.Translate
   use FieldPublicationWeb, :live_view
 
   import FieldPublicationWeb.Components.TranslationInput
@@ -26,7 +27,7 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
 
   @impl true
   def mount(%{"project_id" => project_id, "draft_date" => draft_date_string}, _session, socket) do
-    publication = Publications.get!(project_id, draft_date_string)
+    %Publication{} = publication = Publications.get!(project_id, draft_date_string)
     channel = Publications.get_doc_id(publication)
 
     PubSub.subscribe(FieldPublication.PubSub, channel)
@@ -64,11 +65,17 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
       |> Publication.changeset()
       |> to_form
 
+    translation_options =
+      (publication.languages ++ Translate.supported_languages())
+      |> Enum.uniq()
+      |> Enum.sort()
+
     {
       :ok,
       socket
       |> assign(:today, Date.utc_today())
       |> assign(:channel, channel)
+      |> assign(:translation_options, translation_options)
       |> assign(:page_title, "Publication for '#{project_id}' drafted #{draft_date_string}.")
       |> assign(:publication, publication)
       |> assign(:replication_logs, publication.replication_logs)

@@ -939,7 +939,7 @@ defmodule FieldPublication.Publications.Data do
     %RelationGroup{
       name: "contains",
       labels:
-        Gettext.known_locales(FieldPublicationWeb.Translate)
+        FieldPublicationWeb.Translate.supported_languages()
         |> Enum.map(fn locale ->
           {
             locale,

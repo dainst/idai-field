@@ -63,6 +63,10 @@ defmodule FieldPublicationWeb.Translate do
     }
   end
 
+  def supported_languages() do
+    Gettext.known_locales(FieldPublicationWeb.Translate)
+  end
+
   def pick_default_translation(options) when is_map(options) do
     key = pick_default_language_key(options)
 

@@ -27,6 +27,10 @@ defmodule FieldPublication.DatabaseSchema.Publication do
     field(:hierarchy_doc, :string)
     field(:database, :string)
     field(:languages, {:array, :string}, default: [])
+    # Version is currently not used, the default is saved. The idea is to maybe
+    # allow revision releases that can be created to fix errors without adding
+    # a new major version. These then could get communicated differently through
+    # the web UI.
     field(:version, Ecto.Enum, values: [:major, :revision], default: :major)
     embeds_many(:comments, Translation, on_replace: :delete)
     embeds_many(:replication_logs, LogEntry, on_replace: :delete)

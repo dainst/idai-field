@@ -29,6 +29,7 @@ defmodule FieldPublication.Publications.Data do
       :publication_draft_date,
       :category,
       :geometry,
+      description: %{},
       groups: [],
       relations: [],
       image_uuids: [],
@@ -67,6 +68,7 @@ defmodule FieldPublication.Publications.Data do
       identifier: map["identifier"],
       project_key: map["project_key"],
       publication_draft_date: map["publication_draft_date"],
+      description: map["description"],
       category: %Category{
         name: map["category"]["name"],
         labels: map["category"]["labels"],
@@ -765,6 +767,23 @@ defmodule FieldPublication.Publications.Data do
             map_layers: map_layers,
             geometry: resource["geometry"]
           }
+
+        short_description =
+          doc
+          |> get_field_value("shortDescription")
+          |> case do
+            val when is_binary(val) ->
+              # Fallback for older projects.
+              %{"unspecifiedLanguage" => val}
+
+            val when is_map(val) ->
+              val
+
+            _ ->
+              %{}
+          end
+
+        doc = %{doc | description: short_description}
 
         if include_relations do
           child_task_pid =

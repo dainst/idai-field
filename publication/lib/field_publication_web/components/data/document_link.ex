@@ -35,10 +35,9 @@ defmodule FieldPublicationWeb.Components.Data.DocumentLink do
       >
         <div>
           <span class="text-slate-600">{@doc.identifier}</span>
-          <% shortdescription = Data.get_field(@doc, "shortDescription") %>
           <small class="ml-2 text-slate-600">
-            <%= if shortdescription do %>
-              <.render_field_data field={shortdescription} />
+            <%= if @doc.description != %{} do %>
+              {pick_default_translation(@doc.description)}
             <% end %>
             <.icon
               :if={@geometry_indicator and @doc.geometry != nil}

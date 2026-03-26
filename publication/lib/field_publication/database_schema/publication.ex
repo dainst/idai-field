@@ -60,6 +60,7 @@ defmodule FieldPublication.DatabaseSchema.Publication do
     )
     |> cast_embed(:replication_logs)
     |> cast_embed(:processing_logs)
+    |> Translation.language_unique_constraint(:comments)
     |> validate_required([
       :project_name,
       :source_url,

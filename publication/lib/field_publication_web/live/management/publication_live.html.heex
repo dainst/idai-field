@@ -37,10 +37,10 @@
 
   <.list>
     <:item title="Replication">
-      <div if={@publication.replication_finished}>
+      <div class="font-thin" if={@publication.replication_finished}>
         Replication finished {@publication.replication_finished}.
       </div>
-      <div class="flex flex-wrap gap-2 w-full">
+      <div class="flex flex-wrap p-2 gap-2 w-full">
         <.labeled_value>
           <:label>Source URL</:label>
           {@publication.source_url}
@@ -246,7 +246,7 @@
         <:no_translations>No comments for this publication</:no_translations>
       </.translation_input>
 
-      <.button>Save changes</.button>
+      <.button class="mt-4" phx-disable-with="Saving...">Save changes</.button>
     </:item>
   </.list>
 </.form>

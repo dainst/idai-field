@@ -706,9 +706,9 @@ defmodule FieldPublicationWeb.CoreComponents do
 
   def progress_bar(assigns) do
     ~H"""
-    <div class="bg-slate-600 relative h-4 w-full text-xs font-semibold text-white">
+    <div class="bg-primary-hover relative h-4 w-full text-xs font-semibold text-primary-inverse bar-background">
       <div
-        class="bg-indigo-500 absolute top-0 left-0 flex h-full items-center justify-center"
+        class="bg-primary absolute top-0 left-0 flex h-full items-center justify-center bar-progress"
         style={"width: #{if @state != nil, do: @state.percentage, else: 0}%"}
       >
       </div>

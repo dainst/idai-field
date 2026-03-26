@@ -289,6 +289,15 @@ defmodule FieldPublication.CouchService do
     |> Finch.request(FieldPublication.Finch)
   end
 
+  def all_design_docs(database_name \\ @core_database) do
+    Finch.build(
+      :get,
+      "#{local_url()}/#{database_name}/_design_docs?include_docs=true",
+      headers()
+    )
+    |> Finch.request(FieldPublication.Finch)
+  end
+
   def get_documents(doc_ids, database_name \\ @core_database) do
     Finch.build(
       :post,

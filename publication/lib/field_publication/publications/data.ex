@@ -534,11 +534,23 @@ defmodule FieldPublication.Publications.Data do
          {:ok, %{status: 200, body: primary_response}} <-
            CouchService.get_database(primary_db_name),
          {:ok, %{status: configuration_doc_status}} <-
-           CouchService.head_document("configuration", primary_db_name) do
-      adjustment = if configuration_doc_status == 200, do: 1, else: 0
+           CouchService.head_document("configuration", primary_db_name),
+         {:ok, %{status: 200, body: design_docs_body}} <-
+           CouchService.all_design_docs(primary_db_name) do
+      %{"total_rows" => design_doc_count} = Jason.decode!(design_docs_body)
 
-      %{"doc_count" => preview_doc_count} = Jason.decode!(preview_response)
-      %{"doc_count" => primary_doc_count} = Jason.decode!(primary_response)
+      adjustment =
+        if configuration_doc_status == 200 do
+          1
+        else
+          0
+        end + design_doc_count
+
+      %{"doc_count" => preview_doc_count} =
+        Jason.decode!(preview_response)
+
+      %{"doc_count" => primary_doc_count} =
+        Jason.decode!(primary_response)
 
       primary_doc_count = primary_doc_count - adjustment
 

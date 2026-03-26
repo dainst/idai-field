@@ -65,9 +65,11 @@ defmodule FieldPublicationWeb.Presentation.Components.WorldMap do
         click_event: "project_selected",
         id: project_name
       },
-      geometry: %Geo.Point{
-        coordinates: {lon, lat}
-      }
+      geometry:
+        %Geo.Point{
+          coordinates: {lon, lat}
+        }
+        |> Geo.JSON.encode!()
     }
   end
 end

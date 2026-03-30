@@ -372,8 +372,7 @@ export module Validations {
 
         for (let fieldDefinition of fieldDefinitions) {
             if (allowEmptyFields.includes(fieldDefinition.name)) continue;
-            if (CategoryForm.isMandatoryField(projectConfiguration.getCategory(resource.category), fieldDefinition.name)
-                    && !Field.isFilled(fieldDefinition, resource as Resource)) {
+            if (fieldDefinition.mandatory && !Field.isFilled(fieldDefinition, resource as Resource)) {
                 missingFields.push(fieldDefinition.name);
             }
         }

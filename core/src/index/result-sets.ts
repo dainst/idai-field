@@ -1,5 +1,4 @@
-import {intersection, union, subtract, flow, cond} from 'tsfun';
-import * as tsfun from 'tsfun';
+import { intersection, union, subtract, flow, cond, isEmpty as empty } from 'tsfun';
 
 
 export interface ResultSets<T> {
@@ -52,7 +51,7 @@ export module ResultSets {
         return flow(
             intersection(resultSets.addSets),
             cond(
-                !tsfun.isEmpty(resultSets.subtractSets),
+                !empty(resultSets.subtractSets),
                 subtract(union(resultSets.subtractSets))));
     }
 

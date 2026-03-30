@@ -125,7 +125,7 @@ export module DotBuilder {
 
             const documentEdges: Edges = edges[document.resource.id];
 
-            if (isEmpty(documentEdges.aboveIds) || !isEmpty(documentEdges.belowIds)) return false;
+            if (!documentEdges.aboveIds.length || !documentEdges.belowIds.length) return false;
 
             processedDocuments.push(document.resource.id);
 
@@ -165,7 +165,7 @@ export module DotBuilder {
         const updatedProcessedSameRankTargetIds: string[] =
             copy(processedSameRankTargetIds).concat(document.resource.id);
 
-        if (isEmpty(targetIds)) return [undefined, copy(updatedProcessedSameRankTargetIds)];
+        if (!targetIds.length) return [undefined, copy(updatedProcessedSameRankTargetIds)];
 
         return [createEdgesDefinitions(targetIds, documents, document)
             + ' '

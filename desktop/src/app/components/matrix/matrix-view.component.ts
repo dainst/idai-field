@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Graphviz } from '@hpcc-js/wasm-graphviz';
-import { isEmpty, on, is, not, isUndefined } from 'tsfun';
+import { on, is, not, isUndefined } from 'tsfun';
 import { Datastore, FeatureDocument, FieldDocument, Document, Named, ProjectConfiguration,
     Relation, Labels, CategoryForm, Valuelist } from 'idai-field-core';
 import { DoceditComponent } from '../docedit/docedit.component';
@@ -105,11 +105,11 @@ export class MatrixViewComponent implements OnInit {
 
     public clearSelection = () => this.selection.clear();
 
-    private noConfiguredOperationCategories = () => isEmpty(this.configuredOperationCategories);
+    private noConfiguredOperationCategories = () => !this.configuredOperationCategories.length;
 
-    private noOperations = () => isEmpty(this.operations);
+    private noOperations = () => !this.operations.length;
 
-    private noFeatures = () => isEmpty(this.featureDocuments);
+    private noFeatures = () => !this.featureDocuments.length;
 
 
     async ngOnInit() {

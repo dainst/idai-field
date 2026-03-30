@@ -22,13 +22,7 @@ export module FieldConverter {
 
         return (document: Document) => {
 
-            const fields: Array<Field> = CategoryForm.getFields(
-                projectConfiguration.getCategory(document.resource.category)
-            );
-
-            const fieldNames: string[] = Object.keys(document.resource).filter(fieldName => {
-                return !['relations', 'geometry', 'category'].includes(fieldName);
-            });
+            const [fields, fieldNames] = getFieldsAndFieldNames(document, projectConfiguration);
 
             for (let fieldName of fieldNames) {
                 const field: Field = fields.find(field => field.name === fieldName);
@@ -53,13 +47,7 @@ export module FieldConverter {
         
         return (document: Document) => {
 
-            const fields: Array<Field> = CategoryForm.getFields(
-                projectConfiguration.getCategory(document.resource.category)
-            );
-
-            const fieldNames: string[] = Object.keys(document.resource).filter(fieldName => {
-                return !['relations', 'geometry', 'category'].includes(fieldName);
-            });
+            const [fields, fieldNames] = getFieldsAndFieldNames(document, projectConfiguration);
 
             for (let fieldName of fieldNames) {
                 const field: Field = fields.find(fieldDefinition => fieldDefinition.name === fieldName);
@@ -83,7 +71,19 @@ export module FieldConverter {
             return document;
         }
     }
+
+
+    function getFieldsAndFieldNames(document: Document,
+                                    projectConfiguration: ProjectConfiguration): [Array<Field>, string[]] {
+
+        const fields: Array<Field> = CategoryForm.getFields(
+            projectConfiguration.getCategory(document.resource.category)
+        );
+
+        const fieldNames: string[] = Object.keys(document.resource).filter(fieldName => {
+            return !['relations', 'geometry', 'category'].includes(fieldName);
+        });
+
+        return [fields, fieldNames];
+    }
 }
-
-
-

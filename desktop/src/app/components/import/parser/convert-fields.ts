@@ -26,9 +26,10 @@ export function convertFields(category: CategoryForm) {
 
     return (resource: Resource) => {
 
-        for (const fieldName of fields(resource)) {
+        const categoryFields: Array<Field> = CategoryForm.getFields(category);
 
-            const field = CategoryForm.getFields(category).find(on(Field.NAME, is(fieldName)));
+        for (const fieldName of fields(resource)) {
+            const field: Field = categoryFields.find(on(Field.NAME, is(fieldName)));
             if (!field) continue;
 
             const inputType: InputType = field.inputType;

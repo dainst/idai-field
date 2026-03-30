@@ -1,5 +1,4 @@
-import { isDefined, dropRightWhile, isArray, isEmpty, isAssociative, copy, Map, isObject, and, isString, keysValues,
-    not } from 'tsfun';
+import { isArray, isEmpty, isAssociative, copy, Map, isObject, and, isString, keysValues } from 'tsfun';
 import { ImportErrors } from './import-errors';
 
 
@@ -27,8 +26,11 @@ export function removeNullProperties(struct: Map<any>|Array<any>): Map<any>|Arra
         }
 
         if (originalFieldValue === null || struct_[fieldName] === undefined) {
-            if (isArray(struct_)) struct_[fieldName] = undefined;
-            else delete struct_[fieldName];
+            if (isArray(struct_)) {
+                struct_[fieldName] = undefined;
+            } else {
+                delete struct_[fieldName];
+            }
         }
     });
 

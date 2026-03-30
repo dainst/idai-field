@@ -431,9 +431,8 @@ export module Validations {
                                      projectConfiguration: ProjectConfiguration): boolean {
 
         if (!resource.category) return false;
-        return Tree.flatten(projectConfiguration
-            .getCategories())
-            .some(Named.onName(is(resource.category)));
+        return Tree.flatten(projectConfiguration.getCategories())
+            .find(category => category.name === resource.category) !== undefined;
     }
 
 

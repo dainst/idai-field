@@ -22,20 +22,22 @@ export module FieldConverter {
 
         return (document: Document) => {
 
-            const resource = document.resource;
+            const fields: Array<Field> = CategoryForm.getFields(
+                projectConfiguration.getCategory(document.resource.category)
+            );
 
-            for (let field of Object.keys(resource).filter(isNot(includedIn(['relations', 'geometry', 'category'])))) {
+            const fieldNames: string[] = Object.keys(document.resource).filter(fieldName => {
+                return !['relations', 'geometry', 'category'].includes(fieldName);
+            });
 
-                const fieldDefinition = CategoryForm
-                    .getFields(projectConfiguration.getCategory(resource.category))
-                    .find(on('name', is(field)));
+            for (let fieldName of fieldNames) {
+                const field: Field = fields.find(field => field.name === fieldName);
+                if (!field) continue;
 
-                if (!fieldDefinition) continue;
-
-                if (fieldDefinition.inputType === Field.InputType.DATING) {
-                    resource[field] = resource[field].map(Dating.revert);
-                } else if (Field.InputType.MEASUREMENT_INPUT_TYPES.includes(fieldDefinition.inputType)) {
-                    resource[field] = resource[field].map(Measurement.revert);
+                if (field.inputType === Field.InputType.DATING) {
+                    document.resource[fieldName] = document.resource[fieldName].map(Dating.revert);
+                } else if (Field.InputType.MEASUREMENT_INPUT_TYPES.includes(field.inputType)) {
+                    document.resource[fieldName] = document.resource[fieldName].map(Measurement.revert);
                 }
             }
 
@@ -51,25 +53,29 @@ export module FieldConverter {
         
         return (document: Document) => {
 
-            const resource = document.resource;
+            const fields: Array<Field> = CategoryForm.getFields(
+                projectConfiguration.getCategory(document.resource.category)
+            );
 
-            for (let field of Object.keys(resource).filter(isNot(includedIn(['relations', 'geometry', 'category'])))) {
-                const fieldDefinition = CategoryForm.getFields(
-                    projectConfiguration.getCategory(resource.category)).find(on('name', is(field))
-                );
+            const fieldNames: string[] = Object.keys(document.resource).filter(fieldName => {
+                return !['relations', 'geometry', 'category'].includes(fieldName);
+            });
+
+            for (let fieldName of fieldNames) {
+                const field: Field = fields.find(fieldDefinition => fieldDefinition.name === fieldName);
 
                 // This could be an -End suffixed field of a dropdownRange input
                 // However, all the necessary validation is assumed to have taken place already
-                if (!fieldDefinition) continue;
+                if (!field) continue;
 
-                if (fieldDefinition.inputType === Field.InputType.DATING) {
-                    for (let dating of resource[field]) {
+                if (field.inputType === Field.InputType.DATING) {
+                    for (let dating of document.resource[fieldName]) {
                         Dating.addNormalizedValues(dating);
                     }
                 }
 
-                if (Field.InputType.MEASUREMENT_INPUT_TYPES.includes(fieldDefinition.inputType)) {
-                    for (let measurement of resource[field]) {
+                if (Field.InputType.MEASUREMENT_INPUT_TYPES.includes(field.inputType)) {
+                    for (let measurement of document.resource[fieldName]) {
                         Measurement.addNormalizedValues(measurement);
                     }
                 }

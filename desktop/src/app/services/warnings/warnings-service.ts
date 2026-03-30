@@ -10,6 +10,7 @@ import { WarningsModalComponent } from '../../components/navbar/warnings/warning
 import { MenuContext } from '../menu-context';
 import { SettingsProvider } from '../settings/settings-provider';
 import { Settings } from '../settings/settings';
+import { AppState, DataTransferType } from '../app-state';
 
 
 @Injectable()
@@ -22,6 +23,7 @@ export class WarningsService {
     public hasConfigurationConflict: boolean = false;
 
     private warningsResolvedObservers: Array<Observer<void>> = [];
+    private runningDataTransfer: DataTransferType = 'none';
 
 
     constructor(private datastore: Datastore,
@@ -31,15 +33,25 @@ export class WarningsService {
                 private modals: Modals,
                 private menus: Menus,
                 private syncService: SyncService,
-                private settingsProvider: SettingsProvider) {
+                private settingsProvider: SettingsProvider,
+                private appState: AppState) {
 
         this.update();
 
         this.indexFacade.changesNotifications().subscribe(() => {
-            if (SyncStatus.isSyncing(this.syncService.getStatus())) return;
+            if (SyncStatus.isSyncing(this.syncService.getStatus()) || this.runningDataTransfer !== 'none') return;
             this.zone.run(() => {
                 this.update();
             });
+        });
+
+        this.appState.dataTransferNotifications().subscribe(notification => {
+            if (notification.newDataTransfer === 'none') {
+                this.zone.run(() => {
+                    this.update();
+                });
+            }
+            this.runningDataTransfer = notification.newDataTransfer;
         });
 
         this.syncService.statusNotifications().subscribe((status: SyncStatus) => {

@@ -9,7 +9,7 @@ export type MatrixSelectionChange = {
 
     ids: Array<string>;
     changeType: 'added'|'removed';
-}
+};
 
 
 /**

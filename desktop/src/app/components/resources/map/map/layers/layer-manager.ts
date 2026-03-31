@@ -177,7 +177,9 @@ export class LayerManager {
 
         const relations: Resource.Relations = this.layerGroupInEditing.document.resource.relations;
         for (let relationName of [Relation.Image.HASMAPLAYER, Relation.Image.HASDEFAULTMAPLAYER]) {
-            relations[relationName] = relations[relationName].filter(id => id !== layerToRemove.resource.id);
+            if (relations[relationName]) {
+                relations[relationName] = relations[relationName].filter(id => id !== layerToRemove.resource.id);
+            }
         }
         this.layerGroupInEditing.layers = this.layerGroupInEditing.layers.filter(layer => layer !== layerToRemove);
 

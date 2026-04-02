@@ -14,7 +14,12 @@ export class BackupsInfoSerializer {
 
         if (!this.fs.existsSync(this.filePath)) return { lastUpdateSequence: {} };
     
-        return JSON.parse(this.fs.readFileSync(this.filePath, 'utf-8'));
+        try {
+            return JSON.parse(this.fs.readFileSync(this.filePath, 'utf-8'));
+        } catch (err) {
+            console.error('Failed to parse backups info. Using empty backups info.', err);
+            return { lastUpdateSequence: {} };
+        }
     }
     
     

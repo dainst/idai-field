@@ -11,6 +11,8 @@ export class BackupsInfoSerializer {
 
 
     public load(): BackupsInfo {
+        
+        this.cleanUpTempFile();
 
         if (!this.fs.existsSync(this.filePath)) return { lastUpdateSequence: {} };
     
@@ -24,7 +26,23 @@ export class BackupsInfoSerializer {
     
     
     public store(backupsInfo: BackupsInfo) {
-    
-        this.fs.writeFileSync(this.filePath, JSON.stringify(backupsInfo, null, 2));
+
+        const tempFilePath: string = this.getTempFilePath();
+
+        this.fs.writeFileSync(tempFilePath, JSON.stringify(backupsInfo, null, 2));
+        this.fs.renameSync(tempFilePath, this.filePath);
+    }
+
+
+    private cleanUpTempFile() {
+
+        const tempFilePath: string = this.getTempFilePath();
+        if (this.fs.existsSync(tempFilePath)) this.fs.unlinkSync(tempFilePath);
+    }
+
+
+    private getTempFilePath(): string {
+
+        return this.filePath + '.new';
     }
 }

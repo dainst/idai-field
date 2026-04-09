@@ -4,15 +4,15 @@ import { ImageStore, ImageVariant, FileInfo, ConfigurationSerializer, ConfigRead
     RelationsManager, IdGenerator, Document } from 'idai-field-core';
 import { SettingsProvider } from '../settings/settings-provider';
 import { exportConfiguration } from './endpoints/configuration';
-import { exportData } from './endpoints/export';
-import { importData } from './endpoints/importData';
+import { exportData } from './endpoints/export-data';
+import { importData } from './endpoints/import-data';
 import { Settings } from '../settings/settings';
 import { MD } from '../../components/messages/md';
 import { AngularUtility } from '../../angular/angular-utility';
-import { importFiles } from './endpoints/importFiles';
+import { importFiles } from './endpoints/import-files';
 import { ImageUploader } from '../../components/image/upload/image-uploader';
 import { UploadStatus } from '../../components/image/upload/upload-status';
-import { exportFile } from './endpoints/exportFile';
+import { exportFile } from './endpoints/export-file';
 import { AppState, DataTransferType } from '../app-state';
 
 const express = window.require('express');

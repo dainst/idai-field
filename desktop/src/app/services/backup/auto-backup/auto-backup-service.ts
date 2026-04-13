@@ -87,9 +87,11 @@ export class AutoBackupService {
 
         console.log('Number of CPU Cores:', cores.length);
 
-        return cores.length <= 4
+        let maxWorkers: number = cores.length <= 4
             ? 1
             : 1 + Math.floor(cores.length / 4);
+
+        return Math.min(3, maxWorkers);
     }
 
 

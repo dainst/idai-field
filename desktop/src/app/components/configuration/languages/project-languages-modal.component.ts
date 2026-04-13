@@ -44,7 +44,7 @@ export class ProjectLanguagesModalComponent {
     public async onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape' && !this.modalOpened
-                && this.menuService.getContext() === MenuContext.CONFIGURATION_MODAL) {
+                && this.menuService.getContext() === MenuContext.CONFIGURATION_MANAGEMENT) {
             this.activeModal.dismiss('cancel');
         }
     }

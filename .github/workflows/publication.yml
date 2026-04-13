@@ -17,7 +17,7 @@ jobs:
         with:
           otp-version: 26.0
           elixir-version: 1.16.0
-      - name: Start CouchDB, Cantaloupe and OpenSearch
+      - name: Start CouchDB and OpenSearch
         run: docker compose -f docker-compose.yml up -d
         working-directory: publication
       - name: Sleep to await CouchDB startup

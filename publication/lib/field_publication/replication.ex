@@ -323,7 +323,8 @@ defmodule FieldPublication.Replication do
       LogEntry.create(%{
         severity: severity,
         timestamp: DateTime.utc_now(),
-        message: msg
+        message: msg,
+        key: :replication_step
       })
 
     Publications.get!(publication.project_name, publication.draft_date)

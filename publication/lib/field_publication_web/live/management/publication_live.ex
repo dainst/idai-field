@@ -74,8 +74,6 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
     {
       :ok,
       socket
-      |> assign(:today, Date.utc_today())
-      |> assign(:channel, channel)
       |> assign(:translation_options, translation_options)
       |> assign(:page_title, "Publication for '#{project_id}' drafted #{draft_date_string}.")
       |> assign(:publication, publication)

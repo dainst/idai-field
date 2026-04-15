@@ -7,7 +7,16 @@ defmodule FieldPublication.DatabaseSchema.LogEntry do
   @primary_key false
   embedded_schema do
     field(:severity, Ecto.Enum, values: [:error, :warning, :info])
-    field(:key, Ecto.Enum, values: [:replication_step, :malformed_geometry, :unknown_batch_error, :unknown_document_error])
+
+    field(:key, Ecto.Enum,
+      values: [
+        :replication_step,
+        :malformed_geometry,
+        :unknown_batch_error,
+        :unknown_document_error
+      ]
+    )
+
     field(:message, :string)
     field(:timestamp, :utc_datetime)
     field(:metadata, :map, default: %{})

@@ -72,7 +72,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
         value={value}
         id={"#{@field.name}_#{value}"}
       >
-        <.maybe_search_link field={@field}>
+        <.maybe_search_link field={@field} value={value}>
           {text}
         </.maybe_search_link>
       </.maybe_language_select>
@@ -95,7 +95,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
       value={start_value}
       id={"#{@field.name}_#{start_value}"}
     >
-      <.maybe_search_link field={@field}>
+      <.maybe_search_link field={@field} value={start_value}>
         {text}
       </.maybe_search_link>
     </.maybe_language_select>
@@ -111,7 +111,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
           "#{@field.name}_#{end_value}" |> Base.encode16() |> String.replace_prefix("", "language_")
         }
       >
-        <.maybe_search_link field={@field}>
+        <.maybe_search_link field={@field} value={end_value}>
           {text}
         </.maybe_search_link>
       </.maybe_language_select>

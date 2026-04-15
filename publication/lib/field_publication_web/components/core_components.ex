@@ -706,7 +706,11 @@ defmodule FieldPublicationWeb.CoreComponents do
         <% severity = List.first(logs) |> Map.get(:severity) %>
 
         <div class="w-full border ">
-          <button class="cursor-pointer text-left" type="button" phx-click={JS.toggle(to: "##{key}-issue-group")}>
+          <button
+            class="cursor-pointer text-left"
+            type="button"
+            phx-click={JS.toggle(to: "##{key}-issue-group")}
+          >
             <%= case severity do %>
               <% :error -> %>
                 <.icon name="hero-exclamation-triangle" class="bg-red-500" />

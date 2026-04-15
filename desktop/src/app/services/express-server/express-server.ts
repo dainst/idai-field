@@ -334,7 +334,7 @@ export class ExpressServer {
             this.notificationTimeout = setTimeout(() => {
                 this.appState.setRunningDataTransfer(runningDataTransfer);
                 this.notificationTimeout = undefined;
-            }, 2000);
+            }, 3000);
         } else {
             this.appState.setRunningDataTransfer(runningDataTransfer);
         }

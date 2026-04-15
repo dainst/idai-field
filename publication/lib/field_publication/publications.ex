@@ -1,6 +1,7 @@
 defmodule FieldPublication.Publications do
   import Ecto.Changeset
 
+  alias FieldPublication.DatabaseSchema.LogEntry
   alias Phoenix.PubSub
 
   alias FieldPublication.CouchService
@@ -259,9 +260,19 @@ defmodule FieldPublication.Publications do
     Cachex.del(:document_cache, doc_id)
 
     with {:ok, publication} <- apply_action(changeset, :create),
-         {:ok, %{status: 201, body: body}} <- CouchService.put_document(doc_id, publication) do
-      %{"rev" => rev} = Jason.decode!(body)
-      {:ok, Map.put(publication, :_rev, rev)}
+         {:ok, %{status: 201}} <- CouchService.put_document(doc_id, publication) do
+      {:ok, %Publication{} = updated_publication} =
+        CouchService.get_document(doc_id)
+        |> then(fn {:ok, %{status: 200, body: body}} ->
+          %Publication{}
+          |> Publication.changeset(Jason.decode!(body))
+          |> apply_action(:create)
+        end)
+
+      # Map.put(publication, :_rev, rev)
+      broadcast(updated_publication)
+
+      {:ok, updated_publication}
     else
       {:error, %Ecto.Changeset{}} = error ->
         error
@@ -328,6 +339,18 @@ defmodule FieldPublication.Publications do
     end
   end
 
+  def put_search_indexing_log(%Publication{} = pub, %LogEntry{} = entry) do
+    get!(pub.project_name, pub.draft_date)
+    |> Map.update(:search_index_logs, [], fn existing -> existing ++ [entry] end)
+    |> put(%{})
+  end
+
+  def clear_search_indexing_logs(%Publication{} = pub) do
+    get!(pub.project_name, pub.draft_date)
+    |> Map.put(:search_index_logs, [])
+    |> put(%{})
+  end
+
   defp delete_configuration_doc(%Publication{configuration_doc: doc_id}) do
     CouchService.get_document(doc_id)
     |> case do
@@ -366,6 +389,14 @@ defmodule FieldPublication.Publications do
 
   def get_doc_id(%Publication{} = publication) do
     Base.construct_doc_id(publication, Publication)
+  end
+
+  def broadcast(%Publication{} = publication) do
+    PubSub.broadcast(
+      FieldPublication.PubSub,
+      get_doc_id(publication),
+      publication
+    )
   end
 
   def broadcast(%Publication{} = publication, msg) do

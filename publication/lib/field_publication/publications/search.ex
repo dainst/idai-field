@@ -1,4 +1,5 @@
 defmodule FieldPublication.Publications.Search do
+  alias FieldPublication.DatabaseSchema.LogEntry
   alias Phoenix.PubSub
 
   alias FieldPublication.Publications
@@ -918,6 +919,8 @@ defmodule FieldPublication.Publications.Search do
       }
     )
 
+    Publications.clear_search_indexing_logs(publication)
+
     publication
     |> Publications.Data.get_doc_stream_for_all()
     |> Stream.reject(fn %{"_id" => id} ->
@@ -939,46 +942,105 @@ defmodule FieldPublication.Publications.Search do
     |> Enum.map(fn doc_batch ->
       batch_size = Enum.count(doc_batch)
 
-      index_documents(doc_batch, publication)
-      |> case do
-        {:ok, %{status: 200, body: body}} ->
-          Jason.decode!(body)
-          |> case do
-            %{"errors" => true} = result ->
-              Enum.map(result["items"], fn
-                %{"index" => %{"status" => 400} = item} ->
-                  msg = inspect(item)
-                  Logger.warning("Failed to add document to the search index:")
-                  Logger.warning(msg)
+      success_count =
+        doc_batch
+        |> index_documents(publication)
+        |> case do
+          {:ok, %{status: 200, body: body}} ->
+            Jason.decode!(body)
+            |> case do
+              %{"errors" => true} = result ->
+                Enum.map(result["items"], fn
+                  # TODO: Move to seperate function
+                  %{
+                    "index" => %{
+                      "_id" => uuid,
+                      "status" => 400,
+                      "error" => %{
+                        "reason" => "failed to parse field [geometry] of type [geo_shape]",
+                        "caused_by" => %{"caused_by" => %{"reason" => reason}}
+                      }
+                    }
+                  } ->
+                    {:ok, entry} =
+                      LogEntry.create(%{
+                        severity: :error,
+                        key: :malformed_geometry,
+                        message: "Malformed GeoJSON geometry",
+                        metadata: %{uuid: uuid, detailed: reason}
+                      })
 
-                _ ->
-                  :ok
-              end)
+                    Publications.put_search_indexing_log(publication, entry)
+                    :error
 
-            _ ->
-              :ok
-          end
+                  %{
+                    "index" => %{
+                      "_id" => uuid,
+                      "status" => 400,
+                      "error" => %{
+                        "reason" => "failed to parse field [geometry] of type [geo_shape]",
+                        "caused_by" => %{"reason" => reason}
+                      }
+                    }
+                  } ->
+                    {:ok, entry} =
+                      LogEntry.create(%{
+                        severity: :error,
+                        key: :malformed_geometry,
+                        message: "Malformed GeoJSON geometry",
+                        metadata: %{uuid: uuid, detailed: reason}
+                      })
 
-          :ok
+                    Publications.put_search_indexing_log(publication, entry)
+                    :error
 
-        {:ok, %{status: 400, body: body}} ->
-          msg =
-            body
-            |> Jason.decode!()
-            |> inspect()
+                  %{"index" => %{"_id" => uuid, "status" => 400, "error" => error}} ->
+                    {:ok, entry} =
+                      LogEntry.create(%{
+                        severity: :warning,
+                        key: :unknown_document_error,
+                        message: "Unknown error when trying to index single document",
+                        metadata: %{uuid: uuid, detailed: inspect(error)}
+                      })
 
-          Logger.error("Failed to add document batch to search index:")
-          Logger.error(msg)
+                    Publications.put_search_indexing_log(publication, entry)
+                    :error
 
-          :error
-      end
+                  _ ->
+                    :ok
+                end)
+                |> Enum.reject(fn val -> val == :error end)
+                |> Enum.count()
+
+              _ ->
+                batch_size
+            end
+
+          {:ok, %{status: 400, body: body}} ->
+            msg =
+              body
+              |> Jason.decode!()
+              |> inspect()
+
+            {:ok, entry} =
+              LogEntry.create(%{
+                severity: :error,
+                key: :unknown_batch_error,
+                message: "Unknown error when trying to index document batch",
+                metadata: %{detailed: msg}
+              })
+
+            Publications.put_search_indexing_log(publication, entry)
+
+            0
+        end
 
       updated_state =
         Agent.get_and_update(counter_pid, fn %{counter: counter, overall: overall} = state ->
           state =
             state
-            |> Map.put(:counter, counter + batch_size)
-            |> Map.put(:percentage, (counter + batch_size) / overall * 100)
+            |> Map.put(:counter, counter + success_count)
+            |> Map.put(:percentage, (counter + success_count) / overall * 100)
 
           {state, state}
         end)

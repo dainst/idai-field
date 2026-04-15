@@ -23,18 +23,6 @@
     />
   <% end %>
 
-  <.inputs_for :let={field} field={@publication_form[:replication_logs]}>
-    <.input type="hidden" field={field[:severity]} />
-    <.input type="hidden" field={field[:timestamp]} />
-    <.input type="hidden" field={field[:message]} />
-  </.inputs_for>
-
-  <.inputs_for :let={field} field={@publication_form[:processing_logs]}>
-    <.input type="hidden" field={field[:severity]} />
-    <.input type="hidden" field={field[:timestamp]} />
-    <.input type="hidden" field={field[:message]} />
-  </.inputs_for>
-
   <.list>
     <:item title="Replication">
       <div class="font-thin" if={@publication.replication_finished}>
@@ -88,10 +76,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="text-center">
+            <tr>
               <td>Missing raw files</td>
-              <td>{Enum.count(@data_state.images.missing_raw_files)}</td>
-              <td>
+              <td class="text-center">{Enum.count(@data_state.images.missing_raw_files)}</td>
+              <td class="text-center">
                 <.link
                   class="font-semibold font-mono"
                   navigate={~p"/management/projects/#{@publication.project_name}/publication/new"}
@@ -101,7 +89,7 @@
               </td>
             </tr>
             <tr>
-              <td class="text-center">Web images</td>
+              <td>Web images</td>
               <td>
                 <.progress_bar
                   count={@data_state.images.summary.counter}
@@ -129,7 +117,7 @@
               </td>
             </tr>
             <tr>
-              <td class="text-center">Map tile images</td>
+              <td>Map tile images</td>
               <td>
                 <.progress_bar
                   count={@data_state.tiles.summary.counter}
@@ -157,12 +145,13 @@
               </td>
             </tr>
             <tr>
-              <td class="text-center">Search index</td>
+              <td>Search index</td>
               <td>
                 <.progress_bar
                   count={@data_state.search_index.counter}
                   max={@data_state.search_index.overall}
                 />
+                <.log_entry_grouped logs={@publication.search_index_logs} />
               </td>
               <td class="text-center">
                 <%= if @search_indexing? do %>
@@ -185,7 +174,7 @@
               </td>
             </tr>
             <tr>
-              <td class="text-center">Preview documents</td>
+              <td>Preview documents</td>
               <td>
                 <%= if @creating_previews? do %>
                   <div class="text-center ">

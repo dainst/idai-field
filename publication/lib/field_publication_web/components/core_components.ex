@@ -681,7 +681,7 @@ defmodule FieldPublicationWeb.CoreComponents do
   def log_entry_list(assigns) do
     ~H"""
     <div>
-      <%= for %LogEntry{severity: severity, timestamp: timestamp, message: msg} <- @logs do %>
+      <%= for %LogEntry{severity: severity, timestamp: timestamp, message: msg, metadata: metadata} = log <- @logs do %>
         <div class="flex">
           <%= case severity do %>
             <% :error -> %>
@@ -695,6 +695,58 @@ defmodule FieldPublicationWeb.CoreComponents do
         </div>
       <% end %>
     </div>
+    """
+  end
+
+  def log_entry_grouped(assigns) do
+    ~H"""
+    <% grouped = Enum.group_by(@logs, fn log -> log.key end) %>
+    <div class="flex gap-2">
+      <%= for {key, logs} <- grouped do %>
+        <% severity = List.first(logs) |> Map.get(:severity) %>
+
+        <div class="w-full border ">
+          <button class="cursor-pointer text-left" type="button" phx-click={JS.toggle(to: "##{key}-issue-group")}>
+            <%= case severity do %>
+              <% :error -> %>
+                <.icon name="hero-exclamation-triangle" class="bg-red-500" />
+              <% :warning -> %>
+                <.icon name="hero-exclamation-triangle" class="bg-yellow-500" />
+              <% :info -> %>
+                <.icon name="hero-check" class="bg-green-500" />
+            <% end %>
+            <span class="text-xs text-primary hover:text-primary-hover">
+              {key} ({Enum.count(logs)})
+            </span>
+          </button>
+          <div class="hidden" id={"#{key}-issue-group"}>
+            <%= for log <- logs do %>
+              <div>
+                <.log_entry entry={log} />
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    """
+  end
+
+  def log_entry(%{entry: %{metadata: %{"detailed" => _detailed, "uuid" => _uuid}}} = assigns) do
+    ~H"""
+    {@entry.metadata["uuid"]}: <span class="font-mono">{@entry.metadata["detailed"]}</span>
+    """
+  end
+
+  def log_entry(%{entry: %{metadata: %{"detailed" => _detailed}}} = assigns) do
+    ~H"""
+    {@entry.metadata["detailed"]}
+    """
+  end
+
+  def log_entry(assigns) do
+    ~H"""
+    {@entry}
     """
   end
 

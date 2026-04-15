@@ -28,6 +28,7 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
   @impl true
   def mount(%{"project_id" => project_id, "draft_date" => draft_date_string}, _session, socket) do
     %Publication{} = publication = Publications.get!(project_id, draft_date_string)
+
     channel = Publications.get_doc_id(publication)
 
     PubSub.subscribe(FieldPublication.PubSub, channel)
@@ -411,6 +412,13 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
     {
       :noreply,
       assign(socket, :creating_previews?, false)
+    }
+  end
+
+  def handle_info(%Publication{} = updated_publication, socket) do
+    {
+      :noreply,
+      assign(socket, :publication, updated_publication)
     }
   end
 

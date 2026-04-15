@@ -34,10 +34,7 @@ export class InitializationProgress {
     private error: boolean = false;
 
 
-    constructor(private settingsService: SettingsService) {
-
-        InitializationProgress.setElementText('version-info-number', remote.app.getVersion());
-    }
+    constructor(private settingsService: SettingsService) {}
 
 
     public async setPhase(phase: InitializationPhase) {

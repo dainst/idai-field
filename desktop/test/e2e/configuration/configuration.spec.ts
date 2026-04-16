@@ -1,6 +1,7 @@
 import { NavbarPage } from '../navbar.page';
 import { ResourcesPage } from '../resources/resources.page';
-import { getText, navigateTo, pause, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
+import { closeAllMessages, getText, navigateTo, pause, resetApp, start, stop, waitForExist, waitForMessage,
+    waitForNotExist } from '../app';
 import { ConfigurationPage } from './configuration.page';
 import { AddCategoryFormModalPage } from './add-category-form-modal.page';
 import { EditConfigurationPage } from './edit-configuration.page';
@@ -1250,8 +1251,8 @@ test.describe('configuration', () => {
         await EditConfigurationPage.clickInputTypeSelectOption('relation', 'field');
         await EditConfigurationPage.clickConfirm();
 
-        await NavbarPage.awaitAlert('Bitte wählen Sie mindestens eine Kategorie als erlaubte Zielkategorie aus.');
-        await NavbarPage.clickCloseAllMessages();
+        await waitForMessage('Bitte wählen Sie mindestens eine Kategorie als erlaubte Zielkategorie aus.');
+        await closeAllMessages();
 
         await EditConfigurationPage.clickCancel(true);
         await AddFieldModalPage.clickCancel();

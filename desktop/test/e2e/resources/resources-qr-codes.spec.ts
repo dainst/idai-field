@@ -1,4 +1,5 @@
-import { navigateTo, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
+import { closeAllMessages, navigateTo, resetApp, start, stop, waitForExist, waitForMessage,
+    waitForNotExist } from '../app';
 import { ConfigurationPage } from '../configuration/configuration.page';
 import { EditConfigurationPage } from '../configuration/edit-configuration.page';
 import { DoceditRelationsPage } from '../docedit/docedit-relations.page';
@@ -165,7 +166,7 @@ test.describe('resources/qr codes', () => {
         await ResourcesPage.performCreateResource('P1', 'find-pottery');
         await ResourcesPage.performCreateResource('P2', 'find-pottery');
         await addExistingQrCode('P1');
-        await NavbarPage.clickCloseAllMessages();
+        await closeAllMessages();
 
         await ResourcesPage.clickOpenContextMenu('P2');
         await ResourcesPage.clickContextMenuAddQrCodeButton();
@@ -174,7 +175,7 @@ test.describe('resources/qr codes', () => {
         await waitForNotExist(await ResourcesPage.getQrCodeScannerModalBody());
         await QrCodeEditorModalPage.clickCancel();
 
-        expect(await NavbarPage.awaitAlert('Der gescannte QR-Code ist bereits einer anderen Ressource zugeordnet.'));
+        expect(await waitForMessage('Der gescannte QR-Code ist bereits einer anderen Ressource zugeordnet.'));
     });
 
 
@@ -187,14 +188,14 @@ test.describe('resources/qr codes', () => {
         await QrCodeEditorModalPage.clickConfirmDeletionInModal();
         await waitForExist(await QrCodeEditorModalPage.getPlaceholder());
         await waitForNotExist(await QrCodeEditorModalPage.getCanvas());
-        await NavbarPage.clickCloseAllMessages();
+        await closeAllMessages();
         
         await QrCodeEditorModalPage.clickCancel();
         await ResourcesPage.clickSelectResource('P2');
         await ResourcesSearchBarPage.clickOpenQrScanner();
 
         await waitForNotExist(await ResourcesPage.getQrCodeScannerModalBody());
-        expect(await NavbarPage.awaitAlert('Für diesen QR-Code konnte keine Ressource gefunden werden.'));
+        expect(await waitForMessage('Für diesen QR-Code konnte keine Ressource gefunden werden.'));
     });
 
 
@@ -226,7 +227,7 @@ test.describe('resources/qr codes', () => {
         await ResourcesPage.clickOpenContextMenu('P1');
         await ResourcesPage.clickContextMenuScanResourceButton();
 
-        await NavbarPage.awaitAlert('Für die Ressource P1 wurde erfolgreich der Aufbewahrungsort SP2 gespeichert.');
+        await waitForMessage('Für die Ressource P1 wurde erfolgreich der Aufbewahrungsort SP2 gespeichert.');
         
         await ResourcesPage.clickSelectResource('P1');
         await FieldsViewPage.clickAccordionTab(1);
@@ -242,7 +243,7 @@ test.describe('resources/qr codes', () => {
         await ResourcesPage.clickOpenContextMenu('P1');
         await ResourcesPage.clickContextMenuScanResourceButton();
 
-        await NavbarPage.awaitAlert('Für die Ressource P1 wurde erfolgreich der Typ T2 gespeichert.');
+        await waitForMessage('Für die Ressource P1 wurde erfolgreich der Typ T2 gespeichert.');
         
         await ResourcesPage.clickSelectResource('P1');
         await FieldsViewPage.clickAccordionTab(1);
@@ -259,7 +260,7 @@ test.describe('resources/qr codes', () => {
 
         await ResourcesPage.clickOpenContextMenu('P1');
         await ResourcesPage.clickContextMenuScanResourceButton();
-        await NavbarPage.awaitAlert('Der Aufbewahrungsort SP2 ist für die Ressource P1 bereits gesetzt.');
+        await waitForMessage('Der Aufbewahrungsort SP2 ist für die Ressource P1 bereits gesetzt.');
         
         await ResourcesPage.clickSelectResource('P1');
         await FieldsViewPage.clickAccordionTab(1);
@@ -276,7 +277,7 @@ test.describe('resources/qr codes', () => {
 
         await ResourcesPage.clickOpenContextMenu('P1');
         await ResourcesPage.clickContextMenuScanResourceButton();
-        await NavbarPage.awaitAlert('Der Typ T2 ist für die Ressource P1 bereits gesetzt.');
+        await waitForMessage('Der Typ T2 ist für die Ressource P1 bereits gesetzt.');
         
         await ResourcesPage.clickSelectResource('P1');
         await FieldsViewPage.clickAccordionTab(1);
@@ -298,7 +299,7 @@ test.describe('resources/qr codes', () => {
 
         await ResourcesPage.clickOpenContextMenu('P1');
         await ResourcesPage.clickContextMenuScanResourceButton();
-        await NavbarPage.awaitAlert('Für die Ressource P1 wurde erfolgreich der Aufbewahrungsort SP2 gespeichert.');
+        await waitForMessage('Für die Ressource P1 wurde erfolgreich der Aufbewahrungsort SP2 gespeichert.');
         
         expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in');
         expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SP2');
@@ -314,7 +315,7 @@ test.describe('resources/qr codes', () => {
         await ResourcesPage.clickOpenContextMenu('FC1');
         await ResourcesPage.clickContextMenuScanResourceButton();
         await ResourcesPage.clickConfirmReplacingStoragePlace();
-        await NavbarPage.awaitAlert('Für die Ressource FC1 wurde erfolgreich der Aufbewahrungsort SP2 gespeichert.');
+        await waitForMessage('Für die Ressource FC1 wurde erfolgreich der Aufbewahrungsort SP2 gespeichert.');
         
         await ResourcesPage.clickSelectResource('FC1');
         await FieldsViewPage.clickAccordionTab(1);
@@ -334,7 +335,7 @@ test.describe('resources/qr codes', () => {
         await ResourcesPage.clickOpenContextMenu('FC1');
         await ResourcesPage.clickContextMenuScanResourceButton();
         await ResourcesPage.clickConfirmAddingStoragePlace();
-        await NavbarPage.awaitAlert('Für die Ressource FC1 wurde erfolgreich der Aufbewahrungsort SP2 gespeichert.');
+        await waitForMessage('Für die Ressource FC1 wurde erfolgreich der Aufbewahrungsort SP2 gespeichert.');
         
         await ResourcesPage.clickSelectResource('FC1');
         await FieldsViewPage.clickAccordionTab(1);
@@ -374,7 +375,7 @@ test.describe('resources/qr codes', () => {
         await ResourcesPage.clickOpenContextMenu('F1');
         await ResourcesPage.clickContextMenuScanResourceButton();
         await ResourcesPage.clickConfirmReplacingType();
-        await NavbarPage.awaitAlert('Für die Ressource F1 wurde erfolgreich der Typ T2 gespeichert.');
+        await waitForMessage('Für die Ressource F1 wurde erfolgreich der Typ T2 gespeichert.');
         
         await ResourcesPage.clickSelectResource('F1');
         await FieldsViewPage.clickAccordionTab(1);
@@ -394,7 +395,7 @@ test.describe('resources/qr codes', () => {
         await ResourcesPage.clickOpenContextMenu('F1');
         await ResourcesPage.clickContextMenuScanResourceButton();
         await ResourcesPage.clickConfirmAddingType();
-        await NavbarPage.awaitAlert('Für die Ressource F1 wurde erfolgreich der Typ T2 gespeichert.');
+        await waitForMessage('Für die Ressource F1 wurde erfolgreich der Typ T2 gespeichert.');
         
         await ResourcesPage.clickSelectResource('F1');
         await FieldsViewPage.clickAccordionTab(1);
@@ -434,7 +435,7 @@ test.describe('resources/qr codes', () => {
         await ResourcesPage.clickOpenContextMenu('P1');
         await ResourcesPage.clickContextMenuScanResourceButton();
         
-        await NavbarPage.awaitAlert(
+        await waitForMessage(
             'Die Ressource P2 der Kategorie Keramik ist kein gültiger Typ oder Aufbewahrungsort.'
         );
     });

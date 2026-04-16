@@ -1,4 +1,5 @@
-import { click, getText, navigateTo, pause, resetApp, start, stop, waitForNotExist, waitForExist } from '../app';
+import { click, getText, navigateTo, pause, resetApp, start, stop, waitForNotExist, waitForExist, closeAllMessages,
+    waitForMessage } from '../app';
 import { DoceditPage} from '../docedit/docedit.page';
 import { SearchBarPage } from '../widgets/search-bar.page';
 import { ResourcesPage } from './resources.page';
@@ -67,9 +68,9 @@ test.describe('resources', () => {
         // warn if identifier is missing
         await ResourcesPage.performCreateResource('', 'feature', 'diary', 'p', false, false, false);
 
-        await NavbarPage.awaitAlert('Bitte füllen Sie das Feld', false);
-        await NavbarPage.awaitAlert('Bezeichner', false);
-        await NavbarPage.clickCloseAllMessages();
+        await waitForMessage('Bitte füllen Sie das Feld', false);
+        await waitForMessage('Bezeichner', false);
+        await closeAllMessages();
         await DoceditPage.clickCloseEdit('discard');
     });
 
@@ -88,8 +89,8 @@ test.describe('resources', () => {
         // same identifier
         await ResourcesPage.performCreateResource('12', undefined, undefined, undefined, false, false, false);
 
-        await NavbarPage.awaitAlert('existiert bereits', false);
-        await NavbarPage.clickCloseAllMessages();
+        await waitForMessage('existiert bereits', false);
+        await closeAllMessages();
         await DoceditPage.clickCloseEdit('discard');
     });
 
@@ -386,9 +387,9 @@ test.describe('resources', () => {
         await ResourcesPage.openEditByDoubleClickResource('1');
         await DoceditPage.clickCategorySwitcherButton();
         await DoceditPage.clickCategorySwitcherOption('feature');
-        await NavbarPage.awaitAlert('Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern ' +
+        await waitForMessage('Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern ' +
             'verloren gehen: Mauertyp');
-        await NavbarPage.clickCloseAllMessages();
+        await closeAllMessages();
         await DoceditPage.clickSaveDocument();
 
         expect(await FieldsViewPage.getFieldValue(0, 0)).toEqual('Stratigraphische Einheit');
@@ -623,7 +624,7 @@ test.describe('resources', () => {
         await MoveModalPage.clickResourceListItem('A1');
         await waitForNotExist(await MoveModalPage.getModal());
 
-        await NavbarPage.awaitAlert('kann nicht verschoben werden', false);
+        await waitForMessage('kann nicht verschoben werden', false);
     });
 
 

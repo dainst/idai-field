@@ -17,18 +17,16 @@ defmodule FieldPublication.Replication.FileReplication do
                                            :field_hub_to_publication_file_mapping
                                          )
 
-  def start(
-        %{
-          input:
-            %ReplicationInput{
-              source_url: source_url,
-              source_project_name: source_project_name,
-              source_user: source_user,
-              source_password: source_password
-            } = input,
-          publication: %Publication{} = publication
-        } = parameters
-      ) do
+  def start(%{
+        input:
+          %ReplicationInput{
+            source_url: source_url,
+            source_project_name: source_project_name,
+            source_user: source_user,
+            source_password: source_password
+          } = input,
+        publication: %Publication{} = publication
+      }) do
     headers = [
       {"Content-Type", "application/json"},
       {"Authorization", "Basic #{"#{source_user}:#{source_password}" |> Base.encode64()}"}
@@ -67,7 +65,7 @@ defmodule FieldPublication.Replication.FileReplication do
     {:ok, counter_pid} =
       Agent.start_link(fn -> %{overall: overall_file_count, counter: 0} end)
 
-    Replication.log(parameters, :info, "#{overall_file_count} files need replication.")
+    Replication.log(publication, :info, "#{overall_file_count} files need replication.")
 
     Enum.each(
       uuid_lists_by_variant,

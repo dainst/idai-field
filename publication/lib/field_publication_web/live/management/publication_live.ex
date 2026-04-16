@@ -406,10 +406,19 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
     }
   end
 
-  def handle_info({:processing_stopped, :preview_documents}, socket) do
+  def handle_info(
+        {:processing_stopped, :preview_documents},
+        %{assigns: %{publication: publication}} = socket
+      ) do
+    preview_doc_state = Publications.Data.get_preview_document_state(publication)
+
     {
       :noreply,
-      assign(socket, :creating_previews?, false)
+      socket
+      |> assign(:creating_previews?, false)
+      |> update(:data_state, fn old ->
+        Map.put(old, :preview_documents, preview_doc_state)
+      end)
     }
   end
 

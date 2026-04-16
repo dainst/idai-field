@@ -25,7 +25,7 @@
 
   <.list>
     <:item title="Replication">
-      <div class="font-thin" if={@publication.replication_finished}>
+      <div :if={@publication.replication_finished} class="font-thin">
         Replication finished {@publication.replication_finished}.
       </div>
       <div class="flex flex-wrap p-2 gap-2 w-full">

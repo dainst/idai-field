@@ -73,17 +73,20 @@ defmodule FieldPublication.Replication.FileReplication do
       uuid_lists_by_variant,
       fn {uuid_list, variant_name, local_variant_name} ->
         uuid_list
-        |> Task.async_stream(fn uuid ->
-          copy_file(%{
-            uuid: uuid,
-            variant_name: variant_name,
-            local_variant_name: local_variant_name,
-            headers: headers,
-            base_url: base_file_url,
-            counter_pid: counter_pid,
-            publication: publication
-          })
-        end)
+        |> Task.async_stream(
+          fn uuid ->
+            copy_file(%{
+              uuid: uuid,
+              variant_name: variant_name,
+              local_variant_name: local_variant_name,
+              headers: headers,
+              base_url: base_file_url,
+              counter_pid: counter_pid,
+              publication: publication
+            })
+          end,
+          timeout: 1000 * 60 * 5
+        )
         |> Enum.to_list()
       end
     )

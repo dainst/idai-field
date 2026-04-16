@@ -1,4 +1,4 @@
-import { click, getLocator, waitForExist, getText } from './app';
+import { click, getLocator, getText } from './app';
 
 
 export class NavbarPage {
@@ -41,28 +41,6 @@ export class NavbarPage {
     }
 
 
-    public static async clickCloseAllMessages() {
-
-        await waitForExist((await getLocator('.alert button')).nth(0));
-        const elements = await getLocator('.alert button');
-        for (let i = 0; i < await elements.count(); i++) {
-            await elements.nth(i).click();
-        }
-    }
-
-
-    // await
-
-    public static awaitAlert(text: string, matchExactly: boolean = true) {
-
-        if (matchExactly) {
-            return waitForExist("//span[@class='message-content' and normalize-space(text())='" + text + "']");
-        } else {
-            return waitForExist("//span[@class='message-content' and contains(text(),'" + text + "')]");
-        }
-    };
-
-
     // elements
 
     public static getTab(routeName: string, resourceIdentifier?: string) {
@@ -84,12 +62,6 @@ export class NavbarPage {
 
 
     // get text
-
-    public static async getMessageText() {
-
-        return getText('#message-0');
-    }
-
 
     public static async getActiveNavLinkLabel() {
 

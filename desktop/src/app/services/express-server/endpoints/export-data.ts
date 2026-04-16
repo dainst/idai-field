@@ -25,7 +25,7 @@ export async function exportData(request: any, response: any, projectConfigurati
     
     try {
         const { format, schemaOnly, categoryName, context, separator, combineHierarchicalRelations,
-            formatted } = await getRequestParameters(request, datastore);
+            formatted } = await getRequestParameters(request, datastore, projectConfiguration);
 
         if (!['geojson', 'csv'].includes(format)) throw 'Unsupported format: ' + format;
 
@@ -53,7 +53,8 @@ export async function exportData(request: any, response: any, projectConfigurati
 }
 
 
-async function getRequestParameters(request: any, datastore: Datastore): Promise<RequestParameters> {
+async function getRequestParameters(request: any, datastore: Datastore,
+                                    projectConfiguration: ProjectConfiguration): Promise<RequestParameters> {
 
     const format: string = request.params.format;
     const schemaOnly: boolean = request.query.schemaOnly === 'true';
@@ -61,27 +62,35 @@ async function getRequestParameters(request: any, datastore: Datastore): Promise
     const separator: string = request.query.separator ?? ',';
     const combineHierarchicalRelations: boolean = request.query.combineHierarchicalRelations !== 'false';
     const formatted: boolean = request.query.formatted !== 'false';
-    const context: string = await getContext(request, datastore);
+    const context: string = await getContext(request, datastore, projectConfiguration);
 
     return { format, schemaOnly, categoryName, separator, combineHierarchicalRelations, formatted, context };
 }
 
 
-async function getContext(request: any, datastore: Datastore): Promise<string> {
+async function getContext(request: any, datastore: Datastore,
+                          projectConfiguration: ProjectConfiguration): Promise<string> {
 
-    let context: string = request.query.context ?? 'project';
+    const context: string = request.query.context ?? 'project';
+    if (context === 'project') return context;
 
-    if (context !== 'project') {
-        const documents: Array<Document> = (await datastore.find(
-            { constraints: { 'identifier:match': context } }
-        )).documents;
+    const documents: Array<Document> = (await datastore.find(
+        { constraints: { 'identifier:match': context } }
+    )).documents;
 
-        context = documents.length === 1
-            ? documents[0].resource.id
-            : undefined;
+    const contextDocument: Document = documents.length === 1
+        ? documents[0]
+        : undefined;
+
+    if (!contextDocument) {
+        throw 'Invalid context: Could not find resource ' + context;
+    }
+        
+    if (!projectConfiguration.isSubcategory(contextDocument.resource.category, 'Operation')) {
+        throw 'Invalid context: ' + context + ' is not an operation';
     }
 
-    return context;
+    return contextDocument.resource.id;
 }
 
 

@@ -68,10 +68,10 @@ export async function importData(request: any, response: any, preparedImportDocu
 }
 
 
-async function parse(importData: any, options: ImporterOptions, preparedImportDocuments: Map<Array<Document>>,
+async function parse(importData: string, options: ImporterOptions, preparedImportDocuments: Map<Array<Document>>,
                      importId?: string): Promise<Array<Document>> {
 
-    const documents: Array<Document> = !isEmpty(importData)
+    const documents: Array<Document> = importData?.length
         ? await Importer.doParse(options, importData)
         : [];
 

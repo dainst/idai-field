@@ -148,12 +148,6 @@ export namespace CategoryForm {
     }
 
 
-    export function isMandatoryField(category: CategoryForm, fieldName: string): boolean {
-
-        return hasProperty(category, fieldName, Field.MANDATORY);
-    }
-
-
     export function getGroupsConfiguration(category: CategoryForm,
                                            permanentlyHiddenFields: string[]): Array<GroupDefinition> {
 
@@ -223,15 +217,5 @@ export namespace CategoryForm {
             hash |= 0; // Convert to 32bit integer
         }
         return hash;
-    }
-
-
-    function hasProperty(category: CategoryForm, fieldName: string, propertyName: string) {
-
-        return flow(
-            CategoryForm.getFields(category),
-            filter(on(Named.NAME, is(fieldName))),
-            filter(on(propertyName, is(true))),
-            not(isEmpty));
     }
 }

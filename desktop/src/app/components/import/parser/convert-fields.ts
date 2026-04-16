@@ -26,9 +26,10 @@ export function convertFields(category: CategoryForm) {
 
     return (resource: Resource) => {
 
-        for (const fieldName of fields(resource)) {
+        const categoryFields: Array<Field> = CategoryForm.getFields(category);
 
-            const field = CategoryForm.getFields(category).find(on(Field.NAME, is(fieldName)));
+        for (const fieldName of fields(resource)) {
+            const field: Field = categoryFields.find(field => field.name === fieldName);
             if (!field) continue;
 
             const inputType: InputType = field.inputType;
@@ -37,7 +38,8 @@ export function convertFields(category: CategoryForm) {
 
         for (const relationName of Object.keys(resource.relations).filter(isnt(Relation.PARENT))) {
             if (resource.relations[relationName] === null) continue;
-            resource.relations[relationName] = (resource.relations[relationName] as unknown as string).split(ARRAY_SEPARATOR)
+            resource.relations[relationName] = (resource.relations[relationName] as unknown as string)
+                .split(ARRAY_SEPARATOR);
         }
 
         return resource;
@@ -123,7 +125,7 @@ function convertComposite(resource: Resource, fieldName: string, field: Field) {
         if (element === null) return;
 
         Object.keys(element).forEach(subfieldName => {
-            const inputType: InputType = field.subfields?.find(on(Named.NAME, is(subfieldName)))?.inputType;
+            const inputType: InputType = field.subfields?.find(subfield => subfield.name === subfieldName)?.inputType;
             if (inputType) {
                 convertTypeDependent(element, subfieldName, inputType, field);
             } else {

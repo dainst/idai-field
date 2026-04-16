@@ -1,8 +1,18 @@
 import { Injectable } from '@angular/core';
+import { Observable, Observer } from 'rxjs';
+import { ObserverUtil } from 'idai-field-core';
 import { StateSerializer } from './state-serializer';
 
 const path = window.require('path');
 const fs = window.require('fs');
+
+
+export type DataTransferType = 'none'|'import'|'fileImport'|'export';
+
+export type DataTransferNotification = {
+    previousDataTransfer: DataTransferType;
+    newDataTransfer: DataTransferType;
+};
 
 
 /**
@@ -13,9 +23,35 @@ export class AppState {
 
     private codeScannerCameraId: string|undefined;
     private folderPaths: { [context: string]: string };
+    
+    private runningDataTransfer: DataTransferType = 'none';
+    private dataTransferObservers: Array<Observer<DataTransferNotification>> = [];
 
 
     constructor(private stateSerializer: StateSerializer) {}
+
+
+    public dataTransferNotifications = (): Observable<DataTransferNotification> =>
+        ObserverUtil.register(this.dataTransferObservers);
+
+
+    public getRunningDataTransfer(): DataTransferType {
+
+        return this.runningDataTransfer;
+    }
+
+
+    public setRunningDataTransfer(runningDataTransfer: DataTransferType) {
+
+        const notification: DataTransferNotification = {
+            previousDataTransfer: this.runningDataTransfer,
+            newDataTransfer: runningDataTransfer
+        };
+
+        this.runningDataTransfer = runningDataTransfer;
+
+        ObserverUtil.notify(this.dataTransferObservers, notification);
+    }
 
 
     public getCodeScannerCameraId(): string {

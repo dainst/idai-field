@@ -139,10 +139,11 @@ export class ViewFacade {
     }
 
 
-    public async setSelectedDocument(resourceId: string, adjustListIfNecessary?: boolean, viaResourceLink?: boolean) {
+    public async setSelectedDocument(resourceId: string, checkIfInList?: boolean, adjustListIfNecessary?: boolean,
+                                     viaResourceLink?: boolean) {
 
         try {
-            await this.documentsManager.setSelected(resourceId, adjustListIfNecessary, viaResourceLink);
+            await this.documentsManager.setSelected(resourceId, checkIfInList, adjustListIfNecessary, viaResourceLink);
         } catch (errWithParams) {
             await this.populateDocumentList();
             await this.rebuildNavigationPath();

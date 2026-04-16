@@ -102,7 +102,12 @@ function onWorkerFinished(worker: Worker) {
 
 async function run() {
 
-    await updateBackups();
+    try {
+        await updateBackups();
+    } catch (err) {
+        console.error('Error while updating backups', err);
+        postMessage({ error: BACKUP_FILE_CREATION_FAILED });
+    }
 
     if (runTimeout) clearTimeout(runTimeout);
 

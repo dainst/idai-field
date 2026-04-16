@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { isEmpty, flow, includedIn, is, left, map, Mapping, on, Pair, pairWith, prune, right, to,
+import { flow, includedIn, is, left, map, Mapping, on, Pair, pairWith, prune, right, to,
     isUndefinedOrEmpty } from 'tsfun';
 import { CategoryForm, Labels, Constraint, Datastore, Document, FieldDocument, FieldResource, Named,
     ProjectConfiguration, Query, Resource, Relation, SortMode } from 'idai-field-core';
@@ -234,7 +234,7 @@ export class TypeRelationPickerComponent {
                 subtract: true
             };
         }
-        if (!isEmpty(selectedCatalogs)) {
+        if (selectedCatalogs.length) {
             (query.constraints as any)['isChildOf:contain'] = {
                 value: selectedCatalogs.map(to(Resource.ID)),
                 searchRecursively: true

@@ -1,4 +1,3 @@
-import { isEmpty } from 'tsfun';
 import { Component, Input } from '@angular/core';
 import { SemanticReference, Predicate } from 'idai-field-core';
 
@@ -24,7 +23,7 @@ export class SemanticReferencesInputComponent {
 
     public addReference() {
 
-        if (this.references.length > 0 && isEmpty(this.references[this.references.length - 1]?.uri)) return;
+        if (this.references.length && !this.references[this.references.length - 1]?.uri?.length) return;
         this.references.push({ predicate: 'skos:exactMatch', uri: '' });
     }
 

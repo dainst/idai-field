@@ -8,7 +8,7 @@ export type ValuelistId = string;
 
 export type Valuelists = {
     [fieldName: string]: ValuelistId|Map<ValuelistId>
-}
+};
 
 
 /**

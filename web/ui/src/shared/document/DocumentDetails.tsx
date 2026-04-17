@@ -1,7 +1,7 @@
 import { mdiChevronLeft, mdiChevronRight, mdiOpenInNew } from '@mdi/js';
 import { Icon } from '@mdi/react';
 import { TFunction } from 'i18next';
-import { Dating, Dimension, I18N, Literature, OptionalRange, Field as FieldDefinition } from 'idai-field-core';
+import { Dating, Measurement, I18N, Literature, OptionalRange, Field as FieldDefinition } from 'idai-field-core';
 import React, { CSSProperties, ReactElement, ReactNode, useContext, useEffect, useState } from 'react';
 import { Button, OverlayTrigger, Popover } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
@@ -68,7 +68,7 @@ export default function DocumentDetails({ document, baseUrl } : DocumentDetailsP
                             label: {
                                 'de': 'Enthält', 'en': 'Includes', 'es': 'Incluye', 'fr': 'Inclut', 'it': 'Include'
                             }
-                        } as Field
+                        } as any
                     ]
                 } as FieldGroup);
             } else {
@@ -245,7 +245,7 @@ const renderFieldValue = (value: FieldValue, inputType: FieldDefinition.InputTyp
             case 'dating':
                 return renderDating(value as Dating, t);
             case 'dimension':
-                return renderDimension(value as Dimension, t);
+                return renderDimension(value as Measurement, t);
             case 'literature':
                 return renderLiterature(value as Literature, t);
             default:
@@ -302,15 +302,15 @@ const renderDating = (dating: Dating, t: TFunction) => {
 };
 
 
-const renderDimension = (dimension: Dimension, t: TFunction) => {
+const renderDimension = (dimension: Measurement, t: TFunction) => {
 
     dimension = convertMeasurementPosition(dimension);
 
-    if (!Dimension.isDimension(dimension)) return undefined;
+    if (!Measurement.isMeasurement(dimension)) return undefined;
     if (isLabeled(dimension)) return dimension.label;
 
-    return Dimension.generateLabel(
-        dimension, getDecimalValue, t,
+    return Measurement.generateLabel(
+        dimension, 'dimension', getDecimalValue, t,
         // eslint-disable-next-line
         (value: any) => getLabel({ label: value, name: undefined })
         // eslint-disable-next-line

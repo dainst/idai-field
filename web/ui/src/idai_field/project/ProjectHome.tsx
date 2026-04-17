@@ -316,7 +316,7 @@ const getStaffInfo = (projectDocument: Document): string => {
 
     const staffValues: I18N.String[]|string[] = getFieldValue(projectDocument, 'staff') as I18N.String[]|string[];
     return staffValues
-        ? staffValues.map(staff => getTranslation(staff)).join(', ')
+        ? (staffValues as any[]).map(staff => getTranslation(staff)).join(', ')
         : '';
 };
 

@@ -91,13 +91,13 @@ defmodule Api.Worker.Enricher.Labels do
       field_value
     end
   end
-  defp get_value_with_label(field_name, dimension, category_definition, field_definition, subfield_name) do
-    value_id = dimension[subfield_name]
+  defp get_value_with_label(field_name, measurement, category_definition, field_definition, subfield_name) do
+    value_id = measurement[subfield_name]
     label = if is_nil(value_id) do nil else get_label(field_name, value_id, category_definition, field_definition) end
     if !is_nil(label) do
-      put_in(dimension[subfield_name], %{ name: value_id, label: label })
+      put_in(measurement[subfield_name], %{ name: value_id, label: label })
     else
-      dimension
+      measurement
     end
   end
 

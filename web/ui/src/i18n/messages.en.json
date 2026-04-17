@@ -376,5 +376,8 @@
   "from": "From: ",
   "to": ", to: ",
   "yes": "Yes",
-  "no": "No"
+  "no": "No",
+  "timeSuffix": ".",
+  "unspecifiedDate": "Unspecified date",
+  "toDate": "to"
 }

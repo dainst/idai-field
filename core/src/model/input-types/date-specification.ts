@@ -79,12 +79,14 @@ export module DateSpecification {
 
     export function generateLabel(date: DateSpecification, timezone: string, timeSuffix: string,
                                   locale: string, translate: (term: string) => string,
-                                  addTimezoneInfo: boolean = true, multiLine: boolean = true): string {
+                                  addTimezoneInfo: boolean = true, multiLine: boolean = true,
+                                  customParseDate?: Function, customFormatDate?: Function): string {
 
         try {
             let result: string = date.isRange
-                ? generateRangeLabel(date, timezone, timeSuffix, locale, translate, multiLine)
-                : generateValueLabel(date.value, timezone, timeSuffix, locale);
+                ? generateRangeLabel(date, timezone, timeSuffix, locale, translate, multiLine, customParseDate,
+                    customFormatDate)
+                : generateValueLabel(date.value, timezone, timeSuffix, locale, customParseDate, customFormatDate);
 
             if (addTimezoneInfo && (date.value?.includes(':') || date.endValue?.includes(':'))) {
                 result += date.isRange && multiLine ? '\n' : ' ';
@@ -100,26 +102,31 @@ export module DateSpecification {
 
 
     function generateRangeLabel(date: DateSpecification, timezone: string, timeSuffix: string,
-                                locale: string, translate: (term: string) => string, multiLine: boolean): string {
+                                locale: string, translate: (term: string) => string, multiLine: boolean,
+                                customParseDate?: Function, customFormatDate?: Function): string {
 
         let result: string = date.value
-            ? generateValueLabel(date.value, timezone, timeSuffix, locale)
+            ? generateValueLabel(date.value, timezone, timeSuffix, locale, customParseDate, customFormatDate)
             : translate('unspecifiedDate');
         
         result += ' ' + translate('toDate') + (multiLine ? '\n' : ' ');
         result += date.endValue
-            ? generateValueLabel(date.endValue, timezone, timeSuffix, locale)
+            ? generateValueLabel(date.endValue, timezone, timeSuffix, locale, customParseDate, customFormatDate)
             : translate('unspecifiedDate');
         
         return result;
     }
 
 
-    function generateValueLabel(value: string, timezone: string, timeSuffix: string, locale: string): string {
+    function generateValueLabel(value: string, timezone: string, timeSuffix: string, locale: string,
+                                customParseDate?: Function, customFormatDate?: Function): string {
+        
+        const parse = customParseDate ?? parseDate;
+        const format = customFormatDate ?? formatDate;
         
         const hasTimeValue: boolean = value.includes(':');
-        const date: Date = parseDate(value);
-        let formattedDate: string = formatDate(date, locale, timezone, getFormat(value, hasTimeValue));
+        const date: Date = parse(value);
+        let formattedDate: string = format(date, locale, timezone, getFormat(value, hasTimeValue));
 
         // If the time suffix is set to '.', this indicates that no time suffix should be used
         if (hasTimeValue && timeSuffix !== '.') formattedDate = formattedDate + ' ' + timeSuffix;

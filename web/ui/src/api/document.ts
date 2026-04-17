@@ -1,6 +1,7 @@
 import { Geometry } from 'geojson';
 import { isObject, to, clone } from 'tsfun';
-import { Dating, Measurement, Literature, OptionalRange, I18N, Field as FieldDefinition } from 'idai-field-core';
+import { Dating, Measurement, Literature, OptionalRange, I18N, Field as FieldDefinition,
+    DateSpecification } from 'idai-field-core';
 import { getLabel } from '../shared/languages';
 import { ResultDocument } from './result';
 
@@ -66,6 +67,7 @@ export type FieldValue =
     string
     | LabeledValue
     | boolean
+    | DateSpecification
     | Measurement
     | DimensionWithLabeledMeasurementPosition
     | Dating

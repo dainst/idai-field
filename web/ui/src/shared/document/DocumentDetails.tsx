@@ -1,7 +1,8 @@
 import { mdiChevronLeft, mdiChevronRight, mdiOpenInNew } from '@mdi/js';
 import { Icon } from '@mdi/react';
 import { TFunction } from 'i18next';
-import { Dating, Measurement, I18N, Literature, OptionalRange, Field as FieldDefinition } from 'idai-field-core';
+import { Dating, Measurement, I18N, Literature, OptionalRange, Field as FieldDefinition,
+    DateSpecification } from 'idai-field-core';
 import React, { CSSProperties, ReactElement, ReactNode, useContext, useEffect, useState } from 'react';
 import { Button, OverlayTrigger, Popover } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
@@ -12,10 +13,12 @@ import { search } from '../../api/documents';
 import { Query } from '../../api/query';
 import { Result, ResultDocument } from '../../api/result';
 import { ImageCarousel } from '../image/ImageCarousel';
-import { getLabel, getNumberOfUndisplayedLabels, getTranslation } from '../languages';
+import { getLabel, getNumberOfUndisplayedLabels, getTranslation, getUserInterfaceLanguage } from '../languages';
 import { LoginContext } from '../login';
 import { getDocumentLink, getSupercategoryName } from './document-utils';
 import DocumentTeaser from './DocumentTeaser';
+import { parseDate } from './date/parse-date';
+import { formatDate } from './date/format-date';
 
 const HIDDEN_FIELDS = ['id', 'identifier', 'geometry', 'georeference', 'originalFilename'];
 const HIDDEN_RELATIONS = ['isDepictedIn', 'hasMapLayer', 'hasDefaultMapLayer'];
@@ -242,6 +245,8 @@ const renderFieldValue = (value: FieldValue, inputType: FieldDefinition.InputTyp
                 return renderFieldValueBoolean(value as boolean, t);
             case 'dropdownRange':
                 return renderOptionalRange(value as OptionalRange<LabeledValue>, t);
+            case 'date':
+                return renderDate(value as DateSpecification, t);
             case 'dating':
                 return renderDating(value as Dating, t);
             case 'dimension':
@@ -289,6 +294,22 @@ const renderMultiLanguageText = (object: LabeledValue, t: TFunction): ReactNode 
             <div style={ multiLanguageTextStyle }>{ label }</div>
           </OverlayTrigger>
         : label;
+};
+
+
+const renderDate = (date: DateSpecification, t: TFunction) => {
+
+    return DateSpecification.generateLabel(
+        date,
+        Intl.DateTimeFormat().resolvedOptions().timeZone ?? 'UTC',
+        t('timeSuffix'),
+        getUserInterfaceLanguage(),
+        t,
+        true,
+        false,
+        parseDate,
+        formatDate
+    );
 };
 
 

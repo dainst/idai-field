@@ -6,7 +6,7 @@ import React, { CSSProperties, ReactElement, ReactNode, useContext, useEffect, u
 import { Button, OverlayTrigger, Popover } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
-import { convertMeasurementPosition, Document, Field, FieldGroup, FieldValue, getDocumentImages,
+import { convertMeasurementSubfieldValue, Document, Field, FieldGroup, FieldValue, getDocumentImages,
     isLabeled, isLabeledValue, LabeledValue } from '../../api/document';
 import { search } from '../../api/documents';
 import { Query } from '../../api/query';
@@ -245,7 +245,9 @@ const renderFieldValue = (value: FieldValue, inputType: FieldDefinition.InputTyp
             case 'dating':
                 return renderDating(value as Dating, t);
             case 'dimension':
-                return renderDimension(value as Measurement, t);
+            case 'weight':
+            case 'volume':
+                return renderMeasurement(value as Measurement, inputType, t);
             case 'literature':
                 return renderLiterature(value as Literature, t);
             default:
@@ -302,15 +304,15 @@ const renderDating = (dating: Dating, t: TFunction) => {
 };
 
 
-const renderDimension = (dimension: Measurement, t: TFunction) => {
+const renderMeasurement = (measurement: Measurement, inputType: FieldDefinition.InputType, t: TFunction) => {
 
-    dimension = convertMeasurementPosition(dimension);
+    measurement = convertMeasurementSubfieldValue(measurement, inputType);
 
-    if (!Measurement.isMeasurement(dimension)) return undefined;
-    if (isLabeled(dimension)) return dimension.label;
+    if (!Measurement.isMeasurement(measurement)) return undefined;
+    if (isLabeled(measurement)) return measurement.label;
 
     return Measurement.generateLabel(
-        dimension, 'dimension', getDecimalValue, t,
+        measurement, inputType, getDecimalValue, t,
         // eslint-disable-next-line
         (value: any) => getLabel({ label: value, name: undefined })
         // eslint-disable-next-line

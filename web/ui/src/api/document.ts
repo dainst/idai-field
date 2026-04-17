@@ -46,13 +46,16 @@ export interface DimensionWithLabeledMeasurementPosition extends Omit<Measuremen
 }
 
 
-export function convertMeasurementPosition(dimension: Measurement): Measurement {
-    
-    if (!isObject(dimension) || !dimension.measurementPosition) return dimension;
+export function convertMeasurementSubfieldValue(measurement: Measurement,
+                                                inputType: FieldDefinition.InputType): Measurement {
 
-    const result: Measurement = clone(dimension);
-    result.measurementPosition = isLabeledValue(dimension.measurementPosition)
-        ? getLabel(dimension.measurementPosition)
+    const subfieldName: string = Measurement.getValuelistSubfieldName(inputType);
+    
+    if (!isObject(measurement) || !measurement[subfieldName]) return measurement;
+
+    const result: Measurement = clone(measurement);
+    result[subfieldName] = isLabeledValue(measurement[subfieldName])
+        ? getLabel(measurement[subfieldName])
         : undefined;
 
     return result;

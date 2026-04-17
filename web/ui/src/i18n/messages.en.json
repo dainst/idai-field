@@ -99,7 +99,7 @@
     "download": "Download Field Desktop",
     "currentVersion": "Current Version:",
     "packageInfo": "The Field desktop application can be used on the following operating systems:",
-    "windowsInfo": "Windows 10 and later",
+    "windowsInfo": "Windows 11",
     "macInfo": "macOS 10.13 and later",
     "linuxInfo": "Linux (Ubuntu 18.04, Fedora 32, Debian 10 and later)",
     "allVersions": "All versions...",
@@ -114,6 +114,28 @@
       "synchronization": "Synchronization",
       "tableView": "Table view",
       "nesting": "Nesting"
+    },
+    "installation": {
+      "header": "Notes on installation",
+      "update": {
+        "header": "Updating an existing version",
+        "body": "You can also start the installation if an older version of the application is already installed. In this case, Field Desktop will be updated to the new version. Existing projects are normally retained. However, it is strongly recommended that you create backup files of all important projects before the update, as data may be lost in exceptional cases."
+      },
+      "linux": {
+        "header": "Linux troubleshooting",
+        "appImage": {
+          "header": "The AppImage file cannot be started.",
+          "body1": "With some Linux operating systems (e. g. newer Ubuntu versions), errors may occur when running AppImage files. You can find information on how to solve the problem in the ",
+          "link": "troubleshooting section of the AppImage homepage",
+          "body2": "."
+        },
+        "imageProcessing": {
+          "header": "The application freezes when loading a project or when importing or displaying images.",
+          "body1": "Depending on the system libraries installed, this error may occur during automatic image conversion. If the problem persists after updating your system, you can run the application with alternative image processing enabled by calling the AppImage file from the command line with the flag ",
+          "flag": "--alternativeImageProcessing",
+          "body2": "."
+        }
+      }
     }
   },
   "contact": {

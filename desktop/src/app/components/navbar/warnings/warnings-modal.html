@@ -282,7 +282,7 @@
                             <document-teaser *ngFor="let targetDocument of section.relationTargets"
                                              [document]="targetDocument"></document-teaser>
                         </div>
-                        <div *ngIf="!section.dataLabel && !section.isRelationField" class="data-info-content"
+                        <div *ngIf="!section.dataLabel && !section.relationTargets" class="data-info-content"
                              i18n="@@navbar.taskbar.warnings.fieldData.none"><i>Keine</i></div>
                     </div>
                     <div *ngIf="section.type === 'unconfiguredCategory'" class="data-info">

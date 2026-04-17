@@ -19,6 +19,7 @@ defmodule Api.Worker.Mapper do
     |> convert_dates(configuration)
     |> convert_period
     |> convert_dating_fields(configuration)
+    |> convert_weight_field
   end
 
   def rename_type_to_category(change = %{ doc: %{ resource: %{ type: _ } }}) do
@@ -118,6 +119,11 @@ defmodule Api.Worker.Mapper do
     put_in(dating_entry, ["type"], "single")
   end
   defp convert_dating_entry(dating_entry), do: dating_entry
+
+  defp convert_weight_field(change = %{ doc: %{ resource: %{ "weight" => weight} }}) when is_number(weight) do
+    put_in(change, [:doc, :resource, "weight"], [%{"inputValue" => weight, "inputUnit" => "g", "isImprecise" => false}])
+  end
+  defp convert_weight_field(change), do: change
 
   defp convert_staff(change = %{ doc: %{ resource: %{ "staff" => staff }}}) do
     put_in(change, [:doc, :resource, "staff"], get_staff_or_campaign_values(staff))

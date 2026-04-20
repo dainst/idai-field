@@ -1,7 +1,6 @@
 defmodule FieldPublication.Publications do
   import Ecto.Changeset
 
-  alias FieldPublication.DatabaseSchema.LogEntry
   alias Phoenix.PubSub
 
   alias FieldPublication.CouchService
@@ -9,9 +8,10 @@ defmodule FieldPublication.Publications do
   alias FieldPublication.Publications.{Data, Search}
 
   alias FieldPublication.DatabaseSchema.{
+    Base,
+    DataIssue,
     ReplicationInput,
-    Publication,
-    Base
+    Publication
   }
 
   @moduledoc """
@@ -339,16 +339,19 @@ defmodule FieldPublication.Publications do
     end
   end
 
-  def put_search_indexing_log(%Publication{} = pub, %LogEntry{} = entry) do
-    get!(pub.project_name, pub.draft_date)
-    |> Map.update(:search_index_logs, [], fn existing -> existing ++ [entry] end)
-    |> put(%{})
+  def clear_data_issues(%Publication{project_name: project_name, draft_date: draft_date}) do
+    get!(project_name, draft_date)
+    |> Map.put(:data_issues, [])
+    |> put()
   end
 
-  def clear_search_indexing_logs(%Publication{} = pub) do
-    get!(pub.project_name, pub.draft_date)
-    |> Map.put(:search_index_logs, [])
-    |> put(%{})
+  def report_data_issue(
+        %Publication{project_name: project_name, draft_date: draft_date},
+        %DataIssue{} = data_issue
+      ) do
+    get!(project_name, draft_date)
+    |> Map.update(:data_issues, [], fn existing -> existing ++ [data_issue] end)
+    |> put()
   end
 
   defp delete_configuration_doc(%Publication{configuration_doc: doc_id}) do

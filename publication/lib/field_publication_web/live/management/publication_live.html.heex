@@ -151,7 +151,6 @@
                   count={@data_state.search_index.counter}
                   max={@data_state.search_index.overall}
                 />
-                <.log_entry_grouped logs={@publication.search_index_logs} />
               </td>
               <td class="text-center">
                 <%= if @search_indexing? do %>
@@ -212,6 +211,14 @@
             </tr>
           </tbody>
         </table>
+
+        <div>
+          <.data_issues
+            logs={@publication.data_issues}
+            project_key={@publication.project_name}
+            draft_date={@publication.draft_date}
+          />
+        </div>
       <% else %>
         <div class="inline-flex items-center">
           <svg

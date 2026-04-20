@@ -1,5 +1,4 @@
 defmodule FieldPublication.Publications.Search do
-  alias FieldPublication.DatabaseSchema.LogEntry
   alias Phoenix.PubSub
 
   alias FieldPublication.Publications
@@ -7,10 +6,7 @@ defmodule FieldPublication.Publications.Search do
   alias FieldPublication.OpenSearchService
   alias FieldPublication.Publications.Data
 
-  alias FieldPublication.DatabaseSchema.{
-    Publication,
-    Project
-  }
+  alias FieldPublication.DatabaseSchema.{DataIssue, Publication, Project}
 
   require Logger
 
@@ -919,7 +915,7 @@ defmodule FieldPublication.Publications.Search do
       }
     )
 
-    Publications.clear_search_indexing_logs(publication)
+    Publications.clear_data_issues(publication)
 
     publication
     |> Publications.Data.get_doc_stream_for_all()
@@ -938,7 +934,7 @@ defmodule FieldPublication.Publications.Search do
         special_input_types
       )
     )
-    |> Stream.chunk_every(100)
+    |> Stream.chunk_every(500)
     |> Enum.map(fn doc_batch ->
       batch_size = Enum.count(doc_batch)
 
@@ -962,15 +958,17 @@ defmodule FieldPublication.Publications.Search do
                       }
                     }
                   } ->
-                    {:ok, entry} =
-                      LogEntry.create(%{
+                    issue =
+                      DataIssue.create!("malformed_geometry", "search_indexing", uuid, %{
                         severity: :error,
-                        key: :malformed_geometry,
-                        message: "Malformed GeoJSON geometry",
-                        metadata: %{uuid: uuid, detailed: reason}
+                        message: reason
                       })
 
-                    Publications.put_search_indexing_log(publication, entry)
+                    Publications.report_data_issue(
+                      publication,
+                      issue
+                    )
+
                     :error
 
                   %{
@@ -983,27 +981,31 @@ defmodule FieldPublication.Publications.Search do
                       }
                     }
                   } ->
-                    {:ok, entry} =
-                      LogEntry.create(%{
+                    issue =
+                      DataIssue.create!("malformed_geometry", "search_indexing", uuid, %{
                         severity: :error,
-                        key: :malformed_geometry,
-                        message: "Malformed GeoJSON geometry",
-                        metadata: %{uuid: uuid, detailed: reason}
+                        message: reason
                       })
 
-                    Publications.put_search_indexing_log(publication, entry)
+                    Publications.report_data_issue(
+                      publication,
+                      issue
+                    )
+
                     :error
 
                   %{"index" => %{"_id" => uuid, "status" => 400, "error" => error}} ->
-                    {:ok, entry} =
-                      LogEntry.create(%{
-                        severity: :warning,
-                        key: :unknown_document_error,
-                        message: "Unknown error when trying to index single document",
-                        metadata: %{uuid: uuid, detailed: inspect(error)}
+                    issue =
+                      DataIssue.create!("unknown", "search_indexing", uuid, %{
+                        severity: :error,
+                        message: inspect(error)
                       })
 
-                    Publications.put_search_indexing_log(publication, entry)
+                    Publications.report_data_issue(
+                      publication,
+                      issue
+                    )
+
                     :error
 
                   _ ->
@@ -1022,15 +1024,16 @@ defmodule FieldPublication.Publications.Search do
               |> Jason.decode!()
               |> inspect()
 
-            {:ok, entry} =
-              LogEntry.create(%{
+            issue =
+              DataIssue.create!("unknown", "search_indexing", nil, %{
                 severity: :error,
-                key: :unknown_batch_error,
-                message: "Unknown error when trying to index document batch",
-                metadata: %{detailed: msg}
+                message: msg
               })
 
-            Publications.put_search_indexing_log(publication, entry)
+            Publications.report_data_issue(
+              publication,
+              issue
+            )
 
             0
         end

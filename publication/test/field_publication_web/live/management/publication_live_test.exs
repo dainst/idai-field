@@ -161,8 +161,7 @@ defmodule FieldPublicationWeb.Management.PublicationLiveTest do
             languages: ["de", "en"],
             version: :major,
             comments: [],
-            replication_logs: logs,
-            processing_logs: []
+            replication_logs: logs
           }
         }
       },

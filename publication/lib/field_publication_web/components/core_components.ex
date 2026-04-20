@@ -16,6 +16,8 @@ defmodule FieldPublicationWeb.CoreComponents do
   """
   use Phoenix.Component
 
+  use FieldPublicationWeb, :verified_routes
+  alias FieldPublication.DatabaseSchema.DataIssue
   alias Phoenix.LiveView.JS
   use Gettext, backend: FieldPublicationWeb.Translate
 
@@ -681,7 +683,7 @@ defmodule FieldPublicationWeb.CoreComponents do
   def log_entry_list(assigns) do
     ~H"""
     <div>
-      <%= for %LogEntry{severity: severity, timestamp: timestamp, message: msg, metadata: metadata} = log <- @logs do %>
+      <%= for %LogEntry{severity: severity, timestamp: timestamp, message: msg} = log <- @logs do %>
         <div class="flex">
           <%= case severity do %>
             <% :error -> %>
@@ -698,55 +700,68 @@ defmodule FieldPublicationWeb.CoreComponents do
     """
   end
 
-  def log_entry_grouped(assigns) do
+  def data_issues(assigns) do
     ~H"""
-    <% grouped = Enum.group_by(@logs, fn log -> log.key end) %>
-    <div class="flex gap-2">
-      <%= for {key, logs} <- grouped do %>
-        <% severity = List.first(logs) |> Map.get(:severity) %>
-
-        <div class="w-full border ">
-          <button
-            class="cursor-pointer text-left"
-            type="button"
-            phx-click={JS.toggle(to: "##{key}-issue-group")}
-          >
-            <%= case severity do %>
-              <% :error -> %>
-                <.icon name="hero-exclamation-triangle" class="bg-red-500" />
-              <% :warning -> %>
-                <.icon name="hero-exclamation-triangle" class="bg-yellow-500" />
-              <% :info -> %>
-                <.icon name="hero-check" class="bg-green-500" />
+    <% grouped = Enum.group_by(@logs, fn log -> log.issue_type_key end) %>
+    <%= for {issue_type_key, issues} <- grouped do %>
+      <details class="p-1 border border-primary hover:border-primary-hover">
+        <summary class="cursor-pointer text-left w-full text-primary hover:text-primary-hover">
+          <.icon name="hero-exclamation-triangle" class={get_severity_icon_color(issues)} />
+          {issue_type_key} ({Enum.count(issues)})
+        </summary>
+        <table class="text-xs w-full">
+          <thead>
+            <tr>
+              <th>Document</th>
+              <th>Issue</th>
+              <th>Reported by</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%= for %DataIssue{log: %LogEntry{message: msg} = log, uuid: uuid, reported_by: reported_by} <- issues do %>
+              <tr>
+                <td class="text-center">
+                  <a href={~p"/projects/#{@project_key}/#{@draft_date}/#{uuid}"} target="new">
+                    {uuid}
+                  </a>
+                </td>
+                <td class="p-1">{msg}</td>
+                <td class="text-center">{reported_by}</td>
+              </tr>
             <% end %>
-            <span class="text-xs text-primary hover:text-primary-hover">
-              {key} ({Enum.count(logs)})
-            </span>
-          </button>
-          <div class="hidden" id={"#{key}-issue-group"}>
-            <%= for log <- logs do %>
-              <div>
-                <.log_entry entry={log} />
-              </div>
-            <% end %>
-          </div>
-        </div>
-      <% end %>
-    </div>
+          </tbody>
+        </table>
+      </details>
+    <% end %>
     """
   end
 
-  def log_entry(%{entry: %{metadata: %{"detailed" => _detailed, "uuid" => _uuid}}} = assigns) do
-    ~H"""
-    {@entry.metadata["uuid"]}: <span class="font-mono">{@entry.metadata["detailed"]}</span>
-    """
+  defp get_severity_icon_color(issues) do
+    issue_example = List.first(issues)
+
+    case issue_example.log.severity do
+      :error ->
+        "bg-red-500"
+
+      :warning ->
+        "bg-yellow-500"
+
+      _ ->
+        ""
+    end
   end
 
-  def log_entry(%{entry: %{metadata: %{"detailed" => _detailed}}} = assigns) do
-    ~H"""
-    {@entry.metadata["detailed"]}
-    """
-  end
+  # def log_entry(%{entry: %{metadata: %{"detailed" => _detailed, "uuid" => _uuid}}} = assigns) do
+  #   ~H"""
+  #   {@entry.metadata["uuid"]}: <span class="font-mono">{@entry.metadata["detailed"]}</span>
+  #   """
+  # end
+
+  # def log_entry(%{entry: %{metadata: %{"detailed" => _detailed}}} = assigns) do
+  #   ~H"""
+  #   {@entry.metadata["detailed"]}
+  #   """
+  # end
 
   def log_entry(assigns) do
     ~H"""

@@ -7,6 +7,7 @@ defmodule FieldPublication.DatabaseSchema.Publication do
 
   alias FieldPublication.DatabaseSchema.{
     Base,
+    DataIssue,
     Translation,
     LogEntry
   }
@@ -34,7 +35,7 @@ defmodule FieldPublication.DatabaseSchema.Publication do
     field(:version, Ecto.Enum, values: [:major, :revision], default: :major)
     embeds_many(:comments, Translation, on_replace: :delete)
     embeds_many(:replication_logs, LogEntry, on_replace: :delete)
-    embeds_many(:search_index_logs, LogEntry, on_replace: :delete)
+    embeds_many(:data_issues, DataIssue, on_replace: :delete)
   end
 
   def changeset(publication, attrs \\ %{}) do
@@ -59,7 +60,7 @@ defmodule FieldPublication.DatabaseSchema.Publication do
       drop_param: :comments_drop
     )
     |> cast_embed(:replication_logs)
-    |> cast_embed(:search_index_logs)
+    |> cast_embed(:data_issues)
     |> Translation.language_unique_constraint(:comments)
     |> validate_required([
       :project_name,

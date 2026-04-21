@@ -24,10 +24,10 @@ defmodule FieldPublication.Processing.WebImage do
 
   @data_report_key "web_image_processing"
 
-  def evaluate_web_images_state(%Publication{project_name: project_name} = publication) do
-    %{image: current_raw_files} = FileService.list_raw_data_files(project_name)
+  def evaluate_web_images_state(%Publication{project_name: project_key} = publication) do
+    %{image: current_raw_files} = FileService.list_raw_data_files(project_key)
 
-    current_web_files = FileService.list_web_image_files(project_name)
+    current_web_files = FileService.list_web_image_files(project_key)
 
     image_categories = Publications.Data.get_image_categories(publication)
 
@@ -72,19 +72,14 @@ defmodule FieldPublication.Processing.WebImage do
     }
   end
 
-  def start(%Publication{project_name: project_name} = publication) do
+  def start(%Publication{project_name: project_key} = publication) do
     %{existing_raw_files: existing_raw_files, summary: summary} =
       evaluate_web_images_state(publication)
-
-    raw_root = FileService.get_raw_data_path(project_name)
-    web_root = FileService.get_web_images_path(project_name)
 
     quarter_of_all_schedulers = trunc(System.schedulers() * 0.25)
 
     concurrent_processes =
       if quarter_of_all_schedulers >= 1, do: quarter_of_all_schedulers, else: 1
-
-    # TODO: Log missing raw files
 
     {:ok, counter_pid} =
       Agent.start_link(fn -> summary end)
@@ -95,17 +90,22 @@ defmodule FieldPublication.Processing.WebImage do
     |> Task.async_stream(
       fn uuid ->
         Logger.debug(
-          "Creating web image (pyramid TIFF) for '#{uuid}' in project '#{publication.project_name}'..."
+          "Creating web image (pyramid TIFF) for '#{uuid}' in project '#{project_key}'..."
         )
 
-        {:ok, file} = Image.new_from_file("#{raw_root}/image/#{uuid}")
+        {:ok, file} =
+          project_key
+          |> FileService.get_raw_image_data_path(uuid)
+          |> Image.new_from_file()
 
         # Apply exif rotation metadata directly to the image data (if present), because we do not
         # want end user's web browser to rotate image tiles because of the metadata.
         {:ok, {file, _}} = Operation.autorot(file)
 
+        target_path = FileService.get_web_images_path(project_key, uuid)
+
         :ok =
-          Operation.tiffsave(file, "#{web_root}/#{uuid}.tif",
+          Operation.tiffsave(file, target_path,
             pyramid: true,
             "tile-height": 256,
             "tile-width": 256,

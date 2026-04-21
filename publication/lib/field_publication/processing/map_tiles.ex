@@ -79,10 +79,8 @@ defmodule FieldPublication.Processing.MapTiles do
     }
   end
 
-  def start(%Publication{} = publication) do
-    # TODO: Construct all paths in FileService module.
-    raw_root = FileService.get_raw_data_path(publication.project_name)
-    tiles_root = FileService.get_map_tiles_path(publication.project_name)
+  def start(%Publication{project_name: project_key} = publication) do
+    tiles_root = FileService.get_map_tiles_base_path(project_key)
 
     %{documents_awaiting_processing: waiting, summary: summary} =
       evaluate_state(publication)
@@ -104,7 +102,12 @@ defmodule FieldPublication.Processing.MapTiles do
       |> Task.async_stream(
         fn
           %{"resource" => %{"id" => uuid, "width" => width, "height" => height}} ->
-            {:ok, image} = Image.new_from_file("#{raw_root}/image/#{uuid}")
+            {:ok, image} =
+              project_key
+              |> FileService.get_raw_image_data_path(uuid)
+              |> Image.new_from_file()
+
+            target_base_path = FileService.get_map_tiles_base_path(project_key, uuid)
 
             max = if width < height, do: height, else: width
 
@@ -120,7 +123,7 @@ defmodule FieldPublication.Processing.MapTiles do
               background: [+0.0],
               extent: :VIPS_EXTEND_BACKGROUND
             )
-            |> Operation.dzsave!("#{tiles_root}/#{uuid}",
+            |> Operation.dzsave!(target_base_path,
               "tile-size": @tile_size,
               suffix: ".webp",
               layout: :VIPS_FOREIGN_DZ_LAYOUT_GOOGLE,

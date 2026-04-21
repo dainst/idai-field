@@ -102,6 +102,6 @@ defmodule FieldPublicationWeb.Api.IIIFImage do
       URI.decode(identifier)
       |> String.split("/")
 
-    "#{FieldPublication.FileService.get_web_images_path(project)}/#{uuid}.tif"
+    FieldPublication.FileService.get_web_images_path(project, uuid)
   end
 end

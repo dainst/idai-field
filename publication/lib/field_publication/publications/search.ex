@@ -947,80 +947,20 @@ defmodule FieldPublication.Publications.Search do
           {:ok, %{status: 200, body: body}} ->
             Jason.decode!(body)
             |> case do
-              %{"errors" => true} = result ->
-                Enum.map(result["items"], fn
-                  # TODO: Move to seperate function
-                  %{
-                    "index" => %{
-                      "_id" => uuid,
-                      "status" => 400,
-                      "error" => %{
-                        "reason" => "failed to parse field [geometry] of type [geo_shape]",
-                        "caused_by" => %{"caused_by" => %{"reason" => reason}}
-                      }
-                    }
-                  } ->
-                    issue =
-                      DataIssue.create!("malformed_geometry", @data_report_key, uuid, %{
-                        severity: :error,
-                        message: reason
-                      })
-
-                    Publications.report_data_issue(
-                      publication,
-                      issue
-                    )
-
-                    :error
-
-                  %{
-                    "index" => %{
-                      "_id" => uuid,
-                      "status" => 400,
-                      "error" => %{
-                        "reason" => "failed to parse field [geometry] of type [geo_shape]",
-                        "caused_by" => %{"reason" => reason}
-                      }
-                    }
-                  } ->
-                    issue =
-                      DataIssue.create!("malformed_geometry", @data_report_key, uuid, %{
-                        severity: :error,
-                        message: reason
-                      })
-
-                    Publications.report_data_issue(
-                      publication,
-                      issue
-                    )
-
-                    :error
-
-                  %{"index" => %{"_id" => uuid, "status" => 400, "error" => error}} ->
-                    issue =
-                      DataIssue.create!("unknown", @data_report_key, uuid, %{
-                        severity: :error,
-                        message: inspect(error)
-                      })
-
-                    Publications.report_data_issue(
-                      publication,
-                      issue
-                    )
-
-                    :error
-
-                  _ ->
-                    :ok
-                end)
-                |> Enum.reject(fn val -> val == :error end)
+              %{"errors" => true} = response ->
+                # Batch was indexed, but atleast one document had an error.
+                response["items"]
+                |> Stream.map(&check_indexing_item_for_error(&1, publication))
+                |> Stream.reject(fn val -> val == :error end)
                 |> Enum.count()
 
               _ ->
+                # Batch was indexed, without any errors.
                 batch_size
             end
 
           {:ok, %{status: 400, body: body}} ->
+            # Batch was not indexed.
             msg =
               body
               |> Jason.decode!()
@@ -1063,6 +1003,85 @@ defmodule FieldPublication.Publications.Search do
 
     switch_active_alias(publication)
     evaluate_system_wide_label_usage()
+  end
+
+  defp check_indexing_item_for_error(
+         %{
+           "index" => %{
+             "_id" => uuid,
+             "status" => 400,
+             "error" => %{
+               "reason" => "failed to parse field [geometry] of type [geo_shape]",
+               "caused_by" => %{"caused_by" => %{"reason" => reason}}
+             }
+           }
+         },
+         %Publication{} = publication
+       ) do
+    issue =
+      DataIssue.create!("malformed_geometry", @data_report_key, uuid, %{
+        severity: :warning,
+        message: reason
+      })
+
+    Publications.report_data_issue(
+      publication,
+      issue
+    )
+
+    :error
+  end
+
+  defp check_indexing_item_for_error(
+         %{
+           "index" => %{
+             "_id" => uuid,
+             "status" => 400,
+             "error" => %{
+               "reason" => "failed to parse field [geometry] of type [geo_shape]",
+               "caused_by" => %{"reason" => reason}
+             }
+           }
+         },
+         %Publication{} = publication
+       ) do
+    issue =
+      DataIssue.create!("malformed_geometry", @data_report_key, uuid, %{
+        severity: :warning,
+        message: reason
+      })
+
+    Publications.report_data_issue(
+      publication,
+      issue
+    )
+
+    :error
+  end
+
+  defp check_indexing_item_for_error(
+         %{"index" => %{"_id" => uuid, "error" => error}},
+         %Publication{} = publication
+       ) do
+    issue =
+      DataIssue.create!("unknown", @data_report_key, uuid, %{
+        severity: :error,
+        message: inspect(error)
+      })
+
+    Publications.report_data_issue(
+      publication,
+      issue
+    )
+
+    :error
+  end
+
+  defp check_indexing_item_for_error(
+         _response_item_without_error,
+         _publication
+       ) do
+    :ok
   end
 
   defp flatten_input_types(

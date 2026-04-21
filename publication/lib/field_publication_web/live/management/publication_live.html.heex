@@ -212,13 +212,11 @@
           </tbody>
         </table>
 
-        <div>
-          <.data_issues
-            logs={@publication.data_issues}
-            project_key={@publication.project_name}
-            draft_date={@publication.draft_date}
-          />
-        </div>
+        <.data_issues
+          logs={@publication.data_issues}
+          project_key={@publication.project_name}
+          draft_date={@publication.draft_date}
+        />
       <% else %>
         <div class="inline-flex items-center">
           <svg

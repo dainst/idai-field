@@ -117,14 +117,18 @@
                       <p class="font-semibold">Actions</p>
                       <ul class="list-disc list-inside">
                         <li>
-                          <.link navigate={~p"/projects/#{project}/#{publication.draft_date}"}>
-                            <.icon name="hero-home-solid w-4 h-4" />
-                            <%= if is_nil(publication.publication_date) do %>
-                              Preview draft
-                            <% else %>
-                              View
-                            <% end %>
-                          </.link>
+                          <%= if is_nil(publication.replication_finished) do %>
+                            Replication still running...
+                          <% else %>
+                            <.link navigate={~p"/projects/#{project}/#{publication.draft_date}"}>
+                              <.icon name="hero-home-solid w-4 h-4" />
+                              <%= if is_nil(publication.publication_date) do %>
+                                Preview draft
+                              <% else %>
+                                View
+                              <% end %>
+                            </.link>
+                          <% end %>
                         </li>
 
                         <li>

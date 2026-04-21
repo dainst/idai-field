@@ -495,7 +495,7 @@ defmodule FieldPublication.Publications.Data do
 
       error ->
         Logger.error("No preview documents for `pub_id`.")
-        Logger.error(error)
+        Logger.error(inspect(error))
         []
     end
   end
@@ -520,7 +520,7 @@ defmodule FieldPublication.Publications.Data do
 
       error ->
         Logger.error("No preview documents for `pub_id`.")
-        Logger.error(error)
+        Logger.error(inspect(error))
         []
     end
   end

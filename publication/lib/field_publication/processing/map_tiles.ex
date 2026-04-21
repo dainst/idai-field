@@ -46,6 +46,11 @@ defmodule FieldPublication.Processing.MapTiles do
 
     missing_raw_files = Enum.map(missing, fn %{"_id" => uuid} -> uuid end) -- current_raw_files
 
+    missing_that_could_be_generated =
+      Enum.reject(missing, fn %{"_id" => uuid} ->
+        uuid in missing_raw_files
+      end)
+
     overall_count = Enum.count(georeferenced_docs)
     existing_count = Enum.count(existing_tiles)
 
@@ -65,7 +70,7 @@ defmodule FieldPublication.Processing.MapTiles do
 
     %{
       existing: existing_tiles,
-      missing: missing,
+      documents_awaiting_processing: missing_that_could_be_generated,
       summary: %{
         overall: overall_count,
         counter: existing_count,
@@ -79,7 +84,7 @@ defmodule FieldPublication.Processing.MapTiles do
     raw_root = FileService.get_raw_data_path(publication.project_name)
     tiles_root = FileService.get_map_tiles_path(publication.project_name)
 
-    %{missing: missing, summary: summary} =
+    %{documents_awaiting_processing: waiting, summary: summary} =
       evaluate_state(publication)
 
     File.mkdir_p!(tiles_root)
@@ -95,10 +100,10 @@ defmodule FieldPublication.Processing.MapTiles do
       if quarter_of_all_schedulers >= 1, do: quarter_of_all_schedulers, else: 1
 
     result =
-      missing
+      waiting
       |> Task.async_stream(
-        fn %{"resource" => %{"id" => uuid, "width" => width, "height" => height}} ->
-          if FileService.raw_data_file_exists?(publication.project_name, uuid, :image) do
+        fn
+          %{"resource" => %{"id" => uuid, "width" => width, "height" => height}} ->
             {:ok, image} = Image.new_from_file("#{raw_root}/image/#{uuid}")
 
             max = if width < height, do: height, else: width
@@ -143,11 +148,18 @@ defmodule FieldPublication.Processing.MapTiles do
                 updated_state
               }
             )
-          else
-            Logger.error(
-              "No raw image file `#{uuid}` for project `#{publication.project_name}`. Unable to create tiles..."
-            )
-          end
+
+          %{"_id" => uuid} ->
+            Publications.report_data_issue(publication, %DataIssue{
+              uuid: uuid,
+              reported_by: @data_report_key,
+              issue_type_key: "invalid_document_structure",
+              log: %LogEntry{
+                severity: :warning,
+                message:
+                  "The document is missing either 'width' or 'height' or both parameters and can not be processed as a map tile as a result."
+              }
+            })
         end,
         max_concurrency: concurrent_processes,
         timeout: 1000 * 60 * 5

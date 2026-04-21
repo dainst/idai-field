@@ -18,7 +18,7 @@ defmodule FieldPublicationWeb.Components.Data.DocumentLink do
     <div class="flex mb-0.5" id={if @id, do: @id, else: "#{@doc.id}_link"}>
       <.link
         navigate={~p"/search?#{%{filters: %{"category" => @doc.category.name}}}"}
-        class="rounded-tl pl-2 rounded-bl"
+        class="rounded-tl pl-2 rounded-bl suppress-link-styling"
         style={"background-color: #{desaturate_category_color(@doc.category.color)}; border-color: #{desaturate_category_color(@doc.category.color)}; border-width: 1px 1px 1px 0px;"}
       >
         <div class="h-full bg-white/70 hover:bg-white/40  pl-2 pr-2 pt-3 pb-3 font-thin hover:text-black text-gray-800">
@@ -26,7 +26,7 @@ defmodule FieldPublicationWeb.Components.Data.DocumentLink do
         </div>
       </.link>
       <.link
-        class="grow p-3 rounded-tr rounded-br hover:bg-(--primary-color)/10"
+        class="grow p-3 rounded-tr rounded-br hover:bg-(--primary-color)/10 suppress-link-styling"
         style={"border-color: #{desaturate_category_color(@doc.category.color)}; border-width: 1px 1px 1px 0px;"}
         navigate={construct_doc_link(@doc.project_key, @doc.publication_draft_date, @doc.id, @focus)}
       >

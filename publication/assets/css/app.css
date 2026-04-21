@@ -59,13 +59,23 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+a.suppress-link-styling {
+    color: black;
+}
+
+
+a.suppress-link-styling:hover {
+    color: black;
+    text-decoration: none;
+}
+
 a {
     color: var(--primary-color);
 }
 
 a:hover {
     color: var(--primary-color-hover);
-    text-decoration: none;
+    text-decoration: underline;
 }
 h1,
 h2,

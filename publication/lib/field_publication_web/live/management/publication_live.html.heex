@@ -1,9 +1,53 @@
 <.back navigate={~p"/management"}>{gettext("Back to management")}</.back>
 <.document_heading>
-  Publication '{@publication.draft_date}' for project '{@publication.project_name}'
+  Publication <span :if={is_nil(@publication.publication_date)}>draft </span>
+  '{@publication.draft_date}' for project '{@publication.project_name}'
 </.document_heading>
 
+<section>
+  <.group_heading>
+    Actions
+  </.group_heading>
+  <ul class="p-4 list-disc list-inside">
+    <%= if is_nil(@publication.publication_date) do %>
+      <li>
+        <.link navigate={~p"/projects/#{@publication.project_name}/#{@publication.draft_date}"}>
+          Preview draft
+        </.link>
+      </li>
+      <li>
+        <button
+          disabled={@publication.replication_finished == nil}
+          class="text-primary hover:text-primary-hover cursor-pointer"
+          class="mt-3 disabled:bg-slate-400"
+          phx-click={JS.push("publish")}
+          data-confirm="Are you sure? This will make all data associated with this draft visible to every site visitor. And you can not reverse the decision without notifying an administrator."
+        >
+          Publish draft
+        </button>
+      </li>
+    <% else %>
+      <li>
+        <.link navigate={~p"/projects/#{@publication.project_name}/#{@publication.draft_date}"}>
+          <.icon name="hero-home-solid" /> View publication
+        </.link>
+      </li>
+    <% end %>
+  </ul>
+</section>
+
+<section>
+  <.group_heading>
+    Metadata
+  </.group_heading>
+</section>
+
 <.form for={@publication_form} phx-change="validate" phx-submit="save">
+  You may review and start the preprocessing steps required for the publication below. You can also add comments specific to this publication, that will be displayed on the publication's project document <.link navigate={
+    ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}"
+  }>
+    <.icon name="hero-home-solid" /> page
+  </.link>. You can still change publication comment after the draft is published.
   <.input type="hidden" field={@publication_form[:project_name]} />
   <.input type="hidden" field={@publication_form[:source_url]} />
   <.input type="hidden" field={@publication_form[:source_project_name]} />
@@ -247,12 +291,3 @@
     </:item>
   </.list>
 </.form>
-<%= if is_nil(@publication.publication_date) do %>
-  <.button
-    disabled={@publication.replication_finished == nil}
-    class="mt-3 w-full disabled:bg-slate-400"
-    phx-click="publish"
-  >
-    Publish
-  </.button>
-<% end %>

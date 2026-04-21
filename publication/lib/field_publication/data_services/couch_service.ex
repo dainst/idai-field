@@ -471,6 +471,10 @@ defmodule FieldPublication.CouchService do
     |> binary_part(0, length)
   end
 
+  def get_document_url(doc_id, database_name \\ @core_database) do
+    "#{local_url()}/#{database_name}/#{doc_id}"
+  end
+
   defp local_url() do
     Application.get_env(:field_publication, :couchdb_url)
   end

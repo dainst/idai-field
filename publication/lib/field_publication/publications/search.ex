@@ -15,6 +15,8 @@ defmodule FieldPublication.Publications.Search do
   external OpenSearch search application.
   """
 
+  @data_report_key "search_indexing"
+
   defmodule SearchDocument do
     @moduledoc """
     Defines the data struct that is used for research data in the OpenSearch index.
@@ -915,7 +917,7 @@ defmodule FieldPublication.Publications.Search do
       }
     )
 
-    Publications.clear_data_issues(publication)
+    Publications.clear_data_issues(publication, @data_report_key)
 
     publication
     |> Publications.Data.get_doc_stream_for_all()
@@ -959,7 +961,7 @@ defmodule FieldPublication.Publications.Search do
                     }
                   } ->
                     issue =
-                      DataIssue.create!("malformed_geometry", "search_indexing", uuid, %{
+                      DataIssue.create!("malformed_geometry", @data_report_key, uuid, %{
                         severity: :error,
                         message: reason
                       })
@@ -982,7 +984,7 @@ defmodule FieldPublication.Publications.Search do
                     }
                   } ->
                     issue =
-                      DataIssue.create!("malformed_geometry", "search_indexing", uuid, %{
+                      DataIssue.create!("malformed_geometry", @data_report_key, uuid, %{
                         severity: :error,
                         message: reason
                       })
@@ -996,7 +998,7 @@ defmodule FieldPublication.Publications.Search do
 
                   %{"index" => %{"_id" => uuid, "status" => 400, "error" => error}} ->
                     issue =
-                      DataIssue.create!("unknown", "search_indexing", uuid, %{
+                      DataIssue.create!("unknown", @data_report_key, uuid, %{
                         severity: :error,
                         message: inspect(error)
                       })
@@ -1025,7 +1027,7 @@ defmodule FieldPublication.Publications.Search do
               |> inspect()
 
             issue =
-              DataIssue.create!("unknown", "search_indexing", nil, %{
+              DataIssue.create!("unknown", @data_report_key, nil, %{
                 severity: :error,
                 message: msg
               })

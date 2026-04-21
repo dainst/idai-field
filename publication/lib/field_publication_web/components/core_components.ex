@@ -704,12 +704,12 @@ defmodule FieldPublicationWeb.CoreComponents do
     ~H"""
     <% grouped = Enum.group_by(@logs, fn log -> log.issue_type_key end) %>
     <%= for {issue_type_key, issues} <- grouped do %>
-      <details class="p-1 border border-primary hover:border-primary-hover">
-        <summary class="cursor-pointer text-left w-full text-primary hover:text-primary-hover">
+      <details class="text-left p-1 border border-primary hover:border-primary-hover mb-0.5 last:mb-0">
+        <summary class="cursor-pointer w-full text-primary hover:text-primary-hover">
           <.icon name="hero-exclamation-triangle" class={get_severity_icon_color(issues)} />
           {issue_type_key} ({Enum.count(issues)})
         </summary>
-        <table class="text-xs w-full">
+        <table class="text-xs w-full table-fixed">
           <thead>
             <tr>
               <th>Document</th>
@@ -719,14 +719,14 @@ defmodule FieldPublicationWeb.CoreComponents do
           </thead>
           <tbody>
             <%= for %DataIssue{log: %LogEntry{message: msg} = log, uuid: uuid, reported_by: reported_by} <- issues do %>
-              <tr>
-                <td class="text-center">
+              <tr class="border-b last:border-b-0">
+                <td class="p-2">
                   <a href={~p"/projects/#{@project_key}/#{@draft_date}/#{uuid}"} target="new">
                     {uuid}
                   </a>
                 </td>
-                <td class="p-1">{msg}</td>
-                <td class="text-center">{reported_by}</td>
+                <td class="p-2">{msg}</td>
+                <td class="p-2">{reported_by}</td>
               </tr>
             <% end %>
           </tbody>

@@ -61,11 +61,6 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
         type == :preview_documents
       end)
 
-    publication_form =
-      publication
-      |> Publication.changeset()
-      |> to_form
-
     translation_options =
       (publication.languages ++ Translate.supported_languages())
       |> Enum.uniq()
@@ -84,7 +79,7 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
       |> assign(:tile_images_processing?, tile_images_processing?)
       |> assign(:search_indexing?, search_indexing?)
       |> assign(:creating_previews?, creating_previews?)
-      |> assign(:publication_form, publication_form)
+      |> publication_updated(publication)
     }
   end
 
@@ -208,17 +203,12 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
         %{assigns: %{publication: publication}} = socket
       ) do
     case Publications.put(publication, publication_form_params) do
-      {:ok, updated_publication} ->
+      {:ok, _updated_publication} ->
+        # The update will get broadcast via PubSub and picked up by the appropriate handle_info/2 definition
+        # below, so we do not need to update the socket here.
         {
           :noreply,
           socket
-          |> assign(:publication, updated_publication)
-          |> assign(
-            :publication_form,
-            updated_publication
-            |> Publication.changeset()
-            |> to_form()
-          )
         }
 
       {:error, changeset} ->
@@ -230,19 +220,11 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
   end
 
   def handle_event("publish", _, %{assigns: %{publication: publication}} = socket) do
-    {:ok, updated_publication} =
-      Publications.put(publication, %{publication_date: Date.utc_today()})
+    Publications.put(publication, %{publication_date: Date.utc_today()})
 
     {
       :noreply,
       socket
-      |> assign(:publication, updated_publication)
-      |> assign(
-        :publication_form,
-        updated_publication
-        |> Publication.changeset()
-        |> to_form()
-      )
     }
   end
 
@@ -425,7 +407,7 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
   def handle_info(%Publication{} = updated_publication, socket) do
     {
       :noreply,
-      assign(socket, :publication, updated_publication)
+      publication_updated(socket, updated_publication)
     }
   end
 
@@ -464,5 +446,16 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
           %{"language" => language, "text" => text}
       end
     end)
+  end
+
+  defp publication_updated(socket, %Publication{} = publication) do
+    socket
+    |> assign(:publication, publication)
+    |> assign(
+      :publication_form,
+      publication
+      |> Publication.changeset()
+      |> to_form
+    )
   end
 end

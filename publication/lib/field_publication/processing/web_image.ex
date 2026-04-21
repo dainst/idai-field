@@ -10,6 +10,8 @@ defmodule FieldPublication.Processing.WebImage do
   alias FieldPublication.Publications
 
   alias FieldPublication.DatabaseSchema.{
+    DataIssue,
+    LogEntry,
     Publication
   }
 
@@ -19,6 +21,8 @@ defmodule FieldPublication.Processing.WebImage do
   This module contains functions for creating TIFF images from raw image data to be served
   by the IIIF image plug.
   """
+
+  @data_report_key "web_image_processing"
 
   def evaluate_web_images_state(%Publication{project_name: project_name} = publication) do
     %{image: current_raw_files} = FileService.list_raw_data_files(project_name)
@@ -41,6 +45,20 @@ defmodule FieldPublication.Processing.WebImage do
 
     overall_count = Enum.count(existing) + Enum.count(missing)
     existing_count = Enum.count(existing)
+
+    Publications.clear_data_issues(publication, @data_report_key)
+
+    Enum.each(missing_raw_files, fn uuid ->
+      Publications.report_data_issue(publication, %DataIssue{
+        uuid: uuid,
+        reported_by: @data_report_key,
+        issue_type_key: "missing_image_file",
+        log: %LogEntry{
+          severity: :warning,
+          message: "Missing raw image file."
+        }
+      })
+    end)
 
     %{
       processed: existing,

@@ -10,9 +10,15 @@ defmodule FieldPublication.Processing.MapTiles do
   alias FieldPublication.FileService
   alias FieldPublication.Publications
   alias FieldPublication.Publications.Data
-  alias FieldPublication.DatabaseSchema.Publication
+
+  alias FieldPublication.DatabaseSchema.{
+    DataIssue,
+    LogEntry,
+    Publication
+  }
 
   @tile_size 256
+  @data_report_key "map_tiles_processing"
 
   @moduledoc """
   This module contains functions for creating image tiles from raw image data to be served as
@@ -25,6 +31,8 @@ defmodule FieldPublication.Processing.MapTiles do
   def evaluate_state(%Publication{} = publication) do
     FileService.initialize!(publication.project_name)
 
+    %{image: current_raw_files} = FileService.list_raw_data_files(publication.project_name)
+
     existing_tiles = FileService.list_tile_image_directories(publication.project_name)
 
     georeferenced_docs =
@@ -36,8 +44,24 @@ defmodule FieldPublication.Processing.MapTiles do
         uuid in existing_tiles
       end)
 
+    missing_raw_files = Enum.map(missing, fn %{"_id" => uuid} -> uuid end) -- current_raw_files
+
     overall_count = Enum.count(georeferenced_docs)
     existing_count = Enum.count(existing_tiles)
+
+    Publications.clear_data_issues(publication, @data_report_key)
+
+    Enum.each(missing_raw_files, fn uuid ->
+      Publications.report_data_issue(publication, %DataIssue{
+        uuid: uuid,
+        reported_by: @data_report_key,
+        issue_type_key: "missing_image_file",
+        log: %LogEntry{
+          severity: :warning,
+          message: "Missing raw image file."
+        }
+      })
+    end)
 
     %{
       existing: existing_tiles,

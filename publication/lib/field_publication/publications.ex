@@ -339,9 +339,23 @@ defmodule FieldPublication.Publications do
     end
   end
 
-  def clear_data_issues(%Publication{project_name: project_name, draft_date: draft_date}) do
-    get!(project_name, draft_date)
-    |> Map.put(:data_issues, [])
+  def clear_data_issues(
+        %Publication{project_name: project_name, draft_date: draft_date},
+        reported_by \\ nil
+      ) do
+    project_name
+    |> get!(draft_date)
+    |> then(fn publication ->
+      if is_nil(reported_by) do
+        Map.put(publication, :data_issues, [])
+      else
+        Map.update!(publication, :data_issues, fn existing ->
+          Enum.reject(existing, fn %DataIssue{reported_by: existing_reported_by} ->
+            existing_reported_by == reported_by
+          end)
+        end)
+      end
+    end)
     |> put()
   end
 

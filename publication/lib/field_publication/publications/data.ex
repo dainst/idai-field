@@ -183,6 +183,9 @@ defmodule FieldPublication.Publications.Data do
       end)
       |> Enum.into(%{})
 
+    # TODO: Instead of saving the hierarchy_mapping as one doc, add each entry to the
+    # appropriate document in the preview database under the key "hierarchy"
+
     document_content =
       CouchService.get_document(publication.hierarchy_doc)
       |> case do
@@ -270,11 +273,14 @@ defmodule FieldPublication.Publications.Data do
         end)
         |> Enum.zip(documents)
         |> Enum.map(fn
+          # TODO: Fix for deleted documents?
           {
             {uuid, %{"ok" => %{"preview" => _res} = existing_doc}},
             %Document{id: id} = new_preview
           }
           when uuid == id ->
+            # For the new preview there already exists a document in the preview database,
+            # so we just update its preview field.
             Map.put(existing_doc, "preview", new_preview)
 
           {
@@ -282,6 +288,7 @@ defmodule FieldPublication.Publications.Data do
             %Document{id: id} = new_preview
           }
           when uuid == id ->
+            # Otherwise, we create a completely new document.
             %{"_id" => id, "preview" => new_preview}
         end)
 

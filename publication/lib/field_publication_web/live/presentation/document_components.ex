@@ -361,9 +361,10 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
   attr :ancestors, :list, default: []
 
   def type(assigns) do
-    ~H"""
-    <h1>Wooohohohhhhhhhhhhhhoho Type</h1>
-    """
+    # ~H"""
+    # <h1>Wooohohohhhhhhhhhhhhoho Type</h1>
+    # """
+    generic(assigns)
   end
 
   attr :publication, Publication, required: true
@@ -371,9 +372,10 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
   attr :ancestors, :list, default: []
 
   def type_catalog(assigns) do
-    ~H"""
-    <h1>Waaahhaahahahahaha Type Catalog</h1>
-    """
+    # ~H"""
+    # <h1>Waaahhaahahahahaha Type Catalog</h1>
+    # """
+    generic(assigns)
   end
 
   attr :publication, Publication, required: true

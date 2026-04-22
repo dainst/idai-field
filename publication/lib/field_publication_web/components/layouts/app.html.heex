@@ -30,7 +30,7 @@
             id="locale-select"
             phx-change={JS.dispatch("click", to: "#submit_language_selection")}
           >
-            <%= for lang <- Gettext.known_locales(FieldPublicationWeb.Translate) do %>
+            <%= for lang <- FieldPublicationWeb.Translate.supported_languages() do %>
               <option
                 value={lang}
                 selected={Gettext.get_locale(FieldPublicationWeb.Translate) == lang}

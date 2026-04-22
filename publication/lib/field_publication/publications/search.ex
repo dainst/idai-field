@@ -6,10 +6,7 @@ defmodule FieldPublication.Publications.Search do
   alias FieldPublication.OpenSearchService
   alias FieldPublication.Publications.Data
 
-  alias FieldPublication.DatabaseSchema.{
-    Publication,
-    Project
-  }
+  alias FieldPublication.DatabaseSchema.{DataIssue, Publication, Project}
 
   require Logger
 
@@ -17,6 +14,8 @@ defmodule FieldPublication.Publications.Search do
   This module contains functions facilitating the interaction between research data and the
   external OpenSearch search application.
   """
+
+  @data_report_key "search_indexing"
 
   defmodule SearchDocument do
     @moduledoc """
@@ -918,6 +917,8 @@ defmodule FieldPublication.Publications.Search do
       }
     )
 
+    Publications.clear_data_issues(publication, @data_report_key)
+
     publication
     |> Publications.Data.get_doc_stream_for_all()
     |> Stream.reject(fn %{"_id" => id} ->
@@ -935,50 +936,56 @@ defmodule FieldPublication.Publications.Search do
         special_input_types
       )
     )
-    |> Stream.chunk_every(100)
+    |> Stream.chunk_every(500)
     |> Enum.map(fn doc_batch ->
       batch_size = Enum.count(doc_batch)
 
-      index_documents(doc_batch, publication)
-      |> case do
-        {:ok, %{status: 200, body: body}} ->
-          Jason.decode!(body)
-          |> case do
-            %{"errors" => true} = result ->
-              Enum.map(result["items"], fn
-                %{"index" => %{"status" => 400} = item} ->
-                  msg = inspect(item)
-                  Logger.warning("Failed to add document to the search index:")
-                  Logger.warning(msg)
+      success_count =
+        doc_batch
+        |> index_documents(publication)
+        |> case do
+          {:ok, %{status: 200, body: body}} ->
+            Jason.decode!(body)
+            |> case do
+              %{"errors" => true} = response ->
+                # Batch was indexed, but atleast one document had an error.
+                response["items"]
+                |> Stream.map(&check_indexing_item_for_error(&1, publication))
+                |> Stream.reject(fn val -> val == :error end)
+                |> Enum.count()
 
-                _ ->
-                  :ok
-              end)
+              _ ->
+                # Batch was indexed, without any errors.
+                batch_size
+            end
 
-            _ ->
-              :ok
-          end
+          {:ok, %{status: 400, body: body}} ->
+            # Batch was not indexed.
+            msg =
+              body
+              |> Jason.decode!()
+              |> inspect()
 
-          :ok
+            issue =
+              DataIssue.create!("unknown", @data_report_key, nil, %{
+                severity: :error,
+                message: msg
+              })
 
-        {:ok, %{status: 400, body: body}} ->
-          msg =
-            body
-            |> Jason.decode!()
-            |> inspect()
+            Publications.report_data_issue(
+              publication,
+              issue
+            )
 
-          Logger.error("Failed to add document batch to search index:")
-          Logger.error(msg)
-
-          :error
-      end
+            0
+        end
 
       updated_state =
         Agent.get_and_update(counter_pid, fn %{counter: counter, overall: overall} = state ->
           state =
             state
-            |> Map.put(:counter, counter + batch_size)
-            |> Map.put(:percentage, (counter + batch_size) / overall * 100)
+            |> Map.put(:counter, counter + success_count)
+            |> Map.put(:percentage, (counter + success_count) / overall * 100)
 
           {state, state}
         end)
@@ -996,6 +1003,85 @@ defmodule FieldPublication.Publications.Search do
 
     switch_active_alias(publication)
     evaluate_system_wide_label_usage()
+  end
+
+  defp check_indexing_item_for_error(
+         %{
+           "index" => %{
+             "_id" => uuid,
+             "status" => 400,
+             "error" => %{
+               "reason" => "failed to parse field [geometry] of type [geo_shape]",
+               "caused_by" => %{"caused_by" => %{"reason" => reason}}
+             }
+           }
+         },
+         %Publication{} = publication
+       ) do
+    issue =
+      DataIssue.create!("malformed_geometry", @data_report_key, uuid, %{
+        severity: :warning,
+        message: reason
+      })
+
+    Publications.report_data_issue(
+      publication,
+      issue
+    )
+
+    :error
+  end
+
+  defp check_indexing_item_for_error(
+         %{
+           "index" => %{
+             "_id" => uuid,
+             "status" => 400,
+             "error" => %{
+               "reason" => "failed to parse field [geometry] of type [geo_shape]",
+               "caused_by" => %{"reason" => reason}
+             }
+           }
+         },
+         %Publication{} = publication
+       ) do
+    issue =
+      DataIssue.create!("malformed_geometry", @data_report_key, uuid, %{
+        severity: :warning,
+        message: reason
+      })
+
+    Publications.report_data_issue(
+      publication,
+      issue
+    )
+
+    :error
+  end
+
+  defp check_indexing_item_for_error(
+         %{"index" => %{"_id" => uuid, "error" => error}},
+         %Publication{} = publication
+       ) do
+    issue =
+      DataIssue.create!("unknown", @data_report_key, uuid, %{
+        severity: :error,
+        message: inspect(error)
+      })
+
+    Publications.report_data_issue(
+      publication,
+      issue
+    )
+
+    :error
+  end
+
+  defp check_indexing_item_for_error(
+         _response_item_without_error,
+         _publication
+       ) do
+    :ok
   end
 
   defp flatten_input_types(

@@ -72,7 +72,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
         value={value}
         id={"#{@field.name}_#{value}"}
       >
-        <.maybe_search_link field={@field}>
+        <.maybe_search_link field={@field} value={value}>
           {text}
         </.maybe_search_link>
       </.maybe_language_select>
@@ -88,34 +88,36 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     <% start_value = @field.value["value"] %>
     <% end_value = @field.value["endValue"] %>
 
-    <.maybe_language_select
-      :let={text}
-      field={@field}
-      hide_selection?={@hide_language_selection?}
-      value={start_value}
-      id={"#{@field.name}_#{start_value}"}
-    >
-      <.maybe_search_link field={@field}>
-        {text}
-      </.maybe_search_link>
-    </.maybe_language_select>
-
-    <%= if end_value do %>
-      -
+    <div class="flex gap-1">
       <.maybe_language_select
         :let={text}
         field={@field}
         hide_selection?={@hide_language_selection?}
-        value={end_value}
-        id={
-          "#{@field.name}_#{end_value}" |> Base.encode16() |> String.replace_prefix("", "language_")
-        }
+        value={start_value}
+        id={"#{@field.name}_#{start_value}"}
       >
-        <.maybe_search_link field={@field}>
+        <.maybe_search_link field={@field} value={start_value}>
           {text}
         </.maybe_search_link>
       </.maybe_language_select>
-    <% end %>
+
+      <%= if end_value do %>
+        -
+        <.maybe_language_select
+          :let={text}
+          field={@field}
+          hide_selection?={@hide_language_selection?}
+          value={end_value}
+          id={
+            "#{@field.name}_#{end_value}" |> Base.encode16() |> String.replace_prefix("", "language_")
+          }
+        >
+          <.maybe_search_link field={@field} value={end_value}>
+            {text}
+          </.maybe_search_link>
+        </.maybe_language_select>
+      <% end %>
+    </div>
     """
   end
 
@@ -279,7 +281,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     # There are also no translated labels for the value.
 
     ~H"""
-    <div>
+    <div class={"#{LanguageSelection.padding()}"}>
       {render_slot(@inner_block, @value)}
     </div>
     """
@@ -289,8 +291,10 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     ~H"""
     <%= case Map.keys(@value) do %>
       <% [one_language_key] -> %>
-        {# If there is only one key, just show that single value.
-        render_slot(@inner_block, @value[one_language_key])}
+        <div class={"#{LanguageSelection.padding()}"}>
+          {# If there is only one key, just show that single value.
+          render_slot(@inner_block, @value[one_language_key])}
+        </div>
       <% _multiple_language_keys -> %>
         <.live_component
           :let={text}
@@ -324,9 +328,11 @@ defmodule FieldPublicationWeb.Components.Data.Field do
         {render_slot(@inner_block, text)}
       </.live_component>
     <% else %>
-      {# there was a map of translations, but this specific value was not
-      # translated so we fallback to just rendering the value
-      render_slot(@inner_block, @value)}
+      <div class={"#{LanguageSelection.padding()}"}>
+        {# there was a map of translations, but this specific value was not
+        # translated so we fallback to just rendering the value
+        render_slot(@inner_block, @value)}
+      </div>
     <% end %>
     """
   end

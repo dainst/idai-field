@@ -253,19 +253,19 @@ defmodule FieldPublication.CouchService do
     |> Finch.request(FieldPublication.Finch)
   end
 
-  @doc """
-  Get a specific document
-
-  Returns `{:ok, Finch.Response.t()}` or `{:error, Exception.t()}` for the deletion attempt. See the https://docs.couchdb.org for possible responses.
-
-  __Parameters__
-  - `doc_id`, the document's id.
-  - `database_name` (optional), the document's database.
-  """
-  def get_document(doc_id, database_name \\ @core_database) do
+  def all_docs(database_name \\ @core_database) do
     Finch.build(
       :get,
-      "#{local_url()}/#{database_name}/#{doc_id}",
+      "#{local_url()}/#{database_name}/_all_docs?include_docs=true",
+      headers()
+    )
+    |> Finch.request(FieldPublication.Finch)
+  end
+
+  def all_design_docs(database_name \\ @core_database) do
+    Finch.build(
+      :get,
+      "#{local_url()}/#{database_name}/_design_docs?include_docs=true",
       headers()
     )
     |> Finch.request(FieldPublication.Finch)
@@ -280,10 +280,19 @@ defmodule FieldPublication.CouchService do
     |> Finch.request(FieldPublication.Finch)
   end
 
-  def all_docs(database_name \\ @core_database) do
+  @doc """
+  Get a specific document
+
+  Returns `{:ok, Finch.Response.t()}` or `{:error, Exception.t()}` for the deletion attempt. See the https://docs.couchdb.org for possible responses.
+
+  __Parameters__
+  - `doc_id`, the document's id.
+  - `database_name` (optional), the document's database.
+  """
+  def get_document(doc_id, database_name \\ @core_database) do
     Finch.build(
       :get,
-      "#{local_url()}/#{database_name}/_all_docs?include_docs=true",
+      "#{local_url()}/#{database_name}/#{doc_id}",
       headers()
     )
     |> Finch.request(FieldPublication.Finch)
@@ -460,6 +469,10 @@ defmodule FieldPublication.CouchService do
     |> :crypto.strong_rand_bytes()
     |> Base.encode64()
     |> binary_part(0, length)
+  end
+
+  def get_document_url(doc_id, database_name \\ @core_database) do
+    "#{local_url()}/#{database_name}/#{doc_id}"
   end
 
   defp local_url() do

@@ -6,18 +6,16 @@ defmodule FieldPublicationWeb.Api.Image do
   alias FieldPublication.FileService
 
   def raw(conn, %{"project_name" => name, "uuid" => uuid} = _params) do
-    base_path = FileService.get_raw_image_data_path(name)
-
-    send_file(conn, 200, "#{base_path}/#{uuid}")
+    send_file(conn, 200, FileService.get_raw_image_data_path(name, uuid))
   end
 
   def tile(
         conn,
         %{"project_name" => name, "uuid" => uuid, "z" => z, "x" => x, "y" => y} = _params
       ) do
-    base_path = FileService.get_map_tiles_path(name)
+    base_path = FileService.get_map_tiles_base_path(name, uuid)
 
-    path = "#{base_path}/#{uuid}/#{z}/#{y}/#{x}.webp"
+    path = "#{base_path}/#{z}/#{y}/#{x}.webp"
 
     if File.exists?(path) do
       cache_type =

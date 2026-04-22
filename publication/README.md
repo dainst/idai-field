@@ -11,10 +11,9 @@ Field Publication is the publication plattform for Field projects.
 
 ## 1. Starting auxiliary services with docker
 
-Field Publication relies on several services:
+Field Publication relies on two other services:
 - [OpenSearch](https://opensearch.org/) as the search engine.
 - [CouchDB](https://couchdb.apache.org) as the database.
-- [Cantaloupe](https://cantaloupe-project.github.io/) as the [IIIF](https://iiif.io/) image server.
 
 The [docker-compose.yml](docker-compose.yml) defines all three services for development. For starting the dockerized services run:
 ```

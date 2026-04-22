@@ -64,8 +64,7 @@ defmodule FieldPublication.Test.ProjectSeed do
     end)
     |> Enum.to_list()
 
-    {:ok, %Finch.Response{status: 201}} =
-      Replication.reconstruct_project_configuraton(publication)
+    :ok = Replication.reconstruct_project_configuraton(publication)
 
     {:ok, %Finch.Response{status: 201}} =
       Publications.Data.recreate_hierarchy_doc(publication)

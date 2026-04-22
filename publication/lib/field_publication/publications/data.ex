@@ -29,6 +29,7 @@ defmodule FieldPublication.Publications.Data do
       :publication_draft_date,
       :category,
       :geometry,
+      description: %{},
       groups: [],
       relations: [],
       image_uuids: [],
@@ -67,6 +68,7 @@ defmodule FieldPublication.Publications.Data do
       identifier: map["identifier"],
       project_key: map["project_key"],
       publication_draft_date: map["publication_draft_date"],
+      description: map["description"],
       category: %Category{
         name: map["category"]["name"],
         labels: map["category"]["labels"],
@@ -233,13 +235,13 @@ defmodule FieldPublication.Publications.Data do
     end)
     |> then(fn
       documents ->
-        {:ok, _cache_database_name} = delete_preview_database(publication)
-        {:ok, cache_database_name} = create_preview_database(publication)
-
         payload =
           Enum.map(documents, fn %Document{id: id} = document ->
             %{_id: id, preview: document}
           end)
+
+        {:ok, _cache_database_name} = delete_preview_database(publication)
+        {:ok, cache_database_name} = create_preview_database(publication)
 
         CouchService.post_documents(payload, cache_database_name)
     end)
@@ -493,7 +495,7 @@ defmodule FieldPublication.Publications.Data do
 
       error ->
         Logger.error("No preview documents for `pub_id`.")
-        Logger.error(error)
+        Logger.error(inspect(error))
         []
     end
   end
@@ -518,8 +520,52 @@ defmodule FieldPublication.Publications.Data do
 
       error ->
         Logger.error("No preview documents for `pub_id`.")
-        Logger.error(error)
+        Logger.error(inspect(error))
         []
+    end
+  end
+
+  def get_preview_document_state(%Publication{} = publication) do
+    preview_db_name = get_preview_database_name(publication)
+    primary_db_name = Publications.get_doc_id(publication)
+
+    with {:ok, %{status: 200, body: preview_response}} <-
+           CouchService.get_database(preview_db_name),
+         {:ok, %{status: 200, body: primary_response}} <-
+           CouchService.get_database(primary_db_name),
+         {:ok, %{status: configuration_doc_status}} <-
+           CouchService.head_document("configuration", primary_db_name),
+         {:ok, %{status: 200, body: design_docs_body}} <-
+           CouchService.all_design_docs(primary_db_name) do
+      %{"total_rows" => design_doc_count} = Jason.decode!(design_docs_body)
+
+      adjustment =
+        if configuration_doc_status == 200 do
+          1
+        else
+          0
+        end + design_doc_count
+
+      %{"doc_count" => preview_doc_count} =
+        Jason.decode!(preview_response)
+
+      %{"doc_count" => primary_doc_count} =
+        Jason.decode!(primary_response)
+
+      primary_doc_count = primary_doc_count - adjustment
+
+      %{
+        counter: preview_doc_count,
+        percentage: preview_doc_count / primary_doc_count * 100,
+        overall: primary_doc_count
+      }
+    else
+      _error ->
+        %{
+          counter: 0,
+          percentage: 0,
+          overall: 0
+        }
     end
   end
 
@@ -734,6 +780,23 @@ defmodule FieldPublication.Publications.Data do
             geometry: resource["geometry"]
           }
 
+        short_description =
+          doc
+          |> get_field_value("shortDescription")
+          |> case do
+            val when is_binary(val) ->
+              # Fallback for older projects.
+              %{"unspecifiedLanguage" => val}
+
+            val when is_map(val) ->
+              val
+
+            _ ->
+              %{}
+          end
+
+        doc = %{doc | description: short_description}
+
         if include_relations do
           child_task_pid =
             Task.async(fn ->
@@ -876,7 +939,7 @@ defmodule FieldPublication.Publications.Data do
     %RelationGroup{
       name: "contains",
       labels:
-        Gettext.known_locales(FieldPublicationWeb.Translate)
+        FieldPublicationWeb.Translate.supported_languages()
         |> Enum.map(fn locale ->
           {
             locale,

@@ -15,7 +15,9 @@ defmodule FieldPublication.Replication.CouchReplication do
 
   require Logger
 
-  def start(%{input: input, publication: %{database: target_database_name}} = parameters) do
+  def start(
+        %{input: input, publication: %{database: target_database_name} = publication} = parameters
+      ) do
     # The replication document will get added to CouchDB's internal database '_replicator' in order to trigger the replication.
     replication_doc =
       create_replication_doc(
@@ -23,7 +25,7 @@ defmodule FieldPublication.Replication.CouchReplication do
         target_database_name
       )
 
-    with {:ok, source_doc_count} <- source_doc_count(input, parameters),
+    with {:ok, source_doc_count} <- source_doc_count(input, publication),
          {:ok, %{status: 201}} <- put_replication_doc(target_database_name, replication_doc) do
       # Once the document has been committed, poll the progress in regular intervals.
       poll_replication_status!(source_doc_count, parameters)
@@ -138,18 +140,18 @@ defmodule FieldPublication.Replication.CouchReplication do
         )
 
         Replication.log(
-          parameters,
+          publication,
           :info,
           "Checking and transforming legacy data."
         )
 
-        %{ok: _successes, errors: errors} = transform_legacy_data(database_name)
+        %{ok: _successes, errors: errors} = transform_legacy_data(publication)
 
         # put_design_documents(database_name)
 
         Enum.map(errors, fn error ->
           Replication.log(
-            parameters,
+            publication,
             :error,
             error
           )
@@ -166,7 +168,7 @@ defmodule FieldPublication.Replication.CouchReplication do
 
       %{"state" => "crashing"} = error ->
         Replication.log(
-          parameters,
+          publication,
           :error,
           "Experienced error while replicating documents, stopping replication."
         )
@@ -182,7 +184,7 @@ defmodule FieldPublication.Replication.CouchReplication do
            source_user: user,
            source_password: password
          },
-         state
+         %Publication{} = publication
        ) do
     Finch.build(
       :get,
@@ -206,7 +208,7 @@ defmodule FieldPublication.Replication.CouchReplication do
               {:ok, update_seq}
           end
 
-        Replication.log(state, :info, "#{count} database documents need replication.")
+        Replication.log(publication, :info, "#{count} database documents need replication.")
 
         result
 
@@ -218,12 +220,12 @@ defmodule FieldPublication.Replication.CouchReplication do
     end
   end
 
-  defp transform_legacy_data(database_name) do
+  defp transform_legacy_data(%Publication{database: database_name} = publication) do
     CouchService.get_document_stream(%{selector: %{}}, database_name)
     |> Stream.map(&legacy_replace_type/1)
     |> Stream.map(&legacy_fix_period/1)
     |> Stream.map(&legacy_remove_attachment/1)
-    |> Stream.map(&legacy_resolve_gazetteer_id/1)
+    |> Stream.map(&legacy_resolve_gazetteer_id(&1, publication))
     |> Stream.map(&legacy_remove_empty_relations/1)
     |> Task.async_stream(
       # Put the documents back into the CouchDB
@@ -292,42 +294,57 @@ defmodule FieldPublication.Replication.CouchReplication do
     doc
   end
 
-  defp legacy_resolve_gazetteer_id(%{"resource" => %{"latitude" => _, "longitude" => _}} = doc) do
+  defp legacy_resolve_gazetteer_id(
+         %{"resource" => %{"latitude" => _, "longitude" => _}} = doc,
+         _publication
+       ) do
     # If latitude and longitude are already present, leave the document as is.
     doc
   end
 
-  defp legacy_resolve_gazetteer_id(%{"resource" => %{"gazId" => gaz_id} = resource} = doc) do
+  defp legacy_resolve_gazetteer_id(
+         %{"resource" => %{"gazId" => gaz_id, "id" => uuid} = resource} = doc,
+         %Publication{} = publication
+       ) do
     # If we only have a gazetteer ID, resolve that ID and extract the coordinates from the iDAI.gazetteer
-    [lon, lat] =
-      Finch.build(
-        :get,
-        "https://gazetteer.dainst.org/doc/#{gaz_id}.json",
-        [
-          {"Content-Type", "application/json"}
-        ]
-      )
-      |> Finch.request(FieldPublication.Finch)
-      |> case do
-        {:ok, %{status: 200, body: body}} ->
+    Finch.build(
+      :get,
+      "https://gazetteer.dainst.org/doc/#{gaz_id}.json",
+      [
+        {"Content-Type", "application/json"}
+      ]
+    )
+    |> Finch.request(FieldPublication.Finch)
+    |> case do
+      {:ok, %{status: 200, body: body}} ->
+        [lon, lat] =
           Jason.decode!(body)
           |> Map.get("prefLocation", %{})
           |> Map.get("coordinates", [nil, nil])
-      end
 
-    if lon != nil and lat != nil do
-      resource =
-        resource
-        |> Map.put("longitude", lon)
-        |> Map.put("latitude", lat)
+        if lon != nil and lat != nil do
+          resource =
+            resource
+            |> Map.put("longitude", lon)
+            |> Map.put("latitude", lat)
 
-      Map.put(doc, "resource", resource)
-    else
-      doc
+          Map.put(doc, "resource", resource)
+        else
+          doc
+        end
+
+      {:ok, %{status: 404}} ->
+        Replication.log(
+          publication,
+          :warning,
+          "Gazetteer place #{gaz_id} not found for '#{uuid}'."
+        )
+
+        doc
     end
   end
 
-  defp legacy_resolve_gazetteer_id(doc) do
+  defp legacy_resolve_gazetteer_id(doc, _publication) do
     doc
   end
 

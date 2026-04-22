@@ -10,9 +10,15 @@ defmodule FieldPublication.Processing.MapTiles do
   alias FieldPublication.FileService
   alias FieldPublication.Publications
   alias FieldPublication.Publications.Data
-  alias FieldPublication.DatabaseSchema.Publication
+
+  alias FieldPublication.DatabaseSchema.{
+    DataIssue,
+    LogEntry,
+    Publication
+  }
 
   @tile_size 256
+  @data_report_key "map_tiles_processing"
 
   @moduledoc """
   This module contains functions for creating image tiles from raw image data to be served as
@@ -25,6 +31,8 @@ defmodule FieldPublication.Processing.MapTiles do
   def evaluate_state(%Publication{} = publication) do
     FileService.initialize!(publication.project_name)
 
+    %{image: current_raw_files} = FileService.list_raw_data_files(publication.project_name)
+
     existing_tiles = FileService.list_tile_image_directories(publication.project_name)
 
     georeferenced_docs =
@@ -36,12 +44,33 @@ defmodule FieldPublication.Processing.MapTiles do
         uuid in existing_tiles
       end)
 
+    missing_raw_files = Enum.map(missing, fn %{"_id" => uuid} -> uuid end) -- current_raw_files
+
+    missing_that_could_be_generated =
+      Enum.reject(missing, fn %{"_id" => uuid} ->
+        uuid in missing_raw_files
+      end)
+
     overall_count = Enum.count(georeferenced_docs)
     existing_count = Enum.count(existing_tiles)
 
+    Publications.clear_data_issues(publication, @data_report_key)
+
+    Enum.each(missing_raw_files, fn uuid ->
+      Publications.report_data_issue(publication, %DataIssue{
+        uuid: uuid,
+        reported_by: @data_report_key,
+        issue_type_key: "missing_image_file",
+        log: %LogEntry{
+          severity: :warning,
+          message: "Missing raw image file."
+        }
+      })
+    end)
+
     %{
       existing: existing_tiles,
-      missing: missing,
+      documents_awaiting_processing: missing_that_could_be_generated,
       summary: %{
         overall: overall_count,
         counter: existing_count,
@@ -50,12 +79,10 @@ defmodule FieldPublication.Processing.MapTiles do
     }
   end
 
-  def start(%Publication{} = publication) do
-    # TODO: Construct all paths in FileService module.
-    raw_root = FileService.get_raw_data_path(publication.project_name)
-    tiles_root = FileService.get_map_tiles_path(publication.project_name)
+  def start(%Publication{project_name: project_key} = publication) do
+    tiles_root = FileService.get_map_tiles_base_path(project_key)
 
-    %{missing: missing, summary: summary} =
+    %{documents_awaiting_processing: waiting, summary: summary} =
       evaluate_state(publication)
 
     File.mkdir_p!(tiles_root)
@@ -71,11 +98,16 @@ defmodule FieldPublication.Processing.MapTiles do
       if quarter_of_all_schedulers >= 1, do: quarter_of_all_schedulers, else: 1
 
     result =
-      missing
+      waiting
       |> Task.async_stream(
-        fn %{"resource" => %{"id" => uuid, "width" => width, "height" => height}} ->
-          if FileService.raw_data_file_exists?(publication.project_name, uuid, :image) do
-            {:ok, image} = Image.new_from_file("#{raw_root}/image/#{uuid}")
+        fn
+          %{"resource" => %{"id" => uuid, "width" => width, "height" => height}} ->
+            {:ok, image} =
+              project_key
+              |> FileService.get_raw_image_data_path(uuid)
+              |> Image.new_from_file()
+
+            target_base_path = FileService.get_map_tiles_base_path(project_key, uuid)
 
             max = if width < height, do: height, else: width
 
@@ -91,7 +123,7 @@ defmodule FieldPublication.Processing.MapTiles do
               background: [+0.0],
               extent: :VIPS_EXTEND_BACKGROUND
             )
-            |> Operation.dzsave!("#{tiles_root}/#{uuid}",
+            |> Operation.dzsave!(target_base_path,
               "tile-size": @tile_size,
               suffix: ".webp",
               layout: :VIPS_FOREIGN_DZ_LAYOUT_GOOGLE,
@@ -119,11 +151,18 @@ defmodule FieldPublication.Processing.MapTiles do
                 updated_state
               }
             )
-          else
-            Logger.error(
-              "No raw image file `#{uuid}` for project `#{publication.project_name}`. Unable to create tiles..."
-            )
-          end
+
+          %{"_id" => uuid} ->
+            Publications.report_data_issue(publication, %DataIssue{
+              uuid: uuid,
+              reported_by: @data_report_key,
+              issue_type_key: "invalid_document_structure",
+              log: %LogEntry{
+                severity: :warning,
+                message:
+                  "The document is missing either 'width' or 'height' or both parameters and can not be processed as a map tile as a result."
+              }
+            })
         end,
         max_concurrency: concurrent_processes,
         timeout: 1000 * 60 * 5

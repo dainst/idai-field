@@ -149,16 +149,16 @@ defmodule FieldPublication.Replication do
 
       task =
         Task.Supervisor.async_nolink(FieldPublication.TaskSupervisor, fn ->
-          log(parameters, :info, "Replicating database for #{publication_id}.")
+          log(publication, :info, "Replicating database for #{publication_id}.")
           CouchReplication.start(parameters)
 
-          log(parameters, :info, "Replicating files for #{publication_id}.")
+          log(publication, :info, "Replicating files for #{publication_id}.")
           FileReplication.start(parameters)
 
           config_task =
             Task.async(fn ->
               log(
-                parameters,
+                publication,
                 :info,
                 "Reconstructing project configuration for '#{publication_id}'."
               )
@@ -168,18 +168,21 @@ defmodule FieldPublication.Replication do
 
           hierarchy_doc_task =
             Task.async(fn ->
-              log(parameters, :info, "Creating hierarchy document for '#{publication_id}'.")
+              log(publication, :info, "Creating hierarchy document for '#{publication_id}'.")
               Publications.Data.recreate_hierarchy_doc(publication)
             end)
 
           [
-            {:ok, %{status: 201}},
+            :ok,
             {:ok, %{status: 201}}
           ] =
-            Task.await_many([
-              config_task,
-              hierarchy_doc_task
-            ])
+            Task.await_many(
+              [
+                config_task,
+                hierarchy_doc_task
+              ],
+              1000 * 60 * 60
+            )
 
           languages =
             CouchService.get_document("configuration", publication.database)
@@ -196,7 +199,7 @@ defmodule FieldPublication.Replication do
                 []
             end
 
-          log(parameters, :info, "Draft creation finished.")
+          log(publication, :info, "Draft creation finished.")
 
           {:ok, %Publication{} = final_publication} =
             Publications.get!(publication.project_name, publication.draft_date)
@@ -307,13 +310,13 @@ defmodule FieldPublication.Replication do
     {:noreply, cleanup(ref, running_replications)}
   end
 
-  def log(%{publication: %Publication{} = publication}, severity, msg) do
+  def log(%Publication{} = publication, severity, msg) do
     case severity do
       :error ->
         Logger.error(msg)
 
       :warning ->
-        Logger.error(msg)
+        Logger.warning(msg)
 
       _ ->
         Logger.debug(msg)
@@ -323,7 +326,8 @@ defmodule FieldPublication.Replication do
       LogEntry.create(%{
         severity: severity,
         timestamp: DateTime.utc_now(),
-        message: msg
+        message: msg,
+        key: :replication_step
       })
 
     Publications.get!(publication.project_name, publication.draft_date)
@@ -341,14 +345,7 @@ defmodule FieldPublication.Replication do
         database: database_name,
         configuration_doc: configuration_doc_name
       }) do
-    configuration_doc =
-      configuration_doc_name
-      |> CouchService.get_document()
-      |> then(fn {:ok, %{body: body}} ->
-        Jason.decode!(body)
-      end)
-
-    full_config =
+    {_logged_output, 0} =
       System.cmd(
         "node",
         [
@@ -360,14 +357,12 @@ defmodule FieldPublication.Replication do
           Application.get_env(:field_publication, :couchdb_url),
           Application.get_env(:field_publication, :couchdb_admin_name),
           Application.get_env(:field_publication, :couchdb_admin_password),
-          source_project_name
+          source_project_name,
+          CouchService.get_document_url(configuration_doc_name)
         ]
       )
-      |> then(fn {full_configuration, 0} ->
-        Map.put(configuration_doc, :config, Jason.decode!(full_configuration))
-      end)
 
-    CouchService.put_document(configuration_doc_name, full_config)
+    :ok
   end
 
   defp cleanup(ref, running_replications) do

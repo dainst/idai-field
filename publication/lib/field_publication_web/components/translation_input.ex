@@ -37,9 +37,7 @@ defmodule FieldPublicationWeb.Components.TranslationInput do
       </button>
     </.group_heading>
 
-    <%= for { _field_name, {msg, _opts}} <- @field.errors do %>
-      <div class="p-2 text-red-700"><.icon name="hero-exclamation-circle-mini" /> {msg}</div>
-    <% end %>
+    <.error :for={{msg, _opts} <- @field.errors}>{msg}</.error>
 
     <div :if={@field.value == []} class="p-2 italic">
       <.icon name="hero-exclamation-triangle" /> {render_slot(@no_translations)}

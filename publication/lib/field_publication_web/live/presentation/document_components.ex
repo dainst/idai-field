@@ -358,6 +358,26 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
 
   attr :publication, Publication, required: true
   attr :doc, Document, required: true
+  attr :ancestors, :list, default: []
+
+  def type(assigns) do
+    ~H"""
+    <h1>Wooohohohhhhhhhhhhhhoho Type</h1>
+    """
+  end
+
+  attr :publication, Publication, required: true
+  attr :doc, Document, required: true
+  attr :ancestors, :list, default: []
+
+  def type_catalog(assigns) do
+    ~H"""
+    <h1>Waaahhaahahahahaha Type Catalog</h1>
+    """
+  end
+
+  attr :publication, Publication, required: true
+  attr :doc, Document, required: true
   attr :lang, :string, required: true
   attr :top_level_docs, :list, required: true
 

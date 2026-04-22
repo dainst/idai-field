@@ -18,7 +18,7 @@ defmodule FieldPublication.Processing.MapTiles do
   }
 
   @tile_size 256
-  @data_report_key "map_tiles_processing"
+  @data_report_key "processing_map_tiles"
 
   @moduledoc """
   This module contains functions for creating image tiles from raw image data to be served as

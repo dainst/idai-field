@@ -22,7 +22,7 @@ defmodule FieldPublication.Processing.WebImage do
   by the IIIF image plug.
   """
 
-  @data_report_key "web_image_processing"
+  @data_report_key "processing_web_image"
 
   def evaluate_web_images_state(%Publication{project_name: project_key} = publication) do
     %{image: current_raw_files} = FileService.list_raw_data_files(project_key)

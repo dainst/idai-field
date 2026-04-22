@@ -15,7 +15,7 @@ defmodule FieldPublication.Publications.Search do
   external OpenSearch search application.
   """
 
-  @data_report_key "search_indexing"
+  @data_report_key "publications_search"
 
   defmodule SearchDocument do
     @moduledoc """

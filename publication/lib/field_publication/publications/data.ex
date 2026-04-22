@@ -17,7 +17,13 @@ defmodule FieldPublication.Publications.Data do
     CouchService
   }
 
-  alias FieldPublication.DatabaseSchema.Publication
+  alias FieldPublication.DatabaseSchema.{
+    DataIssue,
+    LogEntry,
+    Publication
+  }
+
+  @data_report_key "publications_data"
 
   defmodule Document do
     @derive Jason.Encoder
@@ -195,29 +201,35 @@ defmodule FieldPublication.Publications.Data do
   def recreate_document_previews(%Publication{database: db} = publication) do
     config = Publications.get_configuration(publication)
 
+    Publications.clear_data_issues(publication, @data_report_key)
+
+    preview_database_name =
+      create_preview_database(publication)
+      |> case do
+        {:ok, name} ->
+          name
+
+        {:already_exists, name} ->
+          name
+      end
+
     pub_id = Publications.get_doc_id(publication)
 
-    CouchService.all_docs(db)
-    |> case do
-      {:ok, %{status: 200, body: body}} ->
-        body
-        |> Jason.decode!()
-        |> Map.get("rows", [])
-    end
-    |> Enum.reject(fn
-      %{"doc" => %{"resource" => %{"category" => "Configuration"}}} ->
+    CouchService.get_document_stream(%{selector: %{}}, db)
+    |> Stream.reject(fn
+      %{"resource" => %{"category" => "Configuration"}} ->
         true
 
-      %{"doc" => %{"resource" => _}} ->
+      %{"resource" => _} ->
         false
 
       _ ->
         true
     end)
-    |> Enum.map(fn %{"doc" => raw_doc} ->
+    |> Stream.map(fn raw_doc ->
       {raw_doc, apply_project_configuration(raw_doc, config, publication)}
     end)
-    |> Enum.filter(fn
+    |> Stream.filter(fn
       {_raw_doc, %Document{} = _full} ->
         true
 
@@ -227,23 +239,53 @@ defmodule FieldPublication.Publications.Data do
         )
 
         Logger.warning(inspect(error))
+
+        Publications.report_data_issue(publication, %DataIssue{
+          uuid: raw_doc["_id"],
+          issue_type_key: "could_not_apply_project_configuration",
+          reported_by: @data_report_key,
+          log: %LogEntry{
+            severity: :error,
+            message: inspect(error)
+          }
+        })
+
         false
     end)
     |> Enum.map(fn {_raw_doc, %Document{} = doc} ->
       # Remove groups and relations from doc
       %{doc | groups: [], relations: []}
     end)
-    |> then(fn
-      documents ->
-        payload =
-          Enum.map(documents, fn %Document{id: id} = document ->
-            %{_id: id, preview: document}
-          end)
+    |> Stream.chunk_every(500)
+    |> Enum.map(fn documents ->
+      uuids = Enum.map(documents, fn %Document{id: id} -> id end)
 
-        {:ok, _cache_database_name} = delete_preview_database(publication)
-        {:ok, cache_database_name} = create_preview_database(publication)
+      {:ok, %{body: body}} = CouchService.get_documents(uuids, preview_database_name)
 
-        CouchService.post_documents(payload, cache_database_name)
+      payload =
+        Jason.decode!(body)
+        |> Map.get("results", [])
+        |> Enum.map(fn %{"id" => id, "docs" => [doc]} ->
+          {id, doc}
+        end)
+        |> Enum.zip(documents)
+        |> Enum.map(fn
+          {
+            {uuid, %{"ok" => %{"preview" => _res} = existing_doc}},
+            %Document{id: id} = new_preview
+          }
+          when uuid == id ->
+            Map.put(existing_doc, "preview", new_preview)
+
+          {
+            {uuid, _otherwise},
+            %Document{id: id} = new_preview
+          }
+          when uuid == id ->
+            %{"_id" => id, "preview" => new_preview}
+        end)
+
+      CouchService.post_documents(payload, preview_database_name)
     end)
   end
 
@@ -266,7 +308,7 @@ defmodule FieldPublication.Publications.Data do
         {:error, :forbidden}
 
       {:ok, %{status: 412}} ->
-        {:error, :already_exists}
+        {:already_exists, name}
     end
   end
 

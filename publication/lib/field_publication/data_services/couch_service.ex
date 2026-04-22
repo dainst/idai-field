@@ -392,7 +392,7 @@ defmodule FieldPublication.CouchService do
       headers(),
       Jason.encode!(%{docs: docs})
     )
-    |> Finch.request(FieldPublication.Finch)
+    |> Finch.request(FieldPublication.Finch, receive_timeout: 1000 * 60 * 3)
   end
 
   @doc """

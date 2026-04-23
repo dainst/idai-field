@@ -66,9 +66,6 @@ defmodule FieldPublication.Test.ProjectSeed do
 
     :ok = Replication.reconstruct_project_configuraton(publication)
 
-    {:ok, %Finch.Response{status: 201}} =
-      Publications.Data.recreate_hierarchy_doc(publication)
-
     # Expecting one batch created.
     [{:ok, %Finch.Response{status: 201}}] =
       Publications.Data.recreate_document_previews(publication)

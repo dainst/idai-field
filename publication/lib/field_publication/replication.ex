@@ -155,34 +155,13 @@ defmodule FieldPublication.Replication do
           log(publication, :info, "Replicating files for #{publication_id}.")
           FileReplication.start(parameters)
 
-          config_task =
-            Task.async(fn ->
-              log(
-                publication,
-                :info,
-                "Reconstructing project configuration for '#{publication_id}'."
-              )
+          log(
+            publication,
+            :info,
+            "Reconstructing project configuration for '#{publication_id}'."
+          )
 
-              reconstruct_project_configuraton(publication)
-            end)
-
-          hierarchy_doc_task =
-            Task.async(fn ->
-              log(publication, :info, "Creating hierarchy document for '#{publication_id}'.")
-              Publications.Data.recreate_hierarchy_doc(publication)
-            end)
-
-          [
-            :ok,
-            {:ok, %{status: 201}}
-          ] =
-            Task.await_many(
-              [
-                config_task,
-                hierarchy_doc_task
-              ],
-              1000 * 60 * 60
-            )
+          reconstruct_project_configuraton(publication)
 
           languages =
             CouchService.get_document("configuration", publication.database)

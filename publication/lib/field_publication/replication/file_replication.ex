@@ -65,7 +65,7 @@ defmodule FieldPublication.Replication.FileReplication do
     {:ok, counter_pid} =
       Agent.start_link(fn -> %{overall: overall_file_count, counter: 0} end)
 
-    Replication.log(publication, :info, "#{overall_file_count} files need replication.")
+    Replication.persisted_log(publication, :info, "#{overall_file_count} files need replication.")
 
     Enum.each(
       uuid_lists_by_variant,
@@ -83,7 +83,7 @@ defmodule FieldPublication.Replication.FileReplication do
               publication: publication
             })
           end,
-          timeout: 1000 * 60 * 5
+          timeout: 1000 * 60 * 60
         )
         |> Enum.to_list()
       end

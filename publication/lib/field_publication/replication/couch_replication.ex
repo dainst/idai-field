@@ -139,7 +139,7 @@ defmodule FieldPublication.Replication.CouchReplication do
           {:document_replication_count, %{counter: source_doc_count, overall: source_doc_count}}
         )
 
-        Replication.log(
+        Replication.persisted_log(
           publication,
           :info,
           "Checking and transforming legacy data."
@@ -150,7 +150,7 @@ defmodule FieldPublication.Replication.CouchReplication do
         # put_design_documents(database_name)
 
         Enum.map(errors, fn error ->
-          Replication.log(
+          Replication.persisted_log(
             publication,
             :error,
             error
@@ -167,7 +167,7 @@ defmodule FieldPublication.Replication.CouchReplication do
         }
 
       %{"state" => "crashing"} = error ->
-        Replication.log(
+        Replication.persisted_log(
           publication,
           :error,
           "Experienced error while replicating documents, stopping replication."
@@ -208,7 +208,11 @@ defmodule FieldPublication.Replication.CouchReplication do
               {:ok, update_seq}
           end
 
-        Replication.log(publication, :info, "#{count} database documents need replication.")
+        Replication.persisted_log(
+          publication,
+          :info,
+          "#{count} database documents need replication."
+        )
 
         result
 
@@ -334,7 +338,7 @@ defmodule FieldPublication.Replication.CouchReplication do
         end
 
       {:ok, %{status: 404}} ->
-        Replication.log(
+        Replication.persisted_log(
           publication,
           :warning,
           "Gazetteer place #{gaz_id} not found for '#{uuid}'."

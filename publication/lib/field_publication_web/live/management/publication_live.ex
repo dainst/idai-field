@@ -17,11 +17,7 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
     Processing
   }
 
-  alias FieldPublication.DatabaseSchema.{
-    Publication,
-    LogEntry,
-    Translation
-  }
+  alias FieldPublication.DatabaseSchema.Publication
 
   require Logger
 
@@ -69,10 +65,8 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
     {
       :ok,
       socket
-      |> assign(:translation_options, translation_options)
       |> assign(:page_title, "Publication for '#{project_id}' drafted #{draft_date_string}.")
-      |> assign(:publication, publication)
-      |> assign(:replication_logs, publication.replication_logs)
+      |> assign(:translation_options, translation_options)
       |> assign(:replication_progress_state, nil)
       |> assign(:data_state, nil)
       |> assign(:web_images_processing?, web_images_processing?)
@@ -80,12 +74,8 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
       |> assign(:search_indexing?, search_indexing?)
       |> assign(:creating_previews?, creating_previews?)
       |> publication_updated(publication)
+      |> evaluate_replication_state()
     }
-  end
-
-  @impl true
-  def handle_params(_params, _url, socket) do
-    {:noreply, socket}
   end
 
   @impl true
@@ -212,9 +202,6 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
         }
 
       {:error, changeset} ->
-        changeset =
-          Map.put(changeset, "comments", initialize_missing_comments(publication))
-
         {:noreply, assign(socket, :publication_form, to_form(changeset))}
     end
   end
@@ -240,14 +227,6 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
     {:noreply, assign(socket, :data_state, data_state)}
   end
 
-  def handle_info(
-        {:replication_log, %LogEntry{} = log_entry},
-        %{assigns: %{replication_logs: previous}} = socket
-      ) do
-    # Append the new log to the list of existing ones.
-    {:noreply, assign(socket, :replication_logs, previous ++ [log_entry])}
-  end
-
   def handle_info({source, %{counter: counter, overall: overall}}, socket)
       when source in [:file_replication_count, :document_replication_count] and
              counter == overall do
@@ -265,29 +244,10 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
   end
 
   def handle_info({:replication_stopped}, socket) do
-    # Replication was stopped prematurely by a user, the publication got deleted so we redirect the connected
-    # user to the parent project.
+    # Replication was stopped prematurely by a user, or crashed.
     {
       :noreply,
-      push_navigate(socket, to: ~p"/management")
-    }
-  end
-
-  def handle_info({:replication_result, publication}, socket) do
-    # Replication has finished, now check for data consistency and necessary processing tasks.
-    start_data_state_evaluation(publication)
-
-    # Update the form to reflect the final document revision, otherwise making changes based on an old revision will fail.
-    publication_form =
-      publication
-      |> Publication.changeset(%{comments: initialize_missing_comments(publication)})
-      |> to_form()
-
-    {
-      :noreply,
-      socket
-      |> assign(:publication, publication)
-      |> assign(:publication_form, publication_form)
+      evaluate_replication_state(socket)
     }
   end
 
@@ -426,28 +386,6 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
     end)
   end
 
-  defp initialize_missing_comments(%Publication{} = publication) do
-    # The comments are based on a list of %Translation{} schemas. We expect a comment
-    # for every language that is defined as a project language in the publication. This
-    # function initializes missing language variants to an empty string and keeps existing
-    # comments as they are in order to setup the UI form properly.
-
-    publication_languages = publication.languages
-
-    Enum.map(publication_languages, fn project_lang ->
-      Enum.find(publication.comments, fn %Translation{language: lang} ->
-        lang == project_lang
-      end)
-      |> case do
-        nil ->
-          %{"language" => project_lang, "text" => ""}
-
-        %Translation{language: language, text: text} ->
-          %{"language" => language, "text" => text}
-      end
-    end)
-  end
-
   defp publication_updated(socket, %Publication{} = publication) do
     socket
     |> assign(:publication, publication)
@@ -457,5 +395,9 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
       |> Publication.changeset()
       |> to_form
     )
+  end
+
+  defp evaluate_replication_state(%{assigns: %{publication: publication}} = socket) do
+    assign(socket, :replication_state, Replication.show(publication))
   end
 end

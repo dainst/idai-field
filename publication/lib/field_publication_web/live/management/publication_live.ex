@@ -244,7 +244,8 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
   end
 
   def handle_info({:replication_stopped}, socket) do
-    # Replication was stopped prematurely by a user, or crashed.
+    # Replication has finished, was stopped prematurely by a user, or crashed.
+
     {
       :noreply,
       evaluate_replication_state(socket)
@@ -386,7 +387,18 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
     end)
   end
 
-  defp publication_updated(socket, %Publication{} = publication) do
+  defp publication_updated(
+         socket,
+         %Publication{} = publication
+       ) do
+    if Map.has_key?(socket.assigns, :publication) &&
+         is_nil(socket.assigns.publication.replication_finished) &&
+         !is_nil(publication.replication_finished) do
+      # This publication update flipped the replication finished field from `nil` to a date, which
+      # means we just finished the data replication, trigger the data state evaluation.
+      start_data_state_evaluation(publication)
+    end
+
     socket
     |> assign(:publication, publication)
     |> assign(

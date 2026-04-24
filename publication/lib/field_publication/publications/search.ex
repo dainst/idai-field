@@ -6,7 +6,7 @@ defmodule FieldPublication.Publications.Search do
   alias FieldPublication.OpenSearchService
   alias FieldPublication.Publications.Data
 
-  alias FieldPublication.DatabaseSchema.{DataIssue, Publication, Project}
+  alias FieldPublication.DatabaseSchema.{DataIssue, LogEntry, Publication, Project}
 
   require Logger
 
@@ -473,6 +473,16 @@ defmodule FieldPublication.Publications.Search do
       Data.apply_project_configuration(doc, publication_configuration, publication)
       |> case do
         {:error, :unknown_category} ->
+          Publications.report_data_issue(publication, %DataIssue{
+            uuid: res["id"],
+            issue_type_key: "category_not_found_in_configuration",
+            reported_by: @data_report_key,
+            log: %LogEntry{
+              severity: :error,
+              message: "Unknown category for document #{doc["id"]}"
+            }
+          })
+
           Logger.warning("Unknown category for document #{doc["id"]}")
           doc
 
@@ -538,9 +548,18 @@ defmodule FieldPublication.Publications.Search do
               Map.values(values)
 
             values when is_binary(values) ->
-              Logger.warning(
-                "Based on the project configuration expected Map or List values for field '#{field_name}' in '#{res["id"]}', but got '#{values}'."
-              )
+              msg =
+                "Based on the project configuration expected Map or List values for field '#{field_name}', but got '#{values}'."
+
+              Publications.report_data_issue(publication, %DataIssue{
+                uuid: res["id"],
+                issue_type_key: "data_to_configuration_mismatch",
+                reported_by: @data_report_key,
+                log: %LogEntry{
+                  severity: :warning,
+                  message: msg
+                }
+              })
 
               [values]
 

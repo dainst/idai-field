@@ -131,24 +131,12 @@
                   max={@data_state.images.summary.overall}
                 />
               </td>
+
               <td class="text-center">
-                <%= if @web_images_processing? do %>
-                  <.link
-                    class="font-semibold font-mono cursor-pointer"
-                    type="button"
-                    phx-click="stop_web_images_processing"
-                  >
-                    Stop
-                  </.link>
-                <% else %>
-                  <.link
-                    class="font-semibold font-mono cursor-pointer"
-                    type="button"
-                    phx-click="start_web_images_processing"
-                  >
-                    Start
-                  </.link>
-                <% end %>
+                <.processing_button
+                  type={:web_images}
+                  active_processing_tasks={@active_processing_tasks}
+                />
               </td>
             </tr>
             <tr>
@@ -160,23 +148,10 @@
                 />
               </td>
               <td class="text-center">
-                <%= if @tile_images_processing? do %>
-                  <.link
-                    class="font-semibold font-mono cursor-pointer"
-                    type="button"
-                    phx-click="stop_tile_images_processing"
-                  >
-                    Stop
-                  </.link>
-                <% else %>
-                  <.link
-                    class="font-semibold font-mono cursor-pointer"
-                    type="button"
-                    phx-click="start_tile_images_processing"
-                  >
-                    Start
-                  </.link>
-                <% end %>
+                <.processing_button
+                  type={:tile_images}
+                  active_processing_tasks={@active_processing_tasks}
+                />
               </td>
             </tr>
             <tr>
@@ -188,29 +163,16 @@
                 />
               </td>
               <td class="text-center">
-                <%= if @search_indexing? do %>
-                  <.link
-                    class="font-semibold font-mono cursor-pointer"
-                    type="button"
-                    phx-click="stop_search_indexing"
-                  >
-                    Stop
-                  </.link>
-                <% else %>
-                  <.link
-                    class="font-semibold font-mono cursor-pointer"
-                    type="button"
-                    phx-click="start_search_indexing"
-                  >
-                    Start
-                  </.link>
-                <% end %>
+                <.processing_button
+                  type={:search_index}
+                  active_processing_tasks={@active_processing_tasks}
+                />
               </td>
             </tr>
             <tr>
               <td>Preview documents</td>
               <td>
-                <%= if @creating_previews? do %>
+                <%= if :preview_documents in @active_processing_tasks  do %>
                   <div class="text-center ">
                     <.icon
                       name="hero-cog-8-tooth-solid"
@@ -225,63 +187,54 @@
                 <% end %>
               </td>
               <td class="text-center">
-                <%= if @creating_previews? do %>
-                  <.link
-                    class="font-semibold font-mono cursor-pointer"
-                    type="button"
-                    phx-click="stop_preview_creation"
-                  >
-                    Stop
-                  </.link>
-                <% else %>
-                  <.link
-                    class="font-semibold font-mono cursor-pointer"
-                    type="button"
-                    phx-click="start_preview_creation"
-                  >
-                    Start
-                  </.link>
-                <% end %>
+                <.processing_button
+                  type={:preview_documents}
+                  active_processing_tasks={@active_processing_tasks}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Database indices</td>
+              <td>
+                <div class="text-center ">
+                  <%= if :database_indices in @active_processing_tasks  do %>
+                    <.icon
+                      name="hero-cog-8-tooth-solid"
+                      class="h-4 w-4 animate-spin-slow text-primary"
+                    /> Recreating database indices...
+                  <% else %>
+                    <.icon name="hero-check-solid" />
+                  <% end %>
+                </div>
+              </td>
+              <td class="text-center">
+                <.processing_button
+                  type={:database_indices}
+                  active_processing_tasks={@active_processing_tasks}
+                />
               </td>
             </tr>
           </tbody>
         </table>
 
         <.data_issues
+          :if={@active_processing_tasks == []}
           logs={@publication.data_issues}
           project_key={@publication.project_name}
           draft_date={@publication.draft_date}
         />
       <% else %>
-        <div class="inline-flex items-center">
-          <svg
-            class="animate-spin -ml-1 mr-3 h-5 w-5 text-black"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              class="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              stroke-width="4"
-            >
-            </circle>
-            <path
-              class="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-            >
-            </path>
-          </svg>
-          Evaluating data...
-        </div>
+        <.icon
+          name="hero-cog-8-tooth-solid"
+          class="h-4 w-4 animate-spin-slow text-primary"
+        /> Evaluating preprocessing state, please wait...
       <% end %>
     </:item>
 
-    <:item :if={@publication.replication_finished != nil} title="Additional metadata">
+    <:item
+      :if={@publication.replication_finished != nil && @active_processing_tasks == []}
+      title="Additional metadata"
+    >
       <.translation_input
         field={@publication_form[:comments]}
         language_options={@translation_options}

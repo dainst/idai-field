@@ -54,13 +54,20 @@ defmodule FieldPublication.Processing do
     GenServer.call(__MODULE__, {:start, publication, :tile_images})
     GenServer.call(__MODULE__, {:start, publication, :search_index})
     GenServer.call(__MODULE__, {:start, publication, :preview_documents})
+    GenServer.call(__MODULE__, {:start, publication, :database_indices})
   end
 
   @doc """
   Start a processing task as defined by `type` for the given publication.
   """
   def start(%Publication{} = publication, type)
-      when type in [:web_images, :tile_images, :search_index, :preview_documents] do
+      when type in [
+             :web_images,
+             :tile_images,
+             :search_index,
+             :preview_documents,
+             :database_indices
+           ] do
     # Extend the list of atoms in the guard above to support additional processing steps. You
     # still need to implement the  appropriate `handle_call/3` below.
     GenServer.call(__MODULE__, {:start, publication, type})
@@ -84,7 +91,13 @@ defmodule FieldPublication.Processing do
   Get information about the currently running processing task as defined by `type` for the given publication.
   """
   def show(%Publication{} = publication, type)
-      when type in [:web_images, :tile_images, :search_index, :preview_documents] do
+      when type in [
+             :web_images,
+             :tile_images,
+             :search_index,
+             :preview_documents,
+             :database_indices
+           ] do
     GenServer.call(__MODULE__, {:show, Publications.get_doc_id(publication), type})
   end
 
@@ -106,7 +119,13 @@ defmodule FieldPublication.Processing do
   Stop the currently running processing task as defined by `type` for the given publication.
   """
   def stop(%Publication{} = publication, type)
-      when type in [:web_images, :tile_images, :search_index, :preview_documents] do
+      when type in [
+             :web_images,
+             :tile_images,
+             :search_index,
+             :preview_documents,
+             :database_indices
+           ] do
     GenServer.call(__MODULE__, {:stop, Publications.get_doc_id(publication), type})
   end
 
@@ -240,6 +259,38 @@ defmodule FieldPublication.Processing do
     end
   end
 
+  def handle_call(
+        {:start, %Publication{} = publication, :database_indices},
+        _from,
+        running_tasks
+      ) do
+    publication_id = Publications.get_doc_id(publication)
+
+    Enum.any?(running_tasks, fn {_task, type, context} ->
+      publication_id == context and type == :database_indices
+    end)
+    |> if do
+      # The `:preview_documents` task is already running for the given publication, keep the state as-is and return a
+      # `:already_running` atom to the caller.
+      {:reply, :already_running, running_tasks}
+    else
+      task =
+        Task.Supervisor.async_nolink(
+          FieldPublication.ProcessingSupervisor,
+          # Module that implements the actual processing.
+          Publications.Data,
+          # Function within that module to start the processing.
+          :recreate_database_indices,
+          # Parameters for that function.
+          [publication]
+        )
+
+      broadcast(publication_id, :database_indices, :processing_started)
+
+      {:reply, :ok, running_tasks ++ [{task, :database_indices, publication_id}]}
+    end
+  end
+
   def handle_call(:show, _from, running_tasks) do
     {:reply, running_tasks, running_tasks}
   end
@@ -290,12 +341,14 @@ defmodule FieldPublication.Processing do
   def handle_call({:stop, requested_context, requested_type}, _from, running_tasks) do
     Logger.debug("Stopping '#{requested_type}' processing task for #{requested_context}.")
 
-    {[{task, _type, _context}], _remaining_tasks} =
+    {requested_tasks, _remaining_tasks} =
       Enum.split_with(running_tasks, fn {_task, type, context} ->
-        context == requested_context and type == requested_type
+        context == requested_context && type == requested_type
       end)
 
-    Process.exit(task.pid, :stopped)
+    Enum.each(requested_tasks, fn {task, _type, _context} ->
+      Process.exit(task.pid, :stopped)
+    end)
 
     {:reply, :ok, running_tasks}
   end

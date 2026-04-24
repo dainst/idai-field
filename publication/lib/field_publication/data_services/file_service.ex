@@ -35,41 +35,54 @@ defmodule FieldPublication.FileService do
     |> File.rm()
   end
 
-  def get_raw_data_path(project_name) when is_binary(project_name) do
-    "#{@file_store_path}/raw/#{project_name}"
+  def get_raw_data_path(project_key) when is_binary(project_key) do
+    "#{@file_store_path}/raw/#{project_key}"
   end
 
-  def get_raw_image_data_path(project_name) when is_binary(project_name) do
-    "#{get_raw_data_path(project_name)}/image"
+  def get_raw_image_data_path(project_key) when is_binary(project_key) do
+    "#{get_raw_data_path(project_key)}/image"
   end
 
-  def get_web_images_path(project_name) do
-    "#{@file_store_path}/web_images/#{project_name}"
+  def get_raw_image_data_path(project_key, uuid)
+      when is_binary(project_key) and is_binary(uuid) do
+    "#{get_raw_image_data_path(project_key)}/#{uuid}"
   end
 
-  def get_map_tiles_path(project_name) do
-    "#{@file_store_path}/map_tiles/#{project_name}"
+  def get_web_images_path(project_key) do
+    "#{@file_store_path}/web_images/#{project_key}"
   end
 
-  def initialize!(project_name) do
+  def get_web_images_path(project_key, uuid) do
+    "#{get_web_images_path(project_key)}/#{uuid}.tif"
+  end
+
+  def get_map_tiles_base_path(project_key) do
+    "#{@file_store_path}/map_tiles/#{project_key}"
+  end
+
+  def get_map_tiles_base_path(project_key, uuid) do
+    "#{get_map_tiles_base_path(project_key)}/#{uuid}"
+  end
+
+  def initialize!(project_key) do
     [
-      get_raw_image_data_path(project_name),
-      get_web_images_path(project_name),
-      get_map_tiles_path(project_name)
+      get_raw_image_data_path(project_key),
+      get_web_images_path(project_key),
+      get_map_tiles_base_path(project_key)
     ]
     |> Enum.map(&File.mkdir_p!/1)
   end
 
-  def create_map_tiles_subdirectory(project_name, uuid, z_index, x_index) do
-    path = "#{get_map_tiles_path(project_name)}/#{uuid}/#{z_index}/#{x_index}"
+  def create_map_tiles_subdirectory(project_key, uuid, z_index, x_index) do
+    path = "#{get_map_tiles_base_path(project_key)}/#{uuid}/#{z_index}/#{x_index}"
     File.mkdir_p!(path)
   end
 
-  def delete(project_name) do
+  def delete(project_key) do
     [
-      get_raw_data_path(project_name),
-      get_web_images_path(project_name),
-      get_map_tiles_path(project_name)
+      get_raw_data_path(project_key),
+      get_web_images_path(project_key),
+      get_map_tiles_base_path(project_key)
     ]
     |> Enum.map(&File.rm_rf/1)
     |> Enum.reduce_while([], fn result, acc ->
@@ -90,32 +103,32 @@ defmodule FieldPublication.FileService do
     end
   end
 
-  def write_raw_data(project_name, uuid, data, :image) do
-    File.write!("#{get_raw_data_path(project_name)}/image/#{uuid}", data)
+  def write_raw_data(project_key, uuid, data, :image) do
+    File.write!("#{get_raw_data_path(project_key)}/image/#{uuid}", data)
   end
 
-  def read_raw_data(project_name, uuid, :image) do
-    File.read!("#{get_raw_data_path(project_name)}/image/#{uuid}")
+  def read_raw_data(project_key, uuid, :image) do
+    File.read!("#{get_raw_data_path(project_key)}/image/#{uuid}")
   end
 
-  def raw_data_file_exists?(project_name, uuid, :image) do
-    File.exists?("#{get_raw_data_path(project_name)}/image/#{uuid}")
+  def raw_data_file_exists?(project_key, uuid, :image) do
+    File.exists?("#{get_raw_data_path(project_key)}/image/#{uuid}")
   end
 
-  def list_raw_data_files(project_name) do
-    File.ls!(get_raw_data_path(project_name))
+  def list_raw_data_files(project_key) do
+    File.ls!(get_raw_data_path(project_key))
     |> Enum.map(fn directory ->
       {String.to_existing_atom(directory),
-       File.ls!("#{get_raw_data_path(project_name)}/#{directory}")}
+       File.ls!("#{get_raw_data_path(project_key)}/#{directory}")}
     end)
     |> Enum.into(%{})
   end
 
-  def list_web_image_files(project_name) do
-    File.ls!(get_web_images_path(project_name))
+  def list_web_image_files(project_key) do
+    File.ls!(get_web_images_path(project_key))
   end
 
-  def list_tile_image_directories(project_name) do
-    File.ls!(get_map_tiles_path(project_name))
+  def list_tile_image_directories(project_key) do
+    File.ls!(get_map_tiles_base_path(project_key))
   end
 end

@@ -15,3 +15,5 @@ lerna-debug.log
 **/.lsp
 **/.clj-kondo
 
+# dexter is used by Elixir LSPs https://github.com/remoteoss/dexter?tab=readme-ov-file#dexter
+.dexter.db*

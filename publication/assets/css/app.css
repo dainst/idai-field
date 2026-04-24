@@ -3,6 +3,9 @@
 
 @plugin "../js/heroicons.tailwind.plugin.js";
 
+
+/* This file is for your main application CSS */
+
 @font-face {
     font-family: "Cargan";
     src:
@@ -48,14 +51,23 @@
     --color-primary-inverse: var(--primary-color-inverse);
     --color-primary-inverse-hover: var(--primary-color-hover-inverse);
     --color-panel: var(--panel-color);
+    --animate-spin-slow: spin 3s linear infinite;
 }
-
-/* This file is for your main application CSS */
 
 body {
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+a.suppress-link-styling {
+    color: black;
+}
+
+
+a.suppress-link-styling:hover {
+    color: black;
+    text-decoration: none;
 }
 
 a {
@@ -64,7 +76,7 @@ a {
 
 a:hover {
     color: var(--primary-color-hover);
-    text-decoration: none;
+    text-decoration: underline;
 }
 h1,
 h2,

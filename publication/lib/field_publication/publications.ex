@@ -8,9 +8,10 @@ defmodule FieldPublication.Publications do
   alias FieldPublication.Publications.{Data, Search}
 
   alias FieldPublication.DatabaseSchema.{
+    Base,
+    DataIssue,
     ReplicationInput,
-    Publication,
-    Base
+    Publication
   }
 
   @moduledoc """
@@ -140,25 +141,25 @@ defmodule FieldPublication.Publications do
     end
   end
 
-  def get_hierarchy(%Publication{hierarchy_doc: hierarchy_doc_name}) do
-    Cachex.get(:document_cache, hierarchy_doc_name)
-    |> case do
-      {:ok, nil} ->
-        hierarchy =
-          CouchService.get_document(hierarchy_doc_name)
-          |> then(fn {:ok, %{body: body}} ->
-            Jason.decode!(body)
-          end)
-          |> Map.get("hierarchy", [])
+  # def get_hierarchy(%Publication{hierarchy_doc: hierarchy_doc_name}) do
+  #   Cachex.get(:document_cache, hierarchy_doc_name)
+  #   |> case do
+  #     {:ok, nil} ->
+  #       hierarchy =
+  #         CouchService.get_document(hierarchy_doc_name)
+  #         |> then(fn {:ok, %{body: body}} ->
+  #           Jason.decode!(body)
+  #         end)
+  #         |> Map.get("hierarchy", [])
 
-        Cachex.put(:document_cache, hierarchy_doc_name, hierarchy, ttl: 1000 * 60 * 60 * 24 * 7)
+  #       Cachex.put(:document_cache, hierarchy_doc_name, hierarchy, ttl: 1000 * 60 * 60 * 24 * 7)
 
-        hierarchy
+  #       hierarchy
 
-      {:ok, cached} ->
-        cached
-    end
-  end
+  #     {:ok, cached} ->
+  #       cached
+  #   end
+  # end
 
   def get_published(project_name) do
     list(project_name)
@@ -259,9 +260,19 @@ defmodule FieldPublication.Publications do
     Cachex.del(:document_cache, doc_id)
 
     with {:ok, publication} <- apply_action(changeset, :create),
-         {:ok, %{status: 201, body: body}} <- CouchService.put_document(doc_id, publication) do
-      %{"rev" => rev} = Jason.decode!(body)
-      {:ok, Map.put(publication, :_rev, rev)}
+         {:ok, %{status: 201}} <- CouchService.put_document(doc_id, publication) do
+      {:ok, %Publication{} = updated_publication} =
+        CouchService.get_document(doc_id)
+        |> then(fn {:ok, %{status: 200, body: body}} ->
+          %Publication{}
+          |> Publication.changeset(Jason.decode!(body))
+          |> apply_action(:create)
+        end)
+
+      # Map.put(publication, :_rev, rev)
+      broadcast(updated_publication)
+
+      {:ok, updated_publication}
     else
       {:error, %Ecto.Changeset{}} = error ->
         error
@@ -328,6 +339,35 @@ defmodule FieldPublication.Publications do
     end
   end
 
+  def clear_data_issues(
+        %Publication{project_name: project_name, draft_date: draft_date},
+        reported_by \\ nil
+      ) do
+    project_name
+    |> get!(draft_date)
+    |> then(fn publication ->
+      if is_nil(reported_by) do
+        Map.put(publication, :data_issues, [])
+      else
+        Map.update!(publication, :data_issues, fn existing ->
+          Enum.reject(existing, fn %DataIssue{reported_by: existing_reported_by} ->
+            existing_reported_by == reported_by
+          end)
+        end)
+      end
+    end)
+    |> put()
+  end
+
+  def report_data_issue(
+        %Publication{project_name: project_name, draft_date: draft_date},
+        %DataIssue{} = data_issue
+      ) do
+    get!(project_name, draft_date)
+    |> Map.update(:data_issues, [], fn existing -> existing ++ [data_issue] end)
+    |> put()
+  end
+
   defp delete_configuration_doc(%Publication{configuration_doc: doc_id}) do
     CouchService.get_document(doc_id)
     |> case do
@@ -366,6 +406,14 @@ defmodule FieldPublication.Publications do
 
   def get_doc_id(%Publication{} = publication) do
     Base.construct_doc_id(publication, Publication)
+  end
+
+  def broadcast(%Publication{} = publication) do
+    PubSub.broadcast(
+      FieldPublication.PubSub,
+      get_doc_id(publication),
+      publication
+    )
   end
 
   def broadcast(%Publication{} = publication, msg) do

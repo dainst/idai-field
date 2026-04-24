@@ -36,28 +36,24 @@ defmodule FieldPublication.MixProject do
     [
       {:phoenix_live_view, "~> 1.1"},
       {:phoenix_live_dashboard, "~> 0.8"},
-      {:phoenix_ecto, "~> 4.5.1"},
+      {:phoenix_ecto, "~> 4.7"},
       {:phoenix_live_reload, "~> 1.5", only: :dev},
       {:earmark, "~> 1.4"},
-      {:geo, "~> 4.0"},
-      {:esbuild, "~> 0.9", runtime: Mix.env() == :dev},
-      {:tailwind, "~> 0.3", runtime: Mix.env() == :dev},
+      {:geo, "~> 4.1"},
+      {:esbuild, "~> 0.10", runtime: Mix.env() == :dev},
+      {:tailwind, "~> 0.4", runtime: Mix.env() == :dev},
       {:swoosh, "~> 1.18"},
-      {:finch, "~> 0.19"},
-      {:lazy_html, "~> 0.1.8", only: :test},
-      # httpoison is required for reverse_proxy_plug, otherwise it duplicates finch
-      {:httpoison, "~> 2.2"},
-      {:reverse_proxy_plug, "~> 3.0"},
+      {:finch, "~> 0.21"},
+      {:lazy_html, "~> 0.1.10", only: :test},
       {:telemetry_metrics, "~> 1.1"},
       {:telemetry_poller, "~> 1.1"},
-      {:gettext, "~> 0.26"},
+      {:gettext, "~> 1.0"},
       {:jason, "~> 1.4"},
-      {:bandit, "~> 1.8"},
+      {:bandit, "~> 1.10"},
       {:iso639_elixir, "~> 0.2.1"},
-      {:cachex, "~> 4.0"},
-      {:vix, "~> 0.33.0"},
+      {:cachex, "~> 4.1"},
       {:cors_plug, "~> 3.0"},
-      {:iiif_image_plug, "~> 0.7"}
+      {:iiif_image_plug, "~> 1.0"}
     ]
   end
 

@@ -16,6 +16,8 @@ defmodule FieldPublicationWeb.CoreComponents do
   """
   use Phoenix.Component
 
+  use FieldPublicationWeb, :verified_routes
+  alias FieldPublication.DatabaseSchema.DataIssue
   alias Phoenix.LiveView.JS
   use Gettext, backend: FieldPublicationWeb.Translate
 
@@ -681,7 +683,7 @@ defmodule FieldPublicationWeb.CoreComponents do
   def log_entry_list(assigns) do
     ~H"""
     <div>
-      <%= for %LogEntry{severity: severity, timestamp: timestamp, message: msg} <- @logs do %>
+      <%= for %LogEntry{severity: severity, timestamp: timestamp, message: msg} = log <- @logs do %>
         <div class="flex">
           <%= case severity do %>
             <% :error -> %>
@@ -698,26 +700,92 @@ defmodule FieldPublicationWeb.CoreComponents do
     """
   end
 
+  def data_issues(assigns) do
+    ~H"""
+    <% grouped = Enum.group_by(@logs, fn log -> log.issue_type_key end) %>
+    <%= for {issue_type_key, issues} <- grouped do %>
+      <details class="text-left p-1 border border-primary hover:border-primary-hover mb-0.5 last:mb-0">
+        <summary class="cursor-pointer w-full text-primary hover:text-primary-hover">
+          <.icon name="hero-exclamation-triangle" class={get_severity_icon_color(issues)} />
+          {issue_type_key} ({Enum.count(issues)})
+        </summary>
+        <table class="text-xs w-full table-fixed">
+          <thead>
+            <tr>
+              <th>Document</th>
+              <th>Issue</th>
+              <th>Reported by</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%= for %DataIssue{log: %LogEntry{message: msg} = log, uuid: uuid, reported_by: reported_by} <- issues do %>
+              <tr class="border-b last:border-b-0">
+                <td class="p-2">
+                  <a href={~p"/projects/#{@project_key}/#{@draft_date}/#{uuid}"} target="new">
+                    {uuid}
+                  </a>
+                </td>
+                <td class="p-2">{msg}</td>
+                <td class="p-2">{reported_by}</td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </details>
+    <% end %>
+    """
+  end
+
+  defp get_severity_icon_color(issues) do
+    issue_example = List.first(issues)
+
+    case issue_example.log.severity do
+      :error ->
+        "bg-red-500"
+
+      :warning ->
+        "bg-yellow-500"
+
+      _ ->
+        ""
+    end
+  end
+
+  # def log_entry(%{entry: %{metadata: %{"detailed" => _detailed, "uuid" => _uuid}}} = assigns) do
+  #   ~H"""
+  #   {@entry.metadata["uuid"]}: <span class="font-mono">{@entry.metadata["detailed"]}</span>
+  #   """
+  # end
+
+  # def log_entry(%{entry: %{metadata: %{"detailed" => _detailed}}} = assigns) do
+  #   ~H"""
+  #   {@entry.metadata["detailed"]}
+  #   """
+  # end
+
+  def log_entry(assigns) do
+    ~H"""
+    {@entry}
+    """
+  end
+
   @doc """
   Component for displaying a progress bar. If state is nil, the inner slot is rendered as a placeholder.
   """
-  attr(:state, :map, required: true)
-  slot(:inner_block, required: true)
+  attr(:count, :integer, required: true)
+  attr(:max, :integer, required: true)
 
   def progress_bar(assigns) do
     ~H"""
-    <div class="bg-slate-600 relative h-4 w-full text-xs font-semibold text-white">
+    <% percentage = if @max > 0 and @count >= 0, do: trunc(@count / @max * 100), else: 0 %>
+    <div class="bg-primary-hover relative h-4 w-full text-xs font-semibold text-primary-inverse bar-background">
       <div
-        class="bg-indigo-500 absolute top-0 left-0 flex h-full items-center justify-center"
-        style={"width: #{if @state != nil, do: @state.percentage, else: 0}%"}
+        class="bg-primary absolute top-0 left-0 flex h-full items-center justify-center bar-progress"
+        style={"width: #{percentage}%"}
       >
       </div>
       <div class="w-full absolute text-center">
-        <%= if @state do %>
-          {@state.counter} / {@state.overall}
-        <% else %>
-          {render_slot(@inner_block)}
-        <% end %>
+        {@count} / {@max}
       </div>
     </div>
     """

@@ -17,18 +17,16 @@ defmodule FieldPublication.Replication.FileReplication do
                                            :field_hub_to_publication_file_mapping
                                          )
 
-  def start(
-        %{
-          input:
-            %ReplicationInput{
-              source_url: source_url,
-              source_project_name: source_project_name,
-              source_user: source_user,
-              source_password: source_password
-            } = input,
-          publication: %Publication{} = publication
-        } = parameters
-      ) do
+  def start(%{
+        input:
+          %ReplicationInput{
+            source_url: source_url,
+            source_project_name: source_project_name,
+            source_user: source_user,
+            source_password: source_password
+          } = input,
+        publication: %Publication{} = publication
+      }) do
     headers = [
       {"Content-Type", "application/json"},
       {"Authorization", "Basic #{"#{source_user}:#{source_password}" |> Base.encode64()}"}
@@ -67,23 +65,26 @@ defmodule FieldPublication.Replication.FileReplication do
     {:ok, counter_pid} =
       Agent.start_link(fn -> %{overall: overall_file_count, counter: 0} end)
 
-    Replication.log(parameters, :info, "#{overall_file_count} files need replication.")
+    Replication.persisted_log(publication, :info, "#{overall_file_count} files need replication.")
 
     Enum.each(
       uuid_lists_by_variant,
       fn {uuid_list, variant_name, local_variant_name} ->
         uuid_list
-        |> Task.async_stream(fn uuid ->
-          copy_file(%{
-            uuid: uuid,
-            variant_name: variant_name,
-            local_variant_name: local_variant_name,
-            headers: headers,
-            base_url: base_file_url,
-            counter_pid: counter_pid,
-            publication: publication
-          })
-        end)
+        |> Task.async_stream(
+          fn uuid ->
+            copy_file(%{
+              uuid: uuid,
+              variant_name: variant_name,
+              local_variant_name: local_variant_name,
+              headers: headers,
+              base_url: base_file_url,
+              counter_pid: counter_pid,
+              publication: publication
+            })
+          end,
+          timeout: 1000 * 60 * 60
+        )
         |> Enum.to_list()
       end
     )

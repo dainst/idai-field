@@ -1,9 +1,54 @@
 <.back navigate={~p"/management"}>{gettext("Back to management")}</.back>
 <.document_heading>
-  Publication '{@publication.draft_date}' for project '{@publication.project_name}'
+  Publication <span :if={is_nil(@publication.publication_date)}>draft </span>
+  '{@publication.draft_date}' for project '{@publication.project_name}'
 </.document_heading>
 
+<section>
+  <.group_heading>
+    Actions
+  </.group_heading>
+  <ul class="p-4 list-disc list-inside">
+    <%= if is_nil(@publication.publication_date) do %>
+      <li :if={!is_nil(@publication.replication_finished)}>
+        <.link navigate={~p"/projects/#{@publication.project_name}/#{@publication.draft_date}"}>
+          Preview draft
+        </.link>
+      </li>
+      <li>
+        <button
+          disabled={is_nil(@publication.replication_finished)}
+          class="text-primary hover:text-primary-hover disabled:text-black disabled:hover:text-black cursor-pointer disabled:cursor-wait"
+          phx-click={JS.push("publish")}
+          data-confirm="Are you sure? This will make all data associated with this draft visible to every site visitor. And you can not reverse the decision without notifying an administrator."
+        >
+          Publish draft
+        </button>
+      </li>
+    <% else %>
+      <li>
+        <.link navigate={~p"/projects/#{@publication.project_name}/#{@publication.draft_date}"}>
+          <.icon name="hero-home-solid" /> View publication
+        </.link>
+      </li>
+    <% end %>
+  </ul>
+</section>
+
+<section>
+  <.group_heading>
+    Metadata
+  </.group_heading>
+</section>
+
 <.form for={@publication_form} phx-change="validate" phx-submit="save">
+  <div :if={!is_nil(@publication.replication_finished)}>
+    You may review and start the preprocessing steps required for the publication below. You can also add comments specific to this publication, that will be displayed on the publication's project document <.link navigate={
+      ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}"
+    }>
+    <.icon name="hero-home-solid" /> page
+  </.link>. You can still change publication comment after the draft is published.
+  </div>
   <.input type="hidden" field={@publication_form[:project_name]} />
   <.input type="hidden" field={@publication_form[:source_url]} />
   <.input type="hidden" field={@publication_form[:source_project_name]} />
@@ -14,6 +59,7 @@
   <.input type="hidden" field={@publication_form[:hierarchy_doc]} />
   <.input type="hidden" field={@publication_form[:database]} />
   <.input type="hidden" field={@publication_form[:publication_date]} />
+  <.input type="hidden" field={@publication_form[:version]} />
   <%= for {language, index} <- Enum.with_index(@publication_form[:languages].value) do %>
     <input
       type="hidden"
@@ -22,24 +68,12 @@
     />
   <% end %>
 
-  <.inputs_for :let={field} field={@publication_form[:replication_logs]}>
-    <.input type="hidden" field={field[:severity]} />
-    <.input type="hidden" field={field[:timestamp]} />
-    <.input type="hidden" field={field[:message]} />
-  </.inputs_for>
-
-  <.inputs_for :let={field} field={@publication_form[:processing_logs]}>
-    <.input type="hidden" field={field[:severity]} />
-    <.input type="hidden" field={field[:timestamp]} />
-    <.input type="hidden" field={field[:message]} />
-  </.inputs_for>
-
   <.list>
     <:item title="Replication">
-      <div if={@publication.replication_finished}>
+      <div :if={@publication.replication_finished} class="font-thin">
         Replication finished {@publication.replication_finished}.
       </div>
-      <div class="flex flex-wrap gap-2 w-full">
+      <div class="flex flex-wrap p-2 gap-2 w-full">
         <.labeled_value>
           <:label>Source URL</:label>
           {@publication.source_url}
@@ -60,20 +94,25 @@
       </div>
 
       <%= if is_nil(@publication.replication_finished) do %>
-        <.log_entry_list logs={@replication_logs} />
+        <.log_entry_list logs={@publication.replication_logs} />
         <%= if @replication_progress_state do %>
-          <.progress_bar state={@replication_progress_state}></.progress_bar>
+          <.progress_bar
+            count={@replication_progress_state.counter}
+            max={@replication_progress_state.overall}
+          />
         <% end %>
         <button
-          class="font-bold font-mono float-right"
+          :if={@replication_state}
+          class="font-bold font-mono float-right cursor-pointer"
           type="button"
-          phx-click="stop_replication"
+          phx-click={JS.push("stop_replication")}
+          data-confirm="Are you sure?"
         >
           Stop replication
         </button>
       <% end %>
     </:item>
-    <:item title="Preprocessing">
+    <:item :if={@publication.replication_finished != nil} title="Preprocessing">
       <%= if @data_state do %>
         <table class="w-full">
           <thead class="bg-slate-700">
@@ -84,27 +123,18 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="text-center">
-              <td>Missing raw files</td>
-              <td>{Enum.count(@data_state.images.missing_raw_files)}</td>
-              <td>
-                <.link
-                  class="font-semibold font-mono"
-                  navigate={~p"/management/projects/#{@publication.project_name}/publication/new"}
-                >
-                  Redraft publication
-                </.link>
-              </td>
-            </tr>
             <tr>
-              <td class="text-center">Web images</td>
+              <td>Web images</td>
               <td>
-                <.progress_bar state={@data_state.images.summary}></.progress_bar>
+                <.progress_bar
+                  count={@data_state.images.summary.counter}
+                  max={@data_state.images.summary.overall}
+                />
               </td>
               <td class="text-center">
                 <%= if @web_images_processing? do %>
                   <.link
-                    class="font-semibold font-mono"
+                    class="font-semibold font-mono cursor-pointer"
                     type="button"
                     phx-click="stop_web_images_processing"
                   >
@@ -112,7 +142,7 @@
                   </.link>
                 <% else %>
                   <.link
-                    class="font-semibold font-mono"
+                    class="font-semibold font-mono cursor-pointer"
                     type="button"
                     phx-click="start_web_images_processing"
                   >
@@ -122,14 +152,17 @@
               </td>
             </tr>
             <tr>
-              <td class="text-center">Map tile images</td>
+              <td>Map tile images</td>
               <td>
-                <.progress_bar state={@data_state.tiles.summary}></.progress_bar>
+                <.progress_bar
+                  count={@data_state.tiles.summary.counter}
+                  max={@data_state.tiles.summary.overall}
+                />
               </td>
               <td class="text-center">
                 <%= if @tile_images_processing? do %>
                   <.link
-                    class="font-semibold font-mono"
+                    class="font-semibold font-mono cursor-pointer"
                     type="button"
                     phx-click="stop_tile_images_processing"
                   >
@@ -137,7 +170,7 @@
                   </.link>
                 <% else %>
                   <.link
-                    class="font-semibold font-mono"
+                    class="font-semibold font-mono cursor-pointer"
                     type="button"
                     phx-click="start_tile_images_processing"
                   >
@@ -147,14 +180,17 @@
               </td>
             </tr>
             <tr>
-              <td class="text-center">Search index</td>
+              <td>Search index</td>
               <td>
-                <.progress_bar state={@data_state.search_index}></.progress_bar>
+                <.progress_bar
+                  count={@data_state.search_index.counter}
+                  max={@data_state.search_index.overall}
+                />
               </td>
               <td class="text-center">
                 <%= if @search_indexing? do %>
                   <.link
-                    class="font-semibold font-mono"
+                    class="font-semibold font-mono cursor-pointer"
                     type="button"
                     phx-click="stop_search_indexing"
                   >
@@ -162,7 +198,7 @@
                   </.link>
                 <% else %>
                   <.link
-                    class="font-semibold font-mono"
+                    class="font-semibold font-mono cursor-pointer"
                     type="button"
                     phx-click="start_search_indexing"
                   >
@@ -171,8 +207,51 @@
                 <% end %>
               </td>
             </tr>
+            <tr>
+              <td>Preview documents</td>
+              <td>
+                <%= if @creating_previews? do %>
+                  <div class="text-center ">
+                    <.icon
+                      name="hero-cog-8-tooth-solid"
+                      class="h-4 w-4 animate-spin-slow text-primary"
+                    /> Populating preview document database...
+                  </div>
+                <% else %>
+                  <.progress_bar
+                    count={@data_state.preview_documents.counter}
+                    max={@data_state.preview_documents.overall}
+                  />
+                <% end %>
+              </td>
+              <td class="text-center">
+                <%= if @creating_previews? do %>
+                  <.link
+                    class="font-semibold font-mono cursor-pointer"
+                    type="button"
+                    phx-click="stop_preview_creation"
+                  >
+                    Stop
+                  </.link>
+                <% else %>
+                  <.link
+                    class="font-semibold font-mono cursor-pointer"
+                    type="button"
+                    phx-click="start_preview_creation"
+                  >
+                    Start
+                  </.link>
+                <% end %>
+              </td>
+            </tr>
           </tbody>
         </table>
+
+        <.data_issues
+          logs={@publication.data_issues}
+          project_key={@publication.project_name}
+          draft_date={@publication.draft_date}
+        />
       <% else %>
         <div class="inline-flex items-center">
           <svg
@@ -202,26 +281,16 @@
       <% end %>
     </:item>
 
-    <:item title="Additional metadata">
-      <.input type="select" field={@publication_form[:version]} options={[:major, :revision]} />
+    <:item :if={@publication.replication_finished != nil} title="Additional metadata">
       <.translation_input
         field={@publication_form[:comments]}
-        language_options={["en", "de"]}
+        language_options={@translation_options}
       >
         <:heading>Publication comments</:heading>
         <:no_translations>No comments for this publication</:no_translations>
       </.translation_input>
 
-      <.button>Save changes</.button>
+      <.button class="mt-4" phx-disable-with="Saving...">Save changes</.button>
     </:item>
   </.list>
 </.form>
-<%= unless @publication.publication_date do %>
-  <.button
-    disabled={@publication.replication_finished == nil}
-    class="mt-3 w-full disabled:bg-slate-400"
-    phx-click="publish"
-  >
-    Publish
-  </.button>
-<% end %>

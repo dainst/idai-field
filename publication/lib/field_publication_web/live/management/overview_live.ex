@@ -90,6 +90,23 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
     {:noreply, assign_projects(socket)}
   end
 
+  def handle_event(
+        "delete-publication",
+        %{"project_key" => project_key, "draft_date" => draft_date},
+        socket
+      ) do
+    Publications.get(project_key, draft_date)
+    |> case do
+      {:ok, publication} ->
+        Publications.delete(publication)
+
+      _ ->
+        :ok
+    end
+
+    {:noreply, assign_projects(socket)}
+  end
+
   def handle_event("reindex_all_search_indices", _, socket) do
     Publications.list()
     |> Enum.each(&Processing.start(&1, :search_index))

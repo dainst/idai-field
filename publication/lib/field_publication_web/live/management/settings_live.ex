@@ -82,6 +82,15 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
                 background-color:  <%= color_scheme[:primary_hover].value %>;
                 color: <%= color_scheme[:primary_inverse_hover].value %>;
               }
+
+              .bar-background{
+                background-color: <%= color_scheme[:primary].value %>;
+                color: <%= color_scheme[:primary_inverse].value %>;
+              }
+
+              .bar-progress {
+                background-color: <%= color_scheme[:primary_hover].value %>;
+              }
             </style>
             <a class="cursor-pointer example_link">
               Example link
@@ -89,6 +98,16 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
 
             <div class="rounded p-2 mt-2 cursor-pointer example_button">
               Example button
+            </div>
+
+            <div class="mt-2">
+              Example progress bars
+              <div class="flex flex-col gap-1">
+                <.progress_bar count={0} max={100} />
+                <.progress_bar count={25} max={100} />
+                <.progress_bar count={50} max={100} />
+                <.progress_bar count={100} max={100} />
+              </div>
             </div>
           </div>
         </div>

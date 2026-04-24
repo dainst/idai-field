@@ -64,13 +64,10 @@ defmodule FieldPublication.Test.ProjectSeed do
     end)
     |> Enum.to_list()
 
-    {:ok, %Finch.Response{status: 201}} =
-      Replication.reconstruct_project_configuraton(publication)
+    :ok = Replication.reconstruct_project_configuraton(publication)
 
-    {:ok, %Finch.Response{status: 201}} =
-      Publications.Data.recreate_hierarchy_doc(publication)
-
-    {:ok, %Finch.Response{status: 201}} =
+    # Expecting one batch created.
+    [{:ok, %Finch.Response{status: 201}}] =
       Publications.Data.recreate_document_previews(publication)
 
     seed_image_directory = "test/support/fixtures/seed_project/images/"
@@ -98,6 +95,10 @@ defmodule FieldPublication.Test.ProjectSeed do
     %{field_labels: _, category_labels: _} = Publications.Search.index_documents(publication)
 
     {:ok, _} = Publications.Search.set_project_alias(publication)
+
+    # Load latest document, otherwise the put below will error with a revision conflict.
+    publication =
+      FieldPublication.Publications.get!(publication.project_name, publication.draft_date)
 
     {:ok, %FieldPublication.DatabaseSchema.Publication{} = publication} =
       Publications.put(publication, %{

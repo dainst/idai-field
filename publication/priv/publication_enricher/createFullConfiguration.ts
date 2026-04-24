@@ -16,6 +16,7 @@ const couchdbUrl = process.argv[3];
 const couchdbUser = process.argv[4];
 const couchdbPassword = process.argv[5];
 const originalProjectKey = process.argv[6];
+const targetDocumentURL = process.argv[7];
 
 async function start() {
     const configurationDocument = await getConfigurationDocument();
@@ -87,6 +88,29 @@ function getForest(
     }, projectConfiguration.getCategories());
 }
 
-start().then((result) => {
-    console.log(result);
+start().then(async (result) => {
+    const response = await axios.get(targetDocumentURL,
+        {
+            auth: {
+                username: couchdbUser,
+                password: couchdbPassword,
+            },
+        });
+
+    let doc = response.data
+
+    // Add or replace previous configuration with the new one.
+    doc["config"] = JSON.parse(result)
+
+    await axios.put(
+        targetDocumentURL,
+        doc,
+        {
+            auth: {
+                username: couchdbUser,
+                password: couchdbPassword,
+            },
+        }
+    )
+    console.log(`configuration saved at ${targetDocumentURL}`);
 });

@@ -5,6 +5,7 @@ defmodule FieldPublicationWeb.Components.ClipboardCopy do
   attr :copy_value, :string, required: true
   slot :inner_block, required: true
 
+  @impl true
   def render(assigns) do
     ~H"""
     <a class="cursor-pointer" id={@id} phx-hook="CopyToClipboard" valueToCopy={@copy_value}>

@@ -3,7 +3,7 @@ defmodule FieldPublicationWeb.Components.LanguageSelection do
 
   def render(assigns) do
     ~H"""
-    <div class="flex p-0.5 gap-1 relative">
+    <div class={"flex #{padding()} gap-1 relative"}>
       <div class="absolute bg-white w-full z-50 hidden flex-col gap-0.5" id={"#{@id}_dropdown"}>
         <%= for language_key <- @language_keys do %>
           <button
@@ -71,4 +71,6 @@ defmodule FieldPublicationWeb.Components.LanguageSelection do
       assign(socket, :selected, lang)
     }
   end
+
+  def padding(), do: "p-0.5"
 end

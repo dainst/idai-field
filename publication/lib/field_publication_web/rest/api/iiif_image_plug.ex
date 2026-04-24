@@ -11,6 +11,10 @@ defmodule FieldPublicationWeb.Api.IIIFImage do
 
   @response_headers Application.compile_env(:field_publication, :iiif_response_headers, [])
 
+  # TODO:
+  # Caching for low resolution full images (i.e. thumbnails)?
+  # setting response header to private for all images that have not yet been published, similar to the tile endpoint.
+
   @impl true
   def data_metadata(identifier) do
     path = identifier_to_path(identifier)
@@ -102,6 +106,6 @@ defmodule FieldPublicationWeb.Api.IIIFImage do
       URI.decode(identifier)
       |> String.split("/")
 
-    "#{FieldPublication.FileService.get_web_images_path(project)}/#{uuid}.tif"
+    FieldPublication.FileService.get_web_images_path(project, uuid)
   end
 end

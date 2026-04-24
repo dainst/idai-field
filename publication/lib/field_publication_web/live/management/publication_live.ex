@@ -1,4 +1,5 @@
 defmodule FieldPublicationWeb.Management.PublicationLive do
+  alias FieldPublicationWeb.Translate
   use FieldPublicationWeb, :live_view
 
   import FieldPublicationWeb.Components.TranslationInput
@@ -16,17 +17,14 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
     Processing
   }
 
-  alias FieldPublication.DatabaseSchema.{
-    Publication,
-    LogEntry,
-    Translation
-  }
+  alias FieldPublication.DatabaseSchema.Publication
 
   require Logger
 
   @impl true
   def mount(%{"project_id" => project_id, "draft_date" => draft_date_string}, _session, socket) do
-    publication = Publications.get!(project_id, draft_date_string)
+    %Publication{} = publication = Publications.get!(project_id, draft_date_string)
+
     channel = Publications.get_doc_id(publication)
 
     PubSub.subscribe(FieldPublication.PubSub, channel)
@@ -54,31 +52,30 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
         type == :search_index
       end)
 
-    publication_form =
-      publication
-      |> Publication.changeset()
-      |> to_form
+    creating_previews? =
+      Enum.any?(processing_tasks_running, fn {_task_ref, type, _publication_id} ->
+        type == :preview_documents
+      end)
+
+    translation_options =
+      (publication.languages ++ Translate.supported_languages())
+      |> Enum.uniq()
+      |> Enum.sort()
 
     {
       :ok,
       socket
-      |> assign(:today, Date.utc_today())
-      |> assign(:channel, channel)
       |> assign(:page_title, "Publication for '#{project_id}' drafted #{draft_date_string}.")
-      |> assign(:publication, publication)
-      |> assign(:replication_logs, publication.replication_logs)
+      |> assign(:translation_options, translation_options)
       |> assign(:replication_progress_state, nil)
       |> assign(:data_state, nil)
       |> assign(:web_images_processing?, web_images_processing?)
       |> assign(:tile_images_processing?, tile_images_processing?)
       |> assign(:search_indexing?, search_indexing?)
-      |> assign(:publication_form, publication_form)
+      |> assign(:creating_previews?, creating_previews?)
+      |> publication_updated(publication)
+      |> evaluate_replication_state()
     }
-  end
-
-  @impl true
-  def handle_params(_params, _url, socket) do
-    {:noreply, socket}
   end
 
   @impl true
@@ -154,6 +151,26 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
   end
 
   def handle_event(
+        "start_preview_creation",
+        _,
+        %{assigns: %{publication: publication}} = socket
+      ) do
+    Processing.start(publication, :preview_documents)
+
+    {:noreply, socket}
+  end
+
+  def handle_event(
+        "stop_preview_creation",
+        _,
+        %{assigns: %{publication: publication}} = socket
+      ) do
+    Processing.stop(publication, :preview_documents)
+
+    {:noreply, socket}
+  end
+
+  def handle_event(
         "validate",
         %{"publication" => form_parameters},
         socket
@@ -176,41 +193,25 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
         %{assigns: %{publication: publication}} = socket
       ) do
     case Publications.put(publication, publication_form_params) do
-      {:ok, updated_publication} ->
+      {:ok, _updated_publication} ->
+        # The update will get broadcast via PubSub and picked up by the appropriate handle_info/2 definition
+        # below, so we do not need to update the socket here.
         {
           :noreply,
           socket
-          |> assign(:publication, updated_publication)
-          |> assign(
-            :publication_form,
-            updated_publication
-            |> Publication.changeset()
-            |> to_form()
-          )
         }
 
       {:error, changeset} ->
-        changeset =
-          Map.put(changeset, "comments", initialize_missing_comments(publication))
-
         {:noreply, assign(socket, :publication_form, to_form(changeset))}
     end
   end
 
   def handle_event("publish", _, %{assigns: %{publication: publication}} = socket) do
-    {:ok, updated_publication} =
-      Publications.put(publication, %{publication_date: Date.utc_today()})
+    Publications.put(publication, %{publication_date: Date.utc_today()})
 
     {
       :noreply,
       socket
-      |> assign(:publication, updated_publication)
-      |> assign(
-        :publication_form,
-        updated_publication
-        |> Publication.changeset()
-        |> to_form()
-      )
     }
   end
 
@@ -224,14 +225,6 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
     # We don't care about the processes DOWN message now, so let's demonitor and flush it.
     Process.demonitor(ref, [:flush])
     {:noreply, assign(socket, :data_state, data_state)}
-  end
-
-  def handle_info(
-        {:replication_log, %LogEntry{} = log_entry},
-        %{assigns: %{replication_logs: previous}} = socket
-      ) do
-    # Append the new log to the list of existing ones.
-    {:noreply, assign(socket, :replication_logs, previous ++ [log_entry])}
   end
 
   def handle_info({source, %{counter: counter, overall: overall}}, socket)
@@ -251,29 +244,11 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
   end
 
   def handle_info({:replication_stopped}, socket) do
-    # Replication was stopped prematurely by a user, the publication got deleted so we redirect the connected
-    # user to the parent project.
-    {
-      :noreply,
-      push_navigate(socket, to: ~p"/management")
-    }
-  end
-
-  def handle_info({:replication_result, publication}, socket) do
-    # Replication has finished, now check for data consistency and necessary processing tasks.
-    start_data_state_evaluation(publication)
-
-    # Update the form to reflect the final document revision, otherwise making changes based on an old revision will fail.
-    publication_form =
-      publication
-      |> Publication.changeset(%{comments: initialize_missing_comments(publication)})
-      |> to_form()
+    # Replication has finished, was stopped prematurely by a user, or crashed.
 
     {
       :noreply,
-      socket
-      |> assign(:publication, publication)
-      |> assign(:publication_form, publication_form)
+      evaluate_replication_state(socket)
     }
   end
 
@@ -370,14 +345,30 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
   def handle_info({:processing_started, :preview_documents}, socket) do
     {
       :noreply,
-      assign(socket, :creating_previews, true)
+      assign(socket, :creating_previews?, true)
     }
   end
 
-  def handle_info({:processing_stopped, :preview_documents}, socket) do
+  def handle_info(
+        {:processing_stopped, :preview_documents},
+        %{assigns: %{publication: publication}} = socket
+      ) do
+    preview_doc_state = Publications.Data.get_preview_document_state(publication)
+
     {
       :noreply,
-      assign(socket, :creating_previews, false)
+      socket
+      |> assign(:creating_previews?, false)
+      |> update(:data_state, fn old ->
+        Map.put(old, :preview_documents, preview_doc_state)
+      end)
+    }
+  end
+
+  def handle_info(%Publication{} = updated_publication, socket) do
+    {
+      :noreply,
+      publication_updated(socket, updated_publication)
     }
   end
 
@@ -389,31 +380,36 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
         %{
           images: WebImage.evaluate_web_images_state(publication),
           tiles: MapTiles.evaluate_state(publication),
-          search_index: Publications.Search.evaluate_active_index_state(publication)
+          search_index: Publications.Search.evaluate_active_index_state(publication),
+          preview_documents: Publications.Data.get_preview_document_state(publication)
         }
       }
     end)
   end
 
-  defp initialize_missing_comments(%Publication{} = publication) do
-    # The comments are based on a list of %Translation{} schemas. We expect a comment
-    # for every language that is defined as a project language in the publication. This
-    # function initializes missing language variants to an empty string and keeps existing
-    # comments as they are in order to setup the UI form properly.
+  defp publication_updated(
+         socket,
+         %Publication{} = publication
+       ) do
+    if Map.has_key?(socket.assigns, :publication) &&
+         is_nil(socket.assigns.publication.replication_finished) &&
+         !is_nil(publication.replication_finished) do
+      # This publication update flipped the replication finished field from `nil` to a date, which
+      # means we just finished the data replication, trigger the data state evaluation.
+      start_data_state_evaluation(publication)
+    end
 
-    publication_languages = publication.languages
+    socket
+    |> assign(:publication, publication)
+    |> assign(
+      :publication_form,
+      publication
+      |> Publication.changeset()
+      |> to_form
+    )
+  end
 
-    Enum.map(publication_languages, fn project_lang ->
-      Enum.find(publication.comments, fn %Translation{language: lang} ->
-        lang == project_lang
-      end)
-      |> case do
-        nil ->
-          %{"language" => project_lang, "text" => ""}
-
-        %Translation{language: language, text: text} ->
-          %{"language" => language, "text" => text}
-      end
-    end)
+  defp evaluate_replication_state(%{assigns: %{publication: publication}} = socket) do
+    assign(socket, :replication_state, Replication.show(publication))
   end
 end

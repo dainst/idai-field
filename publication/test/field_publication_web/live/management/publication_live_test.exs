@@ -5,6 +5,7 @@ defmodule FieldPublicationWeb.Management.PublicationLiveTest do
   alias FieldPublication.Projects
   alias FieldPublication.CouchService
   alias FieldPublication.DatabaseSchema.Project
+  alias FieldPublication.DatabaseSchema.Publication
   alias FieldPublication.DatabaseSchema.LogEntry
 
   use FieldPublicationWeb.ConnCase
@@ -101,6 +102,9 @@ defmodule FieldPublicationWeb.Management.PublicationLiveTest do
     assert {:ok, live_process, _html} =
              live(conn, ~p"/management/projects/#{@test_project_name}/publication/new")
 
+    pid = live_process.pid
+    :erlang.trace(pid, true, [:receive])
+
     assert live_process
            |> form("#replication-form", %{
              replication_input: %{
@@ -117,54 +121,20 @@ defmodule FieldPublicationWeb.Management.PublicationLiveTest do
 
     assert {:ok, live_process, html} = live(conn, publication_path)
 
-    pid = live_process.pid
-    :erlang.trace(pid, true, [:receive])
-
     assert html =~
-             LazyHTML.html_escape(
-               "Publication '#{Date.utc_today()}' for project '#{@test_project_name}'"
-             )
-
-    assert_receive {
-      :replication_log,
-      %LogEntry{
-        severity: :info,
-        timestamp: _,
-        # The rest would be something containing a date like: "publication_test_project_a_2024-06-17 by first replicating the database."
-        message: "Replicating database for " <> _rest
-      }
-    }
+             "Publication <span>draft </span>\n  &#39;#{Date.utc_today()}&#39; for project &#39;test_project_a&#39;"
 
     assert_receive(
-      {
-        :trace,
-        ^pid,
-        :receive,
-        {
-          :replication_result,
-          %FieldPublication.DatabaseSchema.Publication{
-            _rev: _,
-            doc_type: "publication",
-            project_name: @test_project_name,
-            source_url: _,
-            source_project_name: _,
-            draft_date: _,
-            drafted_by: "couch_admin",
-            replication_finished: _,
-            publication_date: nil,
-            configuration_doc: _config_doc,
-            hierarchy_doc: _hierarchy_doc,
-            database: _database,
-            languages: ["de", "en"],
-            version: :major,
-            comments: [],
-            replication_logs: logs,
-            processing_logs: []
-          }
-        }
-      },
+      {:replication_stopped},
       1000 * 60
     )
+
+    %Publication{
+      doc_type: "publication",
+      project_name: @test_project_name,
+      drafted_by: "couch_admin",
+      replication_logs: logs
+    } = Publications.get!(@test_project_name, "#{Date.utc_today()}")
 
     assert %LogEntry{
              # The rest would be something containing a date like: ""Replicating database for publication_test_project_a_<current date> by first replicating the database."
@@ -179,17 +149,13 @@ defmodule FieldPublicationWeb.Management.PublicationLiveTest do
              severity: :info
            } = List.last(logs)
 
-    assert_receive {:trace, ^pid, :receive, {:processing_started, :search_index}}
+    assert_receive {:processing_started, :search_index}
+    assert_receive {:processing_started, :tile_images}
+    assert_receive {:processing_started, :web_images}
 
-    assert_receive {:trace, ^pid, :receive, {:processing_started, :tile_images}}
-
-    assert_receive {:trace, ^pid, :receive, {:processing_started, :web_images}}
-
-    assert_receive {:trace, ^pid, :receive, {:processing_stopped, :search_index}}, 1000 * 20
-
-    assert_receive {:trace, ^pid, :receive, {:processing_stopped, :tile_images}}, 1000 * 20
-
-    assert_receive {:trace, ^pid, :receive, {:processing_stopped, :web_images}}, 1000 * 20
+    assert_receive {:processing_stopped, :search_index}, 1000 * 20
+    assert_receive {:processing_stopped, :tile_images}, 1000 * 20
+    assert_receive {:processing_stopped, :web_images}, 1000 * 20
 
     %{image: image_uuids} =
       FileService.list_raw_data_files(@test_project_name)

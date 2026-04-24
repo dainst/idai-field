@@ -149,37 +149,19 @@ defmodule FieldPublication.Replication do
 
       task =
         Task.Supervisor.async_nolink(FieldPublication.TaskSupervisor, fn ->
-          log(parameters, :info, "Replicating database for #{publication_id}.")
+          persisted_log(publication, :info, "Replicating database for #{publication_id}.")
           CouchReplication.start(parameters)
 
-          log(parameters, :info, "Replicating files for #{publication_id}.")
+          persisted_log(publication, :info, "Replicating files for #{publication_id}.")
           FileReplication.start(parameters)
 
-          config_task =
-            Task.async(fn ->
-              log(
-                parameters,
-                :info,
-                "Reconstructing project configuration for '#{publication_id}'."
-              )
+          persisted_log(
+            publication,
+            :info,
+            "Reconstructing project configuration for '#{publication_id}'."
+          )
 
-              reconstruct_project_configuraton(publication)
-            end)
-
-          hierarchy_doc_task =
-            Task.async(fn ->
-              log(parameters, :info, "Creating hierarchy document for '#{publication_id}'.")
-              Publications.Data.recreate_hierarchy_doc(publication)
-            end)
-
-          [
-            {:ok, %{status: 201}},
-            {:ok, %{status: 201}}
-          ] =
-            Task.await_many([
-              config_task,
-              hierarchy_doc_task
-            ])
+          reconstruct_project_configuraton(publication)
 
           languages =
             CouchService.get_document("configuration", publication.database)
@@ -196,7 +178,7 @@ defmodule FieldPublication.Replication do
                 []
             end
 
-          log(parameters, :info, "Draft creation finished.")
+          persisted_log(publication, :info, "Draft creation finished.")
 
           {:ok, %Publication{} = final_publication} =
             Publications.get!(publication.project_name, publication.draft_date)
@@ -225,17 +207,6 @@ defmodule FieldPublication.Replication do
         # Delete the replication document for this publication database in case the couch replication got killed by the exit command above.
         CouchReplication.stop_replication(publication.database)
 
-        # Get the latest document revision (in case the publication passed as a parameter is not matching the
-        # latest one), and use it to delete all data.
-        Publications.get!(publication.project_name, publication.draft_date)
-        |> Publications.delete()
-
-        PubSub.broadcast(
-          FieldPublication.PubSub,
-          publication_id,
-          {:replication_stopped}
-        )
-
         {:reply, :stopped, running_replications}
     end
   end
@@ -245,7 +216,7 @@ defmodule FieldPublication.Replication do
 
     case Map.get(running_replications, publication_id) do
       nil ->
-        {:reply, :not_found, running_replications}
+        {:reply, nil, running_replications}
 
       {task, parameters} ->
         {:reply, %{task: task, parameters: parameters}, running_replications}
@@ -256,45 +227,41 @@ defmodule FieldPublication.Replication do
         {_ref, {:ok, {:draft_created, publication}}},
         running_replications
       ) do
+    # Handles the success result of the async process started in `start/2` above. We check
+    # if the input requested immediate processing and otherwise let the process stop, which will
+    # get picked up in the handle_info/2 below that checks for the :DOWN atom.
     publication_id = Publications.get_doc_id(publication)
 
     {_finished_task, %{input: %{processing: start_processing_immediately}}} =
       Map.get(running_replications, publication_id)
 
     if start_processing_immediately do
+      # Processing is a separate GenServer, so we just hand over the publication and
+      # otherwise let the replication process finish.
       Processing.start(publication)
     end
 
-    PubSub.broadcast(
-      FieldPublication.PubSub,
-      publication_id,
-      {:replication_result, publication}
-    )
-
-    {:noreply, Map.delete(running_replications, publication_id)}
+    {:noreply, running_replications}
   end
 
-  def handle_info({:DOWN, ref, :process, _pid, :normal}, running_replications) do
-    Logger.debug("A replication task has completed successfully.")
-
-    {:noreply, cleanup(ref, running_replications)}
-  end
-
-  def handle_info({:DOWN, ref, :process, _pid, :stopped}, running_replications) do
-    Logger.debug("A replication task has been stopped by a user.")
-
-    {:noreply, cleanup(ref, running_replications)}
-  end
-
-  def handle_info({:DOWN, ref, :process, _pid, reason}, running_replications) do
-    [{publication_id, {_task, parameters}}] =
+  def handle_info({:DOWN, ref, :process, _pid, return_value}, running_replications) do
+    [{publication_id, {_task, %{publication: publication} = _parameters}}] =
       Enum.filter(running_replications, fn {_publication_id, {task, _parameters} = _value} ->
         task.ref == ref
       end)
 
-    Logger.error("The replication task '#{publication_id}' failed irregularly.")
+    case return_value do
+      :normal ->
+        Logger.debug("A replication task has completed successfully.")
 
-    log(parameters, :error, inspect(reason))
+      :stopped ->
+        persisted_log(publication, :warning, "Replication stopped by the user.")
+
+      other ->
+        msg = "The replication task '#{publication_id}' failed irregularly:"
+
+        persisted_log(publication, :error, "#{msg} #{inspect(other)}")
+    end
 
     PubSub.broadcast(
       FieldPublication.PubSub,
@@ -302,38 +269,39 @@ defmodule FieldPublication.Replication do
       {:replication_stopped}
     )
 
-    Publications.delete(parameters.publication)
-
     {:noreply, cleanup(ref, running_replications)}
   end
 
-  def log(%{publication: %Publication{} = publication}, severity, msg) do
+  @doc """
+  Logs the message to the console and writes it to the publication document with the requested severity level.
+  """
+  def persisted_log(%Publication{} = publication, severity, message)
+      when severity in [:error, :warning, :info, :debug] and is_binary(message) do
     case severity do
       :error ->
-        Logger.error(msg)
+        Logger.error(message)
 
       :warning ->
-        Logger.error(msg)
+        Logger.warning(message)
+
+      :info ->
+        Logger.info(message)
 
       _ ->
-        Logger.debug(msg)
+        Logger.debug(message)
     end
 
     {:ok, log_entry} =
       LogEntry.create(%{
         severity: severity,
         timestamp: DateTime.utc_now(),
-        message: msg
+        message: message,
+        key: :replication_step
       })
 
     Publications.get!(publication.project_name, publication.draft_date)
     |> Map.update(:replication_logs, [], fn existing -> existing ++ [log_entry] end)
     |> Publications.put(%{})
-
-    Publications.broadcast(
-      publication,
-      {:replication_log, log_entry}
-    )
   end
 
   def reconstruct_project_configuraton(%Publication{
@@ -341,14 +309,7 @@ defmodule FieldPublication.Replication do
         database: database_name,
         configuration_doc: configuration_doc_name
       }) do
-    configuration_doc =
-      configuration_doc_name
-      |> CouchService.get_document()
-      |> then(fn {:ok, %{body: body}} ->
-        Jason.decode!(body)
-      end)
-
-    full_config =
+    {_logged_output, 0} =
       System.cmd(
         "node",
         [
@@ -360,17 +321,16 @@ defmodule FieldPublication.Replication do
           Application.get_env(:field_publication, :couchdb_url),
           Application.get_env(:field_publication, :couchdb_admin_name),
           Application.get_env(:field_publication, :couchdb_admin_password),
-          source_project_name
+          source_project_name,
+          CouchService.get_document_url(configuration_doc_name)
         ]
       )
-      |> then(fn {full_configuration, 0} ->
-        Map.put(configuration_doc, :config, Jason.decode!(full_configuration))
-      end)
 
-    CouchService.put_document(configuration_doc_name, full_config)
+    :ok
   end
 
   defp cleanup(ref, running_replications) do
+    # Removes a replication task by reference from the list of active replications.
     Map.reject(running_replications, fn {_publication_id, {task, _replication_state} = _value} ->
       task.ref == ref
     end)

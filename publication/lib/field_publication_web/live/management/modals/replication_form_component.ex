@@ -92,48 +92,6 @@ defmodule FieldPublicationWeb.Management.Modals.ReplicationFormComponent do
     }
   end
 
-  # @impl true
-  # def handle_event("add_comment", _, %{assigns: %{form: %{source: changeset}}} = socket) do
-  #   current_comments = Ecto.Changeset.get_field(changeset, :comments)
-
-  #   changeset =
-  #     Ecto.Changeset.put_embed(
-  #       changeset,
-  #       :comments,
-  #       current_comments ++ [%{text: "", language: ""}]
-  #     )
-
-  #   {
-  #     :noreply,
-  #     socket
-  #     |> assign(:form, to_form(changeset))
-  #   }
-  # end
-
-  # @impl true
-  # def handle_event(
-  #       "remove_comment",
-  #       %{"id" => "parameters_comments_" <> id},
-  #       %{assigns: %{form: %{source: changeset}}} = socket
-  #     ) do
-  #   {index, _remainder} = Integer.parse(id)
-
-  #   updated_comments =
-  #     changeset
-  #     |> Ecto.Changeset.get_field(:comments)
-  #     |> List.delete_at(index)
-
-  #   changeset =
-  #     changeset
-  #     |> Ecto.Changeset.put_embed(:comments, updated_comments)
-
-  #   {
-  #     :noreply,
-  #     socket
-  #     |> assign(:form, to_form(changeset))
-  #   }
-  # end
-
   def handle_event("start", %{"replication_input" => replication_params}, socket) do
     socket =
       replication_params

@@ -7,6 +7,7 @@ import { environment } from './environments/environment';
 
 const { detect } = window.require('detect-port');
 const log = window.require('electron-log');
+const ipcRenderer = window.require('electron')?.ipcRenderer;
 
 
 if (environment.production) enableProdMode();
@@ -19,6 +20,7 @@ async function start() {
 
     if (await isAlreadyOpen()) {
         showAlreadyOpenError();
+        ipcRenderer.on('requestClose', () => ipcRenderer.send('close'));
     } else {
         platformBrowserDynamic()
             .bootstrapModule(AppModule)

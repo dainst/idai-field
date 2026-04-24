@@ -3,6 +3,9 @@
 
 @plugin "../js/heroicons.tailwind.plugin.js";
 
+
+/* This file is for your main application CSS */
+
 @font-face {
     font-family: "Cargan";
     src:
@@ -50,8 +53,6 @@
     --color-panel: var(--panel-color);
     --animate-spin-slow: spin 3s linear infinite;
 }
-
-/* This file is for your main application CSS */
 
 body {
     font-family: var(--font-body);

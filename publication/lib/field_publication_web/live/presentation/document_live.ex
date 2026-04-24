@@ -148,7 +148,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
         ancestors =
           publication
-          |> Publications.get_hierarchy()
+          |> Publications.Data.get_document_hierarchy()
           |> construct_ancestor_tree(uuid, [])
           |> Data.get_preview_documents(publication)
 
@@ -174,16 +174,16 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
     # If no UUID was provided, load the publication's extended "project" document.
     project_doc = Publications.Data.get_extended_document("project", publication, true)
 
-    top_level_uuids =
-      Publications.get_hierarchy(publication)
-      |> Enum.filter(fn {_key, values} ->
-        Map.get(values, "parent") == nil
+    top_level_docs =
+      Publications.Data.get_document_hierarchy(publication)
+      |> Stream.filter(fn {_uuid, relations} ->
+        # All documents that have no parent, but do have children are considered top level.
+        Map.get(relations, "parent") == nil && Map.get(relations, "children") != []
       end)
-      |> Enum.map(fn {key, _values} ->
-        key
+      |> Enum.map(fn {uuid, _values} ->
+        uuid
       end)
-
-    top_level_docs = Data.get_preview_documents(top_level_uuids, publication)
+      |> Data.get_preview_documents(publication)
 
     category_hierarchy = Data.get_category_hierarchy(publication)
     category_usage = Search.get_category_count(publication)

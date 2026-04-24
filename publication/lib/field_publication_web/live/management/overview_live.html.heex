@@ -48,7 +48,7 @@
           Project '{project.name}'
         </h3>
 
-        <div class="m-4 grid grid-cols-2">
+        <div class="ml-4 mr-4 grid grid-cols-2">
           <div>
             <p class="font-semibold">Actions</p>
             <ul class="list-disc list-inside">
@@ -98,12 +98,13 @@
           </div>
         </div>
 
-        <%= if {:error, :alias_not_set} == search_aliased_publication do %>
-          <div class="m-4 p-2 rounded">
-            <.icon name="hero-exclamation-circle" class="bg-yellow-500 mb-1" />
-            No publication is set to be included in application wide search.
-          </div>
-        <% end %>
+        <div class="ml-4 mr-4 italic">
+          <%= if {:error, :alias_not_set} == search_aliased_publication do %>
+            <.icon name="hero-exclamation-circle" />
+            No publication is set to be included in application wide search for this project.
+          <% end %>
+        </div>
+
         <div class="m-4">
           <p class="font-semibold mb-2 ">Publications ({Enum.count(publications)})</p>
           <%= if publications == [] do %>
@@ -213,7 +214,7 @@
                   </tr>
 
                   <tr :if={is_nil(publication.publication_date)}>
-                    <td colspan="2">
+                    <td colspan="2" class="italic">
                       <.icon name="hero-information-circle" /> Still in draft state
                     </td>
                   </tr>

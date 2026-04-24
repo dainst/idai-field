@@ -317,7 +317,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     ~H"""
     <% value_translations = @field.value_labels[@value] %>
 
-    <%= if value_translations do %>
+    <%= if value_translations && value_translations != %{} do %>
       <.live_component
         :let={text}
         module={LanguageSelection}

@@ -6,12 +6,12 @@ defmodule FieldPublicationWeb.Components.Data.DocumentLink do
 
   import FieldPublicationWeb.Components.Data.Image
 
-  attr :id, :string, default: nil
-  attr :doc, Document, required: true
-  attr :image_count, :integer, default: 0
-  attr :image_height, :integer, default: 64
-  attr :geometry_indicator, :boolean, default: false
-  attr :focus, :atom, default: :default
+  attr(:id, :string, default: nil)
+  attr(:doc, Document, required: true)
+  attr(:image_count, :integer, default: 0)
+  attr(:image_height, :integer, default: 64)
+  attr(:geometry_indicator, :boolean, default: false)
+  attr(:focus, :atom, default: :default)
 
   def document_link(assigns) do
     ~H"""
@@ -22,7 +22,7 @@ defmodule FieldPublicationWeb.Components.Data.DocumentLink do
         style={"background-color: #{desaturate_category_color(@doc.category.color)}; border-color: #{desaturate_category_color(@doc.category.color)}; border-width: 1px 1px 1px 0px;"}
       >
         <div class="h-full bg-white/70 hover:bg-white/40  pl-2 pr-2 pt-3 pb-3 font-thin hover:text-black text-gray-800">
-          {pick_default_translation(@doc.category)}
+          {pick_default_translation(@doc.category.labels)}
         </div>
       </.link>
       <.link

@@ -24,6 +24,7 @@ defmodule FieldPublication.Publications.Data do
   }
 
   @data_report_key "publications_data"
+  @document_cache_name :document_cache
 
   defmodule Document do
     @derive Jason.Encoder
@@ -125,83 +126,12 @@ defmodule FieldPublication.Publications.Data do
     end
   end
 
-  def recreate_hierarchy_doc(%Publication{} = publication) do
-    hierarchy_mapping =
-      publication
-      |> get_doc_stream_for_all()
-      |> Enum.reduce(%{}, fn doc, acc ->
-        uuid = doc["_id"]
-
-        {_key, [parent_uuid]} =
-          Enum.find(doc["resource"]["relations"], nil, fn {key, _val} ->
-            key == "liesWithin"
-          end)
-          |> case do
-            nil ->
-              Enum.find(doc["resource"]["relations"], {nil, [nil]}, fn {key, _val} ->
-                key == "isRecordedIn"
-              end)
-
-            {"liesWithin", [_single_relation_uuid]} = val ->
-              val
-
-            _other_val ->
-              # Temporary (fingers crossed) hack for meninx
-              Logger.error(
-                "Encountered invalid 'liesWithin' relation for document '#{uuid}'. Falling back to 'isRecordedIn' in hierarchy document."
-              )
-
-              Enum.find(doc["resource"]["relations"], {nil, [nil]}, fn {key, _val} ->
-                key == "isRecordedIn"
-              end)
-          end
-
-        # Update or initialize self
-        acc =
-          Map.update(acc, doc["_id"], %{children: [], parent: parent_uuid}, fn existing ->
-            Map.put(existing, :parent, parent_uuid)
-          end)
-
-        # Update or initialize the parent
-        if parent_uuid != nil do
-          Map.update(
-            acc,
-            parent_uuid,
-            %{children: [uuid], parent: nil},
-            fn %{
-                 children: existing_children
-               } = existing ->
-              Map.put(existing, :children, existing_children ++ [uuid])
-            end
-          )
-        else
-          acc
-        end
-      end)
-      |> Enum.reject(fn {_key, value} ->
-        value[:parent] == nil and value[:children] == []
-      end)
-      |> Enum.into(%{})
-
-    document_content =
-      CouchService.get_document(publication.hierarchy_doc)
-      |> case do
-        {:ok, %{status: 200, body: body}} ->
-          doc = Jason.decode!(body)
-          Map.put(doc, "_rev", doc["_rev"])
-          Map.put(doc, "hierarchy", hierarchy_mapping)
-
-        _ ->
-          %{"hierarchy" => hierarchy_mapping}
-      end
-
-    CouchService.put_document(publication.hierarchy_doc, document_content)
-  end
-
   def recreate_document_previews(%Publication{database: db} = publication) do
     config = Publications.get_configuration(publication)
 
     Publications.clear_data_issues(publication, @data_report_key)
+
+    hierarchy_mapping = generate_hierarchy_mapping(publication)
 
     preview_database_name =
       create_preview_database(publication)
@@ -215,78 +145,147 @@ defmodule FieldPublication.Publications.Data do
 
     pub_id = Publications.get_doc_id(publication)
 
-    CouchService.get_document_stream(%{selector: %{}}, db)
-    |> Stream.reject(fn
-      %{"resource" => %{"category" => "Configuration"}} ->
-        true
+    result =
+      CouchService.get_document_stream(%{selector: %{}}, db)
+      |> Stream.reject(fn
+        %{"resource" => %{"category" => "Configuration"}} ->
+          true
 
-      %{"resource" => _} ->
-        false
+        %{"resource" => _} ->
+          false
 
-      _ ->
-        true
-    end)
-    |> Stream.map(fn raw_doc ->
-      {raw_doc, apply_project_configuration(raw_doc, config, publication)}
-    end)
-    |> Stream.filter(fn
-      {_raw_doc, %Document{} = _full} ->
-        true
+        _ ->
+          true
+      end)
+      |> Stream.map(fn raw_doc ->
+        {raw_doc, apply_project_configuration(raw_doc, config, publication)}
+      end)
+      |> Stream.filter(fn
+        {_raw_doc, %Document{} = _full} ->
+          true
 
-      {raw_doc, error} ->
-        Logger.warning(
-          "Failed to apply project configuration to `#{raw_doc["_id"]}` (`#{pub_id}`)"
+        {raw_doc, error} ->
+          Logger.warning(
+            "Failed to apply project configuration to `#{raw_doc["_id"]}` (`#{pub_id}`)"
+          )
+
+          Logger.warning(inspect(error))
+
+          Publications.report_data_issue(publication, %DataIssue{
+            uuid: raw_doc["_id"],
+            issue_type_key: "could_not_apply_project_configuration",
+            reported_by: @data_report_key,
+            log: %LogEntry{
+              severity: :error,
+              message: inspect(error)
+            }
+          })
+
+          false
+      end)
+      |> Enum.map(fn {_raw_doc, %Document{} = doc} ->
+        # Remove groups and relations from doc
+        %{doc | groups: [], relations: []}
+      end)
+      |> Stream.chunk_every(500)
+      |> Enum.map(fn documents ->
+        uuids = Enum.map(documents, fn %Document{id: id} -> id end)
+
+        {:ok, %{body: body}} = CouchService.get_documents(uuids, preview_database_name)
+
+        payload =
+          Jason.decode!(body)
+          |> Map.get("results", [])
+          |> Enum.map(fn %{"id" => id, "docs" => [doc]} ->
+            {id, doc}
+          end)
+          |> Enum.zip(documents)
+          |> Enum.map(fn
+            {
+              {uuid, %{"ok" => %{"preview" => _res, "hierarchy" => _} = existing_doc}},
+              %Document{id: id} = new_preview
+            }
+            when uuid == id ->
+              # For the new preview there already exists a document in the preview database,
+              # so we just update its preview field.
+              existing_doc
+              |> Map.put("preview", new_preview)
+              |> Map.put("hierarchy", Map.fetch!(hierarchy_mapping, id))
+
+            {
+              {uuid, _otherwise},
+              %Document{id: id} = new_preview
+            }
+            when uuid == id ->
+              # Otherwise, we create a completely new document.
+              %{
+                "_id" => id,
+                "preview" => new_preview,
+                "hierarchy" => Map.fetch!(hierarchy_mapping, id)
+              }
+          end)
+
+        CouchService.post_documents(payload, preview_database_name)
+      end)
+
+    Cachex.del(@document_cache_name, get_hierarchy_document_name(publication))
+
+    result
+  end
+
+  defp generate_hierarchy_mapping(%Publication{} = publication) do
+    publication
+    |> get_doc_stream_for_all()
+    |> Enum.reduce(%{}, fn doc, acc ->
+      uuid = doc["_id"]
+
+      {_key, [parent_uuid]} =
+        Enum.find(doc["resource"]["relations"], nil, fn {key, _val} ->
+          key == "liesWithin"
+        end)
+        |> case do
+          nil ->
+            Enum.find(doc["resource"]["relations"], {nil, [nil]}, fn {key, _val} ->
+              key == "isRecordedIn"
+            end)
+
+          {"liesWithin", [_single_relation_uuid]} = val ->
+            val
+
+          _other_val ->
+            # Temporary (fingers crossed) hack for meninx
+            Logger.error(
+              "Encountered invalid 'liesWithin' relation for document '#{uuid}'. Falling back to 'isRecordedIn' in hierarchy document."
+            )
+
+            Enum.find(doc["resource"]["relations"], {nil, [nil]}, fn {key, _val} ->
+              key == "isRecordedIn"
+            end)
+        end
+
+      # Update or initialize self
+      acc =
+        Map.update(acc, doc["_id"], %{children: [], parent: parent_uuid}, fn existing ->
+          Map.put(existing, :parent, parent_uuid)
+        end)
+
+      # Update or initialize the parent
+      if parent_uuid != nil do
+        Map.update(
+          acc,
+          parent_uuid,
+          %{children: [uuid], parent: nil},
+          fn %{
+               children: existing_children
+             } = existing ->
+            Map.put(existing, :children, existing_children ++ [uuid])
+          end
         )
-
-        Logger.warning(inspect(error))
-
-        Publications.report_data_issue(publication, %DataIssue{
-          uuid: raw_doc["_id"],
-          issue_type_key: "could_not_apply_project_configuration",
-          reported_by: @data_report_key,
-          log: %LogEntry{
-            severity: :error,
-            message: inspect(error)
-          }
-        })
-
-        false
+      else
+        acc
+      end
     end)
-    |> Enum.map(fn {_raw_doc, %Document{} = doc} ->
-      # Remove groups and relations from doc
-      %{doc | groups: [], relations: []}
-    end)
-    |> Stream.chunk_every(500)
-    |> Enum.map(fn documents ->
-      uuids = Enum.map(documents, fn %Document{id: id} -> id end)
-
-      {:ok, %{body: body}} = CouchService.get_documents(uuids, preview_database_name)
-
-      payload =
-        Jason.decode!(body)
-        |> Map.get("results", [])
-        |> Enum.map(fn %{"id" => id, "docs" => [doc]} ->
-          {id, doc}
-        end)
-        |> Enum.zip(documents)
-        |> Enum.map(fn
-          {
-            {uuid, %{"ok" => %{"preview" => _res} = existing_doc}},
-            %Document{id: id} = new_preview
-          }
-          when uuid == id ->
-            Map.put(existing_doc, "preview", new_preview)
-
-          {
-            {uuid, _otherwise},
-            %Document{id: id} = new_preview
-          }
-          when uuid == id ->
-            %{"_id" => id, "preview" => new_preview}
-        end)
-
-      CouchService.post_documents(payload, preview_database_name)
-    end)
+    |> Enum.into(%{})
   end
 
   def create_preview_database(%Publication{} = publication) do
@@ -522,9 +521,59 @@ defmodule FieldPublication.Publications.Data do
     |> Enum.map(&apply_project_configuration(&1, config, publication, include_relations))
   end
 
+  def get_document_hierarchy(%Publication{} = publication) do
+    cache_database = get_preview_database_name(publication)
+    hierarchy_cache = get_hierarchy_document_name(publication)
+
+    Cachex.get(@document_cache_name, hierarchy_cache)
+    |> case do
+      {:ok, nil} ->
+        Logger.debug("No document cache for hierarchy.")
+
+        CouchService.all_docs(cache_database)
+        |> case do
+          {:ok, %Finch.Response{status: 200, body: body}} ->
+            hierarchy =
+              body
+              |> Jason.decode!()
+              |> Map.get("rows")
+              |> Enum.map(fn %{"doc" => %{"_id" => uuid, "hierarchy" => hierarchy}} ->
+                {uuid, hierarchy}
+              end)
+              |> Enum.into(%{})
+
+            Cachex.put(@document_cache_name, hierarchy_cache, hierarchy,
+              ttl: 1000 * 60 * 60 * 24 * 7
+            )
+
+            hierarchy
+
+          error ->
+            Logger.error(
+              "No cache documents found for publication `#{Publications.get_doc_id(publication)}`."
+            )
+
+            Logger.error(inspect(error))
+            %{}
+        end
+
+      {:ok, cached} ->
+        cached
+    end
+  end
+
+  def get_document_hierarchy(uuid, %Publication{} = publication) when is_binary(uuid) do
+    get_document_hierarchy(publication)
+    |> Map.get(uuid)
+  end
+
+  def get_document_hierarchy(uuids, %Publication{} = publication) when is_list(uuids) do
+    get_document_hierarchy(publication)
+    |> Map.take(uuids)
+  end
+
   def get_preview_documents(%Publication{} = publication) do
-    pub_id = Publications.get_doc_id(publication)
-    cache_database = "previews_#{pub_id}"
+    cache_database = get_preview_database_name(publication)
 
     CouchService.all_docs(cache_database)
     |> case do
@@ -532,11 +581,11 @@ defmodule FieldPublication.Publications.Data do
         body
         |> Jason.decode!()
         |> Map.get("rows", [])
-        |> Enum.map(fn %{"doc" => %{"preview" => preview}} -> preview end)
+        |> Stream.map(fn %{"doc" => %{"preview" => preview}} -> preview end)
         |> Enum.map(fn doc -> document_map_to_struct(doc) end)
 
       error ->
-        Logger.error("No preview documents for `pub_id`.")
+        Logger.error("No preview documents for `#{Publications.get_doc_id(publication)}`.")
         Logger.error(inspect(error))
         []
     end
@@ -546,22 +595,24 @@ defmodule FieldPublication.Publications.Data do
         uuids,
         %Publication{} = publication
       ) do
-    pub_id = Publications.get_doc_id(publication)
-    cache_database = "previews_#{pub_id}"
+    cache_database = get_preview_database_name(publication)
 
     CouchService.get_documents(uuids, cache_database)
     |> case do
       {:ok, %Finch.Response{status: 200, body: body}} ->
-        body
-        |> Jason.decode!()
-        |> Map.get("results")
-        |> Enum.map(fn %{"docs" => [%{"ok" => %{"preview" => preview}}]} ->
-          preview
-        end)
-        |> Enum.map(fn doc -> document_map_to_struct(doc) end)
+        result =
+          body
+          |> Jason.decode!()
+          |> Map.get("results")
+          |> Stream.map(fn %{"docs" => [%{"ok" => %{"preview" => preview}}]} ->
+            preview
+          end)
+          |> Enum.map(fn doc -> document_map_to_struct(doc) end)
+
+        result
 
       error ->
-        Logger.error("No preview documents for `pub_id`.")
+        Logger.error("No preview documents for `#{Publications.get_doc_id(publication)}`.")
         Logger.error(inspect(error))
         []
     end
@@ -999,10 +1050,8 @@ defmodule FieldPublication.Publications.Data do
         end)
         |> Enum.into(%{}),
       docs:
-        publication
-        |> Publications.get_hierarchy()
-        |> Map.get(uuid, %{})
-        |> Map.get("children", [])
+        get_document_hierarchy(uuid, publication)
+        |> Map.get("children")
         |> get_preview_documents(publication)
     }
   end
@@ -1037,5 +1086,9 @@ defmodule FieldPublication.Publications.Data do
       |> Enum.filter(fn val -> val != :not_found end)
       |> List.first(:not_found)
     end
+  end
+
+  defp get_hierarchy_document_name(%Publication{} = publication) do
+    "hierarchy_#{Publications.get_doc_id(publication)}"
   end
 end

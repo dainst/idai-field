@@ -102,6 +102,7 @@
           />
         <% end %>
         <button
+          :if={@replication_state}
           class="font-bold font-mono float-right cursor-pointer"
           type="button"
           phx-click={JS.push("stop_replication")}

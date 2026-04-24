@@ -311,7 +311,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                   ~p"/api/json/raw/#{@publication.project_name}/#{@publication.draft_date}/#{@doc.id}"
                 }
               >
-                <span class="text-center inline-block w-5]" style="block">{"{}"}</span>
+                <span class="text-center inline-block w-5" style="block">{"{}"}</span>
                 View JSON (raw)
               </a>
             </li>

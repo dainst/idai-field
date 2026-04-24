@@ -335,6 +335,30 @@ defmodule FieldPublication.Publications.Data do
     "previews_#{Publications.get_doc_id(publication)}"
   end
 
+  def recreate_database_indices(%Publication{database: database} = publication) do
+    %{relations: relations} =
+      get_doc_stream_for_all(publication)
+      |> Enum.reduce(%{relations: []}, fn
+        %{"resource" => %{"relations" => relations_map}}, acc ->
+          doc_relations = Map.keys(relations_map)
+          Map.put(acc, :relations, Enum.uniq(doc_relations ++ acc[:relations]))
+
+        _, acc ->
+          acc
+      end)
+
+    CouchService.put_index_document(
+      %{
+        index: %{
+          fields: relations
+        },
+        name: "document-relations-index",
+        type: "json"
+      },
+      database
+    )
+  end
+
   def get_image_categories(publication) do
     ["Image"] ++ get_child_categories(publication, "Image")
   end

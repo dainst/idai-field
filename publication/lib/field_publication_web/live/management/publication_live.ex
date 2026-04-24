@@ -21,6 +21,30 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
 
   require Logger
 
+  def processing_button(assigns) do
+    ~H"""
+      <%= if @type in @active_processing_tasks do %>
+        <.link
+          class="font-semibold font-mono cursor-pointer"
+          type="button"
+          phx-click="stop_processing"
+          phx-value-type={@type}
+        >
+          Stop
+        </.link>
+      <% else %>
+        <.link
+          class="font-semibold font-mono cursor-pointer"
+          type="button"
+          phx-click="start_processing"
+          phx-value-type={@type}
+        >
+          Start
+        </.link>
+      <% end %>
+    """
+  end
+
   @impl true
   def mount(%{"project_id" => project_id, "draft_date" => draft_date_string}, _session, socket) do
     %Publication{} = publication = Publications.get!(project_id, draft_date_string)
@@ -35,27 +59,10 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
 
     # Check if web images are currently processed for the publication.
 
-    processing_tasks_running = Processing.show(publication)
-
-    web_images_processing? =
-      Enum.any?(processing_tasks_running, fn {_task_ref, type, _publication_id} ->
-        type == :web_images
-      end)
-
-    tile_images_processing? =
-      Enum.any?(processing_tasks_running, fn {_task_ref, type, _publication_id} ->
-        type == :tile_images
-      end)
-
-    search_indexing? =
-      Enum.any?(processing_tasks_running, fn {_task_ref, type, _publication_id} ->
-        type == :search_index
-      end)
-
-    creating_previews? =
-      Enum.any?(processing_tasks_running, fn {_task_ref, type, _publication_id} ->
-        type == :preview_documents
-      end)
+    active_processing_tasks =
+      publication
+      |> Processing.show()
+      |> Enum.map(fn {_task_ref, type, _publication_id} -> type end)
 
     translation_options =
       (publication.languages ++ Translate.supported_languages())
@@ -69,10 +76,7 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
       |> assign(:translation_options, translation_options)
       |> assign(:replication_progress_state, nil)
       |> assign(:data_state, nil)
-      |> assign(:web_images_processing?, web_images_processing?)
-      |> assign(:tile_images_processing?, tile_images_processing?)
-      |> assign(:search_indexing?, search_indexing?)
-      |> assign(:creating_previews?, creating_previews?)
+      |> assign(:active_processing_tasks, active_processing_tasks)
       |> publication_updated(publication)
       |> evaluate_replication_state()
     }
@@ -91,82 +95,20 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
   end
 
   def handle_event(
-        "start_web_images_processing",
-        _,
+        "start_processing",
+        %{"type" => type},
         %{assigns: %{publication: publication}} = socket
       ) do
-    Processing.start(publication, :web_images)
-
+    Processing.start(publication, String.to_existing_atom(type))
     {:noreply, socket}
   end
 
   def handle_event(
-        "stop_web_images_processing",
-        _,
+        "stop_processing",
+        %{"type" => type},
         %{assigns: %{publication: publication}} = socket
       ) do
-    Processing.stop(publication, :web_images)
-
-    {:noreply, socket}
-  end
-
-  def handle_event(
-        "start_tile_images_processing",
-        _,
-        %{assigns: %{publication: publication}} = socket
-      ) do
-    Processing.start(publication, :tile_images)
-
-    {:noreply, socket}
-  end
-
-  def handle_event(
-        "stop_tile_images_processing",
-        _,
-        %{assigns: %{publication: publication}} = socket
-      ) do
-    Processing.stop(publication, :tile_images)
-
-    {:noreply, socket}
-  end
-
-  def handle_event(
-        "start_search_indexing",
-        _,
-        %{assigns: %{publication: publication}} = socket
-      ) do
-    Processing.start(publication, :search_index)
-
-    {:noreply, socket}
-  end
-
-  def handle_event(
-        "stop_search_indexing",
-        _,
-        %{assigns: %{publication: publication}} = socket
-      ) do
-    Processing.stop(publication, :search_index)
-
-    {:noreply, socket}
-  end
-
-  def handle_event(
-        "start_preview_creation",
-        _,
-        %{assigns: %{publication: publication}} = socket
-      ) do
-    Processing.start(publication, :preview_documents)
-
-    {:noreply, socket}
-  end
-
-  def handle_event(
-        "stop_preview_creation",
-        _,
-        %{assigns: %{publication: publication}} = socket
-      ) do
-    Processing.stop(publication, :preview_documents)
-
+    Processing.stop(publication, String.to_existing_atom(type))
     {:noreply, socket}
   end
 
@@ -252,13 +194,6 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
     }
   end
 
-  def handle_info({:processing_started, :web_images}, socket) do
-    {
-      :noreply,
-      assign(socket, :web_images_processing?, true)
-    }
-  end
-
   def handle_info(
         {processing_feedback, _summary},
         %{assigns: %{data_state: nil}} = socket
@@ -285,20 +220,6 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
     {:noreply, assign(socket, :data_state, updated_data_state)}
   end
 
-  def handle_info({:processing_stopped, :web_images}, socket) do
-    {
-      :noreply,
-      assign(socket, :web_images_processing?, false)
-    }
-  end
-
-  def handle_info({:processing_started, :tile_images}, socket) do
-    {
-      :noreply,
-      assign(socket, :tile_images_processing?, true)
-    }
-  end
-
   def handle_info(
         {:tile_image_processing_count, summary},
         %{assigns: %{data_state: data_state}} = socket
@@ -311,20 +232,6 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
     {:noreply, assign(socket, :data_state, updated_data_state)}
   end
 
-  def handle_info({:processing_stopped, :tile_images}, socket) do
-    {
-      :noreply,
-      assign(socket, :tile_images_processing?, false)
-    }
-  end
-
-  def handle_info({:processing_started, :search_index}, socket) do
-    {
-      :noreply,
-      assign(socket, :search_indexing?, true)
-    }
-  end
-
   def handle_info(
         {:search_index_processing_count, count},
         %{assigns: %{data_state: data_state}} = socket
@@ -335,32 +242,30 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
     {:noreply, assign(socket, :data_state, updated_data_state)}
   end
 
-  def handle_info({:processing_stopped, :search_index}, socket) do
+  def handle_info({:processing_started, type}, socket) do
     {
       :noreply,
-      assign(socket, :search_indexing?, false)
-    }
-  end
-
-  def handle_info({:processing_started, :preview_documents}, socket) do
-    {
-      :noreply,
-      assign(socket, :creating_previews?, true)
+      update(socket, :active_processing_tasks, fn current -> current ++ [type] end)
     }
   end
 
   def handle_info(
-        {:processing_stopped, :preview_documents},
+        {:processing_stopped, type},
         %{assigns: %{publication: publication}} = socket
       ) do
-    preview_doc_state = Publications.Data.get_preview_document_state(publication)
-
     {
       :noreply,
       socket
-      |> assign(:creating_previews?, false)
-      |> update(:data_state, fn old ->
-        Map.put(old, :preview_documents, preview_doc_state)
+      |> update(:active_processing_tasks, fn current ->
+        Enum.reject(current, fn val -> val == type end)
+      end)
+      |> update(:data_state, fn current ->
+        if type != :preview_documents do
+          current
+        else
+          preview_doc_state = Publications.Data.get_preview_document_state(publication)
+          Map.put(current, :preview_documents, preview_doc_state)
+        end
       end)
     }
   end

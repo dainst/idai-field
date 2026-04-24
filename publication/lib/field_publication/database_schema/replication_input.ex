@@ -12,7 +12,7 @@ defmodule FieldPublication.DatabaseSchema.ReplicationInput do
     field(:project_name, :string)
     field(:delete_existing_publication, :boolean, default: false)
     field(:processing, :boolean, default: true)
-    field(:draft_date, :date, default: Date.utc_today())
+    field(:draft_date, :date)
   end
 
   @doc false
@@ -20,7 +20,6 @@ defmodule FieldPublication.DatabaseSchema.ReplicationInput do
     input_struct
     |> cast(attrs, [
       :drafted_by,
-      :draft_date,
       :source_url,
       :source_project_name,
       :source_user,
@@ -29,6 +28,7 @@ defmodule FieldPublication.DatabaseSchema.ReplicationInput do
       :delete_existing_publication,
       :processing
     ])
+    |> set_draft_date()
     |> validate_required([
       :source_url,
       :source_project_name,
@@ -37,6 +37,10 @@ defmodule FieldPublication.DatabaseSchema.ReplicationInput do
       :project_name
     ])
     |> validate_format(:source_url, ~r/^http(s)?:\/\/.*/, message: "Not a valid http(s) URL.")
+  end
+
+  def set_draft_date(changeset) do
+    put_change(changeset, :draft_date, Date.utc_today())
   end
 
   def create(params) do

@@ -14,6 +14,7 @@ import { GeometryHelper } from './geometry-helper';
 import { LayerMapComponent } from './layer-map.component';
 import { LayerImageProvider } from './layers/layer-image-provider';
 import { LayerManager } from './layers/layer-manager';
+import { MenuContext } from '../../../../services/menu-context';
 
 
 declare global { namespace L { namespace PM { namespace Draw { interface Line { _finishShape(): void
@@ -90,6 +91,8 @@ export class EditableMapComponent extends LayerMapComponent {
 
 
     public async onKeyDown(event: KeyboardEvent) {
+
+        if (this.menuService.getContext() !== MenuContext.GEOMETRY_EDIT) return;
 
         switch(event.key) {
             case 's':

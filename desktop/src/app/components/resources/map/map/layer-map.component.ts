@@ -43,7 +43,7 @@ export class LayerMapComponent extends MapComponent {
                 protected zone: NgZone,
                 protected changeDetectorRef: ChangeDetectorRef,
                 private datastore: PouchdbDatastore,
-                private menuService: Menus) {
+                protected menuService: Menus) {
 
         super(projectConfiguration, labels, zone);
 

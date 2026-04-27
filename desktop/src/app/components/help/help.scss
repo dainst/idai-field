@@ -178,6 +178,8 @@
     }
 
     ul {
+      max-height: calc(100vh - 101px);
+      overflow-y: auto;
       padding: 0;
     }
 

@@ -27,6 +27,9 @@ type DrawMode = 'None'|'Line'|'Poly';
 @Component({
     selector: 'editable-map',
     templateUrl: './editable-map.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    },
     standalone: false
 })
 /**
@@ -86,10 +89,16 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    @HostListener('document:keyup', ['$event'])
-    public handleKeyEvent(event: KeyboardEvent) {
+    public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key == 'Escape') this.finishDrawing();
+        switch(event.key) {
+            case 's':
+                if (event.ctrlKey || event.metaKey) await this.finishEditing();
+                break;
+            case 'Escape':
+                this.finishDrawing();
+                break;
+        }
     }
 
 

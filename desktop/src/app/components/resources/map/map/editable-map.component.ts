@@ -160,6 +160,19 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
+    public removeLastVertex() {
+
+        switch (this.drawMode) {
+            case 'Poly':
+                this.map.pm.Draw.Polygon._removeLastVertex();
+                break;
+            case 'Line':
+                this.map.pm.Draw.Line._removeLastVertex();
+                break;
+        }
+    }
+
+
     public abortEditing() {
 
         this.zone.runOutsideAngular(() => {

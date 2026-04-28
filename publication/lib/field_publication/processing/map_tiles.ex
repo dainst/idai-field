@@ -56,17 +56,20 @@ defmodule FieldPublication.Processing.MapTiles do
 
     Publications.clear_data_issues(publication, @data_report_key)
 
-    Enum.each(missing_raw_files, fn uuid ->
-      Publications.report_data_issue(publication, %DataIssue{
-        uuid: uuid,
-        reported_by: @data_report_key,
-        issue_type_key: "missing_image_file",
-        log: %LogEntry{
-          severity: :warning,
-          message: "Missing raw image file."
+    issues =
+      Enum.map(missing_raw_files, fn uuid ->
+        %DataIssue{
+          uuid: uuid,
+          reported_by: @data_report_key,
+          issue_type_key: "missing_image_file",
+          log: %LogEntry{
+            severity: :warning,
+            message: "Missing raw image file."
+          }
         }
-      })
-    end)
+      end)
+
+    Publications.report_data_issues(publication, issues)
 
     %{
       existing: existing_tiles,

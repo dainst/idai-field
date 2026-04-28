@@ -368,6 +368,15 @@ defmodule FieldPublication.Publications do
     |> put()
   end
 
+  def report_data_issues(
+        %Publication{project_name: project_name, draft_date: draft_date},
+        data_issues
+      ) do
+    get!(project_name, draft_date)
+    |> Map.update(:data_issues, [], fn existing -> existing ++ data_issues end)
+    |> put()
+  end
+
   defp delete_configuration_doc(%Publication{configuration_doc: doc_id}) do
     CouchService.get_document(doc_id)
     |> case do

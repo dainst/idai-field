@@ -739,7 +739,7 @@ export class EditableMapComponent extends LayerMapComponent {
         editableMarker.on('mousedown', event => {
             this.setSelectedMarker(event.target);
             this.map.dragging.disable();
-            this.map.on('mousemove', (e: L.MouseEvent) => editableMarker.setLatLng(e.latlng));
+            this.map.on('mousemove', (e: L.LeafletMouseEvent) => editableMarker.setLatLng(e.latlng));
         });
     }
 

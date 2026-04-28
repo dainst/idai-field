@@ -183,7 +183,9 @@ export class LayerMapComponent extends MapComponent {
             [georeference.topLeftCoordinates,
             georeference.topRightCoordinates,
             georeference.bottomLeftCoordinates],
-            { pane: layerDocument.resource.id }).addTo(this.map);
+            { pane: layerDocument.resource.id },
+            
+        ).addTo(this.map);
     }
 
 

@@ -202,12 +202,23 @@ defmodule FieldPublication.Publications.Data do
           |> Enum.zip(documents)
           |> Enum.map(fn
             {
-              {uuid, %{"ok" => %{"preview" => _res, "hierarchy" => _} = existing_doc}},
+              {uuid, %{"ok" => %{"_deleted" => true} = _existing_doc}},
               %Document{id: id} = new_preview
             }
             when uuid == id ->
-              # For the new preview there already exists a document in the preview database,
-              # so we just update its preview field.
+              # The document existed at one point but was deleted, in that case recreate it from scratch.
+              %{
+                "_id" => id,
+                "preview" => new_preview,
+                "hierarchy" => Map.fetch!(hierarchy_mapping, id)
+              }
+
+            {
+              {uuid, %{"ok" => existing_doc}},
+              %Document{id: id} = new_preview
+            }
+            when uuid == id ->
+              # There is an existing document in the database, so we just update its relevant fields.
               existing_doc
               |> Map.put("preview", new_preview)
               |> Map.put("hierarchy", Map.fetch!(hierarchy_mapping, id))
@@ -229,7 +240,6 @@ defmodule FieldPublication.Publications.Data do
       end)
 
     Cachex.del(@document_cache_name, get_hierarchy_document_name(publication))
-
     result
   end
 

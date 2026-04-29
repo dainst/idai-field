@@ -2,19 +2,20 @@ defmodule FieldPublicationWeb.Components.Data.Image do
   use Phoenix.Component
 
   @default_region "full"
-  @default_size "^500,"
+  @default_width 500
+  @default_size "^#{@default_width},"
   @default_rotation "0"
   @default_quality "default"
   @default_format :jpg
 
-  attr :project, :string, required: true
-  attr :uuid, :string, required: true
-  attr :region, :string, default: @default_region
-  attr :size, :string, default: @default_size
-  attr :rotation, :string, default: @default_rotation
-  attr :quality, :string, default: @default_quality
-  attr :format, :atom, values: [:jpg, :png, :webp], default: @default_format
-  attr :rest, :global
+  attr(:project, :string, required: true)
+  attr(:uuid, :string, required: true)
+  attr(:region, :string, default: @default_region)
+  attr(:size, :string, default: @default_size)
+  attr(:rotation, :string, default: @default_rotation)
+  attr(:quality, :string, default: @default_quality)
+  attr(:format, :atom, values: [:jpg, :png, :webp], default: @default_format)
+  attr(:rest, :global)
 
   def img_element(assigns) do
     ~H"""
@@ -43,9 +44,9 @@ defmodule FieldPublicationWeb.Components.Data.Image do
     "/api/image/iiif/3/#{project}%2F#{uuid}/#{region}/#{size}/#{rotation}/#{quality}.#{format}"
   end
 
-  attr :project, :string, required: true
-  attr :uuid, :string, required: true
-  attr :rest, :global
+  attr(:project, :string, required: true)
+  attr(:uuid, :string, required: true)
+  attr(:rest, :global)
 
   def iiif_viewer(assigns) do
     ~H"""
@@ -57,4 +58,7 @@ defmodule FieldPublicationWeb.Components.Data.Image do
 
   def construct_iiif_info_url(project, uuid),
     do: "/api/image/iiif/3/#{project}%2F#{uuid}/info.json"
+
+  def get_default_width(), do: @default_width
+  def get_default_format(), do: @default_format
 end

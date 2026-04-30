@@ -199,7 +199,7 @@
     "tslib": "2.8.1",
     "tslint": "~6.1.0",
     "typescript": "5.9.3",
-    "wait-on": "9.0.4"
+    "wait-on": "9.0.5"
   },
   "browser": {
     "zlib": false,

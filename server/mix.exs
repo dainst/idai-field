@@ -57,7 +57,7 @@ defmodule FieldHub.MixProject do
       {:telemetry_poller, "~> 1.1"},
       {:jason, "~> 1.4"},
       {:httpoison, "~> 2.2"},
-      {:reverse_proxy_plug, "~> 2.4"},
+      {:reverse_proxy_plug, "~> 3.0"},
       {:zarex, "~> 1.0"},
       {:ex_json_schema, "~> 0.10"},
       {:cachex, "~> 4.0"},

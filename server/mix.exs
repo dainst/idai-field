@@ -16,7 +16,6 @@ defmodule FieldHub.MixProject do
           FieldHubWeb.ChannelCase,
           FieldHubWeb.ErrorHTML,
           FieldHubWeb.ErrorJSON,
-          FieldHubWeb.Gettext,
           FieldHubWeb.Layouts,
           FieldHubWeb.CoreComponents
         ]

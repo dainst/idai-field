@@ -400,7 +400,7 @@ defmodule FieldHubWeb.Live.ProjectShowTest do
                "<input type=\"text\" placeholder=\"New password\" id=\"password\" name=\"password\" value=\"\"/></div>"
 
       # The "Set new password" button should be disabled as long as the input is an empty string.
-      assert html =~ "phx-click=\"set_password\" disabled=\"disabled\" style=\"width:100%\""
+      assert html =~ "phx-click=\"set_password\" disabled=\"\" style=\"width:100%\""
 
       html =
         view
@@ -411,7 +411,7 @@ defmodule FieldHubWeb.Live.ProjectShowTest do
                "<input type=\"text\" placeholder=\"New password\" id=\"password\" name=\"password\" value=\"typed_in_password\"/></div>"
 
       # The "Set new password" button should no longer be disabled.
-      assert html =~ "phx-click=\"set_password\" style=\"width:100%\""
+      refute html =~ "phx-click=\"set_password\" disabled=\"\" style=\"width:100%\""
     end
 
     test "button click generates random password", %{conn: conn} do
@@ -589,7 +589,7 @@ defmodule FieldHubWeb.Live.ProjectShowTest do
       html = render(view)
 
       # The "Delete" button should be disabled as long as the repeated project name does not match.
-      assert html =~ "phx-click=\"delete\" disabled=\"disabled\""
+      assert html =~ "phx-click=\"delete\" disabled=\"\""
 
       html =
         view

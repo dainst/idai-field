@@ -50,7 +50,7 @@ defmodule FieldHub.MixProject do
       {:phoenix_live_dashboard, "~> 0.8"},
       {:phoenix_live_reload, "~> 1.5", only: :dev},
       {:bandit, "~> 1.5"},
-      {:floki, ">= 0.30.0", only: :test},
+      {:lazy_html, ">= 0.1.0", only: :test},
       {:esbuild, "~> 0.9", runtime: Mix.env() == :dev},
       {:sizeable, "~> 1.0"},
       {:swoosh, "~> 1.18"},

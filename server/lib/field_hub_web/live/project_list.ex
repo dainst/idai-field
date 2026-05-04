@@ -29,8 +29,11 @@ defmodule FieldHubWeb.Live.ProjectList do
           project_keys = Project.get_all_for_user(current_user)
 
           database_infos =
-            Task.async_stream(project_keys, fn project_key ->
+            Enum.map(project_keys, fn project_key ->
               PubSub.subscribe(FieldHub.PubSub, project_key)
+              project_key
+            end)
+            |> Task.async_stream(fn project_key ->
               {project_key, Project.database_info(project_key)}
             end)
             |> Enum.map(fn {:ok, result} ->

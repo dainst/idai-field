@@ -95,6 +95,7 @@ defmodule FieldHubWeb.Live.ProjectShowTest do
         flash: %{},
         issues_evaluating?: false,
         issues: issues,
+        issue_count: Enum.count(issues),
         live_action: nil,
         project: "test_project",
         supervisor: :loading,

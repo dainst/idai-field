@@ -1,283 +1,407 @@
 defmodule FieldHubWeb.Live.ProjectList do
   use FieldHubWeb, :live_view
 
+  alias Phoenix.PubSub
+
   alias FieldHub.{
     Project,
-    User,
-    CouchService
+    Project.DatabaseInfo,
+    Project.ChangeInfo,
+    User
   }
-
-  @default_sort_by :name
-  @default_sort_direction :asc
 
   require Logger
 
   def mount(_params, _session, %{assigns: %{current_user: current_user}} = socket) do
     socket =
-      case current_user do
-        nil ->
+      cond do
+        is_nil(current_user) ->
+          # TODO?
           socket
 
-        user_name when is_binary(user_name) ->
-          if User.is_admin?(user_name) do
-            projects = Project.get_all_for_user(user_name)
+        Project.exists?(current_user) ->
+          # Redirect to project's page if user is not an admin (implicitley given because there is a project of
+          # the same name).
+          push_navigate(socket, to: "/ui/projects/show/#{current_user}")
 
-            socket
-            |> assign_async(
-              [
-                :state,
-                :healthy_projects_number,
-                :total_database_size,
-                :total_documents_number,
-                :total_documents_size,
-                :total_images_number,
-                :total_thumbnails_number,
-                :total_originals_number,
-                :total_images_size
-              ],
-              fn ->
-                load_stats(projects)
+        User.is_admin?(current_user) ->
+          # Render project list for administrator.
+          project_keys = Project.get_all_for_user(current_user)
+
+          database_infos =
+            Task.async_stream(project_keys, fn project_key ->
+              PubSub.subscribe(FieldHub.PubSub, project_key)
+              {project_key, Project.database_info(project_key)}
+            end)
+            |> Enum.map(fn {:ok, result} ->
+              result
+            end)
+            |> Enum.into(%{})
+
+          {overall_database_size, overall_doc_count} =
+            database_infos
+            |> Map.values()
+            |> Enum.reduce(
+              {0, 0},
+              fn %DatabaseInfo{size: size, doc_count: count}, {size_acc, count_acc} ->
+                {size_acc + size, count_acc + count}
               end
             )
-            |> assign(:sort_by, @default_sort_by)
-            |> assign(:sort_direction, @default_sort_direction)
-            |> assign(:all_projects_number, length(projects))
-          else
-            push_navigate(socket, to: "/ui/projects/show/#{user_name}")
-          end
+
+          file_infos =
+            Enum.map(project_keys, fn project_key ->
+              task =
+                Task.Supervisor.async_nolink(FieldHub.TaskSupervisor, fn ->
+                  {:file_info, {project_key, Project.file_store_info(project_key)}}
+                end)
+
+              {project_key, {:loading, task}}
+            end)
+            |> Enum.into(%{})
+
+          socket
+          |> assign(:page_title, "Overview")
+          |> assign(:sort, {nil, nil})
+          |> assign(:project_keys, project_keys)
+          |> assign(:database_infos, database_infos)
+          |> assign(:file_infos, file_infos)
+          |> assign(:aggregated_info, %{
+            database_size: overall_database_size,
+            doc_count: overall_doc_count,
+            thumbnail_size: 0,
+            thumbnail_count: 0,
+            original_size: 0,
+            original_count: 0
+          })
+          |> assign(:errors, %{})
       end
 
-    {:ok, assign(socket, :page_title, "Overview")}
+    {:ok, socket}
   end
 
-  def handle_event("sort", %{"field" => field}, socket) do
-    field = String.to_atom(field)
+  def handle_params(params, _, %{assigns: %{project_keys: _project_keys}} = socket) do
+    default_sort = {"projects", :asc}
 
-    async_state = socket.assigns.state
-    %{projects: projects, errors: errors} = async_state.result
+    new_sort_params =
+      case Map.get(params, "sort") do
+        nil ->
+          nil
 
-    {sort_direction, sort_by} =
-      if socket.assigns.sort_by == field do
-        {toggle_direction(socket.assigns.sort_direction), field}
-      else
-        {:asc, field}
+        param ->
+          String.split(param, "|")
+      end
+      |> case do
+        [column, direction] ->
+          parsed_direction =
+            case direction do
+              "asc" -> :asc
+              "desc" -> :desc
+              _ -> :asc
+            end
+
+          {column, parsed_direction}
+
+        _ ->
+          default_sort
       end
 
-    sorted_projects = sort_projects(projects, sort_by, sort_direction)
-
-    new_result = %{async_state.result | projects: sorted_projects, errors: errors}
-    new_async_state = %{async_state | result: new_result}
-
-    {:noreply,
-     socket
-     |> assign(:state, new_async_state)
-     |> assign(:sort_by, sort_by)
-     |> assign(:sort_direction, sort_direction)}
+    {
+      :noreply,
+      socket
+      |> assign(:sort, new_sort_params)
+      |> apply_sort()
+    }
   end
 
-  def handle_event("go_to_project", %{"id" => id}, socket) do
-    {:noreply, push_navigate(socket, to: ~p"/ui/projects/show/#{id}")}
+  def handle_params(_, _, socket) do
+    {
+      :noreply,
+      socket
+    }
   end
 
-  def render_dashboard(assigns) do
+  def handle_event(
+        "toggle-sort",
+        %{"column" => column},
+        %{assigns: %{sort: {current_column, direction}}} = socket
+      ) do
+    socket =
+      cond do
+        is_nil(current_column) || current_column != column ->
+          push_patch(socket, to: ~p"/?#{%{sort: "#{column}|asc"}}")
+
+        current_column == column and direction == :asc ->
+          push_patch(socket, to: ~p"/?#{%{sort: "#{column}|desc"}}")
+
+        current_column == column and direction == :desc ->
+          push_patch(socket, to: ~p"/")
+      end
+
+    {:noreply, socket}
+  end
+
+  def handle_info({project_key, %FieldHub.Issues.Issue{} = issue}, socket) do
+    {
+      :noreply,
+      update(socket, :errors, fn existing ->
+        Map.update(existing, project_key, [issue], fn existing_for_project ->
+          existing_for_project ++ [issue]
+        end)
+      end)
+    }
+  end
+
+  def handle_info(
+        {
+          ref,
+          {
+            :file_info,
+            {
+              project_key,
+              %{
+                thumbnail_image: %{active: thumbnail_count, active_size: thumbnail_size},
+                original_image: %{active: original_count, active_size: original_size}
+              }
+            }
+          }
+        },
+        socket
+      ) do
+    Process.demonitor(ref, [:flush])
+
+    {
+      :noreply,
+      socket
+      |> update(:file_infos, fn infos ->
+        Map.put(infos, project_key, %{
+          thumbnail_count: thumbnail_count,
+          thumbnail_size: thumbnail_size,
+          original_count: original_count,
+          original_size: original_size
+        })
+      end)
+      |> update(:aggregated_info, fn infos ->
+        infos
+        |> Map.put(:thumbnail_size, infos.thumbnail_size + thumbnail_size)
+        |> Map.put(:thumbnail_count, infos.thumbnail_count + thumbnail_count)
+        |> Map.put(:original_size, infos.original_size + original_size)
+        |> Map.put(:original_count, infos.original_count + original_count)
+      end)
+    }
+  end
+
+  def handle_info(
+        {
+          :DOWN,
+          ref,
+          _,
+          _pid,
+          _error
+        },
+        %{assigns: %{file_infos: file_infos}} = socket
+      ) do
+    # The file system evaluation task for a project crashed, evaluate the affected project
+    # by the task reference and push the appropriate errors to the user.
+    {project_key_with_error, _} =
+      Enum.find(file_infos, fn {_project_key, status} ->
+        case status do
+          {:loading, %Task{ref: running_task_ref}} when running_task_ref == ref ->
+            true
+
+          _ ->
+            false
+        end
+      end)
+
+    {
+      :noreply,
+      socket
+      |> update(:file_infos, fn infos ->
+        Map.put(infos, project_key_with_error, :error)
+      end)
+      |> update(:errors, fn existing ->
+        issue = %FieldHub.Issues.Issue{
+          severity: :error,
+          type: :error_reading_file_system,
+          data: %{}
+        }
+
+        Map.update(existing, project_key_with_error, [issue], fn existing_for_project ->
+          existing_for_project ++ [issue]
+        end)
+      end)
+    }
+  end
+
+  attr(:column, :string, required: true)
+  attr(:active, :any, required: true)
+  slot(:inner_block, required: true)
+
+  defp th(assigns) do
     ~H"""
-    <%!-- <%= if @all_projects_number > 1 do %> --%>
-    <div class="dashboard">
-      <div class="dashboard-card">
-        <div class="dashboard-card-title">Number of projects</div>
-        <div class="dashboard-card-main-number">
-          {@healthy_projects_number.result}
-        </div>
-        <%= if @all_projects_number > @healthy_projects_number.result do %>
-          <div class="dashboard-card-error">
-            +{@all_projects_number - @healthy_projects_number.result} unhealthy
-          </div>
-        <% end %>
-      </div>
-      <div class="dashboard-card">
-        <div class="dashboard-card-title">Documents</div>
-        <div class="dashboard-card-main-number">{@total_documents_size.result}</div>
-        <b class="info-label">Total:</b>
-        <span class="info-value">{@total_documents_number.result}</span>
-      </div>
-      <div class="dashboard-card">
-        <div class="dashboard-card-title">Images</div>
-        <div class="dashboard-card-main-number">{@total_images_size.result}</div>
-        <div class="dashboard-secondary-info">
-          <span class="info-item">
-            <b class="info-label">Thumbnails :</b>
-            <span class="info-value">{@total_thumbnails_number.result}</span>
-          </span>
-
-          <span class="info-item">
-            <span class="info-label">Originals :</span>
-            <span class="info-value">{@total_originals_number.result}</span>
-          </span>
-        </div>
-      </div>
-    </div>
-    <%!-- <% end %> --%>
+    <% {active_column, direction} = @active %>
+    <th
+      class={"sortable-list-heading #{if active_column == @column, do: direction}"}
+      phx-click="toggle-sort"
+      phx-value-column={@column}
+    >
+      {render_slot(@inner_block)}
+    </th>
     """
   end
 
-  defp toggle_direction(:asc), do: :desc
-
-  defp toggle_direction(:desc), do: :asc
-
-  defp sort_projects(projects, :name, direction) do
-    Enum.sort_by(projects, & &1.name, direction)
+  defp apply_sort(
+         %{
+           assigns: %{project_keys: project_keys, sort: {"projects", direction}}
+         } = socket
+       ) do
+    assign(socket, :project_keys, Enum.sort(project_keys, direction))
   end
 
-  defp sort_projects(projects, :doc_count, direction) do
-    Enum.sort_by(projects, & &1.doc_count, direction)
-  end
+  defp apply_sort(
+         %{
+           assigns: %{
+             project_keys: project_keys,
+             sort: {"document_count", direction},
+             database_infos: db_infos
+           }
+         } = socket
+       ) do
+    assign(
+      socket,
+      :project_keys,
+      Enum.sort(
+        project_keys,
+        fn project_key_a, project_key_b ->
+          %DatabaseInfo{doc_count: doc_count_a} = db_infos[project_key_a]
 
-  defp sort_projects(projects, :database_file_size, direction) do
-    Enum.sort_by(projects, & &1.database_file_size, direction)
-  end
+          %DatabaseInfo{doc_count: doc_count_b} = db_infos[project_key_b]
 
-  defp sort_projects(projects, :image_file_size, direction) do
-    Enum.sort_by(projects, & &1.image_file_size, direction)
-  end
-
-  defp sort_projects(projects, :last_change_date, direction) do
-    Enum.sort_by(
-      projects,
-      fn project ->
-        case project.last_change_date do
-          nil -> 0
-          datetime -> datetime |> DateTime.to_unix()
+          if direction == :asc do
+            doc_count_a >= doc_count_b
+          else
+            doc_count_a < doc_count_b
+          end
         end
-      end,
-      direction
+      )
     )
   end
 
-  defp sort_indicator(current_sort, current_direction, column) do
-    if current_sort == column do
-      case current_direction do
-        :asc -> "\u2b61"
-        :desc -> "\u2b63"
-      end
-    else
-      "\u2b65"
-    end
-  end
+  defp apply_sort(
+         %{
+           assigns: %{
+             project_keys: project_keys,
+             sort: {"thumbnail_count", direction},
+             file_infos: file_infos
+           }
+         } = socket
+       ) do
+    assign(
+      socket,
+      :project_keys,
+      Enum.sort(
+        project_keys,
+        fn project_key_a, project_key_b ->
+          count_a =
+            file_infos[project_key_a]
+            |> case do
+              :loading ->
+                -1
 
-  defp load_stats(projects) do
-    {errors, enriched_projects} =
-      Enum.map(projects, fn project_id ->
-        try do
-          %{
-            database: %{
-              doc_count: doc_count,
-              file_size: database_file_size,
-              last_n_changes: last_n_changes
-            },
-            files: %{
-              thumbnail_image: %{
-                active: thumbnail_count,
-                active_size: thumbnail_file_size
-              },
-              original_image: %{
-                active: original_count,
-                active_size: original_file_size
-              }
-            }
-          } = Project.evaluate_project(project_id, 1)
-
-          %{date: last_change_date_time, user: last_change_user} =
-            case List.first(last_n_changes) do
-              nil ->
-                %{date: nil, user: nil}
-
-              change ->
-                change
-                |> CouchService.extract_most_recent_change_info()
-                |> (fn {_type, date_time, user} -> %{date: date_time, user: user} end).()
+              %{thumbnail_count: val} ->
+                val
             end
 
-          {
-            :ok,
-            %{
-              id: project_id,
-              name: project_id,
-              doc_count: doc_count,
-              database_file_size: database_file_size,
-              image_file_size: thumbnail_file_size + original_file_size,
-              original_count: original_count,
-              thumbnail_count: thumbnail_count,
-              last_change_date: last_change_date_time,
-              last_change_user: last_change_user
-            }
-          }
-        rescue
-          error ->
-            Logger.error(error)
-            {:error, {error, project_id}}
+          count_b =
+            file_infos[project_key_b]
+            |> case do
+              :loading ->
+                -1
+
+              %{thumbnail_count: val} ->
+                val
+            end
+
+          if direction == :asc do
+            count_a >= count_b
+          else
+            count_a < count_b
+          end
         end
-      end)
-      |> Enum.split_with(fn {status, _content} -> status == :error end)
+      )
+    )
+  end
 
-    enriched_projects = Enum.map(enriched_projects, fn {:ok, info} -> info end)
-    errors = Enum.map(errors, fn {:error, info} -> info end)
-    healthy_projects_number = length(enriched_projects)
+  defp apply_sort(
+         %{
+           assigns: %{
+             project_keys: project_keys,
+             sort: {"image_count", direction},
+             file_infos: file_infos
+           }
+         } = socket
+       ) do
+    assign(
+      socket,
+      :project_keys,
+      Enum.sort(
+        project_keys,
+        fn project_key_a, project_key_b ->
+          count_a =
+            file_infos[project_key_a]
+            |> case do
+              :loading ->
+                -1
 
-    total_documents_number =
-      enriched_projects
-      |> Enum.map(& &1.doc_count)
-      |> Enum.sum()
+              %{original_count: val} ->
+                val
+            end
 
-    total_documents_size =
-      enriched_projects
-      |> Enum.map(& &1.database_file_size)
-      |> Enum.sum()
+          count_b =
+            file_infos[project_key_b]
+            |> case do
+              :loading ->
+                -1
 
-    total_originals_number =
-      enriched_projects
-      |> Enum.map(& &1.original_count)
-      |> Enum.sum()
+              %{original_count: val} ->
+                val
+            end
 
-    total_thumbnails_number =
-      enriched_projects
-      |> Enum.map(& &1.thumbnail_count)
-      |> Enum.sum()
+          if direction == :asc do
+            count_a >= count_b
+          else
+            count_a < count_b
+          end
+        end
+      )
+    )
+  end
 
-    total_images_number = total_thumbnails_number + total_originals_number
+  defp apply_sort(
+         %{
+           assigns: %{
+             project_keys: project_keys,
+             sort: {"last_change", direction},
+             database_infos: db_infos
+           }
+         } = socket
+       ) do
+    assign(
+      socket,
+      :project_keys,
+      Enum.sort(
+        project_keys,
+        fn project_key_a, project_key_b ->
+          last_change_a = List.first(db_infos[project_key_a].last_changes)
+          last_change_b = List.first(db_infos[project_key_b].last_changes)
 
-    total_images_size =
-      enriched_projects
-      |> Enum.map(& &1.image_file_size)
-      |> Enum.sum()
-
-    total_database_size =
-      (total_documents_size + total_images_size)
-      |> Sizeable.filesize()
-
-    total_documents_size =
-      total_documents_size
-      |> Sizeable.filesize()
-
-    total_images_size =
-      total_images_size
-      |> Sizeable.filesize()
-
-    {
-      :ok,
-      %{
-        state: %{
-          projects: enriched_projects,
-          errors: errors
-        },
-        healthy_projects_number: healthy_projects_number,
-        total_database_size: total_database_size,
-        total_documents_number: total_documents_number,
-        total_documents_size: total_documents_size,
-        total_images_number: total_images_number,
-        total_thumbnails_number: total_thumbnails_number,
-        total_originals_number: total_originals_number,
-        total_images_size: total_images_size
-      }
-    }
+          if direction == :asc do
+            last_change_a < last_change_b
+          else
+            last_change_a > last_change_b
+          end
+        end
+      )
+    )
   end
 end

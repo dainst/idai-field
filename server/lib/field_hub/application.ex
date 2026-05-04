@@ -23,7 +23,8 @@ defmodule FieldHub.Application do
       Supervisor.child_spec(
         {Cachex, name: Application.get_env(:field_hub, :user_tokens_cache_name)},
         id: :user_tokens_cache
-      )
+      ),
+      {Task.Supervisor, name: FieldHub.TaskSupervisor}
     ]
 
     # Run the FieldHub setup

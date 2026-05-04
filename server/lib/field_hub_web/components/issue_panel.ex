@@ -5,97 +5,94 @@ defmodule FieldHubWeb.Components.IssuesPanel do
 
   def render(assigns) do
     ~H"""
-    <section>
-      <h2>
-        <div class="row">
-          <div class="column column-80">
-            Issues{if @overall_issue_count != 0, do: " (#{@overall_issue_count})"}
-          </div>
-          <button class="button column" phx-click="evaluate_issues">
-            <%= case @issues do %>
-              <% nil -> %>
-                Evaluate
-              <% _data -> %>
-                Re-evaluate
-            <% end %>
-          </button>
-        </div>
-      </h2>
-      <%= if @evaluating? do %>
+    <div class="issue-panel">
+      {render_slot(@inner_block)}
+      <button
+        :if={@event}
+        class="button column"
+        phx-click={@event}
+      >
+        <%= case @grouped_issues do %>
+          <% nil -> %>
+            Evaluate
+          <% _data -> %>
+            Re-evaluate
+        <% end %>
+      </button>
+      <%= if @loading? do %>
         <div class="row">
           <span class="issue-loading-spinner"></span>
           <span style="margin-top:6px;margin-left:10px">
             Evaluating issues, for big projects this may take several minutes...
           </span>
         </div>
-      <% end %>
+      <% else %>
+        <%= case @grouped_issues do %>
+          <% nil -> %>
+            No data.
+          <% issues when issues == %{} -> %>
+            None.
+          <% grouped_issues when is_map(grouped_issues) -> %>
+            <%= for {{type, severity}, issues} <- grouped_issues do %>
+              <details class="issues">
+                <summary class={issue_classes(severity)}>
+                  {get_issue_type_label(type)} ({Enum.count(issues)})
+                </summary>
 
-      <%= case @issues do %>
-        <% nil -> %>
-          No data.
-        <% issues when issues == %{} -> %>
-          None.
-        <% grouped_issues when is_map(grouped_issues) -> %>
-          <%= for {{type, severity}, issues} <- grouped_issues do %>
-            <section id={"#{type}-issue-group"} class="issue-group hide">
-              <h3 class={issue_classes(severity)}>
-                <div
-                  class="show-toggle"
-                  phx-click={JS.remove_class("hide", to: "##{type}-issue-group")}
-                >
-                  <img src="/images/hero-icons/folder.svg" />{get_issue_type_label(type)} ({Enum.count(
-                    issues
-                  )})
-                </div>
-                <div class="hide-toggle" phx-click={JS.add_class("hide", to: "##{type}-issue-group")}>
-                  <img src="/images/hero-icons/folder-open.svg" />{get_issue_type_label(type)} ({Enum.count(
-                    issues
-                  )})
-                </div>
-              </h3>
-
-              <.render_issue_group project={@project} type={type} issues={issues} />
-            </section>
-          <% end %>
+                <.issue_group project={@project} type={type} issues={issues} />
+              </details>
+            <% end %>
+        <% end %>
       <% end %>
-    </section>
+    </div>
     """
   end
 
-  def update(%{issues: issues, project: project, evaluating?: evaluating?}, socket) do
-    overall_issue_count =
-      if is_list(issues) do
-        Enum.count(issues)
-      else
-        0
-      end
-
-    issues =
-      case issues do
-        nil ->
-          nil
-
-        issues ->
-          Enum.group_by(issues, fn %{type: type, severity: severity} -> {type, severity} end)
-      end
+  def update(
+        %{
+          issues: issues,
+          project_key: project_key,
+          inner_block: inner_block
+        } = assigns,
+        socket
+      ) do
+    event = Map.get(assigns, :event, false)
+    loading? = Map.get(assigns, :loading?, false)
 
     {
       :ok,
       socket
-      |> assign(:project, project)
-      |> assign(:evaluating?, evaluating?)
-      |> assign(:issues, issues)
-      |> assign(:overall_issue_count, overall_issue_count)
+      |> assign(
+        :grouped_issues,
+        if issues == nil do
+          nil
+        else
+          Enum.group_by(
+            issues,
+            fn %{type: type, severity: severity} -> {type, severity} end
+          )
+        end
+      )
+      |> assign(:event, event)
+      |> assign(:loading?, loading?)
+      |> assign(:inner_block, inner_block)
+      |> assign(:project, project_key)
     }
   end
 
-  defp render_issue_group(%{type: :no_project_document} = assigns) do
+  defp issue_group(%{type: :no_project_document} = assigns) do
     ~H"""
     <span class="issue-content">Could not find a project document in the database!</span>
     """
   end
 
-  defp render_issue_group(%{type: :no_default_project_map_layer} = assigns) do
+  defp issue_group(%{type: :error_reading_file_system} = assigns) do
+    ~H"""
+    <span class="issue-content">System failed to read the project's file store!</span>
+    """
+  end
+
+  defp issue_group(%{type: :no_default_project_map_layer} = assigns) do
     ~H"""
     <span class="issue-content">
       <em>There is no default map layer defined for the project.</em>
@@ -109,7 +106,7 @@ defmodule FieldHubWeb.Components.IssuesPanel do
     """
   end
 
-  defp render_issue_group(%{type: :missing_original_image} = assigns) do
+  defp issue_group(%{type: :missing_original_image} = assigns) do
     ~H"""
     <div class="issue-content">
       <em>Some original files are missing and should be uploaded by their creator.</em>
@@ -125,7 +122,7 @@ defmodule FieldHubWeb.Components.IssuesPanel do
     """
   end
 
-  defp render_issue_group(%{type: :image_variants_size} = assigns) do
+  defp issue_group(%{type: :image_variants_size} = assigns) do
     ~H"""
     <div class="issue-content">
       <em>In general the original images are expected to be larger than their thumbnails.
@@ -150,7 +147,7 @@ defmodule FieldHubWeb.Components.IssuesPanel do
     """
   end
 
-  defp render_issue_group(%{type: :missing_image_copyright} = assigns) do
+  defp issue_group(%{type: :missing_image_copyright} = assigns) do
     ~H"""
     <div class="issue-content">
       <em>
@@ -168,7 +165,23 @@ defmodule FieldHubWeb.Components.IssuesPanel do
     """
   end
 
-  defp render_issue_group(%{type: :unresolved_relation} = assigns) do
+  defp issue_group(%{type: :invalid_document} = assigns) do
+    ~H"""
+    <dl>
+      <dt>
+        There are some document in the database that seem to be generated outside of Field and
+        are considered invalid. Their IDs are:
+      </dt>
+      <dd>
+        <%= for %{data: %{uuid: uuid}} <- @issues do %>
+          {uuid}
+        <% end %>
+      </dd>
+    </dl>
+    """
+  end
+
+  defp issue_group(%{type: :unresolved_relation} = assigns) do
     ~H"""
     <div class="issue-content">
       <em>
@@ -215,7 +228,7 @@ defmodule FieldHubWeb.Components.IssuesPanel do
     """
   end
 
-  defp render_issue_group(%{type: :non_unique_identifiers} = assigns) do
+  defp issue_group(%{type: :non_unique_identifiers} = assigns) do
     ~H"""
     <div class="issue-content">
       <em>There are documents sharing the same identifier.</em>
@@ -245,7 +258,7 @@ defmodule FieldHubWeb.Components.IssuesPanel do
     """
   end
 
-  defp render_issue_group(assigns) do
+  defp issue_group(assigns) do
     # Fallback function, displays issues data as list with key/value as columns.
     ~H"""
     <div class="issue-content">
@@ -280,6 +293,26 @@ defmodule FieldHubWeb.Components.IssuesPanel do
     """
   end
 
+  defp get_issue_type_label(:no_project_document), do: "No project document"
+  defp get_issue_type_label(:no_default_project_map_layer), do: "No default map layer"
+  defp get_issue_type_label(:file_directory_not_found), do: "Project file directory not found"
+  defp get_issue_type_label(:image_variants_size), do: "Original images file size"
+  defp get_issue_type_label(:missing_image_copyright), do: "Images missing copyright information"
+  defp get_issue_type_label(:missing_original_image), do: "Missing original images"
+  defp get_issue_type_label(:unexpected_error), do: "Unexpected issue"
+  defp get_issue_type_label(:unresolved_relation), do: "Unresolved relation"
+  defp get_issue_type_label(:invalid_document), do: "Invalid document"
+  defp get_issue_type_label(:error_reading_file_system), do: "Project files inaccessible"
+
+  defp get_issue_type_label(:non_unique_identifiers),
+    do: "Same identifier used for different documents"
+
+  defp get_issue_type_label(type), do: type
+
+  defp issue_classes(:info), do: "monitoring-issue info"
+  defp issue_classes(:warning), do: "monitoring-issue warning"
+  defp issue_classes(:error), do: "monitoring-issue error"
+
   defp get_thumbnail_data(uuid, project) do
     # TODO: Add  /ui/images route and replace blob variant
     FieldHub.FileStore.get_file_path(uuid, project, :thumbnail_image)
@@ -296,22 +329,4 @@ defmodule FieldHubWeb.Components.IssuesPanel do
         "No thumbnail available"
     end
   end
-
-  defp get_issue_type_label(:no_project_document), do: "No project document"
-  defp get_issue_type_label(:no_default_project_map_layer), do: "No default map layer"
-  defp get_issue_type_label(:file_directory_not_found), do: "Project file directory not found"
-  defp get_issue_type_label(:image_variants_size), do: "Original images file size"
-  defp get_issue_type_label(:missing_image_copyright), do: "Images missing copyright information"
-  defp get_issue_type_label(:missing_original_image), do: "Missing original images"
-  defp get_issue_type_label(:unexpected_error), do: "Unexpected issue"
-  defp get_issue_type_label(:unresolved_relation), do: "Unresolved relation"
-
-  defp get_issue_type_label(:non_unique_identifiers),
-    do: "Same identifier used for different documents"
-
-  defp get_issue_type_label(type), do: type
-
-  defp issue_classes(:info), do: "monitoring-issue info"
-  defp issue_classes(:warning), do: "monitoring-issue warning"
-  defp issue_classes(:error), do: "monitoring-issue error"
 end

@@ -41,6 +41,7 @@ defmodule FieldHubWeb.Live.ProjectShow do
           |> assign(:stats, :loading)
           |> assign(:issues_evaluating?, false)
           |> assign(:issues, nil)
+          |> assign(:issue_count, nil)
           |> assign(:project, project)
           |> assign(:current_user, user_name)
           |> assign(:new_password, "")
@@ -140,11 +141,13 @@ defmodule FieldHubWeb.Live.ProjectShow do
             Map.put(db, :last_n_changes, sorted_changes)
           end)
 
-        {:noreply,
-         socket
-         |> assign(:stats, sorted_stats)
-         |> assign(:sort_by, sort_by)
-         |> assign(:sort_direction, sort_direction)}
+        {
+          :noreply,
+          socket
+          |> assign(:stats, sorted_stats)
+          |> assign(:sort_by, sort_by)
+          |> assign(:sort_direction, sort_direction)
+        }
     end
   end
 

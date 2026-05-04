@@ -380,7 +380,7 @@ defmodule FieldHub.CouchService do
   """
   def get_last_n_changes(project_identifier, n) do
     HTTPoison.get!(
-      "#{base_url()}/#{project_identifier}/_changes?descending=true&limit=100&include_docs=true",
+      "#{base_url()}/#{project_identifier}/_changes?descending=true&limit=#{n}&include_docs=true",
       get_user_credentials()
       |> headers()
     )
@@ -391,11 +391,26 @@ defmodule FieldHub.CouchService do
       doc = change["doc"]
       Map.has_key?(doc, "_deleted")
     end)
+    |> Enum.filter(fn %{"doc" => doc} ->
+      if Map.has_key?(doc, "modified") && Map.has_key?(doc, "created") do
+        true
+      else
+        FieldHub.Project.broadcast(
+          project_identifier,
+          %FieldHub.Issues.Issue{
+            type: :invalid_document,
+            severity: :error,
+            data: %{uuid: doc["_id"]}
+          }
+        )
+
+        false
+      end
+    end)
     |> Enum.sort_by(
       &extract_most_recent_change_info/1,
       &compare_change_info/2
     )
-    |> Enum.take(n)
   end
 
   def extract_most_recent_change_info(%{"doc" => %{"modified" => []}} = change) do
@@ -405,8 +420,8 @@ defmodule FieldHub.CouchService do
     {:created, creation_date, user_name}
   end
 
-  def extract_most_recent_change_info(change) do
-    last_modification = List.last(change["doc"]["modified"])
+  def extract_most_recent_change_info(%{"doc" => %{"modified" => modifications}} = _change) do
+    last_modification = List.last(modifications)
 
     {:ok, modification_date, _seconds} = DateTime.from_iso8601(last_modification["date"])
     user_name = last_modification["user"]

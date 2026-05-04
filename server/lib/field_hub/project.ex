@@ -1,7 +1,10 @@
 defmodule FieldHub.Project do
+  alias Phoenix.PubSub
+
   alias FieldHub.{
     CouchService,
-    FileStore
+    FileStore,
+    Issues.Issue
   }
 
   import CouchService.Credentials
@@ -10,6 +13,16 @@ defmodule FieldHub.Project do
 
   @variant_types Application.compile_env(:field_hub, :valid_file_variants)
   @identifier_length Application.compile_env(:field_hub, :max_project_identifier_length)
+
+  defmodule DatabaseInfo do
+    @enforce_keys [:size, :doc_count]
+    defstruct size: 0, doc_count: 0, last_changes: []
+  end
+
+  defmodule ChangeInfo do
+    @enforce_keys [:action, :id, :identifier, :date, :user]
+    defstruct action: nil, id: nil, identifier: nil, date: nil, user: nil
+  end
 
   @moduledoc """
   Bundles functions concerning Field projects in Field Hub.
@@ -148,7 +161,7 @@ defmodule FieldHub.Project do
   end
 
   @doc """
-  Returns a list of names for all projects the given user has access to (as admin or member).
+  Returns a list of project keys the given user has access to (as admin or member).
 
   __Parameters__
   - `user_name` the user's name.
@@ -199,7 +212,7 @@ defmodule FieldHub.Project do
         :unknown
 
       db_statistics ->
-        file_statistics = evaluate_file_store(project_identifier)
+        file_statistics = file_store_info(project_identifier)
 
         changes = CouchService.get_last_n_changes(project_identifier, n_changes_to_display)
 
@@ -295,7 +308,58 @@ defmodule FieldHub.Project do
     end)
   end
 
-  defp evaluate_database(project_identifier) do
+  def database_info(project_key) do
+    CouchService.get_db_infos(project_key)
+    |> case do
+      %{status_code: 200, body: body} ->
+        %{"doc_count" => db_doc_count, "sizes" => %{"file" => db_file_size}} = Jason.decode!(body)
+
+        %DatabaseInfo{
+          size: db_file_size,
+          doc_count: db_doc_count,
+          last_changes:
+            CouchService.get_last_n_changes(project_key, 100)
+            |> Enum.map(&change_info/1)
+        }
+
+      %{status_code: 404} ->
+        {:error, :unknown}
+    end
+  end
+
+  def change_info(%{"doc" => %{"modified" => []}} = change) do
+    {:ok, creation_date, _seconds} = DateTime.from_iso8601(change["doc"]["created"]["date"])
+    user_name = change["doc"]["created"]["user"]
+
+    %ChangeInfo{
+      action: :create,
+      id: change["doc"]["_id"],
+      identifier: change["doc"]["resource"]["identifier"],
+      user: user_name,
+      date: creation_date
+    }
+  end
+
+  def change_info(%{"doc" => %{"modified" => modifications}} = change) do
+    last_modification = List.last(modifications)
+
+    {:ok, modification_date, _seconds} = DateTime.from_iso8601(last_modification["date"])
+    user_name = last_modification["user"]
+
+    %ChangeInfo{
+      action: :modified,
+      id: change["doc"]["_id"],
+      identifier: change["doc"]["resource"]["identifier"],
+      user: user_name,
+      date: modification_date
+    }
+  end
+
+  def change_info(_) do
+    nil
+  end
+
+  def evaluate_database(project_identifier) do
     FieldHub.CouchService.get_db_infos(project_identifier)
     |> case do
       %{status_code: 200, body: body} ->
@@ -308,7 +372,7 @@ defmodule FieldHub.Project do
     end
   end
 
-  defp evaluate_file_store(project_identifier) do
+  def file_store_info(project_identifier) do
     FileStore.file_index(project_identifier)
     |> Enum.reduce(
       Map.new(@variant_types, fn type ->
@@ -355,5 +419,11 @@ defmodule FieldHub.Project do
         end)
       end
     )
+  end
+
+  def broadcast(project_key, %Issue{} = issue) do
+    PubSub.broadcast(FieldHub.PubSub, project_key, {project_key, issue})
+
+    FieldHub.CLI.print_issues([issue])
   end
 end

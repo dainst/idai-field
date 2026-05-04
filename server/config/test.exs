@@ -23,5 +23,6 @@ config :logger, :console, level: :error
 config :phoenix, :plug_init_mode, :runtime
 
 config :field_hub,
+  couchdb_url: "http://localhost:5983",
   file_directory_root: "test/tmp",
   file_read_chunk_size_bytes: 8000

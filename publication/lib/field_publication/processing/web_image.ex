@@ -96,45 +96,57 @@ defmodule FieldPublication.Processing.WebImage do
           "Creating web image (pyramid TIFF) for '#{uuid}' in project '#{project_key}'..."
         )
 
-        {:ok, file} =
-          project_key
-          |> FileService.get_raw_image_data_path(uuid)
-          |> Image.new_from_file()
+        project_key
+        |> FileService.get_raw_image_data_path(uuid)
+        |> Image.new_from_file()
+        |> case do
+          {:error, _} ->
+            Publications.report_data_issue(publication, %DataIssue{
+              uuid: uuid,
+              reported_by: @data_report_key,
+              issue_type_key: "invalid_file",
+              log: %LogEntry{
+                severity: :warning,
+                message: "The file could not be opened as an image."
+              }
+            })
 
-        # Apply exif rotation metadata directly to the image data (if present), because we do not
-        # want end user's web browser to rotate image tiles because of the metadata.
-        {:ok, {file, _}} = Operation.autorot(file)
+          {:ok, file} ->
+            # Apply exif rotation metadata directly to the image data (if present), because we do not
+            # want end user's web browser to rotate image tiles because of the metadata.
+            {:ok, {file, _}} = Operation.autorot(file)
 
-        target_path = FileService.get_web_images_path(project_key, uuid)
+            target_path = FileService.get_web_images_path(project_key, uuid)
 
-        :ok =
-          Operation.tiffsave(file, target_path,
-            pyramid: true,
-            "tile-height": 256,
-            "tile-width": 256,
-            tile: true,
-            # See https://iipimage.sourceforge.io/2024/12/tiff-image-encoding-optimizing-for-size-speed-and-quality
-            compression: :VIPS_FOREIGN_TIFF_COMPRESSION_DEFLATE
-          )
+            :ok =
+              Operation.tiffsave(file, target_path,
+                pyramid: true,
+                "tile-height": 256,
+                "tile-width": 256,
+                tile: true,
+                # See https://iipimage.sourceforge.io/2024/12/tiff-image-encoding-optimizing-for-size-speed-and-quality
+                compression: :VIPS_FOREIGN_TIFF_COMPRESSION_DEFLATE
+              )
 
-        updated_state =
-          Agent.get_and_update(counter_pid, fn %{counter: counter, overall: overall} = state ->
-            state =
-              state
-              |> Map.put(:counter, counter + 1)
-              |> Map.put(:percentage, (counter + 1) / overall * 100)
+            updated_state =
+              Agent.get_and_update(counter_pid, fn %{counter: counter, overall: overall} = state ->
+                state =
+                  state
+                  |> Map.put(:counter, counter + 1)
+                  |> Map.put(:percentage, (counter + 1) / overall * 100)
 
-            {state, state}
-          end)
+                {state, state}
+              end)
 
-        PubSub.broadcast(
-          FieldPublication.PubSub,
-          doc_id,
-          {
-            :web_image_processing_count,
-            updated_state
-          }
-        )
+            PubSub.broadcast(
+              FieldPublication.PubSub,
+              doc_id,
+              {
+                :web_image_processing_count,
+                updated_state
+              }
+            )
+        end
       end,
       max_concurrency: concurrent_processes,
       timeout: 1000 * 60 * 5

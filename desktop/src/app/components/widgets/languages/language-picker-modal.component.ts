@@ -38,7 +38,9 @@ export class LanguagePickerModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key.length === 1 && this.menuService.getContext() === MenuContext.MODAL) {
+        if (event.key.length === 1
+                && (this.menuService.getContext() === MenuContext.MODAL
+                || this.menuService.getContext() === MenuContext.CONFIGURATION_MODAL))  {
             this.searchTerm += event.key;
             this.scrollToSearchTermEntry();
             this.resetTimeout();

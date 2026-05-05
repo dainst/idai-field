@@ -979,7 +979,7 @@
         },
         {
           "name": "properties",
-          "fields": ["description", "height", "width", "literature", "imageRights"]
+          "fields": ["description", "height", "width", "originalFilename", "literature", "imageRights"]
         }
       ]
     },
@@ -999,7 +999,7 @@
         },
         {
           "name": "properties",
-          "fields": ["description", "height", "width"]
+          "fields": ["description", "height", "width", "originalFilename"]
         }
       ]
     },

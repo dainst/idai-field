@@ -372,8 +372,7 @@ export module Validations {
 
         for (let fieldDefinition of fieldDefinitions) {
             if (allowEmptyFields.includes(fieldDefinition.name)) continue;
-            if (CategoryForm.isMandatoryField(projectConfiguration.getCategory(resource.category), fieldDefinition.name)
-                    && !Field.isFilled(fieldDefinition, resource as Resource)) {
+            if (fieldDefinition.mandatory && !Field.isFilled(fieldDefinition, resource as Resource)) {
                 missingFields.push(fieldDefinition.name);
             }
         }
@@ -432,9 +431,8 @@ export module Validations {
                                      projectConfiguration: ProjectConfiguration): boolean {
 
         if (!resource.category) return false;
-        return Tree.flatten(projectConfiguration
-            .getCategories())
-            .some(Named.onName(is(resource.category)));
+        return Tree.flatten(projectConfiguration.getCategories())
+            .find(category => category.name === resource.category) !== undefined;
     }
 
 

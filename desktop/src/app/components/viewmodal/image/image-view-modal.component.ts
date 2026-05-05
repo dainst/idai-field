@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { on, is, first, isEmpty } from 'tsfun';
+import { on, is, first } from 'tsfun';
 import { Datastore, Document, FieldDocument, ImageDocument, Relation } from 'idai-field-core';
 import { ImagesState } from '../../../components/image/overview/view/images-state';
 import { ViewModalComponent } from '../view-modal.component';
@@ -230,7 +230,7 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
         this.images = (await this.getImageDocuments(this.linkedDocument.resource.relations.isDepictedIn))
             .map(ImageRowItem.ofDocument);
-        this.selectedImage = isEmpty(this.images)
+        this.selectedImage = !this.images.length
             ? undefined
             : first(this.images);
         this.selected = [];

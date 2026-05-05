@@ -1849,7 +1849,7 @@ Aus Gründen der Übersichtlichkeit werden die Beispiele im Folgenden jeweils in
 
 ##### Relationen
 
-Felder vom Eingabetyp *Relation* werden im Objekt *relations* gebündelt. Die Feldnamen des Objekts entsprechen den Bezeichnern der Relationen, als Feldwert wird jeweils ein Array mit den Bezeichnern der Zielressourcen eingetragen.
+Felder vom Eingabetyp *Relation* werden im Objekt *relations* gebündelt. Die Feldnamen des Objekts entsprechen den Bezeichnern der Relationen, als Feldwert wird jeweils ein Array mit den Bezeichnern der Zielressourcen eingetragen. Einzige Ausnahme ist die Relation *isChildOf*: In diesem Fall wird kein Array, sondern unmittelbar der Bezeichner gesetzt (siehe Beispiel unten).
 
 Zusätzlich zu den Relationen, die in der Projektkonfiguration im Formular der jeweiligen Kategorie aufgeführt sind, können die folgenden Relationen verwendet werden:
 
@@ -1866,7 +1866,7 @@ Um Bilder mit dem Projekt zu verknüpfen oder auf Projektebene als Kartenhinterg
     {
       "identifier": "A",
       "category": "Feature",
-      "relations": { "isAbove": ["B", "C", "D"], "isChildOf": ["E"], "isDepictedIn": ["Image1.png", "Image2.png"] }
+      "relations": { "isAbove": ["B", "C", "D"], "isChildOf": "E", "isDepictedIn": ["Image1.png", "Image2.png"] }
     }
 
 
@@ -2458,6 +2458,7 @@ Request-Body:
 * *filePaths (String-Array)*: Die Dateipfade der zu importierenden Dateien
 * *category (String)*: Der Name der Kategorie, die für importierte Bilder gesetzt werden soll (Standardwert: "Image")
 * *readCreatorsFromMetadata (Boolean)*: Liest die Metadaten von Bilddateien aus, um das Feld "Bildersteller/Bilderstellerin" automatisch auszufüllen
+* *checkOriginalFilename (Boolean)*: Bilddateien werden grundsätzlich nicht importiert, wenn es im Projekt bereits ein Bild mit dem gleichen Bezeichner gibt. Ist diese Option aktiviert, wird der Import darüber hinaus auch dann abgelehnt, wenn es bereits ein Bild mit dem gleichen ursprünglichen Dateinamen gibt.
 
 Rückgabe:
 * *importedImages (Integer)*: Die Anzahl der erfolgreich importierten Bilddateien

@@ -17,7 +17,7 @@ export class ResourcesPage {
 
     public static clickSelectGeometryType(geometryType: string = 'none') {
 
-        return click('#choose-geometry-option-' + geometryType);
+        return click(this.getGeometryTypeOption(geometryType));
     }
 
 
@@ -320,6 +320,12 @@ export class ResourcesPage {
     }
 
 
+    public static getGeometryTypeOption(geometryType: string) {
+
+        return getLocator('#choose-geometry-option-' + geometryType);
+    }
+
+
     public static getCreateDocumentButton() {
 
         return getLocator('#create-document-button .circular-button');
@@ -375,6 +381,12 @@ export class ResourcesPage {
     public static getQrCodeScannerModalBody() {
 
         return getLocator('#qr-code-scanner-modal-body');
+    }
+
+
+    public static getCreateGeometryContextMenuOption(geometryType) {
+
+        return getLocator('#context-menu-create-' + geometryType + '-button');
     }
 
 

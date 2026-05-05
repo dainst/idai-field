@@ -1,6 +1,6 @@
 import { aFlow, aMap, includedIn, isNot, map, on, pairWith, to, val } from 'tsfun';
 import { CategoryForm, Document, FieldDocument, Name, Named, Query, Resource, Constraints,
-    IndexFacade } from 'idai-field-core';
+    IndexFacade, Datastore } from 'idai-field-core';
 import { CategoryCount, Find, GetIdentifierForId, PerformExport } from './export-helper';
 
 const IS_CHILD_OF_CONTAIN = 'isChildOf:contain';
@@ -64,18 +64,19 @@ export module ExportRunner {
     }
 
 
-    export async function determineCategoryCounts(indexFacade: IndexFacade, context: ExportContext,
+    export async function determineCategoryCounts(indexFacade: IndexFacade, datastore: Datastore,
+                                                  context: ExportContext,
                                                   categoriesList: Array<CategoryForm>): Promise<Array<CategoryCount>> {
 
         if (!context) return determineCategoryCountsForSchema(categoriesList);
 
         return (await determineCategoryCountsForSelectedOperation(
-            indexFacade, context, categoriesList
+            indexFacade, datastore, context, categoriesList
         )).filter(([_category, count]) => count > 0);
     }
 
 
-    async function determineCategoryCountsForSelectedOperation(indexFacade: IndexFacade,
+    async function determineCategoryCountsForSelectedOperation(indexFacade: IndexFacade, datastore: Datastore,
                                                                selectedOperationId: string|undefined,
                                                                categoriesList: Array<CategoryForm>)
             : Promise<Array<CategoryCount>> {
@@ -86,10 +87,10 @@ export module ExportRunner {
 
         const counts: Array<CategoryCount> = [];
         for (let category of categories) {
-            counts.push([
-                category,
-                indexFacade.getCategoryCount(category.name)
-            ]);
+            const count: number = selectedOperationId === PROJECT_CONTEXT
+                ? indexFacade.getCategoryCount(category.name)
+                : (datastore.findIds(getQuery(category.name, selectedOperationId))?.ids?.length ?? 0);
+            counts.push([category, count]);
         }
         return counts;
     }

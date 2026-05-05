@@ -1,6 +1,7 @@
 import { NavbarPage } from '../navbar.page';
 import { ResourcesPage } from '../resources/resources.page';
-import { getText, navigateTo, pause, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
+import { closeAllMessages, getText, navigateTo, pause, resetApp, start, stop, waitForExist, waitForMessage,
+    waitForNotExist } from '../app';
 import { ConfigurationPage } from './configuration.page';
 import { AddCategoryFormModalPage } from './add-category-form-modal.page';
 import { EditConfigurationPage } from './edit-configuration.page';
@@ -1250,10 +1251,70 @@ test.describe('configuration', () => {
         await EditConfigurationPage.clickInputTypeSelectOption('relation', 'field');
         await EditConfigurationPage.clickConfirm();
 
-        await NavbarPage.awaitAlert('Bitte wählen Sie mindestens eine Kategorie als erlaubte Zielkategorie aus.');
-        await NavbarPage.clickCloseAllMessages();
+        await waitForMessage('Bitte wählen Sie mindestens eine Kategorie als erlaubte Zielkategorie aus.');
+        await closeAllMessages();
 
         await EditConfigurationPage.clickCancel(true);
         await AddFieldModalPage.clickCancel();
+    });
+
+
+    test('disable geometry type', async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickSelectGroup('position');
+        await ConfigurationPage.clickOpenContextMenuForField('geometry');
+        await ConfigurationPage.clickContextMenuEditOption();
+        
+        await EditConfigurationPage.clickGeometryTypeCheckbox(1); // Disable 'MultiPolygon'
+        await EditConfigurationPage.clickGeometryTypeCheckbox(0); // Disable 'Polygon'
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.clickCreateResource();
+        await ResourcesPage.clickSelectCategory('Place');
+
+        await waitForExist(await ResourcesPage.getGeometryTypeOption('none'));
+        await waitForExist(await ResourcesPage.getGeometryTypeOption('point'));
+        await waitForExist(await ResourcesPage.getGeometryTypeOption('polyline'));
+        await waitForNotExist(await ResourcesPage.getGeometryTypeOption('polygon'));
+
+        await ResourcesPage.clickSelectGeometryType('none');
+        await DoceditPage.typeInInputField('identifier', 'P1');
+        await DoceditPage.clickSaveDocument();
+        
+        await ResourcesPage.clickOpenContextMenu('P1');
+
+        await waitForExist(await ResourcesPage.getCreateGeometryContextMenuOption('point'));
+        await waitForExist(await ResourcesPage.getCreateGeometryContextMenuOption('polyline'));
+        await waitForNotExist(await ResourcesPage.getCreateGeometryContextMenuOption('polygon'));
+    });
+
+
+    test('do not allow disabling single geometry type without also disabling corresponding multi type', async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickSelectGroup('position');
+        await ConfigurationPage.clickOpenContextMenuForField('geometry');
+        await ConfigurationPage.clickContextMenuEditOption();
+        
+        await expect(await EditConfigurationPage.getGeometryTypeCheckbox(0)).toBeDisabled();
+        await expect(await EditConfigurationPage.getGeometryTypeCheckbox(1)).not.toBeDisabled();
+        await expect(await EditConfigurationPage.getGeometryTypeCheckbox(2)).toBeDisabled();
+        await expect(await EditConfigurationPage.getGeometryTypeCheckbox(3)).not.toBeDisabled();
+        await expect(await EditConfigurationPage.getGeometryTypeCheckbox(4)).toBeDisabled();
+        await expect(await EditConfigurationPage.getGeometryTypeCheckbox(5)).not.toBeDisabled();
+
+        await EditConfigurationPage.clickGeometryTypeCheckbox(1); // Disallow 'MultiPolygon'
+        await expect(await EditConfigurationPage.getGeometryTypeCheckbox(0)).not.toBeDisabled();
+
+        await EditConfigurationPage.clickGeometryTypeCheckbox(3); // Disallow 'MultiPolyline'
+        await expect(await EditConfigurationPage.getGeometryTypeCheckbox(2)).not.toBeDisabled();
+
+        await EditConfigurationPage.clickGeometryTypeCheckbox(5); // Disallow 'MultiPoint'
+        await expect(await EditConfigurationPage.getGeometryTypeCheckbox(4)).not.toBeDisabled();
+
+        await EditConfigurationPage.clickCancel();
     });
 });

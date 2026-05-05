@@ -9,14 +9,9 @@ export class GeometryViewPage {
 
     public static async clickCreateGeometry(identifier, type) {
 
-        let number = '0';
-        if (type === 'polygon') number = '1';
-        if (type === 'polyline') number = '2';
-        if (type === 'point') number = '3';
-
         await this.waitForLayoverToDisappear();
         await ResourcesPage.clickOpenContextMenu(identifier);
-        return click('#context-menu #context-menu-create-geo-' + number + '-button');
+        return click('#context-menu #context-menu-create-' + type + '-button');
     };
 
 
@@ -43,9 +38,9 @@ export class GeometryViewPage {
         await this.waitForLayoverToDisappear();
 
         if (identifier) await ResourcesPage.clickOpenContextMenu(identifier);
-        await waitForExist('#context-menu #context-menu-create-geo-1-button');
-        await waitForExist('#context-menu #context-menu-create-geo-2-button');
-        return waitForExist('#context-menu #context-menu-create-geo-3-button');
+        await waitForExist('#context-menu #context-menu-create-polygon-button');
+        await waitForExist('#context-menu #context-menu-create-polyline-button');
+        return waitForExist('#context-menu #context-menu-create-point-button');
     };
 
 

@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { copy, flow, forEach, isEmpty, map, remove, take, to } from 'tsfun';
 import { CategoryForm, Datastore, Document, IdGenerator, Labels, Named, ProjectConfiguration, RelationsManager,
     SyncService, Tree, ImageStore } from 'idai-field-core';
@@ -17,7 +16,6 @@ import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { ImportState } from './import-state';
 import { MessagesConversion } from './messages-conversion';
-import { ImportExportProcessModalComponent } from '../widgets/import-export-process-modal.component';
 import { AppState } from '../../services/app-state';
 import { Settings } from '../../services/settings/settings';
 import getCategoriesWithoutExcludedCategories = ExportRunner.getCategoriesWithoutExcludedCategories;
@@ -62,7 +60,6 @@ export class ImportComponent implements OnInit {
                 private http: HttpClient,
                 private settingsProvider: SettingsProvider,
                 private projectConfiguration: ProjectConfiguration,
-                private modalService: NgbModal,
                 private synchronizationService: SyncService,
                 private idGenerator: IdGenerator,
                 private tabManager: TabManager,
@@ -220,12 +217,7 @@ export class ImportComponent implements OnInit {
 
         this.messages.removeAllMessages();
 
-        this.menuService.setContext(MenuContext.MODAL);
-        const importModalRef: NgbModalRef = this.modalService.open(
-            ImportExportProcessModalComponent,
-            { backdrop: 'static', keyboard: false, animation: false }
-        );
-        importModalRef.componentInstance.type = 'import';
+        this.appState.setRunningDataTransfer('import');
 
         await AngularUtility.refresh();
 
@@ -241,8 +233,7 @@ export class ImportComponent implements OnInit {
             await this.synchronizationService.startSync();
         }
 
-        importModalRef.close();
-        this.menuService.setContext(MenuContext.DEFAULT);
+        this.appState.setRunningDataTransfer('none');
 
         if (importReport) this.showImportResult(importReport);
     }

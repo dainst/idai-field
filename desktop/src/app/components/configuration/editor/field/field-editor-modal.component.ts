@@ -90,7 +90,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public isInverseRelationVisible = () => this.isRelationSectionVisible() && this.isCustomField();
 
-    public isI18nCompatible = () => Field.InputType.I18N_COMPATIBLE_INPUT_TYPES.includes(this.getInputType());
+    public isI18nCompatible = () => Field.InputType.I18N_COMPATIBLE_INPUT_TYPES.includes(this.getInputType())
+        && this.field.editable;
 
     public isCustomField = () => this.field.source === 'custom';
 
@@ -386,13 +387,15 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public isGeometryTypeAllowed(geometryType: FieldGeometryType): boolean {
         
-        return this.getClonedFieldDefinition().geometryTypes.includes(geometryType);
+        return this.getClonedFieldDefinition()?.geometryTypes.includes(geometryType);
     }
 
 
     public isGeometryOptionEnabled(geometryType: FieldGeometryType): boolean {
 
-        const geometryTypes: Array<FieldGeometryType> = this.getClonedFieldDefinition().geometryTypes;
+        if (!this.getClonedFieldDefinition()) return false;
+
+        const geometryTypes: Array<FieldGeometryType> = this.getClonedFieldDefinition()?.geometryTypes;
 
         switch (geometryType) {
             case 'Polygon':

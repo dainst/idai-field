@@ -3772,10 +3772,10 @@
         "label": ""
       },
       "Basalt": {
-        "label": ""
+        "label": "Basalto"
       },
       "Feldspat": {
-        "label": ""
+        "label": "Feldspato"
       },
       "Flint": {
         "label": ""
@@ -3796,19 +3796,19 @@
         "label": "Pedra calcária"
       },
       "Kalzit": {
-        "label": ""
+        "label": "Calcite"
       },
       "Kreide": {
-        "label": ""
+        "label": "Gesso"
       },
       "Marmor": {
-        "label": ""
+        "label": "Mármore"
       },
       "Pophyr": {
         "label": ""
       },
       "Quarz": {
-        "label": ""
+        "label": "Quartzo"
       },
       "Sandstein": {
         "label": ""

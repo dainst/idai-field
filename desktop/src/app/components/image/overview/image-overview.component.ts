@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -15,7 +15,7 @@ import { TabManager } from '../../../services/tabs/tab-manager';
 import { ViewFacade } from '../../../components/resources/view/view-facade';
 import { Messages } from '../../messages/messages';
 import { Routing } from '../../../services/routing';
-import { ApiState, ExpressServer } from '../../../services/express-server/express-server';
+import { AppState } from '../../../services/app-state';
 
 
 @Component({
@@ -40,7 +40,6 @@ export class ImageOverviewComponent implements OnInit, OnDestroy {
     private selectViaImageLinkSubscription: Subscription;
     private intitialization: Promise<void>;
     private apiSubscription: Subscription;
-    private apiState: ApiState;
 
 
     constructor(route: ActivatedRoute,
@@ -55,7 +54,8 @@ export class ImageOverviewComponent implements OnInit, OnDestroy {
                 private menuService: Menus,
                 private router: Router,
                 private routing: Routing,
-                private expressServer: ExpressServer) {
+                private appState: AppState,
+                private changeDetectorRef: ChangeDetectorRef) {
 
         this.intitialization = this.imageOverviewFacade.initialize();
         this.intitialization.then(() => {
@@ -94,7 +94,7 @@ export class ImageOverviewComponent implements OnInit, OnDestroy {
 
     public setQueryString = (q: string) => this.imageOverviewFacade.setQueryString(q);
 
-    public onResize = () => this.imageGrid.calcGrid();
+    public onResize = () => this.imageGrid.triggerGridCalculation();
 
     public refreshGrid = () => this.imageOverviewFacade.fetchDocuments();
 
@@ -206,11 +206,13 @@ export class ImageOverviewComponent implements OnInit, OnDestroy {
         this.selectViaImageLinkSubscription =
             this.routing.selectViaImageLinkNotifications().subscribe(document => this.showImage(document));
 
-        this.apiSubscription = this.expressServer.apiNotifications().subscribe(async apiState => {
-            if (this.apiState === 'fileImport' && apiState !== 'fileImport') {
+        this.apiSubscription = this.appState.dataTransferNotifications().subscribe(async notification => {
+            if (notification.previousDataTransfer === 'fileImport' && notification.newDataTransfer !== 'fileImport') {
+                // Calling fetchDocuments twice is necessary to prevent ExpressionChangedAfterItHasBeenCheckedError
+                await this.imageOverviewFacade.fetchDocuments();
+                this.changeDetectorRef.detectChanges();
                 await this.imageOverviewFacade.fetchDocuments();
             }
-            this.apiState = apiState;
         });
     }
 }

@@ -25,6 +25,7 @@ export module IndexerConfiguration {
             'isSameAs:exist': { path: 'resource.relations.isSameAs', pathArray: ['resource', 'relations', 'isSameAs'], type: 'exist' },
             'geometry:exist': { path: 'resource.geometry', pathArray: ['resource', 'geometry'], type: 'exist' },
             'georeference:exist': { path: 'resource.georeference', pathArray: ['resource', 'georeference'], type: 'exist' },
+            'originalFilename:match': { path: 'resource.originalFilename', pathArray: ['resource', 'originalFilename'], type: 'match' },
             'conflicts:exist': { path: '_conflicts', pathArray: ['_conflicts'], type: 'exist' },
             'project:exist': { path: 'project', pathArray: ['project'], type: 'exist' } // *project* property is set for documents which are not "owned" by the current project. This is the case for images of imported type catalogs, for example.
         }, Tree.flatten(projectConfiguration.getCategories()));

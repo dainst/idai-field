@@ -1,6 +1,5 @@
 import { waitForNotExist, click, waitForExist, getLocator, typeIn, getValue, getText, clearText,
-    selectSearchableSelectOption, pressKey } from '../app';
-import { NavbarPage } from '../navbar.page';
+    selectSearchableSelectOption, pressKey, closeAllMessages } from '../app';
 
 
 /**
@@ -105,7 +104,7 @@ export class DoceditPage {
         await waitForExist('#document-edit-button-save-document');
         await click('#document-edit-button-save-document');
                     
-        if (clickMsgAway) await NavbarPage.clickCloseAllMessages();
+        if (clickMsgAway) await closeAllMessages();
         if (waitForModalToClose) await waitForNotExist('#document-edit-wrapper');
     }
 

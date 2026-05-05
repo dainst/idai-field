@@ -61,7 +61,7 @@ export class ImageUploader {
      *  a depicts relation to the specified document.
      */
     public async startUpload(filePaths: string[], depictsRelationTarget?: Document, metadata?: ImageMetadata,
-                             parseDraughtsmen?: boolean,
+                             parseDraughtsmen?: boolean, checkOriginalFilename?: boolean,
                              calledViaRestApi: boolean = false): Promise<ImageUploadResult> {
 
         let uploadResult: ImageUploadResult = { uploadedImages: 0, uploadedWorldFiles: 0, messages: [] };
@@ -96,7 +96,7 @@ export class ImageUploader {
             this.uploadStatus.running = true;
 
             uploadResult = await this.uploadImageFiles(
-                filePaths, metadata, uploadResult, depictsRelationTarget, parseDraughtsmen
+                filePaths, metadata, uploadResult, depictsRelationTarget, parseDraughtsmen, checkOriginalFilename
             );
     
             if (!calledViaRestApi) {
@@ -155,8 +155,8 @@ export class ImageUploader {
 
 
     private async uploadImageFiles(filePaths: string[], metadata: ImageMetadata, uploadResult: ImageUploadResult,
-                                   depictsRelationTarget?: Document,
-                                   parseDraughtsmen?: boolean): Promise<ImageUploadResult> {
+                                   depictsRelationTarget?: Document, parseDraughtsmen?: boolean,
+                                   checkOriginalFilename?: boolean): Promise<ImageUploadResult> {
 
         if (!filePaths) return uploadResult;
 
@@ -170,8 +170,10 @@ export class ImageUploader {
                 this.uploadStatus.setTotalImages(this.uploadStatus.getTotalImages() - 1);
             } else {
                 try {
-                    const result = await this.findImageByFilename(path.basename(filePath));
-                    if (result.totalCount > 0) {
+                    const existingImageDocuments: Array<ImageDocument> = await this.findImageByFilename(
+                        path.basename(filePath), checkOriginalFilename
+                    );
+                    if (existingImageDocuments.length > 0) {
                         duplicateFilenames.push(path.basename(filePath));
                     } else {
                         await this.uploadFile(filePath, metadata, depictsRelationTarget, parseDraughtsmen);
@@ -202,10 +204,10 @@ export class ImageUploader {
         outer: for (const filePath of filePaths) {
             for (const extension of ImageUploader.supportedImageFileTypes) {
                 const candidateName = ExtensionUtil.replaceExtension(path.basename(filePath), extension);
-                const result = await this.findImageByFilename(candidateName);
-                if (result.totalCount > 0) {
+                const imageDocuments: Array<ImageDocument> = await this.findImageByFilename(candidateName);
+                if (imageDocuments.length) {
                     try {
-                        await this.saveWldFile(filePath, result.documents[0]);
+                        await this.saveWldFile(filePath, imageDocuments[0]);
                         uploadResult.uploadedWorldFiles++;
                         continue outer;
                     } catch (err) {
@@ -245,13 +247,26 @@ export class ImageUploader {
     }
 
 
-    private findImageByFilename(filename: string): Promise<Datastore.FindResult> {
+    private async findImageByFilename(filename: string,
+                                      checkOriginalFilename: boolean = false): Promise<Array<ImageDocument>> {
 
-        return this.datastore.find({
-            constraints: {
-                'identifier:match' : filename
+        const result: Array<ImageDocument> = (await this.datastore.find({
+            constraints: { 'identifier:match': filename }
+        })).documents as Array<ImageDocument>;
+        
+        if (!checkOriginalFilename) return result;
+        
+        const originalFilenameMatches: Array<ImageDocument> = (await this.datastore.find({
+            constraints: { 'originalFilename:match': filename }
+        })).documents as Array<ImageDocument>;
+
+        for (let documentToAdd of originalFilenameMatches) {
+            if (!result.find(document => document.resource.id === documentToAdd.resource.id)) {
+                result.push(documentToAdd);
             }
-        });
+        }
+
+        return result;
     }
 
 

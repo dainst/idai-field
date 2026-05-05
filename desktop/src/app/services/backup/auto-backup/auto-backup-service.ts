@@ -23,6 +23,8 @@ export class AutoBackupService {
     private worker: Worker;
     private resolveRequest: () => void;
 
+    private activeErrorMessage: string;
+
 
     constructor(private settingsProvider: SettingsProvider,
                 private messages: Messages) {}
@@ -33,16 +35,7 @@ export class AutoBackupService {
         if (remote.getGlobal('mode') === 'test') return;
 
         this.worker = createWorker(AUTO_BACKUP);
-
-        this.worker.onmessage = ({ data }) => {
-            if (data.running !== undefined) this.running = data.running;
-            if (data.error) this.handleError(data.error);
-            if (!this.running && this.resolveRequest) {
-                this.resolveRequest();
-                this.resolveRequest = undefined;
-            }
-        };
-
+        this.worker.onmessage = ({ data }) => this.handleWorkerMessage(data);
         this.worker.postMessage({
             command: 'start',
             settings: this.getSettings()
@@ -94,21 +87,46 @@ export class AutoBackupService {
 
         console.log('Number of CPU Cores:', cores.length);
 
-        return cores.length <= 4
+        let maxWorkers: number = cores.length <= 4
             ? 1
             : 1 + Math.floor(cores.length / 4);
+
+        return Math.min(3, maxWorkers);
+    }
+
+
+    private handleWorkerMessage(messageData: any) {
+
+        if (messageData.running !== undefined) {
+            this.running = messageData.running;
+            if (!messageData.running) this.activeErrorMessage = undefined;
+        }
+
+        if (messageData.error) this.handleError(messageData.error);
+
+        if ((!this.running || messageData.error) && this.resolveRequest) {
+            this.resolveRequest();
+            this.resolveRequest = undefined;
+        }
     }
 
 
     private handleError(error: string) {
 
+        const errorMessage: string = AutoBackupService.getErrorMessage(error);
+
+        if (this.activeErrorMessage !== errorMessage) this.messages.add([errorMessage]);
+        this.activeErrorMessage = errorMessage;
+    }
+
+
+    private static getErrorMessage(error: string): string {
+
         switch (error) {
             case INVALID_BACKUP_DIRECTORY_PATH:
-                this.messages.add([M.BACKUP_INVALID_AUTO_BACKUP_DIRECTORY]);
-                break;
+                return M.BACKUP_INVALID_AUTO_BACKUP_DIRECTORY;
             case BACKUP_FILE_CREATION_FAILED:
-                this.messages.add([M.BACKUP_AUTOMATIC_FILE_CREATION_FAILED]);
-                break;
+                return M.BACKUP_AUTOMATIC_FILE_CREATION_FAILED;
         }
     }
 }

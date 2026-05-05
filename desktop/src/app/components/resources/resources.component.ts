@@ -22,7 +22,7 @@ import { QrCodeEditorModalComponent } from './actions/edit-qr-code/qr-code-edito
 import { ResourceScanner } from './actions/scan-resource/resource-scanner';
 import { WarningsService } from '../../services/warnings/warnings-service';
 import { WorkflowEditorModalComponent } from './actions/edit-workflow/workflow-editor-modal.component';
-import { ApiState, ExpressServer } from '../../services/express-server/express-server';
+import { AppState } from '../../services/app-state';
 
 
 @Component({
@@ -43,8 +43,6 @@ export class ResourcesComponent implements OnDestroy {
     public mapUpdateAllowed: boolean = true;
 
     private clickEventObservers: Array<any> = [];
-
-    private apiState: ApiState = 'none';
 
     private deselectionSubscription: Subscription;
     private populateDocumentsSubscription: Subscription;
@@ -70,7 +68,7 @@ export class ResourcesComponent implements OnDestroy {
                 private menuService: Menus,
                 private storagePlaceScanner: ResourceScanner,
                 private warningsService: WarningsService,
-                private expressServer: ExpressServer) {
+                private appState: AppState) {
 
         routingService.routeParams(route).subscribe(async (params: any) => {
             this.quitGeometryEditing();
@@ -460,11 +458,10 @@ export class ResourcesComponent implements OnDestroy {
                 await this.viewFacade.populateDocumentList();
             });
         
-        this.apiSubscription = this.expressServer.apiNotifications().subscribe(async apiState => {
-            if (this.apiState === 'import' && apiState !== 'import') {
+        this.apiSubscription = this.appState.dataTransferNotifications().subscribe(async notification => {
+            if (notification.previousDataTransfer === 'import' && notification.newDataTransfer !== 'import') {
                 await this.viewFacade.populateDocumentList();
             }
-            this.apiState = apiState;
         });
     }
 

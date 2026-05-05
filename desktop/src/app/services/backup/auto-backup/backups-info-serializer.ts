@@ -11,15 +11,38 @@ export class BackupsInfoSerializer {
 
 
     public load(): BackupsInfo {
+        
+        this.cleanUpTempFile();
 
         if (!this.fs.existsSync(this.filePath)) return { lastUpdateSequence: {} };
     
-        return JSON.parse(this.fs.readFileSync(this.filePath, 'utf-8'));
+        try {
+            return JSON.parse(this.fs.readFileSync(this.filePath, 'utf-8'));
+        } catch (err) {
+            console.error('Failed to parse backups info. Using empty backups info.', err);
+            return { lastUpdateSequence: {} };
+        }
     }
     
     
     public store(backupsInfo: BackupsInfo) {
-    
-        this.fs.writeFileSync(this.filePath, JSON.stringify(backupsInfo, null, 2));
+
+        const tempFilePath: string = this.getTempFilePath();
+
+        this.fs.writeFileSync(tempFilePath, JSON.stringify(backupsInfo, null, 2));
+        this.fs.renameSync(tempFilePath, this.filePath);
+    }
+
+
+    private cleanUpTempFile() {
+
+        const tempFilePath: string = this.getTempFilePath();
+        if (this.fs.existsSync(tempFilePath)) this.fs.unlinkSync(tempFilePath);
+    }
+
+
+    private getTempFilePath(): string {
+
+        return this.filePath + '.new';
     }
 }

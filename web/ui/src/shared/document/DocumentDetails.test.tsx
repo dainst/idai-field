@@ -17,7 +17,7 @@ test('abc', () => {
         }
     } as any;
 
-    const { getByText } = render(<Router><DocumentDetails document={ document } /></Router>);
+    const { getByText } = render(<Router><DocumentDetails baseUrl='' document={ document } /></Router>);
     const linkElement = getByText(/1dentifier/i);
     expect(linkElement).toBeInTheDocument();
 });

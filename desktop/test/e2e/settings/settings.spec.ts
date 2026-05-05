@@ -1,4 +1,4 @@
-import { navigateTo, resetApp, resetConfigJson, start, stop, typeIn } from '../app';
+import { closeAllMessages, navigateTo, resetApp, resetConfigJson, start, stop, typeIn, waitForMessage } from '../app';
 import { NavbarPage } from '../navbar.page';
 import { SettingsPage } from './settings.page';
 import { ImageOverviewPage } from '../images/image-overview.page';
@@ -44,22 +44,22 @@ test.describe('settings ', () => {
         await SettingsPage.clickOpenAdvancedSettings();
         await typeIn(await SettingsPage.getImagestorePathInput(), '/invalid/path/to/imagestore');
         await SettingsPage.clickSaveSettingsButton();
-        await NavbarPage.awaitAlert('Das Bilderverzeichnis konnte nicht gefunden werden', false);
-        await NavbarPage.clickCloseAllMessages();
+        await waitForMessage('Das Bilderverzeichnis konnte nicht gefunden werden', false);
+        await closeAllMessages();
 
         await navigateTo('images');
         await ImageOverviewPage.uploadImage(path.resolve(__dirname, '../../test-data/logo.png'));
-        await NavbarPage.awaitAlert('Es können keine Dateien im Bilderverzeichnis gespeichert werden', false);
-        await NavbarPage.clickCloseAllMessages();
+        await waitForMessage('Es können keine Dateien im Bilderverzeichnis gespeichert werden', false);
+        await closeAllMessages();
 
         await ImageOverviewPage.doubleClickCell(0);
-        await NavbarPage.awaitAlert('Es können keine Dateien aus dem Bilderverzeichnis gelesen werden', false);
-        await NavbarPage.clickCloseAllMessages();
+        await waitForMessage('Es können keine Dateien aus dem Bilderverzeichnis gelesen werden', false);
+        await closeAllMessages();
         await ImageViewPage.clickCloseButton();
 
         await ImageOverviewPage.clickCell(1);
         await ImageOverviewPage.clickDeleteButton();
         await ImageOverviewPage.clickConfirmDeleteButton();
-        await NavbarPage.awaitAlert('Es können keine Dateien aus dem Bilderverzeichnis gelöscht werden', false);
+        await waitForMessage('Es können keine Dateien aus dem Bilderverzeichnis gelöscht werden', false);
     });
 });

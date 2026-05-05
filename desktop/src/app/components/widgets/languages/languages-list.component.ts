@@ -2,6 +2,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Language, Languages } from '../../../services/languages';
 import { LanguagePickerModalComponent } from './language-picker-modal.component';
+import { Menus } from '../../../services/menus';
+import { MenuContext } from '../../../services/menu-context';
 
 
 @Component({
@@ -21,7 +23,8 @@ export class LanguagesListComponent {
     @Output() onChanged: EventEmitter<void> = new EventEmitter<void>();
 
 
-    constructor(private modalService: NgbModal) {}
+    constructor(private modalService: NgbModal,
+                private menuService: Menus) {}
 
 
     public showNoLanguagesSelectedMessage = () => this.selectedLanguages && this.selectedLanguages.length === 0;
@@ -30,6 +33,14 @@ export class LanguagesListComponent {
     public async addLanguage() {
 
         this.onModalToggled.emit(true);
+
+        const currentMenuContext: MenuContext = this.menuService.getContext();
+
+        this.menuService.setContext(
+            currentMenuContext.includes('configuration')
+                ? MenuContext.CONFIGURATION_MODAL
+                : MenuContext.MODAL
+        );
 
         const modalReference: NgbModalRef = this.modalService.open(LanguagePickerModalComponent, { animation: false });
         modalReference.componentInstance.languages = Languages.getUnselectedLanguages(
@@ -43,6 +54,8 @@ export class LanguagesListComponent {
         } catch (err) {
             // Modal has been canceled
         }
+
+        this.menuService.setContext(currentMenuContext);
 
         this.onModalToggled.emit(false);
     }

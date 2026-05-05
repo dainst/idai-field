@@ -16,6 +16,8 @@ export interface ImageResource extends Resource, ImageResourceBase {
 
 export module ImageResource {
 
+    export const WIDTH = 'width';
+    export const HEIGHT = 'height';
     export const GEOREFERENCE = 'georeference';
     export const ORIGINAL_FILENAME = 'originalFilename';
 

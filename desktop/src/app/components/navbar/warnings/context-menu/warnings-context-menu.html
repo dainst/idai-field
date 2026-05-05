@@ -8,7 +8,7 @@
      [style.top]="contextMenu.position.y + 'px'"
      [style.bottom]="getBottomPosition(contextMenu.position.y) + 'px'">
     <div id="context-menu-view-button" class="dropdown-item" (click)="selectAction('view')">
-        <span class="arrow-up"></span>
+        <span class="mdi mdi-application-export mdi-flip-h"></span>
         <span class="dropdown-entry-label" i18n="@@resources.showInContext.tooltip">Im Kontext anzeigen</span>
     </div>
     <div id="context-menu-edit-button" class="dropdown-item" (click)="selectAction('edit')">

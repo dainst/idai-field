@@ -9,13 +9,6 @@ export module AngularUtility {
     }
 
 
-    export function focusElementInNgTemplate(id: string) {
-
-        const element: HTMLElement = document.getElementById(id);
-        if (element) element.focus();
-    }
-
-
     export function blurActiveElement() {
         
         setTimeout(() => {

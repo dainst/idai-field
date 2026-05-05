@@ -166,7 +166,8 @@ export class DocumentsManager {
     }
 
 
-    public async setSelected(resourceId: string, adjustListIfNecessary: boolean = true,
+    public async setSelected(resourceId: string, checkIfInList: boolean = true,
+                             adjustListIfNecessary: boolean = true,
                              viaResourceLink: boolean = false): Promise<any> {
 
         this.removeNewDocument();
@@ -175,9 +176,14 @@ export class DocumentsManager {
         this.newDocumentsFromRemote
             = subtract([documentToSelect.resource.id])(this.newDocumentsFromRemote);
 
-        if (adjustListIfNecessary && !(await this.isDocumentInList(documentToSelect))) {
-            await this.makeSureSelectedDocumentAppearsInList(documentToSelect);
-            await this.populateDocumentList();
+        if (checkIfInList && !(await this.isDocumentInList(documentToSelect))) {
+            if (adjustListIfNecessary) {
+                await this.makeSureSelectedDocumentAppearsInList(documentToSelect);
+                await this.populateDocumentList();
+            } else {
+                await this.deselect();
+                return;
+            }
         }
 
         this.selectAndNotify(documentToSelect, viaResourceLink);
@@ -339,6 +345,8 @@ export class DocumentsManager {
 
 
     private async makeSureSelectedDocumentAppearsInList(documentToSelect: FieldDocument) {
+
+        console.log('make sure this appears in list:', documentToSelect);
 
         await this.resourcesStateManager.updateNavigationPathForDocument(documentToSelect);
         await this.adjustQuerySettingsIfNecessary(documentToSelect);

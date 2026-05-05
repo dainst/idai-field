@@ -116,7 +116,7 @@ export class Routing {
         if (!this.router.url.startsWith('/resources/') || viewName !== this.viewFacade.getView()) {
             await this.router.navigate(['resources', viewName, documentToSelect.resource.id]);
         } else {
-            await this.viewFacade.setSelectedDocument(documentToSelect.resource.id, true, fromLink);
+            await this.viewFacade.setSelectedDocument(documentToSelect.resource.id, true, true, fromLink);
             if (['types', 'inventory', 'workflow'].includes(viewName)) {
                 await this.viewFacade.moveInto(documentToSelect.resource.id, false, fromLink);
             }

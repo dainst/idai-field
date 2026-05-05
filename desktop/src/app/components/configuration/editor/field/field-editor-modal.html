@@ -23,7 +23,7 @@
     <input-type-selector [selectedInputType]="getInputType()"
                          [availableInputTypes]="availableInputTypes"
                          [isCustomField]="isCustomField()"
-                         [isFixedInputType]="field.fixedInputType"
+                         [isFixedInputType]="field.fixedInputType || !field.editable"
                          [disabled]="hidden"
                          (onChanged)="setInputType($event)">
     </input-type-selector>
@@ -173,7 +173,8 @@
             <span *ngFor="let geometryType of getAvailableGeometryTypes()"
                   class="checkbox form-check form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" type="checkbox" [checked]="isGeometryTypeAllowed(geometryType)"
+                    <input class="form-check-input geometry-type-checkbox" type="checkbox"
+                           [checked]="isGeometryTypeAllowed(geometryType)"
                            [disabled]="!isGeometryOptionEnabled(geometryType)"
                            (click)="toggleGeometryType(geometryType)">
                     {{getGeometryTypeLabel(geometryType)}}

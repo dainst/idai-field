@@ -53,12 +53,12 @@ export class AppComponent {
                 configurationChangeNotifications: ConfigurationChangeNotifications,
                 imageUrlMaker: ImageUrlMaker,
                 settingsService: SettingsService,
-                appState: AppState,
                 imageToolLauncher: ImageToolLauncher,
                 projectConfiguration: ProjectConfiguration,
                 relationsManager: RelationsManager,
                 imageUploader: ImageUploader,
                 uploadStatus: UploadStatus,
+                private appState: AppState,
                 private expressServer: ExpressServer,
                 private messages: Messages,
                 private utilTranslations: UtilTranslations,
@@ -100,7 +100,7 @@ export class AppComponent {
         AppComponent.preventDefaultDragAndDropBehavior();
         this.initializeUtilTranslations();
         this.listenToSettingsChangesFromMenu();
-        this.listenToApiEvents();
+        this.listenToDataTransferEvents();
         this.handleCloseRequests();
 
         if (!Settings.hasUsername(settingsProvider.getSettings())) {
@@ -122,10 +122,10 @@ export class AppComponent {
     }
 
 
-    private listenToApiEvents() {
+    private listenToDataTransferEvents() {
 
-        this.expressServer.apiNotifications().subscribe(state => {
-            switch (state) {
+        this.appState.dataTransferNotifications().subscribe(notification => {
+            switch (notification.newDataTransfer) {
                 case 'import':
                 case 'fileImport':
                 case 'export':
@@ -133,13 +133,15 @@ export class AppComponent {
                         this.previousMenuContext = this.menuService.getContext();
                         this.menuService.setContext(MenuContext.BLOCKING_MODAL);
                         const modalRef: NgbModalRef = this.modalService.open(
-                            state === 'fileImport' ? UploadModalComponent : ImportExportProcessModalComponent,
+                            notification.newDataTransfer === 'fileImport'
+                                ? UploadModalComponent
+                                : ImportExportProcessModalComponent,
                             { backdrop: 'static', keyboard: false, animation: false }
                         );
                         this.modal = modalRef.componentInstance;
                         this.changeDetectorRef.detectChanges();
                     }
-                    if (state !== 'fileImport') this.modal.type = state;
+                    if (notification.newDataTransfer !== 'fileImport') this.modal.type = notification.newDataTransfer;
                     break;
                 case 'none':
                     if (this.modal) this.closeModal();

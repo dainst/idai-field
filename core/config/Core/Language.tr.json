@@ -43,6 +43,9 @@
         },
         "width": {
           "label": "Eni"
+        },
+        "originalFilename": {
+          "label": "Orijinal dosya adı"
         }
       }
     }

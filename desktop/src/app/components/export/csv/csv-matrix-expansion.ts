@@ -288,6 +288,8 @@ export module CSVMatrixExpansion {
 
     function rowsWithDateElementsExpanded(date: DateSpecification): string[] {
 
+        if (!date) return ['', '', ''];
+
         const { value, endValue, isRange } = date;
         return [value ?? '', endValue ?? '', isRange ? 'true' : 'false'];
     }
@@ -372,6 +374,8 @@ export module CSVMatrixExpansion {
             return subfields.reduce((result, subfield) => {
                 if (Field.InputType.I18N_INPUT_TYPES.includes(subfield.inputType)) {
                     result = result.concat(rowsWithI18nStringExpanded(languages)(object[subfield.name]));
+                } else if (subfield.inputType === Field.InputType.DATE) {
+                    result = result.concat(rowsWithDateElementsExpanded(object[subfield.name]));
                 } else if (object[subfield.name] === undefined) {
                     result.push('');
                 } else if (isArray(object[subfield.name])) {
@@ -393,7 +397,13 @@ export module CSVMatrixExpansion {
             return Field.InputType.I18N_INPUT_TYPES.includes(subfield.inputType)
         });
 
-        return subfields.length - i18nStringSubfields.length + i18nStringSubfields.length * languages.length;
+        const dateSubfields: Array<Subfield> = subfields.filter(subfield => {
+            return subfield.inputType === Field.InputType.DATE;
+        });
+
+        return subfields.length
+            + i18nStringSubfields.length * (Math.max(languages.length - 1, 0))
+            + dateSubfields.length * 2;
     }
 
 

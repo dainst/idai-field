@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryForm, Datastore, FieldDocument, Query, Labels, Document, Tree, Named, ProjectConfiguration,
     IndexFacade } from 'idai-field-core';
 import { CatalogExporter, ERROR_FAILED_TO_COPY_IMAGES } from '../../components/export/catalog/catalog-exporter';
@@ -18,7 +17,6 @@ import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
 import { AppState } from '../../services/app-state';
 import { AngularUtility } from '../../angular/angular-utility';
-import { ImportExportProcessModalComponent } from '../widgets/import-export-process-modal.component';
 
 const remote = window.require('@electron/remote');
 
@@ -51,13 +49,8 @@ export class ExportComponent implements OnInit {
     
     public invalidFields: Array<InvalidField> = [];
 
-    private modalRef: NgbModalRef|undefined;
-
-    private static TIMEOUT: number = 200;
-
 
     constructor(private settingsProvider: SettingsProvider,
-                private modalService: NgbModal,
                 private messages: Messages,
                 private datastore: Datastore,
                 private tabManager: TabManager,
@@ -103,6 +96,7 @@ export class ExportComponent implements OnInit {
 
         this.categoryCounts = await ExportRunner.determineCategoryCounts(
             this.indexFacade,
+            this.datastore,
             this.getExportContext(),
             Tree.flatten(this.projectConfiguration.getCategories())
         );
@@ -149,8 +143,9 @@ export class ExportComponent implements OnInit {
             return;
         }
         
-        this.menuService.setContext(MenuContext.MODAL);
-        this.openModal();
+        this.appState.setRunningDataTransfer('export');
+
+        await AngularUtility.refresh(350);
 
         try {
             if (this.format === 'geojson') await this.startGeojsonExport(filePath);
@@ -164,8 +159,7 @@ export class ExportComponent implements OnInit {
         }
 
         this.running = false;
-        this.menuService.setContext(MenuContext.DEFAULT);
-        this.closeModal();
+        this.appState.setRunningDataTransfer('none');
     }
 
 
@@ -331,27 +325,6 @@ export class ExportComponent implements OnInit {
                     extensions: ['csv']
                 };
         }
-    }
-
-
-    private openModal() {
-
-        setTimeout(() => {
-            if (this.running) {
-                this.modalRef = this.modalService.open(
-                    ImportExportProcessModalComponent,
-                    { backdrop: 'static', keyboard: false, animation: false }
-                );
-                this.modalRef.componentInstance.type = 'export';
-            }
-        }, ExportComponent.TIMEOUT);
-    }
-
-
-    private closeModal() {
-
-        if (this.modalRef) this.modalRef.close();
-        this.modalRef = undefined;
     }
 
 

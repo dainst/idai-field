@@ -10160,9 +10160,9 @@
           <context context-type="linenumber">31,33</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="imageExport.originalFileame" datatype="html">
+      <trans-unit id="imageExport.originalFilename" datatype="html">
         <source>Ursprünglicher Dateiname</source>
-        <target state="translated">Original file name</target>
+        <target state="translated">Original filename</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/export/image-export-modal.html</context>
           <context context-type="linenumber">38,40</context>

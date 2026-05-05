@@ -114,6 +114,10 @@ export module CSVHeadingsExpansion {
                             return fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + subfield.name
                                 + (hasNoConfiguredProjectLanguages(languages) ? '' : OBJECT_SEPARATOR + language);
                         }));
+                    } else if (subfield.inputType === Field.InputType.DATE) {
+                        result = result.concat(
+                            expandDateHeadings(fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + subfield.name)
+                        );
                     } else {
                         result.push(fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + subfield.name);
                     }

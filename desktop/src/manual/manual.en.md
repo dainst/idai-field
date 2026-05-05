@@ -194,7 +194,7 @@ Please note that this function is only available if a valid synchronization targ
 To export the original image files from Field Desktop, first select the images in the image management (or call them up from another part of the application) and click the button "Export". A window will appear in which you can select the directory to which the image files are to be exported. You also can choose between two different options for naming the files:
 
 * *Identifier*: The identifier that the corresponding images currently have in the project is used as a file name for the exported image files.
-* *Original file name*: The files are exported under the names under which they were originally imported into the project.
+* *Original filename*: The files are exported under the names under which they were originally imported into the project.
 
 
 ## Link images to resources
@@ -1839,7 +1839,7 @@ For reasons of clarity, the examples below are each displayed in several lines. 
 
 ##### Relations
 
-Fields of the input type *Relation* are bundled in the object *relations*. The field names of the object correspond to the identifiers of the relations; in each case an array with the identifiers of the target resources is entered as the field value.
+Fields of the input type *Relation* are bundled in the object *relations*. The field names of the object correspond to the identifiers of the relations; in each case an array with the identifiers of the target resources is entered as the field value. The only exception is the relation *isChildOf*: In this case, the identifier is set directly, not in an array (see example below).
 
 In addition to the relations listed in the project configuration in the form of the respective category, the following relations can be used:
 
@@ -1856,7 +1856,7 @@ To link images to the project or set them up as map layers at project level, add
     {
       "identifier": "A",
       "category": "Feature",
-      "relations": { "isAbove": ["B", "C", "D"], "isChildOf": ["E"], "isDepictedIn": ["Image1.png", "Image2.png"] }
+      "relations": { "isAbove": ["B", "C", "D"], "isChildOf": "E", "isDepictedIn": ["Image1.png", "Image2.png"] }
     }
 
 
@@ -2449,6 +2449,7 @@ Request body:
 * *filePaths (string array)*: The file paths of the files to be imported
 * *category (string)*: The name of the category to be set for imported images (Default value: "Image")
 * *readCreatorsFromMetadata (boolean)*: Reads the metadata from image files to automatically fill in the field "Creator"
+* *checkOriginalFilename (Boolean)*: Image files are never imported if the project already contains an image with the same identifier. If this option is enabled, the import will also be rejected if there is already an image with the same original filename.
 
 Response:
 * *importedImages (integer)*: The number of successfully imported image files

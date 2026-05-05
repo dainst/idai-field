@@ -1,4 +1,5 @@
-import { click, navigateTo, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
+import { click, closeAllMessages, getMessageText, navigateTo, resetApp, start, stop, waitForExist,
+    waitForNotExist } from '../app';
 import { NavbarPage } from '../navbar.page';
 import { ResourcesPage } from './resources.page';
 import { DoceditPage } from '../docedit/docedit.page';
@@ -107,10 +108,10 @@ test.describe('resources/list', () => {
         await ResourcesPage.typeInListModeIdentifierField('2', '1');
         await click(await ResourcesPage.getListModeIdentifierField('3'));
 
-        expect(await NavbarPage.getMessageText()).toContain('existiert bereits');
+        expect(await getMessageText(0)).toContain('existiert bereits');
         expect(await ResourcesPage.getListModeIdentifierFieldValue('2')).toEqual('2');
 
-        await NavbarPage.clickCloseAllMessages();
+        await closeAllMessages();
     });
 
 

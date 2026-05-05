@@ -1,4 +1,4 @@
-FROM node:16.13.2-alpine3.15 as builder
+FROM node:22-alpine as builder
 
 COPY ./src /ui/src
 COPY ./public /ui/public
@@ -10,7 +10,7 @@ WORKDIR /ui
 RUN npm i
 RUN npm run build
 
-FROM nginx:1.23.2
+FROM nginx:1.29.8
 
 COPY --from=builder /ui/build /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf

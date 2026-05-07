@@ -312,8 +312,8 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
-    private getPeriodMap(documents: Array<FeatureDocument>, clusterMode: MatrixClusterMode)
-        : { [period: string]: Array<FeatureDocument> } {
+    private getPeriodMap(documents: Array<FeatureDocument>,
+                         clusterMode: MatrixClusterMode): { [period: string]: Array<FeatureDocument> } {
 
         if (clusterMode === 'none') return { 'UNKNOWN': documents };
 

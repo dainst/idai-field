@@ -39,8 +39,8 @@ export module EdgesBuilder {
     }
 
 
-    function getEdgesForDocument(graphDocuments: Array<Document>,
-                                 totalDocuments: Array<Document>, relations: GraphRelationsConfiguration) {
+    function getEdgesForDocument(graphDocuments: Array<Document>, totalDocuments: Array<Document>,
+                                 relations: GraphRelationsConfiguration) {
 
         return (document: Document): { resourceId: string, edges: Edges } => {
 
@@ -85,10 +85,8 @@ export module EdgesBuilder {
     }
 
 
-    function getEdgeTargetIds(document: Document, graphDocuments: Array<Document>,
-                              totalDocuments: Array<Document>, relations: GraphRelationsConfiguration,
-                              pathType?: string)
-                            : Array<TargetAndPathType> {
+    function getEdgeTargetIds(document: Document, graphDocuments: Array<Document>, totalDocuments: Array<Document>,
+                              relations: GraphRelationsConfiguration, pathType?: string): Array<TargetAndPathType> {
 
         return mergeTargetIdResults(
             getRelationTargetIds(document, getRelationTypesForPathType(pathType, relations))
@@ -101,8 +99,7 @@ export module EdgesBuilder {
     }
 
 
-    function getRelationTargetIds(document: Document, relationTypes: string[])
-            : Array<TargetAndRelationType> {
+    function getRelationTargetIds(document: Document, relationTypes: string[]): Array<TargetAndRelationType> {
 
         return mergeTargetIdResults(
             relationTypes
@@ -128,10 +125,8 @@ export module EdgesBuilder {
 
 
     function getIncludedRelationTargetIds(targetId: string, graphDocuments: Array<Document>,
-                                          totalDocuments: Array<Document>,
-                                          relations: GraphRelationsConfiguration,
-                                          processedTargetIds: string[], pathType?: string)
-                                        : Array<TargetAndPathType> {
+                                          totalDocuments: Array<Document>, relations: GraphRelationsConfiguration,
+                                          processedTargetIds: string[], pathType?: string): Array<TargetAndPathType> {
 
         processedTargetIds.push(targetId);
 
@@ -162,8 +157,8 @@ export module EdgesBuilder {
 
 
     function convertToTargetsAndPathTypes(graphDocuments: Array<Document>, totalDocuments: Array<Document>,
-                                          relations: GraphRelationsConfiguration,
-                                          processedTargetIds: string[], pathType?: string) {
+                                          relations: GraphRelationsConfiguration, processedTargetIds: string[],
+                                          pathType?: string) {
 
         return (targetIdResult: TargetAndRelationType): TargetsAndPathTypes => {
 
@@ -178,8 +173,7 @@ export module EdgesBuilder {
     }
 
 
-    function getEdgeType(relationType: string,
-                         relations: GraphRelationsConfiguration): 'above'|'below'|'sameRank' {
+    function getEdgeType(relationType: string, relations: GraphRelationsConfiguration): 'above'|'below'|'sameRank' {
 
         if (relations.above.includes(relationType)) {
             return 'above';

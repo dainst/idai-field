@@ -31,7 +31,11 @@ export async function exportFile(request: any, response: any, datastore: Datasto
         }
     
     } catch (err) {
-        response.status(400).send({ error: getErrorMessage(err, messagesDictionary) });
+        if (err.toString().includes('no such file or directory')) {
+            response.status(400).send({ error: 'No original image file found: ' + request.params.identifier });
+        } else {
+            response.status(400).send({ error: getErrorMessage(err, messagesDictionary) });
+        }
     }
 }
 

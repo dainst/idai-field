@@ -43,7 +43,7 @@ export class LayerMapComponent extends MapComponent {
                 protected zone: NgZone,
                 protected changeDetectorRef: ChangeDetectorRef,
                 private datastore: PouchdbDatastore,
-                private menuService: Menus) {
+                protected menuService: Menus) {
 
         super(projectConfiguration, labels, zone);
 
@@ -183,7 +183,9 @@ export class LayerMapComponent extends MapComponent {
             [georeference.topLeftCoordinates,
             georeference.topRightCoordinates,
             georeference.bottomLeftCoordinates],
-            { pane: layerDocument.resource.id }).addTo(this.map);
+            { pane: layerDocument.resource.id },
+            
+        ).addTo(this.map);
     }
 
 

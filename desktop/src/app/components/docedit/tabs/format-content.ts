@@ -21,8 +21,8 @@ export function formatContent(resource: Resource, field: DifferingField, timeSuf
     return isArray(fieldContent)
         ? flow(fieldContent,
             convertArray(field, languages, timeSuffix, getTranslation, transform, labels),
-            formatArray)
-        : isObject(fieldContent)
+            formatArray
+        ) : isObject(fieldContent)
             ? convertObject(fieldContent, field, languages, timeSuffix, getTranslation, labels)
             : formatSingleValue(fieldContent, field, getTranslation);
 }
@@ -31,11 +31,13 @@ export function formatContent(resource: Resource, field: DifferingField, timeSuf
 function formatArray(fieldContent: Array<string>): InnerHTML {
 
     let contentString: string = '<div>';
+
     for (let i = 0; i < fieldContent.length; i++) {
         if (contentString.length > 6) contentString;
         if (i !== 0) contentString += '<br>';
         contentString += fieldContent[i];
     }
+
     return contentString += '</div>';
 }
 
@@ -60,7 +62,7 @@ function convertObject(fieldContent: any, field: DifferingField, languages: Map<
             getTranslation,
             (value: string) => labels.getValueLabel(field.valuelist, value)
         );
-    } else if (field.inputType === Field.InputType.INPUT) {
+    } else if ([Field.InputType.INPUT, Field.InputType.TEXT].includes(field.inputType)) {
         return I18N.getFormattedContent(fieldContent, map(to('label'))(languages));
     } else if (field.inputType === Field.InputType.DATE) {
         return DateSpecification.generateLabel(

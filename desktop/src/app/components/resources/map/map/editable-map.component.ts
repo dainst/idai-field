@@ -14,6 +14,7 @@ import { GeometryHelper } from './geometry-helper';
 import { LayerMapComponent } from './layer-map.component';
 import { LayerImageProvider } from './layers/layer-image-provider';
 import { LayerManager } from './layers/layer-manager';
+import { MenuContext } from '../../../../services/menu-context';
 
 
 declare global { namespace L { namespace PM { namespace Draw { interface Line { _finishShape(): void
@@ -27,6 +28,9 @@ type DrawMode = 'None'|'Line'|'Poly';
 @Component({
     selector: 'editable-map',
     templateUrl: './editable-map.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    },
     standalone: false
 })
 /**
@@ -86,10 +90,18 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    @HostListener('document:keyup', ['$event'])
-    public handleKeyEvent(event: KeyboardEvent) {
+    public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key == 'Escape') this.finishDrawing();
+        if (this.menuService.getContext() !== MenuContext.GEOMETRY_EDIT) return;
+
+        switch(event.key) {
+            case 's':
+                if (event.ctrlKey || event.metaKey) await this.finishEditing();
+                break;
+            case 'Escape':
+                this.finishDrawing();
+                break;
+        }
     }
 
 
@@ -148,6 +160,19 @@ export class EditableMapComponent extends LayerMapComponent {
             this.setSelectedMarker(marker);
             this.redrawGeometries();
         });
+    }
+
+
+    public removeLastVertex() {
+
+        switch (this.drawMode) {
+            case 'Poly':
+                this.map.pm.Draw.Polygon._removeLastVertex();
+                break;
+            case 'Line':
+                this.map.pm.Draw.Line._removeLastVertex();
+                break;
+        }
     }
 
 
@@ -714,7 +739,7 @@ export class EditableMapComponent extends LayerMapComponent {
         editableMarker.on('mousedown', event => {
             this.setSelectedMarker(event.target);
             this.map.dragging.disable();
-            this.map.on('mousemove', (e: L.MouseEvent) => editableMarker.setLatLng(e.latlng));
+            this.map.on('mousemove', (e: L.LeafletMouseEvent) => editableMarker.setLatLng(e.latlng));
         });
     }
 

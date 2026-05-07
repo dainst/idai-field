@@ -36,9 +36,9 @@ export class Labels {
     
     public getValueLabel(valuelist: Valuelist, valueId: string): string {
 
-        const label = Valuelist.getValueLabel(valuelist, valueId);
-
+        const label: I18N.String|undefined = Valuelist.getValueLabel(valuelist, valueId);
         const translation: string|undefined = I18N.getTranslation(label, this.getLanguages());
+
         return translation ?? valueId;
     }
 

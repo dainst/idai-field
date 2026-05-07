@@ -1,4 +1,4 @@
-<div id="map-container"></div>
+<div id="map-container" (contextmenu)="removeLastVertex()"></div>
 
 <layer-menu [layerGroups]="getLayerGroups()"
             (onToggleLayer)="toggleLayer($event)"

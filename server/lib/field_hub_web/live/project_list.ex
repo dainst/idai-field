@@ -197,6 +197,7 @@ defmodule FieldHubWeb.Live.ProjectList do
         |> Map.put(:original_size, infos.original_size + original_size)
         |> Map.put(:original_count, infos.original_count + original_count)
       end)
+      |> apply_sort()
     }
   end
 
@@ -240,6 +241,7 @@ defmodule FieldHubWeb.Live.ProjectList do
           existing_for_project ++ [issue]
         end)
       end)
+      |> apply_sort()
     }
   end
 

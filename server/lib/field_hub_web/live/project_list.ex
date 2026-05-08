@@ -303,36 +303,7 @@ defmodule FieldHubWeb.Live.ProjectList do
     assign(
       socket,
       :project_keys,
-      Enum.sort(
-        project_keys,
-        fn project_key_a, project_key_b ->
-          count_a =
-            file_infos[project_key_a]
-            |> case do
-              :loading ->
-                -1
-
-              %{thumbnail_count: val} ->
-                val
-            end
-
-          count_b =
-            file_infos[project_key_b]
-            |> case do
-              :loading ->
-                -1
-
-              %{thumbnail_count: val} ->
-                val
-            end
-
-          if direction == :asc do
-            count_a >= count_b
-          else
-            count_a < count_b
-          end
-        end
-      )
+      sort_by_file_info(project_keys, :thumbnail_count, file_infos, direction)
     )
   end
 
@@ -348,36 +319,7 @@ defmodule FieldHubWeb.Live.ProjectList do
     assign(
       socket,
       :project_keys,
-      Enum.sort(
-        project_keys,
-        fn project_key_a, project_key_b ->
-          count_a =
-            file_infos[project_key_a]
-            |> case do
-              :loading ->
-                -1
-
-              %{original_count: val} ->
-                val
-            end
-
-          count_b =
-            file_infos[project_key_b]
-            |> case do
-              :loading ->
-                -1
-
-              %{original_count: val} ->
-                val
-            end
-
-          if direction == :asc do
-            count_a >= count_b
-          else
-            count_a < count_b
-          end
-        end
-      )
+      sort_by_file_info(project_keys, :original_count, file_infos, direction)
     )
   end
 
@@ -406,6 +348,41 @@ defmodule FieldHubWeb.Live.ProjectList do
           end
         end
       )
+    )
+  end
+
+  defp sort_by_file_info(project_keys, file_info_key, file_infos, direction) do
+    Enum.sort(
+      project_keys,
+      fn project_key_a, project_key_b ->
+        count_a =
+          file_infos[project_key_a]
+          |> case do
+            %{^file_info_key => val} ->
+              val
+
+            _ ->
+              # :loading or :error
+              -1
+          end
+
+        count_b =
+          file_infos[project_key_b]
+          |> case do
+            %{^file_info_key => val} ->
+              val
+
+            _ ->
+              # :loading or :error
+              -1
+          end
+
+        if direction == :asc do
+          count_a <= count_b
+        else
+          count_a > count_b
+        end
+      end
     )
   end
 end

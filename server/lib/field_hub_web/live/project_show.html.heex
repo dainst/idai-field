@@ -80,7 +80,7 @@
 
     <h2>History</h2>
     <small>Last {Enum.count(@database_info.last_changes)} changes.</small>
-    <div style="max-height: 350px; overflow: scroll;">
+    <div style="max-height: 350px; overflow: auto;">
     <% {current_column, current_direction} = @history_sort_state %>
     <.sortable_table
       rows={@database_info.last_changes}

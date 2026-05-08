@@ -95,7 +95,13 @@ defmodule FieldHubWeb.Live.ProjectList do
       end
       |> case do
         [column, direction]
-        when column in ["projects", "thumbnail_count", "image_count", "last_change"] ->
+        when column in [
+               "projects",
+               "document_count",
+               "thumbnail_count",
+               "image_count",
+               "last_change"
+             ] ->
           parsed_direction =
             case direction do
               "asc" -> :asc

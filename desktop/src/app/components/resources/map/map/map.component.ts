@@ -89,7 +89,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
         const map: L.Map = L.map('map-container', mapOptions);
 
         const mapComponent = this;
-        map.on('click', function(event: L.LeafletMouseEvent) {
+        map.on('click', function(event: L.MouseEvent) {
             mapComponent.clickOnMap(event.latlng);
         });
 

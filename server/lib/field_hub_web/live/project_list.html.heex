@@ -32,18 +32,37 @@ This server runs Field Hub (<small><%= Application.spec(:field_hub, :vsn) %></sm
         Some projects have serious data <.link patch="/#issues-section">issues</.link>.
       </div>
 
-      <% {current_column, current_direction} = @sort%>
+      <% {current_column, current_direction} = @sort %>
 
       <% overall_project_count = Enum.count(@project_keys) %>
-      <.sortable_table rows={@project_keys} current_column={current_column} current_direction={current_direction} event="toggle-sort">
-        <:column :let={project_key} sort_key="projects" heading={"#{overall_project_count} Project#{if overall_project_count != 1, do: "s"}"}>
+      <.sortable_table
+        rows={@project_keys}
+        current_column={current_column}
+        current_direction={current_direction}
+        event="toggle-sort"
+      >
+        <:column
+          :let={project_key}
+          sort_key="projects"
+          heading={"#{overall_project_count} Project#{if overall_project_count != 1, do: "s"}"}
+        >
           <.link navigate={~p"/ui/projects/show/#{project_key}"}>{project_key}</.link>
         </:column>
-        <:column :let={project_key} sort_key="document_count" heading={"#{overall_doc_count} Documents (#{Sizeable.filesize(overall_db_size)})"}>
-            {@database_infos[project_key].doc_count} ({Sizeable.filesize(@database_infos[project_key].size)})
+        <:column
+          :let={project_key}
+          sort_key="document_count"
+          heading={"#{overall_doc_count} Documents (#{Sizeable.filesize(overall_db_size)})"}
+        >
+          {@database_infos[project_key].doc_count} ({Sizeable.filesize(
+            @database_infos[project_key].size
+          )})
         </:column>
 
-        <:column :let={project_key} sort_key="thumbnail_count" heading={"#{overall_thumbnail_count} Thumbnails (#{Sizeable.filesize(overall_thumbnail_size)})"}>
+        <:column
+          :let={project_key}
+          sort_key="thumbnail_count"
+          heading={"#{overall_thumbnail_count} Thumbnails (#{Sizeable.filesize(overall_thumbnail_size)})"}
+        >
           <%= case @file_infos[project_key] do %>
             <% {:loading, _task} -> %>
               Loading...
@@ -57,7 +76,11 @@ This server runs Field Hub (<small><%= Application.spec(:field_hub, :vsn) %></sm
           <% end %>
         </:column>
 
-        <:column :let={project_key} sort_key="image_count" heading={"#{overall_original_count} Images (#{Sizeable.filesize(overall_original_size)})"}>
+        <:column
+          :let={project_key}
+          sort_key="image_count"
+          heading={"#{overall_original_count} Images (#{Sizeable.filesize(overall_original_size)})"}
+        >
           <%= case @file_infos[project_key] do %>
             <% {:loading, _task} -> %>
               Loading...

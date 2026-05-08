@@ -16,8 +16,7 @@ defmodule FieldHubWeb.Live.ProjectList do
     socket =
       cond do
         is_nil(current_user) ->
-          # TODO?
-          socket
+          assign(socket, :page_title, "Overview")
 
         Project.exists?(current_user) ->
           # Redirect to project's page if user is not an admin (implicitley given because there is a project of

@@ -94,7 +94,8 @@ defmodule FieldHubWeb.Live.ProjectList do
           String.split(param, "|")
       end
       |> case do
-        [column, direction] ->
+        [column, direction]
+        when column in ["projects", "thumbnail_count", "image_count", "last_change"] ->
           parsed_direction =
             case direction do
               "asc" -> :asc

@@ -19,89 +19,67 @@ This server runs Field Hub (<small><%= Application.spec(:field_hub, :vsn) %></sm
       You don't have a project yet.
     <% else %>
       <% %{
-        doc_count: doc_count,
-        database_size: db_size,
-        thumbnail_count: thumbnail_count,
-        thumbnail_size: thumbnail_size,
-        original_count: original_count,
-        original_size: original_size
+        doc_count: overall_doc_count,
+        database_size: overall_db_size,
+        thumbnail_count: overall_thumbnail_count,
+        thumbnail_size: overall_thumbnail_size,
+        original_count: overall_original_count,
+        original_size: overall_original_size
       } = @aggregated_info %>
       <h2>Projects</h2>
 
-      <div class="alert alert-danger" :if={@errors != %{}}>
+      <div :if={@errors != %{}} class="alert alert-danger">
         Some projects have serious data <.link patch="/#issues-section">issues</.link>.
       </div>
-      <table style="table-layout: fixed;">
-        <thead>
-          <tr>
-            <.th column="projects" active={@sort}>
-              <% count = Enum.count(@project_keys) %> {count} Project{if count != 1, do: "s"}
-            </.th>
-            <.th column="document_count" active={@sort}>
-              {doc_count} Documents ({Sizeable.filesize(db_size)})
-            </.th>
-            <.th column="thumbnail_count" active={@sort}>
-              {thumbnail_count} Thumbnails ({Sizeable.filesize(thumbnail_size)})
-            </.th>
-            <.th column="image_count" active={@sort}>
-              {original_count} Images ({Sizeable.filesize(original_size)})
-            </.th>
 
-            <.th column="last_change" active={@sort}>
-              Last changes
-            </.th>
-          </tr>
-        </thead>
+      <% {current_column, current_direction} = @sort%>
 
-        <tbody>
-          <%= for project_key <- @project_keys do %>
-            <% %DatabaseInfo{doc_count: doc_count, size: db_size, last_changes: last_changes} =
-              @database_infos[project_key] %>
+      <% overall_project_count = Enum.count(@project_keys) %>
+      <.sortable_table rows={@project_keys} current_column={current_column} current_direction={current_direction} event="toggle-sort">
+        <:column :let={project_key} sort_key="projects" heading={"#{overall_project_count} Project#{if overall_project_count != 1, do: "s"}"}>
+          <.link navigate={~p"/ui/projects/show/#{project_key}"}>{project_key}</.link>
+        </:column>
+        <:column :let={project_key} sort_key="document_count" heading={"#{overall_doc_count} Documents (#{Sizeable.filesize(overall_db_size)})"}>
+            {@database_infos[project_key].doc_count} ({Sizeable.filesize(@database_infos[project_key].size)})
+        </:column>
 
-            <tr>
-              <td>
-                <.link navigate={~p"/ui/projects/show/#{project_key}"}>{project_key}</.link>
-              </td>
-              <td>{doc_count} ({Sizeable.filesize(db_size)})</td>
-              <td>
-                <%= case @file_infos[project_key] do %>
-                  <% {:loading, _task} -> %>
-                    Loading...
-                  <% :error -> %>
-                    Error, see below.
-                  <% %{
-                  thumbnail_count: thumbnail_count,
-                  thumbnail_size: thumbnail_size
-                } -> %>
-                    {thumbnail_count} ({Sizeable.filesize(thumbnail_size)})
-                <% end %>
-              </td>
-              <td>
-                <%= case @file_infos[project_key] do %>
-                  <% {:loading, _task} -> %>
-                    Loading...
-                  <% :error -> %>
-                    Error, see below.
-                  <% %{
-                  original_count: original_count,
-                  original_size: original_size
-                } -> %>
-                    {original_count} ({Sizeable.filesize(original_size)})
-                <% end %>
-              </td>
-
-              <td>
-                <%= case List.first(last_changes) do %>
-                  <% nil -> %>
-                    -
-                  <% %ChangeInfo{date: date, user: user} -> %>
-                    {Calendar.strftime(date, "%c")} ({user})
-                <% end %>
-              </td>
-            </tr>
+        <:column :let={project_key} sort_key="thumbnail_count" heading={"#{overall_thumbnail_count} Thumbnails (#{Sizeable.filesize(overall_thumbnail_size)})"}>
+          <%= case @file_infos[project_key] do %>
+            <% {:loading, _task} -> %>
+              Loading...
+            <% :error -> %>
+              Error, see below.
+            <% %{
+            thumbnail_count: thumbnail_count,
+            thumbnail_size: thumbnail_size
+          } -> %>
+              {thumbnail_count} ({Sizeable.filesize(thumbnail_size)})
           <% end %>
-        </tbody>
-      </table>
+        </:column>
+
+        <:column :let={project_key} sort_key="image_count" heading={"#{overall_original_count} Images (#{Sizeable.filesize(overall_original_size)})"}>
+          <%= case @file_infos[project_key] do %>
+            <% {:loading, _task} -> %>
+              Loading...
+            <% :error -> %>
+              Error, see below.
+            <% %{
+            original_count: original_count,
+            original_size: original_size
+          } -> %>
+              {original_count} ({Sizeable.filesize(original_size)})
+          <% end %>
+        </:column>
+
+        <:column :let={project_key} sort_key="last_change" heading="Last changes">
+          <%= case List.first(@database_infos[project_key].last_changes) do %>
+            <% nil -> %>
+              -
+            <% %ChangeInfo{date: date, user: user} -> %>
+              {Calendar.strftime(date, "%c")} ({user})
+          <% end %>
+        </:column>
+      </.sortable_table>
     <% end %>
   </section>
 

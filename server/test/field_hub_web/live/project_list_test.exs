@@ -83,7 +83,7 @@ defmodule FieldHubWeb.ProjectListTest do
       assert html =~ "Last changes"
 
       # Database size for @project_key.
-      assert html =~ "<td>21 (48.39 KB)</td>"
+      assert html =~ "21 (48.39 KB)"
 
       html = render_async(view)
 

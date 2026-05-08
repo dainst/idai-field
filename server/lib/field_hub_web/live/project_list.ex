@@ -10,6 +10,8 @@ defmodule FieldHubWeb.Live.ProjectList do
     User
   }
 
+  import FieldHubWeb.Components.SortableTable
+
   require Logger
 
   def mount(_params, _session, %{assigns: %{current_user: current_user}} = socket) do
@@ -242,23 +244,6 @@ defmodule FieldHubWeb.Live.ProjectList do
       end)
       |> apply_sort()
     }
-  end
-
-  attr(:column, :string, required: true)
-  attr(:active, :any, required: true)
-  slot(:inner_block, required: true)
-
-  defp th(assigns) do
-    ~H"""
-    <% {active_column, direction} = @active %>
-    <th
-      class={"sortable-list-heading #{if active_column == @column, do: direction}"}
-      phx-click="toggle-sort"
-      phx-value-column={@column}
-    >
-      {render_slot(@inner_block)}
-    </th>
-    """
   end
 
   defp apply_sort(

@@ -262,11 +262,11 @@ nav {
 }
 
 .sortable-list-heading.asc:before {
-    content: "▿";
+    content: "▵";
 }
 
 .sortable-list-heading.desc:before {
-    content: "▵";
+    content: "▿";
 }
 
 .row-compact {

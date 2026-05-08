@@ -288,9 +288,9 @@ defmodule FieldHubWeb.Live.ProjectList do
           %DatabaseInfo{doc_count: doc_count_b} = db_infos[project_key_b]
 
           if direction == :asc do
-            doc_count_a >= doc_count_b
+            doc_count_a <= doc_count_b
           else
-            doc_count_a < doc_count_b
+            doc_count_a > doc_count_b
           end
         end
       )
@@ -348,7 +348,7 @@ defmodule FieldHubWeb.Live.ProjectList do
           last_change_b = List.first(db_infos[project_key_b].last_changes)
 
           if direction == :asc do
-            last_change_a < last_change_b
+            last_change_a <= last_change_b
           else
             last_change_a > last_change_b
           end

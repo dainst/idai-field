@@ -28,7 +28,7 @@ This server runs Field Hub (<small><%= Application.spec(:field_hub, :vsn) %></sm
       } = @aggregated_info %>
       <h2>Projects</h2>
 
-      <div :if={@errors != %{}}>
+      <div class="alert alert-danger" :if={@errors != %{}}>
         Some projects have serious data <.link patch="/#issues-section">issues</.link>.
       </div>
       <table style="table-layout: fixed;">

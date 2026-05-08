@@ -1,6 +1,8 @@
 defmodule FieldHubWeb.Live.ProjectShow do
   use FieldHubWeb, :live_view
 
+  import FieldHubWeb.Components.SortableTable
+
   alias FieldHub.Project
 
   alias FieldHubWeb.UserAuth
@@ -9,13 +11,12 @@ defmodule FieldHubWeb.Live.ProjectShow do
     CouchService,
     Issues,
     Project,
+    Project.DatabaseInfo,
+    Project.ChangeInfo,
     User
   }
 
   require Logger
-
-  @default_sort_by :time
-  @default_sort_direction :desc
 
   def mount(%{"project" => project} = _params, %{"user_token" => user_token} = _session, socket) do
     # TODO: In newer Phoenix version use an `on_mount` plug. This check prevents direct unauthorized
@@ -30,14 +31,14 @@ defmodule FieldHubWeb.Live.ProjectShow do
     Project.check_project_authorization(project, user_name)
     |> case do
       :granted ->
-        # For the overview portion we may have to look up the sizes of all files in the project, which may take some seconds. For this
-        # reason we implement that evaluation asynchronously. This Process.send/3 will get picked up further down by
-        # a handle_info/2.
-        Process.send(self(), :update_overview, [])
-
         {
           :ok,
           socket
+          |> assign(:database_info, Project.database_info(project))
+          |> assign(:history_sort_state, {:id, :asc})
+          |> assign_async(:file_info, fn ->
+            {:ok, %{file_info: Project.file_store_info(project)}}
+          end)
           |> assign(:stats, :loading)
           |> assign(:issues_evaluating?, false)
           |> assign(:issues, nil)
@@ -48,55 +49,13 @@ defmodule FieldHubWeb.Live.ProjectShow do
           |> assign(:confirm_project_name, "")
           |> assign(:delete_files, false)
           |> assign(:hide_cache_cleared_message, true)
-          |> assign(:n_changes_to_display, 100)
           |> assign(:page_title, project)
           |> read_project_doc()
-          |> assign(:sort_by, @default_sort_by)
-          |> assign(:sort_direction, @default_sort_direction)
         }
 
       _ ->
-        redirect(socket, to: "/")
+        push_navigate(socket, to: "/")
     end
-  end
-
-  def handle_info(
-        :update_overview,
-        %{assigns: %{project: project, n_changes_to_display: number_of_changes}} = socket
-      ) do
-    # Evaluate the project asynchronously. Once the task finishes, it will get picked up
-    # by another handle_info/2 below.
-    Task.async(fn ->
-      {:overview_task, Project.evaluate_project(project, number_of_changes)}
-    end)
-
-    {:noreply, socket}
-  end
-
-  def handle_info({ref, {:overview_task, stats}}, socket) do
-    # The asynchronous task is finished, we are not interested in its process anymore and demonitor it.
-    Process.demonitor(ref, [:flush])
-
-    # Reschedule the task to be run again in 10 seconds, see above.
-    Process.send_after(self(), :update_overview, 10000)
-
-    sorted_changes =
-      sort_changes(
-        Map.get(stats, :database, %{}) |> Map.get(:last_n_changes, []),
-        socket.assigns.sort_by,
-        socket.assigns.sort_direction
-      )
-
-    sorted_stats =
-      Map.update!(stats, :database, fn db ->
-        Map.put(db, :last_n_changes, sorted_changes)
-      end)
-
-    {
-      :noreply,
-      socket
-      |> assign(:stats, sorted_stats)
-    }
   end
 
   def handle_info({ref, {:issues_task, issues}}, socket) do
@@ -114,41 +73,57 @@ defmodule FieldHubWeb.Live.ProjectShow do
     }
   end
 
-  def handle_event("sort", %{"field" => field}, socket) do
-    field = String.to_atom(field)
+  def handle_event(
+        "history_toggled",
+        %{"column" => column_param},
+        %{
+          assigns: %{
+            history_sort_state: {current_column, direction},
+            database_info: %DatabaseInfo{last_changes: last_changes}
+          }
+        } = socket
+      )
+      when column_param in ["id", "identifier", "action", "date", "user"] do
+    column = String.to_existing_atom(column_param)
 
-    case socket.assigns.stats do
-      :loading ->
-        {:noreply, socket}
+    {column, direction} =
+      cond do
+        is_nil(current_column) || current_column != column ->
+          {column, :asc}
 
-      stats when is_map(stats) ->
-        changes =
-          stats
-          |> Map.get(:database, %{})
-          |> Map.get(:last_n_changes, [])
+        current_column == column and direction == :asc ->
+          {column, :desc}
 
-        {sort_direction, sort_by} =
-          if socket.assigns.sort_by == field do
-            {toggle_direction(socket.assigns.sort_direction), field}
-          else
-            {:desc, field}
-          end
+        current_column == column and direction == :desc ->
+          {:id, :asc}
+      end
 
-        sorted_changes = sort_changes(changes, sort_by, sort_direction)
+    updated_last_changes =
+      Enum.sort(last_changes, fn %ChangeInfo{} = info_a, %ChangeInfo{} = info_b ->
+        val_a = Map.get(info_a, column)
+        val_b = Map.get(info_b, column)
 
-        sorted_stats =
-          Map.update!(stats, :database, fn db ->
-            Map.put(db, :last_n_changes, sorted_changes)
-          end)
+        cond do
+          column == :date && direction == :desc ->
+            DateTime.after?(val_a, val_b)
 
-        {
-          :noreply,
-          socket
-          |> assign(:stats, sorted_stats)
-          |> assign(:sort_by, sort_by)
-          |> assign(:sort_direction, sort_direction)
-        }
-    end
+          column == :date ->
+            false
+
+          direction == :asc ->
+            val_a <= val_b
+
+          true ->
+            val_a > val_b
+        end
+      end)
+
+    {
+      :noreply,
+      socket
+      |> assign(:history_sort_state, {column, direction})
+      |> update(:database_info, fn old -> Map.put(old, :last_changes, updated_last_changes) end)
+    }
   end
 
   def handle_event(
@@ -378,78 +353,6 @@ defmodule FieldHubWeb.Live.ProjectShow do
 
       combined_names ->
         combined_names
-    end
-  end
-
-  defp toggle_direction(:desc), do: :asc
-
-  defp toggle_direction(:asc), do: :desc
-
-  defp sort_changes(changes, :resource, direction) do
-    Enum.sort_by(
-      changes,
-      fn change ->
-        change
-        |> Map.get("doc", %{})
-        |> Map.get("resource", %{})
-        |> Map.get("identifier", "")
-
-        # |> String.capitalize()
-      end,
-      direction
-    )
-  end
-
-  defp sort_changes(changes, :action, direction) do
-    Enum.sort_by(
-      changes,
-      fn change ->
-        change
-        |> Map.get("doc", %{})
-        |> Map.get("modified", [])
-      end,
-      direction
-    )
-  end
-
-  defp sort_changes(changes, :user, direction) do
-    Enum.sort_by(
-      changes,
-      fn change ->
-        {_type, _date, user} = CouchService.extract_most_recent_change_info(change)
-
-        user
-        |> String.capitalize()
-      end,
-      direction
-    )
-  end
-
-  defp sort_changes(changes, :time, direction) do
-    Enum.sort_by(
-      changes,
-      fn change ->
-        case CouchService.extract_most_recent_change_info(change) do
-          {_type, %DateTime{} = datetime, _user} ->
-            datetime
-            |> DateTime.to_unix()
-
-          _ ->
-            0
-        end
-      end,
-      direction
-    )
-  end
-
-  defp sort_indicator(current_sort, current_direction, column) do
-    if current_sort == column do
-      case current_direction do
-        :asc -> "\u2b61"
-        :desc -> "\u2b63"
-      end
-    else
-      "\u2b65"
     end
   end
 end

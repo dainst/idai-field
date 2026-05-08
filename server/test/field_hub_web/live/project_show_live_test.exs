@@ -13,6 +13,7 @@ defmodule FieldHubWeb.Live.ProjectShowTest do
 
   alias FieldHub.{
     Project,
+    Project.DatabaseInfo,
     CouchService,
     Issues,
     User,
@@ -45,7 +46,7 @@ defmodule FieldHubWeb.Live.ProjectShowTest do
         %Phoenix.LiveView.Socket{}
       )
 
-    assert {:redirect, %{to: "/"}} = socket.redirected
+    assert {:live, :redirect, %{kind: :push, to: "/"}} = socket.redirected
   end
 
   test "redirect to landing page if not authorized for project", %{conn: conn} do
@@ -66,7 +67,7 @@ defmodule FieldHubWeb.Live.ProjectShowTest do
         %Phoenix.LiveView.Socket{}
       )
 
-    assert {:redirect, %{to: "/"}} = socket.redirected
+    assert {:live, :redirect, %{kind: :push, to: "/"}} = socket.redirected
   end
 
   test "issues are displayed, even if no custom label or description defined" do
@@ -101,8 +102,8 @@ defmodule FieldHubWeb.Live.ProjectShowTest do
         supervisor: :loading,
         contact: :loading,
         staff: :loading,
-        stats: :loading,
-        state: :loading
+        database_info: %DatabaseInfo{doc_count: 0, size: 0, last_changes: []},
+        file_info: Phoenix.LiveView.AsyncResult.loading()
       })
 
     assert html =~ "Project file directory not found (1)"
@@ -143,17 +144,12 @@ defmodule FieldHubWeb.Live.ProjectShowTest do
       assert html_on_mount =~ "No supervisor found in project document."
       assert html_on_mount =~ "No contact data found in project document."
       assert html_on_mount =~ "Person 1, Person 2"
-      assert html_on_mount =~ "Loading..."
       assert html_on_mount =~ "Issues"
 
-      assert_receive {:trace, ^pid, :receive, {_ref, {:overview_task, _stats}}}
+      assert html_on_mount =~ "Database documents: 21"
+      assert html_on_mount =~ "Database size: 48.39 KB (49548 bytes)"
 
-      html = render(view)
-
-      assert html =~ "<h1>Project <i>#{@project}</i></h1>"
-
-      assert html =~ "Database documents: 21"
-      assert html =~ "Database size: 48.39 KB (49548 bytes)"
+      html = render_async(view)
       assert html =~ "Original images: 2, size: 697.78 KB (714528 bytes)"
       assert html =~ "Thumbnail images: 2, size: 18.84 KB (19295 bytes)"
     end
@@ -466,12 +462,9 @@ defmodule FieldHubWeb.Live.ProjectShowTest do
     end
 
     test "file index cache can be deleted through the interface", %{conn: conn} do
-      {:ok, %{pid: pid} = view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
+      {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
 
-      # We wait until the overview task has completed and the result is received by the view process, because the
-      # overview evaluation will create a cached index.
-      :erlang.trace(pid, true, [:receive])
-      assert_receive {:trace, ^pid, :receive, {_ref, {:overview_task, _stats}}}
+      render_async(view)
 
       assert {:ok, %{"o26" => _value}} = Cachex.get(@index_cache_name, @project)
 

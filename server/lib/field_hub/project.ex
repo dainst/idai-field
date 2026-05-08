@@ -308,7 +308,7 @@ defmodule FieldHub.Project do
     end)
   end
 
-  def database_info(project_key) do
+  def database_info(project_key, number_of_changes \\ 100) do
     CouchService.get_db_infos(project_key)
     |> case do
       %{status_code: 200, body: body} ->
@@ -318,7 +318,7 @@ defmodule FieldHub.Project do
           size: db_file_size,
           doc_count: db_doc_count,
           last_changes:
-            CouchService.get_last_n_changes(project_key, 100)
+            CouchService.get_last_n_changes(project_key, number_of_changes)
             |> Enum.map(&change_info/1)
         }
 

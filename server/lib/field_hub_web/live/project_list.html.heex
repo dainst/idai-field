@@ -14,91 +14,109 @@ This server runs Field Hub (<small><%= Application.spec(:field_hub, :vsn) %></sm
 
   <hr />
 
-  <div>
-    <.async_result :let={%{projects: projects, errors: errors}} assign={@state}>
-      <:loading>Loading projects list...</:loading>
-      <:failed :let={_failure}>there was an error loading the projects list</:failed>
+  <section>
+    <%= if @project_keys == [] do %>
+      You don't have a project yet.
+    <% else %>
+      <% %{
+        doc_count: overall_doc_count,
+        database_size: overall_db_size,
+        thumbnail_count: overall_thumbnail_count,
+        thumbnail_size: overall_thumbnail_size,
+        original_count: overall_original_count,
+        original_size: overall_original_size
+      } = @aggregated_info %>
+      <h2>Projects</h2>
 
-      <%= if length(errors) > 0 do %>
-        <p class="alert alert-danger">
-          <b>Project errors detected.</b>
-          <br />Please contact the administrators to resolve the issue and ensure project integrity.
-        </p>
-      <% end %>
+      <div :if={@errors != %{}} class="alert alert-danger">
+        Some projects have serious data <.link patch="/#issues-section">issues</.link>.
+      </div>
 
-      <%= case projects do %>
-        <% [] -> %>
-          <%= if errors != [] do %>
-            You don't have a project yet.
+      <% {current_column, current_direction} = @sort %>
+
+      <% overall_project_count = Enum.count(@project_keys) %>
+      <.sortable_table
+        rows={@project_keys}
+        current_column={current_column}
+        current_direction={current_direction}
+        event="toggle-sort"
+      >
+        <:column
+          :let={project_key}
+          sort_key="projects"
+          heading={"#{overall_project_count} Project#{if overall_project_count != 1, do: "s"}"}
+        >
+          <.link navigate={~p"/ui/projects/show/#{project_key}"}>{project_key}</.link>
+        </:column>
+        <:column
+          :let={project_key}
+          sort_key="document_count"
+          heading={"#{overall_doc_count} Documents (#{Sizeable.filesize(overall_db_size)})"}
+        >
+          {@database_infos[project_key].doc_count} ({Sizeable.filesize(
+            @database_infos[project_key].size
+          )})
+        </:column>
+
+        <:column
+          :let={project_key}
+          sort_key="thumbnail_count"
+          heading={"#{overall_thumbnail_count} Thumbnails (#{Sizeable.filesize(overall_thumbnail_size)})"}
+        >
+          <%= case @file_infos[project_key] do %>
+            <% {:loading, _task} -> %>
+              Loading...
+            <% :error -> %>
+              Error, see below.
+            <% %{
+            thumbnail_count: thumbnail_count,
+            thumbnail_size: thumbnail_size
+          } -> %>
+              {thumbnail_count} ({Sizeable.filesize(thumbnail_size)})
           <% end %>
-        <% _projects -> %>
-          {render_dashboard(assigns)}
-          <table class="project-list">
-            <thead>
-              <tr>
-                <th phx-click="sort" phx-value-field="name" class="cursor-pointer">
-                  Name {sort_indicator(@sort_by, @sort_direction, :name)}
-                </th>
-                <th
-                  class="text-right"
-                  phx-click="sort"
-                  phx-value-field="doc_count"
-                  class="cursor-pointer"
-                >
-                  Documents {sort_indicator(@sort_by, @sort_direction, :doc_count)}
-                </th>
-                <th
-                  class="text-right"
-                  class="text-right"
-                  phx-click="sort"
-                  phx-value-field="database_file_size"
-                  class="cursor-pointer"
-                >
-                  Database Size {sort_indicator(@sort_by, @sort_direction, :database_file_size)}
-                </th>
+        </:column>
 
-                <th
-                  class="text-right"
-                  class="text-right"
-                  phx-click="sort"
-                  phx-value-field="image_file_size"
-                  class="cursor-pointer"
-                >
-                  Images Size {sort_indicator(@sort_by, @sort_direction, :image_file_size)}
-                </th>
-                <th phx-click="sort" phx-value-field="last_change_date" class="cursor-pointer">
-                  Last action (by) {sort_indicator(@sort_by, @sort_direction, :last_change_date)}
-                </th>
-              </tr>
-            </thead>
+        <:column
+          :let={project_key}
+          sort_key="image_count"
+          heading={"#{overall_original_count} Images (#{Sizeable.filesize(overall_original_size)})"}
+        >
+          <%= case @file_infos[project_key] do %>
+            <% {:loading, _task} -> %>
+              Loading...
+            <% :error -> %>
+              Error, see below.
+            <% %{
+            original_count: original_count,
+            original_size: original_size
+          } -> %>
+              {original_count} ({Sizeable.filesize(original_size)})
+          <% end %>
+        </:column>
 
-            <tbody>
-              <%= for project <- projects do %>
-                <tr class="click-row" phx-click="go_to_project" phx-value-id={project.id}>
-                  <td class="cursor-pointer">{project.name}</td>
-                  <td class="text-right cursor-pointer">{project.doc_count}</td>
-                  <td class="text-right cursor-pointer">
-                    {Sizeable.filesize(project.database_file_size)}
-                  </td>
-                  <td class="text-right cursor-pointer">
-                    {Sizeable.filesize(project.image_file_size)}
-                  </td>
-                  <td>
-                    <%= if project.last_change_date != :nil do %>
-                      {Calendar.strftime(project.last_change_date, "%c")} ({project.last_change_user})
-                    <% end %>
-                  </td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-      <% end %>
-      <%= if User.is_admin?(@current_user) do %>
-        <%= for {error, project_id} <- errors do %>
-          Project <span class="emphasis-text-error">{project_id}</span>
-          has an error: <pre>{inspect(error)}</pre>
-        <% end %>
-      <% end %>
-    </.async_result>
-  </div>
+        <:column :let={project_key} sort_key="last_change" heading="Last changes">
+          <%= case List.first(@database_infos[project_key].last_changes) do %>
+            <% nil -> %>
+              -
+            <% %ChangeInfo{date: date, user: user} -> %>
+              {Calendar.strftime(date, "%c")} ({user})
+          <% end %>
+        </:column>
+      </.sortable_table>
+    <% end %>
+  </section>
+
+  <section :if={@errors != %{}} id="issues-section">
+    <h2>Errors</h2>
+    <%= for {project_key, issue_list} <- @errors do %>
+      <.live_component
+        id={"issue_display-#{project_key}"}
+        module={FieldHubWeb.Components.IssuesPanel}
+        issues={issue_list}
+        project_key={project_key}
+      >
+        <h3>Project '{project_key}' ({Enum.count(issue_list)})</h3>
+      </.live_component>
+    <% end %>
+  </section>
 <% end %>

@@ -101,7 +101,7 @@ defmodule FieldHubWeb.Live.ProjectCreateTest do
         |> element("button", "Create project")
         |> render()
 
-      assert button_html =~ "disabled=\"disabled\""
+      assert button_html =~ "disabled=\"\""
 
       html =
         view
@@ -116,7 +116,7 @@ defmodule FieldHubWeb.Live.ProjectCreateTest do
         |> element("button", "Create project")
         |> render()
 
-      assert html =~ "disabled=\"disabled\""
+      assert html =~ "disabled=\"\""
 
       html =
         view
@@ -146,7 +146,7 @@ defmodule FieldHubWeb.Live.ProjectCreateTest do
         |> element("button", "Create project")
         |> render()
 
-      assert html =~ "disabled=\"disabled\""
+      assert html =~ "disabled=\"\""
 
       html =
         view
@@ -161,7 +161,7 @@ defmodule FieldHubWeb.Live.ProjectCreateTest do
         |> element("button", "Create project")
         |> render()
 
-      assert html =~ "disabled=\"disabled\""
+      assert html =~ "disabled=\"\""
     end
 
     test "can generate password", %{conn: conn} do

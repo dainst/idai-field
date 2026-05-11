@@ -8,6 +8,7 @@ defmodule FieldHub.MixProject do
       elixir: "~> 1.18",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: Mix.compilers(),
+      listeners: [Phoenix.CodeReloader],
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
@@ -16,7 +17,6 @@ defmodule FieldHub.MixProject do
           FieldHubWeb.ChannelCase,
           FieldHubWeb.ErrorHTML,
           FieldHubWeb.ErrorJSON,
-          FieldHubWeb.Gettext,
           FieldHubWeb.Layouts,
           FieldHubWeb.CoreComponents
         ]
@@ -43,23 +43,18 @@ defmodule FieldHub.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      # Hackney dependency was explicitely set because of issue in 1.23.0
-      # https://github.com/benoitc/hackney/issues/764
-      {:hackney, "~> 1.20.1", override: true},
       {:phoenix_live_view, "~> 1.0"},
       {:phoenix_live_dashboard, "~> 0.8"},
       {:phoenix_live_reload, "~> 1.5", only: :dev},
       {:bandit, "~> 1.5"},
-      {:floki, ">= 0.30.0", only: :test},
+      {:lazy_html, ">= 0.1.0", only: :test},
       {:esbuild, "~> 0.9", runtime: Mix.env() == :dev},
       {:sizeable, "~> 1.0"},
-      {:swoosh, "~> 1.18"},
       {:telemetry_metrics, "~> 1.1"},
       {:telemetry_poller, "~> 1.1"},
-      {:gettext, "~> 0.26"},
       {:jason, "~> 1.4"},
       {:httpoison, "~> 2.2"},
-      {:reverse_proxy_plug, "~> 2.4"},
+      {:reverse_proxy_plug, "~> 3.0"},
       {:zarex, "~> 1.0"},
       {:ex_json_schema, "~> 0.10"},
       {:cachex, "~> 4.0"},

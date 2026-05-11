@@ -29,12 +29,24 @@ defmodule FieldHub.FileStore do
   def create_directories(project_identifier) do
     @valid_file_variants
     |> Enum.map(fn type ->
-      get_variant_directory(project_identifier, type)
-      |> File.mkdir_p()
+      directory = get_variant_directory(project_identifier, type)
+      {type, File.mkdir_p(directory)}
     end)
-    |> Enum.zip(@valid_file_variants)
-    |> Enum.into(%{}, fn {status, variant_name} ->
-      {variant_name, status}
+    |> Enum.into(%{})
+  end
+
+  def copy_directories(from, to) do
+    @valid_file_variants
+    |> Enum.map(fn type ->
+      from_directory = get_variant_directory(from, type)
+      to_directory = get_variant_directory(to, type)
+      file_names = File.ls!(from_directory)
+
+      File.mkdir_p!(to_directory)
+
+      Enum.map(file_names, fn file_name ->
+        File.cp("#{from_directory}/#{file_name}", "#{to_directory}/#{file_name}")
+      end)
     end)
   end
 

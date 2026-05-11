@@ -108,6 +108,19 @@ defmodule FieldHub.CouchService do
     )
   end
 
+  def copy(from, to) do
+    HTTPoison.post!(
+      "#{base_url()}/_replicate",
+      Jason.encode(%{
+        source: "#{base_url()}/#{from}",
+        target: "#{base_url()}/#{to}",
+        create_target: true,
+        continous: false
+      }),
+      get_admin_credentials() |> headers()
+    )
+  end
+
   @doc """
   Creates a CouchDB user.
 

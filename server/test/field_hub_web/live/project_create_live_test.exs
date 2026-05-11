@@ -23,9 +23,11 @@ defmodule FieldHubWeb.Live.ProjectCreateTest do
   @project "test_project"
   test "redirect to login if not authenticated", %{conn: conn} do
     # Test the authentication plug (http)
-    assert {:error, {:redirect, %{flash: _, to: "/ui/session/log_in"}}} =
-             conn
-             |> live("/ui/projects/create")
+    assert {
+             :error,
+             {:redirect, %{flash: _, to: "/ui/session/log_in"}}
+           } =
+             live(conn, "/ui/projects/create")
 
     # Test the mount function (websocket), this makes sure that users with invalidated/old user token can not
     # access the page.
@@ -36,7 +38,7 @@ defmodule FieldHubWeb.Live.ProjectCreateTest do
         %Phoenix.LiveView.Socket{}
       )
 
-    assert {:redirect, %{to: "/"}} = socket.redirected
+    assert {:live, :redirect, %{kind: :push, to: "/"}} = socket.redirected
   end
 
   test "redirect to landing page if not admin", %{conn: conn} do
@@ -57,7 +59,7 @@ defmodule FieldHubWeb.Live.ProjectCreateTest do
         %Phoenix.LiveView.Socket{}
       )
 
-    assert {:redirect, %{to: "/"}} = socket.redirected
+    assert {:live, :redirect, %{kind: :push, to: "/"}} = socket.redirected
   end
 
   describe "with logged in admin" do
@@ -75,17 +77,11 @@ defmodule FieldHubWeb.Live.ProjectCreateTest do
     end
 
     test "admin can load the page", %{conn: conn} do
-      {:ok, view, html_on_mount} = live(conn, "/ui/projects/create")
+      {:ok, _view, html_on_mount} = live(conn, "/ui/projects/create")
 
-      assert html_on_mount =~ "<h1>Create a new project</h1>"
+      assert html_on_mount =~ "Creating a new project"
       assert html_on_mount =~ "<li>Please provide a project identifier.\n</li>"
       assert html_on_mount =~ "<li>Please provide a password.\n</li>"
-
-      html = render(view)
-
-      assert html =~ "<h1>Create a new project</h1>"
-      assert html =~ "<li>Please provide a project identifier.\n</li>"
-      assert html =~ "<li>Please provide a password.\n</li>"
     end
 
     test "valid inputs remove warnings and enable creation button", %{conn: conn} do
@@ -98,7 +94,7 @@ defmodule FieldHubWeb.Live.ProjectCreateTest do
 
       button_html =
         view
-        |> element("button", "Create project")
+        |> element("button", "Create")
         |> render()
 
       assert button_html =~ "disabled=\"\""
@@ -113,7 +109,7 @@ defmodule FieldHubWeb.Live.ProjectCreateTest do
 
       html =
         view
-        |> element("button", "Create project")
+        |> element("button", "Create")
         |> render()
 
       assert html =~ "disabled=\"\""
@@ -128,7 +124,7 @@ defmodule FieldHubWeb.Live.ProjectCreateTest do
 
       button_html =
         view
-        |> element("button", "Create project")
+        |> element("button", "Create")
         |> render()
 
       assert not (button_html =~ "disabled=\"disabled\"")
@@ -143,7 +139,7 @@ defmodule FieldHubWeb.Live.ProjectCreateTest do
 
       html =
         view
-        |> element("button", "Create project")
+        |> element("button", "Create")
         |> render()
 
       assert html =~ "disabled=\"\""
@@ -158,7 +154,7 @@ defmodule FieldHubWeb.Live.ProjectCreateTest do
 
       html =
         view
-        |> element("button", "Create project")
+        |> element("button", "Create")
         |> render()
 
       assert html =~ "disabled=\"\""
@@ -268,7 +264,8 @@ defmodule FieldHubWeb.Live.ProjectCreateTest do
         %{"identifier" => @project, "password" => "some_password"},
         %Phoenix.LiveView.Socket{
           assigns: %{
-            current_user: @project
+            current_user: @project,
+            live_action: :new
           }
         }
       )

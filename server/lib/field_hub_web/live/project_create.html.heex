@@ -1,12 +1,20 @@
 <div class="container">
   <.link navigate={~p"/"}>Back to overview</.link>
-  <h1>Create a new project</h1>
-
-  <p class="alert alert-danger">{Phoenix.Flash.get(@flash, :error)}</p>
+  <h1>
+    <%= if @live_action == :copy do %>
+      Creating a copy of <em>{@from}</em>
+    <% else %>
+      Creating a new project
+    <% end%>
+  </h1>
 
   <form phx-change="update" phx-submit="create">
     <button style="width: 100%" disabled={Enum.count(@issues) > 0}>
-      Create project
+      <%= if @live_action == :copy do %>
+        Copy
+      <% else %>
+        Create
+      <% end%>
     </button>
 
     <input

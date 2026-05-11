@@ -12,7 +12,7 @@ defmodule FieldHub.Project do
   require Logger
 
   @variant_types Application.compile_env(:field_hub, :valid_file_variants)
-  @identifier_length Application.compile_env(:field_hub, :max_project_identifier_length)
+  @max_identifier_length Application.compile_env(:field_hub, :max_project_identifier_length)
 
   defmodule DatabaseInfo do
     @enforce_keys [:size, :doc_count]
@@ -43,7 +43,7 @@ defmodule FieldHub.Project do
   - `project_identifier` the project's name
   """
   def create(project_identifier) do
-    if String.length(project_identifier) > @identifier_length do
+    if String.length(project_identifier) > @max_identifier_length do
       :invalid_name
     else
       project_identifier
@@ -57,6 +57,68 @@ defmodule FieldHub.Project do
           )
 
           file_store_response = FileStore.create_directories(project_identifier)
+          %{database: :created, file_store: file_store_response}
+
+        %{status_code: 400} ->
+          :invalid_name
+
+        %{status_code: 412} ->
+          :already_exists
+      end
+    end
+  end
+
+  def create(project_key, password) do
+    with {:length, true} <- {:length, String.length(project_key) < @max_identifier_length},
+         {:db, %{status_code: 201}} <- {:db, CouchService.create_database()},
+         {:user, :created} <- User.create(project_key, password),
+         {:user, :set} <- {:user, update_user(project_key, project_key, :member)},
+         {
+           :files,
+           %{thumbnail_files: :ok, original_files: :ok} = file_store_response
+         } <-
+           {:files, FileStore.create_directories(project_key)} do
+      update_user(
+        Application.get_env(:field_hub, :couchdb_user_name),
+        project_key,
+        :member
+      )
+
+      %{database: :created, file_store: file_store_response}
+    else
+      {:length, false} ->
+        :invalid_name
+
+      {:db, %{status_code: 400}} ->
+        :invalid_name
+
+      {:db, %{status_code: 412}} ->
+        :already_exists
+
+      {:user, error} ->
+        Logger.error(inspect(error))
+        :failed_to_set_project_user
+
+      {:files, error} ->
+        Logger.error(inspect(error))
+        :failed_to_create_file_directories
+    end
+  end
+
+  def copy_project(from, to) do
+    if String.length(to) > @max_identifier_length do
+      :invalid_name
+    else
+      CouchService.copy(from, to)
+      |> case do
+        %{status_code: 201} ->
+          update_user(
+            Application.get_env(:field_hub, :couchdb_user_name),
+            to,
+            :member
+          )
+
+          file_store_response = FileStore.create_directories(to)
           %{database: :created, file_store: file_store_response}
 
         %{status_code: 400} ->

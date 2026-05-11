@@ -15,7 +15,7 @@ defmodule FieldHubWeb.Live.ProjectCreate do
 
   @identifier_length Application.compile_env(:field_hub, :max_project_identifier_length)
 
-  def mount(_params, %{"user_token" => user_token} = _session, socket) do
+  def mount(params, %{"user_token" => user_token} = _session, socket) do
     user_name =
       user_token
       |> UserAuth.get_user_by_session_token()
@@ -25,14 +25,30 @@ defmodule FieldHubWeb.Live.ProjectCreate do
         {
           :ok,
           socket
-          |> assign(:page_title, "Create project")
           |> assign(:current_user, user_name)
-          |> evaluate_inputs("", "")
+          |> setup_action(params)
         }
 
       _ ->
-        redirect(socket, to: "/")
+        push_navigate(socket, to: "/")
     end
+  end
+
+  def setup_action(%{assigns: %{live_action: :copy}} = socket, %{"from" => from_project_key}) do
+    if Project.exists?(from_project_key) do
+      socket
+      |> assign(:page_title, "Create #{from_project_key} copy")
+      |> assign(:from, from_project_key)
+      |> evaluate_inputs("", "")
+    else
+      push_patch(socket, to: ~p"/ui/projects/create")
+    end
+  end
+
+  def setup_action(%{assigns: %{live_action: :new}} = socket, _params) do
+    socket
+    |> assign(:page_title, "Create project")
+    |> evaluate_inputs("", "")
   end
 
   def handle_event("update", %{"identifier" => identifier, "password" => password}, socket) do
@@ -50,11 +66,17 @@ defmodule FieldHubWeb.Live.ProjectCreate do
   def handle_event(
         "create",
         %{"identifier" => identifier, "password" => password},
-        %{assigns: %{current_user: user_name}} = socket
+        %{assigns: %{current_user: user_name, live_action: action}} = socket
       ) do
     socket =
       if User.is_admin?(user_name) do
-        create_project(identifier, password)
+        case action do
+          :copy ->
+            copy_project(socket.assigns.from, identifier, password)
+
+          :new ->
+            create_project(identifier, password)
+        end
         |> case do
           :ok ->
             socket
@@ -146,5 +168,20 @@ defmodule FieldHubWeb.Live.ProjectCreate do
         Logger.error("Project creation failed with: #{error}")
         {:error, error}
     end
+  end
+
+  defp copy_project(from, to, password) do
+    #   # TODO: Actually copy stuff
+    #   with :created <- User.create(identifier, password),
+    #        %{database: :created, file_store: %{original_image: :ok, thumbnail_image: :ok}} <-
+    #          Project.create(identifier),
+    #        :set <- Project.update_user(identifier, identifier, :member) do
+
+    #     :ok
+    #   else
+    #     error ->
+    #       Logger.error("Project creation failed with: #{error}")
+    #       {:error, error}
+    #   end
   end
 end

@@ -85,30 +85,29 @@
     <h2>History</h2>
     <small>Last {Enum.count(@database_info.last_changes)} changes.</small>
     <div style="max-height: 350px; overflow: auto;">
-    <% {current_column, current_direction} = @history_sort_state %>
-    <.sortable_table
-      rows={@database_info.last_changes}
-      current_column={Atom.to_string(current_column)}
-      current_direction={current_direction}
-      event="history_toggled"
-    >
-      <:column :let={%ChangeInfo{id: val}} sort_key="id" heading="Document ID">
-        {val}
-      </:column>
-      <:column :let={%ChangeInfo{identifier: val}} sort_key="identifier" heading="Identifier">
-        {val}
-      </:column>
-      <:column :let={%ChangeInfo{action: val}} sort_key="action" heading="Action">
-        {val}
-      </:column>
-      <:column :let={%ChangeInfo{date: val}} sort_key="date" heading="Date">
-        {val}
-      </:column>
-      <:column :let={%ChangeInfo{user: val}} sort_key="user" heading="User">
-        {val}
-      </:column>
-    </.sortable_table>
-
+      <% {current_column, current_direction} = @history_sort_state %>
+      <.sortable_table
+        rows={@database_info.last_changes}
+        current_column={Atom.to_string(current_column)}
+        current_direction={current_direction}
+        event="history_toggled"
+      >
+        <:column :let={%ChangeInfo{id: val}} sort_key="id" heading="Document ID">
+          {val}
+        </:column>
+        <:column :let={%ChangeInfo{identifier: val}} sort_key="identifier" heading="Identifier">
+          {val}
+        </:column>
+        <:column :let={%ChangeInfo{action: val}} sort_key="action" heading="Action">
+          {val}
+        </:column>
+        <:column :let={%ChangeInfo{date: val}} sort_key="date" heading="Date">
+          {val}
+        </:column>
+        <:column :let={%ChangeInfo{user: val}} sort_key="user" heading="User">
+          {val}
+        </:column>
+      </.sortable_table>
     </div>
   </section>
 

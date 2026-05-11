@@ -175,19 +175,14 @@
     <hr />
     <h2>Delete project</h2>
     <form id="del_form" phx-change="delete_form_change">
-      <div class="row">
-        <div class="column">
+      <fieldset>
           <input
             type="text"
             placeholder="Repeat the project name to delete"
             name="repeat_project_name_input"
             value={@confirm_project_name}
           />
-        </div>
-      </div>
 
-      <div class="row">
-        <div class="column">
           <input
             type="radio"
             name="delete_files_radio"
@@ -195,8 +190,8 @@
             value="keep_files"
             checked={not @delete_files}
           />
-          <label for="delete_database">Delete database only</label>
-          <br />
+          <label style="display: inline" for="delete_database">Delete database only</label>
+
           <input
             type="radio"
             name="delete_files_radio"
@@ -204,11 +199,7 @@
             value="delete_files"
             checked={@delete_files}
           />
-          <label for="delete_database_and_files">Delete database and image files</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="column">
+          <label style="display: inline" for="delete_database_and_files">Delete database and image files</label>
           <button
             type="button"
             class="button"
@@ -218,8 +209,7 @@
           >
             Delete
           </button>
-        </div>
-      </div>
+      </fieldset>
     </form>
   <% end %>
 </div>

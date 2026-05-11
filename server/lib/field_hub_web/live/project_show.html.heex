@@ -61,7 +61,11 @@
             </section>
             <.async_result :let={file_info} assign={@file_info}>
               <:loading>Loading file information...</:loading>
-              <:failed :let={_failure}>There was an error loading the project's file information</:failed>
+              <:failed :let={_failure}>
+                <div  class="alert alert-danger">
+                Failed to load the project's file information! Evaluate issues below to see more...
+                </div>
+              </:failed>
               <%= Enum.map(file_info, fn({variant_name, %{ active: files_count, active_size: files_size }}) -> %>
                 <section>
                   {variant_name |> get_file_label() |> String.capitalize()}: {files_count}, size: {Sizeable.filesize(

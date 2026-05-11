@@ -1,4 +1,4 @@
-<div class="container">
+
   <%= if User.is_admin?(@current_user) do %>
     <.link navigate={~p"/"}>Back to overview</.link>
   <% end %>
@@ -59,8 +59,8 @@
             <.async_result :let={file_info} assign={@file_info}>
               <:loading>Loading file information...</:loading>
               <:failed :let={_failure}>
-                <div  class="alert alert-danger">
-                Failed to load the project's file information! Evaluate issues below to see more...
+                <div class="alert alert-danger">
+                  Failed to load the project's file information! Evaluate issues below to see more...
                 </div>
               </:failed>
               <%= Enum.map(file_info, fn({variant_name, %{ active: files_count, active_size: files_size }}) -> %>
@@ -78,7 +78,6 @@
   </section>
 
   <section :if={@database_info.last_changes != []}>
-
     <h2>History</h2>
     <small>Last {Enum.count(@database_info.last_changes)} changes.</small>
     <div style="max-height: 350px; overflow: auto;">
@@ -173,40 +172,41 @@
     <h2>Delete project</h2>
     <form id="del_form" phx-change="delete_form_change">
       <fieldset>
-          <input
-            type="text"
-            placeholder="Repeat the project name to delete"
-            name="repeat_project_name_input"
-            value={@confirm_project_name}
-          />
+        <input
+          type="text"
+          placeholder="Repeat the project name to delete"
+          name="repeat_project_name_input"
+          value={@confirm_project_name}
+        />
 
-          <input
-            type="radio"
-            name="delete_files_radio"
-            id="delete_database"
-            value="keep_files"
-            checked={not @delete_files}
-          />
-          <label style="display: inline" for="delete_database">Delete database only</label>
+        <input
+          type="radio"
+          name="delete_files_radio"
+          id="delete_database"
+          value="keep_files"
+          checked={not @delete_files}
+        />
+        <label style="display: inline" for="delete_database">Delete database only</label>
 
-          <input
-            type="radio"
-            name="delete_files_radio"
-            id="delete_database_and_files"
-            value="delete_files"
-            checked={@delete_files}
-          />
-          <label style="display: inline" for="delete_database_and_files">Delete database and image files</label>
-          <button
-            type="button"
-            class="button"
-            phx-click="delete"
-            disabled={@confirm_project_name != @project}
-            style="width:100%"
-          >
-            Delete
-          </button>
+        <input
+          type="radio"
+          name="delete_files_radio"
+          id="delete_database_and_files"
+          value="delete_files"
+          checked={@delete_files}
+        />
+        <label style="display: inline" for="delete_database_and_files">
+          Delete database and image files
+        </label>
+        <button
+          type="button"
+          class="button"
+          phx-click="delete"
+          disabled={@confirm_project_name != @project}
+          style="width:100%"
+        >
+          Delete
+        </button>
       </fieldset>
     </form>
   <% end %>
-</div>

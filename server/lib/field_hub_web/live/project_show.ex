@@ -108,7 +108,7 @@ defmodule FieldHubWeb.Live.ProjectShow do
             DateTime.after?(val_a, val_b)
 
           column == :date ->
-            false
+            !DateTime.after?(val_a, val_b)
 
           direction == :asc ->
             val_a <= val_b

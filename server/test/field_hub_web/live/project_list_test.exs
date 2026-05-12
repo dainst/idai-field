@@ -239,20 +239,19 @@ defmodule FieldHubWeb.ProjectListTest do
       |> element(@changes_heading)
       |> render_click()
 
-      # Should stay the same
-      assert has_element?(view, @first_entry_project_column, @empty_project_key)
-      assert has_element?(view, @first_entry_documents_column, "0 (32.3 KB)")
-      assert has_element?(view, @second_entry_project_column, @project_key)
-      assert has_element?(view, @second_entry_documents_column, "21 (48.39 KB)")
+      assert has_element?(view, @first_entry_project_column, @project_key)
+      assert has_element?(view, @first_entry_documents_column, "21 (48.39 KB)")
+      assert has_element?(view, @second_entry_project_column, @empty_project_key)
+      assert has_element?(view, @second_entry_documents_column, "0 (32.3 KB)")
 
       view
       |> element(@changes_heading)
       |> render_click()
 
-      assert has_element?(view, @first_entry_project_column, @project_key)
-      assert has_element?(view, @first_entry_documents_column, "21 (48.39 KB)")
-      assert has_element?(view, @second_entry_project_column, @empty_project_key)
-      assert has_element?(view, @second_entry_documents_column, "0 (32.3 KB)")
+      assert has_element?(view, @first_entry_project_column, @empty_project_key)
+      assert has_element?(view, @first_entry_documents_column, "0 (32.3 KB)")
+      assert has_element?(view, @second_entry_project_column, @project_key)
+      assert has_element?(view, @second_entry_documents_column, "21 (48.39 KB)")
     end
 
     @file_directory_root Application.compile_env(:field_hub, :file_directory_root)

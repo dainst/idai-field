@@ -330,13 +330,31 @@ defmodule FieldHubWeb.Live.ProjectList do
       Enum.sort(
         project_keys,
         fn project_key_a, project_key_b ->
-          last_change_a = List.first(db_infos[project_key_a].last_changes)
-          last_change_b = List.first(db_infos[project_key_b].last_changes)
+          last_change_a = List.first(db_infos[project_key_a].last_changes, %{}) |> Map.get(:date)
+          last_change_b = List.first(db_infos[project_key_b].last_changes, %{}) |> Map.get(:date)
 
           if direction == :asc do
-            last_change_a <= last_change_b
+            cond do
+              is_nil(last_change_a) ->
+                false
+
+              is_nil(last_change_b) ->
+                true
+
+              true ->
+                !DateTime.after?(last_change_a, last_change_b)
+            end
           else
-            last_change_a > last_change_b
+            cond do
+              is_nil(last_change_a) ->
+                true
+
+              is_nil(last_change_b) ->
+                false
+
+              true ->
+                DateTime.after?(last_change_a, last_change_b)
+            end
           end
         end
       )

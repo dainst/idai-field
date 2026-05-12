@@ -20,8 +20,6 @@ jobs:
       - name: Start CouchDB
         run: docker compose -f docker-compose.yml --env-file .env_template up -d
         working-directory: server
-      - name: Sleep to await CouchDB startup
-        run: sleep 15s
       - name: Restore dependencies cache
         uses: actions/cache@v4
         with:

@@ -259,13 +259,23 @@ defmodule FieldHubWeb.ProjectListTest do
     test "can see errors", %{conn: conn} do
       missing_directory = "#{@file_directory_root}/#{@empty_project_key}/thumbnail_images"
 
-      File.rmdir!(missing_directory)
+      File.rmdir(missing_directory)
 
       log =
         capture_log(fn ->
           assert {:ok, view, _html} = live(conn, "/")
 
-          html = render_async(view)
+          :erlang.trace(view.pid, true, [:receive])
+
+          assert_receive({
+            :DOWN,
+            _ref,
+            :process,
+            _pid,
+            {%File.Error{}, __stack}
+          })
+
+          html = render(view)
 
           assert html =~
                    "Some projects have serious data <a href=\"/#issues-section\" data-phx-link=\"patch\" data-phx-link-state=\"push\">issues</a>."

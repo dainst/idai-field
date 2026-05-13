@@ -11,7 +11,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     input_type in (Search.get_keyword_inputs() ++ Search.get_keyword_multi_inputs())
   end
 
-  attr :field, Field, required: true
+  attr :field, Field
   attr :hide_language_selection?, :boolean, default: false
 
   def render_field_data(%{field: %Field{input_type: input_type}} = assigns)
@@ -60,8 +60,8 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     """
   end
 
-  def render_field_data(%{field: %Field{input_type: input_type}} = assigns)
-      when input_type == "checkboxes" do
+  def render_field_data(%{field: %Field{input_type: input_type, value: value}} = assigns)
+      when input_type == "checkboxes" and is_list(value) do
     # Checkboxes where the selected value is mapped to a label.
     ~H"""
     <%= for value <- @field.value do %>
@@ -179,10 +179,20 @@ defmodule FieldPublicationWeb.Components.Data.Field do
   def render_field_data(%{field: %Field{input_type: input_type}} = assigns)
       when input_type in ["dimension"] do
     ~H"""
-    <%= for %{"inputUnit" => unit, "inputValue" => value, "isImprecise" => imprecise?, "measurementPosition" => position} <- @field.value do %>
+    <%= for measurement <- @field.value do %>
       <div>
-        {if position != nil and position != "", do: "#{position}: "}{"#{value} #{unit}"}{if imprecise?,
-          do: " (#{gettext("imprecise")})"}
+        <%= case measurement do %>
+          <% %{
+            "inputUnit" => unit,
+            "inputValue" => value
+          } -> %>
+            <% position = Map.get(measurement, "position") %>
+            <% imprecise? = Map.get(measurement, "imprecise?") %>
+            {if position, do: "#{position}: "} {value} {unit} {if imprecise?,
+              do: " (#{gettext("imprecise")})"}
+          <% _ -> %>
+            {render_warning(assigns)}
+        <% end %>
       </div>
     <% end %>
     """

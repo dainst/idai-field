@@ -95,7 +95,7 @@ defmodule FieldHubWeb.Live.ProjectShow do
           {column, :desc}
 
         current_column == column and direction == :desc ->
-          {:id, :asc}
+          {column, :asc}
       end
 
     updated_last_changes =

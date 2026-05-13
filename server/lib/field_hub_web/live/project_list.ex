@@ -145,7 +145,7 @@ defmodule FieldHubWeb.Live.ProjectList do
           push_patch(socket, to: ~p"/?#{%{sort: "#{column}|desc"}}")
 
         current_column == column and direction == :desc ->
-          push_patch(socket, to: ~p"/")
+          push_patch(socket, to: ~p"/?#{%{sort: "#{column}|asc"}}")
       end
 
     {:noreply, socket}

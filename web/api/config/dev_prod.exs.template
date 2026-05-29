@@ -12,7 +12,7 @@ config :api,
   gazetteer_url: "https://gazetteer.dainst.org",
   projects: ["db1", "db2", "db3"],
   locales: ["de", "en"],
-  rights: %{ 
+  rights: %{
     users: [
       %{ name: "user-1", pass: "pass-1", admin: true }
     ],
@@ -20,7 +20,8 @@ config :api,
       "user-1" => ["a", "b", "c", "d"],
       "anonymous" => ["a"]
     }
-  }
+  },
+  cache_control_header: "private, max-age=31536000, immutable"
 
 config :api, Api.Auth.Guardian,
        issuer: "api",

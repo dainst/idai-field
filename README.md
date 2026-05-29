@@ -3,6 +3,8 @@
 <!-- badges: start -->
 [![latest release](https://img.shields.io/github/v/release/dainst/idai-field)](https://github.com/dainst/releases)
 [![Manual](https://img.shields.io/badge/Manual-field.idai.world-green)](https://field.idai.world/manual)
+[![Community Hub](https://img.shields.io/badge/Forum-community.nfdi4objects.net-darkblue)](https://community.nfdi4objects.net/assemblies/field)
+
 <!-- badges: end -->
 
 Field is a modern take on flexible field and find recording for archaeological excavations. It is developed as a cooperation between the German Archaeological Institute ([DAI](https://www.dainst.org)) and the Head Office of the GBV Common Library Network ([GBV](https://en.gbv.de/)). Field is completely Open Source and free to use!

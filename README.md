@@ -1,7 +1,7 @@
 # iDAI.field | Field <a href='https://field.idai.world/'><img src='/desktop/img/logo.png' align="right" height="200" /></a>
 
 <!-- badges: start -->
-[![latest release](https://img.shields.io/github/v/release/dainst/idai-field)](https://github.com/dainst/releases)
+[![latest release](https://img.shields.io/github/v/release/dainst/idai-field)](https://github.com/dainst/idai-field/releases)
 [![Manual](https://img.shields.io/badge/Manual-field.idai.world-green)](https://field.idai.world/manual)
 [![Community Hub](https://img.shields.io/badge/Forum-community.nfdi4objects.net-darkblue)](https://community.nfdi4objects.net/assemblies/field)
 

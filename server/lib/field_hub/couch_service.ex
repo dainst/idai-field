@@ -3,6 +3,16 @@ defmodule FieldHub.CouchService do
     defstruct name: "<user_name>", password: "<user_password>"
   end
 
+  def client() do
+    Tesla.client(
+      [
+        {Tesla.Middleware.BaseUrl, Application.get_env(:field_hub, :couchdb_url)},
+        Tesla.Middleware.JSON
+      ],
+      {Tesla.Adapter.Mint, [skip_target_validation: true]}
+    )
+  end
+
   @moduledoc """
   Bundles functions for directly interacting with the CouchDB.
   """
@@ -11,7 +21,7 @@ defmodule FieldHub.CouchService do
   Sends a HEAD request to the configurated CouchDB's base url.
   """
   def ping_couch() do
-    HTTPoison.head("#{base_url()}/")
+    Tesla.head(client(), "/")
   end
 
   @doc """
@@ -24,16 +34,17 @@ defmodule FieldHub.CouchService do
   """
   def authenticate(%Credentials{} = credentials) do
     response =
-      HTTPoison.head!(
-        "#{base_url()}/",
-        headers(credentials)
+      Tesla.head!(
+        client(),
+        "/",
+        headers: headers(credentials)
       )
 
     case response do
-      %{status_code: 200} ->
+      %{status: 200} ->
         :ok
 
-      %{status_code: 401} ->
+      %{status: 401} ->
         {:error, 401}
     end
   end
@@ -45,31 +56,24 @@ defmodule FieldHub.CouchService do
   - `user_name` the user's name.
   """
   def get_user(user_name) do
-    HTTPoison.get!(
-      "#{base_url()}/_users/org.couchdb.user:#{user_name}",
-      get_admin_credentials()
-      |> headers()
+    Tesla.get!(client(), "/_users/org.couchdb.user:#{user_name}",
+      headers: get_admin_credentials() |> headers()
     )
   end
 
   @doc """
   Creates CouchDB's internal databases `_users` and `_replicator`.
 
-  Returns a tuple with two #{HTTPoison.Response} for each creation attempt.
+  Returns a tuple with two #{Tesla.Env} for each creation attempt.
   """
   def initial_setup() do
     {
-      HTTPoison.put!(
-        "#{base_url()}/_users",
+      Tesla.put!(client(), "/_users", "", headers: get_admin_credentials() |> headers()),
+      Tesla.put!(
+        client(),
+        "/_replicator",
         "",
-        get_admin_credentials()
-        |> headers()
-      ),
-      HTTPoison.put!(
-        "#{base_url()}/_replicator",
-        "",
-        get_admin_credentials()
-        |> headers()
+        headers: get_admin_credentials() |> headers()
       )
     }
   end
@@ -77,80 +81,77 @@ defmodule FieldHub.CouchService do
   @doc """
   Creates a project database.
 
-  Returns the #{HTTPoison.Response} for the creation attempt.
+  Returns the #{Tesla.Env} for the creation attempt.
 
   __Parameters__
   - `project_identifier` the project's name.
   """
   def create_database(project_identifier) do
-    HTTPoison.put!(
-      "#{base_url()}/#{project_identifier}",
+    Tesla.put!(
+      client(),
+      "/#{project_identifier}",
       "",
-      get_admin_credentials()
-      |> headers()
+      headers: get_admin_credentials() |> headers()
     )
   end
 
   @doc """
   Deletes the project database.
 
-  Returns the #{HTTPoison.Response} for the deletion attempt.
+  Returns the #{Tesla.Env} for the deletion attempt.
 
   __Parameters__
   - `project_identifier` the project's name.
   """
   def delete_database(project_identifier) do
-    HTTPoison.delete!(
-      "#{base_url()}/#{project_identifier}",
-      get_admin_credentials()
-      |> headers()
+    Tesla.delete!(
+      client(),
+      "/#{project_identifier}",
+      headers: get_admin_credentials() |> headers()
     )
   end
 
   @doc """
   Creates a CouchDB user.
 
-  Returns the #{HTTPoison.Response} for the creation attempt.
+  Returns the #{Tesla.Env} for the creation attempt.
 
   __Parameters__
   - `name` the user's name.
   - `password` the user's password.
   """
   def create_user(name, password) do
-    HTTPoison.put!(
-      "#{base_url()}/_users/org.couchdb.user:#{name}",
+    Tesla.put!(
+      client(),
+      "/_users/org.couchdb.user:#{name}",
       Jason.encode!(%{name: name, password: password, roles: [], type: "user"}),
-      get_admin_credentials()
-      |> headers()
+      headers: get_admin_credentials() |> headers()
     )
   end
 
   @doc """
   Deletes a CouchDB user.
 
-  Returns the #{HTTPoison.Response} for the deletion attempt.
+  Returns the #{Tesla.Env} for the deletion attempt.
 
   __Parameters__
   - `name` the user's name.
   """
   def delete_user(name) do
-    HTTPoison.get!(
-      "#{base_url()}/_users/org.couchdb.user:#{name}",
-      get_admin_credentials()
-      |> headers()
+    Tesla.get!(
+      client(),
+      "/_users/org.couchdb.user:#{name}",
+      headers: get_admin_credentials() |> headers()
     )
     |> case do
-      %{status_code: 200, body: body} ->
-        %{"_rev" => rev} =
-          body
-          |> Jason.decode!()
-
-        HTTPoison.delete!(
-          "#{base_url()}/_users/org.couchdb.user:#{name}",
-          headers(get_admin_credentials()) ++ [{"If-Match", rev}]
+      %{status: 200, body: %{"_rev" => rev}} ->
+        Tesla.delete!(
+          client(),
+          "/_users/org.couchdb.user:#{name}",
+          headers: headers(get_admin_credentials()) ++ [{"If-Match", rev}]
         )
 
-      %{status_code: 404} = response ->
+      %{status: 404} = response ->
         # User was not found
         response
     end
@@ -159,7 +160,7 @@ defmodule FieldHub.CouchService do
   @doc """
   Sets the password for an existing CouchDB user`.
 
-  Returns the #{HTTPoison.Response} for the update attempt.
+  Returns the #{Tesla.Env} for the update attempt.
 
   __Parameters__
   - `name` the user's name.
@@ -167,31 +168,29 @@ defmodule FieldHub.CouchService do
   """
   def update_password(name, new_password) do
     response =
-      HTTPoison.get!(
-        "#{base_url()}/_users/org.couchdb.user:#{name}",
-        get_admin_credentials()
-        |> headers()
+      Tesla.get!(
+        client(),
+        "/_users/org.couchdb.user:#{name}",
+        headers: get_admin_credentials() |> headers()
       )
 
     case response do
-      %{status_code: 200} = res ->
-        res
-        |> Map.get(:body)
-        |> Jason.decode!()
-        |> case do
+      %{status: 200, body: body} ->
+        case body do
           %{"_rev" => rev} ->
-            HTTPoison.put!(
-              "#{base_url()}/_users/org.couchdb.user:#{name}",
+            Tesla.put!(
+              client(),
+              "/_users/org.couchdb.user:#{name}",
               Jason.encode!(%{name: name, password: new_password, roles: [], type: "user"}),
-              headers(get_admin_credentials()) ++ [{"If-Match", rev}]
+              headers: headers(get_admin_credentials()) ++ [{"If-Match", rev}]
             )
             |> case do
-              %{status_code: 201} = res ->
+              %{status: 201} = res ->
                 res
             end
         end
 
-      %{status_code: 404} = res ->
+      %{status: 404} = res ->
         res
     end
   end
@@ -199,7 +198,7 @@ defmodule FieldHub.CouchService do
   @doc """
   Sets a user's role within a certain project.
 
-  Returns the #{HTTPoison.Response} for the update attempt.
+  Returns the #{Tesla.Env} for the update attempt.
 
   __Parameters__
   - `user_name` the user's name.
@@ -212,34 +211,32 @@ defmodule FieldHub.CouchService do
         role
       )
       when role in [:none, :member, :admin] do
-    HTTPoison.get!(
-      "#{base_url()}/_users/org.couchdb.user:#{user_name}",
-      get_admin_credentials()
-      |> headers()
+    Tesla.get!(
+      client(),
+      "/_users/org.couchdb.user:#{user_name}",
+      headers: get_admin_credentials() |> headers()
     )
     |> case do
-      %{status_code: 200} ->
-        HTTPoison.get!(
-          "#{base_url()}/#{project_identifier}/_security",
-          get_admin_credentials()
-          |> headers()
+      %{status: 200} ->
+        Tesla.get!(
+          client(),
+          "/#{project_identifier}/_security",
+          headers: get_admin_credentials() |> headers()
         )
         |> case do
-          %{status_code: 200, body: body} ->
-            %{"admins" => existing_admins, "members" => existing_members} = Jason.decode!(body)
-
-            HTTPoison.put!(
-              "#{base_url()}/#{project_identifier}/_security",
+          %{status: 200, body: %{"admins" => existing_admins, "members" => existing_members}} ->
+            Tesla.put!(
+              client(),
+              "/#{project_identifier}/_security",
               user_update_payload(user_name, existing_admins, existing_members, role),
-              get_admin_credentials()
-              |> headers()
+              headers: get_admin_credentials() |> headers()
             )
 
-          %{status_code: 404} = res ->
+          %{status: 404} = res ->
             {:unknown_project, res}
         end
 
-      %{status_code: 404} = res ->
+      %{status: 404} = res ->
         {:unknown_user, res}
     end
   end
@@ -299,8 +296,11 @@ defmodule FieldHub.CouchService do
   - `project_identifier` the project's name.
   """
   def get_database_security(project_identifier) do
-    "#{base_url()}/#{project_identifier}/_security"
-    |> HTTPoison.get!(headers())
+    Tesla.get!(
+      client(),
+      "/#{project_identifier}/_security",
+      headers: headers()
+    )
   end
 
   @doc """
@@ -308,18 +308,13 @@ defmodule FieldHub.CouchService do
   `_security` or `_users` and databases within the CouchDB instance that are not associated with Field Hub.
   """
   def get_all_databases() do
-    "#{base_url()}/_all_dbs"
-    |> HTTPoison.get!(
-      get_admin_credentials()
-      |> headers()
-    )
+    Tesla.get!(client(), "/_all_dbs", headers: get_admin_credentials() |> headers())
     |> Map.get(:body)
-    |> Jason.decode!()
     |> Stream.filter(fn project_identifier ->
       # Only keep databases that the application user has access to (see `headers/0`).
-      HTTPoison.head!("#{base_url()}/#{project_identifier}", headers())
+      Tesla.head!(client(), "/#{project_identifier}", headers: headers())
       |> case do
-        %{status_code: 200} ->
+        %{status: 200} ->
           true
 
         _ ->
@@ -336,9 +331,10 @@ defmodule FieldHub.CouchService do
   - `project_identifier` the project's name.
   """
   def get_db_infos(project_identifier) do
-    HTTPoison.get!(
-      "#{base_url()}/#{project_identifier}",
-      headers()
+    Tesla.get!(
+      client(),
+      "/#{project_identifier}",
+      headers: headers()
     )
   end
 
@@ -378,13 +374,12 @@ defmodule FieldHub.CouchService do
 
   """
   def get_last_n_changes(project_identifier, n) do
-    HTTPoison.get!(
-      "#{base_url()}/#{project_identifier}/_changes?descending=true&limit=#{n}&include_docs=true",
-      get_user_credentials()
-      |> headers()
+    Tesla.get!(
+      client(),
+      "/#{project_identifier}/_changes?descending=true&limit=#{n}&include_docs=true",
+      headers: get_user_credentials() |> headers()
     )
     |> Map.get(:body)
-    |> Jason.decode!()
     |> Map.get("results")
     |> Enum.reject(fn change ->
       doc = change["doc"]
@@ -455,18 +450,18 @@ defmodule FieldHub.CouchService do
       }
       |> Jason.encode!()
 
-    HTTPoison.post!(
-      "#{base_url()}/#{project_identifier}/_all_docs",
+    Tesla.post!(
+      client(),
+      "/#{project_identifier}/_all_docs",
       body,
-      headers()
+      headers: headers()
     )
     |> case do
       # This is rather elaborate code to replace "type" keys with "category", see replace_resource_type_with_category/1.
       # Once replace_resource_type_with_category/1 gets removed, this complete `case` structure can be removed also.
-      %{status_code: 200, body: body} = result ->
+      %{status: 200, body: body} = result ->
         updated_body =
           body
-          |> Jason.decode!()
           |> Map.update!("rows", fn rows ->
             rows
             |> Enum.map(fn row ->
@@ -483,7 +478,6 @@ defmodule FieldHub.CouchService do
               end
             end)
           end)
-          |> Jason.encode!()
 
         Map.put(result, :body, updated_body)
 
@@ -586,17 +580,16 @@ defmodule FieldHub.CouchService do
         |> Map.put(:limit, batch_size)
       end,
       fn payload ->
-        HTTPoison.post!(
-          "#{base_url()}/#{project_identifier}/_find",
+        Tesla.post!(
+          client(),
+          "/#{project_identifier}/_find",
           Jason.encode!(payload),
-          headers(),
+          headers: headers(),
           recv_timeout: 60000
         )
         |> case do
-          %{status_code: 200, body: body} ->
-            body
-            |> Jason.decode!()
-            |> case do
+          %{status: 200, body: body} ->
+            case body do
               %{"docs" => []} ->
                 {:halt, :ok}
 

@@ -47,7 +47,7 @@ defmodule FieldHub.Project do
       project_identifier
       |> CouchService.create_database()
       |> case do
-        %{status_code: 201} ->
+        %{status: 201} ->
           update_user(
             Application.get_env(:field_hub, :couchdb_user_name),
             project_identifier,
@@ -57,10 +57,10 @@ defmodule FieldHub.Project do
           file_store_response = FileStore.create_directories(project_identifier)
           %{database: :created, file_store: file_store_response}
 
-        %{status_code: 400} ->
+        %{status: 400} ->
           :invalid_name
 
-        %{status_code: 412} ->
+        %{status: 412} ->
           :already_exists
       end
     end
@@ -80,10 +80,10 @@ defmodule FieldHub.Project do
       project_identifier
       |> CouchService.delete_database()
       |> case do
-        %{status_code: 200} ->
+        %{status: 200} ->
           :deleted
 
-        %{status_code: 404} ->
+        %{status: 404} ->
           :unknown_project
       end
 
@@ -121,10 +121,10 @@ defmodule FieldHub.Project do
       role
     )
     |> case do
-      %{status_code: 200} when role == :none ->
+      %{status: 200} when role == :none ->
         :unset
 
-      %{status_code: 200} ->
+      %{status: 200} ->
         :set
 
       {:unknown_project, _res} ->
@@ -145,15 +145,15 @@ defmodule FieldHub.Project do
       when project_identifier != "" and not is_nil(project_identifier) do
     CouchService.get_db_infos(project_identifier)
     |> case do
-      %{status_code: 200} ->
+      %{status: 200} ->
         true
 
       # Databases without the Field Hub's application user are considered non-existing
       # by the application.
-      %{status_code: 403} ->
+      %{status: 403} ->
         false
 
-      %{status_code: 404} ->
+      %{status: 404} ->
         false
     end
   end
@@ -259,9 +259,7 @@ defmodule FieldHub.Project do
     else
       CouchService.get_database_security(project_identifier)
       |> case do
-        %{status_code: 200, body: body} ->
-          %{"members" => members, "admins" => admins} = Jason.decode!(body)
-
+        %{status: 200, body: %{"members" => members, "admins" => admins}} ->
           existing_members = Map.get(members, "names", [])
           existing_admins = Map.get(admins, "names", [])
 
@@ -271,7 +269,7 @@ defmodule FieldHub.Project do
             :denied
           end
 
-        %{status_code: 404} ->
+        %{status: 404} ->
           :unknown_project
       end
     end
@@ -290,7 +288,6 @@ defmodule FieldHub.Project do
     project_identifier
     |> FieldHub.CouchService.get_docs(uuids)
     |> then(fn %{body: body} -> body end)
-    |> Jason.decode!()
     |> Map.get("rows")
     |> Enum.map(fn row ->
       case row do
@@ -309,9 +306,7 @@ defmodule FieldHub.Project do
   def database_info(project_key, number_of_changes \\ 100) do
     CouchService.get_db_infos(project_key)
     |> case do
-      %{status_code: 200, body: body} ->
-        %{"doc_count" => db_doc_count, "sizes" => %{"file" => db_file_size}} = Jason.decode!(body)
-
+      %{status: 200, body: %{"doc_count" => db_doc_count, "sizes" => %{"file" => db_file_size}}} ->
         %DatabaseInfo{
           size: db_file_size,
           doc_count: db_doc_count,
@@ -320,7 +315,7 @@ defmodule FieldHub.Project do
             |> Enum.map(&change_info/1)
         }
 
-      %{status_code: 404} ->
+      %{status: 404} ->
         {:error, :unknown}
     end
   end
@@ -360,12 +355,10 @@ defmodule FieldHub.Project do
   def evaluate_database(project_identifier) do
     FieldHub.CouchService.get_db_infos(project_identifier)
     |> case do
-      %{status_code: 200, body: body} ->
-        %{"doc_count" => db_doc_count, "sizes" => %{"file" => db_file_size}} = Jason.decode!(body)
-
+      %{status: 200, body: %{"doc_count" => db_doc_count, "sizes" => %{"file" => db_file_size}}} ->
         %{doc_count: db_doc_count, file_size: db_file_size}
 
-      %{status_code: 404} ->
+      %{status: 404} ->
         :unknown
     end
   end

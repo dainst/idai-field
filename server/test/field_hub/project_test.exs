@@ -33,7 +33,7 @@ defmodule FieldHub.ProjectTest do
 
     # 403 means database exists but application has no access. `get_db_infos/1` uses the application user
     # credentials for this task.
-    assert %{status_code: 403} = CouchService.get_db_infos(name)
+    assert %{status: 403} = CouchService.get_db_infos(name)
 
     assert !Project.exists?(name)
   end

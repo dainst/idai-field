@@ -75,7 +75,7 @@ defmodule FieldHub.CouchServiceTest do
   end
 
   test "get_docs/2 returns a project's documents with the given UUIDs" do
-    %HTTPoison.Response{status_code: 200, body: body} =
+    %Tesla.Env{status: 200, body: body} =
       CouchService.get_docs(@project, ["o25", "o26"])
 
     assert %{
@@ -141,11 +141,11 @@ defmodule FieldHub.CouchServiceTest do
                  }
                }
              ]
-           } = Jason.decode!(body)
+           } = body
   end
 
   test "get_docs/2 returns error for unknown uuids" do
-    %HTTPoison.Response{status_code: 200, body: body} =
+    %Tesla.Env{status: 200, body: body} =
       CouchService.get_docs(@project, ["o25", "unknown"])
 
     assert %{
@@ -156,7 +156,7 @@ defmodule FieldHub.CouchServiceTest do
                },
                %{"error" => "not_found", "key" => "unknown"}
              ]
-           } = Jason.decode!(body)
+           } = body
   end
 
   test "get_docs_by_category/2 returns a project's documents matching the given types" do

@@ -98,10 +98,10 @@ defmodule FieldHub.TestHelper do
       %{docs: docs}
       |> Jason.encode!()
 
-    "#{CouchService.base_url()}/#{project_identifier}/_bulk_docs"
-    |> HTTPoison.post!(
+    Tesla.post!(
+      "#{CouchService.base_url()}/#{project_identifier}/_bulk_docs",
       payload,
-      headers()
+      headers: headers()
     )
   end
 
@@ -111,8 +111,7 @@ defmodule FieldHub.TestHelper do
   end
 
   def database_exists?(project_identifier) do
-    "#{CouchService.base_url()}/#{project_identifier}"
-    |> HTTPoison.get!(headers())
+    Tesla.get!("#{CouchService.base_url()}/#{project_identifier}", headers: headers())
   end
 
   def get_admin_basic_auth() do
@@ -124,33 +123,34 @@ defmodule FieldHub.TestHelper do
   end
 
   def create_document(project_identifier, doc) do
-    "#{CouchService.base_url()}/#{project_identifier}"
-    |> HTTPoison.post!(
+    Tesla.post!(
+      "#{CouchService.base_url()}/#{project_identifier}",
       Jason.encode!(doc),
-      headers()
+      headers: headers()
     )
   end
 
   def update_document(project_identifier, %{"_id" => id} = doc) do
     rev = get_current_revision(project_identifier, id)
 
-    "#{CouchService.base_url()}/#{project_identifier}/#{id}?rev=#{rev}"
-    |> HTTPoison.put(
+    Tesla.put(
+      "#{CouchService.base_url()}/#{project_identifier}/#{id}?rev=#{rev}",
       Jason.encode!(doc),
-      headers()
+      headers: headers()
     )
   end
 
   def delete_document(project_identifier, id) do
     rev = get_current_revision(project_identifier, id)
 
-    "#{CouchService.base_url()}/#{project_identifier}/#{id}?rev=#{rev}"
-    |> HTTPoison.delete(headers())
+    Tesla.delete(
+      "#{CouchService.base_url()}/#{project_identifier}/#{id}?rev=#{rev}",
+      headers: headers()
+    )
   end
 
   def get_current_revision(project_identifier, id) do
-    "#{CouchService.base_url()}/#{project_identifier}/#{id}"
-    |> HTTPoison.get!(headers())
+    Tesla.get!("#{CouchService.base_url()}/#{project_identifier}/#{id}", headers: headers())
     |> case do
       %{body: body} ->
         body

@@ -722,13 +722,7 @@ defmodule FieldPublication.Publications.Data do
       {:ok, nil} ->
         Logger.debug("No document cache for hierarchy.")
 
-        hierarchy =
-          CouchService.get_document_stream(%{selector: %{doc_type: "hierarchy"}}, cache_database)
-          |> Enum.map(fn %{"uuid" => uuid, "parent_uuid" => parent, "children_uuids" => children} ->
-            {uuid, %{"parent" => parent, "children" => children}}
-          end)
-          |> Enum.into(%{})
-
+        hierarchy = DataHierarchy.list(cache_database)
         Cachex.put(@document_cache_name, hierarchy_cache, hierarchy, ttl: 1000 * 60 * 60 * 24 * 7)
 
         hierarchy
@@ -750,26 +744,7 @@ defmodule FieldPublication.Publications.Data do
 
   def get_preview_documents(%Publication{} = publication) do
     cache_database = get_meta_database_name(publication)
-
-    CouchService.get_document_stream(%{selector: %{doc_type: "preview"}}, cache_database)
-    |> Stream.map(fn %{"preview" => preview} ->
-      preview
-    end)
-    |> Enum.map(&document_map_to_struct/1)
-
-    # |> case do
-    #   {:ok, %Finch.Response{status: 200, body: body}} ->
-    #     body
-    #     |> Jason.decode!()
-    #     |> Map.get("rows", [])
-    #     |> Stream.map(fn %{"doc" => %{"preview" => preview}} -> preview end)
-    #     |> Enum.map(fn doc -> document_map_to_struct(doc) end)
-
-    #   error ->
-    #     Logger.error("No preview documents for `#{Publications.get_doc_id(publication)}`.")
-    #     Logger.error(inspect(error))
-    #     []
-    # end
+    DataPreview.list(cache_database)
   end
 
   def get_preview_documents(
@@ -777,21 +752,7 @@ defmodule FieldPublication.Publications.Data do
         %Publication{} = publication
       ) do
     cache_database = get_meta_database_name(publication)
-
-    Enum.map(uuids, fn uuid ->
-      %{selector: %{doc_type: "preview", uuid: uuid}}
-    end)
-    |> Task.async_stream(fn selector ->
-      CouchService.get_document_stream(selector, cache_database)
-      |> Enum.map(fn %{"preview" => preview} ->
-        preview
-      end)
-      |> Enum.map(&document_map_to_struct/1)
-    end)
-    |> Enum.reject(fn {:ok, result} -> result == [] end)
-    |> Enum.map(fn
-      {:ok, [doc]} -> doc
-    end)
+    DataPreview.list(cache_database, uuids)
   end
 
   def get_doc_stream_for_categories(%Publication{database: database}, categories)

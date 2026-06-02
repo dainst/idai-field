@@ -3,6 +3,8 @@ defmodule FieldPublication.DatabaseSchema.DataPreview do
 
   import Ecto.Changeset
 
+  alias FieldPublication.CouchService
+  alias FieldPublication.Publications.Data
   alias FieldPublication.Publications.Data.Document
 
   @doc_type "preview"
@@ -29,6 +31,34 @@ defmodule FieldPublication.DatabaseSchema.DataPreview do
   end
 
   def id(%__MODULE__{uuid: uuid}), do: "preview_#{uuid}"
+
+  def list(db_name, uuids \\ nil)
+
+  def list(db_name, nil) when is_binary(db_name) do
+    %{selector: %{doc_type: "preview"}}
+    |> CouchService.get_document_stream(db_name)
+    |> Stream.map(fn %{"preview" => preview} ->
+      preview
+    end)
+    |> Enum.map(&Data.document_map_to_struct/1)
+  end
+
+  def list(db_name, uuids) when is_binary(db_name) and is_list(uuids) do
+    Enum.map(uuids, fn uuid ->
+      %{selector: %{doc_type: "preview", uuid: uuid}}
+    end)
+    |> Task.async_stream(fn selector ->
+      CouchService.get_document_stream(selector, db_name)
+      |> Enum.map(fn %{"preview" => preview} ->
+        preview
+      end)
+      |> Enum.map(&Data.document_map_to_struct/1)
+    end)
+    |> Enum.reject(fn {:ok, result} -> result == [] end)
+    |> Enum.map(fn
+      {:ok, [doc]} -> doc
+    end)
+  end
 
   defp changeset(%__MODULE__{} = preview, attrs) do
     preview

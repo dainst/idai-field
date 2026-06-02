@@ -3,6 +3,8 @@ defmodule FieldPublication.DatabaseSchema.DataHierarchy do
 
   import Ecto.Changeset
 
+  alias FieldPublication.CouchService
+
   @doc_type "hierarchy"
   @primary_key false
   embedded_schema do
@@ -29,6 +31,15 @@ defmodule FieldPublication.DatabaseSchema.DataHierarchy do
     {:ok, hierarchy_doc} = create(uuid, parent_uuid, children)
 
     hierarchy_doc
+  end
+
+  def list(db_name) do
+    %{selector: %{doc_type: "hierarchy"}}
+    |> CouchService.get_document_stream(db_name)
+    |> Enum.map(fn %{"uuid" => uuid, "parent_uuid" => parent, "children_uuids" => children} ->
+      {uuid, %{"parent" => parent, "children" => children}}
+    end)
+    |> Enum.into(%{})
   end
 
   defp changeset(%__MODULE__{} = hierarchy, attrs) do

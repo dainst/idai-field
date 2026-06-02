@@ -18,7 +18,6 @@ defmodule FieldPublication.Publications.Data do
   }
 
   alias FieldPublication.DatabaseSchema.{
-    Base,
     DataHierarchy,
     DataIssues,
     DataPreview,
@@ -128,66 +127,11 @@ defmodule FieldPublication.Publications.Data do
     end
   end
 
-  def report_data_issue(uuid, %LogEntry{} = issue, %Publication{} = publication)
+  def report_data_issue(uuid, %LogEntry{} = entry, %Publication{} = publication)
       when is_binary(uuid) do
     meta_db_name = get_meta_database_name(publication)
-
-    DataIssues.get_document_id(uuid)
-    |> CouchService.get_document(meta_db_name)
-    |> case do
-      {:ok, %{status: 404}} ->
-        issue =
-          %DataIssues{}
-          |> DataIssues.changeset(%{
-            uuid: uuid
-          })
-          |> Ecto.Changeset.put_embed(:entries, [issue])
-          |> Ecto.Changeset.apply_action!(:create)
-
-        CouchService.put_document(
-          Base.construct_doc_id(issue, DataIssues),
-          issue,
-          meta_db_name
-        )
-
-      {:ok, %{status: 200, body: body}} ->
-        doc = Jason.decode!(body)
-
-        changeset = DataIssues.changeset(%DataIssues{}, doc)
-
-        issues =
-          changeset
-          |> Ecto.Changeset.put_embed(
-            :entries,
-            Ecto.Changeset.get_embed(changeset, :entries) ++ [issue]
-          )
-          |> Ecto.Changeset.apply_action!(:create)
-
-        CouchService.put_document(doc["id"], issues, meta_db_name)
-    end
+    DataIssues.add_entry(uuid, entry, meta_db_name)
   end
-
-  # def report_data_issues(issues, %Publication{} = publication) when is_list(issues) do
-  #   meta_db_name = get_meta_database_name(publication)
-
-  #   issue_uuids = Enum.map(issues, fn {uuid, _log} ->
-  #     DataIssues.get_document_id(uuid)
-  #   end)
-
-  #   issues = Enum.into(issues, %{})
-
-  #   {:ok, %{body: body}} = CouchService.get_documents(issue_uuids, meta_db_name)
-
-  #   Jason.decode!(body)
-  #   |> Map.get("results")
-  #   |> IO.inspect()
-  #   |> Enum.map(fn
-  #     %{"docs" => [%{"ok" => doc}], "id" => uuid} ->
-  #       changeset = DataIssues.changeset(%DataIssues{}, doc)
-
-
-  #   end)
-  # end
 
   def clear_data_issues(publication, report_key) do
     meta_db_name = get_meta_database_name(publication)
@@ -241,13 +185,7 @@ defmodule FieldPublication.Publications.Data do
     hierarchy_documents =
       hierarchy_mapping
       |> Enum.map(fn {uuid, %{parent: parent_uuid, children: children}} ->
-        %DataHierarchy{}
-        |> DataHierarchy.changeset(%{
-          uuid: uuid,
-          parent_uuid: parent_uuid,
-          children_uuids: children
-        })
-        |> Ecto.Changeset.apply_action(:create)
+        DataHierarchy.create(uuid, parent_uuid, children)
       end)
       |> Enum.filter(fn
         {:ok, _doc} ->
@@ -330,13 +268,7 @@ defmodule FieldPublication.Publications.Data do
     end)
     |> Stream.map(fn {_raw_doc, %Document{} = doc} ->
       # Remove groups and relations from doc
-
-      %DataPreview{}
-      |> DataPreview.changeset(%{
-        uuid: doc.id,
-        preview: %{doc | groups: [], relations: []}
-      })
-      |> Ecto.Changeset.apply_action(:create)
+      DataPreview.create(doc)
     end)
     |> Stream.filter(fn
       {:ok, _doc} ->
@@ -355,24 +287,14 @@ defmodule FieldPublication.Publications.Data do
   end
 
   def get_issues(%Publication{} = publication) do
-    meta_db_name = get_meta_database_name(publication)
-
-    CouchService.get_document_stream(%{selector: %{doc_type: "issue"}}, meta_db_name)
-    |> Stream.map(fn doc ->
-      DataIssues.changeset(%DataIssues{}, doc)
-      |> Ecto.Changeset.apply_action!(:create)
-    end)
-    |> Enum.to_list()
+    publication
+    |> get_meta_database_name()
+    |> DataIssues.list()
   end
 
   def get_grouped_issues(%Publication{} = publication) do
-    meta_db_name = get_meta_database_name(publication)
-
-    CouchService.get_document_stream(%{selector: %{doc_type: "issue"}}, meta_db_name)
-    |> Stream.map(fn doc ->
-      DataIssues.changeset(%DataIssues{}, doc)
-      |> Ecto.Changeset.apply_action!(:create)
-    end)
+    publication
+    |> get_issues()
     |> Enum.reduce(%{}, fn %DataIssues{uuid: uuid, entries: entries} = _doc, acc ->
       Enum.reduce(entries, acc, fn %LogEntry{
                                      message: message,

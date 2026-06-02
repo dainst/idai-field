@@ -62,10 +62,7 @@ defimpl Jason.Encoder,
   for: [
     FieldPublication.DatabaseSchema.Project,
     FieldPublication.DatabaseSchema.Publication,
-    FieldPublication.DatabaseSchema.ApplicationSettings,
-    FieldPublication.DatabaseSchema.DataHierarchy,
-    FieldPublication.DatabaseSchema.DataPreview,
-    FieldPublication.DatabaseSchema.DataIssues
+    FieldPublication.DatabaseSchema.ApplicationSettings
   ] do
   def encode(document, opts) do
     document
@@ -78,6 +75,21 @@ defimpl Jason.Encoder,
         document.__struct__
       )
     )
+    |> Jason.Encode.map(opts)
+  end
+end
+
+defimpl Jason.Encoder,
+  for: [
+    FieldPublication.DatabaseSchema.DataHierarchy,
+    FieldPublication.DatabaseSchema.DataPreview,
+    FieldPublication.DatabaseSchema.DataIssues
+  ] do
+  def encode(document, opts) do
+    document
+    |> Map.from_struct()
+    |> Map.reject(fn {k, v} -> k == :_rev and is_nil(v) end)
+    |> Map.put(:_id, document.__struct__.id(document))
     |> Jason.Encode.map(opts)
   end
 end

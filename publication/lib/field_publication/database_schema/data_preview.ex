@@ -3,26 +3,36 @@ defmodule FieldPublication.DatabaseSchema.DataPreview do
 
   import Ecto.Changeset
 
-  alias FieldPublication.DatabaseSchema.Base
+  alias FieldPublication.Publications.Data.Document
 
   @doc_type "preview"
   @primary_key false
   embedded_schema do
     field(:_rev, :string)
     field(:doc_type, :string, default: @doc_type)
-    field(:uuid, :string, primary_key: true)
+    field(:uuid, :string)
     field(:preview, :map)
   end
 
-  @doc false
-  def changeset(project, attrs \\ %{}) do
-    project
-    |> cast(attrs, [:_rev, :uuid, :preview])
-    |> validate_required([:uuid, :preview])
-    |> Base.validate_doc_type(@doc_type)
+  def create(%Document{} = doc) do
+    %__MODULE__{}
+    |> changeset(%{
+      uuid: doc.id,
+      preview: %{doc | groups: [], relations: []}
+    })
+    |> apply_action(:create)
   end
 
-  def doc_type() do
-    @doc_type
+  def create!(%Document{} = doc) do
+    {:ok, preview} = create(doc)
+    preview
+  end
+
+  def id(%__MODULE__{uuid: uuid}), do: "preview_#{uuid}"
+
+  defp changeset(%__MODULE__{} = preview, attrs) do
+    preview
+    |> cast(attrs, [:_rev, :uuid, :preview])
+    |> validate_required([:uuid, :preview])
   end
 end

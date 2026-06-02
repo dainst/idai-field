@@ -448,8 +448,7 @@ defmodule FieldPublication.Publications.Data do
 
     name = get_meta_database_name(publication)
 
-    name
-    |> CouchService.put_database()
+    CouchService.put_database(name)
     |> case do
       {:ok, %{status: status}} when status in [201, 202] ->
         Enum.each(index_documents, &CouchService.put_index_document(&1, name))
@@ -704,12 +703,13 @@ defmodule FieldPublication.Publications.Data do
 
   def get_extended_documents(
         uuids,
-        %Publication{database: db} = publication,
+        %Publication{} = publication,
         include_relations \\ false
       ) do
     config = Publications.get_configuration(publication)
 
-    get_raw_documents(uuids, %Publication{database: db})
+    uuids
+    |> get_raw_documents(publication)
     |> Enum.map(&apply_project_configuration(&1, config, publication, include_relations))
   end
 

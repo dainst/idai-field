@@ -293,7 +293,7 @@ defmodule FieldPublication.Replication do
         Logger.debug(message)
     end
 
-     log_entry =
+    log_entry =
       LogEntry.create(%{
         severity: severity,
         timestamp: DateTime.utc_now(),

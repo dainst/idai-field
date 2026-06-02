@@ -54,12 +54,12 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
     PubSub.subscribe(FieldPublication.PubSub, channel)
 
     issues =
-    if publication.replication_finished do
-      start_data_state_evaluation(publication)
-      Publications.Data.get_grouped_issues(publication)
-    else
-nil
-    end
+      if publication.replication_finished do
+        start_data_state_evaluation(publication)
+        Publications.Data.get_grouped_issues(publication)
+      else
+        nil
+      end
 
     # Check if web images are currently processed for the publication.
 
@@ -258,7 +258,6 @@ nil
         {:processing_stopped, type},
         %{assigns: %{publication: publication}} = socket
       ) do
-
     updated_issues = Publications.Data.get_grouped_issues(publication)
 
     {

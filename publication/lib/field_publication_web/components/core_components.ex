@@ -741,28 +741,28 @@ defmodule FieldPublicationWeb.CoreComponents do
           {type} ({Enum.count(entries)})
         </summary>
         <div class="overflow-y-scroll max-h-96 p-4">
-        <table class="text-xs w-full table-fixed">
-          <thead>
-            <tr>
-              <th>Document</th>
-              <th>Issue</th>
-              <th>Reported by</th>
-            </tr>
-          </thead>
-          <tbody>
-            <%= for %{message: msg, reported_by: reported_by, uuid: uuid} <- entries do %>
-              <tr class="border-b last:border-b-0">
-                <td class="p-2">
-                  <a href={~p"/projects/#{@project_key}/#{@draft_date}/#{uuid}"} target="new">
-                    {uuid}
-                  </a>
-                </td>
-                <td class="p-2">{msg}</td>
-                <td class="p-2">{reported_by}</td>
+          <table class="text-xs w-full table-fixed">
+            <thead>
+              <tr>
+                <th>Document</th>
+                <th>Issue</th>
+                <th>Reported by</th>
               </tr>
-            <% end %>
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              <%= for %{message: msg, reported_by: reported_by, uuid: uuid} <- entries do %>
+                <tr class="border-b last:border-b-0">
+                  <td class="p-2">
+                    <a href={~p"/projects/#{@project_key}/#{@draft_date}/#{uuid}"} target="new">
+                      {uuid}
+                    </a>
+                  </td>
+                  <td class="p-2">{msg}</td>
+                  <td class="p-2">{reported_by}</td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
         </div>
       </details>
     <% end %>

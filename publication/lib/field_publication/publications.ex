@@ -48,7 +48,7 @@ defmodule FieldPublication.Publications do
     case apply_action(changeset, :create) do
       {:ok, publication} ->
         if delete_existing do
-          get(project_name, draft_date) |> IO.inspect()
+          get(project_name, draft_date)
           |> case do
             {:ok, existing} ->
               # TODO: if the existing publication is already published, do not allow deletion?
@@ -369,22 +369,6 @@ defmodule FieldPublication.Publications do
         CouchService.delete_document(doc_id, rev)
     end
   end
-
-  # defp delete_hierarchy_doc(%Publication{hierarchy_doc: doc_id}) do
-  #   CouchService.get_document(doc_id)
-  #   |> case do
-  #     {:ok, %{status: 404}} = response ->
-  #       response
-
-  #     {:ok, %{status: 200, body: body}} ->
-  #       rev =
-  #         body
-  #         |> Jason.decode!()
-  #         |> Map.get("_rev")
-
-  #       CouchService.delete_document(doc_id, rev)
-  #   end
-  # end
 
   def generate_task_channel_name(project_key, draft_date) do
     "#{project_key}_#{draft_date}_task"

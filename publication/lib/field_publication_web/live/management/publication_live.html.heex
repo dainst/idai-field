@@ -172,17 +172,16 @@
             <tr>
               <td>Preview documents</td>
               <td>
-                  <div class="text-center ">
-                    <%= if :preview_documents in @active_processing_tasks  do %>
+                <div class="text-center ">
+                  <%= if :preview_documents in @active_processing_tasks  do %>
                     <.icon
                       name="hero-cog-8-tooth-solid"
                       class="h-4 w-4 animate-spin-slow text-primary"
                     /> Populating meta database...
-                    <% else %>
-                      <.icon name="hero-check-solid" />
-                    <% end %>
-                  </div>
-
+                  <% else %>
+                    <.icon name="hero-check-solid" />
+                  <% end %>
+                </div>
               </td>
               <td class="text-center">
                 <.processing_button

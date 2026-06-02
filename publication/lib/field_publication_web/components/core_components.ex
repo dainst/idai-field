@@ -704,67 +704,43 @@ defmodule FieldPublicationWeb.CoreComponents do
     """
   end
 
-  # def data_issues(assigns) do
-  #   ~H"""
-  #   <%= for %DataIssues{uuid: uuid, entries: entries} = issue <- @issues do %>
-  #     <details>
-  #       <summary>{uuid} ({Enum.count(entries)})</summary>
-  #       <table>
-  #         <thead>
-  #           <tr>
-  #             <th>Issue</th>
-  #             <th>Severity</th>
-  #             <th>Reported by</th>
-  #           </tr>
-  #         </thead>
-  #         <tbody>
-  #           <%= for %LogEntry{message: msg, reported_by: reported_by, severity: severity} = entry <- entries do %>
-  #             <tr>
-  #               <td>{msg}</td>
-  #               <td>{severity}</td>
-  #               <td>{reported_by}</td>
-  #             </tr>
-  #           <% end %>
-  #         </tbody>
-  #       </table>
-  #     </details>
-  #   <% end %>
-  #   """
-  # end
-
   def data_issues(assigns) do
     ~H"""
-    <%= for {{type, severity}, entries} <- @issues do %>
-      <details class="text-left p-1 border border-primary hover:border-primary-hover mb-0.5 last:mb-0">
-        <summary class="cursor-pointer w-full text-primary hover:text-primary-hover">
-          <.icon name="hero-exclamation-triangle" class={get_severity_icon_color(severity)} />
-          {type} ({Enum.count(entries)})
-        </summary>
-        <div class="overflow-y-scroll max-h-96 p-4">
-          <table class="text-xs w-full table-fixed">
-            <thead>
-              <tr>
-                <th>Document</th>
-                <th>Issue</th>
-                <th>Reported by</th>
-              </tr>
-            </thead>
-            <tbody>
-              <%= for %{message: msg, reported_by: reported_by, uuid: uuid} <- entries do %>
-                <tr class="border-b last:border-b-0">
-                  <td class="p-2">
-                    <a href={~p"/projects/#{@project_key}/#{@draft_date}/#{uuid}"} target="new">
-                      {uuid}
-                    </a>
-                  </td>
-                  <td class="p-2">{msg}</td>
-                  <td class="p-2">{reported_by}</td>
+    <%= if Enum.empty?(@issues) do %>
+      None.
+    <% else %>
+      <%= for {{type, severity}, entries} <- @issues do %>
+        <details class="text-left p-1 mb-0.5 last:mb-0">
+          <summary class="cursor-pointer w-full text-primary hover:text-primary-hover">
+            <.icon name="hero-exclamation-triangle" class={get_severity_icon_color(severity)} />
+            {type} ({Enum.count(entries)})
+          </summary>
+          <div class="overflow-y-scroll max-h-96 p-4">
+            <table class="text-xs w-full table-fixed">
+              <thead>
+                <tr>
+                  <th>Document</th>
+                  <th>Issue</th>
+                  <th>Reported by</th>
                 </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
-      </details>
+              </thead>
+              <tbody>
+                <%= for %{message: msg, reported_by: reported_by, uuid: uuid} <- entries do %>
+                  <tr class="border-b last:border-b-0">
+                    <td class="p-2">
+                      <a href={~p"/projects/#{@project_key}/#{@draft_date}/#{uuid}"} target="new">
+                        {uuid}
+                      </a>
+                    </td>
+                    <td class="p-2">{msg}</td>
+                    <td class="p-2">{reported_by}</td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </details>
+      <% end %>
     <% end %>
     """
   end

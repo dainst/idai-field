@@ -512,16 +512,11 @@ defmodule FieldPublication.Publications.Data do
           acc
       end)
 
-    CouchService.put_index_document(
-      %{
-        index: %{
-          fields: relations
-        },
-        name: "document-relations-index",
-        type: "json"
-      },
-      database
-    )
+    [
+      %{index: %{fields: relations}, name: "document-relations-index", type: "json"},
+      %{index: %{fields: ["resource.category"]}, name: "document-category-index", type: "json"}
+    ]
+    |> Enum.map(&CouchService.put_index_document(&1, database))
   end
 
   def get_image_categories(publication) do

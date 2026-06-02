@@ -10,7 +10,6 @@ defmodule FieldPublication.Processing.WebImage do
   alias FieldPublication.Publications
 
   alias FieldPublication.DatabaseSchema.{
-    DataIssue,
     LogEntry,
     Publication
   }
@@ -46,22 +45,20 @@ defmodule FieldPublication.Processing.WebImage do
     overall_count = Enum.count(existing) + Enum.count(missing)
     existing_count = Enum.count(existing)
 
-    Publications.clear_data_issues(publication, @data_report_key)
+    Publications.Data.clear_data_issues(publication, @data_report_key)
 
-    issues =
-      Enum.map(missing_raw_files, fn uuid ->
-        %DataIssue{
-          uuid: uuid,
+    Enum.map(missing_raw_files, fn uuid ->
+      Publications.Data.report_data_issue(
+        uuid,
+        LogEntry.create(%{
+          type: "missing_image_file",
           reported_by: @data_report_key,
-          issue_type_key: "missing_image_file",
-          log: %LogEntry{
-            severity: :warning,
-            message: "Missing raw image file."
-          }
-        }
-      end)
-
-    Publications.report_data_issues(publication, issues)
+          severity: :warning,
+          message: "Missing raw image file."
+        }),
+        publication
+      )
+    end)
 
     %{
       processed: existing,
@@ -101,15 +98,16 @@ defmodule FieldPublication.Processing.WebImage do
         |> Image.new_from_file()
         |> case do
           {:error, _} ->
-            Publications.report_data_issue(publication, %DataIssue{
-              uuid: uuid,
-              reported_by: @data_report_key,
-              issue_type_key: "invalid_file",
-              log: %LogEntry{
+            Publications.Data.report_data_issue(
+              uuid,
+              %LogEntry{
+                type: "invalid_file",
+                reported_by: @data_report_key,
                 severity: :warning,
                 message: "The file could not be opened as an image."
-              }
-            })
+              },
+              publication
+            )
 
           {:ok, file} ->
             # Apply exif rotation metadata directly to the image data (if present), because we do not

@@ -172,19 +172,17 @@
             <tr>
               <td>Preview documents</td>
               <td>
-                <%= if :preview_documents in @active_processing_tasks  do %>
                   <div class="text-center ">
+                    <%= if :preview_documents in @active_processing_tasks  do %>
                     <.icon
                       name="hero-cog-8-tooth-solid"
                       class="h-4 w-4 animate-spin-slow text-primary"
-                    /> Populating preview document database...
+                    /> Populating meta database...
+                    <% else %>
+                      <.icon name="hero-check-solid" />
+                    <% end %>
                   </div>
-                <% else %>
-                  <.progress_bar
-                    count={@data_state.preview_documents.counter}
-                    max={@data_state.preview_documents.overall}
-                  />
-                <% end %>
+
               </td>
               <td class="text-center">
                 <.processing_button
@@ -218,8 +216,7 @@
         </table>
 
         <.data_issues
-          :if={@active_processing_tasks == []}
-          logs={@publication.data_issues}
+          issues={@data_issues}
           project_key={@publication.project_name}
           draft_date={@publication.draft_date}
         />
@@ -232,7 +229,7 @@
     </:item>
 
     <:item
-      :if={@publication.replication_finished != nil && @active_processing_tasks == []}
+      :if={@publication.replication_finished != nil}
       title="Additional metadata"
     >
       <.translation_input

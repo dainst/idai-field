@@ -12,7 +12,6 @@ defmodule FieldPublication.Processing.MapTiles do
   alias FieldPublication.Publications.Data
 
   alias FieldPublication.DatabaseSchema.{
-    DataIssue,
     LogEntry,
     Publication
   }
@@ -54,22 +53,20 @@ defmodule FieldPublication.Processing.MapTiles do
     overall_count = Enum.count(georeferenced_docs)
     existing_count = Enum.count(existing_tiles)
 
-    Publications.clear_data_issues(publication, @data_report_key)
+    Publications.Data.clear_data_issues(publication, @data_report_key)
 
-    issues =
-      Enum.map(missing_raw_files, fn uuid ->
-        %DataIssue{
-          uuid: uuid,
+    Enum.map(missing_raw_files, fn uuid ->
+      Publications.Data.report_data_issue(
+        uuid,
+        LogEntry.create(%{
+          type: "missing_image_file",
           reported_by: @data_report_key,
-          issue_type_key: "missing_image_file",
-          log: %LogEntry{
-            severity: :warning,
-            message: "Missing raw image file."
-          }
-        }
-      end)
-
-    Publications.report_data_issues(publication, issues)
+          severity: :warning,
+          message: "Missing raw image file."
+        }),
+        publication
+      )
+    end)
 
     %{
       existing: existing_tiles,
@@ -156,16 +153,17 @@ defmodule FieldPublication.Processing.MapTiles do
             )
 
           %{"_id" => uuid} ->
-            Publications.report_data_issue(publication, %DataIssue{
-              uuid: uuid,
-              reported_by: @data_report_key,
-              issue_type_key: "invalid_document_structure",
-              log: %LogEntry{
+            Publications.Data.report_data_issue(
+              uuid,
+              LogEntry.create(%{
+                type: "invalid_document_structure",
+                reported_by: @data_report_key,
                 severity: :warning,
                 message:
                   "The document is missing either 'width' or 'height' or both parameters and can not be processed as a map tile as a result."
-              }
-            })
+              }),
+              publication
+            )
         end,
         max_concurrency: concurrent_processes,
         timeout: 1000 * 60 * 5

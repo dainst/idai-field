@@ -248,7 +248,7 @@ defmodule FieldPublication.Processing do
           # Module that implements the actual processing.
           Publications.Data,
           # Function within that module to start the processing.
-          :recreate_document_previews,
+          :recreate_meta_database,
           # Parameters for that function.
           [publication]
         )

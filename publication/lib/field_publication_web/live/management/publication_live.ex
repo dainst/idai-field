@@ -23,25 +23,25 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
 
   def processing_button(assigns) do
     ~H"""
-      <%= if @type in @active_processing_tasks do %>
-        <.link
-          class="font-semibold font-mono cursor-pointer"
-          type="button"
-          phx-click="stop_processing"
-          phx-value-type={@type}
-        >
-          Stop
-        </.link>
-      <% else %>
-        <.link
-          class="font-semibold font-mono cursor-pointer"
-          type="button"
-          phx-click="start_processing"
-          phx-value-type={@type}
-        >
-          Start
-        </.link>
-      <% end %>
+    <%= if @type in @active_processing_tasks do %>
+      <.link
+        class="font-semibold font-mono cursor-pointer"
+        type="button"
+        phx-click="stop_processing"
+        phx-value-type={@type}
+      >
+        Stop
+      </.link>
+    <% else %>
+      <.link
+        class="font-semibold font-mono cursor-pointer"
+        type="button"
+        phx-click="start_processing"
+        phx-value-type={@type}
+      >
+        Start
+      </.link>
+    <% end %>
     """
   end
 
@@ -53,8 +53,12 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
 
     PubSub.subscribe(FieldPublication.PubSub, channel)
 
+    issues =
     if publication.replication_finished do
       start_data_state_evaluation(publication)
+      Publications.Data.get_grouped_issues(publication)
+    else
+nil
     end
 
     # Check if web images are currently processed for the publication.
@@ -76,6 +80,7 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
       |> assign(:translation_options, translation_options)
       |> assign(:replication_progress_state, nil)
       |> assign(:data_state, nil)
+      |> assign(:data_issues, issues)
       |> assign(:active_processing_tasks, active_processing_tasks)
       |> publication_updated(publication)
       |> evaluate_replication_state()
@@ -253,20 +258,16 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
         {:processing_stopped, type},
         %{assigns: %{publication: publication}} = socket
       ) do
+
+    updated_issues = Publications.Data.get_grouped_issues(publication)
+
     {
       :noreply,
       socket
       |> update(:active_processing_tasks, fn current ->
         Enum.reject(current, fn val -> val == type end)
       end)
-      |> update(:data_state, fn current ->
-        if type != :preview_documents do
-          current
-        else
-          preview_doc_state = Publications.Data.get_preview_document_state(publication)
-          Map.put(current, :preview_documents, preview_doc_state)
-        end
-      end)
+      |> assign(:data_issues, updated_issues)
     }
   end
 
@@ -285,8 +286,8 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
         %{
           images: WebImage.evaluate_web_images_state(publication),
           tiles: MapTiles.evaluate_state(publication),
-          search_index: Publications.Search.evaluate_active_index_state(publication),
-          preview_documents: Publications.Data.get_preview_document_state(publication)
+          search_index: Publications.Search.evaluate_active_index_state(publication)
+          #          preview_documents: Publications.Data.get_preview_document_state(publication)
         }
       }
     end)

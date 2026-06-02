@@ -9,7 +9,6 @@ defmodule FieldPublication.Publications do
 
   alias FieldPublication.DatabaseSchema.{
     Base,
-    DataIssue,
     ReplicationInput,
     Publication
   }
@@ -40,7 +39,6 @@ defmodule FieldPublication.Publications do
         source_url: source_url,
         source_project_name: source_project_name,
         configuration_doc: "configuration_#{project_name}_#{draft_date}",
-        hierarchy_doc: "hierarchy_#{project_name}_#{draft_date}",
         database: "publication_#{project_name}_#{draft_date}",
         draft_date: draft_date,
         drafted_by: drafted_by
@@ -50,7 +48,7 @@ defmodule FieldPublication.Publications do
     case apply_action(changeset, :create) do
       {:ok, publication} ->
         if delete_existing do
-          get(project_name, draft_date)
+          get(project_name, draft_date) |> IO.inspect()
           |> case do
             {:ok, existing} ->
               # TODO: if the existing publication is already published, do not allow deletion?
@@ -140,26 +138,6 @@ defmodule FieldPublication.Publications do
         cached
     end
   end
-
-  # def get_hierarchy(%Publication{hierarchy_doc: hierarchy_doc_name}) do
-  #   Cachex.get(:document_cache, hierarchy_doc_name)
-  #   |> case do
-  #     {:ok, nil} ->
-  #       hierarchy =
-  #         CouchService.get_document(hierarchy_doc_name)
-  #         |> then(fn {:ok, %{body: body}} ->
-  #           Jason.decode!(body)
-  #         end)
-  #         |> Map.get("hierarchy", [])
-
-  #       Cachex.put(:document_cache, hierarchy_doc_name, hierarchy, ttl: 1000 * 60 * 60 * 24 * 7)
-
-  #       hierarchy
-
-  #     {:ok, cached} ->
-  #       cached
-  #   end
-  # end
 
   def get_published(project_name) do
     list(project_name)
@@ -290,7 +268,6 @@ defmodule FieldPublication.Publications do
          _ <- Cachex.del(:document_cache, doc_id),
          {:ok, %{status: 201}} <- CouchService.put_database(publication.database),
          {:ok, %{status: 201}} <- CouchService.put_document(publication.configuration_doc, %{}),
-         {:ok, %{status: 201}} <- CouchService.put_document(publication.hierarchy_doc, %{}),
          {:ok, %{status: 201, body: body}} <- CouchService.put_document(doc_id, publication),
          {:ok, %{status: 200}} <- Search.initialize_search_indices(publication) do
       %{"rev" => rev} = Jason.decode!(body)
@@ -322,11 +299,11 @@ defmodule FieldPublication.Publications do
     Cachex.del(:document_cache, doc_id)
 
     with {:ok, _preview_database_name} <-
-           Data.delete_preview_database(publication),
+           Data.delete_meta_database(publication),
          {:ok, %{status: status}} when status in [200, 404] <-
            delete_configuration_doc(publication),
-         {:ok, %{status: status}} when status in [200, 404] <-
-           delete_hierarchy_doc(publication),
+         # {:ok, %{status: status}} when status in [200, 404] <-
+         #   delete_hierarchy_doc(publication),
          :ok <- Search.delete_search_indices(publication),
          {:ok, %{status: status}} when status in [200, 404] <-
            CouchService.delete_document(doc_id, rev),
@@ -339,43 +316,43 @@ defmodule FieldPublication.Publications do
     end
   end
 
-  def clear_data_issues(
-        %Publication{project_name: project_name, draft_date: draft_date},
-        reported_by \\ nil
-      ) do
-    project_name
-    |> get!(draft_date)
-    |> then(fn publication ->
-      if is_nil(reported_by) do
-        Map.put(publication, :data_issues, [])
-      else
-        Map.update!(publication, :data_issues, fn existing ->
-          Enum.reject(existing, fn %DataIssue{reported_by: existing_reported_by} ->
-            existing_reported_by == reported_by
-          end)
-        end)
-      end
-    end)
-    |> put()
-  end
+  # def clear_data_issues(
+  #       %Publication{project_name: project_name, draft_date: draft_date},
+  #       reported_by \\ nil
+  #     ) do
+  #   project_name
+  #   |> get!(draft_date)
+  #   |> then(fn publication ->
+  #     if is_nil(reported_by) do
+  #       Map.put(publication, :data_issues, [])
+  #     else
+  #       Map.update!(publication, :data_issues, fn existing ->
+  #         Enum.reject(existing, fn %DataIssue{reported_by: existing_reported_by} ->
+  #           existing_reported_by == reported_by
+  #         end)
+  #       end)
+  #     end
+  #   end)
+  #   |> put()
+  # end
 
-  def report_data_issue(
-        %Publication{project_name: project_name, draft_date: draft_date},
-        %DataIssue{} = data_issue
-      ) do
-    get!(project_name, draft_date)
-    |> Map.update(:data_issues, [], fn existing -> existing ++ [data_issue] end)
-    |> put()
-  end
+  # def report_data_issue(
+  #       %Publication{project_name: project_name, draft_date: draft_date},
+  #       %DataIssue{} = data_issue
+  #     ) do
+  #   get!(project_name, draft_date)
+  #   |> Map.update(:data_issues, [], fn existing -> existing ++ [data_issue] end)
+  #   |> put()
+  # end
 
-  def report_data_issues(
-        %Publication{project_name: project_name, draft_date: draft_date},
-        data_issues
-      ) do
-    get!(project_name, draft_date)
-    |> Map.update(:data_issues, [], fn existing -> existing ++ data_issues end)
-    |> put()
-  end
+  # def report_data_issues(
+  #       %Publication{project_name: project_name, draft_date: draft_date},
+  #       data_issues
+  #     ) do
+  #   get!(project_name, draft_date)
+  #   |> Map.update(:data_issues, [], fn existing -> existing ++ data_issues end)
+  #   |> put()
+  # end
 
   defp delete_configuration_doc(%Publication{configuration_doc: doc_id}) do
     CouchService.get_document(doc_id)
@@ -393,21 +370,21 @@ defmodule FieldPublication.Publications do
     end
   end
 
-  defp delete_hierarchy_doc(%Publication{hierarchy_doc: doc_id}) do
-    CouchService.get_document(doc_id)
-    |> case do
-      {:ok, %{status: 404}} = response ->
-        response
+  # defp delete_hierarchy_doc(%Publication{hierarchy_doc: doc_id}) do
+  #   CouchService.get_document(doc_id)
+  #   |> case do
+  #     {:ok, %{status: 404}} = response ->
+  #       response
 
-      {:ok, %{status: 200, body: body}} ->
-        rev =
-          body
-          |> Jason.decode!()
-          |> Map.get("_rev")
+  #     {:ok, %{status: 200, body: body}} ->
+  #       rev =
+  #         body
+  #         |> Jason.decode!()
+  #         |> Map.get("_rev")
 
-        CouchService.delete_document(doc_id, rev)
-    end
-  end
+  #       CouchService.delete_document(doc_id, rev)
+  #   end
+  # end
 
   def generate_task_channel_name(project_key, draft_date) do
     "#{project_key}_#{draft_date}_task"

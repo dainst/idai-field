@@ -6,7 +6,11 @@ defmodule FieldPublication.Publications.Search do
   alias FieldPublication.OpenSearchService
   alias FieldPublication.Publications.Data
 
-  alias FieldPublication.DatabaseSchema.{DataIssue, LogEntry, Publication, Project}
+  alias FieldPublication.DatabaseSchema.{
+    LogEntry,
+    Publication,
+    Project
+  }
 
   require Logger
 
@@ -472,16 +476,18 @@ defmodule FieldPublication.Publications.Search do
     full_doc =
       Data.apply_project_configuration(doc, publication_configuration, publication)
       |> case do
-        {:error, :unknown_category} ->
-          Publications.report_data_issue(publication, %DataIssue{
-            uuid: res["id"],
-            issue_type_key: "category_not_found_in_configuration",
-            reported_by: @data_report_key,
-            log: %LogEntry{
+        {:error, {:unknown_category, category_name}} ->
+          Publications.Data.report_data_issue(
+            res["id"],
+            LogEntry.create(%{
+              type: "category_not_found_in_configuration",
+              reported_by: @data_report_key,
               severity: :error,
-              message: "Unknown category for document #{doc["id"]}"
-            }
-          })
+              message:
+                "Category not found in configuration: `#{category_name}` in document `#{doc["id"]}`"
+            }),
+            publication
+          )
 
           Logger.warning("Unknown category for document #{doc["id"]}")
           doc
@@ -551,15 +557,16 @@ defmodule FieldPublication.Publications.Search do
               msg =
                 "Based on the project configuration expected Map or List values for field '#{field_name}', but got '#{values}'."
 
-              Publications.report_data_issue(publication, %DataIssue{
-                uuid: res["id"],
-                issue_type_key: "data_to_configuration_mismatch",
-                reported_by: @data_report_key,
-                log: %LogEntry{
+              Publications.Data.report_data_issue(
+                res["id"],
+                LogEntry.create(%{
+                  type: "data_to_configuration_mismatch",
+                  reported_by: @data_report_key,
                   severity: :warning,
                   message: msg
-                }
-              })
+                }),
+                publication
+              )
 
               [values]
 
@@ -936,7 +943,7 @@ defmodule FieldPublication.Publications.Search do
       }
     )
 
-    Publications.clear_data_issues(publication, @data_report_key)
+    Publications.Data.clear_data_issues(publication, @data_report_key)
 
     publication
     |> Publications.Data.get_doc_stream_for_all()
@@ -985,15 +992,15 @@ defmodule FieldPublication.Publications.Search do
               |> Jason.decode!()
               |> inspect()
 
-            issue =
-              DataIssue.create!("unknown", @data_report_key, nil, %{
-                severity: :error,
+            Publications.Data.report_data_issue(
+              "general",
+              LogEntry.create(%{
+                type: "unknown",
+                reported_by: @data_report_key,
+                severity: :warning,
                 message: msg
-              })
-
-            Publications.report_data_issue(
-              publication,
-              issue
+              }),
+              publication
             )
 
             0
@@ -1037,15 +1044,15 @@ defmodule FieldPublication.Publications.Search do
          },
          %Publication{} = publication
        ) do
-    issue =
-      DataIssue.create!("malformed_geometry", @data_report_key, uuid, %{
+    Publications.Data.report_data_issue(
+      uuid,
+      LogEntry.create(%{
+        type: "malformed_geometry",
+        reported_by: @data_report_key,
         severity: :warning,
         message: reason
-      })
-
-    Publications.report_data_issue(
-      publication,
-      issue
+      }),
+      publication
     )
 
     :error
@@ -1064,15 +1071,15 @@ defmodule FieldPublication.Publications.Search do
          },
          %Publication{} = publication
        ) do
-    issue =
-      DataIssue.create!("malformed_geometry", @data_report_key, uuid, %{
+    Publications.Data.report_data_issue(
+      uuid,
+      LogEntry.create(%{
+        type: "malformed_geometry",
+        reported_by: @data_report_key,
         severity: :warning,
         message: reason
-      })
-
-    Publications.report_data_issue(
-      publication,
-      issue
+      }),
+      publication
     )
 
     :error
@@ -1082,15 +1089,15 @@ defmodule FieldPublication.Publications.Search do
          %{"index" => %{"_id" => uuid, "error" => error}},
          %Publication{} = publication
        ) do
-    issue =
-      DataIssue.create!("unknown", @data_report_key, uuid, %{
+    Publications.Data.report_data_issue(
+      uuid,
+      LogEntry.create(%{
+        type: "unknown",
+        reported_by: @data_report_key,
         severity: :error,
         message: inspect(error)
-      })
-
-    Publications.report_data_issue(
-      publication,
-      issue
+      }),
+      publication
     )
 
     :error

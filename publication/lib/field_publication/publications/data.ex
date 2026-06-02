@@ -13,8 +13,9 @@ defmodule FieldPublication.Publications.Data do
   require Logger
 
   alias FieldPublication.{
+    CouchService,
     Publications,
-    CouchService
+    Publications.Data.Document
   }
 
   alias FieldPublication.DatabaseSchema.{
@@ -315,123 +316,6 @@ defmodule FieldPublication.Publications.Data do
     end)
   end
 
-  # def recreate_document_previews(%Publication{database: db} = publication) do
-  #   config = Publications.get_configuration(publication)
-
-  #   Publications.clear_data_issues(publication, @data_report_key)
-
-  #   hierarchy_mapping = generate_hierarchy_mapping(publication)
-
-  #   preview_database_name =
-  #     create_preview_database(publication)
-  #     |> case do
-  #       {:ok, name} ->
-  #         name
-
-  #       {:already_exists, name} ->
-  #         name
-  #     end
-
-  #   pub_id = Publications.get_doc_id(publication)
-
-  #   result =
-  #     CouchService.get_document_stream(%{selector: %{}}, db)
-  #     |> Stream.reject(fn
-  #       %{"resource" => %{"category" => "Configuration"}} ->
-  #         true
-
-  #       %{"resource" => _} ->
-  #         false
-
-  #       _ ->
-  #         true
-  #     end)
-  #     |> Stream.map(fn raw_doc ->
-  #       {raw_doc, apply_project_configuration(raw_doc, config, publication)}
-  #     end)
-  #     |> Stream.filter(fn
-  #       {_raw_doc, %Document{} = _full} ->
-  #         true
-
-  #       {raw_doc, error} ->
-  #         Logger.warning(
-  #           "Failed to apply project configuration to `#{raw_doc["_id"]}` (`#{pub_id}`)"
-  #         )
-
-  #         Logger.warning(inspect(error))
-
-  #         Publications.report_data_issue(publication, %DataIssue{
-  #           uuid: raw_doc["_id"],
-  #           issue_type_key: "could_not_apply_project_configuration",
-  #           reported_by: @data_report_key,
-  #           log: %LogEntry{
-  #             severity: :error,
-  #             message: inspect(error)
-  #           }
-  #         })
-
-  #         false
-  #     end)
-  #     |> Enum.map(fn {_raw_doc, %Document{} = doc} ->
-  #       # Remove groups and relations from doc
-  #       %{doc | groups: [], relations: []}
-  #     end)
-  #     |> Stream.chunk_every(500)
-  #     |> Enum.map(fn documents ->
-  #       uuids = Enum.map(documents, fn %Document{id: id} -> id end)
-
-  #       {:ok, %{body: body}} = CouchService.get_documents(uuids, preview_database_name)
-
-  #       payload =
-  #         Jason.decode!(body)
-  #         |> Map.get("results", [])
-  #         |> Enum.map(fn %{"id" => id, "docs" => [doc]} ->
-  #           {id, doc}
-  #         end)
-  #         |> Enum.zip(documents)
-  #         |> Enum.map(fn
-  #           {
-  #             {uuid, %{"ok" => %{"_deleted" => true} = _existing_doc}},
-  #             %Document{id: id} = new_preview
-  #           }
-  #           when uuid == id ->
-  #             # The document existed at one point but was deleted, in that case recreate it from scratch.
-  #             %{
-  #               "_id" => id,
-  #               "preview" => new_preview,
-  #               "hierarchy" => Map.fetch!(hierarchy_mapping, id)
-  #             }
-
-  #           {
-  #             {uuid, %{"ok" => existing_doc}},
-  #             %Document{id: id} = new_preview
-  #           }
-  #           when uuid == id ->
-  #             # There is an existing document in the database, so we just update its relevant fields.
-  #             existing_doc
-  #             |> Map.put("preview", new_preview)
-  #             |> Map.put("hierarchy", Map.fetch!(hierarchy_mapping, id))
-
-  #           {
-  #             {uuid, _otherwise},
-  #             %Document{id: id} = new_preview
-  #           }
-  #           when uuid == id ->
-  #             # Otherwise, we create a completely new document.
-  #             %{
-  #               "_id" => id,
-  #               "preview" => new_preview,
-  #               "hierarchy" => Map.fetch!(hierarchy_mapping, id)
-  #             }
-  #         end)
-
-  #       CouchService.post_documents(payload, preview_database_name)
-  #     end)
-
-  #   Cachex.del(@document_cache_name, get_hierarchy_document_name(publication))
-  #   result
-  # end
-
   defp generate_hierarchy_mapping(%Publication{} = publication) do
     pub_id = Publications.get_doc_id(publication)
 
@@ -610,53 +494,6 @@ defmodule FieldPublication.Publications.Data do
   defp get_meta_database_name(%Publication{} = publication) do
     "meta_#{Publications.get_doc_id(publication)}"
   end
-
-  # def create_preview_database(%Publication{} = publication) do
-  #   name = get_preview_database_name(publication)
-
-  #   name
-  #   |> CouchService.put_database()
-  #   |> case do
-  #     {:ok, %{status: status}} when status in [201, 202] ->
-  #       {:ok, name}
-
-  #     {:ok, %{status: 400}} ->
-  #       {:error, :invalid_name}
-
-  #     {:ok, %{status: 401}} ->
-  #       {:error, :not_authorized}
-
-  #     {:ok, %{status: 403}} ->
-  #       {:error, :forbidden}
-
-  #     {:ok, %{status: 412}} ->
-  #       {:already_exists, name}
-  #   end
-  # end
-
-  # def delete_preview_database(%Publication{} = publication) do
-  #   name = get_preview_database_name(publication)
-
-  #   name
-  #   |> CouchService.delete_database()
-  #   |> case do
-  #     {:ok, %{status: status}} when status in [200, 202, 404] ->
-  #       {:ok, name}
-
-  #     {:ok, %{status: 400}} ->
-  #       {:error, :invalid_name}
-
-  #     {:ok, %{status: 401}} ->
-  #       {:error, :not_authorized}
-
-  #     {:ok, %{status: 403}} ->
-  #       {:error, :forbidden}
-  #   end
-  # end
-
-  # defp get_preview_database_name(%Publication{} = publication) do
-  #   "previews_#{Publications.get_doc_id(publication)}"
-  # end
 
   def recreate_database_indices(%Publication{database: database} = publication) do
     %{relations: relations} =
@@ -961,50 +798,6 @@ defmodule FieldPublication.Publications.Data do
       {:ok, [doc]} -> doc
     end)
   end
-
-  # def get_preview_document_state(%Publication{} = publication) do
-  #   preview_db_name = get_meta_database_name(publication)
-  #   primary_db_name = Publications.get_doc_id(publication)
-
-  #   with {:ok, %{status: 200, body: preview_response}} <-
-  #          CouchService.get_database(preview_db_name),
-  #        {:ok, %{status: 200, body: primary_response}} <-
-  #          CouchService.get_database(primary_db_name),
-  #        {:ok, %{status: configuration_doc_status}} <-
-  #          CouchService.head_document("configuration", primary_db_name),
-  #        {:ok, %{status: 200, body: design_docs_body}} <-
-  #          CouchService.all_design_docs(primary_db_name) do
-  #     %{"total_rows" => design_doc_count} = Jason.decode!(design_docs_body)
-
-  #     adjustment =
-  #       if configuration_doc_status == 200 do
-  #         1
-  #       else
-  #         0
-  #       end + design_doc_count
-
-  #     %{"doc_count" => preview_doc_count} =
-  #       Jason.decode!(preview_response)
-
-  #     %{"doc_count" => primary_doc_count} =
-  #       Jason.decode!(primary_response)
-
-  #     primary_doc_count = primary_doc_count - adjustment
-
-  #     %{
-  #       counter: preview_doc_count,
-  #       percentage: preview_doc_count / primary_doc_count * 100,
-  #       overall: primary_doc_count
-  #     }
-  #   else
-  #     _error ->
-  #       %{
-  #         counter: 0,
-  #         percentage: 0,
-  #         overall: 0
-  #       }
-  #   end
-  # end
 
   def get_doc_stream_for_categories(%Publication{database: database}, categories)
       when is_list(categories) do
@@ -1431,8 +1224,4 @@ defmodule FieldPublication.Publications.Data do
       |> List.first(:not_found)
     end
   end
-
-  # defp get_hierarchy_document_name(%Publication{} = publication) do
-  #   "hierarchy_#{Publications.get_doc_id(publication)}"
-  # end
 end

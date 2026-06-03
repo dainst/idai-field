@@ -338,39 +338,43 @@ defmodule FieldPublication.Publications.Search do
 
     _keyword_fields =
       Jason.decode!(body)
-      |> Enum.reduce([], fn {
-                              _publication_index_name,
-                              %{"mappings" => %{"properties" => props}}
-                            },
-                            acc ->
-        keywords =
-          props
-          |> Enum.map(fn prop ->
-            case prop do
-              {"configuration_based_field_mappings", %{"properties" => configuration_based_props}} ->
-                Enum.map(configuration_based_props, fn configuration_prop ->
-                  case configuration_prop do
-                    {nested_key, %{"type" => "keyword"}} ->
-                      nested_key
+      |> Enum.reduce([], fn
+        {_publication_index_name, %{"mappings" => %{"properties" => props}}}, acc ->
+          keywords =
+            props
+            |> Enum.map(fn prop ->
+              case prop do
+                {"configuration_based_field_mappings",
+                 %{"properties" => configuration_based_props}} ->
+                  Enum.map(configuration_based_props, fn configuration_prop ->
+                    case configuration_prop do
+                      {nested_key, %{"type" => "keyword"}} ->
+                        nested_key
 
-                    _ ->
-                      nil
-                  end
-                end)
+                      _ ->
+                        nil
+                    end
+                  end)
 
-              {key, %{"type" => "keyword"}} ->
-                key
+                {key, %{"type" => "keyword"}} ->
+                  key
 
-              _ ->
-                nil
-            end
-          end)
-          |> List.flatten()
-          |> Enum.reject(fn key -> key in [nil, "id", "identifier"] end)
+                _ ->
+                  nil
+              end
+            end)
+            |> List.flatten()
+            |> Enum.reject(fn key -> key in [nil, "id", "identifier"] end)
 
-        acc = acc ++ (keywords -- acc)
+          acc = acc ++ (keywords -- acc)
 
-        acc
+          acc
+
+        {publication_index_name, invalid_mapping}, acc ->
+          Logger.error("Invalid search mapping for `#{publication_index_name}`:")
+          Logger.error(inspect(invalid_mapping, pretty: true))
+
+          acc
       end)
       |> Stream.map(fn key ->
         cond do
@@ -962,7 +966,7 @@ defmodule FieldPublication.Publications.Search do
         special_input_types
       )
     )
-    |> Stream.chunk_every(500)
+    |> Stream.chunk_every(10)
     |> Enum.map(fn doc_batch ->
       batch_size = Enum.count(doc_batch)
 

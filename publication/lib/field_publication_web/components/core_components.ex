@@ -710,7 +710,7 @@ defmodule FieldPublicationWeb.CoreComponents do
       None.
     <% else %>
       <%= for {{type, severity}, entries} <- @issues do %>
-        <details class="text-left p-1 mb-0.5 last:mb-0">
+        <details phx-mounted={JS.ignore_attributes(["open"])} class="text-left p-1 mb-0.5 last:mb-0">
           <summary class="cursor-pointer w-full text-primary hover:text-primary-hover">
             <.icon name="hero-exclamation-triangle" class={get_severity_icon_color(severity)} />
             {type} ({Enum.count(entries)})

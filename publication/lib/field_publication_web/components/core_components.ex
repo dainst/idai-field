@@ -758,18 +758,6 @@ defmodule FieldPublicationWeb.CoreComponents do
     end
   end
 
-  # def log_entry(%{entry: %{metadata: %{"detailed" => _detailed, "uuid" => _uuid}}} = assigns) do
-  #   ~H"""
-  #   {@entry.metadata["uuid"]}: <span class="font-mono">{@entry.metadata["detailed"]}</span>
-  #   """
-  # end
-
-  # def log_entry(%{entry: %{metadata: %{"detailed" => _detailed}}} = assigns) do
-  #   ~H"""
-  #   {@entry.metadata["detailed"]}
-  #   """
-  # end
-
   def log_entry(assigns) do
     ~H"""
     {@entry}

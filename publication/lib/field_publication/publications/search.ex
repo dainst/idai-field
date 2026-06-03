@@ -989,19 +989,20 @@ defmodule FieldPublication.Publications.Search do
                 batch_size
             end
 
-          {:ok, %{status: 400, body: body}} ->
+          {:ok, %{status: status, body: body}} ->
             # Batch was not indexed.
             msg =
-              body
+              ("status code #{status} for\n " <>
+                 body)
               |> Jason.decode!()
               |> inspect()
 
             Publications.Data.report_data_issue(
               "general",
               LogEntry.create(%{
-                type: "unknown",
+                type: "unexpected_open_search_response",
                 reported_by: @data_report_key,
-                severity: :warning,
+                severity: :error,
                 message: msg
               }),
               publication

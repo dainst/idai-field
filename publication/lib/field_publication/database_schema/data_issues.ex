@@ -65,6 +65,24 @@ defmodule FieldPublication.DatabaseSchema.DataIssues do
     end
   end
 
+  def remove_entries(report_key, database_name) do
+    CouchService.get_document_stream(
+      %{
+        selector: %{entries: %{"$elemMatch": %{reported_by: report_key}}}
+      },
+      database_name
+    )
+    |> Stream.map(fn doc ->
+      Map.update!(doc, "entries", fn existing ->
+        Enum.reject(existing, fn %{"reported_by" => r} -> r == report_key end)
+      end)
+    end)
+    |> Stream.chunk_every(10000)
+    |> Enum.each(fn doc_list ->
+      CouchService.post_documents(doc_list, database_name)
+    end)
+  end
+
   def list(database_name) do
     CouchService.get_document_stream(%{selector: %{doc_type: @doc_type}}, database_name)
     |> Stream.map(fn doc ->

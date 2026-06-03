@@ -137,19 +137,7 @@ defmodule FieldPublication.Publications.Data do
   def clear_data_issues(publication, report_key) do
     meta_db_name = get_meta_database_name(publication)
 
-    CouchService.get_document_stream(
-      %{
-        selector: %{entries: %{"$elemMatch": %{reported_by: report_key}}}
-      },
-      meta_db_name
-    )
-    |> Stream.map(fn doc ->
-      %{
-        "_id" => doc["_id"],
-        "_rev" => doc["_rev"],
-        "_deleted" => true
-      }
-    end)
+    DataIssues.remove_entries(report_key, meta_db_name)
   end
 
   def recreate_meta_database(%Publication{database: db} = publication) do

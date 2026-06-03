@@ -7,11 +7,19 @@ defmodule FieldPublication.Processing do
   }
 
   alias FieldPublication.DatabaseSchema.Publication
+
+  alias FieldPublication.DatabaseSchema.{
+    LogEntry,
+    Publication
+  }
+
   alias FieldPublication.Publications
 
   alias Phoenix.PubSub
 
   require Logger
+
+  @data_report_key "processing"
 
   @moduledoc """
   This GenServer is used to start, stop and track processing tasks.
@@ -372,7 +380,52 @@ defmodule FieldPublication.Processing do
 
   def handle_info({:DOWN, ref, :process, _pid, _reason}, running_tasks) do
     Logger.error("A processing task failed irregularly.")
+
+    try do
+      report_crash_to_publication(ref, running_tasks)
+    after
+      :ok
+    end
+
     {:noreply, cleanup(ref, running_tasks)}
+  end
+
+  defp report_crash_to_publication(ref, running_tasks) do
+    Enum.find(running_tasks, fn {task, _type, _context} ->
+      task.ref == ref
+    end)
+    |> case do
+      {_task, type, context} ->
+        Publications.get(context)
+        |> case do
+          {:ok, publication} ->
+            # This clears all data issues associated with processing, which
+            # is slightly hacky, because there might be issues related to a different
+            # processing type (for example: this call might report a search index issue,
+            # while there might also be a reported crash concerning web images.).
+            #
+            # But: This only affects completely unhandled processing issues, the more nuanced
+            # issues reported by the processing tasks themselves are left intact.
+            Publications.Data.clear_data_issues(publication, @data_report_key)
+
+            Publications.Data.report_data_issue(
+              "general",
+              LogEntry.create(%{
+                type: "general_processing_crash",
+                reported_by: @data_report_key,
+                severity: :error,
+                message: "processing task #{type} crashed"
+              }),
+              publication
+            )
+
+          _ ->
+            Logger.error("Could not find publication by task context.")
+        end
+
+      _ ->
+        Logger.error("Could not find task by reference.")
+    end
   end
 
   defp cleanup(ref, task_list) do

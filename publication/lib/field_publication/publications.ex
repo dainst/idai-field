@@ -79,14 +79,21 @@ defmodule FieldPublication.Publications do
   end
 
   def get(project_name, %Date{} = draft_date) when is_binary(project_name) do
-    doc_id =
-      %Publication{
-        project_name: project_name,
-        draft_date: draft_date,
-        doc_type: Publication.doc_type()
-      }
-      |> get_doc_id()
+    %Publication{
+      project_name: project_name,
+      draft_date: draft_date,
+      doc_type: Publication.doc_type()
+    }
+    |> get_doc_id()
+    |> get()
+  end
 
+  def get!(project_name, draft_date) do
+    {:ok, publication} = get(project_name, draft_date)
+    publication
+  end
+
+  def get(doc_id) do
     Cachex.get(:document_cache, doc_id)
     |> case do
       {:ok, nil} ->
@@ -112,8 +119,8 @@ defmodule FieldPublication.Publications do
     end
   end
 
-  def get!(project_name, draft_date) do
-    {:ok, publication} = get(project_name, draft_date)
+  def get!(doc_id) do
+    {:ok, publication} = get(doc_id)
     publication
   end
 

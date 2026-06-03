@@ -29,9 +29,9 @@
           <.group_heading>Active filters</.group_heading>
           <%= for {field, value} <- @url_parameters.filters do %>
             <.aggregation_deselection
-          field_name={field}
-          value={value}
-        />
+              field_name={field}
+              value={value}
+            />
           <% end %>
         <% end %>
 
@@ -40,9 +40,9 @@
           <%= for {field, buckets} <- aggregations do %>
             <%= if !(Enum.find(@url_parameters.filters, fn({already_filtered_field, _value}) -> already_filtered_field == field end ) ) and buckets != [] do %>
               <.aggregation_selection
-            field_name={field}
-            buckets={buckets}
-          />
+                field_name={field}
+                buckets={buckets}
+              />
             <% end %>
           <% end %>
         </div>

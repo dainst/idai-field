@@ -41,199 +41,193 @@
   </.group_heading>
 </section>
 
-<.form for={@publication_form} phx-change="validate" phx-submit="save">
-  <div :if={!is_nil(@publication.replication_finished)}>
-    You may review and start the preprocessing steps required for the publication below. You can also add comments specific to this publication, that will be displayed on the publication's project document <.link navigate={
-      ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}"
-    }>
+<div :if={!is_nil(@publication.replication_finished)}>
+  You may review and start the preprocessing steps required for the publication below. You can also add comments specific to this publication, that will be displayed on the publication's project document <.link navigate={
+    ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}"
+  }>
     <.icon name="hero-home-solid" /> page
   </.link>. You can still change publication comment after the draft is published.
-  </div>
-  <.input type="hidden" field={@publication_form[:project_name]} />
-  <.input type="hidden" field={@publication_form[:source_url]} />
-  <.input type="hidden" field={@publication_form[:source_project_name]} />
-  <.input type="hidden" field={@publication_form[:draft_date]} />
-  <.input type="hidden" field={@publication_form[:drafted_by]} />
-  <.input type="hidden" field={@publication_form[:replication_finished]} />
-  <.input type="hidden" field={@publication_form[:configuration_doc]} />
-  <.input type="hidden" field={@publication_form[:hierarchy_doc]} />
-  <.input type="hidden" field={@publication_form[:database]} />
-  <.input type="hidden" field={@publication_form[:publication_date]} />
-  <.input type="hidden" field={@publication_form[:version]} />
-  <%= for {language, index} <- Enum.with_index(@publication_form[:languages].value) do %>
-    <input
-      type="hidden"
-      name={"#{@publication_form[:languages].name}[]"}
-      value={language}
-    />
-  <% end %>
+</div>
 
-  <.list>
-    <:item title="Replication">
-      <div :if={@publication.replication_finished} class="font-thin">
-        Replication finished {@publication.replication_finished}.
+<.list>
+  <:item title="Replication">
+    <div class="flex flex-wrap p-2 gap-4 w-full">
+      <.labeled_value>
+        <:label>Source URL</:label>
+        {@publication.source_url}
+      </.labeled_value>
+      <.labeled_value>
+        <:label>Source project name</:label>
+        {@publication.source_project_name}
+      </.labeled_value>
+      <.labeled_value>
+        <:label>Draft date</:label>
+        {@publication.draft_date}
+      </.labeled_value>
+      <.labeled_value>
+        <:label>Draft created by</:label>
+        {@publication.drafted_by}
+      </.labeled_value>
+    </div>
+    <%= if @publication.replication_finished do %>
+      <div>
+        Data replication finished {@publication.replication_finished}.
       </div>
-      <div class="flex flex-wrap p-2 gap-2 w-full">
-        <.labeled_value>
-          <:label>Source URL</:label>
-          {@publication.source_url}
-        </.labeled_value>
-        <.labeled_value>
-          <:label>Source project name</:label>
-          {@publication.source_project_name}
-        </.labeled_value>
-        <.labeled_value>
-          <:label>Draft date</:label>
-          {@publication.draft_date}
-        </.labeled_value>
-
-        <.labeled_value>
-          <:label>Draft created by</:label>
-          {@publication.drafted_by}
-        </.labeled_value>
-      </div>
-
-      <%= if is_nil(@publication.replication_finished) do %>
-        <.log_entry_list logs={@publication.replication_logs} />
-        <%= if @replication_progress_state do %>
-          <.progress_bar
-            count={@replication_progress_state.counter}
-            max={@replication_progress_state.overall}
-          />
-        <% end %>
-        <button
-          :if={@replication_state}
-          class="font-bold font-mono float-right cursor-pointer"
-          type="button"
-          phx-click={JS.push("stop_replication")}
-          data-confirm="Are you sure?"
-        >
-          Stop replication
-        </button>
-      <% end %>
-    </:item>
-    <:item :if={@publication.replication_finished != nil} title="Preprocessing">
-      <%= if @data_state do %>
-        <table class="w-full">
-          <thead class="bg-slate-700">
-            <tr class="text-slate-50">
-              <th class="w-1/6">Type</th>
-              <th class="w-4/6">Info</th>
-              <th class="w-1/6">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Web images</td>
-              <td>
-                <.progress_bar
-                  count={@data_state.images.summary.counter}
-                  max={@data_state.images.summary.overall}
-                />
-              </td>
-
-              <td class="text-center">
-                <.processing_button
-                  type={:web_images}
-                  active_processing_tasks={@active_processing_tasks}
-                />
-              </td>
-            </tr>
-            <tr>
-              <td>Map tile images</td>
-              <td>
-                <.progress_bar
-                  count={@data_state.tiles.summary.counter}
-                  max={@data_state.tiles.summary.overall}
-                />
-              </td>
-              <td class="text-center">
-                <.processing_button
-                  type={:tile_images}
-                  active_processing_tasks={@active_processing_tasks}
-                />
-              </td>
-            </tr>
-            <tr>
-              <td>Search index</td>
-              <td>
-                <.progress_bar
-                  count={@data_state.search_index.counter}
-                  max={@data_state.search_index.overall}
-                />
-              </td>
-              <td class="text-center">
-                <.processing_button
-                  type={:search_index}
-                  active_processing_tasks={@active_processing_tasks}
-                />
-              </td>
-            </tr>
-            <tr>
-              <td>Previews and hierarchy</td>
-              <td>
-                <div class="text-center ">
-                  <%= if :preview_documents in @active_processing_tasks  do %>
-                    <.icon
-                      name="hero-cog-8-tooth-solid"
-                      class="h-4 w-4 animate-spin-slow text-primary"
-                    /> Populating meta database...
-                  <% else %>
-                    <.icon name="hero-check-solid" />
-                  <% end %>
-                </div>
-              </td>
-              <td class="text-center">
-                <.processing_button
-                  type={:preview_documents}
-                  active_processing_tasks={@active_processing_tasks}
-                />
-              </td>
-            </tr>
-            <tr>
-              <td>Database indices</td>
-              <td>
-                <div class="text-center ">
-                  <%= if :database_indices in @active_processing_tasks  do %>
-                    <.icon
-                      name="hero-cog-8-tooth-solid"
-                      class="h-4 w-4 animate-spin-slow text-primary"
-                    /> Recreating database indices...
-                  <% else %>
-                    <.icon name="hero-check-solid" />
-                  <% end %>
-                </div>
-              </td>
-              <td class="text-center">
-                <.processing_button
-                  type={:database_indices}
-                  active_processing_tasks={@active_processing_tasks}
-                />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <.group_heading>
-          Issues
-        </.group_heading>
-        <.data_issues
-          issues={@data_issues}
-          project_key={@publication.project_name}
-          draft_date={@publication.draft_date}
+    <% else %>
+      <.log_entry_list logs={@publication.replication_logs} />
+      <%= if @replication_progress_state do %>
+        <.progress_bar
+          count={@replication_progress_state.counter}
+          max={@replication_progress_state.overall}
         />
-      <% else %>
-        <.icon
-          name="hero-cog-8-tooth-solid"
-          class="h-4 w-4 animate-spin-slow text-primary"
-        /> Evaluating preprocessing state, please wait...
       <% end %>
-    </:item>
+      <button
+        :if={@replication_state}
+        class="font-bold font-mono float-right cursor-pointer"
+        type="button"
+        phx-click={JS.push("stop_replication")}
+        data-confirm="Are you sure?"
+      >
+        Stop replication
+      </button>
+    <% end %>
+  </:item>
+  <:item :if={@publication.replication_finished != nil} title="Preprocessing">
+    <%= if @data_state do %>
+      <table class="w-full">
+        <thead class="bg-slate-700">
+          <tr class="text-slate-50">
+            <th class="w-1/6">Type</th>
+            <th class="w-4/6">Info</th>
+            <th class="w-1/6">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Web images</td>
+            <td>
+              <.progress_bar
+                count={@data_state.images.summary.counter}
+                max={@data_state.images.summary.overall}
+              />
+            </td>
 
-    <:item
-      :if={@publication.replication_finished != nil}
-      title="Additional metadata"
-    >
+            <td class="text-center">
+              <.processing_button
+                type={:web_images}
+                active_processing_tasks={@active_processing_tasks}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Map tile images</td>
+            <td>
+              <.progress_bar
+                count={@data_state.tiles.summary.counter}
+                max={@data_state.tiles.summary.overall}
+              />
+            </td>
+            <td class="text-center">
+              <.processing_button
+                type={:tile_images}
+                active_processing_tasks={@active_processing_tasks}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Search index</td>
+            <td>
+              <.progress_bar
+                count={@data_state.search_index.counter}
+                max={@data_state.search_index.overall}
+              />
+            </td>
+            <td class="text-center">
+              <.processing_button
+                type={:search_index}
+                active_processing_tasks={@active_processing_tasks}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Previews and hierarchy</td>
+            <td>
+              <div class="text-center ">
+                <%= if :preview_documents in @active_processing_tasks  do %>
+                  <.icon
+                    name="hero-cog-8-tooth-solid"
+                    class="h-4 w-4 animate-spin-slow text-primary"
+                  /> Populating meta database...
+                <% else %>
+                  <.icon name="hero-check-solid" />
+                <% end %>
+              </div>
+            </td>
+            <td class="text-center">
+              <.processing_button
+                type={:preview_documents}
+                active_processing_tasks={@active_processing_tasks}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Database indices</td>
+            <td>
+              <div class="text-center ">
+                <%= if :database_indices in @active_processing_tasks  do %>
+                  <.icon
+                    name="hero-cog-8-tooth-solid"
+                    class="h-4 w-4 animate-spin-slow text-primary"
+                  /> Recreating database indices...
+                <% else %>
+                  <.icon name="hero-check-solid" />
+                <% end %>
+              </div>
+            </td>
+            <td class="text-center">
+              <.processing_button
+                type={:database_indices}
+                active_processing_tasks={@active_processing_tasks}
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    <% else %>
+      <.icon
+        name="hero-cog-8-tooth-solid"
+        class="h-4 w-4 animate-spin-slow text-primary"
+      /> Evaluating preprocessing state, please wait...
+    <% end %>
+    <.group_heading>
+      Issues
+    </.group_heading>
+    <.data_issues
+      issues={@data_issues}
+      project_key={@publication.project_name}
+      draft_date={@publication.draft_date}
+    />
+  </:item>
+  <:item :if={@publication.replication_finished != nil} title="Additional metadata">
+    <.form for={@publication_form} phx-change="validate" phx-submit="save">
+      <.input type="hidden" field={@publication_form[:project_name]} />
+      <.input type="hidden" field={@publication_form[:source_url]} />
+      <.input type="hidden" field={@publication_form[:source_project_name]} />
+      <.input type="hidden" field={@publication_form[:draft_date]} />
+      <.input type="hidden" field={@publication_form[:drafted_by]} />
+      <.input type="hidden" field={@publication_form[:replication_finished]} />
+      <.input type="hidden" field={@publication_form[:configuration_doc]} />
+      <.input type="hidden" field={@publication_form[:hierarchy_doc]} />
+      <.input type="hidden" field={@publication_form[:database]} />
+      <.input type="hidden" field={@publication_form[:publication_date]} />
+      <.input type="hidden" field={@publication_form[:version]} />
+      <%= for {language, index} <- Enum.with_index(@publication_form[:languages].value) do %>
+        <input
+          type="hidden"
+          name={"#{@publication_form[:languages].name}[]"}
+          value={language}
+        />
+      <% end %>
       <.translation_input
         field={@publication_form[:comments]}
         language_options={@translation_options}
@@ -241,8 +235,7 @@
         <:heading>Publication comments</:heading>
         <:no_translations>No comments for this publication</:no_translations>
       </.translation_input>
-
       <.button class="mt-4" phx-disable-with="Saving...">Save changes</.button>
-    </:item>
-  </.list>
-</.form>
+    </.form>
+  </:item>
+</.list>

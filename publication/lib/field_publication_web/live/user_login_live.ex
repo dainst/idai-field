@@ -28,6 +28,13 @@ defmodule FieldPublicationWeb.UserLoginLive do
   def mount(_params, _session, socket) do
     name = Phoenix.Flash.get(socket.assigns.flash, :name)
     form = to_form(%{"name" => name}, as: "user")
-    {:ok, assign(socket, form: form), temporary_assigns: [form: form]}
+
+    {
+      :ok,
+      socket
+      |> assign(form: form)
+      |> assign(:page_title, "Login"),
+      temporary_assigns: [form: form]
+    }
   end
 end

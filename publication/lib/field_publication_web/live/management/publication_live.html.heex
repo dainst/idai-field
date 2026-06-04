@@ -93,112 +93,30 @@
     <% end %>
   </:item>
   <:item :if={@publication.replication_finished != nil} title="Preprocessing">
-    <%= if @data_state do %>
-      <table class="w-full">
-        <thead class="bg-slate-700">
-          <tr class="text-slate-50">
-            <th class="w-1/6">Type</th>
-            <th class="w-4/6">Info</th>
-            <th class="w-1/6">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Web images</td>
-            <td>
-              <.progress_bar
-                count={@data_state.images.summary.counter}
-                max={@data_state.images.summary.overall}
-              />
-            </td>
-
-            <td class="text-center">
-              <.processing_button
-                type={:web_images}
-                active_processing_tasks={@active_processing_tasks}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>Map tile images</td>
-            <td>
-              <.progress_bar
-                count={@data_state.tiles.summary.counter}
-                max={@data_state.tiles.summary.overall}
-              />
-            </td>
-            <td class="text-center">
-              <.processing_button
-                type={:tile_images}
-                active_processing_tasks={@active_processing_tasks}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>Search index</td>
-            <td>
-              <.progress_bar
-                count={@data_state.search_index.counter}
-                max={@data_state.search_index.overall}
-              />
-            </td>
-            <td class="text-center">
-              <.processing_button
-                type={:search_index}
-                active_processing_tasks={@active_processing_tasks}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>Previews and hierarchy</td>
-            <td>
-              <div class="text-center ">
-                <%= if :preview_documents in @active_processing_tasks  do %>
-                  <.icon
-                    name="hero-cog-8-tooth-solid"
-                    class="h-4 w-4 animate-spin-slow text-primary"
-                  /> Populating meta database...
-                <% else %>
-                  <.icon name="hero-check-solid" />
-                <% end %>
-              </div>
-            </td>
-            <td class="text-center">
-              <.processing_button
-                type={:preview_documents}
-                active_processing_tasks={@active_processing_tasks}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>Database indices</td>
-            <td>
-              <div class="text-center ">
-                <%= if :database_indices in @active_processing_tasks  do %>
-                  <.icon
-                    name="hero-cog-8-tooth-solid"
-                    class="h-4 w-4 animate-spin-slow text-primary"
-                  /> Recreating database indices...
-                <% else %>
-                  <.icon name="hero-check-solid" />
-                <% end %>
-              </div>
-            </td>
-            <td class="text-center">
-              <.processing_button
-                type={:database_indices}
-                active_processing_tasks={@active_processing_tasks}
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    <% else %>
-      <.icon
-        name="hero-cog-8-tooth-solid"
-        class="h-4 w-4 animate-spin-slow text-primary"
-      /> Evaluating preprocessing state, please wait...
-    <% end %>
+    <table class="w-full">
+      <thead class="bg-slate-700">
+        <tr class="text-slate-50">
+          <th class="w-1/6">Type</th>
+          <th class="w-4/6">Info</th>
+          <th class="w-1/6">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <.processing_state_row label="Web images" type={:web_images} state={@web_images} />
+        <.processing_state_row label="Tile images" type={:tile_images} state={@tile_images} />
+        <.processing_state_row label="Search index" type={:search_index} state={@search_index} />
+        <.processing_state_row
+          label="Previews and hierarchy"
+          type={:preview_documents}
+          state={@preview_documents}
+        />
+        <.processing_state_row
+          label="Database indices"
+          type={:database_indices}
+          state={@database_indices}
+        />
+      </tbody>
+    </table>
     <.group_heading>
       Issues
     </.group_heading>

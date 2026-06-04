@@ -323,44 +323,6 @@ defmodule FieldPublication.Publications do
     end
   end
 
-  # def clear_data_issues(
-  #       %Publication{project_name: project_name, draft_date: draft_date},
-  #       reported_by \\ nil
-  #     ) do
-  #   project_name
-  #   |> get!(draft_date)
-  #   |> then(fn publication ->
-  #     if is_nil(reported_by) do
-  #       Map.put(publication, :data_issues, [])
-  #     else
-  #       Map.update!(publication, :data_issues, fn existing ->
-  #         Enum.reject(existing, fn %DataIssue{reported_by: existing_reported_by} ->
-  #           existing_reported_by == reported_by
-  #         end)
-  #       end)
-  #     end
-  #   end)
-  #   |> put()
-  # end
-
-  # def report_data_issue(
-  #       %Publication{project_name: project_name, draft_date: draft_date},
-  #       %DataIssue{} = data_issue
-  #     ) do
-  #   get!(project_name, draft_date)
-  #   |> Map.update(:data_issues, [], fn existing -> existing ++ [data_issue] end)
-  #   |> put()
-  # end
-
-  # def report_data_issues(
-  #       %Publication{project_name: project_name, draft_date: draft_date},
-  #       data_issues
-  #     ) do
-  #   get!(project_name, draft_date)
-  #   |> Map.update(:data_issues, [], fn existing -> existing ++ data_issues end)
-  #   |> put()
-  # end
-
   defp delete_configuration_doc(%Publication{configuration_doc: doc_id}) do
     CouchService.get_document(doc_id)
     |> case do
@@ -386,18 +348,22 @@ defmodule FieldPublication.Publications do
   end
 
   def broadcast(%Publication{} = publication) do
+    id = get_doc_id(publication)
+
     PubSub.broadcast(
       FieldPublication.PubSub,
-      get_doc_id(publication),
-      publication
+      id,
+      {id, publication}
     )
   end
 
   def broadcast(%Publication{} = publication, msg) do
+    id = get_doc_id(publication)
+
     PubSub.broadcast(
       FieldPublication.PubSub,
-      get_doc_id(publication),
-      msg
+      id,
+      {id, msg}
     )
   end
 end

@@ -268,7 +268,7 @@ defmodule FieldPublication.Replication do
     PubSub.broadcast(
       FieldPublication.PubSub,
       publication_id,
-      {:replication_stopped}
+      {publication_id, {:replication_stopped}}
     )
 
     {:noreply, cleanup(ref, running_replications)}

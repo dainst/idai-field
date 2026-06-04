@@ -1,6 +1,4 @@
 defmodule FieldPublication.Publications.Search do
-  alias Phoenix.PubSub
-
   alias FieldPublication.Publications
   alias FieldPublication.Projects
   alias FieldPublication.OpenSearchService
@@ -920,7 +918,6 @@ defmodule FieldPublication.Publications.Search do
   end
 
   def index_documents(%Publication{} = publication) do
-    publication_id = Publications.get_doc_id(publication)
     publication_configuration = Publications.get_configuration(publication)
 
     mapping = generate_index_mapping(publication)
@@ -938,14 +935,11 @@ defmodule FieldPublication.Publications.Search do
     {:ok, counter_pid} =
       Agent.start_link(fn -> initial_state end)
 
-    PubSub.broadcast(
-      FieldPublication.PubSub,
-      publication_id,
-      {
-        :search_index_processing_count,
-        initial_state
-      }
-    )
+    Publications.broadcast(publication, {
+      :processing_progress,
+      :search_index,
+      initial_state
+    })
 
     Publications.Data.clear_data_issues(publication, @data_report_key)
 
@@ -1021,14 +1015,7 @@ defmodule FieldPublication.Publications.Search do
           {state, state}
         end)
 
-      PubSub.broadcast(
-        FieldPublication.PubSub,
-        publication_id,
-        {
-          :search_index_processing_count,
-          updated_state
-        }
-      )
+      Publications.broadcast(publication, {:processing_progress, :search_index, updated_state})
     end)
     |> Enum.to_list()
 

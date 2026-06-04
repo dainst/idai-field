@@ -12,12 +12,17 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
   alias FieldPublication.Processing
   alias FieldPublication.Users
 
+  alias Phoenix.PubSub
+
+  require Logger
+
   @impl true
   def mount(_params, _session, socket) do
     {
       :ok,
       socket
-      |> assign_projects()
+      |> load_projects()
+      |> update_processing_state()
       |> assign(:users, Users.list())
       |> assign(:today, Date.utc_today())
       |> assign(:page_title, "Publishing")
@@ -58,10 +63,9 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
         {FieldPublicationWeb.Management.Modals.ProjectFormComponent, {:saved, _project}},
         socket
       ) do
-    {:noreply, assign_projects(socket)}
+    {:noreply, load_projects(socket)}
   end
 
-  @impl true
   def handle_info(
         {FieldPublicationWeb.Management.Modals.ReplicationFormComponent,
          {%ReplicationInput{} = params, %Publication{} = publication}},
@@ -82,12 +86,68 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
     }
   end
 
+  def handle_info(
+        {publication_id, {:processing_started, processing_type}},
+        %{assigns: %{processing_state: state}} = socket
+      ) do
+    updated_state =
+      Map.update(state, publication_id, %{processing_type => nil}, fn publication_state ->
+        Map.put(publication_state, processing_type, nil)
+      end)
+
+    {
+      :noreply,
+      assign(socket, :processing_state, updated_state)
+    }
+  end
+
+  def handle_info(
+        {publication_id, {:processing_stopped, processing_type}},
+        %{assigns: %{processing_state: state}} = socket
+      ) do
+    updated_state =
+      Map.update(state, publication_id, %{}, fn publication_state ->
+        Map.delete(publication_state, processing_type)
+      end)
+
+    updated_state =
+      if updated_state[publication_id] == %{},
+        do: Map.delete(updated_state, publication_id),
+        else: updated_state
+
+    {
+      :noreply,
+      assign(socket, :processing_state, updated_state)
+    }
+  end
+
+  def handle_info(
+        {publication_id, {:processing_progress, processing_type, progress}},
+        %{assigns: %{processing_state: state}} = socket
+      ) do
+    updated_state =
+      Map.update(state, publication_id, %{processing_type => nil}, fn publication_state ->
+        Map.put(publication_state, processing_type, progress)
+      end)
+
+    {
+      :noreply,
+      assign(socket, :processing_state, updated_state)
+    }
+  end
+
+  def handle_info(info, socket) do
+    Logger.debug("Ignoring handle_info/2 call:")
+    Logger.debug(inspect(info))
+    {:noreply, socket}
+  end
+
   @impl true
   def handle_event("delete", %{"project_id" => id}, socket) do
     project = Projects.get!(id)
     {:ok, _} = Projects.delete(project)
 
-    {:noreply, assign_projects(socket)}
+    {:noreply, load_projects(socket)}
   end
 
   def handle_event(
@@ -104,7 +164,7 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
         :ok
     end
 
-    {:noreply, assign_projects(socket)}
+    {:noreply, load_projects(socket)}
   end
 
   def handle_event("reindex_all_search_indices", _, socket) do
@@ -135,10 +195,10 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
     end)
     |> Publications.Search.set_project_alias()
 
-    {:noreply, assign_projects(socket)}
+    {:noreply, load_projects(socket)}
   end
 
-  defp assign_projects(socket) do
+  defp load_projects(socket) do
     projects =
       Projects.list()
       |> Enum.filter(fn %Project{} = project ->
@@ -146,6 +206,11 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
       end)
       |> Enum.map(fn project ->
         publications = Publications.list(project.name)
+
+        Enum.each(publications, fn publication ->
+          channel = Publications.get_doc_id(publication)
+          PubSub.subscribe(FieldPublication.PubSub, channel)
+        end)
 
         %{
           project: project,
@@ -156,5 +221,18 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
       end)
 
     assign(socket, :projects, projects)
+  end
+
+  defp update_processing_state(socket) do
+    processing_state =
+      if FieldPublication.Users.is_admin?(socket.assigns.current_user) do
+        Processing.show()
+        |> Enum.map(fn {_task, type, id} -> {id, %{type => nil}} end)
+        |> Enum.into(%{})
+      else
+        %{}
+      end
+
+    assign(socket, :processing_state, processing_state)
   end
 end

@@ -21,27 +21,65 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
 
   require Logger
 
-  def processing_button(assigns) do
+  def processing_state_row(assigns) do
     ~H"""
-    <%= if @type in @active_processing_tasks do %>
-      <.link
-        class="font-semibold font-mono cursor-pointer"
-        type="button"
-        phx-click="stop_processing"
-        phx-value-type={@type}
-      >
-        Stop
-      </.link>
-    <% else %>
-      <.link
-        class="font-semibold font-mono cursor-pointer"
-        type="button"
-        phx-click="start_processing"
-        phx-value-type={@type}
-      >
-        Start
-      </.link>
-    <% end %>
+    <tr>
+      <td>{@label}</td>
+      <%= case @state do %>
+        <% :loading -> %>
+          <td>
+            <div class="text-center">Loading...</div>
+          </td>
+          <td></td>
+        <% :error -> %>
+          <td>
+            <div class="text-center">Error while evaluating data state.</div>
+          </td>
+          <td></td>
+        <% %{active?: active?, progress: progress} -> %>
+          <td>
+            <%= cond do %>
+              <% progress == nil && active? -> %>
+                <div class="text-center">
+                  <.icon
+                    name="hero-cog-8-tooth-solid"
+                    class="h-4 w-4 animate-spin-slow text-primary"
+                  /> Processing...
+                </div>
+              <% progress == nil && !active? -> %>
+                <div class="text-center">
+                  <.icon name="hero-check-solid" />
+                </div>
+              <% true -> %>
+                <.progress_bar
+                  count={progress.counter}
+                  max={progress.overall}
+                />
+            <% end %>
+          </td>
+          <td class="text-center">
+            <%= if active? do %>
+              <.link
+                class="font-semibold font-mono cursor-pointer"
+                type="button"
+                phx-click="stop_processing"
+                phx-value-type={@type}
+              >
+                Stop
+              </.link>
+            <% else %>
+              <.link
+                class="font-semibold font-mono cursor-pointer"
+                type="button"
+                phx-click="start_processing"
+                phx-value-type={@type}
+              >
+                Start
+              </.link>
+            <% end %>
+          </td>
+      <% end %>
+    </tr>
     """
   end
 
@@ -52,21 +90,6 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
     channel = Publications.get_doc_id(publication)
 
     PubSub.subscribe(FieldPublication.PubSub, channel)
-
-    issues =
-      if publication.replication_finished do
-        start_data_state_evaluation(publication)
-        Publications.Data.get_grouped_issues(publication)
-      else
-        nil
-      end
-
-    # Check if web images are currently processed for the publication.
-
-    active_processing_tasks =
-      publication
-      |> Processing.show()
-      |> Enum.map(fn {_task_ref, type, _publication_id} -> type end)
 
     translation_options =
       (publication.languages ++ Translate.supported_languages())
@@ -79,11 +102,61 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
       |> assign(:page_title, "Publication for '#{project_id}' drafted #{draft_date_string}.")
       |> assign(:translation_options, translation_options)
       |> assign(:replication_progress_state, nil)
-      |> assign(:data_state, nil)
-      |> assign(:data_issues, issues)
-      |> assign(:active_processing_tasks, active_processing_tasks)
       |> publication_updated(publication)
       |> evaluate_replication_state()
+      |> get_issues()
+      |> assign(:web_images, :loading)
+      |> assign(:tile_images, :loading)
+      |> assign(:search_index, %{
+        active?: Processing.show(publication, :search_index) != nil,
+        progress: Publications.Search.evaluate_active_index_state(publication)
+      })
+      |> assign(:preview_documents, %{
+        active?: Processing.show(publication, :preview_documents) != nil,
+        progress: nil
+      })
+      |> assign(:database_indices, %{
+        active?: Processing.show(publication, :database_indices) != nil,
+        progress: nil
+      })
+      |> start_async(:web_images, fn ->
+        %{summary: progress} = WebImage.evaluate_web_images_state(publication)
+
+        %{
+          active?: Processing.show(publication, :web_images) != nil,
+          progress: progress
+        }
+      end)
+      |> start_async(:tile_images, fn ->
+        %{summary: progress} = MapTiles.evaluate_state(publication)
+
+        %{
+          active?: Processing.show(publication, :tile_images) != nil,
+          progress: progress
+        }
+      end)
+    }
+  end
+
+  @impl Phoenix.LiveView
+  def handle_async(task_key, {:ok, state}, socket) when task_key in [:web_images, :tile_images] do
+    {
+      :noreply,
+      socket
+      |> assign(task_key, state)
+      |> get_issues()
+    }
+  end
+
+  def handle_async(task_key, {:exit, reason}, socket) do
+    Logger.error("Async state loading for #{task_key} failed with:")
+    Logger.error(inspect(reason))
+
+    {
+      :noreply,
+      socket
+      |> assign(task_key, :error)
+      |> get_issues()
     }
   end
 
@@ -166,15 +239,8 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
   @doc """
   The function `handle_info/2` handles messages sent directly to the socket-process from the within the server application.
   """
-  def handle_info({ref, {:data_state_evaluation, data_state}}, socket) do
-    # Handles the result of the async Task started in the `mount/3` function above.
 
-    # We don't care about the processes DOWN message now, so let's demonitor and flush it.
-    Process.demonitor(ref, [:flush])
-    {:noreply, assign(socket, :data_state, data_state)}
-  end
-
-  def handle_info({source, %{counter: counter, overall: overall}}, socket)
+  def handle_info({_publication_id, {source, %{counter: counter, overall: overall}}}, socket)
       when source in [:file_replication_count, :document_replication_count] and
              counter == overall do
     # Document and file replication share the same interface element, using the same assign.
@@ -183,14 +249,14 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
     {:noreply, assign(socket, :replication_progress_state, nil)}
   end
 
-  def handle_info({source, state}, socket)
+  def handle_info({_publication_id, {source, state}}, socket)
       when source in [:file_replication_count, :document_replication_count] do
     # Document and file replication share the same interface element, using the same assign.
     state = Map.put(state, :percentage, state.counter / state.overall * 100)
     {:noreply, assign(socket, :replication_progress_state, state)}
   end
 
-  def handle_info({:replication_stopped}, socket) do
+  def handle_info({_publication_id, {:replication_stopped}}, socket) do
     # Replication has finished, was stopped prematurely by a user, or crashed.
 
     {
@@ -200,110 +266,50 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
   end
 
   def handle_info(
-        {processing_feedback, _summary},
-        %{assigns: %{data_state: nil}} = socket
-      )
-      when processing_feedback in [
-             :web_image_processing_count,
-             :search_index_processing_count,
-             :tile_image_processing_count
-           ] do
-    # This handles situations, where a processing task starts sending updates, while the interface is not ready yet. While
-    # our view's data_state is nil, we just ignore any incoming update and thereby waiting for start_data_state_evaluation/1 to finish.
-    {:noreply, socket}
-  end
-
-  def handle_info(
-        {:web_image_processing_count, summary},
-        %{assigns: %{data_state: data_state}} = socket
+        {_publication_id, {:processing_started, processing_type}},
+        socket
       ) do
-    updated_data_state =
-      Map.update!(data_state, :images, fn old_image_state ->
-        Map.put(old_image_state, :summary, summary)
-      end)
-
-    {:noreply, assign(socket, :data_state, updated_data_state)}
-  end
-
-  def handle_info(
-        {:tile_image_processing_count, summary},
-        %{assigns: %{data_state: data_state}} = socket
-      ) do
-    updated_data_state =
-      Map.update!(data_state, :tiles, fn old_image_state ->
-        Map.put(old_image_state, :summary, summary)
-      end)
-
-    {:noreply, assign(socket, :data_state, updated_data_state)}
-  end
-
-  def handle_info(
-        {:search_index_processing_count, count},
-        %{assigns: %{data_state: data_state}} = socket
-      ) do
-    updated_data_state =
-      Map.put(data_state, :search_index, count)
-
-    {:noreply, assign(socket, :data_state, updated_data_state)}
-  end
-
-  def handle_info({:processing_started, type}, socket) do
     {
       :noreply,
-      update(socket, :active_processing_tasks, fn current -> current ++ [type] end)
+      update(socket, processing_type, fn previous ->
+        Map.put(previous, :active?, true)
+      end)
     }
   end
 
   def handle_info(
-        {:processing_stopped, type},
-        %{assigns: %{publication: publication}} = socket
+        {_publication_id, {:processing_stopped, processing_type}},
+        socket
       ) do
-    updated_issues = Publications.Data.get_grouped_issues(publication)
-
     {
       :noreply,
-      socket
-      |> update(:active_processing_tasks, fn current ->
-        Enum.reject(current, fn val -> val == type end)
+      update(socket, processing_type, fn previous ->
+        Map.put(previous, :active?, false)
       end)
-      |> assign(:data_issues, updated_issues)
     }
   end
 
-  def handle_info(%Publication{} = updated_publication, socket) do
+  def handle_info(
+        {_publication_id, {:processing_progress, processing_type, progress}},
+        socket
+      ) do
+    {
+      :noreply,
+      assign(socket, processing_type, %{active?: true, progress: progress})
+    }
+  end
+
+  def handle_info({_publication_id, %Publication{} = updated_publication}, socket) do
     {
       :noreply,
       publication_updated(socket, updated_publication)
     }
   end
 
-  defp start_data_state_evaluation(%Publication{} = publication) do
-    # The result of the async task will get picked up by a `handle_info/2` above.
-    Task.async(fn ->
-      {
-        :data_state_evaluation,
-        %{
-          images: WebImage.evaluate_web_images_state(publication),
-          tiles: MapTiles.evaluate_state(publication),
-          search_index: Publications.Search.evaluate_active_index_state(publication)
-          #          preview_documents: Publications.Data.get_preview_document_state(publication)
-        }
-      }
-    end)
-  end
-
   defp publication_updated(
          socket,
          %Publication{} = publication
        ) do
-    if Map.has_key?(socket.assigns, :publication) &&
-         is_nil(socket.assigns.publication.replication_finished) &&
-         !is_nil(publication.replication_finished) do
-      # This publication update flipped the replication finished field from `nil` to a date, which
-      # means we just finished the data replication, trigger the data state evaluation.
-      start_data_state_evaluation(publication)
-    end
-
     socket
     |> assign(:publication, publication)
     |> assign(
@@ -312,6 +318,17 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
       |> Publication.changeset()
       |> to_form
     )
+  end
+
+  def get_issues(%{assigns: %{publication: publication}} = socket) do
+    issues =
+      if publication.replication_finished do
+        Publications.Data.get_grouped_issues(publication)
+      else
+        %{}
+      end
+
+    assign(socket, :data_issues, issues)
   end
 
   defp evaluate_replication_state(%{assigns: %{publication: publication}} = socket) do

@@ -1,5 +1,4 @@
 defmodule FieldPublication.Processing.MapTiles do
-  alias Phoenix.PubSub
   require Logger
 
   alias Vix.Vips.{
@@ -53,24 +52,10 @@ defmodule FieldPublication.Processing.MapTiles do
     overall_count = Enum.count(georeferenced_docs)
     existing_count = Enum.count(existing_tiles)
 
-    Publications.Data.clear_data_issues(publication, @data_report_key)
-
-    Enum.map(missing_raw_files, fn uuid ->
-      Publications.Data.report_data_issue(
-        uuid,
-        LogEntry.create(%{
-          type: "missing_image_file",
-          reported_by: @data_report_key,
-          severity: :warning,
-          message: "Missing raw image file."
-        }),
-        publication
-      )
-    end)
-
     %{
       existing: existing_tiles,
       documents_awaiting_processing: missing_that_could_be_generated,
+      missing_raw_files: missing_raw_files,
       summary: %{
         overall: overall_count,
         counter: existing_count,
@@ -82,15 +67,33 @@ defmodule FieldPublication.Processing.MapTiles do
   def start(%Publication{project_name: project_key} = publication) do
     tiles_root = FileService.get_map_tiles_base_path(project_key)
 
-    %{documents_awaiting_processing: waiting, summary: summary} =
-      evaluate_state(publication)
+    %{
+      documents_awaiting_processing: waiting,
+      summary: summary,
+      missing_raw_files: missing_raw_files
+    } = evaluate_state(publication)
+
+    Publications.Data.clear_data_issues(publication, @data_report_key)
+
+    issues =
+      Enum.map(missing_raw_files, fn uuid ->
+        {
+          uuid,
+          LogEntry.create(%{
+            type: "missing_image_file",
+            reported_by: @data_report_key,
+            severity: :warning,
+            message: "Missing raw image file."
+          })
+        }
+      end)
+
+    Publications.Data.report_data_issues(issues, publication)
 
     File.mkdir_p!(tiles_root)
 
     {:ok, counter_pid} =
       Agent.start_link(fn -> summary end)
-
-    doc_id = Publications.get_doc_id(publication)
 
     quarter_of_all_schedulers = trunc(System.schedulers() * 0.25)
 
@@ -143,13 +146,9 @@ defmodule FieldPublication.Processing.MapTiles do
                 {state, state}
               end)
 
-            PubSub.broadcast(
-              FieldPublication.PubSub,
-              doc_id,
-              {
-                :tile_image_processing_count,
-                updated_state
-              }
+            Publications.broadcast(
+              publication,
+              {:processing_progress, :tile_images, updated_state}
             )
 
           %{"_id" => uuid} ->

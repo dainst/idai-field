@@ -12,7 +12,7 @@ defmodule FieldPublication.DatabaseSchema.DataIssues do
     field(:_rev, :string)
     field(:doc_type, :string, default: @doc_type)
     field(:uuid, :string)
-    embeds_many(:entries, LogEntry)
+    embeds_many(:entries, LogEntry, on_replace: :delete)
   end
 
   def id(%__MODULE__{uuid: uuid}), do: "issue_#{uuid}"
@@ -65,6 +65,57 @@ defmodule FieldPublication.DatabaseSchema.DataIssues do
     end
   end
 
+  def add_entries(entries, database_name) do
+    existing_list =
+      Enum.map(entries, fn {uuid, _doc} -> id(uuid) end)
+      |> CouchService.get_documents(database_name)
+      |> then(fn {:ok, %{body: body}} ->
+        %{"results" => doc_list} = Jason.decode!(body)
+
+        Enum.map(doc_list, fn
+          %{"docs" => [%{"ok" => unparsed_doc}]} ->
+            %__MODULE__{}
+            |> changeset(unparsed_doc)
+            |> apply_action!(:create)
+
+          _ ->
+            :not_found
+        end)
+      end)
+      |> Stream.reject(fn val -> val == :not_found end)
+      |> Stream.map(fn %__MODULE__{uuid: uuid} = issue ->
+        {uuid, issue}
+      end)
+      |> Enum.into(%{})
+
+    Stream.map(entries, fn {uuid, %LogEntry{} = entry} when is_binary(uuid) ->
+      case Map.get(existing_list, uuid) do
+        %__MODULE__{} = issue_doc ->
+          changeset = changeset(issue_doc)
+
+          changeset
+          |> Ecto.Changeset.put_embed(
+            :entries,
+            issue_doc.entries ++ [entry]
+          )
+          |> Ecto.Changeset.apply_action(:create)
+          |> case do
+            {:ok, updated_doc} ->
+              updated_doc
+
+            _error ->
+              # TODO: Add warning/error?
+              create!(uuid, entry)
+          end
+
+        nil ->
+          create!(uuid, entry)
+      end
+    end)
+    |> Stream.chunk_every(500)
+    |> Enum.each(&CouchService.post_documents(&1, database_name))
+  end
+
   def remove_entries(report_key, database_name) do
     CouchService.get_document_stream(
       %{
@@ -83,8 +134,8 @@ defmodule FieldPublication.DatabaseSchema.DataIssues do
     end)
   end
 
-  def list(database_name) do
-    CouchService.get_document_stream(%{selector: %{doc_type: @doc_type}}, database_name)
+  def list(database_name, selector \\ %{selector: %{doc_type: @doc_type}}) do
+    CouchService.get_document_stream(selector, database_name)
     |> Stream.map(fn doc ->
       %__MODULE__{}
       |> changeset(doc)
@@ -93,7 +144,7 @@ defmodule FieldPublication.DatabaseSchema.DataIssues do
     |> Enum.to_list()
   end
 
-  defp changeset(project, attrs) do
+  defp changeset(project, attrs \\ %{}) do
     project
     |> cast(attrs, [:_rev, :uuid])
     |> cast_embed(:entries)

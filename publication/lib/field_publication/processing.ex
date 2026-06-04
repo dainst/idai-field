@@ -447,6 +447,6 @@ defmodule FieldPublication.Processing do
   defp broadcast(channel, processing_type, msg)
        when msg in [:processing_started, :processing_stopped] do
     Logger.info("#{msg}: #{processing_type}, #{channel}")
-    PubSub.broadcast!(FieldPublication.PubSub, channel, {msg, processing_type})
+    PubSub.broadcast!(FieldPublication.PubSub, channel, {channel, {msg, processing_type}})
   end
 end

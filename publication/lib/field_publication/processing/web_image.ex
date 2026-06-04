@@ -1,6 +1,4 @@
 defmodule FieldPublication.Processing.WebImage do
-  alias Phoenix.PubSub
-
   alias Vix.Vips.{
     Image,
     Operation
@@ -45,21 +43,6 @@ defmodule FieldPublication.Processing.WebImage do
     overall_count = Enum.count(existing) + Enum.count(missing)
     existing_count = Enum.count(existing)
 
-    Publications.Data.clear_data_issues(publication, @data_report_key)
-
-    Enum.map(missing_raw_files, fn uuid ->
-      Publications.Data.report_data_issue(
-        uuid,
-        LogEntry.create(%{
-          type: "missing_image_file",
-          reported_by: @data_report_key,
-          severity: :warning,
-          message: "Missing raw image file."
-        }),
-        publication
-      )
-    end)
-
     %{
       processed: existing,
       existing_raw_files: existing_raw_files,
@@ -73,8 +56,26 @@ defmodule FieldPublication.Processing.WebImage do
   end
 
   def start(%Publication{project_name: project_key} = publication) do
-    %{existing_raw_files: existing_raw_files, summary: summary} =
-      evaluate_web_images_state(publication)
+    %{
+      existing_raw_files: existing_raw_files,
+      summary: summary,
+      missing_raw_files: missing_raw_files
+    } = evaluate_web_images_state(publication)
+
+    Publications.Data.clear_data_issues(publication, @data_report_key)
+
+    Publications.Data.report_data_issues(
+      Enum.map(missing_raw_files, fn uuid ->
+        {uuid,
+         LogEntry.create(%{
+           type: "missing_image_file",
+           reported_by: @data_report_key,
+           severity: :warning,
+           message: "Missing raw image file."
+         })}
+      end),
+      publication
+    )
 
     quarter_of_all_schedulers = trunc(System.schedulers() * 0.25)
 
@@ -83,8 +84,6 @@ defmodule FieldPublication.Processing.WebImage do
 
     {:ok, counter_pid} =
       Agent.start_link(fn -> summary end)
-
-    doc_id = Publications.get_doc_id(publication)
 
     existing_raw_files
     |> Task.async_stream(
@@ -136,13 +135,9 @@ defmodule FieldPublication.Processing.WebImage do
                 {state, state}
               end)
 
-            PubSub.broadcast(
-              FieldPublication.PubSub,
-              doc_id,
-              {
-                :web_image_processing_count,
-                updated_state
-              }
+            Publications.broadcast(
+              publication,
+              {:processing_progress, :web_images, updated_state}
             )
         end
       end,

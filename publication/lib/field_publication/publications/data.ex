@@ -134,6 +134,11 @@ defmodule FieldPublication.Publications.Data do
     DataIssues.add_entry(uuid, entry, meta_db_name)
   end
 
+  def report_data_issues(issues, %Publication{} = publication) when is_list(issues) do
+    meta_db_name = get_meta_database_name(publication)
+    DataIssues.add_entries(issues, meta_db_name)
+  end
+
   def clear_data_issues(publication, report_key) do
     meta_db_name = get_meta_database_name(publication)
 

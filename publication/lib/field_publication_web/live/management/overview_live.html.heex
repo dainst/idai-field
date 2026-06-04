@@ -3,41 +3,76 @@
 <.document_heading>Management</.document_heading>
 <%= if FieldPublication.Users.is_admin?(@current_user) do %>
   <.group_heading>Administration</.group_heading>
-  <ul class="p-4 list-disc list-inside">
-    <li>
-      <.link navigate={~p"/management/projects/new"}>
-        Create new project
-      </.link>
-    </li>
-    <li>
-      <button
-        class="text-primary hover:text-primary-hover cursor-pointer"
-        phx-click={JS.push("reindex_all_search_indices")}
-        data-confirm="Are you sure?"
-      >
-        Recreate search indices
-      </button>
-    </li>
-    <li>
-      <button
-        class="text-primary hover:text-primary-hover cursor-pointer"
-        phx-click={JS.push("recreate_previews")}
-        data-confirm="Are you sure?"
-      >
-        Recreate all preview documents
-      </button>
-    </li>
-    <li>
-      <.link navigate={~p"/management/users"}>
-        Manage users
-      </.link>
-    </li>
-    <li>
-      <.link navigate={~p"/management/settings"}>
-        Settings
-      </.link>
-    </li>
-  </ul>
+  <section class="flex">
+    <ul class="p-4 min-w-80 list-disc list-inside">
+      <li>
+        <.link navigate={~p"/management/projects/new"}>
+          Create new project
+        </.link>
+      </li>
+      <li>
+        <button
+          class="text-primary hover:text-primary-hover cursor-pointer"
+          phx-click={JS.push("reindex_all_search_indices")}
+          data-confirm="Are you sure?"
+        >
+          Recreate search indices
+        </button>
+      </li>
+      <li>
+        <button
+          class="text-primary hover:text-primary-hover cursor-pointer"
+          phx-click={JS.push("recreate_previews")}
+          data-confirm="Are you sure?"
+        >
+          Recreate all preview documents
+        </button>
+      </li>
+      <li>
+        <.link navigate={~p"/management/users"}>
+          Manage users
+        </.link>
+      </li>
+      <li>
+        <.link navigate={~p"/management/settings"}>
+          Settings
+        </.link>
+      </li>
+    </ul>
+    <div class="grow ">
+      <div>Running processes</div>
+
+      <%= if @processing_state == %{} do %>
+        None
+      <% else %>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 max-h-64 overflow-y-auto">
+          <%= for {publication_id, processes} <- @processing_state do %>
+            <.labeled_value>
+              <:label>{publication_id}</:label>
+              <%= for {process_type, progress} <- processes do %>
+                <div class="flex gap-4">
+                  <div>{process_type}</div>
+                  <div class="w-96">
+                    <%= if progress == nil do %>
+                      <.icon
+                        name="hero-cog-8-tooth-solid"
+                        class="h-4 w-4 animate-spin-slow text-primary"
+                      />
+                    <% else %>
+                      <.progress_bar
+                        count={progress.counter}
+                        max={progress.overall}
+                      />
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            </.labeled_value>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </section>
 <% end %>
 <.group_heading>Projects</.group_heading>
 <%= if @projects != [] do %>

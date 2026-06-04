@@ -84,7 +84,7 @@ defmodule FieldPublicationWeb.FieldHubIntegrationTest do
              "Publication <span>draft </span>\n  &#39;#{Date.utc_today()}&#39; for project &#39;#{@test_project_name}&#39;"
 
     assert_receive(
-      {:replication_stopped},
+      {_publication_id, {:replication_stopped}},
       1000 * 60
     )
 
@@ -108,13 +108,13 @@ defmodule FieldPublicationWeb.FieldHubIntegrationTest do
              severity: :info
            } = List.last(logs)
 
-    assert_receive {:processing_started, :search_index}
-    assert_receive {:processing_started, :tile_images}
-    assert_receive {:processing_started, :web_images}
+    assert_receive {_publication_id, {:processing_started, :search_index}}
+    assert_receive {_publication_id, {:processing_started, :tile_images}}
+    assert_receive {_publication_id, {:processing_started, :web_images}}
 
-    assert_receive {:processing_stopped, :search_index}, 1000 * 20
-    assert_receive {:processing_stopped, :tile_images}, 1000 * 20
-    assert_receive {:processing_stopped, :web_images}, 1000 * 20
+    assert_receive {_publication_id, {:processing_stopped, :search_index}}, 1000 * 20
+    assert_receive {_publication_id, {:processing_stopped, :tile_images}}, 1000 * 20
+    assert_receive {_publication_id, {:processing_stopped, :web_images}}, 1000 * 20
 
     %{image: image_uuids} =
       FileService.list_raw_data_files(@test_project_name)

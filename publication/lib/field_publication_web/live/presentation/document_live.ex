@@ -62,7 +62,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
   end
 
   def handle_params(
-        _neither_date_nor_language_were_requested,
+        _no_date_was_requested,
         _uri,
         %{assigns: %{publications: publications, project_name: project_name}} = socket
       ) do

@@ -1,6 +1,5 @@
 defmodule FieldPublicationWeb.Presentation.Components.PublicationSelection do
   use FieldPublicationWeb, :html
-  use FieldPublicationWeb, :verified_routes
 
   def render(assigns) do
     ~H"""

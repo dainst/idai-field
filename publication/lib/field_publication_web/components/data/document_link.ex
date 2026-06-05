@@ -1,6 +1,5 @@
 defmodule FieldPublicationWeb.Components.Data.DocumentLink do
   use FieldPublicationWeb, :html
-  use FieldPublicationWeb, :verified_routes
 
   alias FieldPublication.Publications.Data.Document
 

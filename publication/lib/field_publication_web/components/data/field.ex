@@ -1,5 +1,4 @@
 defmodule FieldPublicationWeb.Components.Data.Field do
-  use FieldPublicationWeb, :verified_routes
   use FieldPublicationWeb, :html
 
   require Logger
@@ -11,8 +10,8 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     input_type in (Search.get_keyword_inputs() ++ Search.get_keyword_multi_inputs())
   end
 
-  attr :field, Field
-  attr :hide_language_selection?, :boolean, default: false
+  attr(:field, Field)
+  attr(:hide_language_selection?, :boolean, default: false)
 
   def render_field_data(%{field: %Field{input_type: input_type}} = assigns)
       when input_type in ["boolean"] do
@@ -202,8 +201,8 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     render_warning(assigns)
   end
 
-  attr :field, Field, required: true
-  attr :hide_language_selection?, :boolean, default: false
+  attr(:field, Field, required: true)
+  attr(:hide_language_selection?, :boolean, default: false)
 
   def render_field_data_as_markdown(%{field: %Field{input_type: input_type}} = assigns)
       when input_type in ["input", "simpleInput", "text"] do
@@ -226,7 +225,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     """
   end
 
-  attr :field, Field, required: true
+  attr(:field, Field, required: true)
 
   def render_field_label(%{field: %Field{labels: labels}} = assigns) when is_map(labels) do
     ~H"""
@@ -274,11 +273,11 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     """
   end
 
-  attr :id, :string, required: true
-  attr :field, Field, required: true
-  attr :hide_selection?, :boolean, default: false
-  attr :value, :any, required: true
-  slot :inner_block, required: true
+  attr(:id, :string, required: true)
+  attr(:field, Field, required: true)
+  attr(:hide_selection?, :boolean, default: false)
+  attr(:value, :any, required: true)
+  slot(:inner_block, required: true)
 
   defp maybe_language_select(
          %{
@@ -353,14 +352,15 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     """
   end
 
-  attr :field, Field, required: true
+  attr(:field, Field, required: true)
 
-  attr :value, :string,
+  attr(:value, :string,
     default: nil,
     doc:
       "Explicitly define which value to use, for example if the field's `value` key is a list of selected values."
+  )
 
-  slot :inner_block, required: true
+  slot(:inner_block, required: true)
 
   defp maybe_search_link(assigns) do
     ~H"""

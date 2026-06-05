@@ -42,6 +42,7 @@ defmodule FieldPublication.MixProject do
       {:geo, "~> 4.1"},
       {:esbuild, "~> 0.10", runtime: Mix.env() == :dev},
       {:tailwind, "~> 0.4", runtime: Mix.env() == :dev},
+      {:mix_audit, "~> 2.1", only: [:dev, :test], runtime: false},
       {:swoosh, "~> 1.18"},
       {:finch, "~> 0.21"},
       {:lazy_html, "~> 0.1.10", only: :test},

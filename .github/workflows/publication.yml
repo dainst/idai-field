@@ -31,6 +31,9 @@ jobs:
       - name: Install Field Publication dependencies and run setup
         run: mix setup
         working-directory: publication
+      - name: Audit Field Publication dependencies
+        run: mix deps.audit
+        working-directory: publication
       - name: Run Field Publication tests
         run: mix test
         working-directory: publication

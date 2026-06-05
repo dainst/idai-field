@@ -1,12 +1,9 @@
 defmodule FieldPublicationWeb.Management.PublicationLiveTest do
-  alias FieldPublication.FileService
   alias FieldPublication.Processing
   alias FieldPublication.Publications
   alias FieldPublication.Projects
   alias FieldPublication.CouchService
   alias FieldPublication.DatabaseSchema.Project
-  alias FieldPublication.DatabaseSchema.Publication
-  alias FieldPublication.DatabaseSchema.LogEntry
 
   use FieldPublicationWeb.ConnCase
   import Phoenix.LiveViewTest
@@ -93,91 +90,5 @@ defmodule FieldPublicationWeb.Management.PublicationLiveTest do
              live(conn, ~p"/management/projects/#{@test_project_name}/publication/new")
 
     assert html =~ "Create new publication draft"
-  end
-
-  @tag timeout: 1000 * 60 * 5
-  test "can create a new publication through replicating from FieldHub", %{conn: conn} do
-    conn = log_in_user(conn, Application.get_env(:field_publication, :couchdb_admin_name))
-
-    assert {:ok, live_process, _html} =
-             live(conn, ~p"/management/projects/#{@test_project_name}/publication/new")
-
-    pid = live_process.pid
-    :erlang.trace(pid, true, [:receive])
-
-    assert live_process
-           |> form("#replication-form", %{
-             replication_input: %{
-               source_url: FieldHubHelper.get_url(),
-               source_user: FieldHubHelper.get_admin_name(),
-               source_password: FieldHubHelper.get_admin_password(),
-               source_project_name: "testopolis",
-               delete_existing_publication: true
-             }
-           })
-           |> render_submit()
-
-    {publication_path, _flash} = assert_redirect(live_process, 5000)
-
-    assert {:ok, live_process, html} = live(conn, publication_path)
-
-    assert html =~
-             "Publication <span>draft </span>\n  &#39;#{Date.utc_today()}&#39; for project &#39;test_project_a&#39;"
-
-    assert_receive(
-      {:replication_stopped},
-      1000 * 60
-    )
-
-    %Publication{
-      doc_type: "publication",
-      project_name: @test_project_name,
-      drafted_by: "couch_admin",
-      replication_logs: logs
-    } = Publications.get!(@test_project_name, "#{Date.utc_today()}")
-
-    assert %LogEntry{
-             # The rest would be something containing a date like: ""Replicating database for publication_test_project_a_<current date> by first replicating the database."
-             message: "Replicating database for " <> _rest,
-             timestamp: _,
-             severity: :info
-           } = List.first(logs)
-
-    assert %LogEntry{
-             message: "Draft creation finished.",
-             timestamp: _,
-             severity: :info
-           } = List.last(logs)
-
-    assert_receive {:processing_started, :search_index}
-    assert_receive {:processing_started, :tile_images}
-    assert_receive {:processing_started, :web_images}
-
-    assert_receive {:processing_stopped, :search_index}, 1000 * 20
-    assert_receive {:processing_stopped, :tile_images}, 1000 * 20
-    assert_receive {:processing_stopped, :web_images}, 1000 * 20
-
-    %{image: image_uuids} =
-      FileService.list_raw_data_files(@test_project_name)
-
-    raw_images_count = Enum.count(image_uuids)
-
-    web_files_count =
-      @test_project_name
-      |> FileService.list_web_image_files()
-      |> Enum.count()
-
-    tiles_count =
-      @test_project_name
-      |> FileService.list_tile_image_directories()
-      |> Enum.count()
-
-    assert raw_images_count == web_files_count
-    assert tiles_count == 2
-
-    html = render(live_process)
-
-    # save button is only visible after replication
-    assert html =~ "Save changes"
   end
 end

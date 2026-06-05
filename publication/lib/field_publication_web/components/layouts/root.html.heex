@@ -16,8 +16,13 @@
     be set on mount in the different live views. -->
     <meta property="og:title" content={ "#{assigns[:page_title]} · #{page_name}"} />
     <meta property="og:url" content={Phoenix.Controller.current_url(@conn)} />
-    <%= if assigns[:page_image] do %>
-      <meta property="og:image" content={assigns[:page_image]} />
+
+    <%= if assigns[:page_images] do %>
+      <%= for %{url: url, width: width, format: format} <- assigns[:page_images] do %>
+        <meta property="og:image" content={url} />
+        <meta property="og:image:width" content={width} />
+        <meta property="og:image:type" content={"image/#{format}"} />
+      <% end %>
     <% end %>
     <%= if assigns[:page_description] do %>
       <meta property="og:description" content={assigns[:page_description]} />

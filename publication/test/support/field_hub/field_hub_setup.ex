@@ -85,7 +85,7 @@ defmodule FieldHubHelper do
     )
     |> Finch.request(FieldPublication.Finch)
     |> case do
-      {:error, %Mint.TransportError{reason: :closed}} ->
+      {:error, %Finch.TransportError{reason: :closed}} ->
         Process.sleep(@retry_sleep_time)
         await_startup(ms_waited + @retry_sleep_time)
 

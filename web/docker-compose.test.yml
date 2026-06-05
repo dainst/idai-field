@@ -60,7 +60,7 @@ services:
       labels:
         - "traefik.docker.network=web"
         - "traefik.enable=true"
-        - "traefik.frontend.rule=Host:field.test.idai.world,shapes.test.idai.world; PathPrefix:/api"
+        - "traefik.frontend.rule=Host:field.test.idai.world; PathPrefix:/api"
         - "traefik.port=4000"
 
   ui:
@@ -72,7 +72,7 @@ services:
       labels:
         - "traefik.docker.network=web"
         - "traefik.enable=true"
-        - "traefik.frontend.rule=Host:field.test.idai.world,shapes.test.idai.world"
+        - "traefik.frontend.rule=Host:field.test.idai.world"
         - "traefik.port=80"
 
 volumes:

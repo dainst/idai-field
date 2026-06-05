@@ -118,8 +118,8 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
     }
   end
 
-  defp get_page_title(%Document{id: "project"} = doc) do
-    pick_default_translation(Data.get_field_value(doc, "shortName"))
+  defp get_page_title(%Document{id: "project", identifier: identifier} = doc) do
+    pick_default_translation(Data.get_field_value(doc, "shortName") || identifier)
   end
 
   defp get_page_title(%Document{identifier: identifier, category: %{labels: labels}}) do

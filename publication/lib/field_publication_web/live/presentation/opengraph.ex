@@ -1,20 +1,22 @@
 defmodule FieldPublicationWeb.Presentation.Opengraph do
-  import Phoenix.Component, only: [assign: 3]
-
   use FieldPublicationWeb, :html
+
+  alias FieldPublication.DatabaseSchema.Publication
+
   alias FieldPublication.Publications.Data
   alias FieldPublication.Publications.Data.Document
+
   alias FieldPublicationWeb.Components.Data.Image
 
-  def add_opengraph_tags(socket, publication, doc) do
+  def add_opengraph_tags(socket, %Publication{} = publication, %Document{} = doc) do
     socket
-    |> assign(
-      :page_image,
-      create_image(doc, publication.project_name)
-    )
     |> assign(
       :page_description,
       create_description(doc)
+    )
+    |> assign(
+      :page_images,
+      create_images(doc, publication.project_name)
     )
   end
 
@@ -32,13 +34,13 @@ defmodule FieldPublicationWeb.Presentation.Opengraph do
     end
   end
 
-  defp create_image(%Document{} = doc, project_name) do
-    case List.first(doc.image_uuids) do
-      nil ->
-        nil
-
-      first_image_uuid ->
-        "#{FieldPublicationWeb.Endpoint.url()}/#{Image.construct_url(project_name, first_image_uuid)}"
-    end
+  defp create_images(doc, project_name) do
+    Enum.map(doc.image_uuids, fn uuid ->
+      %{
+        url: "#{FieldPublicationWeb.Endpoint.url()}/#{Image.construct_url(project_name, uuid)}",
+        width: Image.get_default_width(),
+        format: Image.get_default_format()
+      }
+    end)
   end
 end

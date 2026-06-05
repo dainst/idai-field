@@ -6,6 +6,8 @@ defmodule FieldPublication.DatabaseSchema.LogEntry do
   @derive Jason.Encoder
   @primary_key false
   embedded_schema do
+    field(:type, :string)
+    field(:reported_by, :string)
     field(:severity, Ecto.Enum, values: [:error, :warning, :info])
     field(:message, :string)
     field(:timestamp, :utc_datetime)
@@ -13,14 +15,26 @@ defmodule FieldPublication.DatabaseSchema.LogEntry do
 
   def changeset(entry, attrs \\ %{}) do
     entry
-    |> cast(attrs, [:severity, :timestamp, :message])
+    |> cast(attrs, [
+      :type,
+      :reported_by,
+      :severity,
+      :message,
+      :timestamp
+    ])
     |> set_timestamp()
-    |> validate_required([:severity, :message, :timestamp])
+    |> validate_required([
+      :type,
+      :reported_by,
+      :severity,
+      :message,
+      :timestamp
+    ])
   end
 
   def create(attrs) do
     changeset(%__MODULE__{}, attrs)
-    |> apply_action(:create)
+    |> apply_action!(:create)
   end
 
   defp set_timestamp(changeset) do

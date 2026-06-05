@@ -1,7 +1,6 @@
 defmodule FieldPublicationWeb.Presentation.DocumentComponents do
   alias FieldPublication.DatabaseSchema.Publication
   use FieldPublicationWeb, :html
-  use FieldPublicationWeb, :verified_routes
 
   alias FieldPublicationWeb.Presentation.Components.{
     DocumentAncestors
@@ -28,10 +27,10 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
     RelationGroup
   }
 
-  attr :publication, Publication, required: true
-  attr :doc, Document, required: true
-  attr :lang, :string, required: true
-  attr :focus, :atom, default: :default
+  attr(:publication, Publication, required: true)
+  attr(:doc, Document, required: true)
+  attr(:lang, :string, required: true)
+  attr(:focus, :atom, default: :default)
 
   def generic(assigns) do
     ~H"""
@@ -248,8 +247,8 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
     """
   end
 
-  attr :publication, Publication, required: true
-  attr :doc, Document, required: true
+  attr(:publication, Publication, required: true)
+  attr(:doc, Document, required: true)
 
   def image(assigns) do
     ~H"""
@@ -311,8 +310,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                   ~p"/api/json/raw/#{@publication.project_name}/#{@publication.draft_date}/#{@doc.id}"
                 }
               >
-                <span class="text-center inline-block w-5]" style="block">{"{}"}</span>
-                View JSON (raw)
+                <span class="text-center inline-block w-5" style="block">{"{}"}</span> View JSON (raw)
               </a>
             </li>
             <li>
@@ -356,10 +354,10 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
     """
   end
 
-  attr :publication, Publication, required: true
-  attr :doc, Document, required: true
-  attr :lang, :string, required: true
-  attr :top_level_docs, :list, required: true
+  attr(:publication, Publication, required: true)
+  attr(:doc, Document, required: true)
+  attr(:lang, :string, required: true)
+  attr(:top_level_docs, :list, required: true)
 
   def project(assigns) do
     ~H"""
@@ -523,9 +521,9 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
     """
   end
 
-  attr :publication, Publication, required: true
-  attr :hierarchy, :map, required: true
-  attr :usage, :map, required: true
+  attr(:publication, Publication, required: true)
+  attr(:hierarchy, :map, required: true)
+  attr(:usage, :map, required: true)
 
   defp display_category_hierarchy(assigns) do
     ~H"""

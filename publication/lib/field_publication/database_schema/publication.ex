@@ -7,7 +7,6 @@ defmodule FieldPublication.DatabaseSchema.Publication do
 
   alias FieldPublication.DatabaseSchema.{
     Base,
-    DataIssue,
     Translation,
     LogEntry
   }
@@ -25,7 +24,6 @@ defmodule FieldPublication.DatabaseSchema.Publication do
     field(:replication_finished, :utc_datetime)
     field(:publication_date, :date)
     field(:configuration_doc, :string)
-    field(:hierarchy_doc, :string)
     field(:database, :string)
     field(:languages, {:array, :string}, default: [])
     # Version is currently not used, the default is saved. The idea is to maybe
@@ -35,7 +33,6 @@ defmodule FieldPublication.DatabaseSchema.Publication do
     field(:version, Ecto.Enum, values: [:major, :revision], default: :major)
     embeds_many(:comments, Translation, on_replace: :delete)
     embeds_many(:replication_logs, LogEntry, on_replace: :delete)
-    embeds_many(:data_issues, DataIssue, on_replace: :delete)
   end
 
   def changeset(publication, attrs \\ %{}) do
@@ -50,7 +47,6 @@ defmodule FieldPublication.DatabaseSchema.Publication do
       :replication_finished,
       :publication_date,
       :configuration_doc,
-      :hierarchy_doc,
       :database,
       :languages,
       :version
@@ -60,7 +56,6 @@ defmodule FieldPublication.DatabaseSchema.Publication do
       drop_param: :comments_drop
     )
     |> cast_embed(:replication_logs)
-    |> cast_embed(:data_issues)
     |> Translation.language_unique_constraint(:comments)
     |> validate_required([
       :project_name,
@@ -68,7 +63,6 @@ defmodule FieldPublication.DatabaseSchema.Publication do
       :source_project_name,
       :draft_date,
       :configuration_doc,
-      :hierarchy_doc,
       :database,
       :version
     ])

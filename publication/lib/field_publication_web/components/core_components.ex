@@ -17,9 +17,13 @@ defmodule FieldPublicationWeb.CoreComponents do
   use Phoenix.Component
 
   use FieldPublicationWeb, :verified_routes
-  alias FieldPublication.DatabaseSchema.DataIssue
-  alias Phoenix.LiveView.JS
   use Gettext, backend: FieldPublicationWeb.Translate
+
+  alias Phoenix.LiveView.JS
+
+  alias FieldPublication.DatabaseSchema.{
+    LogEntry
+  }
 
   @doc """
   Renders a modal.
@@ -702,44 +706,47 @@ defmodule FieldPublicationWeb.CoreComponents do
 
   def data_issues(assigns) do
     ~H"""
-    <% grouped = Enum.group_by(@logs, fn log -> log.issue_type_key end) %>
-    <%= for {issue_type_key, issues} <- grouped do %>
-      <details class="text-left p-1 border border-primary hover:border-primary-hover mb-0.5 last:mb-0">
-        <summary class="cursor-pointer w-full text-primary hover:text-primary-hover">
-          <.icon name="hero-exclamation-triangle" class={get_severity_icon_color(issues)} />
-          {issue_type_key} ({Enum.count(issues)})
-        </summary>
-        <table class="text-xs w-full table-fixed">
-          <thead>
-            <tr>
-              <th>Document</th>
-              <th>Issue</th>
-              <th>Reported by</th>
-            </tr>
-          </thead>
-          <tbody>
-            <%= for %DataIssue{log: %LogEntry{message: msg} = log, uuid: uuid, reported_by: reported_by} <- issues do %>
-              <tr class="border-b last:border-b-0">
-                <td class="p-2">
-                  <a href={~p"/projects/#{@project_key}/#{@draft_date}/#{uuid}"} target="new">
-                    {uuid}
-                  </a>
-                </td>
-                <td class="p-2">{msg}</td>
-                <td class="p-2">{reported_by}</td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </details>
+    <%= if Enum.empty?(@issues) do %>
+      None.
+    <% else %>
+      <%= for {{type, severity}, entries} <- @issues do %>
+        <details phx-mounted={JS.ignore_attributes(["open"])} class="text-left p-1 mb-0.5 last:mb-0">
+          <summary class="cursor-pointer w-full text-primary hover:text-primary-hover">
+            <.icon name="hero-exclamation-triangle" class={get_severity_icon_color(severity)} />
+            {type} ({Enum.count(entries)})
+          </summary>
+          <div class="overflow-y-scroll max-h-96 p-4">
+            <table class="text-xs w-full table-fixed">
+              <thead>
+                <tr>
+                  <th>Document</th>
+                  <th>Issue</th>
+                  <th>Reported by</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= for %{message: msg, reported_by: reported_by, uuid: uuid} <- entries do %>
+                  <tr class="border-b last:border-b-0">
+                    <td class="p-2">
+                      <a href={~p"/projects/#{@project_key}/#{@draft_date}/#{uuid}"} target="new">
+                        {uuid}
+                      </a>
+                    </td>
+                    <td class="p-2">{msg}</td>
+                    <td class="p-2">{reported_by}</td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </details>
+      <% end %>
     <% end %>
     """
   end
 
-  defp get_severity_icon_color(issues) do
-    issue_example = List.first(issues)
-
-    case issue_example.log.severity do
+  defp get_severity_icon_color(severity) do
+    case severity do
       :error ->
         "bg-red-500"
 
@@ -750,18 +757,6 @@ defmodule FieldPublicationWeb.CoreComponents do
         ""
     end
   end
-
-  # def log_entry(%{entry: %{metadata: %{"detailed" => _detailed, "uuid" => _uuid}}} = assigns) do
-  #   ~H"""
-  #   {@entry.metadata["uuid"]}: <span class="font-mono">{@entry.metadata["detailed"]}</span>
-  #   """
-  # end
-
-  # def log_entry(%{entry: %{metadata: %{"detailed" => _detailed}}} = assigns) do
-  #   ~H"""
-  #   {@entry.metadata["detailed"]}
-  #   """
-  # end
 
   def log_entry(assigns) do
     ~H"""

@@ -1,12 +1,14 @@
 defmodule FieldPublication.Publications.Search do
-  alias Phoenix.PubSub
-
   alias FieldPublication.Publications
   alias FieldPublication.Projects
   alias FieldPublication.OpenSearchService
   alias FieldPublication.Publications.Data
 
-  alias FieldPublication.DatabaseSchema.{DataIssue, Publication, Project}
+  alias FieldPublication.DatabaseSchema.{
+    LogEntry,
+    Publication,
+    Project
+  }
 
   require Logger
 
@@ -334,39 +336,43 @@ defmodule FieldPublication.Publications.Search do
 
     _keyword_fields =
       Jason.decode!(body)
-      |> Enum.reduce([], fn {
-                              _publication_index_name,
-                              %{"mappings" => %{"properties" => props}}
-                            },
-                            acc ->
-        keywords =
-          props
-          |> Enum.map(fn prop ->
-            case prop do
-              {"configuration_based_field_mappings", %{"properties" => configuration_based_props}} ->
-                Enum.map(configuration_based_props, fn configuration_prop ->
-                  case configuration_prop do
-                    {nested_key, %{"type" => "keyword"}} ->
-                      nested_key
+      |> Enum.reduce([], fn
+        {_publication_index_name, %{"mappings" => %{"properties" => props}}}, acc ->
+          keywords =
+            props
+            |> Enum.map(fn prop ->
+              case prop do
+                {"configuration_based_field_mappings",
+                 %{"properties" => configuration_based_props}} ->
+                  Enum.map(configuration_based_props, fn configuration_prop ->
+                    case configuration_prop do
+                      {nested_key, %{"type" => "keyword"}} ->
+                        nested_key
 
-                    _ ->
-                      nil
-                  end
-                end)
+                      _ ->
+                        nil
+                    end
+                  end)
 
-              {key, %{"type" => "keyword"}} ->
-                key
+                {key, %{"type" => "keyword"}} ->
+                  key
 
-              _ ->
-                nil
-            end
-          end)
-          |> List.flatten()
-          |> Enum.reject(fn key -> key in [nil, "id", "identifier"] end)
+                _ ->
+                  nil
+              end
+            end)
+            |> List.flatten()
+            |> Enum.reject(fn key -> key in [nil, "id", "identifier"] end)
 
-        acc = acc ++ (keywords -- acc)
+          acc = acc ++ (keywords -- acc)
 
-        acc
+          acc
+
+        {publication_index_name, invalid_mapping}, acc ->
+          Logger.error("Invalid search mapping for `#{publication_index_name}`:")
+          Logger.error(inspect(invalid_mapping, pretty: true))
+
+          acc
       end)
       |> Stream.map(fn key ->
         cond do
@@ -472,7 +478,19 @@ defmodule FieldPublication.Publications.Search do
     full_doc =
       Data.apply_project_configuration(doc, publication_configuration, publication)
       |> case do
-        {:error, :unknown_category} ->
+        {:error, {:unknown_category, category_name}} ->
+          Publications.Data.report_data_issue(
+            res["id"],
+            LogEntry.create(%{
+              type: "category_not_found_in_configuration",
+              reported_by: @data_report_key,
+              severity: :error,
+              message:
+                "Category not found in configuration: `#{category_name}` in document `#{doc["id"]}`"
+            }),
+            publication
+          )
+
           Logger.warning("Unknown category for document #{doc["id"]}")
           doc
 
@@ -538,8 +556,18 @@ defmodule FieldPublication.Publications.Search do
               Map.values(values)
 
             values when is_binary(values) ->
-              Logger.warning(
-                "Based on the project configuration expected Map or List values for field '#{field_name}' in '#{res["id"]}', but got '#{values}'."
+              msg =
+                "Based on the project configuration expected Map or List values for field '#{field_name}', but got '#{values}'."
+
+              Publications.Data.report_data_issue(
+                res["id"],
+                LogEntry.create(%{
+                  type: "data_to_configuration_mismatch",
+                  reported_by: @data_report_key,
+                  severity: :warning,
+                  message: msg
+                }),
+                publication
               )
 
               [values]
@@ -890,7 +918,6 @@ defmodule FieldPublication.Publications.Search do
   end
 
   def index_documents(%Publication{} = publication) do
-    publication_id = Publications.get_doc_id(publication)
     publication_configuration = Publications.get_configuration(publication)
 
     mapping = generate_index_mapping(publication)
@@ -908,16 +935,13 @@ defmodule FieldPublication.Publications.Search do
     {:ok, counter_pid} =
       Agent.start_link(fn -> initial_state end)
 
-    PubSub.broadcast(
-      FieldPublication.PubSub,
-      publication_id,
-      {
-        :search_index_processing_count,
-        initial_state
-      }
-    )
+    Publications.broadcast(publication, {
+      :processing_progress,
+      :search_index,
+      initial_state
+    })
 
-    Publications.clear_data_issues(publication, @data_report_key)
+    Publications.Data.clear_data_issues(publication, @data_report_key)
 
     publication
     |> Publications.Data.get_doc_stream_for_all()
@@ -936,7 +960,7 @@ defmodule FieldPublication.Publications.Search do
         special_input_types
       )
     )
-    |> Stream.chunk_every(500)
+    |> Stream.chunk_every(10)
     |> Enum.map(fn doc_batch ->
       batch_size = Enum.count(doc_batch)
 
@@ -959,22 +983,23 @@ defmodule FieldPublication.Publications.Search do
                 batch_size
             end
 
-          {:ok, %{status: 400, body: body}} ->
+          {:ok, %{status: status, body: body}} ->
             # Batch was not indexed.
             msg =
-              body
+              ("status code #{status} for\n " <>
+                 body)
               |> Jason.decode!()
               |> inspect()
 
-            issue =
-              DataIssue.create!("unknown", @data_report_key, nil, %{
+            Publications.Data.report_data_issue(
+              "general",
+              LogEntry.create(%{
+                type: "unexpected_open_search_response",
+                reported_by: @data_report_key,
                 severity: :error,
                 message: msg
-              })
-
-            Publications.report_data_issue(
-              publication,
-              issue
+              }),
+              publication
             )
 
             0
@@ -990,14 +1015,7 @@ defmodule FieldPublication.Publications.Search do
           {state, state}
         end)
 
-      PubSub.broadcast(
-        FieldPublication.PubSub,
-        publication_id,
-        {
-          :search_index_processing_count,
-          updated_state
-        }
-      )
+      Publications.broadcast(publication, {:processing_progress, :search_index, updated_state})
     end)
     |> Enum.to_list()
 
@@ -1018,15 +1036,15 @@ defmodule FieldPublication.Publications.Search do
          },
          %Publication{} = publication
        ) do
-    issue =
-      DataIssue.create!("malformed_geometry", @data_report_key, uuid, %{
+    Publications.Data.report_data_issue(
+      uuid,
+      LogEntry.create(%{
+        type: "malformed_geometry",
+        reported_by: @data_report_key,
         severity: :warning,
         message: reason
-      })
-
-    Publications.report_data_issue(
-      publication,
-      issue
+      }),
+      publication
     )
 
     :error
@@ -1045,15 +1063,15 @@ defmodule FieldPublication.Publications.Search do
          },
          %Publication{} = publication
        ) do
-    issue =
-      DataIssue.create!("malformed_geometry", @data_report_key, uuid, %{
+    Publications.Data.report_data_issue(
+      uuid,
+      LogEntry.create(%{
+        type: "malformed_geometry",
+        reported_by: @data_report_key,
         severity: :warning,
         message: reason
-      })
-
-    Publications.report_data_issue(
-      publication,
-      issue
+      }),
+      publication
     )
 
     :error
@@ -1063,15 +1081,15 @@ defmodule FieldPublication.Publications.Search do
          %{"index" => %{"_id" => uuid, "error" => error}},
          %Publication{} = publication
        ) do
-    issue =
-      DataIssue.create!("unknown", @data_report_key, uuid, %{
+    Publications.Data.report_data_issue(
+      uuid,
+      LogEntry.create(%{
+        type: "unknown",
+        reported_by: @data_report_key,
         severity: :error,
         message: inspect(error)
-      })
-
-    Publications.report_data_issue(
-      publication,
-      issue
+      }),
+      publication
     )
 
     :error

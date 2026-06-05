@@ -178,6 +178,8 @@ defmodule FieldPublication.Replication do
                 []
             end
 
+          Publications.Data.recreate_meta_database(publication)
+
           persisted_log(publication, :info, "Draft creation finished.")
 
           {:ok, %Publication{} = final_publication} =
@@ -266,7 +268,7 @@ defmodule FieldPublication.Replication do
     PubSub.broadcast(
       FieldPublication.PubSub,
       publication_id,
-      {:replication_stopped}
+      {publication_id, {:replication_stopped}}
     )
 
     {:noreply, cleanup(ref, running_replications)}
@@ -291,12 +293,13 @@ defmodule FieldPublication.Replication do
         Logger.debug(message)
     end
 
-    {:ok, log_entry} =
+    log_entry =
       LogEntry.create(%{
         severity: severity,
         timestamp: DateTime.utc_now(),
         message: message,
-        key: :replication_step
+        type: "replication_step",
+        reported_by: "replication"
       })
 
     Publications.get!(publication.project_name, publication.draft_date)

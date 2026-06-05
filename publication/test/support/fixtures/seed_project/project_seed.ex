@@ -68,7 +68,7 @@ defmodule FieldPublication.Test.ProjectSeed do
 
     # Expecting one batch created.
     [{:ok, %Finch.Response{status: 201}}] =
-      Publications.Data.recreate_document_previews(publication)
+      Publications.Data.recreate_meta_database(publication)
 
     seed_image_directory = "test/support/fixtures/seed_project/images/"
 

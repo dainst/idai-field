@@ -9,7 +9,6 @@ defmodule FieldPublication.Publications do
 
   alias FieldPublication.DatabaseSchema.{
     Base,
-    DataIssue,
     ReplicationInput,
     Publication
   }
@@ -40,7 +39,6 @@ defmodule FieldPublication.Publications do
         source_url: source_url,
         source_project_name: source_project_name,
         configuration_doc: "configuration_#{project_name}_#{draft_date}",
-        hierarchy_doc: "hierarchy_#{project_name}_#{draft_date}",
         database: "publication_#{project_name}_#{draft_date}",
         draft_date: draft_date,
         drafted_by: drafted_by
@@ -81,14 +79,21 @@ defmodule FieldPublication.Publications do
   end
 
   def get(project_name, %Date{} = draft_date) when is_binary(project_name) do
-    doc_id =
-      %Publication{
-        project_name: project_name,
-        draft_date: draft_date,
-        doc_type: Publication.doc_type()
-      }
-      |> get_doc_id()
+    %Publication{
+      project_name: project_name,
+      draft_date: draft_date,
+      doc_type: Publication.doc_type()
+    }
+    |> get_doc_id()
+    |> get()
+  end
 
+  def get!(project_name, draft_date) do
+    {:ok, publication} = get(project_name, draft_date)
+    publication
+  end
+
+  def get(doc_id) do
     Cachex.get(:document_cache, doc_id)
     |> case do
       {:ok, nil} ->
@@ -114,8 +119,8 @@ defmodule FieldPublication.Publications do
     end
   end
 
-  def get!(project_name, draft_date) do
-    {:ok, publication} = get(project_name, draft_date)
+  def get!(doc_id) do
+    {:ok, publication} = get(doc_id)
     publication
   end
 
@@ -140,26 +145,6 @@ defmodule FieldPublication.Publications do
         cached
     end
   end
-
-  # def get_hierarchy(%Publication{hierarchy_doc: hierarchy_doc_name}) do
-  #   Cachex.get(:document_cache, hierarchy_doc_name)
-  #   |> case do
-  #     {:ok, nil} ->
-  #       hierarchy =
-  #         CouchService.get_document(hierarchy_doc_name)
-  #         |> then(fn {:ok, %{body: body}} ->
-  #           Jason.decode!(body)
-  #         end)
-  #         |> Map.get("hierarchy", [])
-
-  #       Cachex.put(:document_cache, hierarchy_doc_name, hierarchy, ttl: 1000 * 60 * 60 * 24 * 7)
-
-  #       hierarchy
-
-  #     {:ok, cached} ->
-  #       cached
-  #   end
-  # end
 
   def get_published(project_name) do
     list(project_name)
@@ -290,7 +275,6 @@ defmodule FieldPublication.Publications do
          _ <- Cachex.del(:document_cache, doc_id),
          {:ok, %{status: 201}} <- CouchService.put_database(publication.database),
          {:ok, %{status: 201}} <- CouchService.put_document(publication.configuration_doc, %{}),
-         {:ok, %{status: 201}} <- CouchService.put_document(publication.hierarchy_doc, %{}),
          {:ok, %{status: 201, body: body}} <- CouchService.put_document(doc_id, publication),
          {:ok, %{status: 200}} <- Search.initialize_search_indices(publication) do
       %{"rev" => rev} = Jason.decode!(body)
@@ -322,11 +306,11 @@ defmodule FieldPublication.Publications do
     Cachex.del(:document_cache, doc_id)
 
     with {:ok, _preview_database_name} <-
-           Data.delete_preview_database(publication),
+           Data.delete_meta_database(publication),
          {:ok, %{status: status}} when status in [200, 404] <-
            delete_configuration_doc(publication),
-         {:ok, %{status: status}} when status in [200, 404] <-
-           delete_hierarchy_doc(publication),
+         # {:ok, %{status: status}} when status in [200, 404] <-
+         #   delete_hierarchy_doc(publication),
          :ok <- Search.delete_search_indices(publication),
          {:ok, %{status: status}} when status in [200, 404] <-
            CouchService.delete_document(doc_id, rev),
@@ -339,52 +323,7 @@ defmodule FieldPublication.Publications do
     end
   end
 
-  def clear_data_issues(
-        %Publication{project_name: project_name, draft_date: draft_date},
-        reported_by \\ nil
-      ) do
-    project_name
-    |> get!(draft_date)
-    |> then(fn publication ->
-      if is_nil(reported_by) do
-        Map.put(publication, :data_issues, [])
-      else
-        Map.update!(publication, :data_issues, fn existing ->
-          Enum.reject(existing, fn %DataIssue{reported_by: existing_reported_by} ->
-            existing_reported_by == reported_by
-          end)
-        end)
-      end
-    end)
-    |> put()
-  end
-
-  def report_data_issue(
-        %Publication{project_name: project_name, draft_date: draft_date},
-        %DataIssue{} = data_issue
-      ) do
-    get!(project_name, draft_date)
-    |> Map.update(:data_issues, [], fn existing -> existing ++ [data_issue] end)
-    |> put()
-  end
-
   defp delete_configuration_doc(%Publication{configuration_doc: doc_id}) do
-    CouchService.get_document(doc_id)
-    |> case do
-      {:ok, %{status: 404}} = response ->
-        response
-
-      {:ok, %{status: 200, body: body}} ->
-        rev =
-          body
-          |> Jason.decode!()
-          |> Map.get("_rev")
-
-        CouchService.delete_document(doc_id, rev)
-    end
-  end
-
-  defp delete_hierarchy_doc(%Publication{hierarchy_doc: doc_id}) do
     CouchService.get_document(doc_id)
     |> case do
       {:ok, %{status: 404}} = response ->
@@ -409,18 +348,22 @@ defmodule FieldPublication.Publications do
   end
 
   def broadcast(%Publication{} = publication) do
+    id = get_doc_id(publication)
+
     PubSub.broadcast(
       FieldPublication.PubSub,
-      get_doc_id(publication),
-      publication
+      id,
+      {id, publication}
     )
   end
 
   def broadcast(%Publication{} = publication, msg) do
+    id = get_doc_id(publication)
+
     PubSub.broadcast(
       FieldPublication.PubSub,
-      get_doc_id(publication),
-      msg
+      id,
+      {id, msg}
     )
   end
 end

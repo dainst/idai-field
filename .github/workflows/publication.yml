@@ -15,8 +15,8 @@ jobs:
       - uses: actions/checkout@v2
       - uses: erlef/setup-beam@v1
         with:
-          otp-version: 26.0
-          elixir-version: 1.16.0
+          otp-version: 27.0
+          elixir-version: 1.18.0
       - name: Start CouchDB and OpenSearch
         run: docker compose -f docker-compose.yml up -d
         working-directory: publication
@@ -30,6 +30,9 @@ jobs:
           restore-keys: ${{ runner.os }}-mix-
       - name: Install Field Publication dependencies and run setup
         run: mix setup
+        working-directory: publication
+      - name: Audit Field Publication dependencies
+        run: mix deps.audit
         working-directory: publication
       - name: Run Field Publication tests
         run: mix test

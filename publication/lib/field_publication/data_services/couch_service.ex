@@ -45,7 +45,7 @@ defmodule FieldPublication.CouchService do
         Logger.info("Created application database `#{@core_database}`.")
     end
 
-    [
+    {:ok, %Finch.Response{body: body}} =
       %{
         index: %{
           fields: ["doc_type"]
@@ -53,35 +53,38 @@ defmodule FieldPublication.CouchService do
         name: "doc_type-index",
         type: "json"
       }
-    ]
-    |> put_design_documents()
-    |> Enum.each(fn {:ok, {:ok, %Finch.Response{body: body}}} ->
-      response = Jason.decode!(body)
+      |> put_index_document()
 
-      case response do
-        %{"result" => "created", "name" => name} ->
-          Logger.info("Created database index '#{name}'.")
+    response = Jason.decode!(body)
 
-        %{"result" => "exists", "name" => name} ->
-          Logger.info("  Index '#{name}' already present.")
-      end
+    case response do
+      %{"result" => "created", "name" => name} ->
+        Logger.info("Created database index '#{name}'.")
 
-      response
-    end)
+      %{"result" => "exists", "name" => name} ->
+        Logger.info("  Index '#{name}' already present.")
+    end
+
+    response
   end
 
-  def put_design_documents(design_documents, database \\ @core_database) do
-    design_documents
-    |> Enum.map(fn definition ->
-      Finch.build(
-        :post,
-        "#{local_url()}/#{database}/_index",
-        headers(),
-        Jason.encode!(definition)
-      )
-    end)
-    |> Task.async_stream(&Finch.request(&1, FieldPublication.Finch))
-    |> Enum.to_list()
+  def put_index_document(design_document, database \\ @core_database) do
+    Finch.build(
+      :post,
+      "#{local_url()}/#{database}/_index",
+      headers(),
+      Jason.encode!(design_document)
+    )
+    |> Finch.request(FieldPublication.Finch)
+  end
+
+  def list_index_documents(database \\ @core_database) do
+    Finch.build(
+      :get,
+      "#{local_url()}/#{database}/_index",
+      headers()
+    )
+    |> Finch.request(FieldPublication.Finch)
   end
 
   @doc """

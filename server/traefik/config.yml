@@ -1,0 +1,36 @@
+providers:
+  docker: {}
+
+log:
+  level: "INFO"
+
+entryPoints:
+  web:
+    address: ":80"
+    http:
+      redirections:
+        entryPoint:
+          to: "websecure"
+  websecure:
+    address: ":443"
+
+certificatesResolvers:
+  dfn:
+    acme:
+      email: "it@dainst.de"
+      storage: "acme.json"
+      caServer: "<not set>"
+      eab:
+        kid: "<not set>"
+        hmacEncoded: "<not set>"
+      httpChallenge:
+        entryPoint: "web"
+      tlsChallenge: {}
+
+  letsencrypt:
+    acme:
+      email: "it@dainst.de"
+      storage: "acme.json"
+      httpChallenge:
+        entryPoint: "web"
+      tlsChallenge: {}

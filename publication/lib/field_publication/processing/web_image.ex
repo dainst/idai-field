@@ -1,6 +1,4 @@
 defmodule FieldPublication.Processing.WebImage do
-  alias Phoenix.PubSub
-
   alias Vix.Vips.{
     Image,
     Operation
@@ -10,7 +8,6 @@ defmodule FieldPublication.Processing.WebImage do
   alias FieldPublication.Publications
 
   alias FieldPublication.DatabaseSchema.{
-    DataIssue,
     LogEntry,
     Publication
   }
@@ -46,20 +43,6 @@ defmodule FieldPublication.Processing.WebImage do
     overall_count = Enum.count(existing) + Enum.count(missing)
     existing_count = Enum.count(existing)
 
-    Publications.clear_data_issues(publication, @data_report_key)
-
-    Enum.each(missing_raw_files, fn uuid ->
-      Publications.report_data_issue(publication, %DataIssue{
-        uuid: uuid,
-        reported_by: @data_report_key,
-        issue_type_key: "missing_image_file",
-        log: %LogEntry{
-          severity: :warning,
-          message: "Missing raw image file."
-        }
-      })
-    end)
-
     %{
       processed: existing,
       existing_raw_files: existing_raw_files,
@@ -73,8 +56,26 @@ defmodule FieldPublication.Processing.WebImage do
   end
 
   def start(%Publication{project_name: project_key} = publication) do
-    %{existing_raw_files: existing_raw_files, summary: summary} =
-      evaluate_web_images_state(publication)
+    %{
+      existing_raw_files: existing_raw_files,
+      summary: summary,
+      missing_raw_files: missing_raw_files
+    } = evaluate_web_images_state(publication)
+
+    Publications.Data.clear_data_issues(publication, @data_report_key)
+
+    Publications.Data.report_data_issues(
+      Enum.map(missing_raw_files, fn uuid ->
+        {uuid,
+         LogEntry.create(%{
+           type: "missing_image_file",
+           reported_by: @data_report_key,
+           severity: :warning,
+           message: "Missing raw image file."
+         })}
+      end),
+      publication
+    )
 
     quarter_of_all_schedulers = trunc(System.schedulers() * 0.25)
 
@@ -84,8 +85,6 @@ defmodule FieldPublication.Processing.WebImage do
     {:ok, counter_pid} =
       Agent.start_link(fn -> summary end)
 
-    doc_id = Publications.get_doc_id(publication)
-
     existing_raw_files
     |> Task.async_stream(
       fn uuid ->
@@ -93,45 +92,54 @@ defmodule FieldPublication.Processing.WebImage do
           "Creating web image (pyramid TIFF) for '#{uuid}' in project '#{project_key}'..."
         )
 
-        {:ok, file} =
-          project_key
-          |> FileService.get_raw_image_data_path(uuid)
-          |> Image.new_from_file()
+        project_key
+        |> FileService.get_raw_image_data_path(uuid)
+        |> Image.new_from_file()
+        |> case do
+          {:error, _} ->
+            Publications.Data.report_data_issue(
+              uuid,
+              %LogEntry{
+                type: "invalid_file",
+                reported_by: @data_report_key,
+                severity: :warning,
+                message: "The file could not be opened as an image."
+              },
+              publication
+            )
 
-        # Apply exif rotation metadata directly to the image data (if present), because we do not
-        # want end user's web browser to rotate image tiles because of the metadata.
-        {:ok, {file, _}} = Operation.autorot(file)
+          {:ok, file} ->
+            # Apply exif rotation metadata directly to the image data (if present), because we do not
+            # want end user's web browser to rotate image tiles because of the metadata.
+            {:ok, {file, _}} = Operation.autorot(file)
 
-        target_path = FileService.get_web_images_path(project_key, uuid)
+            target_path = FileService.get_web_images_path(project_key, uuid)
 
-        :ok =
-          Operation.tiffsave(file, target_path,
-            pyramid: true,
-            "tile-height": 256,
-            "tile-width": 256,
-            tile: true,
-            # See https://iipimage.sourceforge.io/2024/12/tiff-image-encoding-optimizing-for-size-speed-and-quality
-            compression: :VIPS_FOREIGN_TIFF_COMPRESSION_DEFLATE
-          )
+            :ok =
+              Operation.tiffsave(file, target_path,
+                pyramid: true,
+                "tile-height": 256,
+                "tile-width": 256,
+                tile: true,
+                # See https://iipimage.sourceforge.io/2024/12/tiff-image-encoding-optimizing-for-size-speed-and-quality
+                compression: :VIPS_FOREIGN_TIFF_COMPRESSION_DEFLATE
+              )
 
-        updated_state =
-          Agent.get_and_update(counter_pid, fn %{counter: counter, overall: overall} = state ->
-            state =
-              state
-              |> Map.put(:counter, counter + 1)
-              |> Map.put(:percentage, (counter + 1) / overall * 100)
+            updated_state =
+              Agent.get_and_update(counter_pid, fn %{counter: counter, overall: overall} = state ->
+                state =
+                  state
+                  |> Map.put(:counter, counter + 1)
+                  |> Map.put(:percentage, (counter + 1) / overall * 100)
 
-            {state, state}
-          end)
+                {state, state}
+              end)
 
-        PubSub.broadcast(
-          FieldPublication.PubSub,
-          doc_id,
-          {
-            :web_image_processing_count,
-            updated_state
-          }
-        )
+            Publications.broadcast(
+              publication,
+              {:processing_progress, :web_images, updated_state}
+            )
+        end
       end,
       max_concurrency: concurrent_processes,
       timeout: 1000 * 60 * 5

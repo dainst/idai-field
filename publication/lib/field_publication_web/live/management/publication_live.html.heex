@@ -41,247 +41,111 @@
   </.group_heading>
 </section>
 
-<.form for={@publication_form} phx-change="validate" phx-submit="save">
-  <div :if={!is_nil(@publication.replication_finished)}>
-    You may review and start the preprocessing steps required for the publication below. You can also add comments specific to this publication, that will be displayed on the publication's project document <.link navigate={
-      ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}"
-    }>
+<div :if={!is_nil(@publication.replication_finished)}>
+  You may review and start the preprocessing steps required for the publication below. You can also add comments specific to this publication, that will be displayed on the publication's project document <.link navigate={
+    ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}"
+  }>
     <.icon name="hero-home-solid" /> page
   </.link>. You can still change publication comment after the draft is published.
-  </div>
-  <.input type="hidden" field={@publication_form[:project_name]} />
-  <.input type="hidden" field={@publication_form[:source_url]} />
-  <.input type="hidden" field={@publication_form[:source_project_name]} />
-  <.input type="hidden" field={@publication_form[:draft_date]} />
-  <.input type="hidden" field={@publication_form[:drafted_by]} />
-  <.input type="hidden" field={@publication_form[:replication_finished]} />
-  <.input type="hidden" field={@publication_form[:configuration_doc]} />
-  <.input type="hidden" field={@publication_form[:hierarchy_doc]} />
-  <.input type="hidden" field={@publication_form[:database]} />
-  <.input type="hidden" field={@publication_form[:publication_date]} />
-  <.input type="hidden" field={@publication_form[:version]} />
-  <%= for {language, index} <- Enum.with_index(@publication_form[:languages].value) do %>
-    <input
-      type="hidden"
-      name={"#{@publication_form[:languages].name}[]"}
-      value={language}
-    />
-  <% end %>
+</div>
 
-  <.list>
-    <:item title="Replication">
-      <div :if={@publication.replication_finished} class="font-thin">
-        Replication finished {@publication.replication_finished}.
+<.list>
+  <:item title="Replication">
+    <div class="flex flex-wrap p-2 gap-4 w-full">
+      <.labeled_value>
+        <:label>Source URL</:label>
+        {@publication.source_url}
+      </.labeled_value>
+      <.labeled_value>
+        <:label>Source project name</:label>
+        {@publication.source_project_name}
+      </.labeled_value>
+      <.labeled_value>
+        <:label>Draft date</:label>
+        {@publication.draft_date}
+      </.labeled_value>
+      <.labeled_value>
+        <:label>Draft created by</:label>
+        {@publication.drafted_by}
+      </.labeled_value>
+    </div>
+    <%= if @publication.replication_finished do %>
+      <div>
+        Data replication finished {@publication.replication_finished}.
       </div>
-      <div class="flex flex-wrap p-2 gap-2 w-full">
-        <.labeled_value>
-          <:label>Source URL</:label>
-          {@publication.source_url}
-        </.labeled_value>
-        <.labeled_value>
-          <:label>Source project name</:label>
-          {@publication.source_project_name}
-        </.labeled_value>
-        <.labeled_value>
-          <:label>Draft date</:label>
-          {@publication.draft_date}
-        </.labeled_value>
-
-        <.labeled_value>
-          <:label>Draft created by</:label>
-          {@publication.drafted_by}
-        </.labeled_value>
-      </div>
-
-      <%= if is_nil(@publication.replication_finished) do %>
-        <.log_entry_list logs={@publication.replication_logs} />
-        <%= if @replication_progress_state do %>
-          <.progress_bar
-            count={@replication_progress_state.counter}
-            max={@replication_progress_state.overall}
-          />
-        <% end %>
-        <button
-          :if={@replication_state}
-          class="font-bold font-mono float-right cursor-pointer"
-          type="button"
-          phx-click={JS.push("stop_replication")}
-          data-confirm="Are you sure?"
-        >
-          Stop replication
-        </button>
-      <% end %>
-    </:item>
-    <:item :if={@publication.replication_finished != nil} title="Preprocessing">
-      <%= if @data_state do %>
-        <table class="w-full">
-          <thead class="bg-slate-700">
-            <tr class="text-slate-50">
-              <th class="w-1/6">Type</th>
-              <th class="w-4/6">Info</th>
-              <th class="w-1/6">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Web images</td>
-              <td>
-                <.progress_bar
-                  count={@data_state.images.summary.counter}
-                  max={@data_state.images.summary.overall}
-                />
-              </td>
-              <td class="text-center">
-                <%= if @web_images_processing? do %>
-                  <.link
-                    class="font-semibold font-mono cursor-pointer"
-                    type="button"
-                    phx-click="stop_web_images_processing"
-                  >
-                    Stop
-                  </.link>
-                <% else %>
-                  <.link
-                    class="font-semibold font-mono cursor-pointer"
-                    type="button"
-                    phx-click="start_web_images_processing"
-                  >
-                    Start
-                  </.link>
-                <% end %>
-              </td>
-            </tr>
-            <tr>
-              <td>Map tile images</td>
-              <td>
-                <.progress_bar
-                  count={@data_state.tiles.summary.counter}
-                  max={@data_state.tiles.summary.overall}
-                />
-              </td>
-              <td class="text-center">
-                <%= if @tile_images_processing? do %>
-                  <.link
-                    class="font-semibold font-mono cursor-pointer"
-                    type="button"
-                    phx-click="stop_tile_images_processing"
-                  >
-                    Stop
-                  </.link>
-                <% else %>
-                  <.link
-                    class="font-semibold font-mono cursor-pointer"
-                    type="button"
-                    phx-click="start_tile_images_processing"
-                  >
-                    Start
-                  </.link>
-                <% end %>
-              </td>
-            </tr>
-            <tr>
-              <td>Search index</td>
-              <td>
-                <.progress_bar
-                  count={@data_state.search_index.counter}
-                  max={@data_state.search_index.overall}
-                />
-              </td>
-              <td class="text-center">
-                <%= if @search_indexing? do %>
-                  <.link
-                    class="font-semibold font-mono cursor-pointer"
-                    type="button"
-                    phx-click="stop_search_indexing"
-                  >
-                    Stop
-                  </.link>
-                <% else %>
-                  <.link
-                    class="font-semibold font-mono cursor-pointer"
-                    type="button"
-                    phx-click="start_search_indexing"
-                  >
-                    Start
-                  </.link>
-                <% end %>
-              </td>
-            </tr>
-            <tr>
-              <td>Preview documents</td>
-              <td>
-                <%= if @creating_previews? do %>
-                  <div class="text-center ">
-                    <.icon
-                      name="hero-cog-8-tooth-solid"
-                      class="h-4 w-4 animate-spin-slow text-primary"
-                    /> Populating preview document database...
-                  </div>
-                <% else %>
-                  <.progress_bar
-                    count={@data_state.preview_documents.counter}
-                    max={@data_state.preview_documents.overall}
-                  />
-                <% end %>
-              </td>
-              <td class="text-center">
-                <%= if @creating_previews? do %>
-                  <.link
-                    class="font-semibold font-mono cursor-pointer"
-                    type="button"
-                    phx-click="stop_preview_creation"
-                  >
-                    Stop
-                  </.link>
-                <% else %>
-                  <.link
-                    class="font-semibold font-mono cursor-pointer"
-                    type="button"
-                    phx-click="start_preview_creation"
-                  >
-                    Start
-                  </.link>
-                <% end %>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <.data_issues
-          logs={@publication.data_issues}
-          project_key={@publication.project_name}
-          draft_date={@publication.draft_date}
+    <% else %>
+      <.log_entry_list logs={@publication.replication_logs} />
+      <%= if @replication_progress_state do %>
+        <.progress_bar
+          count={@replication_progress_state.counter}
+          max={@replication_progress_state.overall}
         />
-      <% else %>
-        <div class="inline-flex items-center">
-          <svg
-            class="animate-spin -ml-1 mr-3 h-5 w-5 text-black"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              class="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              stroke-width="4"
-            >
-            </circle>
-            <path
-              class="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-            >
-            </path>
-          </svg>
-          Evaluating data...
-        </div>
       <% end %>
-    </:item>
-
-    <:item :if={@publication.replication_finished != nil} title="Additional metadata">
+      <button
+        :if={@replication_state}
+        class="font-bold font-mono float-right cursor-pointer"
+        type="button"
+        phx-click={JS.push("stop_replication")}
+        data-confirm="Are you sure?"
+      >
+        Stop replication
+      </button>
+    <% end %>
+  </:item>
+  <:item :if={@publication.replication_finished != nil} title="Preprocessing">
+    <table class="w-full">
+      <thead class="bg-slate-700">
+        <tr class="text-slate-50">
+          <th class="w-1/6">Type</th>
+          <th class="w-4/6">Info</th>
+          <th class="w-1/6">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <.processing_state_row label="Web images" type={:web_images} state={@web_images} />
+        <.processing_state_row label="Tile images" type={:tile_images} state={@tile_images} />
+        <.processing_state_row label="Search index" type={:search_index} state={@search_index} />
+        <.processing_state_row
+          label="Previews and hierarchy"
+          type={:preview_documents}
+          state={@preview_documents}
+        />
+        <.processing_state_row
+          label="Database indices"
+          type={:database_indices}
+          state={@database_indices}
+        />
+      </tbody>
+    </table>
+    <.group_heading>
+      Issues
+    </.group_heading>
+    <.data_issues
+      issues={@data_issues}
+      project_key={@publication.project_name}
+      draft_date={@publication.draft_date}
+    />
+  </:item>
+  <:item :if={@publication.replication_finished != nil} title="Additional metadata">
+    <.form for={@publication_form} phx-change="validate" phx-submit="save">
+      <.input type="hidden" field={@publication_form[:project_name]} />
+      <.input type="hidden" field={@publication_form[:source_url]} />
+      <.input type="hidden" field={@publication_form[:source_project_name]} />
+      <.input type="hidden" field={@publication_form[:draft_date]} />
+      <.input type="hidden" field={@publication_form[:drafted_by]} />
+      <.input type="hidden" field={@publication_form[:replication_finished]} />
+      <.input type="hidden" field={@publication_form[:configuration_doc]} />
+      <.input type="hidden" field={@publication_form[:hierarchy_doc]} />
+      <.input type="hidden" field={@publication_form[:database]} />
+      <.input type="hidden" field={@publication_form[:publication_date]} />
+      <.input type="hidden" field={@publication_form[:version]} />
+      <%= for {language, index} <- Enum.with_index(@publication_form[:languages].value) do %>
+        <input
+          type="hidden"
+          name={"#{@publication_form[:languages].name}[]"}
+          value={language}
+        />
+      <% end %>
       <.translation_input
         field={@publication_form[:comments]}
         language_options={@translation_options}
@@ -289,8 +153,7 @@
         <:heading>Publication comments</:heading>
         <:no_translations>No comments for this publication</:no_translations>
       </.translation_input>
-
       <.button class="mt-4" phx-disable-with="Saving...">Save changes</.button>
-    </:item>
-  </.list>
-</.form>
+    </.form>
+  </:item>
+</.list>

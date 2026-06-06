@@ -554,6 +554,22 @@ defmodule FieldPublication.Publications.Data do
      }}
   end
 
+  def list_with_geometries(%Publication{} = publication) do
+    db_name = get_meta_database_name(publication)
+
+    CouchService.get_document_stream(
+      %{
+        selector: %{"preview.geometry": %{"$ne": nil}},
+        use_index: "previews-with-geometry-index"
+      },
+      db_name
+    )
+    |> Stream.map(fn %{"preview" => preview} ->
+      preview
+    end)
+    |> Stream.map(&document_map_to_struct/1)
+  end
+
   def get_geometries_by_category(%Publication{} = publication) do
     color_mapping =
       publication

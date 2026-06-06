@@ -21,28 +21,35 @@ defmodule FieldPublicationWeb.Presentation.Components.Search do
         phx-debounce="100"
       />
     </form>
-    <%= if @total < 10000 do %>
-      Found {@total} matches.
-    <% else %>
-      Found more than 10000 matches.
-    <% end %>
+    <section>
+      <div>
+        <%= if @total < 10000 do %>
+          Found {@total} matches.
+        <% else %>
+          Found more than 10000 matches.
+        <% end %>
+        <%= if @active_filters != %{} do %>
+          Active filters:
+        <% end %>
+      </div>
+      <%= if @active_filters != %{} do %>
+        <div class="flex flex-wrap gap-1">
+          <%= for {field, value} <- @active_filters do %>
+            <.aggregation_deselection
+              field_name={field}
+              value={value}
+            />
+          <% end %>
+        </div>
+      <% end %>
+    </section>
     """
   end
 
   def filter_list(assigns) do
     ~H"""
-    <%= if @active_filters != %{} do %>
-      <.group_heading>Active filters</.group_heading>
-      <%= for {field, value} <- @active_filters do %>
-        <.aggregation_deselection
-          field_name={field}
-          value={value}
-        />
-      <% end %>
-    <% end %>
-
-    <.group_heading>Available filters</.group_heading>
-    <div class="mt-2 p-1 bg-panel overflow-auto">
+    {render_slot(@inner_block)}
+    <div class="p-1">
       <%= for {field, buckets} <- @aggregations do %>
         <%= if !(Enum.find(@active_filters, fn({already_filtered_field, _value}) -> already_filtered_field == field end ) ) and buckets != [] do %>
           <.aggregation_selection
@@ -57,15 +64,15 @@ defmodule FieldPublicationWeb.Presentation.Components.Search do
 
   def result_list(assigns) do
     ~H"""
-    <div class="ml-4 w-full">
-      <div class="flex flex-row mb-2 sticky top-4">
+    <div class="w-full">
+      <div class="flex flex-row mb-2 sticky top-0">
         <% previous_from =
           if @query_params.from - @limit > 0,
             do: @query_params.from - @limit,
             else: 0 %>
         <.link
           class={"p-2 #{if @query_params.from == 0, do: "bg-zinc-700 cursor-default border-(--primary-color)", else: "bg-(--primary-color) hover:bg-(--primary-color-hover)"}"}
-          patch={@update_from.(@query_params, previous_from)}
+          patch={"#{@base_url}?#{Plug.Conn.Query.encode(Map.put(@query_params, :from, previous_from))}"}
         >
           <span class="text-white">
             Previous
@@ -82,7 +89,7 @@ defmodule FieldPublicationWeb.Presentation.Components.Search do
             else: @query_params.from + @limit %>
         <.link
           class={"p-2 #{if next_from == @query_params.from, do: "bg-zinc-700 cursor-default", else: "bg-(--primary-color) hover:bg-(--primary-color-hover)"} text-white"}
-          patch={@update_from.(@query_params, next_from)}
+          patch={"#{@base_url}?#{Plug.Conn.Query.encode(Map.put(@query_params, :from, next_from))}"}
         >
           <span class="text-white">
             Next
@@ -91,9 +98,11 @@ defmodule FieldPublicationWeb.Presentation.Components.Search do
       </div>
       <div :for={%SearchDocument{full_doc: doc} <- @docs}>
         <.document_link
+          geometry_indicator={@map_indicators?}
           doc={doc}
           image_count={10}
           image_height={128}
+          hover_target={@map_hover_target}
         />
       </div>
     </div>
@@ -124,7 +133,7 @@ defmodule FieldPublicationWeb.Presentation.Components.Search do
   def aggregation_deselection(assigns) do
     ~H"""
     <div
-      class="pl-2 mt-1 text-primary-inverse hover:text-primary-hover-inverse cursor-pointer bg-primary hover:bg-primary-hover hover:line-through rounded"
+      class="pl-2 text-primary-inverse hover:text-primary-hover-inverse cursor-pointer bg-primary hover:bg-primary-hover hover:line-through rounded"
       phx-click="toggle_filter"
       phx-value-key={@field_name}
       phx-value-value={@value}

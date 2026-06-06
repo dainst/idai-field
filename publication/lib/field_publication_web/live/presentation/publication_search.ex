@@ -1,21 +1,40 @@
-defmodule FieldPublicationWeb.Presentation.SearchLive do
+defmodule FieldPublicationWeb.Presentation.PublicationSearch do
   use FieldPublicationWeb, :live_view
 
+  alias FieldPublication.Publications
   alias FieldPublication.Publications.Search
+  alias FieldPublication.Publications.Data
+
   import FieldPublicationWeb.Presentation.Components.Search
+
+  import FieldPublicationWeb.Components.Data.{
+    Field
+  }
 
   @search_batch_limit 20
 
-  def mount(_params, _session, socket) do
-    {:ok, assign(socket, :page_title, "Search")}
+  @impl true
+  def mount(%{"draft_date" => draft_date, "project_id" => project_key}, _session, socket) do
+    publication = Publications.get!(project_key, draft_date)
+
+    project_document = Publications.Data.get_extended_document("project", publication, true)
+
+    {
+      :ok,
+      socket
+      |> assign(:page_title, "Searching '#{project_key}' (#{draft_date})")
+      |> assign(:publication, publication)
+      |> assign(:project_document, project_document)
+    }
   end
 
-  def handle_params(params, _uri, socket) do
-    q = Map.get(params, "q", "*")
-    filters = Map.get(params, "filters", %{})
+  @impl true
+  def handle_params(unsigned_params, _uri, %{assigns: %{publication: publication}} = socket) do
+    q = Map.get(unsigned_params, "q", "*")
+    filters = Map.get(unsigned_params, "filters", %{})
 
     from =
-      Map.get(params, "from", "0")
+      Map.get(unsigned_params, "from", "0")
       |> Integer.parse()
       |> case do
         {val, ""} ->
@@ -28,14 +47,14 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
     {
       :noreply,
       socket
-      |> assign(:url_parameters, %{q: q, filters: filters, from: from})
       |> assign(:limit, @search_batch_limit)
+      |> assign(:url_parameters, %{q: q, filters: filters, from: from})
       |> assign_async(:search_result, fn ->
         %{
           total: total,
           docs: docs,
           aggregations: aggregations
-        } = Search.search(q, filters, from, @search_batch_limit)
+        } = Search.search(q, filters, from, @search_batch_limit, publication)
 
         {project_specific_aggregations, shared_aggregations} =
           aggregations
@@ -59,10 +78,11 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
     }
   end
 
+  @impl true
   def handle_event(
         "search",
         %{"search_input" => input_value},
-        %{assigns: %{url_parameters: parameters}} = socket
+        %{assigns: %{url_parameters: parameters, publication: publication}} = socket
       ) do
     url_parameters =
       parameters
@@ -71,8 +91,10 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
 
     {
       :noreply,
-      push_patch(socket,
-        to: ~p"/search?#{url_parameters}"
+      push_patch(
+        socket,
+        to:
+          ~p"/projects/search/#{publication.project_name}/#{publication.draft_date}?#{url_parameters}"
       )
     }
   end
@@ -80,7 +102,7 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
   def handle_event(
         "toggle_filter",
         %{"key" => key, "value" => value},
-        %{assigns: %{url_parameters: url_parameters}} = socket
+        %{assigns: %{url_parameters: url_parameters, publication: publication}} = socket
       ) do
     toggled_param = {key, value}
 
@@ -101,7 +123,8 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
     {
       :noreply,
       push_patch(socket,
-        to: ~p"/search?#{url_parameters}"
+        to:
+          ~p"/projects/search/#{publication.project_name}/#{publication.draft_date}?#{url_parameters}"
       )
     }
   end

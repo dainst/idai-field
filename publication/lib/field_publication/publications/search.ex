@@ -242,7 +242,16 @@ defmodule FieldPublication.Publications.Search do
     end
   end
 
-  def search(q, filter, from \\ 0, size \\ 100) do
+  def search(q, filter, from \\ 0, size \\ 100, publication \\ nil) do
+    index =
+      if publication == nil do
+        "project*"
+      else
+        get_search_alias(publication)
+        |> OpenSearchService.get_indices_behind_alias()
+        |> List.first()
+      end
+
     q =
       case q do
         "" ->
@@ -278,7 +287,7 @@ defmodule FieldPublication.Publications.Search do
             ]
           }
         },
-        aggs: generate_aggregations_queries(),
+        aggs: generate_aggregations_queries(index),
         from: from,
         size: size
       }
@@ -303,7 +312,7 @@ defmodule FieldPublication.Publications.Search do
         put_in(payload.query.bool, boolean_query)
       end
 
-    OpenSearchService.run_query("project_*", payload)
+    OpenSearchService.run_query(index, payload)
     |> case do
       {:ok, %{status: 200, body: body}} ->
         body = Jason.decode!(body)
@@ -331,8 +340,8 @@ defmodule FieldPublication.Publications.Search do
     end
   end
 
-  defp generate_aggregations_queries() do
-    {:ok, %{status: 200, body: body}} = OpenSearchService.get_mapping("project*")
+  defp generate_aggregations_queries(index) do
+    {:ok, %{status: 200, body: body}} = OpenSearchService.get_mapping(index)
 
     _keyword_fields =
       Jason.decode!(body)

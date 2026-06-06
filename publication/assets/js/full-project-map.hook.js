@@ -11,19 +11,20 @@ import {
     styleFunction,
 } from "./map-helper-functions.js";
 
-export default getProjectViewMapHook = () => {
+export default getFullProjectMapHook = () => {
     return {
         map: null,
         projectName: null,
         projectTileLayers: [],
         projectTileLayerExtent: null,
         featureLayers: [],
+        fullVectorExtent: null,
 
         mounted() {
             const _this = this;
             this.initialize();
             this.handleEvent(
-                `project-map-set-layers-${this.el.id}`,
+                `full-project-map-set-layers-${this.el.id}`,
                 ({ project, project_tile_layers }) => {
                     this.projectName = project;
                     this.setTileLayers(project, project_tile_layers);
@@ -31,14 +32,14 @@ export default getProjectViewMapHook = () => {
             );
 
             this.handleEvent(
-                `project-map-update-${this.el.id}`,
+                `full-project-map-data-${this.el.id}`,
                 ({ feature_collections }) => {
                     this.setMapFeatures(feature_collections);
                 },
             );
 
             this.handleEvent(
-                `project-map-set-layer-visibility-${this.el.id}`,
+                `full-project-map-set-layer-visibility-${this.el.id}`,
                 ({ uuid, visibility }) => {
                     this.toggleLayerVisibility(uuid, visibility);
                 },
@@ -47,32 +48,37 @@ export default getProjectViewMapHook = () => {
             this.handleEvent(
                 `map-highlight-feature-${this.el.id}`,
                 ({ feature_id }) => {
-                    categoryNames = feature_id.split(",");
-
                     this.clearHighlights();
-                    const vectorLayerFeatures = this.map
-                        .getAllLayers()
-                        .filter((layer) => layer instanceof VectorLayer)
-                        .map((layer) => layer.getSource().getFeatures())
-                        .flat();
+                    feature = this.findFeature(feature_id);
+                    parentId = feature.getProperties().parent;
 
-                    vectorLayerFeatures
-                        .filter(function (f) {
-                            console.log(f);
+                    if (parentId) {
+                        parent = this.findFeature(parentId);
+                        this.map
+                            .getView()
+                            .fit(parent.getGeometry().getExtent(), {
+                                padding: [10, 10, 10, 10],
+                                duration: 1000,
+                            });
+                    } else {
+                        this.map
+                            .getView()
+                            .fit(feature.getGeometry().getExtent(), {
+                                padding: [10, 10, 10, 10],
+                                duration: 1000,
+                            });
+                    }
 
-                            return (
-                                categoryNames.indexOf(f.getProperties().group) >
-                                -1
-                            );
-                        })
-                        .map(function (f) {
-                            _this.highlightFeature(f);
-                        });
+                    this.highlightFeature(feature);
                 },
             );
 
             this.handleEvent(`map-clear-highlights-${this.el.id}`, () => {
                 this.clearHighlights();
+                this.map.getView().fit(this.fullVectorExtent, {
+                    padding: [10, 10, 10, 10],
+                    duration: 1000,
+                });
             });
         },
         initialize() {
@@ -148,8 +154,8 @@ export default getProjectViewMapHook = () => {
 
         highlightFeature(feature) {
             let properties = feature.getProperties();
-
             properties.fill = true;
+
             feature.setProperties(properties);
         },
 
@@ -167,6 +173,18 @@ export default getProjectViewMapHook = () => {
             }
         },
 
+        findFeature(uuid) {
+            const vectorLayerFeatures = this.map
+                .getAllLayers()
+                .filter((layer) => layer instanceof VectorLayer)
+                .map((layer) => layer.getSource().getFeatures())
+                .flat();
+
+            return vectorLayerFeatures.find(function (f) {
+                return f.getProperties().uuid == uuid;
+            });
+        },
+
         setMapFeatures(featureCollections) {
             for (const index in this.featureLayers) {
                 delete this.featureLayers[index];
@@ -175,15 +193,16 @@ export default getProjectViewMapHook = () => {
             if (this.featureLayers != {})
                 this.map.removeLayer(this.featureLayer);
 
-            let aggregatedExtent = createEmpty();
+            this.fullVectorExtent = createEmpty();
 
-            for (collection of featureCollections) {
+            for (let key in featureCollections) {
+                let collection = featureCollections[key];
                 const vectorSource = new VectorSource({
                     features: new GeoJSON().readFeatures(collection),
                 });
 
                 const featureLayer = new VectorLayer({
-                    name: "featureLayer",
+                    name: key,
                     source: vectorSource,
                     style: styleFunction,
                 });
@@ -191,12 +210,12 @@ export default getProjectViewMapHook = () => {
                 this.featureLayers.push(featureLayer);
                 this.map.addLayer(featureLayer);
 
-                extend(aggregatedExtent, vectorSource.getExtent());
+                extend(this.fullVectorExtent, vectorSource.getExtent());
             }
 
             let fullExtent = createEmpty();
 
-            fullExtent = extend(fullExtent, aggregatedExtent);
+            fullExtent = extend(fullExtent, this.fullVectorExtent);
 
             if (this.projectTileLayerExtent)
                 fullExtent = extend(fullExtent, this.projectTileLayerExtent);
@@ -212,8 +231,7 @@ export default getProjectViewMapHook = () => {
             );
             this.map
                 .getView()
-                .fit(aggregatedExtent, { padding: [10, 10, 10, 10] });
-
+                .fit(this.fullVectorExtent, { padding: [10, 10, 10, 10] });
             this.clearHighlights();
         },
     };

@@ -295,8 +295,6 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
 
     category = pick_default_translation(category_labels)
 
-
-
     base = %{
       type: "Feature",
       properties: %{
@@ -322,17 +320,20 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
     Map.get(hierarchy, uuid)
     |> case do
       %{"parent" => nil} ->
-       nil
+        nil
+
       %{"parent" => parent_uuid} ->
         Data.get_preview_documents([parent_uuid], publication)
     end
     |> case do
       [%Document{id: parent_uuid, geometry: nil}] ->
         next_ancestor_with_geometry(parent_uuid, hierarchy, publication)
+
       [%Document{id: uuid} = _parent_with_geometry] ->
         uuid
+
       _ ->
         nil
-      end
+    end
   end
 end

@@ -110,11 +110,14 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
   def handle_event(
         "search",
         %{"search_input" => q},
-        %{assigns: %{publication: %Publication{project_name: project_name}}} = socket
+        %{assigns: %{publication: %Publication{project_name: project_name, draft_date: draft_date}}} = socket
       ) do
     {
       :noreply,
-      redirect(socket, to: ~p"/search?#{%{q: q, filters: %{project_key: project_name}}}")
+      redirect(socket,
+        to:
+          ~p"/projects/search/#{project_name}/#{draft_date}?#{%{q: q}}"
+      )
     }
   end
 

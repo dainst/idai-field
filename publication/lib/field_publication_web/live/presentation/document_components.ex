@@ -67,7 +67,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                 <%= for %Field{} = field <- fields do %>
                   <.labeled_value class="border p-0.5 border-black/20">
                     <:label><.render_field_label field={field} /></:label>
-                    <.render_field_data field={field} />
+                    <.render_field_data field={field} publication={@publication} />
                   </.labeled_value>
                 <% end %>
               </div>
@@ -283,7 +283,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                 <%= for %Field{} = field <- fields do %>
                   <.labeled_value class="p-0.5">
                     <:label><.render_field_label field={field} /></:label>
-                    <.render_field_data field={field} />
+                    <.render_field_data field={field} publication={@publication} />
                   </.labeled_value>
                 <% end %>
               </section>
@@ -363,7 +363,11 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
     ~H"""
     <div>
       <.document_heading>
-        <.render_field_data field={Data.get_field(@doc, "shortName")} hide_language_selection?={true} />
+        <.render_field_data
+          field={Data.get_field(@doc, "shortName")}
+          hide_language_selection?={true}
+          publication={@publication}
+        />
       </.document_heading>
       <% depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
       <%= if depicted_in != nil do %>
@@ -429,7 +433,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           <%= if institution do %>
             <.labeled_value>
               <:label><.render_field_label field={institution} /></:label>
-              <.render_field_data field={institution} />
+              <.render_field_data field={institution} publication={@publication} />
             </.labeled_value>
           <% end %>
 
@@ -453,7 +457,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           <%= if supervisor do %>
             <.labeled_value>
               <:label><.render_field_label field={supervisor} /></:label>
-              <.render_field_data field={supervisor} />
+              <.render_field_data field={supervisor} publication={@publication} />
             </.labeled_value>
           <% end %>
 
@@ -469,7 +473,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           <%= if bibliographic_references do %>
             <.labeled_value>
               <:label><.render_field_label field={bibliographic_references} /></:label>
-              <.render_field_data field={bibliographic_references} />
+              <.render_field_data field={bibliographic_references} publication={@publication} />
             </.labeled_value>
           <% end %>
           <% url = Data.get_field_value(@doc, "projectURI") %>
@@ -538,7 +542,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           target_id={"#{Enum.join(get_child_category_names(children) ++ [category_name], ",")}"}
         >
           <.link navigate={
-            ~p"/search?#{%{filters: %{category: category_name, project_key: @publication.project_name}}}"
+            ~p"/projects/search/#{@doc.project_key}/#{@doc.publication_draft_date}?#{%{filters: %{category: category_name}}}"
           }>
             <div class="flex flex-row mb-0.5 p-1">
               <span style={"color: #{desaturate_category_color(color)}"}>

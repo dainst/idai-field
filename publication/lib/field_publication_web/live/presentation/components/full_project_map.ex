@@ -85,7 +85,7 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
 
     feature_collections =
       Data.list_with_geometries(publication)
-      |> Enum.map(&create_feature_info(&1, hierarchy))
+      |> Enum.map(&create_feature_info(&1, hierarchy, publication))
       |> Enum.reduce(%{}, fn feature, collections ->
         category = feature.properties.category
 
@@ -276,7 +276,8 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
            identifier: identifier,
            geometry: geometry
          } = doc,
-         hierarchy
+         hierarchy,
+         publication
        ) do
     description =
       doc
@@ -294,6 +295,8 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
 
     category = pick_default_translation(category_labels)
 
+
+
     base = %{
       type: "Feature",
       properties: %{
@@ -302,7 +305,7 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
         color: color,
         description: description,
         category: category,
-        parent: hierarchy[uuid]["parent"]
+        parent: next_ancestor_with_geometry(uuid, hierarchy, publication)
       }
     }
 
@@ -313,5 +316,23 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
     else
       base
     end
+  end
+
+  defp next_ancestor_with_geometry(uuid, hierarchy, publication) do
+    Map.get(hierarchy, uuid)
+    |> case do
+      %{"parent" => nil} ->
+       nil
+      %{"parent" => parent_uuid} ->
+        Data.get_preview_documents([parent_uuid], publication)
+    end
+    |> case do
+      [%Document{id: parent_uuid, geometry: nil}] ->
+        next_ancestor_with_geometry(parent_uuid, hierarchy, publication)
+      [%Document{id: uuid} = _parent_with_geometry] ->
+        uuid
+      _ ->
+        nil
+      end
   end
 end

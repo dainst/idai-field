@@ -137,30 +137,47 @@ function getLineStyle(featureProperties) {
 
 function getPointStyle(featureProperties) {
     const [r, g, b, a] = asArray(featureProperties.color);
+    const styles = [];
 
-    let image = new Circle({
-        radius: pointRadius,
-        stroke: new Stroke({
-            color: `rgba(${r}, ${g}, ${b}, ${a})`,
-            width: 1,
+    styles.push(
+        new Style({
+            image: new Circle({
+                radius: pointRadius,
+                stroke: new Stroke({
+                    color: `rgba(${r}, ${g}, ${b}, ${a})`,
+                    width: 1,
+                }),
+                fill: new Fill({
+                    color: `rgba(${r}, ${g}, ${b}, 1)`,
+                }),
+            }),
         }),
-    });
+    );
 
     if (featureProperties.fill) {
-        image.setFill(
-            new Fill({
-                color: `rgba(${r * 0.5}, ${g * 0.5}, ${b * 0.5}, 0.5)`,
+        styles.push(
+            new Style({
+                image: new Circle({
+                    radius: pointRadius * 3,
+                    stroke: new Stroke({
+                        color: `rgba(${r}, ${g}, ${b}, ${a})`,
+                        width: 2,
+                    }),
+                }),
             }),
         );
-    } else {
-        image.setFill(
-            new Fill({
-                color: `rgba(${r}, ${g}, ${b}, 0.05)`,
+        styles.push(
+            new Style({
+                image: new Circle({
+                    radius: pointRadius * 5,
+                    stroke: new Stroke({
+                        color: `rgba(${r}, ${g}, ${b}, ${a})`,
+                        width: 2,
+                    }),
+                }),
             }),
         );
     }
 
-    return new Style({
-        image: image,
-    });
+    return styles;
 }

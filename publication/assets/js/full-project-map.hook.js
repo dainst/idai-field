@@ -11,6 +11,8 @@ import {
     styleFunction,
 } from "./map-helper-functions.js";
 
+const highlightZoomDuration = 800;
+
 export default getFullProjectMapHook = () => {
     return {
         map: null,
@@ -19,6 +21,7 @@ export default getFullProjectMapHook = () => {
         projectTileLayerExtent: null,
         featureLayers: [],
         fullVectorExtent: null,
+        lastHighlightChange: Date.now(),
 
         mounted() {
             const _this = this;
@@ -48,28 +51,49 @@ export default getFullProjectMapHook = () => {
             this.handleEvent(
                 `map-highlight-feature-${this.el.id}`,
                 ({ feature_id }) => {
-                    this.clearHighlights();
-                    feature = this.findFeature(feature_id);
-                    parentId = feature.getProperties().parent;
+                    if (
+                        Date.now() - this.lastHighlightChange >
+                        highlightZoomDuration
+                    ) {
+                        this.clearHighlights();
+                        feature = this.findFeature(feature_id);
+                        parentId = feature.getProperties().parent;
 
-                    if (parentId) {
-                        parent = this.findFeature(parentId);
-                        this.map
-                            .getView()
-                            .fit(parent.getGeometry().getExtent(), {
-                                padding: [10, 10, 10, 10],
-                                duration: 1000,
-                            });
-                    } else {
-                        this.map
-                            .getView()
-                            .fit(feature.getGeometry().getExtent(), {
-                                padding: [10, 10, 10, 10],
-                                duration: 1000,
-                            });
+                        if (parentId) {
+                            parent = this.findFeature(parentId);
+                            if (parent) {
+                                this.map
+                                    .getView()
+                                    .fit(parent.getGeometry().getExtent(), {
+                                        padding: [10, 10, 10, 10],
+                                        duration: highlightZoomDuration,
+                                    });
+                            } else if (
+                                feature.getProperties().type != "Point"
+                            ) {
+                                this.map
+                                    .getView()
+                                    .fit(feature.getGeometry().getExtent(), {
+                                        padding: [10, 10, 10, 10],
+                                        duration: highlightZoomDuration,
+                                    });
+                            } else {
+                                console.log(
+                                    `No geometry or parent geometry to zoom to for ${feature_id}`,
+                                );
+                            }
+                        } else {
+                            this.map
+                                .getView()
+                                .fit(feature.getGeometry().getExtent(), {
+                                    padding: [10, 10, 10, 10],
+                                    duration: highlightZoomDuration,
+                                });
+                        }
+
+                        this.highlightFeature(feature);
+                        this.lastHighlightChange = Date.now();
                     }
-
-                    this.highlightFeature(feature);
                 },
             );
 
@@ -77,8 +101,10 @@ export default getFullProjectMapHook = () => {
                 this.clearHighlights();
                 this.map.getView().fit(this.fullVectorExtent, {
                     padding: [10, 10, 10, 10],
-                    duration: 1000,
+                    duration: highlightZoomDuration,
                 });
+
+                this.lastHighlightChange = Date.now();
             });
         },
         initialize() {

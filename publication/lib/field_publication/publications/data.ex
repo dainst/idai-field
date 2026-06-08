@@ -570,6 +570,59 @@ defmodule FieldPublication.Publications.Data do
     |> Stream.map(&document_map_to_struct/1)
   end
 
+  def get_project_geometry_feature_collections(
+        %Publication{project_name: project_key, draft_date: draft_date} = publication
+      ) do
+    cache_doc_name = "geometry_feature_collections_#{project_key}_#{draft_date}"
+
+    Cachex.get(:application_documents, cache_doc_name)
+    |> case do
+      {:ok, hit} when hit != nil ->
+        hit
+
+      _ ->
+        hierarchy = FieldPublication.Publications.Data.get_document_hierarchy(publication)
+
+        feature_collections =
+          list_with_geometries(publication)
+          |> Enum.map(
+            &FieldPublicationWeb.Presentation.Components.FullProjectMap.create_feature_info(
+              &1,
+              hierarchy,
+              publication
+            )
+          )
+          |> Enum.reduce(%{}, fn feature, collections ->
+            category = feature.properties.category
+
+            case Map.get(collections, category) do
+              nil ->
+                # Create a new feature collection for this category with the first feature
+                # as its first member.
+                Map.put(collections, category, %{
+                  type: "FeatureCollection",
+                  properties: %{
+                    category: category
+                  },
+                  features: [feature]
+                })
+
+              existing_collection ->
+                # Otherwise add the feature to the existing collection.
+                updated_collection =
+                  Map.update!(existing_collection, :features, fn existing_features ->
+                    existing_features ++ [feature]
+                  end)
+
+                Map.put(collections, category, updated_collection)
+            end
+          end)
+
+        Cachex.put(:application_documents, cache_doc_name, feature_collections)
+        feature_collections
+    end
+  end
+
   def get_geometries_by_category(%Publication{} = publication) do
     color_mapping =
       publication

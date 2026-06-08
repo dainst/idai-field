@@ -16,7 +16,8 @@ const highlightZoomDuration = -1;
 export default getFullProjectMapHook = () => {
     return {
         map: null,
-        projectName: null,
+        projectKey: null,
+        draftDate: null,
         projectTileLayers: [],
         projectTileLayerExtent: null,
         featureLayers: [],
@@ -29,7 +30,7 @@ export default getFullProjectMapHook = () => {
             this.handleEvent(
                 `full-project-map-set-layers-${this.el.id}`,
                 ({ project, project_tile_layers }) => {
-                    this.projectName = project;
+                    this.projectKey = project;
                     this.setTileLayers(project, project_tile_layers);
                 },
             );
@@ -107,7 +108,7 @@ export default getFullProjectMapHook = () => {
                 this.lastHighlightChange = Date.now();
             });
         },
-        initialize() {
+        async initialize() {
             const container = document.getElementById(
                 `${this.el.getAttribute("id")}-map`,
             );
@@ -120,19 +121,28 @@ export default getFullProjectMapHook = () => {
                 target: `${this.el.getAttribute("id")}-map`,
                 view: new View(),
             });
+
+            this.projectKey = this.el.getAttribute("project_key");
+            this.draftDate = this.el.getAttribute("draft_date");
+
+            const response = await fetch(
+                `/api/json/geometry_feature_collections/${this.projectKey}/${this.draftDate}`,
+            );
+            const featureCollections = await response.json();
+            this.setMapFeatures(featureCollections);
         },
 
-        setTileLayers(projectName, tileLayers) {
+        setTileLayers(projectKey, tileLayers) {
             let layerGroup = [];
             let layerGroupExtent = createEmpty();
 
             for (let info of tileLayers) {
-                const layer = createTileLayer(info, projectName);
+                const layer = createTileLayer(info, projectKey);
 
                 layerGroup.push(layer);
 
                 const preference = localStorage.getItem(
-                    getVisibilityKey(this.projectName, layer.get("name")),
+                    getVisibilityKey(this.projectKey, layer.get("name")),
                 );
                 let visible = null;
 
@@ -194,7 +204,7 @@ export default getFullProjectMapHook = () => {
             if (layer) {
                 layer.setVisible(visibility);
                 localStorage.setItem(
-                    getVisibilityKey(this.projectName, layer.get("name")),
+                    getVisibilityKey(this.projectKey, layer.get("name")),
                     visibility,
                 );
             }

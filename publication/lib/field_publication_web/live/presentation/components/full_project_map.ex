@@ -22,6 +22,8 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
       centerLon={@centerLon}
       centerLat={@centerLat}
       zoom={@zoom}
+      project_key={@publication.project_name}
+      draft_date={@publication.draft_date}
       phx-hook="FullProjectMap"
     >
       <!-- set phx-update="ignore" to ensure changes the map's DOM elements are not re-rendered on updates
@@ -79,83 +81,9 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
     assigns = set_defaults(assigns)
     socket = handle_publication_change(socket, publication, id)
 
-    hierarchy = Data.get_document_hierarchy(publication)
-
     socket = assign(socket, assigns)
 
-    feature_collections =
-      Data.list_with_geometries(publication)
-      |> Enum.map(&create_feature_info(&1, hierarchy, publication))
-      |> Enum.reduce(%{}, fn feature, collections ->
-        category = feature.properties.category
-
-        case Map.get(collections, category) do
-          nil ->
-            # Create a new feature collection for this category with the first feature
-            # as its first member.
-            Map.put(collections, category, %{
-              type: "FeatureCollection",
-              properties: %{
-                category: category
-              },
-              features: [feature]
-            })
-
-          existing_collection ->
-            # Otherwise add the feature to the existing collection.
-            updated_collection =
-              Map.update!(existing_collection, :features, fn existing_features ->
-                existing_features ++ [feature]
-              end)
-
-            Map.put(collections, category, updated_collection)
-        end
-      end)
-
-    socket =
-      push_event(
-        socket,
-        "full-project-map-data-#{id}",
-        %{
-          feature_collections: feature_collections
-        }
-      )
-      |> assign(:no_data, false)
-
-    # category_geometries = Data.get_geometries_by_category(publication)
-
-    # feature_collections =
-    #   category_geometries
-    #   |> Enum.map(fn {category_key, %{color: color, geometries: geometries}} ->
-    #     %{
-    #       type: "FeatureCollection",
-    #       features:
-    #         Enum.map(geometries, fn geometry ->
-    #           %{
-    #             type: "Feature",
-    #             geometry: geometry,
-    #             properties: %{
-    #               color: color,
-    #               group: category_key,
-    #               type: geometry["type"]
-    #             }
-    #           }
-    #         end)
-    #     }
-    #   end)
-
-    # socket =
-    #   if feature_collections == [] do
-    #     socket
-    #   else
-    #     socket
-    #     |> push_event("project-map-update-#{id}", %{
-    #       feature_collections: feature_collections
-    #     })
-    #     |> assign(:no_data, false)
-    #   end
-
-    {:ok, socket}
+    {:ok, assign(socket, :no_data, false)}
   end
 
   def handle_event(
@@ -269,16 +197,16 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
     |> Map.put(:no_data, true)
   end
 
-  defp create_feature_info(
-         %Document{
-           category: %Category{color: color, labels: category_labels},
-           id: uuid,
-           identifier: identifier,
-           geometry: geometry
-         } = doc,
-         hierarchy,
-         publication
-       ) do
+  def create_feature_info(
+        %Document{
+          category: %Category{color: color, labels: category_labels},
+          id: uuid,
+          identifier: identifier,
+          geometry: geometry
+        } = doc,
+        hierarchy,
+        publication
+      ) do
     description =
       doc
       |> Data.get_field_value("shortDescription")

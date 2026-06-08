@@ -1,7 +1,7 @@
 <.document_heading>Search</.document_heading>
 <div class="flex flex-row">
   <.async_result
-    :let={%{total: total, docs: docs, aggregations: aggregations}}
+    :let={%{total: total, docs: docs, available_filters: available_filters}}
     assign={@search_result}
   >
     <:loading>Searching...</:loading>
@@ -9,9 +9,20 @@
       <div class="sticky top-4">
         <.search_input total={total} current_query={@url_parameters.q} />
         <.filter_list
-          aggregations={aggregations}
+          available_filters={available_filters}
           active_filters={@url_parameters.filters}
-        />
+        >
+          <:active_heading>
+            <.group_heading>
+              Active filters filters:
+            </.group_heading>
+          </:active_heading>
+          <:available_heading>
+            <.group_heading>
+              Available filters:
+            </.group_heading>
+          </:available_heading>
+        </.filter_list>
       </div>
     </div>
 

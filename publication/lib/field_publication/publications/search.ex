@@ -328,7 +328,10 @@ defmodule FieldPublication.Publications.Search do
             body
             |> Map.get("aggregations", %{})
             |> Stream.map(&parse_aggregation_result/1)
-            |> Stream.reject(fn {_field, buckets} -> buckets == [] end)
+            |> Stream.reject(fn {_field, buckets} ->
+              # Ignore empty buckets or ones that have only one entry.
+              buckets == [] || Enum.count(buckets) == 1
+            end)
             |> Enum.sort_by(
               # Sorts the aggregations by descending size of all bucket entries
               fn {_field, buckets} ->

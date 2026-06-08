@@ -6,6 +6,10 @@ defmodule FieldPublicationWeb.Presentation.Components.Search do
   alias FieldPublication.Publications.Search
   alias FieldPublication.Publications.Search.SearchDocument
 
+  attr :current_query, :string, required: true
+  attr :total, :integer, required: true
+  attr :active_filters, :map, default: %{}
+
   def search_input(assigns) do
     ~H"""
     <form
@@ -46,21 +50,45 @@ defmodule FieldPublicationWeb.Presentation.Components.Search do
     """
   end
 
+  attr(:active_filters, :map, default: %{})
+  attr(:available_filters, :map, required: true)
+  slot :inner_block, required: true
+  slot :active_heading
+  slot :available_heading, required: true
+
   def filter_list(assigns) do
     ~H"""
-    {render_slot(@inner_block)}
-    <div class="p-1">
-      <%= for {field, buckets} <- @aggregations do %>
-        <%= if !(Enum.find(@active_filters, fn({already_filtered_field, _value}) -> already_filtered_field == field end ) ) and buckets != [] do %>
-          <.aggregation_selection
+    <%= if @active_filters != %{} do %>
+      {render_slot(@active_heading)}
+      <div class="p-1 flex flex-col gap-0.5">
+        <%= for {field, value} <- @active_filters do %>
+          <.aggregation_deselection
             field_name={field}
-            buckets={buckets}
+            value={value}
           />
         <% end %>
+      </div>
+    <% end %>
+
+    {render_slot(@available_heading)}
+    <div class="p-1">
+      <%= for {field, buckets} <- @available_filters do %>
+        <.aggregation_selection
+          field_name={field}
+          buckets={buckets}
+        />
       <% end %>
     </div>
     """
   end
+
+  attr(:total, :integer, required: true)
+  attr(:docs, :list, required: true)
+  attr(:limit, :integer, required: true)
+  attr(:query_params, :map, required: true)
+  attr(:map_indicators?, :boolean, default: false)
+  attr(:map_hover_target, :string, default: nil)
+  attr(:base_url, :string, required: true)
 
   def result_list(assigns) do
     ~H"""
@@ -104,6 +132,7 @@ defmodule FieldPublicationWeb.Presentation.Components.Search do
           image_count={10}
           image_height={128}
           hover_target={@map_hover_target}
+          publication_search?={!String.starts_with?(@base_url, ~p"/search")}
         />
       </div>
     </div>
@@ -112,22 +141,26 @@ defmodule FieldPublicationWeb.Presentation.Components.Search do
 
   def aggregation_selection(assigns) do
     ~H"""
-    <strong>
-      {render_label(get_filter_label(@field_name))}
-    </strong>
-    <%= for %{count: count, key: key} <- @buckets do %>
-      <div
-        class="pl-2 mt-1 cursor-pointer border border-gray-100 hover:border-primary rounded "
-        phx-click="toggle_filter"
-        phx-value-key={@field_name}
-        phx-value-value={key}
-      >
-        <div class="flex pl-2 pr-2 font-thin rounded">
-          <span class="grow mr-2">{render_label(get_filter_value_label(@field_name, key))}</span>
-          ({count})
-        </div>
+    <details>
+      <summary class="cursor-pointer italic">
+        {render_label(get_filter_label(@field_name))}
+      </summary>
+      <div class="pl-2 max-h-96 overflow-y-auto">
+        <%= for %{count: count, key: key} <- @buckets do %>
+          <div
+            class="pl-2 mt-1 cursor-pointer border border-gray-100 hover:border-primary rounded"
+            phx-click="toggle_filter"
+            phx-value-key={@field_name}
+            phx-value-value={key}
+          >
+            <div class="flex pl-2 pr-2 font-thin rounded">
+              <span class="grow mr-2">{render_label(get_filter_value_label(@field_name, key))}</span>
+              ({count})
+            </div>
+          </div>
+        <% end %>
       </div>
-    <% end %>
+    </details>
     """
   end
 

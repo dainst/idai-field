@@ -56,13 +56,24 @@ defmodule FieldPublicationWeb.Presentation.PublicationSearch do
           aggregations: aggregations
         } = Search.search(q, filters, from, @search_batch_limit, publication)
 
-        {project_specific_aggregations, shared_aggregations} =
-          aggregations
-          |> Enum.split_with(fn {field_name, _buckets} ->
-            String.contains?(field_name, ":")
-          end)
+        aggregations =
+          Enum.reject(
+            aggregations,
+            fn
+              # We do not want to provide a filter for the project itself, as we
+              # are only ever having one value for the publication. This filter
+              # is only useful in the system wide search at `/search`.
+              {"project_key", _value} -> true
+              _ -> false
+            end
+          )
 
-        aggregations = shared_aggregations ++ project_specific_aggregations
+        available_filters =
+          Enum.reject(aggregations, fn {field, _buckets} ->
+            Enum.find(filters, fn {already_filtered_field, _value} ->
+              already_filtered_field == field
+            end)
+          end)
 
         {
           :ok,
@@ -70,7 +81,8 @@ defmodule FieldPublicationWeb.Presentation.PublicationSearch do
             search_result: %{
               total: total,
               docs: docs,
-              aggregations: aggregations
+              aggregations: aggregations,
+              available_filters: available_filters
             }
           }
         }

@@ -45,13 +45,20 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
 
         aggregations = shared_aggregations ++ project_specific_aggregations
 
+        available_filters =
+          Enum.reject(aggregations, fn {field, _buckets} ->
+            Enum.find(filters, fn {already_filtered_field, _value} ->
+              already_filtered_field == field
+            end)
+          end)
+
         {
           :ok,
           %{
             search_result: %{
               total: total,
               docs: docs,
-              aggregations: aggregations
+              available_filters: available_filters
             }
           }
         }

@@ -4,10 +4,13 @@
     hide_language_selection?={true}
     publication={@publication}
   />
+  <.link class="text-sm" navigate={~p"/search?#{@url_parameters}"}>
+    Search all projects
+  </.link>
 </.document_heading>
 
 <.async_result
-  :let={%{total: total, docs: docs, aggregations: aggregations}}
+  :let={%{total: total, docs: docs, available_filters: available_filters}}
   assign={@search_result}
 >
   <:loading>Searching...</:loading>
@@ -20,7 +23,11 @@
         active_filters={@url_parameters.filters}
       />
     </div>
-    <.button class="h-full" phx-click={JS.toggle(to: "#available-filter")}>
+    <.button
+      :if={available_filters != []}
+      class="h-full"
+      phx-click={JS.toggle(to: "#available-filter")}
+    >
       <.icon name="hero-funnel" />
     </.button>
   </section>
@@ -28,19 +35,18 @@
   <div
     id="available-filter"
     style="display: none;"
-    class="z-500 w-full bg-white max-h-96 overflow-y-auto"
+    class="z-500 w-full bg-white max-h-96 overflow-y-auto mb-4"
   >
-    <.filter_list
-      aggregations={aggregations}
-      active_filters={@url_parameters.filters}
-    >
-      <span
-        class="ml-4 text-primary hover:text-primary-hover cursor-pointer"
-        phx-click={JS.toggle(to: "#available-filter")}
-      >
-        <.icon name="hero-chevron-up" />
-      </span>
-      Available filters:
+    <.filter_list available_filters={available_filters}>
+      <:available_heading>
+        <span
+          class="ml-4 text-primary hover:text-primary-hover cursor-pointer"
+          phx-click={JS.toggle(to: "#available-filter")}
+        >
+          <.icon name="hero-chevron-up" />
+        </span>
+        Available filters:
+      </:available_heading>
     </.filter_list>
   </div>
 

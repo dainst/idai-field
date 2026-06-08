@@ -14,7 +14,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
   def render(assigns) do
     ~H"""
     <div>
-      <.render_step nodes={@nodes} map_id={@map_id} focus={@focus} />
+      <.render_step nodes={@nodes} map_id={@map_id} focus={@focus} publication={@publication} />
     </div>
     """
   end
@@ -65,7 +65,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
         <div class="flex flex-row">
           <.icon name="hero-arrow-turn-down-right min-w-8" />
           <div>
-            <.render_step nodes={rest} map_id={@map_id} focus={@focus} />
+            <.render_step nodes={rest} map_id={@map_id} focus={@focus} publication={@publication} />
           </div>
         </div>
       <% [] -> %>
@@ -115,7 +115,8 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
         %{
           doc: %Document{} = doc,
           map_id: map_id,
-          ancestors: ancestors
+          ancestors: ancestors,
+          publication: publication
         } = params,
         socket
       ) do
@@ -125,6 +126,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
       |> assign(:nodes, ancestors ++ [doc])
       |> assign(:map_id, map_id)
       |> assign(:focus, Map.get(params, :focus, :default))
+      |> assign(:publication, publication)
     }
   end
 end

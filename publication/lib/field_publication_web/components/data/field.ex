@@ -216,13 +216,11 @@ defmodule FieldPublicationWeb.Components.Data.Field do
       value={@field.value}
       id={@field.name}
     >
-      <.maybe_search_link field={@field} publication={@publication}>
-        <span class="markdown">
-          {text
-          |> Earmark.as_html!()
-          |> Phoenix.HTML.raw()}
-        </span>
-      </.maybe_search_link>
+      <span class="markdown">
+        {text
+        |> Earmark.as_html!()
+        |> Phoenix.HTML.raw()}
+      </span>
     </.maybe_language_select>
     """
   end

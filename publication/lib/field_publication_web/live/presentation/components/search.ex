@@ -98,6 +98,7 @@ defmodule FieldPublicationWeb.Presentation.Components.Search do
       </div>
       <div :for={%SearchDocument{full_doc: doc} <- @docs}>
         <.document_link
+          id={doc.id}
           geometry_indicator={@map_indicators?}
           doc={doc}
           image_count={10}

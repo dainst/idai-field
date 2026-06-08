@@ -11,7 +11,7 @@ import {
     styleFunction,
 } from "./map-helper-functions.js";
 
-const highlightZoomDuration = 800;
+const highlightZoomDuration = -1;
 
 export default getFullProjectMapHook = () => {
     return {

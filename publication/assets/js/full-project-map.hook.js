@@ -112,8 +112,9 @@ export default getFullProjectMapHook = () => {
                 `${this.el.getAttribute("id")}-map`,
             );
 
+            const offsetElement = document.getElementById(`map-offset-element`);
             container.innerHTML = "";
-            container.style.height = `${window.innerHeight - this.el.offsetTop}px`;
+            container.style.height = `${window.innerHeight - offsetElement.offsetTop}px`;
 
             this.map = new Map({
                 target: `${this.el.getAttribute("id")}-map`,

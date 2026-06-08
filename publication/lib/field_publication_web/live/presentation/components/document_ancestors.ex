@@ -40,7 +40,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentAncestors do
                   <%= for %Field{} = field <- fields do %>
                     <.labeled_value class="p-0.5">
                       <:label><.render_field_label field={field} /></:label>
-                      <.render_field_data field={field} />
+                      <.render_field_data field={field} publication={@publication} />
                     </.labeled_value>
                   <% end %>
                 </section>

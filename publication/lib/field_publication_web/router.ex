@@ -33,10 +33,14 @@ defmodule FieldPublicationWeb.Router do
   end
 
   scope "/api/json" do
-    get "/raw/:project_name/:draft_date/:uuid", FieldPublicationWeb.Api.JSON, :raw
-    get "/extended/:project_name/:draft_date/:uuid", FieldPublicationWeb.Api.JSON, :extended
+    pipe_through :fetch_session
+    pipe_through :fetch_current_user
+    pipe_through [:browser, :require_published_or_project_access]
 
-    get "/geometry_feature_collections/:project_key/:draft_date",
+    get "/raw/:project_id/:draft_date/:uuid", FieldPublicationWeb.Api.JSON, :raw
+    get "/extended/:project_id/:draft_date/:uuid", FieldPublicationWeb.Api.JSON, :extended
+
+    get "/geometry_feature_collections/:project_id/:draft_date",
         FieldPublicationWeb.Api.JSON,
         :geometry_feature_collections
   end

@@ -6,7 +6,7 @@ defmodule FieldPublicationWeb.Api.JSON do
 
   def raw(
         conn,
-        %{"project_name" => name, "draft_date" => draft_date, "uuid" => uuid} =
+        %{"project_id" => name, "draft_date" => draft_date, "uuid" => uuid} =
           _params
       ) do
     publication = Publications.get!(name, draft_date)
@@ -20,7 +20,7 @@ defmodule FieldPublicationWeb.Api.JSON do
 
   def extended(
         conn,
-        %{"project_name" => name, "draft_date" => draft_date, "uuid" => uuid} =
+        %{"project_id" => name, "draft_date" => draft_date, "uuid" => uuid} =
           _params
       ) do
     publication = Publications.get!(name, draft_date)
@@ -33,7 +33,7 @@ defmodule FieldPublicationWeb.Api.JSON do
   end
 
   def geometry_feature_collections(conn, %{
-        "project_key" => project_key,
+        "project_id" => project_key,
         "draft_date" => draft_date
       }) do
     publication = Publications.get!(project_key, draft_date)

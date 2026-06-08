@@ -542,7 +542,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           target_id={"#{Enum.join(get_child_category_names(children) ++ [category_name], ",")}"}
         >
           <.link navigate={
-            ~p"/projects/search/#{@doc.project_key}/#{@doc.publication_draft_date}?#{%{filters: %{category: category_name}}}"
+            ~p"/projects/search/#{@publication.project_name}/#{@publication.draft_date}?#{%{filters: %{category: category_name}}}"
           }>
             <div class="flex flex-row mb-0.5 p-1">
               <span style={"color: #{desaturate_category_color(color)}"}>

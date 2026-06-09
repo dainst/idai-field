@@ -471,7 +471,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
 
           <% bibliographic_references = Data.get_field(@doc, "bibliographicReferences") %>
           <%= if bibliographic_references do %>
-            <.labeled_value>
+            <.labeled_value class="max-h-78 overflow-y-auto">
               <:label><.render_field_label field={bibliographic_references} /></:label>
               <.render_field_data field={bibliographic_references} publication={@publication} />
             </.labeled_value>

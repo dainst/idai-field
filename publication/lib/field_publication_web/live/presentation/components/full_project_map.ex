@@ -22,6 +22,7 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
       centerLon={@centerLon}
       centerLat={@centerLat}
       zoom={@zoom}
+      offset_base_element={@offset_base_element}
       project_key={@publication.project_name}
       draft_date={@publication.draft_date}
       phx-hook="FullProjectMap"
@@ -29,23 +30,8 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
       <!-- set phx-update="ignore" to ensure changes the map's DOM elements are not re-rendered on updates
           by live view, but instead the content is controlled by OpenLayers (and/or our hook logic) client side after initializiation. -->
       <div style={@style} id={"#{@id}-map"} phx-update="ignore">
-        <!-- Set pointer-events-none, otherwise the tooltip will block click events on the map -->
-        <div class="pointer-events-none text-xs" id={"#{@id}-identifier-tooltip"}>
-          <div class="border rounded-sm border-black flex">
-            <div class="saturate-50 pl-2  text-black" id={"#{@id}-identifier-tooltip-category-bar"}>
-              <div
-                class="h-full bg-white/60 p-1 font-thin"
-                id={"#{@id}-identifier-tooltip-category-content"}
-              >
-              </div>
-            </div>
-            <div class="grow p-1 h-full bg-white">
-              <div class="pointer-events-none" id={"#{@id}-identifier-tooltip-content"}>
-                <!-- This div will get repurposed once the map is loaded. -->
-                  Loading map...
-              </div>
-            </div>
-          </div>
+        <div  id={"#{@id}-loading-indicator"} class="text-center p-1 h-full w-full bg-white">
+            Loading map...
         </div>
       </div>
       <div :if={@project_tile_layers_state != []} class="absolute p-1 top-1 right-1">
@@ -63,12 +49,6 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
             layer_states={@project_tile_layers_state}
           />
         </div>
-      </div>
-      <div
-        :if={@no_data}
-        class="absolute w-full h-full top-0 bg-white text-center place-content-center"
-      >
-        <.icon class="mb-1" name="hero-no-symbol" /> No geometry context available
       </div>
     </div>
     """
@@ -194,7 +174,7 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
     |> Map.put_new(:centerLon, 0)
     |> Map.put_new(:centerLat, 0)
     |> Map.put_new(:zoom, 2)
-    |> Map.put(:no_data, true)
+    |> Map.put_new(:offset_base_element, nil)
   end
 
   def create_feature_info(

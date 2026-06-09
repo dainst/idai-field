@@ -15,6 +15,7 @@ const highlightZoomDuration = -1;
 
 export default getFullProjectMapHook = () => {
     return {
+        id: null,
         map: null,
         projectKey: null,
         draftDate: null,
@@ -52,73 +53,41 @@ export default getFullProjectMapHook = () => {
             this.handleEvent(
                 `map-highlight-feature-${this.el.id}`,
                 ({ feature_id }) => {
-                    if (
-                        Date.now() - this.lastHighlightChange >
-                        highlightZoomDuration
-                    ) {
-                        this.clearHighlights();
-                        feature = this.findFeature(feature_id);
-                        parentId = feature.getProperties().parent;
-
-                        if (parentId) {
-                            parent = this.findFeature(parentId);
-                            if (parent) {
-                                this.map
-                                    .getView()
-                                    .fit(parent.getGeometry().getExtent(), {
-                                        padding: [10, 10, 10, 10],
-                                        duration: highlightZoomDuration,
-                                    });
-                            } else if (
-                                feature.getProperties().type != "Point"
-                            ) {
-                                this.map
-                                    .getView()
-                                    .fit(feature.getGeometry().getExtent(), {
-                                        padding: [10, 10, 10, 10],
-                                        duration: highlightZoomDuration,
-                                    });
-                            } else {
-                                console.log(
-                                    `No geometry or parent geometry to zoom to for ${feature_id}`,
-                                );
-                            }
-                        } else {
-                            this.map
-                                .getView()
-                                .fit(feature.getGeometry().getExtent(), {
-                                    padding: [10, 10, 10, 10],
-                                    duration: highlightZoomDuration,
-                                });
-                        }
-
-                        this.highlightFeature(feature);
-                        this.lastHighlightChange = Date.now();
+                    if (feature_id.startsWith("categories-")) {
+                        this.highlightCategories(feature_id);
+                    } else {
+                        this.highlightDocument(feature_id);
                     }
                 },
             );
 
             this.handleEvent(`map-clear-highlights-${this.el.id}`, () => {
-                this.clearHighlights();
-                this.map.getView().fit(this.fullVectorExtent, {
-                    padding: [10, 10, 10, 10],
-                    duration: highlightZoomDuration,
-                });
+                if (this.map) {
+                    this.clearHighlights();
+                    this.map.getView().fit(this.fullVectorExtent, {
+                        padding: [10, 10, 10, 10],
+                        duration: highlightZoomDuration,
+                    });
 
-                this.lastHighlightChange = Date.now();
+                    this.lastHighlightChange = Date.now();
+                }
             });
         },
         async initialize() {
-            const container = document.getElementById(
-                `${this.el.getAttribute("id")}-map`,
-            );
+            this.id = this.el.getAttribute("id");
 
-            const offsetElement = document.getElementById(`map-offset-element`);
-            container.innerHTML = "";
-            container.style.height = `${window.innerHeight - offsetElement.offsetTop}px`;
+            const container = document.getElementById(`${this.id}-map`);
+
+            if (this.el.getAttribute("offset_base_element")) {
+                const offsetElement = document.getElementById(
+                    this.el.getAttribute("offset_base_element"),
+                );
+                //container.innerHTML = "";
+                container.style.height = `${window.innerHeight - offsetElement.offsetTop}px`;
+            }
 
             this.map = new Map({
-                target: `${this.el.getAttribute("id")}-map`,
+                target: `${this.id}-map`,
                 view: new View(),
             });
 
@@ -130,6 +99,77 @@ export default getFullProjectMapHook = () => {
             );
             const featureCollections = await response.json();
             this.setMapFeatures(featureCollections);
+
+            document.getElementById(
+                `${this.id}-loading-indicator`,
+            ).style.display = "none";
+        },
+
+        highlightCategories(categories) {
+            const _this = this;
+
+            const categoryNames = categories
+                .replace("categories-", "")
+                .split(",");
+
+            this.clearHighlights();
+            const vectorLayerFeatures = this.map
+                .getAllLayers()
+                .filter((layer) => layer instanceof VectorLayer)
+                .map((layer) => layer.getSource().getFeatures())
+                .flat();
+
+            vectorLayerFeatures
+                .filter(function (f) {
+                    return (
+                        categoryNames.indexOf(f.getProperties().category) > -1
+                    );
+                })
+                .map(function (f) {
+                    _this.highlightFeature(f);
+                });
+        },
+
+        highlightDocument(uuid) {
+            if (
+                this.map &&
+                Date.now() - this.lastHighlightChange > highlightZoomDuration
+            ) {
+                this.clearHighlights();
+                feature = this.findFeature(uuid);
+                parentId = feature.getProperties().parent;
+
+                if (parentId) {
+                    parent = this.findFeature(parentId);
+                    if (parent) {
+                        this.map
+                            .getView()
+                            .fit(parent.getGeometry().getExtent(), {
+                                padding: [10, 10, 10, 10],
+                                duration: highlightZoomDuration,
+                            });
+                    } else if (feature.getProperties().type != "Point") {
+                        this.map
+                            .getView()
+                            .fit(feature.getGeometry().getExtent(), {
+                                padding: [10, 10, 10, 10],
+                                duration: highlightZoomDuration,
+                            });
+                    } else {
+                        console.log(
+                            `No geometry or parent geometry to zoom to for ${uuid}`,
+                        );
+                    }
+                } else {
+                    this.map.getView().fit(feature.getGeometry().getExtent(), {
+                        padding: [10, 10, 10, 10],
+                        duration: highlightZoomDuration,
+                    });
+                }
+
+                this.highlightFeature(feature);
+                this.lastHighlightChange = Date.now();
+            }
         },
 
         setTileLayers(projectKey, tileLayers) {

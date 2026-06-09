@@ -59,7 +59,7 @@
         limit={@limit}
         query_params={@url_parameters}
         map_indicators?={true}
-        map_hover_target="project_map"
+        map_hover_target="project_search_map"
         base_url={~p"/projects/search/#{@publication.project_name}/#{@publication.draft_date}"}
       />
     </div>
@@ -67,7 +67,8 @@
       <div class="sticky top-0">
         <.live_component
           module={FieldPublicationWeb.Presentation.Components.FullProjectMap}
-          id="project_map"
+          id="project_search_map"
+          offset_base_element="map-offset-element"
           style="background-color: var(--panel-color)"
           publication={@publication}
         />

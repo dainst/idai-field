@@ -498,10 +498,10 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           <% end %>
         </div>
       </div>
-      <div class="flex flex-row gap-4 mt-4">
+      <div class="flex flex-row gap-4 mt-4"  id="map-offset-element">
         <div class="basis-2/3 flex-none p-2">
           <.live_component
-            module={FieldPublicationWeb.Presentation.Components.ProjectViewMap}
+            module={FieldPublicationWeb.Presentation.Components.FullProjectMap}
             id="project_doc_map"
             style="height: 600px; background-color: var(--panel-color)"
             publication={@publication}
@@ -539,7 +539,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           id={"category_link_#{category_name}"}
           phx-hook="HoverHighlightMapFeature"
           target_dom_element="project_doc_map"
-          target_id={"#{Enum.join(get_child_category_names(children) ++ [category_name], ",")}"}
+          target_id={"categories-#{Enum.join(get_child_category_names(children) ++ [category_name], ",")}"}
         >
           <.link navigate={
             ~p"/projects/search/#{@publication.project_name}/#{@publication.draft_date}?#{%{filters: %{category: category_name}}}"

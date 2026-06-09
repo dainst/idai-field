@@ -3,11 +3,6 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
 
   alias FieldPublication.Publications.Data
 
-  alias FieldPublication.Publications.Data.{
-    Category,
-    Document
-  }
-
   alias FieldPublication.DatabaseSchema.Publication
 
   alias FieldPublicationWeb.Presentation.Components.DocumentViewMap
@@ -175,73 +170,5 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
     |> Map.put_new(:centerLat, 0)
     |> Map.put_new(:zoom, 2)
     |> Map.put_new(:offset_base_element, nil)
-  end
-
-  def create_feature_info(
-        %Document{
-          category: %Category{color: color, labels: category_labels},
-          id: uuid,
-          identifier: identifier,
-          geometry: geometry
-        } = doc,
-        hierarchy,
-        publication
-      ) do
-    description =
-      doc
-      |> Data.get_field_value("shortDescription")
-      |> case do
-        nil ->
-          ""
-
-        value when is_binary(value) ->
-          value
-
-        values when is_map(values) ->
-          pick_default_translation(values)
-      end
-
-    category = pick_default_translation(category_labels)
-
-    base = %{
-      type: "Feature",
-      properties: %{
-        uuid: uuid,
-        identifier: identifier,
-        color: color,
-        description: description,
-        category: category,
-        parent: next_ancestor_with_geometry(uuid, hierarchy, publication)
-      }
-    }
-
-    if geometry do
-      base
-      |> put_in([:geometry], geometry)
-      |> put_in([:properties, :type], geometry["type"])
-    else
-      base
-    end
-  end
-
-  defp next_ancestor_with_geometry(uuid, hierarchy, publication) do
-    Map.get(hierarchy, uuid)
-    |> case do
-      %{"parent" => nil} ->
-        nil
-
-      %{"parent" => parent_uuid} ->
-        Data.get_preview_documents([parent_uuid], publication)
-    end
-    |> case do
-      [%Document{id: parent_uuid, geometry: nil}] ->
-        next_ancestor_with_geometry(parent_uuid, hierarchy, publication)
-
-      [%Document{id: uuid} = _parent_with_geometry] ->
-        uuid
-
-      _ ->
-        nil
-    end
   end
 end

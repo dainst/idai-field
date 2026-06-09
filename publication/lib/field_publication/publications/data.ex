@@ -586,7 +586,7 @@ defmodule FieldPublication.Publications.Data do
         feature_collections =
           list_with_geometries(publication)
           |> Enum.map(
-            &FieldPublicationWeb.Presentation.Components.FullProjectMap.create_feature_info(
+            &create_map_feature(
               &1,
               hierarchy,
               publication
@@ -620,6 +620,73 @@ defmodule FieldPublication.Publications.Data do
 
         Cachex.put(:application_documents, cache_doc_name, feature_collections)
         feature_collections
+    end
+  end
+
+  defp create_map_feature(
+         %Document{
+           category: %Category{color: color, labels: category_labels, name: category_key},
+           id: uuid,
+           identifier: identifier,
+           geometry: geometry
+         } = doc,
+         hierarchy,
+         publication
+       ) do
+    description =
+      doc
+      |> get_field_value("shortDescription")
+      |> case do
+        nil ->
+          ""
+
+        value when is_binary(value) ->
+          value
+
+        values when is_map(values) ->
+          FieldPublicationWeb.Translate.pick_default_translation(values)
+      end
+
+    base = %{
+      type: "Feature",
+      properties: %{
+        uuid: uuid,
+        identifier: identifier,
+        color: color,
+        description: description,
+        category_label: FieldPublicationWeb.Translate.pick_default_translation(category_labels),
+        category: category_key,
+        parent: next_ancestor_with_geometry(uuid, hierarchy, publication)
+      }
+    }
+
+    if geometry do
+      base
+      |> put_in([:geometry], geometry)
+      |> put_in([:properties, :type], geometry["type"])
+    else
+      base
+    end
+  end
+
+  defp next_ancestor_with_geometry(uuid, hierarchy, publication) do
+    Map.get(hierarchy, uuid)
+    |> case do
+      %{"parent" => nil} ->
+        nil
+
+      %{"parent" => parent_uuid} ->
+        get_preview_documents([parent_uuid], publication)
+    end
+    |> case do
+      [%Document{id: parent_uuid, geometry: nil}] ->
+        next_ancestor_with_geometry(parent_uuid, hierarchy, publication)
+
+      [%Document{id: uuid} = _parent_with_geometry] ->
+        uuid
+
+      _ ->
+        nil
     end
   end
 

@@ -24,7 +24,7 @@ defmodule FieldPublicationWeb.Presentation.Components.ProjectViewMap do
         <!-- Set pointer-events-none, otherwise the tooltip will block click events on the map -->
         <div class="pointer-events-none text-xs" id={"#{@id}-identifier-tooltip"}>
           <div class="border rounded-sm border-black flex">
-            <div class="saturate-50 pl-2  text-black" id={"#{@id}-identifier-tooltip-category-bar"}>
+            <div class="saturate-50 pl-2 text-black" id={"#{@id}-identifier-tooltip-category-bar"}>
               <div
                 class="h-full bg-white/60 p-1 font-thin"
                 id={"#{@id}-identifier-tooltip-category-content"}

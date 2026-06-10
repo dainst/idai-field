@@ -3,7 +3,9 @@ import View from "ol/View.js";
 import { createEmpty, extend } from "ol/extent.js";
 import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
+import { asArray } from "ol/color";
 import GeoJSON from "ol/format/GeoJSON.js";
+import Overlay from "ol/Overlay.js";
 
 import {
     createTileLayer,
@@ -12,6 +14,123 @@ import {
 } from "./map-helper-functions.js";
 
 const highlightZoomDuration = -1;
+
+function pickTranslation(options, selected) {
+    if (options[selected]) return options[selected];
+    if (options["en"]) return options["en"];
+
+    return options[Object.keys(options)[0]];
+}
+
+function renderPreviewList(features, hook, addButton = false) {
+    const container = document.createElement("div");
+
+    container.classList.add("flex", "gap-0.5");
+
+    const list = document.createElement("div");
+    list.classList.add("flex", "flex-col", "gap-0.5");
+
+    if (features.length == 0) {
+        return list;
+    }
+
+    for (let feature of features) {
+        list.appendChild(renderPreviewIcon(feature, hook, addButton));
+    }
+
+    container.appendChild(list);
+
+    if (addButton) {
+        const closeButton = document.createElement("button");
+
+        closeButton.classList.add(
+            "cursor-pointer",
+            "bg-primary",
+            "hover:bg-primary-hover",
+            "text-primary-inverse",
+            "hover:text-primary-inverse-hover",
+            "p-1",
+            "border",
+            "border-black",
+        );
+
+        closeButton.appendChild(document.createTextNode("x"));
+        closeButton.onclick = (e) => {
+            window.dispatchEvent(
+                new CustomEvent(`phx:close-preview-list-${hook.id}`),
+            );
+        };
+        container.appendChild(closeButton);
+    }
+    return container;
+}
+
+function renderPreviewIcon(feature, hook) {
+    let properties = feature.getProperties();
+
+    preview = document.createElement("div");
+    preview.classList.add("border", "border-black", "flex");
+
+    categoryLabel = document.createElement("div");
+    categoryLabel.classList.add("h-full", "bg-white/60", "p-1", "font-thin");
+
+    categoryLabel.appendChild(
+        document.createTextNode(
+            `${pickTranslation(hook.categoryLabels[properties.category], hook.language)}`,
+        ),
+    );
+
+    categoryInfo = document.createElement("div");
+    categoryInfo.classList.add("pl-2", "text-black");
+    categoryInfo.style = `background: hsl(from ${properties.color} h calc(s * 0.5) l)`;
+
+    categoryInfo.appendChild(categoryLabel);
+
+    documentInfo = document.createElement("a");
+    documentInfo.classList.add(
+        "document-info",
+        "grow",
+        "p-1",
+        "h-full",
+        "bg-white",
+        "cursor-pointer",
+    );
+
+    // if (!addButton) documentInfo.classList.add("rounded-r-sm");
+    documentInfoText = properties.identifier;
+
+    if (properties.description) {
+        documentInfoText += ` | ${pickTranslation(properties.description, hook.language)}`;
+    }
+
+    documentInfo.appendChild(document.createTextNode(documentInfoText));
+
+    documentInfo.addEventListener("click", function (event) {
+        return hook
+            .js()
+            .navigate(
+                `/projects/${hook.projectKey}/${hook.draftDate}/${properties.uuid}`,
+            );
+    });
+
+    preview.appendChild(categoryInfo);
+    preview.appendChild(documentInfo);
+
+    return preview;
+}
+
+async function checkForHitInOrder(layers, coords) {
+    let hits = [];
+    for (const layer of layers) {
+        const features = await layer.getFeatures(coords);
+
+        if (features.length) {
+            hits = hits.concat(features);
+        }
+    }
+
+    return hits;
+}
 
 export default getFullProjectMapHook = () => {
     return {
@@ -24,6 +143,10 @@ export default getFullProjectMapHook = () => {
         featureLayers: [],
         fullVectorExtent: null,
         lastHighlightChange: Date.now(),
+        hoveredFeatures: [],
+        pinnedFeatures: [],
+        identifierOverlay: null,
+        categoryLabels: {},
 
         mounted() {
             const _this = this;
@@ -53,13 +176,22 @@ export default getFullProjectMapHook = () => {
             this.handleEvent(
                 `map-highlight-feature-${this.el.id}`,
                 ({ feature_id }) => {
-                    if (feature_id.startsWith("categories-")) {
-                        this.highlightCategories(feature_id);
-                    } else {
-                        this.highlightDocument(feature_id);
+                    if (this.map) {
+                        if (feature_id.startsWith("categories-")) {
+                            this.highlightCategories(feature_id);
+                        } else {
+                            this.highlightDocument(feature_id);
+                        }
                     }
                 },
             );
+
+            this.handleEvent(`close-preview-list-${this.el.id}`, () => {
+                if (this.map) {
+                    this.pinnedFeatures = [];
+                    this.updateFeatureOverlay(this.pinnedFeatures);
+                }
+            });
 
             this.handleEvent(`map-clear-highlights-${this.el.id}`, () => {
                 if (this.map) {
@@ -76,6 +208,7 @@ export default getFullProjectMapHook = () => {
         async initialize() {
             this.id = this.el.getAttribute("id");
 
+            const _this = this;
             const container = document.getElementById(`${this.id}-map`);
 
             if (this.el.getAttribute("offset_base_element")) {
@@ -86,9 +219,57 @@ export default getFullProjectMapHook = () => {
                 container.style.height = `${window.innerHeight - offsetElement.offsetTop}px`;
             }
 
+            const overlayDiv = document.getElementById(
+                `${this.el.getAttribute("id")}-identifier-tooltip`,
+            );
+
+            this.identifierOverlay = new Overlay({
+                element: overlayDiv,
+                offset: [5, 5],
+                stopEvent: false,
+            });
+
+            this.identifierOverlay.setPosition(undefined);
+
             this.map = new Map({
                 target: `${this.id}-map`,
                 view: new View(),
+                overlays: [this.identifierOverlay],
+            });
+
+            this.map.on("pointermove", async function (e) {
+                if (e.dragging) {
+                    return;
+                }
+
+                if (_this.pinnedFeatures.length == 0) {
+                    _this.hoveredFeatures = await checkForHitInOrder(
+                        _this.featureLayers,
+                        e.pixel,
+                    );
+                    _this.updateFeatureOverlay(
+                        _this.hoveredFeatures,
+                        e.coordinate,
+                    );
+                }
+            });
+
+            this.map.addEventListener("pointerleave", function (e) {
+                _this.featureLayers.map((layer) => {
+                    setFillForLayer(layer, false);
+                });
+            });
+
+            this.map.on("singleclick", async function (e) {
+                if (_this.hoveredFeatures.length != 0) {
+                    _this.pinnedFeatures = _this.hoveredFeatures;
+                    _this.hoveredFeatures = [];
+                    _this.updateFeatureOverlay(
+                        _this.pinnedFeatures,
+                        e.coordinate,
+                        true,
+                    );
+                }
             });
 
             this.projectKey = this.el.getAttribute("project_key");
@@ -97,8 +278,13 @@ export default getFullProjectMapHook = () => {
             const response = await fetch(
                 `/api/json/geometry_feature_collections/${this.projectKey}/${this.draftDate}`,
             );
-            const featureCollections = await response.json();
-            this.setMapFeatures(featureCollections);
+            const { category_labels, feature_collections } =
+                await response.json();
+
+            this.categoryLabels = category_labels;
+            this.language = this.el.getAttribute("language");
+
+            this.setMapFeatures(feature_collections);
 
             document.getElementById(
                 `${this.id}-loading-indicator`,
@@ -169,6 +355,39 @@ export default getFullProjectMapHook = () => {
 
                 this.highlightFeature(feature);
                 this.lastHighlightChange = Date.now();
+            }
+        },
+
+        updateFeatureOverlay(features, coordinate, addButton = false) {
+            this.clearHighlights();
+
+            let tooltipContentNode = document.getElementById(
+                `${this.el.getAttribute("id")}-identifier-tooltip-content`,
+            );
+
+            while (tooltipContentNode.firstChild) {
+                tooltipContentNode.removeChild(tooltipContentNode.firstChild);
+            }
+
+            if (features.length > 0) {
+                tooltipContentNode.appendChild(
+                    renderPreviewList(features, this, addButton),
+                );
+
+                const anchorPixel = this.map.getPixelFromCoordinate(coordinate);
+                const mapSize = this.map.getSize();
+
+                const right =
+                    anchorPixel[0] > mapSize[0] * 0.5 ? "right" : "left";
+                const bottom =
+                    anchorPixel[1] > mapSize[1] * 0.5 ? "bottom" : "top";
+
+                const offsetX = right == "right" ? -5 : 5;
+                const offsetY = bottom == "bottom" ? -5 : 5;
+
+                this.identifierOverlay.setPositioning(`${bottom}-${right}`);
+                this.identifierOverlay.setOffset([offsetX, offsetY]);
+                this.identifierOverlay.setPosition(coordinate);
             }
         },
 
@@ -264,11 +483,9 @@ export default getFullProjectMapHook = () => {
 
         setMapFeatures(featureCollections) {
             for (const index in this.featureLayers) {
-                delete this.featureLayers[index];
+                this.map.removeLayer(this.featureLayer[index]);
             }
-
-            if (this.featureLayers != {})
-                this.map.removeLayer(this.featureLayer);
+            this.featureLayers = [];
 
             this.fullVectorExtent = createEmpty();
 

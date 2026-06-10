@@ -124,9 +124,6 @@ export default getDocumentViewMapHook = () => {
         initialize() {
             const _this = this;
 
-            this.identifierOverlayContent = document.getElementById(
-                `${this.el.getAttribute("id")}-identifier-tooltip-content`,
-            );
             const overlayDiv = document.getElementById(
                 `${this.el.getAttribute("id")}-identifier-tooltip`,
             );

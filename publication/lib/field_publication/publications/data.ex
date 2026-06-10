@@ -583,7 +583,7 @@ defmodule FieldPublication.Publications.Data do
       _ ->
         hierarchy = FieldPublication.Publications.Data.get_document_hierarchy(publication)
 
-        feature_collections =
+        {category_labels, feature_collections} =
           list_with_geometries(publication)
           |> Enum.map(
             &create_map_feature(
@@ -592,34 +592,49 @@ defmodule FieldPublication.Publications.Data do
               publication
             )
           )
-          |> Enum.reduce(%{}, fn feature, collections ->
+          |> Enum.reduce({%{}, %{}}, fn {category_labels, feature}, {labels, collections} ->
             category = feature.properties.category
 
-            case Map.get(collections, category) do
-              nil ->
-                # Create a new feature collection for this category with the first feature
-                # as its first member.
-                Map.put(collections, category, %{
-                  type: "FeatureCollection",
-                  properties: %{
-                    category: category
-                  },
-                  features: [feature]
-                })
+            updated_labels =
+              case Map.get labels, category do
+                nil -> Map.put(labels, category, category_labels)
+                _existing -> labels
+              end
 
-              existing_collection ->
-                # Otherwise add the feature to the existing collection.
-                updated_collection =
-                  Map.update!(existing_collection, :features, fn existing_features ->
-                    existing_features ++ [feature]
-                  end)
+            updated_collections =
+              case Map.get(collections, category) do
+                nil ->
+                  # Create a new feature collection for this category with the first feature
+                  # as its first member.
+                  Map.put(collections, category, %{
+                    type: "FeatureCollection",
+                    properties: %{
+                      category: category
+                    },
+                    features: [feature]
+                  })
 
-                Map.put(collections, category, updated_collection)
-            end
+                existing_collection ->
+                  # Otherwise add the feature to the existing collection.
+                  updated_collection =
+                    Map.update!(existing_collection, :features, fn existing_features ->
+                      existing_features ++ [feature]
+                    end)
+
+                  Map.put(collections, category, updated_collection)
+              end
+
+            {updated_labels, updated_collections}
           end)
 
-        Cachex.put(:application_documents, cache_doc_name, feature_collections)
-        feature_collections
+        result = %{
+          category_labels: category_labels,
+          feature_collections: feature_collections
+        }
+
+        Cachex.put(:application_documents, cache_doc_name, result)
+
+        result
     end
   end
 
@@ -627,24 +642,24 @@ defmodule FieldPublication.Publications.Data do
          %Document{
            category: %Category{color: color, labels: category_labels, name: category_key},
            id: uuid,
+           description: description,
            identifier: identifier,
            geometry: geometry
-         } = doc,
+         },
          hierarchy,
          publication
        ) do
     description =
-      doc
-      |> get_field_value("shortDescription")
-      |> case do
+      case description do
         nil ->
-          ""
+          %{}
 
         value when is_binary(value) ->
-          value
+          # Using the same key as Field Desktop, that is why it is no written with underscore.
+          %{unspecifiedLanguage: value}
 
         values when is_map(values) ->
-          FieldPublicationWeb.Translate.pick_default_translation(values)
+          values
       end
 
     base = %{
@@ -654,19 +669,21 @@ defmodule FieldPublication.Publications.Data do
         identifier: identifier,
         color: color,
         description: description,
-        category_label: FieldPublicationWeb.Translate.pick_default_translation(category_labels),
         category: category_key,
         parent: next_ancestor_with_geometry(uuid, hierarchy, publication)
       }
     }
 
-    if geometry do
-      base
-      |> put_in([:geometry], geometry)
-      |> put_in([:properties, :type], geometry["type"])
-    else
-      base
-    end
+    {
+      category_labels,
+      if geometry do
+        base
+        |> put_in([:geometry], geometry)
+        |> put_in([:properties, :type], geometry["type"])
+      else
+        base
+      end
+    }
   end
 
   defp next_ancestor_with_geometry(uuid, hierarchy, publication) do

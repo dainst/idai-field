@@ -20,13 +20,17 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
       offset_base_element={@offset_base_element}
       project_key={@publication.project_name}
       draft_date={@publication.draft_date}
+      language={@language}
       phx-hook="FullProjectMap"
     >
       <!-- set phx-update="ignore" to ensure changes the map's DOM elements are not re-rendered on updates
           by live view, but instead the content is controlled by OpenLayers (and/or our hook logic) client side after initializiation. -->
       <div style={@style} id={"#{@id}-map"} phx-update="ignore">
-        <div  id={"#{@id}-loading-indicator"} class="text-center p-1 h-full w-full bg-white">
-            Loading map...
+        <div id={"#{@id}-loading-indicator"} class="text-center p-1 h-full w-full bg-white">
+          Loading map...
+        </div>
+        <div class="text-xs" id={"#{@id}-identifier-tooltip"}>
+          <div class="grow h-full" id={"#{@id}-identifier-tooltip-content"}></div>
         </div>
       </div>
       <div :if={@project_tile_layers_state != []} class="absolute p-1 top-1 right-1">
@@ -170,5 +174,6 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
     |> Map.put_new(:centerLat, 0)
     |> Map.put_new(:zoom, 2)
     |> Map.put_new(:offset_base_element, nil)
+    |> Map.put_new(:language, Gettext.get_locale(FieldPublicationWeb.Translate))
   end
 end

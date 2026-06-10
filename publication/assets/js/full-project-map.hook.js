@@ -181,6 +181,13 @@ export default getFullProjectMapHook = () => {
             );
 
             this.handleEvent(
+                `render-selection-polygon-${this.el.id}`,
+                ({ geometry }) => {
+                    this.setSelectionPolygon(geometry);
+                },
+            );
+
+            this.handleEvent(
                 `map-highlight-feature-${this.el.id}`,
                 ({ feature_id }) => {
                     if (this.map) {
@@ -292,7 +299,7 @@ export default getFullProjectMapHook = () => {
                         width: 1,
                     }),
                     fill: new Fill({
-                        color: `rgba(255, 255, 255, 0.3)`,
+                        color: `rgba(255, 255, 255, 0.5)`,
                     }),
                 }),
             });
@@ -360,6 +367,22 @@ export default getFullProjectMapHook = () => {
             document.getElementById(
                 `${this.id}-loading-indicator`,
             ).style.display = "none";
+        },
+
+        setSelectionPolygon(geometry) {
+            this.drawSource.clear();
+
+            if (geometry != null) {
+                this.drawSource.addFeature(
+                    new GeoJSON().readFeature({
+                        type: "Feature",
+                        geometry: {
+                            type: "Polygon",
+                            coordinates: [geometry],
+                        },
+                    }),
+                );
+            }
         },
 
         highlightCategories(categories) {

@@ -46,7 +46,7 @@ defmodule FieldPublicationWeb.Presentation.PublicationSearch do
 
     parsed_geometry_filter =
       with values when is_binary(values) and values != "" <-
-             Map.get(unsigned_params, "geometry_filter") |> IO.inspect(),
+             Map.get(unsigned_params, "geometry_filter"),
            coordinates_params <- String.split(values, "_"),
            coordinates <- Enum.map(coordinates_params, &String.split(&1, "|")),
            parsed_values <-
@@ -69,6 +69,7 @@ defmodule FieldPublicationWeb.Presentation.PublicationSearch do
       :noreply,
       socket
       |> assign(:limit, @search_batch_limit)
+      |> assign(:selected_geometry, parsed_geometry_filter)
       |> assign(:url_parameters, %{
         q: q,
         filters: filters,

@@ -9,6 +9,7 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
 
   require Logger
 
+  @impl true
   def render(assigns) do
     ~H"""
     <div
@@ -67,13 +68,15 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
 
   @impl true
   def update(
-        %{publication: publication, id: id} = assigns,
+        %{publication: publication, id: id, preset_geometry: preset_geometry} = assigns,
         socket
       ) do
     assigns = set_defaults(assigns)
-    socket = handle_publication_change(socket, publication, id)
 
-    socket = assign(socket, assigns)
+    socket =
+      push_event(socket, "render-selection-polygon-#{id}", %{geometry: preset_geometry} )
+      |> handle_publication_change(publication, id)
+      |> assign(assigns)
 
     {:ok, assign(socket, :no_data, false)}
   end

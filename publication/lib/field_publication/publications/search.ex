@@ -304,7 +304,7 @@ defmodule FieldPublication.Publications.Search do
       end)
 
     filter_params =
-      if geometry_filter |> IO.inspect() do
+      if geometry_filter do
         filter_params ++
           [
             %{

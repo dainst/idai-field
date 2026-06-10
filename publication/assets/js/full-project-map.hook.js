@@ -7,6 +7,8 @@ import { asArray } from "ol/color";
 import GeoJSON from "ol/format/GeoJSON.js";
 import Overlay from "ol/Overlay.js";
 import Draw from "ol/interaction/Draw.js";
+import { Fill, Stroke } from "ol/style.js";
+import Style from "ol/style/Style.js";
 
 import {
     createTileLayer,
@@ -87,7 +89,7 @@ function renderPreviewIcon(feature, hook) {
 
     categoryInfo.appendChild(categoryLabel);
 
-    documentInfo = document.createElement("a");
+    documentInfo = document.createElement("div");
     documentInfo.classList.add(
         "document-info",
         "grow",
@@ -221,27 +223,32 @@ export default getFullProjectMapHook = () => {
                         this.updateFeatureOverlay([]);
 
                         this.draw = new Draw({
-                            drawLayerSource: this.drawSource,
+                            source: this.drawSource,
                             type: "Polygon",
+                            // style while drawing polygons
                             style: {
                                 "circle-radius": 5,
-                                "circle-fill-color": "red",
-                                "stroke-color": "black",
+                                "circle-fill-color": `rgba(255, 0, 0, 1)`,
+                                "stroke-color": `rgba(0, 0, 0, 1)`,
                                 "stroke-width": 2,
-                                "fill-color": `rgba(255, 255, 255, 0.3)`,
+                                "fill-color": `rgba(255, 255, 255, 0.5)`,
                             },
                         });
 
                         this.draw.once("drawend", ({ feature }) => {
+                            this.drawSource.clear();
                             this.pushEventTo(this.el, "drawn-selection", {
                                 coordinates: feature
                                     .getGeometry()
                                     .getCoordinates(),
                             });
+                            this.drawBoxMode = new_value;
                             this.map.removeInteraction(this.draw);
                         });
 
                         this.map.addInteraction(this.draw);
+                    } else {
+                        this.map.removeInteraction(this.draw);
                     }
                 },
             );
@@ -275,8 +282,19 @@ export default getFullProjectMapHook = () => {
             this.drawSource = new VectorSource({
                 wrapX: false,
             });
+
             this.drawLayer = new VectorLayer({
                 source: this.drawSource,
+                // style for finished polygons
+                style: new Style({
+                    stroke: new Stroke({
+                        color: `rgba(0, 0, 0, 1)`,
+                        width: 1,
+                    }),
+                    fill: new Fill({
+                        color: `rgba(255, 255, 255, 0.3)`,
+                    }),
+                }),
             });
 
             this.map = new Map({

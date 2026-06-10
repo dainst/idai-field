@@ -6,6 +6,7 @@ import VectorLayer from "ol/layer/Vector";
 import { asArray } from "ol/color";
 import GeoJSON from "ol/format/GeoJSON.js";
 import Overlay from "ol/Overlay.js";
+import Draw from "ol/interaction/Draw.js";
 
 import {
     createTileLayer,
@@ -147,6 +148,10 @@ export default getFullProjectMapHook = () => {
         pinnedFeatures: [],
         identifierOverlay: null,
         categoryLabels: {},
+        drawBoxMode: false,
+        draw: null,
+        drawSource: null,
+        drawLayer: null,
 
         mounted() {
             const _this = this;
@@ -204,6 +209,42 @@ export default getFullProjectMapHook = () => {
                     this.lastHighlightChange = Date.now();
                 }
             });
+
+            this.handleEvent(
+                `set-draw-box-mode-${this.el.id}`,
+                ({ new_value }) => {
+                    this.drawBoxMode = new_value;
+                    if (new_value == true) {
+                        this.pinnedFeatures = [];
+                        this.hoveredFeatures = [];
+
+                        this.updateFeatureOverlay([]);
+
+                        this.draw = new Draw({
+                            drawLayerSource: this.drawSource,
+                            type: "Polygon",
+                            style: {
+                                "circle-radius": 5,
+                                "circle-fill-color": "red",
+                                "stroke-color": "black",
+                                "stroke-width": 2,
+                                "fill-color": `rgba(255, 255, 255, 0.3)`,
+                            },
+                        });
+
+                        this.draw.once("drawend", ({ feature }) => {
+                            this.pushEventTo(this.el, "drawn-selection", {
+                                coordinates: feature
+                                    .getGeometry()
+                                    .getCoordinates(),
+                            });
+                            this.map.removeInteraction(this.draw);
+                        });
+
+                        this.map.addInteraction(this.draw);
+                    }
+                },
+            );
         },
         async initialize() {
             this.id = this.el.getAttribute("id");
@@ -231,14 +272,22 @@ export default getFullProjectMapHook = () => {
 
             this.identifierOverlay.setPosition(undefined);
 
+            this.drawSource = new VectorSource({
+                wrapX: false,
+            });
+            this.drawLayer = new VectorLayer({
+                source: this.drawSource,
+            });
+
             this.map = new Map({
+                layers: [this.drawLayer],
                 target: `${this.id}-map`,
                 view: new View(),
                 overlays: [this.identifierOverlay],
             });
 
             this.map.on("pointermove", async function (e) {
-                if (e.dragging) {
+                if (e.dragging || _this.drawBoxMode) {
                     return;
                 }
 
@@ -255,12 +304,16 @@ export default getFullProjectMapHook = () => {
             });
 
             this.map.addEventListener("pointerleave", function (e) {
+                if (_this.drawBoxMode) return;
+
                 _this.featureLayers.map((layer) => {
                     setFillForLayer(layer, false);
                 });
             });
 
             this.map.on("singleclick", async function (e) {
+                if (_this.drawBoxMode) return;
+
                 if (_this.hoveredFeatures.length != 0) {
                     _this.pinnedFeatures = _this.hoveredFeatures;
                     _this.hoveredFeatures = [];

@@ -44,17 +44,51 @@ defmodule FieldPublicationWeb.Presentation.PublicationSearch do
           0
       end
 
+    parsed_geometry_filter =
+      with values when is_binary(values) and values != "" <-
+             Map.get(unsigned_params, "geometry_filter") |> IO.inspect(),
+           coordinates_params <- String.split(values, "_"),
+           coordinates <- Enum.map(coordinates_params, &String.split(&1, "|")),
+           parsed_values <-
+             Enum.map(coordinates, fn [a, b] -> [Float.parse(a), Float.parse(b)] end),
+           true <-
+             Enum.all?(parsed_values, fn
+               [{_a, ""}, {_b, ""}] -> true
+               _ -> false
+             end) do
+        Enum.map(parsed_values, fn [{a, ""}, {b, ""}] -> [a, b] end)
+      else
+        _ ->
+          nil
+      end
+
+    geometry_filter_parameter =
+      if parsed_geometry_filter, do: Map.get(unsigned_params, "geometry_filter"), else: nil
+
     {
       :noreply,
       socket
       |> assign(:limit, @search_batch_limit)
-      |> assign(:url_parameters, %{q: q, filters: filters, from: from})
+      |> assign(:url_parameters, %{
+        q: q,
+        filters: filters,
+        geometry_filter: geometry_filter_parameter,
+        from: from
+      })
       |> assign_async(:search_result, fn ->
         %{
           total: total,
           docs: docs,
           aggregations: aggregations
-        } = Search.search(q, filters, from, @search_batch_limit, publication)
+        } =
+          Search.search(
+            q,
+            filters,
+            parsed_geometry_filter,
+            from,
+            @search_batch_limit,
+            publication
+          )
 
         aggregations =
           Enum.reject(
@@ -131,6 +165,44 @@ defmodule FieldPublicationWeb.Presentation.PublicationSearch do
       url_parameters
       |> Map.put(:filters, updated_filters)
       |> Map.put(:from, 0)
+
+    {
+      :noreply,
+      push_patch(socket,
+        to:
+          ~p"/projects/search/#{publication.project_name}/#{publication.draft_date}?#{url_parameters}"
+      )
+    }
+  end
+
+  def handle_event(
+        "clear_geo_filter",
+        _,
+        %{assigns: %{url_parameters: url_parameters, publication: publication}} = socket
+      ) do
+    url_parameters = Map.delete(url_parameters, :geometry_filter)
+
+    {
+      :noreply,
+      push_patch(socket,
+        to:
+          ~p"/projects/search/#{publication.project_name}/#{publication.draft_date}?#{url_parameters}"
+      )
+    }
+  end
+
+  @impl true
+  def handle_info(
+        {:drawn_selection, values},
+        %{assigns: %{url_parameters: url_parameters, publication: publication}} = socket
+      ) do
+    parameter =
+      Enum.reduce(values, "", fn [x, y], acc ->
+        "#{acc}_#{x}|#{y}"
+      end)
+      |> String.replace_prefix("_", "")
+
+    url_parameters = Map.put(url_parameters, :geometry_filter, parameter)
 
     {
       :noreply,

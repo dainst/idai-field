@@ -9,6 +9,7 @@ defmodule FieldPublicationWeb.Presentation.Components.Search do
   attr :current_query, :string, required: true
   attr :total, :integer, required: true
   attr :active_filters, :map, default: %{}
+  attr :active_geo_search?, :boolean, default: false
 
   def search_input(assigns) do
     ~H"""
@@ -38,6 +39,15 @@ defmodule FieldPublicationWeb.Presentation.Components.Search do
       </div>
       <%= if @active_filters != %{} do %>
         <div class="flex flex-wrap gap-1">
+          <div
+            :if={@active_geo_search?}
+            class="pl-2 text-primary-inverse hover:text-primary-hover-inverse cursor-pointer bg-primary hover:bg-primary-hover hover:line-through rounded"
+            phx-click="clear_geo_filter"
+          >
+            <div class="h-full pl-2 pr-2 font-thin rounded">
+              <strong><.icon name="hero-map" /></strong> Map selection
+            </div>
+          </div>
           <%= for {field, value} <- @active_filters do %>
             <.aggregation_deselection
               field_name={field}

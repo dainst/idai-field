@@ -33,26 +33,39 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
           <div class="grow h-full" id={"#{@id}-identifier-tooltip-content"}></div>
         </div>
       </div>
-      <div :if={@project_tile_layers_state != []} class="absolute p-1 top-1 right-1">
-        <div
-          class="right-1 absolute rounded w-8 h-8 text-center pt-0.5 bg-white"
-          phx-click={Phoenix.LiveView.JS.toggle(to: "##{@id}-layer-select")}
-        >
-          <.icon name="hero-square-3-stack-3d" />
+      <div class="absolute p-1 top-1 right-1 flex gap-1">
+        <div class="bg-white">
+          <div
+            id={"#{@id}-draw-box-selector"}
+            phx-click="toggle-draw-box-mode"
+            phx-target={@myself}
+            class={"w-8 h-8 text-center pt-0.5 rounded #{if @draw_box_mode, do: "bg-primary/20 border border-primary hover:border-primary-hover"}"}
+          >
+            <.icon name="hero-viewfinder-circle" />
+          </div>
         </div>
-        <div id={"#{@id}-layer-select"} class="bg-white p-2 pr-8 max-h-64 overflow-auto hidden">
-          <DocumentViewMap.render_tile_layer_selection_group
-            target={@myself}
-            publication={@publication}
-            group={:project}
-            layer_states={@project_tile_layers_state}
-          />
+        <div :if={@project_tile_layers_state != []}>
+          <div
+            class="right-1 rounded w-8 h-8 text-center pt-0.5 bg-white"
+            phx-click={Phoenix.LiveView.JS.toggle(to: "##{@id}-layer-select")}
+          >
+            <.icon name="hero-square-3-stack-3d" />
+          </div>
+          <div id={"#{@id}-layer-select"} class="bg-white p-2 pr-8 max-h-64 overflow-auto hidden">
+            <DocumentViewMap.render_tile_layer_selection_group
+              target={@myself}
+              publication={@publication}
+              group={:project}
+              layer_states={@project_tile_layers_state}
+            />
+          </div>
         </div>
       </div>
     </div>
     """
   end
 
+  @impl true
   def update(
         %{publication: publication, id: id} = assigns,
         socket
@@ -65,6 +78,7 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
     {:ok, assign(socket, :no_data, false)}
   end
 
+  @impl true
   def handle_event(
         "visibility-preference",
         %{"group" => "project", "uuid" => uuid, "value" => value},
@@ -118,6 +132,38 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
         visibility:
           Enum.find(layer_states, fn state -> state.uuid == uuid end) |> Map.get(:visible)
       })
+    }
+  end
+
+  def handle_event("toggle-draw-box-mode", _, socket) do
+    {
+      :noreply,
+      toggle_draw_mode(socket)
+    }
+  end
+
+  def handle_event("drawn-selection", %{"coordinates" => multipolygon_coordinates}, socket) do
+    case multipolygon_coordinates do
+      [polygon_coordinates] when is_list(polygon_coordinates) ->
+        Enum.all?(polygon_coordinates, fn
+          [a, b] when is_float(a) and is_float(b) -> true
+          _ -> false
+        end)
+
+      _ ->
+        false
+
+      _ ->
+        false
+    end
+    |> if do
+      # Sends notification to whatever live view is using this map component.
+      send(self(), {:drawn_selection, List.first(multipolygon_coordinates)})
+    end
+
+    {
+      :noreply,
+      toggle_draw_mode(socket)
     }
   end
 
@@ -175,5 +221,14 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
     |> Map.put_new(:zoom, 2)
     |> Map.put_new(:offset_base_element, nil)
     |> Map.put_new(:language, Gettext.get_locale(FieldPublicationWeb.Translate))
+    |> Map.put_new(:draw_box_mode, false)
+  end
+
+  defp toggle_draw_mode(%{assigns: %{id: id, draw_box_mode: current}} = socket) do
+    new_value = !current
+
+    socket
+    |> assign(:draw_box_mode, new_value)
+    |> push_event("set-draw-box-mode-#{id}", %{new_value: new_value})
   end
 end

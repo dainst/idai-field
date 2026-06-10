@@ -596,7 +596,7 @@ defmodule FieldPublication.Publications.Data do
             category = feature.properties.category
 
             updated_labels =
-              case Map.get labels, category do
+              case Map.get(labels, category) do
                 nil -> Map.put(labels, category, category_labels)
                 _existing -> labels
               end

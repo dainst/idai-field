@@ -21,6 +21,7 @@
         total={total}
         current_query={@url_parameters.q}
         active_filters={@url_parameters.filters}
+        active_geo_search?={!is_nil(@url_parameters.geometry_filter)}
       />
     </div>
     <.button

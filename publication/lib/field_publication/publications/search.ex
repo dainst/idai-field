@@ -242,7 +242,7 @@ defmodule FieldPublication.Publications.Search do
     end
   end
 
-  def search(q, filter, from \\ 0, size \\ 100, publication \\ nil) do
+  def search(q, filter, geometry_filter, from \\ 0, size \\ 100, publication \\ nil) do
     index =
       if publication == nil do
         "project*"
@@ -302,6 +302,25 @@ defmodule FieldPublication.Publications.Search do
             %{term: %{"configuration_based_field_mappings.#{key}" => value}}
         end
       end)
+
+    filter_params =
+      if geometry_filter |> IO.inspect() do
+        filter_params ++
+          [
+            %{
+              geo_shape: %{
+                geometry: %{
+                  shape: %{
+                    type: "polygon",
+                    coordinates: [geometry_filter]
+                  }
+                }
+              }
+            }
+          ]
+      else
+        filter_params
+      end
 
     payload =
       if Enum.empty?(filter_params) do

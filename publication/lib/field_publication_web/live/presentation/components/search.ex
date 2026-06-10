@@ -37,7 +37,7 @@ defmodule FieldPublicationWeb.Presentation.Components.Search do
           Active filters:
         <% end %>
       </div>
-      <%= if @active_filters != %{} do %>
+      <%= if @active_filters != %{} || @active_geo_search? do %>
         <div class="flex flex-wrap gap-1">
           <div
             :if={@active_geo_search?}

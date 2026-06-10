@@ -1,212 +1,211 @@
+<%= if User.is_admin?(@current_user) do %>
+  <.link navigate={~p"/"}>Back to overview</.link>
+<% end %>
 
-  <%= if User.is_admin?(@current_user) do %>
-    <.link navigate={~p"/"}>Back to overview</.link>
-  <% end %>
+<h1>Project <i>{@project}</i></h1>
 
-  <h1>Project <i>{@project}</i></h1>
+<section>
+  <h2>Overview</h2>
 
-  <section>
-    <h2>Overview</h2>
+  <table>
+    <tbody>
+      <tr>
+        <td>Supervisor</td>
+        <td>
+          <%= case @supervisor do %>
+            <% :loading -> %>
+              {"Loading..."}
+            <% :no_data -> %>
+              {"No supervisor found in project document."}
+            <% name -> %>
+              {name}
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td>Contact</td>
+        <td>
+          <%= case @contact do %>
+            <% :loading -> %>
+              {"Loading..."}
+            <% :no_data -> %>
+              {"No contact data found in project document."}
+            <% %{name: name, mail: mail} -> %>
+              {name} (<a href={"mailto:#{mail}"}><%= mail %></a>)
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td>Staff</td>
+        <td>
+          <%= case @staff do %>
+            <% :loading -> %>
+              {"Loading..."}
+            <% :no_data -> %>
+              {"No staff names found in project document."}
+            <% names -> %>
+              {names}
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td>Statistics</td>
+        <td>
+          <section>Database documents: {@database_info.doc_count}</section>
+          <section>
+            Database size: {Sizeable.filesize(@database_info.size)} ({@database_info.size} bytes)
+          </section>
+          <.async_result :let={file_info} assign={@file_info}>
+            <:loading>Loading file information...</:loading>
+            <:failed :let={_failure}>
+              <div class="alert alert-danger">
+                Failed to load the project's file information! Evaluate issues below to see more...
+              </div>
+            </:failed>
+            <%= Enum.map(file_info, fn({variant_name, %{ active: files_count, active_size: files_size }}) -> %>
+              <section>
+                {variant_name |> get_file_label() |> String.capitalize()}: {files_count}, size: {Sizeable.filesize(
+                  files_size
+                )} ({files_size} bytes)
+              </section>
+            <% end) %>
+          </.async_result>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
 
-    <table>
-      <tbody>
-        <tr>
-          <td>Supervisor</td>
-          <td>
-            <%= case @supervisor do %>
-              <% :loading -> %>
-                {"Loading..."}
-              <% :no_data -> %>
-                {"No supervisor found in project document."}
-              <% name -> %>
-                {name}
-            <% end %>
-          </td>
-        </tr>
-        <tr>
-          <td>Contact</td>
-          <td>
-            <%= case @contact do %>
-              <% :loading -> %>
-                {"Loading..."}
-              <% :no_data -> %>
-                {"No contact data found in project document."}
-              <% %{name: name, mail: mail} -> %>
-                {name} (<a href={"mailto:#{mail}"}><%= mail %></a>)
-            <% end %>
-          </td>
-        </tr>
-        <tr>
-          <td>Staff</td>
-          <td>
-            <%= case @staff do %>
-              <% :loading -> %>
-                {"Loading..."}
-              <% :no_data -> %>
-                {"No staff names found in project document."}
-              <% names -> %>
-                {names}
-            <% end %>
-          </td>
-        </tr>
-        <tr>
-          <td>Statistics</td>
-          <td>
-            <section>Database documents: {@database_info.doc_count}</section>
-            <section>
-              Database size: {Sizeable.filesize(@database_info.size)} ({@database_info.size} bytes)
-            </section>
-            <.async_result :let={file_info} assign={@file_info}>
-              <:loading>Loading file information...</:loading>
-              <:failed :let={_failure}>
-                <div class="alert alert-danger">
-                  Failed to load the project's file information! Evaluate issues below to see more...
-                </div>
-              </:failed>
-              <%= Enum.map(file_info, fn({variant_name, %{ active: files_count, active_size: files_size }}) -> %>
-                <section>
-                  {variant_name |> get_file_label() |> String.capitalize()}: {files_count}, size: {Sizeable.filesize(
-                    files_size
-                  )} ({files_size} bytes)
-                </section>
-              <% end) %>
-            </.async_result>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
-
-  <section :if={@database_info.last_changes != []}>
-    <h2>History</h2>
-    <small>Last {Enum.count(@database_info.last_changes)} changes.</small>
-    <div style="max-height: 350px; overflow: auto;">
-      <% {current_column, current_direction} = @history_sort_state %>
-      <.sortable_table
-        rows={@database_info.last_changes}
-        current_column={Atom.to_string(current_column)}
-        current_direction={current_direction}
-        event="history_toggled"
-      >
-        <:column :let={%ChangeInfo{id: val}} sort_key="id" heading="Document ID">
-          {val}
-        </:column>
-        <:column :let={%ChangeInfo{identifier: val}} sort_key="identifier" heading="Identifier">
-          {val}
-        </:column>
-        <:column :let={%ChangeInfo{action: val}} sort_key="action" heading="Action">
-          {val}
-        </:column>
-        <:column :let={%ChangeInfo{date: val}} sort_key="date" heading="Date">
-          {val}
-        </:column>
-        <:column :let={%ChangeInfo{user: val}} sort_key="user" heading="User">
-          {val}
-        </:column>
-      </.sortable_table>
-    </div>
-  </section>
-
-  <section>
-    <h2>Issues {if @issue_count, do: "(#{@issue_count})"}</h2>
-    <.live_component
-      id="issue_display"
-      module={FieldHubWeb.Components.IssuesPanel}
-      issues={@issues}
-      project_key={@project}
-      loading?={@issues_evaluating?}
-      event="evaluate_issues"
+<section :if={@database_info.last_changes != []}>
+  <h2>History</h2>
+  <small>Last {Enum.count(@database_info.last_changes)} changes.</small>
+  <div style="max-height: 350px; overflow: auto;">
+    <% {current_column, current_direction} = @history_sort_state %>
+    <.sortable_table
+      rows={@database_info.last_changes}
+      current_column={Atom.to_string(current_column)}
+      current_direction={current_direction}
+      event="history_toggled"
     >
-    </.live_component>
-  </section>
-  <%= if User.is_admin?(@current_user) do %>
-    <hr />
-    <h2>Password change</h2>
-    <form id="pwd_form" phx-change="update">
-      <div class="row">
-        <div class="column">
-          <input
-            type="text"
-            placeholder="New password"
-            id="password"
-            name="password"
-            value={@new_password}
-          />
-        </div>
-      </div>
-      <div class="row">
-        <div class="column">
-          <button
-            type="button"
-            class="button button-outline"
-            phx-click="generate_password"
-            style="width:100%"
-          >
-            Generate new password
-          </button>
-        </div>
-        <div class="column">
-          <button
-            type="button"
-            class="button"
-            phx-click="set_password"
-            disabled={@new_password == ""}
-            style="width:100%"
-          >
-            Set new password
-          </button>
-        </div>
-      </div>
-    </form>
-    <hr />
-    <h2>
-      <div class="row">
-        <div class="column column-80">
-          Cache <small hidden={@hide_cache_cleared_message}><i>cleared</i></small>
-        </div>
+      <:column :let={%ChangeInfo{id: val}} sort_key="id" heading="Document ID">
+        {val}
+      </:column>
+      <:column :let={%ChangeInfo{identifier: val}} sort_key="identifier" heading="Identifier">
+        {val}
+      </:column>
+      <:column :let={%ChangeInfo{action: val}} sort_key="action" heading="Action">
+        {val}
+      </:column>
+      <:column :let={%ChangeInfo{date: val}} sort_key="date" heading="Date">
+        {val}
+      </:column>
+      <:column :let={%ChangeInfo{user: val}} sort_key="user" heading="User">
+        {val}
+      </:column>
+    </.sortable_table>
+  </div>
+</section>
 
-        <button type="button" class="button column" phx-click="delete_cache">Clear cache</button>
-      </div>
-    </h2>
-    <hr />
-    <h2>Delete project</h2>
-    <form id="del_form" phx-change="delete_form_change">
-      <fieldset>
+<section>
+  <h2>Issues {if @issue_count, do: "(#{@issue_count})"}</h2>
+  <.live_component
+    id="issue_display"
+    module={FieldHubWeb.Components.IssuesPanel}
+    issues={@issues}
+    project_key={@project}
+    loading?={@issues_evaluating?}
+    event="evaluate_issues"
+  >
+  </.live_component>
+</section>
+<%= if User.is_admin?(@current_user) do %>
+  <hr />
+  <h2>Password change</h2>
+  <form id="pwd_form" phx-change="update">
+    <div class="row">
+      <div class="column">
         <input
           type="text"
-          placeholder="Repeat the project name to delete"
-          name="repeat_project_name_input"
-          value={@confirm_project_name}
+          placeholder="New password"
+          id="password"
+          name="password"
+          value={@new_password}
         />
-
-        <input
-          type="radio"
-          name="delete_files_radio"
-          id="delete_database"
-          value="keep_files"
-          checked={not @delete_files}
-        />
-        <label style="display: inline" for="delete_database">Delete database only</label>
-
-        <input
-          type="radio"
-          name="delete_files_radio"
-          id="delete_database_and_files"
-          value="delete_files"
-          checked={@delete_files}
-        />
-        <label style="display: inline" for="delete_database_and_files">
-          Delete database and image files
-        </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="column">
+        <button
+          type="button"
+          class="button button-outline"
+          phx-click="generate_password"
+          style="width:100%"
+        >
+          Generate new password
+        </button>
+      </div>
+      <div class="column">
         <button
           type="button"
           class="button"
-          phx-click="delete"
-          disabled={@confirm_project_name != @project}
+          phx-click="set_password"
+          disabled={@new_password == ""}
           style="width:100%"
         >
-          Delete
+          Set new password
         </button>
-      </fieldset>
-    </form>
-  <% end %>
+      </div>
+    </div>
+  </form>
+  <hr />
+  <h2>
+    <div class="row">
+      <div class="column column-80">
+        Cache <small hidden={@hide_cache_cleared_message}><i>cleared</i></small>
+      </div>
+
+      <button type="button" class="button column" phx-click="delete_cache">Clear cache</button>
+    </div>
+  </h2>
+  <hr />
+  <h2>Delete project</h2>
+  <form id="del_form" phx-change="delete_form_change">
+    <fieldset>
+      <input
+        type="text"
+        placeholder="Repeat the project name to delete"
+        name="repeat_project_name_input"
+        value={@confirm_project_name}
+      />
+
+      <input
+        type="radio"
+        name="delete_files_radio"
+        id="delete_database"
+        value="keep_files"
+        checked={not @delete_files}
+      />
+      <label style="display: inline" for="delete_database">Delete database only</label>
+
+      <input
+        type="radio"
+        name="delete_files_radio"
+        id="delete_database_and_files"
+        value="delete_files"
+        checked={@delete_files}
+      />
+      <label style="display: inline" for="delete_database_and_files">
+        Delete database and image files
+      </label>
+      <button
+        type="button"
+        class="button"
+        phx-click="delete"
+        disabled={@confirm_project_name != @project}
+        style="width:100%"
+      >
+        Delete
+      </button>
+    </fieldset>
+  </form>
+<% end %>

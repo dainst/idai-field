@@ -155,9 +155,6 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
 
       _ ->
         false
-
-      _ ->
-        false
     end
     |> if do
       # Sends notification to whatever live view is using this map component.

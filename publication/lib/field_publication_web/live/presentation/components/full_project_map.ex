@@ -42,7 +42,7 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
             phx-target={@myself}
             class={"w-8 h-8 text-center pt-0.5 rounded #{if @draw_box_mode, do: "bg-primary/20 border border-primary hover:border-primary-hover"}"}
           >
-            <.icon name="hero-viewfinder-circle" />
+            <.icon name="hero-pencil-square" />
           </div>
         </div>
         <div :if={@project_tile_layers_state != []}>
@@ -74,7 +74,7 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
     assigns = set_defaults(assigns)
 
     socket =
-      push_event(socket, "render-selection-polygon-#{id}", %{geometry: preset_geometry} )
+      push_event(socket, "render-selection-polygon-#{id}", %{geometry: preset_geometry})
       |> handle_publication_change(publication, id)
       |> assign(assigns)
 

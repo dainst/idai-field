@@ -197,13 +197,7 @@ defmodule FieldPublicationWeb.Presentation.PublicationSearch do
         {:drawn_selection, values},
         %{assigns: %{url_parameters: url_parameters, publication: publication}} = socket
       ) do
-    parameter =
-      Enum.reduce(values, "", fn [x, y], acc ->
-        "#{acc}_#{x}|#{y}"
-      end)
-      |> String.replace_prefix("_", "")
-
-    url_parameters = Map.put(url_parameters, :geometry_filter, parameter)
+    url_parameters = Map.merge(url_parameters, drawn_selection_to_parameter(values))
 
     {
       :noreply,
@@ -211,6 +205,16 @@ defmodule FieldPublicationWeb.Presentation.PublicationSearch do
         to:
           ~p"/projects/search/#{publication.project_name}/#{publication.draft_date}?#{url_parameters}"
       )
+    }
+  end
+
+  def drawn_selection_to_parameter(geometry) do
+    %{
+      geometry_filter:
+        Enum.reduce(geometry, "", fn [x, y], acc ->
+          "#{acc}_#{x}|#{y}"
+        end)
+        |> String.replace_prefix("_", "")
     }
   end
 end

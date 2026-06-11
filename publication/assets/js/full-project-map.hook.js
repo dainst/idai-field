@@ -210,10 +210,7 @@ export default getFullProjectMapHook = () => {
             this.handleEvent(`map-clear-highlights-${this.el.id}`, () => {
                 if (this.map) {
                     this.clearHighlights();
-                    this.map.getView().fit(this.fullVectorExtent, {
-                        padding: [10, 10, 10, 10],
-                        duration: highlightZoomDuration,
-                    });
+                    this.refitView();
 
                     this.lastHighlightChange = Date.now();
                 }
@@ -251,6 +248,11 @@ export default getFullProjectMapHook = () => {
                             });
                             this.drawBoxMode = new_value;
                             this.map.removeInteraction(this.draw);
+                            this.drawnExtent = feature
+                                .getGeometry()
+                                .getExtent();
+
+                            this.refitView();
                         });
 
                         this.map.addInteraction(this.draw);
@@ -373,16 +375,21 @@ export default getFullProjectMapHook = () => {
             this.drawSource.clear();
 
             if (geometry != null) {
-                this.drawSource.addFeature(
-                    new GeoJSON().readFeature({
-                        type: "Feature",
-                        geometry: {
-                            type: "Polygon",
-                            coordinates: [geometry],
-                        },
-                    }),
-                );
+                feature = new GeoJSON().readFeature({
+                    type: "Feature",
+                    geometry: {
+                        type: "Polygon",
+                        coordinates: [geometry],
+                    },
+                });
+
+                this.drawSource.addFeature(feature);
+                this.drawnExtent = feature.getGeometry().getExtent();
+            } else {
+                this.drawnExtent = null;
             }
+
+            this.refitView();
         },
 
         highlightCategories(categories) {
@@ -419,7 +426,11 @@ export default getFullProjectMapHook = () => {
                 feature = this.findFeature(uuid);
                 parentId = feature.getProperties().parent;
 
-                if (parentId) {
+                if (this.drawnExtent) {
+                    this.map
+                        .getView()
+                        .fit(this.drawnExtent, { padding: [10, 10, 10, 10] });
+                } else if (parentId) {
                     parent = this.findFeature(parentId);
                     if (parent) {
                         this.map
@@ -575,6 +586,19 @@ export default getFullProjectMapHook = () => {
             });
         },
 
+        refitView() {
+            if (!this.map | !this.fullVectorExtent) return;
+            if (this.drawnExtent) {
+                this.map
+                    .getView()
+                    .fit(this.drawnExtent, { padding: [10, 10, 10, 10] });
+            } else {
+                this.map
+                    .getView()
+                    .fit(this.fullVectorExtent, { padding: [10, 10, 10, 10] });
+            }
+        },
+
         setMapFeatures(featureCollections) {
             for (const index in this.featureLayers) {
                 this.map.removeLayer(this.featureLayer[index]);
@@ -617,9 +641,8 @@ export default getFullProjectMapHook = () => {
                     maxZoom: 40,
                 }),
             );
-            this.map
-                .getView()
-                .fit(this.fullVectorExtent, { padding: [10, 10, 10, 10] });
+
+            this.refitView();
             this.clearHighlights();
         },
     };

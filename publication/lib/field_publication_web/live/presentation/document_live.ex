@@ -124,6 +124,23 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
     }
   end
 
+  def handle_info(
+        {:drawn_selection, geometry},
+        %{
+          assigns: %{
+            publication: %Publication{project_name: project_name, draft_date: draft_date}
+          }
+        } = socket
+      ) do
+    query =
+      FieldPublicationWeb.Presentation.PublicationSearch.drawn_selection_to_parameter(geometry)
+
+    {
+      :noreply,
+      push_navigate(socket, to: ~p"/projects/search/#{project_name}/#{draft_date}?#{query}")
+    }
+  end
+
   defp get_page_title(%Document{id: "project", identifier: identifier} = doc) do
     pick_default_translation(Data.get_field_value(doc, "shortName") || identifier)
   end

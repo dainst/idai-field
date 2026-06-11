@@ -505,6 +505,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             id="project_doc_map"
             style="height: 600px; background-color: var(--panel-color)"
             publication={@publication}
+            preset_geometry={nil}
           />
         </div>
 

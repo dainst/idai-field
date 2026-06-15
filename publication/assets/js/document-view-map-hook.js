@@ -186,7 +186,12 @@ export default getDocumentViewMapHook = () => {
                     setFillForLayer(layer, false);
                 });
 
-                const hitFeatures = _this.map.getFeaturesAtPixel(e.pixel);
+                const hitFeatures = _this.map.getFeaturesAtPixel(e.pixel, {
+                    layerFilter: (layer) => {
+                        const properties = layer.getProperties();
+                        return properties && !properties.mainDocumentLayer;
+                    },
+                });
 
                 _this.hoveredFeatures = hitFeatures;
 
@@ -319,6 +324,9 @@ export default getDocumentViewMapHook = () => {
                 this.docLayer = new VectorLayer({
                     source: documentVectorSource,
                     style: styleFunction,
+                    properties: {
+                        mainDocumentLayer: true,
+                    },
                 });
                 this.map.addLayer(this.docLayer);
             }

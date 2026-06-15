@@ -127,7 +127,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     socket = assign(socket, assigns)
 
     socket =
-      if parent_features == %{} and children_features == %{} and
+      if parent_features.features == [] and children_features.features == [] and
            is_nil(document_geometry_type) do
         socket
       else

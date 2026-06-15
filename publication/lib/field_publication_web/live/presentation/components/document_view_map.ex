@@ -8,7 +8,6 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
 
   alias FieldPublication.Publications.Data.{
     RelationGroup,
-    Category,
     Document
   }
 
@@ -16,7 +15,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     ~H"""
     <div>
       <.group_heading>
-        Geometry <span class="text-xs">({@geometry_type})</span>
+        Geometry <span class="text-xs">({@document_geometry_type})</span>
         <.link patch={
           ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@uuid}?#{if @focus != :map, do: %{focus: "map"}, else: %{}}"
         }>
@@ -31,13 +30,13 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
         centerLon={@centerLon}
         centerLat={@centerLat}
         zoom={@zoom}
+        language={@language}
         phx-hook="DocumentViewMap"
       >
         <!-- set phx-update="ignore" to ensure changes the map's DOM elements are not re-rendered on updates
           by live view, but instead the content is controlled by OpenLayers (and/or our hook logic) client side after initializiation. -->
         <div style={@style} id={"#{@id}-map"} phx-update="ignore">
-          <!-- Set pointer-events-none, otherwise the tooltip will block click events on the map -->
-          <div class="pointer-events-none text-xs" id={"#{@id}-identifier-tooltip"}>
+          <div class="text-xs" id={"#{@id}-identifier-tooltip"}>
             <div class="grow h-full" id={"#{@id}-identifier-tooltip-content"}>
               <!-- This div will get repurposed once the map is loaded. -->
                 Loading map...
@@ -85,7 +84,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
           id: id,
           publication: %Publication{} = publication,
           doc: %Document{} = doc,
-          ancestors: ancestors
+          ancestors: _ancestors
         } =
           assigns,
         socket
@@ -95,54 +94,54 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     socket = handle_publication_change(socket, publication, id)
     socket = process_document_tile_layers(socket, publication, doc, id)
 
+    hierarchy = Data.get_document_hierarchy(publication)
+
     children_features =
-      accumulate_geometries_for_relations(doc, ["contains", "isAbove", "cuts", "isCutBy"])
+      doc
+      |> get_docs_in_relation(["contains", "isAbove", "cuts", "isCutBy"])
+      |> Data.get_map_feature_collection(publication)
 
     parent_features =
-      accumulate_geometries_for_relations(doc, ["isRecordedIn", "liesWithin", "isBelow"])
+      doc
+      |> get_docs_in_relation(["isRecordedIn", "liesWithin", "isBelow"])
+      |> Data.get_map_feature_collection(publication)
 
-    parent_uuids =
-      Enum.map(parent_features, fn %{properties: %{uuid: uuid}} -> uuid end)
+    document_feature_info =
+      case Data.create_map_feature(doc, hierarchy, publication) do
+        {:error, _} ->
+          %{}
 
-    ancestor_features =
-      ancestors
-      |> Enum.reject(fn %{id: id} -> id in parent_uuids end)
-      |> Enum.map(&create_feature_info(&1))
-      |> Enum.filter(fn feature -> Map.has_key?(feature, :geometry) end)
+        {:ok, {category_labels, feature}} ->
+          %{category_labels: category_labels, feature: feature}
+      end
 
-    document_feature = create_feature_info(doc)
+    document_geometry_type =
+      case document_feature_info do
+        %{feature: %{properties: %{type: type}}} ->
+          type
 
-    assigns =
-      Map.put(
-        assigns,
-        :geometry_type,
-        get_in(document_feature, [:properties, :type]) || "None"
-      )
+        _ ->
+          "None"
+      end
 
     socket = assign(socket, assigns)
 
     socket =
-      if parent_features == [] and children_features == [] and
-           not Map.has_key?(document_feature, :geometry) do
+      if parent_features == %{} and children_features == %{} and
+           is_nil(document_geometry_type) do
         socket
       else
         socket
         |> push_event("document-map-update-#{id}", %{
           project: publication.project_name,
-          document_feature: document_feature,
-          children_features: %{
-            type: "FeatureCollection",
-            features: children_features
-          },
-          parent_features: %{
-            type: "FeatureCollection",
-            features: parent_features
-          },
-          ancestor_features: %{
-            type: "FeatureCollection",
-            features: ancestor_features
-          }
+          draft_date: publication.draft_date,
+          document_uuid: doc.id,
+          document_feature_info: document_feature_info,
+          children_features: children_features,
+          parent_features: parent_features,
+          ancestor_features: %{}
         })
+        |> assign(:document_geometry_type, document_geometry_type)
         |> assign(:no_data, false)
       end
 
@@ -158,54 +157,55 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     |> Map.put_new(:centerLat, 0)
     |> Map.put_new(:zoom, 2)
     |> Map.put(:no_data, true)
+    |> Map.put_new(:language, Gettext.get_locale(FieldPublicationWeb.Translate))
     |> Map.put(:show_layer_select, false)
     |> Map.put_new(:focus, :default)
     |> Map.put(:uuid, assigns.doc.id)
   end
 
-  defp create_feature_info(
-         %Document{
-           category: %Category{color: color, labels: category_labels},
-           id: uuid,
-           identifier: identifier,
-           geometry: geometry
-         } = doc
-       ) do
-    description =
-      doc
-      |> Data.get_field_value("shortDescription")
-      |> case do
-        nil ->
-          ""
+  # defp create_feature_info(
+  #        %Document{
+  #          category: %Category{color: color, labels: category_labels},
+  #          id: uuid,
+  #          identifier: identifier,
+  #          geometry: geometry
+  #        } = doc
+  #      ) do
+  #   description =
+  #     doc
+  #     |> Data.get_field_value("shortDescription")
+  #     |> case do
+  #       nil ->
+  #         ""
 
-        value when is_binary(value) ->
-          value
+  #       value when is_binary(value) ->
+  #         value
 
-        values when is_map(values) ->
-          pick_default_translation(values)
-      end
+  #       values when is_map(values) ->
+  #         pick_default_translation(values)
+  #     end
 
-    category = pick_default_translation(category_labels)
+  #   category = pick_default_translation(category_labels)
 
-    base = %{
-      type: "Feature",
-      properties: %{
-        uuid: uuid,
-        identifier: identifier,
-        color: color,
-        description: description,
-        category: category
-      }
-    }
+  #   base = %{
+  #     type: "Feature",
+  #     properties: %{
+  #       uuid: uuid,
+  #       identifier: identifier,
+  #       color: color,
+  #       description: description,
+  #       category: category
+  #     }
+  #   }
 
-    if geometry do
-      base
-      |> put_in([:geometry], geometry)
-      |> put_in([:properties, :type], geometry["type"])
-    else
-      base
-    end
-  end
+  #   if geometry do
+  #     base
+  #     |> put_in([:geometry], geometry)
+  #     |> put_in([:properties, :type], geometry["type"])
+  #   else
+  #     base
+  #   end
+  # end
 
   def extract_tile_layer_info(%{
         "resource" => %{
@@ -392,7 +392,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     """
   end
 
-  defp accumulate_geometries_for_relations(%{} = doc, relation_names) do
+  defp get_docs_in_relation(%Document{} = doc, relation_names) do
     relation_names
     |> Enum.map(fn relation_name ->
       doc
@@ -401,10 +401,9 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
         nil ->
           []
 
-        %RelationGroup{} = relation_group ->
-          Enum.map(relation_group.docs, &create_feature_info/1)
+        %RelationGroup{docs: docs} ->
+          docs
       end
-      |> Enum.filter(fn feature -> Map.has_key?(feature, :geometry) end)
     end)
     |> List.flatten()
 

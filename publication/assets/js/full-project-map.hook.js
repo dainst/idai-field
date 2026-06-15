@@ -3,7 +3,6 @@ import View from "ol/View.js";
 import { createEmpty, extend } from "ol/extent.js";
 import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
-import { asArray } from "ol/color";
 import GeoJSON from "ol/format/GeoJSON.js";
 import Overlay from "ol/Overlay.js";
 import Draw from "ol/interaction/Draw.js";
@@ -14,126 +13,10 @@ import {
     createTileLayer,
     getVisibilityKey,
     styleFunction,
+    renderPreviewOverlay,
 } from "./map-helper-functions.js";
 
 const highlightZoomDuration = -1;
-
-function pickTranslation(options, selected) {
-    if (options[selected]) return options[selected];
-    if (options["en"]) return options["en"];
-
-    return options[Object.keys(options)[0]];
-}
-
-function renderPreviewList(features, hook, addButton = false) {
-    const container = document.createElement("div");
-
-    container.classList.add("flex", "gap-0.5");
-
-    const list = document.createElement("div");
-    list.classList.add("flex", "flex-col", "gap-0.5");
-
-    if (features.length == 0) {
-        return list;
-    }
-
-    for (let feature of features) {
-        list.appendChild(renderPreviewIcon(feature, hook, addButton));
-    }
-
-    container.appendChild(list);
-
-    if (addButton) {
-        const closeButton = document.createElement("button");
-
-        closeButton.classList.add(
-            "cursor-pointer",
-            "bg-primary",
-            "hover:bg-primary-hover",
-            "text-primary-inverse",
-            "hover:text-primary-inverse-hover",
-            "p-1",
-            "border",
-            "border-black",
-        );
-
-        closeButton.appendChild(document.createTextNode("x"));
-        closeButton.onclick = (e) => {
-            window.dispatchEvent(
-                new CustomEvent(`phx:close-preview-list-${hook.id}`),
-            );
-        };
-        container.appendChild(closeButton);
-    }
-    return container;
-}
-
-function renderPreviewIcon(feature, hook) {
-    let properties = feature.getProperties();
-
-    preview = document.createElement("div");
-    preview.classList.add("border", "border-black", "flex");
-
-    categoryLabel = document.createElement("div");
-    categoryLabel.classList.add("h-full", "bg-white/60", "p-1", "font-thin");
-
-    categoryLabel.appendChild(
-        document.createTextNode(
-            `${pickTranslation(hook.categoryLabels[properties.category], hook.language)}`,
-        ),
-    );
-
-    categoryInfo = document.createElement("div");
-    categoryInfo.classList.add("pl-2", "text-black");
-    categoryInfo.style = `background: hsl(from ${properties.color} h calc(s * 0.5) l)`;
-
-    categoryInfo.appendChild(categoryLabel);
-
-    documentInfo = document.createElement("div");
-    documentInfo.classList.add(
-        "document-info",
-        "grow",
-        "p-1",
-        "h-full",
-        "bg-white",
-        "cursor-pointer",
-    );
-
-    // if (!addButton) documentInfo.classList.add("rounded-r-sm");
-    documentInfoText = properties.identifier;
-
-    if (properties.description) {
-        documentInfoText += ` | ${pickTranslation(properties.description, hook.language)}`;
-    }
-
-    documentInfo.appendChild(document.createTextNode(documentInfoText));
-
-    documentInfo.addEventListener("click", function (event) {
-        return hook
-            .js()
-            .navigate(
-                `/projects/${hook.projectKey}/${hook.draftDate}/${properties.uuid}`,
-            );
-    });
-
-    preview.appendChild(categoryInfo);
-    preview.appendChild(documentInfo);
-
-    return preview;
-}
-
-async function checkForHitInOrder(layers, coords) {
-    let hits = [];
-    for (const layer of layers) {
-        const features = await layer.getFeatures(coords);
-
-        if (features.length) {
-            hits = hits.concat(features);
-        }
-    }
-
-    return hits;
-}
 
 export default getFullProjectMapHook = () => {
     return {
@@ -304,6 +187,9 @@ export default getFullProjectMapHook = () => {
                         color: `rgba(255, 255, 255, 0.5)`,
                     }),
                 }),
+                properties: {
+                    drawn: true,
+                },
             });
 
             this.map = new Map({
@@ -319,10 +205,16 @@ export default getFullProjectMapHook = () => {
                 }
 
                 if (_this.pinnedFeatures.length == 0) {
-                    _this.hoveredFeatures = await checkForHitInOrder(
-                        _this.featureLayers,
+                    _this.hoveredFeatures = _this.map.getFeaturesAtPixel(
                         e.pixel,
+                        {
+                            layerFilter: (layer) => {
+                                const properties = layer.getProperties();
+                                return properties && !properties.drawn;
+                            },
+                        },
                     );
+
                     _this.updateFeatureOverlay(
                         _this.hoveredFeatures,
                         e.coordinate,
@@ -470,30 +362,19 @@ export default getFullProjectMapHook = () => {
                 `${this.el.getAttribute("id")}-identifier-tooltip-content`,
             );
 
-            while (tooltipContentNode.firstChild) {
-                tooltipContentNode.removeChild(tooltipContentNode.firstChild);
-            }
-
-            if (features.length > 0) {
-                tooltipContentNode.appendChild(
-                    renderPreviewList(features, this, addButton),
-                );
-
-                const anchorPixel = this.map.getPixelFromCoordinate(coordinate);
-                const mapSize = this.map.getSize();
-
-                const right =
-                    anchorPixel[0] > mapSize[0] * 0.5 ? "right" : "left";
-                const bottom =
-                    anchorPixel[1] > mapSize[1] * 0.5 ? "bottom" : "top";
-
-                const offsetX = right == "right" ? -5 : 5;
-                const offsetY = bottom == "bottom" ? -5 : 5;
-
-                this.identifierOverlay.setPositioning(`${bottom}-${right}`);
-                this.identifierOverlay.setOffset([offsetX, offsetY]);
-                this.identifierOverlay.setPosition(coordinate);
-            }
+            renderPreviewOverlay(
+                this,
+                this.map,
+                this.identifierOverlay,
+                tooltipContentNode,
+                coordinate,
+                this.categoryLabels,
+                this.language,
+                this.projectKey,
+                this.draftDate,
+                features,
+                addButton,
+            );
         },
 
         setTileLayers(projectKey, tileLayers) {

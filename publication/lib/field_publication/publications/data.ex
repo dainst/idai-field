@@ -581,7 +581,7 @@ defmodule FieldPublication.Publications.Data do
         hit
 
       _ ->
-        hierarchy = FieldPublication.Publications.Data.get_document_hierarchy(publication)
+        hierarchy = get_document_hierarchy(publication)
 
         {category_labels, feature_collections} =
           list_with_geometries(publication)
@@ -592,7 +592,8 @@ defmodule FieldPublication.Publications.Data do
               publication
             )
           )
-          |> Enum.reduce({%{}, %{}}, fn {category_labels, feature}, {labels, collections} ->
+          |> Enum.reduce({%{}, %{}}, fn {:ok, {category_labels, feature}},
+                                        {labels, collections} ->
             category = feature.properties.category
 
             updated_labels =
@@ -609,7 +610,7 @@ defmodule FieldPublication.Publications.Data do
                   Map.put(collections, category, %{
                     type: "FeatureCollection",
                     properties: %{
-                      category: category
+                      group: category
                     },
                     features: [feature]
                   })
@@ -627,10 +628,11 @@ defmodule FieldPublication.Publications.Data do
             {updated_labels, updated_collections}
           end)
 
-        result = %{
-          category_labels: category_labels,
-          feature_collections: feature_collections
-        }
+        result =
+          %{
+            category_labels: category_labels,
+            feature_collections: feature_collections
+          }
 
         Cachex.put(:application_documents, cache_doc_name, result)
 
@@ -638,17 +640,63 @@ defmodule FieldPublication.Publications.Data do
     end
   end
 
-  defp create_map_feature(
-         %Document{
-           category: %Category{color: color, labels: category_labels, name: category_key},
-           id: uuid,
-           description: description,
-           identifier: identifier,
-           geometry: geometry
-         },
-         hierarchy,
-         publication
-       ) do
+  def get_map_feature_collection(documents, %Publication{} = publication)
+      when is_list(documents) do
+    hierarchy = get_document_hierarchy(publication)
+
+    {label_info, features} =
+      documents
+      |> Stream.map(fn %Document{} = document ->
+        create_map_feature(document, hierarchy, publication)
+      end)
+      |> Stream.reject(fn
+        {:error, _} -> true
+        _ -> false
+      end)
+      |> Enum.reduce(
+        {%{}, []},
+        fn {
+             :ok,
+             {category_labels, %{properties: %{category: category}} = feature}
+           },
+           {existing_labels_map, existing_feature_list} ->
+          updated_labels = Map.put_new(existing_labels_map, category, category_labels)
+          updated_features = existing_feature_list ++ [feature]
+
+          {updated_labels, updated_features}
+        end
+      )
+
+    %{
+      type: "FeatureCollection",
+      properties: %{
+        category_labels: label_info
+      },
+      features: features
+    }
+  end
+
+  def create_map_feature(
+        %Document{
+          geometry: nil
+        },
+        _hierarchy,
+        _publication
+      ) do
+    {:error, :no_geometry}
+  end
+
+  def create_map_feature(
+        %Document{
+          category: %Category{color: color, labels: category_labels, name: category_key},
+          id: uuid,
+          description: description,
+          identifier: identifier,
+          geometry: geometry
+        },
+        hierarchy,
+        publication
+      ) do
     description =
       case description do
         nil ->
@@ -662,27 +710,24 @@ defmodule FieldPublication.Publications.Data do
           values
       end
 
-    base = %{
-      type: "Feature",
-      properties: %{
-        uuid: uuid,
-        identifier: identifier,
-        color: color,
-        description: description,
-        category: category_key,
-        parent: next_ancestor_with_geometry(uuid, hierarchy, publication)
-      }
-    }
-
     {
-      category_labels,
-      if geometry do
-        base
-        |> put_in([:geometry], geometry)
-        |> put_in([:properties, :type], geometry["type"])
-      else
-        base
-      end
+      :ok,
+      {
+        category_labels,
+        %{
+          type: "Feature",
+          geometry: geometry,
+          properties: %{
+            type: geometry["type"],
+            uuid: uuid,
+            identifier: identifier,
+            color: color,
+            description: description,
+            category: category_key,
+            parent: next_ancestor_with_geometry(uuid, hierarchy, publication)
+          }
+        }
+      }
     }
   end
 

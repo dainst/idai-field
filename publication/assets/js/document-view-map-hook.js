@@ -207,7 +207,7 @@ export default getDocumentViewMapHook = () => {
             this.map.on("singleclick", async function (e) {
                 if (_this.drawBoxMode) return;
 
-                if (_this.hoveredFeatures.length != 0) {
+                if (_this.hoveredFeatures.length > 1) {
                     _this.pinnedFeatures = _this.hoveredFeatures;
                     _this.hoveredFeatures = [];
                     _this.updateTooltip(
@@ -215,6 +215,15 @@ export default getDocumentViewMapHook = () => {
                         e.coordinate,
                         true,
                     );
+                } else if (_this.hoveredFeatures.length === 1) {
+                    const properties = _this.hoveredFeatures[0].getProperties();
+                    _this
+                        .js()
+                        .patch(
+                            `/projects/${_this.projectKey}/${_this.projectDraftDate}/${properties.uuid}`,
+                        );
+
+                    _this.identifierOverlay.setPosition(undefined);
                 }
             });
         },

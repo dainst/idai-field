@@ -188,16 +188,14 @@ export default getDocumentViewMapHook = () => {
 
                 const hitFeatures = _this.map.getFeaturesAtPixel(e.pixel);
 
-                if (hitFeatures.length != 0) {
-                    _this.hoveredFeatures = hitFeatures;
+                _this.hoveredFeatures = hitFeatures;
 
-                    for (feature of _this.hoveredFeatures) {
-                        _this.highlightFeature(feature, e.coordinate);
-                    }
+                for (feature of _this.hoveredFeatures) {
+                    _this.highlightFeature(feature, e.coordinate);
+                }
 
-                    if (e.coordinate) {
-                        _this.updateTooltip(hitFeatures, e.coordinate);
-                    }
+                if (e.coordinate) {
+                    _this.updateTooltip(hitFeatures, e.coordinate);
                 }
             });
 

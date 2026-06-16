@@ -346,8 +346,6 @@ export class DocumentsManager {
 
     private async makeSureSelectedDocumentAppearsInList(documentToSelect: FieldDocument) {
 
-        console.log('make sure this appears in list:', documentToSelect);
-
         await this.resourcesStateManager.updateNavigationPathForDocument(documentToSelect);
         await this.adjustQuerySettingsIfNecessary(documentToSelect);
     }

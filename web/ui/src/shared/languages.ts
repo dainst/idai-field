@@ -3,7 +3,7 @@ import { I18N } from 'idai-field-core';
 import { I18nString, LabeledValue } from '../api/document';
 
 export const USER_INTERFACE_LANGUAGES = ['en', 'de'];
-export const MANUAL_LANGUAGES = ['en', 'de', 'tr'];
+export const MANUAL_LANGUAGES = ['en', 'de', 'ko', 'tr'];
 
 export const LANGUAGES: string[] = initializeLanguages();
 

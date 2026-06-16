@@ -1,6 +1,8 @@
 import { getExistingBackups } from '../../../../../src/app/services/backup/auto-backup/get-existing-backups';
 import { BackupsMap } from '../../../../../src/app/services/backup/model/backups-map';
 
+const fs = require('fs');
+
 
 /**
  * @author Thomas Kleinke
@@ -18,13 +20,13 @@ describe('get existing backups', () => {
                     filePath: backupDirectoryPath + '/project.2025-01-02.10-30-20.jsonl',
                     project: 'project',
                     creationDate: new Date('2025-01-02T10:30:20+01:00'),
-                    size: 20
+                    size: getFileSize(backupDirectoryPath + '/project.2025-01-02.10-30-20.jsonl')
                 },
                 {
                     filePath: backupDirectoryPath + '/project.2025-02-03.01-02-03.jsonl',
                     project: 'project',
                     creationDate: new Date('2025-02-03T01:02:03+01:00'),
-                    size: 21
+                    size: getFileSize(backupDirectoryPath + '/project.2025-02-03.01-02-03.jsonl')
                 }
             ],
             'project-with-special_characters': [
@@ -32,7 +34,8 @@ describe('get existing backups', () => {
                     filePath: backupDirectoryPath + '/project-with-special_characters.2025-01-02.10-30-20.jsonl',
                     project: 'project-with-special_characters',
                     creationDate: new Date('2025-01-02T10:30:20+01:00'),
-                    size: 22
+                    size: getFileSize(backupDirectoryPath
+                        + '/project-with-special_characters.2025-01-02.10-30-20.jsonl')
                 }
             ]
         });
@@ -47,3 +50,9 @@ describe('get existing backups', () => {
         expect(backups).toEqual({});
     });
 });
+
+
+function getFileSize(filePath: string): number {
+
+    return fs.statSync(filePath).size;
+}

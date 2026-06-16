@@ -2,6 +2,7 @@ import sampleDataLabelsDe from './labels/sample-data-labels.de.json';
 import sampleDataLabelsEn from './labels/sample-data-labels.en.json';
 import sampleDataLabelsEs from './labels/sample-data-labels.es.json';
 import sampleDataLabelsIt from './labels/sample-data-labels.it.json';
+import sampleDataLabelsKo from './labels/sample-data-labels.ko.json';
 import sampleDataLabelsPt from './labels/sample-data-labels.pt.json';
 import sampleDataLabelsTr from './labels/sample-data-labels.tr.json';
 import sampleDataLabelsUk from './labels/sample-data-labels.uk.json';
@@ -12,6 +13,7 @@ export const sampleDataLabels = {
     en: sampleDataLabelsEn,
     es: sampleDataLabelsEs,
     it: sampleDataLabelsIt,
+    ko: sampleDataLabelsKo,
     pt: sampleDataLabelsPt,
     tr: sampleDataLabelsTr,
     uk: sampleDataLabelsUk

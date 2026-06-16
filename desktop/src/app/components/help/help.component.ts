@@ -11,7 +11,7 @@ import { AngularUtility } from '../../angular/angular-utility';
 const remote = window.require('@electron/remote');
 
 
-const HELP_LANGUAGES = ['de', 'en', 'tr'];
+const HELP_LANGUAGES = ['de', 'en', 'ko', 'tr'];
 const FALLBACK_LANGUAGE = 'en';
 
 

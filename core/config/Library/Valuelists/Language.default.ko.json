@@ -1,0 +1,2964 @@
+{
+  "coordinate-reference-system-default-1": {
+    "values": {
+      "Eigenes Koordinatenbezugssystem": {
+        "label": "사용자 정의 좌표계"
+      },
+      "EPSG4326 (WGS 84)": {
+        "label": "EPSG4326(WGS 84)"
+      },
+      "EPSG3857 (WGS 84 Web Mercator)": {
+        "label": "EPSG3857(WGS 84 웹 메르카토르)"
+      }
+    }
+  },
+  "position-values-expansion-default": {
+    "values": {
+      "Maximale Ausdehnung": {
+        "label": "최대 범위"
+      },
+      "Minimale Ausdehnung": {
+        "label": "최소 범위"
+      }
+    }
+  },
+  "position-values-edge-default": {
+    "values": {
+      "Oberkante": {
+        "label": "상단"
+      },
+      "Unterkante": {
+        "label": "하단"
+      }
+    }
+  },
+  "Building-condition-default": {
+    "values": {
+      "sehr gut": {
+        "label": "아주 좋아"
+      },
+      "gut": {
+        "label": "좋아"
+      },
+      "mittel": {
+        "label": "중간"
+      },
+      "schlecht": {
+        "label": "나쁜"
+      },
+      "sehr schlecht": {
+        "label": "아주 나쁘다"
+      }
+    }
+  },
+  "Building-conditionAmount-default": {
+    "values": {
+      "Fragmentarisch": {
+        "label": "단편적인"
+      },
+      "Vollständig": {
+        "label": "완료"
+      },
+      "Vollständig zerstört": {
+        "label": "완전히 파괴됨"
+      }
+    }
+  },
+  "TypeCatalog-criterion-default": {
+    "values": {
+      "Form": {
+        "label": "형태"
+      },
+      "Material": {
+        "label": "재질"
+      },
+      "Dekoration": {
+        "label": "문양"
+      },
+      "Spuren": {
+        "label": "흔적"
+      }
+    }
+  },
+  "Damage-condition-default": {
+    "values": {
+      "CCO": {
+        "label": "CCO - 증상 없음"
+      },
+      "CC1": {
+        "label": "CC1 - 경미한 증상"
+      },
+      "CC2": {
+        "label": "CC2 - 약간 강한 증상"
+      },
+      "CC3": {
+        "label": "CC3 - 주요 증상"
+      },
+      "CC4": {
+        "label": "CC4 - 총 손실"
+      }
+    }
+  },
+  "viewingDirection-default": {
+    "values": {
+      "N": {
+        "label": "N"
+      },
+      "NE": {
+        "label": "NE"
+      },
+      "E": {
+        "label": "E"
+      },
+      "SE": {
+        "label": "SE"
+      },
+      "S": {
+        "label": "S"
+      },
+      "SW": {
+        "label": "SW"
+      },
+      "W": {
+        "label": "W"
+      },
+      "NW": {
+        "label": "NW"
+      }
+    }
+  },
+  "Photo-originalFormat-default": {
+    "values": {
+      "Farbe": {
+        "label": "색상"
+      },
+      "Digital": {
+        "label": "디지털"
+      },
+      "Analog": {
+        "label": "아날로그"
+      },
+      "Dia": {
+        "label": "슬라이드"
+      },
+      "S/W": {
+        "label": "B/W"
+      }
+    }
+  },
+  "Layer-distinguishingCriteria-default": {
+    "values": {
+      "Farbe": {
+        "label": "색상"
+      },
+      "Form": {
+        "label": "형태"
+      },
+      "Grenzen": {
+        "label": "경계"
+      },
+      "Konsistenz": {
+        "label": "점성"
+      },
+      "Komposition": {
+        "label": "구성"
+      }
+    }
+  },
+  "weight-scale-values-default": {
+    "values": {
+      "Luggage scale": {
+        "label": "수하물 규모"
+      },
+      "Kitchen scale": {
+        "label": "주방 저울"
+      },
+      "Precision scale": {
+        "label": "정밀 스케일"
+      }
+    }
+  },
+  "volume-measurementTechnique-default": {
+    "values": {
+      "classical": {
+        "label": "클래식",
+        "description": "부피는 계량용기에 붓기만 하면 측정됩니다."
+      },
+      "displacement": {
+        "label": "변위",
+        "description": "부피는 측정 용기에 알려진 양의 물을 넣은 다음 검사 대상을 추가하여 변위된 부피를 측정하여 측정됩니다."
+      },
+      "calculated": {
+        "label": "측정기준으로 계산됨",
+        "description": "볼륨은 관련 치수를 기준으로 계산됩니다."
+      }
+    }
+  },
+  "orientation-default-1": {
+    "values": {
+      "N-S": {
+        "label": "N-S"
+      },
+      "NNO - SSW": {
+        "label": "NNE - SSW"
+      },
+      "NNW-SSO": {
+        "label": "NNW-SSE"
+      },
+      "NO-SW": {
+        "label": "NE-SW"
+      },
+      "NW-SO": {
+        "label": "NW-SE"
+      },
+      "W-O": {
+        "label": "W-E"
+      },
+      "WNW-OSO": {
+        "label": "WNW-ESE"
+      },
+      "WSW-ONO": {
+        "label": "WSW-ENE"
+      }
+    }
+  },
+  "provenance-default-1": {
+    "values": {
+      "Anatolien": {
+        "label": "아나톨리아"
+      },
+      "Athen": {
+        "label": "아테네"
+      },
+      "Ägypten": {
+        "label": "이집트"
+      },
+      "Britannien": {
+        "label": "영국"
+      },
+      "Deutschland": {
+        "label": "독일"
+      },
+      "Irland": {
+        "label": "아일랜드"
+      },
+      "Italien": {
+        "label": "이탈리아"
+      },
+      "Palästina": {
+        "label": "팔레스타인"
+      },
+      "Attisch": {
+        "label": "다락방"
+      },
+      "Chios": {
+        "label": "키오스"
+      },
+      "Ephesos": {
+        "label": "에베소"
+      },
+      "Etruskisch": {
+        "label": "에트루리아인"
+      },
+      "Gallien": {
+        "label": "갈리아"
+      },
+      "Ionien": {
+        "label": "아이오니아"
+      },
+      "Kampanisch": {
+        "label": "캄파니아식"
+      },
+      "Karthagisch": {
+        "label": "카르타고의"
+      },
+      "Kleinasien": {
+        "label": "소아시아"
+      },
+      "Knidos": {
+        "label": "크니도스"
+      },
+      "Korinth": {
+        "label": "고린도"
+      },
+      "Kos": {
+        "label": "코스"
+      },
+      "Levante": {
+        "label": "레반테"
+      },
+      "Lokal": {
+        "label": "지역"
+      },
+      "Lokal/Regional": {
+        "label": "지역/지역"
+      },
+      "Milet": {
+        "label": "밀레토스"
+      },
+      "Mäandertal": {
+        "label": "미앤더 밸리"
+      },
+      "Nordafrika": {
+        "label": "북아프리카"
+      },
+      "Nordafrikanisch": {
+        "label": "북아프리카"
+      },
+      "Pannonien": {
+        "label": "판노니아"
+      },
+      "Peloponnes": {
+        "label": "펠로폰네소스 반도"
+      },
+      "Regional": {
+        "label": "지역"
+      },
+      "Rhodos": {
+        "label": "로즈"
+      },
+      "Samos": {
+        "label": "사모스"
+      },
+      "Skandinavien": {
+        "label": "스칸디나비아"
+      },
+      "Slawisch": {
+        "label": "슬라브어"
+      },
+      "Spanien": {
+        "label": "스페인"
+      },
+      "Syrien": {
+        "label": "시리아"
+      },
+      "Südtunesisch": {
+        "label": "남부 튀니지인"
+      },
+      "Südägäis": {
+        "label": "남부에게 해"
+      },
+      "Antiochia (Antakya)": {
+        "label": "안디옥(안타키아)"
+      },
+      "Lesbos": {
+        "label": "레즈비언"
+      },
+      "Sizilien": {
+        "label": "시칠리아"
+      }
+    }
+  },
+  "periods-default-1": {
+    "values": {
+      "Frühmittelalter": {
+        "label": "중세 초기"
+      },
+      "Mittelalter": {
+        "label": "중세"
+      },
+      "Spätmittelalter": {
+        "label": "중세 후기"
+      },
+      "Hochmittelalter": {
+        "label": "중세 시대"
+      },
+      "Archaisch": {
+        "label": "고풍스러운"
+      },
+      "Bronzezeitlich": {
+        "label": "청동기 시대"
+      },
+      "Byzantinisch": {
+        "label": "비잔틴"
+      },
+      "Eisenzeitlich": {
+        "label": "철기시대"
+      },
+      "Frühbyzantinisch": {
+        "label": "초기 비잔틴"
+      },
+      "Frühhellenistisch": {
+        "label": "초기 헬레니즘"
+      },
+      "Frühklassisch": {
+        "label": "초기 클래식"
+      },
+      "Frühkaiserzeitlich": {
+        "label": "초기 제국"
+      },
+      "Frühbronzezeitlich": {
+        "label": "초기 청동기 시대"
+      },
+      "Spätbronzezeitlich": {
+        "label": "후기 청동기 시대"
+      },
+      "Geometrisch": {
+        "label": "기하학"
+      },
+      "Hellenistisch": {
+        "label": "헬레니즘의"
+      },
+      "Kaiserzeitlich": {
+        "label": "로마 제국"
+      },
+      "Klassisch": {
+        "label": "클래식"
+      },
+      "Neolithisch": {
+        "label": "신석기 시대"
+      },
+      "Osmanisch": {
+        "label": "오스만"
+      },
+      "Rezent": {
+        "label": "최근"
+      },
+      "Römisch": {
+        "label": "로마인"
+      },
+      "Spätantik": {
+        "label": "후기 고대"
+      },
+      "Spätbyzantinisch": {
+        "label": "후기 비잔틴"
+      },
+      "Späthellenistisch": {
+        "label": "후기 헬레니즘 시대"
+      },
+      "Spätkaiserzeitlich": {
+        "label": "후기 제국"
+      },
+      "Spätklassisch": {
+        "label": "후기 고전"
+      },
+      "Pleistozän": {
+        "label": "홍적세"
+      },
+      "Neuzeitlich": {
+        "label": "근대 초기"
+      }
+    }
+  },
+  "colors-default-2": {
+    "values": {
+      "ocker": {
+        "label": "황토"
+      },
+      "orange": {
+        "label": "오렌지"
+      },
+      "orangerot": {
+        "label": "주황색-빨간색"
+      },
+      "rosa": {
+        "label": "로즈/핑크"
+      },
+      "rot": {
+        "label": "빨간색"
+      },
+      "rotbraun": {
+        "label": "적갈색"
+      },
+      "schwarz": {
+        "label": "검정색"
+      },
+      "weiß": {
+        "label": "흰색"
+      },
+      "beige": {
+        "label": "베이지색"
+      },
+      "dunkelbraun": {
+        "label": "진한 갈색"
+      },
+      "dunkelrot": {
+        "label": "진한 빨간색"
+      },
+      "gelb": {
+        "label": "노란색"
+      },
+      "hellbraun": {
+        "label": "밝은 갈색"
+      },
+      "hellgrau": {
+        "label": "밝은 회색"
+      },
+      "mittelbraun": {
+        "label": "중간 갈색"
+      }
+    },
+    "description": "컬러세트2, 다양한 활용도"
+  },
+  "glass-decorationTechnique-default": {
+    "values": {
+      "Diatretdekor": {
+        "label": "망상 / 규조류 장식"
+      },
+      "Emaille": {
+        "label": "유리질 에나멜"
+      },
+      "Bemalung": {
+        "label": "칠해진 장식"
+      },
+      "Facettschliffdekor": {
+        "label": "면처리"
+      },
+      "Mosaikdekor": {
+        "label": "모자이크 장식"
+      },
+      "Reliefdekor": {
+        "label": "구호 장식"
+      },
+      "Stempeldekor": {
+        "label": "스탬프 장식"
+      },
+      "Riefeldekor": {
+        "label": "홈 장식"
+      },
+      "Ritzungen": {
+        "label": "긁힌 장식"
+      },
+      "Warzendekor": {
+        "label": "꼬집은 장식"
+      },
+      "Schliffrillendekor": {
+        "label": "선형 절단"
+      }
+    }
+  },
+  "glass-objectType-default": {
+    "values": {
+      "Gemme": {
+        "label": "새겨진 보석"
+      },
+      "Gerät": {
+        "label": "도구"
+      },
+      "Einlage": {
+        "label": "인레이"
+      },
+      "Armreif": {
+        "label": "팔찌"
+      },
+      "Glasschlacke": {
+        "label": "유리 슬래그"
+      },
+      "Lampe": {
+        "label": "램프"
+      },
+      "Löffel": {
+        "label": "숟가락"
+      },
+      "Tessera": {
+        "label": "테세라"
+      },
+      "Gefäß": {
+        "label": "선박"
+      },
+      "Ring": {
+        "label": "반지"
+      },
+      "Anhänger": {
+        "label": "펜던트"
+      },
+      "Rohglas": {
+        "label": "원시 유리"
+      },
+      "Fensterglas": {
+        "label": "창유리"
+      },
+      "Perle": {
+        "label": "구슬"
+      },
+      "Produktionsfragment": {
+        "label": "생산 잔여물"
+      },
+      "Schmuck": {
+        "label": "보석"
+      },
+      "Spielstein": {
+        "label": "게임 조각"
+      },
+      "Unsicher bzw. unbestimmbar": {
+        "label": "불확실하거나 불확실한"
+      }
+    }
+  },
+  "Brick-decorationTechnique-default": {
+    "values": {
+      "Fingerabdruck": {
+        "label": "지문"
+      },
+      "Reliefdekor": {
+        "label": "구호 장식"
+      },
+      "Stempeldekor": {
+        "label": "스탬프 장식"
+      },
+      "Bemalung": {
+        "label": "칠해진 장식"
+      },
+      "Stempel": {
+        "label": "스탬프가 찍힌"
+      },
+      "Überzug/Glasur": {
+        "label": "미끄러짐/유약"
+      },
+      "Riefeldekor": {
+        "label": "홈 장식"
+      },
+      "Ritzungen": {
+        "label": "긁힘"
+      },
+      "Sonstige Abdrücke": {
+        "label": "다른 노출"
+      }
+    }
+  },
+  "Brick-temper-default": {
+    "values": {
+      "Sonstige": {
+        "label": "다른"
+      },
+      "Organische Partikel": {
+        "label": "유기적인 성질"
+      },
+      "Quarz": {
+        "label": "석영"
+      },
+      "Glimmer": {
+        "label": "운모"
+      },
+      "Kalk": {
+        "label": "라임"
+      },
+      "Mineralische Partikel": {
+        "label": "미네랄 성질"
+      },
+      "Muschelgrus": {
+        "label": "껍질"
+      },
+      "Schamotte": {
+        "label": "샤모트"
+      },
+      "Steinchen": {
+        "label": "(작은) 돌"
+      },
+      "Stroh/Spreu": {
+        "label": "짚/왕겨"
+      },
+      "Vacua": {
+        "label": "진공"
+      },
+      "Vulkanische Partikel": {
+        "label": "화산성 성격"
+      }
+    }
+  },
+  "Burial-burialDocumentation-default": {
+    "values": {
+      "Foto": {
+        "label": "사진"
+      }
+    }
+  },
+  "Building-buildingTechnique-default": {
+    "values": {
+      "Bruchsteinmauerwerk": {
+        "label": "채석장 석조 벽돌"
+      },
+      "Lehmziegelmauerwerk": {
+        "label": "흙벽돌 벽돌"
+      }
+    }
+  },
+  "glass-vesselForm-default": {
+    "values": {
+      "Tasse": {
+        "label": "컵(수직 손잡이 포함)"
+      },
+      "Deckel": {
+        "label": "뚜껑"
+      },
+      "Flasche": {
+        "label": "플라스크"
+      },
+      "Teller": {
+        "label": "플레이트"
+      },
+      "Unbestimmt": {
+        "label": "불확정"
+      },
+      "Vorratsgefäß": {
+        "label": "저장 용기"
+      },
+      "Deckelgefäß": {
+        "label": "뚜껑이 있는 용기"
+      }
+    }
+  },
+  "glass-vesselFormSpecific-default": {
+    "values": {
+      "Dattelflasche": {
+        "label": "날짜 모양의 병"
+      },
+      "Alabastron": {
+        "label": "알라바스트론"
+      },
+      "Amphoriskos": {
+        "label": "암포리스코스"
+      },
+      "Aryballos": {
+        "label": "아리발로스"
+      },
+      "Hydria": {
+        "label": "히드리아"
+      },
+      "Kotyle": {
+        "label": "코틸"
+      },
+      "Krater": {
+        "label": "크라테르"
+      },
+      "Kylix": {
+        "label": "카일릭스"
+      },
+      "Lekythos": {
+        "label": "레키토스"
+      },
+      "Schöpfer": {
+        "label": "국자"
+      },
+      "Skyphos": {
+        "label": "스카이포스"
+      },
+      "Rippenschale": {
+        "label": "골이 있는 그릇"
+      },
+      "Schliffrillenschale": {
+        "label": "선형 컷 그릇"
+      },
+      "Unguentarium": {
+        "label": "운구엔타리움"
+      },
+      "Vierkantflasche": {
+        "label": "정사각형 병"
+      },
+      "hexagonale Flasche": {
+        "label": "육각플라스크"
+      },
+      "zylindrische Flasche": {
+        "label": "원통형 플라스크"
+      },
+      "Balsamarium": {
+        "label": "발사마륨"
+      },
+      "Kragenschale": {
+        "label": "칼라 림 그릇"
+      },
+      "zarte Rippenschale": {
+        "label": "섬세한 골이 있는 그릇('zarte Rippenschale')"
+      }
+    }
+  },
+  "Building-buildingType-default": {
+    "values": {
+      "Befestigung": {
+        "label": "요새화"
+      },
+      "Lager": {
+        "label": "창고 건물"
+      },
+      "Werkstatt": {
+        "label": "워크숍"
+      }
+    }
+  },
+  "colors-default-1": {
+    "values": {
+      "schwarz": {
+        "label": "검정색"
+      },
+      "beige": {
+        "label": "베이지색"
+      },
+      "blass-": {
+        "label": "창백-"
+      },
+      "blau": {
+        "label": "파란색"
+      },
+      "braun": {
+        "label": "갈색"
+      },
+      "cremefarben": {
+        "label": "크림"
+      },
+      "dunkel-": {
+        "label": "어둡다-"
+      },
+      "gelb": {
+        "label": "노란색"
+      },
+      "grau": {
+        "label": "회색"
+      },
+      "grün": {
+        "label": "녹색"
+      },
+      "hell-": {
+        "label": "빛-"
+      },
+      "leuchtend-": {
+        "label": "밝다-"
+      },
+      "ocker": {
+        "label": "황토"
+      },
+      "orange": {
+        "label": "오렌지"
+      },
+      "rosa": {
+        "label": "로즈/핑크"
+      },
+      "rot": {
+        "label": "빨간색"
+      },
+      "türkis": {
+        "label": "청록색"
+      },
+      "violett": {
+        "label": "보라색/보라색"
+      },
+      "weiß": {
+        "label": "흰색"
+      }
+    },
+    "description": "색상 세트 1, 다양한 용도; IT부서, 2019"
+  },
+  "Building-buildingCategory-default": {
+    "values": {
+      "Tempel": {
+        "label": "사원"
+      },
+      "Theater": {
+        "label": "극장"
+      },
+      "Turm": {
+        "label": "타워"
+      },
+      "Wohnbau": {
+        "label": "국내 건물"
+      },
+      "Altar": {
+        "label": "제단"
+      },
+      "Amphitheater": {
+        "label": "원형 극장"
+      },
+      "Bogen": {
+        "label": "아치"
+      },
+      "Brücke": {
+        "label": "다리"
+      },
+      "Gymnasium": {
+        "label": "체육관"
+      },
+      "Strasse": {
+        "label": "거리"
+      },
+      "Basilika": {
+        "label": "공회당"
+      },
+      "Therme": {
+        "label": "목욕 / 온천"
+      },
+      "Circus": {
+        "label": "서커스"
+      },
+      "Grabbau": {
+        "label": "무덤"
+      },
+      "Nymphäum": {
+        "label": "님패움"
+      },
+      "Odeion": {
+        "label": "오데온"
+      },
+      "Stützmauer": {
+        "label": "옹벽"
+      },
+      "Säulenhalle": {
+        "label": "포르티코"
+      }
+    }
+  },
+  "Building-material-default-3": {
+    "values": {
+      "Eisen": {
+        "label": "철"
+      },
+      "Marmor": {
+        "label": "대리석"
+      },
+      "Blei": {
+        "label": "납"
+      },
+      "Erde": {
+        "label": "지구"
+      },
+      "Glas": {
+        "label": "유리"
+      },
+      "Holz": {
+        "label": "목재"
+      },
+      "Metall": {
+        "label": "금속"
+      },
+      "Mörtel": {
+        "label": "모르타르"
+      },
+      "Stuck": {
+        "label": "치장벽토/성형"
+      },
+      "Kalkmörtel": {
+        "label": "석회 모르타르"
+      },
+      "Kalkstein": {
+        "label": "석회암"
+      },
+      "Pophyr": {
+        "label": "반암"
+      },
+      "Quarz": {
+        "label": "석영"
+      },
+      "Sandstein": {
+        "label": "사암"
+      },
+      "Ziegel": {
+        "label": "벽돌"
+      },
+      "Beton": {
+        "label": "콘크리트"
+      },
+      "Lehm": {
+        "label": "양토"
+      },
+      "Putz": {
+        "label": "석고"
+      },
+      "Granit": {
+        "label": "화강암"
+      },
+      "Kalk": {
+        "label": "라임"
+      }
+    }
+  },
+  "Wood-objectType-default": {
+    "values": {
+      "Gefäß": {
+        "label": "선박"
+      },
+      "Architektur": {
+        "label": "건축"
+      },
+      "Altar": {
+        "label": "제단"
+      },
+      "Gerät": {
+        "label": "도구"
+      },
+      "Kasten/Kiste": {
+        "label": "상자/가슴"
+      },
+      "Spielzeug": {
+        "label": "장난감"
+      },
+      "Anhänger": {
+        "label": "펜던트"
+      },
+      "Ring": {
+        "label": "반지"
+      },
+      "Sarkophag": {
+        "label": "석관"
+      },
+      "Unsicher bzw. unbestimmbar": {
+        "label": "불확실하거나 불확실한"
+      },
+      "Gussform": {
+        "label": "곰팡이"
+      },
+      "Löffel": {
+        "label": "숟가락"
+      },
+      "Mobiliar": {
+        "label": "(일부) 가구"
+      },
+      "Plastik/Skulptur": {
+        "label": "조각품"
+      },
+      "Produktionsrest": {
+        "label": "생산 잔여물"
+      },
+      "Schmuck": {
+        "label": "보석"
+      }
+    }
+  },
+  "glass-formDescription-default": {
+    "values": {
+      "rund": {
+        "label": "둥근"
+      },
+      "bauchig": {
+        "label": "구형의"
+      },
+      "konisch": {
+        "label": "원뿔형의"
+      },
+      "quadratisch": {
+        "label": "광장"
+      },
+      "kugelförmig": {
+        "label": "구형"
+      },
+      "rechteckig": {
+        "label": "직사각형"
+      },
+      "schmal": {
+        "label": "좁은"
+      },
+      "zylinderförmig": {
+        "label": "원통형"
+      },
+      "tonnenförmig": {
+        "label": "통 모양의"
+      }
+    }
+  },
+  "Building-buildingCategorySpecific-default": {
+    "values": {
+      "Bogen": {
+        "label": "아치"
+      },
+      "Villa": {
+        "label": "별장"
+      }
+    }
+  },
+  "Wood-color-default": {
+    "values": {
+      "braun": {
+        "label": "갈색"
+      },
+      "haselnuss": {
+        "label": "헤이즐넛"
+      },
+      "schwarz": {
+        "label": "검정색"
+      }
+    }
+  },
+  "Brick-brickUsage-default": {
+    "values": {
+      "Decke": {
+        "label": "천장"
+      },
+      "Dach": {
+        "label": "지붕"
+      },
+      "Fenster": {
+        "label": "창"
+      },
+      "Fussboden": {
+        "label": "바닥"
+      },
+      "Gewölbedecke": {
+        "label": "아치형 천장"
+      },
+      "Türsturz": {
+        "label": "상인방"
+      },
+      "Türrahmen": {
+        "label": "도어 케이싱"
+      },
+      "Wandverkleidung": {
+        "label": "벽 패널"
+      }
+    }
+  },
+  "Layer-soilType-default": {
+    "values": {
+      "Ton": {
+        "label": "점토"
+      },
+      "Feinsand": {
+        "label": "고운 모래"
+      },
+      "Schluff": {
+        "label": "미사"
+      },
+      "Sandiger Ton": {
+        "label": "모래 미사"
+      },
+      "Schluffiger Lehm": {
+        "label": "미사질양토"
+      },
+      "Schluffiger Sand": {
+        "label": "미사질 모래"
+      },
+      "Schluffiger Ton": {
+        "label": "미사질 점토"
+      },
+      "Toniger Lehm": {
+        "label": "점토질 양토"
+      },
+      "Toniger Sand": {
+        "label": "점토 모래"
+      },
+      "Toniger Schluff": {
+        "label": "점토 미사"
+      },
+      "Lehmiger Sand": {
+        "label": "양질의 모래"
+      },
+      "Lehmiger Schluff": {
+        "label": "양질의 미사"
+      },
+      "Lehmiger Ton": {
+        "label": "양질의 점토"
+      }
+    }
+  },
+  "Wood-decorationTechnique-default": {
+    "values": {
+      "Sgraffito": {
+        "label": "스그래피토 도자기"
+      },
+      "Intarsie": {
+        "label": "인타르시아"
+      },
+      "Relief": {
+        "label": "구호"
+      },
+      "Vergoldung/metallischer Überzug": {
+        "label": "금도금/금속 도금"
+      }
+    }
+  },
+  "Architecture-wallType-default": {
+    "values": {
+      "Ziegelmauer": {
+        "label": "벽돌 벽"
+      },
+      "Außenmauer": {
+        "label": "외벽"
+      },
+      "Fachwerk": {
+        "label": "목재 프레임"
+      },
+      "Befestigugsmauer": {
+        "label": "요새 벽"
+      },
+      "Blockmauerwerk": {
+        "label": "블록 벽돌"
+      },
+      "Bruchsteinmauer": {
+        "label": "잔해 벽"
+      },
+      "Feldsteinmauer": {
+        "label": "현장석 벽"
+      },
+      "Grenzmauer": {
+        "label": "국경 벽"
+      }
+    }
+  },
+  "Place-findspotClassification-default": {
+    "values": {
+      "Fundsammlung": {
+        "label": "컬렉션 찾기"
+      },
+      "Grab": {
+        "label": "무덤"
+      },
+      "Nekropole": {
+        "label": "묘지"
+      },
+      "Steinbruch": {
+        "label": "채석장"
+      },
+      "Straße/Platz": {
+        "label": "거리/광장"
+      },
+      "ländliches Gebäude": {
+        "label": "시골 건물"
+      },
+      "urbanes Gebäude": {
+        "label": "도시 건물"
+      },
+      "Felsabarbeitung": {
+        "label": "조각된 바위"
+      },
+      "Wein- bzw. Ölpresse": {
+        "label": "포도 또는 올리브 프레스"
+      },
+      "einzelnes Steindenkmal": {
+        "label": "특이한 석비"
+      }
+    }
+  },
+  "Layer-consistency-default": {
+    "values": {
+      "mittel bindend": {
+        "label": "중간 바인딩"
+      },
+      "stark bindend": {
+        "label": "매우 구속력이 있는"
+      },
+      "fest": {
+        "label": "확고한"
+      },
+      "flüssig": {
+        "label": "액체"
+      },
+      "gut formbar": {
+        "label": "쉽게 성형 가능"
+      },
+      "hart": {
+        "label": "열심히"
+      },
+      "lehmig": {
+        "label": "양질의"
+      },
+      "locker": {
+        "label": "느슨한"
+      },
+      "mittel formbar": {
+        "label": "중간 성형 가능"
+      },
+      "nicht bindend": {
+        "label": "구속력이 없음"
+      },
+      "nicht formbar": {
+        "label": "성형 불가능"
+      },
+      "porös": {
+        "label": "다공성"
+      },
+      "sandig": {
+        "label": "모래의"
+      },
+      "schwach bindend": {
+        "label": "거의 구속력이 없음"
+      },
+      "schwach formbar": {
+        "label": "거의 성형할 수 없음"
+      },
+      "sehr gut formbar": {
+        "label": "매우 쉽게 성형 가능"
+      },
+      "sehr hart": {
+        "label": "매우 열심히"
+      },
+      "sehr weich": {
+        "label": "매우 부드러움"
+      },
+      "weich": {
+        "label": "부드러운"
+      },
+      "Durch Brand versiegelt": {
+        "label": "불로 봉인 / 연소"
+      },
+      "Oberfläche abgewaschen": {
+        "label": "표면이 씻겨 나갔다"
+      },
+      "Oberfläche verhärtet": {
+        "label": "표면이 경화됨"
+      },
+      "sehr schwach formbar": {
+        "label": "거의 가단성이 없음"
+      },
+      "steif": {
+        "label": "엄밀한"
+      }
+    }
+  },
+  "Layer-layerClassification-default": {
+    "values": {
+      "Kulturschicht": {
+        "label": "문화층"
+      },
+      "Brandschicht": {
+        "label": "탄 층"
+      },
+      "Laufhorizont": {
+        "label": "층/점유 레이어"
+      },
+      "Planierschicht": {
+        "label": "레벨링 레이어"
+      }
+    }
+  },
+  "Pottery-manufacturingMethod-default": {
+    "values": {
+      "gedreht (auf Drehscheibe)": {
+        "label": "바퀴가 돌아갔다"
+      },
+      "gegossen": {
+        "label": "캐스트"
+      },
+      "gepresst": {
+        "label": "누르면"
+      },
+      "handgeformt": {
+        "label": "손으로 만든"
+      }
+    }
+  },
+  "glass-manufacturingMethod-default": {
+    "values": {
+      "Formgeblasen (mit Reliefdekor)": {
+        "label": "곰팡이 제거(안심 있음)"
+      },
+      "Formgeschmolzen": {
+        "label": "주형"
+      },
+      "Freigeblasen": {
+        "label": "무료로 날린"
+      },
+      "Kerngeformt": {
+        "label": "코어 형성"
+      },
+      "gedreht (auf Drehscheibe)": {
+        "label": "바퀴가 돌아갔다"
+      }
+    }
+  },
+  "Brick-brickForm-default": {
+    "values": {
+      "Dachziegel": {
+        "label": "지붕 타일"
+      },
+      "Flachziegel": {
+        "label": "평평한 벽돌/타일"
+      },
+      "Formziegel": {
+        "label": "성형 벽돌"
+      },
+      "Imbrex": {
+        "label": "임브렉스"
+      },
+      "Kalyptere": {
+        "label": "칼립터"
+      },
+      "Later": {
+        "label": "나중에"
+      },
+      "Stroter": {
+        "label": "스트로터"
+      },
+      "Tegula": {
+        "label": "어깨뼈"
+      },
+      "Tonrohr": {
+        "label": "파이프"
+      },
+      "Bodenziegel": {
+        "label": "바닥 벽돌"
+      },
+      "Wandziegel": {
+        "label": "벽 벽돌"
+      }
+    }
+  },
+  "Brick-specificType-default": {
+    "values": {
+      "Dachziegel": {
+        "label": "지붕 타일"
+      },
+      "Tonrohr": {
+        "label": "파이프"
+      },
+      "Bodenziegel": {
+        "label": "바닥 벽돌"
+      },
+      "Bruchstein": {
+        "label": "채석장"
+      },
+      "Quader": {
+        "label": "마름돌"
+      },
+      "Wandziegel": {
+        "label": "벽 벽돌"
+      }
+    }
+  },
+  "Brick-manufacturing-default": {
+    "values": {
+      "Dickwandig": {
+        "label": "벽이 두꺼운"
+      },
+      "Dünnwandig": {
+        "label": "벽이 얇은"
+      },
+      "Gebrannt": {
+        "label": "해고됨"
+      },
+      "Hart gebrannt": {
+        "label": "열심히 해고"
+      },
+      "Luftgetrocknet": {
+        "label": "공기 건조"
+      },
+      "Sekundär gebrannt": {
+        "label": "2차 화상"
+      },
+      "Weich gebrannt": {
+        "label": "소프트 해고"
+      }
+    }
+  },
+  "Brick-manufacturingMethod-default": {
+    "values": {
+      "gedreht (auf Drehscheibe)": {
+        "label": "바퀴가 돌아갔다"
+      },
+      "gegossen": {
+        "label": "캐스트"
+      },
+      "gepresst": {
+        "label": "누르면"
+      },
+      "handgeformt": {
+        "label": "손으로 만든"
+      }
+    }
+  },
+  "Building-material-default-2": {
+    "values": {
+      "Erde": {
+        "label": "지구"
+      },
+      "Eisen": {
+        "label": "철"
+      },
+      "Blei": {
+        "label": "리드"
+      },
+      "Glas": {
+        "label": "유리"
+      },
+      "Holz": {
+        "label": "나무"
+      },
+      "Metall": {
+        "label": "금속"
+      },
+      "Mörtel": {
+        "label": "모르타르"
+      },
+      "Putz": {
+        "label": "석고"
+      },
+      "Stahl": {
+        "label": "강철"
+      },
+      "Stuck": {
+        "label": "치장벽토/성형"
+      },
+      "Ziegel": {
+        "label": "벽돌"
+      },
+      "Beton": {
+        "label": "콘크리트"
+      },
+      "Lehm": {
+        "label": "양토"
+      }
+    }
+  },
+  "Building-material-default": {
+    "values": {
+      "Ziegel": {
+        "label": "벽돌"
+      },
+      "Sandstein": {
+        "label": "사암"
+      },
+      "Quarz": {
+        "label": "석영"
+      },
+      "Pophyr": {
+        "label": "반암"
+      },
+      "Marmor": {
+        "label": "대리석"
+      },
+      "Kalkstein": {
+        "label": "석회암"
+      },
+      "Kalkmörtel": {
+        "label": "석회 모르타르"
+      },
+      "Granit": {
+        "label": "화강암"
+      },
+      "Kalk": {
+        "label": "라임"
+      }
+    }
+  },
+  "Place-siteClassification-default": {
+    "values": {
+      "Siedlung": {
+        "label": "정착"
+      },
+      "Bestattungsplatz": {
+        "label": "매장지"
+      }
+    }
+  },
+  "glass-transparency-default": {
+    "values": {
+      "opak": {
+        "label": "불투명한"
+      },
+      "durchscheinend": {
+        "label": "반투명"
+      },
+      "durchsichtig": {
+        "label": "투명한"
+      }
+    }
+  },
+  "Burial-amountIndividuals-default": {
+    "values": {
+      "Unsicher bzw. unbestimmbar": {
+        "label": "불확실하거나 불확실한"
+      }
+    }
+  },
+  "Burial-burialCharacteristic-default": {
+    "values": {
+      "Unsicher bzw. unbestimmbar": {
+        "label": "불확실하거나 불확실한"
+      }
+    }
+  },
+  "Burial-positionLegs-default": {
+    "values": {
+      "Unsicher bzw. unbestimmbar": {
+        "label": "불확실하거나 불확실한"
+      }
+    }
+  },
+  "Burial-positioningIndividuals-default": {
+    "values": {
+      "Unsicher bzw. unbestimmbar": {
+        "label": "불확실하거나 불확실한"
+      }
+    }
+  },
+  "Wood-surfaceCondition-default": {
+    "values": {
+      "Unsicher bzw. unbestimmbar": {
+        "label": "불확실하거나 불확실한"
+      },
+      "Brandspuren": {
+        "label": "불타는 흔적(부분적으로 탄)"
+      }
+    }
+  },
+  "Coin-metalMaterial-default": {
+    "values": {
+      "Unsicher bzw. unbestimmbar": {
+        "label": "불확실하거나 불확실한"
+      },
+      "Blei": {
+        "label": "리드"
+      },
+      "Bronze": {
+        "label": "청동"
+      },
+      "Eisen": {
+        "label": "철"
+      },
+      "Gold": {
+        "label": "금"
+      },
+      "Kupfer": {
+        "label": "구리"
+      },
+      "Messing": {
+        "label": "황동"
+      },
+      "Silber": {
+        "label": "은"
+      },
+      "Stahl": {
+        "label": "강철"
+      },
+      "Zink": {
+        "label": "아연"
+      },
+      "Zinn": {
+        "label": "주석"
+      },
+      "Billon": {
+        "label": "빌런"
+      }
+    }
+  },
+  "Burial-positionArms-default": {
+    "values": {
+      "Unsicher bzw. unbestimmbar": {
+        "label": "불확실하거나 불확실한"
+      }
+    }
+  },
+  "Inscription-objectType-default": {
+    "values": {
+      "Unsicher bzw. unbestimmbar": {
+        "label": "불확실하거나 불확실한"
+      },
+      "Ehreninschrift": {
+        "label": "명예 비문"
+      },
+      "Alltäglicher Gebrauch": {
+        "label": "일상적인 사용"
+      },
+      "Bauinschrift": {
+        "label": "건물 비문"
+      },
+      "Grabinschrift (Inschrift im Grabkontext)": {
+        "label": "무덤 비문(무덤의 맥락에 있는 비문)"
+      },
+      "Urkunde": {
+        "label": "증서"
+      },
+      "Wasserversorgung": {
+        "label": "물 공급"
+      },
+      "Weihinschrift": {
+        "label": "봉헌 비문"
+      }
+    }
+  },
+  "Pottery-objectType-default": {
+    "values": {
+      "Unsicher bzw. unbestimmbar": {
+        "label": "불확실하거나 불확실한"
+      },
+      "Perle": {
+        "label": "구슬"
+      },
+      "Plastik/Skulptur": {
+        "label": "조각품"
+      },
+      "Spinnwirtel": {
+        "label": "스핀들 전체"
+      },
+      "Altar": {
+        "label": "제단"
+      },
+      "Einlage": {
+        "label": "인레이"
+      },
+      "Gefäß": {
+        "label": "선박"
+      },
+      "Gerät": {
+        "label": "도구"
+      },
+      "Gussform": {
+        "label": "곰팡이"
+      },
+      "Kette": {
+        "label": "체인/목걸이"
+      },
+      "Kohlebecken": {
+        "label": "화로"
+      },
+      "Lampe": {
+        "label": "램프"
+      },
+      "Löffel": {
+        "label": "숟가락"
+      },
+      "Produktionsfragment": {
+        "label": "생산 잔여물"
+      },
+      "Ring": {
+        "label": "반지"
+      },
+      "Schmuck": {
+        "label": "보석"
+      },
+      "Spielstein": {
+        "label": "게임 조각/토큰"
+      },
+      "Webgewicht": {
+        "label": "직기 무게"
+      },
+      "Werkzeug": {
+        "label": "도구"
+      }
+    }
+  },
+  "Bone-objectType-default": {
+    "values": {
+      "Unsicher bzw. unbestimmbar": {
+        "label": "불확실하거나 불확실한"
+      },
+      "Spielstein": {
+        "label": "게임 조각/토큰"
+      },
+      "Armreif": {
+        "label": "팔찌"
+      },
+      "Bearbeitet (allgemein)": {
+        "label": "일했다(구체적이지 않음)"
+      },
+      "Einlage": {
+        "label": "인레이"
+      },
+      "Gefäß": {
+        "label": "선박"
+      },
+      "Gerät": {
+        "label": "도구"
+      },
+      "Kette": {
+        "label": "목걸이/체인"
+      },
+      "Löffel": {
+        "label": "숟가락"
+      },
+      "Perle": {
+        "label": "구슬"
+      },
+      "Ring": {
+        "label": "반지"
+      },
+      "Schmuck": {
+        "label": "보석"
+      },
+      "Waffe": {
+        "label": "무기"
+      },
+      "Werkzeug": {
+        "label": "도구"
+      }
+    }
+  },
+  "Stone-objectType-default": {
+    "values": {
+      "Unsicher bzw. unbestimmbar": {
+        "label": "불확실하거나 불확실한"
+      },
+      "Plastik/Skulptur": {
+        "label": "조각품"
+      },
+      "Perle": {
+        "label": "구슬"
+      },
+      "Abschlag": {
+        "label": "플레이크"
+      },
+      "Altar": {
+        "label": "제단"
+      },
+      "Bauglied": {
+        "label": "건축 요소"
+      },
+      "Einlage": {
+        "label": "인레이"
+      },
+      "Gefäß": {
+        "label": "선박"
+      },
+      "Gerät": {
+        "label": "도구"
+      },
+      "Gussform": {
+        "label": "곰팡이"
+      },
+      "Lampe": {
+        "label": "램프"
+      },
+      "Löffel": {
+        "label": "숟가락"
+      },
+      "Mobiliar": {
+        "label": "(일부) 가구"
+      },
+      "Produktionsfragment": {
+        "label": "생산 잔여물"
+      }
+    }
+  },
+  "Coin-denomination-default": {
+    "values": {
+      "Unsicher bzw. unbestimmbar": {
+        "label": "불확실하거나 불확실한"
+      }
+    }
+  },
+  "Coin-manufacturingMethod-default": {
+    "values": {
+      "Unsicher bzw. unbestimmbar": {
+        "label": "불확실하거나 불확실한"
+      }
+    }
+  },
+  "Coin-mint-default": {
+    "values": {
+      "Unsicher bzw. unbestimmbar": {
+        "label": "불확실하거나 불확실한"
+      },
+      "Sizilien": {
+        "label": "시칠리아"
+      },
+      "Syrien": {
+        "label": "시리아"
+      },
+      "Thasos": {
+        "label": "타소스"
+      },
+      "Akanthus": {
+        "label": "아칸서스"
+      },
+      "Alexandria": {
+        "label": "알렉산드리아"
+      },
+      "Abdera": {
+        "label": "압데라"
+      },
+      "Abydos": {
+        "label": "아비도스"
+      },
+      "Afrika": {
+        "label": "아프리카"
+      },
+      "Agrigent": {
+        "label": "아그리젠토"
+      },
+      "Aigai (Vergina)": {
+        "label": "아이가이(베르기나)"
+      },
+      "Aiolis": {
+        "label": "에올리스"
+      },
+      "Aitolischer Bund": {
+        "label": "에톨리아 리그"
+      },
+      "Akkon": {
+        "label": "아콘 / 에이커"
+      },
+      "Alabanda": {
+        "label": "알라반다"
+      },
+      "Alexandria Troas": {
+        "label": "알렉산드리아 트로아스"
+      },
+      "Amasra": {
+        "label": "아마스라"
+      },
+      "Amathus": {
+        "label": "아마투스"
+      },
+      "Ambianum (Amiens)": {
+        "label": "Ambianum (아미앵)"
+      },
+      "Ambracia": {
+        "label": "암브라시아"
+      },
+      "Amiens": {
+        "label": "아미앵"
+      },
+      "Amisus": {
+        "label": "아미수스"
+      },
+      "Amphipolis": {
+        "label": "암피폴리스"
+      },
+      "Amrit": {
+        "label": "암리트"
+      },
+      "Anaktorio": {
+        "label": "아낙토리오"
+      },
+      "Antiochia": {
+        "label": "안디옥"
+      },
+      "Antiochia (Antakya)": {
+        "label": "안디옥(안타키아)"
+      },
+      "Antiochia am Orontes": {
+        "label": "오론테스강의 안티오크"
+      },
+      "Apameia Kibotos": {
+        "label": "아파메아 시보투스"
+      },
+      "Apameia am Orontes": {
+        "label": "아파메아, 시리아"
+      },
+      "Apulien": {
+        "label": "풀리아"
+      },
+      "Etrurien": {
+        "label": "에트루리아"
+      },
+      "Korinth": {
+        "label": "고린도"
+      },
+      "Gallien": {
+        "label": "갈리아"
+      },
+      "Italien": {
+        "label": "이탈리아"
+      },
+      "Karthago": {
+        "label": "카르타고"
+      },
+      "Milas": {
+        "label": "밀라스"
+      },
+      "Naxos": {
+        "label": "낙소스"
+      },
+      "Paros": {
+        "label": "파로스"
+      },
+      "Priene": {
+        "label": "프리에네"
+      },
+      "Rhodos": {
+        "label": "로즈"
+      },
+      "Samos": {
+        "label": "사모스"
+      },
+      "Sardinien": {
+        "label": "사르디니아"
+      }
+    }
+  },
+  "Metal-objectType-default": {
+    "values": {
+      "Unsicher bzw. unbestimmbar": {
+        "label": "불확실하거나 불확실한"
+      },
+      "Perle": {
+        "label": "구슬"
+      }
+    }
+  },
+  "Building-context-default": {
+    "values": {
+      "Akropolis": {
+        "label": "아크로폴리스"
+      },
+      "Forum": {
+        "label": "포럼"
+      },
+      "Handwerksviertel": {
+        "label": "장인 지구"
+      },
+      "Heiligtum": {
+        "label": "성역"
+      },
+      "Nekropole": {
+        "label": "네크로폴리스"
+      },
+      "Wohnviertel": {
+        "label": "주거 지역"
+      }
+    }
+  },
+  "Wood-typeOfWood-default": {
+    "values": {
+      "Apfel": {
+        "label": "사과"
+      },
+      "Birne": {
+        "label": "배"
+      },
+      "Eiche": {
+        "label": "참나무"
+      },
+      "Weide": {
+        "label": "버드나무"
+      },
+      "Zeder": {
+        "label": "삼나무"
+      }
+    }
+  },
+  "Wood-manufacturingMethod-default": {
+    "values": {
+      "Gebohrt": {
+        "label": "뚫은"
+      },
+      "Gedämpft": {
+        "label": "찐"
+      },
+      "Gedreht": {
+        "label": "돌았다"
+      },
+      "Gefräst": {
+        "label": "밀링"
+      },
+      "Gesägt": {
+        "label": "톱질하다"
+      },
+      "Geschabt": {
+        "label": "면도"
+      },
+      "Geschnitzt": {
+        "label": "새긴"
+      },
+      "Gespalten": {
+        "label": "분할"
+      },
+      "Gehobelt": {
+        "label": "계획된"
+      }
+    }
+  },
+  "Wood-paintCondition-default": {
+    "values": {
+      "gut erhalten": {
+        "label": "잘 보존되어 있다"
+      },
+      "abblätternd": {
+        "label": "벗겨짐"
+      },
+      "verwaschen": {
+        "label": "씻겨 나가다"
+      },
+      "stark abgerieben": {
+        "label": "심하게 마모됨"
+      },
+      "nicht erhalten": {
+        "label": "보존되지 않음"
+      },
+      "verrieben": {
+        "label": "약간 마모됨 / 벗겨짐"
+      }
+    }
+  },
+  "Architecture-blockProcessing-default": {
+    "values": {
+      "Lesesteine": {
+        "label": "들판의 돌"
+      }
+    }
+  },
+  "Sample-sampleType-default": {
+    "values": {
+      "Pollenanalyse": {
+        "label": "꽃가루 분석"
+      }
+    }
+  },
+  "Pottery-vesselFormSpecific-default": {
+    "values": {
+      "Fischteller": {
+        "label": "어판"
+      },
+      "Salznapf": {
+        "label": "소금 저장고"
+      },
+      "Kragenschale": {
+        "label": "칼라 림 그릇"
+      },
+      "Vierkantflasche": {
+        "label": "정사각형 병"
+      },
+      "hexagonale Flasche": {
+        "label": "육각플라스크"
+      },
+      "zylindrische Flasche": {
+        "label": "원통형 플라스크"
+      }
+    }
+  },
+  "Bone-boneClassification-default": {
+    "values": {
+      "Zahn": {
+        "label": "치아"
+      }
+    }
+  },
+  "Bone-boneType-default": {
+    "values": {
+      "Tierknochen": {
+        "label": "동물의 뼈"
+      },
+      "Elfenbein": {
+        "label": "상아"
+      },
+      "Horn": {
+        "label": "경적"
+      },
+      "Menschenknochen": {
+        "label": "인간의 뼈"
+      }
+    }
+  },
+  "Terracotta-clayStructure-default": {
+    "values": {
+      "weich": {
+        "label": "부드러움 (손톱으로 긁힐 수 있음)"
+      },
+      "hart": {
+        "label": "열심히"
+      },
+      "klingend hart": {
+        "label": "매우 / 힘들게 들리는군요"
+      },
+      "mittel": {
+        "label": "중간"
+      }
+    }
+  },
+  "Terracotta-surfaceCondition-default": {
+    "values": {
+      "starke Sinter- oder Mörtelablagerungen": {
+        "label": "소결 또는 모르타르 침전물"
+      },
+      "Brandspuren": {
+        "label": "불타는 흔적"
+      },
+      "Sekundärbrand": {
+        "label": "연소/해고(2차)"
+      },
+      "abblätternd": {
+        "label": "벗겨짐"
+      },
+      "gut erhalten": {
+        "label": "잘 보존되어 있다"
+      },
+      "stark abgerieben": {
+        "label": "심하게 마모됨"
+      },
+      "versintert": {
+        "label": "소결"
+      },
+      "verwaschen": {
+        "label": "씻겨 나가다"
+      }
+    }
+  },
+  "Terracotta-vesselForm-default": {
+    "values": {
+      "Teller": {
+        "label": "접시"
+      },
+      "Deckel": {
+        "label": "뚜껑"
+      },
+      "Tasse": {
+        "label": "컵/머그(타세)"
+      },
+      "Topf": {
+        "label": "냄비"
+      },
+      "Unbestimmt": {
+        "label": "무질서하다"
+      },
+      "Vorratsgefäß": {
+        "label": "저장 용기"
+      },
+      "Deckelgefäß": {
+        "label": "뚜껑이 있는 용기"
+      }
+    }
+  },
+  "Terracotta-vesselFormSpecific-default": {
+    "values": {
+      "Balsamarium": {
+        "label": "발사마륨"
+      },
+      "Kragenschale": {
+        "label": "칼라 림 그릇"
+      },
+      "Vierkantflasche": {
+        "label": "정사각형 병"
+      },
+      "hexagonale Flasche": {
+        "label": "육각플라스크"
+      },
+      "zylindrische Flasche": {
+        "label": "원통형 플라스크"
+      }
+    }
+  },
+  "Survey-researchMethod-default": {
+    "values": {
+      "Luft- oder Satellitenbilder": {
+        "label": "항공 또는 위성 이미지"
+      },
+      "Quadratisch": {
+        "label": "광장"
+      }
+    }
+  },
+  "Stone-material-default": {
+    "values": {
+      "Kalkmörtel": {
+        "label": "석회 모르타르"
+      },
+      "Flint": {
+        "label": "부싯돌"
+      },
+      "Glimmer": {
+        "label": "운모"
+      },
+      "Granit": {
+        "label": "화강암"
+      },
+      "Kalk": {
+        "label": "라임"
+      },
+      "Kalkstein": {
+        "label": "석회암"
+      },
+      "Marmor": {
+        "label": "대리석"
+      },
+      "Pophyr": {
+        "label": "반암"
+      },
+      "Quarz": {
+        "label": "석영"
+      },
+      "Sandstein": {
+        "label": "사암"
+      }
+    }
+  },
+  "Bone-sex-default": {
+    "values": {
+      "Männlich": {
+        "label": "남성"
+      },
+      "Weiblich": {
+        "label": "여성"
+      }
+    }
+  },
+  "Bone-species-default": {
+    "values": {
+      "Biber": {
+        "label": "비버"
+      },
+      "Fisch": {
+        "label": "물고기"
+      },
+      "Schwein": {
+        "label": "수대"
+      },
+      "Vogel": {
+        "label": "새"
+      }
+    }
+  },
+  "Stone-architectureElement-default": {
+    "values": {
+      "Fries": {
+        "label": "프리즈"
+      },
+      "Säule": {
+        "label": "기둥"
+      },
+      "Wandverkleidung": {
+        "label": "벽 패널"
+      }
+    }
+  },
+  "Floor-floorClassification-default": {
+    "values": {
+      "Mosaik": {
+        "label": "모자이크"
+      },
+      "Opus sectile": {
+        "label": "종파의 작품"
+      },
+      "Pflaster": {
+        "label": "포장"
+      },
+      "Stampflehm": {
+        "label": "포장된 양토"
+      },
+      "Ziegel": {
+        "label": "벽돌이나 타일"
+      }
+    }
+  },
+  "Pottery-decorationTechnique-default": {
+    "values": {
+      "Stempel": {
+        "label": "스탬프"
+      },
+      "Bemalung": {
+        "label": "그린"
+      },
+      "Reliefdekor": {
+        "label": "구호 장식"
+      },
+      "Stempeldekor": {
+        "label": "스탬프 장식"
+      },
+      "Warzendekor": {
+        "label": "꼬집은 장식"
+      }
+    }
+  },
+  "Pottery-temperParticles-default": {
+    "values": {
+      "sehr fein": {
+        "label": "아주 좋아"
+      },
+      "fein": {
+        "label": "괜찮아"
+      },
+      "grob": {
+        "label": "거친"
+      },
+      "mittel": {
+        "label": "중간"
+      },
+      "mittelfein": {
+        "label": "중간 정도의 미세한"
+      },
+      "sehr grob": {
+        "label": "매우 거친"
+      }
+    }
+  },
+  "Feature-featureForm-default": {
+    "values": {
+      "oval": {
+        "label": "타원형"
+      },
+      "Befundrest": {
+        "label": "기능 잔재"
+      },
+      "U-förmig": {
+        "label": "U자형"
+      },
+      "V-förmig": {
+        "label": "V자형"
+      },
+      "rechteckig": {
+        "label": "직사각형"
+      },
+      "rund": {
+        "label": "둥근"
+      },
+      "unregelmäßig": {
+        "label": "불규칙한"
+      }
+    }
+  },
+  "Feature-featureBorders-default": {
+    "values": {
+      "deutlich": {
+        "label": "명확한"
+      },
+      "fließend": {
+        "label": "점진적인"
+      },
+      "scharf": {
+        "label": "날카로운"
+      },
+      "sehr deutlich": {
+        "label": "매우 명확"
+      },
+      "undeutlich": {
+        "label": "불분명하다"
+      },
+      "unregelmäßig": {
+        "label": "불규칙한"
+      },
+      "verwaschen": {
+        "label": "씻겨 나가다"
+      },
+      "diffus": {
+        "label": "모호한"
+      },
+      "eben": {
+        "label": "심지어"
+      },
+      "erkennbar": {
+        "label": "식별할 수 있는"
+      }
+    }
+  },
+  "Pottery-coatInsideType-default": {
+    "values": {
+      "Bemalung": {
+        "label": "그린"
+      },
+      "Geglättet": {
+        "label": "부드럽게"
+      },
+      "Poliert": {
+        "label": "광택이 나는"
+      }
+    }
+  },
+  "Pottery-specificType-default": {
+    "values": {
+      "Campana A": {
+        "label": "캄파나 A"
+      },
+      "Campana B": {
+        "label": "캄파나 B"
+      },
+      "Campana C": {
+        "label": "캄파나 C"
+      },
+      "Red Slip Ware": {
+        "label": ""
+      }
+    }
+  },
+  "Pottery-temperAmount-default": {
+    "values": {
+      "Keine Einschlüsse": {
+        "label": "없음"
+      },
+      "Mittel": {
+        "label": "중간"
+      },
+      "Nicht erkennbar": {
+        "label": "식별할 수 없음"
+      },
+      "Vereinzelt": {
+        "label": "흩어진"
+      },
+      "Viel": {
+        "label": "많이"
+      },
+      "Wenig": {
+        "label": "거의"
+      }
+    }
+  },
+  "Pottery-vesselForm-default": {
+    "values": {
+      "Deckel": {
+        "label": "뚜껑"
+      },
+      "Deckelgefäß": {
+        "label": "뚜껑이 있는 용기"
+      }
+    }
+  },
+  "Architecture-wallClassification-default": {
+    "values": {
+      "Fundament": {
+        "label": "기초"
+      },
+      "Wandgestaltung": {
+        "label": "벽 디자인"
+      },
+      "Fensterzusetzung": {
+        "label": "창 채우기"
+      },
+      "Flickung": {
+        "label": "수선"
+      },
+      "Gewölbe": {
+        "label": "둥근 천장"
+      },
+      "Mauer": {
+        "label": "벽"
+      },
+      "Mauerbettung": {
+        "label": "벽돌 침구"
+      },
+      "Mauerdurchbruch": {
+        "label": "벽 개구부/벽 파손"
+      },
+      "Mosaik": {
+        "label": "모자이크"
+      },
+      "Opus sectile": {
+        "label": "종파의 작품"
+      },
+      "Türzusetzung": {
+        "label": "문 채우기"
+      },
+      "Aufgehendes": {
+        "label": "떠오르는 벽돌"
+      }
+    }
+  },
+  "Architecture-mortarBinder-default": {
+    "values": {
+      "gering": {
+        "label": "낮음"
+      },
+      "hoch": {
+        "label": "높은"
+      },
+      "mittel": {
+        "label": "중간"
+      }
+    }
+  },
+  "Architecture-mortarConsistency-default": {
+    "values": {
+      "fest": {
+        "label": "확고한"
+      },
+      "locker": {
+        "label": "느슨한"
+      },
+      "mittelfein": {
+        "label": "중간 벌금"
+      },
+      "hart": {
+        "label": "열심히"
+      },
+      "sandig": {
+        "label": "모래의"
+      },
+      "pulverig": {
+        "label": "가루 같은"
+      },
+      "erdig/lehmig": {
+        "label": "흙이 있는 / 양토"
+      },
+      "brüchig": {
+        "label": "부서지기 쉬운"
+      }
+    }
+  },
+  "Pottery-clayHardness-default": {
+    "values": {
+      "4 (Messerspitze ritzt)": {
+        "label": "4 (칼로 긁힐 수 있음)"
+      },
+      "5 (Messerspitze ritzt schwer)": {
+        "label": "5 (칼로 긁히기 어렵다)"
+      },
+      "3 (Messerspitze ritzt leicht)": {
+        "label": "3 (칼로 긁기 쉬움)"
+      },
+      "2 (Fingernagel ritzt)": {
+        "label": "2 (손톱으로 긁힐 수 있음)"
+      }
+    }
+  },
+  "Stone-origin-default": {
+    "values": {
+      "Kreta": {
+        "label": "크레타"
+      },
+      "Sizilien": {
+        "label": "시칠리아"
+      },
+      "Anatolien": {
+        "label": "아나톨리아"
+      },
+      "Chimtou": {
+        "label": "침터우"
+      },
+      "Harz": {
+        "label": "하르츠"
+      }
+    }
+  },
+  "Pottery-materialType-default": {
+    "values": {
+      "Gebrauchskeramik (Grobe Ware)": {
+        "label": "거친 도자기"
+      }
+    }
+  },
+  "Pottery-coatInside-default": {
+    "values": {
+      "Redslip": {
+        "label": "Engobe vermelho (레드 슬립)"
+      }
+    }
+  },
+  "PlasterFragment-plasterComponents-default": {
+    "values": {
+      "Grus": {
+        "label": "두루미"
+      },
+      "Sand": {
+        "label": "모래"
+      }
+    }
+  },
+  "Metal-decorationTechnique-default": {
+    "values": {
+      "Stempel": {
+        "label": "스탬프가 찍힌"
+      },
+      "Bemalung": {
+        "label": "그린"
+      },
+      "Emaille": {
+        "label": "에나멜"
+      },
+      "Reliefdekor": {
+        "label": "구호 장식"
+      },
+      "Riefeldekor": {
+        "label": "홈 장식"
+      },
+      "Stempeldekor": {
+        "label": "스탬프가 찍힌 (장식용)"
+      },
+      "Vergoldung": {
+        "label": "금박"
+      },
+      "Ritzungen": {
+        "label": "긁힌"
+      }
+    }
+  },
+  "process-state-default": {
+    "values": {
+      "planned": {
+        "label": "예정"
+      },
+      "in progress": {
+        "label": "진행 중"
+      },
+      "completed": {
+        "label": "완료됨"
+      },
+      "canceled": {
+        "label": "취소됨"
+      }
+    }
+  },
+  "Sampling-samplingStrategy-default": {
+    "values": {
+      "horizontal": {
+        "label": "수평",
+        "description": "수평으로 촬영 – 예: 표면 또는 바닥"
+      },
+      "vertical": {
+        "label": "수직",
+        "description": "수직으로 촬영 – 예: 프로필"
+      }
+    }
+  },
+  "Sampling-horizontalSamplingStrategy-default": {
+    "values": {
+      "grabSample": {
+        "label": "샘플 채취",
+        "description": "사전 정의된 계획 없이 수행되는 비전략적, 기회주의적 샘플링입니다. 우연한 발견도 포함됩니다."
+      },
+      "systematicSample": {
+        "label": "체계적인 샘플",
+        "description": "정의된 공간을 고르게 커버하기 위해 일정한 간격으로 샘플링 전략"
+      },
+      "judgementSample": {
+        "label": "판결 샘플",
+        "description": "샘플링되는 컨텍스트에 대한 사전 지식, 전문가 해석 또는 정보에 기초한 가정을 기반으로 하는 선택적 샘플링 전략"
+      }
+    }
+  },
+  "Sampling-systematicSamplingStrategy-default": {
+    "values": {
+      "fixedVolume": {
+        "label": "고정 볼륨",
+        "description": "균일성을 보장하기 위해 각 샘플링 단위에서 일정하고 미리 결정된 양의 퇴적물을 수집하는 샘플링 전략"
+      },
+      "probabilistic": {
+        "label": "확률적",
+        "description": "표본이 모집단을 반영할 확률을 통계적으로 평가할 수 있는 표본 추출 전략"
+      },
+      "random": {
+        "label": "무작위",
+        "description": "표본이 순전히 우연히 선택되어 모집단의 모든 단위가 동일한 확률로 선택되도록 보장하는 표본 추출 전략"
+      },
+      "eachQuadrant": {
+        "label": "각 사분면",
+        "description": "사이트 그리드 내의 정의된 각 사분면에서 샘플을 수집하여 모든 영역을 체계적으로 포괄하는 샘플링 전략"
+      },
+      "everyOtherQuadrant": {
+        "label": "다른 모든 사분면",
+        "description": "체계적이지만 간격을 둔 적용 범위를 달성하기 위해 체커보드 패턴에 따라 사이트 그리드 내의 교대 사분면에서 샘플을 수집하는 샘플링 전략"
+      },
+      "100%": {
+        "label": "100%",
+        "description": "정의된 단위 내의 퇴적물 전체를 수집 또는 분석하는 샘플링 전략"
+      }
+    }
+  },
+  "Sampling-verticalSamplingStrategy-default": {
+    "values": {
+      "profile": {
+        "label": "프로필",
+        "description": "발굴 중 노출된 층서학적 부분에서 채취한 샘플"
+      },
+      "core": {
+        "label": "코어",
+        "description": "연속적인 수직 퇴적물 기둥을 얻기 위해 일반적으로 전체 굴착 없이 코어링 장치를 사용하여 샘플을 추출했습니다."
+      }
+    }
+  },
+  "Sampling-profileSamplingStrategy-default": {
+    "values": {
+      "sondage": {
+        "label": "손디지",
+        "description": "퇴적물이 발생한 고고학적 맥락을 이해하는 것을 목표로 하지 않고 층위학을 조사하고 특정 층에서 개별 퇴적물 샘플을 회수하기 위해 만들어진 소규모 시험 굴착 또는 도랑"
+      },
+      "monolith": {
+        "label": "모노리스",
+        "description": "미세형태학 또는 실험실 분석을 위해 층위학을 보존하기 위해 추출되어 고정 용기에 보관된 연속적이고 방해받지 않는 퇴적물 블록입니다."
+      }
+    }
+  },
+  "Sieving-waterOrigin-default": {
+    "values": {
+      "regular": {
+        "label": "레귤러",
+        "description": "표준 수돗물"
+      },
+      "recycledSystem": {
+        "label": "재활용 시스템",
+        "description": "폐쇄형 또는 반밀폐형 시스템 내에서 재사용을 위해 이전에 사용 및 여과된 물"
+      },
+      "riverPondWell": {
+        "label": "강, 연못, 우물",
+        "description": "인근 강, 연못, 우물 또는 이와 유사한 수원에서 채취한 자연수"
+      }
+    }
+  },
+  "Sieving-waterChangeFrequency-default": {
+    "values": {
+      "everyStratigraphicalUnit": {
+        "label": "모든 층서 단위"
+      },
+      "everyFewStratigraphicalUnits": {
+        "label": "몇 개의 층위 단위마다"
+      },
+      "onceADay": {
+        "label": "하루에 한 번"
+      },
+      "afterFewDays": {
+        "label": "며칠 후"
+      }
+    }
+  },
+  "Sieving-pretreatmentType-default": {
+    "values": {
+      "freezing": {
+        "label": "냉동",
+        "description": "샘플이 동결되었습니다."
+      },
+      "soaking": {
+        "label": "담그기",
+        "description": "샘플을 물에 담갔다."
+      },
+      "soakingWithSoap": {
+        "label": "비누로 담그기",
+        "description": "샘플을 물과 순한 세제 용액에 담갔습니다."
+      },
+      "soakingWithChemicals": {
+        "label": "다른 화학물질과 함께 담그기",
+        "description": "샘플을 물과 화학 용액에 담갔습니다."
+      },
+      "sundryingAndSoaking": {
+        "label": "햇볕에 말리고 담그기",
+        "description": "샘플을 햇빛에 건조시킨 후 재수화시켰습니다."
+      }
+    }
+  },
+  "Sieving-sievingMethod-default": {
+    "values": {
+      "flotation": {
+        "label": "부양",
+        "description": "상부가 유출되는 부유조(용량 80리터 이상)에 물을 채우고 시료가 탱크 바닥으로 떨어지는 것을 방지하기 위해 체나 망을 이용하여 시료를 탱크에 투입한다. 유기 물질(탄화됨)이 표면에 떠오르고 손으로 부드럽게 저어주는 동안 침전물은 탱크에 남아 있습니다. 하나의 체, 여러 개의 체 또는 그물을 사용하여 유출수에서 나오는 물과 함께 떨어지는 유기물 부분을 회수합니다. 탱크에 남아있는 침전물은 광물 분획입니다."
+      },
+      "flotationAirCompressor": {
+        "label": "공기 압축기를 이용한 부양",
+        "description": "부유선광과 유사하게 이 시스템은 압축 공기를 사용하여 부유 기계에서 소용돌이 효과를 생성하여 퇴적물 덩어리의 분해와 탄화 물질의 부유를 돕습니다."
+      },
+      "bucketFlotation": {
+        "label": "버킷 부양",
+        "description": "침전물을 물통에 붓고 손으로 저어준 후 상등액을 체나 망에 붓는다. 이 과정은 더 이상 유기 물질이 뜨지 않을 때까지 필요하다고 생각되는 횟수만큼 반복됩니다."
+      },
+      "washOver": {
+        "label": "워시오버",
+        "description": "물이 담긴 그릇에 소량의 침전물을 부드럽게 휘저어 섞는 분리 기술입니다. 그런 다음 부유된(상청액) 물질을 체 더미 위에 부어 더 가벼운 입자를 분리합니다. 용기 내부에 남아 있는 무거운 잔류물은 시료의 광물 분획으로 유지되고 부유 물질은 유기 분획으로 유지됩니다."
+      },
+      "waterScreening": {
+        "label": "수질검사",
+        "description": "호스에서 물을 체 더미에 붓는 급속 침전물 처리 방법"
+      },
+      "drySieving": {
+        "label": "건식 체질",
+        "description": "물을 사용하지 않고 일련의 체를 통해 건조한 토양을 체로 걸러내는 처리 기술"
+      }
+    }
+  },
+  "Sieving-sievingMeshes-default": {
+    "values": {
+      "organic8": {
+        "label": "8 ORG"
+      },
+      "organic4": {
+        "label": "4 ORG"
+      },
+      "organic2": {
+        "label": "2 ORG"
+      },
+      "organic05": {
+        "label": "0,5 ORG"
+      },
+      "organic035": {
+        "label": "0,35 ORG"
+      },
+      "organic025": {
+        "label": "0,25 ORG"
+      },
+      "organic0125": {
+        "label": "0,125 ORG"
+      },
+      "mineral8": {
+        "label": "8 MIN"
+      },
+      "mineral4": {
+        "label": "4 MIN"
+      },
+      "mineral2": {
+        "label": "2 MIN"
+      },
+      "mineral1": {
+        "label": "1 MIN"
+      },
+      "mineral05": {
+        "label": "0,5 MIN"
+      },
+      "organicStrain": {
+        "label": "변형(폭을 알 수 없음) ORG"
+      },
+      "mineralStrain": {
+        "label": "변형률(폭을 알 수 없음) MIN"
+      }
+    }
+  },
+  "SievedFractionProcessing-organicFractionTreatmentType-default": {
+    "values": {
+      "airDrying": {
+        "label": "공기 건조",
+        "description": "샘플을 자연 건조되도록 방치하고 공기에 노출시켰습니다."
+      },
+      "putIntoWater": {
+        "label": "물에 넣어",
+        "description": "샘플을 물에 보관했습니다."
+      }
+    }
+  },
+  "SievedFractionProcessing-subsamplingTechnique-default": {
+    "values": {
+      "gridMethod": {
+        "label": "그리드 방식",
+        "description": "샘플을 균일하게 펼쳐 표시된 격자로 나누는 서브샘플링 기술입니다. 그런 다음 공간적 대표성을 보장하고 샘플링 편향을 줄이기 위해 특정 또는 무작위로 선택된 그리드 섹션에서 하위 샘플을 가져옵니다."
+      },
+      "riffleBox": {
+        "label": "리플박스",
+        "description": "교대 슈트를 사용하여 샘플을 동일하고 대표적인 부분으로 나누는 기계식 서브샘플링 도구"
+      }
+    }
+  },
+  "SievedFractionProcessing-measurementUnit-default": {
+    "values": {
+      "litres": {
+        "label": "리터"
+      },
+      "millilitres": {
+        "label": "밀리리터"
+      },
+      "kilograms": {
+        "label": "킬로그램"
+      },
+      "grams": {
+        "label": "그램"
+      }
+    }
+  },
+  "SievedFractionProcessing-volumeMeasurementTechnique-default": {
+    "values": {
+      "classical": {
+        "label": "클래식",
+        "description": "샘플량은 단순히 측정 용기에 부어서 측정됩니다."
+      },
+      "displacement": {
+        "label": "변위",
+        "description": "샘플 부피는 측정 용기에 알려진 양의 물을 넣은 다음 샘플을 추가하여 변위된 부피를 측정하여 측정됩니다."
+      }
+    }
+  },
+  "SievedFractionProcessing-organicFractionSubsampledList-default": {
+    "values": {
+      "organic8": {
+        "label": "8 ORG"
+      },
+      "organic4": {
+        "label": "4 ORG"
+      },
+      "organic2": {
+        "label": "2 ORG"
+      },
+      "organic05": {
+        "label": "0,5 ORG"
+      },
+      "organic035": {
+        "label": "0,35 ORG"
+      },
+      "organic0125": {
+        "label": "0,125 ORG"
+      },
+      "organic025": {
+        "label": "0,25 ORG"
+      },
+      "organicStrain": {
+        "label": "변형(폭을 알 수 없음) ORG"
+      }
+    }
+  },
+  "SievedFractionProcessing-mineralFractionSubsampledList-default": {
+    "values": {
+      "mineral8": {
+        "label": "8 MIN"
+      },
+      "mineral4": {
+        "label": "4 MIN"
+      },
+      "mineral2": {
+        "label": "2 MIN"
+      },
+      "mineral1": {
+        "label": "1 MIN"
+      },
+      "mineral05": {
+        "label": "0,5 MIN"
+      },
+      "mineralStrain": {
+        "label": "변형률(폭을 알 수 없음) MIN"
+      }
+    }
+  }
+}

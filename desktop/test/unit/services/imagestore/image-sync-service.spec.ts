@@ -28,6 +28,7 @@ describe('ImageSyncService', () => {
     let expressFauxtonApp: any;
     let expressServer: ExpressServer;
     let pouchdbDatastore: PouchdbDatastore;
+    let PouchDB: any;
 
     const ajv = new Ajv();
     const validate = ajv.compile(schema);
@@ -49,7 +50,7 @@ describe('ImageSyncService', () => {
 
         [expressMainApp, expressFauxtonApp] = await expressServer.setupServer(expressServerFilePath);
 
-        const PouchDB = expressServer.getPouchDB();
+        PouchDB = expressServer.getPouchDB();
 
         pouchdbDatastore = new PouchdbDatastore(
             (name: string) => new PouchDB(name),
@@ -74,8 +75,10 @@ describe('ImageSyncService', () => {
             expressFauxtonApp.close(resolve);
         });
 
-        fs.rmSync(localFilePath, { recursive: true });
-        fs.rmSync(expressServerFilePath, { recursive: true });
+        await closePouchDB(PouchDB);
+
+        await removeTestFiles(localFilePath);
+        await removeTestFiles(expressServerFilePath);
     });
 
 
@@ -237,3 +240,33 @@ describe('ImageSyncService', () => {
         }
     });
 });
+
+
+async function closePouchDB(PouchDB: any) {
+
+    if (PouchDB.__dbCacheMap) {
+        const cachedDbs: Array<any> = Array.from(PouchDB.__dbCacheMap.values());
+
+        for (const db of cachedDbs) {
+            if (db.stopReplicatorDaemon) await db.stopReplicatorDaemon().catch(nop);
+            if (db.close) await db.close().catch(nop);
+        }
+        PouchDB.__dbCacheMap.clear();
+    }
+
+    if (PouchDB.resetAllDbs) await PouchDB.resetAllDbs();
+}
+
+
+async function removeTestFiles(filePath: string) {
+
+    for (let attempt = 1; attempt <= 10; attempt++) {
+        try {
+            fs.rmSync(filePath, { recursive: true, force: true });
+            return;
+        } catch (err) {
+            if (attempt === 10) throw err;
+            await new Promise(resolve => setTimeout(resolve, 200));
+        }
+    }
+}

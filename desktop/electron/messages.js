@@ -3,6 +3,7 @@ const messageDictionary = {
     en: require('./messages/messages.en.json'),
     es: require('./messages/messages.es.json'),
     it: require('./messages/messages.it.json'),
+    ko: require('./messages/messages.ko.json'),
     pt: require('./messages/messages.pt.json'),
     tr: require('./messages/messages.tr.json'),
     uk: require('./messages/messages.uk.json')

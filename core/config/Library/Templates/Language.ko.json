@@ -1,0 +1,24 @@
+{
+  "default": {
+    "label": "기본"
+  },
+  "minimalExcavation": {
+    "label": "기본(발굴)"
+  },
+  "minimalBuilding": {
+    "label": "기본(건축 조사)"
+  },
+  "minimalSurvey": {
+    "label": "기본(지표조사)"
+  },
+  "archaeoDox": {
+    "label": "고고학자",
+    "languageConfiguration": {
+      "relations": {
+        "isPresentIn": {
+          "label": "종단/평면도에 존재합니다."
+        }
+      }
+    }
+  }
+}

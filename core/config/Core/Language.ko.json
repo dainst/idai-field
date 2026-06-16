@@ -1,0 +1,139 @@
+{
+  "fields": {
+    "category": {
+      "label": "분류"
+    },
+    "identifier": {
+      "label": "식별번호",
+      "description": "이 자료의 고유 식별번호"
+    },
+    "shortDescription": {
+      "label": "간략 설명"
+    },
+    "includesStratigraphicalUnits": {
+      "label": "유구/층위 단위 포함"
+    },
+    "hasChildren": {
+      "label": "하위 자료"
+    },
+    "isSubjectOf": {
+      "label": "대상 자료"
+    },
+    "isResultOf": {
+      "label": "결과 자료"
+    }
+  },
+  "categories": {
+    "Project": {
+      "label": "프로젝트",
+      "fields": {
+        "coordinateReferenceSystem": {
+          "label": "좌표 기준계"
+        },
+        "shortName": {
+          "label": "프로젝트명"
+        }
+      }
+    },
+    "Image": {
+      "label": "이미지",
+      "fields": {
+        "height": {
+          "label": "높이"
+        },
+        "width": {
+          "label": "너비"
+        },
+        "originalFilename": {
+          "label": "원본 파일명"
+        }
+      }
+    }
+  },
+  "relations": {
+    "isRecordedIn": {
+      "label": "조사 단위에 기록됨"
+    },
+    "liesWithin": {
+      "label": "내부에 위치"
+    },
+    "includes": {
+      "label": "포함"
+    },
+    "isPresentIn": {
+      "label": "단면/평면에 나타남"
+    },
+    "isAbove": {
+      "label": "상부"
+    },
+    "isBelow": {
+      "label": "하부"
+    },
+    "isSameAs": {
+      "label": "동일"
+    },
+    "cuts": {
+      "label": "절단함"
+    },
+    "isCutBy": {
+      "label": "절단됨"
+    },
+    "fills": {
+      "label": "채움"
+    },
+    "isFilledBy": {
+      "label": "채워짐"
+    },
+    "abuts": {
+      "label": "접대"
+    },
+    "isAbuttedBy": {
+      "label": "인접자"
+    },
+    "bondsWith": {
+      "label": "다음과의 유대관계"
+    },
+    "borders": {
+      "label": "경계를 접함"
+    },
+    "isAfter": {
+      "label": "이후"
+    },
+    "isBefore": {
+      "label": "이전"
+    },
+    "isContemporaryWith": {
+      "label": "동시기"
+    },
+    "depicts": {
+      "label": "묘사함"
+    },
+    "isDepictedIn": {
+      "label": "묘사된 자료"
+    },
+    "isMapLayerOf": {
+      "label": "지도 레이어 대상"
+    },
+    "hasMapLayer": {
+      "label": "지도 레이어 있음"
+    },
+    "isInstanceOf": {
+      "label": "유형 분류"
+    },
+    "hasInstance": {
+      "label": "관련 유물"
+    },
+    "isStoredIn": {
+      "label": "보관 장소"
+    },
+    "isStoragePlaceOf": {
+      "label": "보관 자료"
+    },
+    "isCarriedOutOn": {
+      "label": "수행 대상"
+    },
+    "resultsIn": {
+      "label": "결과 자료"
+    }
+  }
+}

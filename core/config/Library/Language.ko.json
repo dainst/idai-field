@@ -1,0 +1,1825 @@
+{
+  "groups": {
+    "stem": "기본 정보",
+    "properties": "속성",
+    "time": "시간",
+    "position": "위치/맥락",
+    "dimension": "치수",
+    "identification": "식별",
+    "other": "기타",
+    "inventory": "인벤토리",
+    "hierarchy": "계층",
+    "stratigraphy": "층위 관계",
+    "workflow": "작업 흐름",
+    "mineralFraction": "미네랄분율",
+    "organicFraction": "유기분획"
+  },
+  "commons": {
+    "dimensionLength": {
+      "label": "길이",
+      "description": "길이의 측정"
+    },
+    "dimensionWidth": {
+      "label": "너비",
+      "description": "최대/최소 연장시 폭 표시"
+    },
+    "dimensionHeight": {
+      "label": "높이",
+      "description": "최대/최소 확장시 높이 표시"
+    },
+    "dimensionDepth": {
+      "label": "깊이",
+      "description": "최대/최소 확장시 깊이 표시"
+    },
+    "dimensionThickness": {
+      "label": "두께",
+      "description": "물체의 두께"
+    },
+    "dimensionVerticalExtent": {
+      "label": "수직 범위",
+      "description": "상하 경계 또는 보행 수준의 니보"
+    },
+    "dimensionPerimeter": {
+      "label": "둘레",
+      "description": "물체 둘레 표시"
+    },
+    "dimensionDiameter": {
+      "label": "직경",
+      "description": "물체 직경 표시"
+    },
+    "dimensionOther": {
+      "label": "기타 치수",
+      "description": "여기에 다른 차원을 입력할 수 있습니다. 댓글을 달아주세요"
+    },
+    "area": {
+      "label": "면적(m2)",
+      "description": "면적(제곱미터)"
+    },
+    "processor": {
+      "label": "작성자",
+      "description": "캠페인 기간 동안 자원이나 물건을 담당하는 사람의 이름입니다. 참고: 데이터베이스 항목을 편집하는 사람의 이름은 자동으로 저장되므로 여기에는 필요하지 않습니다."
+    },
+    "campaign": {
+      "label": "조사 차수"
+    },
+    "description": {
+      "label": "설명",
+      "description": "무제한 설명 필드"
+    },
+    "period": {
+      "label": "시기"
+    },
+    "dating": {
+      "label": "연대"
+    },
+    "diary": {
+      "label": "야장",
+      "description": "발굴 야장 참조"
+    },
+    "date": {
+      "label": "날짜",
+      "description": "녹음/지휘 날짜"
+    },
+    "orientation": {
+      "label": "방향",
+      "description": "나침반 방향에 따른 방향"
+    },
+    "spatialLocation": {
+      "label": "공간 위치",
+      "description": "현장, 도랑 또는 지형지물 내의 위치에 대한 설명"
+    },
+    "provenance": {
+      "label": "출토/기원 위치",
+      "description": "원산지"
+    },
+    "literature": {
+      "label": "문헌 참조"
+    },
+    "geometry": {
+      "label": "공간 형상"
+    },
+    "notes": {
+      "label": "비고"
+    },
+    "damage": {
+      "label": "피해율(%)"
+    },
+    "archaeoDox:documentationUnit": {
+      "label": "문서화 단위"
+    },
+    "webGisId": {
+      "label": "웹 GIS ID"
+    },
+    "shortDescriptionAddendum": {
+      "label": "간단한 설명(부록)"
+    },
+    "phase": {
+      "label": "위상"
+    },
+    "weight": {
+      "label": "무게",
+      "description": "중량 사양"
+    },
+    "volume": {
+      "label": "부피",
+      "description": "볼륨 사양"
+    }
+  },
+  "categories": {
+    "Level": {
+      "label": "레벨",
+      "fields": {
+        "material": {
+          "label": "소재"
+        }
+      }
+    },
+    "RoomFloor": {
+      "label": "바닥",
+      "fields": {
+        "material": {
+          "label": "소재"
+        }
+      }
+    },
+    "RoomWall": {
+      "label": "벽",
+      "fields": {
+        "material": {
+          "label": "소재"
+        }
+      }
+    },
+    "RoomCeiling": {
+      "label": "천장",
+      "fields": {
+        "material": {
+          "label": "소재"
+        }
+      }
+    },
+    "InnerWall": {
+      "label": "내벽"
+    },
+    "OuterWall": {
+      "label": "외벽"
+    },
+    "Roof": {
+      "label": "지붕",
+      "fields": {
+        "material": {
+          "label": "소재"
+        }
+      }
+    },
+    "Stairs": {
+      "label": "계단",
+      "fields": {
+        "material": {
+          "label": "소재"
+        }
+      }
+    },
+    "Opening": {
+      "label": "오프닝",
+      "fields": {
+        "material": {
+          "label": "소재"
+        }
+      }
+    },
+    "Window": {
+      "label": "창"
+    },
+    "Door": {
+      "label": "문"
+    },
+    "Damage": {
+      "label": "손상",
+      "fields": {
+        "condition": {
+          "label": "상태"
+        },
+        "damageType": {
+          "label": "피해 유형"
+        }
+      }
+    },
+    "DesignElement": {
+      "label": "디자인 요소",
+      "fields": {
+        "material": {
+          "label": "소재"
+        }
+      }
+    },
+    "Trench": {
+      "label": "트렌치",
+      "fields": {
+        "researchQuestion": {
+          "label": "연구문제",
+          "description": "참호에 대한 연구 질문이나 배경. '자기 기록에서 발견된 구조물의 규격과 연대는...'"
+        },
+        "trenchComment": {
+          "label": "트렌치 코멘트",
+          "description": "평가 및 문서화를 위한 트렌치 해설, 발굴 관리를 위한 보고서"
+        }
+      }
+    },
+    "ExcavationArea": {
+      "label": "발굴지역"
+    },
+    "Glass": {
+      "label": "유리",
+      "fields": {
+        "decorationDescription": {
+          "label": "장식 설명",
+          "description": "장식에 대한 자세한 설명을 위한 추가 설명 필드"
+        },
+        "color": {
+          "label": "색상과 강도",
+          "description": "색상은 알아볼 수 있는 한도 내에서"
+        },
+        "decorationTechnique": {
+          "label": "표면 처리 또는 장식 기술",
+          "description": "유리에 장식을 적용하는 데 사용되는 기술"
+        },
+        "formDescription": {
+          "label": "양식 설명",
+          "description": "일반 형식에 대한 자세한 설명"
+        },
+        "manufacturingMethod": {
+          "label": "제조방법",
+          "description": "물체를 생산하는 데 사용되는 기술. 인식 가능한 처리 흔적"
+        },
+        "objectType": {
+          "label": "객체의 명칭 또는 유형"
+        },
+        "transparency": {
+          "label": "투명성",
+          "description": "물체는 얼마나 반투명합니까?"
+        },
+        "vesselForm": {
+          "label": "기본 선박 형태",
+          "description": "선박의 기본 형태"
+        },
+        "vesselFormSpecific": {
+          "label": "특정 선박 형태",
+          "description": "선박의 특정 모양"
+        }
+      }
+    },
+    "Mollusk": {
+      "label": "연체동물",
+      "fields": {
+        "classification": {
+          "label": "연체동물 분류"
+        }
+      }
+    },
+    "Planum": {
+      "label": "플래넘"
+    },
+    "Brick": {
+      "label": "벽돌",
+      "fields": {
+        "featureText": {
+          "label": "스탬프 텍스트",
+          "description": "스탬프 텍스트의 사본"
+        },
+        "brickForm": {
+          "label": "벽돌 형태"
+        },
+        "brickUsage": {
+          "label": "아키텍처의 일부로 벽돌 배치"
+        },
+        "clayColorOutside": {
+          "label": "외부: 점토 색상 및 강도"
+        },
+        "coatColorInside": {
+          "label": "코트(내부): 색상 및 강도"
+        },
+        "coatColorOutside": {
+          "label": "코트(외부): 색상 및 강도"
+        },
+        "decorationTechnique": {
+          "label": "표면 처리 또는 장식 기술"
+        },
+        "formDescription": {
+          "label": "양식 설명",
+          "description": "일반 형식에 대한 자세한 설명"
+        },
+        "manufacturing": {
+          "label": "제조"
+        },
+        "manufacturingMethod": {
+          "label": "제조방법"
+        },
+        "specificType": {
+          "label": "형식",
+          "description": "인식 가능한 경우 벽돌과 타일의 형식"
+        },
+        "temper": {
+          "label": "성미",
+          "description": "기본 성격 유형"
+        }
+      }
+    },
+    "Project": {
+      "fields": {
+        "contactMail": {
+          "label": "연락 담당자의 메일 주소",
+          "description": "프로젝트의 메일 주소 또는 연락 담당자"
+        },
+        "contactPerson": {
+          "label": "담당자",
+          "description": "프로젝트 담당자"
+        },
+        "epsgId": {
+          "label": "EPSG 코드",
+          "description": "EPSG 코드 사양(http://spatialreference.org/ 참조, 예: 3004)"
+        },
+        "externalReference": {
+          "label": "프로젝트 홈페이지",
+          "description": "프로젝트의 외부 참조"
+        },
+        "gazId": {
+          "label": "지명자 ID",
+          "description": "장소 백과사전의 ID 번호"
+        },
+        "institution": {
+          "label": "기관",
+          "description": "프로젝트 담당 기관"
+        },
+        "latitude": {
+          "label": "위도",
+          "description": "10진수로 입력하며, 음수 입력 가능"
+        },
+        "longitude": {
+          "label": "경도",
+          "description": "10진수로 입력하며, 음수 입력 가능"
+        },
+        "license": {
+          "label": "라이센스 정보"
+        },
+        "projectURI": {
+          "label": "프로젝트 URL",
+          "description": "추가 정보가 포함된 외부 프로젝트 페이지 참조"
+        },
+        "staff": {
+          "label": "직원"
+        },
+        "campaigns": {
+          "label": "캠페인"
+        },
+        "projectSupervisor": {
+          "label": "감독자",
+          "description": "프로젝트 담당자"
+        },
+        "bibliographicReferences": {
+          "label": "참고문헌"
+        }
+      }
+    },
+    "Burial": {
+      "label": "매장",
+      "fields": {
+        "ageDetermination": {
+          "label": "연령 결정"
+        },
+        "ageDeterminationBasis": {
+          "label": "연령 결정의 기초"
+        },
+        "bodyHeightAndRobustness": {
+          "label": "신체 높이와 견고성"
+        },
+        "burialRite": {
+          "label": "고인의 장례식이나 처우"
+        },
+        "conditionComment": {
+          "label": "조건 코멘트"
+        },
+        "dietReconstruction": {
+          "label": "다이어트 재구성"
+        },
+        "findingPlace": {
+          "label": "장소 찾기",
+          "description": "찾기 장소로 여러 다른 리소스를 입력하려면 e. g. (PE07 그래서 04,002)"
+        },
+        "palaeopathologicalReport": {
+          "label": "고병리학적 보고서"
+        },
+        "publicationDatingFinds": {
+          "label": "데이트(찾다)"
+        },
+        "publicationDatingStratigraphy": {
+          "label": "데이트(층서학)"
+        },
+        "sexDetermination": {
+          "label": "성 결정"
+        },
+        "sexDeterminationBasis": {
+          "label": "성 결정의 기초"
+        },
+        "amountIndividuals": {
+          "label": "매장 유형"
+        },
+        "burialCharacteristic": {
+          "label": "장례 순서(1차/2차)"
+        },
+        "burialDocumentation": {
+          "label": "문서",
+          "description": "어떤 형태의 문서가 사용되었나요?"
+        },
+        "graveFeature": {
+          "label": "장례방법"
+        },
+        "positionArms": {
+          "label": "팔의 위치"
+        },
+        "positionLegs": {
+          "label": "다리의 위치"
+        },
+        "positioningIndividuals": {
+          "label": "고인의 위치"
+        }
+      }
+    },
+    "Building": {
+      "label": "건축물",
+      "fields": {
+        "buildingHistory": {
+          "label": "건물의 역사"
+        },
+        "buildingResearchHistory": {
+          "label": "연구 이력"
+        },
+        "conditionComment": {
+          "label": "조건 코멘트"
+        },
+        "excavationHistory": {
+          "label": "발굴 이력"
+        },
+        "history": {
+          "label": "역사"
+        },
+        "hasRestoration": {
+          "label": "복원",
+          "description": "복원 및 보존 조치가 취해졌습니까?"
+        },
+        "architecturalOrders": {
+          "label": "건축 주문"
+        },
+        "buildingCategory": {
+          "label": "건물 카테고리"
+        },
+        "buildingCategorySpecific": {
+          "label": "건물 카테고리(구체적)"
+        },
+        "buildingTechnique": {
+          "label": "건축 기술"
+        },
+        "buildingType": {
+          "label": "건물 유형"
+        },
+        "condition": {
+          "label": "상태",
+          "description": "보존상태에 대한 설명"
+        },
+        "conditionAmount": {
+          "label": "보존 평가",
+          "description": "원본 대비 보존량"
+        },
+        "context": {
+          "label": "맥락"
+        },
+        "material": {
+          "label": "소재"
+        }
+      }
+    },
+    "SurveyUnit": {
+      "label": "지표조사 단위"
+    },
+    "Wood": {
+      "label": "목재",
+      "fields": {
+        "color": {
+          "label": "색상",
+          "description": "발견물의 색 또는 목조 구조"
+        },
+        "objectType": {
+          "label": "객체의 명칭 또는 유형"
+        },
+        "typeOfWood": {
+          "label": "목재의 종류"
+        },
+        "manufacturingMethod": {
+          "label": "제조방법"
+        },
+        "colorOutside": {
+          "label": "외부 목재 색상"
+        },
+        "colorInside": {
+          "label": "내부의 나무 색상"
+        },
+        "colorOutsideMunsell": {
+          "label": "Munsell-Nr 외부의 목재 색상."
+        },
+        "colorInsideMunsell": {
+          "label": "Munsell-Nr 내부의 목재 색상."
+        },
+        "colorBreak": {
+          "label": "목재 색상 코어"
+        },
+        "colorBreakMunsell": {
+          "label": "목재 색상 코어 Munsell-Nr."
+        },
+        "surfaceCondition": {
+          "label": "화상 자국"
+        },
+        "decorationTechnique": {
+          "label": "장식"
+        },
+        "paintColor": {
+          "label": "페인트 색상"
+        },
+        "paintColorMunsell": {
+          "label": "페인트 색상 Munsell-Nr."
+        },
+        "paintCondition": {
+          "label": "페인트 상태"
+        }
+      }
+    },
+    "Architecture": {
+      "label": "건축",
+      "fields": {
+        "bibliography": {
+          "label": "참고문헌"
+        },
+        "conditionComment": {
+          "label": "조건 코멘트"
+        },
+        "constructionDetailsDescription": {
+          "label": "공사 내용 설명"
+        },
+        "descriptionOfBuildingTechnique": {
+          "label": "건축기술에 대한 설명"
+        },
+        "findingPlace": {
+          "label": "장소 찾기",
+          "description": "찾기 장소로 여러 다른 리소스를 입력하려면 e. g. (PE07 그래서 04,002)"
+        },
+        "hasGrouting": {
+          "label": "그라우팅"
+        },
+        "layerAmount": {
+          "label": "레이어 수"
+        },
+        "layerHeight": {
+          "label": "레이어 높이"
+        },
+        "markDescription": {
+          "label": "마크 설명"
+        },
+        "materialCharacteristic": {
+          "label": "재료 특성"
+        },
+        "materialForm": {
+          "label": "재료 형태"
+        },
+        "muralCrown": {
+          "label": "벽화 왕관"
+        },
+        "publicationDatingFinds": {
+          "label": "데이트(찾다)"
+        },
+        "publicationDatingScientific": {
+          "label": "데이트(과학적)"
+        },
+        "publicationDatingStratigraphy": {
+          "label": "데이트(층서학)"
+        },
+        "publicationRemark": {
+          "label": "게재 비고"
+        },
+        "blockProcessing": {
+          "label": "블록 처리"
+        },
+        "blockTreatment": {
+          "label": "블록 처리"
+        },
+        "brickwork": {
+          "label": "벽돌 쌓기"
+        },
+        "condition": {
+          "label": "상태"
+        },
+        "conditionAmount": {
+          "label": "보존 평가",
+          "description": "원본 대비 보존량"
+        },
+        "construction": {
+          "label": "건설"
+        },
+        "mark": {
+          "label": "벽돌 봉인"
+        },
+        "mortarBinder": {
+          "label": "모르타르 바인더"
+        },
+        "mortarColor": {
+          "label": "모르타르 색상"
+        },
+        "mortarConsistency": {
+          "label": "모르타르 일관성"
+        },
+        "wallClassification": {
+          "label": "벽 분류"
+        },
+        "wallType": {
+          "label": "벽 유형"
+        }
+      }
+    },
+    "Operation": {
+      "label": "조사 단위",
+      "fields": {
+        "diaryAbstract": {
+          "label": "일기 요약"
+        },
+        "supervisor": {
+          "label": "감독자",
+          "description": "운영을 담당하는 사람"
+        }
+      }
+    },
+    "Place": {
+      "label": "장소",
+      "fields": {
+        "gazId": {
+          "label": "지명자 ID"
+        },
+        "placeName": {
+          "label": "지명"
+        },
+        "buildingHistory": {
+          "label": "연구 이력 구축"
+        },
+        "buildingResearchHistory": {
+          "label": "연구 이력"
+        },
+        "description": {
+          "label": "설명"
+        },
+        "excavationHistory": {
+          "label": "발굴 이력"
+        },
+        "findSituation": {
+          "label": "상황 찾기",
+          "description": "발견 장소 발견 경위와 관계자에 대한 설명"
+        },
+        "modernIntervention": {
+          "label": "현대 개입"
+        },
+        "findspotClassification": {
+          "label": "Findspot 분류"
+        },
+        "siteClassification": {
+          "label": "사이트 분류"
+        }
+      }
+    },
+    "Layer": {
+      "label": "층위",
+      "fields": {
+        "appearance": {
+          "label": "형성",
+          "description": "층 형성에 대한 설명, e. g. 'xy 건물의 무너진 흙벽돌 벽'"
+        },
+        "isNatural": {
+          "label": "자연적인"
+        },
+        "consistency": {
+          "label": "일관성"
+        },
+        "distinguishingCriteria": {
+          "label": "구별 기준"
+        },
+        "layerClassification": {
+          "label": "레이어의 지정 또는 분류"
+        },
+        "soilType": {
+          "label": "토양 유형"
+        }
+      }
+    },
+    "Feature": {
+      "label": "유구",
+      "fields": {
+        "hasDisturbance": {
+          "label": "소란"
+        },
+        "comparison": {
+          "label": "비교"
+        },
+        "color": {
+          "label": "색상과 강도"
+        },
+        "featureBorders": {
+          "label": "층서 단위의 경계"
+        },
+        "featureForm": {
+          "label": "층서 단위의 형태"
+        }
+      }
+    },
+    "FeatureGroup": {
+      "label": "기능 그룹",
+      "fields": {
+        "comparison": {
+          "label": "비교"
+        }
+      }
+    },
+    "FeatureSegment": {
+      "label": "기능 세그먼트",
+      "fields": {
+        "comparison": {
+          "label": "비교"
+        },
+        "hasDisturbance": {
+          "label": "소란"
+        },
+        "featureSegmentBorders": {
+          "label": "기능 세그먼트의 경계"
+        },
+        "featureSegmentForm": {
+          "label": "특징 세그먼트의 형태"
+        }
+      }
+    },
+    "Floor": {
+      "label": "바닥",
+      "fields": {
+        "conditionComment": {
+          "label": "조건 코멘트"
+        },
+        "condition": {
+          "label": "상태"
+        },
+        "conditionAmount": {
+          "label": "보존 평가",
+          "description": "원본 대비 보존량"
+        },
+        "consistency": {
+          "label": "일관성"
+        },
+        "distinguishingCriteria": {
+          "label": "구별 기준"
+        },
+        "floorClassification": {
+          "label": "층 구분"
+        },
+        "layerClassification": {
+          "label": "레이어 분류"
+        },
+        "mortarBinder": {
+          "label": "모르타르 바인더"
+        }
+      }
+    },
+    "Inscription": {
+      "label": "비문",
+      "fields": {
+        "comparison": {
+          "label": "비교"
+        },
+        "conditionComment": {
+          "label": "조건 코멘트"
+        },
+        "content": {
+          "label": "전사"
+        },
+        "language": {
+          "label": "언어"
+        },
+        "condition": {
+          "label": "상태"
+        },
+        "conditionAmount": {
+          "label": "보존 평가",
+          "description": "원본 대비 보존량"
+        },
+        "objectType": {
+          "label": "비문의 지정 또는 유형"
+        }
+      }
+    },
+    "Image": {
+      "fields": {
+        "draughtsmen": {
+          "label": "크리에이터",
+          "description": "이미지 작성자, 사진작가, 각각 초안 작성자"
+        },
+        "processor": {
+          "label": "프로세서",
+          "description": "이미지 생성 후 변경사항이 있는 경우 이미지 프로세서"
+        },
+        "imageRights": {
+          "label": "초상권"
+        }
+      }
+    },
+    "Pottery": {
+      "label": "토기",
+      "fields": {
+        "amountSherdsWall": {
+          "label": "벽 파편 수"
+        },
+        "amountSherdsRim": {
+          "label": "림 조각 수"
+        },
+        "amountSherdsBase": {
+          "label": "베이스 샤드 수"
+        },
+        "amountSherdsHandles": {
+          "label": "핸들 수"
+        },
+        "amountSherdsLip": {
+          "label": "입술의 수"
+        },
+        "amountSherdsPedestal": {
+          "label": "받침대 샤드 수"
+        },
+        "amountSherdsRimBase": {
+          "label": "림 베이스 조각의 수"
+        },
+        "amountSherdsRimShoulder": {
+          "label": "림 숄더 샤드 수"
+        },
+        "amountSherdsShoulder": {
+          "label": "어깨 파편 수"
+        },
+        "amountSherdsOther": {
+          "label": "기타 샤드 수"
+        },
+        "amountSherdsPercent": {
+          "label": "백분율로 정량화"
+        },
+        "amountSherdsLid": {
+          "label": "뚜껑 수"
+        },
+        "clayColorBreakMunsell": {
+          "label": "브레이크 색상(먼셀)"
+        },
+        "clayColorInsideMunsell": {
+          "label": "내부 색상(먼셀)"
+        },
+        "clayColorOutsideMunsell": {
+          "label": "외부 색상(먼셀)"
+        },
+        "hasCoat": {
+          "label": "코트"
+        },
+        "decorationDescription": {
+          "label": "장식 설명"
+        },
+        "breakStructure": {
+          "label": "파손에 대한 참고 사항(구조, 다공성 등)"
+        },
+        "residueAnalysis": {
+          "label": "잔류물 분석"
+        },
+        "sample": {
+          "label": "샘플"
+        },
+        "purpose": {
+          "label": "목적"
+        },
+        "typeNumber": {
+          "label": "유형 번호",
+          "description": "유형 카탈로그 번호"
+        },
+        "clayColorBreak": {
+          "label": "브레이크: 클레이 색상 및 강도"
+        },
+        "clayColorInside": {
+          "label": "내부: 점토 색상 및 강도"
+        },
+        "clayColorOutside": {
+          "label": "외부: 점토 색상 및 강도"
+        },
+        "clayHardness": {
+          "label": "점토 경도(모스 스케일)"
+        },
+        "coatColorInside": {
+          "label": "코트(내부): 색상 및 강도"
+        },
+        "coatColorOutside": {
+          "label": "코트(외부): 색상 및 강도"
+        },
+        "coatInside": {
+          "label": "코트(내부)"
+        },
+        "coatInsideType": {
+          "label": "트리트먼트(내부)"
+        },
+        "coatOutside": {
+          "label": "코트(외부)"
+        },
+        "coatOutsideType": {
+          "label": "트리트먼트(외부)"
+        },
+        "decorationTechnique": {
+          "label": "표면 처리 또는 장식 기술"
+        },
+        "formDescription": {
+          "label": "양식 설명"
+        },
+        "manufacturing": {
+          "label": "제조"
+        },
+        "manufacturingMethod": {
+          "label": "제조방법"
+        },
+        "materialType": {
+          "label": "재료 유형"
+        },
+        "objectType": {
+          "label": "객체 유형"
+        },
+        "specificType": {
+          "label": "도자기 종류, 도자기"
+        },
+        "temper": {
+          "label": "성미"
+        },
+        "temperAmount": {
+          "label": "포함 수"
+        },
+        "temperParticles": {
+          "label": "템퍼 입자",
+          "description": "템퍼 입자의 크기"
+        },
+        "temperTypeClay": {
+          "label": "점토형"
+        },
+        "vesselForm": {
+          "label": "기본 선박 형태"
+        },
+        "vesselFormSpecific": {
+          "label": "특정 선박 형태"
+        },
+        "vesselpart": {
+          "label": "선박의 일부"
+        },
+        "Firing": {
+          "label": "도자기 굽기"
+        },
+        "FormComparisonCompendia": {
+          "label": "양식 비교 개요서"
+        },
+        "FormComparisonCompendiadetail": {
+          "label": "양식 비교 개요서 세부정보"
+        },
+        "DecorationComparisonCompendia": {
+          "label": "장식 비교 개요서"
+        },
+        "DecorationComparisonCompendiadetail": {
+          "label": "장식 비교 개요서 세부정보"
+        },
+        "ApplicationComparisonCompendia": {
+          "label": "애플리케이션 비교 개요서"
+        },
+        "ApplicationComparisonCompendiadetail": {
+          "label": "애플리케이션 비교 개요 세부정보"
+        },
+        "Drawing": {
+          "label": "현재 그리기"
+        }
+      }
+    },
+    "Grave": {
+      "label": "무덤",
+      "fields": {
+        "bibliography": {
+          "label": "참고문헌"
+        },
+        "conditionComment": {
+          "label": "조건 코멘트"
+        },
+        "findingPlace": {
+          "label": "장소 찾기",
+          "description": "찾기 장소로 여러 다른 리소스를 입력하려면 e. g. (PE07 그래서 04,002)"
+        },
+        "publicationDatingFinds": {
+          "label": "데이트(찾다)"
+        },
+        "publicationDatingScientific": {
+          "label": "데이트(과학적)"
+        },
+        "publicationDatingStratigraphy": {
+          "label": "데이트(층서학)"
+        },
+        "publicationRemark": {
+          "label": "게재 비고"
+        },
+        "condition": {
+          "label": "상태"
+        },
+        "conditionAmount": {
+          "label": "보존 평가",
+          "description": "원본 대비 보존량"
+        },
+        "distinguishingCriteria": {
+          "label": "구별 기준"
+        },
+        "graveType": {
+          "label": "무덤 유형"
+        },
+        "specificType": {
+          "label": "특정 무덤 유형"
+        },
+        "soilType": {
+          "label": "토양 유형"
+        },
+        "tombBuilding": {
+          "label": "무덤 건물"
+        }
+      }
+    },
+    "Bone": {
+      "label": "뼈",
+      "fields": {
+        "biologicalAge": {
+          "label": "생물학적 연령",
+          "description": "사망 당시 인간 또는 동물의 나이(예: 유아 I)"
+        },
+        "boneClassification": {
+          "label": "뼈 분류"
+        },
+        "boneType": {
+          "label": "뼈의 대략적인 분류"
+        },
+        "burningGrade": {
+          "label": "뼈의 연소 등급(Wahl 1982에 따름)"
+        },
+        "sex": {
+          "label": "섹스"
+        },
+        "objectType": {
+          "label": "객체의 명칭 또는 유형"
+        },
+        "species": {
+          "label": "종"
+        }
+      }
+    },
+    "Room": {
+      "label": "방",
+      "fields": {
+        "conditionAmount": {
+          "label": "보존 평가",
+          "description": "원본 대비 보존량"
+        },
+        "conditionComment": {
+          "label": "조건 코멘트"
+        },
+        "condition": {
+          "label": "상태"
+        }
+      }
+    },
+    "Terracotta": {
+      "label": "테라코타",
+      "fields": {
+        "clayColorBreak": {
+          "label": "브레이크: 클레이 색상 및 강도"
+        },
+        "clayColorInside": {
+          "label": "내부: 점토 색상 및 강도"
+        },
+        "clayColorOutside": {
+          "label": "외부: 점토 색상 및 강도"
+        },
+        "clayStructure": {
+          "label": "구조"
+        },
+        "coatColorInside": {
+          "label": "코트(내부): 색상 및 강도"
+        },
+        "coatColorOutside": {
+          "label": "코트(외부): 색상 및 강도"
+        },
+        "decorationTechnique": {
+          "label": "표면 처리 또는 장식 기술"
+        },
+        "formDescription": {
+          "label": "양식 설명"
+        },
+        "manufacturingMethod": {
+          "label": "제조방법"
+        },
+        "surfaceCondition": {
+          "label": "표면 상태"
+        },
+        "temper": {
+          "label": "성미"
+        },
+        "temperAmount": {
+          "label": "포함 수"
+        },
+        "temperParticles": {
+          "label": "템퍼 입자",
+          "description": "템퍼 입자의 크기"
+        },
+        "vesselForm": {
+          "label": "기본 선박 형태"
+        },
+        "vesselFormSpecific": {
+          "label": "특정 선박 형태"
+        }
+      }
+    },
+    "Other": {
+      "label": "기타",
+      "fields": {
+        "isNatural": {
+          "label": "자연적인"
+        },
+        "consistency": {
+          "label": "일관성"
+        },
+        "distinguishingCriteria": {
+          "label": "구별 기준"
+        },
+        "otherClassification": {
+          "label": "분류 기타"
+        },
+        "soilType": {
+          "label": "토양 유형"
+        }
+      }
+    },
+    "Sample": {
+      "label": "샘플",
+      "fields": {
+        "labNumber": {
+          "label": "연구실 번호"
+        },
+        "sampleType": {
+          "label": "샘플 유형"
+        },
+        "storagePlace": {
+          "label": "보관 장소"
+        }
+      }
+    },
+    "Drawing": {
+      "label": "그리기",
+      "fields": {
+        "drawingMaterial": {
+          "label": "그리기 재료",
+          "description": "도면 작성에 사용되는 재료/응용 프로그램"
+        },
+        "drawingTool": {
+          "label": "그리기 도구",
+          "description": "그림을 그리는 데 사용된 도구는 무엇입니까?"
+        },
+        "drawingType": {
+          "label": "도면 유형"
+        },
+        "scale": {
+          "label": "규모"
+        }
+      }
+    },
+    "FindDrawing": {
+      "label": "그림 찾기",
+      "fields": {
+        "scale": {
+          "label": "규모"
+        },
+        "sheetNumberFrom": {
+          "label": "시트 번호(시작)"
+        },
+        "sheetNumberTo": {
+          "label": "시트 번호(~)"
+        }
+      }
+    },
+    "PlanDrawing": {
+      "label": "계획 도면",
+      "fields": {
+        "scale": {
+          "label": "규모"
+        },
+        "sheetNumberFrom": {
+          "label": "시트 번호(시작)"
+        },
+        "sheetNumberTo": {
+          "label": "시트 번호(~)"
+        }
+      }
+    },
+    "Survey": {
+      "label": "조사지역",
+      "fields": {
+        "researchMethod": {
+          "label": "연구방법"
+        }
+      }
+    },
+    "Stone": {
+      "label": "스톤",
+      "fields": {
+        "purpose": {
+          "label": "목적"
+        },
+        "treatment": {
+          "label": "치료"
+        },
+        "workmanship": {
+          "label": "솜씨"
+        },
+        "architectureElement": {
+          "label": "건축 요소"
+        },
+        "color": {
+          "label": "색상과 강도"
+        },
+        "formDescription": {
+          "label": "양식 설명"
+        },
+        "material": {
+          "label": "소재"
+        },
+        "objectType": {
+          "label": "객체 유형"
+        },
+        "origin": {
+          "label": "소재의 유래"
+        },
+        "temperAmount": {
+          "label": "포함 수"
+        }
+      }
+    },
+    "Coin": {
+      "label": "코인",
+      "fields": {
+        "frontSideDescription": {
+          "label": "앞면 설명"
+        },
+        "preservedDiameter": {
+          "label": "보존된 직경",
+          "description": "동전의 직경(밀리미터)"
+        },
+        "reverseSideDescription": {
+          "label": "뒷면 설명"
+        },
+        "denomination": {
+          "label": "명칭"
+        },
+        "manufacturingMethod": {
+          "label": "제조방법"
+        },
+        "metalMaterial": {
+          "label": "소재"
+        },
+        "mint": {
+          "label": "민트",
+          "description": "동전이 주조된 장소"
+        },
+        "mintingRuler": {
+          "label": "주조 통치자",
+          "description": "주화에 대한 책임이 있는 개인 또는 법인"
+        },
+        "stampPositioning": {
+          "label": "스탬프 위치 지정",
+          "description": "앞면과 뒷면의 스탬프 회전; 시계 문자판과 유사한 1-12h 지정(예: 동일 회전의 경우 '12')"
+        }
+      }
+    },
+    "Find": {
+      "label": "유물",
+      "fields": {
+        "instanceOf": {
+          "label": "유형학적 분류"
+        },
+        "amount": {
+          "label": "총 수"
+        },
+        "bibliography": {
+          "label": "참고문헌"
+        },
+        "catalogueNumber": {
+          "label": "카탈로그 번호"
+        },
+        "comparison": {
+          "label": "비교"
+        },
+        "conditionComment": {
+          "label": "조건 코멘트"
+        },
+        "conditionPercent": {
+          "label": "상태(%)"
+        },
+        "publicationMaterialSummary": {
+          "label": "자료 요약"
+        },
+        "publicationRemark": {
+          "label": "게재 비고"
+        },
+        "hasRestoration": {
+          "label": "복원",
+          "description": "복원 및 보존 조치가 취해졌습니까?"
+        },
+        "storageInventoryNumber": {
+          "label": "재고 번호",
+          "description": "수집 또는 창고의 재고 중에 할당된 번호"
+        },
+        "condition": {
+          "label": "상태",
+          "description": "보존상태 설명"
+        },
+        "conditionAmount": {
+          "label": "보존 평가",
+          "description": "원본 대비 보존량"
+        },
+        "storagePlace": {
+          "label": "보관 장소",
+          "description": "발견물의 보관 장소"
+        }
+      }
+    },
+    "FindCollection": {
+      "label": "컬렉션 찾기",
+      "fields": {
+        "amount": {
+          "label": "총 수",
+          "description": "저장되거나 목록에 등록된 유물의 수"
+        },
+        "bibliography": {
+          "label": "참고문헌"
+        },
+        "storagePlace": {
+          "label": "보관 장소",
+          "description": "찾기 컬렉션의 저장 위치"
+        }
+      }
+    },
+    "PlasterFragment": {
+      "label": "석고 조각",
+      "fields": {
+        "composition": {
+          "label": "구성",
+          "description": "석고의 구조에 대한 설명"
+        },
+        "hasDecoration": {
+          "label": "장식"
+        },
+        "color": {
+          "label": "색상과 강도",
+          "description": "색상은 알아볼 수 있는 한도 내에서"
+        },
+        "plasterComponents": {
+          "label": "석고 구성 요소"
+        }
+      }
+    },
+    "Photo": {
+      "label": "사진",
+      "fields": {
+        "viewingDirection": {
+          "label": "보는 방향"
+        },
+        "originalFormat": {
+          "label": "원본 형식"
+        }
+      }
+    },
+    "Profile": {
+      "label": "프로필"
+    },
+    "Metal": {
+      "label": "금속",
+      "fields": {
+        "materialDescription": {
+          "label": "재료 설명",
+          "description": "사용된 재료에 대한 설명 금속 또는 합금에 대한 정확한 설명 가능"
+        },
+        "decorationTechnique": {
+          "label": "표면 처리 또는 장식 기술"
+        },
+        "formDescription": {
+          "label": "양식 설명",
+          "description": "일반 형식에 대한 자세한 설명"
+        },
+        "manufacturingMethod": {
+          "label": "제조방법"
+        },
+        "metalMaterial": {
+          "label": "소재"
+        },
+        "objectType": {
+          "label": "객체의 명칭 또는 유형"
+        },
+        "vesselForm": {
+          "label": "기본 선박 형태"
+        },
+        "vesselFormSpecific": {
+          "label": "특정 선박 형태",
+          "description": "선박의 특정 모양"
+        }
+      }
+    },
+    "BuildingPart": {
+      "label": "건물 부분",
+      "fields": {
+        "material": {
+          "label": "소재"
+        }
+      }
+    },
+    "Area": {
+      "label": "구역"
+    },
+    "Excavation": {
+      "label": "발굴",
+      "fields": {
+        "isIllegal": {
+          "label": "불법 발굴"
+        }
+      }
+    },
+    "Type": {
+      "label": "유형"
+    },
+    "TypeCatalog": {
+      "label": "유형 목록",
+      "fields": {
+        "criterion": {
+          "label": "기준"
+        }
+      }
+    },
+    "StoragePlace": {
+      "label": "보관 장소"
+    },
+    "StorageBuilding": {
+      "label": "건물"
+    },
+    "StorageRoom": {
+      "label": "방"
+    },
+    "StorageShelf": {
+      "label": "선반"
+    },
+    "StorageCompartment": {
+      "label": "구획"
+    },
+    "StorageBox": {
+      "label": "상자"
+    },
+    "StorageBag": {
+      "label": "가방"
+    },
+    "Process": {
+      "label": "프로세스",
+      "fields": {
+        "state": {
+          "label": "상태"
+        }
+      }
+    },
+    "Sampling": {
+      "label": "샘플링",
+      "fields": {
+        "samplingStrategy": {
+          "label": "샘플링 전략 유형",
+          "description": "수집된 퇴적물 샘플의 유형을 분류하는 주요 카테고리, 즉 유적의 수직 또는 수평 분포를 우선시함"
+        },
+        "horizontalSamplingStrategy": {
+          "label": "수평 샘플링 전략 유형",
+          "description": "고고학적 맥락/현장의 표면 전체에서 샘플을 수집하는 데 사용되는 전략"
+        },
+        "systematicSamplingStrategy": {
+          "label": "체계적인 샘플링 전략의 유형",
+          "description": "구조화되고 패턴화된 방법에 따라 퇴적물 샘플을 수집할 때 적용되는 특정 접근법"
+        },
+        "proportionSystematicSampling": {
+          "label": "샘플링된 영역의 비율(%)",
+          "description": "확률론적 체계적 전략에서 샘플링된 면적/퇴적물의 비율"
+        },
+        "quadrantDimensionsSystematicSampling": {
+          "label": "사분면 치수(m2)",
+          "description": "체계적인 그리드의 샘플링 사분면 크기"
+        },
+        "verticalSamplingStrategy": {
+          "label": "수직 샘플링 전략 유형",
+          "description": "고고학적 맥락의 수직축을 따라 퇴적물 샘플을 수집하는 데 사용되는 방법"
+        },
+        "profileSamplingStrategy": {
+          "label": "프로필 샘플링 전략 유형",
+          "description": "노출된 층위학적 부분에서 퇴적물을 수집하는 데 사용되는 특정 기술"
+        }
+      }
+    },
+    "Sieving": {
+      "label": "체질",
+      "fields": {
+        "waterOrigin": {
+          "label": "물 유래",
+          "description": "시료 처리 중에 사용되는 물의 출처"
+        },
+        "waterChangeFrequency": {
+          "label": "물갈이 빈도",
+          "description": "시료 처리 중에 사용된 물을 교체하는 빈도"
+        },
+        "samplePretreated": {
+          "label": "체질 전 전처리",
+          "description": "퇴적물 샘플이 체질 전 처리 단계를 거쳤는지 여부를 명시합니다."
+        },
+        "pretreatmentType": {
+          "label": "수행된 전처리 유형",
+          "description": "체질 전 퇴적물 시료에 적용되는 구체적인 방법"
+        },
+        "pretreatmentChemicals": {
+          "label": "사용된 화학물질",
+          "description": "사용된 화학물질의 명칭"
+        },
+        "sievingMethod": {
+          "label": "체질 방법",
+          "description": "시료에서 광물 및 유기물을 체로 걸러 분리하는 데 사용되는 기술"
+        },
+        "sievingMeshes": {
+          "label": "사용된 체질 메쉬",
+          "description": "체질하는 동안 물질을 분리하는 데 사용되는 메쉬 크기"
+        }
+      }
+    },
+    "SievedFractionProcessing": {
+      "label": "체질된 분수 처리",
+      "fields": {
+        "organicFractionTreatmentType": {
+          "label": "유기분획에 적용되는 처리 유형",
+          "description": "체질 후 체질된 유기 분획에 적용되는 처리"
+        },
+        "organicFractionSubsampled": {
+          "label": "서브샘플링된 유기 부분",
+          "description": "서로 다른 유기 분획을 완전히 분석하는 대신 하위 샘플링했는지 여부를 나타냅니다."
+        },
+        "organicSubsamplingTechnique": {
+          "label": "서브샘플링 기법 수행(유기분획)",
+          "description": "분석을 위해 체질된 유기 분획을 더 작고 대표적인 부분으로 나누는 데 사용되는 방법"
+        },
+        "organicFractionMeasured": {
+          "label": "측정된 유기분율",
+          "description": "유기분획의 부피/중량이 기록되었는지 여부를 명시합니다."
+        },
+        "organicFractionMeasurement8": {
+          "label": "분수 측정 8 ORG",
+          "description": "8mm 체에 남아있는 유기물의 양"
+        },
+        "organicFractionMeasurement4": {
+          "label": "분수 측정 4 ORG",
+          "description": "4mm 체에 남아 있는 유기물의 양"
+        },
+        "organicFractionMeasurement2": {
+          "label": "분수 측정 2 ORG",
+          "description": "2mm 체에 남아 있는 유기물의 양"
+        },
+        "organicFractionMeasurement05": {
+          "label": "분수 측정 0,5 ORG",
+          "description": "0,5mm 체에 남아 있는 유기 물질의 양"
+        },
+        "organicFractionMeasurement035": {
+          "label": "분수 측정 0,35 ORG",
+          "description": "0,35mm 체에 남아 있는 유기 물질의 양"
+        },
+        "organicFractionMeasurement025": {
+          "label": "분수 측정 0,25 ORG",
+          "description": "0,25mm 체에 남아 있는 유기 물질의 양"
+        },
+        "organicFractionMeasurement0125": {
+          "label": "분수 측정 0,125 ORG",
+          "description": "0,125mm 체에 남아있는 유기물의 양"
+        },
+        "organicFractionMeasurementStrain": {
+          "label": "분수 측정 변형(폭을 알 수 없음) ORG",
+          "description": "균주에 보유된 유기 물질의 양"
+        },
+        "mineralFractionKept": {
+          "label": "미네랄 성분이 유지됨",
+          "description": "광물분획이 보존되었는지 여부를 명시합니다."
+        },
+        "mineralFractionMeasured": {
+          "label": "측정된 미네랄 분율",
+          "description": "광물 분획의 부피/무게가 기록되었는지 여부를 명시합니다."
+        },
+        "mineralFractionMeasurementUnit": {
+          "label": "측정단위(광물분율)",
+          "description": "광물분획량을 표현하는데 사용되는 단위"
+        },
+        "mineralFractionMeasurement8": {
+          "label": "분수 측정 8분",
+          "description": "8mm 체에 남아 있는 미네랄 물질의 양"
+        },
+        "mineralFractionMeasurement4": {
+          "label": "분수 측정 4분",
+          "description": "4mm 체에 남아있는 미네랄 물질의 양"
+        },
+        "mineralFractionMeasurement2": {
+          "label": "분수 측정 2분",
+          "description": "2mm 체에 남아있는 미네랄 물질의 양"
+        },
+        "mineralFractionMeasurement1": {
+          "label": "분수 측정 1분",
+          "description": "1mm 체에 남아 있는 미네랄 물질의 양"
+        },
+        "mineralFractionMeasurement05": {
+          "label": "분수 측정 0,5 MIN",
+          "description": "0.5mm 체에 남아 있는 광물 물질의 양"
+        },
+        "mineralFractionMeasurementStrain": {
+          "label": "분수 측정 변형률(폭을 알 수 없음) MIN",
+          "description": "균주에 보유된 미네랄 물질의 양"
+        },
+        "mineralFractionSubsampled": {
+          "label": "서브샘플링된 미네랄 분율",
+          "description": "다양한 광물 부분을 완전히 분석하는 대신 하위 샘플링을 했는지 여부를 명시합니다."
+        },
+        "mineralSubsamplingTechnique": {
+          "label": "수행된 서브샘플링 기술(광물 분율)",
+          "description": "분석을 위해 체로 쳐진 광물 분획을 더 작고 대표적인 부분으로 나누는 데 사용되는 방법"
+        },
+        "mineralFractionSubsampledList": {
+          "label": "하위 샘플링된 광물 부분 목록",
+          "description": "서브샘플링된 광물 부분을 나타냅니다."
+        },
+        "mineralMultiplicationFactor8": {
+          "label": "곱셈 인자 8MIN",
+          "description": "8 MIN 부분에서 남은 총량을 추정할 때 사용해야 하는 곱셈 계수"
+        },
+        "mineralMultiplicationFactor4": {
+          "label": "곱셈 인자 4MIN",
+          "description": "4 MIN 부분의 남은 총량을 추정할 때 사용해야 하는 곱셈 계수"
+        },
+        "mineralMultiplicationFactor2": {
+          "label": "곱셈 인자 2 MIN",
+          "description": "2 MIN 부분의 잔유물 총량을 추정할 때 사용해야 하는 곱셈 인자"
+        },
+        "mineralMultiplicationFactor1": {
+          "label": "곱셈 인자 1MIN",
+          "description": "1 MIN 부분의 잔여량 총계를 추정할 때 사용해야 하는 곱셈 계수"
+        },
+        "mineralMultiplicationFactor05": {
+          "label": "곱셈 인자 0,5 MIN",
+          "description": "0,5 MIN 부분의 잔여물 총량을 추정할 때 사용해야 하는 곱셈 계수"
+        },
+        "mineralMultiplicationFactorStrain": {
+          "label": "곱셈 인자 변형(폭을 알 수 없음) MIN",
+          "description": "총 광물량을 추정할 때 사용해야 하는 곱셈 계수는 변형률에 남아 있습니다."
+        },
+        "mineralDescription": {
+          "label": "설명(미네랄분율)"
+        },
+        "mineralNotes": {
+          "label": "참고 사항(미네랄 분획)"
+        },
+        "organicFractionMeasurementUnit": {
+          "label": "측정단위(유기분율)",
+          "description": "유기분획량을 표현하는데 사용되는 단위"
+        },
+        "organicFractionVolumeMeasurementTechnique": {
+          "label": "부피 측정 기술",
+          "description": "유기 분획의 부피를 결정하는 데 사용되는 방법"
+        },
+        "organicFractionSubsampledList": {
+          "label": "서브샘플링된 유기 분획 목록",
+          "description": "서브샘플링된 유기 부분을 나타냅니다."
+        },
+        "organicMultiplicationFactor8": {
+          "label": "곱셈 인자 8 ORG",
+          "description": "8 ORG 분율의 잔해 총량을 추정할 때 사용해야 하는 곱셈 인자"
+        },
+        "organicMultiplicationFactor4": {
+          "label": "곱셈 인자 4 ORG",
+          "description": "4 ORG 분획의 잔해 총량을 추정할 때 사용해야 하는 곱셈 인자"
+        },
+        "organicMultiplicationFactor2": {
+          "label": "곱셈 인자 2 ORG",
+          "description": "2 ORG 분율의 잔해 총량을 추정할 때 사용해야 하는 곱셈 인자"
+        },
+        "organicMultiplicationFactor05": {
+          "label": "곱셈 인자 0,5 ORG",
+          "description": "0,5 ORG 부분의 잔유물 총량을 추정할 때 사용해야 하는 곱셈 계수"
+        },
+        "organicMultiplicationFactor035": {
+          "label": "곱셈 인자 0,35 ORG",
+          "description": "0,35 ORG 부분의 잔해 총량을 추정할 때 사용해야 하는 곱셈 계수"
+        },
+        "organicMultiplicationFactor025": {
+          "label": "곱셈 인자 0,25 ORG",
+          "description": "0,25 ORG 부분의 잔해 총량을 추정할 때 사용해야 하는 곱셈 계수"
+        },
+        "organicMultiplicationFactor0125": {
+          "label": "곱셈 인자 0,125 ORG",
+          "description": "0,125 ORG 부분의 잔해 총량을 추정할 때 사용해야 하는 곱셈 계수"
+        },
+        "organicMultiplicationFactorStrain": {
+          "label": "곱셈 인자 변형(폭을 알 수 없음) ORG",
+          "description": "변형률 분율에서 총 유기 잔여물을 추정할 때 사용해야 하는 곱셈 인자"
+        },
+        "organicDescription": {
+          "label": "설명(유기분획)"
+        },
+        "organicNotes": {
+          "label": "메모(유기분획)"
+        }
+      }
+    }
+  },
+  "forms": {
+    "Project:archaeoDox": {
+      "label": "프로세스"
+    },
+    "Place:archaeoDox": {
+      "label": "자리 찾기"
+    },
+    "Planum:archaeoDox": {
+      "label": "플래넘 도면"
+    },
+    "Profile:archaeoDox": {
+      "label": "프로필 도면",
+      "fields": {
+        "archaeoDox:viewingDirection": {
+          "label": "보는 방향"
+        }
+      }
+    },
+    "Find:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": "간단한 설명(분류)"
+        },
+        "archaeoDox:material": {
+          "label": "소재"
+        },
+        "archaeoDox:typeOfWare": {
+          "label": "도자기의 종류"
+        }
+      }
+    },
+    "FeatureGroup:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": "간단한 설명(분류)"
+        }
+      }
+    },
+    "Feature:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": "간단한 설명(분류)"
+        },
+        "archaeoDox:distinguishingCriterium": {
+          "label": "구별기준"
+        },
+        "archaeoDox:isNatural": {
+          "label": "자연적인"
+        },
+        "archaeoDox:soilType": {
+          "label": "토양 유형"
+        },
+        "archaeoDox:consistency": {
+          "label": "일관성"
+        },
+        "archaeoDox:isArchaeologicallyIrrelevant": {
+          "label": "고고학적으로 관련이 없음"
+        }
+      },
+      "label": "특징"
+    },
+    "FeatureSegment:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": "간단한 설명(분류)"
+        }
+      }
+    },
+    "Sample:archaeoDox": {
+      "fields": {
+        "shortDescription": {
+          "label": "간단한 설명(분류)"
+        },
+        "archaeoDox:soilProperties": {
+          "label": "토양 특성"
+        }
+      }
+    }
+  }
+}

@@ -3,6 +3,7 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import localeDe from '@angular/common/locales/de';
 import localeEs from '@angular/common/locales/es';
 import localeIt from '@angular/common/locales/it';
+import localeKo from '@angular/common/locales/ko';
 import localePt from '@angular/common/locales/pt';
 import localeTr from '@angular/common/locales/tr';
 import localeUk from '@angular/common/locales/uk';
@@ -73,6 +74,7 @@ const remote = window.require('@electron/remote');
 registerLocaleData(localeDe, 'de');
 registerLocaleData(localeEs, 'es');
 registerLocaleData(localeIt, 'it');
+registerLocaleData(localeKo, 'ko');
 registerLocaleData(localePt, 'pt');
 registerLocaleData(localeTr, 'tr');
 registerLocaleData(localeUk, 'uk');

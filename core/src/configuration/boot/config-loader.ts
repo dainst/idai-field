@@ -16,7 +16,7 @@ import { Template } from '../../model/configuration/template';
 import { ValuelistValue } from '../../model/configuration/valuelist-value';
 
 
-const DEFAULT_LANGUAGES = ['de', 'en', 'es', 'fr', 'it', 'pt', 'tr', 'uk'];
+const DEFAULT_LANGUAGES = ['de', 'en', 'es', 'fr', 'it', 'ko', 'pt', 'tr', 'uk'];
 
 
 /**

@@ -27,7 +27,7 @@ describe('ConfigLoader', () => {
             libraryForms,
             libraryValuelists,
             languageConfiguration,
-            {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
+            {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
         );
         configReader.exists.and.returnValue(true);
         configReader.getValuelistsLanguages.and.returnValue({});

@@ -5,6 +5,9 @@ import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
 import GeoJSON from "ol/format/GeoJSON.js";
 import Overlay from "ol/Overlay.js";
+import Style from "ol/style/Style.js";
+import { Fill, Stroke } from "ol/style.js";
+import Draw from "ol/interaction/Draw.js";
 
 import {
     createTileLayer,
@@ -42,6 +45,10 @@ export default getDocumentViewMapHook = () => {
         identifierOverlayContent: null,
         hoveredFeatures: [],
         pinnedFeatures: [],
+        drawBoxMode: false,
+        draw: null,
+        drawSource: null,
+        drawLayer: null,
 
         mounted() {
             this.initialize();
@@ -125,6 +132,57 @@ export default getDocumentViewMapHook = () => {
 
                 setFillForLayer(this.docLayer, true);
             });
+
+            this.handleEvent(
+                `render-selection-polygon-${this.el.id}`,
+                ({ geometry }) => {
+                    this.setSelectionPolygon(geometry);
+                },
+            );
+
+            this.handleEvent(
+                `set-draw-box-mode-${this.el.id}`,
+                ({ new_value }) => {
+                    this.drawBoxMode = new_value;
+                    if (new_value == true) {
+                        this.pinnedFeatures = [];
+                        this.hoveredFeatures = [];
+
+                        this.updateTooltip([]);
+
+                        this.draw = new Draw({
+                            source: this.drawSource,
+                            type: "Polygon",
+                            // style while drawing polygons
+                            style: {
+                                "circle-radius": 5,
+                                "circle-fill-color": `rgba(255, 0, 0, 1)`,
+                                "stroke-color": `rgba(0, 0, 0, 1)`,
+                                "stroke-width": 2,
+                                "fill-color": `rgba(255, 255, 255, 0.5)`,
+                            },
+                        });
+
+                        this.draw.once("drawend", ({ feature }) => {
+                            this.drawSource.clear();
+                            this.pushEventTo(this.el, "drawn-selection", {
+                                coordinates: feature
+                                    .getGeometry()
+                                    .getCoordinates(),
+                            });
+                            this.drawBoxMode = new_value;
+                            this.map.removeInteraction(this.draw);
+                            this.drawnExtent = feature
+                                .getGeometry()
+                                .getExtent();
+                        });
+
+                        this.map.addInteraction(this.draw);
+                    } else {
+                        this.map.removeInteraction(this.draw);
+                    }
+                },
+            );
         },
 
         initialize() {
@@ -140,11 +198,33 @@ export default getDocumentViewMapHook = () => {
                 offset: [5, 5],
             });
 
+            this.drawSource = new VectorSource({
+                wrapX: false,
+            });
+
+            this.drawLayer = new VectorLayer({
+                source: this.drawSource,
+                // style for finished polygons
+                style: new Style({
+                    stroke: new Stroke({
+                        color: `rgba(0, 0, 0, 1)`,
+                        width: 1,
+                    }),
+                    fill: new Fill({
+                        color: `rgba(255, 255, 255, 0.5)`,
+                    }),
+                }),
+                properties: {
+                    drawn: true,
+                },
+            });
+
             document.getElementById(
                 `${this.el.getAttribute("id")}-map`,
             ).innerHTML = "";
 
             this.map = new Map({
+                layers: [this.drawLayer],
                 target: `${this.el.getAttribute("id")}-map`,
                 view: new View(),
                 overlays: [this.identifierOverlay],
@@ -189,7 +269,11 @@ export default getDocumentViewMapHook = () => {
                 const hitFeatures = _this.map.getFeaturesAtPixel(e.pixel, {
                     layerFilter: (layer) => {
                         const properties = layer.getProperties();
-                        return properties && !properties.mainDocumentLayer;
+                        return (
+                            properties &&
+                            !properties.mainDocumentLayer &&
+                            !properties.drawn
+                        );
                     },
                 });
 
@@ -282,6 +366,24 @@ export default getDocumentViewMapHook = () => {
 
             for (let i = 0; i < layerCount; i++) {
                 combined[i].setZIndex(layerCount - i - 200);
+            }
+        },
+        setSelectionPolygon(geometry) {
+            this.drawSource.clear();
+
+            if (geometry != null) {
+                feature = new GeoJSON().readFeature({
+                    type: "Feature",
+                    geometry: {
+                        type: "Polygon",
+                        coordinates: [geometry],
+                    },
+                });
+
+                this.drawSource.addFeature(feature);
+                this.drawnExtent = feature.getGeometry().getExtent();
+            } else {
+                this.drawnExtent = null;
             }
         },
 

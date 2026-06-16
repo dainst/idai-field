@@ -43,29 +43,38 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
             </div>
           </div>
         </div>
-        <div
-          :if={@document_tile_layers_state ++ @project_tile_layers_state != []}
-          class="absolute p-1 top-1 right-1"
-        >
-          <div
-            class="right-1 absolute rounded w-8 h-8 text-center pt-0.5 bg-white"
-            phx-click={Phoenix.LiveView.JS.toggle(to: "##{@id}-layer-select")}
-          >
-            <.icon name="hero-square-3-stack-3d" />
+        <div class="absolute p-1 top-1 right-1 flex gap-1">
+          <div class="bg-white">
+            <div
+              id={"#{@id}-draw-box-selector"}
+              phx-click="toggle-draw-box-mode"
+              phx-target={@myself}
+              class={"w-8 h-8 text-center pt-0.5 rounded #{if @draw_box_mode, do: "bg-primary/20 border border-primary hover:border-primary-hover"}"}
+            >
+              <.icon name="hero-pencil-square" />
+            </div>
           </div>
-          <div id={"#{@id}-layer-select"} class="bg-white p-2 pr-8 max-h-64 overflow-auto hidden">
-            <.render_tile_layer_selection_group
-              target={@myself}
-              publication={@publication}
-              group={:document}
-              layer_states={@document_tile_layers_state}
-            />
-            <.render_tile_layer_selection_group
-              target={@myself}
-              publication={@publication}
-              group={:project}
-              layer_states={@project_tile_layers_state}
-            />
+          <div :if={@document_tile_layers_state ++ @project_tile_layers_state != []}>
+            <div
+              class="right-1 rounded w-8 h-8 text-center pt-0.5 bg-white"
+              phx-click={Phoenix.LiveView.JS.toggle(to: "##{@id}-layer-select")}
+            >
+              <.icon name="hero-square-3-stack-3d" />
+            </div>
+            <div id={"#{@id}-layer-select"} class="bg-white p-2 pr-8 max-h-64 overflow-auto hidden">
+              <.render_tile_layer_selection_group
+                target={@myself}
+                publication={@publication}
+                group={:document}
+                layer_states={@document_tile_layers_state}
+              />
+              <.render_tile_layer_selection_group
+                target={@myself}
+                publication={@publication}
+                group={:project}
+                layer_states={@project_tile_layers_state}
+              />
+            </div>
           </div>
         </div>
         <div
@@ -161,6 +170,44 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     |> Map.put(:show_layer_select, false)
     |> Map.put_new(:focus, :default)
     |> Map.put(:uuid, assigns.doc.id)
+    |> Map.put_new(:draw_box_mode, false)
+  end
+
+  def handle_event("toggle-draw-box-mode", _, socket) do
+    {
+      :noreply,
+      toggle_draw_mode(socket)
+    }
+  end
+
+  def handle_event("drawn-selection", %{"coordinates" => multipolygon_coordinates}, socket) do
+    case multipolygon_coordinates do
+      [polygon_coordinates] when is_list(polygon_coordinates) ->
+        Enum.all?(polygon_coordinates, fn
+          [a, b] when is_float(a) and is_float(b) -> true
+          _ -> false
+        end)
+
+      _ ->
+        false
+    end
+    |> if do
+      # Sends notification to whatever live view is using this map component.
+      send(self(), {:drawn_selection, List.first(multipolygon_coordinates)})
+    end
+
+    {
+      :noreply,
+      toggle_draw_mode(socket)
+    }
+  end
+
+  defp toggle_draw_mode(%{assigns: %{id: id, draw_box_mode: current}} = socket) do
+    new_value = !current
+
+    socket
+    |> assign(:draw_box_mode, new_value)
+    |> push_event("set-draw-box-mode-#{id}", %{new_value: new_value})
   end
 
   # defp create_feature_info(

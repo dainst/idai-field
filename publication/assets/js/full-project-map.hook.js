@@ -166,7 +166,6 @@ export default getFullProjectMapHook = () => {
             this.identifierOverlay = new Overlay({
                 element: overlayDiv,
                 offset: [5, 5],
-                stopEvent: false,
             });
 
             this.identifierOverlay.setPosition(undefined);

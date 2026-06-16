@@ -111,7 +111,9 @@ function renderPreviewList(
     container.classList.add("flex", "gap-0.5");
 
     const list = document.createElement("div");
-    list.classList.add("flex", "flex-col", "gap-0.5");
+    list.classList.add("flex", "flex-col", "gap-0.5", "overflow-y-auto");
+
+    list.style.maxHeight = `${hookReference.el.clientHeight * 0.5}px`;
 
     if (features.length == 0) {
         return list;

@@ -222,13 +222,11 @@ export default getFullProjectMapHook = () => {
                 }
             });
 
-            this.map.addEventListener("pointerleave", function (e) {
-                if (_this.drawBoxMode) return;
-
-                _this.featureLayers.map((layer) => {
-                    setFillForLayer(layer, false);
+            this.map
+                .getTargetElement()
+                .addEventListener("pointerleave", function (e) {
+                    _this.identifierOverlay.setPosition(undefined);
                 });
-            });
 
             this.map.on("singleclick", async function (e) {
                 if (_this.drawBoxMode) return;

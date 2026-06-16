@@ -11,9 +11,20 @@ defmodule FieldPublicationWeb.Api.IIIFImage do
 
   @response_headers Application.compile_env(:field_publication, :iiif_response_headers, [])
 
-  # TODO:
-  # Caching for low resolution full images (i.e. thumbnails)?
-  # setting response header to private for all images that have not yet been published, similar to the tile endpoint.
+  def create_cache_path(%{path_info: path_info}) do
+    Path.join(["/", "tmp", "field_publication"] ++ path_info)
+  end
+
+  @impl true
+  def data_call(conn) do
+    path = create_cache_path(conn)
+
+    if File.exists?(path) do
+      {:stop, Plug.Conn.send_file(conn, 200, path)}
+    else
+      {:continue, conn}
+    end
+  end
 
   @impl true
   def data_metadata(identifier) do
@@ -27,6 +38,27 @@ defmodule FieldPublicationWeb.Api.IIIFImage do
        }}
     else
       {:error, %RequestError{status_code: 404, msg: :no_image_data_found}}
+    end
+  end
+
+  @impl true
+  def data_response(
+        %Plug.Conn{path_info: [_id, region | _rest]} = conn,
+        %Vix.Vips.Image{} = image,
+        _format
+      ) do
+    if Vix.Vips.Image.width(image) <= 250 && region == "full" do
+      path = create_cache_path(conn)
+
+      path
+      |> Path.dirname()
+      |> File.mkdir_p!()
+
+      Vix.Vips.Image.write_to_file(image, path)
+
+      {:stop, send_file(conn, 200, path)}
+    else
+      {:continue, conn}
     end
   end
 

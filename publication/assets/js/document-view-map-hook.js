@@ -514,6 +514,7 @@ export default getDocumentViewMapHook = () => {
                     .fit(aggregatedExtent, { padding: [10, 10, 10, 10] });
             }
             this.clearAllHighlights();
+            setFillForLayer(this.docLayer, true);
         },
         highlightFeature(feature) {
             let properties = feature.getProperties();

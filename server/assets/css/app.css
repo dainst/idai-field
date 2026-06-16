@@ -259,7 +259,11 @@ main {
 
 .sortable-list-heading {
     cursor: pointer;
-    border: 1px solid transparent;
+    border: 1px solid transparent;   
+    background-color: #f8f8f8; 
+    position: sticky;
+    top: 0;
+    z-index: 1000; 
 }
 
 .sortable-list-heading:hover {

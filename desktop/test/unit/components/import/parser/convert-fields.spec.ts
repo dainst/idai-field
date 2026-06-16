@@ -23,9 +23,13 @@ describe('convertFields', () => {
             }]}],
         } as CategoryForm;
 
-        const result = convertFields(category)
+        let result = convertFields(category)
             ({ Bool1: 'true', Bool2: 'false', relations: {} } as unknown as Resource);
+        expect(result['Bool1']).toBe(true);
+        expect(result['Bool2']).toBe(false);
 
+        result = convertFields(category)
+            ({ Bool1: 'TRUE', Bool2: 'FALSE', relations: {} } as unknown as Resource);
         expect(result['Bool1']).toBe(true);
         expect(result['Bool2']).toBe(false);
     });

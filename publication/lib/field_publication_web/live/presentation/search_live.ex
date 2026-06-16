@@ -35,7 +35,7 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
           total: total,
           docs: docs,
           aggregations: aggregations
-        } = Search.search(q, filters, from, @search_batch_limit)
+        } = Search.search(q, filters, nil, from, @search_batch_limit)
 
         {project_specific_aggregations, shared_aggregations} =
           aggregations

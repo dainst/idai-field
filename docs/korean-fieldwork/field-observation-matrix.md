@@ -40,6 +40,7 @@
 | 현장 현상 | 반드시 관찰할 것 | 기록 필드 후보 | 책에서 읽은 원칙 |
 | --- | --- | --- | --- |
 | 층위와 퇴적 | 색, 입도, 점성, 포함물, 경계 명료도, 절단·교란, 검출면, 소속 층위, 층간 대비, 산화철·망간, 지하수 영향, 생물교란, 자연/문화층 판단, 건층 후보, 축조면·사용면·검출면 구분 | `soilColor`, `grainSize`, `inclusions`, `boundary`, `horizonConcept`, `stratigraphicCorrelation`, `formationInterpretation`, `keyBedCandidate`, `featureSurface`, `uncertaintyReason` | 충적지 조사는 층 구분과 해석에서 시작한다. 색 차이만으로 층을 나누지 말고 구성 물질과 퇴적구조, 2차 변질, 건층, 유구 소속층위를 함께 기록해야 한다. |
+| 지표·고지형 분석 | 표면 유물 부재, 위성사진, 시기별 항공사진, 실체경 판독, 고지도, 지형도, 지질도, DEM, 형질변경 지도, 시추자료, 산지·구릉·평야, 선상지, 자연제방, 배후습지, 구하도, 단구, 미고지, 현지답사 보정, 시굴 추천 지점 | `paleoLandformSurvey`, `landformInterpretationMap`, `remoteSensingSource`, `aerialPhotoDate`, `demSource`, `landformAnalysisStage`, `paleoLandformType`, `fieldVerification`, `trialTrenchRecommendation` | 평야와 논 지역은 표면 유물로 유적을 판단하기 어렵다. 고지형 분석은 매몰 구지형과 유적 가능성을 과학적으로 제시하고, 시굴 트렌치의 위치·방향·깊이·밀도를 정하는 근거가 되어야 한다. |
 | 충적지 취락 | 자연제방 전사면·상면·후사면, 배후습지, 구하도, 하천 방향, 지표조사 자료, 격자·트렌치, 주상도, 문화층 수, 제토 깊이, 장비 동선, 주거·무덤·밭·논·노지·수혈·도로·의례유구 관계, 정리작업 상태 | `alluvialSettlementModel`, `microLandformUnit`, `trialTrenchSurvey`, `profileColumn`, `machineStrippingRecord`, `settlementSpace`, `featureFillProcess`, `fieldworkRegisterLink` | 충적지 취락은 개별 유구보다 지형·퇴적 환경 속의 관계가 중요하다. 자연제방과 배후습지를 구분하고, 시굴 주상도와 제토 기록을 근거로 유구 배치와 유적의 생성·발달·소멸을 읽어야 한다. |
 | 고환경 분석 | 조사 범위, 집수유역, 분수계, 광역·주변·미세지형, 수계, DEM·등고선·수준점 자료, 경사도, 사면 방향, 지질, 토층 단면, 시추 시료, 입도, 퇴적상, 간극수·유기물·토양 지구화학, 화분·규조·유공충·패류·식물규산체, 연대자료, 1D/2D/3D 복원 | `paleoenvironmentStudyArea`, `catchmentArea`, `geomorphometryAnalysis`, `demSource`, `geoarchaeologicalSample`, `sedimentologyAnalysis`, `geochemicalAnalysis`, `microfossilAnalysis`, `paleoenvironmentUnit`, `reconstructionDimension`, `datingPurpose` | 고환경은 현재 지형 설명이 아니라 유적 당시와 이후의 자연환경 변화를 복원하는 일이다. 유적 경계를 넘어 집수유역과 주변 지형을 잡고, 현장 단면·시추 시료를 실험실 분석 결과와 다시 연결하며, 보존 조건·운반·재퇴적·복원 한계를 함께 남겨야 한다. |
 | 선사·석기 산포 | 석기 출토 위치, 3차원 좌표, 방향성, 산포 밀도, 원재료, 박리 흔적, 제작기법, 잔손질 정도·각도·위치, 작업날 위치, 유물 조성, 접합군, 미세 격지, 체질 단위, 도면 상태, 홍수·침식·재퇴적, 생물교란, 미세구조 관찰 필요성 | `lithicFind`, `threeDimensionalPosition`, `artifactOrientation`, `rawMaterial`, `knappingTechnique`, `retouchAttribute`, `workingEdge`, `refitGroup`, `sievingUnit`, `drawingStatus`, `postDepositionalProcess`, `culturalProcessEvidence` | 선사 유적은 자연현상과 문화현상을 먼저 분리해야 한다. 접합은 제작장 판단의 단독 근거가 아니며, 석기 도면과 형식명은 관찰값과 수습 맥락을 근거로 관리한다. |
@@ -117,7 +118,7 @@
 - 제2권: 패총 세부 수습 단위, 고환경 분석, 석기 도면 세부 규칙 추가 확인
 - 제3권: 외국 사례 후반 도면 검토, 조사 중 유구선 수정 이력
 - 제5권: 고분 유형별 매장주체부, 외래요소 해석, 인골 분석 결과 정리
-- 제6권: 지표조사와 고지형 분석, 토양조사 자료의 고고학적 활용
+- 제6권: 토양조사 자료의 고고학적 활용
 
 ## 6. iDAI.field 개조 방향
 

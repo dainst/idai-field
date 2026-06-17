@@ -8,16 +8,13 @@ defmodule FieldPublicationWeb.Api.IIIFImage do
   }
 
   alias FieldPublicationWeb.Endpoint
+  alias FieldPublication.FileService
 
   @response_headers Application.compile_env(:field_publication, :iiif_response_headers, [])
 
-  def create_cache_path(%{path_info: path_info}) do
-    Path.join(["/", "tmp", "field_publication"] ++ path_info)
-  end
-
   @impl true
   def data_call(conn) do
-    path = create_cache_path(conn)
+    path = FileService.get_iiif_cache_path(conn)
 
     if File.exists?(path) do
       {:stop, Plug.Conn.send_file(conn, 200, path)}
@@ -48,7 +45,7 @@ defmodule FieldPublicationWeb.Api.IIIFImage do
         _format
       ) do
     if Vix.Vips.Image.width(image) <= 250 && region == "full" do
-      path = create_cache_path(conn)
+      path = FileService.get_iiif_cache_path(conn)
 
       path
       |> Path.dirname()

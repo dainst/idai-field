@@ -39,15 +39,16 @@
 
 | 현장 현상 | 반드시 관찰할 것 | 기록 필드 후보 | 책에서 읽은 원칙 |
 | --- | --- | --- | --- |
-| 층위와 퇴적 | 색, 입도, 점성, 포함물, 경계 명료도, 절단·교란, 자연/문화층 판단 | `soilColor`, `grainSize`, `inclusions`, `boundary`, `formationInterpretation`, `uncertaintyReason` | 충적지와 밭유구는 자연퇴적층 오인이 가능하므로 판정 근거를 남겨야 한다. |
-| 건물지 | 주공, 초석, 기단, 벽체, 바닥, 배수, 화덕, 개수·소실 흔적 | `buildingElement`, `constructionPhase`, `floorSurface`, `postholeGroup`, `burnEvidence` | 건물지는 단일 유구가 아니라 구조 요소와 축조 단계의 관계망이다. |
+| 층위와 퇴적 | 색, 입도, 점성, 포함물, 경계 명료도, 절단·교란, 검출면, 소속 층위, 층간 대비, 산화철·망간, 지하수 영향, 생물교란, 자연/문화층 판단 | `soilColor`, `grainSize`, `inclusions`, `boundary`, `horizonConcept`, `stratigraphicCorrelation`, `formationInterpretation`, `uncertaintyReason` | 충적지 조사는 층 구분과 해석에서 시작한다. 층명보다 층 개념, 구성요소, 판정 근거를 남겨야 유구의 연대, 선후관계, 형성·폐기 원인을 잘못 읽지 않는다. |
+| 선사·석기 산포 | 석기 출토 위치, 방향성, 산포 밀도, 원재료, 박리 흔적, 잔손질 정도·각도·위치, 작업날 위치, 유물 조성, 홍수·침식·재퇴적, 생물교란, 미세구조 관찰 필요성 | `lithicFind`, `artifactOrientation`, `rawMaterial`, `retouchAttribute`, `workingEdge`, `debitageContext`, `postDepositionalProcess`, `culturalProcessEvidence` | 선사 유적은 자연현상과 문화현상을 먼저 분리해야 한다. 석기 형식명은 잔손질과 작업날 같은 관찰값을 근거로 붙인다. |
+| 건물지 | 주공, 초석, 기단, 벽체, 바닥, 배수, 화덕, 출입부, 저장·침상 시설, 개수·소실 흔적, 복원 가능성 | `buildingElement`, `constructionPhase`, `floorSurface`, `postholeGroup`, `burnEvidence`, `reconstructionHypothesis` | 건물지는 단일 유구가 아니라 구조 요소와 축조 단계의 관계망이다. 평면 노출만으로 끝내지 말고 건축 구조, 기능, 생활 동선, 복원 불확실성을 함께 기록한다. |
 | 성곽 | 구간, 체성 내외부, 기초다짐, 협판·고정주·횡장목·달구질흔, 보축, 해자, 문지 | `fortificationSegment`, `constructionEvidence`, `foundationTreatment`, `revetment`, `ditch`, `gate` | 판축·성토 같은 명칭은 증거가 있을 때 붙이고, 근거가 약하면 대안 해석을 기록한다. |
-| 고분 | 봉토, 묘광, 매장주체부, 관·곽, 폐쇄시설, 추가장, 교란, 부장품 위치, 인골 자세 | `burialStructure`, `burialEvent`, `graveGoodsPosition`, `humanRemainsPosition`, `disturbance` | 고분은 매장 행위의 순서와 위치 관계가 핵심이다. |
-| 패총 | 패각층, 패각 종류, 층 두께, 토기·석기·골각기, 동물유체, 화덕, 주거, 의례·교류 흔적 | `shellLayer`, `shellSpecies`, `associatedFinds`, `ecofacts`, `subsistenceEvidence` | 패총은 생업, 생활, 자연환경, 교류를 함께 담는 복합 자료다. |
-| 밭유구 | 이랑·고랑면, 발자국, 경작구흔, 뿌리흔, plant-opal, 토양미세형태, 상·하층 관계 | `fieldSurface`, `furrowRidge`, `cultivationTrace`, `microMorphologySample`, `phytolithSample` | 밭은 자연층과 혼동될 수 있으므로 기능면과 층 내부 판정요소를 함께 기록한다. |
+| 고분 | 봉토, 묘광, 매장주체부, 관·곽, 묘도·연도, 폐쇄시설, 추가장, 교란, 부장품 위치, 인골 자세, 개방 전 내부환경 | `burialStructure`, `moundElement`, `burialEvent`, `graveGoodsPosition`, `humanRemainsPosition`, `sealedChamberCondition`, `disturbance` | 고분은 매장 행위의 순서와 위치 관계가 핵심이다. 봉토 트렌치와 석실 개방은 매장주체부와 내부환경을 훼손하지 않도록 사전 판단 근거를 남긴다. |
+| 패총 | 패각층, 패각 종류, 층 두께, 퇴적물 구성, 사면/해안 영향, 재퇴적 가능성, 토기·석기·골각기, 동물유체, 화덕, 주거, 의례·교류 흔적 | `shellLayer`, `shellSpecies`, `depositionProcess`, `redepositionRisk`, `associatedFinds`, `ecofacts`, `subsistenceEvidence` | 패총은 생업, 생활, 자연환경, 교류를 함께 담는 복합 자료다. 패각층의 공반관계는 퇴적·재퇴적 과정을 검토한 뒤 사용한다. |
+| 논·밭유구 | 논둑·두둑, 경작면, 고랑, 경작토층, 발자국, 경작구흔, 뿌리흔, 산화철·망간, plant-opal, 토양미세형태, 상·하층 관계 | `fieldSurface`, `paddySurface`, `furrowRidge`, `cultivationTrace`, `ironManganeseFeature`, `microMorphologySample`, `phytolithSample` | 논·밭은 자연층과 혼동될 수 있으므로 기능면과 층 내부 판정요소를 함께 기록한다. 논은 물관리 흔적, 밭은 두둑·고랑과 경작구흔이 특히 중요하다. |
 | 생산유적 | 원료, 연료, 노·가마 구조, 송풍, 배출, 부산물, 실패품, 폐기장, 열변색 | `productionProcess`, `rawMaterial`, `fuel`, `firingStructure`, `technicalResidue`, `slagDistribution` | 생산유적은 형태보다 공정 단계와 부산물의 관계가 중요하다. |
 | 제철유적 | 채광·선광·배소·제련·단야·용해·초강 단계, 노벽, 슬래그, 송풍관, 철괴, 목탄, 시료 선정 | `ironProcessStage`, `furnaceWallZone`, `slagType`, `tuyere`, `metallurgicalSample`, `charcoalSample` | 발굴 전 분석 계획을 세우고, 폐기장 규모에 따라 전수 또는 통계적 수거를 선택해야 한다. |
-| 인골·동물유체 | 해부학적 위치, 자세, 방향, 보존 상태, 오염 가능성, 수습 순서, 보관 조건 | `anatomicalPosition`, `orientation`, `preservationState`, `collectionOrder`, `storageCondition` | DNA·동물고고학 등 분석은 수습과 보관 단계에서 신뢰도가 갈린다. |
+| 인골·동물유체 | 해부학적 위치, 자세, 방향, 보존 상태, 오염 가능성, 수습 순서, 체질 방법, 표본 채취량, 보관 조건 | `anatomicalPosition`, `orientation`, `preservationState`, `collectionOrder`, `sievingMethod`, `sampleVolume`, `storageCondition` | DNA·동물고고학 등 분석은 수습과 보관 단계에서 신뢰도가 갈린다. 작은 동물자료는 전체 체질이나 층위별 표본 채취 없이는 누락되기 쉽다. |
 | 자연과학 시료 | 분석 목적, 적정 방법, 파괴 여부, 채취 위치, 채취량, 포장, 냉장/냉동, 오염 위험 | `analysisPurpose`, `methodCandidate`, `samplingContext`, `sampleAmount`, `contaminationRisk`, `storageTemperature` | 분석 대상과 목적에 맞는 방법을 고르고, 결과의 한계까지 검토해야 한다. |
 | 3D·측량 | 기준점, 좌표계, 스캔 위치, 타겟, 점밀도, 폐색영역, 정합, 검사측량, 파일 | `controlPoint`, `coordinateSystem`, `scanStation`, `targetType`, `pointDensity`, `occlusion`, `registration`, `checkSurvey` | 3D 데이터는 파일 첨부가 아니라 좌표·정확도·후처리 이력이 있는 측량 기록이다. |
 | 보존·응급처치 | 노출 시점, 재질, 수분 상태, 손상, 세척 여부, 라벨, 포장, 반출, 사진·도면 | `exposureDate`, `materialState`, `damage`, `cleaningDecision`, `labeling`, `packing`, `transport` | 노출 직후부터 변질이 시작되므로 수습과 응급처치 자체를 기록해야 한다. |
@@ -109,12 +110,12 @@
 
 ## 5. 다음 독해 과제
 
-2·3·5·6권은 이미지 기반 스캔본이라 후속 OCR이 필요하다. 특히 다음 항목은 OCR 후 세부 필드를 보강한다.
+2·3·5·6권은 이미지 기반 스캔본이라 후속 OCR이 필요하다. 2권 선사 유적, 3권 건물지, 5권 고분, 6권 충적지는 일부 OCR 판독을 시작했으며, 특히 다음 항목은 계속 보강한다.
 
-- 제2권: 석기 관찰, 석기 작도, 패총·인골·동물유체 수습, 고환경 분석
-- 제3권: 건물지 세부 구조 요소와 조사 순서
-- 제5권: 고분 유형별 매장주체부와 부장품·인골 수습
-- 제6권: 충적지 층 구분, 단면 기록, 고지형 분석, 토양조사
+- 제2권: 석기 작도, 접합, 패총 세부 수습 단위, 고환경 분석
+- 제3권: 건물지 세부 구조 요소, 복원 검토, 생활 기능, 조사 중 유구선 수정 이력
+- 제5권: 고분 유형별 매장주체부, 부장품 배치, 분묘 제사, 인골 분석 결과 정리
+- 제6권: 충적지 층 구분, 단면 기록, 층간 대비, 평면 조사 전환 기준, 고지형 분석, 토양조사
 
 ## 6. iDAI.field 개조 방향
 

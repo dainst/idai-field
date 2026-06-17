@@ -13,6 +13,7 @@ docs/korean-fieldwork/
   source-inventory.md
   field-recording-principles.md
   field-observation-matrix.md
+  field-recording-workflows.md
   idai-adaptation-roadmap.md
   volume-notes/
     volume-01-general.md

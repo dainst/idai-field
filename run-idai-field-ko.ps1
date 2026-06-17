@@ -1,9 +1,40 @@
 $ErrorActionPreference = 'Stop'
 
-$nodeDir = 'C:\Users\nuri9\AppData\Local\Temp\codex-idai-field-tools\node\node-v22.22.3-win-x64'
-$appDir = 'C:\Users\nuri9\Documents\New project\desktop'
+$repoDir = $PSScriptRoot
+$appDir = Join-Path $repoDir 'desktop'
 $serverUrl = 'http://localhost:4200/dist/'
 $serverLog = Join-Path $env:TEMP 'idai-field-ng-serve-ko.log'
+
+function Resolve-NodeDir {
+    $candidateDirs = @()
+
+    if ($env:LOCALAPPDATA) {
+        $codexRuntimeRoot = Join-Path $env:LOCALAPPDATA 'OpenAI\Codex\runtimes'
+        if (Test-Path -LiteralPath $codexRuntimeRoot) {
+            $candidateDirs += Get-ChildItem -LiteralPath $codexRuntimeRoot -Recurse -Filter npm.cmd -ErrorAction SilentlyContinue |
+                Sort-Object LastWriteTime -Descending |
+                ForEach-Object { $_.DirectoryName }
+        }
+    }
+
+    $npmCommand = Get-Command npm.cmd -ErrorAction SilentlyContinue
+    if (-not $npmCommand) {
+        $npmCommand = Get-Command npm -ErrorAction SilentlyContinue
+    }
+    if ($npmCommand) {
+        $candidateDirs += Split-Path -Parent $npmCommand.Source
+    }
+
+    foreach ($candidateDir in $candidateDirs) {
+        if ($candidateDir -and
+            (Test-Path -LiteralPath (Join-Path $candidateDir 'node.exe')) -and
+            (Test-Path -LiteralPath (Join-Path $candidateDir 'npm.cmd'))) {
+            return $candidateDir
+        }
+    }
+
+    throw 'Node/npm runtime was not found. Install Node.js or launch Codex once to restore its bundled Node runtime.'
+}
 
 function Wait-ForEnter {
     Read-Host 'Press Enter to close'
@@ -30,9 +61,7 @@ $serverProcess = $null
 $startedServer = $false
 
 try {
-    if (-not (Test-Path -LiteralPath (Join-Path $nodeDir 'npm.cmd'))) {
-        throw "Portable Node runtime was not found: $nodeDir"
-    }
+    $nodeDir = Resolve-NodeDir
 
     if (-not (Test-Path -LiteralPath (Join-Path $appDir 'package.json'))) {
         throw "Desktop package was not found: $appDir"

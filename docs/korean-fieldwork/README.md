@@ -16,7 +16,12 @@
 
 - [자료 목록과 분석 범위](source-inventory.md)
 - [현장기록 원칙 1차 초안](field-recording-principles.md)
+- [한국형 공통 기록 모델 v0](korean-core-recording-model.md)
 - [iDAI.field 접목 로드맵](idai-adaptation-roadmap.md)
+
+## 권별 분석 노트
+
+- [제1권: 총론과 공통 야장 요구사항](volume-notes/volume-01-general.md)
 
 ## 중요한 전제
 

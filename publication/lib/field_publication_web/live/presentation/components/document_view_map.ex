@@ -31,6 +31,8 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
         centerLat={@centerLat}
         zoom={@zoom}
         language={@language}
+        project_key={@publication.project_name}
+        draft_date={@publication.draft_date}
         phx-hook="DocumentViewMap"
       >
         <!-- set phx-update="ignore" to ensure changes the map's DOM elements are not re-rendered on updates
@@ -142,8 +144,6 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
       else
         socket
         |> push_event("document-map-update-#{id}", %{
-          project: publication.project_name,
-          draft_date: publication.draft_date,
           document_uuid: doc.id,
           document_feature_info: document_feature_info,
           children_features: children_features,

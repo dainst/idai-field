@@ -16,6 +16,8 @@ import {
     renderPreviewOverlay,
 } from "./map-helper-functions.js";
 
+import PreviewOverlay from "./map/preview-overlay.js";
+
 function setFillForLayer(layer, value) {
     if (!layer) return;
 
@@ -41,8 +43,6 @@ export default getDocumentViewMapHook = () => {
         ancestorLayer: null,
         docLayer: null,
         childrenLayer: null,
-        identifierOverlay: null,
-        identifierOverlayContent: null,
         hoveredFeatures: [],
         pinnedFeatures: [],
         drawBoxMode: false,
@@ -71,16 +71,12 @@ export default getDocumentViewMapHook = () => {
             this.handleEvent(
                 `document-map-update-${this.el.id}`,
                 ({
-                    project,
-                    draft_date,
                     document_uuid,
                     document_feature_info,
                     children_features,
                     parent_features,
                     ancestor_features,
                 }) => {
-                    this.projectKey = project;
-                    this.projectDraftDate = draft_date;
                     this.docId = document_uuid;
                     this.setMapFeatures(
                         document_feature_info.category_labels
@@ -123,6 +119,7 @@ export default getDocumentViewMapHook = () => {
             this.handleEvent(`close-preview-list-${this.el.id}`, () => {
                 if (this.map) {
                     this.pinnedFeatures = [];
+                    this.overlay.update(this.pinnedFeatures);
                     this.updateTooltip(this.pinnedFeatures);
                 }
             });
@@ -148,7 +145,7 @@ export default getDocumentViewMapHook = () => {
                         this.pinnedFeatures = [];
                         this.hoveredFeatures = [];
 
-                        this.updateTooltip([]);
+                        this.overlay.update([]);
 
                         this.draw = new Draw({
                             source: this.drawSource,
@@ -188,15 +185,9 @@ export default getDocumentViewMapHook = () => {
         initialize() {
             const _this = this;
 
+            this.projectKey = this.el.getAttribute("project_key");
+            this.projectDraftDate = this.el.getAttribute("draft_date");
             this.language = this.el.getAttribute("language");
-            const overlayDiv = document.getElementById(
-                `${this.el.getAttribute("id")}-identifier-tooltip`,
-            );
-
-            this.identifierOverlay = new Overlay({
-                element: overlayDiv,
-                offset: [5, 5],
-            });
 
             this.drawSource = new VectorSource({
                 wrapX: false,
@@ -219,18 +210,23 @@ export default getDocumentViewMapHook = () => {
                 },
             });
 
-            document.getElementById(
-                `${this.el.getAttribute("id")}-map`,
-            ).innerHTML = "";
-
             this.map = new Map({
                 layers: [this.drawLayer],
                 target: `${this.el.getAttribute("id")}-map`,
                 view: new View(),
-                overlays: [this.identifierOverlay],
             });
 
-            _this.identifierOverlay.setPosition(undefined);
+            const overlayDiv = document.getElementById(
+                `${this.el.getAttribute("id")}-identifier-tooltip`,
+            );
+
+            this.overlay = new PreviewOverlay(
+                this,
+                this.map,
+                overlayDiv,
+                this.projectKey,
+                this.projectDraftDate,
+            );
 
             this.el.addEventListener("pointerenter", function (e) {
                 setFillForLayer(_this.docLayer, false);
@@ -246,7 +242,7 @@ export default getDocumentViewMapHook = () => {
                 });
 
                 setFillForLayer(_this.docLayer, true);
-                _this.identifierOverlay.setPosition(undefined);
+                _this.overlay.hide();
             });
 
             this.map.on("pointermove", async function (e) {
@@ -284,7 +280,12 @@ export default getDocumentViewMapHook = () => {
                 }
 
                 if (e.coordinate) {
-                    _this.updateTooltip(hitFeatures, e.coordinate);
+                    _this.overlay.update(
+                        hitFeatures,
+                        _this.categoryLabels,
+                        e.coordinate,
+                        _this.language,
+                    );
                 }
             });
 
@@ -294,9 +295,11 @@ export default getDocumentViewMapHook = () => {
                 if (_this.hoveredFeatures.length > 1) {
                     _this.pinnedFeatures = _this.hoveredFeatures;
                     _this.hoveredFeatures = [];
-                    _this.updateTooltip(
+                    _this.overlay.update(
                         _this.pinnedFeatures,
+                        _this.categoryLabels,
                         e.coordinate,
+                        _this.language,
                         true,
                     );
                 } else if (_this.hoveredFeatures.length === 1) {
@@ -306,8 +309,7 @@ export default getDocumentViewMapHook = () => {
                         .patch(
                             `/projects/${_this.projectKey}/${_this.projectDraftDate}/${properties.uuid}`,
                         );
-
-                    _this.identifierOverlay.setPosition(undefined);
+                    _this.overlay.hide();
                 }
             });
         },
@@ -399,18 +401,6 @@ export default getDocumentViewMapHook = () => {
             if (this.parentLayer) this.map.removeLayer(this.parentLayer);
             if (this.ancestorLayer) this.map.removeLayer(this.ancestorLayer);
 
-            // const ancestorVectorSoruce = new VectorSource({
-            //     features: new GeoJSON().readFeatures(ancestorFeatures),
-            // });
-
-            // this.ancestorLayer = new VectorLayer({
-            //     name: "ancestorLayer",
-            //     source: ancestorVectorSoruce,
-            //     style: styleFunction,
-            // });
-
-            // this.map.addLayer(this.ancestorLayer);
-            //
             this.categoryLabels = {};
 
             let documentVectorSource = null;
@@ -522,25 +512,6 @@ export default getDocumentViewMapHook = () => {
             properties.fill = true;
             feature.setProperties(properties);
         },
-        updateTooltip(features, coordinate, showCloseButton = false) {
-            let tooltipContentNode = document.getElementById(
-                `${this.el.getAttribute("id")}-identifier-tooltip-content`,
-            );
-
-            renderPreviewOverlay(
-                this,
-                this.map,
-                this.identifierOverlay,
-                tooltipContentNode,
-                coordinate,
-                this.categoryLabels,
-                this.language,
-                this.projectKey,
-                this.projectDraftDate,
-                features,
-                showCloseButton,
-            );
-        },
         clearAllHighlights() {
             [
                 this.ancestorLayer,
@@ -551,7 +522,7 @@ export default getDocumentViewMapHook = () => {
                 setFillForLayer(layer, false);
             });
 
-            this.identifierOverlay.setPosition(undefined);
+            this.overlay.hide();
         },
         toggleLayerVisibility(uuid, visibility) {
             const layer = this.map

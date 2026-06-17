@@ -13,8 +13,9 @@ import {
     createTileLayer,
     getVisibilityKey,
     styleFunction,
-    renderPreviewOverlay,
 } from "./map-helper-functions.js";
+
+import PreviewOverlay from "./map/preview-overlay.js";
 
 const highlightZoomDuration = -1;
 
@@ -31,15 +32,14 @@ export default getFullProjectMapHook = () => {
         lastHighlightChange: Date.now(),
         hoveredFeatures: [],
         pinnedFeatures: [],
-        identifierOverlay: null,
         categoryLabels: {},
         drawBoxMode: false,
         draw: null,
         drawSource: null,
         drawLayer: null,
+        overlay: null,
 
         mounted() {
-            const _this = this;
             this.initialize();
             this.handleEvent(
                 `full-project-map-set-layers-${this.el.id}`,
@@ -86,7 +86,7 @@ export default getFullProjectMapHook = () => {
             this.handleEvent(`close-preview-list-${this.el.id}`, () => {
                 if (this.map) {
                     this.pinnedFeatures = [];
-                    this.updateFeatureOverlay(this.pinnedFeatures);
+                    this.overlay.update([]);
                 }
             });
 
@@ -107,7 +107,7 @@ export default getFullProjectMapHook = () => {
                         this.pinnedFeatures = [];
                         this.hoveredFeatures = [];
 
-                        this.updateFeatureOverlay([]);
+                        this.overlay.update([]);
 
                         this.draw = new Draw({
                             source: this.drawSource,
@@ -147,6 +147,8 @@ export default getFullProjectMapHook = () => {
         },
         async initialize() {
             this.id = this.el.getAttribute("id");
+            this.projectKey = this.el.getAttribute("project_key");
+            this.draftDate = this.el.getAttribute("draft_date");
 
             const _this = this;
             const container = document.getElementById(`${this.id}-map`);
@@ -158,17 +160,6 @@ export default getFullProjectMapHook = () => {
                 //container.innerHTML = "";
                 container.style.height = `${window.innerHeight - offsetElement.offsetTop}px`;
             }
-
-            const overlayDiv = document.getElementById(
-                `${this.el.getAttribute("id")}-identifier-tooltip`,
-            );
-
-            this.identifierOverlay = new Overlay({
-                element: overlayDiv,
-                offset: [5, 5],
-            });
-
-            this.identifierOverlay.setPosition(undefined);
 
             this.drawSource = new VectorSource({
                 wrapX: false,
@@ -195,8 +186,19 @@ export default getFullProjectMapHook = () => {
                 layers: [this.drawLayer],
                 target: `${this.id}-map`,
                 view: new View(),
-                overlays: [this.identifierOverlay],
             });
+
+            const overlayDiv = document.getElementById(
+                `${this.el.getAttribute("id")}-identifier-tooltip`,
+            );
+
+            this.overlay = new PreviewOverlay(
+                this,
+                this.map,
+                overlayDiv,
+                this.projectKey,
+                this.draftDate,
+            );
 
             this.map.on("pointermove", async function (e) {
                 if (e.dragging || _this.drawBoxMode) {
@@ -214,9 +216,11 @@ export default getFullProjectMapHook = () => {
                         },
                     );
 
-                    _this.updateFeatureOverlay(
+                    _this.overlay.update(
                         _this.hoveredFeatures,
+                        _this.categoryLabels,
                         e.coordinate,
+                        _this.language,
                     );
                 }
             });
@@ -224,7 +228,7 @@ export default getFullProjectMapHook = () => {
             this.map
                 .getTargetElement()
                 .addEventListener("pointerleave", function (e) {
-                    _this.identifierOverlay.setPosition(undefined);
+                    _this.overlay.hide();
                 });
 
             this.map.on("singleclick", async function (e) {
@@ -233,9 +237,11 @@ export default getFullProjectMapHook = () => {
                 if (_this.hoveredFeatures.length > 1) {
                     _this.pinnedFeatures = _this.hoveredFeatures;
                     _this.hoveredFeatures = [];
-                    _this.updateFeatureOverlay(
+                    _this.overlay.update(
                         _this.pinnedFeatures,
+                        _this.categoryLabels,
                         e.coordinate,
+                        _this.language,
                         true,
                     );
                 } else if (_this.hoveredFeatures.length === 1) {
@@ -249,9 +255,6 @@ export default getFullProjectMapHook = () => {
                     _this.identifierOverlay.setPosition(undefined);
                 }
             });
-
-            this.projectKey = this.el.getAttribute("project_key");
-            this.draftDate = this.el.getAttribute("draft_date");
 
             const response = await fetch(
                 `/api/json/geometry_feature_collections/${this.projectKey}/${this.draftDate}`,
@@ -363,24 +366,6 @@ export default getFullProjectMapHook = () => {
 
         updateFeatureOverlay(features, coordinate, addButton = false) {
             this.clearHighlights();
-
-            let tooltipContentNode = document.getElementById(
-                `${this.el.getAttribute("id")}-identifier-tooltip-content`,
-            );
-
-            renderPreviewOverlay(
-                this,
-                this.map,
-                this.identifierOverlay,
-                tooltipContentNode,
-                coordinate,
-                this.categoryLabels,
-                this.language,
-                this.projectKey,
-                this.draftDate,
-                features,
-                addButton,
-            );
         },
 
         setTileLayers(projectKey, tileLayers) {

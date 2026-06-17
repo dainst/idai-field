@@ -724,14 +724,14 @@ defmodule FieldPublication.Publications.Data do
             color: color,
             description: description,
             category: category_key,
-            parent: next_ancestor_with_geometry(uuid, hierarchy, publication)
+            parent: uuid_of_next_ancestor_with_geometry(uuid, hierarchy, publication)
           }
         }
       }
     }
   end
 
-  defp next_ancestor_with_geometry(uuid, hierarchy, publication) do
+  def next_ancestor_with_geometry(uuid, hierarchy, publication) do
     Map.get(hierarchy, uuid)
     |> case do
       %{"parent" => nil} ->
@@ -744,7 +744,18 @@ defmodule FieldPublication.Publications.Data do
       [%Document{id: parent_uuid, geometry: nil}] ->
         next_ancestor_with_geometry(parent_uuid, hierarchy, publication)
 
-      [%Document{id: uuid} = _parent_with_geometry] ->
+      [%Document{} = parent_with_geometry] ->
+        parent_with_geometry
+
+      _ ->
+        nil
+    end
+  end
+
+  def uuid_of_next_ancestor_with_geometry(uuid, hierarchy, publication) do
+    next_ancestor_with_geometry(uuid, hierarchy, publication)
+    |> case do
+      %Document{id: uuid} ->
         uuid
 
       _ ->

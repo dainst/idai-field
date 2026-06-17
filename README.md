@@ -15,6 +15,8 @@ S. Hohl - T. Kleinke - F. Riebschlager - J. Watson, **iDAI.field: developing sof
 
 논문의 핵심 내용과 한국 고고학 야장 설계에 주는 단서는 [한국어 해설 문서](docs/papers/hohl-et-al-2023-idai-field.ko.md)로 정리했습니다. 원문 전체는 공식 DOI/PDF를 통해 확인하세요.
 
+한국 매장문화재 조사 방법론을 바탕으로 Field를 한국형 야장 도구로 바꾸기 위한 분석은 [한국형 야장 적용 연구 노트](docs/korean-fieldwork/README.md)에 정리하기 시작했습니다.
+
 Field를 사용하면 고고학 연구자는 다음 작업을 할 수 있습니다.
 
 * 발굴 현장에서 생산되는 데이터와 이미지를 기록, 공유, 보관

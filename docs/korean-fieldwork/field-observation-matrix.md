@@ -41,7 +41,7 @@
 | --- | --- | --- | --- |
 | 층위와 퇴적 | 색, 입도, 점성, 포함물, 경계 명료도, 절단·교란, 검출면, 소속 층위, 층간 대비, 산화철·망간, 지하수 영향, 생물교란, 자연/문화층 판단, 건층 후보, 축조면·사용면·검출면 구분 | `soilColor`, `grainSize`, `inclusions`, `boundary`, `horizonConcept`, `stratigraphicCorrelation`, `formationInterpretation`, `keyBedCandidate`, `featureSurface`, `uncertaintyReason` | 충적지 조사는 층 구분과 해석에서 시작한다. 색 차이만으로 층을 나누지 말고 구성 물질과 퇴적구조, 2차 변질, 건층, 유구 소속층위를 함께 기록해야 한다. |
 | 선사·석기 산포 | 석기 출토 위치, 3차원 좌표, 방향성, 산포 밀도, 원재료, 박리 흔적, 제작기법, 잔손질 정도·각도·위치, 작업날 위치, 유물 조성, 접합군, 미세 격지, 체질 단위, 도면 상태, 홍수·침식·재퇴적, 생물교란, 미세구조 관찰 필요성 | `lithicFind`, `threeDimensionalPosition`, `artifactOrientation`, `rawMaterial`, `knappingTechnique`, `retouchAttribute`, `workingEdge`, `refitGroup`, `sievingUnit`, `drawingStatus`, `postDepositionalProcess`, `culturalProcessEvidence` | 선사 유적은 자연현상과 문화현상을 먼저 분리해야 한다. 접합은 제작장 판단의 단독 근거가 아니며, 석기 도면과 형식명은 관찰값과 수습 맥락을 근거로 관리한다. |
-| 건물지 | 주공, 초석, 기단, 벽체, 바닥, 배수, 화덕, 출입부, 저장·침상 시설, 개수·소실 흔적, 복원 가능성 | `buildingElement`, `constructionPhase`, `floorSurface`, `postholeGroup`, `burnEvidence`, `reconstructionHypothesis` | 건물지는 단일 유구가 아니라 구조 요소와 축조 단계의 관계망이다. 평면 노출만으로 끝내지 말고 건축 구조, 기능, 생활 동선, 복원 불확실성을 함께 기록한다. |
+| 건물지 | 주공, 초석, 기단, 벽체, 바닥, 배수, 화덕, 출입부, 저장·침상 시설, 집자리/집터 구분, 유물 원위치, 기와·전돌 속성, 초석설치굴광·발취공·폐기공, 적심석, 보강토, 기단외장, 계단, 낙수구, 비계 주공, 기준 말뚝, 배치축, 칸수, 주간거리, 영조척 후보, 어깨선·도리선, 서까래 밑동 후보, 내진/외진, 결구방식, 가구형식, 지붕형식, 용마루·까치구멍, 벽체 구법, 배연·난방, 개수·소실 흔적, 동시성, 복원 근거, 복원 대안 | `buildingElement`, `constructionPhase`, `floorSurface`, `postholeGroup`, `inSituFindDistribution`, `roofTileAttributeSet`, `stoneBaseTrace`, `constructionSupportTrace`, `architecturalModule`, `structuralLine`, `woodenStructuralSystem`, `roofHypothesis`, `wallEntranceHeating`, `burnEvidence`, `restorationEvidence`, `reconstructionHypothesis`, `useLifePhase` | 건물지는 단일 유구가 아니라 구조 요소와 축조 단계의 관계망이다. 평면 노출만으로 끝내지 말고 유물 원위치, 건축부재 속성, 사라진 초석의 흔적, 생활공간, 칸과 영조척, 목조건축 결구·가구·지붕 가설, 중복 주거지의 동시성과 복원 근거를 함께 기록한다. |
 | 성곽 | 구간, 체성 내외부, 기초다짐, 협판·고정주·횡장목·달구질흔, 보축, 해자, 문지 | `fortificationSegment`, `constructionEvidence`, `foundationTreatment`, `revetment`, `ditch`, `gate` | 판축·성토 같은 명칭은 증거가 있을 때 붙이고, 근거가 약하면 대안 해석을 기록한다. |
 | 고분 | 봉토, 묘광, 매장주체부, 관·곽, 묘도·연도, 폐쇄시설, 추가장, 교란, 부장품 위치군, 부장품 성격, 제사유물, 동물희생, 음식물, 인골 자세, 개방 전 내부환경 | `burialStructure`, `moundElement`, `burialEvent`, `graveGoodsPosition`, `graveGoodsRole`, `ritualDeposit`, `humanRemainsPosition`, `sealedChamberCondition`, `disturbance` | 고분은 매장 행위의 순서와 위치 관계가 핵심이다. 부장품은 종류보다 출토 위치와 성격 분류가 중요하고, 제사자료는 축조 공정 단계와 부장/공헌 구분을 함께 남긴다. |
 | 패총 | 패각층, 패각 종류, 층 두께, 퇴적물 구성, 사면/해안 영향, 재퇴적 가능성, 토기·석기·골각기, 동물유체, 화덕, 주거, 의례·교류 흔적 | `shellLayer`, `shellSpecies`, `depositionProcess`, `redepositionRisk`, `associatedFinds`, `ecofacts`, `subsistenceEvidence` | 패총은 생업, 생활, 자연환경, 교류를 함께 담는 복합 자료다. 패각층의 공반관계는 퇴적·재퇴적 과정을 검토한 뒤 사용한다. |
@@ -113,7 +113,7 @@
 2·3·5·6권은 이미지 기반 스캔본이라 후속 OCR이 필요하다. 2권 선사 유적, 3권 건물지, 5권 고분, 6권 충적지는 일부 OCR 판독을 시작했으며, 특히 다음 항목은 계속 보강한다.
 
 - 제2권: 패총 세부 수습 단위, 고환경 분석, 석기 도면 세부 규칙 추가 확인
-- 제3권: 건물지 세부 구조 요소, 복원 검토, 생활 기능, 조사 중 유구선 수정 이력
+- 제3권: 외국 사례 후반 도면 검토, 조사 중 유구선 수정 이력
 - 제5권: 고분 유형별 매장주체부, 외래요소 해석, 인골 분석 결과 정리
 - 제6권: 고지형 분석, 토양조사, 충적지 취락유적 조사 절차, 시료 분석과 복원 사례
 

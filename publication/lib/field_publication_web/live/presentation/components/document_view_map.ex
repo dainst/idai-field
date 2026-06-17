@@ -202,6 +202,67 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     }
   end
 
+  def handle_event(
+        "toggle-layer",
+        %{"group" => group, "uuid" => uuid},
+        %{assigns: %{id: id}} = socket
+      ) do
+    toggled_group =
+      if group == "project", do: :project_tile_layers_state, else: :document_tile_layers_state
+
+    layer_states =
+      socket.assigns[toggled_group]
+      |> Enum.map(fn state ->
+        if state.uuid == uuid do
+          Map.put(state, :visible, !state.visible)
+        else
+          state
+        end
+      end)
+
+    {
+      :noreply,
+      socket
+      |> assign(toggled_group, layer_states)
+      |> push_event("document-map-set-layer-visibility-#{id}", %{
+        uuid: uuid,
+        visibility:
+          Enum.find(layer_states, fn state -> state.uuid == uuid end) |> Map.get(:visible)
+      })
+    }
+  end
+
+  def handle_event(
+        "visibility-preference",
+        %{"group" => group, "uuid" => uuid, "value" => value},
+        socket
+      )
+      when is_boolean(value) do
+    # When a map background layer is loaded on the client side, the client side hook will
+    # send this event if the client's localStorage contained a visibility preference for
+    # the added layer.
+    #
+    # The client will have set the layer visibility at this point and uses this event to make
+    # sure the server state is the same as in the client's browser.
+    set_group =
+      if group == "project", do: :project_tile_layers_state, else: :document_tile_layers_state
+
+    layer_states =
+      socket.assigns[set_group]
+      |> Enum.map(fn state ->
+        if state.uuid == uuid do
+          Map.put(state, :visible, value)
+        else
+          state
+        end
+      end)
+
+    {
+      :noreply,
+      assign(socket, set_group, layer_states)
+    }
+  end
+
   defp toggle_draw_mode(%{assigns: %{id: id, draw_box_mode: current}} = socket) do
     new_value = !current
 
@@ -348,67 +409,6 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
       :document_tile_layers_state,
       default_map_layers ++ other_map_layers
     )
-  end
-
-  def handle_event(
-        "toggle-layer",
-        %{"group" => group, "uuid" => uuid},
-        %{assigns: %{id: id}} = socket
-      ) do
-    toggled_group =
-      if group == "project", do: :project_tile_layers_state, else: :document_tile_layers_state
-
-    layer_states =
-      socket.assigns[toggled_group]
-      |> Enum.map(fn state ->
-        if state.uuid == uuid do
-          Map.put(state, :visible, !state.visible)
-        else
-          state
-        end
-      end)
-
-    {
-      :noreply,
-      socket
-      |> assign(toggled_group, layer_states)
-      |> push_event("document-map-set-layer-visibility-#{id}", %{
-        uuid: uuid,
-        visibility:
-          Enum.find(layer_states, fn state -> state.uuid == uuid end) |> Map.get(:visible)
-      })
-    }
-  end
-
-  def handle_event(
-        "visibility-preference",
-        %{"group" => group, "uuid" => uuid, "value" => value},
-        socket
-      )
-      when is_boolean(value) do
-    # When a map background layer is loaded on the client side, the client side hook will
-    # send this event if the client's localStorage contained a visibility preference for
-    # the added layer.
-    #
-    # The client will have set the layer visibility at this point and uses this event to make
-    # sure the server state is the same as in the client's browser.
-    set_group =
-      if group == "project", do: :project_tile_layers_state, else: :document_tile_layers_state
-
-    layer_states =
-      socket.assigns[set_group]
-      |> Enum.map(fn state ->
-        if state.uuid == uuid do
-          Map.put(state, :visible, value)
-        else
-          state
-        end
-      end)
-
-    {
-      :noreply,
-      assign(socket, set_group, layer_states)
-    }
   end
 
   def render_tile_layer_selection_group(assigns) do

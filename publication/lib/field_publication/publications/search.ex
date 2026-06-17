@@ -331,7 +331,7 @@ defmodule FieldPublication.Publications.Search do
                       }
                     }
                   }
-                }
+                ]
               }
             }
           ]

@@ -56,7 +56,7 @@
 | 인골·동물유체 | 해부학적 위치, 자세, 방향, 보존 상태, 오염 가능성, 수습 순서, DNA 시료, 노출 도구, 물 사용 여부, 포장재, 건조 기간, 체질 방법, 표본 채취량, 보관 조건 | `anatomicalPosition`, `orientation`, `preservationState`, `collectionOrder`, `dnaSampleStatus`, `exposureTool`, `waterUse`, `packingMaterial`, `dryingPeriod`, `sievingMethod`, `sampleVolume`, `storageCondition` | DNA·동물고고학 등 분석은 수습과 보관 단계에서 신뢰도가 갈린다. 인골은 직사광선, 물 세척, 비닐 밀봉, 뿌리 제거 방식까지 기록해야 하며, 작은 동물자료는 전체 체질이나 층위별 표본 채취 없이는 누락되기 쉽다. |
 | 자연과학 시료 | 분석 목적, 적정 방법, 파괴 여부, 채취 위치, 채취량, 포장, 냉장/냉동, 오염 위험 | `analysisPurpose`, `methodCandidate`, `samplingContext`, `sampleAmount`, `contaminationRisk`, `storageTemperature` | 분석 대상과 목적에 맞는 방법을 고르고, 결과의 한계까지 검토해야 한다. |
 | 3D·측량 | 기준점, 좌표계, 스캔 위치, 타겟, 점밀도, 폐색영역, 정합, 검사측량, 파일 | `controlPoint`, `coordinateSystem`, `scanStation`, `targetType`, `pointDensity`, `occlusion`, `registration`, `checkSurvey` | 3D 데이터는 파일 첨부가 아니라 좌표·정확도·후처리 이력이 있는 측량 기록이다. |
-| 보존·응급처치 | 노출 시점, 재질, 수분 상태, 손상, 세척 여부, 라벨, 포장, 반출, 사진·도면 | `exposureDate`, `materialState`, `damage`, `cleaningDecision`, `labeling`, `packing`, `transport` | 노출 직후부터 변질이 시작되므로 수습과 응급처치 자체를 기록해야 한다. |
+| 보존·응급처치 | 노출 시점, 재질, 매장환경, 습도·온도·산소·빛 변화, 수분 상태, 부식·열화 정도, 금속심 잔존, 자석반응, X-ray·CT 후보, 세척 여부, 주변토 포함 수습, 한지·화선지·킴와이프스 차단층, 압박붕대·석고붕대, 수지 강화, 발포성 우레탄폼, 습윤/건조 보관, 차광, 냉장, 완충지지대, 상하 표시, 안전장비, 전문가 자문, 후속 보존처리 | `exposureDate`, `burialEnvironment`, `postExcavationRisk`, `materialState`, `damage`, `cleaningDecision`, `liftingMethod`, `temporaryConsolidation`, `packing`, `storageCondition`, `safetyMeasure`, `expertConsultation`, `transport` | 노출 직후부터 변질이 시작되므로 수습과 응급처치 자체를 기록해야 한다. 금속, 도토기, 연질토기, 수침목재, 뼈, 의류는 서로 다른 보관 조건을 요구하므로, 일률적인 세척·건조·분리를 피하고 사용 재료와 조치 이유, 가역성, 전문가 판단을 함께 남긴다. |
 
 ## 4. 현장 기록 화면으로 바꾸면 필요한 묶음
 

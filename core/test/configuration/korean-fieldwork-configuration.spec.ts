@@ -27,6 +27,8 @@ describe('KoreanFieldwork project configuration', () => {
         const termAuthorityForm = config.forms.TermAuthority;
         const findForm = config.forms['Find:default'];
         const sampleForm = config.forms['Sample:default'];
+        const drawingForm = config.forms['Drawing:default'];
+        const photoForm = config.forms['Photo:default'];
 
         expect(fieldRecordQualityReviewForm.parent).toBe('Operation');
         expect(fieldRecordQualityReviewForm.fields.reviewedRecordUnit.inputType).toBe('checkboxes');
@@ -79,6 +81,14 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.fields.termAuthorityStatus.inputType).toBe('checkboxes');
         expect(findForm.fields.termSearchMapping.inputType).toBe('checkboxes');
         expect(sampleForm.fields.sampleCollectionHandling.inputType).toBe('checkboxes');
+        expect(drawingForm.fields.mediaEvidenceRole.inputType).toBe('checkboxes');
+        expect(drawingForm.fields.mediaQualityCheck.inputType).toBe('checkboxes');
+        expect(drawingForm.fields.digitalSourcePreservation.inputType).toBe('checkboxes');
+        expect(drawingForm.fields.reportCrossCheck.inputType).toBe('checkboxes');
+        expect(photoForm.fields.mediaEvidenceRole.inputType).toBe('checkboxes');
+        expect(photoForm.fields.mediaQualityCheck.inputType).toBe('checkboxes');
+        expect(photoForm.fields.digitalSourcePreservation.inputType).toBe('checkboxes');
+        expect(photoForm.fields.reportCrossCheck.inputType).toBe('checkboxes');
 
         expect(operationForm.valuelists.fieldRecordQuality).toBe('KoreanFieldwork-fieldRecordQuality');
         expect(operationForm.valuelists.personalNotebookArchive).toBe('KoreanFieldwork-personalNotebookArchive');
@@ -134,6 +144,16 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.valuelists.termSearchMapping).toBe('KoreanFieldwork-termSearchMapping');
         expect(sampleForm.valuelists.sampleCollectionHandling)
             .toBe('KoreanFieldwork-sampleCollectionHandling');
+        expect(drawingForm.valuelists.mediaEvidenceRole).toBe('KoreanFieldwork-mediaEvidenceRole');
+        expect(drawingForm.valuelists.mediaQualityCheck).toBe('KoreanFieldwork-mediaQualityCheck');
+        expect(drawingForm.valuelists.digitalSourcePreservation)
+            .toBe('KoreanFieldwork-digitalSourcePreservation');
+        expect(drawingForm.valuelists.reportCrossCheck).toBe('KoreanFieldwork-reportCrossCheck');
+        expect(photoForm.valuelists.mediaEvidenceRole).toBe('KoreanFieldwork-mediaEvidenceRole');
+        expect(photoForm.valuelists.mediaQualityCheck).toBe('KoreanFieldwork-mediaQualityCheck');
+        expect(photoForm.valuelists.digitalSourcePreservation)
+            .toBe('KoreanFieldwork-digitalSourcePreservation');
+        expect(photoForm.valuelists.reportCrossCheck).toBe('KoreanFieldwork-reportCrossCheck');
     });
 
 
@@ -178,6 +198,10 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.Find.fields.assemblageRelation.label).toBe('Assemblage relation');
         expect(languages.en.categories.Sample.fields.sampleCollectionHandling.label)
             .toBe('Sample collection handling');
+        expect(languages.en.categories.Drawing.fields.mediaEvidenceRole.label)
+            .toBe('Media evidence role');
+        expect(languages.en.categories.Photo.fields.mediaQualityCheck.label)
+            .toBe('Media quality check');
         expect(languages.ko.categories.Operation.fields.fieldRecordQuality.label).toBeDefined();
 
         expect(valuelistLanguages.projects.en['KoreanFieldwork-fieldRecordQuality'].values.immediateRecording.label)
@@ -237,6 +261,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Accidental association risk');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-sampleCollectionHandling'].values.lightShielded.label)
             .toBe('Light-shielded');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaEvidenceRole']
+            .values.stratigraphicEvidence.label)
+            .toBe('Stratigraphic evidence');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
+            .values.retakeOrRedrawNeeded.label)
+            .toBe('Retake or redraw needed');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-fieldRecordQuality'].values.immediateRecording.label)
             .toBeDefined();
     });

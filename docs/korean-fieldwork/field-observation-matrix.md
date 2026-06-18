@@ -31,7 +31,7 @@
 | 유구 | 형태, 규모, 방향, 절단 관계, 축조·사용·폐기 흔적 | `Feature`, 유형별 확장 |
 | 유물 | 출토 맥락, 수습 위치, 재질, 상태, 보존·분석 필요성 | `Find`, 재질별 하위 범주 |
 | 시료 | 채취 목적, 위치, 층위, 오염 가능성, 포장·보관, 분석 의뢰 | `Sample`, `Analysis` |
-| 매체 | 사진, 도면, 3D, GIS, 파일 경로, 촬영·측량 조건 | `Photo`, `Drawing`, `Document` |
+| 매체 | 사진, 도면, 3D, GIS, 파일 경로, 촬영·측량 조건, 증거 역할, 방향·축척·기준점, 해상도·선명도, 원본 보존, 대장번호 대조, 재촬영·재작성 필요 여부 | `Photo`, `Drawing`, `Document`, `mediaEvidenceRole`, `mediaQualityCheck`, `digitalSourcePreservation`, `reportCrossCheck` |
 | 보존·수습 | 노출 시점, 응급처치, 포장, 반출, 보관, 후속 처리, 보존가치판단, 보존가치세부기준, 고유성·보전성 요소, 이해관계자, 보존관리위협, 개발계획 변경, 재매장·이전·현장보존 결정, 사진·도면·작업과정 기록, 새재료 구분, 재확인 계획 | `ConservationAction`, `AdministrativeDecision`, `PreservationAssessment` 후보 |
 | 정보화 자산 | 조판 작업파일, PDF, 표준 전자발굴조사보고서, 전자문서표준, 수록문화재 DB, 디지털 문서 DB, 도판 DB, 도면 DB, 지표조사 GIS, 슬라이드·사진첩·수기 도면 같은 재래식 매체, 통합 DBMS 연결 상태 | `InformationAsset`, `ReportItem`, `Document` 후보 |
 | 검토·보고 | 검토자 의견, 수정 이력, 보고서 반영 여부 | 작업기록/상태 필드 |
@@ -143,7 +143,10 @@
 - 촬영·작성·측량자
 - 방향·축척·좌표계
 - 파일 경로
+- 증거 역할
+- 품질검수 상태
 - 후처리 상태
+- 원본 보존과 백업
 - 보고서 사용 여부
 
 ## 5. 다음 독해 과제

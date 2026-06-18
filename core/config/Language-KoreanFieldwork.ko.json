@@ -292,6 +292,38 @@
           "label": "검증상태"
         }
       }
+    },
+    "Drawing": {
+      "fields": {
+        "mediaEvidenceRole": {
+          "label": "매체 증거 역할"
+        },
+        "mediaQualityCheck": {
+          "label": "매체 품질검수"
+        },
+        "digitalSourcePreservation": {
+          "label": "디지털 원자료 보존"
+        },
+        "reportCrossCheck": {
+          "label": "보고서 교차검토"
+        }
+      }
+    },
+    "Photo": {
+      "fields": {
+        "mediaEvidenceRole": {
+          "label": "매체 증거 역할"
+        },
+        "mediaQualityCheck": {
+          "label": "매체 품질검수"
+        },
+        "digitalSourcePreservation": {
+          "label": "디지털 원자료 보존"
+        },
+        "reportCrossCheck": {
+          "label": "보고서 교차검토"
+        }
+      }
     }
   }
 }

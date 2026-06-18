@@ -13372,5 +13372,81 @@
       }
     },
     "description": "Korean fieldwork assemblage relation list for separating same-layer or closed assemblages from accidental association, redeposition, mixed contexts, and unclear contemporaneity"
+  },
+  "KoreanFieldwork-mediaEvidenceRole": {
+    "values": {
+      "fieldOverview": {
+        "label": "Field overview"
+      },
+      "workStageRecord": {
+        "label": "Work-stage record"
+      },
+      "stratigraphicEvidence": {
+        "label": "Stratigraphic evidence"
+      },
+      "featureOutlineEvidence": {
+        "label": "Feature outline evidence"
+      },
+      "findContextEvidence": {
+        "label": "Find-context evidence"
+      },
+      "sampleLocationEvidence": {
+        "label": "Sample-location evidence"
+      },
+      "drawingCorrectionBasis": {
+        "label": "Drawing correction basis"
+      },
+      "preservationActionEvidence": {
+        "label": "Preservation action evidence"
+      },
+      "reportPlateCandidate": {
+        "label": "Report plate candidate"
+      },
+      "publicOutputCandidate": {
+        "label": "Public output candidate"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean fieldwork media evidence roles for identifying which field judgment, report plate, preservation action, or public output a photo or drawing supports"
+  },
+  "KoreanFieldwork-mediaQualityCheck": {
+    "values": {
+      "targetPurposeClear": {
+        "label": "Target and purpose clear"
+      },
+      "directionRecorded": {
+        "label": "Direction recorded"
+      },
+      "scaleIncluded": {
+        "label": "Scale included"
+      },
+      "orientationChecked": {
+        "label": "Orientation checked"
+      },
+      "controlPointLinked": {
+        "label": "Control point linked"
+      },
+      "resolutionOrLineworkReadable": {
+        "label": "Resolution or linework readable"
+      },
+      "lightingConditionSuitable": {
+        "label": "Lighting condition suitable"
+      },
+      "originalUncroppedPreserved": {
+        "label": "Original uncropped preserved"
+      },
+      "registerNumberMatched": {
+        "label": "Register number matched"
+      },
+      "retakeOrRedrawNeeded": {
+        "label": "Retake or redraw needed"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean fieldwork media quality checks for direction, scale, control points, resolution or linework, lighting, source preservation, and register-number consistency"
   }
 }

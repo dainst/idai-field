@@ -1618,5 +1618,81 @@
       }
     },
     "description": "공반유물을 곧바로 동시기 근거로 보지 않고 매장단위, 반복성, 우연 공반, 재퇴적과 혼입 가능성을 분리하기 위한 목록"
+  },
+  "KoreanFieldwork-mediaEvidenceRole": {
+    "values": {
+      "fieldOverview": {
+        "label": "현장 전경"
+      },
+      "workStageRecord": {
+        "label": "작업단계 기록"
+      },
+      "stratigraphicEvidence": {
+        "label": "층위 근거"
+      },
+      "featureOutlineEvidence": {
+        "label": "유구 윤곽 근거"
+      },
+      "findContextEvidence": {
+        "label": "유물 출토맥락 근거"
+      },
+      "sampleLocationEvidence": {
+        "label": "시료 위치 근거"
+      },
+      "drawingCorrectionBasis": {
+        "label": "도면 교정 근거"
+      },
+      "preservationActionEvidence": {
+        "label": "보존조치 근거"
+      },
+      "reportPlateCandidate": {
+        "label": "보고서 도판 후보"
+      },
+      "publicOutputCandidate": {
+        "label": "공개자료 후보"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "사진과 도면이 어떤 현장 판단, 보고서 도판, 보존조치, 공개자료의 근거인지 구분하기 위한 목록"
+  },
+  "KoreanFieldwork-mediaQualityCheck": {
+    "values": {
+      "targetPurposeClear": {
+        "label": "대상·목적 명확"
+      },
+      "directionRecorded": {
+        "label": "방향 기록"
+      },
+      "scaleIncluded": {
+        "label": "축척 포함"
+      },
+      "orientationChecked": {
+        "label": "방위 기준 확인"
+      },
+      "controlPointLinked": {
+        "label": "기준점 연결"
+      },
+      "resolutionOrLineworkReadable": {
+        "label": "해상도·선명도 적정"
+      },
+      "lightingConditionSuitable": {
+        "label": "조명 조건 적정"
+      },
+      "originalUncroppedPreserved": {
+        "label": "원본 무손상 보존"
+      },
+      "registerNumberMatched": {
+        "label": "대장번호 일치"
+      },
+      "retakeOrRedrawNeeded": {
+        "label": "재촬영·재작성 필요"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "사진과 도면의 방향, 축척, 기준점, 해상도·선명도, 원본 보존, 대장번호 일치 여부를 점검하기 위한 목록"
   }
 }

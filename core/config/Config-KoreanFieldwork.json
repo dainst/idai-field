@@ -924,6 +924,112 @@
           "fields": ["geometry", "spatialLocation"]
         }
       ]
+    },
+    "Drawing:default": {
+      "hidden": [],
+      "fields": {
+        "mediaEvidenceRole": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "mediaQualityCheck": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "digitalSourcePreservation": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "reportCrossCheck": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "mediaEvidenceRole": "KoreanFieldwork-mediaEvidenceRole",
+        "mediaQualityCheck": "KoreanFieldwork-mediaQualityCheck",
+        "digitalSourcePreservation": "KoreanFieldwork-digitalSourcePreservation",
+        "reportCrossCheck": "KoreanFieldwork-reportCrossCheck"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "draughtsmen", "processor", "campaign", "date"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description", "height", "width", "originalFilename", "literature", "imageRights",
+            "drawingMaterial", "drawingTool", "drawingType", "scale"
+          ]
+        },
+        {
+          "name": "koreanFieldwork",
+          "fields": [
+            "mediaEvidenceRole",
+            "mediaQualityCheck",
+            "digitalSourcePreservation",
+            "reportCrossCheck"
+          ]
+        }
+      ]
+    },
+    "Photo:default": {
+      "hidden": [],
+      "fields": {
+        "mediaEvidenceRole": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "mediaQualityCheck": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "digitalSourcePreservation": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "reportCrossCheck": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "mediaEvidenceRole": "KoreanFieldwork-mediaEvidenceRole",
+        "mediaQualityCheck": "KoreanFieldwork-mediaQualityCheck",
+        "digitalSourcePreservation": "KoreanFieldwork-digitalSourcePreservation",
+        "reportCrossCheck": "KoreanFieldwork-reportCrossCheck"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "draughtsmen", "processor", "campaign", "date"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description", "height", "width", "originalFilename", "literature", "imageRights",
+            "viewingDirection", "originalFormat"
+          ]
+        },
+        {
+          "name": "koreanFieldwork",
+          "fields": [
+            "mediaEvidenceRole",
+            "mediaQualityCheck",
+            "digitalSourcePreservation",
+            "reportCrossCheck"
+          ]
+        }
+      ]
     }
   },
   "order": [

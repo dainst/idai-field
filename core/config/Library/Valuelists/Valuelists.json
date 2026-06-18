@@ -32301,5 +32301,65 @@
       "contemporaneityUnclear",
       "pendingDecision"
     ]
+  },
+  "KoreanFieldwork-mediaEvidenceRole": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "fieldOverview": {},
+      "workStageRecord": {},
+      "stratigraphicEvidence": {},
+      "featureOutlineEvidence": {},
+      "findContextEvidence": {},
+      "sampleLocationEvidence": {},
+      "drawingCorrectionBasis": {},
+      "preservationActionEvidence": {},
+      "reportPlateCandidate": {},
+      "publicOutputCandidate": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "fieldOverview",
+      "workStageRecord",
+      "stratigraphicEvidence",
+      "featureOutlineEvidence",
+      "findContextEvidence",
+      "sampleLocationEvidence",
+      "drawingCorrectionBasis",
+      "preservationActionEvidence",
+      "reportPlateCandidate",
+      "publicOutputCandidate",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-mediaQualityCheck": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "targetPurposeClear": {},
+      "directionRecorded": {},
+      "scaleIncluded": {},
+      "orientationChecked": {},
+      "controlPointLinked": {},
+      "resolutionOrLineworkReadable": {},
+      "lightingConditionSuitable": {},
+      "originalUncroppedPreserved": {},
+      "registerNumberMatched": {},
+      "retakeOrRedrawNeeded": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "targetPurposeClear",
+      "directionRecorded",
+      "scaleIncluded",
+      "orientationChecked",
+      "controlPointLinked",
+      "resolutionOrLineworkReadable",
+      "lightingConditionSuitable",
+      "originalUncroppedPreserved",
+      "registerNumberMatched",
+      "retakeOrRedrawNeeded",
+      "pendingDecision"
+    ]
   }
 }

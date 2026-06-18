@@ -292,6 +292,38 @@
           "label": "Verification state"
         }
       }
+    },
+    "Drawing": {
+      "fields": {
+        "mediaEvidenceRole": {
+          "label": "Media evidence role"
+        },
+        "mediaQualityCheck": {
+          "label": "Media quality check"
+        },
+        "digitalSourcePreservation": {
+          "label": "Digital source preservation"
+        },
+        "reportCrossCheck": {
+          "label": "Report cross-check"
+        }
+      }
+    },
+    "Photo": {
+      "fields": {
+        "mediaEvidenceRole": {
+          "label": "Media evidence role"
+        },
+        "mediaQualityCheck": {
+          "label": "Media quality check"
+        },
+        "digitalSourcePreservation": {
+          "label": "Digital source preservation"
+        },
+        "reportCrossCheck": {
+          "label": "Report cross-check"
+        }
+      }
     }
   }
 }

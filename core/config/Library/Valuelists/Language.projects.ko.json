@@ -686,6 +686,117 @@
     },
     "description": "인골 수습에서 전문가 협의, 노출 순서, 오염 방지, 도구, 차양, 물 사용, 1/5 도면, 부장품 위치관계, 포장·주기, 보존처리, 건조, 개체식별과 분석 기준을 함께 관리하기 위한 목록"
   },
+  "KoreanFieldwork-shellMiddenStratigraphy": {
+    "values": {
+      "pureShellLayer": { "label": "순패층" },
+      "mixedSoilShellLayer": { "label": "혼토패층" },
+      "shellMixedSoilLayer": { "label": "혼패토층" },
+      "crushedShellLayer": { "label": "파쇄패층" },
+      "ashCharcoalBurntSoil": { "label": "재·숯·소토" },
+      "shellFragmentationRecorded": { "label": "패각 파쇄도 기록" },
+      "soilIntrusionRecorded": { "label": "흙 혼입 기록" },
+      "slopeCollapseRisk": { "label": "사면 붕괴 가능성" },
+      "marineSandIntrusion": { "label": "해안 모래 유입" },
+      "chemicalWeathering": { "label": "화학적 풍화" },
+      "redepositionChecked": { "label": "재퇴적 검토" },
+      "surfaceDistributionRecorded": { "label": "면상 분포 기록" },
+      "verticalDistributionRecorded": { "label": "층중 분포 기록" },
+      "planAndSectionCombined": { "label": "평면·단면 병행" },
+      "baulkOrSubBaulkSet": { "label": "둑·보조둑 설정" },
+      "underlyingFeatureChecked": { "label": "하부 유구 확인" },
+      "intrusiveFeatureChecked": { "label": "관입 유구 확인" },
+      "formationProcessOpen": { "label": "형성과정 판단 보류" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "패총층을 순패층·혼토패층·혼패토층·파쇄패층으로 나누고, 패각 파쇄도, 흙 혼입, 사면 붕괴, 해안 모래 유입, 풍화, 재퇴적, 평면·단면 병행, 둑 설정, 하부·관입 유구와 형성과정 보류를 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-shellMiddenSettlementContext": {
+    "values": {
+      "settlementWholeAreaPlanned": { "label": "집락 전체 조사구획" },
+      "dwellingLinked": { "label": "주거지 연결" },
+      "outdoorHearthLinked": { "label": "야외노지 연결" },
+      "storagePitLinked": { "label": "저장공 연결" },
+      "burialRitualLinked": { "label": "매장·의례 연결" },
+      "trapOrFieldCandidate": { "label": "함정·밭 후보" },
+      "shorelineWaterSystemContext": { "label": "해안·수계 맥락" },
+      "inlandizedCoastChecked": { "label": "내륙화 해안 확인" },
+      "tidalFlatOrBay": { "label": "조간대·내만" },
+      "estuaryOrIsland": { "label": "하구·도서" },
+      "marineCurrentSeasonality": { "label": "해류·계절성" },
+      "laterReuseSeparated": { "label": "후대 재사용 분리" },
+      "periodDistributionSeparated": { "label": "시대별 분포 분리" },
+      "exchangeContextCandidate": { "label": "교류 맥락 후보" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "패총을 조개층 단독 유구가 아니라 주거지, 야외노지, 저장공, 매장·의례, 함정·밭 후보, 해안·수계, 내륙화 해안, 조간대·내만·하구·도서, 해류·계절성, 후대 재사용, 시대별 분포, 교류 맥락과 연결하기 위한 목록"
+  },
+  "KoreanFieldwork-neolithicSubsistenceEvidence": {
+    "values": {
+      "shellfishCollectionTool": { "label": "패류 채취구" },
+      "netSinkerOrStoneWeight": { "label": "어망추·석추" },
+      "compositeFishhook": { "label": "결합식조침" },
+      "singleFishhook": { "label": "단식조침" },
+      "harpoonPoint": { "label": "작살" },
+      "boneFishingTool": { "label": "골제 어로구" },
+      "shellFishingTool": { "label": "패제 어로구" },
+      "logboatEvidence": { "label": "통나무배 근거" },
+      "offshoreFishSpecies": { "label": "외양성 어종" },
+      "marineMammalEvidence": { "label": "해양포유류 근거" },
+      "directWhalingEvidence": { "label": "직접 포경 근거" },
+      "indirectWhalingEvidence": { "label": "간접 포경 근거" },
+      "fishCurrentSeasonality": { "label": "어종·해류 계절성" },
+      "westCoastPattern": { "label": "서해안 생업 패턴" },
+      "southCoastPattern": { "label": "남해안 생업 패턴" },
+      "potteryChronologyLinked": { "label": "토기 편년 연결" },
+      "exchangeGoodsCandidate": { "label": "교류품 후보" },
+      "functionNotAssumed": { "label": "기능 단정 보류" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "신석기 패총과 취락에서 패류 채취구, 어망추, 조침, 작살, 골제·패제 어로구, 통나무배, 외양성 어종, 해양포유류, 직접·간접 포경 근거, 어종과 해류의 계절성, 지역 생업 패턴, 토기 편년, 교류품 후보와 기능 보류를 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-shellMiddenSamplingStrategy": {
+    "values": {
+      "stratifiedBulkSample": { "label": "층위별 벌크시료" },
+      "blockSample": { "label": "블록시료" },
+      "layerVolumeRecorded": { "label": "층별 부피 기록" },
+      "totalWaterSieving": { "label": "전체 물체질" },
+      "sampleWaterSieving": { "label": "표본 물체질" },
+      "meshSizeRecorded": { "label": "체눈 크기 기록" },
+      "fineMeshTwoThreeMm": { "label": "2~3mm 세체" },
+      "fineMeshOneMm": { "label": "1mm 세체" },
+      "flotationUsed": { "label": "부유선별 실시" },
+      "shellSpeciesPositionRecorded": { "label": "패류 종·위치 기록" },
+      "fishBoneSeparated": { "label": "어골 분리" },
+      "animalBoneSeparated": { "label": "동물뼈 분리" },
+      "botanicalRemainsSeparated": { "label": "식물유체 분리" },
+      "preservationBeforeSeparation": { "label": "분리 전 보존처리" },
+      "dryOrWetProcessingRecorded": { "label": "건식·습식 처리 기록" },
+      "specialistConsulted": { "label": "전문가 협의" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "패총 시료를 층위별 벌크시료, 블록시료, 부피 기록, 전체·표본 물체질, 체눈 크기, 부유선별, 패류·어골·동물뼈·식물유체 분리, 분리 전 보존처리, 건식·습식 처리, 전문가 협의와 함께 관리하기 위한 목록"
+  },
+  "KoreanFieldwork-paleoenvironmentProxySampling": {
+    "values": {
+      "pollenSample": { "label": "화분 시료" },
+      "diatomSample": { "label": "규조 시료" },
+      "plantOpalSample": { "label": "식물규산체 시료" },
+      "carbonizedGrainFlotation": { "label": "탄화곡물 부유선별" },
+      "charcoalWoodSpecies": { "label": "목탄 수종분석" },
+      "molluskAssemblage": { "label": "패류 군집" },
+      "foraminiferaSample": { "label": "유공충 시료" },
+      "coreDepthElevationRecorded": { "label": "코어 깊이·표고 기록" },
+      "contaminationRiskRecorded": { "label": "오염위험 기록" },
+      "preservationBiasRecorded": { "label": "보존 편향 기록" },
+      "shellRadiocarbonReservoirChecked": { "label": "패각 해양저수지효과 검토" },
+      "datingPretreatmentRecorded": { "label": "연대 전처리 기록" },
+      "regionalSeaLevelCurveLinked": { "label": "지역 해수면 곡선 연결" },
+      "proxyAssemblageNotSingleSpecies": { "label": "단일종 아닌 군집 해석" },
+      "archaeologicalContextLinked": { "label": "고고학 맥락 연결" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "고환경 시료에서 화분, 규조, 식물규산체, 탄화곡물, 목탄, 패류·유공충 군집, 코어 깊이와 표고, 오염위험, 보존 편향, 패각 해양저수지효과, 연대 전처리, 지역 해수면 곡선, 프록시 군집과 고고학 맥락을 함께 기록하기 위한 목록"
+  },
   "KoreanFieldwork-personalNotebookArchive": {
     "values": {
       "personalNotebookWritten": {

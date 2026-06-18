@@ -53,6 +53,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-19 고분·분묘 자료도 구현 단위로 다시 압축했다. 제5권 고분 조사방법론, 분묘유구 조사법 강의자료, 고분편·고분유물편 사전은 묘형명 확정보다 봉토·분구 조사통제, 구지표와 성토 단위, 주구와 재굴착, 묘광 어깨선, 개석 제거 전후 기록, 밀봉토·내부토, 벽면 입면, 폐쇄시설과 추가장·도굴 근거, 부장품의 위치 맥락, 인골 오염 방지와 포장·분석 기준을 먼저 남기라고 요구한다. 이 묶음은 `Feature`의 `tombMoundInvestigation`, `tombBurialStructureInvestigation`, `Find`의 `graveGoodsRitualContext`, `Sample`의 `humanRemainsRecoveryAnalysis` 값 목록으로 옮겼다.
 
+2026-06-19 패총·신석기·고환경 자료도 구현 단위로 압축했다. 제2권 패총 조사방법론과 제8권 신석기·최신기법, 고환경 분석 자료는 패총을 단일 패각층이 아니라 층위·재퇴적·교란·하부 유구·집락 공간·해안/수계 맥락이 겹친 복합 자료로 보라고 요구한다. 이 묶음은 `Feature`의 `shellMiddenStratigraphy`, `shellMiddenSettlementContext`, `Find`의 `neolithicSubsistenceEvidence`, `Sample`의 `shellMiddenSamplingStrategy`, `paleoenvironmentProxySampling` 값 목록으로 옮겼다.
+
 ## 보조 자료군 판독 현황
 
 새 보조 자료군은 [보조 자료군 목록과 우선순위](supplemental-source-inventory.md)에서 상세 관리한다. 현재 상태는 다음과 같다.
@@ -80,6 +82,7 @@ C:\Users\nuri9\Downloads\조사방법론
    유물 정리·보관 요구는 `KoreanFieldwork-artifactHandlingWorkflow`, `KoreanFieldwork-artifactQuantityBasis`, `KoreanFieldwork-storageEnvironmentControl`로 추가하고 `Find` 화면에 배치했다.
    제철유적 요구는 `KoreanFieldwork-ironProcessEvidence`, `KoreanFieldwork-ironFurnaceStructure`, `KoreanFieldwork-ironResidueSubtype`, `KoreanFieldwork-ironSampleAnalysisPlan`로 추가하고 `Feature`, `Find`, `Sample` 화면에 나누어 배치했다.
    고분·분묘 요구는 `KoreanFieldwork-tombMoundInvestigation`, `KoreanFieldwork-tombBurialStructureInvestigation`, `KoreanFieldwork-graveGoodsRitualContext`, `KoreanFieldwork-humanRemainsRecoveryAnalysis`로 추가하고 `Feature`, `Find`, `Sample` 화면에 나누어 배치했다.
+   패총·신석기·고환경 요구는 `KoreanFieldwork-shellMiddenStratigraphy`, `KoreanFieldwork-shellMiddenSettlementContext`, `KoreanFieldwork-neolithicSubsistenceEvidence`, `KoreanFieldwork-shellMiddenSamplingStrategy`, `KoreanFieldwork-paleoenvironmentProxySampling`으로 추가하고 `Feature`, `Find`, `Sample` 화면에 나누어 배치했다.
 6. 샘플 조사 프로젝트를 만들어 고분, 패총, 제철유적 각각의 입력 흐름을 검증한다.
 
 ## 주의

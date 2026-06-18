@@ -12440,6 +12440,117 @@
     },
     "description": "Korean human-remains recovery checks for specialist consultation, exposure order, contamination control, soft tools, shade, restricted water use, 1:5 drawing, relation to grave goods, packaging, conservation, drying, individual identification, and analysis criteria"
   },
+  "KoreanFieldwork-shellMiddenStratigraphy": {
+    "values": {
+      "pureShellLayer": { "label": "Pure shell layer" },
+      "mixedSoilShellLayer": { "label": "Mixed soil-shell layer" },
+      "shellMixedSoilLayer": { "label": "Shell-mixed soil layer" },
+      "crushedShellLayer": { "label": "Crushed shell layer" },
+      "ashCharcoalBurntSoil": { "label": "Ash, charcoal, or burned soil" },
+      "shellFragmentationRecorded": { "label": "Shell fragmentation recorded" },
+      "soilIntrusionRecorded": { "label": "Soil intrusion recorded" },
+      "slopeCollapseRisk": { "label": "Slope-collapse risk" },
+      "marineSandIntrusion": { "label": "Marine sand intrusion" },
+      "chemicalWeathering": { "label": "Chemical weathering" },
+      "redepositionChecked": { "label": "Redeposition checked" },
+      "surfaceDistributionRecorded": { "label": "Surface distribution recorded" },
+      "verticalDistributionRecorded": { "label": "Vertical distribution recorded" },
+      "planAndSectionCombined": { "label": "Plan and section combined" },
+      "baulkOrSubBaulkSet": { "label": "Baulk or sub-baulk set" },
+      "underlyingFeatureChecked": { "label": "Underlying feature checked" },
+      "intrusiveFeatureChecked": { "label": "Intrusive feature checked" },
+      "formationProcessOpen": { "label": "Formation process open" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean shell-midden stratigraphy checks for layer type, shell fragmentation, soil intrusion, slope collapse, marine sand, weathering, redeposition, plan-section correlation, baulks, underlying features, intrusive features, and open formation interpretation"
+  },
+  "KoreanFieldwork-shellMiddenSettlementContext": {
+    "values": {
+      "settlementWholeAreaPlanned": { "label": "Whole settlement area planned" },
+      "dwellingLinked": { "label": "Dwelling linked" },
+      "outdoorHearthLinked": { "label": "Outdoor hearth linked" },
+      "storagePitLinked": { "label": "Storage pit linked" },
+      "burialRitualLinked": { "label": "Burial or ritual linked" },
+      "trapOrFieldCandidate": { "label": "Trap or field candidate" },
+      "shorelineWaterSystemContext": { "label": "Shoreline or water-system context" },
+      "inlandizedCoastChecked": { "label": "Inlandized coast checked" },
+      "tidalFlatOrBay": { "label": "Tidal flat or bay" },
+      "estuaryOrIsland": { "label": "Estuary or island" },
+      "marineCurrentSeasonality": { "label": "Marine-current seasonality" },
+      "laterReuseSeparated": { "label": "Later reuse separated" },
+      "periodDistributionSeparated": { "label": "Period distribution separated" },
+      "exchangeContextCandidate": { "label": "Exchange context candidate" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean shell-midden settlement context checks for linking shell layers to dwellings, hearths, storage pits, burials, ritual, traps, fields, shoreline and water-system context, inlandized coasts, tidal flats, estuaries, islands, seasonality, reuse, period distribution, and exchange"
+  },
+  "KoreanFieldwork-neolithicSubsistenceEvidence": {
+    "values": {
+      "shellfishCollectionTool": { "label": "Shellfish collection tool" },
+      "netSinkerOrStoneWeight": { "label": "Net sinker or stone weight" },
+      "compositeFishhook": { "label": "Composite fishhook" },
+      "singleFishhook": { "label": "Single fishhook" },
+      "harpoonPoint": { "label": "Harpoon point" },
+      "boneFishingTool": { "label": "Bone fishing tool" },
+      "shellFishingTool": { "label": "Shell fishing tool" },
+      "logboatEvidence": { "label": "Logboat evidence" },
+      "offshoreFishSpecies": { "label": "Offshore fish species" },
+      "marineMammalEvidence": { "label": "Marine mammal evidence" },
+      "directWhalingEvidence": { "label": "Direct whaling evidence" },
+      "indirectWhalingEvidence": { "label": "Indirect whaling evidence" },
+      "fishCurrentSeasonality": { "label": "Fish-current seasonality" },
+      "westCoastPattern": { "label": "West-coast pattern" },
+      "southCoastPattern": { "label": "South-coast pattern" },
+      "potteryChronologyLinked": { "label": "Pottery chronology linked" },
+      "exchangeGoodsCandidate": { "label": "Exchange goods candidate" },
+      "functionNotAssumed": { "label": "Function not assumed" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean Neolithic subsistence checks for shellfish tools, net sinkers, fishhooks, harpoons, bone and shell tools, logboats, offshore fish, marine mammals, whaling evidence, fish-current seasonality, regional patterns, pottery chronology, exchange goods, and function uncertainty"
+  },
+  "KoreanFieldwork-shellMiddenSamplingStrategy": {
+    "values": {
+      "stratifiedBulkSample": { "label": "Stratified bulk sample" },
+      "blockSample": { "label": "Block sample" },
+      "layerVolumeRecorded": { "label": "Layer volume recorded" },
+      "totalWaterSieving": { "label": "Total water sieving" },
+      "sampleWaterSieving": { "label": "Sample water sieving" },
+      "meshSizeRecorded": { "label": "Mesh size recorded" },
+      "fineMeshTwoThreeMm": { "label": "2-3 mm fine mesh" },
+      "fineMeshOneMm": { "label": "1 mm fine mesh" },
+      "flotationUsed": { "label": "Flotation used" },
+      "shellSpeciesPositionRecorded": { "label": "Shell species position recorded" },
+      "fishBoneSeparated": { "label": "Fish bone separated" },
+      "animalBoneSeparated": { "label": "Animal bone separated" },
+      "botanicalRemainsSeparated": { "label": "Botanical remains separated" },
+      "preservationBeforeSeparation": { "label": "Preservation before separation" },
+      "dryOrWetProcessingRecorded": { "label": "Dry or wet processing recorded" },
+      "specialistConsulted": { "label": "Specialist consulted" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean shell-midden sampling checks for stratified bulk samples, block samples, sample volume, total or sample water sieving, mesh size, flotation, shell and bone separation, botanical remains, preservation before separation, processing state, and specialist consultation"
+  },
+  "KoreanFieldwork-paleoenvironmentProxySampling": {
+    "values": {
+      "pollenSample": { "label": "Pollen sample" },
+      "diatomSample": { "label": "Diatom sample" },
+      "plantOpalSample": { "label": "Plant-opal sample" },
+      "carbonizedGrainFlotation": { "label": "Carbonized grain flotation" },
+      "charcoalWoodSpecies": { "label": "Charcoal wood species" },
+      "molluskAssemblage": { "label": "Mollusk assemblage" },
+      "foraminiferaSample": { "label": "Foraminifera sample" },
+      "coreDepthElevationRecorded": { "label": "Core depth and elevation recorded" },
+      "contaminationRiskRecorded": { "label": "Contamination risk recorded" },
+      "preservationBiasRecorded": { "label": "Preservation bias recorded" },
+      "shellRadiocarbonReservoirChecked": { "label": "Shell radiocarbon reservoir checked" },
+      "datingPretreatmentRecorded": { "label": "Dating pretreatment recorded" },
+      "regionalSeaLevelCurveLinked": { "label": "Regional sea-level curve linked" },
+      "proxyAssemblageNotSingleSpecies": { "label": "Proxy assemblage, not single species" },
+      "archaeologicalContextLinked": { "label": "Archaeological context linked" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean paleoenvironment proxy checks for pollen, diatom, plant-opal, carbonized grain, charcoal, mollusk and foraminifera samples, core depth and elevation, contamination, preservation bias, shell radiocarbon reservoir, dating pretreatment, regional sea-level curves, proxy assemblages, and archaeological context"
+  },
   "KoreanFieldwork-personalNotebookArchive": {
     "values": {
       "personalNotebookWritten": {

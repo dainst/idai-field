@@ -557,6 +557,14 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "shellMiddenStratigraphy": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "shellMiddenSettlementContext": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "fortificationGateFacility": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -614,6 +622,8 @@
         "ironFurnaceStructure": "KoreanFieldwork-ironFurnaceStructure",
         "tombMoundInvestigation": "KoreanFieldwork-tombMoundInvestigation",
         "tombBurialStructureInvestigation": "KoreanFieldwork-tombBurialStructureInvestigation",
+        "shellMiddenStratigraphy": "KoreanFieldwork-shellMiddenStratigraphy",
+        "shellMiddenSettlementContext": "KoreanFieldwork-shellMiddenSettlementContext",
         "fortificationGateFacility": "KoreanFieldwork-fortificationGateFacility",
         "fortificationHiddenGateFunction": "KoreanFieldwork-fortificationHiddenGateFunction",
         "fortificationParapetDetail": "KoreanFieldwork-fortificationParapetDetail",
@@ -660,6 +670,8 @@
             "ironFurnaceStructure",
             "tombMoundInvestigation",
             "tombBurialStructureInvestigation",
+            "shellMiddenStratigraphy",
+            "shellMiddenSettlementContext",
             "fortificationGateFacility",
             "fortificationHiddenGateFunction",
             "fortificationParapetDetail",
@@ -837,6 +849,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "neolithicSubsistenceEvidence": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "recordCreationTiming": {
           "inputType": "dropdown",
           "constraintIndexed": true
@@ -869,6 +885,7 @@
         "storageEnvironmentControl": "KoreanFieldwork-storageEnvironmentControl",
         "ironResidueSubtype": "KoreanFieldwork-ironResidueSubtype",
         "graveGoodsRitualContext": "KoreanFieldwork-graveGoodsRitualContext",
+        "neolithicSubsistenceEvidence": "KoreanFieldwork-neolithicSubsistenceEvidence",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "termRelation": "KoreanFieldwork-termRelation",
         "termSearchMapping": "KoreanFieldwork-termSearchMapping",
@@ -905,6 +922,7 @@
             "storageEnvironmentControl",
             "ironResidueSubtype",
             "graveGoodsRitualContext",
+            "neolithicSubsistenceEvidence",
             "recordCreationTiming",
             "verificationState",
             "termRelation",
@@ -972,6 +990,14 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "shellMiddenSamplingStrategy": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "paleoenvironmentProxySampling": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "verificationState": {
           "inputType": "dropdown",
           "constraintIndexed": true
@@ -985,6 +1011,8 @@
         "sampleCollectionHandling": "KoreanFieldwork-sampleCollectionHandling",
         "ironSampleAnalysisPlan": "KoreanFieldwork-ironSampleAnalysisPlan",
         "humanRemainsRecoveryAnalysis": "KoreanFieldwork-humanRemainsRecoveryAnalysis",
+        "shellMiddenSamplingStrategy": "KoreanFieldwork-shellMiddenSamplingStrategy",
+        "paleoenvironmentProxySampling": "KoreanFieldwork-paleoenvironmentProxySampling",
         "verificationState": "KoreanFieldwork-verificationState"
       },
       "groups": [
@@ -1015,6 +1043,8 @@
             "sampleCollectionHandling",
             "ironSampleAnalysisPlan",
             "humanRemainsRecoveryAnalysis",
+            "shellMiddenSamplingStrategy",
+            "paleoenvironmentProxySampling",
             "fieldRecordQuality",
             "fieldOnlyMissingCheck",
             "recordCreationTiming",

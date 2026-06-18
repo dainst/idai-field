@@ -65,6 +65,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.fields.ironFurnaceStructure.inputType).toBe('checkboxes');
         expect(featureForm.fields.tombMoundInvestigation.inputType).toBe('checkboxes');
         expect(featureForm.fields.tombBurialStructureInvestigation.inputType).toBe('checkboxes');
+        expect(featureForm.fields.shellMiddenStratigraphy.inputType).toBe('checkboxes');
+        expect(featureForm.fields.shellMiddenSettlementContext.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.chronologyArgument.inputType).toBe('checkboxes');
         expect(findForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
@@ -73,12 +75,15 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.fields.storageEnvironmentControl.inputType).toBe('checkboxes');
         expect(findForm.fields.ironResidueSubtype.inputType).toBe('checkboxes');
         expect(findForm.fields.graveGoodsRitualContext.inputType).toBe('checkboxes');
+        expect(findForm.fields.neolithicSubsistenceEvidence.inputType).toBe('checkboxes');
         expect(findForm.fields.typologyArgument.inputType).toBe('checkboxes');
         expect(findForm.fields.chronologyArgument.inputType).toBe('checkboxes');
         expect(findForm.fields.assemblageRelation.inputType).toBe('checkboxes');
         expect(sampleForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
         expect(sampleForm.fields.ironSampleAnalysisPlan.inputType).toBe('checkboxes');
         expect(sampleForm.fields.humanRemainsRecoveryAnalysis.inputType).toBe('checkboxes');
+        expect(sampleForm.fields.shellMiddenSamplingStrategy.inputType).toBe('checkboxes');
+        expect(sampleForm.fields.paleoenvironmentProxySampling.inputType).toBe('checkboxes');
         expect(featureForm.fields.firstExposureRecord.inputType).toBe('checkboxes');
         expect(config.forms['FeatureSegment:default'].fields.firstExposureRecord.inputType).toBe('checkboxes');
         expect(featureForm.fields.fieldOnlyMissingCheck.mandatory).toBe(true);
@@ -160,6 +165,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-tombMoundInvestigation');
         expect(featureForm.valuelists.tombBurialStructureInvestigation)
             .toBe('KoreanFieldwork-tombBurialStructureInvestigation');
+        expect(featureForm.valuelists.shellMiddenStratigraphy)
+            .toBe('KoreanFieldwork-shellMiddenStratigraphy');
+        expect(featureForm.valuelists.shellMiddenSettlementContext)
+            .toBe('KoreanFieldwork-shellMiddenSettlementContext');
         expect(featureSegmentForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
         expect(featureSegmentForm.valuelists.chronologyArgument).toBe('KoreanFieldwork-chronologyArgument');
         expect(findForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
@@ -168,6 +177,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.valuelists.storageEnvironmentControl).toBe('KoreanFieldwork-storageEnvironmentControl');
         expect(findForm.valuelists.ironResidueSubtype).toBe('KoreanFieldwork-ironResidueSubtype');
         expect(findForm.valuelists.graveGoodsRitualContext).toBe('KoreanFieldwork-graveGoodsRitualContext');
+        expect(findForm.valuelists.neolithicSubsistenceEvidence)
+            .toBe('KoreanFieldwork-neolithicSubsistenceEvidence');
         expect(findForm.valuelists.typologyArgument).toBe('KoreanFieldwork-typologyArgument');
         expect(findForm.valuelists.chronologyArgument).toBe('KoreanFieldwork-chronologyArgument');
         expect(findForm.valuelists.assemblageRelation).toBe('KoreanFieldwork-assemblageRelation');
@@ -186,6 +197,10 @@ describe('KoreanFieldwork project configuration', () => {
         expect(sampleForm.valuelists.ironSampleAnalysisPlan).toBe('KoreanFieldwork-ironSampleAnalysisPlan');
         expect(sampleForm.valuelists.humanRemainsRecoveryAnalysis)
             .toBe('KoreanFieldwork-humanRemainsRecoveryAnalysis');
+        expect(sampleForm.valuelists.shellMiddenSamplingStrategy)
+            .toBe('KoreanFieldwork-shellMiddenSamplingStrategy');
+        expect(sampleForm.valuelists.paleoenvironmentProxySampling)
+            .toBe('KoreanFieldwork-paleoenvironmentProxySampling');
         expect(drawingForm.valuelists.mediaEvidenceRole).toBe('KoreanFieldwork-mediaEvidenceRole');
         expect(drawingForm.valuelists.mediaQualityCheck).toBe('KoreanFieldwork-mediaQualityCheck');
         expect(drawingForm.valuelists.digitalSourcePreservation)
@@ -241,6 +256,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Tomb mound investigation');
         expect(languages.en.categories.Feature.fields.tombBurialStructureInvestigation.label)
             .toBe('Tomb burial structure investigation');
+        expect(languages.en.categories.Feature.fields.shellMiddenStratigraphy.label)
+            .toBe('Shell midden stratigraphy');
+        expect(languages.en.categories.Feature.fields.shellMiddenSettlementContext.label)
+            .toBe('Shell midden settlement context');
         expect(languages.en.categories.Feature.fields.fortificationHiddenGateFunction.label).toBe('Hidden gate function');
         expect(languages.en.categories.Feature.fields.fortificationParapetDetail.label).toBe('Parapet detail');
         expect(languages.en.categories.Feature.fields.termAuthorityStatus.label).toBe('Term authority status');
@@ -255,6 +274,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.Find.fields.ironResidueSubtype.label).toBe('Iron residue subtype');
         expect(languages.en.categories.Find.fields.graveGoodsRitualContext.label)
             .toBe('Grave goods and ritual context');
+        expect(languages.en.categories.Find.fields.neolithicSubsistenceEvidence.label)
+            .toBe('Neolithic subsistence evidence');
         expect(languages.en.categories.Find.fields.typologyArgument.label).toBe('Typology argument');
         expect(languages.en.categories.Find.fields.chronologyArgument.label).toBe('Chronology argument');
         expect(languages.en.categories.Find.fields.assemblageRelation.label).toBe('Assemblage relation');
@@ -264,6 +285,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Iron sample analysis plan');
         expect(languages.en.categories.Sample.fields.humanRemainsRecoveryAnalysis.label)
             .toBe('Human remains recovery and analysis');
+        expect(languages.en.categories.Sample.fields.shellMiddenSamplingStrategy.label)
+            .toBe('Shell midden sampling strategy');
+        expect(languages.en.categories.Sample.fields.paleoenvironmentProxySampling.label)
+            .toBe('Paleoenvironment proxy sampling');
         expect(languages.en.categories.Drawing.fields.mediaEvidenceRole.label)
             .toBe('Media evidence role');
         expect(languages.en.categories.Photo.fields.mediaQualityCheck.label)
@@ -347,6 +372,21 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-humanRemainsRecoveryAnalysis']
             .values.dnaBeforeTreatment.label)
             .toBe('DNA before treatment');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-shellMiddenStratigraphy']
+            .values.planAndSectionCombined.label)
+            .toBe('Plan and section combined');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-shellMiddenSettlementContext']
+            .values.inlandizedCoastChecked.label)
+            .toBe('Inlandized coast checked');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-neolithicSubsistenceEvidence']
+            .values.directWhalingEvidence.label)
+            .toBe('Direct whaling evidence');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-shellMiddenSamplingStrategy']
+            .values.flotationUsed.label)
+            .toBe('Flotation used');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-paleoenvironmentProxySampling']
+            .values.regionalSeaLevelCurveLinked.label)
+            .toBe('Regional sea-level curve linked');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-fortificationHiddenGateFunction'].values.supplyTransport.label)
             .toBe('Military supply transport');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-fortificationParapetDetail'].values.nearGunOpening.label)

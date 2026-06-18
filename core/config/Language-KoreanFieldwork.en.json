@@ -201,6 +201,12 @@
         "tombBurialStructureInvestigation": {
           "label": "Tomb burial structure investigation"
         },
+        "shellMiddenStratigraphy": {
+          "label": "Shell midden stratigraphy"
+        },
+        "shellMiddenSettlementContext": {
+          "label": "Shell midden settlement context"
+        },
         "fortificationGateFacility": {
           "label": "Gate and defensive components"
         },
@@ -299,6 +305,9 @@
         "graveGoodsRitualContext": {
           "label": "Grave goods and ritual context"
         },
+        "neolithicSubsistenceEvidence": {
+          "label": "Neolithic subsistence evidence"
+        },
         "recordCreationTiming": {
           "label": "Record creation timing"
         },
@@ -338,6 +347,12 @@
         },
         "humanRemainsRecoveryAnalysis": {
           "label": "Human remains recovery and analysis"
+        },
+        "shellMiddenSamplingStrategy": {
+          "label": "Shell midden sampling strategy"
+        },
+        "paleoenvironmentProxySampling": {
+          "label": "Paleoenvironment proxy sampling"
         },
         "verificationState": {
           "label": "Verification state"

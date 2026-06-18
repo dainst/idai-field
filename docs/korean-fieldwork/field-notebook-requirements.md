@@ -37,12 +37,13 @@
 
 ## 첫 구현 단위
 
-1. `DailyLog`와 `FieldRecordQualityReview`
-2. `InvestigationProject` 행정 타임라인
-3. `RecordCreationTiming` 누락 경고
-4. `ReportPreparationReview`와 도면·사진·목록 교차검토
-5. `InvestigationStageTransition`과 후속기관 인계
-6. `TermAuthority` 기반 한국어 용어 검색
+1. `KoreanFieldwork-*` 공통 값 목록: 기록 생성 시점, 검증상태, 용어관계, 유적 패키지, 시료 목적, 보고서 교차검토
+2. `DailyLog`와 `FieldRecordQualityReview`
+3. `InvestigationProject` 행정 타임라인
+4. `RecordCreationTiming` 누락 경고
+5. `ReportPreparationReview`와 도면·사진·목록 교차검토
+6. `InvestigationStageTransition`과 후속기관 인계
+7. `TermAuthority` 기반 한국어 용어 검색
 
 이 여섯 가지가 먼저 들어가야 각 유적 유형별 템플릿을 만들 때 기록이 흩어지지 않는다.
 

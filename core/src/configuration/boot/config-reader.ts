@@ -116,6 +116,7 @@ import libraryValuelistsLanguageProjectsEn from '../../../config/Library/Valueli
 import libraryValuelistsLanguageProjectsEs from '../../../config/Library/Valuelists/Language.projects.es.json';
 import libraryValuelistsLanguageProjectsFr from '../../../config/Library/Valuelists/Language.projects.fr.json';
 import libraryValuelistsLanguageProjectsIt from '../../../config/Library/Valuelists/Language.projects.it.json';
+import libraryValuelistsLanguageProjectsKo from '../../../config/Library/Valuelists/Language.projects.ko.json';
 import libraryValuelistsLanguageProjectsTr from '../../../config/Library/Valuelists/Language.projects.tr.json';
 import { LanguageConfiguration } from '../model';
 
@@ -198,6 +199,7 @@ const VALUELISTS_LANGUAGES = {
         es: libraryValuelistsLanguageProjectsEs,
         fr: libraryValuelistsLanguageProjectsFr,
         it: libraryValuelistsLanguageProjectsIt,
+        ko: libraryValuelistsLanguageProjectsKo,
         tr: libraryValuelistsLanguageProjectsTr,
     }
 };

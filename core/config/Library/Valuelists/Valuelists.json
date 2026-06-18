@@ -31039,5 +31039,167 @@
         "uri": "http://uri.gbv.de/terminology/amh_befunde/"
       }
     ]
+  },
+  "KoreanFieldwork-recordCreationTiming": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "planningStage": {},
+      "duringFieldwork": {},
+      "sameDayFieldRecord": {},
+      "fieldOnlyObservation": {},
+      "handoverStage": {},
+      "reportStageGenerated": {},
+      "postExcavationDerived": {}
+    },
+    "order": [
+      "planningStage",
+      "duringFieldwork",
+      "sameDayFieldRecord",
+      "fieldOnlyObservation",
+      "handoverStage",
+      "reportStageGenerated",
+      "postExcavationDerived"
+    ]
+  },
+  "KoreanFieldwork-verificationState": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "observedInField": {},
+      "candidate": {},
+      "inferred": {},
+      "conflictingEvidence": {},
+      "notObserved": {},
+      "needsRecheck": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "observedInField",
+      "candidate",
+      "inferred",
+      "conflictingEvidence",
+      "notObserved",
+      "needsRecheck",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-termRelation": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "preferredTerm": {},
+      "alias": {},
+      "synonym": {},
+      "broaderTerm": {},
+      "narrowerTerm": {},
+      "functionalSimilarity": {},
+      "structuralSimilarity": {},
+      "periodRestricted": {},
+      "domainRestricted": {},
+      "institutionalUsage": {},
+      "reportOutputTerm": {}
+    },
+    "order": [
+      "preferredTerm",
+      "alias",
+      "synonym",
+      "broaderTerm",
+      "narrowerTerm",
+      "functionalSimilarity",
+      "structuralSimilarity",
+      "periodRestricted",
+      "domainRestricted",
+      "institutionalUsage",
+      "reportOutputTerm"
+    ]
+  },
+  "KoreanFieldwork-featurePackage": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "surfaceSurvey": {},
+      "paleolithicSite": {},
+      "shellMidden": {},
+      "buildingSite": {},
+      "pitDwelling": {},
+      "tomb": {},
+      "productionSite": {},
+      "kilnSite": {},
+      "ironProductionSite": {},
+      "fortress": {},
+      "alluvialSite": {},
+      "conservationAdministration": {}
+    },
+    "order": [
+      "surfaceSurvey",
+      "paleolithicSite",
+      "shellMidden",
+      "buildingSite",
+      "pitDwelling",
+      "tomb",
+      "productionSite",
+      "kilnSite",
+      "ironProductionSite",
+      "fortress",
+      "alluvialSite",
+      "conservationAdministration"
+    ]
+  },
+  "KoreanFieldwork-samplePurpose": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "absoluteDating": {},
+      "paleoenvironment": {},
+      "archaeobotany": {},
+      "zooarchaeology": {},
+      "metallurgy": {},
+      "ceramicFabric": {},
+      "provenance": {},
+      "useWearResidue": {},
+      "conservation": {},
+      "contaminationControl": {}
+    },
+    "order": [
+      "absoluteDating",
+      "paleoenvironment",
+      "archaeobotany",
+      "zooarchaeology",
+      "metallurgy",
+      "ceramicFabric",
+      "provenance",
+      "useWearResidue",
+      "conservation",
+      "contaminationControl"
+    ]
+  },
+  "KoreanFieldwork-reportCrossCheck": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "manuscript": {},
+      "drawingRegister": {},
+      "photoRegister": {},
+      "artifactRegister": {},
+      "sampleRegister": {},
+      "dailyLog": {},
+      "stratigraphicStandard": {},
+      "numberConversionTable": {},
+      "sourceMediaBackup": {},
+      "evaluationFeedback": {}
+    },
+    "order": [
+      "manuscript",
+      "drawingRegister",
+      "photoRegister",
+      "artifactRegister",
+      "sampleRegister",
+      "dailyLog",
+      "stratigraphicStandard",
+      "numberConversionTable",
+      "sourceMediaBackup",
+      "evaluationFeedback"
+    ]
   }
 }

@@ -1,0 +1,203 @@
+{
+  "KoreanFieldwork-recordCreationTiming": {
+    "values": {
+      "planningStage": {
+        "label": "계획 단계"
+      },
+      "duringFieldwork": {
+        "label": "현장 중 누적"
+      },
+      "sameDayFieldRecord": {
+        "label": "당일 현장기록"
+      },
+      "fieldOnlyObservation": {
+        "label": "현장시에만 가능한 관찰"
+      },
+      "handoverStage": {
+        "label": "조사단계 전환·인계"
+      },
+      "reportStageGenerated": {
+        "label": "보고서 단계 생성"
+      },
+      "postExcavationDerived": {
+        "label": "정리·분석 단계 파생"
+      }
+    },
+    "description": "현장에서만 남길 수 있는 관찰값과 나중에 산출되는 기록을 구분하기 위한 한국형 야장 기록 생성 시점 목록"
+  },
+  "KoreanFieldwork-verificationState": {
+    "values": {
+      "observedInField": {
+        "label": "현장 직접 관찰"
+      },
+      "candidate": {
+        "label": "후보"
+      },
+      "inferred": {
+        "label": "추정"
+      },
+      "conflictingEvidence": {
+        "label": "근거 충돌"
+      },
+      "notObserved": {
+        "label": "미확인"
+      },
+      "needsRecheck": {
+        "label": "재검토 필요"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "현장 관찰과 해석을 분리하고 판단 보류를 정상값으로 남기기 위한 검증 상태 목록"
+  },
+  "KoreanFieldwork-termRelation": {
+    "values": {
+      "preferredTerm": {
+        "label": "우선표제어"
+      },
+      "alias": {
+        "label": "이칭"
+      },
+      "synonym": {
+        "label": "동의어"
+      },
+      "broaderTerm": {
+        "label": "상위어"
+      },
+      "narrowerTerm": {
+        "label": "하위어"
+      },
+      "functionalSimilarity": {
+        "label": "기능 유사"
+      },
+      "structuralSimilarity": {
+        "label": "구조 유사"
+      },
+      "periodRestricted": {
+        "label": "시대 한정"
+      },
+      "domainRestricted": {
+        "label": "분야 한정"
+      },
+      "institutionalUsage": {
+        "label": "기관 관용어"
+      },
+      "reportOutputTerm": {
+        "label": "보고서 출력어"
+      }
+    },
+    "description": "한국 고고학 사전류의 관용어, 전문 표제어, 보고서 출력어를 분리하기 위한 용어 관계 목록"
+  },
+  "KoreanFieldwork-featurePackage": {
+    "values": {
+      "surfaceSurvey": {
+        "label": "지표조사"
+      },
+      "paleolithicSite": {
+        "label": "구석기유적"
+      },
+      "shellMidden": {
+        "label": "패총"
+      },
+      "buildingSite": {
+        "label": "건물지"
+      },
+      "pitDwelling": {
+        "label": "수혈건물지"
+      },
+      "tomb": {
+        "label": "분묘"
+      },
+      "productionSite": {
+        "label": "생산유적"
+      },
+      "kilnSite": {
+        "label": "요업유적"
+      },
+      "ironProductionSite": {
+        "label": "제철유적"
+      },
+      "fortress": {
+        "label": "성곽·봉수"
+      },
+      "alluvialSite": {
+        "label": "충적지유적"
+      },
+      "conservationAdministration": {
+        "label": "보존·행정"
+      }
+    },
+    "description": "조사방법론 자료에서 반복 확인된 한국형 야장 유적·업무 패키지 목록"
+  },
+  "KoreanFieldwork-samplePurpose": {
+    "values": {
+      "absoluteDating": {
+        "label": "절대연대"
+      },
+      "paleoenvironment": {
+        "label": "고환경"
+      },
+      "archaeobotany": {
+        "label": "식물유체"
+      },
+      "zooarchaeology": {
+        "label": "동물유체"
+      },
+      "metallurgy": {
+        "label": "금속학"
+      },
+      "ceramicFabric": {
+        "label": "태토·소성"
+      },
+      "provenance": {
+        "label": "산지 추정"
+      },
+      "useWearResidue": {
+        "label": "사용흔·잔존물"
+      },
+      "conservation": {
+        "label": "보존처리"
+      },
+      "contaminationControl": {
+        "label": "오염 통제"
+      }
+    },
+    "description": "시료명을 분석명으로 끝내지 않고 분석 질문과 채취 목적을 연결하기 위한 한국형 야장 목록"
+  },
+  "KoreanFieldwork-reportCrossCheck": {
+    "values": {
+      "manuscript": {
+        "label": "원고"
+      },
+      "drawingRegister": {
+        "label": "도면대장"
+      },
+      "photoRegister": {
+        "label": "사진대장"
+      },
+      "artifactRegister": {
+        "label": "유물대장"
+      },
+      "sampleRegister": {
+        "label": "시료목록"
+      },
+      "dailyLog": {
+        "label": "조사일지"
+      },
+      "stratigraphicStandard": {
+        "label": "기준토층"
+      },
+      "numberConversionTable": {
+        "label": "번호 변환표"
+      },
+      "sourceMediaBackup": {
+        "label": "원자료 백업"
+      },
+      "evaluationFeedback": {
+        "label": "평가 환류"
+      }
+    },
+    "description": "현장기록에서 보고서 산출물을 역산하고 원자료와 대조하기 위한 교차검토 항목 목록"
+  }
+}

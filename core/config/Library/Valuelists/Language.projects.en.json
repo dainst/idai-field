@@ -11752,5 +11752,206 @@
       }
     },
     "description": "Valuelist defining wether a smallfind is migrated from the UrfaDB or not"
+  },
+  "KoreanFieldwork-recordCreationTiming": {
+    "values": {
+      "planningStage": {
+        "label": "Planning stage"
+      },
+      "duringFieldwork": {
+        "label": "During fieldwork"
+      },
+      "sameDayFieldRecord": {
+        "label": "Same-day field record"
+      },
+      "fieldOnlyObservation": {
+        "label": "Field-only observation"
+      },
+      "handoverStage": {
+        "label": "Stage handover"
+      },
+      "reportStageGenerated": {
+        "label": "Generated for report stage"
+      },
+      "postExcavationDerived": {
+        "label": "Post-excavation derived"
+      }
+    },
+    "description": "Korean field notebook timing states for distinguishing observations that must be captured in the field from later derived records"
+  },
+  "KoreanFieldwork-verificationState": {
+    "values": {
+      "observedInField": {
+        "label": "Observed in field"
+      },
+      "candidate": {
+        "label": "Candidate"
+      },
+      "inferred": {
+        "label": "Inferred"
+      },
+      "conflictingEvidence": {
+        "label": "Conflicting evidence"
+      },
+      "notObserved": {
+        "label": "Not observed"
+      },
+      "needsRecheck": {
+        "label": "Needs recheck"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean field notebook verification states for keeping interpretation separate from observation"
+  },
+  "KoreanFieldwork-termRelation": {
+    "values": {
+      "preferredTerm": {
+        "label": "Preferred term"
+      },
+      "alias": {
+        "label": "Alias"
+      },
+      "synonym": {
+        "label": "Synonym"
+      },
+      "broaderTerm": {
+        "label": "Broader term"
+      },
+      "narrowerTerm": {
+        "label": "Narrower term"
+      },
+      "functionalSimilarity": {
+        "label": "Functional similarity"
+      },
+      "structuralSimilarity": {
+        "label": "Structural similarity"
+      },
+      "periodRestricted": {
+        "label": "Period restricted"
+      },
+      "domainRestricted": {
+        "label": "Domain restricted"
+      },
+      "institutionalUsage": {
+        "label": "Institutional usage"
+      },
+      "reportOutputTerm": {
+        "label": "Report output term"
+      }
+    },
+    "description": "Korean archaeological term authority relationships for aliases, specialist terms, and report labels"
+  },
+  "KoreanFieldwork-featurePackage": {
+    "values": {
+      "surfaceSurvey": {
+        "label": "Surface survey"
+      },
+      "paleolithicSite": {
+        "label": "Paleolithic site"
+      },
+      "shellMidden": {
+        "label": "Shell midden"
+      },
+      "buildingSite": {
+        "label": "Building site"
+      },
+      "pitDwelling": {
+        "label": "Pit dwelling"
+      },
+      "tomb": {
+        "label": "Tomb"
+      },
+      "productionSite": {
+        "label": "Production site"
+      },
+      "kilnSite": {
+        "label": "Kiln site"
+      },
+      "ironProductionSite": {
+        "label": "Iron production site"
+      },
+      "fortress": {
+        "label": "Fortress"
+      },
+      "alluvialSite": {
+        "label": "Alluvial site"
+      },
+      "conservationAdministration": {
+        "label": "Conservation and administration"
+      }
+    },
+    "description": "Korean field notebook package types derived from the supplementary methodology and dictionary readings"
+  },
+  "KoreanFieldwork-samplePurpose": {
+    "values": {
+      "absoluteDating": {
+        "label": "Absolute dating"
+      },
+      "paleoenvironment": {
+        "label": "Paleoenvironment"
+      },
+      "archaeobotany": {
+        "label": "Archaeobotany"
+      },
+      "zooarchaeology": {
+        "label": "Zooarchaeology"
+      },
+      "metallurgy": {
+        "label": "Metallurgy"
+      },
+      "ceramicFabric": {
+        "label": "Ceramic fabric"
+      },
+      "provenance": {
+        "label": "Provenance"
+      },
+      "useWearResidue": {
+        "label": "Use-wear or residue"
+      },
+      "conservation": {
+        "label": "Conservation"
+      },
+      "contaminationControl": {
+        "label": "Contamination control"
+      }
+    },
+    "description": "Korean field notebook sample purposes for linking collection to analytical questions"
+  },
+  "KoreanFieldwork-reportCrossCheck": {
+    "values": {
+      "manuscript": {
+        "label": "Manuscript"
+      },
+      "drawingRegister": {
+        "label": "Drawing register"
+      },
+      "photoRegister": {
+        "label": "Photo register"
+      },
+      "artifactRegister": {
+        "label": "Artifact register"
+      },
+      "sampleRegister": {
+        "label": "Sample register"
+      },
+      "dailyLog": {
+        "label": "Daily log"
+      },
+      "stratigraphicStandard": {
+        "label": "Stratigraphic standard"
+      },
+      "numberConversionTable": {
+        "label": "Number conversion table"
+      },
+      "sourceMediaBackup": {
+        "label": "Source media backup"
+      },
+      "evaluationFeedback": {
+        "label": "Evaluation feedback"
+      }
+    },
+    "description": "Korean report cross-check items for generating and auditing report outputs from field records"
   }
 }

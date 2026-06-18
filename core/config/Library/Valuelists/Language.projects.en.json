@@ -12254,6 +12254,103 @@
     },
     "description": "Korean overlapping pit dwelling checks for staged plan stripping, section evidence, over-trenching risk, later/earlier excavation order, and unresolved sequence decisions"
   },
+  "KoreanFieldwork-ironProcessEvidence": {
+    "values": {
+      "miningLead": { "label": "Mining lead" },
+      "beneficiation": { "label": "Beneficiation" },
+      "roasting": { "label": "Roasting" },
+      "smeltingCandidate": { "label": "Smelting candidate" },
+      "refiningSmithingCandidate": { "label": "Refining smithing candidate" },
+      "forgingCandidate": { "label": "Forging candidate" },
+      "meltingCastingCandidate": { "label": "Melting/casting candidate" },
+      "steelmakingCandidate": { "label": "Steelmaking candidate" },
+      "processMixed": { "label": "Mixed process" },
+      "structureEvidence": { "label": "Structure evidence" },
+      "residueEvidence": { "label": "Residue evidence" },
+      "metallurgicalAnalysisNeeded": { "label": "Metallurgical analysis needed" },
+      "analysisConfirmed": { "label": "Analysis confirmed" },
+      "alternativeProcessOpen": { "label": "Alternative process open" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean iron-production checks for keeping smelting, smithing, casting, steelmaking, mixed-process, and analysis-confirmed interpretations separate"
+  },
+  "KoreanFieldwork-ironFurnaceStructure": {
+    "values": {
+      "furnacePlanRecorded": { "label": "Furnace plan recorded" },
+      "furnaceSectionRecorded": { "label": "Furnace section recorded" },
+      "wallRecorded": { "label": "Wall recorded" },
+      "floorNotConfusedWithCut": { "label": "Floor not confused with cut" },
+      "undergroundMoistureControl": { "label": "Underground moisture control" },
+      "tuyereOpening": { "label": "Tuyere opening" },
+      "tuyereFragment": { "label": "Tuyere fragment" },
+      "tuyereCurvature": { "label": "Tuyere curvature" },
+      "slagTappingOpening": { "label": "Slag-tapping opening" },
+      "stokeholeOrHearthMouth": { "label": "Stokehole or hearth mouth" },
+      "repairTrace": { "label": "Repair trace" },
+      "reuseTrace": { "label": "Reuse trace" },
+      "rawMaterialStorage": { "label": "Raw material storage" },
+      "fuelStorage": { "label": "Fuel storage" },
+      "additiveEvidence": { "label": "Additive evidence" },
+      "roastingFeatureNearby": { "label": "Roasting feature nearby" },
+      "wasteDepositLinked": { "label": "Waste deposit linked" },
+      "workshopLinked": { "label": "Workshop linked" },
+      "ritualDepositCandidate": { "label": "Ritual deposit candidate" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean iron-furnace structural checks for recording plans, sections, walls, floors, tuyere evidence, tapping openings, storage, waste deposits, workshops, and ritual candidates"
+  },
+  "KoreanFieldwork-ironResidueSubtype": {
+    "values": {
+      "ore": { "label": "Ore" },
+      "ironSand": { "label": "Iron sand" },
+      "charcoal": { "label": "Charcoal" },
+      "furnaceWall": { "label": "Furnace wall" },
+      "tuyere": { "label": "Tuyere" },
+      "tuyereNozzle": { "label": "Tuyere nozzle" },
+      "furnaceBottom": { "label": "Furnace bottom" },
+      "tapSlag": { "label": "Tap slag" },
+      "furnaceInternalSlag": { "label": "Furnace-internal slag" },
+      "bloomFragment": { "label": "Bloom fragment" },
+      "reducedLump": { "label": "Reduced lump" },
+      "partiallyReducedLump": { "label": "Partially reduced lump" },
+      "pigIronLump": { "label": "Pig-iron lump" },
+      "smithingSlag": { "label": "Smithing slag" },
+      "forgingScale": { "label": "Forging scale" },
+      "sphericalHammerscale": { "label": "Spherical hammerscale" },
+      "glassySlag": { "label": "Glassy slag" },
+      "additiveCandidate": { "label": "Additive candidate" },
+      "moldFragment": { "label": "Mold fragment" },
+      "crucibleCandidate": { "label": "Crucible candidate" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean iron residue subtypes for separating ore, charcoal, furnace wall, tuyeres, tap slag, furnace-internal slag, blooms, reduced lumps, smithing debris, additives, molds, and crucible candidates"
+  },
+  "KoreanFieldwork-ironSampleAnalysisPlan": {
+    "values": {
+      "visualRecord": { "label": "Visual record" },
+      "sizeWeightColor": { "label": "Size, weight, and color" },
+      "magnetReaction": { "label": "Magnet reaction" },
+      "samplingLocationRecorded": { "label": "Sampling location recorded" },
+      "multipleSampling": { "label": "Multiple sampling" },
+      "cutLocationMarked": { "label": "Cut location marked" },
+      "destructiveApproval": { "label": "Destructive approval" },
+      "remainingSampleStored": { "label": "Remaining sample stored" },
+      "metallography": { "label": "Metallography" },
+      "semEds": { "label": "SEM-EDS" },
+      "xrf": { "label": "XRF" },
+      "xrd": { "label": "XRD" },
+      "hardnessTest": { "label": "Hardness test" },
+      "carbonSulfurAnalysis": { "label": "C/S analysis" },
+      "oxideConversion": { "label": "Oxide conversion" },
+      "caoSio2Checked": { "label": "CaO/SiO2 checked" },
+      "amsSample": { "label": "AMS sample" },
+      "archaeomagneticSample": { "label": "Archaeomagnetic sample" },
+      "woodSpeciesAnalysis": { "label": "Wood-species analysis" },
+      "analysisFeedbackRecorded": { "label": "Analysis feedback recorded" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean iron-sample analysis planning checks for linking field observation, sampling position, destructive preparation, analysis methods, oxide interpretation, dating, wood species, and feedback"
+  },
   "KoreanFieldwork-personalNotebookArchive": {
     "values": {
       "personalNotebookWritten": {

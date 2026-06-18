@@ -61,16 +61,20 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.fields.pitDwellingFloorFacility.inputType).toBe('checkboxes');
         expect(featureForm.fields.pitDwellingFireEvidence.inputType).toBe('checkboxes');
         expect(featureForm.fields.pitDwellingOverlapSequence.inputType).toBe('checkboxes');
+        expect(featureForm.fields.ironProcessEvidence.inputType).toBe('checkboxes');
+        expect(featureForm.fields.ironFurnaceStructure.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.chronologyArgument.inputType).toBe('checkboxes');
         expect(findForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
         expect(findForm.fields.artifactHandlingWorkflow.inputType).toBe('checkboxes');
         expect(findForm.fields.artifactQuantityBasis.inputType).toBe('checkboxes');
         expect(findForm.fields.storageEnvironmentControl.inputType).toBe('checkboxes');
+        expect(findForm.fields.ironResidueSubtype.inputType).toBe('checkboxes');
         expect(findForm.fields.typologyArgument.inputType).toBe('checkboxes');
         expect(findForm.fields.chronologyArgument.inputType).toBe('checkboxes');
         expect(findForm.fields.assemblageRelation.inputType).toBe('checkboxes');
         expect(sampleForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
+        expect(sampleForm.fields.ironSampleAnalysisPlan.inputType).toBe('checkboxes');
         expect(featureForm.fields.firstExposureRecord.inputType).toBe('checkboxes');
         expect(config.forms['FeatureSegment:default'].fields.firstExposureRecord.inputType).toBe('checkboxes');
         expect(featureForm.fields.fieldOnlyMissingCheck.mandatory).toBe(true);
@@ -146,12 +150,15 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-pitDwellingFireEvidence');
         expect(featureForm.valuelists.pitDwellingOverlapSequence)
             .toBe('KoreanFieldwork-pitDwellingOverlapSequence');
+        expect(featureForm.valuelists.ironProcessEvidence).toBe('KoreanFieldwork-ironProcessEvidence');
+        expect(featureForm.valuelists.ironFurnaceStructure).toBe('KoreanFieldwork-ironFurnaceStructure');
         expect(featureSegmentForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
         expect(featureSegmentForm.valuelists.chronologyArgument).toBe('KoreanFieldwork-chronologyArgument');
         expect(findForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
         expect(findForm.valuelists.artifactHandlingWorkflow).toBe('KoreanFieldwork-artifactHandlingWorkflow');
         expect(findForm.valuelists.artifactQuantityBasis).toBe('KoreanFieldwork-artifactQuantityBasis');
         expect(findForm.valuelists.storageEnvironmentControl).toBe('KoreanFieldwork-storageEnvironmentControl');
+        expect(findForm.valuelists.ironResidueSubtype).toBe('KoreanFieldwork-ironResidueSubtype');
         expect(findForm.valuelists.typologyArgument).toBe('KoreanFieldwork-typologyArgument');
         expect(findForm.valuelists.chronologyArgument).toBe('KoreanFieldwork-chronologyArgument');
         expect(findForm.valuelists.assemblageRelation).toBe('KoreanFieldwork-assemblageRelation');
@@ -167,6 +174,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.valuelists.termSearchMapping).toBe('KoreanFieldwork-termSearchMapping');
         expect(sampleForm.valuelists.sampleCollectionHandling)
             .toBe('KoreanFieldwork-sampleCollectionHandling');
+        expect(sampleForm.valuelists.ironSampleAnalysisPlan).toBe('KoreanFieldwork-ironSampleAnalysisPlan');
         expect(drawingForm.valuelists.mediaEvidenceRole).toBe('KoreanFieldwork-mediaEvidenceRole');
         expect(drawingForm.valuelists.mediaQualityCheck).toBe('KoreanFieldwork-mediaQualityCheck');
         expect(drawingForm.valuelists.digitalSourcePreservation)
@@ -216,6 +224,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Pit dwelling exposure and baulk');
         expect(languages.en.categories.Feature.fields.pitDwellingFireEvidence.label)
             .toBe('Burned pit dwelling evidence');
+        expect(languages.en.categories.Feature.fields.ironProcessEvidence.label).toBe('Iron process evidence');
+        expect(languages.en.categories.Feature.fields.ironFurnaceStructure.label).toBe('Iron furnace structure');
         expect(languages.en.categories.Feature.fields.fortificationHiddenGateFunction.label).toBe('Hidden gate function');
         expect(languages.en.categories.Feature.fields.fortificationParapetDetail.label).toBe('Parapet detail');
         expect(languages.en.categories.Feature.fields.termAuthorityStatus.label).toBe('Term authority status');
@@ -227,11 +237,14 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.Find.fields.artifactQuantityBasis.label).toBe('Artifact quantity basis');
         expect(languages.en.categories.Find.fields.storageEnvironmentControl.label)
             .toBe('Storage environment control');
+        expect(languages.en.categories.Find.fields.ironResidueSubtype.label).toBe('Iron residue subtype');
         expect(languages.en.categories.Find.fields.typologyArgument.label).toBe('Typology argument');
         expect(languages.en.categories.Find.fields.chronologyArgument.label).toBe('Chronology argument');
         expect(languages.en.categories.Find.fields.assemblageRelation.label).toBe('Assemblage relation');
         expect(languages.en.categories.Sample.fields.sampleCollectionHandling.label)
             .toBe('Sample collection handling');
+        expect(languages.en.categories.Sample.fields.ironSampleAnalysisPlan.label)
+            .toBe('Iron sample analysis plan');
         expect(languages.en.categories.Drawing.fields.mediaEvidenceRole.label)
             .toBe('Media evidence role');
         expect(languages.en.categories.Photo.fields.mediaQualityCheck.label)
@@ -293,6 +306,16 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-pitDwellingOverlapSequence']
             .values.relationshipUnresolved.label)
             .toBe('Relationship unresolved');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-ironProcessEvidence']
+            .values.metallurgicalAnalysisNeeded.label)
+            .toBe('Metallurgical analysis needed');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-ironFurnaceStructure']
+            .values.floorNotConfusedWithCut.label)
+            .toBe('Floor not confused with cut');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-ironResidueSubtype'].values.furnaceInternalSlag.label)
+            .toBe('Furnace-internal slag');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-ironSampleAnalysisPlan'].values.oxideConversion.label)
+            .toBe('Oxide conversion');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-fortificationHiddenGateFunction'].values.supplyTransport.label)
             .toBe('Military supply transport');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-fortificationParapetDetail'].values.nearGunOpening.label)

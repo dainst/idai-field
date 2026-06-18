@@ -500,6 +500,103 @@
     },
     "description": "중복 수혈건물지에서 1차·2차 평면제토, 단면조사, 과다 트렌치 위험, 후행·선행 조사순서와 미해결 관계를 기록하기 위한 목록"
   },
+  "KoreanFieldwork-ironProcessEvidence": {
+    "values": {
+      "miningLead": { "label": "채광 단서" },
+      "beneficiation": { "label": "선광" },
+      "roasting": { "label": "배소" },
+      "smeltingCandidate": { "label": "제련 후보" },
+      "refiningSmithingCandidate": { "label": "정련단야 후보" },
+      "forgingCandidate": { "label": "단야 후보" },
+      "meltingCastingCandidate": { "label": "용해·주조 후보" },
+      "steelmakingCandidate": { "label": "초강 후보" },
+      "processMixed": { "label": "공정 혼재" },
+      "structureEvidence": { "label": "구조 근거" },
+      "residueEvidence": { "label": "부산물 근거" },
+      "metallurgicalAnalysisNeeded": { "label": "금속학 분석 필요" },
+      "analysisConfirmed": { "label": "분석 후 확정" },
+      "alternativeProcessOpen": { "label": "대안 공정 열림" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "제철유구를 노 형태만으로 확정하지 않고 제련, 단야, 용해·주조, 초강, 공정 혼재, 구조 근거, 부산물 근거, 분석 후 확정을 분리하기 위한 목록"
+  },
+  "KoreanFieldwork-ironFurnaceStructure": {
+    "values": {
+      "furnacePlanRecorded": { "label": "노 평면 기록" },
+      "furnaceSectionRecorded": { "label": "노 단면 기록" },
+      "wallRecorded": { "label": "벽체 기록" },
+      "floorNotConfusedWithCut": { "label": "노바닥·굴광면 구분" },
+      "undergroundMoistureControl": { "label": "지하 방습시설" },
+      "tuyereOpening": { "label": "송풍구" },
+      "tuyereFragment": { "label": "송풍관편" },
+      "tuyereCurvature": { "label": "송풍관 곡률" },
+      "slagTappingOpening": { "label": "배재구" },
+      "stokeholeOrHearthMouth": { "label": "아궁이·노구" },
+      "repairTrace": { "label": "보수흔" },
+      "reuseTrace": { "label": "재사용흔" },
+      "rawMaterialStorage": { "label": "원료 저장소" },
+      "fuelStorage": { "label": "연료 저장소" },
+      "additiveEvidence": { "label": "첨가제 근거" },
+      "roastingFeatureNearby": { "label": "배소시설 인접" },
+      "wasteDepositLinked": { "label": "폐기장 연결" },
+      "workshopLinked": { "label": "공방 연결" },
+      "ritualDepositCandidate": { "label": "제의유구 후보" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "제철 노의 평면, 단면, 벽체, 바닥, 송풍·배재 구조, 보수·재사용, 원료·연료 저장, 폐기장과 공방 연결을 현장에서 빠뜨리지 않기 위한 목록"
+  },
+  "KoreanFieldwork-ironResidueSubtype": {
+    "values": {
+      "ore": { "label": "철광석" },
+      "ironSand": { "label": "사철" },
+      "charcoal": { "label": "목탄" },
+      "furnaceWall": { "label": "노벽" },
+      "tuyere": { "label": "송풍관" },
+      "tuyereNozzle": { "label": "송풍구편" },
+      "furnaceBottom": { "label": "노바닥재" },
+      "tapSlag": { "label": "유출재" },
+      "furnaceInternalSlag": { "label": "노내재" },
+      "bloomFragment": { "label": "철괴편" },
+      "reducedLump": { "label": "환원괴" },
+      "partiallyReducedLump": { "label": "반환원괴" },
+      "pigIronLump": { "label": "선철괴" },
+      "smithingSlag": { "label": "단야재" },
+      "forgingScale": { "label": "단조박편" },
+      "sphericalHammerscale": { "label": "입상재" },
+      "glassySlag": { "label": "유리질철재" },
+      "additiveCandidate": { "label": "첨가제 후보" },
+      "moldFragment": { "label": "용범편" },
+      "crucibleCandidate": { "label": "도가니 후보" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "제철 관련 유물과 부산물을 철광석, 사철, 목탄, 노벽, 송풍관, 유출재, 노내재, 환원괴, 단야재, 단조박편, 입상재, 용범편처럼 공정 해석 단위로 나누기 위한 목록"
+  },
+  "KoreanFieldwork-ironSampleAnalysisPlan": {
+    "values": {
+      "visualRecord": { "label": "육안관찰 기록" },
+      "sizeWeightColor": { "label": "크기·무게·색상" },
+      "magnetReaction": { "label": "자석반응" },
+      "samplingLocationRecorded": { "label": "채취 위치 기록" },
+      "multipleSampling": { "label": "복수 시료 채취" },
+      "cutLocationMarked": { "label": "절단 위치 표시" },
+      "destructiveApproval": { "label": "파괴분석 승인" },
+      "remainingSampleStored": { "label": "잔여 시료 보관" },
+      "metallography": { "label": "금속현미경" },
+      "semEds": { "label": "SEM-EDS" },
+      "xrf": { "label": "XRF" },
+      "xrd": { "label": "XRD" },
+      "hardnessTest": { "label": "경도시험" },
+      "carbonSulfurAnalysis": { "label": "C/S 분석" },
+      "oxideConversion": { "label": "산화물 변환" },
+      "caoSio2Checked": { "label": "CaO/SiO2 검토" },
+      "amsSample": { "label": "AMS 시료" },
+      "archaeomagneticSample": { "label": "고고지자기 시료" },
+      "woodSpeciesAnalysis": { "label": "수종분석" },
+      "analysisFeedbackRecorded": { "label": "분석 환류 기록" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "제철 시료를 분석기관에 보내기 전에 육안관찰, 자석반응, 채취 위치, 절단 위치, 파괴 승인, 분석법, 산화물 해석, 연대·수종분석과 결과 환류를 함께 관리하기 위한 목록"
+  },
   "KoreanFieldwork-personalNotebookArchive": {
     "values": {
       "personalNotebookWritten": {

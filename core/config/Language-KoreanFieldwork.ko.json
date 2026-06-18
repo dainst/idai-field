@@ -189,6 +189,12 @@
         "pitDwellingOverlapSequence": {
           "label": "중복 수혈건물지 선후"
         },
+        "ironProcessEvidence": {
+          "label": "제철 공정 근거"
+        },
+        "ironFurnaceStructure": {
+          "label": "제철 노 구조"
+        },
         "fortificationGateFacility": {
           "label": "성문·방어 부속시설"
         },
@@ -281,6 +287,9 @@
         "storageEnvironmentControl": {
           "label": "수장환경 관리"
         },
+        "ironResidueSubtype": {
+          "label": "제철 부산물 세분"
+        },
         "recordCreationTiming": {
           "label": "기록 생성 시점"
         },
@@ -314,6 +323,9 @@
         },
         "sampleCollectionHandling": {
           "label": "시료 채취·보관"
+        },
+        "ironSampleAnalysisPlan": {
+          "label": "제철 시료 분석계획"
         },
         "verificationState": {
           "label": "검증상태"

@@ -189,6 +189,12 @@
         "pitDwellingOverlapSequence": {
           "label": "Overlapping pit dwelling sequence"
         },
+        "ironProcessEvidence": {
+          "label": "Iron process evidence"
+        },
+        "ironFurnaceStructure": {
+          "label": "Iron furnace structure"
+        },
         "fortificationGateFacility": {
           "label": "Gate and defensive components"
         },
@@ -281,6 +287,9 @@
         "storageEnvironmentControl": {
           "label": "Storage environment control"
         },
+        "ironResidueSubtype": {
+          "label": "Iron residue subtype"
+        },
         "recordCreationTiming": {
           "label": "Record creation timing"
         },
@@ -314,6 +323,9 @@
         },
         "sampleCollectionHandling": {
           "label": "Sample collection handling"
+        },
+        "ironSampleAnalysisPlan": {
+          "label": "Iron sample analysis plan"
         },
         "verificationState": {
           "label": "Verification state"

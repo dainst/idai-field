@@ -541,6 +541,14 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "ironProcessEvidence": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "ironFurnaceStructure": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "fortificationGateFacility": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -594,6 +602,8 @@
         "pitDwellingFloorFacility": "KoreanFieldwork-pitDwellingFloorFacility",
         "pitDwellingFireEvidence": "KoreanFieldwork-pitDwellingFireEvidence",
         "pitDwellingOverlapSequence": "KoreanFieldwork-pitDwellingOverlapSequence",
+        "ironProcessEvidence": "KoreanFieldwork-ironProcessEvidence",
+        "ironFurnaceStructure": "KoreanFieldwork-ironFurnaceStructure",
         "fortificationGateFacility": "KoreanFieldwork-fortificationGateFacility",
         "fortificationHiddenGateFunction": "KoreanFieldwork-fortificationHiddenGateFunction",
         "fortificationParapetDetail": "KoreanFieldwork-fortificationParapetDetail",
@@ -636,6 +646,8 @@
             "pitDwellingFloorFacility",
             "pitDwellingFireEvidence",
             "pitDwellingOverlapSequence",
+            "ironProcessEvidence",
+            "ironFurnaceStructure",
             "fortificationGateFacility",
             "fortificationHiddenGateFunction",
             "fortificationParapetDetail",
@@ -805,6 +817,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "ironResidueSubtype": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "recordCreationTiming": {
           "inputType": "dropdown",
           "constraintIndexed": true
@@ -835,6 +851,7 @@
         "artifactHandlingWorkflow": "KoreanFieldwork-artifactHandlingWorkflow",
         "artifactQuantityBasis": "KoreanFieldwork-artifactQuantityBasis",
         "storageEnvironmentControl": "KoreanFieldwork-storageEnvironmentControl",
+        "ironResidueSubtype": "KoreanFieldwork-ironResidueSubtype",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "termRelation": "KoreanFieldwork-termRelation",
         "termSearchMapping": "KoreanFieldwork-termSearchMapping",
@@ -869,6 +886,7 @@
             "artifactHandlingWorkflow",
             "artifactQuantityBasis",
             "storageEnvironmentControl",
+            "ironResidueSubtype",
             "recordCreationTiming",
             "verificationState",
             "termRelation",
@@ -928,6 +946,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "ironSampleAnalysisPlan": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "verificationState": {
           "inputType": "dropdown",
           "constraintIndexed": true
@@ -939,6 +961,7 @@
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "samplePurpose": "KoreanFieldwork-samplePurpose",
         "sampleCollectionHandling": "KoreanFieldwork-sampleCollectionHandling",
+        "ironSampleAnalysisPlan": "KoreanFieldwork-ironSampleAnalysisPlan",
         "verificationState": "KoreanFieldwork-verificationState"
       },
       "groups": [
@@ -967,6 +990,7 @@
           "fields": [
             "samplePurpose",
             "sampleCollectionHandling",
+            "ironSampleAnalysisPlan",
             "fieldRecordQuality",
             "fieldOnlyMissingCheck",
             "recordCreationTiming",

@@ -1994,6 +1994,95 @@
     },
     "description": "목탄·목재, TL/OSL, 고고지자기, 화분·규조·식물규산체, 수침목재, 인골 DNA, 탄화곡물처럼 채취 순간의 빛·수분·오염·위치 조건이 분석 가능성을 바꾸는 시료를 관리하기 위한 목록"
   },
+  "KoreanFieldwork-cultivationFeatureContext": {
+    "values": {
+      "hillslopeHigh": { "label": "구릉지 고지" },
+      "hillslopeLow": { "label": "구릉지 저지" },
+      "alluvialHigh": { "label": "충적지 고지" },
+      "alluvialLow": { "label": "충적지 저지" },
+      "naturalLeveeCandidate": { "label": "자연제방 후보" },
+      "backswampCandidate": { "label": "배후습지 후보" },
+      "valleyBottomCandidate": { "label": "곡저부 후보" },
+      "landReadjustmentImpact": { "label": "경지정리·형질변경 영향" },
+      "historicalAerialPhotoChecked": { "label": "과거 항공사진 확인" },
+      "modernFieldPatternNotAssumed": { "label": "현대 경작지 모양으로 단정 금지" },
+      "paddyAndDryFieldCoexist": { "label": "논·밭 공존 가능" },
+      "irrigationFacilityLinked": { "label": "관개시설 연결" },
+      "waterManagementFirst": { "label": "물관리 방식 우선" },
+      "cropNameNotClassification": { "label": "작물명으로 논밭 확정 금지" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "경작유구의 입지, 충적지 조건, 과거 항공사진, 관개시설, 물관리 방식을 작물명 단정과 분리해 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-cultivationTrialTrenchStrategy": {
+    "values": {
+      "furrowRidgeCrossTrench": { "label": "고랑·이랑 직교 트렌치" },
+      "paddyLeveeCrossTrench": { "label": "논둑 직교 트렌치" },
+      "surfaceHeightDifferenceChecked": { "label": "논면·경작면 고저차 확인" },
+      "layerBoundaryCrossed": { "label": "층 경계 관통" },
+      "valleyPressureReduced": { "label": "곡저부 토압 완화" },
+      "auxiliaryTrenchAdded": { "label": "보조 트렌치 추가" },
+      "distributionExtentChecked": { "label": "분포 범위 확인" },
+      "costDurationEstimated": { "label": "기간·비용 산정" },
+      "safetySecured": { "label": "안전 확보" },
+      "contourDirectionAdjusted": { "label": "등고선 방향 보정" },
+      "waterFlowDirectionRecorded": { "label": "물흐름 방향 기록" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "경작유구 시굴에서 트렌치 방향, 경작면 고저차, 보조 트렌치, 분포 범위, 기간·비용, 안전을 함께 관리하기 위한 목록"
+  },
+  "KoreanFieldwork-cultivationFeatureEvidence": {
+    "values": {
+      "paddyLevee": { "label": "논둑" },
+      "paddySurface": { "label": "논 경작면" },
+      "dryFieldRidgeFurrow": { "label": "밭 두둑·고랑" },
+      "functionalSurface": { "label": "기능면" },
+      "postUseDeposit": { "label": "기능 후 퇴적층" },
+      "workedBottomSurface": { "label": "저면 가공면" },
+      "laminaPresentNaturalDeposit": { "label": "라미나 있음·자연퇴적 후보" },
+      "laminaAbsentCaution": { "label": "라미나 부재 주의" },
+      "heterogeneousSoilBlock": { "label": "이질토 블록" },
+      "singleGrainStructure": { "label": "단립구조" },
+      "footprints": { "label": "발자국" },
+      "cultivationToolMark": { "label": "경작구흔" },
+      "cropRootTrace": { "label": "작물 뿌리흔" },
+      "weedSeedCandidate": { "label": "밭잡초 종자 후보" },
+      "ironManganeseSegregation": { "label": "산화철·망간 분리집적" },
+      "plantOpalEvidence": { "label": "식물규산체 근거" },
+      "soilMicromorphologyNeeded": { "label": "토양미세형태 필요" },
+      "floodRapidBurial": { "label": "홍수 일시매몰" },
+      "notAbsoluteCriterion": { "label": "절대 기준 아님" },
+      "expertJudgementNeeded": { "label": "전문가 판단 필요" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "논둑·논면, 두둑·고랑, 기능면, 기능 후 퇴적층, 토양구조, 식물 흔적, 산화철·망간, 단일 기준 해석 위험을 함께 남기기 위한 경작유구 판정 목록"
+  },
+  "KoreanFieldwork-cultivationChronologyAnalysis": {
+    "values": {
+      "artifactsInCultivationLayer": { "label": "경작층 포함 유물" },
+      "lastFindDateReviewed": { "label": "최후 출토유물 연대 검토" },
+      "trenchWallFindsInsufficient": { "label": "트렌치 벽면 유물 부족" },
+      "selectivePlanExcavation": { "label": "선별 평면조사" },
+      "amsAlternativeNeeded": { "label": "AMS 대안 필요" },
+      "oslSampleNeeded": { "label": "OSL 시료 필요" },
+      "phytolithSampleNeeded": { "label": "식물규산체 시료 필요" },
+      "plantRemainSampleNeeded": { "label": "식물유체 시료 필요" },
+      "soilMicromorphologySampleNeeded": { "label": "토양미세형태 시료 필요" },
+      "fattyAcidSampleNeeded": { "label": "지방산 시료 필요" },
+      "analysisQuestionRecorded": { "label": "분석 질문 기록" },
+      "expectedResultRecorded": { "label": "예상 결과 기록" },
+      "sampleLocationRecorded": { "label": "시료 위치 기록" },
+      "sampleRepresentativenessChecked": { "label": "시료 대표성 확인" },
+      "joseonSelectiveExcavation": { "label": "조선시대 선별조사" },
+      "undatedExcavationDeferred": { "label": "시대불명 발굴 보류" },
+      "relationshipWithDwelling": { "label": "주거지와 선후관계" },
+      "relationshipWithOutdoorHearth": { "label": "야외노지와 관계" },
+      "relationshipWithPitFeature": { "label": "수혈유구와 관계" },
+      "munamriLayerCorrelation": { "label": "문암리식 층위대비" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "경작유구의 유물 연대, 선택적 평면 노출, AMS·OSL·환경시료, 분석 질문, 주거지·노지·수혈 관계를 연대 판단과 묶어 관리하기 위한 목록"
+  },
   "KoreanFieldwork-fortificationGateFacility": {
     "values": {
       "entranceGate": {

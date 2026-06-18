@@ -13748,6 +13748,95 @@
     },
     "description": "Korean field notebook handling controls for samples whose analytical value depends on light, moisture, contamination, and mapped collection context"
   },
+  "KoreanFieldwork-cultivationFeatureContext": {
+    "values": {
+      "hillslopeHigh": { "label": "Hillslope high position" },
+      "hillslopeLow": { "label": "Hillslope low position" },
+      "alluvialHigh": { "label": "Alluvial high position" },
+      "alluvialLow": { "label": "Alluvial low position" },
+      "naturalLeveeCandidate": { "label": "Natural levee candidate" },
+      "backswampCandidate": { "label": "Backswamp candidate" },
+      "valleyBottomCandidate": { "label": "Valley-bottom candidate" },
+      "landReadjustmentImpact": { "label": "Land readjustment impact" },
+      "historicalAerialPhotoChecked": { "label": "Historical aerial photo checked" },
+      "modernFieldPatternNotAssumed": { "label": "Modern field pattern not assumed" },
+      "paddyAndDryFieldCoexist": { "label": "Paddy and dry field coexist" },
+      "irrigationFacilityLinked": { "label": "Irrigation facility linked" },
+      "waterManagementFirst": { "label": "Water management first" },
+      "cropNameNotClassification": { "label": "Crop name not classification" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Cultivation-feature context checks for Korean fieldwork, keeping landform, alluvial setting, historical aerial-photo evidence, irrigation, and water-management mode separate from crop-name assumptions"
+  },
+  "KoreanFieldwork-cultivationTrialTrenchStrategy": {
+    "values": {
+      "furrowRidgeCrossTrench": { "label": "Furrow/ridge cross-trench" },
+      "paddyLeveeCrossTrench": { "label": "Paddy levee cross-trench" },
+      "surfaceHeightDifferenceChecked": { "label": "Surface height difference checked" },
+      "layerBoundaryCrossed": { "label": "Layer boundary crossed" },
+      "valleyPressureReduced": { "label": "Valley pressure reduced" },
+      "auxiliaryTrenchAdded": { "label": "Auxiliary trench added" },
+      "distributionExtentChecked": { "label": "Distribution extent checked" },
+      "costDurationEstimated": { "label": "Cost and duration estimated" },
+      "safetySecured": { "label": "Safety secured" },
+      "contourDirectionAdjusted": { "label": "Contour direction adjusted" },
+      "waterFlowDirectionRecorded": { "label": "Water-flow direction recorded" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Cultivation-feature trial trench strategy for recording trench direction, surface height checks, auxiliary trenches, distribution extent, schedule, cost, and safety"
+  },
+  "KoreanFieldwork-cultivationFeatureEvidence": {
+    "values": {
+      "paddyLevee": { "label": "Paddy levee" },
+      "paddySurface": { "label": "Paddy surface" },
+      "dryFieldRidgeFurrow": { "label": "Dry-field ridge and furrow" },
+      "functionalSurface": { "label": "Functional surface" },
+      "postUseDeposit": { "label": "Post-use deposit" },
+      "workedBottomSurface": { "label": "Worked bottom surface" },
+      "laminaPresentNaturalDeposit": { "label": "Lamina present, natural deposit" },
+      "laminaAbsentCaution": { "label": "Lamina absent caution" },
+      "heterogeneousSoilBlock": { "label": "Heterogeneous soil block" },
+      "singleGrainStructure": { "label": "Single-grain structure" },
+      "footprints": { "label": "Footprints" },
+      "cultivationToolMark": { "label": "Cultivation tool mark" },
+      "cropRootTrace": { "label": "Crop root trace" },
+      "weedSeedCandidate": { "label": "Weed seed candidate" },
+      "ironManganeseSegregation": { "label": "Iron-manganese segregation" },
+      "plantOpalEvidence": { "label": "Plant-opal evidence" },
+      "soilMicromorphologyNeeded": { "label": "Soil micromorphology needed" },
+      "floodRapidBurial": { "label": "Flood rapid burial" },
+      "notAbsoluteCriterion": { "label": "Not an absolute criterion" },
+      "expertJudgementNeeded": { "label": "Expert judgement needed" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Cultivation-feature evidence list for separating paddy and dry-field structures, functional surfaces, deposits, soil structure, botanical traces, Fe-Mn evidence, and cautions against single-criterion interpretation"
+  },
+  "KoreanFieldwork-cultivationChronologyAnalysis": {
+    "values": {
+      "artifactsInCultivationLayer": { "label": "Artifacts in cultivation layer" },
+      "lastFindDateReviewed": { "label": "Latest find date reviewed" },
+      "trenchWallFindsInsufficient": { "label": "Trench-wall finds insufficient" },
+      "selectivePlanExcavation": { "label": "Selective plan excavation" },
+      "amsAlternativeNeeded": { "label": "AMS alternative needed" },
+      "oslSampleNeeded": { "label": "OSL sample needed" },
+      "phytolithSampleNeeded": { "label": "Phytolith sample needed" },
+      "plantRemainSampleNeeded": { "label": "Plant-remain sample needed" },
+      "soilMicromorphologySampleNeeded": { "label": "Soil micromorphology sample needed" },
+      "fattyAcidSampleNeeded": { "label": "Fatty-acid sample needed" },
+      "analysisQuestionRecorded": { "label": "Analysis question recorded" },
+      "expectedResultRecorded": { "label": "Expected result recorded" },
+      "sampleLocationRecorded": { "label": "Sample location recorded" },
+      "sampleRepresentativenessChecked": { "label": "Sample representativeness checked" },
+      "joseonSelectiveExcavation": { "label": "Joseon selective excavation" },
+      "undatedExcavationDeferred": { "label": "Undated excavation deferred" },
+      "relationshipWithDwelling": { "label": "Relationship with dwelling" },
+      "relationshipWithOutdoorHearth": { "label": "Relationship with outdoor hearth" },
+      "relationshipWithPitFeature": { "label": "Relationship with pit feature" },
+      "munamriLayerCorrelation": { "label": "Munam-ri layer correlation" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Cultivation-feature chronology and analysis list for tying artifacts, selective exposure, AMS/OSL and environmental samples, analytical questions, and feature relationships to the dating argument"
+  },
   "KoreanFieldwork-fortificationGateFacility": {
     "values": {
       "entranceGate": {

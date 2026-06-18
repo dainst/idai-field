@@ -88,6 +88,7 @@ C:\Users\nuri9\Downloads\조사방법론
    고분·분묘 요구는 `KoreanFieldwork-tombMoundInvestigation`, `KoreanFieldwork-tombBurialStructureInvestigation`, `KoreanFieldwork-graveGoodsRitualContext`, `KoreanFieldwork-humanRemainsRecoveryAnalysis`로 추가하고 `Feature`, `Find`, `Sample` 화면에 나누어 배치했다.
    패총·신석기·고환경 요구는 `KoreanFieldwork-shellMiddenStratigraphy`, `KoreanFieldwork-shellMiddenSettlementContext`, `KoreanFieldwork-neolithicSubsistenceEvidence`, `KoreanFieldwork-shellMiddenSamplingStrategy`, `KoreanFieldwork-paleoenvironmentProxySampling`으로 추가하고 `Feature`, `Find`, `Sample` 화면에 나누어 배치했다.
    청동기 주거·고인돌·환호·토기 용어 요구는 `KoreanFieldwork-bronzeAgeDwellingEvidence`, `KoreanFieldwork-dolmenStructureContext`, `KoreanFieldwork-bronzeAgeEnclosureInterpretation`, `KoreanFieldwork-bronzeAgePotteryTerminology`로 추가하고 `Feature`와 `Find` 화면에 나누어 배치했다.
+   경작유구·논밭 조사 요구는 `KoreanFieldwork-cultivationFeatureContext`, `KoreanFieldwork-cultivationTrialTrenchStrategy`, `KoreanFieldwork-cultivationFeatureEvidence`, `KoreanFieldwork-cultivationChronologyAnalysis`로 추가하고 `Feature` 화면에 배치했다. 입지·물관리, 시굴 트렌치 방향, 판정 근거, 연대·분석 질문을 나누어 경작층이라는 단일 해석값으로 접히지 않게 했다.
 6. 샘플 조사 프로젝트를 만들어 고분, 패총, 제철유적 각각의 입력 흐름을 검증한다.
 
 ## 주의

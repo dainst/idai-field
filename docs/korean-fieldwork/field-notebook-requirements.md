@@ -58,6 +58,8 @@
 
 충적지·토양도 보강분은 `Survey`에 `alluvialLandformSurvey`와 `soilMapPredictionVerification`을 배치해 자연제방·배후습지·구하도·구해안선·근현대 형질변경, 보링·주상도, 표면유물 부재의 한계, 토양통·대토양군·정밀토양도 반영깊이, 실제 시굴 결과와 예측 수정 사유를 지표조사 단계에서 남기게 했다. `FeatureSegment`에는 `alluvialLayerConceptAudit`, `alluvialSurfaceAttribution`, `alluvialFormationProcess`를 두어 a+b층 세트, 토양층위/퇴적층위/고고학 층명 구분, 구지표면·생활면·유구축조면·검출면, b층 상면 검출, 암색대·이질토 블록·라미나·홍수퇴적 같은 형성과정 근거를 층 세부단위에서 바로 점검한다.
 
+경작유구 보강분은 `Feature`에 `cultivationFeatureContext`, `cultivationTrialTrenchStrategy`, `cultivationFeatureEvidence`, `cultivationChronologyAnalysis`를 배치했다. 입지·맥락에서는 구릉지/충적지 고저, 자연제방·배후습지·곡저부 후보, 경지정리와 과거 항공사진, 관개시설, 물관리 방식을 남기고, 작물명만으로 논·밭을 확정하지 않게 했다. 시굴 트렌치에서는 고랑·이랑 또는 논둑과 직교하는지, 경작면 고저차와 층 경계를 확인했는지, 보조 트렌치·분포 범위·기간·안전을 기록한다. 판정 근거는 논둑·논면, 밭 두둑·고랑, 기능면과 기능 후 퇴적층, 라미나·이질토 블록·단립구조·경작구흔·뿌리흔·식물규산체·산화철망간을 분리한다. 연대·분석은 경작층 포함 유물, 선별 평면조사, AMS/OSL, 식물규산체·식물유체·토양미세형태·지방산 시료, 주거지·야외노지·수혈과의 관계를 한 흐름에서 추적한다.
+
 이 구현 단위가 먼저 들어가야 각 유적 유형별 템플릿을 만들 때 기록이 흩어지지 않는다.
 
 ## 검증 질문

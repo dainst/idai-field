@@ -222,6 +222,18 @@
         "bronzeAgeEnclosureInterpretation": {
           "label": "청동기 환호 판단"
         },
+        "cultivationFeatureContext": {
+          "label": "경작유구 입지·맥락"
+        },
+        "cultivationTrialTrenchStrategy": {
+          "label": "경작유구 시굴 트렌치"
+        },
+        "cultivationFeatureEvidence": {
+          "label": "경작유구 판정 근거"
+        },
+        "cultivationChronologyAnalysis": {
+          "label": "경작유구 연대·분석"
+        },
         "fortificationGateFacility": {
           "label": "성문·방어 부속시설"
         },

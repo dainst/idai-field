@@ -222,6 +222,18 @@
         "bronzeAgeEnclosureInterpretation": {
           "label": "Bronze Age enclosure interpretation"
         },
+        "cultivationFeatureContext": {
+          "label": "Cultivation feature context"
+        },
+        "cultivationTrialTrenchStrategy": {
+          "label": "Cultivation trial trench strategy"
+        },
+        "cultivationFeatureEvidence": {
+          "label": "Cultivation feature evidence"
+        },
+        "cultivationChronologyAnalysis": {
+          "label": "Cultivation chronology and analysis"
+        },
         "fortificationGateFacility": {
           "label": "Gate and defensive components"
         },

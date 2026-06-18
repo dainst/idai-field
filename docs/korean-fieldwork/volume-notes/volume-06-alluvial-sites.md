@@ -307,3 +307,5 @@ a층과 b층의 경계는 지표면이 아니다. 그것은 토양화가 미친 
 유물보존능 화면은 유물 재질별로 분리되어야 한다. 토기·자기, 골격, 목재, 금속, 동식물유체는 같은 토양에서도 보존 조건이 다르므로, 하나의 “보존상태” 값보다 토양환경과 재질별 보존 가능성을 나누어 기록하는 편이 한국식 야장에 맞다.
 
 이번 구현에서는 이 요구 중 지표조사와 층 세부단위에서 바로 써야 하는 값을 먼저 내렸다. `Survey`에는 `alluvialLandformSurvey`와 `soilMapPredictionVerification`을 두어 자연제방·배후습지·구하도·구해안선·근현대 형질변경, 보링·주상도, 토양통·대토양군, 정밀토양도 반영깊이, 주변 유적·주민 제보, 실제 시굴·발굴 결과와 예측 수정 사유를 관리한다. `FeatureSegment`에는 `alluvialLayerConceptAudit`, `alluvialSurfaceAttribution`, `alluvialFormationProcess`를 두어 a+b층 세트, 토양층위·퇴적층위·고고학 층명, 구지표면·생활면·유구축조면·검출면, b층 상면 검출, 삭평 후보, 토양화에 따른 검출면 하강, 암색대·매몰고토양·이질토 블록·라미나·홍수퇴적 근거를 분리한다. 고환경 분석 결과와 재질별 유물보존능은 이후 `Sample`과 분석 환류 화면에서 더 세분한다.
+
+논·밭유구는 충적지 층서와 직접 맞물리므로 별도 `Feature` 체크 목록으로도 내렸다. `cultivationFeatureContext`는 자연제방·배후습지·곡저부 후보와 경지정리 영향을, `cultivationTrialTrenchStrategy`는 고랑·이랑/논둑 직교 트렌치와 경작면 고저차 확인을, `cultivationFeatureEvidence`는 논둑·논면·두둑·고랑·기능면·라미나·이질토 블록·산화철망간을, `cultivationChronologyAnalysis`는 경작층 유물·AMS/OSL·식물규산체·토양미세형태·지방산 시료와 주변 유구 관계를 관리한다. 이로써 “경작층”이라는 층명 하나가 토양층위·퇴적층위·사용면 판단을 대신하지 않게 한다.

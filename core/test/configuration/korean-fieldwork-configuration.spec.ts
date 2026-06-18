@@ -72,6 +72,10 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.fields.bronzeAgeDwellingEvidence.inputType).toBe('checkboxes');
         expect(featureForm.fields.dolmenStructureContext.inputType).toBe('checkboxes');
         expect(featureForm.fields.bronzeAgeEnclosureInterpretation.inputType).toBe('checkboxes');
+        expect(featureForm.fields.cultivationFeatureContext.inputType).toBe('checkboxes');
+        expect(featureForm.fields.cultivationTrialTrenchStrategy.inputType).toBe('checkboxes');
+        expect(featureForm.fields.cultivationFeatureEvidence.inputType).toBe('checkboxes');
+        expect(featureForm.fields.cultivationChronologyAnalysis.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.chronologyArgument.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.alluvialLayerConceptAudit.inputType).toBe('checkboxes');
@@ -188,6 +192,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-dolmenStructureContext');
         expect(featureForm.valuelists.bronzeAgeEnclosureInterpretation)
             .toBe('KoreanFieldwork-bronzeAgeEnclosureInterpretation');
+        expect(featureForm.valuelists.cultivationFeatureContext)
+            .toBe('KoreanFieldwork-cultivationFeatureContext');
+        expect(featureForm.valuelists.cultivationTrialTrenchStrategy)
+            .toBe('KoreanFieldwork-cultivationTrialTrenchStrategy');
+        expect(featureForm.valuelists.cultivationFeatureEvidence)
+            .toBe('KoreanFieldwork-cultivationFeatureEvidence');
+        expect(featureForm.valuelists.cultivationChronologyAnalysis)
+            .toBe('KoreanFieldwork-cultivationChronologyAnalysis');
         expect(featureSegmentForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
         expect(featureSegmentForm.valuelists.chronologyArgument).toBe('KoreanFieldwork-chronologyArgument');
         expect(featureSegmentForm.valuelists.alluvialLayerConceptAudit)
@@ -297,6 +309,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Dolmen structure context');
         expect(languages.en.categories.Feature.fields.bronzeAgeEnclosureInterpretation.label)
             .toBe('Bronze Age enclosure interpretation');
+        expect(languages.en.categories.Feature.fields.cultivationFeatureContext.label)
+            .toBe('Cultivation feature context');
+        expect(languages.en.categories.Feature.fields.cultivationTrialTrenchStrategy.label)
+            .toBe('Cultivation trial trench strategy');
+        expect(languages.en.categories.Feature.fields.cultivationFeatureEvidence.label)
+            .toBe('Cultivation feature evidence');
+        expect(languages.en.categories.Feature.fields.cultivationChronologyAnalysis.label)
+            .toBe('Cultivation chronology and analysis');
         expect(languages.en.categories.Feature.fields.fortificationHiddenGateFunction.label).toBe('Hidden gate function');
         expect(languages.en.categories.Feature.fields.fortificationParapetDetail.label).toBe('Parapet detail');
         expect(languages.en.categories.Feature.fields.termAuthorityStatus.label).toBe('Term authority status');
@@ -456,6 +476,18 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-bronzeAgeEnclosureInterpretation']
             .values.recutTrace.label)
             .toBe('Recut trace');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-cultivationFeatureContext']
+            .values.waterManagementFirst.label)
+            .toBe('Water management first');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-cultivationTrialTrenchStrategy']
+            .values.furrowRidgeCrossTrench.label)
+            .toBe('Furrow/ridge cross-trench');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-cultivationFeatureEvidence']
+            .values.laminaPresentNaturalDeposit.label)
+            .toBe('Lamina present, natural deposit');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-cultivationChronologyAnalysis']
+            .values.analysisQuestionRecorded.label)
+            .toBe('Analysis question recorded');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-bronzeAgePotteryTerminology']
             .values.aliasMappingRequired.label)
             .toBe('Alias mapping required');
@@ -491,6 +523,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
             .values.retakeOrRedrawNeeded.label)
             .toBe('Retake or redraw needed');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-cultivationFeatureContext']
+            .values.cropNameNotClassification.label)
+            .toBe('작물명으로 논밭 확정 금지');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-fieldRecordQuality'].values.immediateRecording.label)
             .toBeDefined();
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-alluvialLayerConceptAudit']

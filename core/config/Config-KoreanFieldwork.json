@@ -589,6 +589,22 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "cultivationFeatureContext": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "cultivationTrialTrenchStrategy": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "cultivationFeatureEvidence": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "cultivationChronologyAnalysis": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "fortificationGateFacility": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -651,6 +667,10 @@
         "bronzeAgeDwellingEvidence": "KoreanFieldwork-bronzeAgeDwellingEvidence",
         "dolmenStructureContext": "KoreanFieldwork-dolmenStructureContext",
         "bronzeAgeEnclosureInterpretation": "KoreanFieldwork-bronzeAgeEnclosureInterpretation",
+        "cultivationFeatureContext": "KoreanFieldwork-cultivationFeatureContext",
+        "cultivationTrialTrenchStrategy": "KoreanFieldwork-cultivationTrialTrenchStrategy",
+        "cultivationFeatureEvidence": "KoreanFieldwork-cultivationFeatureEvidence",
+        "cultivationChronologyAnalysis": "KoreanFieldwork-cultivationChronologyAnalysis",
         "fortificationGateFacility": "KoreanFieldwork-fortificationGateFacility",
         "fortificationHiddenGateFunction": "KoreanFieldwork-fortificationHiddenGateFunction",
         "fortificationParapetDetail": "KoreanFieldwork-fortificationParapetDetail",
@@ -702,6 +722,10 @@
             "bronzeAgeDwellingEvidence",
             "dolmenStructureContext",
             "bronzeAgeEnclosureInterpretation",
+            "cultivationFeatureContext",
+            "cultivationTrialTrenchStrategy",
+            "cultivationFeatureEvidence",
+            "cultivationChronologyAnalysis",
             "fortificationGateFacility",
             "fortificationHiddenGateFunction",
             "fortificationParapetDetail",

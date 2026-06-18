@@ -177,6 +177,18 @@
         "firstExposureRecord": {
           "label": "최초 노출 기록"
         },
+        "pitDwellingExposureBaulk": {
+          "label": "수혈건물지 노출·둑"
+        },
+        "pitDwellingFloorFacility": {
+          "label": "수혈건물지 바닥·시설"
+        },
+        "pitDwellingFireEvidence": {
+          "label": "화재 수혈건물지 증거"
+        },
+        "pitDwellingOverlapSequence": {
+          "label": "중복 수혈건물지 선후"
+        },
         "fortificationGateFacility": {
           "label": "성문·방어 부속시설"
         },

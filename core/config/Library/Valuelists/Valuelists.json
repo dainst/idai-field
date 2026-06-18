@@ -31180,6 +31180,142 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-pitDwellingExposureBaulk": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "initialStratigraphyChecked": {},
+      "shoulderLineRecorded": {},
+      "baulkPlanSet": {},
+      "crossBaulk": {},
+      "sixOrEightDivision": {},
+      "sunlightDirectionConsidered": {},
+      "slopeConsidered": {},
+      "sectionPhotoImmediate": {},
+      "unmarkedPhotoKept": {},
+      "markedPhotoKept": {},
+      "plasticCoverOrShade": {},
+      "exploratoryTrenchJustified": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "initialStratigraphyChecked",
+      "shoulderLineRecorded",
+      "baulkPlanSet",
+      "crossBaulk",
+      "sixOrEightDivision",
+      "sunlightDirectionConsidered",
+      "slopeConsidered",
+      "sectionPhotoImmediate",
+      "unmarkedPhotoKept",
+      "markedPhotoKept",
+      "plasticCoverOrShade",
+      "exploratoryTrenchJustified",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-pitDwellingFloorFacility": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "floorSurfaceIdentified": {},
+      "firstFillNotMisread": {},
+      "wallFloorJunctionFollowed": {},
+      "postholesChecked": {},
+      "hearthChecked": {},
+      "stoveOrGudeulChecked": {},
+      "wallGrooveChecked": {},
+      "storagePitChecked": {},
+      "drainageOrSumpChecked": {},
+      "entranceChecked": {},
+      "ancillaryFacilitiesSectioned": {},
+      "findsLeftUntilFloorCheck": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "floorSurfaceIdentified",
+      "firstFillNotMisread",
+      "wallFloorJunctionFollowed",
+      "postholesChecked",
+      "hearthChecked",
+      "stoveOrGudeulChecked",
+      "wallGrooveChecked",
+      "storagePitChecked",
+      "drainageOrSumpChecked",
+      "entranceChecked",
+      "ancillaryFacilitiesSectioned",
+      "findsLeftUntilFloorCheck",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-pitDwellingFireEvidence": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "charredTimberRecorded": {},
+      "burntSoilRecorded": {},
+      "ashLayerRecorded": {},
+      "heatAlteredFloor": {},
+      "timberDirectionMapped": {},
+      "fireTypeNotAssumed": {},
+      "ritualBurningCandidate": {},
+      "postDepositionalFireCandidate": {},
+      "firstPlanBeforeRemoval": {},
+      "secondPlanAfterRemoval": {},
+      "samplePointsMapped": {},
+      "expertReviewNeeded": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "charredTimberRecorded",
+      "burntSoilRecorded",
+      "ashLayerRecorded",
+      "heatAlteredFloor",
+      "timberDirectionMapped",
+      "fireTypeNotAssumed",
+      "ritualBurningCandidate",
+      "postDepositionalFireCandidate",
+      "firstPlanBeforeRemoval",
+      "secondPlanAfterRemoval",
+      "samplePointsMapped",
+      "expertReviewNeeded",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-pitDwellingOverlapSequence": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "overlapGroupRecord": {},
+      "firstPlanStripping": {},
+      "verticalPhoto": {},
+      "inferredLineMarked": {},
+      "firstSectionInvestigation": {},
+      "secondPlanStripping": {},
+      "upperThirdRemovalRisk": {},
+      "excessiveTrenchAvoided": {},
+      "laterFeatureExcavatedFirst": {},
+      "earlierFeatureExcavatedAfter": {},
+      "sectionEvidenceRequired": {},
+      "relationshipUnresolved": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "overlapGroupRecord",
+      "firstPlanStripping",
+      "verticalPhoto",
+      "inferredLineMarked",
+      "firstSectionInvestigation",
+      "secondPlanStripping",
+      "upperThirdRemovalRisk",
+      "excessiveTrenchAvoided",
+      "laterFeatureExcavatedFirst",
+      "earlierFeatureExcavatedAfter",
+      "sectionEvidenceRequired",
+      "relationshipUnresolved",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-personalNotebookArchive": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

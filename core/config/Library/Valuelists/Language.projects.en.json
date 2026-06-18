@@ -11928,6 +11928,182 @@
     },
     "description": "Korean field notebook checks for recording feature outlines, shoulder lines, overlap, section checks, and drying risks at the first exposure moment"
   },
+  "KoreanFieldwork-pitDwellingExposureBaulk": {
+    "values": {
+      "initialStratigraphyChecked": {
+        "label": "Initial stratigraphy checked"
+      },
+      "shoulderLineRecorded": {
+        "label": "Shoulder line recorded"
+      },
+      "baulkPlanSet": {
+        "label": "Baulk plan set"
+      },
+      "crossBaulk": {
+        "label": "Cross baulk"
+      },
+      "sixOrEightDivision": {
+        "label": "Six- or eight-part division"
+      },
+      "sunlightDirectionConsidered": {
+        "label": "Sunlight direction considered"
+      },
+      "slopeConsidered": {
+        "label": "Slope considered"
+      },
+      "sectionPhotoImmediate": {
+        "label": "Immediate section photo"
+      },
+      "unmarkedPhotoKept": {
+        "label": "Unmarked photo kept"
+      },
+      "markedPhotoKept": {
+        "label": "Marked photo kept"
+      },
+      "plasticCoverOrShade": {
+        "label": "Plastic cover or shade"
+      },
+      "exploratoryTrenchJustified": {
+        "label": "Exploratory trench justified"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean pit dwelling checks for first exposure, shoulder lines, baulk setup, section photos, protection, and justified exploratory trenches"
+  },
+  "KoreanFieldwork-pitDwellingFloorFacility": {
+    "values": {
+      "floorSurfaceIdentified": {
+        "label": "Floor surface identified"
+      },
+      "firstFillNotMisread": {
+        "label": "First fill not misread"
+      },
+      "wallFloorJunctionFollowed": {
+        "label": "Wall-floor junction followed"
+      },
+      "postholesChecked": {
+        "label": "Postholes checked"
+      },
+      "hearthChecked": {
+        "label": "Hearth checked"
+      },
+      "stoveOrGudeulChecked": {
+        "label": "Stove or gudeul checked"
+      },
+      "wallGrooveChecked": {
+        "label": "Wall groove checked"
+      },
+      "storagePitChecked": {
+        "label": "Storage pit checked"
+      },
+      "drainageOrSumpChecked": {
+        "label": "Drainage or sump checked"
+      },
+      "entranceChecked": {
+        "label": "Entrance checked"
+      },
+      "ancillaryFacilitiesSectioned": {
+        "label": "Ancillary facilities sectioned"
+      },
+      "findsLeftUntilFloorCheck": {
+        "label": "Finds left until floor check"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean pit dwelling checks for floor surfaces, wall-floor junctions, postholes, hearths, stoves, wall grooves, storage pits, drains, entrances, and facility sections"
+  },
+  "KoreanFieldwork-pitDwellingFireEvidence": {
+    "values": {
+      "charredTimberRecorded": {
+        "label": "Charred timber recorded"
+      },
+      "burntSoilRecorded": {
+        "label": "Burnt soil recorded"
+      },
+      "ashLayerRecorded": {
+        "label": "Ash layer recorded"
+      },
+      "heatAlteredFloor": {
+        "label": "Heat-altered floor"
+      },
+      "timberDirectionMapped": {
+        "label": "Timber direction mapped"
+      },
+      "fireTypeNotAssumed": {
+        "label": "Fire type not assumed"
+      },
+      "ritualBurningCandidate": {
+        "label": "Ritual burning candidate"
+      },
+      "postDepositionalFireCandidate": {
+        "label": "Post-depositional fire candidate"
+      },
+      "firstPlanBeforeRemoval": {
+        "label": "First plan before removal"
+      },
+      "secondPlanAfterRemoval": {
+        "label": "Second plan after removal"
+      },
+      "samplePointsMapped": {
+        "label": "Sample points mapped"
+      },
+      "expertReviewNeeded": {
+        "label": "Expert review needed"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean burned pit dwelling checks for treating charcoal, burnt soil, ash, heat alteration, timber directions, staged plans, and sample points as evidence rather than assumed fire causes"
+  },
+  "KoreanFieldwork-pitDwellingOverlapSequence": {
+    "values": {
+      "overlapGroupRecord": {
+        "label": "Overlap group record"
+      },
+      "firstPlanStripping": {
+        "label": "First plan stripping"
+      },
+      "verticalPhoto": {
+        "label": "Vertical photo"
+      },
+      "inferredLineMarked": {
+        "label": "Inferred line marked"
+      },
+      "firstSectionInvestigation": {
+        "label": "First section investigation"
+      },
+      "secondPlanStripping": {
+        "label": "Second plan stripping"
+      },
+      "upperThirdRemovalRisk": {
+        "label": "Upper-third removal risk"
+      },
+      "excessiveTrenchAvoided": {
+        "label": "Excessive trench avoided"
+      },
+      "laterFeatureExcavatedFirst": {
+        "label": "Later feature excavated first"
+      },
+      "earlierFeatureExcavatedAfter": {
+        "label": "Earlier feature excavated after"
+      },
+      "sectionEvidenceRequired": {
+        "label": "Section evidence required"
+      },
+      "relationshipUnresolved": {
+        "label": "Relationship unresolved"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean overlapping pit dwelling checks for staged plan stripping, section evidence, over-trenching risk, later/earlier excavation order, and unresolved sequence decisions"
+  },
   "KoreanFieldwork-personalNotebookArchive": {
     "values": {
       "personalNotebookWritten": {

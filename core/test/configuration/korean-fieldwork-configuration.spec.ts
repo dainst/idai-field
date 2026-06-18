@@ -57,6 +57,10 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.fields.typologyArgument.inputType).toBe('checkboxes');
         expect(featureForm.fields.chronologyArgument.inputType).toBe('checkboxes');
         expect(featureForm.fields.assemblageRelation.inputType).toBe('checkboxes');
+        expect(featureForm.fields.pitDwellingExposureBaulk.inputType).toBe('checkboxes');
+        expect(featureForm.fields.pitDwellingFloorFacility.inputType).toBe('checkboxes');
+        expect(featureForm.fields.pitDwellingFireEvidence.inputType).toBe('checkboxes');
+        expect(featureForm.fields.pitDwellingOverlapSequence.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.chronologyArgument.inputType).toBe('checkboxes');
         expect(findForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
@@ -131,6 +135,14 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.valuelists.typologyArgument).toBe('KoreanFieldwork-typologyArgument');
         expect(featureForm.valuelists.chronologyArgument).toBe('KoreanFieldwork-chronologyArgument');
         expect(featureForm.valuelists.assemblageRelation).toBe('KoreanFieldwork-assemblageRelation');
+        expect(featureForm.valuelists.pitDwellingExposureBaulk)
+            .toBe('KoreanFieldwork-pitDwellingExposureBaulk');
+        expect(featureForm.valuelists.pitDwellingFloorFacility)
+            .toBe('KoreanFieldwork-pitDwellingFloorFacility');
+        expect(featureForm.valuelists.pitDwellingFireEvidence)
+            .toBe('KoreanFieldwork-pitDwellingFireEvidence');
+        expect(featureForm.valuelists.pitDwellingOverlapSequence)
+            .toBe('KoreanFieldwork-pitDwellingOverlapSequence');
         expect(featureSegmentForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
         expect(featureSegmentForm.valuelists.chronologyArgument).toBe('KoreanFieldwork-chronologyArgument');
         expect(findForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
@@ -194,6 +206,10 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.Feature.fields.chronologyArgument.label).toBe('Chronology argument');
         expect(languages.en.categories.Feature.fields.assemblageRelation.label).toBe('Assemblage relation');
         expect(languages.en.categories.Feature.fields.firstExposureRecord.label).toBe('First exposure record');
+        expect(languages.en.categories.Feature.fields.pitDwellingExposureBaulk.label)
+            .toBe('Pit dwelling exposure and baulk');
+        expect(languages.en.categories.Feature.fields.pitDwellingFireEvidence.label)
+            .toBe('Burned pit dwelling evidence');
         expect(languages.en.categories.Feature.fields.fortificationHiddenGateFunction.label).toBe('Hidden gate function');
         expect(languages.en.categories.Feature.fields.fortificationParapetDetail.label).toBe('Parapet detail');
         expect(languages.en.categories.Feature.fields.termAuthorityStatus.label).toBe('Term authority status');
@@ -247,6 +263,18 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Pre-removal condition');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-firstExposureRecord'].values.shoulderLineRecorded.label)
             .toBe('Shoulder line recorded');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-pitDwellingExposureBaulk']
+            .values.sectionPhotoImmediate.label)
+            .toBe('Immediate section photo');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-pitDwellingFloorFacility']
+            .values.wallFloorJunctionFollowed.label)
+            .toBe('Wall-floor junction followed');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-pitDwellingFireEvidence']
+            .values.fireTypeNotAssumed.label)
+            .toBe('Fire type not assumed');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-pitDwellingOverlapSequence']
+            .values.relationshipUnresolved.label)
+            .toBe('Relationship unresolved');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-fortificationHiddenGateFunction'].values.supplyTransport.label)
             .toBe('Military supply transport');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-fortificationParapetDetail'].values.nearGunOpening.label)

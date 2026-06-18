@@ -525,6 +525,22 @@
           "mandatory": true,
           "constraintIndexed": true
         },
+        "pitDwellingExposureBaulk": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "pitDwellingFloorFacility": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "pitDwellingFireEvidence": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "pitDwellingOverlapSequence": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "fortificationGateFacility": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -574,6 +590,10 @@
         "assemblageRelation": "KoreanFieldwork-assemblageRelation",
         "fieldOnlyMissingCheck": "KoreanFieldwork-fieldOnlyMissingCheck",
         "firstExposureRecord": "KoreanFieldwork-firstExposureRecord",
+        "pitDwellingExposureBaulk": "KoreanFieldwork-pitDwellingExposureBaulk",
+        "pitDwellingFloorFacility": "KoreanFieldwork-pitDwellingFloorFacility",
+        "pitDwellingFireEvidence": "KoreanFieldwork-pitDwellingFireEvidence",
+        "pitDwellingOverlapSequence": "KoreanFieldwork-pitDwellingOverlapSequence",
         "fortificationGateFacility": "KoreanFieldwork-fortificationGateFacility",
         "fortificationHiddenGateFunction": "KoreanFieldwork-fortificationHiddenGateFunction",
         "fortificationParapetDetail": "KoreanFieldwork-fortificationParapetDetail",
@@ -612,6 +632,10 @@
             "assemblageRelation",
             "fieldOnlyMissingCheck",
             "firstExposureRecord",
+            "pitDwellingExposureBaulk",
+            "pitDwellingFloorFacility",
+            "pitDwellingFireEvidence",
+            "pitDwellingOverlapSequence",
             "fortificationGateFacility",
             "fortificationHiddenGateFunction",
             "fortificationParapetDetail",

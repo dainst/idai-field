@@ -174,6 +174,182 @@
     },
     "description": "제토와 동시에 가장 잘 보이는 유구 윤곽선, 어깨선, 중복관계, 건조 위험을 최초 노출 순간에 남기기 위한 목록"
   },
+  "KoreanFieldwork-pitDwellingExposureBaulk": {
+    "values": {
+      "initialStratigraphyChecked": {
+        "label": "기본층서 확인"
+      },
+      "shoulderLineRecorded": {
+        "label": "어깨선 기록"
+      },
+      "baulkPlanSet": {
+        "label": "둑 설정계획"
+      },
+      "crossBaulk": {
+        "label": "십자둑"
+      },
+      "sixOrEightDivision": {
+        "label": "6·8분할"
+      },
+      "sunlightDirectionConsidered": {
+        "label": "햇빛 방향 고려"
+      },
+      "slopeConsidered": {
+        "label": "경사면 고려"
+      },
+      "sectionPhotoImmediate": {
+        "label": "단면 즉시 촬영"
+      },
+      "unmarkedPhotoKept": {
+        "label": "미표시 사진 보존"
+      },
+      "markedPhotoKept": {
+        "label": "표시 사진 보존"
+      },
+      "plasticCoverOrShade": {
+        "label": "비닐·그늘 보양"
+      },
+      "exploratoryTrenchJustified": {
+        "label": "탐색 트렌치 사유"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "수혈건물지의 최초 노출, 어깨선, 둑 설정, 단면 촬영·보양, 탐색 트렌치 사유를 현장에서 바로 남기기 위한 목록"
+  },
+  "KoreanFieldwork-pitDwellingFloorFacility": {
+    "values": {
+      "floorSurfaceIdentified": {
+        "label": "바닥면 확인"
+      },
+      "firstFillNotMisread": {
+        "label": "1차 매몰토 오인 방지"
+      },
+      "wallFloorJunctionFollowed": {
+        "label": "벽·바닥 접점 추적"
+      },
+      "postholesChecked": {
+        "label": "주혈 확인"
+      },
+      "hearthChecked": {
+        "label": "노지 확인"
+      },
+      "stoveOrGudeulChecked": {
+        "label": "부뚜막·구들 확인"
+      },
+      "wallGrooveChecked": {
+        "label": "벽구 확인"
+      },
+      "storagePitChecked": {
+        "label": "저장공 확인"
+      },
+      "drainageOrSumpChecked": {
+        "label": "배수·집수시설 확인"
+      },
+      "entranceChecked": {
+        "label": "출입구 확인"
+      },
+      "ancillaryFacilitiesSectioned": {
+        "label": "부속시설 단면 확인"
+      },
+      "findsLeftUntilFloorCheck": {
+        "label": "바닥 확인 전 유물 잔류"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "수혈건물지 바닥면과 주혈, 노지, 부뚜막, 벽구, 저장공, 배수·집수시설 같은 내부시설의 확인 상태를 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-pitDwellingFireEvidence": {
+    "values": {
+      "charredTimberRecorded": {
+        "label": "탄화목재 기록"
+      },
+      "burntSoilRecorded": {
+        "label": "소토 기록"
+      },
+      "ashLayerRecorded": {
+        "label": "재층 기록"
+      },
+      "heatAlteredFloor": {
+        "label": "바닥 피열흔"
+      },
+      "timberDirectionMapped": {
+        "label": "탄화재 방향 도면화"
+      },
+      "fireTypeNotAssumed": {
+        "label": "화재 유형 단정 금지"
+      },
+      "ritualBurningCandidate": {
+        "label": "의례 소각 후보"
+      },
+      "postDepositionalFireCandidate": {
+        "label": "후퇴적 화재 후보"
+      },
+      "firstPlanBeforeRemoval": {
+        "label": "제거 전 1차 도면"
+      },
+      "secondPlanAfterRemoval": {
+        "label": "제거 후 2차 도면"
+      },
+      "samplePointsMapped": {
+        "label": "시료 지점 도면화"
+      },
+      "expertReviewNeeded": {
+        "label": "전문가 검토 필요"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "화재 수혈건물지의 목탄, 소토, 재층, 피열흔을 화재 원인 확정값이 아니라 단계별 증거로 관리하기 위한 목록"
+  },
+  "KoreanFieldwork-pitDwellingOverlapSequence": {
+    "values": {
+      "overlapGroupRecord": {
+        "label": "중복군 기록"
+      },
+      "firstPlanStripping": {
+        "label": "1차 평면제토"
+      },
+      "verticalPhoto": {
+        "label": "수직 촬영"
+      },
+      "inferredLineMarked": {
+        "label": "유구 추정선 표시"
+      },
+      "firstSectionInvestigation": {
+        "label": "1차 단면조사"
+      },
+      "secondPlanStripping": {
+        "label": "2차 평면제토"
+      },
+      "upperThirdRemovalRisk": {
+        "label": "상층 1/3 제거 위험"
+      },
+      "excessiveTrenchAvoided": {
+        "label": "과다 트렌치 회피"
+      },
+      "laterFeatureExcavatedFirst": {
+        "label": "후행 유구 우선 조사"
+      },
+      "earlierFeatureExcavatedAfter": {
+        "label": "선행 유구 후속 조사"
+      },
+      "sectionEvidenceRequired": {
+        "label": "단면 근거 필요"
+      },
+      "relationshipUnresolved": {
+        "label": "선후관계 미해결"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "중복 수혈건물지에서 1차·2차 평면제토, 단면조사, 과다 트렌치 위험, 후행·선행 조사순서와 미해결 관계를 기록하기 위한 목록"
+  },
   "KoreanFieldwork-personalNotebookArchive": {
     "values": {
       "personalNotebookWritten": {

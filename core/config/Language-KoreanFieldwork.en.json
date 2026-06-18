@@ -177,6 +177,18 @@
         "firstExposureRecord": {
           "label": "First exposure record"
         },
+        "pitDwellingExposureBaulk": {
+          "label": "Pit dwelling exposure and baulk"
+        },
+        "pitDwellingFloorFacility": {
+          "label": "Pit dwelling floor and facilities"
+        },
+        "pitDwellingFireEvidence": {
+          "label": "Burned pit dwelling evidence"
+        },
+        "pitDwellingOverlapSequence": {
+          "label": "Overlapping pit dwelling sequence"
+        },
         "fortificationGateFacility": {
           "label": "Gate and defensive components"
         },

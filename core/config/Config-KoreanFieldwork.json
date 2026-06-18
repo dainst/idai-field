@@ -299,6 +299,14 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "gisPredictionEvidence": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "gisPredictionFieldVerification": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "verificationState": {
           "inputType": "dropdown",
           "constraintIndexed": true
@@ -310,6 +318,8 @@
         "surfaceSurveyObservation": "KoreanFieldwork-surfaceSurveyObservation",
         "surfaceSurveyBiasControl": "KoreanFieldwork-surfaceSurveyBiasControl",
         "surfaceSurveyFollowUp": "KoreanFieldwork-surfaceSurveyFollowUp",
+        "gisPredictionEvidence": "KoreanFieldwork-gisPredictionEvidence",
+        "gisPredictionFieldVerification": "KoreanFieldwork-gisPredictionFieldVerification",
         "verificationState": "KoreanFieldwork-verificationState"
       },
       "groups": [
@@ -323,6 +333,8 @@
             "surfaceSurveyObservation",
             "surfaceSurveyBiasControl",
             "surfaceSurveyFollowUp",
+            "gisPredictionEvidence",
+            "gisPredictionFieldVerification",
             "fieldRecordQuality",
             "recordCreationTiming",
             "verificationState"

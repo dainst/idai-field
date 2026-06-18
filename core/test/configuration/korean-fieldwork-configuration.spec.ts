@@ -51,6 +51,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(surveyForm.fields.surfaceSurveyObservation.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyBiasControl.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyFollowUp.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.gisPredictionEvidence.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.gisPredictionFieldVerification.inputType).toBe('checkboxes');
         expect(featureForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
         expect(featureForm.fields.typologyArgument.inputType).toBe('checkboxes');
         expect(featureForm.fields.chronologyArgument.inputType).toBe('checkboxes');
@@ -122,6 +124,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(surveyForm.valuelists.surfaceSurveyObservation).toBe('KoreanFieldwork-surfaceSurveyObservation');
         expect(surveyForm.valuelists.surfaceSurveyBiasControl).toBe('KoreanFieldwork-surfaceSurveyBiasControl');
         expect(surveyForm.valuelists.surfaceSurveyFollowUp).toBe('KoreanFieldwork-surfaceSurveyFollowUp');
+        expect(surveyForm.valuelists.gisPredictionEvidence).toBe('KoreanFieldwork-gisPredictionEvidence');
+        expect(surveyForm.valuelists.gisPredictionFieldVerification)
+            .toBe('KoreanFieldwork-gisPredictionFieldVerification');
         expect(featureForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
         expect(featureForm.valuelists.typologyArgument).toBe('KoreanFieldwork-typologyArgument');
         expect(featureForm.valuelists.chronologyArgument).toBe('KoreanFieldwork-chronologyArgument');
@@ -181,6 +186,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Report evaluation feedback');
         expect(languages.en.categories.Survey.fields.surfaceSurveyObservation.label)
             .toBe('Surface survey observation');
+        expect(languages.en.categories.Survey.fields.gisPredictionFieldVerification.label)
+            .toBe('Prediction field verification');
         expect(languages.en.categories.Feature.fields.fieldOnlyMissingCheck.label)
             .toBe('Field-only missing check');
         expect(languages.en.categories.Feature.fields.typologyArgument.label).toBe('Typology argument');
@@ -231,6 +238,11 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Field observation first');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveyFollowUp'].values.testExcavation.label)
             .toBe('Test excavation');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-gisPredictionEvidence'].values.aerialPhotoStereo.label)
+            .toBe('Aerial-photo stereo interpretation');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-gisPredictionFieldVerification']
+            .values.missedCandidate.label)
+            .toBe('Missed candidate');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-fieldOnlyMissingCheck'].values.preRemovalCondition.label)
             .toBe('Pre-removal condition');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-firstExposureRecord'].values.shoulderLineRecorded.label)

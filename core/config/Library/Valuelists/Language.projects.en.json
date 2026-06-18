@@ -12734,6 +12734,106 @@
     },
     "description": "Korean field notebook follow-up decisions for treating surface survey results as evidence for preservation, sample survey, test excavation, full excavation, stratigraphy survey, watching brief, or chance find reporting"
   },
+  "KoreanFieldwork-gisPredictionEvidence": {
+    "values": {
+      "elevationModel": {
+        "label": "Elevation model"
+      },
+      "slopeAnalysis": {
+        "label": "Slope analysis"
+      },
+      "aspectAnalysis": {
+        "label": "Aspect analysis"
+      },
+      "watercourseDistance": {
+        "label": "Watercourse distance"
+      },
+      "relativeElevationToWatercourse": {
+        "label": "Relative elevation to watercourse"
+      },
+      "soilMap": {
+        "label": "Soil map"
+      },
+      "geologyMap": {
+        "label": "Geology map"
+      },
+      "aerialPhotoStereo": {
+        "label": "Aerial-photo stereo interpretation"
+      },
+      "preDevelopmentAerialPhoto": {
+        "label": "Pre-development aerial photo"
+      },
+      "historicalMap": {
+        "label": "Historical or modern map"
+      },
+      "boreholeData": {
+        "label": "Borehole data"
+      },
+      "demOrContour": {
+        "label": "DEM or contour map"
+      },
+      "overlayAnalysis": {
+        "label": "Overlay analysis"
+      },
+      "weightedAnalysis": {
+        "label": "Weighted analysis"
+      },
+      "logisticRegression": {
+        "label": "Logistic regression"
+      },
+      "decisionTree": {
+        "label": "Decision tree"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean fieldwork GIS and aerial-photo prediction evidence for recording terrain, watercourse, soil, geology, aerial-photo, map, borehole, and analytical inputs behind site-potential models"
+  },
+  "KoreanFieldwork-gisPredictionFieldVerification": {
+    "values": {
+      "predictionHigh": {
+        "label": "High prediction"
+      },
+      "predictionMedium": {
+        "label": "Medium prediction"
+      },
+      "predictionLow": {
+        "label": "Low prediction"
+      },
+      "fieldConfirmed": {
+        "label": "Field confirmed"
+      },
+      "fieldNotConfirmed": {
+        "label": "Field not confirmed"
+      },
+      "missedCandidate": {
+        "label": "Missed candidate"
+      },
+      "overPredictedCandidate": {
+        "label": "Over-predicted candidate"
+      },
+      "routeAdjusted": {
+        "label": "Survey route adjusted"
+      },
+      "trialTrenchRecommended": {
+        "label": "Trial trench recommended"
+      },
+      "additionalWalkoverNeeded": {
+        "label": "Additional walkover needed"
+      },
+      "scaleResolutionCaution": {
+        "label": "Scale or resolution caution"
+      },
+      "rapidPlanningOnly": {
+        "label": "Rapid planning only"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean fieldwork checks for comparing GIS predictions with field observations, including confirmation, non-confirmation, missed candidates, over-prediction, trial trench recommendations, and survey route changes"
+  },
   "KoreanFieldwork-samplePurpose": {
     "values": {
       "absoluteDating": {

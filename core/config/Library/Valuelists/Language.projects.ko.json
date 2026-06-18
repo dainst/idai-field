@@ -980,6 +980,106 @@
     },
     "description": "지표조사 결과를 유적 존재 확정값이 아니라 보존, 표본조사, 시굴, 정밀발굴, 토층분포조사, 입회조사로 이어지는 판단근거로 관리하기 위한 목록"
   },
+  "KoreanFieldwork-gisPredictionEvidence": {
+    "values": {
+      "elevationModel": {
+        "label": "고도 모델"
+      },
+      "slopeAnalysis": {
+        "label": "경사 분석"
+      },
+      "aspectAnalysis": {
+        "label": "사면 방향 분석"
+      },
+      "watercourseDistance": {
+        "label": "수계 거리"
+      },
+      "relativeElevationToWatercourse": {
+        "label": "수계 대비 비고"
+      },
+      "soilMap": {
+        "label": "토양도"
+      },
+      "geologyMap": {
+        "label": "지질도"
+      },
+      "aerialPhotoStereo": {
+        "label": "항공사진 입체판독"
+      },
+      "preDevelopmentAerialPhoto": {
+        "label": "개발 전 항공사진"
+      },
+      "historicalMap": {
+        "label": "고지도·근현대지도"
+      },
+      "boreholeData": {
+        "label": "보링자료"
+      },
+      "demOrContour": {
+        "label": "DEM·등고선도"
+      },
+      "overlayAnalysis": {
+        "label": "중첩분석"
+      },
+      "weightedAnalysis": {
+        "label": "가중치분석"
+      },
+      "logisticRegression": {
+        "label": "로지스틱 회귀"
+      },
+      "decisionTree": {
+        "label": "의사결정나무"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "GIS와 항공사진 기반 유적 가능성 예측에 사용한 지형, 수계, 토양, 지질, 항공사진, 고지도, 보링자료, 분석기법을 남기기 위한 목록"
+  },
+  "KoreanFieldwork-gisPredictionFieldVerification": {
+    "values": {
+      "predictionHigh": {
+        "label": "예측 높음"
+      },
+      "predictionMedium": {
+        "label": "예측 중간"
+      },
+      "predictionLow": {
+        "label": "예측 낮음"
+      },
+      "fieldConfirmed": {
+        "label": "현장 확인"
+      },
+      "fieldNotConfirmed": {
+        "label": "현장 미확인"
+      },
+      "missedCandidate": {
+        "label": "누락 후보"
+      },
+      "overPredictedCandidate": {
+        "label": "과대예측 후보"
+      },
+      "routeAdjusted": {
+        "label": "조사경로 조정"
+      },
+      "trialTrenchRecommended": {
+        "label": "시굴 트렌치 추천"
+      },
+      "additionalWalkoverNeeded": {
+        "label": "추가 답사 필요"
+      },
+      "scaleResolutionCaution": {
+        "label": "축척·해상도 주의"
+      },
+      "rapidPlanningOnly": {
+        "label": "신속 계획용"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "GIS 예측 결과를 유적 확정값으로 쓰지 않고 현장 확인, 미확인, 누락, 과대예측, 시굴 추천, 추가 답사 필요 상태로 대조하기 위한 목록"
+  },
   "KoreanFieldwork-samplePurpose": {
     "values": {
       "absoluteDating": {

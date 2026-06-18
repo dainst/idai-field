@@ -118,6 +118,12 @@
         "surfaceSurveyFollowUp": {
           "label": "지표조사 후속조치"
         },
+        "gisPredictionEvidence": {
+          "label": "GIS·항공사진 예측근거"
+        },
+        "gisPredictionFieldVerification": {
+          "label": "예측 현장검증"
+        },
         "verificationState": {
           "label": "검증상태"
         }

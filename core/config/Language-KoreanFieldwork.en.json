@@ -118,6 +118,12 @@
         "surfaceSurveyFollowUp": {
           "label": "Surface survey follow-up"
         },
+        "gisPredictionEvidence": {
+          "label": "GIS and aerial-photo prediction evidence"
+        },
+        "gisPredictionFieldVerification": {
+          "label": "Prediction field verification"
+        },
         "verificationState": {
           "label": "Verification state"
         }

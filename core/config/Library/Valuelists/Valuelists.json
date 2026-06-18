@@ -31806,6 +31806,82 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-gisPredictionEvidence": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "elevationModel": {},
+      "slopeAnalysis": {},
+      "aspectAnalysis": {},
+      "watercourseDistance": {},
+      "relativeElevationToWatercourse": {},
+      "soilMap": {},
+      "geologyMap": {},
+      "aerialPhotoStereo": {},
+      "preDevelopmentAerialPhoto": {},
+      "historicalMap": {},
+      "boreholeData": {},
+      "demOrContour": {},
+      "overlayAnalysis": {},
+      "weightedAnalysis": {},
+      "logisticRegression": {},
+      "decisionTree": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "elevationModel",
+      "slopeAnalysis",
+      "aspectAnalysis",
+      "watercourseDistance",
+      "relativeElevationToWatercourse",
+      "soilMap",
+      "geologyMap",
+      "aerialPhotoStereo",
+      "preDevelopmentAerialPhoto",
+      "historicalMap",
+      "boreholeData",
+      "demOrContour",
+      "overlayAnalysis",
+      "weightedAnalysis",
+      "logisticRegression",
+      "decisionTree",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-gisPredictionFieldVerification": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "predictionHigh": {},
+      "predictionMedium": {},
+      "predictionLow": {},
+      "fieldConfirmed": {},
+      "fieldNotConfirmed": {},
+      "missedCandidate": {},
+      "overPredictedCandidate": {},
+      "routeAdjusted": {},
+      "trialTrenchRecommended": {},
+      "additionalWalkoverNeeded": {},
+      "scaleResolutionCaution": {},
+      "rapidPlanningOnly": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "predictionHigh",
+      "predictionMedium",
+      "predictionLow",
+      "fieldConfirmed",
+      "fieldNotConfirmed",
+      "missedCandidate",
+      "overPredictedCandidate",
+      "routeAdjusted",
+      "trialTrenchRecommended",
+      "additionalWalkoverNeeded",
+      "scaleResolutionCaution",
+      "rapidPlanningOnly",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-samplePurpose": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

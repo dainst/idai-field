@@ -2491,6 +2491,106 @@
     },
     "description": "회구부·아궁이·연소실·소성실별 C14, 고고지자기 다지점 시료, OSL 차광, 기와·가마 태토와 소비지 기와 대조를 한 번에 계획하기 위한 목록"
   },
+  "KoreanFieldwork-charcoalKilnIdentification": {
+    "values": {
+      "charcoalKilnCandidate": { "label": "목탄요 후보" },
+      "sideOpeningCharcoalKilnCandidate": { "label": "측구부탄요 후보" },
+      "noSideOpeningCharcoalKilnCandidate": { "label": "무측구식 탄요 후보" },
+      "whiteCharcoalKilnCandidate": { "label": "백탄요 후보" },
+      "blackCharcoalKilnCandidate": { "label": "흑탄요 후보" },
+      "dualUseKilnCandidate": { "label": "겸용요 후보" },
+      "undergroundKiln": { "label": "지하식" },
+      "semiUndergroundKiln": { "label": "반지하식" },
+      "semiAboveGroundKiln": { "label": "반지상식" },
+      "aboveGroundKiln": { "label": "지상식" },
+      "contourParallelLongAxis": { "label": "등고선 평행 장축" },
+      "slopeFootLocation": { "label": "경사면 하단 입지" },
+      "lowFiringTraceCaution": { "label": "낮은 피열흔 주의" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "목탄요 판정에서 측구식·무측구식, 백탄·흑탄·겸용 후보, 구조 깊이, 지형 조건, 낮은 피열흔 주의를 나누기 위한 목록"
+  },
+  "KoreanFieldwork-charcoalKilnStructurePart": {
+    "values": {
+      "firingPart": { "label": "소성부" },
+      "combustionPart": { "label": "연소부" },
+      "stokingMouth": { "label": "분구" },
+      "stokingMouthClosureStone": { "label": "분구폐쇄석" },
+      "fluePart": { "label": "연도" },
+      "chimneyPart": { "label": "연통" },
+      "frontWorkingArea": { "label": "전면작업장" },
+      "sideOpening": { "label": "측구" },
+      "sideOpeningPartitionWall": { "label": "측구간벽" },
+      "sideOpeningClosureStone": { "label": "측구폐쇄석" },
+      "sideWorkingArea": { "label": "측면작업장" },
+      "externalDrainage": { "label": "외부배수구" },
+      "internalDrainage": { "label": "내부배수구" },
+      "posthole": { "label": "주혈" },
+      "ceilingFragment": { "label": "천정부편" },
+      "wallFragment": { "label": "벽체편" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "측구부탄요의 소성부, 연소부, 분구, 연도·연통, 측구·측구폐쇄석, 작업장, 배수구, 주혈, 천정부편과 벽체편을 구조 부위로 나누는 목록"
+  },
+  "KoreanFieldwork-charcoalKilnExcavationControl": {
+    "values": {
+      "shallowFeatureLineCaution": { "label": "얕은 유구선 주의" },
+      "externalDrainageProtected": { "label": "외부배수구 보존" },
+      "longAxisBaulk": { "label": "장축 토층둑" },
+      "shortAxisBaulkThreePlus": { "label": "단축 토층둑 3개 이상" },
+      "shortBaulkThroughPartition": { "label": "측구간벽 관통 단축둑" },
+      "shortBaulkThroughSideOpening": { "label": "측구 관통 단축둑" },
+      "shortBaulkThroughFrontWorkArea": { "label": "전면작업장 관통 단축둑" },
+      "centralTrenchDeferred": { "label": "중앙 트렌치 보류" },
+      "flueLocationMarkedBeforeTrench": { "label": "트렌치 전 연도 후보 표시" },
+      "closureStonesLeftInPlace": { "label": "폐쇄석 원위치 보존" },
+      "originalPositionPhoto": { "label": "원위치 사진" },
+      "overheadPhotoAttempted": { "label": "직상방 촬영 시도" },
+      "colorDrawingPlanned": { "label": "원색 도면 계획" },
+      "colorPlatePlanned": { "label": "원색 도판 계획" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "흐린 유구선과 외부배수구를 보호하고 장축·단축 토층둑, 중앙 트렌치 보류, 폐쇄석 원위치, 원색 도면·도판을 조사 중 관리하기 위한 목록"
+  },
+  "KoreanFieldwork-charcoalKilnTraceInterpretation": {
+    "values": {
+      "heatColorMapped": { "label": "피열색 도면화" },
+      "redBrownHeatColor": { "label": "적갈색 피열" },
+      "grayBlueHardening": { "label": "회청색 경화" },
+      "ceilingGrassTrace": { "label": "천정부 초류흔" },
+      "ceilingWoodTrace": { "label": "천정부 목재흔" },
+      "diggingToolTrace": { "label": "굴지구흔" },
+      "charcoalLayerRecorded": { "label": "목탄층 기록" },
+      "charcoalRemovalRepairTrace": { "label": "목탄 반출·보수흔" },
+      "sideOpeningCountRecorded": { "label": "측구 개수 기록" },
+      "sideOpeningSpacingMeasured": { "label": "측구 간격 측정" },
+      "sideOpeningFloorHeightCompared": { "label": "측구 바닥고 비교" },
+      "associatedIronProductionCandidate": { "label": "제철 연료 후보" },
+      "tombFuelCandidate": { "label": "분묘 연료 후보" },
+      "domesticFuelCandidate": { "label": "생활 연료 후보" },
+      "distributionCandidate": { "label": "유통 후보" },
+      "preservationMoveCandidate": { "label": "보존·이전 후보" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "피열색, 천정부 초류·목재흔, 굴지구흔, 측구 개수·간격·바닥고, 목탄 반출·보수흔, 연료 사용 해석과 보존 판단을 묶는 목록"
+  },
+  "KoreanFieldwork-charcoalKilnAnalysisPlan": {
+    "values": {
+      "charcoalSample": { "label": "목탄 시료" },
+      "postholeCarbonizedWood": { "label": "주혈 탄화목" },
+      "woodSpeciesAnalysis": { "label": "수종분석" },
+      "c14Dating": { "label": "C14 연대" },
+      "archaeomagneticSample": { "label": "고고지자기 시료" },
+      "oslSample": { "label": "OSL 시료" },
+      "heatedSoilSample": { "label": "소토 시료" },
+      "sampleByPart": { "label": "부위별 시료" },
+      "samplePositionMapped": { "label": "시료 위치 도면화" },
+      "datingMethodsCompared": { "label": "연대측정법 대조" },
+      "fuelUseQuestionRecorded": { "label": "연료 사용 질문 기록" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "목탄, 주혈 탄화목, 수종분석, C14, 고고지자기, OSL, 소토 시료와 시료 위치, 연료 사용 질문을 목탄요 분석계획으로 묶는 목록"
+  },
   "KoreanFieldwork-fortificationGateFacility": {
     "values": {
       "entranceGate": {

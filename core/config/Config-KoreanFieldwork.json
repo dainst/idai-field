@@ -641,6 +641,22 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "charcoalKilnIdentification": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "charcoalKilnStructurePart": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "charcoalKilnExcavationControl": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "charcoalKilnTraceInterpretation": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "fortificationGateFacility": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -716,6 +732,10 @@
         "tileKilnExcavationControl": "KoreanFieldwork-tileKilnExcavationControl",
         "tileKilnPartInvestigation": "KoreanFieldwork-tileKilnPartInvestigation",
         "tileKilnOperationSequence": "KoreanFieldwork-tileKilnOperationSequence",
+        "charcoalKilnIdentification": "KoreanFieldwork-charcoalKilnIdentification",
+        "charcoalKilnStructurePart": "KoreanFieldwork-charcoalKilnStructurePart",
+        "charcoalKilnExcavationControl": "KoreanFieldwork-charcoalKilnExcavationControl",
+        "charcoalKilnTraceInterpretation": "KoreanFieldwork-charcoalKilnTraceInterpretation",
         "fortificationGateFacility": "KoreanFieldwork-fortificationGateFacility",
         "fortificationHiddenGateFunction": "KoreanFieldwork-fortificationHiddenGateFunction",
         "fortificationParapetDetail": "KoreanFieldwork-fortificationParapetDetail",
@@ -780,6 +800,10 @@
             "tileKilnExcavationControl",
             "tileKilnPartInvestigation",
             "tileKilnOperationSequence",
+            "charcoalKilnIdentification",
+            "charcoalKilnStructurePart",
+            "charcoalKilnExcavationControl",
+            "charcoalKilnTraceInterpretation",
             "fortificationGateFacility",
             "fortificationHiddenGateFunction",
             "fortificationParapetDetail",
@@ -1164,6 +1188,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "charcoalKilnAnalysisPlan": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "humanRemainsRecoveryAnalysis": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1195,6 +1223,7 @@
         "archaeomagneticOrientationRecord": "KoreanFieldwork-archaeomagneticOrientationRecord",
         "archaeomagneticResultQuality": "KoreanFieldwork-archaeomagneticResultQuality",
         "archaeomagneticChronologyInterpretation": "KoreanFieldwork-archaeomagneticChronologyInterpretation",
+        "charcoalKilnAnalysisPlan": "KoreanFieldwork-charcoalKilnAnalysisPlan",
         "humanRemainsRecoveryAnalysis": "KoreanFieldwork-humanRemainsRecoveryAnalysis",
         "shellMiddenSamplingStrategy": "KoreanFieldwork-shellMiddenSamplingStrategy",
         "paleoenvironmentProxySampling": "KoreanFieldwork-paleoenvironmentProxySampling",
@@ -1234,6 +1263,7 @@
             "archaeomagneticOrientationRecord",
             "archaeomagneticResultQuality",
             "archaeomagneticChronologyInterpretation",
+            "charcoalKilnAnalysisPlan",
             "humanRemainsRecoveryAnalysis",
             "shellMiddenSamplingStrategy",
             "paleoenvironmentProxySampling",

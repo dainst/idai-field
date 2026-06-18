@@ -261,6 +261,18 @@
         "tileKilnOperationSequence": {
           "label": "Tile kiln operation sequence"
         },
+        "charcoalKilnIdentification": {
+          "label": "Charcoal kiln identification"
+        },
+        "charcoalKilnStructurePart": {
+          "label": "Charcoal kiln structure part"
+        },
+        "charcoalKilnExcavationControl": {
+          "label": "Charcoal kiln excavation control"
+        },
+        "charcoalKilnTraceInterpretation": {
+          "label": "Charcoal kiln trace interpretation"
+        },
         "fortificationGateFacility": {
           "label": "Gate and defensive components"
         },
@@ -440,6 +452,9 @@
         },
         "archaeomagneticChronologyInterpretation": {
           "label": "Archaeomagnetic chronology interpretation"
+        },
+        "charcoalKilnAnalysisPlan": {
+          "label": "Charcoal kiln analysis plan"
         },
         "humanRemainsRecoveryAnalysis": {
           "label": "Human remains recovery and analysis"

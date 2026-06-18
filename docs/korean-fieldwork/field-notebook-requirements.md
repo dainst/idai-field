@@ -66,6 +66,8 @@
 
 고고지자기 보강분은 `Sample`에 `archaeomagneticSampleContext`, `archaeomagneticSamplingWorkflow`, `archaeomagneticOrientationRecord`, `archaeomagneticResultQuality`, `archaeomagneticChronologyInterpretation`을 배치했다. 소토 유구 유형과 최종소성면 후보, 파괴 채취 협의, 정방위 큐브·석고 고정·시료번호·주향 표시, pitch·dip·strike와 자북/진북·편각 보정, NRM·교류소자·D/I/L95/K·n/N·D.F.·제외 시료, 한국·일본 표준곡선과 지역차·C14/OSL/층위/형식 편년 대조를 같은 시료 흐름에서 확인하게 했다. 결과값은 “고고지자기 추정연대”로 다루고 단독 확정연대로 쓰지 않는다는 주의도 값 목록에 포함했다.
 
+측구부탄요 보강분은 `Feature`에 `charcoalKilnIdentification`, `charcoalKilnStructurePart`, `charcoalKilnExcavationControl`, `charcoalKilnTraceInterpretation`을, `Sample`에 `charcoalKilnAnalysisPlan`을 배치했다. 낮은 피열흔 때문에 성격불명 소토유구로 흘러가는 것을 막기 위해 측구식·무측구식, 백탄·흑탄·겸용 후보, 지하식·반지하식·반지상식·지상식, 소성부·연소부·분구·연도·연통·측구·측구폐쇄석·측면작업장·외부배수구, 장축·단축 토층둑, 중앙 트렌치 보류, 폐쇄석 원위치, 피열색·천정부 초류흔·굴지구흔, 목탄·주혈 탄화목·수종분석·C14·고고지자기·OSL 시료를 한 흐름으로 점검하게 했다.
+
 이 구현 단위가 먼저 들어가야 각 유적 유형별 템플릿을 만들 때 기록이 흩어지지 않는다.
 
 ## 검증 질문

@@ -14245,6 +14245,106 @@
     },
     "description": "Analysis-plan checks for tile kilns, separating C14 contexts, archaeomagnetic sampling density, OSL handling, fabric and clay comparison, and caution around single-date chronologies"
   },
+  "KoreanFieldwork-charcoalKilnIdentification": {
+    "values": {
+      "charcoalKilnCandidate": { "label": "Charcoal kiln candidate" },
+      "sideOpeningCharcoalKilnCandidate": { "label": "Side-opening charcoal kiln candidate" },
+      "noSideOpeningCharcoalKilnCandidate": { "label": "No-side-opening charcoal kiln candidate" },
+      "whiteCharcoalKilnCandidate": { "label": "White charcoal kiln candidate" },
+      "blackCharcoalKilnCandidate": { "label": "Black charcoal kiln candidate" },
+      "dualUseKilnCandidate": { "label": "Dual-use kiln candidate" },
+      "undergroundKiln": { "label": "Underground kiln" },
+      "semiUndergroundKiln": { "label": "Semi-underground kiln" },
+      "semiAboveGroundKiln": { "label": "Semi-above-ground kiln" },
+      "aboveGroundKiln": { "label": "Above-ground kiln" },
+      "contourParallelLongAxis": { "label": "Contour-parallel long axis" },
+      "slopeFootLocation": { "label": "Slope-foot location" },
+      "lowFiringTraceCaution": { "label": "Low firing trace caution" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Identification checks for Korean charcoal kilns, separating side-opening and no-side-opening forms, white/black charcoal candidates, construction depth, topographic setting, and low-firing trace caution"
+  },
+  "KoreanFieldwork-charcoalKilnStructurePart": {
+    "values": {
+      "firingPart": { "label": "Firing part" },
+      "combustionPart": { "label": "Combustion part" },
+      "stokingMouth": { "label": "Stoking mouth" },
+      "stokingMouthClosureStone": { "label": "Stoking-mouth closure stone" },
+      "fluePart": { "label": "Flue part" },
+      "chimneyPart": { "label": "Chimney part" },
+      "frontWorkingArea": { "label": "Front working area" },
+      "sideOpening": { "label": "Side opening" },
+      "sideOpeningPartitionWall": { "label": "Side-opening partition wall" },
+      "sideOpeningClosureStone": { "label": "Side-opening closure stone" },
+      "sideWorkingArea": { "label": "Side working area" },
+      "externalDrainage": { "label": "External drainage" },
+      "internalDrainage": { "label": "Internal drainage" },
+      "posthole": { "label": "Posthole" },
+      "ceilingFragment": { "label": "Ceiling fragment" },
+      "wallFragment": { "label": "Wall fragment" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Structure-part checks for side-opening charcoal kilns, keeping firing, combustion, stoking, flue, side openings, working areas, drainage, postholes, and collapsed fragments visible"
+  },
+  "KoreanFieldwork-charcoalKilnExcavationControl": {
+    "values": {
+      "shallowFeatureLineCaution": { "label": "Shallow feature line caution" },
+      "externalDrainageProtected": { "label": "External drainage protected" },
+      "longAxisBaulk": { "label": "Long-axis baulk" },
+      "shortAxisBaulkThreePlus": { "label": "Three-plus short-axis baulks" },
+      "shortBaulkThroughPartition": { "label": "Short baulk through partition" },
+      "shortBaulkThroughSideOpening": { "label": "Short baulk through side opening" },
+      "shortBaulkThroughFrontWorkArea": { "label": "Short baulk through front work area" },
+      "centralTrenchDeferred": { "label": "Central trench deferred" },
+      "flueLocationMarkedBeforeTrench": { "label": "Flue location marked before trench" },
+      "closureStonesLeftInPlace": { "label": "Closure stones left in place" },
+      "originalPositionPhoto": { "label": "Original-position photo" },
+      "overheadPhotoAttempted": { "label": "Overhead photo attempted" },
+      "colorDrawingPlanned": { "label": "Color drawing planned" },
+      "colorPlatePlanned": { "label": "Color plate planned" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Excavation-control checks for charcoal kilns, protecting faint outlines and drainage, setting long- and short-axis baulks, delaying destructive trenches, and preserving closure stones in place"
+  },
+  "KoreanFieldwork-charcoalKilnTraceInterpretation": {
+    "values": {
+      "heatColorMapped": { "label": "Heat color mapped" },
+      "redBrownHeatColor": { "label": "Red-brown heat color" },
+      "grayBlueHardening": { "label": "Gray-blue hardening" },
+      "ceilingGrassTrace": { "label": "Ceiling grass trace" },
+      "ceilingWoodTrace": { "label": "Ceiling wood trace" },
+      "diggingToolTrace": { "label": "Digging-tool trace" },
+      "charcoalLayerRecorded": { "label": "Charcoal layer recorded" },
+      "charcoalRemovalRepairTrace": { "label": "Charcoal removal or repair trace" },
+      "sideOpeningCountRecorded": { "label": "Side-opening count recorded" },
+      "sideOpeningSpacingMeasured": { "label": "Side-opening spacing measured" },
+      "sideOpeningFloorHeightCompared": { "label": "Side-opening floor height compared" },
+      "associatedIronProductionCandidate": { "label": "Associated iron production candidate" },
+      "tombFuelCandidate": { "label": "Tomb fuel candidate" },
+      "domesticFuelCandidate": { "label": "Domestic fuel candidate" },
+      "distributionCandidate": { "label": "Distribution candidate" },
+      "preservationMoveCandidate": { "label": "Preservation or relocation candidate" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Trace-interpretation checks for charcoal kilns, tying heat color, ceiling and tool traces, side-opening measurements, charcoal extraction, fuel-use hypotheses, and preservation decisions together"
+  },
+  "KoreanFieldwork-charcoalKilnAnalysisPlan": {
+    "values": {
+      "charcoalSample": { "label": "Charcoal sample" },
+      "postholeCarbonizedWood": { "label": "Posthole carbonized wood" },
+      "woodSpeciesAnalysis": { "label": "Wood species analysis" },
+      "c14Dating": { "label": "C14 dating" },
+      "archaeomagneticSample": { "label": "Archaeomagnetic sample" },
+      "oslSample": { "label": "OSL sample" },
+      "heatedSoilSample": { "label": "Heated soil sample" },
+      "sampleByPart": { "label": "Sample by part" },
+      "samplePositionMapped": { "label": "Sample position mapped" },
+      "datingMethodsCompared": { "label": "Dating methods compared" },
+      "fuelUseQuestionRecorded": { "label": "Fuel-use question recorded" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Analysis-plan checks for charcoal kilns, linking charcoal, posthole carbonized wood, wood species, C14, archaeomagnetic, OSL, heated soil, sample positions, and fuel-use questions"
+  },
   "KoreanFieldwork-fortificationGateFacility": {
     "values": {
       "entranceGate": {

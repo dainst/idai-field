@@ -204,14 +204,23 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
 
   def handle_event(
         "toggle-layer",
-        %{"group" => group, "uuid" => uuid},
+        %{"uuid" => uuid, "show" => show_parameter},
         %{assigns: %{id: id}} = socket
       ) do
-    toggled_group =
-      if group == "project", do: :project_tile_layers_state, else: :document_tile_layers_state
+    value = show_parameter == "true"
 
-    layer_states =
-      socket.assigns[toggled_group]
+    maybe_updated_project_layers =
+      socket.assigns.project_tile_layers_state
+      |> Enum.map(fn state ->
+        if state.uuid == uuid do
+          Map.put(state, :visible, !state.visible)
+        else
+          state
+        end
+      end)
+
+    maybe_updated_document_layers =
+      socket.assigns.document_tile_layers_state
       |> Enum.map(fn state ->
         if state.uuid == uuid do
           Map.put(state, :visible, !state.visible)
@@ -223,18 +232,18 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     {
       :noreply,
       socket
-      |> assign(toggled_group, layer_states)
+      |> assign(:project_tile_layers_state, maybe_updated_project_layers)
+      |> assign(:document_tile_layers_state, maybe_updated_document_layers)
       |> push_event("document-map-set-layer-visibility-#{id}", %{
         uuid: uuid,
-        visibility:
-          Enum.find(layer_states, fn state -> state.uuid == uuid end) |> Map.get(:visible)
+        visibility: value
       })
     }
   end
 
   def handle_event(
         "visibility-preference",
-        %{"group" => group, "uuid" => uuid, "value" => value},
+        %{"uuid" => uuid, "show" => value},
         socket
       )
       when is_boolean(value) do
@@ -244,11 +253,18 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     #
     # The client will have set the layer visibility at this point and uses this event to make
     # sure the server state is the same as in the client's browser.
-    set_group =
-      if group == "project", do: :project_tile_layers_state, else: :document_tile_layers_state
+    maybe_updated_project_layers =
+      socket.assigns.project_tile_layers_state
+      |> Enum.map(fn state ->
+        if state.uuid == uuid do
+          Map.put(state, :visible, value)
+        else
+          state
+        end
+      end)
 
-    layer_states =
-      socket.assigns[set_group]
+    maybe_updated_document_layers =
+      socket.assigns.document_tile_layers_state
       |> Enum.map(fn state ->
         if state.uuid == uuid do
           Map.put(state, :visible, value)
@@ -259,7 +275,9 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
 
     {
       :noreply,
-      assign(socket, set_group, layer_states)
+      socket
+      |> assign(:project_tile_layers_state, maybe_updated_project_layers)
+      |> assign(:document_tile_layers_state, maybe_updated_document_layers)
     }
   end
 
@@ -377,8 +395,8 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
             class="cursor-pointer"
             phx-target={@target}
             phx-click="toggle-layer"
-            phx-value-group={@group}
             phx-value-uuid={layer.uuid}
+            phx-value-show={"#{!layer.visible}"}
           >
             <.icon class="mb-1" name={if layer.visible, do: "hero-eye", else: "hero-eye-slash"} />
           </span>
@@ -407,29 +425,5 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
       end
     end)
     |> List.flatten()
-
-    # lies_within =
-    #   doc
-    #   |> Data.get_relation("liesWithin")
-    #   |> case do
-    #     nil ->
-    #       []
-
-    #     %RelationGroup{} = relation ->
-    #       Enum.map(relation.docs, &create_feature_info(&1, lang))
-    #   end
-    #   |> Enum.filter(fn feature -> Map.has_key?(feature, :geometry) end)
-
-    # is_recorded_in =
-    #   doc
-    #   |> Data.get_relation("isRecordedIn")
-    #   |> case do
-    #     nil ->
-    #       []
-
-    #     %RelationGroup{} = relation ->
-    #       Enum.map(relation.docs, &create_feature_info(&1, lang))
-    #   end
-    #   |> Enum.filter(fn feature -> Map.has_key?(feature, :geometry) end)
   end
 end

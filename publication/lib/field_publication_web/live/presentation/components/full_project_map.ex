@@ -84,7 +84,7 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
   @impl true
   def handle_event(
         "visibility-preference",
-        %{"group" => "project", "uuid" => uuid, "value" => value},
+        %{"uuid" => uuid, "show" => value},
         socket
       )
       when is_boolean(value) do
@@ -113,14 +113,16 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
 
   def handle_event(
         "toggle-layer",
-        %{"group" => "project", "uuid" => uuid},
+        %{"uuid" => uuid, "show" => show_parameter} = _params,
         %{assigns: %{id: id}} = socket
       ) do
+    value = show_parameter == "true"
+
     layer_states =
       socket.assigns[:project_tile_layers_state]
       |> Enum.map(fn state ->
         if state.uuid == uuid do
-          Map.put(state, :visible, !state.visible)
+          Map.put(state, :visible, value)
         else
           state
         end
@@ -132,8 +134,7 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
       |> assign(:project_tile_layers_state, layer_states)
       |> push_event("full-project-map-set-layer-visibility-#{id}", %{
         uuid: uuid,
-        visibility:
-          Enum.find(layer_states, fn state -> state.uuid == uuid end) |> Map.get(:visible)
+        visibility: value
       })
     }
   end

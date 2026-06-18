@@ -132,8 +132,7 @@ export default class PublicationTileLayers {
                 layer.setVisible(visible);
                 this.hook.pushEventTo(this.hook.el, "visibility-preference", {
                     uuid: metadata.uuid,
-                    group: "project",
-                    value: visible,
+                    show: visible,
                 });
             }
 

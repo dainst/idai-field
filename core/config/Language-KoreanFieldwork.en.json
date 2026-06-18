@@ -67,6 +67,9 @@
         "termRelation": {
           "label": "Term relation"
         },
+        "termAuthorityStatus": {
+          "label": "Term authority status"
+        },
         "verificationState": {
           "label": "Verification state"
         }
@@ -104,6 +107,9 @@
         "termRelation": {
           "label": "Term relation"
         },
+        "termAuthorityStatus": {
+          "label": "Term authority status"
+        },
         "verificationState": {
           "label": "Verification state"
         }
@@ -126,6 +132,9 @@
         "termRelation": {
           "label": "Term relation"
         },
+        "termAuthorityStatus": {
+          "label": "Term authority status"
+        },
         "verificationState": {
           "label": "Verification state"
         }
@@ -141,6 +150,9 @@
         },
         "termRelation": {
           "label": "Term relation"
+        },
+        "termAuthorityStatus": {
+          "label": "Term authority status"
         },
         "verificationState": {
           "label": "Verification state"

@@ -167,6 +167,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "termAuthorityStatus": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "verificationState": {
           "inputType": "dropdown",
           "constraintIndexed": true
@@ -177,6 +181,7 @@
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "termRelation": "KoreanFieldwork-termRelation",
+        "termAuthorityStatus": "KoreanFieldwork-termAuthorityStatus",
         "verificationState": "KoreanFieldwork-verificationState"
       },
       "groups": [
@@ -203,7 +208,8 @@
             "fieldRecordQuality",
             "recordCreationTiming",
             "verificationState",
-            "termRelation"
+            "termRelation",
+            "termAuthorityStatus"
           ]
         },
         {
@@ -259,6 +265,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "termAuthorityStatus": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "verificationState": {
           "inputType": "dropdown",
           "constraintIndexed": true
@@ -275,6 +285,7 @@
         "japaneseFortificationDitch": "KoreanFieldwork-japaneseFortificationDitch",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "termRelation": "KoreanFieldwork-termRelation",
+        "termAuthorityStatus": "KoreanFieldwork-termAuthorityStatus",
         "verificationState": "KoreanFieldwork-verificationState"
       },
       "groups": [
@@ -307,7 +318,8 @@
             "japaneseFortificationDitch",
             "recordCreationTiming",
             "verificationState",
-            "termRelation"
+            "termRelation",
+            "termAuthorityStatus"
           ]
         },
         {
@@ -354,6 +366,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "termAuthorityStatus": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "verificationState": {
           "inputType": "dropdown",
           "constraintIndexed": true
@@ -365,6 +381,7 @@
         "firstExposureRecord": "KoreanFieldwork-firstExposureRecord",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "termRelation": "KoreanFieldwork-termRelation",
+        "termAuthorityStatus": "KoreanFieldwork-termAuthorityStatus",
         "verificationState": "KoreanFieldwork-verificationState"
       },
       "groups": [
@@ -392,7 +409,8 @@
             "firstExposureRecord",
             "recordCreationTiming",
             "verificationState",
-            "termRelation"
+            "termRelation",
+            "termAuthorityStatus"
           ]
         },
         {
@@ -420,6 +438,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "termAuthorityStatus": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "verificationState": {
           "inputType": "dropdown",
           "constraintIndexed": true
@@ -429,6 +451,7 @@
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "termRelation": "KoreanFieldwork-termRelation",
+        "termAuthorityStatus": "KoreanFieldwork-termAuthorityStatus",
         "verificationState": "KoreanFieldwork-verificationState"
       },
       "groups": [
@@ -450,7 +473,7 @@
         },
         {
           "name": "koreanFieldwork",
-          "fields": ["fieldRecordQuality", "recordCreationTiming", "verificationState", "termRelation"]
+          "fields": ["fieldRecordQuality", "recordCreationTiming", "verificationState", "termRelation", "termAuthorityStatus"]
         },
         {
           "name": "inventory",

@@ -31362,6 +31362,40 @@
       "reportOutputTerm"
     ]
   },
+  "KoreanFieldwork-termAuthorityStatus": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "specialistDictionarySource": {},
+      "latestSupplementSource": {},
+      "generalDictionaryUsage": {},
+      "institutionalUsage": {},
+      "reportOutputChecked": {},
+      "sourcePageLinked": {},
+      "originalScriptChecked": {},
+      "captionNeedsCheck": {},
+      "ocrCorrectionNeeded": {},
+      "pdfCrossChecked": {},
+      "valueListCandidate": {},
+      "uiExposureDeferred": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "specialistDictionarySource",
+      "latestSupplementSource",
+      "generalDictionaryUsage",
+      "institutionalUsage",
+      "reportOutputChecked",
+      "sourcePageLinked",
+      "originalScriptChecked",
+      "captionNeedsCheck",
+      "ocrCorrectionNeeded",
+      "pdfCrossChecked",
+      "valueListCandidate",
+      "uiExposureDeferred",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-featurePackage": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

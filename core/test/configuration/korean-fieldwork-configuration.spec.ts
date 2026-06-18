@@ -19,6 +19,9 @@ describe('KoreanFieldwork project configuration', () => {
         const operationForm = config.forms['Operation:default'];
         const projectForm = config.forms['Project:default'];
         const featureForm = config.forms['Feature:default'];
+        const featureGroupForm = config.forms['FeatureGroup:default'];
+        const featureSegmentForm = config.forms['FeatureSegment:default'];
+        const findForm = config.forms['Find:default'];
         const sampleForm = config.forms['Sample:default'];
 
         expect(operationForm.fields.fieldRecordQuality.inputType).toBe('checkboxes');
@@ -29,6 +32,10 @@ describe('KoreanFieldwork project configuration', () => {
         expect(config.forms['FeatureSegment:default'].fields.firstExposureRecord.inputType).toBe('checkboxes');
         expect(featureForm.fields.fortificationHiddenGateFunction.inputType).toBe('checkboxes');
         expect(featureForm.fields.fortificationParapetDetail.inputType).toBe('checkboxes');
+        expect(featureGroupForm.fields.termAuthorityStatus.inputType).toBe('checkboxes');
+        expect(featureForm.fields.termAuthorityStatus.inputType).toBe('checkboxes');
+        expect(featureSegmentForm.fields.termAuthorityStatus.inputType).toBe('checkboxes');
+        expect(findForm.fields.termAuthorityStatus.inputType).toBe('checkboxes');
         expect(sampleForm.fields.sampleCollectionHandling.inputType).toBe('checkboxes');
 
         expect(operationForm.valuelists.fieldRecordQuality).toBe('KoreanFieldwork-fieldRecordQuality');
@@ -39,6 +46,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-fortificationHiddenGateFunction');
         expect(featureForm.valuelists.fortificationParapetDetail)
             .toBe('KoreanFieldwork-fortificationParapetDetail');
+        expect(featureForm.valuelists.termAuthorityStatus).toBe('KoreanFieldwork-termAuthorityStatus');
+        expect(findForm.valuelists.termAuthorityStatus).toBe('KoreanFieldwork-termAuthorityStatus');
         expect(sampleForm.valuelists.sampleCollectionHandling)
             .toBe('KoreanFieldwork-sampleCollectionHandling');
     });
@@ -56,6 +65,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.Feature.fields.firstExposureRecord.label).toBe('First exposure record');
         expect(languages.en.categories.Feature.fields.fortificationHiddenGateFunction.label).toBe('Hidden gate function');
         expect(languages.en.categories.Feature.fields.fortificationParapetDetail.label).toBe('Parapet detail');
+        expect(languages.en.categories.Feature.fields.termAuthorityStatus.label).toBe('Term authority status');
+        expect(languages.en.categories.Find.fields.termAuthorityStatus.label).toBe('Term authority status');
         expect(languages.en.categories.Sample.fields.sampleCollectionHandling.label)
             .toBe('Sample collection handling');
         expect(languages.ko.categories.Operation.fields.fieldRecordQuality.label).toBeDefined();
@@ -72,6 +83,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Military supply transport');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-fortificationParapetDetail'].values.nearGunOpening.label)
             .toBe('Near-range gun opening');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-termAuthorityStatus'].values.pdfCrossChecked.label)
+            .toBe('Source PDF cross-checked');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-sampleCollectionHandling'].values.lightShielded.label)
             .toBe('Light-shielded');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-fieldRecordQuality'].values.immediateRecording.label)

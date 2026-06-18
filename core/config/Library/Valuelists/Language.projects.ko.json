@@ -405,6 +405,50 @@
     },
     "description": "한국 고고학 사전류의 관용어, 전문 표제어, 보고서 출력어를 분리하기 위한 용어 관계 목록"
   },
+  "KoreanFieldwork-termAuthorityStatus": {
+    "values": {
+      "specialistDictionarySource": {
+        "label": "전문사전 근거"
+      },
+      "latestSupplementSource": {
+        "label": "최신 증보판 근거"
+      },
+      "generalDictionaryUsage": {
+        "label": "일반사전 용례"
+      },
+      "institutionalUsage": {
+        "label": "기관 관용어"
+      },
+      "reportOutputChecked": {
+        "label": "보고서 출력어 확인"
+      },
+      "sourcePageLinked": {
+        "label": "출처 쪽수 연결"
+      },
+      "originalScriptChecked": {
+        "label": "한자·원어 확인"
+      },
+      "captionNeedsCheck": {
+        "label": "캡션 대조 필요"
+      },
+      "ocrCorrectionNeeded": {
+        "label": "OCR 교정 필요"
+      },
+      "pdfCrossChecked": {
+        "label": "원PDF 대조 완료"
+      },
+      "valueListCandidate": {
+        "label": "값목록 후보"
+      },
+      "uiExposureDeferred": {
+        "label": "UI 노출 보류"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "고고학사전 표제어와 현장 관용어를 앱 값 목록으로 올리기 전에 출처, 원문 대조, OCR 품질, UI 노출 가능성을 표시하기 위한 목록"
+  },
   "KoreanFieldwork-featurePackage": {
     "values": {
       "surfaceSurvey": {

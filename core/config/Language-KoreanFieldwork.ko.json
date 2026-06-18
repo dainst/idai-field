@@ -67,6 +67,9 @@
         "termRelation": {
           "label": "용어 관계"
         },
+        "termAuthorityStatus": {
+          "label": "용어 검증상태"
+        },
         "verificationState": {
           "label": "검증상태"
         }
@@ -104,6 +107,9 @@
         "termRelation": {
           "label": "용어 관계"
         },
+        "termAuthorityStatus": {
+          "label": "용어 검증상태"
+        },
         "verificationState": {
           "label": "검증상태"
         }
@@ -126,6 +132,9 @@
         "termRelation": {
           "label": "용어 관계"
         },
+        "termAuthorityStatus": {
+          "label": "용어 검증상태"
+        },
         "verificationState": {
           "label": "검증상태"
         }
@@ -141,6 +150,9 @@
         },
         "termRelation": {
           "label": "용어 관계"
+        },
+        "termAuthorityStatus": {
+          "label": "용어 검증상태"
         },
         "verificationState": {
           "label": "검증상태"

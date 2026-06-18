@@ -12159,6 +12159,50 @@
     },
     "description": "Korean archaeological term authority relationships for aliases, specialist terms, and report labels"
   },
+  "KoreanFieldwork-termAuthorityStatus": {
+    "values": {
+      "specialistDictionarySource": {
+        "label": "Specialist dictionary source"
+      },
+      "latestSupplementSource": {
+        "label": "Latest supplement source"
+      },
+      "generalDictionaryUsage": {
+        "label": "General dictionary usage"
+      },
+      "institutionalUsage": {
+        "label": "Institutional usage"
+      },
+      "reportOutputChecked": {
+        "label": "Report output checked"
+      },
+      "sourcePageLinked": {
+        "label": "Source page linked"
+      },
+      "originalScriptChecked": {
+        "label": "Original script checked"
+      },
+      "captionNeedsCheck": {
+        "label": "Caption needs check"
+      },
+      "ocrCorrectionNeeded": {
+        "label": "OCR correction needed"
+      },
+      "pdfCrossChecked": {
+        "label": "Source PDF cross-checked"
+      },
+      "valueListCandidate": {
+        "label": "Value-list candidate"
+      },
+      "uiExposureDeferred": {
+        "label": "UI exposure deferred"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean archaeological term authority status for tracking dictionary source quality, original-script checks, OCR risk, and readiness for UI value lists"
+  },
   "KoreanFieldwork-featurePackage": {
     "values": {
       "surfaceSurvey": {

@@ -81,6 +81,15 @@
         "fieldRecordQuality": {
           "label": "현장기록 품질"
         },
+        "gpsSurveyQualityRecord": {
+          "label": "GPS 측량 품질기록"
+        },
+        "gpsNmeaRecord": {
+          "label": "GPS NMEA 정보기록"
+        },
+        "fieldDatabaseOperationRisk": {
+          "label": "현장 DB 운영위험"
+        },
         "investigationRecordHandover": {
           "label": "조사자료 인계"
         },
@@ -634,6 +643,9 @@
         },
         "digitalSourcePreservation": {
           "label": "디지털 원자료 보존"
+        },
+        "gpsPhotoLinkRecord": {
+          "label": "GPS 사진연동 기록"
         },
         "reportCrossCheck": {
           "label": "보고서 교차검토"

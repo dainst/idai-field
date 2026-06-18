@@ -197,6 +197,18 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "gpsSurveyQualityRecord": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "gpsNmeaRecord": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "fieldDatabaseOperationRisk": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "personalNotebookArchive": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -227,6 +239,9 @@
         "dailyLogReview": "KoreanFieldwork-dailyLogReview",
         "digitalSourcePreservation": "KoreanFieldwork-digitalSourcePreservation",
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
+        "gpsSurveyQualityRecord": "KoreanFieldwork-gpsSurveyQualityRecord",
+        "gpsNmeaRecord": "KoreanFieldwork-gpsNmeaRecord",
+        "fieldDatabaseOperationRisk": "KoreanFieldwork-fieldDatabaseOperationRisk",
         "investigationRecordHandover": "KoreanFieldwork-investigationRecordHandover",
         "personalNotebookArchive": "KoreanFieldwork-personalNotebookArchive",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
@@ -258,6 +273,9 @@
             "dailyLogContent",
             "dailyLogReview",
             "fieldRecordQuality",
+            "gpsSurveyQualityRecord",
+            "gpsNmeaRecord",
+            "fieldDatabaseOperationRisk",
             "personalNotebookArchive",
             "investigationRecordHandover",
             "digitalSourcePreservation",
@@ -1623,6 +1641,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "gpsPhotoLinkRecord": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "reportCrossCheck": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1632,6 +1654,7 @@
         "mediaEvidenceRole": "KoreanFieldwork-mediaEvidenceRole",
         "mediaQualityCheck": "KoreanFieldwork-mediaQualityCheck",
         "digitalSourcePreservation": "KoreanFieldwork-digitalSourcePreservation",
+        "gpsPhotoLinkRecord": "KoreanFieldwork-gpsPhotoLinkRecord",
         "reportCrossCheck": "KoreanFieldwork-reportCrossCheck"
       },
       "groups": [
@@ -1656,6 +1679,7 @@
             "mediaEvidenceRole",
             "mediaQualityCheck",
             "digitalSourcePreservation",
+            "gpsPhotoLinkRecord",
             "reportCrossCheck"
           ]
         }

@@ -36471,5 +36471,145 @@
       "imageExported",
       "pendingDecision"
     ]
+  },
+  "KoreanFieldwork-gpsSurveyQualityRecord": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "gpsUsed": {},
+      "gnssUsed": {},
+      "rtkUsed": {},
+      "baseStationRecorded": {},
+      "roverRecorded": {},
+      "satelliteStateChecked": {},
+      "observationTimeRecorded": {},
+      "rawDataPreserved": {},
+      "realtimeProcessingRecorded": {},
+      "coordinateSystemRecorded": {},
+      "geoidRecorded": {},
+      "satelliteCountRecorded": {},
+      "dopRecorded": {},
+      "accuracyRecorded": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "gpsUsed",
+      "gnssUsed",
+      "rtkUsed",
+      "baseStationRecorded",
+      "roverRecorded",
+      "satelliteStateChecked",
+      "observationTimeRecorded",
+      "rawDataPreserved",
+      "realtimeProcessingRecorded",
+      "coordinateSystemRecorded",
+      "geoidRecorded",
+      "satelliteCountRecorded",
+      "dopRecorded",
+      "accuracyRecorded",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-gpsNmeaRecord": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "gpsDate": {},
+      "gpsTime": {},
+      "latitudeLogged": {},
+      "longitudeLogged": {},
+      "altitudeLogged": {},
+      "fixStatus": {},
+      "satellitesInView": {},
+      "satellitesUsed": {},
+      "pdop": {},
+      "hdop": {},
+      "vdop": {},
+      "satelliteId": {},
+      "satelliteElevation": {},
+      "satelliteAzimuth": {},
+      "snr": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "gpsDate",
+      "gpsTime",
+      "latitudeLogged",
+      "longitudeLogged",
+      "altitudeLogged",
+      "fixStatus",
+      "satellitesInView",
+      "satellitesUsed",
+      "pdop",
+      "hdop",
+      "vdop",
+      "satelliteId",
+      "satelliteElevation",
+      "satelliteAzimuth",
+      "snr",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-gpsPhotoLinkRecord": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "gpsConnectionConfigured": {},
+      "gpsTrackManaged": {},
+      "registeredPointManaged": {},
+      "currentPositionLinked": {},
+      "photoFilenameRecorded": {},
+      "photoAutoClassifiedByLocation": {},
+      "userFolderSaved": {},
+      "digitalMapLinked": {},
+      "radiusSearchUsed": {},
+      "distanceMeasurementUsed": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "gpsConnectionConfigured",
+      "gpsTrackManaged",
+      "registeredPointManaged",
+      "currentPositionLinked",
+      "photoFilenameRecorded",
+      "photoAutoClassifiedByLocation",
+      "userFolderSaved",
+      "digitalMapLinked",
+      "radiusSearchUsed",
+      "distanceMeasurementUsed",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-fieldDatabaseOperationRisk": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "updateDifficulty": {},
+      "analysisDifficulty": {},
+      "informationUseInconvenient": {},
+      "unknownBuriedHeritageManaged": {},
+      "dataCompatibilityChecked": {},
+      "shpManaged": {},
+      "dxfManaged": {},
+      "layerManaged": {},
+      "geometryManaged": {},
+      "attributeEditingTracked": {},
+      "fieldSyncChecked": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "updateDifficulty",
+      "analysisDifficulty",
+      "informationUseInconvenient",
+      "unknownBuriedHeritageManaged",
+      "dataCompatibilityChecked",
+      "shpManaged",
+      "dxfManaged",
+      "layerManaged",
+      "geometryManaged",
+      "attributeEditingTracked",
+      "fieldSyncChecked",
+      "pendingDecision"
+    ]
   }
 }

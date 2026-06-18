@@ -41,6 +41,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(termAuthorityForm.fields.termApplicationScope.inputType).toBe('checkboxes');
         expect(termAuthorityForm.fields.termSourcePriority.inputType).toBe('checkboxes');
         expect(operationForm.fields.fieldRecordQuality.inputType).toBe('checkboxes');
+        expect(operationForm.fields.gpsSurveyQualityRecord.inputType).toBe('checkboxes');
+        expect(operationForm.fields.gpsNmeaRecord.inputType).toBe('checkboxes');
+        expect(operationForm.fields.fieldDatabaseOperationRisk.inputType).toBe('checkboxes');
         expect(operationForm.fields.personalNotebookArchive.inputType).toBe('checkboxes');
         expect(operationForm.fields.dailyLogContent.inputType).toBe('checkboxes');
         expect(operationForm.fields.dailyLogReview.inputType).toBe('checkboxes');
@@ -193,9 +196,16 @@ describe('KoreanFieldwork project configuration', () => {
         expect(photoForm.fields.mediaEvidenceRole.inputType).toBe('checkboxes');
         expect(photoForm.fields.mediaQualityCheck.inputType).toBe('checkboxes');
         expect(photoForm.fields.digitalSourcePreservation.inputType).toBe('checkboxes');
+        expect(photoForm.fields.gpsPhotoLinkRecord.inputType).toBe('checkboxes');
         expect(photoForm.fields.reportCrossCheck.inputType).toBe('checkboxes');
 
         expect(operationForm.valuelists.fieldRecordQuality).toBe('KoreanFieldwork-fieldRecordQuality');
+        expect(operationForm.valuelists.gpsSurveyQualityRecord)
+            .toBe('KoreanFieldwork-gpsSurveyQualityRecord');
+        expect(operationForm.valuelists.gpsNmeaRecord)
+            .toBe('KoreanFieldwork-gpsNmeaRecord');
+        expect(operationForm.valuelists.fieldDatabaseOperationRisk)
+            .toBe('KoreanFieldwork-fieldDatabaseOperationRisk');
         expect(operationForm.valuelists.personalNotebookArchive).toBe('KoreanFieldwork-personalNotebookArchive');
         expect(operationForm.valuelists.dailyLogContent).toBe('KoreanFieldwork-dailyLogContent');
         expect(operationForm.valuelists.dailyLogReview).toBe('KoreanFieldwork-dailyLogReview');
@@ -448,6 +458,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(photoForm.valuelists.mediaQualityCheck).toBe('KoreanFieldwork-mediaQualityCheck');
         expect(photoForm.valuelists.digitalSourcePreservation)
             .toBe('KoreanFieldwork-digitalSourcePreservation');
+        expect(photoForm.valuelists.gpsPhotoLinkRecord)
+            .toBe('KoreanFieldwork-gpsPhotoLinkRecord');
         expect(photoForm.valuelists.reportCrossCheck).toBe('KoreanFieldwork-reportCrossCheck');
     });
 
@@ -471,6 +483,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.Operation.fields.personalNotebookArchive.label).toBe('Personal notebook archive');
         expect(languages.en.categories.Operation.fields.dailyLogContent.label).toBe('Daily work log');
         expect(languages.en.categories.Operation.fields.dailyLogReview.label).toBe('Daily log review');
+        expect(languages.en.categories.Operation.fields.gpsSurveyQualityRecord.label)
+            .toBe('GPS survey quality record');
+        expect(languages.en.categories.Operation.fields.gpsNmeaRecord.label)
+            .toBe('GPS NMEA record');
+        expect(languages.en.categories.Operation.fields.fieldDatabaseOperationRisk.label)
+            .toBe('Field database operation risk');
         expect(languages.en.categories.Project.fields.digitalSourcePreservation.label).toBe('Digital source preservation');
         expect(languages.en.categories.Project.fields.reportEvaluationFeedback.label)
             .toBe('Report evaluation feedback');
@@ -697,6 +715,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Distribution map requirement');
         expect(languages.en.categories.Photo.fields.mediaQualityCheck.label)
             .toBe('Media quality check');
+        expect(languages.en.categories.Photo.fields.gpsPhotoLinkRecord.label)
+            .toBe('GPS photo-link record');
         expect(languages.ko.categories.Operation.fields.fieldRecordQuality.label).toBeDefined();
 
         expect(valuelistLanguages.projects.en['KoreanFieldwork-fieldRecordQuality'].values.immediateRecording.label)
@@ -1080,9 +1100,24 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-distributionMapRequirement']
             .values.radius500m.label)
             .toBe('500 m radius');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-gpsSurveyQualityRecord']
+            .values.rtkUsed.label)
+            .toBe('RTK used');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-gpsNmeaRecord']
+            .values.hdop.label)
+            .toBe('HDOP');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-gpsPhotoLinkRecord']
+            .values.currentPositionLinked.label)
+            .toBe('Current position linked');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-fieldDatabaseOperationRisk']
+            .values.dataCompatibilityChecked.label)
+            .toBe('Data compatibility checked');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-artifactDrawingRecordMethod']
             .values.measuredDrawing.label)
             .toBeDefined();
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-gpsSurveyQualityRecord']
+            .values.rtkUsed.label)
+            .toBe('RTK 사용');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-mapSourceMaterial']
             .values.joseonMap.label)
             .toBe('조선시대 지도');

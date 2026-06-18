@@ -81,6 +81,15 @@
         "fieldRecordQuality": {
           "label": "Field record quality"
         },
+        "gpsSurveyQualityRecord": {
+          "label": "GPS survey quality record"
+        },
+        "gpsNmeaRecord": {
+          "label": "GPS NMEA record"
+        },
+        "fieldDatabaseOperationRisk": {
+          "label": "Field database operation risk"
+        },
         "investigationRecordHandover": {
           "label": "Investigation record handover"
         },
@@ -634,6 +643,9 @@
         },
         "digitalSourcePreservation": {
           "label": "Digital source preservation"
+        },
+        "gpsPhotoLinkRecord": {
+          "label": "GPS photo-link record"
         },
         "reportCrossCheck": {
           "label": "Report cross-check"

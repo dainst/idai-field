@@ -15966,5 +15966,79 @@
       "pendingDecision": { "label": "Pending decision" }
     },
     "description": "Korean fieldwork distribution map checks for survey area, heritage/protection areas, radius settings, legend, scale, north arrow, and exported outputs"
+  },
+  "KoreanFieldwork-gpsSurveyQualityRecord": {
+    "values": {
+      "gpsUsed": { "label": "GPS used" },
+      "gnssUsed": { "label": "GNSS used" },
+      "rtkUsed": { "label": "RTK used" },
+      "baseStationRecorded": { "label": "Base station recorded" },
+      "roverRecorded": { "label": "Rover recorded" },
+      "satelliteStateChecked": { "label": "Satellite state checked" },
+      "observationTimeRecorded": { "label": "Observation time recorded" },
+      "rawDataPreserved": { "label": "Raw data preserved" },
+      "realtimeProcessingRecorded": { "label": "Realtime processing recorded" },
+      "coordinateSystemRecorded": { "label": "Coordinate system recorded" },
+      "geoidRecorded": { "label": "Geoid recorded" },
+      "satelliteCountRecorded": { "label": "Satellite count recorded" },
+      "dopRecorded": { "label": "DOP recorded" },
+      "accuracyRecorded": { "label": "Accuracy recorded" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean fieldwork GPS survey quality checks for method, base and rover stations, satellite state, observation time, raw data, coordinate system, geoid, DOP, and accuracy"
+  },
+  "KoreanFieldwork-gpsNmeaRecord": {
+    "values": {
+      "gpsDate": { "label": "GPS date" },
+      "gpsTime": { "label": "GPS time" },
+      "latitudeLogged": { "label": "Latitude logged" },
+      "longitudeLogged": { "label": "Longitude logged" },
+      "altitudeLogged": { "label": "Altitude logged" },
+      "fixStatus": { "label": "Fix status" },
+      "satellitesInView": { "label": "Satellites in view" },
+      "satellitesUsed": { "label": "Satellites used" },
+      "pdop": { "label": "PDOP" },
+      "hdop": { "label": "HDOP" },
+      "vdop": { "label": "VDOP" },
+      "satelliteId": { "label": "Satellite ID" },
+      "satelliteElevation": { "label": "Satellite elevation" },
+      "satelliteAzimuth": { "label": "Satellite azimuth" },
+      "snr": { "label": "SNR" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean fieldwork GPS NMEA checks for date, time, coordinates, altitude, fix status, satellite counts, PDOP/HDOP/VDOP, satellite ID, elevation, azimuth, and SNR"
+  },
+  "KoreanFieldwork-gpsPhotoLinkRecord": {
+    "values": {
+      "gpsConnectionConfigured": { "label": "GPS connection configured" },
+      "gpsTrackManaged": { "label": "GPS track managed" },
+      "registeredPointManaged": { "label": "Registered point managed" },
+      "currentPositionLinked": { "label": "Current position linked" },
+      "photoFilenameRecorded": { "label": "Photo filename recorded" },
+      "photoAutoClassifiedByLocation": { "label": "Photo auto-classified by location" },
+      "userFolderSaved": { "label": "User folder saved" },
+      "digitalMapLinked": { "label": "Digital map linked" },
+      "radiusSearchUsed": { "label": "Radius search used" },
+      "distanceMeasurementUsed": { "label": "Distance measurement used" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean fieldwork GPS photo-link checks for GPS connection, tracks, registered points, current position, filenames, location-based classification, map links, radius search, and distance measurement"
+  },
+  "KoreanFieldwork-fieldDatabaseOperationRisk": {
+    "values": {
+      "updateDifficulty": { "label": "Update difficulty" },
+      "analysisDifficulty": { "label": "Analysis difficulty" },
+      "informationUseInconvenient": { "label": "Information use inconvenient" },
+      "unknownBuriedHeritageManaged": { "label": "Unknown buried heritage managed" },
+      "dataCompatibilityChecked": { "label": "Data compatibility checked" },
+      "shpManaged": { "label": "SHP managed" },
+      "dxfManaged": { "label": "DXF managed" },
+      "layerManaged": { "label": "Layer managed" },
+      "geometryManaged": { "label": "Geometry managed" },
+      "attributeEditingTracked": { "label": "Attribute editing tracked" },
+      "fieldSyncChecked": { "label": "Field sync checked" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean fieldwork field database operation checks for update, analysis, usability, unknown buried heritage, SHP/DXF compatibility, layers, geometry, attribute editing, and synchronization risks"
   }
 }

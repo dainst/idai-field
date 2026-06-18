@@ -4,18 +4,13 @@ import { createEmpty, extend, isEmpty } from "ol/extent.js";
 import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
 import GeoJSON from "ol/format/GeoJSON.js";
-import Overlay from "ol/Overlay.js";
 import Style from "ol/style/Style.js";
 import { Fill, Stroke } from "ol/style.js";
 import Draw from "ol/interaction/Draw.js";
 
-import {
-    createTileLayer,
-    getVisibilityKey,
-    styleFunction,
-    renderPreviewOverlay,
-} from "./map-helper-functions.js";
+import { styleFunction } from "./map-helper-functions.js";
 
+import PublicationTileLayers from "./map/tile-layers";
 import PreviewOverlay from "./map/preview-overlay.js";
 
 function setFillForLayer(layer, value) {
@@ -35,10 +30,6 @@ export default getDocumentViewMapHook = () => {
         projectKey: null,
         projectDraftDate: null,
         docId: null,
-        projectTileLayers: [],
-        projectTileLayerExtent: null,
-        documentTileLayers: [],
-        documentTileLayerExtent: null,
         parentLayer: null,
         ancestorLayer: null,
         docLayer: null,
@@ -49,25 +40,37 @@ export default getDocumentViewMapHook = () => {
         draw: null,
         drawSource: null,
         drawLayer: null,
+        publicationTileLayers: null,
 
         mounted() {
             this.initialize();
             this.handleEvent(
                 `document-map-set-project-layers-${this.el.id}`,
-                ({ project, project_tile_layers }) => {
-                    this.setTileLayers(project, project_tile_layers, "project");
+                ({ project_tile_layers }) => {
+                    this.publicationTileLayers.setProjectLayers(
+                        project_tile_layers,
+                    );
                 },
             );
             this.handleEvent(
                 `document-map-set-document-layers-${this.el.id}`,
-                ({ project, document_tile_layers }) => {
-                    this.setTileLayers(
-                        project,
+                ({ document_tile_layers }) => {
+                    this.publicationTileLayers.setDocumentLayers(
                         document_tile_layers,
-                        "document",
                     );
                 },
             );
+
+            this.handleEvent(
+                `document-map-set-layer-visibility-${this.el.id}`,
+                ({ uuid, visibility }) => {
+                    this.publicationTileLayers.toggleLayerVisibility(
+                        uuid,
+                        visibility,
+                    );
+                },
+            );
+
             this.handleEvent(
                 `document-map-update-${this.el.id}`,
                 ({
@@ -89,12 +92,6 @@ export default getDocumentViewMapHook = () => {
                         children_features,
                         ancestor_features,
                     );
-                },
-            );
-            this.handleEvent(
-                `document-map-set-layer-visibility-${this.el.id}`,
-                ({ uuid, visibility }) => {
-                    this.toggleLayerVisibility(uuid, visibility);
                 },
             );
 
@@ -228,6 +225,13 @@ export default getDocumentViewMapHook = () => {
                 this.projectDraftDate,
             );
 
+            this.publicationTileLayers = new PublicationTileLayers(
+                this,
+                this.map,
+                this.projectKey,
+                this.draftDate,
+            );
+
             this.el.addEventListener("pointerenter", function (e) {
                 setFillForLayer(_this.docLayer, false);
             });
@@ -312,63 +316,6 @@ export default getDocumentViewMapHook = () => {
                     _this.overlay.hide();
                 }
             });
-        },
-        setTileLayers(projectKey, tileLayersInfo, groupName) {
-            let layerGroup = [];
-            let layerGroupExtent = createEmpty();
-
-            for (let info of tileLayersInfo) {
-                const layer = createTileLayer(info, projectKey);
-
-                layerGroup.push(layer);
-
-                const preference = localStorage.getItem(
-                    getVisibilityKey(projectKey, layer.get("name")),
-                );
-                let visible = null;
-
-                if (preference == "true") {
-                    visible = true;
-                } else if (preference == "false") {
-                    visible = false;
-                }
-
-                if (visible != null) {
-                    layer.setVisible(visible);
-                    this.pushEventTo(this.el, "visibility-preference", {
-                        uuid: layer.get("name"),
-                        group: groupName,
-                        value: visible,
-                    });
-                }
-
-                layerGroupExtent = extend(layerGroupExtent, layer.getExtent());
-                this.map.addLayer(layer);
-            }
-
-            if (groupName == "project") {
-                this.projectTileLayers = layerGroup;
-                this.projectTileLayerExtent = layerGroupExtent;
-            } else if (groupName == "document") {
-                this.documentTileLayers = layerGroup;
-                this.documentTileLayerExtent = layerGroupExtent;
-            }
-
-            this.updateZIndices();
-        },
-
-        updateZIndices() {
-            const layerCount =
-                0 +
-                this.documentTileLayers.length +
-                this.projectTileLayers.length;
-            const combined = this.documentTileLayers.concat(
-                this.projectTileLayers,
-            );
-
-            for (let i = 0; i < layerCount; i++) {
-                combined[i].setZIndex(layerCount - i - 200);
-            }
         },
         setSelectionPolygon(geometry) {
             this.drawSource.clear();
@@ -482,11 +429,15 @@ export default getDocumentViewMapHook = () => {
             let fullExtent = createEmpty();
 
             fullExtent = extend(fullExtent, aggregatedExtent);
+            fullExtent = extend(
+                fullExtent,
+                this.publicationTileLayers.getExtents().project,
+            );
 
-            if (this.projectTileLayerExtent)
-                fullExtent = extend(fullExtent, this.projectTileLayerExtent);
-            if (this.documentTileLayerExtent)
-                fullExtent = extend(fullExtent, this.documentTileLayerExtent);
+            fullExtent = extend(
+                fullExtent,
+                this.publicationTileLayers.getExtents().document,
+            );
 
             this.map.getView().fit(fullExtent, { padding: [10, 10, 10, 10] });
             this.map.setView(
@@ -523,19 +474,6 @@ export default getDocumentViewMapHook = () => {
             });
 
             this.overlay.hide();
-        },
-        toggleLayerVisibility(uuid, visibility) {
-            const layer = this.map
-                .getLayers()
-                .getArray()
-                .find((layer) => layer.get("name") == uuid);
-            if (layer) {
-                layer.setVisible(visibility);
-                localStorage.setItem(
-                    getVisibilityKey(this.projectKey, layer.get("name")),
-                    visibility,
-                );
-            }
         },
     };
 };

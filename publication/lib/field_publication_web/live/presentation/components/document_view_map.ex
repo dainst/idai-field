@@ -271,50 +271,6 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     |> push_event("set-draw-box-mode-#{id}", %{new_value: new_value})
   end
 
-  # defp create_feature_info(
-  #        %Document{
-  #          category: %Category{color: color, labels: category_labels},
-  #          id: uuid,
-  #          identifier: identifier,
-  #          geometry: geometry
-  #        } = doc
-  #      ) do
-  #   description =
-  #     doc
-  #     |> Data.get_field_value("shortDescription")
-  #     |> case do
-  #       nil ->
-  #         ""
-
-  #       value when is_binary(value) ->
-  #         value
-
-  #       values when is_map(values) ->
-  #         pick_default_translation(values)
-  #     end
-
-  #   category = pick_default_translation(category_labels)
-
-  #   base = %{
-  #     type: "Feature",
-  #     properties: %{
-  #       uuid: uuid,
-  #       identifier: identifier,
-  #       color: color,
-  #       description: description,
-  #       category: category
-  #     }
-  #   }
-
-  #   if geometry do
-  #     base
-  #     |> put_in([:geometry], geometry)
-  #     |> put_in([:properties, :type], geometry["type"])
-  #   else
-  #     base
-  #   end
-  # end
-
   def extract_tile_layer_info(%{
         "resource" => %{
           "georeference" => georeference,
@@ -325,7 +281,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
         }
       }) do
     %{
-      extent: georeference,
+      geo_reference: georeference,
       height: height,
       width: width,
       uuid: uuid,
@@ -367,7 +323,6 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
 
       socket
       |> push_event("document-map-set-project-layers-#{hook_id}", %{
-        project: current.project_name,
         project_tile_layers: default_map_layers ++ other_map_layers
       })
       |> assign(
@@ -402,7 +357,6 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
 
     socket
     |> push_event("document-map-set-document-layers-#{hook_id}", %{
-      project: publication.project_name,
       document_tile_layers: default_map_layers ++ other_map_layers
     })
     |> assign(

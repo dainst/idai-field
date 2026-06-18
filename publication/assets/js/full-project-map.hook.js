@@ -4,18 +4,13 @@ import { createEmpty, extend } from "ol/extent.js";
 import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
 import GeoJSON from "ol/format/GeoJSON.js";
-import Overlay from "ol/Overlay.js";
 import Draw from "ol/interaction/Draw.js";
 import { Fill, Stroke } from "ol/style.js";
 import Style from "ol/style/Style.js";
 
-import {
-    createTileLayer,
-    getVisibilityKey,
-    styleFunction,
-} from "./map-helper-functions.js";
-
-import PreviewOverlay from "./map/preview-overlay.js";
+import { styleFunction } from "./map-helper-functions.js";
+import PublicationTileLayers from "./map/tile-layers";
+import PreviewOverlay from "./map/preview-overlay";
 
 const highlightZoomDuration = -1;
 
@@ -25,8 +20,6 @@ export default getFullProjectMapHook = () => {
         map: null,
         projectKey: null,
         draftDate: null,
-        projectTileLayers: [],
-        projectTileLayerExtent: null,
         featureLayers: [],
         fullVectorExtent: null,
         lastHighlightChange: Date.now(),
@@ -38,14 +31,26 @@ export default getFullProjectMapHook = () => {
         drawSource: null,
         drawLayer: null,
         overlay: null,
+        publicationTileLayers: null,
 
         mounted() {
             this.initialize();
             this.handleEvent(
                 `full-project-map-set-layers-${this.el.id}`,
-                ({ project, project_tile_layers }) => {
-                    this.projectKey = project;
-                    this.setTileLayers(project, project_tile_layers);
+                ({ project_tile_layers }) => {
+                    this.publicationTileLayers.setProjectLayers(
+                        project_tile_layers,
+                    );
+                },
+            );
+
+            this.handleEvent(
+                `full-project-map-set-layer-visibility-${this.el.id}`,
+                ({ uuid, visibility }) => {
+                    this.publicationTileLayers.toggleLayerVisibility(
+                        uuid,
+                        visibility,
+                    );
                 },
             );
 
@@ -53,13 +58,6 @@ export default getFullProjectMapHook = () => {
                 `full-project-map-data-${this.el.id}`,
                 ({ feature_collections }) => {
                     this.setMapFeatures(feature_collections);
-                },
-            );
-
-            this.handleEvent(
-                `full-project-map-set-layer-visibility-${this.el.id}`,
-                ({ uuid, visibility }) => {
-                    this.toggleLayerVisibility(uuid, visibility);
                 },
             );
 
@@ -149,6 +147,7 @@ export default getFullProjectMapHook = () => {
             this.id = this.el.getAttribute("id");
             this.projectKey = this.el.getAttribute("project_key");
             this.draftDate = this.el.getAttribute("draft_date");
+            this.language = this.el.getAttribute("language");
 
             const _this = this;
             const container = document.getElementById(`${this.id}-map`);
@@ -157,7 +156,6 @@ export default getFullProjectMapHook = () => {
                 const offsetElement = document.getElementById(
                     this.el.getAttribute("offset_base_element"),
                 );
-                //container.innerHTML = "";
                 container.style.height = `${window.innerHeight - offsetElement.offsetTop}px`;
             }
 
@@ -196,6 +194,13 @@ export default getFullProjectMapHook = () => {
                 this,
                 this.map,
                 overlayDiv,
+                this.projectKey,
+                this.draftDate,
+            );
+
+            this.publicationTileLayers = new PublicationTileLayers(
+                this,
+                this.map,
                 this.projectKey,
                 this.draftDate,
             );
@@ -263,7 +268,6 @@ export default getFullProjectMapHook = () => {
                 await response.json();
 
             this.categoryLabels = category_labels;
-            this.language = this.el.getAttribute("language");
 
             this.setMapFeatures(feature_collections);
 
@@ -364,53 +368,6 @@ export default getFullProjectMapHook = () => {
             }
         },
 
-        updateFeatureOverlay(features, coordinate, addButton = false) {
-            this.clearHighlights();
-        },
-
-        setTileLayers(projectKey, tileLayers) {
-            let layerGroup = [];
-            let layerGroupExtent = createEmpty();
-
-            for (let info of tileLayers) {
-                const layer = createTileLayer(info, projectKey);
-
-                layerGroup.push(layer);
-
-                const preference = localStorage.getItem(
-                    getVisibilityKey(this.projectKey, layer.get("name")),
-                );
-                let visible = null;
-
-                if (preference == "true") {
-                    visible = true;
-                } else if (preference == "false") {
-                    visible = false;
-                }
-
-                if (visible != null) {
-                    layer.setVisible(visible);
-                    this.pushEventTo(this.el, "visibility-preference", {
-                        uuid: layer.get("name"),
-                        group: "project",
-                        value: visible,
-                    });
-                }
-
-                layerGroupExtent = extend(layerGroupExtent, layer.getExtent());
-                this.map.addLayer(layer);
-            }
-
-            this.projectTileLayers = layerGroup;
-            this.projectTileLayerExtent = layerGroupExtent;
-
-            const layerCount = this.projectTileLayers.length;
-
-            for (let i = 0; i < layerCount; i++) {
-                this.projectTileLayers[i].setZIndex(layerCount - i - 200);
-            }
-        },
-
         clearHighlights() {
             for (const index in this.featureLayers) {
                 let features = this.featureLayers[index]
@@ -430,20 +387,6 @@ export default getFullProjectMapHook = () => {
             properties.fill = true;
 
             feature.setProperties(properties);
-        },
-
-        toggleLayerVisibility(uuid, visibility) {
-            const layer = this.map
-                .getLayers()
-                .getArray()
-                .find((layer) => layer.get("name") == uuid);
-            if (layer) {
-                layer.setVisible(visibility);
-                localStorage.setItem(
-                    getVisibilityKey(this.projectKey, layer.get("name")),
-                    visibility,
-                );
-            }
         },
 
         findFeature(uuid) {
@@ -500,9 +443,10 @@ export default getFullProjectMapHook = () => {
             let fullExtent = createEmpty();
 
             fullExtent = extend(fullExtent, this.fullVectorExtent);
-
-            if (this.projectTileLayerExtent)
-                fullExtent = extend(fullExtent, this.projectTileLayerExtent);
+            fullExtent = extend(
+                fullExtent,
+                this.publicationTileLayers.getExtents().project,
+            );
 
             this.map.getView().fit(fullExtent, { padding: [10, 10, 10, 10] });
             this.map.setView(

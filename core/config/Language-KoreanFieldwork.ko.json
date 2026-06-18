@@ -136,6 +136,21 @@
         "surfaceSurveyMapRequirement": {
           "label": "지표조사 지도요건"
         },
+        "surfaceSurveyHeritageCategory": {
+          "label": "지표조사 문화재 범주"
+        },
+        "surfaceSurveyScopeDefinition": {
+          "label": "지표조사 범위 산정"
+        },
+        "surfaceSurveyLowerChronologyReview": {
+          "label": "지표조사 하한연대 검토"
+        },
+        "surfaceSurveyTeamExpertise": {
+          "label": "지표조사 조사단 전문성"
+        },
+        "surfaceSurveyTimingReview": {
+          "label": "지표조사 시점 검토"
+        },
         "sampleSurveySuitability": {
           "label": "표본조사 적합성"
         },

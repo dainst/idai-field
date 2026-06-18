@@ -13923,6 +13923,79 @@
     },
     "description": "Korean field notebook map checks for representing surface survey areas and scatters as verifiable polygons or ranges with project-plan, scale, map-sheet, DGPS/RTK, and coordinate evidence"
   },
+  "KoreanFieldwork-surfaceSurveyHeritageCategory": {
+    "values": {
+      "archaeology": { "label": "Archaeology" },
+      "architecturalHistory": { "label": "Architectural history" },
+      "history": { "label": "History" },
+      "artHistory": { "label": "Art history" },
+      "anthropologyFolklore": { "label": "Anthropology and folklore" },
+      "naturalHeritage": { "label": "Natural heritage" },
+      "underwaterHeritage": { "label": "Underwater heritage" },
+      "modernHeritage": { "label": "Modern heritage" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean surface survey heritage-category checks for preventing the survey target from collapsing into artifact scatters only"
+  },
+  "KoreanFieldwork-surfaceSurveyScopeDefinition": {
+    "values": {
+      "entireProjectArea": { "label": "Entire project area" },
+      "alteredAreaIncluded": { "label": "Altered area included" },
+      "phasedProjectEntireArea": { "label": "Entire phased project area" },
+      "borrowPit": { "label": "Borrow pit" },
+      "spoilDisposalArea": { "label": "Spoil disposal area" },
+      "temporaryRoad": { "label": "Temporary road" },
+      "submergedArea": { "label": "Submerged area" },
+      "designChangeArea": { "label": "Design-change area" },
+      "surrounding50m": { "label": "Surrounding 50 m" },
+      "designatedHeritage500mInfluence": { "label": "Designated heritage 500 m influence zone" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean surface survey scope checks for project area, altered areas, phased work, borrow pits, spoil areas, temporary roads, submerged areas, design changes, and influence zones"
+  },
+  "KoreanFieldwork-surfaceSurveyLowerChronologyReview": {
+    "values": {
+      "aroundLiberation": { "label": "Around liberation" },
+      "koreanWarPeriod": { "label": "Korean War period" },
+      "over50Years": { "label": "Over 50 years" },
+      "registeredHeritageCandidate": { "label": "Registered heritage candidate" },
+      "nineteenSeventiesCandidate": { "label": "1970s candidate" },
+      "urgentProtectionNeeded": { "label": "Urgent protection needed" },
+      "legalCriteriaReviewed": { "label": "Legal criteria reviewed" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean surface survey lower-chronology checks for modern heritage and legal threshold review"
+  },
+  "KoreanFieldwork-surfaceSurveyTeamExpertise": {
+    "values": {
+      "archaeologyExpert": { "label": "Archaeology expert" },
+      "architecturalHistoryExpert": { "label": "Architectural history expert" },
+      "historyExpert": { "label": "History expert" },
+      "folkloreExpert": { "label": "Folklore expert" },
+      "geologyExpert": { "label": "Geology expert" },
+      "naturalHeritageExpert": { "label": "Natural heritage expert" },
+      "underwaterExpert": { "label": "Underwater expert" },
+      "fortificationExpert": { "label": "Fortification expert" },
+      "basicSurvey": { "label": "Basic survey" },
+      "inDepthSurvey": { "label": "In-depth survey" },
+      "specialistReferral": { "label": "Specialist referral" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean surface survey team-expertise checks for recording whether architecture, folklore, geology, natural heritage, underwater, or fortification expertise is needed"
+  },
+  "KoreanFieldwork-surfaceSurveyTimingReview": {
+    "values": {
+      "siteSelectionStage": { "label": "Site selection stage" },
+      "projectPlanningStage": { "label": "Project planning stage" },
+      "afterDesignCompletion": { "label": "After design completion" },
+      "beforeConstruction": { "label": "Before construction" },
+      "afterDesignChange": { "label": "After design change" },
+      "preservationReviewTimeSecured": { "label": "Preservation review time secured" },
+      "timingRisk": { "label": "Timing risk" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean surface survey timing checks for recording whether survey timing allows preservation review or creates a late-stage risk"
+  },
   "KoreanFieldwork-sampleSurveySuitability": {
     "values": {
       "largeAlluvialSite": {

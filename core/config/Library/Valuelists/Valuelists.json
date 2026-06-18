@@ -33698,6 +33698,142 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-surfaceSurveyHeritageCategory": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "archaeology": {},
+      "architecturalHistory": {},
+      "history": {},
+      "artHistory": {},
+      "anthropologyFolklore": {},
+      "naturalHeritage": {},
+      "underwaterHeritage": {},
+      "modernHeritage": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "archaeology",
+      "architecturalHistory",
+      "history",
+      "artHistory",
+      "anthropologyFolklore",
+      "naturalHeritage",
+      "underwaterHeritage",
+      "modernHeritage",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-surfaceSurveyScopeDefinition": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "entireProjectArea": {},
+      "alteredAreaIncluded": {},
+      "phasedProjectEntireArea": {},
+      "borrowPit": {},
+      "spoilDisposalArea": {},
+      "temporaryRoad": {},
+      "submergedArea": {},
+      "designChangeArea": {},
+      "surrounding50m": {},
+      "designatedHeritage500mInfluence": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "entireProjectArea",
+      "alteredAreaIncluded",
+      "phasedProjectEntireArea",
+      "borrowPit",
+      "spoilDisposalArea",
+      "temporaryRoad",
+      "submergedArea",
+      "designChangeArea",
+      "surrounding50m",
+      "designatedHeritage500mInfluence",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-surfaceSurveyLowerChronologyReview": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "aroundLiberation": {},
+      "koreanWarPeriod": {},
+      "over50Years": {},
+      "registeredHeritageCandidate": {},
+      "nineteenSeventiesCandidate": {},
+      "urgentProtectionNeeded": {},
+      "legalCriteriaReviewed": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "aroundLiberation",
+      "koreanWarPeriod",
+      "over50Years",
+      "registeredHeritageCandidate",
+      "nineteenSeventiesCandidate",
+      "urgentProtectionNeeded",
+      "legalCriteriaReviewed",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-surfaceSurveyTeamExpertise": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "archaeologyExpert": {},
+      "architecturalHistoryExpert": {},
+      "historyExpert": {},
+      "folkloreExpert": {},
+      "geologyExpert": {},
+      "naturalHeritageExpert": {},
+      "underwaterExpert": {},
+      "fortificationExpert": {},
+      "basicSurvey": {},
+      "inDepthSurvey": {},
+      "specialistReferral": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "archaeologyExpert",
+      "architecturalHistoryExpert",
+      "historyExpert",
+      "folkloreExpert",
+      "geologyExpert",
+      "naturalHeritageExpert",
+      "underwaterExpert",
+      "fortificationExpert",
+      "basicSurvey",
+      "inDepthSurvey",
+      "specialistReferral",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-surfaceSurveyTimingReview": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "siteSelectionStage": {},
+      "projectPlanningStage": {},
+      "afterDesignCompletion": {},
+      "beforeConstruction": {},
+      "afterDesignChange": {},
+      "preservationReviewTimeSecured": {},
+      "timingRisk": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "siteSelectionStage",
+      "projectPlanningStage",
+      "afterDesignCompletion",
+      "beforeConstruction",
+      "afterDesignChange",
+      "preservationReviewTimeSecured",
+      "timingRisk",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-sampleSurveySuitability": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

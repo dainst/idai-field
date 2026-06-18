@@ -2169,6 +2169,79 @@
     },
     "description": "지표조사 보고서의 범위 표시가 추상적인 점으로 끝나지 않도록 조사범위, 유물산포지, 사업계획도 대조, 축척·도엽·GPS 기준점을 확인하기 위한 목록"
   },
+  "KoreanFieldwork-surfaceSurveyHeritageCategory": {
+    "values": {
+      "archaeology": { "label": "고고" },
+      "architecturalHistory": { "label": "건축사" },
+      "history": { "label": "역사" },
+      "artHistory": { "label": "미술사" },
+      "anthropologyFolklore": { "label": "인류민속" },
+      "naturalHeritage": { "label": "자연유산" },
+      "underwaterHeritage": { "label": "수중문화재" },
+      "modernHeritage": { "label": "근대문화유산" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "지표조사 대상을 유물산포지로 축소하지 않고 고고, 건축사, 역사, 미술사, 인류민속, 자연유산, 수중문화재, 근대문화유산까지 검토하기 위한 목록"
+  },
+  "KoreanFieldwork-surfaceSurveyScopeDefinition": {
+    "values": {
+      "entireProjectArea": { "label": "사업구역 전체" },
+      "alteredAreaIncluded": { "label": "기존 형질변경지역 포함" },
+      "phasedProjectEntireArea": { "label": "연차·분할·단계 전체" },
+      "borrowPit": { "label": "토취장" },
+      "spoilDisposalArea": { "label": "사토장" },
+      "temporaryRoad": { "label": "가설도로" },
+      "submergedArea": { "label": "수몰면" },
+      "designChangeArea": { "label": "설계변경 부지" },
+      "surrounding50m": { "label": "주변 50m" },
+      "designatedHeritage500mInfluence": { "label": "지정문화재 500m 영향권" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "사업구역, 형질변경지, 분할사업 전체면적, 토취장·사토장·가설도로·수몰면·설계변경부지와 주변 영향권을 지표조사 범위 산정 근거로 남기기 위한 목록"
+  },
+  "KoreanFieldwork-surfaceSurveyLowerChronologyReview": {
+    "values": {
+      "aroundLiberation": { "label": "해방 전후" },
+      "koreanWarPeriod": { "label": "한국전쟁기" },
+      "over50Years": { "label": "50년 이상" },
+      "registeredHeritageCandidate": { "label": "등록문화재 후보" },
+      "nineteenSeventiesCandidate": { "label": "1970년대 후보" },
+      "urgentProtectionNeeded": { "label": "긴급보호 필요" },
+      "legalCriteriaReviewed": { "label": "법령 기준 검토" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "근현대 문화유산과 하한연대가 지표조사에서 누락되지 않도록 해방 전후, 한국전쟁기, 50년 이상, 등록문화재 후보와 법령 기준 검토 상태를 남기기 위한 목록"
+  },
+  "KoreanFieldwork-surfaceSurveyTeamExpertise": {
+    "values": {
+      "archaeologyExpert": { "label": "고고학 전문가" },
+      "architecturalHistoryExpert": { "label": "건축사 전문가" },
+      "historyExpert": { "label": "역사 전문가" },
+      "folkloreExpert": { "label": "민속 전문가" },
+      "geologyExpert": { "label": "지질 전문가" },
+      "naturalHeritageExpert": { "label": "자연유산 전문가" },
+      "underwaterExpert": { "label": "수중 전문가" },
+      "fortificationExpert": { "label": "성곽 전문가" },
+      "basicSurvey": { "label": "기본조사" },
+      "inDepthSurvey": { "label": "심층조사" },
+      "specialistReferral": { "label": "전문가 의뢰" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "조사단이 고고학 전공자만으로 구성되어 건축·민속·자연유산·지질 자료가 누락되는 위험을 줄이기 위한 전문성 점검 목록"
+  },
+  "KoreanFieldwork-surfaceSurveyTimingReview": {
+    "values": {
+      "siteSelectionStage": { "label": "입지선정 단계" },
+      "projectPlanningStage": { "label": "사업계획 수립 단계" },
+      "afterDesignCompletion": { "label": "설계 완료 후" },
+      "beforeConstruction": { "label": "착공 전" },
+      "afterDesignChange": { "label": "설계변경 후" },
+      "preservationReviewTimeSecured": { "label": "보존 검토 시간 확보" },
+      "timingRisk": { "label": "시점 부적절 위험" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "지표조사가 사업 입안 단계에 들어가 보존 검토 시간을 확보했는지, 설계 완료 후나 착공 직전으로 밀려 시점 위험이 생겼는지 기록하기 위한 목록"
+  },
   "KoreanFieldwork-sampleSurveySuitability": {
     "values": {
       "largeAlluvialSite": {

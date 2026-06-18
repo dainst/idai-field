@@ -136,6 +136,21 @@
         "surfaceSurveyMapRequirement": {
           "label": "Surface survey map requirement"
         },
+        "surfaceSurveyHeritageCategory": {
+          "label": "Surface survey heritage category"
+        },
+        "surfaceSurveyScopeDefinition": {
+          "label": "Surface survey scope definition"
+        },
+        "surfaceSurveyLowerChronologyReview": {
+          "label": "Surface survey lower chronology review"
+        },
+        "surfaceSurveyTeamExpertise": {
+          "label": "Surface survey team expertise"
+        },
+        "surfaceSurveyTimingReview": {
+          "label": "Surface survey timing review"
+        },
         "sampleSurveySuitability": {
           "label": "Sample survey suitability"
         },

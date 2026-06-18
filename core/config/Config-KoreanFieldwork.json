@@ -329,6 +329,26 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "surfaceSurveyHeritageCategory": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "surfaceSurveyScopeDefinition": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "surfaceSurveyLowerChronologyReview": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "surfaceSurveyTeamExpertise": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "surfaceSurveyTimingReview": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "sampleSurveySuitability": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -387,6 +407,11 @@
         "surfaceSurveyPreparationCheck": "KoreanFieldwork-surfaceSurveyPreparationCheck",
         "surfaceSurveyFieldSequence": "KoreanFieldwork-surfaceSurveyFieldSequence",
         "surfaceSurveyMapRequirement": "KoreanFieldwork-surfaceSurveyMapRequirement",
+        "surfaceSurveyHeritageCategory": "KoreanFieldwork-surfaceSurveyHeritageCategory",
+        "surfaceSurveyScopeDefinition": "KoreanFieldwork-surfaceSurveyScopeDefinition",
+        "surfaceSurveyLowerChronologyReview": "KoreanFieldwork-surfaceSurveyLowerChronologyReview",
+        "surfaceSurveyTeamExpertise": "KoreanFieldwork-surfaceSurveyTeamExpertise",
+        "surfaceSurveyTimingReview": "KoreanFieldwork-surfaceSurveyTimingReview",
         "sampleSurveySuitability": "KoreanFieldwork-sampleSurveySuitability",
         "trialExcavationPurpose": "KoreanFieldwork-trialExcavationPurpose",
         "trialTrenchDesign": "KoreanFieldwork-trialTrenchDesign",
@@ -414,6 +439,11 @@
             "surfaceSurveyPreparationCheck",
             "surfaceSurveyFieldSequence",
             "surfaceSurveyMapRequirement",
+            "surfaceSurveyHeritageCategory",
+            "surfaceSurveyScopeDefinition",
+            "surfaceSurveyLowerChronologyReview",
+            "surfaceSurveyTeamExpertise",
+            "surfaceSurveyTimingReview",
             "sampleSurveySuitability",
             "trialExcavationPurpose",
             "trialTrenchDesign",

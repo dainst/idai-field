@@ -57,6 +57,11 @@ describe('KoreanFieldwork project configuration', () => {
         expect(surveyForm.fields.surfaceSurveyPreparationCheck.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyFieldSequence.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyMapRequirement.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.surfaceSurveyHeritageCategory.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.surfaceSurveyScopeDefinition.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.surfaceSurveyLowerChronologyReview.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.surfaceSurveyTeamExpertise.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.surfaceSurveyTimingReview.inputType).toBe('checkboxes');
         expect(surveyForm.fields.sampleSurveySuitability.inputType).toBe('checkboxes');
         expect(surveyForm.fields.trialExcavationPurpose.inputType).toBe('checkboxes');
         expect(surveyForm.fields.trialTrenchDesign.inputType).toBe('checkboxes');
@@ -249,6 +254,16 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-surfaceSurveyFieldSequence');
         expect(surveyForm.valuelists.surfaceSurveyMapRequirement)
             .toBe('KoreanFieldwork-surfaceSurveyMapRequirement');
+        expect(surveyForm.valuelists.surfaceSurveyHeritageCategory)
+            .toBe('KoreanFieldwork-surfaceSurveyHeritageCategory');
+        expect(surveyForm.valuelists.surfaceSurveyScopeDefinition)
+            .toBe('KoreanFieldwork-surfaceSurveyScopeDefinition');
+        expect(surveyForm.valuelists.surfaceSurveyLowerChronologyReview)
+            .toBe('KoreanFieldwork-surfaceSurveyLowerChronologyReview');
+        expect(surveyForm.valuelists.surfaceSurveyTeamExpertise)
+            .toBe('KoreanFieldwork-surfaceSurveyTeamExpertise');
+        expect(surveyForm.valuelists.surfaceSurveyTimingReview)
+            .toBe('KoreanFieldwork-surfaceSurveyTimingReview');
         expect(surveyForm.valuelists.sampleSurveySuitability).toBe('KoreanFieldwork-sampleSurveySuitability');
         expect(surveyForm.valuelists.trialExcavationPurpose).toBe('KoreanFieldwork-trialExcavationPurpose');
         expect(surveyForm.valuelists.trialTrenchDesign).toBe('KoreanFieldwork-trialTrenchDesign');
@@ -518,6 +533,16 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Surface survey field sequence');
         expect(languages.en.categories.Survey.fields.surfaceSurveyMapRequirement.label)
             .toBe('Surface survey map requirement');
+        expect(languages.en.categories.Survey.fields.surfaceSurveyHeritageCategory.label)
+            .toBe('Surface survey heritage category');
+        expect(languages.en.categories.Survey.fields.surfaceSurveyScopeDefinition.label)
+            .toBe('Surface survey scope definition');
+        expect(languages.en.categories.Survey.fields.surfaceSurveyLowerChronologyReview.label)
+            .toBe('Surface survey lower chronology review');
+        expect(languages.en.categories.Survey.fields.surfaceSurveyTeamExpertise.label)
+            .toBe('Surface survey team expertise');
+        expect(languages.en.categories.Survey.fields.surfaceSurveyTimingReview.label)
+            .toBe('Surface survey timing review');
         expect(languages.en.categories.Survey.fields.sampleSurveySuitability.label)
             .toBe('Sample survey suitability');
         expect(languages.en.categories.Survey.fields.trialExcavationPurpose.label)
@@ -802,6 +827,21 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveyMapRequirement']
             .values.twoGpsControlPoints.label)
             .toBe('At least two GPS control points');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveyHeritageCategory']
+            .values.naturalHeritage.label)
+            .toBe('Natural heritage');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveyScopeDefinition']
+            .values.designatedHeritage500mInfluence.label)
+            .toBe('Designated heritage 500 m influence zone');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveyLowerChronologyReview']
+            .values.koreanWarPeriod.label)
+            .toBe('Korean War period');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveyTeamExpertise']
+            .values.specialistReferral.label)
+            .toBe('Specialist referral');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveyTimingReview']
+            .values.timingRisk.label)
+            .toBe('Timing risk');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-alluvialLandformSurvey']
             .values.noSurfaceFindsNotAbsence.label)
             .toBe('No surface finds not absence');

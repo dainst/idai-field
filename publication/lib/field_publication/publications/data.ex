@@ -739,6 +739,9 @@ defmodule FieldPublication.Publications.Data do
 
       %{"parent" => parent_uuid} ->
         get_preview_documents([parent_uuid], publication)
+
+      nil ->
+        nil
     end
     |> case do
       [%Document{id: parent_uuid, geometry: nil}] ->

@@ -7,6 +7,22 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "investigationAdministration": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "investigationRecordHandover": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "permitConditionCompliance": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "preservationActionTracking": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "reportCrossCheck": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -18,6 +34,10 @@
       },
       "valuelists": {
         "digitalSourcePreservation": "KoreanFieldwork-digitalSourcePreservation",
+        "investigationAdministration": "KoreanFieldwork-investigationAdministration",
+        "investigationRecordHandover": "KoreanFieldwork-investigationRecordHandover",
+        "permitConditionCompliance": "KoreanFieldwork-permitConditionCompliance",
+        "preservationActionTracking": "KoreanFieldwork-preservationActionTracking",
         "reportCrossCheck": "KoreanFieldwork-reportCrossCheck",
         "verificationState": "KoreanFieldwork-verificationState"
       },
@@ -36,7 +56,15 @@
         },
         {
           "name": "koreanFieldwork",
-          "fields": ["digitalSourcePreservation", "reportCrossCheck", "verificationState"]
+          "fields": [
+            "investigationAdministration",
+            "permitConditionCompliance",
+            "preservationActionTracking",
+            "investigationRecordHandover",
+            "digitalSourcePreservation",
+            "reportCrossCheck",
+            "verificationState"
+          ]
         }
       ]
     },
@@ -52,6 +80,10 @@
           "constraintIndexed": true
         },
         "personalNotebookArchive": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "investigationRecordHandover": {
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
@@ -71,6 +103,7 @@
       "valuelists": {
         "digitalSourcePreservation": "KoreanFieldwork-digitalSourcePreservation",
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
+        "investigationRecordHandover": "KoreanFieldwork-investigationRecordHandover",
         "personalNotebookArchive": "KoreanFieldwork-personalNotebookArchive",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "reportCrossCheck": "KoreanFieldwork-reportCrossCheck",
@@ -99,6 +132,7 @@
             "recordCreationTiming",
             "fieldRecordQuality",
             "personalNotebookArchive",
+            "investigationRecordHandover",
             "digitalSourcePreservation",
             "verificationState",
             "reportCrossCheck"

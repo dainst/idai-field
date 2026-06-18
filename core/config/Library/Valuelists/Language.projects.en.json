@@ -11913,6 +11913,173 @@
     },
     "description": "Korean field notebook source-preservation states for original drawings, photos, electronic notebooks, backups, and access procedures"
   },
+  "KoreanFieldwork-investigationAdministration": {
+    "values": {
+      "requestReceived": {
+        "label": "Request received"
+      },
+      "priorRecordsSecured": {
+        "label": "Prior records secured"
+      },
+      "fieldReconnaissance": {
+        "label": "Field reconnaissance"
+      },
+      "planPrepared": {
+        "label": "Investigation plan prepared"
+      },
+      "internalReview": {
+        "label": "Internal review"
+      },
+      "contractSigned": {
+        "label": "Contract signed"
+      },
+      "excavationPermitApplied": {
+        "label": "Excavation permit applied"
+      },
+      "permitConditionsChecked": {
+        "label": "Permit conditions checked"
+      },
+      "startReported": {
+        "label": "Start reported"
+      },
+      "fieldworkInProgress": {
+        "label": "Fieldwork in progress"
+      },
+      "changePermitApplied": {
+        "label": "Change permit applied"
+      },
+      "extensionApplied": {
+        "label": "Extension applied"
+      },
+      "completionReported": {
+        "label": "Completion reported"
+      },
+      "completionMaterialsSubmitted": {
+        "label": "Completion materials submitted"
+      },
+      "reportSubmitted": {
+        "label": "Report submitted"
+      },
+      "resultNotification": {
+        "label": "Result notification"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean field notebook checklist for tracking investigation administration from request and permit to completion reporting and final report submission"
+  },
+  "KoreanFieldwork-permitConditionCompliance": {
+    "values": {
+      "permitDocumentOnSite": {
+        "label": "Permit document on site"
+      },
+      "landownerConsent": {
+        "label": "Landowner consent"
+      },
+      "investigationPeriodChecked": {
+        "label": "Investigation period checked"
+      },
+      "permitConditionsUnderstood": {
+        "label": "Permit conditions understood"
+      },
+      "siteInspectionCooperation": {
+        "label": "Site inspection cooperation"
+      },
+      "advisoryMeeting": {
+        "label": "Advisory meeting"
+      },
+      "protectiveAction": {
+        "label": "Protective action"
+      },
+      "changeReview": {
+        "label": "Change review"
+      },
+      "violationRisk": {
+        "label": "Violation risk"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean field notebook checklist for keeping permit documents, permit conditions, period checks, changes, and inspections visible in field records"
+  },
+  "KoreanFieldwork-preservationActionTracking": {
+    "values": {
+      "preservationNotice": {
+        "label": "Preservation notice"
+      },
+      "expertOnSite": {
+        "label": "Expert on site"
+      },
+      "sampleSurvey": {
+        "label": "Sample survey"
+      },
+      "trialExcavation": {
+        "label": "Trial excavation"
+      },
+      "fullExcavation": {
+        "label": "Full excavation"
+      },
+      "completionReport": {
+        "label": "Completion report"
+      },
+      "projectOwnerNotified": {
+        "label": "Project owner notified"
+      },
+      "constructionStopStatus": {
+        "label": "Construction stop status"
+      },
+      "managementEntity": {
+        "label": "Management entity"
+      },
+      "periodicInspection": {
+        "label": "Periodic inspection"
+      },
+      "reevaluationTrigger": {
+        "label": "Reevaluation trigger"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean field notebook checklist for following preservation actions through notice, implementation, management, inspection, and reevaluation"
+  },
+  "KoreanFieldwork-investigationRecordHandover": {
+    "values": {
+      "sampleSurveyRecord": {
+        "label": "Sample survey record"
+      },
+      "trialExcavationRecord": {
+        "label": "Trial excavation record"
+      },
+      "fullExcavationTransition": {
+        "label": "Full excavation transition"
+      },
+      "successorInstitution": {
+        "label": "Successor institution"
+      },
+      "fieldRecordsHandover": {
+        "label": "Field records handover"
+      },
+      "findsHandover": {
+        "label": "Finds handover"
+      },
+      "summaryReport": {
+        "label": "Summary report"
+      },
+      "finalReportSourceLinked": {
+        "label": "Final report source linked"
+      },
+      "handoverConfirmed": {
+        "label": "Handover confirmed"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean field notebook checklist for tracking records, finds, summary reports, successor institutions, and source links across investigation stage handovers"
+  },
   "KoreanFieldwork-termRelation": {
     "values": {
       "preferredTerm": {

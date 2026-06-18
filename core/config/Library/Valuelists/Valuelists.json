@@ -31170,6 +31170,136 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-investigationAdministration": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "requestReceived": {},
+      "priorRecordsSecured": {},
+      "fieldReconnaissance": {},
+      "planPrepared": {},
+      "internalReview": {},
+      "contractSigned": {},
+      "excavationPermitApplied": {},
+      "permitConditionsChecked": {},
+      "startReported": {},
+      "fieldworkInProgress": {},
+      "changePermitApplied": {},
+      "extensionApplied": {},
+      "completionReported": {},
+      "completionMaterialsSubmitted": {},
+      "reportSubmitted": {},
+      "resultNotification": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "requestReceived",
+      "priorRecordsSecured",
+      "fieldReconnaissance",
+      "planPrepared",
+      "internalReview",
+      "contractSigned",
+      "excavationPermitApplied",
+      "permitConditionsChecked",
+      "startReported",
+      "fieldworkInProgress",
+      "changePermitApplied",
+      "extensionApplied",
+      "completionReported",
+      "completionMaterialsSubmitted",
+      "reportSubmitted",
+      "resultNotification",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-permitConditionCompliance": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "permitDocumentOnSite": {},
+      "landownerConsent": {},
+      "investigationPeriodChecked": {},
+      "permitConditionsUnderstood": {},
+      "siteInspectionCooperation": {},
+      "advisoryMeeting": {},
+      "protectiveAction": {},
+      "changeReview": {},
+      "violationRisk": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "permitDocumentOnSite",
+      "landownerConsent",
+      "investigationPeriodChecked",
+      "permitConditionsUnderstood",
+      "siteInspectionCooperation",
+      "advisoryMeeting",
+      "protectiveAction",
+      "changeReview",
+      "violationRisk",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-preservationActionTracking": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "preservationNotice": {},
+      "expertOnSite": {},
+      "sampleSurvey": {},
+      "trialExcavation": {},
+      "fullExcavation": {},
+      "completionReport": {},
+      "projectOwnerNotified": {},
+      "constructionStopStatus": {},
+      "managementEntity": {},
+      "periodicInspection": {},
+      "reevaluationTrigger": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "preservationNotice",
+      "expertOnSite",
+      "sampleSurvey",
+      "trialExcavation",
+      "fullExcavation",
+      "completionReport",
+      "projectOwnerNotified",
+      "constructionStopStatus",
+      "managementEntity",
+      "periodicInspection",
+      "reevaluationTrigger",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-investigationRecordHandover": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "sampleSurveyRecord": {},
+      "trialExcavationRecord": {},
+      "fullExcavationTransition": {},
+      "successorInstitution": {},
+      "fieldRecordsHandover": {},
+      "findsHandover": {},
+      "summaryReport": {},
+      "finalReportSourceLinked": {},
+      "handoverConfirmed": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "sampleSurveyRecord",
+      "trialExcavationRecord",
+      "fullExcavationTransition",
+      "successorInstitution",
+      "fieldRecordsHandover",
+      "findsHandover",
+      "summaryReport",
+      "finalReportSourceLinked",
+      "handoverConfirmed",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-termRelation": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

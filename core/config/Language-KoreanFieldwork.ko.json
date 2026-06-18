@@ -8,6 +8,18 @@
         "digitalSourcePreservation": {
           "label": "디지털 원자료 보존"
         },
+        "investigationAdministration": {
+          "label": "조사 행정 흐름"
+        },
+        "investigationRecordHandover": {
+          "label": "조사자료 인계"
+        },
+        "permitConditionCompliance": {
+          "label": "허가조건 이행"
+        },
+        "preservationActionTracking": {
+          "label": "보존조치 이행"
+        },
         "reportCrossCheck": {
           "label": "보고서 교차검토"
         },
@@ -23,6 +35,9 @@
         },
         "fieldRecordQuality": {
           "label": "현장기록 품질"
+        },
+        "investigationRecordHandover": {
+          "label": "조사자료 인계"
         },
         "personalNotebookArchive": {
           "label": "개인 야장 공적기록화"

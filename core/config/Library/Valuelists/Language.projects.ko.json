@@ -159,6 +159,173 @@
     },
     "description": "보고서에 수록되지 않은 원도면, 원사진, 전자야장 원본까지 영구 관리하기 위한 원자료 보존 목록"
   },
+  "KoreanFieldwork-investigationAdministration": {
+    "values": {
+      "requestReceived": {
+        "label": "의뢰 접수"
+      },
+      "priorRecordsSecured": {
+        "label": "선행자료 확보"
+      },
+      "fieldReconnaissance": {
+        "label": "현장답사"
+      },
+      "planPrepared": {
+        "label": "조사계획서 작성"
+      },
+      "internalReview": {
+        "label": "기관 내부검증"
+      },
+      "contractSigned": {
+        "label": "계약 체결"
+      },
+      "excavationPermitApplied": {
+        "label": "발굴허가 신청"
+      },
+      "permitConditionsChecked": {
+        "label": "허가조건 확인"
+      },
+      "startReported": {
+        "label": "착수신고"
+      },
+      "fieldworkInProgress": {
+        "label": "조사 실시"
+      },
+      "changePermitApplied": {
+        "label": "변경허가 신청"
+      },
+      "extensionApplied": {
+        "label": "기간연장 신청"
+      },
+      "completionReported": {
+        "label": "완료신고"
+      },
+      "completionMaterialsSubmitted": {
+        "label": "완료자료 제출"
+      },
+      "reportSubmitted": {
+        "label": "보고서 제출"
+      },
+      "resultNotification": {
+        "label": "결과통보"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "조사 의뢰부터 허가, 착수, 완료신고, 보고서 제출까지 조사사업 행정 흐름을 추적하기 위한 목록"
+  },
+  "KoreanFieldwork-permitConditionCompliance": {
+    "values": {
+      "permitDocumentOnSite": {
+        "label": "허가서 현장 비치"
+      },
+      "landownerConsent": {
+        "label": "토지소유자 동의"
+      },
+      "investigationPeriodChecked": {
+        "label": "조사기간 확인"
+      },
+      "permitConditionsUnderstood": {
+        "label": "허가부관 숙지"
+      },
+      "siteInspectionCooperation": {
+        "label": "현장점검 협조"
+      },
+      "advisoryMeeting": {
+        "label": "학술자문회의"
+      },
+      "protectiveAction": {
+        "label": "보호조치"
+      },
+      "changeReview": {
+        "label": "변경사항 검토"
+      },
+      "violationRisk": {
+        "label": "위반위험"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "발굴허가서와 허가조건, 조사기간, 변경사항, 현장점검 대응을 현장 기록과 함께 관리하기 위한 목록"
+  },
+  "KoreanFieldwork-preservationActionTracking": {
+    "values": {
+      "preservationNotice": {
+        "label": "보존조치 통보"
+      },
+      "expertOnSite": {
+        "label": "관련전문가 입회"
+      },
+      "sampleSurvey": {
+        "label": "표본조사"
+      },
+      "trialExcavation": {
+        "label": "시굴조사"
+      },
+      "fullExcavation": {
+        "label": "정밀발굴조사"
+      },
+      "completionReport": {
+        "label": "조치완료보고"
+      },
+      "projectOwnerNotified": {
+        "label": "사업시행자 통지"
+      },
+      "constructionStopStatus": {
+        "label": "공사금지 상태"
+      },
+      "managementEntity": {
+        "label": "관리주체 지정"
+      },
+      "periodicInspection": {
+        "label": "정기점검"
+      },
+      "reevaluationTrigger": {
+        "label": "재평가 트리거"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "보존조치가 결정 이후 통보, 이행, 관리주체, 점검, 재평가로 이어지는 과정을 추적하기 위한 목록"
+  },
+  "KoreanFieldwork-investigationRecordHandover": {
+    "values": {
+      "sampleSurveyRecord": {
+        "label": "표본조사 기록"
+      },
+      "trialExcavationRecord": {
+        "label": "시굴조사 기록"
+      },
+      "fullExcavationTransition": {
+        "label": "정밀발굴 전환"
+      },
+      "successorInstitution": {
+        "label": "후속조사기관"
+      },
+      "fieldRecordsHandover": {
+        "label": "조사기록 인계"
+      },
+      "findsHandover": {
+        "label": "출토유물 인계"
+      },
+      "summaryReport": {
+        "label": "약식보고서"
+      },
+      "finalReportSourceLinked": {
+        "label": "최종보고서 원기록 연결"
+      },
+      "handoverConfirmed": {
+        "label": "인계확인"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "표본·시굴·정밀발굴 사이에서 앞 단계 기록, 출토유물, 약식보고서, 후속기관 인계를 추적하기 위한 목록"
+  },
   "KoreanFieldwork-termRelation": {
     "values": {
       "preferredTerm": {

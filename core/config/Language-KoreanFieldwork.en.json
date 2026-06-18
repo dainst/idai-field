@@ -8,6 +8,18 @@
         "digitalSourcePreservation": {
           "label": "Digital source preservation"
         },
+        "investigationAdministration": {
+          "label": "Investigation administration"
+        },
+        "investigationRecordHandover": {
+          "label": "Investigation record handover"
+        },
+        "permitConditionCompliance": {
+          "label": "Permit condition compliance"
+        },
+        "preservationActionTracking": {
+          "label": "Preservation action tracking"
+        },
         "reportCrossCheck": {
           "label": "Report cross-check"
         },
@@ -23,6 +35,9 @@
         },
         "fieldRecordQuality": {
           "label": "Field record quality"
+        },
+        "investigationRecordHandover": {
+          "label": "Investigation record handover"
         },
         "personalNotebookArchive": {
           "label": "Personal notebook archive"

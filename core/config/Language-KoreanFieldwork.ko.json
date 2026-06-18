@@ -1,0 +1,104 @@
+{
+  "groups": {
+    "koreanFieldwork": "한국형 야장"
+  },
+  "categories": {
+    "Project": {
+      "fields": {
+        "reportCrossCheck": {
+          "label": "보고서 교차검토"
+        },
+        "verificationState": {
+          "label": "검증상태"
+        }
+      }
+    },
+    "Operation": {
+      "fields": {
+        "recordCreationTiming": {
+          "label": "기록 생성 시점"
+        },
+        "reportCrossCheck": {
+          "label": "보고서 교차검토"
+        },
+        "verificationState": {
+          "label": "검증상태"
+        }
+      }
+    },
+    "FeatureGroup": {
+      "fields": {
+        "featurePackage": {
+          "label": "유적·유구 패키지"
+        },
+        "recordCreationTiming": {
+          "label": "기록 생성 시점"
+        },
+        "termRelation": {
+          "label": "용어 관계"
+        },
+        "verificationState": {
+          "label": "검증상태"
+        }
+      }
+    },
+    "Feature": {
+      "fields": {
+        "featurePackage": {
+          "label": "유적·유구 패키지"
+        },
+        "recordCreationTiming": {
+          "label": "기록 생성 시점"
+        },
+        "termRelation": {
+          "label": "용어 관계"
+        },
+        "verificationState": {
+          "label": "검증상태"
+        }
+      }
+    },
+    "FeatureSegment": {
+      "fields": {
+        "featurePackage": {
+          "label": "유적·유구 패키지"
+        },
+        "recordCreationTiming": {
+          "label": "기록 생성 시점"
+        },
+        "termRelation": {
+          "label": "용어 관계"
+        },
+        "verificationState": {
+          "label": "검증상태"
+        }
+      }
+    },
+    "Find": {
+      "fields": {
+        "recordCreationTiming": {
+          "label": "기록 생성 시점"
+        },
+        "termRelation": {
+          "label": "용어 관계"
+        },
+        "verificationState": {
+          "label": "검증상태"
+        }
+      }
+    },
+    "Sample": {
+      "fields": {
+        "recordCreationTiming": {
+          "label": "기록 생성 시점"
+        },
+        "samplePurpose": {
+          "label": "시료 목적"
+        },
+        "verificationState": {
+          "label": "검증상태"
+        }
+      }
+    }
+  }
+}

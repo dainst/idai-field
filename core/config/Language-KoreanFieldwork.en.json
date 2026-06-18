@@ -1,0 +1,104 @@
+{
+  "groups": {
+    "koreanFieldwork": "Korean fieldwork"
+  },
+  "categories": {
+    "Project": {
+      "fields": {
+        "reportCrossCheck": {
+          "label": "Report cross-check"
+        },
+        "verificationState": {
+          "label": "Verification state"
+        }
+      }
+    },
+    "Operation": {
+      "fields": {
+        "recordCreationTiming": {
+          "label": "Record creation timing"
+        },
+        "reportCrossCheck": {
+          "label": "Report cross-check"
+        },
+        "verificationState": {
+          "label": "Verification state"
+        }
+      }
+    },
+    "FeatureGroup": {
+      "fields": {
+        "featurePackage": {
+          "label": "Feature package"
+        },
+        "recordCreationTiming": {
+          "label": "Record creation timing"
+        },
+        "termRelation": {
+          "label": "Term relation"
+        },
+        "verificationState": {
+          "label": "Verification state"
+        }
+      }
+    },
+    "Feature": {
+      "fields": {
+        "featurePackage": {
+          "label": "Feature package"
+        },
+        "recordCreationTiming": {
+          "label": "Record creation timing"
+        },
+        "termRelation": {
+          "label": "Term relation"
+        },
+        "verificationState": {
+          "label": "Verification state"
+        }
+      }
+    },
+    "FeatureSegment": {
+      "fields": {
+        "featurePackage": {
+          "label": "Feature package"
+        },
+        "recordCreationTiming": {
+          "label": "Record creation timing"
+        },
+        "termRelation": {
+          "label": "Term relation"
+        },
+        "verificationState": {
+          "label": "Verification state"
+        }
+      }
+    },
+    "Find": {
+      "fields": {
+        "recordCreationTiming": {
+          "label": "Record creation timing"
+        },
+        "termRelation": {
+          "label": "Term relation"
+        },
+        "verificationState": {
+          "label": "Verification state"
+        }
+      }
+    },
+    "Sample": {
+      "fields": {
+        "recordCreationTiming": {
+          "label": "Record creation timing"
+        },
+        "samplePurpose": {
+          "label": "Sample purpose"
+        },
+        "verificationState": {
+          "label": "Verification state"
+        }
+      }
+    }
+  }
+}

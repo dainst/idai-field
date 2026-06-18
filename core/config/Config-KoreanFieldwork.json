@@ -1,0 +1,415 @@
+{
+  "forms": {
+    "Project:default": {
+      "hidden": [],
+      "fields": {
+        "reportCrossCheck": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "verificationState": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "reportCrossCheck": "KoreanFieldwork-reportCrossCheck",
+        "verificationState": "KoreanFieldwork-verificationState"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["category", "shortName", "shortDescription"]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description", "institution", "projectSupervisor", "contactPerson", "contactMail", "staff",
+            "campaigns", "projectURI", "externalReference", "bibliographicReferences", "license", "gazId",
+            "latitude", "longitude", "epsgId", "coordinateReferenceSystem"
+          ]
+        },
+        {
+          "name": "koreanFieldwork",
+          "fields": ["reportCrossCheck", "verificationState"]
+        }
+      ]
+    },
+    "Operation:default": {
+      "hidden": [],
+      "fields": {
+        "recordCreationTiming": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "reportCrossCheck": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "verificationState": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
+        "reportCrossCheck": "KoreanFieldwork-reportCrossCheck",
+        "verificationState": "KoreanFieldwork-verificationState"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "supervisor", "processor", "campaign", "date"]
+        },
+        {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "diaryAbstract"]
+        },
+        {
+          "name": "koreanFieldwork",
+          "fields": ["recordCreationTiming", "verificationState", "reportCrossCheck"]
+        },
+        {
+          "name": "dimension",
+          "fields": ["area"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "spatialLocation"]
+        }
+      ]
+    },
+    "FeatureGroup:default": {
+      "hidden": [],
+      "fields": {
+        "featurePackage": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "recordCreationTiming": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "termRelation": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "verificationState": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "featurePackage": "KoreanFieldwork-featurePackage",
+        "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
+        "termRelation": "KoreanFieldwork-termRelation",
+        "verificationState": "KoreanFieldwork-verificationState"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "date", "isSameAs"]
+        },
+        {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "color"]
+        },
+        {
+          "name": "koreanFieldwork",
+          "fields": ["featurePackage", "recordCreationTiming", "verificationState", "termRelation"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "isPresentIn"]
+        },
+        {
+          "name": "time",
+          "fields": ["period", "dating"]
+        }
+      ]
+    },
+    "Feature:default": {
+      "hidden": [],
+      "fields": {
+        "featurePackage": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "recordCreationTiming": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "termRelation": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "verificationState": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "featurePackage": "KoreanFieldwork-featurePackage",
+        "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
+        "termRelation": "KoreanFieldwork-termRelation",
+        "verificationState": "KoreanFieldwork-verificationState"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "date", "isSameAs"]
+        },
+        {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "color", "hasDisturbance", "featureForm", "featureBorders", "comparison"]
+        },
+        {
+          "name": "koreanFieldwork",
+          "fields": ["featurePackage", "recordCreationTiming", "verificationState", "termRelation"]
+        },
+        {
+          "name": "stratigraphy",
+          "fields": [
+            "isAbove", "isBelow", "cuts", "isCutBy", "fills", "isFilledBy", "abuts", "isAbuttedBy",
+            "bondsWith", "borders"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": ["area", "dimensionLength", "dimensionWidth"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "dimensionVerticalExtent", "isPresentIn"]
+        },
+        {
+          "name": "time",
+          "fields": ["period", "dating", "isBefore", "isAfter", "isContemporaryWith"]
+        }
+      ]
+    },
+    "FeatureSegment:default": {
+      "hidden": [],
+      "fields": {
+        "featurePackage": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "recordCreationTiming": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "termRelation": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "verificationState": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "featurePackage": "KoreanFieldwork-featurePackage",
+        "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
+        "termRelation": "KoreanFieldwork-termRelation",
+        "verificationState": "KoreanFieldwork-verificationState"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "date", "isSameAs"]
+        },
+        {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "color"]
+        },
+        {
+          "name": "koreanFieldwork",
+          "fields": ["featurePackage", "recordCreationTiming", "verificationState", "termRelation"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "isPresentIn"]
+        },
+        {
+          "name": "time",
+          "fields": ["period", "dating"]
+        }
+      ]
+    },
+    "Find:default": {
+      "hidden": [],
+      "fields": {
+        "recordCreationTiming": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "termRelation": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "verificationState": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
+        "termRelation": "KoreanFieldwork-termRelation",
+        "verificationState": "KoreanFieldwork-verificationState"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
+        },
+        {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
+          "name": "identification",
+          "fields": ["isInstanceOf"]
+        },
+        {
+          "name": "koreanFieldwork",
+          "fields": ["recordCreationTiming", "verificationState", "termRelation"]
+        },
+        {
+          "name": "inventory",
+          "fields": ["isStoredIn", "storagePlace"]
+        },
+        {
+          "name": "properties",
+          "fields": [
+            "description", "hasRestoration", "catalogueNumber", "amount", "condition", "conditionAmount",
+            "conditionPercent", "conditionComment", "weight", "storageInventoryNumber", "comparison", "bibliography"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": [
+            "dimensionHeight", "dimensionLength", "dimensionWidth", "dimensionPerimeter", "dimensionDiameter",
+            "dimensionThickness", "dimensionOther"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "spatialLocation", "dimensionVerticalExtent"]
+        },
+        {
+          "name": "time",
+          "fields": ["period", "dating"]
+        }
+      ]
+    },
+    "Sample:default": {
+      "hidden": [],
+      "fields": {
+        "recordCreationTiming": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "samplePurpose": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "verificationState": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
+        "samplePurpose": "KoreanFieldwork-samplePurpose",
+        "verificationState": "KoreanFieldwork-verificationState"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "date"]
+        },
+        {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
+          "name": "inventory",
+          "fields": ["isStoredIn", "storagePlace"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "sampleType", "labNumber", "weight", "volume"]
+        },
+        {
+          "name": "koreanFieldwork",
+          "fields": ["samplePurpose", "recordCreationTiming", "verificationState"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "spatialLocation"]
+        }
+      ]
+    }
+  },
+  "order": [
+    "Project",
+    "Operation",
+    "Trench",
+    "Survey",
+    "Place",
+    "FeatureGroup",
+    "Feature",
+    "FeatureSegment",
+    "Layer",
+    "Find",
+    "FindCollection",
+    "Sample",
+    "Drawing",
+    "Photo",
+    "Image",
+    "TypeCatalog",
+    "Type",
+    "Process"
+  ]
+}

@@ -45,7 +45,9 @@
 6. `InvestigationStageTransition`과 후속기관 인계
 7. `TermAuthority` 기반 한국어 용어 검색
 
-이 여섯 가지가 먼저 들어가야 각 유적 유형별 템플릿을 만들 때 기록이 흩어지지 않는다.
+`Config-KoreanFieldwork`는 1차 공통 값 목록을 Project, Operation, FeatureGroup, Feature, FeatureSegment, Find, Sample 화면에 배치한다.
+
+이 일곱 가지가 먼저 들어가야 각 유적 유형별 템플릿을 만들 때 기록이 흩어지지 않는다.
 
 ## 검증 질문
 

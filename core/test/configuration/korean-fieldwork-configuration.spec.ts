@@ -62,6 +62,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(surveyForm.fields.surfaceSurveyLowerChronologyReview.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyTeamExpertise.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyTimingReview.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.surfaceEvidenceAbsenceAssessment.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.nonSiteResourceSurvey.inputType).toBe('checkboxes');
         expect(surveyForm.fields.sampleSurveySuitability.inputType).toBe('checkboxes');
         expect(surveyForm.fields.trialExcavationPurpose.inputType).toBe('checkboxes');
         expect(surveyForm.fields.trialTrenchDesign.inputType).toBe('checkboxes');
@@ -264,6 +266,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-surfaceSurveyTeamExpertise');
         expect(surveyForm.valuelists.surfaceSurveyTimingReview)
             .toBe('KoreanFieldwork-surfaceSurveyTimingReview');
+        expect(surveyForm.valuelists.surfaceEvidenceAbsenceAssessment)
+            .toBe('KoreanFieldwork-surfaceEvidenceAbsenceAssessment');
+        expect(surveyForm.valuelists.nonSiteResourceSurvey)
+            .toBe('KoreanFieldwork-nonSiteResourceSurvey');
         expect(surveyForm.valuelists.sampleSurveySuitability).toBe('KoreanFieldwork-sampleSurveySuitability');
         expect(surveyForm.valuelists.trialExcavationPurpose).toBe('KoreanFieldwork-trialExcavationPurpose');
         expect(surveyForm.valuelists.trialTrenchDesign).toBe('KoreanFieldwork-trialTrenchDesign');
@@ -543,6 +549,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Surface survey team expertise');
         expect(languages.en.categories.Survey.fields.surfaceSurveyTimingReview.label)
             .toBe('Surface survey timing review');
+        expect(languages.en.categories.Survey.fields.surfaceEvidenceAbsenceAssessment.label)
+            .toBe('Surface evidence absence assessment');
+        expect(languages.en.categories.Survey.fields.nonSiteResourceSurvey.label)
+            .toBe('Non-site resource survey');
         expect(languages.en.categories.Survey.fields.sampleSurveySuitability.label)
             .toBe('Sample survey suitability');
         expect(languages.en.categories.Survey.fields.trialExcavationPurpose.label)
@@ -842,6 +852,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveyTimingReview']
             .values.timingRisk.label)
             .toBe('Timing risk');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceEvidenceAbsenceAssessment']
+            .values.surveyLimit.label)
+            .toBe('Survey limit');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-nonSiteResourceSurvey']
+            .values.productionRawMaterialCandidate.label)
+            .toBe('Production raw material candidate');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-alluvialLandformSurvey']
             .values.noSurfaceFindsNotAbsence.label)
             .toBe('No surface finds not absence');

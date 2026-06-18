@@ -151,6 +151,12 @@
         "surfaceSurveyTimingReview": {
           "label": "Surface survey timing review"
         },
+        "surfaceEvidenceAbsenceAssessment": {
+          "label": "Surface evidence absence assessment"
+        },
+        "nonSiteResourceSurvey": {
+          "label": "Non-site resource survey"
+        },
         "sampleSurveySuitability": {
           "label": "Sample survey suitability"
         },

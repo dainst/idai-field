@@ -151,6 +151,12 @@
         "surfaceSurveyTimingReview": {
           "label": "지표조사 시점 검토"
         },
+        "surfaceEvidenceAbsenceAssessment": {
+          "label": "지표 증거부재 판단"
+        },
+        "nonSiteResourceSurvey": {
+          "label": "비유적지 자원조사"
+        },
         "sampleSurveySuitability": {
           "label": "표본조사 적합성"
         },

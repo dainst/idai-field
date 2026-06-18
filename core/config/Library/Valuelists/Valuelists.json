@@ -33834,6 +33834,56 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-surfaceEvidenceAbsenceAssessment": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "noSurfaceEvidence": {},
+      "terrainEvidence": {},
+      "locationConditionEvidence": {},
+      "depositCharacterEvidence": {},
+      "interviewEvidence": {},
+      "experienceBasedJudgement": {},
+      "surveyLimit": {},
+      "additionalSurveyNeeded": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "noSurfaceEvidence",
+      "terrainEvidence",
+      "locationConditionEvidence",
+      "depositCharacterEvidence",
+      "interviewEvidence",
+      "experienceBasedJudgement",
+      "surveyLimit",
+      "additionalSurveyNeeded",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-nonSiteResourceSurvey": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "stoneSource": {},
+      "claySource": {},
+      "fortificationStoneSource": {},
+      "dolmenStoneSource": {},
+      "productionRawMaterialCandidate": {},
+      "surroundingResourceDistribution": {},
+      "surroundingAreaDetailedObservation": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "stoneSource",
+      "claySource",
+      "fortificationStoneSource",
+      "dolmenStoneSource",
+      "productionRawMaterialCandidate",
+      "surroundingResourceDistribution",
+      "surroundingAreaDetailedObservation",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-sampleSurveySuitability": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

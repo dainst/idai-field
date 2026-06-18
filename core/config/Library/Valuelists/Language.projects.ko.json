@@ -2242,6 +2242,33 @@
     },
     "description": "지표조사가 사업 입안 단계에 들어가 보존 검토 시간을 확보했는지, 설계 완료 후나 착공 직전으로 밀려 시점 위험이 생겼는지 기록하기 위한 목록"
   },
+  "KoreanFieldwork-surfaceEvidenceAbsenceAssessment": {
+    "values": {
+      "noSurfaceEvidence": { "label": "지표증거 없음" },
+      "terrainEvidence": { "label": "지형 근거" },
+      "locationConditionEvidence": { "label": "입지조건 근거" },
+      "depositCharacterEvidence": { "label": "퇴적물 성격 근거" },
+      "interviewEvidence": { "label": "탐문 근거" },
+      "experienceBasedJudgement": { "label": "경험 판단" },
+      "surveyLimit": { "label": "조사 한계" },
+      "additionalSurveyNeeded": { "label": "추가조사 필요" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "표면 유물이나 노출 유구가 보이지 않을 때도 유적 부재로 바로 확정하지 않고 지형, 입지, 퇴적물, 탐문, 경험 판단과 조사 한계를 분리해 남기기 위한 목록"
+  },
+  "KoreanFieldwork-nonSiteResourceSurvey": {
+    "values": {
+      "stoneSource": { "label": "석재 공급원" },
+      "claySource": { "label": "점토 공급원" },
+      "fortificationStoneSource": { "label": "성곽 암석 공급지" },
+      "dolmenStoneSource": { "label": "고인돌 석재 공급지" },
+      "productionRawMaterialCandidate": { "label": "생산 원료 후보" },
+      "surroundingResourceDistribution": { "label": "주변 자원분포" },
+      "surroundingAreaDetailedObservation": { "label": "주변지역 정밀관찰" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "유적이 확인되지 않은 주변 지역도 석재·점토·성곽석재·고인돌석재·생산 원료 후보와 자원분포를 설명하는 조사 자료로 남기기 위한 목록"
+  },
   "KoreanFieldwork-sampleSurveySuitability": {
     "values": {
       "largeAlluvialSite": {

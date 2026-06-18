@@ -349,6 +349,14 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "surfaceEvidenceAbsenceAssessment": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "nonSiteResourceSurvey": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "sampleSurveySuitability": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -412,6 +420,8 @@
         "surfaceSurveyLowerChronologyReview": "KoreanFieldwork-surfaceSurveyLowerChronologyReview",
         "surfaceSurveyTeamExpertise": "KoreanFieldwork-surfaceSurveyTeamExpertise",
         "surfaceSurveyTimingReview": "KoreanFieldwork-surfaceSurveyTimingReview",
+        "surfaceEvidenceAbsenceAssessment": "KoreanFieldwork-surfaceEvidenceAbsenceAssessment",
+        "nonSiteResourceSurvey": "KoreanFieldwork-nonSiteResourceSurvey",
         "sampleSurveySuitability": "KoreanFieldwork-sampleSurveySuitability",
         "trialExcavationPurpose": "KoreanFieldwork-trialExcavationPurpose",
         "trialTrenchDesign": "KoreanFieldwork-trialTrenchDesign",
@@ -444,6 +454,8 @@
             "surfaceSurveyLowerChronologyReview",
             "surfaceSurveyTeamExpertise",
             "surfaceSurveyTimingReview",
+            "surfaceEvidenceAbsenceAssessment",
+            "nonSiteResourceSurvey",
             "sampleSurveySuitability",
             "trialExcavationPurpose",
             "trialTrenchDesign",

@@ -13996,6 +13996,33 @@
     },
     "description": "Korean surface survey timing checks for recording whether survey timing allows preservation review or creates a late-stage risk"
   },
+  "KoreanFieldwork-surfaceEvidenceAbsenceAssessment": {
+    "values": {
+      "noSurfaceEvidence": { "label": "No surface evidence" },
+      "terrainEvidence": { "label": "Terrain evidence" },
+      "locationConditionEvidence": { "label": "Location condition evidence" },
+      "depositCharacterEvidence": { "label": "Deposit character evidence" },
+      "interviewEvidence": { "label": "Interview evidence" },
+      "experienceBasedJudgement": { "label": "Experience-based judgement" },
+      "surveyLimit": { "label": "Survey limit" },
+      "additionalSurveyNeeded": { "label": "Additional survey needed" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean surface survey checks for separating absence of visible evidence from terrain, location, deposit, interview, experience, survey-limit, and additional-survey reasons"
+  },
+  "KoreanFieldwork-nonSiteResourceSurvey": {
+    "values": {
+      "stoneSource": { "label": "Stone source" },
+      "claySource": { "label": "Clay source" },
+      "fortificationStoneSource": { "label": "Fortification stone source" },
+      "dolmenStoneSource": { "label": "Dolmen stone source" },
+      "productionRawMaterialCandidate": { "label": "Production raw material candidate" },
+      "surroundingResourceDistribution": { "label": "Surrounding resource distribution" },
+      "surroundingAreaDetailedObservation": { "label": "Surrounding area detailed observation" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean surface survey checks for recording non-site resource observations such as stone, clay, fortification stone, dolmen stone, raw material candidates, and surrounding resource distributions"
+  },
   "KoreanFieldwork-sampleSurveySuitability": {
     "values": {
       "largeAlluvialSite": {

@@ -493,10 +493,12 @@
         },
         "fieldOnlyMissingCheck": {
           "inputType": "checkboxes",
+          "mandatory": true,
           "constraintIndexed": true
         },
         "firstExposureRecord": {
           "inputType": "checkboxes",
+          "mandatory": true,
           "constraintIndexed": true
         },
         "fortificationGateFacility": {
@@ -626,10 +628,12 @@
         },
         "fieldOnlyMissingCheck": {
           "inputType": "checkboxes",
+          "mandatory": true,
           "constraintIndexed": true
         },
         "firstExposureRecord": {
           "inputType": "checkboxes",
+          "mandatory": true,
           "constraintIndexed": true
         },
         "recordCreationTiming": {
@@ -714,6 +718,7 @@
         },
         "fieldOnlyMissingCheck": {
           "inputType": "checkboxes",
+          "mandatory": true,
           "constraintIndexed": true
         },
         "recordCreationTiming": {
@@ -812,6 +817,7 @@
         },
         "fieldOnlyMissingCheck": {
           "inputType": "checkboxes",
+          "mandatory": true,
           "constraintIndexed": true
         },
         "recordCreationTiming": {

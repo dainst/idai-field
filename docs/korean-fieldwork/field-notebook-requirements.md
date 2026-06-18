@@ -19,7 +19,7 @@
 | --- | --- | --- |
 | 조사사업 생애주기 | 한국 매장문화재 조사는 의뢰, 사전자료, 답사, 허가, 착수, 조사, 완료, 보고, 보존조치, 귀속·이관이 이어지는 업무다. | `InvestigationProject` 타임라인에 허가, 변경·기간연장, 완료신고, 전자행정, 협업포털, 결과통보, 인계 이벤트를 둔다. |
 | 현장기록 품질검수 | 좋은 야장은 개인 메모가 아니라 즉시성, 사실/해석 분리, 교차검토가 가능한 공적 기록이다. | `FieldRecordQualityReview`를 두고 작성자, 담당 유구, 작성시점, 검토자, 사실/해석 분리, 수정 근거를 저장한다. |
-| 현장시에만 가능한 값 경고 | 층 경계, 수습 전 상태, 사진 각도, 표본 위치처럼 나중에 되돌릴 수 없는 값이 있다. | `RecordCreationTiming`으로 계획단계, 현장 중 누적, 당일 작성, 현장시에만 가능, 보고서 단계 생성을 구분하고 누락 경고를 띄운다. |
+| 현장시에만 가능한 값 경고 | 층 경계, 수습 전 상태, 사진 각도, 표본 위치처럼 나중에 되돌릴 수 없는 값이 있다. | `RecordCreationTiming`으로 기록 시점을 구분하고, `fieldOnlyMissingCheck`와 `firstExposureRecord`를 필수값으로 두어 기존 `missingMandatoryFields` 경고가 빈 기록을 잡게 한다. |
 | 보고서 역산 | 보고서 초록, 도면 목록, 사진대장, 유물·시료 목록은 나중에 따로 만드는 문서가 아니라 현장기록에서 생성되어야 한다. | `ReportPreparationReview`와 `ReportEditorialCrossCheck`가 원고, 도면, 사진, 일지, 목록, 번호 변환표의 불일치를 원기록 ID와 연결한다. |
 | 보고서 평가 환류 | 보고서 평가표는 반복 오류와 보완 요구를 잡아내는 장치지만, 현장 품질을 완전히 대신하지는 못한다. | `ReportEvaluationApplicabilityReview`와 `ReportFieldQualityFeedback`이 자체평가·위원회평가 차이, 비해당 항목, 적용 제외 근거, 원기록 보완 작업을 연결한다. |
 | 조사단계 전환과 인계 | 지표·표본·시굴·정밀발굴은 단절된 프로젝트가 아니라 판단과 자료가 이어지는 단계다. | `InvestigationStageTransition`과 `InvestigationRecordHandover`에 앞 단계 기록, 출토유물, 약식보고서, 후속기관, 최종보고서 연결을 둔다. |
@@ -43,12 +43,12 @@
 1. `KoreanFieldwork-*` 공통 값 목록: 기록 생성 시점, 검증상태, 현장기록 품질, 현장시점 누락점검, 최초 노출 기록, 일일 작업기록, 일지 증거 역할, 일지 검토, 개인 야장 공적기록화, 디지털 원자료 보존, 조사 행정 흐름, 허가조건 이행, 보존조치 이행, 조사자료 인계, 용어관계, 용어 검색·매핑, 용어 검증상태, 사전 분야, 용어 적용범위, 출처 우선순위, 지표조사 현장관찰, 지표조사 편향방지, 지표조사 후속조치, 유적 패키지, 시료 목적, 시료 채취·보관, 보고서 교차검토, 보고서 평가 환류
 2. 독립 `FieldRecordQualityReview`, `DailyLog`, `TermAuthority` 1차 카드
 3. `InvestigationProject` 행정 타임라인
-4. `RecordCreationTiming` 누락 경고
+4. `fieldOnlyMissingCheck`와 `firstExposureRecord` 필수값 경고
 5. `ReportPreparationReview`와 도면·사진·목록 교차검토
 6. `InvestigationStageTransition`과 후속기관 인계
 7. `TermAuthority` 기반 한국어 용어 검색과 자동완성
 
-`Config-KoreanFieldwork`는 1차 공통 값 목록을 Project, Operation, Survey, FeatureGroup, Feature, FeatureSegment, Find, Sample 화면에 배치한다. 현장기록 품질은 각 기록 단위에, 현장시점 누락점검은 `Feature`, `FeatureSegment`, `Find`, `Sample`에, 최초 노출 기록은 `Feature`와 `FeatureSegment`에 배치했다. 일일 작업기록과 일지 검토는 `diaryAbstract`가 있는 `Operation`에 먼저 배치하고, 독립 `DailyLog`는 `Operation` 하위 카드로 두어 당일 사실기록, 누적 조사원·인부·장비 수, 날씨·우천작업, 위원회·전문가 검토회의, 발주처·기관 소통, 분쟁 증거 가능성을 별도 기록하게 했다. 개인 야장 공적기록화는 `Operation`에, 디지털 원자료 보존은 `Project`와 `Operation`에 우선 배치했다. 독립 `FieldRecordQualityReview`는 `Operation` 하위 카드로 두어 검수 대상 기록, 검수 단계, 수정·보완 근거를 별도 기록하게 했다. 독립 `TermAuthority`는 `FeatureGroup` 하위 카드로 두어 사전 분야, 적용범위, 출처 우선순위, 용어 관계, 검색 매핑, 검증상태를 한 곳에서 관리하게 했다. 조사 행정 흐름, 허가조건 이행, 보존조치 이행은 `Project`에, 조사자료 인계는 `Project`와 `Operation`에 배치해 표본·시굴·정밀발굴 사이의 기록 이동을 끊기지 않게 했다. 보고서 교차검토와 보고서 평가 환류는 `Project`와 `Operation`에 함께 배치해 원고·도면·사진·목록 대조와 자체평가·위원회평가 차이, 비해당 항목, 보완요구 추적이 조사 단위와 사업 단위에서 모두 남도록 했다. `Survey`에는 지표조사를 유적 확정 절차가 아니라 현장관찰, 편향방지, 후속조치 판단근거로 관리하는 세 목록을 배치했다. `FeatureGroup`, `Feature`, `FeatureSegment`, `Find`에는 용어 관계, 용어 검색·매핑, 사전 근거, OCR 교정 필요, 원PDF 대조 완료, 값목록 후보, UI 노출 보류를 표시하는 용어 검증상태를 배치했다. Sample 화면에는 시료 목적과 함께 빛·수분·오염·위치도면 연결 조건을 남기는 시료 채취·보관 목록을 배치했다. 성곽 보강분 중 성문·방어 부속시설, 암문 기능, 여장 세부, 수문·수구, 왜성 해자는 `Feature` 화면의 첫 전문 값 목록으로 옮겼다.
+`Config-KoreanFieldwork`는 1차 공통 값 목록을 Project, Operation, Survey, FeatureGroup, Feature, FeatureSegment, Find, Sample 화면에 배치한다. 현장기록 품질은 각 기록 단위에, 현장시점 누락점검은 `Feature`, `FeatureSegment`, `Find`, `Sample`에, 최초 노출 기록은 `Feature`와 `FeatureSegment`에 배치했다. `fieldOnlyMissingCheck`와 `firstExposureRecord`는 해당 화면의 필수값으로 지정해 값이 없으면 기존 필수값 경고 흐름에 잡히게 했다. 일일 작업기록과 일지 검토는 `diaryAbstract`가 있는 `Operation`에 먼저 배치하고, 독립 `DailyLog`는 `Operation` 하위 카드로 두어 당일 사실기록, 누적 조사원·인부·장비 수, 날씨·우천작업, 위원회·전문가 검토회의, 발주처·기관 소통, 분쟁 증거 가능성을 별도 기록하게 했다. 개인 야장 공적기록화는 `Operation`에, 디지털 원자료 보존은 `Project`와 `Operation`에 우선 배치했다. 독립 `FieldRecordQualityReview`는 `Operation` 하위 카드로 두어 검수 대상 기록, 검수 단계, 수정·보완 근거를 별도 기록하게 했다. 독립 `TermAuthority`는 `FeatureGroup` 하위 카드로 두어 사전 분야, 적용범위, 출처 우선순위, 용어 관계, 검색 매핑, 검증상태를 한 곳에서 관리하게 했다. 조사 행정 흐름, 허가조건 이행, 보존조치 이행은 `Project`에, 조사자료 인계는 `Project`와 `Operation`에 배치해 표본·시굴·정밀발굴 사이의 기록 이동을 끊기지 않게 했다. 보고서 교차검토와 보고서 평가 환류는 `Project`와 `Operation`에 함께 배치해 원고·도면·사진·목록 대조와 자체평가·위원회평가 차이, 비해당 항목, 보완요구 추적이 조사 단위와 사업 단위에서 모두 남도록 했다. `Survey`에는 지표조사를 유적 확정 절차가 아니라 현장관찰, 편향방지, 후속조치 판단근거로 관리하는 세 목록을 배치했다. `FeatureGroup`, `Feature`, `FeatureSegment`, `Find`에는 용어 관계, 용어 검색·매핑, 사전 근거, OCR 교정 필요, 원PDF 대조 완료, 값목록 후보, UI 노출 보류를 표시하는 용어 검증상태를 배치했다. Sample 화면에는 시료 목적과 함께 빛·수분·오염·위치도면 연결 조건을 남기는 시료 채취·보관 목록을 배치했다. 성곽 보강분 중 성문·방어 부속시설, 암문 기능, 여장 세부, 수문·수구, 왜성 해자는 `Feature` 화면의 첫 전문 값 목록으로 옮겼다.
 
 이 일곱 가지가 먼저 들어가야 각 유적 유형별 템플릿을 만들 때 기록이 흩어지지 않는다.
 

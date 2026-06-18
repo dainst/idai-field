@@ -55,6 +55,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(sampleForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
         expect(featureForm.fields.firstExposureRecord.inputType).toBe('checkboxes');
         expect(config.forms['FeatureSegment:default'].fields.firstExposureRecord.inputType).toBe('checkboxes');
+        expect(featureForm.fields.fieldOnlyMissingCheck.mandatory).toBe(true);
+        expect(featureSegmentForm.fields.fieldOnlyMissingCheck.mandatory).toBe(true);
+        expect(findForm.fields.fieldOnlyMissingCheck.mandatory).toBe(true);
+        expect(sampleForm.fields.fieldOnlyMissingCheck.mandatory).toBe(true);
+        expect(featureForm.fields.firstExposureRecord.mandatory).toBe(true);
+        expect(config.forms['FeatureSegment:default'].fields.firstExposureRecord.mandatory).toBe(true);
         expect(featureForm.fields.fortificationHiddenGateFunction.inputType).toBe('checkboxes');
         expect(featureForm.fields.fortificationParapetDetail.inputType).toBe('checkboxes');
         expect(featureGroupForm.fields.termAuthorityStatus.inputType).toBe('checkboxes');

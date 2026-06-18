@@ -1015,6 +1015,26 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "conservationScienceRequest": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "waterloggedWoodEmergencyStorage": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "lacquerConservationRisk": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "metalAnalysisRequest": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "ceramicConservationState": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "ironResidueSubtype": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1081,6 +1101,11 @@
         "artifactHandlingWorkflow": "KoreanFieldwork-artifactHandlingWorkflow",
         "artifactQuantityBasis": "KoreanFieldwork-artifactQuantityBasis",
         "storageEnvironmentControl": "KoreanFieldwork-storageEnvironmentControl",
+        "conservationScienceRequest": "KoreanFieldwork-conservationScienceRequest",
+        "waterloggedWoodEmergencyStorage": "KoreanFieldwork-waterloggedWoodEmergencyStorage",
+        "lacquerConservationRisk": "KoreanFieldwork-lacquerConservationRisk",
+        "metalAnalysisRequest": "KoreanFieldwork-metalAnalysisRequest",
+        "ceramicConservationState": "KoreanFieldwork-ceramicConservationState",
         "ironResidueSubtype": "KoreanFieldwork-ironResidueSubtype",
         "graveGoodsRitualContext": "KoreanFieldwork-graveGoodsRitualContext",
         "neolithicSubsistenceEvidence": "KoreanFieldwork-neolithicSubsistenceEvidence",
@@ -1124,6 +1149,11 @@
             "artifactHandlingWorkflow",
             "artifactQuantityBasis",
             "storageEnvironmentControl",
+            "conservationScienceRequest",
+            "waterloggedWoodEmergencyStorage",
+            "lacquerConservationRisk",
+            "metalAnalysisRequest",
+            "ceramicConservationState",
             "ironResidueSubtype",
             "graveGoodsRitualContext",
             "neolithicSubsistenceEvidence",
@@ -1236,6 +1266,18 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "humanDnaFieldControl": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "organicSoilAnalysisSample": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "destructiveAnalysisDecision": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "shellMiddenSamplingStrategy": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1266,6 +1308,9 @@
         "charcoalKilnAnalysisPlan": "KoreanFieldwork-charcoalKilnAnalysisPlan",
         "porcelainAnalysisPlan": "KoreanFieldwork-porcelainAnalysisPlan",
         "humanRemainsRecoveryAnalysis": "KoreanFieldwork-humanRemainsRecoveryAnalysis",
+        "humanDnaFieldControl": "KoreanFieldwork-humanDnaFieldControl",
+        "organicSoilAnalysisSample": "KoreanFieldwork-organicSoilAnalysisSample",
+        "destructiveAnalysisDecision": "KoreanFieldwork-destructiveAnalysisDecision",
         "shellMiddenSamplingStrategy": "KoreanFieldwork-shellMiddenSamplingStrategy",
         "paleoenvironmentProxySampling": "KoreanFieldwork-paleoenvironmentProxySampling",
         "verificationState": "KoreanFieldwork-verificationState"
@@ -1307,6 +1352,9 @@
             "charcoalKilnAnalysisPlan",
             "porcelainAnalysisPlan",
             "humanRemainsRecoveryAnalysis",
+            "humanDnaFieldControl",
+            "organicSoilAnalysisSample",
+            "destructiveAnalysisDecision",
             "shellMiddenSamplingStrategy",
             "paleoenvironmentProxySampling",
             "fieldRecordQuality",

@@ -386,6 +386,21 @@
         "storageEnvironmentControl": {
           "label": "수장환경 관리"
         },
+        "conservationScienceRequest": {
+          "label": "보존과학 의뢰"
+        },
+        "waterloggedWoodEmergencyStorage": {
+          "label": "수침목재 응급보관"
+        },
+        "lacquerConservationRisk": {
+          "label": "칠기 보존 위험"
+        },
+        "metalAnalysisRequest": {
+          "label": "금속 분석 의뢰"
+        },
+        "ceramicConservationState": {
+          "label": "토도류 보존상태"
+        },
         "ironResidueSubtype": {
           "label": "제철 부산물 세분"
         },
@@ -479,6 +494,15 @@
         },
         "humanRemainsRecoveryAnalysis": {
           "label": "인골 수습·분석"
+        },
+        "humanDnaFieldControl": {
+          "label": "인골 DNA 현장관리"
+        },
+        "organicSoilAnalysisSample": {
+          "label": "유기물·토양 분석시료"
+        },
+        "destructiveAnalysisDecision": {
+          "label": "파괴분석 결정"
         },
         "shellMiddenSamplingStrategy": {
           "label": "패총 시료 채취전략"

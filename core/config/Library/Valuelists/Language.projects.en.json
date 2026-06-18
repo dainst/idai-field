@@ -12037,6 +12037,144 @@
     },
     "description": "Korean storage environment checks for treating training standards as reference values and tracking current-standard review, measured conditions, material ranges, deviations, and inspection"
   },
+  "KoreanFieldwork-conservationScienceRequest": {
+    "values": {
+      "requestPurposeRecorded": { "label": "Request purpose recorded" },
+      "materialRecorded": { "label": "Material recorded" },
+      "excavationContextLinked": { "label": "Excavation context linked" },
+      "analysisInstitutionRecorded": { "label": "Analysis institution recorded" },
+      "requestingInstitutionRecorded": { "label": "Requesting institution recorded" },
+      "analysisMethodCandidate": { "label": "Analysis method candidate" },
+      "nonDestructiveFirst": { "label": "Non-destructive first" },
+      "destructiveSampleFlag": { "label": "Destructive sample flag" },
+      "remainingSampleStorage": { "label": "Remaining sample storage" },
+      "resultLinked": { "label": "Result linked" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean conservation-science request checks for linking purpose, material, context, institution, analysis method, destructiveness, remaining sample storage, and results"
+  },
+  "KoreanFieldwork-waterloggedWoodEmergencyStorage": {
+    "values": {
+      "waterloggedState": { "label": "Waterlogged state" },
+      "largeWaterTank": { "label": "Large water tank" },
+      "sealedContainer": { "label": "Sealed container" },
+      "degassedWaterBag": { "label": "Degassed water bag" },
+      "wetClothPlasticWrap": { "label": "Wet cloth and plastic wrap" },
+      "lightShielded": { "label": "Light-shielded" },
+      "coolDarkStorage": { "label": "Cool dark storage" },
+      "surfaceChemicalUsed": { "label": "Surface chemical used" },
+      "chemicalNameRecorded": { "label": "Chemical name recorded" },
+      "chemicalAmountRecorded": { "label": "Chemical amount recorded" },
+      "c14ImpactReview": { "label": "C14 impact review" },
+      "conservationTreatmentImpactReview": { "label": "Conservation-treatment impact review" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean emergency storage checks for waterlogged wood and other waterlogged organic materials before conservation treatment"
+  },
+  "KoreanFieldwork-lacquerConservationRisk": {
+    "values": {
+      "woodBodyDeteriorated": { "label": "Wood body deteriorated" },
+      "lacquerFilmRemains": { "label": "Lacquer film remains" },
+      "lacquerFilmCrackingRisk": { "label": "Lacquer film cracking risk" },
+      "flakingRisk": { "label": "Flaking risk" },
+      "chemicalDeformationRisk": { "label": "Chemical deformation risk" },
+      "dryingShrinkageRisk": { "label": "Drying shrinkage risk" },
+      "layeredStructurePhoto": { "label": "Layered structure photo" },
+      "crossSectionAnalysisCandidate": { "label": "Cross-section analysis candidate" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean lacquer conservation-risk checks for separating wood-body condition, lacquer-film risk, chemical deformation, drying risk, photos, and cross-section analysis"
+  },
+  "KoreanFieldwork-metalAnalysisRequest": {
+    "values": {
+      "ironArtifact": { "label": "Iron artifact" },
+      "bronzeArtifact": { "label": "Bronze artifact" },
+      "giltBronzeArtifact": { "label": "Gilt-bronze artifact" },
+      "xrf": { "label": "XRF" },
+      "semWds": { "label": "SEM-WDS" },
+      "metallographicMicroscopy": { "label": "Metallographic microscopy" },
+      "leadIsotope": { "label": "Lead isotope" },
+      "microstructure": { "label": "Microstructure" },
+      "nonMetallicInclusions": { "label": "Non-metallic inclusions" },
+      "alloyRatio": { "label": "Alloy ratio" },
+      "sampleLocation": { "label": "Sample location" },
+      "cuttingPolishingApproval": { "label": "Cutting/polishing approval" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean metal-analysis request checks for keeping material, method, sample location, approval, microstructure, inclusions, alloy ratio, and provenance questions linked"
+  },
+  "KoreanFieldwork-ceramicConservationState": {
+    "values": {
+      "clayBodyState": { "label": "Clay body state" },
+      "glazeState": { "label": "Glaze state" },
+      "saltCrystallization": { "label": "Salt crystallization" },
+      "moldRisk": { "label": "Mold risk" },
+      "hydrationRisk": { "label": "Hydration risk" },
+      "calciumCarbonateAdhesion": { "label": "Calcium carbonate adhesion" },
+      "shellAdhesion": { "label": "Shell adhesion" },
+      "oldRestorationMaterial": { "label": "Old restoration material" },
+      "dryCleaning": { "label": "Dry cleaning" },
+      "wetCleaningCaution": { "label": "Wet cleaning caution" },
+      "dryingMethod": { "label": "Drying method" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean ceramic conservation-state checks for separating clay body, glaze, salts, mold, hydration, marine adhesion, old restoration, cleaning, and drying"
+  },
+  "KoreanFieldwork-humanDnaFieldControl": {
+    "values": {
+      "contactPersonRecorded": { "label": "Contact person recorded" },
+      "glovesAndMask": { "label": "Gloves and mask" },
+      "noFieldWashing": { "label": "No field washing" },
+      "separatePacking": { "label": "Separate packing" },
+      "preTreatmentSamplingNeeded": { "label": "Pre-treatment sampling needed" },
+      "coolDarkStorage": { "label": "Cool dark storage" },
+      "controlledSpace": { "label": "Controlled space" },
+      "labHandover": { "label": "Lab handover" },
+      "beforeConsolidationReview": { "label": "Before-consolidation review" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean human-DNA field control checks for limiting contact, washing, packing, storage, access, and conservation-treatment conflicts"
+  },
+  "KoreanFieldwork-organicSoilAnalysisSample": {
+    "values": {
+      "interiorSoil": { "label": "Interior soil" },
+      "exteriorControlSoil": { "label": "Exterior control soil" },
+      "depthColorSampling": { "label": "Depth/color sampling" },
+      "refrigeratedStorage": { "label": "Refrigerated storage" },
+      "ph": { "label": "pH" },
+      "organicMatter": { "label": "Organic matter" },
+      "availablePhosphate": { "label": "Available phosphate" },
+      "parasiteEgg": { "label": "Parasite egg" },
+      "ftIr": { "label": "FT-IR" },
+      "opticalMicroscope": { "label": "Optical microscope" },
+      "sem": { "label": "SEM" },
+      "analysisQuestionRecorded": { "label": "Analysis question recorded" },
+      "interpretationImpactRecorded": { "label": "Interpretation impact recorded" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean organic and soil analysis sample checks for interior/control soils, depth and color, storage, chemical and microscopy methods, questions, and interpretation impact"
+  },
+  "KoreanFieldwork-destructiveAnalysisDecision": {
+    "values": {
+      "nonDestructiveFirst": { "label": "Non-destructive first" },
+      "minimallyDestructive": { "label": "Minimally destructive" },
+      "destructiveSample": { "label": "Destructive sample" },
+      "surfaceContaminationChecked": { "label": "Surface contamination checked" },
+      "corrosionLayerImpact": { "label": "Corrosion-layer impact" },
+      "overpaintImpact": { "label": "Overpaint impact" },
+      "lightElementLimit": { "label": "Light-element limit" },
+      "standardSample": { "label": "Standard sample" },
+      "crossValidation": { "label": "Cross-validation" },
+      "sampleSizeLimit": { "label": "Sample-size limit" },
+      "conservationConflict": { "label": "Conservation conflict" },
+      "analysisApprovalNeeded": { "label": "Analysis approval needed" },
+      "cuttingGrindingEtchingRecorded": { "label": "Cutting/grinding/etching recorded" },
+      "remainingSampleStorage": { "label": "Remaining sample storage" },
+      "analysisImpactReview": { "label": "Analysis impact review" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean analysis-reliability checks for non-destructive, minimally destructive, and destructive methods, contamination, limits, approval, preparation history, remaining samples, and interpretation impact"
+  },
   "KoreanFieldwork-firstExposureRecord": {
     "values": {
       "concurrentWithStripping": {

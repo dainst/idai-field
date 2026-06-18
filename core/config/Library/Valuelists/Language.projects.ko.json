@@ -283,6 +283,144 @@
     },
     "description": "교재의 수장·전시 환경 기준을 고정 규칙이 아니라 현재 기준 대조, 실측값, 일탈 기록, 재질별 관리 상태로 추적하기 위한 목록"
   },
+  "KoreanFieldwork-conservationScienceRequest": {
+    "values": {
+      "requestPurposeRecorded": { "label": "의뢰목적 기록" },
+      "materialRecorded": { "label": "재질 기록" },
+      "excavationContextLinked": { "label": "출토맥락 연결" },
+      "analysisInstitutionRecorded": { "label": "분석기관 기록" },
+      "requestingInstitutionRecorded": { "label": "의뢰기관 기록" },
+      "analysisMethodCandidate": { "label": "분석방법 후보" },
+      "nonDestructiveFirst": { "label": "비파괴 우선" },
+      "destructiveSampleFlag": { "label": "파괴시료 여부" },
+      "remainingSampleStorage": { "label": "잔여시료 보관" },
+      "resultLinked": { "label": "결과 연결" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "보존과학 의뢰에서 목적, 재질, 출토맥락, 기관, 분석방법, 파괴 여부, 잔여시료 보관, 결과 연결을 함께 관리하기 위한 목록"
+  },
+  "KoreanFieldwork-waterloggedWoodEmergencyStorage": {
+    "values": {
+      "waterloggedState": { "label": "수침상태" },
+      "largeWaterTank": { "label": "대형수조" },
+      "sealedContainer": { "label": "밀폐용기" },
+      "degassedWaterBag": { "label": "물봉투 탈기" },
+      "wetClothPlasticWrap": { "label": "습포·비닐" },
+      "lightShielded": { "label": "차광" },
+      "coolDarkStorage": { "label": "냉암소 보관" },
+      "surfaceChemicalUsed": { "label": "표면약제 사용" },
+      "chemicalNameRecorded": { "label": "약제명 기록" },
+      "chemicalAmountRecorded": { "label": "사용량 기록" },
+      "c14ImpactReview": { "label": "C14 영향 검토" },
+      "conservationTreatmentImpactReview": { "label": "보존처리 영향 검토" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "수침목재와 수침 유기물의 외기 노출, 건조수축, 임시약제 영향, 보존처리 전 보관 조건을 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-lacquerConservationRisk": {
+    "values": {
+      "woodBodyDeteriorated": { "label": "목질부 열화" },
+      "lacquerFilmRemains": { "label": "칠도막 잔존" },
+      "lacquerFilmCrackingRisk": { "label": "칠도막 갈라짐 위험" },
+      "flakingRisk": { "label": "탈락 위험" },
+      "chemicalDeformationRisk": { "label": "약품 변형 위험" },
+      "dryingShrinkageRisk": { "label": "건조수축 위험" },
+      "layeredStructurePhoto": { "label": "층상구조 사진" },
+      "crossSectionAnalysisCandidate": { "label": "단면분석 후보" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "칠기의 목질부와 칠도막을 분리해 갈라짐, 박락, 약품 변형, 건조수축, 층상구조 사진과 단면분석 후보를 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-metalAnalysisRequest": {
+    "values": {
+      "ironArtifact": { "label": "철제" },
+      "bronzeArtifact": { "label": "청동" },
+      "giltBronzeArtifact": { "label": "금동" },
+      "xrf": { "label": "XRF" },
+      "semWds": { "label": "SEM-WDS" },
+      "metallographicMicroscopy": { "label": "금속현미경" },
+      "leadIsotope": { "label": "납동위원소" },
+      "microstructure": { "label": "미세조직" },
+      "nonMetallicInclusions": { "label": "비금속개재물" },
+      "alloyRatio": { "label": "합금비" },
+      "sampleLocation": { "label": "시료채취 위치" },
+      "cuttingPolishingApproval": { "label": "절단·연마 승인" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "금속유물 분석에서 재질, 분석법, 시료 위치, 절단·연마 승인, 미세조직, 비금속개재물, 합금비, 산지 질문을 함께 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-ceramicConservationState": {
+    "values": {
+      "clayBodyState": { "label": "태토 상태" },
+      "glazeState": { "label": "유약 상태" },
+      "saltCrystallization": { "label": "염 결정화" },
+      "moldRisk": { "label": "곰팡이 위험" },
+      "hydrationRisk": { "label": "수화 위험" },
+      "calciumCarbonateAdhesion": { "label": "탄산칼슘 고착" },
+      "shellAdhesion": { "label": "패각 고착" },
+      "oldRestorationMaterial": { "label": "과거 복원재" },
+      "dryCleaning": { "label": "건식세척" },
+      "wetCleaningCaution": { "label": "물세척 주의" },
+      "dryingMethod": { "label": "건조 방식" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "토기·도자기의 태토, 유약, 염결정, 곰팡이, 수화, 해양 고착물, 과거 복원재, 세척과 건조 방식을 분리해 관리하기 위한 목록"
+  },
+  "KoreanFieldwork-humanDnaFieldControl": {
+    "values": {
+      "contactPersonRecorded": { "label": "접촉자 기록" },
+      "glovesAndMask": { "label": "장갑·마스크" },
+      "noFieldWashing": { "label": "현장 세척 금지" },
+      "separatePacking": { "label": "별도 포장" },
+      "preTreatmentSamplingNeeded": { "label": "선채취 필요" },
+      "coolDarkStorage": { "label": "냉암소 보관" },
+      "controlledSpace": { "label": "통제 공간" },
+      "labHandover": { "label": "분석실 인계" },
+      "beforeConsolidationReview": { "label": "경화처리 전 검토" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "인골 DNA 분석 가능성을 해치지 않도록 접촉자, 보호구, 세척 금지, 별도 포장, 선채취, 보관, 접근 통제, 분석실 인계를 관리하기 위한 목록"
+  },
+  "KoreanFieldwork-organicSoilAnalysisSample": {
+    "values": {
+      "interiorSoil": { "label": "내부토" },
+      "exteriorControlSoil": { "label": "외부 대조토" },
+      "depthColorSampling": { "label": "깊이·색상별 채취" },
+      "refrigeratedStorage": { "label": "냉장 보관" },
+      "ph": { "label": "pH" },
+      "organicMatter": { "label": "유기물 함량" },
+      "availablePhosphate": { "label": "유효인산" },
+      "parasiteEgg": { "label": "기생충란" },
+      "ftIr": { "label": "FT-IR" },
+      "opticalMicroscope": { "label": "광학현미경" },
+      "sem": { "label": "SEM" },
+      "analysisQuestionRecorded": { "label": "분석 질문 기록" },
+      "interpretationImpactRecorded": { "label": "해석 영향 기록" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "묘 내부토와 외부 대조토, 깊이·색상별 채취, 냉장 보관, 토양·유기물 분석법, 분석 질문과 해석 환류를 관리하기 위한 목록"
+  },
+  "KoreanFieldwork-destructiveAnalysisDecision": {
+    "values": {
+      "nonDestructiveFirst": { "label": "비파괴 우선" },
+      "minimallyDestructive": { "label": "준파괴" },
+      "destructiveSample": { "label": "파괴시료" },
+      "surfaceContaminationChecked": { "label": "표면오염 확인" },
+      "corrosionLayerImpact": { "label": "부식층 영향" },
+      "overpaintImpact": { "label": "덧칠 영향" },
+      "lightElementLimit": { "label": "경원소 한계" },
+      "standardSample": { "label": "표준시료" },
+      "crossValidation": { "label": "교차검증" },
+      "sampleSizeLimit": { "label": "시료크기 부족" },
+      "conservationConflict": { "label": "보존원칙 충돌" },
+      "analysisApprovalNeeded": { "label": "분석 승인 필요" },
+      "cuttingGrindingEtchingRecorded": { "label": "절단·연마·부식 기록" },
+      "remainingSampleStorage": { "label": "잔여시료 보관" },
+      "analysisImpactReview": { "label": "분석결과 영향 검토" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "비파괴·준파괴·파괴 분석의 보존 영향, 표면오염, 부식층, 분석 한계, 승인, 시료 제작 이력, 잔여시료와 해석 영향을 기록하기 위한 목록"
+  },
   "KoreanFieldwork-firstExposureRecord": {
     "values": {
       "concurrentWithStripping": {

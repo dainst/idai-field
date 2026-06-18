@@ -386,6 +386,21 @@
         "storageEnvironmentControl": {
           "label": "Storage environment control"
         },
+        "conservationScienceRequest": {
+          "label": "Conservation science request"
+        },
+        "waterloggedWoodEmergencyStorage": {
+          "label": "Waterlogged wood emergency storage"
+        },
+        "lacquerConservationRisk": {
+          "label": "Lacquer conservation risk"
+        },
+        "metalAnalysisRequest": {
+          "label": "Metal analysis request"
+        },
+        "ceramicConservationState": {
+          "label": "Ceramic conservation state"
+        },
         "ironResidueSubtype": {
           "label": "Iron residue subtype"
         },
@@ -479,6 +494,15 @@
         },
         "humanRemainsRecoveryAnalysis": {
           "label": "Human remains recovery and analysis"
+        },
+        "humanDnaFieldControl": {
+          "label": "Human DNA field control"
+        },
+        "organicSoilAnalysisSample": {
+          "label": "Organic and soil analysis sample"
+        },
+        "destructiveAnalysisDecision": {
+          "label": "Destructive analysis decision"
         },
         "shellMiddenSamplingStrategy": {
           "label": "Shell midden sampling strategy"

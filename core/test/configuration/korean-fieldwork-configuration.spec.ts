@@ -102,6 +102,11 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.fields.artifactHandlingWorkflow.inputType).toBe('checkboxes');
         expect(findForm.fields.artifactQuantityBasis.inputType).toBe('checkboxes');
         expect(findForm.fields.storageEnvironmentControl.inputType).toBe('checkboxes');
+        expect(findForm.fields.conservationScienceRequest.inputType).toBe('checkboxes');
+        expect(findForm.fields.waterloggedWoodEmergencyStorage.inputType).toBe('checkboxes');
+        expect(findForm.fields.lacquerConservationRisk.inputType).toBe('checkboxes');
+        expect(findForm.fields.metalAnalysisRequest.inputType).toBe('checkboxes');
+        expect(findForm.fields.ceramicConservationState.inputType).toBe('checkboxes');
         expect(findForm.fields.ironResidueSubtype.inputType).toBe('checkboxes');
         expect(findForm.fields.graveGoodsRitualContext.inputType).toBe('checkboxes');
         expect(findForm.fields.neolithicSubsistenceEvidence.inputType).toBe('checkboxes');
@@ -126,6 +131,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(sampleForm.fields.charcoalKilnAnalysisPlan.inputType).toBe('checkboxes');
         expect(sampleForm.fields.porcelainAnalysisPlan.inputType).toBe('checkboxes');
         expect(sampleForm.fields.humanRemainsRecoveryAnalysis.inputType).toBe('checkboxes');
+        expect(sampleForm.fields.humanDnaFieldControl.inputType).toBe('checkboxes');
+        expect(sampleForm.fields.organicSoilAnalysisSample.inputType).toBe('checkboxes');
+        expect(sampleForm.fields.destructiveAnalysisDecision.inputType).toBe('checkboxes');
         expect(sampleForm.fields.shellMiddenSamplingStrategy.inputType).toBe('checkboxes');
         expect(sampleForm.fields.paleoenvironmentProxySampling.inputType).toBe('checkboxes');
         expect(featureForm.fields.firstExposureRecord.inputType).toBe('checkboxes');
@@ -283,6 +291,15 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.valuelists.artifactHandlingWorkflow).toBe('KoreanFieldwork-artifactHandlingWorkflow');
         expect(findForm.valuelists.artifactQuantityBasis).toBe('KoreanFieldwork-artifactQuantityBasis');
         expect(findForm.valuelists.storageEnvironmentControl).toBe('KoreanFieldwork-storageEnvironmentControl');
+        expect(findForm.valuelists.conservationScienceRequest)
+            .toBe('KoreanFieldwork-conservationScienceRequest');
+        expect(findForm.valuelists.waterloggedWoodEmergencyStorage)
+            .toBe('KoreanFieldwork-waterloggedWoodEmergencyStorage');
+        expect(findForm.valuelists.lacquerConservationRisk)
+            .toBe('KoreanFieldwork-lacquerConservationRisk');
+        expect(findForm.valuelists.metalAnalysisRequest).toBe('KoreanFieldwork-metalAnalysisRequest');
+        expect(findForm.valuelists.ceramicConservationState)
+            .toBe('KoreanFieldwork-ceramicConservationState');
         expect(findForm.valuelists.ironResidueSubtype).toBe('KoreanFieldwork-ironResidueSubtype');
         expect(findForm.valuelists.graveGoodsRitualContext).toBe('KoreanFieldwork-graveGoodsRitualContext');
         expect(findForm.valuelists.neolithicSubsistenceEvidence)
@@ -330,6 +347,11 @@ describe('KoreanFieldwork project configuration', () => {
         expect(sampleForm.valuelists.porcelainAnalysisPlan).toBe('KoreanFieldwork-porcelainAnalysisPlan');
         expect(sampleForm.valuelists.humanRemainsRecoveryAnalysis)
             .toBe('KoreanFieldwork-humanRemainsRecoveryAnalysis');
+        expect(sampleForm.valuelists.humanDnaFieldControl).toBe('KoreanFieldwork-humanDnaFieldControl');
+        expect(sampleForm.valuelists.organicSoilAnalysisSample)
+            .toBe('KoreanFieldwork-organicSoilAnalysisSample');
+        expect(sampleForm.valuelists.destructiveAnalysisDecision)
+            .toBe('KoreanFieldwork-destructiveAnalysisDecision');
         expect(sampleForm.valuelists.shellMiddenSamplingStrategy)
             .toBe('KoreanFieldwork-shellMiddenSamplingStrategy');
         expect(sampleForm.valuelists.paleoenvironmentProxySampling)
@@ -474,6 +496,16 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.Find.fields.artifactQuantityBasis.label).toBe('Artifact quantity basis');
         expect(languages.en.categories.Find.fields.storageEnvironmentControl.label)
             .toBe('Storage environment control');
+        expect(languages.en.categories.Find.fields.conservationScienceRequest.label)
+            .toBe('Conservation science request');
+        expect(languages.en.categories.Find.fields.waterloggedWoodEmergencyStorage.label)
+            .toBe('Waterlogged wood emergency storage');
+        expect(languages.en.categories.Find.fields.lacquerConservationRisk.label)
+            .toBe('Lacquer conservation risk');
+        expect(languages.en.categories.Find.fields.metalAnalysisRequest.label)
+            .toBe('Metal analysis request');
+        expect(languages.en.categories.Find.fields.ceramicConservationState.label)
+            .toBe('Ceramic conservation state');
         expect(languages.en.categories.Find.fields.ironResidueSubtype.label).toBe('Iron residue subtype');
         expect(languages.en.categories.Find.fields.graveGoodsRitualContext.label)
             .toBe('Grave goods and ritual context');
@@ -518,6 +550,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Porcelain analysis plan');
         expect(languages.en.categories.Sample.fields.humanRemainsRecoveryAnalysis.label)
             .toBe('Human remains recovery and analysis');
+        expect(languages.en.categories.Sample.fields.humanDnaFieldControl.label)
+            .toBe('Human DNA field control');
+        expect(languages.en.categories.Sample.fields.organicSoilAnalysisSample.label)
+            .toBe('Organic and soil analysis sample');
+        expect(languages.en.categories.Sample.fields.destructiveAnalysisDecision.label)
+            .toBe('Destructive analysis decision');
         expect(languages.en.categories.Sample.fields.shellMiddenSamplingStrategy.label)
             .toBe('Shell midden sampling strategy');
         expect(languages.en.categories.Sample.fields.paleoenvironmentProxySampling.label)
@@ -596,6 +634,21 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-storageEnvironmentControl']
             .values.currentStandardCrossCheckNeeded.label)
             .toBe('Current standard cross-check needed');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-conservationScienceRequest']
+            .values.nonDestructiveFirst.label)
+            .toBe('Non-destructive first');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-waterloggedWoodEmergencyStorage']
+            .values.c14ImpactReview.label)
+            .toBe('C14 impact review');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-lacquerConservationRisk']
+            .values.lacquerFilmCrackingRisk.label)
+            .toBe('Lacquer film cracking risk');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-metalAnalysisRequest']
+            .values.cuttingPolishingApproval.label)
+            .toBe('Cutting/polishing approval');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-ceramicConservationState']
+            .values.wetCleaningCaution.label)
+            .toBe('Wet cleaning caution');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-firstExposureRecord'].values.shoulderLineRecorded.label)
             .toBe('Shoulder line recorded');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-pitDwellingExposureBaulk']
@@ -632,6 +685,15 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-humanRemainsRecoveryAnalysis']
             .values.dnaBeforeTreatment.label)
             .toBe('DNA before treatment');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-humanDnaFieldControl']
+            .values.noFieldWashing.label)
+            .toBe('No field washing');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-organicSoilAnalysisSample']
+            .values.exteriorControlSoil.label)
+            .toBe('Exterior control soil');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-destructiveAnalysisDecision']
+            .values.analysisApprovalNeeded.label)
+            .toBe('Analysis approval needed');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-shellMiddenStratigraphy']
             .values.planAndSectionCombined.label)
             .toBe('Plan and section combined');

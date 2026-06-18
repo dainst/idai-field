@@ -227,6 +227,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "firstExposureRecord": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "fortificationGateFacility": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -263,6 +267,7 @@
       "valuelists": {
         "featurePackage": "KoreanFieldwork-featurePackage",
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
+        "firstExposureRecord": "KoreanFieldwork-firstExposureRecord",
         "fortificationGateFacility": "KoreanFieldwork-fortificationGateFacility",
         "fortificationHiddenGateFunction": "KoreanFieldwork-fortificationHiddenGateFunction",
         "fortificationParapetDetail": "KoreanFieldwork-fortificationParapetDetail",
@@ -294,6 +299,7 @@
           "fields": [
             "featurePackage",
             "fieldRecordQuality",
+            "firstExposureRecord",
             "fortificationGateFacility",
             "fortificationHiddenGateFunction",
             "fortificationParapetDetail",
@@ -336,6 +342,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "firstExposureRecord": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "recordCreationTiming": {
           "inputType": "dropdown",
           "constraintIndexed": true
@@ -352,6 +362,7 @@
       "valuelists": {
         "featurePackage": "KoreanFieldwork-featurePackage",
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
+        "firstExposureRecord": "KoreanFieldwork-firstExposureRecord",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "termRelation": "KoreanFieldwork-termRelation",
         "verificationState": "KoreanFieldwork-verificationState"
@@ -375,7 +386,14 @@
         },
         {
           "name": "koreanFieldwork",
-          "fields": ["featurePackage", "fieldRecordQuality", "recordCreationTiming", "verificationState", "termRelation"]
+          "fields": [
+            "featurePackage",
+            "fieldRecordQuality",
+            "firstExposureRecord",
+            "recordCreationTiming",
+            "verificationState",
+            "termRelation"
+          ]
         },
         {
           "name": "position",

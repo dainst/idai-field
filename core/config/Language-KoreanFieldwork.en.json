@@ -80,6 +80,9 @@
         "fieldRecordQuality": {
           "label": "Field record quality"
         },
+        "firstExposureRecord": {
+          "label": "First exposure record"
+        },
         "fortificationGateFacility": {
           "label": "Gate and defensive components"
         },
@@ -113,6 +116,9 @@
         },
         "fieldRecordQuality": {
           "label": "Field record quality"
+        },
+        "firstExposureRecord": {
+          "label": "First exposure record"
         },
         "recordCreationTiming": {
           "label": "Record creation timing"

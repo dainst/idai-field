@@ -24,12 +24,15 @@ describe('KoreanFieldwork project configuration', () => {
         expect(operationForm.fields.personalNotebookArchive.inputType).toBe('checkboxes');
         expect(operationForm.fields.digitalSourcePreservation.inputType).toBe('checkboxes');
         expect(projectForm.fields.digitalSourcePreservation.inputType).toBe('checkboxes');
+        expect(featureForm.fields.firstExposureRecord.inputType).toBe('checkboxes');
+        expect(config.forms['FeatureSegment:default'].fields.firstExposureRecord.inputType).toBe('checkboxes');
         expect(featureForm.fields.fortificationHiddenGateFunction.inputType).toBe('checkboxes');
         expect(featureForm.fields.fortificationParapetDetail.inputType).toBe('checkboxes');
 
         expect(operationForm.valuelists.fieldRecordQuality).toBe('KoreanFieldwork-fieldRecordQuality');
         expect(operationForm.valuelists.personalNotebookArchive).toBe('KoreanFieldwork-personalNotebookArchive');
         expect(operationForm.valuelists.digitalSourcePreservation).toBe('KoreanFieldwork-digitalSourcePreservation');
+        expect(featureForm.valuelists.firstExposureRecord).toBe('KoreanFieldwork-firstExposureRecord');
         expect(featureForm.valuelists.fortificationHiddenGateFunction)
             .toBe('KoreanFieldwork-fortificationHiddenGateFunction');
         expect(featureForm.valuelists.fortificationParapetDetail)
@@ -46,6 +49,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.Operation.fields.fieldRecordQuality.label).toBe('Field record quality');
         expect(languages.en.categories.Operation.fields.personalNotebookArchive.label).toBe('Personal notebook archive');
         expect(languages.en.categories.Project.fields.digitalSourcePreservation.label).toBe('Digital source preservation');
+        expect(languages.en.categories.Feature.fields.firstExposureRecord.label).toBe('First exposure record');
         expect(languages.en.categories.Feature.fields.fortificationHiddenGateFunction.label).toBe('Hidden gate function');
         expect(languages.en.categories.Feature.fields.fortificationParapetDetail.label).toBe('Parapet detail');
         expect(languages.ko.categories.Operation.fields.fieldRecordQuality.label).toBeDefined();
@@ -56,6 +60,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Original submitted');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-digitalSourcePreservation'].values.backupVerified.label)
             .toBe('Backup verified');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-firstExposureRecord'].values.shoulderLineRecorded.label)
+            .toBe('Shoulder line recorded');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-fortificationHiddenGateFunction'].values.supplyTransport.label)
             .toBe('Military supply transport');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-fortificationParapetDetail'].values.nearGunOpening.label)

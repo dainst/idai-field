@@ -80,6 +80,9 @@
         "fieldRecordQuality": {
           "label": "현장기록 품질"
         },
+        "firstExposureRecord": {
+          "label": "최초 노출 기록"
+        },
         "fortificationGateFacility": {
           "label": "성문·방어 부속시설"
         },
@@ -113,6 +116,9 @@
         },
         "fieldRecordQuality": {
           "label": "현장기록 품질"
+        },
+        "firstExposureRecord": {
+          "label": "최초 노출 기록"
         },
         "recordCreationTiming": {
           "label": "기록 생성 시점"

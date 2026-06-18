@@ -31112,6 +31112,38 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-firstExposureRecord": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "concurrentWithStripping": {},
+      "firstExposurePhoto": {},
+      "featureLineVisible": {},
+      "shoulderLineRecorded": {},
+      "overlapShoulderLine": {},
+      "sectionCrossCheck": {},
+      "longTrenchCheck": {},
+      "dryingRisk": {},
+      "rewettingLimit": {},
+      "lightingConditionRecorded": {},
+      "confirmedBeforeInternalExcavation": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "concurrentWithStripping",
+      "firstExposurePhoto",
+      "featureLineVisible",
+      "shoulderLineRecorded",
+      "overlapShoulderLine",
+      "sectionCrossCheck",
+      "longTrenchCheck",
+      "dryingRisk",
+      "rewettingLimit",
+      "lightingConditionRecorded",
+      "confirmedBeforeInternalExcavation",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-personalNotebookArchive": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

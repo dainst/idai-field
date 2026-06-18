@@ -86,6 +86,47 @@
     },
     "description": "현장 강의자료에서 반복된 기록 정확성, 즉시성, 재현 가능성, 관찰·해석 분리 요구를 관리하기 위한 목록"
   },
+  "KoreanFieldwork-firstExposureRecord": {
+    "values": {
+      "concurrentWithStripping": {
+        "label": "제토 동시 확인"
+      },
+      "firstExposurePhoto": {
+        "label": "최초 노출 사진"
+      },
+      "featureLineVisible": {
+        "label": "유구선 가시"
+      },
+      "shoulderLineRecorded": {
+        "label": "어깨선 기록"
+      },
+      "overlapShoulderLine": {
+        "label": "중복 어깨선"
+      },
+      "sectionCrossCheck": {
+        "label": "단면 대조"
+      },
+      "longTrenchCheck": {
+        "label": "장트렌치 확인"
+      },
+      "dryingRisk": {
+        "label": "노출 후 건조 위험"
+      },
+      "rewettingLimit": {
+        "label": "재급수·재정리 한계"
+      },
+      "lightingConditionRecorded": {
+        "label": "광선 조건 기록"
+      },
+      "confirmedBeforeInternalExcavation": {
+        "label": "내부조사 전 확정"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "제토와 동시에 가장 잘 보이는 유구 윤곽선, 어깨선, 중복관계, 건조 위험을 최초 노출 순간에 남기기 위한 목록"
+  },
   "KoreanFieldwork-personalNotebookArchive": {
     "values": {
       "personalNotebookWritten": {

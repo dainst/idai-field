@@ -11840,6 +11840,47 @@
     },
     "description": "Korean field notebook record-quality checks for accuracy, immediacy, reproducibility, and separation of observation from interpretation"
   },
+  "KoreanFieldwork-firstExposureRecord": {
+    "values": {
+      "concurrentWithStripping": {
+        "label": "Checked during stripping"
+      },
+      "firstExposurePhoto": {
+        "label": "First exposure photo"
+      },
+      "featureLineVisible": {
+        "label": "Feature line visible"
+      },
+      "shoulderLineRecorded": {
+        "label": "Shoulder line recorded"
+      },
+      "overlapShoulderLine": {
+        "label": "Overlapping shoulder line"
+      },
+      "sectionCrossCheck": {
+        "label": "Section cross-check"
+      },
+      "longTrenchCheck": {
+        "label": "Long trench check"
+      },
+      "dryingRisk": {
+        "label": "Post-exposure drying risk"
+      },
+      "rewettingLimit": {
+        "label": "Rewetting/recleaning limit"
+      },
+      "lightingConditionRecorded": {
+        "label": "Lighting condition recorded"
+      },
+      "confirmedBeforeInternalExcavation": {
+        "label": "Confirmed before internal excavation"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean field notebook checks for recording feature outlines, shoulder lines, overlap, section checks, and drying risks at the first exposure moment"
+  },
   "KoreanFieldwork-personalNotebookArchive": {
     "values": {
       "personalNotebookWritten": {

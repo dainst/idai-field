@@ -1348,8 +1348,9 @@ defmodule FieldPublication.Publications.Data do
         end)
         |> Enum.into(%{}),
       docs:
-        get_document_hierarchy(uuid, publication)
-        |> Map.get("children")
+        uuid
+        |> get_document_hierarchy(publication)
+        |> Map.get("children", [])
         |> get_preview_documents(publication)
     }
   end

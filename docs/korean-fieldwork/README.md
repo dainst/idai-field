@@ -15,6 +15,7 @@
 ## 문서
 
 - [자료 목록과 분석 범위](source-inventory.md)
+- [보조 자료군 목록과 우선순위](supplemental-source-inventory.md)
 - [PDF 판독 상태](pdf-reading-status.md)
 - [현장기록 원칙 1차 초안](field-recording-principles.md)
 - [현장 현상별 관찰·기록 매트릭스](field-observation-matrix.md)
@@ -34,6 +35,7 @@
 - [제8권: 신석기시대 유적과 최신 조사기법](volume-notes/volume-08-neolithic-sites.md)
 - [제9권: 연구방법론과 과학 분석](volume-notes/volume-09-research-methods.md)
 - [2020년: 제철유적 조사·분석 방법론](volume-notes/volume-2020-iron-production.md)
+- [현장 강의자료: 조사방법론 보조 독해](volume-notes/field-training-methods.md)
 
 ## 문서 서술 기준
 

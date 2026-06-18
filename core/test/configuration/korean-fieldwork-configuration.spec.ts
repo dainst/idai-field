@@ -30,7 +30,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(operationForm.fields.dailyLogContent.inputType).toBe('checkboxes');
         expect(operationForm.fields.dailyLogReview.inputType).toBe('checkboxes');
         expect(operationForm.fields.digitalSourcePreservation.inputType).toBe('checkboxes');
+        expect(operationForm.fields.reportEvaluationFeedback.inputType).toBe('checkboxes');
         expect(projectForm.fields.digitalSourcePreservation.inputType).toBe('checkboxes');
+        expect(projectForm.fields.reportEvaluationFeedback.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyObservation.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyBiasControl.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyFollowUp.inputType).toBe('checkboxes');
@@ -57,6 +59,10 @@ describe('KoreanFieldwork project configuration', () => {
         expect(operationForm.valuelists.dailyLogContent).toBe('KoreanFieldwork-dailyLogContent');
         expect(operationForm.valuelists.dailyLogReview).toBe('KoreanFieldwork-dailyLogReview');
         expect(operationForm.valuelists.digitalSourcePreservation).toBe('KoreanFieldwork-digitalSourcePreservation');
+        expect(operationForm.valuelists.reportEvaluationFeedback)
+            .toBe('KoreanFieldwork-reportEvaluationFeedback');
+        expect(projectForm.valuelists.reportEvaluationFeedback)
+            .toBe('KoreanFieldwork-reportEvaluationFeedback');
         expect(surveyForm.valuelists.surfaceSurveyObservation).toBe('KoreanFieldwork-surfaceSurveyObservation');
         expect(surveyForm.valuelists.surfaceSurveyBiasControl).toBe('KoreanFieldwork-surfaceSurveyBiasControl');
         expect(surveyForm.valuelists.surfaceSurveyFollowUp).toBe('KoreanFieldwork-surfaceSurveyFollowUp');
@@ -89,6 +95,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.Operation.fields.dailyLogContent.label).toBe('Daily work log');
         expect(languages.en.categories.Operation.fields.dailyLogReview.label).toBe('Daily log review');
         expect(languages.en.categories.Project.fields.digitalSourcePreservation.label).toBe('Digital source preservation');
+        expect(languages.en.categories.Project.fields.reportEvaluationFeedback.label)
+            .toBe('Report evaluation feedback');
         expect(languages.en.categories.Survey.fields.surfaceSurveyObservation.label)
             .toBe('Surface survey observation');
         expect(languages.en.categories.Feature.fields.fieldOnlyMissingCheck.label)
@@ -114,6 +122,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Same-day written');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-digitalSourcePreservation'].values.backupVerified.label)
             .toBe('Backup verified');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-reportEvaluationFeedback'].values.selfEvaluation.label)
+            .toBe('Institution self-evaluation');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveyObservation'].values.cutSectionStratigraphy.label)
             .toBe('Cut-section stratigraphy');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveyBiasControl'].values.fieldObservationFirst.label)

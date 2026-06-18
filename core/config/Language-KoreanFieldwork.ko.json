@@ -23,6 +23,9 @@
         "reportCrossCheck": {
           "label": "보고서 교차검토"
         },
+        "reportEvaluationFeedback": {
+          "label": "보고서 평가 환류"
+        },
         "verificationState": {
           "label": "검증상태"
         }
@@ -53,6 +56,9 @@
         },
         "reportCrossCheck": {
           "label": "보고서 교차검토"
+        },
+        "reportEvaluationFeedback": {
+          "label": "보고서 평가 환류"
         },
         "verificationState": {
           "label": "검증상태"

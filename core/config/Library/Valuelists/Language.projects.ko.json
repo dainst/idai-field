@@ -1179,5 +1179,55 @@
       }
     },
     "description": "현장기록에서 보고서 산출물을 역산하고 원자료와 대조하기 위한 교차검토 항목 목록"
+  },
+  "KoreanFieldwork-reportEvaluationFeedback": {
+    "values": {
+      "selfEvaluation": {
+        "label": "기관 자체평가"
+      },
+      "committeeEvaluation": {
+        "label": "위원회 평가"
+      },
+      "scoreDifference": {
+        "label": "평가점수 차이"
+      },
+      "siteTypeApplicability": {
+        "label": "유적유형 적용성"
+      },
+      "nonApplicableItem": {
+        "label": "비해당 평가항목"
+      },
+      "exclusionRationale": {
+        "label": "적용 제외 근거"
+      },
+      "fieldQualityNotSubstituted": {
+        "label": "현장품질 대체불가"
+      },
+      "fieldRecordReview": {
+        "label": "원기록 재검토"
+      },
+      "expertFieldParticipation": {
+        "label": "전문가 현장참여"
+      },
+      "stakeholderCoordination": {
+        "label": "이해관계 조정"
+      },
+      "lowBidRisk": {
+        "label": "저가수주 위험"
+      },
+      "formalEvaluationLimit": {
+        "label": "형식평가 한계"
+      },
+      "improvementForNextInvestigation": {
+        "label": "다음 조사 개선"
+      },
+      "supplementRequestTracked": {
+        "label": "보완요구 추적"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "보고서 평가 결과를 점수표로 닫지 않고 원기록 재검토와 다음 현장 개선으로 되돌리기 위한 환류 항목 목록"
   }
 }

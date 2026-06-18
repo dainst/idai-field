@@ -23,6 +23,9 @@
         "reportCrossCheck": {
           "label": "Report cross-check"
         },
+        "reportEvaluationFeedback": {
+          "label": "Report evaluation feedback"
+        },
         "verificationState": {
           "label": "Verification state"
         }
@@ -53,6 +56,9 @@
         },
         "reportCrossCheck": {
           "label": "Report cross-check"
+        },
+        "reportEvaluationFeedback": {
+          "label": "Report evaluation feedback"
         },
         "verificationState": {
           "label": "Verification state"

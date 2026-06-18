@@ -12933,5 +12933,55 @@
       }
     },
     "description": "Korean report cross-check items for generating and auditing report outputs from field records"
+  },
+  "KoreanFieldwork-reportEvaluationFeedback": {
+    "values": {
+      "selfEvaluation": {
+        "label": "Institution self-evaluation"
+      },
+      "committeeEvaluation": {
+        "label": "Committee evaluation"
+      },
+      "scoreDifference": {
+        "label": "Evaluation score difference"
+      },
+      "siteTypeApplicability": {
+        "label": "Site-type applicability"
+      },
+      "nonApplicableItem": {
+        "label": "Non-applicable evaluation item"
+      },
+      "exclusionRationale": {
+        "label": "Exclusion rationale"
+      },
+      "fieldQualityNotSubstituted": {
+        "label": "Field quality not substituted"
+      },
+      "fieldRecordReview": {
+        "label": "Original record review"
+      },
+      "expertFieldParticipation": {
+        "label": "Expert field participation"
+      },
+      "stakeholderCoordination": {
+        "label": "Stakeholder coordination"
+      },
+      "lowBidRisk": {
+        "label": "Low-bid risk"
+      },
+      "formalEvaluationLimit": {
+        "label": "Formal evaluation limit"
+      },
+      "improvementForNextInvestigation": {
+        "label": "Improvement for next investigation"
+      },
+      "supplementRequestTracked": {
+        "label": "Supplement request tracked"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean report evaluation feedback items for linking evaluation results back to source records and future field improvements"
   }
 }

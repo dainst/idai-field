@@ -27,6 +27,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "reportEvaluationFeedback": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "verificationState": {
           "inputType": "dropdown",
           "constraintIndexed": true
@@ -39,6 +43,7 @@
         "permitConditionCompliance": "KoreanFieldwork-permitConditionCompliance",
         "preservationActionTracking": "KoreanFieldwork-preservationActionTracking",
         "reportCrossCheck": "KoreanFieldwork-reportCrossCheck",
+        "reportEvaluationFeedback": "KoreanFieldwork-reportEvaluationFeedback",
         "verificationState": "KoreanFieldwork-verificationState"
       },
       "groups": [
@@ -63,6 +68,7 @@
             "investigationRecordHandover",
             "digitalSourcePreservation",
             "reportCrossCheck",
+            "reportEvaluationFeedback",
             "verificationState"
           ]
         }
@@ -103,6 +109,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "reportEvaluationFeedback": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "verificationState": {
           "inputType": "dropdown",
           "constraintIndexed": true
@@ -117,6 +127,7 @@
         "personalNotebookArchive": "KoreanFieldwork-personalNotebookArchive",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "reportCrossCheck": "KoreanFieldwork-reportCrossCheck",
+        "reportEvaluationFeedback": "KoreanFieldwork-reportEvaluationFeedback",
         "verificationState": "KoreanFieldwork-verificationState"
       },
       "groups": [
@@ -147,7 +158,8 @@
             "investigationRecordHandover",
             "digitalSourcePreservation",
             "verificationState",
-            "reportCrossCheck"
+            "reportCrossCheck",
+            "reportEvaluationFeedback"
           ]
         },
         {

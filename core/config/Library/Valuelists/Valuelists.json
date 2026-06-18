@@ -31957,5 +31957,43 @@
       "sourceMediaBackup",
       "evaluationFeedback"
     ]
+  },
+  "KoreanFieldwork-reportEvaluationFeedback": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "selfEvaluation": {},
+      "committeeEvaluation": {},
+      "scoreDifference": {},
+      "siteTypeApplicability": {},
+      "nonApplicableItem": {},
+      "exclusionRationale": {},
+      "fieldQualityNotSubstituted": {},
+      "fieldRecordReview": {},
+      "expertFieldParticipation": {},
+      "stakeholderCoordination": {},
+      "lowBidRisk": {},
+      "formalEvaluationLimit": {},
+      "improvementForNextInvestigation": {},
+      "supplementRequestTracked": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "selfEvaluation",
+      "committeeEvaluation",
+      "scoreDifference",
+      "siteTypeApplicability",
+      "nonApplicableItem",
+      "exclusionRationale",
+      "fieldQualityNotSubstituted",
+      "fieldRecordReview",
+      "expertFieldParticipation",
+      "stakeholderCoordination",
+      "lowBidRisk",
+      "formalEvaluationLimit",
+      "improvementForNextInvestigation",
+      "supplementRequestTracked",
+      "pendingDecision"
+    ]
   }
 }

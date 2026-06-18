@@ -56,6 +56,8 @@
 
 청동기 보강분은 `Feature`에 `bronzeAgeDwellingEvidence`, `dolmenStructureContext`, `bronzeAgeEnclosureInterpretation`을 배치해 송국리식·가락동식 같은 유형명을 관찰값 뒤의 후보로 두고, 평면형·화덕·중앙 타원형 구덩이·양단 주혈·벽도랑·주거군/묘역 관계, 고인돌의 덮개돌·받침돌·무덤방·묘역시설·성혈·알구멍·이전복원 이력, 환호의 방어·경계·배수·의례 후보와 내부퇴적·재굴착·수축흔을 분리해 남기게 했다. `Find`에는 `bronzeAgePotteryTerminology`를 두어 민무늬토기/무문토기, 구순각목/골아가리, 공렬/구멍무늬, 이중구연/겹아가리 같은 이칭과 표준 용어, 편년·공반 맥락을 유물 카드에서 추적한다.
 
+충적지·토양도 보강분은 `Survey`에 `alluvialLandformSurvey`와 `soilMapPredictionVerification`을 배치해 자연제방·배후습지·구하도·구해안선·근현대 형질변경, 보링·주상도, 표면유물 부재의 한계, 토양통·대토양군·정밀토양도 반영깊이, 실제 시굴 결과와 예측 수정 사유를 지표조사 단계에서 남기게 했다. `FeatureSegment`에는 `alluvialLayerConceptAudit`, `alluvialSurfaceAttribution`, `alluvialFormationProcess`를 두어 a+b층 세트, 토양층위/퇴적층위/고고학 층명 구분, 구지표면·생활면·유구축조면·검출면, b층 상면 검출, 암색대·이질토 블록·라미나·홍수퇴적 같은 형성과정 근거를 층 세부단위에서 바로 점검한다.
+
 이 구현 단위가 먼저 들어가야 각 유적 유형별 템플릿을 만들 때 기록이 흩어지지 않는다.
 
 ## 검증 질문

@@ -13552,6 +13552,117 @@
     },
     "description": "Korean fieldwork checks for comparing GIS predictions with field observations, including confirmation, non-confirmation, missed candidates, over-prediction, trial trench recommendations, and survey route changes"
   },
+  "KoreanFieldwork-alluvialLandformSurvey": {
+    "values": {
+      "alluvialFan": { "label": "Alluvial fan" },
+      "floodplain": { "label": "Floodplain" },
+      "naturalLeveeFrontSlope": { "label": "Natural levee front slope" },
+      "naturalLeveeTop": { "label": "Natural levee top" },
+      "naturalLeveeBackSlope": { "label": "Natural levee back slope" },
+      "backswamp": { "label": "Backswamp" },
+      "paleoChannel": { "label": "Paleo-channel" },
+      "pointBar": { "label": "Point bar" },
+      "lowHill": { "label": "Low hill" },
+      "riverTerrace": { "label": "River terrace" },
+      "deltaPlain": { "label": "Delta plain" },
+      "coastalLowland": { "label": "Coastal lowland" },
+      "oldShorelineCandidate": { "label": "Old shoreline candidate" },
+      "modernLandReclamation": { "label": "Modern land reclamation" },
+      "landReadjustmentImpact": { "label": "Land readjustment impact" },
+      "boringOrColumnLinked": { "label": "Boring or column linked" },
+      "trialTrenchTargetSuggested": { "label": "Trial trench target suggested" },
+      "noSurfaceFindsNotAbsence": { "label": "No surface finds not absence" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean alluvial landform survey checks for natural levee, backswamp, paleo-channel, coastal and terrace settings, modern land alteration, column links, and trial trench targeting"
+  },
+  "KoreanFieldwork-soilMapPredictionVerification": {
+    "values": {
+      "soilMapSheetRecorded": { "label": "Soil map sheet recorded" },
+      "mapScaleRecorded": { "label": "Map scale recorded" },
+      "soilSeriesMapped": { "label": "Soil series mapped" },
+      "greatSoilGroupReclassified": { "label": "Great soil group reclassified" },
+      "alluvialSoilCandidate": { "label": "Alluvial soil candidate" },
+      "graySoilCandidate": { "label": "Gray soil candidate" },
+      "redYellowSoilCandidate": { "label": "Red-yellow soil candidate" },
+      "salineOrganicSoilCandidate": { "label": "Saline or organic soil candidate" },
+      "soilMapDepthLimitChecked": { "label": "Soil map depth limit checked" },
+      "buriedMicroLandformNotReflected": { "label": "Buried micro-landform not reflected" },
+      "surroundingSiteCompared": { "label": "Surrounding site compared" },
+      "residentReportCompared": { "label": "Resident report compared" },
+      "trenchResultSupportsPrediction": { "label": "Trench result supports prediction" },
+      "trenchResultRevisesPrediction": { "label": "Trench result revises prediction" },
+      "siteAbsenceNotConfirmed": { "label": "Site absence not confirmed" },
+      "preservationPotentialReviewed": { "label": "Preservation potential reviewed" },
+      "reportFeedbackRequired": { "label": "Report feedback required" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean soil-map prediction checks for recording map scale, soil series, great soil groups, interpretive limits, field verification, preservation potential, and report feedback"
+  },
+  "KoreanFieldwork-alluvialLayerConceptAudit": {
+    "values": {
+      "soilHorizonConcept": { "label": "Soil horizon concept" },
+      "sedimentaryUnitConcept": { "label": "Sedimentary unit concept" },
+      "archaeologicalLayerConcept": { "label": "Archaeological layer concept" },
+      "culturalLayerTermChecked": { "label": "Cultural layer term checked" },
+      "naturalDepositTermChecked": { "label": "Natural deposit term checked" },
+      "cultivationLayerTermChecked": { "label": "Cultivation layer term checked" },
+      "fillDepositTermChecked": { "label": "Fill deposit term checked" },
+      "abLayerSetRecorded": { "label": "a+b layer set recorded" },
+      "missingABSignRecorded": { "label": "Missing a/b sign recorded" },
+      "soilBoundaryNotSurface": { "label": "Soil boundary is not surface" },
+      "depositionalBoundarySeparated": { "label": "Depositional boundary separated" },
+      "colorOnlyNotEnough": { "label": "Color alone not enough" },
+      "layerCorrelationCandidate": { "label": "Layer correlation candidate" },
+      "keyBedCandidate": { "label": "Key bed candidate" },
+      "alternativeConceptRecorded": { "label": "Alternative concept recorded" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean alluvial stratigraphy checks for separating soil horizons, sedimentary units, archaeological layer names, a+b layer sets, boundaries, key beds, and alternative layer concepts"
+  },
+  "KoreanFieldwork-alluvialSurfaceAttribution": {
+    "values": {
+      "oldGroundSurface": { "label": "Old ground surface" },
+      "activitySurface": { "label": "Activity surface" },
+      "featureConstructionSurface": { "label": "Feature construction surface" },
+      "featureDetectionSurface": { "label": "Feature detection surface" },
+      "currentInvestigationSurface": { "label": "Current investigation surface" },
+      "originalConstructionSurfaceCandidate": { "label": "Original construction surface candidate" },
+      "bLayerSurfaceDetection": { "label": "b-layer surface detection" },
+      "truncationCandidate": { "label": "Truncation candidate" },
+      "soilFormationLoweredDetection": { "label": "Soil formation lowered detection" },
+      "overlyingLayerRelation": { "label": "Overlying layer relation" },
+      "fillCharacterRecorded": { "label": "Fill character recorded" },
+      "sameDetectionSurfaceDifferentDate": { "label": "Same detection surface but different date possible" },
+      "alternativeStratigraphicAttribution": { "label": "Alternative stratigraphic attribution" },
+      "datingEvidenceSeparated": { "label": "Dating evidence separated" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean alluvial surface attribution checks for distinguishing old ground, activity, construction, and detection surfaces, including b-layer detection, truncation, soil formation, fill, and dating evidence"
+  },
+  "KoreanFieldwork-alluvialFormationProcess": {
+    "values": {
+      "darkBandCaution": { "label": "Dark band caution" },
+      "buriedPaleosolCandidate": { "label": "Buried paleosol candidate" },
+      "blackMudLayerCandidate": { "label": "Black mud layer candidate" },
+      "microBotanicalAccumulation": { "label": "Micro-botanical accumulation" },
+      "secondaryDepositionCandidate": { "label": "Secondary deposition candidate" },
+      "laminaVisible": { "label": "Lamina visible" },
+      "softXrayNeeded": { "label": "Soft X-ray needed" },
+      "bioturbationPossible": { "label": "Bioturbation possible" },
+      "heterogeneousSoilBlock": { "label": "Heterogeneous soil block" },
+      "naturalUnconsolidatedBlock": { "label": "Natural unconsolidated block" },
+      "flameOrLoadStructure": { "label": "Flame or load structure" },
+      "floodDepositCandidate": { "label": "Flood deposit candidate" },
+      "normalGradingObserved": { "label": "Normal grading observed" },
+      "earlyMudThenSand": { "label": "Early mud then sand" },
+      "threeDimensionalDistributionChecked": { "label": "3D distribution checked" },
+      "groundWaterRedoxChange": { "label": "Groundwater redox change" },
+      "rootOrPostDiscoloration": { "label": "Root or post discoloration" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean alluvial formation-process checks for dark bands, paleosols, laminae, soft X-ray needs, bioturbation, heterogeneous blocks, flood deposits, redox change, and discoloration risks"
+  },
   "KoreanFieldwork-samplePurpose": {
     "values": {
       "absoluteDating": {

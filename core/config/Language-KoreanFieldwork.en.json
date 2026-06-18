@@ -124,6 +124,12 @@
         "gisPredictionFieldVerification": {
           "label": "Prediction field verification"
         },
+        "alluvialLandformSurvey": {
+          "label": "Alluvial landform survey"
+        },
+        "soilMapPredictionVerification": {
+          "label": "Soil map prediction verification"
+        },
         "verificationState": {
           "label": "Verification state"
         }
@@ -264,6 +270,15 @@
         },
         "firstExposureRecord": {
           "label": "First exposure record"
+        },
+        "alluvialLayerConceptAudit": {
+          "label": "Alluvial layer concept audit"
+        },
+        "alluvialSurfaceAttribution": {
+          "label": "Alluvial surface attribution"
+        },
+        "alluvialFormationProcess": {
+          "label": "Alluvial formation process"
         },
         "recordCreationTiming": {
           "label": "Record creation timing"

@@ -53,6 +53,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(surveyForm.fields.surfaceSurveyFollowUp.inputType).toBe('checkboxes');
         expect(surveyForm.fields.gisPredictionEvidence.inputType).toBe('checkboxes');
         expect(surveyForm.fields.gisPredictionFieldVerification.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.alluvialLandformSurvey.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.soilMapPredictionVerification.inputType).toBe('checkboxes');
         expect(featureForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
         expect(featureForm.fields.typologyArgument.inputType).toBe('checkboxes');
         expect(featureForm.fields.chronologyArgument.inputType).toBe('checkboxes');
@@ -72,6 +74,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.fields.bronzeAgeEnclosureInterpretation.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.chronologyArgument.inputType).toBe('checkboxes');
+        expect(featureSegmentForm.fields.alluvialLayerConceptAudit.inputType).toBe('checkboxes');
+        expect(featureSegmentForm.fields.alluvialSurfaceAttribution.inputType).toBe('checkboxes');
+        expect(featureSegmentForm.fields.alluvialFormationProcess.inputType).toBe('checkboxes');
         expect(findForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
         expect(findForm.fields.artifactHandlingWorkflow.inputType).toBe('checkboxes');
         expect(findForm.fields.artifactQuantityBasis.inputType).toBe('checkboxes');
@@ -151,6 +156,10 @@ describe('KoreanFieldwork project configuration', () => {
         expect(surveyForm.valuelists.gisPredictionEvidence).toBe('KoreanFieldwork-gisPredictionEvidence');
         expect(surveyForm.valuelists.gisPredictionFieldVerification)
             .toBe('KoreanFieldwork-gisPredictionFieldVerification');
+        expect(surveyForm.valuelists.alluvialLandformSurvey)
+            .toBe('KoreanFieldwork-alluvialLandformSurvey');
+        expect(surveyForm.valuelists.soilMapPredictionVerification)
+            .toBe('KoreanFieldwork-soilMapPredictionVerification');
         expect(featureForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
         expect(featureForm.valuelists.typologyArgument).toBe('KoreanFieldwork-typologyArgument');
         expect(featureForm.valuelists.chronologyArgument).toBe('KoreanFieldwork-chronologyArgument');
@@ -181,6 +190,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-bronzeAgeEnclosureInterpretation');
         expect(featureSegmentForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
         expect(featureSegmentForm.valuelists.chronologyArgument).toBe('KoreanFieldwork-chronologyArgument');
+        expect(featureSegmentForm.valuelists.alluvialLayerConceptAudit)
+            .toBe('KoreanFieldwork-alluvialLayerConceptAudit');
+        expect(featureSegmentForm.valuelists.alluvialSurfaceAttribution)
+            .toBe('KoreanFieldwork-alluvialSurfaceAttribution');
+        expect(featureSegmentForm.valuelists.alluvialFormationProcess)
+            .toBe('KoreanFieldwork-alluvialFormationProcess');
         expect(findForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
         expect(findForm.valuelists.artifactHandlingWorkflow).toBe('KoreanFieldwork-artifactHandlingWorkflow');
         expect(findForm.valuelists.artifactQuantityBasis).toBe('KoreanFieldwork-artifactQuantityBasis');
@@ -252,6 +267,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Surface survey observation');
         expect(languages.en.categories.Survey.fields.gisPredictionFieldVerification.label)
             .toBe('Prediction field verification');
+        expect(languages.en.categories.Survey.fields.alluvialLandformSurvey.label)
+            .toBe('Alluvial landform survey');
+        expect(languages.en.categories.Survey.fields.soilMapPredictionVerification.label)
+            .toBe('Soil map prediction verification');
         expect(languages.en.categories.Feature.fields.fieldOnlyMissingCheck.label)
             .toBe('Field-only missing check');
         expect(languages.en.categories.Feature.fields.typologyArgument.label).toBe('Typology argument');
@@ -282,6 +301,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.Feature.fields.fortificationParapetDetail.label).toBe('Parapet detail');
         expect(languages.en.categories.Feature.fields.termAuthorityStatus.label).toBe('Term authority status');
         expect(languages.en.categories.Feature.fields.termSearchMapping.label).toBe('Term search mapping');
+        expect(languages.en.categories.FeatureSegment.fields.alluvialLayerConceptAudit.label)
+            .toBe('Alluvial layer concept audit');
+        expect(languages.en.categories.FeatureSegment.fields.alluvialSurfaceAttribution.label)
+            .toBe('Alluvial surface attribution');
+        expect(languages.en.categories.FeatureSegment.fields.alluvialFormationProcess.label)
+            .toBe('Alluvial formation process');
         expect(languages.en.categories.Find.fields.termAuthorityStatus.label).toBe('Term authority status');
         expect(languages.en.categories.Find.fields.termSearchMapping.label).toBe('Term search mapping');
         expect(languages.en.categories.Find.fields.artifactHandlingWorkflow.label)
@@ -347,6 +372,21 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-gisPredictionFieldVerification']
             .values.missedCandidate.label)
             .toBe('Missed candidate');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-alluvialLandformSurvey']
+            .values.noSurfaceFindsNotAbsence.label)
+            .toBe('No surface finds not absence');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-soilMapPredictionVerification']
+            .values.soilMapDepthLimitChecked.label)
+            .toBe('Soil map depth limit checked');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-alluvialLayerConceptAudit']
+            .values.abLayerSetRecorded.label)
+            .toBe('a+b layer set recorded');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-alluvialSurfaceAttribution']
+            .values.bLayerSurfaceDetection.label)
+            .toBe('b-layer surface detection');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-alluvialFormationProcess']
+            .values.floodDepositCandidate.label)
+            .toBe('Flood deposit candidate');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-fieldOnlyMissingCheck'].values.preRemovalCondition.label)
             .toBe('Pre-removal condition');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactHandlingWorkflow'].values.stateVesting.label)
@@ -453,5 +493,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Retake or redraw needed');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-fieldRecordQuality'].values.immediateRecording.label)
             .toBeDefined();
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-alluvialLayerConceptAudit']
+            .values.abLayerSetRecorded.label)
+            .toBe('a+b층 세트 기록');
     });
 });

@@ -76,6 +76,8 @@ C:\Users\nuri9\AppData\Local\Temp\codex-idai-field-new-pdf-text\methods-all
 
 청동기시대편 증보판에서 뽑은 공통 축은 `KoreanFieldwork-bronzeAgeDwellingEvidence`, `KoreanFieldwork-dolmenStructureContext`, `KoreanFieldwork-bronzeAgeEnclosureInterpretation`, `KoreanFieldwork-bronzeAgePotteryTerminology`로 나누어 배치한다. 송국리식·가락동식·검단리식 같은 주거유형명은 결과값으로 두되, 현장 화면에서는 평면형, 화덕, 중앙 타원형 구덩이, 양단 주혈, 벽도랑, 주거군·묘역 관계와 연대 근거가 먼저 기록되도록 한다. 고인돌·지석묘는 덮개돌·받침돌·묘역시설·무덤방·성혈·이전복원 이력을 분리하고, 환호는 방어·경계·배수·의례 후보와 퇴적·재굴착·수축흔을 분리한다.
 
+충적지·토양도 자료에서 뽑은 공통 축은 `KoreanFieldwork-alluvialLandformSurvey`, `KoreanFieldwork-soilMapPredictionVerification`, `KoreanFieldwork-alluvialLayerConceptAudit`, `KoreanFieldwork-alluvialSurfaceAttribution`, `KoreanFieldwork-alluvialFormationProcess`로 나누어 배치한다. 지표조사 단계에서는 자연제방, 배후습지, 구하도, 미고지, 구해안선, 근현대 형질변경, 보링·주상도, 시굴 대상 제안을 남기고, 정밀토양도는 토양통·대토양군·지도 축척·반영깊이 한계와 실제 시굴·발굴 결과를 함께 검증한다. 층 세부단위에서는 a+b층 세트, 토양층위와 퇴적층위, 구지표면·생활면·유구축조면·검출면, 암색대, 이질토 블록, 라미나, 홍수퇴적을 분리해 같은 검출면을 같은 시기로 오해하지 않게 한다.
+
 ## 고고학사전 자료
 
 | 자료 | 쪽수 | 텍스트 상태 | 추출 파일 | iDAI.field에서 볼 지점 |

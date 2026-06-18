@@ -307,6 +307,14 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "alluvialLandformSurvey": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "soilMapPredictionVerification": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "verificationState": {
           "inputType": "dropdown",
           "constraintIndexed": true
@@ -320,6 +328,8 @@
         "surfaceSurveyFollowUp": "KoreanFieldwork-surfaceSurveyFollowUp",
         "gisPredictionEvidence": "KoreanFieldwork-gisPredictionEvidence",
         "gisPredictionFieldVerification": "KoreanFieldwork-gisPredictionFieldVerification",
+        "alluvialLandformSurvey": "KoreanFieldwork-alluvialLandformSurvey",
+        "soilMapPredictionVerification": "KoreanFieldwork-soilMapPredictionVerification",
         "verificationState": "KoreanFieldwork-verificationState"
       },
       "groups": [
@@ -335,6 +345,8 @@
             "surfaceSurveyFollowUp",
             "gisPredictionEvidence",
             "gisPredictionFieldVerification",
+            "alluvialLandformSurvey",
+            "soilMapPredictionVerification",
             "fieldRecordQuality",
             "recordCreationTiming",
             "verificationState"
@@ -748,6 +760,18 @@
           "mandatory": true,
           "constraintIndexed": true
         },
+        "alluvialLayerConceptAudit": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "alluvialSurfaceAttribution": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "alluvialFormationProcess": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "recordCreationTiming": {
           "inputType": "dropdown",
           "constraintIndexed": true
@@ -775,6 +799,9 @@
         "chronologyArgument": "KoreanFieldwork-chronologyArgument",
         "fieldOnlyMissingCheck": "KoreanFieldwork-fieldOnlyMissingCheck",
         "firstExposureRecord": "KoreanFieldwork-firstExposureRecord",
+        "alluvialLayerConceptAudit": "KoreanFieldwork-alluvialLayerConceptAudit",
+        "alluvialSurfaceAttribution": "KoreanFieldwork-alluvialSurfaceAttribution",
+        "alluvialFormationProcess": "KoreanFieldwork-alluvialFormationProcess",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "termRelation": "KoreanFieldwork-termRelation",
         "termSearchMapping": "KoreanFieldwork-termSearchMapping",
@@ -806,6 +833,9 @@
             "chronologyArgument",
             "fieldOnlyMissingCheck",
             "firstExposureRecord",
+            "alluvialLayerConceptAudit",
+            "alluvialSurfaceAttribution",
+            "alluvialFormationProcess",
             "recordCreationTiming",
             "verificationState",
             "termRelation",

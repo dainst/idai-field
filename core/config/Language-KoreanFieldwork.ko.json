@@ -124,6 +124,12 @@
         "gisPredictionFieldVerification": {
           "label": "예측 현장검증"
         },
+        "alluvialLandformSurvey": {
+          "label": "충적지 고지형 조사"
+        },
+        "soilMapPredictionVerification": {
+          "label": "토양도 예측 검증"
+        },
         "verificationState": {
           "label": "검증상태"
         }
@@ -264,6 +270,15 @@
         },
         "firstExposureRecord": {
           "label": "최초 노출 기록"
+        },
+        "alluvialLayerConceptAudit": {
+          "label": "충적지 층 개념 검토"
+        },
+        "alluvialSurfaceAttribution": {
+          "label": "충적지 면·층위 판정"
+        },
+        "alluvialFormationProcess": {
+          "label": "충적지 형성과정 근거"
         },
         "recordCreationTiming": {
           "label": "기록 생성 시점"

@@ -8,20 +8,14 @@ import Style from "ol/style/Style.js";
 import { Fill, Stroke } from "ol/style.js";
 import Draw from "ol/interaction/Draw.js";
 
-import { styleFunction } from "./map/styles";
+import {
+    styleFunction,
+    setFillForLayer,
+    clearAllHighlights,
+    highlightFeature,
+} from "./map/features";
 import PublicationTileLayers from "./map/tile-layers";
 import PreviewOverlay from "./map/preview-overlay.js";
-
-function setFillForLayer(layer, value) {
-    if (!layer) return;
-
-    let features = layer.getSource().getFeatures();
-    for (let feature of features) {
-        let properties = feature.getProperties();
-        properties.fill = value;
-        feature.setProperties(properties);
-    }
-}
 
 export default getDocumentViewMapHook = () => {
     return {
@@ -96,7 +90,12 @@ export default getDocumentViewMapHook = () => {
             this.handleEvent(
                 `map-highlight-feature-${this.el.id}`,
                 ({ feature_id }) => {
-                    this.clearAllHighlights();
+                    clearAllHighlights([
+                        this.ancestorLayer,
+                        this.parentLayer,
+                        this.docLayer,
+                        this.childrenLayer,
+                    ]);
                     const vectorLayerFeatures = this.map
                         .getAllLayers()
                         .filter((layer) => layer instanceof VectorLayer)
@@ -107,7 +106,7 @@ export default getDocumentViewMapHook = () => {
                         return f.getProperties().uuid == feature_id;
                     });
 
-                    if (feature) this.highlightFeature(feature);
+                    if (feature) highlightFeature(feature);
                 },
             );
 
@@ -120,7 +119,12 @@ export default getDocumentViewMapHook = () => {
             });
 
             this.handleEvent(`map-clear-highlights-${this.el.id}`, () => {
-                this.clearAllHighlights();
+                clearAllHighlights([
+                    this.ancestorLayer,
+                    this.parentLayer,
+                    this.docLayer,
+                    this.childrenLayer,
+                ]);
 
                 setFillForLayer(this.docLayer, true);
             });
@@ -278,7 +282,7 @@ export default getDocumentViewMapHook = () => {
                 _this.hoveredFeatures = hitFeatures;
 
                 for (feature of _this.hoveredFeatures) {
-                    _this.highlightFeature(feature, e.coordinate);
+                    highlightFeature(feature);
                 }
 
                 if (e.coordinate) {
@@ -452,26 +456,14 @@ export default getDocumentViewMapHook = () => {
                     .getView()
                     .fit(aggregatedExtent, { padding: [10, 10, 10, 10] });
             }
-            this.clearAllHighlights();
-            setFillForLayer(this.docLayer, true);
-        },
-        highlightFeature(feature) {
-            let properties = feature.getProperties();
 
-            properties.fill = true;
-            feature.setProperties(properties);
-        },
-        clearAllHighlights() {
-            [
+            clearAllHighlights([
                 this.ancestorLayer,
                 this.parentLayer,
                 this.docLayer,
                 this.childrenLayer,
-            ].map((layer) => {
-                setFillForLayer(layer, false);
-            });
-
-            this.overlay.hide();
+            ]);
+            setFillForLayer(this.docLayer, true);
         },
     };
 };

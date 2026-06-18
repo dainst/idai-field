@@ -8,7 +8,12 @@ import Draw from "ol/interaction/Draw.js";
 import { Fill, Stroke } from "ol/style.js";
 import Style from "ol/style/Style.js";
 
-import { styleFunction } from "./map/styles";
+import {
+    findFeature,
+    highlightFeature,
+    clearAllHighlights,
+    styleFunction,
+} from "./map/features";
 import PublicationTileLayers from "./map/tile-layers";
 import PreviewOverlay from "./map/preview-overlay";
 
@@ -90,7 +95,7 @@ export default getFullProjectMapHook = () => {
 
             this.handleEvent(`map-clear-highlights-${this.el.id}`, () => {
                 if (this.map) {
-                    this.clearHighlights();
+                    clearAllHighlights(this.featureLayers);
                     this.refitView();
 
                     this.lastHighlightChange = Date.now();
@@ -298,13 +303,11 @@ export default getFullProjectMapHook = () => {
         },
 
         highlightCategories(categories) {
-            const _this = this;
-
+            clearAllHighlights(this.featureLayers);
             const categoryNames = categories
                 .replace("categories-", "")
                 .split(",");
 
-            this.clearHighlights();
             const vectorLayerFeatures = this.map
                 .getAllLayers()
                 .filter((layer) => layer instanceof VectorLayer)
@@ -318,7 +321,7 @@ export default getFullProjectMapHook = () => {
                     );
                 })
                 .map(function (f) {
-                    _this.highlightFeature(f);
+                    highlightFeature(f);
                 });
         },
 
@@ -327,8 +330,8 @@ export default getFullProjectMapHook = () => {
                 this.map &&
                 Date.now() - this.lastHighlightChange > highlightZoomDuration
             ) {
-                this.clearHighlights();
-                feature = this.findFeature(uuid);
+                clearAllHighlights(this.featureLayers);
+                feature = findFeature(uuid, this.map);
                 parentId = feature.getProperties().parent;
 
                 if (this.drawnExtent) {
@@ -336,7 +339,7 @@ export default getFullProjectMapHook = () => {
                         .getView()
                         .fit(this.drawnExtent, { padding: [10, 10, 10, 10] });
                 } else if (parentId) {
-                    parent = this.findFeature(parentId);
+                    parent = findFeature(parentId, this.map);
                     if (parent) {
                         this.map
                             .getView()
@@ -363,42 +366,9 @@ export default getFullProjectMapHook = () => {
                     });
                 }
 
-                this.highlightFeature(feature);
+                highlightFeature(feature);
                 this.lastHighlightChange = Date.now();
             }
-        },
-
-        clearHighlights() {
-            for (const index in this.featureLayers) {
-                let features = this.featureLayers[index]
-                    .getSource()
-                    .getFeatures();
-
-                for (let feature of features) {
-                    let properties = feature.getProperties();
-                    properties.fill = false;
-                    feature.setProperties(properties);
-                }
-            }
-        },
-
-        highlightFeature(feature) {
-            let properties = feature.getProperties();
-            properties.fill = true;
-
-            feature.setProperties(properties);
-        },
-
-        findFeature(uuid) {
-            const vectorLayerFeatures = this.map
-                .getAllLayers()
-                .filter((layer) => layer instanceof VectorLayer)
-                .map((layer) => layer.getSource().getFeatures())
-                .flat();
-
-            return vectorLayerFeatures.find(function (f) {
-                return f.getProperties().uuid == uuid;
-            });
         },
 
         refitView() {
@@ -459,7 +429,7 @@ export default getFullProjectMapHook = () => {
             );
 
             this.refitView();
-            this.clearHighlights();
+            clearAllHighlights(this.featureLayers);
         },
     };
 };

@@ -1,9 +1,27 @@
 import { Fill, Stroke, Style, Circle } from "ol/style.js";
 import { asArray } from "ol/color";
 import Feature from "ol/Feature";
+import VectorLayer from "ol/layer/Vector";
+import VectorSource from "ol/source/Vector";
+import { Geometry } from "ol/geom";
+import Map from "ol/Map";
 
 const pointRadius = 5;
 const lineWidth = pointRadius * 2;
+
+export const findFeature = function (uuid: string, map: Map) {
+    const vectorLayerFeatures = map
+        .getAllLayers()
+        .filter((layer) => layer instanceof VectorLayer)
+        .map((layer: VectorLayer<VectorSource<Feature<Geometry>>>) =>
+            layer.getSource().getFeatures(),
+        )
+        .flat();
+
+    return vectorLayerFeatures.find(function (f) {
+        return f.getProperties().uuid == uuid;
+    });
+};
 
 export const styleFunction = function (feature: Feature) {
     const props = feature.getProperties();
@@ -17,6 +35,35 @@ export const styleFunction = function (feature: Feature) {
         console.error(`Unknown feature type ${props.type}, no matching style.`);
         return null;
     }
+};
+
+export const clearAllHighlights = function (
+    layers: VectorLayer<VectorSource<Feature<Geometry>>>[],
+) {
+    for (let layer of layers) {
+        setFillForLayer(layer, false);
+    }
+};
+
+export const setFillForLayer = function (
+    layer: VectorLayer<VectorSource<Feature<Geometry>>>,
+    value: boolean,
+) {
+    if (!layer) return;
+
+    let features = layer.getSource().getFeatures();
+    for (let feature of features) {
+        let properties = feature.getProperties();
+        properties.fill = value;
+        feature.setProperties(properties);
+    }
+};
+
+export const highlightFeature = function (feature: Feature) {
+    let properties = feature.getProperties();
+
+    properties.fill = true;
+    feature.setProperties(properties);
 };
 
 function getPolygonStyle(properties: { [key: string]: any }) {

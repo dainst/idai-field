@@ -165,6 +165,147 @@
     },
     "description": "시료명을 분석명으로 끝내지 않고 분석 질문과 채취 목적을 연결하기 위한 한국형 야장 목록"
   },
+  "KoreanFieldwork-fortificationGateFacility": {
+    "values": {
+      "entranceGate": {
+        "label": "출입문"
+      },
+      "yukchuk": {
+        "label": "육축"
+      },
+      "archOpening": {
+        "label": "홍예·개구부"
+      },
+      "gateTower": {
+        "label": "문루·누각"
+      },
+      "ongseong": {
+        "label": "옹성"
+      },
+      "jeokdae": {
+        "label": "적대"
+      },
+      "parapet": {
+        "label": "여장"
+      },
+      "oseongji": {
+        "label": "오성지(五星池)"
+      },
+      "nujo": {
+        "label": "누조"
+      },
+      "nuhyeol": {
+        "label": "누혈"
+      },
+      "janggungmok": {
+        "label": "장군목"
+      },
+      "janggungseok": {
+        "label": "장군석"
+      },
+      "janggeumDevice": {
+        "label": "장금장치"
+      },
+      "fireAttackDefense": {
+        "label": "화공 대응"
+      },
+      "hiddenGate": {
+        "label": "암문"
+      }
+    },
+    "description": "2007년 성곽 용어사전 원문 대조와 성곽·봉수편 독해에서 추린 성문·방어 부속시설 목록"
+  },
+  "KoreanFieldwork-fortificationWaterFacility": {
+    "values": {
+      "waterGate": {
+        "label": "수문"
+      },
+      "drainageOpening": {
+        "label": "수구"
+      },
+      "hiddenDrainage": {
+        "label": "은밀 수구"
+      },
+      "namEungu": {
+        "label": "남은구"
+      },
+      "bukEungu": {
+        "label": "북은구"
+      },
+      "archCount": {
+        "label": "홍예 수"
+      },
+      "archBridge": {
+        "label": "홍예석교"
+      },
+      "streamConnection": {
+        "label": "하천 연결"
+      },
+      "pavilionPresent": {
+        "label": "누각 있음"
+      },
+      "dragonHeadChannel": {
+        "label": "용두 수로"
+      },
+      "upstreamDownstreamRelation": {
+        "label": "상·하류 관계"
+      },
+      "collapseRepairHistory": {
+        "label": "붕괴·복구 이력"
+      }
+    },
+    "description": "성곽 수문과 수구를 규모, 형식, 하천 관계, 보수 이력으로 나누어 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-japaneseFortificationDitch": {
+    "values": {
+      "waterDitch": {
+        "label": "수해자"
+      },
+      "dryDitch": {
+        "label": "건호"
+      },
+      "karabori": {
+        "label": "가라보리"
+      },
+      "tatebori": {
+        "label": "수굴·다테보리"
+      },
+      "cutOffDitch": {
+        "label": "차단해자"
+      },
+      "vSection": {
+        "label": "V자 단면"
+      },
+      "uSection": {
+        "label": "U자 단면"
+      },
+      "multipleDitch": {
+        "label": "다중 해자"
+      },
+      "furrowLikeTatebori": {
+        "label": "밭이랑형 수굴"
+      },
+      "ridgeCut": {
+        "label": "능선 절단"
+      },
+      "horizontalMovementRestriction": {
+        "label": "수평 이동 제한"
+      },
+      "friendlyMovementRoute": {
+        "label": "아군 이동 통로"
+      },
+      "transportRoute": {
+        "label": "물자 수송로"
+      },
+      "drinkingWaterTransport": {
+        "label": "음료수 운반"
+      },
+      "interFortressLink": {
+        "label": "인접 성 연락로"
+      }
+    },
+    "description": "왜성 해자를 조선 읍성 해자와 섞지 않고 물 유무, 방향, 단면, 기능으로 나누기 위한 목록"
+  },
   "KoreanFieldwork-reportCrossCheck": {
     "values": {
       "manuscript": {

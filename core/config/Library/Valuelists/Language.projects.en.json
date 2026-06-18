@@ -11919,6 +11919,147 @@
     },
     "description": "Korean field notebook sample purposes for linking collection to analytical questions"
   },
+  "KoreanFieldwork-fortificationGateFacility": {
+    "values": {
+      "entranceGate": {
+        "label": "Entrance gate"
+      },
+      "yukchuk": {
+        "label": "Gate platform"
+      },
+      "archOpening": {
+        "label": "Arched opening"
+      },
+      "gateTower": {
+        "label": "Gate tower"
+      },
+      "ongseong": {
+        "label": "Ongseong outer gatework"
+      },
+      "jeokdae": {
+        "label": "Flanking platform"
+      },
+      "parapet": {
+        "label": "Parapet"
+      },
+      "oseongji": {
+        "label": "Oseongji fire-defense reservoir"
+      },
+      "nujo": {
+        "label": "Nujo water channel"
+      },
+      "nuhyeol": {
+        "label": "Nuhyeol drain hole"
+      },
+      "janggungmok": {
+        "label": "Janggungmok locking beam"
+      },
+      "janggungseok": {
+        "label": "Janggungseok beam socket stone"
+      },
+      "janggeumDevice": {
+        "label": "Locking device"
+      },
+      "fireAttackDefense": {
+        "label": "Fire-attack defense"
+      },
+      "hiddenGate": {
+        "label": "Hidden gate"
+      }
+    },
+    "description": "Gate and defensive component list derived from the 2007 castle terminology source check and fortress dictionary reading"
+  },
+  "KoreanFieldwork-fortificationWaterFacility": {
+    "values": {
+      "waterGate": {
+        "label": "Water gate"
+      },
+      "drainageOpening": {
+        "label": "Drainage opening"
+      },
+      "hiddenDrainage": {
+        "label": "Hidden drainage opening"
+      },
+      "namEungu": {
+        "label": "Nam-eungu hidden drain"
+      },
+      "bukEungu": {
+        "label": "Buk-eungu hidden drain"
+      },
+      "archCount": {
+        "label": "Number of arches"
+      },
+      "archBridge": {
+        "label": "Arched stone bridge"
+      },
+      "streamConnection": {
+        "label": "Stream connection"
+      },
+      "pavilionPresent": {
+        "label": "Pavilion present"
+      },
+      "dragonHeadChannel": {
+        "label": "Dragon-head channel"
+      },
+      "upstreamDownstreamRelation": {
+        "label": "Upstream/downstream relation"
+      },
+      "collapseRepairHistory": {
+        "label": "Collapse or repair history"
+      }
+    },
+    "description": "Water gate and drain list for recording scale, form, stream relation, and repair history"
+  },
+  "KoreanFieldwork-japaneseFortificationDitch": {
+    "values": {
+      "waterDitch": {
+        "label": "Water-filled ditch"
+      },
+      "dryDitch": {
+        "label": "Dry ditch"
+      },
+      "karabori": {
+        "label": "Karabori"
+      },
+      "tatebori": {
+        "label": "Tatebori vertical ditch"
+      },
+      "cutOffDitch": {
+        "label": "Cut-off ditch"
+      },
+      "vSection": {
+        "label": "V-shaped section"
+      },
+      "uSection": {
+        "label": "U-shaped section"
+      },
+      "multipleDitch": {
+        "label": "Multiple ditch"
+      },
+      "furrowLikeTatebori": {
+        "label": "Furrow-like tatebori"
+      },
+      "ridgeCut": {
+        "label": "Ridge cut"
+      },
+      "horizontalMovementRestriction": {
+        "label": "Restricts horizontal movement"
+      },
+      "friendlyMovementRoute": {
+        "label": "Friendly movement route"
+      },
+      "transportRoute": {
+        "label": "Transport route"
+      },
+      "drinkingWaterTransport": {
+        "label": "Drinking-water transport"
+      },
+      "interFortressLink": {
+        "label": "Link to nearby fortress"
+      }
+    },
+    "description": "Japanese-style fortress ditch list separating water state, orientation, section, and function from Joseon town-wall ditch terms"
+  },
   "KoreanFieldwork-reportCrossCheck": {
     "values": {
       "manuscript": {

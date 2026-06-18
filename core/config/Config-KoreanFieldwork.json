@@ -94,6 +94,18 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "fortificationGateFacility": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "fortificationWaterFacility": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "japaneseFortificationDitch": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "recordCreationTiming": {
           "inputType": "dropdown",
           "constraintIndexed": true
@@ -109,6 +121,9 @@
       },
       "valuelists": {
         "featurePackage": "KoreanFieldwork-featurePackage",
+        "fortificationGateFacility": "KoreanFieldwork-fortificationGateFacility",
+        "fortificationWaterFacility": "KoreanFieldwork-fortificationWaterFacility",
+        "japaneseFortificationDitch": "KoreanFieldwork-japaneseFortificationDitch",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "termRelation": "KoreanFieldwork-termRelation",
         "verificationState": "KoreanFieldwork-verificationState"
@@ -132,7 +147,15 @@
         },
         {
           "name": "koreanFieldwork",
-          "fields": ["featurePackage", "recordCreationTiming", "verificationState", "termRelation"]
+          "fields": [
+            "featurePackage",
+            "fortificationGateFacility",
+            "fortificationWaterFacility",
+            "japaneseFortificationDitch",
+            "recordCreationTiming",
+            "verificationState",
+            "termRelation"
+          ]
         },
         {
           "name": "position",

@@ -130,6 +130,54 @@
         }
       ]
     },
+    "DailyLog": {
+      "parent": "Operation",
+      "color": "#6f8758",
+      "hidden": [],
+      "fields": {
+        "dailyLogEvidenceRole": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "dailyLogContent": "KoreanFieldwork-dailyLogContent",
+        "dailyLogEvidenceRole": "KoreanFieldwork-dailyLogEvidenceRole",
+        "dailyLogReview": "KoreanFieldwork-dailyLogReview",
+        "digitalSourcePreservation": "KoreanFieldwork-digitalSourcePreservation",
+        "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
+        "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
+        "reportCrossCheck": "KoreanFieldwork-reportCrossCheck",
+        "verificationState": "KoreanFieldwork-verificationState"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "supervisor", "processor", "campaign", "date"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "diaryAbstract"]
+        },
+        {
+          "name": "koreanFieldwork",
+          "fields": [
+            "recordCreationTiming",
+            "dailyLogContent",
+            "dailyLogEvidenceRole",
+            "dailyLogReview",
+            "fieldRecordQuality",
+            "reportCrossCheck",
+            "digitalSourcePreservation",
+            "verificationState"
+          ]
+        }
+      ]
+    },
     "Operation:default": {
       "hidden": [],
       "fields": {

@@ -31244,6 +31244,40 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-dailyLogEvidenceRole": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "sameDayFactRecord": {},
+      "cumulativeStaffCount": {},
+      "cumulativeWorkerCount": {},
+      "cumulativeEquipmentCount": {},
+      "weatherAndRainWork": {},
+      "importantFindNoted": {},
+      "visitorInstructionNoted": {},
+      "committeeMeetingNoted": {},
+      "expertReviewMeetingNoted": {},
+      "clientAgencyCommunication": {},
+      "disputeEvidencePotential": {},
+      "nextPlanBasis": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "sameDayFactRecord",
+      "cumulativeStaffCount",
+      "cumulativeWorkerCount",
+      "cumulativeEquipmentCount",
+      "weatherAndRainWork",
+      "importantFindNoted",
+      "visitorInstructionNoted",
+      "committeeMeetingNoted",
+      "expertReviewMeetingNoted",
+      "clientAgencyCommunication",
+      "disputeEvidencePotential",
+      "nextPlanBasis",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-dailyLogReview": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

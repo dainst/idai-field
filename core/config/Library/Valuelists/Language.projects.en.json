@@ -12010,6 +12010,50 @@
     },
     "description": "Korean daily fieldwork log content for work progress, weather, staff, equipment, finds, visitors, and change reasons that must remain traceable to reports"
   },
+  "KoreanFieldwork-dailyLogEvidenceRole": {
+    "values": {
+      "sameDayFactRecord": {
+        "label": "Same-day fact record"
+      },
+      "cumulativeStaffCount": {
+        "label": "Cumulative investigator count"
+      },
+      "cumulativeWorkerCount": {
+        "label": "Cumulative worker count"
+      },
+      "cumulativeEquipmentCount": {
+        "label": "Cumulative equipment count"
+      },
+      "weatherAndRainWork": {
+        "label": "Weather and rain work"
+      },
+      "importantFindNoted": {
+        "label": "Important find noted"
+      },
+      "visitorInstructionNoted": {
+        "label": "Visitor or instruction noted"
+      },
+      "committeeMeetingNoted": {
+        "label": "Academic committee noted"
+      },
+      "expertReviewMeetingNoted": {
+        "label": "Expert review meeting noted"
+      },
+      "clientAgencyCommunication": {
+        "label": "Client or agency communication"
+      },
+      "disputeEvidencePotential": {
+        "label": "Dispute evidence potential"
+      },
+      "nextPlanBasis": {
+        "label": "Next plan basis"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean daily log evidence roles for marking same-day fact records, cumulative staffing and equipment counts, weather, meetings, and dispute-relevant documentation"
+  },
   "KoreanFieldwork-dailyLogReview": {
     "values": {
       "sameDayWritten": {

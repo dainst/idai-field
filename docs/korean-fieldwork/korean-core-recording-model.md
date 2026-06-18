@@ -28,7 +28,8 @@
 | 시료 | 자연과학 분석과 연결되는 채취 단위 | `Sample` 하위범주 신설 검토 |
 | 사진 | 촬영 대상, 방향, 촬영자, 파일을 연결한다 | `Image` 확장 |
 | 도면 | 실측도, 평면도, 단면도, 유구도 등을 연결한다 | `Drawing` 또는 `Document` 범주 신설 |
-| 작업기록 | 조사일지와 당일 작업 맥락 | `Workflow`/`Operation` 확장 |
+| 작업기록 | 조사일지와 당일 작업 맥락 | `Workflow`/`Operation` 확장, `DailyLog` |
+| 작업일지 증거역할 | 당일 사실기록, 누적 조사원·인부·장비 수, 날씨·우천작업, 회의·방문·소통, 분쟁 증거 가능성을 분리한다 | `DailyLog`의 `dailyLogEvidenceRole` |
 | 현장기록 품질검수 | 개인 야장, 일지, 사진, 도면, 유물·시료 기록의 즉시성·정합성·수정근거를 검토한다 | `FieldRecordQualityReview` |
 | 수습/보존조치 | 현장수습, 응급처치, 반출, 보존 필요성을 기록한다 | `ConservationAction` 범주 신설 |
 | 분석결과 | 자연과학 분석 의뢰와 결과를 추적한다 | `Analysis` 범주 신설 |
@@ -1175,7 +1176,7 @@
 
 ## iDAI.field 적용 우선순위
 
-1. `Sample`, `Drawing`, `Analysis`, `ConservationAction`, `DailyLog` 범주의 필요성을 검토한다.
+1. `DailyLog`는 1차 범주로 두고, `Sample`, `Drawing`, `Analysis`, `ConservationAction` 범주의 필요성을 이어서 검토한다.
 2. 기존 `Feature`, `Find`, `Image`, `Operation` 범주에 한국형 필드 확장을 붙인다.
 3. 값 목록을 한국어 현장 용어 중심으로 재구성한다.
 4. 샘플 프로젝트에서 “유구 1건이 보고서 표와 사진대장으로 이어지는 흐름”을 검증한다.

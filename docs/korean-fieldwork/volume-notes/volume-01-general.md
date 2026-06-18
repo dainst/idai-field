@@ -239,7 +239,7 @@
 
 - `Investigation`: 조사사업, 허가, 사업 맥락
 - `Operation`: 조사구역, 트렌치, 작업 단위
-- `DailyLog`: 일일 작업기록과 운영 판단
+- `DailyLog`: 일일 작업기록, 검토 상태, 증거 역할
 - `StratigraphicUnit`: 층위와 층서 관계
 - `Feature`: 유구와 특화 템플릿
 - `Find`: 유물과 수습 맥락

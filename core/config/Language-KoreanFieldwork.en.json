@@ -17,6 +17,14 @@
         }
       }
     },
+    "DailyLog": {
+      "label": "Daily log",
+      "fields": {
+        "dailyLogEvidenceRole": {
+          "label": "Daily log evidence role"
+        }
+      }
+    },
     "Project": {
       "fields": {
         "digitalSourcePreservation": {

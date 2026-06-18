@@ -17,6 +17,14 @@
         }
       }
     },
+    "DailyLog": {
+      "label": "작업일지",
+      "fields": {
+        "dailyLogEvidenceRole": {
+          "label": "일지 증거 역할"
+        }
+      }
+    },
     "Project": {
       "fields": {
         "digitalSourcePreservation": {

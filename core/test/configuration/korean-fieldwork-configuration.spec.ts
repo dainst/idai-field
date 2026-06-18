@@ -107,6 +107,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.fields.lacquerConservationRisk.inputType).toBe('checkboxes');
         expect(findForm.fields.metalAnalysisRequest.inputType).toBe('checkboxes');
         expect(findForm.fields.ceramicConservationState.inputType).toBe('checkboxes');
+        expect(findForm.fields.paperTextileEmergencyRecovery.inputType).toBe('checkboxes');
+        expect(findForm.fields.conservationTreatmentPrincipleReview.inputType).toBe('checkboxes');
         expect(findForm.fields.ironResidueSubtype.inputType).toBe('checkboxes');
         expect(findForm.fields.graveGoodsRitualContext.inputType).toBe('checkboxes');
         expect(findForm.fields.neolithicSubsistenceEvidence.inputType).toBe('checkboxes');
@@ -300,6 +302,10 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.valuelists.metalAnalysisRequest).toBe('KoreanFieldwork-metalAnalysisRequest');
         expect(findForm.valuelists.ceramicConservationState)
             .toBe('KoreanFieldwork-ceramicConservationState');
+        expect(findForm.valuelists.paperTextileEmergencyRecovery)
+            .toBe('KoreanFieldwork-paperTextileEmergencyRecovery');
+        expect(findForm.valuelists.conservationTreatmentPrincipleReview)
+            .toBe('KoreanFieldwork-conservationTreatmentPrincipleReview');
         expect(findForm.valuelists.ironResidueSubtype).toBe('KoreanFieldwork-ironResidueSubtype');
         expect(findForm.valuelists.graveGoodsRitualContext).toBe('KoreanFieldwork-graveGoodsRitualContext');
         expect(findForm.valuelists.neolithicSubsistenceEvidence)
@@ -506,6 +512,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Metal analysis request');
         expect(languages.en.categories.Find.fields.ceramicConservationState.label)
             .toBe('Ceramic conservation state');
+        expect(languages.en.categories.Find.fields.paperTextileEmergencyRecovery.label)
+            .toBe('Paper/textile emergency recovery');
+        expect(languages.en.categories.Find.fields.conservationTreatmentPrincipleReview.label)
+            .toBe('Conservation treatment principle review');
         expect(languages.en.categories.Find.fields.ironResidueSubtype.label).toBe('Iron residue subtype');
         expect(languages.en.categories.Find.fields.graveGoodsRitualContext.label)
             .toBe('Grave goods and ritual context');
@@ -649,6 +659,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-ceramicConservationState']
             .values.wetCleaningCaution.label)
             .toBe('Wet cleaning caution');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-paperTextileEmergencyRecovery']
+            .values.forcedDryingAvoided.label)
+            .toBe('Forced drying avoided');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-conservationTreatmentPrincipleReview']
+            .values.evidenceDamageAvoided.label)
+            .toBe('Evidence damage avoided');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-firstExposureRecord'].values.shoulderLineRecorded.label)
             .toBe('Shoulder line recorded');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-pitDwellingExposureBaulk']

@@ -401,6 +401,12 @@
         "ceramicConservationState": {
           "label": "Ceramic conservation state"
         },
+        "paperTextileEmergencyRecovery": {
+          "label": "Paper/textile emergency recovery"
+        },
+        "conservationTreatmentPrincipleReview": {
+          "label": "Conservation treatment principle review"
+        },
         "ironResidueSubtype": {
           "label": "Iron residue subtype"
         },

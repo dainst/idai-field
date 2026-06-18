@@ -401,6 +401,12 @@
         "ceramicConservationState": {
           "label": "토도류 보존상태"
         },
+        "paperTextileEmergencyRecovery": {
+          "label": "지류·직물 응급수습"
+        },
+        "conservationTreatmentPrincipleReview": {
+          "label": "보존처리 원칙 검토"
+        },
         "ironResidueSubtype": {
           "label": "제철 부산물 세분"
         },

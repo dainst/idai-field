@@ -12120,6 +12120,46 @@
     },
     "description": "Korean ceramic conservation-state checks for separating clay body, glaze, salts, mold, hydration, marine adhesion, old restoration, cleaning, and drying"
   },
+  "KoreanFieldwork-paperTextileEmergencyRecovery": {
+    "values": {
+      "originalEnvironmentMaintained": { "label": "Original environment maintained" },
+      "airExposureMinimized": { "label": "Air exposure minimized" },
+      "lightExposureMinimized": { "label": "Light exposure minimized" },
+      "coolStorage": { "label": "Cool storage" },
+      "humidity60_70": { "label": "Humidity 60-70%" },
+      "acclimationPeriod": { "label": "Acclimation period" },
+      "forcedDryingAvoided": { "label": "Forced drying avoided" },
+      "brushingAvoided": { "label": "Brushing avoided" },
+      "massConditionRecorded": { "label": "Mass condition recorded" },
+      "materialSeparated": { "label": "Material separated" },
+      "locationSorted": { "label": "Location sorted" },
+      "limeAlkaliContamination": { "label": "Lime/alkali contamination" },
+      "humidityMonitoring": { "label": "Humidity monitoring" },
+      "pollutantMonitoring": { "label": "Pollutant monitoring" },
+      "glovesAndMask": { "label": "Gloves and mask" },
+      "handWashing": { "label": "Hand washing" },
+      "neutralStorageBox": { "label": "Neutral storage box" },
+      "paulowniaBox": { "label": "Paulownia box" },
+      "pencilRecord": { "label": "Pencil record" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean paper/textile emergency recovery checks for keeping find conditions, exposure, humidity, contamination, packing, and recording controlled"
+  },
+  "KoreanFieldwork-conservationTreatmentPrincipleReview": {
+    "values": {
+      "originalFormPreserved": { "label": "Original form preserved" },
+      "valueMaintained": { "label": "Value maintained" },
+      "exteriorDamageAvoided": { "label": "Exterior damage avoided" },
+      "structuralDamageAvoided": { "label": "Structural damage avoided" },
+      "materialDamageAvoided": { "label": "Material damage avoided" },
+      "evidenceDamageAvoided": { "label": "Evidence damage avoided" },
+      "reversibleMaterial": { "label": "Reversible material" },
+      "retreatmentPossible": { "label": "Retreatment possible" },
+      "storageEnvironmentResponse": { "label": "Storage environment response" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean conservation-treatment principle checks for original form, value, exterior, structure, material, evidence, reversibility, retreatment, and storage fit"
+  },
   "KoreanFieldwork-humanDnaFieldControl": {
     "values": {
       "contactPersonRecorded": { "label": "Contact person recorded" },

@@ -31418,6 +31418,82 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-paperTextileEmergencyRecovery": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "originalEnvironmentMaintained": {},
+      "airExposureMinimized": {},
+      "lightExposureMinimized": {},
+      "coolStorage": {},
+      "humidity60_70": {},
+      "acclimationPeriod": {},
+      "forcedDryingAvoided": {},
+      "brushingAvoided": {},
+      "massConditionRecorded": {},
+      "materialSeparated": {},
+      "locationSorted": {},
+      "limeAlkaliContamination": {},
+      "humidityMonitoring": {},
+      "pollutantMonitoring": {},
+      "glovesAndMask": {},
+      "handWashing": {},
+      "neutralStorageBox": {},
+      "paulowniaBox": {},
+      "pencilRecord": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "originalEnvironmentMaintained",
+      "airExposureMinimized",
+      "lightExposureMinimized",
+      "coolStorage",
+      "humidity60_70",
+      "acclimationPeriod",
+      "forcedDryingAvoided",
+      "brushingAvoided",
+      "massConditionRecorded",
+      "materialSeparated",
+      "locationSorted",
+      "limeAlkaliContamination",
+      "humidityMonitoring",
+      "pollutantMonitoring",
+      "glovesAndMask",
+      "handWashing",
+      "neutralStorageBox",
+      "paulowniaBox",
+      "pencilRecord",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-conservationTreatmentPrincipleReview": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "originalFormPreserved": {},
+      "valueMaintained": {},
+      "exteriorDamageAvoided": {},
+      "structuralDamageAvoided": {},
+      "materialDamageAvoided": {},
+      "evidenceDamageAvoided": {},
+      "reversibleMaterial": {},
+      "retreatmentPossible": {},
+      "storageEnvironmentResponse": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "originalFormPreserved",
+      "valueMaintained",
+      "exteriorDamageAvoided",
+      "structuralDamageAvoided",
+      "materialDamageAvoided",
+      "evidenceDamageAvoided",
+      "reversibleMaterial",
+      "retreatmentPossible",
+      "storageEnvironmentResponse",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-humanDnaFieldControl": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

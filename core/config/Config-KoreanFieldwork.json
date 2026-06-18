@@ -1035,6 +1035,14 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "paperTextileEmergencyRecovery": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "conservationTreatmentPrincipleReview": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "ironResidueSubtype": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1106,6 +1114,8 @@
         "lacquerConservationRisk": "KoreanFieldwork-lacquerConservationRisk",
         "metalAnalysisRequest": "KoreanFieldwork-metalAnalysisRequest",
         "ceramicConservationState": "KoreanFieldwork-ceramicConservationState",
+        "paperTextileEmergencyRecovery": "KoreanFieldwork-paperTextileEmergencyRecovery",
+        "conservationTreatmentPrincipleReview": "KoreanFieldwork-conservationTreatmentPrincipleReview",
         "ironResidueSubtype": "KoreanFieldwork-ironResidueSubtype",
         "graveGoodsRitualContext": "KoreanFieldwork-graveGoodsRitualContext",
         "neolithicSubsistenceEvidence": "KoreanFieldwork-neolithicSubsistenceEvidence",
@@ -1154,6 +1164,8 @@
             "lacquerConservationRisk",
             "metalAnalysisRequest",
             "ceramicConservationState",
+            "paperTextileEmergencyRecovery",
+            "conservationTreatmentPrincipleReview",
             "ironResidueSubtype",
             "graveGoodsRitualContext",
             "neolithicSubsistenceEvidence",

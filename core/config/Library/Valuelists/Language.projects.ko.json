@@ -366,6 +366,46 @@
     },
     "description": "토기·도자기의 태토, 유약, 염결정, 곰팡이, 수화, 해양 고착물, 과거 복원재, 세척과 건조 방식을 분리해 관리하기 위한 목록"
   },
+  "KoreanFieldwork-paperTextileEmergencyRecovery": {
+    "values": {
+      "originalEnvironmentMaintained": { "label": "발견환경 유지" },
+      "airExposureMinimized": { "label": "공기노출 최소화" },
+      "lightExposureMinimized": { "label": "빛노출 최소화" },
+      "coolStorage": { "label": "저온 보관" },
+      "humidity60_70": { "label": "습도 60-70%" },
+      "acclimationPeriod": { "label": "적응기간" },
+      "forcedDryingAvoided": { "label": "무리한 건조 금지" },
+      "brushingAvoided": { "label": "붓질 금지" },
+      "massConditionRecorded": { "label": "덩어리 상태 기록" },
+      "materialSeparated": { "label": "재질별 분리" },
+      "locationSorted": { "label": "위치별 정리" },
+      "limeAlkaliContamination": { "label": "석회·알칼리 오염" },
+      "humidityMonitoring": { "label": "온습도 모니터링" },
+      "pollutantMonitoring": { "label": "오염물질 모니터링" },
+      "glovesAndMask": { "label": "장갑·마스크" },
+      "handWashing": { "label": "손 세척" },
+      "neutralStorageBox": { "label": "중성 보관함" },
+      "paulowniaBox": { "label": "오동상자" },
+      "pencilRecord": { "label": "연필 기록" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "지류·직물 유물을 출토 직전 환경과 급격히 다르게 만들지 않도록 공기·빛·온습도·오염·포장·기록 조건을 함께 관리하기 위한 목록"
+  },
+  "KoreanFieldwork-conservationTreatmentPrincipleReview": {
+    "values": {
+      "originalFormPreserved": { "label": "원형 보존" },
+      "valueMaintained": { "label": "가치 유지" },
+      "exteriorDamageAvoided": { "label": "외형 손상 방지" },
+      "structuralDamageAvoided": { "label": "구조 손상 방지" },
+      "materialDamageAvoided": { "label": "재질 손상 방지" },
+      "evidenceDamageAvoided": { "label": "증거 훼손 방지" },
+      "reversibleMaterial": { "label": "가역 재료" },
+      "retreatmentPossible": { "label": "재처리 가능성" },
+      "storageEnvironmentResponse": { "label": "수장환경 대응" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "보존처리 전 원형·가치·외형·구조·재질·증거 훼손 위험과 가역성, 재처리 가능성, 수장환경 대응을 검토하기 위한 목록"
+  },
   "KoreanFieldwork-humanDnaFieldControl": {
     "values": {
       "contactPersonRecorded": { "label": "접촉자 기록" },

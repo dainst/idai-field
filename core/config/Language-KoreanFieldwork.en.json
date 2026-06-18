@@ -111,6 +111,9 @@
         "fieldRecordQuality": {
           "label": "Field record quality"
         },
+        "fieldOnlyMissingCheck": {
+          "label": "Field-only missing check"
+        },
         "firstExposureRecord": {
           "label": "First exposure record"
         },
@@ -151,6 +154,9 @@
         "fieldRecordQuality": {
           "label": "Field record quality"
         },
+        "fieldOnlyMissingCheck": {
+          "label": "Field-only missing check"
+        },
         "firstExposureRecord": {
           "label": "First exposure record"
         },
@@ -173,6 +179,9 @@
         "fieldRecordQuality": {
           "label": "Field record quality"
         },
+        "fieldOnlyMissingCheck": {
+          "label": "Field-only missing check"
+        },
         "recordCreationTiming": {
           "label": "Record creation timing"
         },
@@ -191,6 +200,9 @@
       "fields": {
         "fieldRecordQuality": {
           "label": "Field record quality"
+        },
+        "fieldOnlyMissingCheck": {
+          "label": "Field-only missing check"
         },
         "recordCreationTiming": {
           "label": "Record creation timing"

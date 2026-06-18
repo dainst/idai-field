@@ -86,6 +86,53 @@
     },
     "description": "현장 강의자료에서 반복된 기록 정확성, 즉시성, 재현 가능성, 관찰·해석 분리 요구를 관리하기 위한 목록"
   },
+  "KoreanFieldwork-fieldOnlyMissingCheck": {
+    "values": {
+      "stratigraphicBoundary": {
+        "label": "층 경계 확인"
+      },
+      "featureOutline": {
+        "label": "유구 윤곽 확인"
+      },
+      "preRemovalCondition": {
+        "label": "수습 전 상태"
+      },
+      "photoAngleAndScale": {
+        "label": "사진 각도·스케일"
+      },
+      "drawingLineReason": {
+        "label": "도면선 사유"
+      },
+      "spatialLocation": {
+        "label": "위치 좌표"
+      },
+      "elevationRecorded": {
+        "label": "해발고도"
+      },
+      "orientationRecorded": {
+        "label": "방향"
+      },
+      "samplePointMapped": {
+        "label": "시료 위치도면"
+      },
+      "sampleConditionControlled": {
+        "label": "시료 상태 통제"
+      },
+      "numberedBeforeCollection": {
+        "label": "수습 전 번호 부여"
+      },
+      "sameDayReview": {
+        "label": "당일 점검"
+      },
+      "notRecoverableWarning": {
+        "label": "복구 불가능 경고"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "층 경계, 유구 윤곽, 수습 전 상태, 사진 각도, 위치·고도·방향, 시료 위치처럼 현장 종료 뒤 복구하기 어려운 값의 누락을 점검하기 위한 목록"
+  },
   "KoreanFieldwork-firstExposureRecord": {
     "values": {
       "concurrentWithStripping": {

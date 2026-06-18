@@ -11840,6 +11840,53 @@
     },
     "description": "Korean field notebook record-quality checks for accuracy, immediacy, reproducibility, and separation of observation from interpretation"
   },
+  "KoreanFieldwork-fieldOnlyMissingCheck": {
+    "values": {
+      "stratigraphicBoundary": {
+        "label": "Stratigraphic boundary checked"
+      },
+      "featureOutline": {
+        "label": "Feature outline checked"
+      },
+      "preRemovalCondition": {
+        "label": "Pre-removal condition"
+      },
+      "photoAngleAndScale": {
+        "label": "Photo angle and scale"
+      },
+      "drawingLineReason": {
+        "label": "Drawing line reason"
+      },
+      "spatialLocation": {
+        "label": "Spatial location"
+      },
+      "elevationRecorded": {
+        "label": "Elevation recorded"
+      },
+      "orientationRecorded": {
+        "label": "Orientation recorded"
+      },
+      "samplePointMapped": {
+        "label": "Sample point mapped"
+      },
+      "sampleConditionControlled": {
+        "label": "Sample condition controlled"
+      },
+      "numberedBeforeCollection": {
+        "label": "Numbered before collection"
+      },
+      "sameDayReview": {
+        "label": "Same-day review"
+      },
+      "notRecoverableWarning": {
+        "label": "Not-recoverable warning"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean field-only missing checks for stratigraphic boundaries, feature outlines, pre-removal states, photo angles, spatial/elevation/orientation data, and sample points that cannot be recovered after fieldwork"
+  },
   "KoreanFieldwork-firstExposureRecord": {
     "values": {
       "concurrentWithStripping": {

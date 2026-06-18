@@ -307,6 +307,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "fieldOnlyMissingCheck": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "firstExposureRecord": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -351,6 +355,7 @@
       "valuelists": {
         "featurePackage": "KoreanFieldwork-featurePackage",
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
+        "fieldOnlyMissingCheck": "KoreanFieldwork-fieldOnlyMissingCheck",
         "firstExposureRecord": "KoreanFieldwork-firstExposureRecord",
         "fortificationGateFacility": "KoreanFieldwork-fortificationGateFacility",
         "fortificationHiddenGateFunction": "KoreanFieldwork-fortificationHiddenGateFunction",
@@ -384,6 +389,7 @@
           "fields": [
             "featurePackage",
             "fieldRecordQuality",
+            "fieldOnlyMissingCheck",
             "firstExposureRecord",
             "fortificationGateFacility",
             "fortificationHiddenGateFunction",
@@ -428,6 +434,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "fieldOnlyMissingCheck": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "firstExposureRecord": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -452,6 +462,7 @@
       "valuelists": {
         "featurePackage": "KoreanFieldwork-featurePackage",
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
+        "fieldOnlyMissingCheck": "KoreanFieldwork-fieldOnlyMissingCheck",
         "firstExposureRecord": "KoreanFieldwork-firstExposureRecord",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "termRelation": "KoreanFieldwork-termRelation",
@@ -480,6 +491,7 @@
           "fields": [
             "featurePackage",
             "fieldRecordQuality",
+            "fieldOnlyMissingCheck",
             "firstExposureRecord",
             "recordCreationTiming",
             "verificationState",
@@ -504,6 +516,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "fieldOnlyMissingCheck": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "recordCreationTiming": {
           "inputType": "dropdown",
           "constraintIndexed": true
@@ -523,6 +539,7 @@
       },
       "valuelists": {
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
+        "fieldOnlyMissingCheck": "KoreanFieldwork-fieldOnlyMissingCheck",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "termRelation": "KoreanFieldwork-termRelation",
         "termAuthorityStatus": "KoreanFieldwork-termAuthorityStatus",
@@ -547,7 +564,14 @@
         },
         {
           "name": "koreanFieldwork",
-          "fields": ["fieldRecordQuality", "recordCreationTiming", "verificationState", "termRelation", "termAuthorityStatus"]
+          "fields": [
+            "fieldRecordQuality",
+            "fieldOnlyMissingCheck",
+            "recordCreationTiming",
+            "verificationState",
+            "termRelation",
+            "termAuthorityStatus"
+          ]
         },
         {
           "name": "inventory",
@@ -584,6 +608,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "fieldOnlyMissingCheck": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "recordCreationTiming": {
           "inputType": "dropdown",
           "constraintIndexed": true
@@ -603,6 +631,7 @@
       },
       "valuelists": {
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
+        "fieldOnlyMissingCheck": "KoreanFieldwork-fieldOnlyMissingCheck",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "samplePurpose": "KoreanFieldwork-samplePurpose",
         "sampleCollectionHandling": "KoreanFieldwork-sampleCollectionHandling",
@@ -631,7 +660,14 @@
         },
         {
           "name": "koreanFieldwork",
-          "fields": ["samplePurpose", "sampleCollectionHandling", "fieldRecordQuality", "recordCreationTiming", "verificationState"]
+          "fields": [
+            "samplePurpose",
+            "sampleCollectionHandling",
+            "fieldRecordQuality",
+            "fieldOnlyMissingCheck",
+            "recordCreationTiming",
+            "verificationState"
+          ]
         },
         {
           "name": "position",

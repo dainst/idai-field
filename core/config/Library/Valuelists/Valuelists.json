@@ -31112,6 +31112,42 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-fieldOnlyMissingCheck": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "stratigraphicBoundary": {},
+      "featureOutline": {},
+      "preRemovalCondition": {},
+      "photoAngleAndScale": {},
+      "drawingLineReason": {},
+      "spatialLocation": {},
+      "elevationRecorded": {},
+      "orientationRecorded": {},
+      "samplePointMapped": {},
+      "sampleConditionControlled": {},
+      "numberedBeforeCollection": {},
+      "sameDayReview": {},
+      "notRecoverableWarning": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "stratigraphicBoundary",
+      "featureOutline",
+      "preRemovalCondition",
+      "photoAngleAndScale",
+      "drawingLineReason",
+      "spatialLocation",
+      "elevationRecorded",
+      "orientationRecorded",
+      "samplePointMapped",
+      "sampleConditionControlled",
+      "numberedBeforeCollection",
+      "sameDayReview",
+      "notRecoverableWarning",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-firstExposureRecord": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

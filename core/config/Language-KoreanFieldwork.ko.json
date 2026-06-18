@@ -111,6 +111,9 @@
         "fieldRecordQuality": {
           "label": "현장기록 품질"
         },
+        "fieldOnlyMissingCheck": {
+          "label": "현장시점 누락점검"
+        },
         "firstExposureRecord": {
           "label": "최초 노출 기록"
         },
@@ -151,6 +154,9 @@
         "fieldRecordQuality": {
           "label": "현장기록 품질"
         },
+        "fieldOnlyMissingCheck": {
+          "label": "현장시점 누락점검"
+        },
         "firstExposureRecord": {
           "label": "최초 노출 기록"
         },
@@ -173,6 +179,9 @@
         "fieldRecordQuality": {
           "label": "현장기록 품질"
         },
+        "fieldOnlyMissingCheck": {
+          "label": "현장시점 누락점검"
+        },
         "recordCreationTiming": {
           "label": "기록 생성 시점"
         },
@@ -191,6 +200,9 @@
       "fields": {
         "fieldRecordQuality": {
           "label": "현장기록 품질"
+        },
+        "fieldOnlyMissingCheck": {
+          "label": "현장시점 누락점검"
         },
         "recordCreationTiming": {
           "label": "기록 생성 시점"

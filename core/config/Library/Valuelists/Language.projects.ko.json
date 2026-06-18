@@ -797,6 +797,101 @@
     },
     "description": "고환경 시료에서 화분, 규조, 식물규산체, 탄화곡물, 목탄, 패류·유공충 군집, 코어 깊이와 표고, 오염위험, 보존 편향, 패각 해양저수지효과, 연대 전처리, 지역 해수면 곡선, 프록시 군집과 고고학 맥락을 함께 기록하기 위한 목록"
   },
+  "KoreanFieldwork-bronzeAgeDwellingEvidence": {
+    "values": {
+      "garakdongTypeCandidate": { "label": "가락동식 후보" },
+      "dunsanTypeCandidate": { "label": "둔산식 후보" },
+      "yeoksamdongTypeCandidate": { "label": "역삼동식 후보" },
+      "gwansanriTypeCandidate": { "label": "관산리식 후보" },
+      "geomdanriTypeCandidate": { "label": "검단리식 후보" },
+      "hyuamriTypeCandidate": { "label": "휴암리식 후보" },
+      "songgukriTypeCandidate": { "label": "송국리식 후보" },
+      "slenderRectangularPlan": { "label": "세장방형 평면" },
+      "rectangularPlan": { "label": "장방형 평면" },
+      "squarePlan": { "label": "방형 평면" },
+      "roundPlan": { "label": "원형 평면" },
+      "roundedSquarePlan": { "label": "말각방형 평면" },
+      "stoneRingHearth": { "label": "돌두름식 화덕" },
+      "pitHearth": { "label": "구덩식 화덕" },
+      "foundationStone": { "label": "주춧돌" },
+      "centralOvalPit": { "label": "중앙 타원형 구덩이" },
+      "pairedPostholes": { "label": "양단 주혈" },
+      "wallDitch": { "label": "벽도랑" },
+      "drainageMoistureControl": { "label": "배수·제습시설" },
+      "settlementClusterLinked": { "label": "주거군 연결" },
+      "burialAreaSeparated": { "label": "묘역 분리" },
+      "radiocarbonLinked": { "label": "방사성탄소연대 연결" },
+      "typeNameNotAssumed": { "label": "유형명 단정 보류" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "청동기 주거지를 가락동식·둔산식·역삼동식·관산리식·검단리식·휴암리식·송국리식 같은 유형명 후보와 평면, 화덕, 주춧돌, 중앙 타원형 구덩이, 양단 주혈, 벽도랑, 배수·제습, 주거군, 묘역, 연대 근거로 나누어 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-dolmenStructureContext": {
+    "values": {
+      "capstoneRecorded": { "label": "덮개돌 기록" },
+      "supportingStoneRecorded": { "label": "받침돌 기록" },
+      "burialChamberRecorded": { "label": "무덤방 기록" },
+      "burialPrecinctRecorded": { "label": "묘역시설 기록" },
+      "tableStyleCandidate": { "label": "바둑판식 후보" },
+      "coverStoneStyleCandidate": { "label": "덮개식 후보" },
+      "stoneCircleType": { "label": "돌두름형" },
+      "stoneCistType": { "label": "돌덧널형" },
+      "slabWallRecorded": { "label": "판돌 벽석" },
+      "floorSlabRecorded": { "label": "바닥 판석" },
+      "burialSubjectConfirmed": { "label": "매장주체부 확인" },
+      "burialSubjectAbsent": { "label": "매장주체부 부재" },
+      "altarMonumentCandidate": { "label": "제단·기념물 후보" },
+      "cupmarkRecorded": { "label": "성혈·알구멍 기록" },
+      "quarryTraceCandidate": { "label": "채석흔 후보" },
+      "laterGraveMarkerReuse": { "label": "후대 묘표석 재사용" },
+      "relocationRestorationRecorded": { "label": "이전·복원 이력" },
+      "settlementRelationRecorded": { "label": "인접 취락 관계" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "고인돌·지석묘를 덮개돌, 받침돌, 무덤방, 묘역시설, 바둑판식·덮개식 후보, 돌두름형·돌덧널형, 판돌 벽석, 바닥 판석, 매장주체부 유무, 제단·기념물 후보, 성혈·알구멍, 채석흔, 후대 재사용, 이전·복원과 인접 취락 관계로 나누어 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-bronzeAgeEnclosureInterpretation": {
+    "values": {
+      "defensiveCandidate": { "label": "방어 후보" },
+      "boundaryCandidate": { "label": "경계 후보" },
+      "drainageCollectionCandidate": { "label": "배수·집수 후보" },
+      "ritualCandidate": { "label": "의례 후보" },
+      "multipleEnclosure": { "label": "다중 환호" },
+      "vShapedSection": { "label": "V자 단면" },
+      "entranceRecorded": { "label": "출입구 기록" },
+      "fillSequenceRecorded": { "label": "내부 퇴적순서" },
+      "naturalSedimentChecked": { "label": "자연퇴적 검토" },
+      "recutTrace": { "label": "재굴착흔" },
+      "contractionTrace": { "label": "수축흔" },
+      "settlementRelation": { "label": "취락 관계" },
+      "dwellingOverlapRelation": { "label": "주거 중복 관계" },
+      "shortUseCandidate": { "label": "단기 사용 후보" },
+      "floodBurialEvent": { "label": "홍수 매몰 사건" },
+      "spatialSeparationRecorded": { "label": "공간 구획 기록" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "청동기 환호를 방어시설로만 고정하지 않고 방어, 경계, 배수·집수, 의례, 다중 환호, 단면형태, 출입구, 내부 퇴적, 자연퇴적, 재굴착·수축흔, 취락·주거 중복 관계, 단기 사용, 홍수 매몰, 공간 구획으로 나누어 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-bronzeAgePotteryTerminology": {
+    "values": {
+      "mumunPlainPottery": { "label": "무문토기" },
+      "minmunTerminologyAlias": { "label": "민무늬토기 이칭" },
+      "garakdongTypePottery": { "label": "가락동식 토기" },
+      "geomdanriTypePottery": { "label": "검단리식 토기" },
+      "rimNotchDecoration": { "label": "구순각목·골아가리" },
+      "perforatedRimDecoration": { "label": "공렬·구멍무늬" },
+      "doubleRim": { "label": "이중구연·겹아가리" },
+      "redBurnishedPottery": { "label": "붉은간토기" },
+      "blackBurnishedPottery": { "label": "검은간토기" },
+      "potteryChronologyLinked": { "label": "토기 편년 연결" },
+      "associationContextRecorded": { "label": "공반 맥락 기록" },
+      "standardTermChecked": { "label": "표준 용어 확인" },
+      "aliasMappingRequired": { "label": "이칭 매핑 필요" },
+      "contextNotStyleOnly": { "label": "문양명 단독 해석 금지" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "청동기 토기와 용어를 무문토기·민무늬토기, 가락동식·검단리식 토기, 구순각목·공렬·이중구연, 붉은간토기·검은간토기, 편년, 공반 맥락, 표준 용어, 이칭 매핑, 문양명 단독 해석 금지로 나누기 위한 목록"
+  },
   "KoreanFieldwork-personalNotebookArchive": {
     "values": {
       "personalNotebookWritten": {

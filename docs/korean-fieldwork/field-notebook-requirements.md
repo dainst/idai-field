@@ -54,6 +54,8 @@
 
 패총·신석기 보강분은 `Feature`에 `shellMiddenStratigraphy`와 `shellMiddenSettlementContext`를 배치해 패총층 유형, 재퇴적·교란, 평면·단면 병행, 하부·관입 유구, 집락 전체 조사구획, 주거지·노지·저장공·매장·의례·밭 후보와 해안·수계 맥락을 함께 남기게 했다. `Find`에는 `neolithicSubsistenceEvidence`를 두어 어망추, 조침, 작살, 골제·패제 어로구, 통나무배, 외양성 어종, 해양포유류, 직접·간접 포경 근거, 어종과 해류의 계절성, 교류품 후보를 유물 카드에서 기록한다. `Sample`에는 `shellMiddenSamplingStrategy`와 `paleoenvironmentProxySampling`을 배치해 층위별 벌크·블록시료, 물체질·부유선별, 패류·어골·동물뼈·식물유체 분리, 화분·규조·식물규산체·탄화곡물·목탄·패류·유공충 프록시, 연대 전처리와 지역 해수면 곡선 연결을 추적한다.
 
+청동기 보강분은 `Feature`에 `bronzeAgeDwellingEvidence`, `dolmenStructureContext`, `bronzeAgeEnclosureInterpretation`을 배치해 송국리식·가락동식 같은 유형명을 관찰값 뒤의 후보로 두고, 평면형·화덕·중앙 타원형 구덩이·양단 주혈·벽도랑·주거군/묘역 관계, 고인돌의 덮개돌·받침돌·무덤방·묘역시설·성혈·알구멍·이전복원 이력, 환호의 방어·경계·배수·의례 후보와 내부퇴적·재굴착·수축흔을 분리해 남기게 했다. `Find`에는 `bronzeAgePotteryTerminology`를 두어 민무늬토기/무문토기, 구순각목/골아가리, 공렬/구멍무늬, 이중구연/겹아가리 같은 이칭과 표준 용어, 편년·공반 맥락을 유물 카드에서 추적한다.
+
 이 구현 단위가 먼저 들어가야 각 유적 유형별 템플릿을 만들 때 기록이 흩어지지 않는다.
 
 ## 검증 질문

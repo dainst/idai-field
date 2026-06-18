@@ -67,6 +67,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.fields.tombBurialStructureInvestigation.inputType).toBe('checkboxes');
         expect(featureForm.fields.shellMiddenStratigraphy.inputType).toBe('checkboxes');
         expect(featureForm.fields.shellMiddenSettlementContext.inputType).toBe('checkboxes');
+        expect(featureForm.fields.bronzeAgeDwellingEvidence.inputType).toBe('checkboxes');
+        expect(featureForm.fields.dolmenStructureContext.inputType).toBe('checkboxes');
+        expect(featureForm.fields.bronzeAgeEnclosureInterpretation.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.chronologyArgument.inputType).toBe('checkboxes');
         expect(findForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
@@ -76,6 +79,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.fields.ironResidueSubtype.inputType).toBe('checkboxes');
         expect(findForm.fields.graveGoodsRitualContext.inputType).toBe('checkboxes');
         expect(findForm.fields.neolithicSubsistenceEvidence.inputType).toBe('checkboxes');
+        expect(findForm.fields.bronzeAgePotteryTerminology.inputType).toBe('checkboxes');
         expect(findForm.fields.typologyArgument.inputType).toBe('checkboxes');
         expect(findForm.fields.chronologyArgument.inputType).toBe('checkboxes');
         expect(findForm.fields.assemblageRelation.inputType).toBe('checkboxes');
@@ -169,6 +173,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-shellMiddenStratigraphy');
         expect(featureForm.valuelists.shellMiddenSettlementContext)
             .toBe('KoreanFieldwork-shellMiddenSettlementContext');
+        expect(featureForm.valuelists.bronzeAgeDwellingEvidence)
+            .toBe('KoreanFieldwork-bronzeAgeDwellingEvidence');
+        expect(featureForm.valuelists.dolmenStructureContext)
+            .toBe('KoreanFieldwork-dolmenStructureContext');
+        expect(featureForm.valuelists.bronzeAgeEnclosureInterpretation)
+            .toBe('KoreanFieldwork-bronzeAgeEnclosureInterpretation');
         expect(featureSegmentForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
         expect(featureSegmentForm.valuelists.chronologyArgument).toBe('KoreanFieldwork-chronologyArgument');
         expect(findForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
@@ -179,6 +189,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.valuelists.graveGoodsRitualContext).toBe('KoreanFieldwork-graveGoodsRitualContext');
         expect(findForm.valuelists.neolithicSubsistenceEvidence)
             .toBe('KoreanFieldwork-neolithicSubsistenceEvidence');
+        expect(findForm.valuelists.bronzeAgePotteryTerminology)
+            .toBe('KoreanFieldwork-bronzeAgePotteryTerminology');
         expect(findForm.valuelists.typologyArgument).toBe('KoreanFieldwork-typologyArgument');
         expect(findForm.valuelists.chronologyArgument).toBe('KoreanFieldwork-chronologyArgument');
         expect(findForm.valuelists.assemblageRelation).toBe('KoreanFieldwork-assemblageRelation');
@@ -260,6 +272,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Shell midden stratigraphy');
         expect(languages.en.categories.Feature.fields.shellMiddenSettlementContext.label)
             .toBe('Shell midden settlement context');
+        expect(languages.en.categories.Feature.fields.bronzeAgeDwellingEvidence.label)
+            .toBe('Bronze Age dwelling evidence');
+        expect(languages.en.categories.Feature.fields.dolmenStructureContext.label)
+            .toBe('Dolmen structure context');
+        expect(languages.en.categories.Feature.fields.bronzeAgeEnclosureInterpretation.label)
+            .toBe('Bronze Age enclosure interpretation');
         expect(languages.en.categories.Feature.fields.fortificationHiddenGateFunction.label).toBe('Hidden gate function');
         expect(languages.en.categories.Feature.fields.fortificationParapetDetail.label).toBe('Parapet detail');
         expect(languages.en.categories.Feature.fields.termAuthorityStatus.label).toBe('Term authority status');
@@ -276,6 +294,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Grave goods and ritual context');
         expect(languages.en.categories.Find.fields.neolithicSubsistenceEvidence.label)
             .toBe('Neolithic subsistence evidence');
+        expect(languages.en.categories.Find.fields.bronzeAgePotteryTerminology.label)
+            .toBe('Bronze Age pottery terminology');
         expect(languages.en.categories.Find.fields.typologyArgument.label).toBe('Typology argument');
         expect(languages.en.categories.Find.fields.chronologyArgument.label).toBe('Chronology argument');
         expect(languages.en.categories.Find.fields.assemblageRelation.label).toBe('Assemblage relation');
@@ -387,6 +407,18 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-paleoenvironmentProxySampling']
             .values.regionalSeaLevelCurveLinked.label)
             .toBe('Regional sea-level curve linked');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-bronzeAgeDwellingEvidence']
+            .values.centralOvalPit.label)
+            .toBe('Central oval pit');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-dolmenStructureContext']
+            .values.cupmarkRecorded.label)
+            .toBe('Cupmark recorded');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-bronzeAgeEnclosureInterpretation']
+            .values.recutTrace.label)
+            .toBe('Recut trace');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-bronzeAgePotteryTerminology']
+            .values.aliasMappingRequired.label)
+            .toBe('Alias mapping required');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-fortificationHiddenGateFunction'].values.supplyTransport.label)
             .toBe('Military supply transport');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-fortificationParapetDetail'].values.nearGunOpening.label)

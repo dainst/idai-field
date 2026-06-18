@@ -565,6 +565,18 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "bronzeAgeDwellingEvidence": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "dolmenStructureContext": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "bronzeAgeEnclosureInterpretation": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "fortificationGateFacility": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -624,6 +636,9 @@
         "tombBurialStructureInvestigation": "KoreanFieldwork-tombBurialStructureInvestigation",
         "shellMiddenStratigraphy": "KoreanFieldwork-shellMiddenStratigraphy",
         "shellMiddenSettlementContext": "KoreanFieldwork-shellMiddenSettlementContext",
+        "bronzeAgeDwellingEvidence": "KoreanFieldwork-bronzeAgeDwellingEvidence",
+        "dolmenStructureContext": "KoreanFieldwork-dolmenStructureContext",
+        "bronzeAgeEnclosureInterpretation": "KoreanFieldwork-bronzeAgeEnclosureInterpretation",
         "fortificationGateFacility": "KoreanFieldwork-fortificationGateFacility",
         "fortificationHiddenGateFunction": "KoreanFieldwork-fortificationHiddenGateFunction",
         "fortificationParapetDetail": "KoreanFieldwork-fortificationParapetDetail",
@@ -672,6 +687,9 @@
             "tombBurialStructureInvestigation",
             "shellMiddenStratigraphy",
             "shellMiddenSettlementContext",
+            "bronzeAgeDwellingEvidence",
+            "dolmenStructureContext",
+            "bronzeAgeEnclosureInterpretation",
             "fortificationGateFacility",
             "fortificationHiddenGateFunction",
             "fortificationParapetDetail",
@@ -853,6 +871,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "bronzeAgePotteryTerminology": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "recordCreationTiming": {
           "inputType": "dropdown",
           "constraintIndexed": true
@@ -886,6 +908,7 @@
         "ironResidueSubtype": "KoreanFieldwork-ironResidueSubtype",
         "graveGoodsRitualContext": "KoreanFieldwork-graveGoodsRitualContext",
         "neolithicSubsistenceEvidence": "KoreanFieldwork-neolithicSubsistenceEvidence",
+        "bronzeAgePotteryTerminology": "KoreanFieldwork-bronzeAgePotteryTerminology",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "termRelation": "KoreanFieldwork-termRelation",
         "termSearchMapping": "KoreanFieldwork-termSearchMapping",
@@ -923,6 +946,7 @@
             "ironResidueSubtype",
             "graveGoodsRitualContext",
             "neolithicSubsistenceEvidence",
+            "bronzeAgePotteryTerminology",
             "recordCreationTiming",
             "verificationState",
             "termRelation",

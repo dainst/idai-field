@@ -207,6 +207,15 @@
         "shellMiddenSettlementContext": {
           "label": "Shell midden settlement context"
         },
+        "bronzeAgeDwellingEvidence": {
+          "label": "Bronze Age dwelling evidence"
+        },
+        "dolmenStructureContext": {
+          "label": "Dolmen structure context"
+        },
+        "bronzeAgeEnclosureInterpretation": {
+          "label": "Bronze Age enclosure interpretation"
+        },
         "fortificationGateFacility": {
           "label": "Gate and defensive components"
         },
@@ -307,6 +316,9 @@
         },
         "neolithicSubsistenceEvidence": {
           "label": "Neolithic subsistence evidence"
+        },
+        "bronzeAgePotteryTerminology": {
+          "label": "Bronze Age pottery terminology"
         },
         "recordCreationTiming": {
           "label": "Record creation timing"

@@ -207,6 +207,15 @@
         "shellMiddenSettlementContext": {
           "label": "패총 취락·공간 맥락"
         },
+        "bronzeAgeDwellingEvidence": {
+          "label": "청동기 주거 근거"
+        },
+        "dolmenStructureContext": {
+          "label": "고인돌·지석묘 구조"
+        },
+        "bronzeAgeEnclosureInterpretation": {
+          "label": "청동기 환호 판단"
+        },
         "fortificationGateFacility": {
           "label": "성문·방어 부속시설"
         },
@@ -307,6 +316,9 @@
         },
         "neolithicSubsistenceEvidence": {
           "label": "신석기 생업·어구 근거"
+        },
+        "bronzeAgePotteryTerminology": {
+          "label": "청동기 토기·용어 표지"
         },
         "recordCreationTiming": {
           "label": "기록 생성 시점"

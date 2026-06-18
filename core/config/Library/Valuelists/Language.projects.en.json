@@ -12551,6 +12551,101 @@
     },
     "description": "Korean paleoenvironment proxy checks for pollen, diatom, plant-opal, carbonized grain, charcoal, mollusk and foraminifera samples, core depth and elevation, contamination, preservation bias, shell radiocarbon reservoir, dating pretreatment, regional sea-level curves, proxy assemblages, and archaeological context"
   },
+  "KoreanFieldwork-bronzeAgeDwellingEvidence": {
+    "values": {
+      "garakdongTypeCandidate": { "label": "Garak-dong type candidate" },
+      "dunsanTypeCandidate": { "label": "Dunsan type candidate" },
+      "yeoksamdongTypeCandidate": { "label": "Yeoksam-dong type candidate" },
+      "gwansanriTypeCandidate": { "label": "Gwansan-ri type candidate" },
+      "geomdanriTypeCandidate": { "label": "Geomdan-ri type candidate" },
+      "hyuamriTypeCandidate": { "label": "Hyuam-ri type candidate" },
+      "songgukriTypeCandidate": { "label": "Songguk-ri type candidate" },
+      "slenderRectangularPlan": { "label": "Slender rectangular plan" },
+      "rectangularPlan": { "label": "Rectangular plan" },
+      "squarePlan": { "label": "Square plan" },
+      "roundPlan": { "label": "Round plan" },
+      "roundedSquarePlan": { "label": "Rounded square plan" },
+      "stoneRingHearth": { "label": "Stone-ring hearth" },
+      "pitHearth": { "label": "Pit hearth" },
+      "foundationStone": { "label": "Foundation stone" },
+      "centralOvalPit": { "label": "Central oval pit" },
+      "pairedPostholes": { "label": "Paired postholes" },
+      "wallDitch": { "label": "Wall ditch" },
+      "drainageMoistureControl": { "label": "Drainage or moisture control" },
+      "settlementClusterLinked": { "label": "Settlement cluster linked" },
+      "burialAreaSeparated": { "label": "Burial area separated" },
+      "radiocarbonLinked": { "label": "Radiocarbon linked" },
+      "typeNameNotAssumed": { "label": "Type name not assumed" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean Bronze Age dwelling checks for separating type-name candidates from observed plans, hearths, foundation stones, central oval pits, paired postholes, wall ditches, drainage, settlement clusters, burial areas, radiocarbon dates, and unresolved interpretation"
+  },
+  "KoreanFieldwork-dolmenStructureContext": {
+    "values": {
+      "capstoneRecorded": { "label": "Capstone recorded" },
+      "supportingStoneRecorded": { "label": "Supporting stone recorded" },
+      "burialChamberRecorded": { "label": "Burial chamber recorded" },
+      "burialPrecinctRecorded": { "label": "Burial precinct recorded" },
+      "tableStyleCandidate": { "label": "Table-style candidate" },
+      "coverStoneStyleCandidate": { "label": "Cover-stone style candidate" },
+      "stoneCircleType": { "label": "Stone-circle type" },
+      "stoneCistType": { "label": "Stone-cist type" },
+      "slabWallRecorded": { "label": "Slab wall recorded" },
+      "floorSlabRecorded": { "label": "Floor slab recorded" },
+      "burialSubjectConfirmed": { "label": "Burial subject confirmed" },
+      "burialSubjectAbsent": { "label": "Burial subject absent" },
+      "altarMonumentCandidate": { "label": "Altar or monument candidate" },
+      "cupmarkRecorded": { "label": "Cupmark recorded" },
+      "quarryTraceCandidate": { "label": "Quarry trace candidate" },
+      "laterGraveMarkerReuse": { "label": "Later grave-marker reuse" },
+      "relocationRestorationRecorded": { "label": "Relocation or restoration recorded" },
+      "settlementRelationRecorded": { "label": "Settlement relation recorded" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean dolmen checks for recording capstones, supporting stones, burial chambers, precincts, table and cover-stone candidates, stone-circle and stone-cist forms, slab walls, floor slabs, burial-subject presence or absence, altar or monument interpretation, cupmarks, quarry traces, later reuse, relocation, restoration, and relation to nearby settlements"
+  },
+  "KoreanFieldwork-bronzeAgeEnclosureInterpretation": {
+    "values": {
+      "defensiveCandidate": { "label": "Defensive candidate" },
+      "boundaryCandidate": { "label": "Boundary candidate" },
+      "drainageCollectionCandidate": { "label": "Drainage or collection candidate" },
+      "ritualCandidate": { "label": "Ritual candidate" },
+      "multipleEnclosure": { "label": "Multiple enclosure" },
+      "vShapedSection": { "label": "V-shaped section" },
+      "entranceRecorded": { "label": "Entrance recorded" },
+      "fillSequenceRecorded": { "label": "Fill sequence recorded" },
+      "naturalSedimentChecked": { "label": "Natural sediment checked" },
+      "recutTrace": { "label": "Recut trace" },
+      "contractionTrace": { "label": "Contraction trace" },
+      "settlementRelation": { "label": "Settlement relation" },
+      "dwellingOverlapRelation": { "label": "Dwelling overlap relation" },
+      "shortUseCandidate": { "label": "Short-use candidate" },
+      "floodBurialEvent": { "label": "Flood burial event" },
+      "spatialSeparationRecorded": { "label": "Spatial separation recorded" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean Bronze Age enclosure checks for keeping defense, boundary, drainage, collection, ritual, multiple enclosure, section, entrance, fill sequence, natural sediment, recuts, contraction traces, settlement relation, dwelling overlap, short use, flood burial, and spatial separation as separate interpretations"
+  },
+  "KoreanFieldwork-bronzeAgePotteryTerminology": {
+    "values": {
+      "mumunPlainPottery": { "label": "Mumun plain pottery" },
+      "minmunTerminologyAlias": { "label": "Minmun terminology alias" },
+      "garakdongTypePottery": { "label": "Garak-dong type pottery" },
+      "geomdanriTypePottery": { "label": "Geomdan-ri type pottery" },
+      "rimNotchDecoration": { "label": "Rim-notch decoration" },
+      "perforatedRimDecoration": { "label": "Perforated-rim decoration" },
+      "doubleRim": { "label": "Double rim" },
+      "redBurnishedPottery": { "label": "Red burnished pottery" },
+      "blackBurnishedPottery": { "label": "Black burnished pottery" },
+      "potteryChronologyLinked": { "label": "Pottery chronology linked" },
+      "associationContextRecorded": { "label": "Association context recorded" },
+      "standardTermChecked": { "label": "Standard term checked" },
+      "aliasMappingRequired": { "label": "Alias mapping required" },
+      "contextNotStyleOnly": { "label": "Context, not style only" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean Bronze Age pottery terminology checks for separating Mumun and Minmun terms, type names, rim traits, burnished pottery, chronology, association context, standard-term review, alias mapping, and style-only overinterpretation"
+  },
   "KoreanFieldwork-personalNotebookArchive": {
     "values": {
       "personalNotebookWritten": {

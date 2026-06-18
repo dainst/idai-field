@@ -74,6 +74,8 @@ C:\Users\nuri9\AppData\Local\Temp\codex-idai-field-new-pdf-text\methods-all
 
 패총·신석기·고환경 자료에서 뽑은 공통 축은 `KoreanFieldwork-shellMiddenStratigraphy`, `KoreanFieldwork-shellMiddenSettlementContext`, `KoreanFieldwork-neolithicSubsistenceEvidence`, `KoreanFieldwork-shellMiddenSamplingStrategy`, `KoreanFieldwork-paleoenvironmentProxySampling`로 나누어 배치한다. 패총명은 결과값으로 두되, 현장 화면에서는 순패층·혼토패층·파쇄패층, 재퇴적과 교란, 평면·단면 병행, 하부·관입 유구, 주거지·노지·저장공·매장·의례·밭 후보, 어구와 해양포유류, 물체질·부유선별, 화분·규조·식물규산체, 연대 전처리와 지역 해수면 곡선 연결이 먼저 기록되도록 한다.
 
+청동기시대편 증보판에서 뽑은 공통 축은 `KoreanFieldwork-bronzeAgeDwellingEvidence`, `KoreanFieldwork-dolmenStructureContext`, `KoreanFieldwork-bronzeAgeEnclosureInterpretation`, `KoreanFieldwork-bronzeAgePotteryTerminology`로 나누어 배치한다. 송국리식·가락동식·검단리식 같은 주거유형명은 결과값으로 두되, 현장 화면에서는 평면형, 화덕, 중앙 타원형 구덩이, 양단 주혈, 벽도랑, 주거군·묘역 관계와 연대 근거가 먼저 기록되도록 한다. 고인돌·지석묘는 덮개돌·받침돌·묘역시설·무덤방·성혈·이전복원 이력을 분리하고, 환호는 방어·경계·배수·의례 후보와 퇴적·재굴착·수축흔을 분리한다.
+
 ## 고고학사전 자료
 
 | 자료 | 쪽수 | 텍스트 상태 | 추출 파일 | iDAI.field에서 볼 지점 |

@@ -36,6 +36,7 @@
 - [제9권: 연구방법론과 과학 분석](volume-notes/volume-09-research-methods.md)
 - [2020년: 제철유적 조사·분석 방법론](volume-notes/volume-2020-iron-production.md)
 - [현장 강의자료: 조사방법론 보조 독해](volume-notes/field-training-methods.md)
+- [고고학사전 용어 표준화 노트](volume-notes/dictionary-terminology.md)
 
 ## 문서 서술 기준
 

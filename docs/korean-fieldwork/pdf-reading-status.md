@@ -2,7 +2,7 @@
 
 마지막 갱신: 2026-06-18
 
-이 문서는 사용자가 `C:\Users\nuri9\Downloads`에 제공한 한국 고고학 방법론 PDF 10종의 판독 상태를 이어받기 위한 작업 기록이다. 원문 PDF는 저장소에 넣지 않고, 추출 텍스트와 권별 분석 노트만 작업 근거로 사용한다.
+이 문서는 사용자가 `C:\Users\nuri9\Downloads`에 제공한 한국 고고학 방법론 PDF와 보조 자료군의 판독 상태를 이어받기 위한 작업 기록이다. 원문 PDF는 저장소에 넣지 않고, 추출 텍스트와 권별 분석 노트만 작업 근거로 사용한다.
 
 ## 로컬 자료
 
@@ -16,6 +16,14 @@ C:\Users\nuri9\Downloads
 
 ```text
 C:\Users\nuri9\AppData\Local\Temp\codex-idai-field-pdf-text
+C:\Users\nuri9\AppData\Local\Temp\codex-idai-field-new-pdf-text
+```
+
+2026-06-18에 추가 확인한 보조 자료군:
+
+```text
+C:\Users\nuri9\Downloads\고고학사전
+C:\Users\nuri9\Downloads\조사방법론
 ```
 
 ## 판독 현황
@@ -38,6 +46,15 @@ C:\Users\nuri9\AppData\Local\Temp\codex-idai-field-pdf-text
 10종 모두 로컬 PDF 확인, 텍스트 추출, 권별 노트 반영까지 완료했다. 다만 이것은 “야장 모델 설계에 필요한 1차 정밀 독해” 상태이며, 실제 iDAI.field 구성 파일을 고치기 전에는 다음 보강이 더 필요하다.
 
 기존 방법론 10종은 이 문서에서 1차 판독 묶음으로 닫아 둔다. 새로 제공되는 고고학사전과 조사방법론 자료는 별도 자료군으로 목록화하고, 작업 이력은 이 문서와 `source-inventory.md`에 남기며, 권별 노트와 모델 문서는 조사 절차·관찰 항목·판단 근거 중심으로 유지한다.
+
+## 보조 자료군 판독 현황
+
+새 보조 자료군은 [보조 자료군 목록과 우선순위](supplemental-source-inventory.md)에서 상세 관리한다. 현재 상태는 다음과 같다.
+
+- `조사방법론` 31종: 전체 목록화 완료. 직접 추출, 부분 추출, WinRT OCR 보강, 직접 재추출 결과를 `field-training-methods.md`, `korean-core-recording-model.md`, `field-recording-workflows.md`에 단계적으로 반영했다. 현장 팁은 UI 강제값으로 바로 옮기지 않고, 누락되면 복구 불가능한 관찰값, 보고서 산출물과 연결되는 값, 판단 보류가 필요한 해석값으로 나누어 반영한다.
+- `고고학사전` 12종: 전체 목록화 및 텍스트 추출 확인 완료. `dictionary-terminology.md`에 용어 표준화 원칙, `TermAuthority`, `TermAlias`, `TermRelationship`, 출처·검증상태·분야 범위 관리 원칙을 정리했다. 전문사전류는 값 목록과 보고서 출력어의 권위 근거로 사용하고, 2001년 일반 사전과 2007년 성곽 용어사전처럼 추출 품질이 흔들리는 자료는 용례 확인·도판 대조용으로 먼저 둔다.
+- 현재 보강된 사전 주제: 생산유적, 청동기 주거·고인돌·환호, 구석기 석기·석재·접합, 신석기 패총·어구·토기, 고분 구조·고분유물 위치, 성곽·봉수 시설 관계.
+- 남은 사전 작업: 2001년 일반 사전의 넓은 동의어 용례를 전문사전 표제어에 매핑하고, 2007년 성곽 용어사전의 낮은 추출 품질 항목은 원 PDF 화면으로 도판·캡션을 다시 대조한다.
 
 우선순위:
 

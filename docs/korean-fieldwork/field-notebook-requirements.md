@@ -21,6 +21,7 @@
 | 현장기록 품질검수 | 좋은 야장은 개인 메모가 아니라 즉시성, 사실/해석 분리, 교차검토가 가능한 공적 기록이다. | `FieldRecordQualityReview`를 두고 작성자, 담당 유구, 작성시점, 검토자, 사실/해석 분리, 수정 근거를 저장한다. |
 | 현장시에만 가능한 값 경고 | 층 경계, 수습 전 상태, 사진 각도, 표본 위치처럼 나중에 되돌릴 수 없는 값이 있다. | `RecordCreationTiming`으로 계획단계, 현장 중 누적, 당일 작성, 현장시에만 가능, 보고서 단계 생성을 구분하고 누락 경고를 띄운다. |
 | 보고서 역산 | 보고서 초록, 도면 목록, 사진대장, 유물·시료 목록은 나중에 따로 만드는 문서가 아니라 현장기록에서 생성되어야 한다. | `ReportPreparationReview`와 `ReportEditorialCrossCheck`가 원고, 도면, 사진, 일지, 목록, 번호 변환표의 불일치를 원기록 ID와 연결한다. |
+| 보고서 평가 환류 | 보고서 평가표는 반복 오류와 보완 요구를 잡아내는 장치지만, 현장 품질을 완전히 대신하지는 못한다. | `ReportEvaluationApplicabilityReview`와 `ReportFieldQualityFeedback`이 자체평가·위원회평가 차이, 비해당 항목, 적용 제외 근거, 원기록 보완 작업을 연결한다. |
 | 조사단계 전환과 인계 | 지표·표본·시굴·정밀발굴은 단절된 프로젝트가 아니라 판단과 자료가 이어지는 단계다. | `InvestigationStageTransition`과 `InvestigationRecordHandover`에 앞 단계 기록, 출토유물, 약식보고서, 후속기관, 최종보고서 연결을 둔다. |
 | 행정·보존 이행 | 보존조치는 결정으로 끝나지 않고 이행, 통보, 관리주체, 점검, 재평가로 이어진다. | `PreservationDecisionPackage`, `PermitConditionComplianceRecord`, `ReportSubmissionWorkflow`, `StateVestingSelectionRecord`를 조사사업 카드에 연결한다. |
 | 질문형 유구 야장 | 유구명만 고르는 방식은 수혈주거지, 고분, 성곽, 생산유구의 조사 과정을 설명하지 못한다. | 유구 유형별 카드에는 단계별 질문, 확인 전제, 대안 해석, 사진·도면·시료 연결을 둔다. |

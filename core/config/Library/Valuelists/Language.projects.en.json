@@ -13264,5 +13264,113 @@
       }
     },
     "description": "Korean field record quality correction basis list for preserving review reasons and source-record traceability"
+  },
+  "KoreanFieldwork-typologyArgument": {
+    "values": {
+      "representativeAttribute": {
+        "label": "Representative attribute"
+      },
+      "variationRecorded": {
+        "label": "Variation recorded"
+      },
+      "residualTraitReviewed": {
+        "label": "Residual trait reviewed"
+      },
+      "relatedArtifactGroup": {
+        "label": "Related artifact group"
+      },
+      "attributeCombination": {
+        "label": "Attribute combination"
+      },
+      "typeCandidate": {
+        "label": "Type candidate"
+      },
+      "typeConfirmed": {
+        "label": "Type confirmed"
+      },
+      "alternativeClassification": {
+        "label": "Alternative classification"
+      },
+      "specialistReviewNeeded": {
+        "label": "Specialist review needed"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean fieldwork typology argument list for recording representative attributes, variation, related artifact groups, and alternative classifications before fixing a type name"
+  },
+  "KoreanFieldwork-chronologyArgument": {
+    "values": {
+      "stratigraphicRelation": {
+        "label": "Stratigraphic relation"
+      },
+      "associatedFinds": {
+        "label": "Associated finds"
+      },
+      "closedContext": {
+        "label": "Closed context"
+      },
+      "absoluteDate": {
+        "label": "Absolute date"
+      },
+      "markerArtifact": {
+        "label": "Marker artifact"
+      },
+      "existingChronologyApplied": {
+        "label": "Existing chronology applied"
+      },
+      "regionalLagRisk": {
+        "label": "Regional lag risk"
+      },
+      "heirloomOrReuseRisk": {
+        "label": "Heirloom or reuse risk"
+      },
+      "alternativeChronology": {
+        "label": "Alternative chronology"
+      },
+      "acceptedBasis": {
+        "label": "Accepted basis"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean fieldwork chronology argument list for keeping period decisions tied to stratigraphy, associated finds, absolute dates, marker artifacts, and alternative chronologies"
+  },
+  "KoreanFieldwork-assemblageRelation": {
+    "values": {
+      "sameLayer": {
+        "label": "Same layer"
+      },
+      "sameDepositUnit": {
+        "label": "Same deposit unit"
+      },
+      "closedAssemblage": {
+        "label": "Closed assemblage"
+      },
+      "repeatedAssociation": {
+        "label": "Repeated association"
+      },
+      "accidentalAssociationRisk": {
+        "label": "Accidental association risk"
+      },
+      "secondaryDepositionRisk": {
+        "label": "Secondary deposition risk"
+      },
+      "mixedContextRisk": {
+        "label": "Mixed context risk"
+      },
+      "functionalDifferencePossible": {
+        "label": "Functional difference possible"
+      },
+      "contemporaneityUnclear": {
+        "label": "Contemporaneity unclear"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean fieldwork assemblage relation list for separating same-layer or closed assemblages from accidental association, redeposition, mixed contexts, and unclear contemporaneity"
   }
 }

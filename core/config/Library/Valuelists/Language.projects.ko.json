@@ -1510,5 +1510,113 @@
       }
     },
     "description": "품질검수 과정에서 수정·보완이 어떤 근거로 이루어졌는지 남기는 목록"
+  },
+  "KoreanFieldwork-typologyArgument": {
+    "values": {
+      "representativeAttribute": {
+        "label": "대표 속성"
+      },
+      "variationRecorded": {
+        "label": "변이 기록"
+      },
+      "residualTraitReviewed": {
+        "label": "흔적기관 검토"
+      },
+      "relatedArtifactGroup": {
+        "label": "관련 유물군"
+      },
+      "attributeCombination": {
+        "label": "속성 조합"
+      },
+      "typeCandidate": {
+        "label": "형식 후보"
+      },
+      "typeConfirmed": {
+        "label": "형식 확정"
+      },
+      "alternativeClassification": {
+        "label": "대안 분류"
+      },
+      "specialistReviewNeeded": {
+        "label": "전문가 검토 필요"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "형식명을 확정값으로 바로 저장하지 않고 대표 속성, 변이, 관련 유물군, 대안 분류를 함께 남기기 위한 목록"
+  },
+  "KoreanFieldwork-chronologyArgument": {
+    "values": {
+      "stratigraphicRelation": {
+        "label": "층위관계"
+      },
+      "associatedFinds": {
+        "label": "공반유물"
+      },
+      "closedContext": {
+        "label": "일괄 맥락"
+      },
+      "absoluteDate": {
+        "label": "절대연대"
+      },
+      "markerArtifact": {
+        "label": "표지유물"
+      },
+      "existingChronologyApplied": {
+        "label": "기존 편년안 적용"
+      },
+      "regionalLagRisk": {
+        "label": "지역차·확산지체 위험"
+      },
+      "heirloomOrReuseRisk": {
+        "label": "전승품·재사용 위험"
+      },
+      "alternativeChronology": {
+        "label": "대안 편년"
+      },
+      "acceptedBasis": {
+        "label": "채택 근거"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "시대값을 단일 선택으로 닫지 않고 층위, 공반, 절대연대, 표지유물, 대안 편년과 함께 검토하기 위한 목록"
+  },
+  "KoreanFieldwork-assemblageRelation": {
+    "values": {
+      "sameLayer": {
+        "label": "동일층"
+      },
+      "sameDepositUnit": {
+        "label": "동일 매장단위"
+      },
+      "closedAssemblage": {
+        "label": "일괄유물"
+      },
+      "repeatedAssociation": {
+        "label": "반복 공반"
+      },
+      "accidentalAssociationRisk": {
+        "label": "우연 공반 위험"
+      },
+      "secondaryDepositionRisk": {
+        "label": "재퇴적 위험"
+      },
+      "mixedContextRisk": {
+        "label": "혼입 맥락 위험"
+      },
+      "functionalDifferencePossible": {
+        "label": "기능차 가능"
+      },
+      "contemporaneityUnclear": {
+        "label": "동시성 불명"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "공반유물을 곧바로 동시기 근거로 보지 않고 매장단위, 반복성, 우연 공반, 재퇴적과 혼입 가능성을 분리하기 위한 목록"
   }
 }

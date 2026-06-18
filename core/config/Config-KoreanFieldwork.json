@@ -491,6 +491,18 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "typologyArgument": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "chronologyArgument": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "assemblageRelation": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "fieldOnlyMissingCheck": {
           "inputType": "checkboxes",
           "mandatory": true,
@@ -545,6 +557,9 @@
       "valuelists": {
         "featurePackage": "KoreanFieldwork-featurePackage",
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
+        "typologyArgument": "KoreanFieldwork-typologyArgument",
+        "chronologyArgument": "KoreanFieldwork-chronologyArgument",
+        "assemblageRelation": "KoreanFieldwork-assemblageRelation",
         "fieldOnlyMissingCheck": "KoreanFieldwork-fieldOnlyMissingCheck",
         "firstExposureRecord": "KoreanFieldwork-firstExposureRecord",
         "fortificationGateFacility": "KoreanFieldwork-fortificationGateFacility",
@@ -580,6 +595,9 @@
           "fields": [
             "featurePackage",
             "fieldRecordQuality",
+            "typologyArgument",
+            "chronologyArgument",
+            "assemblageRelation",
             "fieldOnlyMissingCheck",
             "firstExposureRecord",
             "fortificationGateFacility",
@@ -626,6 +644,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "chronologyArgument": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "fieldOnlyMissingCheck": {
           "inputType": "checkboxes",
           "mandatory": true,
@@ -660,6 +682,7 @@
       "valuelists": {
         "featurePackage": "KoreanFieldwork-featurePackage",
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
+        "chronologyArgument": "KoreanFieldwork-chronologyArgument",
         "fieldOnlyMissingCheck": "KoreanFieldwork-fieldOnlyMissingCheck",
         "firstExposureRecord": "KoreanFieldwork-firstExposureRecord",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
@@ -690,6 +713,7 @@
           "fields": [
             "featurePackage",
             "fieldRecordQuality",
+            "chronologyArgument",
             "fieldOnlyMissingCheck",
             "firstExposureRecord",
             "recordCreationTiming",
@@ -713,6 +737,18 @@
       "hidden": [],
       "fields": {
         "fieldRecordQuality": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "typologyArgument": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "chronologyArgument": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "assemblageRelation": {
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
@@ -744,6 +780,9 @@
       },
       "valuelists": {
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
+        "typologyArgument": "KoreanFieldwork-typologyArgument",
+        "chronologyArgument": "KoreanFieldwork-chronologyArgument",
+        "assemblageRelation": "KoreanFieldwork-assemblageRelation",
         "fieldOnlyMissingCheck": "KoreanFieldwork-fieldOnlyMissingCheck",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "termRelation": "KoreanFieldwork-termRelation",
@@ -772,6 +811,9 @@
           "name": "koreanFieldwork",
           "fields": [
             "fieldRecordQuality",
+            "typologyArgument",
+            "chronologyArgument",
+            "assemblageRelation",
             "fieldOnlyMissingCheck",
             "recordCreationTiming",
             "verificationState",

@@ -156,6 +156,15 @@
         "fieldRecordQuality": {
           "label": "현장기록 품질"
         },
+        "typologyArgument": {
+          "label": "형식 논증"
+        },
+        "chronologyArgument": {
+          "label": "편년 논증"
+        },
+        "assemblageRelation": {
+          "label": "공반 관계"
+        },
         "fieldOnlyMissingCheck": {
           "label": "현장시점 누락점검"
         },
@@ -202,6 +211,9 @@
         "fieldRecordQuality": {
           "label": "현장기록 품질"
         },
+        "chronologyArgument": {
+          "label": "편년 논증"
+        },
         "fieldOnlyMissingCheck": {
           "label": "현장시점 누락점검"
         },
@@ -229,6 +241,15 @@
       "fields": {
         "fieldRecordQuality": {
           "label": "현장기록 품질"
+        },
+        "typologyArgument": {
+          "label": "형식 논증"
+        },
+        "chronologyArgument": {
+          "label": "편년 논증"
+        },
+        "assemblageRelation": {
+          "label": "공반 관계"
         },
         "fieldOnlyMissingCheck": {
           "label": "현장시점 누락점검"

@@ -50,8 +50,15 @@ describe('KoreanFieldwork project configuration', () => {
         expect(surveyForm.fields.surfaceSurveyBiasControl.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyFollowUp.inputType).toBe('checkboxes');
         expect(featureForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
+        expect(featureForm.fields.typologyArgument.inputType).toBe('checkboxes');
+        expect(featureForm.fields.chronologyArgument.inputType).toBe('checkboxes');
+        expect(featureForm.fields.assemblageRelation.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
+        expect(featureSegmentForm.fields.chronologyArgument.inputType).toBe('checkboxes');
         expect(findForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
+        expect(findForm.fields.typologyArgument.inputType).toBe('checkboxes');
+        expect(findForm.fields.chronologyArgument.inputType).toBe('checkboxes');
+        expect(findForm.fields.assemblageRelation.inputType).toBe('checkboxes');
         expect(sampleForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
         expect(featureForm.fields.firstExposureRecord.inputType).toBe('checkboxes');
         expect(config.forms['FeatureSegment:default'].fields.firstExposureRecord.inputType).toBe('checkboxes');
@@ -106,8 +113,15 @@ describe('KoreanFieldwork project configuration', () => {
         expect(surveyForm.valuelists.surfaceSurveyBiasControl).toBe('KoreanFieldwork-surfaceSurveyBiasControl');
         expect(surveyForm.valuelists.surfaceSurveyFollowUp).toBe('KoreanFieldwork-surfaceSurveyFollowUp');
         expect(featureForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
+        expect(featureForm.valuelists.typologyArgument).toBe('KoreanFieldwork-typologyArgument');
+        expect(featureForm.valuelists.chronologyArgument).toBe('KoreanFieldwork-chronologyArgument');
+        expect(featureForm.valuelists.assemblageRelation).toBe('KoreanFieldwork-assemblageRelation');
         expect(featureSegmentForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
+        expect(featureSegmentForm.valuelists.chronologyArgument).toBe('KoreanFieldwork-chronologyArgument');
         expect(findForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
+        expect(findForm.valuelists.typologyArgument).toBe('KoreanFieldwork-typologyArgument');
+        expect(findForm.valuelists.chronologyArgument).toBe('KoreanFieldwork-chronologyArgument');
+        expect(findForm.valuelists.assemblageRelation).toBe('KoreanFieldwork-assemblageRelation');
         expect(sampleForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
         expect(featureForm.valuelists.firstExposureRecord).toBe('KoreanFieldwork-firstExposureRecord');
         expect(featureForm.valuelists.fortificationHiddenGateFunction)
@@ -149,6 +163,9 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Surface survey observation');
         expect(languages.en.categories.Feature.fields.fieldOnlyMissingCheck.label)
             .toBe('Field-only missing check');
+        expect(languages.en.categories.Feature.fields.typologyArgument.label).toBe('Typology argument');
+        expect(languages.en.categories.Feature.fields.chronologyArgument.label).toBe('Chronology argument');
+        expect(languages.en.categories.Feature.fields.assemblageRelation.label).toBe('Assemblage relation');
         expect(languages.en.categories.Feature.fields.firstExposureRecord.label).toBe('First exposure record');
         expect(languages.en.categories.Feature.fields.fortificationHiddenGateFunction.label).toBe('Hidden gate function');
         expect(languages.en.categories.Feature.fields.fortificationParapetDetail.label).toBe('Parapet detail');
@@ -156,6 +173,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.Feature.fields.termSearchMapping.label).toBe('Term search mapping');
         expect(languages.en.categories.Find.fields.termAuthorityStatus.label).toBe('Term authority status');
         expect(languages.en.categories.Find.fields.termSearchMapping.label).toBe('Term search mapping');
+        expect(languages.en.categories.Find.fields.typologyArgument.label).toBe('Typology argument');
+        expect(languages.en.categories.Find.fields.chronologyArgument.label).toBe('Chronology argument');
+        expect(languages.en.categories.Find.fields.assemblageRelation.label).toBe('Assemblage relation');
         expect(languages.en.categories.Sample.fields.sampleCollectionHandling.label)
             .toBe('Sample collection handling');
         expect(languages.ko.categories.Operation.fields.fieldRecordQuality.label).toBeDefined();
@@ -206,6 +226,15 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-termSourcePriority']
             .values.domainSpecialistDictionary.label)
             .toBe('Domain specialist dictionary');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-typologyArgument']
+            .values.representativeAttribute.label)
+            .toBe('Representative attribute');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-chronologyArgument']
+            .values.alternativeChronology.label)
+            .toBe('Alternative chronology');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-assemblageRelation']
+            .values.accidentalAssociationRisk.label)
+            .toBe('Accidental association risk');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-sampleCollectionHandling'].values.lightShielded.label)
             .toBe('Light-shielded');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-fieldRecordQuality'].values.immediateRecording.label)

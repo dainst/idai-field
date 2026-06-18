@@ -32215,5 +32215,91 @@
       "noSilentRewrite",
       "pendingDecision"
     ]
+  },
+  "KoreanFieldwork-typologyArgument": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "representativeAttribute": {},
+      "variationRecorded": {},
+      "residualTraitReviewed": {},
+      "relatedArtifactGroup": {},
+      "attributeCombination": {},
+      "typeCandidate": {},
+      "typeConfirmed": {},
+      "alternativeClassification": {},
+      "specialistReviewNeeded": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "representativeAttribute",
+      "variationRecorded",
+      "residualTraitReviewed",
+      "relatedArtifactGroup",
+      "attributeCombination",
+      "typeCandidate",
+      "typeConfirmed",
+      "alternativeClassification",
+      "specialistReviewNeeded",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-chronologyArgument": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "stratigraphicRelation": {},
+      "associatedFinds": {},
+      "closedContext": {},
+      "absoluteDate": {},
+      "markerArtifact": {},
+      "existingChronologyApplied": {},
+      "regionalLagRisk": {},
+      "heirloomOrReuseRisk": {},
+      "alternativeChronology": {},
+      "acceptedBasis": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "stratigraphicRelation",
+      "associatedFinds",
+      "closedContext",
+      "absoluteDate",
+      "markerArtifact",
+      "existingChronologyApplied",
+      "regionalLagRisk",
+      "heirloomOrReuseRisk",
+      "alternativeChronology",
+      "acceptedBasis",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-assemblageRelation": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "sameLayer": {},
+      "sameDepositUnit": {},
+      "closedAssemblage": {},
+      "repeatedAssociation": {},
+      "accidentalAssociationRisk": {},
+      "secondaryDepositionRisk": {},
+      "mixedContextRisk": {},
+      "functionalDifferencePossible": {},
+      "contemporaneityUnclear": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "sameLayer",
+      "sameDepositUnit",
+      "closedAssemblage",
+      "repeatedAssociation",
+      "accidentalAssociationRisk",
+      "secondaryDepositionRisk",
+      "mixedContextRisk",
+      "functionalDifferencePossible",
+      "contemporaneityUnclear",
+      "pendingDecision"
+    ]
   }
 }

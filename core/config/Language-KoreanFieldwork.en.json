@@ -156,6 +156,15 @@
         "fieldRecordQuality": {
           "label": "Field record quality"
         },
+        "typologyArgument": {
+          "label": "Typology argument"
+        },
+        "chronologyArgument": {
+          "label": "Chronology argument"
+        },
+        "assemblageRelation": {
+          "label": "Assemblage relation"
+        },
         "fieldOnlyMissingCheck": {
           "label": "Field-only missing check"
         },
@@ -202,6 +211,9 @@
         "fieldRecordQuality": {
           "label": "Field record quality"
         },
+        "chronologyArgument": {
+          "label": "Chronology argument"
+        },
         "fieldOnlyMissingCheck": {
           "label": "Field-only missing check"
         },
@@ -229,6 +241,15 @@
       "fields": {
         "fieldRecordQuality": {
           "label": "Field record quality"
+        },
+        "typologyArgument": {
+          "label": "Typology argument"
+        },
+        "chronologyArgument": {
+          "label": "Chronology argument"
+        },
+        "assemblageRelation": {
+          "label": "Assemblage relation"
         },
         "fieldOnlyMissingCheck": {
           "label": "Field-only missing check"

@@ -22,9 +22,14 @@ describe('KoreanFieldwork project configuration', () => {
         const featureForm = config.forms['Feature:default'];
         const featureGroupForm = config.forms['FeatureGroup:default'];
         const featureSegmentForm = config.forms['FeatureSegment:default'];
+        const fieldRecordQualityReviewForm = config.forms.FieldRecordQualityReview;
         const findForm = config.forms['Find:default'];
         const sampleForm = config.forms['Sample:default'];
 
+        expect(fieldRecordQualityReviewForm.parent).toBe('Operation');
+        expect(fieldRecordQualityReviewForm.fields.reviewedRecordUnit.inputType).toBe('checkboxes');
+        expect(fieldRecordQualityReviewForm.fields.qualityReviewStage.inputType).toBe('checkboxes');
+        expect(fieldRecordQualityReviewForm.fields.qualityCorrectionBasis.inputType).toBe('checkboxes');
         expect(operationForm.fields.fieldRecordQuality.inputType).toBe('checkboxes');
         expect(operationForm.fields.personalNotebookArchive.inputType).toBe('checkboxes');
         expect(operationForm.fields.dailyLogContent.inputType).toBe('checkboxes');
@@ -63,6 +68,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-reportEvaluationFeedback');
         expect(projectForm.valuelists.reportEvaluationFeedback)
             .toBe('KoreanFieldwork-reportEvaluationFeedback');
+        expect(fieldRecordQualityReviewForm.valuelists.reviewedRecordUnit)
+            .toBe('KoreanFieldwork-reviewedRecordUnit');
+        expect(fieldRecordQualityReviewForm.valuelists.qualityReviewStage)
+            .toBe('KoreanFieldwork-qualityReviewStage');
+        expect(fieldRecordQualityReviewForm.valuelists.qualityCorrectionBasis)
+            .toBe('KoreanFieldwork-qualityCorrectionBasis');
+        expect(fieldRecordQualityReviewForm.valuelists.fieldRecordQuality)
+            .toBe('KoreanFieldwork-fieldRecordQuality');
         expect(surveyForm.valuelists.surfaceSurveyObservation).toBe('KoreanFieldwork-surfaceSurveyObservation');
         expect(surveyForm.valuelists.surfaceSurveyBiasControl).toBe('KoreanFieldwork-surfaceSurveyBiasControl');
         expect(surveyForm.valuelists.surfaceSurveyFollowUp).toBe('KoreanFieldwork-surfaceSurveyFollowUp');
@@ -90,6 +103,9 @@ describe('KoreanFieldwork project configuration', () => {
         const languages = configReader.getCustomLanguageConfigurations('KoreanFieldwork');
         const valuelistLanguages = configReader.getValuelistsLanguages();
 
+        expect(languages.en.categories.FieldRecordQualityReview.label).toBe('Field record quality review');
+        expect(languages.en.categories.FieldRecordQualityReview.fields.reviewedRecordUnit.label)
+            .toBe('Reviewed record unit');
         expect(languages.en.categories.Operation.fields.fieldRecordQuality.label).toBe('Field record quality');
         expect(languages.en.categories.Operation.fields.personalNotebookArchive.label).toBe('Personal notebook archive');
         expect(languages.en.categories.Operation.fields.dailyLogContent.label).toBe('Daily work log');
@@ -122,6 +138,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Same-day written');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-digitalSourcePreservation'].values.backupVerified.label)
             .toBe('Backup verified');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-reviewedRecordUnit'].values.personalNotebook.label)
+            .toBe('Personal notebook');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-qualityReviewStage'].values.sameDayReview.label)
+            .toBe('Same-day review');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-qualityCorrectionBasis'].values.noSilentRewrite.label)
+            .toBe('No silent rewrite');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-reportEvaluationFeedback'].values.selfEvaluation.label)
             .toBe('Institution self-evaluation');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveyObservation'].values.cutSectionStratigraphy.label)

@@ -1229,5 +1229,119 @@
       }
     },
     "description": "보고서 평가 결과를 점수표로 닫지 않고 원기록 재검토와 다음 현장 개선으로 되돌리기 위한 환류 항목 목록"
+  },
+  "KoreanFieldwork-reviewedRecordUnit": {
+    "values": {
+      "operationRecord": {
+        "label": "조사구역·작업기록"
+      },
+      "featureGroupRecord": {
+        "label": "유구군 기록"
+      },
+      "featureRecord": {
+        "label": "유구 기록"
+      },
+      "featureSegmentRecord": {
+        "label": "유구 세부 기록"
+      },
+      "findRecord": {
+        "label": "유물 기록"
+      },
+      "sampleRecord": {
+        "label": "시료 기록"
+      },
+      "dailyLog": {
+        "label": "조사일지"
+      },
+      "personalNotebook": {
+        "label": "개인 야장"
+      },
+      "drawing": {
+        "label": "도면"
+      },
+      "photo": {
+        "label": "사진"
+      },
+      "gisOr3d": {
+        "label": "GIS·3D 원자료"
+      },
+      "reportDraft": {
+        "label": "보고서 초안"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "현장기록 품질검수에서 어떤 원기록 단위를 검토했는지 표시하기 위한 목록"
+  },
+  "KoreanFieldwork-qualityReviewStage": {
+    "values": {
+      "sameDayReview": {
+        "label": "당일 검토"
+      },
+      "crossRecorderReview": {
+        "label": "조사자 교차검토"
+      },
+      "supervisorReview": {
+        "label": "책임조사원 검토"
+      },
+      "specialistReview": {
+        "label": "전문가 검토"
+      },
+      "reportPreparationReview": {
+        "label": "보고서 작성 전 검토"
+      },
+      "postEvaluationFeedback": {
+        "label": "보고서 평가 후 환류"
+      },
+      "sourceRecordCorrection": {
+        "label": "원기록 보완"
+      },
+      "closedAfterCorrection": {
+        "label": "보완 후 종료"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "현장기록 품질검수가 어느 단계에서 이루어졌는지 남기는 목록"
+  },
+  "KoreanFieldwork-qualityCorrectionBasis": {
+    "values": {
+      "factInterpretationSeparated": {
+        "label": "사실·해석 분리"
+      },
+      "correctionReasonLinked": {
+        "label": "수정 사유 연결"
+      },
+      "originalRecordPreserved": {
+        "label": "원기록 보존"
+      },
+      "changeHistoryRecorded": {
+        "label": "변경 이력 기록"
+      },
+      "reviewerNamed": {
+        "label": "검토자 명시"
+      },
+      "sourceMediaChecked": {
+        "label": "원사진·원도면 대조"
+      },
+      "numberConversionChecked": {
+        "label": "번호 변환 대조"
+      },
+      "contradictionRecorded": {
+        "label": "모순점 기록"
+      },
+      "nextFieldworkAction": {
+        "label": "다음 현장조치"
+      },
+      "noSilentRewrite": {
+        "label": "무근거 덮어쓰기 금지"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "품질검수 과정에서 수정·보완이 어떤 근거로 이루어졌는지 남기는 목록"
   }
 }

@@ -3,6 +3,20 @@
     "koreanFieldwork": "한국형 야장"
   },
   "categories": {
+    "FieldRecordQualityReview": {
+      "label": "현장기록 품질검수",
+      "fields": {
+        "qualityCorrectionBasis": {
+          "label": "수정·보완 근거"
+        },
+        "qualityReviewStage": {
+          "label": "품질검수 단계"
+        },
+        "reviewedRecordUnit": {
+          "label": "검수 대상 기록"
+        }
+      }
+    },
     "Project": {
       "fields": {
         "digitalSourcePreservation": {

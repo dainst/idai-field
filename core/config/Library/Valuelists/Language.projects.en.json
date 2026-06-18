@@ -12983,5 +12983,119 @@
       }
     },
     "description": "Korean report evaluation feedback items for linking evaluation results back to source records and future field improvements"
+  },
+  "KoreanFieldwork-reviewedRecordUnit": {
+    "values": {
+      "operationRecord": {
+        "label": "Operation record"
+      },
+      "featureGroupRecord": {
+        "label": "Feature group record"
+      },
+      "featureRecord": {
+        "label": "Feature record"
+      },
+      "featureSegmentRecord": {
+        "label": "Feature segment record"
+      },
+      "findRecord": {
+        "label": "Find record"
+      },
+      "sampleRecord": {
+        "label": "Sample record"
+      },
+      "dailyLog": {
+        "label": "Daily log"
+      },
+      "personalNotebook": {
+        "label": "Personal notebook"
+      },
+      "drawing": {
+        "label": "Drawing"
+      },
+      "photo": {
+        "label": "Photo"
+      },
+      "gisOr3d": {
+        "label": "GIS or 3D source"
+      },
+      "reportDraft": {
+        "label": "Report draft"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean field record quality review list for identifying which source record units were reviewed"
+  },
+  "KoreanFieldwork-qualityReviewStage": {
+    "values": {
+      "sameDayReview": {
+        "label": "Same-day review"
+      },
+      "crossRecorderReview": {
+        "label": "Cross-recorder review"
+      },
+      "supervisorReview": {
+        "label": "Supervisor review"
+      },
+      "specialistReview": {
+        "label": "Specialist review"
+      },
+      "reportPreparationReview": {
+        "label": "Pre-report review"
+      },
+      "postEvaluationFeedback": {
+        "label": "Post-evaluation feedback"
+      },
+      "sourceRecordCorrection": {
+        "label": "Source record correction"
+      },
+      "closedAfterCorrection": {
+        "label": "Closed after correction"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean field record quality review stages from same-day review through report evaluation feedback"
+  },
+  "KoreanFieldwork-qualityCorrectionBasis": {
+    "values": {
+      "factInterpretationSeparated": {
+        "label": "Fact and interpretation separated"
+      },
+      "correctionReasonLinked": {
+        "label": "Correction reason linked"
+      },
+      "originalRecordPreserved": {
+        "label": "Original record preserved"
+      },
+      "changeHistoryRecorded": {
+        "label": "Change history recorded"
+      },
+      "reviewerNamed": {
+        "label": "Reviewer named"
+      },
+      "sourceMediaChecked": {
+        "label": "Source media checked"
+      },
+      "numberConversionChecked": {
+        "label": "Number conversion checked"
+      },
+      "contradictionRecorded": {
+        "label": "Contradiction recorded"
+      },
+      "nextFieldworkAction": {
+        "label": "Next fieldwork action"
+      },
+      "noSilentRewrite": {
+        "label": "No silent rewrite"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean field record quality correction basis list for preserving review reasons and source-record traceability"
   }
 }

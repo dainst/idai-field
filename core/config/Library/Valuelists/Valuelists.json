@@ -31995,5 +31995,95 @@
       "supplementRequestTracked",
       "pendingDecision"
     ]
+  },
+  "KoreanFieldwork-reviewedRecordUnit": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "operationRecord": {},
+      "featureGroupRecord": {},
+      "featureRecord": {},
+      "featureSegmentRecord": {},
+      "findRecord": {},
+      "sampleRecord": {},
+      "dailyLog": {},
+      "personalNotebook": {},
+      "drawing": {},
+      "photo": {},
+      "gisOr3d": {},
+      "reportDraft": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "operationRecord",
+      "featureGroupRecord",
+      "featureRecord",
+      "featureSegmentRecord",
+      "findRecord",
+      "sampleRecord",
+      "dailyLog",
+      "personalNotebook",
+      "drawing",
+      "photo",
+      "gisOr3d",
+      "reportDraft",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-qualityReviewStage": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "sameDayReview": {},
+      "crossRecorderReview": {},
+      "supervisorReview": {},
+      "specialistReview": {},
+      "reportPreparationReview": {},
+      "postEvaluationFeedback": {},
+      "sourceRecordCorrection": {},
+      "closedAfterCorrection": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "sameDayReview",
+      "crossRecorderReview",
+      "supervisorReview",
+      "specialistReview",
+      "reportPreparationReview",
+      "postEvaluationFeedback",
+      "sourceRecordCorrection",
+      "closedAfterCorrection",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-qualityCorrectionBasis": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "factInterpretationSeparated": {},
+      "correctionReasonLinked": {},
+      "originalRecordPreserved": {},
+      "changeHistoryRecorded": {},
+      "reviewerNamed": {},
+      "sourceMediaChecked": {},
+      "numberConversionChecked": {},
+      "contradictionRecorded": {},
+      "nextFieldworkAction": {},
+      "noSilentRewrite": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "factInterpretationSeparated",
+      "correctionReasonLinked",
+      "originalRecordPreserved",
+      "changeHistoryRecorded",
+      "reviewerNamed",
+      "sourceMediaChecked",
+      "numberConversionChecked",
+      "contradictionRecorded",
+      "nextFieldworkAction",
+      "noSilentRewrite",
+      "pendingDecision"
+    ]
   }
 }

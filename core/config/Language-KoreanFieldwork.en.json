@@ -3,6 +3,20 @@
     "koreanFieldwork": "Korean fieldwork"
   },
   "categories": {
+    "FieldRecordQualityReview": {
+      "label": "Field record quality review",
+      "fields": {
+        "qualityCorrectionBasis": {
+          "label": "Correction basis"
+        },
+        "qualityReviewStage": {
+          "label": "Quality review stage"
+        },
+        "reviewedRecordUnit": {
+          "label": "Reviewed record unit"
+        }
+      }
+    },
     "Project": {
       "fields": {
         "digitalSourcePreservation": {

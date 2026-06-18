@@ -74,6 +74,62 @@
         }
       ]
     },
+    "FieldRecordQualityReview": {
+      "parent": "Operation",
+      "color": "#5f7f8f",
+      "hidden": [],
+      "fields": {
+        "reviewedRecordUnit": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "qualityCorrectionBasis": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "qualityReviewStage": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
+        "qualityCorrectionBasis": "KoreanFieldwork-qualityCorrectionBasis",
+        "qualityReviewStage": "KoreanFieldwork-qualityReviewStage",
+        "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
+        "reportCrossCheck": "KoreanFieldwork-reportCrossCheck",
+        "reportEvaluationFeedback": "KoreanFieldwork-reportEvaluationFeedback",
+        "reviewedRecordUnit": "KoreanFieldwork-reviewedRecordUnit",
+        "verificationState": "KoreanFieldwork-verificationState"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "supervisor", "processor", "campaign", "date"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "diaryAbstract"]
+        },
+        {
+          "name": "koreanFieldwork",
+          "fields": [
+            "reviewedRecordUnit",
+            "recordCreationTiming",
+            "fieldRecordQuality",
+            "qualityReviewStage",
+            "qualityCorrectionBasis",
+            "reportCrossCheck",
+            "reportEvaluationFeedback",
+            "verificationState"
+          ]
+        }
+      ]
+    },
     "Operation:default": {
       "hidden": [],
       "fields": {

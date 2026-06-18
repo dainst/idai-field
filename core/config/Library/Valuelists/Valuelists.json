@@ -33860,6 +33860,142 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-wetlandAnalysisSource": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "aerialPhotoSixtyOverlap": {},
+      "preDevelopmentAerialPhoto": {},
+      "multiDateAerialPhoto": {},
+      "oldMapReviewed": {},
+      "stereoscopeUsed": {},
+      "fiveThousandDigitalMap": {},
+      "geologicalMapReviewed": {},
+      "landAlterationMap": {},
+      "boringDataLinked": {},
+      "tenMeterContourMap": {},
+      "microContourMap": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "aerialPhotoSixtyOverlap",
+      "preDevelopmentAerialPhoto",
+      "multiDateAerialPhoto",
+      "oldMapReviewed",
+      "stereoscopeUsed",
+      "fiveThousandDigitalMap",
+      "geologicalMapReviewed",
+      "landAlterationMap",
+      "boringDataLinked",
+      "tenMeterContourMap",
+      "microContourMap",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-wetlandLandformInterpretation": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "regionalEnvironmentAnalysis": {},
+      "landformSurfaceAnalysis": {},
+      "landformZoneAnalysis": {},
+      "microLandformAnalysis": {},
+      "ultraMicroLandformAnalysis": {},
+      "contourIntervalRecorded": {},
+      "aerialPhotoInterpretation": {},
+      "fieldWalkover": {},
+      "drillingSurvey": {},
+      "boringColumnCompared": {},
+      "riverIntegrationContext": {},
+      "erosionDepositionRepeated": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "regionalEnvironmentAnalysis",
+      "landformSurfaceAnalysis",
+      "landformZoneAnalysis",
+      "microLandformAnalysis",
+      "ultraMicroLandformAnalysis",
+      "contourIntervalRecorded",
+      "aerialPhotoInterpretation",
+      "fieldWalkover",
+      "drillingSurvey",
+      "boringColumnCompared",
+      "riverIntegrationContext",
+      "erosionDepositionRepeated",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-wetlandSurveyTargeting": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "satelliteImageObservation": {},
+      "topographicMapObservation": {},
+      "fieldCheckCompared": {},
+      "stereoscopicInterpretation": {},
+      "repeatedVerification": {},
+      "paleoRiverMarked": {},
+      "naturalLeveeMarked": {},
+      "terraceSurfaceMarked": {},
+      "backswampMarked": {},
+      "trialTrenchPointSelected": {},
+      "surveyExtentSet": {},
+      "siteAbsenceNotAssumed": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "satelliteImageObservation",
+      "topographicMapObservation",
+      "fieldCheckCompared",
+      "stereoscopicInterpretation",
+      "repeatedVerification",
+      "paleoRiverMarked",
+      "naturalLeveeMarked",
+      "terraceSurfaceMarked",
+      "backswampMarked",
+      "trialTrenchPointSelected",
+      "surveyExtentSet",
+      "siteAbsenceNotAssumed",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-wetlandMicrotopographyRecord": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "singleEventDeposit": {},
+      "trialExcavationConfirmed": {},
+      "excavationConfirmed": {},
+      "environmentalChangeCause": {},
+      "siteImpactRecorded": {},
+      "buriedPaddySoil": {},
+      "backswampDeposit": {},
+      "pollenAnalysisLinked": {},
+      "phytolithAnalysisLinked": {},
+      "diatomAnalysisLinked": {},
+      "woodenArtifactContext": {},
+      "seedFaunalRemainContext": {},
+      "landscapeReconstructionLinked": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "singleEventDeposit",
+      "trialExcavationConfirmed",
+      "excavationConfirmed",
+      "environmentalChangeCause",
+      "siteImpactRecorded",
+      "buriedPaddySoil",
+      "backswampDeposit",
+      "pollenAnalysisLinked",
+      "phytolithAnalysisLinked",
+      "diatomAnalysisLinked",
+      "woodenArtifactContext",
+      "seedFaunalRemainContext",
+      "landscapeReconstructionLinked",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-alluvialLayerConceptAudit": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

@@ -14172,6 +14172,78 @@
     },
     "description": "Korean soil-map prediction checks for recording map scale, soil series, great soil groups, interpretive limits, field verification, preservation potential, and report feedback"
   },
+  "KoreanFieldwork-wetlandAnalysisSource": {
+    "values": {
+      "aerialPhotoSixtyOverlap": { "label": "Aerial photo 60% overlap" },
+      "preDevelopmentAerialPhoto": { "label": "Pre-development aerial photo" },
+      "multiDateAerialPhoto": { "label": "Multi-date aerial photos" },
+      "oldMapReviewed": { "label": "Old map reviewed" },
+      "stereoscopeUsed": { "label": "Stereoscope used" },
+      "fiveThousandDigitalMap": { "label": "1:5,000 digital map" },
+      "geologicalMapReviewed": { "label": "Geological map reviewed" },
+      "landAlterationMap": { "label": "Land alteration map" },
+      "boringDataLinked": { "label": "Boring data linked" },
+      "tenMeterContourMap": { "label": "10 m contour map" },
+      "microContourMap": { "label": "Micro-contour map" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean wetland analysis checks for collecting overlapping aerial photos, pre-development imagery, old maps, geological and alteration maps, boring data, and contour sources before field interpretation"
+  },
+  "KoreanFieldwork-wetlandLandformInterpretation": {
+    "values": {
+      "regionalEnvironmentAnalysis": { "label": "Regional environment analysis" },
+      "landformSurfaceAnalysis": { "label": "Landform-surface analysis" },
+      "landformZoneAnalysis": { "label": "Landform-zone analysis" },
+      "microLandformAnalysis": { "label": "Micro-landform analysis" },
+      "ultraMicroLandformAnalysis": { "label": "Ultra-micro-landform analysis" },
+      "contourIntervalRecorded": { "label": "Contour interval recorded" },
+      "aerialPhotoInterpretation": { "label": "Aerial-photo interpretation" },
+      "fieldWalkover": { "label": "Field walkover" },
+      "drillingSurvey": { "label": "Drilling survey" },
+      "boringColumnCompared": { "label": "Boring column compared" },
+      "riverIntegrationContext": { "label": "River integration context" },
+      "erosionDepositionRepeated": { "label": "Repeated erosion/deposition" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean wetland landform checks for moving from regional to micro-landform interpretation and recording contour, boring, river integration, and erosion/deposition evidence"
+  },
+  "KoreanFieldwork-wetlandSurveyTargeting": {
+    "values": {
+      "satelliteImageObservation": { "label": "Satellite image observation" },
+      "topographicMapObservation": { "label": "Topographic map observation" },
+      "fieldCheckCompared": { "label": "Field check compared" },
+      "stereoscopicInterpretation": { "label": "Stereoscopic interpretation" },
+      "repeatedVerification": { "label": "Repeated verification" },
+      "paleoRiverMarked": { "label": "Paleo-river marked" },
+      "naturalLeveeMarked": { "label": "Natural levee marked" },
+      "terraceSurfaceMarked": { "label": "Terrace surface marked" },
+      "backswampMarked": { "label": "Backswamp marked" },
+      "trialTrenchPointSelected": { "label": "Trial trench point selected" },
+      "surveyExtentSet": { "label": "Survey extent set" },
+      "siteAbsenceNotAssumed": { "label": "Site absence not assumed" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean wetland survey checks for turning interpretation into mapped paleo-river, natural levee, terrace, backswamp, trial trench, and survey-extent decisions"
+  },
+  "KoreanFieldwork-wetlandMicrotopographyRecord": {
+    "values": {
+      "singleEventDeposit": { "label": "Single-event deposit" },
+      "trialExcavationConfirmed": { "label": "Trial excavation confirmed" },
+      "excavationConfirmed": { "label": "Excavation confirmed" },
+      "environmentalChangeCause": { "label": "Environmental change cause" },
+      "siteImpactRecorded": { "label": "Site impact recorded" },
+      "buriedPaddySoil": { "label": "Buried paddy soil" },
+      "backswampDeposit": { "label": "Backswamp deposit" },
+      "pollenAnalysisLinked": { "label": "Pollen analysis linked" },
+      "phytolithAnalysisLinked": { "label": "Phytolith analysis linked" },
+      "diatomAnalysisLinked": { "label": "Diatom analysis linked" },
+      "woodenArtifactContext": { "label": "Wooden artifact context" },
+      "seedFaunalRemainContext": { "label": "Seed/faunal-remain context" },
+      "landscapeReconstructionLinked": { "label": "Landscape reconstruction linked" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean wetland microtopography checks for single-event deposits, buried paddy soils, backswamp deposits, environmental proxy links, preserved organic contexts, and landscape reconstruction"
+  },
   "KoreanFieldwork-alluvialLayerConceptAudit": {
     "values": {
       "soilHorizonConcept": { "label": "Soil horizon concept" },

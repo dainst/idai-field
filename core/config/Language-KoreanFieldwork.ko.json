@@ -142,6 +142,15 @@
         "soilMapPredictionVerification": {
           "label": "토양도 예측 검증"
         },
+        "wetlandAnalysisSource": {
+          "label": "저습지 분석자료"
+        },
+        "wetlandLandformInterpretation": {
+          "label": "저습지 지형환경 분석"
+        },
+        "wetlandSurveyTargeting": {
+          "label": "저습지 판독·시굴 연결"
+        },
         "verificationState": {
           "label": "검증상태"
         }
@@ -354,6 +363,9 @@
         },
         "alluvialFormationProcess": {
           "label": "충적지 형성과정 근거"
+        },
+        "wetlandMicrotopographyRecord": {
+          "label": "저습지 극미지형 기록"
         },
         "recordCreationTiming": {
           "label": "기록 생성 시점"

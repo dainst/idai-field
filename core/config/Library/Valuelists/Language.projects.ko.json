@@ -2418,6 +2418,78 @@
     },
     "description": "정밀토양도와 토양조사보고서를 토양통, 대토양군, 지도 축척, 반영깊이 한계, 주변 유적·주민 제보, 실제 시굴·발굴 결과, 보존능 판단과 함께 검증하기 위한 목록"
   },
+  "KoreanFieldwork-wetlandAnalysisSource": {
+    "values": {
+      "aerialPhotoSixtyOverlap": { "label": "항공사진 60% 중첩" },
+      "preDevelopmentAerialPhoto": { "label": "개발 전 항공사진" },
+      "multiDateAerialPhoto": { "label": "촬영시기 다른 항공사진" },
+      "oldMapReviewed": { "label": "고지도 검토" },
+      "stereoscopeUsed": { "label": "입체경 사용" },
+      "fiveThousandDigitalMap": { "label": "1:5,000 전자지도" },
+      "geologicalMapReviewed": { "label": "지질도 검토" },
+      "landAlterationMap": { "label": "형질변경 지도" },
+      "boringDataLinked": { "label": "보링자료 연결" },
+      "tenMeterContourMap": { "label": "10m 등고선도" },
+      "microContourMap": { "label": "미세 등고선도" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "저습지 지표조사 전에 중첩 항공사진, 개발 전 항공사진, 고지도, 전자지도, 지질도, 형질변경 지도, 보링자료와 등고선도를 모아 분석 근거를 남기기 위한 목록"
+  },
+  "KoreanFieldwork-wetlandLandformInterpretation": {
+    "values": {
+      "regionalEnvironmentAnalysis": { "label": "지역환경 분석" },
+      "landformSurfaceAnalysis": { "label": "지형면 분석" },
+      "landformZoneAnalysis": { "label": "지형대 분석" },
+      "microLandformAnalysis": { "label": "미지형 분석" },
+      "ultraMicroLandformAnalysis": { "label": "극미지형 분석" },
+      "contourIntervalRecorded": { "label": "등고선 간격 기록" },
+      "aerialPhotoInterpretation": { "label": "항공사진 판독" },
+      "fieldWalkover": { "label": "현지조사" },
+      "drillingSurvey": { "label": "시추 조사" },
+      "boringColumnCompared": { "label": "보링·주상도 대조" },
+      "riverIntegrationContext": { "label": "하천 통합 맥락" },
+      "erosionDepositionRepeated": { "label": "침식·퇴적 반복" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "저습지를 단순 습윤지가 아니라 지역환경, 지형면, 지형대, 미지형, 극미지형 단계로 좁혀 읽고 하천 통합과 침식·퇴적 반복을 함께 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-wetlandSurveyTargeting": {
+    "values": {
+      "satelliteImageObservation": { "label": "위성사진 관찰" },
+      "topographicMapObservation": { "label": "지형도 관찰" },
+      "fieldCheckCompared": { "label": "현지답사 대조" },
+      "stereoscopicInterpretation": { "label": "입체 판독" },
+      "repeatedVerification": { "label": "반복 확인" },
+      "paleoRiverMarked": { "label": "고하천 표시" },
+      "naturalLeveeMarked": { "label": "자연제방 표시" },
+      "terraceSurfaceMarked": { "label": "단구면 표시" },
+      "backswampMarked": { "label": "배후습지 표시" },
+      "trialTrenchPointSelected": { "label": "시굴 지점 선정" },
+      "surveyExtentSet": { "label": "조사 범위 설정" },
+      "siteAbsenceNotAssumed": { "label": "유적 부재 단정 금지" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "저습지 판독 결과를 고하천, 자연제방, 단구면, 배후습지 표시와 시굴 지점·조사 범위 선정으로 연결하고 유적 부재 단정을 피하기 위한 목록"
+  },
+  "KoreanFieldwork-wetlandMicrotopographyRecord": {
+    "values": {
+      "singleEventDeposit": { "label": "1회성 퇴적" },
+      "trialExcavationConfirmed": { "label": "시굴 확인" },
+      "excavationConfirmed": { "label": "발굴 확인" },
+      "environmentalChangeCause": { "label": "환경변화 원인" },
+      "siteImpactRecorded": { "label": "유적 영향 기록" },
+      "buriedPaddySoil": { "label": "수전 매몰토층" },
+      "backswampDeposit": { "label": "배후습지 퇴적" },
+      "pollenAnalysisLinked": { "label": "화분분석 연결" },
+      "phytolithAnalysisLinked": { "label": "식물규산체 분석 연결" },
+      "diatomAnalysisLinked": { "label": "규조분석 연결" },
+      "woodenArtifactContext": { "label": "목재유물 맥락" },
+      "seedFaunalRemainContext": { "label": "종자·동물유체 맥락" },
+      "landscapeReconstructionLinked": { "label": "유적경관 복원 연결" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "저습지 극미지형과 실제 시굴·발굴에서 확인한 1회성 퇴적, 수전 매몰토층, 배후습지 퇴적, 환경분석과 유적경관 복원 연결을 기록하기 위한 목록"
+  },
   "KoreanFieldwork-alluvialLayerConceptAudit": {
     "values": {
       "soilHorizonConcept": { "label": "토양층위 개념" },

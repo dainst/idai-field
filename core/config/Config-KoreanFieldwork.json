@@ -331,6 +331,18 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "wetlandAnalysisSource": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "wetlandLandformInterpretation": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "wetlandSurveyTargeting": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "verificationState": {
           "inputType": "dropdown",
           "constraintIndexed": true
@@ -350,6 +362,9 @@
         "gisPredictionFieldVerification": "KoreanFieldwork-gisPredictionFieldVerification",
         "alluvialLandformSurvey": "KoreanFieldwork-alluvialLandformSurvey",
         "soilMapPredictionVerification": "KoreanFieldwork-soilMapPredictionVerification",
+        "wetlandAnalysisSource": "KoreanFieldwork-wetlandAnalysisSource",
+        "wetlandLandformInterpretation": "KoreanFieldwork-wetlandLandformInterpretation",
+        "wetlandSurveyTargeting": "KoreanFieldwork-wetlandSurveyTargeting",
         "verificationState": "KoreanFieldwork-verificationState"
       },
       "groups": [
@@ -371,6 +386,9 @@
             "gisPredictionFieldVerification",
             "alluvialLandformSurvey",
             "soilMapPredictionVerification",
+            "wetlandAnalysisSource",
+            "wetlandLandformInterpretation",
+            "wetlandSurveyTargeting",
             "fieldRecordQuality",
             "recordCreationTiming",
             "verificationState"
@@ -922,6 +940,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "wetlandMicrotopographyRecord": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "recordCreationTiming": {
           "inputType": "dropdown",
           "constraintIndexed": true
@@ -952,6 +974,7 @@
         "alluvialLayerConceptAudit": "KoreanFieldwork-alluvialLayerConceptAudit",
         "alluvialSurfaceAttribution": "KoreanFieldwork-alluvialSurfaceAttribution",
         "alluvialFormationProcess": "KoreanFieldwork-alluvialFormationProcess",
+        "wetlandMicrotopographyRecord": "KoreanFieldwork-wetlandMicrotopographyRecord",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "termRelation": "KoreanFieldwork-termRelation",
         "termSearchMapping": "KoreanFieldwork-termSearchMapping",
@@ -986,6 +1009,7 @@
             "alluvialLayerConceptAudit",
             "alluvialSurfaceAttribution",
             "alluvialFormationProcess",
+            "wetlandMicrotopographyRecord",
             "recordCreationTiming",
             "verificationState",
             "termRelation",

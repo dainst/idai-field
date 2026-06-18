@@ -59,6 +59,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(surveyForm.fields.gisPredictionFieldVerification.inputType).toBe('checkboxes');
         expect(surveyForm.fields.alluvialLandformSurvey.inputType).toBe('checkboxes');
         expect(surveyForm.fields.soilMapPredictionVerification.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.wetlandAnalysisSource.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.wetlandLandformInterpretation.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.wetlandSurveyTargeting.inputType).toBe('checkboxes');
         expect(featureForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
         expect(featureForm.fields.typologyArgument.inputType).toBe('checkboxes');
         expect(featureForm.fields.chronologyArgument.inputType).toBe('checkboxes');
@@ -102,6 +105,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureSegmentForm.fields.alluvialLayerConceptAudit.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.alluvialSurfaceAttribution.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.alluvialFormationProcess.inputType).toBe('checkboxes');
+        expect(featureSegmentForm.fields.wetlandMicrotopographyRecord.inputType).toBe('checkboxes');
         expect(findForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
         expect(findForm.fields.artifactHandlingWorkflow.inputType).toBe('checkboxes');
         expect(findForm.fields.artifactQuantityBasis.inputType).toBe('checkboxes');
@@ -231,6 +235,11 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-alluvialLandformSurvey');
         expect(surveyForm.valuelists.soilMapPredictionVerification)
             .toBe('KoreanFieldwork-soilMapPredictionVerification');
+        expect(surveyForm.valuelists.wetlandAnalysisSource).toBe('KoreanFieldwork-wetlandAnalysisSource');
+        expect(surveyForm.valuelists.wetlandLandformInterpretation)
+            .toBe('KoreanFieldwork-wetlandLandformInterpretation');
+        expect(surveyForm.valuelists.wetlandSurveyTargeting)
+            .toBe('KoreanFieldwork-wetlandSurveyTargeting');
         expect(featureForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
         expect(featureForm.valuelists.typologyArgument).toBe('KoreanFieldwork-typologyArgument');
         expect(featureForm.valuelists.chronologyArgument).toBe('KoreanFieldwork-chronologyArgument');
@@ -309,6 +318,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-alluvialSurfaceAttribution');
         expect(featureSegmentForm.valuelists.alluvialFormationProcess)
             .toBe('KoreanFieldwork-alluvialFormationProcess');
+        expect(featureSegmentForm.valuelists.wetlandMicrotopographyRecord)
+            .toBe('KoreanFieldwork-wetlandMicrotopographyRecord');
         expect(findForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
         expect(findForm.valuelists.artifactHandlingWorkflow).toBe('KoreanFieldwork-artifactHandlingWorkflow');
         expect(findForm.valuelists.artifactQuantityBasis).toBe('KoreanFieldwork-artifactQuantityBasis');
@@ -467,6 +478,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Alluvial landform survey');
         expect(languages.en.categories.Survey.fields.soilMapPredictionVerification.label)
             .toBe('Soil map prediction verification');
+        expect(languages.en.categories.Survey.fields.wetlandAnalysisSource.label)
+            .toBe('Wetland analysis source');
+        expect(languages.en.categories.Survey.fields.wetlandLandformInterpretation.label)
+            .toBe('Wetland landform interpretation');
+        expect(languages.en.categories.Survey.fields.wetlandSurveyTargeting.label)
+            .toBe('Wetland interpretation and trench targeting');
         expect(languages.en.categories.Feature.fields.fieldOnlyMissingCheck.label)
             .toBe('Field-only missing check');
         expect(languages.en.categories.Feature.fields.typologyArgument.label).toBe('Typology argument');
@@ -545,6 +562,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Alluvial surface attribution');
         expect(languages.en.categories.FeatureSegment.fields.alluvialFormationProcess.label)
             .toBe('Alluvial formation process');
+        expect(languages.en.categories.FeatureSegment.fields.wetlandMicrotopographyRecord.label)
+            .toBe('Wetland microtopography record');
         expect(languages.en.categories.Find.fields.termAuthorityStatus.label).toBe('Term authority status');
         expect(languages.en.categories.Find.fields.termSearchMapping.label).toBe('Term search mapping');
         expect(languages.en.categories.Find.fields.artifactHandlingWorkflow.label)
@@ -710,6 +729,15 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-soilMapPredictionVerification']
             .values.soilMapDepthLimitChecked.label)
             .toBe('Soil map depth limit checked');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-wetlandAnalysisSource']
+            .values.preDevelopmentAerialPhoto.label)
+            .toBe('Pre-development aerial photo');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-wetlandLandformInterpretation']
+            .values.ultraMicroLandformAnalysis.label)
+            .toBe('Ultra-micro-landform analysis');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-wetlandSurveyTargeting']
+            .values.trialTrenchPointSelected.label)
+            .toBe('Trial trench point selected');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-alluvialLayerConceptAudit']
             .values.abLayerSetRecorded.label)
             .toBe('a+b layer set recorded');
@@ -719,6 +747,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-alluvialFormationProcess']
             .values.floodDepositCandidate.label)
             .toBe('Flood deposit candidate');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-wetlandMicrotopographyRecord']
+            .values.buriedPaddySoil.label)
+            .toBe('Buried paddy soil');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-fieldOnlyMissingCheck'].values.preRemovalCondition.label)
             .toBe('Pre-removal condition');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactHandlingWorkflow'].values.stateVesting.label)

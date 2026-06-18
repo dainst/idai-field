@@ -142,6 +142,15 @@
         "soilMapPredictionVerification": {
           "label": "Soil map prediction verification"
         },
+        "wetlandAnalysisSource": {
+          "label": "Wetland analysis source"
+        },
+        "wetlandLandformInterpretation": {
+          "label": "Wetland landform interpretation"
+        },
+        "wetlandSurveyTargeting": {
+          "label": "Wetland interpretation and trench targeting"
+        },
         "verificationState": {
           "label": "Verification state"
         }
@@ -354,6 +363,9 @@
         },
         "alluvialFormationProcess": {
           "label": "Alluvial formation process"
+        },
+        "wetlandMicrotopographyRecord": {
+          "label": "Wetland microtopography record"
         },
         "recordCreationTiming": {
           "label": "Record creation timing"

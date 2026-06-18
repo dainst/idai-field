@@ -64,6 +64,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureSegmentForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.chronologyArgument.inputType).toBe('checkboxes');
         expect(findForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
+        expect(findForm.fields.artifactHandlingWorkflow.inputType).toBe('checkboxes');
+        expect(findForm.fields.artifactQuantityBasis.inputType).toBe('checkboxes');
+        expect(findForm.fields.storageEnvironmentControl.inputType).toBe('checkboxes');
         expect(findForm.fields.typologyArgument.inputType).toBe('checkboxes');
         expect(findForm.fields.chronologyArgument.inputType).toBe('checkboxes');
         expect(findForm.fields.assemblageRelation.inputType).toBe('checkboxes');
@@ -146,6 +149,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureSegmentForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
         expect(featureSegmentForm.valuelists.chronologyArgument).toBe('KoreanFieldwork-chronologyArgument');
         expect(findForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
+        expect(findForm.valuelists.artifactHandlingWorkflow).toBe('KoreanFieldwork-artifactHandlingWorkflow');
+        expect(findForm.valuelists.artifactQuantityBasis).toBe('KoreanFieldwork-artifactQuantityBasis');
+        expect(findForm.valuelists.storageEnvironmentControl).toBe('KoreanFieldwork-storageEnvironmentControl');
         expect(findForm.valuelists.typologyArgument).toBe('KoreanFieldwork-typologyArgument');
         expect(findForm.valuelists.chronologyArgument).toBe('KoreanFieldwork-chronologyArgument');
         expect(findForm.valuelists.assemblageRelation).toBe('KoreanFieldwork-assemblageRelation');
@@ -216,6 +222,11 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.Feature.fields.termSearchMapping.label).toBe('Term search mapping');
         expect(languages.en.categories.Find.fields.termAuthorityStatus.label).toBe('Term authority status');
         expect(languages.en.categories.Find.fields.termSearchMapping.label).toBe('Term search mapping');
+        expect(languages.en.categories.Find.fields.artifactHandlingWorkflow.label)
+            .toBe('Artifact handling workflow');
+        expect(languages.en.categories.Find.fields.artifactQuantityBasis.label).toBe('Artifact quantity basis');
+        expect(languages.en.categories.Find.fields.storageEnvironmentControl.label)
+            .toBe('Storage environment control');
         expect(languages.en.categories.Find.fields.typologyArgument.label).toBe('Typology argument');
         expect(languages.en.categories.Find.fields.chronologyArgument.label).toBe('Chronology argument');
         expect(languages.en.categories.Find.fields.assemblageRelation.label).toBe('Assemblage relation');
@@ -261,6 +272,13 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Missed candidate');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-fieldOnlyMissingCheck'].values.preRemovalCondition.label)
             .toBe('Pre-removal condition');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactHandlingWorkflow'].values.stateVesting.label)
+            .toBe('State vesting');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactQuantityBasis'].values.sameObjectConfirmed.label)
+            .toBe('Same object confirmed');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-storageEnvironmentControl']
+            .values.currentStandardCrossCheckNeeded.label)
+            .toBe('Current standard cross-check needed');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-firstExposureRecord'].values.shoulderLineRecorded.label)
             .toBe('Shoulder line recorded');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-pitDwellingExposureBaulk']

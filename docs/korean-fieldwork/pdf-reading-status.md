@@ -1,6 +1,6 @@
 # PDF 판독 상태
 
-마지막 갱신: 2026-06-18
+마지막 갱신: 2026-06-19
 
 이 문서는 사용자가 `C:\Users\nuri9\Downloads`에 제공한 한국 고고학 방법론 PDF와 보조 자료군의 판독 상태를 이어받기 위한 작업 기록이다. 원문 PDF는 저장소에 넣지 않고, 추출 텍스트와 권별 분석 노트만 작업 근거로 사용한다.
 
@@ -47,6 +47,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 기존 방법론 10종은 이 문서에서 1차 판독 묶음으로 닫아 둔다. 새로 제공되는 고고학사전과 조사방법론 자료는 별도 자료군으로 목록화하고, 작업 이력은 이 문서와 `source-inventory.md`에 남기며, 권별 노트와 모델 문서는 조사 절차·관찰 항목·판단 근거 중심으로 유지한다.
 
+2026-06-19 유물 정리·보관 장도 다시 대조했다. 현장수습, 응급처치, 보존처리, 보고서 작성, 선별회의, 비파괴조사, 컨디션 체크, 국가귀속, 포장·이송, 이관은 수습번호 뒤에 흩어질 업무가 아니라 한 유물 카드에서 이어져야 한다. 또한 보고서·국가귀속 수량은 파편 수만으로 계산하지 않고 행정 건수, 물리 점수, 동일개체, 부속구, 실제수량 병기, 근거사진을 분리해야 하며, 수장환경은 교재 기준을 고정 규칙으로 쓰기보다 현재 기준 대조, 실측 온습도, 재질별 범위, 일탈 기록으로 관리해야 한다. 이 묶음은 `Find` 화면의 `artifactHandlingWorkflow`, `artifactQuantityBasis`, `storageEnvironmentControl` 값 목록으로 옮겼다.
+
 ## 보조 자료군 판독 현황
 
 새 보조 자료군은 [보조 자료군 목록과 우선순위](supplemental-source-inventory.md)에서 상세 관리한다. 현재 상태는 다음과 같다.
@@ -71,6 +73,7 @@ C:\Users\nuri9\Downloads\조사방법론
 3. 제2권은 구석기 편년 판단, 제4기 지질·고토양·토양쐐기, 석기 재질 표준화, 현재 내륙화된 패총 입지 가능성을 재독해 보강했고, 구석기 앞 장을 다시 대조해 층위 재검토와 사용흔 분석 후보 석기 처리까지 추가했다. 남은 작업은 깨진 한자·지명·도표 제목과 사례별 세부 수치 교정이다.
 4. 제3권 건물지는 OCR 전체 재독해를 마치고 한국형 야장 항목을 확장했다. 제6권은 충적지 층서의 a/b 세트와 유구면·검출면 판정에 더해 도표·사례 색인, 라미나/층리면 관계, 색조 변화 오인위험, 유구 소속층위, 정밀토양도 사례검증을 추가 보강했다. 남은 작업은 깨진 한자·지명·도표 제목과 사례별 수치 교정이다. 제5·6권 OCR 자료도 필요한 범위에서 같은 방식으로 교정한다.
 5. 권별 노트에서 뽑은 값 목록을 `core/config/Library/Valuelists` 쪽 실제 한국형 구성으로 옮긴다. 1차로 기록 생성 시점, 검증상태, 용어관계, 유적 패키지, 시료 목적, 보고서 교차검토 목록을 `KoreanFieldwork-*` 프로젝트 값 목록으로 추가했다. 이번 보강에서는 강의자료의 공통 실무축인 현장기록 품질, 현장시점 누락점검, 개인 야장 공적기록화, 디지털 원자료 보존, 일일 작업기록, 일지 증거 역할, 일지 검토를 실제 구성에 추가했고, 성곽 성문·방어 부속시설, 수문·수구, 왜성 해자를 `Feature` 전문 값 목록으로 추가했다. 이어 자연과학 시료 채취 장의 목탄·목재 즉시 채취, TL/OSL 차광, 화분·규조 표면 제거, 수침목재 습윤 유지, DNA 장갑 착용, 탄화곡물 개별 보관 원칙을 `Sample` 화면의 시료 채취·보관 목록으로 옮겼고, 보고서 평가 환류를 `Project`와 `Operation` 화면에 추가했다. `FieldRecordQualityReview`는 `Operation` 하위 독립 카드로 두고 `KoreanFieldwork-reviewedRecordUnit`, `KoreanFieldwork-qualityReviewStage`, `KoreanFieldwork-qualityCorrectionBasis`를 연결했다. `DailyLog`도 `Operation` 하위 독립 카드로 두고 `KoreanFieldwork-dailyLogContent`, `KoreanFieldwork-dailyLogEvidenceRole`, `KoreanFieldwork-dailyLogReview`를 연결했다. `TermAuthority`는 `FeatureGroup` 하위 독립 카드로 두고 `KoreanFieldwork-termDictionaryDomain`, `KoreanFieldwork-termApplicationScope`, `KoreanFieldwork-termSourcePriority`, `KoreanFieldwork-termRelation`, `KoreanFieldwork-termSearchMapping`, `KoreanFieldwork-termAuthorityStatus`를 연결했다. 형식학 교재에서 뽑은 `KoreanFieldwork-typologyArgument`, `KoreanFieldwork-chronologyArgument`, `KoreanFieldwork-assemblageRelation`은 `Feature`와 `Find`에 배치하고 `FeatureSegment`에는 편년 논증을 배치했다. 수혈건물지·수혈주거지 현장팁은 `KoreanFieldwork-pitDwellingExposureBaulk`, `KoreanFieldwork-pitDwellingFloorFacility`, `KoreanFieldwork-pitDwellingFireEvidence`, `KoreanFieldwork-pitDwellingOverlapSequence`로 추가하고 `Feature` 화면에 배치했다. GIS·항공사진 예측검증 요구는 `KoreanFieldwork-gisPredictionEvidence`와 `KoreanFieldwork-gisPredictionFieldVerification`으로 추가하고, `Survey` 화면에 현장관찰·후속조치 목록과 함께 배치했다. 사진·도면 독해 요구는 `KoreanFieldwork-mediaEvidenceRole`과 `KoreanFieldwork-mediaQualityCheck`로 추가하고, `Photo`와 `Drawing` 화면에 원자료 보존·보고서 교차검토와 함께 배치했다. `Config-KoreanFieldwork.json`은 이 목록을 Project, Operation, Survey, FeatureGroup, Feature, FeatureSegment, Find, Sample, Photo, Drawing 화면에 연결하고, 현장시점 누락점검과 최초 노출 기록을 필수값 경고 흐름에 연결했다. 프로젝트 식별자 `korean-fieldwork`가 해당 구성을 불러오게 했다.
+   유물 정리·보관 요구는 `KoreanFieldwork-artifactHandlingWorkflow`, `KoreanFieldwork-artifactQuantityBasis`, `KoreanFieldwork-storageEnvironmentControl`로 추가하고 `Find` 화면에 배치했다.
 6. 샘플 조사 프로젝트를 만들어 고분, 패총, 제철유적 각각의 입력 흐름을 검증한다.
 
 ## 주의

@@ -272,6 +272,15 @@
         "fieldOnlyMissingCheck": {
           "label": "Field-only missing check"
         },
+        "artifactHandlingWorkflow": {
+          "label": "Artifact handling workflow"
+        },
+        "artifactQuantityBasis": {
+          "label": "Artifact quantity basis"
+        },
+        "storageEnvironmentControl": {
+          "label": "Storage environment control"
+        },
         "recordCreationTiming": {
           "label": "Record creation timing"
         },

@@ -133,6 +133,156 @@
     },
     "description": "층 경계, 유구 윤곽, 수습 전 상태, 사진 각도, 위치·고도·방향, 시료 위치처럼 현장 종료 뒤 복구하기 어려운 값의 누락을 점검하기 위한 목록"
   },
+  "KoreanFieldwork-artifactHandlingWorkflow": {
+    "values": {
+      "fieldCollection": {
+        "label": "현장수습"
+      },
+      "emergencyTreatment": {
+        "label": "응급처치"
+      },
+      "findConditionRecord": {
+        "label": "상태기록"
+      },
+      "recoveryManualApplied": {
+        "label": "수습매뉴얼 실행"
+      },
+      "conservationTreatment": {
+        "label": "보존처리"
+      },
+      "reportPreparation": {
+        "label": "보고서 작성"
+      },
+      "selectionMeeting": {
+        "label": "선별회의"
+      },
+      "nonDestructiveInvestigation": {
+        "label": "비파괴조사"
+      },
+      "conditionCheck": {
+        "label": "컨디션 체크"
+      },
+      "reportSubmission": {
+        "label": "보고서 제출"
+      },
+      "materialSpecificStorage": {
+        "label": "재질별 보관"
+      },
+      "stateVesting": {
+        "label": "국가귀속"
+      },
+      "packingTransport": {
+        "label": "포장·이송"
+      },
+      "transfer": {
+        "label": "이관"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "유물이 출토 위치와 수습번호만 남기고 끝나지 않도록 현장수습, 응급처치, 보존처리, 보고서, 선별회의, 국가귀속, 포장·이송, 이관을 하나의 생애주기로 추적하기 위한 목록"
+  },
+  "KoreanFieldwork-artifactQuantityBasis": {
+    "values": {
+      "administrativeLotCount": {
+        "label": "행정 건수"
+      },
+      "physicalItemCount": {
+        "label": "물리 점수"
+      },
+      "oneLotOneItem": {
+        "label": "1건 1점"
+      },
+      "oneLotTwoItems": {
+        "label": "1건 2점"
+      },
+      "oneLotManyItems": {
+        "label": "1건 다점"
+      },
+      "sameObjectConfirmed": {
+        "label": "동일개체 확인"
+      },
+      "componentRelationship": {
+        "label": "부속구 관계"
+      },
+      "actualCountAnnotated": {
+        "label": "실제수량 병기"
+      },
+      "compositeConservationUnit": {
+        "label": "복합 보존처리 단위"
+      },
+      "quantityEvidencePhoto": {
+        "label": "수량 근거 사진"
+      },
+      "quantityNote": {
+        "label": "수량 근거 비고"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "보고서·국가귀속용 수량을 파편 수로 자동 계산하지 않고 건, 점, 동일개체, 부속구, 실제 개수, 보존처리 단위와 근거사진을 분리하기 위한 목록"
+  },
+  "KoreanFieldwork-storageEnvironmentControl": {
+    "values": {
+      "storageSpace": {
+        "label": "수장공간"
+      },
+      "exhibitionSpace": {
+        "label": "전시공간"
+      },
+      "trainingStandardReference": {
+        "label": "교재 기준"
+      },
+      "currentStandardCrossCheckNeeded": {
+        "label": "현재 기준 대조 필요"
+      },
+      "temperature20PlusMinus4": {
+        "label": "온도 20±4℃"
+      },
+      "measuredTemperature": {
+        "label": "실측 온도"
+      },
+      "measuredHumidity": {
+        "label": "실측 습도"
+      },
+      "metalHumidity40_50": {
+        "label": "금속 습도 40~50%"
+      },
+      "ceramicStoneGlassHumidity40_60": {
+        "label": "도·토기·석재·유리·옥 습도 40~60%"
+      },
+      "paperTextileHumidity50_60": {
+        "label": "회화·고서적·직물 습도 50~60%"
+      },
+      "woodBoneAntlerHumidity50_60": {
+        "label": "목기·골·각 습도 50~60%"
+      },
+      "lacquerHumidity60_70": {
+        "label": "칠기 습도 60~70%"
+      },
+      "so2No2Limit10": {
+        "label": "SO2·NO2 10 이하"
+      },
+      "ozoneLimit2": {
+        "label": "O3 2 이하"
+      },
+      "lightUvSensitive": {
+        "label": "조도·자외선 민감"
+      },
+      "deviationRecorded": {
+        "label": "일탈 기록"
+      },
+      "regularInspection": {
+        "label": "정기점검"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "교재의 수장·전시 환경 기준을 고정 규칙이 아니라 현재 기준 대조, 실측값, 일탈 기록, 재질별 관리 상태로 추적하기 위한 목록"
+  },
   "KoreanFieldwork-firstExposureRecord": {
     "values": {
       "concurrentWithStripping": {

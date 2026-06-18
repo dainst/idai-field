@@ -11887,6 +11887,156 @@
     },
     "description": "Korean field-only missing checks for stratigraphic boundaries, feature outlines, pre-removal states, photo angles, spatial/elevation/orientation data, and sample points that cannot be recovered after fieldwork"
   },
+  "KoreanFieldwork-artifactHandlingWorkflow": {
+    "values": {
+      "fieldCollection": {
+        "label": "Field collection"
+      },
+      "emergencyTreatment": {
+        "label": "Emergency treatment"
+      },
+      "findConditionRecord": {
+        "label": "Condition record"
+      },
+      "recoveryManualApplied": {
+        "label": "Recovery manual applied"
+      },
+      "conservationTreatment": {
+        "label": "Conservation treatment"
+      },
+      "reportPreparation": {
+        "label": "Report preparation"
+      },
+      "selectionMeeting": {
+        "label": "Selection meeting"
+      },
+      "nonDestructiveInvestigation": {
+        "label": "Non-destructive investigation"
+      },
+      "conditionCheck": {
+        "label": "Condition check"
+      },
+      "reportSubmission": {
+        "label": "Report submission"
+      },
+      "materialSpecificStorage": {
+        "label": "Material-specific storage"
+      },
+      "stateVesting": {
+        "label": "State vesting"
+      },
+      "packingTransport": {
+        "label": "Packing and transport"
+      },
+      "transfer": {
+        "label": "Transfer"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean artifact lifecycle checks for tracking finds from field collection through emergency treatment, conservation, reports, selection, state vesting, packing, transport, and transfer"
+  },
+  "KoreanFieldwork-artifactQuantityBasis": {
+    "values": {
+      "administrativeLotCount": {
+        "label": "Administrative lot count"
+      },
+      "physicalItemCount": {
+        "label": "Physical item count"
+      },
+      "oneLotOneItem": {
+        "label": "One lot one item"
+      },
+      "oneLotTwoItems": {
+        "label": "One lot two items"
+      },
+      "oneLotManyItems": {
+        "label": "One lot many items"
+      },
+      "sameObjectConfirmed": {
+        "label": "Same object confirmed"
+      },
+      "componentRelationship": {
+        "label": "Component relationship"
+      },
+      "actualCountAnnotated": {
+        "label": "Actual count annotated"
+      },
+      "compositeConservationUnit": {
+        "label": "Composite conservation unit"
+      },
+      "quantityEvidencePhoto": {
+        "label": "Quantity evidence photo"
+      },
+      "quantityNote": {
+        "label": "Quantity note"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean artifact quantity basis checks for keeping administrative lots, physical item counts, same-object joins, components, actual counts, conservation units, and evidence photos separate"
+  },
+  "KoreanFieldwork-storageEnvironmentControl": {
+    "values": {
+      "storageSpace": {
+        "label": "Storage space"
+      },
+      "exhibitionSpace": {
+        "label": "Exhibition space"
+      },
+      "trainingStandardReference": {
+        "label": "Training standard reference"
+      },
+      "currentStandardCrossCheckNeeded": {
+        "label": "Current standard cross-check needed"
+      },
+      "temperature20PlusMinus4": {
+        "label": "Temperature 20+/-4 C"
+      },
+      "measuredTemperature": {
+        "label": "Measured temperature"
+      },
+      "measuredHumidity": {
+        "label": "Measured humidity"
+      },
+      "metalHumidity40_50": {
+        "label": "Metal humidity 40-50%"
+      },
+      "ceramicStoneGlassHumidity40_60": {
+        "label": "Ceramic/stone/glass humidity 40-60%"
+      },
+      "paperTextileHumidity50_60": {
+        "label": "Paper/textile humidity 50-60%"
+      },
+      "woodBoneAntlerHumidity50_60": {
+        "label": "Wood/bone/antler humidity 50-60%"
+      },
+      "lacquerHumidity60_70": {
+        "label": "Lacquer humidity 60-70%"
+      },
+      "so2No2Limit10": {
+        "label": "SO2/NO2 limit 10"
+      },
+      "ozoneLimit2": {
+        "label": "O3 limit 2"
+      },
+      "lightUvSensitive": {
+        "label": "Light/UV sensitive"
+      },
+      "deviationRecorded": {
+        "label": "Deviation recorded"
+      },
+      "regularInspection": {
+        "label": "Regular inspection"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean storage environment checks for treating training standards as reference values and tracking current-standard review, measured conditions, material ranges, deviations, and inspection"
+  },
   "KoreanFieldwork-firstExposureRecord": {
     "values": {
       "concurrentWithStripping": {

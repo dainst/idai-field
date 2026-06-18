@@ -793,6 +793,18 @@
           "mandatory": true,
           "constraintIndexed": true
         },
+        "artifactHandlingWorkflow": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "artifactQuantityBasis": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "storageEnvironmentControl": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "recordCreationTiming": {
           "inputType": "dropdown",
           "constraintIndexed": true
@@ -820,6 +832,9 @@
         "chronologyArgument": "KoreanFieldwork-chronologyArgument",
         "assemblageRelation": "KoreanFieldwork-assemblageRelation",
         "fieldOnlyMissingCheck": "KoreanFieldwork-fieldOnlyMissingCheck",
+        "artifactHandlingWorkflow": "KoreanFieldwork-artifactHandlingWorkflow",
+        "artifactQuantityBasis": "KoreanFieldwork-artifactQuantityBasis",
+        "storageEnvironmentControl": "KoreanFieldwork-storageEnvironmentControl",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "termRelation": "KoreanFieldwork-termRelation",
         "termSearchMapping": "KoreanFieldwork-termSearchMapping",
@@ -851,6 +866,9 @@
             "chronologyArgument",
             "assemblageRelation",
             "fieldOnlyMissingCheck",
+            "artifactHandlingWorkflow",
+            "artifactQuantityBasis",
+            "storageEnvironmentControl",
             "recordCreationTiming",
             "verificationState",
             "termRelation",

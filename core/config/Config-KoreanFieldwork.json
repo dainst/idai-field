@@ -495,6 +495,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "sampleCollectionHandling": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "verificationState": {
           "inputType": "dropdown",
           "constraintIndexed": true
@@ -504,6 +508,7 @@
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "samplePurpose": "KoreanFieldwork-samplePurpose",
+        "sampleCollectionHandling": "KoreanFieldwork-sampleCollectionHandling",
         "verificationState": "KoreanFieldwork-verificationState"
       },
       "groups": [
@@ -529,7 +534,7 @@
         },
         {
           "name": "koreanFieldwork",
-          "fields": ["samplePurpose", "fieldRecordQuality", "recordCreationTiming", "verificationState"]
+          "fields": ["samplePurpose", "sampleCollectionHandling", "fieldRecordQuality", "recordCreationTiming", "verificationState"]
         },
         {
           "name": "position",

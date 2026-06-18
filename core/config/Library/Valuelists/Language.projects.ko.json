@@ -481,6 +481,56 @@
     },
     "description": "시료명을 분석명으로 끝내지 않고 분석 질문과 채취 목적을 연결하기 위한 한국형 야장 목록"
   },
+  "KoreanFieldwork-sampleCollectionHandling": {
+    "values": {
+      "immediateCollection": {
+        "label": "즉시 채취"
+      },
+      "charcoalWoodImmediate": {
+        "label": "목탄·목재 노출 즉시"
+      },
+      "lightShielded": {
+        "label": "빛 차단"
+      },
+      "nightLowLightSampling": {
+        "label": "야간·저조도 채취"
+      },
+      "dedicatedSamplingTool": {
+        "label": "전용 채취도구"
+      },
+      "pollenSurfaceRemoved": {
+        "label": "화분·규조 표면 제거"
+      },
+      "pollenContaminationBlocked": {
+        "label": "현생 화분 오염 차단"
+      },
+      "waterloggedMoistKept": {
+        "label": "수침목재 습윤 유지"
+      },
+      "coldDarkStorage": {
+        "label": "냉암소 보관"
+      },
+      "avoidCrushing": {
+        "label": "분쇄 방지"
+      },
+      "humanRemainsShade": {
+        "label": "인골 직사광선 차단"
+      },
+      "dnaGloves": {
+        "label": "DNA 장갑 착용"
+      },
+      "carbonizedGrainSeparate": {
+        "label": "탄화곡물 개별 보관"
+      },
+      "contextMapLinked": {
+        "label": "위치도면 연결"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "목탄·목재, TL/OSL, 고고지자기, 화분·규조·식물규산체, 수침목재, 인골 DNA, 탄화곡물처럼 채취 순간의 빛·수분·오염·위치 조건이 분석 가능성을 바꾸는 시료를 관리하기 위한 목록"
+  },
   "KoreanFieldwork-fortificationGateFacility": {
     "values": {
       "entranceGate": {

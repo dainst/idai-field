@@ -12235,6 +12235,56 @@
     },
     "description": "Korean field notebook sample purposes for linking collection to analytical questions"
   },
+  "KoreanFieldwork-sampleCollectionHandling": {
+    "values": {
+      "immediateCollection": {
+        "label": "Immediate collection"
+      },
+      "charcoalWoodImmediate": {
+        "label": "Charcoal/wood at exposure"
+      },
+      "lightShielded": {
+        "label": "Light-shielded"
+      },
+      "nightLowLightSampling": {
+        "label": "Night or low-light sampling"
+      },
+      "dedicatedSamplingTool": {
+        "label": "Dedicated sampling tool"
+      },
+      "pollenSurfaceRemoved": {
+        "label": "Pollen/diatom surface removed"
+      },
+      "pollenContaminationBlocked": {
+        "label": "Modern pollen contamination blocked"
+      },
+      "waterloggedMoistKept": {
+        "label": "Waterlogged wood kept moist"
+      },
+      "coldDarkStorage": {
+        "label": "Cold dark storage"
+      },
+      "avoidCrushing": {
+        "label": "Crushing avoided"
+      },
+      "humanRemainsShade": {
+        "label": "Human remains shaded"
+      },
+      "dnaGloves": {
+        "label": "DNA gloves worn"
+      },
+      "carbonizedGrainSeparate": {
+        "label": "Carbonized grain separated"
+      },
+      "contextMapLinked": {
+        "label": "Context map linked"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean field notebook handling controls for samples whose analytical value depends on light, moisture, contamination, and mapped collection context"
+  },
   "KoreanFieldwork-fortificationGateFacility": {
     "values": {
       "entranceGate": {

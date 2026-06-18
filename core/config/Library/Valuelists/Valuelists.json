@@ -31422,6 +31422,44 @@
       "contaminationControl"
     ]
   },
+  "KoreanFieldwork-sampleCollectionHandling": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "immediateCollection": {},
+      "charcoalWoodImmediate": {},
+      "lightShielded": {},
+      "nightLowLightSampling": {},
+      "dedicatedSamplingTool": {},
+      "pollenSurfaceRemoved": {},
+      "pollenContaminationBlocked": {},
+      "waterloggedMoistKept": {},
+      "coldDarkStorage": {},
+      "avoidCrushing": {},
+      "humanRemainsShade": {},
+      "dnaGloves": {},
+      "carbonizedGrainSeparate": {},
+      "contextMapLinked": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "immediateCollection",
+      "charcoalWoodImmediate",
+      "lightShielded",
+      "nightLowLightSampling",
+      "dedicatedSamplingTool",
+      "pollenSurfaceRemoved",
+      "pollenContaminationBlocked",
+      "waterloggedMoistKept",
+      "coldDarkStorage",
+      "avoidCrushing",
+      "humanRemainsShade",
+      "dnaGloves",
+      "carbonizedGrainSeparate",
+      "contextMapLinked",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-fortificationGateFacility": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

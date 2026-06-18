@@ -158,6 +158,9 @@
         "samplePurpose": {
           "label": "시료 목적"
         },
+        "sampleCollectionHandling": {
+          "label": "시료 채취·보관"
+        },
         "verificationState": {
           "label": "검증상태"
         }

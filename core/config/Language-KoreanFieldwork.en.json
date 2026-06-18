@@ -158,6 +158,9 @@
         "samplePurpose": {
           "label": "Sample purpose"
         },
+        "sampleCollectionHandling": {
+          "label": "Sample collection handling"
+        },
         "verificationState": {
           "label": "Verification state"
         }

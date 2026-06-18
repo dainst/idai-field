@@ -231,6 +231,14 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "fortificationHiddenGateFunction": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "fortificationParapetDetail": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "fortificationWaterFacility": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -256,6 +264,8 @@
         "featurePackage": "KoreanFieldwork-featurePackage",
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
         "fortificationGateFacility": "KoreanFieldwork-fortificationGateFacility",
+        "fortificationHiddenGateFunction": "KoreanFieldwork-fortificationHiddenGateFunction",
+        "fortificationParapetDetail": "KoreanFieldwork-fortificationParapetDetail",
         "fortificationWaterFacility": "KoreanFieldwork-fortificationWaterFacility",
         "japaneseFortificationDitch": "KoreanFieldwork-japaneseFortificationDitch",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
@@ -285,6 +295,8 @@
             "featurePackage",
             "fieldRecordQuality",
             "fortificationGateFacility",
+            "fortificationHiddenGateFunction",
+            "fortificationParapetDetail",
             "fortificationWaterFacility",
             "japaneseFortificationDitch",
             "recordCreationTiming",

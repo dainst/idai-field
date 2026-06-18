@@ -12244,6 +12244,112 @@
     },
     "description": "Gate and defensive component list derived from the 2007 castle terminology source check and fortress dictionary reading"
   },
+  "KoreanFieldwork-fortificationHiddenGateFunction": {
+    "values": {
+      "concealedLocation": {
+        "label": "Concealed location"
+      },
+      "supplyTransport": {
+        "label": "Military supply transport"
+      },
+      "rescueRequest": {
+        "label": "Rescue request"
+      },
+      "counterattackRoute": {
+        "label": "Counterattack route"
+      },
+      "oneHorseWidth": {
+        "label": "One-horse width"
+      },
+      "noGateTower": {
+        "label": "No gate tower"
+      },
+      "noYukchuk": {
+        "label": "No gate platform"
+      },
+      "hongyeOpening": {
+        "label": "Arched opening"
+      },
+      "oseongjiPresent": {
+        "label": "Oseongji present"
+      },
+      "innerFlatParapet": {
+        "label": "Inner flat parapet"
+      },
+      "outerRoundParapet": {
+        "label": "Outer round parapet"
+      },
+      "stairPassage": {
+        "label": "Stair passage"
+      },
+      "unrestored": {
+        "label": "Unrestored"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Hidden-gate function list for recording concealment, supply transport, rescue, counterattack, and structural clues checked against the 2007 castle terminology source"
+  },
+  "KoreanFieldwork-fortificationParapetDetail": {
+    "values": {
+      "yeojang": {
+        "label": "Yeojang parapet"
+      },
+      "yeodam": {
+        "label": "Yeodam parapet wall"
+      },
+      "seonggakwi": {
+        "label": "Seonggakwi battlement"
+      },
+      "ta": {
+        "label": "Ta parapet unit"
+      },
+      "tagu": {
+        "label": "Tagu crenel"
+      },
+      "gunOpening": {
+        "label": "Gun opening"
+      },
+      "nearGunOpening": {
+        "label": "Near-range gun opening"
+      },
+      "farGunOpening": {
+        "label": "Far-range gun opening"
+      },
+      "arrowOpening": {
+        "label": "Arrow opening"
+      },
+      "parapetCapstone": {
+        "label": "Parapet capstone"
+      },
+      "roofTileCap": {
+        "label": "Roof-tile cap"
+      },
+      "brickParapet": {
+        "label": "Brick parapet"
+      },
+      "stoneParapet": {
+        "label": "Stone parapet"
+      },
+      "flatParapet": {
+        "label": "Flat parapet"
+      },
+      "roundParapet": {
+        "label": "Round parapet"
+      },
+      "parapetFoundationStone": {
+        "label": "Parapet foundation stone"
+      },
+      "defenderCount": {
+        "label": "Defender count"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Parapet detail list for recording crenels, gun openings, capstones, materials, form, and defender assignment instead of only presence or absence"
+  },
   "KoreanFieldwork-fortificationWaterFacility": {
     "values": {
       "waterGate": {

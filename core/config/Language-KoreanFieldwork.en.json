@@ -83,6 +83,12 @@
         "fortificationGateFacility": {
           "label": "Gate and defensive components"
         },
+        "fortificationHiddenGateFunction": {
+          "label": "Hidden gate function"
+        },
+        "fortificationParapetDetail": {
+          "label": "Parapet detail"
+        },
         "fortificationWaterFacility": {
           "label": "Water gate and drain"
         },

@@ -490,6 +490,112 @@
     },
     "description": "2007년 성곽 용어사전 원문 대조와 성곽·봉수편 독해에서 추린 성문·방어 부속시설 목록"
   },
+  "KoreanFieldwork-fortificationHiddenGateFunction": {
+    "values": {
+      "concealedLocation": {
+        "label": "은폐 입지"
+      },
+      "supplyTransport": {
+        "label": "군수물자 운반"
+      },
+      "rescueRequest": {
+        "label": "구원 요청"
+      },
+      "counterattackRoute": {
+        "label": "역습 통로"
+      },
+      "oneHorseWidth": {
+        "label": "말 한 마리 폭"
+      },
+      "noGateTower": {
+        "label": "문루 없음"
+      },
+      "noYukchuk": {
+        "label": "육축 없음"
+      },
+      "hongyeOpening": {
+        "label": "홍예 개구부"
+      },
+      "oseongjiPresent": {
+        "label": "오성지 있음"
+      },
+      "innerFlatParapet": {
+        "label": "내부 평여장"
+      },
+      "outerRoundParapet": {
+        "label": "외부 원여장"
+      },
+      "stairPassage": {
+        "label": "계단 통로"
+      },
+      "unrestored": {
+        "label": "미복원"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "2007년 성곽 용어사전 암문 원문 대조에서 확인한 은폐 통로, 운반, 구원 요청, 역습 기능과 구조 단서를 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-fortificationParapetDetail": {
+    "values": {
+      "yeojang": {
+        "label": "여장"
+      },
+      "yeodam": {
+        "label": "여담"
+      },
+      "seonggakwi": {
+        "label": "성가퀴"
+      },
+      "ta": {
+        "label": "타"
+      },
+      "tagu": {
+        "label": "타구"
+      },
+      "gunOpening": {
+        "label": "총안"
+      },
+      "nearGunOpening": {
+        "label": "근총안"
+      },
+      "farGunOpening": {
+        "label": "원총안"
+      },
+      "arrowOpening": {
+        "label": "전안"
+      },
+      "parapetCapstone": {
+        "label": "여장개석·옥개석"
+      },
+      "roofTileCap": {
+        "label": "옥개전"
+      },
+      "brickParapet": {
+        "label": "전돌여장"
+      },
+      "stoneParapet": {
+        "label": "석여장"
+      },
+      "flatParapet": {
+        "label": "평여장"
+      },
+      "roundParapet": {
+        "label": "원여장"
+      },
+      "parapetFoundationStone": {
+        "label": "여장기단석"
+      },
+      "defenderCount": {
+        "label": "수비 인원"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "여장을 단순 유무가 아니라 타구, 총안, 근총안, 원총안, 옥개석, 재료, 담당 수비 인원으로 나누어 기록하기 위한 목록"
+  },
   "KoreanFieldwork-fortificationWaterFacility": {
     "values": {
       "waterGate": {

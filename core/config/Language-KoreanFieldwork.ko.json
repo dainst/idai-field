@@ -83,6 +83,12 @@
         "fortificationGateFacility": {
           "label": "성문·방어 부속시설"
         },
+        "fortificationHiddenGateFunction": {
+          "label": "암문 기능"
+        },
+        "fortificationParapetDetail": {
+          "label": "여장 세부"
+        },
         "fortificationWaterFacility": {
           "label": "성곽 수문·수구"
         },

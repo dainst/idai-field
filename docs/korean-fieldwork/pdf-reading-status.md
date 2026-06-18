@@ -31,7 +31,7 @@ C:\Users\nuri9\AppData\Local\Temp\codex-idai-field-pdf-text
 | 2012 제7권 성곽 | `volume-07-direct.txt` | 174쪽 | `volume-07-fortresses.md`, 축성·성벽 구간·시설·보존·수리 기록 |
 | 2013 제8권 신석기·최신기법 | `volume-08-direct.txt` | 117쪽 | `volume-08-neolithic-sites.md`, 패총·신석기 토기·밭유구·고환경·연대·3D |
 | 2014 제9권 연구방법론 | `volume-09-direct.txt` | 217쪽 | `volume-09-research-methods.md`, 형식·편년 논증·민족지·실험·공개·분석·해외조사 |
-| 2020 제철유적 별책 | `volume-2020-direct.txt` | 374쪽 | `volume-2020-iron-production.md`, 제철 공정·문헌·민속·금속학 분석·복원실험 |
+| 2020 제철유적 별책 | `volume-2020-direct.txt` | 374쪽 | `volume-2020-iron-production.md`, 제철 공정·문헌·민속·금속학 분석·복원실험. 추가 재독해로 공정별 분석요건, 환원괴/반환원괴, 단조박편·입상재, 철정·단조철기 단면, 주조철기 조직, AMS·고고지자기 연대모델을 보강 |
 
 ## 현재 판단
 

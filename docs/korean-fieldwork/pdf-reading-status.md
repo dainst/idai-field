@@ -89,6 +89,7 @@ C:\Users\nuri9\Downloads\조사방법론
    패총·신석기·고환경 요구는 `KoreanFieldwork-shellMiddenStratigraphy`, `KoreanFieldwork-shellMiddenSettlementContext`, `KoreanFieldwork-neolithicSubsistenceEvidence`, `KoreanFieldwork-shellMiddenSamplingStrategy`, `KoreanFieldwork-paleoenvironmentProxySampling`으로 추가하고 `Feature`, `Find`, `Sample` 화면에 나누어 배치했다.
    청동기 주거·고인돌·환호·토기 용어 요구는 `KoreanFieldwork-bronzeAgeDwellingEvidence`, `KoreanFieldwork-dolmenStructureContext`, `KoreanFieldwork-bronzeAgeEnclosureInterpretation`, `KoreanFieldwork-bronzeAgePotteryTerminology`로 추가하고 `Feature`와 `Find` 화면에 나누어 배치했다.
    경작유구·논밭 조사 요구는 `KoreanFieldwork-cultivationFeatureContext`, `KoreanFieldwork-cultivationTrialTrenchStrategy`, `KoreanFieldwork-cultivationFeatureEvidence`, `KoreanFieldwork-cultivationChronologyAnalysis`로 추가하고 `Feature` 화면에 배치했다. 입지·물관리, 시굴 트렌치 방향, 판정 근거, 연대·분석 질문을 나누어 경작층이라는 단일 해석값으로 접히지 않게 했다.
+   기와가마·와요 조사 요구는 `KoreanFieldwork-tileKilnStructureContext`, `KoreanFieldwork-tileKilnExcavationControl`, `KoreanFieldwork-tileKilnPartInvestigation`, `KoreanFieldwork-tileKilnOperationSequence`, `KoreanFieldwork-tileKilnFindContext`, `KoreanFieldwork-tileKilnAnalysisPlan`로 추가했다. `Feature`에서는 생산공간, 제토·둑 설정, 부위별 조사, 가마군 운영·변천을, `Find`에서는 생산품·불량품·재활용·유입품과 층위별 문양을, `Sample`에서는 C14 위치별 시료, 고고지자기 다지점, OSL 차광, 태토·소비지 대조를 기록하게 했다.
 6. 샘플 조사 프로젝트를 만들어 고분, 패총, 제철유적 각각의 입력 흐름을 검증한다.
 
 ## 주의

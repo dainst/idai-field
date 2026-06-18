@@ -605,6 +605,22 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "tileKilnStructureContext": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "tileKilnExcavationControl": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "tileKilnPartInvestigation": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "tileKilnOperationSequence": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "fortificationGateFacility": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -671,6 +687,10 @@
         "cultivationTrialTrenchStrategy": "KoreanFieldwork-cultivationTrialTrenchStrategy",
         "cultivationFeatureEvidence": "KoreanFieldwork-cultivationFeatureEvidence",
         "cultivationChronologyAnalysis": "KoreanFieldwork-cultivationChronologyAnalysis",
+        "tileKilnStructureContext": "KoreanFieldwork-tileKilnStructureContext",
+        "tileKilnExcavationControl": "KoreanFieldwork-tileKilnExcavationControl",
+        "tileKilnPartInvestigation": "KoreanFieldwork-tileKilnPartInvestigation",
+        "tileKilnOperationSequence": "KoreanFieldwork-tileKilnOperationSequence",
         "fortificationGateFacility": "KoreanFieldwork-fortificationGateFacility",
         "fortificationHiddenGateFunction": "KoreanFieldwork-fortificationHiddenGateFunction",
         "fortificationParapetDetail": "KoreanFieldwork-fortificationParapetDetail",
@@ -726,6 +746,10 @@
             "cultivationTrialTrenchStrategy",
             "cultivationFeatureEvidence",
             "cultivationChronologyAnalysis",
+            "tileKilnStructureContext",
+            "tileKilnExcavationControl",
+            "tileKilnPartInvestigation",
+            "tileKilnOperationSequence",
             "fortificationGateFacility",
             "fortificationHiddenGateFunction",
             "fortificationParapetDetail",
@@ -929,6 +953,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "tileKilnFindContext": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "recordCreationTiming": {
           "inputType": "dropdown",
           "constraintIndexed": true
@@ -963,6 +991,7 @@
         "graveGoodsRitualContext": "KoreanFieldwork-graveGoodsRitualContext",
         "neolithicSubsistenceEvidence": "KoreanFieldwork-neolithicSubsistenceEvidence",
         "bronzeAgePotteryTerminology": "KoreanFieldwork-bronzeAgePotteryTerminology",
+        "tileKilnFindContext": "KoreanFieldwork-tileKilnFindContext",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "termRelation": "KoreanFieldwork-termRelation",
         "termSearchMapping": "KoreanFieldwork-termSearchMapping",
@@ -1001,6 +1030,7 @@
             "graveGoodsRitualContext",
             "neolithicSubsistenceEvidence",
             "bronzeAgePotteryTerminology",
+            "tileKilnFindContext",
             "recordCreationTiming",
             "verificationState",
             "termRelation",
@@ -1064,6 +1094,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "tileKilnAnalysisPlan": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "humanRemainsRecoveryAnalysis": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1088,6 +1122,7 @@
         "samplePurpose": "KoreanFieldwork-samplePurpose",
         "sampleCollectionHandling": "KoreanFieldwork-sampleCollectionHandling",
         "ironSampleAnalysisPlan": "KoreanFieldwork-ironSampleAnalysisPlan",
+        "tileKilnAnalysisPlan": "KoreanFieldwork-tileKilnAnalysisPlan",
         "humanRemainsRecoveryAnalysis": "KoreanFieldwork-humanRemainsRecoveryAnalysis",
         "shellMiddenSamplingStrategy": "KoreanFieldwork-shellMiddenSamplingStrategy",
         "paleoenvironmentProxySampling": "KoreanFieldwork-paleoenvironmentProxySampling",
@@ -1120,6 +1155,7 @@
             "samplePurpose",
             "sampleCollectionHandling",
             "ironSampleAnalysisPlan",
+            "tileKilnAnalysisPlan",
             "humanRemainsRecoveryAnalysis",
             "shellMiddenSamplingStrategy",
             "paleoenvironmentProxySampling",

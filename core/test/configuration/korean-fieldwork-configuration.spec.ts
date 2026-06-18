@@ -76,6 +76,10 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.fields.cultivationTrialTrenchStrategy.inputType).toBe('checkboxes');
         expect(featureForm.fields.cultivationFeatureEvidence.inputType).toBe('checkboxes');
         expect(featureForm.fields.cultivationChronologyAnalysis.inputType).toBe('checkboxes');
+        expect(featureForm.fields.tileKilnStructureContext.inputType).toBe('checkboxes');
+        expect(featureForm.fields.tileKilnExcavationControl.inputType).toBe('checkboxes');
+        expect(featureForm.fields.tileKilnPartInvestigation.inputType).toBe('checkboxes');
+        expect(featureForm.fields.tileKilnOperationSequence.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.chronologyArgument.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.alluvialLayerConceptAudit.inputType).toBe('checkboxes');
@@ -89,11 +93,13 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.fields.graveGoodsRitualContext.inputType).toBe('checkboxes');
         expect(findForm.fields.neolithicSubsistenceEvidence.inputType).toBe('checkboxes');
         expect(findForm.fields.bronzeAgePotteryTerminology.inputType).toBe('checkboxes');
+        expect(findForm.fields.tileKilnFindContext.inputType).toBe('checkboxes');
         expect(findForm.fields.typologyArgument.inputType).toBe('checkboxes');
         expect(findForm.fields.chronologyArgument.inputType).toBe('checkboxes');
         expect(findForm.fields.assemblageRelation.inputType).toBe('checkboxes');
         expect(sampleForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
         expect(sampleForm.fields.ironSampleAnalysisPlan.inputType).toBe('checkboxes');
+        expect(sampleForm.fields.tileKilnAnalysisPlan.inputType).toBe('checkboxes');
         expect(sampleForm.fields.humanRemainsRecoveryAnalysis.inputType).toBe('checkboxes');
         expect(sampleForm.fields.shellMiddenSamplingStrategy.inputType).toBe('checkboxes');
         expect(sampleForm.fields.paleoenvironmentProxySampling.inputType).toBe('checkboxes');
@@ -200,6 +206,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-cultivationFeatureEvidence');
         expect(featureForm.valuelists.cultivationChronologyAnalysis)
             .toBe('KoreanFieldwork-cultivationChronologyAnalysis');
+        expect(featureForm.valuelists.tileKilnStructureContext)
+            .toBe('KoreanFieldwork-tileKilnStructureContext');
+        expect(featureForm.valuelists.tileKilnExcavationControl)
+            .toBe('KoreanFieldwork-tileKilnExcavationControl');
+        expect(featureForm.valuelists.tileKilnPartInvestigation)
+            .toBe('KoreanFieldwork-tileKilnPartInvestigation');
+        expect(featureForm.valuelists.tileKilnOperationSequence)
+            .toBe('KoreanFieldwork-tileKilnOperationSequence');
         expect(featureSegmentForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
         expect(featureSegmentForm.valuelists.chronologyArgument).toBe('KoreanFieldwork-chronologyArgument');
         expect(featureSegmentForm.valuelists.alluvialLayerConceptAudit)
@@ -218,6 +232,7 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-neolithicSubsistenceEvidence');
         expect(findForm.valuelists.bronzeAgePotteryTerminology)
             .toBe('KoreanFieldwork-bronzeAgePotteryTerminology');
+        expect(findForm.valuelists.tileKilnFindContext).toBe('KoreanFieldwork-tileKilnFindContext');
         expect(findForm.valuelists.typologyArgument).toBe('KoreanFieldwork-typologyArgument');
         expect(findForm.valuelists.chronologyArgument).toBe('KoreanFieldwork-chronologyArgument');
         expect(findForm.valuelists.assemblageRelation).toBe('KoreanFieldwork-assemblageRelation');
@@ -234,6 +249,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(sampleForm.valuelists.sampleCollectionHandling)
             .toBe('KoreanFieldwork-sampleCollectionHandling');
         expect(sampleForm.valuelists.ironSampleAnalysisPlan).toBe('KoreanFieldwork-ironSampleAnalysisPlan');
+        expect(sampleForm.valuelists.tileKilnAnalysisPlan).toBe('KoreanFieldwork-tileKilnAnalysisPlan');
         expect(sampleForm.valuelists.humanRemainsRecoveryAnalysis)
             .toBe('KoreanFieldwork-humanRemainsRecoveryAnalysis');
         expect(sampleForm.valuelists.shellMiddenSamplingStrategy)
@@ -317,6 +333,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Cultivation feature evidence');
         expect(languages.en.categories.Feature.fields.cultivationChronologyAnalysis.label)
             .toBe('Cultivation chronology and analysis');
+        expect(languages.en.categories.Feature.fields.tileKilnStructureContext.label)
+            .toBe('Tile kiln structure context');
+        expect(languages.en.categories.Feature.fields.tileKilnExcavationControl.label)
+            .toBe('Tile kiln excavation control');
+        expect(languages.en.categories.Feature.fields.tileKilnPartInvestigation.label)
+            .toBe('Tile kiln part investigation');
+        expect(languages.en.categories.Feature.fields.tileKilnOperationSequence.label)
+            .toBe('Tile kiln operation sequence');
         expect(languages.en.categories.Feature.fields.fortificationHiddenGateFunction.label).toBe('Hidden gate function');
         expect(languages.en.categories.Feature.fields.fortificationParapetDetail.label).toBe('Parapet detail');
         expect(languages.en.categories.Feature.fields.termAuthorityStatus.label).toBe('Term authority status');
@@ -341,6 +365,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Neolithic subsistence evidence');
         expect(languages.en.categories.Find.fields.bronzeAgePotteryTerminology.label)
             .toBe('Bronze Age pottery terminology');
+        expect(languages.en.categories.Find.fields.tileKilnFindContext.label)
+            .toBe('Tile kiln find context');
         expect(languages.en.categories.Find.fields.typologyArgument.label).toBe('Typology argument');
         expect(languages.en.categories.Find.fields.chronologyArgument.label).toBe('Chronology argument');
         expect(languages.en.categories.Find.fields.assemblageRelation.label).toBe('Assemblage relation');
@@ -348,6 +374,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Sample collection handling');
         expect(languages.en.categories.Sample.fields.ironSampleAnalysisPlan.label)
             .toBe('Iron sample analysis plan');
+        expect(languages.en.categories.Sample.fields.tileKilnAnalysisPlan.label)
+            .toBe('Tile kiln analysis plan');
         expect(languages.en.categories.Sample.fields.humanRemainsRecoveryAnalysis.label)
             .toBe('Human remains recovery and analysis');
         expect(languages.en.categories.Sample.fields.shellMiddenSamplingStrategy.label)
@@ -488,6 +516,23 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-cultivationChronologyAnalysis']
             .values.analysisQuestionRecorded.label)
             .toBe('Analysis question recorded');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-tileKilnStructureContext'].values.ashDump.label)
+            .toBe('Ash dump');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-tileKilnExcavationControl']
+            .values.ashDumpLinkedBaulk.label)
+            .toBe('Ash dump linked baulk');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-tileKilnPartInvestigation']
+            .values.flueAbsentCaution.label)
+            .toBe('Flue absent caution');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-tileKilnOperationSequence']
+            .values.typeNotDateAlone.label)
+            .toBe('Type not date alone');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-tileKilnFindContext']
+            .values.patternByLayerRecorded.label)
+            .toBe('Pattern by layer recorded');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-tileKilnAnalysisPlan']
+            .values.consumerTileComparison.label)
+            .toBe('Consumer tile comparison');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-bronzeAgePotteryTerminology']
             .values.aliasMappingRequired.label)
             .toBe('Alias mapping required');
@@ -526,6 +571,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-cultivationFeatureContext']
             .values.cropNameNotClassification.label)
             .toBe('작물명으로 논밭 확정 금지');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-tileKilnFindContext']
+            .values.postAbandonmentIntrusion.label)
+            .toBe('폐기 후 유입품');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-fieldRecordQuality'].values.immediateRecording.label)
             .toBeDefined();
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-alluvialLayerConceptAudit']

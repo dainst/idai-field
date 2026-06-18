@@ -234,6 +234,18 @@
         "cultivationChronologyAnalysis": {
           "label": "Cultivation chronology and analysis"
         },
+        "tileKilnStructureContext": {
+          "label": "Tile kiln structure context"
+        },
+        "tileKilnExcavationControl": {
+          "label": "Tile kiln excavation control"
+        },
+        "tileKilnPartInvestigation": {
+          "label": "Tile kiln part investigation"
+        },
+        "tileKilnOperationSequence": {
+          "label": "Tile kiln operation sequence"
+        },
         "fortificationGateFacility": {
           "label": "Gate and defensive components"
         },
@@ -347,6 +359,9 @@
         "bronzeAgePotteryTerminology": {
           "label": "Bronze Age pottery terminology"
         },
+        "tileKilnFindContext": {
+          "label": "Tile kiln find context"
+        },
         "recordCreationTiming": {
           "label": "Record creation timing"
         },
@@ -383,6 +398,9 @@
         },
         "ironSampleAnalysisPlan": {
           "label": "Iron sample analysis plan"
+        },
+        "tileKilnAnalysisPlan": {
+          "label": "Tile kiln analysis plan"
         },
         "humanRemainsRecoveryAnalysis": {
           "label": "Human remains recovery and analysis"

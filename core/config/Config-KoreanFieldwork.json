@@ -657,6 +657,22 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "porcelainKilnSiteSystem": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "porcelainWorkshopProcess": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "porcelainKilnStructure": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "porcelainKilnExcavationControl": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "fortificationGateFacility": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -736,6 +752,10 @@
         "charcoalKilnStructurePart": "KoreanFieldwork-charcoalKilnStructurePart",
         "charcoalKilnExcavationControl": "KoreanFieldwork-charcoalKilnExcavationControl",
         "charcoalKilnTraceInterpretation": "KoreanFieldwork-charcoalKilnTraceInterpretation",
+        "porcelainKilnSiteSystem": "KoreanFieldwork-porcelainKilnSiteSystem",
+        "porcelainWorkshopProcess": "KoreanFieldwork-porcelainWorkshopProcess",
+        "porcelainKilnStructure": "KoreanFieldwork-porcelainKilnStructure",
+        "porcelainKilnExcavationControl": "KoreanFieldwork-porcelainKilnExcavationControl",
         "fortificationGateFacility": "KoreanFieldwork-fortificationGateFacility",
         "fortificationHiddenGateFunction": "KoreanFieldwork-fortificationHiddenGateFunction",
         "fortificationParapetDetail": "KoreanFieldwork-fortificationParapetDetail",
@@ -804,6 +824,10 @@
             "charcoalKilnStructurePart",
             "charcoalKilnExcavationControl",
             "charcoalKilnTraceInterpretation",
+            "porcelainKilnSiteSystem",
+            "porcelainWorkshopProcess",
+            "porcelainKilnStructure",
+            "porcelainKilnExcavationControl",
             "fortificationGateFacility",
             "fortificationHiddenGateFunction",
             "fortificationParapetDetail",
@@ -1019,6 +1043,14 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "porcelainFindObservation": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "porcelainKilnFurnitureContext": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "recordCreationTiming": {
           "inputType": "dropdown",
           "constraintIndexed": true
@@ -1056,6 +1088,8 @@
         "potteryFiringTraceObservation": "KoreanFieldwork-potteryFiringTraceObservation",
         "potteryKilnFurnitureContext": "KoreanFieldwork-potteryKilnFurnitureContext",
         "tileKilnFindContext": "KoreanFieldwork-tileKilnFindContext",
+        "porcelainFindObservation": "KoreanFieldwork-porcelainFindObservation",
+        "porcelainKilnFurnitureContext": "KoreanFieldwork-porcelainKilnFurnitureContext",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "termRelation": "KoreanFieldwork-termRelation",
         "termSearchMapping": "KoreanFieldwork-termSearchMapping",
@@ -1097,6 +1131,8 @@
             "potteryFiringTraceObservation",
             "potteryKilnFurnitureContext",
             "tileKilnFindContext",
+            "porcelainFindObservation",
+            "porcelainKilnFurnitureContext",
             "recordCreationTiming",
             "verificationState",
             "termRelation",
@@ -1192,6 +1228,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "porcelainAnalysisPlan": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "humanRemainsRecoveryAnalysis": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1224,6 +1264,7 @@
         "archaeomagneticResultQuality": "KoreanFieldwork-archaeomagneticResultQuality",
         "archaeomagneticChronologyInterpretation": "KoreanFieldwork-archaeomagneticChronologyInterpretation",
         "charcoalKilnAnalysisPlan": "KoreanFieldwork-charcoalKilnAnalysisPlan",
+        "porcelainAnalysisPlan": "KoreanFieldwork-porcelainAnalysisPlan",
         "humanRemainsRecoveryAnalysis": "KoreanFieldwork-humanRemainsRecoveryAnalysis",
         "shellMiddenSamplingStrategy": "KoreanFieldwork-shellMiddenSamplingStrategy",
         "paleoenvironmentProxySampling": "KoreanFieldwork-paleoenvironmentProxySampling",
@@ -1264,6 +1305,7 @@
             "archaeomagneticResultQuality",
             "archaeomagneticChronologyInterpretation",
             "charcoalKilnAnalysisPlan",
+            "porcelainAnalysisPlan",
             "humanRemainsRecoveryAnalysis",
             "shellMiddenSamplingStrategy",
             "paleoenvironmentProxySampling",

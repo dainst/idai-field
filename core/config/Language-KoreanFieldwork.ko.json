@@ -273,6 +273,18 @@
         "charcoalKilnTraceInterpretation": {
           "label": "측구부탄요 흔적 해석"
         },
+        "porcelainKilnSiteSystem": {
+          "label": "자기요장 생산체계"
+        },
+        "porcelainWorkshopProcess": {
+          "label": "자기요장 공방 공정"
+        },
+        "porcelainKilnStructure": {
+          "label": "자기가마 구조"
+        },
+        "porcelainKilnExcavationControl": {
+          "label": "자기가마 조사 제어"
+        },
         "fortificationGateFacility": {
           "label": "성문·방어 부속시설"
         },
@@ -395,6 +407,12 @@
         "tileKilnFindContext": {
           "label": "기와가마 출토품 성격"
         },
+        "porcelainFindObservation": {
+          "label": "자기 유물 관찰"
+        },
+        "porcelainKilnFurnitureContext": {
+          "label": "자기요장 요도구 맥락"
+        },
         "recordCreationTiming": {
           "label": "기록 생성 시점"
         },
@@ -455,6 +473,9 @@
         },
         "charcoalKilnAnalysisPlan": {
           "label": "측구부탄요 분석 계획"
+        },
+        "porcelainAnalysisPlan": {
+          "label": "자기요장 분석 계획"
         },
         "humanRemainsRecoveryAnalysis": {
           "label": "인골 수습·분석"

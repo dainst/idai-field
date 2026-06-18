@@ -273,6 +273,18 @@
         "charcoalKilnTraceInterpretation": {
           "label": "Charcoal kiln trace interpretation"
         },
+        "porcelainKilnSiteSystem": {
+          "label": "Porcelain kiln site system"
+        },
+        "porcelainWorkshopProcess": {
+          "label": "Porcelain workshop process"
+        },
+        "porcelainKilnStructure": {
+          "label": "Porcelain kiln structure"
+        },
+        "porcelainKilnExcavationControl": {
+          "label": "Porcelain kiln excavation control"
+        },
         "fortificationGateFacility": {
           "label": "Gate and defensive components"
         },
@@ -395,6 +407,12 @@
         "tileKilnFindContext": {
           "label": "Tile kiln find context"
         },
+        "porcelainFindObservation": {
+          "label": "Porcelain find observation"
+        },
+        "porcelainKilnFurnitureContext": {
+          "label": "Porcelain kiln furniture context"
+        },
         "recordCreationTiming": {
           "label": "Record creation timing"
         },
@@ -455,6 +473,9 @@
         },
         "charcoalKilnAnalysisPlan": {
           "label": "Charcoal kiln analysis plan"
+        },
+        "porcelainAnalysisPlan": {
+          "label": "Porcelain analysis plan"
         },
         "humanRemainsRecoveryAnalysis": {
           "label": "Human remains recovery and analysis"

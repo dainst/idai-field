@@ -975,6 +975,117 @@
     },
     "description": "고환경 시료에서 화분, 규조, 식물규산체, 탄화곡물, 목탄, 패류·유공충 군집, 코어 깊이와 표고, 오염위험, 보존 편향, 패각 해양저수지효과, 연대 전처리, 지역 해수면 곡선, 프록시 군집과 고고학 맥락을 함께 기록하기 위한 목록"
   },
+  "KoreanFieldwork-archaeobotanySampleDesign": {
+    "values": {
+      "analysisMaterialSelected": { "label": "분석자료 선택" },
+      "researchQuestionSelected": { "label": "연구질문 선택" },
+      "samplingMethodSelected": { "label": "표본추출법 선택" },
+      "amsCandidate": { "label": "AMS 후보" },
+      "vegetationReconstructionCandidate": { "label": "식생복원 후보" },
+      "dietReconstructionCandidate": { "label": "식생활 복원 후보" },
+      "architecturalTimberQuestion": { "label": "건축재 질문" },
+      "fuelUseQuestion": { "label": "연료 사용 질문" },
+      "collectionPointDiversity": { "label": "채취지점 다양화" },
+      "sampleCountPrioritized": { "label": "시료 수 우선" },
+      "largeSampleNotPrioritized": { "label": "대형시료 우선 아님" },
+      "contextDistributionRecorded": { "label": "출토분포 기록" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "식물고고학 시료를 분석자료, 연구질문, 표본추출법, AMS·식생·식생활·건축재·연료 질문, 채취지점 다양성과 출토분포로 설계하기 위한 목록"
+  },
+  "KoreanFieldwork-plantRemainSamplingMethod": {
+    "values": {
+      "nonProbabilitySample": { "label": "비확률 표본" },
+      "probabilitySample": { "label": "확률 표본" },
+      "simpleRandomSample": { "label": "단순무작위 표본" },
+      "systematicSample": { "label": "체계적 표본" },
+      "stratifiedRandomSample": { "label": "층위적 무작위 표본" },
+      "gridUnit": { "label": "격자 단위" },
+      "layerUnit": { "label": "층위 단위" },
+      "featureUnit": { "label": "유구 단위" },
+      "collectionPointRecorded": { "label": "채취 지점 기록" },
+      "unanalyzedArea": { "label": "미분석 구역" },
+      "sampleBiasRecorded": { "label": "표본 편향 기록" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "식물유체가 임의 채취인지 계획 표본인지, 격자·층위·유구 단위와 미분석 구역, 표본 편향을 함께 남기기 위한 목록"
+  },
+  "KoreanFieldwork-flotationProcessingRecord": {
+    "values": {
+      "waterSieving": { "label": "물체질" },
+      "flotation": { "label": "플로테이션" },
+      "densitySeparation": { "label": "비중차 분리" },
+      "preProcessingSoilAmount": { "label": "처리 전 토양량" },
+      "residueAfterProcessing": { "label": "처리 후 잔류물" },
+      "lightFractionAfterProcessing": { "label": "처리 후 부유물" },
+      "meshSizeRecorded": { "label": "체눈 기록" },
+      "fieldProcessing": { "label": "현장 처리" },
+      "labProcessing": { "label": "실내 처리" },
+      "unprocessedReason": { "label": "미처리 사유" },
+      "processingBiasRecorded": { "label": "처리 편향 기록" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "물체질과 플로테이션 여부, 처리 전 토양량, 잔류물·부유물, 체눈, 현장·실내 처리, 미처리 사유와 처리 편향을 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-plantRemainIdentificationRecord": {
+    "values": {
+      "modernComparativeSpecimen": { "label": "현생 비교표본" },
+      "archaeologicalPlantRemain": { "label": "유적 식물유체" },
+      "morphologyComparison": { "label": "형태 비교" },
+      "modernCarbonizedComparison": { "label": "현생 탄화 비교" },
+      "carbonizedRiceGrain": { "label": "탄화미" },
+      "carbonizedPaddyCandidate": { "label": "탄화벼 후보" },
+      "carbonizedBarley": { "label": "탄화보리" },
+      "transverseSection": { "label": "횡단면" },
+      "radialSection": { "label": "방사단면" },
+      "tangentialSection": { "label": "접선단면" },
+      "enlargedPhoto": { "label": "확대사진" },
+      "semPhoto": { "label": "SEM 사진" },
+      "metricRecorded": { "label": "계측치 기록" },
+      "identificationConfidence": { "label": "동정 신뢰도" },
+      "alternativeTaxon": { "label": "대체 분류군" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "식물유체 동정을 현생 비교표본, 형태·탄화 비교, 단면 관찰, 사진, 계측치, 신뢰도와 대체 분류군으로 검토하기 위한 목록"
+  },
+  "KoreanFieldwork-archaeobotanyInterpretationReview": {
+    "values": {
+      "archaeobotanyAnalysis": { "label": "식물유체 자체분석" },
+      "paleoethnobotanyInterpretation": { "label": "문화역사 해석" },
+      "analyticalResultSeparated": { "label": "분석결과 분리" },
+      "interpretationConclusionLinked": { "label": "해석결론 연결" },
+      "debatedCaseRecorded": { "label": "논쟁 사례 기록" },
+      "nonAgriculturalPlantUse": { "label": "비농경 식물이용" },
+      "vegetationReconstruction": { "label": "식생 복원" },
+      "architecturalTimberSelection": { "label": "건축재 선택" },
+      "agriculturalDevelopment": { "label": "농경문화 전개" },
+      "dietReconstruction": { "label": "식생활 복원" },
+      "harvestStorage": { "label": "수확·저장" },
+      "cropIntroduction": { "label": "작물 도입" },
+      "cropMorphologyChange": { "label": "작물 형태 변화" },
+      "dwellingDistributionCompared": { "label": "주거별 분포 비교" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "식물유체 자체분석과 문화역사 해석을 분리하고, 식생·건축재·농경문화·식생활·수확저장·작물 변화와 공간분포 해석을 분석근거에 연결하기 위한 목록"
+  },
+  "KoreanFieldwork-plantRemainNonDetectionAssessment": {
+    "values": {
+      "nonDetection": { "label": "미검출" },
+      "unanalyzedArea": { "label": "미분석 구역" },
+      "sampleCountInsufficient": { "label": "표본 수 부족" },
+      "poorPreservation": { "label": "보존 불량" },
+      "processingMethodDifference": { "label": "처리 방법 차이" },
+      "sampleBias": { "label": "표본 편향" },
+      "researchQuestionLimit": { "label": "연구질문 한계" },
+      "pollenPreservationFragile": { "label": "화분 보존 취약" },
+      "plantOpalIdentificationLimit": { "label": "식물규산체 동정 한계" },
+      "starchContaminationRisk": { "label": "전분 오염 가능" },
+      "impressionPreservationState": { "label": "압흔 보존상태" },
+      "absenceNotAssumed": { "label": "부재 단정 금지" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "식물유체가 검출되지 않은 결과를 유적 내 부재로 단정하지 않도록 미분석 구역, 표본 수, 보존, 처리법, 표본 편향, 연구질문 한계와 프록시별 보존 한계를 남기기 위한 목록"
+  },
   "KoreanFieldwork-bronzeAgeDwellingEvidence": {
     "values": {
       "garakdongTypeCandidate": { "label": "가락동식 후보" },

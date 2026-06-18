@@ -528,6 +528,24 @@
         "paleoenvironmentProxySampling": {
           "label": "Paleoenvironment proxy sampling"
         },
+        "archaeobotanySampleDesign": {
+          "label": "Archaeobotany sample design"
+        },
+        "plantRemainSamplingMethod": {
+          "label": "Plant-remain sampling method"
+        },
+        "flotationProcessingRecord": {
+          "label": "Flotation processing record"
+        },
+        "plantRemainIdentificationRecord": {
+          "label": "Plant-remain identification record"
+        },
+        "archaeobotanyInterpretationReview": {
+          "label": "Archaeobotany interpretation review"
+        },
+        "plantRemainNonDetectionAssessment": {
+          "label": "Plant-remain non-detection assessment"
+        },
         "verificationState": {
           "label": "Verification state"
         }

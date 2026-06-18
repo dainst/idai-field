@@ -55,6 +55,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-19 패총·신석기·고환경 자료도 구현 단위로 압축했다. 제2권 패총 조사방법론과 제8권 신석기·최신기법, 고환경 분석 자료는 패총을 단일 패각층이 아니라 층위·재퇴적·교란·하부 유구·집락 공간·해안/수계 맥락이 겹친 복합 자료로 보라고 요구한다. 이 묶음은 `Feature`의 `shellMiddenStratigraphy`, `shellMiddenSettlementContext`, `Find`의 `neolithicSubsistenceEvidence`, `Sample`의 `shellMiddenSamplingStrategy`, `paleoenvironmentProxySampling` 값 목록으로 옮겼다.
 
+2026-06-19 식물유체·탄화곡물 자료도 구현 단위로 더 압축했다. `유적조사와 고환경분석`의 탄화곡물 검출 장은 식물유체를 유물 목록 부속물이 아니라 표본설계, 물체질·플로테이션 처리, 비교표본 기반 동정, 분석/해석 분리, 미검출 해석 조건이 이어지는 시료 체계로 다룬다. 이 묶음은 `Sample`의 `archaeobotanySampleDesign`, `plantRemainSamplingMethod`, `flotationProcessingRecord`, `plantRemainIdentificationRecord`, `archaeobotanyInterpretationReview`, `plantRemainNonDetectionAssessment` 값 목록으로 옮겼다.
+
 2026-06-19 청동기시대편 증보판 자료도 구현 단위로 압축했다. 청동기 사전은 `송국리식`, `가락동식`, `고인돌`, `지석묘`, `환호`, `민무늬토기`, `무문토기`처럼 표제어와 현장 관용어가 겹치므로, 표제어 확정보다 관찰값과 이칭 관계를 먼저 남기라고 읽힌다. 이 묶음은 `Feature`의 `bronzeAgeDwellingEvidence`, `dolmenStructureContext`, `bronzeAgeEnclosureInterpretation`, `Find`의 `bronzeAgePotteryTerminology` 값 목록으로 옮겼다.
 
 2026-06-19 충적지·토양도 자료도 구현 단위로 압축했다. 제6권 고지형·충적지와 조사방법론의 지표·GIS 자료는 평야·논 지역에서 표면유물 부재를 유적 부재로 보지 말고, 자연제방·배후습지·구하도·구해안선, 토양통·대토양군, 보링·주상도, a+b층 세트, 유구축조면과 검출면 차이, 암색대·이질토 블록·홍수퇴적 해석을 함께 보라고 요구한다. 이 묶음은 `Survey`의 `alluvialLandformSurvey`, `soilMapPredictionVerification`, `FeatureSegment`의 `alluvialLayerConceptAudit`, `alluvialSurfaceAttribution`, `alluvialFormationProcess` 값 목록으로 옮겼다.

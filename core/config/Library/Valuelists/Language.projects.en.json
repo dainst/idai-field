@@ -12729,6 +12729,117 @@
     },
     "description": "Korean paleoenvironment proxy checks for pollen, diatom, plant-opal, carbonized grain, charcoal, mollusk and foraminifera samples, core depth and elevation, contamination, preservation bias, shell radiocarbon reservoir, dating pretreatment, regional sea-level curves, proxy assemblages, and archaeological context"
   },
+  "KoreanFieldwork-archaeobotanySampleDesign": {
+    "values": {
+      "analysisMaterialSelected": { "label": "Analysis material selected" },
+      "researchQuestionSelected": { "label": "Research question selected" },
+      "samplingMethodSelected": { "label": "Sampling method selected" },
+      "amsCandidate": { "label": "AMS candidate" },
+      "vegetationReconstructionCandidate": { "label": "Vegetation reconstruction candidate" },
+      "dietReconstructionCandidate": { "label": "Diet reconstruction candidate" },
+      "architecturalTimberQuestion": { "label": "Architectural timber question" },
+      "fuelUseQuestion": { "label": "Fuel-use question" },
+      "collectionPointDiversity": { "label": "Collection point diversity" },
+      "sampleCountPrioritized": { "label": "Sample count prioritized" },
+      "largeSampleNotPrioritized": { "label": "Large sample not prioritized" },
+      "contextDistributionRecorded": { "label": "Context distribution recorded" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean archaeobotany sample-design checks for linking materials, research questions, sampling method, AMS, vegetation, diet, timber, fuel, collection-point diversity, sample count, and context distribution"
+  },
+  "KoreanFieldwork-plantRemainSamplingMethod": {
+    "values": {
+      "nonProbabilitySample": { "label": "Non-probability sample" },
+      "probabilitySample": { "label": "Probability sample" },
+      "simpleRandomSample": { "label": "Simple random sample" },
+      "systematicSample": { "label": "Systematic sample" },
+      "stratifiedRandomSample": { "label": "Stratified random sample" },
+      "gridUnit": { "label": "Grid unit" },
+      "layerUnit": { "label": "Layer unit" },
+      "featureUnit": { "label": "Feature unit" },
+      "collectionPointRecorded": { "label": "Collection point recorded" },
+      "unanalyzedArea": { "label": "Unanalyzed area" },
+      "sampleBiasRecorded": { "label": "Sample bias recorded" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean plant-remain sampling checks for distinguishing opportunistic and planned samples, grid, layer, and feature units, collection points, unanalyzed areas, and sampling bias"
+  },
+  "KoreanFieldwork-flotationProcessingRecord": {
+    "values": {
+      "waterSieving": { "label": "Water sieving" },
+      "flotation": { "label": "Flotation" },
+      "densitySeparation": { "label": "Density separation" },
+      "preProcessingSoilAmount": { "label": "Pre-processing soil amount" },
+      "residueAfterProcessing": { "label": "Residue after processing" },
+      "lightFractionAfterProcessing": { "label": "Light fraction after processing" },
+      "meshSizeRecorded": { "label": "Mesh size recorded" },
+      "fieldProcessing": { "label": "Field processing" },
+      "labProcessing": { "label": "Lab processing" },
+      "unprocessedReason": { "label": "Unprocessed reason" },
+      "processingBiasRecorded": { "label": "Processing bias recorded" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean flotation-processing checks for water sieving, flotation, density separation, soil amount, residue, light fraction, mesh size, processing location, unprocessed reasons, and processing bias"
+  },
+  "KoreanFieldwork-plantRemainIdentificationRecord": {
+    "values": {
+      "modernComparativeSpecimen": { "label": "Modern comparative specimen" },
+      "archaeologicalPlantRemain": { "label": "Archaeological plant remain" },
+      "morphologyComparison": { "label": "Morphology comparison" },
+      "modernCarbonizedComparison": { "label": "Modern carbonized comparison" },
+      "carbonizedRiceGrain": { "label": "Carbonized rice grain" },
+      "carbonizedPaddyCandidate": { "label": "Carbonized paddy candidate" },
+      "carbonizedBarley": { "label": "Carbonized barley" },
+      "transverseSection": { "label": "Transverse section" },
+      "radialSection": { "label": "Radial section" },
+      "tangentialSection": { "label": "Tangential section" },
+      "enlargedPhoto": { "label": "Enlarged photo" },
+      "semPhoto": { "label": "SEM photo" },
+      "metricRecorded": { "label": "Metric recorded" },
+      "identificationConfidence": { "label": "Identification confidence" },
+      "alternativeTaxon": { "label": "Alternative taxon" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean plant-remain identification checks for comparative specimens, morphology, carbonized comparisons, crop candidates, wood sections, photographs, metrics, confidence, and alternative taxa"
+  },
+  "KoreanFieldwork-archaeobotanyInterpretationReview": {
+    "values": {
+      "archaeobotanyAnalysis": { "label": "Archaeobotany analysis" },
+      "paleoethnobotanyInterpretation": { "label": "Paleoethnobotany interpretation" },
+      "analyticalResultSeparated": { "label": "Analytical result separated" },
+      "interpretationConclusionLinked": { "label": "Interpretation conclusion linked" },
+      "debatedCaseRecorded": { "label": "Debated case recorded" },
+      "nonAgriculturalPlantUse": { "label": "Non-agricultural plant use" },
+      "vegetationReconstruction": { "label": "Vegetation reconstruction" },
+      "architecturalTimberSelection": { "label": "Architectural timber selection" },
+      "agriculturalDevelopment": { "label": "Agricultural development" },
+      "dietReconstruction": { "label": "Diet reconstruction" },
+      "harvestStorage": { "label": "Harvest and storage" },
+      "cropIntroduction": { "label": "Crop introduction" },
+      "cropMorphologyChange": { "label": "Crop morphology change" },
+      "dwellingDistributionCompared": { "label": "Dwelling distribution compared" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean archaeobotany interpretation checks for keeping analysis and paleoethnobotanical interpretation distinct while linking evidence to vegetation, timber, agriculture, diet, storage, crop change, and spatial distribution"
+  },
+  "KoreanFieldwork-plantRemainNonDetectionAssessment": {
+    "values": {
+      "nonDetection": { "label": "Non-detection" },
+      "unanalyzedArea": { "label": "Unanalyzed area" },
+      "sampleCountInsufficient": { "label": "Sample count insufficient" },
+      "poorPreservation": { "label": "Poor preservation" },
+      "processingMethodDifference": { "label": "Processing method difference" },
+      "sampleBias": { "label": "Sample bias" },
+      "researchQuestionLimit": { "label": "Research question limit" },
+      "pollenPreservationFragile": { "label": "Pollen preservation fragile" },
+      "plantOpalIdentificationLimit": { "label": "Plant-opal identification limit" },
+      "starchContaminationRisk": { "label": "Starch contamination risk" },
+      "impressionPreservationState": { "label": "Impression preservation state" },
+      "absenceNotAssumed": { "label": "Absence not assumed" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean plant-remain non-detection checks for preventing absence claims when unanalyzed areas, sample count, preservation, processing methods, sampling bias, question limits, or proxy-specific limits affect results"
+  },
   "KoreanFieldwork-bronzeAgeDwellingEvidence": {
     "values": {
       "garakdongTypeCandidate": { "label": "Garak-dong type candidate" },

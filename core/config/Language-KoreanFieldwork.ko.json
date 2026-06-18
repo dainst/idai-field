@@ -528,6 +528,24 @@
         "paleoenvironmentProxySampling": {
           "label": "고환경 프록시 시료"
         },
+        "archaeobotanySampleDesign": {
+          "label": "식물고고학 시료 설계"
+        },
+        "plantRemainSamplingMethod": {
+          "label": "식물유체 표본추출"
+        },
+        "flotationProcessingRecord": {
+          "label": "플로테이션 처리기록"
+        },
+        "plantRemainIdentificationRecord": {
+          "label": "식물유체 동정기록"
+        },
+        "archaeobotanyInterpretationReview": {
+          "label": "식물고고학 해석검토"
+        },
+        "plantRemainNonDetectionAssessment": {
+          "label": "식물유체 미검출 평가"
+        },
         "verificationState": {
           "label": "검증상태"
         }

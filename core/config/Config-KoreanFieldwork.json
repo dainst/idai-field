@@ -1322,6 +1322,30 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "archaeobotanySampleDesign": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "plantRemainSamplingMethod": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "flotationProcessingRecord": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "plantRemainIdentificationRecord": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "archaeobotanyInterpretationReview": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "plantRemainNonDetectionAssessment": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "verificationState": {
           "inputType": "dropdown",
           "constraintIndexed": true
@@ -1349,6 +1373,12 @@
         "destructiveAnalysisDecision": "KoreanFieldwork-destructiveAnalysisDecision",
         "shellMiddenSamplingStrategy": "KoreanFieldwork-shellMiddenSamplingStrategy",
         "paleoenvironmentProxySampling": "KoreanFieldwork-paleoenvironmentProxySampling",
+        "archaeobotanySampleDesign": "KoreanFieldwork-archaeobotanySampleDesign",
+        "plantRemainSamplingMethod": "KoreanFieldwork-plantRemainSamplingMethod",
+        "flotationProcessingRecord": "KoreanFieldwork-flotationProcessingRecord",
+        "plantRemainIdentificationRecord": "KoreanFieldwork-plantRemainIdentificationRecord",
+        "archaeobotanyInterpretationReview": "KoreanFieldwork-archaeobotanyInterpretationReview",
+        "plantRemainNonDetectionAssessment": "KoreanFieldwork-plantRemainNonDetectionAssessment",
         "verificationState": "KoreanFieldwork-verificationState"
       },
       "groups": [
@@ -1393,6 +1423,12 @@
             "destructiveAnalysisDecision",
             "shellMiddenSamplingStrategy",
             "paleoenvironmentProxySampling",
+            "archaeobotanySampleDesign",
+            "plantRemainSamplingMethod",
+            "flotationProcessingRecord",
+            "plantRemainIdentificationRecord",
+            "archaeobotanyInterpretationReview",
+            "plantRemainNonDetectionAssessment",
             "fieldRecordQuality",
             "fieldOnlyMissingCheck",
             "recordCreationTiming",

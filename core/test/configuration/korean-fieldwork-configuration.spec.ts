@@ -142,6 +142,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(sampleForm.fields.destructiveAnalysisDecision.inputType).toBe('checkboxes');
         expect(sampleForm.fields.shellMiddenSamplingStrategy.inputType).toBe('checkboxes');
         expect(sampleForm.fields.paleoenvironmentProxySampling.inputType).toBe('checkboxes');
+        expect(sampleForm.fields.archaeobotanySampleDesign.inputType).toBe('checkboxes');
+        expect(sampleForm.fields.plantRemainSamplingMethod.inputType).toBe('checkboxes');
+        expect(sampleForm.fields.flotationProcessingRecord.inputType).toBe('checkboxes');
+        expect(sampleForm.fields.plantRemainIdentificationRecord.inputType).toBe('checkboxes');
+        expect(sampleForm.fields.archaeobotanyInterpretationReview.inputType).toBe('checkboxes');
+        expect(sampleForm.fields.plantRemainNonDetectionAssessment.inputType).toBe('checkboxes');
         expect(featureForm.fields.firstExposureRecord.inputType).toBe('checkboxes');
         expect(config.forms['FeatureSegment:default'].fields.firstExposureRecord.inputType).toBe('checkboxes');
         expect(featureForm.fields.fieldOnlyMissingCheck.mandatory).toBe(true);
@@ -371,6 +377,18 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-shellMiddenSamplingStrategy');
         expect(sampleForm.valuelists.paleoenvironmentProxySampling)
             .toBe('KoreanFieldwork-paleoenvironmentProxySampling');
+        expect(sampleForm.valuelists.archaeobotanySampleDesign)
+            .toBe('KoreanFieldwork-archaeobotanySampleDesign');
+        expect(sampleForm.valuelists.plantRemainSamplingMethod)
+            .toBe('KoreanFieldwork-plantRemainSamplingMethod');
+        expect(sampleForm.valuelists.flotationProcessingRecord)
+            .toBe('KoreanFieldwork-flotationProcessingRecord');
+        expect(sampleForm.valuelists.plantRemainIdentificationRecord)
+            .toBe('KoreanFieldwork-plantRemainIdentificationRecord');
+        expect(sampleForm.valuelists.archaeobotanyInterpretationReview)
+            .toBe('KoreanFieldwork-archaeobotanyInterpretationReview');
+        expect(sampleForm.valuelists.plantRemainNonDetectionAssessment)
+            .toBe('KoreanFieldwork-plantRemainNonDetectionAssessment');
         expect(drawingForm.valuelists.mediaEvidenceRole).toBe('KoreanFieldwork-mediaEvidenceRole');
         expect(drawingForm.valuelists.mediaQualityCheck).toBe('KoreanFieldwork-mediaQualityCheck');
         expect(drawingForm.valuelists.digitalSourcePreservation)
@@ -587,6 +605,18 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Shell midden sampling strategy');
         expect(languages.en.categories.Sample.fields.paleoenvironmentProxySampling.label)
             .toBe('Paleoenvironment proxy sampling');
+        expect(languages.en.categories.Sample.fields.archaeobotanySampleDesign.label)
+            .toBe('Archaeobotany sample design');
+        expect(languages.en.categories.Sample.fields.plantRemainSamplingMethod.label)
+            .toBe('Plant-remain sampling method');
+        expect(languages.en.categories.Sample.fields.flotationProcessingRecord.label)
+            .toBe('Flotation processing record');
+        expect(languages.en.categories.Sample.fields.plantRemainIdentificationRecord.label)
+            .toBe('Plant-remain identification record');
+        expect(languages.en.categories.Sample.fields.archaeobotanyInterpretationReview.label)
+            .toBe('Archaeobotany interpretation review');
+        expect(languages.en.categories.Sample.fields.plantRemainNonDetectionAssessment.label)
+            .toBe('Plant-remain non-detection assessment');
         expect(languages.en.categories.Drawing.fields.mediaEvidenceRole.label)
             .toBe('Media evidence role');
         expect(languages.en.categories.Drawing.fields.artifactDrawingRecordMethod.label)
@@ -754,6 +784,24 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-paleoenvironmentProxySampling']
             .values.regionalSeaLevelCurveLinked.label)
             .toBe('Regional sea-level curve linked');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-archaeobotanySampleDesign']
+            .values.collectionPointDiversity.label)
+            .toBe('Collection point diversity');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-plantRemainSamplingMethod']
+            .values.stratifiedRandomSample.label)
+            .toBe('Stratified random sample');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-flotationProcessingRecord']
+            .values.lightFractionAfterProcessing.label)
+            .toBe('Light fraction after processing');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-plantRemainIdentificationRecord']
+            .values.identificationConfidence.label)
+            .toBe('Identification confidence');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-archaeobotanyInterpretationReview']
+            .values.paleoethnobotanyInterpretation.label)
+            .toBe('Paleoethnobotany interpretation');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-plantRemainNonDetectionAssessment']
+            .values.absenceNotAssumed.label)
+            .toBe('Absence not assumed');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-bronzeAgeDwellingEvidence']
             .values.centralOvalPit.label)
             .toBe('Central oval pit');

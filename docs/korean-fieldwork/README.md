@@ -15,6 +15,7 @@
 ## 문서
 
 - [자료 목록과 분석 범위](source-inventory.md)
+- [PDF 판독 상태](pdf-reading-status.md)
 - [현장기록 원칙 1차 초안](field-recording-principles.md)
 - [현장 현상별 관찰·기록 매트릭스](field-observation-matrix.md)
 - [한국형 야장 기록 워크플로 초안](field-recording-workflows.md)

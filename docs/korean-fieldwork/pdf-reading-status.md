@@ -1,0 +1,50 @@
+# PDF 판독 상태
+
+마지막 갱신: 2026-06-18
+
+이 문서는 사용자가 `C:\Users\nuri9\Downloads`에 제공한 한국 고고학 방법론 PDF 10종의 판독 상태를 이어받기 위한 작업 기록이다. 원문 PDF는 저장소에 넣지 않고, 추출 텍스트와 권별 분석 노트만 작업 근거로 사용한다.
+
+## 로컬 자료
+
+원문 PDF 위치:
+
+```text
+C:\Users\nuri9\Downloads
+```
+
+추출 텍스트 위치:
+
+```text
+C:\Users\nuri9\AppData\Local\Temp\codex-idai-field-pdf-text
+```
+
+## 판독 현황
+
+| 자료 | 추출 파일 | 범위 | 저장소 반영 |
+| --- | --- | --- | --- |
+| 2005 제1권 총론 | `volume-01-direct.txt` | 332쪽 | `volume-01-general.md`, 공통 모델, 워크플로, 정보화·운영 원칙 |
+| 2006 제2권 선사시대 유적 | `volume-02-ocr.txt` | 413쪽 | `volume-02-prehistoric-sites.md`, 선사·패총·동물유체·인골·연대 시료 |
+| 2007 제3권 건물지 | `volume-03-ocr.txt` | 499쪽 | `volume-03-building-sites.md`, 건물지·초석·GPR·3D·복원 근거 |
+| 2008 제4권 생산유적 | `volume-04-direct.txt` | 449쪽 | `volume-04-production-sites.md`, 생산공정·가마·유리·기와·자기·탄요·고고지자기 |
+| 2009 제5권 고분 | `volume-05-ocr.txt` | 434쪽 | `volume-05-tombs.md`, 봉토·분구·매장주체부·부장품·제사·인골 |
+| 2010 제6권 고지형·충적지 | `volume-06-ocr.txt` | 581쪽 | `volume-06-alluvial-sites.md`, 고지형·충적지·토양·고환경 분석 |
+| 2012 제7권 성곽 | `volume-07-direct.txt` | 174쪽 | `volume-07-fortresses.md`, 축성·성벽 구간·시설·보존·수리 기록 |
+| 2013 제8권 신석기·최신기법 | `volume-08-direct.txt` | 117쪽 | `volume-08-neolithic-sites.md`, 패총·신석기 토기·밭유구·고환경·연대·3D |
+| 2014 제9권 연구방법론 | `volume-09-direct.txt` | 217쪽 | `volume-09-research-methods.md`, 형식·편년 논증·민족지·실험·공개·분석·해외조사 |
+| 2020 제철유적 별책 | `volume-2020-direct.txt` | 374쪽 | `volume-2020-iron-production.md`, 제철 공정·문헌·민속·금속학 분석·복원실험 |
+
+## 현재 판단
+
+10종 모두 로컬 PDF 확인, 텍스트 추출, 권별 노트 반영까지 완료했다. 다만 이것은 “야장 모델 설계에 필요한 1차 정밀 독해” 상태이며, 실제 iDAI.field 구성 파일을 고치기 전에는 다음 보강이 더 필요하다.
+
+우선순위:
+
+1. 제5권 고분과 제7권 성곽은 장·절 색인과 사례 지명 교정을 한 번 더 보강한다.
+2. 제1권 총론은 조사운영, 정보화, 보존·정비 원칙을 실제 템플릿 우선순위와 다시 맞춘다.
+3. 제2·3·5·6권 OCR 자료는 깨진 한자·지명·도표 제목을 필요한 범위에서 교정한다.
+4. 권별 노트에서 뽑은 값 목록을 `core/config/Library/Valuelists` 쪽 실제 한국형 구성으로 옮긴다.
+5. 샘플 조사 프로젝트를 만들어 고분, 패총, 제철유적 각각의 입력 흐름을 검증한다.
+
+## 주의
+
+공개 자료라 하더라도 원문 전체나 장문 번역을 저장소에 옮기지는 않는다. 이 저장소에는 출처, 요약, 조사 원칙, 기록 항목, iDAI.field 적용 설계만 남긴다.

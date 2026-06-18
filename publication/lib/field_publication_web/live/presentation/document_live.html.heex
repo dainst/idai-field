@@ -33,6 +33,20 @@
         category_usage: @category_usage
       })
 
+    category == "Type" ->
+      DocumentComponents.type(%{
+        doc: @doc,
+        publication: @publication,
+        ancestors: @ancestors
+      })
+
+    category == "TypeCatalog" ->
+      DocumentComponents.type_catalog(%{
+        doc: @doc,
+        publication: @publication,
+        ancestors: @ancestors
+      })
+
     category in @image_categories ->
       DocumentComponents.image(%{
         doc: @doc,

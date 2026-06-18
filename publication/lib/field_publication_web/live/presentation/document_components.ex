@@ -354,10 +354,70 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
     """
   end
 
-  attr(:publication, Publication, required: true)
-  attr(:doc, Document, required: true)
+  attr :publication, Publication, required: true
+  attr :doc, Document, required: true
+  attr :ancestors, :list, default: []
+
+  def type(assigns) do
+    # ~H"""
+    # <h1>Type</h1>
+    # """
+    generic(assigns)
+  end
+
+  attr :publication, Publication, required: true
+  attr :doc, Document, required: true
+  attr :ancestors, :list, default: []
   attr(:lang, :string, required: true)
-  attr(:top_level_docs, :list, required: true)
+  attr(:focus, :atom, default: :default)
+
+  def type_catalog(assigns) do
+    ~H"""
+    <div class="mb-4">
+      <.document_heading>
+        <.document_link doc={@doc} />
+      </.document_heading>
+
+      <div class="lg:basis-1/3 flex flex-col lg:flex-col-reverse lg:ml-2 lg:justify-end">
+        <%= for other_relation <- Enum.reject(
+      @doc.relations,
+      fn %RelationGroup{name: relation_name} -> relation_name in ["isDepictedIn", "hasDefaultMapLayer", "hasMapLayer"] end
+      )  do %>
+          <section>
+            <.group_heading>
+              {pick_default_translation(other_relation.labels)} ({Enum.count(other_relation.docs)})
+            </.group_heading>
+            <div class="grid grid-cols-4 gap-1 overflow-y-auto max-h-[1500px]">
+              <%= for %Document{geometry: geometry} = doc <- other_relation.docs do %>
+                <%= if geometry do %>
+                  <div
+                    id={"relations_map_highlighter_#{doc.id}"}
+                    phx-hook="HoverHighlightMapFeature"
+                    target_dom_element="generic_doc_map"
+                    target_id={doc.id}
+                  >
+                    <.document_link
+                      doc={doc}
+                      image_count={10}
+                      geometry_indicator={true}
+                    />
+                  </div>
+                <% else %>
+                  <.document_link doc={doc} image_count={10} geometry_indicator={true} />
+                <% end %>
+              <% end %>
+            </div>
+          </section>
+        <% end %>
+      </div>
+    </div>
+    """
+  end
+
+  attr :publication, Publication, required: true
+  attr :doc, Document, required: true
+  attr :lang, :string, required: true
+  attr :top_level_docs, :list, required: true
 
   def project(assigns) do
     ~H"""

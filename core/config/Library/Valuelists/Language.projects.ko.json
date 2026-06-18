@@ -51,6 +51,114 @@
     },
     "description": "현장 관찰과 해석을 분리하고 판단 보류를 정상값으로 남기기 위한 검증 상태 목록"
   },
+  "KoreanFieldwork-fieldRecordQuality": {
+    "values": {
+      "factualAccuracy": {
+        "label": "사실 왜곡 없음"
+      },
+      "immediateRecording": {
+        "label": "즉기 기록"
+      },
+      "memoryRelianceRisk": {
+        "label": "기억 의존 위험"
+      },
+      "observationInterpretationSeparated": {
+        "label": "관찰·해석 구분"
+      },
+      "criteriaConsistency": {
+        "label": "조사자 간 기준 일치"
+      },
+      "reproducibleRecord": {
+        "label": "재현 가능"
+      },
+      "researchQuestionFit": {
+        "label": "연구목적 적합"
+      },
+      "crossReviewNeeded": {
+        "label": "교차검토 필요"
+      },
+      "correctionNeeded": {
+        "label": "보완 필요"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "현장 강의자료에서 반복된 기록 정확성, 즉시성, 재현 가능성, 관찰·해석 분리 요구를 관리하기 위한 목록"
+  },
+  "KoreanFieldwork-personalNotebookArchive": {
+    "values": {
+      "personalNotebookWritten": {
+        "label": "개인 야장 작성"
+      },
+      "assignedFeatureLinked": {
+        "label": "담당 유구 연결"
+      },
+      "originalSubmitted": {
+        "label": "원본 제출"
+      },
+      "digitized": {
+        "label": "전자화 완료"
+      },
+      "researcherReviewed": {
+        "label": "조사자 검토"
+      },
+      "supervisorReviewed": {
+        "label": "책임조사원 검토"
+      },
+      "accessConditionsSet": {
+        "label": "열람조건 설정"
+      },
+      "removalProhibited": {
+        "label": "반출 금지"
+      },
+      "correctionNeeded": {
+        "label": "보완 필요"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "개인 메모로 시작한 야장이 조사 완료 뒤 제출·검토·열람되는 공적 기록이 되도록 관리하기 위한 목록"
+  },
+  "KoreanFieldwork-digitalSourcePreservation": {
+    "values": {
+      "originalDrawing": {
+        "label": "원도면"
+      },
+      "originalPhoto": {
+        "label": "원사진"
+      },
+      "personalNotebookScan": {
+        "label": "개인 야장 스캔"
+      },
+      "electronicNotebookOriginal": {
+        "label": "전자야장 원본"
+      },
+      "originalImage": {
+        "label": "원본 이미지"
+      },
+      "unpublishedReportMaterial": {
+        "label": "보고서 미수록 자료"
+      },
+      "twoLocationBackup": {
+        "label": "두 곳 이상 백업"
+      },
+      "backupVerified": {
+        "label": "백업 검증"
+      },
+      "accessProcedure": {
+        "label": "열람 절차"
+      },
+      "indefiniteRetention": {
+        "label": "보존연한 없음"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "보고서에 수록되지 않은 원도면, 원사진, 전자야장 원본까지 영구 관리하기 위한 원자료 보존 목록"
+  },
   "KoreanFieldwork-termRelation": {
     "values": {
       "preferredTerm": {

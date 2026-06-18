@@ -11805,6 +11805,114 @@
     },
     "description": "Korean field notebook verification states for keeping interpretation separate from observation"
   },
+  "KoreanFieldwork-fieldRecordQuality": {
+    "values": {
+      "factualAccuracy": {
+        "label": "Factual accuracy"
+      },
+      "immediateRecording": {
+        "label": "Immediate recording"
+      },
+      "memoryRelianceRisk": {
+        "label": "Memory-reliance risk"
+      },
+      "observationInterpretationSeparated": {
+        "label": "Observation and interpretation separated"
+      },
+      "criteriaConsistency": {
+        "label": "Criteria consistency"
+      },
+      "reproducibleRecord": {
+        "label": "Reproducible record"
+      },
+      "researchQuestionFit": {
+        "label": "Fits research question"
+      },
+      "crossReviewNeeded": {
+        "label": "Cross-review needed"
+      },
+      "correctionNeeded": {
+        "label": "Correction needed"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean field notebook record-quality checks for accuracy, immediacy, reproducibility, and separation of observation from interpretation"
+  },
+  "KoreanFieldwork-personalNotebookArchive": {
+    "values": {
+      "personalNotebookWritten": {
+        "label": "Personal notebook written"
+      },
+      "assignedFeatureLinked": {
+        "label": "Assigned feature linked"
+      },
+      "originalSubmitted": {
+        "label": "Original submitted"
+      },
+      "digitized": {
+        "label": "Digitized"
+      },
+      "researcherReviewed": {
+        "label": "Researcher reviewed"
+      },
+      "supervisorReviewed": {
+        "label": "Supervisor reviewed"
+      },
+      "accessConditionsSet": {
+        "label": "Access conditions set"
+      },
+      "removalProhibited": {
+        "label": "Removal prohibited"
+      },
+      "correctionNeeded": {
+        "label": "Correction needed"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean field notebook archive states for treating personal notes as submitted, reviewed, and accessible official records"
+  },
+  "KoreanFieldwork-digitalSourcePreservation": {
+    "values": {
+      "originalDrawing": {
+        "label": "Original drawing"
+      },
+      "originalPhoto": {
+        "label": "Original photo"
+      },
+      "personalNotebookScan": {
+        "label": "Personal notebook scan"
+      },
+      "electronicNotebookOriginal": {
+        "label": "Electronic notebook original"
+      },
+      "originalImage": {
+        "label": "Original image"
+      },
+      "unpublishedReportMaterial": {
+        "label": "Unpublished report material"
+      },
+      "twoLocationBackup": {
+        "label": "Two-location backup"
+      },
+      "backupVerified": {
+        "label": "Backup verified"
+      },
+      "accessProcedure": {
+        "label": "Access procedure"
+      },
+      "indefiniteRetention": {
+        "label": "Indefinite retention"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean field notebook source-preservation states for original drawings, photos, electronic notebooks, backups, and access procedures"
+  },
   "KoreanFieldwork-termRelation": {
     "values": {
       "preferredTerm": {

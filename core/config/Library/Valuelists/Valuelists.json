@@ -31084,6 +31084,92 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-fieldRecordQuality": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "factualAccuracy": {},
+      "immediateRecording": {},
+      "memoryRelianceRisk": {},
+      "observationInterpretationSeparated": {},
+      "criteriaConsistency": {},
+      "reproducibleRecord": {},
+      "researchQuestionFit": {},
+      "crossReviewNeeded": {},
+      "correctionNeeded": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "factualAccuracy",
+      "immediateRecording",
+      "memoryRelianceRisk",
+      "observationInterpretationSeparated",
+      "criteriaConsistency",
+      "reproducibleRecord",
+      "researchQuestionFit",
+      "crossReviewNeeded",
+      "correctionNeeded",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-personalNotebookArchive": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "personalNotebookWritten": {},
+      "assignedFeatureLinked": {},
+      "originalSubmitted": {},
+      "digitized": {},
+      "researcherReviewed": {},
+      "supervisorReviewed": {},
+      "accessConditionsSet": {},
+      "removalProhibited": {},
+      "correctionNeeded": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "personalNotebookWritten",
+      "assignedFeatureLinked",
+      "originalSubmitted",
+      "digitized",
+      "researcherReviewed",
+      "supervisorReviewed",
+      "accessConditionsSet",
+      "removalProhibited",
+      "correctionNeeded",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-digitalSourcePreservation": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "originalDrawing": {},
+      "originalPhoto": {},
+      "personalNotebookScan": {},
+      "electronicNotebookOriginal": {},
+      "originalImage": {},
+      "unpublishedReportMaterial": {},
+      "twoLocationBackup": {},
+      "backupVerified": {},
+      "accessProcedure": {},
+      "indefiniteRetention": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "originalDrawing",
+      "originalPhoto",
+      "personalNotebookScan",
+      "electronicNotebookOriginal",
+      "originalImage",
+      "unpublishedReportMaterial",
+      "twoLocationBackup",
+      "backupVerified",
+      "accessProcedure",
+      "indefiniteRetention",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-termRelation": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

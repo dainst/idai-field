@@ -40,7 +40,7 @@
 
 ## 첫 구현 단위
 
-1. `KoreanFieldwork-*` 공통 값 목록: 기록 생성 시점, 검증상태, 용어관계, 유적 패키지, 시료 목적, 보고서 교차검토
+1. `KoreanFieldwork-*` 공통 값 목록: 기록 생성 시점, 검증상태, 현장기록 품질, 개인 야장 공적기록화, 디지털 원자료 보존, 용어관계, 유적 패키지, 시료 목적, 보고서 교차검토
 2. `DailyLog`와 `FieldRecordQualityReview`
 3. `InvestigationProject` 행정 타임라인
 4. `RecordCreationTiming` 누락 경고
@@ -48,7 +48,7 @@
 6. `InvestigationStageTransition`과 후속기관 인계
 7. `TermAuthority` 기반 한국어 용어 검색
 
-`Config-KoreanFieldwork`는 1차 공통 값 목록을 Project, Operation, FeatureGroup, Feature, FeatureSegment, Find, Sample 화면에 배치한다. 성곽 보강분 중 성문·방어 부속시설, 수문·수구, 왜성 해자는 `Feature` 화면의 첫 전문 값 목록으로 옮겼다.
+`Config-KoreanFieldwork`는 1차 공통 값 목록을 Project, Operation, FeatureGroup, Feature, FeatureSegment, Find, Sample 화면에 배치한다. 현장기록 품질은 각 기록 단위에, 개인 야장 공적기록화는 `Operation`에, 디지털 원자료 보존은 `Project`와 `Operation`에 우선 배치했다. 성곽 보강분 중 성문·방어 부속시설, 수문·수구, 왜성 해자는 `Feature` 화면의 첫 전문 값 목록으로 옮겼다.
 
 이 일곱 가지가 먼저 들어가야 각 유적 유형별 템플릿을 만들 때 기록이 흩어지지 않는다.
 

@@ -5,6 +5,9 @@
   "categories": {
     "Project": {
       "fields": {
+        "digitalSourcePreservation": {
+          "label": "디지털 원자료 보존"
+        },
         "reportCrossCheck": {
           "label": "보고서 교차검토"
         },
@@ -15,6 +18,15 @@
     },
     "Operation": {
       "fields": {
+        "digitalSourcePreservation": {
+          "label": "디지털 원자료 보존"
+        },
+        "fieldRecordQuality": {
+          "label": "현장기록 품질"
+        },
+        "personalNotebookArchive": {
+          "label": "개인 야장 공적기록화"
+        },
         "recordCreationTiming": {
           "label": "기록 생성 시점"
         },
@@ -31,6 +43,9 @@
         "featurePackage": {
           "label": "유적·유구 패키지"
         },
+        "fieldRecordQuality": {
+          "label": "현장기록 품질"
+        },
         "recordCreationTiming": {
           "label": "기록 생성 시점"
         },
@@ -46,6 +61,9 @@
       "fields": {
         "featurePackage": {
           "label": "유적·유구 패키지"
+        },
+        "fieldRecordQuality": {
+          "label": "현장기록 품질"
         },
         "fortificationGateFacility": {
           "label": "성문·방어 부속시설"
@@ -72,6 +90,9 @@
         "featurePackage": {
           "label": "유적·유구 패키지"
         },
+        "fieldRecordQuality": {
+          "label": "현장기록 품질"
+        },
         "recordCreationTiming": {
           "label": "기록 생성 시점"
         },
@@ -85,6 +106,9 @@
     },
     "Find": {
       "fields": {
+        "fieldRecordQuality": {
+          "label": "현장기록 품질"
+        },
         "recordCreationTiming": {
           "label": "기록 생성 시점"
         },
@@ -98,6 +122,9 @@
     },
     "Sample": {
       "fields": {
+        "fieldRecordQuality": {
+          "label": "현장기록 품질"
+        },
         "recordCreationTiming": {
           "label": "기록 생성 시점"
         },

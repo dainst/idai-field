@@ -16,7 +16,7 @@ import {
 } from "./map/features";
 import PublicationTileLayers from "./map/tile-layers";
 import PreviewOverlay from "./map/preview-overlay";
-
+import PublicationSelection from "./map/selection";
 const highlightZoomDuration = -1;
 
 export default getFullProjectMapHook = () => {
@@ -32,10 +32,7 @@ export default getFullProjectMapHook = () => {
         hoveredFeatures: [],
         pinnedFeatures: [],
         categoryLabels: {},
-        drawBoxMode: false,
-        draw: null,
-        drawSource: null,
-        drawLayer: null,
+        selectionMode: false,
         overlay: null,
 
         mounted() {
@@ -69,7 +66,7 @@ export default getFullProjectMapHook = () => {
             this.handleEvent(
                 `render-selection-polygon-${this.el.id}`,
                 ({ geometry }) => {
-                    this.setSelectionPolygon(geometry);
+                    this.selection.presetSelection(geometry);
                 },
             );
 
@@ -105,45 +102,11 @@ export default getFullProjectMapHook = () => {
             this.handleEvent(
                 `set-draw-box-mode-${this.el.id}`,
                 ({ new_value }) => {
-                    this.drawBoxMode = new_value;
-                    if (new_value == true) {
-                        this.pinnedFeatures = [];
-                        this.hoveredFeatures = [];
-
-                        this.overlay.update([]);
-
-                        this.draw = new Draw({
-                            source: this.drawSource,
-                            type: "Polygon",
-                            // style while drawing polygons
-                            style: {
-                                "circle-radius": 5,
-                                "circle-fill-color": `rgba(255, 0, 0, 1)`,
-                                "stroke-color": `rgba(0, 0, 0, 1)`,
-                                "stroke-width": 2,
-                                "fill-color": `rgba(255, 255, 255, 0.5)`,
-                            },
-                        });
-
-                        this.draw.once("drawend", ({ feature }) => {
-                            this.drawSource.clear();
-                            this.pushEventTo(this.el, "drawn-selection", {
-                                coordinates: feature
-                                    .getGeometry()
-                                    .getCoordinates(),
-                            });
-                            this.drawBoxMode = new_value;
-                            this.map.removeInteraction(this.draw);
-                            this.drawnExtent = feature
-                                .getGeometry()
-                                .getExtent();
-
-                            this.refitView();
-                        });
-
-                        this.map.addInteraction(this.draw);
+                    this.selectionMode = new_value;
+                    if (new_value) {
+                        this.selection.startDrawing();
                     } else {
-                        this.map.removeInteraction(this.draw);
+                        this.selection.stopDrawing();
                     }
                 },
             );
@@ -164,29 +127,7 @@ export default getFullProjectMapHook = () => {
                 container.style.height = `${window.innerHeight - offsetElement.offsetTop}px`;
             }
 
-            this.drawSource = new VectorSource({
-                wrapX: false,
-            });
-
-            this.drawLayer = new VectorLayer({
-                source: this.drawSource,
-                // style for finished polygons
-                style: new Style({
-                    stroke: new Stroke({
-                        color: `rgba(0, 0, 0, 1)`,
-                        width: 1,
-                    }),
-                    fill: new Fill({
-                        color: `rgba(255, 255, 255, 0.5)`,
-                    }),
-                }),
-                properties: {
-                    drawn: true,
-                },
-            });
-
             this.map = new Map({
-                layers: [this.drawLayer],
                 target: `${this.id}-map`,
                 view: new View(),
             });
@@ -210,8 +151,13 @@ export default getFullProjectMapHook = () => {
                 this.draftDate,
             );
 
+            this.selection = new PublicationSelection(this, this.map, () => {
+                this.selectionMode = false;
+                this.refitView();
+            });
+
             this.map.on("pointermove", async function (e) {
-                if (e.dragging || _this.drawBoxMode) {
+                if (e.dragging || _this.selectionMode) {
                     return;
                 }
 
@@ -242,7 +188,7 @@ export default getFullProjectMapHook = () => {
                 });
 
             this.map.on("singleclick", async function (e) {
-                if (_this.drawBoxMode) return;
+                if (_this.selectionMode) return;
 
                 if (_this.hoveredFeatures.length > 1) {
                     _this.pinnedFeatures = _this.hoveredFeatures;
@@ -279,27 +225,6 @@ export default getFullProjectMapHook = () => {
             document.getElementById(
                 `${this.id}-loading-indicator`,
             ).style.display = "none";
-        },
-
-        setSelectionPolygon(geometry) {
-            this.drawSource.clear();
-
-            if (geometry != null) {
-                feature = new GeoJSON().readFeature({
-                    type: "Feature",
-                    geometry: {
-                        type: "Polygon",
-                        coordinates: [geometry],
-                    },
-                });
-
-                this.drawSource.addFeature(feature);
-                this.drawnExtent = feature.getGeometry().getExtent();
-            } else {
-                this.drawnExtent = null;
-            }
-
-            this.refitView();
         },
 
         highlightCategories(categories) {
@@ -373,10 +298,12 @@ export default getFullProjectMapHook = () => {
 
         refitView() {
             if (!this.map | !this.fullVectorExtent) return;
-            if (this.drawnExtent) {
-                this.map
-                    .getView()
-                    .fit(this.drawnExtent, { padding: [10, 10, 10, 10] });
+
+            const selectionExtent = this.selection.getExtent();
+            if (selectionExtent) {
+                this.map.getView().fit(selectionExtent, {
+                    padding: [10, 10, 10, 10],
+                });
             } else {
                 this.map
                     .getView()

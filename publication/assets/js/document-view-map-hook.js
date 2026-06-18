@@ -16,6 +16,7 @@ import {
 } from "./map/features";
 import PublicationTileLayers from "./map/tile-layers";
 import PreviewOverlay from "./map/preview-overlay.js";
+import PublicationSelection from "./map/selection";
 
 export default getDocumentViewMapHook = () => {
     return {
@@ -30,10 +31,7 @@ export default getDocumentViewMapHook = () => {
         childrenLayer: null,
         hoveredFeatures: [],
         pinnedFeatures: [],
-        drawBoxMode: false,
-        draw: null,
-        drawSource: null,
-        drawLayer: null,
+        selectionMode: false,
         mounted() {
             this.initialize();
             this.handleEvent(
@@ -132,50 +130,22 @@ export default getDocumentViewMapHook = () => {
             this.handleEvent(
                 `render-selection-polygon-${this.el.id}`,
                 ({ geometry }) => {
-                    this.setSelectionPolygon(geometry);
+                    this.selection.presetSelection(geometry);
                 },
             );
 
             this.handleEvent(
                 `set-draw-box-mode-${this.el.id}`,
                 ({ new_value }) => {
-                    this.drawBoxMode = new_value;
+                    this.selectionMode = new_value;
                     if (new_value == true) {
                         this.pinnedFeatures = [];
                         this.hoveredFeatures = [];
 
                         this.overlay.update([]);
-
-                        this.draw = new Draw({
-                            source: this.drawSource,
-                            type: "Polygon",
-                            // style while drawing polygons
-                            style: {
-                                "circle-radius": 5,
-                                "circle-fill-color": `rgba(255, 0, 0, 1)`,
-                                "stroke-color": `rgba(0, 0, 0, 1)`,
-                                "stroke-width": 2,
-                                "fill-color": `rgba(255, 255, 255, 0.5)`,
-                            },
-                        });
-
-                        this.draw.once("drawend", ({ feature }) => {
-                            this.drawSource.clear();
-                            this.pushEventTo(this.el, "drawn-selection", {
-                                coordinates: feature
-                                    .getGeometry()
-                                    .getCoordinates(),
-                            });
-                            this.drawBoxMode = new_value;
-                            this.map.removeInteraction(this.draw);
-                            this.drawnExtent = feature
-                                .getGeometry()
-                                .getExtent();
-                        });
-
-                        this.map.addInteraction(this.draw);
+                        this.selection.startDrawing();
                     } else {
-                        this.map.removeInteraction(this.draw);
+                        this.selection.stopDrawing();
                     }
                 },
             );
@@ -234,6 +204,10 @@ export default getDocumentViewMapHook = () => {
                 this.draftDate,
             );
 
+            this.selection = new PublicationSelection(this, this.map, () => {
+                this.selectionMode = false;
+            });
+
             this.el.addEventListener("pointerenter", function (e) {
                 setFillForLayer(_this.docLayer, false);
             });
@@ -254,7 +228,7 @@ export default getDocumentViewMapHook = () => {
             this.map.on("pointermove", async function (e) {
                 if (
                     e.dragging ||
-                    _this.drawBoxMode ||
+                    _this.selectionMode ||
                     _this.pinnedFeatures.length != 0
                 ) {
                     return;
@@ -296,7 +270,7 @@ export default getDocumentViewMapHook = () => {
             });
 
             this.map.on("singleclick", async function (e) {
-                if (_this.drawBoxMode) return;
+                if (_this.selectionMode) return;
 
                 if (_this.hoveredFeatures.length > 1) {
                     _this.pinnedFeatures = _this.hoveredFeatures;
@@ -319,25 +293,6 @@ export default getDocumentViewMapHook = () => {
                 }
             });
         },
-        setSelectionPolygon(geometry) {
-            this.drawSource.clear();
-
-            if (geometry != null) {
-                feature = new GeoJSON().readFeature({
-                    type: "Feature",
-                    geometry: {
-                        type: "Polygon",
-                        coordinates: [geometry],
-                    },
-                });
-
-                this.drawSource.addFeature(feature);
-                this.drawnExtent = feature.getGeometry().getExtent();
-            } else {
-                this.drawnExtent = null;
-            }
-        },
-
         async setMapFeatures(
             documentCategoryLabels,
             documentFeature,

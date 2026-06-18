@@ -234,6 +234,21 @@
         "cultivationChronologyAnalysis": {
           "label": "경작유구 연대·분석"
         },
+        "potteryKilnIdentification": {
+          "label": "토기가마 판정"
+        },
+        "potteryKilnStructureContext": {
+          "label": "토기가마 구조·입지"
+        },
+        "potteryKilnPartInvestigation": {
+          "label": "토기가마 부위별 조사"
+        },
+        "potteryKilnYardFacility": {
+          "label": "토기가마 요장 시설"
+        },
+        "potteryKilnInterpretationRisk": {
+          "label": "토기가마 해석위험"
+        },
         "tileKilnStructureContext": {
           "label": "기와가마 구조·공간"
         },
@@ -359,6 +374,12 @@
         "bronzeAgePotteryTerminology": {
           "label": "청동기 토기·용어 표지"
         },
+        "potteryFiringTraceObservation": {
+          "label": "토기 소성흔 관찰"
+        },
+        "potteryKilnFurnitureContext": {
+          "label": "요도구·소성흔 관계"
+        },
         "tileKilnFindContext": {
           "label": "기와가마 출토품 성격"
         },
@@ -401,6 +422,9 @@
         },
         "tileKilnAnalysisPlan": {
           "label": "기와가마 분석 계획"
+        },
+        "potteryKilnAnalysisPlan": {
+          "label": "토기가마 분석 계획"
         },
         "humanRemainsRecoveryAnalysis": {
           "label": "인골 수습·분석"

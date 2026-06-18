@@ -234,6 +234,21 @@
         "cultivationChronologyAnalysis": {
           "label": "Cultivation chronology and analysis"
         },
+        "potteryKilnIdentification": {
+          "label": "Pottery kiln identification"
+        },
+        "potteryKilnStructureContext": {
+          "label": "Pottery kiln structure context"
+        },
+        "potteryKilnPartInvestigation": {
+          "label": "Pottery kiln part investigation"
+        },
+        "potteryKilnYardFacility": {
+          "label": "Pottery kiln yard facility"
+        },
+        "potteryKilnInterpretationRisk": {
+          "label": "Pottery kiln interpretation risk"
+        },
         "tileKilnStructureContext": {
           "label": "Tile kiln structure context"
         },
@@ -359,6 +374,12 @@
         "bronzeAgePotteryTerminology": {
           "label": "Bronze Age pottery terminology"
         },
+        "potteryFiringTraceObservation": {
+          "label": "Pottery firing trace observation"
+        },
+        "potteryKilnFurnitureContext": {
+          "label": "Pottery kiln furniture context"
+        },
         "tileKilnFindContext": {
           "label": "Tile kiln find context"
         },
@@ -401,6 +422,9 @@
         },
         "tileKilnAnalysisPlan": {
           "label": "Tile kiln analysis plan"
+        },
+        "potteryKilnAnalysisPlan": {
+          "label": "Pottery kiln analysis plan"
         },
         "humanRemainsRecoveryAnalysis": {
           "label": "Human remains recovery and analysis"

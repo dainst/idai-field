@@ -2083,6 +2083,172 @@
     },
     "description": "경작유구의 유물 연대, 선택적 평면 노출, AMS·OSL·환경시료, 분석 질문, 주거지·노지·수혈 관계를 연대 판단과 묶어 관리하기 위한 목록"
   },
+  "KoreanFieldwork-potteryKilnIdentification": {
+    "values": {
+      "firingFeature": { "label": "소성유구" },
+      "structuralKiln": { "label": "구조요" },
+      "structuralKilnCandidate": { "label": "구조요 후보" },
+      "coveredFiringFeature": { "label": "덮개형 소성유구" },
+      "updraftKiln": { "label": "승염식요" },
+      "crossdraftStructuralKiln": { "label": "횡염식 구조요" },
+      "semiDowndraftStructuralKiln": { "label": "반도염식 구조요" },
+      "fuelRefeedingPossible": { "label": "연료 재투입 가능" },
+      "fireboxPresent": { "label": "화구 확인" },
+      "firingCombustionSeparated": { "label": "소성실·연소실 분리" },
+      "typeNameDeferred": { "label": "명칭 확정 보류" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "토기요 명칭을 성급히 붙이지 않고 소성유구, 구조요, 구조요 후보, 화염 흐름, 화구와 소성실·연소실 분리 근거를 함께 남기기 위한 목록"
+  },
+  "KoreanFieldwork-potteryKilnStructureContext": {
+    "values": {
+      "undergroundKiln": { "label": "지하식" },
+      "semiUndergroundKiln": { "label": "반지하식" },
+      "aboveGroundKiln": { "label": "지상식" },
+      "slopingKilnCandidate": { "label": "등요 후보" },
+      "flatKilnCandidate": { "label": "평요 후보" },
+      "slopeNotSingleCriterion": { "label": "요상 경사 단독판정 금지" },
+      "planShapeRecorded": { "label": "평면형 기록" },
+      "scaleRecorded": { "label": "규모 기록" },
+      "firingCombustionRatio": { "label": "소성부·연소부 비율" },
+      "flameFlowRecorded": { "label": "화염 유동 방식" },
+      "fireboxClosure": { "label": "화구 폐쇄" },
+      "oxidationReductionBoundary": { "label": "산화·환원 경계" },
+      "wallCollapseFragment": { "label": "함몰 벽체편" },
+      "ceilingFragment": { "label": "천장편" },
+      "exteriorReinforcementSoil": { "label": "외면 보강토" },
+      "originalGroundCutDepth": { "label": "원지반 굴착 깊이" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "토기가마의 입지와 구조를 요상 경사 하나로 닫지 않고 평면형, 규모, 소성부·연소부 비율, 화염 흐름, 피열색 경계, 함몰 구조와 굴착 깊이로 판단하기 위한 목록"
+  },
+  "KoreanFieldwork-potteryKilnPartInvestigation": {
+    "values": {
+      "fireboxRecorded": { "label": "화구 기록" },
+      "combustionPartRecorded": { "label": "연소부 기록" },
+      "firingPartRecorded": { "label": "소성부 기록" },
+      "fluePartRecorded": { "label": "연도부 기록" },
+      "ashDumpRecorded": { "label": "회구부 기록" },
+      "kilnFloorSoftCaution": { "label": "요상 무름 주의" },
+      "floorStepChecked": { "label": "요상 단 확인" },
+      "sandLayerChecked": { "label": "모래 깔림 확인" },
+      "crushedSherdLayerChecked": { "label": "소분 깔림 확인" },
+      "potterySherdBedding": { "label": "토기편 깔림" },
+      "kilnFloorRepair": { "label": "요상 보수" },
+      "floorSubstructureChecked": { "label": "요상하부구 확인" },
+      "excavationToolTrace": { "label": "굴착도구흔" },
+      "ceilingPostholeCandidate": { "label": "천장 구축 주혈 후보" },
+      "wallFloorSectionCut": { "label": "벽체·요상 절개" },
+      "stratigraphicCollection": { "label": "층위별 수습" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "화구, 연소부, 소성부, 연도부, 회구부를 부위별로 조사하고 무른 요상, 요상 조성·보수, 요상하부시설, 벽체와 요상 절개, 층위별 수습을 남기기 위한 목록"
+  },
+  "KoreanFieldwork-potteryKilnYardFacility": {
+    "values": {
+      "claySource": { "label": "토취장" },
+      "clayStorageFacility": { "label": "태토 저장시설" },
+      "drainageFacility": { "label": "배수시설" },
+      "dryingArea": { "label": "건조장" },
+      "storageArea": { "label": "저장고" },
+      "craftspersonLivingSpace": { "label": "공인 생활공간" },
+      "productDisposalArea": { "label": "제품 폐기공간" },
+      "wasteDeposit": { "label": "폐기장" },
+      "workshopArea": { "label": "작업장" },
+      "magneticSurvey": { "label": "자력탐사" },
+      "groundRadarSurvey": { "label": "지중레이더 탐사" },
+      "aerialPhoto": { "label": "항공사진" },
+      "colorPhotoRequired": { "label": "컬러사진 필요" },
+      "drawingOxidationReductionColored": { "label": "도면 산화·환원 색표기" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "토기가마를 요체만이 아니라 토취장, 태토 저장, 배수, 건조, 저장, 공인 생활공간, 폐기장, 탐사·사진·도면 기록까지 포함한 요장으로 관리하기 위한 목록"
+  },
+  "KoreanFieldwork-potteryKilnInterpretationRisk": {
+    "values": {
+      "slopeOnlyClassificationBlocked": { "label": "경사 단독분류 차단" },
+      "finalOperationNotAssumed": { "label": "최종 조업품 자동판정 금지" },
+      "ashDumpAutoLinkBlocked": { "label": "회구부 자동연결 금지" },
+      "ashDumpFloorMisexcavationRisk": { "label": "회구부 바닥 오인 굴착 위험" },
+      "structuralKilnOvernamingRisk": { "label": "구조요 과잉명명 위험" },
+      "reusedAbandonedKiln": { "label": "폐요 재사용" },
+      "neighboringKilnWasteIntrusion": { "label": "인접요 폐기물 유입" },
+      "sherdKilnFurnitureReuse": { "label": "토기편 요도구 재사용" },
+      "preservationLimitsRecorded": { "label": "보존 한계 기록" },
+      "disassemblySkipped": { "label": "해체조사 생략" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "요상 경사 단독판정, 최종 조업품 자동판정, 회구부 자동연결, 회구부 바닥 오인 굴착, 폐요 재사용과 인접요 폐기물 유입을 막기 위한 해석위험 목록"
+  },
+  "KoreanFieldwork-potteryFiringTraceObservation": {
+    "values": {
+      "irregularTrace": { "label": "부정형 소성흔" },
+      "discTrace": { "label": "원반형 소성흔" },
+      "ringTrace": { "label": "고리형 소성흔" },
+      "dottedTrace": { "label": "점열형 소성흔" },
+      "squareTrace": { "label": "사각형 소성흔" },
+      "linearTrace": { "label": "일자형 소성흔" },
+      "compositeTrace": { "label": "복합형 소성흔" },
+      "bottomTrace": { "label": "저부 흔적" },
+      "pedestalEndTrace": { "label": "대각단 흔적" },
+      "lidInteriorTrace": { "label": "뚜껑 내면 흔적" },
+      "lidExteriorTrace": { "label": "뚜껑 외면 흔적" },
+      "bodyTrace": { "label": "동체부 흔적" },
+      "kilnFloorAttachment": { "label": "가마바닥 부착면" },
+      "traceCountRecorded": { "label": "흔적 개수 기록" },
+      "traceSpacingRecorded": { "label": "흔적 간격 기록" },
+      "depressionRecorded": { "label": "오목한 함몰 기록" },
+      "combustionTraceSeparated": { "label": "연소흔과 구분" },
+      "naturalAshGlazeSeparated": { "label": "자연유와 구분" },
+      "blackGlossSeparated": { "label": "흑색 윤과 구분" },
+      "nonFlameContactFabricSeparated": { "label": "화기 비접촉 태와 구분" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "토기 표면의 소성흔 형태, 위치, 개수, 간격, 함몰과 연소흔·자연유·흑색 윤·화기 비접촉 태의 구분을 유물 카드에서 남기기 위한 목록"
+  },
+  "KoreanFieldwork-potteryKilnFurnitureContext": {
+    "values": {
+      "floorSeparatorCandidate": { "label": "이상재 후보" },
+      "stackingSeparatorCandidate": { "label": "이기재 후보" },
+      "supportMaterial": { "label": "지지재" },
+      "dualFunction": { "label": "겸용" },
+      "herbaceousMaterial": { "label": "초본류" },
+      "sand": { "label": "모래" },
+      "stoneFragment": { "label": "할석" },
+      "refractoryClay": { "label": "내화토" },
+      "clayLump": { "label": "점토덩어리" },
+      "potterySherd": { "label": "토기편" },
+      "dedicatedClayObject": { "label": "전용토제품" },
+      "ringTypeFurniture": { "label": "고리형 요도구" },
+      "pedestalTypeFurniture": { "label": "고배대각형 요도구" },
+      "hourglassTypeFurniture": { "label": "장고형 요도구" },
+      "wedgeTypeFurniture": { "label": "쐐기형 요도구" },
+      "modifiedCylinderType": { "label": "변형원통형" },
+      "stackingCombinationRecorded": { "label": "중첩소성 조합 기록" },
+      "invertedFiringRecorded": { "label": "도치 소성 기록" },
+      "stackLevelCandidate": { "label": "적재 단수 후보" },
+      "findLinkedToSurfaceTrace": { "label": "출토 요도구와 표면흔 연결" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "이상재·이기재 기능 후보, 재료, 전용토제품 형식, 중첩소성 조합, 도치 여부, 출토 요도구와 토기 표면흔의 연결을 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-potteryKilnAnalysisPlan": {
+    "values": {
+      "charcoalAms": { "label": "숯 AMS" },
+      "c14Organic": { "label": "C14 유기물" },
+      "woodSpeciesAnalysis": { "label": "수종분석" },
+      "potteryOsl": { "label": "토기 OSL" },
+      "fabricCompositionAnalysis": { "label": "태토 성분분석" },
+      "sinteredFloorArchaeomagnetic": { "label": "소결 요상 고고지자기" },
+      "sinteredBodyArchaeomagnetic": { "label": "소결 요체 고고지자기" },
+      "heatedSurfaceSamplePoint": { "label": "피열면 시료지점" },
+      "sampleBeforeDisassembly": { "label": "해체 전 시료 확보" },
+      "multipleDatingMethodsCompared": { "label": "복수 연대측정법 대조" },
+      "analysisQuestionRecorded": { "label": "분석 질문 기록" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "토기가마 조사 완료 전 숯 AMS·C14, 수종분석, 토기 OSL, 태토 성분분석, 소결 요상·요체 고고지자기 시료를 확보하기 위한 목록"
+  },
   "KoreanFieldwork-tileKilnStructureContext": {
     "values": {
       "kilnBody": { "label": "요체" },

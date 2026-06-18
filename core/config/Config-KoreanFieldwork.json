@@ -605,6 +605,26 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "potteryKilnIdentification": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "potteryKilnStructureContext": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "potteryKilnPartInvestigation": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "potteryKilnYardFacility": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "potteryKilnInterpretationRisk": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "tileKilnStructureContext": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -687,6 +707,11 @@
         "cultivationTrialTrenchStrategy": "KoreanFieldwork-cultivationTrialTrenchStrategy",
         "cultivationFeatureEvidence": "KoreanFieldwork-cultivationFeatureEvidence",
         "cultivationChronologyAnalysis": "KoreanFieldwork-cultivationChronologyAnalysis",
+        "potteryKilnIdentification": "KoreanFieldwork-potteryKilnIdentification",
+        "potteryKilnStructureContext": "KoreanFieldwork-potteryKilnStructureContext",
+        "potteryKilnPartInvestigation": "KoreanFieldwork-potteryKilnPartInvestigation",
+        "potteryKilnYardFacility": "KoreanFieldwork-potteryKilnYardFacility",
+        "potteryKilnInterpretationRisk": "KoreanFieldwork-potteryKilnInterpretationRisk",
         "tileKilnStructureContext": "KoreanFieldwork-tileKilnStructureContext",
         "tileKilnExcavationControl": "KoreanFieldwork-tileKilnExcavationControl",
         "tileKilnPartInvestigation": "KoreanFieldwork-tileKilnPartInvestigation",
@@ -746,6 +771,11 @@
             "cultivationTrialTrenchStrategy",
             "cultivationFeatureEvidence",
             "cultivationChronologyAnalysis",
+            "potteryKilnIdentification",
+            "potteryKilnStructureContext",
+            "potteryKilnPartInvestigation",
+            "potteryKilnYardFacility",
+            "potteryKilnInterpretationRisk",
             "tileKilnStructureContext",
             "tileKilnExcavationControl",
             "tileKilnPartInvestigation",
@@ -953,6 +983,14 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "potteryFiringTraceObservation": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "potteryKilnFurnitureContext": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "tileKilnFindContext": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -991,6 +1029,8 @@
         "graveGoodsRitualContext": "KoreanFieldwork-graveGoodsRitualContext",
         "neolithicSubsistenceEvidence": "KoreanFieldwork-neolithicSubsistenceEvidence",
         "bronzeAgePotteryTerminology": "KoreanFieldwork-bronzeAgePotteryTerminology",
+        "potteryFiringTraceObservation": "KoreanFieldwork-potteryFiringTraceObservation",
+        "potteryKilnFurnitureContext": "KoreanFieldwork-potteryKilnFurnitureContext",
         "tileKilnFindContext": "KoreanFieldwork-tileKilnFindContext",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "termRelation": "KoreanFieldwork-termRelation",
@@ -1030,6 +1070,8 @@
             "graveGoodsRitualContext",
             "neolithicSubsistenceEvidence",
             "bronzeAgePotteryTerminology",
+            "potteryFiringTraceObservation",
+            "potteryKilnFurnitureContext",
             "tileKilnFindContext",
             "recordCreationTiming",
             "verificationState",
@@ -1098,6 +1140,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "potteryKilnAnalysisPlan": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "humanRemainsRecoveryAnalysis": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1123,6 +1169,7 @@
         "sampleCollectionHandling": "KoreanFieldwork-sampleCollectionHandling",
         "ironSampleAnalysisPlan": "KoreanFieldwork-ironSampleAnalysisPlan",
         "tileKilnAnalysisPlan": "KoreanFieldwork-tileKilnAnalysisPlan",
+        "potteryKilnAnalysisPlan": "KoreanFieldwork-potteryKilnAnalysisPlan",
         "humanRemainsRecoveryAnalysis": "KoreanFieldwork-humanRemainsRecoveryAnalysis",
         "shellMiddenSamplingStrategy": "KoreanFieldwork-shellMiddenSamplingStrategy",
         "paleoenvironmentProxySampling": "KoreanFieldwork-paleoenvironmentProxySampling",
@@ -1156,6 +1203,7 @@
             "sampleCollectionHandling",
             "ironSampleAnalysisPlan",
             "tileKilnAnalysisPlan",
+            "potteryKilnAnalysisPlan",
             "humanRemainsRecoveryAnalysis",
             "shellMiddenSamplingStrategy",
             "paleoenvironmentProxySampling",

@@ -451,6 +451,8 @@
 
 토기가마 화면은 요체 부위별 탭과 요장 관련시설 목록을 함께 가져야 한다. 화구·연소부·소성부·연도부·회구부에서 관찰한 색 변화, 보수흔, 단면, 유물 위치가 하나의 요장 기록으로 묶이고, 자력탐사·항공사진·실측도·자연과학 시료가 같은 화면에서 추적되어야 한다.
 
+2026-06-19 구현에서는 토기 소성흔과 토기가마 조사 요구를 실제 값 목록으로 옮겼다. `potteryFiringTraceObservation`과 `potteryKilnFurnitureContext`는 `Find`에서 소성흔 형태·위치·개수·함몰·연소흔/자연유 구분과 이상재·이기재·전용토제품·중첩소성 관계를 기록한다. `potteryKilnIdentification`, `potteryKilnStructureContext`, `potteryKilnPartInvestigation`, `potteryKilnYardFacility`, `potteryKilnInterpretationRisk`는 `Feature`에서 구조요 판정, 요상 경사 단독판정 방지, 부위별 조사, 요장 시설, 회구부와 최종조업품 해석위험을 관리한다. `potteryKilnAnalysisPlan`은 `Sample`에서 AMS·C14, 수종분석, OSL, 태토 성분분석, 소결 요상·요체 고고지자기 시료를 조사 완료 전 확인하게 했다.
+
 유리생산 화면은 완제품 속성표, 진흙틀 카드, 도가니 카드, 잔류물 분석 카드, 공방 공간 카드를 서로 연결해야 한다. “유리구슬”만 입력하는 구조로는 moulding, winding, drawing, 재가공, 원료 산지, 공방 운영 성격을 추적할 수 없다.
 
 기와가마 화면은 구조 속성표와 층위 수습표를 동시에 보여줘야 한다. 평요/등요 형식, 아궁이·연소실·소성실·연도 속성, 회구부 층위, 기와 문양, 태토분석과 고고지자기 시료가 분리되면 편년과 공급체계 해석이 끊어진다.

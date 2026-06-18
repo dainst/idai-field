@@ -13837,6 +13837,172 @@
     },
     "description": "Cultivation-feature chronology and analysis list for tying artifacts, selective exposure, AMS/OSL and environmental samples, analytical questions, and feature relationships to the dating argument"
   },
+  "KoreanFieldwork-potteryKilnIdentification": {
+    "values": {
+      "firingFeature": { "label": "Firing feature" },
+      "structuralKiln": { "label": "Structural kiln" },
+      "structuralKilnCandidate": { "label": "Structural kiln candidate" },
+      "coveredFiringFeature": { "label": "Covered firing feature" },
+      "updraftKiln": { "label": "Updraft kiln" },
+      "crossdraftStructuralKiln": { "label": "Crossdraft structural kiln" },
+      "semiDowndraftStructuralKiln": { "label": "Semi-downdraft structural kiln" },
+      "fuelRefeedingPossible": { "label": "Fuel refeeding possible" },
+      "fireboxPresent": { "label": "Firebox present" },
+      "firingCombustionSeparated": { "label": "Firing/combustion separated" },
+      "typeNameDeferred": { "label": "Type name deferred" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Pottery-kiln identification checks that separate firing features, structural kilns, candidates, draft systems, fuel refeeding, firebox evidence, and deferred naming"
+  },
+  "KoreanFieldwork-potteryKilnStructureContext": {
+    "values": {
+      "undergroundKiln": { "label": "Underground kiln" },
+      "semiUndergroundKiln": { "label": "Semi-underground kiln" },
+      "aboveGroundKiln": { "label": "Above-ground kiln" },
+      "slopingKilnCandidate": { "label": "Sloping kiln candidate" },
+      "flatKilnCandidate": { "label": "Flat kiln candidate" },
+      "slopeNotSingleCriterion": { "label": "Slope not single criterion" },
+      "planShapeRecorded": { "label": "Plan shape recorded" },
+      "scaleRecorded": { "label": "Scale recorded" },
+      "firingCombustionRatio": { "label": "Firing/combustion ratio" },
+      "flameFlowRecorded": { "label": "Flame flow recorded" },
+      "fireboxClosure": { "label": "Firebox closure" },
+      "oxidationReductionBoundary": { "label": "Oxidation/reduction boundary" },
+      "wallCollapseFragment": { "label": "Wall collapse fragment" },
+      "ceilingFragment": { "label": "Ceiling fragment" },
+      "exteriorReinforcementSoil": { "label": "Exterior reinforcement soil" },
+      "originalGroundCutDepth": { "label": "Original ground cut depth" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Structure and setting checks for pottery kilns, preventing slope-only classification and keeping plan, scale, draft, heat-color boundary, collapsed structure, and ground-cut evidence together"
+  },
+  "KoreanFieldwork-potteryKilnPartInvestigation": {
+    "values": {
+      "fireboxRecorded": { "label": "Firebox recorded" },
+      "combustionPartRecorded": { "label": "Combustion part recorded" },
+      "firingPartRecorded": { "label": "Firing part recorded" },
+      "fluePartRecorded": { "label": "Flue part recorded" },
+      "ashDumpRecorded": { "label": "Ash dump recorded" },
+      "kilnFloorSoftCaution": { "label": "Kiln floor soft caution" },
+      "floorStepChecked": { "label": "Floor step checked" },
+      "sandLayerChecked": { "label": "Sand layer checked" },
+      "crushedSherdLayerChecked": { "label": "Crushed sherd layer checked" },
+      "potterySherdBedding": { "label": "Pottery sherd bedding" },
+      "kilnFloorRepair": { "label": "Kiln floor repair" },
+      "floorSubstructureChecked": { "label": "Floor substructure checked" },
+      "excavationToolTrace": { "label": "Excavation tool trace" },
+      "ceilingPostholeCandidate": { "label": "Ceiling posthole candidate" },
+      "wallFloorSectionCut": { "label": "Wall/floor section cut" },
+      "stratigraphicCollection": { "label": "Stratigraphic collection" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Part-by-part pottery-kiln investigation checks for firebox, combustion and firing parts, flue, ash dump, fragile floors, floor preparation, substructures, and stratigraphic collection"
+  },
+  "KoreanFieldwork-potteryKilnYardFacility": {
+    "values": {
+      "claySource": { "label": "Clay source" },
+      "clayStorageFacility": { "label": "Clay storage facility" },
+      "drainageFacility": { "label": "Drainage facility" },
+      "dryingArea": { "label": "Drying area" },
+      "storageArea": { "label": "Storage area" },
+      "craftspersonLivingSpace": { "label": "Craftsperson living space" },
+      "productDisposalArea": { "label": "Product disposal area" },
+      "wasteDeposit": { "label": "Waste deposit" },
+      "workshopArea": { "label": "Workshop area" },
+      "magneticSurvey": { "label": "Magnetic survey" },
+      "groundRadarSurvey": { "label": "Ground radar survey" },
+      "aerialPhoto": { "label": "Aerial photo" },
+      "colorPhotoRequired": { "label": "Color photo required" },
+      "drawingOxidationReductionColored": { "label": "Drawing oxidation/reduction colored" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Kiln-yard facility checks for clay procurement, storage, drainage, drying, craftsperson space, waste areas, geophysical survey, color photography, and oxidation/reduction drawing"
+  },
+  "KoreanFieldwork-potteryKilnInterpretationRisk": {
+    "values": {
+      "slopeOnlyClassificationBlocked": { "label": "Slope-only classification blocked" },
+      "finalOperationNotAssumed": { "label": "Final operation not assumed" },
+      "ashDumpAutoLinkBlocked": { "label": "Ash dump auto-link blocked" },
+      "ashDumpFloorMisexcavationRisk": { "label": "Ash dump floor misexcavation risk" },
+      "structuralKilnOvernamingRisk": { "label": "Structural kiln overnaming risk" },
+      "reusedAbandonedKiln": { "label": "Reused abandoned kiln" },
+      "neighboringKilnWasteIntrusion": { "label": "Neighboring kiln waste intrusion" },
+      "sherdKilnFurnitureReuse": { "label": "Sherd kiln furniture reuse" },
+      "preservationLimitsRecorded": { "label": "Preservation limits recorded" },
+      "disassemblySkipped": { "label": "Disassembly skipped" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Interpretation-risk checks for pottery kilns, guarding against slope-only classification, final-operation assumptions, automatic ash-dump linkage, overnaming, reuse, intrusion, and unrecorded preservation limits"
+  },
+  "KoreanFieldwork-potteryFiringTraceObservation": {
+    "values": {
+      "irregularTrace": { "label": "Irregular trace" },
+      "discTrace": { "label": "Disc trace" },
+      "ringTrace": { "label": "Ring trace" },
+      "dottedTrace": { "label": "Dotted trace" },
+      "squareTrace": { "label": "Square trace" },
+      "linearTrace": { "label": "Linear trace" },
+      "compositeTrace": { "label": "Composite trace" },
+      "bottomTrace": { "label": "Bottom trace" },
+      "pedestalEndTrace": { "label": "Pedestal-end trace" },
+      "lidInteriorTrace": { "label": "Lid interior trace" },
+      "lidExteriorTrace": { "label": "Lid exterior trace" },
+      "bodyTrace": { "label": "Body trace" },
+      "kilnFloorAttachment": { "label": "Kiln-floor attachment" },
+      "traceCountRecorded": { "label": "Trace count recorded" },
+      "traceSpacingRecorded": { "label": "Trace spacing recorded" },
+      "depressionRecorded": { "label": "Depression recorded" },
+      "combustionTraceSeparated": { "label": "Combustion trace separated" },
+      "naturalAshGlazeSeparated": { "label": "Natural ash glaze separated" },
+      "blackGlossSeparated": { "label": "Black gloss separated" },
+      "nonFlameContactFabricSeparated": { "label": "Non-flame-contact fabric separated" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Pottery firing-trace observation checks that record trace type, position, count, spacing, depressions, and separation from combustion traces, natural ash glaze, black gloss, and fabric color"
+  },
+  "KoreanFieldwork-potteryKilnFurnitureContext": {
+    "values": {
+      "floorSeparatorCandidate": { "label": "Floor separator candidate" },
+      "stackingSeparatorCandidate": { "label": "Stacking separator candidate" },
+      "supportMaterial": { "label": "Support material" },
+      "dualFunction": { "label": "Dual function" },
+      "herbaceousMaterial": { "label": "Herbaceous material" },
+      "sand": { "label": "Sand" },
+      "stoneFragment": { "label": "Stone fragment" },
+      "refractoryClay": { "label": "Refractory clay" },
+      "clayLump": { "label": "Clay lump" },
+      "potterySherd": { "label": "Pottery sherd" },
+      "dedicatedClayObject": { "label": "Dedicated clay object" },
+      "ringTypeFurniture": { "label": "Ring-type furniture" },
+      "pedestalTypeFurniture": { "label": "Pedestal-type furniture" },
+      "hourglassTypeFurniture": { "label": "Hourglass-type furniture" },
+      "wedgeTypeFurniture": { "label": "Wedge-type furniture" },
+      "modifiedCylinderType": { "label": "Modified-cylinder type" },
+      "stackingCombinationRecorded": { "label": "Stacking combination recorded" },
+      "invertedFiringRecorded": { "label": "Inverted firing recorded" },
+      "stackLevelCandidate": { "label": "Stack level candidate" },
+      "findLinkedToSurfaceTrace": { "label": "Find linked to surface trace" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Kiln-furniture and separator checks for pottery firing traces, linking floor separators, stacking separators, materials, dedicated clay objects, stacking combinations, inverted firing, and surface traces"
+  },
+  "KoreanFieldwork-potteryKilnAnalysisPlan": {
+    "values": {
+      "charcoalAms": { "label": "Charcoal AMS" },
+      "c14Organic": { "label": "C14 organic" },
+      "woodSpeciesAnalysis": { "label": "Wood species analysis" },
+      "potteryOsl": { "label": "Pottery OSL" },
+      "fabricCompositionAnalysis": { "label": "Fabric composition analysis" },
+      "sinteredFloorArchaeomagnetic": { "label": "Sintered floor archaeomagnetic" },
+      "sinteredBodyArchaeomagnetic": { "label": "Sintered body archaeomagnetic" },
+      "heatedSurfaceSamplePoint": { "label": "Heated surface sample point" },
+      "sampleBeforeDisassembly": { "label": "Sample before disassembly" },
+      "multipleDatingMethodsCompared": { "label": "Multiple dating methods compared" },
+      "analysisQuestionRecorded": { "label": "Analysis question recorded" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Analysis-plan checks for pottery kilns, keeping charcoal AMS/C14, wood species, pottery OSL, fabric analysis, archaeomagnetic sampling, disassembly timing, and dating-method comparison together"
+  },
   "KoreanFieldwork-tileKilnStructureContext": {
     "values": {
       "kilnBody": { "label": "Kiln body" },

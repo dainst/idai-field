@@ -12426,6 +12426,129 @@
     },
     "description": "Korean archaeological term authority status for tracking dictionary source quality, original-script checks, OCR risk, and readiness for UI value lists"
   },
+  "KoreanFieldwork-termDictionaryDomain": {
+    "values": {
+      "concept": {
+        "label": "Concept"
+      },
+      "paleolithic": {
+        "label": "Paleolithic"
+      },
+      "neolithic": {
+        "label": "Neolithic"
+      },
+      "bronzeAge": {
+        "label": "Bronze Age"
+      },
+      "tomb": {
+        "label": "Tomb"
+      },
+      "tombArtifact": {
+        "label": "Tomb artifact"
+      },
+      "fortificationBeacon": {
+        "label": "Fortification and beacon"
+      },
+      "pottery": {
+        "label": "Pottery"
+      },
+      "roofTile": {
+        "label": "Roof tile"
+      },
+      "porcelain": {
+        "label": "Porcelain"
+      },
+      "earthenware": {
+        "label": "Earthenware"
+      },
+      "ironProduction": {
+        "label": "Iron production"
+      },
+      "charcoal": {
+        "label": "Charcoal"
+      },
+      "workshopOther": {
+        "label": "Workshop and other"
+      },
+      "generalArchaeology": {
+        "label": "General archaeology"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean archaeological dictionary domains for deciding which specialist authority a term belongs to"
+  },
+  "KoreanFieldwork-termApplicationScope": {
+    "values": {
+      "screenLabel": {
+        "label": "Screen label"
+      },
+      "fieldLabel": {
+        "label": "Field label"
+      },
+      "valueListEntry": {
+        "label": "Value-list entry"
+      },
+      "helpText": {
+        "label": "Help text"
+      },
+      "reportOutput": {
+        "label": "Report output"
+      },
+      "searchAlias": {
+        "label": "Search alias"
+      },
+      "importMapping": {
+        "label": "Import mapping"
+      },
+      "institutionalUsage": {
+        "label": "Institutional usage"
+      },
+      "sourceDictionaryLink": {
+        "label": "Source dictionary link"
+      },
+      "measurementUnitDefault": {
+        "label": "Measurement unit default"
+      },
+      "uiExposureDeferred": {
+        "label": "UI exposure deferred"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean archaeological term application scopes for screen labels, value lists, help, report output, search aliases, and import mappings"
+  },
+  "KoreanFieldwork-termSourcePriority": {
+    "values": {
+      "domainSpecialistDictionary": {
+        "label": "Domain specialist dictionary"
+      },
+      "latestSupplementDictionary": {
+        "label": "Latest supplement dictionary"
+      },
+      "generalArchaeologyDictionary": {
+        "label": "General archaeology dictionary"
+      },
+      "methodologyTerm": {
+        "label": "Methodology term"
+      },
+      "institutionReportUsage": {
+        "label": "Institution report usage"
+      },
+      "fieldInstitutionUsage": {
+        "label": "Field institution usage"
+      },
+      "pdfCrossCheckRequired": {
+        "label": "Source PDF cross-check required"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean archaeological term source priorities for specialist dictionaries, general dictionaries, methodology materials, reports, and field usage"
+  },
   "KoreanFieldwork-featurePackage": {
     "values": {
       "surfaceSurvey": {

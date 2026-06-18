@@ -25,6 +25,20 @@
         }
       }
     },
+    "TermAuthority": {
+      "label": "Term authority",
+      "fields": {
+        "termApplicationScope": {
+          "label": "Term application scope"
+        },
+        "termDictionaryDomain": {
+          "label": "Dictionary domain"
+        },
+        "termSourcePriority": {
+          "label": "Source priority"
+        }
+      }
+    },
     "Project": {
       "fields": {
         "digitalSourcePreservation": {

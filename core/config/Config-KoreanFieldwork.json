@@ -338,6 +338,68 @@
         }
       ]
     },
+    "TermAuthority": {
+      "parent": "FeatureGroup",
+      "color": "#7f6b8f",
+      "hidden": [],
+      "fields": {
+        "termApplicationScope": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "termDictionaryDomain": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "termSourcePriority": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "termApplicationScope": "KoreanFieldwork-termApplicationScope",
+        "termAuthorityStatus": "KoreanFieldwork-termAuthorityStatus",
+        "termDictionaryDomain": "KoreanFieldwork-termDictionaryDomain",
+        "termRelation": "KoreanFieldwork-termRelation",
+        "termSearchMapping": "KoreanFieldwork-termSearchMapping",
+        "termSourcePriority": "KoreanFieldwork-termSourcePriority",
+        "verificationState": "KoreanFieldwork-verificationState"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
+        },
+        {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description"]
+        },
+        {
+          "name": "koreanFieldwork",
+          "fields": [
+            "termDictionaryDomain",
+            "termApplicationScope",
+            "termSourcePriority",
+            "termRelation",
+            "termSearchMapping",
+            "termAuthorityStatus",
+            "verificationState"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": ["period", "dating"]
+        }
+      ]
+    },
     "FeatureGroup:default": {
       "hidden": [],
       "fields": {

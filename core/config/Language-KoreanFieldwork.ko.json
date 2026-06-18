@@ -25,6 +25,20 @@
         }
       }
     },
+    "TermAuthority": {
+      "label": "용어 권위",
+      "fields": {
+        "termApplicationScope": {
+          "label": "용어 적용범위"
+        },
+        "termDictionaryDomain": {
+          "label": "사전 분야"
+        },
+        "termSourcePriority": {
+          "label": "출처 우선순위"
+        }
+      }
+    },
     "Project": {
       "fields": {
         "digitalSourcePreservation": {

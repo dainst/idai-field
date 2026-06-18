@@ -672,6 +672,129 @@
     },
     "description": "고고학사전 표제어와 현장 관용어를 앱 값 목록으로 올리기 전에 출처, 원문 대조, OCR 품질, UI 노출 가능성을 표시하기 위한 목록"
   },
+  "KoreanFieldwork-termDictionaryDomain": {
+    "values": {
+      "concept": {
+        "label": "개념"
+      },
+      "paleolithic": {
+        "label": "구석기"
+      },
+      "neolithic": {
+        "label": "신석기"
+      },
+      "bronzeAge": {
+        "label": "청동기"
+      },
+      "tomb": {
+        "label": "고분"
+      },
+      "tombArtifact": {
+        "label": "고분유물"
+      },
+      "fortificationBeacon": {
+        "label": "성곽·봉수"
+      },
+      "pottery": {
+        "label": "토기"
+      },
+      "roofTile": {
+        "label": "기와"
+      },
+      "porcelain": {
+        "label": "자기"
+      },
+      "earthenware": {
+        "label": "도기"
+      },
+      "ironProduction": {
+        "label": "제철"
+      },
+      "charcoal": {
+        "label": "목탄"
+      },
+      "workshopOther": {
+        "label": "공방·기타"
+      },
+      "generalArchaeology": {
+        "label": "일반고고학"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "고고학사전 표제어를 어느 전문 분야의 권위 근거로 쓸지 구분하기 위한 목록"
+  },
+  "KoreanFieldwork-termApplicationScope": {
+    "values": {
+      "screenLabel": {
+        "label": "화면명"
+      },
+      "fieldLabel": {
+        "label": "필드명"
+      },
+      "valueListEntry": {
+        "label": "값목록 항목"
+      },
+      "helpText": {
+        "label": "도움말"
+      },
+      "reportOutput": {
+        "label": "보고서 출력"
+      },
+      "searchAlias": {
+        "label": "검색 동의어"
+      },
+      "importMapping": {
+        "label": "가져오기 매핑"
+      },
+      "institutionalUsage": {
+        "label": "기관 관용어"
+      },
+      "sourceDictionaryLink": {
+        "label": "사전 출처 연결"
+      },
+      "measurementUnitDefault": {
+        "label": "측정단위 기본값"
+      },
+      "uiExposureDeferred": {
+        "label": "UI 노출 보류"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "표제어를 화면명, 값목록, 도움말, 보고서 출력, 검색어, 가져오기 매핑 중 어디에 적용할지 표시하기 위한 목록"
+  },
+  "KoreanFieldwork-termSourcePriority": {
+    "values": {
+      "domainSpecialistDictionary": {
+        "label": "해당분야 전문사전"
+      },
+      "latestSupplementDictionary": {
+        "label": "최신 증보판"
+      },
+      "generalArchaeologyDictionary": {
+        "label": "일반고고학사전"
+      },
+      "methodologyTerm": {
+        "label": "조사방법론 용어"
+      },
+      "institutionReportUsage": {
+        "label": "기관보고서 관용어"
+      },
+      "fieldInstitutionUsage": {
+        "label": "현장기관 관용어"
+      },
+      "pdfCrossCheckRequired": {
+        "label": "원PDF 대조 필수"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "전문사전, 일반사전, 조사방법론, 기관 보고서, 현장 관용어 사이에서 어떤 출처를 우선할지 표시하기 위한 목록"
+  },
   "KoreanFieldwork-featurePackage": {
     "values": {
       "surfaceSurvey": {

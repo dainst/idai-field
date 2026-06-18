@@ -31568,6 +31568,102 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-termDictionaryDomain": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "concept": {},
+      "paleolithic": {},
+      "neolithic": {},
+      "bronzeAge": {},
+      "tomb": {},
+      "tombArtifact": {},
+      "fortificationBeacon": {},
+      "pottery": {},
+      "roofTile": {},
+      "porcelain": {},
+      "earthenware": {},
+      "ironProduction": {},
+      "charcoal": {},
+      "workshopOther": {},
+      "generalArchaeology": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "concept",
+      "paleolithic",
+      "neolithic",
+      "bronzeAge",
+      "tomb",
+      "tombArtifact",
+      "fortificationBeacon",
+      "pottery",
+      "roofTile",
+      "porcelain",
+      "earthenware",
+      "ironProduction",
+      "charcoal",
+      "workshopOther",
+      "generalArchaeology",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-termApplicationScope": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "screenLabel": {},
+      "fieldLabel": {},
+      "valueListEntry": {},
+      "helpText": {},
+      "reportOutput": {},
+      "searchAlias": {},
+      "importMapping": {},
+      "institutionalUsage": {},
+      "sourceDictionaryLink": {},
+      "measurementUnitDefault": {},
+      "uiExposureDeferred": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "screenLabel",
+      "fieldLabel",
+      "valueListEntry",
+      "helpText",
+      "reportOutput",
+      "searchAlias",
+      "importMapping",
+      "institutionalUsage",
+      "sourceDictionaryLink",
+      "measurementUnitDefault",
+      "uiExposureDeferred",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-termSourcePriority": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "domainSpecialistDictionary": {},
+      "latestSupplementDictionary": {},
+      "generalArchaeologyDictionary": {},
+      "methodologyTerm": {},
+      "institutionReportUsage": {},
+      "fieldInstitutionUsage": {},
+      "pdfCrossCheckRequired": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "domainSpecialistDictionary",
+      "latestSupplementDictionary",
+      "generalArchaeologyDictionary",
+      "methodologyTerm",
+      "institutionReportUsage",
+      "fieldInstitutionUsage",
+      "pdfCrossCheckRequired",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-featurePackage": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

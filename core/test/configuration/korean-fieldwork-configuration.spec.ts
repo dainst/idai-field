@@ -24,6 +24,7 @@ describe('KoreanFieldwork project configuration', () => {
         const featureSegmentForm = config.forms['FeatureSegment:default'];
         const fieldRecordQualityReviewForm = config.forms.FieldRecordQualityReview;
         const dailyLogForm = config.forms.DailyLog;
+        const termAuthorityForm = config.forms.TermAuthority;
         const findForm = config.forms['Find:default'];
         const sampleForm = config.forms['Sample:default'];
 
@@ -33,6 +34,10 @@ describe('KoreanFieldwork project configuration', () => {
         expect(fieldRecordQualityReviewForm.fields.qualityCorrectionBasis.inputType).toBe('checkboxes');
         expect(dailyLogForm.parent).toBe('Operation');
         expect(dailyLogForm.fields.dailyLogEvidenceRole.inputType).toBe('checkboxes');
+        expect(termAuthorityForm.parent).toBe('FeatureGroup');
+        expect(termAuthorityForm.fields.termDictionaryDomain.inputType).toBe('checkboxes');
+        expect(termAuthorityForm.fields.termApplicationScope.inputType).toBe('checkboxes');
+        expect(termAuthorityForm.fields.termSourcePriority.inputType).toBe('checkboxes');
         expect(operationForm.fields.fieldRecordQuality.inputType).toBe('checkboxes');
         expect(operationForm.fields.personalNotebookArchive.inputType).toBe('checkboxes');
         expect(operationForm.fields.dailyLogContent.inputType).toBe('checkboxes');
@@ -83,6 +88,14 @@ describe('KoreanFieldwork project configuration', () => {
         expect(dailyLogForm.valuelists.dailyLogEvidenceRole)
             .toBe('KoreanFieldwork-dailyLogEvidenceRole');
         expect(dailyLogForm.valuelists.dailyLogReview).toBe('KoreanFieldwork-dailyLogReview');
+        expect(termAuthorityForm.valuelists.termDictionaryDomain)
+            .toBe('KoreanFieldwork-termDictionaryDomain');
+        expect(termAuthorityForm.valuelists.termApplicationScope)
+            .toBe('KoreanFieldwork-termApplicationScope');
+        expect(termAuthorityForm.valuelists.termSourcePriority)
+            .toBe('KoreanFieldwork-termSourcePriority');
+        expect(termAuthorityForm.valuelists.termAuthorityStatus)
+            .toBe('KoreanFieldwork-termAuthorityStatus');
         expect(surveyForm.valuelists.surfaceSurveyObservation).toBe('KoreanFieldwork-surfaceSurveyObservation');
         expect(surveyForm.valuelists.surfaceSurveyBiasControl).toBe('KoreanFieldwork-surfaceSurveyBiasControl');
         expect(surveyForm.valuelists.surfaceSurveyFollowUp).toBe('KoreanFieldwork-surfaceSurveyFollowUp');
@@ -116,6 +129,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.DailyLog.label).toBe('Daily log');
         expect(languages.en.categories.DailyLog.fields.dailyLogEvidenceRole.label)
             .toBe('Daily log evidence role');
+        expect(languages.en.categories.TermAuthority.label).toBe('Term authority');
+        expect(languages.en.categories.TermAuthority.fields.termDictionaryDomain.label)
+            .toBe('Dictionary domain');
         expect(languages.en.categories.Operation.fields.fieldRecordQuality.label).toBe('Field record quality');
         expect(languages.en.categories.Operation.fields.personalNotebookArchive.label).toBe('Personal notebook archive');
         expect(languages.en.categories.Operation.fields.dailyLogContent.label).toBe('Daily work log');
@@ -177,6 +193,13 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Source PDF cross-checked');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-termSearchMapping'].values.reportOutputSeparated.label)
             .toBe('Report output separated');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-termDictionaryDomain'].values.fortificationBeacon.label)
+            .toBe('Fortification and beacon');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-termApplicationScope'].values.reportOutput.label)
+            .toBe('Report output');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-termSourcePriority']
+            .values.domainSpecialistDictionary.label)
+            .toBe('Domain specialist dictionary');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-sampleCollectionHandling'].values.lightShielded.label)
             .toBe('Light-shielded');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-fieldRecordQuality'].values.immediateRecording.label)

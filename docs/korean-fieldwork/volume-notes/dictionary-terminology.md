@@ -331,9 +331,9 @@
 
 ## iDAI.field 반영 방향
 
-1. `TermAuthority`를 새로 두고 우선표제어, 한자, 영문, 분야, 시대, 출처, 검증상태를 저장한다.
+1. `TermAuthority`를 `FeatureGroup` 하위 1차 카드로 두고 우선표제어 후보, 분야, 적용범위, 출처 우선순위, 관계, 검색 매핑, 검증상태를 저장한다.
 2. `TermAlias`는 동의어와 이칭을 저장하되, 저장 데이터의 기본값은 `TermAuthority`를 향하게 한다.
-3. 기존 값 목록에는 한국어 표시값만 넣지 말고 `sourceDictionary`, `sourcePage`, `verificationState`, `sourceQuality`, `domain`을 붙인다.
+3. 기존 값 목록에는 한국어 표시값만 넣지 말고 `sourceDictionary`, `sourcePage`, `verificationState`, `sourceQuality`, `domain`을 붙인다. 이번 구현에서는 우선 `termDictionaryDomain`, `termApplicationScope`, `termSourcePriority`로 사전 분야와 적용범위, 출처 우선순위를 분리했다.
 4. 도움말은 사전 정의를 길게 번역하지 않고, 현장 입력에 필요한 구분 기준과 혼동 위험만 요약한다.
 5. `TermRelationship`를 별도로 두고 동의어, 이칭, 찾아가기, 상위어, 하위어, 기능유사, 구조유사, 위치관계를 구분한다.
 6. 용어 표준화는 한 번에 전체 사전을 값 목록으로 옮기는 방식이 아니라, 실제 템플릿을 만들 때 필요한 분야부터 부분 적용한다.
@@ -344,6 +344,7 @@
 
 ## 다음 대조 대상
 
+- `TermAuthority` 검색 인덱스: `TermAlias`와 `TermRelationship`가 실제 자동완성·가져오기 매핑에서 어떻게 쓰일지 샘플 데이터로 검증.
 - 생산유적편: 도판 속 개별 사례명과 요도구 사진 캡션 교정.
 - 청동기시대편: 수혈주거지와 생산 관련 값 목록, 도판 속 개별 사례명 교정.
 - 구석기시대편: 국외 유적명 원어 표기와 도판 속 개별 석재·접합 번호 교정.

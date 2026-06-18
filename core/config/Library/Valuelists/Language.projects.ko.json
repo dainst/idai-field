@@ -597,6 +597,95 @@
     },
     "description": "제철 시료를 분석기관에 보내기 전에 육안관찰, 자석반응, 채취 위치, 절단 위치, 파괴 승인, 분석법, 산화물 해석, 연대·수종분석과 결과 환류를 함께 관리하기 위한 목록"
   },
+  "KoreanFieldwork-tombMoundInvestigation": {
+    "values": {
+      "preExcavationSurvey": { "label": "발굴 전 현황조사" },
+      "contourSurvey": { "label": "등고 측량" },
+      "disturbanceMapped": { "label": "도굴·교란 범위 표시" },
+      "originalMoundBoundary": { "label": "원봉토 범위" },
+      "baulkPlanRecorded": { "label": "조사둑 계획 기록" },
+      "horizontalRemovalUnit": { "label": "수평 제토 단위" },
+      "moundSectionRecorded": { "label": "봉토 단면 기록" },
+      "oldSurfaceIdentified": { "label": "구지표 확인" },
+      "moundOrSealingSeparated": { "label": "분구·봉토·밀봉층 구분" },
+      "constructionUnitRecorded": { "label": "성토 단위 기록" },
+      "stoneSettingLinked": { "label": "호석·적석 연결" },
+      "ditchLinked": { "label": "주구 연결" },
+      "ditchFillRecorded": { "label": "주구 퇴적토 기록" },
+      "ditchRecutChecked": { "label": "주구 재굴착 확인" },
+      "moundConstructionSequence": { "label": "성토·매장 선후" },
+      "preservedAreaMarked": { "label": "보존 구역 표시" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "고분 봉토와 분구 조사에서 발굴 전 현황, 등고·교란, 조사둑, 제토 단위, 구지표, 성토 단위, 호석·주구, 재굴착, 보존 구역을 빠뜨리지 않기 위한 목록"
+  },
+  "KoreanFieldwork-tombBurialStructureInvestigation": {
+    "values": {
+      "gravePitShoulderLine": { "label": "묘광 어깨선" },
+      "burialFacilityTypeOpen": { "label": "매장시설 유형 보류" },
+      "coffinChamberRoomSeparated": { "label": "관·곽·실 분리" },
+      "capstoneBeforeRemoval": { "label": "개석 제거 전 기록" },
+      "sealClayOrPacking": { "label": "밀봉토·충전재" },
+      "capstoneRemovalSequence": { "label": "개석 제거 순서" },
+      "internalFillUnit": { "label": "내부토 수습 단위" },
+      "waterSievingSmallFinds": { "label": "소형유물 물체질" },
+      "wallElevationRecorded": { "label": "벽면 입면 기록" },
+      "floorAndBeddingRecorded": { "label": "바닥·시상 기록" },
+      "closureFeatureRecorded": { "label": "폐쇄시설 기록" },
+      "entrancePassageRecorded": { "label": "입구·연도·묘도 기록" },
+      "additionalBurialEvidence": { "label": "추가장 근거" },
+      "robberyDisturbanceSeparated": { "label": "도굴·교란 분리" },
+      "foundationAfterDismantling": { "label": "해체 후 기초 기록" },
+      "preservationDecisionLinked": { "label": "보존 판단 연결" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "고분 매장주체부 조사에서 묘광, 관·곽·실, 개석, 밀봉토, 내부토, 소형유물, 벽면·바닥, 폐쇄시설, 입구·묘도, 추가장, 도굴·교란, 해체 후 기초와 보존 판단을 분리하기 위한 목록"
+  },
+  "KoreanFieldwork-graveGoodsRitualContext": {
+    "values": {
+      "wearingPosition": { "label": "착장 위치" },
+      "coffinInside": { "label": "관 내부" },
+      "coffinOutside": { "label": "관 외부" },
+      "burialChamber": { "label": "매장주체부 내부" },
+      "stoneSettingOrCapstone": { "label": "적석·개석 상부" },
+      "moundOrDitch": { "label": "봉토·주구" },
+      "entranceOrPassage": { "label": "입구·연도·묘도" },
+      "closureDeposit": { "label": "폐쇄부 매납" },
+      "ritualVessel": { "label": "제사용 토기" },
+      "intentionalBreakage": { "label": "의도적 파손" },
+      "animalOrFoodOffering": { "label": "동물·음식물 공헌" },
+      "foreignElementCandidate": { "label": "외래요소 후보" },
+      "functionNotAssumed": { "label": "기능 단정 보류" },
+      "collectionUnitRecorded": { "label": "수습 단위 기록" },
+      "relationToHumanRemains": { "label": "인골과 위치관계" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "고분 부장품과 제사자료를 착장, 관 내부·외부, 매장주체부, 봉토·주구, 입구·폐쇄부, 의도적 파손, 공헌, 외래요소 후보, 수습 단위와 인골 위치관계로 나누기 위한 목록"
+  },
+  "KoreanFieldwork-humanRemainsRecoveryAnalysis": {
+    "values": {
+      "specialistConsulted": { "label": "전문가 협의" },
+      "exposedAfterFeatureCleaning": { "label": "유구 정리 후 노출" },
+      "pinProbeAvoided": { "label": "핀폴 보링 금지" },
+      "dnaBeforeTreatment": { "label": "보존처리 전 DNA" },
+      "softToolsUsed": { "label": "약한 도구 사용" },
+      "rootsCutNotPulled": { "label": "뿌리 절단·당김 금지" },
+      "shadeMaintained": { "label": "차양 유지" },
+      "waterUseRestricted": { "label": "물 사용 제한" },
+      "scaleOneToFiveDrawing": { "label": "1/5 인골 도면" },
+      "graveGoodsRelationRecorded": { "label": "부장품 위치관계 기록" },
+      "individualNumberAssigned": { "label": "개체번호 부여" },
+      "newspaperOrCardboardPacking": { "label": "신문지·골판지 포장" },
+      "plasticSealingAvoided": { "label": "비닐 밀봉 회피" },
+      "labelOnWrapping": { "label": "포장재 직접 주기" },
+      "conservationBeforeLifting": { "label": "수습 전 보존처리" },
+      "slowShadeDrying": { "label": "그늘 장기건조" },
+      "bonePartSideIndividualSequence": { "label": "부위·좌우·개체 순서" },
+      "analysisCriteriaRecorded": { "label": "분석 기준 기록" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "인골 수습에서 전문가 협의, 노출 순서, 오염 방지, 도구, 차양, 물 사용, 1/5 도면, 부장품 위치관계, 포장·주기, 보존처리, 건조, 개체식별과 분석 기준을 함께 관리하기 위한 목록"
+  },
   "KoreanFieldwork-personalNotebookArchive": {
     "values": {
       "personalNotebookWritten": {

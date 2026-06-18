@@ -70,6 +70,8 @@ C:\Users\nuri9\AppData\Local\Temp\codex-idai-field-new-pdf-text\methods-all
 
 제철유적 장과 생산유적 사전에서 뽑은 공통 축은 `KoreanFieldwork-ironProcessEvidence`, `KoreanFieldwork-ironFurnaceStructure`, `KoreanFieldwork-ironResidueSubtype`, `KoreanFieldwork-ironSampleAnalysisPlan`로 나누어 배치한다. 제련·단야·용해·초강 판정은 노 이름이 아니라 구조, 부산물, 시료 분석계획, 분석 후 환류가 모여야 확정되도록 한다.
 
+고분·분묘 자료에서 뽑은 공통 축은 `KoreanFieldwork-tombMoundInvestigation`, `KoreanFieldwork-tombBurialStructureInvestigation`, `KoreanFieldwork-graveGoodsRitualContext`, `KoreanFieldwork-humanRemainsRecoveryAnalysis`로 나누어 배치한다. 봉토분·분구묘·주구묘·석곽묘·석실묘 같은 명칭은 결과값으로 남기되, 현장 화면에서는 구지표, 성토 단위, 주구 퇴적과 재굴착, 묘광 어깨선, 관·곽·실 구분, 개석과 폐쇄시설, 추가장·도굴 근거, 부장품 위치 맥락, 인골 오염 방지와 분석 기준이 먼저 기록되도록 한다.
+
 ## 고고학사전 자료
 
 | 자료 | 쪽수 | 텍스트 상태 | 추출 파일 | iDAI.field에서 볼 지점 |

@@ -195,6 +195,12 @@
         "ironFurnaceStructure": {
           "label": "Iron furnace structure"
         },
+        "tombMoundInvestigation": {
+          "label": "Tomb mound investigation"
+        },
+        "tombBurialStructureInvestigation": {
+          "label": "Tomb burial structure investigation"
+        },
         "fortificationGateFacility": {
           "label": "Gate and defensive components"
         },
@@ -290,6 +296,9 @@
         "ironResidueSubtype": {
           "label": "Iron residue subtype"
         },
+        "graveGoodsRitualContext": {
+          "label": "Grave goods and ritual context"
+        },
         "recordCreationTiming": {
           "label": "Record creation timing"
         },
@@ -326,6 +335,9 @@
         },
         "ironSampleAnalysisPlan": {
           "label": "Iron sample analysis plan"
+        },
+        "humanRemainsRecoveryAnalysis": {
+          "label": "Human remains recovery and analysis"
         },
         "verificationState": {
           "label": "Verification state"

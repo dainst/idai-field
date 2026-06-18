@@ -195,6 +195,12 @@
         "ironFurnaceStructure": {
           "label": "제철 노 구조"
         },
+        "tombMoundInvestigation": {
+          "label": "고분 봉토·분구 조사"
+        },
+        "tombBurialStructureInvestigation": {
+          "label": "고분 매장주체부 조사"
+        },
         "fortificationGateFacility": {
           "label": "성문·방어 부속시설"
         },
@@ -290,6 +296,9 @@
         "ironResidueSubtype": {
           "label": "제철 부산물 세분"
         },
+        "graveGoodsRitualContext": {
+          "label": "부장·제사 맥락"
+        },
         "recordCreationTiming": {
           "label": "기록 생성 시점"
         },
@@ -326,6 +335,9 @@
         },
         "ironSampleAnalysisPlan": {
           "label": "제철 시료 분석계획"
+        },
+        "humanRemainsRecoveryAnalysis": {
+          "label": "인골 수습·분석"
         },
         "verificationState": {
           "label": "검증상태"

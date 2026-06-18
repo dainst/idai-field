@@ -63,6 +63,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.fields.pitDwellingOverlapSequence.inputType).toBe('checkboxes');
         expect(featureForm.fields.ironProcessEvidence.inputType).toBe('checkboxes');
         expect(featureForm.fields.ironFurnaceStructure.inputType).toBe('checkboxes');
+        expect(featureForm.fields.tombMoundInvestigation.inputType).toBe('checkboxes');
+        expect(featureForm.fields.tombBurialStructureInvestigation.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.chronologyArgument.inputType).toBe('checkboxes');
         expect(findForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
@@ -70,11 +72,13 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.fields.artifactQuantityBasis.inputType).toBe('checkboxes');
         expect(findForm.fields.storageEnvironmentControl.inputType).toBe('checkboxes');
         expect(findForm.fields.ironResidueSubtype.inputType).toBe('checkboxes');
+        expect(findForm.fields.graveGoodsRitualContext.inputType).toBe('checkboxes');
         expect(findForm.fields.typologyArgument.inputType).toBe('checkboxes');
         expect(findForm.fields.chronologyArgument.inputType).toBe('checkboxes');
         expect(findForm.fields.assemblageRelation.inputType).toBe('checkboxes');
         expect(sampleForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
         expect(sampleForm.fields.ironSampleAnalysisPlan.inputType).toBe('checkboxes');
+        expect(sampleForm.fields.humanRemainsRecoveryAnalysis.inputType).toBe('checkboxes');
         expect(featureForm.fields.firstExposureRecord.inputType).toBe('checkboxes');
         expect(config.forms['FeatureSegment:default'].fields.firstExposureRecord.inputType).toBe('checkboxes');
         expect(featureForm.fields.fieldOnlyMissingCheck.mandatory).toBe(true);
@@ -152,6 +156,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-pitDwellingOverlapSequence');
         expect(featureForm.valuelists.ironProcessEvidence).toBe('KoreanFieldwork-ironProcessEvidence');
         expect(featureForm.valuelists.ironFurnaceStructure).toBe('KoreanFieldwork-ironFurnaceStructure');
+        expect(featureForm.valuelists.tombMoundInvestigation)
+            .toBe('KoreanFieldwork-tombMoundInvestigation');
+        expect(featureForm.valuelists.tombBurialStructureInvestigation)
+            .toBe('KoreanFieldwork-tombBurialStructureInvestigation');
         expect(featureSegmentForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
         expect(featureSegmentForm.valuelists.chronologyArgument).toBe('KoreanFieldwork-chronologyArgument');
         expect(findForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
@@ -159,6 +167,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.valuelists.artifactQuantityBasis).toBe('KoreanFieldwork-artifactQuantityBasis');
         expect(findForm.valuelists.storageEnvironmentControl).toBe('KoreanFieldwork-storageEnvironmentControl');
         expect(findForm.valuelists.ironResidueSubtype).toBe('KoreanFieldwork-ironResidueSubtype');
+        expect(findForm.valuelists.graveGoodsRitualContext).toBe('KoreanFieldwork-graveGoodsRitualContext');
         expect(findForm.valuelists.typologyArgument).toBe('KoreanFieldwork-typologyArgument');
         expect(findForm.valuelists.chronologyArgument).toBe('KoreanFieldwork-chronologyArgument');
         expect(findForm.valuelists.assemblageRelation).toBe('KoreanFieldwork-assemblageRelation');
@@ -175,6 +184,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(sampleForm.valuelists.sampleCollectionHandling)
             .toBe('KoreanFieldwork-sampleCollectionHandling');
         expect(sampleForm.valuelists.ironSampleAnalysisPlan).toBe('KoreanFieldwork-ironSampleAnalysisPlan');
+        expect(sampleForm.valuelists.humanRemainsRecoveryAnalysis)
+            .toBe('KoreanFieldwork-humanRemainsRecoveryAnalysis');
         expect(drawingForm.valuelists.mediaEvidenceRole).toBe('KoreanFieldwork-mediaEvidenceRole');
         expect(drawingForm.valuelists.mediaQualityCheck).toBe('KoreanFieldwork-mediaQualityCheck');
         expect(drawingForm.valuelists.digitalSourcePreservation)
@@ -226,6 +237,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Burned pit dwelling evidence');
         expect(languages.en.categories.Feature.fields.ironProcessEvidence.label).toBe('Iron process evidence');
         expect(languages.en.categories.Feature.fields.ironFurnaceStructure.label).toBe('Iron furnace structure');
+        expect(languages.en.categories.Feature.fields.tombMoundInvestigation.label)
+            .toBe('Tomb mound investigation');
+        expect(languages.en.categories.Feature.fields.tombBurialStructureInvestigation.label)
+            .toBe('Tomb burial structure investigation');
         expect(languages.en.categories.Feature.fields.fortificationHiddenGateFunction.label).toBe('Hidden gate function');
         expect(languages.en.categories.Feature.fields.fortificationParapetDetail.label).toBe('Parapet detail');
         expect(languages.en.categories.Feature.fields.termAuthorityStatus.label).toBe('Term authority status');
@@ -238,6 +253,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.Find.fields.storageEnvironmentControl.label)
             .toBe('Storage environment control');
         expect(languages.en.categories.Find.fields.ironResidueSubtype.label).toBe('Iron residue subtype');
+        expect(languages.en.categories.Find.fields.graveGoodsRitualContext.label)
+            .toBe('Grave goods and ritual context');
         expect(languages.en.categories.Find.fields.typologyArgument.label).toBe('Typology argument');
         expect(languages.en.categories.Find.fields.chronologyArgument.label).toBe('Chronology argument');
         expect(languages.en.categories.Find.fields.assemblageRelation.label).toBe('Assemblage relation');
@@ -245,6 +262,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Sample collection handling');
         expect(languages.en.categories.Sample.fields.ironSampleAnalysisPlan.label)
             .toBe('Iron sample analysis plan');
+        expect(languages.en.categories.Sample.fields.humanRemainsRecoveryAnalysis.label)
+            .toBe('Human remains recovery and analysis');
         expect(languages.en.categories.Drawing.fields.mediaEvidenceRole.label)
             .toBe('Media evidence role');
         expect(languages.en.categories.Photo.fields.mediaQualityCheck.label)
@@ -316,6 +335,18 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Furnace-internal slag');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-ironSampleAnalysisPlan'].values.oxideConversion.label)
             .toBe('Oxide conversion');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-tombMoundInvestigation']
+            .values.oldSurfaceIdentified.label)
+            .toBe('Old surface identified');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-tombBurialStructureInvestigation']
+            .values.capstoneBeforeRemoval.label)
+            .toBe('Capstone before removal');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-graveGoodsRitualContext']
+            .values.functionNotAssumed.label)
+            .toBe('Function not assumed');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-humanRemainsRecoveryAnalysis']
+            .values.dnaBeforeTreatment.label)
+            .toBe('DNA before treatment');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-fortificationHiddenGateFunction'].values.supplyTransport.label)
             .toBe('Military supply transport');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-fortificationParapetDetail'].values.nearGunOpening.label)

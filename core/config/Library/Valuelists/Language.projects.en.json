@@ -12351,6 +12351,95 @@
     },
     "description": "Korean iron-sample analysis planning checks for linking field observation, sampling position, destructive preparation, analysis methods, oxide interpretation, dating, wood species, and feedback"
   },
+  "KoreanFieldwork-tombMoundInvestigation": {
+    "values": {
+      "preExcavationSurvey": { "label": "Pre-excavation survey" },
+      "contourSurvey": { "label": "Contour survey" },
+      "disturbanceMapped": { "label": "Disturbance mapped" },
+      "originalMoundBoundary": { "label": "Original mound boundary" },
+      "baulkPlanRecorded": { "label": "Baulk plan recorded" },
+      "horizontalRemovalUnit": { "label": "Horizontal removal unit" },
+      "moundSectionRecorded": { "label": "Mound section recorded" },
+      "oldSurfaceIdentified": { "label": "Old surface identified" },
+      "moundOrSealingSeparated": { "label": "Mound or sealing separated" },
+      "constructionUnitRecorded": { "label": "Construction unit recorded" },
+      "stoneSettingLinked": { "label": "Stone setting linked" },
+      "ditchLinked": { "label": "Ditch linked" },
+      "ditchFillRecorded": { "label": "Ditch fill recorded" },
+      "ditchRecutChecked": { "label": "Ditch recut checked" },
+      "moundConstructionSequence": { "label": "Mound construction sequence" },
+      "preservedAreaMarked": { "label": "Preserved area marked" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean tomb mound checks for pre-excavation survey, contour and disturbance mapping, baulk placement, mound or sealing deposits, construction units, stone settings, ditches, recuts, and preserved areas"
+  },
+  "KoreanFieldwork-tombBurialStructureInvestigation": {
+    "values": {
+      "gravePitShoulderLine": { "label": "Grave-pit shoulder line" },
+      "burialFacilityTypeOpen": { "label": "Burial facility type open" },
+      "coffinChamberRoomSeparated": { "label": "Coffin, chamber, and room separated" },
+      "capstoneBeforeRemoval": { "label": "Capstone before removal" },
+      "sealClayOrPacking": { "label": "Sealing clay or packing" },
+      "capstoneRemovalSequence": { "label": "Capstone removal sequence" },
+      "internalFillUnit": { "label": "Internal fill unit" },
+      "waterSievingSmallFinds": { "label": "Water-sieving small finds" },
+      "wallElevationRecorded": { "label": "Wall elevation recorded" },
+      "floorAndBeddingRecorded": { "label": "Floor and bedding recorded" },
+      "closureFeatureRecorded": { "label": "Closure feature recorded" },
+      "entrancePassageRecorded": { "label": "Entrance or passage recorded" },
+      "additionalBurialEvidence": { "label": "Additional burial evidence" },
+      "robberyDisturbanceSeparated": { "label": "Robbery or disturbance separated" },
+      "foundationAfterDismantling": { "label": "Foundation after dismantling" },
+      "preservationDecisionLinked": { "label": "Preservation decision linked" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean tomb burial-structure checks for separating observed burial facilities from interpretation, and for recording capstones, seals, fills, small finds, wall elevations, floors, closures, entrances, additional burials, disturbance, dismantling, and preservation decisions"
+  },
+  "KoreanFieldwork-graveGoodsRitualContext": {
+    "values": {
+      "wearingPosition": { "label": "Wearing position" },
+      "coffinInside": { "label": "Inside coffin" },
+      "coffinOutside": { "label": "Outside coffin" },
+      "burialChamber": { "label": "Burial chamber" },
+      "stoneSettingOrCapstone": { "label": "Stone setting or capstone" },
+      "moundOrDitch": { "label": "Mound or ditch" },
+      "entranceOrPassage": { "label": "Entrance or passage" },
+      "closureDeposit": { "label": "Closure deposit" },
+      "ritualVessel": { "label": "Ritual vessel" },
+      "intentionalBreakage": { "label": "Intentional breakage" },
+      "animalOrFoodOffering": { "label": "Animal or food offering" },
+      "foreignElementCandidate": { "label": "Foreign element candidate" },
+      "functionNotAssumed": { "label": "Function not assumed" },
+      "collectionUnitRecorded": { "label": "Collection unit recorded" },
+      "relationToHumanRemains": { "label": "Relation to human remains" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean grave-goods and ritual context checks for recording wearing position, coffin/chamber/ditch/entrance contexts, closure deposits, ritual vessels, breakage, animal and food offerings, foreign-element candidates, function uncertainty, collection units, and relation to human remains"
+  },
+  "KoreanFieldwork-humanRemainsRecoveryAnalysis": {
+    "values": {
+      "specialistConsulted": { "label": "Specialist consulted" },
+      "exposedAfterFeatureCleaning": { "label": "Exposed after feature cleaning" },
+      "pinProbeAvoided": { "label": "Pin probe avoided" },
+      "dnaBeforeTreatment": { "label": "DNA before treatment" },
+      "softToolsUsed": { "label": "Soft tools used" },
+      "rootsCutNotPulled": { "label": "Roots cut, not pulled" },
+      "shadeMaintained": { "label": "Shade maintained" },
+      "waterUseRestricted": { "label": "Water use restricted" },
+      "scaleOneToFiveDrawing": { "label": "1:5 drawing" },
+      "graveGoodsRelationRecorded": { "label": "Grave-goods relation recorded" },
+      "individualNumberAssigned": { "label": "Individual number assigned" },
+      "newspaperOrCardboardPacking": { "label": "Newspaper or cardboard packing" },
+      "plasticSealingAvoided": { "label": "Plastic sealing avoided" },
+      "labelOnWrapping": { "label": "Label on wrapping" },
+      "conservationBeforeLifting": { "label": "Conservation before lifting" },
+      "slowShadeDrying": { "label": "Slow shade drying" },
+      "bonePartSideIndividualSequence": { "label": "Bone, side, individual sequence" },
+      "analysisCriteriaRecorded": { "label": "Analysis criteria recorded" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean human-remains recovery checks for specialist consultation, exposure order, contamination control, soft tools, shade, restricted water use, 1:5 drawing, relation to grave goods, packaging, conservation, drying, individual identification, and analysis criteria"
+  },
   "KoreanFieldwork-personalNotebookArchive": {
     "values": {
       "personalNotebookWritten": {

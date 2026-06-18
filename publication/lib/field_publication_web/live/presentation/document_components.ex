@@ -387,7 +387,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             <.group_heading>
               {pick_default_translation(other_relation.labels)} ({Enum.count(other_relation.docs)})
             </.group_heading>
-            <div class="grid grid-cols-4 gap-1 overflow-y-auto max-h-[1500px]">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1 overflow-y-auto max-h-[200vh]">
               <%= for %Document{geometry: geometry} = doc <- other_relation.docs do %>
                 <%= if geometry do %>
                   <div

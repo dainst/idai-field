@@ -94,6 +94,68 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "recordCreationTiming": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "termRelation": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "verificationState": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "featurePackage": "KoreanFieldwork-featurePackage",
+        "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
+        "termRelation": "KoreanFieldwork-termRelation",
+        "verificationState": "KoreanFieldwork-verificationState"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "date", "isSameAs"]
+        },
+        {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "color"]
+        },
+        {
+          "name": "koreanFieldwork",
+          "fields": [
+            "featurePackage",
+            "recordCreationTiming",
+            "verificationState",
+            "termRelation"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "isPresentIn"]
+        },
+        {
+          "name": "time",
+          "fields": ["period", "dating"]
+        }
+      ]
+    },
+    "Feature:default": {
+      "hidden": [],
+      "fields": {
+        "featurePackage": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "fortificationGateFacility": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -143,7 +205,7 @@
         },
         {
           "name": "properties",
-          "fields": ["description", "color"]
+          "fields": ["description", "color", "hasDisturbance", "featureForm", "featureBorders", "comparison"]
         },
         {
           "name": "koreanFieldwork",
@@ -156,63 +218,6 @@
             "verificationState",
             "termRelation"
           ]
-        },
-        {
-          "name": "position",
-          "fields": ["geometry", "isPresentIn"]
-        },
-        {
-          "name": "time",
-          "fields": ["period", "dating"]
-        }
-      ]
-    },
-    "Feature:default": {
-      "hidden": [],
-      "fields": {
-        "featurePackage": {
-          "inputType": "checkboxes",
-          "constraintIndexed": true
-        },
-        "recordCreationTiming": {
-          "inputType": "dropdown",
-          "constraintIndexed": true
-        },
-        "termRelation": {
-          "inputType": "checkboxes",
-          "constraintIndexed": true
-        },
-        "verificationState": {
-          "inputType": "dropdown",
-          "constraintIndexed": true
-        }
-      },
-      "valuelists": {
-        "featurePackage": "KoreanFieldwork-featurePackage",
-        "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
-        "termRelation": "KoreanFieldwork-termRelation",
-        "verificationState": "KoreanFieldwork-verificationState"
-      },
-      "groups": [
-        {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "diary", "date", "isSameAs"]
-        },
-        {
-          "name": "hierarchy",
-          "fields": ["hasChildren"]
-        },
-        {
-          "name": "workflow",
-          "fields": ["isSubjectOf", "isResultOf"]
-        },
-        {
-          "name": "properties",
-          "fields": ["description", "color", "hasDisturbance", "featureForm", "featureBorders", "comparison"]
-        },
-        {
-          "name": "koreanFieldwork",
-          "fields": ["featurePackage", "recordCreationTiming", "verificationState", "termRelation"]
         },
         {
           "name": "stratigraphy",

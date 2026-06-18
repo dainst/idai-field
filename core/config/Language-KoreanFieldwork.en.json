@@ -31,15 +31,6 @@
         "featurePackage": {
           "label": "Feature package"
         },
-        "fortificationGateFacility": {
-          "label": "Gate and defensive components"
-        },
-        "fortificationWaterFacility": {
-          "label": "Water gate and drain"
-        },
-        "japaneseFortificationDitch": {
-          "label": "Japanese-style fortress ditch"
-        },
         "recordCreationTiming": {
           "label": "Record creation timing"
         },
@@ -55,6 +46,15 @@
       "fields": {
         "featurePackage": {
           "label": "Feature package"
+        },
+        "fortificationGateFacility": {
+          "label": "Gate and defensive components"
+        },
+        "fortificationWaterFacility": {
+          "label": "Water gate and drain"
+        },
+        "japaneseFortificationDitch": {
+          "label": "Japanese-style fortress ditch"
         },
         "recordCreationTiming": {
           "label": "Record creation timing"

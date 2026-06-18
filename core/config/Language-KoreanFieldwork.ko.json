@@ -31,15 +31,6 @@
         "featurePackage": {
           "label": "유적·유구 패키지"
         },
-        "fortificationGateFacility": {
-          "label": "성문·방어 부속시설"
-        },
-        "fortificationWaterFacility": {
-          "label": "성곽 수문·수구"
-        },
-        "japaneseFortificationDitch": {
-          "label": "왜성 해자"
-        },
         "recordCreationTiming": {
           "label": "기록 생성 시점"
         },
@@ -55,6 +46,15 @@
       "fields": {
         "featurePackage": {
           "label": "유적·유구 패키지"
+        },
+        "fortificationGateFacility": {
+          "label": "성문·방어 부속시설"
+        },
+        "fortificationWaterFacility": {
+          "label": "성곽 수문·수구"
+        },
+        "japaneseFortificationDitch": {
+          "label": "왜성 해자"
         },
         "recordCreationTiming": {
           "label": "기록 생성 시점"

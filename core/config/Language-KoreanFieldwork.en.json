@@ -53,6 +53,28 @@
         }
       }
     },
+    "Survey": {
+      "fields": {
+        "fieldRecordQuality": {
+          "label": "Field record quality"
+        },
+        "recordCreationTiming": {
+          "label": "Record creation timing"
+        },
+        "surfaceSurveyObservation": {
+          "label": "Surface survey observation"
+        },
+        "surfaceSurveyBiasControl": {
+          "label": "Surface survey bias control"
+        },
+        "surfaceSurveyFollowUp": {
+          "label": "Surface survey follow-up"
+        },
+        "verificationState": {
+          "label": "Verification state"
+        }
+      }
+    },
     "FeatureGroup": {
       "fields": {
         "featurePackage": {

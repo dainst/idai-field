@@ -18,6 +18,7 @@ describe('KoreanFieldwork project configuration', () => {
         const config = configReader.read('/Config-KoreanFieldwork.json');
         const operationForm = config.forms['Operation:default'];
         const projectForm = config.forms['Project:default'];
+        const surveyForm = config.forms['Survey:default'];
         const featureForm = config.forms['Feature:default'];
         const featureGroupForm = config.forms['FeatureGroup:default'];
         const featureSegmentForm = config.forms['FeatureSegment:default'];
@@ -28,6 +29,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(operationForm.fields.personalNotebookArchive.inputType).toBe('checkboxes');
         expect(operationForm.fields.digitalSourcePreservation.inputType).toBe('checkboxes');
         expect(projectForm.fields.digitalSourcePreservation.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.surfaceSurveyObservation.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.surfaceSurveyBiasControl.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.surfaceSurveyFollowUp.inputType).toBe('checkboxes');
         expect(featureForm.fields.firstExposureRecord.inputType).toBe('checkboxes');
         expect(config.forms['FeatureSegment:default'].fields.firstExposureRecord.inputType).toBe('checkboxes');
         expect(featureForm.fields.fortificationHiddenGateFunction.inputType).toBe('checkboxes');
@@ -41,6 +45,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(operationForm.valuelists.fieldRecordQuality).toBe('KoreanFieldwork-fieldRecordQuality');
         expect(operationForm.valuelists.personalNotebookArchive).toBe('KoreanFieldwork-personalNotebookArchive');
         expect(operationForm.valuelists.digitalSourcePreservation).toBe('KoreanFieldwork-digitalSourcePreservation');
+        expect(surveyForm.valuelists.surfaceSurveyObservation).toBe('KoreanFieldwork-surfaceSurveyObservation');
+        expect(surveyForm.valuelists.surfaceSurveyBiasControl).toBe('KoreanFieldwork-surfaceSurveyBiasControl');
+        expect(surveyForm.valuelists.surfaceSurveyFollowUp).toBe('KoreanFieldwork-surfaceSurveyFollowUp');
         expect(featureForm.valuelists.firstExposureRecord).toBe('KoreanFieldwork-firstExposureRecord');
         expect(featureForm.valuelists.fortificationHiddenGateFunction)
             .toBe('KoreanFieldwork-fortificationHiddenGateFunction');
@@ -62,6 +69,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.Operation.fields.fieldRecordQuality.label).toBe('Field record quality');
         expect(languages.en.categories.Operation.fields.personalNotebookArchive.label).toBe('Personal notebook archive');
         expect(languages.en.categories.Project.fields.digitalSourcePreservation.label).toBe('Digital source preservation');
+        expect(languages.en.categories.Survey.fields.surfaceSurveyObservation.label)
+            .toBe('Surface survey observation');
         expect(languages.en.categories.Feature.fields.firstExposureRecord.label).toBe('First exposure record');
         expect(languages.en.categories.Feature.fields.fortificationHiddenGateFunction.label).toBe('Hidden gate function');
         expect(languages.en.categories.Feature.fields.fortificationParapetDetail.label).toBe('Parapet detail');
@@ -77,6 +86,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Original submitted');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-digitalSourcePreservation'].values.backupVerified.label)
             .toBe('Backup verified');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveyObservation'].values.cutSectionStratigraphy.label)
+            .toBe('Cut-section stratigraphy');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveyBiasControl'].values.fieldObservationFirst.label)
+            .toBe('Field observation first');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveyFollowUp'].values.testExcavation.label)
+            .toBe('Test excavation');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-firstExposureRecord'].values.shoulderLineRecorded.label)
             .toBe('Shoulder line recorded');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-fortificationHiddenGateFunction'].values.supplyTransport.label)

@@ -490,6 +490,150 @@
     },
     "description": "조사방법론 자료에서 반복 확인된 한국형 야장 유적·업무 패키지 목록"
   },
+  "KoreanFieldwork-surfaceSurveyObservation": {
+    "values": {
+      "terrainCharacteristic": {
+        "label": "지형특성"
+      },
+      "locationPotential": {
+        "label": "입지가능성"
+      },
+      "terrainModification": {
+        "label": "지형변경"
+      },
+      "originalLandformReconstruction": {
+        "label": "원지형 복원"
+      },
+      "surroundingSiteLandscape": {
+        "label": "주변유적 경관"
+      },
+      "artifactScatter": {
+        "label": "유물산포"
+      },
+      "exposedFeature": {
+        "label": "유구노출"
+      },
+      "cutSectionStratigraphy": {
+        "label": "절개면 토층"
+      },
+      "artifactBearingLayer": {
+        "label": "유물포함층"
+      },
+      "associatedFindRange": {
+        "label": "공반유물 범위"
+      },
+      "gpsPosition": {
+        "label": "GPS 위치"
+      },
+      "soilEnvironment": {
+        "label": "토양환경"
+      },
+      "externalFillPossible": {
+        "label": "외부반입토 가능"
+      },
+      "redepositionPossible": {
+        "label": "재퇴적 가능"
+      },
+      "noSurfaceFindsPotential": {
+        "label": "표면유물 없음·입지 가능"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "지표조사를 유물산포 확인으로 축소하지 않고 지형, 입지, 원지형 변화, 절개면 토층, 유물포함층, 재퇴적 가능성을 함께 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-surfaceSurveyBiasControl": {
+    "values": {
+      "priorLiteratureChecked": {
+        "label": "사전문헌 확인"
+      },
+      "sourceTextChecked": {
+        "label": "원전문헌 대조"
+      },
+      "fieldObservationFirst": {
+        "label": "현장관찰 우선"
+      },
+      "priorKnowledgeDeferred": {
+        "label": "사전지식 참조 보류"
+      },
+      "crewSpacingRecorded": {
+        "label": "조사원 간격 기록"
+      },
+      "routeRecorded": {
+        "label": "이동경로 기록"
+      },
+      "visibilityConditionsRecorded": {
+        "label": "시야조건 기록"
+      },
+      "investigatorCrossCheck": {
+        "label": "조사자 교차확인"
+      },
+      "postFieldLiteratureComparison": {
+        "label": "사후 문헌대조"
+      },
+      "existingBoundaryRevisionReason": {
+        "label": "기존 범위·위치 변경 사유"
+      },
+      "missingLiteratureSupplement": {
+        "label": "누락문헌 보완"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "사전문헌이 현장 판단을 덮어쓰지 않도록 백지상태 관찰, 조사 경로와 시야조건, 조사자 교차확인, 사후 문헌대조를 남기기 위한 목록"
+  },
+  "KoreanFieldwork-surfaceSurveyFollowUp": {
+    "values": {
+      "sitePresent": {
+        "label": "유적 있음"
+      },
+      "highPotential": {
+        "label": "유적 가능성 높음"
+      },
+      "lowPotential": {
+        "label": "유적 가능성 낮음"
+      },
+      "noSiteObserved": {
+        "label": "유적 없음"
+      },
+      "destructionSevere": {
+        "label": "파괴 심함"
+      },
+      "preservationLikely": {
+        "label": "보존 양호 가능"
+      },
+      "additionalSurveyNeeded": {
+        "label": "추가조사 필요"
+      },
+      "preservationInPlace": {
+        "label": "원형보존"
+      },
+      "sampleSurvey": {
+        "label": "표본조사"
+      },
+      "testExcavation": {
+        "label": "시굴조사"
+      },
+      "fullExcavation": {
+        "label": "정밀발굴조사"
+      },
+      "stratigraphySurvey": {
+        "label": "토층분포조사"
+      },
+      "watchingBrief": {
+        "label": "입회조사"
+      },
+      "chanceFindReport": {
+        "label": "공사 중 발견 신고"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "지표조사 결과를 유적 존재 확정값이 아니라 보존, 표본조사, 시굴, 정밀발굴, 토층분포조사, 입회조사로 이어지는 판단근거로 관리하기 위한 목록"
+  },
   "KoreanFieldwork-samplePurpose": {
     "values": {
       "absoluteDating": {

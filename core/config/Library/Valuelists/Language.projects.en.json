@@ -12244,6 +12244,150 @@
     },
     "description": "Korean field notebook package types derived from the supplementary methodology and dictionary readings"
   },
+  "KoreanFieldwork-surfaceSurveyObservation": {
+    "values": {
+      "terrainCharacteristic": {
+        "label": "Terrain characteristic"
+      },
+      "locationPotential": {
+        "label": "Location potential"
+      },
+      "terrainModification": {
+        "label": "Terrain modification"
+      },
+      "originalLandformReconstruction": {
+        "label": "Original landform reconstruction"
+      },
+      "surroundingSiteLandscape": {
+        "label": "Surrounding site landscape"
+      },
+      "artifactScatter": {
+        "label": "Artifact scatter"
+      },
+      "exposedFeature": {
+        "label": "Exposed feature"
+      },
+      "cutSectionStratigraphy": {
+        "label": "Cut-section stratigraphy"
+      },
+      "artifactBearingLayer": {
+        "label": "Artifact-bearing layer"
+      },
+      "associatedFindRange": {
+        "label": "Associated find range"
+      },
+      "gpsPosition": {
+        "label": "GPS position"
+      },
+      "soilEnvironment": {
+        "label": "Soil environment"
+      },
+      "externalFillPossible": {
+        "label": "External fill possible"
+      },
+      "redepositionPossible": {
+        "label": "Redeposition possible"
+      },
+      "noSurfaceFindsPotential": {
+        "label": "No surface finds but potential"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean field notebook surface survey observations for terrain, location potential, landform modification, cut sections, artifact-bearing layers, and redeposition risk"
+  },
+  "KoreanFieldwork-surfaceSurveyBiasControl": {
+    "values": {
+      "priorLiteratureChecked": {
+        "label": "Prior literature checked"
+      },
+      "sourceTextChecked": {
+        "label": "Source text checked"
+      },
+      "fieldObservationFirst": {
+        "label": "Field observation first"
+      },
+      "priorKnowledgeDeferred": {
+        "label": "Prior knowledge deferred"
+      },
+      "crewSpacingRecorded": {
+        "label": "Crew spacing recorded"
+      },
+      "routeRecorded": {
+        "label": "Route recorded"
+      },
+      "visibilityConditionsRecorded": {
+        "label": "Visibility conditions recorded"
+      },
+      "investigatorCrossCheck": {
+        "label": "Investigator cross-check"
+      },
+      "postFieldLiteratureComparison": {
+        "label": "Post-field literature comparison"
+      },
+      "existingBoundaryRevisionReason": {
+        "label": "Existing boundary revision reason"
+      },
+      "missingLiteratureSupplement": {
+        "label": "Missing literature supplemented"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean field notebook controls for reducing surface survey observation bias by separating prior sources, walkover observations, route visibility, cross-checking, and later literature comparison"
+  },
+  "KoreanFieldwork-surfaceSurveyFollowUp": {
+    "values": {
+      "sitePresent": {
+        "label": "Site present"
+      },
+      "highPotential": {
+        "label": "High potential"
+      },
+      "lowPotential": {
+        "label": "Low potential"
+      },
+      "noSiteObserved": {
+        "label": "No site observed"
+      },
+      "destructionSevere": {
+        "label": "Severe destruction"
+      },
+      "preservationLikely": {
+        "label": "Preservation likely"
+      },
+      "additionalSurveyNeeded": {
+        "label": "Additional survey needed"
+      },
+      "preservationInPlace": {
+        "label": "Preservation in place"
+      },
+      "sampleSurvey": {
+        "label": "Sample survey"
+      },
+      "testExcavation": {
+        "label": "Test excavation"
+      },
+      "fullExcavation": {
+        "label": "Full excavation"
+      },
+      "stratigraphySurvey": {
+        "label": "Stratigraphy survey"
+      },
+      "watchingBrief": {
+        "label": "Watching brief"
+      },
+      "chanceFindReport": {
+        "label": "Chance find report"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean field notebook follow-up decisions for treating surface survey results as evidence for preservation, sample survey, test excavation, full excavation, stratigraphy survey, watching brief, or chance find reporting"
+  },
   "KoreanFieldwork-samplePurpose": {
     "values": {
       "absoluteDating": {

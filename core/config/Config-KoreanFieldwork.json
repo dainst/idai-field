@@ -148,6 +148,68 @@
         }
       ]
     },
+    "Survey:default": {
+      "hidden": [],
+      "fields": {
+        "fieldRecordQuality": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "recordCreationTiming": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "surfaceSurveyObservation": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "surfaceSurveyBiasControl": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "surfaceSurveyFollowUp": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "verificationState": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
+        "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
+        "surfaceSurveyObservation": "KoreanFieldwork-surfaceSurveyObservation",
+        "surfaceSurveyBiasControl": "KoreanFieldwork-surfaceSurveyBiasControl",
+        "surfaceSurveyFollowUp": "KoreanFieldwork-surfaceSurveyFollowUp",
+        "verificationState": "KoreanFieldwork-verificationState"
+      },
+      "groups": [
+        {
+          "name": "properties",
+          "fields": ["researchMethod"]
+        },
+        {
+          "name": "koreanFieldwork",
+          "fields": [
+            "surfaceSurveyObservation",
+            "surfaceSurveyBiasControl",
+            "surfaceSurveyFollowUp",
+            "fieldRecordQuality",
+            "recordCreationTiming",
+            "verificationState"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": ["area"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "spatialLocation"]
+        }
+      ]
+    },
     "FeatureGroup:default": {
       "hidden": [],
       "fields": {

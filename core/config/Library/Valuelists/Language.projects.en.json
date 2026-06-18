@@ -11978,6 +11978,23 @@
     },
     "description": "Korean artifact quantity basis checks for keeping administrative lots, physical item counts, same-object joins, components, actual counts, conservation units, and evidence photos separate"
   },
+  "KoreanFieldwork-surfaceFindHandlingRecord": {
+    "values": {
+      "individualPackaging": { "label": "Individual packaging" },
+      "artifactCardCreated": { "label": "Artifact card created" },
+      "map1_5000Marked": { "label": "1:5,000 map marked" },
+      "gpsLatLongRecorded": { "label": "GPS latitude/longitude recorded" },
+      "parcelNumberChecked": { "label": "Parcel number checked" },
+      "closePhoto": { "label": "Close photo" },
+      "overviewPhoto": { "label": "Overview photo" },
+      "scaleIncluded": { "label": "Scale included" },
+      "northArrowIncluded": { "label": "North arrow included" },
+      "adheringSoilPreserved": { "label": "Adhering soil preserved" },
+      "washingCaution": { "label": "Washing caution" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean surface-find handling checks for preserving packaging, artifact-card, map, GPS, parcel, photo, scale, north-arrow, adhering-soil, and washing-caution evidence"
+  },
   "KoreanFieldwork-storageEnvironmentControl": {
     "values": {
       "storageSpace": {
@@ -13848,6 +13865,63 @@
       }
     },
     "description": "Korean field notebook follow-up decisions for treating surface survey results as evidence for preservation, sample survey, test excavation, full excavation, stratigraphy survey, watching brief, or chance find reporting"
+  },
+  "KoreanFieldwork-surfaceSurveyPreparationCheck": {
+    "values": {
+      "crewCompositionChecked": { "label": "Crew composition checked" },
+      "specialistNeededReviewed": { "label": "Specialist need reviewed" },
+      "literatureSourcesReady": { "label": "Literature sources ready" },
+      "mapSourcesReady": { "label": "Map sources ready" },
+      "previousReportsReady": { "label": "Previous reports ready" },
+      "heritageDistributionMapReady": { "label": "Heritage distribution map ready" },
+      "currentSurveyCadReady": { "label": "Current survey CAD ready" },
+      "cameraReady": { "label": "Camera ready" },
+      "compassReady": { "label": "Compass ready" },
+      "gpsReady": { "label": "GPS ready" },
+      "recordFormsReady": { "label": "Record forms ready" },
+      "artifactBagsReady": { "label": "Artifact bags ready" },
+      "firstAidReady": { "label": "First aid ready" },
+      "probeReady": { "label": "Probe ready" },
+      "vegetationRemovalToolsReady": { "label": "Vegetation removal tools ready" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean field notebook preparation checks for keeping surface survey from collapsing into artifact scatter only: crew, specialists, source materials, equipment, and recording supplies"
+  },
+  "KoreanFieldwork-surfaceSurveyFieldSequence": {
+    "values": {
+      "surveyBoundaryChecked": { "label": "Survey boundary checked" },
+      "boundaryGpsRecorded": { "label": "Boundary GPS recorded" },
+      "panoramicPhotosMultiDirection": { "label": "Multi-direction overview photos" },
+      "zonesDividedByLandform": { "label": "Zones divided by landform" },
+      "existingHeritageChecked": { "label": "Existing heritage checked" },
+      "artifactScatterChecked": { "label": "Artifact scatter checked" },
+      "exposedFeaturesChecked": { "label": "Exposed features checked" },
+      "cutSectionStratigraphyChecked": { "label": "Cut-section stratigraphy checked" },
+      "originalLandformDamageRecorded": { "label": "Original landform damage recorded" },
+      "vegetationCoverRecorded": { "label": "Vegetation cover recorded" },
+      "interviewSurveyRecorded": { "label": "Interview survey recorded" },
+      "supplementarySurveyNeeded": { "label": "Supplementary survey needed" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean field notebook sequence checks for recording boundary, overview photos, landform zones, known heritage, scatters, exposed features, sections, disturbance, vegetation, and interviews during surface survey"
+  },
+  "KoreanFieldwork-surfaceSurveyMapRequirement": {
+    "values": {
+      "polygonSurveyArea": { "label": "Polygon survey area" },
+      "baseDigitalTopographicMap": { "label": "Base digital topographic map" },
+      "projectPlanMatched": { "label": "Project plan matched" },
+      "absoluteCoordinatesRecorded": { "label": "Absolute coordinates recorded" },
+      "mapScale1_5000": { "label": "1:5,000 map scale" },
+      "mapScale1_10000": { "label": "1:10,000 map scale" },
+      "mapSheetNumberRecorded": { "label": "Map sheet number recorded" },
+      "artifactScatterBoundaryCurve": { "label": "Artifact scatter boundary curve" },
+      "pointRadiusUnder5m": { "label": "Point radius under 5 m" },
+      "dgpsUsed": { "label": "DGPS used" },
+      "rtkUsed": { "label": "RTK used" },
+      "twoGpsControlPoints": { "label": "At least two GPS control points" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean field notebook map checks for representing surface survey areas and scatters as verifiable polygons or ranges with project-plan, scale, map-sheet, DGPS/RTK, and coordinate evidence"
   },
   "KoreanFieldwork-sampleSurveySuitability": {
     "values": {

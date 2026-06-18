@@ -317,6 +317,18 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "surfaceSurveyPreparationCheck": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "surfaceSurveyFieldSequence": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "surfaceSurveyMapRequirement": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "sampleSurveySuitability": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -372,6 +384,9 @@
         "surfaceSurveyObservation": "KoreanFieldwork-surfaceSurveyObservation",
         "surfaceSurveyBiasControl": "KoreanFieldwork-surfaceSurveyBiasControl",
         "surfaceSurveyFollowUp": "KoreanFieldwork-surfaceSurveyFollowUp",
+        "surfaceSurveyPreparationCheck": "KoreanFieldwork-surfaceSurveyPreparationCheck",
+        "surfaceSurveyFieldSequence": "KoreanFieldwork-surfaceSurveyFieldSequence",
+        "surfaceSurveyMapRequirement": "KoreanFieldwork-surfaceSurveyMapRequirement",
         "sampleSurveySuitability": "KoreanFieldwork-sampleSurveySuitability",
         "trialExcavationPurpose": "KoreanFieldwork-trialExcavationPurpose",
         "trialTrenchDesign": "KoreanFieldwork-trialTrenchDesign",
@@ -396,6 +411,9 @@
             "surfaceSurveyObservation",
             "surfaceSurveyBiasControl",
             "surfaceSurveyFollowUp",
+            "surfaceSurveyPreparationCheck",
+            "surfaceSurveyFieldSequence",
+            "surfaceSurveyMapRequirement",
             "sampleSurveySuitability",
             "trialExcavationPurpose",
             "trialTrenchDesign",
@@ -1077,6 +1095,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "surfaceFindHandlingRecord": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "storageEnvironmentControl": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1174,6 +1196,7 @@
         "fieldOnlyMissingCheck": "KoreanFieldwork-fieldOnlyMissingCheck",
         "artifactHandlingWorkflow": "KoreanFieldwork-artifactHandlingWorkflow",
         "artifactQuantityBasis": "KoreanFieldwork-artifactQuantityBasis",
+        "surfaceFindHandlingRecord": "KoreanFieldwork-surfaceFindHandlingRecord",
         "storageEnvironmentControl": "KoreanFieldwork-storageEnvironmentControl",
         "conservationScienceRequest": "KoreanFieldwork-conservationScienceRequest",
         "waterloggedWoodEmergencyStorage": "KoreanFieldwork-waterloggedWoodEmergencyStorage",
@@ -1224,6 +1247,7 @@
             "fieldOnlyMissingCheck",
             "artifactHandlingWorkflow",
             "artifactQuantityBasis",
+            "surfaceFindHandlingRecord",
             "storageEnvironmentControl",
             "conservationScienceRequest",
             "waterloggedWoodEmergencyStorage",

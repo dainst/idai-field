@@ -224,6 +224,23 @@
     },
     "description": "보고서·국가귀속용 수량을 파편 수로 자동 계산하지 않고 건, 점, 동일개체, 부속구, 실제 개수, 보존처리 단위와 근거사진을 분리하기 위한 목록"
   },
+  "KoreanFieldwork-surfaceFindHandlingRecord": {
+    "values": {
+      "individualPackaging": { "label": "개별 포장" },
+      "artifactCardCreated": { "label": "유물카드 작성" },
+      "map1_5000Marked": { "label": "1:5,000 지도 표시" },
+      "gpsLatLongRecorded": { "label": "GPS 위경도 기록" },
+      "parcelNumberChecked": { "label": "지번 확인" },
+      "closePhoto": { "label": "근경 사진" },
+      "overviewPhoto": { "label": "원경 사진" },
+      "scaleIncluded": { "label": "눈금자 포함" },
+      "northArrowIncluded": { "label": "방위판 포함" },
+      "adheringSoilPreserved": { "label": "부착토 보존" },
+      "washingCaution": { "label": "세척 주의" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "지표 수습 유물이 위치·지도·사진·부착토 정보를 잃지 않도록 개별 포장, 유물카드, 지도 표시, GPS, 지번, 근경·원경 사진, 눈금자·방위판, 세척주의를 확인하기 위한 목록"
+  },
   "KoreanFieldwork-storageEnvironmentControl": {
     "values": {
       "storageSpace": {
@@ -2094,6 +2111,63 @@
       }
     },
     "description": "지표조사 결과를 유적 존재 확정값이 아니라 보존, 표본조사, 시굴, 정밀발굴, 토층분포조사, 입회조사로 이어지는 판단근거로 관리하기 위한 목록"
+  },
+  "KoreanFieldwork-surfaceSurveyPreparationCheck": {
+    "values": {
+      "crewCompositionChecked": { "label": "조사단 구성 확인" },
+      "specialistNeededReviewed": { "label": "분야 전문가 필요 검토" },
+      "literatureSourcesReady": { "label": "문헌자료 준비" },
+      "mapSourcesReady": { "label": "지도자료 준비" },
+      "previousReportsReady": { "label": "기조사보고서 준비" },
+      "heritageDistributionMapReady": { "label": "문화유적분포지도 준비" },
+      "currentSurveyCadReady": { "label": "현황측량도 준비" },
+      "cameraReady": { "label": "사진기 준비" },
+      "compassReady": { "label": "나침반 준비" },
+      "gpsReady": { "label": "GPS 준비" },
+      "recordFormsReady": { "label": "기록지 준비" },
+      "artifactBagsReady": { "label": "유물봉투 준비" },
+      "firstAidReady": { "label": "응급약품 준비" },
+      "probeReady": { "label": "탐침봉 준비" },
+      "vegetationRemovalToolsReady": { "label": "식생 제거 도구 준비" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "지표조사를 유물산포 확인으로 축소하지 않도록 조사단, 전문분야, 문헌·지도·기조사자료, 현장 장비와 기록 도구를 출발 전에 점검하기 위한 목록"
+  },
+  "KoreanFieldwork-surfaceSurveyFieldSequence": {
+    "values": {
+      "surveyBoundaryChecked": { "label": "조사경계 확인" },
+      "boundaryGpsRecorded": { "label": "경계 GPS 좌표 기록" },
+      "panoramicPhotosMultiDirection": { "label": "전경 다방향 사진" },
+      "zonesDividedByLandform": { "label": "지형별 지구 구분" },
+      "existingHeritageChecked": { "label": "기존 문화재 확인" },
+      "artifactScatterChecked": { "label": "유물산포 확인" },
+      "exposedFeaturesChecked": { "label": "유구노출 확인" },
+      "cutSectionStratigraphyChecked": { "label": "절개면 토층 확인" },
+      "originalLandformDamageRecorded": { "label": "원지형 훼손 기록" },
+      "vegetationCoverRecorded": { "label": "식생 피복 기록" },
+      "interviewSurveyRecorded": { "label": "탐문·설문 기록" },
+      "supplementarySurveyNeeded": { "label": "보완조사 필요" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "지표조사 현장에서 경계·전경·지형 구분을 먼저 확보하고 기존 문화재, 산포, 노출 유구, 절개면, 훼손, 탐문을 순서대로 놓치지 않기 위한 목록"
+  },
+  "KoreanFieldwork-surfaceSurveyMapRequirement": {
+    "values": {
+      "polygonSurveyArea": { "label": "다각형 조사범위" },
+      "baseDigitalTopographicMap": { "label": "수치지형도 기본도" },
+      "projectPlanMatched": { "label": "사업계획도 일치" },
+      "absoluteCoordinatesRecorded": { "label": "절대좌표값 기록" },
+      "mapScale1_5000": { "label": "1:5,000 축척" },
+      "mapScale1_10000": { "label": "1:10,000 축척" },
+      "mapSheetNumberRecorded": { "label": "도엽번호 기록" },
+      "artifactScatterBoundaryCurve": { "label": "유물산포지 곡선 범위" },
+      "pointRadiusUnder5m": { "label": "점 표시 반경 5m 이하" },
+      "dgpsUsed": { "label": "DGPS 사용" },
+      "rtkUsed": { "label": "RTK 사용" },
+      "twoGpsControlPoints": { "label": "GPS 좌표 2점 이상" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "지표조사 보고서의 범위 표시가 추상적인 점으로 끝나지 않도록 조사범위, 유물산포지, 사업계획도 대조, 축척·도엽·GPS 기준점을 확인하기 위한 목록"
   },
   "KoreanFieldwork-sampleSurveySuitability": {
     "values": {

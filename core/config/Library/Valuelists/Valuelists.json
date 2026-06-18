@@ -31218,6 +31218,38 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-surfaceFindHandlingRecord": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "individualPackaging": {},
+      "artifactCardCreated": {},
+      "map1_5000Marked": {},
+      "gpsLatLongRecorded": {},
+      "parcelNumberChecked": {},
+      "closePhoto": {},
+      "overviewPhoto": {},
+      "scaleIncluded": {},
+      "northArrowIncluded": {},
+      "adheringSoilPreserved": {},
+      "washingCaution": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "individualPackaging",
+      "artifactCardCreated",
+      "map1_5000Marked",
+      "gpsLatLongRecorded",
+      "parcelNumberChecked",
+      "closePhoto",
+      "overviewPhoto",
+      "scaleIncluded",
+      "northArrowIncluded",
+      "adheringSoilPreserved",
+      "washingCaution",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-storageEnvironmentControl": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",
@@ -33555,6 +33587,114 @@
       "stratigraphySurvey",
       "watchingBrief",
       "chanceFindReport",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-surfaceSurveyPreparationCheck": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "crewCompositionChecked": {},
+      "specialistNeededReviewed": {},
+      "literatureSourcesReady": {},
+      "mapSourcesReady": {},
+      "previousReportsReady": {},
+      "heritageDistributionMapReady": {},
+      "currentSurveyCadReady": {},
+      "cameraReady": {},
+      "compassReady": {},
+      "gpsReady": {},
+      "recordFormsReady": {},
+      "artifactBagsReady": {},
+      "firstAidReady": {},
+      "probeReady": {},
+      "vegetationRemovalToolsReady": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "crewCompositionChecked",
+      "specialistNeededReviewed",
+      "literatureSourcesReady",
+      "mapSourcesReady",
+      "previousReportsReady",
+      "heritageDistributionMapReady",
+      "currentSurveyCadReady",
+      "cameraReady",
+      "compassReady",
+      "gpsReady",
+      "recordFormsReady",
+      "artifactBagsReady",
+      "firstAidReady",
+      "probeReady",
+      "vegetationRemovalToolsReady",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-surfaceSurveyFieldSequence": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "surveyBoundaryChecked": {},
+      "boundaryGpsRecorded": {},
+      "panoramicPhotosMultiDirection": {},
+      "zonesDividedByLandform": {},
+      "existingHeritageChecked": {},
+      "artifactScatterChecked": {},
+      "exposedFeaturesChecked": {},
+      "cutSectionStratigraphyChecked": {},
+      "originalLandformDamageRecorded": {},
+      "vegetationCoverRecorded": {},
+      "interviewSurveyRecorded": {},
+      "supplementarySurveyNeeded": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "surveyBoundaryChecked",
+      "boundaryGpsRecorded",
+      "panoramicPhotosMultiDirection",
+      "zonesDividedByLandform",
+      "existingHeritageChecked",
+      "artifactScatterChecked",
+      "exposedFeaturesChecked",
+      "cutSectionStratigraphyChecked",
+      "originalLandformDamageRecorded",
+      "vegetationCoverRecorded",
+      "interviewSurveyRecorded",
+      "supplementarySurveyNeeded",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-surfaceSurveyMapRequirement": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "polygonSurveyArea": {},
+      "baseDigitalTopographicMap": {},
+      "projectPlanMatched": {},
+      "absoluteCoordinatesRecorded": {},
+      "mapScale1_5000": {},
+      "mapScale1_10000": {},
+      "mapSheetNumberRecorded": {},
+      "artifactScatterBoundaryCurve": {},
+      "pointRadiusUnder5m": {},
+      "dgpsUsed": {},
+      "rtkUsed": {},
+      "twoGpsControlPoints": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "polygonSurveyArea",
+      "baseDigitalTopographicMap",
+      "projectPlanMatched",
+      "absoluteCoordinatesRecorded",
+      "mapScale1_5000",
+      "mapScale1_10000",
+      "mapSheetNumberRecorded",
+      "artifactScatterBoundaryCurve",
+      "pointRadiusUnder5m",
+      "dgpsUsed",
+      "rtkUsed",
+      "twoGpsControlPoints",
       "pendingDecision"
     ]
   },

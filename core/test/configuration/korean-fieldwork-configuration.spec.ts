@@ -54,6 +54,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(surveyForm.fields.surfaceSurveyObservation.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyBiasControl.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyFollowUp.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.surfaceSurveyPreparationCheck.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.surfaceSurveyFieldSequence.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.surfaceSurveyMapRequirement.inputType).toBe('checkboxes');
         expect(surveyForm.fields.sampleSurveySuitability.inputType).toBe('checkboxes');
         expect(surveyForm.fields.trialExcavationPurpose.inputType).toBe('checkboxes');
         expect(surveyForm.fields.trialTrenchDesign.inputType).toBe('checkboxes');
@@ -112,6 +115,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
         expect(findForm.fields.artifactHandlingWorkflow.inputType).toBe('checkboxes');
         expect(findForm.fields.artifactQuantityBasis.inputType).toBe('checkboxes');
+        expect(findForm.fields.surfaceFindHandlingRecord.inputType).toBe('checkboxes');
         expect(findForm.fields.storageEnvironmentControl.inputType).toBe('checkboxes');
         expect(findForm.fields.conservationScienceRequest.inputType).toBe('checkboxes');
         expect(findForm.fields.waterloggedWoodEmergencyStorage.inputType).toBe('checkboxes');
@@ -239,6 +243,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(surveyForm.valuelists.surfaceSurveyObservation).toBe('KoreanFieldwork-surfaceSurveyObservation');
         expect(surveyForm.valuelists.surfaceSurveyBiasControl).toBe('KoreanFieldwork-surfaceSurveyBiasControl');
         expect(surveyForm.valuelists.surfaceSurveyFollowUp).toBe('KoreanFieldwork-surfaceSurveyFollowUp');
+        expect(surveyForm.valuelists.surfaceSurveyPreparationCheck)
+            .toBe('KoreanFieldwork-surfaceSurveyPreparationCheck');
+        expect(surveyForm.valuelists.surfaceSurveyFieldSequence)
+            .toBe('KoreanFieldwork-surfaceSurveyFieldSequence');
+        expect(surveyForm.valuelists.surfaceSurveyMapRequirement)
+            .toBe('KoreanFieldwork-surfaceSurveyMapRequirement');
         expect(surveyForm.valuelists.sampleSurveySuitability).toBe('KoreanFieldwork-sampleSurveySuitability');
         expect(surveyForm.valuelists.trialExcavationPurpose).toBe('KoreanFieldwork-trialExcavationPurpose');
         expect(surveyForm.valuelists.trialTrenchDesign).toBe('KoreanFieldwork-trialTrenchDesign');
@@ -339,6 +349,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
         expect(findForm.valuelists.artifactHandlingWorkflow).toBe('KoreanFieldwork-artifactHandlingWorkflow');
         expect(findForm.valuelists.artifactQuantityBasis).toBe('KoreanFieldwork-artifactQuantityBasis');
+        expect(findForm.valuelists.surfaceFindHandlingRecord)
+            .toBe('KoreanFieldwork-surfaceFindHandlingRecord');
         expect(findForm.valuelists.storageEnvironmentControl).toBe('KoreanFieldwork-storageEnvironmentControl');
         expect(findForm.valuelists.conservationScienceRequest)
             .toBe('KoreanFieldwork-conservationScienceRequest');
@@ -500,6 +512,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Report evaluation feedback');
         expect(languages.en.categories.Survey.fields.surfaceSurveyObservation.label)
             .toBe('Surface survey observation');
+        expect(languages.en.categories.Survey.fields.surfaceSurveyPreparationCheck.label)
+            .toBe('Surface survey preparation check');
+        expect(languages.en.categories.Survey.fields.surfaceSurveyFieldSequence.label)
+            .toBe('Surface survey field sequence');
+        expect(languages.en.categories.Survey.fields.surfaceSurveyMapRequirement.label)
+            .toBe('Surface survey map requirement');
         expect(languages.en.categories.Survey.fields.sampleSurveySuitability.label)
             .toBe('Sample survey suitability');
         expect(languages.en.categories.Survey.fields.trialExcavationPurpose.label)
@@ -607,6 +625,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.Find.fields.artifactQuantityBasis.label).toBe('Artifact quantity basis');
         expect(languages.en.categories.Find.fields.storageEnvironmentControl.label)
             .toBe('Storage environment control');
+        expect(languages.en.categories.Find.fields.surfaceFindHandlingRecord.label)
+            .toBe('Surface find handling record');
         expect(languages.en.categories.Find.fields.conservationScienceRequest.label)
             .toBe('Conservation science request');
         expect(languages.en.categories.Find.fields.waterloggedWoodEmergencyStorage.label)
@@ -773,6 +793,15 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-gisPredictionFieldVerification']
             .values.missedCandidate.label)
             .toBe('Missed candidate');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveyPreparationCheck']
+            .values.heritageDistributionMapReady.label)
+            .toBe('Heritage distribution map ready');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveyFieldSequence']
+            .values.boundaryGpsRecorded.label)
+            .toBe('Boundary GPS recorded');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveyMapRequirement']
+            .values.twoGpsControlPoints.label)
+            .toBe('At least two GPS control points');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-alluvialLandformSurvey']
             .values.noSurfaceFindsNotAbsence.label)
             .toBe('No surface finds not absence');
@@ -1128,6 +1157,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-fieldDatabaseOperationRisk']
             .values.dataCompatibilityChecked.label)
             .toBe('Data compatibility checked');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceFindHandlingRecord']
+            .values.adheringSoilPreserved.label)
+            .toBe('Adhering soil preserved');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-artifactDrawingRecordMethod']
             .values.measuredDrawing.label)
             .toBeDefined();

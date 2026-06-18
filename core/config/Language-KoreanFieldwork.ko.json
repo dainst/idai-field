@@ -127,6 +127,15 @@
         "surfaceSurveyFollowUp": {
           "label": "지표조사 후속조치"
         },
+        "surfaceSurveyPreparationCheck": {
+          "label": "지표조사 준비점검"
+        },
+        "surfaceSurveyFieldSequence": {
+          "label": "지표조사 현장순서"
+        },
+        "surfaceSurveyMapRequirement": {
+          "label": "지표조사 지도요건"
+        },
         "sampleSurveySuitability": {
           "label": "표본조사 적합성"
         },
@@ -415,6 +424,9 @@
         },
         "artifactQuantityBasis": {
           "label": "유물 건·점수 산정"
+        },
+        "surfaceFindHandlingRecord": {
+          "label": "지표 수습유물 관리"
         },
         "storageEnvironmentControl": {
           "label": "수장환경 관리"

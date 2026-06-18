@@ -127,6 +127,15 @@
         "surfaceSurveyFollowUp": {
           "label": "Surface survey follow-up"
         },
+        "surfaceSurveyPreparationCheck": {
+          "label": "Surface survey preparation check"
+        },
+        "surfaceSurveyFieldSequence": {
+          "label": "Surface survey field sequence"
+        },
+        "surfaceSurveyMapRequirement": {
+          "label": "Surface survey map requirement"
+        },
         "sampleSurveySuitability": {
           "label": "Sample survey suitability"
         },
@@ -415,6 +424,9 @@
         },
         "artifactQuantityBasis": {
           "label": "Artifact quantity basis"
+        },
+        "surfaceFindHandlingRecord": {
+          "label": "Surface find handling record"
         },
         "storageEnvironmentControl": {
           "label": "Storage environment control"

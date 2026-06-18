@@ -1346,6 +1346,26 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "faunalRecoverySampling": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "faunalPreservationHandling": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "zooarchaeologicalIdentification": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "boneSurfaceModification": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "zooarchaeologicalQuantification": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "verificationState": {
           "inputType": "dropdown",
           "constraintIndexed": true
@@ -1379,6 +1399,11 @@
         "plantRemainIdentificationRecord": "KoreanFieldwork-plantRemainIdentificationRecord",
         "archaeobotanyInterpretationReview": "KoreanFieldwork-archaeobotanyInterpretationReview",
         "plantRemainNonDetectionAssessment": "KoreanFieldwork-plantRemainNonDetectionAssessment",
+        "faunalRecoverySampling": "KoreanFieldwork-faunalRecoverySampling",
+        "faunalPreservationHandling": "KoreanFieldwork-faunalPreservationHandling",
+        "zooarchaeologicalIdentification": "KoreanFieldwork-zooarchaeologicalIdentification",
+        "boneSurfaceModification": "KoreanFieldwork-boneSurfaceModification",
+        "zooarchaeologicalQuantification": "KoreanFieldwork-zooarchaeologicalQuantification",
         "verificationState": "KoreanFieldwork-verificationState"
       },
       "groups": [
@@ -1429,6 +1454,11 @@
             "plantRemainIdentificationRecord",
             "archaeobotanyInterpretationReview",
             "plantRemainNonDetectionAssessment",
+            "faunalRecoverySampling",
+            "faunalPreservationHandling",
+            "zooarchaeologicalIdentification",
+            "boneSurfaceModification",
+            "zooarchaeologicalQuantification",
             "fieldRecordQuality",
             "fieldOnlyMissingCheck",
             "recordCreationTiming",

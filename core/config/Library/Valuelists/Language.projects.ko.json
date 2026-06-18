@@ -1086,6 +1086,114 @@
     },
     "description": "식물유체가 검출되지 않은 결과를 유적 내 부재로 단정하지 않도록 미분석 구역, 표본 수, 보존, 처리법, 표본 편향, 연구질문 한계와 프록시별 보존 한계를 남기기 위한 목록"
   },
+  "KoreanFieldwork-faunalRecoverySampling": {
+    "values": {
+      "acidicSoilPoorPreservation": { "label": "산성토양 보존 불량" },
+      "shellMiddenAlkalinePreservation": { "label": "패총 알칼리성 보존" },
+      "limestoneCavePreservation": { "label": "석회암 동굴 보존" },
+      "wetlandPreservation": { "label": "습윤지 보존" },
+      "wholeSoilSieving": { "label": "전체 토양 체질" },
+      "waterSieving": { "label": "물체질" },
+      "drySieving": { "label": "건식체질" },
+      "twoMmMesh": { "label": "2mm 체" },
+      "fiveMmMesh": { "label": "5mm 체" },
+      "smallMaterialTargeted": { "label": "소형자료 목표 수습" },
+      "layerBlockSample": { "label": "층위별 블록샘플" },
+      "repeatedSameLayerSample": { "label": "동일층 반복 채취" },
+      "blockSampleDimensionRecorded": { "label": "블록샘플 치수 기록" },
+      "selectiveRecoveryReason": { "label": "선별수습 사유" },
+      "smallFishBirdRodentRisk": { "label": "소형 어골·조류·설치류 누락 위험" },
+      "juvenileIndividualRisk": { "label": "어린개체 누락 위험" },
+      "sampleAmountInsufficient": { "label": "표본량 부족" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "동물유체 수습에서 토양 보존 조건, 전체 체질·물체질·건식체질, 체눈 크기, 블록샘플, 반복 채취, 선별수습 사유와 소형자료 누락 위험을 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-faunalPreservationHandling": {
+    "values": {
+      "exposureBreakageRisk": { "label": "노출 파손 위험" },
+      "transportBreakageRisk": { "label": "수송 파손 위험" },
+      "soilSupportMaintained": { "label": "토양 지지 형태 유지" },
+      "basicDehydration": { "label": "기본 탈수" },
+      "surfaceForeignMatterRemoved": { "label": "표면 이물질 제거" },
+      "alcoholDehydration": { "label": "알코올 탈수" },
+      "lowConcentrationResinConsolidation": { "label": "저농도 수지 강화" },
+      "specialistRecoveryRequested": { "label": "전문가 수습 의뢰" },
+      "featureLayerSeparated": { "label": "유구·층별 분리" },
+      "distributedBoxStorage": { "label": "상자 분산 보관" },
+      "packingMaterialRecorded": { "label": "포장재 기록" },
+      "noOverCleaning": { "label": "과세척 금지" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "동물뼈가 노출·수송 중 부서지지 않도록 토양 지지, 탈수, 표면 처리, 저농도 강화, 전문가 수습, 유구·층별 분리와 포장재를 관리하기 위한 목록"
+  },
+  "KoreanFieldwork-zooarchaeologicalIdentification": {
+    "values": {
+      "referenceAtlas": { "label": "골격도감" },
+      "modernComparativeSpecimen": { "label": "현생 비교표본" },
+      "nearbySiteReportCompared": { "label": "인근 유적 보고서 대조" },
+      "taxonRecorded": { "label": "동물종 기록" },
+      "skeletalElementRecorded": { "label": "부위 기록" },
+      "sideRecorded": { "label": "좌우 기록" },
+      "proximalPortion": { "label": "근위부" },
+      "shaftPortion": { "label": "체부" },
+      "distalPortion": { "label": "원위부" },
+      "ageStageRecorded": { "label": "성장도 기록" },
+      "sexEstimateRecorded": { "label": "성 추정 기록" },
+      "growthStageDifference": { "label": "성장단계 차이" },
+      "fragmentationRecorded": { "label": "파편화 기록" },
+      "identificationUncertain": { "label": "동정 불확실" },
+      "identifierRecorded": { "label": "동정자 기록" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "동물유체 동정을 골격도감, 현생 비교표본, 인근 유적 보고서, 동물종, 부위, 좌우, 성장도, 파편화, 동정 불확실성과 동정자 기록으로 관리하기 위한 목록"
+  },
+  "KoreanFieldwork-boneSurfaceModification": {
+    "values": {
+      "wholeSurfaceAfterCleaning": { "label": "세척 후 전체 표면 관찰" },
+      "lowMagnificationMicroscope": { "label": "저배율 현미경" },
+      "cutMark": { "label": "절단흔" },
+      "butcheryMark": { "label": "도살흔" },
+      "burningTrace": { "label": "화흔" },
+      "carnivoreGnawing": { "label": "포식흔" },
+      "transportAbrasion": { "label": "운반 마모" },
+      "weathering": { "label": "풍화" },
+      "freezeThaw": { "label": "동결융해" },
+      "waterFlowImpact": { "label": "물흐름 영향" },
+      "drippingWaterImpact": { "label": "물떨어짐 영향" },
+      "soilPressureImpact": { "label": "토양 무게 영향" },
+      "soilChemistryImpact": { "label": "토양 화학작용" },
+      "microbialAction": { "label": "미생물 작용" },
+      "rootEtching": { "label": "뿌리 침식" },
+      "animalDisturbance": { "label": "동물 교란" },
+      "humanAction": { "label": "사람 행위" },
+      "modificationCauseUnresolved": { "label": "변형 원인 미해결" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "동물뼈 표면 변형을 절단·도살·화흔 같은 행위 흔적과 풍화·동결융해·물흐름·토양·미생물·뿌리·동물 교란 같은 후퇴적 변형으로 나누어 관찰하기 위한 목록"
+  },
+  "KoreanFieldwork-zooarchaeologicalQuantification": {
+    "values": {
+      "nisp": { "label": "NISP" },
+      "mne": { "label": "MNE" },
+      "mni": { "label": "MNI" },
+      "mau": { "label": "MAU" },
+      "percentMau": { "label": "%MAU" },
+      "relativeFrequency": { "label": "상대빈도" },
+      "skeletalPartFrequency": { "label": "부위빈도" },
+      "ageComposition": { "label": "연령구성" },
+      "sexRatio": { "label": "성비" },
+      "metricRecorded": { "label": "계측값 기록" },
+      "calculationMethodRecorded": { "label": "산출방식 기록" },
+      "indexUsePurpose": { "label": "지수 사용목적" },
+      "indexLimitRecorded": { "label": "지수 한계 기록" },
+      "complementaryIndexNeeded": { "label": "보완지수 필요" },
+      "smallSampleWarning": { "label": "소표본 주의" },
+      "singleIndexNotUsed": { "label": "단일지수 단독사용 금지" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "동물유체 계량을 NISP, MNE, MNI, MAU, %MAU, 상대빈도, 부위빈도, 연령·성비, 산출방식, 사용목적, 한계와 보완지수로 관리하기 위한 목록"
+  },
   "KoreanFieldwork-bronzeAgeDwellingEvidence": {
     "values": {
       "garakdongTypeCandidate": { "label": "가락동식 후보" },

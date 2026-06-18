@@ -12840,6 +12840,114 @@
     },
     "description": "Korean plant-remain non-detection checks for preventing absence claims when unanalyzed areas, sample count, preservation, processing methods, sampling bias, question limits, or proxy-specific limits affect results"
   },
+  "KoreanFieldwork-faunalRecoverySampling": {
+    "values": {
+      "acidicSoilPoorPreservation": { "label": "Acidic soil poor preservation" },
+      "shellMiddenAlkalinePreservation": { "label": "Shell midden alkaline preservation" },
+      "limestoneCavePreservation": { "label": "Limestone cave preservation" },
+      "wetlandPreservation": { "label": "Wetland preservation" },
+      "wholeSoilSieving": { "label": "Whole-soil sieving" },
+      "waterSieving": { "label": "Water sieving" },
+      "drySieving": { "label": "Dry sieving" },
+      "twoMmMesh": { "label": "2 mm mesh" },
+      "fiveMmMesh": { "label": "5 mm mesh" },
+      "smallMaterialTargeted": { "label": "Small material targeted" },
+      "layerBlockSample": { "label": "Layer block sample" },
+      "repeatedSameLayerSample": { "label": "Repeated same-layer sample" },
+      "blockSampleDimensionRecorded": { "label": "Block sample dimension recorded" },
+      "selectiveRecoveryReason": { "label": "Selective recovery reason" },
+      "smallFishBirdRodentRisk": { "label": "Small fish/bird/rodent risk" },
+      "juvenileIndividualRisk": { "label": "Juvenile individual risk" },
+      "sampleAmountInsufficient": { "label": "Sample amount insufficient" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean faunal recovery checks for preservation conditions, sieving method, mesh size, block samples, repeated sampling, selective recovery reasons, and small-material omission risks"
+  },
+  "KoreanFieldwork-faunalPreservationHandling": {
+    "values": {
+      "exposureBreakageRisk": { "label": "Exposure breakage risk" },
+      "transportBreakageRisk": { "label": "Transport breakage risk" },
+      "soilSupportMaintained": { "label": "Soil support maintained" },
+      "basicDehydration": { "label": "Basic dehydration" },
+      "surfaceForeignMatterRemoved": { "label": "Surface foreign matter removed" },
+      "alcoholDehydration": { "label": "Alcohol dehydration" },
+      "lowConcentrationResinConsolidation": { "label": "Low-concentration resin consolidation" },
+      "specialistRecoveryRequested": { "label": "Specialist recovery requested" },
+      "featureLayerSeparated": { "label": "Feature/layer separated" },
+      "distributedBoxStorage": { "label": "Distributed box storage" },
+      "packingMaterialRecorded": { "label": "Packing material recorded" },
+      "noOverCleaning": { "label": "No over-cleaning" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean faunal preservation checks for breakage risk, soil support, dehydration, surface treatment, consolidation, specialist recovery, layer separation, distributed storage, and packing"
+  },
+  "KoreanFieldwork-zooarchaeologicalIdentification": {
+    "values": {
+      "referenceAtlas": { "label": "Reference atlas" },
+      "modernComparativeSpecimen": { "label": "Modern comparative specimen" },
+      "nearbySiteReportCompared": { "label": "Nearby site report compared" },
+      "taxonRecorded": { "label": "Taxon recorded" },
+      "skeletalElementRecorded": { "label": "Skeletal element recorded" },
+      "sideRecorded": { "label": "Side recorded" },
+      "proximalPortion": { "label": "Proximal portion" },
+      "shaftPortion": { "label": "Shaft portion" },
+      "distalPortion": { "label": "Distal portion" },
+      "ageStageRecorded": { "label": "Age stage recorded" },
+      "sexEstimateRecorded": { "label": "Sex estimate recorded" },
+      "growthStageDifference": { "label": "Growth-stage difference" },
+      "fragmentationRecorded": { "label": "Fragmentation recorded" },
+      "identificationUncertain": { "label": "Identification uncertain" },
+      "identifierRecorded": { "label": "Identifier recorded" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean zooarchaeological identification checks for reference sources, comparative specimens, taxon, skeletal element, side, portion, age, sex, fragmentation, uncertainty, and identifier"
+  },
+  "KoreanFieldwork-boneSurfaceModification": {
+    "values": {
+      "wholeSurfaceAfterCleaning": { "label": "Whole surface after cleaning" },
+      "lowMagnificationMicroscope": { "label": "Low-magnification microscope" },
+      "cutMark": { "label": "Cut mark" },
+      "butcheryMark": { "label": "Butchery mark" },
+      "burningTrace": { "label": "Burning trace" },
+      "carnivoreGnawing": { "label": "Carnivore gnawing" },
+      "transportAbrasion": { "label": "Transport abrasion" },
+      "weathering": { "label": "Weathering" },
+      "freezeThaw": { "label": "Freeze-thaw" },
+      "waterFlowImpact": { "label": "Water-flow impact" },
+      "drippingWaterImpact": { "label": "Dripping-water impact" },
+      "soilPressureImpact": { "label": "Soil-pressure impact" },
+      "soilChemistryImpact": { "label": "Soil-chemistry impact" },
+      "microbialAction": { "label": "Microbial action" },
+      "rootEtching": { "label": "Root etching" },
+      "animalDisturbance": { "label": "Animal disturbance" },
+      "humanAction": { "label": "Human action" },
+      "modificationCauseUnresolved": { "label": "Modification cause unresolved" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean bone-surface modification checks for separating butchery, burning, carnivore, transport, weathering, water, soil, microbial, root, animal, human, and unresolved causes"
+  },
+  "KoreanFieldwork-zooarchaeologicalQuantification": {
+    "values": {
+      "nisp": { "label": "NISP" },
+      "mne": { "label": "MNE" },
+      "mni": { "label": "MNI" },
+      "mau": { "label": "MAU" },
+      "percentMau": { "label": "%MAU" },
+      "relativeFrequency": { "label": "Relative frequency" },
+      "skeletalPartFrequency": { "label": "Skeletal-part frequency" },
+      "ageComposition": { "label": "Age composition" },
+      "sexRatio": { "label": "Sex ratio" },
+      "metricRecorded": { "label": "Metric recorded" },
+      "calculationMethodRecorded": { "label": "Calculation method recorded" },
+      "indexUsePurpose": { "label": "Index use purpose" },
+      "indexLimitRecorded": { "label": "Index limit recorded" },
+      "complementaryIndexNeeded": { "label": "Complementary index needed" },
+      "smallSampleWarning": { "label": "Small sample warning" },
+      "singleIndexNotUsed": { "label": "Single index not used" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean zooarchaeological quantification checks for NISP, MNE, MNI, MAU, %MAU, relative frequencies, demographics, measurements, calculation methods, index purpose, limits, and complementary indices"
+  },
   "KoreanFieldwork-bronzeAgeDwellingEvidence": {
     "values": {
       "garakdongTypeCandidate": { "label": "Garak-dong type candidate" },

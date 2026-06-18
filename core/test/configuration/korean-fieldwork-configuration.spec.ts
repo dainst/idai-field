@@ -148,6 +148,11 @@ describe('KoreanFieldwork project configuration', () => {
         expect(sampleForm.fields.plantRemainIdentificationRecord.inputType).toBe('checkboxes');
         expect(sampleForm.fields.archaeobotanyInterpretationReview.inputType).toBe('checkboxes');
         expect(sampleForm.fields.plantRemainNonDetectionAssessment.inputType).toBe('checkboxes');
+        expect(sampleForm.fields.faunalRecoverySampling.inputType).toBe('checkboxes');
+        expect(sampleForm.fields.faunalPreservationHandling.inputType).toBe('checkboxes');
+        expect(sampleForm.fields.zooarchaeologicalIdentification.inputType).toBe('checkboxes');
+        expect(sampleForm.fields.boneSurfaceModification.inputType).toBe('checkboxes');
+        expect(sampleForm.fields.zooarchaeologicalQuantification.inputType).toBe('checkboxes');
         expect(featureForm.fields.firstExposureRecord.inputType).toBe('checkboxes');
         expect(config.forms['FeatureSegment:default'].fields.firstExposureRecord.inputType).toBe('checkboxes');
         expect(featureForm.fields.fieldOnlyMissingCheck.mandatory).toBe(true);
@@ -389,6 +394,16 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-archaeobotanyInterpretationReview');
         expect(sampleForm.valuelists.plantRemainNonDetectionAssessment)
             .toBe('KoreanFieldwork-plantRemainNonDetectionAssessment');
+        expect(sampleForm.valuelists.faunalRecoverySampling)
+            .toBe('KoreanFieldwork-faunalRecoverySampling');
+        expect(sampleForm.valuelists.faunalPreservationHandling)
+            .toBe('KoreanFieldwork-faunalPreservationHandling');
+        expect(sampleForm.valuelists.zooarchaeologicalIdentification)
+            .toBe('KoreanFieldwork-zooarchaeologicalIdentification');
+        expect(sampleForm.valuelists.boneSurfaceModification)
+            .toBe('KoreanFieldwork-boneSurfaceModification');
+        expect(sampleForm.valuelists.zooarchaeologicalQuantification)
+            .toBe('KoreanFieldwork-zooarchaeologicalQuantification');
         expect(drawingForm.valuelists.mediaEvidenceRole).toBe('KoreanFieldwork-mediaEvidenceRole');
         expect(drawingForm.valuelists.mediaQualityCheck).toBe('KoreanFieldwork-mediaQualityCheck');
         expect(drawingForm.valuelists.digitalSourcePreservation)
@@ -617,6 +632,16 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Archaeobotany interpretation review');
         expect(languages.en.categories.Sample.fields.plantRemainNonDetectionAssessment.label)
             .toBe('Plant-remain non-detection assessment');
+        expect(languages.en.categories.Sample.fields.faunalRecoverySampling.label)
+            .toBe('Faunal recovery and sampling');
+        expect(languages.en.categories.Sample.fields.faunalPreservationHandling.label)
+            .toBe('Faunal preservation handling');
+        expect(languages.en.categories.Sample.fields.zooarchaeologicalIdentification.label)
+            .toBe('Zooarchaeological identification');
+        expect(languages.en.categories.Sample.fields.boneSurfaceModification.label)
+            .toBe('Bone surface modification');
+        expect(languages.en.categories.Sample.fields.zooarchaeologicalQuantification.label)
+            .toBe('Zooarchaeological quantification');
         expect(languages.en.categories.Drawing.fields.mediaEvidenceRole.label)
             .toBe('Media evidence role');
         expect(languages.en.categories.Drawing.fields.artifactDrawingRecordMethod.label)
@@ -802,6 +827,21 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-plantRemainNonDetectionAssessment']
             .values.absenceNotAssumed.label)
             .toBe('Absence not assumed');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-faunalRecoverySampling']
+            .values.blockSampleDimensionRecorded.label)
+            .toBe('Block sample dimension recorded');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-faunalPreservationHandling']
+            .values.soilSupportMaintained.label)
+            .toBe('Soil support maintained');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-zooarchaeologicalIdentification']
+            .values.taxonRecorded.label)
+            .toBe('Taxon recorded');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-boneSurfaceModification']
+            .values.modificationCauseUnresolved.label)
+            .toBe('Modification cause unresolved');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-zooarchaeologicalQuantification']
+            .values.singleIndexNotUsed.label)
+            .toBe('Single index not used');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-bronzeAgeDwellingEvidence']
             .values.centralOvalPit.label)
             .toBe('Central oval pit');

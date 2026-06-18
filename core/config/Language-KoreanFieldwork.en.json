@@ -546,6 +546,21 @@
         "plantRemainNonDetectionAssessment": {
           "label": "Plant-remain non-detection assessment"
         },
+        "faunalRecoverySampling": {
+          "label": "Faunal recovery and sampling"
+        },
+        "faunalPreservationHandling": {
+          "label": "Faunal preservation handling"
+        },
+        "zooarchaeologicalIdentification": {
+          "label": "Zooarchaeological identification"
+        },
+        "boneSurfaceModification": {
+          "label": "Bone surface modification"
+        },
+        "zooarchaeologicalQuantification": {
+          "label": "Zooarchaeological quantification"
+        },
         "verificationState": {
           "label": "Verification state"
         }

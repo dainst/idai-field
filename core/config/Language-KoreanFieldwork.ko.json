@@ -546,6 +546,21 @@
         "plantRemainNonDetectionAssessment": {
           "label": "식물유체 미검출 평가"
         },
+        "faunalRecoverySampling": {
+          "label": "동물유체 수습·표본"
+        },
+        "faunalPreservationHandling": {
+          "label": "동물유체 보존·취급"
+        },
+        "zooarchaeologicalIdentification": {
+          "label": "동물유체 동정기록"
+        },
+        "boneSurfaceModification": {
+          "label": "뼈 표면 변형관찰"
+        },
+        "zooarchaeologicalQuantification": {
+          "label": "동물유체 계량지표"
+        },
         "verificationState": {
           "label": "검증상태"
         }

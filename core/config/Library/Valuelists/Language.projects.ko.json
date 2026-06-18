@@ -540,6 +540,50 @@
     },
     "description": "한국 고고학 사전류의 관용어, 전문 표제어, 보고서 출력어를 분리하기 위한 용어 관계 목록"
   },
+  "KoreanFieldwork-termSearchMapping": {
+    "values": {
+      "fieldSearchTermAccepted": {
+        "label": "현장 검색어 허용"
+      },
+      "preferredHeadwordLinked": {
+        "label": "우선표제어 연결"
+      },
+      "reportOutputSeparated": {
+        "label": "보고서 출력어 분리"
+      },
+      "originalScriptIndexed": {
+        "label": "한자·원어 색인"
+      },
+      "sourceLanguageIndexed": {
+        "label": "원어 표기 색인"
+      },
+      "fieldUsagePreserved": {
+        "label": "현장 관용어 보존"
+      },
+      "domainScopeSet": {
+        "label": "분야 범위 지정"
+      },
+      "periodScopeSet": {
+        "label": "시대 범위 지정"
+      },
+      "structureSubtypeSeparated": {
+        "label": "구조 하위유형 분리"
+      },
+      "ambiguousSynonymFlagged": {
+        "label": "동의어 모호성 표시"
+      },
+      "importMappingNeeded": {
+        "label": "가져오기 매핑 필요"
+      },
+      "doNotMergeToSingleTerm": {
+        "label": "단일 용어 병합 금지"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "집자리/주거지, 조개더미/패총, 가마/요/요지처럼 현장 검색어와 권위 표제어, 보고서 출력어를 넓게 연결하되 저장값을 하나로 병합하지 않기 위한 목록"
+  },
   "KoreanFieldwork-termAuthorityStatus": {
     "values": {
       "specialistDictionarySource": {

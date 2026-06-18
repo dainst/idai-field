@@ -95,6 +95,9 @@
         "termRelation": {
           "label": "용어 관계"
         },
+        "termSearchMapping": {
+          "label": "용어 검색·매핑"
+        },
         "termAuthorityStatus": {
           "label": "용어 검증상태"
         },
@@ -138,6 +141,9 @@
         "termRelation": {
           "label": "용어 관계"
         },
+        "termSearchMapping": {
+          "label": "용어 검색·매핑"
+        },
         "termAuthorityStatus": {
           "label": "용어 검증상태"
         },
@@ -166,6 +172,9 @@
         "termRelation": {
           "label": "용어 관계"
         },
+        "termSearchMapping": {
+          "label": "용어 검색·매핑"
+        },
         "termAuthorityStatus": {
           "label": "용어 검증상태"
         },
@@ -187,6 +196,9 @@
         },
         "termRelation": {
           "label": "용어 관계"
+        },
+        "termSearchMapping": {
+          "label": "용어 검색·매핑"
         },
         "termAuthorityStatus": {
           "label": "용어 검증상태"

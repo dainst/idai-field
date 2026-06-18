@@ -12294,6 +12294,50 @@
     },
     "description": "Korean archaeological term authority relationships for aliases, specialist terms, and report labels"
   },
+  "KoreanFieldwork-termSearchMapping": {
+    "values": {
+      "fieldSearchTermAccepted": {
+        "label": "Field search term accepted"
+      },
+      "preferredHeadwordLinked": {
+        "label": "Preferred headword linked"
+      },
+      "reportOutputSeparated": {
+        "label": "Report output separated"
+      },
+      "originalScriptIndexed": {
+        "label": "Original script indexed"
+      },
+      "sourceLanguageIndexed": {
+        "label": "Source language indexed"
+      },
+      "fieldUsagePreserved": {
+        "label": "Field usage preserved"
+      },
+      "domainScopeSet": {
+        "label": "Domain scope set"
+      },
+      "periodScopeSet": {
+        "label": "Period scope set"
+      },
+      "structureSubtypeSeparated": {
+        "label": "Structure subtype separated"
+      },
+      "ambiguousSynonymFlagged": {
+        "label": "Ambiguous synonym flagged"
+      },
+      "importMappingNeeded": {
+        "label": "Import mapping needed"
+      },
+      "doNotMergeToSingleTerm": {
+        "label": "Do not merge to single term"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean archaeological term search mappings that connect field search terms, preferred headwords, original scripts, and report output terms without collapsing them into one stored value"
+  },
   "KoreanFieldwork-termAuthorityStatus": {
     "values": {
       "specialistDictionarySource": {

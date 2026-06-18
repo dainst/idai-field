@@ -241,6 +241,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "termSearchMapping": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "termAuthorityStatus": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -255,6 +259,7 @@
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "termRelation": "KoreanFieldwork-termRelation",
+        "termSearchMapping": "KoreanFieldwork-termSearchMapping",
         "termAuthorityStatus": "KoreanFieldwork-termAuthorityStatus",
         "verificationState": "KoreanFieldwork-verificationState"
       },
@@ -283,6 +288,7 @@
             "recordCreationTiming",
             "verificationState",
             "termRelation",
+            "termSearchMapping",
             "termAuthorityStatus"
           ]
         },
@@ -343,6 +349,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "termSearchMapping": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "termAuthorityStatus": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -364,6 +374,7 @@
         "japaneseFortificationDitch": "KoreanFieldwork-japaneseFortificationDitch",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "termRelation": "KoreanFieldwork-termRelation",
+        "termSearchMapping": "KoreanFieldwork-termSearchMapping",
         "termAuthorityStatus": "KoreanFieldwork-termAuthorityStatus",
         "verificationState": "KoreanFieldwork-verificationState"
       },
@@ -399,6 +410,7 @@
             "recordCreationTiming",
             "verificationState",
             "termRelation",
+            "termSearchMapping",
             "termAuthorityStatus"
           ]
         },
@@ -450,6 +462,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "termSearchMapping": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "termAuthorityStatus": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -466,6 +482,7 @@
         "firstExposureRecord": "KoreanFieldwork-firstExposureRecord",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "termRelation": "KoreanFieldwork-termRelation",
+        "termSearchMapping": "KoreanFieldwork-termSearchMapping",
         "termAuthorityStatus": "KoreanFieldwork-termAuthorityStatus",
         "verificationState": "KoreanFieldwork-verificationState"
       },
@@ -496,6 +513,7 @@
             "recordCreationTiming",
             "verificationState",
             "termRelation",
+            "termSearchMapping",
             "termAuthorityStatus"
           ]
         },
@@ -528,6 +546,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "termSearchMapping": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "termAuthorityStatus": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -542,6 +564,7 @@
         "fieldOnlyMissingCheck": "KoreanFieldwork-fieldOnlyMissingCheck",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "termRelation": "KoreanFieldwork-termRelation",
+        "termSearchMapping": "KoreanFieldwork-termSearchMapping",
         "termAuthorityStatus": "KoreanFieldwork-termAuthorityStatus",
         "verificationState": "KoreanFieldwork-verificationState"
       },
@@ -570,6 +593,7 @@
             "recordCreationTiming",
             "verificationState",
             "termRelation",
+            "termSearchMapping",
             "termAuthorityStatus"
           ]
         },

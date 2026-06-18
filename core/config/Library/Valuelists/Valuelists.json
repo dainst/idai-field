@@ -31466,6 +31466,40 @@
       "reportOutputTerm"
     ]
   },
+  "KoreanFieldwork-termSearchMapping": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "fieldSearchTermAccepted": {},
+      "preferredHeadwordLinked": {},
+      "reportOutputSeparated": {},
+      "originalScriptIndexed": {},
+      "sourceLanguageIndexed": {},
+      "fieldUsagePreserved": {},
+      "domainScopeSet": {},
+      "periodScopeSet": {},
+      "structureSubtypeSeparated": {},
+      "ambiguousSynonymFlagged": {},
+      "importMappingNeeded": {},
+      "doNotMergeToSingleTerm": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "fieldSearchTermAccepted",
+      "preferredHeadwordLinked",
+      "reportOutputSeparated",
+      "originalScriptIndexed",
+      "sourceLanguageIndexed",
+      "fieldUsagePreserved",
+      "domainScopeSet",
+      "periodScopeSet",
+      "structureSubtypeSeparated",
+      "ambiguousSynonymFlagged",
+      "importMappingNeeded",
+      "doNotMergeToSingleTerm",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-termAuthorityStatus": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

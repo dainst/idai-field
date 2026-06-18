@@ -43,9 +43,13 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.fields.fortificationHiddenGateFunction.inputType).toBe('checkboxes');
         expect(featureForm.fields.fortificationParapetDetail.inputType).toBe('checkboxes');
         expect(featureGroupForm.fields.termAuthorityStatus.inputType).toBe('checkboxes');
+        expect(featureGroupForm.fields.termSearchMapping.inputType).toBe('checkboxes');
         expect(featureForm.fields.termAuthorityStatus.inputType).toBe('checkboxes');
+        expect(featureForm.fields.termSearchMapping.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.termAuthorityStatus.inputType).toBe('checkboxes');
+        expect(featureSegmentForm.fields.termSearchMapping.inputType).toBe('checkboxes');
         expect(findForm.fields.termAuthorityStatus.inputType).toBe('checkboxes');
+        expect(findForm.fields.termSearchMapping.inputType).toBe('checkboxes');
         expect(sampleForm.fields.sampleCollectionHandling.inputType).toBe('checkboxes');
 
         expect(operationForm.valuelists.fieldRecordQuality).toBe('KoreanFieldwork-fieldRecordQuality');
@@ -66,7 +70,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.valuelists.fortificationParapetDetail)
             .toBe('KoreanFieldwork-fortificationParapetDetail');
         expect(featureForm.valuelists.termAuthorityStatus).toBe('KoreanFieldwork-termAuthorityStatus');
+        expect(featureForm.valuelists.termSearchMapping).toBe('KoreanFieldwork-termSearchMapping');
         expect(findForm.valuelists.termAuthorityStatus).toBe('KoreanFieldwork-termAuthorityStatus');
+        expect(findForm.valuelists.termSearchMapping).toBe('KoreanFieldwork-termSearchMapping');
         expect(sampleForm.valuelists.sampleCollectionHandling)
             .toBe('KoreanFieldwork-sampleCollectionHandling');
     });
@@ -91,7 +97,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.Feature.fields.fortificationHiddenGateFunction.label).toBe('Hidden gate function');
         expect(languages.en.categories.Feature.fields.fortificationParapetDetail.label).toBe('Parapet detail');
         expect(languages.en.categories.Feature.fields.termAuthorityStatus.label).toBe('Term authority status');
+        expect(languages.en.categories.Feature.fields.termSearchMapping.label).toBe('Term search mapping');
         expect(languages.en.categories.Find.fields.termAuthorityStatus.label).toBe('Term authority status');
+        expect(languages.en.categories.Find.fields.termSearchMapping.label).toBe('Term search mapping');
         expect(languages.en.categories.Sample.fields.sampleCollectionHandling.label)
             .toBe('Sample collection handling');
         expect(languages.ko.categories.Operation.fields.fieldRecordQuality.label).toBeDefined();
@@ -122,6 +130,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Near-range gun opening');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-termAuthorityStatus'].values.pdfCrossChecked.label)
             .toBe('Source PDF cross-checked');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-termSearchMapping'].values.reportOutputSeparated.label)
+            .toBe('Report output separated');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-sampleCollectionHandling'].values.lightShielded.label)
             .toBe('Light-shielded');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-fieldRecordQuality'].values.immediateRecording.label)

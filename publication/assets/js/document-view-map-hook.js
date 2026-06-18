@@ -8,8 +8,7 @@ import Style from "ol/style/Style.js";
 import { Fill, Stroke } from "ol/style.js";
 import Draw from "ol/interaction/Draw.js";
 
-import { styleFunction } from "./map-helper-functions.js";
-
+import { styleFunction } from "./map/styles";
 import PublicationTileLayers from "./map/tile-layers";
 import PreviewOverlay from "./map/preview-overlay.js";
 
@@ -29,6 +28,7 @@ export default getDocumentViewMapHook = () => {
         map: null,
         projectKey: null,
         projectDraftDate: null,
+        publicationTileLayers: null,
         docId: null,
         parentLayer: null,
         ancestorLayer: null,
@@ -40,8 +40,6 @@ export default getDocumentViewMapHook = () => {
         draw: null,
         drawSource: null,
         drawLayer: null,
-        publicationTileLayers: null,
-
         mounted() {
             this.initialize();
             this.handleEvent(

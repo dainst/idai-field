@@ -11916,6 +11916,94 @@
     },
     "description": "Korean field notebook archive states for treating personal notes as submitted, reviewed, and accessible official records"
   },
+  "KoreanFieldwork-dailyLogContent": {
+    "values": {
+      "workDateWeather": {
+        "label": "Work date and weather"
+      },
+      "staffRoles": {
+        "label": "Staff and roles"
+      },
+      "workArea": {
+        "label": "Work area"
+      },
+      "strippingProgress": {
+        "label": "Stripping progress"
+      },
+      "featureProgress": {
+        "label": "Feature progress"
+      },
+      "layerDecision": {
+        "label": "Layer decision"
+      },
+      "findSampleCollection": {
+        "label": "Finds and samples collected"
+      },
+      "photoDrawingNumbers": {
+        "label": "Photo and drawing numbers"
+      },
+      "visitorInstruction": {
+        "label": "Visitors or instructions"
+      },
+      "equipmentIssue": {
+        "label": "Equipment issue"
+      },
+      "safetyIssue": {
+        "label": "Safety issue"
+      },
+      "changeReason": {
+        "label": "Change reason"
+      },
+      "nextWorkPlan": {
+        "label": "Next work plan"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean daily fieldwork log content for work progress, weather, staff, equipment, finds, visitors, and change reasons that must remain traceable to reports"
+  },
+  "KoreanFieldwork-dailyLogReview": {
+    "values": {
+      "sameDayWritten": {
+        "label": "Same-day written"
+      },
+      "factsInterpretationSeparated": {
+        "label": "Facts and interpretations separated"
+      },
+      "authorIdentified": {
+        "label": "Author identified"
+      },
+      "reviewerChecked": {
+        "label": "Reviewer checked"
+      },
+      "photoDrawingCrossChecked": {
+        "label": "Photo and drawing cross-checked"
+      },
+      "findListCrossChecked": {
+        "label": "Find list cross-checked"
+      },
+      "sampleListCrossChecked": {
+        "label": "Sample list cross-checked"
+      },
+      "numberConversionChecked": {
+        "label": "Number conversion checked"
+      },
+      "correctionReasonLinked": {
+        "label": "Correction reason linked"
+      },
+      "sourceRecordArchived": {
+        "label": "Source record archived"
+      },
+      "reportCarryForwardChecked": {
+        "label": "Report carry-forward checked"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean daily log review states for same-day writing, author and reviewer checks, source preservation, and cross-checks with photos, drawings, finds, samples, and number conversions"
+  },
   "KoreanFieldwork-digitalSourcePreservation": {
     "values": {
       "originalDrawing": {

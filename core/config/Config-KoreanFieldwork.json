@@ -71,6 +71,14 @@
     "Operation:default": {
       "hidden": [],
       "fields": {
+        "dailyLogContent": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "dailyLogReview": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "digitalSourcePreservation": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -101,6 +109,8 @@
         }
       },
       "valuelists": {
+        "dailyLogContent": "KoreanFieldwork-dailyLogContent",
+        "dailyLogReview": "KoreanFieldwork-dailyLogReview",
         "digitalSourcePreservation": "KoreanFieldwork-digitalSourcePreservation",
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
         "investigationRecordHandover": "KoreanFieldwork-investigationRecordHandover",
@@ -130,6 +140,8 @@
           "name": "koreanFieldwork",
           "fields": [
             "recordCreationTiming",
+            "dailyLogContent",
+            "dailyLogReview",
             "fieldRecordQuality",
             "personalNotebookArchive",
             "investigationRecordHandover",

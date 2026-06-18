@@ -162,6 +162,94 @@
     },
     "description": "개인 메모로 시작한 야장이 조사 완료 뒤 제출·검토·열람되는 공적 기록이 되도록 관리하기 위한 목록"
   },
+  "KoreanFieldwork-dailyLogContent": {
+    "values": {
+      "workDateWeather": {
+        "label": "작업일자·날씨"
+      },
+      "staffRoles": {
+        "label": "조사자·역할"
+      },
+      "workArea": {
+        "label": "작업구역"
+      },
+      "strippingProgress": {
+        "label": "제토 진행"
+      },
+      "featureProgress": {
+        "label": "유구 조사 진행"
+      },
+      "layerDecision": {
+        "label": "층위 판단"
+      },
+      "findSampleCollection": {
+        "label": "유물·시료 수습"
+      },
+      "photoDrawingNumbers": {
+        "label": "사진·도면 번호"
+      },
+      "visitorInstruction": {
+        "label": "방문자·지시사항"
+      },
+      "equipmentIssue": {
+        "label": "장비 문제"
+      },
+      "safetyIssue": {
+        "label": "안전 문제"
+      },
+      "changeReason": {
+        "label": "변경 사유"
+      },
+      "nextWorkPlan": {
+        "label": "다음 작업계획"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "매일 남겨야 하는 조사단 공정, 날씨, 인원, 장비, 출토, 방문자, 변경 사유를 보고서 대조가 가능한 원기록으로 관리하기 위한 목록"
+  },
+  "KoreanFieldwork-dailyLogReview": {
+    "values": {
+      "sameDayWritten": {
+        "label": "당일 작성"
+      },
+      "factsInterpretationSeparated": {
+        "label": "사실·해석 분리"
+      },
+      "authorIdentified": {
+        "label": "작성자 확인"
+      },
+      "reviewerChecked": {
+        "label": "검토자 확인"
+      },
+      "photoDrawingCrossChecked": {
+        "label": "사진·도면 대조"
+      },
+      "findListCrossChecked": {
+        "label": "유물목록 대조"
+      },
+      "sampleListCrossChecked": {
+        "label": "시료목록 대조"
+      },
+      "numberConversionChecked": {
+        "label": "번호 변환표 대조"
+      },
+      "correctionReasonLinked": {
+        "label": "수정근거 연결"
+      },
+      "sourceRecordArchived": {
+        "label": "원기록 보존"
+      },
+      "reportCarryForwardChecked": {
+        "label": "보고서 반영 확인"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "작업일지가 당일 사실 기록으로 남고 사진·도면·유물·시료 목록과 번호 변환표에 연결되는지 검토하기 위한 목록"
+  },
   "KoreanFieldwork-digitalSourcePreservation": {
     "values": {
       "originalDrawing": {

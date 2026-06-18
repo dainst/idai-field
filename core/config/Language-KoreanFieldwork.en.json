@@ -30,6 +30,12 @@
     },
     "Operation": {
       "fields": {
+        "dailyLogContent": {
+          "label": "Daily work log"
+        },
+        "dailyLogReview": {
+          "label": "Daily log review"
+        },
         "digitalSourcePreservation": {
           "label": "Digital source preservation"
         },

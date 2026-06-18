@@ -30,6 +30,12 @@
     },
     "Operation": {
       "fields": {
+        "dailyLogContent": {
+          "label": "일일 작업기록"
+        },
+        "dailyLogReview": {
+          "label": "일지 검토"
+        },
         "digitalSourcePreservation": {
           "label": "디지털 원자료 보존"
         },

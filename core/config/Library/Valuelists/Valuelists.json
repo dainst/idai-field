@@ -31172,6 +31172,74 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-dailyLogContent": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "workDateWeather": {},
+      "staffRoles": {},
+      "workArea": {},
+      "strippingProgress": {},
+      "featureProgress": {},
+      "layerDecision": {},
+      "findSampleCollection": {},
+      "photoDrawingNumbers": {},
+      "visitorInstruction": {},
+      "equipmentIssue": {},
+      "safetyIssue": {},
+      "changeReason": {},
+      "nextWorkPlan": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "workDateWeather",
+      "staffRoles",
+      "workArea",
+      "strippingProgress",
+      "featureProgress",
+      "layerDecision",
+      "findSampleCollection",
+      "photoDrawingNumbers",
+      "visitorInstruction",
+      "equipmentIssue",
+      "safetyIssue",
+      "changeReason",
+      "nextWorkPlan",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-dailyLogReview": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "sameDayWritten": {},
+      "factsInterpretationSeparated": {},
+      "authorIdentified": {},
+      "reviewerChecked": {},
+      "photoDrawingCrossChecked": {},
+      "findListCrossChecked": {},
+      "sampleListCrossChecked": {},
+      "numberConversionChecked": {},
+      "correctionReasonLinked": {},
+      "sourceRecordArchived": {},
+      "reportCarryForwardChecked": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "sameDayWritten",
+      "factsInterpretationSeparated",
+      "authorIdentified",
+      "reviewerChecked",
+      "photoDrawingCrossChecked",
+      "findListCrossChecked",
+      "sampleListCrossChecked",
+      "numberConversionChecked",
+      "correctionReasonLinked",
+      "sourceRecordArchived",
+      "reportCarryForwardChecked",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-digitalSourcePreservation": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

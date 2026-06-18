@@ -26,7 +26,7 @@ C:\Users\nuri9\AppData\Local\Temp\codex-idai-field-pdf-text
 | 2006 제2권 선사시대 유적 | `volume-02-ocr.txt` | 413쪽 | `volume-02-prehistoric-sites.md`, 선사·패총·동물유체·인골·연대 시료 |
 | 2007 제3권 건물지 | `volume-03-ocr.txt` | 499쪽 | `volume-03-building-sites.md`, 건물지·초석·GPR·3D·복원 근거 |
 | 2008 제4권 생산유적 | `volume-04-direct.txt` | 449쪽 | `volume-04-production-sites.md`, 생산공정·가마·유리·기와·자기·탄요·고고지자기 |
-| 2009 제5권 고분 | `volume-05-ocr.txt` | 434쪽 | `volume-05-tombs.md`, 봉토·분구·매장주체부·부장품·제사·인골 |
+| 2009 제5권 고분 | `volume-05-ocr.txt` | 434쪽 | `volume-05-tombs.md`, 봉토·분구·석곽 벽면·횡혈계 묘도·매장주체부·부장품·제사·인골 |
 | 2010 제6권 고지형·충적지 | `volume-06-ocr.txt` | 581쪽 | `volume-06-alluvial-sites.md`, 고지형·충적지·토양·고환경 분석 |
 | 2012 제7권 성곽 | `volume-07-direct.txt` | 174쪽 | `volume-07-fortresses.md`, 축성·성벽 구간·시설·보존·수리 기록 |
 | 2013 제8권 신석기·최신기법 | `volume-08-direct.txt` | 117쪽 | `volume-08-neolithic-sites.md`, 패총·신석기 토기·밭유구·고환경·연대·3D |
@@ -39,7 +39,7 @@ C:\Users\nuri9\AppData\Local\Temp\codex-idai-field-pdf-text
 
 우선순위:
 
-1. 제5권 고분과 제7권 성곽은 장·절 색인과 사례 지명 교정을 한 번 더 보강한다.
+1. 제7권 성곽은 장·절 색인과 사례 지명 교정을 한 번 더 보강한다. 제5권 고분은 석곽·석실 조사절차를 추가 보강했지만, 사례 지명과 도표 제목 교정은 실제 구현 전 한 차례 더 확인한다.
 2. 제1권 총론은 조사운영, 정보화, 보존·정비 원칙을 실제 템플릿 우선순위와 다시 맞춘다.
 3. 제2·3·5·6권 OCR 자료는 깨진 한자·지명·도표 제목을 필요한 범위에서 교정한다.
 4. 권별 노트에서 뽑은 값 목록을 `core/config/Library/Valuelists` 쪽 실제 한국형 구성으로 옮긴다.

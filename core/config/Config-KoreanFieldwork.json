@@ -1571,6 +1571,14 @@
         "distributionMapRequirement": {
           "inputType": "checkboxes",
           "constraintIndexed": true
+        },
+        "electronicDrawingSourceWorkflow": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "artifactElectronicDrawingProcedure": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
         }
       },
       "valuelists": {
@@ -1587,7 +1595,9 @@
         "mapSourceMaterial": "KoreanFieldwork-mapSourceMaterial",
         "historicalMapLandscapeInterpretation": "KoreanFieldwork-historicalMapLandscapeInterpretation",
         "spatialDrawingProductionWorkflow": "KoreanFieldwork-spatialDrawingProductionWorkflow",
-        "distributionMapRequirement": "KoreanFieldwork-distributionMapRequirement"
+        "distributionMapRequirement": "KoreanFieldwork-distributionMapRequirement",
+        "electronicDrawingSourceWorkflow": "KoreanFieldwork-electronicDrawingSourceWorkflow",
+        "artifactElectronicDrawingProcedure": "KoreanFieldwork-artifactElectronicDrawingProcedure"
       },
       "groups": [
         {
@@ -1621,7 +1631,9 @@
             "mapSourceMaterial",
             "historicalMapLandscapeInterpretation",
             "spatialDrawingProductionWorkflow",
-            "distributionMapRequirement"
+            "distributionMapRequirement",
+            "electronicDrawingSourceWorkflow",
+            "artifactElectronicDrawingProcedure"
           ]
         }
       ]

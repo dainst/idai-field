@@ -71,6 +71,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-19 GPS·GIS 현장 시스템 자료도 구현 단위로 압축했다. 제2회 조사연구원 교육자료의 GPS 측량과 Tablet/GPS 야외조사 시스템 장은 좌표값만이 아니라 관측 방식, 기준국·이동국, 위성 상태, 관측시간, NMEA의 일자·시각·위성수·DOP·SNR, GPS 궤적과 사진 파일명 연동, SHP·DXF 호환과 레이어·도형·속성 편집 위험을 함께 남기라고 요구한다. 이 묶음은 `Operation`의 `gpsSurveyQualityRecord`, `gpsNmeaRecord`, `fieldDatabaseOperationRisk`와 `Photo`의 `gpsPhotoLinkRecord` 값 목록으로 옮겼다.
 
+2026-06-19 전자도면·3D 스캔 자료도 구현 단위로 압축했다. 제2회 조사연구원 교육자료의 전자도면 장은 3D 스캔을 완성 도면 대체물이 아니라 점군 획득, 병합, 폴리곤 변환·최적화, CAD 데이터, 2D·3D 도면과 복원자료 산출로 이어지는 제작 과정으로 다룬다. 유물 전자도면은 유물 형태 검토, 최종 결과물 형태, 특징 view와 단면 위치 결정, 벡터화, 연구자 요구정보, 기준면 생성, 좌표계 이동, 합치 기준을 따로 남겨야 하므로 `Drawing`의 `electronicDrawingSourceWorkflow`, `artifactElectronicDrawingProcedure` 값 목록으로 옮겼다.
+
 ## 보조 자료군 판독 현황
 
 새 보조 자료군은 [보조 자료군 목록과 우선순위](supplemental-source-inventory.md)에서 상세 관리한다. 현재 상태는 다음과 같다.

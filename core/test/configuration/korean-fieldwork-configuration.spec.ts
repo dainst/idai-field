@@ -193,6 +193,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(drawingForm.fields.historicalMapLandscapeInterpretation.inputType).toBe('checkboxes');
         expect(drawingForm.fields.spatialDrawingProductionWorkflow.inputType).toBe('checkboxes');
         expect(drawingForm.fields.distributionMapRequirement.inputType).toBe('checkboxes');
+        expect(drawingForm.fields.electronicDrawingSourceWorkflow.inputType).toBe('checkboxes');
+        expect(drawingForm.fields.artifactElectronicDrawingProcedure.inputType).toBe('checkboxes');
         expect(photoForm.fields.mediaEvidenceRole.inputType).toBe('checkboxes');
         expect(photoForm.fields.mediaQualityCheck.inputType).toBe('checkboxes');
         expect(photoForm.fields.digitalSourcePreservation.inputType).toBe('checkboxes');
@@ -454,6 +456,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-spatialDrawingProductionWorkflow');
         expect(drawingForm.valuelists.distributionMapRequirement)
             .toBe('KoreanFieldwork-distributionMapRequirement');
+        expect(drawingForm.valuelists.electronicDrawingSourceWorkflow)
+            .toBe('KoreanFieldwork-electronicDrawingSourceWorkflow');
+        expect(drawingForm.valuelists.artifactElectronicDrawingProcedure)
+            .toBe('KoreanFieldwork-artifactElectronicDrawingProcedure');
         expect(photoForm.valuelists.mediaEvidenceRole).toBe('KoreanFieldwork-mediaEvidenceRole');
         expect(photoForm.valuelists.mediaQualityCheck).toBe('KoreanFieldwork-mediaQualityCheck');
         expect(photoForm.valuelists.digitalSourcePreservation)
@@ -713,6 +719,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Spatial drawing production workflow');
         expect(languages.en.categories.Drawing.fields.distributionMapRequirement.label)
             .toBe('Distribution map requirement');
+        expect(languages.en.categories.Drawing.fields.electronicDrawingSourceWorkflow.label)
+            .toBe('Electronic drawing source workflow');
+        expect(languages.en.categories.Drawing.fields.artifactElectronicDrawingProcedure.label)
+            .toBe('Artifact electronic drawing procedure');
         expect(languages.en.categories.Photo.fields.mediaQualityCheck.label)
             .toBe('Media quality check');
         expect(languages.en.categories.Photo.fields.gpsPhotoLinkRecord.label)
@@ -1100,6 +1110,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-distributionMapRequirement']
             .values.radius500m.label)
             .toBe('500 m radius');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-electronicDrawingSourceWorkflow']
+            .values.pointCloudMerged.label)
+            .toBe('Point cloud merged');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactElectronicDrawingProcedure']
+            .values.referencePlaneCreated.label)
+            .toBe('Reference plane created');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-gpsSurveyQualityRecord']
             .values.rtkUsed.label)
             .toBe('RTK used');

@@ -36611,5 +36611,65 @@
       "fieldSyncChecked",
       "pendingDecision"
     ]
+  },
+  "KoreanFieldwork-electronicDrawingSourceWorkflow": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "scannerSelected": {},
+      "pointCloudAcquired": {},
+      "pointCloudMerged": {},
+      "polygonConverted": {},
+      "polygonOptimized": {},
+      "cadDataGenerated": {},
+      "twoDimensionalDrawingOutput": {},
+      "threeDimensionalDrawingOutput": {},
+      "restorationDataOutput": {},
+      "sourceFilePreserved": {},
+      "processedFilePreserved": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "scannerSelected",
+      "pointCloudAcquired",
+      "pointCloudMerged",
+      "polygonConverted",
+      "polygonOptimized",
+      "cadDataGenerated",
+      "twoDimensionalDrawingOutput",
+      "threeDimensionalDrawingOutput",
+      "restorationDataOutput",
+      "sourceFilePreserved",
+      "processedFilePreserved",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-artifactElectronicDrawingProcedure": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "artifactFormReviewed": {},
+      "finalOutputFormDefined": {},
+      "featureViewSelected": {},
+      "sectionPositionSelected": {},
+      "vectorized": {},
+      "researcherInformationIntegrated": {},
+      "referencePlaneCreated": {},
+      "coordinateSystemMoved": {},
+      "alignmentCriterionSet": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "artifactFormReviewed",
+      "finalOutputFormDefined",
+      "featureViewSelected",
+      "sectionPositionSelected",
+      "vectorized",
+      "researcherInformationIntegrated",
+      "referencePlaneCreated",
+      "coordinateSystemMoved",
+      "alignmentCriterionSet",
+      "pendingDecision"
+    ]
   }
 }

@@ -630,6 +630,12 @@
         },
         "distributionMapRequirement": {
           "label": "주변유적분포도 요건"
+        },
+        "electronicDrawingSourceWorkflow": {
+          "label": "전자도면 작업원천"
+        },
+        "artifactElectronicDrawingProcedure": {
+          "label": "유물 전자도면 절차"
         }
       }
     },

@@ -630,6 +630,12 @@
         },
         "distributionMapRequirement": {
           "label": "Distribution map requirement"
+        },
+        "electronicDrawingSourceWorkflow": {
+          "label": "Electronic drawing source workflow"
+        },
+        "artifactElectronicDrawingProcedure": {
+          "label": "Artifact electronic drawing procedure"
         }
       }
     },

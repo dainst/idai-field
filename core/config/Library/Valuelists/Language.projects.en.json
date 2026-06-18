@@ -16040,5 +16040,37 @@
       "pendingDecision": { "label": "Pending decision" }
     },
     "description": "Korean fieldwork field database operation checks for update, analysis, usability, unknown buried heritage, SHP/DXF compatibility, layers, geometry, attribute editing, and synchronization risks"
+  },
+  "KoreanFieldwork-electronicDrawingSourceWorkflow": {
+    "values": {
+      "scannerSelected": { "label": "Scanner selected" },
+      "pointCloudAcquired": { "label": "Point cloud acquired" },
+      "pointCloudMerged": { "label": "Point cloud merged" },
+      "polygonConverted": { "label": "Polygon converted" },
+      "polygonOptimized": { "label": "Polygon optimized" },
+      "cadDataGenerated": { "label": "CAD data generated" },
+      "twoDimensionalDrawingOutput": { "label": "2D drawing output" },
+      "threeDimensionalDrawingOutput": { "label": "3D drawing output" },
+      "restorationDataOutput": { "label": "Restoration data output" },
+      "sourceFilePreserved": { "label": "Source file preserved" },
+      "processedFilePreserved": { "label": "Processed file preserved" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean fieldwork electronic drawing workflow checks for scanner selection, point-cloud acquisition and merging, polygon processing, CAD/2D/3D outputs, restoration data, and file preservation"
+  },
+  "KoreanFieldwork-artifactElectronicDrawingProcedure": {
+    "values": {
+      "artifactFormReviewed": { "label": "Artifact form reviewed" },
+      "finalOutputFormDefined": { "label": "Final output form defined" },
+      "featureViewSelected": { "label": "Feature view selected" },
+      "sectionPositionSelected": { "label": "Section position selected" },
+      "vectorized": { "label": "Vectorized" },
+      "researcherInformationIntegrated": { "label": "Researcher information integrated" },
+      "referencePlaneCreated": { "label": "Reference plane created" },
+      "coordinateSystemMoved": { "label": "Coordinate system moved" },
+      "alignmentCriterionSet": { "label": "Alignment criterion set" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean fieldwork artifact electronic drawing checks for form review, output definition, feature view and section decisions, vectorization, reference planes, coordinate movement, and alignment criteria"
   }
 }

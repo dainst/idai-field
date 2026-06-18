@@ -4286,5 +4286,37 @@
       "pendingDecision": { "label": "판단 보류" }
     },
     "description": "현장 GIS·DB가 자료 갱신, 분석, 이용성, 미확인 매장문화재 관리, SHP·DXF 호환, 레이어·도형·속성 편집과 동기화에서 실패하지 않도록 점검하기 위한 목록"
+  },
+  "KoreanFieldwork-electronicDrawingSourceWorkflow": {
+    "values": {
+      "scannerSelected": { "label": "스캐너 선정" },
+      "pointCloudAcquired": { "label": "점군 획득" },
+      "pointCloudMerged": { "label": "점군 병합" },
+      "polygonConverted": { "label": "폴리곤 변환" },
+      "polygonOptimized": { "label": "폴리곤 최적화" },
+      "cadDataGenerated": { "label": "CAD 데이터 생성" },
+      "twoDimensionalDrawingOutput": { "label": "2D 도면 산출" },
+      "threeDimensionalDrawingOutput": { "label": "3D 도면 산출" },
+      "restorationDataOutput": { "label": "복원자료 산출" },
+      "sourceFilePreserved": { "label": "원본파일 보존" },
+      "processedFilePreserved": { "label": "후처리파일 보존" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "전자도면을 단순 결과물이 아니라 스캐너 선정, 점군 획득·병합, 폴리곤 변환·최적화, CAD·2D·3D·복원 산출물, 원본·후처리 파일 보존 흐름으로 점검하기 위한 목록"
+  },
+  "KoreanFieldwork-artifactElectronicDrawingProcedure": {
+    "values": {
+      "artifactFormReviewed": { "label": "유물 형태 검토" },
+      "finalOutputFormDefined": { "label": "최종 결과물 형태 정의" },
+      "featureViewSelected": { "label": "특징 View 선정" },
+      "sectionPositionSelected": { "label": "단면 위치 선정" },
+      "vectorized": { "label": "벡터화" },
+      "researcherInformationIntegrated": { "label": "연구자 요구정보 반영" },
+      "referencePlaneCreated": { "label": "기준면 생성" },
+      "coordinateSystemMoved": { "label": "좌표계 이동" },
+      "alignmentCriterionSet": { "label": "합치 기준 결정" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "유물 전자도면에서 형태 검토, 결과물 정의, 특징 view와 단면 위치 결정, 벡터화, 연구자 요구정보, 기준면·좌표계·합치 기준을 분리해 점검하기 위한 목록"
   }
 }

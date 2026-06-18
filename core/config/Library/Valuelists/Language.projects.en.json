@@ -13630,6 +13630,182 @@
     },
     "description": "Korean field notebook follow-up decisions for treating surface survey results as evidence for preservation, sample survey, test excavation, full excavation, stratigraphy survey, watching brief, or chance find reporting"
   },
+  "KoreanFieldwork-sampleSurveySuitability": {
+    "values": {
+      "largeAlluvialSite": {
+        "label": "Large alluvial site"
+      },
+      "culturalLayerExtentCheck": {
+        "label": "Cultural-layer extent check"
+      },
+      "hillyAreaUnsuitable": {
+        "label": "Hilly area unsuitable"
+      },
+      "featureExtentHardToEstimate": {
+        "label": "Feature extent hard to estimate"
+      },
+      "betweenTrenchesUncertain": {
+        "label": "Between-trenches uncertain"
+      },
+      "additionalTrialNeeded": {
+        "label": "Additional trial needed"
+      },
+      "followUpConflictRisk": {
+        "label": "Follow-up conflict risk"
+      },
+      "fullCoveragePrincipleChecked": {
+        "label": "Full-coverage principle checked"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean field notebook controls for deciding whether sample survey is suitable or whether limited coverage, hilly terrain, gaps between trenches, or cultural-layer uncertainty require trial or full excavation"
+  },
+  "KoreanFieldwork-trialExcavationPurpose": {
+    "values": {
+      "presenceAbsenceCheck": {
+        "label": "Presence/absence check"
+      },
+      "horizontalExtentCheck": {
+        "label": "Horizontal extent check"
+      },
+      "verticalExtentCheck": {
+        "label": "Vertical extent check"
+      },
+      "multiLayerCheck": {
+        "label": "Multi-layer check"
+      },
+      "periodIdentification": {
+        "label": "Period identification"
+      },
+      "siteCharacterIdentification": {
+        "label": "Site character identification"
+      },
+      "detailedExcavationPeriodEstimate": {
+        "label": "Detailed excavation period estimate"
+      },
+      "detailedExcavationCostEstimate": {
+        "label": "Detailed excavation cost estimate"
+      },
+      "detailedExcavationMethodEstimate": {
+        "label": "Detailed excavation method estimate"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean field notebook controls for recording trial excavation as evidence for site presence, horizontal and vertical extent, period, character, and detailed excavation planning"
+  },
+  "KoreanFieldwork-trialTrenchDesign": {
+    "values": {
+      "hillContourPerpendicular": {
+        "label": "Hill-contour perpendicular"
+      },
+      "ridgeTopSlopeIncluded": {
+        "label": "Ridge top and slope included"
+      },
+      "naturalLeveeRiverPerpendicular": {
+        "label": "Natural-levee river perpendicular"
+      },
+      "alluvialFanRadial": {
+        "label": "Alluvial-fan radial"
+      },
+      "openAreaPaleolandformAnalysis": {
+        "label": "Open-area paleolandform analysis"
+      },
+      "microHighlandAdditionalTrench": {
+        "label": "Micro-highland additional trench"
+      },
+      "trenchIntervalRecorded": {
+        "label": "Trench interval recorded"
+      },
+      "trenchWidthRecorded": {
+        "label": "Trench width recorded"
+      },
+      "trenchDepthRecorded": {
+        "label": "Trench depth recorded"
+      },
+      "safetySecured": {
+        "label": "Safety secured"
+      },
+      "extensionTrenchReason": {
+        "label": "Extension trench reason"
+      },
+      "paleolithicPitCombined": {
+        "label": "Paleolithic pit combined"
+      },
+      "fortificationWallPerpendicular": {
+        "label": "Fortification wall perpendicular"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean field notebook controls for recording trial trench direction, interval, width, depth, extension reason, safety condition, and combined pit strategy by landform"
+  },
+  "KoreanFieldwork-excavationScopeDifficultyBasis": {
+    "values": {
+      "siteType": {
+        "label": "Site type"
+      },
+      "landform": {
+        "label": "Landform"
+      },
+      "soilCondition": {
+        "label": "Soil condition"
+      },
+      "investigationCondition": {
+        "label": "Investigation condition"
+      },
+      "findContent": {
+        "label": "Find content"
+      },
+      "featureDensity": {
+        "label": "Feature density"
+      },
+      "featureIdentificationDifficulty": {
+        "label": "Feature identification difficulty"
+      },
+      "featureContent": {
+        "label": "Feature content"
+      },
+      "multiLayerSite": {
+        "label": "Multi-layer site"
+      },
+      "preservedAreaSize": {
+        "label": "Preserved area size"
+      },
+      "legalReferenceDate": {
+        "label": "Legal reference date"
+      },
+      "basisDocument": {
+        "label": "Basis document"
+      },
+      "confirmedFeatures": {
+        "label": "Confirmed features"
+      },
+      "blankSpaceBetweenFeatures": {
+        "label": "Blank space between features"
+      },
+      "settlementLandscape": {
+        "label": "Settlement landscape"
+      },
+      "exclusionConsultation": {
+        "label": "Exclusion consultation"
+      },
+      "exclusionReason": {
+        "label": "Exclusion reason"
+      },
+      "scopeChangeHistory": {
+        "label": "Scope change history"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean field notebook controls for explaining detailed excavation scope and difficulty through feature density, identification difficulty, multi-layer conditions, preserved area size, exclusions, and scope changes"
+  },
   "KoreanFieldwork-gisPredictionEvidence": {
     "values": {
       "elevationModel": {

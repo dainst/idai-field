@@ -59,6 +59,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-19 충적지·토양도 자료도 구현 단위로 압축했다. 제6권 고지형·충적지와 조사방법론의 지표·GIS 자료는 평야·논 지역에서 표면유물 부재를 유적 부재로 보지 말고, 자연제방·배후습지·구하도·구해안선, 토양통·대토양군, 보링·주상도, a+b층 세트, 유구축조면과 검출면 차이, 암색대·이질토 블록·홍수퇴적 해석을 함께 보라고 요구한다. 이 묶음은 `Survey`의 `alluvialLandformSurvey`, `soilMapPredictionVerification`, `FeatureSegment`의 `alluvialLayerConceptAudit`, `alluvialSurfaceAttribution`, `alluvialFormationProcess` 값 목록으로 옮겼다.
 
+2026-06-19 표본·시굴 전환 자료도 구현 단위로 압축했다. `매장문화재조사 기초이론`과 지표조사 업무 이해 계열 자료는 표본조사를 제한 범위의 후속 발굴 판단 단계로, 시굴조사를 존재 확인뿐 아니라 수평·수직 범위, 시대·성격, 정밀발굴 기간·비용·방법 산정 단계로 다룬다. 이 묶음은 `Survey`의 `sampleSurveySuitability`, `trialExcavationPurpose`, `trialTrenchDesign`, `excavationScopeDifficultyBasis` 값 목록으로 옮겨 지표조사 후속조치와 GIS 예측검증 다음의 조사전환 판단을 같은 화면에서 기록하게 했다.
+
 ## 보조 자료군 판독 현황
 
 새 보조 자료군은 [보조 자료군 목록과 우선순위](supplemental-source-inventory.md)에서 상세 관리한다. 현재 상태는 다음과 같다.

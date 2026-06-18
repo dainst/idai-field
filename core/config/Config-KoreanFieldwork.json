@@ -299,6 +299,22 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "sampleSurveySuitability": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "trialExcavationPurpose": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "trialTrenchDesign": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "excavationScopeDifficultyBasis": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "gisPredictionEvidence": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -326,6 +342,10 @@
         "surfaceSurveyObservation": "KoreanFieldwork-surfaceSurveyObservation",
         "surfaceSurveyBiasControl": "KoreanFieldwork-surfaceSurveyBiasControl",
         "surfaceSurveyFollowUp": "KoreanFieldwork-surfaceSurveyFollowUp",
+        "sampleSurveySuitability": "KoreanFieldwork-sampleSurveySuitability",
+        "trialExcavationPurpose": "KoreanFieldwork-trialExcavationPurpose",
+        "trialTrenchDesign": "KoreanFieldwork-trialTrenchDesign",
+        "excavationScopeDifficultyBasis": "KoreanFieldwork-excavationScopeDifficultyBasis",
         "gisPredictionEvidence": "KoreanFieldwork-gisPredictionEvidence",
         "gisPredictionFieldVerification": "KoreanFieldwork-gisPredictionFieldVerification",
         "alluvialLandformSurvey": "KoreanFieldwork-alluvialLandformSurvey",
@@ -343,6 +363,10 @@
             "surfaceSurveyObservation",
             "surfaceSurveyBiasControl",
             "surfaceSurveyFollowUp",
+            "sampleSurveySuitability",
+            "trialExcavationPurpose",
+            "trialTrenchDesign",
+            "excavationScopeDifficultyBasis",
             "gisPredictionEvidence",
             "gisPredictionFieldVerification",
             "alluvialLandformSurvey",

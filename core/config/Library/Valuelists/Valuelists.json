@@ -33142,6 +33142,142 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-sampleSurveySuitability": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "largeAlluvialSite": {},
+      "culturalLayerExtentCheck": {},
+      "hillyAreaUnsuitable": {},
+      "featureExtentHardToEstimate": {},
+      "betweenTrenchesUncertain": {},
+      "additionalTrialNeeded": {},
+      "followUpConflictRisk": {},
+      "fullCoveragePrincipleChecked": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "largeAlluvialSite",
+      "culturalLayerExtentCheck",
+      "hillyAreaUnsuitable",
+      "featureExtentHardToEstimate",
+      "betweenTrenchesUncertain",
+      "additionalTrialNeeded",
+      "followUpConflictRisk",
+      "fullCoveragePrincipleChecked",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-trialExcavationPurpose": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "presenceAbsenceCheck": {},
+      "horizontalExtentCheck": {},
+      "verticalExtentCheck": {},
+      "multiLayerCheck": {},
+      "periodIdentification": {},
+      "siteCharacterIdentification": {},
+      "detailedExcavationPeriodEstimate": {},
+      "detailedExcavationCostEstimate": {},
+      "detailedExcavationMethodEstimate": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "presenceAbsenceCheck",
+      "horizontalExtentCheck",
+      "verticalExtentCheck",
+      "multiLayerCheck",
+      "periodIdentification",
+      "siteCharacterIdentification",
+      "detailedExcavationPeriodEstimate",
+      "detailedExcavationCostEstimate",
+      "detailedExcavationMethodEstimate",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-trialTrenchDesign": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "hillContourPerpendicular": {},
+      "ridgeTopSlopeIncluded": {},
+      "naturalLeveeRiverPerpendicular": {},
+      "alluvialFanRadial": {},
+      "openAreaPaleolandformAnalysis": {},
+      "microHighlandAdditionalTrench": {},
+      "trenchIntervalRecorded": {},
+      "trenchWidthRecorded": {},
+      "trenchDepthRecorded": {},
+      "safetySecured": {},
+      "extensionTrenchReason": {},
+      "paleolithicPitCombined": {},
+      "fortificationWallPerpendicular": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "hillContourPerpendicular",
+      "ridgeTopSlopeIncluded",
+      "naturalLeveeRiverPerpendicular",
+      "alluvialFanRadial",
+      "openAreaPaleolandformAnalysis",
+      "microHighlandAdditionalTrench",
+      "trenchIntervalRecorded",
+      "trenchWidthRecorded",
+      "trenchDepthRecorded",
+      "safetySecured",
+      "extensionTrenchReason",
+      "paleolithicPitCombined",
+      "fortificationWallPerpendicular",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-excavationScopeDifficultyBasis": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "siteType": {},
+      "landform": {},
+      "soilCondition": {},
+      "investigationCondition": {},
+      "findContent": {},
+      "featureDensity": {},
+      "featureIdentificationDifficulty": {},
+      "featureContent": {},
+      "multiLayerSite": {},
+      "preservedAreaSize": {},
+      "legalReferenceDate": {},
+      "basisDocument": {},
+      "confirmedFeatures": {},
+      "blankSpaceBetweenFeatures": {},
+      "settlementLandscape": {},
+      "exclusionConsultation": {},
+      "exclusionReason": {},
+      "scopeChangeHistory": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "siteType",
+      "landform",
+      "soilCondition",
+      "investigationCondition",
+      "findContent",
+      "featureDensity",
+      "featureIdentificationDifficulty",
+      "featureContent",
+      "multiLayerSite",
+      "preservedAreaSize",
+      "legalReferenceDate",
+      "basisDocument",
+      "confirmedFeatures",
+      "blankSpaceBetweenFeatures",
+      "settlementLandscape",
+      "exclusionConsultation",
+      "exclusionReason",
+      "scopeChangeHistory",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-gisPredictionEvidence": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

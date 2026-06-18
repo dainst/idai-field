@@ -1876,6 +1876,182 @@
     },
     "description": "지표조사 결과를 유적 존재 확정값이 아니라 보존, 표본조사, 시굴, 정밀발굴, 토층분포조사, 입회조사로 이어지는 판단근거로 관리하기 위한 목록"
   },
+  "KoreanFieldwork-sampleSurveySuitability": {
+    "values": {
+      "largeAlluvialSite": {
+        "label": "대규모 충적지"
+      },
+      "culturalLayerExtentCheck": {
+        "label": "문화층 범위 확인"
+      },
+      "hillyAreaUnsuitable": {
+        "label": "구릉지 부적합"
+      },
+      "featureExtentHardToEstimate": {
+        "label": "유구 범위 추정 곤란"
+      },
+      "betweenTrenchesUncertain": {
+        "label": "트렌치 사이 불확실"
+      },
+      "additionalTrialNeeded": {
+        "label": "추가 시굴 필요"
+      },
+      "followUpConflictRisk": {
+        "label": "후속조사 갈등 위험"
+      },
+      "fullCoveragePrincipleChecked": {
+        "label": "전역조사 원칙 확인"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "표본조사가 후속 발굴 여부를 판단할 수 있는 제한 조사인지, 구릉지·트렌치 사이 공백·문화층 범위 불확실성 때문에 시굴 또는 정밀조사로 넘겨야 하는지 남기기 위한 목록"
+  },
+  "KoreanFieldwork-trialExcavationPurpose": {
+    "values": {
+      "presenceAbsenceCheck": {
+        "label": "존재 유무 확인"
+      },
+      "horizontalExtentCheck": {
+        "label": "수평 범위 확인"
+      },
+      "verticalExtentCheck": {
+        "label": "수직 범위 확인"
+      },
+      "multiLayerCheck": {
+        "label": "중층 여부 확인"
+      },
+      "periodIdentification": {
+        "label": "시대 파악"
+      },
+      "siteCharacterIdentification": {
+        "label": "성격 파악"
+      },
+      "detailedExcavationPeriodEstimate": {
+        "label": "정밀발굴 기간 산정"
+      },
+      "detailedExcavationCostEstimate": {
+        "label": "정밀발굴 비용 산정"
+      },
+      "detailedExcavationMethodEstimate": {
+        "label": "정밀발굴 방법 산정"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "시굴조사를 유적 존재 확인뿐 아니라 수평·수직 범위, 시대·성격, 정밀발굴 기간·비용·방법 산정 근거로 관리하기 위한 목록"
+  },
+  "KoreanFieldwork-trialTrenchDesign": {
+    "values": {
+      "hillContourPerpendicular": {
+        "label": "구릉 등고선 직교"
+      },
+      "ridgeTopSlopeIncluded": {
+        "label": "능선부·사면 포함"
+      },
+      "naturalLeveeRiverPerpendicular": {
+        "label": "자연제방 하천 직교"
+      },
+      "alluvialFanRadial": {
+        "label": "선상지 부채꼴"
+      },
+      "openAreaPaleolandformAnalysis": {
+        "label": "개활지 고지형 분석"
+      },
+      "microHighlandAdditionalTrench": {
+        "label": "미고지 추가 트렌치"
+      },
+      "trenchIntervalRecorded": {
+        "label": "트렌치 간격 기록"
+      },
+      "trenchWidthRecorded": {
+        "label": "트렌치 너비 기록"
+      },
+      "trenchDepthRecorded": {
+        "label": "트렌치 깊이 기록"
+      },
+      "safetySecured": {
+        "label": "안전 확보"
+      },
+      "extensionTrenchReason": {
+        "label": "확장 트렌치 사유"
+      },
+      "paleolithicPitCombined": {
+        "label": "구석기 피트 병행"
+      },
+      "fortificationWallPerpendicular": {
+        "label": "성벽 직교 트렌치"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "지형별 트렌치 방향·간격·폭·깊이, 확장 사유, 안전 조건, 피트 병행 여부를 시굴 설계 근거로 남기기 위한 목록"
+  },
+  "KoreanFieldwork-excavationScopeDifficultyBasis": {
+    "values": {
+      "siteType": {
+        "label": "유적 종류"
+      },
+      "landform": {
+        "label": "지형"
+      },
+      "soilCondition": {
+        "label": "토질"
+      },
+      "investigationCondition": {
+        "label": "조사 조건"
+      },
+      "findContent": {
+        "label": "유물 내용"
+      },
+      "featureDensity": {
+        "label": "유구 밀도"
+      },
+      "featureIdentificationDifficulty": {
+        "label": "유구 식별 난이도"
+      },
+      "featureContent": {
+        "label": "유구 내용"
+      },
+      "multiLayerSite": {
+        "label": "중층 여부"
+      },
+      "preservedAreaSize": {
+        "label": "유존지역 면적"
+      },
+      "legalReferenceDate": {
+        "label": "법령 기준일"
+      },
+      "basisDocument": {
+        "label": "산정 근거문서"
+      },
+      "confirmedFeatures": {
+        "label": "확인 유구"
+      },
+      "blankSpaceBetweenFeatures": {
+        "label": "유구 사이 공지"
+      },
+      "settlementLandscape": {
+        "label": "취락 경관"
+      },
+      "exclusionConsultation": {
+        "label": "제외 협의"
+      },
+      "exclusionReason": {
+        "label": "제외 사유"
+      },
+      "scopeChangeHistory": {
+        "label": "범위 변경 이력"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "정밀발굴 범위와 조사 난이도를 유구 밀도, 식별 난이도, 중층 여부, 유존지역 면적, 제외 협의와 범위 변경 이력으로 설명하기 위한 목록"
+  },
   "KoreanFieldwork-gisPredictionEvidence": {
     "values": {
       "elevationModel": {

@@ -118,6 +118,18 @@
         "surfaceSurveyFollowUp": {
           "label": "Surface survey follow-up"
         },
+        "sampleSurveySuitability": {
+          "label": "Sample survey suitability"
+        },
+        "trialExcavationPurpose": {
+          "label": "Trial excavation purpose"
+        },
+        "trialTrenchDesign": {
+          "label": "Trial trench design"
+        },
+        "excavationScopeDifficultyBasis": {
+          "label": "Excavation scope and difficulty basis"
+        },
         "gisPredictionEvidence": {
           "label": "GIS and aerial-photo prediction evidence"
         },

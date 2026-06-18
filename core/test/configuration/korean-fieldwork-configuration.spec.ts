@@ -51,6 +51,10 @@ describe('KoreanFieldwork project configuration', () => {
         expect(surveyForm.fields.surfaceSurveyObservation.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyBiasControl.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyFollowUp.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.sampleSurveySuitability.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.trialExcavationPurpose.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.trialTrenchDesign.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.excavationScopeDifficultyBasis.inputType).toBe('checkboxes');
         expect(surveyForm.fields.gisPredictionEvidence.inputType).toBe('checkboxes');
         expect(surveyForm.fields.gisPredictionFieldVerification.inputType).toBe('checkboxes');
         expect(surveyForm.fields.alluvialLandformSurvey.inputType).toBe('checkboxes');
@@ -204,6 +208,11 @@ describe('KoreanFieldwork project configuration', () => {
         expect(surveyForm.valuelists.surfaceSurveyObservation).toBe('KoreanFieldwork-surfaceSurveyObservation');
         expect(surveyForm.valuelists.surfaceSurveyBiasControl).toBe('KoreanFieldwork-surfaceSurveyBiasControl');
         expect(surveyForm.valuelists.surfaceSurveyFollowUp).toBe('KoreanFieldwork-surfaceSurveyFollowUp');
+        expect(surveyForm.valuelists.sampleSurveySuitability).toBe('KoreanFieldwork-sampleSurveySuitability');
+        expect(surveyForm.valuelists.trialExcavationPurpose).toBe('KoreanFieldwork-trialExcavationPurpose');
+        expect(surveyForm.valuelists.trialTrenchDesign).toBe('KoreanFieldwork-trialTrenchDesign');
+        expect(surveyForm.valuelists.excavationScopeDifficultyBasis)
+            .toBe('KoreanFieldwork-excavationScopeDifficultyBasis');
         expect(surveyForm.valuelists.gisPredictionEvidence).toBe('KoreanFieldwork-gisPredictionEvidence');
         expect(surveyForm.valuelists.gisPredictionFieldVerification)
             .toBe('KoreanFieldwork-gisPredictionFieldVerification');
@@ -411,6 +420,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Report evaluation feedback');
         expect(languages.en.categories.Survey.fields.surfaceSurveyObservation.label)
             .toBe('Surface survey observation');
+        expect(languages.en.categories.Survey.fields.sampleSurveySuitability.label)
+            .toBe('Sample survey suitability');
+        expect(languages.en.categories.Survey.fields.trialExcavationPurpose.label)
+            .toBe('Trial excavation purpose');
+        expect(languages.en.categories.Survey.fields.trialTrenchDesign.label)
+            .toBe('Trial trench design');
+        expect(languages.en.categories.Survey.fields.excavationScopeDifficultyBasis.label)
+            .toBe('Excavation scope and difficulty basis');
         expect(languages.en.categories.Survey.fields.gisPredictionFieldVerification.label)
             .toBe('Prediction field verification');
         expect(languages.en.categories.Survey.fields.alluvialLandformSurvey.label)
@@ -615,6 +632,18 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Field observation first');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveyFollowUp'].values.testExcavation.label)
             .toBe('Test excavation');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-sampleSurveySuitability']
+            .values.betweenTrenchesUncertain.label)
+            .toBe('Between-trenches uncertain');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-trialExcavationPurpose']
+            .values.detailedExcavationMethodEstimate.label)
+            .toBe('Detailed excavation method estimate');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-trialTrenchDesign']
+            .values.naturalLeveeRiverPerpendicular.label)
+            .toBe('Natural-levee river perpendicular');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-excavationScopeDifficultyBasis']
+            .values.featureIdentificationDifficulty.label)
+            .toBe('Feature identification difficulty');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-gisPredictionEvidence'].values.aerialPhotoStereo.label)
             .toBe('Aerial-photo stereo interpretation');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-gisPredictionFieldVerification']

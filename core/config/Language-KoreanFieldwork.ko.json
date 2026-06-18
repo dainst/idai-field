@@ -118,6 +118,18 @@
         "surfaceSurveyFollowUp": {
           "label": "지표조사 후속조치"
         },
+        "sampleSurveySuitability": {
+          "label": "표본조사 적합성"
+        },
+        "trialExcavationPurpose": {
+          "label": "시굴조사 목적"
+        },
+        "trialTrenchDesign": {
+          "label": "시굴 트렌치 설계"
+        },
+        "excavationScopeDifficultyBasis": {
+          "label": "정밀발굴 범위·난이도 근거"
+        },
         "gisPredictionEvidence": {
           "label": "GIS·항공사진 예측근거"
         },

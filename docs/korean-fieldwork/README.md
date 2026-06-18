@@ -20,6 +20,7 @@
 - [현장기록 원칙 1차 초안](field-recording-principles.md)
 - [현장 현상별 관찰·기록 매트릭스](field-observation-matrix.md)
 - [한국형 야장 기록 워크플로 초안](field-recording-workflows.md)
+- [한국형 야장 구현 요구사항](field-notebook-requirements.md)
 - [한국형 공통 기록 모델 v0](korean-core-recording-model.md)
 - [iDAI.field 접목 로드맵](idai-adaptation-roadmap.md)
 

@@ -32,6 +32,7 @@
 | 유물 | 출토 맥락, 수습 위치, 재질, 상태, 보존·분석 필요성 | `Find`, 재질별 하위 범주 |
 | 시료 | 채취 목적, 위치, 층위, 오염 가능성, 포장·보관, 분석 의뢰 | `Sample`, `Analysis` |
 | 매체 | 사진, 도면, 3D, GIS, 파일 경로, 촬영·측량 조건, 증거 역할, 방향·축척·기준점, 해상도·선명도, 원본 보존, 대장번호 대조, 재촬영·재작성 필요 여부 | `Photo`, `Drawing`, `Document`, `mediaEvidenceRole`, `mediaQualityCheck`, `digitalSourcePreservation`, `reportCrossCheck` |
+| 유물실측·도면 | 기술·사진·탁본·실측·3D스캔·현미경사진 중 어떤 기록방식을 썼는지, 재질·기종·잔존상태·기능에 따라 기준선·실측선·투상법·축척·도구를 어떻게 정했는지, 기준선 선택 사유·측점 검점·교정이력·사진/탁본 대조·보존처리 전후 대조가 남았는지 확인한다. 토기는 정치상태·단면 우선·기벽두께 3-4점·문양측점을, 석기는 사용방향 정치·평면/종단면/횡단면/측면·제3각법 6면·타제/고타/마연흔을, 수침목재는 습식 제도 조건·분무수분·천 보호·물상자·건조수축 위험을 별도 확인한다. | `Drawing`, `artifactDrawingRecordMethod`, `artifactDrawingPlan`, `artifactDrawingQualityCheck`, `potteryDrawingStandard`, `stoneToolDrawingView`, `waterloggedWoodDrawingHandling` |
 | 보존·수습 | 노출 시점, 응급처치, 포장, 반출, 보관, 후속 처리, 보존가치판단, 보존가치세부기준, 고유성·보전성 요소, 이해관계자, 보존관리위협, 개발계획 변경, 재매장·이전·현장보존 결정, 사진·도면·작업과정 기록, 새재료 구분, 재확인 계획 | `ConservationAction`, `AdministrativeDecision`, `PreservationAssessment` 후보 |
 | 정보화 자산 | 조판 작업파일, PDF, 표준 전자발굴조사보고서, 전자문서표준, 수록문화재 DB, 디지털 문서 DB, 도판 DB, 도면 DB, 지표조사 GIS, 슬라이드·사진첩·수기 도면 같은 재래식 매체, 통합 DBMS 연결 상태 | `InformationAsset`, `ReportItem`, `Document` 후보 |
 | 검토·보고 | 검토자 의견, 수정 이력, 보고서 반영 여부 | 작업기록/상태 필드 |

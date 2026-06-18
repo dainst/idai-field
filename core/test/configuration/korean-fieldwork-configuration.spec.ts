@@ -151,6 +151,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(drawingForm.fields.mediaQualityCheck.inputType).toBe('checkboxes');
         expect(drawingForm.fields.digitalSourcePreservation.inputType).toBe('checkboxes');
         expect(drawingForm.fields.reportCrossCheck.inputType).toBe('checkboxes');
+        expect(drawingForm.fields.artifactDrawingRecordMethod.inputType).toBe('checkboxes');
+        expect(drawingForm.fields.artifactDrawingPlan.inputType).toBe('checkboxes');
+        expect(drawingForm.fields.artifactDrawingQualityCheck.inputType).toBe('checkboxes');
+        expect(drawingForm.fields.potteryDrawingStandard.inputType).toBe('checkboxes');
+        expect(drawingForm.fields.stoneToolDrawingView.inputType).toBe('checkboxes');
+        expect(drawingForm.fields.waterloggedWoodDrawingHandling.inputType).toBe('checkboxes');
         expect(photoForm.fields.mediaEvidenceRole.inputType).toBe('checkboxes');
         expect(photoForm.fields.mediaQualityCheck.inputType).toBe('checkboxes');
         expect(photoForm.fields.digitalSourcePreservation.inputType).toBe('checkboxes');
@@ -333,6 +339,18 @@ describe('KoreanFieldwork project configuration', () => {
         expect(drawingForm.valuelists.digitalSourcePreservation)
             .toBe('KoreanFieldwork-digitalSourcePreservation');
         expect(drawingForm.valuelists.reportCrossCheck).toBe('KoreanFieldwork-reportCrossCheck');
+        expect(drawingForm.valuelists.artifactDrawingRecordMethod)
+            .toBe('KoreanFieldwork-artifactDrawingRecordMethod');
+        expect(drawingForm.valuelists.artifactDrawingPlan)
+            .toBe('KoreanFieldwork-artifactDrawingPlan');
+        expect(drawingForm.valuelists.artifactDrawingQualityCheck)
+            .toBe('KoreanFieldwork-artifactDrawingQualityCheck');
+        expect(drawingForm.valuelists.potteryDrawingStandard)
+            .toBe('KoreanFieldwork-potteryDrawingStandard');
+        expect(drawingForm.valuelists.stoneToolDrawingView)
+            .toBe('KoreanFieldwork-stoneToolDrawingView');
+        expect(drawingForm.valuelists.waterloggedWoodDrawingHandling)
+            .toBe('KoreanFieldwork-waterloggedWoodDrawingHandling');
         expect(photoForm.valuelists.mediaEvidenceRole).toBe('KoreanFieldwork-mediaEvidenceRole');
         expect(photoForm.valuelists.mediaQualityCheck).toBe('KoreanFieldwork-mediaQualityCheck');
         expect(photoForm.valuelists.digitalSourcePreservation)
@@ -506,6 +524,18 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Paleoenvironment proxy sampling');
         expect(languages.en.categories.Drawing.fields.mediaEvidenceRole.label)
             .toBe('Media evidence role');
+        expect(languages.en.categories.Drawing.fields.artifactDrawingRecordMethod.label)
+            .toBe('Artifact drawing record method');
+        expect(languages.en.categories.Drawing.fields.artifactDrawingPlan.label)
+            .toBe('Artifact drawing plan');
+        expect(languages.en.categories.Drawing.fields.artifactDrawingQualityCheck.label)
+            .toBe('Artifact drawing quality check');
+        expect(languages.en.categories.Drawing.fields.potteryDrawingStandard.label)
+            .toBe('Pottery drawing standard');
+        expect(languages.en.categories.Drawing.fields.stoneToolDrawingView.label)
+            .toBe('Stone tool drawing view');
+        expect(languages.en.categories.Drawing.fields.waterloggedWoodDrawingHandling.label)
+            .toBe('Waterlogged wood drawing handling');
         expect(languages.en.categories.Photo.fields.mediaQualityCheck.label)
             .toBe('Media quality check');
         expect(languages.ko.categories.Operation.fields.fieldRecordQuality.label).toBeDefined();
@@ -774,6 +804,27 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
             .values.retakeOrRedrawNeeded.label)
             .toBe('Retake or redraw needed');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactDrawingRecordMethod']
+            .values.measuredDrawing.label)
+            .toBe('Measured drawing');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactDrawingPlan']
+            .values.baselineSelected.label)
+            .toBe('Baseline selected');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactDrawingQualityCheck']
+            .values.measuringPointCheck.label)
+            .toBe('Measuring point check');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-potteryDrawingStandard']
+            .values.wallThicknessThreeFourPoints.label)
+            .toBe('Wall thickness at 3-4 points');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-stoneToolDrawingView']
+            .values.thirdAngleSixViews.label)
+            .toBe('Third-angle six views');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-waterloggedWoodDrawingHandling']
+            .values.waterloggedState.label)
+            .toBe('Waterlogged state');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-artifactDrawingRecordMethod']
+            .values.measuredDrawing.label)
+            .toBeDefined();
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-cultivationFeatureContext']
             .values.cropNameNotClassification.label)
             .toBe('작물명으로 논밭 확정 금지');

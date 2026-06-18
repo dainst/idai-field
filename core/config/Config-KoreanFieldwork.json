@@ -1339,13 +1339,43 @@
         "reportCrossCheck": {
           "inputType": "checkboxes",
           "constraintIndexed": true
+        },
+        "artifactDrawingRecordMethod": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "artifactDrawingPlan": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "artifactDrawingQualityCheck": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "potteryDrawingStandard": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "stoneToolDrawingView": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "waterloggedWoodDrawingHandling": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
         }
       },
       "valuelists": {
         "mediaEvidenceRole": "KoreanFieldwork-mediaEvidenceRole",
         "mediaQualityCheck": "KoreanFieldwork-mediaQualityCheck",
         "digitalSourcePreservation": "KoreanFieldwork-digitalSourcePreservation",
-        "reportCrossCheck": "KoreanFieldwork-reportCrossCheck"
+        "reportCrossCheck": "KoreanFieldwork-reportCrossCheck",
+        "artifactDrawingRecordMethod": "KoreanFieldwork-artifactDrawingRecordMethod",
+        "artifactDrawingPlan": "KoreanFieldwork-artifactDrawingPlan",
+        "artifactDrawingQualityCheck": "KoreanFieldwork-artifactDrawingQualityCheck",
+        "potteryDrawingStandard": "KoreanFieldwork-potteryDrawingStandard",
+        "stoneToolDrawingView": "KoreanFieldwork-stoneToolDrawingView",
+        "waterloggedWoodDrawingHandling": "KoreanFieldwork-waterloggedWoodDrawingHandling"
       },
       "groups": [
         {
@@ -1369,7 +1399,13 @@
             "mediaEvidenceRole",
             "mediaQualityCheck",
             "digitalSourcePreservation",
-            "reportCrossCheck"
+            "reportCrossCheck",
+            "artifactDrawingRecordMethod",
+            "artifactDrawingPlan",
+            "artifactDrawingQualityCheck",
+            "potteryDrawingStandard",
+            "stoneToolDrawingView",
+            "waterloggedWoodDrawingHandling"
           ]
         }
       ]

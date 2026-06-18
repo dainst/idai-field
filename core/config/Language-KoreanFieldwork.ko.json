@@ -504,6 +504,24 @@
         },
         "reportCrossCheck": {
           "label": "보고서 교차검토"
+        },
+        "artifactDrawingRecordMethod": {
+          "label": "유물실측 기록방식"
+        },
+        "artifactDrawingPlan": {
+          "label": "유물실측 계획"
+        },
+        "artifactDrawingQualityCheck": {
+          "label": "유물실측 검수"
+        },
+        "potteryDrawingStandard": {
+          "label": "토기 실측 기준"
+        },
+        "stoneToolDrawingView": {
+          "label": "석기 실측 방식"
+        },
+        "waterloggedWoodDrawingHandling": {
+          "label": "수침목재 실측 취급"
         }
       }
     },

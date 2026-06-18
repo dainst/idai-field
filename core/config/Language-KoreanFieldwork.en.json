@@ -504,6 +504,24 @@
         },
         "reportCrossCheck": {
           "label": "Report cross-check"
+        },
+        "artifactDrawingRecordMethod": {
+          "label": "Artifact drawing record method"
+        },
+        "artifactDrawingPlan": {
+          "label": "Artifact drawing plan"
+        },
+        "artifactDrawingQualityCheck": {
+          "label": "Artifact drawing quality check"
+        },
+        "potteryDrawingStandard": {
+          "label": "Pottery drawing standard"
+        },
+        "stoneToolDrawingView": {
+          "label": "Stone tool drawing view"
+        },
+        "waterloggedWoodDrawingHandling": {
+          "label": "Waterlogged wood drawing handling"
         }
       }
     },

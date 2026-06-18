@@ -68,6 +68,8 @@ C:\Users\nuri9\AppData\Local\Temp\codex-idai-field-new-pdf-text\methods-all
 
 유물 정리·보관 장의 공통 축은 `KoreanFieldwork-artifactHandlingWorkflow`, `KoreanFieldwork-artifactQuantityBasis`, `KoreanFieldwork-storageEnvironmentControl`로 `Find` 화면에 배치해 현장수습부터 이관까지의 절차, 건·점수 산정 근거, 재질별 수장환경을 같은 유물 카드에서 추적한다.
 
+유물실측 2014·2015년 교재의 공통 축은 `KoreanFieldwork-artifactDrawingRecordMethod`, `KoreanFieldwork-artifactDrawingPlan`, `KoreanFieldwork-artifactDrawingQualityCheck`, `KoreanFieldwork-potteryDrawingStandard`, `KoreanFieldwork-stoneToolDrawingView`, `KoreanFieldwork-waterloggedWoodDrawingHandling`로 `Drawing` 화면에 배치했다. 실측은 사진이나 도면 파일의 품질검수가 아니라 기준선·실측선 선택, 측점 검점, 재질별 취급 조건, 보존처리 전후 대조를 포함한 별도 기록 행위로 관리한다.
+
 제철유적 장과 생산유적 사전에서 뽑은 공통 축은 `KoreanFieldwork-ironProcessEvidence`, `KoreanFieldwork-ironFurnaceStructure`, `KoreanFieldwork-ironResidueSubtype`, `KoreanFieldwork-ironSampleAnalysisPlan`로 나누어 배치한다. 제련·단야·용해·초강 판정은 노 이름이 아니라 구조, 부산물, 시료 분석계획, 분석 후 환류가 모여야 확정되도록 한다.
 
 고분·분묘 자료에서 뽑은 공통 축은 `KoreanFieldwork-tombMoundInvestigation`, `KoreanFieldwork-tombBurialStructureInvestigation`, `KoreanFieldwork-graveGoodsRitualContext`, `KoreanFieldwork-humanRemainsRecoveryAnalysis`로 나누어 배치한다. 봉토분·분구묘·주구묘·석곽묘·석실묘 같은 명칭은 결과값으로 남기되, 현장 화면에서는 구지표, 성토 단위, 주구 퇴적과 재굴착, 묘광 어깨선, 관·곽·실 구분, 개석과 폐쇄시설, 추가장·도굴 근거, 부장품 위치 맥락, 인골 오염 방지와 분석 기준이 먼저 기록되도록 한다.

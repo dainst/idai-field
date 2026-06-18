@@ -3040,6 +3040,102 @@
     },
     "description": "현장기록에서 보고서 산출물을 역산하고 원자료와 대조하기 위한 교차검토 항목 목록"
   },
+  "KoreanFieldwork-artifactDrawingRecordMethod": {
+    "values": {
+      "technicalDescription": { "label": "기술" },
+      "photoRecord": { "label": "사진" },
+      "rubbingRecord": { "label": "탁본" },
+      "measuredDrawing": { "label": "실측" },
+      "threeDimensionalScan": { "label": "3D 스캔" },
+      "microscopePhoto": { "label": "현미경사진" },
+      "complementaryRecordRequired": { "label": "보완기록 필요" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "유물 기록에서 기술, 사진, 탁본, 실측, 3D 스캔, 현미경사진과 보완기록 필요 여부를 함께 관리하기 위한 목록"
+  },
+  "KoreanFieldwork-artifactDrawingPlan": {
+    "values": {
+      "materialRecorded": { "label": "재질 기록" },
+      "artifactTypeRecorded": { "label": "기종 기록" },
+      "preservationStateRecorded": { "label": "잔존상태 기록" },
+      "functionHypothesisRecorded": { "label": "기능 가설 기록" },
+      "baselineSelected": { "label": "기준선 선정" },
+      "measuredLineSelected": { "label": "실측선 선정" },
+      "projectionMethodSelected": { "label": "투상법 선정" },
+      "drawingLayoutSelected": { "label": "도면배치 선정" },
+      "scaleSelected": { "label": "축척 선정" },
+      "drawingToolsRecorded": { "label": "실측도구 기록" },
+      "complementaryPhotoPlanned": { "label": "보완사진 계획" },
+      "rubbingPlanned": { "label": "탁본 계획" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "유물실측 전에 재질, 기종, 잔존상태, 기능, 기준선, 실측선, 투상법, 도면배치, 축척, 도구, 보완사진, 탁본 여부를 점검하기 위한 목록"
+  },
+  "KoreanFieldwork-artifactDrawingQualityCheck": {
+    "values": {
+      "baselineRationale": { "label": "기준선 선택사유" },
+      "measuredLineRationale": { "label": "실측선 선택사유" },
+      "measuredLineChangeReason": { "label": "실측선 변경사유" },
+      "measuringPointCheck": { "label": "측점 검점" },
+      "calibrationHistory": { "label": "교정 이력" },
+      "photoComparison": { "label": "사진 대조" },
+      "rubbingComparison": { "label": "탁본 대조" },
+      "descriptionSupplement": { "label": "기술 보완" },
+      "prePostConservationComparison": { "label": "보존처리 전후 대조" },
+      "redrawingNeeded": { "label": "재실측 필요" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "유물실측 결과의 기준선·실측선 판단, 측점, 교정, 사진·탁본 대조, 기술 보완, 보존처리 전후 대조, 재실측 필요 여부를 검수하기 위한 목록"
+  },
+  "KoreanFieldwork-potteryDrawingStandard": {
+    "values": {
+      "orientationState": { "label": "정치상태" },
+      "baseline": { "label": "기준선" },
+      "measuredLine": { "label": "실측선" },
+      "measuringPoint": { "label": "측점" },
+      "measuringPointCheck": { "label": "측점 검점" },
+      "sectionFirst": { "label": "단면 우선" },
+      "bodyContour": { "label": "바디 윤곽" },
+      "wallThicknessThreeFourPoints": { "label": "기벽두께 3-4점" },
+      "elevationView": { "label": "입면도" },
+      "patternMeasuringPoint": { "label": "문양 측점" },
+      "annotationPrepared": { "label": "주기 작성" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "토기 실측에서 정치상태, 기준선, 실측선, 측점, 단면 우선 기록, 바디 윤곽, 기벽두께, 입면, 문양 측점, 주기 작성을 점검하기 위한 목록"
+  },
+  "KoreanFieldwork-stoneToolDrawingView": {
+    "values": {
+      "useDirectionOriented": { "label": "사용방향 정치" },
+      "planView": { "label": "평면도" },
+      "longitudinalSection": { "label": "종단면도" },
+      "crossSection": { "label": "횡단면도" },
+      "sideView": { "label": "측면도" },
+      "thirdAngleSixViews": { "label": "제3각법 6면" },
+      "developedViewLayout": { "label": "전개도 배치" },
+      "flakingRetouchTrace": { "label": "타제·조정흔" },
+      "peckingTrace": { "label": "고타조정흔" },
+      "grindingTrace": { "label": "마연흔" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "석기 실측에서 사용방향 정치, 평면·종단면·횡단면·측면, 제3각법 6면, 전개도, 타제·고타·마연흔을 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-waterloggedWoodDrawingHandling": {
+    "values": {
+      "waterloggedState": { "label": "수침상태" },
+      "beforeConservation": { "label": "보존처리 전" },
+      "afterConservation": { "label": "보존처리 후" },
+      "wetDraftingPaper": { "label": "습강제도용지" },
+      "plasticMeasuringTool": { "label": "플라스틱 측정도구" },
+      "mistMoistureSupplement": { "label": "분무 수분보충" },
+      "clothProtection": { "label": "천 보호" },
+      "waterBoxStorage": { "label": "물상자 보관" },
+      "dentRisk": { "label": "찍힘 위험" },
+      "dryingShrinkageRisk": { "label": "건조수축 위험" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "수침목재와 목기 실측에서 수분 유지, 보존처리 전후 기록, 습식 제도, 보호·보관, 찍힘과 건조수축 위험을 관리하기 위한 목록"
+  },
   "KoreanFieldwork-reportEvaluationFeedback": {
     "values": {
       "selfEvaluation": {

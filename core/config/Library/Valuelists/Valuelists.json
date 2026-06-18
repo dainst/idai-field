@@ -34834,6 +34834,186 @@
       "evaluationFeedback"
     ]
   },
+  "KoreanFieldwork-artifactDrawingRecordMethod": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "technicalDescription": {},
+      "photoRecord": {},
+      "rubbingRecord": {},
+      "measuredDrawing": {},
+      "threeDimensionalScan": {},
+      "microscopePhoto": {},
+      "complementaryRecordRequired": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "technicalDescription",
+      "photoRecord",
+      "rubbingRecord",
+      "measuredDrawing",
+      "threeDimensionalScan",
+      "microscopePhoto",
+      "complementaryRecordRequired",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-artifactDrawingPlan": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "materialRecorded": {},
+      "artifactTypeRecorded": {},
+      "preservationStateRecorded": {},
+      "functionHypothesisRecorded": {},
+      "baselineSelected": {},
+      "measuredLineSelected": {},
+      "projectionMethodSelected": {},
+      "drawingLayoutSelected": {},
+      "scaleSelected": {},
+      "drawingToolsRecorded": {},
+      "complementaryPhotoPlanned": {},
+      "rubbingPlanned": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "materialRecorded",
+      "artifactTypeRecorded",
+      "preservationStateRecorded",
+      "functionHypothesisRecorded",
+      "baselineSelected",
+      "measuredLineSelected",
+      "projectionMethodSelected",
+      "drawingLayoutSelected",
+      "scaleSelected",
+      "drawingToolsRecorded",
+      "complementaryPhotoPlanned",
+      "rubbingPlanned",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-artifactDrawingQualityCheck": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "baselineRationale": {},
+      "measuredLineRationale": {},
+      "measuredLineChangeReason": {},
+      "measuringPointCheck": {},
+      "calibrationHistory": {},
+      "photoComparison": {},
+      "rubbingComparison": {},
+      "descriptionSupplement": {},
+      "prePostConservationComparison": {},
+      "redrawingNeeded": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "baselineRationale",
+      "measuredLineRationale",
+      "measuredLineChangeReason",
+      "measuringPointCheck",
+      "calibrationHistory",
+      "photoComparison",
+      "rubbingComparison",
+      "descriptionSupplement",
+      "prePostConservationComparison",
+      "redrawingNeeded",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-potteryDrawingStandard": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "orientationState": {},
+      "baseline": {},
+      "measuredLine": {},
+      "measuringPoint": {},
+      "measuringPointCheck": {},
+      "sectionFirst": {},
+      "bodyContour": {},
+      "wallThicknessThreeFourPoints": {},
+      "elevationView": {},
+      "patternMeasuringPoint": {},
+      "annotationPrepared": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "orientationState",
+      "baseline",
+      "measuredLine",
+      "measuringPoint",
+      "measuringPointCheck",
+      "sectionFirst",
+      "bodyContour",
+      "wallThicknessThreeFourPoints",
+      "elevationView",
+      "patternMeasuringPoint",
+      "annotationPrepared",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-stoneToolDrawingView": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "useDirectionOriented": {},
+      "planView": {},
+      "longitudinalSection": {},
+      "crossSection": {},
+      "sideView": {},
+      "thirdAngleSixViews": {},
+      "developedViewLayout": {},
+      "flakingRetouchTrace": {},
+      "peckingTrace": {},
+      "grindingTrace": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "useDirectionOriented",
+      "planView",
+      "longitudinalSection",
+      "crossSection",
+      "sideView",
+      "thirdAngleSixViews",
+      "developedViewLayout",
+      "flakingRetouchTrace",
+      "peckingTrace",
+      "grindingTrace",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-waterloggedWoodDrawingHandling": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "waterloggedState": {},
+      "beforeConservation": {},
+      "afterConservation": {},
+      "wetDraftingPaper": {},
+      "plasticMeasuringTool": {},
+      "mistMoistureSupplement": {},
+      "clothProtection": {},
+      "waterBoxStorage": {},
+      "dentRisk": {},
+      "dryingShrinkageRisk": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "waterloggedState",
+      "beforeConservation",
+      "afterConservation",
+      "wetDraftingPaper",
+      "plasticMeasuringTool",
+      "mistMoistureSupplement",
+      "clothProtection",
+      "waterBoxStorage",
+      "dentRisk",
+      "dryingShrinkageRisk",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-reportEvaluationFeedback": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

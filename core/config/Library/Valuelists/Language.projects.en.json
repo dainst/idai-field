@@ -14794,6 +14794,102 @@
     },
     "description": "Korean report cross-check items for generating and auditing report outputs from field records"
   },
+  "KoreanFieldwork-artifactDrawingRecordMethod": {
+    "values": {
+      "technicalDescription": { "label": "Technical description" },
+      "photoRecord": { "label": "Photo record" },
+      "rubbingRecord": { "label": "Rubbing record" },
+      "measuredDrawing": { "label": "Measured drawing" },
+      "threeDimensionalScan": { "label": "3D scan" },
+      "microscopePhoto": { "label": "Microscope photo" },
+      "complementaryRecordRequired": { "label": "Complementary record required" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Artifact drawing record methods, keeping drawing, description, photography, rubbing, 3D scanning, microscope photography, and required complementary records visible"
+  },
+  "KoreanFieldwork-artifactDrawingPlan": {
+    "values": {
+      "materialRecorded": { "label": "Material recorded" },
+      "artifactTypeRecorded": { "label": "Artifact type recorded" },
+      "preservationStateRecorded": { "label": "Preservation state recorded" },
+      "functionHypothesisRecorded": { "label": "Function hypothesis recorded" },
+      "baselineSelected": { "label": "Baseline selected" },
+      "measuredLineSelected": { "label": "Measured line selected" },
+      "projectionMethodSelected": { "label": "Projection method selected" },
+      "drawingLayoutSelected": { "label": "Drawing layout selected" },
+      "scaleSelected": { "label": "Scale selected" },
+      "drawingToolsRecorded": { "label": "Drawing tools recorded" },
+      "complementaryPhotoPlanned": { "label": "Complementary photo planned" },
+      "rubbingPlanned": { "label": "Rubbing planned" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Artifact drawing planning checks for material, type, preservation, function, baseline, measured line, projection, layout, scale, tools, photos, and rubbings"
+  },
+  "KoreanFieldwork-artifactDrawingQualityCheck": {
+    "values": {
+      "baselineRationale": { "label": "Baseline rationale" },
+      "measuredLineRationale": { "label": "Measured line rationale" },
+      "measuredLineChangeReason": { "label": "Measured line change reason" },
+      "measuringPointCheck": { "label": "Measuring point check" },
+      "calibrationHistory": { "label": "Calibration history" },
+      "photoComparison": { "label": "Photo comparison" },
+      "rubbingComparison": { "label": "Rubbing comparison" },
+      "descriptionSupplement": { "label": "Description supplement" },
+      "prePostConservationComparison": { "label": "Pre/post-conservation comparison" },
+      "redrawingNeeded": { "label": "Redrawing needed" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Artifact drawing quality checks for baseline and measured-line decisions, measuring points, calibration, photo/rubbing comparison, description supplements, conservation comparison, and redrawing"
+  },
+  "KoreanFieldwork-potteryDrawingStandard": {
+    "values": {
+      "orientationState": { "label": "Orientation state" },
+      "baseline": { "label": "Baseline" },
+      "measuredLine": { "label": "Measured line" },
+      "measuringPoint": { "label": "Measuring point" },
+      "measuringPointCheck": { "label": "Measuring point check" },
+      "sectionFirst": { "label": "Section first" },
+      "bodyContour": { "label": "Body contour" },
+      "wallThicknessThreeFourPoints": { "label": "Wall thickness at 3-4 points" },
+      "elevationView": { "label": "Elevation view" },
+      "patternMeasuringPoint": { "label": "Pattern measuring point" },
+      "annotationPrepared": { "label": "Annotation prepared" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Pottery drawing standards for orientation, baseline, measured line, section-first recording, body contour, wall thickness, elevation, pattern points, and annotations"
+  },
+  "KoreanFieldwork-stoneToolDrawingView": {
+    "values": {
+      "useDirectionOriented": { "label": "Use direction oriented" },
+      "planView": { "label": "Plan view" },
+      "longitudinalSection": { "label": "Longitudinal section" },
+      "crossSection": { "label": "Cross section" },
+      "sideView": { "label": "Side view" },
+      "thirdAngleSixViews": { "label": "Third-angle six views" },
+      "developedViewLayout": { "label": "Developed view layout" },
+      "flakingRetouchTrace": { "label": "Flaking or retouch trace" },
+      "peckingTrace": { "label": "Pecking trace" },
+      "grindingTrace": { "label": "Grinding trace" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Stone-tool drawing view checks for orientation, plan, longitudinal and cross sections, side views, six-view projection, developed views, and production traces"
+  },
+  "KoreanFieldwork-waterloggedWoodDrawingHandling": {
+    "values": {
+      "waterloggedState": { "label": "Waterlogged state" },
+      "beforeConservation": { "label": "Before conservation" },
+      "afterConservation": { "label": "After conservation" },
+      "wetDraftingPaper": { "label": "Wet drafting paper" },
+      "plasticMeasuringTool": { "label": "Plastic measuring tool" },
+      "mistMoistureSupplement": { "label": "Mist moisture supplement" },
+      "clothProtection": { "label": "Cloth protection" },
+      "waterBoxStorage": { "label": "Water-box storage" },
+      "dentRisk": { "label": "Dent risk" },
+      "dryingShrinkageRisk": { "label": "Drying shrinkage risk" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Waterlogged wood drawing handling checks for condition, pre/post-conservation records, wet drawing media, moisture support, protection, storage, denting, and shrinkage risk"
+  },
   "KoreanFieldwork-reportEvaluationFeedback": {
     "values": {
       "selfEvaluation": {

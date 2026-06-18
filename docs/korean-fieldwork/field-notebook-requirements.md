@@ -64,6 +64,8 @@
 
 기와가마·와요 보강분은 `Feature`에 `tileKilnStructureContext`, `tileKilnExcavationControl`, `tileKilnPartInvestigation`, `tileKilnOperationSequence`를 배치했다. 요체만 기록하지 않고 요전부, 아궁이, 연소실, 소성실, 연도부, 회구부, 폐기장, 채토공, 제작공방, 건조장, 보관소, 배수시설을 생산공간으로 함께 묶는다. 제토량, 적토장소, 10m 격자 조정, 장축둑과 가마-회구부 연결둑, 구지표·천정 상부·소결 윤곽 보존은 조사 제어 항목으로 분리했다. 부위별 조사에서는 연소실·소성실 분리 근거, 연도 미확인 주의, 회구부 관계 검증, 재층 일부 보존, 층위별 수습을 남긴다. `Find`에는 `tileKilnFindContext`를 두어 생산품, 불량품, 잔여품, 축조재·요도구·보수재, 폐기 후 유입품, 층위별 문양 기록을 구분하고, `Sample`에는 `tileKilnAnalysisPlan`을 두어 C14 위치별 시료, 고고지자기 다지점 시료, OSL 차광, 기와·가마 태토와 소비지 기와 대조를 한 흐름으로 관리한다.
 
+고고지자기 보강분은 `Sample`에 `archaeomagneticSampleContext`, `archaeomagneticSamplingWorkflow`, `archaeomagneticOrientationRecord`, `archaeomagneticResultQuality`, `archaeomagneticChronologyInterpretation`을 배치했다. 소토 유구 유형과 최종소성면 후보, 파괴 채취 협의, 정방위 큐브·석고 고정·시료번호·주향 표시, pitch·dip·strike와 자북/진북·편각 보정, NRM·교류소자·D/I/L95/K·n/N·D.F.·제외 시료, 한국·일본 표준곡선과 지역차·C14/OSL/층위/형식 편년 대조를 같은 시료 흐름에서 확인하게 했다. 결과값은 “고고지자기 추정연대”로 다루고 단독 확정연대로 쓰지 않는다는 주의도 값 목록에 포함했다.
+
 이 구현 단위가 먼저 들어가야 각 유적 유형별 템플릿을 만들 때 기록이 흩어지지 않는다.
 
 ## 검증 질문

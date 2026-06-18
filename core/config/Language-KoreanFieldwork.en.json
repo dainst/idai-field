@@ -426,6 +426,21 @@
         "potteryKilnAnalysisPlan": {
           "label": "Pottery kiln analysis plan"
         },
+        "archaeomagneticSampleContext": {
+          "label": "Archaeomagnetic sample context"
+        },
+        "archaeomagneticSamplingWorkflow": {
+          "label": "Archaeomagnetic sampling workflow"
+        },
+        "archaeomagneticOrientationRecord": {
+          "label": "Archaeomagnetic orientation record"
+        },
+        "archaeomagneticResultQuality": {
+          "label": "Archaeomagnetic result quality"
+        },
+        "archaeomagneticChronologyInterpretation": {
+          "label": "Archaeomagnetic chronology interpretation"
+        },
         "humanRemainsRecoveryAnalysis": {
           "label": "Human remains recovery and analysis"
         },

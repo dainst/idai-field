@@ -426,6 +426,21 @@
         "potteryKilnAnalysisPlan": {
           "label": "토기가마 분석 계획"
         },
+        "archaeomagneticSampleContext": {
+          "label": "고고지자기 시료 맥락"
+        },
+        "archaeomagneticSamplingWorkflow": {
+          "label": "고고지자기 채취 절차"
+        },
+        "archaeomagneticOrientationRecord": {
+          "label": "고고지자기 방향 기록"
+        },
+        "archaeomagneticResultQuality": {
+          "label": "고고지자기 결과 품질"
+        },
+        "archaeomagneticChronologyInterpretation": {
+          "label": "고고지자기 연대 해석"
+        },
         "humanRemainsRecoveryAnalysis": {
           "label": "인골 수습·분석"
         },

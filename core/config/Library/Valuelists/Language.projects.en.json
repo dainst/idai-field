@@ -14003,6 +14003,103 @@
     },
     "description": "Analysis-plan checks for pottery kilns, keeping charcoal AMS/C14, wood species, pottery OSL, fabric analysis, archaeomagnetic sampling, disassembly timing, and dating-method comparison together"
   },
+  "KoreanFieldwork-archaeomagneticSampleContext": {
+    "values": {
+      "potteryKiln": { "label": "Pottery kiln" },
+      "tileKiln": { "label": "Tile kiln" },
+      "porcelainKiln": { "label": "Porcelain kiln" },
+      "sideOpeningCharcoalKiln": { "label": "Side-opening charcoal kiln" },
+      "ironFeature": { "label": "Iron feature" },
+      "hearth": { "label": "Hearth" },
+      "firebox": { "label": "Firebox" },
+      "burnedSoilFeature": { "label": "Burned soil feature" },
+      "pitDwellingHeatedSurface": { "label": "Pit dwelling heated surface" },
+      "finalFiringSurfaceCandidate": { "label": "Final firing surface candidate" },
+      "specialistConsulted": { "label": "Specialist consulted" },
+      "destructiveSamplingScopeRecorded": { "label": "Destructive sampling scope recorded" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Context checks for archaeomagnetic sampling candidates, separating heated feature type, final firing surface, specialist consultation, and destructive-sampling scope before sampling"
+  },
+  "KoreanFieldwork-archaeomagneticSamplingWorkflow": {
+    "values": {
+      "wellFiredSurfaceSelected": { "label": "Well-fired surface selected" },
+      "orientedSample": { "label": "Oriented sample" },
+      "plasticCube": { "label": "Plastic cube" },
+      "gypsumFixed": { "label": "Gypsum fixed" },
+      "sampleNumberMarked": { "label": "Sample number marked" },
+      "strikeLineMarked": { "label": "Strike line marked" },
+      "sealedBag": { "label": "Sealed bag" },
+      "aboutFifteenSamples": { "label": "About fifteen samples" },
+      "samplePositionMapped": { "label": "Sample position mapped" },
+      "preSamplingPhoto": { "label": "Pre-sampling photo" },
+      "sampleSizeRecorded": { "label": "Sample size recorded" },
+      "labHandover": { "label": "Lab handover" },
+      "resultReceived": { "label": "Result received" },
+      "reportLinked": { "label": "Report linked" },
+      "sampleDamaged": { "label": "Sample damaged" },
+      "samplingImpossible": { "label": "Sampling impossible" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Sampling workflow checks for archaeomagnetic cubes, from selecting a well-fired surface through cube fixing, marking, mapping, handover, result receipt, and report linkage"
+  },
+  "KoreanFieldwork-archaeomagneticOrientationRecord": {
+    "values": {
+      "pitchRecorded": { "label": "Pitch recorded" },
+      "dipRecorded": { "label": "Dip recorded" },
+      "strikeRecorded": { "label": "Strike recorded" },
+      "clinometerMeasured": { "label": "Clinometer measured" },
+      "magneticNorthBasis": { "label": "Magnetic north basis" },
+      "trueNorthBasis": { "label": "True north basis" },
+      "currentDeclinationRecorded": { "label": "Current declination recorded" },
+      "declinationSourceRecorded": { "label": "Declination source recorded" },
+      "trueNorthCorrectionApplied": { "label": "True north correction applied" },
+      "directionBasisConsistent": { "label": "Direction basis consistent" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Orientation-record checks for archaeomagnetic samples, keeping pitch, dip, strike, clinometer measurement, north basis, and declination correction together"
+  },
+  "KoreanFieldwork-archaeomagneticResultQuality": {
+    "values": {
+      "nrmMeasured": { "label": "NRM measured" },
+      "afDemagnetization": { "label": "AF demagnetization" },
+      "optimumDemagStep": { "label": "Optimum demag step" },
+      "declinationDRecorded": { "label": "Declination D recorded" },
+      "inclinationIRecorded": { "label": "Inclination I recorded" },
+      "l95Recorded": { "label": "L95 recorded" },
+      "kRecorded": { "label": "K recorded" },
+      "meanMagnetizationRecorded": { "label": "Mean magnetization recorded" },
+      "acceptedTotalRatioRecorded": { "label": "Accepted/total ratio recorded" },
+      "dfRecorded": { "label": "D.F. recorded" },
+      "excludedSampleRecorded": { "label": "Excluded sample recorded" },
+      "exclusionReasonRecorded": { "label": "Exclusion reason recorded" },
+      "l95UnderThree": { "label": "L95 under 3 degrees" },
+      "l95OverThreeCaution": { "label": "L95 over 3 degrees caution" },
+      "kOverFiveHundred": { "label": "K over 500" },
+      "acceptedSamplesFiveOrLessCaution": { "label": "Accepted samples five or less caution" },
+      "disturbancePossible": { "label": "Disturbance possible" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Measurement-quality checks for archaeomagnetic results, tracking NRM, demagnetization, D/I/L95/K, accepted samples, D.F., excluded samples, and caution flags"
+  },
+  "KoreanFieldwork-archaeomagneticChronologyInterpretation": {
+    "values": {
+      "estimatedDateRecorded": { "label": "Estimated date recorded" },
+      "errorRangeRecorded": { "label": "Error range recorded" },
+      "koreanCurveCompared": { "label": "Korean curve compared" },
+      "japaneseCurveCompared": { "label": "Japanese curve compared" },
+      "regionalDifferenceConsidered": { "label": "Regional difference considered" },
+      "standardCurveInsufficient": { "label": "Standard curve insufficient" },
+      "c14Compared": { "label": "C14 compared" },
+      "oslCompared": { "label": "OSL compared" },
+      "stratigraphyCompared": { "label": "Stratigraphy compared" },
+      "featureRelationCompared": { "label": "Feature relation compared" },
+      "typologyCompared": { "label": "Typology compared" },
+      "singleDateNotAccepted": { "label": "Single date not accepted" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Chronology-interpretation checks for archaeomagnetic dating, recording estimated date, error range, reference curve, regional difference, and comparison with other dating evidence"
+  },
   "KoreanFieldwork-tileKilnStructureContext": {
     "values": {
       "kilnBody": { "label": "Kiln body" },

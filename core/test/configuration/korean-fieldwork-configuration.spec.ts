@@ -108,6 +108,11 @@ describe('KoreanFieldwork project configuration', () => {
         expect(sampleForm.fields.ironSampleAnalysisPlan.inputType).toBe('checkboxes');
         expect(sampleForm.fields.tileKilnAnalysisPlan.inputType).toBe('checkboxes');
         expect(sampleForm.fields.potteryKilnAnalysisPlan.inputType).toBe('checkboxes');
+        expect(sampleForm.fields.archaeomagneticSampleContext.inputType).toBe('checkboxes');
+        expect(sampleForm.fields.archaeomagneticSamplingWorkflow.inputType).toBe('checkboxes');
+        expect(sampleForm.fields.archaeomagneticOrientationRecord.inputType).toBe('checkboxes');
+        expect(sampleForm.fields.archaeomagneticResultQuality.inputType).toBe('checkboxes');
+        expect(sampleForm.fields.archaeomagneticChronologyInterpretation.inputType).toBe('checkboxes');
         expect(sampleForm.fields.humanRemainsRecoveryAnalysis.inputType).toBe('checkboxes');
         expect(sampleForm.fields.shellMiddenSamplingStrategy.inputType).toBe('checkboxes');
         expect(sampleForm.fields.paleoenvironmentProxySampling.inputType).toBe('checkboxes');
@@ -273,6 +278,16 @@ describe('KoreanFieldwork project configuration', () => {
         expect(sampleForm.valuelists.ironSampleAnalysisPlan).toBe('KoreanFieldwork-ironSampleAnalysisPlan');
         expect(sampleForm.valuelists.tileKilnAnalysisPlan).toBe('KoreanFieldwork-tileKilnAnalysisPlan');
         expect(sampleForm.valuelists.potteryKilnAnalysisPlan).toBe('KoreanFieldwork-potteryKilnAnalysisPlan');
+        expect(sampleForm.valuelists.archaeomagneticSampleContext)
+            .toBe('KoreanFieldwork-archaeomagneticSampleContext');
+        expect(sampleForm.valuelists.archaeomagneticSamplingWorkflow)
+            .toBe('KoreanFieldwork-archaeomagneticSamplingWorkflow');
+        expect(sampleForm.valuelists.archaeomagneticOrientationRecord)
+            .toBe('KoreanFieldwork-archaeomagneticOrientationRecord');
+        expect(sampleForm.valuelists.archaeomagneticResultQuality)
+            .toBe('KoreanFieldwork-archaeomagneticResultQuality');
+        expect(sampleForm.valuelists.archaeomagneticChronologyInterpretation)
+            .toBe('KoreanFieldwork-archaeomagneticChronologyInterpretation');
         expect(sampleForm.valuelists.humanRemainsRecoveryAnalysis)
             .toBe('KoreanFieldwork-humanRemainsRecoveryAnalysis');
         expect(sampleForm.valuelists.shellMiddenSamplingStrategy)
@@ -415,6 +430,16 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Tile kiln analysis plan');
         expect(languages.en.categories.Sample.fields.potteryKilnAnalysisPlan.label)
             .toBe('Pottery kiln analysis plan');
+        expect(languages.en.categories.Sample.fields.archaeomagneticSampleContext.label)
+            .toBe('Archaeomagnetic sample context');
+        expect(languages.en.categories.Sample.fields.archaeomagneticSamplingWorkflow.label)
+            .toBe('Archaeomagnetic sampling workflow');
+        expect(languages.en.categories.Sample.fields.archaeomagneticOrientationRecord.label)
+            .toBe('Archaeomagnetic orientation record');
+        expect(languages.en.categories.Sample.fields.archaeomagneticResultQuality.label)
+            .toBe('Archaeomagnetic result quality');
+        expect(languages.en.categories.Sample.fields.archaeomagneticChronologyInterpretation.label)
+            .toBe('Archaeomagnetic chronology interpretation');
         expect(languages.en.categories.Sample.fields.humanRemainsRecoveryAnalysis.label)
             .toBe('Human remains recovery and analysis');
         expect(languages.en.categories.Sample.fields.shellMiddenSamplingStrategy.label)
@@ -579,6 +604,24 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-potteryKilnAnalysisPlan']
             .values.sinteredFloorArchaeomagnetic.label)
             .toBe('Sintered floor archaeomagnetic');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-archaeomagneticSampleContext']
+            .values.finalFiringSurfaceCandidate.label)
+            .toBe('Final firing surface candidate');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-archaeomagneticSamplingWorkflow']
+            .values.gypsumFixed.label)
+            .toBe('Gypsum fixed');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-archaeomagneticOrientationRecord']
+            .values.currentDeclinationRecorded.label)
+            .toBe('Current declination recorded');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-archaeomagneticResultQuality']
+            .values.l95UnderThree.label)
+            .toBe('L95 under 3 degrees');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-archaeomagneticChronologyInterpretation']
+            .values.regionalDifferenceConsidered.label)
+            .toBe('Regional difference considered');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-archaeomagneticChronologyInterpretation']
+            .values.singleDateNotAccepted.label)
+            .toBe('단독 확정연대 금지');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-tileKilnStructureContext'].values.ashDump.label)
             .toBe('Ash dump');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-tileKilnExcavationControl']

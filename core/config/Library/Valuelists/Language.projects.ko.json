@@ -2249,6 +2249,103 @@
     },
     "description": "토기가마 조사 완료 전 숯 AMS·C14, 수종분석, 토기 OSL, 태토 성분분석, 소결 요상·요체 고고지자기 시료를 확보하기 위한 목록"
   },
+  "KoreanFieldwork-archaeomagneticSampleContext": {
+    "values": {
+      "potteryKiln": { "label": "토기가마" },
+      "tileKiln": { "label": "기와가마" },
+      "porcelainKiln": { "label": "자기가마" },
+      "sideOpeningCharcoalKiln": { "label": "측구부탄요" },
+      "ironFeature": { "label": "제철유구" },
+      "hearth": { "label": "노지" },
+      "firebox": { "label": "아궁이" },
+      "burnedSoilFeature": { "label": "소토유구" },
+      "pitDwellingHeatedSurface": { "label": "주거지 소성상면" },
+      "finalFiringSurfaceCandidate": { "label": "최종소성면 후보" },
+      "specialistConsulted": { "label": "전문가 협의" },
+      "destructiveSamplingScopeRecorded": { "label": "파괴 채취 범위 기록" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "고고지자기 시료 후보의 소토 유구 유형, 최종소성면, 전문가 협의, 파괴 채취 범위를 채취 전에 구분하기 위한 목록"
+  },
+  "KoreanFieldwork-archaeomagneticSamplingWorkflow": {
+    "values": {
+      "wellFiredSurfaceSelected": { "label": "잘 구워진 소성면 선택" },
+      "orientedSample": { "label": "정방위 시료" },
+      "plasticCube": { "label": "플라스틱 큐브" },
+      "gypsumFixed": { "label": "석고 고정" },
+      "sampleNumberMarked": { "label": "시료번호 표시" },
+      "strikeLineMarked": { "label": "주향선 표시" },
+      "sealedBag": { "label": "밀봉 포장" },
+      "aboutFifteenSamples": { "label": "약 15점 시료" },
+      "samplePositionMapped": { "label": "시료 위치 도면화" },
+      "preSamplingPhoto": { "label": "채취 전 사진" },
+      "sampleSizeRecorded": { "label": "시료 크기 기록" },
+      "labHandover": { "label": "분석실 인계" },
+      "resultReceived": { "label": "결과 수신" },
+      "reportLinked": { "label": "보고서 연결" },
+      "sampleDamaged": { "label": "시료 파손" },
+      "samplingImpossible": { "label": "채취 불가" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "잘 구워진 소성면 선택부터 큐브 고정, 번호·주향 표시, 위치도면, 분석실 인계, 결과 수신, 보고서 연결까지 추적하는 목록"
+  },
+  "KoreanFieldwork-archaeomagneticOrientationRecord": {
+    "values": {
+      "pitchRecorded": { "label": "pitch 기록" },
+      "dipRecorded": { "label": "dip 기록" },
+      "strikeRecorded": { "label": "strike 기록" },
+      "clinometerMeasured": { "label": "클리노미터 측정" },
+      "magneticNorthBasis": { "label": "자북 기준" },
+      "trueNorthBasis": { "label": "진북 기준" },
+      "currentDeclinationRecorded": { "label": "현재 편각 기록" },
+      "declinationSourceRecorded": { "label": "편각 출처 기록" },
+      "trueNorthCorrectionApplied": { "label": "진북 보정 적용" },
+      "directionBasisConsistent": { "label": "방향 기준 일관" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "고고지자기 시료의 pitch, dip, strike, 클리노미터 측정, 자북·진북 기준, 편각 보정을 함께 남기기 위한 목록"
+  },
+  "KoreanFieldwork-archaeomagneticResultQuality": {
+    "values": {
+      "nrmMeasured": { "label": "NRM 측정" },
+      "afDemagnetization": { "label": "교류소자" },
+      "optimumDemagStep": { "label": "최적소자단계" },
+      "declinationDRecorded": { "label": "D 기록" },
+      "inclinationIRecorded": { "label": "I 기록" },
+      "l95Recorded": { "label": "L95 기록" },
+      "kRecorded": { "label": "K 기록" },
+      "meanMagnetizationRecorded": { "label": "평균 자화강도 기록" },
+      "acceptedTotalRatioRecorded": { "label": "채택/전체 비율 기록" },
+      "dfRecorded": { "label": "D.F. 기록" },
+      "excludedSampleRecorded": { "label": "제외 시료 기록" },
+      "exclusionReasonRecorded": { "label": "제외 사유 기록" },
+      "l95UnderThree": { "label": "L95 3도 이하" },
+      "l95OverThreeCaution": { "label": "L95 3도 초과 주의" },
+      "kOverFiveHundred": { "label": "K 500 초과" },
+      "acceptedSamplesFiveOrLessCaution": { "label": "채택 시료 5점 이하 주의" },
+      "disturbancePossible": { "label": "교란 가능" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "NRM, 교류소자, D/I/L95/K, 채택 시료 수, D.F., 제외 시료와 품질 주의값을 함께 점검하기 위한 목록"
+  },
+  "KoreanFieldwork-archaeomagneticChronologyInterpretation": {
+    "values": {
+      "estimatedDateRecorded": { "label": "추정연대 기록" },
+      "errorRangeRecorded": { "label": "오차범위 기록" },
+      "koreanCurveCompared": { "label": "한국곡선 비교" },
+      "japaneseCurveCompared": { "label": "일본곡선 비교" },
+      "regionalDifferenceConsidered": { "label": "지역차 고려" },
+      "standardCurveInsufficient": { "label": "표준곡선 부족" },
+      "c14Compared": { "label": "C14 대조" },
+      "oslCompared": { "label": "OSL 대조" },
+      "stratigraphyCompared": { "label": "층위 대조" },
+      "featureRelationCompared": { "label": "유구 관계 대조" },
+      "typologyCompared": { "label": "형식 편년 대조" },
+      "singleDateNotAccepted": { "label": "단독 확정연대 금지" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "고고지자기 추정연대, 오차범위, 비교 표준곡선, 지역차, C14·OSL·층위·형식 편년 대조를 함께 해석하기 위한 목록"
+  },
   "KoreanFieldwork-tileKilnStructureContext": {
     "values": {
       "kilnBody": { "label": "요체" },

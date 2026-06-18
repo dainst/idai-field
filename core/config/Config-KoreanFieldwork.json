@@ -1144,6 +1144,26 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "archaeomagneticSampleContext": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "archaeomagneticSamplingWorkflow": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "archaeomagneticOrientationRecord": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "archaeomagneticResultQuality": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "archaeomagneticChronologyInterpretation": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "humanRemainsRecoveryAnalysis": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1170,6 +1190,11 @@
         "ironSampleAnalysisPlan": "KoreanFieldwork-ironSampleAnalysisPlan",
         "tileKilnAnalysisPlan": "KoreanFieldwork-tileKilnAnalysisPlan",
         "potteryKilnAnalysisPlan": "KoreanFieldwork-potteryKilnAnalysisPlan",
+        "archaeomagneticSampleContext": "KoreanFieldwork-archaeomagneticSampleContext",
+        "archaeomagneticSamplingWorkflow": "KoreanFieldwork-archaeomagneticSamplingWorkflow",
+        "archaeomagneticOrientationRecord": "KoreanFieldwork-archaeomagneticOrientationRecord",
+        "archaeomagneticResultQuality": "KoreanFieldwork-archaeomagneticResultQuality",
+        "archaeomagneticChronologyInterpretation": "KoreanFieldwork-archaeomagneticChronologyInterpretation",
         "humanRemainsRecoveryAnalysis": "KoreanFieldwork-humanRemainsRecoveryAnalysis",
         "shellMiddenSamplingStrategy": "KoreanFieldwork-shellMiddenSamplingStrategy",
         "paleoenvironmentProxySampling": "KoreanFieldwork-paleoenvironmentProxySampling",
@@ -1204,6 +1229,11 @@
             "ironSampleAnalysisPlan",
             "tileKilnAnalysisPlan",
             "potteryKilnAnalysisPlan",
+            "archaeomagneticSampleContext",
+            "archaeomagneticSamplingWorkflow",
+            "archaeomagneticOrientationRecord",
+            "archaeomagneticResultQuality",
+            "archaeomagneticChronologyInterpretation",
             "humanRemainsRecoveryAnalysis",
             "shellMiddenSamplingStrategy",
             "paleoenvironmentProxySampling",

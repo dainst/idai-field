@@ -67,6 +67,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-19 저습지 조사방법 자료도 구현 단위로 압축했다. 제2회 조사연구원 교육자료의 저습지 조사방법은 항공사진 60% 중첩, 개발 전·다시기 항공사진, 고지도, 입체경, 1:5,000 전자지도, 지질도, 형질변경 지도, 보링자료, 등고선도를 준비하고 지역환경에서 극미지형까지 내려가며 고하천·자연제방·단구면·배후습지를 판독하라고 요구한다. 이 묶음은 `Survey`의 `wetlandAnalysisSource`, `wetlandLandformInterpretation`, `wetlandSurveyTargeting`과 `FeatureSegment`의 `wetlandMicrotopographyRecord` 값 목록으로 옮겨 지표 판독, 시굴 위치 선정, 매몰 수전·1회성 퇴적·미화석 분석 연결을 분리했다.
 
+2026-06-19 도면작성법 자료도 구현 단위로 압축했다. `조사요원 기초소양 교육`의 도면작성 장은 고지도·일제강점기 지형도·지적원도·토지이용현황도·항공사진·수치지형도·DEM을 단순 배경이 아니라 과거 경관과 유구 잔존 상태를 읽는 근거로 다룬다. 이 묶음은 `Drawing`의 `mapSourceMaterial`, `historicalMapLandscapeInterpretation`, `spatialDrawingProductionWorkflow`, `distributionMapRequirement` 값 목록으로 옮겨 원천자료, 지도 판독, 좌표계·객체 변환, 주변유적분포도 산출 요건을 분리했다.
+
 ## 보조 자료군 판독 현황
 
 새 보조 자료군은 [보조 자료군 목록과 우선순위](supplemental-source-inventory.md)에서 상세 관리한다. 현재 상태는 다음과 같다.

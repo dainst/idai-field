@@ -15882,5 +15882,89 @@
       }
     },
     "description": "Korean fieldwork media quality checks for direction, scale, control points, resolution or linework, lighting, source preservation, and register-number consistency"
+  },
+  "KoreanFieldwork-mapSourceMaterial": {
+    "values": {
+      "joseonMap": { "label": "Joseon-period map" },
+      "colonialTopographicMap": { "label": "Colonial-period topographic map" },
+      "cadastralOriginalMap": { "label": "Original cadastral map" },
+      "landUseStatusMap": { "label": "Land-use status map" },
+      "aerialPhoto": { "label": "Aerial photo" },
+      "orthophoto": { "label": "Orthophoto" },
+      "digitalTopographicMap": { "label": "Digital topographic map" },
+      "dem": { "label": "DEM" },
+      "culturalHeritageDistributionMap": { "label": "Cultural heritage distribution map" },
+      "gisIntranet": { "label": "GIS intranet" },
+      "nationalGeographicPlatform": { "label": "National geographic platform" },
+      "kyujanggakArchive": { "label": "Kyujanggak archive" },
+      "nationalArchives": { "label": "National Archives" },
+      "nationalMuseumDocument": { "label": "National museum document" },
+      "productionYearRecorded": { "label": "Production year recorded" },
+      "scaleRecorded": { "label": "Scale recorded" },
+      "coordinateSystemRecorded": { "label": "Coordinate system recorded" },
+      "sourceUrlRecorded": { "label": "Source URL recorded" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean fieldwork map source checks for recording historical maps, topographic maps, aerial imagery, DEM, heritage distribution maps, production year, scale, coordinate system, and source"
+  },
+  "KoreanFieldwork-historicalMapLandscapeInterpretation": {
+    "values": {
+      "naturalLevee": { "label": "Natural levee" },
+      "midChannelBar": { "label": "Mid-channel bar" },
+      "wetland": { "label": "Wetland" },
+      "saltField": { "label": "Salt field" },
+      "cultivatedLand": { "label": "Cultivated land" },
+      "communalCemetery": { "label": "Communal cemetery" },
+      "historicalRouteNetwork": { "label": "Historical route network" },
+      "templeLocation": { "label": "Temple location" },
+      "ritualActivityCandidate": { "label": "Ritual activity candidate" },
+      "landformChange": { "label": "Landform change" },
+      "waterLevelRise": { "label": "Water-level rise" },
+      "beforeAfterDevelopmentCompared": { "label": "Before/after development compared" },
+      "featurePreservationInterpreted": { "label": "Feature preservation interpreted" },
+      "siteDistributionPotential": { "label": "Site distribution potential" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean fieldwork historical-map checks for recording landscape clues such as levees, wetlands, cultivated land, cemeteries, historical routes, landform change, and site-distribution potential"
+  },
+  "KoreanFieldwork-spatialDrawingProductionWorkflow": {
+    "values": {
+      "gisIntranetDownload": { "label": "GIS intranet download" },
+      "heritageDataDownload": { "label": "Heritage data download" },
+      "archiveExtracted": { "label": "Archive extracted" },
+      "digitalTopographicMapDownload": { "label": "Digital topographic map download" },
+      "coordinateSystemChecked": { "label": "Coordinate system checked" },
+      "coordinateSystemConverted": { "label": "Coordinate system converted" },
+      "objectSelectionRecorded": { "label": "Object selection recorded" },
+      "selectedObjectsSaved": { "label": "Selected objects saved" },
+      "fileNameCoordinateSystemIncluded": { "label": "File name includes coordinate system" },
+      "layerNamesRomanized": { "label": "Layer names romanized" },
+      "styleReappliedConsistently": { "label": "Style reapplied consistently" },
+      "conversionVerified": { "label": "Conversion verified" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean fieldwork spatial drawing workflow checks for data download, coordinate-system checking and conversion, object selection, file naming, layer naming, styling, and conversion verification"
+  },
+  "KoreanFieldwork-distributionMapRequirement": {
+    "values": {
+      "surveyAreaShown": { "label": "Survey area shown" },
+      "alterationPermitStandardShown": { "label": "Alteration-permit standard shown" },
+      "surfaceSiteLocationMap": { "label": "Surface site location map" },
+      "excavatedSiteLocationMap": { "label": "Excavated site location map" },
+      "culturalHeritageDistributionMap": { "label": "Cultural heritage distribution map" },
+      "municipalHeritage": { "label": "Municipal heritage" },
+      "nationalHeritage": { "label": "National heritage" },
+      "protectedAreaShown": { "label": "Protected area shown" },
+      "radius300m": { "label": "300 m radius" },
+      "radius500m": { "label": "500 m radius" },
+      "radius1000m": { "label": "1000 m radius" },
+      "legendIncluded": { "label": "Legend included" },
+      "scaleIncluded": { "label": "Scale included" },
+      "northArrowIncluded": { "label": "North arrow included" },
+      "pdfExported": { "label": "PDF exported" },
+      "imageExported": { "label": "Image exported" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean fieldwork distribution map checks for survey area, heritage/protection areas, radius settings, legend, scale, north arrow, and exported outputs"
   }
 }

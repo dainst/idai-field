@@ -609,6 +609,18 @@
         },
         "waterloggedWoodDrawingHandling": {
           "label": "수침목재 실측 취급"
+        },
+        "mapSourceMaterial": {
+          "label": "도면 원천자료"
+        },
+        "historicalMapLandscapeInterpretation": {
+          "label": "역사지도 경관해석"
+        },
+        "spatialDrawingProductionWorkflow": {
+          "label": "공간도면 제작흐름"
+        },
+        "distributionMapRequirement": {
+          "label": "주변유적분포도 요건"
         }
       }
     },

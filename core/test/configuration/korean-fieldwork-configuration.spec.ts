@@ -186,6 +186,10 @@ describe('KoreanFieldwork project configuration', () => {
         expect(drawingForm.fields.potteryDrawingStandard.inputType).toBe('checkboxes');
         expect(drawingForm.fields.stoneToolDrawingView.inputType).toBe('checkboxes');
         expect(drawingForm.fields.waterloggedWoodDrawingHandling.inputType).toBe('checkboxes');
+        expect(drawingForm.fields.mapSourceMaterial.inputType).toBe('checkboxes');
+        expect(drawingForm.fields.historicalMapLandscapeInterpretation.inputType).toBe('checkboxes');
+        expect(drawingForm.fields.spatialDrawingProductionWorkflow.inputType).toBe('checkboxes');
+        expect(drawingForm.fields.distributionMapRequirement.inputType).toBe('checkboxes');
         expect(photoForm.fields.mediaEvidenceRole.inputType).toBe('checkboxes');
         expect(photoForm.fields.mediaQualityCheck.inputType).toBe('checkboxes');
         expect(photoForm.fields.digitalSourcePreservation.inputType).toBe('checkboxes');
@@ -432,6 +436,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-stoneToolDrawingView');
         expect(drawingForm.valuelists.waterloggedWoodDrawingHandling)
             .toBe('KoreanFieldwork-waterloggedWoodDrawingHandling');
+        expect(drawingForm.valuelists.mapSourceMaterial)
+            .toBe('KoreanFieldwork-mapSourceMaterial');
+        expect(drawingForm.valuelists.historicalMapLandscapeInterpretation)
+            .toBe('KoreanFieldwork-historicalMapLandscapeInterpretation');
+        expect(drawingForm.valuelists.spatialDrawingProductionWorkflow)
+            .toBe('KoreanFieldwork-spatialDrawingProductionWorkflow');
+        expect(drawingForm.valuelists.distributionMapRequirement)
+            .toBe('KoreanFieldwork-distributionMapRequirement');
         expect(photoForm.valuelists.mediaEvidenceRole).toBe('KoreanFieldwork-mediaEvidenceRole');
         expect(photoForm.valuelists.mediaQualityCheck).toBe('KoreanFieldwork-mediaQualityCheck');
         expect(photoForm.valuelists.digitalSourcePreservation)
@@ -675,6 +687,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Stone tool drawing view');
         expect(languages.en.categories.Drawing.fields.waterloggedWoodDrawingHandling.label)
             .toBe('Waterlogged wood drawing handling');
+        expect(languages.en.categories.Drawing.fields.mapSourceMaterial.label)
+            .toBe('Map source material');
+        expect(languages.en.categories.Drawing.fields.historicalMapLandscapeInterpretation.label)
+            .toBe('Historical-map landscape interpretation');
+        expect(languages.en.categories.Drawing.fields.spatialDrawingProductionWorkflow.label)
+            .toBe('Spatial drawing production workflow');
+        expect(languages.en.categories.Drawing.fields.distributionMapRequirement.label)
+            .toBe('Distribution map requirement');
         expect(languages.en.categories.Photo.fields.mediaQualityCheck.label)
             .toBe('Media quality check');
         expect(languages.ko.categories.Operation.fields.fieldRecordQuality.label).toBeDefined();
@@ -1048,9 +1068,24 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-waterloggedWoodDrawingHandling']
             .values.waterloggedState.label)
             .toBe('Waterlogged state');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-mapSourceMaterial']
+            .values.joseonMap.label)
+            .toBe('Joseon-period map');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-historicalMapLandscapeInterpretation']
+            .values.naturalLevee.label)
+            .toBe('Natural levee');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-spatialDrawingProductionWorkflow']
+            .values.coordinateSystemConverted.label)
+            .toBe('Coordinate system converted');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-distributionMapRequirement']
+            .values.radius500m.label)
+            .toBe('500 m radius');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-artifactDrawingRecordMethod']
             .values.measuredDrawing.label)
             .toBeDefined();
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-mapSourceMaterial']
+            .values.joseonMap.label)
+            .toBe('조선시대 지도');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-cultivationFeatureContext']
             .values.cropNameNotClassification.label)
             .toBe('작물명으로 논밭 확정 금지');

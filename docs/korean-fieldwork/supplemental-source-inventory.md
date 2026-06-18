@@ -86,6 +86,8 @@ C:\Users\nuri9\AppData\Local\Temp\codex-idai-field-new-pdf-text\methods-all
 
 저습지 조사방법에서 뽑은 공통 축은 `KoreanFieldwork-wetlandAnalysisSource`, `KoreanFieldwork-wetlandLandformInterpretation`, `KoreanFieldwork-wetlandSurveyTargeting`, `KoreanFieldwork-wetlandMicrotopographyRecord`로 나누어 배치한다. 지표조사 단계에서는 항공사진·고지도·전자지도·지질도·형질변경 지도·보링자료와 판독 단계를 남기고, 시굴 계획에서는 고하천·자연제방·단구면·배후습지 표시와 시굴 지점·범위 설정을 남긴다. 층 세부단위에서는 1회성 퇴적, 수전 매몰토층, 화분·식물규산체·규조 분석, 목제품·종자·동물유체 맥락을 따로 기록해 지표 판독과 발굴 확인값을 섞지 않게 한다.
 
+도면작성법에서 뽑은 공통 축은 `KoreanFieldwork-mapSourceMaterial`, `KoreanFieldwork-historicalMapLandscapeInterpretation`, `KoreanFieldwork-spatialDrawingProductionWorkflow`, `KoreanFieldwork-distributionMapRequirement`로 `Drawing` 화면에 배치한다. 고지도·지형도·지적원도·항공사진·DEM은 완성 도면의 배경이 아니라 조사 전 지형 이해와 유적분포 가능성 판단의 근거이므로, 제작연도·축척·좌표계·출처와 함께 저장한다. 주변유적분포도는 조사대상지역, 문화재·보호구역, 반경, 범례·축척·방위표, PDF와 이미지 산출물까지 남겨 도면 작성 과정을 검증할 수 있게 한다.
+
 동물유체·화석환경 자료에서 뽑은 공통 축은 `KoreanFieldwork-faunalRecoverySampling`, `KoreanFieldwork-faunalPreservationHandling`, `KoreanFieldwork-zooarchaeologicalIdentification`, `KoreanFieldwork-boneSurfaceModification`, `KoreanFieldwork-zooarchaeologicalQuantification`으로 `Sample` 화면에 배치한다. 수습 단계에서는 보존 환경, 전체 체질 여부, 체눈, 블록샘플 치수, 동일층 반복 채취와 선별 수습 사유를 남기고, 보존·취급 단계에서는 토양 지지 형태, 탈수·이물질 제거, 전문가 수습과 유구·층별 분리 보관을 남긴다. 동정과 해석 단계에서는 동물종, 부위, 좌우, 성장단계, 동정 불확실성, 뼈 표면 변형, NISP·MNE·MNI·MAU·%MAU의 사용 목적과 한계를 함께 기록한다.
 
 ## 고고학사전 자료

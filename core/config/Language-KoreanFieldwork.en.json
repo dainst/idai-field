@@ -609,6 +609,18 @@
         },
         "waterloggedWoodDrawingHandling": {
           "label": "Waterlogged wood drawing handling"
+        },
+        "mapSourceMaterial": {
+          "label": "Map source material"
+        },
+        "historicalMapLandscapeInterpretation": {
+          "label": "Historical-map landscape interpretation"
+        },
+        "spatialDrawingProductionWorkflow": {
+          "label": "Spatial drawing production workflow"
+        },
+        "distributionMapRequirement": {
+          "label": "Distribution map requirement"
         }
       }
     },

@@ -4128,5 +4128,89 @@
       }
     },
     "description": "사진과 도면의 방향, 축척, 기준점, 해상도·선명도, 원본 보존, 대장번호 일치 여부를 점검하기 위한 목록"
+  },
+  "KoreanFieldwork-mapSourceMaterial": {
+    "values": {
+      "joseonMap": { "label": "조선시대 지도" },
+      "colonialTopographicMap": { "label": "일제강점기 지형도" },
+      "cadastralOriginalMap": { "label": "지적원도" },
+      "landUseStatusMap": { "label": "토지이용현황도" },
+      "aerialPhoto": { "label": "항공사진" },
+      "orthophoto": { "label": "정사영상" },
+      "digitalTopographicMap": { "label": "수치지형도" },
+      "dem": { "label": "DEM" },
+      "culturalHeritageDistributionMap": { "label": "문화유적분포지도" },
+      "gisIntranet": { "label": "GIS 인트라넷" },
+      "nationalGeographicPlatform": { "label": "국토정보플랫폼" },
+      "kyujanggakArchive": { "label": "규장각 원문검색" },
+      "nationalArchives": { "label": "국가기록원" },
+      "nationalMuseumDocument": { "label": "국립중앙박물관 문서" },
+      "productionYearRecorded": { "label": "제작연도 기록" },
+      "scaleRecorded": { "label": "축척 기록" },
+      "coordinateSystemRecorded": { "label": "좌표계 기록" },
+      "sourceUrlRecorded": { "label": "출처 URL 기록" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "도면작성 전에 사용한 고지도, 지형도, 항공사진, DEM, 문화유적분포지도와 제작연도·축척·좌표계·출처를 함께 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-historicalMapLandscapeInterpretation": {
+    "values": {
+      "naturalLevee": { "label": "자연제방" },
+      "midChannelBar": { "label": "하중도" },
+      "wetland": { "label": "습지" },
+      "saltField": { "label": "염전" },
+      "cultivatedLand": { "label": "경작지" },
+      "communalCemetery": { "label": "공동묘지" },
+      "historicalRouteNetwork": { "label": "역로망" },
+      "templeLocation": { "label": "사원 위치" },
+      "ritualActivityCandidate": { "label": "제례행위 후보" },
+      "landformChange": { "label": "지형 변화" },
+      "waterLevelRise": { "label": "수위 상승" },
+      "beforeAfterDevelopmentCompared": { "label": "개발 전후 비교" },
+      "featurePreservationInterpreted": { "label": "유구 잔존상태 해석" },
+      "siteDistributionPotential": { "label": "유적분포 가능성" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "역사지도와 항공사진에서 자연제방, 습지, 경작지, 묘지, 역로망, 지형 변화와 유적분포 가능성을 해석할 때 근거를 남기기 위한 목록"
+  },
+  "KoreanFieldwork-spatialDrawingProductionWorkflow": {
+    "values": {
+      "gisIntranetDownload": { "label": "GIS 인트라넷 다운로드" },
+      "heritageDataDownload": { "label": "문화재 자료 다운로드" },
+      "archiveExtracted": { "label": "압축 해제" },
+      "digitalTopographicMapDownload": { "label": "수치지형도 다운로드" },
+      "coordinateSystemChecked": { "label": "좌표계 확인" },
+      "coordinateSystemConverted": { "label": "좌표계 변환" },
+      "objectSelectionRecorded": { "label": "객체 선택 기록" },
+      "selectedObjectsSaved": { "label": "선택 객체 저장" },
+      "fileNameCoordinateSystemIncluded": { "label": "파일명 좌표계 표기" },
+      "layerNamesRomanized": { "label": "레이어명 영문화" },
+      "styleReappliedConsistently": { "label": "스타일 반복 적용" },
+      "conversionVerified": { "label": "변환 검증" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "수치지형도와 문화재 공간자료를 내려받아 좌표계 확인·변환·객체 선택·파일명과 레이어 관리를 거쳐 도면으로 만드는 흐름을 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-distributionMapRequirement": {
+    "values": {
+      "surveyAreaShown": { "label": "조사대상지역 표시" },
+      "alterationPermitStandardShown": { "label": "현상변경허용기준 표시" },
+      "surfaceSiteLocationMap": { "label": "지표유적 위치도" },
+      "excavatedSiteLocationMap": { "label": "발굴유적 위치도" },
+      "culturalHeritageDistributionMap": { "label": "문화유적분포지도" },
+      "municipalHeritage": { "label": "시도지정문화재" },
+      "nationalHeritage": { "label": "국가지정문화재" },
+      "protectedAreaShown": { "label": "보호구역 표시" },
+      "radius300m": { "label": "300m 반경" },
+      "radius500m": { "label": "500m 반경" },
+      "radius1000m": { "label": "1000m 반경" },
+      "legendIncluded": { "label": "범례 포함" },
+      "scaleIncluded": { "label": "축척 포함" },
+      "northArrowIncluded": { "label": "방위표 포함" },
+      "pdfExported": { "label": "PDF 내보내기" },
+      "imageExported": { "label": "이미지 내보내기" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "주변유적분포도에 조사대상지, 문화재·보호구역, 반경, 범례·축척·방위표, PDF와 이미지 산출물을 빠뜨리지 않기 위한 목록"
   }
 }

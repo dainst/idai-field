@@ -1537,6 +1537,22 @@
         "waterloggedWoodDrawingHandling": {
           "inputType": "checkboxes",
           "constraintIndexed": true
+        },
+        "mapSourceMaterial": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "historicalMapLandscapeInterpretation": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "spatialDrawingProductionWorkflow": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "distributionMapRequirement": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
         }
       },
       "valuelists": {
@@ -1549,7 +1565,11 @@
         "artifactDrawingQualityCheck": "KoreanFieldwork-artifactDrawingQualityCheck",
         "potteryDrawingStandard": "KoreanFieldwork-potteryDrawingStandard",
         "stoneToolDrawingView": "KoreanFieldwork-stoneToolDrawingView",
-        "waterloggedWoodDrawingHandling": "KoreanFieldwork-waterloggedWoodDrawingHandling"
+        "waterloggedWoodDrawingHandling": "KoreanFieldwork-waterloggedWoodDrawingHandling",
+        "mapSourceMaterial": "KoreanFieldwork-mapSourceMaterial",
+        "historicalMapLandscapeInterpretation": "KoreanFieldwork-historicalMapLandscapeInterpretation",
+        "spatialDrawingProductionWorkflow": "KoreanFieldwork-spatialDrawingProductionWorkflow",
+        "distributionMapRequirement": "KoreanFieldwork-distributionMapRequirement"
       },
       "groups": [
         {
@@ -1579,7 +1599,11 @@
             "artifactDrawingQualityCheck",
             "potteryDrawingStandard",
             "stoneToolDrawingView",
-            "waterloggedWoodDrawingHandling"
+            "waterloggedWoodDrawingHandling",
+            "mapSourceMaterial",
+            "historicalMapLandscapeInterpretation",
+            "spatialDrawingProductionWorkflow",
+            "distributionMapRequirement"
           ]
         }
       ]

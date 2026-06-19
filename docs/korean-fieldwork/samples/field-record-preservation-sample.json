@@ -328,6 +328,7 @@
           "separateGridSheetLinked",
           "baseGridLineMaintained",
           "sheetConnectionMarksRecorded",
+          "copyDrawingPositionAnnotated",
           "topBottomSurfaceSeparated",
           "overlapSequenceAnnotated",
           "levelingDatumMatched",

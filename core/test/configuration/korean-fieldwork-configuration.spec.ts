@@ -330,6 +330,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(documentsById['drawing-pit-building-001-plan'].resource.mediaQualityCheck)
             .toContain('sheetConnectionMarksRecorded');
         expect(documentsById['drawing-pit-building-001-plan'].resource.mediaQualityCheck)
+            .toContain('copyDrawingPositionAnnotated');
+        expect(documentsById['drawing-pit-building-001-plan'].resource.mediaQualityCheck)
             .toContain('topBottomSurfaceSeparated');
         expect(documentsById['drawing-pit-building-001-plan'].resource.mediaQualityCheck)
             .toContain('overlapSequenceAnnotated');
@@ -4228,6 +4230,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
             .values.sheetConnectionMarksRecorded.label)
             .toBe('Sheet connection marks recorded');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-mediaQualityCheck']
+            .values.copyDrawingPositionAnnotated.label)
+            .toBe('복사도면 위치주기');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
             .values.fieldCompletionCorrectionRecorded.label)
             .toBe('Field completion/correction recorded');

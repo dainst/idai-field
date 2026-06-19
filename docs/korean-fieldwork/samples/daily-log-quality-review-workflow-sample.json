@@ -8,6 +8,7 @@
     "작업일의 측량·사진·도면·안전·민원·유물정리·시료·일지·보고서 책임이 일지 문장 속에 묻히지 않고 구조화되는가.",
     "제토량, 굴삭기 조합, 표토량, 적토·반출, 둑, 기준단면, 배수, 장비 작업 안전이 작업일지의 일반 메모가 아니라 작업 단위의 확인값으로 남는가.",
     "일지 검토가 사진·도면·유물·시료 목록, 번호 변환표, 원기록 보존, 보고서 반영 여부와 연결되는가.",
+    "사진자료가 사진야장·대장과 대조되고, 필름·슬라이드·밀착인화 같은 구매체 원본까지 장기보존 대상으로 표시되는가.",
     "보고서 미수록 원야장·원도면·원사진과 실물 유물 열람 가능성이 백업 여부와 별도로 남는가.",
     "품질검수가 원기록을 조용히 덮어쓰지 않고 수정 사유, 변경 이력, 검토자, 원매체 확인, 다음 현장조치, 보고서 평가 환류를 남기는가."
   ],
@@ -279,15 +280,23 @@
           "scaleIncluded",
           "orientationChecked",
           "controlPointLinked",
+          "captureFormatRecorded",
           "originalUncroppedPreserved",
           "registerNumberMatched",
+          "photoNotebookMatched",
+          "printAnnotationAdded",
           "retakeOrRedrawNeeded"
         ],
         "digitalSourcePreservation": [
           "originalPhoto",
           "originalImage",
+          "analogFilmOriginal",
+          "slideFilmOriginal",
+          "contactPrintPreserved",
           "twoLocationBackup",
+          "webOrServerBackup",
           "backupVerified",
+          "legacyMediaConditionChecked",
           "pendingDecision"
         ],
         "reportCrossCheck": [

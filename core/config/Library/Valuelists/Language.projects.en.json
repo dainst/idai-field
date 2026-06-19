@@ -14545,6 +14545,15 @@
       "originalPhoto": {
         "label": "Original photo"
       },
+      "analogFilmOriginal": {
+        "label": "Analog film original"
+      },
+      "slideFilmOriginal": {
+        "label": "Slide film original"
+      },
+      "contactPrintPreserved": {
+        "label": "Contact print preserved"
+      },
       "personalNotebookScan": {
         "label": "Personal notebook scan"
       },
@@ -14590,8 +14599,14 @@
       "twoLocationBackup": {
         "label": "Two-location backup"
       },
+      "webOrServerBackup": {
+        "label": "Web or server backup"
+      },
       "backupVerified": {
         "label": "Backup verified"
+      },
+      "legacyMediaConditionChecked": {
+        "label": "Legacy media condition checked"
       },
       "accessProcedure": {
         "label": "Access procedure"
@@ -14603,7 +14618,7 @@
         "label": "Pending decision"
       }
     },
-    "description": "Korean field notebook source-preservation and access states for raw notebooks, unpublished drawings/photos, electronic originals, physical find access, backups, restrictions, and follow-up research access"
+    "description": "Korean field notebook source-preservation and access states for raw notebooks, unpublished drawings/photos, analog film, slide film, contact prints, electronic originals, physical find access, backups, restrictions, and follow-up research access"
   },
   "KoreanFieldwork-investigationAdministration": {
     "values": {
@@ -18663,11 +18678,20 @@
       "lightingConditionSuitable": {
         "label": "Lighting condition suitable"
       },
+      "captureFormatRecorded": {
+        "label": "Capture format recorded"
+      },
       "originalUncroppedPreserved": {
         "label": "Original uncropped preserved"
       },
       "registerNumberMatched": {
         "label": "Register number matched"
+      },
+      "photoNotebookMatched": {
+        "label": "Photo notebook matched"
+      },
+      "printAnnotationAdded": {
+        "label": "Print annotation added"
       },
       "preRecoveryPhotoTaken": {
         "label": "Pre-recovery photo taken"
@@ -18715,7 +18739,7 @@
         "label": "Pending decision"
       }
     },
-    "description": "Korean fieldwork media quality checks for direction, scale, control points, resolution or linework, lighting, source preservation, pre-recovery multi-direction photos, avoiding overhead-only and backlit shots, keeping oblique/side views, overview/close-up pairs, stratigraphy whole/part/detail sets, leveling links, and register-number or location consistency"
+    "description": "Korean fieldwork media quality checks for direction, scale, control points, resolution or linework, lighting, capture format, photo-notebook matching, print annotations, source preservation, pre-recovery multi-direction photos, avoiding overhead-only and backlit shots, keeping oblique/side views, overview/close-up pairs, stratigraphy whole/part/detail sets, leveling links, and register-number or location consistency"
   },
   "KoreanFieldwork-photoCaptureSafetyReview": {
     "values": {

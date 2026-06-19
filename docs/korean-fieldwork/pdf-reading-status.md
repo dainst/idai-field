@@ -208,6 +208,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-20 새로 정리된 `C:\Users\nuri9\Downloads\고고학사전` 12권과 `C:\Users\nuri9\Downloads\조사방법론` 31건은 기존 텍스트 캐시와 1:1로 대응함을 확인했다. 첫 추가 독해는 `발굴조사_실무.pdf`와 `매장문화재_조사실무.pdf`의 야장·일지 장을 다시 대조했다. 자료는 야장이 작고 휴대 가능해야 하며 방안 약식실측을 지원해야 하고, 보고서나 논문에는 바로 들어가지 않는 시행착오·판단변경·현장관찰도 조사 완료 뒤 공적 기록으로 보존해야 한다고 본다. 이 요구는 `personalNotebookArchive`의 `portableNotebookPrepared`, `griddedSketchPageAvailable`, `fieldTrialErrorRecorded`, `reportUnpublishedObservationRecorded`와 `daily-log-quality-review-workflow-sample.json` 검증값으로 옮겼다.
 
+2026-06-20 이어 `유적 및 유구의 촬영`, `발굴조사_실무.pdf`, `발굴조사의_이해.pdf`의 사진자료 관리 대목을 다시 대조했다. 사진자료는 촬영 직후 사진야장과 맞지 않으면 활용성이 떨어지고, 흑백·컬러·슬라이드 필름과 밀착인화는 디지털 사진과 별도 원본으로 보존해야 한다. 이번 구현은 `mediaQualityCheck`의 촬영 포맷 기록, 사진야장 대조, 인화 사진 주기 기록과 `digitalSourcePreservation`의 아날로그 필름 원본, 슬라이드 필름 원본, 밀착인화 보존, 웹·서버 백업, 구매체 상태점검으로 옮겼다.
+
 2026-06-19 이어서 사진·보고서 동시 검수 장과 `제2회_매장문화재_조사연구원_교육_2007년3월`의 조사계획·착수 OCR 대목을 다시 대조했다. 현장 작업자는 조사단장·책임조사원·조사원 같은 직급뿐 아니라 측량, 사진, 도면, 안전관리, 민원·기관소통, 유물정리, 시료채취, 일지 작성, 보고서 준비, 검토 역할을 겸할 수 있고, 이 책임 범위가 일지 본문에만 남으면 분쟁·보고서 보완·품질검수 때 역추적이 어렵다. 이 묶음은 `Operation`과 `DailyLog`의 `operationRoleResponsibility` 값목록으로 옮겼고, `daily-log-quality-review-workflow-sample.json`에서 당일 역할 공백까지 함께 검증한다.
 
 2026-06-19 추가로 `제2회_매장문화재_조사연구원_교육_2007년3월` 조사계획·착수 OCR과 `field-training-methods.md`의 현장보존조치 후보를 다시 맞춰 보았다. 허가서 현장 비치, 착수신고 안내, 보안 유지, 주민·관할기관 통보, 유적보호 주의사항, 혹서·혹한·강우 대비, 야간방범, 임시유물·기록물 보관, 미작성자료 즉시 조치는 보존조치 결정 이후의 장기 관리가 아니라 당일 작업 실행값에 가깝다. 이 묶음은 `Operation`의 `siteProtectionSecurity` 값목록으로 옮겼고, `administrative-workflow-sample.json`에서 부분완료·자료인계 흐름과 함께 검증한다.

@@ -214,8 +214,10 @@
           "scaleIncluded",
           "orientationChecked",
           "controlPointLinked",
+          "captureFormatRecorded",
           "originalUncroppedPreserved",
           "registerNumberMatched",
+          "photoNotebookMatched",
           "preRecoveryPhotoTaken",
           "multiDirectionPhotoTaken",
           "levelingLinkedForRecovery",
@@ -237,6 +239,7 @@
           "originalPhoto",
           "originalImage",
           "twoLocationBackup",
+          "webOrServerBackup",
           "backupVerified",
           "pendingDecision"
         ],

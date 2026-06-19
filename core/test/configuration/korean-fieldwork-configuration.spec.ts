@@ -250,6 +250,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('levelingLinkedForRecovery');
         expect(documentsById['photo-media-gps-001'].resource.mediaQualityCheck)
             .toContain('findNumberLocationMatched');
+        expect(documentsById['photo-media-gps-001'].resource.mediaQualityCheck)
+            .toContain('photoNotebookMatched');
+        expect(documentsById['photo-media-gps-001'].resource.digitalSourcePreservation)
+            .toContain('webOrServerBackup');
         expect(documentsById['drawing-media-distribution-001'].resource.mapSourceMaterial)
             .toContain('joseonMap');
         expect(documentsById['drawing-media-distribution-001'].resource.distributionMapRequirement)
@@ -356,6 +360,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('physicalFindAccessRecorded');
         expect(documentsById['op-quality-001'].resource.digitalSourcePreservation)
             .toContain('followUpResearcherAccessLogged');
+        expect(documentsById['photo-quality-001'].resource.mediaQualityCheck)
+            .toContain('printAnnotationAdded');
+        expect(documentsById['photo-quality-001'].resource.digitalSourcePreservation)
+            .toContain('slideFilmOriginal');
+        expect(documentsById['photo-quality-001'].resource.digitalSourcePreservation)
+            .toContain('contactPrintPreserved');
         expect(documentsById['field-report-concurrent-review-quality-001'].resource.relations.liesWithin)
             .toEqual(['op-quality-001']);
         expect(documentsById['field-report-concurrent-review-quality-001'].resource.fieldReportConcurrentReview)
@@ -3016,9 +3026,15 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-digitalSourcePreservation']
             .values.unpublishedDrawingRetained.label)
             .toBe('Unpublished original drawing retained');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-digitalSourcePreservation']
+            .values.contactPrintPreserved.label)
+            .toBe('Contact print preserved');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-digitalSourcePreservation']
             .values.followUpResearcherAccessLogged.label)
             .toBe('후속연구자 열람 이력');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-digitalSourcePreservation']
+            .values.webOrServerBackup.label)
+            .toBe('웹·서버 백업');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-reviewedRecordUnit'].values.personalNotebook.label)
             .toBe('Personal notebook');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-qualityReviewStage'].values.sameDayReview.label)
@@ -3777,6 +3793,9 @@ describe('KoreanFieldwork project configuration', () => {
             .values.preRecoveryPhotoTaken.label)
             .toBe('Pre-recovery photo taken');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
+            .values.photoNotebookMatched.label)
+            .toBe('Photo notebook matched');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
             .values.obliqueSidePhotoTaken.label)
             .toBe('Oblique/side photo taken');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
@@ -3785,6 +3804,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-mediaQualityCheck']
             .values.levelingLinkedForRecovery.label)
             .toBe('레벨링 연계 위치복원');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-mediaQualityCheck']
+            .values.printAnnotationAdded.label)
+            .toBe('인화 사진 주기 기록');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactDrawingRecordMethod']
             .values.measuredDrawing.label)
             .toBe('Measured drawing');

@@ -126,6 +126,45 @@ describe('KoreanFieldwork project configuration', () => {
     });
 
 
+    it('keeps the Korean media drawing and GPS sample aligned with drawing and spatial fields', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const sample = loadSample('media-drawing-gps-workflow-sample.json');
+        const documents = sample.documents;
+        const documentsById = documents.reduce((index: any, document: any) => {
+            index[document.resource.id] = document;
+            return index;
+        }, {});
+
+        expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
+
+        expect(documentsById['op-media-001'].resource.gpsSurveyQualityRecord)
+            .toContain('rtkUsed');
+        expect(documentsById['op-media-001'].resource.gpsNmeaRecord)
+            .toContain('hdop');
+        expect(documentsById['op-media-001'].resource.fieldDatabaseOperationRisk)
+            .toContain('dataCompatibilityChecked');
+        expect(documentsById['photo-media-gps-001'].resource.gpsPhotoLinkRecord)
+            .toContain('currentPositionLinked');
+        expect(documentsById['drawing-media-distribution-001'].resource.mapSourceMaterial)
+            .toContain('joseonMap');
+        expect(documentsById['drawing-media-distribution-001'].resource.distributionMapRequirement)
+            .toContain('radius500m');
+        expect(documentsById['drawing-media-pottery-001'].resource.potteryDrawingStandard)
+            .toContain('wallThicknessThreeFourPoints');
+        expect(documentsById['drawing-media-stone-tool-001'].resource.stoneToolDrawingView)
+            .toContain('thirdAngleSixViews');
+        expect(documentsById['drawing-media-waterlogged-wood-001'].resource.waterloggedWoodDrawingHandling)
+            .toContain('waterloggedState');
+        expect(documentsById['drawing-media-3d-source-001'].resource.electronicDrawingSourceWorkflow)
+            .toContain('pointCloudMerged');
+        expect(documentsById['drawing-media-3d-source-001'].resource.artifactElectronicDrawingProcedure)
+            .toContain('referencePlaneCreated');
+    });
+
+
     it('keeps the Korean investigation stage transition sample aligned with handover fields', () => {
 
         const configReader = new ConfigReader();

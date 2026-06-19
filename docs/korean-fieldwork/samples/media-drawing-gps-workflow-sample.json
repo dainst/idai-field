@@ -1,0 +1,600 @@
+{
+  "title": "Korean media drawing and GPS workflow sample",
+  "purpose": "Validate that field media records treat GPS, photos, distribution maps, artifact drawings, and 3D/electronic drawings as evidence-bearing records with source, control, quality, and preservation checks.",
+  "validationQuestions": [
+    "GPS 좌표가 위도·경도 숫자만이 아니라 RTK/GNSS 방식, 기준국·이동국, 위성 상태, DOP, NMEA 원자료, 좌표계와 지오이드로 검증되는가.",
+    "사진 파일이 단순 첨부가 아니라 현재 위치, 궤적, 등록지점, 파일명, 수치지도 연동 상태와 함께 남는가.",
+    "분포도·위치도 작성이 완성 PDF 하나가 아니라 원천 지도, 좌표계 변환, 객체 선택, 반경·범례·축척·방위표 검수로 이어지는가.",
+    "유물실측과 전자도면이 외곽선 복사가 아니라 재질·기종·기준선·측점 검점·사진/탁본 대조·3D 원천파일 보존으로 관리되는가."
+  ],
+  "documents": [
+    {
+      "resource": {
+        "id": "op-media-001",
+        "identifier": "MEDIA-OP-001",
+        "shortDescription": "도면·사진·GPS 기록 검수 작업",
+        "category": "Operation",
+        "relations": {},
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "crossReviewNeeded"
+        ],
+        "recordCreationTiming": "duringFieldwork",
+        "dailyLogContent": [
+          "workDateWeather",
+          "workArea",
+          "photoDrawingNumbers",
+          "visitorInstruction"
+        ],
+        "dailyLogReview": [
+          "sameDayWritten",
+          "photoDrawingCrossChecked",
+          "reviewerChecked"
+        ],
+        "gpsSurveyQualityRecord": [
+          "gpsUsed",
+          "gnssUsed",
+          "rtkUsed",
+          "baseStationRecorded",
+          "roverRecorded",
+          "satelliteStateChecked",
+          "observationTimeRecorded",
+          "rawDataPreserved",
+          "coordinateSystemRecorded",
+          "geoidRecorded",
+          "satelliteCountRecorded",
+          "dopRecorded",
+          "accuracyRecorded",
+          "pendingDecision"
+        ],
+        "gpsNmeaRecord": [
+          "gpsDate",
+          "gpsTime",
+          "latitudeLogged",
+          "longitudeLogged",
+          "altitudeLogged",
+          "fixStatus",
+          "satellitesInView",
+          "satellitesUsed",
+          "pdop",
+          "hdop",
+          "vdop",
+          "satelliteId",
+          "satelliteElevation",
+          "satelliteAzimuth",
+          "snr",
+          "pendingDecision"
+        ],
+        "fieldDatabaseOperationRisk": [
+          "dataCompatibilityChecked",
+          "shpManaged",
+          "dxfManaged",
+          "layerManaged",
+          "geometryManaged",
+          "attributeEditingTracked",
+          "fieldSyncChecked",
+          "pendingDecision"
+        ],
+        "digitalSourcePreservation": [
+          "electronicNotebookOriginal",
+          "originalImage",
+          "twoLocationBackup",
+          "backupVerified",
+          "accessProcedure",
+          "pendingDecision"
+        ],
+        "reportCrossCheck": [
+          "manuscript",
+          "drawingRegister",
+          "photoRegister",
+          "numberConversionTable",
+          "sourceMediaBackup"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "feature-media-control-001",
+        "identifier": "MEDIA-FEAT-001",
+        "shortDescription": "기준점 연동 유구 구간",
+        "category": "Feature",
+        "relations": {
+          "isRecordedIn": ["op-media-001"]
+        },
+        "description": "현장 기준점과 RTK 관측값을 도면·사진·GIS 레이어에 공통으로 붙인 유구 구간. 좌표와 매체 기록이 보고서 단계에서 서로 분리되지 않게 한다.",
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "crossReviewNeeded"
+        ],
+        "fieldOnlyMissingCheck": [
+          "featureOutline",
+          "photoAngleAndScale",
+          "drawingLineReason",
+          "spatialLocation",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "find-media-pottery-001",
+        "identifier": "MEDIA-FIND-001",
+        "shortDescription": "실측 대상 토기편",
+        "category": "Find",
+        "relations": {
+          "isRecordedIn": ["op-media-001"],
+          "liesWithin": ["feature-media-control-001"]
+        },
+        "description": "문양 측점과 기벽 두께를 다시 확인해야 하는 토기편. 실측 기준선과 사진·탁본 대조를 도면 카드에서 관리한다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated"
+        ],
+        "fieldOnlyMissingCheck": [
+          "preRemovalCondition",
+          "spatialLocation",
+          "numberedBeforeCollection"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "find-media-stone-tool-001",
+        "identifier": "MEDIA-FIND-002",
+        "shortDescription": "석기 전개도 대상품",
+        "category": "Find",
+        "relations": {
+          "isRecordedIn": ["op-media-001"],
+          "liesWithin": ["feature-media-control-001"]
+        },
+        "description": "사용방향 정치와 타제·고타·마연흔을 함께 도면화해야 하는 석기. 평면·단면·측면 view를 도면 카드에서 분리한다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "researchQuestionFit"
+        ],
+        "fieldOnlyMissingCheck": [
+          "preRemovalCondition",
+          "photoAngleAndScale",
+          "numberedBeforeCollection"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "photo-media-gps-001",
+        "identifier": "MEDIA-PHOTO-001",
+        "shortDescription": "GPS 연동 현장 사진",
+        "category": "Photo",
+        "relations": {
+          "isRecordedIn": ["op-media-001"],
+          "isDepictedIn": ["feature-media-control-001"]
+        },
+        "mediaEvidenceRole": [
+          "fieldOverview",
+          "workStageRecord",
+          "featureOutlineEvidence",
+          "reportPlateCandidate"
+        ],
+        "mediaQualityCheck": [
+          "targetPurposeClear",
+          "directionRecorded",
+          "scaleIncluded",
+          "orientationChecked",
+          "controlPointLinked",
+          "originalUncroppedPreserved",
+          "registerNumberMatched"
+        ],
+        "gpsPhotoLinkRecord": [
+          "gpsConnectionConfigured",
+          "gpsTrackManaged",
+          "registeredPointManaged",
+          "currentPositionLinked",
+          "photoFilenameRecorded",
+          "photoAutoClassifiedByLocation",
+          "digitalMapLinked",
+          "radiusSearchUsed",
+          "distanceMeasurementUsed",
+          "pendingDecision"
+        ],
+        "digitalSourcePreservation": [
+          "originalPhoto",
+          "originalImage",
+          "twoLocationBackup",
+          "backupVerified",
+          "pendingDecision"
+        ],
+        "reportCrossCheck": [
+          "photoRegister",
+          "manuscript",
+          "numberConversionTable",
+          "sourceMediaBackup"
+        ]
+      }
+    },
+    {
+      "resource": {
+        "id": "drawing-media-distribution-001",
+        "identifier": "MEDIA-DRAW-001",
+        "shortDescription": "고지도·분포도 작성 근거",
+        "category": "Drawing",
+        "relations": {
+          "isRecordedIn": ["op-media-001"],
+          "isDepictedIn": ["feature-media-control-001"]
+        },
+        "mediaEvidenceRole": [
+          "fieldOverview",
+          "drawingCorrectionBasis",
+          "reportPlateCandidate"
+        ],
+        "mediaQualityCheck": [
+          "targetPurposeClear",
+          "directionRecorded",
+          "scaleIncluded",
+          "orientationChecked",
+          "controlPointLinked",
+          "resolutionOrLineworkReadable",
+          "registerNumberMatched"
+        ],
+        "mapSourceMaterial": [
+          "joseonMap",
+          "colonialTopographicMap",
+          "cadastralOriginalMap",
+          "aerialPhoto",
+          "orthophoto",
+          "digitalTopographicMap",
+          "dem",
+          "culturalHeritageDistributionMap",
+          "productionYearRecorded",
+          "scaleRecorded",
+          "coordinateSystemRecorded",
+          "sourceUrlRecorded",
+          "pendingDecision"
+        ],
+        "historicalMapLandscapeInterpretation": [
+          "naturalLevee",
+          "wetland",
+          "cultivatedLand",
+          "historicalRouteNetwork",
+          "landformChange",
+          "beforeAfterDevelopmentCompared",
+          "featurePreservationInterpreted",
+          "siteDistributionPotential",
+          "pendingDecision"
+        ],
+        "spatialDrawingProductionWorkflow": [
+          "gisIntranetDownload",
+          "heritageDataDownload",
+          "archiveExtracted",
+          "digitalTopographicMapDownload",
+          "coordinateSystemChecked",
+          "coordinateSystemConverted",
+          "objectSelectionRecorded",
+          "selectedObjectsSaved",
+          "fileNameCoordinateSystemIncluded",
+          "layerNamesRomanized",
+          "styleReappliedConsistently",
+          "conversionVerified",
+          "pendingDecision"
+        ],
+        "distributionMapRequirement": [
+          "surveyAreaShown",
+          "alterationPermitStandardShown",
+          "surfaceSiteLocationMap",
+          "excavatedSiteLocationMap",
+          "culturalHeritageDistributionMap",
+          "protectedAreaShown",
+          "radius500m",
+          "legendIncluded",
+          "scaleIncluded",
+          "northArrowIncluded",
+          "pdfExported",
+          "imageExported",
+          "pendingDecision"
+        ],
+        "digitalSourcePreservation": [
+          "originalDrawing",
+          "originalImage",
+          "twoLocationBackup",
+          "backupVerified",
+          "accessProcedure",
+          "pendingDecision"
+        ],
+        "reportCrossCheck": [
+          "drawingRegister",
+          "manuscript",
+          "sourceMediaBackup",
+          "evaluationFeedback"
+        ]
+      }
+    },
+    {
+      "resource": {
+        "id": "drawing-media-pottery-001",
+        "identifier": "MEDIA-DRAW-002",
+        "shortDescription": "토기 실측·전자도면",
+        "category": "Drawing",
+        "relations": {
+          "isRecordedIn": ["op-media-001"],
+          "isDepictedIn": ["find-media-pottery-001"]
+        },
+        "mediaEvidenceRole": [
+          "findContextEvidence",
+          "drawingCorrectionBasis",
+          "reportPlateCandidate"
+        ],
+        "mediaQualityCheck": [
+          "targetPurposeClear",
+          "directionRecorded",
+          "scaleIncluded",
+          "resolutionOrLineworkReadable",
+          "registerNumberMatched",
+          "retakeOrRedrawNeeded"
+        ],
+        "artifactDrawingRecordMethod": [
+          "technicalDescription",
+          "photoRecord",
+          "rubbingRecord",
+          "measuredDrawing",
+          "threeDimensionalScan",
+          "complementaryRecordRequired",
+          "pendingDecision"
+        ],
+        "artifactDrawingPlan": [
+          "materialRecorded",
+          "artifactTypeRecorded",
+          "preservationStateRecorded",
+          "functionHypothesisRecorded",
+          "baselineSelected",
+          "measuredLineSelected",
+          "projectionMethodSelected",
+          "drawingLayoutSelected",
+          "scaleSelected",
+          "drawingToolsRecorded",
+          "complementaryPhotoPlanned",
+          "rubbingPlanned",
+          "pendingDecision"
+        ],
+        "artifactDrawingQualityCheck": [
+          "baselineRationale",
+          "measuredLineRationale",
+          "measuredLineChangeReason",
+          "measuringPointCheck",
+          "calibrationHistory",
+          "photoComparison",
+          "rubbingComparison",
+          "descriptionSupplement",
+          "prePostConservationComparison",
+          "redrawingNeeded",
+          "pendingDecision"
+        ],
+        "potteryDrawingStandard": [
+          "orientationState",
+          "baseline",
+          "measuredLine",
+          "measuringPoint",
+          "measuringPointCheck",
+          "sectionFirst",
+          "bodyContour",
+          "wallThicknessThreeFourPoints",
+          "elevationView",
+          "patternMeasuringPoint",
+          "annotationPrepared",
+          "pendingDecision"
+        ],
+        "artifactElectronicDrawingProcedure": [
+          "artifactFormReviewed",
+          "finalOutputFormDefined",
+          "featureViewSelected",
+          "sectionPositionSelected",
+          "vectorized",
+          "researcherInformationIntegrated",
+          "referencePlaneCreated",
+          "coordinateSystemMoved",
+          "alignmentCriterionSet",
+          "pendingDecision"
+        ],
+        "digitalSourcePreservation": [
+          "originalDrawing",
+          "originalPhoto",
+          "electronicNotebookOriginal",
+          "twoLocationBackup",
+          "pendingDecision"
+        ],
+        "reportCrossCheck": [
+          "drawingRegister",
+          "artifactRegister",
+          "numberConversionTable",
+          "sourceMediaBackup"
+        ]
+      }
+    },
+    {
+      "resource": {
+        "id": "drawing-media-stone-tool-001",
+        "identifier": "MEDIA-DRAW-003",
+        "shortDescription": "석기 실측 view 검수",
+        "category": "Drawing",
+        "relations": {
+          "isRecordedIn": ["op-media-001"],
+          "isDepictedIn": ["find-media-stone-tool-001"]
+        },
+        "mediaEvidenceRole": [
+          "findContextEvidence",
+          "drawingCorrectionBasis"
+        ],
+        "mediaQualityCheck": [
+          "targetPurposeClear",
+          "directionRecorded",
+          "scaleIncluded",
+          "resolutionOrLineworkReadable",
+          "registerNumberMatched"
+        ],
+        "artifactDrawingRecordMethod": [
+          "technicalDescription",
+          "photoRecord",
+          "measuredDrawing",
+          "microscopePhoto",
+          "complementaryRecordRequired",
+          "pendingDecision"
+        ],
+        "stoneToolDrawingView": [
+          "useDirectionOriented",
+          "planView",
+          "longitudinalSection",
+          "crossSection",
+          "sideView",
+          "thirdAngleSixViews",
+          "developedViewLayout",
+          "flakingRetouchTrace",
+          "peckingTrace",
+          "grindingTrace",
+          "pendingDecision"
+        ],
+        "digitalSourcePreservation": [
+          "originalDrawing",
+          "originalPhoto",
+          "twoLocationBackup",
+          "pendingDecision"
+        ],
+        "reportCrossCheck": [
+          "drawingRegister",
+          "artifactRegister",
+          "sourceMediaBackup"
+        ]
+      }
+    },
+    {
+      "resource": {
+        "id": "drawing-media-waterlogged-wood-001",
+        "identifier": "MEDIA-DRAW-004",
+        "shortDescription": "수침목재 습식 실측",
+        "category": "Drawing",
+        "relations": {
+          "isRecordedIn": ["op-media-001"],
+          "isDepictedIn": ["feature-media-control-001"]
+        },
+        "mediaEvidenceRole": [
+          "preservationActionEvidence",
+          "drawingCorrectionBasis",
+          "reportPlateCandidate"
+        ],
+        "mediaQualityCheck": [
+          "targetPurposeClear",
+          "directionRecorded",
+          "scaleIncluded",
+          "lightingConditionSuitable",
+          "originalUncroppedPreserved",
+          "registerNumberMatched"
+        ],
+        "artifactDrawingRecordMethod": [
+          "technicalDescription",
+          "photoRecord",
+          "measuredDrawing",
+          "complementaryRecordRequired",
+          "pendingDecision"
+        ],
+        "waterloggedWoodDrawingHandling": [
+          "waterloggedState",
+          "beforeConservation",
+          "afterConservation",
+          "wetDraftingPaper",
+          "plasticMeasuringTool",
+          "mistMoistureSupplement",
+          "clothProtection",
+          "waterBoxStorage",
+          "dentRisk",
+          "dryingShrinkageRisk",
+          "pendingDecision"
+        ],
+        "digitalSourcePreservation": [
+          "originalDrawing",
+          "originalPhoto",
+          "twoLocationBackup",
+          "backupVerified",
+          "pendingDecision"
+        ],
+        "reportCrossCheck": [
+          "drawingRegister",
+          "photoRegister",
+          "sourceMediaBackup"
+        ]
+      }
+    },
+    {
+      "resource": {
+        "id": "drawing-media-3d-source-001",
+        "identifier": "MEDIA-DRAW-005",
+        "shortDescription": "3D 스캔 원천자료 흐름",
+        "category": "Drawing",
+        "relations": {
+          "isRecordedIn": ["op-media-001"],
+          "isDepictedIn": ["feature-media-control-001", "find-media-pottery-001"]
+        },
+        "mediaEvidenceRole": [
+          "workStageRecord",
+          "drawingCorrectionBasis",
+          "publicOutputCandidate"
+        ],
+        "mediaQualityCheck": [
+          "targetPurposeClear",
+          "directionRecorded",
+          "controlPointLinked",
+          "resolutionOrLineworkReadable",
+          "originalUncroppedPreserved",
+          "registerNumberMatched"
+        ],
+        "electronicDrawingSourceWorkflow": [
+          "scannerSelected",
+          "pointCloudAcquired",
+          "pointCloudMerged",
+          "polygonConverted",
+          "polygonOptimized",
+          "cadDataGenerated",
+          "twoDimensionalDrawingOutput",
+          "threeDimensionalDrawingOutput",
+          "restorationDataOutput",
+          "sourceFilePreserved",
+          "processedFilePreserved",
+          "pendingDecision"
+        ],
+        "artifactElectronicDrawingProcedure": [
+          "artifactFormReviewed",
+          "finalOutputFormDefined",
+          "featureViewSelected",
+          "sectionPositionSelected",
+          "vectorized",
+          "researcherInformationIntegrated",
+          "referencePlaneCreated",
+          "coordinateSystemMoved",
+          "alignmentCriterionSet",
+          "pendingDecision"
+        ],
+        "digitalSourcePreservation": [
+          "originalDrawing",
+          "electronicNotebookOriginal",
+          "originalImage",
+          "twoLocationBackup",
+          "backupVerified",
+          "accessProcedure",
+          "pendingDecision"
+        ],
+        "reportCrossCheck": [
+          "drawingRegister",
+          "manuscript",
+          "sourceMediaBackup",
+          "evaluationFeedback"
+        ]
+      }
+    }
+  ]
+}

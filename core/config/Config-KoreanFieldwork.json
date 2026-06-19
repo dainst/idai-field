@@ -1323,6 +1323,34 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "ceramicTermScope": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "potteryFabricTemperRecord": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "potteryTemperFunctionAssessment": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "potteryProductionLifeRecord": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "potteryFormingTraceAssessment": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "potteryFormingCaution": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "potteryProcessDirectionality": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "potteryFiringTraceObservation": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1387,6 +1415,13 @@
         "graveGoodsRitualContext": "KoreanFieldwork-graveGoodsRitualContext",
         "neolithicSubsistenceEvidence": "KoreanFieldwork-neolithicSubsistenceEvidence",
         "bronzeAgePotteryTerminology": "KoreanFieldwork-bronzeAgePotteryTerminology",
+        "ceramicTermScope": "KoreanFieldwork-ceramicTermScope",
+        "potteryFabricTemperRecord": "KoreanFieldwork-potteryFabricTemperRecord",
+        "potteryTemperFunctionAssessment": "KoreanFieldwork-potteryTemperFunctionAssessment",
+        "potteryProductionLifeRecord": "KoreanFieldwork-potteryProductionLifeRecord",
+        "potteryFormingTraceAssessment": "KoreanFieldwork-potteryFormingTraceAssessment",
+        "potteryFormingCaution": "KoreanFieldwork-potteryFormingCaution",
+        "potteryProcessDirectionality": "KoreanFieldwork-potteryProcessDirectionality",
         "potteryFiringTraceObservation": "KoreanFieldwork-potteryFiringTraceObservation",
         "potteryKilnFurnitureContext": "KoreanFieldwork-potteryKilnFurnitureContext",
         "tileKilnFindContext": "KoreanFieldwork-tileKilnFindContext",
@@ -1440,6 +1475,13 @@
             "graveGoodsRitualContext",
             "neolithicSubsistenceEvidence",
             "bronzeAgePotteryTerminology",
+            "ceramicTermScope",
+            "potteryFabricTemperRecord",
+            "potteryTemperFunctionAssessment",
+            "potteryProductionLifeRecord",
+            "potteryFormingTraceAssessment",
+            "potteryFormingCaution",
+            "potteryProcessDirectionality",
             "potteryFiringTraceObservation",
             "potteryKilnFurnitureContext",
             "tileKilnFindContext",

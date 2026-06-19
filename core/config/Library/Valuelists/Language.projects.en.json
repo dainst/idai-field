@@ -15157,6 +15157,127 @@
     },
     "description": "Interpretation-risk checks for pottery kilns, guarding against slope-only classification, final-operation assumptions, automatic ash-dump linkage, overnaming, reuse, intrusion, and unrecorded preservation limits"
   },
+  "KoreanFieldwork-ceramicTermScope": {
+    "values": {
+      "earthenwareTerm": { "label": "Earthenware term" },
+      "stonewareTerm": { "label": "Stoneware term" },
+      "porcelainTerm": { "label": "Porcelain term" },
+      "hardFiredPotteryTerm": { "label": "Hard-fired pottery term" },
+      "suekiTerm": { "label": "Sueki term" },
+      "ceramicUmbrellaTerm": { "label": "Ceramic umbrella term" },
+      "glazedPottery": { "label": "Glazed pottery" },
+      "unglazedPottery": { "label": "Unglazed pottery" },
+      "glazePresent": { "label": "Glaze present" },
+      "porousBody": { "label": "Porous body" },
+      "firingTemperatureCandidate": { "label": "Firing-temperature candidate" },
+      "terminologyRegionDifference": { "label": "Terminology-region difference" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Ceramic terminology checks that keep earthenware, stoneware, porcelain, hard-fired pottery, Sueki, glaze, porosity, firing-temperature candidates, and regional terminology differences separate"
+  },
+  "KoreanFieldwork-potteryFabricTemperRecord": {
+    "values": {
+      "primaryClay": { "label": "Primary clay" },
+      "secondaryClay": { "label": "Secondary clay" },
+      "clayLevigated": { "label": "Clay levigated" },
+      "temperPresent": { "label": "Temper present" },
+      "sandTemper": { "label": "Sand temper" },
+      "stoneFragmentTemper": { "label": "Stone fragment temper" },
+      "micaTemper": { "label": "Mica temper" },
+      "talcTemper": { "label": "Talc temper" },
+      "shellPowderTemper": { "label": "Shell powder temper" },
+      "plantFiberTemper": { "label": "Plant fiber temper" },
+      "grainHuskTemper": { "label": "Grain husk temper" },
+      "fireResistancePurpose": { "label": "Fire-resistance purpose" },
+      "formingEfficiencyPurpose": { "label": "Forming-efficiency purpose" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Pottery fabric and temper checks that separate clay source, levigation, temper material, and possible functional intent instead of treating inclusions as neutral description"
+  },
+  "KoreanFieldwork-potteryTemperFunctionAssessment": {
+    "values": {
+      "formingEfficiency": { "label": "Forming efficiency" },
+      "fireResistance": { "label": "Fire resistance" },
+      "porosityControl": { "label": "Porosity control" },
+      "cookingVessel": { "label": "Cooking vessel" },
+      "largeVessel": { "label": "Large vessel" },
+      "dryingSpeedControl": { "label": "Drying-speed control" },
+      "decoratedSmallVessel": { "label": "Decorated small vessel" },
+      "refinedClay": { "label": "Refined clay" },
+      "levigatedClay": { "label": "Levigated clay" },
+      "temperReuse": { "label": "Temper reuse" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Temper-function checks for forming efficiency, fire resistance, porosity, drying control, vessel use, refined clay, and reuse while allowing interpretation to stay pending"
+  },
+  "KoreanFieldwork-potteryProductionLifeRecord": {
+    "values": {
+      "clayQuarrying": { "label": "Clay quarrying" },
+      "temperProcurement": { "label": "Temper procurement" },
+      "fabricPreparation": { "label": "Fabric preparation" },
+      "forming": { "label": "Forming" },
+      "finishing": { "label": "Finishing" },
+      "decoration": { "label": "Decoration" },
+      "surfaceFinishing": { "label": "Surface finishing" },
+      "drying": { "label": "Drying" },
+      "firing": { "label": "Firing" },
+      "completion": { "label": "Completion" },
+      "use": { "label": "Use" },
+      "breakage": { "label": "Breakage" },
+      "repairReuse": { "label": "Repair/reuse" },
+      "discard": { "label": "Discard" },
+      "temperReuse": { "label": "Temper reuse" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Production-life checks that keep pottery observations open from clay quarrying and fabric preparation through forming, finishing, firing, use, breakage, repair, reuse, and discard"
+  },
+  "KoreanFieldwork-potteryFormingTraceAssessment": {
+    "values": {
+      "handBuilding": { "label": "Hand building" },
+      "coilBuilding": { "label": "Coil building" },
+      "ringBuilding": { "label": "Ring building" },
+      "innerMold": { "label": "Inner mold" },
+      "outerMold": { "label": "Outer mold" },
+      "innerOuterMold": { "label": "Inner/outer mold" },
+      "wheelThrowing": { "label": "Wheel throwing" },
+      "paddleAndAnvil": { "label": "Paddle and anvil" },
+      "innerAnvilTrace": { "label": "Inner anvil trace" },
+      "hakemeFinishing": { "label": "Hakeme finishing" },
+      "stringCutTrace": { "label": "String-cut trace" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Forming-trace checks for hand building, coils, molds, wheel throwing, paddle-and-anvil traces, Hakeme finishing, and string cuts without turning a single trace into a final technique call"
+  },
+  "KoreanFieldwork-potteryFormingCaution": {
+    "values": {
+      "stringCutNotStandalone": { "label": "String cut not standalone" },
+      "wheelThrowingCandidate": { "label": "Wheel throwing candidate" },
+      "singleFormingRotationalFinishing": { "label": "Single forming plus rotational finishing" },
+      "formingFinishingSeparated": { "label": "Forming and finishing separated" },
+      "techniquePersistencePossible": { "label": "Technique persistence possible" },
+      "paddleUseChecked": { "label": "Paddle use checked" },
+      "tileFormingTraceCompared": { "label": "Tile forming trace compared" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Caution checks that prevent string cuts and rotational traces from being treated as direct proof of wheel throwing, while keeping forming/finishing separation and comparative tile traces visible"
+  },
+  "KoreanFieldwork-potteryProcessDirectionality": {
+    "values": {
+      "sandGrainDirection": { "label": "Sand-grain direction" },
+      "finishingTraceDirection": { "label": "Finishing-trace direction" },
+      "rotaryTrimming": { "label": "Rotary trimming" },
+      "wetSmoothingTrace": { "label": "Wet smoothing trace" },
+      "uprightTrimming": { "label": "Upright trimming" },
+      "invertedTrimming": { "label": "Inverted trimming" },
+      "formingDirection": { "label": "Forming direction" },
+      "finishingDirection": { "label": "Finishing direction" },
+      "sameDirection": { "label": "Same direction" },
+      "oppositeDirection": { "label": "Opposite direction" },
+      "magnifiedPhoto": { "label": "Magnified photo" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Directionality checks for sand grains, finishing traces, rotary trimming, wet smoothing, upright and inverted trimming, forming direction, finishing direction, and magnified photographs"
+  },
   "KoreanFieldwork-potteryFiringTraceObservation": {
     "values": {
       "irregularTrace": { "label": "Irregular trace" },

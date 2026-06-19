@@ -1293,6 +1293,8 @@ GIS 입지분석 장은 고도, 경사, 사면방향, 수계거리, 수계와의
 - `토기생산분업후보`: 성형분업, 시문분업, 채색분업, 도안반복, 규격동일유약차이, 형뜨기분리선, 생활도자비교, 민족지직접등치금지, 판단 보류
 - `토기비교표본검토`: 동일시기, 동일지역, 동일기종, 개체수확대, 기와성형흔대조, 민족지사례, 생산지후보, 유통범위, 지역성, 성급판단보류, 판단 보류
 
+2026-06-19 구현에서는 이 후보군 중 `토도자용어범위`, `토기원료소지기록`, `토기비짐기능판정`, `토기제작생애기록`, `토기성형흔판정`, `토기성형기법판단주의`, `토기공정방향성`을 `Find` 화면의 `ceramicTermScope`, `potteryFabricTemperRecord`, `potteryTemperFunctionAssessment`, `potteryProductionLifeRecord`, `potteryFormingTraceAssessment`, `potteryFormingCaution`, `potteryProcessDirectionality`로 먼저 옮겼다. 소성표면흔은 기존 `potteryFiringTraceObservation`과 함께 보며, 생산분업 후보와 비교표본 검토는 `typologyArgument`, `chronologyArgument`, `assemblageRelation` 또는 후속 전용 목록으로 확장한다.
+
 ## 제2회 매장문화재 조사연구원 교육 OCR 재대조
 
 `제2회_매장문화재_조사연구원_교육_2007년3월.pdf`는 이미지 기반 PDF라 선택 장을 WinRT OCR로 다시 읽었다. 이번 대조 범위는 조사 계획 수립과 결과 보고, 전자도면 작성법, 구석기유적 조사법, 저습지 조사방법, GPS 측량, GIS 데이터베이스와 Tablet/GPS 현장조사 시스템이다. OCR 기반이므로 세부 용어는 원문 재대조가 필요하지만, 현장 야장 구조에는 바로 반영할 수 있는 절차와 누락 위험이 뚜렷하다.

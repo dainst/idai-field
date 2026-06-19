@@ -554,6 +554,27 @@
         "bronzeAgePotteryTerminology": {
           "label": "청동기 토기·용어 표지"
         },
+        "ceramicTermScope": {
+          "label": "토도자 용어 범위"
+        },
+        "potteryFabricTemperRecord": {
+          "label": "토기 원료·소지 기록"
+        },
+        "potteryTemperFunctionAssessment": {
+          "label": "토기 비짐 기능 판정"
+        },
+        "potteryProductionLifeRecord": {
+          "label": "토기 제작 생애 기록"
+        },
+        "potteryFormingTraceAssessment": {
+          "label": "토기 성형흔 판정"
+        },
+        "potteryFormingCaution": {
+          "label": "토기 성형기법 주의"
+        },
+        "potteryProcessDirectionality": {
+          "label": "토기 공정 방향성"
+        },
         "potteryFiringTraceObservation": {
           "label": "토기 소성흔 관찰"
         },

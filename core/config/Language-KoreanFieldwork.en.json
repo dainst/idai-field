@@ -554,6 +554,27 @@
         "bronzeAgePotteryTerminology": {
           "label": "Bronze Age pottery terminology"
         },
+        "ceramicTermScope": {
+          "label": "Ceramic term scope"
+        },
+        "potteryFabricTemperRecord": {
+          "label": "Pottery fabric and temper record"
+        },
+        "potteryTemperFunctionAssessment": {
+          "label": "Pottery temper function assessment"
+        },
+        "potteryProductionLifeRecord": {
+          "label": "Pottery production life record"
+        },
+        "potteryFormingTraceAssessment": {
+          "label": "Pottery forming trace assessment"
+        },
+        "potteryFormingCaution": {
+          "label": "Pottery forming caution"
+        },
+        "potteryProcessDirectionality": {
+          "label": "Pottery process directionality"
+        },
         "potteryFiringTraceObservation": {
           "label": "Pottery firing trace observation"
         },

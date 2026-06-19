@@ -3403,6 +3403,127 @@
     },
     "description": "요상 경사 단독판정, 최종 조업품 자동판정, 회구부 자동연결, 회구부 바닥 오인 굴착, 폐요 재사용과 인접요 폐기물 유입을 막기 위한 해석위험 목록"
   },
+  "KoreanFieldwork-ceramicTermScope": {
+    "values": {
+      "earthenwareTerm": { "label": "토기" },
+      "stonewareTerm": { "label": "도기" },
+      "porcelainTerm": { "label": "자기" },
+      "hardFiredPotteryTerm": { "label": "도질토기" },
+      "suekiTerm": { "label": "스에키" },
+      "ceramicUmbrellaTerm": { "label": "도자기 포괄어" },
+      "glazedPottery": { "label": "유약도기" },
+      "unglazedPottery": { "label": "무유도기" },
+      "glazePresent": { "label": "유약 있음" },
+      "porousBody": { "label": "다공질 태" },
+      "firingTemperatureCandidate": { "label": "소성온도 후보" },
+      "terminologyRegionDifference": { "label": "용어권역 차이" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "토기·도기·자기·도질토기·스에키 같은 용어권역 차이를 열어두고 유약, 다공질 태, 소성온도 후보를 분리해 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-potteryFabricTemperRecord": {
+    "values": {
+      "primaryClay": { "label": "1차 점토" },
+      "secondaryClay": { "label": "2차 점토" },
+      "clayLevigated": { "label": "수비" },
+      "temperPresent": { "label": "비짐 있음" },
+      "sandTemper": { "label": "모래 비짐" },
+      "stoneFragmentTemper": { "label": "석편 비짐" },
+      "micaTemper": { "label": "운모 비짐" },
+      "talcTemper": { "label": "활석 비짐" },
+      "shellPowderTemper": { "label": "패각가루 비짐" },
+      "plantFiberTemper": { "label": "식물섬유 비짐" },
+      "grainHuskTemper": { "label": "곡물껍질 비짐" },
+      "fireResistancePurpose": { "label": "내화 목적" },
+      "formingEfficiencyPurpose": { "label": "성형효율 목적" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "토기 태토와 비짐을 단순 포함물로 처리하지 않고 원료 점토, 수비, 비짐 재료와 의도된 기능 후보로 분리해 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-potteryTemperFunctionAssessment": {
+    "values": {
+      "formingEfficiency": { "label": "성형효율" },
+      "fireResistance": { "label": "내화성" },
+      "porosityControl": { "label": "다공성 조절" },
+      "cookingVessel": { "label": "취사용" },
+      "largeVessel": { "label": "대형토기" },
+      "dryingSpeedControl": { "label": "건조속도 조절" },
+      "decoratedSmallVessel": { "label": "장식성 소형토기" },
+      "refinedClay": { "label": "정제 태토" },
+      "levigatedClay": { "label": "수비 태토" },
+      "temperReuse": { "label": "비짐 재활용" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "비짐의 기능을 성형효율, 내화성, 다공성, 건조 조절, 용도와 연결하되 기능 확정을 보류할 수 있게 하는 목록"
+  },
+  "KoreanFieldwork-potteryProductionLifeRecord": {
+    "values": {
+      "clayQuarrying": { "label": "점토 채굴" },
+      "temperProcurement": { "label": "비짐 확보" },
+      "fabricPreparation": { "label": "소지 제작" },
+      "forming": { "label": "성형" },
+      "finishing": { "label": "정형" },
+      "decoration": { "label": "장식" },
+      "surfaceFinishing": { "label": "정면" },
+      "drying": { "label": "건조" },
+      "firing": { "label": "소성" },
+      "completion": { "label": "완성" },
+      "use": { "label": "사용" },
+      "breakage": { "label": "파손" },
+      "repairReuse": { "label": "보수·재사용" },
+      "discard": { "label": "폐기" },
+      "temperReuse": { "label": "비짐 재활용" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "토기 유물을 시기명이나 기종명으로 닫지 않고 채굴, 소지, 성형, 정형, 장식, 소성, 사용, 파손, 보수·재사용, 폐기까지 제작 생애로 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-potteryFormingTraceAssessment": {
+    "values": {
+      "handBuilding": { "label": "손빚기" },
+      "coilBuilding": { "label": "테쌓기" },
+      "ringBuilding": { "label": "서리기" },
+      "innerMold": { "label": "내형법" },
+      "outerMold": { "label": "외형법" },
+      "innerOuterMold": { "label": "내외형법" },
+      "wheelThrowing": { "label": "물레질 뽑기" },
+      "paddleAndAnvil": { "label": "타날 채용" },
+      "innerAnvilTrace": { "label": "내박자흔" },
+      "hakemeFinishing": { "label": "하케메 조정" },
+      "stringCutTrace": { "label": "실떼기" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "성형흔을 손빚기, 테쌓기, 형틀, 물레질, 타날, 내박자흔, 하케메, 실떼기 등으로 관찰하되 단일 흔적으로 제작법을 확정하지 않기 위한 목록"
+  },
+  "KoreanFieldwork-potteryFormingCaution": {
+    "values": {
+      "stringCutNotStandalone": { "label": "실떼기 단독확정 금지" },
+      "wheelThrowingCandidate": { "label": "물레질 뽑기 후보" },
+      "singleFormingRotationalFinishing": { "label": "단일성형 후 회전조정" },
+      "formingFinishingSeparated": { "label": "성형·정형 분리" },
+      "techniquePersistencePossible": { "label": "제법 지속 가능" },
+      "paddleUseChecked": { "label": "타날 채용 확인" },
+      "tileFormingTraceCompared": { "label": "기와 성형흔 대조" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "실떼기와 회전흔을 물레질 뽑기의 직접 증거로 확정하지 않고 성형·정형 분리, 기술 지속, 기와 성형흔 대조를 남기기 위한 목록"
+  },
+  "KoreanFieldwork-potteryProcessDirectionality": {
+    "values": {
+      "sandGrainDirection": { "label": "모래알 방향" },
+      "finishingTraceDirection": { "label": "조정흔 방향" },
+      "rotaryTrimming": { "label": "회전깎기" },
+      "wetSmoothingTrace": { "label": "물손질흔" },
+      "uprightTrimming": { "label": "정치깎기" },
+      "invertedTrimming": { "label": "도치깎기" },
+      "formingDirection": { "label": "성형 방향" },
+      "finishingDirection": { "label": "정형 방향" },
+      "sameDirection": { "label": "동일 방향" },
+      "oppositeDirection": { "label": "반대 방향" },
+      "magnifiedPhoto": { "label": "확대사진" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "모래알 방향, 조정흔 방향, 회전깎기, 물손질흔, 정치·도치깎기를 확대사진과 함께 남겨 성형과 정형의 공정 방향성을 검토하기 위한 목록"
+  },
   "KoreanFieldwork-potteryFiringTraceObservation": {
     "values": {
       "irregularTrace": { "label": "부정형 소성흔" },

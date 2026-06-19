@@ -146,6 +146,20 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('doNotMergeToSingleTerm');
         expect(documentsById['term-import-pottery-workshop-drying-yard'].resource.verificationState)
             .toBe('pendingDecision');
+        expect(documentsById['term-authority-stone-chamber-tomb'].resource.termDictionaryDomain)
+            .toEqual(['tomb', 'generalArchaeology']);
+        expect(documentsById['term-alias-stone-chamber-tomb-dolbang'].resource.termAliasText)
+            .toBe('돌방무덤');
+        expect(documentsById['term-alias-stone-chamber-tomb-dolbang'].resource.termSearchMapping)
+            .toContain('structureSubtypeSeparated');
+        expect(documentsById['term-import-stone-chamber-tomb-dolbang'].resource.termImportAuthorityText)
+            .toBe('석실묘');
+        expect(documentsById['term-import-stone-chamber-tomb-dolbang'].resource.termAliasHandling)
+            .toContain('doNotOverwriteObservedTerm');
+        expect(documentsById['term-relationship-stone-chamber-access'].resource.termRelationshipTargetText)
+            .toContain('횡혈식 석실묘');
+        expect(documentsById['term-relationship-stone-chamber-access'].resource.termSearchMapping)
+            .toContain('doNotMergeToSingleTerm');
     });
 
 

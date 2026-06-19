@@ -988,6 +988,120 @@
         "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "pendingDecision"],
         "verificationState": "pendingDecision"
       }
+    },
+    {
+      "resource": {
+        "id": "term-authority-stone-chamber-tomb",
+        "identifier": "석실묘",
+        "shortDescription": "돌방무덤 계열 권위 표제어",
+        "category": "TermAuthority",
+        "relations": {
+          "liesWithin": ["term-group-korean-archaeology"]
+        },
+        "description": "돌방무덤 입력어를 석실묘 표제어와 연결하되, 횡구식·횡혈식 접근 구조, 현실·연도·묘도, 시상·관대, 추가장 가능성은 별도 매장주체부 기록으로 남긴다.",
+        "termDictionaryDomain": ["tomb", "generalArchaeology"],
+        "termApplicationScope": ["valueListEntry", "reportOutput", "searchAlias", "sourceDictionaryLink"],
+        "termSourcePriority": ["domainSpecialistDictionary", "generalArchaeologyDictionary", "methodologyTerm"],
+        "termRelation": ["preferredTerm", "alias", "narrowerTerm", "domainRestricted"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "fieldUsagePreserved",
+          "structureSubtypeSeparated",
+          "ambiguousSynonymFlagged",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["specialistDictionarySource", "generalDictionaryUsage", "sourcePageLinked", "valueListCandidate"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-alias-stone-chamber-tomb-dolbang",
+        "identifier": "돌방무덤",
+        "shortDescription": "돌방무덤 현장 입력어의 석실묘 연결",
+        "category": "TermAlias",
+        "relations": {
+          "liesWithin": ["term-authority-stone-chamber-tomb"]
+        },
+        "description": "일반 사전과 현장 입력에서 쓰이는 돌방무덤을 검색어로 허용하지만, 횡구식·횡혈식 같은 접근 구조 판단은 석실묘 표제어 하나로 덮어쓰지 않는다.",
+        "termAliasText": "돌방무덤",
+        "termAliasRole": ["fieldSynonym", "localUsage", "dictionarySeeAlso"],
+        "termAliasHandling": [
+          "autocompleteAccepted",
+          "preferredHeadwordTarget",
+          "keepAliasForSearch",
+          "manualReviewRequired",
+          "doNotOverwriteObservedTerm"
+        ],
+        "termRelation": ["alias", "domainRestricted"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "fieldUsagePreserved",
+          "structureSubtypeSeparated",
+          "ambiguousSynonymFlagged",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["generalDictionaryUsage", "sourcePageLinked", "pendingDecision"],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-import-stone-chamber-tomb-dolbang",
+        "identifier": "IMPORT-TOMB-001",
+        "shortDescription": "가져오기 입력어 돌방무덤의 석실묘 매핑",
+        "category": "TermImportMapping",
+        "relations": {
+          "liesWithin": ["term-authority-stone-chamber-tomb"]
+        },
+        "description": "기존 야장, 사진 캡션, 보고서 목록에서 돌방무덤으로 들어온 값을 석실묘 표제어와 연결하되, 보고서 출력 전에는 횡구식·횡혈식·연도·묘도·폐쇄석 기록을 확인한다.",
+        "termImportSourceText": "돌방무덤",
+        "termImportAuthorityText": "석실묘",
+        "termImportReportText": "석실묘",
+        "termAliasHandling": [
+          "importOnly",
+          "preferredHeadwordTarget",
+          "keepAliasForSearch",
+          "manualReviewRequired",
+          "doNotOverwriteObservedTerm"
+        ],
+        "termRelation": ["alias", "domainRestricted"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "structureSubtypeSeparated",
+          "ambiguousSynonymFlagged",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["generalDictionaryUsage", "sourcePageLinked", "pendingDecision"],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-relationship-stone-chamber-access",
+        "identifier": "REL-TOMB-001",
+        "shortDescription": "석실묘와 횡구식·횡혈식 접근 구조 관계",
+        "category": "TermRelationship",
+        "relations": {
+          "liesWithin": ["term-authority-stone-chamber-tomb"]
+        },
+        "description": "분묘 조사방법론과 고분편 사전은 석실묘를 현실, 연도, 묘도, 폐쇄석, 시상·관대, 추가장 가능성과 함께 기록하게 한다. 따라서 돌방무덤을 석실묘로 연결하더라도 접근 구조와 통로·폐쇄시설 관계는 별도 기록으로 남긴다.",
+        "termRelationshipSourceText": "석실묘",
+        "termRelationshipTargetText": "횡구식 석실묘; 횡혈식 석실묘; 현실; 연도; 묘도; 폐쇄석; 시상; 관대",
+        "termRelationshipEvidenceText": "고분편 전문사전의 석실묘·시상·관대 용례와 2011년 분묘유구 조사법의 횡구식·횡혈식 석실분 조사 기준",
+        "termRelation": ["narrowerTerm", "partWholeRelation", "spatialRelation", "domainRestricted"],
+        "termSearchMapping": [
+          "fieldUsagePreserved",
+          "structureSubtypeSeparated",
+          "ambiguousSynonymFlagged",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "pendingDecision"],
+        "verificationState": "candidate"
+      }
     }
   ]
 }

@@ -148,7 +148,9 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-19 추가로 `현장조사 방법과 해석`의 수혈주거지 도판을 다시 보면서 평면확인, 토층둑 배치, 1~3차 노출, 동일 촬영지점·드론 경로, 외부시설 조사, 해체 후 최종평면이 단계 비교 가능하게 남아야 함을 반영했다. 이 요구는 `Feature` 화면의 `pitDwellingInvestigationSequence`와 `pitDwellingSectionStrategy` 값 목록으로 추가했다.
 
-2026-06-20 `수혈건물지 조사법`과 `매장문화재 유적조사방법론`의 취락·마을 해석 부분을 다시 묶어 `FeatureGroup`의 `settlementSpatialInterpretation`으로 옮겼다. 기존 `pitDwellingOverlapSequence`가 개별 중복 수혈주거지의 조사 절차와 선후관계 근거를 맡는다면, 새 필드는 취락 범위, 집자리 중복과 동시기성, 한 시점 규모, 행위공간 구획, 공동·세대별 공간, 폐기 방식, 바닥 유물분포, 식물유체와 잔류물·내용물 분석 연결, 반복 축조 원인 검토를 취락 카드에서 관리한다. `bronze-age-settlement-dolmen-workflow-sample.json`은 이 취락 단위 해석값과 개별 수혈건물지 조사값이 함께 검증되도록 갱신했다.
+2026-06-20 `수혈건물지 조사법`과 `매장문화재 유적조사방법론`의 취락·마을 해석 부분을 다시 묶어 `FeatureGroup`의 `settlementSpatialInterpretation`으로 옮겼다. 기존 `pitDwellingOverlapSequence`가 개별 중복 수혈주거지의 조사 절차와 선후관계 근거를 맡는다면, 새 필드는 취락 범위, 집자리 중복과 동시기성, 한 시점 규모, 행위공간 구획, 공동·세대별 공간, 폐기 방식, 바닥 유물분포, 주거지 간 유물 접합 검토, 식물유체와 잔류물·내용물 분석 연결, 반복 축조 원인 검토를 취락 카드에서 관리한다. `bronze-age-settlement-dolmen-workflow-sample.json`은 이 취락 단위 해석값과 개별 수혈건물지 조사값이 함께 검증되도록 갱신했다.
+
+2026-06-20 마무리 보강에서는 `발굴조사 기록 방법1`과 `발굴조사의 이해`의 질문형 야장 대목을 다시 대조해, 바닥에서 뜬 유물의 자연유입·의도폐기 검토, 수거 전 실측 판단, 사용면·최초굴착면 구분을 `pitDwellingFloorFacility`에 추가했다. 주거지 간 유물 접합은 개별 유물 복원값과 별개로 취락 동시기성 판단 근거가 되므로 `settlementSpatialInterpretation`에 `interDwellingRefitChecked`를 추가했다.
 
 2026-06-19 `발굴조사 업무의 이해`의 시대별 토기 장도 구현 단위로 압축했다. 토기 유물은 시대명이나 기형명보다 점토 채굴, 비짐 확보, 소지 제작, 성형, 정형, 장식, 정면, 건조, 소성, 사용, 파손, 보수·재사용, 폐기로 이어지는 제작 생애를 먼저 남겨야 한다. 토기·도기·자기·도질토기·스에키 용어 범위, 유약·다공질·소성온도 후보, 원료 점토와 비짐 기능, 실떼기 단독확정 금지, 성형·정형 분리, 공정 방향성은 `Find` 화면의 `ceramicTermScope`, `potteryFabricTemperRecord`, `potteryTemperFunctionAssessment`, `potteryProductionLifeRecord`, `potteryFormingTraceAssessment`, `potteryFormingCaution`, `potteryProcessDirectionality` 값 목록으로 옮겼다. 생활도자·민족지·실험 사례, 표준화와 분업 후보, 동일 시기·지역·기종 비교, 표본 확대, 생산지·유통범위 후보는 `potteryProductionOrganizationEvidence`와 `potteryComparativeReferenceCheck`로 추가해 직접 등치와 성급한 결론을 막는다. 이번 보강에서는 점토 수분·비짐 비율·건조·소성 조건과 실패흔을 `potteryExperimentalVariableRecord`로, 관찰·제외·대표 속성 및 기술군·암석기술군·형태기술군 분류를 `potteryClassificationBasis`로 추가했다.
 

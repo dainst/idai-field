@@ -12889,11 +12889,23 @@
       "findsLeftUntilFloorCheck": {
         "label": "Finds left until floor check"
       },
+      "floatingFindNaturalInflowReviewed": {
+        "label": "Floating find natural-inflow reviewed"
+      },
+      "floatingFindIntentionalDiscardReviewed": {
+        "label": "Floating find intentional discard reviewed"
+      },
+      "floatingFindMeasuredBeforeRemoval": {
+        "label": "Floating find measured before removal"
+      },
+      "useSurfaceInitialCutDistinguished": {
+        "label": "Use surface/initial cut distinguished"
+      },
       "pendingDecision": {
         "label": "Pending decision"
       }
     },
-    "description": "Korean pit dwelling checks for floor surfaces, wall-floor junctions, postholes, hearths, stoves, wall grooves, storage pits, drains, entrances, and facility sections"
+    "description": "Korean pit dwelling checks for floor surfaces, wall-floor junctions, postholes, hearths, stoves, wall grooves, storage pits, drains, entrances, facility sections, floating-find deposition questions, pre-removal measurement decisions, and distinguishing use surfaces from initial cuts"
   },
   "KoreanFieldwork-pitDwellingFireEvidence": {
     "values": {
@@ -13305,13 +13317,14 @@
       "householdSpaceCandidate": { "label": "Household space candidate" },
       "discardPatternRecorded": { "label": "Discard pattern recorded" },
       "floorFindDistributionReviewed": { "label": "Floor-find distribution reviewed" },
+      "interDwellingRefitChecked": { "label": "Inter-dwelling refit checked" },
       "archaeobotanyAnalysisLinked": { "label": "Archaeobotany analysis linked" },
       "residueContentAnalysisLinked": { "label": "Residue/content analysis linked" },
       "repeatedConstructionCauseReviewed": { "label": "Repeated construction cause reviewed" },
       "alternativeSpatialInterpretation": { "label": "Alternative spatial interpretation" },
       "pendingDecision": { "label": "Pending decision" }
     },
-    "description": "Korean settlement-scale interpretation checks for keeping overlap, contemporaneity, occupation scale, spatial partitioning, discard patterns, floor finds, archaeobotany, residue/content analysis, and repeated construction causes linked to feature-group evidence"
+    "description": "Korean settlement-scale interpretation checks for keeping overlap, contemporaneity, occupation scale, spatial partitioning, discard patterns, floor finds, inter-dwelling refits, archaeobotany, residue/content analysis, and repeated construction causes linked to feature-group evidence"
   },
   "KoreanFieldwork-productionProcessSystem": {
     "values": {

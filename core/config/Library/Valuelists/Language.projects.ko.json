@@ -1135,11 +1135,23 @@
       "findsLeftUntilFloorCheck": {
         "label": "바닥 확인 전 유물 잔류"
       },
+      "floatingFindNaturalInflowReviewed": {
+        "label": "뜬 유물 자연유입 검토"
+      },
+      "floatingFindIntentionalDiscardReviewed": {
+        "label": "뜬 유물 의도폐기 검토"
+      },
+      "floatingFindMeasuredBeforeRemoval": {
+        "label": "뜬 유물 수거 전 실측 판단"
+      },
+      "useSurfaceInitialCutDistinguished": {
+        "label": "사용면·최초굴착면 구분"
+      },
       "pendingDecision": {
         "label": "판단 보류"
       }
     },
-    "description": "수혈건물지 바닥면과 주혈, 노지, 부뚜막, 벽구, 저장공, 배수·집수시설 같은 내부시설의 확인 상태를 기록하기 위한 목록"
+    "description": "수혈건물지 바닥면과 주혈, 노지, 부뚜막, 벽구, 저장공, 배수·집수시설, 뜬 유물의 자연유입·의도폐기 판단, 수거 전 실측 여부, 사용면·최초굴착면 구분을 기록하기 위한 목록"
   },
   "KoreanFieldwork-pitDwellingFireEvidence": {
     "values": {
@@ -1551,13 +1563,14 @@
       "householdSpaceCandidate": { "label": "세대별 공간 후보" },
       "discardPatternRecorded": { "label": "폐기 방식 기록" },
       "floorFindDistributionReviewed": { "label": "바닥 유물분포 검토" },
+      "interDwellingRefitChecked": { "label": "주거지 간 유물 접합 검토" },
       "archaeobotanyAnalysisLinked": { "label": "식물유체 분석 연결" },
       "residueContentAnalysisLinked": { "label": "잔류물·내용물 분석 연결" },
       "repeatedConstructionCauseReviewed": { "label": "반복 축조 원인 검토" },
       "alternativeSpatialInterpretation": { "label": "대안 공간해석" },
       "pendingDecision": { "label": "판단 보류" }
     },
-    "description": "취락 단위에서 중복관계, 동시기성, 한 시점 규모, 공간구획, 폐기 양상, 바닥 유물분포, 식물유체와 잔류물·내용물 분석, 반복 축조 원인을 유구군 근거로 묶어 검토하기 위한 목록"
+    "description": "취락 단위에서 중복관계, 동시기성, 한 시점 규모, 공간구획, 폐기 양상, 바닥 유물분포, 주거지 간 유물 접합, 식물유체와 잔류물·내용물 분석, 반복 축조 원인을 유구군 근거로 묶어 검토하기 위한 목록"
   },
   "KoreanFieldwork-productionProcessSystem": {
     "values": {

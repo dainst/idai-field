@@ -74,6 +74,7 @@
           "activityAreaPartitionRecorded",
           "sharedSpaceRecorded",
           "discardPatternRecorded",
+          "interDwellingRefitChecked",
           "archaeobotanyAnalysisLinked",
           "residueContentAnalysisLinked",
           "alternativeSpatialInterpretation"

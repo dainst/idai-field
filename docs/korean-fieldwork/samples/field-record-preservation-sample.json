@@ -8,7 +8,8 @@
     "판단 보류가 확정값으로 덮이지 않고 검토 이력으로 남는가.",
     "표토·교란·상부퇴적토·매몰토 제거와 사용면 확인이 행위의 역순 원칙으로 검토되는가.",
     "행정귀속·보고서 수록 대상이 아니더라도 탄화곡물·목탄·슬래그·동물뼈·조개 같은 시료가 후속연구 후보와 수습·미수습 사유까지 남는가.",
-    "개인 야장의 유구별 서사와 현장 조사자의 보고서 기술 연결이 보존되는가."
+    "개인 야장의 유구별 서사와 현장 조사자의 보고서 기술 연결이 보존되는가.",
+    "바닥에서 뜬 유물의 자연유입·의도폐기 가능성과 수거 전 실측 판단이 남는가."
   ],
   "documents": [
     {
@@ -91,7 +92,11 @@
           "wallFloorJunctionFollowed",
           "postholesChecked",
           "hearthChecked",
-          "findsLeftUntilFloorCheck"
+          "findsLeftUntilFloorCheck",
+          "floatingFindNaturalInflowReviewed",
+          "floatingFindIntentionalDiscardReviewed",
+          "floatingFindMeasuredBeforeRemoval",
+          "useSurfaceInitialCutDistinguished"
         ],
         "pitDwellingFireEvidence": [
           "charredTimberRecorded",

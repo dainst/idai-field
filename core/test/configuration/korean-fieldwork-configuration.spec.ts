@@ -175,6 +175,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('notRecoverableWarning');
         expect(documentsById['feature-pit-building-001'].resource.excavationReverseSequenceCheck)
             .toContain('useSurfaceChecked');
+        expect(documentsById['feature-pit-building-001'].resource.pitDwellingFloorFacility)
+            .toContain('floatingFindNaturalInflowReviewed');
+        expect(documentsById['feature-pit-building-001'].resource.pitDwellingFloorFacility)
+            .toContain('floatingFindIntentionalDiscardReviewed');
+        expect(documentsById['feature-pit-building-001'].resource.pitDwellingFloorFacility)
+            .toContain('floatingFindMeasuredBeforeRemoval');
+        expect(documentsById['feature-pit-building-001'].resource.pitDwellingFloorFacility)
+            .toContain('useSurfaceInitialCutDistinguished');
         expect(documentsById['feature-pit-building-001'].resource.pitDwellingFireEvidence)
             .toContain('charredTimberMoistureMaintained');
         expect(documentsById['feature-pit-building-001'].resource.pitDwellingFireEvidence)
@@ -807,6 +815,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('pitDwelling');
         expect(documentsById['fg-bronze-settlement-001'].resource.settlementSpatialInterpretation)
             .toContain('contemporaneousDwellingAssessed');
+        expect(documentsById['fg-bronze-settlement-001'].resource.settlementSpatialInterpretation)
+            .toContain('interDwellingRefitChecked');
         expect(documentsById['fg-bronze-settlement-001'].resource.settlementSpatialInterpretation)
             .toContain('residueContentAnalysisLinked');
         expect(documentsById['feature-bronze-dwelling-001'].resource.pitFeatureFunctionAssessment)
@@ -3137,6 +3147,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-pitDwellingFloorFacility']
             .values.wallFloorJunctionFollowed.label)
             .toBe('Wall-floor junction followed');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-pitDwellingFloorFacility']
+            .values.floatingFindMeasuredBeforeRemoval.label)
+            .toBe('Floating find measured before removal');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-pitDwellingFloorFacility']
+            .values.useSurfaceInitialCutDistinguished.label)
+            .toBe('사용면·최초굴착면 구분');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-pitDwellingFireEvidence']
             .values.fireTypeNotAssumed.label)
             .toBe('Fire type not assumed');
@@ -3173,6 +3189,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-settlementSpatialInterpretation']
             .values.contemporaneousDwellingAssessed.label)
             .toBe('Contemporaneous dwellings assessed');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-settlementSpatialInterpretation']
+            .values.interDwellingRefitChecked.label)
+            .toBe('Inter-dwelling refit checked');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-settlementSpatialInterpretation']
             .values.residueContentAnalysisLinked.label)
             .toBe('잔류물·내용물 분석 연결');

@@ -32556,6 +32556,10 @@
       "entranceChecked": {},
       "ancillaryFacilitiesSectioned": {},
       "findsLeftUntilFloorCheck": {},
+      "floatingFindNaturalInflowReviewed": {},
+      "floatingFindIntentionalDiscardReviewed": {},
+      "floatingFindMeasuredBeforeRemoval": {},
+      "useSurfaceInitialCutDistinguished": {},
       "pendingDecision": {}
     },
     "order": [
@@ -32571,6 +32575,10 @@
       "entranceChecked",
       "ancillaryFacilitiesSectioned",
       "findsLeftUntilFloorCheck",
+      "floatingFindNaturalInflowReviewed",
+      "floatingFindIntentionalDiscardReviewed",
+      "floatingFindMeasuredBeforeRemoval",
+      "useSurfaceInitialCutDistinguished",
       "pendingDecision"
     ]
   },
@@ -33136,6 +33144,7 @@
       "householdSpaceCandidate": {},
       "discardPatternRecorded": {},
       "floorFindDistributionReviewed": {},
+      "interDwellingRefitChecked": {},
       "archaeobotanyAnalysisLinked": {},
       "residueContentAnalysisLinked": {},
       "repeatedConstructionCauseReviewed": {},
@@ -33153,6 +33162,7 @@
       "householdSpaceCandidate",
       "discardPatternRecorded",
       "floorFindDistributionReviewed",
+      "interDwellingRefitChecked",
       "archaeobotanyAnalysisLinked",
       "residueContentAnalysisLinked",
       "repeatedConstructionCauseReviewed",

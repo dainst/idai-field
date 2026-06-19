@@ -15113,8 +15113,23 @@
       "modernAdministrativePlaceBasis": {
         "label": "Modern administrative place basis"
       },
+      "legalDongRiBasis": {
+        "label": "Legal dong/ri basis"
+      },
       "conventionalOldPlaceNamePreserved": {
         "label": "Conventional old place name preserved"
+      },
+      "projectNameSeeAlso": {
+        "label": "Project name see-also"
+      },
+      "designatedHeritageNameLinked": {
+        "label": "Designated heritage name linked"
+      },
+      "northKoreanCulturalLanguagePreserved": {
+        "label": "North Korean cultural-language preserved"
+      },
+      "initialSoundVariantLinked": {
+        "label": "Initial-sound variant linked"
       },
       "siteTypeNameSeparated": {
         "label": "Place and site type separated"
@@ -15124,6 +15139,9 @@
       },
       "differentPointSplitByType": {
         "label": "Different point split by type"
+      },
+      "sameHeadwordDomainSeparated": {
+        "label": "Same headword separated by domain"
       },
       "featureMetersOutput": {
         "label": "Feature meters output"
@@ -15143,11 +15161,14 @@
       "originalScriptIndexLinked": {
         "label": "Original-script index linked"
       },
+      "domainIndexLinked": {
+        "label": "Domain index linked"
+      },
       "pendingDecision": {
         "label": "Pending decision"
       }
     },
-    "description": "Korean archaeological dictionary editorial rules for report output, site-name normalization, measurement display, and search indexing"
+    "description": "Korean archaeological dictionary editorial rules for report output, site-name normalization, see-also handling, measurement display, and search indexing"
   },
   "KoreanFieldwork-featurePackage": {
     "values": {

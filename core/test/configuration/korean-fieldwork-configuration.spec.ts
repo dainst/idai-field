@@ -92,6 +92,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('structureSubtypeSeparated');
         expect(documentsById['term-authority-dwelling-site'].resource.dictionaryEditorialRule)
             .toContain('siteTypeNameSeparated');
+        expect(documentsById['term-authority-dwelling-site'].resource.dictionaryEditorialRule)
+            .toContain('initialSoundVariantLinked');
+        expect(documentsById['term-authority-dwelling-site'].resource.dictionaryEditorialRule)
+            .toContain('sameHeadwordDomainSeparated');
         expect(documentsById['term-authority-kiln-site'].resource.termSearchMapping)
             .toContain('doNotMergeToSingleTerm');
         expect(documentsById['term-alias-kiln-site-kiln'].resource.termAliasText)
@@ -3276,9 +3280,15 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-dictionaryEditorialRule']
             .values.siteTypeNameSeparated.label)
             .toBe('Place and site type separated');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-dictionaryEditorialRule']
+            .values.sameHeadwordDomainSeparated.label)
+            .toBe('Same headword separated by domain');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-dictionaryEditorialRule']
             .values.chronologyNoThousandsSeparator.label)
             .toBe('연대 천 단위 미사용');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-dictionaryEditorialRule']
+            .values.initialSoundVariantLinked.label)
+            .toBe('두음법칙 변형 연결');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-termAliasRole']
             .values.projectReportName.label)
             .toBe('Project/report name');

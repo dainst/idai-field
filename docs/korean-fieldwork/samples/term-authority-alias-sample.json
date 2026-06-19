@@ -123,11 +123,18 @@
           "koreanHeadwordPreferred",
           "originalScriptParallel",
           "modernAdministrativePlaceBasis",
+          "legalDongRiBasis",
+          "projectNameSeeAlso",
+          "designatedHeritageNameLinked",
+          "northKoreanCulturalLanguagePreserved",
+          "initialSoundVariantLinked",
           "siteTypeNameSeparated",
           "samePointMultiPeriodLinked",
           "differentPointSplitByType",
+          "sameHeadwordDomainSeparated",
           "hangulIndexLinked",
-          "originalScriptIndexLinked"
+          "originalScriptIndexLinked",
+          "domainIndexLinked"
         ],
         "termRelation": ["preferredTerm", "broaderTerm", "narrowerTerm"],
         "termSearchMapping": [

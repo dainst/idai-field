@@ -14324,6 +14324,35 @@
     },
     "description": "Korean report-preparation checks for keeping the report legend, standards, source notebooks, original drawings, photos, registers, number conversions, and drawing/photo consistency visible"
   },
+  "KoreanFieldwork-reportStandardHistory": {
+    "values": {
+      "legendStandardRecorded": { "label": "Legend standard recorded" },
+      "permitNumberStandardRecorded": { "label": "Permit number standard recorded" },
+      "northStandardRecorded": { "label": "North standard recorded" },
+      "scaleStandardRecorded": { "label": "Scale standard recorded" },
+      "elevationStandardRecorded": { "label": "Elevation standard recorded" },
+      "soilColorStandardRecorded": { "label": "Soil color standard recorded" },
+      "drawingSymbolStandardRecorded": { "label": "Drawing symbol standard recorded" },
+      "drawingReductionRatioRecorded": { "label": "Drawing reduction ratio recorded" },
+      "drawingPhotoOrientationRecorded": { "label": "Drawing/photo orientation recorded" },
+      "featureNumberRuleRecorded": { "label": "Feature number rule recorded" },
+      "artifactNumberRuleRecorded": { "label": "Artifact number rule recorded" },
+      "artifactDescriptionStandardRecorded": { "label": "Artifact description standard recorded" },
+      "artifactSelectionStandardRecorded": { "label": "Artifact selection standard recorded" },
+      "terminologyStandardRecorded": { "label": "Terminology standard recorded" },
+      "standardChanged": { "label": "Standard changed" },
+      "changeReasonRecorded": { "label": "Change reason recorded" },
+      "previousVersionPreserved": { "label": "Previous version preserved" },
+      "drawingRegisterUpdated": { "label": "Drawing register updated" },
+      "photoRegisterUpdated": { "label": "Photo register updated" },
+      "artifactRegisterUpdated": { "label": "Artifact register updated" },
+      "reportLegendUpdated": { "label": "Report legend updated" },
+      "teamNotified": { "label": "Team notified" },
+      "sourceRecordLinked": { "label": "Source record linked" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean report-standard history checks for preserving changes to legends, orientation, scales, elevation, soil color, drawing symbols, numbering rules, terminology, registers, and source-record links"
+  },
   "KoreanFieldwork-stateVestingSelectionRecord": {
     "values": {
       "ownershipNotice": { "label": "Ownership notice" },

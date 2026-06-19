@@ -2570,6 +2570,35 @@
     },
     "description": "보고서 일러두기, 허가번호, 방위, 축척, 고도, 토색, 도면기호, 실측 기준, 원야장·원도면·원사진·목록·번호 변환표와 도면·사진 일치 여부를 관리하기 위한 목록"
   },
+  "KoreanFieldwork-reportStandardHistory": {
+    "values": {
+      "legendStandardRecorded": { "label": "일러두기 기준 기록" },
+      "permitNumberStandardRecorded": { "label": "허가번호 기준 기록" },
+      "northStandardRecorded": { "label": "방위 기준 기록" },
+      "scaleStandardRecorded": { "label": "축척 기준 기록" },
+      "elevationStandardRecorded": { "label": "해발고도 기준 기록" },
+      "soilColorStandardRecorded": { "label": "토색 기준 기록" },
+      "drawingSymbolStandardRecorded": { "label": "도면기호 기준 기록" },
+      "drawingReductionRatioRecorded": { "label": "도면 축소율 기록" },
+      "drawingPhotoOrientationRecorded": { "label": "도면·사진 방향 기록" },
+      "featureNumberRuleRecorded": { "label": "유구번호 규칙 기록" },
+      "artifactNumberRuleRecorded": { "label": "유물번호 규칙 기록" },
+      "artifactDescriptionStandardRecorded": { "label": "유물 기술 기준 기록" },
+      "artifactSelectionStandardRecorded": { "label": "유물 선별 기준 기록" },
+      "terminologyStandardRecorded": { "label": "용어 기준 기록" },
+      "standardChanged": { "label": "기준 변경" },
+      "changeReasonRecorded": { "label": "변경 사유 기록" },
+      "previousVersionPreserved": { "label": "이전 버전 보존" },
+      "drawingRegisterUpdated": { "label": "도면목록 갱신" },
+      "photoRegisterUpdated": { "label": "사진대장 갱신" },
+      "artifactRegisterUpdated": { "label": "유물대장 갱신" },
+      "reportLegendUpdated": { "label": "일러두기 갱신" },
+      "teamNotified": { "label": "조사팀 공유" },
+      "sourceRecordLinked": { "label": "원기록 연결" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "일러두기, 방위, 축척, 해발고도, 토색, 도면기호, 유구·유물번호, 유물 기술·선별, 용어 기준의 변경 사유와 이전 버전, 대장 갱신, 팀 공유, 원기록 연결을 관리하기 위한 목록"
+  },
   "KoreanFieldwork-stateVestingSelectionRecord": {
     "values": {
       "ownershipNotice": { "label": "소유권 공고" },

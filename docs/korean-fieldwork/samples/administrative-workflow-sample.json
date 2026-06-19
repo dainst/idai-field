@@ -1,6 +1,6 @@
 {
   "title": "Korean administrative workflow and review package sample",
-  "purpose": "Validate that request intake, permit document sets, plan changes, site protection, expert review meetings, partial completion packages, surface survey result processing, and record transfer management stay connected in the Korean fieldwork configuration.",
+  "purpose": "Validate that request intake, permit document sets, plan changes, site protection, expert review meetings, partial completion packages, surface survey result processing, report standards, and record transfer management stay connected in the Korean fieldwork configuration.",
   "validationQuestions": [
     "조사의뢰 접수 단계의 기초자료와 현장답사 이력이 조사계획 수립 근거로 남는가.",
     "현장 착수·진행 중 허가서 비치, 보안, 주민·관할기관 통보, 유적보호, 임시보관, 기록물 점검이 작업 단위로 남는가.",
@@ -208,6 +208,46 @@
           "drawingPhotoConsistencyChecked",
           "photoNotSubstitutingPlan",
           "sourceRecordLinkPreserved"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "report-standard-history-admin-001",
+        "identifier": "ADMIN-REPORT-STD-001",
+        "shortDescription": "보고서 일러두기 기준 변경 이력",
+        "category": "ReportStandardHistory",
+        "relations": {
+          "liesWithin": ["project-admin-workflow-001"]
+        },
+        "description": "최종보고서 1차 편집 뒤 방위 기준과 유구·유물번호 정리 방식이 바뀐 내역을 이전 기준과 함께 보존한다.",
+        "reportStandardScopeText": "일러두기·도면·사진·유물대장 공통 기준",
+        "reportStandardVersionText": "2026-1차 편집 후 기준 v2",
+        "reportStandardChangeReasonText": "유구번호 변동표 반영, 유물번호-도면번호-사진번호 대조 후 변경",
+        "reportStandardSourceLinkText": "report-preparation-admin-001 / 도면목록 DR-2026-01 / 사진대장 PH-2026-01 / 유물대장 AR-2026-01",
+        "reportStandardHistory": [
+          "legendStandardRecorded",
+          "northStandardRecorded",
+          "scaleStandardRecorded",
+          "elevationStandardRecorded",
+          "soilColorStandardRecorded",
+          "drawingSymbolStandardRecorded",
+          "drawingReductionRatioRecorded",
+          "drawingPhotoOrientationRecorded",
+          "featureNumberRuleRecorded",
+          "artifactNumberRuleRecorded",
+          "artifactDescriptionStandardRecorded",
+          "terminologyStandardRecorded",
+          "standardChanged",
+          "changeReasonRecorded",
+          "previousVersionPreserved",
+          "drawingRegisterUpdated",
+          "photoRegisterUpdated",
+          "artifactRegisterUpdated",
+          "reportLegendUpdated",
+          "teamNotified",
+          "sourceRecordLinked"
         ],
         "verificationState": "candidate"
       }

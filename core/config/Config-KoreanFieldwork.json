@@ -1130,6 +1130,71 @@
         }
       ]
     },
+    "ReportStandardHistory": {
+      "parent": "Project",
+      "color": "#707d5b",
+      "hidden": [],
+      "fields": {
+        "reportStandardScopeText": {
+          "inputType": "input",
+          "mandatory": true,
+          "constraintIndexed": true
+        },
+        "reportStandardVersionText": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "reportStandardChangeReasonText": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "reportStandardSourceLinkText": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "reportStandardHistory": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "verificationState": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "reportStandardHistory": "KoreanFieldwork-reportStandardHistory",
+        "verificationState": "KoreanFieldwork-verificationState"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
+        },
+        {
+          "name": "hierarchy",
+          "fields": ["liesWithin"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "diaryAbstract"]
+        },
+        {
+          "name": "koreanFieldwork",
+          "fields": [
+            "reportStandardScopeText",
+            "reportStandardVersionText",
+            "reportStandardChangeReasonText",
+            "reportStandardSourceLinkText",
+            "reportStandardHistory",
+            "verificationState"
+          ]
+        }
+      ]
+    },
     "StateVestingSelectionRecord": {
       "parent": "Project",
       "color": "#8a6f50",

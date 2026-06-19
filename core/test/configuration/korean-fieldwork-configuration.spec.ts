@@ -373,6 +373,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('drawingPhotoConsistencyChecked');
         expect(documentsById['report-preparation-admin-001'].resource.reportPreparationStandardText)
             .toContain('방위');
+        expect(documentsById['report-standard-history-admin-001'].resource.reportStandardHistory)
+            .toContain('standardChanged');
+        expect(documentsById['report-standard-history-admin-001'].resource.reportStandardHistory)
+            .toContain('artifactNumberRuleRecorded');
+        expect(documentsById['report-standard-history-admin-001'].resource.reportStandardChangeReasonText)
+            .toContain('유구번호 변동표');
         expect(documentsById['state-vesting-admin-001'].resource.stateVestingSelectionRecord)
             .toContain('stateVestingRegister');
         expect(documentsById['state-vesting-admin-001'].resource.stateVestingReceiptText)
@@ -1020,6 +1026,7 @@ describe('KoreanFieldwork project configuration', () => {
         const excavationPermitDocumentSetForm = config.forms.ExcavationPermitDocumentSet;
         const reportSubmissionWorkflowForm = config.forms.ReportSubmissionWorkflow;
         const reportPreparationReviewForm = config.forms.ReportPreparationReview;
+        const reportStandardHistoryForm = config.forms.ReportStandardHistory;
         const stateVestingSelectionRecordForm = config.forms.StateVestingSelectionRecord;
         const ironProcessRelationForm = config.forms.IronProcessRelation;
         const findForm = config.forms['Find:default'];
@@ -1077,6 +1084,13 @@ describe('KoreanFieldwork project configuration', () => {
         expect(reportPreparationReviewForm.fields.reportPreparationSourceText.inputType).toBe('input');
         expect(reportPreparationReviewForm.fields.reportPreparationStandardText.inputType).toBe('input');
         expect(reportPreparationReviewForm.fields.reportPreparationReview.inputType).toBe('checkboxes');
+        expect(reportStandardHistoryForm.parent).toBe('Project');
+        expect(reportStandardHistoryForm.fields.reportStandardScopeText.inputType).toBe('input');
+        expect(reportStandardHistoryForm.fields.reportStandardScopeText.mandatory).toBe(true);
+        expect(reportStandardHistoryForm.fields.reportStandardVersionText.inputType).toBe('input');
+        expect(reportStandardHistoryForm.fields.reportStandardChangeReasonText.inputType).toBe('input');
+        expect(reportStandardHistoryForm.fields.reportStandardSourceLinkText.inputType).toBe('input');
+        expect(reportStandardHistoryForm.fields.reportStandardHistory.inputType).toBe('checkboxes');
         expect(stateVestingSelectionRecordForm.parent).toBe('Project');
         expect(stateVestingSelectionRecordForm.fields.stateVestingObjectScopeText.inputType).toBe('input');
         expect(stateVestingSelectionRecordForm.fields.stateVestingObjectScopeText.mandatory).toBe(true);
@@ -1390,6 +1404,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(reportPreparationReviewForm.valuelists.reportPreparationReview)
             .toBe('KoreanFieldwork-reportPreparationReview');
         expect(reportPreparationReviewForm.valuelists.verificationState).toBe('KoreanFieldwork-verificationState');
+        expect(reportStandardHistoryForm.valuelists.reportStandardHistory)
+            .toBe('KoreanFieldwork-reportStandardHistory');
+        expect(reportStandardHistoryForm.valuelists.verificationState).toBe('KoreanFieldwork-verificationState');
         expect(stateVestingSelectionRecordForm.valuelists.stateVestingSelectionRecord)
             .toBe('KoreanFieldwork-stateVestingSelectionRecord');
         expect(stateVestingSelectionRecordForm.valuelists.verificationState).toBe('KoreanFieldwork-verificationState');
@@ -1897,6 +1914,11 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Preparation subject');
         expect(languages.en.categories.ReportPreparationReview.fields.reportPreparationReview.label)
             .toBe('Report preparation review');
+        expect(languages.en.categories.ReportStandardHistory.label).toBe('Report standard history');
+        expect(languages.en.categories.ReportStandardHistory.fields.reportStandardScopeText.label)
+            .toBe('Standard scope');
+        expect(languages.en.categories.ReportStandardHistory.fields.reportStandardHistory.label)
+            .toBe('Report standard history');
         expect(languages.en.categories.StateVestingSelectionRecord.label).toBe('State vesting selection record');
         expect(languages.en.categories.StateVestingSelectionRecord.fields.stateVestingObjectScopeText.label)
             .toBe('Object scope');
@@ -2987,6 +3009,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-reportPreparationReview']
             .values.legendPrepared.label)
             .toBe('Legend prepared');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-reportStandardHistory']
+            .values.artifactNumberRuleRecorded.label)
+            .toBe('Artifact number rule recorded');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-stateVestingSelectionRecord']
             .values.stateVestingRegister.label)
             .toBe('State vesting register');
@@ -2996,6 +3021,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-reportPreparationReview']
             .values.drawingPhotoConsistencyChecked.label)
             .toBe('도면·사진 일치 대조');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-reportStandardHistory']
+            .values.reportLegendUpdated.label)
+            .toBe('일러두기 갱신');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-excavationPermitDocumentSet']
             .values.alterationPermitChecked.label)
             .toBe('현상변경허가 확인');

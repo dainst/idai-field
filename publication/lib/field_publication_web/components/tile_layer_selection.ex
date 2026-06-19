@@ -25,7 +25,7 @@ defmodule FieldPublicationWeb.Components.Map.TileLayerSelection do
         </div>
         <div
           id={"#{@id}-layer-select"}
-          class="absolute mt-0.5 bg-white right-1 p-2 pr-8 max-h-64 overflow-auto hidden"
+          class="absolute mt-0.5 bg-white right-1 p-2 max-h-64 overflow-auto hidden"
         >
           <.render_tile_layer_selection_group
             event_target={@myself}
@@ -231,11 +231,11 @@ defmodule FieldPublicationWeb.Components.Map.TileLayerSelection do
   def render_tile_layer_selection_group(assigns) do
     ~H"""
     <%= if @layers != [] do %>
-      <div class="font-semibold pb-2">
+      <div class="font-semibold pb-2 grow">
         {render_slot(@inner_block)}
       </div>
       <%= for %{uuid: uuid, identifier: identifier, visible: visible} <- @layers do %>
-        <div class="text-xs flex gap-0.5">
+        <div class="text-xs flex gap-0.5 items-center">
           <span
             class="cursor-pointer text-primary hover:text-primary-hover"
             phx-target={@event_target}
@@ -243,15 +243,13 @@ defmodule FieldPublicationWeb.Components.Map.TileLayerSelection do
             phx-value-uuid={uuid}
             phx-value-show={"#{!visible}"}
           >
-            <.icon name={if visible, do: "hero-eye", else: "hero-eye-slash"} />
+            <.icon class="w-5 h-5" name={if visible, do: "hero-eye", else: "hero-eye-slash"} />
           </span>
-
-          <.link
-            class="flex gap-0.5 items-center"
-            patch={~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{uuid}"}
-          >
+          <div class="grow text-nowrap">
             {identifier}
-            <.icon name="hero-photo" />
+          </div>
+          <.link patch={~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{uuid}"}>
+            <.icon class="w-5 h-5" name="hero-photo" />
           </.link>
         </div>
       <% end %>

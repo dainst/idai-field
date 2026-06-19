@@ -519,6 +519,73 @@
     },
     "description": "제토와 동시에 가장 잘 보이는 유구 윤곽선, 어깨선, 중복관계, 건조 위험을 최초 노출 순간에 남기기 위한 목록"
   },
+  "KoreanFieldwork-stratigraphicDivisionBasis": {
+    "values": {
+      "particleSize": { "label": "입자 크기" },
+      "grainSizeComposition": { "label": "입도 조성" },
+      "mixedCondition": { "label": "혼합 상태" },
+      "beddingPlane": { "label": "층리면" },
+      "sedimentaryStructure": { "label": "퇴적구조" },
+      "truncationTrace": { "label": "삭평흔" },
+      "unconformity": { "label": "부정합" },
+      "channelFunctionalSurface": { "label": "수로 기능면" },
+      "pedogenesisExtent": { "label": "토양화 범위" },
+      "oldGroundSurface": { "label": "구지표" },
+      "culturalLayer": { "label": "문화층" },
+      "thinLensDeposit": { "label": "박층·렌즈상 퇴적" },
+      "abruptGrainSizeChange": { "label": "급격한 입도 변화" },
+      "singleEventDepositKept": { "label": "단일 사건층 유지" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "색 차이만으로 층을 나누지 않고 입도, 구조, 삭평, 토양화, 구지표, 문화층과 과도한 세분 보류 근거를 함께 남기기 위한 목록"
+  },
+  "KoreanFieldwork-layerNamingSystem": {
+    "values": {
+      "abovePresentSurfaceNumber": { "label": "현지표 상부 번호" },
+      "belowOriginNumber": { "label": "하부 기원 번호" },
+      "majorLayer": { "label": "대별층" },
+      "middleLayer": { "label": "중별층" },
+      "subLayer": { "label": "세분층" },
+      "aLayer": { "label": "a층" },
+      "bLayer": { "label": "b층" },
+      "culturalLayerNumber": { "label": "문화층 번호" },
+      "featureDetectionSurfaceNumber": { "label": "유구 확인면 번호" },
+      "institutionalStandard": { "label": "기관 기준" },
+      "changeHistory": { "label": "변경 이력" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "층명과 기호가 토양층위, 퇴적층위, 문화층, 유구 확인면을 뒤섞지 않도록 번호체계와 변경 이력을 남기기 위한 목록"
+  },
+  "KoreanFieldwork-featureFillInterpretation": {
+    "values": {
+      "workedSurface": { "label": "가공면" },
+      "formationDuringCutting": { "label": "가공시 형성층" },
+      "functionalSurface": { "label": "기능면" },
+      "useDeposit": { "label": "기능시 퇴적층" },
+      "intentionalBackfill": { "label": "인위 매립토" },
+      "collapseDeposit": { "label": "붕락토" },
+      "naturalInflow": { "label": "자연 유입토" },
+      "naturalDeposit": { "label": "자연 퇴적층" },
+      "pedogenicHiatus": { "label": "토양화 휴지기" },
+      "packingDeposit": { "label": "충전토" },
+      "postAbandonmentDeposit": { "label": "폐기 후 퇴적층" },
+      "attributionCaution": { "label": "귀속 주의" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "유구 내부토를 복토 하나로 합치지 않고 축조, 사용, 폐기, 매몰 과정과 유물 귀속 주의를 분리하기 위한 목록"
+  },
+  "KoreanFieldwork-soilTextureFieldAssessment": {
+    "values": {
+      "fingerRubbing": { "label": "손가락 비빔" },
+      "ballRibbonTest": { "label": "구슬·리본 시험" },
+      "notebookDryingTest": { "label": "노트 찍어 말림" },
+      "referenceSampleComparison": { "label": "표본시료 대조" },
+      "quantitativeAnalysisNeeded": { "label": "정량분석 대조 필요" },
+      "assessmentMethodStandardized": { "label": "판정법 통일" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "토성을 현장에서 어떻게 판정했는지와 정량분석 또는 표준화가 필요한지를 남기기 위한 목록"
+  },
   "KoreanFieldwork-pitDwellingExposureBaulk": {
     "values": {
       "initialStratigraphyChecked": {

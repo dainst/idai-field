@@ -394,6 +394,18 @@
         "firstExposureRecord": {
           "label": "First exposure record"
         },
+        "stratigraphicDivisionBasis": {
+          "label": "Stratigraphic division basis"
+        },
+        "layerNamingSystem": {
+          "label": "Layer naming system"
+        },
+        "featureFillInterpretation": {
+          "label": "Feature fill interpretation"
+        },
+        "soilTextureFieldAssessment": {
+          "label": "Soil texture field assessment"
+        },
         "alluvialLayerConceptAudit": {
           "label": "Alluvial layer concept audit"
         },

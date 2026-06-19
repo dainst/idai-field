@@ -12273,6 +12273,73 @@
     },
     "description": "Korean field notebook checks for recording feature outlines, shoulder lines, overlap, section checks, and drying risks at the first exposure moment"
   },
+  "KoreanFieldwork-stratigraphicDivisionBasis": {
+    "values": {
+      "particleSize": { "label": "Particle size" },
+      "grainSizeComposition": { "label": "Grain-size composition" },
+      "mixedCondition": { "label": "Mixed condition" },
+      "beddingPlane": { "label": "Bedding plane" },
+      "sedimentaryStructure": { "label": "Sedimentary structure" },
+      "truncationTrace": { "label": "Truncation trace" },
+      "unconformity": { "label": "Unconformity" },
+      "channelFunctionalSurface": { "label": "Channel functional surface" },
+      "pedogenesisExtent": { "label": "Pedogenesis extent" },
+      "oldGroundSurface": { "label": "Old ground surface" },
+      "culturalLayer": { "label": "Cultural layer" },
+      "thinLensDeposit": { "label": "Thin/lens deposit" },
+      "abruptGrainSizeChange": { "label": "Abrupt grain-size change" },
+      "singleEventDepositKept": { "label": "Single event deposit kept" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean stratigraphic checks for recording grain size, structures, truncation, pedogenesis, old ground surfaces, cultural layers, and reasons not to over-subdivide deposits"
+  },
+  "KoreanFieldwork-layerNamingSystem": {
+    "values": {
+      "abovePresentSurfaceNumber": { "label": "Above-present-surface number" },
+      "belowOriginNumber": { "label": "Below-origin number" },
+      "majorLayer": { "label": "Major layer" },
+      "middleLayer": { "label": "Middle layer" },
+      "subLayer": { "label": "Sub-layer" },
+      "aLayer": { "label": "a layer" },
+      "bLayer": { "label": "b layer" },
+      "culturalLayerNumber": { "label": "Cultural-layer number" },
+      "featureDetectionSurfaceNumber": { "label": "Feature-detection surface number" },
+      "institutionalStandard": { "label": "Institutional standard" },
+      "changeHistory": { "label": "Change history" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean layer naming checks for keeping soil horizons, sedimentary layers, cultural layers, and feature-detection surfaces from being collapsed into one naming system"
+  },
+  "KoreanFieldwork-featureFillInterpretation": {
+    "values": {
+      "workedSurface": { "label": "Worked surface" },
+      "formationDuringCutting": { "label": "Formation during cutting" },
+      "functionalSurface": { "label": "Functional surface" },
+      "useDeposit": { "label": "Use deposit" },
+      "intentionalBackfill": { "label": "Intentional backfill" },
+      "collapseDeposit": { "label": "Collapse deposit" },
+      "naturalInflow": { "label": "Natural inflow" },
+      "naturalDeposit": { "label": "Natural deposit" },
+      "pedogenicHiatus": { "label": "Pedogenic hiatus" },
+      "packingDeposit": { "label": "Packing deposit" },
+      "postAbandonmentDeposit": { "label": "Post-abandonment deposit" },
+      "attributionCaution": { "label": "Attribution caution" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean feature-fill checks for separating construction, use, abandonment, burial, and find-attribution cautions instead of recording every fill as backfill"
+  },
+  "KoreanFieldwork-soilTextureFieldAssessment": {
+    "values": {
+      "fingerRubbing": { "label": "Finger rubbing" },
+      "ballRibbonTest": { "label": "Ball/ribbon test" },
+      "notebookDryingTest": { "label": "Notebook drying test" },
+      "referenceSampleComparison": { "label": "Reference sample comparison" },
+      "quantitativeAnalysisNeeded": { "label": "Quantitative analysis needed" },
+      "assessmentMethodStandardized": { "label": "Assessment method standardized" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean soil-texture field checks for recording how texture was judged and whether reference samples or quantitative analysis are needed"
+  },
   "KoreanFieldwork-pitDwellingExposureBaulk": {
     "values": {
       "initialStratigraphyChecked": {

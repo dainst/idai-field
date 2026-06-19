@@ -31662,6 +31662,132 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-stratigraphicDivisionBasis": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "particleSize": {},
+      "grainSizeComposition": {},
+      "mixedCondition": {},
+      "beddingPlane": {},
+      "sedimentaryStructure": {},
+      "truncationTrace": {},
+      "unconformity": {},
+      "channelFunctionalSurface": {},
+      "pedogenesisExtent": {},
+      "oldGroundSurface": {},
+      "culturalLayer": {},
+      "thinLensDeposit": {},
+      "abruptGrainSizeChange": {},
+      "singleEventDepositKept": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "particleSize",
+      "grainSizeComposition",
+      "mixedCondition",
+      "beddingPlane",
+      "sedimentaryStructure",
+      "truncationTrace",
+      "unconformity",
+      "channelFunctionalSurface",
+      "pedogenesisExtent",
+      "oldGroundSurface",
+      "culturalLayer",
+      "thinLensDeposit",
+      "abruptGrainSizeChange",
+      "singleEventDepositKept",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-layerNamingSystem": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "abovePresentSurfaceNumber": {},
+      "belowOriginNumber": {},
+      "majorLayer": {},
+      "middleLayer": {},
+      "subLayer": {},
+      "aLayer": {},
+      "bLayer": {},
+      "culturalLayerNumber": {},
+      "featureDetectionSurfaceNumber": {},
+      "institutionalStandard": {},
+      "changeHistory": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "abovePresentSurfaceNumber",
+      "belowOriginNumber",
+      "majorLayer",
+      "middleLayer",
+      "subLayer",
+      "aLayer",
+      "bLayer",
+      "culturalLayerNumber",
+      "featureDetectionSurfaceNumber",
+      "institutionalStandard",
+      "changeHistory",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-featureFillInterpretation": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "workedSurface": {},
+      "formationDuringCutting": {},
+      "functionalSurface": {},
+      "useDeposit": {},
+      "intentionalBackfill": {},
+      "collapseDeposit": {},
+      "naturalInflow": {},
+      "naturalDeposit": {},
+      "pedogenicHiatus": {},
+      "packingDeposit": {},
+      "postAbandonmentDeposit": {},
+      "attributionCaution": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "workedSurface",
+      "formationDuringCutting",
+      "functionalSurface",
+      "useDeposit",
+      "intentionalBackfill",
+      "collapseDeposit",
+      "naturalInflow",
+      "naturalDeposit",
+      "pedogenicHiatus",
+      "packingDeposit",
+      "postAbandonmentDeposit",
+      "attributionCaution",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-soilTextureFieldAssessment": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "fingerRubbing": {},
+      "ballRibbonTest": {},
+      "notebookDryingTest": {},
+      "referenceSampleComparison": {},
+      "quantitativeAnalysisNeeded": {},
+      "assessmentMethodStandardized": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "fingerRubbing",
+      "ballRibbonTest",
+      "notebookDryingTest",
+      "referenceSampleComparison",
+      "quantitativeAnalysisNeeded",
+      "assessmentMethodStandardized",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-pitDwellingExposureBaulk": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

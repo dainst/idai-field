@@ -394,6 +394,18 @@
         "firstExposureRecord": {
           "label": "최초 노출 기록"
         },
+        "stratigraphicDivisionBasis": {
+          "label": "층 구분 판단근거"
+        },
+        "layerNamingSystem": {
+          "label": "층명·기호 체계"
+        },
+        "featureFillInterpretation": {
+          "label": "유구 내부토 해석"
+        },
+        "soilTextureFieldAssessment": {
+          "label": "토성 현장판정"
+        },
         "alluvialLayerConceptAudit": {
           "label": "충적지 층 개념 검토"
         },

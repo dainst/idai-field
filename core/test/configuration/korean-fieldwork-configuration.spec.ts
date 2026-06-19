@@ -115,6 +115,10 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.fields.porcelainKilnExcavationControl.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.chronologyArgument.inputType).toBe('checkboxes');
+        expect(featureSegmentForm.fields.stratigraphicDivisionBasis.inputType).toBe('checkboxes');
+        expect(featureSegmentForm.fields.layerNamingSystem.inputType).toBe('checkboxes');
+        expect(featureSegmentForm.fields.featureFillInterpretation.inputType).toBe('checkboxes');
+        expect(featureSegmentForm.fields.soilTextureFieldAssessment.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.alluvialLayerConceptAudit.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.alluvialSurfaceAttribution.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.alluvialFormationProcess.inputType).toBe('checkboxes');
@@ -359,6 +363,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-porcelainKilnExcavationControl');
         expect(featureSegmentForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
         expect(featureSegmentForm.valuelists.chronologyArgument).toBe('KoreanFieldwork-chronologyArgument');
+        expect(featureSegmentForm.valuelists.stratigraphicDivisionBasis)
+            .toBe('KoreanFieldwork-stratigraphicDivisionBasis');
+        expect(featureSegmentForm.valuelists.layerNamingSystem)
+            .toBe('KoreanFieldwork-layerNamingSystem');
+        expect(featureSegmentForm.valuelists.featureFillInterpretation)
+            .toBe('KoreanFieldwork-featureFillInterpretation');
+        expect(featureSegmentForm.valuelists.soilTextureFieldAssessment)
+            .toBe('KoreanFieldwork-soilTextureFieldAssessment');
         expect(featureSegmentForm.valuelists.alluvialLayerConceptAudit)
             .toBe('KoreanFieldwork-alluvialLayerConceptAudit');
         expect(featureSegmentForm.valuelists.alluvialSurfaceAttribution)
@@ -645,6 +657,14 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.Feature.fields.fortificationParapetDetail.label).toBe('Parapet detail');
         expect(languages.en.categories.Feature.fields.termAuthorityStatus.label).toBe('Term authority status');
         expect(languages.en.categories.Feature.fields.termSearchMapping.label).toBe('Term search mapping');
+        expect(languages.en.categories.FeatureSegment.fields.stratigraphicDivisionBasis.label)
+            .toBe('Stratigraphic division basis');
+        expect(languages.en.categories.FeatureSegment.fields.layerNamingSystem.label)
+            .toBe('Layer naming system');
+        expect(languages.en.categories.FeatureSegment.fields.featureFillInterpretation.label)
+            .toBe('Feature fill interpretation');
+        expect(languages.en.categories.FeatureSegment.fields.soilTextureFieldAssessment.label)
+            .toBe('Soil texture field assessment');
         expect(languages.en.categories.FeatureSegment.fields.alluvialLayerConceptAudit.label)
             .toBe('Alluvial layer concept audit');
         expect(languages.en.categories.FeatureSegment.fields.alluvialSurfaceAttribution.label)
@@ -873,6 +893,18 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-wetlandSurveyTargeting']
             .values.trialTrenchPointSelected.label)
             .toBe('Trial trench point selected');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-stratigraphicDivisionBasis']
+            .values.singleEventDepositKept.label)
+            .toBe('Single event deposit kept');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-layerNamingSystem']
+            .values.featureDetectionSurfaceNumber.label)
+            .toBe('Feature-detection surface number');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-featureFillInterpretation']
+            .values.attributionCaution.label)
+            .toBe('Attribution caution');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-soilTextureFieldAssessment']
+            .values.quantitativeAnalysisNeeded.label)
+            .toBe('Quantitative analysis needed');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-alluvialLayerConceptAudit']
             .values.abLayerSetRecorded.label)
             .toBe('a+b layer set recorded');
@@ -1236,6 +1268,9 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('최종 조업품 자동판정 금지');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-fieldRecordQuality'].values.immediateRecording.label)
             .toBeDefined();
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-featureFillInterpretation']
+            .values.attributionCaution.label)
+            .toBe('귀속 주의');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-alluvialLayerConceptAudit']
             .values.abLayerSetRecorded.label)
             .toBe('a+b층 세트 기록');

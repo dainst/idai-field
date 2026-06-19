@@ -1006,6 +1006,22 @@
           "mandatory": true,
           "constraintIndexed": true
         },
+        "stratigraphicDivisionBasis": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "layerNamingSystem": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "featureFillInterpretation": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "soilTextureFieldAssessment": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "alluvialLayerConceptAudit": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1049,6 +1065,10 @@
         "chronologyArgument": "KoreanFieldwork-chronologyArgument",
         "fieldOnlyMissingCheck": "KoreanFieldwork-fieldOnlyMissingCheck",
         "firstExposureRecord": "KoreanFieldwork-firstExposureRecord",
+        "stratigraphicDivisionBasis": "KoreanFieldwork-stratigraphicDivisionBasis",
+        "layerNamingSystem": "KoreanFieldwork-layerNamingSystem",
+        "featureFillInterpretation": "KoreanFieldwork-featureFillInterpretation",
+        "soilTextureFieldAssessment": "KoreanFieldwork-soilTextureFieldAssessment",
         "alluvialLayerConceptAudit": "KoreanFieldwork-alluvialLayerConceptAudit",
         "alluvialSurfaceAttribution": "KoreanFieldwork-alluvialSurfaceAttribution",
         "alluvialFormationProcess": "KoreanFieldwork-alluvialFormationProcess",
@@ -1084,6 +1104,10 @@
             "chronologyArgument",
             "fieldOnlyMissingCheck",
             "firstExposureRecord",
+            "stratigraphicDivisionBasis",
+            "layerNamingSystem",
+            "featureFillInterpretation",
+            "soilTextureFieldAssessment",
             "alluvialLayerConceptAudit",
             "alluvialSurfaceAttribution",
             "alluvialFormationProcess",

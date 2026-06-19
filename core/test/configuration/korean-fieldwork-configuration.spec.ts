@@ -340,6 +340,18 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('gpsControlPointsTwoPlus');
         expect(documentsById['drawing-media-pottery-001'].resource.potteryDrawingStandard)
             .toContain('wallThicknessThreeFourPoints');
+        expect(documentsById['drawing-media-pottery-001'].resource.artifactDrawingPlan)
+            .toContain('findContextBlockRecorded');
+        expect(documentsById['drawing-media-pottery-001'].resource.artifactDrawingPlan)
+            .toContain('drawingDateDrawerRecorded');
+        expect(documentsById['drawing-media-pottery-001'].resource.potteryDrawingStandard)
+            .toContain('overallFeatureAnnotation');
+        expect(documentsById['drawing-media-pottery-001'].resource.potteryDrawingStandard)
+            .toContain('materialFiringAnnotation');
+        expect(documentsById['drawing-media-pottery-001'].resource.potteryDrawingStandard)
+            .toContain('manufacturePatternAnnotation');
+        expect(documentsById['drawing-media-pottery-001'].resource.potteryDrawingStandard)
+            .toContain('dimensionAnnotation');
         expect(documentsById['drawing-media-pottery-001'].resource.mediaQualityCheck)
             .toContain('planSectionMismatch');
         expect(documentsById['drawing-media-pottery-001'].resource.mediaQualityCheck)
@@ -4129,12 +4141,27 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactDrawingPlan']
             .values.baselineSelected.label)
             .toBe('Baseline selected');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactDrawingPlan']
+            .values.findContextBlockRecorded.label)
+            .toBe('Find context block recorded');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactDrawingPlan']
+            .values.drawingDateDrawerRecorded.label)
+            .toBe('Drawing date and drafter recorded');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactDrawingQualityCheck']
             .values.measuringPointCheck.label)
             .toBe('Measuring point check');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-potteryDrawingStandard']
             .values.wallThicknessThreeFourPoints.label)
             .toBe('Wall thickness at 3-4 points');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-potteryDrawingStandard']
+            .values.overallFeatureAnnotation.label)
+            .toBe('Overall feature annotation');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-potteryDrawingStandard']
+            .values.fabricColorSurfaceAnnotation.label)
+            .toBe('태토·색·표면 주기');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-potteryDrawingStandard']
+            .values.dimensionAnnotation.label)
+            .toBe('규격 주기');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-stoneToolDrawingView']
             .values.thirdAngleSixViews.label)
             .toBe('Third-angle six views');

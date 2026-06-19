@@ -6547,17 +6547,19 @@
       "artifactTypeRecorded": { "label": "기종 기록" },
       "preservationStateRecorded": { "label": "잔존상태 기록" },
       "functionHypothesisRecorded": { "label": "기능 가설 기록" },
+      "findContextBlockRecorded": { "label": "출토맥락 기본기록" },
       "baselineSelected": { "label": "기준선 선정" },
       "measuredLineSelected": { "label": "실측선 선정" },
       "projectionMethodSelected": { "label": "투상법 선정" },
       "drawingLayoutSelected": { "label": "도면배치 선정" },
       "scaleSelected": { "label": "축척 선정" },
+      "drawingDateDrawerRecorded": { "label": "실측일·실측자 기록" },
       "drawingToolsRecorded": { "label": "실측도구 기록" },
       "complementaryPhotoPlanned": { "label": "보완사진 계획" },
       "rubbingPlanned": { "label": "탁본 계획" },
       "pendingDecision": { "label": "판단 보류" }
     },
-    "description": "유물실측 전에 재질, 기종, 잔존상태, 기능, 기준선, 실측선, 투상법, 도면배치, 축척, 도구, 보완사진, 탁본 여부를 점검하기 위한 목록"
+    "description": "유물실측 전에 재질, 기종, 잔존상태, 기능, 출토맥락 기본기록, 기준선, 실측선, 투상법, 도면배치, 축척, 실측일·실측자, 도구, 보완사진, 탁본 여부를 점검하기 위한 목록"
   },
   "KoreanFieldwork-artifactDrawingQualityCheck": {
     "values": {
@@ -6588,9 +6590,15 @@
       "elevationView": { "label": "입면도" },
       "patternMeasuringPoint": { "label": "문양 측점" },
       "annotationPrepared": { "label": "주기 작성" },
+      "overallFeatureAnnotation": { "label": "전체 특징 주기" },
+      "partialFeatureAnnotation": { "label": "부분 특징 주기" },
+      "materialFiringAnnotation": { "label": "재질·소성도 주기" },
+      "fabricColorSurfaceAnnotation": { "label": "태토·색·표면 주기" },
+      "manufacturePatternAnnotation": { "label": "제작기법·문양 주기" },
+      "dimensionAnnotation": { "label": "규격 주기" },
       "pendingDecision": { "label": "판단 보류" }
     },
-    "description": "토기 실측에서 정치상태, 기준선, 실측선, 측점, 단면 우선 기록, 바디 윤곽, 기벽두께, 입면, 문양 측점, 주기 작성을 점검하기 위한 목록"
+    "description": "토기 실측에서 정치상태, 기준선, 실측선, 측점, 단면 우선 기록, 바디 윤곽, 기벽두께, 입면, 문양 측점, 전체·부분 특징, 재질·소성도, 태토·색·표면, 제작기법·문양, 규격 주기 작성을 점검하기 위한 목록"
   },
   "KoreanFieldwork-stoneToolDrawingView": {
     "values": {

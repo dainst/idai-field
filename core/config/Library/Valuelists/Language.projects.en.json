@@ -18301,17 +18301,19 @@
       "artifactTypeRecorded": { "label": "Artifact type recorded" },
       "preservationStateRecorded": { "label": "Preservation state recorded" },
       "functionHypothesisRecorded": { "label": "Function hypothesis recorded" },
+      "findContextBlockRecorded": { "label": "Find context block recorded" },
       "baselineSelected": { "label": "Baseline selected" },
       "measuredLineSelected": { "label": "Measured line selected" },
       "projectionMethodSelected": { "label": "Projection method selected" },
       "drawingLayoutSelected": { "label": "Drawing layout selected" },
       "scaleSelected": { "label": "Scale selected" },
+      "drawingDateDrawerRecorded": { "label": "Drawing date and drafter recorded" },
       "drawingToolsRecorded": { "label": "Drawing tools recorded" },
       "complementaryPhotoPlanned": { "label": "Complementary photo planned" },
       "rubbingPlanned": { "label": "Rubbing planned" },
       "pendingDecision": { "label": "Pending decision" }
     },
-    "description": "Artifact drawing planning checks for material, type, preservation, function, baseline, measured line, projection, layout, scale, tools, photos, and rubbings"
+    "description": "Artifact drawing planning checks for material, type, preservation, function, find context, baseline, measured line, projection, layout, scale, drawing date and drafter, tools, photos, and rubbings"
   },
   "KoreanFieldwork-artifactDrawingQualityCheck": {
     "values": {
@@ -18342,9 +18344,15 @@
       "elevationView": { "label": "Elevation view" },
       "patternMeasuringPoint": { "label": "Pattern measuring point" },
       "annotationPrepared": { "label": "Annotation prepared" },
+      "overallFeatureAnnotation": { "label": "Overall feature annotation" },
+      "partialFeatureAnnotation": { "label": "Partial feature annotation" },
+      "materialFiringAnnotation": { "label": "Material/firing annotation" },
+      "fabricColorSurfaceAnnotation": { "label": "Fabric/color/surface annotation" },
+      "manufacturePatternAnnotation": { "label": "Manufacture/pattern annotation" },
+      "dimensionAnnotation": { "label": "Dimension annotation" },
       "pendingDecision": { "label": "Pending decision" }
     },
-    "description": "Pottery drawing standards for orientation, baseline, measured line, section-first recording, body contour, wall thickness, elevation, pattern points, and annotations"
+    "description": "Pottery drawing standards for orientation, baseline, measured line, section-first recording, body contour, wall thickness, elevation, pattern points, and annotations for overall/partial features, material, firing, fabric, color, surface, manufacture, pattern, and dimensions"
   },
   "KoreanFieldwork-stoneToolDrawingView": {
     "values": {

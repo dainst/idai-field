@@ -5,6 +5,7 @@
     "제련·단야·용해·초강 판단이 노 이름이나 평면 형태 하나로 확정되지 않고 구조, 부산물, 분석계획을 함께 요구하는가.",
     "송풍구, 배재구, 노바닥과 굴광면 구분, 폐기장·공방 연결이 개별 유구 기록에 남는가.",
     "노벽, 송풍관, 유출재, 노내재, 환원괴, 단조박편, 입상재 같은 부산물이 한 덩어리 슬래그로 뭉개지지 않는가.",
+    "이전 공정 산출물과 다음 공정 원료의 연결이 노·부산물·분석시료와 분리된 검토 기록으로 남는가.",
     "금속현미경, SEM-EDS, XRF, XRD, C/S 분석, 산화물 환산, CaO/SiO2 검토와 파괴분석 승인 이력이 시료 카드에서 추적되는가."
   ],
   "documents": [
@@ -82,6 +83,33 @@
           "repairTrace",
           "wasteDepositLinked",
           "workshopLinked"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "iron-process-relation-001",
+        "identifier": "IF-001-REL-001",
+        "shortDescription": "환원괴 후보와 단야 원료 연결",
+        "category": "IronProcessRelation",
+        "relations": {
+          "liesWithin": ["feature-iron-furnace-001"],
+          "isRecordedIn": ["op-iron-production-001"]
+        },
+        "description": "제련 후보 노 주변 환원괴와 단야 부산물 후보가 함께 확인되어, 이전 공정 산출물이 다음 공정 원료로 이어졌을 가능성을 분석 전 보류값으로 남긴다.",
+        "ironPreviousProcessText": "제련 후보",
+        "ironPreviousOutputText": "환원괴·반환원괴 후보",
+        "ironNextProcessText": "정련단야 후보",
+        "ironNextInputText": "단야 원료 철소재 후보",
+        "ironProcessRelationCheck": [
+          "previousOutputIdentified",
+          "nextInputIdentified",
+          "residueBasedInference",
+          "analysisBasedInference",
+          "productFlow",
+          "alternativeRelationOpen",
+          "analysisFeedbackNeeded"
         ],
         "verificationState": "pendingDecision"
       }

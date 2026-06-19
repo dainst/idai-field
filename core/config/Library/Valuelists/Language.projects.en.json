@@ -12910,6 +12910,24 @@
     },
     "description": "Korean iron-production checks for keeping smelting, smithing, casting, steelmaking, mixed-process, and analysis-confirmed interpretations separate"
   },
+  "KoreanFieldwork-ironProcessRelationCheck": {
+    "values": {
+      "previousOutputIdentified": { "label": "Previous output identified" },
+      "nextInputIdentified": { "label": "Next input identified" },
+      "directContextLink": { "label": "Direct context link" },
+      "residueBasedInference": { "label": "Residue-based inference" },
+      "analysisBasedInference": { "label": "Analysis-based inference" },
+      "documentaryComparison": { "label": "Documentary comparison" },
+      "rawMaterialFlow": { "label": "Raw material flow" },
+      "fuelFlow": { "label": "Fuel flow" },
+      "productFlow": { "label": "Product flow" },
+      "residueFlow": { "label": "Residue flow" },
+      "alternativeRelationOpen": { "label": "Alternative relation open" },
+      "analysisFeedbackNeeded": { "label": "Analysis feedback needed" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean iron-production checks for linking a previous process output to a next process input without finalizing the process chain too early"
+  },
   "KoreanFieldwork-ironFurnaceStructure": {
     "values": {
       "furnacePlanRecorded": { "label": "Furnace plan recorded" },

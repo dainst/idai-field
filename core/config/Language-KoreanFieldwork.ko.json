@@ -142,6 +142,29 @@
         }
       }
     },
+    "IronProcessRelation": {
+      "label": "제철 공정 연결",
+      "fields": {
+        "ironNextInputText": {
+          "label": "다음 원료"
+        },
+        "ironNextProcessText": {
+          "label": "다음 공정"
+        },
+        "ironPreviousOutputText": {
+          "label": "이전 산출물"
+        },
+        "ironPreviousProcessText": {
+          "label": "이전 공정"
+        },
+        "ironProcessRelationCheck": {
+          "label": "공정 연결 검토"
+        },
+        "verificationState": {
+          "label": "검증상태"
+        }
+      }
+    },
     "Operation": {
       "fields": {
         "dailyLogContent": {

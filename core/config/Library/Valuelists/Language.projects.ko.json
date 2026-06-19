@@ -1156,6 +1156,24 @@
     },
     "description": "제철유구를 노 형태만으로 확정하지 않고 제련, 단야, 용해·주조, 초강, 공정 혼재, 구조 근거, 부산물 근거, 분석 후 확정을 분리하기 위한 목록"
   },
+  "KoreanFieldwork-ironProcessRelationCheck": {
+    "values": {
+      "previousOutputIdentified": { "label": "이전 산출물 식별" },
+      "nextInputIdentified": { "label": "다음 원료 식별" },
+      "directContextLink": { "label": "현장 맥락 직접 연결" },
+      "residueBasedInference": { "label": "부산물 근거 추정" },
+      "analysisBasedInference": { "label": "분석 근거 추정" },
+      "documentaryComparison": { "label": "문헌·도상 비교" },
+      "rawMaterialFlow": { "label": "원료 흐름" },
+      "fuelFlow": { "label": "연료 흐름" },
+      "productFlow": { "label": "생산품 흐름" },
+      "residueFlow": { "label": "부산물 흐름" },
+      "alternativeRelationOpen": { "label": "대안 연결 열림" },
+      "analysisFeedbackNeeded": { "label": "분석 환류 필요" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "제철유적에서 이전 공정 산출물이 다음 공정 원료로 이어지는 관계를 공정 확정 전에 보존하기 위한 목록"
+  },
   "KoreanFieldwork-ironFurnaceStructure": {
     "values": {
       "furnacePlanRecorded": { "label": "노 평면 기록" },

@@ -142,6 +142,29 @@
         }
       }
     },
+    "IronProcessRelation": {
+      "label": "Iron process relation",
+      "fields": {
+        "ironNextInputText": {
+          "label": "Next input"
+        },
+        "ironNextProcessText": {
+          "label": "Next process"
+        },
+        "ironPreviousOutputText": {
+          "label": "Previous output"
+        },
+        "ironPreviousProcessText": {
+          "label": "Previous process"
+        },
+        "ironProcessRelationCheck": {
+          "label": "Process relation check"
+        },
+        "verificationState": {
+          "label": "Verification state"
+        }
+      }
+    },
     "Operation": {
       "fields": {
         "dailyLogContent": {

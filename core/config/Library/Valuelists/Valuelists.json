@@ -32602,6 +32602,40 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-ironProcessRelationCheck": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "previousOutputIdentified": {},
+      "nextInputIdentified": {},
+      "directContextLink": {},
+      "residueBasedInference": {},
+      "analysisBasedInference": {},
+      "documentaryComparison": {},
+      "rawMaterialFlow": {},
+      "fuelFlow": {},
+      "productFlow": {},
+      "residueFlow": {},
+      "alternativeRelationOpen": {},
+      "analysisFeedbackNeeded": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "previousOutputIdentified",
+      "nextInputIdentified",
+      "directContextLink",
+      "residueBasedInference",
+      "analysisBasedInference",
+      "documentaryComparison",
+      "rawMaterialFlow",
+      "fuelFlow",
+      "productFlow",
+      "residueFlow",
+      "alternativeRelationOpen",
+      "analysisFeedbackNeeded",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-ironFurnaceStructure": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

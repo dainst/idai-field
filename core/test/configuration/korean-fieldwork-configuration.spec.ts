@@ -510,6 +510,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('alternativeProcessOpen');
         expect(documentsById['feature-iron-furnace-001'].resource.ironFurnaceStructure)
             .toContain('floorNotConfusedWithCut');
+        expect(documentsById['iron-process-relation-001'].resource.ironPreviousOutputText)
+            .toBe('환원괴·반환원괴 후보');
+        expect(documentsById['iron-process-relation-001'].resource.ironNextInputText)
+            .toBe('단야 원료 철소재 후보');
+        expect(documentsById['iron-process-relation-001'].resource.ironProcessRelationCheck)
+            .toContain('analysisFeedbackNeeded');
         expect(documentsById['find-iron-residue-001'].resource.ironResidueSubtype)
             .toContain('furnaceInternalSlag');
         expect(documentsById['find-iron-residue-001'].resource.ironResidueSubtype)
@@ -991,6 +997,7 @@ describe('KoreanFieldwork project configuration', () => {
         const termAliasForm = config.forms.TermAlias;
         const termImportMappingForm = config.forms.TermImportMapping;
         const sourceEvidenceIndexForm = config.forms.SourceEvidenceIndex;
+        const ironProcessRelationForm = config.forms.IronProcessRelation;
         const findForm = config.forms['Find:default'];
         const sampleForm = config.forms['Sample:default'];
         const drawingForm = config.forms['Drawing:default'];
@@ -1027,6 +1034,15 @@ describe('KoreanFieldwork project configuration', () => {
         expect(sourceEvidenceIndexForm.fields.sourceEvidenceDomain.inputType).toBe('checkboxes');
         expect(sourceEvidenceIndexForm.fields.sourceEvidenceVerification.inputType).toBe('checkboxes');
         expect(sourceEvidenceIndexForm.fields.sourceEvidenceUse.inputType).toBe('checkboxes');
+        expect(ironProcessRelationForm.parent).toBe('Feature');
+        expect(ironProcessRelationForm.fields.ironPreviousProcessText.inputType).toBe('input');
+        expect(ironProcessRelationForm.fields.ironPreviousOutputText.inputType).toBe('input');
+        expect(ironProcessRelationForm.fields.ironPreviousOutputText.mandatory).toBe(true);
+        expect(ironProcessRelationForm.fields.ironNextProcessText.inputType).toBe('input');
+        expect(ironProcessRelationForm.fields.ironNextInputText.inputType).toBe('input');
+        expect(ironProcessRelationForm.fields.ironNextInputText.mandatory).toBe(true);
+        expect(ironProcessRelationForm.fields.ironProcessRelationCheck.inputType).toBe('checkboxes');
+        expect(ironProcessRelationForm.fields.verificationState.inputType).toBe('dropdown');
         expect(operationForm.fields.fieldRecordQuality.inputType).toBe('checkboxes');
         expect(operationForm.fields.operationRoleResponsibility.inputType).toBe('checkboxes');
         expect(operationForm.fields.siteProtectionSecurity.inputType).toBe('checkboxes');
@@ -1471,6 +1487,9 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-productionSiteAssociatedFacility');
         expect(featureForm.valuelists.ironProcessEvidence).toBe('KoreanFieldwork-ironProcessEvidence');
         expect(featureForm.valuelists.ironFurnaceStructure).toBe('KoreanFieldwork-ironFurnaceStructure');
+        expect(ironProcessRelationForm.valuelists.ironProcessRelationCheck)
+            .toBe('KoreanFieldwork-ironProcessRelationCheck');
+        expect(ironProcessRelationForm.valuelists.verificationState).toBe('KoreanFieldwork-verificationState');
         expect(featureForm.valuelists.tombMoundInvestigation)
             .toBe('KoreanFieldwork-tombMoundInvestigation');
         expect(featureForm.valuelists.tombBurialStructureInvestigation)
@@ -1800,6 +1819,13 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Source material type');
         expect(languages.en.categories.SourceEvidenceIndex.fields.sourceEvidenceVerification.label)
             .toBe('Source verification status');
+        expect(languages.en.categories.IronProcessRelation.label).toBe('Iron process relation');
+        expect(languages.en.categories.IronProcessRelation.fields.ironPreviousOutputText.label)
+            .toBe('Previous output');
+        expect(languages.en.categories.IronProcessRelation.fields.ironNextInputText.label)
+            .toBe('Next input');
+        expect(languages.en.categories.IronProcessRelation.fields.ironProcessRelationCheck.label)
+            .toBe('Process relation check');
         expect(languages.en.categories.Operation.fields.fieldRecordQuality.label).toBe('Field record quality');
         expect(languages.en.categories.Operation.fields.operationRoleResponsibility.label)
             .toBe('Operation role responsibility');
@@ -2465,6 +2491,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-ironProcessEvidence']
             .values.metallurgicalAnalysisNeeded.label)
             .toBe('Metallurgical analysis needed');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-ironProcessRelationCheck']
+            .values.previousOutputIdentified.label)
+            .toBe('Previous output identified');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-ironProcessRelationCheck']
+            .values.analysisFeedbackNeeded.label)
+            .toBe('Analysis feedback needed');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-ironFurnaceStructure']
             .values.floorNotConfusedWithCut.label)
             .toBe('Floor not confused with cut');

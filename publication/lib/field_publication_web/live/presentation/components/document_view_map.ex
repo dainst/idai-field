@@ -85,11 +85,6 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
           assigns,
         socket
       ) do
-    assigns = set_defaults(assigns)
-
-    # socket = handle_publication_change(socket, publication, id)
-    # socket = process_document_tile_layers(socket, publication, doc, id)
-
     hierarchy = Data.get_document_hierarchy(publication)
 
     children_features =
@@ -120,16 +115,15 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
           "None"
       end
 
-    socket = assign(socket, assigns)
+    socket = assign(socket, set_defaults(assigns))
 
     socket =
       if parent_features.features == [] and children_features.features == [] and
-           is_nil(document_geometry_type) do
-        socket
+           document_geometry_type == "None" do
+        assign(socket, :no_data, true)
       else
         socket
-        |> assign(:document_tile_layers_state, [])
-        |> assign(:project_tile_layers_state, [])
+        |> assign(:no_data, false)
         |> push_event("document-map-update-#{id}", %{
           document_uuid: doc.id,
           document_feature_info: document_feature_info,
@@ -138,7 +132,6 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
           ancestor_features: %{}
         })
         |> assign(:document_geometry_type, document_geometry_type)
-        |> assign(:no_data, false)
         |> assign(:doc, doc)
       end
 
@@ -153,12 +146,10 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     |> Map.put_new(:centerLon, 0)
     |> Map.put_new(:centerLat, 0)
     |> Map.put_new(:zoom, 2)
-    |> Map.put(:no_data, true)
+    |> Map.put_new(:draw_box_mode, false)
     |> Map.put_new(:language, Gettext.get_locale(FieldPublicationWeb.Translate))
-    |> Map.put(:show_layer_select, false)
     |> Map.put_new(:focus, :default)
     |> Map.put(:uuid, assigns.doc.id)
-    |> Map.put_new(:draw_box_mode, false)
   end
 
   def handle_event("toggle-draw-box-mode", _, socket) do

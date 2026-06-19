@@ -400,6 +400,16 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('moundConstructionSequence');
         expect(documentsById['feature-tomb-mound-001'].resource.tombBurialStructureInvestigation)
             .toContain('additionalBurialEvidence');
+        expect(documentsById['feature-tomb-mound-001'].resource.tombSurveyPurpose)
+            .toContain('scheduleBudgetConstraint');
+        expect(documentsById['feature-tomb-mound-001'].resource.moundTrenchInvestigation)
+            .toContain('partialInformationCaution');
+        expect(documentsById['feature-tomb-mound-001'].resource.moundFillSubdivisionRecord)
+            .toContain('labMergePossible');
+        expect(documentsById['feature-tomb-mound-001'].resource.stoneCistWallPackingRecord)
+            .toContain('plasterClayRemaining');
+        expect(documentsById['feature-tomb-mound-001'].resource.tombInteriorRecoveryRecord)
+            .toContain('laboratorySeparationPlanned');
         expect(documentsById['find-tomb-grave-good-001'].resource.graveGoodsRitualContext)
             .toContain('functionNotAssumed');
         expect(documentsById['find-tomb-grave-good-001'].resource.graveGoodsRitualContext)

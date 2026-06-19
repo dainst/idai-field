@@ -100,6 +100,61 @@
           "robberyDisturbanceSeparated",
           "preservationDecisionLinked"
         ],
+        "tombSurveyPurpose": [
+          "characterClarification",
+          "moundFocusedInvestigation",
+          "burialStructureFocused",
+          "previousInvestigationCompared",
+          "scheduleBudgetConstraint",
+          "damageMinimized"
+        ],
+        "moundTrenchInvestigation": [
+          "burialMainAxis",
+          "burialShortAxis",
+          "ridgeAxis",
+          "slopeDirection",
+          "outerExtension",
+          "sectionBaulkPosition",
+          "planRemovalCombined",
+          "sectionPlanCompared",
+          "partialInformationCaution",
+          "trenchWidthRecorded"
+        ],
+        "moundFillSubdivisionRecord": [
+          "fieldSubdivisionKept",
+          "fillMaterialProperties",
+          "fillCompositionRatio",
+          "fillUnitRecorded",
+          "transportUnitCandidate",
+          "compartmentFillCandidate",
+          "constructionProcess",
+          "fillExtentRecorded",
+          "labMergePossible"
+        ],
+        "stoneCistWallPackingRecord": [
+          "capstoneWorkedDegree",
+          "stoneMaterialIdentified",
+          "wallTopClay",
+          "woodSupportTrace",
+          "packingSpace",
+          "packingComposition",
+          "packingMethod",
+          "topCoverSoil",
+          "plasterClayRemaining",
+          "fieldStoneReview"
+        ],
+        "tombInteriorRecoveryRecord": [
+          "interiorLightingControlled",
+          "disturbedSoilSieved",
+          "nearFloorFineInvestigation",
+          "smallFindLossCaution",
+          "organicDiscoloration",
+          "organicDryingAvoided",
+          "uniqueRecoveryNumber",
+          "smallTabletSerialNumber",
+          "bulkRecovery",
+          "laboratorySeparationPlanned"
+        ],
         "verificationState": "pendingDecision"
       }
     },

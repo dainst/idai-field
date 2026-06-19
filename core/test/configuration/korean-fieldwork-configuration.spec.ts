@@ -639,6 +639,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(documentsById['sample-bronze-dwelling-science-001'].resource.pitDwellingScienceSamplingPlan)
             .toContain('postExcavationCleaningAvoided');
         expect(documentsById['sample-bronze-dwelling-science-001'].resource.pitDwellingScienceSamplingPlan)
+            .toContain('postInvestigationSampling');
+        expect(documentsById['sample-bronze-dwelling-science-001'].resource.pitDwellingScienceSamplingPlan)
             .toContain('contaminationRiskChecked');
         expect(documentsById['feature-bronze-dolmen-001'].resource.dolmenStructureContext)
             .toContain('laterGraveMarkerReuse');
@@ -2989,9 +2991,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-pitDwellingScienceSamplingPlan']
             .values.amsRepresentativeContextChecked.label)
             .toBe('AMS representative context checked');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-pitDwellingScienceSamplingPlan']
+            .values.starchSample.label)
+            .toBe('Starch grinding-stone sample');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-pitDwellingScienceSamplingPlan']
-            .values.postExcavationCleaningAvoided.label)
-            .toBe('강한 세척 회피');
+            .values.postInvestigationSampling.label)
+            .toBe('조사종료 후 채취');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaEvidenceRole']
             .values.stratigraphicEvidence.label)
             .toBe('Stratigraphic evidence');

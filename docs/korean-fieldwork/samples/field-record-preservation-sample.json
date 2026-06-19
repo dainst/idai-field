@@ -217,6 +217,14 @@
           "originalUncroppedPreserved",
           "registerNumberMatched"
         ],
+        "photoCaptureSafetyReview": [
+          "boomPoleCamera",
+          "droneCapture",
+          "ladderRiskReviewed",
+          "ladderTopShootingProhibited",
+          "alternativeCaptureMethod",
+          "safetyManagerChecked"
+        ],
         "digitalSourcePreservation": ["originalPhoto", "originalImage", "twoLocationBackup"],
         "gpsPhotoLinkRecord": ["currentPositionLinked", "photoFilenameRecorded", "digitalMapLinked"],
         "reportCrossCheck": ["photoRegister", "manuscript", "numberConversionTable", "sourceMediaBackup"]

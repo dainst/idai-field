@@ -2313,6 +2313,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "photoCaptureSafetyReview": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "digitalSourcePreservation": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -2337,6 +2341,7 @@
       "valuelists": {
         "mediaEvidenceRole": "KoreanFieldwork-mediaEvidenceRole",
         "mediaQualityCheck": "KoreanFieldwork-mediaQualityCheck",
+        "photoCaptureSafetyReview": "KoreanFieldwork-photoCaptureSafetyReview",
         "digitalSourcePreservation": "KoreanFieldwork-digitalSourcePreservation",
         "gpsPhotoLinkRecord": "KoreanFieldwork-gpsPhotoLinkRecord",
         "reportCrossCheck": "KoreanFieldwork-reportCrossCheck",
@@ -2364,6 +2369,7 @@
           "fields": [
             "mediaEvidenceRole",
             "mediaQualityCheck",
+            "photoCaptureSafetyReview",
             "digitalSourcePreservation",
             "gpsPhotoLinkRecord",
             "reportCrossCheck",

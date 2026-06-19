@@ -17272,6 +17272,20 @@
     },
     "description": "Korean fieldwork media quality checks for direction, scale, control points, resolution or linework, lighting, source preservation, and register-number consistency"
   },
+  "KoreanFieldwork-photoCaptureSafetyReview": {
+    "values": {
+      "boomPoleCamera": { "label": "Boom-pole camera" },
+      "droneCapture": { "label": "Drone capture" },
+      "highPlaceShootingProhibited": { "label": "High-place shooting prohibited" },
+      "ladderRiskReviewed": { "label": "Ladder risk reviewed" },
+      "ladderTopShootingProhibited": { "label": "Ladder-top shooting prohibited" },
+      "alternativeCaptureMethod": { "label": "Alternative capture method recorded" },
+      "safetyManagerChecked": { "label": "Safety manager checked" },
+      "photoAngleSupplementNeeded": { "label": "Photo angle supplement needed" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean fieldwork photo-safety checks for keeping recorder safety ahead of image quality while recording boom-pole cameras, drones, ladder risks, high-place shooting bans, alternative capture methods, safety-manager checks, and angle supplements"
+  },
   "KoreanFieldwork-mapSourceMaterial": {
     "values": {
       "joseonMap": { "label": "Joseon-period map" },

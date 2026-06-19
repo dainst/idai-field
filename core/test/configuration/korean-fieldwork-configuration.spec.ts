@@ -127,6 +127,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('contextMapLinked');
         expect(documentsById['photo-pit-building-001-first-exposure'].resource.reportCrossCheck)
             .toContain('photoRegister');
+        expect(documentsById['photo-pit-building-001-first-exposure'].resource.photoCaptureSafetyReview)
+            .toContain('ladderTopShootingProhibited');
         expect(documentsById['drawing-pit-building-001-plan'].resource.relations.isDepictedIn)
             .toContain('sample-pit-building-001-charcoal-001');
     });
@@ -1210,6 +1212,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(drawingForm.fields.mediaRights.inputType).toBe('checkboxes');
         expect(photoForm.fields.mediaEvidenceRole.inputType).toBe('checkboxes');
         expect(photoForm.fields.mediaQualityCheck.inputType).toBe('checkboxes');
+        expect(photoForm.fields.photoCaptureSafetyReview.inputType).toBe('checkboxes');
         expect(photoForm.fields.digitalSourcePreservation.inputType).toBe('checkboxes');
         expect(photoForm.fields.gpsPhotoLinkRecord.inputType).toBe('checkboxes');
         expect(photoForm.fields.reportCrossCheck.inputType).toBe('checkboxes');
@@ -1663,6 +1666,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(drawingForm.valuelists.mediaRights).toBe('KoreanFieldwork-mediaRights');
         expect(photoForm.valuelists.mediaEvidenceRole).toBe('KoreanFieldwork-mediaEvidenceRole');
         expect(photoForm.valuelists.mediaQualityCheck).toBe('KoreanFieldwork-mediaQualityCheck');
+        expect(photoForm.valuelists.photoCaptureSafetyReview)
+            .toBe('KoreanFieldwork-photoCaptureSafetyReview');
         expect(photoForm.valuelists.digitalSourcePreservation)
             .toBe('KoreanFieldwork-digitalSourcePreservation');
         expect(photoForm.valuelists.gpsPhotoLinkRecord)
@@ -2086,6 +2091,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Media rights management');
         expect(languages.en.categories.Photo.fields.mediaQualityCheck.label)
             .toBe('Media quality check');
+        expect(languages.en.categories.Photo.fields.photoCaptureSafetyReview.label)
+            .toBe('Photo capture safety review');
         expect(languages.en.categories.Photo.fields.gpsPhotoLinkRecord.label)
             .toBe('GPS photo-link record');
         expect(languages.en.categories.Photo.fields.accessControlTag.label)
@@ -2709,6 +2716,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactElectronicDrawingProcedure']
             .values.referencePlaneCreated.label)
             .toBe('Reference plane created');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-photoCaptureSafetyReview']
+            .values.ladderTopShootingProhibited.label)
+            .toBe('Ladder-top shooting prohibited');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-photoCaptureSafetyReview']
+            .values.alternativeCaptureMethod.label)
+            .toBe('촬영 대체수단 기록');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-gpsSurveyQualityRecord']
             .values.rtkUsed.label)
             .toBe('RTK used');

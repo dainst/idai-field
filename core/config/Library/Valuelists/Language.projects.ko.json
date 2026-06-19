@@ -5518,6 +5518,20 @@
     },
     "description": "사진과 도면의 방향, 축척, 기준점, 해상도·선명도, 원본 보존, 대장번호 일치 여부를 점검하기 위한 목록"
   },
+  "KoreanFieldwork-photoCaptureSafetyReview": {
+    "values": {
+      "boomPoleCamera": { "label": "붐대 카메라" },
+      "droneCapture": { "label": "드론 촬영" },
+      "highPlaceShootingProhibited": { "label": "고소촬영 금지" },
+      "ladderRiskReviewed": { "label": "사다리 위험 검토" },
+      "ladderTopShootingProhibited": { "label": "사다리 꼭대기 촬영 금지" },
+      "alternativeCaptureMethod": { "label": "촬영 대체수단 기록" },
+      "safetyManagerChecked": { "label": "안전관리자 확인" },
+      "photoAngleSupplementNeeded": { "label": "촬영각도 보완 필요" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "사진 기록 품질을 확보하되 조사자 안전을 우선하기 위해 붐대 카메라, 드론, 사다리 위험, 고소촬영 금지, 대체 촬영수단, 안전관리자 확인, 촬영각도 보완 필요를 기록하기 위한 목록"
+  },
   "KoreanFieldwork-mapSourceMaterial": {
     "values": {
       "joseonMap": { "label": "조선시대 지도" },

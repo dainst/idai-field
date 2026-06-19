@@ -921,6 +921,9 @@
         "mediaQualityCheck": {
           "label": "Media quality check"
         },
+        "photoCaptureSafetyReview": {
+          "label": "Photo capture safety review"
+        },
         "digitalSourcePreservation": {
           "label": "Digital source preservation"
         },

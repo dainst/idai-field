@@ -921,6 +921,9 @@
         "mediaQualityCheck": {
           "label": "매체 품질검수"
         },
+        "photoCaptureSafetyReview": {
+          "label": "사진촬영 안전검토"
+        },
         "digitalSourcePreservation": {
           "label": "디지털 원자료 보존"
         },

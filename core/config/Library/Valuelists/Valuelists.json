@@ -38822,6 +38822,32 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-photoCaptureSafetyReview": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "boomPoleCamera": {},
+      "droneCapture": {},
+      "highPlaceShootingProhibited": {},
+      "ladderRiskReviewed": {},
+      "ladderTopShootingProhibited": {},
+      "alternativeCaptureMethod": {},
+      "safetyManagerChecked": {},
+      "photoAngleSupplementNeeded": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "boomPoleCamera",
+      "droneCapture",
+      "highPlaceShootingProhibited",
+      "ladderRiskReviewed",
+      "ladderTopShootingProhibited",
+      "alternativeCaptureMethod",
+      "safetyManagerChecked",
+      "photoAngleSupplementNeeded",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-mapSourceMaterial": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

@@ -1,0 +1,356 @@
+{
+  "title": "Korean pottery technology and Neolithic subsistence workflow sample",
+  "purpose": "Validate that Korean Find records keep ceramic terminology, fabric and temper observations, forming-trace cautions, process directionality, and Neolithic subsistence evidence separate from type names or broad subsistence conclusions.",
+  "validationQuestions": [
+    "토기편 기록이 빗살무늬토기·도질토기 같은 이름 하나가 아니라 용어 범위, 태토·비짐, 비짐 기능, 제작 생애와 함께 남는가.",
+    "성형흔과 정면흔이 실떼기·회전흔 같은 단일 흔적으로 물레질 뽑기나 제작기법을 확정하지 않고 확대사진과 공정 방향성을 함께 남기는가.",
+    "신석기 생업 유물이 어구명 하나로 닫히지 않고 어망추·조침·작살, 외양성 어종, 해양포유류, 포경 증거 수준, 해류·계절성, 교류품 후보와 함께 남는가."
+  ],
+  "documents": [
+    {
+      "resource": {
+        "id": "op-pottery-subsistence-001",
+        "identifier": "POT-SUBS-OP-001",
+        "shortDescription": "토기 제작·신석기 생업 검토 작업",
+        "category": "Operation",
+        "relations": {},
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "researchQuestionFit",
+          "crossReviewNeeded"
+        ],
+        "recordCreationTiming": "duringFieldwork",
+        "dailyLogContent": [
+          "workDateWeather",
+          "workArea",
+          "findSampleCollection",
+          "photoDrawingNumbers",
+          "changeReason"
+        ],
+        "dailyLogReview": [
+          "sameDayWritten",
+          "findListCrossChecked",
+          "photoDrawingCrossChecked",
+          "reviewerChecked"
+        ],
+        "reportCrossCheck": [
+          "manuscript",
+          "artifactRegister",
+          "drawingRegister",
+          "photoRegister",
+          "numberConversionTable"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "feature-neolithic-shellmidden-001",
+        "identifier": "POT-SUBS-FEAT-001",
+        "shortDescription": "혼토패각층과 생업 유물 출토 구역",
+        "category": "Feature",
+        "relations": {
+          "isRecordedIn": ["op-pottery-subsistence-001"]
+        },
+        "description": "혼토패각층 안에서 토기편, 어망추, 조침 후보, 외양성 어류·해양포유류 자료가 함께 확인되어 생업과 토기 편년을 분리 검토하는 맥락.",
+        "featurePackage": [
+          "shellMidden",
+          "paleolithicSite"
+        ],
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "criteriaConsistency"
+        ],
+        "fieldOnlyMissingCheck": [
+          "stratigraphicBoundary",
+          "preRemovalCondition",
+          "photoAngleAndScale",
+          "spatialLocation",
+          "elevationRecorded",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "shellMiddenStratigraphy": [
+          "mixedSoilShellLayer",
+          "soilIntrusionRecorded",
+          "redepositionChecked",
+          "planAndSectionCombined",
+          "intrusiveFeatureChecked",
+          "formationProcessOpen",
+          "pendingDecision"
+        ],
+        "shellMiddenSettlementContext": [
+          "dwellingLinked",
+          "outdoorHearthLinked",
+          "storagePitLinked",
+          "burialRitualLinked",
+          "shorelineWaterSystemContext",
+          "estuaryOrIsland",
+          "marineCurrentSeasonality",
+          "laterReuseSeparated",
+          "periodDistributionSeparated",
+          "pendingDecision"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "find-neolithic-pottery-001",
+        "identifier": "POT-SUBS-FIND-001",
+        "shortDescription": "식물섬유 비짐 토기편",
+        "category": "Find",
+        "relations": {
+          "isRecordedIn": ["op-pottery-subsistence-001"],
+          "liesWithin": ["feature-neolithic-shellmidden-001"]
+        },
+        "description": "평저 후보와 식물섬유·모래 비짐이 보이는 토기편. 고산리식 같은 형식 후보는 보류하고 태토, 비짐, 저온 소성 후보, 음식 조리 관련성을 관찰값으로 남긴다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "researchQuestionFit"
+        ],
+        "fieldOnlyMissingCheck": [
+          "preRemovalCondition",
+          "photoAngleAndScale",
+          "spatialLocation",
+          "elevationRecorded",
+          "numberedBeforeCollection",
+          "sameDayReview"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "artifactLabelRegisterLink": [
+          "labelCreated",
+          "sitePointRecorded",
+          "fieldSerialNumber",
+          "stratigraphicUnitRecorded",
+          "artifactNameRecorded",
+          "materialRecorded",
+          "ledgerEntryCreated",
+          "pendingDecision"
+        ],
+        "ceramicTermScope": [
+          "earthenwareTerm",
+          "ceramicUmbrellaTerm",
+          "unglazedPottery",
+          "porousBody",
+          "firingTemperatureCandidate",
+          "terminologyRegionDifference",
+          "pendingDecision"
+        ],
+        "potteryFabricTemperRecord": [
+          "primaryClay",
+          "secondaryClay",
+          "clayLevigated",
+          "temperPresent",
+          "sandTemper",
+          "plantFiberTemper",
+          "grainHuskTemper",
+          "formingEfficiencyPurpose",
+          "pendingDecision"
+        ],
+        "potteryTemperFunctionAssessment": [
+          "formingEfficiency",
+          "fireResistance",
+          "porosityControl",
+          "cookingVessel",
+          "dryingSpeedControl",
+          "levigatedClay",
+          "pendingDecision"
+        ],
+        "potteryProductionLifeRecord": [
+          "clayQuarrying",
+          "temperProcurement",
+          "fabricPreparation",
+          "forming",
+          "surfaceFinishing",
+          "drying",
+          "firing",
+          "use",
+          "breakage",
+          "discard",
+          "pendingDecision"
+        ],
+        "potteryFormingTraceAssessment": [
+          "handBuilding",
+          "coilBuilding",
+          "ringBuilding",
+          "hakemeFinishing",
+          "pendingDecision"
+        ],
+        "typologyArgument": [
+          "representativeAttribute",
+          "variationRecorded",
+          "attributeCombination",
+          "typeCandidate",
+          "alternativeClassification",
+          "pendingDecision"
+        ],
+        "chronologyArgument": [
+          "stratigraphicRelation",
+          "associatedFinds",
+          "regionalLagRisk",
+          "alternativeChronology",
+          "pendingDecision"
+        ],
+        "assemblageRelation": [
+          "sameLayer",
+          "sameDepositUnit",
+          "mixedContextRisk",
+          "functionalDifferencePossible",
+          "contemporaneityUnclear"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "find-pottery-forming-trace-001",
+        "identifier": "POT-SUBS-FIND-002",
+        "shortDescription": "회전정면·실떼기 후보 토기 저부편",
+        "category": "Find",
+        "relations": {
+          "isRecordedIn": ["op-pottery-subsistence-001"]
+        },
+        "description": "저부의 실떼기와 회전정면 흔적이 보이나 물레질 뽑기 단독 증거로 확정하지 않고 성형과 정형 방향을 분리해 남기는 비교 토기편.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "crossReviewNeeded"
+        ],
+        "fieldOnlyMissingCheck": [
+          "preRemovalCondition",
+          "photoAngleAndScale",
+          "spatialLocation",
+          "orientationRecorded",
+          "numberedBeforeCollection",
+          "sameDayReview"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "ceramicTermScope": [
+          "earthenwareTerm",
+          "hardFiredPotteryTerm",
+          "stonewareTerm",
+          "unglazedPottery",
+          "glazePresent",
+          "firingTemperatureCandidate",
+          "pendingDecision"
+        ],
+        "potteryFormingTraceAssessment": [
+          "coilBuilding",
+          "wheelThrowing",
+          "paddleAndAnvil",
+          "innerAnvilTrace",
+          "stringCutTrace",
+          "pendingDecision"
+        ],
+        "potteryFormingCaution": [
+          "stringCutNotStandalone",
+          "wheelThrowingCandidate",
+          "singleFormingRotationalFinishing",
+          "formingFinishingSeparated",
+          "techniquePersistencePossible",
+          "paddleUseChecked",
+          "tileFormingTraceCompared",
+          "pendingDecision"
+        ],
+        "potteryProcessDirectionality": [
+          "sandGrainDirection",
+          "finishingTraceDirection",
+          "rotaryTrimming",
+          "wetSmoothingTrace",
+          "uprightTrimming",
+          "invertedTrimming",
+          "formingDirection",
+          "finishingDirection",
+          "oppositeDirection",
+          "magnifiedPhoto",
+          "pendingDecision"
+        ],
+        "typologyArgument": [
+          "representativeAttribute",
+          "residualTraitReviewed",
+          "relatedArtifactGroup",
+          "alternativeClassification",
+          "specialistReviewNeeded",
+          "pendingDecision"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "find-neolithic-fishing-gear-001",
+        "identifier": "POT-SUBS-FIND-003",
+        "shortDescription": "어망추·조침·작살 생업 증거 묶음",
+        "category": "Find",
+        "relations": {
+          "isRecordedIn": ["op-pottery-subsistence-001"],
+          "liesWithin": ["feature-neolithic-shellmidden-001"]
+        },
+        "description": "석제 어망추와 골각제 조침·작살 후보가 같은 패총층에서 수습되었지만 포경·외해어로 여부는 어골·해양포유류·해류·계절성 근거와 함께 보류한다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "researchQuestionFit",
+          "crossReviewNeeded"
+        ],
+        "fieldOnlyMissingCheck": [
+          "preRemovalCondition",
+          "photoAngleAndScale",
+          "spatialLocation",
+          "elevationRecorded",
+          "numberedBeforeCollection",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "artifactLabelRegisterLink": [
+          "labelCreated",
+          "fieldSerialNumber",
+          "stratigraphicUnitRecorded",
+          "artifactLayerRecorded",
+          "artifactNameRecorded",
+          "materialRecorded",
+          "ledgerEntryCreated",
+          "pendingDecision"
+        ],
+        "neolithicSubsistenceEvidence": [
+          "shellfishCollectionTool",
+          "netSinkerOrStoneWeight",
+          "compositeFishhook",
+          "singleFishhook",
+          "harpoonPoint",
+          "boneFishingTool",
+          "shellFishingTool",
+          "logboatEvidence",
+          "offshoreFishSpecies",
+          "marineMammalEvidence",
+          "directWhalingEvidence",
+          "indirectWhalingEvidence",
+          "fishCurrentSeasonality",
+          "southCoastPattern",
+          "potteryChronologyLinked",
+          "exchangeGoodsCandidate",
+          "functionNotAssumed",
+          "pendingDecision"
+        ],
+        "assemblageRelation": [
+          "sameLayer",
+          "repeatedAssociation",
+          "accidentalAssociationRisk",
+          "secondaryDepositionRisk",
+          "functionalDifferencePossible",
+          "contemporaneityUnclear",
+          "pendingDecision"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    }
+  ]
+}

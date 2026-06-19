@@ -481,6 +481,41 @@ describe('KoreanFieldwork project configuration', () => {
     });
 
 
+    it('keeps the Korean pottery technology and Neolithic subsistence sample aligned with Find fields', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const sample = loadSample('pottery-technology-subsistence-workflow-sample.json');
+        const documents = sample.documents;
+        const documentsById = documents.reduce((index: any, document: any) => {
+            index[document.resource.id] = document;
+            return index;
+        }, {});
+
+        expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
+
+        expect(documentsById['find-neolithic-pottery-001'].resource.ceramicTermScope)
+            .toContain('firingTemperatureCandidate');
+        expect(documentsById['find-neolithic-pottery-001'].resource.potteryFabricTemperRecord)
+            .toContain('plantFiberTemper');
+        expect(documentsById['find-neolithic-pottery-001'].resource.potteryTemperFunctionAssessment)
+            .toContain('porosityControl');
+        expect(documentsById['find-neolithic-pottery-001'].resource.potteryProductionLifeRecord)
+            .toContain('fabricPreparation');
+        expect(documentsById['find-pottery-forming-trace-001'].resource.potteryFormingTraceAssessment)
+            .toContain('stringCutTrace');
+        expect(documentsById['find-pottery-forming-trace-001'].resource.potteryFormingCaution)
+            .toContain('stringCutNotStandalone');
+        expect(documentsById['find-pottery-forming-trace-001'].resource.potteryProcessDirectionality)
+            .toContain('magnifiedPhoto');
+        expect(documentsById['find-neolithic-fishing-gear-001'].resource.neolithicSubsistenceEvidence)
+            .toContain('functionNotAssumed');
+        expect(documentsById['find-neolithic-fishing-gear-001'].resource.neolithicSubsistenceEvidence)
+            .toContain('fishCurrentSeasonality');
+    });
+
+
     it('keeps the Korean archaeobotany flotation sample aligned with Sample fields', () => {
 
         const configReader = new ConfigReader();

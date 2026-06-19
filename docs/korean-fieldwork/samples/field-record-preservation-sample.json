@@ -5,7 +5,8 @@
     "하루 작업기록에서 보고서 도면·사진·목록까지 원기록 ID가 이어지는가.",
     "현장 종료 전에만 확인 가능한 값이 비어 있으면 경고되는가.",
     "시료가 분석명만이 아니라 분석 질문과 채취 맥락을 갖는가.",
-    "판단 보류가 확정값으로 덮이지 않고 검토 이력으로 남는가."
+    "판단 보류가 확정값으로 덮이지 않고 검토 이력으로 남는가.",
+    "표토·교란·상부퇴적토·매몰토 제거와 사용면 확인이 행위의 역순 원칙으로 검토되는가."
   ],
   "documents": [
     {
@@ -56,6 +57,16 @@
           "shoulderLineRecorded",
           "lightingConditionRecorded",
           "confirmedBeforeInternalExcavation"
+        ],
+        "excavationReverseSequenceCheck": [
+          "topsoilRemoved",
+          "modernDisturbanceRemoved",
+          "upperDepositRemoved",
+          "overlapSequenceChecked",
+          "featureFillRemoved",
+          "useSurfaceChecked",
+          "exceptionReasonRecorded",
+          "pendingDecision"
         ],
         "recordCreationTiming": "fieldOnlyObservation",
         "pitDwellingExposureBaulk": [

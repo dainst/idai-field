@@ -5224,6 +5224,44 @@
     },
     "description": "유적·유구·유물·유물복합체·환경을 함께 묶고, 조사방법 선택근거와 트렌치·피트·바둑판식·사분법·계단식 조사 방식을 기록하기 위한 목록"
   },
+  "KoreanFieldwork-excavationReverseSequenceCheck": {
+    "values": {
+      "topsoilRemoved": {
+        "label": "표토 제거"
+      },
+      "modernDisturbanceRemoved": {
+        "label": "현대교란선 제거"
+      },
+      "robberyPitCleaned": {
+        "label": "도굴갱 정리"
+      },
+      "upperDepositRemoved": {
+        "label": "상부퇴적토 제거"
+      },
+      "overlapSequenceChecked": {
+        "label": "중복 선후관계 확인"
+      },
+      "featureFillRemoved": {
+        "label": "유구 매몰토 제거"
+      },
+      "constructionSurfaceChecked": {
+        "label": "축조면 확인"
+      },
+      "useSurfaceChecked": {
+        "label": "사용면 확인"
+      },
+      "abandonmentSurfaceChecked": {
+        "label": "폐기면 확인"
+      },
+      "exceptionReasonRecorded": {
+        "label": "예외 사유 기록"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "표토·현대교란·도굴갱·상부퇴적토·유구 매몰토 제거와 축조면·사용면·폐기면 확인을 행위의 역순 원칙으로 점검하기 위한 목록"
+  },
   "KoreanFieldwork-mediaEvidenceRole": {
     "values": {
       "fieldOverview": {

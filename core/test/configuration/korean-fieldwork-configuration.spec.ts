@@ -113,6 +113,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('firstExposurePhoto');
         expect(documentsById['feature-pit-building-001'].resource.fieldOnlyMissingCheck)
             .toContain('notRecoverableWarning');
+        expect(documentsById['feature-pit-building-001'].resource.excavationReverseSequenceCheck)
+            .toContain('useSurfaceChecked');
         expect(documentsById['segment-pit-building-001-fill-a'].resource.relations.liesWithin)
             .toEqual(['feature-pit-building-001']);
         expect(documentsById['find-pit-building-001-001'].resource.fieldOnlyMissingCheck)
@@ -997,6 +999,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.fields.chronologyArgument.inputType).toBe('checkboxes');
         expect(featureForm.fields.assemblageRelation.inputType).toBe('checkboxes');
         expect(featureForm.fields.excavationContextModel.inputType).toBe('checkboxes');
+        expect(featureForm.fields.excavationReverseSequenceCheck.inputType).toBe('checkboxes');
         expect(featureForm.fields.pitDwellingExposureBaulk.inputType).toBe('checkboxes');
         expect(featureForm.fields.pitDwellingFloorFacility.inputType).toBe('checkboxes');
         expect(featureForm.fields.pitDwellingFireEvidence.inputType).toBe('checkboxes');
@@ -1314,6 +1317,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.valuelists.assemblageRelation).toBe('KoreanFieldwork-assemblageRelation');
         expect(featureForm.valuelists.excavationContextModel)
             .toBe('KoreanFieldwork-excavationContextModel');
+        expect(featureForm.valuelists.excavationReverseSequenceCheck)
+            .toBe('KoreanFieldwork-excavationReverseSequenceCheck');
         expect(featureForm.valuelists.pitDwellingExposureBaulk)
             .toBe('KoreanFieldwork-pitDwellingExposureBaulk');
         expect(featureForm.valuelists.pitDwellingFloorFacility)
@@ -1714,6 +1719,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.Feature.fields.assemblageRelation.label).toBe('Assemblage relation');
         expect(languages.en.categories.Feature.fields.excavationContextModel.label)
             .toBe('Excavation context model');
+        expect(languages.en.categories.Feature.fields.excavationReverseSequenceCheck.label)
+            .toBe('Excavation reverse sequence check');
         expect(languages.en.categories.Feature.fields.firstExposureRecord.label).toBe('First exposure record');
         expect(languages.en.categories.Feature.fields.pitDwellingExposureBaulk.label)
             .toBe('Pit dwelling exposure and baulk');
@@ -2145,6 +2152,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-excavationContextModel']
             .values.quadrantInvestigation.label)
             .toBe('Quadrant investigation');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-excavationReverseSequenceCheck']
+            .values.useSurfaceChecked.label)
+            .toBe('Use surface checked');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-soilTextureFieldAssessment']
             .values.quantitativeAnalysisNeeded.label)
             .toBe('Quantitative analysis needed');

@@ -316,6 +316,9 @@
         "excavationContextModel": {
           "label": "발굴맥락 구성"
         },
+        "excavationReverseSequenceCheck": {
+          "label": "발굴행위 역순 검토"
+        },
         "fieldOnlyMissingCheck": {
           "label": "현장시점 누락점검"
         },

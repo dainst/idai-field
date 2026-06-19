@@ -16978,6 +16978,44 @@
     },
     "description": "Korean fieldwork excavation context checks for linking site, feature, finds, assemblage, environment, horizontal and vertical context, and the rationale for trench, pit, grid, quadrant, stepped, planned, or rescue excavation methods"
   },
+  "KoreanFieldwork-excavationReverseSequenceCheck": {
+    "values": {
+      "topsoilRemoved": {
+        "label": "Topsoil removed"
+      },
+      "modernDisturbanceRemoved": {
+        "label": "Modern disturbance removed"
+      },
+      "robberyPitCleaned": {
+        "label": "Robbery pit cleaned"
+      },
+      "upperDepositRemoved": {
+        "label": "Upper deposit removed"
+      },
+      "overlapSequenceChecked": {
+        "label": "Overlap sequence checked"
+      },
+      "featureFillRemoved": {
+        "label": "Feature fill removed"
+      },
+      "constructionSurfaceChecked": {
+        "label": "Construction surface checked"
+      },
+      "useSurfaceChecked": {
+        "label": "Use surface checked"
+      },
+      "abandonmentSurfaceChecked": {
+        "label": "Abandonment surface checked"
+      },
+      "exceptionReasonRecorded": {
+        "label": "Exception reason recorded"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean fieldwork reverse-sequence checks for reviewing topsoil, modern disturbance, robbery pits, upper deposits, feature fills, and construction, use, or abandonment surfaces before excavation interpretation is closed"
+  },
   "KoreanFieldwork-mediaEvidenceRole": {
     "values": {
       "fieldOverview": {

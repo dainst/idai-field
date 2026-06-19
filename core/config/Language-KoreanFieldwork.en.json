@@ -316,6 +316,9 @@
         "excavationContextModel": {
           "label": "Excavation context model"
         },
+        "excavationReverseSequenceCheck": {
+          "label": "Excavation reverse sequence check"
+        },
         "fieldOnlyMissingCheck": {
           "label": "Field-only missing check"
         },

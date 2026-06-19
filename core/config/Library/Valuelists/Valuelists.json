@@ -38390,6 +38390,36 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-excavationReverseSequenceCheck": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "topsoilRemoved": {},
+      "modernDisturbanceRemoved": {},
+      "robberyPitCleaned": {},
+      "upperDepositRemoved": {},
+      "overlapSequenceChecked": {},
+      "featureFillRemoved": {},
+      "constructionSurfaceChecked": {},
+      "useSurfaceChecked": {},
+      "abandonmentSurfaceChecked": {},
+      "exceptionReasonRecorded": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "topsoilRemoved",
+      "modernDisturbanceRemoved",
+      "robberyPitCleaned",
+      "upperDepositRemoved",
+      "overlapSequenceChecked",
+      "featureFillRemoved",
+      "constructionSurfaceChecked",
+      "useSurfaceChecked",
+      "abandonmentSurfaceChecked",
+      "exceptionReasonRecorded",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-mediaEvidenceRole": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

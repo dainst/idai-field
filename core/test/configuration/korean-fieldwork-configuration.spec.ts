@@ -112,8 +112,16 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('집자리');
         expect(documentsById['term-import-dwelling-site-house-place'].resource.termImportAuthorityText)
             .toBe('주거지');
+        expect(documentsById['term-import-dwelling-site-house-place'].resource.termImportSourceFieldText)
+            .toContain('사진 캡션');
+        expect(documentsById['term-import-dwelling-site-house-place'].resource.termImportContextText)
+            .toContain('저장구덩이');
+        expect(documentsById['term-import-dwelling-site-house-place'].resource.termImportReviewNoteText)
+            .toContain('별도 검토');
         expect(documentsById['term-import-kiln-site-gamateo'].resource.termImportReportText)
             .toBe('가마터');
+        expect(documentsById['term-import-kiln-site-gamateo'].resource.termImportContextText)
+            .toContain('구조 확인 단계');
         expect(documentsById['term-import-kiln-site-gamateo'].resource.termSearchMapping)
             .toContain('reportOutputSeparated');
         expect(documentsById['term-alias-open-kiln-handaetgama'].resource.termAliasText)
@@ -170,6 +178,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('importMappingNeeded');
         expect(documentsById['term-import-pottery-workshop-subijang'].resource.termImportAuthorityText)
             .toBe('토기 공방');
+        expect(documentsById['term-import-pottery-workshop-subijang'].resource.termImportSourceFieldText)
+            .toContain('사진 캡션');
+        expect(documentsById['term-import-pottery-workshop-subijang'].resource.termImportReviewNoteText)
+            .toContain('원료가공 단계');
         expect(documentsById['term-relationship-pottery-workshop-facilities'].resource.category)
             .toBe('TermRelationship');
         expect(documentsById['term-relationship-pottery-workshop-facilities'].resource.termRelation)
@@ -188,6 +200,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('structureSubtypeSeparated');
         expect(documentsById['term-import-stone-chamber-tomb-dolbang'].resource.termImportAuthorityText)
             .toBe('석실묘');
+        expect(documentsById['term-import-stone-chamber-tomb-dolbang'].resource.termImportSourceFieldText)
+            .toContain('기존 야장');
+        expect(documentsById['term-import-stone-chamber-tomb-dolbang'].resource.termImportContextText)
+            .toContain('폐쇄석');
         expect(documentsById['term-import-stone-chamber-tomb-dolbang'].resource.termAliasHandling)
             .toContain('doNotOverwriteObservedTerm');
         expect(documentsById['term-relationship-stone-chamber-access'].resource.termRelationshipTargetText)
@@ -1689,6 +1705,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(termImportMappingForm.fields.termImportSourceText.inputType).toBe('input');
         expect(termImportMappingForm.fields.termImportAuthorityText.inputType).toBe('input');
         expect(termImportMappingForm.fields.termImportReportText.inputType).toBe('input');
+        expect(termImportMappingForm.fields.termImportSourceFieldText.inputType).toBe('input');
+        expect(termImportMappingForm.fields.termImportContextText.inputType).toBe('input');
+        expect(termImportMappingForm.fields.termImportReviewNoteText.inputType).toBe('input');
         expect(termImportMappingForm.fields.termImportSourceText.mandatory).toBe(true);
         expect(termImportMappingForm.fields.termImportAuthorityText.mandatory).toBe(true);
         expect(termRelationshipForm.parent).toBe('TermAuthority');
@@ -2701,6 +2720,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Imported source term');
         expect(languages.en.categories.TermImportMapping.fields.termImportAuthorityText.label)
             .toBe('Authority headword');
+        expect(languages.en.categories.TermImportMapping.fields.termImportSourceFieldText.label)
+            .toBe('Source field or register');
+        expect(languages.en.categories.TermImportMapping.fields.termImportContextText.label)
+            .toBe('Original context');
+        expect(languages.en.categories.TermImportMapping.fields.termImportReviewNoteText.label)
+            .toBe('Import review note');
         expect(languages.en.categories.TermRelationship.label).toBe('Term relationship');
         expect(languages.en.categories.TermRelationship.fields.termRelationshipSourceText.label)
             .toBe('Source term');

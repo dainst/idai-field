@@ -932,6 +932,18 @@
         "termImportReportText": {
           "inputType": "input",
           "constraintIndexed": true
+        },
+        "termImportSourceFieldText": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "termImportContextText": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "termImportReviewNoteText": {
+          "inputType": "input",
+          "constraintIndexed": true
         }
       },
       "valuelists": {
@@ -964,6 +976,9 @@
             "termImportSourceText",
             "termImportAuthorityText",
             "termImportReportText",
+            "termImportSourceFieldText",
+            "termImportContextText",
+            "termImportReviewNoteText",
             "termAliasHandling",
             "termRelation",
             "termSearchMapping",

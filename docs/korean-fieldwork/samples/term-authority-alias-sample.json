@@ -5,7 +5,8 @@
     "조개더미·조개무지 검색어가 패총 표제어로 연결되되, 패각층·조가비층은 층위 단위로 분리되는가.",
     "표준 용어와 현장 관용어를 모두 검색하되 저장값은 권위어로 정규화되는가.",
     "가마·요·요지·가마터, 한뎃가마·노천요, 평요 분야분리, 수비장·건조장 찾아가기 관계가 현장 원문과 보고서 출력어를 덮어쓰지 않는가.",
-    "판단 보류가 확정값으로 덮이지 않고 검토 이력으로 남는가."
+    "판단 보류가 확정값으로 덮이지 않고 검토 이력으로 남는가.",
+    "기존 대장·사진 캡션·야장 값을 가져올 때 원자료 필드와 원문 맥락, 수동 검토 메모가 남는가."
   ],
   "documents": [
     {
@@ -233,6 +234,9 @@
         "termImportSourceText": "집자리",
         "termImportAuthorityText": "주거지",
         "termImportReportText": "주거지",
+        "termImportSourceFieldText": "기존 유구대장 / 사진 캡션",
+        "termImportContextText": "수혈건물지와 저장구덩이가 중복된 생활면 기록",
+        "termImportReviewNoteText": "주거 기능 확정 전에는 수혈건물지·저장구덩이 관계를 별도 검토한다.",
         "termAliasHandling": [
           "importOnly",
           "preferredHeadwordTarget",
@@ -899,6 +903,9 @@
         "termImportSourceText": "가마터",
         "termImportAuthorityText": "요지",
         "termImportReportText": "가마터",
+        "termImportSourceFieldText": "기존 유적명 목록 / 보고서 유구명",
+        "termImportContextText": "소토·목탄·토기편 집중으로 추정된 단계와 구조 확인 단계가 섞인 입력",
+        "termImportReviewNoteText": "구조요 판정 전에는 가마터 입력어를 요지로 자동 출력하지 않는다.",
         "termAliasHandling": [
           "importOnly",
           "preferredHeadwordTarget",
@@ -1141,6 +1148,9 @@
         "termImportSourceText": "수비장",
         "termImportAuthorityText": "토기 공방",
         "termImportReportText": "수비장",
+        "termImportSourceFieldText": "기존 시설명 대장 / 사진 캡션",
+        "termImportContextText": "원료 침전층과 수비구덩이 위치가 공방 내부 시설로 기록된 사례",
+        "termImportReviewNoteText": "공방 표제어에 연결하되 시설 위치와 원료가공 단계는 별도 유구 관찰값으로 유지한다.",
         "termAliasHandling": [
           "importOnly",
           "preferredHeadwordTarget",
@@ -1359,6 +1369,9 @@
         "termImportSourceText": "돌방무덤",
         "termImportAuthorityText": "석실묘",
         "termImportReportText": "석실묘",
+        "termImportSourceFieldText": "기존 야장 / 사진 캡션 / 보고서 목록",
+        "termImportContextText": "현실·연도·묘도·폐쇄석 기록이 아직 분리되지 않은 무덤 명칭 입력",
+        "termImportReviewNoteText": "권위 표제어 연결 뒤에도 횡구식·횡혈식 접근 구조와 폐쇄시설을 수동 확인한다.",
         "termAliasHandling": [
           "importOnly",
           "preferredHeadwordTarget",

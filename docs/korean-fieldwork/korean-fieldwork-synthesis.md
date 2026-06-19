@@ -84,7 +84,7 @@
 
 1. 조건부 필수값: 현장시에만 가능한 기록, 시료 채취 전 통제, 수습 전 사진처럼 시점 의존성이 큰 항목을 실제 UI 경고로 정교화한다.
 2. 원자료 연결: 사진, 도면, GPS, 3D, OCR 근거, 보고서 도판이 원기록 ID와 끊기지 않는지 샘플 프로젝트로 검증한다. `SourceEvidenceIndex`는 인용 정보와 쪽수·도판 위치를 필수로 남겨 원문 대조 대기열 역할을 하게 하고, `InformationAsset`은 보고서 PDF·작업파일·DB·GIS·재래식 매체의 장기보존 위치와 권한을 따로 남긴다.
-3. 용어 가져오기: `TermAlias`가 현장 검색어를 받아도 저장값과 보고서 출력어를 섞지 않는지 자동완성·가져오기 흐름을 확인한다. 별칭 원문은 `termAliasText`에 별도로 남겨 카드 제목이나 요약문과 섞이지 않게 한다.
+3. 용어 가져오기: `TermAlias`가 현장 검색어를 받아도 저장값과 보고서 출력어를 섞지 않는지 자동완성·가져오기 흐름을 확인한다. 별칭 원문은 `termAliasText`에 별도로 남겨 카드 제목이나 요약문과 섞이지 않게 하고, `TermImportMapping`은 원자료 필드·대장, 원문 맥락, 수동 검토 메모를 함께 저장해 기존 대장·사진 캡션·야장 맥락이 권위 표제어로 덮이지 않게 한다.
 4. 층위관계 표시: Harris Matrix와 맥락번호 변경 이력은 현재 `stratigraphicRelationReview`, `chronologyArgument`, `excavationContextModel`, `FeatureSegment`의 관찰·라이프사이클 목록, `reportCrossCheck`로 처리하고, 관계 그래프 편집이나 독립 변경 이력이 필요한지는 샘플 입력으로 확인한다.
 
 이 기준을 통과하지 못한 항목은 값목록으로 바로 올리지 않고, 권별 노트와 `SourceEvidenceIndex`에서 근거 대조 상태로 남긴다.

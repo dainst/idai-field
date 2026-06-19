@@ -103,6 +103,15 @@
         "termImportReportText": {
           "label": "보고서 출력어"
         },
+        "termImportSourceFieldText": {
+          "label": "원자료 필드·대장"
+        },
+        "termImportContextText": {
+          "label": "원문 맥락"
+        },
+        "termImportReviewNoteText": {
+          "label": "가져오기 검토 메모"
+        },
         "termImportSourceText": {
           "label": "가져온 입력어"
         }

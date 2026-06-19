@@ -103,6 +103,15 @@
         "termImportReportText": {
           "label": "Report output term"
         },
+        "termImportSourceFieldText": {
+          "label": "Source field or register"
+        },
+        "termImportContextText": {
+          "label": "Original context"
+        },
+        "termImportReviewNoteText": {
+          "label": "Import review note"
+        },
         "termImportSourceText": {
           "label": "Imported source term"
         }

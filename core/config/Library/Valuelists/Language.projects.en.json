@@ -16608,6 +16608,27 @@
     },
     "description": "Comparative-reference checks that require pottery observations to be compared across the same period, region, vessel type, tile forming traces, living pottery, ethnographic and experimental cases, production-site candidates, distribution range, and reference limits before classification"
   },
+  "KoreanFieldwork-potteryProvenanceDistributionReview": {
+    "values": {
+      "sourceClayCandidate": { "label": "Source clay candidate" },
+      "petrographicCompositionCompared": { "label": "Petrographic composition compared" },
+      "rawClayGeologyChecked": { "label": "Raw-clay geology checked" },
+      "workshopCandidate": { "label": "Workshop candidate" },
+      "workshopAttributionUncertain": { "label": "Workshop attribution uncertain" },
+      "multiWorkshopSameTypePossible": { "label": "Multi-workshop same type possible" },
+      "importedVesselCandidate": { "label": "Imported vessel candidate" },
+      "localProductionCandidate": { "label": "Local production candidate" },
+      "distributionRangeEstimated": { "label": "Distribution range estimated" },
+      "circulationUseMovementConsidered": { "label": "Circulation/use movement considered" },
+      "supplyShareQuestion": { "label": "Supply-share question" },
+      "geographicChronologicalTrendChecked": { "label": "Geographic/chronological trend checked" },
+      "specializedWorkshopCandidate": { "label": "Specialized workshop candidate" },
+      "multiTypeWorkshopCandidate": { "label": "Multi-type workshop candidate" },
+      "exchangeModePending": { "label": "Exchange mode pending" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Pottery provenance and distribution checks for keeping source clay, petrographic composition, workshop attribution uncertainty, local/imported candidates, distribution range, use-life circulation, supply-share questions, and exchange modes visible"
+  },
   "KoreanFieldwork-potteryExperimentalVariableRecord": {
     "values": {
       "clayMoisture": { "label": "Clay moisture" },

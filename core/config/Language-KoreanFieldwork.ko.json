@@ -976,6 +976,9 @@
         "potteryClassificationBasis": {
           "label": "토기 분류 판단근거"
         },
+        "potteryProvenanceDistributionReview": {
+          "label": "토기 산지·분포 검토"
+        },
         "potteryFiringTraceObservation": {
           "label": "토기 소성흔 관찰"
         },

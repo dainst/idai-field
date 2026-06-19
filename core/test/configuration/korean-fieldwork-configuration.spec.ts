@@ -904,6 +904,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('failureTrace');
         expect(documentsById['find-pottery-forming-trace-001'].resource.potteryClassificationBasis)
             .toContain('technicalGroupSorted');
+        expect(documentsById['find-pottery-forming-trace-001'].resource.potteryProvenanceDistributionReview)
+            .toContain('workshopAttributionUncertain');
         expect(documentsById['find-neolithic-fishing-gear-001'].resource.neolithicSubsistenceEvidence)
             .toContain('functionNotAssumed');
         expect(documentsById['find-neolithic-fishing-gear-001'].resource.neolithicSubsistenceEvidence)
@@ -1492,6 +1494,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.fields.potteryComparativeReferenceCheck.inputType).toBe('checkboxes');
         expect(findForm.fields.potteryExperimentalVariableRecord.inputType).toBe('checkboxes');
         expect(findForm.fields.potteryClassificationBasis.inputType).toBe('checkboxes');
+        expect(findForm.fields.potteryProvenanceDistributionReview.inputType).toBe('checkboxes');
         expect(findForm.fields.potteryFiringTraceObservation.inputType).toBe('checkboxes');
         expect(findForm.fields.potteryKilnFurnitureContext.inputType).toBe('checkboxes');
         expect(findForm.fields.tileKilnFindContext.inputType).toBe('checkboxes');
@@ -1989,6 +1992,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-potteryExperimentalVariableRecord');
         expect(findForm.valuelists.potteryClassificationBasis)
             .toBe('KoreanFieldwork-potteryClassificationBasis');
+        expect(findForm.valuelists.potteryProvenanceDistributionReview)
+            .toBe('KoreanFieldwork-potteryProvenanceDistributionReview');
         expect(findForm.valuelists.potteryFiringTraceObservation)
             .toBe('KoreanFieldwork-potteryFiringTraceObservation');
         expect(findForm.valuelists.potteryKilnFurnitureContext)
@@ -2532,6 +2537,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Pottery experimental variable record');
         expect(languages.en.categories.Find.fields.potteryClassificationBasis.label)
             .toBe('Pottery classification basis');
+        expect(languages.en.categories.Find.fields.potteryProvenanceDistributionReview.label)
+            .toBe('Pottery provenance and distribution review');
         expect(languages.en.categories.Find.fields.potteryFiringTraceObservation.label)
             .toBe('Pottery firing trace observation');
         expect(languages.en.categories.Find.fields.potteryKilnFurnitureContext.label)
@@ -3147,6 +3154,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-potteryClassificationBasis']
             .values.technicalGroupSorted.label)
             .toBe('Technical group sorted');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-potteryProvenanceDistributionReview']
+            .values.workshopAttributionUncertain.label)
+            .toBe('공방 귀속 불확실');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-potteryFiringTraceObservation']
             .values.naturalAshGlazeSeparated.label)
             .toBe('Natural ash glaze separated');

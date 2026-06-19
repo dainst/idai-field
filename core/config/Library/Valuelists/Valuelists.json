@@ -37964,6 +37964,46 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-potteryProvenanceDistributionReview": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-20",
+    "values": {
+      "sourceClayCandidate": {},
+      "petrographicCompositionCompared": {},
+      "rawClayGeologyChecked": {},
+      "workshopCandidate": {},
+      "workshopAttributionUncertain": {},
+      "multiWorkshopSameTypePossible": {},
+      "importedVesselCandidate": {},
+      "localProductionCandidate": {},
+      "distributionRangeEstimated": {},
+      "circulationUseMovementConsidered": {},
+      "supplyShareQuestion": {},
+      "geographicChronologicalTrendChecked": {},
+      "specializedWorkshopCandidate": {},
+      "multiTypeWorkshopCandidate": {},
+      "exchangeModePending": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "sourceClayCandidate",
+      "petrographicCompositionCompared",
+      "rawClayGeologyChecked",
+      "workshopCandidate",
+      "workshopAttributionUncertain",
+      "multiWorkshopSameTypePossible",
+      "importedVesselCandidate",
+      "localProductionCandidate",
+      "distributionRangeEstimated",
+      "circulationUseMovementConsidered",
+      "supplyShareQuestion",
+      "geographicChronologicalTrendChecked",
+      "specializedWorkshopCandidate",
+      "multiTypeWorkshopCandidate",
+      "exchangeModePending",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-potteryExperimentalVariableRecord": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

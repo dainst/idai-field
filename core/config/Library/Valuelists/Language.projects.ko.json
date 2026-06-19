@@ -4854,6 +4854,27 @@
     },
     "description": "토기 한 점이나 단일 흔적으로 판단하지 않고 동일 시기·지역·기종, 기와 성형흔, 생활도자, 민족지·실험 사례, 생산지·유통범위 후보와 참조 한계를 비교하기 위한 목록"
   },
+  "KoreanFieldwork-potteryProvenanceDistributionReview": {
+    "values": {
+      "sourceClayCandidate": { "label": "원료 점토 후보" },
+      "petrographicCompositionCompared": { "label": "암석학 조성 비교" },
+      "rawClayGeologyChecked": { "label": "원료 지질 확인" },
+      "workshopCandidate": { "label": "공방 후보" },
+      "workshopAttributionUncertain": { "label": "공방 귀속 불확실" },
+      "multiWorkshopSameTypePossible": { "label": "여러 공방 동일기종 가능" },
+      "importedVesselCandidate": { "label": "반입품 후보" },
+      "localProductionCandidate": { "label": "현지 생산 후보" },
+      "distributionRangeEstimated": { "label": "분포 범위 추정" },
+      "circulationUseMovementConsidered": { "label": "사용 중 이동 검토" },
+      "supplyShareQuestion": { "label": "공급 비중 질문" },
+      "geographicChronologicalTrendChecked": { "label": "시공간 경향 확인" },
+      "specializedWorkshopCandidate": { "label": "전문 공방 후보" },
+      "multiTypeWorkshopCandidate": { "label": "다기종 공방 후보" },
+      "exchangeModePending": { "label": "교환 방식 보류" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "토기 산지와 공방 귀속을 단일 생산지로 확정하지 않고 원료 점토·암석학 조성, 공방 후보와 불확실성, 현지 생산·반입품, 분포 범위와 사용 중 이동, 공급 비중과 교환 방식 질문을 함께 남기기 위한 목록"
+  },
   "KoreanFieldwork-potteryExperimentalVariableRecord": {
     "values": {
       "clayMoisture": { "label": "점토 수분" },

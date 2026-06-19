@@ -12023,6 +12023,23 @@
     },
     "description": "Korean artifact lifecycle checks for tracking finds from field collection through emergency treatment, conservation, reports, selection, state vesting, packing, transport, and transfer"
   },
+  "KoreanFieldwork-artifactFieldRestorationLink": {
+    "values": {
+      "collectionPhotoSeries": { "label": "Collection photo series" },
+      "preCleaningConditionPhoto": { "label": "Pre-cleaning condition photo" },
+      "fieldCleaningRecorded": { "label": "Field cleaning recorded" },
+      "joinCandidateGrouped": { "label": "Join candidate grouped" },
+      "sourceObjectCandidateLinked": { "label": "Source object candidate linked" },
+      "restorationReferencePhotoLinked": { "label": "Restoration reference photo linked" },
+      "fieldRestorationRecorded": { "label": "Field restoration recorded" },
+      "restorationStateRecorded": { "label": "Restoration state recorded" },
+      "researchMaterialCandidateReviewed": { "label": "Research-material candidate reviewed" },
+      "discardCandidateReviewed": { "label": "Discard candidate reviewed" },
+      "specialistReviewNeeded": { "label": "Specialist review needed" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean artifact field-restoration links for keeping collection photos, cleaning, join candidates, restoration state, and research/discard candidate review connected to find records"
+  },
   "KoreanFieldwork-findSampleResearchScope": {
     "values": {
       "administrativeArtifact": { "label": "Administrative artifact" },

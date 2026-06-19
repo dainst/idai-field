@@ -155,6 +155,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toEqual(['feature-pit-building-001']);
         expect(documentsById['find-pit-building-001-001'].resource.fieldOnlyMissingCheck)
             .toContain('numberedBeforeCollection');
+        expect(documentsById['find-pit-building-001-001'].resource.artifactFieldRestorationLink)
+            .toContain('restorationReferencePhotoLinked');
+        expect(documentsById['find-pit-building-001-001'].resource.artifactFieldRestorationLink)
+            .toContain('discardCandidateReviewed');
         expect(documentsById['find-pit-building-001-001'].resource.findSampleResearchScope)
             .toContain('futureResearchCandidate');
         expect(documentsById['sample-pit-building-001-charcoal-001'].resource.findSampleResearchScope)
@@ -1472,6 +1476,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureSegmentForm.fields.wetlandMicrotopographyRecord.inputType).toBe('checkboxes');
         expect(findForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
         expect(findForm.fields.artifactHandlingWorkflow.inputType).toBe('checkboxes');
+        expect(findForm.fields.artifactFieldRestorationLink.inputType).toBe('checkboxes');
         expect(findForm.fields.findSampleResearchScope.inputType).toBe('checkboxes');
         expect(findForm.fields.artifactLabelRegisterLink.inputType).toBe('checkboxes');
         expect(findForm.fields.artifactQuantityBasis.inputType).toBe('checkboxes');
@@ -1947,6 +1952,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-wetlandMicrotopographyRecord');
         expect(findForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
         expect(findForm.valuelists.artifactHandlingWorkflow).toBe('KoreanFieldwork-artifactHandlingWorkflow');
+        expect(findForm.valuelists.artifactFieldRestorationLink)
+            .toBe('KoreanFieldwork-artifactFieldRestorationLink');
         expect(findForm.valuelists.findSampleResearchScope).toBe('KoreanFieldwork-findSampleResearchScope');
         expect(findForm.valuelists.artifactLabelRegisterLink)
             .toBe('KoreanFieldwork-artifactLabelRegisterLink');
@@ -2488,6 +2495,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.Find.fields.termSearchMapping.label).toBe('Term search mapping');
         expect(languages.en.categories.Find.fields.artifactHandlingWorkflow.label)
             .toBe('Artifact handling workflow');
+        expect(languages.en.categories.Find.fields.artifactFieldRestorationLink.label)
+            .toBe('Artifact field restoration link');
         expect(languages.en.categories.Find.fields.findSampleResearchScope.label)
             .toBe('Find/sample research scope');
         expect(languages.en.categories.Find.fields.artifactLabelRegisterLink.label)
@@ -2885,6 +2894,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Small feature plotted');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactHandlingWorkflow'].values.stateVesting.label)
             .toBe('State vesting');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactFieldRestorationLink']
+            .values.restorationReferencePhotoLinked.label)
+            .toBe('Restoration reference photo linked');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-artifactFieldRestorationLink']
+            .values.discardCandidateReviewed.label)
+            .toBe('폐기유물 후보 검토');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-findSampleResearchScope']
             .values.futureResearchCandidate.label)
             .toBe('Future research candidate');

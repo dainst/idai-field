@@ -164,6 +164,16 @@
         ],
         "recordCreationTiming": "fieldOnlyObservation",
         "artifactHandlingWorkflow": ["fieldCollection", "findConditionRecord", "packingTransport"],
+        "artifactFieldRestorationLink": [
+          "collectionPhotoSeries",
+          "preCleaningConditionPhoto",
+          "joinCandidateGrouped",
+          "sourceObjectCandidateLinked",
+          "restorationReferencePhotoLinked",
+          "researchMaterialCandidateReviewed",
+          "discardCandidateReviewed",
+          "pendingDecision"
+        ],
         "findSampleResearchScope": [
           "reportIncludedArtifact",
           "futureResearchCandidate",

@@ -886,6 +886,9 @@
         "artifactHandlingWorkflow": {
           "label": "유물 관리 절차"
         },
+        "artifactFieldRestorationLink": {
+          "label": "유물 현장복원 연결"
+        },
         "findSampleResearchScope": {
           "label": "유물·시료 연구범위"
         },

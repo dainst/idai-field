@@ -31248,6 +31248,38 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-artifactFieldRestorationLink": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-20",
+    "values": {
+      "collectionPhotoSeries": {},
+      "preCleaningConditionPhoto": {},
+      "fieldCleaningRecorded": {},
+      "joinCandidateGrouped": {},
+      "sourceObjectCandidateLinked": {},
+      "restorationReferencePhotoLinked": {},
+      "fieldRestorationRecorded": {},
+      "restorationStateRecorded": {},
+      "researchMaterialCandidateReviewed": {},
+      "discardCandidateReviewed": {},
+      "specialistReviewNeeded": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "collectionPhotoSeries",
+      "preCleaningConditionPhoto",
+      "fieldCleaningRecorded",
+      "joinCandidateGrouped",
+      "sourceObjectCandidateLinked",
+      "restorationReferencePhotoLinked",
+      "fieldRestorationRecorded",
+      "restorationStateRecorded",
+      "researchMaterialCandidateReviewed",
+      "discardCandidateReviewed",
+      "specialistReviewNeeded",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-findSampleResearchScope": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

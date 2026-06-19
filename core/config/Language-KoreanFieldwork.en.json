@@ -886,6 +886,9 @@
         "artifactHandlingWorkflow": {
           "label": "Artifact handling workflow"
         },
+        "artifactFieldRestorationLink": {
+          "label": "Artifact field restoration link"
+        },
         "findSampleResearchScope": {
           "label": "Find/sample research scope"
         },

@@ -2307,6 +2307,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "artifactFieldRestorationLink": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "findSampleResearchScope": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -2480,6 +2484,7 @@
         "interpretationArgument": "KoreanFieldwork-interpretationArgument",
         "fieldOnlyMissingCheck": "KoreanFieldwork-fieldOnlyMissingCheck",
         "artifactHandlingWorkflow": "KoreanFieldwork-artifactHandlingWorkflow",
+        "artifactFieldRestorationLink": "KoreanFieldwork-artifactFieldRestorationLink",
         "findSampleResearchScope": "KoreanFieldwork-findSampleResearchScope",
         "artifactLabelRegisterLink": "KoreanFieldwork-artifactLabelRegisterLink",
         "artifactQuantityBasis": "KoreanFieldwork-artifactQuantityBasis",
@@ -2549,6 +2554,7 @@
             "interpretationArgument",
             "fieldOnlyMissingCheck",
             "artifactHandlingWorkflow",
+            "artifactFieldRestorationLink",
             "findSampleResearchScope",
             "artifactLabelRegisterLink",
             "artifactQuantityBasis",

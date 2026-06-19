@@ -68,6 +68,8 @@ C:\Users\nuri9\AppData\Local\Temp\codex-idai-field-new-pdf-text\methods-all
 
 2026-06-19 추가 재독해에서는 직접 추출이 약한 `발굴조사_업무의_이해_교재`, `제2회_매장문화재_조사연구원_교육_2007년3월`, `매장문화재_유적조사방법론` OCR 보강본과 `현장조사_방법과_해석` 본문을 대조해, 구획·둑 설정, 배수·집수정, 장비 제토 두께, 기준단면 당일 기록, 안전휀스, 철수 전 기록물 점검을 `KoreanFieldwork-excavationControlSafety`로 추가했다. 이 값은 유구 유형별 둑 계획을 대신하지 않고, 하루 작업 단위에서 현장 운영과 안전·보고서 역산 근거를 함께 검수하기 위한 공통 축이다.
 
+같은 재독해에서 작업일의 현장 보호·보안은 `KoreanFieldwork-siteProtectionSecurity`로 분리했다. 허가서 현장 비치, 착수신고 안내, 보안, 지역주민·파출소·면사무소 통보, 유적보호 주의사항, 출입·경계 통제, 기상 대비, 야간방범, 임시유물·기록물 보관, 미작성자료 즉시 조치, 복사본·자료 인수인계 준비는 `Project`의 허가조건·보존조치 결정값이 아니라 `Operation`의 당일 실행 확인값으로 둔다.
+
 유물 정리·보관 장의 공통 축은 `KoreanFieldwork-artifactHandlingWorkflow`, `KoreanFieldwork-artifactQuantityBasis`, `KoreanFieldwork-storageEnvironmentControl`로 `Find` 화면에 배치해 현장수습부터 이관까지의 절차, 건·점수 산정 근거, 재질별 수장환경을 같은 유물 카드에서 추적한다.
 
 보존과학 연구 성과 자료의 공통 축은 `KoreanFieldwork-conservationScienceRequest`, `KoreanFieldwork-waterloggedWoodEmergencyStorage`, `KoreanFieldwork-lacquerConservationRisk`, `KoreanFieldwork-metalAnalysisRequest`, `KoreanFieldwork-ceramicConservationState`, `KoreanFieldwork-paperTextileEmergencyRecovery`, `KoreanFieldwork-conservationTreatmentPrincipleReview`, `KoreanFieldwork-humanDnaFieldControl`, `KoreanFieldwork-organicSoilAnalysisSample`, `KoreanFieldwork-destructiveAnalysisDecision`로 `Find`와 `Sample` 화면에 나누어 배치했다. 보존과학은 실내 후처리가 아니라 노출·수습·임시보관·분석승인 단계에서 해석 가능성을 바꾸므로, 유물 카드와 시료 카드가 서로 끊기지 않게 관리한다. 지류·직물은 발견환경 유지, 공기·빛·습도 변화, 취급 오염을 먼저 보고, 보존처리 원칙은 원형·증거·가역성 훼손 여부를 별도 검토값으로 남긴다.

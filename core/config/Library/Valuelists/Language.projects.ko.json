@@ -2013,6 +2013,68 @@
     },
     "description": "조사단장, 책임조사원, 현장팀장, 측량·사진·도면·안전·민원·유물정리·시료·일지·보고서 담당과 검토 책임을 작업 단위에서 확인하기 위한 목록"
   },
+  "KoreanFieldwork-siteProtectionSecurity": {
+    "values": {
+      "permitDocumentOnSite": {
+        "label": "허가서 현장 비치"
+      },
+      "startReportGuidance": {
+        "label": "착수신고 안내"
+      },
+      "securityMaintained": {
+        "label": "보안 유지"
+      },
+      "localResidentNotice": {
+        "label": "지역주민 통보"
+      },
+      "policeLocalOfficeNotice": {
+        "label": "파출소·면사무소 통보"
+      },
+      "heritageProtectionNotice": {
+        "label": "유적보호 주의사항 통보"
+      },
+      "accessBoundaryControlled": {
+        "label": "출입·경계 통제"
+      },
+      "heatSeasonProtection": {
+        "label": "혹서기 보호"
+      },
+      "coldSeasonProtection": {
+        "label": "혹한기 보호"
+      },
+      "rainPreparedness": {
+        "label": "강우 대비"
+      },
+      "nightSecurity": {
+        "label": "야간 방범"
+      },
+      "temporaryFindStorage": {
+        "label": "임시유물 보관"
+      },
+      "importantRecordCheck": {
+        "label": "중요기록물 점검"
+      },
+      "missingRecordImmediateAction": {
+        "label": "미작성자료 즉시 조치"
+      },
+      "longPauseSiteCleanup": {
+        "label": "장기중지 주변정리"
+      },
+      "backfillRestoration": {
+        "label": "원상복구·복토"
+      },
+      "backupCopyCreated": {
+        "label": "복사본 작성"
+      },
+      "handoverPrepared": {
+        "label": "자료 인수인계 준비"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "허가서 비치, 착수신고 안내, 보안, 주민·관할기관 통보, 유적보호 주의사항, 기상 대비, 야간방범, 임시유물·기록물 보관, 철수 전 미작성자료 조치를 작업 단위에서 확인하기 위한 목록"
+  },
   "KoreanFieldwork-dailyLogEvidenceRole": {
     "values": {
       "sameDayFactRecord": {

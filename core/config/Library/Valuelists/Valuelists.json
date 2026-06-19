@@ -34074,6 +34074,52 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-siteProtectionSecurity": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "permitDocumentOnSite": {},
+      "startReportGuidance": {},
+      "securityMaintained": {},
+      "localResidentNotice": {},
+      "policeLocalOfficeNotice": {},
+      "heritageProtectionNotice": {},
+      "accessBoundaryControlled": {},
+      "heatSeasonProtection": {},
+      "coldSeasonProtection": {},
+      "rainPreparedness": {},
+      "nightSecurity": {},
+      "temporaryFindStorage": {},
+      "importantRecordCheck": {},
+      "missingRecordImmediateAction": {},
+      "longPauseSiteCleanup": {},
+      "backfillRestoration": {},
+      "backupCopyCreated": {},
+      "handoverPrepared": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "permitDocumentOnSite",
+      "startReportGuidance",
+      "securityMaintained",
+      "localResidentNotice",
+      "policeLocalOfficeNotice",
+      "heritageProtectionNotice",
+      "accessBoundaryControlled",
+      "heatSeasonProtection",
+      "coldSeasonProtection",
+      "rainPreparedness",
+      "nightSecurity",
+      "temporaryFindStorage",
+      "importantRecordCheck",
+      "missingRecordImmediateAction",
+      "longPauseSiteCleanup",
+      "backfillRestoration",
+      "backupCopyCreated",
+      "handoverPrepared",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-dailyLogEvidenceRole": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

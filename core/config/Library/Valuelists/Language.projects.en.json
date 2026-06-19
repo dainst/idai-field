@@ -13767,6 +13767,68 @@
     },
     "description": "Korean operation role responsibilities for project direction, field direction, survey, photos, drawings, safety, communication, artifact processing, samples, logs, reports, and review"
   },
+  "KoreanFieldwork-siteProtectionSecurity": {
+    "values": {
+      "permitDocumentOnSite": {
+        "label": "Permit document on site"
+      },
+      "startReportGuidance": {
+        "label": "Start report guidance"
+      },
+      "securityMaintained": {
+        "label": "Security maintained"
+      },
+      "localResidentNotice": {
+        "label": "Local residents notified"
+      },
+      "policeLocalOfficeNotice": {
+        "label": "Police or local office notified"
+      },
+      "heritageProtectionNotice": {
+        "label": "Heritage protection notice given"
+      },
+      "accessBoundaryControlled": {
+        "label": "Access and boundary controlled"
+      },
+      "heatSeasonProtection": {
+        "label": "Hot-season protection"
+      },
+      "coldSeasonProtection": {
+        "label": "Cold-season protection"
+      },
+      "rainPreparedness": {
+        "label": "Rain preparedness"
+      },
+      "nightSecurity": {
+        "label": "Night security"
+      },
+      "temporaryFindStorage": {
+        "label": "Temporary find storage"
+      },
+      "importantRecordCheck": {
+        "label": "Important record check"
+      },
+      "missingRecordImmediateAction": {
+        "label": "Missing record immediate action"
+      },
+      "longPauseSiteCleanup": {
+        "label": "Long-pause site cleanup"
+      },
+      "backfillRestoration": {
+        "label": "Backfill and restoration"
+      },
+      "backupCopyCreated": {
+        "label": "Backup copy created"
+      },
+      "handoverPrepared": {
+        "label": "Handover prepared"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean operation checks for permits on site, start-report guidance, security, local notices, weather protection, night security, temporary find storage, record checks, backfill, backups, and handover"
+  },
   "KoreanFieldwork-dailyLogEvidenceRole": {
     "values": {
       "sameDayFactRecord": {

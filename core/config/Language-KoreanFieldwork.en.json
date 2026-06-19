@@ -133,6 +133,9 @@
         "operationRoleResponsibility": {
           "label": "Operation role responsibility"
         },
+        "siteProtectionSecurity": {
+          "label": "Site protection and security"
+        },
         "excavationControlSafety": {
           "label": "Excavation control and safety"
         },

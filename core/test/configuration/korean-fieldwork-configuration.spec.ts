@@ -331,6 +331,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('sourceDatabase');
         expect(documentsById['op-admin-review-001'].resource.partialCompletionPackage)
             .toContain('notificationResult');
+        expect(documentsById['op-admin-review-001'].resource.siteProtectionSecurity)
+            .toContain('permitDocumentOnSite');
+        expect(documentsById['op-admin-review-001'].resource.siteProtectionSecurity)
+            .toContain('temporaryFindStorage');
         expect(documentsById['survey-admin-surface-001'].resource.surfaceSurveyResultProcessing)
             .toContain('digitalRegistration');
     });
@@ -925,6 +929,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(sourceEvidenceIndexForm.fields.sourceEvidenceUse.inputType).toBe('checkboxes');
         expect(operationForm.fields.fieldRecordQuality.inputType).toBe('checkboxes');
         expect(operationForm.fields.operationRoleResponsibility.inputType).toBe('checkboxes');
+        expect(operationForm.fields.siteProtectionSecurity.inputType).toBe('checkboxes');
         expect(operationForm.fields.excavationControlSafety.inputType).toBe('checkboxes');
         expect(operationForm.fields.gpsSurveyQualityRecord.inputType).toBe('checkboxes');
         expect(operationForm.fields.gpsNmeaRecord.inputType).toBe('checkboxes');
@@ -1163,6 +1168,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(operationForm.valuelists.fieldRecordQuality).toBe('KoreanFieldwork-fieldRecordQuality');
         expect(operationForm.valuelists.operationRoleResponsibility)
             .toBe('KoreanFieldwork-operationRoleResponsibility');
+        expect(operationForm.valuelists.siteProtectionSecurity)
+            .toBe('KoreanFieldwork-siteProtectionSecurity');
         expect(operationForm.valuelists.excavationControlSafety)
             .toBe('KoreanFieldwork-excavationControlSafety');
         expect(operationForm.valuelists.gpsSurveyQualityRecord)
@@ -1618,6 +1625,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.Operation.fields.fieldRecordQuality.label).toBe('Field record quality');
         expect(languages.en.categories.Operation.fields.operationRoleResponsibility.label)
             .toBe('Operation role responsibility');
+        expect(languages.en.categories.Operation.fields.siteProtectionSecurity.label)
+            .toBe('Site protection and security');
         expect(languages.en.categories.Operation.fields.excavationControlSafety.label)
             .toBe('Excavation control and safety');
         expect(languages.en.categories.Operation.fields.personalNotebookArchive.label).toBe('Personal notebook archive');
@@ -1998,6 +2007,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-operationRoleResponsibility']
             .values.complaintCommunicationLead.label)
             .toBe('민원·기관소통 담당');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-siteProtectionSecurity']
+            .values.nightSecurity.label)
+            .toBe('Night security');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-siteProtectionSecurity']
+            .values.temporaryFindStorage.label)
+            .toBe('임시유물 보관');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-dailyLogReview'].values.sameDayWritten.label)
             .toBe('Same-day written');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-dailyLogEvidenceRole']

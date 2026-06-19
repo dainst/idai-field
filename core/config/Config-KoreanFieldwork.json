@@ -273,6 +273,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "siteProtectionSecurity": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "excavationControlSafety": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -352,6 +356,7 @@
         "digitalSourcePreservation": "KoreanFieldwork-digitalSourcePreservation",
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
         "operationRoleResponsibility": "KoreanFieldwork-operationRoleResponsibility",
+        "siteProtectionSecurity": "KoreanFieldwork-siteProtectionSecurity",
         "excavationControlSafety": "KoreanFieldwork-excavationControlSafety",
         "gpsSurveyQualityRecord": "KoreanFieldwork-gpsSurveyQualityRecord",
         "gpsNmeaRecord": "KoreanFieldwork-gpsNmeaRecord",
@@ -396,6 +401,7 @@
             "dailyLogReview",
             "fieldRecordQuality",
             "operationRoleResponsibility",
+            "siteProtectionSecurity",
             "excavationControlSafety",
             "gpsSurveyQualityRecord",
             "gpsNmeaRecord",

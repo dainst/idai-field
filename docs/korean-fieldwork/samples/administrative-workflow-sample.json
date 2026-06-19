@@ -1,8 +1,9 @@
 {
   "title": "Korean administrative workflow and review package sample",
-  "purpose": "Validate that request intake, plan changes, expert review meetings, partial completion packages, surface survey result processing, and record transfer management stay connected in the Korean fieldwork configuration.",
+  "purpose": "Validate that request intake, plan changes, site protection, expert review meetings, partial completion packages, surface survey result processing, and record transfer management stay connected in the Korean fieldwork configuration.",
   "validationQuestions": [
     "조사의뢰 접수 단계의 기초자료와 현장답사 이력이 조사계획 수립 근거로 남는가.",
+    "현장 착수·진행 중 허가서 비치, 보안, 주민·관할기관 통보, 유적보호, 임시보관, 기록물 점검이 작업 단위로 남는가.",
     "전문가 검토회의와 부분완료 신청이 도면·사진·유물현황·조사기관 의견과 함께 추적되는가.",
     "지표조사 결과 처리와 자료 인수인계가 보고서 이후의 행정·보존 흐름으로 이어지는가."
   ],
@@ -122,6 +123,22 @@
           "safetyIssue",
           "changeReason",
           "nextWorkPlan"
+        ],
+        "siteProtectionSecurity": [
+          "permitDocumentOnSite",
+          "startReportGuidance",
+          "securityMaintained",
+          "localResidentNotice",
+          "policeLocalOfficeNotice",
+          "heritageProtectionNotice",
+          "accessBoundaryControlled",
+          "rainPreparedness",
+          "nightSecurity",
+          "temporaryFindStorage",
+          "importantRecordCheck",
+          "missingRecordImmediateAction",
+          "backupCopyCreated",
+          "handoverPrepared"
         ],
         "expertReviewMeeting": [
           "importantFeatureFind",

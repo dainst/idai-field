@@ -288,6 +288,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('focusBlurred');
         expect(documentsById['photo-media-gps-001'].resource.digitalSourcePreservation)
             .toContain('webOrServerBackup');
+        expect(documentsById['photo-media-artifact-pottery-001'].resource.artifactPhotoCaptureStandard)
+            .toContain('drawingAngleMatched');
+        expect(documentsById['photo-media-artifact-pottery-001'].resource.artifactPhotoLightingControl)
+            .toContain('reflectionControlled');
+        expect(documentsById['photo-media-artifact-pottery-001'].resource.artifactPhotoViewPlan)
+            .toContain('importantDetailPhoto');
         expect(documentsById['drawing-media-distribution-001'].resource.mapSourceMaterial)
             .toContain('joseonMap');
         expect(documentsById['drawing-media-distribution-001'].resource.distributionMapRequirement)
@@ -1909,6 +1915,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(photoForm.fields.mediaEvidenceRole.inputType).toBe('checkboxes');
         expect(photoForm.fields.mediaQualityCheck.inputType).toBe('checkboxes');
         expect(photoForm.fields.photoCaptureSafetyReview.inputType).toBe('checkboxes');
+        expect(photoForm.fields.artifactPhotoCaptureStandard.inputType).toBe('checkboxes');
+        expect(photoForm.fields.artifactPhotoLightingControl.inputType).toBe('checkboxes');
+        expect(photoForm.fields.artifactPhotoViewPlan.inputType).toBe('checkboxes');
         expect(photoForm.fields.digitalSourcePreservation.inputType).toBe('checkboxes');
         expect(photoForm.fields.gpsPhotoLinkRecord.inputType).toBe('checkboxes');
         expect(photoForm.fields.reportCrossCheck.inputType).toBe('checkboxes');
@@ -2491,6 +2500,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(photoForm.valuelists.mediaQualityCheck).toBe('KoreanFieldwork-mediaQualityCheck');
         expect(photoForm.valuelists.photoCaptureSafetyReview)
             .toBe('KoreanFieldwork-photoCaptureSafetyReview');
+        expect(photoForm.valuelists.artifactPhotoCaptureStandard)
+            .toBe('KoreanFieldwork-artifactPhotoCaptureStandard');
+        expect(photoForm.valuelists.artifactPhotoLightingControl)
+            .toBe('KoreanFieldwork-artifactPhotoLightingControl');
+        expect(photoForm.valuelists.artifactPhotoViewPlan)
+            .toBe('KoreanFieldwork-artifactPhotoViewPlan');
         expect(photoForm.valuelists.digitalSourcePreservation)
             .toBe('KoreanFieldwork-digitalSourcePreservation');
         expect(photoForm.valuelists.gpsPhotoLinkRecord)
@@ -3071,6 +3086,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Media quality check');
         expect(languages.en.categories.Photo.fields.photoCaptureSafetyReview.label)
             .toBe('Photo capture safety review');
+        expect(languages.en.categories.Photo.fields.artifactPhotoCaptureStandard.label)
+            .toBe('Artifact photo capture standard');
+        expect(languages.en.categories.Photo.fields.artifactPhotoLightingControl.label)
+            .toBe('Artifact photo lighting control');
+        expect(languages.en.categories.Photo.fields.artifactPhotoViewPlan.label)
+            .toBe('Artifact photo view plan');
         expect(languages.en.categories.Photo.fields.gpsPhotoLinkRecord.label)
             .toBe('GPS photo-link record');
         expect(languages.en.categories.Photo.fields.accessControlTag.label)
@@ -4003,6 +4024,15 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-photoCaptureSafetyReview']
             .values.alternativeCaptureMethod.label)
             .toBe('촬영 대체수단 기록');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactPhotoCaptureStandard']
+            .values.drawingAngleMatched.label)
+            .toBe('Drawing angle matched');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-artifactPhotoLightingControl']
+            .values.tentLighting.label)
+            .toBe('텐팅라이트');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactPhotoViewPlan']
+            .values.specialistPhotographyNeeded.label)
+            .toBe('Specialist photography needed');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-gpsSurveyQualityRecord']
             .values.rtkUsed.label)
             .toBe('RTK used');

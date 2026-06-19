@@ -1294,6 +1294,15 @@
         "photoCaptureSafetyReview": {
           "label": "Photo capture safety review"
         },
+        "artifactPhotoCaptureStandard": {
+          "label": "Artifact photo capture standard"
+        },
+        "artifactPhotoLightingControl": {
+          "label": "Artifact photo lighting control"
+        },
+        "artifactPhotoViewPlan": {
+          "label": "Artifact photo view plan"
+        },
         "digitalSourcePreservation": {
           "label": "Digital source preservation"
         },

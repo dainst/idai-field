@@ -77,6 +77,8 @@ C:\Users\nuri9\AppData\Local\Temp\codex-idai-field-new-pdf-text\methods-all
 
 사진 촬영 안전 원칙은 `KoreanFieldwork-photoCaptureSafetyReview`로 `Photo` 화면에 배치했다. `매장문화재조사_기초이론.pdf`는 좋은 사진보다 조사자 안전이 우선이며 사다리 꼭대기 촬영을 금지하고 붐대 카메라·드론 같은 대체수단을 쓰라고 설명한다. `발굴조사_실무.pdf`와 2011년 조사기초과정 자료도 사다리·크레인·비계 촬영의 제약과 위험을 반복하므로, 붐대 카메라, 드론 촬영, 고소촬영 금지, 사다리 위험 검토, 사다리 꼭대기 촬영 금지, 촬영 대체수단 기록, 안전관리자 확인, 촬영각도 보완 필요를 사진 카드의 독립 체크값으로 둔다.
 
+유물사진 촬영 원칙은 `KoreanFieldwork-artifactPhotoCaptureStandard`, `KoreanFieldwork-artifactPhotoLightingControl`, `KoreanFieldwork-artifactPhotoViewPlan`으로 `Photo` 화면에 배치했다. 유물실측 교재와 조사방법론 자료는 실측도면 작성 뒤 촬영 방향과 세부컷을 정하고, 실측도면과 같은 각도, 수평·수직 촬영, 그레이카드, 화이트밸런스, 단색 배경, 매크로렌즈, 보고서 해상도, 45도 측면광, 반사판, 확산광, 편광필터, 텐팅라이트, 반사제어, 정면·측면·내면·굽·접사·질감 사진을 도판 근거로 남기라고 요구한다.
+
 같은 재독해에서 작업일의 현장 보호·보안은 `KoreanFieldwork-siteProtectionSecurity`로 분리했다. 허가서 현장 비치, 착수신고 안내, 보안, 지역주민·파출소·면사무소 통보, 유적보호 주의사항, 출입·경계 통제, 기상 대비, 야간방범, 임시유물·기록물 보관, 미작성자료 즉시 조치, 복사본·자료 인수인계 준비는 `Project`의 허가조건·보존조치 결정값이 아니라 `Operation`의 당일 실행 확인값으로 둔다.
 
 제9권 연구방법론의 국내 조사 제도 비판은 `KoreanFieldwork-koreanArchaeologyInstitutionalRisk`로 `Project` 화면에 배치했다. 개발 절차화, 구제발굴 일정 압박, 경쟁입찰, 전문성 약화, 지도위원회 폐지 영향, 학술발굴 부재, 과학분석 배제, 보고서 품질 위험, 발굴·연구 단절, 기관 역할 불명확은 추상 의견이 아니라 조사자료 수집·분석·해석·공개 사슬을 끊는 사업 조건으로 기록한다.

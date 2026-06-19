@@ -1294,6 +1294,15 @@
         "photoCaptureSafetyReview": {
           "label": "사진촬영 안전검토"
         },
+        "artifactPhotoCaptureStandard": {
+          "label": "유물사진 촬영 기준"
+        },
+        "artifactPhotoLightingControl": {
+          "label": "유물사진 조명 제어"
+        },
+        "artifactPhotoViewPlan": {
+          "label": "유물사진 수록 시점 계획"
+        },
         "digitalSourcePreservation": {
           "label": "디지털 원자료 보존"
         },

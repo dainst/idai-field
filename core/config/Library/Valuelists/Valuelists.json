@@ -41006,6 +41006,108 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-artifactPhotoCaptureStandard": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-20",
+    "values": {
+      "drawingAngleMatched": {},
+      "horizontalCapture": {},
+      "verticalCapture": {},
+      "lowIsoUsed": {},
+      "exposureMeterUsed": {},
+      "grayCardUsed": {},
+      "whiteBalanceSet": {},
+      "plainBackgroundUsed": {},
+      "macroLensUsed": {},
+      "reportResolution300Dpi": {},
+      "highResolution600Dpi": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "drawingAngleMatched",
+      "horizontalCapture",
+      "verticalCapture",
+      "lowIsoUsed",
+      "exposureMeterUsed",
+      "grayCardUsed",
+      "whiteBalanceSet",
+      "plainBackgroundUsed",
+      "macroLensUsed",
+      "reportResolution300Dpi",
+      "highResolution600Dpi",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-artifactPhotoLightingControl": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-20",
+    "values": {
+      "frontLighting": {},
+      "fortyFiveDegreeSideLighting": {},
+      "pairedSideLighting": {},
+      "twoToOneLightRatio": {},
+      "topLighting": {},
+      "reflectorUsed": {},
+      "floorLighting": {},
+      "tentLighting": {},
+      "diffusedLighting": {},
+      "polarizingFilterUsed": {},
+      "patternEmphasized": {},
+      "textureEmphasized": {},
+      "reflectionControlled": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "frontLighting",
+      "fortyFiveDegreeSideLighting",
+      "pairedSideLighting",
+      "twoToOneLightRatio",
+      "topLighting",
+      "reflectorUsed",
+      "floorLighting",
+      "tentLighting",
+      "diffusedLighting",
+      "polarizingFilterUsed",
+      "patternEmphasized",
+      "textureEmphasized",
+      "reflectionControlled",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-artifactPhotoViewPlan": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-20",
+    "values": {
+      "drawingPhotoDisplayedTogether": {},
+      "formPhoto": {},
+      "frontPhoto": {},
+      "sidePhoto": {},
+      "interiorPhoto": {},
+      "footPhoto": {},
+      "closeupPhoto": {},
+      "texturePhoto": {},
+      "additionalShotPlanned": {},
+      "importantDetailPhoto": {},
+      "specialistPhotographyNeeded": {},
+      "colorPlateCombination": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "drawingPhotoDisplayedTogether",
+      "formPhoto",
+      "frontPhoto",
+      "sidePhoto",
+      "interiorPhoto",
+      "footPhoto",
+      "closeupPhoto",
+      "texturePhoto",
+      "additionalShotPlanned",
+      "importantDetailPhoto",
+      "specialistPhotographyNeeded",
+      "colorPlateCombination",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-mapSourceMaterial": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

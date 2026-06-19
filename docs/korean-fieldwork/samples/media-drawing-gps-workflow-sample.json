@@ -6,6 +6,7 @@
     "사진 파일이 단순 첨부가 아니라 현재 위치, 궤적, 등록지점, 파일명, 수치지도 연동 상태와 함께 남는가.",
     "분포도·위치도 작성이 완성 PDF 하나가 아니라 원천 지도, 좌표계 변환, 객체 선택, 반경·범례·축척·방위표 검수로 이어지는가.",
     "유물실측과 전자도면이 외곽선 복사가 아니라 재질·기종·기준선·측점 검점·사진/탁본 대조·3D 원천파일 보존으로 관리되는가.",
+    "유물사진이 실측도면과 같은 각도, 수평·수직 촬영, 조명·반사 제어, 정면·측면·접사 계획으로 보고서 도판 근거를 남기는가.",
     "디지털 조사·측량 결과가 장비명이나 완성 파일로만 남지 않고 원천자료 시점, 좌표·지리보정, 오차, 산출물 목적, 외주 결과 검수, 현장 대조와 함께 남는가.",
     "실내 보완 도면과 3D 산출물이 현장 원도, 단계도면, 조사자 재검수 이력을 보존하는가."
   ],
@@ -257,6 +258,74 @@
           "photoRegister",
           "manuscript",
           "numberConversionTable",
+          "sourceMediaBackup"
+        ]
+      }
+    },
+    {
+      "resource": {
+        "id": "photo-media-artifact-pottery-001",
+        "identifier": "MEDIA-PHOTO-ART-001",
+        "shortDescription": "토기편 실측도 연동 유물사진",
+        "category": "Photo",
+        "relations": {
+          "isRecordedIn": ["op-media-001"],
+          "isDepictedIn": ["find-media-pottery-001"]
+        },
+        "description": "실측도면과 같은 각도에서 문양·기벽·접사 사진을 묶어 보고서 도판 후보로 남기는 유물사진 기록.",
+        "mediaEvidenceRole": [
+          "findContextEvidence",
+          "reportPlateCandidate",
+          "drawingCorrectionBasis"
+        ],
+        "mediaQualityCheck": [
+          "targetPurposeClear",
+          "directionRecorded",
+          "scaleIncluded",
+          "lightingConditionSuitable",
+          "captureFormatRecorded",
+          "originalUncroppedPreserved",
+          "registerNumberMatched",
+          "photoNotebookMatched",
+          "fieldResearcherReviewed"
+        ],
+        "artifactPhotoCaptureStandard": [
+          "drawingAngleMatched",
+          "verticalCapture",
+          "lowIsoUsed",
+          "grayCardUsed",
+          "whiteBalanceSet",
+          "plainBackgroundUsed",
+          "macroLensUsed",
+          "reportResolution300Dpi"
+        ],
+        "artifactPhotoLightingControl": [
+          "fortyFiveDegreeSideLighting",
+          "reflectorUsed",
+          "diffusedLighting",
+          "textureEmphasized",
+          "reflectionControlled"
+        ],
+        "artifactPhotoViewPlan": [
+          "drawingPhotoDisplayedTogether",
+          "formPhoto",
+          "frontPhoto",
+          "sidePhoto",
+          "closeupPhoto",
+          "texturePhoto",
+          "importantDetailPhoto"
+        ],
+        "digitalSourcePreservation": [
+          "originalPhoto",
+          "originalImage",
+          "twoLocationBackup",
+          "backupVerified"
+        ],
+        "reportCrossCheck": [
+          "photoRegister",
+          "drawingRegister",
+          "artifactRegister",
+          "manuscript",
           "sourceMediaBackup"
         ]
       }

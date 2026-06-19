@@ -7152,6 +7152,60 @@
     },
     "description": "사진 기록 품질을 확보하되 조사자 안전을 우선하기 위해 붐대 카메라, 드론, 사다리 위험, 고소촬영 금지, 대체 촬영수단, 안전관리자 확인, 촬영각도 보완 필요를 기록하기 위한 목록"
   },
+  "KoreanFieldwork-artifactPhotoCaptureStandard": {
+    "values": {
+      "drawingAngleMatched": { "label": "실측도면 동일각도" },
+      "horizontalCapture": { "label": "수평촬영" },
+      "verticalCapture": { "label": "수직촬영" },
+      "lowIsoUsed": { "label": "저ISO 사용" },
+      "exposureMeterUsed": { "label": "노출계 사용" },
+      "grayCardUsed": { "label": "그레이카드 사용" },
+      "whiteBalanceSet": { "label": "화이트밸런스 설정" },
+      "plainBackgroundUsed": { "label": "단색 배경 사용" },
+      "macroLensUsed": { "label": "매크로렌즈 사용" },
+      "reportResolution300Dpi": { "label": "보고서 300dpi" },
+      "highResolution600Dpi": { "label": "고해상도 600dpi" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "유물사진을 실측도면과 대조 가능한 기록으로 만들기 위해 촬영각도, 수평·수직 촬영, ISO, 노출계, 그레이카드, 화이트밸런스, 배경, 렌즈, 해상도를 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-artifactPhotoLightingControl": {
+    "values": {
+      "frontLighting": { "label": "정면광" },
+      "fortyFiveDegreeSideLighting": { "label": "45도 측면광" },
+      "pairedSideLighting": { "label": "좌우 45도 동일광" },
+      "twoToOneLightRatio": { "label": "주광·보조광 2:1" },
+      "topLighting": { "label": "상부광" },
+      "reflectorUsed": { "label": "반사판 사용" },
+      "floorLighting": { "label": "바닥광" },
+      "tentLighting": { "label": "텐팅라이트" },
+      "diffusedLighting": { "label": "확산광" },
+      "polarizingFilterUsed": { "label": "편광필터 사용" },
+      "patternEmphasized": { "label": "문양강조" },
+      "textureEmphasized": { "label": "질감강조" },
+      "reflectionControlled": { "label": "반사제어" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "유물의 형태·문양·질감과 반사 재질을 객관적으로 표현하기 위해 정면광, 측면광, 광량비, 반사판, 텐팅라이트, 확산광, 편광필터와 반사제어를 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-artifactPhotoViewPlan": {
+    "values": {
+      "drawingPhotoDisplayedTogether": { "label": "도면 동시수록" },
+      "formPhoto": { "label": "기형촬영" },
+      "frontPhoto": { "label": "정면촬영" },
+      "sidePhoto": { "label": "측면촬영" },
+      "interiorPhoto": { "label": "내면촬영" },
+      "footPhoto": { "label": "굽촬영" },
+      "closeupPhoto": { "label": "접사촬영" },
+      "texturePhoto": { "label": "질감촬영" },
+      "additionalShotPlanned": { "label": "추가촬영 계획" },
+      "importantDetailPhoto": { "label": "중요특징 사진" },
+      "specialistPhotographyNeeded": { "label": "전문가 촬영 필요" },
+      "colorPlateCombination": { "label": "컬러도판 조합" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "보고서 도판에서 유물의 기형, 정면·측면, 내면, 굽, 접사, 질감, 중요 특징과 도면 동시수록 여부를 계획하기 위한 목록"
+  },
   "KoreanFieldwork-mapSourceMaterial": {
     "values": {
       "joseonMap": { "label": "조선시대 지도" },

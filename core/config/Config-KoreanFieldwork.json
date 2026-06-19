@@ -3300,6 +3300,18 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "artifactPhotoCaptureStandard": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "artifactPhotoLightingControl": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "artifactPhotoViewPlan": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "digitalSourcePreservation": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -3325,6 +3337,9 @@
         "mediaEvidenceRole": "KoreanFieldwork-mediaEvidenceRole",
         "mediaQualityCheck": "KoreanFieldwork-mediaQualityCheck",
         "photoCaptureSafetyReview": "KoreanFieldwork-photoCaptureSafetyReview",
+        "artifactPhotoCaptureStandard": "KoreanFieldwork-artifactPhotoCaptureStandard",
+        "artifactPhotoLightingControl": "KoreanFieldwork-artifactPhotoLightingControl",
+        "artifactPhotoViewPlan": "KoreanFieldwork-artifactPhotoViewPlan",
         "digitalSourcePreservation": "KoreanFieldwork-digitalSourcePreservation",
         "gpsPhotoLinkRecord": "KoreanFieldwork-gpsPhotoLinkRecord",
         "reportCrossCheck": "KoreanFieldwork-reportCrossCheck",
@@ -3353,6 +3368,9 @@
             "mediaEvidenceRole",
             "mediaQualityCheck",
             "photoCaptureSafetyReview",
+            "artifactPhotoCaptureStandard",
+            "artifactPhotoLightingControl",
+            "artifactPhotoViewPlan",
             "digitalSourcePreservation",
             "gpsPhotoLinkRecord",
             "reportCrossCheck",

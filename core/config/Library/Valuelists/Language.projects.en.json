@@ -18906,6 +18906,60 @@
     },
     "description": "Korean fieldwork photo-safety checks for keeping recorder safety ahead of image quality while recording boom-pole cameras, drones, ladder risks, high-place shooting bans, alternative capture methods, safety-manager checks, and angle supplements"
   },
+  "KoreanFieldwork-artifactPhotoCaptureStandard": {
+    "values": {
+      "drawingAngleMatched": { "label": "Drawing angle matched" },
+      "horizontalCapture": { "label": "Horizontal capture" },
+      "verticalCapture": { "label": "Vertical capture" },
+      "lowIsoUsed": { "label": "Low ISO used" },
+      "exposureMeterUsed": { "label": "Exposure meter used" },
+      "grayCardUsed": { "label": "Gray card used" },
+      "whiteBalanceSet": { "label": "White balance set" },
+      "plainBackgroundUsed": { "label": "Plain background used" },
+      "macroLensUsed": { "label": "Macro lens used" },
+      "reportResolution300Dpi": { "label": "Report resolution 300 dpi" },
+      "highResolution600Dpi": { "label": "High resolution 600 dpi" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean artifact-photo capture checks for keeping photos comparable with measured drawings by recording angle, horizontal or vertical capture, ISO, exposure meter, gray card, white balance, background, lens, and resolution"
+  },
+  "KoreanFieldwork-artifactPhotoLightingControl": {
+    "values": {
+      "frontLighting": { "label": "Front lighting" },
+      "fortyFiveDegreeSideLighting": { "label": "45-degree side lighting" },
+      "pairedSideLighting": { "label": "Paired 45-degree side lighting" },
+      "twoToOneLightRatio": { "label": "Main/fill light ratio 2:1" },
+      "topLighting": { "label": "Top lighting" },
+      "reflectorUsed": { "label": "Reflector used" },
+      "floorLighting": { "label": "Floor lighting" },
+      "tentLighting": { "label": "Tent lighting" },
+      "diffusedLighting": { "label": "Diffused lighting" },
+      "polarizingFilterUsed": { "label": "Polarizing filter used" },
+      "patternEmphasized": { "label": "Pattern emphasized" },
+      "textureEmphasized": { "label": "Texture emphasized" },
+      "reflectionControlled": { "label": "Reflection controlled" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean artifact-photo lighting checks for recording front and side lighting, light ratios, reflectors, tent or diffused lighting, polarization, texture and pattern emphasis, and reflection control"
+  },
+  "KoreanFieldwork-artifactPhotoViewPlan": {
+    "values": {
+      "drawingPhotoDisplayedTogether": { "label": "Drawing and photo displayed together" },
+      "formPhoto": { "label": "Form photo" },
+      "frontPhoto": { "label": "Front photo" },
+      "sidePhoto": { "label": "Side photo" },
+      "interiorPhoto": { "label": "Interior photo" },
+      "footPhoto": { "label": "Foot photo" },
+      "closeupPhoto": { "label": "Close-up photo" },
+      "texturePhoto": { "label": "Texture photo" },
+      "additionalShotPlanned": { "label": "Additional shot planned" },
+      "importantDetailPhoto": { "label": "Important detail photo" },
+      "specialistPhotographyNeeded": { "label": "Specialist photography needed" },
+      "colorPlateCombination": { "label": "Color plate combination" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean artifact-photo view checks for planning drawing/photo pairing, form, front, side, interior, foot, close-up, texture, important detail, specialist, and color-plate photos"
+  },
   "KoreanFieldwork-mapSourceMaterial": {
     "values": {
       "joseonMap": { "label": "Joseon-period map" },

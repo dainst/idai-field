@@ -350,6 +350,16 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('physicalFindAccessRecorded');
         expect(documentsById['op-quality-001'].resource.digitalSourcePreservation)
             .toContain('followUpResearcherAccessLogged');
+        expect(documentsById['field-report-concurrent-review-quality-001'].resource.relations.liesWithin)
+            .toEqual(['op-quality-001']);
+        expect(documentsById['field-report-concurrent-review-quality-001'].resource.fieldReportConcurrentReview)
+            .toContain('fieldIndoorCrossCorrection');
+        expect(documentsById['field-report-concurrent-review-quality-001'].resource.fieldReportConcurrentReview)
+            .toContain('photoDirectionMatchesDrawing');
+        expect(documentsById['field-report-concurrent-review-quality-001'].resource.mediaQualityCheck)
+            .toContain('resolutionOrLineworkReadable');
+        expect(documentsById['field-report-concurrent-review-quality-001'].resource.operationRoleResponsibility)
+            .toContain('reportPreparationLead');
         expect(documentsById['daily-log-quality-001'].resource.relations.liesWithin)
             .toEqual(['op-quality-001']);
         expect(documentsById['daily-log-quality-001'].resource.dailyLogEvidenceRole)
@@ -1361,6 +1371,7 @@ describe('KoreanFieldwork project configuration', () => {
         const featureSegmentForm = config.forms['FeatureSegment:default'];
         const fieldRecordQualityReviewForm = config.forms.FieldRecordQualityReview;
         const dailyLogForm = config.forms.DailyLog;
+        const fieldReportConcurrentReviewForm = config.forms.FieldReportConcurrentReview;
         const termAuthorityForm = config.forms.TermAuthority;
         const termAliasForm = config.forms.TermAlias;
         const termImportMappingForm = config.forms.TermImportMapping;
@@ -1386,6 +1397,15 @@ describe('KoreanFieldwork project configuration', () => {
         expect(dailyLogForm.parent).toBe('Operation');
         expect(dailyLogForm.fields.operationRoleResponsibility.inputType).toBe('checkboxes');
         expect(dailyLogForm.fields.dailyLogEvidenceRole.inputType).toBe('checkboxes');
+        expect(fieldReportConcurrentReviewForm.parent).toBe('Operation');
+        expect(fieldReportConcurrentReviewForm.fields.fieldReportConcurrentSubjectText.inputType).toBe('input');
+        expect(fieldReportConcurrentReviewForm.fields.fieldReportConcurrentSubjectText.mandatory).toBe(true);
+        expect(fieldReportConcurrentReviewForm.fields.fieldReportConcurrentOutputText.inputType).toBe('input');
+        expect(fieldReportConcurrentReviewForm.fields.fieldReportConcurrentIssueText.inputType).toBe('input');
+        expect(fieldReportConcurrentReviewForm.fields.fieldReportConcurrentReview.inputType).toBe('checkboxes');
+        expect(fieldReportConcurrentReviewForm.fields.mediaQualityCheck.inputType).toBe('checkboxes');
+        expect(fieldReportConcurrentReviewForm.fields.operationRoleResponsibility.inputType).toBe('checkboxes');
+        expect(fieldReportConcurrentReviewForm.fields.verificationState.inputType).toBe('dropdown');
         expect(termAuthorityForm.parent).toBe('FeatureGroup');
         expect(termAuthorityForm.fields.termDictionaryDomain.inputType).toBe('checkboxes');
         expect(termAuthorityForm.fields.termApplicationScope.inputType).toBe('checkboxes');
@@ -1867,6 +1887,14 @@ describe('KoreanFieldwork project configuration', () => {
         expect(dailyLogForm.valuelists.dailyLogEvidenceRole)
             .toBe('KoreanFieldwork-dailyLogEvidenceRole');
         expect(dailyLogForm.valuelists.dailyLogReview).toBe('KoreanFieldwork-dailyLogReview');
+        expect(fieldReportConcurrentReviewForm.valuelists.fieldReportConcurrentReview)
+            .toBe('KoreanFieldwork-fieldReportConcurrentReview');
+        expect(fieldReportConcurrentReviewForm.valuelists.reportCrossCheck)
+            .toBe('KoreanFieldwork-reportCrossCheck');
+        expect(fieldReportConcurrentReviewForm.valuelists.mediaQualityCheck)
+            .toBe('KoreanFieldwork-mediaQualityCheck');
+        expect(fieldReportConcurrentReviewForm.valuelists.digitalSourcePreservation)
+            .toBe('KoreanFieldwork-digitalSourcePreservation');
         expect(termAuthorityForm.valuelists.termDictionaryDomain)
             .toBe('KoreanFieldwork-termDictionaryDomain');
         expect(termAuthorityForm.valuelists.termApplicationScope)
@@ -2358,6 +2386,16 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Operation role responsibility');
         expect(languages.en.categories.DailyLog.fields.dailyLogEvidenceRole.label)
             .toBe('Daily log evidence role');
+        expect(languages.en.categories.FieldReportConcurrentReview.label)
+            .toBe('Concurrent field-report review');
+        expect(languages.en.categories.FieldReportConcurrentReview.fields.fieldReportConcurrentSubjectText.label)
+            .toBe('Review subject');
+        expect(languages.en.categories.FieldReportConcurrentReview.fields.mediaQualityCheck.label)
+            .toBe('Media quality check');
+        expect(languages.ko.categories.FieldReportConcurrentReview.label)
+            .toBe('현장 중 보고서 검수');
+        expect(languages.ko.categories.FieldReportConcurrentReview.fields.fieldReportConcurrentIssueText.label)
+            .toBe('오류·보완 사항');
         expect(languages.en.categories.TermAuthority.label).toBe('Term authority');
         expect(languages.en.categories.TermAuthority.fields.termDictionaryDomain.label)
             .toBe('Dictionary domain');
@@ -2963,6 +3001,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Same-day review');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-qualityCorrectionBasis'].values.noSilentRewrite.label)
             .toBe('No silent rewrite');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-fieldReportConcurrentReview']
+            .values.fieldIndoorCrossCorrection.label)
+            .toBe('현장팀·실내편집팀 교차교정');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-fieldReportConcurrentReview']
+            .values.photoDirectionMatchesDrawing.label)
+            .toBe('Photo direction matches drawing');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-reportEvaluationFeedback'].values.selfEvaluation.label)
             .toBe('Institution self-evaluation');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveyObservation'].values.cutSectionStratigraphy.label)

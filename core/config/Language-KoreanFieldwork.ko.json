@@ -28,6 +28,38 @@
         }
       }
     },
+    "FieldReportConcurrentReview": {
+      "label": "현장 중 보고서 검수",
+      "fields": {
+        "digitalSourcePreservation": {
+          "label": "디지털 원자료 보존"
+        },
+        "fieldReportConcurrentIssueText": {
+          "label": "오류·보완 사항"
+        },
+        "fieldReportConcurrentOutputText": {
+          "label": "현장 산출물"
+        },
+        "fieldReportConcurrentReview": {
+          "label": "현장 중 보고서 검수"
+        },
+        "fieldReportConcurrentSubjectText": {
+          "label": "검수 대상"
+        },
+        "mediaQualityCheck": {
+          "label": "매체 품질검수"
+        },
+        "operationRoleResponsibility": {
+          "label": "작업 역할·책임"
+        },
+        "reportCrossCheck": {
+          "label": "보고서 교차검토"
+        },
+        "verificationState": {
+          "label": "검증상태"
+        }
+      }
+    },
     "TermAuthority": {
       "label": "용어 권위",
       "fields": {

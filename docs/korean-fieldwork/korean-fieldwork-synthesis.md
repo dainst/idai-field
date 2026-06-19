@@ -56,6 +56,7 @@
 | `Photo` | 촬영 목적, 안전, 증거 역할, GPS 연결, 원사진 보존 |
 | `Drawing` | 원천 지도, 전자도면, 유구·유물 실측, 좌표계·축척·검수 |
 | `DailyLog` | 작업일 사실기록, 증거 역할, 검토와 보완 |
+| `FieldReportConcurrentReview` | 현장 중 원고·도면·사진 가편집본, 방향·축척·해발고도, 사진 해상도와 원자료 백업 검수 |
 | `InformationAsset` | 보고서 PDF, 조판 작업파일, 전자보고서 패키지, 도판·도면·사진 DB, 지표조사 GIS, 재래식 매체와 장기보존 위치 |
 | `ReportEditorialCrossCheck` | 보고서 원고·도면·사진·목록·번호 변환표의 불일치와 수정 근거 |
 | `SourceEvidenceIndex` | 방법론·사전 PDF의 쪽수, 도표, 사진, 캡션, 사례, OCR 대조 상태 |

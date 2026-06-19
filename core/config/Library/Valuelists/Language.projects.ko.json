@@ -6272,6 +6272,29 @@
     },
     "description": "현장기록에서 보고서 산출물을 역산하고 원자료와 대조하기 위한 교차검토 항목 목록"
   },
+  "KoreanFieldwork-fieldReportConcurrentReview": {
+    "values": {
+      "editFrameKnownDuringFieldwork": { "label": "현장 중 편집틀 숙지" },
+      "manuscriptDrawingPhotoReviewedTogether": { "label": "원고·도면·사진 동시 검토" },
+      "featureDrawingFinalCheckedInField": { "label": "유구도면 현장 최종검수" },
+      "fieldEditorChangeListShared": { "label": "현장·편집팀 변경목록 공유" },
+      "fieldIndoorCrossCorrection": { "label": "현장팀·실내편집팀 교차교정" },
+      "responsibleInvestigatorFinalCorrection": { "label": "책임조사연구원 최종수정" },
+      "drawingDirectionAligned": { "label": "도면 방향 정렬" },
+      "profileLineMatched": { "label": "단면선 일치" },
+      "elevationConsistencyChecked": { "label": "해발고도 정합성 확인" },
+      "stratigraphicNotationUnified": { "label": "토층 주기 통일" },
+      "standardSectionLinked": { "label": "기준토층 연결" },
+      "stageDrawingScaleDirectionMatched": { "label": "단계도면 축척·방향 일치" },
+      "photoDirectionMatchesDrawing": { "label": "사진 방향 도면과 일치" },
+      "printResolutionChecked": { "label": "인쇄 해상도 확인" },
+      "threeDimensionalOutputSecured": { "label": "3D 산출물 확보" },
+      "unresolvedIssuePassedToEditor": { "label": "미해결 쟁점 편집자 전달" },
+      "correctionAppliedBeforeHandover": { "label": "인계 전 수정 반영" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "현장 단계에서 보고서 편집틀, 원고·도면·사진 정합성, 도면 방향·축척·해발고도, 사진 해상도와 원자료 보존 상태를 함께 검수하기 위한 목록"
+  },
   "KoreanFieldwork-artifactDrawingRecordMethod": {
     "values": {
       "technicalDescription": { "label": "기술" },

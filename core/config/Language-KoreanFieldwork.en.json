@@ -28,6 +28,38 @@
         }
       }
     },
+    "FieldReportConcurrentReview": {
+      "label": "Concurrent field-report review",
+      "fields": {
+        "digitalSourcePreservation": {
+          "label": "Digital source preservation"
+        },
+        "fieldReportConcurrentIssueText": {
+          "label": "Error and supplement notes"
+        },
+        "fieldReportConcurrentOutputText": {
+          "label": "Field outputs"
+        },
+        "fieldReportConcurrentReview": {
+          "label": "Concurrent field-report review"
+        },
+        "fieldReportConcurrentSubjectText": {
+          "label": "Review subject"
+        },
+        "mediaQualityCheck": {
+          "label": "Media quality check"
+        },
+        "operationRoleResponsibility": {
+          "label": "Operation role responsibility"
+        },
+        "reportCrossCheck": {
+          "label": "Report cross-check"
+        },
+        "verificationState": {
+          "label": "Verification state"
+        }
+      }
+    },
     "TermAuthority": {
       "label": "Term authority",
       "fields": {

@@ -40184,6 +40184,50 @@
       "evaluationFeedback"
     ]
   },
+  "KoreanFieldwork-fieldReportConcurrentReview": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-20",
+    "values": {
+      "editFrameKnownDuringFieldwork": {},
+      "manuscriptDrawingPhotoReviewedTogether": {},
+      "featureDrawingFinalCheckedInField": {},
+      "fieldEditorChangeListShared": {},
+      "fieldIndoorCrossCorrection": {},
+      "responsibleInvestigatorFinalCorrection": {},
+      "drawingDirectionAligned": {},
+      "profileLineMatched": {},
+      "elevationConsistencyChecked": {},
+      "stratigraphicNotationUnified": {},
+      "standardSectionLinked": {},
+      "stageDrawingScaleDirectionMatched": {},
+      "photoDirectionMatchesDrawing": {},
+      "printResolutionChecked": {},
+      "threeDimensionalOutputSecured": {},
+      "unresolvedIssuePassedToEditor": {},
+      "correctionAppliedBeforeHandover": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "editFrameKnownDuringFieldwork",
+      "manuscriptDrawingPhotoReviewedTogether",
+      "featureDrawingFinalCheckedInField",
+      "fieldEditorChangeListShared",
+      "fieldIndoorCrossCorrection",
+      "responsibleInvestigatorFinalCorrection",
+      "drawingDirectionAligned",
+      "profileLineMatched",
+      "elevationConsistencyChecked",
+      "stratigraphicNotationUnified",
+      "standardSectionLinked",
+      "stageDrawingScaleDirectionMatched",
+      "photoDirectionMatchesDrawing",
+      "printResolutionChecked",
+      "threeDimensionalOutputSecured",
+      "unresolvedIssuePassedToEditor",
+      "correctionAppliedBeforeHandover",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-artifactDrawingRecordMethod": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

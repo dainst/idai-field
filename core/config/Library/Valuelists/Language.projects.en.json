@@ -18026,6 +18026,29 @@
     },
     "description": "Korean report cross-check items for generating and auditing report outputs from field records"
   },
+  "KoreanFieldwork-fieldReportConcurrentReview": {
+    "values": {
+      "editFrameKnownDuringFieldwork": { "label": "Report frame known during fieldwork" },
+      "manuscriptDrawingPhotoReviewedTogether": { "label": "Manuscript, drawing, photo reviewed together" },
+      "featureDrawingFinalCheckedInField": { "label": "Feature drawing final-checked in field" },
+      "fieldEditorChangeListShared": { "label": "Field/editor change list shared" },
+      "fieldIndoorCrossCorrection": { "label": "Field and indoor teams cross-corrected" },
+      "responsibleInvestigatorFinalCorrection": { "label": "Responsible investigator final correction" },
+      "drawingDirectionAligned": { "label": "Drawing direction aligned" },
+      "profileLineMatched": { "label": "Profile line matched" },
+      "elevationConsistencyChecked": { "label": "Elevation consistency checked" },
+      "stratigraphicNotationUnified": { "label": "Stratigraphic notation unified" },
+      "standardSectionLinked": { "label": "Standard section linked" },
+      "stageDrawingScaleDirectionMatched": { "label": "Stage drawing scale/direction matched" },
+      "photoDirectionMatchesDrawing": { "label": "Photo direction matches drawing" },
+      "printResolutionChecked": { "label": "Print resolution checked" },
+      "threeDimensionalOutputSecured": { "label": "3D output secured" },
+      "unresolvedIssuePassedToEditor": { "label": "Unresolved issue passed to editor" },
+      "correctionAppliedBeforeHandover": { "label": "Correction applied before handover" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Concurrent field-report review checks for report frames, manuscript-drawing-photo consistency, drawing direction, scale, elevation, photo resolution, and source-data preservation"
+  },
   "KoreanFieldwork-artifactDrawingRecordMethod": {
     "values": {
       "technicalDescription": { "label": "Technical description" },

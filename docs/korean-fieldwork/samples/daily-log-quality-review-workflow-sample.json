@@ -338,6 +338,69 @@
     },
     {
       "resource": {
+        "id": "field-report-concurrent-review-quality-001",
+        "identifier": "QUALITY-FIELD-REPORT-001",
+        "shortDescription": "현장 중 도면·사진·원고 가편집 검수",
+        "category": "FieldReportConcurrentReview",
+        "relations": {
+          "isRecordedIn": ["op-quality-001"],
+          "liesWithin": ["op-quality-001"]
+        },
+        "description": "수혈건물지 12호의 단계별 도면과 사진, 원고 가편집본을 현장 조사팀과 실내 편집팀이 함께 대조해 방향·축척·해발고도·번호 불일치를 인계 전 수정한다.",
+        "fieldReportConcurrentSubjectText": "수혈건물지 12호 보고서 가편집 검수",
+        "fieldReportConcurrentOutputText": "평면도·단면도·단계별 사진·유구 설명 원고·번호 변환표·3D 원자료",
+        "fieldReportConcurrentIssueText": "2차 노출 사진 방향이 도면과 달랐고 단면선 표기가 가편집본에서 누락되어 현장 도면 원본과 사진대장을 대조해 수정함",
+        "fieldReportConcurrentReview": [
+          "editFrameKnownDuringFieldwork",
+          "manuscriptDrawingPhotoReviewedTogether",
+          "featureDrawingFinalCheckedInField",
+          "fieldEditorChangeListShared",
+          "fieldIndoorCrossCorrection",
+          "drawingDirectionAligned",
+          "profileLineMatched",
+          "elevationConsistencyChecked",
+          "stratigraphicNotationUnified",
+          "stageDrawingScaleDirectionMatched",
+          "photoDirectionMatchesDrawing",
+          "printResolutionChecked",
+          "threeDimensionalOutputSecured",
+          "correctionAppliedBeforeHandover"
+        ],
+        "reportCrossCheck": [
+          "manuscript",
+          "drawingRegister",
+          "photoRegister",
+          "dailyLog",
+          "numberConversionTable",
+          "sourceMediaBackup"
+        ],
+        "mediaQualityCheck": [
+          "directionRecorded",
+          "scaleIncluded",
+          "orientationChecked",
+          "resolutionOrLineworkReadable",
+          "registerNumberMatched",
+          "retakeOrRedrawNeeded"
+        ],
+        "digitalSourcePreservation": [
+          "originalPhoto",
+          "originalDrawing",
+          "electronicNotebookOriginal",
+          "twoLocationBackup",
+          "backupVerified"
+        ],
+        "operationRoleResponsibility": [
+          "fieldDirector",
+          "photographyLead",
+          "drawingLead",
+          "reportPreparationLead",
+          "reviewer"
+        ],
+        "verificationState": "needsRecheck"
+      }
+    },
+    {
+      "resource": {
         "id": "daily-log-quality-001",
         "identifier": "QUALITY-LOG-001",
         "shortDescription": "12일차 당일 작업일지",

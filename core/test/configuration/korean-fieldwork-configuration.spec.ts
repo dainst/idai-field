@@ -96,6 +96,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('가마');
         expect(documentsById['term-alias-kiln-site-kiln'].resource.verificationState)
             .toBe('pendingDecision');
+        expect(documentsById['term-import-dwelling-site-house-place'].resource.termImportSourceText)
+            .toBe('집자리');
+        expect(documentsById['term-import-dwelling-site-house-place'].resource.termImportAuthorityText)
+            .toBe('주거지');
+        expect(documentsById['term-import-kiln-site-gamateo'].resource.termImportReportText)
+            .toBe('가마터');
+        expect(documentsById['term-import-kiln-site-gamateo'].resource.termSearchMapping)
+            .toContain('reportOutputSeparated');
     });
 
 
@@ -981,6 +989,7 @@ describe('KoreanFieldwork project configuration', () => {
         const dailyLogForm = config.forms.DailyLog;
         const termAuthorityForm = config.forms.TermAuthority;
         const termAliasForm = config.forms.TermAlias;
+        const termImportMappingForm = config.forms.TermImportMapping;
         const sourceEvidenceIndexForm = config.forms.SourceEvidenceIndex;
         const findForm = config.forms['Find:default'];
         const sampleForm = config.forms['Sample:default'];
@@ -1003,6 +1012,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(termAliasForm.fields.termAliasText.mandatory).toBe(true);
         expect(termAliasForm.fields.termAliasRole.inputType).toBe('checkboxes');
         expect(termAliasForm.fields.termAliasHandling.inputType).toBe('checkboxes');
+        expect(termImportMappingForm.parent).toBe('TermAuthority');
+        expect(termImportMappingForm.fields.termImportSourceText.inputType).toBe('input');
+        expect(termImportMappingForm.fields.termImportAuthorityText.inputType).toBe('input');
+        expect(termImportMappingForm.fields.termImportReportText.inputType).toBe('input');
+        expect(termImportMappingForm.fields.termImportSourceText.mandatory).toBe(true);
+        expect(termImportMappingForm.fields.termImportAuthorityText.mandatory).toBe(true);
         expect(sourceEvidenceIndexForm.parent).toBe('Project');
         expect(sourceEvidenceIndexForm.fields.sourceEvidenceCitation.inputType).toBe('input');
         expect(sourceEvidenceIndexForm.fields.sourceEvidenceLocator.inputType).toBe('input');
@@ -1361,6 +1376,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(termAliasForm.valuelists.termAliasHandling).toBe('KoreanFieldwork-termAliasHandling');
         expect(termAliasForm.valuelists.termSearchMapping).toBe('KoreanFieldwork-termSearchMapping');
         expect(termAliasForm.valuelists.termAuthorityStatus).toBe('KoreanFieldwork-termAuthorityStatus');
+        expect(termImportMappingForm.valuelists.termAliasHandling)
+            .toBe('KoreanFieldwork-termAliasHandling');
+        expect(termImportMappingForm.valuelists.termSearchMapping)
+            .toBe('KoreanFieldwork-termSearchMapping');
+        expect(termImportMappingForm.valuelists.termAuthorityStatus)
+            .toBe('KoreanFieldwork-termAuthorityStatus');
         expect(sourceEvidenceIndexForm.valuelists.sourceEvidenceMaterial)
             .toBe('KoreanFieldwork-sourceEvidenceMaterial');
         expect(sourceEvidenceIndexForm.valuelists.sourceEvidenceDomain)
@@ -1765,6 +1786,11 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.TermAlias.fields.termAliasText.label).toBe('Alias text');
         expect(languages.en.categories.TermAlias.fields.termAliasRole.label).toBe('Alias role');
         expect(languages.en.categories.TermAlias.fields.termAliasHandling.label).toBe('Alias handling');
+        expect(languages.en.categories.TermImportMapping.label).toBe('Term import mapping');
+        expect(languages.en.categories.TermImportMapping.fields.termImportSourceText.label)
+            .toBe('Imported source term');
+        expect(languages.en.categories.TermImportMapping.fields.termImportAuthorityText.label)
+            .toBe('Authority headword');
         expect(languages.en.categories.SourceEvidenceIndex.label).toBe('Source evidence index');
         expect(languages.en.categories.SourceEvidenceIndex.fields.sourceEvidenceCitation.label)
             .toBe('Source citation');

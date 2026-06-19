@@ -56,6 +56,20 @@
         }
       }
     },
+    "TermImportMapping": {
+      "label": "Term import mapping",
+      "fields": {
+        "termImportAuthorityText": {
+          "label": "Authority headword"
+        },
+        "termImportReportText": {
+          "label": "Report output term"
+        },
+        "termImportSourceText": {
+          "label": "Imported source term"
+        }
+      }
+    },
     "SourceEvidenceIndex": {
       "label": "Source evidence index",
       "fields": {

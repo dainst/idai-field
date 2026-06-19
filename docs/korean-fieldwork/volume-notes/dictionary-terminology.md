@@ -348,9 +348,11 @@
 
 2026-06-19 추가 검증에서는 `docs/korean-fieldwork/samples/term-authority-alias-sample.json`을 두어 `집자리/주거지`, `수혈건물지`, `가마터/요지`, `가마/요지` 관계가 실제 설정의 `TermAuthority`와 `TermAlias` 폼, 값목록 키로만 표현되는지 테스트한다. 이 샘플은 현장 검색어를 허용하되, `doNotOverwriteObservedTerm`, `structureSubtypeSeparated`, `doNotMergeToSingleTerm`, `pendingDecision`을 함께 남겨 관찰어와 권위 표제어가 섞이지 않는지 확인하는 용도다.
 
+2026-06-19 이어서 `TermImportMapping`을 `TermAuthority` 하위 카드로 추가했다. 이 카드는 기존 엑셀, 유물대장, 사진 캡션, 보고서 목록에서 가져온 입력어를 권위 표제어와 보고서 출력어에 연결하되, 자동 치환 여부, 검색어 보존, 수동 검토 필요, 분야 범위, 원문 쪽수 대조 상태를 함께 남긴다. `집자리 -> 주거지`, `가마터 -> 요지 / 보고서 가마터` 샘플은 같은 현장어라도 검색 별칭과 가져오기 규칙이 다를 수 있음을 검증한다.
+
 ## 다음 대조 대상
 
-- `TermAuthority` 검색 인덱스: `TermAlias` 샘플 fixture를 실제 자동완성·가져오기 매핑에 연결해 보고, 별도 `TermRelationship` 카드가 필요한 관계만 추린다.
+- `TermAuthority` 검색 인덱스: `TermAlias`와 `TermImportMapping` 샘플 fixture를 실제 자동완성·가져오기 흐름에 연결해 보고, 별도 `TermRelationship` 카드가 필요한 관계만 추린다.
 - 생산유적편: 도판 속 개별 사례명과 요도구 사진 캡션 교정.
 - 청동기시대편: 수혈주거지와 생산 관련 값 목록, 도판 속 개별 사례명 교정.
 - 구석기시대편: 국외 유적명 원어 표기와 도판 속 개별 석재·접합 번호 교정.

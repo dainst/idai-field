@@ -115,6 +115,36 @@
     },
     {
       "resource": {
+        "id": "term-import-dwelling-site-house-place",
+        "identifier": "IMPORT-DWELLING-001",
+        "shortDescription": "가져오기 입력어 집자리의 권위어 매핑",
+        "category": "TermImportMapping",
+        "relations": {
+          "liesWithin": ["term-authority-dwelling-site"]
+        },
+        "description": "기존 대장이나 사진 캡션의 집자리 입력어를 주거지 권위 표제어로 연결하되 원 입력어는 검색어로 보존한다.",
+        "termImportSourceText": "집자리",
+        "termImportAuthorityText": "주거지",
+        "termImportReportText": "주거지",
+        "termAliasHandling": [
+          "importOnly",
+          "preferredHeadwordTarget",
+          "keepAliasForSearch",
+          "doNotOverwriteObservedTerm"
+        ],
+        "termRelation": ["alias"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "fieldUsagePreserved",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["generalDictionaryUsage", "sourcePageLinked", "pendingDecision"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
         "id": "term-authority-kiln-site",
         "identifier": "요지",
         "shortDescription": "가마터·요 계열 생산유적 권위 표제어",
@@ -199,6 +229,36 @@
         ],
         "termAuthorityStatus": ["generalDictionaryUsage", "uiExposureDeferred", "pendingDecision"],
         "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-import-kiln-site-gamateo",
+        "identifier": "IMPORT-KILN-001",
+        "shortDescription": "가져오기 입력어 가마터의 권위어·출력어 매핑",
+        "category": "TermImportMapping",
+        "relations": {
+          "liesWithin": ["term-authority-kiln-site"]
+        },
+        "description": "기존 보고서의 가마터 입력어를 요지 권위 표제어에 연결하되, 보고서 출력어는 현장 관용어로 별도 유지한다.",
+        "termImportSourceText": "가마터",
+        "termImportAuthorityText": "요지",
+        "termImportReportText": "가마터",
+        "termAliasHandling": [
+          "importOnly",
+          "preferredHeadwordTarget",
+          "reportOutputSeparate",
+          "manualReviewRequired"
+        ],
+        "termRelation": ["alias", "reportOutputTerm"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "reportOutputSeparated",
+          "domainScopeSet"
+        ],
+        "termAuthorityStatus": ["institutionalUsage", "reportOutputChecked", "sourcePageLinked"],
+        "verificationState": "candidate"
       }
     }
   ]

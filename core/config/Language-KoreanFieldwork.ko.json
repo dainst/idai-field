@@ -56,6 +56,20 @@
         }
       }
     },
+    "TermImportMapping": {
+      "label": "용어 가져오기 매핑",
+      "fields": {
+        "termImportAuthorityText": {
+          "label": "권위 표제어"
+        },
+        "termImportReportText": {
+          "label": "보고서 출력어"
+        },
+        "termImportSourceText": {
+          "label": "가져온 입력어"
+        }
+      }
+    },
     "SourceEvidenceIndex": {
       "label": "원문 근거 색인",
       "fields": {

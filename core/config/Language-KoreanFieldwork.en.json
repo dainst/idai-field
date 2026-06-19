@@ -127,6 +127,9 @@
         "fieldRecordQuality": {
           "label": "Field record quality"
         },
+        "excavationControlSafety": {
+          "label": "Excavation control and safety"
+        },
         "gpsSurveyQualityRecord": {
           "label": "GPS survey quality record"
         },

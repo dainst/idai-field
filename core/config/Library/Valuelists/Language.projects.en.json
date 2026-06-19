@@ -11840,6 +11840,65 @@
     },
     "description": "Korean field notebook record-quality checks for accuracy, immediacy, reproducibility, and separation of observation from interpretation"
   },
+  "KoreanFieldwork-excavationControlSafety": {
+    "values": {
+      "gridBaulkPlanSet": {
+        "label": "Grid and baulk plan set"
+      },
+      "baulkWidthSafetySecured": {
+        "label": "Baulk width and collapse safety secured"
+      },
+      "baulkMoistureUvProtected": {
+        "label": "Baulk moisture and UV protection"
+      },
+      "drainageOrSumpPrepared": {
+        "label": "Drainage or sump prepared"
+      },
+      "descentPlanRecorded": {
+        "label": "Descent excavation plan recorded"
+      },
+      "machineStrippingDepthControlled": {
+        "label": "Machine stripping depth controlled"
+      },
+      "machineBladeObserved": {
+        "label": "Machine blade direction observed"
+      },
+      "workerSafetyDistanceSecured": {
+        "label": "Worker safety distance secured"
+      },
+      "findConcentrationCheckedDaily": {
+        "label": "Find concentration and layer change checked daily"
+      },
+      "photoScaleDirectionPrepared": {
+        "label": "Photo number, direction, and scale prepared"
+      },
+      "contextAnglePhotoTaken": {
+        "label": "Context-angle photo taken"
+      },
+      "sameDaySectionPhotoDrawing": {
+        "label": "Same-day section photo and drawing"
+      },
+      "benchmarkSectionProtected": {
+        "label": "Benchmark section protected"
+      },
+      "slopedOrSteppedSectionForRisk": {
+        "label": "Risk section sloped or stepped"
+      },
+      "auxiliarySectionAdded": {
+        "label": "Auxiliary section added"
+      },
+      "safetyFenceInstalled": {
+        "label": "Safety fence installed"
+      },
+      "preWithdrawalRecordAudit": {
+        "label": "Pre-withdrawal record audit"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean field operation checks for grids, baulks, drainage, descent excavation, machine stripping, benchmark sections, photos, safety controls, and pre-withdrawal record audits"
+  },
   "KoreanFieldwork-fieldOnlyMissingCheck": {
     "values": {
       "stratigraphicBoundary": {
@@ -13747,6 +13806,12 @@
       },
       "electronicNotebookOriginal": {
         "label": "Electronic notebook original"
+      },
+      "sourcePdf": {
+        "label": "Source PDF preserved"
+      },
+      "sourceText": {
+        "label": "Extracted source text preserved"
       },
       "originalImage": {
         "label": "Original image"

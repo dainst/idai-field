@@ -86,6 +86,65 @@
     },
     "description": "현장 강의자료에서 반복된 기록 정확성, 즉시성, 재현 가능성, 관찰·해석 분리 요구를 관리하기 위한 목록"
   },
+  "KoreanFieldwork-excavationControlSafety": {
+    "values": {
+      "gridBaulkPlanSet": {
+        "label": "구획·둑 계획 설정"
+      },
+      "baulkWidthSafetySecured": {
+        "label": "둑 폭·무너짐 안전 확보"
+      },
+      "baulkMoistureUvProtected": {
+        "label": "둑 습도·자외선 보호"
+      },
+      "drainageOrSumpPrepared": {
+        "label": "배수로·집수정 준비"
+      },
+      "descentPlanRecorded": {
+        "label": "하강조사 계획 기록"
+      },
+      "machineStrippingDepthControlled": {
+        "label": "장비 제토 두께 통제"
+      },
+      "machineBladeObserved": {
+        "label": "삽날 진행방향 관찰"
+      },
+      "workerSafetyDistanceSecured": {
+        "label": "장비 작업 안전거리 확보"
+      },
+      "findConcentrationCheckedDaily": {
+        "label": "유물 집중·층위 변화 매일 점검"
+      },
+      "photoScaleDirectionPrepared": {
+        "label": "사진 번호·방향·스케일 준비"
+      },
+      "contextAnglePhotoTaken": {
+        "label": "출토정황 각도 사진 촬영"
+      },
+      "sameDaySectionPhotoDrawing": {
+        "label": "단면 당일 사진·도면 작성"
+      },
+      "benchmarkSectionProtected": {
+        "label": "기준단면 보호"
+      },
+      "slopedOrSteppedSectionForRisk": {
+        "label": "위험 단면 경사·계단 처리"
+      },
+      "auxiliarySectionAdded": {
+        "label": "보조단면 추가"
+      },
+      "safetyFenceInstalled": {
+        "label": "안전휀스 설치"
+      },
+      "preWithdrawalRecordAudit": {
+        "label": "철수 전 기록물 점검"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "구획·둑 설정, 배수, 하강조사, 장비 제토, 기준단면 보존, 촬영, 안전조치, 철수 전 기록물 점검을 작업 단위에서 관리하기 위한 목록"
+  },
   "KoreanFieldwork-fieldOnlyMissingCheck": {
     "values": {
       "stratigraphicBoundary": {
@@ -1993,6 +2052,12 @@
       },
       "electronicNotebookOriginal": {
         "label": "전자야장 원본"
+      },
+      "sourcePdf": {
+        "label": "원PDF 보존"
+      },
+      "sourceText": {
+        "label": "추출 원문 텍스트 보존"
       },
       "originalImage": {
         "label": "원본 이미지"

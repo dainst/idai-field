@@ -127,6 +127,9 @@
         "fieldRecordQuality": {
           "label": "현장기록 품질"
         },
+        "excavationControlSafety": {
+          "label": "제토·둑·안전 관리"
+        },
         "gpsSurveyQualityRecord": {
           "label": "GPS 측량 품질기록"
         },

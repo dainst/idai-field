@@ -14981,6 +14981,12 @@
       "structuralSimilarity": {
         "label": "Structural similarity"
       },
+      "partWholeRelation": {
+        "label": "Part-whole relation"
+      },
+      "spatialRelation": {
+        "label": "Spatial relation"
+      },
       "periodRestricted": {
         "label": "Period restricted"
       },
@@ -14994,7 +15000,7 @@
         "label": "Report output term"
       }
     },
-    "description": "Korean archaeological term authority relationships for aliases, specialist terms, and report labels"
+    "description": "Korean archaeological term authority relationships for aliases, part-whole links, spatial links, specialist terms, and report labels"
   },
   "KoreanFieldwork-termSearchMapping": {
     "values": {

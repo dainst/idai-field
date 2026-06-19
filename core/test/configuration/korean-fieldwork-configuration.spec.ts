@@ -126,6 +126,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('importMappingNeeded');
         expect(documentsById['term-import-pottery-workshop-subijang'].resource.termImportAuthorityText)
             .toBe('토기 공방');
+        expect(documentsById['term-relationship-pottery-workshop-facilities'].resource.category)
+            .toBe('TermRelationship');
+        expect(documentsById['term-relationship-pottery-workshop-facilities'].resource.termRelation)
+            .toContain('partWholeRelation');
+        expect(documentsById['term-relationship-fortification-gate-defense'].resource.termRelation)
+            .toContain('spatialRelation');
+        expect(documentsById['term-relationship-pit-building-internal-facilities'].resource.termSearchMapping)
+            .toContain('doNotMergeToSingleTerm');
         expect(documentsById['term-import-pottery-workshop-drying-yard'].resource.verificationState)
             .toBe('pendingDecision');
     });
@@ -1258,6 +1266,7 @@ describe('KoreanFieldwork project configuration', () => {
         const termAuthorityForm = config.forms.TermAuthority;
         const termAliasForm = config.forms.TermAlias;
         const termImportMappingForm = config.forms.TermImportMapping;
+        const termRelationshipForm = config.forms.TermRelationship;
         const sourceEvidenceIndexForm = config.forms.SourceEvidenceIndex;
         const excavationPermitDocumentSetForm = config.forms.ExcavationPermitDocumentSet;
         const reportSubmissionWorkflowForm = config.forms.ReportSubmissionWorkflow;
@@ -1294,6 +1303,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(termImportMappingForm.fields.termImportReportText.inputType).toBe('input');
         expect(termImportMappingForm.fields.termImportSourceText.mandatory).toBe(true);
         expect(termImportMappingForm.fields.termImportAuthorityText.mandatory).toBe(true);
+        expect(termRelationshipForm.parent).toBe('TermAuthority');
+        expect(termRelationshipForm.fields.termRelationshipSourceText.inputType).toBe('input');
+        expect(termRelationshipForm.fields.termRelationshipTargetText.inputType).toBe('input');
+        expect(termRelationshipForm.fields.termRelationshipEvidenceText.inputType).toBe('input');
+        expect(termRelationshipForm.fields.termRelationshipSourceText.mandatory).toBe(true);
+        expect(termRelationshipForm.fields.termRelationshipTargetText.mandatory).toBe(true);
         expect(sourceEvidenceIndexForm.parent).toBe('Project');
         expect(sourceEvidenceIndexForm.fields.sourceEvidenceCitation.inputType).toBe('input');
         expect(sourceEvidenceIndexForm.fields.sourceEvidenceLocator.inputType).toBe('input');
@@ -1755,6 +1770,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-termSearchMapping');
         expect(termImportMappingForm.valuelists.termAuthorityStatus)
             .toBe('KoreanFieldwork-termAuthorityStatus');
+        expect(termRelationshipForm.valuelists.termRelation)
+            .toBe('KoreanFieldwork-termRelation');
+        expect(termRelationshipForm.valuelists.termSearchMapping)
+            .toBe('KoreanFieldwork-termSearchMapping');
+        expect(termRelationshipForm.valuelists.termAuthorityStatus)
+            .toBe('KoreanFieldwork-termAuthorityStatus');
+        expect(termRelationshipForm.valuelists.verificationState)
+            .toBe('KoreanFieldwork-verificationState');
         expect(sourceEvidenceIndexForm.valuelists.sourceEvidenceMaterial)
             .toBe('KoreanFieldwork-sourceEvidenceMaterial');
         expect(sourceEvidenceIndexForm.valuelists.sourceEvidenceDomain)
@@ -2219,6 +2242,13 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Imported source term');
         expect(languages.en.categories.TermImportMapping.fields.termImportAuthorityText.label)
             .toBe('Authority headword');
+        expect(languages.en.categories.TermRelationship.label).toBe('Term relationship');
+        expect(languages.en.categories.TermRelationship.fields.termRelationshipSourceText.label)
+            .toBe('Source term');
+        expect(languages.en.categories.TermRelationship.fields.termRelationshipTargetText.label)
+            .toBe('Target term');
+        expect(languages.en.categories.TermRelationship.fields.termRelationshipEvidenceText.label)
+            .toBe('Relationship evidence');
         expect(languages.en.categories.SourceEvidenceIndex.label).toBe('Source evidence index');
         expect(languages.en.categories.SourceEvidenceIndex.fields.sourceEvidenceCitation.label)
             .toBe('Source citation');
@@ -3383,6 +3413,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Source PDF cross-checked');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-termSearchMapping'].values.reportOutputSeparated.label)
             .toBe('Report output separated');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-termRelation'].values.partWholeRelation.label)
+            .toBe('Part-whole relation');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-termRelation'].values.spatialRelation.label)
+            .toBe('Spatial relation');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-termDictionaryDomain'].values.fortificationBeacon.label)
             .toBe('Fortification and beacon');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-termApplicationScope'].values.reportOutput.label)

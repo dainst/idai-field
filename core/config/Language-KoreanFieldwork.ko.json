@@ -73,6 +73,20 @@
         }
       }
     },
+    "TermRelationship": {
+      "label": "용어 관계",
+      "fields": {
+        "termRelationshipEvidenceText": {
+          "label": "관계 근거"
+        },
+        "termRelationshipSourceText": {
+          "label": "출발 용어"
+        },
+        "termRelationshipTargetText": {
+          "label": "대상 용어"
+        }
+      }
+    },
     "SourceEvidenceIndex": {
       "label": "원문 근거 색인",
       "fields": {

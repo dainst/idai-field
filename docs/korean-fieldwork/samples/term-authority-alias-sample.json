@@ -779,6 +779,102 @@
     },
     {
       "resource": {
+        "id": "term-relationship-pottery-workshop-facilities",
+        "identifier": "REL-WORKSHOP-001",
+        "shortDescription": "토기 공방과 수비장·건조장의 부분-전체 관계",
+        "category": "TermRelationship",
+        "relations": {
+          "liesWithin": ["term-authority-pottery-workshop"]
+        },
+        "description": "생산유적편과 요업유적 조사자료에서 수비장과 건조장은 토기 공방으로 찾아갈 수 있지만, 공방이라는 표제어 하나로 치환하면 위치·바닥·저장 흔적이 사라진다. 관계 카드는 가져오기 매핑과 별도로 작업공간의 부분-전체 관계를 남긴다.",
+        "termRelationshipSourceText": "토기 공방",
+        "termRelationshipTargetText": "수비장; 건조장",
+        "termRelationshipEvidenceText": "생산유적편 찾아가기 관계와 기와가마·자기요장 조사방법론의 관련시설 기록",
+        "termRelation": ["partWholeRelation", "functionalSimilarity", "domainRestricted"],
+        "termSearchMapping": [
+          "preferredHeadwordLinked",
+          "fieldUsagePreserved",
+          "structureSubtypeSeparated",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "pendingDecision"],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-authority-fortification-gate",
+        "identifier": "성문",
+        "shortDescription": "성문과 방어 부속시설 관계 권위 표제어",
+        "category": "TermAuthority",
+        "relations": {
+          "liesWithin": ["term-group-korean-archaeology"]
+        },
+        "description": "성문은 성 안팎을 연결하는 통과시설이면서 옹성, 적대, 치성, 여장, 해자 같은 방어시설과 함께 기록해야 한다. 사전 표제어는 성문 하나여도 현장 기록은 부속시설의 위치·기능 관계를 분리한다.",
+        "termDictionaryDomain": ["fortificationBeacon"],
+        "termApplicationScope": ["valueListEntry", "reportOutput", "sourceDictionaryLink"],
+        "termSourcePriority": ["domainSpecialistDictionary", "methodologyTerm", "pdfCrossCheckRequired"],
+        "termRelation": ["preferredTerm", "partWholeRelation", "spatialRelation", "functionalSimilarity"],
+        "termSearchMapping": [
+          "preferredHeadwordLinked",
+          "domainScopeSet",
+          "structureSubtypeSeparated",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "valueListCandidate"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-relationship-fortification-gate-defense",
+        "identifier": "REL-FORT-001",
+        "shortDescription": "성문과 옹성·적대·치성의 방어 관계",
+        "category": "TermRelationship",
+        "relations": {
+          "liesWithin": ["term-authority-fortification-gate"]
+        },
+        "description": "성곽 용어사전과 성곽·봉수편은 성문, 옹성, 적대, 치성을 단순 동의어가 아니라 성문 통과와 방어를 둘러싼 위치·기능 관계로 다룬다. 이 관계는 성문 부속시설 값을 자동으로 합치지 않고 방어시설 카드의 근거로 남긴다.",
+        "termRelationshipSourceText": "성문",
+        "termRelationshipTargetText": "옹성; 적대; 치성",
+        "termRelationshipEvidenceText": "2007년 성곽 용어사전 성문·옹성·적대·치성 설명과 2011년 성곽·봉수편 부속시설 대조",
+        "termRelation": ["spatialRelation", "functionalSimilarity", "structuralSimilarity", "domainRestricted"],
+        "termSearchMapping": [
+          "domainScopeSet",
+          "structureSubtypeSeparated",
+          "ambiguousSynonymFlagged",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "pendingDecision"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-relationship-pit-building-internal-facilities",
+        "identifier": "REL-BUILDING-001",
+        "shortDescription": "수혈건물지와 주혈·노지의 내부시설 관계",
+        "category": "TermRelationship",
+        "relations": {
+          "liesWithin": ["term-authority-dwelling-site"]
+        },
+        "description": "주혈과 노지는 수혈건물지 안에서 반복되는 내부시설이지만, 주거지명이나 화덕 자리로 자동 확정하면 절개 방향, 바닥면 관계, 소토·탄화재, 목주흔 같은 현장 관찰값이 사라진다.",
+        "termRelationshipSourceText": "수혈건물지",
+        "termRelationshipTargetText": "주혈; 노지",
+        "termRelationshipEvidenceText": "수혈건물지 조사법과 현장조사 방법과 해석의 내부시설 조사 순서",
+        "termRelation": ["partWholeRelation", "spatialRelation", "functionalSimilarity", "domainRestricted"],
+        "termSearchMapping": [
+          "fieldUsagePreserved",
+          "structureSubtypeSeparated",
+          "ambiguousSynonymFlagged",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["institutionalUsage", "sourcePageLinked", "valueListCandidate"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
         "id": "term-import-pottery-workshop-drying-yard",
         "identifier": "IMPORT-WORKSHOP-002",
         "shortDescription": "가져오기 입력어 건조장의 토기 공방 매핑",

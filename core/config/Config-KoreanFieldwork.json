@@ -873,6 +873,67 @@
         }
       ]
     },
+    "TermRelationship": {
+      "parent": "TermAuthority",
+      "color": "#5f7f92",
+      "hidden": [],
+      "fields": {
+        "termRelationshipSourceText": {
+          "inputType": "input",
+          "mandatory": true,
+          "constraintIndexed": true
+        },
+        "termRelationshipTargetText": {
+          "inputType": "input",
+          "mandatory": true,
+          "constraintIndexed": true
+        },
+        "termRelationshipEvidenceText": {
+          "inputType": "input",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "termAuthorityStatus": "KoreanFieldwork-termAuthorityStatus",
+        "termRelation": "KoreanFieldwork-termRelation",
+        "termSearchMapping": "KoreanFieldwork-termSearchMapping",
+        "verificationState": "KoreanFieldwork-verificationState"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
+        },
+        {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description"]
+        },
+        {
+          "name": "koreanFieldwork",
+          "fields": [
+            "termRelationshipSourceText",
+            "termRelationshipTargetText",
+            "termRelationshipEvidenceText",
+            "termRelation",
+            "termSearchMapping",
+            "termAuthorityStatus",
+            "verificationState"
+          ]
+        },
+        {
+          "name": "time",
+          "fields": ["period", "dating"]
+        }
+      ]
+    },
     "SourceEvidenceIndex": {
       "parent": "Project",
       "color": "#8a7550",

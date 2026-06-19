@@ -73,6 +73,20 @@
         }
       }
     },
+    "TermRelationship": {
+      "label": "Term relationship",
+      "fields": {
+        "termRelationshipEvidenceText": {
+          "label": "Relationship evidence"
+        },
+        "termRelationshipSourceText": {
+          "label": "Source term"
+        },
+        "termRelationshipTargetText": {
+          "label": "Target term"
+        }
+      }
+    },
     "SourceEvidenceIndex": {
       "label": "Source evidence index",
       "fields": {

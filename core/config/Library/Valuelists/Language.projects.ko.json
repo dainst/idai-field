@@ -3227,6 +3227,12 @@
       "structuralSimilarity": {
         "label": "구조 유사"
       },
+      "partWholeRelation": {
+        "label": "부분-전체 관계"
+      },
+      "spatialRelation": {
+        "label": "위치 관계"
+      },
       "periodRestricted": {
         "label": "시대 한정"
       },
@@ -3240,7 +3246,7 @@
         "label": "보고서 출력어"
       }
     },
-    "description": "한국 고고학 사전류의 관용어, 전문 표제어, 보고서 출력어를 분리하기 위한 용어 관계 목록"
+    "description": "한국 고고학 사전류의 관용어, 부분-전체 관계, 위치 관계, 전문 표제어, 보고서 출력어를 분리하기 위한 용어 관계 목록"
   },
   "KoreanFieldwork-termSearchMapping": {
     "values": {

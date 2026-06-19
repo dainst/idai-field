@@ -409,7 +409,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
               >
                 <span class="markdown">
                   {comment
-                  |> Earmark.as_html!()
+                  |> MDEx.to_html!()
                   |> Phoenix.HTML.raw()}
                 </span>
               </.live_component>

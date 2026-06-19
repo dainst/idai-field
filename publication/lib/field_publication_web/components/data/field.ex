@@ -218,7 +218,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     >
       <span class="markdown">
         {text
-        |> Earmark.as_html!()
+        |> MDEx.to_html!
         |> Phoenix.HTML.raw()}
       </span>
     </.maybe_language_select>

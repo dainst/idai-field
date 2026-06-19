@@ -104,7 +104,7 @@ C:\Users\nuri9\AppData\Local\Temp\codex-idai-field-new-pdf-text\methods-all
 
 도면작성법에서 뽑은 공통 축은 `KoreanFieldwork-mapSourceMaterial`, `KoreanFieldwork-historicalMapLandscapeInterpretation`, `KoreanFieldwork-spatialDrawingProductionWorkflow`, `KoreanFieldwork-distributionMapRequirement`로 `Drawing` 화면에 배치한다. 고지도·지형도·지적원도·항공사진·DEM은 완성 도면의 배경이 아니라 조사 전 지형 이해와 유적분포 가능성 판단의 근거이므로, 제작연도·축척·좌표계·출처와 함께 저장한다. 주변유적분포도는 조사대상지역, 문화재·보호구역, 반경, 범례·축척·방위표, PDF와 이미지 산출물까지 남겨 도면 작성 과정을 검증할 수 있게 한다.
 
-GPS·GIS 현장 시스템에서 뽑은 공통 축은 `KoreanFieldwork-gpsSurveyQualityRecord`, `KoreanFieldwork-gpsNmeaRecord`, `KoreanFieldwork-gpsPhotoLinkRecord`, `KoreanFieldwork-fieldDatabaseOperationRisk`로 `Operation`과 `Photo` 화면에 나누어 배치한다. 측량 세션은 GPS/GNSS/RTK, 기준국·이동국, 관측시간, 원시데이터, 좌표계, 지오이드, 위성수와 DOP·정확도를 남기고, NMEA 세부값은 일자·시각·위경도·고도·상태값과 위성별 정보를 분리한다. 사진은 궤적·현재위치·파일명·자동분류 연결을 남기고, 현장 DB는 SHP·DXF, 레이어·도형·속성 편집, 동기화 위험을 별도 운영값으로 남긴다.
+GPS·GIS 현장 시스템에서 뽑은 공통 축은 `KoreanFieldwork-gpsSurveyQualityRecord`, `KoreanFieldwork-gpsNmeaRecord`, `KoreanFieldwork-gpsPhotoLinkRecord`, `KoreanFieldwork-fieldDatabaseOperationRisk`로 `Operation`과 `Photo` 화면에 나누어 배치한다. 측량 세션은 GPS/GNSS/RTK, 기준국·이동국, 관측시간, 원시데이터, 좌표계, 지오이드, 위성수와 DOP·정확도를 남기고, NMEA 세부값은 일자·시각·위경도·고도·상태값과 위성별 정보를 분리한다. 사진은 궤적·현재위치·파일명·자동분류 연결을 남기고, 현장 DB는 파일 관리, SHP·DXF, 레이어·도형·속성 편집, 통계·분석, 유적·반경검색, 동기화 위험을 별도 운영값으로 남긴다.
 
 첨단과학장비 활용 자료에서 뽑은 공통 축은 `KoreanFieldwork-digitalSurveyQualityControl`로 `Operation` 화면에 배치한다. 고지형분석, GIS, HGIS, 토탈스테이션, DGPS, UAV 사진측량, 항공사진, LiDAR, 3D 레이저스캔, 사진실측, GPR·물리탐사 사용 여부와 함께 원천자료 시점, 원지형 변경 위험, 기준점, 좌표계·지리보정, 오차, 산출물 목적·형식, 외주작업자, 조사자 품질검수, 현장결과 대조, 재분석 가능성을 남겨 디지털 산출물이 현장 판단과 분리되지 않게 한다.
 

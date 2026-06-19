@@ -17934,16 +17934,20 @@
       "analysisDifficulty": { "label": "Analysis difficulty" },
       "informationUseInconvenient": { "label": "Information use inconvenient" },
       "unknownBuriedHeritageManaged": { "label": "Unknown buried heritage managed" },
+      "fileManagementChecked": { "label": "File management checked" },
       "dataCompatibilityChecked": { "label": "Data compatibility checked" },
       "shpManaged": { "label": "SHP managed" },
       "dxfManaged": { "label": "DXF managed" },
       "layerManaged": { "label": "Layer managed" },
       "geometryManaged": { "label": "Geometry managed" },
       "attributeEditingTracked": { "label": "Attribute editing tracked" },
+      "statisticsAnalysisTested": { "label": "Statistics and analysis tested" },
+      "siteSearchTested": { "label": "Site search tested" },
+      "radiusSearchTested": { "label": "Radius search tested" },
       "fieldSyncChecked": { "label": "Field sync checked" },
       "pendingDecision": { "label": "Pending decision" }
     },
-    "description": "Korean fieldwork field database operation checks for update, analysis, usability, unknown buried heritage, SHP/DXF compatibility, layers, geometry, attribute editing, and synchronization risks"
+    "description": "Korean fieldwork field database operation checks for update, analysis, usability, unknown buried heritage, file management, SHP/DXF compatibility, layers, geometry, attribute editing, statistics and analysis, site/radius search, and synchronization risks"
   },
   "KoreanFieldwork-digitalSurveyQualityControl": {
     "values": {

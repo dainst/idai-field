@@ -6180,16 +6180,20 @@
       "analysisDifficulty": { "label": "분석 어려움" },
       "informationUseInconvenient": { "label": "정보 이용 불편" },
       "unknownBuriedHeritageManaged": { "label": "미확인 매장문화재 관리" },
+      "fileManagementChecked": { "label": "파일 관리 확인" },
       "dataCompatibilityChecked": { "label": "자료 호환 확인" },
       "shpManaged": { "label": "SHP 관리" },
       "dxfManaged": { "label": "DXF 관리" },
       "layerManaged": { "label": "레이어 관리" },
       "geometryManaged": { "label": "도형 관리" },
       "attributeEditingTracked": { "label": "속성편집 추적" },
+      "statisticsAnalysisTested": { "label": "통계·분석 기능 확인" },
+      "siteSearchTested": { "label": "유적검색 확인" },
+      "radiusSearchTested": { "label": "반경검색 확인" },
       "fieldSyncChecked": { "label": "현장 동기화 확인" },
       "pendingDecision": { "label": "판단 보류" }
     },
-    "description": "현장 GIS·DB가 자료 갱신, 분석, 이용성, 미확인 매장문화재 관리, SHP·DXF 호환, 레이어·도형·속성 편집과 동기화에서 실패하지 않도록 점검하기 위한 목록"
+    "description": "현장 GIS·DB가 자료 갱신, 분석, 이용성, 미확인 매장문화재 관리, 파일 관리, SHP·DXF 호환, 레이어·도형·속성 편집, 통계·분석, 유적·반경검색과 동기화에서 실패하지 않도록 점검하기 위한 목록"
   },
   "KoreanFieldwork-digitalSurveyQualityControl": {
     "values": {

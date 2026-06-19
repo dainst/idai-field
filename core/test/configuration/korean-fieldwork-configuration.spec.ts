@@ -184,6 +184,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('hdop');
         expect(documentsById['op-media-001'].resource.fieldDatabaseOperationRisk)
             .toContain('dataCompatibilityChecked');
+        expect(documentsById['op-media-001'].resource.fieldDatabaseOperationRisk)
+            .toContain('siteSearchTested');
         expect(documentsById['op-media-001'].resource.digitalSurveyQualityControl)
             .toContain('fieldResultCrossChecked');
         expect(documentsById['photo-media-gps-001'].resource.gpsPhotoLinkRecord)
@@ -3177,6 +3179,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-fieldDatabaseOperationRisk']
             .values.dataCompatibilityChecked.label)
             .toBe('Data compatibility checked');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-fieldDatabaseOperationRisk']
+            .values.statisticsAnalysisTested.label)
+            .toBe('Statistics and analysis tested');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-fieldDatabaseOperationRisk']
+            .values.siteSearchTested.label)
+            .toBe('유적검색 확인');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-digitalSurveyQualityControl']
             .values.fieldResultCrossChecked.label)
             .toBe('Field result cross-checked');

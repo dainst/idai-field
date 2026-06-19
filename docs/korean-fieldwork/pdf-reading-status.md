@@ -107,7 +107,7 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-19 도면작성법 자료도 구현 단위로 압축했다. `조사요원 기초소양 교육`의 도면작성 장은 고지도·일제강점기 지형도·지적원도·토지이용현황도·항공사진·수치지형도·DEM을 단순 배경이 아니라 과거 경관과 유구 잔존 상태를 읽는 근거로 다룬다. 이 묶음은 `Drawing`의 `mapSourceMaterial`, `historicalMapLandscapeInterpretation`, `spatialDrawingProductionWorkflow`, `distributionMapRequirement` 값 목록으로 옮겨 원천자료, 지도 판독, 좌표계·객체 변환, 주변유적분포도 산출 요건을 분리했다. `media-drawing-gps-workflow-sample.json`으로 고지도·분포도 작성 흐름이 원천자료, 좌표계, 반경·범례·축척·방위표 검수와 맞는지 검증한다.
 
-2026-06-19 GPS·GIS 현장 시스템 자료도 구현 단위로 압축했다. 제2회 조사연구원 교육자료의 GPS 측량과 Tablet/GPS 야외조사 시스템 장은 좌표값만이 아니라 관측 방식, 기준국·이동국, 위성 상태, 관측시간, NMEA의 일자·시각·위성수·DOP·SNR, GPS 궤적과 사진 파일명 연동, SHP·DXF 호환과 레이어·도형·속성 편집 위험을 함께 남기라고 요구한다. 이 묶음은 `Operation`의 `gpsSurveyQualityRecord`, `gpsNmeaRecord`, `fieldDatabaseOperationRisk`와 `Photo`의 `gpsPhotoLinkRecord` 값 목록으로 옮겼다. `media-drawing-gps-workflow-sample.json`으로 RTK/GNSS, NMEA, 현장 DB 호환, 사진 위치연동이 실제 입력값으로 함께 남는지 검증한다.
+2026-06-19 GPS·GIS 현장 시스템 자료도 구현 단위로 압축했다. 제2회 조사연구원 교육자료의 GPS 측량과 Tablet/GPS 야외조사 시스템 장은 좌표값만이 아니라 관측 방식, 기준국·이동국, 위성 상태, 관측시간, NMEA의 일자·시각·위성수·DOP·SNR, GPS 궤적과 사진 파일명 연동, 파일 관리, SHP·DXF 호환, 레이어·도형·속성 편집, 통계·분석, 유적·반경검색 위험을 함께 남기라고 요구한다. 이 묶음은 `Operation`의 `gpsSurveyQualityRecord`, `gpsNmeaRecord`, `fieldDatabaseOperationRisk`와 `Photo`의 `gpsPhotoLinkRecord` 값 목록으로 옮겼다. `media-drawing-gps-workflow-sample.json`으로 RTK/GNSS, NMEA, 현장 DB 호환·검색, 사진 위치연동이 실제 입력값으로 함께 남는지 검증한다.
 
 2026-06-19 첨단과학장비 활용 자료의 디지털 조사 품질검수도 구현 단위로 압축했다. 고지형분석, GIS, HGIS, DGPS, 토탈스테이션, UAV 사진측량, 항공사진, LiDAR, 3D 레이저스캔, 사진실측, GPR·물리탐사는 장비명이 아니라 원천자료 시점, 원지형 변경 위험, 기준점, 좌표계·지리보정, 오차, 산출물 목적, 외주 결과 검수, 현장결과 대조와 재분석 가능성이 함께 남아야 한다. 이 묶음은 `Operation`의 `digitalSurveyQualityControl` 값 목록으로 옮겼고, `media-drawing-gps-workflow-sample.json`에서 GPS/NMEA와 현장 DB 검수 흐름 사이에 함께 검증한다.
 

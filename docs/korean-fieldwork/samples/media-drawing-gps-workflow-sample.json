@@ -70,12 +70,16 @@
           "pendingDecision"
         ],
         "fieldDatabaseOperationRisk": [
+          "fileManagementChecked",
           "dataCompatibilityChecked",
           "shpManaged",
           "dxfManaged",
           "layerManaged",
           "geometryManaged",
           "attributeEditingTracked",
+          "statisticsAnalysisTested",
+          "siteSearchTested",
+          "radiusSearchTested",
           "fieldSyncChecked",
           "pendingDecision"
         ],

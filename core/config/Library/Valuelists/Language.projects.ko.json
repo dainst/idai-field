@@ -6493,6 +6493,71 @@
     },
     "description": "시대값을 단일 선택으로 닫지 않고 층위, 공반, 절대연대, 표지유물, 대안 편년과 함께 검토하기 위한 목록"
   },
+  "KoreanFieldwork-chronologyUnitDecision": {
+    "values": {
+      "artifactTypeUnit": {
+        "label": "유물 형식 단위"
+      },
+      "singleArtifactUnit": {
+        "label": "개별 유물 단위"
+      },
+      "featureUnit": {
+        "label": "유구 단위"
+      },
+      "assemblageUnit": {
+        "label": "유물군 단위"
+      },
+      "cultureUnit": {
+        "label": "문화 단위"
+      },
+      "stratigraphicUnit": {
+        "label": "층위 단위"
+      },
+      "productionPhase": {
+        "label": "제작 시점"
+      },
+      "usePhase": {
+        "label": "사용 시점"
+      },
+      "repairReusePhase": {
+        "label": "수리·재사용 시점"
+      },
+      "discardPhase": {
+        "label": "폐기 시점"
+      },
+      "depositionPhase": {
+        "label": "매납·퇴적 시점"
+      },
+      "postDepositionalPhase": {
+        "label": "후퇴적 변형 시점"
+      },
+      "longDurationStyleRisk": {
+        "label": "장기 지속 양식 위험"
+      },
+      "markerArtifactBiasChecked": {
+        "label": "표지유물 편중 점검"
+      },
+      "functionalRegionalVariationRisk": {
+        "label": "기능·지역차 위험"
+      },
+      "heirloomReuseRisk": {
+        "label": "전승품·재사용 위험"
+      },
+      "stratigraphyPriorityChecked": {
+        "label": "층위 우선성 점검"
+      },
+      "methodAssumptionRecorded": {
+        "label": "방법 전제 기록"
+      },
+      "alternativeUnitRetained": {
+        "label": "대안 단위 보존"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "편년값이 유물 형식, 개별 유물, 유구, 유물군, 문화, 층위 또는 제작·사용·폐기·매납 중 어느 단위와 행위 시점을 가리키는지 남기기 위한 목록"
+  },
   "KoreanFieldwork-assemblageRelation": {
     "values": {
       "sameLayer": {

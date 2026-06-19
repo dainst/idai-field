@@ -263,6 +263,14 @@
           "alternativeChronology",
           "pendingDecision"
         ],
+        "chronologyUnitDecision": [
+          "featureUnit",
+          "usePhase",
+          "discardPhase",
+          "stratigraphyPriorityChecked",
+          "methodAssumptionRecorded",
+          "pendingDecision"
+        ],
         "assemblageRelation": [
           "sameLayer",
           "repeatedAssociation",
@@ -550,6 +558,14 @@
           "regionalLagRisk",
           "alternativeChronology",
           "pendingDecision"
+        ],
+        "chronologyUnitDecision": [
+          "artifactTypeUnit",
+          "productionPhase",
+          "longDurationStyleRisk",
+          "markerArtifactBiasChecked",
+          "functionalRegionalVariationRisk",
+          "alternativeUnitRetained"
         ],
         "assemblageRelation": [
           "sameLayer",

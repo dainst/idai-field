@@ -541,6 +541,9 @@
         "chronologyArgument": {
           "label": "편년 논증"
         },
+        "chronologyUnitDecision": {
+          "label": "편년 단위·행위시점"
+        },
         "assemblageRelation": {
           "label": "공반 관계"
         },
@@ -815,6 +818,9 @@
         "chronologyArgument": {
           "label": "편년 논증"
         },
+        "chronologyUnitDecision": {
+          "label": "편년 단위·행위시점"
+        },
         "fieldOnlyMissingCheck": {
           "label": "현장시점 누락점검"
         },
@@ -905,6 +911,9 @@
         },
         "chronologyArgument": {
           "label": "편년 논증"
+        },
+        "chronologyUnitDecision": {
+          "label": "편년 단위·행위시점"
         },
         "assemblageRelation": {
           "label": "공반 관계"

@@ -18247,6 +18247,71 @@
     },
     "description": "Korean fieldwork chronology argument list for keeping period decisions tied to stratigraphy, associated finds, absolute dates, marker artifacts, and alternative chronologies"
   },
+  "KoreanFieldwork-chronologyUnitDecision": {
+    "values": {
+      "artifactTypeUnit": {
+        "label": "Artifact type unit"
+      },
+      "singleArtifactUnit": {
+        "label": "Single artifact unit"
+      },
+      "featureUnit": {
+        "label": "Feature unit"
+      },
+      "assemblageUnit": {
+        "label": "Assemblage unit"
+      },
+      "cultureUnit": {
+        "label": "Culture unit"
+      },
+      "stratigraphicUnit": {
+        "label": "Stratigraphic unit"
+      },
+      "productionPhase": {
+        "label": "Production phase"
+      },
+      "usePhase": {
+        "label": "Use phase"
+      },
+      "repairReusePhase": {
+        "label": "Repair or reuse phase"
+      },
+      "discardPhase": {
+        "label": "Discard phase"
+      },
+      "depositionPhase": {
+        "label": "Deposition phase"
+      },
+      "postDepositionalPhase": {
+        "label": "Post-depositional phase"
+      },
+      "longDurationStyleRisk": {
+        "label": "Long-duration style risk"
+      },
+      "markerArtifactBiasChecked": {
+        "label": "Marker artifact bias checked"
+      },
+      "functionalRegionalVariationRisk": {
+        "label": "Functional or regional variation risk"
+      },
+      "heirloomReuseRisk": {
+        "label": "Heirloom or reuse risk"
+      },
+      "stratigraphyPriorityChecked": {
+        "label": "Stratigraphy priority checked"
+      },
+      "methodAssumptionRecorded": {
+        "label": "Method assumption recorded"
+      },
+      "alternativeUnitRetained": {
+        "label": "Alternative unit retained"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean fieldwork chronology unit list for recording whether a date refers to an artifact type, find, feature, assemblage, culture, stratum, or a production/use/discard/deposition phase"
+  },
   "KoreanFieldwork-assemblageRelation": {
     "values": {
       "sameLayer": {

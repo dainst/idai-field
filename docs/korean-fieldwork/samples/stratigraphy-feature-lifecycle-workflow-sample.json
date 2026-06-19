@@ -347,6 +347,14 @@
           "alternativeChronology",
           "pendingDecision"
         ],
+        "chronologyUnitDecision": [
+          "stratigraphicUnit",
+          "depositionPhase",
+          "postDepositionalPhase",
+          "heirloomReuseRisk",
+          "methodAssumptionRecorded",
+          "pendingDecision"
+        ],
         "termRelation": [
           "preferredTerm",
           "alias",

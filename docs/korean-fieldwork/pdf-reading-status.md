@@ -87,6 +87,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-20 경작유구 OCR 보강을 다시 확인해 관개시설과 평면조사 절차를 실제 구성으로 분리했다. 조사방법론은 경작 유구를 논·밭뿐 아니라 관개시설까지 포함해 보고, 보·저수지·수로·집수시설 같은 시설과 물흐름 조절, 논·밭 평면조사 중 노출 즉시 선 확인·구획조사·제토 높이 조절·단면/평면 대조를 별도 판단 흐름으로 요구한다. 이 묶음은 `Feature`의 `cultivationIrrigationFacility`와 `cultivationPlanInvestigationProcedure`로 옮겼고, `alluvial-landform-layer-workflow-sample.json`에서 관개시설과 평면조사 절차가 입지·층서·시료 흐름과 함께 남는지 검증한다.
 
+2026-06-20 제9권 형식학·편년론 보강분 중 편년 대상 단위와 행위 시점 판단을 실제 구성으로 분리했다. `Feature`, `FeatureSegment`, `Find`의 `chronologyUnitDecision`은 편년값이 유물 형식, 개별 유물, 유구, 유물군, 문화, 층위 중 무엇을 대상으로 하는지와 제작·사용·수리/재사용·폐기·매납/퇴적·후퇴적 변형 중 어느 시점을 가리키는지 남긴다. 장기 지속 양식, 표지유물 편중, 기능·지역차, 전승품·재사용, 층위 우선성, 방법 전제, 대안 단위 보존도 같은 체크리스트에서 검증한다.
+
 2026-06-19 성곽·봉수편의 봉수 용어도 한 단위 더 닫았다. 2011년 성곽·봉수편과 2007년 성곽 용어사전은 봉수대/봉화대 이칭, 연대·연조·봉조·연소실·건물지·외곽석축 같은 물리시설, 직봉·간봉·연변봉수·내지봉수·대응봉수 같은 노선 관계, 감관·별장·봉군·봉군보 같은 문헌 운영 주체를 구분해서 보라고 읽힌다. 이번 구현에서는 이 묶음을 `Feature`의 `beaconPhysicalFacility`, `beaconNetworkOperation`, `fortressBeaconRelation`으로 옮겨 물리 유구, 운영망, 산성·봉수 복합관계가 같은 값으로 섞이지 않게 했다. `TermAuthority`와 `dictionary-terminology.md`의 `봉수용어권위관계`, `봉수유구운영분리`는 봉수대/봉화대 이칭과 문헌 운영어 검증 근거로 계속 둔다.
 
 2026-06-19 유구 내부층과 라이프사이클 자료도 구현 단위로 압축했다. 발굴조사 실무 자료는 유구 내부토를 단순 복토가 아니라 축조, 사용, 폐기, 매몰 과정이 겹친 결과로 읽고, 단면 정리와 반복 관찰, 그늘·햇볕 조건, 층간 비교, 이질토 블록의 유래, 자연유입·수성퇴적·붕락·토양화 휴지기, 일괄유물 매몰 여부를 따로 남기라고 요구한다. 이 묶음은 `FeatureSegment`의 `stratigraphicObservationProcedure`, `featureLifecycleReview`, `featureBlockInclusionAssessment`, `featureBurialProcessAssessment` 값 목록으로 옮겼고, `stratigraphy-feature-lifecycle-workflow-sample.json`으로 유구 내부토 해석이 단일 복토명으로 닫히지 않는지 검증한다.

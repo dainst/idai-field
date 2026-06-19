@@ -1580,6 +1580,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "chronologyUnitDecision": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "assemblageRelation": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1936,6 +1940,7 @@
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
         "typologyArgument": "KoreanFieldwork-typologyArgument",
         "chronologyArgument": "KoreanFieldwork-chronologyArgument",
+        "chronologyUnitDecision": "KoreanFieldwork-chronologyUnitDecision",
         "assemblageRelation": "KoreanFieldwork-assemblageRelation",
         "interpretationArgument": "KoreanFieldwork-interpretationArgument",
         "excavationContextModel": "KoreanFieldwork-excavationContextModel",
@@ -2048,6 +2053,7 @@
             "fieldRecordQuality",
             "typologyArgument",
             "chronologyArgument",
+            "chronologyUnitDecision",
             "assemblageRelation",
             "interpretationArgument",
             "excavationContextModel",
@@ -2173,6 +2179,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "chronologyUnitDecision": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "fieldOnlyMissingCheck": {
           "inputType": "checkboxes",
           "mandatory": true,
@@ -2284,6 +2294,7 @@
         "featurePackage": "KoreanFieldwork-featurePackage",
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
         "chronologyArgument": "KoreanFieldwork-chronologyArgument",
+        "chronologyUnitDecision": "KoreanFieldwork-chronologyUnitDecision",
         "fieldOnlyMissingCheck": "KoreanFieldwork-fieldOnlyMissingCheck",
         "firstExposureRecord": "KoreanFieldwork-firstExposureRecord",
         "stratigraphicDivisionBasis": "KoreanFieldwork-stratigraphicDivisionBasis",
@@ -2334,6 +2345,7 @@
             "featurePackage",
             "fieldRecordQuality",
             "chronologyArgument",
+            "chronologyUnitDecision",
             "fieldOnlyMissingCheck",
             "firstExposureRecord",
             "stratigraphicDivisionBasis",
@@ -2384,6 +2396,10 @@
           "constraintIndexed": true
         },
         "chronologyArgument": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "chronologyUnitDecision": {
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
@@ -2581,6 +2597,7 @@
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
         "typologyArgument": "KoreanFieldwork-typologyArgument",
         "chronologyArgument": "KoreanFieldwork-chronologyArgument",
+        "chronologyUnitDecision": "KoreanFieldwork-chronologyUnitDecision",
         "assemblageRelation": "KoreanFieldwork-assemblageRelation",
         "interpretationArgument": "KoreanFieldwork-interpretationArgument",
         "fieldOnlyMissingCheck": "KoreanFieldwork-fieldOnlyMissingCheck",
@@ -2652,6 +2669,7 @@
             "fieldRecordQuality",
             "typologyArgument",
             "chronologyArgument",
+            "chronologyUnitDecision",
             "assemblageRelation",
             "interpretationArgument",
             "fieldOnlyMissingCheck",

@@ -541,6 +541,9 @@
         "chronologyArgument": {
           "label": "Chronology argument"
         },
+        "chronologyUnitDecision": {
+          "label": "Chronology unit decision"
+        },
         "assemblageRelation": {
           "label": "Assemblage relation"
         },
@@ -815,6 +818,9 @@
         "chronologyArgument": {
           "label": "Chronology argument"
         },
+        "chronologyUnitDecision": {
+          "label": "Chronology unit decision"
+        },
         "fieldOnlyMissingCheck": {
           "label": "Field-only missing check"
         },
@@ -905,6 +911,9 @@
         },
         "chronologyArgument": {
           "label": "Chronology argument"
+        },
+        "chronologyUnitDecision": {
+          "label": "Chronology unit decision"
         },
         "assemblageRelation": {
           "label": "Assemblage relation"

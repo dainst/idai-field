@@ -14901,6 +14901,105 @@
     },
     "description": "Korean field notebook controls for recording trial trench direction, interval, width, depth, extension reason, safety condition, and combined pit strategy by landform"
   },
+  "KoreanFieldwork-paleolithicSurveyStage": {
+    "values": {
+      "preliminaryResearch": { "label": "Preliminary research" },
+      "literatureReview": { "label": "Literature review" },
+      "interviewSurvey": { "label": "Interview survey" },
+      "locationConditionClassification": { "label": "Location condition classification" },
+      "fieldInspection": { "label": "Field inspection" },
+      "cultivatedLandSurvey": { "label": "Cultivated-land survey" },
+      "uncultivatedLandSurvey": { "label": "Uncultivated-land survey" },
+      "trialPitSurvey": { "label": "Trial-pit survey" },
+      "excavationSurvey": { "label": "Excavation survey" },
+      "nonSiteSurvey": { "label": "Non-site survey" },
+      "preservationMeasure": { "label": "Preservation measure" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean field notebook controls for recording Paleolithic survey stages from preliminary research through trial pits, excavation, non-site survey, and preservation measures"
+  },
+  "KoreanFieldwork-paleolithicLocationSource": {
+    "values": {
+      "limestoneArea": { "label": "Limestone area" },
+      "terraceDistribution": { "label": "Terrace distribution" },
+      "paleosolLayer": { "label": "Paleosol layer" },
+      "brickFactoryLocation": { "label": "Brick-factory location" },
+      "tileKilnSite": { "label": "Tile-kiln site" },
+      "knownPaleolithicSite": { "label": "Known Paleolithic site" },
+      "reportedFindSpot": { "label": "Reported find spot" },
+      "topographicMap": { "label": "Topographic map" },
+      "geologicalMap": { "label": "Geological map" },
+      "digitalMap": { "label": "Digital map" },
+      "satelliteImage": { "label": "Satellite image" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean field notebook controls for recording Paleolithic location evidence such as limestone areas, terraces, paleosols, known sites, maps, and imagery"
+  },
+  "KoreanFieldwork-paleolithicFieldCollection": {
+    "values": {
+      "administrativePlaceName": { "label": "Administrative place name" },
+      "localPlaceName": { "label": "Local place name" },
+      "cadastralLot": { "label": "Cadastral lot" },
+      "findSpotPhoto": { "label": "Find-spot photo" },
+      "terrainConditionPhoto": { "label": "Terrain-condition photo" },
+      "terraceDeposit": { "label": "Terrace deposit" },
+      "paleosolLayer": { "label": "Paleosol layer" },
+      "adheringSoilPreserved": { "label": "Adhering soil preserved" },
+      "oneKgSoilSample": { "label": "1 kg soil sample" },
+      "charcoalChecked": { "label": "Charcoal checked" },
+      "permanentMarkerRecord": { "label": "Permanent-marker record" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean field notebook controls for recording Paleolithic candidate finds with place names, lot numbers, photos, terrace or paleosol context, adhering soil, and soil samples"
+  },
+  "KoreanFieldwork-paleolithicTrialPitCoordinateControl": {
+    "values": {
+      "controlPointSet": { "label": "Control point set" },
+      "gridDivision": { "label": "Grid division" },
+      "flatlandGrid": { "label": "Flatland grid" },
+      "slopeFlowAligned": { "label": "Slope-flow aligned" },
+      "pitIntervalUnder5m": { "label": "Pit interval under 5 m" },
+      "squareCoordinates": { "label": "Square coordinates" },
+      "excavationTransferCoordinatesKept": { "label": "Excavation-transfer coordinates kept" },
+      "excavatorBucketMonitoring": { "label": "Excavator bucket monitoring" },
+      "candidateLithicImmediateCheck": { "label": "Candidate lithic immediate check" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean field notebook controls for recording Paleolithic trial-pit layout, coordinate continuity, and immediate lithic checks during machine stripping"
+  },
+  "KoreanFieldwork-paleolithicProfileSampleRecord": {
+    "values": {
+      "layerName": { "label": "Layer name" },
+      "munsellSoilColor": { "label": "Munsell soil color" },
+      "soilComposition": { "label": "Soil composition" },
+      "layerAttribute": { "label": "Layer attribute" },
+      "layerCultureRelation": { "label": "Layer-culture relation" },
+      "referenceProfile": { "label": "Reference profile" },
+      "profilePhoto": { "label": "Profile photo" },
+      "profileDrawing": { "label": "Profile drawing" },
+      "layerSample": { "label": "Layer sample" },
+      "differentialCompositionSample": { "label": "Differential-composition sample" },
+      "charcoalSample": { "label": "Charcoal sample" },
+      "duplicateSample": { "label": "Duplicate sample" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean field notebook controls for recording Paleolithic profile layers, Munsell color, soil composition, culture-layer relation, profile media, and duplicate sampling"
+  },
+  "KoreanFieldwork-paleolithicNonSiteResourceSurvey": {
+    "values": {
+      "nearbyStoneSource": { "label": "Nearby stone source" },
+      "rawMaterialDistribution": { "label": "Raw-material distribution" },
+      "rockTypeCharacteristic": { "label": "Rock-type characteristic" },
+      "activityRange": { "label": "Activity range" },
+      "topographicMapMarked": { "label": "Topographic map marked" },
+      "geologicalMapMarked": { "label": "Geological map marked" },
+      "aerialPhotoMarked": { "label": "Aerial photo marked" },
+      "satelliteImageMarked": { "label": "Satellite image marked" },
+      "surroundingDetailedObservation": { "label": "Surrounding detailed observation" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean field notebook controls for recording Paleolithic non-site resource survey of nearby stone sources, raw material distribution, rock characteristics, and mapped activity ranges"
+  },
   "KoreanFieldwork-excavationScopeDifficultyBasis": {
     "values": {
       "siteType": {

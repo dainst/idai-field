@@ -523,6 +523,30 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "paleolithicSurveyStage": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "paleolithicLocationSource": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "paleolithicFieldCollection": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "paleolithicTrialPitCoordinateControl": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "paleolithicProfileSampleRecord": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "paleolithicNonSiteResourceSurvey": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "excavationScopeDifficultyBasis": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -580,6 +604,12 @@
         "sampleSurveySuitability": "KoreanFieldwork-sampleSurveySuitability",
         "trialExcavationPurpose": "KoreanFieldwork-trialExcavationPurpose",
         "trialTrenchDesign": "KoreanFieldwork-trialTrenchDesign",
+        "paleolithicSurveyStage": "KoreanFieldwork-paleolithicSurveyStage",
+        "paleolithicLocationSource": "KoreanFieldwork-paleolithicLocationSource",
+        "paleolithicFieldCollection": "KoreanFieldwork-paleolithicFieldCollection",
+        "paleolithicTrialPitCoordinateControl": "KoreanFieldwork-paleolithicTrialPitCoordinateControl",
+        "paleolithicProfileSampleRecord": "KoreanFieldwork-paleolithicProfileSampleRecord",
+        "paleolithicNonSiteResourceSurvey": "KoreanFieldwork-paleolithicNonSiteResourceSurvey",
         "excavationScopeDifficultyBasis": "KoreanFieldwork-excavationScopeDifficultyBasis",
         "gisPredictionEvidence": "KoreanFieldwork-gisPredictionEvidence",
         "gisPredictionFieldVerification": "KoreanFieldwork-gisPredictionFieldVerification",
@@ -615,6 +645,12 @@
             "sampleSurveySuitability",
             "trialExcavationPurpose",
             "trialTrenchDesign",
+            "paleolithicSurveyStage",
+            "paleolithicLocationSource",
+            "paleolithicFieldCollection",
+            "paleolithicTrialPitCoordinateControl",
+            "paleolithicProfileSampleRecord",
+            "paleolithicNonSiteResourceSurvey",
             "excavationScopeDifficultyBasis",
             "gisPredictionEvidence",
             "gisPredictionFieldVerification",

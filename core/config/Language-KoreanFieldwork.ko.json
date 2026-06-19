@@ -245,6 +245,24 @@
         "trialTrenchDesign": {
           "label": "시굴 트렌치 설계"
         },
+        "paleolithicSurveyStage": {
+          "label": "구석기 조사단계"
+        },
+        "paleolithicLocationSource": {
+          "label": "구석기 입지 사전자료"
+        },
+        "paleolithicFieldCollection": {
+          "label": "구석기 현지조사·채집"
+        },
+        "paleolithicTrialPitCoordinateControl": {
+          "label": "구석기 시굴좌표 유지"
+        },
+        "paleolithicProfileSampleRecord": {
+          "label": "구석기 단면시료 기록"
+        },
+        "paleolithicNonSiteResourceSurvey": {
+          "label": "구석기 비유적지 자원조사"
+        },
         "excavationScopeDifficultyBasis": {
           "label": "정밀발굴 범위·난이도 근거"
         },

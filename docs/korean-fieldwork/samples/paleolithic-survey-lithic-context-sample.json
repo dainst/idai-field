@@ -1,0 +1,242 @@
+{
+  "title": "Korean Paleolithic survey and lithic context sample",
+  "purpose": "Validate that Paleolithic survey records keep location evidence, field collection, trial-pit coordinate continuity, profile sampling, and non-site raw-material survey connected before site certainty.",
+  "validationQuestions": [
+    "지표에서 정형 석기가 적거나 없어도 고토양·단구·기존 유적·지도 자료가 구석기 가능성 근거로 남는가.",
+    "후보 석기와 부착토, 지형조건 사진, 토양시료, 숯 확인이 채집 단계에서 함께 기록되는가.",
+    "시굴 피트의 좌표와 후보석기 판별, 단면시료, 주변 석재 공급지 조사가 정밀발굴 전환 근거로 유지되는가."
+  ],
+  "documents": [
+    {
+      "resource": {
+        "id": "project-paleolithic-survey-001",
+        "identifier": "PAL-SURVEY-001",
+        "shortName": "구석기 후보지 조사 샘플",
+        "shortDescription": "고토양·단구·석재 공급지를 함께 보는 구석기 지표·시굴 흐름",
+        "category": "Project",
+        "relations": {},
+        "description": "하천 단구와 산록부가 겹치는 개발 예정지에서 표면 유물 산포가 약하지만 구석기 가능층과 석재 공급지 후보를 추적하는 샘플.",
+        "investigationAdministration": [
+          "requestReceived",
+          "priorRecordsSecured",
+          "fieldReconnaissance",
+          "planPrepared",
+          "fieldworkInProgress"
+        ],
+        "investigationRequestIntake": [
+          "projectOwnerBasicData",
+          "priorSurveyResultSecured",
+          "fieldReconnaissance",
+          "specialistInstitutionReferral"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "op-paleolithic-survey-001",
+        "identifier": "PAL-OP-001",
+        "shortDescription": "구석기 후보지 지표·시굴 작업일",
+        "category": "Operation",
+        "relations": {
+          "isRecordedIn": ["project-paleolithic-survey-001"]
+        },
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "crossReviewNeeded"
+        ],
+        "recordCreationTiming": "duringFieldwork",
+        "operationRoleResponsibility": [
+          "surveyLead",
+          "safetyLead",
+          "artifactProcessingLead",
+          "sampleCollectionLead",
+          "reviewer",
+          "roleGapIdentified"
+        ],
+        "dailyLogContent": [
+          "workDateWeather",
+          "workArea",
+          "staffRoles",
+          "equipmentIssue",
+          "findSampleCollection",
+          "photoDrawingNumbers"
+        ],
+        "siteProtectionSecurity": [
+          "permitDocumentOnSite",
+          "temporaryFindStorage",
+          "importantRecordCheck",
+          "backupCopyCreated",
+          "handoverPrepared"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "survey-paleolithic-terrace-001",
+        "identifier": "PAL-SUR-001",
+        "shortDescription": "하천단구 구석기 가능성 조사",
+        "category": "Survey",
+        "relations": {
+          "isRecordedIn": ["op-paleolithic-survey-001"]
+        },
+        "description": "표면 유물은 희박하지만 하천단구와 암갈색 고토양, 기존 신고 지점, 주변 돌감 분포가 겹치는 구역을 현지조사와 시굴 피트로 대조한다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "reproducibleRecord",
+          "researchQuestionFit"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "surfaceSurveyObservation": [
+          "terrainCharacteristic",
+          "locationPotential",
+          "cutSectionStratigraphy",
+          "soilEnvironment",
+          "noSurfaceFindsPotential"
+        ],
+        "surfaceSurveyBiasControl": [
+          "priorLiteratureChecked",
+          "fieldObservationFirst",
+          "routeRecorded",
+          "visibilityConditionsRecorded",
+          "investigatorCrossCheck"
+        ],
+        "surfaceSurveyFollowUp": [
+          "stratigraphySurvey",
+          "testExcavation",
+          "additionalSurveyNeeded"
+        ],
+        "trialTrenchDesign": [
+          "openAreaPaleolandformAnalysis",
+          "paleolithicPitCombined",
+          "trenchIntervalRecorded",
+          "trenchDepthRecorded",
+          "safetySecured"
+        ],
+        "paleolithicSurveyStage": [
+          "preliminaryResearch",
+          "fieldInspection",
+          "cultivatedLandSurvey",
+          "trialPitSurvey",
+          "nonSiteSurvey"
+        ],
+        "paleolithicLocationSource": [
+          "terraceDistribution",
+          "paleosolLayer",
+          "knownPaleolithicSite",
+          "reportedFindSpot",
+          "topographicMap",
+          "geologicalMap",
+          "satelliteImage"
+        ],
+        "paleolithicFieldCollection": [
+          "administrativePlaceName",
+          "localPlaceName",
+          "cadastralLot",
+          "findSpotPhoto",
+          "terrainConditionPhoto",
+          "terraceDeposit",
+          "paleosolLayer",
+          "adheringSoilPreserved",
+          "oneKgSoilSample",
+          "charcoalChecked"
+        ],
+        "paleolithicTrialPitCoordinateControl": [
+          "controlPointSet",
+          "gridDivision",
+          "flatlandGrid",
+          "pitIntervalUnder5m",
+          "squareCoordinates",
+          "excavationTransferCoordinatesKept",
+          "candidateLithicImmediateCheck"
+        ],
+        "paleolithicProfileSampleRecord": [
+          "layerName",
+          "munsellSoilColor",
+          "soilComposition",
+          "layerCultureRelation",
+          "referenceProfile",
+          "profilePhoto",
+          "profileDrawing",
+          "layerSample",
+          "charcoalSample",
+          "duplicateSample"
+        ],
+        "paleolithicNonSiteResourceSurvey": [
+          "nearbyStoneSource",
+          "rawMaterialDistribution",
+          "rockTypeCharacteristic",
+          "activityRange",
+          "topographicMapMarked",
+          "geologicalMapMarked",
+          "surroundingDetailedObservation"
+        ],
+        "verificationState": "needsRecheck"
+      }
+    },
+    {
+      "resource": {
+        "id": "find-paleolithic-candidate-lithic-001",
+        "identifier": "PAL-FIND-001",
+        "shortDescription": "고토양 부착 후보 석기",
+        "category": "Find",
+        "relations": {
+          "isRecordedIn": ["op-paleolithic-survey-001"],
+          "liesWithin": ["survey-paleolithic-terrace-001"]
+        },
+        "description": "밭둑 절개면에서 확인한 비정형 석재편. 유물 확정 전이므로 부착토와 출토지점, 좌표, 치수, 유물대장 연결 여부를 남기고 전문검토로 넘긴다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "reproducibleRecord"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "fieldOnlyMissingCheck": [
+          "numberedBeforeCollection",
+          "photoAngleAndScale",
+          "spatialLocation",
+          "sameDayReview",
+          "notRecoverableWarning"
+        ],
+        "artifactLabelRegisterLink": [
+          "labelCreated",
+          "collectionDateRecorded",
+          "sitePointRecorded",
+          "excavationGridRecorded",
+          "fieldSerialNumber",
+          "stratigraphicUnitRecorded",
+          "artifactLayerRecorded",
+          "artifactNameRecorded",
+          "materialRecorded",
+          "coordinateEastWestRecorded",
+          "coordinateNorthSouthRecorded",
+          "depthRecorded",
+          "dimensionsRecorded",
+          "weightRecorded",
+          "ledgerEntryCreated"
+        ],
+        "surfaceFindHandlingRecord": [
+          "individualPackaging",
+          "artifactCardCreated",
+          "gpsLatLongRecorded",
+          "parcelNumberChecked",
+          "closePhoto",
+          "overviewPhoto",
+          "adheringSoilPreserved",
+          "washingCaution"
+        ],
+        "findSampleResearchScope": [
+          "administrativeArtifact",
+          "scienceAnalysisCandidate",
+          "futureResearchCandidate",
+          "collectionStatusRecorded"
+        ],
+        "verificationState": "candidate"
+      }
+    }
+  ]
+}

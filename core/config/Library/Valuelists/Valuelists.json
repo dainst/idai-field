@@ -35404,6 +35404,192 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-paleolithicSurveyStage": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "preliminaryResearch": {},
+      "literatureReview": {},
+      "interviewSurvey": {},
+      "locationConditionClassification": {},
+      "fieldInspection": {},
+      "cultivatedLandSurvey": {},
+      "uncultivatedLandSurvey": {},
+      "trialPitSurvey": {},
+      "excavationSurvey": {},
+      "nonSiteSurvey": {},
+      "preservationMeasure": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "preliminaryResearch",
+      "literatureReview",
+      "interviewSurvey",
+      "locationConditionClassification",
+      "fieldInspection",
+      "cultivatedLandSurvey",
+      "uncultivatedLandSurvey",
+      "trialPitSurvey",
+      "excavationSurvey",
+      "nonSiteSurvey",
+      "preservationMeasure",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-paleolithicLocationSource": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "limestoneArea": {},
+      "terraceDistribution": {},
+      "paleosolLayer": {},
+      "brickFactoryLocation": {},
+      "tileKilnSite": {},
+      "knownPaleolithicSite": {},
+      "reportedFindSpot": {},
+      "topographicMap": {},
+      "geologicalMap": {},
+      "digitalMap": {},
+      "satelliteImage": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "limestoneArea",
+      "terraceDistribution",
+      "paleosolLayer",
+      "brickFactoryLocation",
+      "tileKilnSite",
+      "knownPaleolithicSite",
+      "reportedFindSpot",
+      "topographicMap",
+      "geologicalMap",
+      "digitalMap",
+      "satelliteImage",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-paleolithicFieldCollection": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "administrativePlaceName": {},
+      "localPlaceName": {},
+      "cadastralLot": {},
+      "findSpotPhoto": {},
+      "terrainConditionPhoto": {},
+      "terraceDeposit": {},
+      "paleosolLayer": {},
+      "adheringSoilPreserved": {},
+      "oneKgSoilSample": {},
+      "charcoalChecked": {},
+      "permanentMarkerRecord": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "administrativePlaceName",
+      "localPlaceName",
+      "cadastralLot",
+      "findSpotPhoto",
+      "terrainConditionPhoto",
+      "terraceDeposit",
+      "paleosolLayer",
+      "adheringSoilPreserved",
+      "oneKgSoilSample",
+      "charcoalChecked",
+      "permanentMarkerRecord",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-paleolithicTrialPitCoordinateControl": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "controlPointSet": {},
+      "gridDivision": {},
+      "flatlandGrid": {},
+      "slopeFlowAligned": {},
+      "pitIntervalUnder5m": {},
+      "squareCoordinates": {},
+      "excavationTransferCoordinatesKept": {},
+      "excavatorBucketMonitoring": {},
+      "candidateLithicImmediateCheck": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "controlPointSet",
+      "gridDivision",
+      "flatlandGrid",
+      "slopeFlowAligned",
+      "pitIntervalUnder5m",
+      "squareCoordinates",
+      "excavationTransferCoordinatesKept",
+      "excavatorBucketMonitoring",
+      "candidateLithicImmediateCheck",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-paleolithicProfileSampleRecord": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "layerName": {},
+      "munsellSoilColor": {},
+      "soilComposition": {},
+      "layerAttribute": {},
+      "layerCultureRelation": {},
+      "referenceProfile": {},
+      "profilePhoto": {},
+      "profileDrawing": {},
+      "layerSample": {},
+      "differentialCompositionSample": {},
+      "charcoalSample": {},
+      "duplicateSample": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "layerName",
+      "munsellSoilColor",
+      "soilComposition",
+      "layerAttribute",
+      "layerCultureRelation",
+      "referenceProfile",
+      "profilePhoto",
+      "profileDrawing",
+      "layerSample",
+      "differentialCompositionSample",
+      "charcoalSample",
+      "duplicateSample",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-paleolithicNonSiteResourceSurvey": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "nearbyStoneSource": {},
+      "rawMaterialDistribution": {},
+      "rockTypeCharacteristic": {},
+      "activityRange": {},
+      "topographicMapMarked": {},
+      "geologicalMapMarked": {},
+      "aerialPhotoMarked": {},
+      "satelliteImageMarked": {},
+      "surroundingDetailedObservation": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "nearbyStoneSource",
+      "rawMaterialDistribution",
+      "rockTypeCharacteristic",
+      "activityRange",
+      "topographicMapMarked",
+      "geologicalMapMarked",
+      "aerialPhotoMarked",
+      "satelliteImageMarked",
+      "surroundingDetailedObservation",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-excavationScopeDifficultyBasis": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

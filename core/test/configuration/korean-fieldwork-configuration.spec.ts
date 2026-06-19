@@ -389,6 +389,39 @@ describe('KoreanFieldwork project configuration', () => {
     });
 
 
+    it('keeps the Korean Paleolithic survey sample aligned with Survey fields', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const sample = loadSample('paleolithic-survey-lithic-context-sample.json');
+        const documents = sample.documents;
+        const documentsById = documents.reduce((index: any, document: any) => {
+            index[document.resource.id] = document;
+            return index;
+        }, {});
+
+        expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
+
+        expect(documentsById['survey-paleolithic-terrace-001'].resource.paleolithicSurveyStage)
+            .toContain('trialPitSurvey');
+        expect(documentsById['survey-paleolithic-terrace-001'].resource.paleolithicLocationSource)
+            .toContain('paleosolLayer');
+        expect(documentsById['survey-paleolithic-terrace-001'].resource.paleolithicFieldCollection)
+            .toContain('oneKgSoilSample');
+        expect(documentsById['survey-paleolithic-terrace-001'].resource.paleolithicTrialPitCoordinateControl)
+            .toContain('candidateLithicImmediateCheck');
+        expect(documentsById['survey-paleolithic-terrace-001'].resource.paleolithicProfileSampleRecord)
+            .toContain('duplicateSample');
+        expect(documentsById['survey-paleolithic-terrace-001'].resource.paleolithicNonSiteResourceSurvey)
+            .toContain('nearbyStoneSource');
+        expect(documentsById['find-paleolithic-candidate-lithic-001'].resource.relations.liesWithin)
+            .toEqual(['survey-paleolithic-terrace-001']);
+        expect(documentsById['find-paleolithic-candidate-lithic-001'].resource.artifactLabelRegisterLink)
+            .toContain('coordinateEastWestRecorded');
+    });
+
+
     it('keeps the Korean artifact label-register sample aligned with Find fields', () => {
 
         const configReader = new ConfigReader();
@@ -1017,6 +1050,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(surveyForm.fields.sampleSurveySuitability.inputType).toBe('checkboxes');
         expect(surveyForm.fields.trialExcavationPurpose.inputType).toBe('checkboxes');
         expect(surveyForm.fields.trialTrenchDesign.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.paleolithicSurveyStage.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.paleolithicLocationSource.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.paleolithicFieldCollection.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.paleolithicTrialPitCoordinateControl.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.paleolithicProfileSampleRecord.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.paleolithicNonSiteResourceSurvey.inputType).toBe('checkboxes');
         expect(surveyForm.fields.excavationScopeDifficultyBasis.inputType).toBe('checkboxes');
         expect(surveyForm.fields.gisPredictionEvidence.inputType).toBe('checkboxes');
         expect(surveyForm.fields.gisPredictionFieldVerification.inputType).toBe('checkboxes');
@@ -1342,6 +1381,18 @@ describe('KoreanFieldwork project configuration', () => {
         expect(surveyForm.valuelists.sampleSurveySuitability).toBe('KoreanFieldwork-sampleSurveySuitability');
         expect(surveyForm.valuelists.trialExcavationPurpose).toBe('KoreanFieldwork-trialExcavationPurpose');
         expect(surveyForm.valuelists.trialTrenchDesign).toBe('KoreanFieldwork-trialTrenchDesign');
+        expect(surveyForm.valuelists.paleolithicSurveyStage)
+            .toBe('KoreanFieldwork-paleolithicSurveyStage');
+        expect(surveyForm.valuelists.paleolithicLocationSource)
+            .toBe('KoreanFieldwork-paleolithicLocationSource');
+        expect(surveyForm.valuelists.paleolithicFieldCollection)
+            .toBe('KoreanFieldwork-paleolithicFieldCollection');
+        expect(surveyForm.valuelists.paleolithicTrialPitCoordinateControl)
+            .toBe('KoreanFieldwork-paleolithicTrialPitCoordinateControl');
+        expect(surveyForm.valuelists.paleolithicProfileSampleRecord)
+            .toBe('KoreanFieldwork-paleolithicProfileSampleRecord');
+        expect(surveyForm.valuelists.paleolithicNonSiteResourceSurvey)
+            .toBe('KoreanFieldwork-paleolithicNonSiteResourceSurvey');
         expect(surveyForm.valuelists.excavationScopeDifficultyBasis)
             .toBe('KoreanFieldwork-excavationScopeDifficultyBasis');
         expect(surveyForm.valuelists.gisPredictionEvidence).toBe('KoreanFieldwork-gisPredictionEvidence');
@@ -1765,6 +1816,18 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Trial excavation purpose');
         expect(languages.en.categories.Survey.fields.trialTrenchDesign.label)
             .toBe('Trial trench design');
+        expect(languages.en.categories.Survey.fields.paleolithicSurveyStage.label)
+            .toBe('Paleolithic survey stage');
+        expect(languages.en.categories.Survey.fields.paleolithicLocationSource.label)
+            .toBe('Paleolithic location source');
+        expect(languages.en.categories.Survey.fields.paleolithicFieldCollection.label)
+            .toBe('Paleolithic field collection');
+        expect(languages.en.categories.Survey.fields.paleolithicTrialPitCoordinateControl.label)
+            .toBe('Paleolithic trial-pit coordinate control');
+        expect(languages.en.categories.Survey.fields.paleolithicProfileSampleRecord.label)
+            .toBe('Paleolithic profile sample record');
+        expect(languages.en.categories.Survey.fields.paleolithicNonSiteResourceSurvey.label)
+            .toBe('Paleolithic non-site resource survey');
         expect(languages.en.categories.Survey.fields.excavationScopeDifficultyBasis.label)
             .toBe('Excavation scope and difficulty basis');
         expect(languages.en.categories.Survey.fields.gisPredictionFieldVerification.label)
@@ -2155,6 +2218,24 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-trialTrenchDesign']
             .values.naturalLeveeRiverPerpendicular.label)
             .toBe('Natural-levee river perpendicular');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-paleolithicSurveyStage']
+            .values.trialPitSurvey.label)
+            .toBe('Trial-pit survey');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-paleolithicLocationSource']
+            .values.paleosolLayer.label)
+            .toBe('Paleosol layer');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-paleolithicFieldCollection']
+            .values.oneKgSoilSample.label)
+            .toBe('토양시료 1kg');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-paleolithicTrialPitCoordinateControl']
+            .values.candidateLithicImmediateCheck.label)
+            .toBe('Candidate lithic immediate check');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-paleolithicProfileSampleRecord']
+            .values.duplicateSample.label)
+            .toBe('Duplicate sample');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-paleolithicNonSiteResourceSurvey']
+            .values.nearbyStoneSource.label)
+            .toBe('주변 석재 공급지');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-excavationScopeDifficultyBasis']
             .values.featureIdentificationDifficulty.label)
             .toBe('Feature identification difficulty');

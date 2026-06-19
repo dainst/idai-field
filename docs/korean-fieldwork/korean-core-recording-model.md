@@ -195,6 +195,9 @@
 | 구석기꼬리표유물대장 | 조사기관, 조사일자, 조사지점, 발굴칸, 일련번호, 지층, 유물층, 유물명, 암질, 동서좌표, 남북좌표, 깊이, 길이, 너비, 두께, 무게, 판단 보류 |
 | 구석기단면시료기록 | 지층명, Munsell토색, 토양성분, 층속성, 층문화층관계, 대표단면, 단면사진, 단면도, 지층별시료, 성분차별도시료, 숯시료, 이중채취, 판단 보류 |
 | 구석기비유적지조사 | 주변석재공급지, 돌감분포, 암질특성, 활동범위, 지형도표시, 지질도표시, 항공사진표시, 위성사진표시, 주변정밀관찰, 판단 보류 |
+
+위 구석기 지표·시굴 후보 중 조사단계, 입지 사전자료, 현지 채집, 시굴좌표 유지, 단면시료 기록, 비유적지 자원조사는 `Survey`의 `paleolithicSurveyStage`, `paleolithicLocationSource`, `paleolithicFieldCollection`, `paleolithicTrialPitCoordinateControl`, `paleolithicProfileSampleRecord`, `paleolithicNonSiteResourceSurvey`로 실제 배치했다. 꼬리표·유물대장 요구는 모든 출토유물의 `Find.artifactLabelRegisterLink`로 공통화하고, 입력 흐름은 `paleolithic-survey-lithic-context-sample.json`으로 검증한다.
+
 | 석기도면상태 | 미작성, 현장 스케치, 정밀 작도, 검토 필요, 도판 반영 |
 | 유구면구분 | 축조면, 사용면, 검출면, 절단면, 기반층, 내부토, 상부 유실 |
 | 유구면검출면판단 | 원래 유구면, 유구검출면, 생활면, 구지표면, b층 상면 검출, 토양화로 상부 불명료, 실제 삭평, 판단 보류 |

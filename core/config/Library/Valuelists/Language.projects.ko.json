@@ -3147,6 +3147,105 @@
     },
     "description": "지형별 트렌치 방향·간격·폭·깊이, 확장 사유, 안전 조건, 피트 병행 여부를 시굴 설계 근거로 남기기 위한 목록"
   },
+  "KoreanFieldwork-paleolithicSurveyStage": {
+    "values": {
+      "preliminaryResearch": { "label": "기초조사" },
+      "literatureReview": { "label": "문헌자료" },
+      "interviewSurvey": { "label": "탐문조사" },
+      "locationConditionClassification": { "label": "입지조건 분류" },
+      "fieldInspection": { "label": "현지조사" },
+      "cultivatedLandSurvey": { "label": "경작지 조사" },
+      "uncultivatedLandSurvey": { "label": "비경작지 조사" },
+      "trialPitSurvey": { "label": "시굴조사" },
+      "excavationSurvey": { "label": "발굴조사" },
+      "nonSiteSurvey": { "label": "비유적지 조사" },
+      "preservationMeasure": { "label": "보존대책" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "구석기유적 가능성을 지표조사, 시굴, 발굴, 비유적지 조사와 보존대책 단계로 나누어 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-paleolithicLocationSource": {
+    "values": {
+      "limestoneArea": { "label": "석회암 지대" },
+      "terraceDistribution": { "label": "단구 분포" },
+      "paleosolLayer": { "label": "고토양층" },
+      "brickFactoryLocation": { "label": "벽돌공장 위치" },
+      "tileKilnSite": { "label": "기와가마터" },
+      "knownPaleolithicSite": { "label": "기존 구석기유적" },
+      "reportedFindSpot": { "label": "유물 신고지점" },
+      "topographicMap": { "label": "지형도" },
+      "geologicalMap": { "label": "지질도" },
+      "digitalMap": { "label": "수치지도" },
+      "satelliteImage": { "label": "위성사진" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "구석기 입지 가능성을 좁히기 위한 석회암 지대, 단구, 고토양, 기존 유적, 지도와 영상 자료를 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-paleolithicFieldCollection": {
+    "values": {
+      "administrativePlaceName": { "label": "행정지명" },
+      "localPlaceName": { "label": "자연지명" },
+      "cadastralLot": { "label": "지번" },
+      "findSpotPhoto": { "label": "출토지점 사진" },
+      "terrainConditionPhoto": { "label": "지형조건 사진" },
+      "terraceDeposit": { "label": "단구퇴적층" },
+      "paleosolLayer": { "label": "고토양층" },
+      "adheringSoilPreserved": { "label": "부착토 보존" },
+      "oneKgSoilSample": { "label": "토양시료 1kg" },
+      "charcoalChecked": { "label": "숯조각 확인" },
+      "permanentMarkerRecord": { "label": "유성펜 기록" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "구석기 후보 유물과 지점의 행정·자연 지명, 지번, 사진, 고토양·단구퇴적층, 부착토와 토양시료 확보 여부를 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-paleolithicTrialPitCoordinateControl": {
+    "values": {
+      "controlPointSet": { "label": "기준점 설정" },
+      "gridDivision": { "label": "간나누기" },
+      "flatlandGrid": { "label": "평탄지 격자" },
+      "slopeFlowAligned": { "label": "비탈지 흐름 배치" },
+      "pitIntervalUnder5m": { "label": "시굴구덩이 5m 이내" },
+      "squareCoordinates": { "label": "칸별 좌표" },
+      "excavationTransferCoordinatesKept": { "label": "발굴전환 좌표 유지" },
+      "excavatorBucketMonitoring": { "label": "굴삭기 삽날 감시" },
+      "candidateLithicImmediateCheck": { "label": "후보석기 즉시 판별" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "구석기 시굴에서 평탄지와 비탈지 피트 배치, 좌표 유지, 장비 제토 중 후보석기 즉시 판별을 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-paleolithicProfileSampleRecord": {
+    "values": {
+      "layerName": { "label": "지층명" },
+      "munsellSoilColor": { "label": "Munsell 토색" },
+      "soilComposition": { "label": "토양성분" },
+      "layerAttribute": { "label": "층 속성" },
+      "layerCultureRelation": { "label": "층·문화층 관계" },
+      "referenceProfile": { "label": "대표단면" },
+      "profilePhoto": { "label": "단면사진" },
+      "profileDrawing": { "label": "단면도" },
+      "layerSample": { "label": "지층별 시료" },
+      "differentialCompositionSample": { "label": "성분차별도 시료" },
+      "charcoalSample": { "label": "숯시료" },
+      "duplicateSample": { "label": "이중채취" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "구석기 후보 단면의 지층명, 토색, 토양성분, 문화층 관계, 단면 사진·도면, 지층별 시료와 이중채취를 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-paleolithicNonSiteResourceSurvey": {
+    "values": {
+      "nearbyStoneSource": { "label": "주변 석재 공급지" },
+      "rawMaterialDistribution": { "label": "돌감 분포" },
+      "rockTypeCharacteristic": { "label": "암질 특성" },
+      "activityRange": { "label": "활동범위" },
+      "topographicMapMarked": { "label": "지형도 표시" },
+      "geologicalMapMarked": { "label": "지질도 표시" },
+      "aerialPhotoMarked": { "label": "항공사진 표시" },
+      "satelliteImageMarked": { "label": "위성사진 표시" },
+      "surroundingDetailedObservation": { "label": "주변 정밀관찰" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "구석기 조사에서 유적이 아닌 주변 석재 공급지, 돌감 분포, 암질과 활동범위를 지도·항공사진·위성사진과 함께 기록하기 위한 목록"
+  },
   "KoreanFieldwork-excavationScopeDifficultyBasis": {
     "values": {
       "siteType": {

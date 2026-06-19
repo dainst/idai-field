@@ -245,6 +245,24 @@
         "trialTrenchDesign": {
           "label": "Trial trench design"
         },
+        "paleolithicSurveyStage": {
+          "label": "Paleolithic survey stage"
+        },
+        "paleolithicLocationSource": {
+          "label": "Paleolithic location source"
+        },
+        "paleolithicFieldCollection": {
+          "label": "Paleolithic field collection"
+        },
+        "paleolithicTrialPitCoordinateControl": {
+          "label": "Paleolithic trial-pit coordinate control"
+        },
+        "paleolithicProfileSampleRecord": {
+          "label": "Paleolithic profile sample record"
+        },
+        "paleolithicNonSiteResourceSurvey": {
+          "label": "Paleolithic non-site resource survey"
+        },
         "excavationScopeDifficultyBasis": {
           "label": "Excavation scope and difficulty basis"
         },

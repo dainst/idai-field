@@ -1615,6 +1615,14 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "bronzeProductionEvidence": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "glassProductionEvidence": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "ironProcessEvidence": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1878,6 +1886,8 @@
         "settlementFeatureTrenchStrategy": "KoreanFieldwork-settlementFeatureTrenchStrategy",
         "productionProcessSystem": "KoreanFieldwork-productionProcessSystem",
         "productionSiteAssociatedFacility": "KoreanFieldwork-productionSiteAssociatedFacility",
+        "bronzeProductionEvidence": "KoreanFieldwork-bronzeProductionEvidence",
+        "glassProductionEvidence": "KoreanFieldwork-glassProductionEvidence",
         "ironProcessEvidence": "KoreanFieldwork-ironProcessEvidence",
         "ironFurnaceStructure": "KoreanFieldwork-ironFurnaceStructure",
         "tombMoundInvestigation": "KoreanFieldwork-tombMoundInvestigation",
@@ -1986,6 +1996,8 @@
             "settlementFeatureTrenchStrategy",
             "productionProcessSystem",
             "productionSiteAssociatedFacility",
+            "bronzeProductionEvidence",
+            "glassProductionEvidence",
             "ironProcessEvidence",
             "ironFurnaceStructure",
             "tombMoundInvestigation",

@@ -127,6 +127,8 @@ Harris Matrix와 맥락번호 변경 이력은 별도 그래프 편집 화면으
 
 보존과학 보강분은 `Find`에 `conservationScienceRequest`, `waterloggedWoodEmergencyStorage`, `lacquerConservationRisk`, `metalAnalysisRequest`, `ceramicConservationState`, `paperTextileEmergencyRecovery`, `conservationTreatmentPrincipleReview`를 배치하고, `Sample`에 `humanDnaFieldControl`, `organicSoilAnalysisSample`, `destructiveAnalysisDecision`을 배치했다. 출토 순간부터 분석 의뢰까지 보존과학이 유물 해석을 바꿀 수 있으므로 의뢰목적, 재질, 출토맥락, 비파괴 우선 여부, 파괴시료 승인, 잔여시료 보관, 수침목재의 차광·냉암소·표면약제 영향, 칠도막 갈라짐, 금속 분석 위치와 절단·연마 승인, 토도류 염결정·수화·물세척 주의, 지류·직물의 공기·빛·온습도 변화, 보존처리의 원형·증거·가역성 검토, 인골 DNA 접촉자·세척금지·분석실 인계, 내부토/대조토와 분석 질문을 같은 기록 흐름에서 남긴다.
 
+청동·유리 생산 보강분은 `Feature`에 `bronzeProductionEvidence`와 `glassProductionEvidence`를 추가해 생산유적 일반 공정, 제철유적, 요업유적과 겹치지 않게 했다. 청동은 정련·주조 분리, 도가니 정치, 송풍관 위치, 풀무 주혈, 용범편, 청동재·잔류물, 폐기장 체질, 합금 조성, 납동위원소 산지, 관영·사찰 공방 후보와 공급망 검토를 한 유구 카드에 남긴다. 유리는 유리구슬 생산 후보, 유리 덩어리, 토제 용범, 구멍·심재, 첨저형 도가니, 유리 용착, 소형 노시설, 폐기수혈, 조성계·XRF·납동위원소 분석과 복원실험 비교를 같은 흐름에서 검토하게 했다.
+
 유물실측 보강분은 `Drawing`에 `artifactDrawingRecordMethod`, `artifactDrawingPlan`, `artifactDrawingQualityCheck`, `potteryDrawingStandard`, `stoneToolDrawingView`, `waterloggedWoodDrawingHandling`을 배치했다. 실측을 유물 외곽선 복사가 아니라 기술·사진·탁본·실측·3D스캔·현미경사진이 결합된 기록으로 보고, 재질·기종·잔존상태·기능, 기준선·실측선·투상법·도면배치·축척·도구, 측점 검점·교정·사진/탁본 대조·보존처리 전후 대조·재실측 필요를 Drawing 카드에 남기게 했다. 토기는 정치상태, 단면 우선, 기벽두께 3-4점, 문양 측점을, 석기는 사용방향 정치와 제3각법 6면·전개도·타제/고타/마연흔을, 수침목재는 습식 제도와 보존처리 전후·분무수분·물상자·건조수축 위험을 따로 확인한다.
 
 도면작성법 보강분은 `Drawing`에 `mapSourceMaterial`, `historicalMapLandscapeInterpretation`, `spatialDrawingProductionWorkflow`, `distributionMapRequirement`를 추가했다. 조선시대 지도, 일제강점기 지형도, 지적원도, 토지이용현황도, 항공사진, 정사영상, 수치지형도, DEM, 문화유적분포지도는 배경그림이 아니라 유구 잔존 상태와 과거 경관을 설명하는 근거이므로 제작연도·축척·좌표계·출처와 함께 기록한다. 주변유적분포도는 완성 PDF만 저장하지 않고 조사대상지역, 문화재·보호구역, 반경, 범례·축척·방위표, 내보내기 산출물까지 도면 카드에서 검수한다.
@@ -168,6 +170,8 @@ GPS·GIS 현장 시스템 보강분은 `Operation`에 `gpsSurveyQualityRecord`, 
 이 구현 단위가 먼저 들어가야 각 유적 유형별 템플릿을 만들 때 기록이 흩어지지 않는다.
 
 동물유체·화석환경 보강분은 `faunalRecoverySampling`, `faunalPreservationHandling`, `zooarchaeologicalIdentification`, `boneSurfaceModification`, `zooarchaeologicalQuantification`으로 `Sample`에 배치했다. 큰 뼈만 선별해 생기는 왜곡, 소형 어류·조류·설치류·미세 패각·어린 개체 누락, 산성토양·패총·석회암동굴·저습지의 보존 조건, 전체 체질과 체눈, 블록샘플 치수와 반복 채취, 토양 지지 상태 유지, 동물종·부위·좌우·성장단계 동정, 절단흔·화흔·포식흔·풍화, NISP·MNE·MNI·MAU·%MAU 산출 방식과 한계를 함께 남기게 했다. 원문 근거는 `SourceEvidenceIndex`의 `zooarchaeology` 영역과 `source-index-faunal-quantification-001`에서 따로 추적한다.
+
+2026-06-20 검증 샘플에는 `bronze-glass-production-workflow-sample.json`을 추가했다. 이 샘플은 청동 공방 후보가 제철 노로 흡수되지 않고 도가니·용범·청동재·폐기장·합금·납동위원소 분석계획으로 남는지, 유리 공방 후보가 유리구슬 완제품명 하나가 아니라 토제 용범·첨저형 도가니·유리 용착·소형 노시설·조성/XRF 분석계획으로 이어지는지 확인한다.
 
 ## 검증 질문
 

@@ -1579,6 +1579,55 @@
     },
     "description": "기와·토기·자기 가마 같은 생산유적의 채토장, 저장공, 녹로 축혈, 공방, 수비장, 건조장, 집수·배수시설, 주거지, 숯가마, 폐기장을 생산 체계와 연결하기 위한 목록"
   },
+  "KoreanFieldwork-bronzeProductionEvidence": {
+    "values": {
+      "miningStageReviewed": { "label": "채광 단계 검토" },
+      "beneficiationRoastingReviewed": { "label": "선광·배소 검토" },
+      "refiningCastingSeparated": { "label": "정련·주조 분리" },
+      "smallCrucibleWorkshop": { "label": "소형 도가니 공방" },
+      "largeCastingCandidate": { "label": "대형 주조 후보" },
+      "meltingFurnaceRecorded": { "label": "용해로 기록" },
+      "crucibleSettingRecorded": { "label": "도가니 정치 기록" },
+      "tuyerePositionRecorded": { "label": "송풍관 위치 기록" },
+      "bellowsPostholeChecked": { "label": "풀무 주혈 확인" },
+      "moldFragmentLinked": { "label": "용범편 연결" },
+      "crucibleLidLinked": { "label": "도가니 뚜껑 연결" },
+      "bronzeSlagResidueRecorded": { "label": "청동재·잔류물 기록" },
+      "charcoalStorageLinked": { "label": "탄치장 연결" },
+      "wastePitSieved": { "label": "폐기장 체질" },
+      "reusedCrucibleReviewed": { "label": "재사용 도가니 검토" },
+      "alloyCompositionPlanned": { "label": "합금 조성 분석 계획" },
+      "leadIsotopeProvenancePlanned": { "label": "납동위원소 산지 분석 계획" },
+      "officialOrTempleWorkshopCandidate": { "label": "관영·사찰 공방 후보" },
+      "supplyNetworkReviewed": { "label": "공급망 검토" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "청동생산유적에서 채광·정련·주조, 도가니 정치, 송풍관 위치, 용범, 잔류물 수습, 합금 조성, 납동위원소 산지, 공방 성격을 분리해 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-glassProductionEvidence": {
+    "values": {
+      "glassBeadProductionCandidate": { "label": "유리구슬 생산 후보" },
+      "glassLumpRecorded": { "label": "유리 덩어리 기록" },
+      "clayMoldRecorded": { "label": "토제 용범 기록" },
+      "moldHoleCoreRecorded": { "label": "구멍·심재 기록" },
+      "coreMaterialCandidateRecorded": { "label": "심재 재료 후보 기록" },
+      "crucibleRecorded": { "label": "도가니 기록" },
+      "pointedBaseCrucible": { "label": "첨저형 도가니" },
+      "glassAdhesionRecorded": { "label": "유리 용착 기록" },
+      "crucibleResidueLayerReviewed": { "label": "도가니 잔류층 검토" },
+      "smallFurnaceRecorded": { "label": "소형 노시설 기록" },
+      "wastePitRecorded": { "label": "폐기수혈 기록" },
+      "beadManufacturingTraceReviewed": { "label": "구슬 제작흔 검토" },
+      "compositionGroupAnalysisPlanned": { "label": "조성계 분석 계획" },
+      "xrfResidueAnalysisPlanned": { "label": "XRF 잔류물 분석 계획" },
+      "leadIsotopeProvenancePlanned": { "label": "납동위원소 산지 분석 계획" },
+      "replicationExperimentCompared": { "label": "복원실험 비교" },
+      "officialWorkshopCandidate": { "label": "관영 공방 후보" },
+      "importedRawMaterialOpen": { "label": "수입 원료 가능성 열어둠" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "유리생산유적에서 구슬 제작, 토제 용범, 구멍·심재, 도가니, 유리 용착, 소형 노시설, 폐기수혈, 조성·XRF 분석, 납동위원소 산지, 복원실험과 원료 불확실성을 함께 남기기 위한 목록"
+  },
   "KoreanFieldwork-ironProcessEvidence": {
     "values": {
       "miningLead": { "label": "채광 단서" },

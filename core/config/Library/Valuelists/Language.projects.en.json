@@ -13333,6 +13333,55 @@
     },
     "description": "Korean production-site associated-facility checks for linking clay pits, workshops, levigation and drying areas, water facilities, dwellings, charcoal kilns, and waste deposits to the production system"
   },
+  "KoreanFieldwork-bronzeProductionEvidence": {
+    "values": {
+      "miningStageReviewed": { "label": "Mining stage reviewed" },
+      "beneficiationRoastingReviewed": { "label": "Beneficiation/roasting reviewed" },
+      "refiningCastingSeparated": { "label": "Refining and casting separated" },
+      "smallCrucibleWorkshop": { "label": "Small crucible workshop" },
+      "largeCastingCandidate": { "label": "Large casting candidate" },
+      "meltingFurnaceRecorded": { "label": "Melting furnace recorded" },
+      "crucibleSettingRecorded": { "label": "Crucible setting recorded" },
+      "tuyerePositionRecorded": { "label": "Tuyere position recorded" },
+      "bellowsPostholeChecked": { "label": "Bellows posthole checked" },
+      "moldFragmentLinked": { "label": "Mold fragment linked" },
+      "crucibleLidLinked": { "label": "Crucible lid linked" },
+      "bronzeSlagResidueRecorded": { "label": "Bronze slag/residue recorded" },
+      "charcoalStorageLinked": { "label": "Charcoal storage linked" },
+      "wastePitSieved": { "label": "Waste pit sieved" },
+      "reusedCrucibleReviewed": { "label": "Reused crucible reviewed" },
+      "alloyCompositionPlanned": { "label": "Alloy composition planned" },
+      "leadIsotopeProvenancePlanned": { "label": "Lead isotope provenance planned" },
+      "officialOrTempleWorkshopCandidate": { "label": "Official or temple workshop candidate" },
+      "supplyNetworkReviewed": { "label": "Supply network reviewed" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean bronze-production checks for keeping mining, refining, casting, crucible setting, tuyere position, mold evidence, residue recovery, alloy composition, lead-isotope provenance, and workshop character open as separate observations"
+  },
+  "KoreanFieldwork-glassProductionEvidence": {
+    "values": {
+      "glassBeadProductionCandidate": { "label": "Glass bead production candidate" },
+      "glassLumpRecorded": { "label": "Glass lump recorded" },
+      "clayMoldRecorded": { "label": "Clay mold recorded" },
+      "moldHoleCoreRecorded": { "label": "Mold hole and core recorded" },
+      "coreMaterialCandidateRecorded": { "label": "Core material candidate recorded" },
+      "crucibleRecorded": { "label": "Crucible recorded" },
+      "pointedBaseCrucible": { "label": "Pointed-base crucible" },
+      "glassAdhesionRecorded": { "label": "Glass adhesion recorded" },
+      "crucibleResidueLayerReviewed": { "label": "Crucible residue layer reviewed" },
+      "smallFurnaceRecorded": { "label": "Small furnace recorded" },
+      "wastePitRecorded": { "label": "Waste pit recorded" },
+      "beadManufacturingTraceReviewed": { "label": "Bead manufacturing trace reviewed" },
+      "compositionGroupAnalysisPlanned": { "label": "Composition group analysis planned" },
+      "xrfResidueAnalysisPlanned": { "label": "XRF residue analysis planned" },
+      "leadIsotopeProvenancePlanned": { "label": "Lead isotope provenance planned" },
+      "replicationExperimentCompared": { "label": "Replication experiment compared" },
+      "officialWorkshopCandidate": { "label": "Official workshop candidate" },
+      "importedRawMaterialOpen": { "label": "Imported raw material open" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean glass-production checks for linking bead production, clay molds, mold holes, cores, crucibles, glass adhesion, small furnaces, waste pits, composition analysis, XRF residue analysis, lead-isotope provenance, replication experiments, and raw-material uncertainty"
+  },
   "KoreanFieldwork-ironProcessEvidence": {
     "values": {
       "miningLead": { "label": "Mining lead" },

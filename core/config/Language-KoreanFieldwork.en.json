@@ -599,6 +599,12 @@
         "productionSiteAssociatedFacility": {
           "label": "Production site associated facility"
         },
+        "bronzeProductionEvidence": {
+          "label": "Bronze production evidence"
+        },
+        "glassProductionEvidence": {
+          "label": "Glass production evidence"
+        },
         "ironProcessEvidence": {
           "label": "Iron process evidence"
         },

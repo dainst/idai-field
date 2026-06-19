@@ -599,6 +599,12 @@
         "productionSiteAssociatedFacility": {
           "label": "생산유적 주변시설"
         },
+        "bronzeProductionEvidence": {
+          "label": "청동생산 근거"
+        },
+        "glassProductionEvidence": {
+          "label": "유리생산 근거"
+        },
         "ironProcessEvidence": {
           "label": "제철 공정 근거"
         },

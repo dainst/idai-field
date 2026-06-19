@@ -118,6 +118,8 @@
 | 보존·응급처치 | 노출 시점, 재질, 매장환경, 습도·온도·산소·빛 변화, 수분 상태, 부식·열화 정도, 금속심 잔존, 자석반응, X-ray·CT 후보, 세척 여부, 주변토 포함 수습, 한지·화선지·킴와이프스 차단층, 압박붕대·석고붕대, 수지 강화, 농도·겹수·희석비, 발포성 우레탄폼, 비가역성 수지 표시, 습윤/건조 보관, 차광, 냉장, 완충지지대, 상하 표시, 안전장비, 전문가 자문, 후속 보존처리 | `exposureDate`, `burialEnvironment`, `postExcavationRisk`, `materialState`, `damage`, `cleaningDecision`, `liftingMethod`, `temporaryConsolidation`, `emergencyTreatmentQuantitativeRecord`, `packing`, `storageCondition`, `safetyMeasure`, `expertConsultation`, `transport` | 노출 직후부터 변질이 시작되므로 수습과 응급처치 자체를 기록해야 한다. 금속, 도토기, 연질토기, 수침목재, 뼈, 의류는 서로 다른 보관 조건을 요구하므로, 일률적인 세척·건조·분리를 피하고 사용 재료와 조치 이유, 농도, 가역성, 전문가 판단을 함께 남긴다. |
 | 동물유체 구현 필드 | 산성토양·패총·석회암동굴·저습지 보존 조건, 전체 체질, 2mm·5mm 체눈, 층위별 블록샘플, 반복 채취, 선별 수습 사유, 토양 지지 상태, 전문가 수습, 동물종·부위·좌우·성장단계, 동정 불확실성, 세척 후 전체 표면 관찰, 저배율 현미경, 절단흔·도살흔·화흔·포식흔·풍화·동결융해·수류·토양화학·뿌리흔, NISP·MNE·MNI·MAU·%MAU와 지표 한계 | `faunalRecoverySampling`, `faunalPreservationHandling`, `zooarchaeologicalIdentification`, `boneSurfaceModification`, `zooarchaeologicalQuantification` | 동물유체는 수습 단계에서 자료 구성이 결정된다. 큰 뼈만 수습하거나 표본량·체눈·블록샘플 치수를 남기지 않으면 소형 어류·조류·설치류·미세 패각·어린 개체가 빠지고, 계절성·생업·고환경 해석도 함께 흔들린다. 이번 구현에서는 이 다섯 묶음을 `Sample` 화면의 체크리스트로 배치했다. |
 
+2026-06-20 구현 메모: 청동·유리 생산유적은 위 표의 세부 후보를 한 번에 모두 새 카드로 분리하지 않고, 1차 전용 체크 목록인 `bronzeProductionEvidence`와 `glassProductionEvidence`를 `Feature` 화면에 배치했다. 청동은 채광·선광·배소 검토, 정련/주조 분리, 도가니 정치, 송풍관·풀무 주혈, 용범편·도가니뚜껑, 청동재·폐기장 체질, 합금 조성, 납동위원소 산지, 관영·사찰 공방과 공급망 후보를 공정 확정 전 값으로 남긴다. 유리는 유리구슬 생산 후보, 유리 덩어리, 토제 용범, 구멍·심재, 첨저형 도가니, 유리 용착, 소형 노시설, 폐기수혈, 조성계·XRF·납동위원소 분석, 복원실험과 수입 원료 가능성을 한 묶음으로 남긴다.
+
 ## 4. 현장 기록 화면으로 바꾸면 필요한 묶음
 
 ### 오늘의 작업

@@ -1,0 +1,180 @@
+{
+  "title": "Korean bronze and glass production workflow sample",
+  "purpose": "Validate that bronze and glass workshop features keep crucibles, molds, furnaces, residues, analysis plans, and workshop operators separate instead of folding them into generic iron or ceramic production records.",
+  "validationQuestions": [
+    "청동생산유적이 제철유구가 아니라 채광-정련-주조와 도가니·용범·청동재 근거로 기록되는가.",
+    "청동 용해로가 도가니 정치와 송풍관·풀무 주혈, 폐기장 체질, 합금·납동위원소 분석계획을 함께 남기는가.",
+    "유리생산유적이 유리구슬 완제품만이 아니라 토제 용범, 도가니, 유리 용착, 소형 노시설, 폐기수혈, 조성·XRF 분석으로 연결되는가.",
+    "공방 성격이 관영·사찰·수입원료 후보처럼 판단 보류값으로 남고 단일 기능명으로 확정되지 않는가."
+  ],
+  "documents": [
+    {
+      "resource": {
+        "id": "op-bronze-glass-production-001",
+        "identifier": "BRONZE-GLASS-OP-001",
+        "shortDescription": "청동·유리 공방 복합유적 조사 작업",
+        "category": "Operation",
+        "relations": {},
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "researchQuestionFit"
+        ],
+        "recordCreationTiming": "duringFieldwork",
+        "dailyLogContent": [
+          "workDateWeather",
+          "workArea",
+          "photoDrawingNumbers",
+          "findSampleCollection",
+          "changeReason"
+        ],
+        "dailyLogReview": [
+          "sameDayWritten",
+          "photoDrawingCrossChecked",
+          "findListCrossChecked",
+          "sampleListCrossChecked"
+        ]
+      }
+    },
+    {
+      "resource": {
+        "id": "feature-bronze-workshop-001",
+        "identifier": "BRONZE-WORKSHOP-001",
+        "shortDescription": "청동 도가니·용범 공방 후보",
+        "category": "Feature",
+        "relations": {
+          "isRecordedIn": [
+            "op-bronze-glass-production-001"
+          ]
+        },
+        "description": "소토면과 도가니편, 용범편, 청동재가 함께 확인된 공방 후보. 제철 노로 확정하지 않고 청동 정련·주조 근거를 분리한다.",
+        "featurePackage": [
+          "productionSite"
+        ],
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "crossReviewNeeded"
+        ],
+        "fieldOnlyMissingCheck": [
+          "featureOutline",
+          "stratigraphicBoundary",
+          "photoAngleAndScale",
+          "drawingLineReason",
+          "spatialLocation",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "productionProcessSystem": [
+          "rawMaterialProcurement",
+          "rawMaterialProcessing",
+          "firing",
+          "discard",
+          "pendingDecision"
+        ],
+        "productionSiteAssociatedFacility": [
+          "workshop",
+          "charcoalKiln",
+          "wasteDeposit",
+          "waterCollectionFacility",
+          "drainageFacility",
+          "pendingDecision"
+        ],
+        "bronzeProductionEvidence": [
+          "refiningCastingSeparated",
+          "smallCrucibleWorkshop",
+          "meltingFurnaceRecorded",
+          "crucibleSettingRecorded",
+          "tuyerePositionRecorded",
+          "bellowsPostholeChecked",
+          "moldFragmentLinked",
+          "bronzeSlagResidueRecorded",
+          "wastePitSieved",
+          "alloyCompositionPlanned",
+          "leadIsotopeProvenancePlanned",
+          "officialOrTempleWorkshopCandidate",
+          "supplyNetworkReviewed",
+          "pendingDecision"
+        ],
+        "interpretationArgument": [
+          "observationInterpretationSeparated",
+          "alternativeInterpretationRecorded",
+          "analysisResultImpactReviewed",
+          "experimentOrEthnographyLinked"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "feature-glass-workshop-001",
+        "identifier": "GLASS-WORKSHOP-001",
+        "shortDescription": "유리구슬·도가니 공방 후보",
+        "category": "Feature",
+        "relations": {
+          "isRecordedIn": [
+            "op-bronze-glass-production-001"
+          ]
+        },
+        "description": "유리 덩어리와 첨저형 도가니, 소형 노시설이 확인된 유리 생산 후보. 완제품명보다 제작기법·원료·잔류물 분석 계획을 우선 기록한다.",
+        "featurePackage": [
+          "productionSite"
+        ],
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "crossReviewNeeded"
+        ],
+        "fieldOnlyMissingCheck": [
+          "featureOutline",
+          "stratigraphicBoundary",
+          "photoAngleAndScale",
+          "drawingLineReason",
+          "spatialLocation",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "productionProcessSystem": [
+          "rawMaterialProcurement",
+          "forming",
+          "firing",
+          "discard",
+          "pendingDecision"
+        ],
+        "productionSiteAssociatedFacility": [
+          "workshop",
+          "wasteDeposit",
+          "waterCollectionFacility",
+          "drainageFacility",
+          "pendingDecision"
+        ],
+        "glassProductionEvidence": [
+          "glassBeadProductionCandidate",
+          "glassLumpRecorded",
+          "clayMoldRecorded",
+          "moldHoleCoreRecorded",
+          "crucibleRecorded",
+          "pointedBaseCrucible",
+          "glassAdhesionRecorded",
+          "smallFurnaceRecorded",
+          "wastePitRecorded",
+          "compositionGroupAnalysisPlanned",
+          "xrfResidueAnalysisPlanned",
+          "leadIsotopeProvenancePlanned",
+          "replicationExperimentCompared",
+          "officialWorkshopCandidate",
+          "importedRawMaterialOpen",
+          "pendingDecision"
+        ],
+        "interpretationArgument": [
+          "observationInterpretationSeparated",
+          "alternativeInterpretationRecorded",
+          "analysisResultImpactReviewed",
+          "experimentOrEthnographyLinked"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    }
+  ]
+}

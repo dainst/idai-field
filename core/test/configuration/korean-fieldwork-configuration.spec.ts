@@ -657,6 +657,31 @@ describe('KoreanFieldwork project configuration', () => {
     });
 
 
+    it('keeps the Korean bronze and glass production sample aligned with workshop evidence fields', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const sample = loadSample('bronze-glass-production-workflow-sample.json');
+        const documents = sample.documents;
+        const documentsById = documents.reduce((index: any, document: any) => {
+            index[document.resource.id] = document;
+            return index;
+        }, {});
+
+        expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
+
+        expect(documentsById['feature-bronze-workshop-001'].resource.bronzeProductionEvidence)
+            .toContain('crucibleSettingRecorded');
+        expect(documentsById['feature-bronze-workshop-001'].resource.bronzeProductionEvidence)
+            .toContain('leadIsotopeProvenancePlanned');
+        expect(documentsById['feature-glass-workshop-001'].resource.glassProductionEvidence)
+            .toContain('pointedBaseCrucible');
+        expect(documentsById['feature-glass-workshop-001'].resource.glassProductionEvidence)
+            .toContain('xrfResidueAnalysisPlanned');
+    });
+
+
     it('keeps the Korean tomb burial sample aligned with mound, goods, and remains fields', () => {
 
         const configReader = new ConfigReader();
@@ -1420,6 +1445,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.fields.settlementFeatureTrenchStrategy.inputType).toBe('checkboxes');
         expect(featureForm.fields.productionProcessSystem.inputType).toBe('checkboxes');
         expect(featureForm.fields.productionSiteAssociatedFacility.inputType).toBe('checkboxes');
+        expect(featureForm.fields.bronzeProductionEvidence.inputType).toBe('checkboxes');
+        expect(featureForm.fields.glassProductionEvidence.inputType).toBe('checkboxes');
         expect(featureForm.fields.ironProcessEvidence.inputType).toBe('checkboxes');
         expect(featureForm.fields.ironFurnaceStructure.inputType).toBe('checkboxes');
         expect(featureForm.fields.tombMoundInvestigation.inputType).toBe('checkboxes');
@@ -1839,6 +1866,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-productionProcessSystem');
         expect(featureForm.valuelists.productionSiteAssociatedFacility)
             .toBe('KoreanFieldwork-productionSiteAssociatedFacility');
+        expect(featureForm.valuelists.bronzeProductionEvidence)
+            .toBe('KoreanFieldwork-bronzeProductionEvidence');
+        expect(featureForm.valuelists.glassProductionEvidence)
+            .toBe('KoreanFieldwork-glassProductionEvidence');
         expect(featureForm.valuelists.ironProcessEvidence).toBe('KoreanFieldwork-ironProcessEvidence');
         expect(featureForm.valuelists.ironFurnaceStructure).toBe('KoreanFieldwork-ironFurnaceStructure');
         expect(ironProcessRelationForm.valuelists.ironProcessRelationCheck)
@@ -2369,6 +2400,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Production process system');
         expect(languages.en.categories.Feature.fields.productionSiteAssociatedFacility.label)
             .toBe('Production site associated facility');
+        expect(languages.en.categories.Feature.fields.bronzeProductionEvidence.label)
+            .toBe('Bronze production evidence');
+        expect(languages.en.categories.Feature.fields.glassProductionEvidence.label)
+            .toBe('Glass production evidence');
         expect(languages.en.categories.Feature.fields.ironProcessEvidence.label).toBe('Iron process evidence');
         expect(languages.en.categories.Feature.fields.ironFurnaceStructure.label).toBe('Iron furnace structure');
         expect(languages.en.categories.Feature.fields.tombMoundInvestigation.label)
@@ -3020,6 +3055,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-productionSiteAssociatedFacility']
             .values.levigationArea.label)
             .toBe('Levigation area');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-bronzeProductionEvidence']
+            .values.crucibleSettingRecorded.label)
+            .toBe('Crucible setting recorded');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-glassProductionEvidence']
+            .values.pointedBaseCrucible.label)
+            .toBe('첨저형 도가니');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-ironProcessEvidence']
             .values.metallurgicalAnalysisNeeded.label)
             .toBe('Metallurgical analysis needed');

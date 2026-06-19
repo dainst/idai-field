@@ -29,9 +29,14 @@
           "scheduleRecorded",
           "repeatedSessions",
           "audienceDefined",
+          "publicPurposeRecorded",
+          "universityPartner",
           "museumPartner",
           "municipalityPartner",
-          "operatingCostReviewed"
+          "siteSpecificProgramDesigned",
+          "legalBusinessReview",
+          "operatingCostReviewed",
+          "coordinatingBodyRecorded"
         ],
         "accessControlTag": [
           "restricted",
@@ -113,12 +118,17 @@
           "repeatedSessions",
           "audienceDefined",
           "facilitatorAssigned",
+          "responsibleSpecialistAssigned",
           "questionsRecorded",
           "feedbackRecorded",
+          "participantCountRecorded",
+          "followUpEducationPlanned",
           "mockExcavationUsed",
           "replicaUsed",
+          "actualExcavationZoneProtected",
           "schoolLinked",
           "museumPartner",
+          "siteSpecificProgramDesigned",
           "duplicatedProgramRisk",
           "operatingCostReviewed"
         ],

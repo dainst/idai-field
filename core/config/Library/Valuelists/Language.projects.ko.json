@@ -7112,20 +7112,29 @@
       "scheduleRecorded": { "label": "운영 시간표 기록" },
       "repeatedSessions": { "label": "반복 운영" },
       "audienceDefined": { "label": "대상 정의" },
+      "publicPurposeRecorded": { "label": "공익성 기록" },
       "facilitatorAssigned": { "label": "안내자 지정" },
+      "responsibleSpecialistAssigned": { "label": "담당 전문인력 지정" },
       "questionsRecorded": { "label": "질문 기록" },
       "feedbackRecorded": { "label": "반응·피드백 기록" },
+      "participantCountRecorded": { "label": "참여자 수 기록" },
+      "followUpEducationPlanned": { "label": "후속 교육 계획" },
       "mockExcavationUsed": { "label": "모의발굴장 사용" },
       "replicaUsed": { "label": "복제자료 사용" },
+      "actualExcavationZoneProtected": { "label": "실제 조사구역 보호" },
       "schoolLinked": { "label": "학교 연계" },
+      "universityPartner": { "label": "대학 협력" },
       "museumPartner": { "label": "박물관 협력" },
       "municipalityPartner": { "label": "지자체 협력" },
       "membershipProgram": { "label": "회원제 운영" },
+      "siteSpecificProgramDesigned": { "label": "유적 특화 프로그램" },
+      "legalBusinessReview": { "label": "수익사업 법적 검토" },
       "duplicatedProgramRisk": { "label": "중복 프로그램 위험" },
       "operatingCostReviewed": { "label": "운영비 검토" },
+      "coordinatingBodyRecorded": { "label": "컨트롤타워 기록" },
       "pendingDecision": { "label": "판단 보류" }
     },
-    "description": "현장설명회와 공개·교육 프로그램의 대상, 운영 방식, 질문·반응, 협력기관, 후속 보완과 운영 위험을 기록하기 위한 목록"
+    "description": "현장설명회와 공개·교육 프로그램의 공익성, 대상, 운영 방식, 질문·반응, 참여자 수, 실제 조사구역 보호, 협력기관, 후속 교육, 수익사업 검토와 운영 위험을 기록하기 위한 목록"
   },
   "KoreanFieldwork-accessControlTag": {
     "values": {

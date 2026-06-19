@@ -297,8 +297,16 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('scientificAnalysisExcluded');
         expect(documentsById['project-public-research-001'].resource.researchProcessBalance)
             .toContain('interpretationImpactReviewed');
+        expect(documentsById['project-public-research-001'].resource.publicEngagementProgram)
+            .toContain('legalBusinessReview');
+        expect(documentsById['project-public-research-001'].resource.publicEngagementProgram)
+            .toContain('coordinatingBodyRecorded');
         expect(documentsById['op-public-briefing-001'].resource.publicEngagementProgram)
             .toContain('mockExcavationUsed');
+        expect(documentsById['op-public-briefing-001'].resource.publicEngagementProgram)
+            .toContain('participantCountRecorded');
+        expect(documentsById['op-public-briefing-001'].resource.publicEngagementProgram)
+            .toContain('actualExcavationZoneProtected');
         expect(documentsById['op-public-briefing-001'].resource.experimentDesign)
             .toContain('singleRunWarning');
         expect(documentsById['photo-public-briefing-001'].resource.mediaRights)
@@ -3755,6 +3763,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-publicEngagementProgram']
             .values.mockExcavationUsed.label)
             .toBe('Mock excavation used');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-publicEngagementProgram']
+            .values.participantCountRecorded.label)
+            .toBe('Participant count recorded');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-accessControlTag']
             .values.lootingRisk.label)
             .toBe('Looting risk');
@@ -3794,6 +3805,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-publicEngagementProgram']
             .values.operatingCostReviewed.label)
             .toBe('운영비 검토');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-publicEngagementProgram']
+            .values.legalBusinessReview.label)
+            .toBe('수익사업 법적 검토');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-publicEngagementProgram']
+            .values.actualExcavationZoneProtected.label)
+            .toBe('실제 조사구역 보호');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-experimentDesign']
             .values.failedRunRecorded.label)
             .toBe('실패값 기록');

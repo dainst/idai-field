@@ -18866,20 +18866,29 @@
       "scheduleRecorded": { "label": "Schedule recorded" },
       "repeatedSessions": { "label": "Repeated sessions" },
       "audienceDefined": { "label": "Audience defined" },
+      "publicPurposeRecorded": { "label": "Public purpose recorded" },
       "facilitatorAssigned": { "label": "Facilitator assigned" },
+      "responsibleSpecialistAssigned": { "label": "Responsible specialist assigned" },
       "questionsRecorded": { "label": "Questions recorded" },
       "feedbackRecorded": { "label": "Feedback recorded" },
+      "participantCountRecorded": { "label": "Participant count recorded" },
+      "followUpEducationPlanned": { "label": "Follow-up education planned" },
       "mockExcavationUsed": { "label": "Mock excavation used" },
       "replicaUsed": { "label": "Replica used" },
+      "actualExcavationZoneProtected": { "label": "Actual excavation zone protected" },
       "schoolLinked": { "label": "School linked" },
+      "universityPartner": { "label": "University partner" },
       "museumPartner": { "label": "Museum partner" },
       "municipalityPartner": { "label": "Municipality partner" },
       "membershipProgram": { "label": "Membership program" },
+      "siteSpecificProgramDesigned": { "label": "Site-specific program designed" },
+      "legalBusinessReview": { "label": "Business/legal review" },
       "duplicatedProgramRisk": { "label": "Duplicated program risk" },
       "operatingCostReviewed": { "label": "Operating cost reviewed" },
+      "coordinatingBodyRecorded": { "label": "Coordinating body recorded" },
       "pendingDecision": { "label": "Pending decision" }
     },
-    "description": "Korean fieldwork public engagement checks for schedule, audience, facilitation, questions, feedback, mock excavation, replicas, partners, cost, and program duplication risks"
+    "description": "Korean fieldwork public engagement checks for public purpose, schedule, audience, facilitation, questions, feedback, participant counts, actual-zone protection, partners, follow-up education, business/legal review, cost, and program duplication risks"
   },
   "KoreanFieldwork-accessControlTag": {
     "values": {

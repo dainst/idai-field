@@ -566,6 +566,15 @@
         "foundationTraceRecord": {
           "label": "초석·기초 흔적 기록"
         },
+        "buildingExpertReview": {
+          "label": "건물지 전문검토"
+        },
+        "buildingReconstructionEvidence": {
+          "label": "건물지 복원 근거"
+        },
+        "buildingProspectionConservationRecord": {
+          "label": "건물지 탐사·보존 기록"
+        },
         "settlementFeatureInvestigationProcedure": {
           "label": "생활유적 조사 절차"
         },

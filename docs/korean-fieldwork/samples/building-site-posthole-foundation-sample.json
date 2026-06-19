@@ -118,6 +118,48 @@
           "preservationDecisionRecorded",
           "pendingDecision"
         ],
+        "buildingExpertReview": [
+          "architecturalHistoryReview",
+          "vernacularArchitectureReview",
+          "comparativeBuildingEvidence",
+          "documentaryPhotoEvidenceChecked",
+          "reconstructionHypothesisSeparated",
+          "alternativeHypothesisRecorded",
+          "findDatingContextChecked",
+          "expertReviewNeeded"
+        ],
+        "buildingReconstructionEvidence": [
+          "bayCountRecorded",
+          "baySpacingMeasured",
+          "yeongjocheokCandidate",
+          "moduleCalculationRecorded",
+          "sampleCountRecorded",
+          "errorRangeRecorded",
+          "innerOuterColumnSystem",
+          "roofHypothesisRecorded",
+          "tileDistributionLinked",
+          "timberMemberObservation",
+          "toolMarkOrRepairTrace",
+          "originalAndHypothesisSeparated"
+        ],
+        "buildingProspectionConservationRecord": [
+          "preSurveyPhotoMapLinked",
+          "terrainBoringDataLinked",
+          "gprPreparationRecorded",
+          "surveyGridControlPointSet",
+          "antennaFrequencyRationale",
+          "methodLimitRecorded",
+          "excavationComparisonPlanned",
+          "scanPurposeStageRecorded",
+          "controlCoordinateSystemSet",
+          "intermediateSurfaceScanned",
+          "registrationErrorRecorded",
+          "pointCloudSourcePreserved",
+          "onsiteConservationCandidate",
+          "restorationDeferred",
+          "originalDistinguishableMaterial",
+          "publicUsePurposeRecorded"
+        ],
         "settlementFeatureInvestigationProcedure": [
           "preliminarySurvey",
           "planInvestigation",

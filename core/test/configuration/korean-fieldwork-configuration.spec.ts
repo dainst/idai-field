@@ -759,6 +759,18 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('cornerstoneExtractionPit');
         expect(documentsById['feature-surface-building-001'].resource.foundationTraceRecord)
             .toContain('postholeIndependentFoundationCheck');
+        expect(documentsById['feature-surface-building-001'].resource.buildingExpertReview)
+            .toContain('reconstructionHypothesisSeparated');
+        expect(documentsById['feature-surface-building-001'].resource.buildingExpertReview)
+            .toContain('expertReviewNeeded');
+        expect(documentsById['feature-surface-building-001'].resource.buildingReconstructionEvidence)
+            .toContain('yeongjocheokCandidate');
+        expect(documentsById['feature-surface-building-001'].resource.buildingReconstructionEvidence)
+            .toContain('originalAndHypothesisSeparated');
+        expect(documentsById['feature-surface-building-001'].resource.buildingProspectionConservationRecord)
+            .toContain('registrationErrorRecorded');
+        expect(documentsById['feature-surface-building-001'].resource.buildingProspectionConservationRecord)
+            .toContain('restorationDeferred');
     });
 
 
@@ -1340,6 +1352,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.fields.surfaceBuildingJudgement.inputType).toBe('checkboxes');
         expect(featureForm.fields.postholeGroupSurvey.inputType).toBe('checkboxes');
         expect(featureForm.fields.foundationTraceRecord.inputType).toBe('checkboxes');
+        expect(featureForm.fields.buildingExpertReview.inputType).toBe('checkboxes');
+        expect(featureForm.fields.buildingReconstructionEvidence.inputType).toBe('checkboxes');
+        expect(featureForm.fields.buildingProspectionConservationRecord.inputType).toBe('checkboxes');
         expect(featureForm.fields.settlementFeatureInvestigationProcedure.inputType).toBe('checkboxes');
         expect(featureForm.fields.settlementFeatureTrenchStrategy.inputType).toBe('checkboxes');
         expect(featureForm.fields.productionProcessSystem.inputType).toBe('checkboxes');
@@ -1733,6 +1748,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-postholeGroupSurvey');
         expect(featureForm.valuelists.foundationTraceRecord)
             .toBe('KoreanFieldwork-foundationTraceRecord');
+        expect(featureForm.valuelists.buildingExpertReview)
+            .toBe('KoreanFieldwork-buildingExpertReview');
+        expect(featureForm.valuelists.buildingReconstructionEvidence)
+            .toBe('KoreanFieldwork-buildingReconstructionEvidence');
+        expect(featureForm.valuelists.buildingProspectionConservationRecord)
+            .toBe('KoreanFieldwork-buildingProspectionConservationRecord');
         expect(featureForm.valuelists.settlementFeatureInvestigationProcedure)
             .toBe('KoreanFieldwork-settlementFeatureInvestigationProcedure');
         expect(featureForm.valuelists.settlementFeatureTrenchStrategy)
@@ -2237,6 +2258,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Posthole group survey');
         expect(languages.en.categories.Feature.fields.foundationTraceRecord.label)
             .toBe('Foundation trace record');
+        expect(languages.en.categories.Feature.fields.buildingExpertReview.label)
+            .toBe('Building expert review');
+        expect(languages.en.categories.Feature.fields.buildingReconstructionEvidence.label)
+            .toBe('Building reconstruction evidence');
+        expect(languages.en.categories.Feature.fields.buildingProspectionConservationRecord.label)
+            .toBe('Building prospection and conservation record');
         expect(languages.en.categories.Feature.fields.settlementFeatureInvestigationProcedure.label)
             .toBe('Settlement feature investigation procedure');
         expect(languages.en.categories.Feature.fields.settlementFeatureTrenchStrategy.label)
@@ -3456,6 +3483,18 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-foundationTraceRecord']
             .values.noTraceConfirmed.label)
             .toBe('흔적 없음 확인');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-buildingExpertReview']
+            .values.reconstructionHypothesisSeparated.label)
+            .toBe('Reconstruction hypothesis separated');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-buildingReconstructionEvidence']
+            .values.yeongjocheokCandidate.label)
+            .toBe('Yeongjocheok candidate');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-buildingProspectionConservationRecord']
+            .values.registrationErrorRecorded.label)
+            .toBe('Registration error recorded');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-buildingProspectionConservationRecord']
+            .values.restorationDeferred.label)
+            .toBe('복원 보류');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-alluvialLayerConceptAudit']
             .values.abLayerSetRecorded.label)
             .toBe('a+b층 세트 기록');

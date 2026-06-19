@@ -12990,6 +12990,70 @@
     },
     "description": "Korean foundation-trace checks for recording pillar-seat marks, ink lines, carbonized marks, installation pits, packing stones, reinforcement soil, extraction and discard pits, subterranean cornerstones, sill-building candidates, jibokseok, eaves posts, scaffold postholes, reference stakes, and preservation decisions"
   },
+  "KoreanFieldwork-buildingExpertReview": {
+    "values": {
+      "architecturalHistoryReview": { "label": "Architectural history review" },
+      "vernacularArchitectureReview": { "label": "Vernacular architecture review" },
+      "lifeHistoryReview": { "label": "Life-history review" },
+      "structuralEngineeringReview": { "label": "Structural engineering review" },
+      "comparativeBuildingEvidence": { "label": "Comparative building evidence" },
+      "ethnographicReferenceChecked": { "label": "Ethnographic reference checked" },
+      "documentaryPhotoEvidenceChecked": { "label": "Documentary and photo evidence checked" },
+      "experimentalReconstructionReferenced": { "label": "Experimental reconstruction referenced" },
+      "reconstructionHypothesisSeparated": { "label": "Reconstruction hypothesis separated" },
+      "alternativeHypothesisRecorded": { "label": "Alternative hypothesis recorded" },
+      "findDatingContextChecked": { "label": "Find-dating context checked" },
+      "expertReviewNeeded": { "label": "Expert review needed" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean building-site expert review checks for separating reconstruction hypotheses from source observations and documenting specialist review, comparative data, alternatives, and find-dating context"
+  },
+  "KoreanFieldwork-buildingReconstructionEvidence": {
+    "values": {
+      "bayCountRecorded": { "label": "Bay count recorded" },
+      "baySpacingMeasured": { "label": "Bay spacing measured" },
+      "yeongjocheokCandidate": { "label": "Yeongjocheok candidate" },
+      "moduleCalculationRecorded": { "label": "Module calculation recorded" },
+      "sampleCountRecorded": { "label": "Sample count recorded" },
+      "errorRangeRecorded": { "label": "Error range recorded" },
+      "innerOuterColumnSystem": { "label": "Inner and outer column system" },
+      "roofHypothesisRecorded": { "label": "Roof hypothesis recorded" },
+      "wallHeatingEntranceHypothesis": { "label": "Wall, heating, and entrance hypothesis" },
+      "tileDistributionLinked": { "label": "Tile distribution linked" },
+      "timberMemberObservation": { "label": "Timber member observation" },
+      "toolMarkOrRepairTrace": { "label": "Tool mark or repair trace" },
+      "constructionChangeRecorded": { "label": "Construction change recorded" },
+      "originalAndHypothesisSeparated": { "label": "Original data and hypothesis separated" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean building reconstruction checks for recording bay counts, spacing, Yeongjocheok candidates, module calculations, error range, roof and wall hypotheses, tile distribution, timber observations, and construction changes"
+  },
+  "KoreanFieldwork-buildingProspectionConservationRecord": {
+    "values": {
+      "preSurveyPhotoMapLinked": { "label": "Pre-survey photo and map linked" },
+      "terrainBoringDataLinked": { "label": "Terrain and boring data linked" },
+      "gprPreparationRecorded": { "label": "GPR preparation recorded" },
+      "surveyGridControlPointSet": { "label": "Survey grid and control point set" },
+      "obstacleMetalTrashRemoved": { "label": "Obstacle and metal trash removed" },
+      "antennaFrequencyRationale": { "label": "Antenna frequency rationale" },
+      "methodLimitRecorded": { "label": "Method limit recorded" },
+      "excavationComparisonPlanned": { "label": "Excavation comparison planned" },
+      "scanPurposeStageRecorded": { "label": "Scan purpose and stage recorded" },
+      "controlCoordinateSystemSet": { "label": "Control point and coordinate system set" },
+      "intermediateSurfaceScanned": { "label": "Intermediate surface scanned" },
+      "registrationErrorRecorded": { "label": "Registration error recorded" },
+      "pointCloudSourcePreserved": { "label": "Point cloud source preserved" },
+      "outputPurposeLinked": { "label": "Output purpose linked" },
+      "onsiteConservationCandidate": { "label": "On-site conservation candidate" },
+      "relocationConservationCandidate": { "label": "Relocation conservation candidate" },
+      "backfillCandidate": { "label": "Backfill candidate" },
+      "restorationDeferred": { "label": "Restoration deferred" },
+      "originalDistinguishableMaterial": { "label": "Original-distinguishable material" },
+      "publicUsePurposeRecorded": { "label": "Public-use purpose recorded" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean building prospection and conservation checks for recording GPR preparation and limits, 3D scan coordinate and registration quality, source point clouds, and conservation, restoration, and public-use decisions"
+  },
   "KoreanFieldwork-settlementFeatureInvestigationProcedure": {
     "values": {
       "preliminarySurvey": { "label": "Preliminary survey" },

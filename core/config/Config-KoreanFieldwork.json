@@ -1569,6 +1569,18 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "buildingExpertReview": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "buildingReconstructionEvidence": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "buildingProspectionConservationRecord": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "settlementFeatureInvestigationProcedure": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1834,6 +1846,9 @@
         "surfaceBuildingJudgement": "KoreanFieldwork-surfaceBuildingJudgement",
         "postholeGroupSurvey": "KoreanFieldwork-postholeGroupSurvey",
         "foundationTraceRecord": "KoreanFieldwork-foundationTraceRecord",
+        "buildingExpertReview": "KoreanFieldwork-buildingExpertReview",
+        "buildingReconstructionEvidence": "KoreanFieldwork-buildingReconstructionEvidence",
+        "buildingProspectionConservationRecord": "KoreanFieldwork-buildingProspectionConservationRecord",
         "settlementFeatureInvestigationProcedure": "KoreanFieldwork-settlementFeatureInvestigationProcedure",
         "settlementFeatureTrenchStrategy": "KoreanFieldwork-settlementFeatureTrenchStrategy",
         "productionProcessSystem": "KoreanFieldwork-productionProcessSystem",
@@ -1935,6 +1950,9 @@
             "surfaceBuildingJudgement",
             "postholeGroupSurvey",
             "foundationTraceRecord",
+            "buildingExpertReview",
+            "buildingReconstructionEvidence",
+            "buildingProspectionConservationRecord",
             "settlementFeatureInvestigationProcedure",
             "settlementFeatureTrenchStrategy",
             "productionProcessSystem",

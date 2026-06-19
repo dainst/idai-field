@@ -1236,6 +1236,70 @@
     },
     "description": "초석이 남지 않은 건물지에서도 상면흔, 설치굴광, 적심석, 보강토, 발취공, 폐기공, 지하식 초석, 지복석, 처마지주, 비계 주공, 기준말뚝과 보존 결정을 기록하기 위한 목록"
   },
+  "KoreanFieldwork-buildingExpertReview": {
+    "values": {
+      "architecturalHistoryReview": { "label": "건축사 검토" },
+      "vernacularArchitectureReview": { "label": "민속건축 검토" },
+      "lifeHistoryReview": { "label": "생활사 검토" },
+      "structuralEngineeringReview": { "label": "구조 전문가 검토" },
+      "comparativeBuildingEvidence": { "label": "비교 건물 근거" },
+      "ethnographicReferenceChecked": { "label": "민족지 자료 대조" },
+      "documentaryPhotoEvidenceChecked": { "label": "문헌·옛사진 대조" },
+      "experimentalReconstructionReferenced": { "label": "실물복원·거주실험 참고" },
+      "reconstructionHypothesisSeparated": { "label": "복원 가설 분리" },
+      "alternativeHypothesisRecorded": { "label": "대안 가설 기록" },
+      "findDatingContextChecked": { "label": "유물 편년 맥락 확인" },
+      "expertReviewNeeded": { "label": "전문가 검토 필요" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "건물지 복원안이 건축사·민속건축·생활사·구조 검토와 비교자료, 대안 가설, 유물 편년 맥락을 거쳐 원자료와 분리되어 있는지 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-buildingReconstructionEvidence": {
+    "values": {
+      "bayCountRecorded": { "label": "정면·측면 칸수 기록" },
+      "baySpacingMeasured": { "label": "주간거리 측정" },
+      "yeongjocheokCandidate": { "label": "영조척 후보" },
+      "moduleCalculationRecorded": { "label": "모듈 계산 기록" },
+      "sampleCountRecorded": { "label": "표본 수 기록" },
+      "errorRangeRecorded": { "label": "오차 범위 기록" },
+      "innerOuterColumnSystem": { "label": "내진·외진 체계" },
+      "roofHypothesisRecorded": { "label": "지붕 가설 기록" },
+      "wallHeatingEntranceHypothesis": { "label": "벽체·난방·출입 가설" },
+      "tileDistributionLinked": { "label": "기와 분포 연결" },
+      "timberMemberObservation": { "label": "목재 부재 관찰" },
+      "toolMarkOrRepairTrace": { "label": "공구흔·수리흔" },
+      "constructionChangeRecorded": { "label": "시공 변경 기록" },
+      "originalAndHypothesisSeparated": { "label": "원자료·가설 분리" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "칸수, 주간거리, 영조척 후보, 오차 범위, 내진·외진, 지붕·벽체·난방·출입 가설, 기와 분포와 목재 부재 관찰을 복원 근거로 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-buildingProspectionConservationRecord": {
+    "values": {
+      "preSurveyPhotoMapLinked": { "label": "사전 사진·지도 연결" },
+      "terrainBoringDataLinked": { "label": "지형·보링 자료 연결" },
+      "gprPreparationRecorded": { "label": "GPR 준비 기록" },
+      "surveyGridControlPointSet": { "label": "탐사격자·기준점 설정" },
+      "obstacleMetalTrashRemoved": { "label": "장애물·금속쓰레기 제거" },
+      "antennaFrequencyRationale": { "label": "안테나 주파수 근거" },
+      "methodLimitRecorded": { "label": "탐사 한계 기록" },
+      "excavationComparisonPlanned": { "label": "발굴 대조 계획" },
+      "scanPurposeStageRecorded": { "label": "스캔 목적·단계 기록" },
+      "controlCoordinateSystemSet": { "label": "기준점·좌표계 설정" },
+      "intermediateSurfaceScanned": { "label": "중간 노출면 스캔" },
+      "registrationErrorRecorded": { "label": "정합 오차 기록" },
+      "pointCloudSourcePreserved": { "label": "원점군 보존" },
+      "outputPurposeLinked": { "label": "산출물 목적 연결" },
+      "onsiteConservationCandidate": { "label": "원위치 보존 후보" },
+      "relocationConservationCandidate": { "label": "이전 보존 후보" },
+      "backfillCandidate": { "label": "복토 보존 후보" },
+      "restorationDeferred": { "label": "복원 보류" },
+      "originalDistinguishableMaterial": { "label": "원유구 구별 재료" },
+      "publicUsePurposeRecorded": { "label": "활용 목적 기록" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "건물지 탐사 준비, GPR 한계, 3D 스캔 좌표·정합·원점군 보존, 보존·복원·활용 결정의 근거를 기록하기 위한 목록"
+  },
   "KoreanFieldwork-settlementFeatureInvestigationProcedure": {
     "values": {
       "preliminarySurvey": { "label": "사전조사" },

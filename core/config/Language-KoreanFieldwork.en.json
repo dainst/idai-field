@@ -566,6 +566,15 @@
         "foundationTraceRecord": {
           "label": "Foundation trace record"
         },
+        "buildingExpertReview": {
+          "label": "Building expert review"
+        },
+        "buildingReconstructionEvidence": {
+          "label": "Building reconstruction evidence"
+        },
+        "buildingProspectionConservationRecord": {
+          "label": "Building prospection and conservation record"
+        },
         "settlementFeatureInvestigationProcedure": {
           "label": "Settlement feature investigation procedure"
         },

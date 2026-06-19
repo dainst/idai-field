@@ -73,6 +73,8 @@
 
 이번 구현에서는 이 요구를 `Feature`의 `surfaceBuildingJudgement`, `postholeGroupSurvey`, `foundationTraceRecord`로 옮겼다. 지상식·고상식 판단은 생활면·주혈 배열·입지·상부구조 후보와 분리하고, 주혈군은 측정 보조구와 촬영 방향까지 남기며, 사라진 초석은 설치굴광·적심석·보강토·발취공·폐기공·지복석·처마지주·비계 주공·조영 기준말뚝과 보존 결정까지 기록한다.
 
+추가 구현에서는 `buildingExpertReview`, `buildingReconstructionEvidence`, `buildingProspectionConservationRecord`로 복원안과 원자료를 더 강하게 분리했다. 건축사·민속건축·생활사·구조 검토, 비교 건물과 문헌·옛사진, 영조척 후보·칸수·오차 범위, 기와 분포·목재 부재·수리흔, GPR 준비와 한계, 3D 스캔 좌표계·정합오차·원점군 보존, 원위치·이전·복토·복원 보류 결정을 건물지 입력값으로 남긴다.
+
 조사 절차상 중요한 항목:
 
 - 조사 전 지형측량, 사진, 야장기록

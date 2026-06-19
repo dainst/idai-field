@@ -331,6 +331,12 @@
           "scaleIncluded",
           "controlPointLinked",
           "resolutionOrLineworkReadable",
+          "baseGridLineMaintained",
+          "sheetConnectionMarksRecorded",
+          "topBottomSurfaceSeparated",
+          "overlapSequenceAnnotated",
+          "levelingDatumMatched",
+          "fieldCompletionCorrectionRecorded",
           "registerNumberMatched",
           "retakeOrRedrawNeeded"
         ],
@@ -393,6 +399,10 @@
           "scaleIncluded",
           "orientationChecked",
           "resolutionOrLineworkReadable",
+          "tracingOverlayRegistered",
+          "baseGridLineMaintained",
+          "sheetConnectionMarksRecorded",
+          "levelingDatumMatched",
           "registerNumberMatched",
           "retakeOrRedrawNeeded"
         ],

@@ -18950,6 +18950,33 @@
       "stageDrawingSeparated": {
         "label": "Stage drawing separated"
       },
+      "separateGridSheetLinked": {
+        "label": "Separate grid sheet linked"
+      },
+      "tracingOverlayRegistered": {
+        "label": "Tracing overlay registered"
+      },
+      "baseGridLineMaintained": {
+        "label": "Base grid line maintained"
+      },
+      "sheetConnectionMarksRecorded": {
+        "label": "Sheet connection marks recorded"
+      },
+      "topBottomSurfaceSeparated": {
+        "label": "Top and bottom surfaces separated"
+      },
+      "overlapSequenceAnnotated": {
+        "label": "Overlap sequence annotated"
+      },
+      "levelingDatumMatched": {
+        "label": "Leveling datum matched"
+      },
+      "levelingColorSeparated": {
+        "label": "Leveling colors separated by stage"
+      },
+      "fieldCompletionCorrectionRecorded": {
+        "label": "Field completion/correction recorded"
+      },
       "stageDrawingScaleMismatch": {
         "label": "Stage drawing scale mismatch"
       },
@@ -18990,7 +19017,7 @@
         "label": "Pending decision"
       }
     },
-    "description": "Korean fieldwork media quality checks for direction, scale, control points, resolution or linework, lighting, capture format, photo-notebook matching, print annotations, source preservation, pre-recovery multi-direction photos, avoiding overhead-only and backlit shots, keeping oblique/side views, overview/close-up pairs, associated areas, opposite-direction interior views, color and moisture state, stratigraphy whole/part/detail sets, leveling links, register-number or location consistency, linked long- and short-axis sections, oxidation/reduction color annotations, stage-drawing scale/orientation/plan-section mismatches, left-right or upside-down reversals, inverted scans, low resolution, focus blur, and crop damage"
+    "description": "Korean fieldwork media quality checks for direction, scale, control points, resolution or linework, lighting, capture format, photo-notebook matching, print annotations, source preservation, pre-recovery multi-direction photos, avoiding overhead-only and backlit shots, keeping oblique/side views, overview/close-up pairs, associated areas, opposite-direction interior views, color and moisture state, stratigraphy whole/part/detail sets, leveling links, register-number or location consistency, linked long- and short-axis sections, oxidation/reduction color annotations, separated stage drawings, separate grid sheets or tracing overlays, base grid lines, sheet connection marks, top/bottom surface separation, overlap sequence notes, leveling datum and stage-color checks, field completion or correction history, stage-drawing scale/orientation/plan-section mismatches, left-right or upside-down reversals, inverted scans, low resolution, focus blur, and crop damage"
   },
   "KoreanFieldwork-photoCaptureSafetyReview": {
     "values": {

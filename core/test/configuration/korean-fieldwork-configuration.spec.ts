@@ -263,6 +263,16 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('photoAngleSupplementNeeded');
         expect(documentsById['drawing-pit-building-001-plan'].resource.relations.isDepictedIn)
             .toContain('sample-pit-building-001-charcoal-001');
+        expect(documentsById['drawing-pit-building-001-plan'].resource.mediaQualityCheck)
+            .toContain('baseGridLineMaintained');
+        expect(documentsById['drawing-pit-building-001-plan'].resource.mediaQualityCheck)
+            .toContain('sheetConnectionMarksRecorded');
+        expect(documentsById['drawing-pit-building-001-plan'].resource.mediaQualityCheck)
+            .toContain('topBottomSurfaceSeparated');
+        expect(documentsById['drawing-pit-building-001-plan'].resource.mediaQualityCheck)
+            .toContain('overlapSequenceAnnotated');
+        expect(documentsById['drawing-pit-building-001-plan'].resource.mediaQualityCheck)
+            .toContain('levelingColorSeparated');
     });
 
 
@@ -464,8 +474,16 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('photoDirectionMatchesDrawing');
         expect(documentsById['field-report-concurrent-review-quality-001'].resource.mediaQualityCheck)
             .toContain('resolutionOrLineworkReadable');
+        expect(documentsById['field-report-concurrent-review-quality-001'].resource.mediaQualityCheck)
+            .toContain('tracingOverlayRegistered');
+        expect(documentsById['field-report-concurrent-review-quality-001'].resource.mediaQualityCheck)
+            .toContain('sheetConnectionMarksRecorded');
         expect(documentsById['field-report-concurrent-review-quality-001'].resource.operationRoleResponsibility)
             .toContain('reportPreparationLead');
+        expect(documentsById['drawing-quality-001'].resource.mediaQualityCheck)
+            .toContain('baseGridLineMaintained');
+        expect(documentsById['drawing-quality-001'].resource.mediaQualityCheck)
+            .toContain('fieldCompletionCorrectionRecorded');
         expect(documentsById['daily-log-quality-001'].resource.relations.liesWithin)
             .toEqual(['op-quality-001']);
         expect(documentsById['daily-log-quality-001'].resource.dailyLogEvidenceRole)
@@ -4070,6 +4088,15 @@ describe('KoreanFieldwork project configuration', () => {
             .values.stageDrawingScaleMismatch.label)
             .toBe('Stage drawing scale mismatch');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
+            .values.baseGridLineMaintained.label)
+            .toBe('Base grid line maintained');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
+            .values.sheetConnectionMarksRecorded.label)
+            .toBe('Sheet connection marks recorded');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
+            .values.fieldCompletionCorrectionRecorded.label)
+            .toBe('Field completion/correction recorded');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
             .values.planSectionMismatch.label)
             .toBe('Plan/section mismatch');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
@@ -4087,6 +4114,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-mediaQualityCheck']
             .values.levelingLinkedForRecovery.label)
             .toBe('레벨링 연계 위치복원');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-mediaQualityCheck']
+            .values.topBottomSurfaceSeparated.label)
+            .toBe('상면·바닥 분리');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-mediaQualityCheck']
+            .values.levelingColorSeparated.label)
+            .toBe('차수별 레벨 색상 구분');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-mediaQualityCheck']
             .values.printAnnotationAdded.label)
             .toBe('인화 사진 주기 기록');

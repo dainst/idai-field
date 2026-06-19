@@ -1,0 +1,215 @@
+{
+  "title": "Korean tomb burial workflow sample",
+  "purpose": "Validate that a tomb record keeps mound investigation, burial structure, grave goods context, and human remains recovery connected without reducing them to a single tomb type label.",
+  "validationQuestions": [
+    "고분 기록이 형식명 하나가 아니라 봉토·분구, 성토 단위, 주구, 보존구역을 따로 남기는가.",
+    "매장주체부가 관·곽·실, 개석 제거 전후, 밀봉토, 내부토, 폐쇄시설, 추가장·도굴 근거로 나누어 기록되는가.",
+    "부장품과 제사자료가 유물 종류가 아니라 관 내부·외부, 봉토·주구, 입구·폐쇄부, 인골과의 관계로 기록되는가.",
+    "인골 수습이 전문가 협의, DNA 오염 관리, 약한 도구, 1/5 도면, 포장·주기·개체식별 기준까지 이어지는가."
+  ],
+  "documents": [
+    {
+      "resource": {
+        "id": "op-tomb-burial-001",
+        "identifier": "TOMB-OP-001",
+        "shortDescription": "고분 봉토·매장주체부 조사 작업",
+        "category": "Operation",
+        "relations": {},
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "crossReviewNeeded"
+        ],
+        "recordCreationTiming": "duringFieldwork",
+        "dailyLogContent": [
+          "workDateWeather",
+          "workArea",
+          "findSampleCollection",
+          "photoDrawingNumbers"
+        ],
+        "dailyLogReview": [
+          "sameDayWritten",
+          "photoDrawingCrossChecked",
+          "findListCrossChecked",
+          "sampleListCrossChecked"
+        ],
+        "reportCrossCheck": [
+          "manuscript",
+          "drawingRegister",
+          "photoRegister",
+          "artifactRegister",
+          "sampleRegister"
+        ]
+      }
+    },
+    {
+      "resource": {
+        "id": "feature-tomb-mound-001",
+        "identifier": "TM-001",
+        "shortDescription": "봉토와 매장주체부가 확인된 고분",
+        "category": "Feature",
+        "relations": {
+          "isRecordedIn": ["op-tomb-burial-001"]
+        },
+        "description": "봉토 성토 단위와 주구, 매장주체부가 함께 확인된 고분. 묘형명은 보류하고 봉토 조사통제와 매장주체부 관찰값을 먼저 남기는 샘플.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "reproducibleRecord"
+        ],
+        "fieldOnlyMissingCheck": [
+          "featureOutline",
+          "stratigraphicBoundary",
+          "photoAngleAndScale",
+          "drawingLineReason",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "tombMoundInvestigation": [
+          "preExcavationSurvey",
+          "contourSurvey",
+          "disturbanceMapped",
+          "originalMoundBoundary",
+          "baulkPlanRecorded",
+          "horizontalRemovalUnit",
+          "moundSectionRecorded",
+          "oldSurfaceIdentified",
+          "moundOrSealingSeparated",
+          "constructionUnitRecorded",
+          "stoneSettingLinked",
+          "ditchLinked",
+          "ditchFillRecorded",
+          "ditchRecutChecked",
+          "moundConstructionSequence",
+          "preservedAreaMarked"
+        ],
+        "tombBurialStructureInvestigation": [
+          "gravePitShoulderLine",
+          "burialFacilityTypeOpen",
+          "coffinChamberRoomSeparated",
+          "capstoneBeforeRemoval",
+          "sealClayOrPacking",
+          "capstoneRemovalSequence",
+          "internalFillUnit",
+          "waterSievingSmallFinds",
+          "wallElevationRecorded",
+          "floorAndBeddingRecorded",
+          "closureFeatureRecorded",
+          "entrancePassageRecorded",
+          "additionalBurialEvidence",
+          "robberyDisturbanceSeparated",
+          "preservationDecisionLinked"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "find-tomb-grave-good-001",
+        "identifier": "TM-001-F-GG-001",
+        "shortDescription": "관 외부와 폐쇄부 주변 부장품",
+        "category": "Find",
+        "relations": {
+          "liesWithin": ["feature-tomb-mound-001"],
+          "isRecordedIn": ["op-tomb-burial-001"]
+        },
+        "description": "관 외부와 폐쇄부 주변에서 확인된 토기·철기 묶음. 부장품 종류보다 위치와 장송 행위 맥락을 먼저 기록한다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "reproducibleRecord",
+          "criteriaConsistency"
+        ],
+        "fieldOnlyMissingCheck": [
+          "preRemovalCondition",
+          "spatialLocation",
+          "elevationRecorded",
+          "numberedBeforeCollection",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "artifactHandlingWorkflow": [
+          "fieldCollection",
+          "findConditionRecord",
+          "packingTransport"
+        ],
+        "artifactQuantityBasis": [
+          "physicalItemCount",
+          "sameObjectConfirmed",
+          "quantityEvidencePhoto"
+        ],
+        "graveGoodsRitualContext": [
+          "coffinOutside",
+          "burialChamber",
+          "moundOrDitch",
+          "entranceOrPassage",
+          "closureDeposit",
+          "ritualVessel",
+          "intentionalBreakage",
+          "animalOrFoodOffering",
+          "foreignElementCandidate",
+          "functionNotAssumed",
+          "collectionUnitRecorded",
+          "relationToHumanRemains"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "sample-tomb-human-remains-001",
+        "identifier": "TM-001-S-HR-001",
+        "shortDescription": "매장주체부 인골 수습 시료",
+        "category": "Sample",
+        "relations": {
+          "liesWithin": ["feature-tomb-mound-001"],
+          "isRecordedIn": ["op-tomb-burial-001"]
+        },
+        "description": "TM-001 매장주체부에서 노출된 인골을 전문가 협의와 오염 관리, 도면화, 포장·주기 기준에 맞추어 수습하는 흐름을 검증하는 시료.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "researchQuestionFit",
+          "reproducibleRecord"
+        ],
+        "fieldOnlyMissingCheck": [
+          "samplePointMapped",
+          "sampleConditionControlled",
+          "spatialLocation",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "samplePurpose": [
+          "conservation",
+          "contaminationControl"
+        ],
+        "sampleCollectionHandling": [
+          "immediateCollection",
+          "humanRemainsShade",
+          "dnaGloves",
+          "contextMapLinked",
+          "avoidCrushing"
+        ],
+        "humanRemainsRecoveryAnalysis": [
+          "specialistConsulted",
+          "exposedAfterFeatureCleaning",
+          "pinProbeAvoided",
+          "dnaBeforeTreatment",
+          "softToolsUsed",
+          "rootsCutNotPulled",
+          "shadeMaintained",
+          "waterUseRestricted",
+          "scaleOneToFiveDrawing",
+          "graveGoodsRelationRecorded",
+          "individualNumberAssigned",
+          "newspaperOrCardboardPacking",
+          "plasticSealingAvoided",
+          "labelOnWrapping",
+          "conservationBeforeLifting",
+          "slowShadeDrying",
+          "bonePartSideIndividualSequence",
+          "analysisCriteriaRecorded"
+        ],
+        "verificationState": "candidate"
+      }
+    }
+  ]
+}

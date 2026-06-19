@@ -269,6 +269,35 @@ describe('KoreanFieldwork project configuration', () => {
     });
 
 
+    it('keeps the Korean tomb burial sample aligned with mound, goods, and remains fields', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const sample = loadSample('tomb-burial-workflow-sample.json');
+        const documents = sample.documents;
+        const documentsById = documents.reduce((index: any, document: any) => {
+            index[document.resource.id] = document;
+            return index;
+        }, {});
+
+        expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
+
+        expect(documentsById['feature-tomb-mound-001'].resource.tombMoundInvestigation)
+            .toContain('moundConstructionSequence');
+        expect(documentsById['feature-tomb-mound-001'].resource.tombBurialStructureInvestigation)
+            .toContain('additionalBurialEvidence');
+        expect(documentsById['find-tomb-grave-good-001'].resource.graveGoodsRitualContext)
+            .toContain('functionNotAssumed');
+        expect(documentsById['find-tomb-grave-good-001'].resource.graveGoodsRitualContext)
+            .toContain('relationToHumanRemains');
+        expect(documentsById['sample-tomb-human-remains-001'].resource.humanRemainsRecoveryAnalysis)
+            .toContain('dnaBeforeTreatment');
+        expect(documentsById['sample-tomb-human-remains-001'].resource.humanRemainsRecoveryAnalysis)
+            .toContain('analysisCriteriaRecorded');
+    });
+
+
     it('registers the field-record preservation fields in the bundled configuration', () => {
 
         const configReader = new ConfigReader();

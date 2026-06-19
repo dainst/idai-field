@@ -12326,6 +12326,64 @@
     },
     "description": "Korean stratigraphic checks for recording grain size, structures, truncation, pedogenesis, old ground surfaces, cultural layers, and reasons not to over-subdivide deposits"
   },
+  "KoreanFieldwork-soilParticleFieldCheck": {
+    "values": {
+      "gravelDirectMeasured": { "label": "Gravel directly measured" },
+      "particleSizeChartUsed": { "label": "Particle-size chart used" },
+      "sandSieveChecked": { "label": "Sand sieve checked" },
+      "wetSmearChecked": { "label": "Wet smear checked" },
+      "touchTestChecked": { "label": "Touch test checked" },
+      "referenceSampleCompared": { "label": "Reference sample compared" },
+      "siltClayMudWordingReviewed": { "label": "Silt/clay/mud wording reviewed" },
+      "laboratoryGrainSizeComparison": { "label": "Laboratory grain-size comparison" },
+      "expertReviewRequested": { "label": "Expert review requested" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean soil-particle checks for recording how particle size and grain-size composition were judged in the field and whether laboratory or expert review is needed"
+  },
+  "KoreanFieldwork-layerBoundarySurfaceRecord": {
+    "values": {
+      "beddingPlane": { "label": "Bedding plane" },
+      "soilHorizonBoundary": { "label": "Soil horizon boundary" },
+      "oldGroundSurface": { "label": "Old ground surface" },
+      "livingSurface": { "label": "Living surface" },
+      "featureSurface": { "label": "Feature surface" },
+      "featureDetectionSurface": { "label": "Feature detection surface" },
+      "workedSurface": { "label": "Worked surface" },
+      "functionalSurface": { "label": "Functional surface" },
+      "clarityRecorded": { "label": "Clarity recorded" },
+      "shapeRecorded": { "label": "Shape recorded" },
+      "sharpBoundary": { "label": "Sharp boundary" },
+      "clearBoundary": { "label": "Clear boundary" },
+      "gradualBoundary": { "label": "Gradual boundary" },
+      "unclearBoundary": { "label": "Unclear boundary" },
+      "flatBoundary": { "label": "Flat boundary" },
+      "wavyBoundary": { "label": "Wavy boundary" },
+      "irregularBoundary": { "label": "Irregular boundary" },
+      "discontinuousBoundary": { "label": "Discontinuous boundary" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean layer-boundary checks for separating bedding planes, soil horizon boundaries, old ground, living, feature, detection, worked, and functional surfaces from boundary clarity and shape"
+  },
+  "KoreanFieldwork-stratigraphicMisreadGuard": {
+    "values": {
+      "colorPrimaryDivisionAvoided": { "label": "Color-first division avoided" },
+      "freshSectionLightControlled": { "label": "Fresh section/light controlled" },
+      "oxidationReductionDiscoloration": { "label": "Oxidation-reduction discoloration" },
+      "groundwaterChange": { "label": "Groundwater change" },
+      "oldChannelReduction": { "label": "Old-channel reduction" },
+      "falsePaddyBund": { "label": "False paddy bund" },
+      "ironAccumulationBand": { "label": "Iron accumulation band" },
+      "manganeseAccumulationBand": { "label": "Manganese accumulation band" },
+      "rootDiscoloration": { "label": "Root discoloration" },
+      "postRelatedReduction": { "label": "Post-related reduction" },
+      "btBandCandidate": { "label": "Bt-band candidate" },
+      "pedogenicPostDepositionalChange": { "label": "Pedogenic post-depositional change" },
+      "separateLayerDecisionDeferred": { "label": "Separate-layer decision deferred" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean stratigraphic misread checks for keeping color, oxidation-reduction, groundwater, paddy bunds, channels, iron and manganese accumulation, root or post discoloration, and Bt-bands from being mistaken for separate layers or features"
+  },
   "KoreanFieldwork-layerNamingSystem": {
     "values": {
       "abovePresentSurfaceNumber": { "label": "Above-present-surface number" },

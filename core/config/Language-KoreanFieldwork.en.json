@@ -412,6 +412,15 @@
         "stratigraphicDivisionBasis": {
           "label": "Stratigraphic division basis"
         },
+        "soilParticleFieldCheck": {
+          "label": "Soil particle field check"
+        },
+        "layerBoundarySurfaceRecord": {
+          "label": "Layer boundary surface record"
+        },
+        "stratigraphicMisreadGuard": {
+          "label": "Stratigraphic misread guard"
+        },
         "layerNamingSystem": {
           "label": "Layer naming system"
         },

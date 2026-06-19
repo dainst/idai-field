@@ -412,6 +412,15 @@
         "stratigraphicDivisionBasis": {
           "label": "층 구분 판단근거"
         },
+        "soilParticleFieldCheck": {
+          "label": "토층 입자 판정"
+        },
+        "layerBoundarySurfaceRecord": {
+          "label": "층 경계면 기록"
+        },
+        "stratigraphicMisreadGuard": {
+          "label": "층위 오인 방지"
+        },
         "layerNamingSystem": {
           "label": "층명·기호 체계"
         },

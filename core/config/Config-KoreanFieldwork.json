@@ -1040,6 +1040,18 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "soilParticleFieldCheck": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "layerBoundarySurfaceRecord": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "stratigraphicMisreadGuard": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "layerNamingSystem": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1112,6 +1124,9 @@
         "fieldOnlyMissingCheck": "KoreanFieldwork-fieldOnlyMissingCheck",
         "firstExposureRecord": "KoreanFieldwork-firstExposureRecord",
         "stratigraphicDivisionBasis": "KoreanFieldwork-stratigraphicDivisionBasis",
+        "soilParticleFieldCheck": "KoreanFieldwork-soilParticleFieldCheck",
+        "layerBoundarySurfaceRecord": "KoreanFieldwork-layerBoundarySurfaceRecord",
+        "stratigraphicMisreadGuard": "KoreanFieldwork-stratigraphicMisreadGuard",
         "layerNamingSystem": "KoreanFieldwork-layerNamingSystem",
         "featureFillInterpretation": "KoreanFieldwork-featureFillInterpretation",
         "stratigraphicObservationProcedure": "KoreanFieldwork-stratigraphicObservationProcedure",
@@ -1155,6 +1170,9 @@
             "fieldOnlyMissingCheck",
             "firstExposureRecord",
             "stratigraphicDivisionBasis",
+            "soilParticleFieldCheck",
+            "layerBoundarySurfaceRecord",
+            "stratigraphicMisreadGuard",
             "layerNamingSystem",
             "featureFillInterpretation",
             "stratigraphicObservationProcedure",

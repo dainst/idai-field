@@ -572,6 +572,64 @@
     },
     "description": "색 차이만으로 층을 나누지 않고 입도, 구조, 삭평, 토양화, 구지표, 문화층과 과도한 세분 보류 근거를 함께 남기기 위한 목록"
   },
+  "KoreanFieldwork-soilParticleFieldCheck": {
+    "values": {
+      "gravelDirectMeasured": { "label": "자갈 직접 계측" },
+      "particleSizeChartUsed": { "label": "입자 크기표 대조" },
+      "sandSieveChecked": { "label": "모래 체질" },
+      "wetSmearChecked": { "label": "수분 가미 도말" },
+      "touchTestChecked": { "label": "촉감 테스트" },
+      "referenceSampleCompared": { "label": "표본시료 대조" },
+      "siltClayMudWordingReviewed": { "label": "실트·점토·니 표현 검토" },
+      "laboratoryGrainSizeComparison": { "label": "실내 입도분석 대조" },
+      "expertReviewRequested": { "label": "전문가 판정 의뢰" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "입자 크기와 입도 조성을 현장에서 어떤 방법으로 확인했는지, 실내분석이나 전문가 판정이 필요한지를 남기기 위한 목록"
+  },
+  "KoreanFieldwork-layerBoundarySurfaceRecord": {
+    "values": {
+      "beddingPlane": { "label": "층리면" },
+      "soilHorizonBoundary": { "label": "층계" },
+      "oldGroundSurface": { "label": "구지표면" },
+      "livingSurface": { "label": "생활면" },
+      "featureSurface": { "label": "유구면" },
+      "featureDetectionSurface": { "label": "유구 확인면" },
+      "workedSurface": { "label": "가공면" },
+      "functionalSurface": { "label": "기능면" },
+      "clarityRecorded": { "label": "명료도 기록" },
+      "shapeRecorded": { "label": "형상 기록" },
+      "sharpBoundary": { "label": "확연" },
+      "clearBoundary": { "label": "명료" },
+      "gradualBoundary": { "label": "점변" },
+      "unclearBoundary": { "label": "불명료" },
+      "flatBoundary": { "label": "평탄" },
+      "wavyBoundary": { "label": "파상" },
+      "irregularBoundary": { "label": "불규칙" },
+      "discontinuousBoundary": { "label": "불연속" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "층리면과 층계, 구지표면·생활면·유구면·확인면, 가공면·기능면, 경계 명료도와 형상을 따로 남기기 위한 목록"
+  },
+  "KoreanFieldwork-stratigraphicMisreadGuard": {
+    "values": {
+      "colorPrimaryDivisionAvoided": { "label": "색조 최우선 금지" },
+      "freshSectionLightControlled": { "label": "신선 단면·광선 조건 통제" },
+      "oxidationReductionDiscoloration": { "label": "산화·환원 변색" },
+      "groundwaterChange": { "label": "지하수위 변화" },
+      "oldChannelReduction": { "label": "구수로 환원화" },
+      "falsePaddyBund": { "label": "가짜 논둑" },
+      "ironAccumulationBand": { "label": "산화철 집적대" },
+      "manganeseAccumulationBand": { "label": "망간 집적대" },
+      "rootDiscoloration": { "label": "뿌리 주변 변색" },
+      "postRelatedReduction": { "label": "말목 주변 환원화" },
+      "btBandCandidate": { "label": "Bt-band 후보" },
+      "pedogenicPostDepositionalChange": { "label": "토양화 후성작용" },
+      "separateLayerDecisionDeferred": { "label": "별도층 판단 보류" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "색조, 산화·환원, 지하수, 논둑·수로, 철·망간 집적, 뿌리·말목 변색, Bt-band를 별도 층이나 유구로 오인하지 않기 위한 목록"
+  },
   "KoreanFieldwork-layerNamingSystem": {
     "values": {
       "abovePresentSurfaceNumber": { "label": "현지표 상부 번호" },

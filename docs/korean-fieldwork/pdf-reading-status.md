@@ -63,6 +63,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-19 유구 내부층과 라이프사이클 자료도 구현 단위로 압축했다. 발굴조사 실무 자료는 유구 내부토를 단순 복토가 아니라 축조, 사용, 폐기, 매몰 과정이 겹친 결과로 읽고, 단면 정리와 반복 관찰, 그늘·햇볕 조건, 층간 비교, 이질토 블록의 유래, 자연유입·수성퇴적·붕락·토양화 휴지기, 일괄유물 매몰 여부를 따로 남기라고 요구한다. 이 묶음은 `FeatureSegment`의 `stratigraphicObservationProcedure`, `featureLifecycleReview`, `featureBlockInclusionAssessment`, `featureBurialProcessAssessment` 값 목록으로 옮겼다.
 
+2026-06-19 층 경계와 후성작용 오인 방지 자료도 구현 단위로 압축했다. 조사기초과정의 층 구분 사례는 색조를 층 구분의 제1기준으로 삼지 말고, 층리면과 층계, 구지표면·생활면·유구면·확인면, 입도 판정 방법, 산화·환원, 지하수위 변화, 논둑·구수로, 산화철·망간 집적, 뿌리·말목 주변 변색, Bt-band를 별도층·유구 오인 후보로 기록하라고 요구한다. 이 묶음은 `FeatureSegment`의 `soilParticleFieldCheck`, `layerBoundarySurfaceRecord`, `stratigraphicMisreadGuard` 값 목록으로 옮겼다.
+
 2026-06-19 표본·시굴 전환 자료도 구현 단위로 압축했다. `매장문화재조사 기초이론`과 지표조사 업무 이해 계열 자료는 표본조사를 제한 범위의 후속 발굴 판단 단계로, 시굴조사를 존재 확인뿐 아니라 수평·수직 범위, 시대·성격, 정밀발굴 기간·비용·방법 산정 단계로 다룬다. 이 묶음은 `Survey`의 `sampleSurveySuitability`, `trialExcavationPurpose`, `trialTrenchDesign`, `excavationScopeDifficultyBasis` 값 목록으로 옮겨 지표조사 후속조치와 GIS 예측검증 다음의 조사전환 판단을 같은 화면에서 기록하게 했다.
 
 2026-06-19 동물유체·화석환경 자료도 구현 단위로 압축했다. 제9권 연구방법론의 동물고고학 수습 왜곡 경고와 `유적조사와 고환경분석`, 제5회 조사연구원 교육자료의 동물유체 동정·수습보존·분류·계량 항목은 큰 뼈 선별 수습을 경계하고, 작은 어류뼈·조류뼈·설치류·미세 패각·어린 개체 누락, 전체 체질과 2mm/5mm 체눈, 층위별 블록샘플과 반복 채취, 산성토양·패총·석회암동굴·저습지 보존 조건, 뼈 표면 변형, NISP·MNE·MNI·MAU·%MAU 산출 한계를 함께 남기라고 요구한다. 이 묶음은 `Sample`의 `faunalRecoverySampling`, `faunalPreservationHandling`, `zooarchaeologicalIdentification`, `boneSurfaceModification`, `zooarchaeologicalQuantification` 값 목록으로 옮겼다.

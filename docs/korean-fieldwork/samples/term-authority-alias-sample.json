@@ -145,6 +145,186 @@
     },
     {
       "resource": {
+        "id": "term-authority-posthole",
+        "identifier": "기둥 구멍",
+        "shortDescription": "주공·주혈 계열 권위 표제어",
+        "category": "TermAuthority",
+        "relations": {
+          "liesWithin": ["term-group-korean-archaeology"]
+        },
+        "description": "청동기시대편 표준안 계열에서 주공·주혈을 기둥 구멍으로 찾아가게 하는 관계를 반영하되, 실제 기록은 위치·깊이·배치·절개 여부 같은 관찰값으로 남긴다.",
+        "termDictionaryDomain": ["bronzeAge", "generalArchaeology"],
+        "termApplicationScope": ["valueListEntry", "reportOutput", "searchAlias", "sourceDictionaryLink"],
+        "termSourcePriority": ["latestSupplementDictionary", "generalArchaeologyDictionary", "methodologyTerm"],
+        "termRelation": ["preferredTerm", "alias", "reportOutputTerm"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "fieldUsagePreserved",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["specialistDictionarySource", "latestSupplementSource", "sourcePageLinked", "valueListCandidate"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-alias-posthole-juhyeol",
+        "identifier": "주혈",
+        "shortDescription": "사전 찾아가기: 주혈",
+        "category": "TermAlias",
+        "relations": {
+          "liesWithin": ["term-authority-posthole"]
+        },
+        "description": "현장어와 보고서 용례에서 널리 쓰이므로 자동완성은 허용하되, 권위 표제어와 관찰어를 덮어쓰지 않는다.",
+        "termAliasText": "주혈",
+        "termAliasRole": ["dictionarySeeAlso", "fieldSynonym"],
+        "termAliasHandling": [
+          "autocompleteAccepted",
+          "preferredHeadwordTarget",
+          "keepAliasForSearch",
+          "doNotOverwriteObservedTerm"
+        ],
+        "termRelation": ["alias"],
+        "termSearchMapping": ["fieldSearchTermAccepted", "preferredHeadwordLinked", "fieldUsagePreserved"],
+        "termAuthorityStatus": ["latestSupplementSource", "generalDictionaryUsage", "sourcePageLinked"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-alias-posthole-jugong",
+        "identifier": "주공",
+        "shortDescription": "사전 찾아가기: 주공",
+        "category": "TermAlias",
+        "relations": {
+          "liesWithin": ["term-authority-posthole"]
+        },
+        "description": "한자어 보고서 용례와 사전 표준안의 찾아가기 관계를 보존한다.",
+        "termAliasText": "주공",
+        "termAliasRole": ["dictionarySeeAlso", "originalScriptVariant"],
+        "termAliasHandling": [
+          "autocompleteAccepted",
+          "preferredHeadwordTarget",
+          "keepAliasForSearch",
+          "doNotOverwriteObservedTerm"
+        ],
+        "termRelation": ["alias"],
+        "termSearchMapping": ["fieldSearchTermAccepted", "preferredHeadwordLinked", "originalScriptIndexed"],
+        "termAuthorityStatus": ["latestSupplementSource", "sourcePageLinked"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-authority-hearth",
+        "identifier": "화덕 자리",
+        "shortDescription": "노지 계열 권위 표제어",
+        "category": "TermAuthority",
+        "relations": {
+          "liesWithin": ["term-group-korean-archaeology"]
+        },
+        "description": "노지는 화덕 자리로 찾아가게 하되, 구덩식·평지식·수혈식·부뚜막식 같은 구조와 기능 판단은 별도 관찰값으로 유지한다.",
+        "termDictionaryDomain": ["bronzeAge", "neolithic", "generalArchaeology"],
+        "termApplicationScope": ["valueListEntry", "reportOutput", "searchAlias", "sourceDictionaryLink"],
+        "termSourcePriority": ["latestSupplementDictionary", "generalArchaeologyDictionary", "methodologyTerm"],
+        "termRelation": ["preferredTerm", "alias", "narrowerTerm"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "structureSubtypeSeparated",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["specialistDictionarySource", "latestSupplementSource", "valueListCandidate"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-alias-hearth-noji",
+        "identifier": "노지",
+        "shortDescription": "사전 찾아가기: 노지",
+        "category": "TermAlias",
+        "relations": {
+          "liesWithin": ["term-authority-hearth"]
+        },
+        "description": "노지라는 입력어는 보존하되 화덕 자리와 구조 하위유형을 한 문자열로 합치지 않는다.",
+        "termAliasText": "노지",
+        "termAliasRole": ["dictionarySeeAlso", "fieldSynonym"],
+        "termAliasHandling": [
+          "autocompleteAccepted",
+          "preferredHeadwordTarget",
+          "keepAliasForSearch",
+          "domainScoped",
+          "doNotOverwriteObservedTerm"
+        ],
+        "termRelation": ["alias", "domainRestricted"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "structureSubtypeSeparated",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-authority-post-built-building",
+        "identifier": "기둥 건물",
+        "shortDescription": "굴립주 건물 계열 권위 표제어",
+        "category": "TermAuthority",
+        "relations": {
+          "liesWithin": ["term-group-korean-archaeology"]
+        },
+        "description": "굴립주 건물은 기둥 건물로 찾아가게 하되, 지면식·고상식과 수혈건물지·집자리와의 중복관계는 구조 관찰값으로 분리한다.",
+        "termDictionaryDomain": ["bronzeAge", "generalArchaeology"],
+        "termApplicationScope": ["valueListEntry", "reportOutput", "searchAlias", "sourceDictionaryLink"],
+        "termSourcePriority": ["latestSupplementDictionary", "generalArchaeologyDictionary", "methodologyTerm"],
+        "termRelation": ["preferredTerm", "alias", "narrowerTerm"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "structureSubtypeSeparated",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["specialistDictionarySource", "latestSupplementSource", "valueListCandidate"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-alias-post-built-building-gullipju",
+        "identifier": "굴립주 건물",
+        "shortDescription": "사전 찾아가기: 굴립주 건물",
+        "category": "TermAlias",
+        "relations": {
+          "liesWithin": ["term-authority-post-built-building"]
+        },
+        "description": "사전 찾아가기와 현장 관용 입력어를 보존하되 기둥 구멍 배열, 바닥 높이, 고상식 여부는 별도 기록으로 남긴다.",
+        "termAliasText": "굴립주 건물",
+        "termAliasRole": ["dictionarySeeAlso", "fieldSynonym"],
+        "termAliasHandling": [
+          "autocompleteAccepted",
+          "preferredHeadwordTarget",
+          "keepAliasForSearch",
+          "domainScoped",
+          "doNotOverwriteObservedTerm"
+        ],
+        "termRelation": ["alias", "structuralSimilarity"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "structureSubtypeSeparated",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["latestSupplementSource", "sourcePageLinked", "valueListCandidate"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
         "id": "term-authority-kiln-site",
         "identifier": "요지",
         "shortDescription": "가마터·요 계열 생산유적 권위 표제어",

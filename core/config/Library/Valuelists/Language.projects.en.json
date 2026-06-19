@@ -12912,6 +12912,88 @@
     },
     "description": "Korean tomb burial-structure checks for separating observed burial facilities from interpretation, and for recording capstones, seals, fills, small finds, wall elevations, floors, closures, entrances, additional burials, disturbance, dismantling, and preservation decisions"
   },
+  "KoreanFieldwork-tombSurveyPurpose": {
+    "values": {
+      "characterClarification": { "label": "Character clarification" },
+      "restorationMaintenance": { "label": "Restoration/maintenance" },
+      "rescueDevelopment": { "label": "Development rescue" },
+      "presenceConfirmation": { "label": "Presence confirmation" },
+      "outerExtentConfirmation": { "label": "Outer extent confirmation" },
+      "moundFocusedInvestigation": { "label": "Mound-focused investigation" },
+      "burialStructureFocused": { "label": "Burial-structure focused" },
+      "scheduleBudgetConstraint": { "label": "Schedule/budget constraint" },
+      "previousInvestigationCompared": { "label": "Previous investigation compared" },
+      "damageMinimized": { "label": "Damage minimized" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean large-mound tomb checks for recording survey purpose and constraints before choosing trench direction, investigation extent, and mound or burial-structure priorities"
+  },
+  "KoreanFieldwork-moundTrenchInvestigation": {
+    "values": {
+      "burialMainAxis": { "label": "Burial main axis" },
+      "burialShortAxis": { "label": "Burial short axis" },
+      "ridgeAxis": { "label": "Ridge axis" },
+      "slopeDirection": { "label": "Slope direction" },
+      "crossTrench": { "label": "Cross trench" },
+      "outerExtension": { "label": "Outer extension" },
+      "trenchWidthRecorded": { "label": "Trench width recorded" },
+      "sectionBaulkPosition": { "label": "Section baulk position" },
+      "planRemovalCombined": { "label": "Plan removal combined" },
+      "sectionPlanCompared": { "label": "Section and plan compared" },
+      "partialInformationCaution": { "label": "Partial information caution" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean mound-trench checks for recording how trenches cross burial axes and terrain, and whether section and plan evidence were compared"
+  },
+  "KoreanFieldwork-moundFillSubdivisionRecord": {
+    "values": {
+      "fillMaterialProperties": { "label": "Fill material properties" },
+      "fillCompositionRatio": { "label": "Fill composition ratio" },
+      "fillUnitRecorded": { "label": "Fill unit recorded" },
+      "transportUnitCandidate": { "label": "Transport unit candidate" },
+      "compartmentFillCandidate": { "label": "Compartment fill candidate" },
+      "constructionProcess": { "label": "Construction process" },
+      "fillExtentRecorded": { "label": "Fill extent recorded" },
+      "fieldSubdivisionKept": { "label": "Field subdivision kept" },
+      "labMergePossible": { "label": "Lab merge possible" },
+      "labSubdivisionImpossible": { "label": "Lab subdivision impossible" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean mound-fill checks for preserving field subdivisions so fill units, transport units, compartment fills, and construction processes can be reviewed later"
+  },
+  "KoreanFieldwork-stoneCistWallPackingRecord": {
+    "values": {
+      "capstoneWorkedDegree": { "label": "Capstone worked degree" },
+      "stoneMaterialIdentified": { "label": "Stone material identified" },
+      "stoneStrengthChecked": { "label": "Stone strength checked" },
+      "fieldStoneReview": { "label": "Field stone review" },
+      "wallTopClay": { "label": "Wall-top clay" },
+      "woodSupportTrace": { "label": "Wood support trace" },
+      "packingSpace": { "label": "Packing space" },
+      "packingComposition": { "label": "Packing composition" },
+      "packingMethod": { "label": "Packing method" },
+      "topCoverSoil": { "label": "Top cover soil" },
+      "plasterClayRemaining": { "label": "Plaster clay remaining" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean stone-cist checks for separating capstones, stone material, wall-top clay, wood support traces, packing space, packing composition, cover soil, and plaster clay"
+  },
+  "KoreanFieldwork-tombInteriorRecoveryRecord": {
+    "values": {
+      "interiorLightingControlled": { "label": "Interior lighting controlled" },
+      "disturbedSoilSieved": { "label": "Disturbed soil sieved" },
+      "nearFloorFineInvestigation": { "label": "Near-floor fine investigation" },
+      "smallFindLossCaution": { "label": "Small find loss caution" },
+      "organicDiscoloration": { "label": "Organic discoloration" },
+      "organicDryingAvoided": { "label": "Organic drying avoided" },
+      "uniqueRecoveryNumber": { "label": "Unique recovery number" },
+      "smallTabletSerialNumber": { "label": "Small tablet serial number" },
+      "bulkRecovery": { "label": "Bulk recovery" },
+      "laboratorySeparationPlanned": { "label": "Laboratory separation planned" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean tomb-interior recovery checks for managing light, disturbed-soil sieving, fine floor work, small finds, organic preservation, recovery numbers, bulk recovery, and laboratory separation"
+  },
   "KoreanFieldwork-graveGoodsRitualContext": {
     "values": {
       "wearingPosition": { "label": "Wearing position" },

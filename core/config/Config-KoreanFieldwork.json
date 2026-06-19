@@ -709,6 +709,26 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "tombSurveyPurpose": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "moundTrenchInvestigation": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "moundFillSubdivisionRecord": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "stoneCistWallPackingRecord": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "tombInteriorRecoveryRecord": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "shellMiddenStratigraphy": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -875,6 +895,11 @@
         "ironFurnaceStructure": "KoreanFieldwork-ironFurnaceStructure",
         "tombMoundInvestigation": "KoreanFieldwork-tombMoundInvestigation",
         "tombBurialStructureInvestigation": "KoreanFieldwork-tombBurialStructureInvestigation",
+        "tombSurveyPurpose": "KoreanFieldwork-tombSurveyPurpose",
+        "moundTrenchInvestigation": "KoreanFieldwork-moundTrenchInvestigation",
+        "moundFillSubdivisionRecord": "KoreanFieldwork-moundFillSubdivisionRecord",
+        "stoneCistWallPackingRecord": "KoreanFieldwork-stoneCistWallPackingRecord",
+        "tombInteriorRecoveryRecord": "KoreanFieldwork-tombInteriorRecoveryRecord",
         "shellMiddenStratigraphy": "KoreanFieldwork-shellMiddenStratigraphy",
         "shellMiddenSettlementContext": "KoreanFieldwork-shellMiddenSettlementContext",
         "bronzeAgeDwellingEvidence": "KoreanFieldwork-bronzeAgeDwellingEvidence",
@@ -952,6 +977,11 @@
             "ironFurnaceStructure",
             "tombMoundInvestigation",
             "tombBurialStructureInvestigation",
+            "tombSurveyPurpose",
+            "moundTrenchInvestigation",
+            "moundFillSubdivisionRecord",
+            "stoneCistWallPackingRecord",
+            "tombInteriorRecoveryRecord",
             "shellMiddenStratigraphy",
             "shellMiddenSettlementContext",
             "bronzeAgeDwellingEvidence",

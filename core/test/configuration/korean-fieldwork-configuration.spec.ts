@@ -92,6 +92,11 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.fields.ironFurnaceStructure.inputType).toBe('checkboxes');
         expect(featureForm.fields.tombMoundInvestigation.inputType).toBe('checkboxes');
         expect(featureForm.fields.tombBurialStructureInvestigation.inputType).toBe('checkboxes');
+        expect(featureForm.fields.tombSurveyPurpose.inputType).toBe('checkboxes');
+        expect(featureForm.fields.moundTrenchInvestigation.inputType).toBe('checkboxes');
+        expect(featureForm.fields.moundFillSubdivisionRecord.inputType).toBe('checkboxes');
+        expect(featureForm.fields.stoneCistWallPackingRecord.inputType).toBe('checkboxes');
+        expect(featureForm.fields.tombInteriorRecoveryRecord.inputType).toBe('checkboxes');
         expect(featureForm.fields.shellMiddenStratigraphy.inputType).toBe('checkboxes');
         expect(featureForm.fields.shellMiddenSettlementContext.inputType).toBe('checkboxes');
         expect(featureForm.fields.bronzeAgeDwellingEvidence.inputType).toBe('checkboxes');
@@ -333,6 +338,16 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-tombMoundInvestigation');
         expect(featureForm.valuelists.tombBurialStructureInvestigation)
             .toBe('KoreanFieldwork-tombBurialStructureInvestigation');
+        expect(featureForm.valuelists.tombSurveyPurpose)
+            .toBe('KoreanFieldwork-tombSurveyPurpose');
+        expect(featureForm.valuelists.moundTrenchInvestigation)
+            .toBe('KoreanFieldwork-moundTrenchInvestigation');
+        expect(featureForm.valuelists.moundFillSubdivisionRecord)
+            .toBe('KoreanFieldwork-moundFillSubdivisionRecord');
+        expect(featureForm.valuelists.stoneCistWallPackingRecord)
+            .toBe('KoreanFieldwork-stoneCistWallPackingRecord');
+        expect(featureForm.valuelists.tombInteriorRecoveryRecord)
+            .toBe('KoreanFieldwork-tombInteriorRecoveryRecord');
         expect(featureForm.valuelists.shellMiddenStratigraphy)
             .toBe('KoreanFieldwork-shellMiddenStratigraphy');
         expect(featureForm.valuelists.shellMiddenSettlementContext)
@@ -653,6 +668,16 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Tomb mound investigation');
         expect(languages.en.categories.Feature.fields.tombBurialStructureInvestigation.label)
             .toBe('Tomb burial structure investigation');
+        expect(languages.en.categories.Feature.fields.tombSurveyPurpose.label)
+            .toBe('Tomb survey purpose');
+        expect(languages.en.categories.Feature.fields.moundTrenchInvestigation.label)
+            .toBe('Mound trench investigation');
+        expect(languages.en.categories.Feature.fields.moundFillSubdivisionRecord.label)
+            .toBe('Mound fill subdivision record');
+        expect(languages.en.categories.Feature.fields.stoneCistWallPackingRecord.label)
+            .toBe('Stone cist wall and packing record');
+        expect(languages.en.categories.Feature.fields.tombInteriorRecoveryRecord.label)
+            .toBe('Tomb interior recovery record');
         expect(languages.en.categories.Feature.fields.shellMiddenStratigraphy.label)
             .toBe('Shell midden stratigraphy');
         expect(languages.en.categories.Feature.fields.shellMiddenSettlementContext.label)
@@ -1089,6 +1114,18 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-tombBurialStructureInvestigation']
             .values.capstoneBeforeRemoval.label)
             .toBe('Capstone before removal');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-tombSurveyPurpose']
+            .values.damageMinimized.label)
+            .toBe('Damage minimized');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-moundFillSubdivisionRecord']
+            .values.fieldSubdivisionKept.label)
+            .toBe('Field subdivision kept');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-stoneCistWallPackingRecord']
+            .values.plasterClayRemaining.label)
+            .toBe('Plaster clay remaining');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-tombInteriorRecoveryRecord']
+            .values.nearFloorFineInvestigation.label)
+            .toBe('Near-floor fine investigation');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-graveGoodsRitualContext']
             .values.functionNotAssumed.label)
             .toBe('Function not assumed');
@@ -1401,6 +1438,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-featureBurialProcessAssessment']
             .values.soilFormationTrace.label)
             .toBe('토양화 흔적');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-moundTrenchInvestigation']
+            .values.partialInformationCaution.label)
+            .toBe('부분정보 주의');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-tombInteriorRecoveryRecord']
+            .values.organicDryingAvoided.label)
+            .toBe('유기물 건조 방지');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-pitFeatureFunctionAssessment']
             .values.functionNotAssumed.label)
             .toBe('성격 자동판정 금지');

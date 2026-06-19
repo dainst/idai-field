@@ -282,6 +282,21 @@
         "tombBurialStructureInvestigation": {
           "label": "Tomb burial structure investigation"
         },
+        "tombSurveyPurpose": {
+          "label": "Tomb survey purpose"
+        },
+        "moundTrenchInvestigation": {
+          "label": "Mound trench investigation"
+        },
+        "moundFillSubdivisionRecord": {
+          "label": "Mound fill subdivision record"
+        },
+        "stoneCistWallPackingRecord": {
+          "label": "Stone cist wall and packing record"
+        },
+        "tombInteriorRecoveryRecord": {
+          "label": "Tomb interior recovery record"
+        },
         "shellMiddenStratigraphy": {
           "label": "Shell midden stratigraphy"
         },

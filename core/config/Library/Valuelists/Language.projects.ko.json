@@ -1158,6 +1158,88 @@
     },
     "description": "고분 매장주체부 조사에서 묘광, 관·곽·실, 개석, 밀봉토, 내부토, 소형유물, 벽면·바닥, 폐쇄시설, 입구·묘도, 추가장, 도굴·교란, 해체 후 기초와 보존 판단을 분리하기 위한 목록"
   },
+  "KoreanFieldwork-tombSurveyPurpose": {
+    "values": {
+      "characterClarification": { "label": "성격 구명" },
+      "restorationMaintenance": { "label": "정비·복원" },
+      "rescueDevelopment": { "label": "개발 구제" },
+      "presenceConfirmation": { "label": "존부 확인" },
+      "outerExtentConfirmation": { "label": "외연 확인" },
+      "moundFocusedInvestigation": { "label": "봉분 정밀" },
+      "burialStructureFocused": { "label": "매장주체부 중심" },
+      "scheduleBudgetConstraint": { "label": "기간·예산 제약" },
+      "previousInvestigationCompared": { "label": "선행조사 대조" },
+      "damageMinimized": { "label": "훼손 최소화" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "고총고분 조사의 목적과 제약을 먼저 남겨 트렌치 방향, 조사 범위, 봉분·매장주체부 우선순위를 설명하기 위한 목록"
+  },
+  "KoreanFieldwork-moundTrenchInvestigation": {
+    "values": {
+      "burialMainAxis": { "label": "매장주체 장축" },
+      "burialShortAxis": { "label": "매장주체 단축" },
+      "ridgeAxis": { "label": "능선 장축" },
+      "slopeDirection": { "label": "경사면 방향" },
+      "crossTrench": { "label": "십자 트렌치" },
+      "outerExtension": { "label": "외측 연장" },
+      "trenchWidthRecorded": { "label": "트렌치 너비 기록" },
+      "sectionBaulkPosition": { "label": "토층둑 위치" },
+      "planRemovalCombined": { "label": "평면 제토 병행" },
+      "sectionPlanCompared": { "label": "단면·평면 대조" },
+      "partialInformationCaution": { "label": "부분정보 주의" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "봉분 트렌치가 매장주체부와 지형을 어떻게 가로지르는지, 단면과 평면 정보가 함께 검토되었는지 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-moundFillSubdivisionRecord": {
+    "values": {
+      "fillMaterialProperties": { "label": "성토재 물성" },
+      "fillCompositionRatio": { "label": "성토재 구성비" },
+      "fillUnitRecorded": { "label": "성토재 단위" },
+      "transportUnitCandidate": { "label": "운반 단위 후보" },
+      "compartmentFillCandidate": { "label": "구획성토 후보" },
+      "constructionProcess": { "label": "성토 공정" },
+      "fillExtentRecorded": { "label": "성토 범위" },
+      "fieldSubdivisionKept": { "label": "현장 세분 유지" },
+      "labMergePossible": { "label": "실내 합침 가능" },
+      "labSubdivisionImpossible": { "label": "실내 세분 불가" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "봉분 성토재를 현장에서 세분해 성토 단위, 운반 단위, 구획성토와 성토공정을 되살릴 수 있게 하기 위한 목록"
+  },
+  "KoreanFieldwork-stoneCistWallPackingRecord": {
+    "values": {
+      "capstoneWorkedDegree": { "label": "개석 가공도" },
+      "stoneMaterialIdentified": { "label": "석재 암질" },
+      "stoneStrengthChecked": { "label": "석재 강도" },
+      "fieldStoneReview": { "label": "현장 석재 감정" },
+      "wallTopClay": { "label": "벽체 상면 점질토" },
+      "woodSupportTrace": { "label": "목재 받침흔" },
+      "packingSpace": { "label": "충전공간" },
+      "packingComposition": { "label": "충전재 구성" },
+      "packingMethod": { "label": "충전 방식" },
+      "topCoverSoil": { "label": "상면 피복토" },
+      "plasterClayRemaining": { "label": "미장토 잔존" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "석곽·석실 벽체와 충전공간에서 개석, 석재, 점질토, 목재 받침, 충전재와 미장토를 분리해 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-tombInteriorRecoveryRecord": {
+    "values": {
+      "interiorLightingControlled": { "label": "내부 조도 관리" },
+      "disturbedSoilSieved": { "label": "교란토 체질" },
+      "nearFloorFineInvestigation": { "label": "바닥 근처 정밀조사" },
+      "smallFindLossCaution": { "label": "소형유물 유실 주의" },
+      "organicDiscoloration": { "label": "유기물 변색" },
+      "organicDryingAvoided": { "label": "유기물 건조 방지" },
+      "uniqueRecoveryNumber": { "label": "고유번호 수습" },
+      "smallTabletSerialNumber": { "label": "소찰 일련번호" },
+      "bulkRecovery": { "label": "일괄수습" },
+      "laboratorySeparationPlanned": { "label": "연구실 분리해체" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "분묘 내부에서 조도, 교란토 체질, 바닥 근처 정밀조사, 소형유물·유기물 보존, 고유번호와 일괄수습 계획을 관리하기 위한 목록"
+  },
   "KoreanFieldwork-graveGoodsRitualContext": {
     "values": {
       "wearingPosition": { "label": "착장 위치" },

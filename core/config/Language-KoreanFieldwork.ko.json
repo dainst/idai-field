@@ -282,6 +282,21 @@
         "tombBurialStructureInvestigation": {
           "label": "고분 매장주체부 조사"
         },
+        "tombSurveyPurpose": {
+          "label": "고총고분 조사 목적"
+        },
+        "moundTrenchInvestigation": {
+          "label": "봉분 트렌치 조사"
+        },
+        "moundFillSubdivisionRecord": {
+          "label": "봉분 성토 세분"
+        },
+        "stoneCistWallPackingRecord": {
+          "label": "석곽 벽체·충전 기록"
+        },
+        "tombInteriorRecoveryRecord": {
+          "label": "분묘 내부 수습 기록"
+        },
         "shellMiddenStratigraphy": {
           "label": "패총 층위·형성과정"
         },

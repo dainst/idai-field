@@ -32676,6 +32676,160 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-tombSurveyPurpose": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "characterClarification": {},
+      "restorationMaintenance": {},
+      "rescueDevelopment": {},
+      "presenceConfirmation": {},
+      "outerExtentConfirmation": {},
+      "moundFocusedInvestigation": {},
+      "burialStructureFocused": {},
+      "scheduleBudgetConstraint": {},
+      "previousInvestigationCompared": {},
+      "damageMinimized": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "characterClarification",
+      "restorationMaintenance",
+      "rescueDevelopment",
+      "presenceConfirmation",
+      "outerExtentConfirmation",
+      "moundFocusedInvestigation",
+      "burialStructureFocused",
+      "scheduleBudgetConstraint",
+      "previousInvestigationCompared",
+      "damageMinimized",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-moundTrenchInvestigation": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "burialMainAxis": {},
+      "burialShortAxis": {},
+      "ridgeAxis": {},
+      "slopeDirection": {},
+      "crossTrench": {},
+      "outerExtension": {},
+      "trenchWidthRecorded": {},
+      "sectionBaulkPosition": {},
+      "planRemovalCombined": {},
+      "sectionPlanCompared": {},
+      "partialInformationCaution": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "burialMainAxis",
+      "burialShortAxis",
+      "ridgeAxis",
+      "slopeDirection",
+      "crossTrench",
+      "outerExtension",
+      "trenchWidthRecorded",
+      "sectionBaulkPosition",
+      "planRemovalCombined",
+      "sectionPlanCompared",
+      "partialInformationCaution",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-moundFillSubdivisionRecord": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "fillMaterialProperties": {},
+      "fillCompositionRatio": {},
+      "fillUnitRecorded": {},
+      "transportUnitCandidate": {},
+      "compartmentFillCandidate": {},
+      "constructionProcess": {},
+      "fillExtentRecorded": {},
+      "fieldSubdivisionKept": {},
+      "labMergePossible": {},
+      "labSubdivisionImpossible": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "fillMaterialProperties",
+      "fillCompositionRatio",
+      "fillUnitRecorded",
+      "transportUnitCandidate",
+      "compartmentFillCandidate",
+      "constructionProcess",
+      "fillExtentRecorded",
+      "fieldSubdivisionKept",
+      "labMergePossible",
+      "labSubdivisionImpossible",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-stoneCistWallPackingRecord": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "capstoneWorkedDegree": {},
+      "stoneMaterialIdentified": {},
+      "stoneStrengthChecked": {},
+      "fieldStoneReview": {},
+      "wallTopClay": {},
+      "woodSupportTrace": {},
+      "packingSpace": {},
+      "packingComposition": {},
+      "packingMethod": {},
+      "topCoverSoil": {},
+      "plasterClayRemaining": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "capstoneWorkedDegree",
+      "stoneMaterialIdentified",
+      "stoneStrengthChecked",
+      "fieldStoneReview",
+      "wallTopClay",
+      "woodSupportTrace",
+      "packingSpace",
+      "packingComposition",
+      "packingMethod",
+      "topCoverSoil",
+      "plasterClayRemaining",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-tombInteriorRecoveryRecord": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "interiorLightingControlled": {},
+      "disturbedSoilSieved": {},
+      "nearFloorFineInvestigation": {},
+      "smallFindLossCaution": {},
+      "organicDiscoloration": {},
+      "organicDryingAvoided": {},
+      "uniqueRecoveryNumber": {},
+      "smallTabletSerialNumber": {},
+      "bulkRecovery": {},
+      "laboratorySeparationPlanned": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "interiorLightingControlled",
+      "disturbedSoilSieved",
+      "nearFloorFineInvestigation",
+      "smallFindLossCaution",
+      "organicDiscoloration",
+      "organicDryingAvoided",
+      "uniqueRecoveryNumber",
+      "smallTabletSerialNumber",
+      "bulkRecovery",
+      "laboratorySeparationPlanned",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-graveGoodsRitualContext": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

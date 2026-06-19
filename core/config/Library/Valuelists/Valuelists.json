@@ -36552,6 +36552,76 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-paleolithicLithicSpatialContext": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-20",
+    "values": {
+      "gridPitLayoutRecorded": {},
+      "lithicPlanDistributionRecorded": {},
+      "lithicConcentrationDistinguished": {},
+      "scatterAreaDistinguished": {},
+      "coreFlakeDebitageRecorded": {},
+      "microDebitageWaterSieved": {},
+      "refittingRelationRecorded": {},
+      "rawMaterialDistributionMapped": {},
+      "specialRawMaterialImportChecked": {},
+      "cobbleConcentrationChecked": {},
+      "charcoalConcentrationChecked": {},
+      "activityAreaHypothesisRecorded": {},
+      "machineStrippingStoppedAfterFind": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "gridPitLayoutRecorded",
+      "lithicPlanDistributionRecorded",
+      "lithicConcentrationDistinguished",
+      "scatterAreaDistinguished",
+      "coreFlakeDebitageRecorded",
+      "microDebitageWaterSieved",
+      "refittingRelationRecorded",
+      "rawMaterialDistributionMapped",
+      "specialRawMaterialImportChecked",
+      "cobbleConcentrationChecked",
+      "charcoalConcentrationChecked",
+      "activityAreaHypothesisRecorded",
+      "machineStrippingStoppedAfterFind",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-paleolithicCulturalLayerReview": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-20",
+    "values": {
+      "naturalLayerSeparated": {},
+      "culturalLayerNamed": {},
+      "naturalCulturalMismatchChecked": {},
+      "referencePitMaintained": {},
+      "paleosolWedgeChecked": {},
+      "artifactVerticalMovementConsidered": {},
+      "artifactRedepositionConsidered": {},
+      "freezeThawDisturbanceConsidered": {},
+      "refittedAcrossLayersChecked": {},
+      "lithicTiltPatternChecked": {},
+      "absoluteDatingPositionSelected": {},
+      "volcanicAshAnalysisCandidate": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "naturalLayerSeparated",
+      "culturalLayerNamed",
+      "naturalCulturalMismatchChecked",
+      "referencePitMaintained",
+      "paleosolWedgeChecked",
+      "artifactVerticalMovementConsidered",
+      "artifactRedepositionConsidered",
+      "freezeThawDisturbanceConsidered",
+      "refittedAcrossLayersChecked",
+      "lithicTiltPatternChecked",
+      "absoluteDatingPositionSelected",
+      "volcanicAshAnalysisCandidate",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-excavationScopeDifficultyBasis": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

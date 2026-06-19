@@ -533,6 +533,9 @@
         "excavationReverseSequenceCheck": {
           "label": "발굴행위 역순 검토"
         },
+        "paleolithicLithicSpatialContext": {
+          "label": "구석기 석기공간 맥락"
+        },
         "fieldOnlyMissingCheck": {
           "label": "현장시점 누락점검"
         },
@@ -821,6 +824,9 @@
         },
         "stratigraphicRelationReview": {
           "label": "층위관계 검토 이력"
+        },
+        "paleolithicCulturalLayerReview": {
+          "label": "구석기 문화층 검토"
         },
         "soilTextureFieldAssessment": {
           "label": "토성 현장판정"

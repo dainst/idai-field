@@ -1523,6 +1523,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "paleolithicLithicSpatialContext": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "fieldOnlyMissingCheck": {
           "inputType": "checkboxes",
           "mandatory": true,
@@ -1847,6 +1851,7 @@
         "interpretationArgument": "KoreanFieldwork-interpretationArgument",
         "excavationContextModel": "KoreanFieldwork-excavationContextModel",
         "excavationReverseSequenceCheck": "KoreanFieldwork-excavationReverseSequenceCheck",
+        "paleolithicLithicSpatialContext": "KoreanFieldwork-paleolithicLithicSpatialContext",
         "fieldOnlyMissingCheck": "KoreanFieldwork-fieldOnlyMissingCheck",
         "firstExposureRecord": "KoreanFieldwork-firstExposureRecord",
         "pitDwellingExposureBaulk": "KoreanFieldwork-pitDwellingExposureBaulk",
@@ -1954,6 +1959,7 @@
             "interpretationArgument",
             "excavationContextModel",
             "excavationReverseSequenceCheck",
+            "paleolithicLithicSpatialContext",
             "fieldOnlyMissingCheck",
             "firstExposureRecord",
             "pitDwellingExposureBaulk",
@@ -2128,6 +2134,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "paleolithicCulturalLayerReview": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "soilTextureFieldAssessment": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -2187,6 +2197,7 @@
         "featureBlockInclusionAssessment": "KoreanFieldwork-featureBlockInclusionAssessment",
         "featureBurialProcessAssessment": "KoreanFieldwork-featureBurialProcessAssessment",
         "stratigraphicRelationReview": "KoreanFieldwork-stratigraphicRelationReview",
+        "paleolithicCulturalLayerReview": "KoreanFieldwork-paleolithicCulturalLayerReview",
         "soilTextureFieldAssessment": "KoreanFieldwork-soilTextureFieldAssessment",
         "alluvialLayerConceptAudit": "KoreanFieldwork-alluvialLayerConceptAudit",
         "alluvialSurfaceAttribution": "KoreanFieldwork-alluvialSurfaceAttribution",
@@ -2235,6 +2246,7 @@
             "featureBlockInclusionAssessment",
             "featureBurialProcessAssessment",
             "stratigraphicRelationReview",
+            "paleolithicCulturalLayerReview",
             "soilTextureFieldAssessment",
             "alluvialLayerConceptAudit",
             "alluvialSurfaceAttribution",

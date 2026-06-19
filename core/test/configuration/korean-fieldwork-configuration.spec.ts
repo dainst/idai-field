@@ -531,6 +531,16 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('duplicateSample');
         expect(documentsById['survey-paleolithic-terrace-001'].resource.paleolithicNonSiteResourceSurvey)
             .toContain('nearbyStoneSource');
+        expect(documentsById['feature-paleolithic-lithic-cluster-001'].resource.paleolithicLithicSpatialContext)
+            .toContain('microDebitageWaterSieved');
+        expect(documentsById['feature-paleolithic-lithic-cluster-001'].resource.paleolithicLithicSpatialContext)
+            .toContain('machineStrippingStoppedAfterFind');
+        expect(documentsById['segment-paleolithic-cultural-layer-001'].resource.relations.liesWithin)
+            .toEqual(['feature-paleolithic-lithic-cluster-001']);
+        expect(documentsById['segment-paleolithic-cultural-layer-001'].resource.paleolithicCulturalLayerReview)
+            .toContain('naturalCulturalMismatchChecked');
+        expect(documentsById['segment-paleolithic-cultural-layer-001'].resource.paleolithicCulturalLayerReview)
+            .toContain('refittedAcrossLayersChecked');
         expect(documentsById['find-paleolithic-candidate-lithic-001'].resource.relations.liesWithin)
             .toEqual(['survey-paleolithic-terrace-001']);
         expect(documentsById['find-paleolithic-candidate-lithic-001'].resource.artifactLabelRegisterLink)
@@ -1363,6 +1373,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.fields.interpretationArgument.inputType).toBe('checkboxes');
         expect(featureForm.fields.excavationContextModel.inputType).toBe('checkboxes');
         expect(featureForm.fields.excavationReverseSequenceCheck.inputType).toBe('checkboxes');
+        expect(featureForm.fields.paleolithicLithicSpatialContext.inputType).toBe('checkboxes');
         expect(featureForm.fields.pitDwellingExposureBaulk.inputType).toBe('checkboxes');
         expect(featureForm.fields.pitDwellingFloorFacility.inputType).toBe('checkboxes');
         expect(featureForm.fields.pitDwellingFireEvidence.inputType).toBe('checkboxes');
@@ -1436,6 +1447,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureSegmentForm.fields.featureBlockInclusionAssessment.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.featureBurialProcessAssessment.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.stratigraphicRelationReview.inputType).toBe('checkboxes');
+        expect(featureSegmentForm.fields.paleolithicCulturalLayerReview.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.soilTextureFieldAssessment.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.alluvialLayerConceptAudit.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.alluvialSurfaceAttribution.inputType).toBe('checkboxes');
@@ -1754,6 +1766,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-excavationContextModel');
         expect(featureForm.valuelists.excavationReverseSequenceCheck)
             .toBe('KoreanFieldwork-excavationReverseSequenceCheck');
+        expect(featureForm.valuelists.paleolithicLithicSpatialContext)
+            .toBe('KoreanFieldwork-paleolithicLithicSpatialContext');
         expect(featureForm.valuelists.pitDwellingExposureBaulk)
             .toBe('KoreanFieldwork-pitDwellingExposureBaulk');
         expect(featureForm.valuelists.pitDwellingFloorFacility)
@@ -1899,6 +1913,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-featureBurialProcessAssessment');
         expect(featureSegmentForm.valuelists.stratigraphicRelationReview)
             .toBe('KoreanFieldwork-stratigraphicRelationReview');
+        expect(featureSegmentForm.valuelists.paleolithicCulturalLayerReview)
+            .toBe('KoreanFieldwork-paleolithicCulturalLayerReview');
         expect(featureSegmentForm.valuelists.soilTextureFieldAssessment)
             .toBe('KoreanFieldwork-soilTextureFieldAssessment');
         expect(featureSegmentForm.valuelists.alluvialLayerConceptAudit)
@@ -2430,6 +2446,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Feature burial process assessment');
         expect(languages.en.categories.FeatureSegment.fields.stratigraphicRelationReview.label)
             .toBe('Stratigraphic relation review');
+        expect(languages.en.categories.Feature.fields.paleolithicLithicSpatialContext.label)
+            .toBe('Paleolithic lithic spatial context');
+        expect(languages.en.categories.FeatureSegment.fields.paleolithicCulturalLayerReview.label)
+            .toBe('Paleolithic cultural layer review');
         expect(languages.en.categories.FeatureSegment.fields.soilTextureFieldAssessment.label)
             .toBe('Soil texture field assessment');
         expect(languages.en.categories.FeatureSegment.fields.alluvialLayerConceptAudit.label)
@@ -2689,6 +2709,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-paleolithicNonSiteResourceSurvey']
             .values.nearbyStoneSource.label)
             .toBe('주변 석재 공급지');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-paleolithicLithicSpatialContext']
+            .values.microDebitageWaterSieved.label)
+            .toBe('Microdebitage water sieved');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-paleolithicCulturalLayerReview']
+            .values.naturalCulturalMismatchChecked.label)
+            .toBe('자연층·문화층 불일치 검토');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-excavationScopeDifficultyBasis']
             .values.featureIdentificationDifficulty.label)
             .toBe('Feature identification difficulty');

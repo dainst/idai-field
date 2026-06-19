@@ -4,7 +4,8 @@
   "validationQuestions": [
     "지표에서 정형 석기가 적거나 없어도 고토양·단구·기존 유적·지도 자료가 구석기 가능성 근거로 남는가.",
     "후보 석기와 부착토, 지형조건 사진, 토양시료, 숯 확인이 채집 단계에서 함께 기록되는가.",
-    "시굴 피트의 좌표와 후보석기 판별, 단면시료, 주변 석재 공급지 조사가 정밀발굴 전환 근거로 유지되는가."
+    "시굴 피트의 좌표와 후보석기 판별, 단면시료, 주변 석재 공급지 조사가 정밀발굴 전환 근거로 유지되는가.",
+    "정밀발굴 단계에서 석기·부스러기·접합·자갈돌·탄화물 집중과 자연층/문화층 불일치가 별도 검토값으로 남는가."
   ],
   "documents": [
     {
@@ -174,6 +175,95 @@
           "topographicMapMarked",
           "geologicalMapMarked",
           "surroundingDetailedObservation"
+        ],
+        "verificationState": "needsRecheck"
+      }
+    },
+    {
+      "resource": {
+        "id": "feature-paleolithic-lithic-cluster-001",
+        "identifier": "PAL-FEAT-001",
+        "shortDescription": "석기 집중부 후보",
+        "category": "Feature",
+        "relations": {
+          "isRecordedIn": ["op-paleolithic-survey-001"],
+          "liesWithin": ["survey-paleolithic-terrace-001"]
+        },
+        "description": "시굴 뒤 정밀발굴 범위로 확장한 구역에서 몸돌·격지·미세박편과 자갈돌·탄화물 집중이 겹친다. 석기만 수습하고 끝내지 않고 제작공간, 폐기공간, 이동 동선 후보를 현장에서 검토한다.",
+        "featurePackage": ["paleolithicSite"],
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "researchQuestionFit"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "excavationContextModel": [
+          "verticalStratigraphyReviewed",
+          "horizontalDistributionReviewed",
+          "investigationMethodRationale",
+          "siteContextLinked"
+        ],
+        "paleolithicLithicSpatialContext": [
+          "gridPitLayoutRecorded",
+          "lithicPlanDistributionRecorded",
+          "lithicConcentrationDistinguished",
+          "coreFlakeDebitageRecorded",
+          "microDebitageWaterSieved",
+          "refittingRelationRecorded",
+          "rawMaterialDistributionMapped",
+          "cobbleConcentrationChecked",
+          "charcoalConcentrationChecked",
+          "activityAreaHypothesisRecorded",
+          "machineStrippingStoppedAfterFind"
+        ],
+        "interpretationArgument": [
+          "alternativeInterpretationRecorded",
+          "naturalProcessConsidered",
+          "adoptedArgumentRecorded"
+        ],
+        "verificationState": "needsRecheck"
+      }
+    },
+    {
+      "resource": {
+        "id": "segment-paleolithic-cultural-layer-001",
+        "identifier": "PAL-SEG-001",
+        "shortDescription": "고토양 문화층 후보",
+        "category": "FeatureSegment",
+        "relations": {
+          "isRecordedIn": ["op-paleolithic-survey-001"],
+          "liesWithin": ["feature-paleolithic-lithic-cluster-001"]
+        },
+        "description": "암갈색 고토양과 석기 집중이 겹치지만 자연층 구분과 문화층 구분이 완전히 일치하지 않는다. 기준피트와 단면시료를 유지하면서 유물 수직이동, 재퇴적, 동결융해 교란, 층간 접합 가능성을 검토한다.",
+        "featurePackage": ["paleolithicSite"],
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "crossReviewNeeded"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "chronologyArgument": [
+          "stratigraphicRelation",
+          "absoluteDate",
+          "alternativeChronology"
+        ],
+        "stratigraphicDivisionBasis": [
+          "particleSize",
+          "grainSizeComposition",
+          "sedimentaryStructure",
+          "culturalLayer"
+        ],
+        "paleolithicCulturalLayerReview": [
+          "naturalLayerSeparated",
+          "culturalLayerNamed",
+          "naturalCulturalMismatchChecked",
+          "referencePitMaintained",
+          "paleosolWedgeChecked",
+          "artifactVerticalMovementConsidered",
+          "artifactRedepositionConsidered",
+          "freezeThawDisturbanceConsidered",
+          "refittedAcrossLayersChecked",
+          "absoluteDatingPositionSelected"
         ],
         "verificationState": "needsRecheck"
       }

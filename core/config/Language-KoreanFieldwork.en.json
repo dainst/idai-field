@@ -533,6 +533,9 @@
         "excavationReverseSequenceCheck": {
           "label": "Excavation reverse sequence check"
         },
+        "paleolithicLithicSpatialContext": {
+          "label": "Paleolithic lithic spatial context"
+        },
         "fieldOnlyMissingCheck": {
           "label": "Field-only missing check"
         },
@@ -821,6 +824,9 @@
         },
         "stratigraphicRelationReview": {
           "label": "Stratigraphic relation review"
+        },
+        "paleolithicCulturalLayerReview": {
+          "label": "Paleolithic cultural layer review"
         },
         "soilTextureFieldAssessment": {
           "label": "Soil texture field assessment"

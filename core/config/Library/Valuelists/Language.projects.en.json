@@ -15701,6 +15701,43 @@
     },
     "description": "Korean field notebook controls for recording Paleolithic non-site resource survey of nearby stone sources, raw material distribution, rock characteristics, and mapped activity ranges"
   },
+  "KoreanFieldwork-paleolithicLithicSpatialContext": {
+    "values": {
+      "gridPitLayoutRecorded": { "label": "Grid and pit layout recorded" },
+      "lithicPlanDistributionRecorded": { "label": "Lithic plan distribution recorded" },
+      "lithicConcentrationDistinguished": { "label": "Lithic concentration distinguished" },
+      "scatterAreaDistinguished": { "label": "Scatter area distinguished" },
+      "coreFlakeDebitageRecorded": { "label": "Core, flake, and debitage recorded" },
+      "microDebitageWaterSieved": { "label": "Microdebitage water sieved" },
+      "refittingRelationRecorded": { "label": "Refitting relation recorded" },
+      "rawMaterialDistributionMapped": { "label": "Raw-material distribution mapped" },
+      "specialRawMaterialImportChecked": { "label": "Special raw-material import checked" },
+      "cobbleConcentrationChecked": { "label": "Cobble concentration checked" },
+      "charcoalConcentrationChecked": { "label": "Charcoal concentration checked" },
+      "activityAreaHypothesisRecorded": { "label": "Activity-area hypothesis recorded" },
+      "machineStrippingStoppedAfterFind": { "label": "Machine stripping stopped after find" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean field notebook controls for recording Paleolithic lithic plan distribution, microdebitage, refitting, raw-material distribution, cobble or charcoal concentrations, and activity-area hypotheses during excavation"
+  },
+  "KoreanFieldwork-paleolithicCulturalLayerReview": {
+    "values": {
+      "naturalLayerSeparated": { "label": "Natural layer separated" },
+      "culturalLayerNamed": { "label": "Cultural layer named" },
+      "naturalCulturalMismatchChecked": { "label": "Natural/cultural mismatch checked" },
+      "referencePitMaintained": { "label": "Reference pit maintained" },
+      "paleosolWedgeChecked": { "label": "Paleosol wedge checked" },
+      "artifactVerticalMovementConsidered": { "label": "Artifact vertical movement considered" },
+      "artifactRedepositionConsidered": { "label": "Artifact redeposition considered" },
+      "freezeThawDisturbanceConsidered": { "label": "Freeze-thaw disturbance considered" },
+      "refittedAcrossLayersChecked": { "label": "Refitted across layers checked" },
+      "lithicTiltPatternChecked": { "label": "Lithic tilt pattern checked" },
+      "absoluteDatingPositionSelected": { "label": "Absolute-dating position selected" },
+      "volcanicAshAnalysisCandidate": { "label": "Volcanic-ash analysis candidate" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean field notebook controls for reviewing Paleolithic cultural layers against natural strata, reference pits, paleosol wedges, artifact movement, refitting across layers, and dating-sample positions"
+  },
   "KoreanFieldwork-excavationScopeDifficultyBasis": {
     "values": {
       "siteType": {

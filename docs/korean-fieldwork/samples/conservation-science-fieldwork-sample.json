@@ -1,0 +1,450 @@
+{
+  "title": "Korean conservation science fieldwork sample",
+  "purpose": "Validate that conservation-science records connect exposure, emergency storage, material-specific risks, analysis requests, treatment principles, DNA and soil sampling, and destructive-analysis decisions from the field stage.",
+  "validationQuestions": [
+    "수침목재·칠기 수습이 물에 젖은 상태, 차광·냉암소, 표면약제 사용, C14·보존처리 영향 검토까지 이어지는가.",
+    "금속·토도류 분석 의뢰가 재질명 하나가 아니라 비파괴 우선, 분석 위치, 절단·연마 승인, 염·수화·오염 위험과 함께 남는가.",
+    "지류·직물 응급수습이 공기·빛 노출, 온습도 적응, 장갑·마스크, 보관함, 오염 모니터링을 현장 기록으로 남기는가.",
+    "인골 DNA와 유기물·토양 시료가 접촉자, 세척 금지, 대조토, 냉장 보관, 파괴분석 승인과 해석 영향까지 추적되는가."
+  ],
+  "documents": [
+    {
+      "resource": {
+        "id": "op-conservation-001",
+        "identifier": "CONS-OP-001",
+        "shortDescription": "보존과학 현장수습 작업",
+        "category": "Operation",
+        "relations": {},
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "crossReviewNeeded"
+        ],
+        "recordCreationTiming": "duringFieldwork",
+        "dailyLogContent": [
+          "workDateWeather",
+          "workArea",
+          "findSampleCollection",
+          "photoDrawingNumbers",
+          "visitorInstruction"
+        ],
+        "dailyLogReview": [
+          "sameDayWritten",
+          "findListCrossChecked",
+          "sampleListCrossChecked",
+          "reviewerChecked"
+        ],
+        "reportCrossCheck": [
+          "manuscript",
+          "photoRegister",
+          "artifactRegister",
+          "sampleRegister",
+          "sourceMediaBackup"
+        ]
+      }
+    },
+    {
+      "resource": {
+        "id": "find-waterlogged-lacquer-001",
+        "identifier": "CONS-FIND-001",
+        "shortDescription": "수침 칠기 목제편",
+        "category": "Find",
+        "relations": {
+          "isRecordedIn": ["op-conservation-001"]
+        },
+        "description": "저습지층에서 노출된 칠기 목제편. 목질부와 칠도막의 보존 위험이 달라 수침목재 응급보관, 칠도막 위험, 보존처리 원칙 검토를 한 기록 안에 남긴다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "crossReviewNeeded"
+        ],
+        "fieldOnlyMissingCheck": [
+          "preRemovalCondition",
+          "photoAngleAndScale",
+          "spatialLocation",
+          "numberedBeforeCollection",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "conservationScienceRequest": [
+          "requestPurposeRecorded",
+          "materialRecorded",
+          "excavationContextLinked",
+          "analysisInstitutionRecorded",
+          "analysisMethodCandidate",
+          "nonDestructiveFirst",
+          "remainingSampleStorage",
+          "resultLinked",
+          "pendingDecision"
+        ],
+        "waterloggedWoodEmergencyStorage": [
+          "waterloggedState",
+          "sealedContainer",
+          "degassedWaterBag",
+          "wetClothPlasticWrap",
+          "lightShielded",
+          "coolDarkStorage",
+          "surfaceChemicalUsed",
+          "chemicalNameRecorded",
+          "chemicalAmountRecorded",
+          "c14ImpactReview",
+          "conservationTreatmentImpactReview",
+          "pendingDecision"
+        ],
+        "lacquerConservationRisk": [
+          "woodBodyDeteriorated",
+          "lacquerFilmRemains",
+          "lacquerFilmCrackingRisk",
+          "flakingRisk",
+          "chemicalDeformationRisk",
+          "dryingShrinkageRisk",
+          "layeredStructurePhoto",
+          "crossSectionAnalysisCandidate",
+          "pendingDecision"
+        ],
+        "conservationTreatmentPrincipleReview": [
+          "originalFormPreserved",
+          "valueMaintained",
+          "exteriorDamageAvoided",
+          "structuralDamageAvoided",
+          "materialDamageAvoided",
+          "evidenceDamageAvoided",
+          "reversibleMaterial",
+          "retreatmentPossible",
+          "storageEnvironmentResponse",
+          "pendingDecision"
+        ],
+        "artifactRecoveryPreservationRisk": [
+          "moistureEvaporation",
+          "woodDryingShrinkage",
+          "specialistRequest",
+          "pendingDecision"
+        ],
+        "artifactCleaningDryingControl": [
+          "featureUnitSeparated",
+          "recoveryNumberMaintained",
+          "waterloggedStorage",
+          "rapidDryingAvoided",
+          "pendingDecision"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "find-metal-conservation-001",
+        "identifier": "CONS-FIND-002",
+        "shortDescription": "부식 금속유물 분석 의뢰",
+        "category": "Find",
+        "relations": {
+          "isRecordedIn": ["op-conservation-001"]
+        },
+        "description": "철제와 청동 후보가 섞인 부식 금속유물. 표면 부식층과 절단·연마 승인 여부가 제작기술 해석을 바꿀 수 있어 비파괴 우선과 파괴 범위를 분리한다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "researchQuestionFit"
+        ],
+        "fieldOnlyMissingCheck": [
+          "preRemovalCondition",
+          "spatialLocation",
+          "elevationRecorded",
+          "numberedBeforeCollection",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "conservationScienceRequest": [
+          "requestPurposeRecorded",
+          "materialRecorded",
+          "excavationContextLinked",
+          "analysisInstitutionRecorded",
+          "analysisMethodCandidate",
+          "nonDestructiveFirst",
+          "destructiveSampleFlag",
+          "remainingSampleStorage",
+          "resultLinked",
+          "pendingDecision"
+        ],
+        "metalAnalysisRequest": [
+          "ironArtifact",
+          "bronzeArtifact",
+          "xrf",
+          "semWds",
+          "metallographicMicroscopy",
+          "leadIsotope",
+          "microstructure",
+          "nonMetallicInclusions",
+          "alloyRatio",
+          "sampleLocation",
+          "cuttingPolishingApproval",
+          "pendingDecision"
+        ],
+        "conservationTreatmentPrincipleReview": [
+          "originalFormPreserved",
+          "evidenceDamageAvoided",
+          "reversibleMaterial",
+          "retreatmentPossible",
+          "storageEnvironmentResponse",
+          "pendingDecision"
+        ],
+        "storageEnvironmentControl": [
+          "storageSpace",
+          "metalHumidity40_50",
+          "regularInspection"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "find-ceramic-salt-001",
+        "identifier": "CONS-FIND-003",
+        "shortDescription": "염 결정 토도류",
+        "category": "Find",
+        "relations": {
+          "isRecordedIn": ["op-conservation-001"]
+        },
+        "description": "해안 저지층 출토 토도류. 염 결정, 탄산칼슘 고착, 과거 복원재와 물세척 위험이 분석과 보존처리를 동시에 흔들 수 있다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "criteriaConsistency"
+        ],
+        "fieldOnlyMissingCheck": [
+          "preRemovalCondition",
+          "photoAngleAndScale",
+          "spatialLocation",
+          "numberedBeforeCollection"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "conservationScienceRequest": [
+          "requestPurposeRecorded",
+          "materialRecorded",
+          "excavationContextLinked",
+          "analysisMethodCandidate",
+          "nonDestructiveFirst",
+          "remainingSampleStorage",
+          "pendingDecision"
+        ],
+        "ceramicConservationState": [
+          "clayBodyState",
+          "glazeState",
+          "saltCrystallization",
+          "moldRisk",
+          "hydrationRisk",
+          "calciumCarbonateAdhesion",
+          "shellAdhesion",
+          "oldRestorationMaterial",
+          "dryCleaning",
+          "wetCleaningCaution",
+          "dryingMethod",
+          "pendingDecision"
+        ],
+        "conservationTreatmentPrincipleReview": [
+          "originalFormPreserved",
+          "materialDamageAvoided",
+          "evidenceDamageAvoided",
+          "retreatmentPossible",
+          "storageEnvironmentResponse",
+          "pendingDecision"
+        ],
+        "artifactCleaningDryingControl": [
+          "featureUnitSeparated",
+          "recoveryNumberMaintained",
+          "dryCleaning",
+          "rapidDryingAvoided",
+          "pendingDecision"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "find-paper-textile-001",
+        "identifier": "CONS-FIND-004",
+        "shortDescription": "분묘 지류·직물 덩어리",
+        "category": "Find",
+        "relations": {
+          "isRecordedIn": ["op-conservation-001"]
+        },
+        "description": "분묘 내부에서 덩어리 상태로 확인된 지류·직물 후보. 출토 직전 환경을 급격히 바꾸지 않고 적응 기간과 보관 조건을 기록한다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "crossReviewNeeded"
+        ],
+        "fieldOnlyMissingCheck": [
+          "preRemovalCondition",
+          "photoAngleAndScale",
+          "spatialLocation",
+          "numberedBeforeCollection",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "conservationScienceRequest": [
+          "requestPurposeRecorded",
+          "materialRecorded",
+          "excavationContextLinked",
+          "analysisInstitutionRecorded",
+          "analysisMethodCandidate",
+          "nonDestructiveFirst",
+          "pendingDecision"
+        ],
+        "paperTextileEmergencyRecovery": [
+          "originalEnvironmentMaintained",
+          "airExposureMinimized",
+          "lightExposureMinimized",
+          "coolStorage",
+          "humidity60_70",
+          "acclimationPeriod",
+          "forcedDryingAvoided",
+          "brushingAvoided",
+          "massConditionRecorded",
+          "materialSeparated",
+          "locationSorted",
+          "limeAlkaliContamination",
+          "humidityMonitoring",
+          "pollutantMonitoring",
+          "glovesAndMask",
+          "handWashing",
+          "neutralStorageBox",
+          "paulowniaBox",
+          "pencilRecord",
+          "pendingDecision"
+        ],
+        "conservationTreatmentPrincipleReview": [
+          "originalFormPreserved",
+          "valueMaintained",
+          "evidenceDamageAvoided",
+          "storageEnvironmentResponse",
+          "pendingDecision"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "sample-human-dna-soil-001",
+        "identifier": "CONS-SAMP-001",
+        "shortDescription": "인골 DNA와 내부토·대조토 시료",
+        "category": "Sample",
+        "relations": {
+          "isRecordedIn": ["op-conservation-001"]
+        },
+        "description": "인골 DNA 오염관리와 묘광 내부토·외부 대조토 분석을 함께 설계한 시료 묶음. 현장 세척과 경화처리 전에 채취·포장·인계를 기록한다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "researchQuestionFit",
+          "observationInterpretationSeparated"
+        ],
+        "fieldOnlyMissingCheck": [
+          "samplePointMapped",
+          "sampleConditionControlled",
+          "spatialLocation",
+          "elevationRecorded",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "samplePurpose": [
+          "paleoenvironment",
+          "contaminationControl",
+          "conservation"
+        ],
+        "sampleCollectionHandling": [
+          "immediateCollection",
+          "dedicatedSamplingTool",
+          "humanRemainsShade",
+          "dnaGloves",
+          "contextMapLinked",
+          "pendingDecision"
+        ],
+        "humanDnaFieldControl": [
+          "contactPersonRecorded",
+          "glovesAndMask",
+          "noFieldWashing",
+          "separatePacking",
+          "preTreatmentSamplingNeeded",
+          "coolDarkStorage",
+          "controlledSpace",
+          "labHandover",
+          "beforeConsolidationReview",
+          "pendingDecision"
+        ],
+        "organicSoilAnalysisSample": [
+          "interiorSoil",
+          "exteriorControlSoil",
+          "depthColorSampling",
+          "refrigeratedStorage",
+          "ph",
+          "organicMatter",
+          "availablePhosphate",
+          "parasiteEgg",
+          "ftIr",
+          "opticalMicroscope",
+          "sem",
+          "analysisQuestionRecorded",
+          "interpretationImpactRecorded",
+          "pendingDecision"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "sample-destructive-analysis-001",
+        "identifier": "CONS-SAMP-002",
+        "shortDescription": "금속·토도류 파괴분석 승인 시료",
+        "category": "Sample",
+        "relations": {
+          "isRecordedIn": ["op-conservation-001"],
+          "isDepictedIn": ["find-metal-conservation-001", "find-ceramic-salt-001"]
+        },
+        "description": "표면 분석 한계와 보존 원칙 충돌을 기록한 뒤 절단·연마·부식 시료 제작 승인 여부를 남기는 분석 시료.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "researchQuestionFit",
+          "crossReviewNeeded"
+        ],
+        "fieldOnlyMissingCheck": [
+          "samplePointMapped",
+          "sampleConditionControlled",
+          "spatialLocation",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "samplePurpose": [
+          "metallurgy",
+          "ceramicFabric",
+          "provenance",
+          "conservation"
+        ],
+        "sampleCollectionHandling": [
+          "immediateCollection",
+          "contextMapLinked",
+          "avoidCrushing",
+          "pendingDecision"
+        ],
+        "destructiveAnalysisDecision": [
+          "nonDestructiveFirst",
+          "minimallyDestructive",
+          "destructiveSample",
+          "surfaceContaminationChecked",
+          "corrosionLayerImpact",
+          "overpaintImpact",
+          "lightElementLimit",
+          "standardSample",
+          "crossValidation",
+          "sampleSizeLimit",
+          "conservationConflict",
+          "analysisApprovalNeeded",
+          "cuttingGrindingEtchingRecorded",
+          "remainingSampleStorage",
+          "analysisImpactReview",
+          "pendingDecision"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    }
+  ]
+}

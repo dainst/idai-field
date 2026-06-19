@@ -397,6 +397,41 @@ describe('KoreanFieldwork project configuration', () => {
     });
 
 
+    it('keeps the Korean conservation science sample aligned with field conservation fields', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const sample = loadSample('conservation-science-fieldwork-sample.json');
+        const documents = sample.documents;
+        const documentsById = documents.reduce((index: any, document: any) => {
+            index[document.resource.id] = document;
+            return index;
+        }, {});
+
+        expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
+
+        expect(documentsById['find-waterlogged-lacquer-001'].resource.waterloggedWoodEmergencyStorage)
+            .toContain('c14ImpactReview');
+        expect(documentsById['find-waterlogged-lacquer-001'].resource.lacquerConservationRisk)
+            .toContain('lacquerFilmCrackingRisk');
+        expect(documentsById['find-metal-conservation-001'].resource.metalAnalysisRequest)
+            .toContain('cuttingPolishingApproval');
+        expect(documentsById['find-ceramic-salt-001'].resource.ceramicConservationState)
+            .toContain('wetCleaningCaution');
+        expect(documentsById['find-paper-textile-001'].resource.paperTextileEmergencyRecovery)
+            .toContain('acclimationPeriod');
+        expect(documentsById['find-waterlogged-lacquer-001'].resource.conservationTreatmentPrincipleReview)
+            .toContain('evidenceDamageAvoided');
+        expect(documentsById['sample-human-dna-soil-001'].resource.humanDnaFieldControl)
+            .toContain('noFieldWashing');
+        expect(documentsById['sample-human-dna-soil-001'].resource.organicSoilAnalysisSample)
+            .toContain('exteriorControlSoil');
+        expect(documentsById['sample-destructive-analysis-001'].resource.destructiveAnalysisDecision)
+            .toContain('analysisApprovalNeeded');
+    });
+
+
     it('registers the field-record preservation fields in the bundled configuration', () => {
 
         const configReader = new ConfigReader();

@@ -1687,6 +1687,23 @@
     },
     "description": "제철유구를 노 형태만으로 확정하지 않고 제련, 단야, 용해·주조, 초강, 공정 혼재, 구조 근거, 부산물 근거, 분석 후 확정을 분리하기 위한 목록"
   },
+  "KoreanFieldwork-ironProcessClassification": {
+    "values": {
+      "ironFurnaceGeneric": { "label": "제철로" },
+      "smeltingFurnace": { "label": "제련로" },
+      "smithingFurnace": { "label": "단야로" },
+      "refiningSmithingFurnace": { "label": "정련단야로" },
+      "forgingFurnace": { "label": "단련단야로" },
+      "meltingFurnace": { "label": "용해로" },
+      "steelmakingFurnace": { "label": "제강로" },
+      "roastingFurnace": { "label": "배소로" },
+      "multipleProcessCandidate": { "label": "복수 공정 후보" },
+      "classificationAfterAnalysis": { "label": "분석 후 분류" },
+      "classificationDeferred": { "label": "분류 보류" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "제철 노 이름을 공정 확정값으로 바로 쓰지 않고 제련로, 단야로, 정련단야로, 단련단야로, 용해로, 제강로, 배소로 후보와 분석 후 분류 상태를 분리하기 위한 목록"
+  },
   "KoreanFieldwork-ironProcessRelationCheck": {
     "values": {
       "previousOutputIdentified": { "label": "이전 산출물 식별" },
@@ -3766,6 +3783,29 @@
       }
     },
     "description": "한국고고학사전·전문사전의 표제어·유적명·수치·색인·찾아가기 처리 원칙을 보고서 출력과 검색 정규화 규칙으로 추적하기 위한 목록"
+  },
+  "KoreanFieldwork-productionTermNormalization": {
+    "values": {
+      "kilnGamaTerm": { "label": "가마" },
+      "kilnYoTerm": { "label": "요" },
+      "kilnSiteYojiTerm": { "label": "요지" },
+      "kilnSiteGamateoTerm": { "label": "가마터" },
+      "openKilnHandetgamaTerm": { "label": "한뎃가마" },
+      "openKilnNocheonyoTerm": { "label": "노천요" },
+      "flatKilnPyeongyoTerm": { "label": "평요" },
+      "climbingKilnOreumgamaTerm": { "label": "오름가마" },
+      "brickKilnJeonchugyoTerm": { "label": "전축요" },
+      "clayKilnTochukyoTerm": { "label": "토축요" },
+      "firingChamberBeonjosilTerm": { "label": "번조실" },
+      "firingChamberSoseongsilTerm": { "label": "소성실" },
+      "sujangLinkedToPotteryWorkshop": { "label": "수비장-토기공방 연결" },
+      "dryingYardLinkedToPotteryWorkshop": { "label": "건조장-토기공방 연결" },
+      "originalWordingPreserved": { "label": "원문표기 보존" },
+      "productionDomainRecorded": { "label": "생산분야 기록" },
+      "reportOutputTermSeparated": { "label": "보고서 출력어 분리" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "생산유적편 사전의 가마, 요, 요지, 가마터, 한뎃가마, 노천요, 평요, 번조실, 소성실 같은 입력어를 현장 원문, 우선 표제어, 보고서 출력어, 생산분야로 분리해 관리하기 위한 목록"
   },
   "KoreanFieldwork-featurePackage": {
     "values": {

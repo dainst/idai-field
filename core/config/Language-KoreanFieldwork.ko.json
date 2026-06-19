@@ -66,6 +66,9 @@
         "dictionaryEditorialRule": {
           "label": "사전 표기·출력 원칙"
         },
+        "productionTermNormalization": {
+          "label": "생산유적 용어 정규화"
+        },
         "termApplicationScope": {
           "label": "용어 적용범위"
         },
@@ -685,6 +688,9 @@
         },
         "ironProcessEvidence": {
           "label": "제철 공정 근거"
+        },
+        "ironProcessClassification": {
+          "label": "제철 노 공정 분류"
         },
         "ironFurnaceStructure": {
           "label": "제철 노 구조"

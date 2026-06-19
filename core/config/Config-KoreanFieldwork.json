@@ -798,10 +798,15 @@
         "dictionaryEditorialRule": {
           "inputType": "checkboxes",
           "constraintIndexed": true
+        },
+        "productionTermNormalization": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
         }
       },
       "valuelists": {
         "dictionaryEditorialRule": "KoreanFieldwork-dictionaryEditorialRule",
+        "productionTermNormalization": "KoreanFieldwork-productionTermNormalization",
         "termApplicationScope": "KoreanFieldwork-termApplicationScope",
         "termAuthorityStatus": "KoreanFieldwork-termAuthorityStatus",
         "termDictionaryDomain": "KoreanFieldwork-termDictionaryDomain",
@@ -834,6 +839,7 @@
             "termApplicationScope",
             "termSourcePriority",
             "dictionaryEditorialRule",
+            "productionTermNormalization",
             "termRelation",
             "termSearchMapping",
             "termAuthorityStatus",
@@ -1850,6 +1856,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "ironProcessClassification": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "ironFurnaceStructure": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -2121,6 +2131,7 @@
         "bronzeProductionEvidence": "KoreanFieldwork-bronzeProductionEvidence",
         "glassProductionEvidence": "KoreanFieldwork-glassProductionEvidence",
         "ironProcessEvidence": "KoreanFieldwork-ironProcessEvidence",
+        "ironProcessClassification": "KoreanFieldwork-ironProcessClassification",
         "ironFurnaceStructure": "KoreanFieldwork-ironFurnaceStructure",
         "tombMoundInvestigation": "KoreanFieldwork-tombMoundInvestigation",
         "tombBurialStructureInvestigation": "KoreanFieldwork-tombBurialStructureInvestigation",
@@ -2234,6 +2245,7 @@
             "bronzeProductionEvidence",
             "glassProductionEvidence",
             "ironProcessEvidence",
+            "ironProcessClassification",
             "ironFurnaceStructure",
             "tombMoundInvestigation",
             "tombBurialStructureInvestigation",

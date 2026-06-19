@@ -66,6 +66,9 @@
         "dictionaryEditorialRule": {
           "label": "Dictionary editorial rule"
         },
+        "productionTermNormalization": {
+          "label": "Production-site term normalization"
+        },
         "termApplicationScope": {
           "label": "Term application scope"
         },
@@ -685,6 +688,9 @@
         },
         "ironProcessEvidence": {
           "label": "Iron process evidence"
+        },
+        "ironProcessClassification": {
+          "label": "Iron furnace process classification"
         },
         "ironFurnaceStructure": {
           "label": "Iron furnace structure"

@@ -3,6 +3,7 @@
   "purpose": "Validate that Korean archaeological field terms can be searched by local aliases while stored authority terms remain separate from observed field wording.",
   "validationQuestions": [
     "표준 용어와 현장 관용어를 모두 검색하되 저장값은 권위어로 정규화되는가.",
+    "가마·요·요지·가마터, 한뎃가마·노천요, 평요 분야분리, 수비장·건조장 찾아가기 관계가 현장 원문과 보고서 출력어를 덮어쓰지 않는가.",
     "판단 보류가 확정값으로 덮이지 않고 검토 이력으로 남는가."
   ],
   "documents": [
@@ -563,6 +564,15 @@
         "termDictionaryDomain": ["pottery", "roofTile", "porcelain", "earthenware", "workshopOther"],
         "termApplicationScope": ["reportOutput", "searchAlias", "sourceDictionaryLink", "importMapping"],
         "termSourcePriority": ["domainSpecialistDictionary", "institutionReportUsage", "pdfCrossCheckRequired"],
+        "productionTermNormalization": [
+          "kilnSiteYojiTerm",
+          "kilnSiteGamateoTerm",
+          "kilnGamaTerm",
+          "kilnYoTerm",
+          "originalWordingPreserved",
+          "productionDomainRecorded",
+          "reportOutputTermSeparated"
+        ],
         "termRelation": ["preferredTerm", "alias", "domainRestricted", "reportOutputTerm"],
         "termSearchMapping": [
           "fieldSearchTermAccepted",
@@ -681,6 +691,13 @@
         "termDictionaryDomain": ["pottery", "roofTile", "earthenware"],
         "termApplicationScope": ["valueListEntry", "reportOutput", "searchAlias", "sourceDictionaryLink", "importMapping"],
         "termSourcePriority": ["domainSpecialistDictionary", "methodologyTerm", "pdfCrossCheckRequired"],
+        "productionTermNormalization": [
+          "openKilnNocheonyoTerm",
+          "openKilnHandetgamaTerm",
+          "originalWordingPreserved",
+          "productionDomainRecorded",
+          "reportOutputTermSeparated"
+        ],
         "termRelation": ["preferredTerm", "alias", "domainRestricted", "reportOutputTerm"],
         "termSearchMapping": [
           "fieldSearchTermAccepted",
@@ -745,6 +762,12 @@
           "sameHeadwordDomainSeparated",
           "domainIndexLinked"
         ],
+        "productionTermNormalization": [
+          "flatKilnPyeongyoTerm",
+          "productionDomainRecorded",
+          "originalWordingPreserved",
+          "pendingDecision"
+        ],
         "termRelation": ["preferredTerm", "domainRestricted"],
         "termSearchMapping": [
           "fieldSearchTermAccepted",
@@ -780,6 +803,12 @@
           "originalScriptParallel",
           "sameHeadwordDomainSeparated",
           "domainIndexLinked"
+        ],
+        "productionTermNormalization": [
+          "flatKilnPyeongyoTerm",
+          "productionDomainRecorded",
+          "originalWordingPreserved",
+          "pendingDecision"
         ],
         "termRelation": ["preferredTerm", "domainRestricted"],
         "termSearchMapping": [
@@ -841,6 +870,13 @@
         "termDictionaryDomain": ["pottery", "workshopOther"],
         "termApplicationScope": ["valueListEntry", "reportOutput", "searchAlias", "sourceDictionaryLink", "importMapping"],
         "termSourcePriority": ["domainSpecialistDictionary", "methodologyTerm", "pdfCrossCheckRequired"],
+        "productionTermNormalization": [
+          "sujangLinkedToPotteryWorkshop",
+          "dryingYardLinkedToPotteryWorkshop",
+          "originalWordingPreserved",
+          "productionDomainRecorded",
+          "reportOutputTermSeparated"
+        ],
         "termRelation": ["preferredTerm", "narrowerTerm", "functionalSimilarity", "domainRestricted"],
         "termSearchMapping": [
           "fieldSearchTermAccepted",

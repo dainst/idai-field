@@ -55,7 +55,7 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-19 구석기 조사법의 꼬리표·유물대장 요구를 일반 유물 수습 흐름으로 다시 압축했다. 현장 꼬리표는 조사기관, 조사일자, 조사지점, 발굴칸, 일련번호, 지층, 유물층, 유물명, 재질·암질, 동서·남북좌표, 깊이, 치수, 무게를 담고, 유물대장은 이 값에 고유 등록번호와 정리번호 연결을 붙인다. 이 묶음은 `Find` 화면의 `artifactLabelRegisterLink` 값 목록으로 옮겼다.
 
-2026-06-19 제철유적 자료도 다시 대조했다. 2020년 제철유적 조사·분석 방법론과 생산유적 사전은 노 형태만으로 제련·단야·용해·초강을 확정하지 말고, 송풍·배재 구조, 노바닥과 굴광면 구분, 폐기장, 노벽·송풍관·유출재·노내재·환원괴·단조박편·입상재, 시료 채취 위치와 금속학 분석계획을 함께 보라고 요구한다. 이 묶음은 `Feature`의 `ironProcessEvidence`, `ironFurnaceStructure`, `Find`의 `ironResidueSubtype`, `Sample`의 `ironSampleAnalysisPlan` 값 목록으로 옮겼고, `iron-production-workflow-sample.json`으로 공정 확정 전 기록 흐름을 검증한다.
+2026-06-19 제철유적 자료도 다시 대조했다. 2020년 제철유적 조사·분석 방법론과 생산유적 사전은 노 형태만으로 제련·단야·용해·초강을 확정하지 말고, 송풍·배재 구조, 노바닥과 굴광면 구분, 폐기장, 노벽·송풍관·유출재·노내재·환원괴·단조박편·입상재, 시료 채취 위치와 금속학 분석계획을 함께 보라고 요구한다. 이 묶음은 `Feature`의 `ironProcessEvidence`, `ironProcessClassification`, `ironFurnaceStructure`, `Find`의 `ironResidueSubtype`, `Sample`의 `ironSampleAnalysisPlan` 값 목록으로 옮겼고, `iron-production-workflow-sample.json`으로 공정 확정 전 기록 흐름을 검증한다.
 
 2026-06-19 고분·분묘 자료도 구현 단위로 다시 압축했다. 제5권 고분 조사방법론, 분묘유구 조사법 강의자료, 고분편·고분유물편 사전은 묘형명 확정보다 봉토·분구 조사통제, 구지표와 성토 단위, 주구와 재굴착, 묘광 어깨선, 개석 제거 전후 기록, 밀봉토·내부토, 벽면 입면, 폐쇄시설과 추가장·도굴 근거, 부장품의 위치 맥락, 인골 오염 방지와 포장·분석 기준을 먼저 남기라고 요구한다. 이 묶음은 `Feature`의 `tombMoundInvestigation`, `tombBurialStructureInvestigation`, `Find`의 `graveGoodsRitualContext`, `Sample`의 `humanRemainsRecoveryAnalysis` 값 목록으로 옮겼고, `tomb-burial-workflow-sample.json`으로 봉토·매장주체부·부장품·인골 수습 흐름을 검증한다.
 

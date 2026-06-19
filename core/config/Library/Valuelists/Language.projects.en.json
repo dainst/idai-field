@@ -13441,6 +13441,23 @@
     },
     "description": "Korean iron-production checks for keeping smelting, smithing, casting, steelmaking, mixed-process, and analysis-confirmed interpretations separate"
   },
+  "KoreanFieldwork-ironProcessClassification": {
+    "values": {
+      "ironFurnaceGeneric": { "label": "Iron furnace" },
+      "smeltingFurnace": { "label": "Smelting furnace" },
+      "smithingFurnace": { "label": "Smithing furnace" },
+      "refiningSmithingFurnace": { "label": "Refining smithing furnace" },
+      "forgingFurnace": { "label": "Forging furnace" },
+      "meltingFurnace": { "label": "Melting furnace" },
+      "steelmakingFurnace": { "label": "Steelmaking furnace" },
+      "roastingFurnace": { "label": "Roasting furnace" },
+      "multipleProcessCandidate": { "label": "Multiple process candidate" },
+      "classificationAfterAnalysis": { "label": "Classification after analysis" },
+      "classificationDeferred": { "label": "Classification deferred" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean iron-furnace classification checks for keeping smelting, smithing, refining smithing, forging, melting, steelmaking, roasting, multiple-process, and post-analysis states separate"
+  },
   "KoreanFieldwork-ironProcessRelationCheck": {
     "values": {
       "previousOutputIdentified": { "label": "Previous output identified" },
@@ -15520,6 +15537,29 @@
       }
     },
     "description": "Korean archaeological dictionary editorial rules for report output, site-name normalization, see-also handling, measurement display, and search indexing"
+  },
+  "KoreanFieldwork-productionTermNormalization": {
+    "values": {
+      "kilnGamaTerm": { "label": "Gama term" },
+      "kilnYoTerm": { "label": "Yo term" },
+      "kilnSiteYojiTerm": { "label": "Yoji term" },
+      "kilnSiteGamateoTerm": { "label": "Gamateo term" },
+      "openKilnHandetgamaTerm": { "label": "Handetgama term" },
+      "openKilnNocheonyoTerm": { "label": "Nocheonyo term" },
+      "flatKilnPyeongyoTerm": { "label": "Pyeongyo term" },
+      "climbingKilnOreumgamaTerm": { "label": "Oreumgama term" },
+      "brickKilnJeonchugyoTerm": { "label": "Jeonchugyo term" },
+      "clayKilnTochukyoTerm": { "label": "Tochukyo term" },
+      "firingChamberBeonjosilTerm": { "label": "Beonjosil term" },
+      "firingChamberSoseongsilTerm": { "label": "Soseongsil term" },
+      "sujangLinkedToPotteryWorkshop": { "label": "Sujang linked to pottery workshop" },
+      "dryingYardLinkedToPotteryWorkshop": { "label": "Drying yard linked to pottery workshop" },
+      "originalWordingPreserved": { "label": "Original wording preserved" },
+      "productionDomainRecorded": { "label": "Production domain recorded" },
+      "reportOutputTermSeparated": { "label": "Report output term separated" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean production-site term-normalization checks for preserving observed terms, authority headwords, report output terms, and production domains for kiln and workshop terminology"
   },
   "KoreanFieldwork-featurePackage": {
     "values": {

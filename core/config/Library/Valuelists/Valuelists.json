@@ -33390,6 +33390,38 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-ironProcessClassification": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-20",
+    "values": {
+      "ironFurnaceGeneric": {},
+      "smeltingFurnace": {},
+      "smithingFurnace": {},
+      "refiningSmithingFurnace": {},
+      "forgingFurnace": {},
+      "meltingFurnace": {},
+      "steelmakingFurnace": {},
+      "roastingFurnace": {},
+      "multipleProcessCandidate": {},
+      "classificationAfterAnalysis": {},
+      "classificationDeferred": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "ironFurnaceGeneric",
+      "smeltingFurnace",
+      "smithingFurnace",
+      "refiningSmithingFurnace",
+      "forgingFurnace",
+      "meltingFurnace",
+      "steelmakingFurnace",
+      "roastingFurnace",
+      "multipleProcessCandidate",
+      "classificationAfterAnalysis",
+      "classificationDeferred",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-ironProcessRelationCheck": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",
@@ -36167,6 +36199,50 @@
       "hangulIndexLinked",
       "originalScriptIndexLinked",
       "domainIndexLinked",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-productionTermNormalization": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-20",
+    "values": {
+      "kilnGamaTerm": {},
+      "kilnYoTerm": {},
+      "kilnSiteYojiTerm": {},
+      "kilnSiteGamateoTerm": {},
+      "openKilnHandetgamaTerm": {},
+      "openKilnNocheonyoTerm": {},
+      "flatKilnPyeongyoTerm": {},
+      "climbingKilnOreumgamaTerm": {},
+      "brickKilnJeonchugyoTerm": {},
+      "clayKilnTochukyoTerm": {},
+      "firingChamberBeonjosilTerm": {},
+      "firingChamberSoseongsilTerm": {},
+      "sujangLinkedToPotteryWorkshop": {},
+      "dryingYardLinkedToPotteryWorkshop": {},
+      "originalWordingPreserved": {},
+      "productionDomainRecorded": {},
+      "reportOutputTermSeparated": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "kilnGamaTerm",
+      "kilnYoTerm",
+      "kilnSiteYojiTerm",
+      "kilnSiteGamateoTerm",
+      "openKilnHandetgamaTerm",
+      "openKilnNocheonyoTerm",
+      "flatKilnPyeongyoTerm",
+      "climbingKilnOreumgamaTerm",
+      "brickKilnJeonchugyoTerm",
+      "clayKilnTochukyoTerm",
+      "firingChamberBeonjosilTerm",
+      "firingChamberSoseongsilTerm",
+      "sujangLinkedToPotteryWorkshop",
+      "dryingYardLinkedToPotteryWorkshop",
+      "originalWordingPreserved",
+      "productionDomainRecorded",
+      "reportOutputTermSeparated",
       "pendingDecision"
     ]
   },

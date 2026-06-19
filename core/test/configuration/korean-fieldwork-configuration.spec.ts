@@ -102,6 +102,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('bulkImportDeferred');
         expect(documentsById['term-authority-kiln-site'].resource.termSearchMapping)
             .toContain('doNotMergeToSingleTerm');
+        expect(documentsById['term-authority-kiln-site'].resource.productionTermNormalization)
+            .toContain('kilnSiteGamateoTerm');
         expect(documentsById['term-alias-kiln-site-kiln'].resource.termAliasText)
             .toBe('가마');
         expect(documentsById['term-alias-kiln-site-kiln'].resource.verificationState)
@@ -122,6 +124,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toEqual(['pottery', 'roofTile']);
         expect(documentsById['term-authority-flat-kiln-pottery-tile'].resource.dictionaryEditorialRule)
             .toContain('sameHeadwordDomainSeparated');
+        expect(documentsById['term-authority-flat-kiln-pottery-tile'].resource.productionTermNormalization)
+            .toContain('flatKilnPyeongyoTerm');
         expect(documentsById['term-authority-flat-kiln-pottery-tile'].resource.termAuthorityStatus)
             .toContain('duplicateHeadwordConflict');
         expect(documentsById['term-authority-flat-kiln-pottery-tile'].resource.termAuthorityStatus)
@@ -846,6 +850,8 @@ describe('KoreanFieldwork project configuration', () => {
 
         expect(documentsById['feature-iron-furnace-001'].resource.ironProcessEvidence)
             .toContain('alternativeProcessOpen');
+        expect(documentsById['feature-iron-furnace-001'].resource.ironProcessClassification)
+            .toContain('classificationDeferred');
         expect(documentsById['feature-iron-furnace-001'].resource.ironFurnaceStructure)
             .toContain('floorNotConfusedWithCut');
         expect(documentsById['iron-process-relation-001'].resource.ironPreviousOutputText)
@@ -1547,6 +1553,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(termAuthorityForm.fields.termApplicationScope.inputType).toBe('checkboxes');
         expect(termAuthorityForm.fields.termSourcePriority.inputType).toBe('checkboxes');
         expect(termAuthorityForm.fields.dictionaryEditorialRule.inputType).toBe('checkboxes');
+        expect(termAuthorityForm.fields.productionTermNormalization.inputType).toBe('checkboxes');
         expect(termAliasForm.parent).toBe('TermAuthority');
         expect(termAliasForm.fields.termAliasText.inputType).toBe('input');
         expect(termAliasForm.fields.termAliasText.mandatory).toBe(true);
@@ -1728,6 +1735,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.fields.bronzeProductionEvidence.inputType).toBe('checkboxes');
         expect(featureForm.fields.glassProductionEvidence.inputType).toBe('checkboxes');
         expect(featureForm.fields.ironProcessEvidence.inputType).toBe('checkboxes');
+        expect(featureForm.fields.ironProcessClassification.inputType).toBe('checkboxes');
         expect(featureForm.fields.ironFurnaceStructure.inputType).toBe('checkboxes');
         expect(featureForm.fields.tombMoundInvestigation.inputType).toBe('checkboxes');
         expect(featureForm.fields.tombBurialStructureInvestigation.inputType).toBe('checkboxes');
@@ -2042,6 +2050,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-termSourcePriority');
         expect(termAuthorityForm.valuelists.dictionaryEditorialRule)
             .toBe('KoreanFieldwork-dictionaryEditorialRule');
+        expect(termAuthorityForm.valuelists.productionTermNormalization)
+            .toBe('KoreanFieldwork-productionTermNormalization');
         expect(termAuthorityForm.valuelists.termAuthorityStatus)
             .toBe('KoreanFieldwork-termAuthorityStatus');
         expect(termAliasForm.valuelists.termAliasRole).toBe('KoreanFieldwork-termAliasRole');
@@ -2185,6 +2195,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.valuelists.glassProductionEvidence)
             .toBe('KoreanFieldwork-glassProductionEvidence');
         expect(featureForm.valuelists.ironProcessEvidence).toBe('KoreanFieldwork-ironProcessEvidence');
+        expect(featureForm.valuelists.ironProcessClassification)
+            .toBe('KoreanFieldwork-ironProcessClassification');
         expect(featureForm.valuelists.ironFurnaceStructure).toBe('KoreanFieldwork-ironFurnaceStructure');
         expect(ironProcessRelationForm.valuelists.ironProcessRelationCheck)
             .toBe('KoreanFieldwork-ironProcessRelationCheck');
@@ -2546,6 +2558,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Dictionary domain');
         expect(languages.en.categories.TermAuthority.fields.dictionaryEditorialRule.label)
             .toBe('Dictionary editorial rule');
+        expect(languages.en.categories.TermAuthority.fields.productionTermNormalization.label)
+            .toBe('Production-site term normalization');
         expect(languages.en.categories.TermAlias.label).toBe('Term alias');
         expect(languages.en.categories.TermAlias.fields.termAliasText.label).toBe('Alias text');
         expect(languages.en.categories.TermAlias.fields.termAliasRole.label).toBe('Alias role');
@@ -2766,6 +2780,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.Feature.fields.glassProductionEvidence.label)
             .toBe('Glass production evidence');
         expect(languages.en.categories.Feature.fields.ironProcessEvidence.label).toBe('Iron process evidence');
+        expect(languages.en.categories.Feature.fields.ironProcessClassification.label)
+            .toBe('Iron furnace process classification');
         expect(languages.en.categories.Feature.fields.ironFurnaceStructure.label).toBe('Iron furnace structure');
         expect(languages.en.categories.Feature.fields.tombMoundInvestigation.label)
             .toBe('Tomb mound investigation');
@@ -3490,6 +3506,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-productionProcessSystem']
             .values.referenceGroupDefined.label)
             .toBe('Reference group defined');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-productionTermNormalization']
+            .values.kilnSiteGamateoTerm.label)
+            .toBe('Gamateo term');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-productionSiteAssociatedFacility']
             .values.levigationArea.label)
             .toBe('Levigation area');
@@ -3502,6 +3521,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-ironProcessEvidence']
             .values.metallurgicalAnalysisNeeded.label)
             .toBe('Metallurgical analysis needed');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-ironProcessClassification']
+            .values.refiningSmithingFurnace.label)
+            .toBe('Refining smithing furnace');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-ironProcessRelationCheck']
             .values.previousOutputIdentified.label)
             .toBe('Previous output identified');
@@ -4206,6 +4228,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-productionProcessSystem']
             .values.marketDominanceQuestioned.label)
             .toBe('시장 지배 여부 질문');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-productionTermNormalization']
+            .values.sujangLinkedToPotteryWorkshop.label)
+            .toBe('수비장-토기공방 연결');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-artifactCleaningDryingControl']
             .values.rapidDryingAvoided.label)
             .toBe('급건조 방지');

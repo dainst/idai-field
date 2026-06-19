@@ -16925,6 +16925,59 @@
     },
     "description": "Korean fieldwork assemblage relation list for separating same-layer or closed assemblages from accidental association, redeposition, mixed contexts, and unclear contemporaneity"
   },
+  "KoreanFieldwork-excavationContextModel": {
+    "values": {
+      "siteContextLinked": {
+        "label": "Site context linked"
+      },
+      "featureContextLinked": {
+        "label": "Feature context linked"
+      },
+      "findContextLinked": {
+        "label": "Find context linked"
+      },
+      "assemblageContextLinked": {
+        "label": "Assemblage context linked"
+      },
+      "environmentContextLinked": {
+        "label": "Environment context linked"
+      },
+      "horizontalDistributionReviewed": {
+        "label": "Horizontal distribution reviewed"
+      },
+      "verticalStratigraphyReviewed": {
+        "label": "Vertical stratigraphy reviewed"
+      },
+      "investigationMethodRationale": {
+        "label": "Investigation method rationale"
+      },
+      "trenchInvestigation": {
+        "label": "Trench investigation"
+      },
+      "pitInvestigation": {
+        "label": "Pit investigation"
+      },
+      "gridInvestigation": {
+        "label": "Grid investigation"
+      },
+      "quadrantInvestigation": {
+        "label": "Quadrant investigation"
+      },
+      "steppedInvestigation": {
+        "label": "Stepped investigation"
+      },
+      "plannedExcavation": {
+        "label": "Planned excavation"
+      },
+      "rescueExcavation": {
+        "label": "Rescue excavation"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean fieldwork excavation context checks for linking site, feature, finds, assemblage, environment, horizontal and vertical context, and the rationale for trench, pit, grid, quadrant, stepped, planned, or rescue excavation methods"
+  },
   "KoreanFieldwork-mediaEvidenceRole": {
     "values": {
       "fieldOverview": {

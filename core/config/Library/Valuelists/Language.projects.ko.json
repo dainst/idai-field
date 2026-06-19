@@ -5171,6 +5171,59 @@
     },
     "description": "공반유물을 곧바로 동시기 근거로 보지 않고 매장단위, 반복성, 우연 공반, 재퇴적과 혼입 가능성을 분리하기 위한 목록"
   },
+  "KoreanFieldwork-excavationContextModel": {
+    "values": {
+      "siteContextLinked": {
+        "label": "유적 맥락 연결"
+      },
+      "featureContextLinked": {
+        "label": "유구 맥락 연결"
+      },
+      "findContextLinked": {
+        "label": "유물 맥락 연결"
+      },
+      "assemblageContextLinked": {
+        "label": "유물복합체 맥락 연결"
+      },
+      "environmentContextLinked": {
+        "label": "환경 맥락 연결"
+      },
+      "horizontalDistributionReviewed": {
+        "label": "수평분포 검토"
+      },
+      "verticalStratigraphyReviewed": {
+        "label": "수직층위 검토"
+      },
+      "investigationMethodRationale": {
+        "label": "조사방법 선택근거"
+      },
+      "trenchInvestigation": {
+        "label": "트렌치 조사"
+      },
+      "pitInvestigation": {
+        "label": "피트 조사"
+      },
+      "gridInvestigation": {
+        "label": "바둑판식 조사"
+      },
+      "quadrantInvestigation": {
+        "label": "사분법 조사"
+      },
+      "steppedInvestigation": {
+        "label": "계단식 조사"
+      },
+      "plannedExcavation": {
+        "label": "기획발굴"
+      },
+      "rescueExcavation": {
+        "label": "구제발굴"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "유적·유구·유물·유물복합체·환경을 함께 묶고, 조사방법 선택근거와 트렌치·피트·바둑판식·사분법·계단식 조사 방식을 기록하기 위한 목록"
+  },
   "KoreanFieldwork-mediaEvidenceRole": {
     "values": {
       "fieldOverview": {

@@ -38350,6 +38350,46 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-excavationContextModel": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "siteContextLinked": {},
+      "featureContextLinked": {},
+      "findContextLinked": {},
+      "assemblageContextLinked": {},
+      "environmentContextLinked": {},
+      "horizontalDistributionReviewed": {},
+      "verticalStratigraphyReviewed": {},
+      "investigationMethodRationale": {},
+      "trenchInvestigation": {},
+      "pitInvestigation": {},
+      "gridInvestigation": {},
+      "quadrantInvestigation": {},
+      "steppedInvestigation": {},
+      "plannedExcavation": {},
+      "rescueExcavation": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "siteContextLinked",
+      "featureContextLinked",
+      "findContextLinked",
+      "assemblageContextLinked",
+      "environmentContextLinked",
+      "horizontalDistributionReviewed",
+      "verticalStratigraphyReviewed",
+      "investigationMethodRationale",
+      "trenchInvestigation",
+      "pitInvestigation",
+      "gridInvestigation",
+      "quadrantInvestigation",
+      "steppedInvestigation",
+      "plannedExcavation",
+      "rescueExcavation",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-mediaEvidenceRole": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

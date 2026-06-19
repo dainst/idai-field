@@ -313,6 +313,9 @@
         "assemblageRelation": {
           "label": "Assemblage relation"
         },
+        "excavationContextModel": {
+          "label": "Excavation context model"
+        },
         "fieldOnlyMissingCheck": {
           "label": "Field-only missing check"
         },

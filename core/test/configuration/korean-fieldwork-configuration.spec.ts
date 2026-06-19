@@ -743,6 +743,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('baseLayerDerived');
         expect(documentsById['segment-stratigraphy-fill-001'].resource.featureBurialProcessAssessment)
             .toContain('soilFormationTrace');
+        expect(documentsById['feature-stratigraphy-pit-001'].resource.excavationContextModel)
+            .toContain('investigationMethodRationale');
+        expect(documentsById['feature-stratigraphy-pit-001'].resource.excavationContextModel)
+            .toContain('rescueExcavation');
         expect(documentsById['segment-stratigraphy-fill-001'].resource.stratigraphicMisreadGuard)
             .toContain('btBandCandidate');
         expect(documentsById['segment-stratigraphy-fill-001'].resource.termSearchMapping)
@@ -992,6 +996,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.fields.typologyArgument.inputType).toBe('checkboxes');
         expect(featureForm.fields.chronologyArgument.inputType).toBe('checkboxes');
         expect(featureForm.fields.assemblageRelation.inputType).toBe('checkboxes');
+        expect(featureForm.fields.excavationContextModel.inputType).toBe('checkboxes');
         expect(featureForm.fields.pitDwellingExposureBaulk.inputType).toBe('checkboxes');
         expect(featureForm.fields.pitDwellingFloorFacility.inputType).toBe('checkboxes');
         expect(featureForm.fields.pitDwellingFireEvidence.inputType).toBe('checkboxes');
@@ -1307,6 +1312,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.valuelists.typologyArgument).toBe('KoreanFieldwork-typologyArgument');
         expect(featureForm.valuelists.chronologyArgument).toBe('KoreanFieldwork-chronologyArgument');
         expect(featureForm.valuelists.assemblageRelation).toBe('KoreanFieldwork-assemblageRelation');
+        expect(featureForm.valuelists.excavationContextModel)
+            .toBe('KoreanFieldwork-excavationContextModel');
         expect(featureForm.valuelists.pitDwellingExposureBaulk)
             .toBe('KoreanFieldwork-pitDwellingExposureBaulk');
         expect(featureForm.valuelists.pitDwellingFloorFacility)
@@ -1705,6 +1712,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.Feature.fields.typologyArgument.label).toBe('Typology argument');
         expect(languages.en.categories.Feature.fields.chronologyArgument.label).toBe('Chronology argument');
         expect(languages.en.categories.Feature.fields.assemblageRelation.label).toBe('Assemblage relation');
+        expect(languages.en.categories.Feature.fields.excavationContextModel.label)
+            .toBe('Excavation context model');
         expect(languages.en.categories.Feature.fields.firstExposureRecord.label).toBe('First exposure record');
         expect(languages.en.categories.Feature.fields.pitDwellingExposureBaulk.label)
             .toBe('Pit dwelling exposure and baulk');
@@ -2133,6 +2142,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-featureBurialProcessAssessment']
             .values.waterlaidDeposit.label)
             .toBe('Waterlaid deposit');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-excavationContextModel']
+            .values.quadrantInvestigation.label)
+            .toBe('Quadrant investigation');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-soilTextureFieldAssessment']
             .values.quantitativeAnalysisNeeded.label)
             .toBe('Quantitative analysis needed');

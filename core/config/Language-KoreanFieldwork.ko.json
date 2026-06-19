@@ -313,6 +313,9 @@
         "assemblageRelation": {
           "label": "공반 관계"
         },
+        "excavationContextModel": {
+          "label": "발굴맥락 구성"
+        },
         "fieldOnlyMissingCheck": {
           "label": "현장시점 누락점검"
         },

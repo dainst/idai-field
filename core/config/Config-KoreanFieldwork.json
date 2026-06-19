@@ -915,6 +915,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "excavationContextModel": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "fieldOnlyMissingCheck": {
           "inputType": "checkboxes",
           "mandatory": true,
@@ -1180,6 +1184,7 @@
         "typologyArgument": "KoreanFieldwork-typologyArgument",
         "chronologyArgument": "KoreanFieldwork-chronologyArgument",
         "assemblageRelation": "KoreanFieldwork-assemblageRelation",
+        "excavationContextModel": "KoreanFieldwork-excavationContextModel",
         "fieldOnlyMissingCheck": "KoreanFieldwork-fieldOnlyMissingCheck",
         "firstExposureRecord": "KoreanFieldwork-firstExposureRecord",
         "pitDwellingExposureBaulk": "KoreanFieldwork-pitDwellingExposureBaulk",
@@ -1270,6 +1275,7 @@
             "typologyArgument",
             "chronologyArgument",
             "assemblageRelation",
+            "excavationContextModel",
             "fieldOnlyMissingCheck",
             "firstExposureRecord",
             "pitDwellingExposureBaulk",

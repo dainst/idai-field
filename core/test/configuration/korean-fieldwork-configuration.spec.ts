@@ -730,6 +730,10 @@ describe('KoreanFieldwork project configuration', () => {
 
         expect(documentsById['fg-bronze-settlement-001'].resource.featurePackage)
             .toContain('pitDwelling');
+        expect(documentsById['fg-bronze-settlement-001'].resource.settlementSpatialInterpretation)
+            .toContain('contemporaneousDwellingAssessed');
+        expect(documentsById['fg-bronze-settlement-001'].resource.settlementSpatialInterpretation)
+            .toContain('residueContentAnalysisLinked');
         expect(documentsById['feature-bronze-dwelling-001'].resource.pitFeatureFunctionAssessment)
             .toContain('functionNotAssumed');
         expect(documentsById['feature-bronze-dwelling-001'].resource.pitBuildingLifecycleStage)
@@ -1569,6 +1573,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.fields.fortificationFoundationRecord.inputType).toBe('checkboxes');
         expect(featureForm.fields.fortificationRepairRecord.inputType).toBe('checkboxes');
         expect(featureForm.fields.fortificationRestorationEvidence.inputType).toBe('checkboxes');
+        expect(featureGroupForm.fields.settlementSpatialInterpretation.inputType).toBe('checkboxes');
         expect(featureGroupForm.fields.termAuthorityStatus.inputType).toBe('checkboxes');
         expect(featureGroupForm.fields.termSearchMapping.inputType).toBe('checkboxes');
         expect(featureForm.fields.termAuthorityStatus.inputType).toBe('checkboxes');
@@ -1731,6 +1736,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-sourceEvidenceVerification');
         expect(sourceEvidenceIndexForm.valuelists.sourceEvidenceUse)
             .toBe('KoreanFieldwork-sourceEvidenceUse');
+        expect(featureGroupForm.valuelists.settlementSpatialInterpretation)
+            .toBe('KoreanFieldwork-settlementSpatialInterpretation');
         expect(surveyForm.valuelists.surfaceSurveyObservation).toBe('KoreanFieldwork-surfaceSurveyObservation');
         expect(surveyForm.valuelists.surfaceSurveyBiasControl).toBe('KoreanFieldwork-surfaceSurveyBiasControl');
         expect(surveyForm.valuelists.surfaceSurveyFollowUp).toBe('KoreanFieldwork-surfaceSurveyFollowUp');
@@ -2317,6 +2324,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Wetland landform interpretation');
         expect(languages.en.categories.Survey.fields.wetlandSurveyTargeting.label)
             .toBe('Wetland interpretation and trench targeting');
+        expect(languages.en.categories.FeatureGroup.fields.settlementSpatialInterpretation.label)
+            .toBe('Settlement spatial interpretation');
         expect(languages.en.categories.Feature.fields.fieldOnlyMissingCheck.label)
             .toBe('Field-only missing check');
         expect(languages.en.categories.Feature.fields.typologyArgument.label).toBe('Typology argument');
@@ -2999,6 +3008,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-settlementFeatureTrenchStrategy']
             .values.minimalTrenchMaxInfo.label)
             .toBe('Minimal trench, maximum information');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-settlementSpatialInterpretation']
+            .values.contemporaneousDwellingAssessed.label)
+            .toBe('Contemporaneous dwellings assessed');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-settlementSpatialInterpretation']
+            .values.residueContentAnalysisLinked.label)
+            .toBe('잔류물·내용물 분석 연결');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-productionProcessSystem']
             .values.kilnLoading.label)
             .toBe('Kiln loading');

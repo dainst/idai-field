@@ -67,6 +67,17 @@
           "reproducibleRecord",
           "crossReviewNeeded"
         ],
+        "settlementSpatialInterpretation": [
+          "dwellingOverlapReviewed",
+          "contemporaneousDwellingAssessed",
+          "occupationScaleEstimated",
+          "activityAreaPartitionRecorded",
+          "sharedSpaceRecorded",
+          "discardPatternRecorded",
+          "archaeobotanyAnalysisLinked",
+          "residueContentAnalysisLinked",
+          "alternativeSpatialInterpretation"
+        ],
         "recordCreationTiming": "duringFieldwork",
         "termRelation": [
           "preferredTerm",

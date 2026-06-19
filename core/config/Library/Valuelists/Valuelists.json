@@ -33110,6 +33110,44 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-settlementSpatialInterpretation": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-20",
+    "values": {
+      "settlementBoundaryReviewed": {},
+      "dwellingOverlapReviewed": {},
+      "contemporaneousDwellingAssessed": {},
+      "occupationScaleEstimated": {},
+      "roofWallHearthEvidenceReviewed": {},
+      "activityAreaPartitionRecorded": {},
+      "sharedSpaceRecorded": {},
+      "householdSpaceCandidate": {},
+      "discardPatternRecorded": {},
+      "floorFindDistributionReviewed": {},
+      "archaeobotanyAnalysisLinked": {},
+      "residueContentAnalysisLinked": {},
+      "repeatedConstructionCauseReviewed": {},
+      "alternativeSpatialInterpretation": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "settlementBoundaryReviewed",
+      "dwellingOverlapReviewed",
+      "contemporaneousDwellingAssessed",
+      "occupationScaleEstimated",
+      "roofWallHearthEvidenceReviewed",
+      "activityAreaPartitionRecorded",
+      "sharedSpaceRecorded",
+      "householdSpaceCandidate",
+      "discardPatternRecorded",
+      "floorFindDistributionReviewed",
+      "archaeobotanyAnalysisLinked",
+      "residueContentAnalysisLinked",
+      "repeatedConstructionCauseReviewed",
+      "alternativeSpatialInterpretation",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-productionProcessSystem": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

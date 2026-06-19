@@ -490,6 +490,9 @@
         "fieldRecordQuality": {
           "label": "현장기록 품질"
         },
+        "settlementSpatialInterpretation": {
+          "label": "취락 공간 해석"
+        },
         "recordCreationTiming": {
           "label": "기록 생성 시점"
         },

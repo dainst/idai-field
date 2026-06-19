@@ -490,6 +490,9 @@
         "fieldRecordQuality": {
           "label": "Field record quality"
         },
+        "settlementSpatialInterpretation": {
+          "label": "Settlement spatial interpretation"
+        },
         "recordCreationTiming": {
           "label": "Record creation timing"
         },

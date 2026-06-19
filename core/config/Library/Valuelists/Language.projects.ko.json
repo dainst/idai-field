@@ -1521,6 +1521,26 @@
     },
     "description": "생활유적 트렌치를 많이 넣는 방식이 아니라 최소 훼손으로 바닥면, 벽선, 단면 연속성과 도면 작성 위험을 함께 검토하기 위한 목록"
   },
+  "KoreanFieldwork-settlementSpatialInterpretation": {
+    "values": {
+      "settlementBoundaryReviewed": { "label": "취락 범위 검토" },
+      "dwellingOverlapReviewed": { "label": "집자리 중복관계 검토" },
+      "contemporaneousDwellingAssessed": { "label": "동시기 집자리 검토" },
+      "occupationScaleEstimated": { "label": "한 시점 규모 추정" },
+      "roofWallHearthEvidenceReviewed": { "label": "지붕·벽체·화덕 근거 검토" },
+      "activityAreaPartitionRecorded": { "label": "행위공간 구획 기록" },
+      "sharedSpaceRecorded": { "label": "공동이용공간 기록" },
+      "householdSpaceCandidate": { "label": "세대별 공간 후보" },
+      "discardPatternRecorded": { "label": "폐기 방식 기록" },
+      "floorFindDistributionReviewed": { "label": "바닥 유물분포 검토" },
+      "archaeobotanyAnalysisLinked": { "label": "식물유체 분석 연결" },
+      "residueContentAnalysisLinked": { "label": "잔류물·내용물 분석 연결" },
+      "repeatedConstructionCauseReviewed": { "label": "반복 축조 원인 검토" },
+      "alternativeSpatialInterpretation": { "label": "대안 공간해석" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "취락 단위에서 중복관계, 동시기성, 한 시점 규모, 공간구획, 폐기 양상, 바닥 유물분포, 식물유체와 잔류물·내용물 분석, 반복 축조 원인을 유구군 근거로 묶어 검토하기 위한 목록"
+  },
   "KoreanFieldwork-productionProcessSystem": {
     "values": {
       "rawMaterialProcurement": { "label": "원료 채취" },

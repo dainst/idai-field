@@ -13275,6 +13275,26 @@
     },
     "description": "Korean settlement-feature trench checks for balancing information gain, floor and wall preservation, trench form, axis direction, contour relation, section continuity, and drawing risks"
   },
+  "KoreanFieldwork-settlementSpatialInterpretation": {
+    "values": {
+      "settlementBoundaryReviewed": { "label": "Settlement boundary reviewed" },
+      "dwellingOverlapReviewed": { "label": "Dwelling overlap reviewed" },
+      "contemporaneousDwellingAssessed": { "label": "Contemporaneous dwellings assessed" },
+      "occupationScaleEstimated": { "label": "Occupation scale estimated" },
+      "roofWallHearthEvidenceReviewed": { "label": "Roof, wall, and hearth evidence reviewed" },
+      "activityAreaPartitionRecorded": { "label": "Activity-area partition recorded" },
+      "sharedSpaceRecorded": { "label": "Shared space recorded" },
+      "householdSpaceCandidate": { "label": "Household space candidate" },
+      "discardPatternRecorded": { "label": "Discard pattern recorded" },
+      "floorFindDistributionReviewed": { "label": "Floor-find distribution reviewed" },
+      "archaeobotanyAnalysisLinked": { "label": "Archaeobotany analysis linked" },
+      "residueContentAnalysisLinked": { "label": "Residue/content analysis linked" },
+      "repeatedConstructionCauseReviewed": { "label": "Repeated construction cause reviewed" },
+      "alternativeSpatialInterpretation": { "label": "Alternative spatial interpretation" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean settlement-scale interpretation checks for keeping overlap, contemporaneity, occupation scale, spatial partitioning, discard patterns, floor finds, archaeobotany, residue/content analysis, and repeated construction causes linked to feature-group evidence"
+  },
   "KoreanFieldwork-productionProcessSystem": {
     "values": {
       "rawMaterialProcurement": { "label": "Raw material procurement" },

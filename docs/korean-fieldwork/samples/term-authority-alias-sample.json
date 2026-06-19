@@ -27,6 +27,87 @@
     },
     {
       "resource": {
+        "id": "term-authority-beacon-station",
+        "identifier": "봉수대",
+        "shortDescription": "봉화대 계열 권위 표제어",
+        "category": "TermAuthority",
+        "relations": {
+          "liesWithin": ["term-group-korean-archaeology"]
+        },
+        "description": "봉화대 입력어를 봉수대 표제어로 찾아가게 하되, 연대·연조·연소실·건물지·외곽석축 같은 물리시설과 직봉·간봉 같은 운영 노선은 별도 기록으로 남긴다.",
+        "termDictionaryDomain": ["fortificationBeacon"],
+        "termApplicationScope": ["valueListEntry", "reportOutput", "searchAlias", "sourceDictionaryLink"],
+        "termSourcePriority": ["domainSpecialistDictionary", "methodologyTerm"],
+        "termRelation": ["preferredTerm", "alias", "broaderTerm"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "fieldUsagePreserved",
+          "domainScopeSet",
+          "structureSubtypeSeparated",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "valueListCandidate"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-alias-beacon-station-bonghwadae",
+        "identifier": "봉화대",
+        "shortDescription": "사전 찾아가기: 봉화대",
+        "category": "TermAlias",
+        "relations": {
+          "liesWithin": ["term-authority-beacon-station"]
+        },
+        "description": "보고서와 현장 입력에서 봉화대가 들어와도 봉수대와 검색으로 연결하지만, 입력 당시 표현과 실제 시설 구성은 덮어쓰지 않는다.",
+        "termAliasText": "봉화대",
+        "termAliasRole": ["dictionarySeeAlso", "fieldSynonym"],
+        "termAliasHandling": [
+          "autocompleteAccepted",
+          "preferredHeadwordTarget",
+          "keepAliasForSearch",
+          "domainScoped",
+          "doNotOverwriteObservedTerm"
+        ],
+        "termRelation": ["alias", "domainRestricted"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "fieldUsagePreserved",
+          "domainScopeSet",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-authority-beacon-route-ganbong",
+        "identifier": "간봉",
+        "shortDescription": "봉수 운영망 용어",
+        "category": "TermAuthority",
+        "relations": {
+          "liesWithin": ["term-group-korean-archaeology"]
+        },
+        "description": "간봉은 봉수 유적의 물리 형태명이 아니라 직봉과 대응되는 노선·운영 관계이므로, 유구 유형으로 병합하지 않고 문헌 근거와 대응봉수 관계에서 검토한다.",
+        "termDictionaryDomain": ["fortificationBeacon"],
+        "termApplicationScope": ["helpText", "searchAlias", "sourceDictionaryLink", "uiExposureDeferred"],
+        "termSourcePriority": ["domainSpecialistDictionary", "methodologyTerm"],
+        "termRelation": ["domainRestricted"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "domainScopeSet",
+          "ambiguousSynonymFlagged",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["specialistDictionarySource", "uiExposureDeferred", "pendingDecision"],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
         "id": "term-authority-dwelling-site",
         "identifier": "주거지",
         "shortDescription": "집자리·수혈주거지 계열 권위 표제어",

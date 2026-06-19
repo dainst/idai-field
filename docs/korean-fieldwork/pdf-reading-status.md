@@ -79,6 +79,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-19 충적지·토양도 자료도 구현 단위로 압축했다. 제6권 고지형·충적지와 조사방법론의 지표·GIS 자료는 평야·논 지역에서 표면유물 부재를 유적 부재로 보지 말고, 자연제방·배후습지·구하도·구해안선, 토양통·대토양군, 보링·주상도, a+b층 세트, 유구축조면과 검출면 차이, 암색대·이질토 블록·홍수퇴적 해석을 함께 보라고 요구한다. 이 묶음은 `Survey`의 `alluvialLandformSurvey`, `soilMapPredictionVerification`, `FeatureSegment`의 `alluvialLayerConceptAudit`, `alluvialSurfaceAttribution`, `alluvialFormationProcess` 값 목록으로 옮겼고, `alluvial-landform-layer-workflow-sample.json`으로 지표·토양도 예측, 층 개념, 경작유구와 고환경 시료 흐름을 검증한다.
 
+2026-06-19 성곽·봉수편의 봉수 용어도 한 단위 더 닫았다. 2011년 성곽·봉수편과 2007년 성곽 용어사전은 봉수대/봉화대 이칭, 연대·연조·봉조·연소실·건물지·외곽석축 같은 물리시설, 직봉·간봉·연변봉수·내지봉수·대응봉수 같은 노선 관계, 감관·별장·봉군·봉군보 같은 문헌 운영 주체를 구분해서 보라고 읽힌다. 이 묶음은 아직 실제 `Feature` 값 목록으로 크게 확장하지 않고, 먼저 `TermAuthority` 샘플과 `dictionary-terminology.md`의 `봉수용어권위관계`, `봉수유구운영분리` 후보로 남겨 다음 성곽·봉수 템플릿 구현 때 물리 유구와 운영망이 섞이지 않게 한다.
+
 2026-06-19 유구 내부층과 라이프사이클 자료도 구현 단위로 압축했다. 발굴조사 실무 자료는 유구 내부토를 단순 복토가 아니라 축조, 사용, 폐기, 매몰 과정이 겹친 결과로 읽고, 단면 정리와 반복 관찰, 그늘·햇볕 조건, 층간 비교, 이질토 블록의 유래, 자연유입·수성퇴적·붕락·토양화 휴지기, 일괄유물 매몰 여부를 따로 남기라고 요구한다. 이 묶음은 `FeatureSegment`의 `stratigraphicObservationProcedure`, `featureLifecycleReview`, `featureBlockInclusionAssessment`, `featureBurialProcessAssessment` 값 목록으로 옮겼고, `stratigraphy-feature-lifecycle-workflow-sample.json`으로 유구 내부토 해석이 단일 복토명으로 닫히지 않는지 검증한다.
 
 2026-06-19 추가 재독해에서는 발굴조사 업무 자료의 발굴맥락 정의를 구현 단위로 묶었다. 발굴조사는 유구 구조와 유물 출토 상황을 수평·수직으로 파악해 유적, 유구, 유물, 유물복합체, 환경의 맥락을 복원하는 절차이고, 구제발굴에서도 학술적 발굴 요구를 포기하지 않는다. 이 묶음은 `Feature`의 `excavationContextModel`로 옮겨 맥락 연결, 수평분포·수직층위 검토, 조사방법 선택근거, 트렌치·피트·바둑판식·사분법·계단식 조사, 기획·구제발굴 구분을 유구 기록에 남기게 했다.

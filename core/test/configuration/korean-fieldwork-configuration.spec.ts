@@ -126,6 +126,35 @@ describe('KoreanFieldwork project configuration', () => {
     });
 
 
+    it('keeps the Korean investigation stage transition sample aligned with handover fields', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const sample = loadSample('stage-transition-handover-sample.json');
+        const documents = sample.documents;
+        const documentsById = documents.reduce((index: any, document: any) => {
+            index[document.resource.id] = document;
+            return index;
+        }, {});
+
+        expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
+
+        expect(documentsById['project-stage-transition-001'].resource.investigationRecordHandover)
+            .toContain('fullExcavationTransition');
+        expect(documentsById['survey-surface-001'].resource.surfaceSurveyFollowUp)
+            .toContain('testExcavation');
+        expect(documentsById['survey-trial-001'].resource.sampleSurveySuitability)
+            .toContain('betweenTrenchesUncertain');
+        expect(documentsById['survey-trial-001'].resource.trialTrenchDesign)
+            .toContain('naturalLeveeRiverPerpendicular');
+        expect(documentsById['survey-trial-001'].resource.excavationScopeDifficultyBasis)
+            .toContain('scopeChangeHistory');
+        expect(documentsById['op-handover-001'].resource.investigationRecordHandover)
+            .toContain('handoverConfirmed');
+    });
+
+
     it('registers the field-record preservation fields in the bundled configuration', () => {
 
         const configReader = new ConfigReader();

@@ -1,0 +1,252 @@
+{
+  "title": "Korean investigation stage transition and handover sample",
+  "purpose": "Validate that surface survey, sample survey, trial excavation, full excavation transition, permit compliance, preservation action, and record handover stay connected in the Korean fieldwork configuration.",
+  "validationQuestions": [
+    "지표·표본·시굴에서 정밀발굴로 넘어갈 때 자료 인계가 추적되는가.",
+    "하루 작업기록에서 보고서 도면·사진·목록까지 원기록 ID가 이어지는가.",
+    "판단 보류가 확정값으로 덮이지 않고 검토 이력으로 남는가."
+  ],
+  "documents": [
+    {
+      "resource": {
+        "id": "project-stage-transition-001",
+        "identifier": "stage-transition-001",
+        "shortName": "표본·시굴 전환 샘플",
+        "shortDescription": "지표조사에서 정밀발굴 전환까지의 행정·기록 인계 검증",
+        "category": "Project",
+        "relations": {},
+        "description": "지표조사에서 표본조사와 시굴조사를 거쳐 정밀발굴 범위와 후속기관 인계를 결정하는 샘플.",
+        "investigationAdministration": [
+          "requestReceived",
+          "priorRecordsSecured",
+          "fieldReconnaissance",
+          "planPrepared",
+          "excavationPermitApplied",
+          "permitConditionsChecked",
+          "fieldworkInProgress",
+          "changePermitApplied"
+        ],
+        "permitConditionCompliance": [
+          "permitDocumentOnSite",
+          "landownerConsent",
+          "investigationPeriodChecked",
+          "permitConditionsUnderstood",
+          "changeReview"
+        ],
+        "preservationActionTracking": [
+          "sampleSurvey",
+          "trialExcavation",
+          "fullExcavation",
+          "projectOwnerNotified",
+          "constructionStopStatus"
+        ],
+        "investigationRecordHandover": [
+          "sampleSurveyRecord",
+          "trialExcavationRecord",
+          "fullExcavationTransition",
+          "successorInstitution",
+          "fieldRecordsHandover",
+          "summaryReport"
+        ],
+        "digitalSourcePreservation": [
+          "personalNotebookScan",
+          "electronicNotebookOriginal",
+          "twoLocationBackup",
+          "backupVerified"
+        ],
+        "reportCrossCheck": [
+          "manuscript",
+          "drawingRegister",
+          "photoRegister",
+          "numberConversionTable",
+          "sourceMediaBackup"
+        ],
+        "reportEvaluationFeedback": [
+          "selfEvaluation",
+          "committeeEvaluation",
+          "supplementRequestTracked",
+          "improvementForNextInvestigation"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "survey-surface-001",
+        "identifier": "SUR-001",
+        "shortDescription": "자연제방 후보 지표조사",
+        "category": "Survey",
+        "relations": {
+          "isRecordedIn": ["project-stage-transition-001"]
+        },
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "crossReviewNeeded"
+        ],
+        "recordCreationTiming": "duringFieldwork",
+        "surfaceSurveyPreparationCheck": [
+          "literatureSourcesReady",
+          "mapSourcesReady",
+          "previousReportsReady",
+          "heritageDistributionMapReady",
+          "gpsReady",
+          "recordFormsReady"
+        ],
+        "surfaceSurveyFieldSequence": [
+          "surveyBoundaryChecked",
+          "boundaryGpsRecorded",
+          "panoramicPhotosMultiDirection",
+          "zonesDividedByLandform",
+          "artifactScatterChecked",
+          "cutSectionStratigraphyChecked"
+        ],
+        "surfaceSurveyObservation": [
+          "terrainCharacteristic",
+          "locationPotential",
+          "artifactScatter",
+          "cutSectionStratigraphy",
+          "soilEnvironment"
+        ],
+        "surfaceSurveyBiasControl": [
+          "visibilityConditionsRecorded",
+          "routeRecorded",
+          "postFieldLiteratureComparison",
+          "missingLiteratureSupplement"
+        ],
+        "surfaceSurveyFollowUp": [
+          "highPotential",
+          "additionalSurveyNeeded",
+          "sampleSurvey",
+          "testExcavation",
+          "pendingDecision"
+        ],
+        "gisPredictionEvidence": [
+          "preDevelopmentAerialPhoto",
+          "elevationModel",
+          "soilMap",
+          "relativeElevationToWatercourse"
+        ],
+        "gisPredictionFieldVerification": [
+          "fieldConfirmed",
+          "routeAdjusted",
+          "trialTrenchRecommended"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "survey-trial-001",
+        "identifier": "TRIAL-001",
+        "shortDescription": "표본·시굴 전환 판단",
+        "category": "Survey",
+        "relations": {
+          "isRecordedIn": ["project-stage-transition-001"]
+        },
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "researchQuestionFit",
+          "crossReviewNeeded"
+        ],
+        "recordCreationTiming": "handoverStage",
+        "sampleSurveySuitability": [
+          "largeAlluvialSite",
+          "culturalLayerExtentCheck",
+          "betweenTrenchesUncertain",
+          "additionalTrialNeeded",
+          "fullCoveragePrincipleChecked"
+        ],
+        "trialExcavationPurpose": [
+          "presenceAbsenceCheck",
+          "horizontalExtentCheck",
+          "verticalExtentCheck",
+          "multiLayerCheck",
+          "detailedExcavationPeriodEstimate",
+          "detailedExcavationMethodEstimate"
+        ],
+        "trialTrenchDesign": [
+          "naturalLeveeRiverPerpendicular",
+          "openAreaPaleolandformAnalysis",
+          "microHighlandAdditionalTrench",
+          "trenchIntervalRecorded",
+          "trenchWidthRecorded",
+          "trenchDepthRecorded",
+          "safetySecured",
+          "extensionTrenchReason"
+        ],
+        "excavationScopeDifficultyBasis": [
+          "siteType",
+          "landform",
+          "featureDensity",
+          "featureIdentificationDifficulty",
+          "multiLayerSite",
+          "preservedAreaSize",
+          "basisDocument",
+          "confirmedFeatures",
+          "blankSpaceBetweenFeatures",
+          "scopeChangeHistory"
+        ],
+        "verificationState": "needsRecheck"
+      }
+    },
+    {
+      "resource": {
+        "id": "op-handover-001",
+        "identifier": "HANDOVER-001",
+        "shortDescription": "정밀발굴 전환 인계",
+        "category": "Operation",
+        "relations": {
+          "isRecordedIn": ["project-stage-transition-001"]
+        },
+        "fieldRecordQuality": [
+          "factualAccuracy",
+          "reproducibleRecord",
+          "crossReviewNeeded"
+        ],
+        "recordCreationTiming": "handoverStage",
+        "investigationRecordHandover": [
+          "sampleSurveyRecord",
+          "trialExcavationRecord",
+          "fullExcavationTransition",
+          "successorInstitution",
+          "fieldRecordsHandover",
+          "findsHandover",
+          "summaryReport",
+          "handoverConfirmed"
+        ],
+        "dailyLogContent": [
+          "workArea",
+          "featureProgress",
+          "findSampleCollection",
+          "changeReason",
+          "nextWorkPlan"
+        ],
+        "dailyLogReview": [
+          "sameDayWritten",
+          "photoDrawingCrossChecked",
+          "findListCrossChecked",
+          "sampleListCrossChecked",
+          "numberConversionChecked",
+          "sourceRecordArchived"
+        ],
+        "digitalSourcePreservation": [
+          "personalNotebookScan",
+          "electronicNotebookOriginal",
+          "twoLocationBackup",
+          "accessProcedure"
+        ],
+        "reportCrossCheck": [
+          "manuscript",
+          "drawingRegister",
+          "photoRegister",
+          "artifactRegister",
+          "sampleRegister",
+          "dailyLog",
+          "numberConversionTable"
+        ],
+        "verificationState": "candidate"
+      }
+    }
+  ]
+}

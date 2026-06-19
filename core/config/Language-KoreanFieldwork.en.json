@@ -211,6 +211,32 @@
         }
       }
     },
+    "InformationAsset": {
+      "label": "Information asset",
+      "fields": {
+        "informationAssetIdentifierText": {
+          "label": "Asset identifier"
+        },
+        "informationAssetLinkText": {
+          "label": "Source record link"
+        },
+        "informationAssetLocationText": {
+          "label": "Archive location"
+        },
+        "informationAssetManagement": {
+          "label": "Asset management"
+        },
+        "informationAssetTitleText": {
+          "label": "Asset title"
+        },
+        "informationAssetType": {
+          "label": "Asset type"
+        },
+        "verificationState": {
+          "label": "Verification state"
+        }
+      }
+    },
     "ExcavationPermitDocumentSet": {
       "label": "Excavation permit document set",
       "fields": {

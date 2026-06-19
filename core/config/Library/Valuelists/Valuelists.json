@@ -34794,6 +34794,82 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-informationAssetType": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "layoutWorkingFile": {},
+      "finalReportPdf": {},
+      "standardElectronicExcavationReport": {},
+      "electronicDocumentStandard": {},
+      "includedHeritageDatabase": {},
+      "digitalDocumentDatabase": {},
+      "plateDatabase": {},
+      "drawingDatabase": {},
+      "photoDatabase": {},
+      "surfaceSurveyGis": {},
+      "conventionalSlideArchive": {},
+      "conventionalPhotoAlbum": {},
+      "manuscriptDrawingArchive": {},
+      "integratedDbmsLinked": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "layoutWorkingFile",
+      "finalReportPdf",
+      "standardElectronicExcavationReport",
+      "electronicDocumentStandard",
+      "includedHeritageDatabase",
+      "digitalDocumentDatabase",
+      "plateDatabase",
+      "drawingDatabase",
+      "photoDatabase",
+      "surfaceSurveyGis",
+      "conventionalSlideArchive",
+      "conventionalPhotoAlbum",
+      "manuscriptDrawingArchive",
+      "integratedDbmsLinked",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-informationAssetManagement": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "sourceRecordLinked": {},
+      "reportItemLinked": {},
+      "registerNumberLinked": {},
+      "filePathRecorded": {},
+      "formatVersionRecorded": {},
+      "coordinateSystemRecorded": {},
+      "accessPermissionSet": {},
+      "backupLocationRecorded": {},
+      "backupVerified": {},
+      "migrationNeeded": {},
+      "conventionalMediaDigitizationNeeded": {},
+      "dbmsConnectionChecked": {},
+      "longTermArchiveLocation": {},
+      "restrictedAccessMarked": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "sourceRecordLinked",
+      "reportItemLinked",
+      "registerNumberLinked",
+      "filePathRecorded",
+      "formatVersionRecorded",
+      "coordinateSystemRecorded",
+      "accessPermissionSet",
+      "backupLocationRecorded",
+      "backupVerified",
+      "migrationNeeded",
+      "conventionalMediaDigitizationNeeded",
+      "dbmsConnectionChecked",
+      "longTermArchiveLocation",
+      "restrictedAccessMarked",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-stateVestingSelectionRecord": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

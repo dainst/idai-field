@@ -14353,6 +14353,46 @@
     },
     "description": "Korean report-standard history checks for preserving changes to legends, orientation, scales, elevation, soil color, drawing symbols, numbering rules, terminology, registers, and source-record links"
   },
+  "KoreanFieldwork-informationAssetType": {
+    "values": {
+      "layoutWorkingFile": { "label": "Layout working file" },
+      "finalReportPdf": { "label": "Final report PDF" },
+      "standardElectronicExcavationReport": { "label": "Standard electronic excavation report" },
+      "electronicDocumentStandard": { "label": "Electronic document standard" },
+      "includedHeritageDatabase": { "label": "Included heritage database" },
+      "digitalDocumentDatabase": { "label": "Digital document database" },
+      "plateDatabase": { "label": "Plate database" },
+      "drawingDatabase": { "label": "Drawing database" },
+      "photoDatabase": { "label": "Photo database" },
+      "surfaceSurveyGis": { "label": "Surface survey GIS" },
+      "conventionalSlideArchive": { "label": "Conventional slide archive" },
+      "conventionalPhotoAlbum": { "label": "Conventional photo album" },
+      "manuscriptDrawingArchive": { "label": "Manuscript drawing archive" },
+      "integratedDbmsLinked": { "label": "Integrated DBMS linked" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Information-asset types that keep report files, electronic-report packages, databases, GIS, and legacy media visible after fieldwork"
+  },
+  "KoreanFieldwork-informationAssetManagement": {
+    "values": {
+      "sourceRecordLinked": { "label": "Source record linked" },
+      "reportItemLinked": { "label": "Report item linked" },
+      "registerNumberLinked": { "label": "Register number linked" },
+      "filePathRecorded": { "label": "File path recorded" },
+      "formatVersionRecorded": { "label": "Format version recorded" },
+      "coordinateSystemRecorded": { "label": "Coordinate system recorded" },
+      "accessPermissionSet": { "label": "Access permission set" },
+      "backupLocationRecorded": { "label": "Backup location recorded" },
+      "backupVerified": { "label": "Backup verified" },
+      "migrationNeeded": { "label": "Migration needed" },
+      "conventionalMediaDigitizationNeeded": { "label": "Conventional media digitization needed" },
+      "dbmsConnectionChecked": { "label": "DBMS connection checked" },
+      "longTermArchiveLocation": { "label": "Long-term archive location" },
+      "restrictedAccessMarked": { "label": "Restricted access marked" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Information-asset management checks for preserving source links, file paths, formats, permissions, backups, migration needs, DBMS links, and archive locations"
+  },
   "KoreanFieldwork-stateVestingSelectionRecord": {
     "values": {
       "ownershipNotice": { "label": "Ownership notice" },

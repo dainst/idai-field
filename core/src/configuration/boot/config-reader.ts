@@ -249,5 +249,5 @@ export class ConfigReader {
 
     getCustomLanguageConfigurations = (projectPrefix: string) => CUSTOM_LANGUAGE_CONFIGURATIONS[projectPrefix];
 
-    getValuelistsLanguages = () => VALUELISTS_LANGUAGES;
+    getValuelistsLanguages = (): any => VALUELISTS_LANGUAGES;
 }

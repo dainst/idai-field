@@ -211,6 +211,32 @@
         }
       }
     },
+    "InformationAsset": {
+      "label": "정보화 자산",
+      "fields": {
+        "informationAssetIdentifierText": {
+          "label": "자산 식별번호"
+        },
+        "informationAssetLinkText": {
+          "label": "원기록 연결"
+        },
+        "informationAssetLocationText": {
+          "label": "보존 위치"
+        },
+        "informationAssetManagement": {
+          "label": "자산 관리 상태"
+        },
+        "informationAssetTitleText": {
+          "label": "자산명"
+        },
+        "informationAssetType": {
+          "label": "자산 종류"
+        },
+        "verificationState": {
+          "label": "검증상태"
+        }
+      }
+    },
     "ExcavationPermitDocumentSet": {
       "label": "발굴허가 서류 묶음",
       "fields": {

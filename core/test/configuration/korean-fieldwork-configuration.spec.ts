@@ -297,6 +297,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('alluvialSite');
         expect(documentsById['source-index-alluvial-neolithic-001'].resource.sourceEvidenceVerification)
             .toContain('directPdfChecked');
+        expect(documentsById['source-index-alluvial-soilmap-001'].resource.sourceEvidenceLocator)
+            .toContain('PDF 497-525');
+        expect(documentsById['source-index-alluvial-soilmap-001'].resource.sourceEvidenceDomain)
+            .toContain('fieldSurvey');
+        expect(documentsById['source-index-alluvial-soilmap-001'].resource.sourceEvidenceUse)
+            .toContain('preventAutoClassification');
         expect(documentsById['source-index-archaeobotany-001'].resource.sourceEvidenceDomain)
             .toContain('archaeobotany');
         expect(documentsById['source-index-archaeobotany-001'].resource.sourceEvidenceUse)

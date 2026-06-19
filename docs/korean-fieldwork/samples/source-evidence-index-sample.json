@@ -128,6 +128,56 @@
     },
     {
       "resource": {
+        "id": "source-index-alluvial-soilmap-001",
+        "identifier": "SRC-ALL-SOIL-001",
+        "shortDescription": "정밀토양도·대토양군 사례 색인",
+        "category": "SourceEvidenceIndex",
+        "relations": {
+          "liesWithin": ["project-source-evidence-001"]
+        },
+        "description": "제6권 토양조사 자료 활용 장의 정밀토양도 이용 절차, 대토양군 재정리, 창원일반산업단지·합산패총·가술리패총, 울산 태화강, 부산·진해 남문지구, 김해 관동리 사례를 토양도 기반 예측과 실제 시굴·발굴 검증 근거로 분리한다.",
+        "sourceEvidenceCitation": "국립문화유산연구원, 2010, 한국 매장문화재 조사연구방법론6, 토양조사 자료의 고고학적 활용",
+        "sourceEvidenceLocator": "PDF 497-525, 558-580쪽 원문 이미지 대조; 정밀토양도 이용법, 창원산단·합산패총·가술리패총, 태화강·남문지구·김해 관동리 사례",
+        "sourceEvidenceMaterial": [
+          "table",
+          "figure",
+          "map",
+          "caseStudy",
+          "measurementValue",
+          "caption"
+        ],
+        "sourceEvidenceDomain": [
+          "alluvialSite",
+          "fieldSurvey",
+          "spatialData"
+        ],
+        "sourceEvidenceVerification": [
+          "pageChecked",
+          "figureNumberChecked",
+          "tableNumberChecked",
+          "caseNameChecked",
+          "numericValueChecked",
+          "crossSourceCompared",
+          "directPdfChecked"
+        ],
+        "sourceEvidenceUse": [
+          "fieldDesignEvidence",
+          "comparativeReference",
+          "interpretationCaution",
+          "preventAutoClassification",
+          "sourceTraceability"
+        ],
+        "recordCreationTiming": "postExcavationDerived",
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "crossReviewNeeded"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
         "id": "source-index-archaeobotany-001",
         "identifier": "SRC-ARCHBOT-001",
         "shortDescription": "식물유체 표본·동정 도판 색인",

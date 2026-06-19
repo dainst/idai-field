@@ -312,14 +312,6 @@ export default getDocumentViewMapHook = () => {
                 this.categoryLabels[documentFeature.properties.category] =
                     documentCategoryLabels;
 
-                for (categoryKey in parentCollection.properties
-                    .category_labels) {
-                    this.categoryLabels[categoryKey] =
-                        parentCollection.properties.category_labels[
-                            categoryKey
-                        ];
-                }
-
                 documentFeature.properties.fill = true;
 
                 documentVectorSource = new VectorSource({
@@ -334,6 +326,11 @@ export default getDocumentViewMapHook = () => {
                     },
                 });
                 this.map.addLayer(this.docLayer);
+            }
+
+            for (categoryKey in parentCollection.properties.category_labels) {
+                this.categoryLabels[categoryKey] =
+                    parentCollection.properties.category_labels[categoryKey];
             }
 
             const parentVectorSource = new VectorSource({

@@ -4,6 +4,7 @@
   "validationQuestions": [
     "개인 야장이 작성자 개인 메모로 끝나지 않고 담당 유구, 원본 제출, 스캔, 검토, 접근조건, 반출금지 상태로 공적 기록화되는가.",
     "조사일지가 당일 사실기록, 누적 인원·장비, 날씨·우천작업, 지시·회의·기관 소통, 다음 작업 근거를 남기는가.",
+    "작업일의 측량·사진·도면·안전·민원·유물정리·시료·일지·보고서 책임이 일지 문장 속에 묻히지 않고 구조화되는가.",
     "제토·둑·기준단면·배수·장비 작업 안전이 작업일지의 일반 메모가 아니라 작업 단위의 확인값으로 남는가.",
     "일지 검토가 사진·도면·유물·시료 목록, 번호 변환표, 원기록 보존, 보고서 반영 여부와 연결되는가.",
     "품질검수가 원기록을 조용히 덮어쓰지 않고 수정 사유, 변경 이력, 검토자, 원매체 확인, 다음 현장조치, 보고서 평가 환류를 남기는가."
@@ -25,6 +26,22 @@
           "reproducibleRecord",
           "crossReviewNeeded",
           "correctionNeeded"
+        ],
+        "operationRoleResponsibility": [
+          "responsibleInvestigator",
+          "fieldDirector",
+          "fieldInvestigator",
+          "surveyLead",
+          "photographyLead",
+          "drawingLead",
+          "safetyLead",
+          "complaintCommunicationLead",
+          "artifactProcessingLead",
+          "sampleCollectionLead",
+          "dailyLogAuthor",
+          "reportPreparationLead",
+          "reviewer",
+          "roleGapIdentified"
         ],
         "excavationControlSafety": [
           "gridBaulkPlanSet",
@@ -326,6 +343,17 @@
           "pendingDecision"
         ],
         "recordCreationTiming": "sameDayFieldRecord",
+        "operationRoleResponsibility": [
+          "fieldDirector",
+          "photographyLead",
+          "drawingLead",
+          "safetyLead",
+          "complaintCommunicationLead",
+          "sampleCollectionLead",
+          "dailyLogAuthor",
+          "reviewer",
+          "pendingDecision"
+        ],
         "dailyLogContent": [
           "workDateWeather",
           "staffRoles",

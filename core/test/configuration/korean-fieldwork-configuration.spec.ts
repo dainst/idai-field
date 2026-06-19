@@ -216,6 +216,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('originalSubmitted');
         expect(documentsById['op-quality-001'].resource.reportEvaluationFeedback)
             .toContain('fieldQualityNotSubstituted');
+        expect(documentsById['op-quality-001'].resource.operationRoleResponsibility)
+            .toContain('safetyLead');
+        expect(documentsById['op-quality-001'].resource.operationRoleResponsibility)
+            .toContain('roleGapIdentified');
         expect(documentsById['op-quality-001'].resource.excavationControlSafety)
             .toContain('machineStrippingDepthControlled');
         expect(documentsById['op-quality-001'].resource.excavationControlSafety)
@@ -224,6 +228,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toEqual(['op-quality-001']);
         expect(documentsById['daily-log-quality-001'].resource.dailyLogEvidenceRole)
             .toContain('disputeEvidencePotential');
+        expect(documentsById['daily-log-quality-001'].resource.operationRoleResponsibility)
+            .toContain('dailyLogAuthor');
         expect(documentsById['daily-log-quality-001'].resource.dailyLogReview)
             .toContain('sourceRecordArchived');
         expect(documentsById['quality-review-sameday-001'].resource.relations.liesWithin)
@@ -903,6 +909,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(fieldRecordQualityReviewForm.fields.qualityReviewStage.inputType).toBe('checkboxes');
         expect(fieldRecordQualityReviewForm.fields.qualityCorrectionBasis.inputType).toBe('checkboxes');
         expect(dailyLogForm.parent).toBe('Operation');
+        expect(dailyLogForm.fields.operationRoleResponsibility.inputType).toBe('checkboxes');
         expect(dailyLogForm.fields.dailyLogEvidenceRole.inputType).toBe('checkboxes');
         expect(termAuthorityForm.parent).toBe('FeatureGroup');
         expect(termAuthorityForm.fields.termDictionaryDomain.inputType).toBe('checkboxes');
@@ -917,6 +924,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(sourceEvidenceIndexForm.fields.sourceEvidenceVerification.inputType).toBe('checkboxes');
         expect(sourceEvidenceIndexForm.fields.sourceEvidenceUse.inputType).toBe('checkboxes');
         expect(operationForm.fields.fieldRecordQuality.inputType).toBe('checkboxes');
+        expect(operationForm.fields.operationRoleResponsibility.inputType).toBe('checkboxes');
         expect(operationForm.fields.excavationControlSafety.inputType).toBe('checkboxes');
         expect(operationForm.fields.gpsSurveyQualityRecord.inputType).toBe('checkboxes');
         expect(operationForm.fields.gpsNmeaRecord.inputType).toBe('checkboxes');
@@ -1153,6 +1161,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(photoForm.fields.mediaRights.inputType).toBe('checkboxes');
 
         expect(operationForm.valuelists.fieldRecordQuality).toBe('KoreanFieldwork-fieldRecordQuality');
+        expect(operationForm.valuelists.operationRoleResponsibility)
+            .toBe('KoreanFieldwork-operationRoleResponsibility');
         expect(operationForm.valuelists.excavationControlSafety)
             .toBe('KoreanFieldwork-excavationControlSafety');
         expect(operationForm.valuelists.gpsSurveyQualityRecord)
@@ -1216,6 +1226,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(fieldRecordQualityReviewForm.valuelists.fieldRecordQuality)
             .toBe('KoreanFieldwork-fieldRecordQuality');
         expect(dailyLogForm.valuelists.dailyLogContent).toBe('KoreanFieldwork-dailyLogContent');
+        expect(dailyLogForm.valuelists.operationRoleResponsibility)
+            .toBe('KoreanFieldwork-operationRoleResponsibility');
         expect(dailyLogForm.valuelists.dailyLogEvidenceRole)
             .toBe('KoreanFieldwork-dailyLogEvidenceRole');
         expect(dailyLogForm.valuelists.dailyLogReview).toBe('KoreanFieldwork-dailyLogReview');
@@ -1588,6 +1600,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.FieldRecordQualityReview.fields.reviewedRecordUnit.label)
             .toBe('Reviewed record unit');
         expect(languages.en.categories.DailyLog.label).toBe('Daily log');
+        expect(languages.en.categories.DailyLog.fields.operationRoleResponsibility.label)
+            .toBe('Operation role responsibility');
         expect(languages.en.categories.DailyLog.fields.dailyLogEvidenceRole.label)
             .toBe('Daily log evidence role');
         expect(languages.en.categories.TermAuthority.label).toBe('Term authority');
@@ -1602,6 +1616,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.SourceEvidenceIndex.fields.sourceEvidenceVerification.label)
             .toBe('Source verification status');
         expect(languages.en.categories.Operation.fields.fieldRecordQuality.label).toBe('Field record quality');
+        expect(languages.en.categories.Operation.fields.operationRoleResponsibility.label)
+            .toBe('Operation role responsibility');
         expect(languages.en.categories.Operation.fields.excavationControlSafety.label)
             .toBe('Excavation control and safety');
         expect(languages.en.categories.Operation.fields.personalNotebookArchive.label).toBe('Personal notebook archive');
@@ -1976,6 +1992,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Original submitted');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-dailyLogContent'].values.workArea.label)
             .toBe('Work area');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-operationRoleResponsibility']
+            .values.safetyLead.label)
+            .toBe('Safety lead');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-operationRoleResponsibility']
+            .values.complaintCommunicationLead.label)
+            .toBe('민원·기관소통 담당');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-dailyLogReview'].values.sameDayWritten.label)
             .toBe('Same-day written');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-dailyLogEvidenceRole']

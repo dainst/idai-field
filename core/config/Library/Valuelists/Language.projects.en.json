@@ -13708,6 +13708,65 @@
     },
     "description": "Korean daily fieldwork log content for work progress, weather, staff, equipment, finds, visitors, and change reasons that must remain traceable to reports"
   },
+  "KoreanFieldwork-operationRoleResponsibility": {
+    "values": {
+      "principalInvestigator": {
+        "label": "Project director"
+      },
+      "responsibleInvestigator": {
+        "label": "Responsible investigator"
+      },
+      "fieldDirector": {
+        "label": "Field director"
+      },
+      "fieldInvestigator": {
+        "label": "Field investigator"
+      },
+      "juniorInvestigator": {
+        "label": "Junior investigator"
+      },
+      "fieldAssistant": {
+        "label": "Field assistant"
+      },
+      "surveyLead": {
+        "label": "Survey lead"
+      },
+      "photographyLead": {
+        "label": "Photography lead"
+      },
+      "drawingLead": {
+        "label": "Drawing lead"
+      },
+      "safetyLead": {
+        "label": "Safety lead"
+      },
+      "complaintCommunicationLead": {
+        "label": "Complaint and agency communication lead"
+      },
+      "artifactProcessingLead": {
+        "label": "Artifact processing lead"
+      },
+      "sampleCollectionLead": {
+        "label": "Sample collection lead"
+      },
+      "dailyLogAuthor": {
+        "label": "Daily log author"
+      },
+      "reportPreparationLead": {
+        "label": "Report preparation lead"
+      },
+      "reviewer": {
+        "label": "Reviewer"
+      },
+      "roleGapIdentified": {
+        "label": "Role gap identified"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean operation role responsibilities for project direction, field direction, survey, photos, drawings, safety, communication, artifact processing, samples, logs, reports, and review"
+  },
   "KoreanFieldwork-dailyLogEvidenceRole": {
     "values": {
       "sameDayFactRecord": {

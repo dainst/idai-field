@@ -22,6 +22,9 @@
       "fields": {
         "dailyLogEvidenceRole": {
           "label": "일지 증거 역할"
+        },
+        "operationRoleResponsibility": {
+          "label": "작업 역할·책임"
         }
       }
     },
@@ -126,6 +129,9 @@
         },
         "fieldRecordQuality": {
           "label": "현장기록 품질"
+        },
+        "operationRoleResponsibility": {
+          "label": "작업 역할·책임"
         },
         "excavationControlSafety": {
           "label": "제토·둑·안전 관리"

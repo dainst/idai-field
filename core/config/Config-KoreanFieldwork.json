@@ -201,6 +201,10 @@
       "color": "#6f8758",
       "hidden": [],
       "fields": {
+        "operationRoleResponsibility": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "dailyLogEvidenceRole": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -212,6 +216,7 @@
         "dailyLogReview": "KoreanFieldwork-dailyLogReview",
         "digitalSourcePreservation": "KoreanFieldwork-digitalSourcePreservation",
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
+        "operationRoleResponsibility": "KoreanFieldwork-operationRoleResponsibility",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "reportCrossCheck": "KoreanFieldwork-reportCrossCheck",
         "verificationState": "KoreanFieldwork-verificationState"
@@ -234,6 +239,7 @@
           "fields": [
             "recordCreationTiming",
             "dailyLogContent",
+            "operationRoleResponsibility",
             "dailyLogEvidenceRole",
             "dailyLogReview",
             "fieldRecordQuality",
@@ -260,6 +266,10 @@
           "constraintIndexed": true
         },
         "fieldRecordQuality": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "operationRoleResponsibility": {
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
@@ -341,6 +351,7 @@
         "dailyLogReview": "KoreanFieldwork-dailyLogReview",
         "digitalSourcePreservation": "KoreanFieldwork-digitalSourcePreservation",
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
+        "operationRoleResponsibility": "KoreanFieldwork-operationRoleResponsibility",
         "excavationControlSafety": "KoreanFieldwork-excavationControlSafety",
         "gpsSurveyQualityRecord": "KoreanFieldwork-gpsSurveyQualityRecord",
         "gpsNmeaRecord": "KoreanFieldwork-gpsNmeaRecord",
@@ -384,6 +395,7 @@
             "dailyLogContent",
             "dailyLogReview",
             "fieldRecordQuality",
+            "operationRoleResponsibility",
             "excavationControlSafety",
             "gpsSurveyQualityRecord",
             "gpsNmeaRecord",

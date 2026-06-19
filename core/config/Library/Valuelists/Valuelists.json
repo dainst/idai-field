@@ -34030,6 +34030,50 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-operationRoleResponsibility": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "principalInvestigator": {},
+      "responsibleInvestigator": {},
+      "fieldDirector": {},
+      "fieldInvestigator": {},
+      "juniorInvestigator": {},
+      "fieldAssistant": {},
+      "surveyLead": {},
+      "photographyLead": {},
+      "drawingLead": {},
+      "safetyLead": {},
+      "complaintCommunicationLead": {},
+      "artifactProcessingLead": {},
+      "sampleCollectionLead": {},
+      "dailyLogAuthor": {},
+      "reportPreparationLead": {},
+      "reviewer": {},
+      "roleGapIdentified": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "principalInvestigator",
+      "responsibleInvestigator",
+      "fieldDirector",
+      "fieldInvestigator",
+      "juniorInvestigator",
+      "fieldAssistant",
+      "surveyLead",
+      "photographyLead",
+      "drawingLead",
+      "safetyLead",
+      "complaintCommunicationLead",
+      "artifactProcessingLead",
+      "sampleCollectionLead",
+      "dailyLogAuthor",
+      "reportPreparationLead",
+      "reviewer",
+      "roleGapIdentified",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-dailyLogEvidenceRole": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

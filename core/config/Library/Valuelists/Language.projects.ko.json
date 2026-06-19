@@ -1954,6 +1954,65 @@
     },
     "description": "매일 남겨야 하는 조사단 공정, 날씨, 인원, 장비, 출토, 방문자, 변경 사유를 보고서 대조가 가능한 원기록으로 관리하기 위한 목록"
   },
+  "KoreanFieldwork-operationRoleResponsibility": {
+    "values": {
+      "principalInvestigator": {
+        "label": "조사단장"
+      },
+      "responsibleInvestigator": {
+        "label": "책임조사원"
+      },
+      "fieldDirector": {
+        "label": "현장팀장"
+      },
+      "fieldInvestigator": {
+        "label": "조사원"
+      },
+      "juniorInvestigator": {
+        "label": "준조사원"
+      },
+      "fieldAssistant": {
+        "label": "보조원"
+      },
+      "surveyLead": {
+        "label": "측량 담당"
+      },
+      "photographyLead": {
+        "label": "사진 담당"
+      },
+      "drawingLead": {
+        "label": "도면 담당"
+      },
+      "safetyLead": {
+        "label": "안전 담당"
+      },
+      "complaintCommunicationLead": {
+        "label": "민원·기관소통 담당"
+      },
+      "artifactProcessingLead": {
+        "label": "유물정리 담당"
+      },
+      "sampleCollectionLead": {
+        "label": "시료채취 담당"
+      },
+      "dailyLogAuthor": {
+        "label": "작업일지 작성자"
+      },
+      "reportPreparationLead": {
+        "label": "보고서 담당"
+      },
+      "reviewer": {
+        "label": "검토자"
+      },
+      "roleGapIdentified": {
+        "label": "역할 공백 확인"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "조사단장, 책임조사원, 현장팀장, 측량·사진·도면·안전·민원·유물정리·시료·일지·보고서 담당과 검토 책임을 작업 단위에서 확인하기 위한 목록"
+  },
   "KoreanFieldwork-dailyLogEvidenceRole": {
     "values": {
       "sameDayFactRecord": {

@@ -104,6 +104,16 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('가마터');
         expect(documentsById['term-import-kiln-site-gamateo'].resource.termSearchMapping)
             .toContain('reportOutputSeparated');
+        expect(documentsById['term-alias-open-kiln-handaetgama'].resource.termAliasText)
+            .toBe('한뎃가마');
+        expect(documentsById['term-alias-open-kiln-handaetgama'].resource.termAliasHandling)
+            .toContain('doNotOverwriteObservedTerm');
+        expect(documentsById['term-authority-pottery-workshop'].resource.termSearchMapping)
+            .toContain('importMappingNeeded');
+        expect(documentsById['term-import-pottery-workshop-subijang'].resource.termImportAuthorityText)
+            .toBe('토기 공방');
+        expect(documentsById['term-import-pottery-workshop-drying-yard'].resource.verificationState)
+            .toBe('pendingDecision');
     });
 
 

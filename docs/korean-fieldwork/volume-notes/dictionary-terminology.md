@@ -353,7 +353,7 @@
 
 2026-06-19 구현에서는 `TermAlias`를 `TermAuthority` 하위 카드로 추가했다. 별칭 원문은 `termAliasText`에 필수값으로 두고, 카드의 `identifier`와 `shortDescription`은 사람이 읽는 식별자·요약으로 남긴다. `termAliasRole`은 현장 동의어, 사전 찾아가기, 기관 관용어, 보고서·사업명, 한자·원어 변형, OCR 변형을 구분한다. `termAliasHandling`은 자동완성 허용, 우선표제어 연결, 검색어 보존, 보고서 출력 분리, 가져오기 전용, 분야·시대 범위, 원PDF 대조 필요, 현장 관찰어 덮어쓰기 금지를 기록한다. 이 구조는 `집자리/주거지`, `가마터/요지`, `한뎃가마/노천요` 같은 검색어를 받아도 저장 표제어와 보고서 출력어를 섞지 않기 위한 최소 모델이다.
 
-2026-06-19 추가 검증에서는 `docs/korean-fieldwork/samples/term-authority-alias-sample.json`을 두어 `집자리/주거지`, `수혈건물지`, `가마터/요지`, `가마/요지` 관계가 실제 설정의 `TermAuthority`와 `TermAlias` 폼, 값목록 키로만 표현되는지 테스트한다. 이 샘플은 현장 검색어를 허용하되, `doNotOverwriteObservedTerm`, `structureSubtypeSeparated`, `doNotMergeToSingleTerm`, `pendingDecision`을 함께 남겨 관찰어와 권위 표제어가 섞이지 않는지 확인하는 용도다.
+2026-06-19 추가 검증에서는 `docs/korean-fieldwork/samples/term-authority-alias-sample.json`을 두어 `집자리/주거지`, `수혈건물지`, `가마터/요지`, `가마/요지` 관계가 실제 설정의 `TermAuthority`와 `TermAlias` 폼, 값목록 키로만 표현되는지 테스트한다. 이 샘플은 현장 검색어를 허용하되, `doNotOverwriteObservedTerm`, `structureSubtypeSeparated`, `doNotMergeToSingleTerm`, `pendingDecision`을 함께 남겨 관찰어와 권위 표제어가 섞이지 않는지 확인하는 용도다. 이어 생산유적편의 `한뎃가마 -> 노천요`, `수비장 -> 토기 공방`, `건조장 -> 토기 공방` 찾아가기 관계도 추가해, 생산유적 가져오기 과정에서 작업공간·구조 관찰값이 권위 표제어 하나로 접히지 않는지 확인한다.
 
 2026-06-19 청동기 소형 시설 재대조 뒤에는 같은 샘플에 `주혈/주공 -> 기둥 구멍`, `노지 -> 화덕 자리`, `굴립주 건물 -> 기둥 건물` 관계를 추가했다. 이 항목들은 자동완성과 보고서 출력어 후보를 검증하지만, 현장 기록에서는 위치·치수·배치·소결·절개·바닥 높이 같은 관찰 속성을 덮어쓰지 않는지 확인하는 용도다.
 

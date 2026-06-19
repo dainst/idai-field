@@ -521,6 +521,154 @@
         "termAuthorityStatus": ["institutionalUsage", "reportOutputChecked", "sourcePageLinked"],
         "verificationState": "candidate"
       }
+    },
+    {
+      "resource": {
+        "id": "term-authority-open-kiln",
+        "identifier": "노천요",
+        "shortDescription": "한뎃가마 계열 생산유적 권위 표제어",
+        "category": "TermAuthority",
+        "relations": {
+          "liesWithin": ["term-group-korean-archaeology"]
+        },
+        "description": "생산유적편의 찾아가기 관계에 따라 한뎃가마 입력어를 노천요 표제어와 연결하되, 실제 구조가 노천·반지하·지하식인지와 소성실·연소실 잔존 상태는 별도 관찰값으로 남긴다.",
+        "termDictionaryDomain": ["pottery", "roofTile", "earthenware"],
+        "termApplicationScope": ["valueListEntry", "reportOutput", "searchAlias", "sourceDictionaryLink", "importMapping"],
+        "termSourcePriority": ["domainSpecialistDictionary", "methodologyTerm", "pdfCrossCheckRequired"],
+        "termRelation": ["preferredTerm", "alias", "domainRestricted", "reportOutputTerm"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "reportOutputSeparated",
+          "domainScopeSet",
+          "structureSubtypeSeparated",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "valueListCandidate"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-alias-open-kiln-handaetgama",
+        "identifier": "한뎃가마",
+        "shortDescription": "생산유적편 찾아가기: 한뎃가마",
+        "category": "TermAlias",
+        "relations": {
+          "liesWithin": ["term-authority-open-kiln"]
+        },
+        "description": "한뎃가마는 현장·보고서 관용 입력어로 보존하고, 노천요 표제어와 연결하되 구조 관찰값과 사진 캡션의 원문 표현은 덮어쓰지 않는다.",
+        "termAliasText": "한뎃가마",
+        "termAliasRole": ["dictionarySeeAlso", "fieldSynonym", "reportOutputName"],
+        "termAliasHandling": [
+          "autocompleteAccepted",
+          "preferredHeadwordTarget",
+          "keepAliasForSearch",
+          "reportOutputSeparate",
+          "domainScoped",
+          "doNotOverwriteObservedTerm"
+        ],
+        "termRelation": ["alias", "reportOutputTerm", "domainRestricted"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "reportOutputSeparated",
+          "fieldUsagePreserved",
+          "domainScopeSet"
+        ],
+        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "pendingDecision"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-authority-pottery-workshop",
+        "identifier": "토기 공방",
+        "shortDescription": "수비장·건조장 계열 공방 권위 표제어",
+        "category": "TermAuthority",
+        "relations": {
+          "liesWithin": ["term-group-korean-archaeology"]
+        },
+        "description": "수비장과 건조장은 생산유적편에서 토기 공방으로 찾아가지만, 실제 야장에서는 원료가공·건조·성형·저장 같은 작업 단계와 부속시설 위치를 별도 유구로 남긴다.",
+        "termDictionaryDomain": ["pottery", "workshopOther"],
+        "termApplicationScope": ["valueListEntry", "reportOutput", "searchAlias", "sourceDictionaryLink", "importMapping"],
+        "termSourcePriority": ["domainSpecialistDictionary", "methodologyTerm", "pdfCrossCheckRequired"],
+        "termRelation": ["preferredTerm", "narrowerTerm", "functionalSimilarity", "domainRestricted"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "domainScopeSet",
+          "structureSubtypeSeparated",
+          "importMappingNeeded",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "valueListCandidate"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-import-pottery-workshop-subijang",
+        "identifier": "IMPORT-WORKSHOP-001",
+        "shortDescription": "가져오기 입력어 수비장의 토기 공방 매핑",
+        "category": "TermImportMapping",
+        "relations": {
+          "liesWithin": ["term-authority-pottery-workshop"]
+        },
+        "description": "기존 대장이나 사진 캡션의 수비장 입력어를 토기 공방 권위 표제어에 연결하되, 수비공·수비구덩이·원료 침전층 같은 실제 시설 관찰값은 따로 보존한다.",
+        "termImportSourceText": "수비장",
+        "termImportAuthorityText": "토기 공방",
+        "termImportReportText": "수비장",
+        "termAliasHandling": [
+          "importOnly",
+          "preferredHeadwordTarget",
+          "keepAliasForSearch",
+          "manualReviewRequired",
+          "doNotOverwriteObservedTerm"
+        ],
+        "termRelation": ["narrowerTerm", "functionalSimilarity", "domainRestricted"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "fieldUsagePreserved",
+          "structureSubtypeSeparated",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "pendingDecision"],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-import-pottery-workshop-drying-yard",
+        "identifier": "IMPORT-WORKSHOP-002",
+        "shortDescription": "가져오기 입력어 건조장의 토기 공방 매핑",
+        "category": "TermImportMapping",
+        "relations": {
+          "liesWithin": ["term-authority-pottery-workshop"]
+        },
+        "description": "건조장 입력어는 토기 공방의 하위 작업공간으로 연결하되, 건조시설 자체의 위치·바닥·보관 흔적은 공방 표제어로 병합하지 않는다.",
+        "termImportSourceText": "건조장",
+        "termImportAuthorityText": "토기 공방",
+        "termImportReportText": "건조장",
+        "termAliasHandling": [
+          "importOnly",
+          "preferredHeadwordTarget",
+          "keepAliasForSearch",
+          "manualReviewRequired",
+          "doNotOverwriteObservedTerm"
+        ],
+        "termRelation": ["narrowerTerm", "functionalSimilarity", "domainRestricted"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "fieldUsagePreserved",
+          "structureSubtypeSeparated",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "pendingDecision"],
+        "verificationState": "pendingDecision"
+      }
     }
   ]
 }

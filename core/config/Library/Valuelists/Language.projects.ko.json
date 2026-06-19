@@ -6904,6 +6904,13 @@
       "scannerSelected": { "label": "스캐너 선정" },
       "pointCloudAcquired": { "label": "점군 획득" },
       "pointCloudMerged": { "label": "점군 병합" },
+      "scanStationRecorded": { "label": "스캔 위치 기록" },
+      "scanTargetRecorded": { "label": "타겟 기록" },
+      "pointDensityChecked": { "label": "점밀도 확인" },
+      "occlusionRecorded": { "label": "폐색영역 기록" },
+      "overlapScanRecorded": { "label": "중복스캔 기록" },
+      "checkPointSurveyRecorded": { "label": "검사점 측량 기록" },
+      "filteringBeforeAfterChecked": { "label": "필터링 전후 검토" },
       "polygonConverted": { "label": "폴리곤 변환" },
       "polygonOptimized": { "label": "폴리곤 최적화" },
       "cadDataGenerated": { "label": "CAD 데이터 생성" },
@@ -6918,7 +6925,7 @@
       "processedFilePreserved": { "label": "후처리파일 보존" },
       "pendingDecision": { "label": "판단 보류" }
     },
-    "description": "전자도면을 단순 결과물이 아니라 스캐너 선정, 점군 획득·병합, 폴리곤 변환·최적화, CAD·2D·3D·복원 산출물, 원본·후처리 파일 보존 흐름으로 점검하기 위한 목록"
+    "description": "전자도면을 단순 결과물이 아니라 스캐너 선정, 점군 획득·병합, 스캔 위치·타겟·점밀도·폐색영역·중복스캔·검사점·필터링 검수, 폴리곤 변환·최적화, CAD·2D·3D·복원 산출물, 원본·후처리 파일 보존 흐름으로 점검하기 위한 목록"
   },
   "KoreanFieldwork-artifactElectronicDrawingProcedure": {
     "values": {

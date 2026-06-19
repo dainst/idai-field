@@ -18658,6 +18658,13 @@
       "scannerSelected": { "label": "Scanner selected" },
       "pointCloudAcquired": { "label": "Point cloud acquired" },
       "pointCloudMerged": { "label": "Point cloud merged" },
+      "scanStationRecorded": { "label": "Scan station recorded" },
+      "scanTargetRecorded": { "label": "Scan target recorded" },
+      "pointDensityChecked": { "label": "Point density checked" },
+      "occlusionRecorded": { "label": "Occlusion recorded" },
+      "overlapScanRecorded": { "label": "Overlap scan recorded" },
+      "checkPointSurveyRecorded": { "label": "Check-point survey recorded" },
+      "filteringBeforeAfterChecked": { "label": "Filtering before/after checked" },
       "polygonConverted": { "label": "Polygon converted" },
       "polygonOptimized": { "label": "Polygon optimized" },
       "cadDataGenerated": { "label": "CAD data generated" },
@@ -18672,7 +18679,7 @@
       "processedFilePreserved": { "label": "Processed file preserved" },
       "pendingDecision": { "label": "Pending decision" }
     },
-    "description": "Korean fieldwork electronic drawing workflow checks for scanner selection, point-cloud acquisition and merging, polygon processing, CAD/2D/3D outputs, restoration data, and file preservation"
+    "description": "Korean fieldwork electronic drawing workflow checks for scanner selection, point-cloud acquisition and merging, scan station/target/point-density/occlusion/overlap/check-point/filtering controls, polygon processing, CAD/2D/3D outputs, restoration data, and file preservation"
   },
   "KoreanFieldwork-artifactElectronicDrawingProcedure": {
     "values": {

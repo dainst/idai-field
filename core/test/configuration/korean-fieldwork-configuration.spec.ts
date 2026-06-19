@@ -232,6 +232,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('waterloggedState');
         expect(documentsById['drawing-media-3d-source-001'].resource.electronicDrawingSourceWorkflow)
             .toContain('pointCloudMerged');
+        expect(documentsById['drawing-media-3d-source-001'].resource.electronicDrawingSourceWorkflow)
+            .toContain('scanStationRecorded');
+        expect(documentsById['drawing-media-3d-source-001'].resource.electronicDrawingSourceWorkflow)
+            .toContain('occlusionRecorded');
+        expect(documentsById['drawing-media-3d-source-001'].resource.electronicDrawingSourceWorkflow)
+            .toContain('filteringBeforeAfterChecked');
         expect(documentsById['drawing-media-3d-source-001'].resource.artifactElectronicDrawingProcedure)
             .toContain('referencePlaneCreated');
     });
@@ -3561,6 +3567,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-electronicDrawingSourceWorkflow']
             .values.pointCloudMerged.label)
             .toBe('Point cloud merged');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-electronicDrawingSourceWorkflow']
+            .values.scanStationRecorded.label)
+            .toBe('Scan station recorded');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-electronicDrawingSourceWorkflow']
+            .values.filteringBeforeAfterChecked.label)
+            .toBe('Filtering before/after checked');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-electronicDrawingSourceWorkflow']
             .values.fieldResearcherRechecked.label)
             .toBe('Field researcher rechecked');

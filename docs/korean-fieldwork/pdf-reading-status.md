@@ -117,6 +117,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-19 전자도면·3D 스캔 자료도 구현 단위로 압축했다. 제2회 조사연구원 교육자료의 전자도면 장은 3D 스캔을 완성 도면 대체물이 아니라 점군 획득, 병합, 폴리곤 변환·최적화, CAD 데이터, 2D·3D 도면과 복원자료 산출로 이어지는 제작 과정으로 다룬다. 유물 전자도면은 유물 형태 검토, 최종 결과물 형태, 특징 view와 단면 위치 결정, 벡터화, 연구자 요구정보, 기준면 생성, 좌표계 이동, 합치 기준을 따로 남겨야 하므로 `Drawing`의 `electronicDrawingSourceWorkflow`, `artifactElectronicDrawingProcedure` 값 목록으로 옮겼다. 이 흐름도 `media-drawing-gps-workflow-sample.json`에서 점군 병합, 폴리곤 변환, 원천·후처리 파일 보존, 기준면·좌표계·합치 기준으로 검증한다.
 
+2026-06-20 첨단과학장비 자료의 3D 레이저스캔·항공 LiDAR 구간을 다시 보며 `electronicDrawingSourceWorkflow`를 보강했다. 스캔 위치, 타겟, 점밀도, 폐색영역, 중복스캔, 검사점 측량, 필터링 전후 검토를 추가해 3D 산출물이 완성 파일 첨부가 아니라 원점군과 후처리 이력을 가진 측량 기록으로 남게 했다. `media-drawing-gps-workflow-sample.json`의 `drawing-media-3d-source-001`이 이 새 값을 실제로 검증한다.
+
 2026-06-19 행정·검토회의·부분완료 OCR 보강에서는 `매장문화재_유적조사방법론.pdf`, `발굴조사_업무의_이해_교재.pdf`, 제1·2회 조사연구원 교육자료의 보강 OCR을 다시 읽어 조사의뢰 접수, 계획 수립, 착수, 진행, 완료, 완료 후 후속조치가 하나의 업무 흐름임을 확인했다. 이번 구현에서는 `InvestigationRequestIntake`, `InvestigationPlanChangeRecord`, `ExpertReviewMeeting`, `PartialCompletionPackage`, `SurfaceSurveyResultProcessing`, `RecordTransferManagementSystem` 요구를 `Project`, `Operation`, `Survey`의 한국형 값목록으로 옮기고 `administrative-workflow-sample.json`으로 검증하게 했다. 핵심은 전문가 검토회의와 부분완료가 회의록·상태값이 아니라 원도면, 사진, 트렌치별 유구·유물 현황, 조사기관 의견, 공사 일정, 보존방안, 통보 결과가 연결된 제출 패키지라는 점이다.
 
 ## 보조 자료군 판독 현황

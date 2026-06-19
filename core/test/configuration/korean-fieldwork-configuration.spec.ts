@@ -585,6 +585,12 @@ describe('KoreanFieldwork project configuration', () => {
 
         expect(documentsById['project-admin-workflow-001'].resource.investigationRequestIntake)
             .toContain('projectOwnerBasicData');
+        expect(documentsById['project-admin-workflow-001'].resource.investigationRequestIntake)
+            .toContain('requestStatusContinuouslyManaged');
+        expect(documentsById['project-admin-workflow-001'].resource.investigationRequestIntake)
+            .toContain('siteConstraintChecked');
+        expect(documentsById['project-admin-workflow-001'].resource.investigationRequestIntake)
+            .toContain('complaintRiskChecked');
         expect(documentsById['project-admin-workflow-001'].resource.investigationPlanChangeRecord)
             .toContain('permitChangeNeeded');
         expect(documentsById['permit-document-admin-001'].resource.excavationPermitDocumentSet)
@@ -4015,6 +4021,15 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-digitalSurveyQualityControl']
             .values.outsourcedOutputAcceptanceChecked.label)
             .toBe('외주 산출물 인수검수');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-investigationRequestIntake']
+            .values.requestStatusContinuouslyManaged.label)
+            .toBe('Investigation status continuously managed');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-investigationRequestIntake']
+            .values.siteConstraintChecked.label)
+            .toBe('토지·지장물 제약 확인');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-investigationRequestIntake']
+            .values.complaintRiskChecked.label)
+            .toBe('민원 예상사항 파악');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-reportSubmissionWorkflow']
             .values.submissionReceiptRecorded.label)
             .toBe('Submission receipt recorded');

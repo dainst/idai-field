@@ -35247,7 +35247,11 @@
       "photoDrawingSecured": {},
       "fieldReconnaissance": {},
       "intakeOfficerUnified": {},
+      "requestStatusContinuouslyManaged": {},
       "complaintDuplicationPrevented": {},
+      "excessiveComplaintIntakePrevented": {},
+      "siteConstraintChecked": {},
+      "complaintRiskChecked": {},
       "specialistInstitutionReferral": {},
       "planPrerequisitesReviewed": {},
       "pendingDecision": {}
@@ -35260,7 +35264,11 @@
       "photoDrawingSecured",
       "fieldReconnaissance",
       "intakeOfficerUnified",
+      "requestStatusContinuouslyManaged",
       "complaintDuplicationPrevented",
+      "excessiveComplaintIntakePrevented",
+      "siteConstraintChecked",
+      "complaintRiskChecked",
       "specialistInstitutionReferral",
       "planPrerequisitesReviewed",
       "pendingDecision"

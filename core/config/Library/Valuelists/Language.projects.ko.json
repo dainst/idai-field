@@ -2922,6 +2922,56 @@
     },
     "description": "조사 의뢰부터 허가, 착수, 완료신고, 보고서 제출까지 조사사업 행정 흐름을 추적하기 위한 목록"
   },
+  "KoreanFieldwork-investigationRequestIntake": {
+    "values": {
+      "requestReceived": {
+        "label": "의뢰 접수"
+      },
+      "projectOwnerBasicData": {
+        "label": "사업시행자 기초자료 확보"
+      },
+      "priorSurveyResultSecured": {
+        "label": "선행조사 결과 확보"
+      },
+      "projectPlanSecured": {
+        "label": "사업계획서 확보"
+      },
+      "photoDrawingSecured": {
+        "label": "사진·도면 확보"
+      },
+      "fieldReconnaissance": {
+        "label": "현장답사 완료"
+      },
+      "intakeOfficerUnified": {
+        "label": "접수담당자 일원화"
+      },
+      "requestStatusContinuouslyManaged": {
+        "label": "조사현황 상시관리"
+      },
+      "complaintDuplicationPrevented": {
+        "label": "민원·의뢰 중복접수 방지"
+      },
+      "excessiveComplaintIntakePrevented": {
+        "label": "무리한 민원접수 방지"
+      },
+      "siteConstraintChecked": {
+        "label": "토지·지장물 제약 확인"
+      },
+      "complaintRiskChecked": {
+        "label": "민원 예상사항 파악"
+      },
+      "specialistInstitutionReferral": {
+        "label": "전문기관 의뢰"
+      },
+      "planPrerequisitesReviewed": {
+        "label": "계획수립 전제 검토"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "조사의뢰 접수부터 기초자료 확보, 현장답사, 접수 담당, 민원·지장물 위험, 전문기관 배정까지 조사계획 수립 전 상태를 추적하기 위한 목록"
+  },
   "KoreanFieldwork-excavationPermitDocumentSet": {
     "values": {
       "excavationPermitApplication": {

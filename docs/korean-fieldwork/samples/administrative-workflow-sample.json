@@ -36,6 +36,11 @@
           "photoDrawingSecured",
           "fieldReconnaissance",
           "intakeOfficerUnified",
+          "requestStatusContinuouslyManaged",
+          "complaintDuplicationPrevented",
+          "excessiveComplaintIntakePrevented",
+          "siteConstraintChecked",
+          "complaintRiskChecked",
           "specialistInstitutionReferral",
           "planPrerequisitesReviewed"
         ],

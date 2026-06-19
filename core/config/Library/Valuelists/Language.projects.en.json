@@ -14676,6 +14676,56 @@
     },
     "description": "Korean field notebook checklist for tracking investigation administration from request and permit to completion reporting and final report submission"
   },
+  "KoreanFieldwork-investigationRequestIntake": {
+    "values": {
+      "requestReceived": {
+        "label": "Request received"
+      },
+      "projectOwnerBasicData": {
+        "label": "Project owner basic data secured"
+      },
+      "priorSurveyResultSecured": {
+        "label": "Prior survey result secured"
+      },
+      "projectPlanSecured": {
+        "label": "Project plan secured"
+      },
+      "photoDrawingSecured": {
+        "label": "Photos and drawings secured"
+      },
+      "fieldReconnaissance": {
+        "label": "Field reconnaissance completed"
+      },
+      "intakeOfficerUnified": {
+        "label": "Intake officer unified"
+      },
+      "requestStatusContinuouslyManaged": {
+        "label": "Investigation status continuously managed"
+      },
+      "complaintDuplicationPrevented": {
+        "label": "Duplicate complaint or request intake prevented"
+      },
+      "excessiveComplaintIntakePrevented": {
+        "label": "Excessive complaint intake prevented"
+      },
+      "siteConstraintChecked": {
+        "label": "Land and obstacle constraints checked"
+      },
+      "complaintRiskChecked": {
+        "label": "Complaint risk checked"
+      },
+      "specialistInstitutionReferral": {
+        "label": "Specialist institution referral"
+      },
+      "planPrerequisitesReviewed": {
+        "label": "Plan prerequisites reviewed"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean field notebook checklist for tracking request intake, basic source materials, reconnaissance, intake responsibility, complaint and obstacle risks, and specialist assignment before investigation planning"
+  },
   "KoreanFieldwork-excavationPermitDocumentSet": {
     "values": {
       "excavationPermitApplication": {

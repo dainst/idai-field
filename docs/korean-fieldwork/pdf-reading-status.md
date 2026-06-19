@@ -131,6 +131,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-19 행정·검토회의·부분완료 OCR 보강에서는 `매장문화재_유적조사방법론.pdf`, `발굴조사_업무의_이해_교재.pdf`, 제1·2회 조사연구원 교육자료의 보강 OCR을 다시 읽어 조사의뢰 접수, 계획 수립, 착수, 진행, 완료, 완료 후 후속조치가 하나의 업무 흐름임을 확인했다. 이번 구현에서는 `InvestigationRequestIntake`, `InvestigationPlanChangeRecord`, `ExpertReviewMeeting`, `PartialCompletionPackage`, `SurfaceSurveyResultProcessing`, `RecordTransferManagementSystem` 요구를 `Project`, `Operation`, `Survey`의 한국형 값목록으로 옮기고 `administrative-workflow-sample.json`으로 검증하게 했다. 핵심은 전문가 검토회의와 부분완료가 회의록·상태값이 아니라 원도면, 사진, 트렌치별 유구·유물 현황, 조사기관 의견, 공사 일정, 보존방안, 통보 결과가 연결된 제출 패키지라는 점이다.
 
+2026-06-20 같은 OCR 근거의 조사의뢰 접수 대목을 다시 대조해 `InvestigationRequestIntake`를 보강했다. 조사현황 상시관리, 중복·무리한 민원접수 방지, 토지·지장물 제약 확인, 민원 예상사항 파악은 계획서 작성 뒤에 정리할 행정 메모가 아니라 계획 수립 전에 확인해야 하는 리스크다. 이번 보강은 `KoreanFieldwork-investigationRequestIntake` 값목록과 라벨, `administrative-workflow-sample.json`, 설정 테스트에 반영했다.
+
 ## 보조 자료군 판독 현황
 
 새 보조 자료군은 [보조 자료군 목록과 우선순위](supplemental-source-inventory.md)에서 상세 관리한다. 현재 상태는 다음과 같다.

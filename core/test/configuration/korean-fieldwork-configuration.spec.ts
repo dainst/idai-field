@@ -119,6 +119,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toEqual(['feature-pit-building-001']);
         expect(documentsById['find-pit-building-001-001'].resource.fieldOnlyMissingCheck)
             .toContain('numberedBeforeCollection');
+        expect(documentsById['find-pit-building-001-001'].resource.findSampleResearchScope)
+            .toContain('futureResearchCandidate');
+        expect(documentsById['sample-pit-building-001-charcoal-001'].resource.findSampleResearchScope)
+            .toContain('scienceAnalysisCandidate');
         expect(documentsById['sample-pit-building-001-charcoal-001'].resource.sampleCollectionHandling)
             .toContain('contextMapLinked');
         expect(documentsById['photo-pit-building-001-first-exposure'].resource.reportCrossCheck)
@@ -1095,6 +1099,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureSegmentForm.fields.wetlandMicrotopographyRecord.inputType).toBe('checkboxes');
         expect(findForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
         expect(findForm.fields.artifactHandlingWorkflow.inputType).toBe('checkboxes');
+        expect(findForm.fields.findSampleResearchScope.inputType).toBe('checkboxes');
         expect(findForm.fields.artifactLabelRegisterLink.inputType).toBe('checkboxes');
         expect(findForm.fields.artifactQuantityBasis.inputType).toBe('checkboxes');
         expect(findForm.fields.surfaceFindHandlingRecord.inputType).toBe('checkboxes');
@@ -1133,6 +1138,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.fields.assemblageRelation.inputType).toBe('checkboxes');
         expect(findForm.fields.interpretationArgument.inputType).toBe('checkboxes');
         expect(sampleForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
+        expect(sampleForm.fields.findSampleResearchScope.inputType).toBe('checkboxes');
         expect(sampleForm.fields.pitDwellingScienceSamplingPlan.inputType).toBe('checkboxes');
         expect(sampleForm.fields.ironSampleAnalysisPlan.inputType).toBe('checkboxes');
         expect(sampleForm.fields.tileKilnAnalysisPlan.inputType).toBe('checkboxes');
@@ -1488,6 +1494,7 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-wetlandMicrotopographyRecord');
         expect(findForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
         expect(findForm.valuelists.artifactHandlingWorkflow).toBe('KoreanFieldwork-artifactHandlingWorkflow');
+        expect(findForm.valuelists.findSampleResearchScope).toBe('KoreanFieldwork-findSampleResearchScope');
         expect(findForm.valuelists.artifactLabelRegisterLink)
             .toBe('KoreanFieldwork-artifactLabelRegisterLink');
         expect(findForm.valuelists.artifactQuantityBasis).toBe('KoreanFieldwork-artifactQuantityBasis');
@@ -1570,6 +1577,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.valuelists.termSearchMapping).toBe('KoreanFieldwork-termSearchMapping');
         expect(sampleForm.valuelists.sampleCollectionHandling)
             .toBe('KoreanFieldwork-sampleCollectionHandling');
+        expect(sampleForm.valuelists.findSampleResearchScope).toBe('KoreanFieldwork-findSampleResearchScope');
         expect(sampleForm.valuelists.pitDwellingScienceSamplingPlan)
             .toBe('KoreanFieldwork-pitDwellingScienceSamplingPlan');
         expect(sampleForm.valuelists.ironSampleAnalysisPlan).toBe('KoreanFieldwork-ironSampleAnalysisPlan');
@@ -1917,6 +1925,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.Find.fields.termSearchMapping.label).toBe('Term search mapping');
         expect(languages.en.categories.Find.fields.artifactHandlingWorkflow.label)
             .toBe('Artifact handling workflow');
+        expect(languages.en.categories.Find.fields.findSampleResearchScope.label)
+            .toBe('Find/sample research scope');
         expect(languages.en.categories.Find.fields.artifactLabelRegisterLink.label)
             .toBe('Artifact label-register link');
         expect(languages.en.categories.Find.fields.artifactQuantityBasis.label).toBe('Artifact quantity basis');
@@ -1984,6 +1994,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.Find.fields.chronologyArgument.label).toBe('Chronology argument');
         expect(languages.en.categories.Find.fields.assemblageRelation.label).toBe('Assemblage relation');
         expect(languages.en.categories.Find.fields.interpretationArgument.label).toBe('Interpretation argument');
+        expect(languages.en.categories.Sample.fields.findSampleResearchScope.label)
+            .toBe('Find/sample research scope');
         expect(languages.en.categories.Sample.fields.sampleCollectionHandling.label)
             .toBe('Sample collection handling');
         expect(languages.en.categories.Sample.fields.pitDwellingScienceSamplingPlan.label)
@@ -2247,6 +2259,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Pre-removal condition');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactHandlingWorkflow'].values.stateVesting.label)
             .toBe('State vesting');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-findSampleResearchScope']
+            .values.futureResearchCandidate.label)
+            .toBe('Future research candidate');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-findSampleResearchScope']
+            .values.notCollectedReasonRecorded.label)
+            .toBe('미수습 사유 기록');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactLabelRegisterLink']
             .values.fieldSerialInventoryNumberLinked.label)
             .toBe('Field serial and inventory number linked');

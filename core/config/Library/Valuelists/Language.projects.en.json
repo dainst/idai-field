@@ -11996,6 +11996,24 @@
     },
     "description": "Korean artifact lifecycle checks for tracking finds from field collection through emergency treatment, conservation, reports, selection, state vesting, packing, transport, and transfer"
   },
+  "KoreanFieldwork-findSampleResearchScope": {
+    "values": {
+      "administrativeArtifact": { "label": "Administrative artifact" },
+      "reportIncludedArtifact": { "label": "Report-included artifact" },
+      "carbonizedGrain": { "label": "Carbonized grain" },
+      "charcoal": { "label": "Charcoal" },
+      "slag": { "label": "Slag" },
+      "animalBone": { "label": "Animal bone" },
+      "shell": { "label": "Shell" },
+      "organicSample": { "label": "Organic sample" },
+      "scienceAnalysisCandidate": { "label": "Science-analysis candidate" },
+      "futureResearchCandidate": { "label": "Future research candidate" },
+      "collectionStatusRecorded": { "label": "Collection status recorded" },
+      "notCollectedReasonRecorded": { "label": "Not-collected reason recorded" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean fieldwork checks for keeping finds and samples broader than state-vesting or report-included artifacts, including carbonized grains, charcoal, slag, animal bones, shells, organic samples, science-analysis candidates, future research candidates, and collection or non-collection reasons"
+  },
   "KoreanFieldwork-artifactLabelRegisterLink": {
     "values": {
       "labelCreated": { "label": "Label created" },

@@ -31230,6 +31230,40 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-findSampleResearchScope": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "administrativeArtifact": {},
+      "reportIncludedArtifact": {},
+      "carbonizedGrain": {},
+      "charcoal": {},
+      "slag": {},
+      "animalBone": {},
+      "shell": {},
+      "organicSample": {},
+      "scienceAnalysisCandidate": {},
+      "futureResearchCandidate": {},
+      "collectionStatusRecorded": {},
+      "notCollectedReasonRecorded": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "administrativeArtifact",
+      "reportIncludedArtifact",
+      "carbonizedGrain",
+      "charcoal",
+      "slag",
+      "animalBone",
+      "shell",
+      "organicSample",
+      "scienceAnalysisCandidate",
+      "futureResearchCandidate",
+      "collectionStatusRecorded",
+      "notCollectedReasonRecorded",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-artifactLabelRegisterLink": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

@@ -6,7 +6,8 @@
     "현장 종료 전에만 확인 가능한 값이 비어 있으면 경고되는가.",
     "시료가 분석명만이 아니라 분석 질문과 채취 맥락을 갖는가.",
     "판단 보류가 확정값으로 덮이지 않고 검토 이력으로 남는가.",
-    "표토·교란·상부퇴적토·매몰토 제거와 사용면 확인이 행위의 역순 원칙으로 검토되는가."
+    "표토·교란·상부퇴적토·매몰토 제거와 사용면 확인이 행위의 역순 원칙으로 검토되는가.",
+    "행정귀속·보고서 수록 대상이 아니더라도 탄화곡물·목탄·슬래그·동물뼈·조개 같은 시료가 후속연구 후보와 수습·미수습 사유까지 남는가."
   ],
   "documents": [
     {
@@ -150,6 +151,12 @@
         ],
         "recordCreationTiming": "fieldOnlyObservation",
         "artifactHandlingWorkflow": ["fieldCollection", "findConditionRecord", "packingTransport"],
+        "findSampleResearchScope": [
+          "reportIncludedArtifact",
+          "futureResearchCandidate",
+          "collectionStatusRecorded",
+          "pendingDecision"
+        ],
         "artifactQuantityBasis": ["physicalItemCount", "sameObjectConfirmed", "quantityEvidencePhoto"],
         "potteryProductionLifeRecord": ["forming", "use", "breakage"],
         "verificationState": "observedInField"
@@ -175,6 +182,13 @@
         ],
         "recordCreationTiming": "fieldOnlyObservation",
         "samplePurpose": ["absoluteDating", "archaeobotany"],
+        "findSampleResearchScope": [
+          "charcoal",
+          "organicSample",
+          "scienceAnalysisCandidate",
+          "futureResearchCandidate",
+          "collectionStatusRecorded"
+        ],
         "sampleCollectionHandling": [
           "immediateCollection",
           "charcoalWoodImmediate",

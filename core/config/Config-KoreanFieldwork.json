@@ -1615,6 +1615,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "findSampleResearchScope": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "artifactLabelRegisterLink": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1776,6 +1780,7 @@
         "interpretationArgument": "KoreanFieldwork-interpretationArgument",
         "fieldOnlyMissingCheck": "KoreanFieldwork-fieldOnlyMissingCheck",
         "artifactHandlingWorkflow": "KoreanFieldwork-artifactHandlingWorkflow",
+        "findSampleResearchScope": "KoreanFieldwork-findSampleResearchScope",
         "artifactLabelRegisterLink": "KoreanFieldwork-artifactLabelRegisterLink",
         "artifactQuantityBasis": "KoreanFieldwork-artifactQuantityBasis",
         "surfaceFindHandlingRecord": "KoreanFieldwork-surfaceFindHandlingRecord",
@@ -1842,6 +1847,7 @@
             "interpretationArgument",
             "fieldOnlyMissingCheck",
             "artifactHandlingWorkflow",
+            "findSampleResearchScope",
             "artifactLabelRegisterLink",
             "artifactQuantityBasis",
             "surfaceFindHandlingRecord",
@@ -1927,6 +1933,10 @@
           "constraintIndexed": true
         },
         "samplePurpose": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "findSampleResearchScope": {
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
@@ -2056,6 +2066,7 @@
         "fieldOnlyMissingCheck": "KoreanFieldwork-fieldOnlyMissingCheck",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "samplePurpose": "KoreanFieldwork-samplePurpose",
+        "findSampleResearchScope": "KoreanFieldwork-findSampleResearchScope",
         "sampleCollectionHandling": "KoreanFieldwork-sampleCollectionHandling",
         "pitDwellingScienceSamplingPlan": "KoreanFieldwork-pitDwellingScienceSamplingPlan",
         "ironSampleAnalysisPlan": "KoreanFieldwork-ironSampleAnalysisPlan",
@@ -2112,6 +2123,7 @@
           "name": "koreanFieldwork",
           "fields": [
             "samplePurpose",
+            "findSampleResearchScope",
             "sampleCollectionHandling",
             "pitDwellingScienceSamplingPlan",
             "ironSampleAnalysisPlan",

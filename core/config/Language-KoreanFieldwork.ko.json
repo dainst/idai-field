@@ -627,6 +627,9 @@
         "artifactHandlingWorkflow": {
           "label": "유물 관리 절차"
         },
+        "findSampleResearchScope": {
+          "label": "유물·시료 연구범위"
+        },
         "artifactLabelRegisterLink": {
           "label": "유물 꼬리표·대장 연결"
         },
@@ -756,6 +759,9 @@
         },
         "samplePurpose": {
           "label": "시료 목적"
+        },
+        "findSampleResearchScope": {
+          "label": "유물·시료 연구범위"
         },
         "sampleCollectionHandling": {
           "label": "시료 채취·보관"

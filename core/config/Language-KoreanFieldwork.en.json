@@ -627,6 +627,9 @@
         "artifactHandlingWorkflow": {
           "label": "Artifact handling workflow"
         },
+        "findSampleResearchScope": {
+          "label": "Find/sample research scope"
+        },
         "artifactLabelRegisterLink": {
           "label": "Artifact label-register link"
         },
@@ -756,6 +759,9 @@
         },
         "samplePurpose": {
           "label": "Sample purpose"
+        },
+        "findSampleResearchScope": {
+          "label": "Find/sample research scope"
         },
         "sampleCollectionHandling": {
           "label": "Sample collection handling"

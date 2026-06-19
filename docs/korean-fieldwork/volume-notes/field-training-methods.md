@@ -288,6 +288,8 @@ iDAI.field에는 다음 값이 필요하다.
 
 토기요장은 가마 한 기의 구조보다 운영 규모와 시설 배치가 중요하다. 가마 수, 동시 조업 가능성, 소규모·중규모·대규모 구분, 단위취락 공급형부터 지역중심형까지의 운영 유형, 성형장·채토장·건조장·폐기장·주거시설군을 한 묶음으로 관리해야 소비처와 유통 해석까지 이어진다.
 
+2026-06-19 추가 구현에서는 토기 제작실험 변수와 토기 분류 판단근거를 Find의 `potteryExperimentalVariableRecord`, `potteryClassificationBasis`로 옮기고, 토기요장 운영 규모는 Feature의 `potteryKilnOperationScale`로 분리했다. 기존 `potteryKilnYardFacility`에는 수비장·연토장·성형장·주거시설군·관리건물·회구부·운송로를 보강해, 제작실험 조건과 요장 규모가 곧바로 형식명이나 생산량 확정으로 넘어가지 않게 했다.
+
 ## 매장문화재 조사실무 1차 독해
 
 `매장문화재_조사실무.pdf`의 발굴조사 기록 방법 장은 야장을 개인 메모가 아니라 공적 연구자료로 본다. 작업일지와 개인 야장은 다르지만, 조사 완료 뒤 기관에 제출되고 후속 연구자가 다시 찾을 수 있어야 한다는 점에서 iDAI.field의 `DailyLog`보다 긴 생애주기를 가져야 한다. 이번 구현에서는 `Operation` 화면의 `dailyLogContent`와 `dailyLogReview`를 유지하면서, 독립 `DailyLog` 카드에 매일 작업내용, 검토 상태, 일지의 증거 역할을 따로 기록하게 했다.
@@ -1303,7 +1305,7 @@ GIS 입지분석 장은 고도, 경사, 사면방향, 수계거리, 수계와의
 - `토기생산조직근거`: 가내제작후보, 가내공작후보, 공방공작후보, 대규모공작후보, 반전업전문가후보, 전업전문가후보, 성형분업후보, 시문분업후보, 채색분업후보, 도안반복, 규격표준화, 유약만차이, 형뜨기분리선관찰, 생산맥락단정금지, 민족지직접등치금지, 판단 보류
 - `토기비교표본검토`: 동일시기비교, 동일지역비교, 동일기종비교, 개체수확대, 기와성형흔참조, 생활도자참조, 민족지사례비교, 실험사례비교, 생산지후보, 유통범위후보, 지역성검토, 표면흔사진비교, 참조한계기록, 성급한결론차단, 판단 보류
 
-2026-06-19 구현에서는 이 후보군 중 `토도자용어범위`, `토기원료소지기록`, `토기비짐기능판정`, `토기제작생애기록`, `토기성형흔판정`, `토기성형기법판단주의`, `토기공정방향성`을 `Find` 화면의 `ceramicTermScope`, `potteryFabricTemperRecord`, `potteryTemperFunctionAssessment`, `potteryProductionLifeRecord`, `potteryFormingTraceAssessment`, `potteryFormingCaution`, `potteryProcessDirectionality`로 옮겼고, 생산분업 후보와 비교표본 검토도 `potteryProductionOrganizationEvidence`, `potteryComparativeReferenceCheck`로 추가했다. 소성표면흔은 기존 `potteryFiringTraceObservation`과 함께 보며, 새 두 목록은 가내제작·공방공작·대규모공작, 전업성, 분업, 표준화, 형뜨기 분리선, 민족지 유추 한계, 동일 시기·지역·기종 비교, 표본 확대, 기와 성형흔·생활도자·실험 사례 참조를 확정 판정이 아닌 근거 묶음으로 남긴다.
+2026-06-19 구현에서는 이 후보군 중 `토도자용어범위`, `토기원료소지기록`, `토기비짐기능판정`, `토기제작생애기록`, `토기성형흔판정`, `토기성형기법판단주의`, `토기공정방향성`을 `Find` 화면의 `ceramicTermScope`, `potteryFabricTemperRecord`, `potteryTemperFunctionAssessment`, `potteryProductionLifeRecord`, `potteryFormingTraceAssessment`, `potteryFormingCaution`, `potteryProcessDirectionality`로 옮겼고, 생산분업 후보와 비교표본 검토도 `potteryProductionOrganizationEvidence`, `potteryComparativeReferenceCheck`로 추가했다. 이어 제작실험 조건과 분류 속성 근거는 `potteryExperimentalVariableRecord`, `potteryClassificationBasis`로 분리했다. 소성표면흔은 기존 `potteryFiringTraceObservation`과 함께 보며, 새 목록들은 가내제작·공방공작·대규모공작, 전업성, 분업, 표준화, 형뜨기 분리선, 민족지 유추 한계, 동일 시기·지역·기종 비교, 표본 확대, 기와 성형흔·생활도자·실험 사례 참조, 점토 수분·비짐 비율·건조·소성 조건, 기술군·암석기술군·형태기술군 분류를 확정 판정이 아닌 근거 묶음으로 남긴다.
 
 ## 제2회 매장문화재 조사연구원 교육 OCR 재대조
 

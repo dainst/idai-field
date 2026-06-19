@@ -436,6 +436,9 @@
         "potteryKilnYardFacility": {
           "label": "Pottery kiln yard facility"
         },
+        "potteryKilnOperationScale": {
+          "label": "Pottery kiln operation scale"
+        },
         "potteryKilnInterpretationRisk": {
           "label": "Pottery kiln interpretation risk"
         },
@@ -701,6 +704,12 @@
         },
         "potteryComparativeReferenceCheck": {
           "label": "Pottery comparative reference check"
+        },
+        "potteryExperimentalVariableRecord": {
+          "label": "Pottery experimental variable record"
+        },
+        "potteryClassificationBasis": {
+          "label": "Pottery classification basis"
         },
         "potteryFiringTraceObservation": {
           "label": "Pottery firing trace observation"

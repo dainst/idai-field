@@ -1083,6 +1083,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "potteryKilnOperationScale": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "potteryKilnInterpretationRisk": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1238,6 +1242,7 @@
         "potteryKilnStructureContext": "KoreanFieldwork-potteryKilnStructureContext",
         "potteryKilnPartInvestigation": "KoreanFieldwork-potteryKilnPartInvestigation",
         "potteryKilnYardFacility": "KoreanFieldwork-potteryKilnYardFacility",
+        "potteryKilnOperationScale": "KoreanFieldwork-potteryKilnOperationScale",
         "potteryKilnInterpretationRisk": "KoreanFieldwork-potteryKilnInterpretationRisk",
         "tileKilnStructureContext": "KoreanFieldwork-tileKilnStructureContext",
         "tileKilnExcavationControl": "KoreanFieldwork-tileKilnExcavationControl",
@@ -1331,6 +1336,7 @@
             "potteryKilnStructureContext",
             "potteryKilnPartInvestigation",
             "potteryKilnYardFacility",
+            "potteryKilnOperationScale",
             "potteryKilnInterpretationRisk",
             "tileKilnStructureContext",
             "tileKilnExcavationControl",
@@ -1713,6 +1719,14 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "potteryExperimentalVariableRecord": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "potteryClassificationBasis": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "potteryFiringTraceObservation": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1788,6 +1802,8 @@
         "potteryProcessDirectionality": "KoreanFieldwork-potteryProcessDirectionality",
         "potteryProductionOrganizationEvidence": "KoreanFieldwork-potteryProductionOrganizationEvidence",
         "potteryComparativeReferenceCheck": "KoreanFieldwork-potteryComparativeReferenceCheck",
+        "potteryExperimentalVariableRecord": "KoreanFieldwork-potteryExperimentalVariableRecord",
+        "potteryClassificationBasis": "KoreanFieldwork-potteryClassificationBasis",
         "potteryFiringTraceObservation": "KoreanFieldwork-potteryFiringTraceObservation",
         "potteryKilnFurnitureContext": "KoreanFieldwork-potteryKilnFurnitureContext",
         "tileKilnFindContext": "KoreanFieldwork-tileKilnFindContext",
@@ -1852,6 +1868,8 @@
             "potteryProcessDirectionality",
             "potteryProductionOrganizationEvidence",
             "potteryComparativeReferenceCheck",
+            "potteryExperimentalVariableRecord",
+            "potteryClassificationBasis",
             "potteryFiringTraceObservation",
             "potteryKilnFurnitureContext",
             "tileKilnFindContext",

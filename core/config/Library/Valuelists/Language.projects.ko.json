@@ -3712,13 +3712,22 @@
   "KoreanFieldwork-potteryKilnYardFacility": {
     "values": {
       "claySource": { "label": "토취장" },
+      "firingFacilityCluster": { "label": "소성시설군" },
+      "workshopFacilityCluster": { "label": "공방시설군" },
+      "levigationFacility": { "label": "수비장" },
+      "kneadingArea": { "label": "연토장" },
+      "formingArea": { "label": "성형장" },
       "clayStorageFacility": { "label": "태토 저장시설" },
       "drainageFacility": { "label": "배수시설" },
       "dryingArea": { "label": "건조장" },
       "storageArea": { "label": "저장고" },
+      "residentialFacilityCluster": { "label": "주거시설군" },
       "craftspersonLivingSpace": { "label": "공인 생활공간" },
+      "managementBuilding": { "label": "관리건물" },
       "productDisposalArea": { "label": "제품 폐기공간" },
       "wasteDeposit": { "label": "폐기장" },
+      "ashDumpArea": { "label": "회구부" },
+      "transportRoute": { "label": "운송로" },
       "workshopArea": { "label": "작업장" },
       "magneticSurvey": { "label": "자력탐사" },
       "groundRadarSurvey": { "label": "지중레이더 탐사" },
@@ -3727,7 +3736,25 @@
       "drawingOxidationReductionColored": { "label": "도면 산화·환원 색표기" },
       "pendingDecision": { "label": "판단 보류" }
     },
-    "description": "토기가마를 요체만이 아니라 토취장, 태토 저장, 배수, 건조, 저장, 공인 생활공간, 폐기장, 탐사·사진·도면 기록까지 포함한 요장으로 관리하기 위한 목록"
+    "description": "토기가마를 요체만이 아니라 토취장, 수비장, 연토장, 성형장, 태토 저장, 배수, 건조, 주거시설군, 관리건물, 폐기장, 회구부, 운송로, 탐사·사진·도면 기록까지 포함한 요장으로 관리하기 위한 목록"
+  },
+  "KoreanFieldwork-potteryKilnOperationScale": {
+    "values": {
+      "kilnCountRecorded": { "label": "가마 수 기록" },
+      "contemporaneousOperationCandidate": { "label": "동시조업 후보" },
+      "smallScaleOneTwoKilns": { "label": "소규모 1~2기" },
+      "mediumScaleThreeFiveKilns": { "label": "중규모 3~5기" },
+      "mediumLargeScaleSixTenKilns": { "label": "중대규모 6~10기" },
+      "largeScaleAroundTwentyKilns": { "label": "대규모 20기 내외" },
+      "settlementSupplyType": { "label": "단위취락 공급형" },
+      "multipleSettlementSupplyType": { "label": "복수취락 공급형" },
+      "localHubType": { "label": "소지역 거점형" },
+      "regionalCenterType": { "label": "지역중심형" },
+      "diachronicExpansionReviewed": { "label": "통시적 확대 검토" },
+      "productionQuantityNotAssumed": { "label": "생산량 단정 금지" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "토기요장의 가마 수, 동시조업 가능성, 규모 구분, 공급 범위와 통시적 확대 여부를 생산량 확정 전에 기록하기 위한 목록"
   },
   "KoreanFieldwork-potteryKilnInterpretationRisk": {
     "values": {
@@ -3906,6 +3933,46 @@
       "pendingDecision": { "label": "판단 보류" }
     },
     "description": "토기 한 점이나 단일 흔적으로 판단하지 않고 동일 시기·지역·기종, 기와 성형흔, 생활도자, 민족지·실험 사례, 생산지·유통범위 후보와 참조 한계를 비교하기 위한 목록"
+  },
+  "KoreanFieldwork-potteryExperimentalVariableRecord": {
+    "values": {
+      "clayMoisture": { "label": "점토 수분" },
+      "temperRatio": { "label": "비짐 비율" },
+      "levigationDegree": { "label": "수비 정도" },
+      "dryingLocation": { "label": "건조 위치" },
+      "rotationDuringDrying": { "label": "건조 중 방향 돌림" },
+      "dryingDuration": { "label": "건조 시간" },
+      "firingAtmosphere": { "label": "소성 분위기" },
+      "firingTemperature": { "label": "소성 온도" },
+      "firingDuration": { "label": "소성 시간" },
+      "firingPosition": { "label": "재임 위치" },
+      "supportMaterial": { "label": "지지재" },
+      "failureTrace": { "label": "실패흔" },
+      "shrinkageWarpingObserved": { "label": "수축·비틀림 관찰" },
+      "experimentReferenceLinked": { "label": "실험 참조 연결" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "토기 제작실험이나 복원실험을 유물 관찰과 비교할 때 점토 수분, 비짐 비율, 건조·소성 조건, 재임 위치, 지지재와 실패흔을 함께 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-potteryClassificationBasis": {
+    "values": {
+      "observedAttribute": { "label": "관찰속성" },
+      "excludedAttribute": { "label": "제외속성" },
+      "representativeAttribute": { "label": "대표속성" },
+      "technicalGroupSorted": { "label": "기술군 분류" },
+      "technopetrographicGroupSorted": { "label": "암석기술군 분류" },
+      "technomorphologicalGroupSorted": { "label": "형태기술군 분류" },
+      "stylisticGroupReviewed": { "label": "양식군 검토" },
+      "sameVesselTypeCompared": { "label": "동일기종 비교" },
+      "sameRegionCompared": { "label": "동일지역 비교" },
+      "sampleCountRecorded": { "label": "표본수 기록" },
+      "variationRangeRecorded": { "label": "변이범위 기록" },
+      "functionalDifferenceReviewed": { "label": "기능차 검토" },
+      "regionalDifferenceReviewed": { "label": "지역차 검토" },
+      "typologyNotAssumed": { "label": "형식명 선확정 금지" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "토기 형식명을 먼저 붙이지 않고 관찰·제외·대표 속성, 기술군 분류, 표본수, 변이범위, 기능차와 지역차를 근거로 남기기 위한 목록"
   },
   "KoreanFieldwork-potteryFiringTraceObservation": {
     "values": {

@@ -2,6 +2,7 @@
   "title": "Korean ceramic kiln production workflow sample",
   "purpose": "Validate that pottery, tile, and porcelain kiln records keep production space, kiln-part investigation, find context, and analysis planning connected instead of reducing ceramic production sites to one kiln type name.",
   "validationQuestions": [
+    "토기요장 운영 규모가 가마 수·동시조업·공급 범위 후보로 남고 생산량으로 바로 확정되지 않는가.",
     "토기가마 기록이 구조요 명칭보다 화구·연소부·소성부·연도부·회구부와 요장 시설, 해석위험, 분석시료를 함께 남기는가.",
     "기와가마 기록이 요체만이 아니라 요전부, 회구부, 폐기장, 채토공, 제작공방, 층위별 기와 문양, 연대·태토 시료까지 연결되는가.",
     "자기요장 기록이 가마 하나가 아니라 토취장, 수비공, 공방 공정, 봉통부·번조실·연도부, 갑발·도지미, 소비지 비교를 한 생산체계로 묶는가.",
@@ -135,16 +136,34 @@
         ],
         "potteryKilnYardFacility": [
           "claySource",
+          "firingFacilityCluster",
+          "workshopFacilityCluster",
+          "levigationFacility",
+          "kneadingArea",
+          "formingArea",
           "clayStorageFacility",
           "drainageFacility",
           "dryingArea",
           "storageArea",
+          "residentialFacilityCluster",
           "craftspersonLivingSpace",
+          "managementBuilding",
           "productDisposalArea",
           "wasteDeposit",
+          "ashDumpArea",
+          "transportRoute",
           "magneticSurvey",
           "aerialPhoto",
           "drawingOxidationReductionColored",
+          "pendingDecision"
+        ],
+        "potteryKilnOperationScale": [
+          "kilnCountRecorded",
+          "contemporaneousOperationCandidate",
+          "mediumScaleThreeFiveKilns",
+          "multipleSettlementSupplyType",
+          "diachronicExpansionReviewed",
+          "productionQuantityNotAssumed",
           "pendingDecision"
         ],
         "potteryKilnInterpretationRisk": [

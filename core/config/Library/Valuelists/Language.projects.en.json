@@ -15466,13 +15466,22 @@
   "KoreanFieldwork-potteryKilnYardFacility": {
     "values": {
       "claySource": { "label": "Clay source" },
+      "firingFacilityCluster": { "label": "Firing facility cluster" },
+      "workshopFacilityCluster": { "label": "Workshop facility cluster" },
+      "levigationFacility": { "label": "Levigation facility" },
+      "kneadingArea": { "label": "Clay kneading area" },
+      "formingArea": { "label": "Forming area" },
       "clayStorageFacility": { "label": "Clay storage facility" },
       "drainageFacility": { "label": "Drainage facility" },
       "dryingArea": { "label": "Drying area" },
       "storageArea": { "label": "Storage area" },
+      "residentialFacilityCluster": { "label": "Residential facility cluster" },
       "craftspersonLivingSpace": { "label": "Craftsperson living space" },
+      "managementBuilding": { "label": "Management building" },
       "productDisposalArea": { "label": "Product disposal area" },
       "wasteDeposit": { "label": "Waste deposit" },
+      "ashDumpArea": { "label": "Ash-dump area" },
+      "transportRoute": { "label": "Transport route" },
       "workshopArea": { "label": "Workshop area" },
       "magneticSurvey": { "label": "Magnetic survey" },
       "groundRadarSurvey": { "label": "Ground radar survey" },
@@ -15481,7 +15490,25 @@
       "drawingOxidationReductionColored": { "label": "Drawing oxidation/reduction colored" },
       "pendingDecision": { "label": "Pending decision" }
     },
-    "description": "Kiln-yard facility checks for clay procurement, storage, drainage, drying, craftsperson space, waste areas, geophysical survey, color photography, and oxidation/reduction drawing"
+    "description": "Kiln-yard facility checks for clay procurement, levigation, kneading, forming, storage, drainage, drying, residential facilities, management buildings, waste areas, transport routes, geophysical survey, color photography, and oxidation/reduction drawing"
+  },
+  "KoreanFieldwork-potteryKilnOperationScale": {
+    "values": {
+      "kilnCountRecorded": { "label": "Kiln count recorded" },
+      "contemporaneousOperationCandidate": { "label": "Contemporaneous operation candidate" },
+      "smallScaleOneTwoKilns": { "label": "Small scale: 1-2 kilns" },
+      "mediumScaleThreeFiveKilns": { "label": "Medium scale: 3-5 kilns" },
+      "mediumLargeScaleSixTenKilns": { "label": "Medium-large scale: 6-10 kilns" },
+      "largeScaleAroundTwentyKilns": { "label": "Large scale: around 20 kilns" },
+      "settlementSupplyType": { "label": "Settlement supply type" },
+      "multipleSettlementSupplyType": { "label": "Multiple-settlement supply type" },
+      "localHubType": { "label": "Local hub type" },
+      "regionalCenterType": { "label": "Regional center type" },
+      "diachronicExpansionReviewed": { "label": "Diachronic expansion reviewed" },
+      "productionQuantityNotAssumed": { "label": "Production quantity not assumed" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Pottery-kiln operation-scale checks for kiln count, contemporaneous operation, scale classes, supply range, and diachronic expansion before inferring production quantity"
   },
   "KoreanFieldwork-potteryKilnInterpretationRisk": {
     "values": {
@@ -15660,6 +15687,46 @@
       "pendingDecision": { "label": "Pending decision" }
     },
     "description": "Comparative-reference checks that require pottery observations to be compared across the same period, region, vessel type, tile forming traces, living pottery, ethnographic and experimental cases, production-site candidates, distribution range, and reference limits before classification"
+  },
+  "KoreanFieldwork-potteryExperimentalVariableRecord": {
+    "values": {
+      "clayMoisture": { "label": "Clay moisture" },
+      "temperRatio": { "label": "Temper ratio" },
+      "levigationDegree": { "label": "Levigation degree" },
+      "dryingLocation": { "label": "Drying location" },
+      "rotationDuringDrying": { "label": "Rotation during drying" },
+      "dryingDuration": { "label": "Drying duration" },
+      "firingAtmosphere": { "label": "Firing atmosphere" },
+      "firingTemperature": { "label": "Firing temperature" },
+      "firingDuration": { "label": "Firing duration" },
+      "firingPosition": { "label": "Firing position" },
+      "supportMaterial": { "label": "Support material" },
+      "failureTrace": { "label": "Failure trace" },
+      "shrinkageWarpingObserved": { "label": "Shrinkage/warping observed" },
+      "experimentReferenceLinked": { "label": "Experiment reference linked" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Pottery experimental-variable checks for comparing production-practice or replication experiments with finds through clay moisture, temper ratio, drying and firing conditions, firing position, support material, and failure traces"
+  },
+  "KoreanFieldwork-potteryClassificationBasis": {
+    "values": {
+      "observedAttribute": { "label": "Observed attribute" },
+      "excludedAttribute": { "label": "Excluded attribute" },
+      "representativeAttribute": { "label": "Representative attribute" },
+      "technicalGroupSorted": { "label": "Technical group sorted" },
+      "technopetrographicGroupSorted": { "label": "Technopetrographic group sorted" },
+      "technomorphologicalGroupSorted": { "label": "Technomorphological group sorted" },
+      "stylisticGroupReviewed": { "label": "Stylistic group reviewed" },
+      "sameVesselTypeCompared": { "label": "Same vessel type compared" },
+      "sameRegionCompared": { "label": "Same region compared" },
+      "sampleCountRecorded": { "label": "Sample count recorded" },
+      "variationRangeRecorded": { "label": "Variation range recorded" },
+      "functionalDifferenceReviewed": { "label": "Functional difference reviewed" },
+      "regionalDifferenceReviewed": { "label": "Regional difference reviewed" },
+      "typologyNotAssumed": { "label": "Typology not assumed" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Pottery classification-basis checks for keeping observed, excluded, and representative attributes, technical sorting levels, sample count, variation, functional and regional differences before fixing a type name"
   },
   "KoreanFieldwork-potteryFiringTraceObservation": {
     "values": {

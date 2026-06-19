@@ -436,6 +436,9 @@
         "potteryKilnYardFacility": {
           "label": "토기가마 요장 시설"
         },
+        "potteryKilnOperationScale": {
+          "label": "토기가마 운영 규모"
+        },
         "potteryKilnInterpretationRisk": {
           "label": "토기가마 해석위험"
         },
@@ -701,6 +704,12 @@
         },
         "potteryComparativeReferenceCheck": {
           "label": "토기 비교표본 검토"
+        },
+        "potteryExperimentalVariableRecord": {
+          "label": "토기 제작실험 변수"
+        },
+        "potteryClassificationBasis": {
+          "label": "토기 분류 판단근거"
         },
         "potteryFiringTraceObservation": {
           "label": "토기 소성흔 관찰"

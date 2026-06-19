@@ -25,6 +25,7 @@ describe('KoreanFieldwork project configuration', () => {
         const fieldRecordQualityReviewForm = config.forms.FieldRecordQualityReview;
         const dailyLogForm = config.forms.DailyLog;
         const termAuthorityForm = config.forms.TermAuthority;
+        const termAliasForm = config.forms.TermAlias;
         const findForm = config.forms['Find:default'];
         const sampleForm = config.forms['Sample:default'];
         const drawingForm = config.forms['Drawing:default'];
@@ -40,6 +41,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(termAuthorityForm.fields.termDictionaryDomain.inputType).toBe('checkboxes');
         expect(termAuthorityForm.fields.termApplicationScope.inputType).toBe('checkboxes');
         expect(termAuthorityForm.fields.termSourcePriority.inputType).toBe('checkboxes');
+        expect(termAliasForm.parent).toBe('TermAuthority');
+        expect(termAliasForm.fields.termAliasRole.inputType).toBe('checkboxes');
+        expect(termAliasForm.fields.termAliasHandling.inputType).toBe('checkboxes');
         expect(operationForm.fields.fieldRecordQuality.inputType).toBe('checkboxes');
         expect(operationForm.fields.gpsSurveyQualityRecord.inputType).toBe('checkboxes');
         expect(operationForm.fields.gpsNmeaRecord.inputType).toBe('checkboxes');
@@ -277,6 +281,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-termSourcePriority');
         expect(termAuthorityForm.valuelists.termAuthorityStatus)
             .toBe('KoreanFieldwork-termAuthorityStatus');
+        expect(termAliasForm.valuelists.termAliasRole).toBe('KoreanFieldwork-termAliasRole');
+        expect(termAliasForm.valuelists.termAliasHandling).toBe('KoreanFieldwork-termAliasHandling');
+        expect(termAliasForm.valuelists.termSearchMapping).toBe('KoreanFieldwork-termSearchMapping');
+        expect(termAliasForm.valuelists.termAuthorityStatus).toBe('KoreanFieldwork-termAuthorityStatus');
         expect(surveyForm.valuelists.surfaceSurveyObservation).toBe('KoreanFieldwork-surfaceSurveyObservation');
         expect(surveyForm.valuelists.surfaceSurveyBiasControl).toBe('KoreanFieldwork-surfaceSurveyBiasControl');
         expect(surveyForm.valuelists.surfaceSurveyFollowUp).toBe('KoreanFieldwork-surfaceSurveyFollowUp');
@@ -607,6 +615,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.TermAuthority.label).toBe('Term authority');
         expect(languages.en.categories.TermAuthority.fields.termDictionaryDomain.label)
             .toBe('Dictionary domain');
+        expect(languages.en.categories.TermAlias.label).toBe('Term alias');
+        expect(languages.en.categories.TermAlias.fields.termAliasRole.label).toBe('Alias role');
+        expect(languages.en.categories.TermAlias.fields.termAliasHandling.label).toBe('Alias handling');
         expect(languages.en.categories.Operation.fields.fieldRecordQuality.label).toBe('Field record quality');
         expect(languages.en.categories.Operation.fields.personalNotebookArchive.label).toBe('Personal notebook archive');
         expect(languages.en.categories.Operation.fields.dailyLogContent.label).toBe('Daily work log');
@@ -1383,6 +1394,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-termSourcePriority']
             .values.domainSpecialistDictionary.label)
             .toBe('Domain specialist dictionary');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-termAliasRole']
+            .values.projectReportName.label)
+            .toBe('Project/report name');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-termAliasHandling']
+            .values.doNotOverwriteObservedTerm.label)
+            .toBe('Do not overwrite observed term');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-typologyArgument']
             .values.representativeAttribute.label)
             .toBe('Representative attribute');

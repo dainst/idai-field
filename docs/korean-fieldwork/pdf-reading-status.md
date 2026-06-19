@@ -96,6 +96,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-19 `발굴조사 업무의 이해`의 시대별 토기 장도 구현 단위로 압축했다. 토기 유물은 시대명이나 기형명보다 점토 채굴, 비짐 확보, 소지 제작, 성형, 정형, 장식, 정면, 건조, 소성, 사용, 파손, 보수·재사용, 폐기로 이어지는 제작 생애를 먼저 남겨야 한다. 토기·도기·자기·도질토기·스에키 용어 범위, 유약·다공질·소성온도 후보, 원료 점토와 비짐 기능, 실떼기 단독확정 금지, 성형·정형 분리, 공정 방향성은 `Find` 화면의 `ceramicTermScope`, `potteryFabricTemperRecord`, `potteryTemperFunctionAssessment`, `potteryProductionLifeRecord`, `potteryFormingTraceAssessment`, `potteryFormingCaution`, `potteryProcessDirectionality` 값 목록으로 옮겼다.
 
+2026-06-19 고고학사전 자료의 별칭·찾아가기 구조도 한 단계 더 구현했다. 사전은 `집자리/주거지`, `가마터/요지`, `한뎃가마/노천요`처럼 현장 검색어와 권위 표제어, 보고서 출력어가 다른 경우를 반복해서 보여준다. 이 묶음은 `TermAuthority` 하위 `TermAlias` 카드와 `termAliasRole`, `termAliasHandling` 값 목록으로 옮겨 별칭 역할, 자동완성 허용, 우선표제어 연결, 검색어 보존, 가져오기 전용, 원PDF 대조 필요, 현장 관찰어 덮어쓰기 금지를 분리했다.
+
 2026-06-19 독해 상태 감사에서는 `C:\Users\nuri9\Downloads\고고학사전`의 PDF 12개와 사전 추출 텍스트 12개, `C:\Users\nuri9\Downloads\조사방법론`의 PDF 31개와 조사방법론 추출 텍스트 31개가 서로 대응함을 확인했다. 별도 OCR 보강본은 `codex-idai-field-ocr`와 `codex-idai-field-new-pdf-text\ocr-selected`에 남아 있다. 따라서 현재 남은 일은 새 미독 자료 목록을 찾는 단계가 아니라, OCR 취약 구간의 도판·캡션·사례명·한자·표 수치를 원문 이미지로 교정하고, 이미 뽑은 요구사항을 실제 템플릿과 샘플 프로젝트로 검증하는 단계다.
 
 우선순위:
@@ -108,6 +110,7 @@ C:\Users\nuri9\Downloads\조사방법론
    유물 정리·보관 요구는 `KoreanFieldwork-artifactHandlingWorkflow`, `KoreanFieldwork-artifactQuantityBasis`, `KoreanFieldwork-storageEnvironmentControl`로 추가하고 `Find` 화면에 배치했다.
    제철유적 요구는 `KoreanFieldwork-ironProcessEvidence`, `KoreanFieldwork-ironFurnaceStructure`, `KoreanFieldwork-ironResidueSubtype`, `KoreanFieldwork-ironSampleAnalysisPlan`로 추가하고 `Feature`, `Find`, `Sample` 화면에 나누어 배치했다.
    고분·분묘 요구는 `KoreanFieldwork-tombMoundInvestigation`, `KoreanFieldwork-tombBurialStructureInvestigation`, `KoreanFieldwork-graveGoodsRitualContext`, `KoreanFieldwork-humanRemainsRecoveryAnalysis`로 추가하고 `Feature`, `Find`, `Sample` 화면에 나누어 배치했다.
+   사전 별칭·찾아가기 요구는 `TermAlias` 카드와 `KoreanFieldwork-termAliasRole`, `KoreanFieldwork-termAliasHandling`으로 추가하고 `TermAuthority` 아래에 배치했다. 현장 동의어와 사전 찾아가기, 보고서·사업명, 행정지명 변형, 원어·한자 표기, OCR 변형을 권위 표제어와 분리해 관리한다.
    패총·신석기·고환경 요구는 `KoreanFieldwork-shellMiddenStratigraphy`, `KoreanFieldwork-shellMiddenSettlementContext`, `KoreanFieldwork-neolithicSubsistenceEvidence`, `KoreanFieldwork-shellMiddenSamplingStrategy`, `KoreanFieldwork-paleoenvironmentProxySampling`으로 추가하고 `Feature`, `Find`, `Sample` 화면에 나누어 배치했다.
    청동기 주거·고인돌·환호·토기 용어 요구는 `KoreanFieldwork-bronzeAgeDwellingEvidence`, `KoreanFieldwork-dolmenStructureContext`, `KoreanFieldwork-bronzeAgeEnclosureInterpretation`, `KoreanFieldwork-bronzeAgePotteryTerminology`로 추가하고 `Feature`와 `Find` 화면에 나누어 배치했다.
    경작유구·논밭 조사 요구는 `KoreanFieldwork-cultivationFeatureContext`, `KoreanFieldwork-cultivationTrialTrenchStrategy`, `KoreanFieldwork-cultivationFeatureEvidence`, `KoreanFieldwork-cultivationChronologyAnalysis`로 추가하고 `Feature` 화면에 배치했다. 입지·물관리, 시굴 트렌치 방향, 판정 근거, 연대·분석 질문을 나누어 경작층이라는 단일 해석값으로 접히지 않게 했다.

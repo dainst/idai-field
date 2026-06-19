@@ -39,6 +39,17 @@
         }
       }
     },
+    "TermAlias": {
+      "label": "용어 별칭",
+      "fields": {
+        "termAliasHandling": {
+          "label": "별칭 처리 방식"
+        },
+        "termAliasRole": {
+          "label": "별칭 역할"
+        }
+      }
+    },
     "Project": {
       "fields": {
         "digitalSourcePreservation": {

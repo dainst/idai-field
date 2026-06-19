@@ -39,6 +39,17 @@
         }
       }
     },
+    "TermAlias": {
+      "label": "Term alias",
+      "fields": {
+        "termAliasHandling": {
+          "label": "Alias handling"
+        },
+        "termAliasRole": {
+          "label": "Alias role"
+        }
+      }
+    },
     "Project": {
       "fields": {
         "digitalSourcePreservation": {

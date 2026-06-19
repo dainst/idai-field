@@ -2164,6 +2164,43 @@
     },
     "description": "집자리/주거지, 조개더미/패총, 가마/요/요지처럼 현장 검색어와 권위 표제어, 보고서 출력어를 넓게 연결하되 저장값을 하나로 병합하지 않기 위한 목록"
   },
+  "KoreanFieldwork-termAliasRole": {
+    "values": {
+      "fieldSynonym": { "label": "현장 동의어" },
+      "dictionarySeeAlso": { "label": "사전 찾아가기" },
+      "localUsage": { "label": "지역 관용어" },
+      "institutionalUsage": { "label": "기관 관용어" },
+      "reportOutputName": { "label": "보고서 출력명" },
+      "importedLegacyName": { "label": "기존자료 가져오기명" },
+      "originalScriptVariant": { "label": "한자·원어 변형" },
+      "foreignOriginalName": { "label": "국외 원명" },
+      "romanizedName": { "label": "로마자 표기" },
+      "translatedName": { "label": "번역명" },
+      "projectReportName": { "label": "보고서·사업명" },
+      "administrativePlaceVariant": { "label": "행정지명 변형" },
+      "ocrVariant": { "label": "OCR 변형" },
+      "deprecatedTerm": { "label": "폐기어 후보" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "사전 표제어의 동의어, 이칭, 찾아가기, 보고서명, 행정지명, 원어·한자 표기, OCR 변형을 별칭 카드에서 구분하기 위한 목록"
+  },
+  "KoreanFieldwork-termAliasHandling": {
+    "values": {
+      "autocompleteAccepted": { "label": "자동완성 허용" },
+      "preferredHeadwordTarget": { "label": "우선표제어로 연결" },
+      "keepAliasForSearch": { "label": "검색어로 보존" },
+      "reportOutputSeparate": { "label": "보고서 출력 분리" },
+      "importOnly": { "label": "가져오기 전용" },
+      "domainScoped": { "label": "분야 범위 한정" },
+      "periodScoped": { "label": "시대 범위 한정" },
+      "sourcePageRequired": { "label": "출처 쪽수 필요" },
+      "pdfCrossCheckRequired": { "label": "원PDF 대조 필요" },
+      "manualReviewRequired": { "label": "수동 검토 필요" },
+      "doNotOverwriteObservedTerm": { "label": "현장 관찰어 덮어쓰기 금지" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "별칭을 자동완성, 검색어, 보고서 출력, 가져오기 매핑에서 어떻게 처리할지 정하고 권위 표제어로 연결하기 전 검토 조건을 남기기 위한 목록"
+  },
   "KoreanFieldwork-termAuthorityStatus": {
     "values": {
       "specialistDictionarySource": {

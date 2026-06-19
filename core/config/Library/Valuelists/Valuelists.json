@@ -34080,6 +34080,76 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-termAliasRole": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "fieldSynonym": {},
+      "dictionarySeeAlso": {},
+      "localUsage": {},
+      "institutionalUsage": {},
+      "reportOutputName": {},
+      "importedLegacyName": {},
+      "originalScriptVariant": {},
+      "foreignOriginalName": {},
+      "romanizedName": {},
+      "translatedName": {},
+      "projectReportName": {},
+      "administrativePlaceVariant": {},
+      "ocrVariant": {},
+      "deprecatedTerm": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "fieldSynonym",
+      "dictionarySeeAlso",
+      "localUsage",
+      "institutionalUsage",
+      "reportOutputName",
+      "importedLegacyName",
+      "originalScriptVariant",
+      "foreignOriginalName",
+      "romanizedName",
+      "translatedName",
+      "projectReportName",
+      "administrativePlaceVariant",
+      "ocrVariant",
+      "deprecatedTerm",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-termAliasHandling": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "autocompleteAccepted": {},
+      "preferredHeadwordTarget": {},
+      "keepAliasForSearch": {},
+      "reportOutputSeparate": {},
+      "importOnly": {},
+      "domainScoped": {},
+      "periodScoped": {},
+      "sourcePageRequired": {},
+      "pdfCrossCheckRequired": {},
+      "manualReviewRequired": {},
+      "doNotOverwriteObservedTerm": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "autocompleteAccepted",
+      "preferredHeadwordTarget",
+      "keepAliasForSearch",
+      "reportOutputSeparate",
+      "importOnly",
+      "domainScoped",
+      "periodScoped",
+      "sourcePageRequired",
+      "pdfCrossCheckRequired",
+      "manualReviewRequired",
+      "doNotOverwriteObservedTerm",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-termAuthorityStatus": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

@@ -13918,6 +13918,43 @@
     },
     "description": "Korean archaeological term search mappings that connect field search terms, preferred headwords, original scripts, and report output terms without collapsing them into one stored value"
   },
+  "KoreanFieldwork-termAliasRole": {
+    "values": {
+      "fieldSynonym": { "label": "Field synonym" },
+      "dictionarySeeAlso": { "label": "Dictionary see-also" },
+      "localUsage": { "label": "Local usage" },
+      "institutionalUsage": { "label": "Institutional usage" },
+      "reportOutputName": { "label": "Report output name" },
+      "importedLegacyName": { "label": "Imported legacy name" },
+      "originalScriptVariant": { "label": "Original-script variant" },
+      "foreignOriginalName": { "label": "Foreign original name" },
+      "romanizedName": { "label": "Romanized name" },
+      "translatedName": { "label": "Translated name" },
+      "projectReportName": { "label": "Project/report name" },
+      "administrativePlaceVariant": { "label": "Administrative-place variant" },
+      "ocrVariant": { "label": "OCR variant" },
+      "deprecatedTerm": { "label": "Deprecated-term candidate" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Alias roles for Korean archaeological authority terms, separating synonyms, see-also entries, local and institutional usage, report names, place-name variants, original scripts, and OCR variants"
+  },
+  "KoreanFieldwork-termAliasHandling": {
+    "values": {
+      "autocompleteAccepted": { "label": "Autocomplete accepted" },
+      "preferredHeadwordTarget": { "label": "Preferred headword target" },
+      "keepAliasForSearch": { "label": "Keep alias for search" },
+      "reportOutputSeparate": { "label": "Report output separate" },
+      "importOnly": { "label": "Import only" },
+      "domainScoped": { "label": "Domain scoped" },
+      "periodScoped": { "label": "Period scoped" },
+      "sourcePageRequired": { "label": "Source page required" },
+      "pdfCrossCheckRequired": { "label": "Source PDF cross-check required" },
+      "manualReviewRequired": { "label": "Manual review required" },
+      "doNotOverwriteObservedTerm": { "label": "Do not overwrite observed term" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Alias handling checks for autocomplete, search preservation, report-output separation, import-only mappings, scope limits, source-page checks, and manual review before linking to an authority headword"
+  },
   "KoreanFieldwork-termAuthorityStatus": {
     "values": {
       "specialistDictionarySource": {

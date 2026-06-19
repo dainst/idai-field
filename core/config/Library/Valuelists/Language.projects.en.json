@@ -11995,6 +11995,39 @@
     },
     "description": "Korean surface-find handling checks for preserving packaging, artifact-card, map, GPS, parcel, photo, scale, north-arrow, adhering-soil, and washing-caution evidence"
   },
+  "KoreanFieldwork-artifactRecoveryPreservationRisk": {
+    "values": {
+      "smallFindLoss": { "label": "Small find loss" },
+      "microFlakeLoss": { "label": "Micro flake loss" },
+      "internalFillWetSieving": { "label": "Internal fill wet sieving" },
+      "moistureEvaporation": { "label": "Moisture evaporation" },
+      "ultravioletExposure": { "label": "Ultraviolet exposure" },
+      "saltCrystallization": { "label": "Salt crystallization" },
+      "metalOxidation": { "label": "Metal oxidation" },
+      "woodDryingShrinkage": { "label": "Wood drying shrinkage" },
+      "boneHornContamination": { "label": "Bone/horn contamination" },
+      "protectiveGear": { "label": "Protective gear" },
+      "specialistRequest": { "label": "Specialist request" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean artifact recovery checks for recording loss, sieving, moisture, light, salt, oxidation, shrinkage, contamination, protective-gear, and specialist-request risks before cleanup"
+  },
+  "KoreanFieldwork-artifactCleaningDryingControl": {
+    "values": {
+      "featureUnitSeparated": { "label": "Feature unit separated" },
+      "recoveryNumberMaintained": { "label": "Recovery number maintained" },
+      "waterCleaning": { "label": "Water cleaning" },
+      "dryCleaning": { "label": "Dry cleaning" },
+      "ultrasonicCaution": { "label": "Ultrasonic caution" },
+      "metalMechanicalCleaning": { "label": "Metal mechanical cleaning" },
+      "woodDistilledWaterCleaning": { "label": "Wood distilled-water cleaning" },
+      "waterloggedStorage": { "label": "Waterlogged storage" },
+      "shadeDrying": { "label": "Shade drying" },
+      "rapidDryingAvoided": { "label": "Rapid drying avoided" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean artifact cleaning and drying checks for keeping feature units, recovery numbers, cleaning methods, waterlogged storage, shade drying, and rapid-drying cautions traceable"
+  },
   "KoreanFieldwork-storageEnvironmentControl": {
     "values": {
       "storageSpace": {
@@ -12568,6 +12601,44 @@
       "pendingDecision": { "label": "Pending decision" }
     },
     "description": "Korean settlement-feature trench checks for balancing information gain, floor and wall preservation, trench form, axis direction, contour relation, section continuity, and drawing risks"
+  },
+  "KoreanFieldwork-productionProcessSystem": {
+    "values": {
+      "rawMaterialProcurement": { "label": "Raw material procurement" },
+      "rawMaterialProcessing": { "label": "Raw material processing" },
+      "levigation": { "label": "Levigation" },
+      "clayWedging": { "label": "Clay wedging" },
+      "forming": { "label": "Forming" },
+      "decoration": { "label": "Decoration" },
+      "drying": { "label": "Drying" },
+      "kilnLoading": { "label": "Kiln loading" },
+      "firing": { "label": "Firing" },
+      "kilnUnloading": { "label": "Kiln unloading" },
+      "sorting": { "label": "Sorting" },
+      "discard": { "label": "Discard" },
+      "repairWaste": { "label": "Repair waste" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean production-site process checks for keeping raw-material procurement, processing, forming, loading, firing, unloading, sorting, discard, and repair waste separate"
+  },
+  "KoreanFieldwork-productionSiteAssociatedFacility": {
+    "values": {
+      "clayPit": { "label": "Clay pit" },
+      "clayStoragePit": { "label": "Clay storage pit" },
+      "wheelShaftPit": { "label": "Wheel shaft pit" },
+      "workshop": { "label": "Workshop" },
+      "levigationArea": { "label": "Levigation area" },
+      "dryingArea": { "label": "Drying area" },
+      "storageFacility": { "label": "Storage facility" },
+      "waterCollectionFacility": { "label": "Water collection facility" },
+      "drainageFacility": { "label": "Drainage facility" },
+      "emberStorage": { "label": "Ember storage" },
+      "dwelling": { "label": "Dwelling" },
+      "charcoalKiln": { "label": "Charcoal kiln" },
+      "wasteDeposit": { "label": "Waste deposit" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean production-site associated-facility checks for linking clay pits, workshops, levigation and drying areas, water facilities, dwellings, charcoal kilns, and waste deposits to the production system"
   },
   "KoreanFieldwork-ironProcessEvidence": {
     "values": {

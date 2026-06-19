@@ -31250,6 +31250,68 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-artifactRecoveryPreservationRisk": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "smallFindLoss": {},
+      "microFlakeLoss": {},
+      "internalFillWetSieving": {},
+      "moistureEvaporation": {},
+      "ultravioletExposure": {},
+      "saltCrystallization": {},
+      "metalOxidation": {},
+      "woodDryingShrinkage": {},
+      "boneHornContamination": {},
+      "protectiveGear": {},
+      "specialistRequest": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "smallFindLoss",
+      "microFlakeLoss",
+      "internalFillWetSieving",
+      "moistureEvaporation",
+      "ultravioletExposure",
+      "saltCrystallization",
+      "metalOxidation",
+      "woodDryingShrinkage",
+      "boneHornContamination",
+      "protectiveGear",
+      "specialistRequest",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-artifactCleaningDryingControl": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "featureUnitSeparated": {},
+      "recoveryNumberMaintained": {},
+      "waterCleaning": {},
+      "dryCleaning": {},
+      "ultrasonicCaution": {},
+      "metalMechanicalCleaning": {},
+      "woodDistilledWaterCleaning": {},
+      "waterloggedStorage": {},
+      "shadeDrying": {},
+      "rapidDryingAvoided": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "featureUnitSeparated",
+      "recoveryNumberMaintained",
+      "waterCleaning",
+      "dryCleaning",
+      "ultrasonicCaution",
+      "metalMechanicalCleaning",
+      "woodDistilledWaterCleaning",
+      "waterloggedStorage",
+      "shadeDrying",
+      "rapidDryingAvoided",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-storageEnvironmentControl": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",
@@ -32021,6 +32083,78 @@
       "contourRelation",
       "sectionContinuity",
       "drawingInversionRisk",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-productionProcessSystem": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "rawMaterialProcurement": {},
+      "rawMaterialProcessing": {},
+      "levigation": {},
+      "clayWedging": {},
+      "forming": {},
+      "decoration": {},
+      "drying": {},
+      "kilnLoading": {},
+      "firing": {},
+      "kilnUnloading": {},
+      "sorting": {},
+      "discard": {},
+      "repairWaste": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "rawMaterialProcurement",
+      "rawMaterialProcessing",
+      "levigation",
+      "clayWedging",
+      "forming",
+      "decoration",
+      "drying",
+      "kilnLoading",
+      "firing",
+      "kilnUnloading",
+      "sorting",
+      "discard",
+      "repairWaste",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-productionSiteAssociatedFacility": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "clayPit": {},
+      "clayStoragePit": {},
+      "wheelShaftPit": {},
+      "workshop": {},
+      "levigationArea": {},
+      "dryingArea": {},
+      "storageFacility": {},
+      "waterCollectionFacility": {},
+      "drainageFacility": {},
+      "emberStorage": {},
+      "dwelling": {},
+      "charcoalKiln": {},
+      "wasteDeposit": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "clayPit",
+      "clayStoragePit",
+      "wheelShaftPit",
+      "workshop",
+      "levigationArea",
+      "dryingArea",
+      "storageFacility",
+      "waterCollectionFacility",
+      "drainageFacility",
+      "emberStorage",
+      "dwelling",
+      "charcoalKiln",
+      "wasteDeposit",
       "pendingDecision"
     ]
   },

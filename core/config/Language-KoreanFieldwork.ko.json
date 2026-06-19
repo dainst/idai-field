@@ -264,6 +264,12 @@
         "settlementFeatureTrenchStrategy": {
           "label": "생활유적 트렌치 전략"
         },
+        "productionProcessSystem": {
+          "label": "생산유적 공정 체계"
+        },
+        "productionSiteAssociatedFacility": {
+          "label": "생산유적 주변시설"
+        },
         "ironProcessEvidence": {
           "label": "제철 공정 근거"
         },
@@ -469,6 +475,12 @@
         },
         "surfaceFindHandlingRecord": {
           "label": "지표 수습유물 관리"
+        },
+        "artifactRecoveryPreservationRisk": {
+          "label": "유물 수습·보존 위험"
+        },
+        "artifactCleaningDryingControl": {
+          "label": "세척·건조 관리"
         },
         "storageEnvironmentControl": {
           "label": "수장환경 관리"

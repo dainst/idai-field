@@ -264,6 +264,12 @@
         "settlementFeatureTrenchStrategy": {
           "label": "Settlement feature trench strategy"
         },
+        "productionProcessSystem": {
+          "label": "Production process system"
+        },
+        "productionSiteAssociatedFacility": {
+          "label": "Production site associated facility"
+        },
         "ironProcessEvidence": {
           "label": "Iron process evidence"
         },
@@ -469,6 +475,12 @@
         },
         "surfaceFindHandlingRecord": {
           "label": "Surface find handling record"
+        },
+        "artifactRecoveryPreservationRisk": {
+          "label": "Artifact recovery preservation risk"
+        },
+        "artifactCleaningDryingControl": {
+          "label": "Artifact cleaning/drying control"
         },
         "storageEnvironmentControl": {
           "label": "Storage environment control"

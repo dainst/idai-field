@@ -241,6 +241,39 @@
     },
     "description": "지표 수습 유물이 위치·지도·사진·부착토 정보를 잃지 않도록 개별 포장, 유물카드, 지도 표시, GPS, 지번, 근경·원경 사진, 눈금자·방위판, 세척주의를 확인하기 위한 목록"
   },
+  "KoreanFieldwork-artifactRecoveryPreservationRisk": {
+    "values": {
+      "smallFindLoss": { "label": "소형유물 유실" },
+      "microFlakeLoss": { "label": "미세박편 유실" },
+      "internalFillWetSieving": { "label": "내부토 물체질" },
+      "moistureEvaporation": { "label": "수분 증발" },
+      "ultravioletExposure": { "label": "자외선 노출" },
+      "saltCrystallization": { "label": "염 결정화" },
+      "metalOxidation": { "label": "금속 산화" },
+      "woodDryingShrinkage": { "label": "목재 건조수축" },
+      "boneHornContamination": { "label": "골각 오염" },
+      "protectiveGear": { "label": "보호장구" },
+      "specialistRequest": { "label": "전문가 의뢰" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "유물을 세척하거나 건조하기 전 소형유물·미세박편 유실, 물체질 필요, 수분·빛·염·산화·수축·오염 위험과 보호장구·전문가 의뢰 여부를 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-artifactCleaningDryingControl": {
+    "values": {
+      "featureUnitSeparated": { "label": "유구 단위 분리" },
+      "recoveryNumberMaintained": { "label": "수습번호 유지" },
+      "waterCleaning": { "label": "물세척" },
+      "dryCleaning": { "label": "건식세척" },
+      "ultrasonicCaution": { "label": "초음파 주의" },
+      "metalMechanicalCleaning": { "label": "금속 기계세척" },
+      "woodDistilledWaterCleaning": { "label": "목제 증류수 세척" },
+      "waterloggedStorage": { "label": "수침 보관" },
+      "shadeDrying": { "label": "그늘 건조" },
+      "rapidDryingAvoided": { "label": "급건조 방지" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "유구 단위와 수습번호가 세척·건조 과정에서 섞이지 않도록 물세척·건식세척·초음파·기계세척·수침보관·그늘건조·급건조 방지 여부를 기록하기 위한 목록"
+  },
   "KoreanFieldwork-storageEnvironmentControl": {
     "values": {
       "storageSpace": {
@@ -814,6 +847,44 @@
       "pendingDecision": { "label": "판단 보류" }
     },
     "description": "생활유적 트렌치를 많이 넣는 방식이 아니라 최소 훼손으로 바닥면, 벽선, 단면 연속성과 도면 작성 위험을 함께 검토하기 위한 목록"
+  },
+  "KoreanFieldwork-productionProcessSystem": {
+    "values": {
+      "rawMaterialProcurement": { "label": "원료 채취" },
+      "rawMaterialProcessing": { "label": "원료 가공" },
+      "levigation": { "label": "수비" },
+      "clayWedging": { "label": "연토" },
+      "forming": { "label": "성형" },
+      "decoration": { "label": "시문" },
+      "drying": { "label": "건조" },
+      "kilnLoading": { "label": "요내 재임" },
+      "firing": { "label": "소성" },
+      "kilnUnloading": { "label": "요출" },
+      "sorting": { "label": "선별" },
+      "discard": { "label": "폐기" },
+      "repairWaste": { "label": "보수 폐기물" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "생산유적을 노·가마 형태만으로 보지 않고 원료 채취부터 가공, 성형, 재임, 소성, 요출, 선별, 폐기와 보수 폐기물까지 공정 체계로 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-productionSiteAssociatedFacility": {
+    "values": {
+      "clayPit": { "label": "채토장" },
+      "clayStoragePit": { "label": "점토 저장공" },
+      "wheelShaftPit": { "label": "녹로 축혈" },
+      "workshop": { "label": "공방" },
+      "levigationArea": { "label": "수비장" },
+      "dryingArea": { "label": "건조장" },
+      "storageFacility": { "label": "보관시설" },
+      "waterCollectionFacility": { "label": "집수시설" },
+      "drainageFacility": { "label": "배수시설" },
+      "emberStorage": { "label": "불씨 저장고" },
+      "dwelling": { "label": "주거지" },
+      "charcoalKiln": { "label": "숯가마" },
+      "wasteDeposit": { "label": "폐기장" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "기와·토기·자기 가마 같은 생산유적의 채토장, 저장공, 녹로 축혈, 공방, 수비장, 건조장, 집수·배수시설, 주거지, 숯가마, 폐기장을 생산 체계와 연결하기 위한 목록"
   },
   "KoreanFieldwork-ironProcessEvidence": {
     "values": {

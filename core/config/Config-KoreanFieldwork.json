@@ -685,6 +685,14 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "productionProcessSystem": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "productionSiteAssociatedFacility": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "ironProcessEvidence": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -861,6 +869,8 @@
         "pitFeatureFunctionAssessment": "KoreanFieldwork-pitFeatureFunctionAssessment",
         "settlementFeatureInvestigationProcedure": "KoreanFieldwork-settlementFeatureInvestigationProcedure",
         "settlementFeatureTrenchStrategy": "KoreanFieldwork-settlementFeatureTrenchStrategy",
+        "productionProcessSystem": "KoreanFieldwork-productionProcessSystem",
+        "productionSiteAssociatedFacility": "KoreanFieldwork-productionSiteAssociatedFacility",
         "ironProcessEvidence": "KoreanFieldwork-ironProcessEvidence",
         "ironFurnaceStructure": "KoreanFieldwork-ironFurnaceStructure",
         "tombMoundInvestigation": "KoreanFieldwork-tombMoundInvestigation",
@@ -936,6 +946,8 @@
             "pitFeatureFunctionAssessment",
             "settlementFeatureInvestigationProcedure",
             "settlementFeatureTrenchStrategy",
+            "productionProcessSystem",
+            "productionSiteAssociatedFacility",
             "ironProcessEvidence",
             "ironFurnaceStructure",
             "tombMoundInvestigation",
@@ -1183,6 +1195,14 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "artifactRecoveryPreservationRisk": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "artifactCleaningDryingControl": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "storageEnvironmentControl": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1281,6 +1301,8 @@
         "artifactHandlingWorkflow": "KoreanFieldwork-artifactHandlingWorkflow",
         "artifactQuantityBasis": "KoreanFieldwork-artifactQuantityBasis",
         "surfaceFindHandlingRecord": "KoreanFieldwork-surfaceFindHandlingRecord",
+        "artifactRecoveryPreservationRisk": "KoreanFieldwork-artifactRecoveryPreservationRisk",
+        "artifactCleaningDryingControl": "KoreanFieldwork-artifactCleaningDryingControl",
         "storageEnvironmentControl": "KoreanFieldwork-storageEnvironmentControl",
         "conservationScienceRequest": "KoreanFieldwork-conservationScienceRequest",
         "waterloggedWoodEmergencyStorage": "KoreanFieldwork-waterloggedWoodEmergencyStorage",
@@ -1332,6 +1354,8 @@
             "artifactHandlingWorkflow",
             "artifactQuantityBasis",
             "surfaceFindHandlingRecord",
+            "artifactRecoveryPreservationRisk",
+            "artifactCleaningDryingControl",
             "storageEnvironmentControl",
             "conservationScienceRequest",
             "waterloggedWoodEmergencyStorage",

@@ -86,6 +86,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.fields.pitFeatureFunctionAssessment.inputType).toBe('checkboxes');
         expect(featureForm.fields.settlementFeatureInvestigationProcedure.inputType).toBe('checkboxes');
         expect(featureForm.fields.settlementFeatureTrenchStrategy.inputType).toBe('checkboxes');
+        expect(featureForm.fields.productionProcessSystem.inputType).toBe('checkboxes');
+        expect(featureForm.fields.productionSiteAssociatedFacility.inputType).toBe('checkboxes');
         expect(featureForm.fields.ironProcessEvidence.inputType).toBe('checkboxes');
         expect(featureForm.fields.ironFurnaceStructure.inputType).toBe('checkboxes');
         expect(featureForm.fields.tombMoundInvestigation.inputType).toBe('checkboxes');
@@ -130,6 +132,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.fields.artifactHandlingWorkflow.inputType).toBe('checkboxes');
         expect(findForm.fields.artifactQuantityBasis.inputType).toBe('checkboxes');
         expect(findForm.fields.surfaceFindHandlingRecord.inputType).toBe('checkboxes');
+        expect(findForm.fields.artifactRecoveryPreservationRisk.inputType).toBe('checkboxes');
+        expect(findForm.fields.artifactCleaningDryingControl.inputType).toBe('checkboxes');
         expect(findForm.fields.storageEnvironmentControl.inputType).toBe('checkboxes');
         expect(findForm.fields.conservationScienceRequest.inputType).toBe('checkboxes');
         expect(findForm.fields.waterloggedWoodEmergencyStorage.inputType).toBe('checkboxes');
@@ -312,6 +316,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-settlementFeatureInvestigationProcedure');
         expect(featureForm.valuelists.settlementFeatureTrenchStrategy)
             .toBe('KoreanFieldwork-settlementFeatureTrenchStrategy');
+        expect(featureForm.valuelists.productionProcessSystem)
+            .toBe('KoreanFieldwork-productionProcessSystem');
+        expect(featureForm.valuelists.productionSiteAssociatedFacility)
+            .toBe('KoreanFieldwork-productionSiteAssociatedFacility');
         expect(featureForm.valuelists.ironProcessEvidence).toBe('KoreanFieldwork-ironProcessEvidence');
         expect(featureForm.valuelists.ironFurnaceStructure).toBe('KoreanFieldwork-ironFurnaceStructure');
         expect(featureForm.valuelists.tombMoundInvestigation)
@@ -393,6 +401,10 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.valuelists.artifactQuantityBasis).toBe('KoreanFieldwork-artifactQuantityBasis');
         expect(findForm.valuelists.surfaceFindHandlingRecord)
             .toBe('KoreanFieldwork-surfaceFindHandlingRecord');
+        expect(findForm.valuelists.artifactRecoveryPreservationRisk)
+            .toBe('KoreanFieldwork-artifactRecoveryPreservationRisk');
+        expect(findForm.valuelists.artifactCleaningDryingControl)
+            .toBe('KoreanFieldwork-artifactCleaningDryingControl');
         expect(findForm.valuelists.storageEnvironmentControl).toBe('KoreanFieldwork-storageEnvironmentControl');
         expect(findForm.valuelists.conservationScienceRequest)
             .toBe('KoreanFieldwork-conservationScienceRequest');
@@ -610,6 +622,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Settlement feature investigation procedure');
         expect(languages.en.categories.Feature.fields.settlementFeatureTrenchStrategy.label)
             .toBe('Settlement feature trench strategy');
+        expect(languages.en.categories.Feature.fields.productionProcessSystem.label)
+            .toBe('Production process system');
+        expect(languages.en.categories.Feature.fields.productionSiteAssociatedFacility.label)
+            .toBe('Production site associated facility');
         expect(languages.en.categories.Feature.fields.ironProcessEvidence.label).toBe('Iron process evidence');
         expect(languages.en.categories.Feature.fields.ironFurnaceStructure.label).toBe('Iron furnace structure');
         expect(languages.en.categories.Feature.fields.tombMoundInvestigation.label)
@@ -697,6 +713,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Storage environment control');
         expect(languages.en.categories.Find.fields.surfaceFindHandlingRecord.label)
             .toBe('Surface find handling record');
+        expect(languages.en.categories.Find.fields.artifactRecoveryPreservationRisk.label)
+            .toBe('Artifact recovery preservation risk');
+        expect(languages.en.categories.Find.fields.artifactCleaningDryingControl.label)
+            .toBe('Artifact cleaning/drying control');
         expect(languages.en.categories.Find.fields.conservationScienceRequest.label)
             .toBe('Conservation science request');
         expect(languages.en.categories.Find.fields.waterloggedWoodEmergencyStorage.label)
@@ -938,6 +958,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('State vesting');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactQuantityBasis'].values.sameObjectConfirmed.label)
             .toBe('Same object confirmed');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactRecoveryPreservationRisk']
+            .values.smallFindLoss.label)
+            .toBe('Small find loss');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactCleaningDryingControl']
+            .values.recoveryNumberMaintained.label)
+            .toBe('Recovery number maintained');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-storageEnvironmentControl']
             .values.currentStandardCrossCheckNeeded.label)
             .toBe('Current standard cross-check needed');
@@ -985,6 +1011,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-settlementFeatureTrenchStrategy']
             .values.minimalTrenchMaxInfo.label)
             .toBe('Minimal trench, maximum information');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-productionProcessSystem']
+            .values.kilnLoading.label)
+            .toBe('Kiln loading');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-productionSiteAssociatedFacility']
+            .values.levigationArea.label)
+            .toBe('Levigation area');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-ironProcessEvidence']
             .values.metallurgicalAnalysisNeeded.label)
             .toBe('Metallurgical analysis needed');
@@ -1292,6 +1324,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('최종 조업품 자동판정 금지');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-fieldRecordQuality'].values.immediateRecording.label)
             .toBeDefined();
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-productionProcessSystem']
+            .values.kilnLoading.label)
+            .toBe('요내 재임');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-artifactCleaningDryingControl']
+            .values.rapidDryingAvoided.label)
+            .toBe('급건조 방지');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-featureFillInterpretation']
             .values.attributionCaution.label)
             .toBe('귀속 주의');

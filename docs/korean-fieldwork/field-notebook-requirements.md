@@ -43,6 +43,7 @@
 
 1. `KoreanFieldwork-*` 공통 값 목록: 기록 생성 시점, 검증상태, 현장기록 품질, 현장시점 누락점검, 최초 노출 기록, 수혈건물지 노출·둑, 수혈건물지 바닥·시설, 화재 수혈건물지 증거, 중복 수혈건물지 선후, 제철 공정 근거, 제철 노 구조, 제철 부산물 세분, 제철 시료 분석계획, 일일 작업기록, 일지 증거 역할, 일지 검토, 개인 야장 공적기록화, 디지털 원자료 보존, 조사 행정 흐름, 허가조건 이행, 보존조치 이행, 조사자료 인계, 용어관계, 용어 검색·매핑, 용어 검증상태, 사전 분야, 용어 적용범위, 출처 우선순위, 지표조사 현장관찰, 지표조사 편향방지, 지표조사 후속조치, 표본조사 적합성, 시굴조사 목적, 시굴 트렌치 설계, 정밀발굴 범위·난이도 근거, GIS·항공사진 예측근거, 예측 현장검증, 유물 관리 절차, 유물 건·점수 산정, 수장환경 관리, 유적 패키지, 형식 논증, 편년 논증, 공반 관계, 시료 목적, 시료 채취·보관, 식물고고학 시료 설계, 식물유체 표본추출, 플로테이션 처리기록, 식물유체 동정기록, 식물고고학 해석검토, 식물유체 미검출 평가, 매체 증거 역할, 매체 품질검수, 보고서 교차검토, 보고서 평가 환류
    - 동물유체 구현 값 목록: 동물유체 수습·표본, 동물유체 보존·취급, 동물유체 동정기록, 뼈 표면 변형관찰, 동물유체 계량지표
+   - 생산유적·유물수습 보강 값 목록: 생산유적 공정 체계, 생산유적 주변시설, 유물 수습·보존 위험, 세척·건조 관리
 2. 독립 `FieldRecordQualityReview`, `DailyLog`, `TermAuthority` 1차 카드
 3. `InvestigationProject` 행정 타임라인
 4. `fieldOnlyMissingCheck`와 `firstExposureRecord` 필수값 경고
@@ -56,6 +57,8 @@
 층 구분·내부토 보강분은 `FeatureSegment`에 `stratigraphicDivisionBasis`, `layerNamingSystem`, `featureFillInterpretation`, `soilTextureFieldAssessment`를 추가했다. 색 차이만으로 층을 나누지 않고 입도, 혼합 상태, 층리면, 퇴적구조, 삭평·부정합, 수로 기능면, 토양화, 구지표와 문화층을 분리하며, 홍수퇴적처럼 하나의 사건층으로 유지해야 하는 경우도 기록한다. 층명은 대·중·세분층, a/b층, 문화층 번호, 유구 확인면 번호와 변경 이력을 남기고, 유구 내부토는 가공면, 기능면, 인위매립토, 붕락토, 자연유입토, 폐기 후 퇴적층과 귀속 주의를 따로 저장한다.
 
 생활유적 조사절차 보강분은 `Feature`에 `pitFeatureFunctionAssessment`, `settlementFeatureInvestigationProcedure`, `settlementFeatureTrenchStrategy`를 추가했다. 수혈은 주거지로 바로 확정하지 않고 창고, 공방, 공공시설, 함정, 화장실, 폐기장, 태토 채취장, 노지·경화면·조리용기·저장공 근거를 함께 남긴다. 조사 절차는 사전조사, 평면조사, 중복관계, 트렌치와 둑, 하강, 내부 정리, 바닥조사, 절개와 검토 사진으로 나누고, 트렌치는 최소 훼손으로 바닥면·벽선·단면 연속성과 도면 역전 위험을 확인하는 전략값으로 관리한다.
+
+생산유적과 유물 수습 보강분은 `Feature`와 `Find`에 나누어 배치했다. `productionProcessSystem`은 원료 채취·가공, 수비, 연토, 성형, 재임, 소성, 요출, 선별, 폐기와 보수 폐기물을 공정 순서로 남기고, `productionSiteAssociatedFacility`는 채토장, 점토 저장공, 녹로 축혈, 공방, 수비장, 건조장, 집수·배수시설, 주거지, 숯가마, 폐기장을 생산 체계와 연결한다. `artifactRecoveryPreservationRisk`와 `artifactCleaningDryingControl`은 소형유물·미세박편 유실, 내부토 물체질, 수분·자외선·염·산화·건조수축 위험, 보호장구·전문가 의뢰, 유구 단위 분리, 수습번호 유지, 세척 방식, 수침 보관, 그늘 건조와 급건조 방지를 `Find`에서 관리한다. 이미 구현된 `artifactHandlingWorkflow`, `artifactQuantityBasis`, `storageEnvironmentControl`은 전체 정리·등록·수장 흐름을 담당하고, 가마 내부 유물 귀속 위험은 토기가마 맥락의 `potteryKilnInterpretationRisk`와 함께 본다.
 
 보존과학 보강분은 `Find`에 `conservationScienceRequest`, `waterloggedWoodEmergencyStorage`, `lacquerConservationRisk`, `metalAnalysisRequest`, `ceramicConservationState`, `paperTextileEmergencyRecovery`, `conservationTreatmentPrincipleReview`를 배치하고, `Sample`에 `humanDnaFieldControl`, `organicSoilAnalysisSample`, `destructiveAnalysisDecision`을 배치했다. 출토 순간부터 분석 의뢰까지 보존과학이 유물 해석을 바꿀 수 있으므로 의뢰목적, 재질, 출토맥락, 비파괴 우선 여부, 파괴시료 승인, 잔여시료 보관, 수침목재의 차광·냉암소·표면약제 영향, 칠도막 갈라짐, 금속 분석 위치와 절단·연마 승인, 토도류 염결정·수화·물세척 주의, 지류·직물의 공기·빛·온습도 변화, 보존처리의 원형·증거·가역성 검토, 인골 DNA 접촉자·세척금지·분석실 인계, 내부토/대조토와 분석 질문을 같은 기록 흐름에서 남긴다.
 

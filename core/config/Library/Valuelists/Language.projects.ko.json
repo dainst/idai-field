@@ -871,6 +871,10 @@
       "culturalLayerMarked": { "label": "문화층 표시" },
       "relatedLayersGrouped": { "label": "관련층 묶음" },
       "surroundingLocationSummarized": { "label": "주변 입지 정리" },
+      "depositOriginProcessRecorded": { "label": "퇴적 기원·과정 기록" },
+      "overallStratigraphyFlowPrepared": { "label": "전체 층위 흐름도 준비" },
+      "stratigraphicPhotoLinked": { "label": "기준 층위 사진 연결" },
+      "absoluteDatePlottedOnSection": { "label": "연대측정값 층위도 표시" },
       "pendingDecision": { "label": "판단 보류" }
     },
     "description": "토층 단면을 정리한 뒤 빛 조건, 반복 관찰, 층간 비교와 문화층 표시까지 현장 관찰 절차를 남기기 위한 목록"
@@ -890,6 +894,8 @@
       "burialProcess": { "label": "매몰 과정" },
       "comparativeCase": { "label": "유사사례" },
       "scientificAnalysisData": { "label": "자연과학 분석자료" },
+      "findLayerRelationRecorded": { "label": "유물-층위 관계 기록" },
+      "depositProcessNarrativeChecked": { "label": "퇴적 과정 서술 검토" },
       "pendingDecision": { "label": "판단 보류" }
     },
     "description": "유구 내부층을 입지, 기능, 문화층·자연층 관계와 축조·사용·폐기·매몰 과정으로 검토하기 위한 목록"
@@ -5396,6 +5402,18 @@
       },
       "stratigraphicStandard": {
         "label": "기준토층"
+      },
+      "overallStratigraphyFlowDiagram": {
+        "label": "전체 층위 흐름도"
+      },
+      "stratigraphicPhotoPlate": {
+        "label": "층위 사진 도판"
+      },
+      "layerFindContextConsistency": {
+        "label": "층위-유물 맥락 정합성"
+      },
+      "absoluteDateStratigraphyLinked": {
+        "label": "연대측정-층위도 연결"
       },
       "numberConversionTable": {
         "label": "번호 변환표"

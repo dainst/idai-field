@@ -103,7 +103,7 @@ Harris Matrix와 맥락번호 변경 이력은 아직 독립 화면으로 올리
 
 층 경계·오인 방지 보강분은 `FeatureSegment`에 `soilParticleFieldCheck`, `layerBoundarySurfaceRecord`, `stratigraphicMisreadGuard`를 추가했다. 입자는 자갈 직접 계측, 입자 크기표, 모래 체질, 수분 도말, 촉감, 표본시료, 실내 입도분석 대조를 구분하고, 경계면은 층리면·층계·구지표면·생활면·유구면·유구확인면·가공면·기능면과 명료도·형상을 따로 남긴다. 색조, 산화·환원, 지하수위, 구수로, 논둑, 산화철·망간, 뿌리·말목 변색, Bt-band는 별도층이나 유구로 바로 확정하지 않고 오인 후보로 관리한다.
 
-유구 내부층 라이프사이클 보강분은 같은 `FeatureSegment`에 `stratigraphicObservationProcedure`, `featureLifecycleReview`, `featureBlockInclusionAssessment`, `featureBurialProcessAssessment`를 추가했다. 토층 단면 정리, 그늘·햇볕 조건, 반복 관찰, 층간 비교, 문화층 표시 같은 관찰 절차를 먼저 남기고, 그 뒤 내부층을 축조·사용·폐기·매몰 과정으로 검토한다. 이질토 블록은 인위매립으로 자동 판정하지 않고 기반층 유래, 타처 운반, 붕락층, 가공시 형성층, 유물 걸침 여부를 분리하며, 매몰 과정은 급격·점진 매몰, 자연유입, 수성퇴적, 라미나, 토양화 휴지기와 일괄유물 매몰을 따로 기록한다.
+유구 내부층 라이프사이클 보강분은 같은 `FeatureSegment`에 `stratigraphicObservationProcedure`, `featureLifecycleReview`, `featureBlockInclusionAssessment`, `featureBurialProcessAssessment`를 추가했다. 토층 단면 정리, 그늘·햇볕 조건, 반복 관찰, 층간 비교, 문화층 표시 같은 관찰 절차를 먼저 남기고, 그 뒤 내부층을 축조·사용·폐기·매몰 과정으로 검토한다. 제5회 조사연구원 교육자료 재대조 뒤에는 퇴적 기원·과정 기록, 전체 층위 흐름도 준비, 기준 층위 사진 연결, 연대측정값의 층위도 표시, 유물-층위 관계 기록도 같은 흐름에 추가했다. 이질토 블록은 인위매립으로 자동 판정하지 않고 기반층 유래, 타처 운반, 붕락층, 가공시 형성층, 유물 걸침 여부를 분리하며, 매몰 과정은 급격·점진 매몰, 자연유입, 수성퇴적, 라미나, 토양화 휴지기와 일괄유물 매몰을 따로 기록한다.
 
 생활유적 조사절차 보강분은 `Feature`에 `pitFeatureFunctionAssessment`, `settlementFeatureInvestigationProcedure`, `settlementFeatureTrenchStrategy`를 추가했다. 수혈은 주거지로 바로 확정하지 않고 창고, 공방, 공공시설, 함정, 화장실, 폐기장, 태토 채취장, 노지·경화면·조리용기·저장공 근거를 함께 남긴다. 조사 절차는 사전조사, 평면조사, 중복관계, 트렌치와 둑, 하강, 내부 정리, 바닥조사, 절개와 검토 사진으로 나누고, 트렌치는 최소 훼손으로 바닥면·벽선·단면 연속성과 도면 역전 위험을 확인하는 전략값으로 관리한다.
 

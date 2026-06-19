@@ -225,6 +225,49 @@
     },
     {
       "resource": {
+        "id": "source-index-stratigraphy-context-001",
+        "identifier": "SRC-STRAT-CTX-001",
+        "shortDescription": "층위·출토맥락 보고서 검토 색인",
+        "category": "SourceEvidenceIndex",
+        "relations": {
+          "liesWithin": ["project-source-evidence-001"]
+        },
+        "description": "제5회 매장문화재 조사연구원 교육자료의 층위와 출토맥락 기록 요구를 전체 층위 흐름도, 기준 층위 사진, 유물-층위 관계, 연대측정값의 층위도 표시 검토 근거로 분리한다.",
+        "sourceEvidenceCitation": "제5회 매장문화재 조사연구원 교육 2008년 8월, 발굴보고서 작성법 및 층위학적 접근과 출토맥락 분석",
+        "sourceEvidenceLocator": "직접 추출문 행 2362-2407, 2469-2515, 2557-2560 대조; 원PDF 쪽수·도판 재대조 대상",
+        "sourceEvidenceMaterial": [
+          "sourceCitation",
+          "checklist",
+          "reportEvaluationItem"
+        ],
+        "sourceEvidenceDomain": [
+          "reportWriting",
+          "researchMethod"
+        ],
+        "sourceEvidenceVerification": [
+          "ocrCorrectionNeeded",
+          "captionNeedsCheck",
+          "uiExposureDeferred"
+        ],
+        "sourceEvidenceUse": [
+          "fieldDesignEvidence",
+          "sampleValidationEvidence",
+          "reportCrossCheckEvidence",
+          "interpretationCaution",
+          "sourceTraceability",
+          "futurePdfRecheck"
+        ],
+        "recordCreationTiming": "postExcavationDerived",
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "reproducibleRecord",
+          "crossReviewNeeded"
+        ],
+        "verificationState": "needsRecheck"
+      }
+    },
+    {
+      "resource": {
         "id": "source-index-dictionary-001",
         "identifier": "SRC-DICT-001",
         "shortDescription": "사전 한자·캡션·찾아가기 색인",

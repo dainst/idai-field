@@ -307,6 +307,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('archaeobotany');
         expect(documentsById['source-index-archaeobotany-001'].resource.sourceEvidenceUse)
             .toContain('sampleValidationEvidence');
+        expect(documentsById['source-index-stratigraphy-context-001'].resource.sourceEvidenceDomain)
+            .toContain('reportWriting');
+        expect(documentsById['source-index-stratigraphy-context-001'].resource.sourceEvidenceUse)
+            .toContain('reportCrossCheckEvidence');
+        expect(documentsById['source-index-stratigraphy-context-001'].resource.sourceEvidenceVerification)
+            .toContain('ocrCorrectionNeeded');
         expect(documentsById['source-index-dictionary-001'].resource.sourceEvidenceMaterial)
             .toContain('originalScript');
         expect(documentsById['source-index-dictionary-001'].resource.sourceEvidenceVerification)
@@ -872,6 +878,8 @@ describe('KoreanFieldwork project configuration', () => {
 
         expect(documentsById['segment-stratigraphy-fill-001'].resource.stratigraphicObservationProcedure)
             .toContain('repeatedObservation');
+        expect(documentsById['segment-stratigraphy-fill-001'].resource.stratigraphicObservationProcedure)
+            .toContain('overallStratigraphyFlowPrepared');
         expect(documentsById['segment-stratigraphy-fill-001'].resource.layerNamingSystem)
             .toContain('changeHistory');
         expect(documentsById['segment-stratigraphy-fill-001'].resource.soilTextureFieldAssessment)
@@ -882,6 +890,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('targetPeriodChecked');
         expect(documentsById['segment-stratigraphy-fill-001'].resource.featureLifecycleReview)
             .toContain('burialProcess');
+        expect(documentsById['segment-stratigraphy-fill-001'].resource.featureLifecycleReview)
+            .toContain('findLayerRelationRecorded');
+        expect(documentsById['op-stratigraphy-lifecycle-001'].resource.reportCrossCheck)
+            .toContain('layerFindContextConsistency');
         expect(documentsById['segment-stratigraphy-fill-001'].resource.featureBlockInclusionAssessment)
             .toContain('baseLayerDerived');
         expect(documentsById['segment-stratigraphy-fill-001'].resource.featureBurialProcessAssessment)
@@ -2553,9 +2565,15 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-stratigraphicObservationProcedure']
             .values.observationTimeSufficient.label)
             .toBe('Observation time sufficient');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-stratigraphicObservationProcedure']
+            .values.overallStratigraphyFlowPrepared.label)
+            .toBe('Overall stratigraphy flow prepared');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-featureLifecycleReview']
             .values.abandonmentProcess.label)
             .toBe('Abandonment process');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-featureLifecycleReview']
+            .values.findLayerRelationRecorded.label)
+            .toBe('Find-layer relation recorded');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-featureBlockInclusionAssessment']
             .values.collapseDepositCandidate.label)
             .toBe('Collapse deposit candidate');
@@ -3209,6 +3227,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-stratigraphicObservationProcedure']
             .values.shadeObservation.label)
             .toBe('그늘 관찰');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-stratigraphicObservationProcedure']
+            .values.absoluteDatePlottedOnSection.label)
+            .toBe('연대측정값 층위도 표시');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-layerBoundarySurfaceRecord']
             .values.featureDetectionSurface.label)
             .toBe('유구 확인면');

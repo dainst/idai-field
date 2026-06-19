@@ -32183,6 +32183,10 @@
       "culturalLayerMarked": {},
       "relatedLayersGrouped": {},
       "surroundingLocationSummarized": {},
+      "depositOriginProcessRecorded": {},
+      "overallStratigraphyFlowPrepared": {},
+      "stratigraphicPhotoLinked": {},
+      "absoluteDatePlottedOnSection": {},
       "pendingDecision": {}
     },
     "order": [
@@ -32199,6 +32203,10 @@
       "culturalLayerMarked",
       "relatedLayersGrouped",
       "surroundingLocationSummarized",
+      "depositOriginProcessRecorded",
+      "overallStratigraphyFlowPrepared",
+      "stratigraphicPhotoLinked",
+      "absoluteDatePlottedOnSection",
       "pendingDecision"
     ]
   },
@@ -32219,6 +32227,8 @@
       "burialProcess": {},
       "comparativeCase": {},
       "scientificAnalysisData": {},
+      "findLayerRelationRecorded": {},
+      "depositProcessNarrativeChecked": {},
       "pendingDecision": {}
     },
     "order": [
@@ -32235,6 +32245,8 @@
       "burialProcess",
       "comparativeCase",
       "scientificAnalysisData",
+      "findLayerRelationRecorded",
+      "depositProcessNarrativeChecked",
       "pendingDecision"
     ]
   },
@@ -38873,6 +38885,10 @@
       "sampleRegister": {},
       "dailyLog": {},
       "stratigraphicStandard": {},
+      "overallStratigraphyFlowDiagram": {},
+      "stratigraphicPhotoPlate": {},
+      "layerFindContextConsistency": {},
+      "absoluteDateStratigraphyLinked": {},
       "numberConversionTable": {},
       "sourceMediaBackup": {},
       "evaluationFeedback": {}
@@ -38885,6 +38901,10 @@
       "sampleRegister",
       "dailyLog",
       "stratigraphicStandard",
+      "overallStratigraphyFlowDiagram",
+      "stratigraphicPhotoPlate",
+      "layerFindContextConsistency",
+      "absoluteDateStratigraphyLinked",
       "numberConversionTable",
       "sourceMediaBackup",
       "evaluationFeedback"

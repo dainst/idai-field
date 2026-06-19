@@ -42,6 +42,10 @@
           "manuscript",
           "drawingRegister",
           "photoRegister",
+          "overallStratigraphyFlowDiagram",
+          "stratigraphicPhotoPlate",
+          "layerFindContextConsistency",
+          "absoluteDateStratigraphyLinked",
           "dailyLog",
           "numberConversionTable"
         ],
@@ -159,7 +163,11 @@
           "layerDescriptionRecorded",
           "culturalLayerMarked",
           "relatedLayersGrouped",
-          "surroundingLocationSummarized"
+          "surroundingLocationSummarized",
+          "depositOriginProcessRecorded",
+          "overallStratigraphyFlowPrepared",
+          "stratigraphicPhotoLinked",
+          "absoluteDatePlottedOnSection"
         ],
         "stratigraphicDivisionBasis": [
           "particleSize",
@@ -250,6 +258,8 @@
           "abandonmentProcess",
           "burialProcess",
           "scientificAnalysisData",
+          "findLayerRelationRecorded",
+          "depositProcessNarrativeChecked",
           "pendingDecision"
         ],
         "featureBlockInclusionAssessment": [

@@ -12625,6 +12625,10 @@
       "culturalLayerMarked": { "label": "Cultural layer marked" },
       "relatedLayersGrouped": { "label": "Related layers grouped" },
       "surroundingLocationSummarized": { "label": "Surrounding location summarized" },
+      "depositOriginProcessRecorded": { "label": "Deposit origin/process recorded" },
+      "overallStratigraphyFlowPrepared": { "label": "Overall stratigraphy flow prepared" },
+      "stratigraphicPhotoLinked": { "label": "Stratigraphic photo linked" },
+      "absoluteDatePlottedOnSection": { "label": "Absolute date plotted on section" },
       "pendingDecision": { "label": "Pending decision" }
     },
     "description": "Korean stratigraphic observation checks for recording face cleaning, light conditions, repeated observation, layer comparison, and cultural-layer marking"
@@ -12644,6 +12648,8 @@
       "burialProcess": { "label": "Burial process" },
       "comparativeCase": { "label": "Comparative case" },
       "scientificAnalysisData": { "label": "Scientific analysis data" },
+      "findLayerRelationRecorded": { "label": "Find-layer relation recorded" },
+      "depositProcessNarrativeChecked": { "label": "Deposit-process narrative checked" },
       "pendingDecision": { "label": "Pending decision" }
     },
     "description": "Korean feature lifecycle checks for relating internal layers to location, function, cultural and natural deposits, and construction-use-abandonment-burial processes"
@@ -17150,6 +17156,18 @@
       },
       "stratigraphicStandard": {
         "label": "Stratigraphic standard"
+      },
+      "overallStratigraphyFlowDiagram": {
+        "label": "Overall stratigraphy flow diagram"
+      },
+      "stratigraphicPhotoPlate": {
+        "label": "Stratigraphic photo plate"
+      },
+      "layerFindContextConsistency": {
+        "label": "Layer-find context consistency"
+      },
+      "absoluteDateStratigraphyLinked": {
+        "label": "Absolute date-stratigraphy linked"
       },
       "numberConversionTable": {
         "label": "Number conversion table"

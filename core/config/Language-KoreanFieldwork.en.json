@@ -56,8 +56,14 @@
     "SourceEvidenceIndex": {
       "label": "Source evidence index",
       "fields": {
+        "sourceEvidenceCitation": {
+          "label": "Source citation"
+        },
         "sourceEvidenceDomain": {
           "label": "Evidence domain"
+        },
+        "sourceEvidenceLocator": {
+          "label": "Page and figure locator"
         },
         "sourceEvidenceMaterial": {
           "label": "Source material type"

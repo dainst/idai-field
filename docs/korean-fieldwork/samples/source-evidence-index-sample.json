@@ -40,6 +40,8 @@
           "liesWithin": ["project-source-evidence-001"]
         },
         "description": "제7권 성곽 노트의 풍납토성 단면, 비교성곽 도면, 고려 후기 읍성 일람, 수원화성 제원, 남한산성 행궁 중건 사례를 값목록 확정 전에 근거 색인으로 묶는다.",
+        "sourceEvidenceCitation": "국립문화유산연구원, 2012, 한국 매장문화재 조사연구방법론7; 한국고고학전문사전 성곽·봉수편",
+        "sourceEvidenceLocator": "성곽 도면·표·시설 제원 색인, 원PDF 도판·쪽수 재대조 대상",
         "sourceEvidenceMaterial": [
           "figure",
           "table",
@@ -86,6 +88,8 @@
           "liesWithin": ["project-source-evidence-001"]
         },
         "description": "제6권 충적지 표·그림·사례와 제8권 문암리 밭유구, 패총 통계, 방사성탄소 결과표, 고생물 도판을 현장 관찰·연대·분석계획 근거로 분리한다.",
+        "sourceEvidenceCitation": "국립문화유산연구원, 2010, 한국 매장문화재 조사연구방법론6; 국립문화유산연구원, 2013, 한국 매장문화재 조사연구방법론8",
+        "sourceEvidenceLocator": "충적지 도표·문암리 밭유구·패총 통계·방사성탄소 결과표 색인",
         "sourceEvidenceMaterial": [
           "table",
           "figure",
@@ -132,6 +136,8 @@
           "liesWithin": ["project-source-evidence-001"]
         },
         "description": "고고학사전의 표제어, 한자·원문 표기, 도판 캡션, 찾아가기 관계를 용어 권위 근거로 쓰되 OCR 오독과 분야 차이는 보류값으로 남긴다.",
+        "sourceEvidenceCitation": "한국고고학사전 1·2; 한국고고학전문사전 생산유적편·고분편·성곽봉수편",
+        "sourceEvidenceLocator": "표제어·한자·찾아가기·도판 캡션 원PDF 대조 대상",
         "sourceEvidenceMaterial": [
           "originalScript",
           "caption",

@@ -56,8 +56,14 @@
     "SourceEvidenceIndex": {
       "label": "원문 근거 색인",
       "fields": {
+        "sourceEvidenceCitation": {
+          "label": "원문 인용 정보"
+        },
         "sourceEvidenceDomain": {
           "label": "근거 적용 영역"
+        },
+        "sourceEvidenceLocator": {
+          "label": "쪽수·도판 위치"
         },
         "sourceEvidenceMaterial": {
           "label": "원문 자료 종류"

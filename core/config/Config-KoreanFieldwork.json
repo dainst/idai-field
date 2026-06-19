@@ -797,6 +797,16 @@
       "color": "#8a7550",
       "hidden": [],
       "fields": {
+        "sourceEvidenceCitation": {
+          "inputType": "input",
+          "mandatory": true,
+          "constraintIndexed": true
+        },
+        "sourceEvidenceLocator": {
+          "inputType": "input",
+          "mandatory": true,
+          "constraintIndexed": true
+        },
         "sourceEvidenceMaterial": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -843,6 +853,8 @@
         {
           "name": "koreanFieldwork",
           "fields": [
+            "sourceEvidenceCitation",
+            "sourceEvidenceLocator",
             "sourceEvidenceMaterial",
             "sourceEvidenceDomain",
             "sourceEvidenceVerification",

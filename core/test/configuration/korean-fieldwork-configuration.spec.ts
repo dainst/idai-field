@@ -273,6 +273,10 @@ describe('KoreanFieldwork project configuration', () => {
 
         expect(documentsById['source-index-fortification-001'].resource.relations.liesWithin)
             .toEqual(['project-source-evidence-001']);
+        expect(documentsById['source-index-fortification-001'].resource.sourceEvidenceCitation)
+            .toContain('한국 매장문화재 조사연구방법론7');
+        expect(documentsById['source-index-fortification-001'].resource.sourceEvidenceLocator)
+            .toContain('원PDF 도판');
         expect(documentsById['source-index-fortification-001'].resource.sourceEvidenceMaterial)
             .toContain('measurementValue');
         expect(documentsById['source-index-fortification-001'].resource.sourceEvidenceUse)
@@ -994,6 +998,10 @@ describe('KoreanFieldwork project configuration', () => {
         expect(termAliasForm.fields.termAliasRole.inputType).toBe('checkboxes');
         expect(termAliasForm.fields.termAliasHandling.inputType).toBe('checkboxes');
         expect(sourceEvidenceIndexForm.parent).toBe('Project');
+        expect(sourceEvidenceIndexForm.fields.sourceEvidenceCitation.inputType).toBe('input');
+        expect(sourceEvidenceIndexForm.fields.sourceEvidenceLocator.inputType).toBe('input');
+        expect(sourceEvidenceIndexForm.fields.sourceEvidenceCitation.mandatory).toBe(true);
+        expect(sourceEvidenceIndexForm.fields.sourceEvidenceLocator.mandatory).toBe(true);
         expect(sourceEvidenceIndexForm.fields.sourceEvidenceMaterial.inputType).toBe('checkboxes');
         expect(sourceEvidenceIndexForm.fields.sourceEvidenceDomain.inputType).toBe('checkboxes');
         expect(sourceEvidenceIndexForm.fields.sourceEvidenceVerification.inputType).toBe('checkboxes');
@@ -1751,6 +1759,10 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.TermAlias.fields.termAliasRole.label).toBe('Alias role');
         expect(languages.en.categories.TermAlias.fields.termAliasHandling.label).toBe('Alias handling');
         expect(languages.en.categories.SourceEvidenceIndex.label).toBe('Source evidence index');
+        expect(languages.en.categories.SourceEvidenceIndex.fields.sourceEvidenceCitation.label)
+            .toBe('Source citation');
+        expect(languages.en.categories.SourceEvidenceIndex.fields.sourceEvidenceLocator.label)
+            .toBe('Page and figure locator');
         expect(languages.en.categories.SourceEvidenceIndex.fields.sourceEvidenceMaterial.label)
             .toBe('Source material type');
         expect(languages.en.categories.SourceEvidenceIndex.fields.sourceEvidenceVerification.label)

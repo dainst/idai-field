@@ -84,12 +84,16 @@ describe('KoreanFieldwork project configuration', () => {
 
         expect(documentsById['term-alias-dwelling-site-house-place'].resource.relations.liesWithin)
             .toEqual(['term-authority-dwelling-site']);
+        expect(documentsById['term-alias-dwelling-site-house-place'].resource.termAliasText)
+            .toBe('집자리');
         expect(documentsById['term-alias-dwelling-site-house-place'].resource.termAliasHandling)
             .toContain('doNotOverwriteObservedTerm');
         expect(documentsById['term-authority-dwelling-site'].resource.termSearchMapping)
             .toContain('structureSubtypeSeparated');
         expect(documentsById['term-authority-kiln-site'].resource.termSearchMapping)
             .toContain('doNotMergeToSingleTerm');
+        expect(documentsById['term-alias-kiln-site-kiln'].resource.termAliasText)
+            .toBe('가마');
         expect(documentsById['term-alias-kiln-site-kiln'].resource.verificationState)
             .toBe('pendingDecision');
     });
@@ -995,6 +999,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(termAuthorityForm.fields.termApplicationScope.inputType).toBe('checkboxes');
         expect(termAuthorityForm.fields.termSourcePriority.inputType).toBe('checkboxes');
         expect(termAliasForm.parent).toBe('TermAuthority');
+        expect(termAliasForm.fields.termAliasText.inputType).toBe('input');
+        expect(termAliasForm.fields.termAliasText.mandatory).toBe(true);
         expect(termAliasForm.fields.termAliasRole.inputType).toBe('checkboxes');
         expect(termAliasForm.fields.termAliasHandling.inputType).toBe('checkboxes');
         expect(sourceEvidenceIndexForm.parent).toBe('Project');
@@ -1756,6 +1762,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.TermAuthority.fields.termDictionaryDomain.label)
             .toBe('Dictionary domain');
         expect(languages.en.categories.TermAlias.label).toBe('Term alias');
+        expect(languages.en.categories.TermAlias.fields.termAliasText.label).toBe('Alias text');
         expect(languages.en.categories.TermAlias.fields.termAliasRole.label).toBe('Alias role');
         expect(languages.en.categories.TermAlias.fields.termAliasHandling.label).toBe('Alias handling');
         expect(languages.en.categories.SourceEvidenceIndex.label).toBe('Source evidence index');

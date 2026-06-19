@@ -50,6 +50,9 @@
         },
         "termAliasRole": {
           "label": "Alias role"
+        },
+        "termAliasText": {
+          "label": "Alias text"
         }
       }
     },

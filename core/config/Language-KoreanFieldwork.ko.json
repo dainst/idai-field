@@ -50,6 +50,9 @@
         },
         "termAliasRole": {
           "label": "별칭 역할"
+        },
+        "termAliasText": {
+          "label": "별칭 원문"
         }
       }
     },

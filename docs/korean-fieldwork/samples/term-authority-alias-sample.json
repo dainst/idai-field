@@ -65,6 +65,7 @@
           "liesWithin": ["term-authority-dwelling-site"]
         },
         "description": "현장 기록과 사진 캡션에서 자주 쓰는 생활어를 자동완성 검색어로 보존한다.",
+        "termAliasText": "집자리",
         "termAliasRole": ["fieldSynonym", "localUsage"],
         "termAliasHandling": [
           "autocompleteAccepted",
@@ -93,6 +94,7 @@
           "liesWithin": ["term-authority-dwelling-site"]
         },
         "description": "구조는 비슷하지만 주거 기능이 확정되지 않은 입력어이므로 주거지로 자동 병합하지 않는다.",
+        "termAliasText": "수혈건물지",
         "termAliasRole": ["dictionarySeeAlso"],
         "termAliasHandling": [
           "autocompleteAccepted",
@@ -151,6 +153,7 @@
           "liesWithin": ["term-authority-kiln-site"]
         },
         "description": "현장 검색어로 허용하지만 보고서 출력과 권위 표제어는 별도 규칙으로 관리한다.",
+        "termAliasText": "가마터",
         "termAliasRole": ["fieldSynonym", "localUsage", "reportOutputName"],
         "termAliasHandling": [
           "autocompleteAccepted",
@@ -179,6 +182,7 @@
           "liesWithin": ["term-authority-kiln-site"]
         },
         "description": "가마 구조 자체와 요지라는 장소·유적 성격이 섞이지 않도록 수동 검토 조건을 둔다.",
+        "termAliasText": "가마",
         "termAliasRole": ["fieldSynonym"],
         "termAliasHandling": [
           "autocompleteAccepted",

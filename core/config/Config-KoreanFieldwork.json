@@ -741,6 +741,11 @@
       "color": "#9677a8",
       "hidden": [],
       "fields": {
+        "termAliasText": {
+          "inputType": "input",
+          "mandatory": true,
+          "constraintIndexed": true
+        },
         "termAliasRole": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -778,6 +783,7 @@
         {
           "name": "koreanFieldwork",
           "fields": [
+            "termAliasText",
             "termAliasRole",
             "termAliasHandling",
             "termRelation",

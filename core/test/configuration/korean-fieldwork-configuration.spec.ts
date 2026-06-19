@@ -211,6 +211,35 @@ describe('KoreanFieldwork project configuration', () => {
     });
 
 
+    it('keeps the Korean faunal recovery sample aligned with Sample fields', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const sample = loadSample('faunal-recovery-quantification-sample.json');
+        const documents = sample.documents;
+        const documentsById = documents.reduce((index: any, document: any) => {
+            index[document.resource.id] = document;
+            return index;
+        }, {});
+
+        expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
+
+        expect(documentsById['sample-shell-midden-fauna-001'].resource.relations.liesWithin)
+            .toEqual(['feature-shell-midden-001']);
+        expect(documentsById['sample-shell-midden-fauna-001'].resource.shellMiddenSamplingStrategy)
+            .toContain('fishBoneSeparated');
+        expect(documentsById['sample-shell-midden-fauna-001'].resource.faunalRecoverySampling)
+            .toContain('smallMaterialTargeted');
+        expect(documentsById['sample-shell-midden-fauna-001'].resource.boneSurfaceModification)
+            .toContain('modificationCauseUnresolved');
+        expect(documentsById['sample-shell-midden-fauna-001'].resource.zooarchaeologicalQuantification)
+            .toContain('singleIndexNotUsed');
+        expect(documentsById['feature-shell-midden-001'].resource.shellMiddenStratigraphy)
+            .toContain('redepositionChecked');
+    });
+
+
     it('registers the field-record preservation fields in the bundled configuration', () => {
 
         const configReader = new ConfigReader();

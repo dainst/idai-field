@@ -1,0 +1,178 @@
+{
+  "title": "Korean faunal recovery and quantification sample",
+  "purpose": "Validate that animal remains from a shell midden are recorded as sampled archaeological evidence, with recovery method, preservation handling, identification uncertainty, and quantification limits kept together.",
+  "validationQuestions": [
+    "동물유체 시료가 큰 뼈 선별 수습이 아니라 층위별 블록시료와 체질 조건으로 기록되는가.",
+    "소형 어류뼈, 조류뼈, 설치류, 어린 개체처럼 누락되기 쉬운 자료의 회수 위험이 남는가.",
+    "동정 결과가 종명 하나로 고정되지 않고 부위, 좌우, 성장단계, 불확실성, 동정자를 함께 남기는가.",
+    "NISP, MNE, MNI, MAU, %MAU가 하나의 절대값처럼 쓰이지 않고 산출 방식과 한계를 함께 남기는가."
+  ],
+  "documents": [
+    {
+      "resource": {
+        "id": "op-faunal-sampling-001",
+        "identifier": "FAUNA-OP-001",
+        "shortDescription": "패총 동물유체 시료 채취 작업",
+        "category": "Operation",
+        "relations": {},
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "reproducibleRecord"
+        ],
+        "recordCreationTiming": "duringFieldwork",
+        "dailyLogContent": [
+          "workDateWeather",
+          "workArea",
+          "findSampleCollection",
+          "photoDrawingNumbers"
+        ],
+        "dailyLogReview": [
+          "sameDayWritten",
+          "sampleListCrossChecked",
+          "sourceRecordArchived"
+        ],
+        "reportCrossCheck": [
+          "manuscript",
+          "sampleRegister",
+          "dailyLog"
+        ]
+      }
+    },
+    {
+      "resource": {
+        "id": "feature-shell-midden-001",
+        "identifier": "SM-001",
+        "shortDescription": "혼토패각층 패총 단위",
+        "category": "Feature",
+        "relations": {
+          "isRecordedIn": ["op-faunal-sampling-001"]
+        },
+        "description": "순패층이 아니라 토양과 패각이 섞인 층으로, 패각 파쇄와 재퇴적 가능성을 평면·단면에서 함께 확인한 조사 단위.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "criteriaConsistency",
+          "observationInterpretationSeparated"
+        ],
+        "fieldOnlyMissingCheck": [
+          "stratigraphicBoundary",
+          "spatialLocation",
+          "samplePointMapped",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "shellMiddenStratigraphy": [
+          "mixedSoilShellLayer",
+          "shellFragmentationRecorded",
+          "redepositionChecked",
+          "planAndSectionCombined",
+          "baulkOrSubBaulkSet"
+        ],
+        "shellMiddenSettlementContext": [
+          "settlementWholeAreaPlanned",
+          "shorelineWaterSystemContext",
+          "marineCurrentSeasonality",
+          "laterReuseSeparated"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "sample-shell-midden-fauna-001",
+        "identifier": "SM-001-S-FAUNA-001",
+        "shortDescription": "패총 동물유체 블록시료",
+        "category": "Sample",
+        "relations": {
+          "liesWithin": ["feature-shell-midden-001"],
+          "isRecordedIn": ["op-faunal-sampling-001"]
+        },
+        "description": "SM-001 혼토패각층에서 30x30x15cm 블록시료를 채취하고 물체질 조건과 체눈을 기록한 예시다. 이 치수는 고정 표준이 아니라 조사자가 남긴 실제 채취량으로 다룬다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "researchQuestionFit",
+          "reproducibleRecord"
+        ],
+        "fieldOnlyMissingCheck": [
+          "samplePointMapped",
+          "sampleConditionControlled",
+          "spatialLocation",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "samplePurpose": [
+          "zooarchaeology",
+          "paleoenvironment"
+        ],
+        "sampleCollectionHandling": [
+          "immediateCollection",
+          "dedicatedSamplingTool",
+          "contextMapLinked",
+          "avoidCrushing"
+        ],
+        "shellMiddenSamplingStrategy": [
+          "blockSample",
+          "layerVolumeRecorded",
+          "totalWaterSieving",
+          "meshSizeRecorded",
+          "fineMeshOneMm",
+          "fishBoneSeparated",
+          "animalBoneSeparated",
+          "specialistConsulted"
+        ],
+        "faunalRecoverySampling": [
+          "shellMiddenAlkalinePreservation",
+          "waterSieving",
+          "twoMmMesh",
+          "smallMaterialTargeted",
+          "layerBlockSample",
+          "repeatedSameLayerSample",
+          "blockSampleDimensionRecorded",
+          "selectiveRecoveryReason",
+          "smallFishBirdRodentRisk",
+          "juvenileIndividualRisk"
+        ],
+        "faunalPreservationHandling": [
+          "exposureBreakageRisk",
+          "soilSupportMaintained",
+          "specialistRecoveryRequested",
+          "featureLayerSeparated",
+          "noOverCleaning"
+        ],
+        "zooarchaeologicalIdentification": [
+          "modernComparativeSpecimen",
+          "taxonRecorded",
+          "skeletalElementRecorded",
+          "sideRecorded",
+          "ageStageRecorded",
+          "fragmentationRecorded",
+          "identificationUncertain",
+          "identifierRecorded"
+        ],
+        "boneSurfaceModification": [
+          "wholeSurfaceAfterCleaning",
+          "lowMagnificationMicroscope",
+          "cutMark",
+          "burningTrace",
+          "weathering",
+          "rootEtching",
+          "modificationCauseUnresolved"
+        ],
+        "zooarchaeologicalQuantification": [
+          "nisp",
+          "mne",
+          "mni",
+          "mau",
+          "percentMau",
+          "calculationMethodRecorded",
+          "indexUsePurpose",
+          "indexLimitRecorded",
+          "complementaryIndexNeeded",
+          "smallSampleWarning",
+          "singleIndexNotUsed"
+        ],
+        "verificationState": "candidate"
+      }
+    }
+  ]
+}

@@ -11934,6 +11934,15 @@
       "numberedBeforeCollection": {
         "label": "Numbered before collection"
       },
+      "smallFeaturePlotted": {
+        "label": "Small feature plotted"
+      },
+      "featureSetRelationshipRecorded": {
+        "label": "Feature-set relationship recorded"
+      },
+      "belowFloorPostholeCheck": {
+        "label": "Below-floor posthole check"
+      },
       "sameDayReview": {
         "label": "Same-day review"
       },
@@ -12874,7 +12883,10 @@
       "steppedExcavation": { "label": "Stepped excavation" },
       "internalCleaning": { "label": "Internal cleaning" },
       "floorInvestigation": { "label": "Floor investigation" },
+      "postholeSectionSupplement": { "label": "Posthole section supplement" },
+      "floorRemovalBelowCheck": { "label": "Below-floor check after floor removal" },
       "sectioning": { "label": "Sectioning" },
+      "finalDrawingAfterDismantling": { "label": "Final drawing after dismantling" },
       "reviewPhoto": { "label": "Review photo" },
       "pendingDecision": { "label": "Pending decision" }
     },
@@ -17662,6 +17674,18 @@
       "registerNumberMatched": {
         "label": "Register number matched"
       },
+      "smallFeatureActualShapeShown": {
+        "label": "Small feature actual shape shown"
+      },
+      "planSectionElevationMatched": {
+        "label": "Plan, section, and elevation matched"
+      },
+      "stageDrawingSeparated": {
+        "label": "Stage drawing separated"
+      },
+      "fieldResearcherReviewed": {
+        "label": "Field researcher reviewed"
+      },
       "retakeOrRedrawNeeded": {
         "label": "Retake or redraw needed"
       },
@@ -17886,6 +17910,10 @@
       "twoDimensionalDrawingOutput": { "label": "2D drawing output" },
       "threeDimensionalDrawingOutput": { "label": "3D drawing output" },
       "restorationDataOutput": { "label": "Restoration data output" },
+      "fieldOriginalDigitized": { "label": "Field original digitized" },
+      "editedDrawingSeparated": { "label": "Edited drawing separated" },
+      "indoorSupplementRecorded": { "label": "Indoor supplement recorded" },
+      "fieldResearcherRechecked": { "label": "Field researcher rechecked" },
       "sourceFilePreserved": { "label": "Source file preserved" },
       "processedFilePreserved": { "label": "Processed file preserved" },
       "pendingDecision": { "label": "Pending decision" }

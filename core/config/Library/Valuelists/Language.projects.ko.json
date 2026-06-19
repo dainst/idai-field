@@ -180,6 +180,15 @@
       "numberedBeforeCollection": {
         "label": "수습 전 번호 부여"
       },
+      "smallFeaturePlotted": {
+        "label": "소형 시설 도면화"
+      },
+      "featureSetRelationshipRecorded": {
+        "label": "시설 묶음 관계 기록"
+      },
+      "belowFloorPostholeCheck": {
+        "label": "바닥 하부 주혈 확인"
+      },
       "sameDayReview": {
         "label": "당일 점검"
       },
@@ -1120,7 +1129,10 @@
       "steppedExcavation": { "label": "하강조사" },
       "internalCleaning": { "label": "내부 정리" },
       "floorInvestigation": { "label": "바닥조사" },
+      "postholeSectionSupplement": { "label": "주혈 단면 보완" },
+      "floorRemovalBelowCheck": { "label": "바닥 제거 후 하부 확인" },
       "sectioning": { "label": "절개" },
+      "finalDrawingAfterDismantling": { "label": "해체 후 최종도면" },
       "reviewPhoto": { "label": "검토 사진" },
       "pendingDecision": { "label": "판단 보류" }
     },
@@ -5908,6 +5920,18 @@
       "registerNumberMatched": {
         "label": "대장번호 일치"
       },
+      "smallFeatureActualShapeShown": {
+        "label": "소형 시설 실제 형상 표시"
+      },
+      "planSectionElevationMatched": {
+        "label": "평·단·입면 정합"
+      },
+      "stageDrawingSeparated": {
+        "label": "단계도면 분리"
+      },
+      "fieldResearcherReviewed": {
+        "label": "현장조사자 검수"
+      },
       "retakeOrRedrawNeeded": {
         "label": "재촬영·재작성 필요"
       },
@@ -6132,6 +6156,10 @@
       "twoDimensionalDrawingOutput": { "label": "2D 도면 산출" },
       "threeDimensionalDrawingOutput": { "label": "3D 도면 산출" },
       "restorationDataOutput": { "label": "복원자료 산출" },
+      "fieldOriginalDigitized": { "label": "현장 원도 디지털화" },
+      "editedDrawingSeparated": { "label": "편집도면 분리" },
+      "indoorSupplementRecorded": { "label": "실내 보완 기록" },
+      "fieldResearcherRechecked": { "label": "현장조사자 재검수" },
       "sourceFilePreserved": { "label": "원본파일 보존" },
       "processedFilePreserved": { "label": "후처리파일 보존" },
       "pendingDecision": { "label": "판단 보류" }

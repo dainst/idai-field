@@ -31171,6 +31171,9 @@
       "samplePointMapped": {},
       "sampleConditionControlled": {},
       "numberedBeforeCollection": {},
+      "smallFeaturePlotted": {},
+      "featureSetRelationshipRecorded": {},
+      "belowFloorPostholeCheck": {},
       "sameDayReview": {},
       "notRecoverableWarning": {},
       "pendingDecision": {}
@@ -31187,6 +31190,9 @@
       "samplePointMapped",
       "sampleConditionControlled",
       "numberedBeforeCollection",
+      "smallFeaturePlotted",
+      "featureSetRelationshipRecorded",
+      "belowFloorPostholeCheck",
       "sameDayReview",
       "notRecoverableWarning",
       "pendingDecision"
@@ -32472,7 +32478,10 @@
       "steppedExcavation": {},
       "internalCleaning": {},
       "floorInvestigation": {},
+      "postholeSectionSupplement": {},
+      "floorRemovalBelowCheck": {},
       "sectioning": {},
+      "finalDrawingAfterDismantling": {},
       "reviewPhoto": {},
       "pendingDecision": {}
     },
@@ -32485,7 +32494,10 @@
       "steppedExcavation",
       "internalCleaning",
       "floorInvestigation",
+      "postholeSectionSupplement",
+      "floorRemovalBelowCheck",
       "sectioning",
+      "finalDrawingAfterDismantling",
       "reviewPhoto",
       "pendingDecision"
     ]
@@ -39359,6 +39371,10 @@
       "lightingConditionSuitable": {},
       "originalUncroppedPreserved": {},
       "registerNumberMatched": {},
+      "smallFeatureActualShapeShown": {},
+      "planSectionElevationMatched": {},
+      "stageDrawingSeparated": {},
+      "fieldResearcherReviewed": {},
       "retakeOrRedrawNeeded": {},
       "pendingDecision": {}
     },
@@ -39372,6 +39388,10 @@
       "lightingConditionSuitable",
       "originalUncroppedPreserved",
       "registerNumberMatched",
+      "smallFeatureActualShapeShown",
+      "planSectionElevationMatched",
+      "stageDrawingSeparated",
+      "fieldResearcherReviewed",
       "retakeOrRedrawNeeded",
       "pendingDecision"
     ]
@@ -39777,6 +39797,10 @@
       "twoDimensionalDrawingOutput": {},
       "threeDimensionalDrawingOutput": {},
       "restorationDataOutput": {},
+      "fieldOriginalDigitized": {},
+      "editedDrawingSeparated": {},
+      "indoorSupplementRecorded": {},
+      "fieldResearcherRechecked": {},
       "sourceFilePreserved": {},
       "processedFilePreserved": {},
       "pendingDecision": {}
@@ -39791,6 +39815,10 @@
       "twoDimensionalDrawingOutput",
       "threeDimensionalDrawingOutput",
       "restorationDataOutput",
+      "fieldOriginalDigitized",
+      "editedDrawingSeparated",
+      "indoorSupplementRecorded",
+      "fieldResearcherRechecked",
       "sourceFilePreserved",
       "processedFilePreserved",
       "pendingDecision"

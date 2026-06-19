@@ -2548,6 +2548,9 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Buried paddy soil');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-fieldOnlyMissingCheck'].values.preRemovalCondition.label)
             .toBe('Pre-removal condition');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-fieldOnlyMissingCheck']
+            .values.smallFeaturePlotted.label)
+            .toBe('Small feature plotted');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactHandlingWorkflow'].values.stateVesting.label)
             .toBe('State vesting');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-findSampleResearchScope']
@@ -2616,6 +2619,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-settlementFeatureInvestigationProcedure']
             .values.floorInvestigation.label)
             .toBe('Floor investigation');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-settlementFeatureInvestigationProcedure']
+            .values.finalDrawingAfterDismantling.label)
+            .toBe('Final drawing after dismantling');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-settlementFeatureTrenchStrategy']
             .values.minimalTrenchMaxInfo.label)
             .toBe('Minimal trench, maximum information');
@@ -2975,6 +2981,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
             .values.retakeOrRedrawNeeded.label)
             .toBe('Retake or redraw needed');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
+            .values.smallFeatureActualShapeShown.label)
+            .toBe('Small feature actual shape shown');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactDrawingRecordMethod']
             .values.measuredDrawing.label)
             .toBe('Measured drawing');
@@ -3008,6 +3017,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-electronicDrawingSourceWorkflow']
             .values.pointCloudMerged.label)
             .toBe('Point cloud merged');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-electronicDrawingSourceWorkflow']
+            .values.fieldResearcherRechecked.label)
+            .toBe('Field researcher rechecked');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactElectronicDrawingProcedure']
             .values.referencePlaneCreated.label)
             .toBe('Reference plane created');

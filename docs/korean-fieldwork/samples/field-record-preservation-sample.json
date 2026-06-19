@@ -48,6 +48,9 @@
           "featureOutline",
           "photoAngleAndScale",
           "drawingLineReason",
+          "smallFeaturePlotted",
+          "featureSetRelationshipRecorded",
+          "belowFloorPostholeCheck",
           "sameDayReview",
           "notRecoverableWarning"
         ],
@@ -98,6 +101,16 @@
           "firstPlanStripping",
           "sectionEvidenceRequired",
           "relationshipUnresolved"
+        ],
+        "settlementFeatureInvestigationProcedure": [
+          "planInvestigation",
+          "baulkSet",
+          "floorInvestigation",
+          "postholeSectionSupplement",
+          "floorRemovalBelowCheck",
+          "sectioning",
+          "finalDrawingAfterDismantling",
+          "reviewPhoto"
         ],
         "verificationState": "pendingDecision"
       }
@@ -251,6 +264,10 @@
           "directionRecorded",
           "scaleIncluded",
           "controlPointLinked",
+          "smallFeatureActualShapeShown",
+          "planSectionElevationMatched",
+          "stageDrawingSeparated",
+          "fieldResearcherReviewed",
           "registerNumberMatched"
         ],
         "digitalSourcePreservation": ["originalDrawing", "electronicNotebookOriginal", "twoLocationBackup"],

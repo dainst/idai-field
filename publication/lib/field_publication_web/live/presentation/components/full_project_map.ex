@@ -1,12 +1,6 @@
 defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
   use FieldPublicationWeb, :live_component
 
-  alias FieldPublication.Publications.Data
-
-  alias FieldPublication.DatabaseSchema.Publication
-
-  alias FieldPublicationWeb.Presentation.Components.DocumentViewMap
-
   require Logger
 
   @impl true
@@ -45,22 +39,12 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
             <.icon name="hero-pencil-square" />
           </div>
         </div>
-        <div :if={@project_tile_layers_state != []}>
-          <div
-            class="right-1 rounded w-8 h-8 text-center pt-0.5 bg-white"
-            phx-click={Phoenix.LiveView.JS.toggle(to: "##{@id}-layer-select")}
-          >
-            <.icon name="hero-square-3-stack-3d" />
-          </div>
-          <div id={"#{@id}-layer-select"} class="bg-white p-2 pr-8 max-h-64 overflow-auto hidden">
-            <DocumentViewMap.render_tile_layer_selection_group
-              target={@myself}
-              publication={@publication}
-              group={:project}
-              layer_states={@project_tile_layers_state}
-            />
-          </div>
-        </div>
+        <.live_component
+          module={FieldPublicationWeb.Components.Map.TileLayerSelection}
+          id={"#{@id}-tile-layer-selection"}
+          map_id={@id}
+          publication={@publication}
+        />
       </div>
     </div>
     """
@@ -68,77 +52,20 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
 
   @impl true
   def update(
-        %{publication: publication, id: id, preset_geometry: preset_geometry} = assigns,
+        %{id: id, preset_geometry: preset_geometry} = assigns,
         socket
       ) do
     assigns = set_defaults(assigns)
 
-    socket =
-      push_event(socket, "render-selection-polygon-#{id}", %{geometry: preset_geometry})
-      |> handle_publication_change(publication, id)
+    {
+      :ok,
+      socket
       |> assign(assigns)
-
-    {:ok, assign(socket, :no_data, false)}
+      |> push_event("render-selection-polygon-#{id}", %{geometry: preset_geometry})
+    }
   end
 
   @impl true
-  def handle_event(
-        "visibility-preference",
-        %{"uuid" => uuid, "show" => value},
-        socket
-      )
-      when is_boolean(value) do
-    # When a map background layer is loaded on the client side, the client side hook will
-    # send this event if the client's localStorage contained a visibility preference for
-    # the added layer.
-    #
-    # The client will have set the layer visibility at this point and uses this event to make
-    # sure the server state is the same as in the client's browser.
-
-    layer_states =
-      socket.assigns[:project_tile_layers_state]
-      |> Enum.map(fn state ->
-        if state.uuid == uuid do
-          Map.put(state, :visible, value)
-        else
-          state
-        end
-      end)
-
-    {
-      :noreply,
-      assign(socket, :project_tile_layers_state, layer_states)
-    }
-  end
-
-  def handle_event(
-        "toggle-layer",
-        %{"uuid" => uuid, "show" => show_parameter} = _params,
-        %{assigns: %{id: id}} = socket
-      ) do
-    value = show_parameter == "true"
-
-    layer_states =
-      socket.assigns[:project_tile_layers_state]
-      |> Enum.map(fn state ->
-        if state.uuid == uuid do
-          Map.put(state, :visible, value)
-        else
-          state
-        end
-      end)
-
-    {
-      :noreply,
-      socket
-      |> assign(:project_tile_layers_state, layer_states)
-      |> push_event("full-project-map-set-layer-visibility-#{id}", %{
-        uuid: uuid,
-        visibility: value
-      })
-    }
-  end
-
   def handle_event("toggle-draw-box-mode", _, socket) do
     {
       :noreply,
@@ -166,53 +93,6 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
       :noreply,
       toggle_draw_mode(socket)
     }
-  end
-
-  defp handle_publication_change(socket, %Publication{} = current, hook_id) do
-    unless Map.has_key?(socket.assigns, :publication) and
-             Map.equal?(socket.assigns.publication, current) do
-      # If the publication already assigned to the socket differes from the one in the current
-      # update call, we re-initialize the background layers. This may occur if the user switches
-      # to an older or newer publication of the same project.
-      Logger.debug("Resetting project level background layers.")
-
-      project_doc_relations =
-        Data.get_raw_document("project", current)
-        |> Map.get("resource", %{})
-        |> Map.get("relations", %{})
-
-      default_map_layers =
-        Map.get(project_doc_relations, "hasDefaultMapLayer", [])
-        |> Data.get_raw_documents(current)
-        |> Stream.map(&DocumentViewMap.extract_tile_layer_info/1)
-        |> Enum.map(fn layer_info ->
-          Map.merge(layer_info, %{visible: true})
-        end)
-
-      other_map_layers =
-        Map.get(project_doc_relations, "hasMapLayer", [])
-        |> Data.get_raw_documents(current)
-        |> Stream.map(&DocumentViewMap.extract_tile_layer_info/1)
-        |> Stream.map(fn layer_info ->
-          Map.merge(layer_info, %{visible: false})
-        end)
-        |> Enum.reject(fn entry ->
-          entry.uuid in Map.get(project_doc_relations, "hasDefaultMapLayer", [])
-        end)
-
-      socket
-      |> push_event("full-project-map-set-layers-#{hook_id}", %{
-        project: current.project_name,
-        project_tile_layers: default_map_layers ++ other_map_layers
-      })
-      |> assign(
-        :project_tile_layers_state,
-        default_map_layers ++ other_map_layers
-      )
-    else
-      # Same publication, leave project layers as they are.
-      socket
-    end
   end
 
   defp set_defaults(assigns) do

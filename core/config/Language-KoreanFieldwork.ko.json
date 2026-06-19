@@ -255,6 +255,15 @@
         "pitDwellingOverlapSequence": {
           "label": "중복 수혈건물지 선후"
         },
+        "pitFeatureFunctionAssessment": {
+          "label": "수혈유구 성격 판단"
+        },
+        "settlementFeatureInvestigationProcedure": {
+          "label": "생활유적 조사 절차"
+        },
+        "settlementFeatureTrenchStrategy": {
+          "label": "생활유적 트렌치 전략"
+        },
         "ironProcessEvidence": {
           "label": "제철 공정 근거"
         },

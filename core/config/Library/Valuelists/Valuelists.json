@@ -31924,6 +31924,106 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-pitFeatureFunctionAssessment": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "dwellingCandidate": {},
+      "pitBuildingCandidate": {},
+      "storageCandidate": {},
+      "workshopCandidate": {},
+      "publicFacilityCandidate": {},
+      "trapCandidate": {},
+      "toiletCandidate": {},
+      "dumpCandidate": {},
+      "clayExtractionPitCandidate": {},
+      "hearthEvidence": {},
+      "hardenedSurface": {},
+      "cookingVessel": {},
+      "storagePit": {},
+      "functionNotAssumed": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "dwellingCandidate",
+      "pitBuildingCandidate",
+      "storageCandidate",
+      "workshopCandidate",
+      "publicFacilityCandidate",
+      "trapCandidate",
+      "toiletCandidate",
+      "dumpCandidate",
+      "clayExtractionPitCandidate",
+      "hearthEvidence",
+      "hardenedSurface",
+      "cookingVessel",
+      "storagePit",
+      "functionNotAssumed",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-settlementFeatureInvestigationProcedure": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "preliminarySurvey": {},
+      "planInvestigation": {},
+      "overlapRelationCheck": {},
+      "trenchSet": {},
+      "baulkSet": {},
+      "steppedExcavation": {},
+      "internalCleaning": {},
+      "floorInvestigation": {},
+      "sectioning": {},
+      "reviewPhoto": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "preliminarySurvey",
+      "planInvestigation",
+      "overlapRelationCheck",
+      "trenchSet",
+      "baulkSet",
+      "steppedExcavation",
+      "internalCleaning",
+      "floorInvestigation",
+      "sectioning",
+      "reviewPhoto",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-settlementFeatureTrenchStrategy": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "minimalTrenchMaxInfo": {},
+      "floorSurfacePreservation": {},
+      "wallLinePreservation": {},
+      "singleLineTrench": {},
+      "crossTrench": {},
+      "intersectingTrench": {},
+      "longAxisDirection": {},
+      "shortAxisDirection": {},
+      "contourRelation": {},
+      "sectionContinuity": {},
+      "drawingInversionRisk": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "minimalTrenchMaxInfo",
+      "floorSurfacePreservation",
+      "wallLinePreservation",
+      "singleLineTrench",
+      "crossTrench",
+      "intersectingTrench",
+      "longAxisDirection",
+      "shortAxisDirection",
+      "contourRelation",
+      "sectionContinuity",
+      "drawingInversionRisk",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-ironProcessEvidence": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

@@ -83,6 +83,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.fields.pitDwellingFloorFacility.inputType).toBe('checkboxes');
         expect(featureForm.fields.pitDwellingFireEvidence.inputType).toBe('checkboxes');
         expect(featureForm.fields.pitDwellingOverlapSequence.inputType).toBe('checkboxes');
+        expect(featureForm.fields.pitFeatureFunctionAssessment.inputType).toBe('checkboxes');
+        expect(featureForm.fields.settlementFeatureInvestigationProcedure.inputType).toBe('checkboxes');
+        expect(featureForm.fields.settlementFeatureTrenchStrategy.inputType).toBe('checkboxes');
         expect(featureForm.fields.ironProcessEvidence.inputType).toBe('checkboxes');
         expect(featureForm.fields.ironFurnaceStructure.inputType).toBe('checkboxes');
         expect(featureForm.fields.tombMoundInvestigation.inputType).toBe('checkboxes');
@@ -303,6 +306,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-pitDwellingFireEvidence');
         expect(featureForm.valuelists.pitDwellingOverlapSequence)
             .toBe('KoreanFieldwork-pitDwellingOverlapSequence');
+        expect(featureForm.valuelists.pitFeatureFunctionAssessment)
+            .toBe('KoreanFieldwork-pitFeatureFunctionAssessment');
+        expect(featureForm.valuelists.settlementFeatureInvestigationProcedure)
+            .toBe('KoreanFieldwork-settlementFeatureInvestigationProcedure');
+        expect(featureForm.valuelists.settlementFeatureTrenchStrategy)
+            .toBe('KoreanFieldwork-settlementFeatureTrenchStrategy');
         expect(featureForm.valuelists.ironProcessEvidence).toBe('KoreanFieldwork-ironProcessEvidence');
         expect(featureForm.valuelists.ironFurnaceStructure).toBe('KoreanFieldwork-ironFurnaceStructure');
         expect(featureForm.valuelists.tombMoundInvestigation)
@@ -595,6 +604,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Pit dwelling exposure and baulk');
         expect(languages.en.categories.Feature.fields.pitDwellingFireEvidence.label)
             .toBe('Burned pit dwelling evidence');
+        expect(languages.en.categories.Feature.fields.pitFeatureFunctionAssessment.label)
+            .toBe('Pit feature function assessment');
+        expect(languages.en.categories.Feature.fields.settlementFeatureInvestigationProcedure.label)
+            .toBe('Settlement feature investigation procedure');
+        expect(languages.en.categories.Feature.fields.settlementFeatureTrenchStrategy.label)
+            .toBe('Settlement feature trench strategy');
         expect(languages.en.categories.Feature.fields.ironProcessEvidence.label).toBe('Iron process evidence');
         expect(languages.en.categories.Feature.fields.ironFurnaceStructure.label).toBe('Iron furnace structure');
         expect(languages.en.categories.Feature.fields.tombMoundInvestigation.label)
@@ -961,6 +976,15 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-pitDwellingOverlapSequence']
             .values.relationshipUnresolved.label)
             .toBe('Relationship unresolved');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-pitFeatureFunctionAssessment']
+            .values.functionNotAssumed.label)
+            .toBe('Function not assumed');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-settlementFeatureInvestigationProcedure']
+            .values.floorInvestigation.label)
+            .toBe('Floor investigation');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-settlementFeatureTrenchStrategy']
+            .values.minimalTrenchMaxInfo.label)
+            .toBe('Minimal trench, maximum information');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-ironProcessEvidence']
             .values.metallurgicalAnalysisNeeded.label)
             .toBe('Metallurgical analysis needed');
@@ -1271,6 +1295,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-featureFillInterpretation']
             .values.attributionCaution.label)
             .toBe('귀속 주의');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-pitFeatureFunctionAssessment']
+            .values.functionNotAssumed.label)
+            .toBe('성격 자동판정 금지');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-alluvialLayerConceptAudit']
             .values.abLayerSetRecorded.label)
             .toBe('a+b층 세트 기록');

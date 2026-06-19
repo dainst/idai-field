@@ -12516,6 +12516,59 @@
     },
     "description": "Korean overlapping pit dwelling checks for staged plan stripping, section evidence, over-trenching risk, later/earlier excavation order, and unresolved sequence decisions"
   },
+  "KoreanFieldwork-pitFeatureFunctionAssessment": {
+    "values": {
+      "dwellingCandidate": { "label": "Dwelling candidate" },
+      "pitBuildingCandidate": { "label": "Pit building candidate" },
+      "storageCandidate": { "label": "Storage candidate" },
+      "workshopCandidate": { "label": "Workshop candidate" },
+      "publicFacilityCandidate": { "label": "Public facility candidate" },
+      "trapCandidate": { "label": "Trap candidate" },
+      "toiletCandidate": { "label": "Toilet candidate" },
+      "dumpCandidate": { "label": "Dump candidate" },
+      "clayExtractionPitCandidate": { "label": "Clay extraction pit candidate" },
+      "hearthEvidence": { "label": "Hearth evidence" },
+      "hardenedSurface": { "label": "Hardened surface" },
+      "cookingVessel": { "label": "Cooking vessel" },
+      "storagePit": { "label": "Storage pit" },
+      "functionNotAssumed": { "label": "Function not assumed" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean pit-feature function checks for keeping dwelling, storage, workshop, public facility, trap, toilet, dump, clay extraction, hearth, hardened surface, and storage-pit evidence open before assigning a function"
+  },
+  "KoreanFieldwork-settlementFeatureInvestigationProcedure": {
+    "values": {
+      "preliminarySurvey": { "label": "Preliminary survey" },
+      "planInvestigation": { "label": "Plan investigation" },
+      "overlapRelationCheck": { "label": "Overlap relation check" },
+      "trenchSet": { "label": "Trench set" },
+      "baulkSet": { "label": "Baulk set" },
+      "steppedExcavation": { "label": "Stepped excavation" },
+      "internalCleaning": { "label": "Internal cleaning" },
+      "floorInvestigation": { "label": "Floor investigation" },
+      "sectioning": { "label": "Sectioning" },
+      "reviewPhoto": { "label": "Review photo" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean settlement-feature investigation checks for tracking preliminary survey, plan investigation, overlap relations, trenches, baulks, stepped excavation, cleaning, floors, sections, and review photos"
+  },
+  "KoreanFieldwork-settlementFeatureTrenchStrategy": {
+    "values": {
+      "minimalTrenchMaxInfo": { "label": "Minimal trench, maximum information" },
+      "floorSurfacePreservation": { "label": "Floor surface preservation" },
+      "wallLinePreservation": { "label": "Wall line preservation" },
+      "singleLineTrench": { "label": "Single-line trench" },
+      "crossTrench": { "label": "Cross trench" },
+      "intersectingTrench": { "label": "Intersecting trench" },
+      "longAxisDirection": { "label": "Long-axis direction" },
+      "shortAxisDirection": { "label": "Short-axis direction" },
+      "contourRelation": { "label": "Contour relation" },
+      "sectionContinuity": { "label": "Section continuity" },
+      "drawingInversionRisk": { "label": "Drawing inversion risk" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean settlement-feature trench checks for balancing information gain, floor and wall preservation, trench form, axis direction, contour relation, section continuity, and drawing risks"
+  },
   "KoreanFieldwork-ironProcessEvidence": {
     "values": {
       "miningLead": { "label": "Mining lead" },

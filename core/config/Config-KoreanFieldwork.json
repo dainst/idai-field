@@ -673,6 +673,18 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "pitFeatureFunctionAssessment": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "settlementFeatureInvestigationProcedure": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "settlementFeatureTrenchStrategy": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "ironProcessEvidence": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -846,6 +858,9 @@
         "pitDwellingFloorFacility": "KoreanFieldwork-pitDwellingFloorFacility",
         "pitDwellingFireEvidence": "KoreanFieldwork-pitDwellingFireEvidence",
         "pitDwellingOverlapSequence": "KoreanFieldwork-pitDwellingOverlapSequence",
+        "pitFeatureFunctionAssessment": "KoreanFieldwork-pitFeatureFunctionAssessment",
+        "settlementFeatureInvestigationProcedure": "KoreanFieldwork-settlementFeatureInvestigationProcedure",
+        "settlementFeatureTrenchStrategy": "KoreanFieldwork-settlementFeatureTrenchStrategy",
         "ironProcessEvidence": "KoreanFieldwork-ironProcessEvidence",
         "ironFurnaceStructure": "KoreanFieldwork-ironFurnaceStructure",
         "tombMoundInvestigation": "KoreanFieldwork-tombMoundInvestigation",
@@ -918,6 +933,9 @@
             "pitDwellingFloorFacility",
             "pitDwellingFireEvidence",
             "pitDwellingOverlapSequence",
+            "pitFeatureFunctionAssessment",
+            "settlementFeatureInvestigationProcedure",
+            "settlementFeatureTrenchStrategy",
             "ironProcessEvidence",
             "ironFurnaceStructure",
             "tombMoundInvestigation",

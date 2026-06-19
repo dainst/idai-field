@@ -255,6 +255,15 @@
         "pitDwellingOverlapSequence": {
           "label": "Overlapping pit dwelling sequence"
         },
+        "pitFeatureFunctionAssessment": {
+          "label": "Pit feature function assessment"
+        },
+        "settlementFeatureInvestigationProcedure": {
+          "label": "Settlement feature investigation procedure"
+        },
+        "settlementFeatureTrenchStrategy": {
+          "label": "Settlement feature trench strategy"
+        },
         "ironProcessEvidence": {
           "label": "Iron process evidence"
         },

@@ -548,6 +548,9 @@
         "featureFillInterpretation": {
           "label": "Feature fill interpretation"
         },
+        "naturalHumusRelativity": {
+          "label": "Natural/humus relativity"
+        },
         "stratigraphicObservationProcedure": {
           "label": "Stratigraphic observation procedure"
         },

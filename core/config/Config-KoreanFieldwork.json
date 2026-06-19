@@ -1418,6 +1418,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "naturalHumusRelativity": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "stratigraphicObservationProcedure": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1487,6 +1491,7 @@
         "stratigraphicMisreadGuard": "KoreanFieldwork-stratigraphicMisreadGuard",
         "layerNamingSystem": "KoreanFieldwork-layerNamingSystem",
         "featureFillInterpretation": "KoreanFieldwork-featureFillInterpretation",
+        "naturalHumusRelativity": "KoreanFieldwork-naturalHumusRelativity",
         "stratigraphicObservationProcedure": "KoreanFieldwork-stratigraphicObservationProcedure",
         "featureLifecycleReview": "KoreanFieldwork-featureLifecycleReview",
         "featureBlockInclusionAssessment": "KoreanFieldwork-featureBlockInclusionAssessment",
@@ -1533,6 +1538,7 @@
             "stratigraphicMisreadGuard",
             "layerNamingSystem",
             "featureFillInterpretation",
+            "naturalHumusRelativity",
             "stratigraphicObservationProcedure",
             "featureLifecycleReview",
             "featureBlockInclusionAssessment",

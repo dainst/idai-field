@@ -12504,6 +12504,22 @@
     },
     "description": "Korean feature-fill checks for separating construction, use, abandonment, burial, and find-attribution cautions instead of recording every fill as backfill"
   },
+  "KoreanFieldwork-naturalHumusRelativity": {
+    "values": {
+      "naturalSoilCandidate": { "label": "Natural soil candidate" },
+      "culturalLayerCandidate": { "label": "Cultural layer candidate" },
+      "topsoil": { "label": "Topsoil" },
+      "upperDeposit": { "label": "Upper deposit" },
+      "featureFill": { "label": "Feature fill" },
+      "disturbedSoil": { "label": "Disturbed soil" },
+      "paleolithicCulturalLayerCandidate": { "label": "Paleolithic cultural layer candidate" },
+      "modernFeatureLayer": { "label": "Modern feature layer" },
+      "targetPeriodChecked": { "label": "Target period checked" },
+      "relatedFeatureChecked": { "label": "Related feature checked" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean fieldwork checks for recording natural soil, humus, topsoil, upper deposits, feature fills, and disturbed soil as relative judgments tied to target period and related features"
+  },
   "KoreanFieldwork-stratigraphicObservationProcedure": {
     "values": {
       "verticalFaceCleaned": { "label": "Vertical face cleaned" },

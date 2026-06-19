@@ -739,6 +739,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('quantitativeAnalysisNeeded');
         expect(documentsById['segment-stratigraphy-fill-001'].resource.featureFillInterpretation)
             .toContain('attributionCaution');
+        expect(documentsById['segment-stratigraphy-fill-001'].resource.naturalHumusRelativity)
+            .toContain('targetPeriodChecked');
         expect(documentsById['segment-stratigraphy-fill-001'].resource.featureLifecycleReview)
             .toContain('burialProcess');
         expect(documentsById['segment-stratigraphy-fill-001'].resource.featureBlockInclusionAssessment)
@@ -1056,6 +1058,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureSegmentForm.fields.stratigraphicMisreadGuard.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.layerNamingSystem.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.featureFillInterpretation.inputType).toBe('checkboxes');
+        expect(featureSegmentForm.fields.naturalHumusRelativity.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.stratigraphicObservationProcedure.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.featureLifecycleReview.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.featureBlockInclusionAssessment.inputType).toBe('checkboxes');
@@ -1427,6 +1430,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-layerNamingSystem');
         expect(featureSegmentForm.valuelists.featureFillInterpretation)
             .toBe('KoreanFieldwork-featureFillInterpretation');
+        expect(featureSegmentForm.valuelists.naturalHumusRelativity)
+            .toBe('KoreanFieldwork-naturalHumusRelativity');
         expect(featureSegmentForm.valuelists.stratigraphicObservationProcedure)
             .toBe('KoreanFieldwork-stratigraphicObservationProcedure');
         expect(featureSegmentForm.valuelists.featureLifecycleReview)
@@ -1836,6 +1841,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Layer naming system');
         expect(languages.en.categories.FeatureSegment.fields.featureFillInterpretation.label)
             .toBe('Feature fill interpretation');
+        expect(languages.en.categories.FeatureSegment.fields.naturalHumusRelativity.label)
+            .toBe('Natural/humus relativity');
         expect(languages.en.categories.FeatureSegment.fields.stratigraphicObservationProcedure.label)
             .toBe('Stratigraphic observation procedure');
         expect(languages.en.categories.FeatureSegment.fields.featureLifecycleReview.label)
@@ -2137,6 +2144,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-featureFillInterpretation']
             .values.attributionCaution.label)
             .toBe('Attribution caution');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-naturalHumusRelativity']
+            .values.paleolithicCulturalLayerCandidate.label)
+            .toBe('Paleolithic cultural layer candidate');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-stratigraphicObservationProcedure']
             .values.observationTimeSufficient.label)
             .toBe('Observation time sufficient');

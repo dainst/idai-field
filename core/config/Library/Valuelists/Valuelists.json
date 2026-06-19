@@ -32032,6 +32032,36 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-naturalHumusRelativity": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "naturalSoilCandidate": {},
+      "culturalLayerCandidate": {},
+      "topsoil": {},
+      "upperDeposit": {},
+      "featureFill": {},
+      "disturbedSoil": {},
+      "paleolithicCulturalLayerCandidate": {},
+      "modernFeatureLayer": {},
+      "targetPeriodChecked": {},
+      "relatedFeatureChecked": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "naturalSoilCandidate",
+      "culturalLayerCandidate",
+      "topsoil",
+      "upperDeposit",
+      "featureFill",
+      "disturbedSoil",
+      "paleolithicCulturalLayerCandidate",
+      "modernFeatureLayer",
+      "targetPeriodChecked",
+      "relatedFeatureChecked",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-stratigraphicObservationProcedure": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

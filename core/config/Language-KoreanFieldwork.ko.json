@@ -548,6 +548,9 @@
         "featureFillInterpretation": {
           "label": "유구 내부토 해석"
         },
+        "naturalHumusRelativity": {
+          "label": "생토·부식토 상대성"
+        },
         "stratigraphicObservationProcedure": {
           "label": "토층 관찰 절차"
         },

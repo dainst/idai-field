@@ -1,0 +1,201 @@
+{
+  "title": "Korean fieldwork term authority and alias sample",
+  "purpose": "Validate that Korean archaeological field terms can be searched by local aliases while stored authority terms remain separate from observed field wording.",
+  "validationQuestions": [
+    "표준 용어와 현장 관용어를 모두 검색하되 저장값은 권위어로 정규화되는가.",
+    "판단 보류가 확정값으로 덮이지 않고 검토 이력으로 남는가."
+  ],
+  "documents": [
+    {
+      "resource": {
+        "id": "term-group-korean-archaeology",
+        "identifier": "한국 고고학 용어 권위어 샘플",
+        "shortDescription": "사전 표제어와 현장 관용어의 검색/저장값 분리 검증",
+        "category": "FeatureGroup",
+        "relations": {},
+        "featurePackage": ["buildingSite", "kilnSite", "ironProductionSite"],
+        "termRelation": ["preferredTerm", "alias", "reportOutputTerm"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "fieldUsagePreserved",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["specialistDictionarySource", "generalDictionaryUsage", "valueListCandidate"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-authority-dwelling-site",
+        "identifier": "주거지",
+        "shortDescription": "집자리·수혈주거지 계열 권위 표제어",
+        "category": "TermAuthority",
+        "relations": {
+          "liesWithin": ["term-group-korean-archaeology"]
+        },
+        "description": "현장 입력어 집자리와 구조 하위유형 수혈주거지를 검색어로 허용하되, 주거 기능이 불확실한 수혈건물지는 별도 검토 대상으로 남긴다.",
+        "termDictionaryDomain": ["bronzeAge", "generalArchaeology"],
+        "termApplicationScope": ["valueListEntry", "reportOutput", "searchAlias", "sourceDictionaryLink"],
+        "termSourcePriority": ["domainSpecialistDictionary", "generalArchaeologyDictionary", "methodologyTerm"],
+        "termRelation": ["preferredTerm", "broaderTerm", "narrowerTerm"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "fieldUsagePreserved",
+          "structureSubtypeSeparated",
+          "ambiguousSynonymFlagged"
+        ],
+        "termAuthorityStatus": [
+          "specialistDictionarySource",
+          "generalDictionaryUsage",
+          "sourcePageLinked",
+          "valueListCandidate"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-alias-dwelling-site-house-place",
+        "identifier": "집자리",
+        "shortDescription": "현장 관용어: 집자리",
+        "category": "TermAlias",
+        "relations": {
+          "liesWithin": ["term-authority-dwelling-site"]
+        },
+        "description": "현장 기록과 사진 캡션에서 자주 쓰는 생활어를 자동완성 검색어로 보존한다.",
+        "termAliasRole": ["fieldSynonym", "localUsage"],
+        "termAliasHandling": [
+          "autocompleteAccepted",
+          "preferredHeadwordTarget",
+          "keepAliasForSearch",
+          "doNotOverwriteObservedTerm"
+        ],
+        "termRelation": ["alias"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "fieldUsagePreserved",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["generalDictionaryUsage", "sourcePageLinked", "pendingDecision"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-alias-dwelling-site-pit-building",
+        "identifier": "수혈건물지",
+        "shortDescription": "기능 미확정 구조명",
+        "category": "TermAlias",
+        "relations": {
+          "liesWithin": ["term-authority-dwelling-site"]
+        },
+        "description": "구조는 비슷하지만 주거 기능이 확정되지 않은 입력어이므로 주거지로 자동 병합하지 않는다.",
+        "termAliasRole": ["dictionarySeeAlso"],
+        "termAliasHandling": [
+          "autocompleteAccepted",
+          "domainScoped",
+          "manualReviewRequired",
+          "doNotOverwriteObservedTerm"
+        ],
+        "termRelation": ["structuralSimilarity", "domainRestricted"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "structureSubtypeSeparated",
+          "ambiguousSynonymFlagged",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["generalDictionaryUsage", "uiExposureDeferred", "pendingDecision"],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-authority-kiln-site",
+        "identifier": "요지",
+        "shortDescription": "가마터·요 계열 생산유적 권위 표제어",
+        "category": "TermAuthority",
+        "relations": {
+          "liesWithin": ["term-group-korean-archaeology"]
+        },
+        "description": "가마터, 요, 가마는 검색어와 보고서 출력어가 겹치지만 생산분야와 구조 확인 상태를 분리해 저장한다.",
+        "termDictionaryDomain": ["pottery", "roofTile", "porcelain", "earthenware", "workshopOther"],
+        "termApplicationScope": ["reportOutput", "searchAlias", "sourceDictionaryLink", "importMapping"],
+        "termSourcePriority": ["domainSpecialistDictionary", "institutionReportUsage", "pdfCrossCheckRequired"],
+        "termRelation": ["preferredTerm", "alias", "domainRestricted", "reportOutputTerm"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "reportOutputSeparated",
+          "domainScopeSet",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": [
+          "specialistDictionarySource",
+          "reportOutputChecked",
+          "pdfCrossChecked",
+          "valueListCandidate"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-alias-kiln-site-gamateo",
+        "identifier": "가마터",
+        "shortDescription": "현장·보고서 관용어: 가마터",
+        "category": "TermAlias",
+        "relations": {
+          "liesWithin": ["term-authority-kiln-site"]
+        },
+        "description": "현장 검색어로 허용하지만 보고서 출력과 권위 표제어는 별도 규칙으로 관리한다.",
+        "termAliasRole": ["fieldSynonym", "localUsage", "reportOutputName"],
+        "termAliasHandling": [
+          "autocompleteAccepted",
+          "preferredHeadwordTarget",
+          "keepAliasForSearch",
+          "reportOutputSeparate"
+        ],
+        "termRelation": ["alias", "reportOutputTerm"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "reportOutputSeparated",
+          "fieldUsagePreserved"
+        ],
+        "termAuthorityStatus": ["institutionalUsage", "reportOutputChecked", "sourcePageLinked"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-alias-kiln-site-kiln",
+        "identifier": "가마",
+        "shortDescription": "구조명·현장 검색어: 가마",
+        "category": "TermAlias",
+        "relations": {
+          "liesWithin": ["term-authority-kiln-site"]
+        },
+        "description": "가마 구조 자체와 요지라는 장소·유적 성격이 섞이지 않도록 수동 검토 조건을 둔다.",
+        "termAliasRole": ["fieldSynonym"],
+        "termAliasHandling": [
+          "autocompleteAccepted",
+          "domainScoped",
+          "manualReviewRequired",
+          "doNotOverwriteObservedTerm"
+        ],
+        "termRelation": ["structuralSimilarity", "domainRestricted"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "domainScopeSet",
+          "ambiguousSynonymFlagged",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["generalDictionaryUsage", "uiExposureDeferred", "pendingDecision"],
+        "verificationState": "pendingDecision"
+      }
+    }
+  ]
+}

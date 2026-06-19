@@ -1,5 +1,27 @@
+import * as fs from 'fs';
+import * as path from 'path';
 import { ConfigReader } from '../../src/configuration/boot/config-reader';
 import { getConfigurationName, PROJECT_MAPPING } from '../../src/configuration/project-configuration-names';
+
+
+const TERM_ALIAS_SAMPLE_PATH = path.resolve(
+    __dirname,
+    '../../../../docs/korean-fieldwork/samples/term-authority-alias-sample.json'
+);
+
+
+const loadTermAliasSample = (): any => {
+
+    return JSON.parse(fs.readFileSync(TERM_ALIAS_SAMPLE_PATH, 'utf8'));
+};
+
+
+const getSampleFormName = (category: string): string => {
+
+    return category === 'FeatureGroup'
+        ? 'FeatureGroup:default'
+        : category;
+};
 
 
 describe('KoreanFieldwork project configuration', () => {
@@ -9,6 +31,66 @@ describe('KoreanFieldwork project configuration', () => {
         expect(getConfigurationName('korean-fieldwork')).toBe('KoreanFieldwork');
         expect(getConfigurationName('korean-fieldwork-training')).toBe('KoreanFieldwork');
         expect(PROJECT_MAPPING['korean-fieldwork'].prefix).toBe('KoreanFieldwork');
+    });
+
+
+    it('keeps the Korean term authority alias sample aligned with configured forms and valuelists', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const sample = loadTermAliasSample();
+        const documents = sample.documents;
+        const documentsById = documents.reduce((index: any, document: any) => {
+            index[document.resource.id] = document;
+            return index;
+        }, {});
+
+        expect(documents.length).toBeGreaterThan(0);
+
+        documents.forEach((document: any) => {
+            const resource = document.resource;
+            const form = config.forms[getSampleFormName(resource.category)];
+
+            expect(form).toBeDefined();
+            expect(resource.relations).toBeDefined();
+
+            Object.keys(resource).forEach(fieldName => {
+                if (!form.valuelists || !form.valuelists[fieldName]) return;
+
+                const valuelist = valuelists[form.valuelists[fieldName]];
+                const fieldValues = Array.isArray(resource[fieldName])
+                    ? resource[fieldName]
+                    : [resource[fieldName]];
+
+                expect(valuelist).toBeDefined();
+                fieldValues.forEach((fieldValue: string) => {
+                    expect(valuelist.values[fieldValue]).toBeDefined();
+                });
+            });
+        });
+
+        documents
+            .filter((document: any) => document.resource.category !== 'FeatureGroup')
+            .forEach((document: any) => {
+                const resource = document.resource;
+                const parentId = resource.relations.liesWithin[0];
+                const parent = documentsById[parentId];
+
+                expect(parent).toBeDefined();
+                expect(config.forms[resource.category].parent).toBe(parent.resource.category);
+            });
+
+        expect(documentsById['term-alias-dwelling-site-house-place'].resource.relations.liesWithin)
+            .toEqual(['term-authority-dwelling-site']);
+        expect(documentsById['term-alias-dwelling-site-house-place'].resource.termAliasHandling)
+            .toContain('doNotOverwriteObservedTerm');
+        expect(documentsById['term-authority-dwelling-site'].resource.termSearchMapping)
+            .toContain('structureSubtypeSeparated');
+        expect(documentsById['term-authority-kiln-site'].resource.termSearchMapping)
+            .toContain('doNotMergeToSingleTerm');
+        expect(documentsById['term-alias-kiln-site-kiln'].resource.verificationState)
+            .toBe('pendingDecision');
     });
 
 

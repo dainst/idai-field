@@ -346,9 +346,11 @@
 
 2026-06-19 구현에서는 `TermAlias`를 `TermAuthority` 하위 카드로 추가했다. 별칭 텍스트는 카드의 `shortDescription`에 두고, `termAliasRole`은 현장 동의어, 사전 찾아가기, 기관 관용어, 보고서·사업명, 한자·원어 변형, OCR 변형을 구분한다. `termAliasHandling`은 자동완성 허용, 우선표제어 연결, 검색어 보존, 보고서 출력 분리, 가져오기 전용, 분야·시대 범위, 원PDF 대조 필요, 현장 관찰어 덮어쓰기 금지를 기록한다. 이 구조는 `집자리/주거지`, `가마터/요지`, `한뎃가마/노천요` 같은 검색어를 받아도 저장 표제어와 보고서 출력어를 섞지 않기 위한 최소 모델이다.
 
+2026-06-19 추가 검증에서는 `docs/korean-fieldwork/samples/term-authority-alias-sample.json`을 두어 `집자리/주거지`, `수혈건물지`, `가마터/요지`, `가마/요지` 관계가 실제 설정의 `TermAuthority`와 `TermAlias` 폼, 값목록 키로만 표현되는지 테스트한다. 이 샘플은 현장 검색어를 허용하되, `doNotOverwriteObservedTerm`, `structureSubtypeSeparated`, `doNotMergeToSingleTerm`, `pendingDecision`을 함께 남겨 관찰어와 권위 표제어가 섞이지 않는지 확인하는 용도다.
+
 ## 다음 대조 대상
 
-- `TermAuthority` 검색 인덱스: `TermAlias` 카드가 실제 자동완성·가져오기 매핑에서 어떻게 쓰일지 샘플 데이터로 검증하고, 별도 `TermRelationship` 카드가 필요한 관계만 추린다.
+- `TermAuthority` 검색 인덱스: `TermAlias` 샘플 fixture를 실제 자동완성·가져오기 매핑에 연결해 보고, 별도 `TermRelationship` 카드가 필요한 관계만 추린다.
 - 생산유적편: 도판 속 개별 사례명과 요도구 사진 캡션 교정.
 - 청동기시대편: 수혈주거지와 생산 관련 값 목록, 도판 속 개별 사례명 교정.
 - 구석기시대편: 국외 유적명 원어 표기와 도판 속 개별 석재·접합 번호 교정.

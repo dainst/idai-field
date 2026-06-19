@@ -369,11 +369,15 @@
       "baggedByLayerWithLabel": { "label": "층위별 봉투·꼬리표 동봉" },
       "ledgerEntryCreated": { "label": "유물대장 등재" },
       "uniqueRegistrationNumberMarked": { "label": "고유 등록번호 표기" },
+      "artifactSurfaceMarkingMethodReviewed": { "label": "실물 표기방법 검토" },
+      "minimalMarkingArea": { "label": "최소 범위 표기" },
+      "edgeOrDecoratedSurfaceAvoided": { "label": "날·문양·취약면 회피" },
+      "markingCoatingRiskReviewed": { "label": "표기·코팅 탈락위험 검토" },
       "fieldSerialInventoryNumberLinked": { "label": "일련번호·정리번호 연결" },
       "ledgerRegisterPermanent": { "label": "꼬리표와 대장 보존" },
       "pendingDecision": { "label": "판단 보류" }
     },
-    "description": "현장 꼬리표의 조사기관, 일자, 지점, 발굴칸, 일련번호, 지층, 유물층, 유물명, 재질·암질, 좌표, 깊이, 치수, 무게가 유물대장, 고유 등록번호, 정리번호와 끊기지 않게 점검하기 위한 목록"
+    "description": "현장 꼬리표의 조사기관, 일자, 지점, 발굴칸, 일련번호, 지층, 유물층, 유물명, 재질·암질, 좌표, 깊이, 치수, 무게가 유물대장, 고유 등록번호, 정리번호와 끊기지 않게 하고, 실물 표기 방법·최소 표기 범위·취약면 회피·코팅 탈락 위험을 함께 점검하기 위한 목록"
   },
   "KoreanFieldwork-paleolithicArtifactPositionRecovery": {
     "values": {

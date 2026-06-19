@@ -93,6 +93,10 @@
           "baggedByLayerWithLabel",
           "ledgerEntryCreated",
           "uniqueRegistrationNumberMarked",
+          "artifactSurfaceMarkingMethodReviewed",
+          "minimalMarkingArea",
+          "edgeOrDecoratedSurfaceAvoided",
+          "markingCoatingRiskReviewed",
           "fieldSerialInventoryNumberLinked",
           "ledgerRegisterPermanent"
         ],

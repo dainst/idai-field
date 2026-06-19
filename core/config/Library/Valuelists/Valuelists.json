@@ -31410,6 +31410,10 @@
       "baggedByLayerWithLabel": {},
       "ledgerEntryCreated": {},
       "uniqueRegistrationNumberMarked": {},
+      "artifactSurfaceMarkingMethodReviewed": {},
+      "minimalMarkingArea": {},
+      "edgeOrDecoratedSurfaceAvoided": {},
+      "markingCoatingRiskReviewed": {},
       "fieldSerialInventoryNumberLinked": {},
       "ledgerRegisterPermanent": {},
       "pendingDecision": {}
@@ -31433,6 +31437,10 @@
       "baggedByLayerWithLabel",
       "ledgerEntryCreated",
       "uniqueRegistrationNumberMarked",
+      "artifactSurfaceMarkingMethodReviewed",
+      "minimalMarkingArea",
+      "edgeOrDecoratedSurfaceAvoided",
+      "markingCoatingRiskReviewed",
       "fieldSerialInventoryNumberLinked",
       "ledgerRegisterPermanent",
       "pendingDecision"

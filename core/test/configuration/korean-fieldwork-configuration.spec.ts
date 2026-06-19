@@ -968,6 +968,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('fieldSerialInventoryNumberLinked');
         expect(documentsById['find-artifact-label-001'].resource.artifactLabelRegisterLink)
             .toContain('uniqueRegistrationNumberMarked');
+        expect(documentsById['find-artifact-label-001'].resource.artifactLabelRegisterLink)
+            .toContain('markingCoatingRiskReviewed');
+        expect(documentsById['find-artifact-label-001'].resource.artifactLabelRegisterLink)
+            .toContain('edgeOrDecoratedSurfaceAvoided');
         expect(documentsById['find-artifact-label-001'].resource.artifactTransportSafety)
             .toContain('transportBoxLabeled');
         expect(documentsById['find-artifact-label-001'].resource.artifactTransportSafety)
@@ -3615,6 +3619,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactLabelRegisterLink']
             .values.fieldSerialInventoryNumberLinked.label)
             .toBe('Field serial and inventory number linked');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-artifactLabelRegisterLink']
+            .values.markingCoatingRiskReviewed.label)
+            .toBe('표기·코팅 탈락위험 검토');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-paleolithicArtifactPositionRecovery']
             .values.threeDimensionalCoordinateRecorded.label)
             .toBe('3D coordinate recorded');

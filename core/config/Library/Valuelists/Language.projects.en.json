@@ -12123,11 +12123,15 @@
       "baggedByLayerWithLabel": { "label": "Bagged by layer with label" },
       "ledgerEntryCreated": { "label": "Ledger entry created" },
       "uniqueRegistrationNumberMarked": { "label": "Unique registration number marked" },
+      "artifactSurfaceMarkingMethodReviewed": { "label": "Artifact surface marking method reviewed" },
+      "minimalMarkingArea": { "label": "Minimal marking area" },
+      "edgeOrDecoratedSurfaceAvoided": { "label": "Edge/decorated/fragile surface avoided" },
+      "markingCoatingRiskReviewed": { "label": "Marking/coating loss risk reviewed" },
       "fieldSerialInventoryNumberLinked": { "label": "Field serial and inventory number linked" },
       "ledgerRegisterPermanent": { "label": "Ledger kept with label" },
       "pendingDecision": { "label": "Pending decision" }
     },
-    "description": "Korean artifact label and register checks for keeping field labels, field serial numbers, coordinates, depth, dimensions, weight, artifact ledgers, unique registration numbers, and inventory numbers linked"
+    "description": "Korean artifact label and register checks for keeping field labels, field serial numbers, coordinates, depth, dimensions, weight, artifact ledgers, unique registration numbers, inventory numbers, artifact-surface marking methods, minimal marking areas, fragile-surface avoidance, and coating-loss risks linked"
   },
   "KoreanFieldwork-paleolithicArtifactPositionRecovery": {
     "values": {

@@ -576,6 +576,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('scopeChangeHistory');
         expect(documentsById['op-handover-001'].resource.investigationRecordHandover)
             .toContain('handoverConfirmed');
+        expect(documentsById['op-handover-001'].resource.investigationRecordHandover)
+            .toContain('finalReportSourceLinked');
+        expect(documentsById['op-handover-001'].resource.recordTransferManagementSystem)
+            .toContain('receivingInstitutionConfirmed');
+        expect(documentsById['op-handover-001'].resource.digitalSourcePreservation)
+            .toContain('backupVerified');
     });
 
 
@@ -615,6 +621,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('remainingUninvestigatedArea');
         expect(documentsById['project-admin-workflow-001'].resource.recordTransferManagementSystem)
             .toContain('sourceDatabase');
+        expect(documentsById['project-admin-workflow-001'].resource.recordTransferManagementSystem)
+            .toContain('handoverDateRecorded');
         expect(documentsById['project-admin-workflow-001'].resource.preservationActionTracking)
             .toContain('evaluationMaterialRequested');
         expect(documentsById['project-admin-workflow-001'].resource.preservationActionTracking)
@@ -633,6 +641,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('layoutMethodSelected');
         expect(documentsById['report-preparation-admin-001'].resource.reportPreparationReview)
             .toContain('printBindingPlanRecorded');
+        expect(documentsById['report-preparation-admin-001'].resource.reportPreparationReview)
+            .toContain('sourceNotebookSecured');
         expect(documentsById['report-preparation-admin-001'].resource.reportPreparationSourceText)
             .toContain('인쇄소 인계목록');
         expect(documentsById['report-preparation-admin-001'].resource.reportPreparationStandardText)
@@ -667,6 +677,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('permitDocumentOnSite');
         expect(documentsById['op-admin-review-001'].resource.siteProtectionSecurity)
             .toContain('temporaryFindStorage');
+        expect(documentsById['op-admin-review-001'].resource.siteProtectionSecurity)
+            .toContain('missingRecordImmediateAction');
         expect(documentsById['survey-admin-surface-001'].resource.surfaceSurveyResultProcessing)
             .toContain('digitalRegistration');
     });

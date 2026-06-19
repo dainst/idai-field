@@ -138,6 +138,8 @@ GPS·GIS 현장 시스템에서 뽑은 공통 축은 `KoreanFieldwork-gpsSurveyQ
 
 2026-06-19 감사에서 `고고학사전` PDF 12개와 추출 텍스트 12개, `조사방법론` PDF 31개와 `methods-all` 추출 텍스트 31개의 대응을 다시 확인했다. 일부 강의자료는 기본 `metadata.tsv`의 직접 추출문이 0자이므로 `direct-recheck`와 `ocr-selected` 보강본을 실질 근거로 삼아야 한다. 독해 작업의 다음 단계는 새 목록화가 아니라 OCR 취약 구간의 원문 이미지 교정과 실제 iDAI.field 템플릿 적용 검증이다. 이번 템플릿 검증에서는 성곽 성문·수문·왜성 해자 값 목록이 유구군이 아니라 개별 유구 `Feature` 화면에 붙어야 함을 확인했다. 이어 조사방법론의 경작유구 장과 제6권 충적지·제8권 문암리 밭유구 노트를 대조해 `cultivationFeatureContext`, `cultivationTrialTrenchStrategy`, `cultivationFeatureEvidence`, `cultivationChronologyAnalysis`를 개별 유구 `Feature` 화면에 배치했다. 2026-06-20 재대조에서는 경작유구 장의 관개시설 구조와 논·밭 평면조사 절차를 `cultivationIrrigationFacility`, `cultivationPlanInvestigationProcedure`로 추가 분리했다.
 
+2026-06-20 추가 교차독해에서는 조사계획 수립, 조사 착수, 진행 중 기록 보관, 현장 철수 전 미작성자료 조치, 완료자료 제출, DB·복사본·자료 인수인계 요구를 `field-training-methods.md`의 조사계획-철수-보고서 인계 사슬로 정리했다. 이 요구는 이미 구현된 `siteProtectionSecurity`, `digitalSourcePreservation`, `recordTransferManagementSystem`, `reportPreparationReview`, `reportSubmissionWorkflow`를 새 필드로 늘리는 대신 샘플 검증에서 더 강하게 묶는 방식으로 반영했다.
+
 ## 비판적 독해 기준
 
 - 강의자료의 “현장 팁”은 그대로 UI 강제값으로 만들지 않는다. 먼저 반복되는 위험, 누락되면 복구 불가능한 정보, 보고서 산출물과 직접 연결되는 항목인지 따진다.

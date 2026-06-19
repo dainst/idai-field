@@ -220,7 +220,16 @@
           "fieldRecordsHandover",
           "findsHandover",
           "summaryReport",
+          "finalReportSourceLinked",
           "handoverConfirmed"
+        ],
+        "recordTransferManagementSystem": [
+          "backupCopy",
+          "fileLossPrevention",
+          "handoverOfficer",
+          "longTermArchiveLocation",
+          "handoverDateRecorded",
+          "receivingInstitutionConfirmed"
         ],
         "dailyLogContent": [
           "workArea",
@@ -241,6 +250,7 @@
           "personalNotebookScan",
           "electronicNotebookOriginal",
           "twoLocationBackup",
+          "backupVerified",
           "accessProcedure"
         ],
         "reportCrossCheck": [

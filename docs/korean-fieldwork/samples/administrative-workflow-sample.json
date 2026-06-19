@@ -88,7 +88,9 @@
           "reportWritingAssignment",
           "teamReviewSystem",
           "accessPermission",
-          "longTermArchiveLocation"
+          "longTermArchiveLocation",
+          "handoverDateRecorded",
+          "receivingInstitutionConfirmed"
         ],
         "permitConditionCompliance": [
           "permitDocumentOnSite",

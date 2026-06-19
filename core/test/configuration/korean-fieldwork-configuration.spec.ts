@@ -144,6 +144,28 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('블록시료채집법');
         expect(documentsById['term-import-block-sampling-lump'].resource.termAliasHandling)
             .toContain('manualReviewRequired');
+        expect(documentsById['term-group-korean-archaeology'].resource.featurePackage)
+            .toContain('shellMidden');
+        expect(documentsById['term-authority-shell-midden'].resource.identifier)
+            .toBe('패총');
+        expect(documentsById['term-authority-shell-midden'].resource.termSearchMapping)
+            .toContain('doNotMergeToSingleTerm');
+        expect(documentsById['term-alias-shell-midden-jogaemuji'].resource.relations.liesWithin)
+            .toEqual(['term-authority-shell-midden']);
+        expect(documentsById['term-alias-shell-midden-jogaemuji'].resource.termAliasText)
+            .toBe('조개무지');
+        expect(documentsById['term-authority-shell-layer'].resource.identifier)
+            .toBe('패각층');
+        expect(documentsById['term-import-shell-layer-jogabicheung'].resource.termImportAuthorityText)
+            .toBe('패각층');
+        expect(documentsById['term-import-shell-layer-jogabicheung'].resource.termSearchMapping)
+            .toContain('structureSubtypeSeparated');
+        expect(documentsById['term-relationship-shell-midden-layer'].resource.termRelationshipTargetText)
+            .toContain('조가비층');
+        expect(documentsById['term-relationship-shell-midden-layer'].resource.termSearchMapping)
+            .toContain('doNotMergeToSingleTerm');
+        expect(documentsById['term-relationship-shell-midden-complex-context'].resource.termSearchMapping)
+            .toContain('periodScopeSet');
         expect(documentsById['term-authority-pottery-workshop'].resource.termSearchMapping)
             .toContain('importMappingNeeded');
         expect(documentsById['term-import-pottery-workshop-subijang'].resource.termImportAuthorityText)

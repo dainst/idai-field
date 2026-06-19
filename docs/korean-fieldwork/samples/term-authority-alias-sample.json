@@ -2,6 +2,7 @@
   "title": "Korean fieldwork term authority and alias sample",
   "purpose": "Validate that Korean archaeological field terms can be searched by local aliases while stored authority terms remain separate from observed field wording.",
   "validationQuestions": [
+    "조개더미·조개무지 검색어가 패총 표제어로 연결되되, 패각층·조가비층은 층위 단위로 분리되는가.",
     "표준 용어와 현장 관용어를 모두 검색하되 저장값은 권위어로 정규화되는가.",
     "가마·요·요지·가마터, 한뎃가마·노천요, 평요 분야분리, 수비장·건조장 찾아가기 관계가 현장 원문과 보고서 출력어를 덮어쓰지 않는가.",
     "판단 보류가 확정값으로 덮이지 않고 검토 이력으로 남는가."
@@ -14,7 +15,7 @@
         "shortDescription": "사전 표제어와 현장 관용어의 검색/저장값 분리 검증",
         "category": "FeatureGroup",
         "relations": {},
-        "featurePackage": ["buildingSite", "kilnSite", "ironProductionSite"],
+        "featurePackage": ["buildingSite", "shellMidden", "kilnSite", "ironProductionSite"],
         "termRelation": ["preferredTerm", "alias", "reportOutputTerm"],
         "termSearchMapping": [
           "fieldSearchTermAccepted",
@@ -545,6 +546,243 @@
           "fieldUsagePreserved",
           "domainScopeSet",
           "importMappingNeeded",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "pendingDecision"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-authority-shell-midden",
+        "identifier": "패총",
+        "shortDescription": "조개더미·조개무지·패총 계열 권위 표제어",
+        "category": "TermAuthority",
+        "relations": {
+          "liesWithin": ["term-group-korean-archaeology"]
+        },
+        "description": "사전 색인과 현장 용어에서 조개더미, 조개무지, 패총이 서로 찾아가기 관계로 쓰이더라도 저장 표제어는 패총으로 연결한다. 다만 패총은 패각층 하나가 아니라 주거, 노지, 무덤, 적석, 후대 재점유가 겹칠 수 있는 복합 유적이므로 층위·유구·시대 판단은 별도 기록으로 남긴다.",
+        "termDictionaryDomain": ["neolithic", "generalArchaeology"],
+        "termApplicationScope": ["valueListEntry", "reportOutput", "searchAlias", "sourceDictionaryLink", "importMapping"],
+        "termSourcePriority": ["domainSpecialistDictionary", "generalArchaeologyDictionary", "methodologyTerm"],
+        "dictionaryEditorialRule": [
+          "koreanHeadwordPreferred",
+          "originalScriptParallel",
+          "siteTypeNameSeparated",
+          "samePointMultiPeriodLinked"
+        ],
+        "termRelation": ["preferredTerm", "alias", "partWholeRelation", "spatialRelation"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "fieldUsagePreserved",
+          "domainScopeSet",
+          "periodScopeSet",
+          "structureSubtypeSeparated",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["specialistDictionarySource", "generalDictionaryUsage", "sourcePageLinked", "valueListCandidate"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-alias-shell-midden-jogaedeomi",
+        "identifier": "조개더미",
+        "shortDescription": "사전·현장 검색어: 조개더미",
+        "category": "TermAlias",
+        "relations": {
+          "liesWithin": ["term-authority-shell-midden"]
+        },
+        "description": "조개더미 입력어는 패총 표제어 검색으로 연결하되, 현장 원문과 지명·유적명 표기는 보존한다. 패각 집중만 확인된 층위인지, 복합 유적인지는 별도 필드에서 검토한다.",
+        "termAliasText": "조개더미",
+        "termAliasRole": ["dictionarySeeAlso", "fieldSynonym", "localUsage"],
+        "termAliasHandling": [
+          "autocompleteAccepted",
+          "preferredHeadwordTarget",
+          "keepAliasForSearch",
+          "domainScoped",
+          "periodScoped",
+          "doNotOverwriteObservedTerm"
+        ],
+        "termRelation": ["alias", "domainRestricted"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "fieldUsagePreserved",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["generalDictionaryUsage", "sourcePageLinked"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-alias-shell-midden-jogaemuji",
+        "identifier": "조개무지",
+        "shortDescription": "사전·현장 검색어: 조개무지",
+        "category": "TermAlias",
+        "relations": {
+          "liesWithin": ["term-authority-shell-midden"]
+        },
+        "description": "조개무지는 조개더미와 함께 패총 계열 검색어로 허용한다. 가져오기 때는 패총 후보로 연결하지만 패각층·조가비층 같은 층위명과는 자동 병합하지 않는다.",
+        "termAliasText": "조개무지",
+        "termAliasRole": ["dictionarySeeAlso", "fieldSynonym", "localUsage"],
+        "termAliasHandling": [
+          "autocompleteAccepted",
+          "preferredHeadwordTarget",
+          "keepAliasForSearch",
+          "domainScoped",
+          "periodScoped",
+          "doNotOverwriteObservedTerm"
+        ],
+        "termRelation": ["alias", "domainRestricted"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "fieldUsagePreserved",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["generalDictionaryUsage", "sourcePageLinked"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-authority-shell-layer",
+        "identifier": "패각층",
+        "shortDescription": "패총 내부 패각 퇴적층 권위 표제어",
+        "category": "TermAuthority",
+        "relations": {
+          "liesWithin": ["term-group-korean-archaeology"]
+        },
+        "description": "패각층은 패총 안에 포함될 수 있지만 유적 유형명이 아니라 층위·퇴적 단위로 기록한다. 순패각층, 혼토패각층, 혼패토층, 간층, 후대 교란층과의 관계를 따로 남겨야 패총의 반복 점유와 재퇴적을 추적할 수 있다.",
+        "termDictionaryDomain": ["neolithic", "generalArchaeology"],
+        "termApplicationScope": ["valueListEntry", "searchAlias", "sourceDictionaryLink", "helpText", "importMapping"],
+        "termSourcePriority": ["domainSpecialistDictionary", "generalArchaeologyDictionary", "methodologyTerm"],
+        "dictionaryEditorialRule": [
+          "koreanHeadwordPreferred",
+          "originalScriptParallel",
+          "siteTypeNameSeparated",
+          "samePointMultiPeriodLinked"
+        ],
+        "termRelation": ["preferredTerm", "alias", "partWholeRelation", "domainRestricted"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "fieldUsagePreserved",
+          "structureSubtypeSeparated",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["specialistDictionarySource", "generalDictionaryUsage", "sourcePageLinked", "valueListCandidate"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-alias-shell-layer-jogabicheung",
+        "identifier": "조가비층",
+        "shortDescription": "사전·현장 검색어: 조가비층",
+        "category": "TermAlias",
+        "relations": {
+          "liesWithin": ["term-authority-shell-layer"]
+        },
+        "description": "조가비층 입력어는 패각층 표제어로 검색되지만 패총 유적명으로 승격하지 않는다. 층위 색, 두께, 패각 밀도, 파쇄도, 재퇴적 여부는 FeatureSegment 관찰값으로 유지한다.",
+        "termAliasText": "조가비층",
+        "termAliasRole": ["dictionarySeeAlso", "fieldSynonym", "localUsage"],
+        "termAliasHandling": [
+          "autocompleteAccepted",
+          "preferredHeadwordTarget",
+          "keepAliasForSearch",
+          "domainScoped",
+          "manualReviewRequired",
+          "doNotOverwriteObservedTerm"
+        ],
+        "termRelation": ["alias", "domainRestricted"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "fieldUsagePreserved",
+          "structureSubtypeSeparated",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["generalDictionaryUsage", "sourcePageLinked", "pendingDecision"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-import-shell-layer-jogabicheung",
+        "identifier": "IMPORT-SHELL-001",
+        "shortDescription": "가져오기 입력어 조가비층의 패각층 매핑",
+        "category": "TermImportMapping",
+        "relations": {
+          "liesWithin": ["term-authority-shell-layer"]
+        },
+        "description": "기존 야장, 사진 캡션, 보고서 목록에서 조가비층으로 들어온 값은 패각층 표제어로 연결하되, 패총 유적명이나 시대 판단으로 자동 치환하지 않는다. 가져오기 뒤에는 층위 단위, 두께, 구성 패류, 후대 교란 여부를 수동 검토한다.",
+        "termImportSourceText": "조가비층",
+        "termImportAuthorityText": "패각층",
+        "termImportReportText": "패각층",
+        "termAliasHandling": [
+          "importOnly",
+          "preferredHeadwordTarget",
+          "keepAliasForSearch",
+          "manualReviewRequired",
+          "doNotOverwriteObservedTerm"
+        ],
+        "termRelation": ["alias", "domainRestricted"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "fieldUsagePreserved",
+          "structureSubtypeSeparated",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["generalDictionaryUsage", "sourcePageLinked", "pendingDecision"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-relationship-shell-midden-layer",
+        "identifier": "REL-SHELL-001",
+        "shortDescription": "패총과 패각층의 전체·부분 관계",
+        "category": "TermRelationship",
+        "relations": {
+          "liesWithin": ["term-authority-shell-midden"]
+        },
+        "description": "패총 표제어는 조개더미·조개무지 검색어를 받지만, 패각층·조가비층·순패각층·혼토패각층은 패총을 구성하는 층위 단위로 따로 남긴다. 따라서 검색은 연결하고 저장 구조는 유적-층위 관계로 분리한다.",
+        "termRelationshipSourceText": "패총",
+        "termRelationshipTargetText": "패각층; 조가비층; 순패각층; 혼토패각층",
+        "termRelationshipEvidenceText": "일반 사전 찾아가기의 조개더미·조개무지·패총 관계와 신석기 패총 방법론의 패각층·혼토패각층·후대 교란층 분리 요구",
+        "termRelation": ["partWholeRelation", "spatialRelation", "domainRestricted"],
+        "termSearchMapping": [
+          "fieldUsagePreserved",
+          "structureSubtypeSeparated",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["specialistDictionarySource", "generalDictionaryUsage", "sourcePageLinked"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-relationship-shell-midden-complex-context",
+        "identifier": "REL-SHELL-002",
+        "shortDescription": "패총 내부 유구와 후대 재점유 관계",
+        "category": "TermRelationship",
+        "relations": {
+          "liesWithin": ["term-authority-shell-midden"]
+        },
+        "description": "패총 안에서 확인되는 주거지, 노지, 무덤, 적석, 후대 재점유는 패총 이름 안에 묻지 않고 Feature 또는 FeatureSegment 관계로 연결한다. 이 관계는 패총을 단일 신석기 패각층으로 닫아 버리는 오류를 막기 위한 검증 항목이다.",
+        "termRelationshipSourceText": "패총",
+        "termRelationshipTargetText": "주거지; 노지; 무덤; 적석유구; 후대 재점유",
+        "termRelationshipEvidenceText": "신석기 패총문화 조사 원칙의 복합 유적 기록 요구와 일반 사전 패총 층관계 메모",
+        "termRelation": ["partWholeRelation", "spatialRelation", "periodRestricted", "domainRestricted"],
+        "termSearchMapping": [
+          "fieldUsagePreserved",
+          "periodScopeSet",
+          "structureSubtypeSeparated",
           "doNotMergeToSingleTerm"
         ],
         "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "pendingDecision"],

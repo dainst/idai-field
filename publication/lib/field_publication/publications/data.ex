@@ -1301,6 +1301,7 @@ defmodule FieldPublication.Publications.Data do
       relations
       |> Map.values()
       |> List.flatten()
+      |> Enum.uniq()
       |> get_preview_documents(publication)
 
     # ...then sort them into their respective relation groups, including the translated labels for those groups.

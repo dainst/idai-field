@@ -721,6 +721,90 @@
     },
     {
       "resource": {
+        "id": "term-authority-flat-kiln-pottery-tile",
+        "identifier": "평요 平窯 토기·기와",
+        "shortDescription": "토기·기와 분야 평요 표제어",
+        "category": "TermAuthority",
+        "relations": {
+          "liesWithin": ["term-group-korean-archaeology"]
+        },
+        "description": "생산유적편 일러두기는 개념 표제어가 같아도 분야가 다르면 표제어 옆에 분야를 병기한다고 설명한다. 토기·기와 분야의 평요는 자기·도기 분야 평요와 검색어를 공유하되, 저장 권위어와 적용 분야는 분리한다.",
+        "termDictionaryDomain": ["pottery", "roofTile"],
+        "termApplicationScope": ["valueListEntry", "searchAlias", "sourceDictionaryLink", "helpText"],
+        "termSourcePriority": ["domainSpecialistDictionary", "pdfCrossCheckRequired"],
+        "dictionaryEditorialRule": [
+          "koreanHeadwordPreferred",
+          "originalScriptParallel",
+          "sameHeadwordDomainSeparated",
+          "domainIndexLinked"
+        ],
+        "termRelation": ["preferredTerm", "domainRestricted"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "domainScopeSet",
+          "ambiguousSynonymFlagged",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "valueListCandidate"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-authority-flat-kiln-porcelain-earthenware",
+        "identifier": "평요 平窯 자기·도기",
+        "shortDescription": "자기·도기 분야 평요 표제어",
+        "category": "TermAuthority",
+        "relations": {
+          "liesWithin": ["term-group-korean-archaeology"]
+        },
+        "description": "같은 평요라는 입력어라도 자기·도기 분야에서는 토기·기와 분야와 다른 생산기술 맥락으로 쓰일 수 있으므로, 자동완성은 공유하되 분야 범위와 보고서 적용 범위는 따로 둔다.",
+        "termDictionaryDomain": ["porcelain", "earthenware"],
+        "termApplicationScope": ["valueListEntry", "searchAlias", "sourceDictionaryLink", "helpText"],
+        "termSourcePriority": ["domainSpecialistDictionary", "pdfCrossCheckRequired"],
+        "dictionaryEditorialRule": [
+          "koreanHeadwordPreferred",
+          "originalScriptParallel",
+          "sameHeadwordDomainSeparated",
+          "domainIndexLinked"
+        ],
+        "termRelation": ["preferredTerm", "domainRestricted"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "domainScopeSet",
+          "ambiguousSynonymFlagged",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "valueListCandidate"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-relationship-flat-kiln-domain-split",
+        "identifier": "REL-KILN-DOMAIN-001",
+        "shortDescription": "평요 표제어의 분야 분리 관계",
+        "category": "TermRelationship",
+        "relations": {
+          "liesWithin": ["term-authority-flat-kiln-pottery-tile"]
+        },
+        "description": "생산유적편은 평요를 토기·기와와 자기·도기 분야로 나누어 예시한다. 이 관계는 같은 한글·한자 표기를 하나로 병합하는 규칙이 아니라, 분야별 표제어를 검색으로 연결하되 별도 권위어로 유지하는 검토 기록이다.",
+        "termRelationshipSourceText": "평요 平窯 토기·기와",
+        "termRelationshipTargetText": "평요 平窯 자기·도기",
+        "termRelationshipEvidenceText": "생산유적편 일러두기 PDF 9쪽의 같은 개념 표제어 분야 병기 예시",
+        "termRelation": ["domainRestricted"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "domainScopeSet",
+          "ambiguousSynonymFlagged",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "valueListCandidate"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
         "id": "term-authority-pottery-workshop",
         "identifier": "토기 공방",
         "shortDescription": "수비장·건조장 계열 공방 권위 표제어",

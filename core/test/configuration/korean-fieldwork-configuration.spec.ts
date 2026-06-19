@@ -114,6 +114,16 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('한뎃가마');
         expect(documentsById['term-alias-open-kiln-handaetgama'].resource.termAliasHandling)
             .toContain('doNotOverwriteObservedTerm');
+        expect(documentsById['term-authority-flat-kiln-pottery-tile'].resource.termDictionaryDomain)
+            .toEqual(['pottery', 'roofTile']);
+        expect(documentsById['term-authority-flat-kiln-pottery-tile'].resource.dictionaryEditorialRule)
+            .toContain('sameHeadwordDomainSeparated');
+        expect(documentsById['term-authority-flat-kiln-porcelain-earthenware'].resource.termDictionaryDomain)
+            .toEqual(['porcelain', 'earthenware']);
+        expect(documentsById['term-relationship-flat-kiln-domain-split'].resource.termRelationshipSourceText)
+            .toBe('평요 平窯 토기·기와');
+        expect(documentsById['term-relationship-flat-kiln-domain-split'].resource.termSearchMapping)
+            .toContain('doNotMergeToSingleTerm');
         expect(documentsById['term-authority-block-sampling'].resource.termDictionaryDomain)
             .toContain('neolithic');
         expect(documentsById['term-alias-block-sampling-bulk'].resource.termAliasText)

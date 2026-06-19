@@ -653,6 +653,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('partialInformationCaution');
         expect(documentsById['feature-tomb-mound-001'].resource.moundFillSubdivisionRecord)
             .toContain('labMergePossible');
+        expect(documentsById['feature-tomb-mound-001'].resource.tombMoundOverlapSequence)
+            .toContain('latestBurialExposedFirst');
+        expect(documentsById['feature-tomb-mound-001'].resource.tombMoundOverlapSequence)
+            .toContain('sameOrderPhotoSequence');
+        expect(documentsById['feature-tomb-mound-001'].resource.tombMoundOverlapSequence)
+            .toContain('sharedDitchSequenceChecked');
         expect(documentsById['feature-tomb-mound-001'].resource.stoneCistWallPackingRecord)
             .toContain('plasterClayRemaining');
         expect(documentsById['feature-tomb-mound-001'].resource.tombInteriorRecoveryRecord)
@@ -1376,6 +1382,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.fields.tombSurveyPurpose.inputType).toBe('checkboxes');
         expect(featureForm.fields.moundTrenchInvestigation.inputType).toBe('checkboxes');
         expect(featureForm.fields.moundFillSubdivisionRecord.inputType).toBe('checkboxes');
+        expect(featureForm.fields.tombMoundOverlapSequence.inputType).toBe('checkboxes');
         expect(featureForm.fields.stoneCistWallPackingRecord.inputType).toBe('checkboxes');
         expect(featureForm.fields.tombInteriorRecoveryRecord.inputType).toBe('checkboxes');
         expect(featureForm.fields.stoneChamberTombTypology.inputType).toBe('checkboxes');
@@ -1791,6 +1798,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-moundTrenchInvestigation');
         expect(featureForm.valuelists.moundFillSubdivisionRecord)
             .toBe('KoreanFieldwork-moundFillSubdivisionRecord');
+        expect(featureForm.valuelists.tombMoundOverlapSequence)
+            .toBe('KoreanFieldwork-tombMoundOverlapSequence');
         expect(featureForm.valuelists.stoneCistWallPackingRecord)
             .toBe('KoreanFieldwork-stoneCistWallPackingRecord');
         expect(featureForm.valuelists.tombInteriorRecoveryRecord)
@@ -2302,6 +2311,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Mound trench investigation');
         expect(languages.en.categories.Feature.fields.moundFillSubdivisionRecord.label)
             .toBe('Mound fill subdivision record');
+        expect(languages.en.categories.Feature.fields.tombMoundOverlapSequence.label)
+            .toBe('Tomb mound overlap sequence');
         expect(languages.en.categories.Feature.fields.stoneCistWallPackingRecord.label)
             .toBe('Stone cist wall and packing record');
         expect(languages.en.categories.Feature.fields.tombInteriorRecoveryRecord.label)
@@ -2911,6 +2922,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-moundFillSubdivisionRecord']
             .values.fieldSubdivisionKept.label)
             .toBe('Field subdivision kept');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-tombMoundOverlapSequence']
+            .values.latestBurialExposedFirst.label)
+            .toBe('Latest burial exposed first');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-tombMoundOverlapSequence']
+            .values.sharedDitchSequenceChecked.label)
+            .toBe('Shared ditch sequence checked');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-stoneCistWallPackingRecord']
             .values.plasterClayRemaining.label)
             .toBe('Plaster clay remaining');
@@ -3471,6 +3488,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-moundTrenchInvestigation']
             .values.partialInformationCaution.label)
             .toBe('부분정보 주의');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-tombMoundOverlapSequence']
+            .values.sameOrderPhotoSequence.label)
+            .toBe('동일 순서 반복 촬영');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-tombMoundOverlapSequence']
+            .values.sharedDitchSequenceChecked.label)
+            .toBe('공유 주구 선후 확인');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-tombInteriorRecoveryRecord']
             .values.organicDryingAvoided.label)
             .toBe('유기물 건조 방지');

@@ -1670,6 +1670,24 @@
     },
     "description": "봉분 성토재를 현장에서 세분해 성토 단위, 운반 단위, 구획성토와 성토공정을 되살릴 수 있게 하기 위한 목록"
   },
+  "KoreanFieldwork-tombMoundOverlapSequence": {
+    "values": {
+      "overlapMoundGroupRecorded": { "label": "중복 봉분군 기록" },
+      "adjacentMoundRelationChecked": { "label": "연접 봉분 관계 확인" },
+      "pairedMoundRelationChecked": { "label": "표형 봉분 관계 확인" },
+      "burialFacilityAxisMapped": { "label": "매장주체부 축선 표시" },
+      "moundCenterOffsetRecorded": { "label": "봉분 중심 어긋남 기록" },
+      "relationshipTrenchRelocated": { "label": "관계 확인 트렌치 조정" },
+      "latestBurialExposedFirst": { "label": "최신 매장시설 우선 노출" },
+      "sameOrderPhotoSequence": { "label": "동일 순서 반복 촬영" },
+      "burialMoundRelationRecorded": { "label": "매장시설·봉분 관계 기록" },
+      "ritualDepositStageRecorded": { "label": "제사·매납 축조단계 기록" },
+      "sharedDitchSequenceChecked": { "label": "공유 주구 선후 확인" },
+      "moundFacilityRelationUnresolved": { "label": "봉분·시설 관계 미해결" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "연접·표형·중복 봉분에서 매장주체부 축선, 중심 어긋남, 관계 확인 트렌치, 최신 매장시설 우선 노출, 반복 촬영 순서, 제사·매납 축조단계, 공유 주구 선후관계와 미해결 관계를 기록하기 위한 목록"
+  },
   "KoreanFieldwork-stoneCistWallPackingRecord": {
     "values": {
       "capstoneWorkedDegree": { "label": "개석 가공도" },

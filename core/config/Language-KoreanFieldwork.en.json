@@ -614,6 +614,9 @@
         "moundFillSubdivisionRecord": {
           "label": "Mound fill subdivision record"
         },
+        "tombMoundOverlapSequence": {
+          "label": "Tomb mound overlap sequence"
+        },
         "stoneCistWallPackingRecord": {
           "label": "Stone cist wall and packing record"
         },

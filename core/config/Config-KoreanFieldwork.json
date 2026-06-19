@@ -1633,6 +1633,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "tombMoundOverlapSequence": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "stoneCistWallPackingRecord": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1870,6 +1874,7 @@
         "tombSurveyPurpose": "KoreanFieldwork-tombSurveyPurpose",
         "moundTrenchInvestigation": "KoreanFieldwork-moundTrenchInvestigation",
         "moundFillSubdivisionRecord": "KoreanFieldwork-moundFillSubdivisionRecord",
+        "tombMoundOverlapSequence": "KoreanFieldwork-tombMoundOverlapSequence",
         "stoneCistWallPackingRecord": "KoreanFieldwork-stoneCistWallPackingRecord",
         "tombInteriorRecoveryRecord": "KoreanFieldwork-tombInteriorRecoveryRecord",
         "stoneChamberTombTypology": "KoreanFieldwork-stoneChamberTombTypology",
@@ -1976,6 +1981,7 @@
             "tombSurveyPurpose",
             "moundTrenchInvestigation",
             "moundFillSubdivisionRecord",
+            "tombMoundOverlapSequence",
             "stoneCistWallPackingRecord",
             "tombInteriorRecoveryRecord",
             "stoneChamberTombTypology",

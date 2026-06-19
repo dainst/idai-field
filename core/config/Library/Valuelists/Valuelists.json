@@ -33416,6 +33416,40 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-tombMoundOverlapSequence": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "overlapMoundGroupRecorded": {},
+      "adjacentMoundRelationChecked": {},
+      "pairedMoundRelationChecked": {},
+      "burialFacilityAxisMapped": {},
+      "moundCenterOffsetRecorded": {},
+      "relationshipTrenchRelocated": {},
+      "latestBurialExposedFirst": {},
+      "sameOrderPhotoSequence": {},
+      "burialMoundRelationRecorded": {},
+      "ritualDepositStageRecorded": {},
+      "sharedDitchSequenceChecked": {},
+      "moundFacilityRelationUnresolved": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "overlapMoundGroupRecorded",
+      "adjacentMoundRelationChecked",
+      "pairedMoundRelationChecked",
+      "burialFacilityAxisMapped",
+      "moundCenterOffsetRecorded",
+      "relationshipTrenchRelocated",
+      "latestBurialExposedFirst",
+      "sameOrderPhotoSequence",
+      "burialMoundRelationRecorded",
+      "ritualDepositStageRecorded",
+      "sharedDitchSequenceChecked",
+      "moundFacilityRelationUnresolved",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-stoneCistWallPackingRecord": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

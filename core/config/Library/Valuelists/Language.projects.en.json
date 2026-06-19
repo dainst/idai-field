@@ -13424,6 +13424,24 @@
     },
     "description": "Korean mound-fill checks for preserving field subdivisions so fill units, transport units, compartment fills, and construction processes can be reviewed later"
   },
+  "KoreanFieldwork-tombMoundOverlapSequence": {
+    "values": {
+      "overlapMoundGroupRecorded": { "label": "Overlap mound group recorded" },
+      "adjacentMoundRelationChecked": { "label": "Adjacent mound relation checked" },
+      "pairedMoundRelationChecked": { "label": "Paired mound relation checked" },
+      "burialFacilityAxisMapped": { "label": "Burial facility axis mapped" },
+      "moundCenterOffsetRecorded": { "label": "Mound center offset recorded" },
+      "relationshipTrenchRelocated": { "label": "Relationship trench relocated" },
+      "latestBurialExposedFirst": { "label": "Latest burial exposed first" },
+      "sameOrderPhotoSequence": { "label": "Same-order photo sequence" },
+      "burialMoundRelationRecorded": { "label": "Burial and mound relation recorded" },
+      "ritualDepositStageRecorded": { "label": "Ritual deposit stage recorded" },
+      "sharedDitchSequenceChecked": { "label": "Shared ditch sequence checked" },
+      "moundFacilityRelationUnresolved": { "label": "Mound-facility relation unresolved" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean tomb-mound sequence checks for adjacent, paired, or overlapping mounds, burial-facility axes, trench relocation, latest-burial-first excavation, repeated photo order, deposit stages, shared ditches, and unresolved relationships"
+  },
   "KoreanFieldwork-stoneCistWallPackingRecord": {
     "values": {
       "capstoneWorkedDegree": { "label": "Capstone worked degree" },

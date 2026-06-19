@@ -614,6 +614,9 @@
         "moundFillSubdivisionRecord": {
           "label": "봉분 성토 세분"
         },
+        "tombMoundOverlapSequence": {
+          "label": "연접 봉분 선후조사"
+        },
         "stoneCistWallPackingRecord": {
           "label": "석곽 벽체·충전 기록"
         },

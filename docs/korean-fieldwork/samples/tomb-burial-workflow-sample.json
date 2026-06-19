@@ -133,6 +133,15 @@
           "fillExtentRecorded",
           "labMergePossible"
         ],
+        "tombMoundOverlapSequence": [
+          "adjacentMoundRelationChecked",
+          "burialFacilityAxisMapped",
+          "relationshipTrenchRelocated",
+          "latestBurialExposedFirst",
+          "sameOrderPhotoSequence",
+          "burialMoundRelationRecorded",
+          "sharedDitchSequenceChecked"
+        ],
         "stoneCistWallPackingRecord": [
           "capstoneWorkedDegree",
           "stoneMaterialIdentified",

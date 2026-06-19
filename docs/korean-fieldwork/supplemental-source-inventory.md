@@ -70,6 +70,8 @@ C:\Users\nuri9\AppData\Local\Temp\codex-idai-field-new-pdf-text\methods-all
 
 같은 재독해에서 작업일의 현장 보호·보안은 `KoreanFieldwork-siteProtectionSecurity`로 분리했다. 허가서 현장 비치, 착수신고 안내, 보안, 지역주민·파출소·면사무소 통보, 유적보호 주의사항, 출입·경계 통제, 기상 대비, 야간방범, 임시유물·기록물 보관, 미작성자료 즉시 조치, 복사본·자료 인수인계 준비는 `Project`의 허가조건·보존조치 결정값이 아니라 `Operation`의 당일 실행 확인값으로 둔다.
 
+제9권 연구방법론의 국내 조사 제도 비판은 `KoreanFieldwork-koreanArchaeologyInstitutionalRisk`로 `Project` 화면에 배치했다. 개발 절차화, 구제발굴 일정 압박, 경쟁입찰, 전문성 약화, 지도위원회 폐지 영향, 학술발굴 부재, 과학분석 배제, 보고서 품질 위험, 발굴·연구 단절, 기관 역할 불명확은 추상 의견이 아니라 조사자료 수집·분석·해석·공개 사슬을 끊는 사업 조건으로 기록한다.
+
 유물 정리·보관 장의 공통 축은 `KoreanFieldwork-artifactHandlingWorkflow`, `KoreanFieldwork-artifactQuantityBasis`, `KoreanFieldwork-storageEnvironmentControl`로 `Find` 화면에 배치해 현장수습부터 이관까지의 절차, 건·점수 산정 근거, 재질별 수장환경을 같은 유물 카드에서 추적한다.
 
 보존과학 연구 성과 자료의 공통 축은 `KoreanFieldwork-conservationScienceRequest`, `KoreanFieldwork-waterloggedWoodEmergencyStorage`, `KoreanFieldwork-lacquerConservationRisk`, `KoreanFieldwork-metalAnalysisRequest`, `KoreanFieldwork-ceramicConservationState`, `KoreanFieldwork-paperTextileEmergencyRecovery`, `KoreanFieldwork-conservationTreatmentPrincipleReview`, `KoreanFieldwork-humanDnaFieldControl`, `KoreanFieldwork-organicSoilAnalysisSample`, `KoreanFieldwork-destructiveAnalysisDecision`로 `Find`와 `Sample` 화면에 나누어 배치했다. 보존과학은 실내 후처리가 아니라 노출·수습·임시보관·분석승인 단계에서 해석 가능성을 바꾸므로, 유물 카드와 시료 카드가 서로 끊기지 않게 관리한다. 지류·직물은 발견환경 유지, 공기·빛·습도 변화, 취급 오염을 먼저 보고, 보존처리 원칙은 원형·증거·가역성 훼손 여부를 별도 검토값으로 남긴다.

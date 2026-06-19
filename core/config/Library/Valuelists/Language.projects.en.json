@@ -17280,6 +17280,24 @@
     },
     "description": "Korean fieldwork overseas heritage risk checks for local law, permits, partner institutions, export restrictions, conservation, disclosure, development delay, safety, and rescue capacity"
   },
+  "KoreanFieldwork-koreanArchaeologyInstitutionalRisk": {
+    "values": {
+      "developmentProcedureDominance": { "label": "Development procedure dominance" },
+      "rescueSchedulePressure": { "label": "Rescue schedule pressure" },
+      "investigatorExpertiseWeakening": { "label": "Investigator expertise weakening" },
+      "competitiveBiddingRisk": { "label": "Competitive bidding risk" },
+      "regionalRestrictionRemoved": { "label": "Regional restriction removed" },
+      "advisoryCommitteeAbolished": { "label": "Advisory committee abolished" },
+      "academicExcavationAbsent": { "label": "Academic excavation absent" },
+      "scientificAnalysisExcluded": { "label": "Scientific analysis excluded" },
+      "reportQualityRisk": { "label": "Report quality risk" },
+      "excavationResearchSeparation": { "label": "Excavation/research separation" },
+      "dataPublicUseDisconnected": { "label": "Data public use disconnected" },
+      "institutionalRoleUnclear": { "label": "Institutional role unclear" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean fieldwork project checks for institutional conditions that affect research quality, including rescue schedule pressure, bidding risk, weakened expertise, analysis exclusion, weak reports, and unclear institutional roles"
+  },
   "KoreanFieldwork-researchRoleAssignment": {
     "values": {
       "excavationInstitution": { "label": "Excavation institution" },

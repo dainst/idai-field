@@ -38938,6 +38938,40 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-koreanArchaeologyInstitutionalRisk": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "developmentProcedureDominance": {},
+      "rescueSchedulePressure": {},
+      "investigatorExpertiseWeakening": {},
+      "competitiveBiddingRisk": {},
+      "regionalRestrictionRemoved": {},
+      "advisoryCommitteeAbolished": {},
+      "academicExcavationAbsent": {},
+      "scientificAnalysisExcluded": {},
+      "reportQualityRisk": {},
+      "excavationResearchSeparation": {},
+      "dataPublicUseDisconnected": {},
+      "institutionalRoleUnclear": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "developmentProcedureDominance",
+      "rescueSchedulePressure",
+      "investigatorExpertiseWeakening",
+      "competitiveBiddingRisk",
+      "regionalRestrictionRemoved",
+      "advisoryCommitteeAbolished",
+      "academicExcavationAbsent",
+      "scientificAnalysisExcluded",
+      "reportQualityRisk",
+      "excavationResearchSeparation",
+      "dataPublicUseDisconnected",
+      "institutionalRoleUnclear",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-researchRoleAssignment": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

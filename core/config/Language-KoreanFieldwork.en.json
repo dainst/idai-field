@@ -105,6 +105,9 @@
         "overseasHeritageRisk": {
           "label": "Overseas heritage risk"
         },
+        "koreanArchaeologyInstitutionalRisk": {
+          "label": "Korean archaeology institutional risk"
+        },
         "researchRoleAssignment": {
           "label": "Research role assignment"
         },

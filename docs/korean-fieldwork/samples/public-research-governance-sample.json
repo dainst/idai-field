@@ -6,7 +6,8 @@
     "현장 공개·교육 프로그램이 대상, 반복 운영, 질문·반응, 협력기관, 모의발굴·복제자료 사용과 연결되는가.",
     "사진·3D 도면 공개 후보가 권리, 라이선스, 편집본 이력, 민감정보 가림을 원자료 보존과 함께 남기는가.",
     "실험고고학 기록이 단회 복원품 제작이 아니라 질문, 가설, 변수, 대조군, 반복, 실패값, 외부검토를 갖는가.",
-    "해외조사와 연구 역할 분담이 현지 법제, 허가, 반출 제한, 보존·공개, 분석·보존·보고 책임으로 추적되는가."
+    "해외조사와 연구 역할 분담이 현지 법제, 허가, 반출 제한, 보존·공개, 분석·보존·보고 책임으로 추적되는가.",
+    "국내 구제발굴의 일정 압박, 경쟁입찰, 과학분석 배제, 보고서 품질 위험이 연구 역할과 과정 공백으로 함께 기록되는가."
   ],
   "documents": [
     {
@@ -50,6 +51,14 @@
           "developmentDelayRisk",
           "rescueCapacityChecked",
           "publicCommunicationPlan"
+        ],
+        "koreanArchaeologyInstitutionalRisk": [
+          "rescueSchedulePressure",
+          "competitiveBiddingRisk",
+          "scientificAnalysisExcluded",
+          "reportQualityRisk",
+          "excavationResearchSeparation",
+          "institutionalRoleUnclear"
         ],
         "researchRoleAssignment": [
           "excavationInstitution",

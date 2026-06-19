@@ -105,6 +105,9 @@
         "overseasHeritageRisk": {
           "label": "해외조사 문화재 리스크"
         },
+        "koreanArchaeologyInstitutionalRisk": {
+          "label": "한국고고학 제도 리스크"
+        },
         "researchRoleAssignment": {
           "label": "연구 역할 분담"
         },

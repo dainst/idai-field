@@ -67,6 +67,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "koreanArchaeologyInstitutionalRisk": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "researchRoleAssignment": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -97,6 +101,7 @@
         "publicEngagementProgram": "KoreanFieldwork-publicEngagementProgram",
         "accessControlTag": "KoreanFieldwork-accessControlTag",
         "overseasHeritageRisk": "KoreanFieldwork-overseasHeritageRisk",
+        "koreanArchaeologyInstitutionalRisk": "KoreanFieldwork-koreanArchaeologyInstitutionalRisk",
         "researchRoleAssignment": "KoreanFieldwork-researchRoleAssignment",
         "researchProcessBalance": "KoreanFieldwork-researchProcessBalance",
         "verificationState": "KoreanFieldwork-verificationState"
@@ -133,6 +138,7 @@
             "publicEngagementProgram",
             "accessControlTag",
             "overseasHeritageRisk",
+            "koreanArchaeologyInstitutionalRisk",
             "researchRoleAssignment",
             "researchProcessBalance",
             "verificationState"

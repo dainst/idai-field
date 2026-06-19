@@ -185,6 +185,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('lootingRisk');
         expect(documentsById['project-public-research-001'].resource.overseasHeritageRisk)
             .toContain('exportRestriction');
+        expect(documentsById['project-public-research-001'].resource.koreanArchaeologyInstitutionalRisk)
+            .toContain('scientificAnalysisExcluded');
         expect(documentsById['project-public-research-001'].resource.researchProcessBalance)
             .toContain('interpretationImpactReviewed');
         expect(documentsById['op-public-briefing-001'].resource.publicEngagementProgram)
@@ -950,6 +952,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(projectForm.fields.publicEngagementProgram.inputType).toBe('checkboxes');
         expect(projectForm.fields.accessControlTag.inputType).toBe('checkboxes');
         expect(projectForm.fields.overseasHeritageRisk.inputType).toBe('checkboxes');
+        expect(projectForm.fields.koreanArchaeologyInstitutionalRisk.inputType).toBe('checkboxes');
         expect(projectForm.fields.researchRoleAssignment.inputType).toBe('checkboxes');
         expect(projectForm.fields.researchProcessBalance.inputType).toBe('checkboxes');
         expect(operationForm.fields.expertReviewMeeting.inputType).toBe('checkboxes');
@@ -1210,6 +1213,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-accessControlTag');
         expect(projectForm.valuelists.overseasHeritageRisk)
             .toBe('KoreanFieldwork-overseasHeritageRisk');
+        expect(projectForm.valuelists.koreanArchaeologyInstitutionalRisk)
+            .toBe('KoreanFieldwork-koreanArchaeologyInstitutionalRisk');
         expect(projectForm.valuelists.researchRoleAssignment)
             .toBe('KoreanFieldwork-researchRoleAssignment');
         expect(projectForm.valuelists.researchProcessBalance)
@@ -1645,6 +1650,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Public archaeology output');
         expect(languages.en.categories.Project.fields.overseasHeritageRisk.label)
             .toBe('Overseas heritage risk');
+        expect(languages.en.categories.Project.fields.koreanArchaeologyInstitutionalRisk.label)
+            .toBe('Korean archaeology institutional risk');
         expect(languages.en.categories.Project.fields.researchProcessBalance.label)
             .toBe('Research process balance');
         expect(languages.en.categories.Operation.fields.publicEngagementProgram.label)
@@ -2589,6 +2596,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-overseasHeritageRisk']
             .values.exportRestriction.label)
             .toBe('Export restriction');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-koreanArchaeologyInstitutionalRisk']
+            .values.scientificAnalysisExcluded.label)
+            .toBe('과학분석 배제');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-researchRoleAssignment']
             .values.reviewResponsibility.label)
             .toBe('Review responsibility');

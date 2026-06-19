@@ -5526,6 +5526,24 @@
     },
     "description": "해외 개발사업과 해외조사에서 현지 법제, 허가, 협력기관, 반출 제한, 보존·공개, 일정·안전 위험을 프로젝트 단계에서 관리하기 위한 목록"
   },
+  "KoreanFieldwork-koreanArchaeologyInstitutionalRisk": {
+    "values": {
+      "developmentProcedureDominance": { "label": "개발 절차화 우세" },
+      "rescueSchedulePressure": { "label": "구제발굴 일정 압박" },
+      "investigatorExpertiseWeakening": { "label": "조사원 전문성 약화" },
+      "competitiveBiddingRisk": { "label": "경쟁입찰 리스크" },
+      "regionalRestrictionRemoved": { "label": "지역제한 철폐 영향" },
+      "advisoryCommitteeAbolished": { "label": "지도위원회 폐지 영향" },
+      "academicExcavationAbsent": { "label": "학술발굴 부재" },
+      "scientificAnalysisExcluded": { "label": "과학분석 배제" },
+      "reportQualityRisk": { "label": "보고서 부실 위험" },
+      "excavationResearchSeparation": { "label": "발굴·연구 단절" },
+      "dataPublicUseDisconnected": { "label": "자료 공공활용 단절" },
+      "institutionalRoleUnclear": { "label": "기관 역할 불명확" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "국내 구제발굴과 조사사업에서 개발 절차화, 일정 압박, 경쟁입찰, 전문성 약화, 분석 배제, 보고서 부실, 기관 역할 불명확처럼 조사 품질을 흔드는 제도적 조건을 프로젝트 단위로 기록하기 위한 목록"
+  },
   "KoreanFieldwork-researchRoleAssignment": {
     "values": {
       "excavationInstitution": { "label": "발굴기관" },

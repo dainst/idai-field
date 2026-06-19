@@ -1,0 +1,351 @@
+{
+  "title": "Korean charcoal kiln and archaeomagnetic workflow sample",
+  "purpose": "Validate that side-opening charcoal kilns and archaeomagnetic samples are recorded as linked field evidence from feature identification through sampling orientation, result quality, and chronology interpretation.",
+  "validationQuestions": [
+    "측구부탄요 후보가 낮은 피열흔 때문에 성격불명 소토유구로 접히지 않고, 측구식·무측구식·백탄·흑탄·겸용 가능성과 지형 조건으로 검토되는가.",
+    "소성부, 연소부, 분구, 연도, 측구, 측구폐쇄석, 작업장, 배수구, 주혈, 천정부편 같은 구조 부위가 하나의 평면명으로 합쳐지지 않는가.",
+    "장축·단축 토층둑, 중앙 트렌치 보류, 폐쇄석 원위치, 피열색 도면, 도판 계획 같은 조사 제어가 발굴 중 기록되는가.",
+    "고고지자기 시료가 정방위 큐브, 석고 고정, pitch·dip·strike, 자북/진북 보정, NRM·D/I/L95/K·제외시료, 표준곡선 지역차와 함께 추적되는가."
+  ],
+  "documents": [
+    {
+      "resource": {
+        "id": "op-charcoal-kiln-001",
+        "identifier": "CHAR-OP-001",
+        "shortDescription": "측구부탄요 조사·시료 작업",
+        "category": "Operation",
+        "relations": {},
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "crossReviewNeeded"
+        ],
+        "recordCreationTiming": "duringFieldwork",
+        "dailyLogContent": [
+          "workDateWeather",
+          "workArea",
+          "photoDrawingNumbers",
+          "findSampleCollection"
+        ],
+        "dailyLogReview": [
+          "sameDayWritten",
+          "photoDrawingCrossChecked",
+          "sampleListCrossChecked",
+          "reviewerChecked"
+        ],
+        "reportCrossCheck": [
+          "manuscript",
+          "drawingRegister",
+          "photoRegister",
+          "sampleRegister",
+          "sourceMediaBackup"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "feature-charcoal-kiln-001",
+        "identifier": "CHAR-FEAT-001",
+        "shortDescription": "구릉 사면 측구부탄요 후보",
+        "category": "Feature",
+        "relations": {
+          "isRecordedIn": ["op-charcoal-kiln-001"]
+        },
+        "description": "구릉 사면 생토층을 파고 만든 낮은 피열흔의 탄요 후보. 측구, 측면작업장, 외부배수구, 폐쇄석을 먼저 보호하고 중앙 트렌치를 보류한 상태에서 구조와 시료 계획을 분리해 남긴다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "crossReviewNeeded"
+        ],
+        "fieldOnlyMissingCheck": [
+          "featureOutline",
+          "stratigraphicBoundary",
+          "photoAngleAndScale",
+          "drawingLineReason",
+          "spatialLocation",
+          "elevationRecorded",
+          "sameDayReview",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "charcoalKilnIdentification": [
+          "charcoalKilnCandidate",
+          "sideOpeningCharcoalKilnCandidate",
+          "whiteCharcoalKilnCandidate",
+          "blackCharcoalKilnCandidate",
+          "dualUseKilnCandidate",
+          "undergroundKiln",
+          "semiUndergroundKiln",
+          "contourParallelLongAxis",
+          "slopeFootLocation",
+          "lowFiringTraceCaution",
+          "pendingDecision"
+        ],
+        "charcoalKilnStructurePart": [
+          "firingPart",
+          "combustionPart",
+          "stokingMouth",
+          "stokingMouthClosureStone",
+          "fluePart",
+          "chimneyPart",
+          "frontWorkingArea",
+          "sideOpening",
+          "sideOpeningPartitionWall",
+          "sideOpeningClosureStone",
+          "sideWorkingArea",
+          "externalDrainage",
+          "internalDrainage",
+          "posthole",
+          "ceilingFragment",
+          "wallFragment",
+          "pendingDecision"
+        ],
+        "charcoalKilnExcavationControl": [
+          "shallowFeatureLineCaution",
+          "externalDrainageProtected",
+          "longAxisBaulk",
+          "shortAxisBaulkThreePlus",
+          "shortBaulkThroughPartition",
+          "shortBaulkThroughSideOpening",
+          "shortBaulkThroughFrontWorkArea",
+          "centralTrenchDeferred",
+          "flueLocationMarkedBeforeTrench",
+          "closureStonesLeftInPlace",
+          "originalPositionPhoto",
+          "overheadPhotoAttempted",
+          "colorDrawingPlanned",
+          "colorPlatePlanned",
+          "pendingDecision"
+        ],
+        "charcoalKilnTraceInterpretation": [
+          "heatColorMapped",
+          "redBrownHeatColor",
+          "grayBlueHardening",
+          "ceilingGrassTrace",
+          "ceilingWoodTrace",
+          "diggingToolTrace",
+          "charcoalLayerRecorded",
+          "charcoalRemovalRepairTrace",
+          "sideOpeningCountRecorded",
+          "sideOpeningSpacingMeasured",
+          "sideOpeningFloorHeightCompared",
+          "associatedIronProductionCandidate",
+          "tombFuelCandidate",
+          "domesticFuelCandidate",
+          "distributionCandidate",
+          "preservationMoveCandidate",
+          "pendingDecision"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "sample-charcoal-kiln-carbon-001",
+        "identifier": "CHAR-SAMP-001",
+        "shortDescription": "목탄·주혈 탄화목 분석 시료",
+        "category": "Sample",
+        "relations": {
+          "isRecordedIn": ["op-charcoal-kiln-001"],
+          "liesWithin": ["feature-charcoal-kiln-001"]
+        },
+        "description": "소성부 목탄층과 주혈 탄화목을 수종분석, C14, OSL, 소토 분석과 함께 비교하기 위한 시료 묶음. 목탄 생산 목적과 제철·분묘·생활 연료 후보를 단독 확정하지 않도록 남긴다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "researchQuestionFit",
+          "observationInterpretationSeparated"
+        ],
+        "fieldOnlyMissingCheck": [
+          "samplePointMapped",
+          "sampleConditionControlled",
+          "spatialLocation",
+          "elevationRecorded",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "samplePurpose": [
+          "absoluteDating",
+          "paleoenvironment",
+          "contaminationControl"
+        ],
+        "sampleCollectionHandling": [
+          "immediateCollection",
+          "charcoalWoodImmediate",
+          "lightShielded",
+          "dedicatedSamplingTool",
+          "avoidCrushing",
+          "contextMapLinked",
+          "pendingDecision"
+        ],
+        "charcoalKilnAnalysisPlan": [
+          "charcoalSample",
+          "postholeCarbonizedWood",
+          "woodSpeciesAnalysis",
+          "c14Dating",
+          "archaeomagneticSample",
+          "oslSample",
+          "heatedSoilSample",
+          "sampleByPart",
+          "samplePositionMapped",
+          "datingMethodsCompared",
+          "fuelUseQuestionRecorded",
+          "pendingDecision"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "sample-charcoal-kiln-archmag-001",
+        "identifier": "CHAR-ARCHMAG-001",
+        "shortDescription": "측구부탄요 고고지자기 시료",
+        "category": "Sample",
+        "relations": {
+          "isRecordedIn": ["op-charcoal-kiln-001"],
+          "liesWithin": ["feature-charcoal-kiln-001"]
+        },
+        "description": "소성부의 잘 구워진 원위치 소토면에서 정방위로 채취한 고고지자기 시료 묶음. 채취 방향, 보정 기준, 제외시료와 결과 품질, C14·OSL·층위 대조를 같은 기록에 이어 붙인다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "criteriaConsistency",
+          "researchQuestionFit",
+          "crossReviewNeeded"
+        ],
+        "fieldOnlyMissingCheck": [
+          "samplePointMapped",
+          "sampleConditionControlled",
+          "spatialLocation",
+          "elevationRecorded",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "samplePurpose": [
+          "absoluteDating",
+          "contaminationControl"
+        ],
+        "sampleCollectionHandling": [
+          "immediateCollection",
+          "dedicatedSamplingTool",
+          "contextMapLinked",
+          "pendingDecision"
+        ],
+        "archaeomagneticSampleContext": [
+          "sideOpeningCharcoalKiln",
+          "ironFeature",
+          "burnedSoilFeature",
+          "finalFiringSurfaceCandidate",
+          "specialistConsulted",
+          "destructiveSamplingScopeRecorded",
+          "pendingDecision"
+        ],
+        "archaeomagneticSamplingWorkflow": [
+          "wellFiredSurfaceSelected",
+          "orientedSample",
+          "plasticCube",
+          "gypsumFixed",
+          "sampleNumberMarked",
+          "strikeLineMarked",
+          "sealedBag",
+          "aboutFifteenSamples",
+          "samplePositionMapped",
+          "preSamplingPhoto",
+          "sampleSizeRecorded",
+          "labHandover",
+          "resultReceived",
+          "reportLinked",
+          "pendingDecision"
+        ],
+        "archaeomagneticOrientationRecord": [
+          "pitchRecorded",
+          "dipRecorded",
+          "strikeRecorded",
+          "clinometerMeasured",
+          "magneticNorthBasis",
+          "trueNorthBasis",
+          "currentDeclinationRecorded",
+          "declinationSourceRecorded",
+          "trueNorthCorrectionApplied",
+          "directionBasisConsistent",
+          "pendingDecision"
+        ],
+        "archaeomagneticResultQuality": [
+          "nrmMeasured",
+          "afDemagnetization",
+          "optimumDemagStep",
+          "declinationDRecorded",
+          "inclinationIRecorded",
+          "l95Recorded",
+          "kRecorded",
+          "meanMagnetizationRecorded",
+          "acceptedTotalRatioRecorded",
+          "dfRecorded",
+          "excludedSampleRecorded",
+          "exclusionReasonRecorded",
+          "l95UnderThree",
+          "kOverFiveHundred",
+          "disturbancePossible",
+          "pendingDecision"
+        ],
+        "archaeomagneticChronologyInterpretation": [
+          "estimatedDateRecorded",
+          "errorRangeRecorded",
+          "koreanCurveCompared",
+          "japaneseCurveCompared",
+          "regionalDifferenceConsidered",
+          "standardCurveInsufficient",
+          "c14Compared",
+          "oslCompared",
+          "stratigraphyCompared",
+          "featureRelationCompared",
+          "typologyCompared",
+          "singleDateNotAccepted",
+          "pendingDecision"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "photo-charcoal-kiln-overhead-001",
+        "identifier": "CHAR-PHOTO-001",
+        "shortDescription": "측구·폐쇄석 원위치 사진",
+        "category": "Photo",
+        "relations": {
+          "isRecordedIn": ["op-charcoal-kiln-001"],
+          "isDepictedIn": ["feature-charcoal-kiln-001", "sample-charcoal-kiln-archmag-001"]
+        },
+        "mediaEvidenceRole": [
+          "workStageRecord",
+          "featureOutlineEvidence",
+          "sampleLocationEvidence",
+          "reportPlateCandidate"
+        ],
+        "mediaQualityCheck": [
+          "targetPurposeClear",
+          "directionRecorded",
+          "scaleIncluded",
+          "orientationChecked",
+          "controlPointLinked",
+          "originalUncroppedPreserved",
+          "registerNumberMatched"
+        ],
+        "digitalSourcePreservation": [
+          "originalPhoto",
+          "originalImage",
+          "twoLocationBackup",
+          "backupVerified",
+          "pendingDecision"
+        ],
+        "reportCrossCheck": [
+          "photoRegister",
+          "sampleRegister",
+          "manuscript",
+          "sourceMediaBackup"
+        ]
+      }
+    }
+  ]
+}

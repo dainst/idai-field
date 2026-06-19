@@ -467,6 +467,43 @@ describe('KoreanFieldwork project configuration', () => {
     });
 
 
+    it('keeps the Korean charcoal kiln archaeomagnetic sample aligned with kiln and sample fields', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const sample = loadSample('charcoal-kiln-archaeomagnetic-workflow-sample.json');
+        const documents = sample.documents;
+        const documentsById = documents.reduce((index: any, document: any) => {
+            index[document.resource.id] = document;
+            return index;
+        }, {});
+
+        expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
+
+        expect(documentsById['feature-charcoal-kiln-001'].resource.charcoalKilnIdentification)
+            .toContain('sideOpeningCharcoalKilnCandidate');
+        expect(documentsById['feature-charcoal-kiln-001'].resource.charcoalKilnStructurePart)
+            .toContain('sideOpeningClosureStone');
+        expect(documentsById['feature-charcoal-kiln-001'].resource.charcoalKilnExcavationControl)
+            .toContain('centralTrenchDeferred');
+        expect(documentsById['feature-charcoal-kiln-001'].resource.charcoalKilnTraceInterpretation)
+            .toContain('ceilingGrassTrace');
+        expect(documentsById['sample-charcoal-kiln-carbon-001'].resource.charcoalKilnAnalysisPlan)
+            .toContain('woodSpeciesAnalysis');
+        expect(documentsById['sample-charcoal-kiln-archmag-001'].resource.archaeomagneticSampleContext)
+            .toContain('sideOpeningCharcoalKiln');
+        expect(documentsById['sample-charcoal-kiln-archmag-001'].resource.archaeomagneticSamplingWorkflow)
+            .toContain('gypsumFixed');
+        expect(documentsById['sample-charcoal-kiln-archmag-001'].resource.archaeomagneticOrientationRecord)
+            .toContain('currentDeclinationRecorded');
+        expect(documentsById['sample-charcoal-kiln-archmag-001'].resource.archaeomagneticResultQuality)
+            .toContain('l95UnderThree');
+        expect(documentsById['sample-charcoal-kiln-archmag-001'].resource.archaeomagneticChronologyInterpretation)
+            .toContain('singleDateNotAccepted');
+    });
+
+
     it('keeps the Korean conservation science sample aligned with field conservation fields', () => {
 
         const configReader = new ConfigReader();

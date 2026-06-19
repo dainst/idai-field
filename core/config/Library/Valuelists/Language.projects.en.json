@@ -17148,5 +17148,87 @@
       "pendingDecision": { "label": "Pending decision" }
     },
     "description": "Korean fieldwork experimental archaeology checks for research question, hypothesis, source data, variables, controls, repetition, failed runs, review, and digital-substitute limits"
+  },
+  "KoreanFieldwork-sourceEvidenceMaterial": {
+    "values": {
+      "figure": { "label": "Figure" },
+      "table": { "label": "Table" },
+      "plate": { "label": "Plate" },
+      "photo": { "label": "Photo" },
+      "drawing": { "label": "Drawing" },
+      "map": { "label": "Map" },
+      "caption": { "label": "Caption" },
+      "caseStudy": { "label": "Case study" },
+      "measurementValue": { "label": "Measurement value" },
+      "originalScript": { "label": "Original script" },
+      "sourceCitation": { "label": "Source citation" },
+      "checklist": { "label": "Checklist" },
+      "equipmentList": { "label": "Equipment list" },
+      "analysisResultTable": { "label": "Analysis result table" },
+      "diagram": { "label": "Diagram" },
+      "reportEvaluationItem": { "label": "Report evaluation item" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Source material types for indexing tables, figures, plates, cases, metrics, original scripts, citations, checklists, and diagrams from Korean archaeology PDFs"
+  },
+  "KoreanFieldwork-sourceEvidenceDomain": {
+    "values": {
+      "fortification": { "label": "Fortification" },
+      "tomb": { "label": "Tomb" },
+      "alluvialSite": { "label": "Alluvial site" },
+      "neolithicSite": { "label": "Neolithic/shell midden" },
+      "ironProduction": { "label": "Iron production" },
+      "productionSite": { "label": "Production site" },
+      "buildingSite": { "label": "Building site" },
+      "fieldSurvey": { "label": "Surface/trial survey" },
+      "wetlandSurvey": { "label": "Wetland survey" },
+      "artifactDrawing": { "label": "Artifact drawing" },
+      "conservationScience": { "label": "Conservation science" },
+      "researchMethod": { "label": "Research method" },
+      "dictionaryTerminology": { "label": "Dictionary terminology" },
+      "reportWriting": { "label": "Report writing" },
+      "spatialData": { "label": "Drawing/GIS/3D" },
+      "publicArchaeology": { "label": "Public archaeology" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Domains that a source figure, table, caption, or case supports in the Korean fieldwork configuration"
+  },
+  "KoreanFieldwork-sourceEvidenceVerification": {
+    "values": {
+      "pageChecked": { "label": "Page checked" },
+      "figureNumberChecked": { "label": "Figure number checked" },
+      "tableNumberChecked": { "label": "Table number checked" },
+      "captionChecked": { "label": "Caption checked" },
+      "caseNameChecked": { "label": "Case name checked" },
+      "originalScriptChecked": { "label": "Original script checked" },
+      "numericValueChecked": { "label": "Numeric value checked" },
+      "provenanceChecked": { "label": "Provenance checked" },
+      "crossSourceCompared": { "label": "Cross-source compared" },
+      "directPdfChecked": { "label": "Direct PDF checked" },
+      "ocrCorrectionNeeded": { "label": "OCR correction needed" },
+      "captionNeedsCheck": { "label": "Caption needs check" },
+      "valueListPromotionReady": { "label": "Value-list promotion ready" },
+      "uiExposureDeferred": { "label": "UI exposure deferred" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Verification statuses for tracking whether OCR-derived evidence has been checked against PDF pages, figure/table numbers, captions, case names, original scripts, and values"
+  },
+  "KoreanFieldwork-sourceEvidenceUse": {
+    "values": {
+      "fieldDesignEvidence": { "label": "Field design evidence" },
+      "sampleValidationEvidence": { "label": "Sample validation evidence" },
+      "comparativeReference": { "label": "Comparative reference" },
+      "metricReference": { "label": "Metric reference" },
+      "termAuthorityEvidence": { "label": "Term authority evidence" },
+      "chronologyArgumentEvidence": { "label": "Chronology argument evidence" },
+      "analysisPlanEvidence": { "label": "Analysis plan evidence" },
+      "reportCrossCheckEvidence": { "label": "Report cross-check evidence" },
+      "interpretationCaution": { "label": "Interpretation caution" },
+      "preventAutoClassification": { "label": "Prevent auto-classification" },
+      "sourceTraceability": { "label": "Source traceability" },
+      "futurePdfRecheck": { "label": "Future PDF recheck" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Ways a source evidence index entry supports field design, sample validation, comparison, metrics, terminology, chronology, analysis plans, report checks, and interpretation cautions"
   }
 }

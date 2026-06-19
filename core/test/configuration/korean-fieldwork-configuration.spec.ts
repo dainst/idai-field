@@ -235,6 +235,37 @@ describe('KoreanFieldwork project configuration', () => {
     });
 
 
+    it('keeps the Korean source evidence index sample aligned with source verification fields', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const sample = loadSample('source-evidence-index-sample.json');
+        const documents = sample.documents;
+        const documentsById = documents.reduce((index: any, document: any) => {
+            index[document.resource.id] = document;
+            return index;
+        }, {});
+
+        expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
+
+        expect(documentsById['source-index-fortification-001'].resource.relations.liesWithin)
+            .toEqual(['project-source-evidence-001']);
+        expect(documentsById['source-index-fortification-001'].resource.sourceEvidenceMaterial)
+            .toContain('measurementValue');
+        expect(documentsById['source-index-fortification-001'].resource.sourceEvidenceUse)
+            .toContain('preventAutoClassification');
+        expect(documentsById['source-index-alluvial-neolithic-001'].resource.sourceEvidenceDomain)
+            .toContain('alluvialSite');
+        expect(documentsById['source-index-alluvial-neolithic-001'].resource.sourceEvidenceVerification)
+            .toContain('directPdfChecked');
+        expect(documentsById['source-index-dictionary-001'].resource.sourceEvidenceMaterial)
+            .toContain('originalScript');
+        expect(documentsById['source-index-dictionary-001'].resource.sourceEvidenceVerification)
+            .toContain('ocrCorrectionNeeded');
+    });
+
+
     it('keeps the Korean investigation stage transition sample aligned with handover fields', () => {
 
         const configReader = new ConfigReader();
@@ -857,6 +888,7 @@ describe('KoreanFieldwork project configuration', () => {
         const dailyLogForm = config.forms.DailyLog;
         const termAuthorityForm = config.forms.TermAuthority;
         const termAliasForm = config.forms.TermAlias;
+        const sourceEvidenceIndexForm = config.forms.SourceEvidenceIndex;
         const findForm = config.forms['Find:default'];
         const sampleForm = config.forms['Sample:default'];
         const drawingForm = config.forms['Drawing:default'];
@@ -875,6 +907,11 @@ describe('KoreanFieldwork project configuration', () => {
         expect(termAliasForm.parent).toBe('TermAuthority');
         expect(termAliasForm.fields.termAliasRole.inputType).toBe('checkboxes');
         expect(termAliasForm.fields.termAliasHandling.inputType).toBe('checkboxes');
+        expect(sourceEvidenceIndexForm.parent).toBe('Project');
+        expect(sourceEvidenceIndexForm.fields.sourceEvidenceMaterial.inputType).toBe('checkboxes');
+        expect(sourceEvidenceIndexForm.fields.sourceEvidenceDomain.inputType).toBe('checkboxes');
+        expect(sourceEvidenceIndexForm.fields.sourceEvidenceVerification.inputType).toBe('checkboxes');
+        expect(sourceEvidenceIndexForm.fields.sourceEvidenceUse.inputType).toBe('checkboxes');
         expect(operationForm.fields.fieldRecordQuality.inputType).toBe('checkboxes');
         expect(operationForm.fields.gpsSurveyQualityRecord.inputType).toBe('checkboxes');
         expect(operationForm.fields.gpsNmeaRecord.inputType).toBe('checkboxes');
@@ -1187,6 +1224,14 @@ describe('KoreanFieldwork project configuration', () => {
         expect(termAliasForm.valuelists.termAliasHandling).toBe('KoreanFieldwork-termAliasHandling');
         expect(termAliasForm.valuelists.termSearchMapping).toBe('KoreanFieldwork-termSearchMapping');
         expect(termAliasForm.valuelists.termAuthorityStatus).toBe('KoreanFieldwork-termAuthorityStatus');
+        expect(sourceEvidenceIndexForm.valuelists.sourceEvidenceMaterial)
+            .toBe('KoreanFieldwork-sourceEvidenceMaterial');
+        expect(sourceEvidenceIndexForm.valuelists.sourceEvidenceDomain)
+            .toBe('KoreanFieldwork-sourceEvidenceDomain');
+        expect(sourceEvidenceIndexForm.valuelists.sourceEvidenceVerification)
+            .toBe('KoreanFieldwork-sourceEvidenceVerification');
+        expect(sourceEvidenceIndexForm.valuelists.sourceEvidenceUse)
+            .toBe('KoreanFieldwork-sourceEvidenceUse');
         expect(surveyForm.valuelists.surfaceSurveyObservation).toBe('KoreanFieldwork-surfaceSurveyObservation');
         expect(surveyForm.valuelists.surfaceSurveyBiasControl).toBe('KoreanFieldwork-surfaceSurveyBiasControl');
         expect(surveyForm.valuelists.surfaceSurveyFollowUp).toBe('KoreanFieldwork-surfaceSurveyFollowUp');
@@ -1544,6 +1589,11 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.TermAlias.label).toBe('Term alias');
         expect(languages.en.categories.TermAlias.fields.termAliasRole.label).toBe('Alias role');
         expect(languages.en.categories.TermAlias.fields.termAliasHandling.label).toBe('Alias handling');
+        expect(languages.en.categories.SourceEvidenceIndex.label).toBe('Source evidence index');
+        expect(languages.en.categories.SourceEvidenceIndex.fields.sourceEvidenceMaterial.label)
+            .toBe('Source material type');
+        expect(languages.en.categories.SourceEvidenceIndex.fields.sourceEvidenceVerification.label)
+            .toBe('Source verification status');
         expect(languages.en.categories.Operation.fields.fieldRecordQuality.label).toBe('Field record quality');
         expect(languages.en.categories.Operation.fields.personalNotebookArchive.label).toBe('Personal notebook archive');
         expect(languages.en.categories.Operation.fields.dailyLogContent.label).toBe('Daily work log');
@@ -2392,6 +2442,21 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-termAliasHandling']
             .values.doNotOverwriteObservedTerm.label)
             .toBe('Do not overwrite observed term');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-sourceEvidenceMaterial']
+            .values.originalScript.label)
+            .toBe('Original script');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-sourceEvidenceDomain']
+            .values.alluvialSite.label)
+            .toBe('Alluvial site');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-sourceEvidenceVerification']
+            .values.directPdfChecked.label)
+            .toBe('Direct PDF checked');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-sourceEvidenceUse']
+            .values.preventAutoClassification.label)
+            .toBe('Prevent auto-classification');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-sourceEvidenceMaterial']
+            .values.measurementValue.label)
+            .toBe('수치값');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-typologyArgument']
             .values.representativeAttribute.label)
             .toBe('Representative attribute');

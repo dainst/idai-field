@@ -50,6 +50,23 @@
         }
       }
     },
+    "SourceEvidenceIndex": {
+      "label": "Source evidence index",
+      "fields": {
+        "sourceEvidenceDomain": {
+          "label": "Evidence domain"
+        },
+        "sourceEvidenceMaterial": {
+          "label": "Source material type"
+        },
+        "sourceEvidenceUse": {
+          "label": "Evidence use"
+        },
+        "sourceEvidenceVerification": {
+          "label": "Source verification status"
+        }
+      }
+    },
     "Project": {
       "fields": {
         "digitalSourcePreservation": {

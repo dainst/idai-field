@@ -5394,5 +5394,87 @@
       "pendingDecision": { "label": "판단 보류" }
     },
     "description": "실험고고학을 복원품 제작이 아니라 문제, 가설, 변수, 대조군, 반복, 실패값, 외부검토, 디지털 대체자료 한계가 있는 검증 절차로 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-sourceEvidenceMaterial": {
+    "values": {
+      "figure": { "label": "그림" },
+      "table": { "label": "표" },
+      "plate": { "label": "도판" },
+      "photo": { "label": "사진" },
+      "drawing": { "label": "도면" },
+      "map": { "label": "지도" },
+      "caption": { "label": "캡션" },
+      "caseStudy": { "label": "사례" },
+      "measurementValue": { "label": "수치값" },
+      "originalScript": { "label": "한자·원문 표기" },
+      "sourceCitation": { "label": "출전" },
+      "checklist": { "label": "점검표" },
+      "equipmentList": { "label": "장비 목록" },
+      "analysisResultTable": { "label": "분석결과표" },
+      "diagram": { "label": "도식" },
+      "reportEvaluationItem": { "label": "보고서 평가항목" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "원문 PDF에서 가져온 표, 그림, 도판, 사례, 수치, 한자, 출전, 점검표 같은 근거자료 종류를 구분하기 위한 목록"
+  },
+  "KoreanFieldwork-sourceEvidenceDomain": {
+    "values": {
+      "fortification": { "label": "성곽" },
+      "tomb": { "label": "고분·분묘" },
+      "alluvialSite": { "label": "충적지" },
+      "neolithicSite": { "label": "신석기·패총" },
+      "ironProduction": { "label": "제철유적" },
+      "productionSite": { "label": "생산유적" },
+      "buildingSite": { "label": "건물지" },
+      "fieldSurvey": { "label": "지표·시굴조사" },
+      "wetlandSurvey": { "label": "저습지 조사" },
+      "artifactDrawing": { "label": "유물실측" },
+      "conservationScience": { "label": "보존과학" },
+      "researchMethod": { "label": "연구방법론" },
+      "dictionaryTerminology": { "label": "사전·용어" },
+      "reportWriting": { "label": "보고서 작성" },
+      "spatialData": { "label": "도면·GIS·3D" },
+      "publicArchaeology": { "label": "대중고고학" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "도표·사례 근거가 어느 조사 영역이나 템플릿 판단에 쓰이는지 구분하기 위한 목록"
+  },
+  "KoreanFieldwork-sourceEvidenceVerification": {
+    "values": {
+      "pageChecked": { "label": "쪽수 대조" },
+      "figureNumberChecked": { "label": "그림번호 대조" },
+      "tableNumberChecked": { "label": "표번호 대조" },
+      "captionChecked": { "label": "캡션 대조" },
+      "caseNameChecked": { "label": "사례명 대조" },
+      "originalScriptChecked": { "label": "한자·원문 대조" },
+      "numericValueChecked": { "label": "수치 대조" },
+      "provenanceChecked": { "label": "출전·소장처 대조" },
+      "crossSourceCompared": { "label": "교차 출처 대조" },
+      "directPdfChecked": { "label": "원PDF 직접 대조" },
+      "ocrCorrectionNeeded": { "label": "OCR 교정 필요" },
+      "captionNeedsCheck": { "label": "캡션 대조 필요" },
+      "valueListPromotionReady": { "label": "값목록 승격 가능" },
+      "uiExposureDeferred": { "label": "UI 노출 보류" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "OCR 추출 근거가 원문 PDF, 도표 번호, 캡션, 사례명, 한자, 수치와 얼마나 대조되었는지 추적하기 위한 목록"
+  },
+  "KoreanFieldwork-sourceEvidenceUse": {
+    "values": {
+      "fieldDesignEvidence": { "label": "필드 설계 근거" },
+      "sampleValidationEvidence": { "label": "샘플 검증 근거" },
+      "comparativeReference": { "label": "비교 사례" },
+      "metricReference": { "label": "제원·수치 근거" },
+      "termAuthorityEvidence": { "label": "용어 권위 근거" },
+      "chronologyArgumentEvidence": { "label": "편년 논증 근거" },
+      "analysisPlanEvidence": { "label": "분석계획 근거" },
+      "reportCrossCheckEvidence": { "label": "보고서 교차검토 근거" },
+      "interpretationCaution": { "label": "해석 주의 근거" },
+      "preventAutoClassification": { "label": "자동분류 방지" },
+      "sourceTraceability": { "label": "출처 추적성" },
+      "futurePdfRecheck": { "label": "후속 PDF 재대조" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "도표·사례 근거가 필드 설계, 샘플 검증, 비교, 수치, 용어, 편년, 분석계획, 보고서 교차검토 중 어디에 쓰이는지 기록하기 위한 목록"
   }
 }

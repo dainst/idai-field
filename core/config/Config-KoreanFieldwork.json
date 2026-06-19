@@ -720,6 +720,68 @@
         }
       ]
     },
+    "SourceEvidenceIndex": {
+      "parent": "Project",
+      "color": "#8a7550",
+      "hidden": [],
+      "fields": {
+        "sourceEvidenceMaterial": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "sourceEvidenceDomain": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "sourceEvidenceVerification": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "sourceEvidenceUse": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
+        "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
+        "sourceEvidenceDomain": "KoreanFieldwork-sourceEvidenceDomain",
+        "sourceEvidenceMaterial": "KoreanFieldwork-sourceEvidenceMaterial",
+        "sourceEvidenceUse": "KoreanFieldwork-sourceEvidenceUse",
+        "sourceEvidenceVerification": "KoreanFieldwork-sourceEvidenceVerification",
+        "verificationState": "KoreanFieldwork-verificationState"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
+        },
+        {
+          "name": "hierarchy",
+          "fields": ["liesWithin"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "diaryAbstract"]
+        },
+        {
+          "name": "koreanFieldwork",
+          "fields": [
+            "sourceEvidenceMaterial",
+            "sourceEvidenceDomain",
+            "sourceEvidenceVerification",
+            "sourceEvidenceUse",
+            "recordCreationTiming",
+            "fieldRecordQuality",
+            "verificationState"
+          ]
+        }
+      ]
+    },
     "FeatureGroup:default": {
       "hidden": [],
       "fields": {

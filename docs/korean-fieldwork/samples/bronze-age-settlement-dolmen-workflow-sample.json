@@ -1,0 +1,465 @@
+{
+  "title": "Korean Bronze Age settlement, dolmen, and enclosure workflow sample",
+  "purpose": "Validate that Bronze Age settlement records keep pit-building investigation procedure, dwelling type evidence, dolmen structure, enclosure interpretation, and pottery terminology separate from premature type-name confirmation.",
+  "validationQuestions": [
+    "수혈건물지 후보가 주거지로 바로 확정되지 않고 기능 후보, 조사 절차, 트렌치 전략, 바닥·벽선 보존 근거를 남기는가.",
+    "송국리식·가락동식 같은 유형명 후보가 평면형, 중앙 타원형 구덩이, 양단 주혈, 벽도랑, 취락·묘역 관계 같은 관찰값 뒤에 남는가.",
+    "고인돌·지석묘, 환호, 무문토기·민무늬토기 관계가 권위어와 현장 관용어를 섞지 않고 구조·기능·공반·편년 근거와 연결되는가."
+  ],
+  "documents": [
+    {
+      "resource": {
+        "id": "op-bronze-settlement-001",
+        "identifier": "BRONZE-OP-001",
+        "shortDescription": "청동기 취락·분묘 구역 조사 작업",
+        "category": "Operation",
+        "relations": {},
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "researchQuestionFit"
+        ],
+        "recordCreationTiming": "duringFieldwork",
+        "dailyLogContent": [
+          "workDateWeather",
+          "workArea",
+          "featureProgress",
+          "findSampleCollection",
+          "photoDrawingNumbers"
+        ],
+        "dailyLogReview": [
+          "sameDayWritten",
+          "photoDrawingCrossChecked",
+          "findListCrossChecked",
+          "sampleListCrossChecked",
+          "reviewerChecked"
+        ],
+        "reportCrossCheck": [
+          "manuscript",
+          "drawingRegister",
+          "photoRegister",
+          "artifactRegister",
+          "numberConversionTable"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "fg-bronze-settlement-001",
+        "identifier": "BRONZE-SETTLEMENT-001",
+        "shortDescription": "청동기 취락·묘역 복합 구역",
+        "category": "FeatureGroup",
+        "relations": {
+          "isRecordedIn": ["op-bronze-settlement-001"]
+        },
+        "description": "저평지 취락 구역과 낮은 구릉 말단의 고인돌 후보, 외곽 도랑 후보를 한 조사구 안에서 관리하는 샘플.",
+        "featurePackage": [
+          "buildingSite",
+          "pitDwelling",
+          "tomb"
+        ],
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "reproducibleRecord",
+          "crossReviewNeeded"
+        ],
+        "recordCreationTiming": "duringFieldwork",
+        "termRelation": [
+          "preferredTerm",
+          "alias",
+          "structuralSimilarity"
+        ],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "fieldUsagePreserved",
+          "structureSubtypeSeparated"
+        ],
+        "termAuthorityStatus": [
+          "specialistDictionarySource",
+          "generalDictionaryUsage",
+          "valueListCandidate"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "feature-bronze-dwelling-001",
+        "identifier": "BRONZE-DWELL-001",
+        "shortDescription": "송국리식 후보 수혈건물지",
+        "category": "Feature",
+        "relations": {
+          "isRecordedIn": ["op-bronze-settlement-001"],
+          "liesWithin": ["fg-bronze-settlement-001"]
+        },
+        "description": "중앙 타원형 구덩이와 양단 주혈이 보이지만 노지 여부와 기능은 확정하지 않고, 주거·저장·작업 기능 후보와 취락·묘역 관계를 함께 남기는 사례.",
+        "featurePackage": [
+          "buildingSite",
+          "pitDwelling"
+        ],
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "criteriaConsistency"
+        ],
+        "fieldOnlyMissingCheck": [
+          "featureOutline",
+          "stratigraphicBoundary",
+          "photoAngleAndScale",
+          "drawingLineReason",
+          "spatialLocation",
+          "sameDayReview",
+          "notRecoverableWarning"
+        ],
+        "firstExposureRecord": [
+          "concurrentWithStripping",
+          "firstExposurePhoto",
+          "featureLineVisible",
+          "shoulderLineRecorded",
+          "sectionCrossCheck",
+          "confirmedBeforeInternalExcavation"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "pitDwellingExposureBaulk": [
+          "initialStratigraphyChecked",
+          "shoulderLineRecorded",
+          "baulkPlanSet",
+          "crossBaulk",
+          "sunlightDirectionConsidered",
+          "sectionPhotoImmediate",
+          "unmarkedPhotoKept",
+          "markedPhotoKept"
+        ],
+        "pitDwellingFloorFacility": [
+          "floorSurfaceIdentified",
+          "firstFillNotMisread",
+          "wallFloorJunctionFollowed",
+          "postholesChecked",
+          "hearthChecked",
+          "wallGrooveChecked",
+          "storagePitChecked",
+          "findsLeftUntilFloorCheck"
+        ],
+        "pitDwellingOverlapSequence": [
+          "overlapGroupRecord",
+          "firstPlanStripping",
+          "verticalPhoto",
+          "inferredLineMarked",
+          "sectionEvidenceRequired",
+          "relationshipUnresolved"
+        ],
+        "pitFeatureFunctionAssessment": [
+          "dwellingCandidate",
+          "pitBuildingCandidate",
+          "storageCandidate",
+          "workshopCandidate",
+          "hearthEvidence",
+          "hardenedSurface",
+          "storagePit",
+          "functionNotAssumed"
+        ],
+        "settlementFeatureInvestigationProcedure": [
+          "preliminarySurvey",
+          "planInvestigation",
+          "overlapRelationCheck",
+          "trenchSet",
+          "baulkSet",
+          "steppedExcavation",
+          "internalCleaning",
+          "floorInvestigation",
+          "sectioning",
+          "reviewPhoto"
+        ],
+        "settlementFeatureTrenchStrategy": [
+          "minimalTrenchMaxInfo",
+          "floorSurfacePreservation",
+          "wallLinePreservation",
+          "crossTrench",
+          "longAxisDirection",
+          "shortAxisDirection",
+          "sectionContinuity",
+          "drawingInversionRisk"
+        ],
+        "bronzeAgeDwellingEvidence": [
+          "songgukriTypeCandidate",
+          "roundedSquarePlan",
+          "centralOvalPit",
+          "pairedPostholes",
+          "wallDitch",
+          "drainageMoistureControl",
+          "settlementClusterLinked",
+          "burialAreaSeparated",
+          "radiocarbonLinked",
+          "typeNameNotAssumed"
+        ],
+        "typologyArgument": [
+          "representativeAttribute",
+          "variationRecorded",
+          "attributeCombination",
+          "typeCandidate",
+          "alternativeClassification",
+          "specialistReviewNeeded"
+        ],
+        "chronologyArgument": [
+          "stratigraphicRelation",
+          "associatedFinds",
+          "absoluteDate",
+          "regionalLagRisk",
+          "alternativeChronology",
+          "pendingDecision"
+        ],
+        "assemblageRelation": [
+          "sameLayer",
+          "repeatedAssociation",
+          "functionalDifferencePossible",
+          "contemporaneityUnclear"
+        ],
+        "termRelation": [
+          "preferredTerm",
+          "alias",
+          "structuralSimilarity"
+        ],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "fieldUsagePreserved",
+          "structureSubtypeSeparated",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": [
+          "specialistDictionarySource",
+          "generalDictionaryUsage",
+          "uiExposureDeferred",
+          "pendingDecision"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "feature-bronze-dolmen-001",
+        "identifier": "BRONZE-DOLMEN-001",
+        "shortDescription": "고인돌·지석묘 구조 후보",
+        "category": "Feature",
+        "relations": {
+          "isRecordedIn": ["op-bronze-settlement-001"],
+          "liesWithin": ["fg-bronze-settlement-001"]
+        },
+        "description": "덮개돌과 받침돌, 하부 무덤방 후보가 보이지만 후대 묘표석 재사용과 이전·복원 가능성을 함께 남기는 사례.",
+        "featurePackage": [
+          "tomb"
+        ],
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "crossReviewNeeded"
+        ],
+        "fieldOnlyMissingCheck": [
+          "featureOutline",
+          "photoAngleAndScale",
+          "spatialLocation",
+          "orientationRecorded",
+          "sameDayReview"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "dolmenStructureContext": [
+          "capstoneRecorded",
+          "supportingStoneRecorded",
+          "burialChamberRecorded",
+          "burialPrecinctRecorded",
+          "coverStoneStyleCandidate",
+          "stoneCistType",
+          "slabWallRecorded",
+          "floorSlabRecorded",
+          "burialSubjectConfirmed",
+          "cupmarkRecorded",
+          "quarryTraceCandidate",
+          "laterGraveMarkerReuse",
+          "relocationRestorationRecorded",
+          "settlementRelationRecorded"
+        ],
+        "chronologyArgument": [
+          "stratigraphicRelation",
+          "associatedFinds",
+          "existingChronologyApplied",
+          "heirloomOrReuseRisk",
+          "alternativeChronology"
+        ],
+        "termRelation": [
+          "preferredTerm",
+          "alias",
+          "reportOutputTerm"
+        ],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "fieldUsagePreserved",
+          "ambiguousSynonymFlagged"
+        ],
+        "termAuthorityStatus": [
+          "specialistDictionarySource",
+          "generalDictionaryUsage",
+          "sourcePageLinked",
+          "valueListCandidate"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "feature-bronze-enclosure-001",
+        "identifier": "BRONZE-ENCLOSURE-001",
+        "shortDescription": "환호 후보 외곽 도랑",
+        "category": "Feature",
+        "relations": {
+          "isRecordedIn": ["op-bronze-settlement-001"],
+          "liesWithin": ["fg-bronze-settlement-001"]
+        },
+        "description": "V자 단면과 출입구 후보가 있으나 방어시설로 고정하지 않고 경계·배수·의례 가능성, 자연퇴적과 재굴착 흔적을 함께 남긴다.",
+        "featurePackage": [
+          "buildingSite"
+        ],
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "researchQuestionFit"
+        ],
+        "fieldOnlyMissingCheck": [
+          "featureOutline",
+          "stratigraphicBoundary",
+          "photoAngleAndScale",
+          "drawingLineReason",
+          "sameDayReview"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "bronzeAgeEnclosureInterpretation": [
+          "defensiveCandidate",
+          "boundaryCandidate",
+          "drainageCollectionCandidate",
+          "ritualCandidate",
+          "vShapedSection",
+          "entranceRecorded",
+          "fillSequenceRecorded",
+          "naturalSedimentChecked",
+          "recutTrace",
+          "contractionTrace",
+          "settlementRelation",
+          "dwellingOverlapRelation",
+          "shortUseCandidate",
+          "spatialSeparationRecorded"
+        ],
+        "typologyArgument": [
+          "representativeAttribute",
+          "variationRecorded",
+          "alternativeClassification",
+          "pendingDecision"
+        ],
+        "chronologyArgument": [
+          "stratigraphicRelation",
+          "associatedFinds",
+          "alternativeChronology",
+          "pendingDecision"
+        ],
+        "assemblageRelation": [
+          "sameDepositUnit",
+          "secondaryDepositionRisk",
+          "contemporaneityUnclear"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "find-bronze-pottery-001",
+        "identifier": "BRONZE-FIND-001",
+        "shortDescription": "무문토기·민무늬토기 이칭 검토 토기편",
+        "category": "Find",
+        "relations": {
+          "isRecordedIn": ["op-bronze-settlement-001"],
+          "liesWithin": ["feature-bronze-dwelling-001"]
+        },
+        "description": "중앙 타원형 구덩이 인근 바닥면에서 확인된 토기편. 무문토기·민무늬토기 이칭과 구순각목·공렬 표지를 기록하되 편년은 층위·공반·절대연대와 함께 보류한다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "reproducibleRecord"
+        ],
+        "fieldOnlyMissingCheck": [
+          "preRemovalCondition",
+          "spatialLocation",
+          "elevationRecorded",
+          "numberedBeforeCollection",
+          "sameDayReview"
+        ],
+        "artifactHandlingWorkflow": [
+          "fieldCollection",
+          "findConditionRecord",
+          "packingTransport",
+          "reportPreparation"
+        ],
+        "artifactQuantityBasis": [
+          "physicalItemCount",
+          "sameObjectConfirmed",
+          "actualCountAnnotated",
+          "quantityEvidencePhoto"
+        ],
+        "bronzeAgePotteryTerminology": [
+          "mumunPlainPottery",
+          "minmunTerminologyAlias",
+          "rimNotchDecoration",
+          "perforatedRimDecoration",
+          "potteryChronologyLinked",
+          "associationContextRecorded",
+          "standardTermChecked",
+          "aliasMappingRequired",
+          "contextNotStyleOnly"
+        ],
+        "typologyArgument": [
+          "representativeAttribute",
+          "variationRecorded",
+          "attributeCombination",
+          "typeCandidate",
+          "alternativeClassification"
+        ],
+        "chronologyArgument": [
+          "associatedFinds",
+          "closedContext",
+          "markerArtifact",
+          "existingChronologyApplied",
+          "regionalLagRisk",
+          "alternativeChronology",
+          "pendingDecision"
+        ],
+        "assemblageRelation": [
+          "sameLayer",
+          "closedAssemblage",
+          "accidentalAssociationRisk",
+          "functionalDifferencePossible",
+          "contemporaneityUnclear"
+        ],
+        "termRelation": [
+          "preferredTerm",
+          "alias",
+          "reportOutputTerm"
+        ],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "reportOutputSeparated",
+          "fieldUsagePreserved"
+        ],
+        "termAuthorityStatus": [
+          "specialistDictionarySource",
+          "generalDictionaryUsage",
+          "reportOutputChecked",
+          "valueListCandidate"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "verificationState": "candidate"
+      }
+    }
+  ]
+}

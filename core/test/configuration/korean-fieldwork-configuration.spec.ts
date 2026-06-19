@@ -411,6 +411,47 @@ describe('KoreanFieldwork project configuration', () => {
     });
 
 
+    it('keeps the Korean Bronze Age settlement sample aligned with dwelling, dolmen, and pottery fields', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const sample = loadSample('bronze-age-settlement-dolmen-workflow-sample.json');
+        const documents = sample.documents;
+        const documentsById = documents.reduce((index: any, document: any) => {
+            index[document.resource.id] = document;
+            return index;
+        }, {});
+
+        expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
+
+        expect(documentsById['fg-bronze-settlement-001'].resource.featurePackage)
+            .toContain('pitDwelling');
+        expect(documentsById['feature-bronze-dwelling-001'].resource.pitFeatureFunctionAssessment)
+            .toContain('functionNotAssumed');
+        expect(documentsById['feature-bronze-dwelling-001'].resource.settlementFeatureInvestigationProcedure)
+            .toContain('floorInvestigation');
+        expect(documentsById['feature-bronze-dwelling-001'].resource.settlementFeatureTrenchStrategy)
+            .toContain('drawingInversionRisk');
+        expect(documentsById['feature-bronze-dwelling-001'].resource.bronzeAgeDwellingEvidence)
+            .toContain('songgukriTypeCandidate');
+        expect(documentsById['feature-bronze-dwelling-001'].resource.bronzeAgeDwellingEvidence)
+            .toContain('typeNameNotAssumed');
+        expect(documentsById['feature-bronze-dolmen-001'].resource.dolmenStructureContext)
+            .toContain('laterGraveMarkerReuse');
+        expect(documentsById['feature-bronze-enclosure-001'].resource.bronzeAgeEnclosureInterpretation)
+            .toContain('drainageCollectionCandidate');
+        expect(documentsById['feature-bronze-enclosure-001'].resource.bronzeAgeEnclosureInterpretation)
+            .toContain('naturalSedimentChecked');
+        expect(documentsById['find-bronze-pottery-001'].resource.bronzeAgePotteryTerminology)
+            .toContain('minmunTerminologyAlias');
+        expect(documentsById['find-bronze-pottery-001'].resource.bronzeAgePotteryTerminology)
+            .toContain('contextNotStyleOnly');
+        expect(documentsById['find-bronze-pottery-001'].resource.chronologyArgument)
+            .toContain('regionalLagRisk');
+    });
+
+
     it('keeps the Korean fortification facility sample aligned with facility fields', () => {
 
         const configReader = new ConfigReader();

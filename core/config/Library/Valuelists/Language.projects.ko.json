@@ -5375,6 +5375,64 @@
     },
     "description": "왜성 해자를 조선 읍성 해자와 섞지 않고 물 유무, 방향, 단면, 기능으로 나누기 위한 목록"
   },
+  "KoreanFieldwork-beaconPhysicalFacility": {
+    "values": {
+      "bongsudae": { "label": "봉수대" },
+      "bonghwadaeAlias": { "label": "봉화대 이칭 확인" },
+      "yeondaePlatform": { "label": "연대" },
+      "yeonjoSignalChamber": { "label": "연조" },
+      "bongjoSignalFacility": { "label": "봉조" },
+      "fireHearth": { "label": "화덕" },
+      "combustionChamber": { "label": "연소실" },
+      "outerStoneWall": { "label": "외곽석축" },
+      "defensiveWall": { "label": "방호벽" },
+      "associatedBuildingSite": { "label": "부속 건물지" },
+      "watchPostCandidate": { "label": "망대 후보" },
+      "fuelStorageCandidate": { "label": "연료 보관 후보" },
+      "damagedState": { "label": "훼손 상태" },
+      "extantRemainsConfirmed": { "label": "현존 유구 확인" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "봉수대를 명칭 하나로 닫지 않고 연대, 연조, 봉조, 연소실, 건물지, 외곽석축, 방호벽 같은 물리 유구 단위로 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-beaconNetworkOperation": {
+    "values": {
+      "directRouteBeacon": { "label": "직봉" },
+      "secondaryRouteBeacon": { "label": "간봉" },
+      "coastalFrontierBeacon": { "label": "연변봉수" },
+      "inlandBeacon": { "label": "내지봉수" },
+      "counterpartBeacon": { "label": "대응봉수" },
+      "receivingBeacon": { "label": "수신 봉수" },
+      "sendingBeacon": { "label": "발신 봉수" },
+      "routeNumberRecorded": { "label": "노선번호 기록" },
+      "routeChangeRecorded": { "label": "노선 변경 기록" },
+      "jurisdictionRecorded": { "label": "관할 기록" },
+      "watchPersonnelRecorded": { "label": "수번 인원 기록" },
+      "bongsugun": { "label": "봉수군" },
+      "bonggun": { "label": "봉군" },
+      "gamgwan": { "label": "감관" },
+      "byeoljang": { "label": "별장" },
+      "bonggunbo": { "label": "봉군보" },
+      "documentaryEvidenceRequired": { "label": "문헌근거 필요" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "직봉, 간봉, 연변봉수, 내지봉수, 대응봉수와 감관·별장·봉군 같은 운영어를 현장 유구 속성과 섞지 않고 문헌 근거와 연결하기 위한 목록"
+  },
+  "KoreanFieldwork-fortressBeaconRelation": {
+    "values": {
+      "mountaintopFortressBeacon": { "label": "산성 정상 봉수" },
+      "gateAreaBeacon": { "label": "성문 주변 봉수" },
+      "watchtowerPrecedingPossible": { "label": "망대 선행 가능성" },
+      "laterBeaconInstallation": { "label": "후대 봉수 설치" },
+      "contemporaryUsePossible": { "label": "공동 사용 가능성" },
+      "fortressFunctionChange": { "label": "성곽 기능 변화" },
+      "physicalOperationSeparated": { "label": "물리·운영 분리" },
+      "routeRelationLinked": { "label": "노선관계 연결" },
+      "documentaryRelationLinked": { "label": "문헌관계 연결" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "산성 정상이나 성문 주변 봉수가 망대 선행, 후대 설치, 공동 사용, 기능 변화 중 어느 관계인지 보류값과 함께 기록하기 위한 목록"
+  },
   "KoreanFieldwork-fortificationConstructionEvidence": {
     "values": {
       "embankmentCandidate": { "label": "성토 후보" },

@@ -17129,6 +17129,64 @@
     },
     "description": "Japanese-style fortress ditch list separating water state, orientation, section, and function from Joseon town-wall ditch terms"
   },
+  "KoreanFieldwork-beaconPhysicalFacility": {
+    "values": {
+      "bongsudae": { "label": "Bongsudae beacon site" },
+      "bonghwadaeAlias": { "label": "Bonghwadae alias checked" },
+      "yeondaePlatform": { "label": "Yeondae signal platform" },
+      "yeonjoSignalChamber": { "label": "Yeonjo signal chamber" },
+      "bongjoSignalFacility": { "label": "Bongjo signal facility" },
+      "fireHearth": { "label": "Fire hearth" },
+      "combustionChamber": { "label": "Combustion chamber" },
+      "outerStoneWall": { "label": "Outer stone wall" },
+      "defensiveWall": { "label": "Defensive wall" },
+      "associatedBuildingSite": { "label": "Associated building site" },
+      "watchPostCandidate": { "label": "Watch-post candidate" },
+      "fuelStorageCandidate": { "label": "Fuel storage candidate" },
+      "damagedState": { "label": "Damaged state" },
+      "extantRemainsConfirmed": { "label": "Extant remains confirmed" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Physical beacon facility list for recording yeondae, yeonjo, bongjo, combustion chambers, buildings, outer stone walls, and defensive walls before reducing the record to one beacon-site name"
+  },
+  "KoreanFieldwork-beaconNetworkOperation": {
+    "values": {
+      "directRouteBeacon": { "label": "Direct route beacon" },
+      "secondaryRouteBeacon": { "label": "Secondary route beacon" },
+      "coastalFrontierBeacon": { "label": "Coastal frontier beacon" },
+      "inlandBeacon": { "label": "Inland beacon" },
+      "counterpartBeacon": { "label": "Counterpart beacon" },
+      "receivingBeacon": { "label": "Receiving beacon" },
+      "sendingBeacon": { "label": "Sending beacon" },
+      "routeNumberRecorded": { "label": "Route number recorded" },
+      "routeChangeRecorded": { "label": "Route change recorded" },
+      "jurisdictionRecorded": { "label": "Jurisdiction recorded" },
+      "watchPersonnelRecorded": { "label": "Watch personnel recorded" },
+      "bongsugun": { "label": "Bongsugun watch personnel" },
+      "bonggun": { "label": "Bonggun watch personnel" },
+      "gamgwan": { "label": "Gamgwan supervisor" },
+      "byeoljang": { "label": "Byeoljang officer" },
+      "bonggunbo": { "label": "Bonggunbo register" },
+      "documentaryEvidenceRequired": { "label": "Documentary evidence required" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Beacon route and operation list separating direct, secondary, coastal, inland, and counterpart routes plus documentary operating roles from the physical remains"
+  },
+  "KoreanFieldwork-fortressBeaconRelation": {
+    "values": {
+      "mountaintopFortressBeacon": { "label": "Mountaintop fortress beacon" },
+      "gateAreaBeacon": { "label": "Gate-area beacon" },
+      "watchtowerPrecedingPossible": { "label": "Watchtower may precede beacon" },
+      "laterBeaconInstallation": { "label": "Later beacon installation" },
+      "contemporaryUsePossible": { "label": "Contemporary use possible" },
+      "fortressFunctionChange": { "label": "Fortress function change" },
+      "physicalOperationSeparated": { "label": "Physical and operation separated" },
+      "routeRelationLinked": { "label": "Route relation linked" },
+      "documentaryRelationLinked": { "label": "Documentary relation linked" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Fortress-beacon relation list for recording coexistence, sequence, and functional change where a beacon is combined with a mountain fortress or gate area"
+  },
   "KoreanFieldwork-fortificationConstructionEvidence": {
     "values": {
       "embankmentCandidate": { "label": "Embankment candidate" },

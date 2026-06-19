@@ -83,7 +83,7 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-19 충적지·토양도 자료도 구현 단위로 압축했다. 제6권 고지형·충적지와 조사방법론의 지표·GIS 자료는 평야·논 지역에서 표면유물 부재를 유적 부재로 보지 말고, 자연제방·배후습지·구하도·구해안선, 토양통·대토양군, 보링·주상도, a+b층 세트, 유구축조면과 검출면 차이, 암색대·이질토 블록·홍수퇴적 해석을 함께 보라고 요구한다. 이 묶음은 `Survey`의 `alluvialLandformSurvey`, `soilMapPredictionVerification`, `FeatureSegment`의 `alluvialLayerConceptAudit`, `alluvialSurfaceAttribution`, `alluvialFormationProcess` 값 목록으로 옮겼고, `alluvial-landform-layer-workflow-sample.json`으로 지표·토양도 예측, 층 개념, 경작유구와 고환경 시료 흐름을 검증한다.
 
-2026-06-19 성곽·봉수편의 봉수 용어도 한 단위 더 닫았다. 2011년 성곽·봉수편과 2007년 성곽 용어사전은 봉수대/봉화대 이칭, 연대·연조·봉조·연소실·건물지·외곽석축 같은 물리시설, 직봉·간봉·연변봉수·내지봉수·대응봉수 같은 노선 관계, 감관·별장·봉군·봉군보 같은 문헌 운영 주체를 구분해서 보라고 읽힌다. 이 묶음은 아직 실제 `Feature` 값 목록으로 크게 확장하지 않고, 먼저 `TermAuthority` 샘플과 `dictionary-terminology.md`의 `봉수용어권위관계`, `봉수유구운영분리` 후보로 남겨 다음 성곽·봉수 템플릿 구현 때 물리 유구와 운영망이 섞이지 않게 한다.
+2026-06-19 성곽·봉수편의 봉수 용어도 한 단위 더 닫았다. 2011년 성곽·봉수편과 2007년 성곽 용어사전은 봉수대/봉화대 이칭, 연대·연조·봉조·연소실·건물지·외곽석축 같은 물리시설, 직봉·간봉·연변봉수·내지봉수·대응봉수 같은 노선 관계, 감관·별장·봉군·봉군보 같은 문헌 운영 주체를 구분해서 보라고 읽힌다. 이번 구현에서는 이 묶음을 `Feature`의 `beaconPhysicalFacility`, `beaconNetworkOperation`, `fortressBeaconRelation`으로 옮겨 물리 유구, 운영망, 산성·봉수 복합관계가 같은 값으로 섞이지 않게 했다. `TermAuthority`와 `dictionary-terminology.md`의 `봉수용어권위관계`, `봉수유구운영분리`는 봉수대/봉화대 이칭과 문헌 운영어 검증 근거로 계속 둔다.
 
 2026-06-19 유구 내부층과 라이프사이클 자료도 구현 단위로 압축했다. 발굴조사 실무 자료는 유구 내부토를 단순 복토가 아니라 축조, 사용, 폐기, 매몰 과정이 겹친 결과로 읽고, 단면 정리와 반복 관찰, 그늘·햇볕 조건, 층간 비교, 이질토 블록의 유래, 자연유입·수성퇴적·붕락·토양화 휴지기, 일괄유물 매몰 여부를 따로 남기라고 요구한다. 이 묶음은 `FeatureSegment`의 `stratigraphicObservationProcedure`, `featureLifecycleReview`, `featureBlockInclusionAssessment`, `featureBurialProcessAssessment` 값 목록으로 옮겼고, `stratigraphy-feature-lifecycle-workflow-sample.json`으로 유구 내부토 해석이 단일 복토명으로 닫히지 않는지 검증한다.
 
@@ -126,7 +126,7 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-19 이어서 보조 자료군과 기존 권별 노트를 한 번 더 종합해 [한국 현장 고고학 독해 종합](korean-fieldwork-synthesis.md)을 추가했다. 이 문서는 원문 요약이나 작업 이력이 아니라, 조사 단계, 현장시점 자료, 층위 형성과정, 유형명 판단 보류, 유물·시료 생애, 사진·도면·GPS 원자료, 작업일지, 용어 권위 체계를 iDAI.field 화면 구조로 연결하는 상위 설계 기준이다. 다음 구현 판단은 새 값목록 확대보다 조건부 필수값, 원자료 연결, `TermAlias` 가져오기 검증에 둔다.
 
-2026-06-19 추가 원문 대조에서는 2007년 성곽 용어사전 253쪽, 260쪽, 264쪽, 304~305쪽 이미지를 다시 확인해 오성지 도면 출처, 암문의 은폐·군수물자 운반·구원요청·역습 기능, 말 한 마리 폭, 남암문 미복원 상태, 은구의 잔존 여부, 장군석 위치를 교정했다. 이 결과는 `Feature` 화면의 `fortificationHiddenGateFunction`과 `fortificationParapetDetail` 값 목록으로 승격했다.
+2026-06-19 추가 원문 대조에서는 2007년 성곽 용어사전 253쪽, 260쪽, 264쪽, 304~305쪽 이미지를 다시 확인해 오성지 도면 출처, 암문의 은폐·군수물자 운반·구원요청·역습 기능, 말 한 마리 폭, 남암문 미복원 상태, 은구의 잔존 여부, 장군석 위치를 교정했다. 이 결과는 `Feature` 화면의 `fortificationHiddenGateFunction`과 `fortificationParapetDetail` 값 목록으로 승격했다. 이어 봉수 물리시설·노선·운영어는 `beaconPhysicalFacility`, `beaconNetworkOperation`, `fortressBeaconRelation` 값 목록으로 승격했다.
 
 2026-06-19 구석기 조사법과 `현장조사_방법과_해석.pdf`의 구석기 장을 Survey 구성으로 추가 반영했다. 지표에서 석기가 보이지 않거나 비정형 후보석기만 있을 때도 단구·고토양·기존 신고지점·지도자료, 현지 채집 사진과 부착토·토양시료, 시굴 피트 좌표 유지, 단면시료, 주변 석재 공급지를 함께 남기도록 `paleolithicSurveyStage`, `paleolithicLocationSource`, `paleolithicFieldCollection`, `paleolithicTrialPitCoordinateControl`, `paleolithicProfileSampleRecord`, `paleolithicNonSiteResourceSurvey`를 `Survey` 화면에 배치했다. 검증 샘플은 `paleolithic-survey-lithic-context-sample.json`이다.
 

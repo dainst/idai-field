@@ -704,6 +704,15 @@
         "japaneseFortificationDitch": {
           "label": "왜성 해자"
         },
+        "beaconPhysicalFacility": {
+          "label": "봉수 물리시설"
+        },
+        "beaconNetworkOperation": {
+          "label": "봉수 노선·운영"
+        },
+        "fortressBeaconRelation": {
+          "label": "성곽·봉수 복합관계"
+        },
         "fortificationConstructionEvidence": {
           "label": "성곽 축조기법 근거"
         },

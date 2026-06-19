@@ -757,6 +757,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('horizontalMovementRestriction');
         expect(documentsById['feature-japanese-ditch-001'].resource.japaneseFortificationDitch)
             .toContain('interFortressLink');
+        expect(documentsById['feature-beacon-001'].resource.beaconPhysicalFacility)
+            .toContain('combustionChamber');
+        expect(documentsById['feature-beacon-001'].resource.beaconNetworkOperation)
+            .toContain('counterpartBeacon');
+        expect(documentsById['feature-beacon-001'].resource.fortressBeaconRelation)
+            .toContain('physicalOperationSeparated');
     });
 
 
@@ -1443,6 +1449,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(config.forms['FeatureSegment:default'].fields.firstExposureRecord.mandatory).toBe(true);
         expect(featureForm.fields.fortificationHiddenGateFunction.inputType).toBe('checkboxes');
         expect(featureForm.fields.fortificationParapetDetail.inputType).toBe('checkboxes');
+        expect(featureForm.fields.beaconPhysicalFacility.inputType).toBe('checkboxes');
+        expect(featureForm.fields.beaconNetworkOperation.inputType).toBe('checkboxes');
+        expect(featureForm.fields.fortressBeaconRelation.inputType).toBe('checkboxes');
         expect(featureForm.fields.fortificationConstructionEvidence.inputType).toBe('checkboxes');
         expect(featureForm.fields.fortificationFoundationRecord.inputType).toBe('checkboxes');
         expect(featureForm.fields.fortificationRepairRecord.inputType).toBe('checkboxes');
@@ -1880,6 +1889,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-fortificationHiddenGateFunction');
         expect(featureForm.valuelists.fortificationParapetDetail)
             .toBe('KoreanFieldwork-fortificationParapetDetail');
+        expect(featureForm.valuelists.beaconPhysicalFacility)
+            .toBe('KoreanFieldwork-beaconPhysicalFacility');
+        expect(featureForm.valuelists.beaconNetworkOperation)
+            .toBe('KoreanFieldwork-beaconNetworkOperation');
+        expect(featureForm.valuelists.fortressBeaconRelation)
+            .toBe('KoreanFieldwork-fortressBeaconRelation');
         expect(featureForm.valuelists.fortificationConstructionEvidence)
             .toBe('KoreanFieldwork-fortificationConstructionEvidence');
         expect(featureForm.valuelists.fortificationFoundationRecord)
@@ -2264,6 +2279,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Porcelain kiln excavation control');
         expect(languages.en.categories.Feature.fields.fortificationHiddenGateFunction.label).toBe('Hidden gate function');
         expect(languages.en.categories.Feature.fields.fortificationParapetDetail.label).toBe('Parapet detail');
+        expect(languages.en.categories.Feature.fields.beaconPhysicalFacility.label)
+            .toBe('Beacon physical facility');
+        expect(languages.en.categories.Feature.fields.beaconNetworkOperation.label)
+            .toBe('Beacon route and operation');
+        expect(languages.en.categories.Feature.fields.fortressBeaconRelation.label)
+            .toBe('Fortress-beacon relation');
         expect(languages.en.categories.Feature.fields.fortificationConstructionEvidence.label)
             .toBe('Fortification construction evidence');
         expect(languages.en.categories.Feature.fields.fortificationFoundationRecord.label)
@@ -3048,6 +3069,17 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Military supply transport');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-fortificationParapetDetail'].values.nearGunOpening.label)
             .toBe('Near-range gun opening');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-beaconPhysicalFacility']
+            .values.combustionChamber.label)
+            .toBe('Combustion chamber');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-beaconPhysicalFacility']
+            .values.extantRemainsConfirmed.label)
+            .toBe('현존 유구 확인');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-beaconNetworkOperation'].values.gamgwan.label)
+            .toBe('Gamgwan supervisor');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-fortressBeaconRelation']
+            .values.physicalOperationSeparated.label)
+            .toBe('Physical and operation separated');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-fortificationConstructionEvidence']
             .values.similarPanchukCaution.label)
             .toBe('Similar-panchuk caution');

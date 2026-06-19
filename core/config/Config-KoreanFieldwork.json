@@ -1753,6 +1753,18 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "beaconPhysicalFacility": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "beaconNetworkOperation": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "fortressBeaconRelation": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "fortificationConstructionEvidence": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1856,6 +1868,9 @@
         "fortificationParapetDetail": "KoreanFieldwork-fortificationParapetDetail",
         "fortificationWaterFacility": "KoreanFieldwork-fortificationWaterFacility",
         "japaneseFortificationDitch": "KoreanFieldwork-japaneseFortificationDitch",
+        "beaconPhysicalFacility": "KoreanFieldwork-beaconPhysicalFacility",
+        "beaconNetworkOperation": "KoreanFieldwork-beaconNetworkOperation",
+        "fortressBeaconRelation": "KoreanFieldwork-fortressBeaconRelation",
         "fortificationConstructionEvidence": "KoreanFieldwork-fortificationConstructionEvidence",
         "fortificationFoundationRecord": "KoreanFieldwork-fortificationFoundationRecord",
         "fortificationRepairRecord": "KoreanFieldwork-fortificationRepairRecord",
@@ -1951,6 +1966,9 @@
             "fortificationParapetDetail",
             "fortificationWaterFacility",
             "japaneseFortificationDitch",
+            "beaconPhysicalFacility",
+            "beaconNetworkOperation",
+            "fortressBeaconRelation",
             "fortificationConstructionEvidence",
             "fortificationFoundationRecord",
             "fortificationRepairRecord",

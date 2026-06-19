@@ -1,11 +1,12 @@
 {
   "title": "Korean fortification facility workflow sample",
-  "purpose": "Validate that fortification records separate gate, hidden gate, parapet, water facility, and Japanese-style ditch evidence instead of storing them as one generic fortress feature.",
+  "purpose": "Validate that fortification records separate gate, hidden gate, parapet, water facility, Japanese-style ditch, and beacon evidence instead of storing them as one generic fortress feature.",
   "validationQuestions": [
     "성문 기록이 문지 이름 하나가 아니라 육축, 홍예, 옹성, 적대, 오성지, 누조·누혈, 장군목·장군석 같은 부재 단위로 남는가.",
     "암문이 단순 작은 문이 아니라 은폐 위치, 물자 운반, 구원 요청, 역습 통로, 복원 여부 같은 기능과 상태로 기록되는가.",
     "수문·수구·은구가 배수시설 이름만이 아니라 아치 수, 수계 연결, 상하류 관계, 붕괴·보수 이력으로 기록되는가.",
-    "왜성 해자가 물 유무, 종·횡 방향, 단면형, 이동 제한과 우군 이동·수송 기능을 함께 남기는가."
+    "왜성 해자가 물 유무, 종·횡 방향, 단면형, 이동 제한과 우군 이동·수송 기능을 함께 남기는가.",
+    "봉수대가 연대·연소실·건물지 같은 물리시설, 직봉·대응봉수 같은 운영망, 산성·봉수 복합관계를 서로 다른 값으로 남기는가."
   ],
   "documents": [
     {
@@ -184,6 +185,58 @@
           "transportRoute",
           "drinkingWaterTransport",
           "interFortressLink"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "feature-beacon-001",
+        "identifier": "BF-001",
+        "shortDescription": "산성 정상부 봉수대 후보",
+        "category": "Feature",
+        "relations": {
+          "isRecordedIn": ["op-fortification-001"]
+        },
+        "description": "산성 정상부의 봉수대 후보. 봉수대·봉화대 이칭은 용어 관계로 확인하고, 연대·연소실·외곽석축·건물지 같은 물리시설과 직봉·대응봉수·수번 인원 같은 문헌 운영망을 분리 기록한다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "crossReviewNeeded"
+        ],
+        "fieldOnlyMissingCheck": [
+          "featureOutline",
+          "photoAngleAndScale",
+          "drawingLineReason",
+          "spatialLocation",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "beaconPhysicalFacility": [
+          "bongsudae",
+          "bonghwadaeAlias",
+          "yeondaePlatform",
+          "combustionChamber",
+          "outerStoneWall",
+          "associatedBuildingSite",
+          "damagedState"
+        ],
+        "beaconNetworkOperation": [
+          "directRouteBeacon",
+          "counterpartBeacon",
+          "routeNumberRecorded",
+          "routeChangeRecorded",
+          "watchPersonnelRecorded",
+          "gamgwan",
+          "documentaryEvidenceRequired"
+        ],
+        "fortressBeaconRelation": [
+          "mountaintopFortressBeacon",
+          "watchtowerPrecedingPossible",
+          "physicalOperationSeparated",
+          "routeRelationLinked",
+          "documentaryRelationLinked",
+          "pendingDecision"
         ],
         "verificationState": "pendingDecision"
       }

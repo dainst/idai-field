@@ -704,6 +704,15 @@
         "japaneseFortificationDitch": {
           "label": "Japanese-style fortress ditch"
         },
+        "beaconPhysicalFacility": {
+          "label": "Beacon physical facility"
+        },
+        "beaconNetworkOperation": {
+          "label": "Beacon route and operation"
+        },
+        "fortressBeaconRelation": {
+          "label": "Fortress-beacon relation"
+        },
         "fortificationConstructionEvidence": {
           "label": "Fortification construction evidence"
         },

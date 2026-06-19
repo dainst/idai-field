@@ -17269,12 +17269,17 @@
       "multiFlue": { "label": "Multi-flue" },
       "singleFlueSmall": { "label": "Single flue, small" },
       "singleFlueLarge": { "label": "Single flue, large" },
+      "suctionHolePositionRecorded": { "label": "Suction-hole position recorded" },
+      "suctionHoleHeightCountRecorded": { "label": "Suction-hole height and count recorded" },
+      "externalSmokeOutletConsidered": { "label": "External smoke outlet considered" },
+      "flueFinishingRecorded": { "label": "Flue finishing recorded" },
+      "smokeOutletStoneMeasured": { "label": "Smoke-outlet stone measured" },
       "ashDumpRelationChecked": { "label": "Ash dump relation checked" },
       "ashLayerPartPreserved": { "label": "Ash layer part preserved" },
       "stratigraphicCollection": { "label": "Stratigraphic collection" },
       "pendingDecision": { "label": "Pending decision" }
     },
-    "description": "Part-by-part investigation checks for front area, firebox, combustion chamber, firing chamber, flue, smoke outlet, and ash dump, with caution against reading preservation loss as structural absence"
+    "description": "Part-by-part investigation checks for front area, firebox, combustion chamber, firing chamber, suction holes, flue, smoke outlet, chimney, and ash dump, with caution against reading preservation loss as structural absence"
   },
   "KoreanFieldwork-tileKilnOperationSequence": {
     "values": {

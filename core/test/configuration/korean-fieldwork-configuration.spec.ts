@@ -1306,6 +1306,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('multipleDatingMethodsCompared');
         expect(documentsById['feature-tile-kiln-001'].resource.tileKilnExcavationControl)
             .toContain('ashDumpLinkedBaulk');
+        expect(documentsById['feature-tile-kiln-001'].resource.tileKilnPartInvestigation)
+            .toContain('suctionHoleHeightCountRecorded');
+        expect(documentsById['feature-tile-kiln-001'].resource.tileKilnPartInvestigation)
+            .toContain('externalSmokeOutletConsidered');
+        expect(documentsById['feature-tile-kiln-001'].resource.tileKilnPartInvestigation)
+            .toContain('smokeOutletStoneMeasured');
         expect(documentsById['find-tile-kiln-001'].resource.tileKilnFindContext)
             .toContain('patternByLayerRecorded');
         expect(documentsById['sample-tile-kiln-001'].resource.tileKilnAnalysisPlan)
@@ -3626,6 +3632,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-tileKilnPartInvestigation']
             .values.flueAbsentCaution.label)
             .toBe('Flue absent caution');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-tileKilnPartInvestigation']
+            .values.suctionHoleHeightCountRecorded.label)
+            .toBe('Suction-hole height and count recorded');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-tileKilnPartInvestigation']
+            .values.smokeOutletStoneMeasured.label)
+            .toBe('배연공 석재 실측');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-tileKilnOperationSequence']
             .values.typeNotDateAlone.label)
             .toBe('Type not date alone');

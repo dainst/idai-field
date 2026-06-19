@@ -5515,12 +5515,17 @@
       "multiFlue": { "label": "다연도" },
       "singleFlueSmall": { "label": "소형 단연도" },
       "singleFlueLarge": { "label": "대형 단연도" },
+      "suctionHolePositionRecorded": { "label": "흡화공 위치 기록" },
+      "suctionHoleHeightCountRecorded": { "label": "흡화공 높이·개수 기록" },
+      "externalSmokeOutletConsidered": { "label": "외부 배연공 검토" },
+      "flueFinishingRecorded": { "label": "연도부 마감 기록" },
+      "smokeOutletStoneMeasured": { "label": "배연공 석재 실측" },
       "ashDumpRelationChecked": { "label": "회구부 관계 확인" },
       "ashLayerPartPreserved": { "label": "재층 일부 보존" },
       "stratigraphicCollection": { "label": "층위별 수습" },
       "pendingDecision": { "label": "판단 보류" }
     },
-    "description": "요전부, 아궁이, 연소실, 소성실, 연도, 배연구, 회구부를 부위별로 조사하고 연도 미확인을 보존상태와 구조 차이 양쪽에서 판단하게 하는 목록"
+    "description": "요전부, 아궁이, 연소실, 소성실, 흡화공, 연도, 배연공, 굴뚝, 회구부를 부위별로 조사하고 연도·배연부 미확인을 보존상태와 구조 차이 양쪽에서 판단하게 하는 목록"
   },
   "KoreanFieldwork-tileKilnOperationSequence": {
     "values": {

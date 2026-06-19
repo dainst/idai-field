@@ -108,6 +108,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('한뎃가마');
         expect(documentsById['term-alias-open-kiln-handaetgama'].resource.termAliasHandling)
             .toContain('doNotOverwriteObservedTerm');
+        expect(documentsById['term-authority-block-sampling'].resource.termDictionaryDomain)
+            .toContain('neolithic');
+        expect(documentsById['term-alias-block-sampling-bulk'].resource.termAliasText)
+            .toContain('Bulk sample');
+        expect(documentsById['term-import-block-sampling-lump'].resource.termImportAuthorityText)
+            .toBe('블록시료채집법');
+        expect(documentsById['term-import-block-sampling-lump'].resource.termAliasHandling)
+            .toContain('manualReviewRequired');
         expect(documentsById['term-authority-pottery-workshop'].resource.termSearchMapping)
             .toContain('importMappingNeeded');
         expect(documentsById['term-import-pottery-workshop-subijang'].resource.termImportAuthorityText)

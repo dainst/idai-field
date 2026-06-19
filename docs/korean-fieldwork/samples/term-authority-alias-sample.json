@@ -406,6 +406,128 @@
     },
     {
       "resource": {
+        "id": "term-authority-block-sampling",
+        "identifier": "블록시료채집법",
+        "shortDescription": "덩어리시료채집법·Bulk sample 계열 권위 표제어",
+        "category": "TermAuthority",
+        "relations": {
+          "liesWithin": ["term-group-korean-archaeology"]
+        },
+        "description": "신석기시대편 사전의 덩어리시료채집법[Bulk試料採集法] 찾아가기 관계를 블록시료채집법으로 연결하되, 실제 시료 부피·층위·망목·채집 위치는 Sample 관찰값으로 따로 남긴다.",
+        "termDictionaryDomain": ["neolithic", "generalArchaeology"],
+        "termApplicationScope": ["valueListEntry", "searchAlias", "sourceDictionaryLink", "importMapping"],
+        "termSourcePriority": ["domainSpecialistDictionary", "methodologyTerm", "pdfCrossCheckRequired"],
+        "termRelation": ["preferredTerm", "alias", "domainRestricted"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "fieldUsagePreserved",
+          "domainScopeSet",
+          "importMappingNeeded",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "valueListCandidate"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-alias-block-sampling-lump",
+        "identifier": "덩어리시료채집법",
+        "shortDescription": "사전 찾아가기: 덩어리시료채집법",
+        "category": "TermAlias",
+        "relations": {
+          "liesWithin": ["term-authority-block-sampling"]
+        },
+        "description": "덩어리시료채집법 입력어는 블록시료채집법 검색으로 연결하되, 현장에 적힌 채집명과 시료 단위는 보존한다.",
+        "termAliasText": "덩어리시료채집법",
+        "termAliasRole": ["dictionarySeeAlso", "fieldSynonym"],
+        "termAliasHandling": [
+          "autocompleteAccepted",
+          "preferredHeadwordTarget",
+          "keepAliasForSearch",
+          "domainScoped",
+          "doNotOverwriteObservedTerm"
+        ],
+        "termRelation": ["alias", "domainRestricted"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "fieldUsagePreserved",
+          "domainScopeSet",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-alias-block-sampling-bulk",
+        "identifier": "Bulk sample",
+        "shortDescription": "원어 검색어: Bulk sample",
+        "category": "TermAlias",
+        "relations": {
+          "liesWithin": ["term-authority-block-sampling"]
+        },
+        "description": "영문 Bulk sample과 Bulk sampling은 사전 원어 색인으로 보존하고, 보고서 출력어와 현장 시료 기록은 한국어 권위 표제어와 관찰값으로 분리한다.",
+        "termAliasText": "Bulk sample / Bulk sampling",
+        "termAliasRole": ["dictionarySeeAlso", "foreignOriginalName"],
+        "termAliasHandling": [
+          "autocompleteAccepted",
+          "preferredHeadwordTarget",
+          "keepAliasForSearch",
+          "domainScoped",
+          "doNotOverwriteObservedTerm"
+        ],
+        "termRelation": ["alias", "domainRestricted"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "originalScriptIndexed",
+          "sourceLanguageIndexed",
+          "domainScopeSet",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "originalScriptChecked"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-import-block-sampling-lump",
+        "identifier": "IMPORT-SAMPLE-001",
+        "shortDescription": "가져오기 입력어 덩어리시료채집법의 권위어 매핑",
+        "category": "TermImportMapping",
+        "relations": {
+          "liesWithin": ["term-authority-block-sampling"]
+        },
+        "description": "기존 시료 목록이나 사진 캡션에서 덩어리시료채집법이 들어오면 블록시료채집법에 연결하되, 자동 치환 전에는 층위·부피·망목·채집 위치를 수동 검토한다.",
+        "termImportSourceText": "덩어리시료채집법",
+        "termImportAuthorityText": "블록시료채집법",
+        "termImportReportText": "블록시료채집법",
+        "termAliasHandling": [
+          "importOnly",
+          "preferredHeadwordTarget",
+          "keepAliasForSearch",
+          "manualReviewRequired",
+          "doNotOverwriteObservedTerm"
+        ],
+        "termRelation": ["alias", "domainRestricted"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "fieldUsagePreserved",
+          "domainScopeSet",
+          "importMappingNeeded",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "pendingDecision"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
         "id": "term-authority-kiln-site",
         "identifier": "요지",
         "shortDescription": "가마터·요 계열 생산유적 권위 표제어",

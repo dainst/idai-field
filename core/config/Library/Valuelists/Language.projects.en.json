@@ -11937,6 +11937,32 @@
     },
     "description": "Korean artifact lifecycle checks for tracking finds from field collection through emergency treatment, conservation, reports, selection, state vesting, packing, transport, and transfer"
   },
+  "KoreanFieldwork-artifactLabelRegisterLink": {
+    "values": {
+      "labelCreated": { "label": "Label created" },
+      "institutionRecorded": { "label": "Institution recorded" },
+      "collectionDateRecorded": { "label": "Collection date recorded" },
+      "sitePointRecorded": { "label": "Site point recorded" },
+      "excavationGridRecorded": { "label": "Excavation grid recorded" },
+      "fieldSerialNumber": { "label": "Field serial number" },
+      "stratigraphicUnitRecorded": { "label": "Stratigraphic unit recorded" },
+      "artifactLayerRecorded": { "label": "Artifact layer recorded" },
+      "artifactNameRecorded": { "label": "Artifact name recorded" },
+      "materialRecorded": { "label": "Material or stone type recorded" },
+      "coordinateEastWestRecorded": { "label": "East-west coordinate recorded" },
+      "coordinateNorthSouthRecorded": { "label": "North-south coordinate recorded" },
+      "depthRecorded": { "label": "Depth recorded" },
+      "dimensionsRecorded": { "label": "Dimensions recorded" },
+      "weightRecorded": { "label": "Weight recorded" },
+      "baggedByLayerWithLabel": { "label": "Bagged by layer with label" },
+      "ledgerEntryCreated": { "label": "Ledger entry created" },
+      "uniqueRegistrationNumberMarked": { "label": "Unique registration number marked" },
+      "fieldSerialInventoryNumberLinked": { "label": "Field serial and inventory number linked" },
+      "ledgerRegisterPermanent": { "label": "Ledger kept with label" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean artifact label and register checks for keeping field labels, field serial numbers, coordinates, depth, dimensions, weight, artifact ledgers, unique registration numbers, and inventory numbers linked"
+  },
   "KoreanFieldwork-artifactQuantityBasis": {
     "values": {
       "administrativeLotCount": {

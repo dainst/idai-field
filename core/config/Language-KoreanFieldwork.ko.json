@@ -517,6 +517,9 @@
         "artifactHandlingWorkflow": {
           "label": "유물 관리 절차"
         },
+        "artifactLabelRegisterLink": {
+          "label": "유물 꼬리표·대장 연결"
+        },
         "artifactQuantityBasis": {
           "label": "유물 건·점수 산정"
         },

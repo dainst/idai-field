@@ -186,6 +186,31 @@ describe('KoreanFieldwork project configuration', () => {
     });
 
 
+    it('keeps the Korean artifact label-register sample aligned with Find fields', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const sample = loadSample('artifact-label-register-sample.json');
+        const documents = sample.documents;
+        const documentsById = documents.reduce((index: any, document: any) => {
+            index[document.resource.id] = document;
+            return index;
+        }, {});
+
+        expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
+
+        expect(documentsById['find-artifact-label-001'].resource.artifactLabelRegisterLink)
+            .toContain('labelCreated');
+        expect(documentsById['find-artifact-label-001'].resource.artifactLabelRegisterLink)
+            .toContain('fieldSerialInventoryNumberLinked');
+        expect(documentsById['find-artifact-label-001'].resource.artifactLabelRegisterLink)
+            .toContain('uniqueRegistrationNumberMarked');
+        expect(documentsById['find-artifact-label-001'].resource.relations.isRecordedIn)
+            .toEqual(['op-artifact-register-001']);
+    });
+
+
     it('registers the field-record preservation fields in the bundled configuration', () => {
 
         const configReader = new ConfigReader();
@@ -329,6 +354,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureSegmentForm.fields.wetlandMicrotopographyRecord.inputType).toBe('checkboxes');
         expect(findForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
         expect(findForm.fields.artifactHandlingWorkflow.inputType).toBe('checkboxes');
+        expect(findForm.fields.artifactLabelRegisterLink.inputType).toBe('checkboxes');
         expect(findForm.fields.artifactQuantityBasis.inputType).toBe('checkboxes');
         expect(findForm.fields.surfaceFindHandlingRecord.inputType).toBe('checkboxes');
         expect(findForm.fields.artifactRecoveryPreservationRisk.inputType).toBe('checkboxes');
@@ -648,6 +674,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-wetlandMicrotopographyRecord');
         expect(findForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
         expect(findForm.valuelists.artifactHandlingWorkflow).toBe('KoreanFieldwork-artifactHandlingWorkflow');
+        expect(findForm.valuelists.artifactLabelRegisterLink)
+            .toBe('KoreanFieldwork-artifactLabelRegisterLink');
         expect(findForm.valuelists.artifactQuantityBasis).toBe('KoreanFieldwork-artifactQuantityBasis');
         expect(findForm.valuelists.surfaceFindHandlingRecord)
             .toBe('KoreanFieldwork-surfaceFindHandlingRecord');
@@ -998,6 +1026,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.Find.fields.termSearchMapping.label).toBe('Term search mapping');
         expect(languages.en.categories.Find.fields.artifactHandlingWorkflow.label)
             .toBe('Artifact handling workflow');
+        expect(languages.en.categories.Find.fields.artifactLabelRegisterLink.label)
+            .toBe('Artifact label-register link');
         expect(languages.en.categories.Find.fields.artifactQuantityBasis.label).toBe('Artifact quantity basis');
         expect(languages.en.categories.Find.fields.storageEnvironmentControl.label)
             .toBe('Storage environment control');
@@ -1280,6 +1310,9 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Pre-removal condition');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactHandlingWorkflow'].values.stateVesting.label)
             .toBe('State vesting');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactLabelRegisterLink']
+            .values.fieldSerialInventoryNumberLinked.label)
+            .toBe('Field serial and inventory number linked');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactQuantityBasis'].values.sameObjectConfirmed.label)
             .toBe('Same object confirmed');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactRecoveryPreservationRisk']

@@ -517,6 +517,9 @@
         "artifactHandlingWorkflow": {
           "label": "Artifact handling workflow"
         },
+        "artifactLabelRegisterLink": {
+          "label": "Artifact label-register link"
+        },
         "artifactQuantityBasis": {
           "label": "Artifact quantity basis"
         },

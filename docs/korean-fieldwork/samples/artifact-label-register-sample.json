@@ -1,0 +1,99 @@
+{
+  "title": "Korean artifact label and register linkage sample",
+  "purpose": "Validate that field labels, field serial numbers, artifact ledgers, unique registration numbers, and inventory numbers stay connected in the Korean fieldwork configuration.",
+  "validationQuestions": [
+    "현장 꼬리표의 조사기관, 일자, 지점, 발굴칸, 층위, 좌표, 깊이, 치수, 무게가 유물대장으로 이어지는가.",
+    "현장 일련번호와 보고서 정리번호가 따로 놀지 않고 한 유물 카드에서 추적되는가.",
+    "고유 등록번호 표기와 꼬리표·대장 보존 여부가 유물 수습 뒤에도 확인되는가."
+  ],
+  "documents": [
+    {
+      "resource": {
+        "id": "op-artifact-register-001",
+        "identifier": "ARTREG-001",
+        "shortDescription": "유물 꼬리표·대장 점검 작업",
+        "category": "Operation",
+        "relations": {},
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "reproducibleRecord",
+          "crossReviewNeeded"
+        ],
+        "recordCreationTiming": "duringFieldwork",
+        "dailyLogContent": [
+          "workDateWeather",
+          "workArea",
+          "findSampleCollection",
+          "photoDrawingNumbers"
+        ],
+        "dailyLogReview": [
+          "findListCrossChecked",
+          "sampleListCrossChecked",
+          "sameDayWritten"
+        ],
+        "reportCrossCheck": [
+          "artifactRegister",
+          "manuscript",
+          "photoRegister"
+        ]
+      }
+    },
+    {
+      "resource": {
+        "id": "find-artifact-label-001",
+        "identifier": "F-ART-001",
+        "shortDescription": "시굴구덩이 출토 석기 꼬리표",
+        "category": "Find",
+        "relations": {
+          "isRecordedIn": ["op-artifact-register-001"]
+        },
+        "description": "층위별 봉투에 꼬리표를 동봉하고, 현장 일련번호를 유물대장과 정리번호까지 연결하는지 검증하는 샘플.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "reproducibleRecord",
+          "criteriaConsistency"
+        ],
+        "fieldOnlyMissingCheck": [
+          "numberedBeforeCollection",
+          "spatialLocation",
+          "sameDayReview",
+          "notRecoverableWarning"
+        ],
+        "artifactHandlingWorkflow": [
+          "fieldCollection",
+          "findConditionRecord",
+          "reportPreparation",
+          "stateVesting"
+        ],
+        "artifactLabelRegisterLink": [
+          "labelCreated",
+          "institutionRecorded",
+          "collectionDateRecorded",
+          "sitePointRecorded",
+          "excavationGridRecorded",
+          "fieldSerialNumber",
+          "stratigraphicUnitRecorded",
+          "artifactLayerRecorded",
+          "artifactNameRecorded",
+          "materialRecorded",
+          "coordinateEastWestRecorded",
+          "coordinateNorthSouthRecorded",
+          "depthRecorded",
+          "dimensionsRecorded",
+          "weightRecorded",
+          "baggedByLayerWithLabel",
+          "ledgerEntryCreated",
+          "uniqueRegistrationNumberMarked",
+          "fieldSerialInventoryNumberLinked",
+          "ledgerRegisterPermanent"
+        ],
+        "artifactQuantityBasis": [
+          "physicalItemCount",
+          "oneLotOneItem",
+          "quantityEvidencePhoto"
+        ],
+        "verificationState": "candidate"
+      }
+    }
+  ]
+}

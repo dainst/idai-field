@@ -183,6 +183,32 @@
     },
     "description": "유물이 출토 위치와 수습번호만 남기고 끝나지 않도록 현장수습, 응급처치, 보존처리, 보고서, 선별회의, 국가귀속, 포장·이송, 이관을 하나의 생애주기로 추적하기 위한 목록"
   },
+  "KoreanFieldwork-artifactLabelRegisterLink": {
+    "values": {
+      "labelCreated": { "label": "꼬리표 작성" },
+      "institutionRecorded": { "label": "조사기관 기록" },
+      "collectionDateRecorded": { "label": "조사일자 기록" },
+      "sitePointRecorded": { "label": "조사지점 기록" },
+      "excavationGridRecorded": { "label": "발굴칸 기록" },
+      "fieldSerialNumber": { "label": "현장 일련번호" },
+      "stratigraphicUnitRecorded": { "label": "지층 기록" },
+      "artifactLayerRecorded": { "label": "유물층 기록" },
+      "artifactNameRecorded": { "label": "유물명 기록" },
+      "materialRecorded": { "label": "재질·암질 기록" },
+      "coordinateEastWestRecorded": { "label": "동서좌표 기록" },
+      "coordinateNorthSouthRecorded": { "label": "남북좌표 기록" },
+      "depthRecorded": { "label": "깊이 기록" },
+      "dimensionsRecorded": { "label": "치수 기록" },
+      "weightRecorded": { "label": "무게 기록" },
+      "baggedByLayerWithLabel": { "label": "층위별 봉투·꼬리표 동봉" },
+      "ledgerEntryCreated": { "label": "유물대장 등재" },
+      "uniqueRegistrationNumberMarked": { "label": "고유 등록번호 표기" },
+      "fieldSerialInventoryNumberLinked": { "label": "일련번호·정리번호 연결" },
+      "ledgerRegisterPermanent": { "label": "꼬리표와 대장 보존" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "현장 꼬리표의 조사기관, 일자, 지점, 발굴칸, 일련번호, 지층, 유물층, 유물명, 재질·암질, 좌표, 깊이, 치수, 무게가 유물대장, 고유 등록번호, 정리번호와 끊기지 않게 점검하기 위한 목록"
+  },
   "KoreanFieldwork-artifactQuantityBasis": {
     "values": {
       "administrativeLotCount": {

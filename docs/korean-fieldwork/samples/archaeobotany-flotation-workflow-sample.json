@@ -1,0 +1,214 @@
+{
+  "title": "Korean archaeobotany flotation workflow sample",
+  "purpose": "Validate that Korean Sample records keep archaeobotanical sampling, flotation processing, plant-remain identification, interpretation review, and non-detection assessment together before crop, diet, or vegetation interpretations are fixed.",
+  "validationQuestions": [
+    "바닥면·아궁이 재·토기 내부토처럼 버리기 쉬운 토양이 채취 위치, 처리 전 토양량, 체눈, 물체질·플로테이션 조건과 함께 남는가.",
+    "탄화곡물과 식물유체 동정이 현생 비교표본, 탄화 비교, 관찰면, 확대사진, 계측치, 동정 신뢰도와 함께 남는가.",
+    "검출·미검출 결과가 곧바로 농경·식생활·식생 결론으로 닫히지 않고 분석 결과, 해석 결론, 표본 편향, 보존 불량, 미분석 구역을 분리하는가."
+  ],
+  "documents": [
+    {
+      "resource": {
+        "id": "op-archaeobotany-flotation-001",
+        "identifier": "ARCHBOT-OP-001",
+        "shortDescription": "식물유체 부유선별 검토 작업",
+        "category": "Operation",
+        "relations": {},
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "reproducibleRecord",
+          "crossReviewNeeded"
+        ],
+        "recordCreationTiming": "duringFieldwork",
+        "dailyLogContent": [
+          "workDateWeather",
+          "workArea",
+          "featureProgress",
+          "findSampleCollection",
+          "photoDrawingNumbers",
+          "changeReason"
+        ],
+        "dailyLogReview": [
+          "sameDayWritten",
+          "photoDrawingCrossChecked",
+          "sampleListCrossChecked",
+          "reviewerChecked"
+        ],
+        "reportCrossCheck": [
+          "manuscript",
+          "sampleRegister",
+          "photoRegister",
+          "dailyLog",
+          "numberConversionTable"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "feature-hearth-archaeobotany-001",
+        "identifier": "ARCHBOT-FEAT-001",
+        "shortDescription": "아궁이 재층과 완형토기 내부토",
+        "category": "Feature",
+        "relations": {
+          "isRecordedIn": ["op-archaeobotany-flotation-001"]
+        },
+        "description": "수혈건물지 바닥면의 아궁이 재층과 주변 완형토기 내부토가 함께 확인되어 식물유체·동물유체·잔류물 분석을 분리 채취하는 맥락.",
+        "featurePackage": [
+          "pitDwelling",
+          "alluvialSite"
+        ],
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "criteriaConsistency"
+        ],
+        "fieldOnlyMissingCheck": [
+          "featureOutline",
+          "stratigraphicBoundary",
+          "samplePointMapped",
+          "photoAngleAndScale",
+          "spatialLocation",
+          "elevationRecorded",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "pitDwellingFloorFacility": [
+          "floorSurfaceIdentified",
+          "firstFillNotMisread",
+          "hearthChecked",
+          "stoveOrGudeulChecked",
+          "findsLeftUntilFloorCheck",
+          "pendingDecision"
+        ],
+        "featureFillInterpretation": [
+          "useDeposit",
+          "functionalSurface",
+          "postAbandonmentDeposit",
+          "attributionCaution"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "sample-archaeobotany-flotation-001",
+        "identifier": "ARCHBOT-SMP-001",
+        "shortDescription": "아궁이 재층 식물유체 시료",
+        "category": "Sample",
+        "relations": {
+          "isRecordedIn": ["op-archaeobotany-flotation-001"],
+          "isRecordedInFeature": ["feature-hearth-archaeobotany-001"]
+        },
+        "description": "아궁이 재층과 토기 내부토에서 나눈 토양 시료. 처리 전 토양량, 물체질·플로테이션, 잔류물·부유물, 동정 근거와 미검출 조건을 함께 기록한다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "reproducibleRecord",
+          "crossReviewNeeded"
+        ],
+        "fieldOnlyMissingCheck": [
+          "samplePointMapped",
+          "sampleConditionControlled",
+          "spatialLocation",
+          "elevationRecorded",
+          "sameDayReview",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "samplePurpose": [
+          "paleoenvironment",
+          "archaeobotany",
+          "absoluteDating",
+          "contaminationControl"
+        ],
+        "sampleCollectionHandling": [
+          "immediateCollection",
+          "dedicatedSamplingTool",
+          "carbonizedGrainSeparate",
+          "contextMapLinked",
+          "pendingDecision"
+        ],
+        "archaeobotanySampleDesign": [
+          "analysisMaterialSelected",
+          "researchQuestionSelected",
+          "samplingMethodSelected",
+          "amsCandidate",
+          "vegetationReconstructionCandidate",
+          "dietReconstructionCandidate",
+          "fuelUseQuestion",
+          "collectionPointDiversity",
+          "contextDistributionRecorded",
+          "pendingDecision"
+        ],
+        "plantRemainSamplingMethod": [
+          "nonProbabilitySample",
+          "stratifiedRandomSample",
+          "gridUnit",
+          "layerUnit",
+          "featureUnit",
+          "collectionPointRecorded",
+          "unanalyzedArea",
+          "sampleBiasRecorded",
+          "pendingDecision"
+        ],
+        "flotationProcessingRecord": [
+          "waterSieving",
+          "flotation",
+          "densitySeparation",
+          "preProcessingSoilAmount",
+          "residueAfterProcessing",
+          "lightFractionAfterProcessing",
+          "meshSizeRecorded",
+          "fieldProcessing",
+          "labProcessing",
+          "unprocessedReason",
+          "processingBiasRecorded",
+          "pendingDecision"
+        ],
+        "plantRemainIdentificationRecord": [
+          "modernComparativeSpecimen",
+          "archaeologicalPlantRemain",
+          "morphologyComparison",
+          "modernCarbonizedComparison",
+          "carbonizedRiceGrain",
+          "carbonizedBarley",
+          "transverseSection",
+          "enlargedPhoto",
+          "metricRecorded",
+          "identificationConfidence",
+          "alternativeTaxon",
+          "pendingDecision"
+        ],
+        "archaeobotanyInterpretationReview": [
+          "archaeobotanyAnalysis",
+          "paleoethnobotanyInterpretation",
+          "analyticalResultSeparated",
+          "interpretationConclusionLinked",
+          "debatedCaseRecorded",
+          "vegetationReconstruction",
+          "agriculturalDevelopment",
+          "dietReconstruction",
+          "harvestStorage",
+          "dwellingDistributionCompared",
+          "pendingDecision"
+        ],
+        "plantRemainNonDetectionAssessment": [
+          "nonDetection",
+          "unanalyzedArea",
+          "sampleCountInsufficient",
+          "poorPreservation",
+          "processingMethodDifference",
+          "sampleBias",
+          "researchQuestionLimit",
+          "absenceNotAssumed",
+          "pendingDecision"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    }
+  ]
+}

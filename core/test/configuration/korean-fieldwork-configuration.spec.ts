@@ -481,6 +481,41 @@ describe('KoreanFieldwork project configuration', () => {
     });
 
 
+    it('keeps the Korean archaeobotany flotation sample aligned with Sample fields', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const sample = loadSample('archaeobotany-flotation-workflow-sample.json');
+        const documents = sample.documents;
+        const documentsById = documents.reduce((index: any, document: any) => {
+            index[document.resource.id] = document;
+            return index;
+        }, {});
+
+        expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
+
+        expect(documentsById['sample-archaeobotany-flotation-001'].resource.sampleCollectionHandling)
+            .toContain('carbonizedGrainSeparate');
+        expect(documentsById['sample-archaeobotany-flotation-001'].resource.archaeobotanySampleDesign)
+            .toContain('researchQuestionSelected');
+        expect(documentsById['sample-archaeobotany-flotation-001'].resource.plantRemainSamplingMethod)
+            .toContain('unanalyzedArea');
+        expect(documentsById['sample-archaeobotany-flotation-001'].resource.flotationProcessingRecord)
+            .toContain('preProcessingSoilAmount');
+        expect(documentsById['sample-archaeobotany-flotation-001'].resource.flotationProcessingRecord)
+            .toContain('lightFractionAfterProcessing');
+        expect(documentsById['sample-archaeobotany-flotation-001'].resource.plantRemainIdentificationRecord)
+            .toContain('modernComparativeSpecimen');
+        expect(documentsById['sample-archaeobotany-flotation-001'].resource.plantRemainIdentificationRecord)
+            .toContain('identificationConfidence');
+        expect(documentsById['sample-archaeobotany-flotation-001'].resource.archaeobotanyInterpretationReview)
+            .toContain('analyticalResultSeparated');
+        expect(documentsById['sample-archaeobotany-flotation-001'].resource.plantRemainNonDetectionAssessment)
+            .toContain('absenceNotAssumed');
+    });
+
+
     it('keeps the Korean alluvial landform and layer sample aligned with survey and layer fields', () => {
 
         const configReader = new ConfigReader();

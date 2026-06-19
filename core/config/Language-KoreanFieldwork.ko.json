@@ -418,6 +418,18 @@
         "featureFillInterpretation": {
           "label": "유구 내부토 해석"
         },
+        "stratigraphicObservationProcedure": {
+          "label": "토층 관찰 절차"
+        },
+        "featureLifecycleReview": {
+          "label": "유구 라이프사이클 검토"
+        },
+        "featureBlockInclusionAssessment": {
+          "label": "유구 내부 블록 판정"
+        },
+        "featureBurialProcessAssessment": {
+          "label": "유구 매몰 과정 판정"
+        },
         "soilTextureFieldAssessment": {
           "label": "토성 현장판정"
         },

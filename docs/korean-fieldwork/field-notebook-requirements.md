@@ -56,6 +56,8 @@
 
 층 구분·내부토 보강분은 `FeatureSegment`에 `stratigraphicDivisionBasis`, `layerNamingSystem`, `featureFillInterpretation`, `soilTextureFieldAssessment`를 추가했다. 색 차이만으로 층을 나누지 않고 입도, 혼합 상태, 층리면, 퇴적구조, 삭평·부정합, 수로 기능면, 토양화, 구지표와 문화층을 분리하며, 홍수퇴적처럼 하나의 사건층으로 유지해야 하는 경우도 기록한다. 층명은 대·중·세분층, a/b층, 문화층 번호, 유구 확인면 번호와 변경 이력을 남기고, 유구 내부토는 가공면, 기능면, 인위매립토, 붕락토, 자연유입토, 폐기 후 퇴적층과 귀속 주의를 따로 저장한다.
 
+유구 내부층 라이프사이클 보강분은 같은 `FeatureSegment`에 `stratigraphicObservationProcedure`, `featureLifecycleReview`, `featureBlockInclusionAssessment`, `featureBurialProcessAssessment`를 추가했다. 토층 단면 정리, 그늘·햇볕 조건, 반복 관찰, 층간 비교, 문화층 표시 같은 관찰 절차를 먼저 남기고, 그 뒤 내부층을 축조·사용·폐기·매몰 과정으로 검토한다. 이질토 블록은 인위매립으로 자동 판정하지 않고 기반층 유래, 타처 운반, 붕락층, 가공시 형성층, 유물 걸침 여부를 분리하며, 매몰 과정은 급격·점진 매몰, 자연유입, 수성퇴적, 라미나, 토양화 휴지기와 일괄유물 매몰을 따로 기록한다.
+
 생활유적 조사절차 보강분은 `Feature`에 `pitFeatureFunctionAssessment`, `settlementFeatureInvestigationProcedure`, `settlementFeatureTrenchStrategy`를 추가했다. 수혈은 주거지로 바로 확정하지 않고 창고, 공방, 공공시설, 함정, 화장실, 폐기장, 태토 채취장, 노지·경화면·조리용기·저장공 근거를 함께 남긴다. 조사 절차는 사전조사, 평면조사, 중복관계, 트렌치와 둑, 하강, 내부 정리, 바닥조사, 절개와 검토 사진으로 나누고, 트렌치는 최소 훼손으로 바닥면·벽선·단면 연속성과 도면 역전 위험을 확인하는 전략값으로 관리한다.
 
 생산유적과 유물 수습 보강분은 `Feature`와 `Find`에 나누어 배치했다. `productionProcessSystem`은 원료 채취·가공, 수비, 연토, 성형, 재임, 소성, 요출, 선별, 폐기와 보수 폐기물을 공정 순서로 남기고, `productionSiteAssociatedFacility`는 채토장, 점토 저장공, 녹로 축혈, 공방, 수비장, 건조장, 집수·배수시설, 주거지, 숯가마, 폐기장을 생산 체계와 연결한다. `artifactRecoveryPreservationRisk`와 `artifactCleaningDryingControl`은 소형유물·미세박편 유실, 내부토 물체질, 수분·자외선·염·산화·건조수축 위험, 보호장구·전문가 의뢰, 유구 단위 분리, 수습번호 유지, 세척 방식, 수침 보관, 그늘 건조와 급건조 방지를 `Find`에서 관리한다. 이미 구현된 `artifactHandlingWorkflow`, `artifactQuantityBasis`, `storageEnvironmentControl`은 전체 정리·등록·수장 흐름을 담당하고, 가마 내부 유물 귀속 위험은 토기가마 맥락의 `potteryKilnInterpretationRisk`와 함께 본다.

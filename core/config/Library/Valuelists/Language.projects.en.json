@@ -12361,6 +12361,79 @@
     },
     "description": "Korean feature-fill checks for separating construction, use, abandonment, burial, and find-attribution cautions instead of recording every fill as backfill"
   },
+  "KoreanFieldwork-stratigraphicObservationProcedure": {
+    "values": {
+      "verticalFaceCleaned": { "label": "Vertical face cleaned" },
+      "observationTimeSufficient": { "label": "Observation time sufficient" },
+      "sensoryObservation": { "label": "Sensory observation" },
+      "repeatedObservation": { "label": "Repeated observation" },
+      "shadeObservation": { "label": "Shade observation" },
+      "sunlightObservation": { "label": "Sunlight observation" },
+      "totalCompositionRecorded": { "label": "Total composition recorded" },
+      "comparativeLayerChecked": { "label": "Comparative layer checked" },
+      "layerNumberAssigned": { "label": "Layer number assigned" },
+      "layerDescriptionRecorded": { "label": "Layer description recorded" },
+      "culturalLayerMarked": { "label": "Cultural layer marked" },
+      "relatedLayersGrouped": { "label": "Related layers grouped" },
+      "surroundingLocationSummarized": { "label": "Surrounding location summarized" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean stratigraphic observation checks for recording face cleaning, light conditions, repeated observation, layer comparison, and cultural-layer marking"
+  },
+  "KoreanFieldwork-featureLifecycleReview": {
+    "values": {
+      "locationFormRecorded": { "label": "Location/form recorded" },
+      "generalFunctionCandidate": { "label": "General function candidate" },
+      "culturalLayerRelation": { "label": "Cultural-layer relation" },
+      "naturalDepositRelation": { "label": "Natural-deposit relation" },
+      "cutSurface": { "label": "Cut surface" },
+      "useSurface": { "label": "Use surface" },
+      "individualLayerGroup": { "label": "Individual layer group" },
+      "constructionProcess": { "label": "Construction process" },
+      "useProcess": { "label": "Use process" },
+      "abandonmentProcess": { "label": "Abandonment process" },
+      "burialProcess": { "label": "Burial process" },
+      "comparativeCase": { "label": "Comparative case" },
+      "scientificAnalysisData": { "label": "Scientific analysis data" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean feature lifecycle checks for relating internal layers to location, function, cultural and natural deposits, and construction-use-abandonment-burial processes"
+  },
+  "KoreanFieldwork-featureBlockInclusionAssessment": {
+    "values": {
+      "blockBearingLayer": { "label": "Block-bearing layer" },
+      "blockMaterialRecorded": { "label": "Block material recorded" },
+      "baseLayerDerived": { "label": "Base-layer derived" },
+      "transportedFromElsewhere": { "label": "Transported from elsewhere" },
+      "angularBlock": { "label": "Angular block" },
+      "roundedBlock": { "label": "Rounded block" },
+      "collapseDepositCandidate": { "label": "Collapse deposit candidate" },
+      "artificialFillCandidate": { "label": "Artificial fill candidate" },
+      "formationLayerCandidate": { "label": "Formation-layer candidate" },
+      "artifactSpansBlock": { "label": "Artifact spans block" },
+      "exposureTimingReviewed": { "label": "Exposure timing reviewed" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean block-inclusion checks for separating transported blocks, base-layer material, collapse, artificial fill, formation layers, and artifact attribution"
+  },
+  "KoreanFieldwork-featureBurialProcessAssessment": {
+    "values": {
+      "rapidBurial": { "label": "Rapid burial" },
+      "gradualBurial": { "label": "Gradual burial" },
+      "artificialFill": { "label": "Artificial fill" },
+      "naturalInflow": { "label": "Natural inflow" },
+      "waterlaidDeposit": { "label": "Waterlaid deposit" },
+      "repeatedCollapse": { "label": "Repeated collapse" },
+      "laminaPresent": { "label": "Lamina present" },
+      "hiatusTrace": { "label": "Hiatus trace" },
+      "soilFormationTrace": { "label": "Soil-formation trace" },
+      "burntSoilInclusion": { "label": "Burnt-soil inclusion" },
+      "charcoalAshInclusion": { "label": "Charcoal/ash inclusion" },
+      "bulkArtifactBurial": { "label": "Bulk artifact burial" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean burial-process checks for separating rapid and gradual burial, artificial fill, natural inflow, waterlaid deposits, collapse, hiatuses, soil formation, and bulk artifact burial"
+  },
   "KoreanFieldwork-soilTextureFieldAssessment": {
     "values": {
       "fingerRubbing": { "label": "Finger rubbing" },

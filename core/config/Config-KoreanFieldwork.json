@@ -1048,6 +1048,22 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "stratigraphicObservationProcedure": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "featureLifecycleReview": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "featureBlockInclusionAssessment": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "featureBurialProcessAssessment": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "soilTextureFieldAssessment": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1098,6 +1114,10 @@
         "stratigraphicDivisionBasis": "KoreanFieldwork-stratigraphicDivisionBasis",
         "layerNamingSystem": "KoreanFieldwork-layerNamingSystem",
         "featureFillInterpretation": "KoreanFieldwork-featureFillInterpretation",
+        "stratigraphicObservationProcedure": "KoreanFieldwork-stratigraphicObservationProcedure",
+        "featureLifecycleReview": "KoreanFieldwork-featureLifecycleReview",
+        "featureBlockInclusionAssessment": "KoreanFieldwork-featureBlockInclusionAssessment",
+        "featureBurialProcessAssessment": "KoreanFieldwork-featureBurialProcessAssessment",
         "soilTextureFieldAssessment": "KoreanFieldwork-soilTextureFieldAssessment",
         "alluvialLayerConceptAudit": "KoreanFieldwork-alluvialLayerConceptAudit",
         "alluvialSurfaceAttribution": "KoreanFieldwork-alluvialSurfaceAttribution",
@@ -1137,6 +1157,10 @@
             "stratigraphicDivisionBasis",
             "layerNamingSystem",
             "featureFillInterpretation",
+            "stratigraphicObservationProcedure",
+            "featureLifecycleReview",
+            "featureBlockInclusionAssessment",
+            "featureBurialProcessAssessment",
             "soilTextureFieldAssessment",
             "alluvialLayerConceptAudit",
             "alluvialSurfaceAttribution",

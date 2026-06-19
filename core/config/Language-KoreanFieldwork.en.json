@@ -418,6 +418,18 @@
         "featureFillInterpretation": {
           "label": "Feature fill interpretation"
         },
+        "stratigraphicObservationProcedure": {
+          "label": "Stratigraphic observation procedure"
+        },
+        "featureLifecycleReview": {
+          "label": "Feature lifecycle review"
+        },
+        "featureBlockInclusionAssessment": {
+          "label": "Feature block inclusion assessment"
+        },
+        "featureBurialProcessAssessment": {
+          "label": "Feature burial process assessment"
+        },
         "soilTextureFieldAssessment": {
           "label": "Soil texture field assessment"
         },

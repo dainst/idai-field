@@ -32474,6 +32474,74 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-pitDwellingInvestigationSequence": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "planConfirmation": {},
+      "baulkLayoutRecorded": {},
+      "firstExposureRecorded": {},
+      "secondExposureRecorded": {},
+      "thirdExposureRecorded": {},
+      "stagedPlanDrawingLinked": {},
+      "samePhotoStationMaintained": {},
+      "droneRouteRepeated": {},
+      "stageSurfaceSeparated": {},
+      "externalFacilityInvestigated": {},
+      "finalPlanAfterDismantling": {},
+      "findSampleTimingLinked": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "planConfirmation",
+      "baulkLayoutRecorded",
+      "firstExposureRecorded",
+      "secondExposureRecorded",
+      "thirdExposureRecorded",
+      "stagedPlanDrawingLinked",
+      "samePhotoStationMaintained",
+      "droneRouteRepeated",
+      "stageSurfaceSeparated",
+      "externalFacilityInvestigated",
+      "finalPlanAfterDismantling",
+      "findSampleTimingLinked",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-pitDwellingSectionStrategy": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "planShapeConsidered": {},
+      "featureScaleConsidered": {},
+      "terrainSlopeConsidered": {},
+      "sunlightDirectionConsidered": {},
+      "protrudingFacilityConsidered": {},
+      "exploratoryTrenchRationale": {},
+      "baulkPositionRationale": {},
+      "sectionLinePreservesFloor": {},
+      "partialInformationRiskRecorded": {},
+      "wallFloorRelationshipTargeted": {},
+      "overlapBoundaryTargeted": {},
+      "photoAnglePlanned": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "planShapeConsidered",
+      "featureScaleConsidered",
+      "terrainSlopeConsidered",
+      "sunlightDirectionConsidered",
+      "protrudingFacilityConsidered",
+      "exploratoryTrenchRationale",
+      "baulkPositionRationale",
+      "sectionLinePreservesFloor",
+      "partialInformationRiskRecorded",
+      "wallFloorRelationshipTargeted",
+      "overlapBoundaryTargeted",
+      "photoAnglePlanned",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-pitFeatureFunctionAssessment": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

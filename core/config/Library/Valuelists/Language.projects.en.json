@@ -12877,6 +12877,94 @@
     },
     "description": "Korean overlapping pit dwelling checks for staged plan stripping, section evidence, over-trenching risk, later/earlier excavation order, and unresolved sequence decisions"
   },
+  "KoreanFieldwork-pitDwellingInvestigationSequence": {
+    "values": {
+      "planConfirmation": {
+        "label": "Plan confirmation"
+      },
+      "baulkLayoutRecorded": {
+        "label": "Baulk layout recorded"
+      },
+      "firstExposureRecorded": {
+        "label": "First exposure recorded"
+      },
+      "secondExposureRecorded": {
+        "label": "Second exposure recorded"
+      },
+      "thirdExposureRecorded": {
+        "label": "Third exposure recorded"
+      },
+      "stagedPlanDrawingLinked": {
+        "label": "Staged plan drawing linked"
+      },
+      "samePhotoStationMaintained": {
+        "label": "Same photo station maintained"
+      },
+      "droneRouteRepeated": {
+        "label": "Drone route repeated"
+      },
+      "stageSurfaceSeparated": {
+        "label": "Stage surface separated"
+      },
+      "externalFacilityInvestigated": {
+        "label": "External facility investigated"
+      },
+      "finalPlanAfterDismantling": {
+        "label": "Final plan after dismantling"
+      },
+      "findSampleTimingLinked": {
+        "label": "Find and sample timing linked"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean pit dwelling checks for keeping plan confirmation, baulk setup, first to third exposures, external facilities, repeated photo stations and drone routes, and final plans comparable across investigation stages"
+  },
+  "KoreanFieldwork-pitDwellingSectionStrategy": {
+    "values": {
+      "planShapeConsidered": {
+        "label": "Plan shape considered"
+      },
+      "featureScaleConsidered": {
+        "label": "Feature scale considered"
+      },
+      "terrainSlopeConsidered": {
+        "label": "Terrain and slope considered"
+      },
+      "sunlightDirectionConsidered": {
+        "label": "Sunlight direction considered"
+      },
+      "protrudingFacilityConsidered": {
+        "label": "Protruding facility considered"
+      },
+      "exploratoryTrenchRationale": {
+        "label": "Exploratory trench rationale"
+      },
+      "baulkPositionRationale": {
+        "label": "Baulk position rationale"
+      },
+      "sectionLinePreservesFloor": {
+        "label": "Section line preserves floor"
+      },
+      "partialInformationRiskRecorded": {
+        "label": "Partial information risk recorded"
+      },
+      "wallFloorRelationshipTargeted": {
+        "label": "Wall-floor relationship targeted"
+      },
+      "overlapBoundaryTargeted": {
+        "label": "Overlap boundary targeted"
+      },
+      "photoAnglePlanned": {
+        "label": "Photo angle planned"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean pit dwelling section checks for documenting why baulks or exploratory trenches were placed in relation to plan shape, scale, terrain, light, protruding facilities, wall-floor joins, overlap boundaries, and partial-information risk"
+  },
   "KoreanFieldwork-pitFeatureFunctionAssessment": {
     "values": {
       "dwellingCandidate": { "label": "Dwelling candidate" },

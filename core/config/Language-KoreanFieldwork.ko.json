@@ -551,6 +551,12 @@
         "pitDwellingOverlapSequence": {
           "label": "중복 수혈건물지 선후"
         },
+        "pitDwellingInvestigationSequence": {
+          "label": "수혈건물지 단계조사 순서"
+        },
+        "pitDwellingSectionStrategy": {
+          "label": "수혈건물지 토층둑 전략"
+        },
         "pitFeatureFunctionAssessment": {
           "label": "수혈유구 성격 판단"
         },

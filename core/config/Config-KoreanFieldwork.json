@@ -1549,6 +1549,14 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "pitDwellingInvestigationSequence": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "pitDwellingSectionStrategy": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "pitFeatureFunctionAssessment": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1841,6 +1849,8 @@
         "pitDwellingFloorFacility": "KoreanFieldwork-pitDwellingFloorFacility",
         "pitDwellingFireEvidence": "KoreanFieldwork-pitDwellingFireEvidence",
         "pitDwellingOverlapSequence": "KoreanFieldwork-pitDwellingOverlapSequence",
+        "pitDwellingInvestigationSequence": "KoreanFieldwork-pitDwellingInvestigationSequence",
+        "pitDwellingSectionStrategy": "KoreanFieldwork-pitDwellingSectionStrategy",
         "pitFeatureFunctionAssessment": "KoreanFieldwork-pitFeatureFunctionAssessment",
         "pitBuildingLifecycleStage": "KoreanFieldwork-pitBuildingLifecycleStage",
         "surfaceBuildingJudgement": "KoreanFieldwork-surfaceBuildingJudgement",
@@ -1945,6 +1955,8 @@
             "pitDwellingFloorFacility",
             "pitDwellingFireEvidence",
             "pitDwellingOverlapSequence",
+            "pitDwellingInvestigationSequence",
+            "pitDwellingSectionStrategy",
             "pitFeatureFunctionAssessment",
             "pitBuildingLifecycleStage",
             "surfaceBuildingJudgement",

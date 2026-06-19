@@ -551,6 +551,12 @@
         "pitDwellingOverlapSequence": {
           "label": "Overlapping pit dwelling sequence"
         },
+        "pitDwellingInvestigationSequence": {
+          "label": "Pit dwelling investigation sequence"
+        },
+        "pitDwellingSectionStrategy": {
+          "label": "Pit dwelling section strategy"
+        },
         "pitFeatureFunctionAssessment": {
           "label": "Pit feature function assessment"
         },

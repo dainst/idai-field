@@ -698,6 +698,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('functionNotAssumed');
         expect(documentsById['feature-bronze-dwelling-001'].resource.pitBuildingLifecycleStage)
             .toContain('reuse');
+        expect(documentsById['feature-bronze-dwelling-001'].resource.pitDwellingInvestigationSequence)
+            .toContain('samePhotoStationMaintained');
+        expect(documentsById['feature-bronze-dwelling-001'].resource.pitDwellingInvestigationSequence)
+            .toContain('thirdExposureRecorded');
+        expect(documentsById['feature-bronze-dwelling-001'].resource.pitDwellingSectionStrategy)
+            .toContain('exploratoryTrenchRationale');
+        expect(documentsById['feature-bronze-dwelling-001'].resource.pitDwellingSectionStrategy)
+            .toContain('partialInformationRiskRecorded');
         expect(documentsById['feature-bronze-dwelling-001'].resource.settlementFeatureInvestigationProcedure)
             .toContain('floorInvestigation');
         expect(documentsById['feature-bronze-dwelling-001'].resource.settlementFeatureTrenchStrategy)
@@ -1347,6 +1355,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.fields.pitDwellingFloorFacility.inputType).toBe('checkboxes');
         expect(featureForm.fields.pitDwellingFireEvidence.inputType).toBe('checkboxes');
         expect(featureForm.fields.pitDwellingOverlapSequence.inputType).toBe('checkboxes');
+        expect(featureForm.fields.pitDwellingInvestigationSequence.inputType).toBe('checkboxes');
+        expect(featureForm.fields.pitDwellingSectionStrategy.inputType).toBe('checkboxes');
         expect(featureForm.fields.pitFeatureFunctionAssessment.inputType).toBe('checkboxes');
         expect(featureForm.fields.pitBuildingLifecycleStage.inputType).toBe('checkboxes');
         expect(featureForm.fields.surfaceBuildingJudgement.inputType).toBe('checkboxes');
@@ -1738,6 +1748,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-pitDwellingFireEvidence');
         expect(featureForm.valuelists.pitDwellingOverlapSequence)
             .toBe('KoreanFieldwork-pitDwellingOverlapSequence');
+        expect(featureForm.valuelists.pitDwellingInvestigationSequence)
+            .toBe('KoreanFieldwork-pitDwellingInvestigationSequence');
+        expect(featureForm.valuelists.pitDwellingSectionStrategy)
+            .toBe('KoreanFieldwork-pitDwellingSectionStrategy');
         expect(featureForm.valuelists.pitFeatureFunctionAssessment)
             .toBe('KoreanFieldwork-pitFeatureFunctionAssessment');
         expect(featureForm.valuelists.pitBuildingLifecycleStage)
@@ -2248,6 +2262,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Pit dwelling exposure and baulk');
         expect(languages.en.categories.Feature.fields.pitDwellingFireEvidence.label)
             .toBe('Burned pit dwelling evidence');
+        expect(languages.en.categories.Feature.fields.pitDwellingInvestigationSequence.label)
+            .toBe('Pit dwelling investigation sequence');
+        expect(languages.en.categories.Feature.fields.pitDwellingSectionStrategy.label)
+            .toBe('Pit dwelling section strategy');
         expect(languages.en.categories.Feature.fields.pitFeatureFunctionAssessment.label)
             .toBe('Pit feature function assessment');
         expect(languages.en.categories.Feature.fields.pitBuildingLifecycleStage.label)
@@ -2838,6 +2856,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-pitDwellingOverlapSequence']
             .values.relationshipUnresolved.label)
             .toBe('Relationship unresolved');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-pitDwellingInvestigationSequence']
+            .values.samePhotoStationMaintained.label)
+            .toBe('Same photo station maintained');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-pitDwellingSectionStrategy']
+            .values.exploratoryTrenchRationale.label)
+            .toBe('Exploratory trench rationale');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-pitFeatureFunctionAssessment']
             .values.functionNotAssumed.label)
             .toBe('Function not assumed');
@@ -3471,6 +3495,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-pitBuildingLifecycleStage']
             .values.refusePitReuse.label)
             .toBe('폐기장 전용');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-pitDwellingInvestigationSequence']
+            .values.thirdExposureRecorded.label)
+            .toBe('3차 노출 기록');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-pitDwellingSectionStrategy']
+            .values.partialInformationRiskRecorded.label)
+            .toBe('부분 정보 위험 기록');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceBuildingJudgement']
             .values.raisedFloorBuildingCandidate.label)
             .toBe('Raised-floor building candidate');

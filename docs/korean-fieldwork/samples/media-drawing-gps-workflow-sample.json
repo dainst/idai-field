@@ -223,10 +223,15 @@
           "originalUncroppedPreserved",
           "registerNumberMatched",
           "photoNotebookMatched",
+          "photoUpsideDown",
+          "lowResolution",
+          "focusBlurred",
+          "originalCropDamage",
           "preRecoveryPhotoTaken",
           "multiDirectionPhotoTaken",
           "levelingLinkedForRecovery",
-          "findNumberLocationMatched"
+          "findNumberLocationMatched",
+          "rereviewNeeded"
         ],
         "gpsPhotoLinkRecord": [
           "gpsConnectionConfigured",
@@ -381,6 +386,12 @@
           "scaleIncluded",
           "resolutionOrLineworkReadable",
           "registerNumberMatched",
+          "stageDrawingScaleMismatch",
+          "orientationMismatch",
+          "planSectionMismatch",
+          "leftRightReversal",
+          "invertedScan",
+          "rereviewNeeded",
           "retakeOrRedrawNeeded"
         ],
         "artifactDrawingRecordMethod": [

@@ -18761,8 +18761,38 @@
       "stageDrawingSeparated": {
         "label": "Stage drawing separated"
       },
+      "stageDrawingScaleMismatch": {
+        "label": "Stage drawing scale mismatch"
+      },
+      "orientationMismatch": {
+        "label": "Orientation mismatch"
+      },
+      "planSectionMismatch": {
+        "label": "Plan/section mismatch"
+      },
+      "leftRightReversal": {
+        "label": "Left-right reversal"
+      },
+      "invertedScan": {
+        "label": "Inverted scan"
+      },
+      "photoUpsideDown": {
+        "label": "Photo upside-down"
+      },
+      "lowResolution": {
+        "label": "Low resolution"
+      },
+      "focusBlurred": {
+        "label": "Focus blurred"
+      },
+      "originalCropDamage": {
+        "label": "Original crop damage"
+      },
       "fieldResearcherReviewed": {
         "label": "Field researcher reviewed"
+      },
+      "rereviewNeeded": {
+        "label": "Re-review needed"
       },
       "retakeOrRedrawNeeded": {
         "label": "Retake or redraw needed"
@@ -18771,7 +18801,7 @@
         "label": "Pending decision"
       }
     },
-    "description": "Korean fieldwork media quality checks for direction, scale, control points, resolution or linework, lighting, capture format, photo-notebook matching, print annotations, source preservation, pre-recovery multi-direction photos, avoiding overhead-only and backlit shots, keeping oblique/side views, overview/close-up pairs, associated areas, opposite-direction interior views, color and moisture state, stratigraphy whole/part/detail sets, leveling links, register-number or location consistency, linked long- and short-axis sections, and oxidation/reduction color annotations"
+    "description": "Korean fieldwork media quality checks for direction, scale, control points, resolution or linework, lighting, capture format, photo-notebook matching, print annotations, source preservation, pre-recovery multi-direction photos, avoiding overhead-only and backlit shots, keeping oblique/side views, overview/close-up pairs, associated areas, opposite-direction interior views, color and moisture state, stratigraphy whole/part/detail sets, leveling links, register-number or location consistency, linked long- and short-axis sections, oxidation/reduction color annotations, stage-drawing scale/orientation/plan-section mismatches, left-right or upside-down reversals, inverted scans, low resolution, focus blur, and crop damage"
   },
   "KoreanFieldwork-photoCaptureSafetyReview": {
     "values": {

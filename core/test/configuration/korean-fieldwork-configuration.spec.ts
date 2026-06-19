@@ -274,6 +274,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('findNumberLocationMatched');
         expect(documentsById['photo-media-gps-001'].resource.mediaQualityCheck)
             .toContain('photoNotebookMatched');
+        expect(documentsById['photo-media-gps-001'].resource.mediaQualityCheck)
+            .toContain('photoUpsideDown');
+        expect(documentsById['photo-media-gps-001'].resource.mediaQualityCheck)
+            .toContain('focusBlurred');
         expect(documentsById['photo-media-gps-001'].resource.digitalSourcePreservation)
             .toContain('webOrServerBackup');
         expect(documentsById['drawing-media-distribution-001'].resource.mapSourceMaterial)
@@ -286,6 +290,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('gpsControlPointsTwoPlus');
         expect(documentsById['drawing-media-pottery-001'].resource.potteryDrawingStandard)
             .toContain('wallThicknessThreeFourPoints');
+        expect(documentsById['drawing-media-pottery-001'].resource.mediaQualityCheck)
+            .toContain('planSectionMismatch');
+        expect(documentsById['drawing-media-pottery-001'].resource.mediaQualityCheck)
+            .toContain('invertedScan');
         expect(documentsById['drawing-media-stone-tool-001'].resource.stoneToolDrawingView)
             .toContain('thirdAngleSixViews');
         expect(documentsById['drawing-media-waterlogged-wood-001'].resource.waterloggedWoodDrawingHandling)
@@ -3896,9 +3904,24 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
             .values.longShortAxisSectionLinked.label)
             .toBe('Long- and short-axis sections linked');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
+            .values.stageDrawingScaleMismatch.label)
+            .toBe('Stage drawing scale mismatch');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
+            .values.planSectionMismatch.label)
+            .toBe('Plan/section mismatch');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
+            .values.rereviewNeeded.label)
+            .toBe('Re-review needed');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-mediaQualityCheck']
             .values.oxidationReductionColorAnnotated.label)
             .toBe('산화·환원 색표기');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-mediaQualityCheck']
+            .values.leftRightReversal.label)
+            .toBe('좌우반전');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-mediaQualityCheck']
+            .values.photoUpsideDown.label)
+            .toBe('사진 상하반전');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-mediaQualityCheck']
             .values.levelingLinkedForRecovery.label)
             .toBe('레벨링 연계 위치복원');

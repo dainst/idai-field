@@ -7007,8 +7007,38 @@
       "stageDrawingSeparated": {
         "label": "단계도면 분리"
       },
+      "stageDrawingScaleMismatch": {
+        "label": "단계도면 축척 불일치"
+      },
+      "orientationMismatch": {
+        "label": "방향 불일치"
+      },
+      "planSectionMismatch": {
+        "label": "평·단면 불일치"
+      },
+      "leftRightReversal": {
+        "label": "좌우반전"
+      },
+      "invertedScan": {
+        "label": "뒤집힌 스캔"
+      },
+      "photoUpsideDown": {
+        "label": "사진 상하반전"
+      },
+      "lowResolution": {
+        "label": "저해상도"
+      },
+      "focusBlurred": {
+        "label": "초점 흔들림"
+      },
+      "originalCropDamage": {
+        "label": "원본 크롭 손상"
+      },
       "fieldResearcherReviewed": {
         "label": "현장조사자 검수"
+      },
+      "rereviewNeeded": {
+        "label": "재검수 필요"
       },
       "retakeOrRedrawNeeded": {
         "label": "재촬영·재작성 필요"
@@ -7017,7 +7047,7 @@
         "label": "판단 보류"
       }
     },
-    "description": "사진과 도면의 방향, 축척, 기준점, 해상도·선명도, 촬영 포맷, 사진야장 대조, 인화 사진 주기, 원본 보존, 수습 전 다방향 사진, 직상방 위주 촬영 회피, 사선·측면 사진, 원경·근경 병행, 관련 구역 동시 기록, 내부 양방향 촬영, 색·수분 상태, 토층 전체·분할·세부 사진, 역광 회피, 레벨링 연계, 대장번호·위치 일치, 장·단축 단면 연결, 산화·환원 색표기를 점검하기 위한 목록"
+    "description": "사진과 도면의 방향, 축척, 기준점, 해상도·선명도, 촬영 포맷, 사진야장 대조, 인화 사진 주기, 원본 보존, 수습 전 다방향 사진, 직상방 위주 촬영 회피, 사선·측면 사진, 원경·근경 병행, 관련 구역 동시 기록, 내부 양방향 촬영, 색·수분 상태, 토층 전체·분할·세부 사진, 역광 회피, 레벨링 연계, 대장번호·위치 일치, 장·단축 단면 연결, 산화·환원 색표기, 단계도면 축척·방향·평단면 불일치, 좌우반전·상하반전·뒤집힌 스캔, 저해상도·초점 흔들림·크롭 손상을 점검하기 위한 목록"
   },
   "KoreanFieldwork-photoCaptureSafetyReview": {
     "values": {

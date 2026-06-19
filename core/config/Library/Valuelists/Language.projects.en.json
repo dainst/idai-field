@@ -18322,6 +18322,14 @@
       "measuredLineChangeReason": { "label": "Measured line change reason" },
       "measuringPointCheck": { "label": "Measuring point check" },
       "calibrationHistory": { "label": "Calibration history" },
+      "ambiguousObservationReasonRecorded": { "label": "Ambiguous observation reason recorded" },
+      "ambiguousPhenomenonDescribed": { "label": "Ambiguous phenomenon described" },
+      "unmeasurableReasonRecorded": { "label": "Unmeasurable reason recorded" },
+      "estimatedMeasurementMarked": { "label": "Estimated measurement marked" },
+      "futureAnalysisNeedRecorded": { "label": "Future analysis need recorded" },
+      "magnificationObservationChecked": { "label": "Magnification observation checked" },
+      "comparativeReferenceReviewRecorded": { "label": "Comparative reference review recorded" },
+      "descriptionDrawingPhotoCrossCheck": { "label": "Description/drawing/photo cross-check" },
       "photoComparison": { "label": "Photo comparison" },
       "rubbingComparison": { "label": "Rubbing comparison" },
       "descriptionSupplement": { "label": "Description supplement" },
@@ -18329,7 +18337,7 @@
       "redrawingNeeded": { "label": "Redrawing needed" },
       "pendingDecision": { "label": "Pending decision" }
     },
-    "description": "Artifact drawing quality checks for baseline and measured-line decisions, measuring points, calibration, photo/rubbing comparison, description supplements, conservation comparison, and redrawing"
+    "description": "Artifact drawing quality checks for baseline and measured-line decisions, measuring points, calibration, ambiguous observations, unmeasurable values, estimates, magnification review, comparative reference checks, photo/rubbing comparison, description supplements, conservation comparison, and redrawing"
   },
   "KoreanFieldwork-potteryDrawingStandard": {
     "values": {

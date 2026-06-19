@@ -6568,6 +6568,14 @@
       "measuredLineChangeReason": { "label": "실측선 변경사유" },
       "measuringPointCheck": { "label": "측점 검점" },
       "calibrationHistory": { "label": "교정 이력" },
+      "ambiguousObservationReasonRecorded": { "label": "모호한 관찰 사유 기록" },
+      "ambiguousPhenomenonDescribed": { "label": "모호한 현상 설명" },
+      "unmeasurableReasonRecorded": { "label": "계측 곤란 사유 기록" },
+      "estimatedMeasurementMarked": { "label": "추정 계측값 표시" },
+      "futureAnalysisNeedRecorded": { "label": "후속 분석 필요 명기" },
+      "magnificationObservationChecked": { "label": "확대 관찰 검토" },
+      "comparativeReferenceReviewRecorded": { "label": "비교자료 검토 기록" },
+      "descriptionDrawingPhotoCrossCheck": { "label": "설명·도면·사진 교차검토" },
       "photoComparison": { "label": "사진 대조" },
       "rubbingComparison": { "label": "탁본 대조" },
       "descriptionSupplement": { "label": "기술 보완" },
@@ -6575,7 +6583,7 @@
       "redrawingNeeded": { "label": "재실측 필요" },
       "pendingDecision": { "label": "판단 보류" }
     },
-    "description": "유물실측 결과의 기준선·실측선 판단, 측점, 교정, 사진·탁본 대조, 기술 보완, 보존처리 전후 대조, 재실측 필요 여부를 검수하기 위한 목록"
+    "description": "유물실측 결과의 기준선·실측선 판단, 측점, 교정, 모호한 관찰과 계측 곤란 사유, 추정값 표시, 확대관찰, 비교자료 검토, 사진·탁본 대조, 기술 보완, 보존처리 전후 대조, 재실측 필요 여부를 검수하기 위한 목록"
   },
   "KoreanFieldwork-potteryDrawingStandard": {
     "values": {

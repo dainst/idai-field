@@ -352,6 +352,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('manufacturePatternAnnotation');
         expect(documentsById['drawing-media-pottery-001'].resource.potteryDrawingStandard)
             .toContain('dimensionAnnotation');
+        expect(documentsById['drawing-media-pottery-001'].resource.artifactDrawingQualityCheck)
+            .toContain('ambiguousObservationReasonRecorded');
+        expect(documentsById['drawing-media-pottery-001'].resource.artifactDrawingQualityCheck)
+            .toContain('estimatedMeasurementMarked');
+        expect(documentsById['drawing-media-pottery-001'].resource.artifactDrawingQualityCheck)
+            .toContain('descriptionDrawingPhotoCrossCheck');
         expect(documentsById['drawing-media-pottery-001'].resource.mediaQualityCheck)
             .toContain('planSectionMismatch');
         expect(documentsById['drawing-media-pottery-001'].resource.mediaQualityCheck)
@@ -4150,6 +4156,15 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactDrawingQualityCheck']
             .values.measuringPointCheck.label)
             .toBe('Measuring point check');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactDrawingQualityCheck']
+            .values.estimatedMeasurementMarked.label)
+            .toBe('Estimated measurement marked');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactDrawingQualityCheck']
+            .values.descriptionDrawingPhotoCrossCheck.label)
+            .toBe('Description/drawing/photo cross-check');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-artifactDrawingQualityCheck']
+            .values.unmeasurableReasonRecorded.label)
+            .toBe('계측 곤란 사유 기록');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-potteryDrawingStandard']
             .values.wallThicknessThreeFourPoints.label)
             .toBe('Wall thickness at 3-4 points');

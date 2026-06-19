@@ -16,8 +16,9 @@ defmodule FieldPublicationWeb.Components.Data.DocumentLink do
 
   def document_link(assigns) do
     ~H"""
-    <.maybe_map_hover_event doc={@doc} target_id={@hover_target}>
-      <div class="flex mb-0.5" id={if @id, do: @id, else: "#{@doc.id}_link"}>
+    <% id = if @id, do: @id, else: "#{@doc.id}_link" %>
+    <.maybe_map_hover_event id={"#{id}_map_hover"} doc={@doc} target_id={@hover_target}>
+      <div class="flex mb-0.5" id={id}>
         <.link
           navigate={
             if @publication_search? do
@@ -53,7 +54,7 @@ defmodule FieldPublicationWeb.Components.Data.DocumentLink do
               />
             </small>
             <% uuids = Enum.take(@doc.image_uuids, @image_count) %>
-            <div id={"#{@doc.id}-images"} class="flex items-center overflow-x-auto">
+            <div id={"#{id}-images"} class="flex items-center overflow-x-auto">
               <%= for uuid <- uuids do %>
                 <.img_element
                   size={"^,#{@image_height}"}
@@ -93,6 +94,7 @@ defmodule FieldPublicationWeb.Components.Data.DocumentLink do
     ~p"/projects/#{project_name}/#{draft_date}/#{uuid}?#{query}"
   end
 
+  attr(:id, :string, required: true)
   attr(:doc, Document, required: true)
   attr(:target_id, :string, default: nil)
   slot(:inner_block, required: true)
@@ -101,7 +103,7 @@ defmodule FieldPublicationWeb.Components.Data.DocumentLink do
     ~H"""
     <%= if @doc.geometry && @target_id do %>
       <div
-        id={"hover_hook_#{@doc.id}"}
+        id={"hover_hook_#{@id}"}
         phx-hook="HoverHighlightMapFeature"
         target_dom_element={@target_id}
         target_id={@doc.id}

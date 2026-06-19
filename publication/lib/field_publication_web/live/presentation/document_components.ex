@@ -139,23 +139,14 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
               {pick_default_translation(other_relation.labels)} ({Enum.count(other_relation.docs)})
             </.group_heading>
             <div class="overflow-auto overscroll-contain max-h-[400px]">
-              <%= for %Document{geometry: geometry} = doc <- other_relation.docs do %>
-                <%= if geometry do %>
-                  <div
-                    id={"relations_map_highlighter_#{doc.id}"}
-                    phx-hook="HoverHighlightMapFeature"
-                    target_dom_element="generic_doc_map"
-                    target_id={doc.id}
-                  >
-                    <.document_link
-                      doc={doc}
-                      image_count={10}
-                      geometry_indicator={true}
-                    />
-                  </div>
-                <% else %>
-                  <.document_link doc={doc} image_count={10} geometry_indicator={true} />
-                <% end %>
+              <%= for doc <- other_relation.docs do %>
+                  <.document_link
+                    id={"#{other_relation.name}-#{doc.id}"}
+                    doc={doc}
+                    image_count={10}
+                    geometry_indicator={true}
+                    hover_target="generic_doc_map"
+                  />
               <% end %>
             </div>
           </section>

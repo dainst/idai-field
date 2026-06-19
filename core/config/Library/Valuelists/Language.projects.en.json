@@ -13146,7 +13146,7 @@
       "burialShortAxis": { "label": "Burial short axis" },
       "ridgeAxis": { "label": "Ridge axis" },
       "slopeDirection": { "label": "Slope direction" },
-      "crossTrench": { "label": "Cross trench" },
+      "crossTrench": { "label": "Four-part cross trench" },
       "outerExtension": { "label": "Outer extension" },
       "trenchWidthRecorded": { "label": "Trench width recorded" },
       "sectionBaulkPosition": { "label": "Section baulk position" },
@@ -13155,7 +13155,7 @@
       "partialInformationCaution": { "label": "Partial information caution" },
       "pendingDecision": { "label": "Pending decision" }
     },
-    "description": "Korean mound-trench checks for recording how trenches cross burial axes and terrain, and whether section and plan evidence were compared"
+    "description": "Korean mound-trench checks for recording how four-part or cross trenches cut burial axes and terrain, and whether section and plan evidence were compared"
   },
   "KoreanFieldwork-moundFillSubdivisionRecord": {
     "values": {
@@ -13278,10 +13278,11 @@
       "animalFoodOffering": { "label": "Animal or food offering" },
       "locationElevationRecorded": { "label": "Location and elevation recorded" },
       "constructionStageLinked": { "label": "Construction stage linked" },
+      "inSituPreservationDuringMoundWork": { "label": "In-situ preservation during mound work" },
       "redepositionCaution": { "label": "Redeposition caution" },
       "pendingDecision": { "label": "Pending decision" }
     },
-    "description": "Korean tomb ritual-deposit checks for separating deposits by mound, ditch, passage, corridor, closure sequence, chamber context, location, elevation, construction stage, and redeposition risk"
+    "description": "Korean tomb ritual-deposit checks for separating deposits by mound, ditch, passage, corridor, closure sequence, chamber context, location, elevation, construction stage, in-situ preservation, and redeposition risk"
   },
   "KoreanFieldwork-graveGoodsRitualContext": {
     "values": {

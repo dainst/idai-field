@@ -33222,6 +33222,7 @@
       "animalFoodOffering": {},
       "locationElevationRecorded": {},
       "constructionStageLinked": {},
+      "inSituPreservationDuringMoundWork": {},
       "redepositionCaution": {},
       "pendingDecision": {}
     },
@@ -33240,6 +33241,7 @@
       "animalFoodOffering",
       "locationElevationRecorded",
       "constructionStageLinked",
+      "inSituPreservationDuringMoundWork",
       "redepositionCaution",
       "pendingDecision"
     ]

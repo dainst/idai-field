@@ -1392,7 +1392,7 @@
       "burialShortAxis": { "label": "매장주체 단축" },
       "ridgeAxis": { "label": "능선 장축" },
       "slopeDirection": { "label": "경사면 방향" },
-      "crossTrench": { "label": "십자 트렌치" },
+      "crossTrench": { "label": "4분·십자 트렌치" },
       "outerExtension": { "label": "외측 연장" },
       "trenchWidthRecorded": { "label": "트렌치 너비 기록" },
       "sectionBaulkPosition": { "label": "토층둑 위치" },
@@ -1401,7 +1401,7 @@
       "partialInformationCaution": { "label": "부분정보 주의" },
       "pendingDecision": { "label": "판단 보류" }
     },
-    "description": "봉분 트렌치가 매장주체부와 지형을 어떻게 가로지르는지, 단면과 평면 정보가 함께 검토되었는지 기록하기 위한 목록"
+    "description": "봉분 4분·십자 트렌치가 매장주체부와 지형을 어떻게 가로지르는지, 단면과 평면 정보가 함께 검토되었는지 기록하기 위한 목록"
   },
   "KoreanFieldwork-moundFillSubdivisionRecord": {
     "values": {
@@ -1524,10 +1524,11 @@
       "animalFoodOffering": { "label": "동물·음식 공헌" },
       "locationElevationRecorded": { "label": "위치·레벨 기록" },
       "constructionStageLinked": { "label": "축조공정 연결" },
+      "inSituPreservationDuringMoundWork": { "label": "봉분 작업 중 원위치 유존" },
       "redepositionCaution": { "label": "재퇴적 주의" },
       "pendingDecision": { "label": "판단 보류" }
     },
-    "description": "분묘 제사와 매납 자료를 봉토, 주구, 묘도·연도, 폐쇄 전후, 현실 내부, 위치·레벨과 축조공정으로 분리하기 위한 목록"
+    "description": "분묘 제사와 매납 자료를 봉토, 주구, 묘도·연도, 폐쇄 전후, 현실 내부, 위치·레벨, 축조공정과 원위치 유존 맥락으로 분리하기 위한 목록"
   },
   "KoreanFieldwork-graveGoodsRitualContext": {
     "values": {

@@ -114,6 +114,7 @@
           "burialShortAxis",
           "ridgeAxis",
           "slopeDirection",
+          "crossTrench",
           "outerExtension",
           "sectionBaulkPosition",
           "planRemovalCombined",
@@ -205,6 +206,7 @@
           "animalFoodOffering",
           "locationElevationRecorded",
           "constructionStageLinked",
+          "inSituPreservationDuringMoundWork",
           "redepositionCaution"
         ],
         "verificationState": "pendingDecision"

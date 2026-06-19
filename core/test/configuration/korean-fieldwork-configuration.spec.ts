@@ -582,6 +582,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(documentsById['feature-tomb-mound-001'].resource.tombSurveyPurpose)
             .toContain('scheduleBudgetConstraint');
         expect(documentsById['feature-tomb-mound-001'].resource.moundTrenchInvestigation)
+            .toContain('crossTrench');
+        expect(documentsById['feature-tomb-mound-001'].resource.moundTrenchInvestigation)
             .toContain('partialInformationCaution');
         expect(documentsById['feature-tomb-mound-001'].resource.moundFillSubdivisionRecord)
             .toContain('labMergePossible');
@@ -597,6 +599,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('removalReverseSequence');
         expect(documentsById['feature-tomb-mound-001'].resource.tombRitualDepositRecord)
             .toContain('constructionStageLinked');
+        expect(documentsById['feature-tomb-mound-001'].resource.tombRitualDepositRecord)
+            .toContain('inSituPreservationDuringMoundWork');
         expect(documentsById['find-tomb-grave-good-001'].resource.graveGoodsRitualContext)
             .toContain('functionNotAssumed');
         expect(documentsById['find-tomb-grave-good-001'].resource.graveGoodsRitualContext)
@@ -2693,6 +2697,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-tombRitualDepositRecord']
             .values.constructionStageLinked.label)
             .toBe('Construction stage linked');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-tombRitualDepositRecord']
+            .values.inSituPreservationDuringMoundWork.label)
+            .toBe('In-situ preservation during mound work');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-graveGoodsRitualContext']
             .values.functionNotAssumed.label)
             .toBe('Function not assumed');
@@ -3189,6 +3196,9 @@ describe('KoreanFieldwork project configuration', () => {
             .values.soilFormationTrace.label)
             .toBe('토양화 흔적');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-moundTrenchInvestigation']
+            .values.crossTrench.label)
+            .toBe('4분·십자 트렌치');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-moundTrenchInvestigation']
             .values.partialInformationCaution.label)
             .toBe('부분정보 주의');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-tombInteriorRecoveryRecord']
@@ -3203,6 +3213,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-burialPlatformUseSequence']
             .values.graveGoodsByPlatform.label)
             .toBe('시상별 부장품 위치');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-tombRitualDepositRecord']
+            .values.inSituPreservationDuringMoundWork.label)
+            .toBe('봉분 작업 중 원위치 유존');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-tombRitualDepositRecord']
             .values.redepositionCaution.label)
             .toBe('재퇴적 주의');

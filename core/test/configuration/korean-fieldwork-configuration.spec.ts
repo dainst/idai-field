@@ -1230,6 +1230,12 @@ describe('KoreanFieldwork project configuration', () => {
 
         expect(documentsById['feature-pottery-kiln-001'].resource.potteryKilnYardFacility)
             .toContain('formingArea');
+        expect(documentsById['feature-pottery-kiln-001'].resource.productionProcessSystem)
+            .toContain('referenceGroupDefined');
+        expect(documentsById['feature-pottery-kiln-001'].resource.productionProcessSystem)
+            .toContain('consumerSherdDistributionChecked');
+        expect(documentsById['feature-pottery-kiln-001'].resource.productionProcessSystem)
+            .toContain('marketDominanceQuestioned');
         expect(documentsById['feature-pottery-kiln-001'].resource.potteryKilnOperationScale)
             .toContain('productionQuantityNotAssumed');
         expect(documentsById['feature-pottery-kiln-001'].resource.potteryKilnInterpretationRisk)
@@ -3216,6 +3222,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-productionProcessSystem']
             .values.kilnLoading.label)
             .toBe('Kiln loading');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-productionProcessSystem']
+            .values.referenceGroupDefined.label)
+            .toBe('Reference group defined');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-productionSiteAssociatedFacility']
             .values.levigationArea.label)
             .toBe('Levigation area');
@@ -3850,6 +3859,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-productionProcessSystem']
             .values.kilnLoading.label)
             .toBe('요내 재임');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-productionProcessSystem']
+            .values.marketDominanceQuestioned.label)
+            .toBe('시장 지배 여부 질문');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-artifactCleaningDryingControl']
             .values.rapidDryingAvoided.label)
             .toBe('급건조 방지');

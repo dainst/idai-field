@@ -459,6 +459,8 @@
 
 2026-06-20 구현에서는 청동·유리 생산의 1차 전용 필드를 `Feature` 화면에 배치했다. `bronzeProductionEvidence`는 채광·선광·배소 검토, 정련·주조 분리, 소형 도가니 공방, 용해로, 도가니 정치, 송풍관 위치, 풀무 주혈, 용범편, 도가니 뚜껑, 청동재·잔류물, 폐기장 체질, 재사용 도가니, 합금 조성, 납동위원소 산지, 관영·사찰 공방과 공급망 후보를 공정 확정 전 값으로 둔다. `glassProductionEvidence`는 유리구슬 생산 후보, 유리 덩어리, 토제 용범, 구멍·심재, 도가니, 첨저형 도가니, 유리 용착, 도가니 잔류층, 소형 노시설, 폐기수혈, 조성계·XRF·납동위원소 분석, 복원실험 비교, 관영 공방과 수입 원료 가능성을 한 유구 기록에서 검토하게 한다. `bronze-glass-production-workflow-sample.json`은 두 흐름이 제철·요업 일반 목록으로 접히지 않는지 검증한다.
 
+2026-06-20 추가 구현에서는 `productionProcessSystem`을 공정 순서 목록에서 토기 공방 운영 질문까지 확장했다. `토기_제작의_이해와_실습.pdf`의 공방 조사 절은 토기 생산 증거가 확인되면 참조그룹을 먼저 정의하고, 해당 형식이 지역 식별목록인지, 같은 지역 생산품인지, 특정 원료를 함께 선택한 집단인지, 점토 채취·가공과 생산 전문화가 어떤 편년 변화를 보이는지 묻는다. 또 특정 공방 생산물이 얼마만큼 소비지로 퍼졌는지, 비슷한 그릇을 만드는 다른 공방과 공존하는지, 각 공방의 공급 비중과 시장 지배 여부를 확인하라고 한다. 그래서 `referenceGroupDefined`, `localRepertoireCompared`, `sharedClaySelectionReviewed`, `specializationChronologyReviewed`, `consumerSherdDistributionChecked`, `multiWorkshopCoexistenceReviewed`, `supplyShareQuestionRecorded`, `marketDominanceQuestioned`를 추가해 토기가마·공방 기록이 단순한 가마 구조 기록으로 끝나지 않게 했다.
+
 2026-06-19 구현에서는 이 원칙을 `Config-KoreanFieldwork`의 실제 값 목록으로 옮겼다. `tileKilnStructureContext`, `tileKilnExcavationControl`, `tileKilnPartInvestigation`, `tileKilnOperationSequence`는 `Feature`에서 구조·조사제어·부위별 관찰·가마군 운영순서를 기록하고, `tileKilnFindContext`는 `Find`에서 기와의 생산품/재활용/유입품 성격과 층위별 문양 검토를 분리한다. `tileKilnAnalysisPlan`은 `Sample`에서 C14, 고고지자기, OSL, 태토·소비지 대조를 한 묶음으로 남기게 했다.
 
 자기요장 화면은 요장 단위 지도 위에 토취장, 공방, 가마, 폐기장, 생활공간, 운송로, 소비지 비교 자료를 붙이는 구조가 필요하다. 공방 탭은 수비·건조·연토·성형·시유를 공정 순서대로 입력하고, 가마 탭은 봉통부·번조실·연도부의 세부 속성과 층위별 자편·갑발·도지미 수습을 연결해야 한다.

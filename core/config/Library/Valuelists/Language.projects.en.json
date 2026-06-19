@@ -13341,9 +13341,17 @@
       "sorting": { "label": "Sorting" },
       "discard": { "label": "Discard" },
       "repairWaste": { "label": "Repair waste" },
+      "referenceGroupDefined": { "label": "Reference group defined" },
+      "localRepertoireCompared": { "label": "Local repertoire compared" },
+      "sharedClaySelectionReviewed": { "label": "Shared clay selection reviewed" },
+      "specializationChronologyReviewed": { "label": "Specialization chronology reviewed" },
+      "consumerSherdDistributionChecked": { "label": "Consumer sherd distribution checked" },
+      "multiWorkshopCoexistenceReviewed": { "label": "Multi-workshop coexistence reviewed" },
+      "supplyShareQuestionRecorded": { "label": "Supply-share question recorded" },
+      "marketDominanceQuestioned": { "label": "Market dominance questioned" },
       "pendingDecision": { "label": "Pending decision" }
     },
-    "description": "Korean production-site process checks for keeping raw-material procurement, processing, forming, loading, firing, unloading, sorting, discard, and repair waste separate"
+    "description": "Korean production-site process checks for keeping the production sequence, reference groups, local repertoires, clay-selection groups, specialization chronology, consumer sherd distributions, coexisting workshops, supply-share questions, and market dominance questions visible together"
   },
   "KoreanFieldwork-productionSiteAssociatedFacility": {
     "values": {

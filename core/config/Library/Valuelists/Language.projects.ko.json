@@ -1587,9 +1587,17 @@
       "sorting": { "label": "선별" },
       "discard": { "label": "폐기" },
       "repairWaste": { "label": "보수 폐기물" },
+      "referenceGroupDefined": { "label": "참조그룹 정의" },
+      "localRepertoireCompared": { "label": "지역 식별목록 대조" },
+      "sharedClaySelectionReviewed": { "label": "공통 원료 선택 검토" },
+      "specializationChronologyReviewed": { "label": "전문화 단계 편년 검토" },
+      "consumerSherdDistributionChecked": { "label": "소비지 토기편 분포 확인" },
+      "multiWorkshopCoexistenceReviewed": { "label": "복수 공방 공존 검토" },
+      "supplyShareQuestionRecorded": { "label": "공급 비중 질문 기록" },
+      "marketDominanceQuestioned": { "label": "시장 지배 여부 질문" },
       "pendingDecision": { "label": "판단 보류" }
     },
-    "description": "생산유적을 노·가마 형태만으로 보지 않고 원료 채취부터 가공, 성형, 재임, 소성, 요출, 선별, 폐기와 보수 폐기물까지 공정 체계로 기록하기 위한 목록"
+    "description": "생산유적을 노·가마 형태만으로 보지 않고 원료 채취부터 폐기까지의 공정, 참조그룹, 지역 식별목록, 원료 선택 집단, 전문화 단계, 소비지 토기편 분포, 복수 공방 공존, 공급 비중과 시장 지배 질문을 함께 기록하기 위한 목록"
   },
   "KoreanFieldwork-productionSiteAssociatedFacility": {
     "values": {

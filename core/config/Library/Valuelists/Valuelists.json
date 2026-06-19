@@ -33187,6 +33187,14 @@
       "sorting": {},
       "discard": {},
       "repairWaste": {},
+      "referenceGroupDefined": {},
+      "localRepertoireCompared": {},
+      "sharedClaySelectionReviewed": {},
+      "specializationChronologyReviewed": {},
+      "consumerSherdDistributionChecked": {},
+      "multiWorkshopCoexistenceReviewed": {},
+      "supplyShareQuestionRecorded": {},
+      "marketDominanceQuestioned": {},
       "pendingDecision": {}
     },
     "order": [
@@ -33203,6 +33211,14 @@
       "sorting",
       "discard",
       "repairWaste",
+      "referenceGroupDefined",
+      "localRepertoireCompared",
+      "sharedClaySelectionReviewed",
+      "specializationChronologyReviewed",
+      "consumerSherdDistributionChecked",
+      "multiWorkshopCoexistenceReviewed",
+      "supplyShareQuestionRecorded",
+      "marketDominanceQuestioned",
       "pendingDecision"
     ]
   },

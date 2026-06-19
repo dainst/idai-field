@@ -81,6 +81,15 @@
           "kilnUnloading",
           "sorting",
           "discard",
+          "repairWaste",
+          "referenceGroupDefined",
+          "localRepertoireCompared",
+          "sharedClaySelectionReviewed",
+          "specializationChronologyReviewed",
+          "consumerSherdDistributionChecked",
+          "multiWorkshopCoexistenceReviewed",
+          "supplyShareQuestionRecorded",
+          "marketDominanceQuestioned",
           "pendingDecision"
         ],
         "productionSiteAssociatedFacility": [

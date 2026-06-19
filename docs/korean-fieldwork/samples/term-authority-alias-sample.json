@@ -21,7 +21,14 @@
           "fieldUsagePreserved",
           "doNotMergeToSingleTerm"
         ],
-        "termAuthorityStatus": ["specialistDictionarySource", "generalDictionaryUsage", "valueListCandidate"],
+        "termAuthorityStatus": [
+          "specialistDictionarySource",
+          "generalDictionaryUsage",
+          "sourceCoverageAudited",
+          "bulkImportDeferred",
+          "domainConflictReview",
+          "valueListCandidate"
+        ],
         "verificationState": "candidate"
       }
     },
@@ -745,7 +752,13 @@
           "ambiguousSynonymFlagged",
           "doNotMergeToSingleTerm"
         ],
-        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "valueListCandidate"],
+        "termAuthorityStatus": [
+          "specialistDictionarySource",
+          "sourcePageLinked",
+          "duplicateHeadwordConflict",
+          "domainConflictReview",
+          "valueListCandidate"
+        ],
         "verificationState": "candidate"
       }
     },
@@ -775,7 +788,13 @@
           "ambiguousSynonymFlagged",
           "doNotMergeToSingleTerm"
         ],
-        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "valueListCandidate"],
+        "termAuthorityStatus": [
+          "specialistDictionarySource",
+          "sourcePageLinked",
+          "duplicateHeadwordConflict",
+          "domainConflictReview",
+          "valueListCandidate"
+        ],
         "verificationState": "candidate"
       }
     },
@@ -799,7 +818,13 @@
           "ambiguousSynonymFlagged",
           "doNotMergeToSingleTerm"
         ],
-        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "valueListCandidate"],
+        "termAuthorityStatus": [
+          "specialistDictionarySource",
+          "sourcePageLinked",
+          "duplicateHeadwordConflict",
+          "domainConflictReview",
+          "valueListCandidate"
+        ],
         "verificationState": "candidate"
       }
     },

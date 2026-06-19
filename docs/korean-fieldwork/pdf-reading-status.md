@@ -275,6 +275,8 @@ C:\Users\nuri9\Downloads\조사방법론
    보존과학 조사 요구는 `KoreanFieldwork-conservationScienceRequest`, `KoreanFieldwork-waterloggedWoodEmergencyStorage`, `KoreanFieldwork-lacquerConservationRisk`, `KoreanFieldwork-metalAnalysisRequest`, `KoreanFieldwork-ceramicConservationState`, `KoreanFieldwork-paperTextileEmergencyRecovery`, `KoreanFieldwork-conservationTreatmentPrincipleReview`, `KoreanFieldwork-humanDnaFieldControl`, `KoreanFieldwork-organicSoilAnalysisSample`, `KoreanFieldwork-destructiveAnalysisDecision`로 추가했다. `Find`에서는 유물별 보존과학 의뢰, 수침목재·칠기·금속·토도류 상태, 지류·직물 응급수습과 보존처리 원칙 검토를, `Sample`에서는 인골 DNA 현장관리, 내부토/대조토 분석, 비파괴·파괴분석 승인과 시료 제작 이력을 관리하게 했다. `conservation-science-fieldwork-sample.json`으로 현장 노출·수습·임시보관·분석 승인·보존처리 원칙이 실제 값목록으로 이어지는지 검증한다.
 6. 샘플 조사 프로젝트는 패총, 구석기 지표·시굴, 제철유적, 청동기 취락·고인돌·환호·토기 용어, 건물지 주혈군·초석 흔적, 토기 제작·신석기 생업, 고분·분묘, 성곽 부속시설, 충적지·경작유구, 층위·내부토 라이프사이클, 식물유체·탄화곡물 부유선별, 지표조사 범위·증거 부재·비유적 자원, 저습지 지형판독, 도면·사진·GPS 매체기록, 일지·품질검수, 요업유적, 측구부탄요·고고지자기 시료, 보존과학 현장수습 입력 흐름을 먼저 검증했다. 남은 우선 작업은 OCR 취약 구간의 도판·캡션·사례명·한자·표 수치를 원문 이미지로 교정하고, 아직 샘플화하지 않은 세부 템플릿의 입력 흐름을 계속 검증하는 것이다.
 
+2026-06-20 사전 자료군 재대조에서는 생산유적편과 청동기시대편 증보판의 일러두기를 기준으로, 표제어를 대량 수입하기 전에 자료군 범위 검토, 대량 가져오기 후보·보류, 동일 표제어 충돌, 분야 충돌 검토 상태를 남겨야 함을 확인했다. 이 보강은 `KoreanFieldwork-termAuthorityStatus`의 `sourceCoverageAudited`, `bulkImportCandidate`, `bulkImportDeferred`, `duplicateHeadwordConflict`, `domainConflictReview` 값과 `term-authority-alias-sample.json`의 평요 분야 분리 샘플로 검증한다.
+
 ## 주의
 
 공개 자료라 하더라도 원문 전체나 장문 번역을 저장소에 옮기지는 않는다. 이 저장소에는 출처, 요약, 조사 원칙, 기록 항목, iDAI.field 적용 설계만 남긴다.

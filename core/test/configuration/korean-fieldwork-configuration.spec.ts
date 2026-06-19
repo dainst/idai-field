@@ -96,6 +96,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('initialSoundVariantLinked');
         expect(documentsById['term-authority-dwelling-site'].resource.dictionaryEditorialRule)
             .toContain('sameHeadwordDomainSeparated');
+        expect(documentsById['term-group-korean-archaeology'].resource.termAuthorityStatus)
+            .toContain('sourceCoverageAudited');
+        expect(documentsById['term-group-korean-archaeology'].resource.termAuthorityStatus)
+            .toContain('bulkImportDeferred');
         expect(documentsById['term-authority-kiln-site'].resource.termSearchMapping)
             .toContain('doNotMergeToSingleTerm');
         expect(documentsById['term-alias-kiln-site-kiln'].resource.termAliasText)
@@ -118,6 +122,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toEqual(['pottery', 'roofTile']);
         expect(documentsById['term-authority-flat-kiln-pottery-tile'].resource.dictionaryEditorialRule)
             .toContain('sameHeadwordDomainSeparated');
+        expect(documentsById['term-authority-flat-kiln-pottery-tile'].resource.termAuthorityStatus)
+            .toContain('duplicateHeadwordConflict');
+        expect(documentsById['term-authority-flat-kiln-pottery-tile'].resource.termAuthorityStatus)
+            .toContain('domainConflictReview');
         expect(documentsById['term-authority-flat-kiln-porcelain-earthenware'].resource.termDictionaryDomain)
             .toEqual(['porcelain', 'earthenware']);
         expect(documentsById['term-relationship-flat-kiln-domain-split'].resource.termRelationshipSourceText)
@@ -3796,6 +3804,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Future management plan');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-termAuthorityStatus'].values.pdfCrossChecked.label)
             .toBe('Source PDF cross-checked');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-termAuthorityStatus'].values.bulkImportDeferred.label)
+            .toBe('Bulk import deferred');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-termAuthorityStatus'].values.domainConflictReview.label)
+            .toBe('분야 충돌 검토');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-termSearchMapping'].values.reportOutputSeparated.label)
             .toBe('Report output separated');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-termRelation'].values.partWholeRelation.label)

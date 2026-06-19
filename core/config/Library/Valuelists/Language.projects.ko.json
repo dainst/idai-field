@@ -3469,6 +3469,21 @@
       "pdfCrossChecked": {
         "label": "원PDF 대조 완료"
       },
+      "sourceCoverageAudited": {
+        "label": "자료군 범위 검토"
+      },
+      "bulkImportCandidate": {
+        "label": "대량 가져오기 후보"
+      },
+      "bulkImportDeferred": {
+        "label": "대량 가져오기 보류"
+      },
+      "duplicateHeadwordConflict": {
+        "label": "동일 표제어 충돌"
+      },
+      "domainConflictReview": {
+        "label": "분야 충돌 검토"
+      },
       "valueListCandidate": {
         "label": "값목록 후보"
       },
@@ -3479,7 +3494,7 @@
         "label": "판단 보류"
       }
     },
-    "description": "고고학사전 표제어와 현장 관용어를 앱 값 목록으로 올리기 전에 출처, 원문 대조, OCR 품질, UI 노출 가능성을 표시하기 위한 목록"
+    "description": "고고학사전 표제어와 현장 관용어를 앱 값 목록으로 올리기 전에 출처, 원문 대조, OCR 품질, 자료군 범위, 대량 가져오기 가능성, 동일 표제어·분야 충돌, UI 노출 가능성을 표시하기 위한 목록"
   },
   "KoreanFieldwork-termDictionaryDomain": {
     "values": {

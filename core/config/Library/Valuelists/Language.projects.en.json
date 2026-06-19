@@ -15223,6 +15223,21 @@
       "pdfCrossChecked": {
         "label": "Source PDF cross-checked"
       },
+      "sourceCoverageAudited": {
+        "label": "Source coverage audited"
+      },
+      "bulkImportCandidate": {
+        "label": "Bulk import candidate"
+      },
+      "bulkImportDeferred": {
+        "label": "Bulk import deferred"
+      },
+      "duplicateHeadwordConflict": {
+        "label": "Duplicate headword conflict"
+      },
+      "domainConflictReview": {
+        "label": "Domain conflict review"
+      },
       "valueListCandidate": {
         "label": "Value-list candidate"
       },
@@ -15233,7 +15248,7 @@
         "label": "Pending decision"
       }
     },
-    "description": "Korean archaeological term authority status for tracking dictionary source quality, original-script checks, OCR risk, and readiness for UI value lists"
+    "description": "Korean archaeological term authority status for tracking dictionary source quality, original-script checks, OCR risk, source coverage, bulk-import readiness, duplicate headword or domain conflicts, and readiness for UI value lists"
   },
   "KoreanFieldwork-termDictionaryDomain": {
     "values": {

@@ -35966,6 +35966,11 @@
       "captionNeedsCheck": {},
       "ocrCorrectionNeeded": {},
       "pdfCrossChecked": {},
+      "sourceCoverageAudited": {},
+      "bulkImportCandidate": {},
+      "bulkImportDeferred": {},
+      "duplicateHeadwordConflict": {},
+      "domainConflictReview": {},
       "valueListCandidate": {},
       "uiExposureDeferred": {},
       "pendingDecision": {}
@@ -35981,6 +35986,11 @@
       "captionNeedsCheck",
       "ocrCorrectionNeeded",
       "pdfCrossChecked",
+      "sourceCoverageAudited",
+      "bulkImportCandidate",
+      "bulkImportDeferred",
+      "duplicateHeadwordConflict",
+      "domainConflictReview",
       "valueListCandidate",
       "uiExposureDeferred",
       "pendingDecision"

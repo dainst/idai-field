@@ -51,7 +51,7 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-19 구석기 조사법의 꼬리표·유물대장 요구를 일반 유물 수습 흐름으로 다시 압축했다. 현장 꼬리표는 조사기관, 조사일자, 조사지점, 발굴칸, 일련번호, 지층, 유물층, 유물명, 재질·암질, 동서·남북좌표, 깊이, 치수, 무게를 담고, 유물대장은 이 값에 고유 등록번호와 정리번호 연결을 붙인다. 이 묶음은 `Find` 화면의 `artifactLabelRegisterLink` 값 목록으로 옮겼다.
 
-2026-06-19 제철유적 자료도 다시 대조했다. 2020년 제철유적 조사·분석 방법론과 생산유적 사전은 노 형태만으로 제련·단야·용해·초강을 확정하지 말고, 송풍·배재 구조, 노바닥과 굴광면 구분, 폐기장, 노벽·송풍관·유출재·노내재·환원괴·단조박편·입상재, 시료 채취 위치와 금속학 분석계획을 함께 보라고 요구한다. 이 묶음은 `Feature`의 `ironProcessEvidence`, `ironFurnaceStructure`, `Find`의 `ironResidueSubtype`, `Sample`의 `ironSampleAnalysisPlan` 값 목록으로 옮겼다.
+2026-06-19 제철유적 자료도 다시 대조했다. 2020년 제철유적 조사·분석 방법론과 생산유적 사전은 노 형태만으로 제련·단야·용해·초강을 확정하지 말고, 송풍·배재 구조, 노바닥과 굴광면 구분, 폐기장, 노벽·송풍관·유출재·노내재·환원괴·단조박편·입상재, 시료 채취 위치와 금속학 분석계획을 함께 보라고 요구한다. 이 묶음은 `Feature`의 `ironProcessEvidence`, `ironFurnaceStructure`, `Find`의 `ironResidueSubtype`, `Sample`의 `ironSampleAnalysisPlan` 값 목록으로 옮겼고, `iron-production-workflow-sample.json`으로 공정 확정 전 기록 흐름을 검증한다.
 
 2026-06-19 고분·분묘 자료도 구현 단위로 다시 압축했다. 제5권 고분 조사방법론, 분묘유구 조사법 강의자료, 고분편·고분유물편 사전은 묘형명 확정보다 봉토·분구 조사통제, 구지표와 성토 단위, 주구와 재굴착, 묘광 어깨선, 개석 제거 전후 기록, 밀봉토·내부토, 벽면 입면, 폐쇄시설과 추가장·도굴 근거, 부장품의 위치 맥락, 인골 오염 방지와 포장·분석 기준을 먼저 남기라고 요구한다. 이 묶음은 `Feature`의 `tombMoundInvestigation`, `tombBurialStructureInvestigation`, `Find`의 `graveGoodsRitualContext`, `Sample`의 `humanRemainsRecoveryAnalysis` 값 목록으로 옮겼다.
 
@@ -126,7 +126,7 @@ C:\Users\nuri9\Downloads\조사방법론
    자기요장 조사 요구는 `KoreanFieldwork-porcelainKilnSiteSystem`, `KoreanFieldwork-porcelainWorkshopProcess`, `KoreanFieldwork-porcelainKilnStructure`, `KoreanFieldwork-porcelainKilnExcavationControl`, `KoreanFieldwork-porcelainFindObservation`, `KoreanFieldwork-porcelainKilnFurnitureContext`, `KoreanFieldwork-porcelainAnalysisPlan`로 추가했다. `Feature`에서는 토취장·수비공·공방·가마·폐기장·생활공간·운송로와 공정 순서, 봉통부·번조실·연도부, 하단 사면 봉통부 탐색과 칸별 사진을 기록하고, `Find`에서는 태토·유약·시문·기형·굽·내저원각·갑발·도지미·굽받침을, `Sample`에서는 원토·태토·자편·유약·백토·가마벽체·수종·연대·소비지 자편 비교를 관리하게 했다.
    유물실측 조사 요구는 `KoreanFieldwork-artifactDrawingRecordMethod`, `KoreanFieldwork-artifactDrawingPlan`, `KoreanFieldwork-artifactDrawingQualityCheck`, `KoreanFieldwork-potteryDrawingStandard`, `KoreanFieldwork-stoneToolDrawingView`, `KoreanFieldwork-waterloggedWoodDrawingHandling`로 추가하고 `Drawing` 화면에 배치했다. 일반 도면 품질과 별개로 기록방식, 기준선·실측선·투상법·축척, 측점 검점과 교정, 토기·석기·수침목재의 재질별 실측 조건을 남긴다.
    보존과학 조사 요구는 `KoreanFieldwork-conservationScienceRequest`, `KoreanFieldwork-waterloggedWoodEmergencyStorage`, `KoreanFieldwork-lacquerConservationRisk`, `KoreanFieldwork-metalAnalysisRequest`, `KoreanFieldwork-ceramicConservationState`, `KoreanFieldwork-paperTextileEmergencyRecovery`, `KoreanFieldwork-conservationTreatmentPrincipleReview`, `KoreanFieldwork-humanDnaFieldControl`, `KoreanFieldwork-organicSoilAnalysisSample`, `KoreanFieldwork-destructiveAnalysisDecision`로 추가했다. `Find`에서는 유물별 보존과학 의뢰, 수침목재·칠기·금속·토도류 상태, 지류·직물 응급수습과 보존처리 원칙 검토를, `Sample`에서는 인골 DNA 현장관리, 내부토/대조토 분석, 비파괴·파괴분석 승인과 시료 제작 이력을 관리하게 했다.
-6. 샘플 조사 프로젝트를 만들어 고분, 패총, 제철유적 각각의 입력 흐름을 검증한다.
+6. 샘플 조사 프로젝트는 패총과 제철유적 입력 흐름을 먼저 검증했다. 남은 우선 작업은 고분·분묘 샘플에서 봉토, 매장주체부, 부장품, 인골 시료 흐름을 검증하는 것이다.
 
 ## 주의
 

@@ -240,6 +240,35 @@ describe('KoreanFieldwork project configuration', () => {
     });
 
 
+    it('keeps the Korean iron production sample aligned with process and residue fields', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const sample = loadSample('iron-production-workflow-sample.json');
+        const documents = sample.documents;
+        const documentsById = documents.reduce((index: any, document: any) => {
+            index[document.resource.id] = document;
+            return index;
+        }, {});
+
+        expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
+
+        expect(documentsById['feature-iron-furnace-001'].resource.ironProcessEvidence)
+            .toContain('alternativeProcessOpen');
+        expect(documentsById['feature-iron-furnace-001'].resource.ironFurnaceStructure)
+            .toContain('floorNotConfusedWithCut');
+        expect(documentsById['find-iron-residue-001'].resource.ironResidueSubtype)
+            .toContain('furnaceInternalSlag');
+        expect(documentsById['find-iron-residue-001'].resource.ironResidueSubtype)
+            .toContain('sphericalHammerscale');
+        expect(documentsById['sample-iron-analysis-001'].resource.ironSampleAnalysisPlan)
+            .toContain('oxideConversion');
+        expect(documentsById['sample-iron-analysis-001'].resource.ironSampleAnalysisPlan)
+            .toContain('destructiveApproval');
+    });
+
+
     it('registers the field-record preservation fields in the bundled configuration', () => {
 
         const configReader = new ConfigReader();

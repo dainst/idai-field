@@ -1,0 +1,190 @@
+{
+  "title": "Korean iron production workflow sample",
+  "purpose": "Validate that an iron production feature is recorded through process evidence, furnace structure, residue subtype, and metallurgical sampling plan before the production process is finalized.",
+  "validationQuestions": [
+    "제련·단야·용해·초강 판단이 노 이름이나 평면 형태 하나로 확정되지 않고 구조, 부산물, 분석계획을 함께 요구하는가.",
+    "송풍구, 배재구, 노바닥과 굴광면 구분, 폐기장·공방 연결이 개별 유구 기록에 남는가.",
+    "노벽, 송풍관, 유출재, 노내재, 환원괴, 단조박편, 입상재 같은 부산물이 한 덩어리 슬래그로 뭉개지지 않는가.",
+    "금속현미경, SEM-EDS, XRF, XRD, C/S 분석, 산화물 환산, CaO/SiO2 검토와 파괴분석 승인 이력이 시료 카드에서 추적되는가."
+  ],
+  "documents": [
+    {
+      "resource": {
+        "id": "op-iron-production-001",
+        "identifier": "IRON-OP-001",
+        "shortDescription": "제철유적 노·부산물 조사 작업",
+        "category": "Operation",
+        "relations": {},
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "criteriaConsistency",
+          "crossReviewNeeded"
+        ],
+        "recordCreationTiming": "duringFieldwork",
+        "dailyLogContent": [
+          "workDateWeather",
+          "workArea",
+          "findSampleCollection",
+          "photoDrawingNumbers"
+        ],
+        "dailyLogReview": [
+          "sameDayWritten",
+          "findListCrossChecked",
+          "sampleListCrossChecked"
+        ],
+        "reportCrossCheck": [
+          "manuscript",
+          "artifactRegister",
+          "sampleRegister",
+          "dailyLog"
+        ]
+      }
+    },
+    {
+      "resource": {
+        "id": "feature-iron-furnace-001",
+        "identifier": "IF-001",
+        "shortDescription": "제철 관련 노 후보",
+        "category": "Feature",
+        "relations": {
+          "isRecordedIn": ["op-iron-production-001"]
+        },
+        "description": "송풍구와 배재 후보 구조, 노벽편과 노내재가 함께 확인되어 제련 후보로 보되, 단야 부산물 가능성도 남겨 분석 전 공정 확정을 보류한 유구.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "researchQuestionFit"
+        ],
+        "fieldOnlyMissingCheck": [
+          "featureOutline",
+          "stratigraphicBoundary",
+          "photoAngleAndScale",
+          "samplePointMapped",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "ironProcessEvidence": [
+          "smeltingCandidate",
+          "refiningSmithingCandidate",
+          "processMixed",
+          "structureEvidence",
+          "residueEvidence",
+          "metallurgicalAnalysisNeeded",
+          "alternativeProcessOpen"
+        ],
+        "ironFurnaceStructure": [
+          "furnacePlanRecorded",
+          "furnaceSectionRecorded",
+          "wallRecorded",
+          "floorNotConfusedWithCut",
+          "tuyereOpening",
+          "slagTappingOpening",
+          "repairTrace",
+          "wasteDepositLinked",
+          "workshopLinked"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "find-iron-residue-001",
+        "identifier": "IF-001-F-RES-001",
+        "shortDescription": "노벽·송풍관·유출재 혼합 부산물",
+        "category": "Find",
+        "relations": {
+          "liesWithin": ["feature-iron-furnace-001"],
+          "isRecordedIn": ["op-iron-production-001"]
+        },
+        "description": "IF-001 폐기장과 노 주변에서 수습한 부산물 묶음. 노벽, 송풍관, 유출재, 노내재, 단조박편 가능 자료를 분리 기록해 공정 판정의 근거로 남긴다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "reproducibleRecord",
+          "criteriaConsistency"
+        ],
+        "fieldOnlyMissingCheck": [
+          "numberedBeforeCollection",
+          "spatialLocation",
+          "elevationRecorded",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "artifactHandlingWorkflow": [
+          "fieldCollection",
+          "findConditionRecord",
+          "packingTransport"
+        ],
+        "artifactQuantityBasis": [
+          "physicalItemCount",
+          "oneLotOneItem",
+          "quantityEvidencePhoto"
+        ],
+        "ironResidueSubtype": [
+          "furnaceWall",
+          "tuyere",
+          "tapSlag",
+          "furnaceInternalSlag",
+          "bloomFragment",
+          "smithingSlag",
+          "forgingScale",
+          "sphericalHammerscale",
+          "pendingDecision"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "sample-iron-analysis-001",
+        "identifier": "IF-001-S-MET-001",
+        "shortDescription": "제철 부산물 금속학 분석 시료",
+        "category": "Sample",
+        "relations": {
+          "liesWithin": ["feature-iron-furnace-001"],
+          "isRecordedIn": ["op-iron-production-001"]
+        },
+        "description": "IF-001 노내재와 단조박편 후보에서 복수 시료를 채취하고 절단 위치와 잔여 시료 보관을 기록해, 분석 후 공정 판정으로 환류하기 위한 시료.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "researchQuestionFit",
+          "reproducibleRecord"
+        ],
+        "fieldOnlyMissingCheck": [
+          "samplePointMapped",
+          "sampleConditionControlled",
+          "spatialLocation",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "samplePurpose": [
+          "metallurgy"
+        ],
+        "sampleCollectionHandling": [
+          "immediateCollection",
+          "dedicatedSamplingTool",
+          "contextMapLinked",
+          "avoidCrushing"
+        ],
+        "ironSampleAnalysisPlan": [
+          "visualRecord",
+          "sizeWeightColor",
+          "magnetReaction",
+          "samplingLocationRecorded",
+          "multipleSampling",
+          "cutLocationMarked",
+          "destructiveApproval",
+          "remainingSampleStored",
+          "metallography",
+          "semEds",
+          "xrf",
+          "xrd",
+          "carbonSulfurAnalysis",
+          "oxideConversion",
+          "caoSio2Checked",
+          "analysisFeedbackRecorded"
+        ],
+        "verificationState": "candidate"
+      }
+    }
+  ]
+}

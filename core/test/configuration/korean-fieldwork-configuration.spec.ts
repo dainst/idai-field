@@ -262,6 +262,43 @@ describe('KoreanFieldwork project configuration', () => {
     });
 
 
+    it('keeps the Korean surface survey scope and absence sample aligned with Survey fields', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const sample = loadSample('surface-survey-scope-absence-sample.json');
+        const documents = sample.documents;
+        const documentsById = documents.reduce((index: any, document: any) => {
+            index[document.resource.id] = document;
+            return index;
+        }, {});
+
+        expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
+
+        expect(documentsById['survey-surface-scope-001'].resource.surfaceSurveyScopeDefinition)
+            .toContain('temporaryRoad');
+        expect(documentsById['survey-surface-scope-001'].resource.surfaceSurveyMapRequirement)
+            .toContain('absoluteCoordinatesRecorded');
+        expect(documentsById['survey-surface-scope-001'].resource.surfaceSurveyHeritageCategory)
+            .toContain('modernHeritage');
+        expect(documentsById['survey-surface-scope-001'].resource.surfaceSurveyTimingReview)
+            .toContain('preservationReviewTimeSecured');
+        expect(documentsById['survey-surface-scope-001'].resource.surfaceEvidenceAbsenceAssessment)
+            .toContain('noSurfaceEvidence');
+        expect(documentsById['survey-surface-scope-001'].resource.surfaceEvidenceAbsenceAssessment)
+            .toContain('additionalSurveyNeeded');
+        expect(documentsById['survey-surface-scope-001'].resource.nonSiteResourceSurvey)
+            .toContain('dolmenStoneSource');
+        expect(documentsById['find-surface-pottery-001'].resource.relations.liesWithin)
+            .toEqual(['survey-surface-scope-001']);
+        expect(documentsById['find-surface-pottery-001'].resource.surfaceFindHandlingRecord)
+            .toContain('gpsLatLongRecorded');
+        expect(documentsById['find-surface-pottery-001'].resource.surfaceFindHandlingRecord)
+            .toContain('adheringSoilPreserved');
+    });
+
+
     it('keeps the Korean artifact label-register sample aligned with Find fields', () => {
 
         const configReader = new ConfigReader();

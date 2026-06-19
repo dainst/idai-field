@@ -1,0 +1,299 @@
+{
+  "title": "Korean surface survey scope, absence, and non-site resource sample",
+  "purpose": "Validate that Korean surface survey records keep project scope, specialist coverage, map requirements, absence reasoning, non-site resources, and surface find handling connected before follow-up excavation decisions.",
+  "validationQuestions": [
+    "지표조사 범위가 사업구역 전체, 형질변경지, 토취장·사토장·가설도로, 영향권까지 명시되는가.",
+    "표면 유물 부재가 유적 부재로 확정되지 않고 지형·입지·퇴적물·탐문·조사한계와 함께 남는가.",
+    "유적이 아닌 석재·점토·생산 원료 후보와 표면 채집 유물의 지도·GPS·사진·부착토 보존 기록이 이어지는가."
+  ],
+  "documents": [
+    {
+      "resource": {
+        "id": "project-surface-scope-001",
+        "identifier": "SURFACE-SCOPE-001",
+        "shortName": "지표조사 범위·부재근거 샘플",
+        "shortDescription": "사업 범위와 표면 증거 부재, 주변 자원조사를 함께 검증",
+        "category": "Project",
+        "relations": {},
+        "description": "도로 확장과 소규모 저류지 조성 사업에서 지표 유물 부재 구간과 산록부 자원 후보를 같은 조사 흐름으로 남기는 샘플.",
+        "investigationAdministration": [
+          "requestReceived",
+          "priorRecordsSecured",
+          "fieldReconnaissance",
+          "planPrepared",
+          "fieldworkInProgress"
+        ],
+        "investigationRequestIntake": [
+          "requestReceived",
+          "projectOwnerBasicData",
+          "projectPlanSecured",
+          "priorSurveyResultSecured",
+          "fieldReconnaissance",
+          "specialistInstitutionReferral"
+        ],
+        "permitConditionCompliance": [
+          "permitDocumentOnSite",
+          "landownerConsent",
+          "investigationPeriodChecked",
+          "siteInspectionCooperation"
+        ],
+        "reportCrossCheck": [
+          "manuscript",
+          "photoRegister",
+          "artifactRegister",
+          "drawingRegister"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "op-surface-scope-001",
+        "identifier": "SURFACE-OP-001",
+        "shortDescription": "지표조사 범위 확인 작업",
+        "category": "Operation",
+        "relations": {
+          "isRecordedIn": ["project-surface-scope-001"]
+        },
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "reproducibleRecord",
+          "crossReviewNeeded"
+        ],
+        "recordCreationTiming": "duringFieldwork",
+        "dailyLogContent": [
+          "workDateWeather",
+          "workArea",
+          "photoDrawingNumbers",
+          "findSampleCollection",
+          "visitorInstruction"
+        ],
+        "dailyLogReview": [
+          "sameDayWritten",
+          "findListCrossChecked",
+          "photoDrawingCrossChecked",
+          "reviewerChecked"
+        ],
+        "reportCrossCheck": [
+          "manuscript",
+          "photoRegister",
+          "artifactRegister",
+          "numberConversionTable"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "survey-surface-scope-001",
+        "identifier": "SURFACE-SUR-001",
+        "shortDescription": "사업구역·영향권 지표조사",
+        "category": "Survey",
+        "relations": {
+          "isRecordedIn": ["op-surface-scope-001"]
+        },
+        "description": "본선 확장 구간, 임시 진입로, 사토 예정지, 저류지 주변 영향권을 함께 걸어 표면 유물 부재 구간과 산록부 석재·점토 자원 후보를 구분해 기록한다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "researchQuestionFit"
+        ],
+        "recordCreationTiming": "duringFieldwork",
+        "surfaceSurveyPreparationCheck": [
+          "crewCompositionChecked",
+          "specialistNeededReviewed",
+          "literatureSourcesReady",
+          "mapSourcesReady",
+          "previousReportsReady",
+          "heritageDistributionMapReady",
+          "currentSurveyCadReady",
+          "gpsReady",
+          "recordFormsReady",
+          "artifactBagsReady"
+        ],
+        "surfaceSurveyFieldSequence": [
+          "surveyBoundaryChecked",
+          "boundaryGpsRecorded",
+          "panoramicPhotosMultiDirection",
+          "zonesDividedByLandform",
+          "existingHeritageChecked",
+          "artifactScatterChecked",
+          "cutSectionStratigraphyChecked",
+          "originalLandformDamageRecorded",
+          "vegetationCoverRecorded",
+          "interviewSurveyRecorded"
+        ],
+        "surfaceSurveyMapRequirement": [
+          "polygonSurveyArea",
+          "baseDigitalTopographicMap",
+          "projectPlanMatched",
+          "absoluteCoordinatesRecorded",
+          "mapScale1_5000",
+          "mapSheetNumberRecorded",
+          "artifactScatterBoundaryCurve",
+          "pointRadiusUnder5m",
+          "dgpsUsed",
+          "twoGpsControlPoints"
+        ],
+        "surfaceSurveyHeritageCategory": [
+          "archaeology",
+          "history",
+          "anthropologyFolklore",
+          "naturalHeritage",
+          "modernHeritage"
+        ],
+        "surfaceSurveyScopeDefinition": [
+          "entireProjectArea",
+          "alteredAreaIncluded",
+          "temporaryRoad",
+          "borrowPit",
+          "spoilDisposalArea",
+          "surrounding50m",
+          "designChangeArea"
+        ],
+        "surfaceSurveyLowerChronologyReview": [
+          "aroundLiberation",
+          "koreanWarPeriod",
+          "over50Years",
+          "registeredHeritageCandidate",
+          "legalCriteriaReviewed"
+        ],
+        "surfaceSurveyTeamExpertise": [
+          "archaeologyExpert",
+          "historyExpert",
+          "folkloreExpert",
+          "geologyExpert",
+          "specialistReferral"
+        ],
+        "surfaceSurveyTimingReview": [
+          "projectPlanningStage",
+          "beforeConstruction",
+          "afterDesignChange",
+          "preservationReviewTimeSecured",
+          "timingRisk"
+        ],
+        "surfaceSurveyObservation": [
+          "terrainCharacteristic",
+          "locationPotential",
+          "terrainModification",
+          "originalLandformReconstruction",
+          "artifactScatter",
+          "cutSectionStratigraphy",
+          "soilEnvironment",
+          "externalFillPossible",
+          "redepositionPossible",
+          "noSurfaceFindsPotential"
+        ],
+        "surfaceEvidenceAbsenceAssessment": [
+          "noSurfaceEvidence",
+          "terrainEvidence",
+          "locationConditionEvidence",
+          "depositCharacterEvidence",
+          "interviewEvidence",
+          "experienceBasedJudgement",
+          "surveyLimit",
+          "additionalSurveyNeeded"
+        ],
+        "nonSiteResourceSurvey": [
+          "stoneSource",
+          "claySource",
+          "dolmenStoneSource",
+          "productionRawMaterialCandidate",
+          "surroundingResourceDistribution",
+          "surroundingAreaDetailedObservation"
+        ],
+        "surfaceSurveyBiasControl": [
+          "priorLiteratureChecked",
+          "fieldObservationFirst",
+          "crewSpacingRecorded",
+          "routeRecorded",
+          "visibilityConditionsRecorded",
+          "investigatorCrossCheck",
+          "postFieldLiteratureComparison"
+        ],
+        "surfaceSurveyFollowUp": [
+          "noSiteObserved",
+          "lowPotential",
+          "additionalSurveyNeeded",
+          "stratigraphySurvey",
+          "pendingDecision"
+        ],
+        "surfaceSurveyResultProcessing": [
+          "projectDistanceReviewed",
+          "followUpMeasure",
+          "confirmationSurvey",
+          "followUpSurveyScope",
+          "findInventory",
+          "findRegister",
+          "digitalRegistration",
+          "existingSiteBoundaryRevision"
+        ],
+        "verificationState": "needsRecheck"
+      }
+    },
+    {
+      "resource": {
+        "id": "find-surface-pottery-001",
+        "identifier": "SURFACE-FIND-001",
+        "shortDescription": "밭둑 절개면 표면 채집 토기편",
+        "category": "Find",
+        "relations": {
+          "isRecordedIn": ["op-surface-scope-001"],
+          "liesWithin": ["survey-surface-scope-001"]
+        },
+        "description": "밭둑 절개면에서 단독 확인된 토기편. 산포 범위는 불충분하지만 위치와 부착토, 근경·원경 사진을 남겨 후속 확인조사의 단서로 유지한다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "reproducibleRecord"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "fieldOnlyMissingCheck": [
+          "numberedBeforeCollection",
+          "photoAngleAndScale",
+          "spatialLocation",
+          "sameDayReview",
+          "notRecoverableWarning"
+        ],
+        "artifactHandlingWorkflow": [
+          "fieldCollection",
+          "findConditionRecord",
+          "materialSpecificStorage",
+          "reportPreparation"
+        ],
+        "surfaceFindHandlingRecord": [
+          "individualPackaging",
+          "artifactCardCreated",
+          "map1_5000Marked",
+          "gpsLatLongRecorded",
+          "parcelNumberChecked",
+          "closePhoto",
+          "overviewPhoto",
+          "scaleIncluded",
+          "northArrowIncluded",
+          "adheringSoilPreserved",
+          "washingCaution"
+        ],
+        "artifactLabelRegisterLink": [
+          "labelCreated",
+          "collectionDateRecorded",
+          "sitePointRecorded",
+          "fieldSerialNumber",
+          "artifactNameRecorded",
+          "materialRecorded",
+          "coordinateEastWestRecorded",
+          "coordinateNorthSouthRecorded",
+          "ledgerEntryCreated"
+        ],
+        "artifactQuantityBasis": [
+          "physicalItemCount",
+          "actualCountAnnotated",
+          "quantityEvidencePhoto"
+        ],
+        "verificationState": "candidate"
+      }
+    }
+  ]
+}

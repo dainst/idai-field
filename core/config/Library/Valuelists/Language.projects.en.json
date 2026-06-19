@@ -16998,22 +16998,29 @@
   "KoreanFieldwork-potteryExperimentalVariableRecord": {
     "values": {
       "clayMoisture": { "label": "Clay moisture" },
+      "rawClaySourceRecorded": { "label": "Raw clay source recorded" },
       "temperRatio": { "label": "Temper ratio" },
       "levigationDegree": { "label": "Levigation degree" },
+      "formingMethodRecorded": { "label": "Forming method recorded" },
       "dryingLocation": { "label": "Drying location" },
+      "dryingEnvironmentRecorded": { "label": "Drying environment recorded" },
       "rotationDuringDrying": { "label": "Rotation during drying" },
       "dryingDuration": { "label": "Drying duration" },
+      "fuelAmountRecorded": { "label": "Fuel amount recorded" },
       "firingAtmosphere": { "label": "Firing atmosphere" },
+      "firingAtmosphereTransitionRecorded": { "label": "Firing atmosphere transition recorded" },
       "firingTemperature": { "label": "Firing temperature" },
       "firingDuration": { "label": "Firing duration" },
+      "kilnClosureRecorded": { "label": "Kiln closure recorded" },
       "firingPosition": { "label": "Firing position" },
       "supportMaterial": { "label": "Support material" },
       "failureTrace": { "label": "Failure trace" },
       "shrinkageWarpingObserved": { "label": "Shrinkage/warping observed" },
+      "shrinkageRateRecorded": { "label": "Shrinkage rate recorded" },
       "experimentReferenceLinked": { "label": "Experiment reference linked" },
       "pendingDecision": { "label": "Pending decision" }
     },
-    "description": "Pottery experimental-variable checks for comparing production-practice or replication experiments with finds through clay moisture, temper ratio, drying and firing conditions, firing position, support material, and failure traces"
+    "description": "Pottery experimental-variable checks for comparing production-practice or replication experiments with finds through raw clay source, clay moisture, temper ratio, forming method, drying environment, fuel amount, firing-atmosphere transitions, temperature/duration, kiln closure, firing position, support material, failure traces, and shrinkage rate"
   },
   "KoreanFieldwork-potteryClassificationBasis": {
     "values": {
@@ -19186,20 +19193,25 @@
       "hypothesisRecorded": { "label": "Hypothesis recorded" },
       "sourceFeatureLinked": { "label": "Source feature linked" },
       "sourceFindLinked": { "label": "Source find linked" },
+      "processChainRecorded": { "label": "Process chain recorded" },
       "variableDefined": { "label": "Variable defined" },
       "controlGroup": { "label": "Control group" },
       "counterAttributeComparison": { "label": "Counter-attribute comparison" },
       "materialConditionRecorded": { "label": "Material condition recorded" },
+      "environmentConditionRecorded": { "label": "Environment condition recorded" },
       "toolFuelLaborRecorded": { "label": "Tool/fuel/labor recorded" },
+      "dryingFiringScheduleRecorded": { "label": "Drying/firing schedule recorded" },
+      "comparisonCriteriaRecorded": { "label": "Comparison criteria recorded" },
       "replicationCount": { "label": "Replication count" },
       "failedRunRecorded": { "label": "Failed run recorded" },
+      "failureCauseReviewed": { "label": "Failure cause reviewed" },
       "singleRunWarning": { "label": "Single-run warning" },
       "externalReview": { "label": "External review" },
       "longTermReplicationPlan": { "label": "Long-term replication plan" },
       "digitalSubstituteLimit": { "label": "Digital substitute limit" },
       "pendingDecision": { "label": "Pending decision" }
     },
-    "description": "Korean fieldwork experimental archaeology checks for research question, hypothesis, source data, variables, controls, repetition, failed runs, review, and digital-substitute limits"
+    "description": "Korean fieldwork experimental archaeology checks for research question, hypothesis, process chain, variables, controls, material/environment conditions, tools/fuel/labor, drying/firing schedule, comparison criteria, repetition, failed runs and failure causes, review, and digital-substitute limits"
   },
   "KoreanFieldwork-sourceEvidenceMaterial": {
     "values": {

@@ -511,6 +511,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('equipmentList');
         expect(documentsById['source-index-digital-survey-equipment-001'].resource.sourceEvidenceUse)
             .toContain('interpretationCaution');
+        expect(documentsById['source-index-pottery-production-experiment-001'].resource.sourceEvidenceDomain)
+            .toContain('productionSite');
+        expect(documentsById['source-index-pottery-production-experiment-001'].resource.sourceEvidenceMaterial)
+            .toContain('measurementValue');
+        expect(documentsById['source-index-pottery-production-experiment-001'].resource.sourceEvidenceUse)
+            .toContain('analysisPlanEvidence');
     });
 
 
@@ -1101,6 +1107,12 @@ describe('KoreanFieldwork project configuration', () => {
 
         expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
 
+        expect(documentsById['op-pottery-subsistence-001'].resource.experimentDesign)
+            .toContain('processChainRecorded');
+        expect(documentsById['op-pottery-subsistence-001'].resource.experimentDesign)
+            .toContain('dryingFiringScheduleRecorded');
+        expect(documentsById['op-pottery-subsistence-001'].resource.experimentDesign)
+            .toContain('failureCauseReviewed');
         expect(documentsById['find-neolithic-pottery-001'].resource.ceramicTermScope)
             .toContain('firingTemperatureCandidate');
         expect(documentsById['find-neolithic-pottery-001'].resource.potteryFabricTemperRecord)
@@ -1121,6 +1133,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('hastyConclusionBlocked');
         expect(documentsById['find-pottery-forming-trace-001'].resource.potteryExperimentalVariableRecord)
             .toContain('failureTrace');
+        expect(documentsById['find-pottery-forming-trace-001'].resource.potteryExperimentalVariableRecord)
+            .toContain('fuelAmountRecorded');
+        expect(documentsById['find-pottery-forming-trace-001'].resource.potteryExperimentalVariableRecord)
+            .toContain('kilnClosureRecorded');
+        expect(documentsById['find-pottery-forming-trace-001'].resource.potteryExperimentalVariableRecord)
+            .toContain('shrinkageRateRecorded');
         expect(documentsById['find-pottery-forming-trace-001'].resource.potteryClassificationBasis)
             .toContain('technicalGroupSorted');
         expect(documentsById['find-pottery-forming-trace-001'].resource.potteryProvenanceDistributionReview)
@@ -4034,6 +4052,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-experimentDesign']
             .values.singleRunWarning.label)
             .toBe('Single-run warning');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-experimentDesign']
+            .values.dryingFiringScheduleRecorded.label)
+            .toBe('Drying/firing schedule recorded');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-potteryExperimentalVariableRecord']
+            .values.fuelAmountRecorded.label)
+            .toBe('땔감 투입량 기록');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceFindHandlingRecord']
             .values.adheringSoilPreserved.label)
             .toBe('Adhering soil preserved');

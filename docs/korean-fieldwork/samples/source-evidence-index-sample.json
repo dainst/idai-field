@@ -587,6 +587,51 @@
         ],
         "verificationState": "candidate"
       }
+    },
+    {
+      "resource": {
+        "id": "source-index-pottery-production-experiment-001",
+        "identifier": "SRC-POTTERY-EXPERIMENT-001",
+        "shortDescription": "토기 제작실험 변수 색인",
+        "category": "SourceEvidenceIndex",
+        "relations": {
+          "liesWithin": ["project-source-evidence-001"]
+        },
+        "description": "토기 제작의 이해와 실습 자료의 태토 채취·수비, 비짐, 성형, 정면·시문, 건조, 소성, 양산 호계가마 소성실험, 공방·건조장·가마시설 설명을 토기 제작 생애와 실험 설계 근거로 남긴다.",
+        "sourceEvidenceCitation": "토기 제작의 이해와 실습",
+        "sourceEvidenceLocator": "direct-recheck lines 378-679, 1039-1212, 2530-2766: clay, temper, forming, drying, firing, fuel, workshop and kiln facilities",
+        "sourceEvidenceMaterial": [
+          "caseStudy",
+          "measurementValue",
+          "sourceCitation",
+          "checklist"
+        ],
+        "sourceEvidenceDomain": [
+          "productionSite",
+          "researchMethod",
+          "dictionaryTerminology"
+        ],
+        "sourceEvidenceVerification": [
+          "pageChecked",
+          "directPdfChecked",
+          "numericValueChecked",
+          "crossSourceCompared"
+        ],
+        "sourceEvidenceUse": [
+          "fieldDesignEvidence",
+          "sampleValidationEvidence",
+          "analysisPlanEvidence",
+          "interpretationCaution",
+          "sourceTraceability"
+        ],
+        "recordCreationTiming": "postExcavationDerived",
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "crossReviewNeeded"
+        ],
+        "verificationState": "candidate"
+      }
     }
   ]
 }

@@ -5244,22 +5244,29 @@
   "KoreanFieldwork-potteryExperimentalVariableRecord": {
     "values": {
       "clayMoisture": { "label": "점토 수분" },
+      "rawClaySourceRecorded": { "label": "원료 점토 산지 기록" },
       "temperRatio": { "label": "비짐 비율" },
       "levigationDegree": { "label": "수비 정도" },
+      "formingMethodRecorded": { "label": "성형법 기록" },
       "dryingLocation": { "label": "건조 위치" },
+      "dryingEnvironmentRecorded": { "label": "건조 환경 기록" },
       "rotationDuringDrying": { "label": "건조 중 방향 돌림" },
       "dryingDuration": { "label": "건조 시간" },
+      "fuelAmountRecorded": { "label": "땔감 투입량 기록" },
       "firingAtmosphere": { "label": "소성 분위기" },
+      "firingAtmosphereTransitionRecorded": { "label": "소성 분위기 전환 기록" },
       "firingTemperature": { "label": "소성 온도" },
       "firingDuration": { "label": "소성 시간" },
+      "kilnClosureRecorded": { "label": "가마 폐쇄 기록" },
       "firingPosition": { "label": "재임 위치" },
       "supportMaterial": { "label": "지지재" },
       "failureTrace": { "label": "실패흔" },
       "shrinkageWarpingObserved": { "label": "수축·비틀림 관찰" },
+      "shrinkageRateRecorded": { "label": "수축률 기록" },
       "experimentReferenceLinked": { "label": "실험 참조 연결" },
       "pendingDecision": { "label": "판단 보류" }
     },
-    "description": "토기 제작실험이나 복원실험을 유물 관찰과 비교할 때 점토 수분, 비짐 비율, 건조·소성 조건, 재임 위치, 지지재와 실패흔을 함께 기록하기 위한 목록"
+    "description": "토기 제작실험이나 복원실험을 유물 관찰과 비교할 때 원료 점토, 점토 수분, 비짐 비율, 성형법, 건조 환경, 땔감 투입량, 소성 분위기 전환, 온도·시간, 가마 폐쇄, 재임 위치, 지지재, 실패흔과 수축률을 함께 기록하기 위한 목록"
   },
   "KoreanFieldwork-potteryClassificationBasis": {
     "values": {
@@ -7432,20 +7439,25 @@
       "hypothesisRecorded": { "label": "가설 기록" },
       "sourceFeatureLinked": { "label": "원 유구 연결" },
       "sourceFindLinked": { "label": "원 유물 연결" },
+      "processChainRecorded": { "label": "제작 연쇄 기록" },
       "variableDefined": { "label": "변수 정의" },
       "controlGroup": { "label": "대조군" },
       "counterAttributeComparison": { "label": "반대 속성 비교" },
       "materialConditionRecorded": { "label": "재료 조건 기록" },
+      "environmentConditionRecorded": { "label": "환경 조건 기록" },
       "toolFuelLaborRecorded": { "label": "도구·연료·인력 기록" },
+      "dryingFiringScheduleRecorded": { "label": "건조·소성 일정 기록" },
+      "comparisonCriteriaRecorded": { "label": "비교 기준 기록" },
       "replicationCount": { "label": "반복 횟수" },
       "failedRunRecorded": { "label": "실패값 기록" },
+      "failureCauseReviewed": { "label": "실패 원인 검토" },
       "singleRunWarning": { "label": "단회 실험 주의" },
       "externalReview": { "label": "외부 재검토" },
       "longTermReplicationPlan": { "label": "중장기 반복계획" },
       "digitalSubstituteLimit": { "label": "디지털 대체자료 한계" },
       "pendingDecision": { "label": "판단 보류" }
     },
-    "description": "실험고고학을 복원품 제작이 아니라 문제, 가설, 변수, 대조군, 반복, 실패값, 외부검토, 디지털 대체자료 한계가 있는 검증 절차로 기록하기 위한 목록"
+    "description": "실험고고학을 복원품 제작이 아니라 문제, 가설, 제작 연쇄, 변수, 대조군, 재료·환경·도구·연료·인력, 건조·소성 일정, 비교 기준, 반복, 실패값과 실패 원인, 외부검토, 디지털 대체자료 한계가 있는 검증 절차로 기록하기 위한 목록"
   },
   "KoreanFieldwork-sourceEvidenceMaterial": {
     "values": {

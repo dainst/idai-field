@@ -15144,13 +15144,21 @@
       "drawingDatabase": { "label": "Drawing database" },
       "photoDatabase": { "label": "Photo database" },
       "surfaceSurveyGis": { "label": "Surface survey GIS" },
+      "shapefileSubmissionPackage": { "label": "Shapefile submission package" },
+      "gpsRawLog": { "label": "GPS raw log" },
+      "nmeaTrackFile": { "label": "NMEA track file" },
+      "georeferencedRaster": { "label": "Georeferenced raster" },
+      "uavPhotoSet": { "label": "UAV photo set" },
+      "lidarPointCloud": { "label": "LiDAR point cloud" },
+      "photogrammetryProjectFile": { "label": "Photogrammetry project file" },
+      "threeDimensionalSourcePackage": { "label": "3D source package" },
       "conventionalSlideArchive": { "label": "Conventional slide archive" },
       "conventionalPhotoAlbum": { "label": "Conventional photo album" },
       "manuscriptDrawingArchive": { "label": "Manuscript drawing archive" },
       "integratedDbmsLinked": { "label": "Integrated DBMS linked" },
       "pendingDecision": { "label": "Pending decision" }
     },
-    "description": "Information-asset types that keep report files, electronic-report packages, databases, GIS, and legacy media visible after fieldwork"
+    "description": "Information-asset types that keep report files, electronic-report packages, databases, GIS, GPS/NMEA logs, shapefile submissions, georeferenced rasters, UAV/LiDAR/3D source data, and legacy media visible after fieldwork"
   },
   "KoreanFieldwork-informationAssetManagement": {
     "values": {
@@ -15160,6 +15168,13 @@
       "filePathRecorded": { "label": "File path recorded" },
       "formatVersionRecorded": { "label": "Format version recorded" },
       "coordinateSystemRecorded": { "label": "Coordinate system recorded" },
+      "controlPointRegisterLinked": { "label": "Control-point register linked" },
+      "rmsErrorRecorded": { "label": "RMS error recorded" },
+      "processingWorkflowRecorded": { "label": "Processing workflow recorded" },
+      "derivedOutputLinked": { "label": "Derived output linked" },
+      "submissionPackageTracked": { "label": "Submission package tracked" },
+      "checksumRecorded": { "label": "Checksum recorded" },
+      "reanalysisPossible": { "label": "Reanalysis possible" },
       "accessPermissionSet": { "label": "Access permission set" },
       "backupLocationRecorded": { "label": "Backup location recorded" },
       "backupVerified": { "label": "Backup verified" },
@@ -15170,7 +15185,7 @@
       "restrictedAccessMarked": { "label": "Restricted access marked" },
       "pendingDecision": { "label": "Pending decision" }
     },
-    "description": "Information-asset management checks for preserving source links, file paths, formats, permissions, backups, migration needs, DBMS links, and archive locations"
+    "description": "Information-asset management checks for preserving source links, file paths, formats, coordinates, control points, errors, processing workflow, derived outputs, submissions, checksums, permissions, backups, migration needs, DBMS links, and archive locations"
   },
   "KoreanFieldwork-stateVestingSelectionRecord": {
     "values": {

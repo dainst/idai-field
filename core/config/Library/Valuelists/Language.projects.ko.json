@@ -3390,13 +3390,21 @@
       "drawingDatabase": { "label": "도면 DB" },
       "photoDatabase": { "label": "사진 DB" },
       "surfaceSurveyGis": { "label": "지표조사 GIS" },
+      "shapefileSubmissionPackage": { "label": "shapefile 제출 묶음" },
+      "gpsRawLog": { "label": "GPS 원시로그" },
+      "nmeaTrackFile": { "label": "NMEA 궤적파일" },
+      "georeferencedRaster": { "label": "지리보정 래스터" },
+      "uavPhotoSet": { "label": "UAV 원사진 묶음" },
+      "lidarPointCloud": { "label": "LiDAR 점군" },
+      "photogrammetryProjectFile": { "label": "사진측량 프로젝트파일" },
+      "threeDimensionalSourcePackage": { "label": "3D 원천자료 묶음" },
       "conventionalSlideArchive": { "label": "슬라이드 재래식 매체" },
       "conventionalPhotoAlbum": { "label": "사진첩 재래식 매체" },
       "manuscriptDrawingArchive": { "label": "수기 도면 재래식 매체" },
       "integratedDbmsLinked": { "label": "통합 DBMS 연결" },
       "pendingDecision": { "label": "판단 보류" }
     },
-    "description": "보고서 작업파일, 전자보고서, 각종 DB, GIS, 재래식 매체를 현장기록에서 이어 관리하기 위한 정보화 자산 종류 목록"
+    "description": "보고서 작업파일, 전자보고서, 각종 DB, GIS, GPS·NMEA·shapefile·지리보정·UAV·LiDAR·3D 원천자료와 재래식 매체를 현장기록에서 이어 관리하기 위한 정보화 자산 종류 목록"
   },
   "KoreanFieldwork-informationAssetManagement": {
     "values": {
@@ -3406,6 +3414,13 @@
       "filePathRecorded": { "label": "파일경로 기록" },
       "formatVersionRecorded": { "label": "포맷·버전 기록" },
       "coordinateSystemRecorded": { "label": "좌표계 기록" },
+      "controlPointRegisterLinked": { "label": "기준점 대장 연결" },
+      "rmsErrorRecorded": { "label": "RMS 오차 기록" },
+      "processingWorkflowRecorded": { "label": "처리 workflow 기록" },
+      "derivedOutputLinked": { "label": "파생 산출물 연결" },
+      "submissionPackageTracked": { "label": "제출 묶음 추적" },
+      "checksumRecorded": { "label": "체크섬 기록" },
+      "reanalysisPossible": { "label": "재분석 가능" },
       "accessPermissionSet": { "label": "열람권한 설정" },
       "backupLocationRecorded": { "label": "백업 위치 기록" },
       "backupVerified": { "label": "백업 검증" },
@@ -3416,7 +3431,7 @@
       "restrictedAccessMarked": { "label": "제한열람 표시" },
       "pendingDecision": { "label": "판단 보류" }
     },
-    "description": "원기록 연결, 파일경로, 포맷, 권한, 백업, 마이그레이션, DBMS 연결, 장기보존 위치를 추적하기 위한 정보화 자산 관리 목록"
+    "description": "원기록 연결, 파일경로, 포맷, 좌표계, 기준점, 오차, 처리 workflow, 파생 산출물, 제출 묶음, 체크섬, 권한, 백업, 마이그레이션, DBMS 연결, 장기보존 위치를 추적하기 위한 정보화 자산 관리 목록"
   },
   "KoreanFieldwork-stateVestingSelectionRecord": {
     "values": {

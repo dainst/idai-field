@@ -732,6 +732,87 @@
           "evaluationFeedback"
         ]
       }
+    },
+    {
+      "resource": {
+        "id": "information-asset-media-spatial-001",
+        "identifier": "MEDIA-ASSET-001",
+        "shortDescription": "GPS·GIS·shapefile 원천자료 묶음",
+        "category": "InformationAsset",
+        "relations": {
+          "isRecordedIn": ["op-media-001"],
+          "isResultOf": ["op-media-001", "drawing-media-distribution-001"]
+        },
+        "description": "완료신고와 문화재 GIS 제출에 쓰는 조사구역·유구배치 공간자료를 원시 GPS 로그, NMEA 궤적, shapefile, 좌표계, 기준점 대장과 함께 보존한다.",
+        "informationAssetTitleText": "MEDIA-001 GPS/GIS 제출 원천자료",
+        "informationAssetIdentifierText": "ASSET-MEDIA-SPATIAL-001",
+        "informationAssetLocationText": "기관 서버 / GIS 제출 폴더 / 외장 백업",
+        "informationAssetLinkText": "op-media-001 / drawing-media-distribution-001 / 기준점대장 CP-2026-01 / 문화재 GIS 제출본",
+        "informationAssetType": [
+          "surfaceSurveyGis",
+          "shapefileSubmissionPackage",
+          "gpsRawLog",
+          "nmeaTrackFile",
+          "drawingDatabase"
+        ],
+        "informationAssetManagement": [
+          "sourceRecordLinked",
+          "reportItemLinked",
+          "filePathRecorded",
+          "formatVersionRecorded",
+          "coordinateSystemRecorded",
+          "controlPointRegisterLinked",
+          "submissionPackageTracked",
+          "checksumRecorded",
+          "backupLocationRecorded",
+          "backupVerified",
+          "longTermArchiveLocation",
+          "reanalysisPossible"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "information-asset-media-remote-001",
+        "identifier": "MEDIA-ASSET-002",
+        "shortDescription": "지리보정·UAV·LiDAR·3D 원천자료 묶음",
+        "category": "InformationAsset",
+        "relations": {
+          "isRecordedIn": ["op-media-001"],
+          "isResultOf": ["drawing-media-3d-source-001", "photo-media-gps-001"]
+        },
+        "description": "고지형 분석과 3D 산출물을 다시 검토할 수 있도록 지리보정 래스터, UAV 원사진, LiDAR 점군, 사진측량 프로젝트파일, 3D 원천자료와 처리 workflow를 완성 도면과 분리해 보존한다.",
+        "informationAssetTitleText": "MEDIA-001 지리보정·3D 재분석 묶음",
+        "informationAssetIdentifierText": "ASSET-MEDIA-REMOTE-001",
+        "informationAssetLocationText": "기관 서버 / 3D 원본 저장소 / 장기보존 스토리지",
+        "informationAssetLinkText": "drawing-media-3d-source-001 / photo-media-gps-001 / 지리보정 링크테이블 / 점군 정합 보고서",
+        "informationAssetType": [
+          "georeferencedRaster",
+          "uavPhotoSet",
+          "lidarPointCloud",
+          "photogrammetryProjectFile",
+          "threeDimensionalSourcePackage",
+          "photoDatabase"
+        ],
+        "informationAssetManagement": [
+          "sourceRecordLinked",
+          "filePathRecorded",
+          "formatVersionRecorded",
+          "coordinateSystemRecorded",
+          "controlPointRegisterLinked",
+          "rmsErrorRecorded",
+          "processingWorkflowRecorded",
+          "derivedOutputLinked",
+          "checksumRecorded",
+          "accessPermissionSet",
+          "backupLocationRecorded",
+          "backupVerified",
+          "longTermArchiveLocation",
+          "reanalysisPossible"
+        ],
+        "verificationState": "candidate"
+      }
     }
   ]
 }

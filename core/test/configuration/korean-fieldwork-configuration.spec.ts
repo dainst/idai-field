@@ -326,6 +326,22 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('filteringBeforeAfterChecked');
         expect(documentsById['drawing-media-3d-source-001'].resource.artifactElectronicDrawingProcedure)
             .toContain('referencePlaneCreated');
+        expect(documentsById['information-asset-media-spatial-001'].resource.informationAssetType)
+            .toContain('shapefileSubmissionPackage');
+        expect(documentsById['information-asset-media-spatial-001'].resource.informationAssetType)
+            .toContain('nmeaTrackFile');
+        expect(documentsById['information-asset-media-spatial-001'].resource.informationAssetManagement)
+            .toContain('controlPointRegisterLinked');
+        expect(documentsById['information-asset-media-spatial-001'].resource.informationAssetManagement)
+            .toContain('submissionPackageTracked');
+        expect(documentsById['information-asset-media-remote-001'].resource.informationAssetType)
+            .toContain('georeferencedRaster');
+        expect(documentsById['information-asset-media-remote-001'].resource.informationAssetType)
+            .toContain('lidarPointCloud');
+        expect(documentsById['information-asset-media-remote-001'].resource.informationAssetManagement)
+            .toContain('rmsErrorRecorded');
+        expect(documentsById['information-asset-media-remote-001'].resource.informationAssetManagement)
+            .toContain('processingWorkflowRecorded');
     });
 
 
@@ -4166,9 +4182,18 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-informationAssetType']
             .values.standardElectronicExcavationReport.label)
             .toBe('Standard electronic excavation report');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-informationAssetType']
+            .values.shapefileSubmissionPackage.label)
+            .toBe('Shapefile submission package');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-informationAssetType']
+            .values.georeferencedRaster.label)
+            .toBe('지리보정 래스터');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-informationAssetManagement']
             .values.dbmsConnectionChecked.label)
             .toBe('DBMS connection checked');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-informationAssetManagement']
+            .values.processingWorkflowRecorded.label)
+            .toBe('Processing workflow recorded');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-stateVestingSelectionRecord']
             .values.stateVestingRegister.label)
             .toBe('State vesting register');

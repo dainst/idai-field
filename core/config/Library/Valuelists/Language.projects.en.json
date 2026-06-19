@@ -16243,6 +16243,99 @@
     },
     "description": "Japanese-style fortress ditch list separating water state, orientation, section, and function from Joseon town-wall ditch terms"
   },
+  "KoreanFieldwork-fortificationConstructionEvidence": {
+    "values": {
+      "embankmentCandidate": { "label": "Embankment candidate" },
+      "panchukCandidate": { "label": "Panchuk candidate" },
+      "panchukBoardEvidence": { "label": "Board evidence" },
+      "fixingPostEvidence": { "label": "Fixing post evidence" },
+      "horizontalTimberEvidence": { "label": "Horizontal timber evidence" },
+      "tampingTrace": { "label": "Tamping trace" },
+      "layerCompactionRecorded": { "label": "Layer compaction recorded" },
+      "alternatingFill": { "label": "Alternating fill" },
+      "similarPanchukCaution": { "label": "Similar-panchuk caution" },
+      "panBlockJointRecorded": { "label": "Rammed block joint recorded" },
+      "reverseSlopeRamming": { "label": "Reverse-slope ramming" },
+      "protectiveOuterBlock": { "label": "Protective outer block" },
+      "leafyBranchMethod": { "label": "Leafy-branch method" },
+      "stoneReinforcement": { "label": "Stone reinforcement" },
+      "constructionTraceFootprint": { "label": "Human or animal footprint" },
+      "constructionTechniquePending": { "label": "Construction technique pending" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Construction-evidence list for keeping embankment, panchuk, similar panchuk, block joints, leafy-branch method, and other wall-building observations separate from premature type names"
+  },
+  "KoreanFieldwork-fortificationFoundationRecord": {
+    "values": {
+      "oldGroundSurface": { "label": "Old ground surface" },
+      "levelingSurface": { "label": "Leveling surface" },
+      "foundationTampingLayer": { "label": "Foundation tamping layer" },
+      "gijoCandidate": { "label": "Gijo candidate" },
+      "drainageCandidate": { "label": "Drainage candidate" },
+      "cutTraceCandidate": { "label": "Cut-trace candidate" },
+      "stakeFoundation": { "label": "Stake foundation" },
+      "rubbleFoundation": { "label": "Rubble foundation" },
+      "stoneFoundation": { "label": "Base or foundation stone" },
+      "claySandyLayer": { "label": "Clay or sandy layer" },
+      "weakGroundReinforcement": { "label": "Weak-ground reinforcement" },
+      "baseStoneSupport": { "label": "Base-stone support" },
+      "limitedTrenchExcavation": { "label": "Limited trench excavation" },
+      "fullStrippingAvoided": { "label": "Full stripping avoided" },
+      "foundationBeforeWallBody": { "label": "Foundation before wall body" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Foundation-record list for documenting old surfaces, leveling, foundation tamping, gijo candidates, drainage/cut alternatives, foundations, and excavation limits before the wall body is interpreted"
+  },
+  "KoreanFieldwork-fortificationRepairRecord": {
+    "values": {
+      "basicSurveyBeforeRepair": { "label": "Basic survey before repair" },
+      "segmentVisualSurvey": { "label": "Segment visual survey" },
+      "repairHistoryChecked": { "label": "Repair history checked" },
+      "conditionDrawing": { "label": "Condition drawing" },
+      "conditionPhoto": { "label": "Condition photo" },
+      "beforeDuringAfterPhoto": { "label": "Before/during/after photo" },
+      "detailedElevationPhoto": { "label": "Detailed elevation photo" },
+      "preciseSurveyOr3dScan": { "label": "Precise survey or 3D scan" },
+      "collapsedStoneInventory": { "label": "Collapsed stone inventory" },
+      "coreStoneManaged": { "label": "Core stone managed" },
+      "originalStoneReuse": { "label": "Original stone reuse" },
+      "drainageSystemChecked": { "label": "Drainage system checked" },
+      "dismantlingSectionRecorded": { "label": "Dismantling section recorded" },
+      "backfillBondingRecorded": { "label": "Backfill bonding recorded" },
+      "designChangeTracked": { "label": "Design change tracked" },
+      "advisoryOpinionLinked": { "label": "Advisory opinion linked" },
+      "completionInspectionLinked": { "label": "Completion inspection linked" },
+      "repairReportRequired": { "label": "Repair report required" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Repair-record list for keeping surveys, stone management, dismantling sections, backfill, drainage, design changes, advice, and completion inspection connected to fortification field records"
+  },
+  "KoreanFieldwork-fortificationRestorationEvidence": {
+    "values": {
+      "historicalDocumentLinked": { "label": "Historical document linked" },
+      "oldMapLinked": { "label": "Old map linked" },
+      "oldPhotoLinked": { "label": "Old photo linked" },
+      "excavationFeatureLinked": { "label": "Excavation feature linked" },
+      "pillarStoneLayout": { "label": "Pillar-stone layout" },
+      "baySpacingMeasured": { "label": "Bay spacing measured" },
+      "yongcheokCandidate": { "label": "Yongcheok candidate" },
+      "candidateScaleComparison": { "label": "Candidate scale comparison" },
+      "adoptedScaleReason": { "label": "Adopted scale reason" },
+      "comparisonBuilding": { "label": "Comparison building" },
+      "originalMaterialSurvey": { "label": "Original material survey" },
+      "originalMaterialReturn": { "label": "Original material return" },
+      "reusedOriginalMaterial": { "label": "Reused original material" },
+      "newMaterialSubstitutionReason": { "label": "New material substitution reason" },
+      "designChangeBeforeAfter": { "label": "Design change before/after" },
+      "constructionStageReinterpretation": { "label": "Construction-stage reinterpretation" },
+      "restorationExcluded": { "label": "Restoration excluded" },
+      "onsiteConservationPriority": { "label": "On-site conservation priority" },
+      "modernMaterialDifferentiation": { "label": "Modern material differentiation" },
+      "landscapeImpactReviewed": { "label": "Landscape impact reviewed" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Restoration-evidence list for linking documents, maps, photos, excavated features, module calculations, original materials, design changes, exclusion decisions, and on-site conservation"
+  },
   "KoreanFieldwork-reportCrossCheck": {
     "values": {
       "manuscript": {

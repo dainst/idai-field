@@ -1045,6 +1045,22 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "fortificationConstructionEvidence": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "fortificationFoundationRecord": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "fortificationRepairRecord": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "fortificationRestorationEvidence": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "recordCreationTiming": {
           "inputType": "dropdown",
           "constraintIndexed": true
@@ -1127,6 +1143,10 @@
         "fortificationParapetDetail": "KoreanFieldwork-fortificationParapetDetail",
         "fortificationWaterFacility": "KoreanFieldwork-fortificationWaterFacility",
         "japaneseFortificationDitch": "KoreanFieldwork-japaneseFortificationDitch",
+        "fortificationConstructionEvidence": "KoreanFieldwork-fortificationConstructionEvidence",
+        "fortificationFoundationRecord": "KoreanFieldwork-fortificationFoundationRecord",
+        "fortificationRepairRecord": "KoreanFieldwork-fortificationRepairRecord",
+        "fortificationRestorationEvidence": "KoreanFieldwork-fortificationRestorationEvidence",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "termRelation": "KoreanFieldwork-termRelation",
         "termSearchMapping": "KoreanFieldwork-termSearchMapping",
@@ -1213,6 +1233,10 @@
             "fortificationParapetDetail",
             "fortificationWaterFacility",
             "japaneseFortificationDitch",
+            "fortificationConstructionEvidence",
+            "fortificationFoundationRecord",
+            "fortificationRepairRecord",
+            "fortificationRestorationEvidence",
             "recordCreationTiming",
             "verificationState",
             "termRelation",

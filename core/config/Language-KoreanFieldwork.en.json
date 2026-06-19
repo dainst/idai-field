@@ -446,6 +446,18 @@
         "japaneseFortificationDitch": {
           "label": "Japanese-style fortress ditch"
         },
+        "fortificationConstructionEvidence": {
+          "label": "Fortification construction evidence"
+        },
+        "fortificationFoundationRecord": {
+          "label": "Fortification foundation record"
+        },
+        "fortificationRepairRecord": {
+          "label": "Fortification repair record"
+        },
+        "fortificationRestorationEvidence": {
+          "label": "Fortification restoration evidence"
+        },
         "recordCreationTiming": {
           "label": "Record creation timing"
         },

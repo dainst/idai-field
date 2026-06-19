@@ -446,6 +446,18 @@
         "japaneseFortificationDitch": {
           "label": "왜성 해자"
         },
+        "fortificationConstructionEvidence": {
+          "label": "성곽 축조기법 근거"
+        },
+        "fortificationFoundationRecord": {
+          "label": "성벽 기초·기저부 기록"
+        },
+        "fortificationRepairRecord": {
+          "label": "성곽 보수·정비 기록"
+        },
+        "fortificationRestorationEvidence": {
+          "label": "성곽 복원·중건 근거"
+        },
         "recordCreationTiming": {
           "label": "기록 생성 시점"
         },

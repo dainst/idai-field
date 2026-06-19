@@ -532,6 +532,37 @@ describe('KoreanFieldwork project configuration', () => {
     });
 
 
+    it('keeps the Korean fortification construction and restoration sample aligned with evidence fields', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const sample = loadSample('fortification-construction-restoration-sample.json');
+        const documents = sample.documents;
+        const documentsById = documents.reduce((index: any, document: any) => {
+            index[document.resource.id] = document;
+            return index;
+        }, {});
+
+        expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
+
+        expect(documentsById['feature-rampart-construction-001'].resource.fortificationConstructionEvidence)
+            .toContain('similarPanchukCaution');
+        expect(documentsById['feature-rampart-construction-001'].resource.fortificationConstructionEvidence)
+            .toContain('panBlockJointRecorded');
+        expect(documentsById['feature-rampart-construction-001'].resource.fortificationFoundationRecord)
+            .toContain('foundationBeforeWallBody');
+        expect(documentsById['feature-fortification-repair-001'].resource.fortificationRepairRecord)
+            .toContain('collapsedStoneInventory');
+        expect(documentsById['feature-fortification-repair-001'].resource.fortificationRepairRecord)
+            .toContain('repairReportRequired');
+        expect(documentsById['feature-fortification-repair-001'].resource.fortificationRestorationEvidence)
+            .toContain('yongcheokCandidate');
+        expect(documentsById['feature-fortification-repair-001'].resource.fortificationRestorationEvidence)
+            .toContain('onsiteConservationPriority');
+    });
+
+
     it('keeps the Korean pottery technology and Neolithic subsistence sample aligned with Find fields', () => {
 
         const configReader = new ConfigReader();
@@ -1040,6 +1071,10 @@ describe('KoreanFieldwork project configuration', () => {
         expect(config.forms['FeatureSegment:default'].fields.firstExposureRecord.mandatory).toBe(true);
         expect(featureForm.fields.fortificationHiddenGateFunction.inputType).toBe('checkboxes');
         expect(featureForm.fields.fortificationParapetDetail.inputType).toBe('checkboxes');
+        expect(featureForm.fields.fortificationConstructionEvidence.inputType).toBe('checkboxes');
+        expect(featureForm.fields.fortificationFoundationRecord.inputType).toBe('checkboxes');
+        expect(featureForm.fields.fortificationRepairRecord.inputType).toBe('checkboxes');
+        expect(featureForm.fields.fortificationRestorationEvidence.inputType).toBe('checkboxes');
         expect(featureGroupForm.fields.termAuthorityStatus.inputType).toBe('checkboxes');
         expect(featureGroupForm.fields.termSearchMapping.inputType).toBe('checkboxes');
         expect(featureForm.fields.termAuthorityStatus.inputType).toBe('checkboxes');
@@ -1383,6 +1418,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-fortificationHiddenGateFunction');
         expect(featureForm.valuelists.fortificationParapetDetail)
             .toBe('KoreanFieldwork-fortificationParapetDetail');
+        expect(featureForm.valuelists.fortificationConstructionEvidence)
+            .toBe('KoreanFieldwork-fortificationConstructionEvidence');
+        expect(featureForm.valuelists.fortificationFoundationRecord)
+            .toBe('KoreanFieldwork-fortificationFoundationRecord');
+        expect(featureForm.valuelists.fortificationRepairRecord)
+            .toBe('KoreanFieldwork-fortificationRepairRecord');
+        expect(featureForm.valuelists.fortificationRestorationEvidence)
+            .toBe('KoreanFieldwork-fortificationRestorationEvidence');
         expect(featureForm.valuelists.termAuthorityStatus).toBe('KoreanFieldwork-termAuthorityStatus');
         expect(featureForm.valuelists.termSearchMapping).toBe('KoreanFieldwork-termSearchMapping');
         expect(findForm.valuelists.termAuthorityStatus).toBe('KoreanFieldwork-termAuthorityStatus');
@@ -1664,6 +1707,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Porcelain kiln excavation control');
         expect(languages.en.categories.Feature.fields.fortificationHiddenGateFunction.label).toBe('Hidden gate function');
         expect(languages.en.categories.Feature.fields.fortificationParapetDetail.label).toBe('Parapet detail');
+        expect(languages.en.categories.Feature.fields.fortificationConstructionEvidence.label)
+            .toBe('Fortification construction evidence');
+        expect(languages.en.categories.Feature.fields.fortificationFoundationRecord.label)
+            .toBe('Fortification foundation record');
+        expect(languages.en.categories.Feature.fields.fortificationRepairRecord.label)
+            .toBe('Fortification repair record');
+        expect(languages.en.categories.Feature.fields.fortificationRestorationEvidence.label)
+            .toBe('Fortification restoration evidence');
         expect(languages.en.categories.Feature.fields.termAuthorityStatus.label).toBe('Term authority status');
         expect(languages.en.categories.Feature.fields.termSearchMapping.label).toBe('Term search mapping');
         expect(languages.en.categories.FeatureSegment.fields.stratigraphicDivisionBasis.label)
@@ -2309,6 +2360,21 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Military supply transport');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-fortificationParapetDetail'].values.nearGunOpening.label)
             .toBe('Near-range gun opening');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-fortificationConstructionEvidence']
+            .values.similarPanchukCaution.label)
+            .toBe('Similar-panchuk caution');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-fortificationFoundationRecord']
+            .values.foundationBeforeWallBody.label)
+            .toBe('Foundation before wall body');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-fortificationRepairRecord']
+            .values.collapsedStoneInventory.label)
+            .toBe('Collapsed stone inventory');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-fortificationRestorationEvidence']
+            .values.yongcheokCandidate.label)
+            .toBe('Yongcheok candidate');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-fortificationRestorationEvidence']
+            .values.onsiteConservationPriority.label)
+            .toBe('현장보존 우선');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-termAuthorityStatus'].values.pdfCrossChecked.label)
             .toBe('Source PDF cross-checked');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-termSearchMapping'].values.reportOutputSeparated.label)

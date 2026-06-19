@@ -1,0 +1,190 @@
+{
+  "title": "Korean fortification construction and restoration workflow sample",
+  "purpose": "Validate that Korean fortification records keep construction evidence, foundation observations, repair records, and restoration evidence separate from simple fortress type names.",
+  "validationQuestions": [
+    "판축토성 후보가 협판·고정주·횡장목·달구질흔·판괴연접 같은 관찰 근거 없이 판축으로 확정되지 않는가.",
+    "성벽 기초가 구지표·정지면·기초다짐·기조 후보·지정·줄구덩이 조사와 함께 성벽 본체보다 먼저 기록되는가.",
+    "성곽 정비가 현황도면·사진·3D스캔·붕괴 성돌·해체 단면·설계변경·수리보고서와 연결되는가.",
+    "복원·중건 판단이 문헌·고지도·옛 사진·발굴 유구·용척 후보·원부재·복원 제외·현장보존 근거를 함께 남기는가."
+  ],
+  "documents": [
+    {
+      "resource": {
+        "id": "op-fortification-construction-001",
+        "identifier": "FORT-CR-OP-001",
+        "shortDescription": "성벽 축조·정비 근거 조사 작업",
+        "category": "Operation",
+        "relations": {},
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "reproducibleRecord",
+          "criteriaConsistency"
+        ],
+        "recordCreationTiming": "duringFieldwork",
+        "dailyLogContent": [
+          "workDateWeather",
+          "workArea",
+          "photoDrawingNumbers",
+          "visitorInstruction",
+          "changeReason"
+        ],
+        "dailyLogReview": [
+          "sameDayWritten",
+          "photoDrawingCrossChecked",
+          "sourceRecordArchived"
+        ],
+        "digitalSourcePreservation": [
+          "originalDrawing",
+          "originalPhoto",
+          "originalImage",
+          "twoLocationBackup"
+        ],
+        "reportCrossCheck": [
+          "manuscript",
+          "drawingRegister",
+          "photoRegister",
+          "dailyLog"
+        ]
+      }
+    },
+    {
+      "resource": {
+        "id": "feature-rampart-construction-001",
+        "identifier": "RC-001",
+        "shortDescription": "판축 후보 성벽 단면",
+        "category": "Feature",
+        "relations": {
+          "isRecordedIn": ["op-fortification-construction-001"]
+        },
+        "description": "풍납토성식 중심토루와 외피 판괴 후보가 보이는 성벽 절개 단면. 서로 다른 흙층이 겹친 사실만으로 판축을 확정하지 않고 협판·고정주·횡장목·달구질흔·판괴연접과 기초 조사를 따로 남긴다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "crossReviewNeeded"
+        ],
+        "fieldOnlyMissingCheck": [
+          "featureOutline",
+          "stratigraphicBoundary",
+          "preRemovalCondition",
+          "photoAngleAndScale",
+          "drawingLineReason",
+          "spatialLocation",
+          "notRecoverableWarning"
+        ],
+        "firstExposureRecord": [
+          "concurrentWithStripping",
+          "firstExposurePhoto",
+          "featureLineVisible",
+          "shoulderLineRecorded",
+          "lightingConditionRecorded",
+          "confirmedBeforeInternalExcavation"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "fortificationConstructionEvidence": [
+          "panchukCandidate",
+          "panchukBoardEvidence",
+          "fixingPostEvidence",
+          "horizontalTimberEvidence",
+          "tampingTrace",
+          "layerCompactionRecorded",
+          "alternatingFill",
+          "similarPanchukCaution",
+          "panBlockJointRecorded",
+          "reverseSlopeRamming",
+          "protectiveOuterBlock",
+          "leafyBranchMethod",
+          "stoneReinforcement",
+          "constructionTraceFootprint",
+          "constructionTechniquePending"
+        ],
+        "fortificationFoundationRecord": [
+          "oldGroundSurface",
+          "levelingSurface",
+          "foundationTampingLayer",
+          "gijoCandidate",
+          "drainageCandidate",
+          "cutTraceCandidate",
+          "stakeFoundation",
+          "rubbleFoundation",
+          "claySandyLayer",
+          "weakGroundReinforcement",
+          "limitedTrenchExcavation",
+          "fullStrippingAvoided",
+          "foundationBeforeWallBody",
+          "pendingDecision"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "feature-fortification-repair-001",
+        "identifier": "FR-001",
+        "shortDescription": "성곽 정비·복원 근거",
+        "category": "Feature",
+        "relations": {
+          "isRecordedIn": ["op-fortification-construction-001"]
+        },
+        "description": "성벽 보수와 행궁 중건 근거를 함께 검토하는 구간. 보수공사 산출물이 아니라 조사 전·중·후 기록, 원부재와 용척 산정, 설계변경, 현장보존 판단을 같은 근거 묶음으로 남긴다.",
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "crossReviewNeeded",
+          "crossReviewNeeded"
+        ],
+        "fieldOnlyMissingCheck": [
+          "featureOutline",
+          "photoAngleAndScale",
+          "drawingLineReason",
+          "spatialLocation",
+          "elevationRecorded",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "postExcavationDerived",
+        "fortificationRepairRecord": [
+          "basicSurveyBeforeRepair",
+          "segmentVisualSurvey",
+          "repairHistoryChecked",
+          "conditionDrawing",
+          "conditionPhoto",
+          "beforeDuringAfterPhoto",
+          "detailedElevationPhoto",
+          "preciseSurveyOr3dScan",
+          "collapsedStoneInventory",
+          "coreStoneManaged",
+          "originalStoneReuse",
+          "drainageSystemChecked",
+          "dismantlingSectionRecorded",
+          "backfillBondingRecorded",
+          "designChangeTracked",
+          "advisoryOpinionLinked",
+          "completionInspectionLinked",
+          "repairReportRequired"
+        ],
+        "fortificationRestorationEvidence": [
+          "historicalDocumentLinked",
+          "oldMapLinked",
+          "oldPhotoLinked",
+          "excavationFeatureLinked",
+          "pillarStoneLayout",
+          "baySpacingMeasured",
+          "yongcheokCandidate",
+          "candidateScaleComparison",
+          "adoptedScaleReason",
+          "comparisonBuilding",
+          "originalMaterialSurvey",
+          "originalMaterialReturn",
+          "reusedOriginalMaterial",
+          "newMaterialSubstitutionReason",
+          "designChangeBeforeAfter",
+          "constructionStageReinterpretation",
+          "restorationExcluded",
+          "onsiteConservationPriority",
+          "modernMaterialDifferentiation",
+          "landscapeImpactReviewed"
+        ],
+        "verificationState": "observedInField"
+      }
+    }
+  ]
+}

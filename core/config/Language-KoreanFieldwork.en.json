@@ -895,6 +895,9 @@
         "artifactLabelRegisterLink": {
           "label": "Artifact label-register link"
         },
+        "paleolithicArtifactPositionRecovery": {
+          "label": "Paleolithic artifact position/recovery"
+        },
         "artifactQuantityBasis": {
           "label": "Artifact quantity basis"
         },

@@ -309,6 +309,18 @@
           "weightRecorded",
           "ledgerEntryCreated"
         ],
+        "paleolithicArtifactPositionRecovery": [
+          "pedestalHeightChecked",
+          "collectionTimingAdjusted",
+          "absoluteCoordinateBeforeCollection",
+          "threeDimensionalCoordinateRecorded",
+          "culturalLayerNumberBeforeCollection",
+          "artifactSerialBeforeCollection",
+          "layerGridBoxSeparated",
+          "coordinateListLinked",
+          "distributionMapLinked",
+          "refitRelationMapLinked"
+        ],
         "surfaceFindHandlingRecord": [
           "individualPackaging",
           "artifactCardCreated",

@@ -31364,6 +31364,44 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-paleolithicArtifactPositionRecovery": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-20",
+    "values": {
+      "pedestalHeightChecked": {},
+      "pedestalOver30cmRisk": {},
+      "pedestalOver50cmRisk": {},
+      "collectionTimingAdjusted": {},
+      "absoluteCoordinateBeforeCollection": {},
+      "threeDimensionalCoordinateRecorded": {},
+      "culturalLayerNumberBeforeCollection": {},
+      "artifactSerialBeforeCollection": {},
+      "layerGridBoxSeparated": {},
+      "coordinateListLinked": {},
+      "classificationAttributeRecorded": {},
+      "distributionMapLinked": {},
+      "refitRelationMapLinked": {},
+      "specialistReviewNeeded": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "pedestalHeightChecked",
+      "pedestalOver30cmRisk",
+      "pedestalOver50cmRisk",
+      "collectionTimingAdjusted",
+      "absoluteCoordinateBeforeCollection",
+      "threeDimensionalCoordinateRecorded",
+      "culturalLayerNumberBeforeCollection",
+      "artifactSerialBeforeCollection",
+      "layerGridBoxSeparated",
+      "coordinateListLinked",
+      "classificationAttributeRecorded",
+      "distributionMapLinked",
+      "refitRelationMapLinked",
+      "specialistReviewNeeded",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-artifactQuantityBasis": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

@@ -12084,6 +12084,26 @@
     },
     "description": "Korean artifact label and register checks for keeping field labels, field serial numbers, coordinates, depth, dimensions, weight, artifact ledgers, unique registration numbers, and inventory numbers linked"
   },
+  "KoreanFieldwork-paleolithicArtifactPositionRecovery": {
+    "values": {
+      "pedestalHeightChecked": { "label": "Pedestal height checked" },
+      "pedestalOver30cmRisk": { "label": "Pedestal over 30 cm risk" },
+      "pedestalOver50cmRisk": { "label": "Pedestal over 50 cm risk" },
+      "collectionTimingAdjusted": { "label": "Collection timing adjusted" },
+      "absoluteCoordinateBeforeCollection": { "label": "Absolute coordinate before collection" },
+      "threeDimensionalCoordinateRecorded": { "label": "3D coordinate recorded" },
+      "culturalLayerNumberBeforeCollection": { "label": "Cultural layer number before collection" },
+      "artifactSerialBeforeCollection": { "label": "Artifact serial before collection" },
+      "layerGridBoxSeparated": { "label": "Layer/grid box separated" },
+      "coordinateListLinked": { "label": "Coordinate list linked" },
+      "classificationAttributeRecorded": { "label": "Classification/attribute recorded" },
+      "distributionMapLinked": { "label": "Distribution map linked" },
+      "refitRelationMapLinked": { "label": "Refit relation map linked" },
+      "specialistReviewNeeded": { "label": "Specialist review needed" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean Paleolithic find checks for keeping pedestal height, pre-collection coordinates, cultural layer numbers, artifact serials, layer/grid boxes, coordinate lists, distribution maps, and refit relation maps connected through recovery"
+  },
   "KoreanFieldwork-artifactQuantityBasis": {
     "values": {
       "administrativeLotCount": {

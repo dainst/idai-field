@@ -330,6 +330,26 @@
     },
     "description": "현장 꼬리표의 조사기관, 일자, 지점, 발굴칸, 일련번호, 지층, 유물층, 유물명, 재질·암질, 좌표, 깊이, 치수, 무게가 유물대장, 고유 등록번호, 정리번호와 끊기지 않게 점검하기 위한 목록"
   },
+  "KoreanFieldwork-paleolithicArtifactPositionRecovery": {
+    "values": {
+      "pedestalHeightChecked": { "label": "흙기둥 높이 확인" },
+      "pedestalOver30cmRisk": { "label": "흙기둥 30cm 초과 위험" },
+      "pedestalOver50cmRisk": { "label": "흙기둥 50cm 초과 위험" },
+      "collectionTimingAdjusted": { "label": "수습 시점 조정" },
+      "absoluteCoordinateBeforeCollection": { "label": "수습 전 절대좌표" },
+      "threeDimensionalCoordinateRecorded": { "label": "3차원 좌표 기록" },
+      "culturalLayerNumberBeforeCollection": { "label": "수습 전 문화층 번호" },
+      "artifactSerialBeforeCollection": { "label": "수습 전 유물 일련번호" },
+      "layerGridBoxSeparated": { "label": "문화층·칸별 상자 분리" },
+      "coordinateListLinked": { "label": "좌표 목록 연결" },
+      "classificationAttributeRecorded": { "label": "분류·속성 기록" },
+      "distributionMapLinked": { "label": "유물 분포도 연결" },
+      "refitRelationMapLinked": { "label": "접합관계도 연결" },
+      "specialistReviewNeeded": { "label": "전문검토 필요" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "구석기 유물 수습 전에 흙기둥 높이, 절대·3차원 좌표, 문화층 번호, 일련번호를 확인하고 수습 뒤 문화층·칸별 보관과 좌표 목록·분포도·접합관계도 연결을 추적하기 위한 목록"
+  },
   "KoreanFieldwork-artifactQuantityBasis": {
     "values": {
       "administrativeLotCount": {

@@ -561,6 +561,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toEqual(['survey-paleolithic-terrace-001']);
         expect(documentsById['find-paleolithic-candidate-lithic-001'].resource.artifactLabelRegisterLink)
             .toContain('coordinateEastWestRecorded');
+        expect(documentsById['find-paleolithic-candidate-lithic-001'].resource.paleolithicArtifactPositionRecovery)
+            .toContain('threeDimensionalCoordinateRecorded');
+        expect(documentsById['find-paleolithic-candidate-lithic-001'].resource.paleolithicArtifactPositionRecovery)
+            .toContain('layerGridBoxSeparated');
     });
 
 
@@ -1479,6 +1483,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.fields.artifactFieldRestorationLink.inputType).toBe('checkboxes');
         expect(findForm.fields.findSampleResearchScope.inputType).toBe('checkboxes');
         expect(findForm.fields.artifactLabelRegisterLink.inputType).toBe('checkboxes');
+        expect(findForm.fields.paleolithicArtifactPositionRecovery.inputType).toBe('checkboxes');
         expect(findForm.fields.artifactQuantityBasis.inputType).toBe('checkboxes');
         expect(findForm.fields.surfaceFindHandlingRecord.inputType).toBe('checkboxes');
         expect(findForm.fields.artifactRecoveryPreservationRisk.inputType).toBe('checkboxes');
@@ -1957,6 +1962,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.valuelists.findSampleResearchScope).toBe('KoreanFieldwork-findSampleResearchScope');
         expect(findForm.valuelists.artifactLabelRegisterLink)
             .toBe('KoreanFieldwork-artifactLabelRegisterLink');
+        expect(findForm.valuelists.paleolithicArtifactPositionRecovery)
+            .toBe('KoreanFieldwork-paleolithicArtifactPositionRecovery');
         expect(findForm.valuelists.artifactQuantityBasis).toBe('KoreanFieldwork-artifactQuantityBasis');
         expect(findForm.valuelists.surfaceFindHandlingRecord)
             .toBe('KoreanFieldwork-surfaceFindHandlingRecord');
@@ -2501,6 +2508,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Find/sample research scope');
         expect(languages.en.categories.Find.fields.artifactLabelRegisterLink.label)
             .toBe('Artifact label-register link');
+        expect(languages.en.categories.Find.fields.paleolithicArtifactPositionRecovery.label)
+            .toBe('Paleolithic artifact position/recovery');
         expect(languages.en.categories.Find.fields.artifactQuantityBasis.label).toBe('Artifact quantity basis');
         expect(languages.en.categories.Find.fields.storageEnvironmentControl.label)
             .toBe('Storage environment control');
@@ -2909,6 +2918,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactLabelRegisterLink']
             .values.fieldSerialInventoryNumberLinked.label)
             .toBe('Field serial and inventory number linked');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-paleolithicArtifactPositionRecovery']
+            .values.threeDimensionalCoordinateRecorded.label)
+            .toBe('3D coordinate recorded');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-paleolithicArtifactPositionRecovery']
+            .values.layerGridBoxSeparated.label)
+            .toBe('문화층·칸별 상자 분리');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactQuantityBasis'].values.sameObjectConfirmed.label)
             .toBe('Same object confirmed');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactQuantityBasis'].values.oneLotTenItems.label)

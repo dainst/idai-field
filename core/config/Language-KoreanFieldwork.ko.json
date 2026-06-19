@@ -895,6 +895,9 @@
         "artifactLabelRegisterLink": {
           "label": "유물 꼬리표·대장 연결"
         },
+        "paleolithicArtifactPositionRecovery": {
+          "label": "구석기 유물 위치·수습"
+        },
         "artifactQuantityBasis": {
           "label": "유물 건·점수 산정"
         },

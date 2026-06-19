@@ -266,6 +266,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(documentsById['drawing-pit-building-001-plan'].resource.mediaQualityCheck)
             .toContain('baseGridLineMaintained');
         expect(documentsById['drawing-pit-building-001-plan'].resource.mediaQualityCheck)
+            .toContain('criticalSectionLinesRecorded');
+        expect(documentsById['drawing-pit-building-001-plan'].resource.mediaQualityCheck)
+            .toContain('multiplePlanDrawingsLinked');
+        expect(documentsById['drawing-pit-building-001-plan'].resource.mediaQualityCheck)
+            .toContain('conjecturalLineReasonRecorded');
+        expect(documentsById['drawing-pit-building-001-plan'].resource.mediaQualityCheck)
             .toContain('sheetConnectionMarksRecorded');
         expect(documentsById['drawing-pit-building-001-plan'].resource.mediaQualityCheck)
             .toContain('topBottomSurfaceSeparated');
@@ -500,6 +506,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('reportPreparationLead');
         expect(documentsById['drawing-quality-001'].resource.mediaQualityCheck)
             .toContain('baseGridLineMaintained');
+        expect(documentsById['drawing-quality-001'].resource.mediaQualityCheck)
+            .toContain('planProfileSequenceLinked');
+        expect(documentsById['drawing-quality-001'].resource.mediaQualityCheck)
+            .toContain('unexcavatedLineSeparated');
         expect(documentsById['drawing-quality-001'].resource.mediaQualityCheck)
             .toContain('fieldCompletionCorrectionRecorded');
         expect(documentsById['daily-log-quality-001'].resource.relations.liesWithin)
@@ -4084,6 +4094,15 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
             .values.smallFeatureActualShapeShown.label)
             .toBe('Small feature actual shape shown');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
+            .values.criticalSectionLinesRecorded.label)
+            .toBe('Critical section lines recorded');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
+            .values.multiplePlanDrawingsLinked.label)
+            .toBe('Multiple plan drawings linked');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-mediaQualityCheck']
+            .values.conjecturalLineReasonRecorded.label)
+            .toBe('추정선 사유 기록');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
             .values.preRecoveryPhotoTaken.label)
             .toBe('Pre-recovery photo taken');

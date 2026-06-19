@@ -18957,6 +18957,21 @@
       "planSectionElevationMatched": {
         "label": "Plan, section, and elevation matched"
       },
+      "criticalSectionLinesRecorded": {
+        "label": "Critical section lines recorded"
+      },
+      "multiplePlanDrawingsLinked": {
+        "label": "Multiple plan drawings linked"
+      },
+      "planProfileSequenceLinked": {
+        "label": "Plan/profile sequence linked"
+      },
+      "conjecturalLineReasonRecorded": {
+        "label": "Conjectural line reason recorded"
+      },
+      "unexcavatedLineSeparated": {
+        "label": "Unexcavated line separated"
+      },
       "longShortAxisSectionLinked": {
         "label": "Long- and short-axis sections linked"
       },
@@ -19033,7 +19048,7 @@
         "label": "Pending decision"
       }
     },
-    "description": "Korean fieldwork media quality checks for direction, scale, control points, resolution or linework, lighting, capture format, photo-notebook matching, print annotations, source preservation, pre-recovery multi-direction photos, avoiding overhead-only and backlit shots, keeping oblique/side views, overview/close-up pairs, associated areas, opposite-direction interior views, color and moisture state, stratigraphy whole/part/detail sets, leveling links, register-number or location consistency, linked long- and short-axis sections, oxidation/reduction color annotations, separated stage drawings, separate grid sheets or tracing overlays, base grid lines, sheet connection marks, top/bottom surface separation, overlap sequence notes, leveling datum and stage-color checks, field completion or correction history, stage-drawing scale/orientation/plan-section mismatches, left-right or upside-down reversals, inverted scans, low resolution, focus blur, and crop damage"
+    "description": "Korean fieldwork media quality checks for direction, scale, control points, resolution or linework, lighting, capture format, photo-notebook matching, print annotations, source preservation, pre-recovery multi-direction photos, avoiding overhead-only and backlit shots, keeping oblique/side views, overview/close-up pairs, associated areas, opposite-direction interior views, color and moisture state, stratigraphy whole/part/detail sets, leveling links, register-number or location consistency, plan/section/elevation consistency, critical section lines, multiple plan drawings, plan/profile sequencing, conjectural or unexcavated line separation, linked long- and short-axis sections, oxidation/reduction color annotations, separated stage drawings, separate grid sheets or tracing overlays, base grid lines, sheet connection marks, top/bottom surface separation, overlap sequence notes, leveling datum and stage-color checks, field completion or correction history, stage-drawing scale/orientation/plan-section mismatches, left-right or upside-down reversals, inverted scans, low resolution, focus blur, and crop damage"
   },
   "KoreanFieldwork-photoCaptureSafetyReview": {
     "values": {

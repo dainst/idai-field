@@ -4,23 +4,46 @@ import { ConfigReader } from '../../src/configuration/boot/config-reader';
 import { getConfigurationName, PROJECT_MAPPING } from '../../src/configuration/project-configuration-names';
 
 
-const TERM_ALIAS_SAMPLE_PATH = path.resolve(
-    __dirname,
-    '../../../../docs/korean-fieldwork/samples/term-authority-alias-sample.json'
-);
+const SAMPLE_DIR = path.resolve(__dirname, '../../../../docs/korean-fieldwork/samples');
 
 
-const loadTermAliasSample = (): any => {
+const loadSample = (fileName: string): any => {
 
-    return JSON.parse(fs.readFileSync(TERM_ALIAS_SAMPLE_PATH, 'utf8'));
+    return JSON.parse(fs.readFileSync(path.join(SAMPLE_DIR, fileName), 'utf8'));
 };
 
 
-const getSampleFormName = (category: string): string => {
+const getSampleForm = (config: any, category: string): any => {
 
-    return category === 'FeatureGroup'
-        ? 'FeatureGroup:default'
-        : category;
+    return config.forms[category] ?? config.forms[`${category}:default`];
+};
+
+
+const expectSampleDocumentsToUseConfiguredFormsAndValuelists = (sample: any, config: any, valuelists: any) => {
+
+    expect(sample.documents.length).toBeGreaterThan(0);
+
+    sample.documents.forEach((document: any) => {
+        const resource = document.resource;
+        const form = getSampleForm(config, resource.category);
+
+        expect(form).toBeDefined();
+        expect(resource.relations).toBeDefined();
+
+        Object.keys(resource).forEach(fieldName => {
+            if (!form.valuelists || !form.valuelists[fieldName]) return;
+
+            const valuelist = valuelists[form.valuelists[fieldName]];
+            const fieldValues = Array.isArray(resource[fieldName])
+                ? resource[fieldName]
+                : [resource[fieldName]];
+
+            expect(valuelist).toBeDefined();
+            fieldValues.forEach((fieldValue: string) => {
+                expect(valuelist.values[fieldValue]).toBeDefined();
+            });
+        });
+    });
 };
 
 
@@ -39,36 +62,14 @@ describe('KoreanFieldwork project configuration', () => {
         const configReader = new ConfigReader();
         const config = configReader.read('/Config-KoreanFieldwork.json');
         const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
-        const sample = loadTermAliasSample();
+        const sample = loadSample('term-authority-alias-sample.json');
         const documents = sample.documents;
         const documentsById = documents.reduce((index: any, document: any) => {
             index[document.resource.id] = document;
             return index;
         }, {});
 
-        expect(documents.length).toBeGreaterThan(0);
-
-        documents.forEach((document: any) => {
-            const resource = document.resource;
-            const form = config.forms[getSampleFormName(resource.category)];
-
-            expect(form).toBeDefined();
-            expect(resource.relations).toBeDefined();
-
-            Object.keys(resource).forEach(fieldName => {
-                if (!form.valuelists || !form.valuelists[fieldName]) return;
-
-                const valuelist = valuelists[form.valuelists[fieldName]];
-                const fieldValues = Array.isArray(resource[fieldName])
-                    ? resource[fieldName]
-                    : [resource[fieldName]];
-
-                expect(valuelist).toBeDefined();
-                fieldValues.forEach((fieldValue: string) => {
-                    expect(valuelist.values[fieldValue]).toBeDefined();
-                });
-            });
-        });
+        expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
 
         documents
             .filter((document: any) => document.resource.category !== 'FeatureGroup')
@@ -91,6 +92,37 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('doNotMergeToSingleTerm');
         expect(documentsById['term-alias-kiln-site-kiln'].resource.verificationState)
             .toBe('pendingDecision');
+    });
+
+
+    it('keeps the Korean field record preservation sample aligned with field-only warning fields', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const sample = loadSample('field-record-preservation-sample.json');
+        const documents = sample.documents;
+        const documentsById = documents.reduce((index: any, document: any) => {
+            index[document.resource.id] = document;
+            return index;
+        }, {});
+
+        expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
+
+        expect(documentsById['feature-pit-building-001'].resource.firstExposureRecord)
+            .toContain('firstExposurePhoto');
+        expect(documentsById['feature-pit-building-001'].resource.fieldOnlyMissingCheck)
+            .toContain('notRecoverableWarning');
+        expect(documentsById['segment-pit-building-001-fill-a'].resource.relations.liesWithin)
+            .toEqual(['feature-pit-building-001']);
+        expect(documentsById['find-pit-building-001-001'].resource.fieldOnlyMissingCheck)
+            .toContain('numberedBeforeCollection');
+        expect(documentsById['sample-pit-building-001-charcoal-001'].resource.sampleCollectionHandling)
+            .toContain('contextMapLinked');
+        expect(documentsById['photo-pit-building-001-first-exposure'].resource.reportCrossCheck)
+            .toContain('photoRegister');
+        expect(documentsById['drawing-pit-building-001-plan'].resource.relations.isDepictedIn)
+            .toContain('sample-pit-building-001-charcoal-001');
     });
 
 

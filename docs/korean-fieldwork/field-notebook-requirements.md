@@ -118,3 +118,5 @@ GPS·GIS 현장 시스템 보강분은 `Operation`에 `gpsSurveyQualityRecord`, 
 4. 시료가 분석명만이 아니라 분석 질문과 채취 맥락을 갖는가.
 5. 표준 용어와 현장 관용어를 모두 검색하되 저장값은 권위어로 정규화되는가.
 6. 판단 보류가 확정값으로 덮이지 않고 검토 이력으로 남는가.
+
+2026-06-19 검증 샘플은 `docs/korean-fieldwork/samples`에 둔다. `field-record-preservation-sample.json`은 수혈건물지 후보의 최초 노출, 내부층, 유물, 시료, 사진, 도면이 같은 작업기록으로 이어지는지 확인하고, `term-authority-alias-sample.json`은 현장 관용어와 권위 표제어가 같은 저장값으로 섞이지 않는지 확인한다. 두 샘플은 `korean-fieldwork-configuration.spec.ts`에서 실제 폼과 값목록 키를 쓰는지 검증한다.

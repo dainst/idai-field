@@ -1,0 +1,192 @@
+{
+  "title": "Korean fortification facility workflow sample",
+  "purpose": "Validate that fortification records separate gate, hidden gate, parapet, water facility, and Japanese-style ditch evidence instead of storing them as one generic fortress feature.",
+  "validationQuestions": [
+    "성문 기록이 문지 이름 하나가 아니라 육축, 홍예, 옹성, 적대, 오성지, 누조·누혈, 장군목·장군석 같은 부재 단위로 남는가.",
+    "암문이 단순 작은 문이 아니라 은폐 위치, 물자 운반, 구원 요청, 역습 통로, 복원 여부 같은 기능과 상태로 기록되는가.",
+    "수문·수구·은구가 배수시설 이름만이 아니라 아치 수, 수계 연결, 상하류 관계, 붕괴·보수 이력으로 기록되는가.",
+    "왜성 해자가 물 유무, 종·횡 방향, 단면형, 이동 제한과 우군 이동·수송 기능을 함께 남기는가."
+  ],
+  "documents": [
+    {
+      "resource": {
+        "id": "op-fortification-001",
+        "identifier": "FORT-OP-001",
+        "shortDescription": "성곽 부속시설 조사 작업",
+        "category": "Operation",
+        "relations": {},
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "criteriaConsistency"
+        ],
+        "recordCreationTiming": "duringFieldwork",
+        "dailyLogContent": [
+          "workDateWeather",
+          "workArea",
+          "photoDrawingNumbers",
+          "changeReason"
+        ],
+        "dailyLogReview": [
+          "sameDayWritten",
+          "photoDrawingCrossChecked",
+          "sourceRecordArchived"
+        ],
+        "reportCrossCheck": [
+          "manuscript",
+          "drawingRegister",
+          "photoRegister",
+          "dailyLog"
+        ]
+      }
+    },
+    {
+      "resource": {
+        "id": "feature-fortification-gate-001",
+        "identifier": "FG-001",
+        "shortDescription": "성문과 암문 부속시설",
+        "category": "Feature",
+        "relations": {
+          "isRecordedIn": ["op-fortification-001"]
+        },
+        "description": "성문부와 암문 후보가 겹친 구간. 문지 유형명을 확정하기 전에 육축, 홍예, 오성지, 누조·누혈, 장군목·장군석, 암문 기능과 복원 상태를 분리 기록한다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "reproducibleRecord"
+        ],
+        "fieldOnlyMissingCheck": [
+          "featureOutline",
+          "photoAngleAndScale",
+          "drawingLineReason",
+          "spatialLocation",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "fortificationGateFacility": [
+          "entranceGate",
+          "yukchuk",
+          "archOpening",
+          "ongseong",
+          "jeokdae",
+          "oseongji",
+          "nujo",
+          "nuhyeol",
+          "janggungmok",
+          "janggungseok",
+          "fireAttackDefense",
+          "hiddenGate"
+        ],
+        "fortificationHiddenGateFunction": [
+          "concealedLocation",
+          "supplyTransport",
+          "rescueRequest",
+          "counterattackRoute",
+          "oneHorseWidth",
+          "noGateTower",
+          "noYukchuk",
+          "hongyeOpening",
+          "oseongjiPresent",
+          "unrestored",
+          "pendingDecision"
+        ],
+        "fortificationParapetDetail": [
+          "yeojang",
+          "yeodam",
+          "gunOpening",
+          "arrowOpening",
+          "parapetCapstone",
+          "stoneParapet",
+          "flatParapet",
+          "roundParapet",
+          "defenderCount",
+          "pendingDecision"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "feature-fortification-water-001",
+        "identifier": "FW-001",
+        "shortDescription": "수문·은구 배수시설",
+        "category": "Feature",
+        "relations": {
+          "isRecordedIn": ["op-fortification-001"]
+        },
+        "description": "성벽 하부의 배수시설 후보. 수문·수구·은구 명칭을 확정하기 전에 아치 수, 수계 연결, 용두형 수로, 상하류 관계와 보수 이력을 기록한다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "criteriaConsistency",
+          "crossReviewNeeded"
+        ],
+        "fieldOnlyMissingCheck": [
+          "featureOutline",
+          "photoAngleAndScale",
+          "spatialLocation",
+          "elevationRecorded",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "fortificationWaterFacility": [
+          "waterGate",
+          "drainageOpening",
+          "hiddenDrainage",
+          "namEungu",
+          "bukEungu",
+          "archCount",
+          "archBridge",
+          "streamConnection",
+          "pavilionPresent",
+          "dragonHeadChannel",
+          "upstreamDownstreamRelation",
+          "collapseRepairHistory"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "feature-japanese-ditch-001",
+        "identifier": "JD-001",
+        "shortDescription": "왜성 해자와 이동로 후보",
+        "category": "Feature",
+        "relations": {
+          "isRecordedIn": ["op-fortification-001"]
+        },
+        "description": "왜성 주변 해자 후보. 물이 찬 해자와 마른 해자, 종·횡 방향 해자의 단면과 기능을 나누어 방어시설인지 이동·수송로인지 검토한다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "researchQuestionFit"
+        ],
+        "fieldOnlyMissingCheck": [
+          "featureOutline",
+          "stratigraphicBoundary",
+          "photoAngleAndScale",
+          "spatialLocation",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "japaneseFortificationDitch": [
+          "waterDitch",
+          "dryDitch",
+          "karabori",
+          "tatebori",
+          "cutOffDitch",
+          "vSection",
+          "uSection",
+          "multipleDitch",
+          "furrowLikeTatebori",
+          "ridgeCut",
+          "horizontalMovementRestriction",
+          "friendlyMovementRoute",
+          "transportRoute",
+          "drinkingWaterTransport",
+          "interFortressLink"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    }
+  ]
+}

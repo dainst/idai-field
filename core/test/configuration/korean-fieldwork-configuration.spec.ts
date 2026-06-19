@@ -298,6 +298,35 @@ describe('KoreanFieldwork project configuration', () => {
     });
 
 
+    it('keeps the Korean fortification facility sample aligned with facility fields', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const sample = loadSample('fortification-facility-workflow-sample.json');
+        const documents = sample.documents;
+        const documentsById = documents.reduce((index: any, document: any) => {
+            index[document.resource.id] = document;
+            return index;
+        }, {});
+
+        expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
+
+        expect(documentsById['feature-fortification-gate-001'].resource.fortificationGateFacility)
+            .toContain('janggungseok');
+        expect(documentsById['feature-fortification-gate-001'].resource.fortificationHiddenGateFunction)
+            .toContain('counterattackRoute');
+        expect(documentsById['feature-fortification-gate-001'].resource.fortificationParapetDetail)
+            .toContain('defenderCount');
+        expect(documentsById['feature-fortification-water-001'].resource.fortificationWaterFacility)
+            .toContain('collapseRepairHistory');
+        expect(documentsById['feature-japanese-ditch-001'].resource.japaneseFortificationDitch)
+            .toContain('horizontalMovementRestriction');
+        expect(documentsById['feature-japanese-ditch-001'].resource.japaneseFortificationDitch)
+            .toContain('interFortressLink');
+    });
+
+
     it('registers the field-record preservation fields in the bundled configuration', () => {
 
         const configReader = new ConfigReader();

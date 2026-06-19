@@ -68,7 +68,6 @@ export default getDocumentViewMapHook = () => {
                     document_feature_info,
                     children_features,
                     parent_features,
-                    ancestor_features,
                 }) => {
                     this.docId = document_uuid;
                     this.setMapFeatures(
@@ -80,7 +79,6 @@ export default getDocumentViewMapHook = () => {
                             : null,
                         parent_features,
                         children_features,
-                        ancestor_features,
                     );
                 },
             );
@@ -158,29 +156,7 @@ export default getDocumentViewMapHook = () => {
             this.projectDraftDate = this.el.getAttribute("draft_date");
             this.language = this.el.getAttribute("language");
 
-            this.drawSource = new VectorSource({
-                wrapX: false,
-            });
-
-            this.drawLayer = new VectorLayer({
-                source: this.drawSource,
-                // style for finished polygons
-                style: new Style({
-                    stroke: new Stroke({
-                        color: `rgba(0, 0, 0, 1)`,
-                        width: 1,
-                    }),
-                    fill: new Fill({
-                        color: `rgba(255, 255, 255, 0.5)`,
-                    }),
-                }),
-                properties: {
-                    drawn: true,
-                },
-            });
-
             this.map = new Map({
-                layers: [this.drawLayer],
                 target: `${this.el.getAttribute("id")}-map`,
                 view: new View(),
             });
@@ -213,11 +189,7 @@ export default getDocumentViewMapHook = () => {
             });
 
             this.el.addEventListener("pointerleave", function (e) {
-                [
-                    //_this.ancestorLayer,
-                    _this.parentLayer,
-                    _this.childrenLayer,
-                ].map((layer) => {
+                [_this.parentLayer, _this.childrenLayer].map((layer) => {
                     setFillForLayer(layer, false);
                 });
 
@@ -298,7 +270,6 @@ export default getDocumentViewMapHook = () => {
             documentFeature,
             parentCollection,
             childCollection,
-            ancestorFeatures,
         ) {
             if (this.childrenLayer) this.map.removeLayer(this.childrenLayer);
             if (this.docLayer) this.map.removeLayer(this.docLayer);

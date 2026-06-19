@@ -93,10 +93,24 @@
         ],
         "preservationActionTracking": [
           "preservationNotice",
+          "heritageCommitteeOpinion",
+          "expertReviewOpinion",
+          "evaluationPanelReview",
+          "evaluationMaterialRequested",
+          "decisionConditionSpecified",
+          "onsitePreservation",
+          "recordPreservation",
           "expertOnSite",
           "constructionStopStatus",
+          "preservedBoundaryMap",
+          "implementationPhotoAttached",
+          "futureManagementPlan",
           "completionReport",
-          "projectOwnerNotified"
+          "projectOwnerNotified",
+          "managementEntity",
+          "periodicInspection",
+          "environmentChangeReevaluation",
+          "elapsedTimeReevaluation"
         ],
         "reportCrossCheck": [
           "manuscript",

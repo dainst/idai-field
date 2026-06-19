@@ -460,6 +460,10 @@ describe('KoreanFieldwork project configuration', () => {
 
         expect(documentsById['project-stage-transition-001'].resource.investigationRecordHandover)
             .toContain('fullExcavationTransition');
+        expect(documentsById['project-stage-transition-001'].resource.preservationActionTracking)
+            .toContain('onsitePreservation');
+        expect(documentsById['project-stage-transition-001'].resource.preservationActionTracking)
+            .toContain('preservedBoundaryMap');
         expect(documentsById['survey-surface-001'].resource.surfaceSurveyFollowUp)
             .toContain('testExcavation');
         expect(documentsById['survey-trial-001'].resource.sampleSurveySuitability)
@@ -503,6 +507,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('remainingUninvestigatedArea');
         expect(documentsById['project-admin-workflow-001'].resource.recordTransferManagementSystem)
             .toContain('sourceDatabase');
+        expect(documentsById['project-admin-workflow-001'].resource.preservationActionTracking)
+            .toContain('evaluationMaterialRequested');
+        expect(documentsById['project-admin-workflow-001'].resource.preservationActionTracking)
+            .toContain('futureManagementPlan');
+        expect(documentsById['project-admin-workflow-001'].resource.preservationActionTracking)
+            .toContain('elapsedTimeReevaluation');
         expect(documentsById['report-submission-admin-001'].resource.reportSubmissionWorkflow)
             .toContain('submissionReceiptRecorded');
         expect(documentsById['report-submission-admin-001'].resource.reportSourceLinkText)
@@ -3539,6 +3549,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-fortificationRestorationEvidence']
             .values.onsiteConservationPriority.label)
             .toBe('현장보존 우선');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-preservationActionTracking']
+            .values.evaluationMaterialRequested.label)
+            .toBe('평가자료 요청');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-preservationActionTracking']
+            .values.futureManagementPlan.label)
+            .toBe('Future management plan');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-termAuthorityStatus'].values.pdfCrossChecked.label)
             .toBe('Source PDF cross-checked');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-termSearchMapping'].values.reportOutputSeparated.label)

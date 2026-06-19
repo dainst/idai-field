@@ -14746,6 +14746,33 @@
       "preservationNotice": {
         "label": "Preservation notice"
       },
+      "heritageCommitteeOpinion": {
+        "label": "Heritage committee opinion"
+      },
+      "expertReviewOpinion": {
+        "label": "Expert review opinion"
+      },
+      "academicAdvisoryOpinion": {
+        "label": "Academic advisory opinion"
+      },
+      "evaluationPanelReview": {
+        "label": "Evaluation panel review"
+      },
+      "evaluationMaterialRequested": {
+        "label": "Evaluation material requested"
+      },
+      "decisionConditionSpecified": {
+        "label": "Decision condition specified"
+      },
+      "onsitePreservation": {
+        "label": "On-site preservation"
+      },
+      "relocationPreservation": {
+        "label": "Relocation preservation"
+      },
+      "recordPreservation": {
+        "label": "Record preservation"
+      },
       "expertOnSite": {
         "label": "Expert on site"
       },
@@ -14757,6 +14784,15 @@
       },
       "fullExcavation": {
         "label": "Full excavation"
+      },
+      "preservedBoundaryMap": {
+        "label": "Preserved boundary map"
+      },
+      "implementationPhotoAttached": {
+        "label": "Implementation photo attached"
+      },
+      "futureManagementPlan": {
+        "label": "Future management plan"
       },
       "completionReport": {
         "label": "Completion report"
@@ -14773,6 +14809,12 @@
       "periodicInspection": {
         "label": "Periodic inspection"
       },
+      "environmentChangeReevaluation": {
+        "label": "Environment-change reevaluation"
+      },
+      "elapsedTimeReevaluation": {
+        "label": "Elapsed-time reevaluation"
+      },
       "reevaluationTrigger": {
         "label": "Reevaluation trigger"
       },
@@ -14780,7 +14822,7 @@
         "label": "Pending decision"
       }
     },
-    "description": "Korean field notebook checklist for following preservation actions through notice, implementation, management, inspection, and reevaluation"
+    "description": "Korean field notebook checklist for following preservation actions from opinion sources, evaluation material, and decision conditions through preservation mode, boundary maps, implementation photos, management plans, management entity, inspection, and reevaluation"
   },
   "KoreanFieldwork-investigationRecordHandover": {
     "values": {

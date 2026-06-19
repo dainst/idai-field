@@ -34,11 +34,18 @@
           "changeReview"
         ],
         "preservationActionTracking": [
+          "preservationNotice",
+          "expertReviewOpinion",
+          "decisionConditionSpecified",
+          "onsitePreservation",
+          "recordPreservation",
           "sampleSurvey",
           "trialExcavation",
           "fullExcavation",
+          "preservedBoundaryMap",
           "projectOwnerNotified",
-          "constructionStopStatus"
+          "constructionStopStatus",
+          "futureManagementPlan"
         ],
         "investigationRecordHandover": [
           "sampleSurveyRecord",

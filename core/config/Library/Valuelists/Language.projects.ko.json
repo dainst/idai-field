@@ -2992,6 +2992,33 @@
       "preservationNotice": {
         "label": "보존조치 통보"
       },
+      "heritageCommitteeOpinion": {
+        "label": "문화재위원회 보존의견"
+      },
+      "expertReviewOpinion": {
+        "label": "전문가 검토회의 보존의견"
+      },
+      "academicAdvisoryOpinion": {
+        "label": "학술자문회의 보존의견"
+      },
+      "evaluationPanelReview": {
+        "label": "보존조치 평가단 검토"
+      },
+      "evaluationMaterialRequested": {
+        "label": "평가자료 요청"
+      },
+      "decisionConditionSpecified": {
+        "label": "결정 조건 명시"
+      },
+      "onsitePreservation": {
+        "label": "현지보존"
+      },
+      "relocationPreservation": {
+        "label": "이전보존"
+      },
+      "recordPreservation": {
+        "label": "기록보존"
+      },
       "expertOnSite": {
         "label": "관련전문가 입회"
       },
@@ -3003,6 +3030,15 @@
       },
       "fullExcavation": {
         "label": "정밀발굴조사"
+      },
+      "preservedBoundaryMap": {
+        "label": "보존유적 경계도면"
+      },
+      "implementationPhotoAttached": {
+        "label": "이행 사진 첨부"
+      },
+      "futureManagementPlan": {
+        "label": "향후 관리계획"
       },
       "completionReport": {
         "label": "조치완료보고"
@@ -3019,6 +3055,12 @@
       "periodicInspection": {
         "label": "정기점검"
       },
+      "environmentChangeReevaluation": {
+        "label": "환경변화 재평가"
+      },
+      "elapsedTimeReevaluation": {
+        "label": "경과기간 재평가"
+      },
       "reevaluationTrigger": {
         "label": "재평가 트리거"
       },
@@ -3026,7 +3068,7 @@
         "label": "판단 보류"
       }
     },
-    "description": "보존조치가 결정 이후 통보, 이행, 관리주체, 점검, 재평가로 이어지는 과정을 추적하기 위한 목록"
+    "description": "보존조치가 보존의견·평가자료·결정조건에서 현지보존·이전보존·기록보존, 이행 도면·사진·관리계획, 관리주체, 점검, 재평가로 이어지는 과정을 추적하기 위한 목록"
   },
   "KoreanFieldwork-investigationRecordHandover": {
     "values": {

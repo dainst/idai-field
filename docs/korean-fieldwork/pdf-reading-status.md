@@ -162,6 +162,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-20 이어받은 감사에서 실제 로컬 PDF 43종과 `codex-idai-field-new-pdf-text`의 metadata 43건이 다시 1:1로 대응함을 확인했다. 누락된 텍스트 캐시는 없고, `TermImportMapping`과 `SourceEvidenceIndex`도 이미 샘플과 테스트에 들어가 있으므로 다음 독해 작업은 새 목록 작성이 아니라 실제 자동완성·가져오기 흐름 검증, 조건부 필수값 설계, OCR 취약 구간의 도판·캡션·사례명·한자·수치 원문 대조에 둔다.
 
+2026-06-20 새 자료 독해 전 마무리 감사에서 `warnings-updater.ts`와 설정 부트스트랩을 확인했다. 현재 `mandatory`는 필드 정의에 일괄 적용되고, 조건식은 입력값 유효성 경고에는 쓰이지만 조건부 필수값 경고로 승격되지는 않는다. 따라서 다음 독해에서 나오는 “상황에 따라 반드시 남겨야 하는 값”은 당장 조건부 필수 필드로 늘리기보다, 현장시점 누락점검·최초 노출 기록·품질검수·원문 근거 색인으로 먼저 구조화하고, 실제 앱 흐름 검증 뒤 별도 조건부 검증 기능이 필요한지 판단한다.
+
 2026-06-19 도표·사례·캡션 원문 대조도 구현 단위로 옮겼다. `SourceEvidenceIndex`는 성곽, 충적지, 고분, 생산유적, 연구방법론, 사전 용어처럼 분야별로 흩어진 도표·사진·표·캡션·사례명·한자·수치를 `Project` 하위 원문 근거 색인으로 묶고, 원PDF 직접 대조, OCR 교정 필요, 캡션 재확인, 값목록 승격 가능, UI 노출 보류 같은 상태를 함께 남긴다. `source-evidence-index-sample.json`은 이 색인이 자동 분류값이 아니라 필드 설계 근거와 재대조 작업 목록으로 쓰이는지 검증한다.
 
 2026-06-19 수혈주거지 도판·사례명 교정 대상도 같은 색인 흐름으로 분리했다. `발굴조사 업무의 이해`와 `현장조사 방법과 해석`의 수혈주거지 장은 이미 `pitDwellingExposureBaulk`, `pitDwellingFloorFacility`, `pitDwellingFireEvidence`, `pitDwellingOverlapSequence` 값목록으로 구현했지만, 도판 속 사례명과 개별 캡션은 아직 값목록 근거로 승격하지 않는다. `source-index-pit-dwelling-001`은 이 항목을 `buildingSite`와 `researchMethod` 영역의 원문 재대조 대상으로 남겨 자동 분류와 성급한 주거지 확정을 막는다.

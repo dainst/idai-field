@@ -2488,6 +2488,18 @@
       "personalNotebookWritten": {
         "label": "개인 야장 작성"
       },
+      "portableNotebookPrepared": {
+        "label": "휴대용 야장 준비"
+      },
+      "griddedSketchPageAvailable": {
+        "label": "방안 약식실측 가능"
+      },
+      "fieldTrialErrorRecorded": {
+        "label": "시행착오·판단변경 기록"
+      },
+      "reportUnpublishedObservationRecorded": {
+        "label": "보고서 미수록 현장관찰 기록"
+      },
       "assignedFeatureLinked": {
         "label": "담당 유구 연결"
       },
@@ -2516,7 +2528,7 @@
         "label": "판단 보류"
       }
     },
-    "description": "개인 메모로 시작한 야장이 조사 완료 뒤 제출·검토·열람되는 공적 기록이 되도록 관리하기 위한 목록"
+    "description": "휴대용 개인 야장, 현장 약식실측, 시행착오 관찰, 보고서 미수록 판단, 제출 원본이 검토·열람 가능한 공적 기록이 되도록 관리하기 위한 목록"
   },
   "KoreanFieldwork-dailyLogContent": {
     "values": {

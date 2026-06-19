@@ -14242,6 +14242,18 @@
       "personalNotebookWritten": {
         "label": "Personal notebook written"
       },
+      "portableNotebookPrepared": {
+        "label": "Portable notebook prepared"
+      },
+      "griddedSketchPageAvailable": {
+        "label": "Gridded sketch page available"
+      },
+      "fieldTrialErrorRecorded": {
+        "label": "Trial and error recorded"
+      },
+      "reportUnpublishedObservationRecorded": {
+        "label": "Report-unpublished observation recorded"
+      },
       "assignedFeatureLinked": {
         "label": "Assigned feature linked"
       },
@@ -14270,7 +14282,7 @@
         "label": "Pending decision"
       }
     },
-    "description": "Korean field notebook archive states for treating personal notes as submitted, reviewed, and accessible official records"
+    "description": "Korean field notebook archive states for treating portable personal notes, field sketches, trial-and-error observations, and submitted originals as reviewed and accessible official records"
   },
   "KoreanFieldwork-dailyLogContent": {
     "values": {

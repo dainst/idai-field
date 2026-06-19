@@ -206,6 +206,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-20 `현장조사_방법과_해석.pdf`의 구석기 발굴조사 대목을 다시 읽어, 유물 수습 전 위치기록 요구를 `Find` 화면으로 내렸다. 이 자료는 구석기 유물의 흙기둥이 30cm, 경우에 따라 50cm 이상 커지지 않도록 수습 시점을 조정하고, 수습 전에 GPS 절대좌표, 문화층 번호, 유물 일련번호를 부여한 뒤 문화층별·칸별 상자, 좌표 목록, 유물 분포도와 접합관계도로 이어야 한다고 본다. 이번 구현은 `Find.paleolithicArtifactPositionRecovery`에 흙기둥 높이, 수습 전 절대·3차원 좌표, 문화층·일련번호, 수습 뒤 상자 분리, 좌표 목록, 분포도와 접합관계도 연결을 추가하고, `paleolithic-survey-lithic-context-sample.json`에서 후보 석기 카드가 이 흐름을 실제 값목록으로 쓰는지 검증한다.
 
+2026-06-20 새로 정리된 `C:\Users\nuri9\Downloads\고고학사전` 12권과 `C:\Users\nuri9\Downloads\조사방법론` 31건은 기존 텍스트 캐시와 1:1로 대응함을 확인했다. 첫 추가 독해는 `발굴조사_실무.pdf`와 `매장문화재_조사실무.pdf`의 야장·일지 장을 다시 대조했다. 자료는 야장이 작고 휴대 가능해야 하며 방안 약식실측을 지원해야 하고, 보고서나 논문에는 바로 들어가지 않는 시행착오·판단변경·현장관찰도 조사 완료 뒤 공적 기록으로 보존해야 한다고 본다. 이 요구는 `personalNotebookArchive`의 `portableNotebookPrepared`, `griddedSketchPageAvailable`, `fieldTrialErrorRecorded`, `reportUnpublishedObservationRecorded`와 `daily-log-quality-review-workflow-sample.json` 검증값으로 옮겼다.
+
 2026-06-19 이어서 사진·보고서 동시 검수 장과 `제2회_매장문화재_조사연구원_교육_2007년3월`의 조사계획·착수 OCR 대목을 다시 대조했다. 현장 작업자는 조사단장·책임조사원·조사원 같은 직급뿐 아니라 측량, 사진, 도면, 안전관리, 민원·기관소통, 유물정리, 시료채취, 일지 작성, 보고서 준비, 검토 역할을 겸할 수 있고, 이 책임 범위가 일지 본문에만 남으면 분쟁·보고서 보완·품질검수 때 역추적이 어렵다. 이 묶음은 `Operation`과 `DailyLog`의 `operationRoleResponsibility` 값목록으로 옮겼고, `daily-log-quality-review-workflow-sample.json`에서 당일 역할 공백까지 함께 검증한다.
 
 2026-06-19 추가로 `제2회_매장문화재_조사연구원_교육_2007년3월` 조사계획·착수 OCR과 `field-training-methods.md`의 현장보존조치 후보를 다시 맞춰 보았다. 허가서 현장 비치, 착수신고 안내, 보안 유지, 주민·관할기관 통보, 유적보호 주의사항, 혹서·혹한·강우 대비, 야간방범, 임시유물·기록물 보관, 미작성자료 즉시 조치는 보존조치 결정 이후의 장기 관리가 아니라 당일 작업 실행값에 가깝다. 이 묶음은 `Operation`의 `siteProtectionSecurity` 값목록으로 옮겼고, `administrative-workflow-sample.json`에서 부분완료·자료인계 흐름과 함께 검증한다.

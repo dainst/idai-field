@@ -332,6 +332,12 @@ describe('KoreanFieldwork project configuration', () => {
 
         expect(documentsById['op-quality-001'].resource.personalNotebookArchive)
             .toContain('originalSubmitted');
+        expect(documentsById['op-quality-001'].resource.personalNotebookArchive)
+            .toContain('portableNotebookPrepared');
+        expect(documentsById['op-quality-001'].resource.personalNotebookArchive)
+            .toContain('griddedSketchPageAvailable');
+        expect(documentsById['op-quality-001'].resource.personalNotebookArchive)
+            .toContain('reportUnpublishedObservationRecorded');
         expect(documentsById['op-quality-001'].resource.reportEvaluationFeedback)
             .toContain('fieldQualityNotSubstituted');
         expect(documentsById['op-quality-001'].resource.operationRoleResponsibility)
@@ -2980,6 +2986,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('철수 전 기록물 점검');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-personalNotebookArchive'].values.originalSubmitted.label)
             .toBe('Original submitted');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-personalNotebookArchive']
+            .values.portableNotebookPrepared.label)
+            .toBe('Portable notebook prepared');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-personalNotebookArchive']
+            .values.reportUnpublishedObservationRecorded.label)
+            .toBe('보고서 미수록 현장관찰 기록');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-dailyLogContent'].values.workArea.label)
             .toBe('Work area');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-operationRoleResponsibility']

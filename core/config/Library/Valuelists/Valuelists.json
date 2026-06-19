@@ -34911,6 +34911,10 @@
     "creationDate": "2026-06-19",
     "values": {
       "personalNotebookWritten": {},
+      "portableNotebookPrepared": {},
+      "griddedSketchPageAvailable": {},
+      "fieldTrialErrorRecorded": {},
+      "reportUnpublishedObservationRecorded": {},
       "assignedFeatureLinked": {},
       "originalSubmitted": {},
       "digitized": {},
@@ -34923,6 +34927,10 @@
     },
     "order": [
       "personalNotebookWritten",
+      "portableNotebookPrepared",
+      "griddedSketchPageAvailable",
+      "fieldTrialErrorRecorded",
+      "reportUnpublishedObservationRecorded",
       "assignedFeatureLinked",
       "originalSubmitted",
       "digitized",

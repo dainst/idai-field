@@ -188,6 +188,29 @@
         }
       }
     },
+    "ExcavationPermitDocumentSet": {
+      "label": "발굴허가 서류 묶음",
+      "fields": {
+        "excavationPermitDocumentSet": {
+          "label": "발굴허가 서류 묶음"
+        },
+        "permitApplicantText": {
+          "label": "신청자"
+        },
+        "permitApplicationTitleText": {
+          "label": "신청 건명"
+        },
+        "permitDocumentReferenceText": {
+          "label": "문서 참조"
+        },
+        "permitSubmissionAgencyText": {
+          "label": "제출기관"
+        },
+        "verificationState": {
+          "label": "검증상태"
+        }
+      }
+    },
     "StateVestingSelectionRecord": {
       "label": "국가귀속 선별 기록",
       "fields": {

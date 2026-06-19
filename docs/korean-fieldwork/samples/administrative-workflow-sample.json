@@ -1,6 +1,6 @@
 {
   "title": "Korean administrative workflow and review package sample",
-  "purpose": "Validate that request intake, plan changes, site protection, expert review meetings, partial completion packages, surface survey result processing, and record transfer management stay connected in the Korean fieldwork configuration.",
+  "purpose": "Validate that request intake, permit document sets, plan changes, site protection, expert review meetings, partial completion packages, surface survey result processing, and record transfer management stay connected in the Korean fieldwork configuration.",
   "validationQuestions": [
     "조사의뢰 접수 단계의 기초자료와 현장답사 이력이 조사계획 수립 근거로 남는가.",
     "현장 착수·진행 중 허가서 비치, 보안, 주민·관할기관 통보, 유적보호, 임시보관, 기록물 점검이 작업 단위로 남는가.",
@@ -103,6 +103,44 @@
           "photoRegister",
           "artifactRegister",
           "dailyLog"
+        ],
+        "verificationState": "candidate"
+    }
+  },
+  {
+      "resource": {
+        "id": "permit-document-admin-001",
+        "identifier": "ADMIN-PERMIT-001",
+        "shortDescription": "발굴허가 신청 구비서류 점검",
+        "category": "ExcavationPermitDocumentSet",
+        "relations": {
+          "liesWithin": ["project-admin-workflow-001"]
+        },
+        "description": "발굴허가 신청 전에 신청서, 조사계획서, 산출내역, 토지·임야조서, 공사계획과 현상변경 관련 검토를 한 묶음으로 대조한다.",
+        "permitApplicationTitleText": "○○지구 매장문화재 발굴허가 신청",
+        "permitApplicantText": "사업시행자 / 조사기관",
+        "permitSubmissionAgencyText": "문화재청·관할 지방자치단체",
+        "permitDocumentReferenceText": "전자행정 접수파일 ADMIN-PERMIT-2026-001 / 사업계획 평면도 / 위치도",
+        "excavationPermitDocumentSet": [
+          "excavationPermitApplication",
+          "investigationPlanAttached",
+          "costEstimateAttached",
+          "landForestRegisterAttached",
+          "projectLocationMapAttached",
+          "constructionPlanAttached",
+          "undergroundExcavationPlanAttached",
+          "buildingDrawingAttached",
+          "landscapePlantingPlanAttached",
+          "businessRegistrationOrIdAttached",
+          "projectPlanUploaded",
+          "heritageImpactReviewChecked",
+          "alterationPermitChecked",
+          "committeeReviewNeeded",
+          "fairnessConflictChecked",
+          "applicantExecutorConfirmed",
+          "permitNoticeReceived",
+          "permitPeriodChecked",
+          "changeExtensionRouteChecked"
         ],
         "verificationState": "candidate"
       }

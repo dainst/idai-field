@@ -14066,6 +14066,71 @@
     },
     "description": "Korean field notebook checklist for tracking investigation administration from request and permit to completion reporting and final report submission"
   },
+  "KoreanFieldwork-excavationPermitDocumentSet": {
+    "values": {
+      "excavationPermitApplication": {
+        "label": "Excavation permit application"
+      },
+      "investigationPlanAttached": {
+        "label": "Investigation plan attached"
+      },
+      "costEstimateAttached": {
+        "label": "Cost estimate attached"
+      },
+      "landForestRegisterAttached": {
+        "label": "Land or forest register attached"
+      },
+      "projectLocationMapAttached": {
+        "label": "Project location map attached"
+      },
+      "constructionPlanAttached": {
+        "label": "Construction plan attached"
+      },
+      "undergroundExcavationPlanAttached": {
+        "label": "Underground excavation plan attached"
+      },
+      "buildingDrawingAttached": {
+        "label": "Building drawing attached"
+      },
+      "landscapePlantingPlanAttached": {
+        "label": "Landscape planting plan attached"
+      },
+      "businessRegistrationOrIdAttached": {
+        "label": "Business registration or ID attached"
+      },
+      "projectPlanUploaded": {
+        "label": "Project plan uploaded"
+      },
+      "heritageImpactReviewChecked": {
+        "label": "Heritage impact review checked"
+      },
+      "alterationPermitChecked": {
+        "label": "Alteration permit checked"
+      },
+      "committeeReviewNeeded": {
+        "label": "Committee review needed"
+      },
+      "fairnessConflictChecked": {
+        "label": "Fairness conflict checked"
+      },
+      "applicantExecutorConfirmed": {
+        "label": "Applicant and executor confirmed"
+      },
+      "permitNoticeReceived": {
+        "label": "Permit notice received"
+      },
+      "permitPeriodChecked": {
+        "label": "Permit period checked"
+      },
+      "changeExtensionRouteChecked": {
+        "label": "Change or extension route checked"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean excavation-permit document checks for tracking applications, plans, maps, cost estimates, construction details, impact or alteration review, committee review, conflicts, permit notices, periods, and change or extension routes"
+  },
   "KoreanFieldwork-permitConditionCompliance": {
     "values": {
       "permitDocumentOnSite": {

@@ -188,6 +188,29 @@
         }
       }
     },
+    "ExcavationPermitDocumentSet": {
+      "label": "Excavation permit document set",
+      "fields": {
+        "excavationPermitDocumentSet": {
+          "label": "Excavation permit document set"
+        },
+        "permitApplicantText": {
+          "label": "Applicant"
+        },
+        "permitApplicationTitleText": {
+          "label": "Application title"
+        },
+        "permitDocumentReferenceText": {
+          "label": "Document reference"
+        },
+        "permitSubmissionAgencyText": {
+          "label": "Submission agency"
+        },
+        "verificationState": {
+          "label": "Verification state"
+        }
+      }
+    },
     "StateVestingSelectionRecord": {
       "label": "State vesting selection record",
       "fields": {

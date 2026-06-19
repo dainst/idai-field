@@ -935,6 +935,71 @@
         }
       ]
     },
+    "ExcavationPermitDocumentSet": {
+      "parent": "Project",
+      "color": "#6b7f5f",
+      "hidden": [],
+      "fields": {
+        "permitApplicationTitleText": {
+          "inputType": "input",
+          "mandatory": true,
+          "constraintIndexed": true
+        },
+        "permitApplicantText": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "permitSubmissionAgencyText": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "permitDocumentReferenceText": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "excavationPermitDocumentSet": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "verificationState": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "excavationPermitDocumentSet": "KoreanFieldwork-excavationPermitDocumentSet",
+        "verificationState": "KoreanFieldwork-verificationState"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
+        },
+        {
+          "name": "hierarchy",
+          "fields": ["liesWithin"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "diaryAbstract"]
+        },
+        {
+          "name": "koreanFieldwork",
+          "fields": [
+            "permitApplicationTitleText",
+            "permitApplicantText",
+            "permitSubmissionAgencyText",
+            "permitDocumentReferenceText",
+            "excavationPermitDocumentSet",
+            "verificationState"
+          ]
+        }
+      ]
+    },
     "ReportSubmissionWorkflow": {
       "parent": "Project",
       "color": "#6f728a",

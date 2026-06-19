@@ -351,6 +351,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('projectOwnerBasicData');
         expect(documentsById['project-admin-workflow-001'].resource.investigationPlanChangeRecord)
             .toContain('permitChangeNeeded');
+        expect(documentsById['permit-document-admin-001'].resource.excavationPermitDocumentSet)
+            .toContain('excavationPermitApplication');
+        expect(documentsById['permit-document-admin-001'].resource.excavationPermitDocumentSet)
+            .toContain('undergroundExcavationPlanAttached');
+        expect(documentsById['permit-document-admin-001'].resource.permitDocumentReferenceText)
+            .toContain('사업계획 평면도');
         expect(documentsById['project-admin-workflow-001'].resource.expertReviewMeeting)
             .toContain('divergentOpinionPreserved');
         expect(documentsById['project-admin-workflow-001'].resource.partialCompletionPackage)
@@ -1011,6 +1017,7 @@ describe('KoreanFieldwork project configuration', () => {
         const termAliasForm = config.forms.TermAlias;
         const termImportMappingForm = config.forms.TermImportMapping;
         const sourceEvidenceIndexForm = config.forms.SourceEvidenceIndex;
+        const excavationPermitDocumentSetForm = config.forms.ExcavationPermitDocumentSet;
         const reportSubmissionWorkflowForm = config.forms.ReportSubmissionWorkflow;
         const reportPreparationReviewForm = config.forms.ReportPreparationReview;
         const stateVestingSelectionRecordForm = config.forms.StateVestingSelectionRecord;
@@ -1051,6 +1058,13 @@ describe('KoreanFieldwork project configuration', () => {
         expect(sourceEvidenceIndexForm.fields.sourceEvidenceDomain.inputType).toBe('checkboxes');
         expect(sourceEvidenceIndexForm.fields.sourceEvidenceVerification.inputType).toBe('checkboxes');
         expect(sourceEvidenceIndexForm.fields.sourceEvidenceUse.inputType).toBe('checkboxes');
+        expect(excavationPermitDocumentSetForm.parent).toBe('Project');
+        expect(excavationPermitDocumentSetForm.fields.permitApplicationTitleText.inputType).toBe('input');
+        expect(excavationPermitDocumentSetForm.fields.permitApplicationTitleText.mandatory).toBe(true);
+        expect(excavationPermitDocumentSetForm.fields.permitApplicantText.inputType).toBe('input');
+        expect(excavationPermitDocumentSetForm.fields.permitSubmissionAgencyText.inputType).toBe('input');
+        expect(excavationPermitDocumentSetForm.fields.permitDocumentReferenceText.inputType).toBe('input');
+        expect(excavationPermitDocumentSetForm.fields.excavationPermitDocumentSet.inputType).toBe('checkboxes');
         expect(reportSubmissionWorkflowForm.parent).toBe('Project');
         expect(reportSubmissionWorkflowForm.fields.reportSubmissionDocumentText.inputType).toBe('input');
         expect(reportSubmissionWorkflowForm.fields.reportSubmissionDocumentText.mandatory).toBe(true);
@@ -1366,6 +1380,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-partialCompletionPackage');
         expect(projectForm.valuelists.recordTransferManagementSystem)
             .toBe('KoreanFieldwork-recordTransferManagementSystem');
+        expect(excavationPermitDocumentSetForm.valuelists.excavationPermitDocumentSet)
+            .toBe('KoreanFieldwork-excavationPermitDocumentSet');
+        expect(excavationPermitDocumentSetForm.valuelists.verificationState)
+            .toBe('KoreanFieldwork-verificationState');
         expect(reportSubmissionWorkflowForm.valuelists.reportSubmissionWorkflow)
             .toBe('KoreanFieldwork-reportSubmissionWorkflow');
         expect(reportSubmissionWorkflowForm.valuelists.verificationState).toBe('KoreanFieldwork-verificationState');
@@ -1863,6 +1881,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Source material type');
         expect(languages.en.categories.SourceEvidenceIndex.fields.sourceEvidenceVerification.label)
             .toBe('Source verification status');
+        expect(languages.en.categories.ExcavationPermitDocumentSet.label)
+            .toBe('Excavation permit document set');
+        expect(languages.en.categories.ExcavationPermitDocumentSet.fields.permitApplicationTitleText.label)
+            .toBe('Application title');
+        expect(languages.en.categories.ExcavationPermitDocumentSet.fields.excavationPermitDocumentSet.label)
+            .toBe('Excavation permit document set');
         expect(languages.en.categories.ReportSubmissionWorkflow.label).toBe('Report submission workflow');
         expect(languages.en.categories.ReportSubmissionWorkflow.fields.reportSubmissionDocumentText.label)
             .toBe('Submission document');
@@ -2957,6 +2981,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-reportSubmissionWorkflow']
             .values.submissionReceiptRecorded.label)
             .toBe('Submission receipt recorded');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-excavationPermitDocumentSet']
+            .values.undergroundExcavationPlanAttached.label)
+            .toBe('Underground excavation plan attached');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-reportPreparationReview']
             .values.legendPrepared.label)
             .toBe('Legend prepared');
@@ -2969,6 +2996,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-reportPreparationReview']
             .values.drawingPhotoConsistencyChecked.label)
             .toBe('도면·사진 일치 대조');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-excavationPermitDocumentSet']
+            .values.alterationPermitChecked.label)
+            .toBe('현상변경허가 확인');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-stateVestingSelectionRecord']
             .values.temporaryStorageReceipt.label)
             .toBe('임시보관증');

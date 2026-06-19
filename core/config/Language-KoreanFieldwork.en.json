@@ -554,6 +554,9 @@
         "pitFeatureFunctionAssessment": {
           "label": "Pit feature function assessment"
         },
+        "pitBuildingLifecycleStage": {
+          "label": "Pit building lifecycle stage"
+        },
         "settlementFeatureInvestigationProcedure": {
           "label": "Settlement feature investigation procedure"
         },

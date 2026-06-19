@@ -71,7 +71,7 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-19 토기 제작·신석기 생업 자료도 구현 단위로 다시 압축했다. `토기 제작의 이해와 실습`, 유물실측 교재, 신석기시대편 사전과 제8권 신석기 자료는 토기편을 형식명보다 원료 점토, 수비, 비짐 재료와 기능, 제작 생애, 성형흔, 정면흔 방향으로 먼저 보라고 요구한다. 동시에 패총의 어망추·조침·작살·외양성 어종·해양포유류 자료는 생업 결론이 아니라 증거 수준과 계절성·교류 후보로 기록해야 한다. 이 묶음은 `Find`의 `ceramicTermScope`, `potteryFabricTemperRecord`, `potteryTemperFunctionAssessment`, `potteryProductionLifeRecord`, `potteryFormingTraceAssessment`, `potteryFormingCaution`, `potteryProcessDirectionality`, `potteryExperimentalVariableRecord`, `potteryClassificationBasis`, `neolithicSubsistenceEvidence` 값 목록으로 옮겼고, `pottery-technology-subsistence-workflow-sample.json`으로 토기 제작흔·제작실험 변수·분류 판단근거와 신석기 생업 증거가 같은 유물 카드 흐름에서 검증되는지 확인한다.
 
-2026-06-19 수혈건물지 조사법과 현장조사 방법·해석 자료를 청동기 사전 용어와 다시 묶어 샘플로 검증했다. 수혈건물지는 주거지로 바로 확정하지 않고 조사 절차, 둑·트렌치 전략, 바닥·벽선 보존, 기능 후보를 먼저 남기며, 청동기 유형명은 중앙 타원형 구덩이, 양단 주혈, 벽도랑, 취락·묘역 관계, 공반 토기, 방사성탄소연대 같은 관찰값 뒤에 둔다. 이 흐름은 `bronze-age-settlement-dolmen-workflow-sample.json`으로 검증한다.
+2026-06-19 수혈건물지 조사법과 현장조사 방법·해석 자료를 청동기 사전 용어와 다시 묶어 샘플로 검증했다. 수혈건물지는 주거지로 바로 확정하지 않고 조사 절차, 둑·트렌치 전략, 바닥·벽선 보존, 기능 후보와 생애단계를 먼저 남기며, 청동기 유형명은 중앙 타원형 구덩이, 양단 주혈, 벽도랑, 취락·묘역 관계, 공반 토기, 방사성탄소연대 같은 관찰값 뒤에 둔다. `pitBuildingLifecycleStage`는 계획, 부지 선정, 수혈 굴착, 지붕 제작, 생활·보수, 폐기, 재사용, 매몰, 가옥장·폐기장 전용 후보를 `Feature`에서 검토하게 한다. 이 흐름은 `bronze-age-settlement-dolmen-workflow-sample.json`으로 검증한다.
 
 2026-06-19 수혈건물지 자연과학 시료 흐름도 실제 구성으로 옮겼다. `Sample`의 `pitDwellingScienceSamplingPlan`은 AMS 목탄·목재·패각, 고고지자기 피열토·토기편, 식물규산체 토양·토기편, 부유법 층별·바닥상층 격자토양, 수종분석, 레플리카·사용흔·전분 갈판·갈봉·태토 기반토·토기·지방산 토양·토기·석기·석재 분석 후보를 채취 시점, 위치도면, 조사종료 후 채취, 강한 세척 회피, 오염위험 검토와 함께 남긴다. 청동기 샘플에는 수혈건물지에 연결된 자연과학 시료 카드가 추가되어 분석명이 아니라 채취 조건과 판단 보류까지 검증한다.
 

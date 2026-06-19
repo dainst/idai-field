@@ -12897,6 +12897,25 @@
     },
     "description": "Korean pit-feature function checks for keeping dwelling, storage, workshop, public facility, trap, toilet, dump, clay extraction, hearth, hardened surface, and storage-pit evidence open before assigning a function"
   },
+  "KoreanFieldwork-pitBuildingLifecycleStage": {
+    "values": {
+      "planning": { "label": "Planning" },
+      "siteSelection": { "label": "Site selection" },
+      "structureDecision": { "label": "Structure decision" },
+      "construction": { "label": "Construction" },
+      "pitExcavation": { "label": "Pit excavation" },
+      "roofConstruction": { "label": "Roof construction" },
+      "occupationUse": { "label": "Occupation/use" },
+      "repairMaintenance": { "label": "Repair and maintenance" },
+      "abandonment": { "label": "Abandonment" },
+      "reuse": { "label": "Reuse" },
+      "burialFill": { "label": "Burial fill" },
+      "houseBurialCandidate": { "label": "House-burial candidate" },
+      "refusePitReuse": { "label": "Refuse pit reuse" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean pit-building lifecycle checks for recording planning, site selection, construction, occupation, repair, abandonment, reuse, burial fill, and house-burial or refuse-pit candidates without collapsing them into a single feature type"
+  },
   "KoreanFieldwork-settlementFeatureInvestigationProcedure": {
     "values": {
       "preliminarySurvey": { "label": "Preliminary survey" },

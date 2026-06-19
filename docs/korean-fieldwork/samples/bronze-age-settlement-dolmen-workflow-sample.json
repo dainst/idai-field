@@ -2,7 +2,7 @@
   "title": "Korean Bronze Age settlement, dolmen, and enclosure workflow sample",
   "purpose": "Validate that Bronze Age settlement records keep pit-building investigation procedure, dwelling type evidence, dolmen structure, enclosure interpretation, and pottery terminology separate from premature type-name confirmation.",
   "validationQuestions": [
-    "수혈건물지 후보가 주거지로 바로 확정되지 않고 기능 후보, 조사 절차, 트렌치 전략, 바닥·벽선 보존 근거를 남기는가.",
+    "수혈건물지 후보가 주거지로 바로 확정되지 않고 기능 후보, 생애단계, 조사 절차, 트렌치 전략, 바닥·벽선 보존 근거를 남기는가.",
     "송국리식·가락동식 같은 유형명 후보가 평면형, 중앙 타원형 구덩이, 양단 주혈, 벽도랑, 취락·묘역 관계 같은 관찰값 뒤에 남는가.",
     "수혈건물지 자연과학 시료가 분석명만이 아니라 채취 시점, 위치도면, 세척 회피, 오염위험과 함께 남는가.",
     "유구·유물 해석이 연구질문, 관찰·해석 분리, 대안해석, 자연·후퇴적 가능성, 보고서 채택 근거와 함께 남는가.",
@@ -162,6 +162,17 @@
           "hardenedSurface",
           "storagePit",
           "functionNotAssumed"
+        ],
+        "pitBuildingLifecycleStage": [
+          "siteSelection",
+          "pitExcavation",
+          "roofConstruction",
+          "occupationUse",
+          "repairMaintenance",
+          "abandonment",
+          "reuse",
+          "burialFill",
+          "pendingDecision"
         ],
         "settlementFeatureInvestigationProcedure": [
           "preliminarySurvey",

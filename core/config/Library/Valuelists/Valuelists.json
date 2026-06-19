@@ -32512,6 +32512,42 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-pitBuildingLifecycleStage": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "planning": {},
+      "siteSelection": {},
+      "structureDecision": {},
+      "construction": {},
+      "pitExcavation": {},
+      "roofConstruction": {},
+      "occupationUse": {},
+      "repairMaintenance": {},
+      "abandonment": {},
+      "reuse": {},
+      "burialFill": {},
+      "houseBurialCandidate": {},
+      "refusePitReuse": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "planning",
+      "siteSelection",
+      "structureDecision",
+      "construction",
+      "pitExcavation",
+      "roofConstruction",
+      "occupationUse",
+      "repairMaintenance",
+      "abandonment",
+      "reuse",
+      "burialFill",
+      "houseBurialCandidate",
+      "refusePitReuse",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-settlementFeatureInvestigationProcedure": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

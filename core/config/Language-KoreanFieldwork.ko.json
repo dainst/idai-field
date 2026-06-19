@@ -554,6 +554,9 @@
         "pitFeatureFunctionAssessment": {
           "label": "수혈유구 성격 판단"
         },
+        "pitBuildingLifecycleStage": {
+          "label": "수혈건물지 생애단계"
+        },
         "settlementFeatureInvestigationProcedure": {
           "label": "생활유적 조사 절차"
         },

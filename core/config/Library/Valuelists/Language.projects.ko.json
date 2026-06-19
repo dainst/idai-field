@@ -1143,6 +1143,25 @@
     },
     "description": "수혈유구를 주거지로 바로 확정하지 않고 창고, 공방, 공공시설, 함정, 화장실, 폐기장, 태토 채취장과 기능 근거를 함께 검토하기 위한 목록"
   },
+  "KoreanFieldwork-pitBuildingLifecycleStage": {
+    "values": {
+      "planning": { "label": "계획" },
+      "siteSelection": { "label": "부지 선정" },
+      "structureDecision": { "label": "구조 결정" },
+      "construction": { "label": "축조" },
+      "pitExcavation": { "label": "수혈 굴착" },
+      "roofConstruction": { "label": "지붕 제작" },
+      "occupationUse": { "label": "생활·사용" },
+      "repairMaintenance": { "label": "보수·유지" },
+      "abandonment": { "label": "폐기" },
+      "reuse": { "label": "재사용" },
+      "burialFill": { "label": "매몰" },
+      "houseBurialCandidate": { "label": "가옥장 후보" },
+      "refusePitReuse": { "label": "폐기장 전용" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "수혈건물지를 한 번의 유형명으로 닫지 않고 계획, 부지 선정, 축조, 생활, 보수, 폐기, 재사용, 매몰, 가옥장·폐기장 전용 후보까지 생애단계로 기록하기 위한 목록"
+  },
   "KoreanFieldwork-settlementFeatureInvestigationProcedure": {
     "values": {
       "preliminarySurvey": { "label": "사전조사" },

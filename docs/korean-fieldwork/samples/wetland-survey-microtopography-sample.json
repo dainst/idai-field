@@ -1,0 +1,305 @@
+{
+  "title": "Korean wetland survey and microtopography workflow sample",
+  "purpose": "Validate that wetland survey records connect source-map preparation, landform interpretation, trial-trench targeting, ultra-microtopography observations, and paleoenvironment proxy samples without reducing the area to a present-day wet/dry condition.",
+  "validationQuestions": [
+    "저습지 판단이 현재 습윤 여부가 아니라 항공사진, 고지도, 지질도, 형질변경 지도, 보링자료, 등고선도 검토로 시작되는가.",
+    "지역환경에서 극미지형까지 내려가는 지형 판독 단계와 고하천, 자연제방, 단구면, 배후습지 표시가 분리되어 남는가.",
+    "시굴 지점 선정과 조사 범위 설정이 지표유물 유무가 아니라 지형 판독, 현지대조, 반복확인으로 이어지는가.",
+    "실제 시굴·발굴에서 확인한 1회성 퇴적, 매몰 수전, 배후습지 퇴적, 화분·식물규산체·규조 분석 연결이 층 세부단위와 시료 카드에 남는가."
+  ],
+  "documents": [
+    {
+      "resource": {
+        "id": "op-wetland-001",
+        "identifier": "WETLAND-OP-001",
+        "shortDescription": "저습지 지형판독 시굴 작업",
+        "category": "Operation",
+        "relations": {},
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "researchQuestionFit"
+        ],
+        "recordCreationTiming": "duringFieldwork",
+        "dailyLogContent": [
+          "workDateWeather",
+          "workArea",
+          "photoDrawingNumbers",
+          "findSampleCollection"
+        ],
+        "dailyLogReview": [
+          "sameDayWritten",
+          "photoDrawingCrossChecked",
+          "sampleListCrossChecked",
+          "reviewerChecked"
+        ],
+        "reportCrossCheck": [
+          "manuscript",
+          "drawingRegister",
+          "photoRegister",
+          "sampleRegister"
+        ]
+      }
+    },
+    {
+      "resource": {
+        "id": "survey-wetland-001",
+        "identifier": "WETLAND-SUR-001",
+        "shortDescription": "저습지 항공사진·보링자료 판독",
+        "category": "Survey",
+        "relations": {
+          "isRecordedIn": ["op-wetland-001"]
+        },
+        "description": "현재 논·저습지로 이용되는 저지에서 표면유물은 희박하지만, 개발 전 항공사진과 보링자료에서 고하천과 자연제방 후면의 매몰 지형이 반복 확인되어 시굴 대상 후보로 남긴다.",
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "crossReviewNeeded"
+        ],
+        "recordCreationTiming": "duringFieldwork",
+        "surfaceSurveyPreparationCheck": [
+          "literatureSourcesReady",
+          "mapSourcesReady",
+          "previousReportsReady",
+          "heritageDistributionMapReady",
+          "gpsReady"
+        ],
+        "surfaceSurveyObservation": [
+          "terrainCharacteristic",
+          "locationPotential",
+          "soilEnvironment",
+          "cutSectionStratigraphy"
+        ],
+        "surfaceSurveyBiasControl": [
+          "visibilityConditionsRecorded",
+          "routeRecorded",
+          "fieldObservationFirst",
+          "postFieldLiteratureComparison"
+        ],
+        "wetlandAnalysisSource": [
+          "aerialPhotoSixtyOverlap",
+          "preDevelopmentAerialPhoto",
+          "multiDateAerialPhoto",
+          "oldMapReviewed",
+          "stereoscopeUsed",
+          "fiveThousandDigitalMap",
+          "geologicalMapReviewed",
+          "landAlterationMap",
+          "boringDataLinked",
+          "tenMeterContourMap",
+          "microContourMap",
+          "pendingDecision"
+        ],
+        "wetlandLandformInterpretation": [
+          "regionalEnvironmentAnalysis",
+          "landformSurfaceAnalysis",
+          "landformZoneAnalysis",
+          "microLandformAnalysis",
+          "ultraMicroLandformAnalysis",
+          "contourIntervalRecorded",
+          "aerialPhotoInterpretation",
+          "fieldWalkover",
+          "boringColumnCompared",
+          "riverIntegrationContext",
+          "erosionDepositionRepeated",
+          "pendingDecision"
+        ],
+        "wetlandSurveyTargeting": [
+          "satelliteImageObservation",
+          "topographicMapObservation",
+          "fieldCheckCompared",
+          "stereoscopicInterpretation",
+          "repeatedVerification",
+          "paleoRiverMarked",
+          "naturalLeveeMarked",
+          "terraceSurfaceMarked",
+          "backswampMarked",
+          "trialTrenchPointSelected",
+          "surveyExtentSet",
+          "siteAbsenceNotAssumed",
+          "pendingDecision"
+        ],
+        "gisPredictionEvidence": [
+          "preDevelopmentAerialPhoto",
+          "historicalMap",
+          "boreholeData",
+          "demOrContour",
+          "overlayAnalysis"
+        ],
+        "gisPredictionFieldVerification": [
+          "fieldConfirmed",
+          "missedCandidate",
+          "scaleResolutionCaution",
+          "trialTrenchRecommended",
+          "additionalWalkoverNeeded"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "feature-wetland-trench-001",
+        "identifier": "WETLAND-FEAT-001",
+        "shortDescription": "자연제방 후면 시굴 구간",
+        "category": "Feature",
+        "relations": {
+          "isRecordedIn": ["op-wetland-001"],
+          "liesWithin": ["survey-wetland-001"]
+        },
+        "description": "고하천 후보와 자연제방 후면 사이의 완만한 저지에 둔 시굴 구간. 지표유물 부재를 유적 부재로 처리하지 않고 퇴적 단위와 분석 시료 후보를 분리해 기록한다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "crossReviewNeeded"
+        ],
+        "fieldOnlyMissingCheck": [
+          "featureOutline",
+          "stratigraphicBoundary",
+          "photoAngleAndScale",
+          "drawingLineReason",
+          "spatialLocation",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "firstExposureRecord": [
+          "firstExposurePhoto",
+          "featureLineVisible",
+          "sectionCrossCheck",
+          "confirmedBeforeInternalExcavation",
+          "pendingDecision"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "segment-wetland-backswamp-001",
+        "identifier": "WETLAND-SEG-001",
+        "shortDescription": "배후습지 매몰 수전 후보층",
+        "category": "FeatureSegment",
+        "relations": {
+          "isRecordedIn": ["op-wetland-001"],
+          "liesWithin": ["feature-wetland-trench-001"]
+        },
+        "description": "회색 점질토와 유기물대가 반복되는 배후습지 퇴적 단위. 단순 습윤층으로 확정하지 않고 1회성 퇴적, 매몰 수전 가능성, 미화석 분석 연결을 함께 남긴다.",
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "researchQuestionFit"
+        ],
+        "fieldOnlyMissingCheck": [
+          "stratigraphicBoundary",
+          "drawingLineReason",
+          "samplePointMapped",
+          "elevationRecorded",
+          "sameDayReview",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "wetlandMicrotopographyRecord": [
+          "singleEventDeposit",
+          "trialExcavationConfirmed",
+          "environmentalChangeCause",
+          "siteImpactRecorded",
+          "buriedPaddySoil",
+          "backswampDeposit",
+          "pollenAnalysisLinked",
+          "phytolithAnalysisLinked",
+          "diatomAnalysisLinked",
+          "landscapeReconstructionLinked",
+          "pendingDecision"
+        ],
+        "alluvialLayerConceptAudit": [
+          "soilHorizonConcept",
+          "sedimentaryUnitConcept",
+          "archaeologicalLayerConcept",
+          "depositionalBoundarySeparated",
+          "colorOnlyNotEnough",
+          "layerCorrelationCandidate",
+          "pendingDecision"
+        ],
+        "alluvialFormationProcess": [
+          "buriedPaleosolCandidate",
+          "secondaryDepositionCandidate",
+          "laminaVisible",
+          "floodDepositCandidate",
+          "groundWaterRedoxChange",
+          "rootOrPostDiscoloration",
+          "pendingDecision"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "sample-wetland-proxy-001",
+        "identifier": "WETLAND-SAMP-001",
+        "shortDescription": "저습지 미화석·고환경 시료",
+        "category": "Sample",
+        "relations": {
+          "isRecordedIn": ["op-wetland-001"],
+          "liesWithin": ["segment-wetland-backswamp-001"],
+          "isDepictedIn": ["feature-wetland-trench-001"]
+        },
+        "description": "배후습지 매몰 수전 후보층에서 채취한 화분, 식물규산체, 규조 분석용 시료. 표면 오염 제거와 습윤 보존, 층위·고도 연결을 기록해 유적 부재 판단이나 작물명 단독 해석으로 흐르지 않게 한다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "researchQuestionFit",
+          "observationInterpretationSeparated"
+        ],
+        "fieldOnlyMissingCheck": [
+          "samplePointMapped",
+          "sampleConditionControlled",
+          "spatialLocation",
+          "elevationRecorded",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "samplePurpose": [
+          "paleoenvironment",
+          "archaeobotany",
+          "contaminationControl"
+        ],
+        "sampleCollectionHandling": [
+          "immediateCollection",
+          "dedicatedSamplingTool",
+          "pollenSurfaceRemoved",
+          "pollenContaminationBlocked",
+          "waterloggedMoistKept",
+          "contextMapLinked",
+          "pendingDecision"
+        ],
+        "paleoenvironmentProxySampling": [
+          "pollenSample",
+          "diatomSample",
+          "plantOpalSample",
+          "coreDepthElevationRecorded",
+          "contaminationRiskRecorded",
+          "preservationBiasRecorded",
+          "proxyAssemblageNotSingleSpecies",
+          "archaeologicalContextLinked",
+          "pendingDecision"
+        ],
+        "plantRemainSamplingMethod": [
+          "stratifiedRandomSample",
+          "layerUnit",
+          "featureUnit",
+          "collectionPointRecorded",
+          "sampleBiasRecorded",
+          "pendingDecision"
+        ],
+        "plantRemainNonDetectionAssessment": [
+          "sampleCountInsufficient",
+          "poorPreservation",
+          "processingMethodDifference",
+          "pollenPreservationFragile",
+          "plantOpalIdentificationLimit",
+          "absenceNotAssumed",
+          "pendingDecision"
+        ],
+        "verificationState": "candidate"
+      }
+    }
+  ]
+}

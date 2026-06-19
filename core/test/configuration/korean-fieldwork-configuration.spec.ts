@@ -362,6 +362,37 @@ describe('KoreanFieldwork project configuration', () => {
     });
 
 
+    it('keeps the Korean wetland survey sample aligned with microtopography fields', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const sample = loadSample('wetland-survey-microtopography-sample.json');
+        const documents = sample.documents;
+        const documentsById = documents.reduce((index: any, document: any) => {
+            index[document.resource.id] = document;
+            return index;
+        }, {});
+
+        expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
+
+        expect(documentsById['survey-wetland-001'].resource.wetlandAnalysisSource)
+            .toContain('boringDataLinked');
+        expect(documentsById['survey-wetland-001'].resource.wetlandLandformInterpretation)
+            .toContain('ultraMicroLandformAnalysis');
+        expect(documentsById['survey-wetland-001'].resource.wetlandSurveyTargeting)
+            .toContain('trialTrenchPointSelected');
+        expect(documentsById['segment-wetland-backswamp-001'].resource.wetlandMicrotopographyRecord)
+            .toContain('buriedPaddySoil');
+        expect(documentsById['segment-wetland-backswamp-001'].resource.wetlandMicrotopographyRecord)
+            .toContain('diatomAnalysisLinked');
+        expect(documentsById['sample-wetland-proxy-001'].resource.paleoenvironmentProxySampling)
+            .toContain('diatomSample');
+        expect(documentsById['sample-wetland-proxy-001'].resource.sampleCollectionHandling)
+            .toContain('waterloggedMoistKept');
+    });
+
+
     it('keeps the Korean ceramic kiln production sample aligned with kiln fields', () => {
 
         const configReader = new ConfigReader();

@@ -2584,6 +2584,14 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "artifactTransportSafety": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "temporaryStorageOperation": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "artifactFieldRestorationLink": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -2766,6 +2774,8 @@
         "interpretationArgument": "KoreanFieldwork-interpretationArgument",
         "fieldOnlyMissingCheck": "KoreanFieldwork-fieldOnlyMissingCheck",
         "artifactHandlingWorkflow": "KoreanFieldwork-artifactHandlingWorkflow",
+        "artifactTransportSafety": "KoreanFieldwork-artifactTransportSafety",
+        "temporaryStorageOperation": "KoreanFieldwork-temporaryStorageOperation",
         "artifactFieldRestorationLink": "KoreanFieldwork-artifactFieldRestorationLink",
         "findSampleResearchScope": "KoreanFieldwork-findSampleResearchScope",
         "artifactLabelRegisterLink": "KoreanFieldwork-artifactLabelRegisterLink",
@@ -2838,6 +2848,8 @@
             "interpretationArgument",
             "fieldOnlyMissingCheck",
             "artifactHandlingWorkflow",
+            "artifactTransportSafety",
+            "temporaryStorageOperation",
             "artifactFieldRestorationLink",
             "findSampleResearchScope",
             "artifactLabelRegisterLink",

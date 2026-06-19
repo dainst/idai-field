@@ -278,6 +278,42 @@
     },
     "description": "유물이 출토 위치와 수습번호만 남기고 끝나지 않도록 현장수습, 응급처치, 보존처리, 보고서, 선별회의, 국가귀속, 포장·이송, 이관을 하나의 생애주기로 추적하기 위한 목록"
   },
+  "KoreanFieldwork-artifactTransportSafety": {
+    "values": {
+      "materialRiskReviewed": { "label": "재질별 특성 확인" },
+      "fragilePartReviewed": { "label": "취약 부분 확인" },
+      "twoPersonLift": { "label": "2인 1조 취급" },
+      "sufficientTimeSecured": { "label": "충분한 이송 시간 확보" },
+      "recordsTeamHandover": { "label": "자료팀 인수인계" },
+      "packerUnpackerSeparated": { "label": "포장자·해포자 분리" },
+      "excavationStaffAccompany": { "label": "발굴담당자 동행" },
+      "reportStaffAccompany": { "label": "보고서담당자 동행" },
+      "packingTensionReleased": { "label": "포장 장력 완화" },
+      "shockAbsorptionChecked": { "label": "완충재·충격 방지 확인" },
+      "transportBoxLabeled": { "label": "운반상자 표지" },
+      "largeArtifactSeparateTransport": { "label": "대형유물 별도 이송" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "유물 포장·운반 때 재질별 취약성, 담당자 인수인계, 동행자, 완충·장력, 상자 표지와 대형유물 별도 이송 여부를 점검하기 위한 목록"
+  },
+  "KoreanFieldwork-temporaryStorageOperation": {
+    "values": {
+      "individualPackageStored": { "label": "개별 포장 격납" },
+      "stateVestingTargetSeparated": { "label": "국가귀속 대상 별도 보관" },
+      "academicMaterialSeparated": { "label": "학술자료 별도 보관" },
+      "unregisteredDiscardSeparated": { "label": "미등록·폐기 후보 별도 보관" },
+      "metalNonmetalSeparated": { "label": "금속·비금속 분리" },
+      "individualClimateControl": { "label": "개별 공조 검토" },
+      "handoverMovementPathChecked": { "label": "인수인계 동선 확인" },
+      "packingTransferPathChecked": { "label": "포장·이관 동선 확인" },
+      "largeArtifactSeparatePacked": { "label": "대형유물 별도 포장" },
+      "largeArtifactTransportEquipment": { "label": "대형유물 이송장치" },
+      "temporaryReceiptLinked": { "label": "임시보관증 연결" },
+      "preReportConditionChecked": { "label": "보고서 전 상태 점검" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "임시수장고에서 국가귀속 대상, 학술자료, 미등록·폐기 후보, 재질별 분리, 공조, 동선, 대형유물 포장·이송과 임시보관증을 관리하기 위한 목록"
+  },
   "KoreanFieldwork-artifactFieldRestorationLink": {
     "values": {
       "collectionPhotoSeries": { "label": "수거 사진 묶음" },

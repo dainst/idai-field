@@ -264,6 +264,21 @@
           "cuttingPolishingApproval",
           "pendingDecision"
         ],
+        "artifactTransportSafety": [
+          "materialRiskReviewed",
+          "fragilePartReviewed",
+          "packingTensionReleased",
+          "shockAbsorptionChecked",
+          "largeArtifactSeparateTransport"
+        ],
+        "temporaryStorageOperation": [
+          "individualPackageStored",
+          "metalNonmetalSeparated",
+          "individualClimateControl",
+          "handoverMovementPathChecked",
+          "temporaryReceiptLinked",
+          "preReportConditionChecked"
+        ],
         "conservationTreatmentPrincipleReview": [
           "originalFormPreserved",
           "evidenceDamageAvoided",

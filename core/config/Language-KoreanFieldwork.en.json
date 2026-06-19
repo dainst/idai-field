@@ -991,6 +991,12 @@
         "artifactHandlingWorkflow": {
           "label": "Artifact handling workflow"
         },
+        "artifactTransportSafety": {
+          "label": "Artifact transport safety"
+        },
+        "temporaryStorageOperation": {
+          "label": "Temporary storage operation"
+        },
         "artifactFieldRestorationLink": {
           "label": "Artifact field restoration link"
         },

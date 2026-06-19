@@ -4,7 +4,8 @@
   "validationQuestions": [
     "현장 꼬리표의 조사기관, 일자, 지점, 발굴칸, 층위, 좌표, 깊이, 치수, 무게가 유물대장으로 이어지는가.",
     "현장 일련번호와 보고서 정리번호가 따로 놀지 않고 한 유물 카드에서 추적되는가.",
-    "고유 등록번호 표기와 꼬리표·대장 보존 여부가 유물 수습 뒤에도 확인되는가."
+    "고유 등록번호 표기와 꼬리표·대장 보존 여부가 유물 수습 뒤에도 확인되는가.",
+    "포장·운반 중 재질별 취약성, 담당자 인수인계, 운반상자 표지가 유물 카드에 남는가."
   ],
   "documents": [
     {
@@ -63,7 +64,15 @@
           "fieldCollection",
           "findConditionRecord",
           "reportPreparation",
+          "packingTransport",
           "stateVesting"
+        ],
+        "artifactTransportSafety": [
+          "materialRiskReviewed",
+          "twoPersonLift",
+          "recordsTeamHandover",
+          "shockAbsorptionChecked",
+          "transportBoxLabeled"
         ],
         "artifactLabelRegisterLink": [
           "labelCreated",
@@ -116,6 +125,14 @@
           "materialSpecificStorage",
           "stateVesting",
           "reportSubmission"
+        ],
+        "temporaryStorageOperation": [
+          "individualPackageStored",
+          "stateVestingTargetSeparated",
+          "academicMaterialSeparated",
+          "handoverMovementPathChecked",
+          "temporaryReceiptLinked",
+          "preReportConditionChecked"
         ],
         "artifactQuantityBasis": [
           "administrativeLotCount",

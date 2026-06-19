@@ -12032,6 +12032,42 @@
     },
     "description": "Korean artifact lifecycle checks for tracking finds from field collection through emergency treatment, conservation, reports, selection, state vesting, packing, transport, and transfer"
   },
+  "KoreanFieldwork-artifactTransportSafety": {
+    "values": {
+      "materialRiskReviewed": { "label": "Material risk reviewed" },
+      "fragilePartReviewed": { "label": "Fragile part reviewed" },
+      "twoPersonLift": { "label": "Two-person handling" },
+      "sufficientTimeSecured": { "label": "Sufficient transport time secured" },
+      "recordsTeamHandover": { "label": "Records team handover" },
+      "packerUnpackerSeparated": { "label": "Packer and unpacker separated" },
+      "excavationStaffAccompany": { "label": "Excavation staff accompany" },
+      "reportStaffAccompany": { "label": "Report staff accompany" },
+      "packingTensionReleased": { "label": "Packing tension released" },
+      "shockAbsorptionChecked": { "label": "Shock absorption checked" },
+      "transportBoxLabeled": { "label": "Transport box labeled" },
+      "largeArtifactSeparateTransport": { "label": "Large artifact separate transport" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean artifact transport checks for material-specific risk, handover, staff accompaniment, shock absorption, packing tension, box labels, and separate handling for large artifacts"
+  },
+  "KoreanFieldwork-temporaryStorageOperation": {
+    "values": {
+      "individualPackageStored": { "label": "Individual package stored" },
+      "stateVestingTargetSeparated": { "label": "State-vesting target separated" },
+      "academicMaterialSeparated": { "label": "Academic material separated" },
+      "unregisteredDiscardSeparated": { "label": "Unregistered/discard candidate separated" },
+      "metalNonmetalSeparated": { "label": "Metal and non-metal separated" },
+      "individualClimateControl": { "label": "Individual climate control reviewed" },
+      "handoverMovementPathChecked": { "label": "Handover movement path checked" },
+      "packingTransferPathChecked": { "label": "Packing/transfer path checked" },
+      "largeArtifactSeparatePacked": { "label": "Large artifact separately packed" },
+      "largeArtifactTransportEquipment": { "label": "Large artifact transport equipment" },
+      "temporaryReceiptLinked": { "label": "Temporary receipt linked" },
+      "preReportConditionChecked": { "label": "Pre-report condition checked" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean temporary-storage checks for separated storage, climate review, handover and transfer routes, large-artifact handling, and temporary storage receipts"
+  },
   "KoreanFieldwork-artifactFieldRestorationLink": {
     "values": {
       "collectionPhotoSeries": { "label": "Collection photo series" },

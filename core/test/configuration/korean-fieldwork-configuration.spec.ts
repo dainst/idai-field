@@ -812,6 +812,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('fieldSerialInventoryNumberLinked');
         expect(documentsById['find-artifact-label-001'].resource.artifactLabelRegisterLink)
             .toContain('uniqueRegistrationNumberMarked');
+        expect(documentsById['find-artifact-label-001'].resource.artifactTransportSafety)
+            .toContain('transportBoxLabeled');
+        expect(documentsById['find-artifact-label-001'].resource.artifactTransportSafety)
+            .toContain('recordsTeamHandover');
+        expect(documentsById['find-artifact-quantity-components-001'].resource.temporaryStorageOperation)
+            .toContain('temporaryReceiptLinked');
         expect(documentsById['find-artifact-label-001'].resource.relations.isRecordedIn)
             .toEqual(['op-artifact-register-001']);
     });
@@ -1498,6 +1504,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('regionalMasterChronologyChecked');
         expect(documentsById['find-metal-conservation-001'].resource.metalAnalysisRequest)
             .toContain('cuttingPolishingApproval');
+        expect(documentsById['find-metal-conservation-001'].resource.artifactTransportSafety)
+            .toContain('packingTensionReleased');
+        expect(documentsById['find-metal-conservation-001'].resource.temporaryStorageOperation)
+            .toContain('individualClimateControl');
         expect(documentsById['find-ceramic-salt-001'].resource.ceramicConservationState)
             .toContain('wetCleaningCaution');
         expect(documentsById['find-paper-textile-001'].resource.paperTextileEmergencyRecovery)
@@ -1814,6 +1824,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureSegmentForm.fields.wetlandMicrotopographyRecord.inputType).toBe('checkboxes');
         expect(findForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
         expect(findForm.fields.artifactHandlingWorkflow.inputType).toBe('checkboxes');
+        expect(findForm.fields.artifactTransportSafety.inputType).toBe('checkboxes');
+        expect(findForm.fields.temporaryStorageOperation.inputType).toBe('checkboxes');
         expect(findForm.fields.artifactFieldRestorationLink.inputType).toBe('checkboxes');
         expect(findForm.fields.findSampleResearchScope.inputType).toBe('checkboxes');
         expect(findForm.fields.artifactLabelRegisterLink.inputType).toBe('checkboxes');
@@ -2338,6 +2350,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-wetlandMicrotopographyRecord');
         expect(findForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
         expect(findForm.valuelists.artifactHandlingWorkflow).toBe('KoreanFieldwork-artifactHandlingWorkflow');
+        expect(findForm.valuelists.artifactTransportSafety)
+            .toBe('KoreanFieldwork-artifactTransportSafety');
+        expect(findForm.valuelists.temporaryStorageOperation)
+            .toBe('KoreanFieldwork-temporaryStorageOperation');
         expect(findForm.valuelists.artifactFieldRestorationLink)
             .toBe('KoreanFieldwork-artifactFieldRestorationLink');
         expect(findForm.valuelists.findSampleResearchScope).toBe('KoreanFieldwork-findSampleResearchScope');
@@ -2941,6 +2957,10 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.Find.fields.termSearchMapping.label).toBe('Term search mapping');
         expect(languages.en.categories.Find.fields.artifactHandlingWorkflow.label)
             .toBe('Artifact handling workflow');
+        expect(languages.en.categories.Find.fields.artifactTransportSafety.label)
+            .toBe('Artifact transport safety');
+        expect(languages.en.categories.Find.fields.temporaryStorageOperation.label)
+            .toBe('Temporary storage operation');
         expect(languages.en.categories.Find.fields.artifactFieldRestorationLink.label)
             .toBe('Artifact field restoration link');
         expect(languages.en.categories.Find.fields.findSampleResearchScope.label)
@@ -3395,6 +3415,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Small feature plotted');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactHandlingWorkflow'].values.stateVesting.label)
             .toBe('State vesting');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactTransportSafety']
+            .values.transportBoxLabeled.label)
+            .toBe('Transport box labeled');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-temporaryStorageOperation']
+            .values.temporaryReceiptLinked.label)
+            .toBe('임시보관증 연결');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactFieldRestorationLink']
             .values.restorationReferencePhotoLinked.label)
             .toBe('Restoration reference photo linked');

@@ -991,6 +991,12 @@
         "artifactHandlingWorkflow": {
           "label": "유물 관리 절차"
         },
+        "artifactTransportSafety": {
+          "label": "유물 이송 안전"
+        },
+        "temporaryStorageOperation": {
+          "label": "임시수장고 운영"
+        },
         "artifactFieldRestorationLink": {
           "label": "유물 현장복원 연결"
         },

@@ -31254,6 +31254,74 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-artifactTransportSafety": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-20",
+    "values": {
+      "materialRiskReviewed": {},
+      "fragilePartReviewed": {},
+      "twoPersonLift": {},
+      "sufficientTimeSecured": {},
+      "recordsTeamHandover": {},
+      "packerUnpackerSeparated": {},
+      "excavationStaffAccompany": {},
+      "reportStaffAccompany": {},
+      "packingTensionReleased": {},
+      "shockAbsorptionChecked": {},
+      "transportBoxLabeled": {},
+      "largeArtifactSeparateTransport": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "materialRiskReviewed",
+      "fragilePartReviewed",
+      "twoPersonLift",
+      "sufficientTimeSecured",
+      "recordsTeamHandover",
+      "packerUnpackerSeparated",
+      "excavationStaffAccompany",
+      "reportStaffAccompany",
+      "packingTensionReleased",
+      "shockAbsorptionChecked",
+      "transportBoxLabeled",
+      "largeArtifactSeparateTransport",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-temporaryStorageOperation": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-20",
+    "values": {
+      "individualPackageStored": {},
+      "stateVestingTargetSeparated": {},
+      "academicMaterialSeparated": {},
+      "unregisteredDiscardSeparated": {},
+      "metalNonmetalSeparated": {},
+      "individualClimateControl": {},
+      "handoverMovementPathChecked": {},
+      "packingTransferPathChecked": {},
+      "largeArtifactSeparatePacked": {},
+      "largeArtifactTransportEquipment": {},
+      "temporaryReceiptLinked": {},
+      "preReportConditionChecked": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "individualPackageStored",
+      "stateVestingTargetSeparated",
+      "academicMaterialSeparated",
+      "unregisteredDiscardSeparated",
+      "metalNonmetalSeparated",
+      "individualClimateControl",
+      "handoverMovementPathChecked",
+      "packingTransferPathChecked",
+      "largeArtifactSeparatePacked",
+      "largeArtifactTransportEquipment",
+      "temporaryReceiptLinked",
+      "preReportConditionChecked",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-artifactFieldRestorationLink": {
     "createdBy": "codex",
     "creationDate": "2026-06-20",

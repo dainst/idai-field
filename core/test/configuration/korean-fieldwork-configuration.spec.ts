@@ -256,6 +256,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('siteSearchTested');
         expect(documentsById['op-media-001'].resource.digitalSurveyQualityControl)
             .toContain('fieldResultCrossChecked');
+        expect(documentsById['op-media-001'].resource.digitalSurveyQualityControl)
+            .toContain('sourceDataLimitationRecorded');
+        expect(documentsById['op-media-001'].resource.digitalSurveyQualityControl)
+            .toContain('acquisitionRepresentationPlanRecorded');
+        expect(documentsById['op-media-001'].resource.digitalSurveyQualityControl)
+            .toContain('outsourcedOutputAcceptanceChecked');
+        expect(documentsById['op-media-001'].resource.digitalSurveyQualityControl)
+            .toContain('minimumAnalysisRiskFlagged');
         expect(documentsById['photo-media-gps-001'].resource.gpsPhotoLinkRecord)
             .toContain('currentPositionLinked');
         expect(documentsById['photo-media-gps-001'].resource.mediaQualityCheck)
@@ -497,6 +505,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('preventAutoClassification');
         expect(documentsById['source-index-tomb-dictionary-001'].resource.sourceEvidenceVerification)
             .toContain('crossSourceCompared');
+        expect(documentsById['source-index-digital-survey-equipment-001'].resource.sourceEvidenceDomain)
+            .toContain('spatialData');
+        expect(documentsById['source-index-digital-survey-equipment-001'].resource.sourceEvidenceMaterial)
+            .toContain('equipmentList');
+        expect(documentsById['source-index-digital-survey-equipment-001'].resource.sourceEvidenceUse)
+            .toContain('interpretationCaution');
     });
 
 
@@ -3945,6 +3959,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-digitalSurveyQualityControl']
             .values.fieldResultCrossChecked.label)
             .toBe('Field result cross-checked');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-digitalSurveyQualityControl']
+            .values.outsourcedOutputAcceptanceChecked.label)
+            .toBe('외주 산출물 인수검수');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-reportSubmissionWorkflow']
             .values.submissionReceiptRecorded.label)
             .toBe('Submission receipt recorded');

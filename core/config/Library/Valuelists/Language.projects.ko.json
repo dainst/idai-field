@@ -7218,15 +7218,20 @@
       "errorRangeRecorded": { "label": "오차범위 기록" },
       "shootingDirectionRecorded": { "label": "촬영방향 기록" },
       "dataQuantityQualityReviewed": { "label": "데이터 수량·품질 검토" },
+      "sourceDataLimitationRecorded": { "label": "원천자료 한계 기록" },
+      "methodSuitabilityReviewed": { "label": "유적 성격별 기법 적합성 검토" },
+      "acquisitionRepresentationPlanRecorded": { "label": "취득·표현 계획 기록" },
       "outputPurposeDefined": { "label": "산출물 목적 정의" },
       "outputFormatRecorded": { "label": "산출물 형식 기록" },
       "externalContractorRecorded": { "label": "외주작업자 기록" },
+      "outsourcedOutputAcceptanceChecked": { "label": "외주 산출물 인수검수" },
       "researcherQualityChecked": { "label": "조사자 품질검수" },
       "fieldResultCrossChecked": { "label": "현장결과 대조" },
+      "minimumAnalysisRiskFlagged": { "label": "최소 분석 위험 표시" },
       "reanalysisPossible": { "label": "재분석 가능" },
       "pendingDecision": { "label": "판단 보류" }
     },
-    "description": "첨단과학장비 활용 자료에서 뽑은 디지털 조사·측량 품질검수 목록. 장비명보다 원천자료 시점, 원지형 변경 위험, 기준점·좌표계·지리보정, 오차, 산출물 목적, 외주 결과 검수, 현장 대조와 재분석 가능성을 함께 남긴다."
+    "description": "첨단과학장비 활용 자료에서 뽑은 디지털 조사·측량 품질검수 목록. 장비명보다 원천자료 시점, 원지형 변경 위험, 기준점·좌표계·지리보정, 오차, 원천자료 한계, 유적 성격별 기법 적합성, 취득·표현 계획, 산출물 목적, 외주 결과 검수, 최소 분석 위험, 현장 대조와 재분석 가능성을 함께 남긴다."
   },
   "KoreanFieldwork-electronicDrawingSourceWorkflow": {
     "values": {

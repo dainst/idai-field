@@ -119,6 +119,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-19 첨단과학장비 활용 자료의 디지털 조사 품질검수도 구현 단위로 압축했다. 고지형분석, GIS, HGIS, DGPS, 토탈스테이션, UAV 사진측량, 항공사진, LiDAR, 3D 레이저스캔, 사진실측, GPR·물리탐사는 장비명이 아니라 원천자료 시점, 원지형 변경 위험, 기준점, 좌표계·지리보정, 오차, 산출물 목적, 외주 결과 검수, 현장결과 대조와 재분석 가능성이 함께 남아야 한다. 이 묶음은 `Operation`의 `digitalSurveyQualityControl` 값 목록으로 옮겼고, `media-drawing-gps-workflow-sample.json`에서 GPS/NMEA와 현장 DB 검수 흐름 사이에 함께 검증한다.
 
+2026-06-20 이어서 같은 자료의 운용상 유의점 중 원천자료 왜곡·부족, 유적 성격별 기법 적합성, 측정 전 취득·표현 계획, 외주 산출물 인수검수, 기간·예산에 따른 최소 분석 위험을 `digitalSurveyQualityControl`에 추가했다. `media-drawing-gps-workflow-sample.json`과 `source-evidence-index-sample.json`은 이 항목이 장비명 기록이 아니라 원문 근거가 있는 품질검수·해석주의 값인지 확인한다.
+
 2026-06-20 지표조사 업무 이해 자료의 물리탐사·특수조사 절을 다시 읽고 `Survey`에 `geophysicalSurveyMethod`, `geophysicalAnomalyVerification`을 추가했다. GPR·물리탐사를 장비명 하나로 남기는 대신 탐침봉·보링·고지형·지도·항공사진 판독, 지중레이더·전기저항·자기·전자유도·수중탐사 방법과 대상 적합성, 장비 기종, 측선·격자, 원자료·자료처리, 이상체 영상·종류·사진·DGPS 위치, 현장 대조, 오탐 위험, 후속 트렌치와 발굴방법 결정까지 이어지게 했다.
 
 2026-06-19 전자도면·3D 스캔 자료도 구현 단위로 압축했다. 제2회 조사연구원 교육자료의 전자도면 장은 3D 스캔을 완성 도면 대체물이 아니라 점군 획득, 병합, 폴리곤 변환·최적화, CAD 데이터, 2D·3D 도면과 복원자료 산출로 이어지는 제작 과정으로 다룬다. 유물 전자도면은 유물 형태 검토, 최종 결과물 형태, 특징 view와 단면 위치 결정, 벡터화, 연구자 요구정보, 기준면 생성, 좌표계 이동, 합치 기준을 따로 남겨야 하므로 `Drawing`의 `electronicDrawingSourceWorkflow`, `artifactElectronicDrawingProcedure` 값 목록으로 옮겼다. 이 흐름도 `media-drawing-gps-workflow-sample.json`에서 점군 병합, 폴리곤 변환, 원천·후처리 파일 보존, 기준면·좌표계·합치 기준으로 검증한다.

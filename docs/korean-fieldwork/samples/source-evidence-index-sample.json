@@ -542,6 +542,51 @@
         ],
         "verificationState": "needsRecheck"
       }
+    },
+    {
+      "resource": {
+        "id": "source-index-digital-survey-equipment-001",
+        "identifier": "SRC-DIGITAL-SURVEY-001",
+        "shortDescription": "첨단과학장비 조사품질 색인",
+        "category": "SourceEvidenceIndex",
+        "relations": {
+          "liesWithin": ["project-source-evidence-001"]
+        },
+        "description": "첨단과학장비 활용 자료의 고지형분석, GIS, LiDAR, 3D 레이저스캔, 사진실측, 외주 정사작업 유의점을 디지털 조사 품질검수 근거로 남긴다. 원천자료 한계와 취득·표현 계획, 외주 산출물 인수검수, 최소 분석 위험을 장비명과 분리해 추적한다.",
+        "sourceEvidenceCitation": "매장문화재조사와 첨단과학장비의 활용",
+        "sourceEvidenceLocator": "direct-recheck pages 18-23: LiDAR, 3D laser scan, photogrammetry, operation cautions, outsourced orthorectification risk",
+        "sourceEvidenceMaterial": [
+          "equipmentList",
+          "figure",
+          "sourceCitation",
+          "checklist"
+        ],
+        "sourceEvidenceDomain": [
+          "spatialData",
+          "fieldSurvey",
+          "artifactDrawing"
+        ],
+        "sourceEvidenceVerification": [
+          "pageChecked",
+          "figureNumberChecked",
+          "directPdfChecked",
+          "crossSourceCompared"
+        ],
+        "sourceEvidenceUse": [
+          "fieldDesignEvidence",
+          "sampleValidationEvidence",
+          "analysisPlanEvidence",
+          "interpretationCaution",
+          "sourceTraceability"
+        ],
+        "recordCreationTiming": "postExcavationDerived",
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "crossReviewNeeded",
+          "reproducibleRecord"
+        ],
+        "verificationState": "candidate"
+      }
     }
   ]
 }

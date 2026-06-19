@@ -14791,6 +14791,59 @@
     },
     "description": "Korean archaeological term source priorities for specialist dictionaries, general dictionaries, methodology materials, reports, and field usage"
   },
+  "KoreanFieldwork-dictionaryEditorialRule": {
+    "values": {
+      "koreanHeadwordPreferred": {
+        "label": "Korean headword preferred"
+      },
+      "originalScriptParallel": {
+        "label": "Original script parallel"
+      },
+      "sourceSpellingPreserved": {
+        "label": "Source spelling preserved"
+      },
+      "foreignSiteKoreanPronunciation": {
+        "label": "Foreign site Korean pronunciation"
+      },
+      "modernAdministrativePlaceBasis": {
+        "label": "Modern administrative place basis"
+      },
+      "conventionalOldPlaceNamePreserved": {
+        "label": "Conventional old place name preserved"
+      },
+      "siteTypeNameSeparated": {
+        "label": "Place and site type separated"
+      },
+      "samePointMultiPeriodLinked": {
+        "label": "Same-point multi-period linked"
+      },
+      "differentPointSplitByType": {
+        "label": "Different point split by type"
+      },
+      "featureMetersOutput": {
+        "label": "Feature meters output"
+      },
+      "artifactCentimetersOutput": {
+        "label": "Artifact centimeters output"
+      },
+      "quantityThousandsSeparated": {
+        "label": "Quantity thousands separated"
+      },
+      "chronologyNoThousandsSeparator": {
+        "label": "Chronology without thousands separator"
+      },
+      "hangulIndexLinked": {
+        "label": "Hangul index linked"
+      },
+      "originalScriptIndexLinked": {
+        "label": "Original-script index linked"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean archaeological dictionary editorial rules for report output, site-name normalization, measurement display, and search indexing"
+  },
   "KoreanFieldwork-featurePackage": {
     "values": {
       "surfaceSurvey": {

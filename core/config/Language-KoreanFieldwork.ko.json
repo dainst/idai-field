@@ -31,6 +31,9 @@
     "TermAuthority": {
       "label": "용어 권위",
       "fields": {
+        "dictionaryEditorialRule": {
+          "label": "사전 표기·출력 원칙"
+        },
         "termApplicationScope": {
           "label": "용어 적용범위"
         },

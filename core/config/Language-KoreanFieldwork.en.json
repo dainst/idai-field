@@ -31,6 +31,9 @@
     "TermAuthority": {
       "label": "Term authority",
       "fields": {
+        "dictionaryEditorialRule": {
+          "label": "Dictionary editorial rule"
+        },
         "termApplicationScope": {
           "label": "Term application scope"
         },

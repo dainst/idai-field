@@ -35282,6 +35282,46 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-dictionaryEditorialRule": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "koreanHeadwordPreferred": {},
+      "originalScriptParallel": {},
+      "sourceSpellingPreserved": {},
+      "foreignSiteKoreanPronunciation": {},
+      "modernAdministrativePlaceBasis": {},
+      "conventionalOldPlaceNamePreserved": {},
+      "siteTypeNameSeparated": {},
+      "samePointMultiPeriodLinked": {},
+      "differentPointSplitByType": {},
+      "featureMetersOutput": {},
+      "artifactCentimetersOutput": {},
+      "quantityThousandsSeparated": {},
+      "chronologyNoThousandsSeparator": {},
+      "hangulIndexLinked": {},
+      "originalScriptIndexLinked": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "koreanHeadwordPreferred",
+      "originalScriptParallel",
+      "sourceSpellingPreserved",
+      "foreignSiteKoreanPronunciation",
+      "modernAdministrativePlaceBasis",
+      "conventionalOldPlaceNamePreserved",
+      "siteTypeNameSeparated",
+      "samePointMultiPeriodLinked",
+      "differentPointSplitByType",
+      "featureMetersOutput",
+      "artifactCentimetersOutput",
+      "quantityThousandsSeparated",
+      "chronologyNoThousandsSeparator",
+      "hangulIndexLinked",
+      "originalScriptIndexLinked",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-featurePackage": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

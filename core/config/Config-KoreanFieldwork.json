@@ -696,9 +696,14 @@
         "termSourcePriority": {
           "inputType": "checkboxes",
           "constraintIndexed": true
+        },
+        "dictionaryEditorialRule": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
         }
       },
       "valuelists": {
+        "dictionaryEditorialRule": "KoreanFieldwork-dictionaryEditorialRule",
         "termApplicationScope": "KoreanFieldwork-termApplicationScope",
         "termAuthorityStatus": "KoreanFieldwork-termAuthorityStatus",
         "termDictionaryDomain": "KoreanFieldwork-termDictionaryDomain",
@@ -730,6 +735,7 @@
             "termDictionaryDomain",
             "termApplicationScope",
             "termSourcePriority",
+            "dictionaryEditorialRule",
             "termRelation",
             "termSearchMapping",
             "termAuthorityStatus",

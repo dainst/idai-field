@@ -119,6 +119,16 @@
         "termDictionaryDomain": ["bronzeAge", "generalArchaeology"],
         "termApplicationScope": ["valueListEntry", "reportOutput", "searchAlias", "sourceDictionaryLink"],
         "termSourcePriority": ["domainSpecialistDictionary", "generalArchaeologyDictionary", "methodologyTerm"],
+        "dictionaryEditorialRule": [
+          "koreanHeadwordPreferred",
+          "originalScriptParallel",
+          "modernAdministrativePlaceBasis",
+          "siteTypeNameSeparated",
+          "samePointMultiPeriodLinked",
+          "differentPointSplitByType",
+          "hangulIndexLinked",
+          "originalScriptIndexLinked"
+        ],
         "termRelation": ["preferredTerm", "broaderTerm", "narrowerTerm"],
         "termSearchMapping": [
           "fieldSearchTermAccepted",

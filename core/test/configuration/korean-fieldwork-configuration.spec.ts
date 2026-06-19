@@ -90,6 +90,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('doNotOverwriteObservedTerm');
         expect(documentsById['term-authority-dwelling-site'].resource.termSearchMapping)
             .toContain('structureSubtypeSeparated');
+        expect(documentsById['term-authority-dwelling-site'].resource.dictionaryEditorialRule)
+            .toContain('siteTypeNameSeparated');
         expect(documentsById['term-authority-kiln-site'].resource.termSearchMapping)
             .toContain('doNotMergeToSingleTerm');
         expect(documentsById['term-alias-kiln-site-kiln'].resource.termAliasText)
@@ -1146,6 +1148,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(termAuthorityForm.fields.termDictionaryDomain.inputType).toBe('checkboxes');
         expect(termAuthorityForm.fields.termApplicationScope.inputType).toBe('checkboxes');
         expect(termAuthorityForm.fields.termSourcePriority.inputType).toBe('checkboxes');
+        expect(termAuthorityForm.fields.dictionaryEditorialRule.inputType).toBe('checkboxes');
         expect(termAliasForm.parent).toBe('TermAuthority');
         expect(termAliasForm.fields.termAliasText.inputType).toBe('input');
         expect(termAliasForm.fields.termAliasText.mandatory).toBe(true);
@@ -1581,6 +1584,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-termApplicationScope');
         expect(termAuthorityForm.valuelists.termSourcePriority)
             .toBe('KoreanFieldwork-termSourcePriority');
+        expect(termAuthorityForm.valuelists.dictionaryEditorialRule)
+            .toBe('KoreanFieldwork-dictionaryEditorialRule');
         expect(termAuthorityForm.valuelists.termAuthorityStatus)
             .toBe('KoreanFieldwork-termAuthorityStatus');
         expect(termAliasForm.valuelists.termAliasRole).toBe('KoreanFieldwork-termAliasRole');
@@ -2000,6 +2005,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.TermAuthority.label).toBe('Term authority');
         expect(languages.en.categories.TermAuthority.fields.termDictionaryDomain.label)
             .toBe('Dictionary domain');
+        expect(languages.en.categories.TermAuthority.fields.dictionaryEditorialRule.label)
+            .toBe('Dictionary editorial rule');
         expect(languages.en.categories.TermAlias.label).toBe('Term alias');
         expect(languages.en.categories.TermAlias.fields.termAliasText.label).toBe('Alias text');
         expect(languages.en.categories.TermAlias.fields.termAliasRole.label).toBe('Alias role');
@@ -3057,6 +3064,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-termSourcePriority']
             .values.domainSpecialistDictionary.label)
             .toBe('Domain specialist dictionary');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-dictionaryEditorialRule']
+            .values.siteTypeNameSeparated.label)
+            .toBe('Place and site type separated');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-dictionaryEditorialRule']
+            .values.chronologyNoThousandsSeparator.label)
+            .toBe('연대 천 단위 미사용');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-termAliasRole']
             .values.projectReportName.label)
             .toBe('Project/report name');

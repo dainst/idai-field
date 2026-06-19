@@ -3037,6 +3037,59 @@
     },
     "description": "전문사전, 일반사전, 조사방법론, 기관 보고서, 현장 관용어 사이에서 어떤 출처를 우선할지 표시하기 위한 목록"
   },
+  "KoreanFieldwork-dictionaryEditorialRule": {
+    "values": {
+      "koreanHeadwordPreferred": {
+        "label": "한글 표제어 우선"
+      },
+      "originalScriptParallel": {
+        "label": "한자·원어 병기"
+      },
+      "sourceSpellingPreserved": {
+        "label": "원문 표기 보존"
+      },
+      "foreignSiteKoreanPronunciation": {
+        "label": "국외유적 한글발음 표기"
+      },
+      "modernAdministrativePlaceBasis": {
+        "label": "최신 행정지명 기준"
+      },
+      "conventionalOldPlaceNamePreserved": {
+        "label": "옛 지명 관용명 보존"
+      },
+      "siteTypeNameSeparated": {
+        "label": "지명·성격명 분리"
+      },
+      "samePointMultiPeriodLinked": {
+        "label": "동일지점 다시대 연결"
+      },
+      "differentPointSplitByType": {
+        "label": "다른지점 성격명 분리"
+      },
+      "featureMetersOutput": {
+        "label": "유구 m 출력"
+      },
+      "artifactCentimetersOutput": {
+        "label": "유물 cm 출력"
+      },
+      "quantityThousandsSeparated": {
+        "label": "일반 수량 천 단위 구분"
+      },
+      "chronologyNoThousandsSeparator": {
+        "label": "연대 천 단위 미사용"
+      },
+      "hangulIndexLinked": {
+        "label": "한글 색인 연결"
+      },
+      "originalScriptIndexLinked": {
+        "label": "한자·원어 색인 연결"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "2001년 한국고고학사전의 표제어·유적명·수치·색인 처리 원칙을 보고서 출력과 검색 정규화 규칙으로 추적하기 위한 목록"
+  },
   "KoreanFieldwork-featurePackage": {
     "values": {
       "surfaceSurvey": {

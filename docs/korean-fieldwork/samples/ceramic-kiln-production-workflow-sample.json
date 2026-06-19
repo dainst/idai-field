@@ -1,0 +1,719 @@
+{
+  "title": "Korean ceramic kiln production workflow sample",
+  "purpose": "Validate that pottery, tile, and porcelain kiln records keep production space, kiln-part investigation, find context, and analysis planning connected instead of reducing ceramic production sites to one kiln type name.",
+  "validationQuestions": [
+    "토기가마 기록이 구조요 명칭보다 화구·연소부·소성부·연도부·회구부와 요장 시설, 해석위험, 분석시료를 함께 남기는가.",
+    "기와가마 기록이 요체만이 아니라 요전부, 회구부, 폐기장, 채토공, 제작공방, 층위별 기와 문양, 연대·태토 시료까지 연결되는가.",
+    "자기요장 기록이 가마 하나가 아니라 토취장, 수비공, 공방 공정, 봉통부·번조실·연도부, 갑발·도지미, 소비지 비교를 한 생산체계로 묶는가.",
+    "요업 출토품과 시료가 최종조업품·단일연대·생산지 확정값으로 자동 처리되지 않고 검토 상태를 유지하는가."
+  ],
+  "documents": [
+    {
+      "resource": {
+        "id": "op-ceramic-kiln-001",
+        "identifier": "CERAMIC-OP-001",
+        "shortDescription": "요업유적 생산체계 조사 작업",
+        "category": "Operation",
+        "relations": {},
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "researchQuestionFit"
+        ],
+        "recordCreationTiming": "duringFieldwork",
+        "dailyLogContent": [
+          "workDateWeather",
+          "workArea",
+          "photoDrawingNumbers",
+          "findSampleCollection",
+          "changeReason"
+        ],
+        "dailyLogReview": [
+          "sameDayWritten",
+          "photoDrawingCrossChecked",
+          "findListCrossChecked",
+          "sampleListCrossChecked"
+        ],
+        "reportCrossCheck": [
+          "manuscript",
+          "drawingRegister",
+          "photoRegister",
+          "artifactRegister",
+          "sampleRegister"
+        ]
+      }
+    },
+    {
+      "resource": {
+        "id": "feature-pottery-kiln-001",
+        "identifier": "POT-KILN-001",
+        "shortDescription": "토기가마 후보와 요장 시설",
+        "category": "Feature",
+        "relations": {
+          "isRecordedIn": ["op-ceramic-kiln-001"]
+        },
+        "description": "요상 경사와 피열흔은 보이지만 구조요 확정 전 단계다. 화구·연소부·소성부·연도부·회구부를 분리하고, 회구부 유물을 최종 조업품으로 자동 연결하지 않는다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "crossReviewNeeded"
+        ],
+        "fieldOnlyMissingCheck": [
+          "featureOutline",
+          "stratigraphicBoundary",
+          "photoAngleAndScale",
+          "drawingLineReason",
+          "spatialLocation",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "productionProcessSystem": [
+          "rawMaterialProcurement",
+          "rawMaterialProcessing",
+          "levigation",
+          "clayWedging",
+          "forming",
+          "drying",
+          "kilnLoading",
+          "firing",
+          "kilnUnloading",
+          "sorting",
+          "discard",
+          "pendingDecision"
+        ],
+        "productionSiteAssociatedFacility": [
+          "clayPit",
+          "clayStoragePit",
+          "workshop",
+          "levigationArea",
+          "dryingArea",
+          "drainageFacility",
+          "wasteDeposit",
+          "pendingDecision"
+        ],
+        "potteryKilnIdentification": [
+          "firingFeature",
+          "structuralKilnCandidate",
+          "coveredFiringFeature",
+          "crossdraftStructuralKiln",
+          "fuelRefeedingPossible",
+          "fireboxPresent",
+          "firingCombustionSeparated",
+          "typeNameDeferred",
+          "pendingDecision"
+        ],
+        "potteryKilnStructureContext": [
+          "semiUndergroundKiln",
+          "slopingKilnCandidate",
+          "slopeNotSingleCriterion",
+          "planShapeRecorded",
+          "scaleRecorded",
+          "firingCombustionRatio",
+          "flameFlowRecorded",
+          "fireboxClosure",
+          "oxidationReductionBoundary",
+          "wallCollapseFragment",
+          "ceilingFragment",
+          "originalGroundCutDepth",
+          "pendingDecision"
+        ],
+        "potteryKilnPartInvestigation": [
+          "fireboxRecorded",
+          "combustionPartRecorded",
+          "firingPartRecorded",
+          "fluePartRecorded",
+          "ashDumpRecorded",
+          "kilnFloorSoftCaution",
+          "floorStepChecked",
+          "sandLayerChecked",
+          "potterySherdBedding",
+          "kilnFloorRepair",
+          "wallFloorSectionCut",
+          "stratigraphicCollection",
+          "pendingDecision"
+        ],
+        "potteryKilnYardFacility": [
+          "claySource",
+          "clayStorageFacility",
+          "drainageFacility",
+          "dryingArea",
+          "storageArea",
+          "craftspersonLivingSpace",
+          "productDisposalArea",
+          "wasteDeposit",
+          "magneticSurvey",
+          "aerialPhoto",
+          "drawingOxidationReductionColored",
+          "pendingDecision"
+        ],
+        "potteryKilnInterpretationRisk": [
+          "slopeOnlyClassificationBlocked",
+          "finalOperationNotAssumed",
+          "ashDumpAutoLinkBlocked",
+          "ashDumpFloorMisexcavationRisk",
+          "structuralKilnOvernamingRisk",
+          "neighboringKilnWasteIntrusion",
+          "sherdKilnFurnitureReuse",
+          "preservationLimitsRecorded",
+          "pendingDecision"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "find-pottery-firing-trace-001",
+        "identifier": "POT-FIND-001",
+        "shortDescription": "토기 소성흔과 요도구 후보",
+        "category": "Find",
+        "relations": {
+          "isRecordedIn": ["op-ceramic-kiln-001"],
+          "liesWithin": ["feature-pottery-kiln-001"]
+        },
+        "description": "저부 소성흔과 토기편 깔림이 확인되지만, 자연유와 연소흔, 요도구 전용 여부를 분리해 검토한다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "criteriaConsistency"
+        ],
+        "fieldOnlyMissingCheck": [
+          "preRemovalCondition",
+          "spatialLocation",
+          "elevationRecorded",
+          "numberedBeforeCollection"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "potteryFiringTraceObservation": [
+          "discTrace",
+          "ringTrace",
+          "bottomTrace",
+          "kilnFloorAttachment",
+          "traceCountRecorded",
+          "traceSpacingRecorded",
+          "depressionRecorded",
+          "combustionTraceSeparated",
+          "naturalAshGlazeSeparated",
+          "blackGlossSeparated",
+          "pendingDecision"
+        ],
+        "potteryKilnFurnitureContext": [
+          "floorSeparatorCandidate",
+          "supportMaterial",
+          "herbaceousMaterial",
+          "sand",
+          "stoneFragment",
+          "potterySherd",
+          "dedicatedClayObject",
+          "ringTypeFurniture",
+          "stackingCombinationRecorded",
+          "invertedFiringRecorded",
+          "findLinkedToSurfaceTrace",
+          "pendingDecision"
+        ],
+        "artifactHandlingWorkflow": [
+          "fieldCollection",
+          "findConditionRecord",
+          "packingTransport"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "sample-pottery-kiln-001",
+        "identifier": "POT-SAMP-001",
+        "shortDescription": "토기가마 연대·태토·고고지자기 시료",
+        "category": "Sample",
+        "relations": {
+          "isRecordedIn": ["op-ceramic-kiln-001"],
+          "liesWithin": ["feature-pottery-kiln-001"]
+        },
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "researchQuestionFit",
+          "observationInterpretationSeparated"
+        ],
+        "fieldOnlyMissingCheck": [
+          "samplePointMapped",
+          "sampleConditionControlled",
+          "spatialLocation",
+          "elevationRecorded",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "samplePurpose": [
+          "absoluteDating",
+          "ceramicFabric",
+          "paleoenvironment"
+        ],
+        "sampleCollectionHandling": [
+          "immediateCollection",
+          "lightShielded",
+          "contextMapLinked",
+          "pendingDecision"
+        ],
+        "potteryKilnAnalysisPlan": [
+          "charcoalAms",
+          "c14Organic",
+          "woodSpeciesAnalysis",
+          "potteryOsl",
+          "fabricCompositionAnalysis",
+          "sinteredFloorArchaeomagnetic",
+          "sinteredBodyArchaeomagnetic",
+          "heatedSurfaceSamplePoint",
+          "sampleBeforeDisassembly",
+          "multipleDatingMethodsCompared",
+          "analysisQuestionRecorded",
+          "pendingDecision"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "feature-tile-kiln-001",
+        "identifier": "TILE-KILN-001",
+        "shortDescription": "기와가마와 회구부 조사",
+        "category": "Feature",
+        "relations": {
+          "isRecordedIn": ["op-ceramic-kiln-001"]
+        },
+        "description": "기와가마 요체, 요전부, 회구부, 폐기장, 채토공, 제작공방을 한 생산공간으로 묶고, 가마-회구부 관계와 가마군 운영순서를 토층으로 검증한다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "criteriaConsistency"
+        ],
+        "fieldOnlyMissingCheck": [
+          "featureOutline",
+          "stratigraphicBoundary",
+          "photoAngleAndScale",
+          "drawingLineReason",
+          "spatialLocation",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "tileKilnStructureContext": [
+          "kilnBody",
+          "frontWorkingArea",
+          "firebox",
+          "combustionChamber",
+          "firingChamber",
+          "fluePart",
+          "smokeOutlet",
+          "chimneyTrace",
+          "ashDump",
+          "wasteDeposit",
+          "clayPit",
+          "productionWorkshop",
+          "dryingArea",
+          "storageArea",
+          "drainageFacility",
+          "waterFuelTransportChecked",
+          "pendingDecision"
+        ],
+        "tileKilnExcavationControl": [
+          "strippingVolumeEstimated",
+          "spoilAreaPlanned",
+          "tenMeterGrid",
+          "gridAdjustedToKiln",
+          "longAxisBaulk",
+          "centralBaulk",
+          "ashDumpLinkedBaulk",
+          "twentyThirtyCmBaulk",
+          "twoThreeBaulks",
+          "trialSlotVerified",
+          "sectionFlowChecked",
+          "oldSurfacePreserved",
+          "ceilingTopPreserved",
+          "outlineSinteringChecked",
+          "floorThicknessCut",
+          "wallThicknessCut",
+          "pendingDecision"
+        ],
+        "tileKilnPartInvestigation": [
+          "frontAreaRecorded",
+          "fireboxClosureChecked",
+          "fireboxRepairChecked",
+          "combustionFloorChecked",
+          "combustionAshRange",
+          "firingChamberSlopeMeasured",
+          "objectStackingTrace",
+          "ceilingFragmentCollapse",
+          "wallFragmentCollapse",
+          "reducedSinteredSurface",
+          "oxidizedSinteredSurface",
+          "flueAbsentCaution",
+          "ashDumpRelationChecked",
+          "ashLayerPartPreserved",
+          "stratigraphicCollection",
+          "pendingDecision"
+        ],
+        "tileKilnOperationSequence": [
+          "sharedFrontArea",
+          "regularSpacing",
+          "simultaneousOperationCandidate",
+          "clusteredKilnLocation",
+          "longAxisDirectionRecorded",
+          "movementDirectionRecorded",
+          "constructionSequence",
+          "samePeriodCandidate",
+          "differentPeriodCandidate",
+          "laterKilnCutsEarlierAshDump",
+          "earlierWallOutlineChecked",
+          "laterWallOutlineChecked",
+          "slopingKilnCandidate",
+          "semiUndergroundKiln",
+          "largeScaleCandidate",
+          "massProductionCandidate",
+          "typeNotDateAlone",
+          "pendingDecision"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "find-tile-kiln-001",
+        "identifier": "TILE-FIND-001",
+        "shortDescription": "회구부 층위별 기와",
+        "category": "Find",
+        "relations": {
+          "isRecordedIn": ["op-ceramic-kiln-001"],
+          "liesWithin": ["feature-tile-kiln-001"]
+        },
+        "description": "회구부 기와를 생산품, 불량품, 보수재, 폐기 후 유입품 후보로 분리하고, 문양 편년을 층위와 함께 검토한다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "crossReviewNeeded"
+        ],
+        "fieldOnlyMissingCheck": [
+          "preRemovalCondition",
+          "spatialLocation",
+          "elevationRecorded",
+          "numberedBeforeCollection"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "tileKilnFindContext": [
+          "productTile",
+          "defectiveProduct",
+          "remainingStock",
+          "stackedInPlace",
+          "constructionMaterialReuse",
+          "kilnFurnitureReuse",
+          "repairMaterial",
+          "earlierKilnProductReuse",
+          "postAbandonmentIntrusion",
+          "patternByLayerRecorded",
+          "tileResearcherReview",
+          "kilnResearcherReview",
+          "jointSelectionReviewed",
+          "tilePotterySharedKilnCandidate",
+          "pendingDecision"
+        ],
+        "artifactQuantityBasis": [
+          "physicalItemCount",
+          "sameObjectConfirmed",
+          "componentRelationship",
+          "actualCountAnnotated",
+          "quantityEvidencePhoto"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "sample-tile-kiln-001",
+        "identifier": "TILE-SAMP-001",
+        "shortDescription": "기와가마 연대·태토 대조 시료",
+        "category": "Sample",
+        "relations": {
+          "isRecordedIn": ["op-ceramic-kiln-001"],
+          "liesWithin": ["feature-tile-kiln-001"]
+        },
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "researchQuestionFit",
+          "criteriaConsistency"
+        ],
+        "fieldOnlyMissingCheck": [
+          "samplePointMapped",
+          "sampleConditionControlled",
+          "spatialLocation",
+          "elevationRecorded",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "samplePurpose": [
+          "absoluteDating",
+          "ceramicFabric",
+          "provenance"
+        ],
+        "sampleCollectionHandling": [
+          "immediateCollection",
+          "lightShielded",
+          "contextMapLinked",
+          "pendingDecision"
+        ],
+        "tileKilnAnalysisPlan": [
+          "c14AshDumpOrganic",
+          "c14FireboxOrganic",
+          "c14CombustionOrganic",
+          "c14FiringOrganic",
+          "archaeomagneticMultiPoint",
+          "enoughSamplesPerPoint",
+          "oslLightHeatShielded",
+          "kilnWallMaterial",
+          "ceilingMaterial",
+          "floorMaterial",
+          "tileFabricSample",
+          "kilnClaySample",
+          "siteSoilSample",
+          "consumerTileComparison",
+          "singleDateNotAccepted",
+          "chronologyErrorCaution",
+          "pendingDecision"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "feature-porcelain-kiln-001",
+        "identifier": "PORC-KILN-001",
+        "shortDescription": "자기요장 생산체계",
+        "category": "Feature",
+        "relations": {
+          "isRecordedIn": ["op-ceramic-kiln-001"]
+        },
+        "description": "자기요장을 가마 하나가 아니라 토취장, 수비공, 태토건조장, 연토장, 시유시설, 폐기장, 생활공간, 운송로와 소비지 비교가 붙은 생산체계로 기록한다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "researchQuestionFit"
+        ],
+        "fieldOnlyMissingCheck": [
+          "featureOutline",
+          "stratigraphicBoundary",
+          "photoAngleAndScale",
+          "drawingLineReason",
+          "spatialLocation",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "porcelainKilnSiteSystem": [
+          "claySource",
+          "rawClayStorage",
+          "clayRefiningPit",
+          "clayWasteSandLayer",
+          "bodyDryingArea",
+          "heatedDryingOndol",
+          "kneadingArea",
+          "formingArea",
+          "glazeFacility",
+          "kilnBody",
+          "wasteDeposit",
+          "livingSpace",
+          "waterSource",
+          "fuelSource",
+          "transportRoute",
+          "consumerSiteComparison",
+          "documentPlaceNameLead",
+          "pendingDecision"
+        ],
+        "porcelainWorkshopProcess": [
+          "clayExtraction",
+          "rawClayStorageProcess",
+          "clayRefining",
+          "clayWasteSeparated",
+          "bodyDrying",
+          "kneading",
+          "wheelThrowing",
+          "wheelHole",
+          "trimming",
+          "decoration",
+          "glazePreparation",
+          "glazeStoragePit",
+          "glazeJar",
+          "glazing",
+          "glazeSpecialistWorkshop",
+          "dryingBeforeFiring",
+          "workshopSpecializationCandidate",
+          "pendingDecision"
+        ],
+        "porcelainKilnStructure": [
+          "climbingKiln",
+          "crossdraftKiln",
+          "contourPerpendicularLongAxis",
+          "frontArea",
+          "bongtongFirebox",
+          "fireThreshold",
+          "firingChamber",
+          "firstChamberNori",
+          "deepFinalChamber",
+          "steppedChamber",
+          "firePillar",
+          "partitionWall",
+          "fireWindow",
+          "fireWindowPlug",
+          "biscuitFiringChamber",
+          "entranceDirectionRecorded",
+          "firingChamberSlopeMeasured",
+          "chamberQualityDifference",
+          "flueChannel",
+          "smokePit",
+          "chimneyPart",
+          "pendingDecision"
+        ],
+        "porcelainKilnExcavationControl": [
+          "tenMeterGrid",
+          "gridAdjustedToKiln",
+          "contourTrenchCombined",
+          "geophysicalSurveyCombined",
+          "lowerSlopeFireboxSearch",
+          "upperTrenchLossCaution",
+          "kilnStartEndWidthRecorded",
+          "fireboxWidthRecorded",
+          "chamberByChamberPhoto",
+          "frontBackPhoto",
+          "bothWallPhoto",
+          "floorFurniturePositionRecorded",
+          "finalQuantityNotInferred",
+          "partialPreservationByLayer",
+          "colorMoisturePhoto",
+          "pendingDecision"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "find-porcelain-kiln-001",
+        "identifier": "PORC-FIND-001",
+        "shortDescription": "자편·갑발·도지미 수습 단위",
+        "category": "Find",
+        "relations": {
+          "isRecordedIn": ["op-ceramic-kiln-001"],
+          "liesWithin": ["feature-porcelain-kiln-001"]
+        },
+        "description": "자편 관찰과 요도구 맥락을 분리해, 포개구이와 개별번조 판단을 보류한 채 소비지 비교 자료로 연결한다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "criteriaConsistency"
+        ],
+        "fieldOnlyMissingCheck": [
+          "preRemovalCondition",
+          "spatialLocation",
+          "elevationRecorded",
+          "numberedBeforeCollection"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "porcelainFindObservation": [
+          "materialColorRecorded",
+          "bodyTextureRecorded",
+          "glazeColorRecorded",
+          "glazeMeltStateRecorded",
+          "partialGlazing",
+          "unglazedFoot",
+          "decorationTechniqueRecorded",
+          "patternRecorded",
+          "vesselFormRecorded",
+          "vesselTypeRecorded",
+          "footShapeRecorded",
+          "footSupportTrace",
+          "innerFootRing",
+          "interiorPhoto",
+          "sidePhoto",
+          "footPhoto",
+          "layerQuantityTable",
+          "pendingDecision"
+        ],
+        "porcelainKilnFurnitureContext": [
+          "saggar",
+          "saggarLid",
+          "saggarSupport",
+          "cylindricalSaggar",
+          "bowlSaggar",
+          "ventHoleOrMark",
+          "reusedSherdSaggar",
+          "doji",
+          "footSupport",
+          "sandSetting",
+          "stackedFiringEvidence",
+          "individualFiringCaution",
+          "kilnWallFragment",
+          "rawClayLump",
+          "pendingDecision"
+        ],
+        "artifactHandlingWorkflow": [
+          "fieldCollection",
+          "findConditionRecord",
+          "packingTransport"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "sample-porcelain-kiln-001",
+        "identifier": "PORC-SAMP-001",
+        "shortDescription": "자기요장 원토·유약·소비지 비교 시료",
+        "category": "Sample",
+        "relations": {
+          "isRecordedIn": ["op-ceramic-kiln-001"],
+          "liesWithin": ["feature-porcelain-kiln-001"]
+        },
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "researchQuestionFit",
+          "observationInterpretationSeparated"
+        ],
+        "fieldOnlyMissingCheck": [
+          "samplePointMapped",
+          "sampleConditionControlled",
+          "spatialLocation",
+          "elevationRecorded",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "samplePurpose": [
+          "absoluteDating",
+          "ceramicFabric",
+          "provenance"
+        ],
+        "sampleCollectionHandling": [
+          "immediateCollection",
+          "lightShielded",
+          "dedicatedSamplingTool",
+          "contextMapLinked",
+          "pendingDecision"
+        ],
+        "porcelainAnalysisPlan": [
+          "claySourceRawSample",
+          "siteRawClaySample",
+          "bodySample",
+          "sherdSample",
+          "glazeSample",
+          "whiteClaySample",
+          "clayGlazeRoleTest",
+          "bodyGlazeComposition",
+          "fabricAnalysis",
+          "yugtaeAnalysis",
+          "woodSpeciesAnalysis",
+          "c14Dating",
+          "archaeomagneticSample",
+          "oslSample",
+          "kilnWallMaterialSample",
+          "consumerSherdComparison",
+          "provenanceComparison",
+          "analysisQuestionRecorded",
+          "pendingDecision"
+        ],
+        "verificationState": "candidate"
+      }
+    }
+  ]
+}

@@ -362,6 +362,41 @@ describe('KoreanFieldwork project configuration', () => {
     });
 
 
+    it('keeps the Korean ceramic kiln production sample aligned with kiln fields', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const sample = loadSample('ceramic-kiln-production-workflow-sample.json');
+        const documents = sample.documents;
+        const documentsById = documents.reduce((index: any, document: any) => {
+            index[document.resource.id] = document;
+            return index;
+        }, {});
+
+        expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
+
+        expect(documentsById['feature-pottery-kiln-001'].resource.potteryKilnInterpretationRisk)
+            .toContain('ashDumpAutoLinkBlocked');
+        expect(documentsById['find-pottery-firing-trace-001'].resource.potteryKilnFurnitureContext)
+            .toContain('findLinkedToSurfaceTrace');
+        expect(documentsById['sample-pottery-kiln-001'].resource.potteryKilnAnalysisPlan)
+            .toContain('multipleDatingMethodsCompared');
+        expect(documentsById['feature-tile-kiln-001'].resource.tileKilnExcavationControl)
+            .toContain('ashDumpLinkedBaulk');
+        expect(documentsById['find-tile-kiln-001'].resource.tileKilnFindContext)
+            .toContain('patternByLayerRecorded');
+        expect(documentsById['sample-tile-kiln-001'].resource.tileKilnAnalysisPlan)
+            .toContain('consumerTileComparison');
+        expect(documentsById['feature-porcelain-kiln-001'].resource.porcelainKilnSiteSystem)
+            .toContain('consumerSiteComparison');
+        expect(documentsById['find-porcelain-kiln-001'].resource.porcelainKilnFurnitureContext)
+            .toContain('individualFiringCaution');
+        expect(documentsById['sample-porcelain-kiln-001'].resource.porcelainAnalysisPlan)
+            .toContain('provenanceComparison');
+    });
+
+
     it('registers the field-record preservation fields in the bundled configuration', () => {
 
         const configReader = new ConfigReader();

@@ -35906,6 +35906,46 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-pitDwellingScienceSamplingPlan": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "amsCharcoalWoodShell": {},
+      "amsRepresentativeContextChecked": {},
+      "archaeomagneticHeatedSoil": {},
+      "archaeomagneticPotterySherd": {},
+      "phytolithLayerSoil": {},
+      "flotationGridSoil": {},
+      "woodSpeciesCharcoalWood": {},
+      "potteryReplicaResidue": {},
+      "stoneToolUseWearResidue": {},
+      "starchSample": {},
+      "fabricClaySourceComparison": {},
+      "fattyAcidResidue": {},
+      "postExcavationCleaningAvoided": {},
+      "locationDrawingLinked": {},
+      "contaminationRiskChecked": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "amsCharcoalWoodShell",
+      "amsRepresentativeContextChecked",
+      "archaeomagneticHeatedSoil",
+      "archaeomagneticPotterySherd",
+      "phytolithLayerSoil",
+      "flotationGridSoil",
+      "woodSpeciesCharcoalWood",
+      "potteryReplicaResidue",
+      "stoneToolUseWearResidue",
+      "starchSample",
+      "fabricClaySourceComparison",
+      "fattyAcidResidue",
+      "postExcavationCleaningAvoided",
+      "locationDrawingLinked",
+      "contaminationRiskChecked",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-cultivationFeatureContext": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

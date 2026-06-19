@@ -760,6 +760,9 @@
         "sampleCollectionHandling": {
           "label": "Sample collection handling"
         },
+        "pitDwellingScienceSamplingPlan": {
+          "label": "Pit-dwelling science sampling plan"
+        },
         "ironSampleAnalysisPlan": {
           "label": "Iron sample analysis plan"
         },

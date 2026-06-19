@@ -541,6 +541,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('typeNameNotAssumed');
         expect(documentsById['feature-bronze-dwelling-001'].resource.interpretationArgument)
             .toContain('alternativeInterpretationRecorded');
+        expect(documentsById['sample-bronze-dwelling-science-001'].resource.pitDwellingScienceSamplingPlan)
+            .toContain('postExcavationCleaningAvoided');
+        expect(documentsById['sample-bronze-dwelling-science-001'].resource.pitDwellingScienceSamplingPlan)
+            .toContain('contaminationRiskChecked');
         expect(documentsById['feature-bronze-dolmen-001'].resource.dolmenStructureContext)
             .toContain('laterGraveMarkerReuse');
         expect(documentsById['feature-bronze-enclosure-001'].resource.bronzeAgeEnclosureInterpretation)
@@ -1129,6 +1133,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.fields.assemblageRelation.inputType).toBe('checkboxes');
         expect(findForm.fields.interpretationArgument.inputType).toBe('checkboxes');
         expect(sampleForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
+        expect(sampleForm.fields.pitDwellingScienceSamplingPlan.inputType).toBe('checkboxes');
         expect(sampleForm.fields.ironSampleAnalysisPlan.inputType).toBe('checkboxes');
         expect(sampleForm.fields.tileKilnAnalysisPlan.inputType).toBe('checkboxes');
         expect(sampleForm.fields.potteryKilnAnalysisPlan.inputType).toBe('checkboxes');
@@ -1565,6 +1570,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.valuelists.termSearchMapping).toBe('KoreanFieldwork-termSearchMapping');
         expect(sampleForm.valuelists.sampleCollectionHandling)
             .toBe('KoreanFieldwork-sampleCollectionHandling');
+        expect(sampleForm.valuelists.pitDwellingScienceSamplingPlan)
+            .toBe('KoreanFieldwork-pitDwellingScienceSamplingPlan');
         expect(sampleForm.valuelists.ironSampleAnalysisPlan).toBe('KoreanFieldwork-ironSampleAnalysisPlan');
         expect(sampleForm.valuelists.tileKilnAnalysisPlan).toBe('KoreanFieldwork-tileKilnAnalysisPlan');
         expect(sampleForm.valuelists.potteryKilnAnalysisPlan).toBe('KoreanFieldwork-potteryKilnAnalysisPlan');
@@ -1979,6 +1986,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.Find.fields.interpretationArgument.label).toBe('Interpretation argument');
         expect(languages.en.categories.Sample.fields.sampleCollectionHandling.label)
             .toBe('Sample collection handling');
+        expect(languages.en.categories.Sample.fields.pitDwellingScienceSamplingPlan.label)
+            .toBe('Pit-dwelling science sampling plan');
         expect(languages.en.categories.Sample.fields.ironSampleAnalysisPlan.label)
             .toBe('Iron sample analysis plan');
         expect(languages.en.categories.Sample.fields.tileKilnAnalysisPlan.label)
@@ -2634,6 +2643,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Post-depositional process considered');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-sampleCollectionHandling'].values.lightShielded.label)
             .toBe('Light-shielded');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-pitDwellingScienceSamplingPlan']
+            .values.amsRepresentativeContextChecked.label)
+            .toBe('AMS representative context checked');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-pitDwellingScienceSamplingPlan']
+            .values.postExcavationCleaningAvoided.label)
+            .toBe('강한 세척 회피');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaEvidenceRole']
             .values.stratigraphicEvidence.label)
             .toBe('Stratigraphic evidence');

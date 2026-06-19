@@ -760,6 +760,9 @@
         "sampleCollectionHandling": {
           "label": "시료 채취·보관"
         },
+        "pitDwellingScienceSamplingPlan": {
+          "label": "수혈건물지 자연과학 시료"
+        },
         "ironSampleAnalysisPlan": {
           "label": "제철 시료 분석계획"
         },

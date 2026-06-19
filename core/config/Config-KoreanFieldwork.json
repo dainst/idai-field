@@ -1934,6 +1934,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "pitDwellingScienceSamplingPlan": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "ironSampleAnalysisPlan": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -2053,6 +2057,7 @@
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "samplePurpose": "KoreanFieldwork-samplePurpose",
         "sampleCollectionHandling": "KoreanFieldwork-sampleCollectionHandling",
+        "pitDwellingScienceSamplingPlan": "KoreanFieldwork-pitDwellingScienceSamplingPlan",
         "ironSampleAnalysisPlan": "KoreanFieldwork-ironSampleAnalysisPlan",
         "tileKilnAnalysisPlan": "KoreanFieldwork-tileKilnAnalysisPlan",
         "potteryKilnAnalysisPlan": "KoreanFieldwork-potteryKilnAnalysisPlan",
@@ -2108,6 +2113,7 @@
           "fields": [
             "samplePurpose",
             "sampleCollectionHandling",
+            "pitDwellingScienceSamplingPlan",
             "ironSampleAnalysisPlan",
             "tileKilnAnalysisPlan",
             "potteryKilnAnalysisPlan",

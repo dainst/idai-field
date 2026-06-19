@@ -3559,6 +3559,27 @@
     },
     "description": "목탄·목재, TL/OSL, 고고지자기, 화분·규조·식물규산체, 수침목재, 인골 DNA, 탄화곡물처럼 채취 순간의 빛·수분·오염·위치 조건이 분석 가능성을 바꾸는 시료를 관리하기 위한 목록"
   },
+  "KoreanFieldwork-pitDwellingScienceSamplingPlan": {
+    "values": {
+      "amsCharcoalWoodShell": { "label": "AMS 목탄·목재·조개" },
+      "amsRepresentativeContextChecked": { "label": "AMS 대표맥락 검토" },
+      "archaeomagneticHeatedSoil": { "label": "고고지자기 피열토" },
+      "archaeomagneticPotterySherd": { "label": "고고지자기 토기편" },
+      "phytolithLayerSoil": { "label": "식물규산체 층위토양" },
+      "flotationGridSoil": { "label": "부유법 격자토양" },
+      "woodSpeciesCharcoalWood": { "label": "수종분석 목탄·목재" },
+      "potteryReplicaResidue": { "label": "토기 레플리카 잔류물" },
+      "stoneToolUseWearResidue": { "label": "석기 사용흔 잔류물" },
+      "starchSample": { "label": "전분분석 시료" },
+      "fabricClaySourceComparison": { "label": "태토·기반토 비교" },
+      "fattyAcidResidue": { "label": "지방산 잔류물" },
+      "postExcavationCleaningAvoided": { "label": "강한 세척 회피" },
+      "locationDrawingLinked": { "label": "위치도면 연결" },
+      "contaminationRiskChecked": { "label": "오염위험 검토" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "수혈건물지·수혈주거지의 AMS, 고고지자기, 식물규산체, 부유법, 수종, 레플리카, 사용흔, 전분, 태토, 지방산 분석 시료를 채취 시점·위치도면·세척 회피·오염위험과 함께 관리하기 위한 목록"
+  },
   "KoreanFieldwork-cultivationFeatureContext": {
     "values": {
       "hillslopeHigh": { "label": "구릉지 고지" },

@@ -15313,6 +15313,27 @@
     },
     "description": "Korean field notebook handling controls for samples whose analytical value depends on light, moisture, contamination, and mapped collection context"
   },
+  "KoreanFieldwork-pitDwellingScienceSamplingPlan": {
+    "values": {
+      "amsCharcoalWoodShell": { "label": "AMS charcoal/wood/shell" },
+      "amsRepresentativeContextChecked": { "label": "AMS representative context checked" },
+      "archaeomagneticHeatedSoil": { "label": "Archaeomagnetic heated soil" },
+      "archaeomagneticPotterySherd": { "label": "Archaeomagnetic pottery sherd" },
+      "phytolithLayerSoil": { "label": "Phytolith layer soil" },
+      "flotationGridSoil": { "label": "Flotation grid soil" },
+      "woodSpeciesCharcoalWood": { "label": "Wood-species charcoal/wood" },
+      "potteryReplicaResidue": { "label": "Pottery replica residue" },
+      "stoneToolUseWearResidue": { "label": "Stone-tool use-wear residue" },
+      "starchSample": { "label": "Starch sample" },
+      "fabricClaySourceComparison": { "label": "Fabric/clay-source comparison" },
+      "fattyAcidResidue": { "label": "Fatty-acid residue" },
+      "postExcavationCleaningAvoided": { "label": "Strong cleaning avoided" },
+      "locationDrawingLinked": { "label": "Location drawing linked" },
+      "contaminationRiskChecked": { "label": "Contamination risk checked" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Pit-dwelling science sampling checks for AMS, archaeomagnetic, phytolith, flotation, wood-species, replica, use-wear, starch, fabric/clay-source, and fatty-acid samples with timing, location drawing, cleaning avoidance, and contamination risk"
+  },
   "KoreanFieldwork-cultivationFeatureContext": {
     "values": {
       "hillslopeHigh": { "label": "Hillslope high position" },

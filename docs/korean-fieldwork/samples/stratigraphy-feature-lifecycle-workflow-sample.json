@@ -1,0 +1,308 @@
+{
+  "title": "Korean stratigraphy and feature lifecycle workflow sample",
+  "purpose": "Validate that Korean FeatureSegment records keep stratigraphic observation procedure, layer naming, fill interpretation, post-depositional misread guards, block inclusions, burial process, chronology, and terminology checks together before layer or feature attribution is fixed.",
+  "validationQuestions": [
+    "토층 기록이 토색·층명 하나가 아니라 관찰 절차, 입도·경계면, 층명 변경 이력, 문화층 표시와 함께 남는가.",
+    "유구 내부토가 인위매립·붕락·자연유입·폐기 후 퇴적 같은 과정으로 나뉘고, 이질토 블록을 자동으로 인위층으로 확정하지 않는가.",
+    "색조, 산화·환원, 지하수, 뿌리·말목 변색, Bt-band, 철·망간 집적을 별도층·유구로 오인하지 않도록 보류값과 용어 검토가 남는가."
+  ],
+  "documents": [
+    {
+      "resource": {
+        "id": "op-stratigraphy-lifecycle-001",
+        "identifier": "STRAT-OP-001",
+        "shortDescription": "층위·내부토 라이프사이클 검토 작업",
+        "category": "Operation",
+        "relations": {},
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "reproducibleRecord",
+          "crossReviewNeeded"
+        ],
+        "recordCreationTiming": "duringFieldwork",
+        "dailyLogContent": [
+          "workDateWeather",
+          "workArea",
+          "featureProgress",
+          "photoDrawingNumbers",
+          "changeReason",
+          "nextWorkPlan"
+        ],
+        "dailyLogReview": [
+          "sameDayWritten",
+          "photoDrawingCrossChecked",
+          "numberConversionChecked",
+          "reviewerChecked"
+        ],
+        "reportCrossCheck": [
+          "manuscript",
+          "drawingRegister",
+          "photoRegister",
+          "dailyLog",
+          "numberConversionTable"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "feature-stratigraphy-pit-001",
+        "identifier": "STRAT-FEAT-001",
+        "shortDescription": "내부토 해석 보류 수혈",
+        "category": "Feature",
+        "relations": {
+          "isRecordedIn": ["op-stratigraphy-lifecycle-001"]
+        },
+        "description": "평면에서는 수혈로 보이나 내부토에 자연유입, 붕락, 인위매립 후보가 함께 보여 단면 관찰을 먼저 진행하는 유구.",
+        "featurePackage": [
+          "buildingSite",
+          "pitDwelling",
+          "alluvialSite"
+        ],
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "criteriaConsistency"
+        ],
+        "fieldOnlyMissingCheck": [
+          "featureOutline",
+          "stratigraphicBoundary",
+          "photoAngleAndScale",
+          "drawingLineReason",
+          "spatialLocation",
+          "elevationRecorded",
+          "sameDayReview",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "typologyArgument": [
+          "representativeAttribute",
+          "variationRecorded",
+          "alternativeClassification",
+          "pendingDecision"
+        ],
+        "chronologyArgument": [
+          "stratigraphicRelation",
+          "associatedFinds",
+          "regionalLagRisk",
+          "alternativeChronology",
+          "pendingDecision"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "segment-stratigraphy-fill-001",
+        "identifier": "STRAT-SEG-001",
+        "shortDescription": "수혈 내부토 Ia/상부 매몰층",
+        "category": "FeatureSegment",
+        "relations": {
+          "isRecordedIn": ["op-stratigraphy-lifecycle-001"],
+          "liesWithin": ["feature-stratigraphy-pit-001"]
+        },
+        "description": "색은 주변 기반층과 다르지만, 이질토 블록과 철·망간 집적, 뿌리 변색이 함께 보여 내부토 성격과 유구 소속 층위를 보류한 단면 단위.",
+        "featurePackage": [
+          "buildingSite",
+          "pitDwelling",
+          "alluvialSite"
+        ],
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "crossReviewNeeded"
+        ],
+        "fieldOnlyMissingCheck": [
+          "stratigraphicBoundary",
+          "drawingLineReason",
+          "elevationRecorded",
+          "orientationRecorded",
+          "sameDayReview",
+          "notRecoverableWarning"
+        ],
+        "firstExposureRecord": [
+          "sectionCrossCheck",
+          "dryingRisk",
+          "rewettingLimit",
+          "lightingConditionRecorded"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "stratigraphicObservationProcedure": [
+          "verticalFaceCleaned",
+          "observationTimeSufficient",
+          "sensoryObservation",
+          "repeatedObservation",
+          "shadeObservation",
+          "sunlightObservation",
+          "totalCompositionRecorded",
+          "comparativeLayerChecked",
+          "layerNumberAssigned",
+          "layerDescriptionRecorded",
+          "culturalLayerMarked",
+          "relatedLayersGrouped",
+          "surroundingLocationSummarized"
+        ],
+        "stratigraphicDivisionBasis": [
+          "particleSize",
+          "grainSizeComposition",
+          "mixedCondition",
+          "beddingPlane",
+          "sedimentaryStructure",
+          "pedogenesisExtent",
+          "oldGroundSurface",
+          "culturalLayer",
+          "singleEventDepositKept",
+          "pendingDecision"
+        ],
+        "layerNamingSystem": [
+          "majorLayer",
+          "middleLayer",
+          "subLayer",
+          "aLayer",
+          "bLayer",
+          "culturalLayerNumber",
+          "featureDetectionSurfaceNumber",
+          "institutionalStandard",
+          "changeHistory"
+        ],
+        "soilParticleFieldCheck": [
+          "particleSizeChartUsed",
+          "sandSieveChecked",
+          "wetSmearChecked",
+          "touchTestChecked",
+          "referenceSampleCompared",
+          "laboratoryGrainSizeComparison"
+        ],
+        "soilTextureFieldAssessment": [
+          "fingerRubbing",
+          "ballRibbonTest",
+          "notebookDryingTest",
+          "referenceSampleComparison",
+          "quantitativeAnalysisNeeded",
+          "assessmentMethodStandardized"
+        ],
+        "layerBoundarySurfaceRecord": [
+          "beddingPlane",
+          "soilHorizonBoundary",
+          "oldGroundSurface",
+          "livingSurface",
+          "featureSurface",
+          "featureDetectionSurface",
+          "workedSurface",
+          "functionalSurface",
+          "clarityRecorded",
+          "shapeRecorded",
+          "gradualBoundary",
+          "irregularBoundary"
+        ],
+        "featureFillInterpretation": [
+          "workedSurface",
+          "formationDuringCutting",
+          "functionalSurface",
+          "useDeposit",
+          "intentionalBackfill",
+          "collapseDeposit",
+          "naturalInflow",
+          "pedogenicHiatus",
+          "postAbandonmentDeposit",
+          "attributionCaution"
+        ],
+        "featureLifecycleReview": [
+          "locationFormRecorded",
+          "generalFunctionCandidate",
+          "culturalLayerRelation",
+          "naturalDepositRelation",
+          "cutSurface",
+          "useSurface",
+          "individualLayerGroup",
+          "constructionProcess",
+          "useProcess",
+          "abandonmentProcess",
+          "burialProcess",
+          "scientificAnalysisData",
+          "pendingDecision"
+        ],
+        "featureBlockInclusionAssessment": [
+          "blockBearingLayer",
+          "blockMaterialRecorded",
+          "baseLayerDerived",
+          "transportedFromElsewhere",
+          "angularBlock",
+          "collapseDepositCandidate",
+          "artificialFillCandidate",
+          "formationLayerCandidate",
+          "artifactSpansBlock",
+          "exposureTimingReviewed",
+          "pendingDecision"
+        ],
+        "featureBurialProcessAssessment": [
+          "rapidBurial",
+          "gradualBurial",
+          "artificialFill",
+          "naturalInflow",
+          "waterlaidDeposit",
+          "repeatedCollapse",
+          "laminaPresent",
+          "hiatusTrace",
+          "soilFormationTrace",
+          "charcoalAshInclusion",
+          "bulkArtifactBurial",
+          "pendingDecision"
+        ],
+        "stratigraphicMisreadGuard": [
+          "colorPrimaryDivisionAvoided",
+          "freshSectionLightControlled",
+          "oxidationReductionDiscoloration",
+          "groundwaterChange",
+          "oldChannelReduction",
+          "falsePaddyBund",
+          "ironAccumulationBand",
+          "manganeseAccumulationBand",
+          "rootDiscoloration",
+          "postRelatedReduction",
+          "btBandCandidate",
+          "pedogenicPostDepositionalChange",
+          "separateLayerDecisionDeferred"
+        ],
+        "chronologyArgument": [
+          "stratigraphicRelation",
+          "associatedFinds",
+          "closedContext",
+          "absoluteDate",
+          "regionalLagRisk",
+          "heirloomOrReuseRisk",
+          "alternativeChronology",
+          "pendingDecision"
+        ],
+        "termRelation": [
+          "preferredTerm",
+          "alias",
+          "broaderTerm",
+          "narrowerTerm",
+          "domainRestricted"
+        ],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "reportOutputSeparated",
+          "fieldUsagePreserved",
+          "domainScopeSet",
+          "ambiguousSynonymFlagged",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": [
+          "specialistDictionarySource",
+          "institutionalUsage",
+          "reportOutputChecked",
+          "captionNeedsCheck",
+          "valueListCandidate",
+          "pendingDecision"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    }
+  ]
+}

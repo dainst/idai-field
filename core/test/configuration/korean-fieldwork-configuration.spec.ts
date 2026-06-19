@@ -516,6 +516,43 @@ describe('KoreanFieldwork project configuration', () => {
     });
 
 
+    it('keeps the Korean stratigraphy lifecycle sample aligned with FeatureSegment fields', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const sample = loadSample('stratigraphy-feature-lifecycle-workflow-sample.json');
+        const documents = sample.documents;
+        const documentsById = documents.reduce((index: any, document: any) => {
+            index[document.resource.id] = document;
+            return index;
+        }, {});
+
+        expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
+
+        expect(documentsById['segment-stratigraphy-fill-001'].resource.stratigraphicObservationProcedure)
+            .toContain('repeatedObservation');
+        expect(documentsById['segment-stratigraphy-fill-001'].resource.layerNamingSystem)
+            .toContain('changeHistory');
+        expect(documentsById['segment-stratigraphy-fill-001'].resource.soilTextureFieldAssessment)
+            .toContain('quantitativeAnalysisNeeded');
+        expect(documentsById['segment-stratigraphy-fill-001'].resource.featureFillInterpretation)
+            .toContain('attributionCaution');
+        expect(documentsById['segment-stratigraphy-fill-001'].resource.featureLifecycleReview)
+            .toContain('burialProcess');
+        expect(documentsById['segment-stratigraphy-fill-001'].resource.featureBlockInclusionAssessment)
+            .toContain('baseLayerDerived');
+        expect(documentsById['segment-stratigraphy-fill-001'].resource.featureBurialProcessAssessment)
+            .toContain('soilFormationTrace');
+        expect(documentsById['segment-stratigraphy-fill-001'].resource.stratigraphicMisreadGuard)
+            .toContain('btBandCandidate');
+        expect(documentsById['segment-stratigraphy-fill-001'].resource.termSearchMapping)
+            .toContain('doNotMergeToSingleTerm');
+        expect(documentsById['segment-stratigraphy-fill-001'].resource.chronologyArgument)
+            .toContain('heirloomOrReuseRisk');
+    });
+
+
     it('keeps the Korean wetland survey sample aligned with microtopography fields', () => {
 
         const configReader = new ConfigReader();

@@ -1,0 +1,370 @@
+{
+  "title": "Korean alluvial landform and layer workflow sample",
+  "purpose": "Validate that alluvial site records connect landform prediction, soil map limits, layer concept checks, cultivation feature evidence, and paleoenvironment samples without reducing them to a surface-find yes/no decision.",
+  "validationQuestions": [
+    "평야·논 지역 지표조사가 표면유물 부재를 유적 부재로 확정하지 않고 자연제방·배후습지·구하도·토양도 근거를 함께 남기는가.",
+    "충적지 층위가 층명 하나가 아니라 토양층위·퇴적층위·고고학 층명, a+b층 세트, 구지표면·검출면 차이로 검토되는가.",
+    "경작유구가 작물명이나 라미나 하나로 확정되지 않고 입지, 트렌치 방향, 기능면, 분석시료와 함께 보류 판단을 남기는가.",
+    "고환경 시료가 분석명만이 아니라 채취 위치, 보존 편향, 미검출 해석 한계와 연결되는가."
+  ],
+  "documents": [
+    {
+      "resource": {
+        "id": "op-alluvial-001",
+        "identifier": "ALLUVIAL-OP-001",
+        "shortDescription": "충적지 지표·시굴 조사 작업",
+        "category": "Operation",
+        "relations": {},
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "researchQuestionFit"
+        ],
+        "recordCreationTiming": "duringFieldwork",
+        "dailyLogContent": [
+          "workDateWeather",
+          "workArea",
+          "photoDrawingNumbers",
+          "findSampleCollection"
+        ],
+        "dailyLogReview": [
+          "sameDayWritten",
+          "photoDrawingCrossChecked",
+          "sampleListCrossChecked"
+        ],
+        "reportCrossCheck": [
+          "manuscript",
+          "drawingRegister",
+          "photoRegister",
+          "sampleRegister"
+        ]
+      }
+    },
+    {
+      "resource": {
+        "id": "survey-alluvial-001",
+        "identifier": "ALLUVIAL-SUR-001",
+        "shortDescription": "자연제방·배후습지 후보 지표조사",
+        "category": "Survey",
+        "relations": {
+          "isRecordedIn": ["op-alluvial-001"]
+        },
+        "description": "현재 논으로 이용되는 충적평야에서 표면 유물이 거의 보이지 않지만, 구하도와 자연제방 후보가 겹쳐 시굴 대상 범위를 보류 없이 배제하지 않는다.",
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "crossReviewNeeded"
+        ],
+        "recordCreationTiming": "duringFieldwork",
+        "surfaceSurveyPreparationCheck": [
+          "literatureSourcesReady",
+          "mapSourcesReady",
+          "previousReportsReady",
+          "heritageDistributionMapReady",
+          "gpsReady"
+        ],
+        "surfaceSurveyObservation": [
+          "terrainCharacteristic",
+          "locationPotential",
+          "soilEnvironment",
+          "cutSectionStratigraphy"
+        ],
+        "surfaceSurveyBiasControl": [
+          "visibilityConditionsRecorded",
+          "routeRecorded",
+          "fieldObservationFirst",
+          "postFieldLiteratureComparison"
+        ],
+        "alluvialLandformSurvey": [
+          "floodplain",
+          "naturalLeveeTop",
+          "naturalLeveeBackSlope",
+          "backswamp",
+          "paleoChannel",
+          "oldShorelineCandidate",
+          "landReadjustmentImpact",
+          "boringOrColumnLinked",
+          "trialTrenchTargetSuggested",
+          "noSurfaceFindsNotAbsence",
+          "pendingDecision"
+        ],
+        "soilMapPredictionVerification": [
+          "soilMapSheetRecorded",
+          "mapScaleRecorded",
+          "soilSeriesMapped",
+          "greatSoilGroupReclassified",
+          "alluvialSoilCandidate",
+          "graySoilCandidate",
+          "soilMapDepthLimitChecked",
+          "buriedMicroLandformNotReflected",
+          "surroundingSiteCompared",
+          "residentReportCompared",
+          "trenchResultRevisesPrediction",
+          "siteAbsenceNotConfirmed",
+          "preservationPotentialReviewed",
+          "pendingDecision"
+        ],
+        "gisPredictionEvidence": [
+          "preDevelopmentAerialPhoto",
+          "elevationModel",
+          "soilMap",
+          "relativeElevationToWatercourse"
+        ],
+        "gisPredictionFieldVerification": [
+          "fieldConfirmed",
+          "missedCandidate",
+          "scaleResolutionCaution",
+          "trialTrenchRecommended"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "feature-alluvial-cultivation-001",
+        "identifier": "ALLUVIAL-FEAT-001",
+        "shortDescription": "배후습지 경작유구 후보",
+        "category": "Feature",
+        "relations": {
+          "isRecordedIn": ["op-alluvial-001"],
+          "liesWithin": ["survey-alluvial-001"]
+        },
+        "description": "트렌치 단면에서 논둑 후보와 산화철·망간 집적이 보였으나, 작물명이나 색조만으로 논·밭을 확정하지 않고 기능면과 분석시료를 함께 검토한다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "crossReviewNeeded"
+        ],
+        "fieldOnlyMissingCheck": [
+          "featureOutline",
+          "stratigraphicBoundary",
+          "photoAngleAndScale",
+          "drawingLineReason",
+          "spatialLocation",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "cultivationFeatureContext": [
+          "alluvialLow",
+          "naturalLeveeCandidate",
+          "backswampCandidate",
+          "landReadjustmentImpact",
+          "historicalAerialPhotoChecked",
+          "modernFieldPatternNotAssumed",
+          "paddyAndDryFieldCoexist",
+          "irrigationFacilityLinked",
+          "waterManagementFirst",
+          "cropNameNotClassification",
+          "pendingDecision"
+        ],
+        "cultivationTrialTrenchStrategy": [
+          "furrowRidgeCrossTrench",
+          "paddyLeveeCrossTrench",
+          "surfaceHeightDifferenceChecked",
+          "layerBoundaryCrossed",
+          "auxiliaryTrenchAdded",
+          "distributionExtentChecked",
+          "costDurationEstimated",
+          "safetySecured",
+          "waterFlowDirectionRecorded",
+          "pendingDecision"
+        ],
+        "cultivationFeatureEvidence": [
+          "paddyLevee",
+          "paddySurface",
+          "functionalSurface",
+          "postUseDeposit",
+          "laminaPresentNaturalDeposit",
+          "heterogeneousSoilBlock",
+          "cultivationToolMark",
+          "cropRootTrace",
+          "ironManganeseSegregation",
+          "plantOpalEvidence",
+          "soilMicromorphologyNeeded",
+          "notAbsoluteCriterion",
+          "expertJudgementNeeded",
+          "pendingDecision"
+        ],
+        "cultivationChronologyAnalysis": [
+          "artifactsInCultivationLayer",
+          "lastFindDateReviewed",
+          "trenchWallFindsInsufficient",
+          "selectivePlanExcavation",
+          "amsAlternativeNeeded",
+          "oslSampleNeeded",
+          "phytolithSampleNeeded",
+          "plantRemainSampleNeeded",
+          "soilMicromorphologySampleNeeded",
+          "analysisQuestionRecorded",
+          "expectedResultRecorded",
+          "sampleLocationRecorded",
+          "sampleRepresentativenessChecked",
+          "relationshipWithDwelling",
+          "pendingDecision"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "segment-alluvial-profile-ia",
+        "identifier": "ALLUVIAL-Ia",
+        "shortDescription": "Ia 토양화층과 유구검출면 후보",
+        "category": "FeatureSegment",
+        "relations": {
+          "isRecordedIn": ["op-alluvial-001"],
+          "liesWithin": ["feature-alluvial-cultivation-001"]
+        },
+        "description": "a+b층 세트 중 토양화가 진행된 Ia층. 하부 Ib층 상면에서 유구선이 더 뚜렷해졌으나, 원래 축조면인지 토양화에 따른 검출면 하강인지 보류한다.",
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "crossReviewNeeded"
+        ],
+        "fieldOnlyMissingCheck": [
+          "stratigraphicBoundary",
+          "drawingLineReason",
+          "elevationRecorded",
+          "sameDayReview",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "alluvialLayerConceptAudit": [
+          "soilHorizonConcept",
+          "sedimentaryUnitConcept",
+          "archaeologicalLayerConcept",
+          "culturalLayerTermChecked",
+          "naturalDepositTermChecked",
+          "cultivationLayerTermChecked",
+          "abLayerSetRecorded",
+          "soilBoundaryNotSurface",
+          "depositionalBoundarySeparated",
+          "colorOnlyNotEnough",
+          "layerCorrelationCandidate",
+          "keyBedCandidate",
+          "alternativeConceptRecorded",
+          "pendingDecision"
+        ],
+        "alluvialSurfaceAttribution": [
+          "oldGroundSurface",
+          "activitySurface",
+          "featureConstructionSurface",
+          "featureDetectionSurface",
+          "originalConstructionSurfaceCandidate",
+          "bLayerSurfaceDetection",
+          "truncationCandidate",
+          "soilFormationLoweredDetection",
+          "overlyingLayerRelation",
+          "fillCharacterRecorded",
+          "sameDetectionSurfaceDifferentDate",
+          "alternativeStratigraphicAttribution",
+          "datingEvidenceSeparated",
+          "pendingDecision"
+        ],
+        "alluvialFormationProcess": [
+          "darkBandCaution",
+          "buriedPaleosolCandidate",
+          "secondaryDepositionCandidate",
+          "laminaVisible",
+          "bioturbationPossible",
+          "heterogeneousSoilBlock",
+          "naturalUnconsolidatedBlock",
+          "flameOrLoadStructure",
+          "floodDepositCandidate",
+          "normalGradingObserved",
+          "earlyMudThenSand",
+          "threeDimensionalDistributionChecked",
+          "groundWaterRedoxChange",
+          "rootOrPostDiscoloration",
+          "pendingDecision"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "sample-alluvial-phytolith-001",
+        "identifier": "ALLUVIAL-SAMP-001",
+        "shortDescription": "경작면 식물규산체·탄화식물 시료",
+        "category": "Sample",
+        "relations": {
+          "isRecordedIn": ["op-alluvial-001"],
+          "liesWithin": ["segment-alluvial-profile-ia"],
+          "isDepictedIn": ["feature-alluvial-cultivation-001"]
+        },
+        "description": "논·밭 후보 기능면의 식물규산체와 탄화식물 자료를 비교하기 위한 시료. 미검출도 보존·채취·처리 조건과 함께 해석한다.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "researchQuestionFit",
+          "observationInterpretationSeparated"
+        ],
+        "fieldOnlyMissingCheck": [
+          "samplePointMapped",
+          "sampleConditionControlled",
+          "spatialLocation",
+          "elevationRecorded",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "samplePurpose": [
+          "paleoenvironment",
+          "archaeobotany",
+          "absoluteDating",
+          "contaminationControl"
+        ],
+        "sampleCollectionHandling": [
+          "immediateCollection",
+          "dedicatedSamplingTool",
+          "pollenSurfaceRemoved",
+          "pollenContaminationBlocked",
+          "contextMapLinked",
+          "pendingDecision"
+        ],
+        "paleoenvironmentProxySampling": [
+          "pollenSample",
+          "diatomSample",
+          "plantOpalSample",
+          "carbonizedGrainFlotation",
+          "coreDepthElevationRecorded",
+          "contaminationRiskRecorded",
+          "preservationBiasRecorded",
+          "archaeologicalContextLinked",
+          "pendingDecision"
+        ],
+        "archaeobotanySampleDesign": [
+          "analysisMaterialSelected",
+          "researchQuestionSelected",
+          "samplingMethodSelected",
+          "amsCandidate",
+          "vegetationReconstructionCandidate",
+          "collectionPointDiversity",
+          "contextDistributionRecorded",
+          "pendingDecision"
+        ],
+        "plantRemainSamplingMethod": [
+          "stratifiedRandomSample",
+          "gridUnit",
+          "layerUnit",
+          "featureUnit",
+          "collectionPointRecorded",
+          "sampleBiasRecorded",
+          "pendingDecision"
+        ],
+        "plantRemainNonDetectionAssessment": [
+          "nonDetection",
+          "sampleCountInsufficient",
+          "poorPreservation",
+          "processingMethodDifference",
+          "sampleBias",
+          "researchQuestionLimit",
+          "pollenPreservationFragile",
+          "plantOpalIdentificationLimit",
+          "absenceNotAssumed",
+          "pendingDecision"
+        ],
+        "verificationState": "candidate"
+      }
+    }
+  ]
+}

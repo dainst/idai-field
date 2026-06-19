@@ -327,6 +327,41 @@ describe('KoreanFieldwork project configuration', () => {
     });
 
 
+    it('keeps the Korean alluvial landform and layer sample aligned with survey and layer fields', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const sample = loadSample('alluvial-landform-layer-workflow-sample.json');
+        const documents = sample.documents;
+        const documentsById = documents.reduce((index: any, document: any) => {
+            index[document.resource.id] = document;
+            return index;
+        }, {});
+
+        expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
+
+        expect(documentsById['survey-alluvial-001'].resource.alluvialLandformSurvey)
+            .toContain('noSurfaceFindsNotAbsence');
+        expect(documentsById['survey-alluvial-001'].resource.soilMapPredictionVerification)
+            .toContain('soilMapDepthLimitChecked');
+        expect(documentsById['segment-alluvial-profile-ia'].resource.alluvialLayerConceptAudit)
+            .toContain('abLayerSetRecorded');
+        expect(documentsById['segment-alluvial-profile-ia'].resource.alluvialSurfaceAttribution)
+            .toContain('soilFormationLoweredDetection');
+        expect(documentsById['segment-alluvial-profile-ia'].resource.alluvialFormationProcess)
+            .toContain('heterogeneousSoilBlock');
+        expect(documentsById['feature-alluvial-cultivation-001'].resource.cultivationFeatureContext)
+            .toContain('cropNameNotClassification');
+        expect(documentsById['feature-alluvial-cultivation-001'].resource.cultivationFeatureEvidence)
+            .toContain('notAbsoluteCriterion');
+        expect(documentsById['sample-alluvial-phytolith-001'].resource.paleoenvironmentProxySampling)
+            .toContain('plantOpalSample');
+        expect(documentsById['sample-alluvial-phytolith-001'].resource.plantRemainNonDetectionAssessment)
+            .toContain('absenceNotAssumed');
+    });
+
+
     it('registers the field-record preservation fields in the bundled configuration', () => {
 
         const configReader = new ConfigReader();

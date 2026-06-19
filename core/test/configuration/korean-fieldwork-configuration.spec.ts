@@ -1316,6 +1316,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('patternByLayerRecorded');
         expect(documentsById['sample-tile-kiln-001'].resource.tileKilnAnalysisPlan)
             .toContain('consumerTileComparison');
+        expect(documentsById['photo-tile-kiln-media-001'].resource.mediaQualityCheck)
+            .toContain('interiorOppositeDirectionViews');
+        expect(documentsById['photo-tile-kiln-media-001'].resource.mediaQualityCheck)
+            .toContain('colorMoistureStateCaptured');
+        expect(documentsById['drawing-tile-kiln-section-001'].resource.mediaQualityCheck)
+            .toContain('longShortAxisSectionLinked');
+        expect(documentsById['drawing-tile-kiln-section-001'].resource.mediaQualityCheck)
+            .toContain('oxidationReductionColorAnnotated');
         expect(documentsById['feature-porcelain-kiln-001'].resource.porcelainKilnSiteSystem)
             .toContain('consumerSiteComparison');
         expect(documentsById['find-porcelain-kiln-001'].resource.porcelainKilnFurnitureContext)
@@ -3832,6 +3840,15 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
             .values.stratigraphyWholePartDetailSet.label)
             .toBe('Stratigraphy whole/part/detail set');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
+            .values.interiorOppositeDirectionViews.label)
+            .toBe('Interior opposite-direction views');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
+            .values.longShortAxisSectionLinked.label)
+            .toBe('Long- and short-axis sections linked');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-mediaQualityCheck']
+            .values.oxidationReductionColorAnnotated.label)
+            .toBe('산화·환원 색표기');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-mediaQualityCheck']
             .values.levelingLinkedForRecovery.label)
             .toBe('레벨링 연계 위치복원');

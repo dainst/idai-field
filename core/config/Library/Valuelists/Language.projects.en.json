@@ -18718,6 +18718,15 @@
       "overviewCloseupPaired": {
         "label": "Overview and close-up paired"
       },
+      "associatedAreaIncluded": {
+        "label": "Associated area included"
+      },
+      "interiorOppositeDirectionViews": {
+        "label": "Interior opposite-direction views"
+      },
+      "colorMoistureStateCaptured": {
+        "label": "Color and moisture state captured"
+      },
       "stratigraphyWholePartDetailSet": {
         "label": "Stratigraphy whole/part/detail set"
       },
@@ -18736,6 +18745,12 @@
       "planSectionElevationMatched": {
         "label": "Plan, section, and elevation matched"
       },
+      "longShortAxisSectionLinked": {
+        "label": "Long- and short-axis sections linked"
+      },
+      "oxidationReductionColorAnnotated": {
+        "label": "Oxidation/reduction color annotated"
+      },
       "stageDrawingSeparated": {
         "label": "Stage drawing separated"
       },
@@ -18749,7 +18764,7 @@
         "label": "Pending decision"
       }
     },
-    "description": "Korean fieldwork media quality checks for direction, scale, control points, resolution or linework, lighting, capture format, photo-notebook matching, print annotations, source preservation, pre-recovery multi-direction photos, avoiding overhead-only and backlit shots, keeping oblique/side views, overview/close-up pairs, stratigraphy whole/part/detail sets, leveling links, and register-number or location consistency"
+    "description": "Korean fieldwork media quality checks for direction, scale, control points, resolution or linework, lighting, capture format, photo-notebook matching, print annotations, source preservation, pre-recovery multi-direction photos, avoiding overhead-only and backlit shots, keeping oblique/side views, overview/close-up pairs, associated areas, opposite-direction interior views, color and moisture state, stratigraphy whole/part/detail sets, leveling links, register-number or location consistency, linked long- and short-axis sections, and oxidation/reduction color annotations"
   },
   "KoreanFieldwork-photoCaptureSafetyReview": {
     "values": {

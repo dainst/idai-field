@@ -6964,6 +6964,15 @@
       "overviewCloseupPaired": {
         "label": "원경·근경 병행"
       },
+      "associatedAreaIncluded": {
+        "label": "관련 구역 함께 기록"
+      },
+      "interiorOppositeDirectionViews": {
+        "label": "내부 양방향 촬영"
+      },
+      "colorMoistureStateCaptured": {
+        "label": "색·수분 상태 기록"
+      },
       "stratigraphyWholePartDetailSet": {
         "label": "토층 전체·분할·세부 사진"
       },
@@ -6982,6 +6991,12 @@
       "planSectionElevationMatched": {
         "label": "평·단·입면 정합"
       },
+      "longShortAxisSectionLinked": {
+        "label": "장·단축 단면 연결"
+      },
+      "oxidationReductionColorAnnotated": {
+        "label": "산화·환원 색표기"
+      },
       "stageDrawingSeparated": {
         "label": "단계도면 분리"
       },
@@ -6995,7 +7010,7 @@
         "label": "판단 보류"
       }
     },
-    "description": "사진과 도면의 방향, 축척, 기준점, 해상도·선명도, 촬영 포맷, 사진야장 대조, 인화 사진 주기, 원본 보존, 수습 전 다방향 사진, 직상방 위주 촬영 회피, 사선·측면 사진, 원경·근경 병행, 토층 전체·분할·세부 사진, 역광 회피, 레벨링 연계, 대장번호·위치 일치 여부를 점검하기 위한 목록"
+    "description": "사진과 도면의 방향, 축척, 기준점, 해상도·선명도, 촬영 포맷, 사진야장 대조, 인화 사진 주기, 원본 보존, 수습 전 다방향 사진, 직상방 위주 촬영 회피, 사선·측면 사진, 원경·근경 병행, 관련 구역 동시 기록, 내부 양방향 촬영, 색·수분 상태, 토층 전체·분할·세부 사진, 역광 회피, 레벨링 연계, 대장번호·위치 일치, 장·단축 단면 연결, 산화·환원 색표기를 점검하기 위한 목록"
   },
   "KoreanFieldwork-photoCaptureSafetyReview": {
     "values": {

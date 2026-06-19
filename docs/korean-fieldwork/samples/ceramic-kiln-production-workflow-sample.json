@@ -514,6 +514,97 @@
     },
     {
       "resource": {
+        "id": "photo-tile-kiln-media-001",
+        "identifier": "TILE-PHOTO-001",
+        "shortDescription": "기와가마 내부와 회구부 사진",
+        "category": "Photo",
+        "relations": {
+          "isRecordedIn": ["op-ceramic-kiln-001"],
+          "isDepictedIn": ["feature-tile-kiln-001", "find-tile-kiln-001"]
+        },
+        "description": "아궁이에서 연도부 방향, 연도부에서 아궁이 방향을 모두 촬영하고, 가마와 회구부·폐기장 관계가 한 프레임에서 확인되는 사진 묶음이다.",
+        "mediaEvidenceRole": [
+          "workStageRecord",
+          "featureOutlineEvidence",
+          "findContextEvidence",
+          "reportPlateCandidate"
+        ],
+        "mediaQualityCheck": [
+          "targetPurposeClear",
+          "directionRecorded",
+          "scaleIncluded",
+          "orientationChecked",
+          "captureFormatRecorded",
+          "originalUncroppedPreserved",
+          "photoNotebookMatched",
+          "multiDirectionPhotoTaken",
+          "obliqueSidePhotoTaken",
+          "overviewCloseupPaired",
+          "associatedAreaIncluded",
+          "interiorOppositeDirectionViews",
+          "colorMoistureStateCaptured"
+        ],
+        "digitalSourcePreservation": [
+          "originalPhoto",
+          "originalImage",
+          "twoLocationBackup",
+          "backupVerified",
+          "pendingDecision"
+        ],
+        "reportCrossCheck": [
+          "photoRegister",
+          "artifactRegister",
+          "manuscript",
+          "sourceMediaBackup"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "drawing-tile-kiln-section-001",
+        "identifier": "TILE-DRAW-001",
+        "shortDescription": "기와가마 장축·단축 토층도",
+        "category": "Drawing",
+        "relations": {
+          "isRecordedIn": ["op-ceramic-kiln-001"],
+          "isDepictedIn": ["feature-tile-kiln-001"]
+        },
+        "description": "장축토층도를 회구부와 연결하고 단축토층도는 연도부, 소성실, 아궁이, 요전부로 나누어 산화·환원 색표기를 대조한다.",
+        "mediaEvidenceRole": [
+          "stratigraphicEvidence",
+          "drawingCorrectionBasis",
+          "reportPlateCandidate"
+        ],
+        "mediaQualityCheck": [
+          "targetPurposeClear",
+          "directionRecorded",
+          "scaleIncluded",
+          "orientationChecked",
+          "resolutionOrLineworkReadable",
+          "associatedAreaIncluded",
+          "planSectionElevationMatched",
+          "longShortAxisSectionLinked",
+          "oxidationReductionColorAnnotated",
+          "fieldResearcherReviewed"
+        ],
+        "digitalSourcePreservation": [
+          "originalDrawing",
+          "originalImage",
+          "twoLocationBackup",
+          "backupVerified",
+          "pendingDecision"
+        ],
+        "reportCrossCheck": [
+          "drawingRegister",
+          "manuscript",
+          "sourceMediaBackup"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
         "id": "feature-porcelain-kiln-001",
         "identifier": "PORC-KILN-001",
         "shortDescription": "자기요장 생산체계",

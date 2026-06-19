@@ -1063,8 +1063,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('heterogeneousSoilBlock');
         expect(documentsById['feature-alluvial-cultivation-001'].resource.cultivationFeatureContext)
             .toContain('cropNameNotClassification');
+        expect(documentsById['feature-alluvial-cultivation-001'].resource.cultivationIrrigationFacility)
+            .toContain('waterFlowControlChecked');
         expect(documentsById['feature-alluvial-cultivation-001'].resource.cultivationFeatureEvidence)
             .toContain('notAbsoluteCriterion');
+        expect(documentsById['feature-alluvial-cultivation-001'].resource.cultivationPlanInvestigationProcedure)
+            .toContain('lineCheckedImmediatelyAfterExposure');
         expect(documentsById['sample-alluvial-phytolith-001'].resource.paleoenvironmentProxySampling)
             .toContain('plantOpalSample');
         expect(documentsById['sample-alluvial-phytolith-001'].resource.plantRemainNonDetectionAssessment)
@@ -1512,6 +1516,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.fields.cultivationTrialTrenchStrategy.inputType).toBe('checkboxes');
         expect(featureForm.fields.cultivationFeatureEvidence.inputType).toBe('checkboxes');
         expect(featureForm.fields.cultivationChronologyAnalysis.inputType).toBe('checkboxes');
+        expect(featureForm.fields.cultivationIrrigationFacility.inputType).toBe('checkboxes');
+        expect(featureForm.fields.cultivationPlanInvestigationProcedure.inputType).toBe('checkboxes');
         expect(featureForm.fields.potteryKilnIdentification.inputType).toBe('checkboxes');
         expect(featureForm.fields.potteryKilnStructureContext.inputType).toBe('checkboxes');
         expect(featureForm.fields.potteryKilnPartInvestigation.inputType).toBe('checkboxes');
@@ -1969,6 +1975,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-cultivationFeatureEvidence');
         expect(featureForm.valuelists.cultivationChronologyAnalysis)
             .toBe('KoreanFieldwork-cultivationChronologyAnalysis');
+        expect(featureForm.valuelists.cultivationIrrigationFacility)
+            .toBe('KoreanFieldwork-cultivationIrrigationFacility');
+        expect(featureForm.valuelists.cultivationPlanInvestigationProcedure)
+            .toBe('KoreanFieldwork-cultivationPlanInvestigationProcedure');
         expect(featureForm.valuelists.potteryKilnIdentification)
             .toBe('KoreanFieldwork-potteryKilnIdentification');
         expect(featureForm.valuelists.potteryKilnStructureContext)
@@ -2509,6 +2519,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Cultivation feature evidence');
         expect(languages.en.categories.Feature.fields.cultivationChronologyAnalysis.label)
             .toBe('Cultivation chronology and analysis');
+        expect(languages.en.categories.Feature.fields.cultivationIrrigationFacility.label)
+            .toBe('Cultivation irrigation facility');
+        expect(languages.en.categories.Feature.fields.cultivationPlanInvestigationProcedure.label)
+            .toBe('Cultivation plan investigation procedure');
         expect(languages.en.categories.Feature.fields.potteryKilnIdentification.label)
             .toBe('Pottery kiln identification');
         expect(languages.en.categories.Feature.fields.potteryKilnStructureContext.label)
@@ -3276,6 +3290,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-cultivationChronologyAnalysis']
             .values.analysisQuestionRecorded.label)
             .toBe('Analysis question recorded');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-cultivationIrrigationFacility']
+            .values.waterFlowControlChecked.label)
+            .toBe('Water-flow control checked');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-cultivationPlanInvestigationProcedure']
+            .values.lineCheckedImmediatelyAfterExposure.label)
+            .toBe('Line checked immediately after exposure');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-potteryKilnIdentification']
             .values.structuralKiln.label)
             .toBe('Structural kiln');
@@ -3715,6 +3735,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-cultivationFeatureContext']
             .values.cropNameNotClassification.label)
             .toBe('작물명으로 논밭 확정 금지');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-cultivationIrrigationFacility']
+            .values.waterFlowControlChecked.label)
+            .toBe('물흐름 조절 확인');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-cultivationPlanInvestigationProcedure']
+            .values.lineCheckedImmediatelyAfterExposure.label)
+            .toBe('노출 즉시 선 확인');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-tileKilnFindContext']
             .values.postAbandonmentIntrusion.label)
             .toBe('폐기 후 유입품');

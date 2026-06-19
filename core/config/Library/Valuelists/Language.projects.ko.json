@@ -4745,6 +4745,51 @@
     },
     "description": "경작유구의 유물 연대, 선택적 평면 노출, AMS·OSL·환경시료, 분석 질문, 주거지·노지·수혈 관계를 연대 판단과 묶어 관리하기 위한 목록"
   },
+  "KoreanFieldwork-cultivationIrrigationFacility": {
+    "values": {
+      "weirBo": { "label": "보" },
+      "reservoir": { "label": "저수지" },
+      "waterChannel": { "label": "수로" },
+      "mainCanal": { "label": "간선수로" },
+      "branchCanal": { "label": "지선수로" },
+      "catchmentFacility": { "label": "집수시설" },
+      "waterInletOutlet": { "label": "물꼬·유입유출부" },
+      "woodStakeRow": { "label": "말목열" },
+      "twigBundle": { "label": "잔가지 묶음" },
+      "herbaceousMat": { "label": "초본류 깔림" },
+      "clayReinforcement": { "label": "점토 보강" },
+      "leafLayerTechnique": { "label": "부엽공법" },
+      "soilBagLeakBlock": { "label": "토낭 누수차단" },
+      "waterFlowControlChecked": { "label": "물흐름 조절 확인" },
+      "irrigationSystemLinked": { "label": "관개체계 연결" },
+      "facilityFunctionUncertain": { "label": "시설 기능 불확실" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "경작유구의 보, 저수지, 수로, 집수시설, 구성재, 물흐름 조절, 시설 기능 불확실성을 논밭 판정과 분리해 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-cultivationPlanInvestigationProcedure": {
+    "values": {
+      "trialTrenchBackfilled": { "label": "시굴 트렌치 복구" },
+      "stratigraphyRechecked": { "label": "토층 재조사" },
+      "additionalTrenchOpened": { "label": "추가 트렌치 개설" },
+      "planLayerSelected": { "label": "평면조사층 선정" },
+      "lineCheckedImmediatelyAfterExposure": { "label": "노출 즉시 선 확인" },
+      "smallTrenchUsed": { "label": "소규모 트렌치 사용" },
+      "gridInvestigation": { "label": "구획조사" },
+      "multipleInvestigatorsJointDecision": { "label": "복수 조사원 공동판단" },
+      "upperDepositThicknessRecorded": { "label": "상부퇴적토 두께 기록" },
+      "machineStrippingHeightStopped": { "label": "중장비 제토 높이 멈춤" },
+      "manualTopSurfaceExposed": { "label": "인력 최상단 노출" },
+      "furrowSoilLeft": { "label": "고랑 흙 남김" },
+      "orthogonalTrenchUsed": { "label": "직교 트렌치" },
+      "sectionPlanCompared": { "label": "단면·평면 병행 대조" },
+      "weatherEquipmentLaborChecked": { "label": "기후·장비·인부 점검" },
+      "rapidSectionExposure": { "label": "신속 구간 노출" },
+      "surfaceDistortionChecked": { "label": "경작면 변형 확인" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "경작유구의 논·밭 평면 노출에서 시굴 트렌치 복구, 조사층 선정, 즉시 선 확인, 중장비 제토 높이, 인력 노출, 단면·평면 대조를 관리하기 위한 목록"
+  },
   "KoreanFieldwork-potteryKilnIdentification": {
     "values": {
       "firingFeature": { "label": "소성유구" },

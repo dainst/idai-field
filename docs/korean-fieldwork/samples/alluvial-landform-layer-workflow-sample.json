@@ -158,6 +158,19 @@
           "cropNameNotClassification",
           "pendingDecision"
         ],
+        "cultivationIrrigationFacility": [
+          "weirBo",
+          "waterChannel",
+          "branchCanal",
+          "catchmentFacility",
+          "waterInletOutlet",
+          "woodStakeRow",
+          "clayReinforcement",
+          "waterFlowControlChecked",
+          "irrigationSystemLinked",
+          "facilityFunctionUncertain",
+          "pendingDecision"
+        ],
         "cultivationTrialTrenchStrategy": [
           "furrowRidgeCrossTrench",
           "paddyLeveeCrossTrench",
@@ -201,6 +214,24 @@
           "sampleLocationRecorded",
           "sampleRepresentativenessChecked",
           "relationshipWithDwelling",
+          "pendingDecision"
+        ],
+        "cultivationPlanInvestigationProcedure": [
+          "trialTrenchBackfilled",
+          "stratigraphyRechecked",
+          "additionalTrenchOpened",
+          "planLayerSelected",
+          "lineCheckedImmediatelyAfterExposure",
+          "smallTrenchUsed",
+          "gridInvestigation",
+          "multipleInvestigatorsJointDecision",
+          "upperDepositThicknessRecorded",
+          "machineStrippingHeightStopped",
+          "manualTopSurfaceExposed",
+          "furrowSoilLeft",
+          "orthogonalTrenchUsed",
+          "sectionPlanCompared",
+          "surfaceDistortionChecked",
           "pendingDecision"
         ],
         "verificationState": "pendingDecision"

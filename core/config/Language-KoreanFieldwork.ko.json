@@ -691,6 +691,12 @@
         "cultivationChronologyAnalysis": {
           "label": "경작유구 연대·분석"
         },
+        "cultivationIrrigationFacility": {
+          "label": "경작유구 관개시설"
+        },
+        "cultivationPlanInvestigationProcedure": {
+          "label": "경작유구 평면조사 절차"
+        },
         "potteryKilnIdentification": {
           "label": "토기가마 판정"
         },

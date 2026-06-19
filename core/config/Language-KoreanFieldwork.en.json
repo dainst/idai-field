@@ -691,6 +691,12 @@
         "cultivationChronologyAnalysis": {
           "label": "Cultivation chronology and analysis"
         },
+        "cultivationIrrigationFacility": {
+          "label": "Cultivation irrigation facility"
+        },
+        "cultivationPlanInvestigationProcedure": {
+          "label": "Cultivation plan investigation procedure"
+        },
         "potteryKilnIdentification": {
           "label": "Pottery kiln identification"
         },

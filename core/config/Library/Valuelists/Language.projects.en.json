@@ -16499,6 +16499,51 @@
     },
     "description": "Cultivation-feature chronology and analysis list for tying artifacts, selective exposure, AMS/OSL and environmental samples, analytical questions, and feature relationships to the dating argument"
   },
+  "KoreanFieldwork-cultivationIrrigationFacility": {
+    "values": {
+      "weirBo": { "label": "Weir/bo" },
+      "reservoir": { "label": "Reservoir" },
+      "waterChannel": { "label": "Water channel" },
+      "mainCanal": { "label": "Main canal" },
+      "branchCanal": { "label": "Branch canal" },
+      "catchmentFacility": { "label": "Catchment facility" },
+      "waterInletOutlet": { "label": "Water inlet/outlet" },
+      "woodStakeRow": { "label": "Wood stake row" },
+      "twigBundle": { "label": "Twig bundle" },
+      "herbaceousMat": { "label": "Herbaceous mat" },
+      "clayReinforcement": { "label": "Clay reinforcement" },
+      "leafLayerTechnique": { "label": "Leaf-layer technique" },
+      "soilBagLeakBlock": { "label": "Soil-bag leak block" },
+      "waterFlowControlChecked": { "label": "Water-flow control checked" },
+      "irrigationSystemLinked": { "label": "Irrigation system linked" },
+      "facilityFunctionUncertain": { "label": "Facility function uncertain" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Cultivation-feature irrigation checks for separating weirs, reservoirs, water channels, catchment structures, construction materials, water-flow control, and uncertain facility functions"
+  },
+  "KoreanFieldwork-cultivationPlanInvestigationProcedure": {
+    "values": {
+      "trialTrenchBackfilled": { "label": "Trial trench backfilled" },
+      "stratigraphyRechecked": { "label": "Stratigraphy rechecked" },
+      "additionalTrenchOpened": { "label": "Additional trench opened" },
+      "planLayerSelected": { "label": "Plan layer selected" },
+      "lineCheckedImmediatelyAfterExposure": { "label": "Line checked immediately after exposure" },
+      "smallTrenchUsed": { "label": "Small trench used" },
+      "gridInvestigation": { "label": "Grid investigation" },
+      "multipleInvestigatorsJointDecision": { "label": "Multiple investigators joint decision" },
+      "upperDepositThicknessRecorded": { "label": "Upper deposit thickness recorded" },
+      "machineStrippingHeightStopped": { "label": "Machine stripping height stopped" },
+      "manualTopSurfaceExposed": { "label": "Manual top surface exposed" },
+      "furrowSoilLeft": { "label": "Furrow soil left" },
+      "orthogonalTrenchUsed": { "label": "Orthogonal trench used" },
+      "sectionPlanCompared": { "label": "Section and plan compared" },
+      "weatherEquipmentLaborChecked": { "label": "Weather/equipment/labor checked" },
+      "rapidSectionExposure": { "label": "Rapid section exposure" },
+      "surfaceDistortionChecked": { "label": "Surface distortion checked" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Cultivation-feature plan investigation checks for paddy and dry-field exposure, trench backfill, layer selection, immediate line confirmation, machine stripping height, manual exposure, and section-plan comparison"
+  },
   "KoreanFieldwork-potteryKilnIdentification": {
     "values": {
       "firingFeature": { "label": "Firing feature" },

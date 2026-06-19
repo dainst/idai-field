@@ -1782,6 +1782,14 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "cultivationIrrigationFacility": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "cultivationPlanInvestigationProcedure": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "potteryKilnIdentification": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1978,6 +1986,8 @@
         "cultivationTrialTrenchStrategy": "KoreanFieldwork-cultivationTrialTrenchStrategy",
         "cultivationFeatureEvidence": "KoreanFieldwork-cultivationFeatureEvidence",
         "cultivationChronologyAnalysis": "KoreanFieldwork-cultivationChronologyAnalysis",
+        "cultivationIrrigationFacility": "KoreanFieldwork-cultivationIrrigationFacility",
+        "cultivationPlanInvestigationProcedure": "KoreanFieldwork-cultivationPlanInvestigationProcedure",
         "potteryKilnIdentification": "KoreanFieldwork-potteryKilnIdentification",
         "potteryKilnStructureContext": "KoreanFieldwork-potteryKilnStructureContext",
         "potteryKilnPartInvestigation": "KoreanFieldwork-potteryKilnPartInvestigation",
@@ -2088,6 +2098,8 @@
             "cultivationTrialTrenchStrategy",
             "cultivationFeatureEvidence",
             "cultivationChronologyAnalysis",
+            "cultivationIrrigationFacility",
+            "cultivationPlanInvestigationProcedure",
             "potteryKilnIdentification",
             "potteryKilnStructureContext",
             "potteryKilnPartInvestigation",

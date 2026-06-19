@@ -33928,6 +33928,134 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-investigationRequestIntake": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "requestReceived": {},
+      "projectOwnerBasicData": {},
+      "priorSurveyResultSecured": {},
+      "projectPlanSecured": {},
+      "photoDrawingSecured": {},
+      "fieldReconnaissance": {},
+      "intakeOfficerUnified": {},
+      "complaintDuplicationPrevented": {},
+      "specialistInstitutionReferral": {},
+      "planPrerequisitesReviewed": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "requestReceived",
+      "projectOwnerBasicData",
+      "priorSurveyResultSecured",
+      "projectPlanSecured",
+      "photoDrawingSecured",
+      "fieldReconnaissance",
+      "intakeOfficerUnified",
+      "complaintDuplicationPrevented",
+      "specialistInstitutionReferral",
+      "planPrerequisitesReviewed",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-investigationPlanChangeRecord": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "investigationPeriodChanged": {},
+      "budgetChanged": {},
+      "crewChanged": {},
+      "featureFindIncrease": {},
+      "permitChangeNeeded": {},
+      "designContractChange": {},
+      "clientExplanation": {},
+      "changeEvidenceDocument": {},
+      "scopeChangeReason": {},
+      "scheduleRecalculated": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "investigationPeriodChanged",
+      "budgetChanged",
+      "crewChanged",
+      "featureFindIncrease",
+      "permitChangeNeeded",
+      "designContractChange",
+      "clientExplanation",
+      "changeEvidenceDocument",
+      "scopeChangeReason",
+      "scheduleRecalculated",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-expertReviewMeeting": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "importantFeatureFind": {},
+      "progressDirectionDecision": {},
+      "preservationPlanReview": {},
+      "completionStageReview": {},
+      "partialCompletionReview": {},
+      "participantQualification": {},
+      "conflictOfInterestExcluded": {},
+      "submittedDrawingSet": {},
+      "submittedPhotoSet": {},
+      "findStatusSubmitted": {},
+      "divergentOpinionPreserved": {},
+      "followUpDecision": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "importantFeatureFind",
+      "progressDirectionDecision",
+      "preservationPlanReview",
+      "completionStageReview",
+      "partialCompletionReview",
+      "participantQualification",
+      "conflictOfInterestExcluded",
+      "submittedDrawingSet",
+      "submittedPhotoSet",
+      "findStatusSubmitted",
+      "divergentOpinionPreserved",
+      "followUpDecision",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-partialCompletionPackage": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "summaryReport": {},
+      "areaBoundary": {},
+      "trenchStatus": {},
+      "featureStatus": {},
+      "findStatus": {},
+      "relatedPhotos": {},
+      "institutionOpinion": {},
+      "constructionScope": {},
+      "constructionSchedule": {},
+      "remainingUninvestigatedArea": {},
+      "backfillSafetyMeasure": {},
+      "notificationResult": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "summaryReport",
+      "areaBoundary",
+      "trenchStatus",
+      "featureStatus",
+      "findStatus",
+      "relatedPhotos",
+      "institutionOpinion",
+      "constructionScope",
+      "constructionSchedule",
+      "remainingUninvestigatedArea",
+      "backfillSafetyMeasure",
+      "notificationResult",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-permitConditionCompliance": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",
@@ -34013,6 +34141,36 @@
       "summaryReport",
       "finalReportSourceLinked",
       "handoverConfirmed",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-recordTransferManagementSystem": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "sourceDatabase": {},
+      "backupCopy": {},
+      "fileLossPrevention": {},
+      "handoverOfficer": {},
+      "reportWritingAssignment": {},
+      "teamReviewSystem": {},
+      "accessPermission": {},
+      "longTermArchiveLocation": {},
+      "handoverDateRecorded": {},
+      "receivingInstitutionConfirmed": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "sourceDatabase",
+      "backupCopy",
+      "fileLossPrevention",
+      "handoverOfficer",
+      "reportWritingAssignment",
+      "teamReviewSystem",
+      "accessPermission",
+      "longTermArchiveLocation",
+      "handoverDateRecorded",
+      "receivingInstitutionConfirmed",
       "pendingDecision"
     ]
   },
@@ -34419,6 +34577,48 @@
       "stratigraphySurvey",
       "watchingBrief",
       "chanceFindReport",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-surfaceSurveyResultProcessing": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "projectDistanceReviewed": {},
+      "followUpMeasure": {},
+      "watchingBrief": {},
+      "confirmationSurvey": {},
+      "sampleSurvey": {},
+      "trialExcavation": {},
+      "fullExcavation": {},
+      "preservationInPlace": {},
+      "relocationRestoration": {},
+      "followUpSurveyScope": {},
+      "preservationPlan": {},
+      "findInventory": {},
+      "findRegister": {},
+      "findStorageReceipt": {},
+      "digitalRegistration": {},
+      "existingSiteBoundaryRevision": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "projectDistanceReviewed",
+      "followUpMeasure",
+      "watchingBrief",
+      "confirmationSurvey",
+      "sampleSurvey",
+      "trialExcavation",
+      "fullExcavation",
+      "preservationInPlace",
+      "relocationRestoration",
+      "followUpSurveyScope",
+      "preservationPlan",
+      "findInventory",
+      "findRegister",
+      "findStorageReceipt",
+      "digitalRegistration",
+      "existingSiteBoundaryRevision",
       "pendingDecision"
     ]
   },

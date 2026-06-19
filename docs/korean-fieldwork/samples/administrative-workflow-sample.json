@@ -1,0 +1,206 @@
+{
+  "title": "Korean administrative workflow and review package sample",
+  "purpose": "Validate that request intake, plan changes, expert review meetings, partial completion packages, surface survey result processing, and record transfer management stay connected in the Korean fieldwork configuration.",
+  "validationQuestions": [
+    "조사의뢰 접수 단계의 기초자료와 현장답사 이력이 조사계획 수립 근거로 남는가.",
+    "전문가 검토회의와 부분완료 신청이 도면·사진·유물현황·조사기관 의견과 함께 추적되는가.",
+    "지표조사 결과 처리와 자료 인수인계가 보고서 이후의 행정·보존 흐름으로 이어지는가."
+  ],
+  "documents": [
+    {
+      "resource": {
+        "id": "project-admin-workflow-001",
+        "identifier": "ADMIN-001",
+        "shortName": "행정·검토회의 샘플",
+        "shortDescription": "조사의뢰부터 부분완료와 자료 인수인계까지의 행정 흐름 검증",
+        "category": "Project",
+        "relations": {},
+        "description": "강의자료의 조사계획 수립, 전문가 검토회의, 부분완료, 지표조사 결과 처리 요구사항을 프로젝트 단위에서 검증하는 샘플.",
+        "investigationAdministration": [
+          "requestReceived",
+          "priorRecordsSecured",
+          "fieldReconnaissance",
+          "planPrepared",
+          "startReported",
+          "fieldworkInProgress",
+          "completionMaterialsSubmitted"
+        ],
+        "investigationRequestIntake": [
+          "requestReceived",
+          "projectOwnerBasicData",
+          "priorSurveyResultSecured",
+          "projectPlanSecured",
+          "photoDrawingSecured",
+          "fieldReconnaissance",
+          "intakeOfficerUnified",
+          "specialistInstitutionReferral",
+          "planPrerequisitesReviewed"
+        ],
+        "investigationPlanChangeRecord": [
+          "investigationPeriodChanged",
+          "featureFindIncrease",
+          "permitChangeNeeded",
+          "designContractChange",
+          "clientExplanation",
+          "changeEvidenceDocument",
+          "scheduleRecalculated"
+        ],
+        "expertReviewMeeting": [
+          "importantFeatureFind",
+          "progressDirectionDecision",
+          "preservationPlanReview",
+          "partialCompletionReview",
+          "participantQualification",
+          "conflictOfInterestExcluded",
+          "submittedDrawingSet",
+          "submittedPhotoSet",
+          "findStatusSubmitted",
+          "divergentOpinionPreserved",
+          "followUpDecision"
+        ],
+        "partialCompletionPackage": [
+          "summaryReport",
+          "areaBoundary",
+          "trenchStatus",
+          "featureStatus",
+          "findStatus",
+          "relatedPhotos",
+          "institutionOpinion",
+          "constructionScope",
+          "constructionSchedule",
+          "remainingUninvestigatedArea",
+          "backfillSafetyMeasure",
+          "notificationResult"
+        ],
+        "recordTransferManagementSystem": [
+          "sourceDatabase",
+          "backupCopy",
+          "fileLossPrevention",
+          "handoverOfficer",
+          "reportWritingAssignment",
+          "teamReviewSystem",
+          "accessPermission",
+          "longTermArchiveLocation"
+        ],
+        "permitConditionCompliance": [
+          "permitDocumentOnSite",
+          "investigationPeriodChecked",
+          "siteInspectionCooperation",
+          "changeReview"
+        ],
+        "preservationActionTracking": [
+          "preservationNotice",
+          "expertOnSite",
+          "constructionStopStatus",
+          "completionReport",
+          "projectOwnerNotified"
+        ],
+        "reportCrossCheck": [
+          "manuscript",
+          "drawingRegister",
+          "photoRegister",
+          "artifactRegister",
+          "dailyLog"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "op-admin-review-001",
+        "identifier": "REVIEW-001",
+        "shortDescription": "전문가 검토회의와 부분완료 현장 운영기록",
+        "category": "Operation",
+        "relations": {
+          "isRecordedIn": ["project-admin-workflow-001"]
+        },
+        "recordCreationTiming": "duringFieldwork",
+        "dailyLogContent": [
+          "workArea",
+          "featureProgress",
+          "visitorInstruction",
+          "safetyIssue",
+          "changeReason",
+          "nextWorkPlan"
+        ],
+        "expertReviewMeeting": [
+          "importantFeatureFind",
+          "partialCompletionReview",
+          "submittedDrawingSet",
+          "submittedPhotoSet",
+          "divergentOpinionPreserved",
+          "followUpDecision"
+        ],
+        "partialCompletionPackage": [
+          "summaryReport",
+          "trenchStatus",
+          "featureStatus",
+          "findStatus",
+          "relatedPhotos",
+          "institutionOpinion",
+          "remainingUninvestigatedArea",
+          "notificationResult"
+        ],
+        "recordTransferManagementSystem": [
+          "sourceDatabase",
+          "backupCopy",
+          "handoverOfficer",
+          "teamReviewSystem",
+          "accessPermission"
+        ],
+        "reportCrossCheck": [
+          "manuscript",
+          "drawingRegister",
+          "photoRegister",
+          "numberConversionTable"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "survey-admin-surface-001",
+        "identifier": "SUR-ADMIN-001",
+        "shortDescription": "지표조사 결과 처리와 후속조치",
+        "category": "Survey",
+        "relations": {
+          "isRecordedIn": ["project-admin-workflow-001"]
+        },
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "crossReviewNeeded"
+        ],
+        "recordCreationTiming": "handoverStage",
+        "surfaceSurveyObservation": [
+          "terrainCharacteristic",
+          "locationPotential",
+          "artifactScatter",
+          "gpsPosition"
+        ],
+        "surfaceSurveyFollowUp": [
+          "highPotential",
+          "additionalSurveyNeeded",
+          "sampleSurvey",
+          "testExcavation",
+          "pendingDecision"
+        ],
+        "surfaceSurveyResultProcessing": [
+          "projectDistanceReviewed",
+          "followUpMeasure",
+          "watchingBrief",
+          "confirmationSurvey",
+          "sampleSurvey",
+          "trialExcavation",
+          "preservationPlan",
+          "findInventory",
+          "findRegister",
+          "findStorageReceipt",
+          "digitalRegistration",
+          "existingSiteBoundaryRevision"
+        ],
+        "verificationState": "needsRecheck"
+      }
+    }
+  ]
+}

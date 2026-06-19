@@ -11,7 +11,27 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "investigationRequestIntake": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "investigationPlanChangeRecord": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "expertReviewMeeting": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "partialCompletionPackage": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "investigationRecordHandover": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "recordTransferManagementSystem": {
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
@@ -39,7 +59,12 @@
       "valuelists": {
         "digitalSourcePreservation": "KoreanFieldwork-digitalSourcePreservation",
         "investigationAdministration": "KoreanFieldwork-investigationAdministration",
+        "investigationRequestIntake": "KoreanFieldwork-investigationRequestIntake",
+        "investigationPlanChangeRecord": "KoreanFieldwork-investigationPlanChangeRecord",
+        "expertReviewMeeting": "KoreanFieldwork-expertReviewMeeting",
+        "partialCompletionPackage": "KoreanFieldwork-partialCompletionPackage",
         "investigationRecordHandover": "KoreanFieldwork-investigationRecordHandover",
+        "recordTransferManagementSystem": "KoreanFieldwork-recordTransferManagementSystem",
         "permitConditionCompliance": "KoreanFieldwork-permitConditionCompliance",
         "preservationActionTracking": "KoreanFieldwork-preservationActionTracking",
         "reportCrossCheck": "KoreanFieldwork-reportCrossCheck",
@@ -63,9 +88,14 @@
           "name": "koreanFieldwork",
           "fields": [
             "investigationAdministration",
+            "investigationRequestIntake",
+            "investigationPlanChangeRecord",
+            "expertReviewMeeting",
+            "partialCompletionPackage",
             "permitConditionCompliance",
             "preservationActionTracking",
             "investigationRecordHandover",
+            "recordTransferManagementSystem",
             "digitalSourcePreservation",
             "reportCrossCheck",
             "reportEvaluationFeedback",
@@ -217,6 +247,18 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "expertReviewMeeting": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "partialCompletionPackage": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "recordTransferManagementSystem": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "recordCreationTiming": {
           "inputType": "dropdown",
           "constraintIndexed": true
@@ -243,6 +285,9 @@
         "gpsNmeaRecord": "KoreanFieldwork-gpsNmeaRecord",
         "fieldDatabaseOperationRisk": "KoreanFieldwork-fieldDatabaseOperationRisk",
         "investigationRecordHandover": "KoreanFieldwork-investigationRecordHandover",
+        "expertReviewMeeting": "KoreanFieldwork-expertReviewMeeting",
+        "partialCompletionPackage": "KoreanFieldwork-partialCompletionPackage",
+        "recordTransferManagementSystem": "KoreanFieldwork-recordTransferManagementSystem",
         "personalNotebookArchive": "KoreanFieldwork-personalNotebookArchive",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "reportCrossCheck": "KoreanFieldwork-reportCrossCheck",
@@ -278,6 +323,9 @@
             "fieldDatabaseOperationRisk",
             "personalNotebookArchive",
             "investigationRecordHandover",
+            "expertReviewMeeting",
+            "partialCompletionPackage",
+            "recordTransferManagementSystem",
             "digitalSourcePreservation",
             "verificationState",
             "reportCrossCheck",
@@ -314,6 +362,10 @@
           "constraintIndexed": true
         },
         "surfaceSurveyFollowUp": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "surfaceSurveyResultProcessing": {
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
@@ -412,6 +464,7 @@
         "surfaceSurveyObservation": "KoreanFieldwork-surfaceSurveyObservation",
         "surfaceSurveyBiasControl": "KoreanFieldwork-surfaceSurveyBiasControl",
         "surfaceSurveyFollowUp": "KoreanFieldwork-surfaceSurveyFollowUp",
+        "surfaceSurveyResultProcessing": "KoreanFieldwork-surfaceSurveyResultProcessing",
         "surfaceSurveyPreparationCheck": "KoreanFieldwork-surfaceSurveyPreparationCheck",
         "surfaceSurveyFieldSequence": "KoreanFieldwork-surfaceSurveyFieldSequence",
         "surfaceSurveyMapRequirement": "KoreanFieldwork-surfaceSurveyMapRequirement",
@@ -446,6 +499,7 @@
             "surfaceSurveyObservation",
             "surfaceSurveyBiasControl",
             "surfaceSurveyFollowUp",
+            "surfaceSurveyResultProcessing",
             "surfaceSurveyPreparationCheck",
             "surfaceSurveyFieldSequence",
             "surfaceSurveyMapRequirement",

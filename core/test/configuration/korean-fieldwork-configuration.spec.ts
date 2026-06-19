@@ -155,6 +155,37 @@ describe('KoreanFieldwork project configuration', () => {
     });
 
 
+    it('keeps the Korean administrative workflow sample aligned with review package fields', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const sample = loadSample('administrative-workflow-sample.json');
+        const documents = sample.documents;
+        const documentsById = documents.reduce((index: any, document: any) => {
+            index[document.resource.id] = document;
+            return index;
+        }, {});
+
+        expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
+
+        expect(documentsById['project-admin-workflow-001'].resource.investigationRequestIntake)
+            .toContain('projectOwnerBasicData');
+        expect(documentsById['project-admin-workflow-001'].resource.investigationPlanChangeRecord)
+            .toContain('permitChangeNeeded');
+        expect(documentsById['project-admin-workflow-001'].resource.expertReviewMeeting)
+            .toContain('divergentOpinionPreserved');
+        expect(documentsById['project-admin-workflow-001'].resource.partialCompletionPackage)
+            .toContain('remainingUninvestigatedArea');
+        expect(documentsById['project-admin-workflow-001'].resource.recordTransferManagementSystem)
+            .toContain('sourceDatabase');
+        expect(documentsById['op-admin-review-001'].resource.partialCompletionPackage)
+            .toContain('notificationResult');
+        expect(documentsById['survey-admin-surface-001'].resource.surfaceSurveyResultProcessing)
+            .toContain('digitalRegistration');
+    });
+
+
     it('registers the field-record preservation fields in the bundled configuration', () => {
 
         const configReader = new ConfigReader();
@@ -197,10 +228,19 @@ describe('KoreanFieldwork project configuration', () => {
         expect(operationForm.fields.digitalSourcePreservation.inputType).toBe('checkboxes');
         expect(operationForm.fields.reportEvaluationFeedback.inputType).toBe('checkboxes');
         expect(projectForm.fields.digitalSourcePreservation.inputType).toBe('checkboxes');
+        expect(projectForm.fields.investigationRequestIntake.inputType).toBe('checkboxes');
+        expect(projectForm.fields.investigationPlanChangeRecord.inputType).toBe('checkboxes');
+        expect(projectForm.fields.expertReviewMeeting.inputType).toBe('checkboxes');
+        expect(projectForm.fields.partialCompletionPackage.inputType).toBe('checkboxes');
+        expect(projectForm.fields.recordTransferManagementSystem.inputType).toBe('checkboxes');
         expect(projectForm.fields.reportEvaluationFeedback.inputType).toBe('checkboxes');
+        expect(operationForm.fields.expertReviewMeeting.inputType).toBe('checkboxes');
+        expect(operationForm.fields.partialCompletionPackage.inputType).toBe('checkboxes');
+        expect(operationForm.fields.recordTransferManagementSystem.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyObservation.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyBiasControl.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyFollowUp.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.surfaceSurveyResultProcessing.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyPreparationCheck.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyFieldSequence.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyMapRequirement.inputType).toBe('checkboxes');
@@ -400,6 +440,22 @@ describe('KoreanFieldwork project configuration', () => {
         expect(operationForm.valuelists.dailyLogContent).toBe('KoreanFieldwork-dailyLogContent');
         expect(operationForm.valuelists.dailyLogReview).toBe('KoreanFieldwork-dailyLogReview');
         expect(operationForm.valuelists.digitalSourcePreservation).toBe('KoreanFieldwork-digitalSourcePreservation');
+        expect(projectForm.valuelists.investigationRequestIntake)
+            .toBe('KoreanFieldwork-investigationRequestIntake');
+        expect(projectForm.valuelists.investigationPlanChangeRecord)
+            .toBe('KoreanFieldwork-investigationPlanChangeRecord');
+        expect(projectForm.valuelists.expertReviewMeeting).toBe('KoreanFieldwork-expertReviewMeeting');
+        expect(projectForm.valuelists.partialCompletionPackage)
+            .toBe('KoreanFieldwork-partialCompletionPackage');
+        expect(projectForm.valuelists.recordTransferManagementSystem)
+            .toBe('KoreanFieldwork-recordTransferManagementSystem');
+        expect(operationForm.valuelists.expertReviewMeeting).toBe('KoreanFieldwork-expertReviewMeeting');
+        expect(operationForm.valuelists.partialCompletionPackage)
+            .toBe('KoreanFieldwork-partialCompletionPackage');
+        expect(operationForm.valuelists.recordTransferManagementSystem)
+            .toBe('KoreanFieldwork-recordTransferManagementSystem');
+        expect(surveyForm.valuelists.surfaceSurveyResultProcessing)
+            .toBe('KoreanFieldwork-surfaceSurveyResultProcessing');
         expect(operationForm.valuelists.reportEvaluationFeedback)
             .toBe('KoreanFieldwork-reportEvaluationFeedback');
         expect(projectForm.valuelists.reportEvaluationFeedback)

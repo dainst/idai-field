@@ -11863,6 +11863,24 @@
       "machineBladeObserved": {
         "label": "Machine blade direction observed"
       },
+      "dailyStrippingCapacityRecorded": {
+        "label": "Daily stripping capacity recorded"
+      },
+      "excavatorClassCombinationReviewed": {
+        "label": "Excavator class/combination reviewed"
+      },
+      "topsoilThicknessVolumeRecorded": {
+        "label": "Topsoil thickness and volume recorded"
+      },
+      "spoilStockpileHaulagePlanned": {
+        "label": "Spoil stockpile/haulage planned"
+      },
+      "naturalSoilOverburdenChecked": {
+        "label": "Natural-soil overburden checked"
+      },
+      "featureFillDifferenceCompared": {
+        "label": "Feature-fill difference compared"
+      },
       "workerSafetyDistanceSecured": {
         "label": "Worker safety distance secured"
       },
@@ -11897,7 +11915,7 @@
         "label": "Pending decision"
       }
     },
-    "description": "Korean field operation checks for grids, baulks, drainage, descent excavation, machine stripping, benchmark sections, photos, safety controls, and pre-withdrawal record audits"
+    "description": "Korean field operation checks for grids, baulks, drainage, descent excavation, machine stripping, daily stripping capacity, excavator combinations, topsoil thickness and volume, spoil placement or haulage, overburden above natural soil, feature-fill differences, benchmark sections, photos, safety controls, and pre-withdrawal record audits"
   },
   "KoreanFieldwork-fieldOnlyMissingCheck": {
     "values": {

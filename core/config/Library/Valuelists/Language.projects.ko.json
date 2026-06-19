@@ -109,6 +109,24 @@
       "machineBladeObserved": {
         "label": "삽날 진행방향 관찰"
       },
+      "dailyStrippingCapacityRecorded": {
+        "label": "일일 제토량 기록"
+      },
+      "excavatorClassCombinationReviewed": {
+        "label": "굴삭기 규격·조합 검토"
+      },
+      "topsoilThicknessVolumeRecorded": {
+        "label": "표토 두께·토량 기록"
+      },
+      "spoilStockpileHaulagePlanned": {
+        "label": "적토장·반출 계획"
+      },
+      "naturalSoilOverburdenChecked": {
+        "label": "생토 위 퇴적두께 확인"
+      },
+      "featureFillDifferenceCompared": {
+        "label": "유구 내부토 차이 비교"
+      },
       "workerSafetyDistanceSecured": {
         "label": "장비 작업 안전거리 확보"
       },
@@ -143,7 +161,7 @@
         "label": "판단 보류"
       }
     },
-    "description": "구획·둑 설정, 배수, 하강조사, 장비 제토, 기준단면 보존, 촬영, 안전조치, 철수 전 기록물 점검을 작업 단위에서 관리하기 위한 목록"
+    "description": "구획·둑 설정, 배수, 하강조사, 장비 제토, 일일 제토량, 굴삭기 규격·조합, 표토 두께와 토량, 적토장·반출, 생토 위 퇴적두께, 유구 내부토 차이, 기준단면 보존, 촬영, 안전조치, 철수 전 기록물 점검을 작업 단위에서 관리하기 위한 목록"
   },
   "KoreanFieldwork-fieldOnlyMissingCheck": {
     "values": {

@@ -279,6 +279,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(documentsById['op-quality-001'].resource.excavationControlSafety)
             .toContain('machineStrippingDepthControlled');
         expect(documentsById['op-quality-001'].resource.excavationControlSafety)
+            .toContain('spoilStockpileHaulagePlanned');
+        expect(documentsById['op-quality-001'].resource.excavationControlSafety)
             .toContain('sameDaySectionPhotoDrawing');
         expect(documentsById['daily-log-quality-001'].resource.relations.liesWithin)
             .toEqual(['op-quality-001']);
@@ -2660,6 +2662,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-excavationControlSafety']
             .values.machineStrippingDepthControlled.label)
             .toBe('Machine stripping depth controlled');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-excavationControlSafety']
+            .values.dailyStrippingCapacityRecorded.label)
+            .toBe('Daily stripping capacity recorded');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-excavationControlSafety']
             .values.preWithdrawalRecordAudit.label)
             .toBe('철수 전 기록물 점검');

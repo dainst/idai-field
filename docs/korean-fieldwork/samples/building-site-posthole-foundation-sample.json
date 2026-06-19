@@ -1,0 +1,139 @@
+{
+  "title": "Korean building-site posthole and foundation workflow sample",
+  "purpose": "Validate that surface-building judgement, posthole-group survey records, and missing-cornerstone foundation traces remain separate from final reconstruction claims.",
+  "validationQuestions": [
+    "지상식·고상식·반고상식 판단이 주혈 배열, 생활면, 입지, 목주 잔존 같은 관찰 근거와 분리되어 남는가.",
+    "주혈군 사진은 고위·장축·단축·대각·개별 사진과 한 칸 바깥 범위까지 확인되는가.",
+    "초석이 사라진 자리도 설치굴광, 적심석, 보강토, 발취공, 폐기공, 상면흔, 기준말뚝 같은 부재 흔적으로 기록되는가.",
+    "굴립주와 독립기초가 닮아 보이는 경우 중심축, 주간거리, 충전토·다짐, 보존 결정이 판단 보류 상태로 남는가."
+  ],
+  "documents": [
+    {
+      "resource": {
+        "id": "op-building-site-001",
+        "identifier": "BUILDING-OP-001",
+        "shortDescription": "건물지 주혈군·초석 흔적 조사 작업",
+        "category": "Operation",
+        "relations": {},
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "reproducibleRecord",
+          "crossReviewNeeded"
+        ],
+        "recordCreationTiming": "duringFieldwork",
+        "dailyLogContent": [
+          "workDateWeather",
+          "workArea",
+          "featureProgress",
+          "photoDrawingNumbers"
+        ],
+        "dailyLogReview": [
+          "sameDayWritten",
+          "photoDrawingCrossChecked",
+          "reviewerChecked"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "feature-surface-building-001",
+        "identifier": "SB-POST-001",
+        "shortDescription": "고상식 건물 후보 주혈군과 초석 흔적",
+        "category": "Feature",
+        "relations": {
+          "isRecordedIn": [
+            "op-building-site-001"
+          ]
+        },
+        "description": "정연한 주혈 배열과 일부 사라진 초석 흔적이 함께 확인되어 고상식 건물, 작업·건조장, 창고 후보를 모두 열어둔 기록 예시.",
+        "featurePackage": [
+          "buildingSite"
+        ],
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "reproducibleRecord"
+        ],
+        "fieldOnlyMissingCheck": [
+          "featureOutline",
+          "photoAngleAndScale",
+          "drawingLineReason",
+          "smallFeaturePlotted",
+          "featureSetRelationshipRecorded",
+          "sameDayReview",
+          "notRecoverableWarning"
+        ],
+        "firstExposureRecord": [
+          "concurrentWithStripping",
+          "firstExposurePhoto",
+          "featureLineVisible",
+          "lightingConditionRecorded",
+          "confirmedBeforeInternalExcavation"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "surfaceBuildingJudgement": [
+          "raisedFloorBuildingCandidate",
+          "regularPostholeArrangement",
+          "slopeOrWetlandSetting",
+          "externalIndependentRoofSupport",
+          "storageCandidate",
+          "workshopOrDryingCandidate",
+          "reconstructionEvidenceSeparated",
+          "pendingDecision"
+        ],
+        "postholeGroupSurvey": [
+          "postholeArrayMapped",
+          "bayUnitRecorded",
+          "measurementGridUsed",
+          "measuringRodUsed",
+          "centerPegUsed",
+          "stringLineUsed",
+          "highAnglePhoto",
+          "longAxisParallelPhoto",
+          "shortAxisParallelPhoto",
+          "diagonalPhoto",
+          "individualPostholePhoto",
+          "oneBayOutsideIncluded",
+          "featureNumberVisible",
+          "diameterDepthRecorded",
+          "fillAndTampingRecorded",
+          "centralAxisChecked",
+          "baySpacingChecked"
+        ],
+        "foundationTraceRecord": [
+          "cornerstoneInstallationPit",
+          "packingStone",
+          "reinforcementSoil",
+          "cornerstoneExtractionPit",
+          "pillarSeatTrace",
+          "inkLineTrace",
+          "stairFoundation",
+          "jibokseok",
+          "eavesPost",
+          "scaffoldPosthole",
+          "constructionReferenceStake",
+          "postholeIndependentFoundationCheck",
+          "preservationDecisionRecorded",
+          "pendingDecision"
+        ],
+        "settlementFeatureInvestigationProcedure": [
+          "preliminarySurvey",
+          "planInvestigation",
+          "trenchSet",
+          "postholeSectionSupplement",
+          "reviewPhoto"
+        ],
+        "settlementFeatureTrenchStrategy": [
+          "minimalTrenchMaxInfo",
+          "floorSurfacePreservation",
+          "longAxisDirection",
+          "sectionContinuity",
+          "drawingInversionRisk"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    }
+  ]
+}

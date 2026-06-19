@@ -12916,6 +12916,80 @@
     },
     "description": "Korean pit-building lifecycle checks for recording planning, site selection, construction, occupation, repair, abandonment, reuse, burial fill, and house-burial or refuse-pit candidates without collapsing them into a single feature type"
   },
+  "KoreanFieldwork-surfaceBuildingJudgement": {
+    "values": {
+      "groundLevelBuildingCandidate": { "label": "Ground-level building candidate" },
+      "raisedFloorBuildingCandidate": { "label": "Raised-floor building candidate" },
+      "semiRaisedBuildingCandidate": { "label": "Semi-raised building candidate" },
+      "wallPostBuildingCandidate": { "label": "Wall-post building candidate" },
+      "livingSurfaceConfirmed": { "label": "Living surface confirmed" },
+      "regularPostholeArrangement": { "label": "Regular posthole arrangement" },
+      "postholeSizeDirectionRecorded": { "label": "Posthole size and direction recorded" },
+      "slopeOrWetlandSetting": { "label": "Slope or wetland setting" },
+      "woodPostRemainsPresent": { "label": "Wood post remains present" },
+      "internalIndependentRoofSupport": { "label": "Internal independent roof support" },
+      "externalIndependentRoofSupport": { "label": "External independent roof support" },
+      "corridorCandidate": { "label": "Corridor candidate" },
+      "nodaeCandidate": { "label": "Nodae candidate" },
+      "storageCandidate": { "label": "Storage candidate" },
+      "seasonalDwellingCandidate": { "label": "Seasonal dwelling candidate" },
+      "ritualCandidate": { "label": "Ritual candidate" },
+      "workshopOrDryingCandidate": { "label": "Workshop or drying-place candidate" },
+      "reconstructionEvidenceSeparated": { "label": "Reconstruction evidence separated" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean surface-building judgement checks for keeping ground-level, raised-floor, semi-raised, and wall-post candidates tied to living surfaces, posthole arrays, wood-post survival, setting, independent roof supports, corridor/nodae candidates, function candidates, and separated reconstruction evidence"
+  },
+  "KoreanFieldwork-postholeGroupSurvey": {
+    "values": {
+      "postholeArrayMapped": { "label": "Posthole array mapped" },
+      "bayUnitRecorded": { "label": "Bay unit recorded" },
+      "measurementGridUsed": { "label": "Measurement grid used" },
+      "measuringRodUsed": { "label": "Measuring rod used" },
+      "centerPegUsed": { "label": "Center peg used" },
+      "stringLineUsed": { "label": "String line used" },
+      "highAnglePhoto": { "label": "High-angle photo" },
+      "longAxisParallelPhoto": { "label": "Long-axis parallel photo" },
+      "shortAxisParallelPhoto": { "label": "Short-axis parallel photo" },
+      "diagonalPhoto": { "label": "Diagonal photo" },
+      "individualPostholePhoto": { "label": "Individual posthole photo" },
+      "oneBayOutsideIncluded": { "label": "One bay outside included" },
+      "featureNumberVisible": { "label": "Feature number visible" },
+      "diameterDepthRecorded": { "label": "Diameter and depth recorded" },
+      "fillAndTampingRecorded": { "label": "Fill and tamping recorded" },
+      "centralAxisChecked": { "label": "Central axis checked" },
+      "baySpacingChecked": { "label": "Bay spacing checked" },
+      "lengthwiseExtensionCandidate": { "label": "Lengthwise extension candidate" },
+      "widthwiseExtensionCandidate": { "label": "Widthwise extension candidate" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean posthole-group survey checks for recording grid, rod, center peg, string line, high-angle, parallel, diagonal, individual photos, one-bay margin, visible feature number, axis, and bay-spacing evidence"
+  },
+  "KoreanFieldwork-foundationTraceRecord": {
+    "values": {
+      "pillarSeatTrace": { "label": "Pillar-seat trace" },
+      "inkLineTrace": { "label": "Ink-line trace" },
+      "carbonizedTrace": { "label": "Carbonized trace" },
+      "cornerstoneInstallationPit": { "label": "Cornerstone installation pit" },
+      "packingStone": { "label": "Packing stone" },
+      "reinforcementSoil": { "label": "Reinforcement soil" },
+      "cornerstoneExtractionPit": { "label": "Cornerstone extraction pit" },
+      "cornerstoneDiscardPit": { "label": "Cornerstone discard pit" },
+      "subterraneanCornerstone": { "label": "Subterranean cornerstone" },
+      "sillBuildingCandidate": { "label": "Sill-building candidate" },
+      "foundationStone": { "label": "Foundation stone" },
+      "stairFoundation": { "label": "Stair foundation" },
+      "jibokseok": { "label": "Jibokseok" },
+      "eavesPost": { "label": "Eaves post" },
+      "scaffoldPosthole": { "label": "Scaffold posthole" },
+      "constructionReferenceStake": { "label": "Construction reference stake" },
+      "postholeIndependentFoundationCheck": { "label": "Posthole and independent foundation distinction" },
+      "noTraceConfirmed": { "label": "No trace confirmed" },
+      "preservationDecisionRecorded": { "label": "Preservation decision recorded" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean foundation-trace checks for recording pillar-seat marks, ink lines, carbonized marks, installation pits, packing stones, reinforcement soil, extraction and discard pits, subterranean cornerstones, sill-building candidates, jibokseok, eaves posts, scaffold postholes, reference stakes, and preservation decisions"
+  },
   "KoreanFieldwork-settlementFeatureInvestigationProcedure": {
     "values": {
       "preliminarySurvey": { "label": "Preliminary survey" },

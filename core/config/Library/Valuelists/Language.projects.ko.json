@@ -1162,6 +1162,80 @@
     },
     "description": "수혈건물지를 한 번의 유형명으로 닫지 않고 계획, 부지 선정, 축조, 생활, 보수, 폐기, 재사용, 매몰, 가옥장·폐기장 전용 후보까지 생애단계로 기록하기 위한 목록"
   },
+  "KoreanFieldwork-surfaceBuildingJudgement": {
+    "values": {
+      "groundLevelBuildingCandidate": { "label": "지면식 건물 후보" },
+      "raisedFloorBuildingCandidate": { "label": "고상식 건물 후보" },
+      "semiRaisedBuildingCandidate": { "label": "반고상식 건물 후보" },
+      "wallPostBuildingCandidate": { "label": "벽주식 건물 후보" },
+      "livingSurfaceConfirmed": { "label": "생활면 확인" },
+      "regularPostholeArrangement": { "label": "주혈 배치 정연" },
+      "postholeSizeDirectionRecorded": { "label": "주혈 크기·방향 기록" },
+      "slopeOrWetlandSetting": { "label": "경사지·습지 입지" },
+      "woodPostRemainsPresent": { "label": "목주 잔존" },
+      "internalIndependentRoofSupport": { "label": "내부 독립동지주" },
+      "externalIndependentRoofSupport": { "label": "외부 독립동지주" },
+      "corridorCandidate": { "label": "회랑 후보" },
+      "nodaeCandidate": { "label": "노대 후보" },
+      "storageCandidate": { "label": "창고 후보" },
+      "seasonalDwellingCandidate": { "label": "계절성 주거 후보" },
+      "ritualCandidate": { "label": "의례 후보" },
+      "workshopOrDryingCandidate": { "label": "작업·건조장 후보" },
+      "reconstructionEvidenceSeparated": { "label": "복원 근거 분리" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "지상식·고상식·반고상식·벽주식 건물 후보를 생활면, 주혈 배열, 목주 잔존, 입지, 독립동지주, 회랑·노대, 기능 후보와 분리해 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-postholeGroupSurvey": {
+    "values": {
+      "postholeArrayMapped": { "label": "주혈 배열 도면화" },
+      "bayUnitRecorded": { "label": "칸 단위 기록" },
+      "measurementGridUsed": { "label": "방안실 사용" },
+      "measuringRodUsed": { "label": "함척 사용" },
+      "centerPegUsed": { "label": "중심못 사용" },
+      "stringLineUsed": { "label": "색실 사용" },
+      "highAnglePhoto": { "label": "고위 사진" },
+      "longAxisParallelPhoto": { "label": "장축 평행 사진" },
+      "shortAxisParallelPhoto": { "label": "단축 평행 사진" },
+      "diagonalPhoto": { "label": "대각 사진" },
+      "individualPostholePhoto": { "label": "개별 주혈 사진" },
+      "oneBayOutsideIncluded": { "label": "한 칸 바깥 포함" },
+      "featureNumberVisible": { "label": "유구번호 표시" },
+      "diameterDepthRecorded": { "label": "직경·깊이 기록" },
+      "fillAndTampingRecorded": { "label": "충전토·다짐 기록" },
+      "centralAxisChecked": { "label": "중심축 확인" },
+      "baySpacingChecked": { "label": "주간거리 확인" },
+      "lengthwiseExtensionCandidate": { "label": "길이방향 증축 후보" },
+      "widthwiseExtensionCandidate": { "label": "폭방향 확장 후보" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "주혈군을 방안실, 함척, 중심못, 색실, 고위·평행·대각·개별 사진, 한 칸 바깥 포함 여부, 축과 주간거리까지 조사·촬영 단위로 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-foundationTraceRecord": {
+    "values": {
+      "pillarSeatTrace": { "label": "기둥자리 흔적" },
+      "inkLineTrace": { "label": "먹줄 흔적" },
+      "carbonizedTrace": { "label": "탄화흔" },
+      "cornerstoneInstallationPit": { "label": "초석설치굴광" },
+      "packingStone": { "label": "적심석" },
+      "reinforcementSoil": { "label": "보강토" },
+      "cornerstoneExtractionPit": { "label": "초석발취공" },
+      "cornerstoneDiscardPit": { "label": "초석폐기공" },
+      "subterraneanCornerstone": { "label": "지하식 초석" },
+      "sillBuildingCandidate": { "label": "토대건물 후보" },
+      "foundationStone": { "label": "기초석" },
+      "stairFoundation": { "label": "계단 하부" },
+      "jibokseok": { "label": "지복석" },
+      "eavesPost": { "label": "처마지주" },
+      "scaffoldPosthole": { "label": "비계 주공" },
+      "constructionReferenceStake": { "label": "조영 기준말뚝" },
+      "postholeIndependentFoundationCheck": { "label": "굴립주·독립기초 구분" },
+      "noTraceConfirmed": { "label": "흔적 없음 확인" },
+      "preservationDecisionRecorded": { "label": "보존·처리 결정 기록" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "초석이 남지 않은 건물지에서도 상면흔, 설치굴광, 적심석, 보강토, 발취공, 폐기공, 지하식 초석, 지복석, 처마지주, 비계 주공, 기준말뚝과 보존 결정을 기록하기 위한 목록"
+  },
   "KoreanFieldwork-settlementFeatureInvestigationProcedure": {
     "values": {
       "preliminarySurvey": { "label": "사전조사" },

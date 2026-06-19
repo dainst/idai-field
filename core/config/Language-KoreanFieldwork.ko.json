@@ -557,6 +557,15 @@
         "pitBuildingLifecycleStage": {
           "label": "수혈건물지 생애단계"
         },
+        "surfaceBuildingJudgement": {
+          "label": "지상식 건물 판단"
+        },
+        "postholeGroupSurvey": {
+          "label": "주혈군 조사·촬영"
+        },
+        "foundationTraceRecord": {
+          "label": "초석·기초 흔적 기록"
+        },
         "settlementFeatureInvestigationProcedure": {
           "label": "생활유적 조사 절차"
         },

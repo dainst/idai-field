@@ -1557,6 +1557,18 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "surfaceBuildingJudgement": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "postholeGroupSurvey": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "foundationTraceRecord": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "settlementFeatureInvestigationProcedure": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1819,6 +1831,9 @@
         "pitDwellingOverlapSequence": "KoreanFieldwork-pitDwellingOverlapSequence",
         "pitFeatureFunctionAssessment": "KoreanFieldwork-pitFeatureFunctionAssessment",
         "pitBuildingLifecycleStage": "KoreanFieldwork-pitBuildingLifecycleStage",
+        "surfaceBuildingJudgement": "KoreanFieldwork-surfaceBuildingJudgement",
+        "postholeGroupSurvey": "KoreanFieldwork-postholeGroupSurvey",
+        "foundationTraceRecord": "KoreanFieldwork-foundationTraceRecord",
         "settlementFeatureInvestigationProcedure": "KoreanFieldwork-settlementFeatureInvestigationProcedure",
         "settlementFeatureTrenchStrategy": "KoreanFieldwork-settlementFeatureTrenchStrategy",
         "productionProcessSystem": "KoreanFieldwork-productionProcessSystem",
@@ -1917,6 +1932,9 @@
             "pitDwellingOverlapSequence",
             "pitFeatureFunctionAssessment",
             "pitBuildingLifecycleStage",
+            "surfaceBuildingJudgement",
+            "postholeGroupSurvey",
+            "foundationTraceRecord",
             "settlementFeatureInvestigationProcedure",
             "settlementFeatureTrenchStrategy",
             "productionProcessSystem",

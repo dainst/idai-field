@@ -731,6 +731,37 @@ describe('KoreanFieldwork project configuration', () => {
     });
 
 
+    it('keeps the Korean building-site posthole and foundation sample aligned with building fields', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const sample = loadSample('building-site-posthole-foundation-sample.json');
+        const documents = sample.documents;
+        const documentsById = documents.reduce((index: any, document: any) => {
+            index[document.resource.id] = document;
+            return index;
+        }, {});
+
+        expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
+
+        expect(documentsById['feature-surface-building-001'].resource.featurePackage)
+            .toContain('buildingSite');
+        expect(documentsById['feature-surface-building-001'].resource.surfaceBuildingJudgement)
+            .toContain('raisedFloorBuildingCandidate');
+        expect(documentsById['feature-surface-building-001'].resource.surfaceBuildingJudgement)
+            .toContain('reconstructionEvidenceSeparated');
+        expect(documentsById['feature-surface-building-001'].resource.postholeGroupSurvey)
+            .toContain('oneBayOutsideIncluded');
+        expect(documentsById['feature-surface-building-001'].resource.postholeGroupSurvey)
+            .toContain('baySpacingChecked');
+        expect(documentsById['feature-surface-building-001'].resource.foundationTraceRecord)
+            .toContain('cornerstoneExtractionPit');
+        expect(documentsById['feature-surface-building-001'].resource.foundationTraceRecord)
+            .toContain('postholeIndependentFoundationCheck');
+    });
+
+
     it('keeps the Korean fortification facility sample aligned with facility fields', () => {
 
         const configReader = new ConfigReader();
@@ -1306,6 +1337,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.fields.pitDwellingOverlapSequence.inputType).toBe('checkboxes');
         expect(featureForm.fields.pitFeatureFunctionAssessment.inputType).toBe('checkboxes');
         expect(featureForm.fields.pitBuildingLifecycleStage.inputType).toBe('checkboxes');
+        expect(featureForm.fields.surfaceBuildingJudgement.inputType).toBe('checkboxes');
+        expect(featureForm.fields.postholeGroupSurvey.inputType).toBe('checkboxes');
+        expect(featureForm.fields.foundationTraceRecord.inputType).toBe('checkboxes');
         expect(featureForm.fields.settlementFeatureInvestigationProcedure.inputType).toBe('checkboxes');
         expect(featureForm.fields.settlementFeatureTrenchStrategy.inputType).toBe('checkboxes');
         expect(featureForm.fields.productionProcessSystem.inputType).toBe('checkboxes');
@@ -1693,6 +1727,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-pitFeatureFunctionAssessment');
         expect(featureForm.valuelists.pitBuildingLifecycleStage)
             .toBe('KoreanFieldwork-pitBuildingLifecycleStage');
+        expect(featureForm.valuelists.surfaceBuildingJudgement)
+            .toBe('KoreanFieldwork-surfaceBuildingJudgement');
+        expect(featureForm.valuelists.postholeGroupSurvey)
+            .toBe('KoreanFieldwork-postholeGroupSurvey');
+        expect(featureForm.valuelists.foundationTraceRecord)
+            .toBe('KoreanFieldwork-foundationTraceRecord');
         expect(featureForm.valuelists.settlementFeatureInvestigationProcedure)
             .toBe('KoreanFieldwork-settlementFeatureInvestigationProcedure');
         expect(featureForm.valuelists.settlementFeatureTrenchStrategy)
@@ -2191,6 +2231,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Pit feature function assessment');
         expect(languages.en.categories.Feature.fields.pitBuildingLifecycleStage.label)
             .toBe('Pit building lifecycle stage');
+        expect(languages.en.categories.Feature.fields.surfaceBuildingJudgement.label)
+            .toBe('Surface building judgement');
+        expect(languages.en.categories.Feature.fields.postholeGroupSurvey.label)
+            .toBe('Posthole group survey');
+        expect(languages.en.categories.Feature.fields.foundationTraceRecord.label)
+            .toBe('Foundation trace record');
         expect(languages.en.categories.Feature.fields.settlementFeatureInvestigationProcedure.label)
             .toBe('Settlement feature investigation procedure');
         expect(languages.en.categories.Feature.fields.settlementFeatureTrenchStrategy.label)
@@ -3398,6 +3444,18 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-pitBuildingLifecycleStage']
             .values.refusePitReuse.label)
             .toBe('폐기장 전용');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceBuildingJudgement']
+            .values.raisedFloorBuildingCandidate.label)
+            .toBe('Raised-floor building candidate');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-postholeGroupSurvey']
+            .values.oneBayOutsideIncluded.label)
+            .toBe('One bay outside included');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-foundationTraceRecord']
+            .values.cornerstoneExtractionPit.label)
+            .toBe('Cornerstone extraction pit');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-foundationTraceRecord']
+            .values.noTraceConfirmed.label)
+            .toBe('흔적 없음 확인');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-alluvialLayerConceptAudit']
             .values.abLayerSetRecorded.label)
             .toBe('a+b층 세트 기록');

@@ -557,6 +557,15 @@
         "pitBuildingLifecycleStage": {
           "label": "Pit building lifecycle stage"
         },
+        "surfaceBuildingJudgement": {
+          "label": "Surface building judgement"
+        },
+        "postholeGroupSurvey": {
+          "label": "Posthole group survey"
+        },
+        "foundationTraceRecord": {
+          "label": "Foundation trace record"
+        },
         "settlementFeatureInvestigationProcedure": {
           "label": "Settlement feature investigation procedure"
         },

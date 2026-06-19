@@ -5,7 +5,8 @@
     "GPS 좌표가 위도·경도 숫자만이 아니라 RTK/GNSS 방식, 기준국·이동국, 위성 상태, DOP, NMEA 원자료, 좌표계와 지오이드로 검증되는가.",
     "사진 파일이 단순 첨부가 아니라 현재 위치, 궤적, 등록지점, 파일명, 수치지도 연동 상태와 함께 남는가.",
     "분포도·위치도 작성이 완성 PDF 하나가 아니라 원천 지도, 좌표계 변환, 객체 선택, 반경·범례·축척·방위표 검수로 이어지는가.",
-    "유물실측과 전자도면이 외곽선 복사가 아니라 재질·기종·기준선·측점 검점·사진/탁본 대조·3D 원천파일 보존으로 관리되는가."
+    "유물실측과 전자도면이 외곽선 복사가 아니라 재질·기종·기준선·측점 검점·사진/탁본 대조·3D 원천파일 보존으로 관리되는가.",
+    "디지털 조사·측량 결과가 장비명이나 완성 파일로만 남지 않고 원천자료 시점, 좌표·지리보정, 오차, 산출물 목적, 외주 결과 검수, 현장 대조와 함께 남는가."
   ],
   "documents": [
     {
@@ -75,6 +76,23 @@
           "geometryManaged",
           "attributeEditingTracked",
           "fieldSyncChecked",
+          "pendingDecision"
+        ],
+        "digitalSurveyQualityControl": [
+          "dgpsUsed",
+          "uavPhotogrammetryUsed",
+          "lidarUsed",
+          "sourceDateRecorded",
+          "controlPointsRecorded",
+          "coordinateSystemRecorded",
+          "georeferencingRecorded",
+          "errorRangeRecorded",
+          "outputPurposeDefined",
+          "outputFormatRecorded",
+          "externalContractorRecorded",
+          "researcherQualityChecked",
+          "fieldResultCrossChecked",
+          "reanalysisPossible",
           "pendingDecision"
         ],
         "digitalSourcePreservation": [

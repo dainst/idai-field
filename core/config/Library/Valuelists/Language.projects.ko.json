@@ -5529,6 +5529,38 @@
     },
     "description": "현장 GIS·DB가 자료 갱신, 분석, 이용성, 미확인 매장문화재 관리, SHP·DXF 호환, 레이어·도형·속성 편집과 동기화에서 실패하지 않도록 점검하기 위한 목록"
   },
+  "KoreanFieldwork-digitalSurveyQualityControl": {
+    "values": {
+      "paleolandformAnalysisUsed": { "label": "고지형분석 사용" },
+      "gisAnalysisUsed": { "label": "GIS 분석 사용" },
+      "hgisReferenceUsed": { "label": "HGIS 참조" },
+      "totalStationUsed": { "label": "토탈스테이션 사용" },
+      "dgpsUsed": { "label": "DGPS 사용" },
+      "uavPhotogrammetryUsed": { "label": "UAV 사진측량 사용" },
+      "aerialPhotoUsed": { "label": "항공사진 사용" },
+      "lidarUsed": { "label": "LiDAR 사용" },
+      "laserScanUsed": { "label": "3D 레이저스캔 사용" },
+      "photogrammetryUsed": { "label": "사진실측 사용" },
+      "gprOrGeophysicalSurveyUsed": { "label": "GPR·물리탐사 사용" },
+      "sourceDateRecorded": { "label": "원천자료 시점 기록" },
+      "originalLandformAlterationRisk": { "label": "원지형 변경 위험" },
+      "controlPointsRecorded": { "label": "기준점 기록" },
+      "coordinateSystemRecorded": { "label": "좌표계 기록" },
+      "georeferencingRecorded": { "label": "지리보정 기록" },
+      "absoluteCoordinatesRecorded": { "label": "절대좌표 기록" },
+      "errorRangeRecorded": { "label": "오차범위 기록" },
+      "shootingDirectionRecorded": { "label": "촬영방향 기록" },
+      "dataQuantityQualityReviewed": { "label": "데이터 수량·품질 검토" },
+      "outputPurposeDefined": { "label": "산출물 목적 정의" },
+      "outputFormatRecorded": { "label": "산출물 형식 기록" },
+      "externalContractorRecorded": { "label": "외주작업자 기록" },
+      "researcherQualityChecked": { "label": "조사자 품질검수" },
+      "fieldResultCrossChecked": { "label": "현장결과 대조" },
+      "reanalysisPossible": { "label": "재분석 가능" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "첨단과학장비 활용 자료에서 뽑은 디지털 조사·측량 품질검수 목록. 장비명보다 원천자료 시점, 원지형 변경 위험, 기준점·좌표계·지리보정, 오차, 산출물 목적, 외주 결과 검수, 현장 대조와 재분석 가능성을 함께 남긴다."
+  },
   "KoreanFieldwork-electronicDrawingSourceWorkflow": {
     "values": {
       "scannerSelected": { "label": "스캐너 선정" },

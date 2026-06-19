@@ -104,6 +104,8 @@ C:\Users\nuri9\AppData\Local\Temp\codex-idai-field-new-pdf-text\methods-all
 
 GPS·GIS 현장 시스템에서 뽑은 공통 축은 `KoreanFieldwork-gpsSurveyQualityRecord`, `KoreanFieldwork-gpsNmeaRecord`, `KoreanFieldwork-gpsPhotoLinkRecord`, `KoreanFieldwork-fieldDatabaseOperationRisk`로 `Operation`과 `Photo` 화면에 나누어 배치한다. 측량 세션은 GPS/GNSS/RTK, 기준국·이동국, 관측시간, 원시데이터, 좌표계, 지오이드, 위성수와 DOP·정확도를 남기고, NMEA 세부값은 일자·시각·위경도·고도·상태값과 위성별 정보를 분리한다. 사진은 궤적·현재위치·파일명·자동분류 연결을 남기고, 현장 DB는 SHP·DXF, 레이어·도형·속성 편집, 동기화 위험을 별도 운영값으로 남긴다.
 
+첨단과학장비 활용 자료에서 뽑은 공통 축은 `KoreanFieldwork-digitalSurveyQualityControl`로 `Operation` 화면에 배치한다. 고지형분석, GIS, HGIS, 토탈스테이션, DGPS, UAV 사진측량, 항공사진, LiDAR, 3D 레이저스캔, 사진실측, GPR·물리탐사 사용 여부와 함께 원천자료 시점, 원지형 변경 위험, 기준점, 좌표계·지리보정, 오차, 산출물 목적·형식, 외주작업자, 조사자 품질검수, 현장결과 대조, 재분석 가능성을 남겨 디지털 산출물이 현장 판단과 분리되지 않게 한다.
+
 전자도면·3D 스캔에서 뽑은 공통 축은 `KoreanFieldwork-electronicDrawingSourceWorkflow`, `KoreanFieldwork-artifactElectronicDrawingProcedure`로 `Drawing` 화면에 배치한다. 유구·현장 전자도면은 스캐너 선정, 점군 획득·병합, 폴리곤 변환·최적화, CAD·2D·3D·복원 산출물과 원본·후처리 파일 보존을 한 흐름으로 남긴다. 유물 전자도면은 형태 검토, 최종 결과물, 특징 view, 단면 위치, 벡터화, 연구자 요구정보, 기준면, 좌표계 이동, 합치 기준을 분리해 실측 판단의 근거를 보존한다.
 
 동물유체·화석환경 자료에서 뽑은 공통 축은 `KoreanFieldwork-faunalRecoverySampling`, `KoreanFieldwork-faunalPreservationHandling`, `KoreanFieldwork-zooarchaeologicalIdentification`, `KoreanFieldwork-boneSurfaceModification`, `KoreanFieldwork-zooarchaeologicalQuantification`으로 `Sample` 화면에 배치한다. 수습 단계에서는 보존 환경, 전체 체질 여부, 체눈, 블록샘플 치수, 동일층 반복 채취와 선별 수습 사유를 남기고, 보존·취급 단계에서는 토양 지지 형태, 탈수·이물질 제거, 전문가 수습과 유구·층별 분리 보관을 남긴다. 동정과 해석 단계에서는 동물종, 부위, 좌우, 성장단계, 동정 불확실성, 뼈 표면 변형, NISP·MNE·MNI·MAU·%MAU의 사용 목적과 한계를 함께 기록한다.

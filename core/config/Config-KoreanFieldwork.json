@@ -299,6 +299,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "digitalSurveyQualityControl": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "personalNotebookArchive": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -367,6 +371,7 @@
         "gpsSurveyQualityRecord": "KoreanFieldwork-gpsSurveyQualityRecord",
         "gpsNmeaRecord": "KoreanFieldwork-gpsNmeaRecord",
         "fieldDatabaseOperationRisk": "KoreanFieldwork-fieldDatabaseOperationRisk",
+        "digitalSurveyQualityControl": "KoreanFieldwork-digitalSurveyQualityControl",
         "investigationRecordHandover": "KoreanFieldwork-investigationRecordHandover",
         "expertReviewMeeting": "KoreanFieldwork-expertReviewMeeting",
         "partialCompletionPackage": "KoreanFieldwork-partialCompletionPackage",
@@ -412,6 +417,7 @@
             "gpsSurveyQualityRecord",
             "gpsNmeaRecord",
             "fieldDatabaseOperationRisk",
+            "digitalSurveyQualityControl",
             "personalNotebookArchive",
             "investigationRecordHandover",
             "expertReviewMeeting",

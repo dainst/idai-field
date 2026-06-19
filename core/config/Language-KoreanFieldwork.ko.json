@@ -151,6 +151,9 @@
         "fieldDatabaseOperationRisk": {
           "label": "현장 DB 운영위험"
         },
+        "digitalSurveyQualityControl": {
+          "label": "디지털 조사 품질검수"
+        },
         "investigationRecordHandover": {
           "label": "조사자료 인계"
         },

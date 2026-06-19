@@ -151,6 +151,9 @@
         "fieldDatabaseOperationRisk": {
           "label": "Field database operation risk"
         },
+        "digitalSurveyQualityControl": {
+          "label": "Digital survey quality control"
+        },
         "investigationRecordHandover": {
           "label": "Investigation record handover"
         },

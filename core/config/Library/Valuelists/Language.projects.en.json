@@ -17283,6 +17283,38 @@
     },
     "description": "Korean fieldwork field database operation checks for update, analysis, usability, unknown buried heritage, SHP/DXF compatibility, layers, geometry, attribute editing, and synchronization risks"
   },
+  "KoreanFieldwork-digitalSurveyQualityControl": {
+    "values": {
+      "paleolandformAnalysisUsed": { "label": "Paleolandform analysis used" },
+      "gisAnalysisUsed": { "label": "GIS analysis used" },
+      "hgisReferenceUsed": { "label": "HGIS referenced" },
+      "totalStationUsed": { "label": "Total station used" },
+      "dgpsUsed": { "label": "DGPS used" },
+      "uavPhotogrammetryUsed": { "label": "UAV photogrammetry used" },
+      "aerialPhotoUsed": { "label": "Aerial photo used" },
+      "lidarUsed": { "label": "LiDAR used" },
+      "laserScanUsed": { "label": "3D laser scan used" },
+      "photogrammetryUsed": { "label": "Photogrammetry used" },
+      "gprOrGeophysicalSurveyUsed": { "label": "GPR/geophysical survey used" },
+      "sourceDateRecorded": { "label": "Source date recorded" },
+      "originalLandformAlterationRisk": { "label": "Original landform alteration risk" },
+      "controlPointsRecorded": { "label": "Control points recorded" },
+      "coordinateSystemRecorded": { "label": "Coordinate system recorded" },
+      "georeferencingRecorded": { "label": "Georeferencing recorded" },
+      "absoluteCoordinatesRecorded": { "label": "Absolute coordinates recorded" },
+      "errorRangeRecorded": { "label": "Error range recorded" },
+      "shootingDirectionRecorded": { "label": "Shooting direction recorded" },
+      "dataQuantityQualityReviewed": { "label": "Data quantity/quality reviewed" },
+      "outputPurposeDefined": { "label": "Output purpose defined" },
+      "outputFormatRecorded": { "label": "Output format recorded" },
+      "externalContractorRecorded": { "label": "External contractor recorded" },
+      "researcherQualityChecked": { "label": "Researcher quality-checked" },
+      "fieldResultCrossChecked": { "label": "Field result cross-checked" },
+      "reanalysisPossible": { "label": "Reanalysis possible" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean digital survey quality checklist from the advanced equipment training material, keeping source date, original-landform alteration risk, control points, coordinates/georeferencing, error, output purpose, outsourced-result QA, field cross-checking, and reanalysis visible alongside the equipment used"
+  },
   "KoreanFieldwork-electronicDrawingSourceWorkflow": {
     "values": {
       "scannerSelected": { "label": "Scanner selected" },

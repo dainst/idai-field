@@ -168,6 +168,26 @@
         }
       }
     },
+    "ReportPreparationReview": {
+      "label": "보고서 작성 전 검토",
+      "fields": {
+        "reportPreparationReview": {
+          "label": "보고서 작성 전 검토"
+        },
+        "reportPreparationSourceText": {
+          "label": "원자료"
+        },
+        "reportPreparationStandardText": {
+          "label": "보고서 기준"
+        },
+        "reportPreparationSubjectText": {
+          "label": "검토 대상"
+        },
+        "verificationState": {
+          "label": "검증상태"
+        }
+      }
+    },
     "StateVestingSelectionRecord": {
       "label": "국가귀속 선별 기록",
       "fields": {

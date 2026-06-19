@@ -34644,6 +34644,52 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-reportPreparationReview": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "legendPrepared": {},
+      "permitNumberRecorded": {},
+      "northStandardRecorded": {},
+      "scaleStandardRecorded": {},
+      "elevationStandardRecorded": {},
+      "soilColorStandardRecorded": {},
+      "drawingSymbolStandardRecorded": {},
+      "artifactObservationStandardRecorded": {},
+      "drawingReductionRatioRecorded": {},
+      "featureDrawingPhotoOrientationRecorded": {},
+      "sourceNotebookSecured": {},
+      "drawingRegisterSecured": {},
+      "photoRegisterSecured": {},
+      "artifactSampleListSecured": {},
+      "numberConversionTableChecked": {},
+      "drawingPhotoConsistencyChecked": {},
+      "photoNotSubstitutingPlan": {},
+      "sourceRecordLinkPreserved": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "legendPrepared",
+      "permitNumberRecorded",
+      "northStandardRecorded",
+      "scaleStandardRecorded",
+      "elevationStandardRecorded",
+      "soilColorStandardRecorded",
+      "drawingSymbolStandardRecorded",
+      "artifactObservationStandardRecorded",
+      "drawingReductionRatioRecorded",
+      "featureDrawingPhotoOrientationRecorded",
+      "sourceNotebookSecured",
+      "drawingRegisterSecured",
+      "photoRegisterSecured",
+      "artifactSampleListSecured",
+      "numberConversionTableChecked",
+      "drawingPhotoConsistencyChecked",
+      "photoNotSubstitutingPlan",
+      "sourceRecordLinkPreserved",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-stateVestingSelectionRecord": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

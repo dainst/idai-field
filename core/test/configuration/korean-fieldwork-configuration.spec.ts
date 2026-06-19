@@ -361,6 +361,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('submissionReceiptRecorded');
         expect(documentsById['report-submission-admin-001'].resource.reportSourceLinkText)
             .toContain('번호 변환표');
+        expect(documentsById['report-preparation-admin-001'].resource.reportPreparationReview)
+            .toContain('legendPrepared');
+        expect(documentsById['report-preparation-admin-001'].resource.reportPreparationReview)
+            .toContain('drawingPhotoConsistencyChecked');
+        expect(documentsById['report-preparation-admin-001'].resource.reportPreparationStandardText)
+            .toContain('방위');
         expect(documentsById['state-vesting-admin-001'].resource.stateVestingSelectionRecord)
             .toContain('stateVestingRegister');
         expect(documentsById['state-vesting-admin-001'].resource.stateVestingReceiptText)
@@ -1006,6 +1012,7 @@ describe('KoreanFieldwork project configuration', () => {
         const termImportMappingForm = config.forms.TermImportMapping;
         const sourceEvidenceIndexForm = config.forms.SourceEvidenceIndex;
         const reportSubmissionWorkflowForm = config.forms.ReportSubmissionWorkflow;
+        const reportPreparationReviewForm = config.forms.ReportPreparationReview;
         const stateVestingSelectionRecordForm = config.forms.StateVestingSelectionRecord;
         const ironProcessRelationForm = config.forms.IronProcessRelation;
         const findForm = config.forms['Find:default'];
@@ -1050,6 +1057,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(reportSubmissionWorkflowForm.fields.reportSubmissionRecipientText.inputType).toBe('input');
         expect(reportSubmissionWorkflowForm.fields.reportSubmissionReceiptText.inputType).toBe('input');
         expect(reportSubmissionWorkflowForm.fields.reportSubmissionWorkflow.inputType).toBe('checkboxes');
+        expect(reportPreparationReviewForm.parent).toBe('Project');
+        expect(reportPreparationReviewForm.fields.reportPreparationSubjectText.inputType).toBe('input');
+        expect(reportPreparationReviewForm.fields.reportPreparationSubjectText.mandatory).toBe(true);
+        expect(reportPreparationReviewForm.fields.reportPreparationSourceText.inputType).toBe('input');
+        expect(reportPreparationReviewForm.fields.reportPreparationStandardText.inputType).toBe('input');
+        expect(reportPreparationReviewForm.fields.reportPreparationReview.inputType).toBe('checkboxes');
         expect(stateVestingSelectionRecordForm.parent).toBe('Project');
         expect(stateVestingSelectionRecordForm.fields.stateVestingObjectScopeText.inputType).toBe('input');
         expect(stateVestingSelectionRecordForm.fields.stateVestingObjectScopeText.mandatory).toBe(true);
@@ -1356,6 +1369,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(reportSubmissionWorkflowForm.valuelists.reportSubmissionWorkflow)
             .toBe('KoreanFieldwork-reportSubmissionWorkflow');
         expect(reportSubmissionWorkflowForm.valuelists.verificationState).toBe('KoreanFieldwork-verificationState');
+        expect(reportPreparationReviewForm.valuelists.reportPreparationReview)
+            .toBe('KoreanFieldwork-reportPreparationReview');
+        expect(reportPreparationReviewForm.valuelists.verificationState).toBe('KoreanFieldwork-verificationState');
         expect(stateVestingSelectionRecordForm.valuelists.stateVestingSelectionRecord)
             .toBe('KoreanFieldwork-stateVestingSelectionRecord');
         expect(stateVestingSelectionRecordForm.valuelists.verificationState).toBe('KoreanFieldwork-verificationState');
@@ -1852,6 +1868,11 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Submission document');
         expect(languages.en.categories.ReportSubmissionWorkflow.fields.reportSubmissionReceiptText.label)
             .toBe('Submission receipt');
+        expect(languages.en.categories.ReportPreparationReview.label).toBe('Report preparation review');
+        expect(languages.en.categories.ReportPreparationReview.fields.reportPreparationSubjectText.label)
+            .toBe('Preparation subject');
+        expect(languages.en.categories.ReportPreparationReview.fields.reportPreparationReview.label)
+            .toBe('Report preparation review');
         expect(languages.en.categories.StateVestingSelectionRecord.label).toBe('State vesting selection record');
         expect(languages.en.categories.StateVestingSelectionRecord.fields.stateVestingObjectScopeText.label)
             .toBe('Object scope');
@@ -2936,12 +2957,18 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-reportSubmissionWorkflow']
             .values.submissionReceiptRecorded.label)
             .toBe('Submission receipt recorded');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-reportPreparationReview']
+            .values.legendPrepared.label)
+            .toBe('Legend prepared');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-stateVestingSelectionRecord']
             .values.stateVestingRegister.label)
             .toBe('State vesting register');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-reportSubmissionWorkflow']
             .values.collaborationPortalEntered.label)
             .toBe('협업포털 입력');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-reportPreparationReview']
+            .values.drawingPhotoConsistencyChecked.label)
+            .toBe('도면·사진 일치 대조');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-stateVestingSelectionRecord']
             .values.temporaryStorageReceipt.label)
             .toBe('임시보관증');

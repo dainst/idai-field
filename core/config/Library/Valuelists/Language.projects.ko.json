@@ -2443,6 +2443,68 @@
     },
     "description": "완료신고, 완료자료, 약식보고서, 보존조치 결과보고, 최종보고서, PDF, 전자행정, 제출확인, 초록, 협업포털, 공개상태와 원기록 연결을 관리하기 위한 목록"
   },
+  "KoreanFieldwork-reportPreparationReview": {
+    "values": {
+      "legendPrepared": {
+        "label": "일러두기 작성"
+      },
+      "permitNumberRecorded": {
+        "label": "허가번호 기록"
+      },
+      "northStandardRecorded": {
+        "label": "방위 기준 기록"
+      },
+      "scaleStandardRecorded": {
+        "label": "축척 기준 기록"
+      },
+      "elevationStandardRecorded": {
+        "label": "해발고도 기준 기록"
+      },
+      "soilColorStandardRecorded": {
+        "label": "토색 기준 기록"
+      },
+      "drawingSymbolStandardRecorded": {
+        "label": "도면기호 기준 기록"
+      },
+      "artifactObservationStandardRecorded": {
+        "label": "유물 관찰·실측 기준 기록"
+      },
+      "drawingReductionRatioRecorded": {
+        "label": "도면 축소율 기록"
+      },
+      "featureDrawingPhotoOrientationRecorded": {
+        "label": "도면·사진 수록 방향 기록"
+      },
+      "sourceNotebookSecured": {
+        "label": "원야장 확보"
+      },
+      "drawingRegisterSecured": {
+        "label": "도면목록 확보"
+      },
+      "photoRegisterSecured": {
+        "label": "사진대장 확보"
+      },
+      "artifactSampleListSecured": {
+        "label": "유물·시료목록 확보"
+      },
+      "numberConversionTableChecked": {
+        "label": "번호 변환표 대조"
+      },
+      "drawingPhotoConsistencyChecked": {
+        "label": "도면·사진 일치 대조"
+      },
+      "photoNotSubstitutingPlan": {
+        "label": "사진의 평면도 대체 방지"
+      },
+      "sourceRecordLinkPreserved": {
+        "label": "원기록 연결 보존"
+      },
+      "pendingDecision": {
+        "label": "판단 보류"
+      }
+    },
+    "description": "보고서 일러두기, 허가번호, 방위, 축척, 고도, 토색, 도면기호, 실측 기준, 원야장·원도면·원사진·목록·번호 변환표와 도면·사진 일치 여부를 관리하기 위한 목록"
+  },
   "KoreanFieldwork-stateVestingSelectionRecord": {
     "values": {
       "ownershipNotice": { "label": "소유권 공고" },

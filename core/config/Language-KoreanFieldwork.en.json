@@ -168,6 +168,26 @@
         }
       }
     },
+    "ReportPreparationReview": {
+      "label": "Report preparation review",
+      "fields": {
+        "reportPreparationReview": {
+          "label": "Report preparation review"
+        },
+        "reportPreparationSourceText": {
+          "label": "Source materials"
+        },
+        "reportPreparationStandardText": {
+          "label": "Report standards"
+        },
+        "reportPreparationSubjectText": {
+          "label": "Preparation subject"
+        },
+        "verificationState": {
+          "label": "Verification state"
+        }
+      }
+    },
     "StateVestingSelectionRecord": {
       "label": "State vesting selection record",
       "fields": {

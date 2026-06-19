@@ -14197,6 +14197,68 @@
     },
     "description": "Korean report-submission workflow checks for keeping completion reports, deadlines, PDFs, receipts, abstracts, portals, release status, and source-record links visible"
   },
+  "KoreanFieldwork-reportPreparationReview": {
+    "values": {
+      "legendPrepared": {
+        "label": "Legend prepared"
+      },
+      "permitNumberRecorded": {
+        "label": "Permit number recorded"
+      },
+      "northStandardRecorded": {
+        "label": "North standard recorded"
+      },
+      "scaleStandardRecorded": {
+        "label": "Scale standard recorded"
+      },
+      "elevationStandardRecorded": {
+        "label": "Elevation standard recorded"
+      },
+      "soilColorStandardRecorded": {
+        "label": "Soil color standard recorded"
+      },
+      "drawingSymbolStandardRecorded": {
+        "label": "Drawing symbol standard recorded"
+      },
+      "artifactObservationStandardRecorded": {
+        "label": "Artifact observation standard recorded"
+      },
+      "drawingReductionRatioRecorded": {
+        "label": "Drawing reduction ratio recorded"
+      },
+      "featureDrawingPhotoOrientationRecorded": {
+        "label": "Feature drawing/photo orientation recorded"
+      },
+      "sourceNotebookSecured": {
+        "label": "Source notebook secured"
+      },
+      "drawingRegisterSecured": {
+        "label": "Drawing register secured"
+      },
+      "photoRegisterSecured": {
+        "label": "Photo register secured"
+      },
+      "artifactSampleListSecured": {
+        "label": "Artifact/sample list secured"
+      },
+      "numberConversionTableChecked": {
+        "label": "Number conversion table checked"
+      },
+      "drawingPhotoConsistencyChecked": {
+        "label": "Drawing/photo consistency checked"
+      },
+      "photoNotSubstitutingPlan": {
+        "label": "Photo not substituting plan"
+      },
+      "sourceRecordLinkPreserved": {
+        "label": "Source record link preserved"
+      },
+      "pendingDecision": {
+        "label": "Pending decision"
+      }
+    },
+    "description": "Korean report-preparation checks for keeping the report legend, standards, source notebooks, original drawings, photos, registers, number conversions, and drawing/photo consistency visible"
+  },
   "KoreanFieldwork-stateVestingSelectionRecord": {
     "values": {
       "ownershipNotice": { "label": "Ownership notice" },

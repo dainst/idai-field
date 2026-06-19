@@ -1005,6 +1005,66 @@
         }
       ]
     },
+    "ReportPreparationReview": {
+      "parent": "Project",
+      "color": "#5f7f86",
+      "hidden": [],
+      "fields": {
+        "reportPreparationSubjectText": {
+          "inputType": "input",
+          "mandatory": true,
+          "constraintIndexed": true
+        },
+        "reportPreparationSourceText": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "reportPreparationStandardText": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "reportPreparationReview": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "verificationState": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "reportPreparationReview": "KoreanFieldwork-reportPreparationReview",
+        "verificationState": "KoreanFieldwork-verificationState"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
+        },
+        {
+          "name": "hierarchy",
+          "fields": ["liesWithin"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "diaryAbstract"]
+        },
+        {
+          "name": "koreanFieldwork",
+          "fields": [
+            "reportPreparationSubjectText",
+            "reportPreparationSourceText",
+            "reportPreparationStandardText",
+            "reportPreparationReview",
+            "verificationState"
+          ]
+        }
+      ]
+    },
     "StateVestingSelectionRecord": {
       "parent": "Project",
       "color": "#8a6f50",

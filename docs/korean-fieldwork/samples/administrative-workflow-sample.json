@@ -140,6 +140,42 @@
     },
     {
       "resource": {
+        "id": "report-preparation-admin-001",
+        "identifier": "ADMIN-REPORT-PREP-001",
+        "shortDescription": "최종보고서 일러두기·원기록 대조",
+        "category": "ReportPreparationReview",
+        "relations": {
+          "liesWithin": ["project-admin-workflow-001"]
+        },
+        "description": "최종보고서 편집 전에 허가번호, 방위, 축척, 해발고도, 토색, 도면기호, 실측 기준과 도면·사진 수록 방향을 일러두기에 정리하고 원야장·원도면·원사진·대장류와 연결한다.",
+        "reportPreparationSubjectText": "최종보고서 본문·도면·사진 편집 전 검토",
+        "reportPreparationSourceText": "현장야장, 원도면, 원사진, 도면목록, 사진대장, 유물·시료목록, 번호 변환표",
+        "reportPreparationStandardText": "허가번호, 방위 기준, 축척·축소율, 해발고도, 토색, 도면기호, 유물 관찰·실측 기준, 도면·사진 수록 방향",
+        "reportPreparationReview": [
+          "legendPrepared",
+          "permitNumberRecorded",
+          "northStandardRecorded",
+          "scaleStandardRecorded",
+          "elevationStandardRecorded",
+          "soilColorStandardRecorded",
+          "drawingSymbolStandardRecorded",
+          "artifactObservationStandardRecorded",
+          "drawingReductionRatioRecorded",
+          "featureDrawingPhotoOrientationRecorded",
+          "sourceNotebookSecured",
+          "drawingRegisterSecured",
+          "photoRegisterSecured",
+          "artifactSampleListSecured",
+          "numberConversionTableChecked",
+          "drawingPhotoConsistencyChecked",
+          "photoNotSubstitutingPlan",
+          "sourceRecordLinkPreserved"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
         "id": "state-vesting-admin-001",
         "identifier": "ADMIN-VEST-001",
         "shortDescription": "보고서 수록 유물 국가귀속 선별",

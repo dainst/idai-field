@@ -125,6 +125,18 @@
           "vegetationCoverRecorded",
           "interviewSurveyRecorded"
         ],
+        "surfaceSurveyFieldDiary": [
+          "surveyNameRecorded",
+          "surveyAreaPointRecorded",
+          "surveyTargetRecorded",
+          "surveyCrewRecorded",
+          "surveyDateWeatherRecorded",
+          "intervieweeContactRecorded",
+          "informantContactRecorded",
+          "surveyResultRecorded",
+          "surveyProblemRecorded",
+          "permanentMarkerRecord"
+        ],
         "surfaceSurveyMapRequirement": [
           "polygonSurveyArea",
           "baseDigitalTopographicMap",

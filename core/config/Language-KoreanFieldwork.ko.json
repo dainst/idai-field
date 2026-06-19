@@ -396,6 +396,9 @@
         "surfaceSurveyFieldSequence": {
           "label": "지표조사 현장순서"
         },
+        "surfaceSurveyFieldDiary": {
+          "label": "지표조사 현지조사일지"
+        },
         "surfaceSurveyMapRequirement": {
           "label": "지표조사 지도요건"
         },

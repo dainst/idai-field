@@ -396,6 +396,9 @@
         "surfaceSurveyFieldSequence": {
           "label": "Surface survey field sequence"
         },
+        "surfaceSurveyFieldDiary": {
+          "label": "Surface survey field diary"
+        },
         "surfaceSurveyMapRequirement": {
           "label": "Surface survey map requirement"
         },

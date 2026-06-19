@@ -35540,6 +35540,36 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-surfaceSurveyFieldDiary": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "surveyNameRecorded": {},
+      "surveyAreaPointRecorded": {},
+      "surveyTargetRecorded": {},
+      "surveyCrewRecorded": {},
+      "surveyDateWeatherRecorded": {},
+      "intervieweeContactRecorded": {},
+      "informantContactRecorded": {},
+      "surveyResultRecorded": {},
+      "surveyProblemRecorded": {},
+      "permanentMarkerRecord": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "surveyNameRecorded",
+      "surveyAreaPointRecorded",
+      "surveyTargetRecorded",
+      "surveyCrewRecorded",
+      "surveyDateWeatherRecorded",
+      "intervieweeContactRecorded",
+      "informantContactRecorded",
+      "surveyResultRecorded",
+      "surveyProblemRecorded",
+      "permanentMarkerRecord",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-surfaceSurveyMapRequirement": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

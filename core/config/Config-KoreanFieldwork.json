@@ -479,6 +479,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "surfaceSurveyFieldDiary": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "surfaceSurveyMapRequirement": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -593,6 +597,7 @@
         "surfaceSurveyResultProcessing": "KoreanFieldwork-surfaceSurveyResultProcessing",
         "surfaceSurveyPreparationCheck": "KoreanFieldwork-surfaceSurveyPreparationCheck",
         "surfaceSurveyFieldSequence": "KoreanFieldwork-surfaceSurveyFieldSequence",
+        "surfaceSurveyFieldDiary": "KoreanFieldwork-surfaceSurveyFieldDiary",
         "surfaceSurveyMapRequirement": "KoreanFieldwork-surfaceSurveyMapRequirement",
         "surfaceSurveyHeritageCategory": "KoreanFieldwork-surfaceSurveyHeritageCategory",
         "surfaceSurveyScopeDefinition": "KoreanFieldwork-surfaceSurveyScopeDefinition",
@@ -634,6 +639,7 @@
             "surfaceSurveyResultProcessing",
             "surfaceSurveyPreparationCheck",
             "surfaceSurveyFieldSequence",
+            "surfaceSurveyFieldDiary",
             "surfaceSurveyMapRequirement",
             "surfaceSurveyHeritageCategory",
             "surfaceSurveyScopeDefinition",

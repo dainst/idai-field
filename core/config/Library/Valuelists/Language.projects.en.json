@@ -15015,6 +15015,22 @@
     },
     "description": "Korean field notebook sequence checks for recording boundary, overview photos, landform zones, known heritage, scatters, exposed features, sections, disturbance, vegetation, and interviews during surface survey"
   },
+  "KoreanFieldwork-surfaceSurveyFieldDiary": {
+    "values": {
+      "surveyNameRecorded": { "label": "Survey name recorded" },
+      "surveyAreaPointRecorded": { "label": "Survey area and point recorded" },
+      "surveyTargetRecorded": { "label": "Survey target recorded" },
+      "surveyCrewRecorded": { "label": "Survey crew recorded" },
+      "surveyDateWeatherRecorded": { "label": "Survey date and weather recorded" },
+      "intervieweeContactRecorded": { "label": "Interviewee contact recorded" },
+      "informantContactRecorded": { "label": "Informant contact recorded" },
+      "surveyResultRecorded": { "label": "Survey result recorded" },
+      "surveyProblemRecorded": { "label": "Survey problem recorded" },
+      "permanentMarkerRecord": { "label": "Permanent-marker record" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean field notebook checks for keeping surface-survey field diaries tied to the survey name, area or point, target, crew, date, weather, interviewee or informant contacts, results, problems, and water-resistant field records"
+  },
   "KoreanFieldwork-surfaceSurveyMapRequirement": {
     "values": {
       "polygonSurveyArea": { "label": "Polygon survey area" },

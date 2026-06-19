@@ -3261,6 +3261,22 @@
     },
     "description": "지표조사 현장에서 경계·전경·지형 구분을 먼저 확보하고 기존 문화재, 산포, 노출 유구, 절개면, 훼손, 탐문을 순서대로 놓치지 않기 위한 목록"
   },
+  "KoreanFieldwork-surfaceSurveyFieldDiary": {
+    "values": {
+      "surveyNameRecorded": { "label": "조사명 기록" },
+      "surveyAreaPointRecorded": { "label": "조사지역·지점 기록" },
+      "surveyTargetRecorded": { "label": "조사대상 기록" },
+      "surveyCrewRecorded": { "label": "조사자 명단 기록" },
+      "surveyDateWeatherRecorded": { "label": "조사일시·날씨 기록" },
+      "intervieweeContactRecorded": { "label": "면담자 연락처 기록" },
+      "informantContactRecorded": { "label": "제보자 연락처 기록" },
+      "surveyResultRecorded": { "label": "조사결과 기록" },
+      "surveyProblemRecorded": { "label": "문제점 기록" },
+      "permanentMarkerRecord": { "label": "유성펜 기록" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "현지 지표조사일지가 조사명, 조사지역·지점, 조사대상, 조사자, 일시·날씨, 면담자·제보자 연락처, 조사결과와 문제점, 물기에 지워지지 않는 기록 요건을 갖추었는지 확인하기 위한 목록"
+  },
   "KoreanFieldwork-surfaceSurveyMapRequirement": {
     "values": {
       "polygonSurveyArea": { "label": "다각형 조사범위" },

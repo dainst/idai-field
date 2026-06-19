@@ -96,9 +96,10 @@ export default class PreviewOverlay {
     }
 
     for (let feature of features) {
-      list.appendChild(
-        this.renderPreviewIcon(preferredLanguage, categoryLabels, feature),
-      );
+      if (validFeature(feature))
+        list.appendChild(
+          this.renderPreviewIcon(preferredLanguage, categoryLabels, feature),
+        );
     }
 
     container.appendChild(list);
@@ -147,7 +148,7 @@ export default class PreviewOverlay {
 
     categoryLabel.appendChild(
       document.createTextNode(
-        `${this.pickTranslation(categoryLabels[properties.category], preferredLanguage)}`,
+        `${pickTranslation(categoryLabels[properties.category], preferredLanguage)}`,
       ),
     );
 
@@ -170,7 +171,7 @@ export default class PreviewOverlay {
     let documentInfoText = properties.identifier;
 
     if (Object.keys(properties.description).length > 0) {
-      documentInfoText += ` | ${this.pickTranslation(properties.description, preferredLanguage)}`;
+      documentInfoText += ` | ${pickTranslation(properties.description, preferredLanguage)}`;
     }
 
     documentInfo.appendChild(document.createTextNode(documentInfoText));
@@ -190,13 +191,21 @@ export default class PreviewOverlay {
 
     return preview;
   }
-  private pickTranslation(
-    options: { [key: string]: string },
-    selected: string,
-  ) {
-    if (options[selected]) return options[selected];
-    if (options["en"]) return options["en"];
+}
 
-    return options[Object.keys(options)[0]];
-  }
+function pickTranslation(options: { [key: string]: string }, selected: string) {
+  if (options[selected]) return options[selected];
+  if (options["en"]) return options["en"];
+
+  return options[Object.keys(options)[0]];
+}
+
+function validFeature(feature: Feature) {
+  const properties = feature.getProperties();
+  return (
+    properties.uuid &&
+    properties.identifier &&
+    properties.color &&
+    properties.category
+  );
 }

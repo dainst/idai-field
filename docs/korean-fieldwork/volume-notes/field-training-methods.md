@@ -204,11 +204,12 @@ iDAI.field에는 다음 값이 필요하다.
 
 `발굴조사_실무.pdf`의 기록관리 장은 발굴이 파괴 조사라는 전제에서 야장, 사진, 도면, 보고서가 같은 맥락번호와 층위관계를 공유해야 함을 다시 확인시킨다. 번호는 라벨이 아니라 관계를 찾기 위한 키이므로, 격자와 둑이 남긴 단면 정보, 나중에 둑을 걷어낸 뒤 확인한 연결 관계, 관계 수정 사유가 함께 남아야 한다.
 
-Harris Matrix는 지금 단계에서 별도 화면 이름으로 확정하기보다 `chronologyArgument`의 층위관계 값, `excavationContextModel`, `stratigraphicObservationProcedure`, `featureLifecycleReview`, `reportCrossCheck`의 조합으로 처리하는 편이 낫다. 실제 입력 테스트에서 관계 그래프를 그리거나 수정 이력을 한눈에 보아야 한다는 문제가 확인되면 그때 `StratigraphicRelationReview` 같은 독립 기록 단위로 승격한다.
+이번 구현에서는 이 후보 중 `층위관계검토이력`을 `FeatureSegment`의 `stratigraphicRelationReview`로 먼저 올렸다. 맥락번호, 상하관계, 동시관계, 절단관계, 피복관계, 둑 제거 대조, 격자경계 대조, 관계 수정 사유, 도면번호, 사진번호, 대장·보고서 반영을 층 세부단위에서 바로 체크한다.
 
-필드 후보:
+Harris Matrix는 아직 별도 화면 이름으로 확정하지 않는다. 현 단계에서는 `stratigraphicRelationReview`, `chronologyArgument`의 층위관계 값, `excavationContextModel`, `stratigraphicObservationProcedure`, `featureLifecycleReview`, `reportCrossCheck`의 조합으로 처리한다. 실제 입력 테스트에서 관계 그래프를 그리거나 수정 이력을 한눈에 보아야 한다는 문제가 확인되면 그때 `StratigraphicRelationReview` 같은 독립 기록 단위로 승격한다.
 
-- `층위관계검토이력`: 맥락번호, 상하관계, 동시관계, 절단관계, 피복관계, 둑제거대조, 격자경계대조, 관계수정사유, 도면번호연결, 사진번호연결, 보고서반영, 판단 보류
+남은 후보:
+
 - `맥락번호변경이력`: 최초번호, 변경번호, 변경일, 변경자, 변경사유, 대장대조, 사진·도면대조, 보고서반영, 판단 보류
 
 ### 성곽조사 기록 품질

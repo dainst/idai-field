@@ -819,6 +819,9 @@
         "featureBurialProcessAssessment": {
           "label": "유구 매몰 과정 판정"
         },
+        "stratigraphicRelationReview": {
+          "label": "층위관계 검토 이력"
+        },
         "soilTextureFieldAssessment": {
           "label": "토성 현장판정"
         },

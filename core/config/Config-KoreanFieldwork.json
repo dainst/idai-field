@@ -2124,6 +2124,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "stratigraphicRelationReview": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "soilTextureFieldAssessment": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -2182,6 +2186,7 @@
         "featureLifecycleReview": "KoreanFieldwork-featureLifecycleReview",
         "featureBlockInclusionAssessment": "KoreanFieldwork-featureBlockInclusionAssessment",
         "featureBurialProcessAssessment": "KoreanFieldwork-featureBurialProcessAssessment",
+        "stratigraphicRelationReview": "KoreanFieldwork-stratigraphicRelationReview",
         "soilTextureFieldAssessment": "KoreanFieldwork-soilTextureFieldAssessment",
         "alluvialLayerConceptAudit": "KoreanFieldwork-alluvialLayerConceptAudit",
         "alluvialSurfaceAttribution": "KoreanFieldwork-alluvialSurfaceAttribution",
@@ -2229,6 +2234,7 @@
             "featureLifecycleReview",
             "featureBlockInclusionAssessment",
             "featureBurialProcessAssessment",
+            "stratigraphicRelationReview",
             "soilTextureFieldAssessment",
             "alluvialLayerConceptAudit",
             "alluvialSurfaceAttribution",

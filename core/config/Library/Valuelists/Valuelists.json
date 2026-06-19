@@ -32316,6 +32316,50 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-stratigraphicRelationReview": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "contextNumberRecorded": {},
+      "upperLowerRelation": {},
+      "contemporaneousRelation": {},
+      "cutRelation": {},
+      "coveringRelation": {},
+      "baulkRemovalCrossCheck": {},
+      "gridBoundaryCrossCheck": {},
+      "relationChangeReasonRecorded": {},
+      "drawingNumberLinked": {},
+      "photoNumberLinked": {},
+      "reportUpdated": {},
+      "originalNumberRecorded": {},
+      "revisedNumberRecorded": {},
+      "changeActorDateRecorded": {},
+      "registerCrossChecked": {},
+      "mediaCrossChecked": {},
+      "unresolvedRelation": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "contextNumberRecorded",
+      "upperLowerRelation",
+      "contemporaneousRelation",
+      "cutRelation",
+      "coveringRelation",
+      "baulkRemovalCrossCheck",
+      "gridBoundaryCrossCheck",
+      "relationChangeReasonRecorded",
+      "drawingNumberLinked",
+      "photoNumberLinked",
+      "reportUpdated",
+      "originalNumberRecorded",
+      "revisedNumberRecorded",
+      "changeActorDateRecorded",
+      "registerCrossChecked",
+      "mediaCrossChecked",
+      "unresolvedRelation",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-soilTextureFieldAssessment": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

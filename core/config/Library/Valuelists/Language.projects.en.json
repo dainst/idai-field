@@ -12689,6 +12689,29 @@
     },
     "description": "Korean burial-process checks for separating rapid and gradual burial, artificial fill, natural inflow, waterlaid deposits, collapse, hiatuses, soil formation, and bulk artifact burial"
   },
+  "KoreanFieldwork-stratigraphicRelationReview": {
+    "values": {
+      "contextNumberRecorded": { "label": "Context number recorded" },
+      "upperLowerRelation": { "label": "Upper/lower relation" },
+      "contemporaneousRelation": { "label": "Contemporaneous relation" },
+      "cutRelation": { "label": "Cut relation" },
+      "coveringRelation": { "label": "Covering relation" },
+      "baulkRemovalCrossCheck": { "label": "Baulk-removal cross-check" },
+      "gridBoundaryCrossCheck": { "label": "Grid-boundary cross-check" },
+      "relationChangeReasonRecorded": { "label": "Relation-change reason recorded" },
+      "drawingNumberLinked": { "label": "Drawing number linked" },
+      "photoNumberLinked": { "label": "Photo number linked" },
+      "reportUpdated": { "label": "Report updated" },
+      "originalNumberRecorded": { "label": "Original number recorded" },
+      "revisedNumberRecorded": { "label": "Revised number recorded" },
+      "changeActorDateRecorded": { "label": "Change actor/date recorded" },
+      "registerCrossChecked": { "label": "Register cross-checked" },
+      "mediaCrossChecked": { "label": "Photo/drawing cross-checked" },
+      "unresolvedRelation": { "label": "Unresolved relation" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean stratigraphic relation checks for context numbers, upper/lower, contemporaneous, cut, and covering relations, baulk-removal and grid-boundary cross-checks, relation changes, drawing/photo links, report updates, and unresolved relationships"
+  },
   "KoreanFieldwork-soilTextureFieldAssessment": {
     "values": {
       "fingerRubbing": { "label": "Finger rubbing" },

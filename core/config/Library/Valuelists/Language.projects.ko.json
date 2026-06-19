@@ -935,6 +935,29 @@
     },
     "description": "매몰이 급격했는지 점진적이었는지, 인위매립·자연유입·수성퇴적·붕락·휴지기와 유물 일괄성을 분리해 검토하기 위한 목록"
   },
+  "KoreanFieldwork-stratigraphicRelationReview": {
+    "values": {
+      "contextNumberRecorded": { "label": "맥락번호 기록" },
+      "upperLowerRelation": { "label": "상하관계" },
+      "contemporaneousRelation": { "label": "동시관계" },
+      "cutRelation": { "label": "절단관계" },
+      "coveringRelation": { "label": "피복관계" },
+      "baulkRemovalCrossCheck": { "label": "둑 제거 대조" },
+      "gridBoundaryCrossCheck": { "label": "격자경계 대조" },
+      "relationChangeReasonRecorded": { "label": "관계 수정 사유" },
+      "drawingNumberLinked": { "label": "도면번호 연결" },
+      "photoNumberLinked": { "label": "사진번호 연결" },
+      "reportUpdated": { "label": "보고서 반영" },
+      "originalNumberRecorded": { "label": "최초번호 기록" },
+      "revisedNumberRecorded": { "label": "변경번호 기록" },
+      "changeActorDateRecorded": { "label": "변경자·일자 기록" },
+      "registerCrossChecked": { "label": "대장 대조" },
+      "mediaCrossChecked": { "label": "사진·도면 대조" },
+      "unresolvedRelation": { "label": "관계 미해결" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "맥락번호, 상하·동시·절단·피복 관계, 둑 제거와 격자경계 대조, 관계 수정 사유, 도면·사진 번호, 보고서 반영, 최초·변경 번호와 미해결 관계를 기록하기 위한 목록"
+  },
   "KoreanFieldwork-soilTextureFieldAssessment": {
     "values": {
       "fingerRubbing": { "label": "손가락 비빔" },

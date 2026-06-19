@@ -289,6 +289,24 @@
           "bulkArtifactBurial",
           "pendingDecision"
         ],
+        "stratigraphicRelationReview": [
+          "contextNumberRecorded",
+          "upperLowerRelation",
+          "contemporaneousRelation",
+          "cutRelation",
+          "coveringRelation",
+          "baulkRemovalCrossCheck",
+          "gridBoundaryCrossCheck",
+          "relationChangeReasonRecorded",
+          "drawingNumberLinked",
+          "photoNumberLinked",
+          "reportUpdated",
+          "originalNumberRecorded",
+          "revisedNumberRecorded",
+          "changeActorDateRecorded",
+          "registerCrossChecked",
+          "mediaCrossChecked"
+        ],
         "stratigraphicMisreadGuard": [
           "colorPrimaryDivisionAvoided",
           "freshSectionLightControlled",

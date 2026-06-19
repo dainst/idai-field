@@ -1013,6 +1013,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('baseLayerDerived');
         expect(documentsById['segment-stratigraphy-fill-001'].resource.featureBurialProcessAssessment)
             .toContain('soilFormationTrace');
+        expect(documentsById['segment-stratigraphy-fill-001'].resource.stratigraphicRelationReview)
+            .toContain('baulkRemovalCrossCheck');
+        expect(documentsById['segment-stratigraphy-fill-001'].resource.stratigraphicRelationReview)
+            .toContain('relationChangeReasonRecorded');
+        expect(documentsById['segment-stratigraphy-fill-001'].resource.stratigraphicRelationReview)
+            .toContain('mediaCrossChecked');
         expect(documentsById['feature-stratigraphy-pit-001'].resource.excavationContextModel)
             .toContain('investigationMethodRationale');
         expect(documentsById['feature-stratigraphy-pit-001'].resource.excavationContextModel)
@@ -1429,6 +1435,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureSegmentForm.fields.featureLifecycleReview.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.featureBlockInclusionAssessment.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.featureBurialProcessAssessment.inputType).toBe('checkboxes');
+        expect(featureSegmentForm.fields.stratigraphicRelationReview.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.soilTextureFieldAssessment.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.alluvialLayerConceptAudit.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.alluvialSurfaceAttribution.inputType).toBe('checkboxes');
@@ -1890,6 +1897,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-featureBlockInclusionAssessment');
         expect(featureSegmentForm.valuelists.featureBurialProcessAssessment)
             .toBe('KoreanFieldwork-featureBurialProcessAssessment');
+        expect(featureSegmentForm.valuelists.stratigraphicRelationReview)
+            .toBe('KoreanFieldwork-stratigraphicRelationReview');
         expect(featureSegmentForm.valuelists.soilTextureFieldAssessment)
             .toBe('KoreanFieldwork-soilTextureFieldAssessment');
         expect(featureSegmentForm.valuelists.alluvialLayerConceptAudit)
@@ -2419,6 +2428,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Feature block inclusion assessment');
         expect(languages.en.categories.FeatureSegment.fields.featureBurialProcessAssessment.label)
             .toBe('Feature burial process assessment');
+        expect(languages.en.categories.FeatureSegment.fields.stratigraphicRelationReview.label)
+            .toBe('Stratigraphic relation review');
         expect(languages.en.categories.FeatureSegment.fields.soilTextureFieldAssessment.label)
             .toBe('Soil texture field assessment');
         expect(languages.en.categories.FeatureSegment.fields.alluvialLayerConceptAudit.label)
@@ -2776,6 +2787,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-featureBurialProcessAssessment']
             .values.waterlaidDeposit.label)
             .toBe('Waterlaid deposit');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-stratigraphicRelationReview']
+            .values.baulkRemovalCrossCheck.label)
+            .toBe('Baulk-removal cross-check');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-stratigraphicRelationReview']
+            .values.mediaCrossChecked.label)
+            .toBe('Photo/drawing cross-checked');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-excavationContextModel']
             .values.quadrantInvestigation.label)
             .toBe('Quadrant investigation');
@@ -3482,6 +3499,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-featureBurialProcessAssessment']
             .values.soilFormationTrace.label)
             .toBe('토양화 흔적');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-stratigraphicRelationReview']
+            .values.baulkRemovalCrossCheck.label)
+            .toBe('둑 제거 대조');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-stratigraphicRelationReview']
+            .values.mediaCrossChecked.label)
+            .toBe('사진·도면 대조');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-moundTrenchInvestigation']
             .values.crossTrench.label)
             .toBe('4분·십자 트렌치');

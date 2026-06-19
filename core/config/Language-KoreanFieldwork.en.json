@@ -819,6 +819,9 @@
         "featureBurialProcessAssessment": {
           "label": "Feature burial process assessment"
         },
+        "stratigraphicRelationReview": {
+          "label": "Stratigraphic relation review"
+        },
         "soilTextureFieldAssessment": {
           "label": "Soil texture field assessment"
         },

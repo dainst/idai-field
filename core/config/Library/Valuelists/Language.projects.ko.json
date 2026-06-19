@@ -3925,12 +3925,17 @@
       "surveyDateWeatherRecorded": { "label": "조사일시·날씨 기록" },
       "intervieweeContactRecorded": { "label": "면담자 연락처 기록" },
       "informantContactRecorded": { "label": "제보자 연락처 기록" },
+      "informantRoleRecorded": { "label": "제보자 역할 기록" },
+      "interviewQuestionnairePrepared": { "label": "질문지 준비" },
+      "oralPlaceNameRecorded": { "label": "구술 지명 기록" },
+      "informantStatementQualified": { "label": "제보 가능성 정보 표시" },
+      "followUpSurveyLinked": { "label": "보완조사 연결" },
       "surveyResultRecorded": { "label": "조사결과 기록" },
       "surveyProblemRecorded": { "label": "문제점 기록" },
       "permanentMarkerRecord": { "label": "유성펜 기록" },
       "pendingDecision": { "label": "판단 보류" }
     },
-    "description": "현지 지표조사일지가 조사명, 조사지역·지점, 조사대상, 조사자, 일시·날씨, 면담자·제보자 연락처, 조사결과와 문제점, 물기에 지워지지 않는 기록 요건을 갖추었는지 확인하기 위한 목록"
+    "description": "현지 지표조사일지가 조사명, 조사지역·지점, 조사대상, 조사자, 일시·날씨, 면담자·제보자 연락처와 역할, 질문지, 구술 지명, 제보의 가능성 정보 표시, 보완조사 연결, 조사결과와 문제점, 물기에 지워지지 않는 기록 요건을 갖추었는지 확인하기 위한 목록"
   },
   "KoreanFieldwork-surfaceSurveyMapRequirement": {
     "values": {

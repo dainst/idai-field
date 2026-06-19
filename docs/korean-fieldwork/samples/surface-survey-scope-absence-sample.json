@@ -143,6 +143,11 @@
           "surveyDateWeatherRecorded",
           "intervieweeContactRecorded",
           "informantContactRecorded",
+          "informantRoleRecorded",
+          "interviewQuestionnairePrepared",
+          "oralPlaceNameRecorded",
+          "informantStatementQualified",
+          "followUpSurveyLinked",
           "surveyResultRecorded",
           "surveyProblemRecorded",
           "permanentMarkerRecord"

@@ -627,6 +627,16 @@ describe('KoreanFieldwork project configuration', () => {
         expect(documentsById['survey-surface-scope-001'].resource.surfaceSurveyFieldDiary)
             .toContain('informantContactRecorded');
         expect(documentsById['survey-surface-scope-001'].resource.surfaceSurveyFieldDiary)
+            .toContain('informantRoleRecorded');
+        expect(documentsById['survey-surface-scope-001'].resource.surfaceSurveyFieldDiary)
+            .toContain('interviewQuestionnairePrepared');
+        expect(documentsById['survey-surface-scope-001'].resource.surfaceSurveyFieldDiary)
+            .toContain('oralPlaceNameRecorded');
+        expect(documentsById['survey-surface-scope-001'].resource.surfaceSurveyFieldDiary)
+            .toContain('informantStatementQualified');
+        expect(documentsById['survey-surface-scope-001'].resource.surfaceSurveyFieldDiary)
+            .toContain('followUpSurveyLinked');
+        expect(documentsById['survey-surface-scope-001'].resource.surfaceSurveyFieldDiary)
             .toContain('permanentMarkerRecord');
         expect(documentsById['survey-surface-scope-001'].resource.surfaceSurveySpecialRecord)
             .toContain('inscriptionRubbingRecord');
@@ -3111,6 +3121,15 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveyFieldDiary']
             .values.informantContactRecorded.label)
             .toBe('Informant contact recorded');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveyFieldDiary']
+            .values.informantStatementQualified.label)
+            .toBe('Informant statement marked as potential evidence');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-surfaceSurveyFieldDiary']
+            .values.oralPlaceNameRecorded.label)
+            .toBe('구술 지명 기록');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-surfaceSurveyFieldDiary']
+            .values.followUpSurveyLinked.label)
+            .toBe('보완조사 연결');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-surfaceSurveyFieldDiary']
             .values.permanentMarkerRecord.label)
             .toBe('유성펜 기록');

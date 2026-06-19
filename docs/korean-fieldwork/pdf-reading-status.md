@@ -146,6 +146,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-19 도표·사례·캡션 원문 대조도 구현 단위로 옮겼다. `SourceEvidenceIndex`는 성곽, 충적지, 고분, 생산유적, 연구방법론, 사전 용어처럼 분야별로 흩어진 도표·사진·표·캡션·사례명·한자·수치를 `Project` 하위 원문 근거 색인으로 묶고, 원PDF 직접 대조, OCR 교정 필요, 캡션 재확인, 값목록 승격 가능, UI 노출 보류 같은 상태를 함께 남긴다. `source-evidence-index-sample.json`은 이 색인이 자동 분류값이 아니라 필드 설계 근거와 재대조 작업 목록으로 쓰이는지 검증한다.
 
+2026-06-19 수혈주거지 도판·사례명 교정 대상도 같은 색인 흐름으로 분리했다. `발굴조사 업무의 이해`와 `현장조사 방법과 해석`의 수혈주거지 장은 이미 `pitDwellingExposureBaulk`, `pitDwellingFloorFacility`, `pitDwellingFireEvidence`, `pitDwellingOverlapSequence` 값목록으로 구현했지만, 도판 속 사례명과 개별 캡션은 아직 값목록 근거로 승격하지 않는다. `source-index-pit-dwelling-001`은 이 항목을 `buildingSite`와 `researchMethod` 영역의 원문 재대조 대상으로 남겨 자동 분류와 성급한 주거지 확정을 막는다.
+
 2026-06-19 추가 재독해에서는 `현장조사_방법과_해석`, `발굴조사_업무의_이해_교재`, `제2회_매장문화재_조사연구원_교육_2007년3월`, `매장문화재_유적조사방법론` OCR 본문을 교차 검색해 구획·둑 설정, 둑 폭과 보호, 배수·집수정, 장비 제토 두께, 삽날 방향 관찰, 작업자 안전거리, 기준단면 당일 촬영·도면화, 안전휀스, 철수 전 원고·도면·사진·유물목록 점검을 공통 현장 운영 요구로 다시 묶었다. 이 묶음은 `Operation`의 `excavationControlSafety` 값목록으로 옮겼고, `daily-log-quality-review-workflow-sample.json`에서 일지·품질검수 흐름과 함께 검증한다.
 
 2026-06-19 이어서 사진·보고서 동시 검수 장과 `제2회_매장문화재_조사연구원_교육_2007년3월`의 조사계획·착수 OCR 대목을 다시 대조했다. 현장 작업자는 조사단장·책임조사원·조사원 같은 직급뿐 아니라 측량, 사진, 도면, 안전관리, 민원·기관소통, 유물정리, 시료채취, 일지 작성, 보고서 준비, 검토 역할을 겸할 수 있고, 이 책임 범위가 일지 본문에만 남으면 분쟁·보고서 보완·품질검수 때 역추적이 어렵다. 이 묶음은 `Operation`과 `DailyLog`의 `operationRoleResponsibility` 값목록으로 옮겼고, `daily-log-quality-review-workflow-sample.json`에서 당일 역할 공백까지 함께 검증한다.

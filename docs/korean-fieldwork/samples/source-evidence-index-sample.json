@@ -225,6 +225,53 @@
     },
     {
       "resource": {
+        "id": "source-index-pit-dwelling-001",
+        "identifier": "SRC-PIT-DWELL-001",
+        "shortDescription": "수혈주거지 도판·사례명 재대조 색인",
+        "category": "SourceEvidenceIndex",
+        "relations": {
+          "liesWithin": ["project-source-evidence-001"]
+        },
+        "description": "발굴조사 업무의 이해와 현장조사 방법과 해석의 수혈주거지 장에서 도판, 캡션, 사례명, OCR 오독 후보를 바로 값목록으로 확정하지 않고 노출·둑·바닥·화재·중복 조사 필드의 후속 검토 근거로 묶는다.",
+        "sourceEvidenceCitation": "발굴조사_업무의_이해_교재_(2).pdf, 수혈주거지 장; 현장조사_방법과_해석.pdf, 수혈주거지 장",
+        "sourceEvidenceLocator": "수혈주거지 도판·사진·캡션·사례명 원PDF 재대조 대상, method19_page_160-174 및 method30_page_139-143 렌더링 이미지 확인 범위",
+        "sourceEvidenceMaterial": [
+          "figure",
+          "plate",
+          "photo",
+          "drawing",
+          "caption",
+          "caseStudy",
+          "sourceCitation"
+        ],
+        "sourceEvidenceDomain": [
+          "buildingSite",
+          "researchMethod"
+        ],
+        "sourceEvidenceVerification": [
+          "ocrCorrectionNeeded",
+          "captionNeedsCheck",
+          "uiExposureDeferred"
+        ],
+        "sourceEvidenceUse": [
+          "fieldDesignEvidence",
+          "sampleValidationEvidence",
+          "interpretationCaution",
+          "preventAutoClassification",
+          "sourceTraceability",
+          "futurePdfRecheck"
+        ],
+        "recordCreationTiming": "postExcavationDerived",
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "reproducibleRecord",
+          "crossReviewNeeded"
+        ],
+        "verificationState": "needsRecheck"
+      }
+    },
+    {
+      "resource": {
         "id": "source-index-stratigraphy-context-001",
         "identifier": "SRC-STRAT-CTX-001",
         "shortDescription": "층위·출토맥락 보고서 검토 색인",

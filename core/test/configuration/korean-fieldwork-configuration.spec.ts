@@ -317,6 +317,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('archaeobotany');
         expect(documentsById['source-index-archaeobotany-001'].resource.sourceEvidenceUse)
             .toContain('sampleValidationEvidence');
+        expect(documentsById['source-index-pit-dwelling-001'].resource.sourceEvidenceDomain)
+            .toContain('buildingSite');
+        expect(documentsById['source-index-pit-dwelling-001'].resource.sourceEvidenceVerification)
+            .toContain('captionNeedsCheck');
+        expect(documentsById['source-index-pit-dwelling-001'].resource.sourceEvidenceUse)
+            .toContain('preventAutoClassification');
         expect(documentsById['source-index-stratigraphy-context-001'].resource.sourceEvidenceDomain)
             .toContain('reportWriting');
         expect(documentsById['source-index-stratigraphy-context-001'].resource.sourceEvidenceUse)

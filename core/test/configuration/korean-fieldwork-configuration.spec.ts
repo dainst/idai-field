@@ -165,6 +165,39 @@ describe('KoreanFieldwork project configuration', () => {
     });
 
 
+    it('keeps the Korean public research governance sample aligned with release and role fields', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const sample = loadSample('public-research-governance-sample.json');
+        const documents = sample.documents;
+        const documentsById = documents.reduce((index: any, document: any) => {
+            index[document.resource.id] = document;
+            return index;
+        }, {});
+
+        expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
+
+        expect(documentsById['project-public-research-001'].resource.publicArchaeologyOutput)
+            .toContain('onlineArchive');
+        expect(documentsById['project-public-research-001'].resource.accessControlTag)
+            .toContain('lootingRisk');
+        expect(documentsById['project-public-research-001'].resource.overseasHeritageRisk)
+            .toContain('exportRestriction');
+        expect(documentsById['project-public-research-001'].resource.researchProcessBalance)
+            .toContain('interpretationImpactReviewed');
+        expect(documentsById['op-public-briefing-001'].resource.publicEngagementProgram)
+            .toContain('mockExcavationUsed');
+        expect(documentsById['op-public-briefing-001'].resource.experimentDesign)
+            .toContain('singleRunWarning');
+        expect(documentsById['photo-public-briefing-001'].resource.mediaRights)
+            .toContain('sensitiveDetailMasked');
+        expect(documentsById['drawing-public-3d-001'].resource.accessControlTag)
+            .toContain('reviewBeforeRelease');
+    });
+
+
     it('keeps the Korean daily log and quality review sample aligned with review fields', () => {
 
         const configReader = new ConfigReader();
@@ -827,9 +860,20 @@ describe('KoreanFieldwork project configuration', () => {
         expect(projectForm.fields.partialCompletionPackage.inputType).toBe('checkboxes');
         expect(projectForm.fields.recordTransferManagementSystem.inputType).toBe('checkboxes');
         expect(projectForm.fields.reportEvaluationFeedback.inputType).toBe('checkboxes');
+        expect(projectForm.fields.publicArchaeologyOutput.inputType).toBe('checkboxes');
+        expect(projectForm.fields.publicEngagementProgram.inputType).toBe('checkboxes');
+        expect(projectForm.fields.accessControlTag.inputType).toBe('checkboxes');
+        expect(projectForm.fields.overseasHeritageRisk.inputType).toBe('checkboxes');
+        expect(projectForm.fields.researchRoleAssignment.inputType).toBe('checkboxes');
+        expect(projectForm.fields.researchProcessBalance.inputType).toBe('checkboxes');
         expect(operationForm.fields.expertReviewMeeting.inputType).toBe('checkboxes');
         expect(operationForm.fields.partialCompletionPackage.inputType).toBe('checkboxes');
         expect(operationForm.fields.recordTransferManagementSystem.inputType).toBe('checkboxes');
+        expect(operationForm.fields.publicEngagementProgram.inputType).toBe('checkboxes');
+        expect(operationForm.fields.accessControlTag.inputType).toBe('checkboxes');
+        expect(operationForm.fields.researchRoleAssignment.inputType).toBe('checkboxes');
+        expect(operationForm.fields.researchProcessBalance.inputType).toBe('checkboxes');
+        expect(operationForm.fields.experimentDesign.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyObservation.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyBiasControl.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyFollowUp.inputType).toBe('checkboxes');
@@ -1021,11 +1065,15 @@ describe('KoreanFieldwork project configuration', () => {
         expect(drawingForm.fields.distributionMapRequirement.inputType).toBe('checkboxes');
         expect(drawingForm.fields.electronicDrawingSourceWorkflow.inputType).toBe('checkboxes');
         expect(drawingForm.fields.artifactElectronicDrawingProcedure.inputType).toBe('checkboxes');
+        expect(drawingForm.fields.accessControlTag.inputType).toBe('checkboxes');
+        expect(drawingForm.fields.mediaRights.inputType).toBe('checkboxes');
         expect(photoForm.fields.mediaEvidenceRole.inputType).toBe('checkboxes');
         expect(photoForm.fields.mediaQualityCheck.inputType).toBe('checkboxes');
         expect(photoForm.fields.digitalSourcePreservation.inputType).toBe('checkboxes');
         expect(photoForm.fields.gpsPhotoLinkRecord.inputType).toBe('checkboxes');
         expect(photoForm.fields.reportCrossCheck.inputType).toBe('checkboxes');
+        expect(photoForm.fields.accessControlTag.inputType).toBe('checkboxes');
+        expect(photoForm.fields.mediaRights.inputType).toBe('checkboxes');
 
         expect(operationForm.valuelists.fieldRecordQuality).toBe('KoreanFieldwork-fieldRecordQuality');
         expect(operationForm.valuelists.gpsSurveyQualityRecord)
@@ -1058,6 +1106,28 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-reportEvaluationFeedback');
         expect(projectForm.valuelists.reportEvaluationFeedback)
             .toBe('KoreanFieldwork-reportEvaluationFeedback');
+        expect(projectForm.valuelists.publicArchaeologyOutput)
+            .toBe('KoreanFieldwork-publicArchaeologyOutput');
+        expect(projectForm.valuelists.publicEngagementProgram)
+            .toBe('KoreanFieldwork-publicEngagementProgram');
+        expect(projectForm.valuelists.accessControlTag)
+            .toBe('KoreanFieldwork-accessControlTag');
+        expect(projectForm.valuelists.overseasHeritageRisk)
+            .toBe('KoreanFieldwork-overseasHeritageRisk');
+        expect(projectForm.valuelists.researchRoleAssignment)
+            .toBe('KoreanFieldwork-researchRoleAssignment');
+        expect(projectForm.valuelists.researchProcessBalance)
+            .toBe('KoreanFieldwork-researchProcessBalance');
+        expect(operationForm.valuelists.publicEngagementProgram)
+            .toBe('KoreanFieldwork-publicEngagementProgram');
+        expect(operationForm.valuelists.accessControlTag)
+            .toBe('KoreanFieldwork-accessControlTag');
+        expect(operationForm.valuelists.researchRoleAssignment)
+            .toBe('KoreanFieldwork-researchRoleAssignment');
+        expect(operationForm.valuelists.researchProcessBalance)
+            .toBe('KoreanFieldwork-researchProcessBalance');
+        expect(operationForm.valuelists.experimentDesign)
+            .toBe('KoreanFieldwork-experimentDesign');
         expect(fieldRecordQualityReviewForm.valuelists.reviewedRecordUnit)
             .toBe('KoreanFieldwork-reviewedRecordUnit');
         expect(fieldRecordQualityReviewForm.valuelists.qualityReviewStage)
@@ -1397,6 +1467,9 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-electronicDrawingSourceWorkflow');
         expect(drawingForm.valuelists.artifactElectronicDrawingProcedure)
             .toBe('KoreanFieldwork-artifactElectronicDrawingProcedure');
+        expect(drawingForm.valuelists.accessControlTag)
+            .toBe('KoreanFieldwork-accessControlTag');
+        expect(drawingForm.valuelists.mediaRights).toBe('KoreanFieldwork-mediaRights');
         expect(photoForm.valuelists.mediaEvidenceRole).toBe('KoreanFieldwork-mediaEvidenceRole');
         expect(photoForm.valuelists.mediaQualityCheck).toBe('KoreanFieldwork-mediaQualityCheck');
         expect(photoForm.valuelists.digitalSourcePreservation)
@@ -1404,6 +1477,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(photoForm.valuelists.gpsPhotoLinkRecord)
             .toBe('KoreanFieldwork-gpsPhotoLinkRecord');
         expect(photoForm.valuelists.reportCrossCheck).toBe('KoreanFieldwork-reportCrossCheck');
+        expect(photoForm.valuelists.accessControlTag)
+            .toBe('KoreanFieldwork-accessControlTag');
+        expect(photoForm.valuelists.mediaRights).toBe('KoreanFieldwork-mediaRights');
     });
 
 
@@ -1438,6 +1514,16 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.Project.fields.digitalSourcePreservation.label).toBe('Digital source preservation');
         expect(languages.en.categories.Project.fields.reportEvaluationFeedback.label)
             .toBe('Report evaluation feedback');
+        expect(languages.en.categories.Project.fields.publicArchaeologyOutput.label)
+            .toBe('Public archaeology output');
+        expect(languages.en.categories.Project.fields.overseasHeritageRisk.label)
+            .toBe('Overseas heritage risk');
+        expect(languages.en.categories.Project.fields.researchProcessBalance.label)
+            .toBe('Research process balance');
+        expect(languages.en.categories.Operation.fields.publicEngagementProgram.label)
+            .toBe('Public engagement program');
+        expect(languages.en.categories.Operation.fields.experimentDesign.label)
+            .toBe('Experimental archaeology design');
         expect(languages.en.categories.Survey.fields.surfaceSurveyObservation.label)
             .toBe('Surface survey observation');
         expect(languages.en.categories.Survey.fields.surfaceSurveyPreparationCheck.label)
@@ -1754,10 +1840,18 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Electronic drawing source workflow');
         expect(languages.en.categories.Drawing.fields.artifactElectronicDrawingProcedure.label)
             .toBe('Artifact electronic drawing procedure');
+        expect(languages.en.categories.Drawing.fields.accessControlTag.label)
+            .toBe('Access control tag');
+        expect(languages.en.categories.Drawing.fields.mediaRights.label)
+            .toBe('Media rights management');
         expect(languages.en.categories.Photo.fields.mediaQualityCheck.label)
             .toBe('Media quality check');
         expect(languages.en.categories.Photo.fields.gpsPhotoLinkRecord.label)
             .toBe('GPS photo-link record');
+        expect(languages.en.categories.Photo.fields.accessControlTag.label)
+            .toBe('Access control tag');
+        expect(languages.en.categories.Photo.fields.mediaRights.label)
+            .toBe('Media rights management');
         expect(languages.ko.categories.Operation.fields.fieldRecordQuality.label).toBeDefined();
 
         expect(valuelistLanguages.projects.en['KoreanFieldwork-fieldRecordQuality'].values.immediateRecording.label)
@@ -2297,6 +2391,30 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-fieldDatabaseOperationRisk']
             .values.dataCompatibilityChecked.label)
             .toBe('Data compatibility checked');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-publicArchaeologyOutput']
+            .values.onlineArchive.label)
+            .toBe('Online archive');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-publicEngagementProgram']
+            .values.mockExcavationUsed.label)
+            .toBe('Mock excavation used');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-accessControlTag']
+            .values.lootingRisk.label)
+            .toBe('Looting risk');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaRights']
+            .values.sensitiveDetailMasked.label)
+            .toBe('Sensitive detail masked');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-overseasHeritageRisk']
+            .values.exportRestriction.label)
+            .toBe('Export restriction');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-researchRoleAssignment']
+            .values.reviewResponsibility.label)
+            .toBe('Review responsibility');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-researchProcessBalance']
+            .values.interpretationImpactReviewed.label)
+            .toBe('Interpretation impact reviewed');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-experimentDesign']
+            .values.singleRunWarning.label)
+            .toBe('Single-run warning');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceFindHandlingRecord']
             .values.adheringSoilPreserved.label)
             .toBe('Adhering soil preserved');
@@ -2309,6 +2427,15 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-mapSourceMaterial']
             .values.joseonMap.label)
             .toBe('조선시대 지도');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-accessControlTag']
+            .values.reviewBeforeRelease.label)
+            .toBe('공개 전 검토');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-publicEngagementProgram']
+            .values.operatingCostReviewed.label)
+            .toBe('운영비 검토');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-experimentDesign']
+            .values.failedRunRecorded.label)
+            .toBe('실패값 기록');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-cultivationFeatureContext']
             .values.cropNameNotClassification.label)
             .toBe('작물명으로 논밭 확정 금지');

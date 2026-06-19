@@ -73,6 +73,24 @@
         "reportEvaluationFeedback": {
           "label": "Report evaluation feedback"
         },
+        "publicArchaeologyOutput": {
+          "label": "Public archaeology output"
+        },
+        "publicEngagementProgram": {
+          "label": "Public engagement program"
+        },
+        "accessControlTag": {
+          "label": "Access control tag"
+        },
+        "overseasHeritageRisk": {
+          "label": "Overseas heritage risk"
+        },
+        "researchRoleAssignment": {
+          "label": "Research role assignment"
+        },
+        "researchProcessBalance": {
+          "label": "Research process balance"
+        },
         "verificationState": {
           "label": "Verification state"
         }
@@ -115,6 +133,21 @@
         },
         "reportEvaluationFeedback": {
           "label": "Report evaluation feedback"
+        },
+        "publicEngagementProgram": {
+          "label": "Public engagement program"
+        },
+        "accessControlTag": {
+          "label": "Access control tag"
+        },
+        "researchRoleAssignment": {
+          "label": "Research role assignment"
+        },
+        "researchProcessBalance": {
+          "label": "Research process balance"
+        },
+        "experimentDesign": {
+          "label": "Experimental archaeology design"
         },
         "verificationState": {
           "label": "Verification state"
@@ -785,6 +818,12 @@
         },
         "artifactElectronicDrawingProcedure": {
           "label": "Artifact electronic drawing procedure"
+        },
+        "accessControlTag": {
+          "label": "Access control tag"
+        },
+        "mediaRights": {
+          "label": "Media rights management"
         }
       }
     },
@@ -804,6 +843,12 @@
         },
         "reportCrossCheck": {
           "label": "Report cross-check"
+        },
+        "accessControlTag": {
+          "label": "Access control tag"
+        },
+        "mediaRights": {
+          "label": "Media rights management"
         }
       }
     }

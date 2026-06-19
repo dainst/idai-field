@@ -110,6 +110,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-19 고고학사전 자료의 별칭·찾아가기 구조도 한 단계 더 구현했다. 사전은 `집자리/주거지`, `가마터/요지`, `한뎃가마/노천요`처럼 현장 검색어와 권위 표제어, 보고서 출력어가 다른 경우를 반복해서 보여준다. 이 묶음은 `TermAuthority` 하위 `TermAlias` 카드와 `termAliasRole`, `termAliasHandling` 값 목록으로 옮겨 별칭 역할, 자동완성 허용, 우선표제어 연결, 검색어 보존, 가져오기 전용, 원PDF 대조 필요, 현장 관찰어 덮어쓰기 금지를 분리했다.
 
+2026-06-19 제9권 연구방법론의 대중고고학·실험고고학·해외조사·기관 역할 장도 구현 단위로 압축했다. 이 자료는 공개를 보고서 이후의 홍보가 아니라 민감정보, 권리, 설명문, 현장설명회 운영, 후속 교육, 공개 전 검토가 필요한 기록 흐름으로 다루고, 실험고고학을 복원품 제작이 아니라 질문·가설·변수·대조군·반복·실패값·외부검토가 있는 검증 절차로 본다. 해외조사는 국내법 밖이라도 현지 법제, 허가, 반출 제한, 보존·전시, 일정·안전 리스크를 프로젝트 단계에서 관리해야 한다. 이 묶음은 `Project`와 `Operation`의 `publicArchaeologyOutput`, `publicEngagementProgram`, `accessControlTag`, `overseasHeritageRisk`, `researchRoleAssignment`, `researchProcessBalance`, `experimentDesign`, 그리고 `Photo`·`Drawing`의 `mediaRights`와 `accessControlTag`로 옮겼고, `public-research-governance-sample.json`으로 공개 후보 사진·3D 도면과 역할분담이 끊기지 않는지 검증한다.
+
 2026-06-19 독해 상태 감사에서는 `C:\Users\nuri9\Downloads\고고학사전`의 PDF 12개와 사전 추출 텍스트 12개, `C:\Users\nuri9\Downloads\조사방법론`의 PDF 31개와 조사방법론 추출 텍스트 31개가 서로 대응함을 확인했다. 별도 OCR 보강본은 `codex-idai-field-ocr`와 `codex-idai-field-new-pdf-text\ocr-selected`에 남아 있다. 따라서 현재 남은 일은 새 미독 자료 목록을 찾는 단계가 아니라, OCR 취약 구간의 도판·캡션·사례명·한자·표 수치를 원문 이미지로 교정하고, 이미 뽑은 요구사항을 실제 템플릿과 샘플 프로젝트로 검증하는 단계다.
 
 우선순위:

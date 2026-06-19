@@ -1,0 +1,279 @@
+{
+  "title": "Korean public archaeology and research governance sample",
+  "purpose": "Validate that public release, access control, media rights, overseas heritage risk, experimental archaeology, and research role assignment stay connected to project and media records.",
+  "validationQuestions": [
+    "공개자료가 현장설명회·온라인 아카이브 같은 산출물 이름만이 아니라 민감정보, 출처 표기, 공개 전 검토를 함께 갖는가.",
+    "현장 공개·교육 프로그램이 대상, 반복 운영, 질문·반응, 협력기관, 모의발굴·복제자료 사용과 연결되는가.",
+    "사진·3D 도면 공개 후보가 권리, 라이선스, 편집본 이력, 민감정보 가림을 원자료 보존과 함께 남기는가.",
+    "실험고고학 기록이 단회 복원품 제작이 아니라 질문, 가설, 변수, 대조군, 반복, 실패값, 외부검토를 갖는가.",
+    "해외조사와 연구 역할 분담이 현지 법제, 허가, 반출 제한, 보존·공개, 분석·보존·보고 책임으로 추적되는가."
+  ],
+  "documents": [
+    {
+      "resource": {
+        "id": "project-public-research-001",
+        "identifier": "PUBLIC-RESEARCH-001",
+        "shortDescription": "공개·연구 거버넌스 검증 사업",
+        "category": "Project",
+        "relations": {},
+        "description": "제9권 연구방법론에서 요구하는 공개, 실험, 해외조사 리스크, 기관 역할 분담을 한 사업 단위에서 검증하기 위한 샘플.",
+        "publicArchaeologyOutput": [
+          "fieldBriefing",
+          "onlineArchive",
+          "publicReport",
+          "publicDescriptionPrepared",
+          "sourceCitationIncluded"
+        ],
+        "publicEngagementProgram": [
+          "scheduleRecorded",
+          "repeatedSessions",
+          "audienceDefined",
+          "museumPartner",
+          "municipalityPartner",
+          "operatingCostReviewed"
+        ],
+        "accessControlTag": [
+          "restricted",
+          "locationSensitive",
+          "humanRemainsSensitive",
+          "lootingRisk",
+          "reviewBeforeRelease"
+        ],
+        "overseasHeritageRisk": [
+          "localHeritageLawChecked",
+          "partnerInstitutionRecorded",
+          "surveyPermitRequired",
+          "preConstructionSurveyNeeded",
+          "exportRestriction",
+          "localConservationPlan",
+          "internationalDisclosure",
+          "developmentDelayRisk",
+          "rescueCapacityChecked",
+          "publicCommunicationPlan"
+        ],
+        "researchRoleAssignment": [
+          "excavationInstitution",
+          "analysisInstitution",
+          "conservationInstitution",
+          "administrativeAgency",
+          "publicOfficer",
+          "reviewResponsibility",
+          "reportResponsibility",
+          "localPartner"
+        ],
+        "researchProcessBalance": [
+          "collection",
+          "sorting",
+          "classification",
+          "scientificAnalysis",
+          "interpretation",
+          "reportDiscussion",
+          "publicDisclosure",
+          "conservationManagement",
+          "analysisQuestionDefined",
+          "interpretationImpactReviewed"
+        ],
+        "digitalSourcePreservation": [
+          "electronicNotebookOriginal",
+          "originalDrawing",
+          "originalPhoto",
+          "twoLocationBackup",
+          "backupVerified"
+        ],
+        "reportEvaluationFeedback": [
+          "fieldQualityNotSubstituted",
+          "supplementRequestTracked"
+        ],
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "op-public-briefing-001",
+        "identifier": "PUBLIC-OP-001",
+        "shortDescription": "현장설명회와 실험검증 운영",
+        "category": "Operation",
+        "relations": {
+          "isRecordedIn": [
+            "project-public-research-001"
+          ]
+        },
+        "description": "중요 유구 공개 전 설명회 자료와 토기 소성 실험 설계를 같은 작업기록에서 검토한다.",
+        "publicEngagementProgram": [
+          "scheduleRecorded",
+          "repeatedSessions",
+          "audienceDefined",
+          "facilitatorAssigned",
+          "questionsRecorded",
+          "feedbackRecorded",
+          "mockExcavationUsed",
+          "replicaUsed",
+          "schoolLinked",
+          "museumPartner",
+          "duplicatedProgramRisk",
+          "operatingCostReviewed"
+        ],
+        "accessControlTag": [
+          "restricted",
+          "locationSensitive",
+          "uncertainInterpretation",
+          "deidentifiedForPublic",
+          "reviewBeforeRelease"
+        ],
+        "researchRoleAssignment": [
+          "excavationInstitution",
+          "researchInstitution",
+          "universityPartner",
+          "analysisInstitution",
+          "publicOfficer",
+          "reviewResponsibility"
+        ],
+        "researchProcessBalance": [
+          "collection",
+          "scientificAnalysis",
+          "interpretation",
+          "publicDisclosure",
+          "analysisQuestionDefined",
+          "interpretationImpactReviewed",
+          "processGapIdentified"
+        ],
+        "experimentDesign": [
+          "researchQuestion",
+          "hypothesisRecorded",
+          "sourceFeatureLinked",
+          "sourceFindLinked",
+          "variableDefined",
+          "controlGroup",
+          "counterAttributeComparison",
+          "materialConditionRecorded",
+          "toolFuelLaborRecorded",
+          "replicationCount",
+          "failedRunRecorded",
+          "singleRunWarning",
+          "externalReview",
+          "longTermReplicationPlan",
+          "digitalSubstituteLimit"
+        ],
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "reproducibleRecord",
+          "crossReviewNeeded"
+        ],
+        "recordCreationTiming": "duringFieldwork",
+        "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "photo-public-briefing-001",
+        "identifier": "PUBLIC-PHOTO-001",
+        "shortDescription": "공개 후보 현장 사진",
+        "category": "Photo",
+        "relations": {
+          "isRecordedIn": [
+            "op-public-briefing-001"
+          ]
+        },
+        "description": "온라인 공개 후보 사진. 위치 단서와 미확정 인골 관련 정보를 공개 전에 가려야 한다.",
+        "mediaEvidenceRole": [
+          "fieldOverview",
+          "workStageRecord",
+          "publicOutputCandidate"
+        ],
+        "mediaQualityCheck": [
+          "targetPurposeClear",
+          "directionRecorded",
+          "scaleIncluded",
+          "originalUncroppedPreserved",
+          "registerNumberMatched"
+        ],
+        "accessControlTag": [
+          "restricted",
+          "locationSensitive",
+          "humanRemainsSensitive",
+          "deidentifiedForPublic",
+          "reviewBeforeRelease"
+        ],
+        "mediaRights": [
+          "photoRightsChecked",
+          "sourceAttributionRequired",
+          "publicLicenseReviewed",
+          "educationalReuseAllowed",
+          "croppedDerivativeTracked",
+          "sensitiveDetailMasked"
+        ],
+        "digitalSourcePreservation": [
+          "originalPhoto",
+          "originalImage",
+          "twoLocationBackup",
+          "backupVerified"
+        ],
+        "reportCrossCheck": [
+          "photoRegister",
+          "sourceMediaBackup"
+        ]
+      }
+    },
+    {
+      "resource": {
+        "id": "drawing-public-3d-001",
+        "identifier": "PUBLIC-DRAWING-001",
+        "shortDescription": "공개 후보 3D 도면",
+        "category": "Drawing",
+        "relations": {
+          "isRecordedIn": [
+            "op-public-briefing-001"
+          ]
+        },
+        "description": "전시와 온라인 아카이브에 쓸 3D 도면. 원본 점군과 후처리 파일은 보존하고 공개본은 민감 위치를 줄인 파생본으로 관리한다.",
+        "mediaEvidenceRole": [
+          "drawingCorrectionBasis",
+          "reportPlateCandidate",
+          "publicOutputCandidate"
+        ],
+        "mediaQualityCheck": [
+          "targetPurposeClear",
+          "controlPointLinked",
+          "resolutionOrLineworkReadable",
+          "originalUncroppedPreserved",
+          "registerNumberMatched"
+        ],
+        "electronicDrawingSourceWorkflow": [
+          "scannerSelected",
+          "pointCloudAcquired",
+          "pointCloudMerged",
+          "polygonConverted",
+          "threeDimensionalDrawingOutput",
+          "sourceFilePreserved",
+          "processedFilePreserved"
+        ],
+        "accessControlTag": [
+          "restricted",
+          "locationSensitive",
+          "lootingRisk",
+          "deidentifiedForPublic",
+          "reviewBeforeRelease"
+        ],
+        "mediaRights": [
+          "threeDRightsChecked",
+          "sourceAttributionRequired",
+          "publicLicenseReviewed",
+          "educationalReuseAllowed",
+          "commercialUseReview",
+          "croppedDerivativeTracked",
+          "sensitiveDetailMasked"
+        ],
+        "digitalSourcePreservation": [
+          "originalDrawing",
+          "originalImage",
+          "twoLocationBackup",
+          "backupVerified"
+        ],
+        "reportCrossCheck": [
+          "drawingRegister",
+          "sourceMediaBackup"
+        ]
+      }
+    }
+  ]
+}

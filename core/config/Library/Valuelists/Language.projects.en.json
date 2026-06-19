@@ -16911,5 +16911,149 @@
       "pendingDecision": { "label": "Pending decision" }
     },
     "description": "Korean fieldwork artifact electronic drawing checks for form review, output definition, feature view and section decisions, vectorization, reference planes, coordinate movement, and alignment criteria"
+  },
+  "KoreanFieldwork-publicArchaeologyOutput": {
+    "values": {
+      "fieldBriefing": { "label": "Field briefing" },
+      "excavationNewsFlash": { "label": "Excavation news flash" },
+      "exhibition": { "label": "Exhibition" },
+      "lecture": { "label": "Lecture" },
+      "handsOnEducation": { "label": "Hands-on education" },
+      "onlineArchive": { "label": "Online archive" },
+      "heritageTour": { "label": "Heritage tour" },
+      "publicReport": { "label": "Public report" },
+      "localFestival": { "label": "Local festival" },
+      "museumTransfer": { "label": "Museum transfer" },
+      "publicDescriptionPrepared": { "label": "Public description prepared" },
+      "sourceCitationIncluded": { "label": "Source citation included" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean fieldwork public archaeology output checks for field briefings, exhibitions, education, online archives, tours, public descriptions, and source citation"
+  },
+  "KoreanFieldwork-publicEngagementProgram": {
+    "values": {
+      "scheduleRecorded": { "label": "Schedule recorded" },
+      "repeatedSessions": { "label": "Repeated sessions" },
+      "audienceDefined": { "label": "Audience defined" },
+      "facilitatorAssigned": { "label": "Facilitator assigned" },
+      "questionsRecorded": { "label": "Questions recorded" },
+      "feedbackRecorded": { "label": "Feedback recorded" },
+      "mockExcavationUsed": { "label": "Mock excavation used" },
+      "replicaUsed": { "label": "Replica used" },
+      "schoolLinked": { "label": "School linked" },
+      "museumPartner": { "label": "Museum partner" },
+      "municipalityPartner": { "label": "Municipality partner" },
+      "membershipProgram": { "label": "Membership program" },
+      "duplicatedProgramRisk": { "label": "Duplicated program risk" },
+      "operatingCostReviewed": { "label": "Operating cost reviewed" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean fieldwork public engagement checks for schedule, audience, facilitation, questions, feedback, mock excavation, replicas, partners, cost, and program duplication risks"
+  },
+  "KoreanFieldwork-accessControlTag": {
+    "values": {
+      "open": { "label": "Open" },
+      "restricted": { "label": "Restricted" },
+      "internalOnly": { "label": "Internal only" },
+      "closed": { "label": "Closed" },
+      "locationSensitive": { "label": "Location sensitive" },
+      "humanRemainsSensitive": { "label": "Human remains sensitive" },
+      "dnaSensitive": { "label": "DNA sensitive" },
+      "lootingRisk": { "label": "Looting risk" },
+      "ownershipPrivacy": { "label": "Ownership/privacy" },
+      "uncertainInterpretation": { "label": "Uncertain interpretation" },
+      "deidentifiedForPublic": { "label": "Deidentified for public" },
+      "reviewBeforeRelease": { "label": "Review before release" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean fieldwork access-control tags for release state, sensitive location, human remains, DNA, looting risk, ownership, uncertain interpretation, deidentification, and pre-release review"
+  },
+  "KoreanFieldwork-mediaRights": {
+    "values": {
+      "photoRightsChecked": { "label": "Photo rights checked" },
+      "videoRightsChecked": { "label": "Video rights checked" },
+      "threeDRightsChecked": { "label": "3D rights checked" },
+      "sourceAttributionRequired": { "label": "Source attribution required" },
+      "publicLicenseReviewed": { "label": "Public license reviewed" },
+      "educationalReuseAllowed": { "label": "Educational reuse allowed" },
+      "commercialUseReview": { "label": "Commercial use review" },
+      "thirdPartyPermissionNeeded": { "label": "Third-party permission needed" },
+      "croppedDerivativeTracked": { "label": "Cropped derivative tracked" },
+      "sensitiveDetailMasked": { "label": "Sensitive detail masked" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean fieldwork media-rights checks for photos, video, 3D data, attribution, licensing, education reuse, commercial use, permissions, derivatives, and sensitive-detail masking"
+  },
+  "KoreanFieldwork-overseasHeritageRisk": {
+    "values": {
+      "localHeritageLawChecked": { "label": "Local heritage law checked" },
+      "partnerInstitutionRecorded": { "label": "Partner institution recorded" },
+      "surveyPermitRequired": { "label": "Survey permit required" },
+      "preConstructionSurveyNeeded": { "label": "Pre-construction survey needed" },
+      "exportRestriction": { "label": "Export restriction" },
+      "localConservationPlan": { "label": "Local conservation plan" },
+      "internationalDisclosure": { "label": "International disclosure" },
+      "developmentDelayRisk": { "label": "Development delay risk" },
+      "conflictSafetyRisk": { "label": "Conflict/safety risk" },
+      "rescueCapacityChecked": { "label": "Rescue capacity checked" },
+      "publicCommunicationPlan": { "label": "Public communication plan" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean fieldwork overseas heritage risk checks for local law, permits, partner institutions, export restrictions, conservation, disclosure, development delay, safety, and rescue capacity"
+  },
+  "KoreanFieldwork-researchRoleAssignment": {
+    "values": {
+      "excavationInstitution": { "label": "Excavation institution" },
+      "researchInstitution": { "label": "Research institution" },
+      "universityPartner": { "label": "University partner" },
+      "analysisInstitution": { "label": "Analysis institution" },
+      "conservationInstitution": { "label": "Conservation institution" },
+      "administrativeAgency": { "label": "Administrative agency" },
+      "publicOfficer": { "label": "Public officer" },
+      "reviewResponsibility": { "label": "Review responsibility" },
+      "reportResponsibility": { "label": "Report responsibility" },
+      "localPartner": { "label": "Local partner" },
+      "roleGapIdentified": { "label": "Role gap identified" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean fieldwork research role checks for linking excavation, research, analysis, conservation, administration, public outreach, review, reporting, and local partners"
+  },
+  "KoreanFieldwork-researchProcessBalance": {
+    "values": {
+      "collection": { "label": "Collection" },
+      "sorting": { "label": "Sorting" },
+      "classification": { "label": "Classification" },
+      "scientificAnalysis": { "label": "Scientific analysis" },
+      "interpretation": { "label": "Interpretation" },
+      "reportDiscussion": { "label": "Report discussion" },
+      "publicDisclosure": { "label": "Public disclosure" },
+      "conservationManagement": { "label": "Conservation management" },
+      "analysisQuestionDefined": { "label": "Analysis question defined" },
+      "interpretationImpactReviewed": { "label": "Interpretation impact reviewed" },
+      "processGapIdentified": { "label": "Process gap identified" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean fieldwork research-process checks for keeping collection, sorting, classification, analysis, interpretation, reporting, public disclosure, and conservation connected"
+  },
+  "KoreanFieldwork-experimentDesign": {
+    "values": {
+      "researchQuestion": { "label": "Research question" },
+      "hypothesisRecorded": { "label": "Hypothesis recorded" },
+      "sourceFeatureLinked": { "label": "Source feature linked" },
+      "sourceFindLinked": { "label": "Source find linked" },
+      "variableDefined": { "label": "Variable defined" },
+      "controlGroup": { "label": "Control group" },
+      "counterAttributeComparison": { "label": "Counter-attribute comparison" },
+      "materialConditionRecorded": { "label": "Material condition recorded" },
+      "toolFuelLaborRecorded": { "label": "Tool/fuel/labor recorded" },
+      "replicationCount": { "label": "Replication count" },
+      "failedRunRecorded": { "label": "Failed run recorded" },
+      "singleRunWarning": { "label": "Single-run warning" },
+      "externalReview": { "label": "External review" },
+      "longTermReplicationPlan": { "label": "Long-term replication plan" },
+      "digitalSubstituteLimit": { "label": "Digital substitute limit" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean fieldwork experimental archaeology checks for research question, hypothesis, source data, variables, controls, repetition, failed runs, review, and digital-substitute limits"
   }
 }

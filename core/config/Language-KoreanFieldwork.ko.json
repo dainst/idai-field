@@ -73,6 +73,24 @@
         "reportEvaluationFeedback": {
           "label": "보고서 평가 환류"
         },
+        "publicArchaeologyOutput": {
+          "label": "대중고고학 공개자료"
+        },
+        "publicEngagementProgram": {
+          "label": "공개·교육 프로그램"
+        },
+        "accessControlTag": {
+          "label": "공개등급·민감정보"
+        },
+        "overseasHeritageRisk": {
+          "label": "해외조사 문화재 리스크"
+        },
+        "researchRoleAssignment": {
+          "label": "연구 역할 분담"
+        },
+        "researchProcessBalance": {
+          "label": "연구과정 연결상태"
+        },
         "verificationState": {
           "label": "검증상태"
         }
@@ -115,6 +133,21 @@
         },
         "reportEvaluationFeedback": {
           "label": "보고서 평가 환류"
+        },
+        "publicEngagementProgram": {
+          "label": "공개·교육 프로그램"
+        },
+        "accessControlTag": {
+          "label": "공개등급·민감정보"
+        },
+        "researchRoleAssignment": {
+          "label": "연구 역할 분담"
+        },
+        "researchProcessBalance": {
+          "label": "연구과정 연결상태"
+        },
+        "experimentDesign": {
+          "label": "실험고고학 설계"
         },
         "verificationState": {
           "label": "검증상태"
@@ -785,6 +818,12 @@
         },
         "artifactElectronicDrawingProcedure": {
           "label": "유물 전자도면 절차"
+        },
+        "accessControlTag": {
+          "label": "공개등급·민감정보"
+        },
+        "mediaRights": {
+          "label": "매체 권리관리"
         }
       }
     },
@@ -804,6 +843,12 @@
         },
         "reportCrossCheck": {
           "label": "보고서 교차검토"
+        },
+        "accessControlTag": {
+          "label": "공개등급·민감정보"
+        },
+        "mediaRights": {
+          "label": "매체 권리관리"
         }
       }
     }

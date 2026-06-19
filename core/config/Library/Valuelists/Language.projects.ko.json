@@ -5157,5 +5157,149 @@
       "pendingDecision": { "label": "판단 보류" }
     },
     "description": "유물 전자도면에서 형태 검토, 결과물 정의, 특징 view와 단면 위치 결정, 벡터화, 연구자 요구정보, 기준면·좌표계·합치 기준을 분리해 점검하기 위한 목록"
+  },
+  "KoreanFieldwork-publicArchaeologyOutput": {
+    "values": {
+      "fieldBriefing": { "label": "현장설명회" },
+      "excavationNewsFlash": { "label": "발굴속보" },
+      "exhibition": { "label": "전시" },
+      "lecture": { "label": "강연" },
+      "handsOnEducation": { "label": "체험교육" },
+      "onlineArchive": { "label": "온라인 아카이브" },
+      "heritageTour": { "label": "유적 투어" },
+      "publicReport": { "label": "공개 보고자료" },
+      "localFestival": { "label": "지역축제 연계" },
+      "museumTransfer": { "label": "박물관 이관·수탁" },
+      "publicDescriptionPrepared": { "label": "공개 설명문 작성" },
+      "sourceCitationIncluded": { "label": "출처 표기 포함" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "발굴 성과를 시민, 학교, 연구자, 지자체, 언론에 공개할 때 산출물 형식과 설명문·출처 표기를 함께 남기기 위한 목록"
+  },
+  "KoreanFieldwork-publicEngagementProgram": {
+    "values": {
+      "scheduleRecorded": { "label": "운영 시간표 기록" },
+      "repeatedSessions": { "label": "반복 운영" },
+      "audienceDefined": { "label": "대상 정의" },
+      "facilitatorAssigned": { "label": "안내자 지정" },
+      "questionsRecorded": { "label": "질문 기록" },
+      "feedbackRecorded": { "label": "반응·피드백 기록" },
+      "mockExcavationUsed": { "label": "모의발굴장 사용" },
+      "replicaUsed": { "label": "복제자료 사용" },
+      "schoolLinked": { "label": "학교 연계" },
+      "museumPartner": { "label": "박물관 협력" },
+      "municipalityPartner": { "label": "지자체 협력" },
+      "membershipProgram": { "label": "회원제 운영" },
+      "duplicatedProgramRisk": { "label": "중복 프로그램 위험" },
+      "operatingCostReviewed": { "label": "운영비 검토" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "현장설명회와 공개·교육 프로그램의 대상, 운영 방식, 질문·반응, 협력기관, 후속 보완과 운영 위험을 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-accessControlTag": {
+    "values": {
+      "open": { "label": "공개" },
+      "restricted": { "label": "제한 공개" },
+      "internalOnly": { "label": "내부용" },
+      "closed": { "label": "비공개" },
+      "locationSensitive": { "label": "위치정보 민감" },
+      "humanRemainsSensitive": { "label": "인골 민감정보" },
+      "dnaSensitive": { "label": "DNA 민감정보" },
+      "lootingRisk": { "label": "도굴위험" },
+      "ownershipPrivacy": { "label": "소유·개인정보" },
+      "uncertainInterpretation": { "label": "미확정 해석" },
+      "deidentifiedForPublic": { "label": "공개용 비식별화" },
+      "reviewBeforeRelease": { "label": "공개 전 검토" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "위치정보, 인골, DNA, 도굴 위험 유물, 소유·개인정보, 미확정 해석이 공개자료로 나가기 전에 공개 등급과 검토 상태를 표시하기 위한 목록"
+  },
+  "KoreanFieldwork-mediaRights": {
+    "values": {
+      "photoRightsChecked": { "label": "사진 권리 확인" },
+      "videoRightsChecked": { "label": "영상 권리 확인" },
+      "threeDRightsChecked": { "label": "3D 데이터 권리 확인" },
+      "sourceAttributionRequired": { "label": "출처 표기 필요" },
+      "publicLicenseReviewed": { "label": "공개 라이선스 검토" },
+      "educationalReuseAllowed": { "label": "교육 재사용 허용" },
+      "commercialUseReview": { "label": "수익사업 사용 검토" },
+      "thirdPartyPermissionNeeded": { "label": "제3자 허가 필요" },
+      "croppedDerivativeTracked": { "label": "편집본 이력 추적" },
+      "sensitiveDetailMasked": { "label": "민감 세부정보 가림" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "사진·영상·3D 자료를 공개하거나 교육자료로 재가공할 때 권리, 출처, 라이선스, 편집본, 민감정보 가림을 관리하기 위한 목록"
+  },
+  "KoreanFieldwork-overseasHeritageRisk": {
+    "values": {
+      "localHeritageLawChecked": { "label": "현지 문화재법 확인" },
+      "partnerInstitutionRecorded": { "label": "협력기관 기록" },
+      "surveyPermitRequired": { "label": "조사허가 필요" },
+      "preConstructionSurveyNeeded": { "label": "착공 전 지표조사 필요" },
+      "exportRestriction": { "label": "문화재 반출 제한" },
+      "localConservationPlan": { "label": "현지 보존계획" },
+      "internationalDisclosure": { "label": "국제 공개" },
+      "developmentDelayRisk": { "label": "개발 일정 지연 위험" },
+      "conflictSafetyRisk": { "label": "분쟁·안전 위험" },
+      "rescueCapacityChecked": { "label": "구제발굴 역량 확인" },
+      "publicCommunicationPlan": { "label": "공개 소통 계획" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "해외 개발사업과 해외조사에서 현지 법제, 허가, 협력기관, 반출 제한, 보존·공개, 일정·안전 위험을 프로젝트 단계에서 관리하기 위한 목록"
+  },
+  "KoreanFieldwork-researchRoleAssignment": {
+    "values": {
+      "excavationInstitution": { "label": "발굴기관" },
+      "researchInstitution": { "label": "연구기관" },
+      "universityPartner": { "label": "대학 협력" },
+      "analysisInstitution": { "label": "분석기관" },
+      "conservationInstitution": { "label": "보존기관" },
+      "administrativeAgency": { "label": "행정기관" },
+      "publicOfficer": { "label": "공개 담당" },
+      "reviewResponsibility": { "label": "검토 책임" },
+      "reportResponsibility": { "label": "보고서 책임" },
+      "localPartner": { "label": "현지 협력기관" },
+      "roleGapIdentified": { "label": "역할 공백 확인" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "발굴, 분석, 보존, 공개, 행정, 보고서 작성의 담당 기관과 책임자가 자료 사슬에서 끊기지 않도록 남기기 위한 목록"
+  },
+  "KoreanFieldwork-researchProcessBalance": {
+    "values": {
+      "collection": { "label": "자료 수집" },
+      "sorting": { "label": "정리" },
+      "classification": { "label": "분류" },
+      "scientificAnalysis": { "label": "과학분석" },
+      "interpretation": { "label": "해석" },
+      "reportDiscussion": { "label": "보고서 고찰 반영" },
+      "publicDisclosure": { "label": "공개" },
+      "conservationManagement": { "label": "보존·정비" },
+      "analysisQuestionDefined": { "label": "분석 질문 정의" },
+      "interpretationImpactReviewed": { "label": "해석 영향 검토" },
+      "processGapIdentified": { "label": "과정 공백 확인" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "발굴을 자료 수집으로 끝내지 않고 정리, 분류, 분석, 해석, 보고서 고찰, 공개, 보존·정비까지 이어졌는지 점검하기 위한 목록"
+  },
+  "KoreanFieldwork-experimentDesign": {
+    "values": {
+      "researchQuestion": { "label": "실험 질문" },
+      "hypothesisRecorded": { "label": "가설 기록" },
+      "sourceFeatureLinked": { "label": "원 유구 연결" },
+      "sourceFindLinked": { "label": "원 유물 연결" },
+      "variableDefined": { "label": "변수 정의" },
+      "controlGroup": { "label": "대조군" },
+      "counterAttributeComparison": { "label": "반대 속성 비교" },
+      "materialConditionRecorded": { "label": "재료 조건 기록" },
+      "toolFuelLaborRecorded": { "label": "도구·연료·인력 기록" },
+      "replicationCount": { "label": "반복 횟수" },
+      "failedRunRecorded": { "label": "실패값 기록" },
+      "singleRunWarning": { "label": "단회 실험 주의" },
+      "externalReview": { "label": "외부 재검토" },
+      "longTermReplicationPlan": { "label": "중장기 반복계획" },
+      "digitalSubstituteLimit": { "label": "디지털 대체자료 한계" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "실험고고학을 복원품 제작이 아니라 문제, 가설, 변수, 대조군, 반복, 실패값, 외부검토, 디지털 대체자료 한계가 있는 검증 절차로 기록하기 위한 목록"
   }
 }

@@ -51,6 +51,30 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "publicArchaeologyOutput": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "publicEngagementProgram": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "accessControlTag": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "overseasHeritageRisk": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "researchRoleAssignment": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "researchProcessBalance": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "verificationState": {
           "inputType": "dropdown",
           "constraintIndexed": true
@@ -69,6 +93,12 @@
         "preservationActionTracking": "KoreanFieldwork-preservationActionTracking",
         "reportCrossCheck": "KoreanFieldwork-reportCrossCheck",
         "reportEvaluationFeedback": "KoreanFieldwork-reportEvaluationFeedback",
+        "publicArchaeologyOutput": "KoreanFieldwork-publicArchaeologyOutput",
+        "publicEngagementProgram": "KoreanFieldwork-publicEngagementProgram",
+        "accessControlTag": "KoreanFieldwork-accessControlTag",
+        "overseasHeritageRisk": "KoreanFieldwork-overseasHeritageRisk",
+        "researchRoleAssignment": "KoreanFieldwork-researchRoleAssignment",
+        "researchProcessBalance": "KoreanFieldwork-researchProcessBalance",
         "verificationState": "KoreanFieldwork-verificationState"
       },
       "groups": [
@@ -99,6 +129,12 @@
             "digitalSourcePreservation",
             "reportCrossCheck",
             "reportEvaluationFeedback",
+            "publicArchaeologyOutput",
+            "publicEngagementProgram",
+            "accessControlTag",
+            "overseasHeritageRisk",
+            "researchRoleAssignment",
+            "researchProcessBalance",
             "verificationState"
           ]
         }
@@ -271,6 +307,26 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "publicEngagementProgram": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "accessControlTag": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "researchRoleAssignment": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "researchProcessBalance": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "experimentDesign": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "verificationState": {
           "inputType": "dropdown",
           "constraintIndexed": true
@@ -292,6 +348,11 @@
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "reportCrossCheck": "KoreanFieldwork-reportCrossCheck",
         "reportEvaluationFeedback": "KoreanFieldwork-reportEvaluationFeedback",
+        "publicEngagementProgram": "KoreanFieldwork-publicEngagementProgram",
+        "accessControlTag": "KoreanFieldwork-accessControlTag",
+        "researchRoleAssignment": "KoreanFieldwork-researchRoleAssignment",
+        "researchProcessBalance": "KoreanFieldwork-researchProcessBalance",
+        "experimentDesign": "KoreanFieldwork-experimentDesign",
         "verificationState": "KoreanFieldwork-verificationState"
       },
       "groups": [
@@ -327,9 +388,14 @@
             "partialCompletionPackage",
             "recordTransferManagementSystem",
             "digitalSourcePreservation",
-            "verificationState",
             "reportCrossCheck",
-            "reportEvaluationFeedback"
+            "reportEvaluationFeedback",
+            "publicEngagementProgram",
+            "accessControlTag",
+            "researchRoleAssignment",
+            "researchProcessBalance",
+            "experimentDesign",
+            "verificationState"
           ]
         },
         {
@@ -1965,6 +2031,14 @@
         "artifactElectronicDrawingProcedure": {
           "inputType": "checkboxes",
           "constraintIndexed": true
+        },
+        "accessControlTag": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "mediaRights": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
         }
       },
       "valuelists": {
@@ -1983,7 +2057,9 @@
         "spatialDrawingProductionWorkflow": "KoreanFieldwork-spatialDrawingProductionWorkflow",
         "distributionMapRequirement": "KoreanFieldwork-distributionMapRequirement",
         "electronicDrawingSourceWorkflow": "KoreanFieldwork-electronicDrawingSourceWorkflow",
-        "artifactElectronicDrawingProcedure": "KoreanFieldwork-artifactElectronicDrawingProcedure"
+        "artifactElectronicDrawingProcedure": "KoreanFieldwork-artifactElectronicDrawingProcedure",
+        "accessControlTag": "KoreanFieldwork-accessControlTag",
+        "mediaRights": "KoreanFieldwork-mediaRights"
       },
       "groups": [
         {
@@ -2019,7 +2095,9 @@
             "spatialDrawingProductionWorkflow",
             "distributionMapRequirement",
             "electronicDrawingSourceWorkflow",
-            "artifactElectronicDrawingProcedure"
+            "artifactElectronicDrawingProcedure",
+            "accessControlTag",
+            "mediaRights"
           ]
         }
       ]
@@ -2046,6 +2124,14 @@
         "reportCrossCheck": {
           "inputType": "checkboxes",
           "constraintIndexed": true
+        },
+        "accessControlTag": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "mediaRights": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
         }
       },
       "valuelists": {
@@ -2053,7 +2139,9 @@
         "mediaQualityCheck": "KoreanFieldwork-mediaQualityCheck",
         "digitalSourcePreservation": "KoreanFieldwork-digitalSourcePreservation",
         "gpsPhotoLinkRecord": "KoreanFieldwork-gpsPhotoLinkRecord",
-        "reportCrossCheck": "KoreanFieldwork-reportCrossCheck"
+        "reportCrossCheck": "KoreanFieldwork-reportCrossCheck",
+        "accessControlTag": "KoreanFieldwork-accessControlTag",
+        "mediaRights": "KoreanFieldwork-mediaRights"
       },
       "groups": [
         {
@@ -2078,7 +2166,9 @@
             "mediaQualityCheck",
             "digitalSourcePreservation",
             "gpsPhotoLinkRecord",
-            "reportCrossCheck"
+            "reportCrossCheck",
+            "accessControlTag",
+            "mediaRights"
           ]
         }
       ]

@@ -996,8 +996,14 @@ describe('KoreanFieldwork project configuration', () => {
 
         expect(documentsById['find-waterlogged-lacquer-001'].resource.waterloggedWoodEmergencyStorage)
             .toContain('c14ImpactReview');
+        expect(documentsById['find-waterlogged-lacquer-001'].resource.woodenArtifactConditionRecord)
+            .toContain('woodSpeciesAnalysisPlanned');
         expect(documentsById['find-waterlogged-lacquer-001'].resource.lacquerConservationRisk)
             .toContain('lacquerFilmCrackingRisk');
+        expect(documentsById['sample-waterlogged-wood-species-001'].resource.samplePurpose)
+            .toContain('woodSpeciesIdentification');
+        expect(documentsById['sample-waterlogged-wood-species-001'].resource.plantRemainIdentificationRecord)
+            .toContain('regionalMasterChronologyChecked');
         expect(documentsById['find-metal-conservation-001'].resource.metalAnalysisRequest)
             .toContain('cuttingPolishingApproval');
         expect(documentsById['find-ceramic-salt-001'].resource.ceramicConservationState)
@@ -1274,6 +1280,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.fields.storageEnvironmentControl.inputType).toBe('checkboxes');
         expect(findForm.fields.conservationScienceRequest.inputType).toBe('checkboxes');
         expect(findForm.fields.waterloggedWoodEmergencyStorage.inputType).toBe('checkboxes');
+        expect(findForm.fields.woodenArtifactConditionRecord.inputType).toBe('checkboxes');
         expect(findForm.fields.lacquerConservationRisk.inputType).toBe('checkboxes');
         expect(findForm.fields.metalAnalysisRequest.inputType).toBe('checkboxes');
         expect(findForm.fields.ceramicConservationState.inputType).toBe('checkboxes');
@@ -1718,6 +1725,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-conservationScienceRequest');
         expect(findForm.valuelists.waterloggedWoodEmergencyStorage)
             .toBe('KoreanFieldwork-waterloggedWoodEmergencyStorage');
+        expect(findForm.valuelists.woodenArtifactConditionRecord)
+            .toBe('KoreanFieldwork-woodenArtifactConditionRecord');
         expect(findForm.valuelists.lacquerConservationRisk)
             .toBe('KoreanFieldwork-lacquerConservationRisk');
         expect(findForm.valuelists.metalAnalysisRequest).toBe('KoreanFieldwork-metalAnalysisRequest');
@@ -2213,6 +2222,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Conservation science request');
         expect(languages.en.categories.Find.fields.waterloggedWoodEmergencyStorage.label)
             .toBe('Waterlogged wood emergency storage');
+        expect(languages.en.categories.Find.fields.woodenArtifactConditionRecord.label)
+            .toBe('Wooden artifact condition record');
         expect(languages.en.categories.Find.fields.lacquerConservationRisk.label)
             .toBe('Lacquer conservation risk');
         expect(languages.en.categories.Find.fields.metalAnalysisRequest.label)
@@ -2584,6 +2595,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-waterloggedWoodEmergencyStorage']
             .values.c14ImpactReview.label)
             .toBe('C14 impact review');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-woodenArtifactConditionRecord']
+            .values.woodSpeciesAnalysisPlanned.label)
+            .toBe('Wood-species analysis planned');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-lacquerConservationRisk']
             .values.lacquerFilmCrackingRisk.label)
             .toBe('Lacquer film cracking risk');
@@ -2719,6 +2733,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-plantRemainIdentificationRecord']
             .values.identificationConfidence.label)
             .toBe('Identification confidence');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-plantRemainIdentificationRecord']
+            .values.regionalMasterChronologyChecked.label)
+            .toBe('Regional master chronology checked');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-archaeobotanyInterpretationReview']
             .values.paleoethnobotanyInterpretation.label)
             .toBe('Paleoethnobotany interpretation');

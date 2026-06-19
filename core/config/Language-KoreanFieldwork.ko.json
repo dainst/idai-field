@@ -856,6 +856,9 @@
         "waterloggedWoodEmergencyStorage": {
           "label": "수침목재 응급보관"
         },
+        "woodenArtifactConditionRecord": {
+          "label": "목재유물 상태 기록"
+        },
         "lacquerConservationRisk": {
           "label": "칠기 보존 위험"
         },

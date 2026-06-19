@@ -12278,6 +12278,24 @@
     },
     "description": "Korean emergency storage checks for waterlogged wood and other waterlogged organic materials before conservation treatment"
   },
+  "KoreanFieldwork-woodenArtifactConditionRecord": {
+    "values": {
+      "waterloggedConditionRecorded": { "label": "Waterlogged condition recorded" },
+      "moistureLossRisk": { "label": "Moisture-loss risk" },
+      "uvExposurePrevented": { "label": "UV exposure prevented" },
+      "soilSupportMaintained": { "label": "Soil support maintained" },
+      "surfaceTraceRecorded": { "label": "Surface trace recorded" },
+      "lacquerInkTraceRecorded": { "label": "Lacquer/ink trace recorded" },
+      "processingTraceRecorded": { "label": "Processing trace recorded" },
+      "deteriorationStateRecorded": { "label": "Deterioration state recorded" },
+      "samplingPositionRecorded": { "label": "Sampling position recorded" },
+      "woodSpeciesAnalysisPlanned": { "label": "Wood-species analysis planned" },
+      "dendrochronologyCandidate": { "label": "Dendrochronology candidate" },
+      "conservationBeforeAnalysis": { "label": "Conservation before analysis" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean wooden-artifact condition checks for keeping waterlogged state, moisture and UV risks, surface traces, processing marks, sampling position, wood-species analysis, dendrochronology, and conservation-before-analysis visible from the field stage"
+  },
   "KoreanFieldwork-lacquerConservationRisk": {
     "values": {
       "woodBodyDeteriorated": { "label": "Wood body deteriorated" },
@@ -13479,20 +13497,29 @@
       "archaeologicalPlantRemain": { "label": "Archaeological plant remain" },
       "morphologyComparison": { "label": "Morphology comparison" },
       "modernCarbonizedComparison": { "label": "Modern carbonized comparison" },
+      "sampleAtExposure": { "label": "Sample at exposure" },
+      "moistureConditionMaintained": { "label": "Moisture condition maintained" },
       "carbonizedRiceGrain": { "label": "Carbonized rice grain" },
       "carbonizedPaddyCandidate": { "label": "Carbonized paddy candidate" },
       "carbonizedBarley": { "label": "Carbonized barley" },
       "transverseSection": { "label": "Transverse section" },
       "radialSection": { "label": "Radial section" },
       "tangentialSection": { "label": "Tangential section" },
+      "permanentPreparation": { "label": "Permanent preparation" },
+      "microscopeObservation": { "label": "Microscope observation" },
       "enlargedPhoto": { "label": "Enlarged photo" },
       "semPhoto": { "label": "SEM photo" },
+      "referenceKeyCompared": { "label": "Reference key compared" },
+      "woodSpeciesResultLinked": { "label": "Wood-species result linked" },
+      "dendrochronologyCandidate": { "label": "Dendrochronology candidate" },
+      "barkLastRingChecked": { "label": "Bark/last ring checked" },
+      "regionalMasterChronologyChecked": { "label": "Regional master chronology checked" },
       "metricRecorded": { "label": "Metric recorded" },
       "identificationConfidence": { "label": "Identification confidence" },
       "alternativeTaxon": { "label": "Alternative taxon" },
       "pendingDecision": { "label": "Pending decision" }
     },
-    "description": "Korean plant-remain identification checks for comparative specimens, morphology, carbonized comparisons, crop candidates, wood sections, photographs, metrics, confidence, and alternative taxa"
+    "description": "Korean plant-remain identification checks for comparative specimens, morphology, carbonized comparisons, crop candidates, wood sections, permanent preparations, microscopy, reference keys, dendrochronology candidates, photographs, metrics, confidence, and alternative taxa"
   },
   "KoreanFieldwork-archaeobotanyInterpretationReview": {
     "values": {
@@ -15667,6 +15694,9 @@
       },
       "archaeobotany": {
         "label": "Archaeobotany"
+      },
+      "woodSpeciesIdentification": {
+        "label": "Wood-species identification"
       },
       "zooarchaeology": {
         "label": "Zooarchaeology"

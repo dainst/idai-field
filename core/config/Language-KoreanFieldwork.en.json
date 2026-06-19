@@ -856,6 +856,9 @@
         "waterloggedWoodEmergencyStorage": {
           "label": "Waterlogged wood emergency storage"
         },
+        "woodenArtifactConditionRecord": {
+          "label": "Wooden artifact condition record"
+        },
         "lacquerConservationRisk": {
           "label": "Lacquer conservation risk"
         },

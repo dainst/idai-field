@@ -524,6 +524,24 @@
     },
     "description": "수침목재와 수침 유기물의 외기 노출, 건조수축, 임시약제 영향, 보존처리 전 보관 조건을 기록하기 위한 목록"
   },
+  "KoreanFieldwork-woodenArtifactConditionRecord": {
+    "values": {
+      "waterloggedConditionRecorded": { "label": "수침상태 기록" },
+      "moistureLossRisk": { "label": "수분 이탈 위험" },
+      "uvExposurePrevented": { "label": "자외선 노출 방지" },
+      "soilSupportMaintained": { "label": "흙 지지 유지" },
+      "surfaceTraceRecorded": { "label": "표면흔 기록" },
+      "lacquerInkTraceRecorded": { "label": "칠·묵서 흔적 기록" },
+      "processingTraceRecorded": { "label": "가공흔 기록" },
+      "deteriorationStateRecorded": { "label": "열화상태 기록" },
+      "samplingPositionRecorded": { "label": "시료 위치 기록" },
+      "woodSpeciesAnalysisPlanned": { "label": "수종분석 계획" },
+      "dendrochronologyCandidate": { "label": "연륜연대 후보" },
+      "conservationBeforeAnalysis": { "label": "분석 전 보존처리" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "목재유물의 수침상태, 수분·자외선 위험, 표면흔, 가공흔, 시료 위치, 수종분석, 연륜연대 후보, 분석 전 보존처리 판단을 현장 단계에서 기록하기 위한 목록"
+  },
   "KoreanFieldwork-lacquerConservationRisk": {
     "values": {
       "woodBodyDeteriorated": { "label": "목질부 열화" },
@@ -1725,20 +1743,29 @@
       "archaeologicalPlantRemain": { "label": "유적 식물유체" },
       "morphologyComparison": { "label": "형태 비교" },
       "modernCarbonizedComparison": { "label": "현생 탄화 비교" },
+      "sampleAtExposure": { "label": "노출 즉시 시료" },
+      "moistureConditionMaintained": { "label": "수분상태 유지" },
       "carbonizedRiceGrain": { "label": "탄화미" },
       "carbonizedPaddyCandidate": { "label": "탄화벼 후보" },
       "carbonizedBarley": { "label": "탄화보리" },
       "transverseSection": { "label": "횡단면" },
       "radialSection": { "label": "방사단면" },
       "tangentialSection": { "label": "접선단면" },
+      "permanentPreparation": { "label": "영구 프레파라트" },
+      "microscopeObservation": { "label": "현미경 관찰" },
       "enlargedPhoto": { "label": "확대사진" },
       "semPhoto": { "label": "SEM 사진" },
+      "referenceKeyCompared": { "label": "검색표 대조" },
+      "woodSpeciesResultLinked": { "label": "수종 결과 연결" },
+      "dendrochronologyCandidate": { "label": "연륜연대 후보" },
+      "barkLastRingChecked": { "label": "수피·최종연륜 확인" },
+      "regionalMasterChronologyChecked": { "label": "지역 표준연대기 대조" },
       "metricRecorded": { "label": "계측치 기록" },
       "identificationConfidence": { "label": "동정 신뢰도" },
       "alternativeTaxon": { "label": "대체 분류군" },
       "pendingDecision": { "label": "판단 보류" }
     },
-    "description": "식물유체 동정을 현생 비교표본, 형태·탄화 비교, 단면 관찰, 사진, 계측치, 신뢰도와 대체 분류군으로 검토하기 위한 목록"
+    "description": "식물유체 동정을 현생 비교표본, 형태·탄화 비교, 노출 즉시 채취, 수분상태 유지, 단면 관찰, 영구 프레파라트, 현미경 관찰, 검색표 대조, 연륜연대 후보, 사진, 계측치, 신뢰도와 대체 분류군으로 검토하기 위한 목록"
   },
   "KoreanFieldwork-archaeobotanyInterpretationReview": {
     "values": {
@@ -3913,6 +3940,9 @@
       },
       "archaeobotany": {
         "label": "식물유체"
+      },
+      "woodSpeciesIdentification": {
+        "label": "수종분석"
       },
       "zooarchaeology": {
         "label": "동물유체"

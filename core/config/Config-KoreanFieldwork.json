@@ -2229,6 +2229,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "woodenArtifactConditionRecord": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "lacquerConservationRisk": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -2367,6 +2371,7 @@
         "storageEnvironmentControl": "KoreanFieldwork-storageEnvironmentControl",
         "conservationScienceRequest": "KoreanFieldwork-conservationScienceRequest",
         "waterloggedWoodEmergencyStorage": "KoreanFieldwork-waterloggedWoodEmergencyStorage",
+        "woodenArtifactConditionRecord": "KoreanFieldwork-woodenArtifactConditionRecord",
         "lacquerConservationRisk": "KoreanFieldwork-lacquerConservationRisk",
         "metalAnalysisRequest": "KoreanFieldwork-metalAnalysisRequest",
         "ceramicConservationState": "KoreanFieldwork-ceramicConservationState",
@@ -2434,6 +2439,7 @@
             "storageEnvironmentControl",
             "conservationScienceRequest",
             "waterloggedWoodEmergencyStorage",
+            "woodenArtifactConditionRecord",
             "lacquerConservationRisk",
             "metalAnalysisRequest",
             "ceramicConservationState",

@@ -313,6 +313,9 @@
         "assemblageRelation": {
           "label": "공반 관계"
         },
+        "interpretationArgument": {
+          "label": "해석 논증"
+        },
         "excavationContextModel": {
           "label": "발굴맥락 구성"
         },
@@ -608,6 +611,9 @@
         },
         "assemblageRelation": {
           "label": "공반 관계"
+        },
+        "interpretationArgument": {
+          "label": "해석 논증"
         },
         "fieldOnlyMissingCheck": {
           "label": "현장시점 누락점검"

@@ -313,6 +313,9 @@
         "assemblageRelation": {
           "label": "Assemblage relation"
         },
+        "interpretationArgument": {
+          "label": "Interpretation argument"
+        },
         "excavationContextModel": {
           "label": "Excavation context model"
         },
@@ -608,6 +611,9 @@
         },
         "assemblageRelation": {
           "label": "Assemblage relation"
+        },
+        "interpretationArgument": {
+          "label": "Interpretation argument"
         },
         "fieldOnlyMissingCheck": {
           "label": "Field-only missing check"

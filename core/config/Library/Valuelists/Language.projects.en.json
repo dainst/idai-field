@@ -16941,6 +16941,23 @@
     },
     "description": "Korean fieldwork assemblage relation list for separating same-layer or closed assemblages from accidental association, redeposition, mixed contexts, and unclear contemporaneity"
   },
+  "KoreanFieldwork-interpretationArgument": {
+    "values": {
+      "researchQuestionLinked": { "label": "Research question linked" },
+      "observationInterpretationSeparated": { "label": "Observation/interpretation separated" },
+      "classificationBasisRecorded": { "label": "Classification basis recorded" },
+      "alternativeInterpretationRecorded": { "label": "Alternative interpretation recorded" },
+      "naturalProcessConsidered": { "label": "Natural process considered" },
+      "postDepositionalProcessConsidered": { "label": "Post-depositional process considered" },
+      "analogyLimitRecorded": { "label": "Analogy limit recorded" },
+      "experimentOrEthnographyLinked": { "label": "Experiment/ethnography linked" },
+      "analysisResultImpactReviewed": { "label": "Analysis result impact reviewed" },
+      "reportSectionLinked": { "label": "Report section linked" },
+      "adoptedArgumentRecorded": { "label": "Adopted argument recorded" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean interpretation-argument list for keeping research questions, observation/interpretation separation, alternatives, natural and post-depositional processes, comparative evidence, analytical results, and report adoption visible instead of closing interpretation with type or period names"
+  },
   "KoreanFieldwork-excavationContextModel": {
     "values": {
       "siteContextLinked": {

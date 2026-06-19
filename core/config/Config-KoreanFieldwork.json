@@ -915,6 +915,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "interpretationArgument": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "excavationContextModel": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1188,6 +1192,7 @@
         "typologyArgument": "KoreanFieldwork-typologyArgument",
         "chronologyArgument": "KoreanFieldwork-chronologyArgument",
         "assemblageRelation": "KoreanFieldwork-assemblageRelation",
+        "interpretationArgument": "KoreanFieldwork-interpretationArgument",
         "excavationContextModel": "KoreanFieldwork-excavationContextModel",
         "excavationReverseSequenceCheck": "KoreanFieldwork-excavationReverseSequenceCheck",
         "fieldOnlyMissingCheck": "KoreanFieldwork-fieldOnlyMissingCheck",
@@ -1280,6 +1285,7 @@
             "typologyArgument",
             "chronologyArgument",
             "assemblageRelation",
+            "interpretationArgument",
             "excavationContextModel",
             "excavationReverseSequenceCheck",
             "fieldOnlyMissingCheck",
@@ -1584,6 +1590,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "interpretationArgument": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "fieldOnlyMissingCheck": {
           "inputType": "checkboxes",
           "mandatory": true,
@@ -1735,6 +1745,7 @@
         "typologyArgument": "KoreanFieldwork-typologyArgument",
         "chronologyArgument": "KoreanFieldwork-chronologyArgument",
         "assemblageRelation": "KoreanFieldwork-assemblageRelation",
+        "interpretationArgument": "KoreanFieldwork-interpretationArgument",
         "fieldOnlyMissingCheck": "KoreanFieldwork-fieldOnlyMissingCheck",
         "artifactHandlingWorkflow": "KoreanFieldwork-artifactHandlingWorkflow",
         "artifactLabelRegisterLink": "KoreanFieldwork-artifactLabelRegisterLink",
@@ -1796,6 +1807,7 @@
             "typologyArgument",
             "chronologyArgument",
             "assemblageRelation",
+            "interpretationArgument",
             "fieldOnlyMissingCheck",
             "artifactHandlingWorkflow",
             "artifactLabelRegisterLink",

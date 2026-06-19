@@ -4,6 +4,7 @@
   "validationQuestions": [
     "수혈건물지 후보가 주거지로 바로 확정되지 않고 기능 후보, 조사 절차, 트렌치 전략, 바닥·벽선 보존 근거를 남기는가.",
     "송국리식·가락동식 같은 유형명 후보가 평면형, 중앙 타원형 구덩이, 양단 주혈, 벽도랑, 취락·묘역 관계 같은 관찰값 뒤에 남는가.",
+    "유구·유물 해석이 연구질문, 관찰·해석 분리, 대안해석, 자연·후퇴적 가능성, 보고서 채택 근거와 함께 남는가.",
     "고인돌·지석묘, 환호, 무문토기·민무늬토기 관계가 권위어와 현장 관용어를 섞지 않고 구조·기능·공반·편년 근거와 연결되는가."
   ],
   "documents": [
@@ -216,6 +217,16 @@
           "repeatedAssociation",
           "functionalDifferencePossible",
           "contemporaneityUnclear"
+        ],
+        "interpretationArgument": [
+          "researchQuestionLinked",
+          "observationInterpretationSeparated",
+          "classificationBasisRecorded",
+          "alternativeInterpretationRecorded",
+          "naturalProcessConsidered",
+          "postDepositionalProcessConsidered",
+          "reportSectionLinked",
+          "pendingDecision"
         ],
         "termRelation": [
           "preferredTerm",
@@ -439,6 +450,14 @@
           "accidentalAssociationRisk",
           "functionalDifferencePossible",
           "contemporaneityUnclear"
+        ],
+        "interpretationArgument": [
+          "researchQuestionLinked",
+          "classificationBasisRecorded",
+          "alternativeInterpretationRecorded",
+          "analysisResultImpactReviewed",
+          "adoptedArgumentRecorded",
+          "pendingDecision"
         ],
         "termRelation": [
           "preferredTerm",

@@ -69,6 +69,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-19 수혈건물지 조사법과 현장조사 방법·해석 자료를 청동기 사전 용어와 다시 묶어 샘플로 검증했다. 수혈건물지는 주거지로 바로 확정하지 않고 조사 절차, 둑·트렌치 전략, 바닥·벽선 보존, 기능 후보를 먼저 남기며, 청동기 유형명은 중앙 타원형 구덩이, 양단 주혈, 벽도랑, 취락·묘역 관계, 공반 토기, 방사성탄소연대 같은 관찰값 뒤에 둔다. 이 흐름은 `bronze-age-settlement-dolmen-workflow-sample.json`으로 검증한다.
 
+2026-06-19 제9권 연구방법론의 형식학·편년론 장을 실제 구성으로 한 단계 더 옮겼다. 형식명, 시대값, 문화유형명은 관찰값이 아니므로 유구·유물 기록에서 연구질문, 관찰·해석 분리, 분류근거, 대안해석, 자연·후퇴적 가능성, 분석결과 영향, 보고서 채택 근거를 함께 남겨야 한다. 이 묶음은 `Feature`와 `Find`의 `interpretationArgument` 값 목록으로 옮겼고, 청동기 취락·고인돌 샘플에서 해석이 유형명 하나로 닫히지 않는지 함께 검증한다.
+
 2026-06-19 충적지·토양도 자료도 구현 단위로 압축했다. 제6권 고지형·충적지와 조사방법론의 지표·GIS 자료는 평야·논 지역에서 표면유물 부재를 유적 부재로 보지 말고, 자연제방·배후습지·구하도·구해안선, 토양통·대토양군, 보링·주상도, a+b층 세트, 유구축조면과 검출면 차이, 암색대·이질토 블록·홍수퇴적 해석을 함께 보라고 요구한다. 이 묶음은 `Survey`의 `alluvialLandformSurvey`, `soilMapPredictionVerification`, `FeatureSegment`의 `alluvialLayerConceptAudit`, `alluvialSurfaceAttribution`, `alluvialFormationProcess` 값 목록으로 옮겼고, `alluvial-landform-layer-workflow-sample.json`으로 지표·토양도 예측, 층 개념, 경작유구와 고환경 시료 흐름을 검증한다.
 
 2026-06-19 유구 내부층과 라이프사이클 자료도 구현 단위로 압축했다. 발굴조사 실무 자료는 유구 내부토를 단순 복토가 아니라 축조, 사용, 폐기, 매몰 과정이 겹친 결과로 읽고, 단면 정리와 반복 관찰, 그늘·햇볕 조건, 층간 비교, 이질토 블록의 유래, 자연유입·수성퇴적·붕락·토양화 휴지기, 일괄유물 매몰 여부를 따로 남기라고 요구한다. 이 묶음은 `FeatureSegment`의 `stratigraphicObservationProcedure`, `featureLifecycleReview`, `featureBlockInclusionAssessment`, `featureBurialProcessAssessment` 값 목록으로 옮겼고, `stratigraphy-feature-lifecycle-workflow-sample.json`으로 유구 내부토 해석이 단일 복토명으로 닫히지 않는지 검증한다.

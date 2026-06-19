@@ -78,6 +78,8 @@ C:\Users\nuri9\AppData\Local\Temp\codex-idai-field-new-pdf-text\methods-all
 
 제9권 연구방법론의 국내 조사 제도 비판은 `KoreanFieldwork-koreanArchaeologyInstitutionalRisk`로 `Project` 화면에 배치했다. 개발 절차화, 구제발굴 일정 압박, 경쟁입찰, 전문성 약화, 지도위원회 폐지 영향, 학술발굴 부재, 과학분석 배제, 보고서 품질 위험, 발굴·연구 단절, 기관 역할 불명확은 추상 의견이 아니라 조사자료 수집·분석·해석·공개 사슬을 끊는 사업 조건으로 기록한다.
 
+제9권 형식학·편년론과 고고학연구 입문 자료에서 뽑은 해석 논증 요구는 `KoreanFieldwork-interpretationArgument`로 `Feature`와 `Find` 화면에 배치했다. 연구질문 연결, 관찰·해석 분리, 분류근거, 대안해석, 자연·후퇴적 과정, 유추 한계, 실험·민족지 근거, 분석결과 영향, 보고서 채택 근거를 함께 남겨 형식명·시대값·유형명이 해석을 대신하지 않게 한다.
+
 유물 정리·보관 장의 공통 축은 `KoreanFieldwork-artifactHandlingWorkflow`, `KoreanFieldwork-artifactQuantityBasis`, `KoreanFieldwork-storageEnvironmentControl`로 `Find` 화면에 배치해 현장수습부터 이관까지의 절차, 건·점수 산정 근거, 재질별 수장환경을 같은 유물 카드에서 추적한다.
 
 보존과학 연구 성과 자료의 공통 축은 `KoreanFieldwork-conservationScienceRequest`, `KoreanFieldwork-waterloggedWoodEmergencyStorage`, `KoreanFieldwork-lacquerConservationRisk`, `KoreanFieldwork-metalAnalysisRequest`, `KoreanFieldwork-ceramicConservationState`, `KoreanFieldwork-paperTextileEmergencyRecovery`, `KoreanFieldwork-conservationTreatmentPrincipleReview`, `KoreanFieldwork-humanDnaFieldControl`, `KoreanFieldwork-organicSoilAnalysisSample`, `KoreanFieldwork-destructiveAnalysisDecision`로 `Find`와 `Sample` 화면에 나누어 배치했다. 보존과학은 실내 후처리가 아니라 노출·수습·임시보관·분석승인 단계에서 해석 가능성을 바꾸므로, 유물 카드와 시료 카드가 서로 끊기지 않게 관리한다. 지류·직물은 발견환경 유지, 공기·빛·습도 변화, 취급 오염을 먼저 보고, 보존처리 원칙은 원형·증거·가역성 훼손 여부를 별도 검토값으로 남긴다.

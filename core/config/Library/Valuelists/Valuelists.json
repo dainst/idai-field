@@ -38380,6 +38380,38 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-interpretationArgument": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-19",
+    "values": {
+      "researchQuestionLinked": {},
+      "observationInterpretationSeparated": {},
+      "classificationBasisRecorded": {},
+      "alternativeInterpretationRecorded": {},
+      "naturalProcessConsidered": {},
+      "postDepositionalProcessConsidered": {},
+      "analogyLimitRecorded": {},
+      "experimentOrEthnographyLinked": {},
+      "analysisResultImpactReviewed": {},
+      "reportSectionLinked": {},
+      "adoptedArgumentRecorded": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "researchQuestionLinked",
+      "observationInterpretationSeparated",
+      "classificationBasisRecorded",
+      "alternativeInterpretationRecorded",
+      "naturalProcessConsidered",
+      "postDepositionalProcessConsidered",
+      "analogyLimitRecorded",
+      "experimentOrEthnographyLinked",
+      "analysisResultImpactReviewed",
+      "reportSectionLinked",
+      "adoptedArgumentRecorded",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-excavationContextModel": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

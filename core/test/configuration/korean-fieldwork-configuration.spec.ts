@@ -537,6 +537,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('songgukriTypeCandidate');
         expect(documentsById['feature-bronze-dwelling-001'].resource.bronzeAgeDwellingEvidence)
             .toContain('typeNameNotAssumed');
+        expect(documentsById['feature-bronze-dwelling-001'].resource.interpretationArgument)
+            .toContain('alternativeInterpretationRecorded');
         expect(documentsById['feature-bronze-dolmen-001'].resource.dolmenStructureContext)
             .toContain('laterGraveMarkerReuse');
         expect(documentsById['feature-bronze-enclosure-001'].resource.bronzeAgeEnclosureInterpretation)
@@ -549,6 +551,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('contextNotStyleOnly');
         expect(documentsById['find-bronze-pottery-001'].resource.chronologyArgument)
             .toContain('regionalLagRisk');
+        expect(documentsById['find-bronze-pottery-001'].resource.interpretationArgument)
+            .toContain('analysisResultImpactReviewed');
     });
 
 
@@ -1000,6 +1004,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.fields.typologyArgument.inputType).toBe('checkboxes');
         expect(featureForm.fields.chronologyArgument.inputType).toBe('checkboxes');
         expect(featureForm.fields.assemblageRelation.inputType).toBe('checkboxes');
+        expect(featureForm.fields.interpretationArgument.inputType).toBe('checkboxes');
         expect(featureForm.fields.excavationContextModel.inputType).toBe('checkboxes');
         expect(featureForm.fields.excavationReverseSequenceCheck.inputType).toBe('checkboxes');
         expect(featureForm.fields.pitDwellingExposureBaulk.inputType).toBe('checkboxes');
@@ -1102,6 +1107,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.fields.typologyArgument.inputType).toBe('checkboxes');
         expect(findForm.fields.chronologyArgument.inputType).toBe('checkboxes');
         expect(findForm.fields.assemblageRelation.inputType).toBe('checkboxes');
+        expect(findForm.fields.interpretationArgument.inputType).toBe('checkboxes');
         expect(sampleForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
         expect(sampleForm.fields.ironSampleAnalysisPlan.inputType).toBe('checkboxes');
         expect(sampleForm.fields.tileKilnAnalysisPlan.inputType).toBe('checkboxes');
@@ -1318,6 +1324,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.valuelists.typologyArgument).toBe('KoreanFieldwork-typologyArgument');
         expect(featureForm.valuelists.chronologyArgument).toBe('KoreanFieldwork-chronologyArgument');
         expect(featureForm.valuelists.assemblageRelation).toBe('KoreanFieldwork-assemblageRelation');
+        expect(featureForm.valuelists.interpretationArgument).toBe('KoreanFieldwork-interpretationArgument');
         expect(featureForm.valuelists.excavationContextModel)
             .toBe('KoreanFieldwork-excavationContextModel');
         expect(featureForm.valuelists.excavationReverseSequenceCheck)
@@ -1505,6 +1512,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.valuelists.typologyArgument).toBe('KoreanFieldwork-typologyArgument');
         expect(findForm.valuelists.chronologyArgument).toBe('KoreanFieldwork-chronologyArgument');
         expect(findForm.valuelists.assemblageRelation).toBe('KoreanFieldwork-assemblageRelation');
+        expect(findForm.valuelists.interpretationArgument).toBe('KoreanFieldwork-interpretationArgument');
         expect(sampleForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
         expect(featureForm.valuelists.firstExposureRecord).toBe('KoreanFieldwork-firstExposureRecord');
         expect(featureForm.valuelists.fortificationHiddenGateFunction)
@@ -1722,6 +1730,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.Feature.fields.typologyArgument.label).toBe('Typology argument');
         expect(languages.en.categories.Feature.fields.chronologyArgument.label).toBe('Chronology argument');
         expect(languages.en.categories.Feature.fields.assemblageRelation.label).toBe('Assemblage relation');
+        expect(languages.en.categories.Feature.fields.interpretationArgument.label).toBe('Interpretation argument');
         expect(languages.en.categories.Feature.fields.excavationContextModel.label)
             .toBe('Excavation context model');
         expect(languages.en.categories.Feature.fields.excavationReverseSequenceCheck.label)
@@ -1923,6 +1932,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.en.categories.Find.fields.typologyArgument.label).toBe('Typology argument');
         expect(languages.en.categories.Find.fields.chronologyArgument.label).toBe('Chronology argument');
         expect(languages.en.categories.Find.fields.assemblageRelation.label).toBe('Assemblage relation');
+        expect(languages.en.categories.Find.fields.interpretationArgument.label).toBe('Interpretation argument');
         expect(languages.en.categories.Sample.fields.sampleCollectionHandling.label)
             .toBe('Sample collection handling');
         expect(languages.en.categories.Sample.fields.ironSampleAnalysisPlan.label)
@@ -2557,6 +2567,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-assemblageRelation']
             .values.accidentalAssociationRisk.label)
             .toBe('Accidental association risk');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-interpretationArgument']
+            .values.postDepositionalProcessConsidered.label)
+            .toBe('Post-depositional process considered');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-sampleCollectionHandling'].values.lightShielded.label)
             .toBe('Light-shielded');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaEvidenceRole']

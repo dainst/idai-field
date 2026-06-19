@@ -5187,6 +5187,23 @@
     },
     "description": "공반유물을 곧바로 동시기 근거로 보지 않고 매장단위, 반복성, 우연 공반, 재퇴적과 혼입 가능성을 분리하기 위한 목록"
   },
+  "KoreanFieldwork-interpretationArgument": {
+    "values": {
+      "researchQuestionLinked": { "label": "연구질문 연결" },
+      "observationInterpretationSeparated": { "label": "관찰·해석 분리" },
+      "classificationBasisRecorded": { "label": "분류근거 기록" },
+      "alternativeInterpretationRecorded": { "label": "대안해석 기록" },
+      "naturalProcessConsidered": { "label": "자연과정 검토" },
+      "postDepositionalProcessConsidered": { "label": "후퇴적 과정 검토" },
+      "analogyLimitRecorded": { "label": "유추 한계 기록" },
+      "experimentOrEthnographyLinked": { "label": "실험·민족지 근거 연결" },
+      "analysisResultImpactReviewed": { "label": "분석결과 영향 검토" },
+      "reportSectionLinked": { "label": "보고서 문단 연결" },
+      "adoptedArgumentRecorded": { "label": "채택 논증 기록" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "형식명이나 시대값으로 해석을 닫지 않고 연구질문, 관찰·해석 분리, 대안해석, 자연·후퇴적 가능성, 비교근거, 분석결과와 보고서 채택 근거를 함께 남기기 위한 목록"
+  },
   "KoreanFieldwork-excavationContextModel": {
     "values": {
       "siteContextLinked": {

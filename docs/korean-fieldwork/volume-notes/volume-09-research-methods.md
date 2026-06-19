@@ -177,7 +177,7 @@ Mes Aynak 사례는 해외 개발 리스크를 수치로 보여준다. 아프가
 
 - `ResearchQuestion`: 조사·분석 질문
 - `TypologyArgument`: 형식·편년 논증
-- `InterpretationArgument`: 해석 논증과 근거 묶음
+- `InterpretationArgument`: 해석 논증과 근거 묶음 / `interpretationArgument` 1차 구현
 - `ComparativeReference`: 비교 사례 또는 문헌 연결
 - `EthnoarchaeologyReference`: 민족지고고학 참고 자료
 - `TaphonomicObservation`: 유적 형성과 후퇴적 변형 관찰
@@ -223,6 +223,8 @@ Mes Aynak 사례는 해외 개발 리스크를 수치로 보여준다. 아프가
 - 해외조사: 현지 법제, 협력기관, 사전 지표조사, 조사허가, 반출 제한, 보존조치, 국제공개, 개발 일정 영향, 역할 분담, Mes Aynak 조사 완료율, 일본 해외발굴 단계, 샬비르 조사단 구성
 - 연구 과정: 수집, 정리, 분류, 과학분석, 해석, 보고서 고찰 반영, 공개, 보존·정비, 담당기관, 검토 책임
 - 현실 위험: 개발 절차화, 조사원 전문성 약화, 경쟁입찰, 지역제한 철폐, 지도위원회 폐지, 학술발굴 부재, 과학분석 배제, 보고서 부실
+
+이번 구현에서는 이 장의 해석 논증 요구를 `Feature`와 `Find`의 `interpretationArgument`로 옮겼다. 이 값 목록은 연구질문 연결, 관찰·해석 분리, 분류근거, 대안해석, 자연·후퇴적 가능성, 유추 한계, 실험·민족지 근거, 분석결과 영향, 보고서 채택 근거를 한 흐름에서 확인해 형식명·시대값·유형명이 해석을 닫아버리지 않게 한다.
 
 ## 한국형 야장에 필요한 화면
 

@@ -18848,6 +18848,14 @@
       "alterationPermitStandardShown": { "label": "Alteration-permit standard shown" },
       "surfaceSiteLocationMap": { "label": "Surface site location map" },
       "excavatedSiteLocationMap": { "label": "Excavated site location map" },
+      "excavationBoundaryPolygon": { "label": "Excavation boundary polygon" },
+      "boundarySymbolizationAvoided": { "label": "Abstract boundary symbols avoided" },
+      "digitalCadastralBaseUsed": { "label": "Digital cadastral base used" },
+      "gpsControlPointsTwoPlus": { "label": "Two or more GPS control points" },
+      "geodeticDatumRecorded": { "label": "Geodetic datum recorded" },
+      "projectionParametersRecorded": { "label": "Projection parameters recorded" },
+      "featurePlanBoundaryMatched": { "label": "Feature plan boundary matched" },
+      "gisSubmissionReady": { "label": "GIS submission ready" },
       "culturalHeritageDistributionMap": { "label": "Cultural heritage distribution map" },
       "municipalHeritage": { "label": "Municipal heritage" },
       "nationalHeritage": { "label": "National heritage" },
@@ -18862,7 +18870,7 @@
       "imageExported": { "label": "Image exported" },
       "pendingDecision": { "label": "Pending decision" }
     },
-    "description": "Korean fieldwork distribution map checks for survey area, heritage/protection areas, radius settings, legend, scale, north arrow, and exported outputs"
+    "description": "Korean fieldwork distribution and site-location map checks for survey area, true boundary polygons, coordinate/projection metadata, GPS control points, heritage/protection areas, radius settings, legend, scale, north arrow, and export/GIS submission outputs"
   },
   "KoreanFieldwork-gpsSurveyQualityRecord": {
     "values": {

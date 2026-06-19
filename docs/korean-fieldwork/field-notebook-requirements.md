@@ -140,7 +140,7 @@ Harris Matrix와 맥락번호 변경 이력은 별도 그래프 편집 화면으
 
 유물실측 보강분은 `Drawing`에 `artifactDrawingRecordMethod`, `artifactDrawingPlan`, `artifactDrawingQualityCheck`, `potteryDrawingStandard`, `stoneToolDrawingView`, `waterloggedWoodDrawingHandling`을 배치했다. 실측을 유물 외곽선 복사가 아니라 기술·사진·탁본·실측·3D스캔·현미경사진이 결합된 기록으로 보고, 재질·기종·잔존상태·기능, 기준선·실측선·투상법·도면배치·축척·도구, 측점 검점·교정·사진/탁본 대조·보존처리 전후 대조·재실측 필요를 Drawing 카드에 남기게 했다. 토기는 정치상태, 단면 우선, 기벽두께 3-4점, 문양 측점을, 석기는 사용방향 정치와 제3각법 6면·전개도·타제/고타/마연흔을, 수침목재는 습식 제도와 보존처리 전후·분무수분·물상자·건조수축 위험을 따로 확인한다.
 
-도면작성법 보강분은 `Drawing`에 `mapSourceMaterial`, `historicalMapLandscapeInterpretation`, `spatialDrawingProductionWorkflow`, `distributionMapRequirement`를 추가했다. 조선시대 지도, 일제강점기 지형도, 지적원도, 토지이용현황도, 항공사진, 정사영상, 수치지형도, DEM, 문화유적분포지도는 배경그림이 아니라 유구 잔존 상태와 과거 경관을 설명하는 근거이므로 제작연도·축척·좌표계·출처와 함께 기록한다. 주변유적분포도는 완성 PDF만 저장하지 않고 조사대상지역, 문화재·보호구역, 반경, 범례·축척·방위표, 내보내기 산출물까지 도면 카드에서 검수한다.
+도면작성법 보강분은 `Drawing`에 `mapSourceMaterial`, `historicalMapLandscapeInterpretation`, `spatialDrawingProductionWorkflow`, `distributionMapRequirement`를 추가했다. 조선시대 지도, 일제강점기 지형도, 지적원도, 토지이용현황도, 항공사진, 정사영상, 수치지형도, DEM, 문화유적분포지도는 배경그림이 아니라 유구 잔존 상태와 과거 경관을 설명하는 근거이므로 제작연도·축척·좌표계·출처와 함께 기록한다. 주변유적분포도는 완성 PDF만 저장하지 않고 조사대상지역, 문화재·보호구역, 반경, 범례·축척·방위표, 내보내기 산출물까지 도면 카드에서 검수한다. `발굴조사_실무`의 위치 도면 작성 요건은 같은 목록에 발굴구역 다각형 경계, 추상 기호 표시 회피, 수치지적도 기반, GPS 기준점 2점 이상, 측지기준계·투영정보, 유구배치도 경계 일치, GIS 제출 준비로 반영했다.
 
 GPS·GIS 현장 시스템 보강분은 `Operation`에 `gpsSurveyQualityRecord`, `gpsNmeaRecord`, `fieldDatabaseOperationRisk`를, `Photo`에 `gpsPhotoLinkRecord`를 추가했다. 좌표값은 위도·경도만 저장하면 충분하지 않으므로 GPS/GNSS/RTK 방식, 기준국·이동국, 위성 상태, 관측시간, 원시데이터, 좌표계, 지오이드, 위성수, DOP와 정확도를 함께 기록한다. 사진은 파일명과 현재위치·궤적·등록지점·수치지도 연동 상태를 남기고, 현장 DB는 파일 관리, SHP/DXF 호환, 레이어·도형·속성 편집, 통계·분석, 유적·반경검색, 현장 동기화와 자료 갱신 위험을 운영기록으로 검수한다.
 

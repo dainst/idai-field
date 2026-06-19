@@ -7094,6 +7094,14 @@
       "alterationPermitStandardShown": { "label": "현상변경허용기준 표시" },
       "surfaceSiteLocationMap": { "label": "지표유적 위치도" },
       "excavatedSiteLocationMap": { "label": "발굴유적 위치도" },
+      "excavationBoundaryPolygon": { "label": "발굴구역 다각형 경계" },
+      "boundarySymbolizationAvoided": { "label": "추상 기호 표시 회피" },
+      "digitalCadastralBaseUsed": { "label": "수치지적도 기반" },
+      "gpsControlPointsTwoPlus": { "label": "GPS 기준점 2점 이상" },
+      "geodeticDatumRecorded": { "label": "측지기준계 기록" },
+      "projectionParametersRecorded": { "label": "투영정보 기록" },
+      "featurePlanBoundaryMatched": { "label": "유구배치도 경계 일치" },
+      "gisSubmissionReady": { "label": "GIS 제출 준비" },
       "culturalHeritageDistributionMap": { "label": "문화유적분포지도" },
       "municipalHeritage": { "label": "시도지정문화재" },
       "nationalHeritage": { "label": "국가지정문화재" },
@@ -7108,7 +7116,7 @@
       "imageExported": { "label": "이미지 내보내기" },
       "pendingDecision": { "label": "판단 보류" }
     },
-    "description": "주변유적분포도에 조사대상지, 문화재·보호구역, 반경, 범례·축척·방위표, PDF와 이미지 산출물을 빠뜨리지 않기 위한 목록"
+    "description": "주변유적분포도와 발굴 위치도면에 조사대상지, 실제 다각형 경계, 좌표계·투영정보, GPS 기준점, 문화재·보호구역, 반경, 범례·축척·방위표, PDF와 이미지·GIS 제출 산출물을 빠뜨리지 않기 위한 목록"
   },
   "KoreanFieldwork-gpsSurveyQualityRecord": {
     "values": {

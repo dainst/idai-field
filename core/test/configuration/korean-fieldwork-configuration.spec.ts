@@ -258,6 +258,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('joseonMap');
         expect(documentsById['drawing-media-distribution-001'].resource.distributionMapRequirement)
             .toContain('radius500m');
+        expect(documentsById['drawing-media-distribution-001'].resource.distributionMapRequirement)
+            .toContain('excavationBoundaryPolygon');
+        expect(documentsById['drawing-media-distribution-001'].resource.distributionMapRequirement)
+            .toContain('gpsControlPointsTwoPlus');
         expect(documentsById['drawing-media-pottery-001'].resource.potteryDrawingStandard)
             .toContain('wallThicknessThreeFourPoints');
         expect(documentsById['drawing-media-stone-tool-001'].resource.stoneToolDrawingView)
@@ -4011,6 +4015,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-mapSourceMaterial']
             .values.joseonMap.label)
             .toBe('조선시대 지도');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-distributionMapRequirement']
+            .values.boundarySymbolizationAvoided.label)
+            .toBe('추상 기호 표시 회피');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-distributionMapRequirement']
+            .values.gisSubmissionReady.label)
+            .toBe('GIS submission ready');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-accessControlTag']
             .values.reviewBeforeRelease.label)
             .toBe('공개 전 검토');

@@ -619,6 +619,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('legendPrepared');
         expect(documentsById['report-preparation-admin-001'].resource.reportPreparationReview)
             .toContain('drawingPhotoConsistencyChecked');
+        expect(documentsById['report-preparation-admin-001'].resource.reportPreparationReview)
+            .toContain('layoutMethodSelected');
+        expect(documentsById['report-preparation-admin-001'].resource.reportPreparationReview)
+            .toContain('printBindingPlanRecorded');
+        expect(documentsById['report-preparation-admin-001'].resource.reportPreparationSourceText)
+            .toContain('인쇄소 인계목록');
         expect(documentsById['report-preparation-admin-001'].resource.reportPreparationStandardText)
             .toContain('방위');
         expect(documentsById['report-standard-history-admin-001'].resource.reportStandardHistory)
@@ -4039,6 +4045,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-reportPreparationReview']
             .values.legendPrepared.label)
             .toBe('Legend prepared');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-reportPreparationReview']
+            .values.layoutMethodSelected.label)
+            .toBe('Layout method selected');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-reportPreparationReview']
+            .values.printBindingPlanRecorded.label)
+            .toBe('판형·지질·제본·수량 계획');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-reportStandardHistory']
             .values.artifactNumberRuleRecorded.label)
             .toBe('Artifact number rule recorded');

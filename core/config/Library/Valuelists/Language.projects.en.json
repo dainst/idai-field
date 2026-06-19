@@ -14996,6 +14996,30 @@
       "featureDrawingPhotoOrientationRecorded": {
         "label": "Feature drawing/photo orientation recorded"
       },
+      "reportPlanningMeetingHeld": {
+        "label": "Report planning meeting held"
+      },
+      "reportStructurePlanned": {
+        "label": "Report structure and table of contents planned"
+      },
+      "layoutMethodSelected": {
+        "label": "Layout method selected"
+      },
+      "colorPlateSelectionRecorded": {
+        "label": "Color-plate selection rationale recorded"
+      },
+      "printerHandoverPackageChecked": {
+        "label": "Printer handover package checked"
+      },
+      "finalPrinterProofChecked": {
+        "label": "Final printer proof checked"
+      },
+      "printBindingPlanRecorded": {
+        "label": "Format, paper, binding, and quantity plan recorded"
+      },
+      "highResolutionPrintPdfPreserved": {
+        "label": "High-resolution print PDF preserved"
+      },
       "sourceNotebookSecured": {
         "label": "Source notebook secured"
       },
@@ -15024,7 +15048,7 @@
         "label": "Pending decision"
       }
     },
-    "description": "Korean report-preparation checks for keeping the report legend, standards, source notebooks, original drawings, photos, registers, number conversions, and drawing/photo consistency visible"
+    "description": "Korean report-preparation checks for keeping the report legend, standards, planning meeting, layout method, color-plate rationale, printer handover, proofing, print/binding plan, source notebooks, original drawings, photos, registers, number conversions, and drawing/photo consistency visible"
   },
   "KoreanFieldwork-reportStandardHistory": {
     "values": {

@@ -3242,6 +3242,30 @@
       "featureDrawingPhotoOrientationRecorded": {
         "label": "도면·사진 수록 방향 기록"
       },
+      "reportPlanningMeetingHeld": {
+        "label": "보고서 기획회의 개최"
+      },
+      "reportStructurePlanned": {
+        "label": "보고서 체제·목차 계획"
+      },
+      "layoutMethodSelected": {
+        "label": "편집방식 선택"
+      },
+      "colorPlateSelectionRecorded": {
+        "label": "원색도판 선정 근거 기록"
+      },
+      "printerHandoverPackageChecked": {
+        "label": "인쇄소 인계자료 점검"
+      },
+      "finalPrinterProofChecked": {
+        "label": "인쇄소 최종교정 확인"
+      },
+      "printBindingPlanRecorded": {
+        "label": "판형·지질·제본·수량 계획"
+      },
+      "highResolutionPrintPdfPreserved": {
+        "label": "고해상도 인쇄원본 PDF 보존"
+      },
       "sourceNotebookSecured": {
         "label": "원야장 확보"
       },
@@ -3270,7 +3294,7 @@
         "label": "판단 보류"
       }
     },
-    "description": "보고서 일러두기, 허가번호, 방위, 축척, 고도, 토색, 도면기호, 실측 기준, 원야장·원도면·원사진·목록·번호 변환표와 도면·사진 일치 여부를 관리하기 위한 목록"
+    "description": "보고서 일러두기, 허가번호, 방위, 축척, 고도, 토색, 도면기호, 실측 기준, 기획회의, 편집방식, 원색도판, 인쇄소 인계·교정, 판형·제본 계획, 원야장·원도면·원사진·목록·번호 변환표와 도면·사진 일치 여부를 관리하기 위한 목록"
   },
   "KoreanFieldwork-reportStandardHistory": {
     "values": {

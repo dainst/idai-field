@@ -234,6 +234,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-20 이어 `유적 및 유구의 촬영`, `발굴조사_실무.pdf`, `발굴조사의_이해.pdf`의 사진자료 관리 대목을 다시 대조했다. 사진자료는 촬영 직후 사진야장과 맞지 않으면 활용성이 떨어지고, 흑백·컬러·슬라이드 필름과 밀착인화는 디지털 사진과 별도 원본으로 보존해야 한다. 이번 구현은 `mediaQualityCheck`의 촬영 포맷 기록, 사진야장 대조, 인화 사진 주기 기록과 `digitalSourcePreservation`의 아날로그 필름 원본, 슬라이드 필름 원본, 밀착인화 보존, 웹·서버 백업, 구매체 상태점검으로 옮겼다.
 
+2026-06-20 같은 사진자료 대목과 조사기초과정의 사진촬영 장을 추가로 대조했다. 유구사진은 조사 결과물을 보여주는 사진과 조사 과정을 보완하는 사진으로 나누어야 하고, 대상명·방향·크기·위치를 사진 안팎의 기록으로 함께 남겨야 한다. 디지털 사진의 편의성은 촬영내용 기록을 대체하지 않으므로, 이번 보강은 `mediaEvidenceRole.fieldResultRecord`와 `mediaQualityCheck`의 `resultProcessRoleSeparated`, `inFrameRecordBoardIncluded`, `photoContentLogRecorded`, `digitalMetadataCrossChecked`로 반영했다.
+
 2026-06-19 이어서 사진·보고서 동시 검수 장과 `제2회_매장문화재_조사연구원_교육_2007년3월`의 조사계획·착수 OCR 대목을 다시 대조했다. 현장 작업자는 조사단장·책임조사원·조사원 같은 직급뿐 아니라 측량, 사진, 도면, 안전관리, 민원·기관소통, 유물정리, 시료채취, 일지 작성, 보고서 준비, 검토 역할을 겸할 수 있고, 이 책임 범위가 일지 본문에만 남으면 분쟁·보고서 보완·품질검수 때 역추적이 어렵다. 이 묶음은 `Operation`과 `DailyLog`의 `operationRoleResponsibility` 값목록으로 옮겼고, `daily-log-quality-review-workflow-sample.json`에서 당일 역할 공백까지 함께 검증한다.
 
 2026-06-19 추가로 `제2회_매장문화재_조사연구원_교육_2007년3월` 조사계획·착수 OCR과 `field-training-methods.md`의 현장보존조치 후보를 다시 맞춰 보았다. 허가서 현장 비치, 착수신고 안내, 보안 유지, 주민·관할기관 통보, 유적보호 주의사항, 혹서·혹한·강우 대비, 야간방범, 임시유물·기록물 보관, 미작성자료 즉시 조치는 보존조치 결정 이후의 장기 관리가 아니라 당일 작업 실행값에 가깝다. 이 묶음은 `Operation`의 `siteProtectionSecurity` 값목록으로 옮겼고, `administrative-workflow-sample.json`에서 부분완료·자료인계 흐름과 함께 검증한다.

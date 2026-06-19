@@ -316,14 +316,24 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('minimumAnalysisRiskFlagged');
         expect(documentsById['photo-media-gps-001'].resource.gpsPhotoLinkRecord)
             .toContain('currentPositionLinked');
+        expect(documentsById['photo-media-gps-001'].resource.mediaEvidenceRole)
+            .toContain('fieldResultRecord');
         expect(documentsById['photo-media-gps-001'].resource.mediaQualityCheck)
             .toContain('preRecoveryPhotoTaken');
+        expect(documentsById['photo-media-gps-001'].resource.mediaQualityCheck)
+            .toContain('resultProcessRoleSeparated');
+        expect(documentsById['photo-media-gps-001'].resource.mediaQualityCheck)
+            .toContain('inFrameRecordBoardIncluded');
         expect(documentsById['photo-media-gps-001'].resource.mediaQualityCheck)
             .toContain('levelingLinkedForRecovery');
         expect(documentsById['photo-media-gps-001'].resource.mediaQualityCheck)
             .toContain('findNumberLocationMatched');
         expect(documentsById['photo-media-gps-001'].resource.mediaQualityCheck)
             .toContain('photoNotebookMatched');
+        expect(documentsById['photo-media-gps-001'].resource.mediaQualityCheck)
+            .toContain('photoContentLogRecorded');
+        expect(documentsById['photo-media-gps-001'].resource.mediaQualityCheck)
+            .toContain('digitalMetadataCrossChecked');
         expect(documentsById['photo-media-gps-001'].resource.mediaQualityCheck)
             .toContain('photoUpsideDown');
         expect(documentsById['photo-media-gps-001'].resource.mediaQualityCheck)
@@ -4088,6 +4098,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaEvidenceRole']
             .values.stratigraphicEvidence.label)
             .toBe('Stratigraphic evidence');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaEvidenceRole']
+            .values.fieldResultRecord.label)
+            .toBe('Field-result record');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
             .values.retakeOrRedrawNeeded.label)
             .toBe('Retake or redraw needed');
@@ -4109,6 +4122,18 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
             .values.photoNotebookMatched.label)
             .toBe('Photo notebook matched');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
+            .values.resultProcessRoleSeparated.label)
+            .toBe('Result/process role separated');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
+            .values.inFrameRecordBoardIncluded.label)
+            .toBe('In-frame board, direction, and scale included');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
+            .values.photoContentLogRecorded.label)
+            .toBe('Photo content log recorded');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
+            .values.digitalMetadataCrossChecked.label)
+            .toBe('Digital metadata cross-checked');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
             .values.obliqueSidePhotoTaken.label)
             .toBe('Oblique/side photo taken');

@@ -3,7 +3,7 @@
   "purpose": "Validate that field media records treat GPS, photos, distribution maps, artifact drawings, and 3D/electronic drawings as evidence-bearing records with source, control, quality, and preservation checks.",
   "validationQuestions": [
     "GPS 좌표가 위도·경도 숫자만이 아니라 RTK/GNSS 방식, 기준국·이동국, 위성 상태, DOP, NMEA 원자료, 좌표계와 지오이드로 검증되는가.",
-    "사진 파일이 단순 첨부가 아니라 현재 위치, 궤적, 등록지점, 파일명, 수치지도 연동 상태와 함께 남는가.",
+    "사진 파일이 단순 첨부가 아니라 결과·과정 역할, 촬영내용 기록, 현재 위치, 궤적, 등록지점, 파일명, 수치지도 연동 상태와 함께 남는가.",
     "분포도·위치도 작성이 완성 PDF 하나가 아니라 원천 지도, 좌표계 변환, 객체 선택, 반경·범례·축척·방위표 검수로 이어지는가.",
     "유물실측과 전자도면이 외곽선 복사가 아니라 재질·기종·기준선·측점 검점·사진/탁본 대조·3D 원천파일 보존으로 관리되는가.",
     "유물사진이 실측도면과 같은 각도, 수평·수직 촬영, 조명·반사 제어, 정면·측면·접사 계획으로 보고서 도판 근거를 남기는가.",
@@ -211,19 +211,24 @@
         "mediaEvidenceRole": [
           "fieldOverview",
           "workStageRecord",
+          "fieldResultRecord",
           "featureOutlineEvidence",
           "reportPlateCandidate"
         ],
         "mediaQualityCheck": [
           "targetPurposeClear",
+          "resultProcessRoleSeparated",
           "directionRecorded",
           "scaleIncluded",
+          "inFrameRecordBoardIncluded",
           "orientationChecked",
           "controlPointLinked",
           "captureFormatRecorded",
           "originalUncroppedPreserved",
           "registerNumberMatched",
           "photoNotebookMatched",
+          "photoContentLogRecorded",
+          "digitalMetadataCrossChecked",
           "photoUpsideDown",
           "lowResolution",
           "focusBlurred",

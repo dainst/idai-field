@@ -5656,6 +5656,9 @@
       "twentyThirtyCmBaulk": { "label": "20~30cm 폭 둑" },
       "twoThreeBaulks": { "label": "2~3개소 둑" },
       "trialSlotVerified": { "label": "탐색갱 검증" },
+      "finalAxisAdjusted": { "label": "최종 주축 조정" },
+      "floorPlanLineRecorded": { "label": "바닥면 평면선 기록" },
+      "testTrenchSectionCorrected": { "label": "테스트 트렌치 단면 수정" },
       "sectionFlowChecked": { "label": "토층 흐름 확인" },
       "oldSurfacePreserved": { "label": "구지표 보존" },
       "ceilingTopPreserved": { "label": "천정 상부 보존" },
@@ -5664,12 +5667,14 @@
       "wallThicknessCut": { "label": "벽 두께 절개" },
       "pendingDecision": { "label": "판단 보류" }
     },
-    "description": "기와가마 제토, 적토장, 격자 조정, 가마와 회구부를 연결하는 둑, 구지표와 소결 윤곽 보존을 조사 전에 통제하기 위한 목록"
+    "description": "기와가마 제토, 적토장, 격자 조정, 최종 주축과 바닥면 평면선, 가마와 회구부를 연결하는 둑, 구지표와 소결 윤곽 보존을 조사 전에 통제하기 위한 목록"
   },
   "KoreanFieldwork-tileKilnPartInvestigation": {
     "values": {
       "frontAreaRecorded": { "label": "요전부 기록" },
       "fireboxClosureChecked": { "label": "아궁이 폐쇄 확인" },
+      "fireboxClosureMaterialCompared": { "label": "아궁이 폐쇄재 대조" },
+      "closureMaterialWasteDepositChecked": { "label": "폐쇄재 폐기장 대조" },
       "fireboxRepairChecked": { "label": "아궁이 보수 확인" },
       "combustionFloorChecked": { "label": "연소실 바닥 확인" },
       "combustionAshRange": { "label": "연소실 재층 범위" },
@@ -5680,6 +5685,7 @@
       "wallFragmentCollapse": { "label": "벽체편 함몰" },
       "reducedSinteredSurface": { "label": "환원 소결면" },
       "oxidizedSinteredSurface": { "label": "산화 소결면" },
+      "oxidationReductionPlanSectionColored": { "label": "산화·환원 평단면 색표기" },
       "noStepConnection": { "label": "무단식 연결" },
       "steppedConnection": { "label": "유단식 연결" },
       "fluePresent": { "label": "연도 확인" },
@@ -5692,12 +5698,15 @@
       "externalSmokeOutletConsidered": { "label": "외부 배연공 검토" },
       "flueFinishingRecorded": { "label": "연도부 마감 기록" },
       "smokeOutletStoneMeasured": { "label": "배연공 석재 실측" },
+      "fireboxFlueThreeDimensionalSection": { "label": "아궁이·배연부 입체 단면" },
       "ashDumpRelationChecked": { "label": "회구부 관계 확인" },
+      "wasteDepositExtentTrenched": { "label": "폐기장 범위·트렌치 확인" },
+      "slopeDepositInversionRisk": { "label": "사면 폐기장 층위 역전 주의" },
       "ashLayerPartPreserved": { "label": "재층 일부 보존" },
       "stratigraphicCollection": { "label": "층위별 수습" },
       "pendingDecision": { "label": "판단 보류" }
     },
-    "description": "요전부, 아궁이, 연소실, 소성실, 흡화공, 연도, 배연공, 굴뚝, 회구부를 부위별로 조사하고 연도·배연부 미확인을 보존상태와 구조 차이 양쪽에서 판단하게 하는 목록"
+    "description": "요전부, 아궁이, 연소실, 소성실, 흡화공, 연도, 배연공, 굴뚝, 회구부와 폐기장을 부위별로 조사하고 폐쇄재 대조, 산화·환원 색표기, 입체 단면, 사면 폐기장 층위 역전 위험을 남기게 하는 목록"
   },
   "KoreanFieldwork-tileKilnOperationSequence": {
     "values": {

@@ -17410,6 +17410,9 @@
       "twentyThirtyCmBaulk": { "label": "20-30 cm baulk" },
       "twoThreeBaulks": { "label": "Two or three baulks" },
       "trialSlotVerified": { "label": "Trial slot verified" },
+      "finalAxisAdjusted": { "label": "Final axis adjusted" },
+      "floorPlanLineRecorded": { "label": "Floor plan line recorded" },
+      "testTrenchSectionCorrected": { "label": "Test-trench section corrected" },
       "sectionFlowChecked": { "label": "Section flow checked" },
       "oldSurfacePreserved": { "label": "Old surface preserved" },
       "ceilingTopPreserved": { "label": "Ceiling top preserved" },
@@ -17418,12 +17421,14 @@
       "wallThicknessCut": { "label": "Wall thickness cut" },
       "pendingDecision": { "label": "Pending decision" }
     },
-    "description": "Excavation-control checks for tile kilns, including stripping, spoil placement, grid adjustment, baulks connecting kiln and ash dump, and preservation of old surfaces and sintered outlines"
+    "description": "Excavation-control checks for tile kilns, including stripping, spoil placement, grid adjustment, final axis and floor-plan lines, baulks connecting kiln and ash dump, and preservation of old surfaces and sintered outlines"
   },
   "KoreanFieldwork-tileKilnPartInvestigation": {
     "values": {
       "frontAreaRecorded": { "label": "Front area recorded" },
       "fireboxClosureChecked": { "label": "Firebox closure checked" },
+      "fireboxClosureMaterialCompared": { "label": "Firebox closure material compared" },
+      "closureMaterialWasteDepositChecked": { "label": "Closure material checked in waste deposit" },
       "fireboxRepairChecked": { "label": "Firebox repair checked" },
       "combustionFloorChecked": { "label": "Combustion floor checked" },
       "combustionAshRange": { "label": "Combustion ash range" },
@@ -17434,6 +17439,7 @@
       "wallFragmentCollapse": { "label": "Wall fragment collapse" },
       "reducedSinteredSurface": { "label": "Reduced sintered surface" },
       "oxidizedSinteredSurface": { "label": "Oxidized sintered surface" },
+      "oxidationReductionPlanSectionColored": { "label": "Oxidation/reduction plan-section colored" },
       "noStepConnection": { "label": "No-step connection" },
       "steppedConnection": { "label": "Stepped connection" },
       "fluePresent": { "label": "Flue present" },
@@ -17446,12 +17452,15 @@
       "externalSmokeOutletConsidered": { "label": "External smoke outlet considered" },
       "flueFinishingRecorded": { "label": "Flue finishing recorded" },
       "smokeOutletStoneMeasured": { "label": "Smoke-outlet stone measured" },
+      "fireboxFlueThreeDimensionalSection": { "label": "Firebox/flue 3D section" },
       "ashDumpRelationChecked": { "label": "Ash dump relation checked" },
+      "wasteDepositExtentTrenched": { "label": "Waste deposit extent trenched" },
+      "slopeDepositInversionRisk": { "label": "Slope deposit inversion risk" },
       "ashLayerPartPreserved": { "label": "Ash layer part preserved" },
       "stratigraphicCollection": { "label": "Stratigraphic collection" },
       "pendingDecision": { "label": "Pending decision" }
     },
-    "description": "Part-by-part investigation checks for front area, firebox, combustion chamber, firing chamber, suction holes, flue, smoke outlet, chimney, and ash dump, with caution against reading preservation loss as structural absence"
+    "description": "Part-by-part investigation checks for front area, firebox, combustion chamber, firing chamber, suction holes, flue, smoke outlet, chimney, ash dump, and waste deposit, including closure-material comparison, oxidation/reduction color notation, 3D sections, and slope-deposit inversion risk"
   },
   "KoreanFieldwork-tileKilnOperationSequence": {
     "values": {

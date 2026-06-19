@@ -89,6 +89,8 @@
 
 행정·검토회의 OCR 보강분은 `Project`에 `investigationRequestIntake`, `investigationPlanChangeRecord`, `expertReviewMeeting`, `partialCompletionPackage`, `recordTransferManagementSystem`을 배치하고, `Operation`에 현장 단위 `expertReviewMeeting`, `partialCompletionPackage`, `recordTransferManagementSystem`을 배치했다. `Survey`에는 `surfaceSurveyResultProcessing`을 추가해 지표조사 결과가 후속조사 범위, 보존방안, 유물목록·대장·보관증, 전산화 등록, 기존 유적 범위 수정으로 이어지는 흐름을 남기게 했다.
 
+보고서 제출·국가귀속 보강분은 `ReportSubmissionWorkflow`와 `StateVestingSelectionRecord`를 `Project` 하위 카드로 두었다. 완료신고, 완료자료, 약식보고서, 최종보고서 PDF, 전자행정 접수번호, 초록·협업포털 입력, 원기록 연결과 소유권 공고, 선별회의록, 임시보관증, 보관관리기관, 국가귀속대장, 보존처리 후 정정·재평가를 프로젝트 체크값에 묻지 않고 증빙 단위로 추적한다.
+
 고분 조사법 추가 대조분은 `Feature`에 `tombSurveyPurpose`, `moundTrenchInvestigation`, `moundFillSubdivisionRecord`, `stoneCistWallPackingRecord`, `tombInteriorRecoveryRecord`를 더했다. 조사 목적은 성격 구명, 정비·복원, 구제조사, 존부·외연 확인, 기간·예산 제약과 훼손 최소화를 먼저 남기고, 봉분 트렌치는 매장주체 장축·단축, 능선과 경사 방향, 외측 연장, 토층둑 위치, 평면 제토 병행, 단면·평면 대조와 부분정보 주의를 기록한다. 봉분 성토는 현장에서 세분해 성토재 물성, 구성비, 운반 단위, 구획성토, 성토공정과 범위를 보존하고, 석곽·석실은 개석 가공도, 석재 암질, 벽체 상면 점질토, 목재 받침, 충전공간, 피복토와 미장토를 따로 남긴다. 분묘 내부 수습은 내부 조도, 교란토 체질, 바닥 근처 정밀조사, 소형유물 유실, 유기물 변색·건조 방지, 고유번호와 연구실 분리해체 계획을 묶어 현장 노출 중 사라지는 정보를 붙잡는다.
 
 횡구식·횡혈식 석실분 보강분은 `Feature`에 `stoneChamberTombTypology`, `tombPassageClosureSequence`, `burialPlatformUseSequence`, `tombRitualDepositRecord`를 추가했다. 석실 묘형은 수혈식석곽, 횡구식석곽, 횡구식석실, 횡혈식석실 같은 이름을 먼저 확정하지 않고 입구부, 흙 묘도, 석축 연도, 현실, 관대·시상, 추가장 근거와 묘제·장제 불일치 가능성을 함께 남긴다. 묘도와 연도는 축선, 충전부 윤곽, 중앙둑, 바닥, 폐쇄석·폐쇄토, 문지방·문비석, 배수, 재개방·수리 흔적을 매장 순서와 대조한다. 관대와 시상은 두침·족좌, 표면 마감, 중첩·접속, 복수 피장자, 추가장 예정 공간, 시상별 부장품 위치, 제거 역순과 해체 후 단면으로 기록한다. 제사·매납은 봉토 정상부·사면·기저부, 주구, 묘도, 연도, 폐쇄 전후, 현실 내부, 제사용 토기군, 의도적 파손, 동물·음식 공헌, 위치·레벨, 축조공정 연결과 재퇴적 주의를 함께 저장한다.

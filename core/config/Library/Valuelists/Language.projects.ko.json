@@ -2423,6 +2423,47 @@
     },
     "description": "표본·시굴·정밀발굴 사이에서 앞 단계 기록, 출토유물, 약식보고서, 후속기관 인계를 추적하기 위한 목록"
   },
+  "KoreanFieldwork-reportSubmissionWorkflow": {
+    "values": {
+      "completionReported": { "label": "완료신고" },
+      "completionMaterialsSubmitted": { "label": "완료자료 제출" },
+      "completionMaterialDeadlineChecked": { "label": "완료자료 기한 확인" },
+      "summaryReportSubmitted": { "label": "약식보고서 제출" },
+      "preservationResultReported": { "label": "보존조치 결과보고" },
+      "finalReportDeadlineChecked": { "label": "최종보고서 기한 확인" },
+      "intermediateReportScheduled": { "label": "중간보고 일정" },
+      "pdfSubmitted": { "label": "PDF 제출" },
+      "digitalAdministrationSubmitted": { "label": "전자행정 제출" },
+      "submissionReceiptRecorded": { "label": "제출확인 기록" },
+      "abstractEntered": { "label": "초록 입력" },
+      "collaborationPortalEntered": { "label": "협업포털 입력" },
+      "publicReleaseChecked": { "label": "공개상태 확인" },
+      "sourceRecordLinked": { "label": "원기록 연결" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "완료신고, 완료자료, 약식보고서, 보존조치 결과보고, 최종보고서, PDF, 전자행정, 제출확인, 초록, 협업포털, 공개상태와 원기록 연결을 관리하기 위한 목록"
+  },
+  "KoreanFieldwork-stateVestingSelectionRecord": {
+    "values": {
+      "ownershipNotice": { "label": "소유권 공고" },
+      "ownerConfirmed": { "label": "소유자 확인" },
+      "ownershipDecision": { "label": "소유권 판정" },
+      "selectionMeeting": { "label": "선별회의" },
+      "selectionMinutes": { "label": "선별회의록" },
+      "selectionCommitteeMember": { "label": "선별위원" },
+      "reportIncludedArtifact": { "label": "보고서 수록 유물" },
+      "notVestingTarget": { "label": "국가귀속 대상 아님" },
+      "buriedMaterialLabel": { "label": "매몰자료 표지" },
+      "temporaryStorageReceipt": { "label": "임시보관증" },
+      "custodialInstitutionAssigned": { "label": "보관관리기관 지정" },
+      "stateVestingRegister": { "label": "국가귀속대장" },
+      "postConservationCorrection": { "label": "보존처리 후 정정" },
+      "shapeQuantityChanged": { "label": "형상·수량 변경" },
+      "reevaluationNeeded": { "label": "재평가 필요" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "국가귀속 전 소유권 공고와 판정, 선별회의, 임시보관증, 보관관리기관, 국가귀속대장, 보존처리 뒤 정정신고와 재평가를 추적하기 위한 목록"
+  },
   "KoreanFieldwork-termRelation": {
     "values": {
       "preferredTerm": {

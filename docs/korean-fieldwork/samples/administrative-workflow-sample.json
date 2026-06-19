@@ -5,7 +5,8 @@
     "조사의뢰 접수 단계의 기초자료와 현장답사 이력이 조사계획 수립 근거로 남는가.",
     "현장 착수·진행 중 허가서 비치, 보안, 주민·관할기관 통보, 유적보호, 임시보관, 기록물 점검이 작업 단위로 남는가.",
     "전문가 검토회의와 부분완료 신청이 도면·사진·유물현황·조사기관 의견과 함께 추적되는가.",
-    "지표조사 결과 처리와 자료 인수인계가 보고서 이후의 행정·보존 흐름으로 이어지는가."
+    "지표조사 결과 처리와 자료 인수인계가 보고서 이후의 행정·보존 흐름으로 이어지는가.",
+    "완료신고·보고서 제출과 국가귀속 선별이 프로젝트 체크값에 묻히지 않고 접수번호·보관증·대장 같은 증빙 기록으로 남는가."
   ],
   "documents": [
     {
@@ -104,6 +105,68 @@
           "dailyLog"
         ],
         "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "report-submission-admin-001",
+        "identifier": "ADMIN-REPORT-001",
+        "shortDescription": "완료신고와 최종보고서 제출",
+        "category": "ReportSubmissionWorkflow",
+        "relations": {
+          "liesWithin": ["project-admin-workflow-001"]
+        },
+        "description": "완료신고서, 완료자료, 약식보고서, PDF 제출확인과 협업포털 초록 입력을 원도면·사진·유물대장 교차검토와 연결한다.",
+        "reportSubmissionDocumentText": "완료신고서·약식보고서·최종보고서 PDF",
+        "reportSubmissionRecipientText": "문화재청·지방자치단체·사업시행자",
+        "reportSubmissionDeadlineText": "완료자료 20일, 최종보고서 제출기한 별도 관리",
+        "reportSubmissionReceiptText": "전자행정 접수번호 ADMIN-REPORT-2026-001",
+        "reportSourceLinkText": "원도면, 사진대장, 유물대장, 조사일지, 번호 변환표",
+        "reportSubmissionWorkflow": [
+          "completionReported",
+          "completionMaterialsSubmitted",
+          "completionMaterialDeadlineChecked",
+          "summaryReportSubmitted",
+          "finalReportDeadlineChecked",
+          "pdfSubmitted",
+          "digitalAdministrationSubmitted",
+          "submissionReceiptRecorded",
+          "abstractEntered",
+          "collaborationPortalEntered",
+          "sourceRecordLinked"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "state-vesting-admin-001",
+        "identifier": "ADMIN-VEST-001",
+        "shortDescription": "보고서 수록 유물 국가귀속 선별",
+        "category": "StateVestingSelectionRecord",
+        "relations": {
+          "liesWithin": ["project-admin-workflow-001"]
+        },
+        "description": "보고서 수록 유물과 비귀속 후속연구 자료를 선별회의록, 임시보관증, 국가귀속대장, 보존처리 후 정정 가능성과 함께 추적한다.",
+        "stateVestingObjectScopeText": "보고서 수록 유물 1차 선별분과 보존처리 후 정정 후보",
+        "stateVestingCustodyText": "임시보관기관 ADMIN-STORE",
+        "stateVestingReceiptText": "임시보관증 ADMIN-RECEIPT-001 / 국가귀속대장 등재 대기",
+        "stateVestingSelectionRecord": [
+          "ownershipNotice",
+          "ownerConfirmed",
+          "ownershipDecision",
+          "selectionMeeting",
+          "selectionMinutes",
+          "selectionCommitteeMember",
+          "reportIncludedArtifact",
+          "temporaryStorageReceipt",
+          "custodialInstitutionAssigned",
+          "stateVestingRegister",
+          "postConservationCorrection",
+          "shapeQuantityChanged",
+          "reevaluationNeeded"
+        ],
+        "verificationState": "needsRecheck"
       }
     },
     {

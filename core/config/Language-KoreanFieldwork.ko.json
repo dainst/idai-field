@@ -142,6 +142,52 @@
         }
       }
     },
+    "ReportSubmissionWorkflow": {
+      "label": "보고서 제출 흐름",
+      "fields": {
+        "reportSourceLinkText": {
+          "label": "원기록 연결"
+        },
+        "reportSubmissionDeadlineText": {
+          "label": "제출기한"
+        },
+        "reportSubmissionDocumentText": {
+          "label": "제출문서"
+        },
+        "reportSubmissionReceiptText": {
+          "label": "제출확인·접수번호"
+        },
+        "reportSubmissionRecipientText": {
+          "label": "제출처"
+        },
+        "reportSubmissionWorkflow": {
+          "label": "보고서 제출 흐름"
+        },
+        "verificationState": {
+          "label": "검증상태"
+        }
+      }
+    },
+    "StateVestingSelectionRecord": {
+      "label": "국가귀속 선별 기록",
+      "fields": {
+        "stateVestingCustodyText": {
+          "label": "보관관리기관"
+        },
+        "stateVestingObjectScopeText": {
+          "label": "대상 유물 범위"
+        },
+        "stateVestingReceiptText": {
+          "label": "보관증·귀속대장"
+        },
+        "stateVestingSelectionRecord": {
+          "label": "국가귀속 선별 기록"
+        },
+        "verificationState": {
+          "label": "검증상태"
+        }
+      }
+    },
     "IronProcessRelation": {
       "label": "제철 공정 연결",
       "fields": {

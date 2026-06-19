@@ -935,6 +935,136 @@
         }
       ]
     },
+    "ReportSubmissionWorkflow": {
+      "parent": "Project",
+      "color": "#6f728a",
+      "hidden": [],
+      "fields": {
+        "reportSubmissionDocumentText": {
+          "inputType": "input",
+          "mandatory": true,
+          "constraintIndexed": true
+        },
+        "reportSubmissionRecipientText": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "reportSubmissionDeadlineText": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "reportSubmissionReceiptText": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "reportSourceLinkText": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "reportSubmissionWorkflow": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "verificationState": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "reportSubmissionWorkflow": "KoreanFieldwork-reportSubmissionWorkflow",
+        "verificationState": "KoreanFieldwork-verificationState"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
+        },
+        {
+          "name": "hierarchy",
+          "fields": ["liesWithin"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "diaryAbstract"]
+        },
+        {
+          "name": "koreanFieldwork",
+          "fields": [
+            "reportSubmissionDocumentText",
+            "reportSubmissionRecipientText",
+            "reportSubmissionDeadlineText",
+            "reportSubmissionReceiptText",
+            "reportSourceLinkText",
+            "reportSubmissionWorkflow",
+            "verificationState"
+          ]
+        }
+      ]
+    },
+    "StateVestingSelectionRecord": {
+      "parent": "Project",
+      "color": "#8a6f50",
+      "hidden": [],
+      "fields": {
+        "stateVestingObjectScopeText": {
+          "inputType": "input",
+          "mandatory": true,
+          "constraintIndexed": true
+        },
+        "stateVestingCustodyText": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "stateVestingReceiptText": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "stateVestingSelectionRecord": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "verificationState": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "stateVestingSelectionRecord": "KoreanFieldwork-stateVestingSelectionRecord",
+        "verificationState": "KoreanFieldwork-verificationState"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
+        },
+        {
+          "name": "hierarchy",
+          "fields": ["liesWithin"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "diaryAbstract"]
+        },
+        {
+          "name": "koreanFieldwork",
+          "fields": [
+            "stateVestingObjectScopeText",
+            "stateVestingCustodyText",
+            "stateVestingReceiptText",
+            "stateVestingSelectionRecord",
+            "verificationState"
+          ]
+        }
+      ]
+    },
     "IronProcessRelation": {
       "parent": "Feature",
       "color": "#8a5f50",

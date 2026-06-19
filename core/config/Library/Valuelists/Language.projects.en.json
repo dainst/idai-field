@@ -14177,6 +14177,47 @@
     },
     "description": "Korean field notebook checklist for tracking records, finds, summary reports, successor institutions, and source links across investigation stage handovers"
   },
+  "KoreanFieldwork-reportSubmissionWorkflow": {
+    "values": {
+      "completionReported": { "label": "Completion reported" },
+      "completionMaterialsSubmitted": { "label": "Completion materials submitted" },
+      "completionMaterialDeadlineChecked": { "label": "Completion material deadline checked" },
+      "summaryReportSubmitted": { "label": "Summary report submitted" },
+      "preservationResultReported": { "label": "Preservation result reported" },
+      "finalReportDeadlineChecked": { "label": "Final report deadline checked" },
+      "intermediateReportScheduled": { "label": "Intermediate report scheduled" },
+      "pdfSubmitted": { "label": "PDF submitted" },
+      "digitalAdministrationSubmitted": { "label": "Digital administration submitted" },
+      "submissionReceiptRecorded": { "label": "Submission receipt recorded" },
+      "abstractEntered": { "label": "Abstract entered" },
+      "collaborationPortalEntered": { "label": "Collaboration portal entered" },
+      "publicReleaseChecked": { "label": "Public release checked" },
+      "sourceRecordLinked": { "label": "Source record linked" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean report-submission workflow checks for keeping completion reports, deadlines, PDFs, receipts, abstracts, portals, release status, and source-record links visible"
+  },
+  "KoreanFieldwork-stateVestingSelectionRecord": {
+    "values": {
+      "ownershipNotice": { "label": "Ownership notice" },
+      "ownerConfirmed": { "label": "Owner confirmed" },
+      "ownershipDecision": { "label": "Ownership decision" },
+      "selectionMeeting": { "label": "Selection meeting" },
+      "selectionMinutes": { "label": "Selection minutes" },
+      "selectionCommitteeMember": { "label": "Selection committee member" },
+      "reportIncludedArtifact": { "label": "Report-included artifact" },
+      "notVestingTarget": { "label": "Not a vesting target" },
+      "buriedMaterialLabel": { "label": "Buried material label" },
+      "temporaryStorageReceipt": { "label": "Temporary storage receipt" },
+      "custodialInstitutionAssigned": { "label": "Custodial institution assigned" },
+      "stateVestingRegister": { "label": "State vesting register" },
+      "postConservationCorrection": { "label": "Post-conservation correction" },
+      "shapeQuantityChanged": { "label": "Shape or quantity changed" },
+      "reevaluationNeeded": { "label": "Reevaluation needed" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean state-vesting checks for keeping selection meetings, ownership decisions, receipts, custody institutions, registers, conservation corrections, and reevaluation visible"
+  },
   "KoreanFieldwork-termRelation": {
     "values": {
       "preferredTerm": {

@@ -142,6 +142,52 @@
         }
       }
     },
+    "ReportSubmissionWorkflow": {
+      "label": "Report submission workflow",
+      "fields": {
+        "reportSourceLinkText": {
+          "label": "Source record link"
+        },
+        "reportSubmissionDeadlineText": {
+          "label": "Submission deadline"
+        },
+        "reportSubmissionDocumentText": {
+          "label": "Submission document"
+        },
+        "reportSubmissionReceiptText": {
+          "label": "Submission receipt"
+        },
+        "reportSubmissionRecipientText": {
+          "label": "Submission recipient"
+        },
+        "reportSubmissionWorkflow": {
+          "label": "Report submission workflow"
+        },
+        "verificationState": {
+          "label": "Verification state"
+        }
+      }
+    },
+    "StateVestingSelectionRecord": {
+      "label": "State vesting selection record",
+      "fields": {
+        "stateVestingCustodyText": {
+          "label": "Custody institution"
+        },
+        "stateVestingObjectScopeText": {
+          "label": "Object scope"
+        },
+        "stateVestingReceiptText": {
+          "label": "Receipt or register"
+        },
+        "stateVestingSelectionRecord": {
+          "label": "State vesting selection record"
+        },
+        "verificationState": {
+          "label": "Verification state"
+        }
+      }
+    },
     "IronProcessRelation": {
       "label": "Iron process relation",
       "fields": {

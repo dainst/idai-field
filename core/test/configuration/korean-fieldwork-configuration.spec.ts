@@ -357,6 +357,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('remainingUninvestigatedArea');
         expect(documentsById['project-admin-workflow-001'].resource.recordTransferManagementSystem)
             .toContain('sourceDatabase');
+        expect(documentsById['report-submission-admin-001'].resource.reportSubmissionWorkflow)
+            .toContain('submissionReceiptRecorded');
+        expect(documentsById['report-submission-admin-001'].resource.reportSourceLinkText)
+            .toContain('번호 변환표');
+        expect(documentsById['state-vesting-admin-001'].resource.stateVestingSelectionRecord)
+            .toContain('stateVestingRegister');
+        expect(documentsById['state-vesting-admin-001'].resource.stateVestingReceiptText)
+            .toContain('임시보관증');
         expect(documentsById['op-admin-review-001'].resource.partialCompletionPackage)
             .toContain('notificationResult');
         expect(documentsById['op-admin-review-001'].resource.siteProtectionSecurity)
@@ -997,6 +1005,8 @@ describe('KoreanFieldwork project configuration', () => {
         const termAliasForm = config.forms.TermAlias;
         const termImportMappingForm = config.forms.TermImportMapping;
         const sourceEvidenceIndexForm = config.forms.SourceEvidenceIndex;
+        const reportSubmissionWorkflowForm = config.forms.ReportSubmissionWorkflow;
+        const stateVestingSelectionRecordForm = config.forms.StateVestingSelectionRecord;
         const ironProcessRelationForm = config.forms.IronProcessRelation;
         const findForm = config.forms['Find:default'];
         const sampleForm = config.forms['Sample:default'];
@@ -1034,6 +1044,18 @@ describe('KoreanFieldwork project configuration', () => {
         expect(sourceEvidenceIndexForm.fields.sourceEvidenceDomain.inputType).toBe('checkboxes');
         expect(sourceEvidenceIndexForm.fields.sourceEvidenceVerification.inputType).toBe('checkboxes');
         expect(sourceEvidenceIndexForm.fields.sourceEvidenceUse.inputType).toBe('checkboxes');
+        expect(reportSubmissionWorkflowForm.parent).toBe('Project');
+        expect(reportSubmissionWorkflowForm.fields.reportSubmissionDocumentText.inputType).toBe('input');
+        expect(reportSubmissionWorkflowForm.fields.reportSubmissionDocumentText.mandatory).toBe(true);
+        expect(reportSubmissionWorkflowForm.fields.reportSubmissionRecipientText.inputType).toBe('input');
+        expect(reportSubmissionWorkflowForm.fields.reportSubmissionReceiptText.inputType).toBe('input');
+        expect(reportSubmissionWorkflowForm.fields.reportSubmissionWorkflow.inputType).toBe('checkboxes');
+        expect(stateVestingSelectionRecordForm.parent).toBe('Project');
+        expect(stateVestingSelectionRecordForm.fields.stateVestingObjectScopeText.inputType).toBe('input');
+        expect(stateVestingSelectionRecordForm.fields.stateVestingObjectScopeText.mandatory).toBe(true);
+        expect(stateVestingSelectionRecordForm.fields.stateVestingCustodyText.inputType).toBe('input');
+        expect(stateVestingSelectionRecordForm.fields.stateVestingReceiptText.inputType).toBe('input');
+        expect(stateVestingSelectionRecordForm.fields.stateVestingSelectionRecord.inputType).toBe('checkboxes');
         expect(ironProcessRelationForm.parent).toBe('Feature');
         expect(ironProcessRelationForm.fields.ironPreviousProcessText.inputType).toBe('input');
         expect(ironProcessRelationForm.fields.ironPreviousOutputText.inputType).toBe('input');
@@ -1331,6 +1353,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-partialCompletionPackage');
         expect(projectForm.valuelists.recordTransferManagementSystem)
             .toBe('KoreanFieldwork-recordTransferManagementSystem');
+        expect(reportSubmissionWorkflowForm.valuelists.reportSubmissionWorkflow)
+            .toBe('KoreanFieldwork-reportSubmissionWorkflow');
+        expect(reportSubmissionWorkflowForm.valuelists.verificationState).toBe('KoreanFieldwork-verificationState');
+        expect(stateVestingSelectionRecordForm.valuelists.stateVestingSelectionRecord)
+            .toBe('KoreanFieldwork-stateVestingSelectionRecord');
+        expect(stateVestingSelectionRecordForm.valuelists.verificationState).toBe('KoreanFieldwork-verificationState');
         expect(operationForm.valuelists.expertReviewMeeting).toBe('KoreanFieldwork-expertReviewMeeting');
         expect(operationForm.valuelists.partialCompletionPackage)
             .toBe('KoreanFieldwork-partialCompletionPackage');
@@ -1819,6 +1847,16 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Source material type');
         expect(languages.en.categories.SourceEvidenceIndex.fields.sourceEvidenceVerification.label)
             .toBe('Source verification status');
+        expect(languages.en.categories.ReportSubmissionWorkflow.label).toBe('Report submission workflow');
+        expect(languages.en.categories.ReportSubmissionWorkflow.fields.reportSubmissionDocumentText.label)
+            .toBe('Submission document');
+        expect(languages.en.categories.ReportSubmissionWorkflow.fields.reportSubmissionReceiptText.label)
+            .toBe('Submission receipt');
+        expect(languages.en.categories.StateVestingSelectionRecord.label).toBe('State vesting selection record');
+        expect(languages.en.categories.StateVestingSelectionRecord.fields.stateVestingObjectScopeText.label)
+            .toBe('Object scope');
+        expect(languages.en.categories.StateVestingSelectionRecord.fields.stateVestingReceiptText.label)
+            .toBe('Receipt or register');
         expect(languages.en.categories.IronProcessRelation.label).toBe('Iron process relation');
         expect(languages.en.categories.IronProcessRelation.fields.ironPreviousOutputText.label)
             .toBe('Previous output');
@@ -2895,6 +2933,18 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-digitalSurveyQualityControl']
             .values.fieldResultCrossChecked.label)
             .toBe('Field result cross-checked');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-reportSubmissionWorkflow']
+            .values.submissionReceiptRecorded.label)
+            .toBe('Submission receipt recorded');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-stateVestingSelectionRecord']
+            .values.stateVestingRegister.label)
+            .toBe('State vesting register');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-reportSubmissionWorkflow']
+            .values.collaborationPortalEntered.label)
+            .toBe('협업포털 입력');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-stateVestingSelectionRecord']
+            .values.temporaryStorageReceipt.label)
+            .toBe('임시보관증');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-publicArchaeologyOutput']
             .values.onlineArchive.label)
             .toBe('Online archive');

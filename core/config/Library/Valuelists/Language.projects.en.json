@@ -14406,6 +14406,30 @@
       "unpublishedReportMaterial": {
         "label": "Unpublished report material"
       },
+      "rawFieldNotebookOriginal": {
+        "label": "Raw field notebook original"
+      },
+      "unpublishedDrawingRetained": {
+        "label": "Unpublished original drawing retained"
+      },
+      "unpublishedPhotoRetained": {
+        "label": "Unpublished original photo retained"
+      },
+      "physicalFindAccessRecorded": {
+        "label": "Physical find access recorded"
+      },
+      "researchAccessRequestRecorded": {
+        "label": "Research access request recorded"
+      },
+      "accessRestrictionReasonRecorded": {
+        "label": "Access restriction reason recorded"
+      },
+      "followUpResearcherAccessLogged": {
+        "label": "Follow-up researcher access logged"
+      },
+      "earlyCareerResearcherAccessSupported": {
+        "label": "Early-career researcher access supported"
+      },
       "twoLocationBackup": {
         "label": "Two-location backup"
       },
@@ -14422,7 +14446,7 @@
         "label": "Pending decision"
       }
     },
-    "description": "Korean field notebook source-preservation states for original drawings, photos, electronic notebooks, backups, and access procedures"
+    "description": "Korean field notebook source-preservation and access states for raw notebooks, unpublished drawings/photos, electronic originals, physical find access, backups, restrictions, and follow-up research access"
   },
   "KoreanFieldwork-investigationAdministration": {
     "values": {

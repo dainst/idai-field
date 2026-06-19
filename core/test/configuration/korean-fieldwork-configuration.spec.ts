@@ -282,6 +282,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('spoilStockpileHaulagePlanned');
         expect(documentsById['op-quality-001'].resource.excavationControlSafety)
             .toContain('sameDaySectionPhotoDrawing');
+        expect(documentsById['op-quality-001'].resource.digitalSourcePreservation)
+            .toContain('unpublishedDrawingRetained');
+        expect(documentsById['op-quality-001'].resource.digitalSourcePreservation)
+            .toContain('physicalFindAccessRecorded');
+        expect(documentsById['op-quality-001'].resource.digitalSourcePreservation)
+            .toContain('followUpResearcherAccessLogged');
         expect(documentsById['daily-log-quality-001'].resource.relations.liesWithin)
             .toEqual(['op-quality-001']);
         expect(documentsById['daily-log-quality-001'].resource.dailyLogEvidenceRole)
@@ -2691,6 +2697,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Cumulative worker count');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-digitalSourcePreservation'].values.backupVerified.label)
             .toBe('Backup verified');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-digitalSourcePreservation']
+            .values.unpublishedDrawingRetained.label)
+            .toBe('Unpublished original drawing retained');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-digitalSourcePreservation']
+            .values.followUpResearcherAccessLogged.label)
+            .toBe('후속연구자 열람 이력');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-reviewedRecordUnit'].values.personalNotebook.label)
             .toBe('Personal notebook');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-qualityReviewStage'].values.sameDayReview.label)

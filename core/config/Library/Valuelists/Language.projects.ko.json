@@ -2652,6 +2652,30 @@
       "unpublishedReportMaterial": {
         "label": "보고서 미수록 자료"
       },
+      "rawFieldNotebookOriginal": {
+        "label": "원야장 원본"
+      },
+      "unpublishedDrawingRetained": {
+        "label": "미수록 원도면 보존"
+      },
+      "unpublishedPhotoRetained": {
+        "label": "미수록 원사진 보존"
+      },
+      "physicalFindAccessRecorded": {
+        "label": "실물 유물 열람 기록"
+      },
+      "researchAccessRequestRecorded": {
+        "label": "열람신청 기록"
+      },
+      "accessRestrictionReasonRecorded": {
+        "label": "열람 제한 사유"
+      },
+      "followUpResearcherAccessLogged": {
+        "label": "후속연구자 열람 이력"
+      },
+      "earlyCareerResearcherAccessSupported": {
+        "label": "신진연구자 열람 지원"
+      },
       "twoLocationBackup": {
         "label": "두 곳 이상 백업"
       },
@@ -2668,7 +2692,7 @@
         "label": "판단 보류"
       }
     },
-    "description": "보고서에 수록되지 않은 원도면, 원사진, 전자야장 원본까지 영구 관리하기 위한 원자료 보존 목록"
+    "description": "보고서에 수록되지 않은 원야장, 원도면, 원사진, 전자야장 원본과 실물 유물 열람 이력까지 영구 관리하기 위한 원자료 보존·열람 목록"
   },
   "KoreanFieldwork-investigationAdministration": {
     "values": {

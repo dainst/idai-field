@@ -138,6 +138,8 @@ GPS·GIS 현장 시스템에서 뽑은 공통 축은 `KoreanFieldwork-gpsSurveyQ
 
 2026-06-19 감사에서 `고고학사전` PDF 12개와 추출 텍스트 12개, `조사방법론` PDF 31개와 `methods-all` 추출 텍스트 31개의 대응을 다시 확인했다. 일부 강의자료는 기본 `metadata.tsv`의 직접 추출문이 0자이므로 `direct-recheck`와 `ocr-selected` 보강본을 실질 근거로 삼아야 한다. 독해 작업의 다음 단계는 새 목록화가 아니라 OCR 취약 구간의 원문 이미지 교정과 실제 iDAI.field 템플릿 적용 검증이다. 이번 템플릿 검증에서는 성곽 성문·수문·왜성 해자 값 목록이 유구군이 아니라 개별 유구 `Feature` 화면에 붙어야 함을 확인했다. 이어 조사방법론의 경작유구 장과 제6권 충적지·제8권 문암리 밭유구 노트를 대조해 `cultivationFeatureContext`, `cultivationTrialTrenchStrategy`, `cultivationFeatureEvidence`, `cultivationChronologyAnalysis`를 개별 유구 `Feature` 화면에 배치했다. 2026-06-20 재대조에서는 경작유구 장의 관개시설 구조와 논·밭 평면조사 절차를 `cultivationIrrigationFacility`, `cultivationPlanInvestigationProcedure`로 추가 분리했다.
 
+2026-06-20 현재 다운로드 폴더를 다시 확인한 결과도 같은 범위다. `C:\Users\nuri9\Downloads\고고학사전`에는 12권, `C:\Users\nuri9\Downloads\조사방법론`에는 31건이 있고, 임시 텍스트 캐시의 `metadata.json`에는 두 자료군 합계 43개 항목이 잡혀 있다. 직접 추출이 약한 `발굴조사_실무`, `발굴조사_업무의_이해`, `매장문화재조사와_첨단과학장비의_활용`, `토기_제작의_이해와_실습` 같은 자료는 캐시의 0자 표시만 보지 말고 `direct-recheck`, `ocr-selected`, `methods-all`의 보강 텍스트를 함께 대조한다. 이번 추가 판독에서는 `발굴조사의_이해`, 조사기초과정 사진촬영 장, `토기_제작의_이해와_실습`, `형식학적_연구의_이해`를 다시 보아 휴대 야장·방안 약식실측, 사진야장 대조, 비짐 육안 단정 금지, 형식과 속성 혼동 주의를 `field-training-methods.md`에 보강했다.
+
 2026-06-20 추가 교차독해에서는 조사계획 수립, 조사 착수, 진행 중 기록 보관, 현장 철수 전 미작성자료 조치, 완료자료 제출, DB·복사본·자료 인수인계 요구를 `field-training-methods.md`의 조사계획-철수-보고서 인계 사슬로 정리했다. 이 요구는 이미 구현된 `siteProtectionSecurity`, `digitalSourcePreservation`, `recordTransferManagementSystem`, `reportPreparationReview`, `reportSubmissionWorkflow`를 새 필드로 늘리는 대신 샘플 검증에서 더 강하게 묶는 방식으로 반영했다.
 
 ## 비판적 독해 기준

@@ -11828,6 +11828,15 @@
       "researchQuestionFit": {
         "label": "Fits research question"
       },
+      "featureSpecificNarrative": {
+        "label": "Feature-specific narrative"
+      },
+      "fieldToReportContinuity": {
+        "label": "Field-to-report continuity"
+      },
+      "excavatorReportAuthorLink": {
+        "label": "Excavator-report authorship link"
+      },
       "crossReviewNeeded": {
         "label": "Cross-review needed"
       },
@@ -11838,7 +11847,7 @@
         "label": "Pending decision"
       }
     },
-    "description": "Korean field notebook record-quality checks for accuracy, immediacy, reproducibility, and separation of observation from interpretation"
+    "description": "Korean field notebook record-quality checks for accuracy, immediacy, reproducibility, separation of observation from interpretation, feature-specific narratives, and field-to-report continuity"
   },
   "KoreanFieldwork-excavationControlSafety": {
     "values": {

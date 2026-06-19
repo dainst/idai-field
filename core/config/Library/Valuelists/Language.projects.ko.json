@@ -74,6 +74,15 @@
       "researchQuestionFit": {
         "label": "연구목적 적합"
       },
+      "featureSpecificNarrative": {
+        "label": "유구별 서사 기록"
+      },
+      "fieldToReportContinuity": {
+        "label": "현장-보고서 연속성"
+      },
+      "excavatorReportAuthorLink": {
+        "label": "조사자 보고서기술 연결"
+      },
       "crossReviewNeeded": {
         "label": "교차검토 필요"
       },
@@ -84,7 +93,7 @@
         "label": "판단 보류"
       }
     },
-    "description": "현장 강의자료에서 반복된 기록 정확성, 즉시성, 재현 가능성, 관찰·해석 분리 요구를 관리하기 위한 목록"
+    "description": "현장 강의자료에서 반복된 기록 정확성, 즉시성, 재현 가능성, 관찰·해석 분리, 유구별 서사와 보고서 기술 연속성 요구를 관리하기 위한 목록"
   },
   "KoreanFieldwork-excavationControlSafety": {
     "values": {

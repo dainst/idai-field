@@ -31095,6 +31095,9 @@
       "criteriaConsistency": {},
       "reproducibleRecord": {},
       "researchQuestionFit": {},
+      "featureSpecificNarrative": {},
+      "fieldToReportContinuity": {},
+      "excavatorReportAuthorLink": {},
       "crossReviewNeeded": {},
       "correctionNeeded": {},
       "pendingDecision": {}
@@ -31107,6 +31110,9 @@
       "criteriaConsistency",
       "reproducibleRecord",
       "researchQuestionFit",
+      "featureSpecificNarrative",
+      "fieldToReportContinuity",
+      "excavatorReportAuthorLink",
       "crossReviewNeeded",
       "correctionNeeded",
       "pendingDecision"

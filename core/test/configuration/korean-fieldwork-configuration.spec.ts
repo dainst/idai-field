@@ -163,8 +163,14 @@ describe('KoreanFieldwork project configuration', () => {
 
         expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
 
+        expect(documentsById['op-2026-06-19'].resource.fieldRecordQuality)
+            .toContain('fieldToReportContinuity');
+        expect(documentsById['op-2026-06-19'].resource.fieldRecordQuality)
+            .toContain('excavatorReportAuthorLink');
         expect(documentsById['feature-pit-building-001'].resource.firstExposureRecord)
             .toContain('firstExposurePhoto');
+        expect(documentsById['feature-pit-building-001'].resource.fieldRecordQuality)
+            .toContain('featureSpecificNarrative');
         expect(documentsById['feature-pit-building-001'].resource.fieldOnlyMissingCheck)
             .toContain('notRecoverableWarning');
         expect(documentsById['feature-pit-building-001'].resource.excavationReverseSequenceCheck)
@@ -2830,6 +2836,12 @@ describe('KoreanFieldwork project configuration', () => {
 
         expect(valuelistLanguages.projects.en['KoreanFieldwork-fieldRecordQuality'].values.immediateRecording.label)
             .toBe('Immediate recording');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-fieldRecordQuality']
+            .values.featureSpecificNarrative.label)
+            .toBe('Feature-specific narrative');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-fieldRecordQuality']
+            .values.fieldToReportContinuity.label)
+            .toBe('현장-보고서 연속성');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-excavationControlSafety']
             .values.machineStrippingDepthControlled.label)
             .toBe('Machine stripping depth controlled');

@@ -2561,6 +2561,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Field serial and inventory number linked');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactQuantityBasis'].values.sameObjectConfirmed.label)
             .toBe('Same object confirmed');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactQuantityBasis'].values.oneLotTenItems.label)
+            .toBe('One lot / ten items');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactRecoveryPreservationRisk']
             .values.smallFindLoss.label)
             .toBe('Small find loss');
@@ -2570,6 +2572,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-storageEnvironmentControl']
             .values.currentStandardCrossCheckNeeded.label)
             .toBe('Current standard cross-check needed');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-storageEnvironmentControl']
+            .values.conditionCheckBeforeReport.label)
+            .toBe('Condition check before report');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-conservationScienceRequest']
             .values.nonDestructiveFirst.label)
             .toBe('Non-destructive first');

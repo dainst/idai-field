@@ -190,7 +190,20 @@
         ],
         "storageEnvironmentControl": [
           "storageSpace",
+          "exhibitionSpace",
+          "trainingStandardReference",
+          "currentStandardCrossCheckNeeded",
           "metalHumidity40_50",
+          "exhibitionSo2No2Limit100",
+          "exhibitionOzoneLimit20",
+          "illuminationLimit450",
+          "individualPackagingStorage",
+          "stateVestingAcademicUnregisteredSeparated",
+          "metalNonmetalSeparated",
+          "handoverMovementPathChecked",
+          "largeArtifactSeparateTransport",
+          "conditionCheckBeforeReport",
+          "deviationRecorded",
           "regularInspection"
         ],
         "verificationState": "candidate"

@@ -12057,11 +12057,20 @@
       "oneLotManyItems": {
         "label": "One lot many items"
       },
+      "oneLotTenItems": {
+        "label": "One lot / ten items"
+      },
       "sameObjectConfirmed": {
         "label": "Same object confirmed"
       },
       "componentRelationship": {
         "label": "Component relationship"
+      },
+      "sameAttributeAccessory": {
+        "label": "Same-attribute accessory"
+      },
+      "separableComponent": {
+        "label": "Separable component"
       },
       "actualCountAnnotated": {
         "label": "Actual count annotated"
@@ -12175,8 +12184,44 @@
       "ozoneLimit2": {
         "label": "O3 limit 2"
       },
+      "exhibitionSo2No2Limit100": {
+        "label": "Exhibition SO2/NO2 limit 100"
+      },
+      "exhibitionOzoneLimit20": {
+        "label": "Exhibition O3 limit 20"
+      },
+      "illuminationLimit450": {
+        "label": "Illumination limit 450"
+      },
+      "illuminationLimit220": {
+        "label": "Illumination limit 220"
+      },
+      "illuminationLimit150": {
+        "label": "Illumination limit 150"
+      },
+      "illuminationLimit80": {
+        "label": "Illumination limit 80"
+      },
       "lightUvSensitive": {
         "label": "Light/UV sensitive"
+      },
+      "individualPackagingStorage": {
+        "label": "Individual packaging before storage"
+      },
+      "stateVestingAcademicUnregisteredSeparated": {
+        "label": "State-vesting, academic, and unregistered finds separated"
+      },
+      "metalNonmetalSeparated": {
+        "label": "Metal and non-metal separated"
+      },
+      "handoverMovementPathChecked": {
+        "label": "Handover and transfer route checked"
+      },
+      "largeArtifactSeparateTransport": {
+        "label": "Large artifact separately packed and transported"
+      },
+      "conditionCheckBeforeReport": {
+        "label": "Condition check before report"
       },
       "deviationRecorded": {
         "label": "Deviation recorded"

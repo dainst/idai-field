@@ -94,6 +94,42 @@
         ],
         "verificationState": "candidate"
       }
+    },
+    {
+      "resource": {
+        "id": "find-artifact-quantity-components-001",
+        "identifier": "F-ART-002",
+        "shortDescription": "부속구 수량 산정 예시",
+        "category": "Find",
+        "relations": {
+          "isRecordedIn": ["op-artifact-register-001"]
+        },
+        "description": "동일 속성 부속구와 분리 가능한 구성품을 건수·점수·실수량으로 나누어 기록하는지 검증하는 샘플.",
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "reproducibleRecord"
+        ],
+        "artifactHandlingWorkflow": [
+          "conditionCheck",
+          "selectionMeeting",
+          "materialSpecificStorage",
+          "stateVesting",
+          "reportSubmission"
+        ],
+        "artifactQuantityBasis": [
+          "administrativeLotCount",
+          "physicalItemCount",
+          "oneLotTenItems",
+          "sameAttributeAccessory",
+          "separableComponent",
+          "actualCountAnnotated",
+          "componentRelationship",
+          "quantityEvidencePhoto",
+          "quantityNote"
+        ],
+        "verificationState": "candidate"
+      }
     }
   ]
 }

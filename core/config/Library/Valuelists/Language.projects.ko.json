@@ -303,11 +303,20 @@
       "oneLotManyItems": {
         "label": "1건 다점"
       },
+      "oneLotTenItems": {
+        "label": "1건 10점"
+      },
       "sameObjectConfirmed": {
         "label": "동일개체 확인"
       },
       "componentRelationship": {
         "label": "부속구 관계"
+      },
+      "sameAttributeAccessory": {
+        "label": "동일 속성 부속"
+      },
+      "separableComponent": {
+        "label": "분리 가능 구성품"
       },
       "actualCountAnnotated": {
         "label": "실제수량 병기"
@@ -421,8 +430,44 @@
       "ozoneLimit2": {
         "label": "O3 2 이하"
       },
+      "exhibitionSo2No2Limit100": {
+        "label": "전시공간 SO2·NO2 100 이하"
+      },
+      "exhibitionOzoneLimit20": {
+        "label": "전시공간 O3 20 이하"
+      },
+      "illuminationLimit450": {
+        "label": "조도 450 이하"
+      },
+      "illuminationLimit220": {
+        "label": "조도 220 이하"
+      },
+      "illuminationLimit150": {
+        "label": "조도 150 이하"
+      },
+      "illuminationLimit80": {
+        "label": "조도 80 이하"
+      },
       "lightUvSensitive": {
         "label": "조도·자외선 민감"
+      },
+      "individualPackagingStorage": {
+        "label": "개별 포장 후 격납"
+      },
+      "stateVestingAcademicUnregisteredSeparated": {
+        "label": "귀속·학술·미등록 분리"
+      },
+      "metalNonmetalSeparated": {
+        "label": "금속·비금속 분리"
+      },
+      "handoverMovementPathChecked": {
+        "label": "인수인계·이관 동선 확인"
+      },
+      "largeArtifactSeparateTransport": {
+        "label": "대형유물 별도 포장·이송"
+      },
+      "conditionCheckBeforeReport": {
+        "label": "보고서 전 컨디션 체크"
       },
       "deviationRecorded": {
         "label": "일탈 기록"

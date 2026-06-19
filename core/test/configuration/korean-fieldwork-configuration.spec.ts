@@ -188,6 +188,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('fieldResultCrossChecked');
         expect(documentsById['photo-media-gps-001'].resource.gpsPhotoLinkRecord)
             .toContain('currentPositionLinked');
+        expect(documentsById['photo-media-gps-001'].resource.mediaQualityCheck)
+            .toContain('preRecoveryPhotoTaken');
+        expect(documentsById['photo-media-gps-001'].resource.mediaQualityCheck)
+            .toContain('levelingLinkedForRecovery');
+        expect(documentsById['photo-media-gps-001'].resource.mediaQualityCheck)
+            .toContain('findNumberLocationMatched');
         expect(documentsById['drawing-media-distribution-001'].resource.mapSourceMaterial)
             .toContain('joseonMap');
         expect(documentsById['drawing-media-distribution-001'].resource.distributionMapRequirement)
@@ -3093,6 +3099,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
             .values.smallFeatureActualShapeShown.label)
             .toBe('Small feature actual shape shown');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
+            .values.preRecoveryPhotoTaken.label)
+            .toBe('Pre-recovery photo taken');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-mediaQualityCheck']
+            .values.levelingLinkedForRecovery.label)
+            .toBe('레벨링 연계 위치복원');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactDrawingRecordMethod']
             .values.measuredDrawing.label)
             .toBe('Measured drawing');

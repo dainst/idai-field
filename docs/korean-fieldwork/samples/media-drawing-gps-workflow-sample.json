@@ -211,7 +211,11 @@
           "orientationChecked",
           "controlPointLinked",
           "originalUncroppedPreserved",
-          "registerNumberMatched"
+          "registerNumberMatched",
+          "preRecoveryPhotoTaken",
+          "multiDirectionPhotoTaken",
+          "levelingLinkedForRecovery",
+          "findNumberLocationMatched"
         ],
         "gpsPhotoLinkRecord": [
           "gpsConnectionConfigured",

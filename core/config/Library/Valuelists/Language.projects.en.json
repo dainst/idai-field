@@ -17724,6 +17724,18 @@
       "registerNumberMatched": {
         "label": "Register number matched"
       },
+      "preRecoveryPhotoTaken": {
+        "label": "Pre-recovery photo taken"
+      },
+      "multiDirectionPhotoTaken": {
+        "label": "Multi-direction photo taken"
+      },
+      "levelingLinkedForRecovery": {
+        "label": "Leveling linked for recovery"
+      },
+      "findNumberLocationMatched": {
+        "label": "Find number and location matched"
+      },
       "smallFeatureActualShapeShown": {
         "label": "Small feature actual shape shown"
       },
@@ -17743,7 +17755,7 @@
         "label": "Pending decision"
       }
     },
-    "description": "Korean fieldwork media quality checks for direction, scale, control points, resolution or linework, lighting, source preservation, and register-number consistency"
+    "description": "Korean fieldwork media quality checks for direction, scale, control points, resolution or linework, lighting, source preservation, pre-recovery multi-direction photos, leveling links, and register-number or location consistency"
   },
   "KoreanFieldwork-photoCaptureSafetyReview": {
     "values": {

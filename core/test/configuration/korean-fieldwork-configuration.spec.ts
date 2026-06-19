@@ -892,6 +892,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('gpsLatLongRecorded');
         expect(documentsById['find-surface-pottery-001'].resource.surfaceFindHandlingRecord)
             .toContain('adheringSoilPreserved');
+        expect(documentsById['find-surface-pottery-001'].resource.chanceFindProvenance)
+            .toContain('residentReport');
+        expect(documentsById['find-surface-pottery-001'].resource.chanceFindProvenance)
+            .toContain('normalExcavationContextNotAssumed');
     });
 
 
@@ -1995,6 +1999,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.fields.paleolithicArtifactPositionRecovery.inputType).toBe('checkboxes');
         expect(findForm.fields.artifactQuantityBasis.inputType).toBe('checkboxes');
         expect(findForm.fields.surfaceFindHandlingRecord.inputType).toBe('checkboxes');
+        expect(findForm.fields.chanceFindProvenance.inputType).toBe('checkboxes');
         expect(findForm.fields.artifactRecoveryPreservationRisk.inputType).toBe('checkboxes');
         expect(findForm.fields.artifactCleaningDryingControl.inputType).toBe('checkboxes');
         expect(findForm.fields.storageEnvironmentControl.inputType).toBe('checkboxes');
@@ -2527,6 +2532,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.valuelists.artifactQuantityBasis).toBe('KoreanFieldwork-artifactQuantityBasis');
         expect(findForm.valuelists.surfaceFindHandlingRecord)
             .toBe('KoreanFieldwork-surfaceFindHandlingRecord');
+        expect(findForm.valuelists.chanceFindProvenance).toBe('KoreanFieldwork-chanceFindProvenance');
         expect(findForm.valuelists.artifactRecoveryPreservationRisk)
             .toBe('KoreanFieldwork-artifactRecoveryPreservationRisk');
         expect(findForm.valuelists.artifactCleaningDryingControl)
@@ -3143,6 +3149,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Storage environment control');
         expect(languages.en.categories.Find.fields.surfaceFindHandlingRecord.label)
             .toBe('Surface find handling record');
+        expect(languages.en.categories.Find.fields.chanceFindProvenance.label)
+            .toBe('Chance find provenance');
         expect(languages.en.categories.Find.fields.artifactRecoveryPreservationRisk.label)
             .toBe('Artifact recovery preservation risk');
         expect(languages.en.categories.Find.fields.artifactCleaningDryingControl.label)
@@ -4463,6 +4471,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceFindHandlingRecord']
             .values.adheringSoilPreserved.label)
             .toBe('Adhering soil preserved');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-chanceFindProvenance']
+            .values.normalExcavationContextNotAssumed.label)
+            .toBe('일반 발굴맥락으로 보지 않음');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-artifactDrawingRecordMethod']
             .values.measuredDrawing.label)
             .toBeDefined();

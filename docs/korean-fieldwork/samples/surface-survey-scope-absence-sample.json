@@ -327,6 +327,13 @@
           "adheringSoilPreserved",
           "washingCaution"
         ],
+        "chanceFindProvenance": [
+          "residentReport",
+          "surfaceCollection",
+          "exactFindspotUnknown",
+          "normalExcavationContextNotAssumed",
+          "followUpSurveyNeeded"
+        ],
         "artifactLabelRegisterLink": [
           "labelCreated",
           "collectionDateRecorded",

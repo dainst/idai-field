@@ -1024,6 +1024,9 @@
         "surfaceFindHandlingRecord": {
           "label": "Surface find handling record"
         },
+        "chanceFindProvenance": {
+          "label": "Chance find provenance"
+        },
         "artifactRecoveryPreservationRisk": {
           "label": "Artifact recovery preservation risk"
         },

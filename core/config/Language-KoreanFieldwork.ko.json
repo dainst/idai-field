@@ -1024,6 +1024,9 @@
         "surfaceFindHandlingRecord": {
           "label": "지표 수습유물 관리"
         },
+        "chanceFindProvenance": {
+          "label": "우연·신고 유물 출처"
+        },
         "artifactRecoveryPreservationRisk": {
           "label": "유물 수습·보존 위험"
         },

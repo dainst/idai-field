@@ -31546,6 +31546,44 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-chanceFindProvenance": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-20",
+    "values": {
+      "residentReport": {},
+      "constructionDiscovery": {},
+      "agriculturalDiscovery": {},
+      "surfaceCollection": {},
+      "detectorReport": {},
+      "legacyReportImport": {},
+      "collectorHeldFind": {},
+      "exactFindspotUnknown": {},
+      "originalContextDestroyed": {},
+      "damagedBeforeInvestigation": {},
+      "oralReportOnly": {},
+      "mapLocationApproximate": {},
+      "followUpSurveyNeeded": {},
+      "normalExcavationContextNotAssumed": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "residentReport",
+      "constructionDiscovery",
+      "agriculturalDiscovery",
+      "surfaceCollection",
+      "detectorReport",
+      "legacyReportImport",
+      "collectorHeldFind",
+      "exactFindspotUnknown",
+      "originalContextDestroyed",
+      "damagedBeforeInvestigation",
+      "oralReportOnly",
+      "mapLocationApproximate",
+      "followUpSurveyNeeded",
+      "normalExcavationContextNotAssumed",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-artifactRecoveryPreservationRisk": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

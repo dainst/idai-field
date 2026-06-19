@@ -462,6 +462,26 @@
     },
     "description": "지표 수습 유물이 위치·지도·사진·부착토 정보를 잃지 않도록 개별 포장, 유물카드, 지도 표시, GPS, 지번, 근경·원경 사진, 눈금자·방위판, 세척주의를 확인하기 위한 목록"
   },
+  "KoreanFieldwork-chanceFindProvenance": {
+    "values": {
+      "residentReport": { "label": "주민 신고" },
+      "constructionDiscovery": { "label": "공사 중 발견" },
+      "agriculturalDiscovery": { "label": "경작 중 발견" },
+      "surfaceCollection": { "label": "지표 채집" },
+      "detectorReport": { "label": "탐지기 신고" },
+      "legacyReportImport": { "label": "기존 보고서 가져오기" },
+      "collectorHeldFind": { "label": "소장·보관 중 자료" },
+      "exactFindspotUnknown": { "label": "정확한 출토위치 불명" },
+      "originalContextDestroyed": { "label": "원맥락 훼손" },
+      "damagedBeforeInvestigation": { "label": "조사 전 훼손" },
+      "oralReportOnly": { "label": "구술 신고만 있음" },
+      "mapLocationApproximate": { "label": "지도 위치 개략" },
+      "followUpSurveyNeeded": { "label": "후속 확인조사 필요" },
+      "normalExcavationContextNotAssumed": { "label": "일반 발굴맥락으로 보지 않음" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "주민 신고, 공사·경작 중 발견, 지표 채집, 기존 소장·보고서 자료처럼 원위치와 출토 맥락이 흔들릴 수 있는 유물을 일반 발굴 출토품과 구분하기 위한 목록"
+  },
   "KoreanFieldwork-artifactRecoveryPreservationRisk": {
     "values": {
       "smallFindLoss": { "label": "소형유물 유실" },

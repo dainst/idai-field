@@ -2631,6 +2631,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "chanceFindProvenance": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "artifactRecoveryPreservationRisk": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -2797,6 +2801,7 @@
         "paleolithicArtifactPositionRecovery": "KoreanFieldwork-paleolithicArtifactPositionRecovery",
         "artifactQuantityBasis": "KoreanFieldwork-artifactQuantityBasis",
         "surfaceFindHandlingRecord": "KoreanFieldwork-surfaceFindHandlingRecord",
+        "chanceFindProvenance": "KoreanFieldwork-chanceFindProvenance",
         "artifactRecoveryPreservationRisk": "KoreanFieldwork-artifactRecoveryPreservationRisk",
         "artifactCleaningDryingControl": "KoreanFieldwork-artifactCleaningDryingControl",
         "storageEnvironmentControl": "KoreanFieldwork-storageEnvironmentControl",
@@ -2871,6 +2876,7 @@
             "paleolithicArtifactPositionRecovery",
             "artifactQuantityBasis",
             "surfaceFindHandlingRecord",
+            "chanceFindProvenance",
             "artifactRecoveryPreservationRisk",
             "artifactCleaningDryingControl",
             "storageEnvironmentControl",

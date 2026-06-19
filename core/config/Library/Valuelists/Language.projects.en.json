@@ -12216,6 +12216,26 @@
     },
     "description": "Korean surface-find handling checks for preserving packaging, artifact-card, map, GPS, parcel, photo, scale, north-arrow, adhering-soil, and washing-caution evidence"
   },
+  "KoreanFieldwork-chanceFindProvenance": {
+    "values": {
+      "residentReport": { "label": "Resident report" },
+      "constructionDiscovery": { "label": "Construction discovery" },
+      "agriculturalDiscovery": { "label": "Agricultural discovery" },
+      "surfaceCollection": { "label": "Surface collection" },
+      "detectorReport": { "label": "Detector report" },
+      "legacyReportImport": { "label": "Legacy report import" },
+      "collectorHeldFind": { "label": "Collector-held find" },
+      "exactFindspotUnknown": { "label": "Exact findspot unknown" },
+      "originalContextDestroyed": { "label": "Original context destroyed" },
+      "damagedBeforeInvestigation": { "label": "Damaged before investigation" },
+      "oralReportOnly": { "label": "Oral report only" },
+      "mapLocationApproximate": { "label": "Map location approximate" },
+      "followUpSurveyNeeded": { "label": "Follow-up survey needed" },
+      "normalExcavationContextNotAssumed": { "label": "Normal excavation context not assumed" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean provenance checks for distinguishing reported, construction, agricultural, surface-collected, legacy, and context-compromised finds from ordinary excavated finds"
+  },
   "KoreanFieldwork-artifactRecoveryPreservationRisk": {
     "values": {
       "smallFindLoss": { "label": "Small find loss" },

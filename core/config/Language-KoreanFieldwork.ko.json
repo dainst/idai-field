@@ -696,6 +696,12 @@
         "potteryProcessDirectionality": {
           "label": "토기 공정 방향성"
         },
+        "potteryProductionOrganizationEvidence": {
+          "label": "토기 생산조직 근거"
+        },
+        "potteryComparativeReferenceCheck": {
+          "label": "토기 비교표본 검토"
+        },
         "potteryFiringTraceObservation": {
           "label": "토기 소성흔 관찰"
         },

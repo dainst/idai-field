@@ -696,6 +696,12 @@
         "potteryProcessDirectionality": {
           "label": "Pottery process directionality"
         },
+        "potteryProductionOrganizationEvidence": {
+          "label": "Pottery production organization evidence"
+        },
+        "potteryComparativeReferenceCheck": {
+          "label": "Pottery comparative reference check"
+        },
         "potteryFiringTraceObservation": {
           "label": "Pottery firing trace observation"
         },

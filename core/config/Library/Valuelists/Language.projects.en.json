@@ -15620,6 +15620,47 @@
     },
     "description": "Directionality checks for sand grains, finishing traces, rotary trimming, wet smoothing, upright and inverted trimming, forming direction, finishing direction, and magnified photographs"
   },
+  "KoreanFieldwork-potteryProductionOrganizationEvidence": {
+    "values": {
+      "householdProductionCandidate": { "label": "Household production candidate" },
+      "householdIndustryCandidate": { "label": "Household industry candidate" },
+      "workshopIndustryCandidate": { "label": "Workshop industry candidate" },
+      "largeScaleIndustryCandidate": { "label": "Large-scale industry candidate" },
+      "partTimeSpecialistCandidate": { "label": "Part-time specialist candidate" },
+      "fullTimeSpecialistCandidate": { "label": "Full-time specialist candidate" },
+      "formingDivisionCandidate": { "label": "Forming division candidate" },
+      "decorationDivisionCandidate": { "label": "Decoration division candidate" },
+      "paintingDivisionCandidate": { "label": "Painting division candidate" },
+      "repeatedDesignPattern": { "label": "Repeated design pattern" },
+      "standardizedVesselSize": { "label": "Standardized vessel size" },
+      "glazeOnlyDifference": { "label": "Glaze-only difference" },
+      "moldSeamObserved": { "label": "Mold seam observed" },
+      "productionContextNotAssumed": { "label": "Production context not assumed" },
+      "ethnographicDirectEquationBlocked": { "label": "Ethnographic direct equation blocked" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Pottery production-organization evidence checks for household, workshop, and large-scale production candidates, specialist labor, division of forming/decoration/painting, repeated designs, standardization, mold seams, and explicit limits on ethnographic analogy"
+  },
+  "KoreanFieldwork-potteryComparativeReferenceCheck": {
+    "values": {
+      "samePeriodCompared": { "label": "Same period compared" },
+      "sameRegionCompared": { "label": "Same region compared" },
+      "sameVesselTypeCompared": { "label": "Same vessel type compared" },
+      "sampleSizeExpanded": { "label": "Sample size expanded" },
+      "tileFormingTraceReference": { "label": "Tile forming trace reference" },
+      "livingPotteryReference": { "label": "Living pottery reference" },
+      "ethnographicCaseCompared": { "label": "Ethnographic case compared" },
+      "experimentalCaseCompared": { "label": "Experimental case compared" },
+      "productionSiteCandidate": { "label": "Production site candidate" },
+      "distributionRangeCandidate": { "label": "Distribution range candidate" },
+      "regionalityReviewed": { "label": "Regionality reviewed" },
+      "surfaceTracePhotoCompared": { "label": "Surface trace photo compared" },
+      "referenceLimitRecorded": { "label": "Reference limit recorded" },
+      "hastyConclusionBlocked": { "label": "Hasty conclusion blocked" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Comparative-reference checks that require pottery observations to be compared across the same period, region, vessel type, tile forming traces, living pottery, ethnographic and experimental cases, production-site candidates, distribution range, and reference limits before classification"
+  },
   "KoreanFieldwork-potteryFiringTraceObservation": {
     "values": {
       "irregularTrace": { "label": "Irregular trace" },

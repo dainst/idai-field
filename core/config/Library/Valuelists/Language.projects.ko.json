@@ -3866,6 +3866,47 @@
     },
     "description": "모래알 방향, 조정흔 방향, 회전깎기, 물손질흔, 정치·도치깎기를 확대사진과 함께 남겨 성형과 정형의 공정 방향성을 검토하기 위한 목록"
   },
+  "KoreanFieldwork-potteryProductionOrganizationEvidence": {
+    "values": {
+      "householdProductionCandidate": { "label": "가내제작 후보" },
+      "householdIndustryCandidate": { "label": "가내공작 후보" },
+      "workshopIndustryCandidate": { "label": "공방공작 후보" },
+      "largeScaleIndustryCandidate": { "label": "대규모공작 후보" },
+      "partTimeSpecialistCandidate": { "label": "반전업 전문가 후보" },
+      "fullTimeSpecialistCandidate": { "label": "전업 전문가 후보" },
+      "formingDivisionCandidate": { "label": "성형 분업 후보" },
+      "decorationDivisionCandidate": { "label": "시문 분업 후보" },
+      "paintingDivisionCandidate": { "label": "채색 분업 후보" },
+      "repeatedDesignPattern": { "label": "도안 반복" },
+      "standardizedVesselSize": { "label": "규격 표준화" },
+      "glazeOnlyDifference": { "label": "유약만 차이" },
+      "moldSeamObserved": { "label": "형뜨기 분리선 관찰" },
+      "productionContextNotAssumed": { "label": "생산맥락 단정 금지" },
+      "ethnographicDirectEquationBlocked": { "label": "민족지 직접등치 금지" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "토기 생산조직을 바로 확정하지 않고 가내제작·가내공작·공방공작·대규모공작 후보, 전업성, 성형·시문·채색 분업, 도안 반복, 규격 표준화, 형뜨기 분리선, 민족지 유추 한계를 함께 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-potteryComparativeReferenceCheck": {
+    "values": {
+      "samePeriodCompared": { "label": "동일시기 비교" },
+      "sameRegionCompared": { "label": "동일지역 비교" },
+      "sameVesselTypeCompared": { "label": "동일기종 비교" },
+      "sampleSizeExpanded": { "label": "개체수 확대" },
+      "tileFormingTraceReference": { "label": "기와 성형흔 참조" },
+      "livingPotteryReference": { "label": "생활도자 참조" },
+      "ethnographicCaseCompared": { "label": "민족지 사례 비교" },
+      "experimentalCaseCompared": { "label": "실험 사례 비교" },
+      "productionSiteCandidate": { "label": "생산지 후보" },
+      "distributionRangeCandidate": { "label": "유통범위 후보" },
+      "regionalityReviewed": { "label": "지역성 검토" },
+      "surfaceTracePhotoCompared": { "label": "표면흔 사진 비교" },
+      "referenceLimitRecorded": { "label": "참조 한계 기록" },
+      "hastyConclusionBlocked": { "label": "성급한 결론 차단" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "토기 한 점이나 단일 흔적으로 판단하지 않고 동일 시기·지역·기종, 기와 성형흔, 생활도자, 민족지·실험 사례, 생산지·유통범위 후보와 참조 한계를 비교하기 위한 목록"
+  },
   "KoreanFieldwork-potteryFiringTraceObservation": {
     "values": {
       "irregularTrace": { "label": "부정형 소성흔" },

@@ -1705,6 +1705,14 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "potteryProductionOrganizationEvidence": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "potteryComparativeReferenceCheck": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "potteryFiringTraceObservation": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1778,6 +1786,8 @@
         "potteryFormingTraceAssessment": "KoreanFieldwork-potteryFormingTraceAssessment",
         "potteryFormingCaution": "KoreanFieldwork-potteryFormingCaution",
         "potteryProcessDirectionality": "KoreanFieldwork-potteryProcessDirectionality",
+        "potteryProductionOrganizationEvidence": "KoreanFieldwork-potteryProductionOrganizationEvidence",
+        "potteryComparativeReferenceCheck": "KoreanFieldwork-potteryComparativeReferenceCheck",
         "potteryFiringTraceObservation": "KoreanFieldwork-potteryFiringTraceObservation",
         "potteryKilnFurnitureContext": "KoreanFieldwork-potteryKilnFurnitureContext",
         "tileKilnFindContext": "KoreanFieldwork-tileKilnFindContext",
@@ -1840,6 +1850,8 @@
             "potteryFormingTraceAssessment",
             "potteryFormingCaution",
             "potteryProcessDirectionality",
+            "potteryProductionOrganizationEvidence",
+            "potteryComparativeReferenceCheck",
             "potteryFiringTraceObservation",
             "potteryKilnFurnitureContext",
             "tileKilnFindContext",

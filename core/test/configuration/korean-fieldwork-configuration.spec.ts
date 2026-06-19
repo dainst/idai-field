@@ -646,6 +646,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('stringCutNotStandalone');
         expect(documentsById['find-pottery-forming-trace-001'].resource.potteryProcessDirectionality)
             .toContain('magnifiedPhoto');
+        expect(documentsById['find-pottery-forming-trace-001'].resource.potteryProductionOrganizationEvidence)
+            .toContain('ethnographicDirectEquationBlocked');
+        expect(documentsById['find-pottery-forming-trace-001'].resource.potteryComparativeReferenceCheck)
+            .toContain('hastyConclusionBlocked');
         expect(documentsById['find-neolithic-fishing-gear-001'].resource.neolithicSubsistenceEvidence)
             .toContain('functionNotAssumed');
         expect(documentsById['find-neolithic-fishing-gear-001'].resource.neolithicSubsistenceEvidence)
@@ -1102,6 +1106,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.fields.potteryFormingTraceAssessment.inputType).toBe('checkboxes');
         expect(findForm.fields.potteryFormingCaution.inputType).toBe('checkboxes');
         expect(findForm.fields.potteryProcessDirectionality.inputType).toBe('checkboxes');
+        expect(findForm.fields.potteryProductionOrganizationEvidence.inputType).toBe('checkboxes');
+        expect(findForm.fields.potteryComparativeReferenceCheck.inputType).toBe('checkboxes');
         expect(findForm.fields.potteryFiringTraceObservation.inputType).toBe('checkboxes');
         expect(findForm.fields.potteryKilnFurnitureContext.inputType).toBe('checkboxes');
         expect(findForm.fields.tileKilnFindContext.inputType).toBe('checkboxes');
@@ -1506,6 +1512,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-potteryFormingCaution');
         expect(findForm.valuelists.potteryProcessDirectionality)
             .toBe('KoreanFieldwork-potteryProcessDirectionality');
+        expect(findForm.valuelists.potteryProductionOrganizationEvidence)
+            .toBe('KoreanFieldwork-potteryProductionOrganizationEvidence');
+        expect(findForm.valuelists.potteryComparativeReferenceCheck)
+            .toBe('KoreanFieldwork-potteryComparativeReferenceCheck');
         expect(findForm.valuelists.potteryFiringTraceObservation)
             .toBe('KoreanFieldwork-potteryFiringTraceObservation');
         expect(findForm.valuelists.potteryKilnFurnitureContext)
@@ -1926,6 +1936,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Pottery forming caution');
         expect(languages.en.categories.Find.fields.potteryProcessDirectionality.label)
             .toBe('Pottery process directionality');
+        expect(languages.en.categories.Find.fields.potteryProductionOrganizationEvidence.label)
+            .toBe('Pottery production organization evidence');
+        expect(languages.en.categories.Find.fields.potteryComparativeReferenceCheck.label)
+            .toBe('Pottery comparative reference check');
         expect(languages.en.categories.Find.fields.potteryFiringTraceObservation.label)
             .toBe('Pottery firing trace observation');
         expect(languages.en.categories.Find.fields.potteryKilnFurnitureContext.label)
@@ -2425,6 +2439,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-potteryProcessDirectionality']
             .values.oppositeDirection.label)
             .toBe('Opposite direction');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-potteryProductionOrganizationEvidence']
+            .values.ethnographicDirectEquationBlocked.label)
+            .toBe('민족지 직접등치 금지');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-potteryComparativeReferenceCheck']
+            .values.hastyConclusionBlocked.label)
+            .toBe('Hasty conclusion blocked');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-potteryFiringTraceObservation']
             .values.naturalAshGlazeSeparated.label)
             .toBe('Natural ash glaze separated');

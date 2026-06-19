@@ -1300,10 +1300,10 @@ GIS 입지분석 장은 고도, 경사, 사면방향, 수계거리, 수계와의
 - `토기성형기법판단주의`: 실떼기단독확정금지, 물레질뽑기후보, 단일성형후회전조정, 성형정형분리, 제법지속가능, 타날채용유무, 기와성형흔보조, 판단 보류
 - `토기공정방향성`: 모래알방향, 조정흔방향, 회전깎기, 물손질흔, 정치깎기, 도치깎기, 성형방향, 정형방향, 동일방향, 반대방향, 확대사진, 판단 보류
 - `토기소성표면흔판정`: 자연유, 비산, 회흔, 화기노출, 반대화부, 토기내부, 소성온도후보, 재임위치후보, 온도무관위치, 과잉해석주의, 판단 보류
-- `토기생산분업후보`: 성형분업, 시문분업, 채색분업, 도안반복, 규격동일유약차이, 형뜨기분리선, 생활도자비교, 민족지직접등치금지, 판단 보류
-- `토기비교표본검토`: 동일시기, 동일지역, 동일기종, 개체수확대, 기와성형흔대조, 민족지사례, 생산지후보, 유통범위, 지역성, 성급판단보류, 판단 보류
+- `토기생산조직근거`: 가내제작후보, 가내공작후보, 공방공작후보, 대규모공작후보, 반전업전문가후보, 전업전문가후보, 성형분업후보, 시문분업후보, 채색분업후보, 도안반복, 규격표준화, 유약만차이, 형뜨기분리선관찰, 생산맥락단정금지, 민족지직접등치금지, 판단 보류
+- `토기비교표본검토`: 동일시기비교, 동일지역비교, 동일기종비교, 개체수확대, 기와성형흔참조, 생활도자참조, 민족지사례비교, 실험사례비교, 생산지후보, 유통범위후보, 지역성검토, 표면흔사진비교, 참조한계기록, 성급한결론차단, 판단 보류
 
-2026-06-19 구현에서는 이 후보군 중 `토도자용어범위`, `토기원료소지기록`, `토기비짐기능판정`, `토기제작생애기록`, `토기성형흔판정`, `토기성형기법판단주의`, `토기공정방향성`을 `Find` 화면의 `ceramicTermScope`, `potteryFabricTemperRecord`, `potteryTemperFunctionAssessment`, `potteryProductionLifeRecord`, `potteryFormingTraceAssessment`, `potteryFormingCaution`, `potteryProcessDirectionality`로 먼저 옮겼다. 소성표면흔은 기존 `potteryFiringTraceObservation`과 함께 보며, 생산분업 후보와 비교표본 검토는 `typologyArgument`, `chronologyArgument`, `assemblageRelation` 또는 후속 전용 목록으로 확장한다.
+2026-06-19 구현에서는 이 후보군 중 `토도자용어범위`, `토기원료소지기록`, `토기비짐기능판정`, `토기제작생애기록`, `토기성형흔판정`, `토기성형기법판단주의`, `토기공정방향성`을 `Find` 화면의 `ceramicTermScope`, `potteryFabricTemperRecord`, `potteryTemperFunctionAssessment`, `potteryProductionLifeRecord`, `potteryFormingTraceAssessment`, `potteryFormingCaution`, `potteryProcessDirectionality`로 옮겼고, 생산분업 후보와 비교표본 검토도 `potteryProductionOrganizationEvidence`, `potteryComparativeReferenceCheck`로 추가했다. 소성표면흔은 기존 `potteryFiringTraceObservation`과 함께 보며, 새 두 목록은 가내제작·공방공작·대규모공작, 전업성, 분업, 표준화, 형뜨기 분리선, 민족지 유추 한계, 동일 시기·지역·기종 비교, 표본 확대, 기와 성형흔·생활도자·실험 사례 참조를 확정 판정이 아닌 근거 묶음으로 남긴다.
 
 ## 제2회 매장문화재 조사연구원 교육 OCR 재대조
 

@@ -1250,7 +1250,7 @@
         "label": "단계별 평면도 연결"
       },
       "samePhotoStationMaintained": {
-        "label": "동일 촬영지점 유지"
+        "label": "동일 촬영지점·위치 유지"
       },
       "droneRouteRepeated": {
         "label": "드론 경로 반복"
@@ -1271,7 +1271,7 @@
         "label": "판단 보류"
       }
     },
-    "description": "수혈건물지 평면확인부터 토층둑, 1~3차 노출, 외부시설 조사, 동일 촬영지점과 드론 경로, 해체 후 최종평면까지 단계 비교가 가능하게 기록하기 위한 목록"
+    "description": "수혈건물지 평면확인부터 토층둑, 1~3차 노출, 외부시설 조사, 동일 촬영지점·위치와 드론 경로, 해체 후 최종평면까지 단계 비교가 가능하게 기록하기 위한 목록"
   },
   "KoreanFieldwork-pitDwellingSectionStrategy": {
     "values": {
@@ -6664,6 +6664,21 @@
       "multiDirectionPhotoTaken": {
         "label": "다방향 사진"
       },
+      "overheadOnlyAvoided": {
+        "label": "직상방만 촬영 회피"
+      },
+      "obliqueSidePhotoTaken": {
+        "label": "사선·측면 사진"
+      },
+      "overviewCloseupPaired": {
+        "label": "원경·근경 병행"
+      },
+      "stratigraphyWholePartDetailSet": {
+        "label": "토층 전체·분할·세부 사진"
+      },
+      "backlightAvoided": {
+        "label": "역광 촬영 회피"
+      },
       "levelingLinkedForRecovery": {
         "label": "레벨링 연계 위치복원"
       },
@@ -6689,7 +6704,7 @@
         "label": "판단 보류"
       }
     },
-    "description": "사진과 도면의 방향, 축척, 기준점, 해상도·선명도, 원본 보존, 수습 전 다방향 사진, 레벨링 연계, 대장번호·위치 일치 여부를 점검하기 위한 목록"
+    "description": "사진과 도면의 방향, 축척, 기준점, 해상도·선명도, 원본 보존, 수습 전 다방향 사진, 직상방 위주 촬영 회피, 사선·측면 사진, 원경·근경 병행, 토층 전체·분할·세부 사진, 역광 회피, 레벨링 연계, 대장번호·위치 일치 여부를 점검하기 위한 목록"
   },
   "KoreanFieldwork-photoCaptureSafetyReview": {
     "values": {

@@ -13004,7 +13004,7 @@
         "label": "Staged plan drawing linked"
       },
       "samePhotoStationMaintained": {
-        "label": "Same photo station maintained"
+        "label": "Same photo station/position maintained"
       },
       "droneRouteRepeated": {
         "label": "Drone route repeated"
@@ -13025,7 +13025,7 @@
         "label": "Pending decision"
       }
     },
-    "description": "Korean pit dwelling checks for keeping plan confirmation, baulk setup, first to third exposures, external facilities, repeated photo stations and drone routes, and final plans comparable across investigation stages"
+    "description": "Korean pit dwelling checks for keeping plan confirmation, baulk setup, first to third exposures, external facilities, repeated photo station/position and drone routes, and final plans comparable across investigation stages"
   },
   "KoreanFieldwork-pitDwellingSectionStrategy": {
     "values": {
@@ -18418,6 +18418,21 @@
       "multiDirectionPhotoTaken": {
         "label": "Multi-direction photo taken"
       },
+      "overheadOnlyAvoided": {
+        "label": "Overhead-only photo avoided"
+      },
+      "obliqueSidePhotoTaken": {
+        "label": "Oblique/side photo taken"
+      },
+      "overviewCloseupPaired": {
+        "label": "Overview and close-up paired"
+      },
+      "stratigraphyWholePartDetailSet": {
+        "label": "Stratigraphy whole/part/detail set"
+      },
+      "backlightAvoided": {
+        "label": "Backlight avoided"
+      },
       "levelingLinkedForRecovery": {
         "label": "Leveling linked for recovery"
       },
@@ -18443,7 +18458,7 @@
         "label": "Pending decision"
       }
     },
-    "description": "Korean fieldwork media quality checks for direction, scale, control points, resolution or linework, lighting, source preservation, pre-recovery multi-direction photos, leveling links, and register-number or location consistency"
+    "description": "Korean fieldwork media quality checks for direction, scale, control points, resolution or linework, lighting, source preservation, pre-recovery multi-direction photos, avoiding overhead-only and backlit shots, keeping oblique/side views, overview/close-up pairs, stratigraphy whole/part/detail sets, leveling links, and register-number or location consistency"
   },
   "KoreanFieldwork-photoCaptureSafetyReview": {
     "values": {

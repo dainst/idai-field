@@ -176,6 +176,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-19 수혈주거지 도판·사례명 교정 대상도 같은 색인 흐름으로 분리했다. `발굴조사 업무의 이해`와 `현장조사 방법과 해석`의 수혈주거지 장은 이미 `pitDwellingExposureBaulk`, `pitDwellingFloorFacility`, `pitDwellingFireEvidence`, `pitDwellingOverlapSequence` 값목록으로 구현했지만, 도판 속 사례명과 개별 캡션은 아직 값목록 근거로 승격하지 않는다. `source-index-pit-dwelling-001`은 이 항목을 `buildingSite`와 `researchMethod` 영역의 원문 재대조 대상으로 남겨 자동 분류와 성급한 주거지 확정을 막는다.
 
+2026-06-20 `source-index-pit-dwelling-001` 재대조에서 기존 locator의 `method19_page_160-174`가 고총고분 장을 가리키는 오류를 확인하고, 실제 수혈주거지 범위를 `method19_pit_dwellings_pages205_258`과 `method30_pitdwelling_pages119_143_rotated`로 교정했다. 직접 확인한 도판은 단계별 비교 사진의 같은 촬영지점·위치 유지, 드론 직상방 사진 위주 촬영 회피, 사선·측면 사진, 원경·근경 병행, 토층 전체·분할·세부 사진, 역광 회피를 요구하므로 `mediaQualityCheck`와 `field-record-preservation-sample.json`에 반영했다.
+
 2026-06-19 추가 재독해에서는 `현장조사_방법과_해석`, `발굴조사_업무의_이해_교재`, `제2회_매장문화재_조사연구원_교육_2007년3월`, `매장문화재_유적조사방법론` OCR 본문을 교차 검색해 구획·둑 설정, 둑 폭과 보호, 배수·집수정, 장비 제토 두께, 삽날 방향 관찰, 작업자 안전거리, 기준단면 당일 촬영·도면화, 안전휀스, 철수 전 원고·도면·사진·유물목록 점검을 공통 현장 운영 요구로 다시 묶었다. 이 묶음은 `Operation`의 `excavationControlSafety` 값목록으로 옮겼고, `daily-log-quality-review-workflow-sample.json`에서 일지·품질검수 흐름과 함께 검증한다.
 
 2026-06-20 `발굴조사_실무.pdf`의 `발굴조사자료의 작성과 기록관리` 장을 다시 읽어 제토 과정의 야장 항목을 보강했다. 제토는 유구조사 시간을 확보하는 운영 판단이므로, 일일 장비·인부별 제토량, 굴삭기 규격과 조합, 표토 두께와 토량, 적토장·반출 계획, 생토 위 퇴적두께, 유구별 내부토 차이를 당일 작업기록에 남겨야 한다. 이 요구는 새 카드로 분리하지 않고 `Operation.excavationControlSafety`의 세부 선택값으로 추가했으며, `daily-log-quality-review-workflow-sample.json`이 제토 운영 항목과 일지·품질검수 연결을 함께 검증한다.

@@ -183,6 +183,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('photoRegister');
         expect(documentsById['photo-pit-building-001-first-exposure'].resource.photoCaptureSafetyReview)
             .toContain('ladderTopShootingProhibited');
+        expect(documentsById['photo-pit-building-001-stage-series'].resource.mediaQualityCheck)
+            .toContain('overheadOnlyAvoided');
+        expect(documentsById['photo-pit-building-001-stage-series'].resource.mediaQualityCheck)
+            .toContain('stratigraphyWholePartDetailSet');
+        expect(documentsById['photo-pit-building-001-stage-series'].resource.photoCaptureSafetyReview)
+            .toContain('photoAngleSupplementNeeded');
         expect(documentsById['drawing-pit-building-001-plan'].resource.relations.isDepictedIn)
             .toContain('sample-pit-building-001-charcoal-001');
     });
@@ -385,8 +391,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('crossSourceCompared');
         expect(documentsById['source-index-pit-dwelling-001'].resource.sourceEvidenceDomain)
             .toContain('buildingSite');
+        expect(documentsById['source-index-pit-dwelling-001'].resource.sourceEvidenceLocator)
+            .toContain('method19_pit_dwellings_pages205_258');
         expect(documentsById['source-index-pit-dwelling-001'].resource.sourceEvidenceVerification)
             .toContain('captionNeedsCheck');
+        expect(documentsById['source-index-pit-dwelling-001'].resource.sourceEvidenceVerification)
+            .toContain('directPdfChecked');
         expect(documentsById['source-index-pit-dwelling-001'].resource.sourceEvidenceUse)
             .toContain('preventAutoClassification');
         expect(documentsById['source-index-stratigraphy-context-001'].resource.sourceEvidenceDomain)
@@ -3087,7 +3097,7 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Relationship unresolved');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-pitDwellingInvestigationSequence']
             .values.samePhotoStationMaintained.label)
-            .toBe('Same photo station maintained');
+            .toBe('Same photo station/position maintained');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-pitDwellingSectionStrategy']
             .values.exploratoryTrenchRationale.label)
             .toBe('Exploratory trench rationale');
@@ -3531,6 +3541,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
             .values.preRecoveryPhotoTaken.label)
             .toBe('Pre-recovery photo taken');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
+            .values.obliqueSidePhotoTaken.label)
+            .toBe('Oblique/side photo taken');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-mediaQualityCheck']
+            .values.stratigraphyWholePartDetailSet.label)
+            .toBe('Stratigraphy whole/part/detail set');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-mediaQualityCheck']
             .values.levelingLinkedForRecovery.label)
             .toBe('레벨링 연계 위치복원');

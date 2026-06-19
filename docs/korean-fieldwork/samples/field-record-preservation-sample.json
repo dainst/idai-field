@@ -258,6 +258,37 @@
     },
     {
       "resource": {
+        "id": "photo-pit-building-001-stage-series",
+        "identifier": "P-SB-001-002",
+        "shortDescription": "수혈건물지 단계별·다각도 사진 묶음",
+        "category": "Photo",
+        "relations": {
+          "isRecordedIn": ["op-2026-06-19"],
+          "isDepictedIn": ["feature-pit-building-001"]
+        },
+        "description": "평면확인, 1~3차 노출, 외부시설 조사까지 같은 촬영지점·위치를 유지하되 직상방 사진만으로 끝내지 않고 사선·측면, 원경·근경, 토층 전체·분할·세부 사진을 함께 남긴다.",
+        "mediaEvidenceRole": ["workStageRecord", "featureOutlineEvidence", "stratigraphicEvidence"],
+        "mediaQualityCheck": [
+          "targetPurposeClear",
+          "directionRecorded",
+          "scaleIncluded",
+          "lightingConditionSuitable",
+          "multiDirectionPhotoTaken",
+          "overheadOnlyAvoided",
+          "obliqueSidePhotoTaken",
+          "overviewCloseupPaired",
+          "stratigraphyWholePartDetailSet",
+          "backlightAvoided",
+          "originalUncroppedPreserved",
+          "registerNumberMatched"
+        ],
+        "photoCaptureSafetyReview": ["droneCapture", "photoAngleSupplementNeeded", "safetyManagerChecked"],
+        "digitalSourcePreservation": ["originalPhoto", "originalImage", "twoLocationBackup"],
+        "reportCrossCheck": ["photoRegister", "manuscript", "sourceMediaBackup"]
+      }
+    },
+    {
+      "resource": {
         "id": "drawing-pit-building-001-plan",
         "identifier": "D-SB-001-001",
         "shortDescription": "1차 평면도",

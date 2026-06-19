@@ -1137,6 +1137,9 @@
       "charredTimberRecorded": {
         "label": "탄화목재 기록"
       },
+      "charredTimberMoistureMaintained": {
+        "label": "탄화재 수분 유지"
+      },
       "burntSoilRecorded": {
         "label": "소토 기록"
       },
@@ -1148,6 +1151,9 @@
       },
       "timberDirectionMapped": {
         "label": "탄화재 방향 도면화"
+      },
+      "planAndProfileAfterExposure": {
+        "label": "노출 후 평면·입단면도"
       },
       "fireTypeNotAssumed": {
         "label": "화재 유형 단정 금지"
@@ -1170,11 +1176,14 @@
       "expertReviewNeeded": {
         "label": "전문가 검토 필요"
       },
+      "fireOriginExpertConsulted": {
+        "label": "발화지점 전문가 자문"
+      },
       "pendingDecision": {
         "label": "판단 보류"
       }
     },
-    "description": "화재 수혈건물지의 목탄, 소토, 재층, 피열흔을 화재 원인 확정값이 아니라 단계별 증거로 관리하기 위한 목록"
+    "description": "화재 수혈건물지의 목탄, 탄화재 노출 중 수분 유지, 소토, 재층, 피열흔, 탄화재 방향, 평면·입단면도, 시료 지점, 발화지점 전문가 자문을 화재 원인 확정값이 아니라 단계별 증거로 관리하기 위한 목록"
   },
   "KoreanFieldwork-pitDwellingOverlapSequence": {
     "values": {

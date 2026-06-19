@@ -159,6 +159,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('notRecoverableWarning');
         expect(documentsById['feature-pit-building-001'].resource.excavationReverseSequenceCheck)
             .toContain('useSurfaceChecked');
+        expect(documentsById['feature-pit-building-001'].resource.pitDwellingFireEvidence)
+            .toContain('charredTimberMoistureMaintained');
+        expect(documentsById['feature-pit-building-001'].resource.pitDwellingFireEvidence)
+            .toContain('planAndProfileAfterExposure');
+        expect(documentsById['feature-pit-building-001'].resource.pitDwellingFireEvidence)
+            .toContain('fireOriginExpertConsulted');
         expect(documentsById['segment-pit-building-001-fill-a'].resource.relations.liesWithin)
             .toEqual(['feature-pit-building-001']);
         expect(documentsById['find-pit-building-001-001'].resource.fieldOnlyMissingCheck)
@@ -3064,6 +3070,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-pitDwellingFireEvidence']
             .values.fireTypeNotAssumed.label)
             .toBe('Fire type not assumed');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-pitDwellingFireEvidence']
+            .values.charredTimberMoistureMaintained.label)
+            .toBe('Charred timber moisture maintained');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-pitDwellingFireEvidence']
+            .values.fireOriginExpertConsulted.label)
+            .toBe('Fire-origin expert consulted');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-pitDwellingOverlapSequence']
             .values.relationshipUnresolved.label)
             .toBe('Relationship unresolved');

@@ -12891,6 +12891,9 @@
       "charredTimberRecorded": {
         "label": "Charred timber recorded"
       },
+      "charredTimberMoistureMaintained": {
+        "label": "Charred timber moisture maintained"
+      },
       "burntSoilRecorded": {
         "label": "Burnt soil recorded"
       },
@@ -12902,6 +12905,9 @@
       },
       "timberDirectionMapped": {
         "label": "Timber direction mapped"
+      },
+      "planAndProfileAfterExposure": {
+        "label": "Plan and profile after exposure"
       },
       "fireTypeNotAssumed": {
         "label": "Fire type not assumed"
@@ -12924,11 +12930,14 @@
       "expertReviewNeeded": {
         "label": "Expert review needed"
       },
+      "fireOriginExpertConsulted": {
+        "label": "Fire-origin expert consulted"
+      },
       "pendingDecision": {
         "label": "Pending decision"
       }
     },
-    "description": "Korean burned pit dwelling checks for treating charcoal, burnt soil, ash, heat alteration, timber directions, staged plans, and sample points as evidence rather than assumed fire causes"
+    "description": "Korean burned pit dwelling checks for treating charcoal, moisture during exposure, burnt soil, ash, heat alteration, timber directions, staged plans, profiles, sample points, and fire-origin expert consultation as evidence rather than assumed fire causes"
   },
   "KoreanFieldwork-pitDwellingOverlapSequence": {
     "values": {

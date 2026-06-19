@@ -91,10 +91,13 @@
         ],
         "pitDwellingFireEvidence": [
           "charredTimberRecorded",
+          "charredTimberMoistureMaintained",
           "burntSoilRecorded",
           "fireTypeNotAssumed",
           "firstPlanBeforeRemoval",
-          "samplePointsMapped"
+          "planAndProfileAfterExposure",
+          "samplePointsMapped",
+          "fireOriginExpertConsulted"
         ],
         "pitDwellingOverlapSequence": [
           "overlapGroupRecord",

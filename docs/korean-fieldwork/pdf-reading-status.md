@@ -138,6 +138,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-19 이어서 `수혈건물지 조사법`, `현장조사 방법과 해석`, `발굴조사 업무의 이해`의 수혈주거지 장을 다시 대조했다. 수혈건물지는 평면 유형명보다 최초 노출 어깨선, 둑 설정, 단면 보양, 바닥면 오인 방지, 내부시설 절개, 화재 목탄·소토의 단계도면, 중복 유구의 1차·2차 평면제토와 단면 근거가 먼저 필요하다. 이 묶음은 `Feature` 화면의 `pitDwellingExposureBaulk`, `pitDwellingFloorFacility`, `pitDwellingFireEvidence`, `pitDwellingOverlapSequence` 값 목록으로 옮겼다.
 
+2026-06-20 `수혈건물지 조사법` OCR 취약 구간을 다시 보며 화재 수혈주거지의 현장 처치 값을 보강했다. 탄화재는 장시간 노출되면 말라 부서지므로 수분을 유지한 채 노출해야 하고, 노출 뒤 평면도와 입단면도를 작성한 다음 제거·시료채취·2차 도면으로 이어져야 하며, 발화 지점 판단은 소방서나 화재보험사 등 전문가 자문을 열어 두어야 한다. 이 확인분은 `pitDwellingFireEvidence`의 `charredTimberMoistureMaintained`, `planAndProfileAfterExposure`, `fireOriginExpertConsulted`로 옮겼고 `field-record-preservation-sample.json`에서 실제 값목록 키로 검증한다.
+
 2026-06-19 추가로 `현장조사 방법과 해석`의 수혈주거지 도판을 다시 보면서 평면확인, 토층둑 배치, 1~3차 노출, 동일 촬영지점·드론 경로, 외부시설 조사, 해체 후 최종평면이 단계 비교 가능하게 남아야 함을 반영했다. 이 요구는 `Feature` 화면의 `pitDwellingInvestigationSequence`와 `pitDwellingSectionStrategy` 값 목록으로 추가했다.
 
 2026-06-20 `수혈건물지 조사법`과 `매장문화재 유적조사방법론`의 취락·마을 해석 부분을 다시 묶어 `FeatureGroup`의 `settlementSpatialInterpretation`으로 옮겼다. 기존 `pitDwellingOverlapSequence`가 개별 중복 수혈주거지의 조사 절차와 선후관계 근거를 맡는다면, 새 필드는 취락 범위, 집자리 중복과 동시기성, 한 시점 규모, 행위공간 구획, 공동·세대별 공간, 폐기 방식, 바닥 유물분포, 식물유체와 잔류물·내용물 분석 연결, 반복 축조 원인 검토를 취락 카드에서 관리한다. `bronze-age-settlement-dolmen-workflow-sample.json`은 이 취락 단위 해석값과 개별 수혈건물지 조사값이 함께 검증되도록 갱신했다.

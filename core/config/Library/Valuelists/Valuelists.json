@@ -32573,10 +32573,12 @@
     "creationDate": "2026-06-19",
     "values": {
       "charredTimberRecorded": {},
+      "charredTimberMoistureMaintained": {},
       "burntSoilRecorded": {},
       "ashLayerRecorded": {},
       "heatAlteredFloor": {},
       "timberDirectionMapped": {},
+      "planAndProfileAfterExposure": {},
       "fireTypeNotAssumed": {},
       "ritualBurningCandidate": {},
       "postDepositionalFireCandidate": {},
@@ -32584,14 +32586,17 @@
       "secondPlanAfterRemoval": {},
       "samplePointsMapped": {},
       "expertReviewNeeded": {},
+      "fireOriginExpertConsulted": {},
       "pendingDecision": {}
     },
     "order": [
       "charredTimberRecorded",
+      "charredTimberMoistureMaintained",
       "burntSoilRecorded",
       "ashLayerRecorded",
       "heatAlteredFloor",
       "timberDirectionMapped",
+      "planAndProfileAfterExposure",
       "fireTypeNotAssumed",
       "ritualBurningCandidate",
       "postDepositionalFireCandidate",
@@ -32599,6 +32604,7 @@
       "secondPlanAfterRemoval",
       "samplePointsMapped",
       "expertReviewNeeded",
+      "fireOriginExpertConsulted",
       "pendingDecision"
     ]
   },

@@ -1,0 +1,466 @@
+{
+  "title": "Korean daily log and quality review workflow sample",
+  "purpose": "Validate that personal field notebooks, daily work logs, source-media checks, correction reasons, and report-evaluation feedback remain traceable as public field records.",
+  "validationQuestions": [
+    "개인 야장이 작성자 개인 메모로 끝나지 않고 담당 유구, 원본 제출, 스캔, 검토, 접근조건, 반출금지 상태로 공적 기록화되는가.",
+    "조사일지가 당일 사실기록, 누적 인원·장비, 날씨·우천작업, 지시·회의·기관 소통, 다음 작업 근거를 남기는가.",
+    "일지 검토가 사진·도면·유물·시료 목록, 번호 변환표, 원기록 보존, 보고서 반영 여부와 연결되는가.",
+    "품질검수가 원기록을 조용히 덮어쓰지 않고 수정 사유, 변경 이력, 검토자, 원매체 확인, 다음 현장조치, 보고서 평가 환류를 남기는가."
+  ],
+  "documents": [
+    {
+      "resource": {
+        "id": "op-quality-001",
+        "identifier": "QUALITY-OP-001",
+        "shortDescription": "일지·품질검수 작업 단위",
+        "category": "Operation",
+        "relations": {},
+        "description": "정밀발굴 12일차 작업. 개인 야장, 작업일지, 사진·도면·유물·시료 목록, 보고서 평가 보완요구를 같은 작업 단위에서 대조한다.",
+        "fieldRecordQuality": [
+          "factualAccuracy",
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "reproducibleRecord",
+          "crossReviewNeeded",
+          "correctionNeeded"
+        ],
+        "recordCreationTiming": "duringFieldwork",
+        "dailyLogContent": [
+          "workDateWeather",
+          "staffRoles",
+          "workArea",
+          "strippingProgress",
+          "featureProgress",
+          "layerDecision",
+          "findSampleCollection",
+          "photoDrawingNumbers",
+          "visitorInstruction",
+          "equipmentIssue",
+          "safetyIssue",
+          "changeReason",
+          "nextWorkPlan",
+          "pendingDecision"
+        ],
+        "dailyLogReview": [
+          "sameDayWritten",
+          "factsInterpretationSeparated",
+          "authorIdentified",
+          "reviewerChecked",
+          "photoDrawingCrossChecked",
+          "findListCrossChecked",
+          "sampleListCrossChecked",
+          "numberConversionChecked",
+          "correctionReasonLinked",
+          "sourceRecordArchived",
+          "reportCarryForwardChecked",
+          "pendingDecision"
+        ],
+        "personalNotebookArchive": [
+          "personalNotebookWritten",
+          "assignedFeatureLinked",
+          "originalSubmitted",
+          "digitized",
+          "researcherReviewed",
+          "supervisorReviewed",
+          "accessConditionsSet",
+          "removalProhibited",
+          "correctionNeeded",
+          "pendingDecision"
+        ],
+        "digitalSourcePreservation": [
+          "personalNotebookScan",
+          "electronicNotebookOriginal",
+          "originalPhoto",
+          "originalDrawing",
+          "twoLocationBackup",
+          "backupVerified",
+          "accessProcedure",
+          "indefiniteRetention",
+          "pendingDecision"
+        ],
+        "reportCrossCheck": [
+          "manuscript",
+          "drawingRegister",
+          "photoRegister",
+          "artifactRegister",
+          "sampleRegister",
+          "dailyLog",
+          "numberConversionTable",
+          "sourceMediaBackup",
+          "evaluationFeedback"
+        ],
+        "reportEvaluationFeedback": [
+          "selfEvaluation",
+          "committeeEvaluation",
+          "scoreDifference",
+          "fieldQualityNotSubstituted",
+          "fieldRecordReview",
+          "formalEvaluationLimit",
+          "improvementForNextInvestigation",
+          "supplementRequestTracked",
+          "pendingDecision"
+        ],
+        "verificationState": "needsRecheck"
+      }
+    },
+    {
+      "resource": {
+        "id": "feature-quality-001",
+        "identifier": "QUALITY-FEAT-001",
+        "shortDescription": "검수 대상 수혈유구",
+        "category": "Feature",
+        "relations": {
+          "isRecordedIn": ["op-quality-001"]
+        },
+        "description": "전일 야장에는 어깨선과 유구선 해석이 섞여 있어 당일 사진·도면·단면 기록과 함께 검토 대상이 된 수혈유구.",
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "crossReviewNeeded",
+          "correctionNeeded"
+        ],
+        "fieldOnlyMissingCheck": [
+          "featureOutline",
+          "stratigraphicBoundary",
+          "photoAngleAndScale",
+          "drawingLineReason",
+          "spatialLocation",
+          "sameDayReview",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "verificationState": "needsRecheck"
+      }
+    },
+    {
+      "resource": {
+        "id": "find-quality-001",
+        "identifier": "QUALITY-FIND-001",
+        "shortDescription": "번호 변환표 대조 유물",
+        "category": "Find",
+        "relations": {
+          "isRecordedIn": ["op-quality-001"],
+          "liesWithin": ["feature-quality-001"]
+        },
+        "description": "현장 꼬리표 번호와 유물대장 임시번호가 다르게 적혀 번호 변환표와 사진 파일명을 함께 대조한 유물.",
+        "fieldRecordQuality": [
+          "factualAccuracy",
+          "immediateRecording",
+          "crossReviewNeeded",
+          "correctionNeeded"
+        ],
+        "fieldOnlyMissingCheck": [
+          "preRemovalCondition",
+          "photoAngleAndScale",
+          "spatialLocation",
+          "numberedBeforeCollection",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "verificationState": "needsRecheck"
+      }
+    },
+    {
+      "resource": {
+        "id": "sample-quality-001",
+        "identifier": "QUALITY-SAMP-001",
+        "shortDescription": "시료대장 대조 목탄",
+        "category": "Sample",
+        "relations": {
+          "isRecordedIn": ["op-quality-001"],
+          "liesWithin": ["feature-quality-001"]
+        },
+        "description": "사진 위치와 시료대장 채취점이 어긋나 당일 작업일지와 단면도에서 채취 지점을 다시 확인한 목탄 시료.",
+        "fieldRecordQuality": [
+          "factualAccuracy",
+          "immediateRecording",
+          "researchQuestionFit",
+          "crossReviewNeeded",
+          "correctionNeeded"
+        ],
+        "fieldOnlyMissingCheck": [
+          "samplePointMapped",
+          "sampleConditionControlled",
+          "spatialLocation",
+          "elevationRecorded",
+          "notRecoverableWarning"
+        ],
+        "recordCreationTiming": "fieldOnlyObservation",
+        "samplePurpose": [
+          "absoluteDating",
+          "contaminationControl"
+        ],
+        "sampleCollectionHandling": [
+          "immediateCollection",
+          "charcoalWoodImmediate",
+          "avoidCrushing",
+          "contextMapLinked",
+          "pendingDecision"
+        ],
+        "verificationState": "needsRecheck"
+      }
+    },
+    {
+      "resource": {
+        "id": "photo-quality-001",
+        "identifier": "QUALITY-PHOTO-001",
+        "shortDescription": "일지 대조 사진",
+        "category": "Photo",
+        "relations": {
+          "isRecordedIn": ["op-quality-001"],
+          "isDepictedIn": ["feature-quality-001", "find-quality-001", "sample-quality-001"]
+        },
+        "mediaEvidenceRole": [
+          "workStageRecord",
+          "featureOutlineEvidence",
+          "findContextEvidence",
+          "sampleLocationEvidence",
+          "drawingCorrectionBasis"
+        ],
+        "mediaQualityCheck": [
+          "targetPurposeClear",
+          "directionRecorded",
+          "scaleIncluded",
+          "orientationChecked",
+          "controlPointLinked",
+          "originalUncroppedPreserved",
+          "registerNumberMatched",
+          "retakeOrRedrawNeeded"
+        ],
+        "digitalSourcePreservation": [
+          "originalPhoto",
+          "originalImage",
+          "twoLocationBackup",
+          "backupVerified",
+          "pendingDecision"
+        ],
+        "reportCrossCheck": [
+          "photoRegister",
+          "artifactRegister",
+          "sampleRegister",
+          "dailyLog",
+          "numberConversionTable",
+          "sourceMediaBackup"
+        ]
+      }
+    },
+    {
+      "resource": {
+        "id": "drawing-quality-001",
+        "identifier": "QUALITY-DRAW-001",
+        "shortDescription": "단면선 수정 도면",
+        "category": "Drawing",
+        "relations": {
+          "isRecordedIn": ["op-quality-001"],
+          "isDepictedIn": ["feature-quality-001", "sample-quality-001"]
+        },
+        "mediaEvidenceRole": [
+          "stratigraphicEvidence",
+          "sampleLocationEvidence",
+          "drawingCorrectionBasis",
+          "reportPlateCandidate"
+        ],
+        "mediaQualityCheck": [
+          "targetPurposeClear",
+          "directionRecorded",
+          "scaleIncluded",
+          "controlPointLinked",
+          "resolutionOrLineworkReadable",
+          "registerNumberMatched",
+          "retakeOrRedrawNeeded"
+        ],
+        "digitalSourcePreservation": [
+          "originalDrawing",
+          "electronicNotebookOriginal",
+          "twoLocationBackup",
+          "backupVerified",
+          "pendingDecision"
+        ],
+        "reportCrossCheck": [
+          "drawingRegister",
+          "sampleRegister",
+          "dailyLog",
+          "numberConversionTable",
+          "sourceMediaBackup"
+        ]
+      }
+    },
+    {
+      "resource": {
+        "id": "daily-log-quality-001",
+        "identifier": "QUALITY-LOG-001",
+        "shortDescription": "12일차 당일 작업일지",
+        "category": "DailyLog",
+        "relations": {
+          "isRecordedIn": ["op-quality-001"],
+          "liesWithin": ["op-quality-001"]
+        },
+        "description": "작성자 개인 야장에서 옮긴 12일차 작업일지. 우천 중단, 방문 지시, 유물 번호 수정, 목탄 시료 위치 재확인, 다음날 단면 보완 계획을 사실기록과 해석으로 나누어 남긴다.",
+        "fieldRecordQuality": [
+          "factualAccuracy",
+          "immediateRecording",
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "reproducibleRecord",
+          "crossReviewNeeded",
+          "correctionNeeded",
+          "pendingDecision"
+        ],
+        "recordCreationTiming": "sameDayFieldRecord",
+        "dailyLogContent": [
+          "workDateWeather",
+          "staffRoles",
+          "workArea",
+          "strippingProgress",
+          "featureProgress",
+          "layerDecision",
+          "findSampleCollection",
+          "photoDrawingNumbers",
+          "visitorInstruction",
+          "equipmentIssue",
+          "safetyIssue",
+          "changeReason",
+          "nextWorkPlan",
+          "pendingDecision"
+        ],
+        "dailyLogEvidenceRole": [
+          "sameDayFactRecord",
+          "cumulativeStaffCount",
+          "cumulativeWorkerCount",
+          "cumulativeEquipmentCount",
+          "weatherAndRainWork",
+          "importantFindNoted",
+          "visitorInstructionNoted",
+          "expertReviewMeetingNoted",
+          "clientAgencyCommunication",
+          "disputeEvidencePotential",
+          "nextPlanBasis",
+          "pendingDecision"
+        ],
+        "dailyLogReview": [
+          "sameDayWritten",
+          "factsInterpretationSeparated",
+          "authorIdentified",
+          "reviewerChecked",
+          "photoDrawingCrossChecked",
+          "findListCrossChecked",
+          "sampleListCrossChecked",
+          "numberConversionChecked",
+          "correctionReasonLinked",
+          "sourceRecordArchived",
+          "reportCarryForwardChecked",
+          "pendingDecision"
+        ],
+        "digitalSourcePreservation": [
+          "personalNotebookScan",
+          "electronicNotebookOriginal",
+          "twoLocationBackup",
+          "backupVerified",
+          "accessProcedure",
+          "indefiniteRetention",
+          "pendingDecision"
+        ],
+        "reportCrossCheck": [
+          "manuscript",
+          "drawingRegister",
+          "photoRegister",
+          "artifactRegister",
+          "sampleRegister",
+          "dailyLog",
+          "numberConversionTable",
+          "sourceMediaBackup",
+          "evaluationFeedback"
+        ],
+        "verificationState": "needsRecheck"
+      }
+    },
+    {
+      "resource": {
+        "id": "quality-review-sameday-001",
+        "identifier": "QUALITY-REVIEW-001",
+        "shortDescription": "당일 기록 교차검수",
+        "category": "FieldRecordQualityReview",
+        "relations": {
+          "isRecordedIn": ["op-quality-001"],
+          "liesWithin": ["op-quality-001"]
+        },
+        "description": "감독자와 기록 담당자가 당일 야장, 사진, 도면, 유물·시료 목록, 보고서 보완요구를 대조한 품질검수 기록. 원기록은 보존하고 수정 사유와 다음 현장조치를 따로 남긴다.",
+        "fieldRecordQuality": [
+          "factualAccuracy",
+          "immediateRecording",
+          "memoryRelianceRisk",
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "reproducibleRecord",
+          "crossReviewNeeded",
+          "correctionNeeded",
+          "pendingDecision"
+        ],
+        "recordCreationTiming": "sameDayFieldRecord",
+        "reviewedRecordUnit": [
+          "operationRecord",
+          "featureRecord",
+          "findRecord",
+          "sampleRecord",
+          "dailyLog",
+          "personalNotebook",
+          "drawing",
+          "photo",
+          "reportDraft",
+          "pendingDecision"
+        ],
+        "qualityReviewStage": [
+          "sameDayReview",
+          "crossRecorderReview",
+          "supervisorReview",
+          "specialistReview",
+          "reportPreparationReview",
+          "postEvaluationFeedback",
+          "sourceRecordCorrection",
+          "closedAfterCorrection",
+          "pendingDecision"
+        ],
+        "qualityCorrectionBasis": [
+          "factInterpretationSeparated",
+          "correctionReasonLinked",
+          "originalRecordPreserved",
+          "changeHistoryRecorded",
+          "reviewerNamed",
+          "sourceMediaChecked",
+          "numberConversionChecked",
+          "contradictionRecorded",
+          "nextFieldworkAction",
+          "noSilentRewrite",
+          "pendingDecision"
+        ],
+        "reportCrossCheck": [
+          "manuscript",
+          "drawingRegister",
+          "photoRegister",
+          "artifactRegister",
+          "sampleRegister",
+          "dailyLog",
+          "numberConversionTable",
+          "sourceMediaBackup",
+          "evaluationFeedback"
+        ],
+        "reportEvaluationFeedback": [
+          "selfEvaluation",
+          "committeeEvaluation",
+          "scoreDifference",
+          "siteTypeApplicability",
+          "fieldQualityNotSubstituted",
+          "fieldRecordReview",
+          "expertFieldParticipation",
+          "stakeholderCoordination",
+          "formalEvaluationLimit",
+          "improvementForNextInvestigation",
+          "supplementRequestTracked",
+          "pendingDecision"
+        ],
+        "verificationState": "needsRecheck"
+      }
+    }
+  ]
+}

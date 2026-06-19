@@ -165,6 +165,43 @@ describe('KoreanFieldwork project configuration', () => {
     });
 
 
+    it('keeps the Korean daily log and quality review sample aligned with review fields', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const sample = loadSample('daily-log-quality-review-workflow-sample.json');
+        const documents = sample.documents;
+        const documentsById = documents.reduce((index: any, document: any) => {
+            index[document.resource.id] = document;
+            return index;
+        }, {});
+
+        expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
+
+        expect(documentsById['op-quality-001'].resource.personalNotebookArchive)
+            .toContain('originalSubmitted');
+        expect(documentsById['op-quality-001'].resource.reportEvaluationFeedback)
+            .toContain('fieldQualityNotSubstituted');
+        expect(documentsById['daily-log-quality-001'].resource.relations.liesWithin)
+            .toEqual(['op-quality-001']);
+        expect(documentsById['daily-log-quality-001'].resource.dailyLogEvidenceRole)
+            .toContain('disputeEvidencePotential');
+        expect(documentsById['daily-log-quality-001'].resource.dailyLogReview)
+            .toContain('sourceRecordArchived');
+        expect(documentsById['quality-review-sameday-001'].resource.relations.liesWithin)
+            .toEqual(['op-quality-001']);
+        expect(documentsById['quality-review-sameday-001'].resource.reviewedRecordUnit)
+            .toContain('personalNotebook');
+        expect(documentsById['quality-review-sameday-001'].resource.qualityReviewStage)
+            .toContain('sourceRecordCorrection');
+        expect(documentsById['quality-review-sameday-001'].resource.qualityCorrectionBasis)
+            .toContain('noSilentRewrite');
+        expect(documentsById['quality-review-sameday-001'].resource.reportEvaluationFeedback)
+            .toContain('supplementRequestTracked');
+    });
+
+
     it('keeps the Korean investigation stage transition sample aligned with handover fields', () => {
 
         const configReader = new ConfigReader();

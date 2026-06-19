@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { ConfigReader } from '../../src/configuration/boot/config-reader';
 import { getConfigurationName, PROJECT_MAPPING } from '../../src/configuration/project-configuration-names';
+import { ConstraintIndex } from '../../src/index/constraint-index';
 
 
 const SAMPLE_DIR = path.resolve(__dirname, '../../../../docs/korean-fieldwork/samples');
@@ -44,6 +45,21 @@ const expectSampleDocumentsToUseConfiguredFormsAndValuelists = (sample: any, con
             });
         });
     });
+};
+
+
+const makeIndexCategoriesFromConfig = (config: any): any[] => {
+
+    return Object.entries(config.forms).map(([formName, form]: any) => ({
+        name: formName,
+        groups: (form.groups ?? []).map((group: any) => ({
+            name: group.name,
+            fields: group.fields.map((fieldName: string) => ({
+                name: fieldName,
+                ...(form.fields[fieldName] ?? {})
+            }))
+        }))
+    }));
 };
 
 
@@ -210,6 +226,30 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('횡혈식 석실묘');
         expect(documentsById['term-relationship-stone-chamber-access'].resource.termSearchMapping)
             .toContain('doNotMergeToSingleTerm');
+    });
+
+
+    it('indexes Korean term alias and import mapping fields for search and review workflows', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const sample = loadSample('term-authority-alias-sample.json');
+        const index = ConstraintIndex.make({}, makeIndexCategoriesFromConfig(config));
+
+        sample.documents.forEach((document: any) => ConstraintIndex.put(index, document));
+
+        expect(ConstraintIndex.get(index, 'termAliasText:match', '봉화대'))
+            .toContain('term-alias-beacon-station-bonghwadae');
+        expect(ConstraintIndex.get(index, 'termAliasHandling:contain', 'autocompleteAccepted'))
+            .toContain('term-alias-beacon-station-bonghwadae');
+        expect(ConstraintIndex.get(index, 'termSearchMapping:contain', 'doNotMergeToSingleTerm'))
+            .toContain('term-import-dwelling-site-house-place');
+        expect(ConstraintIndex.get(index, 'termImportSourceFieldText:match', '기존 야장 / 사진 캡션 / 보고서 목록'))
+            .toContain('term-import-stone-chamber-tomb-dolbang');
+        expect(ConstraintIndex.get(index, 'termImportContextText:match', '현실·연도·묘도·폐쇄석 기록이 아직 분리되지 않은 무덤 명칭 입력'))
+            .toContain('term-import-stone-chamber-tomb-dolbang');
+        expect(ConstraintIndex.get(index, 'termImportReviewNoteText:match', '권위 표제어 연결 뒤에도 횡구식·횡혈식 접근 구조와 폐쇄시설을 수동 확인한다.'))
+            .toContain('term-import-stone-chamber-tomb-dolbang');
     });
 
 

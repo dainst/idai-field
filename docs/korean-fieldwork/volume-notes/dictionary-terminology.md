@@ -386,9 +386,11 @@
 
 2026-06-20 구현에서는 생산유적편의 용어 찾아가기와 분야 분리 원칙을 `TermAuthority`의 `productionTermNormalization`으로 승격했다. 이 값목록은 `가마`, `요`, `요지`, `가마터`, `한뎃가마`, `노천요`, `평요`, `번조실`, `소성실`, `수비장`, `건조장`을 하나의 표제어로 자동 병합하지 않고, 현장 원문, 생산분야, 보고서 출력어 분리 상태를 함께 저장한다. 제철 노 명칭은 `Feature`의 `ironProcessClassification`으로 분리해 `제철로`, `제련로`, `단야로`, `정련단야로`, `단련단야로`, `용해로`, `제강로`, `배소로` 후보와 분석 후 분류·보류 상태를 따로 남기게 했다.
 
+2026-06-20 추가 검증에서는 `term-authority-alias-sample.json`을 실제 제약 인덱스에 넣어 `termAliasText`, `termAliasHandling`, `termSearchMapping`, `termImportSourceFieldText`, `termImportContextText`, `termImportReviewNoteText`가 검색 가능한지 테스트했다. 이 검증은 봉화대 같은 별칭 자동완성 후보와 돌방무덤 가져오기 맥락이 권위 표제어로 덮이지 않고, 검색·가져오기 검토 흐름에서 다시 찾아질 수 있음을 확인하기 위한 것이다.
+
 ## 다음 대조 대상
 
-- `TermAuthority` 검색 인덱스와 가져오기 검증: `TermAlias`, `TermImportMapping`, `TermRelationship` 샘플 fixture는 이미 있으므로, 실제 자동완성·가져오기 흐름에서 현장 검색어·권위 표제어·보고서 출력어·용어 관계가 섞이지 않는지 검증한다.
+- `TermAuthority` UI 자동완성·가져오기 화면 검증: 제약 인덱스 검증은 들어갔으므로, 후속은 실제 화면에서 현장 검색어·권위 표제어·보고서 출력어·용어 관계가 섞이지 않는지 확인한다.
 - 생산유적편: 핵심 용어·요도구 관계는 `source-index-production-dictionary-001`로 대조했으므로, 후속은 도판·사진 캡션과 개별 사례명 원PDF 화면 교정에 둔다.
 - 청동기시대편: 수혈주거지와 생산 관련 값 목록, 도판 속 개별 사례명 교정.
 - 구석기시대편: 국외 유적명 원어 표기와 도판 속 개별 석재·접합 번호 교정.

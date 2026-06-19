@@ -413,6 +413,9 @@
         "surfaceSurveyFieldSequence": {
           "label": "지표조사 현장순서"
         },
+        "surfaceSurveySpecialRecord": {
+          "label": "지표조사 특수기록"
+        },
         "surfaceSurveyFieldDiary": {
           "label": "지표조사 현지조사일지"
         },

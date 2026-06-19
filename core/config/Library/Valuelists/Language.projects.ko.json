@@ -3794,6 +3794,20 @@
     },
     "description": "지표조사 현장에서 경계·전경·지형 구분을 먼저 확보하고 기존 문화재, 산포, 노출 유구, 절개면, 훼손, 탐문을 순서대로 놓치지 않기 위한 목록"
   },
+  "KoreanFieldwork-surfaceSurveySpecialRecord": {
+    "values": {
+      "inscriptionRubbingRecord": { "label": "비문 탁본 기록" },
+      "rockArtRubbingRecord": { "label": "암각화 탁본 기록" },
+      "simpleMeasuredDrawing": { "label": "간이 실측도" },
+      "overviewCloseDetailPhotos": { "label": "전경·근경·세부 사진" },
+      "videoRecord": { "label": "동영상 기록" },
+      "threeDimensionalRecord": { "label": "3D 기록" },
+      "fieldMapLinked": { "label": "현장지도 연결" },
+      "specialistReviewNeeded": { "label": "전문가 검토 필요" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "비문, 암각화, 노출 구조물처럼 굴토 없이 확인되는 지표조사 대상이 탁본, 간이실측, 사진, 동영상, 3D, 현장지도, 전문가 검토 기록으로 이어지는지 확인하기 위한 목록"
+  },
   "KoreanFieldwork-surfaceSurveyFieldDiary": {
     "values": {
       "surveyNameRecorded": { "label": "조사명 기록" },

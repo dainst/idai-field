@@ -120,10 +120,19 @@
           "zonesDividedByLandform",
           "existingHeritageChecked",
           "artifactScatterChecked",
+          "exposedFeaturesChecked",
           "cutSectionStratigraphyChecked",
           "originalLandformDamageRecorded",
           "vegetationCoverRecorded",
           "interviewSurveyRecorded"
+        ],
+        "surfaceSurveySpecialRecord": [
+          "inscriptionRubbingRecord",
+          "rockArtRubbingRecord",
+          "simpleMeasuredDrawing",
+          "overviewCloseDetailPhotos",
+          "fieldMapLinked",
+          "specialistReviewNeeded"
         ],
         "surfaceSurveyFieldDiary": [
           "surveyNameRecorded",
@@ -152,6 +161,7 @@
         "surfaceSurveyHeritageCategory": [
           "archaeology",
           "history",
+          "artHistory",
           "anthropologyFolklore",
           "naturalHeritage",
           "modernHeritage"

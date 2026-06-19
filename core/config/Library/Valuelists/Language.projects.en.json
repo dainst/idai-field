@@ -15548,6 +15548,20 @@
     },
     "description": "Korean field notebook sequence checks for recording boundary, overview photos, landform zones, known heritage, scatters, exposed features, sections, disturbance, vegetation, and interviews during surface survey"
   },
+  "KoreanFieldwork-surfaceSurveySpecialRecord": {
+    "values": {
+      "inscriptionRubbingRecord": { "label": "Inscription rubbing record" },
+      "rockArtRubbingRecord": { "label": "Rock-art rubbing record" },
+      "simpleMeasuredDrawing": { "label": "Simple measured drawing" },
+      "overviewCloseDetailPhotos": { "label": "Overview, close, and detail photos" },
+      "videoRecord": { "label": "Video record" },
+      "threeDimensionalRecord": { "label": "3D record" },
+      "fieldMapLinked": { "label": "Field map linked" },
+      "specialistReviewNeeded": { "label": "Specialist review needed" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean surface-survey special recording checks for inscriptions, rock art, exposed structures, and other non-excavated heritage that need rubbings, measured drawings, photos, video, 3D records, field-map links, or specialist review"
+  },
   "KoreanFieldwork-surfaceSurveyFieldDiary": {
     "values": {
       "surveyNameRecorded": { "label": "Survey name recorded" },

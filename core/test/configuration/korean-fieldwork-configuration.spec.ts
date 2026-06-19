@@ -514,6 +514,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('informantContactRecorded');
         expect(documentsById['survey-surface-scope-001'].resource.surfaceSurveyFieldDiary)
             .toContain('permanentMarkerRecord');
+        expect(documentsById['survey-surface-scope-001'].resource.surfaceSurveySpecialRecord)
+            .toContain('inscriptionRubbingRecord');
+        expect(documentsById['survey-surface-scope-001'].resource.surfaceSurveySpecialRecord)
+            .toContain('fieldMapLinked');
         expect(documentsById['survey-surface-scope-001'].resource.surfaceEvidenceAbsenceAssessment)
             .toContain('noSurfaceEvidence');
         expect(documentsById['survey-surface-scope-001'].resource.surfaceEvidenceAbsenceAssessment)
@@ -1408,6 +1412,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(surveyForm.fields.surfaceSurveyResultProcessing.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyPreparationCheck.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyFieldSequence.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.surfaceSurveySpecialRecord.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyFieldDiary.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyMapRequirement.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyHeritageCategory.inputType).toBe('checkboxes');
@@ -1795,6 +1800,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-surfaceSurveyPreparationCheck');
         expect(surveyForm.valuelists.surfaceSurveyFieldSequence)
             .toBe('KoreanFieldwork-surfaceSurveyFieldSequence');
+        expect(surveyForm.valuelists.surfaceSurveySpecialRecord)
+            .toBe('KoreanFieldwork-surfaceSurveySpecialRecord');
         expect(surveyForm.valuelists.surfaceSurveyFieldDiary)
             .toBe('KoreanFieldwork-surfaceSurveyFieldDiary');
         expect(surveyForm.valuelists.surfaceSurveyMapRequirement)
@@ -2335,6 +2342,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Surface survey preparation check');
         expect(languages.en.categories.Survey.fields.surfaceSurveyFieldSequence.label)
             .toBe('Surface survey field sequence');
+        expect(languages.en.categories.Survey.fields.surfaceSurveySpecialRecord.label)
+            .toBe('Surface survey special record');
         expect(languages.en.categories.Survey.fields.surfaceSurveyFieldDiary.label)
             .toBe('Surface survey field diary');
         expect(languages.en.categories.Survey.fields.surfaceSurveyMapRequirement.label)
@@ -2856,6 +2865,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveyFieldSequence']
             .values.boundaryGpsRecorded.label)
             .toBe('Boundary GPS recorded');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveySpecialRecord']
+            .values.inscriptionRubbingRecord.label)
+            .toBe('Inscription rubbing record');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveySpecialRecord']
+            .values.threeDimensionalRecord.label)
+            .toBe('3D record');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveyFieldDiary']
             .values.informantContactRecorded.label)
             .toBe('Informant contact recorded');

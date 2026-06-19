@@ -36310,6 +36310,32 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-surfaceSurveySpecialRecord": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-20",
+    "values": {
+      "inscriptionRubbingRecord": {},
+      "rockArtRubbingRecord": {},
+      "simpleMeasuredDrawing": {},
+      "overviewCloseDetailPhotos": {},
+      "videoRecord": {},
+      "threeDimensionalRecord": {},
+      "fieldMapLinked": {},
+      "specialistReviewNeeded": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "inscriptionRubbingRecord",
+      "rockArtRubbingRecord",
+      "simpleMeasuredDrawing",
+      "overviewCloseDetailPhotos",
+      "videoRecord",
+      "threeDimensionalRecord",
+      "fieldMapLinked",
+      "specialistReviewNeeded",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-surfaceSurveyFieldDiary": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

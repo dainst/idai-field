@@ -413,6 +413,9 @@
         "surfaceSurveyFieldSequence": {
           "label": "Surface survey field sequence"
         },
+        "surfaceSurveySpecialRecord": {
+          "label": "Surface survey special record"
+        },
         "surfaceSurveyFieldDiary": {
           "label": "Surface survey field diary"
         },

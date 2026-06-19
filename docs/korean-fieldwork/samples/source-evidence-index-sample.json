@@ -128,6 +128,53 @@
     },
     {
       "resource": {
+        "id": "source-index-archaeobotany-001",
+        "identifier": "SRC-ARCHBOT-001",
+        "shortDescription": "식물유체 표본·동정 도판 색인",
+        "category": "SourceEvidenceIndex",
+        "relations": {
+          "liesWithin": ["project-source-evidence-001"]
+        },
+        "description": "고환경분석 특강의 탄화곡물 장에서 보존 편향표, 표본추출 평면도, 플로테이션 도식, 물체질·플로테이션 산출물 비교, 목재 삼단면·SEM 사진, 현생 탄화 곡물과 유적 곡물 비교를 식물유체 시료 설계 근거로 묶는다.",
+        "sourceEvidenceCitation": "매장문화재전문교육 조사연구특강 유적조사와 고환경분석, 탄화곡물 검출과 분석방법",
+        "sourceEvidenceLocator": "PDF 59, 62-64, 66, 70, 75-78쪽 원문 이미지 대조",
+        "sourceEvidenceMaterial": [
+          "table",
+          "figure",
+          "drawing",
+          "photo",
+          "caseStudy",
+          "measurementValue",
+          "caption"
+        ],
+        "sourceEvidenceDomain": [
+          "archaeobotany",
+          "conservationScience"
+        ],
+        "sourceEvidenceVerification": [
+          "pageChecked",
+          "captionChecked",
+          "caseNameChecked",
+          "numericValueChecked",
+          "directPdfChecked"
+        ],
+        "sourceEvidenceUse": [
+          "sampleValidationEvidence",
+          "analysisPlanEvidence",
+          "interpretationCaution",
+          "sourceTraceability"
+        ],
+        "recordCreationTiming": "postExcavationDerived",
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "crossReviewNeeded"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
         "id": "source-index-dictionary-001",
         "identifier": "SRC-DICT-001",
         "shortDescription": "사전 한자·캡션·찾아가기 색인",

@@ -297,6 +297,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('alluvialSite');
         expect(documentsById['source-index-alluvial-neolithic-001'].resource.sourceEvidenceVerification)
             .toContain('directPdfChecked');
+        expect(documentsById['source-index-archaeobotany-001'].resource.sourceEvidenceDomain)
+            .toContain('archaeobotany');
+        expect(documentsById['source-index-archaeobotany-001'].resource.sourceEvidenceUse)
+            .toContain('sampleValidationEvidence');
         expect(documentsById['source-index-dictionary-001'].resource.sourceEvidenceMaterial)
             .toContain('originalScript');
         expect(documentsById['source-index-dictionary-001'].resource.sourceEvidenceVerification)
@@ -784,8 +788,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('carbonizedGrainSeparate');
         expect(documentsById['sample-archaeobotany-flotation-001'].resource.archaeobotanySampleDesign)
             .toContain('researchQuestionSelected');
+        expect(documentsById['sample-archaeobotany-flotation-001'].resource.archaeobotanySampleDesign)
+            .toContain('sampleCountPrioritized');
         expect(documentsById['sample-archaeobotany-flotation-001'].resource.plantRemainSamplingMethod)
             .toContain('unanalyzedArea');
+        expect(documentsById['sample-archaeobotany-flotation-001'].resource.plantRemainSamplingMethod)
+            .toContain('systematicSample');
         expect(documentsById['sample-archaeobotany-flotation-001'].resource.flotationProcessingRecord)
             .toContain('preProcessingSoilAmount');
         expect(documentsById['sample-archaeobotany-flotation-001'].resource.flotationProcessingRecord)
@@ -794,10 +802,16 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('modernComparativeSpecimen');
         expect(documentsById['sample-archaeobotany-flotation-001'].resource.plantRemainIdentificationRecord)
             .toContain('identificationConfidence');
+        expect(documentsById['sample-archaeobotany-flotation-001'].resource.plantRemainIdentificationRecord)
+            .toContain('semPhoto');
         expect(documentsById['sample-archaeobotany-flotation-001'].resource.archaeobotanyInterpretationReview)
             .toContain('analyticalResultSeparated');
+        expect(documentsById['sample-archaeobotany-flotation-001'].resource.archaeobotanyInterpretationReview)
+            .toContain('cropMorphologyChange');
         expect(documentsById['sample-archaeobotany-flotation-001'].resource.plantRemainNonDetectionAssessment)
             .toContain('absenceNotAssumed');
+        expect(documentsById['sample-archaeobotany-flotation-001'].resource.plantRemainNonDetectionAssessment)
+            .toContain('pollenPreservationFragile');
     });
 
 
@@ -2972,6 +2986,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-sourceEvidenceDomain']
             .values.alluvialSite.label)
             .toBe('Alluvial site');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-sourceEvidenceDomain']
+            .values.archaeobotany.label)
+            .toBe('Archaeobotany');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-sourceEvidenceVerification']
             .values.directPdfChecked.label)
             .toBe('Direct PDF checked');

@@ -839,6 +839,22 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "stoneChamberTombTypology": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "tombPassageClosureSequence": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "burialPlatformUseSequence": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "tombRitualDepositRecord": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "shellMiddenStratigraphy": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1010,6 +1026,10 @@
         "moundFillSubdivisionRecord": "KoreanFieldwork-moundFillSubdivisionRecord",
         "stoneCistWallPackingRecord": "KoreanFieldwork-stoneCistWallPackingRecord",
         "tombInteriorRecoveryRecord": "KoreanFieldwork-tombInteriorRecoveryRecord",
+        "stoneChamberTombTypology": "KoreanFieldwork-stoneChamberTombTypology",
+        "tombPassageClosureSequence": "KoreanFieldwork-tombPassageClosureSequence",
+        "burialPlatformUseSequence": "KoreanFieldwork-burialPlatformUseSequence",
+        "tombRitualDepositRecord": "KoreanFieldwork-tombRitualDepositRecord",
         "shellMiddenStratigraphy": "KoreanFieldwork-shellMiddenStratigraphy",
         "shellMiddenSettlementContext": "KoreanFieldwork-shellMiddenSettlementContext",
         "bronzeAgeDwellingEvidence": "KoreanFieldwork-bronzeAgeDwellingEvidence",
@@ -1092,6 +1112,10 @@
             "moundFillSubdivisionRecord",
             "stoneCistWallPackingRecord",
             "tombInteriorRecoveryRecord",
+            "stoneChamberTombTypology",
+            "tombPassageClosureSequence",
+            "burialPlatformUseSequence",
+            "tombRitualDepositRecord",
             "shellMiddenStratigraphy",
             "shellMiddenSettlementContext",
             "bronzeAgeDwellingEvidence",

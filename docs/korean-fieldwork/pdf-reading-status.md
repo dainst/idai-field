@@ -57,6 +57,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-19 분묘유구 조사법 강의자료의 고총고분 장도 추가 구현 단위로 압축했다. 이 자료는 조사 목적에 따라 트렌치와 조사 범위가 달라지고, 봉분 성토재는 현장에서 세분하지 않으면 성토 단위·운반 단위·구획성토를 사후에 되살릴 수 없다고 본다. 석곽·석실 내부에서는 개석·석재·충전공간·미장토, 내부 조도·교란토 체질·소형유물·유기물 건조 방지와 고유번호가 매장 당시 정보 복원에 직접 걸린다. 이 묶음은 `Feature`의 `tombSurveyPurpose`, `moundTrenchInvestigation`, `moundFillSubdivisionRecord`, `stoneCistWallPackingRecord`, `tombInteriorRecoveryRecord` 값 목록으로 옮겼고, `tomb-burial-workflow-sample.json`에서 기존 봉토·매장주체부 기록과 함께 검증한다.
 
+2026-06-19 횡구식·횡혈식 석실분 조사도 추가 구현 단위로 압축했다. 고분편 사전과 분묘유구 조사법은 횡구식석실과 횡혈식석실을 입구 유무만으로 닫지 않고, 흙 묘도, 석축 연도, 현실, 현문, 폐쇄석·폐쇄토, 바닥·배수, 관대·시상, 두침·족좌, 추가장, 제사·매납 위치를 함께 보라고 요구한다. 이 묶음은 `Feature`의 `stoneChamberTombTypology`, `tombPassageClosureSequence`, `burialPlatformUseSequence`, `tombRitualDepositRecord` 값 목록으로 옮겼고, 같은 고분 샘플에서 묘형명 보류, 폐쇄 순서, 시상 해체, 제사 위치가 봉토·매장주체부 기록과 이어지는지 검증한다.
+
 2026-06-19 패총·신석기·고환경 자료도 구현 단위로 압축했다. 제2권 패총 조사방법론과 제8권 신석기·최신기법, 고환경 분석 자료는 패총을 단일 패각층이 아니라 층위·재퇴적·교란·하부 유구·집락 공간·해안/수계 맥락이 겹친 복합 자료로 보라고 요구한다. 이 묶음은 `Feature`의 `shellMiddenStratigraphy`, `shellMiddenSettlementContext`, `Find`의 `neolithicSubsistenceEvidence`, `Sample`의 `shellMiddenSamplingStrategy`, `paleoenvironmentProxySampling` 값 목록으로 옮겼다.
 
 2026-06-19 식물유체·탄화곡물 자료도 구현 단위로 더 압축했다. `유적조사와 고환경분석`의 탄화곡물 검출 장은 식물유체를 유물 목록 부속물이 아니라 표본설계, 물체질·플로테이션 처리, 비교표본 기반 동정, 분석/해석 분리, 미검출 해석 조건이 이어지는 시료 체계로 다룬다. 이 묶음은 `Sample`의 `archaeobotanySampleDesign`, `plantRemainSamplingMethod`, `flotationProcessingRecord`, `plantRemainIdentificationRecord`, `archaeobotanyInterpretationReview`, `plantRemainNonDetectionAssessment` 값 목록으로 옮겼고, `archaeobotany-flotation-workflow-sample.json`으로 아궁이 재층·토기 내부토 시료가 처리기록과 해석검토를 함께 남기는지 검증한다.

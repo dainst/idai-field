@@ -4,6 +4,7 @@
   "validationQuestions": [
     "고분 기록이 형식명 하나가 아니라 봉토·분구, 성토 단위, 주구, 보존구역을 따로 남기는가.",
     "매장주체부가 관·곽·실, 개석 제거 전후, 밀봉토, 내부토, 폐쇄시설, 추가장·도굴 근거로 나누어 기록되는가.",
+    "횡구·횡혈계 석실이 입구·묘도·연도·현문·폐쇄석, 관대·시상, 제사 위치를 근거로 판정되는가.",
     "부장품과 제사자료가 유물 종류가 아니라 관 내부·외부, 봉토·주구, 입구·폐쇄부, 인골과의 관계로 기록되는가.",
     "인골 수습이 전문가 협의, DNA 오염 관리, 약한 도구, 1/5 도면, 포장·주기·개체식별 기준까지 이어지는가."
   ],
@@ -154,6 +155,57 @@
           "smallTabletSerialNumber",
           "bulkRecovery",
           "laboratorySeparationPlanned"
+        ],
+        "stoneChamberTombTypology": [
+          "horizontalEntranceStoneChamber",
+          "corridorStoneChamber",
+          "entrancePresent",
+          "soilPassageOnly",
+          "stoneCorridorPresent",
+          "mainRoomRecorded",
+          "burialPlatformPresent",
+          "additionalBurialEvidence",
+          "structureRiteMismatch",
+          "typeNamePending"
+        ],
+        "tombPassageClosureSequence": [
+          "entranceAxisRecorded",
+          "passageFillOutline",
+          "centralBaulkInPassage",
+          "passageFloorRecorded",
+          "closureStoneBeforeRemoval",
+          "closureSoilRecorded",
+          "corridorFrontClosure",
+          "thresholdOrDoorstone",
+          "floorDrainageChecked",
+          "sequenceComparedWithBurial"
+        ],
+        "burialPlatformUseSequence": [
+          "coffinStand",
+          "corpsePlatform",
+          "headrestStone",
+          "footrestStone",
+          "platformSurfaceFinish",
+          "platformOverlap",
+          "multipleIndividuals",
+          "additionalBurialSpace",
+          "graveGoodsByPlatform",
+          "removalReverseSequence",
+          "sectionAfterRemoval"
+        ],
+        "tombRitualDepositRecord": [
+          "moundBaseDeposit",
+          "ditchDeposit",
+          "passageDeposit",
+          "corridorDeposit",
+          "closureBeforeDeposit",
+          "closureAfterDeposit",
+          "ritualVesselCluster",
+          "intentionalBreakage",
+          "animalFoodOffering",
+          "locationElevationRecorded",
+          "constructionStageLinked",
+          "redepositionCaution"
         ],
         "verificationState": "pendingDecision"
       }

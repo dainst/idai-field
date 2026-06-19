@@ -13020,6 +13020,83 @@
     },
     "description": "Korean tomb-interior recovery checks for managing light, disturbed-soil sieving, fine floor work, small finds, organic preservation, recovery numbers, bulk recovery, and laboratory separation"
   },
+  "KoreanFieldwork-stoneChamberTombTypology": {
+    "values": {
+      "verticalStoneCist": { "label": "Vertical stone cist" },
+      "horizontalEntranceStoneCist": { "label": "Horizontal-entrance stone cist" },
+      "horizontalEntranceStoneChamber": { "label": "Horizontal-entrance stone chamber" },
+      "corridorStoneChamber": { "label": "Corridor stone chamber" },
+      "entrancePresent": { "label": "Entrance present" },
+      "soilPassageOnly": { "label": "Soil passage only" },
+      "stoneCorridorPresent": { "label": "Stone corridor present" },
+      "mainRoomRecorded": { "label": "Main room recorded" },
+      "burialPlatformPresent": { "label": "Burial platform present" },
+      "additionalBurialEvidence": { "label": "Additional burial evidence" },
+      "structureRiteMismatch": { "label": "Structure and rite mismatch" },
+      "typeNamePending": { "label": "Type name pending" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean stone-chamber tomb typology checks for distinguishing vertical cists, horizontal-entrance chambers, and corridor chambers from entrance, passage, corridor, room, platform, and additional-burial evidence"
+  },
+  "KoreanFieldwork-tombPassageClosureSequence": {
+    "values": {
+      "entranceAxisRecorded": { "label": "Entrance axis recorded" },
+      "passageFillOutline": { "label": "Passage fill outline" },
+      "centralBaulkInPassage": { "label": "Central baulk in passage" },
+      "passageFloorRecorded": { "label": "Passage floor recorded" },
+      "entranceWallRecorded": { "label": "Entrance wall recorded" },
+      "closureStoneBeforeRemoval": { "label": "Closure stone before removal" },
+      "closureSoilRecorded": { "label": "Closure soil recorded" },
+      "corridorFrontClosure": { "label": "Corridor front closure" },
+      "corridorInteriorClosure": { "label": "Corridor interior closure" },
+      "thresholdOrDoorstone": { "label": "Threshold or doorstone" },
+      "floorDrainageChecked": { "label": "Floor drainage checked" },
+      "reopenedOrRepaired": { "label": "Reopened or repaired" },
+      "sequenceComparedWithBurial": { "label": "Sequence compared with burial" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean tomb passage and closure checks for recording passage fills, entrance axes, corridor and doorway closures, drainage, reopening or repair, and sequence evidence"
+  },
+  "KoreanFieldwork-burialPlatformUseSequence": {
+    "values": {
+      "coffinStand": { "label": "Coffin stand" },
+      "corpsePlatform": { "label": "Corpse platform" },
+      "headrestStone": { "label": "Headrest stone" },
+      "footrestStone": { "label": "Footrest stone" },
+      "beddingMaterialRecorded": { "label": "Bedding material recorded" },
+      "platformSurfaceFinish": { "label": "Platform surface finish" },
+      "platformOverlap": { "label": "Platform overlap" },
+      "platformConnection": { "label": "Platform connection" },
+      "multipleIndividuals": { "label": "Multiple individuals" },
+      "additionalBurialSpace": { "label": "Additional burial space" },
+      "graveGoodsByPlatform": { "label": "Grave goods by platform" },
+      "removalReverseSequence": { "label": "Removal reverse sequence" },
+      "sectionAfterRemoval": { "label": "Section after removal" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean burial-platform checks for linking coffin stands and corpse platforms to head and foot supports, surface finish, overlaps, multiple individuals, grave-goods positions, and dismantling records"
+  },
+  "KoreanFieldwork-tombRitualDepositRecord": {
+    "values": {
+      "moundTopDeposit": { "label": "Mound-top deposit" },
+      "moundSlopeDeposit": { "label": "Mound-slope deposit" },
+      "moundBaseDeposit": { "label": "Mound-base deposit" },
+      "ditchDeposit": { "label": "Ditch deposit" },
+      "passageDeposit": { "label": "Passage deposit" },
+      "corridorDeposit": { "label": "Corridor deposit" },
+      "closureBeforeDeposit": { "label": "Pre-closure ritual" },
+      "closureAfterDeposit": { "label": "Post-closure ritual" },
+      "chamberDeposit": { "label": "Chamber deposit" },
+      "ritualVesselCluster": { "label": "Ritual vessel cluster" },
+      "intentionalBreakage": { "label": "Intentional breakage" },
+      "animalFoodOffering": { "label": "Animal or food offering" },
+      "locationElevationRecorded": { "label": "Location and elevation recorded" },
+      "constructionStageLinked": { "label": "Construction stage linked" },
+      "redepositionCaution": { "label": "Redeposition caution" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean tomb ritual-deposit checks for separating deposits by mound, ditch, passage, corridor, closure sequence, chamber context, location, elevation, construction stage, and redeposition risk"
+  },
   "KoreanFieldwork-graveGoodsRitualContext": {
     "values": {
       "wearingPosition": { "label": "Wearing position" },

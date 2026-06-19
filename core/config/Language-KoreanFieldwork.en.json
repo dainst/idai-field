@@ -308,6 +308,18 @@
         "tombInteriorRecoveryRecord": {
           "label": "Tomb interior recovery record"
         },
+        "stoneChamberTombTypology": {
+          "label": "Stone chamber tomb typology"
+        },
+        "tombPassageClosureSequence": {
+          "label": "Tomb passage closure sequence"
+        },
+        "burialPlatformUseSequence": {
+          "label": "Burial platform use sequence"
+        },
+        "tombRitualDepositRecord": {
+          "label": "Tomb ritual deposit record"
+        },
         "shellMiddenStratigraphy": {
           "label": "Shell midden stratigraphy"
         },

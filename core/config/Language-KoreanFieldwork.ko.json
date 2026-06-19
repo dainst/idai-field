@@ -308,6 +308,18 @@
         "tombInteriorRecoveryRecord": {
           "label": "분묘 내부 수습 기록"
         },
+        "stoneChamberTombTypology": {
+          "label": "석실묘 묘형 판정"
+        },
+        "tombPassageClosureSequence": {
+          "label": "묘도·연도 폐쇄 순서"
+        },
+        "burialPlatformUseSequence": {
+          "label": "관대·시상 사용 순서"
+        },
+        "tombRitualDepositRecord": {
+          "label": "분묘 제사·매납 기록"
+        },
         "shellMiddenStratigraphy": {
           "label": "패총 층위·형성과정"
         },

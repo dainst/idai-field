@@ -410,6 +410,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('plasterClayRemaining');
         expect(documentsById['feature-tomb-mound-001'].resource.tombInteriorRecoveryRecord)
             .toContain('laboratorySeparationPlanned');
+        expect(documentsById['feature-tomb-mound-001'].resource.stoneChamberTombTypology)
+            .toContain('typeNamePending');
+        expect(documentsById['feature-tomb-mound-001'].resource.tombPassageClosureSequence)
+            .toContain('sequenceComparedWithBurial');
+        expect(documentsById['feature-tomb-mound-001'].resource.burialPlatformUseSequence)
+            .toContain('removalReverseSequence');
+        expect(documentsById['feature-tomb-mound-001'].resource.tombRitualDepositRecord)
+            .toContain('constructionStageLinked');
         expect(documentsById['find-tomb-grave-good-001'].resource.graveGoodsRitualContext)
             .toContain('functionNotAssumed');
         expect(documentsById['find-tomb-grave-good-001'].resource.graveGoodsRitualContext)
@@ -869,6 +877,10 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.fields.moundFillSubdivisionRecord.inputType).toBe('checkboxes');
         expect(featureForm.fields.stoneCistWallPackingRecord.inputType).toBe('checkboxes');
         expect(featureForm.fields.tombInteriorRecoveryRecord.inputType).toBe('checkboxes');
+        expect(featureForm.fields.stoneChamberTombTypology.inputType).toBe('checkboxes');
+        expect(featureForm.fields.tombPassageClosureSequence.inputType).toBe('checkboxes');
+        expect(featureForm.fields.burialPlatformUseSequence.inputType).toBe('checkboxes');
+        expect(featureForm.fields.tombRitualDepositRecord.inputType).toBe('checkboxes');
         expect(featureForm.fields.shellMiddenStratigraphy.inputType).toBe('checkboxes');
         expect(featureForm.fields.shellMiddenSettlementContext.inputType).toBe('checkboxes');
         expect(featureForm.fields.bronzeAgeDwellingEvidence.inputType).toBe('checkboxes');
@@ -1148,6 +1160,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-stoneCistWallPackingRecord');
         expect(featureForm.valuelists.tombInteriorRecoveryRecord)
             .toBe('KoreanFieldwork-tombInteriorRecoveryRecord');
+        expect(featureForm.valuelists.stoneChamberTombTypology)
+            .toBe('KoreanFieldwork-stoneChamberTombTypology');
+        expect(featureForm.valuelists.tombPassageClosureSequence)
+            .toBe('KoreanFieldwork-tombPassageClosureSequence');
+        expect(featureForm.valuelists.burialPlatformUseSequence)
+            .toBe('KoreanFieldwork-burialPlatformUseSequence');
+        expect(featureForm.valuelists.tombRitualDepositRecord)
+            .toBe('KoreanFieldwork-tombRitualDepositRecord');
         expect(featureForm.valuelists.shellMiddenStratigraphy)
             .toBe('KoreanFieldwork-shellMiddenStratigraphy');
         expect(featureForm.valuelists.shellMiddenSettlementContext)
@@ -1496,6 +1516,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Stone cist wall and packing record');
         expect(languages.en.categories.Feature.fields.tombInteriorRecoveryRecord.label)
             .toBe('Tomb interior recovery record');
+        expect(languages.en.categories.Feature.fields.stoneChamberTombTypology.label)
+            .toBe('Stone chamber tomb typology');
+        expect(languages.en.categories.Feature.fields.tombPassageClosureSequence.label)
+            .toBe('Tomb passage closure sequence');
+        expect(languages.en.categories.Feature.fields.burialPlatformUseSequence.label)
+            .toBe('Burial platform use sequence');
+        expect(languages.en.categories.Feature.fields.tombRitualDepositRecord.label)
+            .toBe('Tomb ritual deposit record');
         expect(languages.en.categories.Feature.fields.shellMiddenStratigraphy.label)
             .toBe('Shell midden stratigraphy');
         expect(languages.en.categories.Feature.fields.shellMiddenSettlementContext.label)
@@ -1962,6 +1990,18 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-tombInteriorRecoveryRecord']
             .values.nearFloorFineInvestigation.label)
             .toBe('Near-floor fine investigation');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-stoneChamberTombTypology']
+            .values.typeNamePending.label)
+            .toBe('Type name pending');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-tombPassageClosureSequence']
+            .values.sequenceComparedWithBurial.label)
+            .toBe('Sequence compared with burial');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-burialPlatformUseSequence']
+            .values.removalReverseSequence.label)
+            .toBe('Removal reverse sequence');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-tombRitualDepositRecord']
+            .values.constructionStageLinked.label)
+            .toBe('Construction stage linked');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-graveGoodsRitualContext']
             .values.functionNotAssumed.label)
             .toBe('Function not assumed');
@@ -2307,6 +2347,18 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-tombInteriorRecoveryRecord']
             .values.organicDryingAvoided.label)
             .toBe('유기물 건조 방지');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-stoneChamberTombTypology']
+            .values.structureRiteMismatch.label)
+            .toBe('묘제·장제 불일치');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-tombPassageClosureSequence']
+            .values.closureStoneBeforeRemoval.label)
+            .toBe('폐쇄석 제거 전 기록');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-burialPlatformUseSequence']
+            .values.graveGoodsByPlatform.label)
+            .toBe('시상별 부장품 위치');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-tombRitualDepositRecord']
+            .values.redepositionCaution.label)
+            .toBe('재퇴적 주의');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-pitFeatureFunctionAssessment']
             .values.functionNotAssumed.label)
             .toBe('성격 자동판정 금지');

@@ -1266,6 +1266,83 @@
     },
     "description": "분묘 내부에서 조도, 교란토 체질, 바닥 근처 정밀조사, 소형유물·유기물 보존, 고유번호와 일괄수습 계획을 관리하기 위한 목록"
   },
+  "KoreanFieldwork-stoneChamberTombTypology": {
+    "values": {
+      "verticalStoneCist": { "label": "수혈식석곽" },
+      "horizontalEntranceStoneCist": { "label": "횡구식석곽" },
+      "horizontalEntranceStoneChamber": { "label": "횡구식석실" },
+      "corridorStoneChamber": { "label": "횡혈식석실" },
+      "entrancePresent": { "label": "입구부 확인" },
+      "soilPassageOnly": { "label": "흙묘도 중심" },
+      "stoneCorridorPresent": { "label": "석축 연도 확인" },
+      "mainRoomRecorded": { "label": "현실 기록" },
+      "burialPlatformPresent": { "label": "관대·시상 확인" },
+      "additionalBurialEvidence": { "label": "추가장 근거" },
+      "structureRiteMismatch": { "label": "묘제·장제 불일치" },
+      "typeNamePending": { "label": "묘형명 보류" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "수혈식석곽, 횡구식석곽·석실, 횡혈식석실을 입구·묘도·연도·현실·관대·추가장 근거로 판정하기 위한 목록"
+  },
+  "KoreanFieldwork-tombPassageClosureSequence": {
+    "values": {
+      "entranceAxisRecorded": { "label": "입구 축선 기록" },
+      "passageFillOutline": { "label": "묘도 충전부 윤곽" },
+      "centralBaulkInPassage": { "label": "묘도 중앙둑" },
+      "passageFloorRecorded": { "label": "묘도 바닥 기록" },
+      "entranceWallRecorded": { "label": "입구 벽체 기록" },
+      "closureStoneBeforeRemoval": { "label": "폐쇄석 제거 전 기록" },
+      "closureSoilRecorded": { "label": "폐쇄토 기록" },
+      "corridorFrontClosure": { "label": "연도 전면 폐쇄" },
+      "corridorInteriorClosure": { "label": "연도 내부 폐쇄" },
+      "thresholdOrDoorstone": { "label": "문지방·문비석" },
+      "floorDrainageChecked": { "label": "바닥·배수 확인" },
+      "reopenedOrRepaired": { "label": "재개방·수리 흔적" },
+      "sequenceComparedWithBurial": { "label": "매장 순서와 대조" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "횡구·횡혈계 고분의 묘도, 연도, 현문, 폐쇄석·폐쇄토와 재개방·수리 흔적을 매장 순서와 대조하기 위한 목록"
+  },
+  "KoreanFieldwork-burialPlatformUseSequence": {
+    "values": {
+      "coffinStand": { "label": "관대" },
+      "corpsePlatform": { "label": "시상" },
+      "headrestStone": { "label": "두침석" },
+      "footrestStone": { "label": "족좌" },
+      "beddingMaterialRecorded": { "label": "깔개 재료 기록" },
+      "platformSurfaceFinish": { "label": "상면 마감" },
+      "platformOverlap": { "label": "시상 중첩" },
+      "platformConnection": { "label": "시상 접속" },
+      "multipleIndividuals": { "label": "복수 피장자" },
+      "additionalBurialSpace": { "label": "추가장 예정 공간" },
+      "graveGoodsByPlatform": { "label": "시상별 부장품 위치" },
+      "removalReverseSequence": { "label": "제거 역순 기록" },
+      "sectionAfterRemoval": { "label": "제거 후 단면" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "관대와 시상을 피장자 수, 두침·족좌, 표면 마감, 중첩·접속, 추가장 공간, 부장품 위치와 해체 순서로 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-tombRitualDepositRecord": {
+    "values": {
+      "moundTopDeposit": { "label": "봉토 정상부 매납" },
+      "moundSlopeDeposit": { "label": "분구 사면 매납" },
+      "moundBaseDeposit": { "label": "분구 기저부 매납" },
+      "ditchDeposit": { "label": "주구 매납" },
+      "passageDeposit": { "label": "묘도 매납" },
+      "corridorDeposit": { "label": "연도 매납" },
+      "closureBeforeDeposit": { "label": "폐쇄 전 제사" },
+      "closureAfterDeposit": { "label": "폐쇄 후 제사" },
+      "chamberDeposit": { "label": "현실 내부 매납" },
+      "ritualVesselCluster": { "label": "제사용 토기군" },
+      "intentionalBreakage": { "label": "의도적 파손" },
+      "animalFoodOffering": { "label": "동물·음식 공헌" },
+      "locationElevationRecorded": { "label": "위치·레벨 기록" },
+      "constructionStageLinked": { "label": "축조공정 연결" },
+      "redepositionCaution": { "label": "재퇴적 주의" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "분묘 제사와 매납 자료를 봉토, 주구, 묘도·연도, 폐쇄 전후, 현실 내부, 위치·레벨과 축조공정으로 분리하기 위한 목록"
+  },
   "KoreanFieldwork-graveGoodsRitualContext": {
     "values": {
       "wearingPosition": { "label": "착장 위치" },

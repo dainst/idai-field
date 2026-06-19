@@ -12540,6 +12540,25 @@
     },
     "description": "Korean layer-boundary checks for separating bedding planes, soil horizon boundaries, old ground, living, feature, detection, worked, and functional surfaces from boundary clarity and shape"
   },
+  "KoreanFieldwork-faciesSectionDrawingRecord": {
+    "values": {
+      "particleSizeDrawn": { "label": "Particle size drawn" },
+      "grainCompositionDrawn": { "label": "Grain-size composition drawn" },
+      "sedimentaryStructureDrawn": { "label": "Sedimentary structure drawn" },
+      "deformationStructureDrawn": { "label": "Deformation structure drawn" },
+      "postDepositionalMaterialDrawn": { "label": "Post-depositional material drawn" },
+      "artifactInclusionDrawn": { "label": "Artifact inclusion drawn" },
+      "ecofactInclusionDrawn": { "label": "Ecofact inclusion drawn" },
+      "burntSoilShellGravelMarked": { "label": "Burnt soil/shell/gravel marked" },
+      "heterogeneousSoilBlockMarked": { "label": "Heterogeneous soil block marked" },
+      "inclusionArrangementDirectionDrawn": { "label": "Inclusion arrangement/direction drawn" },
+      "ironManganeseColorRendered": { "label": "Iron/manganese color rendered" },
+      "boundaryLineConventionApplied": { "label": "Boundary line convention applied" },
+      "excavationDepthLineSeparated": { "label": "Excavation depth line separated" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean facies-section drawing checks for recording particles, sedimentary and deformation structures, post-depositional materials, inclusions, iron/manganese color, boundary line conventions, and excavation-depth lines"
+  },
   "KoreanFieldwork-stratigraphicMisreadGuard": {
     "values": {
       "colorPrimaryDivisionAvoided": { "label": "Color-first division avoided" },

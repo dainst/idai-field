@@ -1035,6 +1035,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('rescueExcavation');
         expect(documentsById['segment-stratigraphy-fill-001'].resource.stratigraphicMisreadGuard)
             .toContain('btBandCandidate');
+        expect(documentsById['segment-stratigraphy-fill-001'].resource.faciesSectionDrawingRecord)
+            .toContain('boundaryLineConventionApplied');
         expect(documentsById['segment-stratigraphy-fill-001'].resource.termSearchMapping)
             .toContain('doNotMergeToSingleTerm');
         expect(documentsById['segment-stratigraphy-fill-001'].resource.chronologyArgument)
@@ -1438,6 +1440,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureSegmentForm.fields.stratigraphicDivisionBasis.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.soilParticleFieldCheck.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.layerBoundarySurfaceRecord.inputType).toBe('checkboxes');
+        expect(featureSegmentForm.fields.faciesSectionDrawingRecord.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.stratigraphicMisreadGuard.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.layerNamingSystem.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.featureFillInterpretation.inputType).toBe('checkboxes');
@@ -1895,6 +1898,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-soilParticleFieldCheck');
         expect(featureSegmentForm.valuelists.layerBoundarySurfaceRecord)
             .toBe('KoreanFieldwork-layerBoundarySurfaceRecord');
+        expect(featureSegmentForm.valuelists.faciesSectionDrawingRecord)
+            .toBe('KoreanFieldwork-faciesSectionDrawingRecord');
         expect(featureSegmentForm.valuelists.stratigraphicMisreadGuard)
             .toBe('KoreanFieldwork-stratigraphicMisreadGuard');
         expect(featureSegmentForm.valuelists.layerNamingSystem)
@@ -2428,6 +2433,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Soil particle field check');
         expect(languages.en.categories.FeatureSegment.fields.layerBoundarySurfaceRecord.label)
             .toBe('Layer boundary surface record');
+        expect(languages.en.categories.FeatureSegment.fields.faciesSectionDrawingRecord.label)
+            .toBe('Facies section drawing record');
         expect(languages.en.categories.FeatureSegment.fields.stratigraphicMisreadGuard.label)
             .toBe('Stratigraphic misread guard');
         expect(languages.en.categories.FeatureSegment.fields.layerNamingSystem.label)
@@ -2783,6 +2790,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-layerBoundarySurfaceRecord']
             .values.gradualBoundary.label)
             .toBe('Gradual boundary');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-faciesSectionDrawingRecord']
+            .values.boundaryLineConventionApplied.label)
+            .toBe('Boundary line convention applied');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-stratigraphicMisreadGuard']
             .values.colorPrimaryDivisionAvoided.label)
             .toBe('Color-first division avoided');
@@ -3519,6 +3529,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-layerBoundarySurfaceRecord']
             .values.featureDetectionSurface.label)
             .toBe('유구 확인면');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-faciesSectionDrawingRecord']
+            .values.ironManganeseColorRendered.label)
+            .toBe('산화철·망간 색채표현');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-stratigraphicMisreadGuard']
             .values.postRelatedReduction.label)
             .toBe('말목 주변 환원화');

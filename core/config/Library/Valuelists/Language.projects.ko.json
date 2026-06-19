@@ -786,6 +786,25 @@
     },
     "description": "층리면과 층계, 구지표면·생활면·유구면·확인면, 가공면·기능면, 경계 명료도와 형상을 따로 남기기 위한 목록"
   },
+  "KoreanFieldwork-faciesSectionDrawingRecord": {
+    "values": {
+      "particleSizeDrawn": { "label": "입자크기 표현" },
+      "grainCompositionDrawn": { "label": "입도조성 표현" },
+      "sedimentaryStructureDrawn": { "label": "퇴적구조 표현" },
+      "deformationStructureDrawn": { "label": "변형구조 표현" },
+      "postDepositionalMaterialDrawn": { "label": "후성물질 표현" },
+      "artifactInclusionDrawn": { "label": "유물 혼입물 표현" },
+      "ecofactInclusionDrawn": { "label": "동식물유체 표현" },
+      "burntSoilShellGravelMarked": { "label": "소토·패각·자갈 표시" },
+      "heterogeneousSoilBlockMarked": { "label": "이질토 블록 표시" },
+      "inclusionArrangementDirectionDrawn": { "label": "혼입물 배열·방향 표시" },
+      "ironManganeseColorRendered": { "label": "산화철·망간 색채표현" },
+      "boundaryLineConventionApplied": { "label": "경계선 표현규칙 적용" },
+      "excavationDepthLineSeparated": { "label": "굴삭 심도선 분리" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "층상단면도에 층 경계선만이 아니라 입자, 퇴적·변형 구조, 후성물질, 혼입물, 철·망간 색채와 굴삭 심도선을 함께 표현했는지 기록하기 위한 목록"
+  },
   "KoreanFieldwork-stratigraphicMisreadGuard": {
     "values": {
       "colorPrimaryDivisionAvoided": { "label": "색조 최우선 금지" },

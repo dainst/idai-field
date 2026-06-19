@@ -32034,6 +32034,42 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-faciesSectionDrawingRecord": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-20",
+    "values": {
+      "particleSizeDrawn": {},
+      "grainCompositionDrawn": {},
+      "sedimentaryStructureDrawn": {},
+      "deformationStructureDrawn": {},
+      "postDepositionalMaterialDrawn": {},
+      "artifactInclusionDrawn": {},
+      "ecofactInclusionDrawn": {},
+      "burntSoilShellGravelMarked": {},
+      "heterogeneousSoilBlockMarked": {},
+      "inclusionArrangementDirectionDrawn": {},
+      "ironManganeseColorRendered": {},
+      "boundaryLineConventionApplied": {},
+      "excavationDepthLineSeparated": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "particleSizeDrawn",
+      "grainCompositionDrawn",
+      "sedimentaryStructureDrawn",
+      "deformationStructureDrawn",
+      "postDepositionalMaterialDrawn",
+      "artifactInclusionDrawn",
+      "ecofactInclusionDrawn",
+      "burntSoilShellGravelMarked",
+      "heterogeneousSoilBlockMarked",
+      "inclusionArrangementDirectionDrawn",
+      "ironManganeseColorRendered",
+      "boundaryLineConventionApplied",
+      "excavationDepthLineSeparated",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-stratigraphicMisreadGuard": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

@@ -222,6 +222,21 @@
           "gradualBoundary",
           "irregularBoundary"
         ],
+        "faciesSectionDrawingRecord": [
+          "particleSizeDrawn",
+          "grainCompositionDrawn",
+          "sedimentaryStructureDrawn",
+          "deformationStructureDrawn",
+          "postDepositionalMaterialDrawn",
+          "artifactInclusionDrawn",
+          "ecofactInclusionDrawn",
+          "burntSoilShellGravelMarked",
+          "heterogeneousSoilBlockMarked",
+          "inclusionArrangementDirectionDrawn",
+          "ironManganeseColorRendered",
+          "boundaryLineConventionApplied",
+          "excavationDepthLineSeparated"
+        ],
         "featureFillInterpretation": [
           "workedSurface",
           "formationDuringCutting",

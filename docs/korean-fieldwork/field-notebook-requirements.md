@@ -39,7 +39,7 @@
 | 질문형 유구 야장 | 유구명만 고르는 방식은 수혈주거지, 고분, 성곽, 생산유구의 조사 과정을 설명하지 못한다. | 유구 유형별 카드에는 단계별 질문, 확인 전제, 대안 해석, 사진·도면·시료 연결을 둔다. 1차 구현은 `Feature`의 수혈건물지 노출·둑, 단계조사 순서, 토층둑 전략, 바닥·시설, 화재 증거, 중복 선후관계 체크리스트로 시작한다. |
 | 건물지 주혈·초석 근거 | 지상식·고상식·초석건물지를 이름만 확정하면 주혈 배열, 촬영 범위, 초석 설치·발취 흔적, 보존 결정이 사라진다. | `surfaceBuildingJudgement`, `postholeGroupSurvey`, `foundationTraceRecord`가 건물 형식 후보, 주혈군 측정·촬영, 사라진 초석과 기초 흔적을 복원안과 분리해 남긴다. |
 | 건물지 복원·전문검토 | 복원도와 정비계획은 현장 관찰, 비교자료, 전문가 검토, 탐사·스캔 품질, 보존·활용 판단이 섞이면 재검토가 어렵다. | `buildingExpertReview`, `buildingReconstructionEvidence`, `buildingProspectionConservationRecord`가 전문검토, 영조척·칸수·상부구조 근거, GPR·3D·보존 결정을 원자료와 분리해 남긴다. |
-| 층위와 유구 형성과정 | 토색이나 층명만으로 층을 확정하면 산화·환원, 교란, 후퇴적 변형을 오인할 수 있다. | `FeatureSegment`의 `stratigraphicDivisionBasis`, `soilParticleFieldCheck`, `layerBoundarySurfaceRecord`, `stratigraphicMisreadGuard`, `featureFillInterpretation`, `naturalHumusRelativity`로 층 구분 근거, 경계면, 오인 후보, 내부토 해석, 생토·부식토 상대성 판단을 분리한다. |
+| 층위와 유구 형성과정 | 토색이나 층명만으로 층을 확정하면 산화·환원, 교란, 후퇴적 변형을 오인할 수 있다. | `FeatureSegment`의 `stratigraphicDivisionBasis`, `soilParticleFieldCheck`, `layerBoundarySurfaceRecord`, `faciesSectionDrawingRecord`, `stratigraphicMisreadGuard`, `featureFillInterpretation`, `naturalHumusRelativity`로 층 구분 근거, 경계면, 층상단면 표현, 오인 후보, 내부토 해석, 생토·부식토 상대성 판단을 분리한다. |
 | 매체의 기록 단위화 | 사진, 도면, 3D, GPS, GIS는 첨부파일이 아니라 판단 근거다. 사진은 좋은 구도보다 조사자 안전이 우선이므로 사다리·고소촬영 위험과 대체수단도 기록해야 한다. | 매체마다 목적, 대상, 방향, 기준점, 좌표계, 품질, 후처리, 재촬영·재실측 필요 여부를 가진다. `Photo`의 `photoCaptureSafetyReview`는 붐대 카메라, 드론, 고소촬영 금지, 사다리 위험, 대체 촬영수단, 안전관리자 확인을 따로 남긴다. |
 | 디지털 조사 품질검수 | 고지형분석, GIS, UAV, LiDAR, 3D 레이저스캔, 사진실측 같은 결과는 장비명과 완성 파일만으로는 검증하기 어렵다. | `Operation`의 `digitalSurveyQualityControl`이 원천자료 시점, 원지형 변경 위험, 기준점, 좌표계·지리보정, 오차, 산출물 목적, 외주 결과 검수, 현장 대조와 재분석 가능성을 함께 남긴다. |
 | 원문 근거 색인 | 도표·사진·표·캡션·사례명·한자·수치가 OCR 노트나 보고서 삽화로 흩어지면 필드 설계 근거와 재대조 상태가 사라진다. | `SourceEvidenceIndex`가 원문 자료 종류, 적용 영역, 대조 상태, 사용 목적을 `Project` 아래에서 추적한다. |
@@ -108,7 +108,7 @@ Harris Matrix와 맥락번호 변경 이력은 별도 그래프 편집 화면으
 
 생토·부식토 상대성 보강분은 `FeatureSegment`에 `naturalHumusRelativity`를 추가했다. 생토, 문화층, 표토, 상부퇴적토, 유구 내 매몰토, 교란토는 절대 층명이 아니라 조사대상시대와 관계유구에 따라 달라지는 판단값이므로, 자연생토 후보·문화층 후보·구석기 문화층 후보·근현대 유구 소속층과 함께 조사대상시대 확인, 관계유구 확인, 판단 보류를 남기게 했다.
 
-층 경계·오인 방지 보강분은 `FeatureSegment`에 `soilParticleFieldCheck`, `layerBoundarySurfaceRecord`, `stratigraphicMisreadGuard`를 추가했다. 입자는 자갈 직접 계측, 입자 크기표, 모래 체질, 수분 도말, 촉감, 표본시료, 실내 입도분석 대조를 구분하고, 경계면은 층리면·층계·구지표면·생활면·유구면·유구확인면·가공면·기능면과 명료도·형상을 따로 남긴다. 색조, 산화·환원, 지하수위, 구수로, 논둑, 산화철·망간, 뿌리·말목 변색, Bt-band는 별도층이나 유구로 바로 확정하지 않고 오인 후보로 관리한다.
+층 경계·오인 방지 보강분은 `FeatureSegment`에 `soilParticleFieldCheck`, `layerBoundarySurfaceRecord`, `faciesSectionDrawingRecord`, `stratigraphicMisreadGuard`를 추가했다. 입자는 자갈 직접 계측, 입자 크기표, 모래 체질, 수분 도말, 촉감, 표본시료, 실내 입도분석 대조를 구분하고, 경계면은 층리면·층계·구지표면·생활면·유구면·유구확인면·가공면·기능면과 명료도·형상을 따로 남긴다. 층상단면도는 경계선만이 아니라 입자·입도조성, 퇴적·변형 구조, 후성물질, 유물·동식물유체·소토·패각·자갈·이질토 블록, 혼입물 배열과 방향, 철·망간 색채, 굴삭 심도선 표현 여부를 저장한다. 색조, 산화·환원, 지하수위, 구수로, 논둑, 산화철·망간, 뿌리·말목 변색, Bt-band는 별도층이나 유구로 바로 확정하지 않고 오인 후보로 관리한다.
 
 유구 내부층 라이프사이클 보강분은 같은 `FeatureSegment`에 `stratigraphicObservationProcedure`, `featureLifecycleReview`, `featureBlockInclusionAssessment`, `featureBurialProcessAssessment`를 추가했다. 토층 단면 정리, 그늘·햇볕 조건, 반복 관찰, 층간 비교, 문화층 표시 같은 관찰 절차를 먼저 남기고, 그 뒤 내부층을 축조·사용·폐기·매몰 과정으로 검토한다. 제5회 조사연구원 교육자료 재대조 뒤에는 퇴적 기원·과정 기록, 전체 층위 흐름도 준비, 기준 층위 사진 연결, 연대측정값의 층위도 표시, 유물-층위 관계 기록도 같은 흐름에 추가했다. 이질토 블록은 인위매립으로 자동 판정하지 않고 기반층 유래, 타처 운반, 붕락층, 가공시 형성층, 유물 걸침 여부를 분리하며, 매몰 과정은 급격·점진 매몰, 자연유입, 수성퇴적, 라미나, 토양화 휴지기와 일괄유물 매몰을 따로 기록한다.
 

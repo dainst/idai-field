@@ -2098,6 +2098,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "faciesSectionDrawingRecord": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "stratigraphicMisreadGuard": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -2188,6 +2192,7 @@
         "stratigraphicDivisionBasis": "KoreanFieldwork-stratigraphicDivisionBasis",
         "soilParticleFieldCheck": "KoreanFieldwork-soilParticleFieldCheck",
         "layerBoundarySurfaceRecord": "KoreanFieldwork-layerBoundarySurfaceRecord",
+        "faciesSectionDrawingRecord": "KoreanFieldwork-faciesSectionDrawingRecord",
         "stratigraphicMisreadGuard": "KoreanFieldwork-stratigraphicMisreadGuard",
         "layerNamingSystem": "KoreanFieldwork-layerNamingSystem",
         "featureFillInterpretation": "KoreanFieldwork-featureFillInterpretation",
@@ -2237,6 +2242,7 @@
             "stratigraphicDivisionBasis",
             "soilParticleFieldCheck",
             "layerBoundarySurfaceRecord",
+            "faciesSectionDrawingRecord",
             "stratigraphicMisreadGuard",
             "layerNamingSystem",
             "featureFillInterpretation",

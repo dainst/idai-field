@@ -83,6 +83,8 @@
 
 발굴맥락 구성 보강분은 `Feature`에 `excavationContextModel`을 추가했다. 이 값은 유적·유구·유물·유물복합체·환경 연결, 수평분포와 수직층위 검토, 조사방법 선택근거, 트렌치·피트·바둑판식·사분법·계단식 조사, 기획발굴과 구제발굴 구분을 한 목록으로 묶어 유구명이 맥락 기록을 대신하지 않게 한다.
 
+Harris Matrix와 맥락번호 변경 이력은 아직 독립 화면으로 올리지 않았다. 현 단계에서는 `Feature`의 `excavationContextModel`, `chronologyArgument`의 층위관계 값, `FeatureSegment`의 층위 관찰·라이프사이클 목록, `reportCrossCheck`를 함께 써서 관계 근거와 도면·사진·보고서 대조를 남긴다. 실제 샘플 입력에서 둑 제거 뒤 연결 확인이나 관계 수정 이력이 묻히면 독립 `StratigraphicRelationReview` 후보로 승격한다.
+
 발굴행위 역순 검토 보강분은 `Feature`에 `excavationReverseSequenceCheck`를 추가했다. 표토, 현대교란선, 도굴갱, 상부퇴적토, 유구 매몰토 제거와 축조면·사용면·폐기면 확인을 분리해 기록하고, 행위의 역순 원칙에서 벗어난 경우에는 예외 사유를 남기게 한다.
 
 제7권 성곽 축조·보존관리 보강분은 `Feature`에 `fortificationConstructionEvidence`, `fortificationFoundationRecord`, `fortificationRepairRecord`, `fortificationRestorationEvidence`를 추가했다. 축조기법은 판축명 확정 전에 협판, 고정주, 횡장목, 달구질흔, 판괴연접, 역경사판축, 부엽공법, 부석·석축 보강과 유사판축 주의를 기록한다. 기초·기저부는 구지표, 정지면, 기초다짐층, 기조·배수·절토 후보, 지정, 지대석 받침, 줄구덩이 조사와 전면 제토 회피를 성벽 본체 해석보다 앞에 둔다. 보수·정비는 현황도면, 현황사진, 조사 전·중·후 사진, 정밀실측·3D스캔, 붕괴 성돌·적심석 관리, 해체 단면, 배수체계, 설계변경, 자문, 준공검사를 수리보고서와 연결한다. 복원·중건은 문헌, 고지도, 옛 사진, 발굴 유구, 주초·적심 배열, 주간거리와 용척 후보, 원부재 조사·반환·재사용, 신규 재료 대체 사유, 복원 제외, 현장보존, 현대 재료 구별과 경관 영향을 한 근거 묶음으로 남기게 했다.

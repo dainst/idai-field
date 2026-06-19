@@ -24,6 +24,9 @@
 | 보고서 평가 환류 | 보고서 평가표는 반복 오류와 보완 요구를 잡아내는 장치지만, 현장 품질을 완전히 대신하지는 못한다. | `ReportEvaluationApplicabilityReview`와 `ReportFieldQualityFeedback`이 자체평가·위원회평가 차이, 비해당 항목, 적용 제외 근거, 원기록 보완 작업을 연결한다. |
 | 조사단계 전환과 인계 | 지표·표본·시굴·정밀발굴은 단절된 프로젝트가 아니라 판단과 자료가 이어지는 단계다. | `InvestigationStageTransition`과 `InvestigationRecordHandover`에 앞 단계 기록, 출토유물, 약식보고서, 후속기관, 최종보고서 연결을 둔다. |
 | 행정·보존 이행 | 보존조치는 결정으로 끝나지 않고 이행, 통보, 관리주체, 점검, 재평가로 이어진다. | `PreservationDecisionPackage`, `PermitConditionComplianceRecord`, `ReportSubmissionWorkflow`, `StateVestingSelectionRecord`를 조사사업 카드에 연결한다. |
+| 의뢰·계획·변경 관리 | 조사기관은 학술 조사뿐 아니라 사업시행자 자료 접수, 선행자료 확인, 현장답사, 전문기관 배정, 민원·일정 조율까지 담당한다. | `InvestigationRequestIntake`와 `InvestigationPlanChangeRecord`가 접수 경로, 기초자료, 계획 전 답사, 담당자, 조사기간·예산·조사단 변경, 허가·계약 변경 근거를 저장한다. |
+| 전문가 검토회의와 부분완료 | 중요 유구·유물, 보존 방안, 부분완료 공사 시행 여부는 원도면·사진·유물현황·조사기관 의견에 근거해 판단된다. | `ExpertReviewMeeting`과 `PartialCompletionPackage`가 회의 사유, 참석자 자격, 제출자료, 상이 의견, 부분완료 구역·트렌치·사진·잔여구간·통보 결과를 원기록 ID에 연결한다. |
+| 지표조사 결과 처리 | 지표조사는 보고서 제출로 끝나지 않고 후속조사 범위, 보존방안, 수습 유물 귀속, 기존 유적 범위 수정과 디지털 등록으로 이어진다. | `SurfaceSurveyResultProcessing`이 사업 이격거리, 향후 대책, 입회·확인·시굴·발굴, 유물목록·대장·보관증, 전산화 등록, 기존 유적 범위 수정을 추적한다. |
 | 질문형 유구 야장 | 유구명만 고르는 방식은 수혈주거지, 고분, 성곽, 생산유구의 조사 과정을 설명하지 못한다. | 유구 유형별 카드에는 단계별 질문, 확인 전제, 대안 해석, 사진·도면·시료 연결을 둔다. 1차 구현은 `Feature`의 수혈건물지 노출·둑, 바닥·시설, 화재 증거, 중복 선후관계 체크리스트로 시작한다. |
 | 층위와 유구 형성과정 | 토색이나 층명만으로 층을 확정하면 산화·환원, 교란, 후퇴적 변형을 오인할 수 있다. | `FeatureSegment`의 `stratigraphicDivisionBasis`, `soilParticleFieldCheck`, `layerBoundarySurfaceRecord`, `stratigraphicMisreadGuard`, `featureFillInterpretation`으로 층 구분 근거, 경계면, 오인 후보, 내부토 해석을 분리한다. |
 | 매체의 기록 단위화 | 사진, 도면, 3D, GPS, GIS는 첨부파일이 아니라 판단 근거다. | 매체마다 목적, 대상, 방향, 기준점, 좌표계, 품질, 후처리, 재촬영·재실측 필요 여부를 가진다. |

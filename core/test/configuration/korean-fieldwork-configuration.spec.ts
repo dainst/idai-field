@@ -451,6 +451,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('originalScript');
         expect(documentsById['source-index-dictionary-001'].resource.sourceEvidenceVerification)
             .toContain('ocrCorrectionNeeded');
+        expect(documentsById['source-index-tomb-dictionary-001'].resource.sourceEvidenceDomain)
+            .toContain('tomb');
+        expect(documentsById['source-index-tomb-dictionary-001'].resource.sourceEvidenceUse)
+            .toContain('preventAutoClassification');
+        expect(documentsById['source-index-tomb-dictionary-001'].resource.sourceEvidenceVerification)
+            .toContain('crossSourceCompared');
     });
 
 

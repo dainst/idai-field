@@ -178,6 +178,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-20 이어받은 감사에서 실제 로컬 PDF 43종과 `codex-idai-field-new-pdf-text`의 metadata 43건이 다시 1:1로 대응함을 확인했다. 누락된 텍스트 캐시는 없고, `TermImportMapping`과 `SourceEvidenceIndex`도 이미 샘플과 테스트에 들어가 있으므로 다음 독해 작업은 새 목록 작성이 아니라 실제 자동완성·가져오기 흐름 검증, 조건부 필수값 설계, OCR 취약 구간의 도판·캡션·사례명·한자·수치 원문 대조에 둔다.
 
+2026-06-20 고분편·고분유물편 재대조에서는 고분편 일러두기의 묘/분 표기, 매장주체시설·외피시설 분리, 목관·목곽 구분 원칙과 고분유물편의 장구·착장품·부장품·제의 매납품 구분을 다시 확인했다. 새 고분 필드를 늘리기보다 기존 고분 값목록과 `graveGoodsRitualContext`가 자동분류를 막는 수용 단위임을 확인했고, `source-evidence-index-sample.json`의 `source-index-tomb-dictionary-001`로 원문 근거 색인을 추가했다.
+
 2026-06-20 `발굴보고서_작성법_교재.pdf`, `발굴조사_실무.pdf`, 현장 기록관리 OCR 보강본을 다시 대조했다. 보고서 작성은 현장 종료 뒤 문장만 만드는 절차가 아니라 원고, 도면대장, 사진대장, 유물·시료목록, 조사일지, 기준토층, 층위 흐름도, 번호 변환표, 원자료 백업이 서로 맞는지 검수하는 절차로 읽힌다. 이 요구는 새 `ReportEditorialCrossCheck` 카드와 `administrative-workflow-sample.json` 편집 교차검토 사례로 옮겼다.
 
 2026-06-20 용어 권위 체계에는 `TermRelationship` 카드를 추가했다. 성문과 방어 부속시설, 토기 공방과 관련 작업공간, 수혈건물지와 내부시설처럼 별칭이나 가져오기 치환 규칙으로 줄이면 안 되는 관계를 `partWholeRelation`과 `spatialRelation`으로 분리해 기록한다. 샘플 fixture와 설정 테스트도 이 관계 카드와 값목록 라벨을 직접 확인한다.

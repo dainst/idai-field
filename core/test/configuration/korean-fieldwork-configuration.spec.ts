@@ -529,6 +529,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('artifactNumberRuleRecorded');
         expect(documentsById['report-standard-history-admin-001'].resource.reportStandardChangeReasonText)
             .toContain('유구번호 변동표');
+        expect(documentsById['report-editorial-cross-check-admin-001'].resource.reportCrossCheck)
+            .toContain('numberConversionTable');
+        expect(documentsById['report-editorial-cross-check-admin-001'].resource.reportCrossCheck)
+            .toContain('layerFindContextConsistency');
+        expect(documentsById['report-editorial-cross-check-admin-001'].resource.reportEditorialIssueText)
+            .toContain('수혈건물지 12호');
         expect(documentsById['information-asset-admin-001'].resource.informationAssetType)
             .toContain('standardElectronicExcavationReport');
         expect(documentsById['information-asset-admin-001'].resource.informationAssetType)
@@ -1364,6 +1370,7 @@ describe('KoreanFieldwork project configuration', () => {
         const reportSubmissionWorkflowForm = config.forms.ReportSubmissionWorkflow;
         const reportPreparationReviewForm = config.forms.ReportPreparationReview;
         const reportStandardHistoryForm = config.forms.ReportStandardHistory;
+        const reportEditorialCrossCheckForm = config.forms.ReportEditorialCrossCheck;
         const informationAssetForm = config.forms.InformationAsset;
         const stateVestingSelectionRecordForm = config.forms.StateVestingSelectionRecord;
         const ironProcessRelationForm = config.forms.IronProcessRelation;
@@ -1436,6 +1443,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(reportStandardHistoryForm.fields.reportStandardChangeReasonText.inputType).toBe('input');
         expect(reportStandardHistoryForm.fields.reportStandardSourceLinkText.inputType).toBe('input');
         expect(reportStandardHistoryForm.fields.reportStandardHistory.inputType).toBe('checkboxes');
+        expect(reportEditorialCrossCheckForm.parent).toBe('Project');
+        expect(reportEditorialCrossCheckForm.fields.reportEditorialSubjectText.inputType).toBe('input');
+        expect(reportEditorialCrossCheckForm.fields.reportEditorialSubjectText.mandatory).toBe(true);
+        expect(reportEditorialCrossCheckForm.fields.reportEditorialSourceText.inputType).toBe('input');
+        expect(reportEditorialCrossCheckForm.fields.reportEditorialIssueText.inputType).toBe('input');
+        expect(reportEditorialCrossCheckForm.fields.reportCrossCheck.inputType).toBe('checkboxes');
         expect(informationAssetForm.parent).toBe('Project');
         expect(informationAssetForm.fields.informationAssetTitleText.inputType).toBe('input');
         expect(informationAssetForm.fields.informationAssetTitleText.mandatory).toBe(true);
@@ -1793,6 +1806,10 @@ describe('KoreanFieldwork project configuration', () => {
         expect(reportStandardHistoryForm.valuelists.reportStandardHistory)
             .toBe('KoreanFieldwork-reportStandardHistory');
         expect(reportStandardHistoryForm.valuelists.verificationState).toBe('KoreanFieldwork-verificationState');
+        expect(reportEditorialCrossCheckForm.valuelists.reportCrossCheck)
+            .toBe('KoreanFieldwork-reportCrossCheck');
+        expect(reportEditorialCrossCheckForm.valuelists.verificationState)
+            .toBe('KoreanFieldwork-verificationState');
         expect(informationAssetForm.valuelists.informationAssetType)
             .toBe('KoreanFieldwork-informationAssetType');
         expect(informationAssetForm.valuelists.informationAssetManagement)
@@ -2392,6 +2409,16 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Standard scope');
         expect(languages.en.categories.ReportStandardHistory.fields.reportStandardHistory.label)
             .toBe('Report standard history');
+        expect(languages.en.categories.ReportEditorialCrossCheck.label)
+            .toBe('Report editorial cross-check');
+        expect(languages.en.categories.ReportEditorialCrossCheck.fields.reportEditorialSubjectText.label)
+            .toBe('Editorial review subject');
+        expect(languages.en.categories.ReportEditorialCrossCheck.fields.reportCrossCheck.label)
+            .toBe('Report cross-check');
+        expect(languages.ko.categories.ReportEditorialCrossCheck.label)
+            .toBe('보고서 편집 교차검토');
+        expect(languages.ko.categories.ReportEditorialCrossCheck.fields.reportEditorialIssueText.label)
+            .toBe('불일치·수정 근거');
         expect(languages.en.categories.InformationAsset.label).toBe('Information asset');
         expect(languages.en.categories.InformationAsset.fields.informationAssetTitleText.label)
             .toBe('Asset title');

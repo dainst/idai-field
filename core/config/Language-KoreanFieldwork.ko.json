@@ -228,6 +228,26 @@
         }
       }
     },
+    "ReportEditorialCrossCheck": {
+      "label": "보고서 편집 교차검토",
+      "fields": {
+        "reportCrossCheck": {
+          "label": "보고서 교차검토"
+        },
+        "reportEditorialIssueText": {
+          "label": "불일치·수정 근거"
+        },
+        "reportEditorialSourceText": {
+          "label": "대조 원자료"
+        },
+        "reportEditorialSubjectText": {
+          "label": "편집 검토 대상"
+        },
+        "verificationState": {
+          "label": "검증상태"
+        }
+      }
+    },
     "InformationAsset": {
       "label": "정보화 자산",
       "fields": {

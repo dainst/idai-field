@@ -269,6 +269,35 @@
     },
     {
       "resource": {
+        "id": "report-editorial-cross-check-admin-001",
+        "identifier": "ADMIN-REPORT-XCHECK-001",
+        "shortDescription": "원고·도면·사진·대장 편집 교차검토",
+        "category": "ReportEditorialCrossCheck",
+        "relations": {
+          "liesWithin": ["project-admin-workflow-001"]
+        },
+        "description": "최종보고서 편집 중 유구번호 변환표와 도면대장, 사진대장, 유물대장의 불일치를 원기록 ID로 다시 대조하고 수정 근거를 남긴다.",
+        "reportEditorialSubjectText": "최종보고서 3장 유구 서술과 도면·사진·유물목록 편집본",
+        "reportEditorialSourceText": "원고 v3, 도면대장 DR-2026-01, 사진대장 PH-2026-01, 유물대장 AR-2026-01, 번호 변환표 NC-2026-02",
+        "reportEditorialIssueText": "수혈건물지 12호의 편집 번호가 도면 18호, 사진 24호, 유물대장 12-3번과 서로 다르게 남아 번호 변환표를 기준으로 수정함",
+        "reportCrossCheck": [
+          "manuscript",
+          "drawingRegister",
+          "photoRegister",
+          "artifactRegister",
+          "dailyLog",
+          "stratigraphicStandard",
+          "overallStratigraphyFlowDiagram",
+          "layerFindContextConsistency",
+          "numberConversionTable",
+          "sourceMediaBackup",
+          "evaluationFeedback"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
         "id": "information-asset-admin-001",
         "identifier": "ADMIN-ASSET-001",
         "shortDescription": "최종보고서와 디지털 원자료 정보화 자산",

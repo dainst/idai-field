@@ -228,6 +228,26 @@
         }
       }
     },
+    "ReportEditorialCrossCheck": {
+      "label": "Report editorial cross-check",
+      "fields": {
+        "reportCrossCheck": {
+          "label": "Report cross-check"
+        },
+        "reportEditorialIssueText": {
+          "label": "Mismatch and correction basis"
+        },
+        "reportEditorialSourceText": {
+          "label": "Cross-checked source materials"
+        },
+        "reportEditorialSubjectText": {
+          "label": "Editorial review subject"
+        },
+        "verificationState": {
+          "label": "Verification state"
+        }
+      }
+    },
     "InformationAsset": {
       "label": "Information asset",
       "fields": {

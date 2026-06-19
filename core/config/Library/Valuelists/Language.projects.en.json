@@ -15677,6 +15677,46 @@
     },
     "description": "Korean field notebook map checks for representing surface survey areas and scatters as verifiable polygons or ranges with project-plan, scale, map-sheet, DGPS/RTK, and coordinate evidence"
   },
+  "KoreanFieldwork-geophysicalSurveyMethod": {
+    "values": {
+      "probeRodCheck": { "label": "Probe-rod check" },
+      "boringSurvey": { "label": "Boring survey" },
+      "paleolandformAnalysis": { "label": "Paleolandform analysis" },
+      "mapInterpretation": { "label": "Map interpretation" },
+      "aerialPhotoInterpretation": { "label": "Aerial-photo interpretation" },
+      "groundPenetratingRadar": { "label": "Ground-penetrating radar" },
+      "electricalResistivitySurvey": { "label": "Electrical resistivity survey" },
+      "magneticSurvey": { "label": "Magnetic survey" },
+      "electromagneticInductionSurvey": { "label": "Electromagnetic induction survey" },
+      "underwaterSonarSurvey": { "label": "Underwater sonar survey" },
+      "subBottomProfiler": { "label": "Sub-bottom profiler" },
+      "underwaterMagneticSurvey": { "label": "Underwater magnetic survey" },
+      "targetFeatureSuitabilityReviewed": { "label": "Target-feature suitability reviewed" },
+      "terrainConditionLimitReviewed": { "label": "Terrain-condition limit reviewed" },
+      "methodLimitRecorded": { "label": "Method limit recorded" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean surface-survey geophysical method checks for recording probe rods, boring, paleolandform/map/aerial-photo interpretation, GPR, resistivity, magnetic, electromagnetic-induction, and underwater survey methods with target suitability and terrain limits"
+  },
+  "KoreanFieldwork-geophysicalAnomalyVerification": {
+    "values": {
+      "equipmentSpecificationRecorded": { "label": "Equipment specification recorded" },
+      "surveyLineGridRecorded": { "label": "Survey line/grid recorded" },
+      "rawDataPreserved": { "label": "Raw data preserved" },
+      "dataProcessingRecorded": { "label": "Data processing recorded" },
+      "anomalyImageRecorded": { "label": "Anomaly image recorded" },
+      "anomalyTypeRecorded": { "label": "Anomaly type recorded" },
+      "colorPhotoRecorded": { "label": "Color photo recorded" },
+      "dgpsLocationRecorded": { "label": "DGPS location recorded" },
+      "interpretationLimitRecorded": { "label": "Interpretation limit recorded" },
+      "fieldCrossCheckCompleted": { "label": "Field cross-check completed" },
+      "falsePositiveRiskRecorded": { "label": "False-positive risk recorded" },
+      "followUpTrenchPlanned": { "label": "Follow-up trench planned" },
+      "excavationMethodDecisionLinked": { "label": "Excavation-method decision linked" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean geophysical anomaly verification checks for linking equipment, survey lines, raw data, processing, anomaly images/types, photos, DGPS positions, interpretation limits, field checks, false-positive risks, follow-up trenches, and excavation-method decisions"
+  },
   "KoreanFieldwork-surfaceSurveyHeritageCategory": {
     "values": {
       "archaeology": { "label": "Archaeology" },

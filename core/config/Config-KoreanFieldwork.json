@@ -491,6 +491,14 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "geophysicalSurveyMethod": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "geophysicalAnomalyVerification": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "surfaceSurveyHeritageCategory": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -604,6 +612,8 @@
         "surfaceSurveySpecialRecord": "KoreanFieldwork-surfaceSurveySpecialRecord",
         "surfaceSurveyFieldDiary": "KoreanFieldwork-surfaceSurveyFieldDiary",
         "surfaceSurveyMapRequirement": "KoreanFieldwork-surfaceSurveyMapRequirement",
+        "geophysicalSurveyMethod": "KoreanFieldwork-geophysicalSurveyMethod",
+        "geophysicalAnomalyVerification": "KoreanFieldwork-geophysicalAnomalyVerification",
         "surfaceSurveyHeritageCategory": "KoreanFieldwork-surfaceSurveyHeritageCategory",
         "surfaceSurveyScopeDefinition": "KoreanFieldwork-surfaceSurveyScopeDefinition",
         "surfaceSurveyLowerChronologyReview": "KoreanFieldwork-surfaceSurveyLowerChronologyReview",
@@ -647,6 +657,8 @@
             "surfaceSurveySpecialRecord",
             "surfaceSurveyFieldDiary",
             "surfaceSurveyMapRequirement",
+            "geophysicalSurveyMethod",
+            "geophysicalAnomalyVerification",
             "surfaceSurveyHeritageCategory",
             "surfaceSurveyScopeDefinition",
             "surfaceSurveyLowerChronologyReview",

@@ -570,6 +570,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('temporaryRoad');
         expect(documentsById['survey-surface-scope-001'].resource.surfaceSurveyMapRequirement)
             .toContain('absoluteCoordinatesRecorded');
+        expect(documentsById['survey-surface-scope-001'].resource.geophysicalSurveyMethod)
+            .toContain('groundPenetratingRadar');
+        expect(documentsById['survey-surface-scope-001'].resource.geophysicalAnomalyVerification)
+            .toContain('dgpsLocationRecorded');
+        expect(documentsById['survey-surface-scope-001'].resource.geophysicalAnomalyVerification)
+            .toContain('followUpTrenchPlanned');
         expect(documentsById['survey-surface-scope-001'].resource.surfaceSurveyHeritageCategory)
             .toContain('modernHeritage');
         expect(documentsById['survey-surface-scope-001'].resource.surfaceSurveyTimingReview)
@@ -1497,6 +1503,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(surveyForm.fields.surfaceSurveySpecialRecord.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyFieldDiary.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyMapRequirement.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.geophysicalSurveyMethod.inputType).toBe('checkboxes');
+        expect(surveyForm.fields.geophysicalAnomalyVerification.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyHeritageCategory.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyScopeDefinition.inputType).toBe('checkboxes');
         expect(surveyForm.fields.surfaceSurveyLowerChronologyReview.inputType).toBe('checkboxes');
@@ -1893,6 +1901,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-surfaceSurveyFieldDiary');
         expect(surveyForm.valuelists.surfaceSurveyMapRequirement)
             .toBe('KoreanFieldwork-surfaceSurveyMapRequirement');
+        expect(surveyForm.valuelists.geophysicalSurveyMethod)
+            .toBe('KoreanFieldwork-geophysicalSurveyMethod');
+        expect(surveyForm.valuelists.geophysicalAnomalyVerification)
+            .toBe('KoreanFieldwork-geophysicalAnomalyVerification');
         expect(surveyForm.valuelists.surfaceSurveyHeritageCategory)
             .toBe('KoreanFieldwork-surfaceSurveyHeritageCategory');
         expect(surveyForm.valuelists.surfaceSurveyScopeDefinition)
@@ -2442,6 +2454,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Surface survey field diary');
         expect(languages.en.categories.Survey.fields.surfaceSurveyMapRequirement.label)
             .toBe('Surface survey map requirement');
+        expect(languages.en.categories.Survey.fields.geophysicalSurveyMethod.label)
+            .toBe('Geophysical survey method');
+        expect(languages.en.categories.Survey.fields.geophysicalAnomalyVerification.label)
+            .toBe('Anomaly verification');
         expect(languages.en.categories.Survey.fields.surfaceSurveyHeritageCategory.label)
             .toBe('Surface survey heritage category');
         expect(languages.en.categories.Survey.fields.surfaceSurveyScopeDefinition.label)
@@ -2990,6 +3006,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveyMapRequirement']
             .values.twoGpsControlPoints.label)
             .toBe('At least two GPS control points');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-geophysicalSurveyMethod']
+            .values.groundPenetratingRadar.label)
+            .toBe('Ground-penetrating radar');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-geophysicalAnomalyVerification']
+            .values.followUpTrenchPlanned.label)
+            .toBe('후속 트렌치 계획');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveyHeritageCategory']
             .values.naturalHeritage.label)
             .toBe('Natural heritage');

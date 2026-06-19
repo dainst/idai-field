@@ -146,6 +146,8 @@ GPS·GIS 현장 시스템 보강분은 `Operation`에 `gpsSurveyQualityRecord`, 
 
 지표조사 준비·현장순서 보강분은 `Survey`에 `surfaceSurveyPreparationCheck`, `surfaceSurveyFieldSequence`, `surfaceSurveyMapRequirement`를 추가했다. 조사단 구성, 분야 전문가, 문헌·지도·기조사보고서, 문화유적분포지도, 현황측량도, GPS·사진기·나침반·기록지·유물봉투·탐침봉 같은 준비값을 먼저 점검하고, 현장에서는 경계 GPS, 전경 다방향 사진, 지형별 지구 구분, 기존 문화재, 유물산포, 노출 유구, 절개면 토층, 원지형 훼손, 탐문·설문을 순서대로 남긴다. 지표조사 지도는 점 하나가 아니라 다각형 조사범위, 유물산포지 곡선 범위, 사업계획도 대조, 축척·도엽번호, DGPS/RTK와 GPS 기준점으로 검증한다. 지표 수습 유물은 `Find`의 `surfaceFindHandlingRecord`에 개별 포장, 유물카드, 지도 표시, GPS 위경도, 지번, 근경·원경 사진, 눈금자·방위판, 부착토 보존과 세척주의를 남긴다.
 
+지표조사 물리탐사 보강분은 `Survey`에 `geophysicalSurveyMethod`, `geophysicalAnomalyVerification`을 추가했다. 탐침봉·보링·고지형·지도·항공사진 판독, GPR, 전기저항, 자기, 전자유도, 수중탐사 방법의 대상 적합성과 한계를 먼저 남기고, 이상체는 장비 기종, 측선·격자, 원자료·자료처리, 영상·종류, 사진, DGPS 위치, 현장 대조, 오탐 위험, 후속 트렌치와 발굴방법 결정까지 연결한다.
+
 지표조사 범위·전문성 보강분은 `Survey`에 `surfaceSurveyHeritageCategory`, `surfaceSurveyScopeDefinition`, `surfaceSurveyLowerChronologyReview`, `surfaceSurveyTeamExpertise`, `surfaceSurveyTimingReview`를 추가했다. 조사대상은 고고 유물산포지만이 아니라 건축사, 역사, 미술사, 인류민속, 자연유산, 수중문화재, 근대문화유산까지 확장될 수 있으므로 범주와 전문분야를 먼저 남긴다. 범위 산정은 사업구역 전체, 형질변경지, 연차·분할 사업 전체, 토취장·사토장·가설도로·수몰면·설계변경 부지와 주변 영향권을 따로 체크하고, 하한연대와 조사 시점은 보존 검토 시간을 확보했는지 판단하는 근거로 둔다.
 
 지표 증거부재·자원조사 보강분은 `Survey`에 `surfaceEvidenceAbsenceAssessment`와 `nonSiteResourceSurvey`를 추가했다. 표면 유물이나 노출 유구가 없다는 사실은 유적 부재의 확정값이 아니므로 지형, 입지조건, 퇴적물 성격, 탐문, 경험 판단, 조사 한계와 추가조사 필요 여부를 분리한다. 비유적지라도 석재·점토 공급원, 성곽·고인돌 석재 공급지, 생산 원료 후보와 주변 자원분포는 유적 해석과 조사계획에 되돌아갈 수 있으므로 별도 조사값으로 둔다.

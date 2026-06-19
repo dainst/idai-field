@@ -4,6 +4,7 @@
   "validationQuestions": [
     "지표조사 범위가 사업구역 전체, 형질변경지, 토취장·사토장·가설도로, 영향권까지 명시되는가.",
     "표면 유물 부재가 유적 부재로 확정되지 않고 지형·입지·퇴적물·탐문·조사한계와 함께 남는가.",
+    "비파괴 물리탐사가 방법 선택, 대상 적합성, 이상체 영상·사진·DGPS, 후속 트렌치 판단까지 이어지는가.",
     "유적이 아닌 석재·점토·생산 원료 후보와 표면 채집 유물의 지도·GPS·사진·부착토 보존 기록이 이어지는가."
   ],
   "documents": [
@@ -157,6 +158,29 @@
           "pointRadiusUnder5m",
           "dgpsUsed",
           "twoGpsControlPoints"
+        ],
+        "geophysicalSurveyMethod": [
+          "probeRodCheck",
+          "groundPenetratingRadar",
+          "electricalResistivitySurvey",
+          "magneticSurvey",
+          "targetFeatureSuitabilityReviewed",
+          "terrainConditionLimitReviewed",
+          "methodLimitRecorded"
+        ],
+        "geophysicalAnomalyVerification": [
+          "equipmentSpecificationRecorded",
+          "surveyLineGridRecorded",
+          "rawDataPreserved",
+          "dataProcessingRecorded",
+          "anomalyImageRecorded",
+          "anomalyTypeRecorded",
+          "colorPhotoRecorded",
+          "dgpsLocationRecorded",
+          "interpretationLimitRecorded",
+          "fieldCrossCheckCompleted",
+          "followUpTrenchPlanned",
+          "excavationMethodDecisionLinked"
         ],
         "surfaceSurveyHeritageCategory": [
           "archaeology",

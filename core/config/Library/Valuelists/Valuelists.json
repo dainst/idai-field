@@ -36466,6 +36466,82 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-geophysicalSurveyMethod": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-20",
+    "values": {
+      "probeRodCheck": {},
+      "boringSurvey": {},
+      "paleolandformAnalysis": {},
+      "mapInterpretation": {},
+      "aerialPhotoInterpretation": {},
+      "groundPenetratingRadar": {},
+      "electricalResistivitySurvey": {},
+      "magneticSurvey": {},
+      "electromagneticInductionSurvey": {},
+      "underwaterSonarSurvey": {},
+      "subBottomProfiler": {},
+      "underwaterMagneticSurvey": {},
+      "targetFeatureSuitabilityReviewed": {},
+      "terrainConditionLimitReviewed": {},
+      "methodLimitRecorded": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "probeRodCheck",
+      "boringSurvey",
+      "paleolandformAnalysis",
+      "mapInterpretation",
+      "aerialPhotoInterpretation",
+      "groundPenetratingRadar",
+      "electricalResistivitySurvey",
+      "magneticSurvey",
+      "electromagneticInductionSurvey",
+      "underwaterSonarSurvey",
+      "subBottomProfiler",
+      "underwaterMagneticSurvey",
+      "targetFeatureSuitabilityReviewed",
+      "terrainConditionLimitReviewed",
+      "methodLimitRecorded",
+      "pendingDecision"
+    ]
+  },
+  "KoreanFieldwork-geophysicalAnomalyVerification": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-20",
+    "values": {
+      "equipmentSpecificationRecorded": {},
+      "surveyLineGridRecorded": {},
+      "rawDataPreserved": {},
+      "dataProcessingRecorded": {},
+      "anomalyImageRecorded": {},
+      "anomalyTypeRecorded": {},
+      "colorPhotoRecorded": {},
+      "dgpsLocationRecorded": {},
+      "interpretationLimitRecorded": {},
+      "fieldCrossCheckCompleted": {},
+      "falsePositiveRiskRecorded": {},
+      "followUpTrenchPlanned": {},
+      "excavationMethodDecisionLinked": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "equipmentSpecificationRecorded",
+      "surveyLineGridRecorded",
+      "rawDataPreserved",
+      "dataProcessingRecorded",
+      "anomalyImageRecorded",
+      "anomalyTypeRecorded",
+      "colorPhotoRecorded",
+      "dgpsLocationRecorded",
+      "interpretationLimitRecorded",
+      "fieldCrossCheckCompleted",
+      "falsePositiveRiskRecorded",
+      "followUpTrenchPlanned",
+      "excavationMethodDecisionLinked",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-surfaceSurveyHeritageCategory": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

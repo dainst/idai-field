@@ -6429,6 +6429,7 @@
       "artifactDrawing": { "label": "유물실측" },
       "conservationScience": { "label": "보존과학" },
       "archaeobotany": { "label": "식물고고학" },
+      "zooarchaeology": { "label": "동물고고학" },
       "researchMethod": { "label": "연구방법론" },
       "dictionaryTerminology": { "label": "사전·용어" },
       "reportWriting": { "label": "보고서 작성" },

@@ -151,7 +151,7 @@ GPS·GIS 현장 시스템 보강분은 `Operation`에 `gpsSurveyQualityRecord`, 
 
 이 구현 단위가 먼저 들어가야 각 유적 유형별 템플릿을 만들 때 기록이 흩어지지 않는다.
 
-동물유체·화석환경 보강분은 `faunalRecoverySampling`, `faunalPreservationHandling`, `zooarchaeologicalIdentification`, `boneSurfaceModification`, `zooarchaeologicalQuantification`으로 `Sample`에 배치했다. 큰 뼈만 선별해 생기는 왜곡, 소형 어류·조류·설치류·미세 패각·어린 개체 누락, 산성토양·패총·석회암동굴·저습지의 보존 조건, 전체 체질과 체눈, 블록샘플 치수와 반복 채취, 토양 지지 상태 유지, 동물종·부위·좌우·성장단계 동정, 절단흔·화흔·포식흔·풍화, NISP·MNE·MNI·MAU·%MAU 산출 방식과 한계를 함께 남기게 했다.
+동물유체·화석환경 보강분은 `faunalRecoverySampling`, `faunalPreservationHandling`, `zooarchaeologicalIdentification`, `boneSurfaceModification`, `zooarchaeologicalQuantification`으로 `Sample`에 배치했다. 큰 뼈만 선별해 생기는 왜곡, 소형 어류·조류·설치류·미세 패각·어린 개체 누락, 산성토양·패총·석회암동굴·저습지의 보존 조건, 전체 체질과 체눈, 블록샘플 치수와 반복 채취, 토양 지지 상태 유지, 동물종·부위·좌우·성장단계 동정, 절단흔·화흔·포식흔·풍화, NISP·MNE·MNI·MAU·%MAU 산출 방식과 한계를 함께 남기게 했다. 원문 근거는 `SourceEvidenceIndex`의 `zooarchaeology` 영역과 `source-index-faunal-quantification-001`에서 따로 추적한다.
 
 ## 검증 질문
 

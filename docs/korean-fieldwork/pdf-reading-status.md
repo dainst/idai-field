@@ -101,6 +101,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-19 동물유체·화석환경 자료도 구현 단위로 압축했다. 제9권 연구방법론의 동물고고학 수습 왜곡 경고와 `유적조사와 고환경분석`, 제5회 조사연구원 교육자료의 동물유체 동정·수습보존·분류·계량 항목은 큰 뼈 선별 수습을 경계하고, 작은 어류뼈·조류뼈·설치류·미세 패각·어린 개체 누락, 전체 체질과 2mm/5mm 체눈, 층위별 블록샘플과 반복 채취, 산성토양·패총·석회암동굴·저습지 보존 조건, 뼈 표면 변형, NISP·MNE·MNI·MAU·%MAU 산출 한계를 함께 남기라고 요구한다. 이 묶음은 `Sample`의 `faunalRecoverySampling`, `faunalPreservationHandling`, `zooarchaeologicalIdentification`, `boneSurfaceModification`, `zooarchaeologicalQuantification` 값 목록으로 옮겼고, `faunal-recovery-quantification-sample.json`으로 패총 시료 기록 흐름을 검증한다.
 
+2026-06-19 같은 동물유체 묶음은 `source-index-faunal-quantification-001`로 원문 근거 색인에도 연결했다. `SourceEvidenceIndex` 적용 영역에는 `zooarchaeology`를 추가해 동물고고학 자료를 식물고고학이나 보존과학에 억지로 분류하지 않게 했고, 고환경분석 강의, 제5회 조사연구원 교육자료, 신석기 전문사전의 NISP/MNI/MNE/MAU 설명을 교차 근거로 남겼다.
+
 2026-06-19 저습지 조사방법 자료도 구현 단위로 압축했다. 제2회 조사연구원 교육자료의 저습지 조사방법은 항공사진 60% 중첩, 개발 전·다시기 항공사진, 고지도, 입체경, 1:5,000 전자지도, 지질도, 형질변경 지도, 보링자료, 등고선도를 준비하고 지역환경에서 극미지형까지 내려가며 고하천·자연제방·단구면·배후습지를 판독하라고 요구한다. 이 묶음은 `Survey`의 `wetlandAnalysisSource`, `wetlandLandformInterpretation`, `wetlandSurveyTargeting`과 `FeatureSegment`의 `wetlandMicrotopographyRecord` 값 목록으로 옮겨 지표 판독, 시굴 위치 선정, 매몰 수전·1회성 퇴적·미화석 분석 연결을 분리했다. `wetland-survey-microtopography-sample.json`으로 준비자료, 지형판독, 시굴 대상 선정, 극미지형 기록, 화분·식물규산체·규조 시료 연결이 값목록과 맞는지 검증한다.
 
 2026-06-19 도면작성법 자료도 구현 단위로 압축했다. `조사요원 기초소양 교육`의 도면작성 장은 고지도·일제강점기 지형도·지적원도·토지이용현황도·항공사진·수치지형도·DEM을 단순 배경이 아니라 과거 경관과 유구 잔존 상태를 읽는 근거로 다룬다. 이 묶음은 `Drawing`의 `mapSourceMaterial`, `historicalMapLandscapeInterpretation`, `spatialDrawingProductionWorkflow`, `distributionMapRequirement` 값 목록으로 옮겨 원천자료, 지도 판독, 좌표계·객체 변환, 주변유적분포도 산출 요건을 분리했다. `media-drawing-gps-workflow-sample.json`으로 고지도·분포도 작성 흐름이 원천자료, 좌표계, 반경·범례·축척·방위표 검수와 맞는지 검증한다.

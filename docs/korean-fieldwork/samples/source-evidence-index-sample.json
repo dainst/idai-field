@@ -273,6 +273,54 @@
     },
     {
       "resource": {
+        "id": "source-index-faunal-quantification-001",
+        "identifier": "SRC-FAUNA-QUANT-001",
+        "shortDescription": "동물유체 수습·계량화 근거 색인",
+        "category": "SourceEvidenceIndex",
+        "relations": {
+          "liesWithin": ["project-source-evidence-001"]
+        },
+        "description": "동물유체가 큰 뼈 선별 수습이나 단일 종명 목록으로 축소되지 않도록, 블록시료·체질망·소형자료 누락 위험과 NISP·MNE·MNI·MAU·%MAU의 산출 방식과 한계를 원문 근거로 묶는다.",
+        "sourceEvidenceCitation": "매장문화재전문교육 조사연구특강 유적조사와 고환경분석, 동물고고학의 이해; 제5회 매장문화재 조사연구원 교육 2008년 8월, 고고학 유적 내 출토 동물유체의 분석방법; 한국고고학전문사전 신석기시대편, 동물유체·블록시료채집법·NISP/MNI/MNE/MAU 항목",
+        "sourceEvidenceLocator": "고환경분석 직접 추출문 행 479-852; 제5회 교육자료 직접 추출문 행 5218-5418; 신석기 전문사전 직접 추출문 행 11724-11734, 44070-44882 및 색인 141·235쪽 대조",
+        "sourceEvidenceMaterial": [
+          "checklist",
+          "measurementValue",
+          "sourceCitation",
+          "table",
+          "caseStudy"
+        ],
+        "sourceEvidenceDomain": [
+          "zooarchaeology",
+          "neolithicSite",
+          "researchMethod"
+        ],
+        "sourceEvidenceVerification": [
+          "crossSourceCompared",
+          "numericValueChecked",
+          "pageChecked",
+          "ocrCorrectionNeeded"
+        ],
+        "sourceEvidenceUse": [
+          "fieldDesignEvidence",
+          "sampleValidationEvidence",
+          "analysisPlanEvidence",
+          "interpretationCaution",
+          "preventAutoClassification",
+          "sourceTraceability",
+          "futurePdfRecheck"
+        ],
+        "recordCreationTiming": "postExcavationDerived",
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "crossReviewNeeded"
+        ],
+        "verificationState": "needsRecheck"
+      }
+    },
+    {
+      "resource": {
         "id": "source-index-pit-dwelling-001",
         "identifier": "SRC-PIT-DWELL-001",
         "shortDescription": "수혈주거지 도판·사례명 재대조 색인",

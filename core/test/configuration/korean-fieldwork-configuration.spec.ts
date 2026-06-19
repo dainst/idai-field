@@ -323,6 +323,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('conservationScience');
         expect(documentsById['source-index-artifact-storage-001'].resource.sourceEvidenceUse)
             .toContain('metricReference');
+        expect(documentsById['source-index-faunal-quantification-001'].resource.sourceEvidenceDomain)
+            .toContain('zooarchaeology');
+        expect(documentsById['source-index-faunal-quantification-001'].resource.sourceEvidenceUse)
+            .toContain('analysisPlanEvidence');
+        expect(documentsById['source-index-faunal-quantification-001'].resource.sourceEvidenceVerification)
+            .toContain('crossSourceCompared');
         expect(documentsById['source-index-pit-dwelling-001'].resource.sourceEvidenceDomain)
             .toContain('buildingSite');
         expect(documentsById['source-index-pit-dwelling-001'].resource.sourceEvidenceVerification)
@@ -3035,6 +3041,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-sourceEvidenceDomain']
             .values.archaeobotany.label)
             .toBe('Archaeobotany');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-sourceEvidenceDomain']
+            .values.zooarchaeology.label)
+            .toBe('Zooarchaeology');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-sourceEvidenceVerification']
             .values.directPdfChecked.label)
             .toBe('Direct PDF checked');

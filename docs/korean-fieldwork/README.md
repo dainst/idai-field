@@ -17,6 +17,7 @@
 - [자료 목록과 분석 범위](source-inventory.md)
 - [보조 자료군 목록과 우선순위](supplemental-source-inventory.md)
 - [PDF 판독 상태](pdf-reading-status.md)
+- [한국 현장 고고학 독해 종합](korean-fieldwork-synthesis.md)
 - [현장기록 원칙 1차 초안](field-recording-principles.md)
 - [현장 현상별 관찰·기록 매트릭스](field-observation-matrix.md)
 - [한국형 야장 기록 워크플로 초안](field-recording-workflows.md)

@@ -242,6 +242,8 @@
           "centralOvalPit",
           "pairedPostholes",
           "wallDitch",
+          "ringDitchAroundDwelling",
+          "houseBurialReuseCandidate",
           "drainageMoistureControl",
           "settlementClusterLinked",
           "burialAreaSeparated",

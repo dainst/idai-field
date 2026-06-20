@@ -2529,6 +2529,8 @@
       "centralOvalPit": { "label": "중앙 타원형 구덩이" },
       "pairedPostholes": { "label": "양단 주혈" },
       "wallDitch": { "label": "벽도랑" },
+      "ringDitchAroundDwelling": { "label": "집자리 외곽 둘레도랑" },
+      "houseBurialReuseCandidate": { "label": "가옥장 전용 후보" },
       "drainageMoistureControl": { "label": "배수·제습시설" },
       "settlementClusterLinked": { "label": "주거군 연결" },
       "burialAreaSeparated": { "label": "묘역 분리" },
@@ -2536,7 +2538,7 @@
       "typeNameNotAssumed": { "label": "유형명 단정 보류" },
       "pendingDecision": { "label": "판단 보류" }
     },
-    "description": "청동기 주거지를 가락동식·둔산식·역삼동식·관산리식·검단리식·휴암리식·송국리식 같은 유형명 후보와 평면, 화덕, 주춧돌, 중앙 타원형 구덩이, 양단 주혈, 벽도랑, 배수·제습, 주거군, 묘역, 연대 근거로 나누어 기록하기 위한 목록"
+    "description": "청동기 주거지를 가락동식·둔산식·역삼동식·관산리식·검단리식·휴암리식·송국리식 같은 유형명 후보와 평면, 화덕, 주춧돌, 중앙 타원형 구덩이, 양단 주혈, 벽도랑, 외곽 둘레도랑, 가옥장 전용 후보, 배수·제습, 주거군, 묘역, 연대 근거로 나누어 기록하기 위한 목록"
   },
   "KoreanFieldwork-dolmenStructureContext": {
     "values": {

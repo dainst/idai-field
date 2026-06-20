@@ -14283,6 +14283,8 @@
       "centralOvalPit": { "label": "Central oval pit" },
       "pairedPostholes": { "label": "Paired postholes" },
       "wallDitch": { "label": "Wall ditch" },
+      "ringDitchAroundDwelling": { "label": "Ring ditch around dwelling" },
+      "houseBurialReuseCandidate": { "label": "House-burial reuse candidate" },
       "drainageMoistureControl": { "label": "Drainage or moisture control" },
       "settlementClusterLinked": { "label": "Settlement cluster linked" },
       "burialAreaSeparated": { "label": "Burial area separated" },
@@ -14290,7 +14292,7 @@
       "typeNameNotAssumed": { "label": "Type name not assumed" },
       "pendingDecision": { "label": "Pending decision" }
     },
-    "description": "Korean Bronze Age dwelling checks for separating type-name candidates from observed plans, hearths, foundation stones, central oval pits, paired postholes, wall ditches, drainage, settlement clusters, burial areas, radiocarbon dates, and unresolved interpretation"
+    "description": "Korean Bronze Age dwelling checks for separating type-name candidates from observed plans, hearths, foundation stones, central oval pits, paired postholes, wall ditches, ring ditches around dwellings, house-burial reuse candidates, drainage, settlement clusters, burial areas, radiocarbon dates, and unresolved interpretation"
   },
   "KoreanFieldwork-dolmenStructureContext": {
     "values": {

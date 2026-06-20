@@ -738,6 +738,18 @@ describe('KoreanFieldwork project configuration', () => {
             .not.toContain('captionNeedsCheck');
         expect(documentsById['source-index-production-dictionary-001'].resource.verificationState)
             .toBe('candidate');
+        expect(documentsById['source-index-bronze-dictionary-001'].resource.sourceEvidenceDomain)
+            .toContain('buildingSite');
+        expect(documentsById['source-index-bronze-dictionary-001'].resource.sourceEvidenceDomain)
+            .toContain('tomb');
+        expect(documentsById['source-index-bronze-dictionary-001'].resource.sourceEvidenceUse)
+            .toContain('preventAutoClassification');
+        expect(documentsById['source-index-bronze-dictionary-001'].resource.sourceEvidenceLocator)
+            .toContain('증보판Ⅱ PDF 20-22쪽');
+        expect(documentsById['source-index-bronze-dictionary-001'].resource.sourceEvidenceVerification)
+            .toContain('directPdfChecked');
+        expect(documentsById['source-index-bronze-dictionary-001'].resource.verificationState)
+            .toBe('candidate');
         expect(documentsById['source-index-paleolithic-dictionary-001'].resource.sourceEvidenceDomain)
             .toContain('paleolithicSite');
         expect(documentsById['source-index-paleolithic-dictionary-001'].resource.sourceEvidenceUse)
@@ -1320,6 +1332,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('drawingInversionRisk');
         expect(documentsById['feature-bronze-dwelling-001'].resource.bronzeAgeDwellingEvidence)
             .toContain('songgukriTypeCandidate');
+        expect(documentsById['feature-bronze-dwelling-001'].resource.bronzeAgeDwellingEvidence)
+            .toContain('ringDitchAroundDwelling');
+        expect(documentsById['feature-bronze-dwelling-001'].resource.bronzeAgeDwellingEvidence)
+            .toContain('houseBurialReuseCandidate');
         expect(documentsById['feature-bronze-dwelling-001'].resource.bronzeAgeDwellingEvidence)
             .toContain('typeNameNotAssumed');
         expect(documentsById['feature-bronze-dwelling-001'].resource.chronologyUnitDecision)

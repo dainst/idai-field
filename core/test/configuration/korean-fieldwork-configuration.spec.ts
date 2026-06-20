@@ -610,6 +610,17 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('noSilentRewrite');
         expect(documentsById['quality-review-sameday-001'].resource.reportEvaluationFeedback)
             .toContain('supplementRequestTracked');
+        [
+            'op-quality-001',
+            'feature-quality-001',
+            'find-quality-001',
+            'sample-quality-001',
+            'field-report-concurrent-review-quality-001',
+            'daily-log-quality-001',
+            'quality-review-sameday-001'
+        ].forEach(documentId => {
+            expect(documentsById[documentId].resource.verificationState).toBe('candidate');
+        });
     });
 
 
@@ -756,6 +767,14 @@ describe('KoreanFieldwork project configuration', () => {
         expect(documentsById['source-index-surface-survey-processing-001'].resource.sourceEvidenceUse)
             .toContain('preventAutoClassification');
         expect(documentsById['source-index-surface-survey-processing-001'].resource.verificationState)
+            .toBe('candidate');
+        expect(documentsById['source-index-daily-log-quality-001'].resource.sourceEvidenceDomain)
+            .toContain('reportWriting');
+        expect(documentsById['source-index-daily-log-quality-001'].resource.sourceEvidenceLocator)
+            .toContain('method17_dailylog_notebook_pages');
+        expect(documentsById['source-index-daily-log-quality-001'].resource.sourceEvidenceUse)
+            .toContain('reportCrossCheckEvidence');
+        expect(documentsById['source-index-daily-log-quality-001'].resource.verificationState)
             .toBe('candidate');
         expect(documentsById['source-index-digital-survey-equipment-001'].resource.sourceEvidenceDomain)
             .toContain('spatialData');

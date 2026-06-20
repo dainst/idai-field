@@ -776,6 +776,55 @@
         ],
         "verificationState": "candidate"
       }
+    },
+    {
+      "resource": {
+        "id": "source-index-daily-log-quality-001",
+        "identifier": "SRC-DAILY-LOG-QUALITY-001",
+        "shortDescription": "야장·작업일지·품질검수 원문 대조 색인",
+        "category": "SourceEvidenceIndex",
+        "relations": {
+          "liesWithin": ["project-source-evidence-001"]
+        },
+        "description": "조사실무와 조사요원 기초소양 교육자료의 야장, 작업일지, 현장시점 기록, 보고서 전 조사자료 검토 대목을 Operation, DailyLog, FieldRecordQualityReview 화면의 근거로 남긴다.",
+        "sourceEvidenceCitation": "매장문화재_조사실무.pdf; 발굴조사_실무.pdf; 조사요원_기초소양_교육.pdf",
+        "sourceEvidenceLocator": "method05_notebook_record_pages/page_0012-0013,0020.png; method17_dailylog_notebook_pages/page_0069-0070,0078-0079.png; method26_record_timing_review_pages/page_0074,0079,0084-0085.png; 개인 야장 공적기록화, 제토량·장비·인부·퇴적두께 기록, 일지 매일작성·증거역할, 현장시에만 작성 가능한 정보, 원고·도면·사진 교차검토 확인",
+        "sourceEvidenceMaterial": [
+          "originalScript",
+          "sourceCitation",
+          "checklist",
+          "administrativeForm",
+          "table",
+          "photo"
+        ],
+        "sourceEvidenceDomain": [
+          "fieldSurvey",
+          "reportWriting",
+          "administration"
+        ],
+        "sourceEvidenceVerification": [
+          "pageChecked",
+          "directPdfChecked",
+          "originalScriptChecked",
+          "formChecked",
+          "crossSourceCompared"
+        ],
+        "sourceEvidenceUse": [
+          "fieldDesignEvidence",
+          "sampleValidationEvidence",
+          "reportCrossCheckEvidence",
+          "preventAutoClassification",
+          "sourceTraceability"
+        ],
+        "recordCreationTiming": "postExcavationDerived",
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "crossReviewNeeded",
+          "reproducibleRecord"
+        ],
+        "verificationState": "candidate"
+      }
     }
   ]
 }

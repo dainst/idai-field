@@ -774,6 +774,26 @@ describe('KoreanFieldwork project configuration', () => {
             .not.toContain('captionNeedsCheck');
         expect(documentsById['source-index-production-dictionary-001'].resource.verificationState)
             .toBe('candidate');
+        expect(documentsById['source-index-iron-process-method-001'].resource.sourceEvidenceDomain)
+            .toContain('ironProduction');
+        expect(documentsById['source-index-iron-process-method-001'].resource.sourceEvidenceDomain)
+            .toContain('productionSite');
+        expect(documentsById['source-index-iron-process-method-001'].resource.sourceEvidenceMaterial)
+            .toContain('measurementValue');
+        expect(documentsById['source-index-iron-process-method-001'].resource.sourceEvidenceLocator)
+            .toContain('method01_iron_rendered');
+        expect(documentsById['source-index-iron-process-method-001'].resource.sourceEvidenceLocator)
+            .toContain('method01_iron_page_071.png');
+        expect(documentsById['source-index-iron-process-method-001'].resource.sourceEvidenceVerification)
+            .toContain('numericValueChecked');
+        expect(documentsById['source-index-iron-process-method-001'].resource.sourceEvidenceUse)
+            .toContain('analysisPlanEvidence');
+        expect(documentsById['source-index-iron-process-method-001'].resource.sourceEvidenceUse)
+            .toContain('preventAutoClassification');
+        expect(documentsById['source-index-iron-process-method-001'].resource.sourceEvidenceUse)
+            .not.toContain('futurePdfRecheck');
+        expect(documentsById['source-index-iron-process-method-001'].resource.verificationState)
+            .toBe('candidate');
         expect(documentsById['source-index-bronze-dictionary-001'].resource.sourceEvidenceDomain)
             .toContain('buildingSite');
         expect(documentsById['source-index-bronze-dictionary-001'].resource.sourceEvidenceDomain)
@@ -1245,16 +1265,28 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('classificationDeferred');
         expect(documentsById['feature-iron-furnace-001'].resource.ironFurnaceStructure)
             .toContain('floorNotConfusedWithCut');
+        expect(documentsById['feature-iron-furnace-001'].resource.ironFurnaceStructure)
+            .toContain('undergroundMoistureControl');
+        expect(documentsById['feature-iron-furnace-001'].resource.ironFurnaceStructure)
+            .toContain('rawMaterialStorage');
+        expect(documentsById['feature-iron-furnace-001'].resource.ironFurnaceStructure)
+            .toContain('ritualDepositCandidate');
         expect(documentsById['iron-process-relation-001'].resource.ironPreviousOutputText)
             .toBe('환원괴·반환원괴 후보');
         expect(documentsById['iron-process-relation-001'].resource.ironNextInputText)
             .toBe('단야 원료 철소재 후보');
+        expect(documentsById['iron-process-relation-001'].resource.ironProcessRelationCheck)
+            .toContain('rawMaterialFlow');
         expect(documentsById['iron-process-relation-001'].resource.ironProcessRelationCheck)
             .toContain('analysisFeedbackNeeded');
         expect(documentsById['find-iron-residue-001'].resource.ironResidueSubtype)
             .toContain('furnaceInternalSlag');
         expect(documentsById['find-iron-residue-001'].resource.ironResidueSubtype)
             .toContain('sphericalHammerscale');
+        expect(documentsById['find-iron-residue-001'].resource.ironResidueSubtype)
+            .toContain('pigIronLump');
+        expect(documentsById['find-iron-residue-001'].resource.ironResidueSubtype)
+            .toContain('moldFragment');
         expect(documentsById['sample-iron-analysis-001'].resource.ironSampleAnalysisPlan)
             .toContain('oxideConversion');
         expect(documentsById['sample-iron-analysis-001'].resource.ironSampleAnalysisPlan)

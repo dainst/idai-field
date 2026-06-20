@@ -6,7 +6,8 @@
     "OCR로 읽은 캡션·한자·수치가 원PDF 대조 상태와 함께 보류될 수 있는가.",
     "사례 색인이 자동분류 근거가 아니라 비교·해석주의·후속 PDF 재대조 근거로 남는가.",
     "구석기 사전의 접합·석재·사용흔·국외 비교용어가 필드 설계 근거와 자동분류 방지 근거로 분리되는가.",
-    "형식학 강의자료의 시간성·공반·기능·지역차 검토가 편년 자동확정 방지 근거로 남는가."
+    "형식학 강의자료의 시간성·공반·기능·지역차 검토가 편년 자동확정 방지 근거로 남는가.",
+    "제철유적 조사방법론의 공정·구조·부산물·부속유구·목탄 근거가 제철로 명칭 자동분류를 막고 분석계획으로 이어지는가."
   ],
   "documents": [
     {
@@ -593,6 +594,59 @@
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
           "crossReviewNeeded"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "source-index-iron-process-method-001",
+        "identifier": "SRC-IRON-PROCESS-METHOD-001",
+        "shortDescription": "제철유적 공정·조사방법 원문 색인",
+        "category": "SourceEvidenceIndex",
+        "relations": {
+          "liesWithin": ["project-source-evidence-001"]
+        },
+        "description": "유적조사방법론 1기 제철유적 장의 제철 공정 도식, 배소·제련·단야·용해·초강로 조사 사진, 제련로 배치 점검표, 단야로 절개법, 격자방안 단조박편·입상재 수습, 구상소철괴 오분류 주의, 부속유구와 목탄 기록을 제철유적 화면과 샘플 검증 근거로 묶는다.",
+        "sourceEvidenceCitation": "매장문화재_유적조사방법론(1기).pdf, 제철유적 조사방법 장",
+        "sourceEvidenceLocator": "원문 렌더링 method01_iron_rendered/method01_iron_page_029.png, method01_iron_page_031.png, method01_iron_page_033.png, method01_iron_page_035.png, method01_iron_page_037.png, method01_iron_page_039.png, method01_iron_page_041.png, method01_iron_page_043.png, method01_iron_page_045.png, method01_iron_page_047.png, method01_iron_page_049.png, method01_iron_page_051.png, method01_iron_page_053.png, method01_iron_page_055.png, method01_iron_page_057.png, method01_iron_page_059.png, method01_iron_page_061.png, method01_iron_page_063.png, method01_iron_page_065.png, method01_iron_page_067.png, method01_iron_page_069.png, method01_iron_page_071.png, method01_iron_page_073.png, method01_iron_page_075.png, method01_iron_page_077.png, method01_iron_page_079.png, method01_iron_page_081.png, method01_iron_page_083.png, method01_iron_page_085.png, method01_iron_page_087.png, method01_iron_page_089.png, method01_iron_page_091.png, method01_iron_page_093.png, method01_iron_page_095.png, method01_iron_page_097.png, method01_iron_page_099.png, method01_iron_page_101.png, method01_iron_page_103.png 직접 대조; 철 탄소함량표, 전통시부리 공정표, 용해주조 공정표, 제철유적 유물 분류표, 목탄 수량·수종·사용량 수치 확인",
+        "sourceEvidenceMaterial": [
+          "diagram",
+          "photo",
+          "table",
+          "checklist",
+          "caseStudy",
+          "measurementValue",
+          "caption"
+        ],
+        "sourceEvidenceDomain": [
+          "ironProduction",
+          "productionSite",
+          "researchMethod"
+        ],
+        "sourceEvidenceVerification": [
+          "pageChecked",
+          "tableNumberChecked",
+          "captionChecked",
+          "caseNameChecked",
+          "numericValueChecked",
+          "directPdfChecked"
+        ],
+        "sourceEvidenceUse": [
+          "fieldDesignEvidence",
+          "sampleValidationEvidence",
+          "analysisPlanEvidence",
+          "metricReference",
+          "interpretationCaution",
+          "preventAutoClassification",
+          "sourceTraceability"
+        ],
+        "recordCreationTiming": "postExcavationDerived",
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "crossReviewNeeded",
+          "reproducibleRecord"
         ],
         "verificationState": "candidate"
       }

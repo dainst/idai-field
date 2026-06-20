@@ -86,11 +86,19 @@
           "furnaceSectionRecorded",
           "wallRecorded",
           "floorNotConfusedWithCut",
+          "undergroundMoistureControl",
           "tuyereOpening",
+          "tuyereCurvature",
           "slagTappingOpening",
+          "stokeholeOrHearthMouth",
           "repairTrace",
+          "rawMaterialStorage",
+          "fuelStorage",
+          "additiveEvidence",
+          "roastingFeatureNearby",
           "wasteDepositLinked",
-          "workshopLinked"
+          "workshopLinked",
+          "ritualDepositCandidate"
         ],
         "verificationState": "pendingDecision"
       }
@@ -115,7 +123,10 @@
           "nextInputIdentified",
           "residueBasedInference",
           "analysisBasedInference",
+          "rawMaterialFlow",
+          "fuelFlow",
           "productFlow",
+          "residueFlow",
           "alternativeRelationOpen",
           "analysisFeedbackNeeded"
         ],
@@ -158,12 +169,20 @@
         "ironResidueSubtype": [
           "furnaceWall",
           "tuyere",
+          "tuyereNozzle",
+          "furnaceBottom",
           "tapSlag",
           "furnaceInternalSlag",
           "bloomFragment",
+          "partiallyReducedLump",
+          "pigIronLump",
           "smithingSlag",
           "forgingScale",
           "sphericalHammerscale",
+          "glassySlag",
+          "additiveCandidate",
+          "moldFragment",
+          "crucibleCandidate",
           "pendingDecision"
         ],
         "verificationState": "pendingDecision"

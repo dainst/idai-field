@@ -5,7 +5,8 @@
     "지표에서 정형 석기가 적거나 없어도 고토양·단구·기존 유적·지도 자료가 구석기 가능성 근거로 남는가.",
     "후보 석기와 부착토, 지형조건 사진, 토양시료, 숯 확인이 채집 단계에서 함께 기록되는가.",
     "시굴 피트의 좌표와 후보석기 판별, 단면시료, 주변 석재 공급지 조사가 정밀발굴 전환 근거로 유지되는가.",
-    "정밀발굴 단계에서 석기·부스러기·접합·자갈돌·탄화물 집중과 자연층/문화층 불일치가 별도 검토값으로 남는가."
+    "정밀발굴 단계에서 석기·부스러기·접합·자갈돌·탄화물 집중과 자연층/문화층 불일치가 별도 검토값으로 남는가.",
+    "접합군 번호, 석재 산지근거, 사용흔·잔류물 보존 조건이 기능·공간 해석과 분리되어 남는가."
   ],
   "documents": [
     {
@@ -189,7 +190,7 @@
           "isRecordedIn": ["op-paleolithic-survey-001"],
           "liesWithin": ["survey-paleolithic-terrace-001"]
         },
-        "description": "시굴 뒤 정밀발굴 범위로 확장한 구역에서 몸돌·격지·미세박편과 자갈돌·탄화물 집중이 겹친다. 석기만 수습하고 끝내지 않고 제작공간, 폐기공간, 이동 동선 후보를 현장에서 검토한다.",
+        "description": "시굴 뒤 정밀발굴 범위로 확장한 구역에서 몸돌·격지·미세박편과 자갈돌·탄화물 집중이 겹친다. 석기만 수습하고 끝내지 않고 접합군 번호, 제작순서, 석재 산지근거, 불땐자리·시료 연결을 남겨 제작공간, 폐기공간, 이동 동선 후보를 현장에서 검토한다.",
         "featurePackage": ["paleolithicSite"],
         "fieldRecordQuality": [
           "immediateRecording",
@@ -210,10 +211,15 @@
           "coreFlakeDebitageRecorded",
           "microDebitageWaterSieved",
           "refittingRelationRecorded",
+          "refitGroupNumbered",
+          "knappingSequenceReconstructed",
           "rawMaterialDistributionMapped",
+          "rawMaterialSourceEvidenceLinked",
           "cobbleConcentrationChecked",
           "charcoalConcentrationChecked",
+          "hearthCobbleSampleAssociated",
           "activityAreaHypothesisRecorded",
+          "foreignComparisonTermScoped",
           "machineStrippingStoppedAfterFind"
         ],
         "interpretationArgument": [
@@ -278,7 +284,7 @@
           "isRecordedIn": ["op-paleolithic-survey-001"],
           "liesWithin": ["survey-paleolithic-terrace-001"]
         },
-        "description": "밭둑 절개면에서 확인한 비정형 석재편. 유물 확정 전이므로 부착토와 출토지점, 좌표, 치수, 유물대장 연결 여부를 남기고 전문검토로 넘긴다.",
+        "description": "밭둑 절개면에서 확인한 비정형 석재편. 유물 확정 전이므로 부착토와 출토지점, 좌표, 치수, 사용흔·잔류물 보존 조건, 유물대장 연결 여부를 남기고 전문검토로 넘긴다.",
         "fieldRecordQuality": [
           "immediateRecording",
           "observationInterpretationSeparated",
@@ -319,7 +325,10 @@
           "layerGridBoxSeparated",
           "coordinateListLinked",
           "distributionMapLinked",
-          "refitRelationMapLinked"
+          "refitRelationMapLinked",
+          "useWearBeforeWashingChecked",
+          "residueAnalysisPotentialPreserved",
+          "functionInterpretationDeferred"
         ],
         "surfaceFindHandlingRecord": [
           "individualPackaging",

@@ -691,6 +691,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('directPdfChecked');
         expect(documentsById['source-index-production-dictionary-001'].resource.sourceEvidenceVerification)
             .toContain('captionNeedsCheck');
+        expect(documentsById['source-index-paleolithic-dictionary-001'].resource.sourceEvidenceDomain)
+            .toContain('paleolithicSite');
+        expect(documentsById['source-index-paleolithic-dictionary-001'].resource.sourceEvidenceUse)
+            .toContain('preventAutoClassification');
+        expect(documentsById['source-index-paleolithic-dictionary-001'].resource.sourceEvidenceLocator)
+            .toContain('PDF 13, 35, 87, 168, 184');
         expect(documentsById['source-index-tomb-dictionary-001'].resource.sourceEvidenceDomain)
             .toContain('tomb');
         expect(documentsById['source-index-tomb-dictionary-001'].resource.sourceEvidenceUse)
@@ -944,6 +950,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(documentsById['feature-paleolithic-lithic-cluster-001'].resource.paleolithicLithicSpatialContext)
             .toContain('microDebitageWaterSieved');
         expect(documentsById['feature-paleolithic-lithic-cluster-001'].resource.paleolithicLithicSpatialContext)
+            .toContain('refitGroupNumbered');
+        expect(documentsById['feature-paleolithic-lithic-cluster-001'].resource.paleolithicLithicSpatialContext)
+            .toContain('rawMaterialSourceEvidenceLinked');
+        expect(documentsById['feature-paleolithic-lithic-cluster-001'].resource.paleolithicLithicSpatialContext)
+            .toContain('hearthCobbleSampleAssociated');
+        expect(documentsById['feature-paleolithic-lithic-cluster-001'].resource.paleolithicLithicSpatialContext)
             .toContain('machineStrippingStoppedAfterFind');
         expect(documentsById['segment-paleolithic-cultural-layer-001'].resource.relations.liesWithin)
             .toEqual(['feature-paleolithic-lithic-cluster-001']);
@@ -959,6 +971,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('threeDimensionalCoordinateRecorded');
         expect(documentsById['find-paleolithic-candidate-lithic-001'].resource.paleolithicArtifactPositionRecovery)
             .toContain('layerGridBoxSeparated');
+        expect(documentsById['find-paleolithic-candidate-lithic-001'].resource.paleolithicArtifactPositionRecovery)
+            .toContain('useWearBeforeWashingChecked');
+        expect(documentsById['find-paleolithic-candidate-lithic-001'].resource.paleolithicArtifactPositionRecovery)
+            .toContain('functionInterpretationDeferred');
     });
 
 
@@ -3463,6 +3479,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-paleolithicLithicSpatialContext']
             .values.microDebitageWaterSieved.label)
             .toBe('Microdebitage water sieved');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-paleolithicLithicSpatialContext']
+            .values.refitGroupNumbered.label)
+            .toBe('Refit group numbered');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-paleolithicLithicSpatialContext']
+            .values.rawMaterialSourceEvidenceLinked.label)
+            .toBe('석재 산지근거 연결');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-paleolithicCulturalLayerReview']
             .values.naturalCulturalMismatchChecked.label)
             .toBe('자연층·문화층 불일치 검토');
@@ -3652,6 +3674,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-paleolithicArtifactPositionRecovery']
             .values.layerGridBoxSeparated.label)
             .toBe('문화층·칸별 상자 분리');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-paleolithicArtifactPositionRecovery']
+            .values.useWearBeforeWashingChecked.label)
+            .toBe('Use-wear checked before washing');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-paleolithicArtifactPositionRecovery']
+            .values.functionInterpretationDeferred.label)
+            .toBe('기능판정 보류');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactQuantityBasis'].values.sameObjectConfirmed.label)
             .toBe('Same object confirmed');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-artifactQuantityBasis'].values.oneLotTenItems.label)
@@ -4169,6 +4197,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-sourceEvidenceDomain']
             .values.alluvialSite.label)
             .toBe('Alluvial site');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-sourceEvidenceDomain']
+            .values.paleolithicSite.label)
+            .toBe('Paleolithic site');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-sourceEvidenceDomain']
             .values.archaeobotany.label)
             .toBe('Archaeobotany');

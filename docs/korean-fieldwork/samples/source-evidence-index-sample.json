@@ -4,7 +4,8 @@
   "validationQuestions": [
     "도표·사진·표·사례명이 단순 메모로 흩어지지 않고 어떤 필드 설계의 근거인지 남는가.",
     "OCR로 읽은 캡션·한자·수치가 원PDF 대조 상태와 함께 보류될 수 있는가.",
-    "사례 색인이 자동분류 근거가 아니라 비교·해석주의·후속 PDF 재대조 근거로 남는가."
+    "사례 색인이 자동분류 근거가 아니라 비교·해석주의·후속 PDF 재대조 근거로 남는가.",
+    "구석기 사전의 접합·석재·사용흔·국외 비교용어가 필드 설계 근거와 자동분류 방지 근거로 분리되는가."
   ],
   "documents": [
     {
@@ -497,6 +498,53 @@
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
           "crossReviewNeeded"
+        ],
+        "verificationState": "needsRecheck"
+      }
+    },
+    {
+      "resource": {
+        "id": "source-index-paleolithic-dictionary-001",
+        "identifier": "SRC-DICT-PALEOLITHIC-001",
+        "shortDescription": "구석기 사전 석재·접합·공간분포 색인",
+        "category": "SourceEvidenceIndex",
+        "relations": {
+          "liesWithin": ["project-source-evidence-001"]
+        },
+        "description": "구석기시대편의 공간분포, 석기 접합·되맞추기, 석기 제작 기법, 석재 산지, 사용흔분석, 르발루아·무스테리안 같은 국외 비교용어를 구석기 발굴 화면의 공간·산지·기능판정 보류 근거로 남긴다.",
+        "sourceEvidenceCitation": "한국고고학전문사전 구석기시대편",
+        "sourceEvidenceLocator": "구석기시대편 PDF 13, 35, 87, 168, 184쪽 직접 대조; 가월리·주월리유적, 공간분포, 사용흔분석, 석기 접합·석기 제작 기법 원문 화면",
+        "sourceEvidenceMaterial": [
+          "originalScript",
+          "sourceCitation",
+          "caseStudy",
+          "caption",
+          "measurementValue"
+        ],
+        "sourceEvidenceDomain": [
+          "paleolithicSite",
+          "dictionaryTerminology",
+          "spatialData"
+        ],
+        "sourceEvidenceVerification": [
+          "pageChecked",
+          "directPdfChecked",
+          "originalScriptChecked",
+          "caseNameChecked",
+          "captionNeedsCheck"
+        ],
+        "sourceEvidenceUse": [
+          "fieldDesignEvidence",
+          "termAuthorityEvidence",
+          "preventAutoClassification",
+          "sourceTraceability",
+          "futurePdfRecheck"
+        ],
+        "recordCreationTiming": "postExcavationDerived",
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "crossReviewNeeded",
+          "reproducibleRecord"
         ],
         "verificationState": "needsRecheck"
       }

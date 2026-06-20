@@ -12148,10 +12148,13 @@
       "classificationAttributeRecorded": { "label": "Classification/attribute recorded" },
       "distributionMapLinked": { "label": "Distribution map linked" },
       "refitRelationMapLinked": { "label": "Refit relation map linked" },
+      "useWearBeforeWashingChecked": { "label": "Use-wear checked before washing" },
+      "residueAnalysisPotentialPreserved": { "label": "Residue analysis potential preserved" },
+      "functionInterpretationDeferred": { "label": "Function interpretation deferred" },
       "specialistReviewNeeded": { "label": "Specialist review needed" },
       "pendingDecision": { "label": "Pending decision" }
     },
-    "description": "Korean Paleolithic find checks for keeping pedestal height, pre-collection coordinates, cultural layer numbers, artifact serials, layer/grid boxes, coordinate lists, distribution maps, and refit relation maps connected through recovery"
+    "description": "Korean Paleolithic find checks for keeping pedestal height, pre-collection coordinates, cultural layer numbers, artifact serials, layer/grid boxes, coordinate lists, distribution maps, refit relation maps, and use-wear or residue preservation conditions connected through recovery"
   },
   "KoreanFieldwork-artifactQuantityBasis": {
     "values": {
@@ -16322,15 +16325,20 @@
       "coreFlakeDebitageRecorded": { "label": "Core, flake, and debitage recorded" },
       "microDebitageWaterSieved": { "label": "Microdebitage water sieved" },
       "refittingRelationRecorded": { "label": "Refitting relation recorded" },
+      "refitGroupNumbered": { "label": "Refit group numbered" },
+      "knappingSequenceReconstructed": { "label": "Knapping sequence reconstructed" },
       "rawMaterialDistributionMapped": { "label": "Raw-material distribution mapped" },
+      "rawMaterialSourceEvidenceLinked": { "label": "Raw-material source evidence linked" },
       "specialRawMaterialImportChecked": { "label": "Special raw-material import checked" },
       "cobbleConcentrationChecked": { "label": "Cobble concentration checked" },
       "charcoalConcentrationChecked": { "label": "Charcoal concentration checked" },
+      "hearthCobbleSampleAssociated": { "label": "Hearth, cobble, and sample associated" },
       "activityAreaHypothesisRecorded": { "label": "Activity-area hypothesis recorded" },
+      "foreignComparisonTermScoped": { "label": "Foreign comparison term scoped" },
       "machineStrippingStoppedAfterFind": { "label": "Machine stripping stopped after find" },
       "pendingDecision": { "label": "Pending decision" }
     },
-    "description": "Korean field notebook controls for recording Paleolithic lithic plan distribution, microdebitage, refitting, raw-material distribution, cobble or charcoal concentrations, and activity-area hypotheses during excavation"
+    "description": "Korean field notebook controls for recording Paleolithic lithic plan distribution, microdebitage, refit groups, knapping sequences, raw-material source evidence, cobble or charcoal concentrations, sample associations, activity-area hypotheses, and scoped foreign comparison terms during excavation"
   },
   "KoreanFieldwork-paleolithicCulturalLayerReview": {
     "values": {
@@ -19660,6 +19668,7 @@
       "fortification": { "label": "Fortification" },
       "tomb": { "label": "Tomb" },
       "alluvialSite": { "label": "Alluvial site" },
+      "paleolithicSite": { "label": "Paleolithic site" },
       "neolithicSite": { "label": "Neolithic/shell midden" },
       "ironProduction": { "label": "Iron production" },
       "productionSite": { "label": "Production site" },

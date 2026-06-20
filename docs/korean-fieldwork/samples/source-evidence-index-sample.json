@@ -42,9 +42,9 @@
         "relations": {
           "liesWithin": ["project-source-evidence-001"]
         },
-        "description": "제7권 성곽 노트의 풍납토성 단면, 비교성곽 도면, 고려 후기 읍성 일람, 수원화성 제원, 남한산성 행궁 중건 사례를 원PDF 쪽수와 캡션 대조 상태까지 묶어 값목록 확정 전 근거 색인으로 둔다.",
-        "sourceEvidenceCitation": "국립문화유산연구원, 2012, 한국 매장문화재 조사연구방법론7; 한국고고학전문사전 성곽·봉수편",
-        "sourceEvidenceLocator": "제7권 PDF 7-8, 13, 24-26, 31-32, 69-70, 143-145, 150, 162-165, 169-173쪽 직접 대조(volume07_fortification_source_pages/page_0007.png, page_0008.png, page_0013.png, page_0024.png, page_0025.png, page_0026.png, page_0031.png, page_0032.png, page_0069.png, page_0070.png, page_0143.png, page_0144.png, page_0145.png, page_0150.png, page_0162.png, page_0163.png, page_0164.png, page_0165.png, page_0169.png, page_0170.png, page_0171.png, page_0172.png, page_0173.png); 성곽·봉수편 PDF 5-7쪽 일러두기와 1621-1622, 1625쪽 개념표제어 대조(dictionary2011_fortification_terms_pages/page_0005.png, page_0006.png, page_0007.png, page_1621.png, page_1622.png, page_1625.png)",
+        "description": "제7권 성곽 노트의 풍납토성 단면, 비교성곽 도면, 고려 후기 읍성 일람, 수원화성 제원, 남한산성 행궁 중건 사례와 2007년 성곽 용어사전의 왜성 구조, 성문 부속부재, 암문, 수문·수구·은구, 기타 시설물 용어를 원PDF 쪽수와 캡션 대조 상태까지 묶어 값목록 확정 전 근거 색인으로 둔다.",
+        "sourceEvidenceCitation": "국립문화유산연구원, 2012, 한국 매장문화재 조사연구방법론7; 한국고고학전문사전 성곽·봉수편; 2007, 한국성곽 용어사전",
+        "sourceEvidenceLocator": "제7권 PDF 7-8, 13, 24-26, 31-32, 69-70, 143-145, 150, 162-165, 169-173쪽 직접 대조(volume07_fortification_source_pages/page_0007.png, page_0008.png, page_0013.png, page_0024.png, page_0025.png, page_0026.png, page_0031.png, page_0032.png, page_0069.png, page_0070.png, page_0143.png, page_0144.png, page_0145.png, page_0150.png, page_0162.png, page_0163.png, page_0164.png, page_0165.png, page_0169.png, page_0170.png, page_0171.png, page_0172.png, page_0173.png); 성곽·봉수편 PDF 5-7쪽 일러두기와 1621-1622, 1625쪽 개념표제어 대조(dictionary2011_fortification_terms_pages/page_0005.png, page_0006.png, page_0007.png, page_1621.png, page_1622.png, page_1625.png); 한국성곽 용어사전 PDF 49-58, 167, 250, 254-255, 261-265, 302-307쪽 직접 대조(dictionary2007_fortification_terms_pages/dict2007_fortification_page_0049.png, dict2007_fortification_page_0050.png, dict2007_fortification_page_0051.png, dict2007_fortification_page_0052.png, dict2007_fortification_page_0053.png, dict2007_fortification_page_0054.png, dict2007_fortification_page_0055.png, dict2007_fortification_page_0056.png, dict2007_fortification_page_0057.png, dict2007_fortification_page_0058.png, dict2007_fortification_page_0167.png, dict2007_fortification_page_0250.png, dict2007_fortification_page_0254.png, dict2007_fortification_page_0255.png, dict2007_fortification_page_0261.png, dict2007_fortification_page_0262.png, dict2007_fortification_page_0263.png, dict2007_fortification_page_0264.png, dict2007_fortification_page_0265.png, dict2007_fortification_page_0302.png, dict2007_fortification_page_0303.png, dict2007_fortification_page_0304.png, dict2007_fortification_page_0305.png, dict2007_fortification_page_0306.png, dict2007_fortification_page_0307.png)",
         "sourceEvidenceMaterial": [
           "figure",
           "table",
@@ -52,7 +52,8 @@
           "photo",
           "caseStudy",
           "measurementValue",
-          "caption"
+          "caption",
+          "originalScript"
         ],
         "sourceEvidenceDomain": [
           "fortification"
@@ -64,7 +65,8 @@
           "caseNameChecked",
           "numericValueChecked",
           "captionChecked",
-          "directPdfChecked"
+          "directPdfChecked",
+          "originalScriptChecked"
         ],
         "sourceEvidenceUse": [
           "fieldDesignEvidence",

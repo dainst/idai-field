@@ -642,14 +642,24 @@ describe('KoreanFieldwork project configuration', () => {
             .toEqual(['project-source-evidence-001']);
         expect(documentsById['source-index-fortification-001'].resource.sourceEvidenceCitation)
             .toContain('한국 매장문화재 조사연구방법론7');
+        expect(documentsById['source-index-fortification-001'].resource.sourceEvidenceCitation)
+            .toContain('한국성곽 용어사전');
         expect(documentsById['source-index-fortification-001'].resource.sourceEvidenceLocator)
             .toContain('page_0025.png');
+        expect(documentsById['source-index-fortification-001'].resource.sourceEvidenceLocator)
+            .toContain('dictionary2007_fortification_terms_pages');
+        expect(documentsById['source-index-fortification-001'].resource.sourceEvidenceLocator)
+            .toContain('dict2007_fortification_page_0305.png');
         expect(documentsById['source-index-fortification-001'].resource.sourceEvidenceMaterial)
             .toContain('measurementValue');
+        expect(documentsById['source-index-fortification-001'].resource.sourceEvidenceMaterial)
+            .toContain('originalScript');
         expect(documentsById['source-index-fortification-001'].resource.sourceEvidenceVerification)
             .toContain('directPdfChecked');
         expect(documentsById['source-index-fortification-001'].resource.sourceEvidenceVerification)
             .toContain('captionChecked');
+        expect(documentsById['source-index-fortification-001'].resource.sourceEvidenceVerification)
+            .toContain('originalScriptChecked');
         expect(documentsById['source-index-fortification-001'].resource.sourceEvidenceUse)
             .toContain('preventAutoClassification');
         expect(documentsById['source-index-alluvial-neolithic-001'].resource.sourceEvidenceDomain)
@@ -1512,18 +1522,41 @@ describe('KoreanFieldwork project configuration', () => {
 
         expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
 
-        expect(documentsById['feature-fortification-gate-001'].resource.fortificationGateFacility)
-            .toContain('janggungseok');
-        expect(documentsById['feature-fortification-gate-001'].resource.fortificationHiddenGateFunction)
-            .toContain('counterattackRoute');
+        ['oseongji', 'nuhyeol', 'janggungmok', 'janggungseok'].forEach(value => {
+            expect(documentsById['feature-fortification-gate-001'].resource.fortificationGateFacility)
+                .toContain(value);
+        });
+        ['counterattackRoute', 'oneHorseWidth', 'oseongjiPresent', 'unrestored'].forEach(value => {
+            expect(documentsById['feature-fortification-gate-001'].resource.fortificationHiddenGateFunction)
+                .toContain(value);
+        });
         expect(documentsById['feature-fortification-gate-001'].resource.fortificationParapetDetail)
             .toContain('defenderCount');
-        expect(documentsById['feature-fortification-water-001'].resource.fortificationWaterFacility)
-            .toContain('collapseRepairHistory');
-        expect(documentsById['feature-japanese-ditch-001'].resource.japaneseFortificationDitch)
-            .toContain('horizontalMovementRestriction');
-        expect(documentsById['feature-japanese-ditch-001'].resource.japaneseFortificationDitch)
-            .toContain('interFortressLink');
+        [
+            'waterGate',
+            'drainageOpening',
+            'hiddenDrainage',
+            'namEungu',
+            'bukEungu',
+            'collapseRepairHistory'
+        ].forEach(value => {
+            expect(documentsById['feature-fortification-water-001'].resource.fortificationWaterFacility)
+                .toContain(value);
+        });
+        [
+            'karabori',
+            'tatebori',
+            'cutOffDitch',
+            'vSection',
+            'uSection',
+            'horizontalMovementRestriction',
+            'friendlyMovementRoute',
+            'transportRoute',
+            'interFortressLink'
+        ].forEach(value => {
+            expect(documentsById['feature-japanese-ditch-001'].resource.japaneseFortificationDitch)
+                .toContain(value);
+        });
         expect(documentsById['feature-beacon-001'].resource.beaconPhysicalFacility)
             .toContain('combustionChamber');
         expect(documentsById['feature-beacon-001'].resource.beaconNetworkOperation)

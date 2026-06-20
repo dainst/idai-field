@@ -1,6 +1,7 @@
 {
   "title": "Korean archaeobotany flotation workflow sample",
   "purpose": "Validate that Korean Sample records keep archaeobotanical sampling, flotation processing, plant-remain identification, interpretation review, and non-detection assessment together before crop, diet, or vegetation interpretations are fixed.",
+  "sourceReviewNote": "2026-06-20 매장문화재전문교육_조사연구특강_유적조사와_고환경분석2011년_10월.pdf 59, 62-64, 66, 70, 75-78쪽 원문 화면을 method12_archaeobotany_recheck_20260620로 다시 대조했다. 75-78쪽은 현생 탄화 밀·보리, 무안 양장리·장흥 상방촌 사례, 길이·폭·두께 계측도, 폭/두께 산점도 H/Y/P 군집, 1mm 축척사진을 확인시킨다. 다만 산점도와 비교사진의 도판별 원출처 표기는 슬라이드 안에 없어 `source-index-archaeobotany-001`은 provenanceChecked로 승격하지 않고 futurePdfRecheck 상태를 유지한다.",
   "validationQuestions": [
     "바닥면·아궁이 재·토기 내부토처럼 버리기 쉬운 토양이 채취 위치, 처리 전 토양량, 체눈, 물체질·플로테이션 조건과 함께 남는가.",
     "탄화곡물과 식물유체 동정이 현생 비교표본, 탄화 비교, 관찰면, 확대사진, 계측치, 동정 신뢰도와 함께 남는가.",

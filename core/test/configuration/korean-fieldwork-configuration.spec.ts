@@ -722,10 +722,16 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('archaeobotany');
         expect(documentsById['source-index-archaeobotany-001'].resource.sourceEvidenceLocator)
             .toContain('method12_rendered/method12_page_075.png-method12_page_078.png');
+        expect(documentsById['source-index-archaeobotany-001'].resource.sourceEvidenceLocator)
+            .toContain('method12_archaeobotany_recheck_20260620');
+        expect(documentsById['source-index-archaeobotany-001'].resource.sourceEvidenceLocator)
+            .toContain('provenanceChecked로 승격하지 않고');
         expect(documentsById['source-index-archaeobotany-001'].resource.sourceEvidenceMaterial)
             .toContain('measurementValue');
         expect(documentsById['source-index-archaeobotany-001'].resource.sourceEvidenceVerification)
             .toContain('directPdfChecked');
+        expect(documentsById['source-index-archaeobotany-001'].resource.sourceEvidenceVerification)
+            .toContain('pendingDecision');
         expect(documentsById['source-index-archaeobotany-001'].resource.sourceEvidenceVerification)
             .not.toContain('provenanceChecked');
         expect(documentsById['source-index-archaeobotany-001'].resource.sourceEvidenceUse)
@@ -1787,6 +1793,10 @@ describe('KoreanFieldwork project configuration', () => {
 
         expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
 
+        expect(sample.sourceReviewNote)
+            .toContain('method12_archaeobotany_recheck_20260620');
+        expect(sample.sourceReviewNote)
+            .toContain('provenanceChecked로 승격하지 않고');
         expect(documentsById['sample-archaeobotany-flotation-001'].resource.sampleCollectionHandling)
             .toContain('carbonizedGrainSeparate');
         expect(documentsById['sample-archaeobotany-flotation-001'].resource.archaeobotanySampleDesign)

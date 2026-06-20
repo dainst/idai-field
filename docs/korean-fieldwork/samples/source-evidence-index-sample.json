@@ -516,9 +516,9 @@
         "relations": {
           "liesWithin": ["project-source-evidence-001"]
         },
-        "description": "고고학사전의 표제어, 한자·원문 표기, 도판 캡션, 찾아가기 관계와 같은 표제어의 분야 분리 예시를 용어 권위 근거로 쓰되 OCR 오독과 분야 차이는 보류값으로 남긴다.",
+        "description": "고고학사전의 일러두기, 표제어, 한자·원문 표기, 도판 캡션, 복합 유적명, 찾아가기 관계와 같은 표제어의 분야 분리 예시를 용어 권위 근거로 쓰되 OCR 오독과 분야 차이는 보류값으로 남긴다.",
         "sourceEvidenceCitation": "한국고고학사전 1·2; 한국고고학전문사전 생산유적편·고분편·성곽봉수편",
-        "sourceEvidenceLocator": "표제어·한자·찾아가기·도판 캡션 원PDF 대조 대상; 생산유적편 일러두기 PDF 9쪽의 평요 분야 분리 예시",
+        "sourceEvidenceLocator": "2001 일반사전 1권 PDF 6, 10, 17, 24, 62, 97, 312쪽 및 2권 PDF 4, 6, 32, 36, 120, 537쪽 원문 렌더링 대조(dictionary2001_general_terms_pages/dict2001_1_page_0006.png, dict2001_1_page_0010.png, dict2001_1_page_0017.png, dict2001_1_page_0024.png, dict2001_1_page_0062.png, dict2001_1_page_0097.png, dict2001_1_page_0312.png, dict2001_2_page_0004.png, dict2001_2_page_0006.png, dict2001_2_page_0032.png, dict2001_2_page_0036.png, dict2001_2_page_0120.png, dict2001_2_page_0537.png); 생산유적편 일러두기 PDF 9쪽의 평요 분야 분리 예시",
         "sourceEvidenceMaterial": [
           "originalScript",
           "caption",
@@ -529,11 +529,16 @@
         "sourceEvidenceDomain": [
           "dictionaryTerminology",
           "productionSite",
-          "tomb"
+          "tomb",
+          "buildingSite",
+          "neolithicSite"
         ],
         "sourceEvidenceVerification": [
+          "pageChecked",
+          "directPdfChecked",
           "originalScriptChecked",
-          "captionNeedsCheck",
+          "captionChecked",
+          "caseNameChecked",
           "ocrCorrectionNeeded",
           "uiExposureDeferred"
         ],
@@ -548,7 +553,7 @@
           "observationInterpretationSeparated",
           "crossReviewNeeded"
         ],
-        "verificationState": "needsRecheck"
+        "verificationState": "candidate"
       }
     },
     {

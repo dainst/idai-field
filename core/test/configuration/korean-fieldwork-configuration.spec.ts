@@ -736,8 +736,20 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('captionChecked');
         expect(documentsById['source-index-dictionary-001'].resource.sourceEvidenceMaterial)
             .toContain('originalScript');
+        expect(documentsById['source-index-dictionary-001'].resource.sourceEvidenceLocator)
+            .toContain('dictionary2001_general_terms_pages');
+        expect(documentsById['source-index-dictionary-001'].resource.sourceEvidenceLocator)
+            .toContain('dict2001_2_page_0537.png');
+        expect(documentsById['source-index-dictionary-001'].resource.sourceEvidenceVerification)
+            .toContain('directPdfChecked');
+        expect(documentsById['source-index-dictionary-001'].resource.sourceEvidenceVerification)
+            .toContain('captionChecked');
         expect(documentsById['source-index-dictionary-001'].resource.sourceEvidenceVerification)
             .toContain('ocrCorrectionNeeded');
+        expect(documentsById['source-index-dictionary-001'].resource.sourceEvidenceVerification)
+            .not.toContain('captionNeedsCheck');
+        expect(documentsById['source-index-dictionary-001'].resource.verificationState)
+            .toBe('candidate');
         expect(documentsById['source-index-production-dictionary-001'].resource.sourceEvidenceDomain)
             .toContain('productionSite');
         expect(documentsById['source-index-production-dictionary-001'].resource.sourceEvidenceUse)

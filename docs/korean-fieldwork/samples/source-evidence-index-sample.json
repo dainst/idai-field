@@ -789,13 +789,14 @@
         "relations": {
           "liesWithin": ["project-source-evidence-001"]
         },
-        "description": "토기 제작의 이해와 실습 자료의 태토 채취·수비, 비짐, 성형, 정면·시문, 건조, 소성, 양산 호계가마 소성실험, 공방·건조장·가마시설 설명을 토기 제작 생애와 실험 설계 근거로 남긴다.",
+        "description": "토기 제작의 이해와 실습 자료의 태토 채취·수비, 비짐 육안 단정 금지, 성형, 정면·시문, 건조·소성·보수흔, 양산 호계가마 소성실험 수치, 요장 시설 도판·캡션을 토기 제작 생애와 실험 설계 근거로 남긴다.",
         "sourceEvidenceCitation": "토기 제작의 이해와 실습",
-        "sourceEvidenceLocator": "direct-recheck lines 378-679, 1039-1212, 2530-2766: clay, temper, forming, drying, firing, fuel, workshop and kiln facilities",
+        "sourceEvidenceLocator": "direct-recheck lines 378-679, 1039-1212, 2530-2766; method29_pottery_rendered/method29_page_068.png-method29_page_076.png, method29_page_089.png-method29_page_095.png, method29_page_140.png-method29_page_148.png: clay, temper, forming, drying, firing traces, Yangsan Hogye kiln experiment values, workshop and kiln facility captions",
         "sourceEvidenceMaterial": [
           "caseStudy",
           "measurementValue",
           "sourceCitation",
+          "caption",
           "checklist"
         ],
         "sourceEvidenceDomain": [
@@ -807,6 +808,8 @@
           "pageChecked",
           "directPdfChecked",
           "numericValueChecked",
+          "captionChecked",
+          "caseNameChecked",
           "crossSourceCompared"
         ],
         "sourceEvidenceUse": [

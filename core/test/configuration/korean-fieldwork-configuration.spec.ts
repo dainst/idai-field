@@ -852,6 +852,18 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('productionSite');
         expect(documentsById['source-index-pottery-production-experiment-001'].resource.sourceEvidenceMaterial)
             .toContain('measurementValue');
+        expect(documentsById['source-index-pottery-production-experiment-001'].resource.sourceEvidenceMaterial)
+            .toContain('caption');
+        expect(documentsById['source-index-pottery-production-experiment-001'].resource.sourceEvidenceLocator)
+            .toContain('method29_pottery_rendered');
+        expect(documentsById['source-index-pottery-production-experiment-001'].resource.sourceEvidenceLocator)
+            .toContain('method29_page_140.png');
+        expect(documentsById['source-index-pottery-production-experiment-001'].resource.sourceEvidenceLocator)
+            .toContain('method29_page_148.png');
+        expect(documentsById['source-index-pottery-production-experiment-001'].resource.sourceEvidenceVerification)
+            .toContain('captionChecked');
+        expect(documentsById['source-index-pottery-production-experiment-001'].resource.sourceEvidenceVerification)
+            .toContain('caseNameChecked');
         expect(documentsById['source-index-pottery-production-experiment-001'].resource.sourceEvidenceUse)
             .toContain('analysisPlanEvidence');
     });

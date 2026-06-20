@@ -680,6 +680,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('conservationScience');
         expect(documentsById['source-index-artifact-storage-001'].resource.sourceEvidenceUse)
             .toContain('metricReference');
+        expect(documentsById['source-index-current-storage-standards-001'].resource.sourceEvidenceLocator)
+            .toContain('국립해양박물관');
+        expect(documentsById['source-index-current-storage-standards-001'].resource.sourceEvidenceDomain)
+            .toContain('conservationScience');
+        expect(documentsById['source-index-current-storage-standards-001'].resource.sourceEvidenceVerification)
+            .toContain('crossSourceCompared');
         expect(documentsById['source-index-faunal-quantification-001'].resource.sourceEvidenceDomain)
             .toContain('zooarchaeology');
         expect(documentsById['source-index-faunal-quantification-001'].resource.sourceEvidenceUse)
@@ -1859,6 +1865,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('individualClimateControl');
         expect(documentsById['find-metal-conservation-001'].resource.storageEnvironmentControl)
             .toContain('humidityPeakBuffered');
+        expect(documentsById['find-metal-conservation-001'].resource.storageEnvironmentControl)
+            .toContain('institutionStandardSourceLinked');
+        expect(documentsById['find-metal-conservation-001'].resource.storageEnvironmentControl)
+            .toContain('environmentMonitoringLogLinked');
+        expect(documentsById['find-metal-conservation-001'].resource.storageEnvironmentControl)
+            .toContain('biologicalRiskMonitoring');
         expect(documentsById['find-metal-conservation-001'].resource.storageEnvironmentControl)
             .toContain('doorToDoorTransferPlanned');
         expect(documentsById['find-metal-conservation-001'].resource.storageEnvironmentControl)
@@ -3839,11 +3851,17 @@ describe('KoreanFieldwork project configuration', () => {
             .values.currentStandardCrossCheckNeeded.label)
             .toBe('Current standard cross-check needed');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-storageEnvironmentControl']
+            .values.institutionStandardSourceLinked.label)
+            .toBe('Institution standard source linked');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-storageEnvironmentControl']
             .values.conditionCheckBeforeReport.label)
             .toBe('Condition check before report');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-storageEnvironmentControl']
             .values.surfaceCondensationPrevented.label)
             .toBe('표면 결로 방지');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-storageEnvironmentControl']
+            .values.biologicalRiskMonitoring.label)
+            .toBe('생물피해 모니터링');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-storageEnvironmentControl']
             .values.largeArtifactSupportEquipment.label)
             .toBe('Large artifact support equipment');

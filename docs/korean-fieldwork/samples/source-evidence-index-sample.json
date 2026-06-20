@@ -321,6 +321,47 @@
     },
     {
       "resource": {
+        "id": "source-index-current-storage-standards-001",
+        "identifier": "SRC-CURRENT-STORAGE-001",
+        "shortDescription": "현행 수장환경 기준 교차대조 색인",
+        "category": "SourceEvidenceIndex",
+        "relations": {
+          "liesWithin": ["project-source-evidence-001"]
+        },
+        "description": "교재 수장환경 표를 앱 기본 규정으로 고정하지 않고, 공개 보존환경 기준과 대조해 기관별·재질별 기준 출처, 실측 로그, 공기오염·생물피해 모니터링을 유물 보관 기록에 연결한다.",
+        "sourceEvidenceCitation": "국립해양박물관 수장고 현황; 국립현대미술관 보존환경; 국립한글박물관 보존환경 관리",
+        "sourceEvidenceLocator": "국립해양박물관 수장고 현황 재질별 온습도 기준(금속 20±2℃/40~50%, 목제 20±2℃/50~60%, 지류·도토·기타 20±2℃/45~55%); 국립현대미술관 보존환경(재질별 기준 차이, 일반 18~22℃/RH 50~70%, 조도·유해가스 관리); 국립한글박물관 보존환경 관리(온·습도, 빛, 공기오염도, 해충·균 등 물리·화학·생물학 요소의 주기적 모니터링)",
+        "sourceEvidenceMaterial": [
+          "sourceCitation",
+          "measurementValue",
+          "checklist"
+        ],
+        "sourceEvidenceDomain": [
+          "conservationScience",
+          "researchMethod"
+        ],
+        "sourceEvidenceVerification": [
+          "provenanceChecked",
+          "numericValueChecked",
+          "crossSourceCompared"
+        ],
+        "sourceEvidenceUse": [
+          "fieldDesignEvidence",
+          "metricReference",
+          "interpretationCaution",
+          "sourceTraceability"
+        ],
+        "recordCreationTiming": "postExcavationDerived",
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "crossReviewNeeded"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
         "id": "source-index-faunal-quantification-001",
         "identifier": "SRC-FAUNA-QUANT-001",
         "shortDescription": "동물유체 수습·계량화 근거 색인",

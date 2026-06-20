@@ -53,6 +53,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-19 유물 건·점수 예시와 수장환경 표는 `source-index-artifact-storage-001`로도 분리했다. 이 색인은 표의 수치를 앱 기본 규정으로 고정하는 장치가 아니라, `artifactQuantityBasis`와 `storageEnvironmentControl`을 보강할 때 원문 쪽수, 수치 대조, 현재 보존 기준 재확인 여부를 함께 추적하는 근거다.
 
+2026-06-20 현행 공개 보존환경 기준도 교차 대조했다. 국립해양박물관은 재질별 온습도 표를 공개하고, 국립현대미술관과 국립한글박물관은 재질별 보존환경 차이, 빛, 공기오염, 해충·균 같은 생물학적 요소의 모니터링을 함께 강조한다. 따라서 `storageEnvironmentControl`에는 교재 표의 수치뿐 아니라 기관 기준 출처, 재질별 적용 범위, 환경 모니터링 로그, 공기오염·생물피해 점검을 추가하고, 별도 색인 `source-index-current-storage-standards-001`로 공개 기준 대조 상태를 남겼다.
+
 2026-06-19 구석기 조사법의 꼬리표·유물대장 요구를 일반 유물 수습 흐름으로 다시 압축했다. 현장 꼬리표는 조사기관, 조사일자, 조사지점, 발굴칸, 일련번호, 지층, 유물층, 유물명, 재질·암질, 동서·남북좌표, 깊이, 치수, 무게를 담고, 유물대장은 이 값에 고유 등록번호와 정리번호 연결을 붙인다. 이 묶음은 `Find` 화면의 `artifactLabelRegisterLink` 값 목록으로 옮겼다.
 
 2026-06-19 제철유적 자료도 다시 대조했다. 2020년 제철유적 조사·분석 방법론과 생산유적 사전은 노 형태만으로 제련·단야·용해·초강을 확정하지 말고, 송풍·배재 구조, 노바닥과 굴광면 구분, 폐기장, 노벽·송풍관·유출재·노내재·환원괴·단조박편·입상재, 시료 채취 위치와 금속학 분석계획을 함께 보라고 요구한다. 이 묶음은 `Feature`의 `ironProcessEvidence`, `ironProcessClassification`, `ironFurnaceStructure`, `Find`의 `ironResidueSubtype`, `Sample`의 `ironSampleAnalysisPlan` 값 목록으로 옮겼고, `iron-production-workflow-sample.json`으로 공정 확정 전 기록 흐름을 검증한다.

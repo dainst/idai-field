@@ -12290,6 +12290,21 @@
       "currentStandardCrossCheckNeeded": {
         "label": "Current standard cross-check needed"
       },
+      "institutionStandardSourceLinked": {
+        "label": "Institution standard source linked"
+      },
+      "materialSpecificRangeApplied": {
+        "label": "Material-specific range applied"
+      },
+      "environmentMonitoringLogLinked": {
+        "label": "Environment monitoring log linked"
+      },
+      "airPollutantMonitoring": {
+        "label": "Air-pollutant monitoring"
+      },
+      "biologicalRiskMonitoring": {
+        "label": "Biological risk monitoring"
+      },
       "temperature20PlusMinus4": {
         "label": "Temperature 20+/-4 C"
       },
@@ -12405,7 +12420,7 @@
         "label": "Pending decision"
       }
     },
-    "description": "Korean storage environment checks for treating training standards as reference values and tracking current-standard review, measured conditions, humidity/temperature peaks, condensation prevention, material-specific microclimates, transfer routes, large-artifact equipment and staff, deviations, and inspection"
+    "description": "Korean storage environment checks for treating training standards as reference values and tracking institution-specific standards, current-standard review, material-specific ranges, monitoring logs, measured conditions, air pollutants, biological risks, humidity/temperature peaks, condensation prevention, transfer routes, large-artifact equipment and staff, deviations, and inspection"
   },
   "KoreanFieldwork-conservationScienceRequest": {
     "values": {

@@ -2042,6 +2042,18 @@ describe('KoreanFieldwork project configuration', () => {
         const drawingForm = config.forms['Drawing:default'];
         const photoForm = config.forms['Photo:default'];
 
+        expect(projectForm.fields.investigationAdministration.inputType).toBe('checkboxes');
+        expect(projectForm.fields.permitConditionCompliance.inputType).toBe('checkboxes');
+        expect(projectForm.fields.investigationRecordHandover.inputType).toBe('checkboxes');
+        expect(operationForm.fields.recordCreationTiming.inputType).toBe('dropdown');
+        expect(operationForm.fields.investigationRecordHandover.inputType).toBe('checkboxes');
+        expect(featureGroupForm.fields.featurePackage.inputType).toBe('checkboxes');
+        expect(featureGroupForm.fields.recordCreationTiming.inputType).toBe('dropdown');
+        expect(featureForm.fields.featurePackage.inputType).toBe('checkboxes');
+        expect(featureForm.fields.fortificationGateFacility.inputType).toBe('checkboxes');
+        expect(featureForm.fields.fortificationWaterFacility.inputType).toBe('checkboxes');
+        expect(featureForm.fields.japaneseFortificationDitch.inputType).toBe('checkboxes');
+        expect(featureForm.fields.recordCreationTiming.inputType).toBe('dropdown');
         expect(fieldRecordQualityReviewForm.parent).toBe('Operation');
         expect(fieldRecordQualityReviewForm.fields.reviewedRecordUnit.inputType).toBe('checkboxes');
         expect(fieldRecordQualityReviewForm.fields.qualityReviewStage.inputType).toBe('checkboxes');
@@ -2362,6 +2374,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.fields.assemblageRelation.inputType).toBe('checkboxes');
         expect(findForm.fields.interpretationArgument.inputType).toBe('checkboxes');
         expect(sampleForm.fields.fieldOnlyMissingCheck.inputType).toBe('checkboxes');
+        expect(sampleForm.fields.recordCreationTiming.inputType).toBe('dropdown');
+        expect(sampleForm.fields.samplePurpose.inputType).toBe('checkboxes');
         expect(sampleForm.fields.findSampleResearchScope.inputType).toBe('checkboxes');
         expect(sampleForm.fields.pitDwellingScienceSamplingPlan.inputType).toBe('checkboxes');
         expect(sampleForm.fields.ironSampleAnalysisPlan.inputType).toBe('checkboxes');
@@ -2464,9 +2478,14 @@ describe('KoreanFieldwork project configuration', () => {
         expect(operationForm.valuelists.digitalSurveyQualityControl)
             .toBe('KoreanFieldwork-digitalSurveyQualityControl');
         expect(operationForm.valuelists.personalNotebookArchive).toBe('KoreanFieldwork-personalNotebookArchive');
+        expect(operationForm.valuelists.recordCreationTiming).toBe('KoreanFieldwork-recordCreationTiming');
+        expect(operationForm.valuelists.investigationRecordHandover)
+            .toBe('KoreanFieldwork-investigationRecordHandover');
         expect(operationForm.valuelists.dailyLogContent).toBe('KoreanFieldwork-dailyLogContent');
         expect(operationForm.valuelists.dailyLogReview).toBe('KoreanFieldwork-dailyLogReview');
         expect(operationForm.valuelists.digitalSourcePreservation).toBe('KoreanFieldwork-digitalSourcePreservation');
+        expect(projectForm.valuelists.investigationAdministration)
+            .toBe('KoreanFieldwork-investigationAdministration');
         expect(projectForm.valuelists.investigationRequestIntake)
             .toBe('KoreanFieldwork-investigationRequestIntake');
         expect(projectForm.valuelists.investigationPlanChangeRecord)
@@ -2474,8 +2493,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(projectForm.valuelists.expertReviewMeeting).toBe('KoreanFieldwork-expertReviewMeeting');
         expect(projectForm.valuelists.partialCompletionPackage)
             .toBe('KoreanFieldwork-partialCompletionPackage');
+        expect(projectForm.valuelists.investigationRecordHandover)
+            .toBe('KoreanFieldwork-investigationRecordHandover');
         expect(projectForm.valuelists.recordTransferManagementSystem)
             .toBe('KoreanFieldwork-recordTransferManagementSystem');
+        expect(projectForm.valuelists.permitConditionCompliance)
+            .toBe('KoreanFieldwork-permitConditionCompliance');
         expect(excavationPermitDocumentSetForm.valuelists.excavationPermitDocumentSet)
             .toBe('KoreanFieldwork-excavationPermitDocumentSet');
         expect(excavationPermitDocumentSetForm.valuelists.verificationState)
@@ -2596,6 +2619,9 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-sourceEvidenceVerification');
         expect(sourceEvidenceIndexForm.valuelists.sourceEvidenceUse)
             .toBe('KoreanFieldwork-sourceEvidenceUse');
+        expect(featureGroupForm.valuelists.featurePackage).toBe('KoreanFieldwork-featurePackage');
+        expect(featureGroupForm.valuelists.recordCreationTiming)
+            .toBe('KoreanFieldwork-recordCreationTiming');
         expect(featureGroupForm.valuelists.settlementSpatialInterpretation)
             .toBe('KoreanFieldwork-settlementSpatialInterpretation');
         expect(surveyForm.valuelists.surfaceSurveyObservation).toBe('KoreanFieldwork-surfaceSurveyObservation');
@@ -2658,6 +2684,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-wetlandLandformInterpretation');
         expect(surveyForm.valuelists.wetlandSurveyTargeting)
             .toBe('KoreanFieldwork-wetlandSurveyTargeting');
+        expect(featureForm.valuelists.featurePackage).toBe('KoreanFieldwork-featurePackage');
+        expect(featureForm.valuelists.recordCreationTiming).toBe('KoreanFieldwork-recordCreationTiming');
+        expect(featureForm.valuelists.fortificationGateFacility)
+            .toBe('KoreanFieldwork-fortificationGateFacility');
+        expect(featureForm.valuelists.fortificationWaterFacility)
+            .toBe('KoreanFieldwork-fortificationWaterFacility');
+        expect(featureForm.valuelists.japaneseFortificationDitch)
+            .toBe('KoreanFieldwork-japaneseFortificationDitch');
         expect(featureForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
         expect(featureForm.valuelists.typologyArgument).toBe('KoreanFieldwork-typologyArgument');
         expect(featureForm.valuelists.chronologyArgument).toBe('KoreanFieldwork-chronologyArgument');
@@ -2920,6 +2954,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.valuelists.assemblageRelation).toBe('KoreanFieldwork-assemblageRelation');
         expect(findForm.valuelists.interpretationArgument).toBe('KoreanFieldwork-interpretationArgument');
         expect(sampleForm.valuelists.fieldOnlyMissingCheck).toBe('KoreanFieldwork-fieldOnlyMissingCheck');
+        expect(sampleForm.valuelists.recordCreationTiming).toBe('KoreanFieldwork-recordCreationTiming');
+        expect(sampleForm.valuelists.samplePurpose).toBe('KoreanFieldwork-samplePurpose');
         expect(featureForm.valuelists.firstExposureRecord).toBe('KoreanFieldwork-firstExposureRecord');
         expect(featureForm.valuelists.fortificationHiddenGateFunction)
             .toBe('KoreanFieldwork-fortificationHiddenGateFunction');

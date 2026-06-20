@@ -343,6 +343,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-20 `형식학적_연구의_이해2015년_9월.pdf`는 추출문 Page 14, 23, 43, 45, 47, 50과 렌더링 이미지를 대조했다. 이 자료는 속성·형식·기종·양식 구분, 공반 반복성, 기능·용도와 지역차, 시간적 속성, 독립 방법 검증, 형식차=시간차 단정 금지, 형식 공존기간을 요구한다. 이번 구현은 `KoreanFieldwork-typologyArgument`와 `KoreanFieldwork-chronologyArgument`를 보강하고, `pottery-technology-subsistence-workflow-sample.json`과 `source-evidence-index-sample.json`에서 형식·편년 자동확정 방지 흐름을 검증하게 했다. 추가로 `method31_page_014.png`, `method31_page_023.png`, `method31_page_043.png`, `method31_page_045.png`, `method31_page_047.png`, `method31_page_050.png`의 표제·도식·캡션성 문구가 추출문과 대응함을 확인해 `source-index-typology-method-001`의 `captionNeedsCheck`를 `captionChecked`로 닫았다.
 
+2026-06-20 값목록-폼-샘플 감사에서는 `supplemental-source-inventory.md`, `Config-KoreanFieldwork.json`, 샘플 JSON, 설정 테스트를 대조했다. 문서에 등장하는 193개 `KoreanFieldwork-*` 이름은 모두 실제 값목록에 존재했고, 전체 294개 `KoreanFieldwork-*` 값목록도 설정 테스트에서 직접 참조되도록 보강했다. 특히 조사행정, 허가조건 이행, 조사기록 인계, 기록 생성 시점, 유구 패키지, 시료 목적, 성곽 성문·수문·왜성 해자 값목록은 이미 폼과 샘플에 있었으나 테스트 누락이 있어 `korean-fieldwork-configuration.spec.ts`에 폼 입력 타입과 값목록 연결 확인을 추가했다.
+
 ## 주의
 
 공개 자료라 하더라도 원문 전체나 장문 번역을 저장소에 옮기지는 않는다. 이 저장소에는 출처, 요약, 조사 원칙, 기록 항목, iDAI.field 적용 설계만 남긴다.

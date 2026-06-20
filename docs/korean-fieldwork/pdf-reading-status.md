@@ -133,6 +133,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-20 지표조사 결과 처리 원문 재대조에서는 `surface_survey_result_processing_pages/page_0020-0026,0028,0036-0037,0049,0053.png`를 확인했다. 보고서 제출, 보존조치 통보와 사업시행 제한, 이격거리·범위 표시, 기존 유적 범위 변경 사유, 원형보존·이전복원·발굴조사 의견, 표본·시굴 필요성, 유적 부재·멸실 판단주의를 확인해 `survey-admin-surface-001`과 `source-index-surface-survey-processing-001`을 `candidate` 상태로 닫았다.
 
+2026-06-20 같은 자료의 36-37, 49, 53-54쪽 원문 화면을 다시 대조했다. 유물 산포량은 유적 규모와 일치하지 않을 수 있고, 소량 유물 확인지는 보존 상태가 좋을 가능성도 있으므로 경시하지 말아야 한다. 자료는 지표조사만으로 매장문화재의 존재·부재를 확정하기 어렵고, 표본·시굴 필요성과 조사원 전문성 조정이 필요하다고 보므로 `surface-survey-scope-absence-sample.json`의 지표조사 부재·후속조치 판단을 `candidate` 상태로 닫고 `source-index-surface-survey-absence-001` 색인을 추가했다.
+
 2026-06-20 야장·작업일지·품질검수 원문 재대조에서는 `method05_notebook_record_pages/page_0012-0013,0020.png`, `method17_dailylog_notebook_pages/page_0069-0070,0078-0079.png`, `method26_record_timing_review_pages/page_0074,0079,0084-0085.png`를 확인했다. 개인 야장은 작성 시에는 개인 기록이지만 조사 완료 후 공적 기록이 되고, 휴대·방안 약식실측·제토량·장비·인부·퇴적두께를 남겨야 하며, 작업일지는 매일 작성되어 누적 조사원·인부·장비, 날씨와 우천작업, 중요 유물, 방문자, 학술위원회·전문가 검토회의, 사실기록과 분쟁 증거 역할을 갖는다. 조사요원 기초소양 교육자료는 유물 노출상태·출토정황·위치·수량을 야장·사진·도면으로 남기고, 현장시에만 작성 가능한 정보와 원고·도면·사진 교차검토를 구분하므로 `daily-log-quality-review-workflow-sample.json`의 미확인 객체 7개와 `source-index-daily-log-quality-001`을 `candidate` 상태로 닫았다.
 
 2026-06-19 전자도면·3D 스캔 자료도 구현 단위로 압축했다. 제2회 조사연구원 교육자료의 전자도면 장은 3D 스캔을 완성 도면 대체물이 아니라 점군 획득, 병합, 폴리곤 변환·최적화, CAD 데이터, 2D·3D 도면과 복원자료 산출로 이어지는 제작 과정으로 다룬다. 유물 전자도면은 유물 형태 검토, 최종 결과물 형태, 특징 view와 단면 위치 결정, 벡터화, 연구자 요구정보, 기준면 생성, 좌표계 이동, 합치 기준을 따로 남겨야 하므로 `Drawing`의 `electronicDrawingSourceWorkflow`, `artifactElectronicDrawingProcedure` 값 목록으로 옮겼다. 이 흐름도 `media-drawing-gps-workflow-sample.json`에서 점군 병합, 폴리곤 변환, 원천·후처리 파일 보존, 기준면·좌표계·합치 기준으로 검증한다.

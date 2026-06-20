@@ -768,6 +768,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('preventAutoClassification');
         expect(documentsById['source-index-surface-survey-processing-001'].resource.verificationState)
             .toBe('candidate');
+        expect(documentsById['source-index-surface-survey-absence-001'].resource.sourceEvidenceDomain)
+            .toContain('surfaceSurvey');
+        expect(documentsById['source-index-surface-survey-absence-001'].resource.sourceEvidenceLocator)
+            .toContain('page_0049');
+        expect(documentsById['source-index-surface-survey-absence-001'].resource.sourceEvidenceUse)
+            .toContain('preventAutoClassification');
+        expect(documentsById['source-index-surface-survey-absence-001'].resource.verificationState)
+            .toBe('candidate');
         expect(documentsById['source-index-daily-log-quality-001'].resource.sourceEvidenceDomain)
             .toContain('reportWriting');
         expect(documentsById['source-index-daily-log-quality-001'].resource.sourceEvidenceLocator)
@@ -981,6 +989,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('noSurfaceEvidence');
         expect(documentsById['survey-surface-scope-001'].resource.surfaceEvidenceAbsenceAssessment)
             .toContain('additionalSurveyNeeded');
+        expect(documentsById['survey-surface-scope-001'].resource.surfaceSurveyBiasControl)
+            .toContain('fieldObservationFirst');
+        expect(documentsById['survey-surface-scope-001'].resource.surfaceSurveyFollowUp)
+            .toContain('stratigraphySurvey');
+        expect(documentsById['survey-surface-scope-001'].resource.surfaceSurveyResultProcessing)
+            .toContain('confirmationSurvey');
+        expect(documentsById['survey-surface-scope-001'].resource.verificationState)
+            .toBe('candidate');
         expect(documentsById['survey-surface-scope-001'].resource.nonSiteResourceSurvey)
             .toContain('dolmenStoneSource');
         expect(documentsById['find-surface-pottery-001'].resource.relations.liesWithin)

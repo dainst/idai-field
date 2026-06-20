@@ -779,6 +779,52 @@
     },
     {
       "resource": {
+        "id": "source-index-surface-survey-absence-001",
+        "identifier": "SRC-SURFACE-SURVEY-ABSENCE-001",
+        "shortDescription": "지표조사 부재판단·후속조치 원문 대조 색인",
+        "category": "SourceEvidenceIndex",
+        "relations": {
+          "liesWithin": ["project-source-evidence-001"]
+        },
+        "description": "지표조사에서 유적이나 유물이 보이지 않는 결과를 곧바로 부재 확정으로 처리하지 않고, 문헌기록 대조, 지형·입지·시야 조건, 조사경로, 전문가 교차검토, 표본·시굴 필요성으로 이어지는 판단 근거로 관리한다.",
+        "sourceEvidenceCitation": "지표조사_업무의_이해_교재.pdf",
+        "sourceEvidenceLocator": "PDF 36-37, 49, 53-54쪽 직접 대조(surface_survey_result_processing_pages/page_0036.png, page_0037.png, page_0049.png, page_0053.png, page_0054.png); 유물 산포량과 유적 규모를 동일시하지 말 것, 소량 유물 확인지 경시 금지, 지표조사만으로 매장문화재 존재·부재를 확정하기 어려움, 표본·시굴 필요성 및 조사원 전문성 조정 필요 확인",
+        "sourceEvidenceMaterial": [
+          "originalScript",
+          "sourceCitation",
+          "checklist",
+          "mapRequirement"
+        ],
+        "sourceEvidenceDomain": [
+          "surfaceSurvey",
+          "fieldSurvey",
+          "administration",
+          "spatialData"
+        ],
+        "sourceEvidenceVerification": [
+          "pageChecked",
+          "directPdfChecked",
+          "originalScriptChecked",
+          "crossSourceCompared"
+        ],
+        "sourceEvidenceUse": [
+          "fieldDesignEvidence",
+          "sampleValidationEvidence",
+          "preventAutoClassification",
+          "interpretationCaution",
+          "sourceTraceability"
+        ],
+        "recordCreationTiming": "postExcavationDerived",
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "crossReviewNeeded"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
         "id": "source-index-daily-log-quality-001",
         "identifier": "SRC-DAILY-LOG-QUALITY-001",
         "shortDescription": "야장·작업일지·품질검수 원문 대조 색인",

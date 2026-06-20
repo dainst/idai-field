@@ -425,10 +425,14 @@
         "relations": {
           "liesWithin": ["project-source-evidence-001"]
         },
-        "description": "제5회 매장문화재 조사연구원 교육자료의 층위와 출토맥락 기록 요구를 전체 층위 흐름도, 기준 층위 사진, 유물-층위 관계, 연대측정값의 층위도 표시 검토 근거로 분리한다.",
+        "description": "제5회 매장문화재 조사연구원 교육자료의 층위와 출토맥락 기록 요구를 원PDF 쪽수와 도판까지 확인해 전체 층위 흐름도, 기준 층위 사진, 유물-층위 관계, 연대측정값의 층위도 표시 검토 근거로 분리한다.",
         "sourceEvidenceCitation": "제5회 매장문화재 조사연구원 교육 2008년 8월, 발굴보고서 작성법 및 층위학적 접근과 출토맥락 분석",
-        "sourceEvidenceLocator": "직접 추출문 행 2362-2407, 2469-2515, 2557-2560 대조; 원PDF 쪽수·도판 재대조 대상",
+        "sourceEvidenceLocator": "직접 추출문 행 2362-2407, 2469-2515, 2557-2560; 원PDF 추출 페이지 60, 66-69, 71, 74-75 직접 대조(교재 지면 53, 59-62, 64, 67-68; method25_stratigraphy_report_pages/page_060.png, page_066.png, page_067.png, page_068.png, page_069.png, page_071.png, page_074.png, page_075.png)",
         "sourceEvidenceMaterial": [
+          "figure",
+          "photo",
+          "drawing",
+          "caption",
           "sourceCitation",
           "checklist",
           "reportEvaluationItem"
@@ -438,8 +442,10 @@
           "researchMethod"
         ],
         "sourceEvidenceVerification": [
-          "ocrCorrectionNeeded",
-          "captionNeedsCheck",
+          "pageChecked",
+          "figureNumberChecked",
+          "captionChecked",
+          "directPdfChecked",
           "uiExposureDeferred"
         ],
         "sourceEvidenceUse": [
@@ -447,8 +453,7 @@
           "sampleValidationEvidence",
           "reportCrossCheckEvidence",
           "interpretationCaution",
-          "sourceTraceability",
-          "futurePdfRecheck"
+          "sourceTraceability"
         ],
         "recordCreationTiming": "postExcavationDerived",
         "fieldRecordQuality": [
@@ -456,7 +461,7 @@
           "reproducibleRecord",
           "crossReviewNeeded"
         ],
-        "verificationState": "needsRecheck"
+        "verificationState": "candidate"
       }
     },
     {

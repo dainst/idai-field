@@ -683,8 +683,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('reportWriting');
         expect(documentsById['source-index-stratigraphy-context-001'].resource.sourceEvidenceUse)
             .toContain('reportCrossCheckEvidence');
+        expect(documentsById['source-index-stratigraphy-context-001'].resource.sourceEvidenceLocator)
+            .toContain('page_067.png');
         expect(documentsById['source-index-stratigraphy-context-001'].resource.sourceEvidenceVerification)
-            .toContain('ocrCorrectionNeeded');
+            .toContain('pageChecked');
+        expect(documentsById['source-index-stratigraphy-context-001'].resource.sourceEvidenceVerification)
+            .toContain('directPdfChecked');
+        expect(documentsById['source-index-stratigraphy-context-001'].resource.sourceEvidenceVerification)
+            .toContain('captionChecked');
         expect(documentsById['source-index-dictionary-001'].resource.sourceEvidenceMaterial)
             .toContain('originalScript');
         expect(documentsById['source-index-dictionary-001'].resource.sourceEvidenceVerification)

@@ -1,6 +1,7 @@
 {
   "title": "Korean conservation science fieldwork sample",
   "purpose": "Validate that conservation-science records connect exposure, emergency storage, material-specific risks, analysis requests, treatment principles, DNA and soil sampling, and destructive-analysis decisions from the field stage.",
+  "sourceReviewNote": "2026-06-20 매장문화재_전문교육_보존과학_연구의_최신_성과와_과제2013년_9월.pdf 17, 23, 31, 55-58, 67, 82, 87, 92, 95, 97, 100, 102쪽 원문 화면을 conservation_science_2013_pages/page_0017.png, page_0023.png, page_0031.png, page_0055.png, page_0056.png, page_0058.png, page_0067.png, page_0082.png, page_0087.png, page_0092.png, page_0095.png, page_0097.png, page_0100.png, page_0102.png로 대조했다. 수침목재·칠기, 금속, 토도류, 지류·직물, 인골 DNA, 유기물·토양 시료는 노출·수습·임시보관·분석승인 단계에서 해석 가능성을 바꾸므로 Find와 Sample 기록이 보존처리와 분석질문을 함께 추적해야 한다.",
   "validationQuestions": [
     "수침목재·칠기 수습이 물에 젖은 상태, 차광·냉암소, 표면약제 사용, C14·보존처리 영향 검토까지 이어지는가.",
     "금속·토도류 분석 의뢰가 재질명 하나가 아니라 비파괴 우선, 분석 위치, 절단·연마 승인, 염·수화·오염 위험과 함께 남는가.",

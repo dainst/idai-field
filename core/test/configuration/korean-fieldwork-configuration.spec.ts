@@ -767,6 +767,16 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('conservationScience');
         expect(documentsById['source-index-current-storage-standards-001'].resource.sourceEvidenceVerification)
             .toContain('crossSourceCompared');
+        expect(documentsById['source-index-conservation-science-001'].resource.sourceEvidenceLocator)
+            .toContain('conservation_science_2013_pages/page_0017.png');
+        expect(documentsById['source-index-conservation-science-001'].resource.sourceEvidenceLocator)
+            .toContain('page_0067.png');
+        expect(documentsById['source-index-conservation-science-001'].resource.sourceEvidenceDomain)
+            .toContain('conservationScience');
+        expect(documentsById['source-index-conservation-science-001'].resource.sourceEvidenceUse)
+            .toContain('analysisPlanEvidence');
+        expect(documentsById['source-index-conservation-science-001'].resource.verificationState)
+            .toBe('candidate');
         expect(documentsById['source-index-artifact-drawing-method-001'].resource.sourceEvidenceCitation)
             .toContain('유물실측의_이해-충청·호남권역2014년_7월.pdf');
         expect(documentsById['source-index-artifact-drawing-method-001'].resource.sourceEvidenceLocator)
@@ -2147,6 +2157,10 @@ describe('KoreanFieldwork project configuration', () => {
 
         expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
 
+        expect(sample.sourceReviewNote)
+            .toContain('conservation_science_2013_pages/page_0017.png');
+        expect(sample.sourceReviewNote)
+            .toContain('page_0067.png');
         expect(documentsById['find-waterlogged-lacquer-001'].resource.waterloggedWoodEmergencyStorage)
             .toContain('c14ImpactReview');
         expect(documentsById['find-waterlogged-lacquer-001'].resource.woodenArtifactConditionRecord)

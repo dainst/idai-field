@@ -11,7 +11,8 @@
     "기와가마 조사방법의 Grid·둑·회구부·부위별 조사·분석시료 요구가 요체명 자동분류를 막고 생산공간 기록으로 이어지는가.",
     "분묘유구 조사법의 봉토·구획성토·묘도·폐쇄시설·도면/사진 기록 요구가 묘형명 자동분류를 막고 조사과정 기록으로 이어지는가.",
     "유물실측 교재의 기준선·실측선·측점 검점·토기 주기·석기 view·수침목재 실측 요구가 도면 카드와 보고서 교차검토 근거로 남는가.",
-    "저습지 조사방법의 항공사진·고지도·보링자료·미지형 판독·극미지형 관찰 요구가 현재 습윤 여부로 축소되지 않고 시굴·시료 설계 근거로 남는가."
+    "저습지 조사방법의 항공사진·고지도·보링자료·미지형 판독·극미지형 관찰 요구가 현재 습윤 여부로 축소되지 않고 시굴·시료 설계 근거로 남는가.",
+    "보존과학 자료의 수침목재·금속·토도류·지류직물·인골·토양 분석 요구가 유물/시료 기록과 파괴분석 승인 근거로 이어지는가."
   ],
   "documents": [
     {
@@ -358,6 +359,54 @@
           "fieldDesignEvidence",
           "metricReference",
           "interpretationCaution",
+          "sourceTraceability"
+        ],
+        "recordCreationTiming": "postExcavationDerived",
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "crossReviewNeeded"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "source-index-conservation-science-001",
+        "identifier": "SRC-CONSERVATION-SCIENCE-001",
+        "shortDescription": "보존과학 현장수습·분석 근거 색인",
+        "category": "SourceEvidenceIndex",
+        "relations": {
+          "liesWithin": ["project-source-evidence-001"]
+        },
+        "description": "보존과학 담당자 과정 자료의 수침목재·칠기, 금속, 토도류, 인골 DNA, 지류·직물, 유기물·토양 분석 대목을 현장 수습, 임시보관, 분석 의뢰, 파괴분석 승인, 보존처리 원칙의 근거로 묶는다.",
+        "sourceEvidenceCitation": "매장문화재_전문교육_보존과학_연구의_최신_성과와_과제2013년_9월.pdf",
+        "sourceEvidenceLocator": "PDF 8, 17, 23, 28, 31, 33, 55-58, 67, 82, 87, 92, 95, 97, 100, 102쪽 직접 대조(conservation_science_2013_pages/page_0008.png, conservation_science_2013_pages/page_0017.png, page_0023.png, page_0028.png, page_0031.png, page_0033.png, page_0055.png, page_0056.png, page_0058.png, page_0067.png, page_0082.png, page_0087.png, page_0092.png, page_0095.png, page_0097.png, page_0100.png, page_0102.png). 수침목재 보관과 PEG의 C14·후속처리 영향, 보존담당 현장 참여와 가역성, 금속 시료채취 위치와 미세조직 해석, 토도류 염·수화·세척 위험, 인골 DNA 접촉자·세척금지·통제공간, 지류·직물 발견환경 유지와 60-70% 습도 적응, 토양시료 깊이·색상별 채취와 4°C 이하 냉장, 칠기 단면·FT-IR, 섬유 비파괴·화학·형태 분석 확인",
+        "sourceEvidenceMaterial": [
+          "checklist",
+          "figure",
+          "photo",
+          "measurementValue",
+          "caseStudy",
+          "sourceCitation"
+        ],
+        "sourceEvidenceDomain": [
+          "conservationScience",
+          "researchMethod"
+        ],
+        "sourceEvidenceVerification": [
+          "pageChecked",
+          "figureNumberChecked",
+          "captionChecked",
+          "numericValueChecked",
+          "directPdfChecked"
+        ],
+        "sourceEvidenceUse": [
+          "fieldDesignEvidence",
+          "sampleValidationEvidence",
+          "analysisPlanEvidence",
+          "interpretationCaution",
+          "preventAutoClassification",
           "sourceTraceability"
         ],
         "recordCreationTiming": "postExcavationDerived",

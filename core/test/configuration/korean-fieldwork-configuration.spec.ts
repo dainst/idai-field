@@ -688,6 +688,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('preventAutoClassification');
         expect(documentsById['source-index-archaeobotany-001'].resource.sourceEvidenceDomain)
             .toContain('archaeobotany');
+        expect(documentsById['source-index-archaeobotany-001'].resource.sourceEvidenceLocator)
+            .toContain('method12_rendered/method12_page_075.png-method12_page_078.png');
+        expect(documentsById['source-index-archaeobotany-001'].resource.sourceEvidenceMaterial)
+            .toContain('measurementValue');
+        expect(documentsById['source-index-archaeobotany-001'].resource.sourceEvidenceVerification)
+            .toContain('directPdfChecked');
+        expect(documentsById['source-index-archaeobotany-001'].resource.sourceEvidenceVerification)
+            .not.toContain('provenanceChecked');
         expect(documentsById['source-index-archaeobotany-001'].resource.sourceEvidenceUse)
             .toContain('sampleValidationEvidence');
         expect(documentsById['source-index-archaeobotany-001'].resource.sourceEvidenceUse)

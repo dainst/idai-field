@@ -544,8 +544,7 @@
         "sourceEvidenceUse": [
           "termAuthorityEvidence",
           "preventAutoClassification",
-          "sourceTraceability",
-          "futurePdfRecheck"
+          "sourceTraceability"
         ],
         "recordCreationTiming": "postExcavationDerived",
         "fieldRecordQuality": [

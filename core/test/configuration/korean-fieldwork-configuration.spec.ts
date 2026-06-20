@@ -754,6 +754,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('ocrCorrectionNeeded');
         expect(documentsById['source-index-dictionary-001'].resource.sourceEvidenceVerification)
             .not.toContain('captionNeedsCheck');
+        expect(documentsById['source-index-dictionary-001'].resource.sourceEvidenceUse)
+            .not.toContain('futurePdfRecheck');
         expect(documentsById['source-index-dictionary-001'].resource.verificationState)
             .toBe('candidate');
         expect(documentsById['source-index-production-dictionary-001'].resource.sourceEvidenceDomain)

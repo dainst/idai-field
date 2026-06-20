@@ -36502,9 +36502,11 @@
       "cutSectionStratigraphy": {},
       "artifactBearingLayer": {},
       "associatedFindRange": {},
+      "artifactOriginalPositionReviewed": {},
       "gpsPosition": {},
       "soilEnvironment": {},
       "externalFillPossible": {},
+      "importedSoilRouteChecked": {},
       "redepositionPossible": {},
       "noSurfaceFindsPotential": {},
       "pendingDecision": {}
@@ -36520,9 +36522,11 @@
       "cutSectionStratigraphy",
       "artifactBearingLayer",
       "associatedFindRange",
+      "artifactOriginalPositionReviewed",
       "gpsPosition",
       "soilEnvironment",
       "externalFillPossible",
+      "importedSoilRouteChecked",
       "redepositionPossible",
       "noSurfaceFindsPotential",
       "pendingDecision"
@@ -36686,6 +36690,7 @@
     "values": {
       "surveyBoundaryChecked": {},
       "boundaryGpsRecorded": {},
+      "fullCoverageWalkoverCompleted": {},
       "panoramicPhotosMultiDirection": {},
       "zonesDividedByLandform": {},
       "existingHeritageChecked": {},
@@ -36694,6 +36699,7 @@
       "cutSectionStratigraphyChecked": {},
       "originalLandformDamageRecorded": {},
       "vegetationCoverRecorded": {},
+      "continuousPositionTracking": {},
       "interviewSurveyRecorded": {},
       "supplementarySurveyNeeded": {},
       "pendingDecision": {}
@@ -36701,6 +36707,7 @@
     "order": [
       "surveyBoundaryChecked",
       "boundaryGpsRecorded",
+      "fullCoverageWalkoverCompleted",
       "panoramicPhotosMultiDirection",
       "zonesDividedByLandform",
       "existingHeritageChecked",
@@ -36709,6 +36716,7 @@
       "cutSectionStratigraphyChecked",
       "originalLandformDamageRecorded",
       "vegetationCoverRecorded",
+      "continuousPositionTracking",
       "interviewSurveyRecorded",
       "supplementarySurveyNeeded",
       "pendingDecision"
@@ -36788,6 +36796,7 @@
       "baseDigitalTopographicMap": {},
       "projectPlanMatched": {},
       "absoluteCoordinatesRecorded": {},
+      "mapScale1_1000": {},
       "mapScale1_5000": {},
       "mapScale1_10000": {},
       "mapSheetNumberRecorded": {},
@@ -36803,6 +36812,7 @@
       "baseDigitalTopographicMap",
       "projectPlanMatched",
       "absoluteCoordinatesRecorded",
+      "mapScale1_1000",
       "mapScale1_5000",
       "mapScale1_10000",
       "mapSheetNumberRecorded",
@@ -36930,6 +36940,7 @@
       "designChangeArea": {},
       "surrounding50m": {},
       "designatedHeritage500mInfluence": {},
+      "alterationPermitProcedureFlagged": {},
       "pendingDecision": {}
     },
     "order": [
@@ -36943,6 +36954,7 @@
       "designChangeArea",
       "surrounding50m",
       "designatedHeritage500mInfluence",
+      "alterationPermitProcedureFlagged",
       "pendingDecision"
     ]
   },

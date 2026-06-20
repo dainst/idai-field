@@ -1079,8 +1079,16 @@ describe('KoreanFieldwork project configuration', () => {
 
         expect(documentsById['survey-surface-scope-001'].resource.surfaceSurveyScopeDefinition)
             .toContain('temporaryRoad');
+        expect(documentsById['survey-surface-scope-001'].resource.surfaceSurveyScopeDefinition)
+            .toContain('alterationPermitProcedureFlagged');
         expect(documentsById['survey-surface-scope-001'].resource.surfaceSurveyMapRequirement)
             .toContain('absoluteCoordinatesRecorded');
+        expect(documentsById['survey-surface-scope-001'].resource.surfaceSurveyMapRequirement)
+            .toContain('mapScale1_1000');
+        expect(documentsById['survey-surface-scope-001'].resource.surfaceSurveyFieldSequence)
+            .toContain('fullCoverageWalkoverCompleted');
+        expect(documentsById['survey-surface-scope-001'].resource.surfaceSurveyFieldSequence)
+            .toContain('continuousPositionTracking');
         expect(documentsById['survey-surface-scope-001'].resource.geophysicalSurveyMethod)
             .toContain('groundPenetratingRadar');
         expect(documentsById['survey-surface-scope-001'].resource.geophysicalAnomalyVerification)
@@ -1113,6 +1121,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('noSurfaceEvidence');
         expect(documentsById['survey-surface-scope-001'].resource.surfaceEvidenceAbsenceAssessment)
             .toContain('additionalSurveyNeeded');
+        expect(documentsById['survey-surface-scope-001'].resource.surfaceSurveyObservation)
+            .toContain('artifactOriginalPositionReviewed');
+        expect(documentsById['survey-surface-scope-001'].resource.surfaceSurveyObservation)
+            .toContain('importedSoilRouteChecked');
         expect(documentsById['survey-surface-scope-001'].resource.surfaceSurveyBiasControl)
             .toContain('fieldObservationFirst');
         expect(documentsById['survey-surface-scope-001'].resource.surfaceSurveyFollowUp)
@@ -3816,6 +3828,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveyFieldSequence']
             .values.boundaryGpsRecorded.label)
             .toBe('Boundary GPS recorded');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveyFieldSequence']
+            .values.continuousPositionTracking.label)
+            .toBe('Continuous position tracking');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveySpecialRecord']
             .values.inscriptionRubbingRecord.label)
             .toBe('Inscription rubbing record');
@@ -3840,6 +3855,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveyMapRequirement']
             .values.twoGpsControlPoints.label)
             .toBe('At least two GPS control points');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveyMapRequirement']
+            .values.mapScale1_1000.label)
+            .toBe('1:1,000 map scale');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-geophysicalSurveyMethod']
             .values.groundPenetratingRadar.label)
             .toBe('Ground-penetrating radar');
@@ -3852,6 +3870,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveyScopeDefinition']
             .values.designatedHeritage500mInfluence.label)
             .toBe('Designated heritage 500 m influence zone');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-surfaceSurveyScopeDefinition']
+            .values.alterationPermitProcedureFlagged.label)
+            .toBe('현상변경 절차 필요 표시');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-surfaceSurveyObservation']
+            .values.importedSoilRouteChecked.label)
+            .toBe('외부반입토 이동경로 확인');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-surfaceSurveyLowerChronologyReview']
             .values.koreanWarPeriod.label)
             .toBe('Korean War period');

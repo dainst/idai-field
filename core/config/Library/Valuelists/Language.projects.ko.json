@@ -4022,6 +4022,9 @@
       "associatedFindRange": {
         "label": "공반유물 범위"
       },
+      "artifactOriginalPositionReviewed": {
+        "label": "유물 원위치 여부 검토"
+      },
       "gpsPosition": {
         "label": "GPS 위치"
       },
@@ -4030,6 +4033,9 @@
       },
       "externalFillPossible": {
         "label": "외부반입토 가능"
+      },
+      "importedSoilRouteChecked": {
+        "label": "외부반입토 이동경로 확인"
       },
       "redepositionPossible": {
         "label": "재퇴적 가능"
@@ -4159,6 +4165,7 @@
     "values": {
       "surveyBoundaryChecked": { "label": "조사경계 확인" },
       "boundaryGpsRecorded": { "label": "경계 GPS 좌표 기록" },
+      "fullCoverageWalkoverCompleted": { "label": "전 구역 도보 확인" },
       "panoramicPhotosMultiDirection": { "label": "전경 다방향 사진" },
       "zonesDividedByLandform": { "label": "지형별 지구 구분" },
       "existingHeritageChecked": { "label": "기존 문화재 확인" },
@@ -4167,6 +4174,7 @@
       "cutSectionStratigraphyChecked": { "label": "절개면 토층 확인" },
       "originalLandformDamageRecorded": { "label": "원지형 훼손 기록" },
       "vegetationCoverRecorded": { "label": "식생 피복 기록" },
+      "continuousPositionTracking": { "label": "조사자 위치 지속 확인" },
       "interviewSurveyRecorded": { "label": "탐문·설문 기록" },
       "supplementarySurveyNeeded": { "label": "보완조사 필요" },
       "pendingDecision": { "label": "판단 보류" }
@@ -4214,6 +4222,7 @@
       "baseDigitalTopographicMap": { "label": "수치지형도 기본도" },
       "projectPlanMatched": { "label": "사업계획도 일치" },
       "absoluteCoordinatesRecorded": { "label": "절대좌표값 기록" },
+      "mapScale1_1000": { "label": "1:1,000 축척" },
       "mapScale1_5000": { "label": "1:5,000 축척" },
       "mapScale1_10000": { "label": "1:10,000 축척" },
       "mapSheetNumberRecorded": { "label": "도엽번호 기록" },
@@ -4292,6 +4301,7 @@
       "designChangeArea": { "label": "설계변경 부지" },
       "surrounding50m": { "label": "주변 50m" },
       "designatedHeritage500mInfluence": { "label": "지정문화재 500m 영향권" },
+      "alterationPermitProcedureFlagged": { "label": "현상변경 절차 필요 표시" },
       "pendingDecision": { "label": "판단 보류" }
     },
     "description": "사업구역, 형질변경지, 분할사업 전체면적, 토취장·사토장·가설도로·수몰면·설계변경부지와 주변 영향권을 지표조사 범위 산정 근거로 남기기 위한 목록"

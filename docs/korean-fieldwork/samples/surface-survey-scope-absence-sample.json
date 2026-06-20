@@ -1,7 +1,7 @@
 {
   "title": "Korean surface survey scope, absence, and non-site resource sample",
   "purpose": "Validate that Korean surface survey records keep project scope, specialist coverage, map requirements, absence reasoning, non-site resources, and surface find handling connected before follow-up excavation decisions.",
-  "sourceReviewNote": "2026-06-20 지표조사_업무의_이해_교재.pdf 36-37, 49, 53-54쪽 원문 화면을 대조해 지표조사는 유적 유무의 확정 판정이 아니라 분포 양상, 입지, 지형조건, 문헌 대조, 표본·시굴 필요성을 묶어 후속조치로 연결하는 진단 절차임을 확인했다.",
+  "sourceReviewNote": "2026-06-20 지표조사_업무의_이해_교재.pdf 36-37, 49, 53-54쪽 원문 화면과 지표조사_업무_이해_교재.pdf PDF 58-59쪽(인쇄 50-51쪽)을 대조했다. 지표조사는 유적 유무의 확정 판정이 아니라 분포 양상, 입지, 지형조건, 문헌 대조, 표본·시굴 필요성을 묶어 후속조치로 연결하는 진단 절차이며, 전 구역 도보 확인, 조사자 위치 지속 확인, 유물 원위치·외부반입토 이동경로 검토가 함께 남아야 한다.",
   "validationQuestions": [
     "지표조사 범위가 사업구역 전체, 형질변경지, 토취장·사토장·가설도로, 영향권까지 명시되는가.",
     "표면 유물 부재가 유적 부재로 확정되지 않고 지형·입지·퇴적물·탐문·조사한계와 함께 남는가.",
@@ -118,6 +118,7 @@
         "surfaceSurveyFieldSequence": [
           "surveyBoundaryChecked",
           "boundaryGpsRecorded",
+          "fullCoverageWalkoverCompleted",
           "panoramicPhotosMultiDirection",
           "zonesDividedByLandform",
           "existingHeritageChecked",
@@ -126,6 +127,7 @@
           "cutSectionStratigraphyChecked",
           "originalLandformDamageRecorded",
           "vegetationCoverRecorded",
+          "continuousPositionTracking",
           "interviewSurveyRecorded"
         ],
         "surfaceSurveySpecialRecord": [
@@ -158,6 +160,7 @@
           "baseDigitalTopographicMap",
           "projectPlanMatched",
           "absoluteCoordinatesRecorded",
+          "mapScale1_1000",
           "mapScale1_5000",
           "mapSheetNumberRecorded",
           "artifactScatterBoundaryCurve",
@@ -203,6 +206,8 @@
           "borrowPit",
           "spoilDisposalArea",
           "surrounding50m",
+          "designatedHeritage500mInfluence",
+          "alterationPermitProcedureFlagged",
           "designChangeArea"
         ],
         "surfaceSurveyLowerChronologyReview": [
@@ -234,7 +239,9 @@
           "artifactScatter",
           "cutSectionStratigraphy",
           "soilEnvironment",
+          "artifactOriginalPositionReviewed",
           "externalFillPossible",
+          "importedSoilRouteChecked",
           "redepositionPossible",
           "noSurfaceFindsPotential"
         ],

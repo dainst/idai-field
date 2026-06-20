@@ -187,6 +187,11 @@
           "enlargedPhoto",
           "semPhoto",
           "metricRecorded",
+          "measurementAxisRecorded",
+          "sizeRatioRecorded",
+          "scatterPlotCompared",
+          "comparativePopulationRecorded",
+          "scaledPhotoLinked",
           "identificationConfidence",
           "alternativeTaxon",
           "pendingDecision"

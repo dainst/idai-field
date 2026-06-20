@@ -1402,6 +1402,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('identificationConfidence');
         expect(documentsById['sample-archaeobotany-flotation-001'].resource.plantRemainIdentificationRecord)
             .toContain('semPhoto');
+        expect(documentsById['sample-archaeobotany-flotation-001'].resource.plantRemainIdentificationRecord)
+            .toContain('scatterPlotCompared');
+        expect(documentsById['sample-archaeobotany-flotation-001'].resource.plantRemainIdentificationRecord)
+            .toContain('comparativePopulationRecorded');
         expect(documentsById['sample-archaeobotany-flotation-001'].resource.archaeobotanyInterpretationReview)
             .toContain('analyticalResultSeparated');
         expect(documentsById['sample-archaeobotany-flotation-001'].resource.archaeobotanyInterpretationReview)
@@ -3842,6 +3846,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-plantRemainIdentificationRecord']
             .values.identificationConfidence.label)
             .toBe('Identification confidence');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-plantRemainIdentificationRecord']
+            .values.scatterPlotCompared.label)
+            .toBe('산점도 군집 대조');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-plantRemainIdentificationRecord']
             .values.regionalMasterChronologyChecked.label)
             .toBe('Regional master chronology checked');

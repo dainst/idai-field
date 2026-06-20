@@ -160,7 +160,7 @@ GPS·GIS 현장 시스템 보강분은 `Operation`에 `gpsSurveyQualityRecord`, 
 
 전자도면·3D 스캔 보강분은 `Drawing`에 `electronicDrawingSourceWorkflow`, `artifactElectronicDrawingProcedure`를 추가했다. 3D 스캔은 완성 도면을 대체하는 버튼이 아니라 스캐너 선정, 점군 획득·병합, 폴리곤 변환·최적화, CAD 데이터, 2D·3D 도면, 복원자료, 원본·후처리 파일 보존으로 이어지는 작업 흐름이다. 유물 전자도면은 유물 형태 검토, 최종 결과물 형태, 특징 view와 단면 위치, 벡터화, 연구자 요구정보, 기준면·좌표계·합치 기준을 따로 남겨야 실측 판단이 파일 산출물 뒤로 사라지지 않는다.
 
-패총·신석기 보강분은 `Feature`에 `shellMiddenStratigraphy`와 `shellMiddenSettlementContext`를 배치해 패총층 유형, 재퇴적·교란, 평면·단면 병행, 하부·관입 유구, 집락 전체 조사구획, 주거지·노지·저장공·매장·의례·밭 후보와 해안·수계 맥락을 함께 남기게 했다. `Find`에는 `neolithicSubsistenceEvidence`를 두어 어망추, 조침, 작살, 골제·패제 어로구, 통나무배, 외양성 어종, 해양포유류, 직접·간접 포경 근거, 어종과 해류의 계절성, 교류품 후보를 유물 카드에서 기록한다. `Sample`에는 `shellMiddenSamplingStrategy`와 `paleoenvironmentProxySampling`을 배치해 층위별 벌크·블록시료, 물체질·부유선별, 패류·어골·동물뼈·식물유체 분리, 화분·규조·식물규산체·탄화곡물·목탄·패류·유공충 프록시, 연대 전처리와 지역 해수면 곡선 연결을 추적한다. 식물유체·탄화곡물 보강분은 `archaeobotanySampleDesign`, `plantRemainSamplingMethod`, `flotationProcessingRecord`, `plantRemainIdentificationRecord`, `archaeobotanyInterpretationReview`, `plantRemainNonDetectionAssessment`로 `Sample`에 배치해 연구질문, 표본추출 방식, 플로테이션 처리 조건, 동정 신뢰도, 분석/해석 분리, 미검출의 조건을 시료 카드에서 직접 관리하게 했다.
+패총·신석기 보강분은 `Feature`에 `shellMiddenStratigraphy`와 `shellMiddenSettlementContext`를 배치해 패총층 유형, 재퇴적·교란, 평면·단면 병행, 하부·관입 유구, 집락 전체 조사구획, 주거지·노지·저장공·매장·의례·밭 후보와 해안·수계 맥락을 함께 남기게 했다. `Find`에는 `neolithicSubsistenceEvidence`를 두어 어망추, 조침, 작살, 골제·패제 어로구, 통나무배, 외양성 어종, 해양포유류, 직접·간접 포경 근거, 어종과 해류의 계절성, 교류품 후보를 유물 카드에서 기록한다. `Sample`에는 `shellMiddenSamplingStrategy`와 `paleoenvironmentProxySampling`을 배치해 층위별 벌크·블록시료, 물체질·부유선별, 패류·어골·동물뼈·식물유체 분리, 화분·규조·식물규산체·탄화곡물·목탄·패류·유공충 프록시, 연대 전처리와 지역 해수면 곡선 연결을 추적한다. 식물유체·탄화곡물 보강분은 `archaeobotanySampleDesign`, `plantRemainSamplingMethod`, `flotationProcessingRecord`, `plantRemainIdentificationRecord`, `archaeobotanyInterpretationReview`, `plantRemainNonDetectionAssessment`로 `Sample`에 배치해 연구질문, 표본추출 방식, 플로테이션 처리 조건, 현생 탄화 비교, 계측축·크기비율·산점도 군집, 비교집단, 축척사진, 동정 신뢰도, 분석/해석 분리, 미검출의 조건을 시료 카드에서 직접 관리하게 했다.
 
 청동기 보강분은 `Feature`에 `bronzeAgeDwellingEvidence`, `dolmenStructureContext`, `bronzeAgeEnclosureInterpretation`을 배치해 송국리식·가락동식 같은 유형명을 관찰값 뒤의 후보로 두고, 평면형·화덕·중앙 타원형 구덩이·양단 주혈·벽도랑·주거군/묘역 관계, 고인돌의 덮개돌·받침돌·무덤방·묘역시설·성혈·알구멍·이전복원 이력, 환호의 방어·경계·배수·의례 후보와 내부퇴적·재굴착·수축흔을 분리해 남기게 했다. `Find`에는 `bronzeAgePotteryTerminology`를 두어 민무늬토기/무문토기, 구순각목/골아가리, 공렬/구멍무늬, 이중구연/겹아가리 같은 이칭과 표준 용어, 편년·공반 맥락을 유물 카드에서 추적한다.
 
@@ -218,7 +218,7 @@ GPS·GIS 현장 시스템 보강분은 `Operation`에 `gpsSurveyQualityRecord`, 
 24. 주민 신고, 공사·경작 중 발견, 기존 소장·보고서 자료가 일반 발굴 출토맥락으로 오인되지 않고 발견 경위와 원위치 신뢰도를 따로 남기는가.
 25. 층위와 유구 내부토 기록이 색조·층명 하나로 닫히지 않고 관찰 절차, 층명 체계, 토성 판정, 오인 후보, 축조·사용·폐기·매몰 과정을 함께 남기는가.
 26. 생토·부식토·교란토 같은 층명이 절대값으로 저장되지 않고 조사대상시대와 관계유구 기준으로 검토되는가.
-27. 식물유체·탄화곡물 시료가 채취 위치, 처리 전 토양량, 물체질·플로테이션, 체눈, 동정 신뢰도, 분석/해석 분리, 미검출 조건을 함께 남기는가.
+27. 식물유체·탄화곡물 시료가 채취 위치, 처리 전 토양량, 물체질·플로테이션, 체눈, 현생 탄화 비교, 계측축·크기비율·산점도 군집, 비교집단, 축척사진, 동정 신뢰도, 분석/해석 분리, 미검출 조건을 함께 남기는가.
 28. 토기와 신석기 생업 유물이 형식명·어구명 하나로 닫히지 않고 태토·비짐·성형흔·공정방향성·생업 증거 수준을 함께 남기는가.
 29. 공개·실험·해외조사·국내 제도 리스크 기록이 홍보 문구나 행사명으로 닫히지 않고 공개등급, 민감정보, 매체 권리, 실험 변수·반복·실패값, 기관 역할, 현지 법제·허가·반출 제한, 구제발굴 일정 압박·과학분석 배제와 연결되는가.
 30. 성곽 축조·정비·복원 기록이 판축·복원 같은 결과명으로 닫히지 않고 협판·고정주·달구질흔, 기초·기저부, 붕괴 성돌·해체 단면, 문헌·사진·용척·원부재·복원 제외 근거와 연결되는가.

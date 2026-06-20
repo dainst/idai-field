@@ -14067,11 +14067,16 @@
       "barkLastRingChecked": { "label": "Bark/last ring checked" },
       "regionalMasterChronologyChecked": { "label": "Regional master chronology checked" },
       "metricRecorded": { "label": "Metric recorded" },
+      "measurementAxisRecorded": { "label": "Measurement axis recorded" },
+      "sizeRatioRecorded": { "label": "Size ratio recorded" },
+      "scatterPlotCompared": { "label": "Scatter-plot cluster compared" },
+      "comparativePopulationRecorded": { "label": "Comparative population recorded" },
+      "scaledPhotoLinked": { "label": "Scaled photo linked" },
       "identificationConfidence": { "label": "Identification confidence" },
       "alternativeTaxon": { "label": "Alternative taxon" },
       "pendingDecision": { "label": "Pending decision" }
     },
-    "description": "Korean plant-remain identification checks for comparative specimens, morphology, carbonized comparisons, crop candidates, wood sections, permanent preparations, microscopy, reference keys, dendrochronology candidates, photographs, metrics, confidence, and alternative taxa"
+    "description": "Korean plant-remain identification checks for comparative specimens, morphology, carbonized comparisons, crop candidates, wood sections, permanent preparations, microscopy, reference keys, dendrochronology candidates, photographs, metrics, measurement axes, size ratios, scatter-plot clusters, comparative populations, confidence, and alternative taxa"
   },
   "KoreanFieldwork-archaeobotanyInterpretationReview": {
     "values": {

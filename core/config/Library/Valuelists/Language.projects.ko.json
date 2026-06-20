@@ -2313,11 +2313,16 @@
       "barkLastRingChecked": { "label": "수피·최종연륜 확인" },
       "regionalMasterChronologyChecked": { "label": "지역 표준연대기 대조" },
       "metricRecorded": { "label": "계측치 기록" },
+      "measurementAxisRecorded": { "label": "계측축 기록" },
+      "sizeRatioRecorded": { "label": "크기비율 기록" },
+      "scatterPlotCompared": { "label": "산점도 군집 대조" },
+      "comparativePopulationRecorded": { "label": "비교집단 기록" },
+      "scaledPhotoLinked": { "label": "축척사진 연결" },
       "identificationConfidence": { "label": "동정 신뢰도" },
       "alternativeTaxon": { "label": "대체 분류군" },
       "pendingDecision": { "label": "판단 보류" }
     },
-    "description": "식물유체 동정을 현생 비교표본, 형태·탄화 비교, 노출 즉시 채취, 수분상태 유지, 단면 관찰, 영구 프레파라트, 현미경 관찰, 검색표 대조, 연륜연대 후보, 사진, 계측치, 신뢰도와 대체 분류군으로 검토하기 위한 목록"
+    "description": "식물유체 동정을 현생 비교표본, 형태·탄화 비교, 노출 즉시 채취, 수분상태 유지, 단면 관찰, 영구 프레파라트, 현미경 관찰, 검색표 대조, 연륜연대 후보, 사진, 계측치, 계측축, 크기비율, 산점도 군집, 비교집단, 신뢰도와 대체 분류군으로 검토하기 위한 목록"
   },
   "KoreanFieldwork-archaeobotanyInterpretationReview": {
     "values": {

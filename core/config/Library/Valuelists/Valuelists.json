@@ -34560,6 +34560,11 @@
       "barkLastRingChecked": {},
       "regionalMasterChronologyChecked": {},
       "metricRecorded": {},
+      "measurementAxisRecorded": {},
+      "sizeRatioRecorded": {},
+      "scatterPlotCompared": {},
+      "comparativePopulationRecorded": {},
+      "scaledPhotoLinked": {},
       "identificationConfidence": {},
       "alternativeTaxon": {},
       "pendingDecision": {}
@@ -34587,6 +34592,11 @@
       "barkLastRingChecked",
       "regionalMasterChronologyChecked",
       "metricRecorded",
+      "measurementAxisRecorded",
+      "sizeRatioRecorded",
+      "scatterPlotCompared",
+      "comparativePopulationRecorded",
+      "scaledPhotoLinked",
       "identificationConfidence",
       "alternativeTaxon",
       "pendingDecision"

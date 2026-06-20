@@ -375,9 +375,9 @@
         "relations": {
           "liesWithin": ["project-source-evidence-001"]
         },
-        "description": "발굴조사 업무의 이해와 현장조사 방법과 해석의 수혈주거지 장에서 도판, 캡션, 사례명, OCR 오독 후보를 바로 값목록으로 확정하지 않고 노출·둑·바닥·사진·화재·중복 조사 필드의 후속 검토 근거로 묶는다.",
+        "description": "발굴조사 업무의 이해와 현장조사 방법과 해석의 수혈주거지 장에서 도판, 캡션, 사례명, OCR 오독 후보를 직접 PDF 이미지와 대조해 노출·둑·바닥·사진·화재·중복 조사 필드의 근거 색인으로 묶는다.",
         "sourceEvidenceCitation": "발굴조사_업무의_이해_교재_(2).pdf, 수혈주거지 장; 현장조사_방법과_해석.pdf, 수혈주거지 장",
-        "sourceEvidenceLocator": "발굴조사 업무의 이해 PDF 205-258쪽 수혈주거지 장, 특히 method19_pit_dwellings_pages205_258/page_214.png의 단계별 사진 도판; 현장조사 방법과 해석 method30_pitdwelling_pages119_143_rotated/page_123,126,127.png의 매몰양상·토층둑·사진촬영 슬라이드 직접 대조",
+        "sourceEvidenceLocator": "발굴조사 업무의 이해 PDF 파일쪽 205-258쪽 렌더링(method19_pit_dwellings_pages205_258/page_214.png=인쇄 206쪽 단계별 사진 도판, page_215.png=인쇄 207쪽 트렌치·토층둑 설치, page_220.png=인쇄 212쪽 바닥 조사); 현장조사 방법과 해석 PDF 파일쪽 119-143쪽 렌더링(method30_pitdwelling_pages119_143_rotated/page_119.png 수혈주거지 장 표지, page_123.png 매몰양상, page_126.png 토층둑 설정, page_127.png 유구·유물 사진촬영)",
         "sourceEvidenceMaterial": [
           "figure",
           "plate",
@@ -396,7 +396,6 @@
           "captionChecked",
           "directPdfChecked",
           "ocrCorrectionNeeded",
-          "captionNeedsCheck",
           "valueListPromotionReady",
           "uiExposureDeferred"
         ],
@@ -406,7 +405,7 @@
           "interpretationCaution",
           "preventAutoClassification",
           "sourceTraceability",
-          "futurePdfRecheck"
+          "reportCrossCheckEvidence"
         ],
         "recordCreationTiming": "postExcavationDerived",
         "fieldRecordQuality": [
@@ -414,7 +413,7 @@
           "reproducibleRecord",
           "crossReviewNeeded"
         ],
-        "verificationState": "needsRecheck"
+        "verificationState": "candidate"
       }
     },
     {

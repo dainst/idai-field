@@ -95,6 +95,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-20 제7권 성곽 자료의 원PDF 도판·표·캡션을 다시 대조했다. 풍납토성 기조·지정목·부석/석축 도면, 고려 후기 읍성 일람표, 웅천읍성 체성 사진, 동래고읍성 사례, 수원화성 공심돈·치성 제원, 남한산성 행궁 건물규모·용척·원부재·현장보존 사례는 `volume07_fortification_source_pages/page_0007.png`부터 `page_0173.png`까지 렌더 이미지로 확인했다. 성곽·봉수편 사전의 표기 원칙과 개념표제어 분류표도 `dictionary2011_fortification_terms_pages/page_0005.png`, `page_1621.png`, `page_1622.png`, `page_1625.png`로 대조했으므로 `source-index-fortification-001`은 `needsRecheck`가 아니라 `candidate` 상태로 둔다.
 
+2026-06-20 수혈주거지 조사법 색인도 다시 확인했다. `발굴조사_업무의_이해_교재_(2).pdf`는 PDF 파일쪽과 인쇄쪽이 어긋나 `method19_pit_dwellings_pages205_258/page_214.png`가 인쇄 206쪽 단계별 사진 도판임을 확인했고, `page_215.png`, `page_220.png`로 트렌치·토층둑과 바닥 조사 슬라이드를 대조했다. `현장조사_방법과_해석.pdf`는 `method30_pitdwelling_pages119_143_rotated/page_119.png`, `page_123.png`, `page_126.png`, `page_127.png`로 장 표지, 매몰양상, 토층둑 설정, 유구·유물 사진촬영 슬라이드를 확인했다. OCR 텍스트는 여전히 오독이 많으므로 `ocrCorrectionNeeded`는 남기되, 핵심 캡션은 직접 PDF 대조가 끝난 `candidate` 색인으로 조정했다.
+
 2026-06-19 유구 내부층과 라이프사이클 자료도 구현 단위로 압축했다. 발굴조사 실무 자료는 유구 내부토를 단순 복토가 아니라 축조, 사용, 폐기, 매몰 과정이 겹친 결과로 읽고, 단면 정리와 반복 관찰, 그늘·햇볕 조건, 층간 비교, 이질토 블록의 유래, 자연유입·수성퇴적·붕락·토양화 휴지기, 일괄유물 매몰 여부를 따로 남기라고 요구한다. 이 묶음은 `FeatureSegment`의 `stratigraphicObservationProcedure`, `featureLifecycleReview`, `featureBlockInclusionAssessment`, `featureBurialProcessAssessment` 값 목록으로 옮겼고, `stratigraphy-feature-lifecycle-workflow-sample.json`으로 유구 내부토 해석이 단일 복토명으로 닫히지 않는지 검증한다.
 
 2026-06-19 추가 재독해에서는 발굴조사 업무 자료의 발굴맥락 정의를 구현 단위로 묶었다. 발굴조사는 유구 구조와 유물 출토 상황을 수평·수직으로 파악해 유적, 유구, 유물, 유물복합체, 환경의 맥락을 복원하는 절차이고, 구제발굴에서도 학술적 발굴 요구를 포기하지 않는다. 이 묶음은 `Feature`의 `excavationContextModel`로 옮겨 맥락 연결, 수평분포·수직층위 검토, 조사방법 선택근거, 트렌치·피트·바둑판식·사분법·계단식 조사, 기획·구제발굴 구분을 유구 기록에 남기게 했다.

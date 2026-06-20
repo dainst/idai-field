@@ -678,9 +678,11 @@ describe('KoreanFieldwork project configuration', () => {
         expect(documentsById['source-index-pit-dwelling-001'].resource.sourceEvidenceLocator)
             .toContain('method19_pit_dwellings_pages205_258');
         expect(documentsById['source-index-pit-dwelling-001'].resource.sourceEvidenceVerification)
-            .toContain('captionNeedsCheck');
+            .toContain('captionChecked');
         expect(documentsById['source-index-pit-dwelling-001'].resource.sourceEvidenceVerification)
             .toContain('directPdfChecked');
+        expect(documentsById['source-index-pit-dwelling-001'].resource.sourceEvidenceUse)
+            .toContain('reportCrossCheckEvidence');
         expect(documentsById['source-index-pit-dwelling-001'].resource.sourceEvidenceUse)
             .toContain('preventAutoClassification');
         expect(documentsById['source-index-stratigraphy-context-001'].resource.sourceEvidenceDomain)

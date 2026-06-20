@@ -757,6 +757,9 @@
         },
         "featureSegmentForm": {
           "label": "Form of the feature segment"
+        },
+        "pitDwellingStratifiedFillRecord": {
+          "label": "Pit dwelling stratified fill record"
         }
       }
     },

@@ -2400,6 +2400,10 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "pitDwellingStratifiedFillRecord": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "naturalHumusRelativity": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -2483,6 +2487,7 @@
         "stratigraphicMisreadGuard": "KoreanFieldwork-stratigraphicMisreadGuard",
         "layerNamingSystem": "KoreanFieldwork-layerNamingSystem",
         "featureFillInterpretation": "KoreanFieldwork-featureFillInterpretation",
+        "pitDwellingStratifiedFillRecord": "KoreanFieldwork-pitDwellingStratifiedFillRecord",
         "naturalHumusRelativity": "KoreanFieldwork-naturalHumusRelativity",
         "stratigraphicObservationProcedure": "KoreanFieldwork-stratigraphicObservationProcedure",
         "featureLifecycleReview": "KoreanFieldwork-featureLifecycleReview",
@@ -2534,6 +2539,7 @@
             "stratigraphicMisreadGuard",
             "layerNamingSystem",
             "featureFillInterpretation",
+            "pitDwellingStratifiedFillRecord",
             "naturalHumusRelativity",
             "stratigraphicObservationProcedure",
             "featureLifecycleReview",

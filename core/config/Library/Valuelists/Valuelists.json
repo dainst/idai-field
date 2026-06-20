@@ -32736,6 +32736,48 @@
       "pendingDecision"
     ]
   },
+  "KoreanFieldwork-pitDwellingStratifiedFillRecord": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-20",
+    "values": {
+      "laterLayer": {},
+      "secondaryFill": {},
+      "primaryFill": {},
+      "surroundingInflow": {},
+      "floorDeposit": {},
+      "wallCollapseSoil": {},
+      "preparedFloor": {},
+      "functionalSurface": {},
+      "constructionDeposit": {},
+      "workedSurface": {},
+      "layerMeaningNarrativeRecorded": {},
+      "artifactInclusionAmountRecorded": {},
+      "organicCharcoalBurntSoilInclusionRecorded": {},
+      "findStratigraphicPositionLinked": {},
+      "findHeightRecorded": {},
+      "heightAboveFloorRecorded": {},
+      "pendingDecision": {}
+    },
+    "order": [
+      "laterLayer",
+      "secondaryFill",
+      "primaryFill",
+      "surroundingInflow",
+      "floorDeposit",
+      "wallCollapseSoil",
+      "preparedFloor",
+      "functionalSurface",
+      "constructionDeposit",
+      "workedSurface",
+      "layerMeaningNarrativeRecorded",
+      "artifactInclusionAmountRecorded",
+      "organicCharcoalBurntSoilInclusionRecorded",
+      "findStratigraphicPositionLinked",
+      "findHeightRecorded",
+      "heightAboveFloorRecorded",
+      "pendingDecision"
+    ]
+  },
   "KoreanFieldwork-pitDwellingFireEvidence": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

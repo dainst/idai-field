@@ -921,6 +921,9 @@
         "featureFillInterpretation": {
           "label": "유구 내부토 해석"
         },
+        "pitDwellingStratifiedFillRecord": {
+          "label": "수혈주거지 분층 기록"
+        },
         "naturalHumusRelativity": {
           "label": "생토·부식토 상대성"
         },

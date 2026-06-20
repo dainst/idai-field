@@ -1816,6 +1816,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('quantitativeAnalysisNeeded');
         expect(documentsById['segment-stratigraphy-fill-001'].resource.featureFillInterpretation)
             .toContain('attributionCaution');
+        expect(documentsById['segment-stratigraphy-fill-001'].resource.pitDwellingStratifiedFillRecord)
+            .toContain('floorDeposit');
+        expect(documentsById['segment-stratigraphy-fill-001'].resource.pitDwellingStratifiedFillRecord)
+            .toContain('heightAboveFloorRecorded');
         expect(documentsById['segment-stratigraphy-fill-001'].resource.naturalHumusRelativity)
             .toContain('targetPeriodChecked');
         expect(documentsById['segment-stratigraphy-fill-001'].resource.featureLifecycleReview)
@@ -2347,6 +2351,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureSegmentForm.fields.stratigraphicMisreadGuard.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.layerNamingSystem.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.featureFillInterpretation.inputType).toBe('checkboxes');
+        expect(featureSegmentForm.fields.pitDwellingStratifiedFillRecord.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.naturalHumusRelativity.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.stratigraphicObservationProcedure.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.featureLifecycleReview.inputType).toBe('checkboxes');
@@ -2884,6 +2889,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-layerNamingSystem');
         expect(featureSegmentForm.valuelists.featureFillInterpretation)
             .toBe('KoreanFieldwork-featureFillInterpretation');
+        expect(featureSegmentForm.valuelists.pitDwellingStratifiedFillRecord)
+            .toBe('KoreanFieldwork-pitDwellingStratifiedFillRecord');
         expect(featureSegmentForm.valuelists.naturalHumusRelativity)
             .toBe('KoreanFieldwork-naturalHumusRelativity');
         expect(featureSegmentForm.valuelists.stratigraphicObservationProcedure)
@@ -3496,6 +3503,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Layer naming system');
         expect(languages.en.categories.FeatureSegment.fields.featureFillInterpretation.label)
             .toBe('Feature fill interpretation');
+        expect(languages.en.categories.FeatureSegment.fields.pitDwellingStratifiedFillRecord.label)
+            .toBe('Pit dwelling stratified fill record');
         expect(languages.en.categories.FeatureSegment.fields.naturalHumusRelativity.label)
             .toBe('Natural/humus relativity');
         expect(languages.en.categories.FeatureSegment.fields.stratigraphicObservationProcedure.label)
@@ -4996,6 +5005,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-featureFillInterpretation']
             .values.attributionCaution.label)
             .toBe('귀속 주의');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-pitDwellingStratifiedFillRecord']
+            .values.heightAboveFloorRecorded.label)
+            .toBe('바닥대비고 기록');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-pitDwellingStratifiedFillRecord']
+            .values.floorDeposit.label)
+            .toBe('Floor deposit');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-stratigraphicObservationProcedure']
             .values.shadeObservation.label)
             .toBe('그늘 관찰');

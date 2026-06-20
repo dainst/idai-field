@@ -1267,6 +1267,28 @@
     },
     "description": "수혈건물지 바닥면과 주혈, 노지, 부뚜막, 벽구, 저장공, 배수·집수시설, 뜬 유물의 자연유입·의도폐기 판단, 수거 전 실측 여부, 사용면·최초굴착면 구분을 기록하기 위한 목록"
   },
+  "KoreanFieldwork-pitDwellingStratifiedFillRecord": {
+    "values": {
+      "laterLayer": { "label": "후대층" },
+      "secondaryFill": { "label": "2차 매몰토" },
+      "primaryFill": { "label": "1차 매몰토" },
+      "surroundingInflow": { "label": "주변 유입토" },
+      "floorDeposit": { "label": "바닥 퇴적토" },
+      "wallCollapseSoil": { "label": "벽가토" },
+      "preparedFloor": { "label": "바닥 다짐토" },
+      "functionalSurface": { "label": "기능면" },
+      "constructionDeposit": { "label": "구축시 퇴적토" },
+      "workedSurface": { "label": "가공면" },
+      "layerMeaningNarrativeRecorded": { "label": "층 의미·해석 기재" },
+      "artifactInclusionAmountRecorded": { "label": "층내 유물 포함량 기록" },
+      "organicCharcoalBurntSoilInclusionRecorded": { "label": "유기물·숯·소토 포함 기록" },
+      "findStratigraphicPositionLinked": { "label": "유물 분층 위치 연결" },
+      "findHeightRecorded": { "label": "유물 높이 기록" },
+      "heightAboveFloorRecorded": { "label": "바닥대비고 기록" },
+      "pendingDecision": { "label": "판단 보류" }
+    },
+    "description": "수혈주거지 내부토를 후대층, 2차·1차 매몰토, 주변 유입토, 바닥퇴적토, 벽가토, 바닥다짐토, 기능면, 구축시 퇴적토, 가공면으로 나누고, 층 의미와 유물 높이·바닥대비고를 함께 남기기 위한 목록"
+  },
   "KoreanFieldwork-pitDwellingFireEvidence": {
     "values": {
       "charredTimberRecorded": {

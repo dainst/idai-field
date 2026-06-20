@@ -13021,6 +13021,28 @@
     },
     "description": "Korean pit dwelling checks for floor surfaces, wall-floor junctions, postholes, hearths, stoves, wall grooves, storage pits, drains, entrances, facility sections, floating-find deposition questions, pre-removal measurement decisions, and distinguishing use surfaces from initial cuts"
   },
+  "KoreanFieldwork-pitDwellingStratifiedFillRecord": {
+    "values": {
+      "laterLayer": { "label": "Later layer" },
+      "secondaryFill": { "label": "Secondary fill" },
+      "primaryFill": { "label": "Primary fill" },
+      "surroundingInflow": { "label": "Surrounding inflow" },
+      "floorDeposit": { "label": "Floor deposit" },
+      "wallCollapseSoil": { "label": "Wall-collapse soil" },
+      "preparedFloor": { "label": "Prepared floor" },
+      "functionalSurface": { "label": "Functional surface" },
+      "constructionDeposit": { "label": "Construction deposit" },
+      "workedSurface": { "label": "Worked surface" },
+      "layerMeaningNarrativeRecorded": { "label": "Layer meaning narrative recorded" },
+      "artifactInclusionAmountRecorded": { "label": "Artifact inclusion amount recorded" },
+      "organicCharcoalBurntSoilInclusionRecorded": { "label": "Organic/charcoal/burnt-soil inclusion recorded" },
+      "findStratigraphicPositionLinked": { "label": "Find stratigraphic position linked" },
+      "findHeightRecorded": { "label": "Find height recorded" },
+      "heightAboveFloorRecorded": { "label": "Height above floor recorded" },
+      "pendingDecision": { "label": "Pending decision" }
+    },
+    "description": "Korean pit dwelling stratified-fill checks for distinguishing later layers, primary/secondary fills, inflow, floor and construction deposits, prepared or worked surfaces, inclusion amounts, and find heights relative to the floor"
+  },
   "KoreanFieldwork-pitDwellingFireEvidence": {
     "values": {
       "charredTimberRecorded": {

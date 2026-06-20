@@ -757,6 +757,9 @@
         },
         "featureSegmentForm": {
           "label": "특징 세그먼트의 형태"
+        },
+        "pitDwellingStratifiedFillRecord": {
+          "label": "수혈주거지 분층 기록"
         }
       }
     },

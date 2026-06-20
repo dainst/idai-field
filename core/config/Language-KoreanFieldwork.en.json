@@ -921,6 +921,9 @@
         "featureFillInterpretation": {
           "label": "Feature fill interpretation"
         },
+        "pitDwellingStratifiedFillRecord": {
+          "label": "Pit dwelling stratified fill record"
+        },
         "naturalHumusRelativity": {
           "label": "Natural/humus relativity"
         },

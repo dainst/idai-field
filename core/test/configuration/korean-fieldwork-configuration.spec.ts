@@ -685,6 +685,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('dictionary2007_fortification_terms_pages');
         expect(documentsById['source-index-fortification-001'].resource.sourceEvidenceLocator)
             .toContain('dict2007_fortification_page_0305.png');
+        expect(documentsById['source-index-fortification-001'].resource.sourceEvidenceLocator)
+            .toContain('page_1372.png');
+        expect(documentsById['source-index-fortification-001'].resource.sourceEvidenceLocator)
+            .toContain('dict2007_fortification_page_0133.png');
+        expect(documentsById['source-index-fortification-001'].resource.description)
+            .toContain('봉군보');
         expect(documentsById['source-index-fortification-001'].resource.sourceEvidenceMaterial)
             .toContain('measurementValue');
         expect(documentsById['source-index-fortification-001'].resource.sourceEvidenceMaterial)
@@ -1707,8 +1713,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('combustionChamber');
         expect(documentsById['feature-beacon-001'].resource.beaconNetworkOperation)
             .toContain('counterpartBeacon');
+        expect(documentsById['feature-beacon-001'].resource.beaconNetworkOperation)
+            .toContain('gamgwan');
         expect(documentsById['feature-beacon-001'].resource.fortressBeaconRelation)
             .toContain('physicalOperationSeparated');
+        expect(documentsById['feature-beacon-001'].resource.description)
+            .toContain('page_1372.png');
     });
 
 

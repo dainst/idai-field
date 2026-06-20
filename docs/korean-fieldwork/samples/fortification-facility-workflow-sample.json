@@ -198,7 +198,7 @@
         "relations": {
           "isRecordedIn": ["op-fortification-001"]
         },
-        "description": "산성 정상부의 봉수대 후보. 봉수대·봉화대 이칭은 용어 관계로 확인하고, 연대·연소실·외곽석축·건물지 같은 물리시설과 직봉·대응봉수·수번 인원 같은 문헌 운영망을 분리 기록한다.",
+        "description": "산성 정상부의 봉수대 후보. 봉수대·봉화대 이칭은 용어 관계로 확인하고, 연대·연조·연소실·외곽석축·건물지 같은 물리시설과 직봉·대응봉수·감관·봉군보 같은 문헌 운영망을 분리 기록한다. 원문 대조는 성곽·봉수편 `dictionary2011_fortification_terms_pages/page_0021.png`, `page_0029.png`, `page_1372.png`와 한국성곽 용어사전 `dict2007_fortification_page_0133.png`, `dict2007_fortification_page_0165.png`를 근거로 둔다.",
         "fieldRecordQuality": [
           "immediateRecording",
           "observationInterpretationSeparated",

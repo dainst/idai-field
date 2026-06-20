@@ -141,7 +141,7 @@
         "relations": {
           "liesWithin": ["project-source-evidence-001"]
         },
-        "description": "형식학적 연구의 이해 자료에서 속성·형식·기종·양식 구분, 공반 반복성, 기능·용도와 지역차, 시간적 속성, 독립 검증 필요성을 형식·편년 논증 필드의 근거로 남긴다.",
+        "description": "형식학적 연구의 이해 자료에서 속성·형식·기종·양식 구분, 공반 반복성, 기능·용도와 지역차, 시간적 속성, 독립 검증 필요성, 편년 대상 단위와 제작·사용·폐기/퇴적 시점 구분을 형식·편년 논증 필드의 근거로 남긴다.",
         "sourceEvidenceCitation": "형식학적 연구의 이해, KAAH 2015년도 매장문화재조사 전문교육",
         "sourceEvidenceLocator": "추출문 Page 14, 23, 43, 45, 47, 50 및 원문 렌더링 method31_page_014.png, method31_page_023.png, method31_page_043.png, method31_page_045.png, method31_page_047.png, method31_page_050.png 직접 대조",
         "sourceEvidenceMaterial": [
@@ -164,6 +164,7 @@
         "sourceEvidenceUse": [
           "fieldDesignEvidence",
           "chronologyArgumentEvidence",
+          "sampleValidationEvidence",
           "interpretationCaution",
           "preventAutoClassification",
           "sourceTraceability"

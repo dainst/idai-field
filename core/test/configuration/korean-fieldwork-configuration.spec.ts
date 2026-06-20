@@ -691,6 +691,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(documentsById['source-index-typology-method-001'].resource.sourceEvidenceUse)
             .toContain('chronologyArgumentEvidence');
         expect(documentsById['source-index-typology-method-001'].resource.sourceEvidenceUse)
+            .toContain('sampleValidationEvidence');
+        expect(documentsById['source-index-typology-method-001'].resource.sourceEvidenceUse)
             .toContain('preventAutoClassification');
         expect(documentsById['source-index-typology-method-001'].resource.sourceEvidenceLocator)
             .toContain('Page 14, 23, 43, 45, 47, 50');
@@ -1673,6 +1675,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('typeDifferenceNotTimeAssumed');
         expect(documentsById['find-neolithic-pottery-001'].resource.chronologyArgument)
             .toContain('independentMethodVerified');
+        expect(documentsById['find-neolithic-pottery-001'].resource.chronologyUnitDecision)
+            .toContain('artifactTypeUnit');
+        expect(documentsById['find-neolithic-pottery-001'].resource.chronologyUnitDecision)
+            .toContain('productionPhase');
+        expect(documentsById['find-neolithic-pottery-001'].resource.chronologyUnitDecision)
+            .toContain('depositionPhase');
+        expect(documentsById['find-neolithic-pottery-001'].resource.chronologyUnitDecision)
+            .toContain('alternativeUnitRetained');
         expect(documentsById['find-pottery-forming-trace-001'].resource.potteryFormingTraceAssessment)
             .toContain('stringCutTrace');
         expect(documentsById['find-pottery-forming-trace-001'].resource.potteryFormingCaution)

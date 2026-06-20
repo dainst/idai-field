@@ -684,10 +684,16 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('futurePdfRecheck');
         expect(documentsById['source-index-artifact-storage-001'].resource.sourceEvidenceLocator)
             .toContain('PDF 309-313');
+        expect(documentsById['source-index-artifact-storage-001'].resource.sourceEvidenceLocator)
+            .toContain('method26_artifact_storage_rendered');
+        expect(documentsById['source-index-artifact-storage-001'].resource.sourceEvidenceLocator)
+            .toContain('method26_page_338.png');
         expect(documentsById['source-index-artifact-storage-001'].resource.sourceEvidenceDomain)
             .toContain('conservationScience');
         expect(documentsById['source-index-artifact-storage-001'].resource.sourceEvidenceUse)
             .toContain('metricReference');
+        expect(documentsById['source-index-artifact-storage-001'].resource.sourceEvidenceUse)
+            .not.toContain('futurePdfRecheck');
         expect(documentsById['source-index-current-storage-standards-001'].resource.sourceEvidenceLocator)
             .toContain('국립해양박물관');
         expect(documentsById['source-index-current-storage-standards-001'].resource.sourceEvidenceDomain)

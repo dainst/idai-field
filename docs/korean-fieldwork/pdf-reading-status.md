@@ -51,7 +51,7 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-19 같은 자료의 309~313쪽, 321쪽, 324쪽, 330~338쪽 원문 이미지를 다시 확인해 `artifactQuantityBasis`와 `storageEnvironmentControl`을 보강했다. 건·점수 예시는 `1건 1점`, `1건 2점`, `1건 10점`, 동일개체 확인, 실수량 병기, 동일 속성 부속, 분리 가능 구성품을 나누어야 함을 보여준다. 수장고 장은 수장공간/전시공간 환경 기준뿐 아니라 개별 포장, 국가귀속·학술자료·미등록 폐기유물 분리, 금속/비금속 분리, 인수인계·이관 동선, 대형유물 별도 이송, 보고서 전 컨디션 체크까지 수장 기록으로 남기라고 읽힌다.
 
-2026-06-19 유물 건·점수 예시와 수장환경 표는 `source-index-artifact-storage-001`로도 분리했다. 이 색인은 표의 수치를 앱 기본 규정으로 고정하는 장치가 아니라, `artifactQuantityBasis`와 `storageEnvironmentControl`을 보강할 때 원문 쪽수, 수치 대조, 현재 보존 기준 재확인 여부를 함께 추적하는 근거다.
+2026-06-19 유물 건·점수 예시와 수장환경 표는 `source-index-artifact-storage-001`로도 분리했다. 이 색인은 표의 수치를 앱 기본 규정으로 고정하는 장치가 아니라, `artifactQuantityBasis`와 `storageEnvironmentControl`을 보강할 때 원문 쪽수, 수치 대조, 재질별 보관 원칙을 추적하는 근거다. 현행 보존환경 기준과 기관별 차이는 별도 `source-index-current-storage-standards-001`에서 관리하므로 이 항목의 `futurePdfRecheck`는 제거했다.
 
 2026-06-20 현행 공개 보존환경 기준도 교차 대조했다. 국립해양박물관은 재질별 온습도 표를 공개하고, 국립현대미술관과 국립한글박물관은 재질별 보존환경 차이, 빛, 공기오염, 해충·균 같은 생물학적 요소의 모니터링을 함께 강조한다. 따라서 `storageEnvironmentControl`에는 교재 표의 수치뿐 아니라 기관 기준 출처, 재질별 적용 범위, 환경 모니터링 로그, 공기오염·생물피해 점검을 추가하고, 별도 색인 `source-index-current-storage-standards-001`로 공개 기준 대조 상태를 남겼다.
 

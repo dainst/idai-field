@@ -87,6 +87,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-20 유물사진 촬영·조명·도판 편집 기준도 `Photo` 화면으로 옮겼다. 유물실측 교재와 조사방법론 자료는 유물사진을 실측도면 뒤에 촬영해 같은 각도와 필요한 세부컷을 정하고, 그레이카드·화이트밸런스·단색 배경·매크로렌즈·저ISO 같은 촬영 조건과 45도 측면광·반사판·확산광·편광필터·텐팅라이트 같은 조명 제어를 남기라고 요구한다. 이번 반영은 `artifactPhotoCaptureStandard`, `artifactPhotoLightingControl`, `artifactPhotoViewPlan` 값 목록과 `media-drawing-gps-workflow-sample.json`의 토기편 유물사진 카드로 검증한다.
 
+2026-06-20 유물실측 교재 두 종의 원문 화면을 다시 대조했다. 2014년 자료는 실측이 보고서의 기초 증거이며 기준선·실측선, 측점 검점, 기벽 3-4점, 문양 시문 순서, 토기 주기, 석기 6면 투상 요구를 남긴다. 2015년 자료는 수침목재 실측에서 사용방향·중심선·수평유지·습식 제도·플라스틱 측정도구·분무와 천 보호·찍힘 및 건조수축 위험을 확인시킨다. 기존 `Drawing` 값목록을 새로 늘리지는 않고, `source-index-artifact-drawing-method-001`과 `media-drawing-gps-workflow-sample.json`의 원문 대조 메모로 근거 추적성을 보강했다.
+
 2026-06-19 제9권 연구방법론의 형식학·편년론 장을 실제 구성으로 한 단계 더 옮겼다. 형식명, 시대값, 문화유형명은 관찰값이 아니므로 유구·유물 기록에서 연구질문, 관찰·해석 분리, 분류근거, 대안해석, 자연·후퇴적 가능성, 분석결과 영향, 보고서 채택 근거를 함께 남겨야 한다. 이 묶음은 `Feature`와 `Find`의 `interpretationArgument` 값 목록으로 옮겼고, 청동기 취락·고인돌 샘플에서 해석이 유형명 하나로 닫히지 않는지 함께 검증한다.
 
 2026-06-19 충적지·토양도 자료도 구현 단위로 압축했다. 제6권 고지형·충적지와 조사방법론의 지표·GIS 자료는 평야·논 지역에서 표면유물 부재를 유적 부재로 보지 말고, 자연제방·배후습지·구하도·구해안선, 토양통·대토양군, 보링·주상도, a+b층 세트, 유구축조면과 검출면 차이, 암색대·이질토 블록·홍수퇴적 해석을 함께 보라고 요구한다. 이 묶음은 `Survey`의 `alluvialLandformSurvey`, `soilMapPredictionVerification`, `FeatureSegment`의 `alluvialLayerConceptAudit`, `alluvialSurfaceAttribution`, `alluvialFormationProcess` 값 목록으로 옮겼고, `alluvial-landform-layer-workflow-sample.json`으로 지표·토양도 예측, 층 개념, 경작유구와 고환경 시료 흐름을 검증한다.

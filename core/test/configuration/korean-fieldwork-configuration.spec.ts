@@ -388,6 +388,10 @@ describe('KoreanFieldwork project configuration', () => {
 
         expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
 
+        expect(sample.sourceReviewNote)
+            .toContain('유물실측의_이해-충청·호남권역2014년_7월.pdf');
+        expect(sample.sourceReviewNote)
+            .toContain('유물실측의_이해_-_호서·호남권역(2015년_8월.pdf');
         expect(documentsById['op-media-001'].resource.gpsSurveyQualityRecord)
             .toContain('rtkUsed');
         expect(documentsById['op-media-001'].resource.gpsNmeaRecord)
@@ -461,6 +465,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(documentsById['drawing-media-pottery-001'].resource.potteryDrawingStandard)
             .toContain('dimensionAnnotation');
         expect(documentsById['drawing-media-pottery-001'].resource.artifactDrawingQualityCheck)
+            .toContain('measuringPointCheck');
+        expect(documentsById['drawing-media-pottery-001'].resource.artifactDrawingQualityCheck)
             .toContain('ambiguousObservationReasonRecorded');
         expect(documentsById['drawing-media-pottery-001'].resource.artifactDrawingQualityCheck)
             .toContain('estimatedMeasurementMarked');
@@ -474,6 +480,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('thirdAngleSixViews');
         expect(documentsById['drawing-media-waterlogged-wood-001'].resource.waterloggedWoodDrawingHandling)
             .toContain('waterloggedState');
+        expect(documentsById['drawing-media-waterlogged-wood-001'].resource.waterloggedWoodDrawingHandling)
+            .toContain('dryingShrinkageRisk');
         expect(documentsById['drawing-media-3d-source-001'].resource.electronicDrawingSourceWorkflow)
             .toContain('pointCloudMerged');
         expect(documentsById['drawing-media-3d-source-001'].resource.electronicDrawingSourceWorkflow)
@@ -742,6 +750,26 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('conservationScience');
         expect(documentsById['source-index-current-storage-standards-001'].resource.sourceEvidenceVerification)
             .toContain('crossSourceCompared');
+        expect(documentsById['source-index-artifact-drawing-method-001'].resource.sourceEvidenceCitation)
+            .toContain('유물실측의_이해-충청·호남권역2014년_7월.pdf');
+        expect(documentsById['source-index-artifact-drawing-method-001'].resource.sourceEvidenceLocator)
+            .toContain('artifact_drawing_method_rendered');
+        expect(documentsById['source-index-artifact-drawing-method-001'].resource.sourceEvidenceLocator)
+            .toContain('2014_page_017.png');
+        expect(documentsById['source-index-artifact-drawing-method-001'].resource.sourceEvidenceLocator)
+            .toContain('2015_page_081.png-2015_page_089.png');
+        expect(documentsById['source-index-artifact-drawing-method-001'].resource.sourceEvidenceDomain)
+            .toContain('artifactDrawing');
+        expect(documentsById['source-index-artifact-drawing-method-001'].resource.sourceEvidenceDomain)
+            .toContain('reportWriting');
+        expect(documentsById['source-index-artifact-drawing-method-001'].resource.sourceEvidenceUse)
+            .toContain('reportCrossCheckEvidence');
+        expect(documentsById['source-index-artifact-drawing-method-001'].resource.sourceEvidenceUse)
+            .toContain('preventAutoClassification');
+        expect(documentsById['source-index-artifact-drawing-method-001'].resource.sourceEvidenceVerification)
+            .toContain('numericValueChecked');
+        expect(documentsById['source-index-artifact-drawing-method-001'].resource.verificationState)
+            .toBe('candidate');
         expect(documentsById['source-index-faunal-quantification-001'].resource.sourceEvidenceDomain)
             .toContain('zooarchaeology');
         expect(documentsById['source-index-faunal-quantification-001'].resource.sourceEvidenceUse)

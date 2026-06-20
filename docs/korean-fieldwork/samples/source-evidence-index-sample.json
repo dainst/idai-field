@@ -9,7 +9,8 @@
     "형식학 강의자료의 시간성·공반·기능·지역차 검토가 편년 자동확정 방지 근거로 남는가.",
     "제철유적 조사방법론의 공정·구조·부산물·부속유구·목탄 근거가 제철로 명칭 자동분류를 막고 분석계획으로 이어지는가.",
     "기와가마 조사방법의 Grid·둑·회구부·부위별 조사·분석시료 요구가 요체명 자동분류를 막고 생산공간 기록으로 이어지는가.",
-    "분묘유구 조사법의 봉토·구획성토·묘도·폐쇄시설·도면/사진 기록 요구가 묘형명 자동분류를 막고 조사과정 기록으로 이어지는가."
+    "분묘유구 조사법의 봉토·구획성토·묘도·폐쇄시설·도면/사진 기록 요구가 묘형명 자동분류를 막고 조사과정 기록으로 이어지는가.",
+    "유물실측 교재의 기준선·실측선·측점 검점·토기 주기·석기 view·수침목재 실측 요구가 도면 카드와 보고서 교차검토 근거로 남는가."
   ],
   "documents": [
     {
@@ -934,6 +935,57 @@
         "recordCreationTiming": "postExcavationDerived",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
+          "crossReviewNeeded",
+          "reproducibleRecord"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "source-index-artifact-drawing-method-001",
+        "identifier": "SRC-ARTIFACT-DRAWING-METHOD-001",
+        "shortDescription": "유물실측 원리·목기 실측 원문 색인",
+        "category": "SourceEvidenceIndex",
+        "relations": {
+          "liesWithin": ["project-source-evidence-001"]
+        },
+        "description": "2014년 유물실측 자료의 실측도면 역할, 기록방식 상호보완, 기준선·실측선 선택, 측점 측정·검점, 단면 우선, 기벽 3-4곳 계측, 문양 측점과 시문 순서, 주기, 석기 6면 투상 요구와 2015년 자료의 수침목재 중심선·습식 실측·보존 전후 기록을 Drawing 샘플 근거로 묶는다.",
+        "sourceEvidenceCitation": "유물실측의_이해-충청·호남권역2014년_7월.pdf; 유물실측의_이해_-_호서·호남권역(2015년_8월.pdf",
+        "sourceEvidenceLocator": "PDF 2014 11-12, 17-20, 30, 35, 40, 45-46, 51-54쪽과 PDF 2015 81-89쪽 원문 이미지 대조; artifact_drawing_method_rendered/2014_page_011.png, 2014_page_012.png, 2014_page_017.png-2014_page_020.png, 2014_page_030.png, 2014_page_035.png, 2014_page_040.png, 2014_page_045.png-2014_page_046.png, 2014_page_051.png-2014_page_054.png, 2015_page_081.png-2015_page_089.png",
+        "sourceEvidenceMaterial": [
+          "originalScript",
+          "sourceCitation",
+          "checklist",
+          "drawing",
+          "photo",
+          "diagram",
+          "measurementValue"
+        ],
+        "sourceEvidenceDomain": [
+          "artifactDrawing",
+          "reportWriting",
+          "conservationScience"
+        ],
+        "sourceEvidenceVerification": [
+          "pageChecked",
+          "captionChecked",
+          "numericValueChecked",
+          "directPdfChecked",
+          "originalScriptChecked"
+        ],
+        "sourceEvidenceUse": [
+          "fieldDesignEvidence",
+          "sampleValidationEvidence",
+          "reportCrossCheckEvidence",
+          "interpretationCaution",
+          "preventAutoClassification",
+          "sourceTraceability"
+        ],
+        "recordCreationTiming": "postExcavationDerived",
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
           "crossReviewNeeded",
           "reproducibleRecord"
         ],

@@ -1,6 +1,7 @@
 {
   "title": "Korean media drawing and GPS workflow sample",
   "purpose": "Validate that field media records treat GPS, photos, distribution maps, artifact drawings, and 3D/electronic drawings as evidence-bearing records with source, control, quality, and preservation checks.",
+  "sourceReviewNote": "2026-06-20 유물실측의_이해-충청·호남권역2014년_7월.pdf 11-12, 17-20, 30, 35, 40, 45-46, 51-54쪽과 유물실측의_이해_-_호서·호남권역(2015년_8월.pdf 81-89쪽 원문 화면을 artifact_drawing_method_rendered/2014_page_011.png-2015_page_089.png로 대조했다. 자료는 실측이 기술·사진·탁본과 보완되는 보고서 증거이며, 기준선·실측선 선택 사유, 측점 검점, 단면 우선, 기벽 3-4점, 문양 시문 순서, 주기, 석기 사용방향·6면 투상, 수침목재 사용방향·중심선·습식 실측·찍힘 및 건조수축 위험을 도면 카드에서 추적하라고 요구한다.",
   "validationQuestions": [
     "GPS 좌표가 위도·경도 숫자만이 아니라 RTK/GNSS 방식, 기준국·이동국, 위성 상태, DOP, NMEA 원자료, 좌표계와 지오이드로 검증되는가.",
     "사진 파일이 단순 첨부가 아니라 결과·과정 역할, 촬영내용 기록, 현재 위치, 궤적, 등록지점, 파일명, 수치지도 연동 상태와 함께 남는가.",

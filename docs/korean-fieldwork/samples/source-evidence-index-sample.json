@@ -562,7 +562,7 @@
         },
         "description": "구석기시대편의 공간분포, 석기 접합·되맞추기, 석기 제작 기법, 석재 산지, 사용흔분석, 르발루아·무스테리안 같은 국외 비교용어를 구석기 발굴 화면의 공간·산지·기능판정 보류 근거로 남긴다.",
         "sourceEvidenceCitation": "한국고고학전문사전 구석기시대편",
-        "sourceEvidenceLocator": "구석기시대편 PDF 13, 35, 87, 168, 184쪽 직접 대조; 가월리·주월리유적, 공간분포, 사용흔분석, 석기 접합·석기 제작 기법 원문 화면",
+        "sourceEvidenceLocator": "구석기시대편 PDF 13, 35, 69, 92, 100, 168, 184, 196쪽 직접 대조; dict2013_paleolithic_rendered 원문 화면으로 가월리·주월리유적, 공간분포, 노산리유적 도판 캡션, 돌날·르발루아 비교, 되맞추기, 사용흔분석, 석기 제작 기법 확인",
         "sourceEvidenceMaterial": [
           "originalScript",
           "sourceCitation",
@@ -580,14 +580,13 @@
           "directPdfChecked",
           "originalScriptChecked",
           "caseNameChecked",
-          "captionNeedsCheck"
+          "captionChecked"
         ],
         "sourceEvidenceUse": [
           "fieldDesignEvidence",
           "termAuthorityEvidence",
           "preventAutoClassification",
-          "sourceTraceability",
-          "futurePdfRecheck"
+          "sourceTraceability"
         ],
         "recordCreationTiming": "postExcavationDerived",
         "fieldRecordQuality": [
@@ -595,7 +594,7 @@
           "crossReviewNeeded",
           "reproducibleRecord"
         ],
-        "verificationState": "needsRecheck"
+        "verificationState": "candidate"
       }
     },
     {

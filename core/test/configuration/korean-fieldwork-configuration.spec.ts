@@ -731,8 +731,18 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('paleolithicSite');
         expect(documentsById['source-index-paleolithic-dictionary-001'].resource.sourceEvidenceUse)
             .toContain('preventAutoClassification');
+        expect(documentsById['source-index-paleolithic-dictionary-001'].resource.sourceEvidenceUse)
+            .not.toContain('futurePdfRecheck');
         expect(documentsById['source-index-paleolithic-dictionary-001'].resource.sourceEvidenceLocator)
-            .toContain('PDF 13, 35, 87, 168, 184');
+            .toContain('PDF 13, 35, 69, 92, 100, 168, 184, 196');
+        expect(documentsById['source-index-paleolithic-dictionary-001'].resource.sourceEvidenceLocator)
+            .toContain('dict2013_paleolithic_rendered');
+        expect(documentsById['source-index-paleolithic-dictionary-001'].resource.sourceEvidenceVerification)
+            .toContain('captionChecked');
+        expect(documentsById['source-index-paleolithic-dictionary-001'].resource.sourceEvidenceVerification)
+            .not.toContain('captionNeedsCheck');
+        expect(documentsById['source-index-paleolithic-dictionary-001'].resource.verificationState)
+            .toBe('candidate');
         expect(documentsById['source-index-tomb-dictionary-001'].resource.sourceEvidenceDomain)
             .toContain('tomb');
         expect(documentsById['source-index-tomb-dictionary-001'].resource.sourceEvidenceUse)

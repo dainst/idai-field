@@ -198,7 +198,9 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-20 생산유적편 재대조에서는 생산 분야 분리, 찾아가기 관계, `평요 平窯`의 분야별 분리, 번조실·소성실 병합 주의, 요도구와 소성흔의 관계를 다시 확인했다. 새 생산유적 필드를 늘리기보다 기존 생산유적·요업·자기요장 값목록이 자동분류를 막는 수용 단위임을 확인했고, `source-evidence-index-sample.json`의 `source-index-production-dictionary-001`로 원문 근거 색인을 추가했다.
 
-2026-06-20 추가 원PDF 재확인에서는 `dictionary2019_production_terms_pages/page_0008-0010.png`, `page_0051-0054.png`, `page_0064.png`, `page_0247.png`, `page_0339-0340.png`, `page_0343.png`, `page_1147-1149.png`를 대조했다. 생산유적편의 표기 원칙, 분야별 표제어 분리, 갑발·갑발뚜껑·갑발받침·갓모·도침 도판 캡션, 건조장·노천요·도지미/도짐이 찾아가기, 이상재·이기재의 도구·재료 범위를 확인해 `source-index-production-dictionary-001`을 `candidate` 상태로 낮췄다.
+2026-06-20 추가 원PDF 재확인에서는 `dictionary2019_production_terms_pages/page_0008-0010.png`, `page_0051-0054.png`, `page_0064.png`, `page_0247.png`, `page_0339-0340.png`, `page_0343.png`, `page_1147-1149.png`를 대조했다. 생산유적편의 표기 원칙, 분야별 표제어 분리, 갑발·갑발뚜껑·갑발받침·갓모·도침 도판 캡션, 건조장·노천요·도지미/도짐이 찾아가기, 이상재·이기재의 도구·재료 범위를 확인해 `source-index-production-dictionary-001`을 `candidate` 상태로 닫았다.
+
+2026-06-20 구석기시대편 추가 원문 화면 대조에서는 `dict2013_paleolithic_rendered`의 13, 35, 69, 92, 100, 168, 184, 196쪽을 확인했다. 가월리·주월리유적의 접합자료와 석재, 공간분포의 3차원 위치·되맞추기, 노산리유적 도판 캡션, 돌날·르발루아 비교, 되맞추기 항목, 사용흔분석과 수보로보유적 사례를 직접 보았으므로 `source-index-paleolithic-dictionary-001`을 `candidate` 상태로 닫았다.
 
 2026-06-20 `발굴보고서_작성법_교재.pdf`, `발굴조사_실무.pdf`, 현장 기록관리 OCR 보강본을 다시 대조했다. 보고서 작성은 현장 종료 뒤 문장만 만드는 절차가 아니라 원고, 도면대장, 사진대장, 유물·시료목록, 조사일지, 기준토층, 층위 흐름도, 번호 변환표, 원자료 백업이 서로 맞는지 검수하는 절차로 읽힌다. 이 요구는 새 `ReportEditorialCrossCheck` 카드와 `administrative-workflow-sample.json` 편집 교차검토 사례로 옮겼다.
 

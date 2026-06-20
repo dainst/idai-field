@@ -1,6 +1,7 @@
 {
   "title": "Korean wetland survey and microtopography workflow sample",
   "purpose": "Validate that wetland survey records connect source-map preparation, landform interpretation, trial-trench targeting, ultra-microtopography observations, and paleoenvironment proxy samples without reducing the area to a present-day wet/dry condition.",
+  "sourceReviewNote": "2026-06-20 제2회_매장문화재_조사연구원_교육_2007년3월.pdf 153, 155, 159-163쪽 원문 화면을 method24_wetland_pages153_164로 대조했다. 저습지 조사는 현재 습윤 여부가 아니라 60% 이상 중첩 항공사진, 개발 전 사진, 고지도, 지질도, 형질변경 지형도, 보링자료, 등고선도와 현지 반복확인을 묶어 고하천·자연제방·단구면·배후습지, 시굴지점, 극미지형과 미화석 시료 연결을 남기는 흐름으로 관리한다.",
   "validationQuestions": [
     "저습지 판단이 현재 습윤 여부가 아니라 항공사진, 고지도, 지질도, 형질변경 지도, 보링자료, 등고선도 검토로 시작되는가.",
     "지역환경에서 극미지형까지 내려가는 지형 판독 단계와 고하천, 자연제방, 단구면, 배후습지 표시가 분리되어 남는가.",

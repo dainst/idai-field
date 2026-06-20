@@ -979,6 +979,18 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('preventAutoClassification');
         expect(documentsById['source-index-surface-survey-absence-001'].resource.verificationState)
             .toBe('candidate');
+        expect(documentsById['source-index-wetland-method-001'].resource.sourceEvidenceLocator)
+            .toContain('method24_wetland_pages153_164');
+        expect(documentsById['source-index-wetland-method-001'].resource.sourceEvidenceLocator)
+            .toContain('60% 이상 항공사진 중첩');
+        expect(documentsById['source-index-wetland-method-001'].resource.sourceEvidenceDomain)
+            .toContain('wetlandSurvey');
+        expect(documentsById['source-index-wetland-method-001'].resource.sourceEvidenceDomain)
+            .toContain('spatialData');
+        expect(documentsById['source-index-wetland-method-001'].resource.sourceEvidenceVerification)
+            .toContain('figureNumberChecked');
+        expect(documentsById['source-index-wetland-method-001'].resource.sourceEvidenceUse)
+            .toContain('preventAutoClassification');
         expect(documentsById['source-index-daily-log-quality-001'].resource.sourceEvidenceDomain)
             .toContain('reportWriting');
         expect(documentsById['source-index-daily-log-quality-001'].resource.sourceEvidenceLocator)
@@ -1973,6 +1985,8 @@ describe('KoreanFieldwork project configuration', () => {
 
         expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
 
+        expect(sample.sourceReviewNote).toContain('method24_wetland_pages153_164');
+        expect(sample.sourceReviewNote).toContain('현재 습윤 여부가 아니라');
         expect(documentsById['survey-wetland-001'].resource.wetlandAnalysisSource)
             .toContain('boringDataLinked');
         expect(documentsById['survey-wetland-001'].resource.wetlandLandformInterpretation)

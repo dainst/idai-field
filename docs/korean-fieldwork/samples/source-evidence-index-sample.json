@@ -10,7 +10,8 @@
     "제철유적 조사방법론의 공정·구조·부산물·부속유구·목탄 근거가 제철로 명칭 자동분류를 막고 분석계획으로 이어지는가.",
     "기와가마 조사방법의 Grid·둑·회구부·부위별 조사·분석시료 요구가 요체명 자동분류를 막고 생산공간 기록으로 이어지는가.",
     "분묘유구 조사법의 봉토·구획성토·묘도·폐쇄시설·도면/사진 기록 요구가 묘형명 자동분류를 막고 조사과정 기록으로 이어지는가.",
-    "유물실측 교재의 기준선·실측선·측점 검점·토기 주기·석기 view·수침목재 실측 요구가 도면 카드와 보고서 교차검토 근거로 남는가."
+    "유물실측 교재의 기준선·실측선·측점 검점·토기 주기·석기 view·수침목재 실측 요구가 도면 카드와 보고서 교차검토 근거로 남는가.",
+    "저습지 조사방법의 항공사진·고지도·보링자료·미지형 판독·극미지형 관찰 요구가 현재 습윤 여부로 축소되지 않고 시굴·시료 설계 근거로 남는가."
   ],
   "documents": [
     {
@@ -1123,6 +1124,59 @@
           "sampleValidationEvidence",
           "preventAutoClassification",
           "interpretationCaution",
+          "sourceTraceability"
+        ],
+        "recordCreationTiming": "postExcavationDerived",
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "crossReviewNeeded"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "source-index-wetland-method-001",
+        "identifier": "SRC-WETLAND-METHOD-001",
+        "shortDescription": "저습지 지형판독·극미지형 원문 대조 색인",
+        "category": "SourceEvidenceIndex",
+        "relations": {
+          "liesWithin": ["project-source-evidence-001"]
+        },
+        "description": "저습지 조사방법 강의자료의 지형환경분석과 발굴조사 대목을 현재 습윤 여부가 아니라 사전 지도·항공사진 판독, 현지 반복확인, 시굴지점 선정, 극미지형 관찰, 미화석 시료 설계의 근거 색인으로 둔다.",
+        "sourceEvidenceCitation": "제2회_매장문화재_조사연구원_교육_2007년3월.pdf, 저습지에 대한 고고학적 조사방법 장",
+        "sourceEvidenceLocator": "PDF 153, 155, 159-163쪽 직접 대조(method24_wetland_pages153_164/page_153.png, page_155.png, page_159.png, page_160.png, page_161.png, page_162.png, page_163.png). 장 표지와 저습지 환경, 하안단구·선상지·자연제방·배후습지 정의, 60% 이상 항공사진 중첩, 개발 전 항공사진, 고지도, 반사식 실체경, 1/5,000 지형 전자지도, 지질도, 형질변경 지형도, 보링자료, 10cm 등고선도, 지형환경분석 순서, 항공사진 판독 기록과 시굴지점 선정, 극미지형은 시굴·발굴에서만 확인 가능하다는 발굴조사 대목 확인",
+        "sourceEvidenceMaterial": [
+          "originalScript",
+          "figure",
+          "map",
+          "checklist",
+          "mapRequirement",
+          "equipmentList",
+          "caseStudy"
+        ],
+        "sourceEvidenceDomain": [
+          "wetlandSurvey",
+          "fieldSurvey",
+          "surfaceSurvey",
+          "alluvialSite",
+          "spatialData"
+        ],
+        "sourceEvidenceVerification": [
+          "pageChecked",
+          "figureNumberChecked",
+          "captionChecked",
+          "caseNameChecked",
+          "directPdfChecked",
+          "originalScriptChecked"
+        ],
+        "sourceEvidenceUse": [
+          "fieldDesignEvidence",
+          "sampleValidationEvidence",
+          "comparativeReference",
+          "interpretationCaution",
+          "preventAutoClassification",
           "sourceTraceability"
         ],
         "recordCreationTiming": "postExcavationDerived",

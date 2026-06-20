@@ -823,10 +823,18 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('testExcavation');
         expect(documentsById['survey-trial-001'].resource.sampleSurveySuitability)
             .toContain('betweenTrenchesUncertain');
+        expect(documentsById['survey-trial-001'].resource.trialExcavationPurpose)
+            .toContain('verticalExtentCheck');
         expect(documentsById['survey-trial-001'].resource.trialTrenchDesign)
             .toContain('naturalLeveeRiverPerpendicular');
+        expect(documentsById['survey-trial-001'].resource.trialTrenchDesign)
+            .toContain('trenchDepthRecorded');
+        expect(documentsById['survey-trial-001'].resource.excavationScopeDifficultyBasis)
+            .toContain('multiLayerSite');
         expect(documentsById['survey-trial-001'].resource.excavationScopeDifficultyBasis)
             .toContain('scopeChangeHistory');
+        expect(documentsById['survey-trial-001'].resource.verificationState)
+            .toBe('candidate');
         expect(documentsById['op-handover-001'].resource.investigationRecordHandover)
             .toContain('handoverConfirmed');
         expect(documentsById['op-handover-001'].resource.investigationRecordHandover)

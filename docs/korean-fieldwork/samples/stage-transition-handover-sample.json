@@ -1,6 +1,7 @@
 {
   "title": "Korean investigation stage transition and handover sample",
   "purpose": "Validate that surface survey, sample survey, trial excavation, full excavation transition, permit compliance, preservation action, and record handover stay connected in the Korean fieldwork configuration.",
+  "sourceReviewNote": "2026-06-20 매장문화재조사_기초이론.pdf 원문 페이지 12, 13, 18, 33, 35, 36, 37, 41쪽을 method13_trial_transition_pages 이미지로 재대조했다. 표본조사는 대규모 충적지의 문화층 범위 확인에 적합하지만 트렌치 사이 부재를 단정하지 않으며, 시굴조사는 존재 여부뿐 아니라 수평·수직 범위, 시대·성격, 정밀발굴 기간·비용·방법 산정 근거를 확보해야 한다. 충적지 트렌치는 자연제방·배후습지를 가로지르도록 하천 방향과 직교시키고, 고지형 분석·미고지 추가 트렌치·깊이에 따른 폭 확장과 안전 확보를 함께 기록한다. 정밀발굴 범위는 보이는 유구만이 아니라 유구 사이 공지와 취락 경관 해석 자료를 포함할 수 있어 범위 변경 이력을 남겨야 한다.",
   "validationQuestions": [
     "지표·표본·시굴에서 정밀발굴로 넘어갈 때 자료 인계가 추적되는가.",
     "하루 작업기록에서 보고서 도면·사진·목록까지 원기록 ID가 이어지는가.",
@@ -194,7 +195,7 @@
           "blankSpaceBetweenFeatures",
           "scopeChangeHistory"
         ],
-        "verificationState": "needsRecheck"
+        "verificationState": "candidate"
       }
     },
     {

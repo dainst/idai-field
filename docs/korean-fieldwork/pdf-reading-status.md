@@ -111,6 +111,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-19 표본·시굴 전환 자료도 구현 단위로 압축했다. `매장문화재조사 기초이론`과 지표조사 업무 이해 계열 자료는 표본조사를 제한 범위의 후속 발굴 판단 단계로, 시굴조사를 존재 확인뿐 아니라 수평·수직 범위, 시대·성격, 정밀발굴 기간·비용·방법 산정 단계로 다룬다. 이 묶음은 `Survey`의 `sampleSurveySuitability`, `trialExcavationPurpose`, `trialTrenchDesign`, `excavationScopeDifficultyBasis` 값 목록으로 옮겨 지표조사 후속조치와 GIS 예측검증 다음의 조사전환 판단을 같은 화면에서 기록하게 했다.
 
+2026-06-20 원PDF 재확인에서는 `method13_trial_transition_pages/method13_page_0012-0013,0018,0033,0035-0037,0041.png`를 대조했다. 표본조사의 2퍼센트 제한과 대규모 충적지 활용, 시굴조사의 10퍼센트 제한과 수평·수직 범위 확인, 지형별 트렌치 방향·간격·너비·깊이, 충적지 깊은 트렌치의 폭 확장·안전 확보, 정밀발굴 전환 범위의 유구 사이 공지 포함 원칙을 확인해 `stage-transition-handover-sample.json`의 `survey-trial-001`을 `candidate` 상태로 낮췄다.
+
 2026-06-19 지표조사 업무 이해 자료의 범위·부재근거·비유적 자원 요구도 샘플로 묶었다. 지표조사는 표면 유물 산포만 확인하는 절차가 아니라 사업구역 전체, 형질변경지, 토취장·사토장·가설도로, 영향권, 근현대 하한연대, 전문분야, 지도·좌표 요건, 지형·입지·퇴적물·탐문 기반의 증거 부재 판단, 석재·점토·생산 원료 후보까지 함께 남겨야 한다. 이 흐름은 `surface-survey-scope-absence-sample.json`으로 검증한다.
 
 2026-06-19 동물유체·화석환경 자료도 구현 단위로 압축했다. 제9권 연구방법론의 동물고고학 수습 왜곡 경고와 `유적조사와 고환경분석`, 제5회 조사연구원 교육자료의 동물유체 동정·수습보존·분류·계량 항목은 큰 뼈 선별 수습을 경계하고, 작은 어류뼈·조류뼈·설치류·미세 패각·어린 개체 누락, 전체 체질과 2mm/5mm 체눈, 층위별 블록샘플과 반복 채취, 산성토양·패총·석회암동굴·저습지 보존 조건, 뼈 표면 변형, NISP·MNE·MNI·MAU·%MAU 산출 한계를 함께 남기라고 요구한다. 이 묶음은 `Sample`의 `faunalRecoverySampling`, `faunalPreservationHandling`, `zooarchaeologicalIdentification`, `boneSurfaceModification`, `zooarchaeologicalQuantification` 값 목록으로 옮겼고, `faunal-recovery-quantification-sample.json`으로 패총 시료 기록 흐름을 검증한다.

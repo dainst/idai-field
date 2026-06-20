@@ -329,7 +329,7 @@
         },
         "description": "동물유체가 큰 뼈 선별 수습이나 단일 종명 목록으로 축소되지 않도록, 블록시료·체질망·소형자료 누락 위험과 NISP·MNE·MNI·MAU·%MAU의 산출 방식과 한계를 원문 근거로 묶는다.",
         "sourceEvidenceCitation": "매장문화재전문교육 조사연구특강 유적조사와 고환경분석, 동물고고학의 이해; 제5회 매장문화재 조사연구원 교육 2008년 8월, 고고학 유적 내 출토 동물유체의 분석방법; 한국고고학전문사전 신석기시대편, 동물유체·블록시료채집법·NISP/MNI/MNE/MAU 항목",
-        "sourceEvidenceLocator": "고환경분석 직접 추출문 행 479-852; 제5회 교육자료 직접 추출문 행 5218-5418; 신석기 전문사전 직접 추출문 행 11724-11734, 44070-44882 및 색인 141·235쪽 대조",
+        "sourceEvidenceLocator": "고환경분석 PDF 19, 32-35쪽(method12_faunal_source_pages/page_019,032-035.png; 인쇄 24-27쪽에서 산성토양·패총·석회암동굴 보존조건, NISP/MNI, 2mm·5mm 물체질 확인); 제5회 교육자료 PDF 170, 172, 174-177쪽(method25_faunal_source_pages/page_170,172,174-177.png; 인쇄 163, 165, 167-170쪽에서 수습·보존, 분류기준, NISP/MNE/MNI/MAU 도식 확인); 신석기 전문사전 PDF 150, 161, 244, 571쪽(dictionary2012_neolithic_faunal_terms_pages/page_150,161,244,571.png; 인쇄 141, 152, 235, 562쪽 동물고고학·동물유체, 동정표본수, 블록시료채집법, 최소개체수·최소단위수·최소부위수 확인)",
         "sourceEvidenceMaterial": [
           "checklist",
           "measurementValue",
@@ -346,7 +346,8 @@
           "crossSourceCompared",
           "numericValueChecked",
           "pageChecked",
-          "ocrCorrectionNeeded"
+          "captionChecked",
+          "directPdfChecked"
         ],
         "sourceEvidenceUse": [
           "fieldDesignEvidence",
@@ -354,8 +355,7 @@
           "analysisPlanEvidence",
           "interpretationCaution",
           "preventAutoClassification",
-          "sourceTraceability",
-          "futurePdfRecheck"
+          "sourceTraceability"
         ],
         "recordCreationTiming": "postExcavationDerived",
         "fieldRecordQuality": [
@@ -363,7 +363,7 @@
           "criteriaConsistency",
           "crossReviewNeeded"
         ],
-        "verificationState": "needsRecheck"
+        "verificationState": "candidate"
       }
     },
     {

@@ -671,8 +671,18 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('zooarchaeology');
         expect(documentsById['source-index-faunal-quantification-001'].resource.sourceEvidenceUse)
             .toContain('analysisPlanEvidence');
+        expect(documentsById['source-index-faunal-quantification-001'].resource.sourceEvidenceUse)
+            .not.toContain('futurePdfRecheck');
+        expect(documentsById['source-index-faunal-quantification-001'].resource.sourceEvidenceLocator)
+            .toContain('method25_faunal_source_pages');
+        expect(documentsById['source-index-faunal-quantification-001'].resource.sourceEvidenceLocator)
+            .toContain('dictionary2012_neolithic_faunal_terms_pages');
         expect(documentsById['source-index-faunal-quantification-001'].resource.sourceEvidenceVerification)
             .toContain('crossSourceCompared');
+        expect(documentsById['source-index-faunal-quantification-001'].resource.sourceEvidenceVerification)
+            .toContain('directPdfChecked');
+        expect(documentsById['source-index-faunal-quantification-001'].resource.verificationState)
+            .toBe('candidate');
         expect(documentsById['source-index-pit-dwelling-001'].resource.sourceEvidenceDomain)
             .toContain('buildingSite');
         expect(documentsById['source-index-pit-dwelling-001'].resource.sourceEvidenceLocator)

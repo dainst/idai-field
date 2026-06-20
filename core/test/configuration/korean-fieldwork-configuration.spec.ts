@@ -672,6 +672,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('archaeobotany');
         expect(documentsById['source-index-archaeobotany-001'].resource.sourceEvidenceUse)
             .toContain('sampleValidationEvidence');
+        expect(documentsById['source-index-archaeobotany-001'].resource.sourceEvidenceUse)
+            .toContain('futurePdfRecheck');
         expect(documentsById['source-index-artifact-storage-001'].resource.sourceEvidenceLocator)
             .toContain('PDF 309-313');
         expect(documentsById['source-index-artifact-storage-001'].resource.sourceEvidenceDomain)

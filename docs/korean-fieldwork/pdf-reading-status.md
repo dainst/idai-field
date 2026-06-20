@@ -334,7 +334,7 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-20 사전 자료군 재대조에서는 생산유적편과 청동기시대편 증보판의 일러두기를 기준으로, 표제어를 대량 수입하기 전에 자료군 범위 검토, 대량 가져오기 후보·보류, 동일 표제어 충돌, 분야 충돌 검토 상태를 남겨야 함을 확인했다. 이 보강은 `KoreanFieldwork-termAuthorityStatus`의 `sourceCoverageAudited`, `bulkImportCandidate`, `bulkImportDeferred`, `duplicateHeadwordConflict`, `domainConflictReview` 값과 `term-authority-alias-sample.json`의 평요 분야 분리 샘플로 검증한다.
 
-2026-06-20 `형식학적_연구의_이해2015년_9월.pdf`는 추출문 Page 14, 23, 43, 45, 47, 50과 렌더링 이미지를 대조했다. 이 자료는 속성·형식·기종·양식 구분, 공반 반복성, 기능·용도와 지역차, 시간적 속성, 독립 방법 검증, 형식차=시간차 단정 금지, 형식 공존기간을 요구한다. 이번 구현은 `KoreanFieldwork-typologyArgument`와 `KoreanFieldwork-chronologyArgument`를 보강하고, `pottery-technology-subsistence-workflow-sample.json`과 `source-evidence-index-sample.json`에서 형식·편년 자동확정 방지 흐름을 검증하게 했다.
+2026-06-20 `형식학적_연구의_이해2015년_9월.pdf`는 추출문 Page 14, 23, 43, 45, 47, 50과 렌더링 이미지를 대조했다. 이 자료는 속성·형식·기종·양식 구분, 공반 반복성, 기능·용도와 지역차, 시간적 속성, 독립 방법 검증, 형식차=시간차 단정 금지, 형식 공존기간을 요구한다. 이번 구현은 `KoreanFieldwork-typologyArgument`와 `KoreanFieldwork-chronologyArgument`를 보강하고, `pottery-technology-subsistence-workflow-sample.json`과 `source-evidence-index-sample.json`에서 형식·편년 자동확정 방지 흐름을 검증하게 했다. 추가로 `method31_page_014.png`, `method31_page_023.png`, `method31_page_043.png`, `method31_page_045.png`, `method31_page_047.png`, `method31_page_050.png`의 표제·도식·캡션성 문구가 추출문과 대응함을 확인해 `source-index-typology-method-001`의 `captionNeedsCheck`를 `captionChecked`로 닫았다.
 
 ## 주의
 

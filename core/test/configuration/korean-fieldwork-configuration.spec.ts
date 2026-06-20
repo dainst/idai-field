@@ -662,6 +662,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('preventAutoClassification');
         expect(documentsById['source-index-typology-method-001'].resource.sourceEvidenceLocator)
             .toContain('Page 14, 23, 43, 45, 47, 50');
+        expect(documentsById['source-index-typology-method-001'].resource.sourceEvidenceLocator)
+            .toContain('method31_page_014.png');
+        expect(documentsById['source-index-typology-method-001'].resource.sourceEvidenceLocator)
+            .toContain('method31_page_047.png');
+        expect(documentsById['source-index-typology-method-001'].resource.sourceEvidenceVerification)
+            .toContain('captionChecked');
+        expect(documentsById['source-index-typology-method-001'].resource.sourceEvidenceVerification)
+            .not.toContain('captionNeedsCheck');
         expect(documentsById['source-index-alluvial-soilmap-001'].resource.sourceEvidenceLocator)
             .toContain('PDF 497-525');
         expect(documentsById['source-index-alluvial-soilmap-001'].resource.sourceEvidenceDomain)

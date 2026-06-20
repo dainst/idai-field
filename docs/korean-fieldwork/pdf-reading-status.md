@@ -131,6 +131,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-20 지표조사 업무 이해 자료의 물리탐사·특수조사 절을 다시 읽고 `Survey`에 `geophysicalSurveyMethod`, `geophysicalAnomalyVerification`을 추가했다. GPR·물리탐사를 장비명 하나로 남기는 대신 탐침봉·보링·고지형·지도·항공사진 판독, 지중레이더·전기저항·자기·전자유도·수중탐사 방법과 대상 적합성, 장비 기종, 측선·격자, 원자료·자료처리, 이상체 영상·종류·사진·DGPS 위치, 현장 대조, 오탐 위험, 후속 트렌치와 발굴방법 결정까지 이어지게 했다.
 
+2026-06-20 지표조사 결과 처리 원문 재대조에서는 `surface_survey_result_processing_pages/page_0020-0026,0028,0036-0037,0049,0053.png`를 확인했다. 보고서 제출, 보존조치 통보와 사업시행 제한, 이격거리·범위 표시, 기존 유적 범위 변경 사유, 원형보존·이전복원·발굴조사 의견, 표본·시굴 필요성, 유적 부재·멸실 판단주의를 확인해 `survey-admin-surface-001`과 `source-index-surface-survey-processing-001`을 `candidate` 상태로 닫았다.
+
 2026-06-19 전자도면·3D 스캔 자료도 구현 단위로 압축했다. 제2회 조사연구원 교육자료의 전자도면 장은 3D 스캔을 완성 도면 대체물이 아니라 점군 획득, 병합, 폴리곤 변환·최적화, CAD 데이터, 2D·3D 도면과 복원자료 산출로 이어지는 제작 과정으로 다룬다. 유물 전자도면은 유물 형태 검토, 최종 결과물 형태, 특징 view와 단면 위치 결정, 벡터화, 연구자 요구정보, 기준면 생성, 좌표계 이동, 합치 기준을 따로 남겨야 하므로 `Drawing`의 `electronicDrawingSourceWorkflow`, `artifactElectronicDrawingProcedure` 값 목록으로 옮겼다. 이 흐름도 `media-drawing-gps-workflow-sample.json`에서 점군 병합, 폴리곤 변환, 원천·후처리 파일 보존, 기준면·좌표계·합치 기준으로 검증한다.
 
 2026-06-20 `발굴조사_실무`의 위치 도면 작성 요건을 다시 읽어 `Drawing`의 `distributionMapRequirement`를 보강했다. 조사구역도와 유적위치도는 완성 PDF나 배경지도 첨부가 아니라, 발굴구역을 실제 다각형 경계로 표시하고 점·원·사각형 같은 추상 기호를 피하며, 수치지적도·수치지형도 기반, GPS 기준점 2점 이상, 측지기준계와 투영정보, 유구배치도 경계 일치, GIS 제출 준비 상태를 함께 남겨야 한다. `media-drawing-gps-workflow-sample.json`은 이 새 값들이 도면 카드의 원천지도·좌표계 변환·분포도 요건과 함께 검증되도록 갱신했다.

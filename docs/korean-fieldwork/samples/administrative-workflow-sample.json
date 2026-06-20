@@ -461,6 +461,7 @@
         "relations": {
           "isRecordedIn": ["project-admin-workflow-001"]
         },
+        "description": "지표조사 업무의 이해 교재 20-26, 28, 36-37, 49, 53쪽 원문 화면을 대조해 보고서 제출, 보존조치 통보, 이격거리·범위 표시, 원형보존·이전복원·발굴조사 의견, 표본·시굴 필요성, 유적 부재·멸실 판단주의가 후속조치 값으로 이어지는지 검증한다.",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
           "criteriaConsistency",
@@ -494,7 +495,7 @@
           "digitalRegistration",
           "existingSiteBoundaryRevision"
         ],
-        "verificationState": "needsRecheck"
+        "verificationState": "candidate"
       }
     }
   ]

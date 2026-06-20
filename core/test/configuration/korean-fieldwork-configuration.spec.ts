@@ -749,6 +749,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('preventAutoClassification');
         expect(documentsById['source-index-tomb-dictionary-001'].resource.sourceEvidenceVerification)
             .toContain('crossSourceCompared');
+        expect(documentsById['source-index-surface-survey-processing-001'].resource.sourceEvidenceDomain)
+            .toContain('surfaceSurvey');
+        expect(documentsById['source-index-surface-survey-processing-001'].resource.sourceEvidenceLocator)
+            .toContain('surface_survey_result_processing_pages');
+        expect(documentsById['source-index-surface-survey-processing-001'].resource.sourceEvidenceUse)
+            .toContain('preventAutoClassification');
+        expect(documentsById['source-index-surface-survey-processing-001'].resource.verificationState)
+            .toBe('candidate');
         expect(documentsById['source-index-digital-survey-equipment-001'].resource.sourceEvidenceDomain)
             .toContain('spatialData');
         expect(documentsById['source-index-digital-survey-equipment-001'].resource.sourceEvidenceMaterial)
@@ -899,6 +907,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('missingRecordImmediateAction');
         expect(documentsById['survey-admin-surface-001'].resource.surfaceSurveyResultProcessing)
             .toContain('digitalRegistration');
+        expect(documentsById['survey-admin-surface-001'].resource.verificationState)
+            .toBe('candidate');
     });
 
 

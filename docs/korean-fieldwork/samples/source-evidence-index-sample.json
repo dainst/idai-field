@@ -729,6 +729,53 @@
         ],
         "verificationState": "candidate"
       }
+    },
+    {
+      "resource": {
+        "id": "source-index-surface-survey-processing-001",
+        "identifier": "SRC-SURFACE-SURVEY-PROCESSING-001",
+        "shortDescription": "지표조사 결과 처리 원문 대조 색인",
+        "category": "SourceEvidenceIndex",
+        "relations": {
+          "liesWithin": ["project-source-evidence-001"]
+        },
+        "description": "지표조사 업무의 이해 교재의 행정절차, 보고서 구성, 결과 적용, 부재·멸실 판단주의를 Survey 화면의 지표조사 결과 처리와 후속조치 판단 근거로 남긴다.",
+        "sourceEvidenceCitation": "지표조사_업무의_이해_교재.pdf",
+        "sourceEvidenceLocator": "PDF 20-26, 28, 36-37, 49, 53쪽 직접 대조(surface_survey_result_processing_pages/page_0020-0026,0028,0036-0037,0049,0053.png); 보고서 제출, 보존조치, 이격거리·범위 표시, 원형보존·이전복원·발굴조사 의견, 표본·시굴 필요성, 부재·멸실 판단주의 확인",
+        "sourceEvidenceMaterial": [
+          "originalScript",
+          "sourceCitation",
+          "checklist",
+          "administrativeForm",
+          "mapRequirement"
+        ],
+        "sourceEvidenceDomain": [
+          "surfaceSurvey",
+          "administration",
+          "fieldSurvey"
+        ],
+        "sourceEvidenceVerification": [
+          "pageChecked",
+          "directPdfChecked",
+          "originalScriptChecked",
+          "formChecked",
+          "crossSourceCompared"
+        ],
+        "sourceEvidenceUse": [
+          "fieldDesignEvidence",
+          "sampleValidationEvidence",
+          "preventAutoClassification",
+          "interpretationCaution",
+          "sourceTraceability"
+        ],
+        "recordCreationTiming": "postExcavationDerived",
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "crossReviewNeeded"
+        ],
+        "verificationState": "candidate"
+      }
     }
   ]
 }

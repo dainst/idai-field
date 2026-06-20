@@ -573,6 +573,10 @@ describe('KoreanFieldwork project configuration', () => {
 
         expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
 
+        expect(sample.sourceReviewNote)
+            .toContain('발굴조사의_이해.pdf 34-46쪽');
+        expect(sample.sourceReviewNote)
+            .toContain('질문형 유구 야장');
         expect(documentsById['op-quality-001'].resource.personalNotebookArchive)
             .toContain('originalSubmitted');
         expect(documentsById['op-quality-001'].resource.personalNotebookArchive)
@@ -1039,6 +1043,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('reportWriting');
         expect(documentsById['source-index-daily-log-quality-001'].resource.sourceEvidenceLocator)
             .toContain('method17_dailylog_notebook_pages');
+        expect(documentsById['source-index-daily-log-quality-001'].resource.sourceEvidenceLocator)
+            .toContain('method20_field_notebook_pages/method20_page_0036.png');
+        expect(documentsById['source-index-daily-log-quality-001'].resource.sourceEvidenceLocator)
+            .toContain('method20_field_notebook_pages/method20_page_0045.png');
         expect(documentsById['source-index-daily-log-quality-001'].resource.sourceEvidenceUse)
             .toContain('reportCrossCheckEvidence');
         expect(documentsById['source-index-daily-log-quality-001'].resource.verificationState)

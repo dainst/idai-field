@@ -1340,9 +1340,9 @@
         "relations": {
           "liesWithin": ["project-source-evidence-001"]
         },
-        "description": "조사실무와 조사요원 기초소양 교육자료의 야장, 작업일지, 현장시점 기록, 보고서 전 조사자료 검토 대목을 Operation, DailyLog, FieldRecordQualityReview 화면의 근거로 남긴다.",
-        "sourceEvidenceCitation": "매장문화재_조사실무.pdf; 발굴조사_실무.pdf; 조사요원_기초소양_교육.pdf",
-        "sourceEvidenceLocator": "method05_notebook_record_pages/page_0012-0013,0020.png; method17_dailylog_notebook_pages/page_0069-0070,0078-0079.png; method26_record_timing_review_pages/page_0074,0079,0084-0085.png; 개인 야장 공적기록화, 제토량·장비·인부·퇴적두께 기록, 일지 매일작성·증거역할, 현장시에만 작성 가능한 정보, 원고·도면·사진 교차검토 확인",
+        "description": "조사실무, 발굴조사의 이해, 발굴조사 실무, 조사요원 기초소양 교육자료의 야장, 작업일지, 현장시점 기록, 보고서 전 조사자료 검토 대목을 Operation, DailyLog, FieldRecordQualityReview 화면의 근거로 남긴다.",
+        "sourceEvidenceCitation": "매장문화재_조사실무.pdf; 발굴조사의_이해.pdf; 발굴조사_실무.pdf; 조사요원_기초소양_교육.pdf",
+        "sourceEvidenceLocator": "method05_notebook_record_pages/page_0012-0013,0020.png; method20_field_notebook_pages/method20_page_0034.png, method20_field_notebook_pages/method20_page_0036.png, method20_field_notebook_pages/method20_page_0038.png, method20_field_notebook_pages/method20_page_0043.png, method20_field_notebook_pages/method20_page_0045.png, method20_field_notebook_pages/method20_page_0046.png; method17_dailylog_notebook_pages/page_0069-0070,0078-0079.png; method26_record_timing_review_pages/page_0074,0079,0084-0085.png; 개인 야장 공적기록화, 휴대·방안 약식실측, 제토량·장비·인부·퇴적두께 기록, 유구별 질문형 야장, 다중 도면 작성, 사진 이중백업, 일지 매일작성·증거역할, 현장시에만 작성 가능한 정보, 원고·도면·사진 교차검토 확인",
         "sourceEvidenceMaterial": [
           "originalScript",
           "sourceCitation",

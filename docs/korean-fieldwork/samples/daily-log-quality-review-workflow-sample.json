@@ -1,7 +1,7 @@
 {
   "title": "Korean daily log and quality review workflow sample",
   "purpose": "Validate that personal field notebooks, daily work logs, source-media checks, correction reasons, and report-evaluation feedback remain traceable as public field records.",
-  "sourceReviewNote": "2026-06-20 매장문화재_조사실무.pdf 12-13, 20쪽, 발굴조사_실무.pdf 69-70, 78-79쪽, 조사요원_기초소양_교육.pdf 74, 79, 84-85쪽 원문 화면을 대조해 개인 야장 공적기록화, 휴대·방안 야장, 제토량·장비·인부·퇴적두께 기록, 일지 매일작성과 법정 증거 역할, 현장시에만 작성 가능한 정보, 원고·도면·사진 교차검토를 확인했다.",
+  "sourceReviewNote": "2026-06-20 매장문화재_조사실무.pdf 12-13, 20쪽, 발굴조사의_이해.pdf 34-46쪽, 발굴조사_실무.pdf 69-70, 78-79쪽, 조사요원_기초소양_교육.pdf 74, 79, 84-85쪽 원문 화면을 대조해 개인 야장 공적기록화, 휴대·방안 야장, 제토량·장비·인부·퇴적두께 기록, 질문형 유구 야장, 다중 도면 작성, 사진자료 이중백업, 일지 매일작성과 법정 증거 역할, 현장시에만 작성 가능한 정보, 원고·도면·사진 교차검토를 확인했다.",
   "validationQuestions": [
     "개인 야장이 작성자 개인 메모로 끝나지 않고 담당 유구, 원본 제출, 스캔, 검토, 접근조건, 반출금지 상태로 공적 기록화되는가.",
     "개인 야장이 휴대 가능하고 방안 약식실측을 지원하며, 보고서에 바로 들어가지 않는 현장관찰과 판단변경까지 보존하는가.",

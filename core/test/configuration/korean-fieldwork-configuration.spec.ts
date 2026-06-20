@@ -723,6 +723,18 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('captionChecked');
         expect(documentsById['source-index-typology-method-001'].resource.sourceEvidenceVerification)
             .not.toContain('captionNeedsCheck');
+        expect(documentsById['source-index-research-design-chronology-001'].resource.sourceEvidenceLocator)
+            .toContain('method03_research_design_pages/method03_page_0029.png');
+        expect(documentsById['source-index-research-design-chronology-001'].resource.sourceEvidenceLocator)
+            .toContain('method03_research_design_pages/method03_page_0110.png');
+        expect(documentsById['source-index-research-design-chronology-001'].resource.sourceEvidenceDomain)
+            .toContain('researchMethod');
+        expect(documentsById['source-index-research-design-chronology-001'].resource.sourceEvidenceUse)
+            .toContain('chronologyArgumentEvidence');
+        expect(documentsById['source-index-research-design-chronology-001'].resource.sourceEvidenceUse)
+            .toContain('preventAutoClassification');
+        expect(documentsById['source-index-research-design-chronology-001'].resource.verificationState)
+            .toBe('candidate');
         expect(documentsById['source-index-alluvial-soilmap-001'].resource.sourceEvidenceLocator)
             .toContain('PDF 497-525');
         expect(documentsById['source-index-alluvial-soilmap-001'].resource.sourceEvidenceDomain)

@@ -13,7 +13,8 @@
     "유물실측 교재의 기준선·실측선·측점 검점·토기 주기·석기 view·수침목재 실측 요구가 도면 카드와 보고서 교차검토 근거로 남는가.",
     "저습지 조사방법의 항공사진·고지도·보링자료·미지형 판독·극미지형 관찰 요구가 현재 습윤 여부로 축소되지 않고 시굴·시료 설계 근거로 남는가.",
     "보존과학 자료의 수침목재·금속·토도류·지류직물·인골·토양 분석 요구가 유물/시료 기록과 파괴분석 승인 근거로 이어지는가.",
-    "조사기초과정의 층 구분·기재법이 색조나 층명 확정이 아니라 입자·층리면·퇴적구조·후성작용·자연/인위 폐기 구분 근거로 남는가."
+    "조사기초과정의 층 구분·기재법이 색조나 층명 확정이 아니라 입자·층리면·퇴적구조·후성작용·자연/인위 폐기 구분 근거로 남는가.",
+    "고고학연구 입문 자료의 연구질문·편년전제·순서배열·생업경제 자료연쇄가 해석값 자동확정 방지 근거로 남는가."
   ],
   "documents": [
     {
@@ -165,6 +166,52 @@
           "pageChecked",
           "directPdfChecked",
           "caseNameChecked",
+          "captionChecked"
+        ],
+        "sourceEvidenceUse": [
+          "fieldDesignEvidence",
+          "chronologyArgumentEvidence",
+          "sampleValidationEvidence",
+          "interpretationCaution",
+          "preventAutoClassification",
+          "sourceTraceability"
+        ],
+        "recordCreationTiming": "postExcavationDerived",
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "crossReviewNeeded"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "source-index-research-design-chronology-001",
+        "identifier": "SRC-RESEARCH-DESIGN-CHRONOLOGY-001",
+        "shortDescription": "연구질문·편년전제·자료연쇄 근거 색인",
+        "category": "SourceEvidenceIndex",
+        "relations": {
+          "liesWithin": ["project-source-evidence-001"]
+        },
+        "description": "고고학연구 입문 자료의 연구 목적, 층서 우선 원칙, 교차·경사편년 전제, 순서배열법 전제, 생업경제 자료연쇄를 유구·유물 해석 논증과 편년 논증의 원문 근거로 묶는다.",
+        "sourceEvidenceCitation": "매장문화재_전문교육_고고학연구_입문2013년_2월.pdf",
+        "sourceEvidenceLocator": "PDF 13, 28-30, 32-33, 110-111쪽 직접 대조(method03_research_design_pages/method03_page_0013.png, method03_research_design_pages/method03_page_0028.png, method03_research_design_pages/method03_page_0029.png, method03_research_design_pages/method03_page_0030.png, method03_research_design_pages/method03_page_0032.png, method03_research_design_pages/method03_page_0033.png, method03_research_design_pages/method03_page_0110.png, method03_research_design_pages/method03_page_0111.png). 문화사·생활방식·문화과정 연구질문, 층서 우선과 전면제토·둑 멸실 위험, 교차·경사편년의 동시기성·존속기간·확산지체·전세·재가공품 전제, 순서배열법의 유물복합체 단위·빈도·전함형곡선·동일 기능/기간/변천과정 전제, 생업경제의 도구·시설, 동식물유체, 인골 골화학 자료연쇄 확인",
+        "sourceEvidenceMaterial": [
+          "sourceCitation",
+          "diagram",
+          "checklist",
+          "caseStudy",
+          "caption"
+        ],
+        "sourceEvidenceDomain": [
+          "researchMethod",
+          "reportWriting"
+        ],
+        "sourceEvidenceVerification": [
+          "pageChecked",
+          "figureNumberChecked",
+          "directPdfChecked",
           "captionChecked"
         ],
         "sourceEvidenceUse": [

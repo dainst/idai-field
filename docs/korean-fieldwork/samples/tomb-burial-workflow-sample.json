@@ -1,10 +1,12 @@
 {
   "title": "Korean tomb burial workflow sample",
   "purpose": "Validate that a tomb record keeps mound investigation, burial structure, grave goods context, and human remains recovery connected without reducing them to a single tomb type label.",
+  "sourceReviewNote": "2026-06-20 매장문화재전문교육_조사기술특강_분묘유구_조사법2011년_8월.pdf 11-22, 34-41, 61-70쪽 원문 화면을 tomb_method_rendered/page_011.png-page_070.png로 대조했다. 자료는 대형봉토분의 환경·입지·분포도, 봉분 현황과 도굴구, 구획성토·토낭·토재/석재 조달, 호석·주구·묘도부, 횡구·횡혈식 석실의 묘도·연도·현실·문틀·폐쇄시설, 매장원상, 그리고 유구배치도·분구측량도·평면도·토층도·입단면도 작성 순서를 분묘 기록의 핵심 근거로 요구한다.",
   "validationQuestions": [
     "고분 기록이 형식명 하나가 아니라 봉토·분구, 성토 단위, 주구, 보존구역을 따로 남기는가.",
     "매장주체부가 관·곽·실, 개석 제거 전후, 밀봉토, 내부토, 폐쇄시설, 추가장·도굴 근거로 나누어 기록되는가.",
     "횡구·횡혈계 석실이 입구·묘도·연도·현문·폐쇄석, 관대·시상, 제사 위치를 근거로 판정되는가.",
+    "분묘 도면과 사진이 유구배치도, 분구측량도, 평면도, 토층도, 입단면도 작성 순서와 기준선·레벨·방위 검토를 함께 남기는가.",
     "부장품과 제사자료가 유물 종류가 아니라 관 내부·외부, 봉토·주구, 입구·폐쇄부, 인골과의 관계로 기록되는가.",
     "인골 수습이 전문가 협의, DNA 오염 관리, 약한 도구, 1/5 도면, 포장·주기·개체식별 기준까지 이어지는가."
   ],

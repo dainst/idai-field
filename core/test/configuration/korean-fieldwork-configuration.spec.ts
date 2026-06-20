@@ -882,6 +882,22 @@ describe('KoreanFieldwork project configuration', () => {
             .not.toContain('captionNeedsCheck');
         expect(documentsById['source-index-paleolithic-dictionary-001'].resource.verificationState)
             .toBe('candidate');
+        expect(documentsById['source-index-tomb-method-001'].resource.sourceEvidenceDomain)
+            .toContain('tomb');
+        expect(documentsById['source-index-tomb-method-001'].resource.sourceEvidenceDomain)
+            .toContain('reportWriting');
+        expect(documentsById['source-index-tomb-method-001'].resource.sourceEvidenceLocator)
+            .toContain('tomb_method_rendered/page_011.png');
+        expect(documentsById['source-index-tomb-method-001'].resource.sourceEvidenceLocator)
+            .toContain('page_070.png');
+        expect(documentsById['source-index-tomb-method-001'].resource.sourceEvidenceUse)
+            .toContain('reportCrossCheckEvidence');
+        expect(documentsById['source-index-tomb-method-001'].resource.sourceEvidenceUse)
+            .toContain('preventAutoClassification');
+        expect(documentsById['source-index-tomb-method-001'].resource.sourceEvidenceVerification)
+            .toContain('numericValueChecked');
+        expect(documentsById['source-index-tomb-method-001'].resource.verificationState)
+            .toBe('candidate');
         expect(documentsById['source-index-tomb-dictionary-001'].resource.sourceEvidenceDomain)
             .toContain('tomb');
         expect(documentsById['source-index-tomb-dictionary-001'].resource.sourceEvidenceUse)
@@ -1401,6 +1417,7 @@ describe('KoreanFieldwork project configuration', () => {
 
         expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
 
+        expect(sample.sourceReviewNote).toContain('분묘유구_조사법2011년_8월.pdf 11-22, 34-41, 61-70쪽');
         expect(documentsById['feature-tomb-mound-001'].resource.tombMoundInvestigation)
             .toContain('moundConstructionSequence');
         expect(documentsById['feature-tomb-mound-001'].resource.tombBurialStructureInvestigation)

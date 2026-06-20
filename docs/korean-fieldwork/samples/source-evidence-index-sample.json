@@ -8,7 +8,8 @@
     "구석기 사전의 접합·석재·사용흔·국외 비교용어가 필드 설계 근거와 자동분류 방지 근거로 분리되는가.",
     "형식학 강의자료의 시간성·공반·기능·지역차 검토가 편년 자동확정 방지 근거로 남는가.",
     "제철유적 조사방법론의 공정·구조·부산물·부속유구·목탄 근거가 제철로 명칭 자동분류를 막고 분석계획으로 이어지는가.",
-    "기와가마 조사방법의 Grid·둑·회구부·부위별 조사·분석시료 요구가 요체명 자동분류를 막고 생산공간 기록으로 이어지는가."
+    "기와가마 조사방법의 Grid·둑·회구부·부위별 조사·분석시료 요구가 요체명 자동분류를 막고 생산공간 기록으로 이어지는가.",
+    "분묘유구 조사법의 봉토·구획성토·묘도·폐쇄시설·도면/사진 기록 요구가 묘형명 자동분류를 막고 조사과정 기록으로 이어지는가."
   ],
   "documents": [
     {
@@ -794,6 +795,58 @@
         "recordCreationTiming": "postExcavationDerived",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
+          "crossReviewNeeded",
+          "reproducibleRecord"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "source-index-tomb-method-001",
+        "identifier": "SRC-TOMB-METHOD-001",
+        "shortDescription": "분묘유구 조사방법 원문 색인",
+        "category": "SourceEvidenceIndex",
+        "relations": {
+          "liesWithin": ["project-source-evidence-001"]
+        },
+        "description": "분묘유구 조사법 자료에서 대형봉토분의 환경·입지·분포도, 발굴 준비, 봉분 현황과 도굴구, 구획성토·토낭·토재/석재 조달, 호석·주구·묘도부, 횡구·횡혈식 석실의 묘도·연도·현실·문틀·폐쇄시설, 매장원상, 분묘 도면·사진 기록 순서를 고분 화면과 샘플 검증 근거로 묶는다.",
+        "sourceEvidenceCitation": "매장문화재전문교육_조사기술특강_분묘유구_조사법2011년_8월.pdf",
+        "sourceEvidenceLocator": "원문 렌더링 tomb_method_rendered/page_005.png-교육 일정, tomb_method_rendered/page_011.png-대형봉토분 조사법 목차, page_014.png-봉분 현황·도굴구, page_015.png-봉분 조사·구획성토·토낭, page_016.png-토재/석재 조달·호석·묘도부, page_017.png-주구·트렌치/보크 설정, page_021.png-묘도·연도·출입시설과 매장원상, page_034.png-page_041.png-횡구·횡혈식 석실분 조사 사진·도면 사례, page_061.png-도면/사진 기록 장 목차, page_064.png-유구배치도 작성 기준, page_065.png-분구측량도·평면도, page_066.png-토층도, page_067.png-토층주기·입단면도, page_069.png-도면 작성 과정, tomb_method_rendered/page_070.png-기준선·평면실측·레벨 측량 직접 대조",
+        "sourceEvidenceMaterial": [
+          "originalScript",
+          "sourceCitation",
+          "checklist",
+          "drawing",
+          "photo",
+          "caseStudy",
+          "measurementValue"
+        ],
+        "sourceEvidenceDomain": [
+          "tomb",
+          "researchMethod",
+          "reportWriting"
+        ],
+        "sourceEvidenceVerification": [
+          "pageChecked",
+          "directPdfChecked",
+          "originalScriptChecked",
+          "captionChecked",
+          "caseNameChecked",
+          "numericValueChecked"
+        ],
+        "sourceEvidenceUse": [
+          "fieldDesignEvidence",
+          "sampleValidationEvidence",
+          "reportCrossCheckEvidence",
+          "interpretationCaution",
+          "preventAutoClassification",
+          "sourceTraceability"
+        ],
+        "recordCreationTiming": "postExcavationDerived",
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
           "crossReviewNeeded",
           "reproducibleRecord"
         ],

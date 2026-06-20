@@ -153,6 +153,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-20 이어서 같은 자료의 운용상 유의점 중 원천자료 왜곡·부족, 유적 성격별 기법 적합성, 측정 전 취득·표현 계획, 외주 산출물 인수검수, 기간·예산에 따른 최소 분석 위험을 `digitalSurveyQualityControl`에 추가했다. `media-drawing-gps-workflow-sample.json`과 `source-evidence-index-sample.json`은 이 항목이 장비명 기록이 아니라 원문 근거가 있는 품질검수·해석주의 값인지 확인한다.
 
+2026-06-20 같은 자료를 `method14_digital_survey_pages/method14_page_0011,0012,0016,0017,0018,0020,0022,0023,0058,0059,0065,0068,0070.png`로 원문 화면 재대조했다. 첫 장에서는 고지형분석·GIS·DGPS·UAV·LiDAR·3D 레이저스캔·사진실측과 운용상 유의점을 확인했고, 고지형분석 장에서는 항공사진 사진지표, 내외부표정, tie point, 지리보정 컨트롤 포인트와 RMS 오차 확인을 보았다. 이 확인분은 `source-index-digital-survey-equipment-001`의 `captionChecked`·`numericValueChecked` 근거로 묶어, 장비 사용 여부가 아니라 원천자료·좌표·오차·산출물 검수값으로 추적한다.
+
 2026-06-20 지표조사 업무 이해 자료의 물리탐사·특수조사 절을 다시 읽고 `Survey`에 `geophysicalSurveyMethod`, `geophysicalAnomalyVerification`을 추가했다. GPR·물리탐사를 장비명 하나로 남기는 대신 탐침봉·보링·고지형·지도·항공사진 판독, 지중레이더·전기저항·자기·전자유도·수중탐사 방법과 대상 적합성, 장비 기종, 측선·격자, 원자료·자료처리, 이상체 영상·종류·사진·DGPS 위치, 현장 대조, 오탐 위험, 후속 트렌치와 발굴방법 결정까지 이어지게 했다.
 
 2026-06-20 지표조사 결과 처리 원문 재대조에서는 `surface_survey_result_processing_pages/page_0020-0026,0028,0036-0037,0049,0053.png`를 확인했다. 보고서 제출, 보존조치 통보와 사업시행 제한, 이격거리·범위 표시, 기존 유적 범위 변경 사유, 원형보존·이전복원·발굴조사 의견, 표본·시굴 필요성, 유적 부재·멸실 판단주의를 확인해 `survey-admin-surface-001`과 `source-index-surface-survey-processing-001`을 `candidate` 상태로 닫았다.

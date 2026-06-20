@@ -1069,6 +1069,18 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('spatialData');
         expect(documentsById['source-index-digital-survey-equipment-001'].resource.sourceEvidenceMaterial)
             .toContain('equipmentList');
+        expect(documentsById['source-index-digital-survey-equipment-001'].resource.sourceEvidenceMaterial)
+            .toContain('measurementValue');
+        expect(documentsById['source-index-digital-survey-equipment-001'].resource.sourceEvidenceLocator)
+            .toContain('method14_digital_survey_pages/method14_page_0017.png');
+        expect(documentsById['source-index-digital-survey-equipment-001'].resource.sourceEvidenceLocator)
+            .toContain('method14_page_0068.png');
+        expect(documentsById['source-index-digital-survey-equipment-001'].resource.sourceEvidenceLocator)
+            .toContain('method14_page_0070.png');
+        expect(documentsById['source-index-digital-survey-equipment-001'].resource.sourceEvidenceVerification)
+            .toContain('captionChecked');
+        expect(documentsById['source-index-digital-survey-equipment-001'].resource.sourceEvidenceVerification)
+            .toContain('numericValueChecked');
         expect(documentsById['source-index-digital-survey-equipment-001'].resource.sourceEvidenceUse)
             .toContain('interpretationCaution');
         expect(documentsById['source-index-pottery-production-experiment-001'].resource.sourceEvidenceDomain)

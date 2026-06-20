@@ -1100,12 +1100,16 @@
         "relations": {
           "liesWithin": ["project-source-evidence-001"]
         },
-        "description": "첨단과학장비 활용 자료의 고지형분석, GIS, LiDAR, 3D 레이저스캔, 사진실측, 외주 정사작업 유의점을 디지털 조사 품질검수 근거로 남긴다. 원천자료 한계와 취득·표현 계획, 외주 산출물 인수검수, 최소 분석 위험을 장비명과 분리해 추적한다.",
+        "description": "첨단과학장비 활용 자료의 고지형분석, GIS, DGPS, UAV, LiDAR, 3D 레이저스캔, 사진실측, 항공사진 표정·지리보정, 외주 정사작업 유의점을 디지털 조사 품질검수 근거로 남긴다. 원천자료 한계와 취득·표현 계획, 좌표·오차·RMS 검수, 외주 산출물 인수검수, 최소 분석 위험을 장비명과 분리해 추적한다.",
         "sourceEvidenceCitation": "매장문화재조사와 첨단과학장비의 활용",
-        "sourceEvidenceLocator": "direct-recheck pages 18-23: LiDAR, 3D laser scan, photogrammetry, operation cautions, outsourced orthorectification risk",
+        "sourceEvidenceLocator": "매장문화재조사와 첨단과학장비의 활용 PDF 11-12, 16-18, 20, 22-23, 58-59, 65, 68, 70쪽 직접 대조(method14_digital_survey_pages/method14_page_0011.png, page_0012.png, page_0016.png, method14_digital_survey_pages/method14_page_0017.png, page_0018.png, page_0020.png, page_0022.png, page_0023.png, page_0058.png, page_0059.png, page_0065.png, method14_page_0068.png, method14_page_0070.png). 고지형분석과 GIS, 토탈스테이션·DGPS·UAV·LiDAR·3D 레이저스캔·사진실측 도판, 원천자료 왜곡·부족 유의점, 외주 정사작업 검수 위험, 항공사진 사진지표·내외부표정·tie point, 지리보정 컨트롤 포인트와 RMS 오차 확인을 화면으로 대조했다.",
         "sourceEvidenceMaterial": [
           "equipmentList",
           "figure",
+          "photo",
+          "map",
+          "caption",
+          "measurementValue",
           "sourceCitation",
           "checklist"
         ],
@@ -1118,7 +1122,9 @@
           "pageChecked",
           "figureNumberChecked",
           "directPdfChecked",
-          "crossSourceCompared"
+          "crossSourceCompared",
+          "captionChecked",
+          "numericValueChecked"
         ],
         "sourceEvidenceUse": [
           "fieldDesignEvidence",

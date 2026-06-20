@@ -632,9 +632,13 @@ describe('KoreanFieldwork project configuration', () => {
         expect(documentsById['source-index-fortification-001'].resource.sourceEvidenceCitation)
             .toContain('한국 매장문화재 조사연구방법론7');
         expect(documentsById['source-index-fortification-001'].resource.sourceEvidenceLocator)
-            .toContain('원PDF 도판');
+            .toContain('page_0025.png');
         expect(documentsById['source-index-fortification-001'].resource.sourceEvidenceMaterial)
             .toContain('measurementValue');
+        expect(documentsById['source-index-fortification-001'].resource.sourceEvidenceVerification)
+            .toContain('directPdfChecked');
+        expect(documentsById['source-index-fortification-001'].resource.sourceEvidenceVerification)
+            .toContain('captionChecked');
         expect(documentsById['source-index-fortification-001'].resource.sourceEvidenceUse)
             .toContain('preventAutoClassification');
         expect(documentsById['source-index-alluvial-neolithic-001'].resource.sourceEvidenceDomain)

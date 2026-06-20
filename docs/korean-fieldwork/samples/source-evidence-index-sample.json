@@ -41,9 +41,9 @@
         "relations": {
           "liesWithin": ["project-source-evidence-001"]
         },
-        "description": "제7권 성곽 노트의 풍납토성 단면, 비교성곽 도면, 고려 후기 읍성 일람, 수원화성 제원, 남한산성 행궁 중건 사례를 값목록 확정 전에 근거 색인으로 묶는다.",
+        "description": "제7권 성곽 노트의 풍납토성 단면, 비교성곽 도면, 고려 후기 읍성 일람, 수원화성 제원, 남한산성 행궁 중건 사례를 원PDF 쪽수와 캡션 대조 상태까지 묶어 값목록 확정 전 근거 색인으로 둔다.",
         "sourceEvidenceCitation": "국립문화유산연구원, 2012, 한국 매장문화재 조사연구방법론7; 한국고고학전문사전 성곽·봉수편",
-        "sourceEvidenceLocator": "성곽 도면·표·시설 제원 색인, 원PDF 도판·쪽수 재대조 대상",
+        "sourceEvidenceLocator": "제7권 PDF 7-8, 13, 24-26, 31-32, 69-70, 143-145, 150, 162-165, 169-173쪽 직접 대조(volume07_fortification_source_pages/page_0007.png, page_0008.png, page_0013.png, page_0024.png, page_0025.png, page_0026.png, page_0031.png, page_0032.png, page_0069.png, page_0070.png, page_0143.png, page_0144.png, page_0145.png, page_0150.png, page_0162.png, page_0163.png, page_0164.png, page_0165.png, page_0169.png, page_0170.png, page_0171.png, page_0172.png, page_0173.png); 성곽·봉수편 PDF 5-7쪽 일러두기와 1621-1622, 1625쪽 개념표제어 대조(dictionary2011_fortification_terms_pages/page_0005.png, page_0006.png, page_0007.png, page_1621.png, page_1622.png, page_1625.png)",
         "sourceEvidenceMaterial": [
           "figure",
           "table",
@@ -62,14 +62,15 @@
           "tableNumberChecked",
           "caseNameChecked",
           "numericValueChecked",
-          "captionNeedsCheck"
+          "captionChecked",
+          "directPdfChecked"
         ],
         "sourceEvidenceUse": [
           "fieldDesignEvidence",
           "metricReference",
           "comparativeReference",
           "preventAutoClassification",
-          "futurePdfRecheck"
+          "sourceTraceability"
         ],
         "recordCreationTiming": "postExcavationDerived",
         "fieldRecordQuality": [
@@ -77,7 +78,7 @@
           "crossReviewNeeded",
           "reproducibleRecord"
         ],
-        "verificationState": "needsRecheck"
+        "verificationState": "candidate"
       }
     },
     {

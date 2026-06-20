@@ -606,9 +606,9 @@
         "relations": {
           "liesWithin": ["project-source-evidence-001"]
         },
-        "description": "고분편 일러두기의 묘·분 표기, 매장주체시설·외피시설 분리, 목관·목곽 구분 원칙과 고분유물편의 장구·착장품·부장품·제의 매납 위치 구분을 고분 화면 설계 근거로 남긴다.",
+        "description": "고분편 일러두기의 묘·분 표기, 매장주체시설·외피시설 분리, 목관·목곽 구분 원칙과 고분유물편의 장구·착장품·부장품·장례·제의 매납 위치 구분을 고분 화면 설계 근거로 남긴다.",
         "sourceEvidenceCitation": "한국고고학전문사전 고분편; 한국고고학전문사전 고분유물편",
-        "sourceEvidenceLocator": "고분편 일러두기 PDF 7-8쪽, 횡구식석실 항목 PDF 1425-1426쪽, 고분유물편 고분 유물 항목 PDF 96-100쪽",
+        "sourceEvidenceLocator": "고분편 일러두기 PDF 7-8쪽(dictionary_tomb_source_pages/tomb2009_page_0007-0008.png; 묘·분·유적명 표기와 한자·이명 원칙 확인), 고분편 횡구식석곽·횡구대고분군 주변 항목 PDF 1425-1426쪽(tomb2009_page_1425-1426.png; 묘도·입구·현실·시상과 추가장 구조 확인), 고분유물편 고분 유물 항목 PDF 97-103쪽(tomb_goods2015_page_0097-0103.png; 장구·착장품·부장품·장례·제의 매납 위치 구분 확인)",
         "sourceEvidenceMaterial": [
           "originalScript",
           "sourceCitation",
@@ -621,23 +621,22 @@
         ],
         "sourceEvidenceVerification": [
           "pageChecked",
+          "directPdfChecked",
           "originalScriptChecked",
-          "crossSourceCompared",
-          "ocrCorrectionNeeded"
+          "crossSourceCompared"
         ],
         "sourceEvidenceUse": [
           "fieldDesignEvidence",
           "termAuthorityEvidence",
           "preventAutoClassification",
-          "sourceTraceability",
-          "futurePdfRecheck"
+          "sourceTraceability"
         ],
         "recordCreationTiming": "postExcavationDerived",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
           "crossReviewNeeded"
         ],
-        "verificationState": "needsRecheck"
+        "verificationState": "candidate"
       }
     },
     {

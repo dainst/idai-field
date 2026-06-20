@@ -1,6 +1,7 @@
 {
   "title": "Korean Paleolithic survey and lithic context sample",
   "purpose": "Validate that Paleolithic survey records keep location evidence, field collection, trial-pit coordinate continuity, profile sampling, and non-site raw-material survey connected before site certainty.",
+  "sourceReviewNote": "2026-06-20 매장문화재조사_기초이론.pdf 40쪽, 현장조사_방법과_해석.pdf 112-113쪽, 한국고고학전문사전 구석기시대편의 dict2013_paleolithic_rendered 페이지를 재대조했다. 구석기 시굴은 고토양층의 평면 범위·깊이·유물 출토 여부를 트렌치와 피트로 함께 확인하고, 정밀발굴 전환 뒤에는 유물 수습 전 GPS 절대좌표, 문화층 번호, 유물 일련번호, 문화층별·칸별 상자, 좌표 목록, 분포도, 접합관계도를 이어야 한다. 전문사전의 석기 접합·되맞추기, 사용흔분석, 석재·공간분포·토양쐐기 항목은 후보석기와 문화층 해석을 단일 확정값으로 닫지 말고 공간·층위·산지·기능 검토 근거로 관리해야 한다는 근거로 둔다.",
   "validationQuestions": [
     "지표에서 정형 석기가 적거나 없어도 고토양·단구·기존 유적·지도 자료가 구석기 가능성 근거로 남는가.",
     "후보 석기와 부착토, 지형조건 사진, 토양시료, 숯 확인이 채집 단계에서 함께 기록되는가.",
@@ -177,7 +178,7 @@
           "geologicalMapMarked",
           "surroundingDetailedObservation"
         ],
-        "verificationState": "needsRecheck"
+        "verificationState": "candidate"
       }
     },
     {
@@ -227,7 +228,7 @@
           "naturalProcessConsidered",
           "adoptedArgumentRecorded"
         ],
-        "verificationState": "needsRecheck"
+        "verificationState": "candidate"
       }
     },
     {
@@ -271,7 +272,7 @@
           "refittedAcrossLayersChecked",
           "absoluteDatingPositionSelected"
         ],
-        "verificationState": "needsRecheck"
+        "verificationState": "candidate"
       }
     },
     {

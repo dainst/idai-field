@@ -758,8 +758,16 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('tomb');
         expect(documentsById['source-index-tomb-dictionary-001'].resource.sourceEvidenceUse)
             .toContain('preventAutoClassification');
+        expect(documentsById['source-index-tomb-dictionary-001'].resource.sourceEvidenceUse)
+            .not.toContain('futurePdfRecheck');
+        expect(documentsById['source-index-tomb-dictionary-001'].resource.sourceEvidenceLocator)
+            .toContain('dictionary_tomb_source_pages');
         expect(documentsById['source-index-tomb-dictionary-001'].resource.sourceEvidenceVerification)
             .toContain('crossSourceCompared');
+        expect(documentsById['source-index-tomb-dictionary-001'].resource.sourceEvidenceVerification)
+            .toContain('directPdfChecked');
+        expect(documentsById['source-index-tomb-dictionary-001'].resource.verificationState)
+            .toBe('candidate');
         expect(documentsById['source-index-surface-survey-processing-001'].resource.sourceEvidenceDomain)
             .toContain('surfaceSurvey');
         expect(documentsById['source-index-surface-survey-processing-001'].resource.sourceEvidenceLocator)
@@ -1052,6 +1060,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('duplicateSample');
         expect(documentsById['survey-paleolithic-terrace-001'].resource.paleolithicNonSiteResourceSurvey)
             .toContain('nearbyStoneSource');
+        expect(documentsById['survey-paleolithic-terrace-001'].resource.verificationState)
+            .toBe('candidate');
         expect(documentsById['feature-paleolithic-lithic-cluster-001'].resource.paleolithicLithicSpatialContext)
             .toContain('microDebitageWaterSieved');
         expect(documentsById['feature-paleolithic-lithic-cluster-001'].resource.paleolithicLithicSpatialContext)
@@ -1062,12 +1072,16 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('hearthCobbleSampleAssociated');
         expect(documentsById['feature-paleolithic-lithic-cluster-001'].resource.paleolithicLithicSpatialContext)
             .toContain('machineStrippingStoppedAfterFind');
+        expect(documentsById['feature-paleolithic-lithic-cluster-001'].resource.verificationState)
+            .toBe('candidate');
         expect(documentsById['segment-paleolithic-cultural-layer-001'].resource.relations.liesWithin)
             .toEqual(['feature-paleolithic-lithic-cluster-001']);
         expect(documentsById['segment-paleolithic-cultural-layer-001'].resource.paleolithicCulturalLayerReview)
             .toContain('naturalCulturalMismatchChecked');
         expect(documentsById['segment-paleolithic-cultural-layer-001'].resource.paleolithicCulturalLayerReview)
             .toContain('refittedAcrossLayersChecked');
+        expect(documentsById['segment-paleolithic-cultural-layer-001'].resource.verificationState)
+            .toBe('candidate');
         expect(documentsById['find-paleolithic-candidate-lithic-001'].resource.relations.liesWithin)
             .toEqual(['survey-paleolithic-terrace-001']);
         expect(documentsById['find-paleolithic-candidate-lithic-001'].resource.artifactLabelRegisterLink)

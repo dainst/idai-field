@@ -388,7 +388,7 @@
 
 2026-06-20 이어서 분묘 용어의 첫 샘플로 `돌방무덤 -> 석실묘` 관계를 추가했다. 이 매핑은 현장 입력어와 보고서 표제어를 연결하지만, `횡구식 석실묘`, `횡혈식 석실묘`, `현실`, `연도`, `묘도`, `폐쇄석`, `시상`, `관대`를 `TermRelationship`으로 남겨 접근 구조와 매장시설 관찰값이 표제어 하나로 병합되지 않게 한다. 따라서 기존 야장·사진 캡션을 가져올 때도 `돌방무덤`은 검색 별칭과 가져오기 입력어로 보존하고, 보고서 출력 전에는 구조 하위유형을 수동 검토한다.
 
-2026-06-20 고분편과 고분유물편 재대조에서는 새 고분 필드보다 기존 `tombMoundInvestigation`, `tombBurialStructureInvestigation`, `tombPassageClosureSequence`, `burialPlatformUseSequence`, `tombRitualDepositRecord`, `graveGoodsRitualContext`가 적절한 1차 수용 단위임을 확인했다. 고분편 일러두기는 매장주체시설과 외피시설을 분리하고, 목관·목곽을 규모가 아니라 부장유물 위치와 관·곽선으로 구분한다. 횡구식석실 항목은 선축조 후매장, 묘도·입구·현실·시상/관대·부장품의 구조, 추가장 가능성을 강조한다. 고분유물편의 고분 유물 항목은 장구, 착장품, 부장품, 장례·제의 매납품을 구분하므로, `부장품` 값 하나로 자동 분류하면 안 된다. 이 재대조는 `source-index-tomb-dictionary-001`에 별도 색인으로 남겼고, 남은 작업은 도판·사진 캡션과 개별 사례명의 원PDF 화면 대조다.
+2026-06-20 고분편과 고분유물편 재대조에서는 새 고분 필드보다 기존 `tombMoundInvestigation`, `tombBurialStructureInvestigation`, `tombPassageClosureSequence`, `burialPlatformUseSequence`, `tombRitualDepositRecord`, `graveGoodsRitualContext`가 적절한 1차 수용 단위임을 확인했다. 고분편 일러두기는 매장주체시설과 외피시설을 분리하고, 목관·목곽을 규모가 아니라 부장유물 위치와 관·곽선으로 구분한다. 횡구식 석곽·석실 주변 항목은 묘도·입구·현실·시상/관대·부장품의 구조, 추가장 가능성을 강조한다. 고분유물편의 고분 유물 항목은 장구, 착장품, 부장품, 장례·제의 매납품을 구분하므로, `부장품` 값 하나로 자동 분류하면 안 된다. 이 재대조는 `source-index-tomb-dictionary-001`에 별도 색인으로 남겼고, 원문 화면 `dictionary_tomb_source_pages/tomb2009_page_0007-0008,1425-1426.png`와 `tomb_goods2015_page_0097-0103.png`를 확인해 후보 상태로 닫았다.
 
 2026-06-20 생산유적편 재대조에서는 새 생산유적 필드보다 기존 `productionProcessSystem`, `productionSiteAssociatedFacility`, `potteryKilnFurnitureContext`, `potteryKilnInterpretationRisk`, `porcelainKilnFurnitureContext`, `tileKilnPartInvestigation`가 적절한 1차 수용 단위임을 확인했다. 생산유적편 일러두기는 분야를 토기·기와·자기·도기·제철·목탄·공방 및 기타로 나누고, `수비장 -> 토기 공방`, `건조장 -> 토기 공방`, `한뎃가마 -> 노천요` 같은 찾아가기 관계를 둔다. 같은 `평요 平窯`라도 토기·기와와 자기·도기에서 분야가 달라지므로 자동완성 검색어는 공유하되 저장 표제어와 보고서 출력어는 분리해야 한다. 도침·도지미·갑발·받침, 이상재·이기재, 소성흔은 유물명과 소성 방식, 재임·중첩소성 판단을 함께 요구하므로 `요도구` 값 하나로 접지 않는다. 추가 원PDF 대조에서는 생산유적편 8-10쪽의 표기 원칙, 51-54쪽의 갑발·뚜껑·받침·갓모·도침 도판 캡션, 64쪽 건조장 찾아가기, 247쪽 노천요/한뎃가마 정의, 339-340·343쪽 도지미/도짐이와 도침 관계, 1147-1149쪽 이상재·이기재 개념을 확인했다. 이 재대조는 `source-index-production-dictionary-001`에 별도 색인으로 남겼고, 대표 도판·사진 캡션은 `candidate` 상태로 닫았다.
 
@@ -403,4 +403,4 @@
 - 청동기시대편: 수혈주거지와 생산 관련 값 목록, 도판 속 개별 사례명 교정.
 - 구석기시대편: 대표 도판·사례명은 `source-index-paleolithic-dictionary-001`로 후보 상태까지 닫았으므로, 후속은 실제 화면 구현 중 필요한 개별 국외 비교용어와 추가 도판 번호 교정에 둔다.
 - 성곽·봉수편: 봉수 시설명과 성곽·봉수 복합유적의 분리 기준.
-- 고분편과 고분유물편: 핵심 용어·위치관계는 `source-index-tomb-dictionary-001`로 대조했으므로, 후속은 도판·사진 캡션과 개별 사례명 원PDF 화면 교정에 둔다.
+- 고분편과 고분유물편: 핵심 용어·위치관계와 대표 원문 화면은 `source-index-tomb-dictionary-001`로 대조했으므로, 후속은 개별 유적·유물 사례를 실제 화면 구현 중 추가 교정하는 데 둔다.

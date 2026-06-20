@@ -113,6 +113,10 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-20 원PDF 재확인에서는 `method13_trial_transition_pages/method13_page_0012-0013,0018,0033,0035-0037,0041.png`를 대조했다. 표본조사의 2퍼센트 제한과 대규모 충적지 활용, 시굴조사의 10퍼센트 제한과 수평·수직 범위 확인, 지형별 트렌치 방향·간격·너비·깊이, 충적지 깊은 트렌치의 폭 확장·안전 확보, 정밀발굴 전환 범위의 유구 사이 공지 포함 원칙을 확인해 `stage-transition-handover-sample.json`의 `survey-trial-001`을 `candidate` 상태로 낮췄다.
 
+2026-06-20 구석기 샘플 재확인에서는 `paleolithic_sample_source_pages/method13_page_0040.png`, `method30_page_0112-0113.png`, `dict2013_paleolithic_rendered/*.png`를 대조했다. 고토양층 시굴은 트렌치와 피트를 병행하고, 구석기 유물 수습은 흙기둥 높이, GPS 절대좌표, 문화층 번호, 유물 일련번호, 문화층별·칸별 상자, 좌표 목록, 분포도, 접합관계도까지 이어져야 한다. 구석기 전문사전의 접합·되맞추기, 사용흔분석, 석재·토양쐐기 근거를 더해 `paleolithic-survey-lithic-context-sample.json`의 세 `needsRecheck` 항목을 `candidate` 상태로 낮췄다.
+
+2026-06-20 고분 사전 색인은 `dictionary_tomb_source_pages/tomb2009_page_0007-0008,1425-1426.png`와 `tomb_goods2015_page_0097-0103.png`를 대조했다. 고분편 일러두기의 묘·분 표기, 한자·이명 원칙, 횡구식 매장 구조의 묘도·입구·현실·시상·추가장 관계, 고분유물편의 장구·착장품·부장품·장례·제의 매납 위치 구분을 확인해 `source-index-tomb-dictionary-001`을 `candidate` 상태로 낮췄다. `source-index-dictionary-001`은 2001년 일반 사전의 공백·글자 무너짐과 넓은 교차 색인 성격 때문에 `needsRecheck`로 유지한다.
+
 2026-06-19 지표조사 업무 이해 자료의 범위·부재근거·비유적 자원 요구도 샘플로 묶었다. 지표조사는 표면 유물 산포만 확인하는 절차가 아니라 사업구역 전체, 형질변경지, 토취장·사토장·가설도로, 영향권, 근현대 하한연대, 전문분야, 지도·좌표 요건, 지형·입지·퇴적물·탐문 기반의 증거 부재 판단, 석재·점토·생산 원료 후보까지 함께 남겨야 한다. 이 흐름은 `surface-survey-scope-absence-sample.json`으로 검증한다.
 
 2026-06-19 동물유체·화석환경 자료도 구현 단위로 압축했다. 제9권 연구방법론의 동물고고학 수습 왜곡 경고와 `유적조사와 고환경분석`, 제5회 조사연구원 교육자료의 동물유체 동정·수습보존·분류·계량 항목은 큰 뼈 선별 수습을 경계하고, 작은 어류뼈·조류뼈·설치류·미세 패각·어린 개체 누락, 전체 체질과 2mm/5mm 체눈, 층위별 블록샘플과 반복 채취, 산성토양·패총·석회암동굴·저습지 보존 조건, 뼈 표면 변형, NISP·MNE·MNI·MAU·%MAU 산출 한계를 함께 남기라고 요구한다. 이 묶음은 `Sample`의 `faunalRecoverySampling`, `faunalPreservationHandling`, `zooarchaeologicalIdentification`, `boneSurfaceModification`, `zooarchaeologicalQuantification` 값 목록으로 옮겼고, `faunal-recovery-quantification-sample.json`으로 패총 시료 기록 흐름을 검증한다.

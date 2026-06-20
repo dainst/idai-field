@@ -1,6 +1,7 @@
 {
   "title": "Korean administrative workflow and review package sample",
   "purpose": "Validate that request intake, permit document sets, plan changes, site protection, expert review meetings, partial completion packages, surface survey result processing, report standards, information assets, and record transfer management stay connected in the Korean fieldwork configuration.",
+  "sourceReviewNote": "2026-06-20 조사요원_기초소양_교육.pdf 309, 321, 324, 330-336쪽 원문 화면을 대조해 유물 건·점수 산정, 임시 수장고 개념, 국가귀속대상유물·학술자료·미등록폐기유물 별도 수납, 재질별 보관, 인수인계·포장/이관 동선을 확인했다.",
   "validationQuestions": [
     "조사의뢰 접수 단계의 기초자료와 현장답사 이력이 조사계획 수립 근거로 남는가.",
     "현장 착수·진행 중 허가서 비치, 보안, 주민·관할기관 통보, 유적보호, 임시보관, 기록물 점검이 작업 단위로 남는가.",
@@ -381,7 +382,7 @@
           "shapeQuantityChanged",
           "reevaluationNeeded"
         ],
-        "verificationState": "needsRecheck"
+        "verificationState": "candidate"
       }
     },
     {

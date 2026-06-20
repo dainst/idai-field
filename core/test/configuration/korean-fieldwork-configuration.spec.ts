@@ -922,8 +922,14 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('사진대장');
         expect(documentsById['state-vesting-admin-001'].resource.stateVestingSelectionRecord)
             .toContain('stateVestingRegister');
+        expect(documentsById['state-vesting-admin-001'].resource.stateVestingSelectionRecord)
+            .toContain('temporaryStorageReceipt');
+        expect(documentsById['state-vesting-admin-001'].resource.stateVestingSelectionRecord)
+            .toContain('postConservationCorrection');
         expect(documentsById['state-vesting-admin-001'].resource.stateVestingReceiptText)
             .toContain('임시보관증');
+        expect(documentsById['state-vesting-admin-001'].resource.verificationState)
+            .toBe('candidate');
         expect(documentsById['op-admin-review-001'].resource.partialCompletionPackage)
             .toContain('notificationResult');
         expect(documentsById['op-admin-review-001'].resource.siteProtectionSecurity)

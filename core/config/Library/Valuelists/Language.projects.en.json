@@ -12341,17 +12341,53 @@
       "individualPackagingStorage": {
         "label": "Individual packaging before storage"
       },
+      "humidityPeakBuffered": {
+        "label": "Humidity/temperature peak buffered"
+      },
+      "surfaceCondensationPrevented": {
+        "label": "Surface condensation prevented"
+      },
       "stateVestingAcademicUnregisteredSeparated": {
         "label": "State-vesting, academic, and unregistered finds separated"
+      },
+      "custodySequenceZoning": {
+        "label": "Custody-sequence zoning"
+      },
+      "academicUseAreaSeparated": {
+        "label": "Academic use area separated"
       },
       "metalNonmetalSeparated": {
         "label": "Metal and non-metal separated"
       },
+      "metalDesiccantStorage": {
+        "label": "Metal desiccant storage"
+      },
+      "woodHumidityInsectControl": {
+        "label": "Wood humidity and mold control"
+      },
+      "ceramicRoomTempStorage": {
+        "label": "Ceramic room-temperature storage"
+      },
       "handoverMovementPathChecked": {
         "label": "Handover and transfer route checked"
       },
+      "doorToDoorTransferPlanned": {
+        "label": "Door-to-door transfer planned"
+      },
+      "packingTableAtEntrance": {
+        "label": "Packing table at entrance"
+      },
       "largeArtifactSeparateTransport": {
         "label": "Large artifact separately packed and transported"
+      },
+      "largeArtifactSupportEquipment": {
+        "label": "Large artifact support equipment"
+      },
+      "largeArtifactExtraStaff": {
+        "label": "Large artifact extra staff"
+      },
+      "materialManualTraining": {
+        "label": "Material manual and training"
       },
       "conditionCheckBeforeReport": {
         "label": "Condition check before report"
@@ -12366,7 +12402,7 @@
         "label": "Pending decision"
       }
     },
-    "description": "Korean storage environment checks for treating training standards as reference values and tracking current-standard review, measured conditions, material ranges, deviations, and inspection"
+    "description": "Korean storage environment checks for treating training standards as reference values and tracking current-standard review, measured conditions, humidity/temperature peaks, condensation prevention, material-specific microclimates, transfer routes, large-artifact equipment and staff, deviations, and inspection"
   },
   "KoreanFieldwork-conservationScienceRequest": {
     "values": {

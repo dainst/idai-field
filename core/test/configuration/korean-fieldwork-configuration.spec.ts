@@ -1682,6 +1682,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('packingTensionReleased');
         expect(documentsById['find-metal-conservation-001'].resource.temporaryStorageOperation)
             .toContain('individualClimateControl');
+        expect(documentsById['find-metal-conservation-001'].resource.storageEnvironmentControl)
+            .toContain('humidityPeakBuffered');
+        expect(documentsById['find-metal-conservation-001'].resource.storageEnvironmentControl)
+            .toContain('doorToDoorTransferPlanned');
+        expect(documentsById['find-metal-conservation-001'].resource.storageEnvironmentControl)
+            .toContain('largeArtifactSupportEquipment');
         expect(documentsById['find-ceramic-salt-001'].resource.ceramicConservationState)
             .toContain('wetCleaningCaution');
         expect(documentsById['find-paper-textile-001'].resource.paperTextileEmergencyRecovery)
@@ -3648,6 +3654,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-storageEnvironmentControl']
             .values.conditionCheckBeforeReport.label)
             .toBe('Condition check before report');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-storageEnvironmentControl']
+            .values.surfaceCondensationPrevented.label)
+            .toBe('표면 결로 방지');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-storageEnvironmentControl']
+            .values.largeArtifactSupportEquipment.label)
+            .toBe('Large artifact support equipment');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-conservationScienceRequest']
             .values.nonDestructiveFirst.label)
             .toBe('Non-destructive first');

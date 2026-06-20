@@ -206,7 +206,9 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-19 독해 상태 감사에서는 `C:\Users\nuri9\Downloads\고고학사전`의 PDF 12개와 사전 추출 텍스트 12개, `C:\Users\nuri9\Downloads\조사방법론`의 PDF 31개와 조사방법론 추출 텍스트 31개가 서로 대응함을 확인했다. 별도 OCR 보강본은 `codex-idai-field-ocr`와 `codex-idai-field-new-pdf-text\ocr-selected`에 남아 있다. 따라서 현재 남은 일은 새 미독 자료 목록을 찾는 단계가 아니라, OCR 취약 구간의 도판·캡션·사례명·한자·표 수치를 원문 이미지로 교정하고, 이미 뽑은 요구사항을 실제 템플릿과 샘플 프로젝트로 검증하는 단계다.
 
-2026-06-20 이어받은 감사에서 실제 로컬 PDF 43종과 `codex-idai-field-new-pdf-text`의 metadata 43건이 다시 1:1로 대응함을 확인했다. 누락된 텍스트 캐시는 없고, `TermImportMapping`과 `SourceEvidenceIndex`도 이미 샘플과 테스트에 들어가 있으므로 다음 독해 작업은 새 목록 작성이 아니라 실제 자동완성·가져오기 흐름 검증, 조건부 필수값 설계, OCR 취약 구간의 도판·캡션·사례명·한자·수치 원문 대조에 둔다.
+2026-06-20 이어받은 감사에서 실제 로컬 PDF 43종은 `고고학사전` 12권과 `조사방법론` 31건으로 확인했다. 대응 근거는 `supplemental-source-inventory.md`, `methods-all`, `direct-recheck`, `ocr-selected`, 사전 추출 텍스트 목록을 함께 본다. `codex-idai-field-new-pdf-text`의 임시 `metadata.json`은 43개 항목을 만들도록 생성된 흔적은 있으나 한글 경로가 깨져 JSON 파싱 근거로 단독 사용하지 않는다. 누락된 텍스트 캐시는 확인되지 않았고, `TermImportMapping`과 `SourceEvidenceIndex`도 이미 샘플과 테스트에 들어가 있으므로 다음 독해 작업은 새 목록 작성이 아니라 실제 자동완성·가져오기 흐름 검증, 조건부 필수값 설계, OCR 취약 구간의 도판·캡션·사례명·한자·수치 원문 대조에 둔다.
+
+2026-06-20 새 자료군을 본격적으로 다시 읽기 전 마무리 감사에서는 `source-evidence-index-sample.json`의 유일한 `needsRecheck`가 `source-index-dictionary-001`임을 확인했다. 이 항목은 미독 자료가 아니라 2001년 일반 고고학사전의 공백·글자 무너짐과 넓은 교차 색인 성격 때문에 보류한 근거 색인이다. 다음 고가치 대조는 청동기시대편 도판 속 개별 사례명, 고환경분석 그래프 수치의 원출처, 유물 보관·보존 관련 현행 기준 순으로 잡되, 실제 화면·값목록 승격 직전에 원PDF 화면으로 다시 교정한다.
 
 2026-06-20 고분편·고분유물편 재대조에서는 고분편 일러두기의 묘/분 표기, 매장주체시설·외피시설 분리, 목관·목곽 구분 원칙과 고분유물편의 장구·착장품·부장품·제의 매납품 구분을 다시 확인했다. 새 고분 필드를 늘리기보다 기존 고분 값목록과 `graveGoodsRitualContext`가 자동분류를 막는 수용 단위임을 확인했고, `source-evidence-index-sample.json`의 `source-index-tomb-dictionary-001`로 원문 근거 색인을 추가했다.
 

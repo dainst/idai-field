@@ -845,6 +845,16 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('directPdfChecked');
         expect(documentsById['source-index-stratigraphy-context-001'].resource.sourceEvidenceVerification)
             .toContain('captionChecked');
+        expect(documentsById['source-index-basic-training-stratigraphy-001'].resource.sourceEvidenceLocator)
+            .toContain('basic_training_stratigraphy_pages/method11_page_0034.png');
+        expect(documentsById['source-index-basic-training-stratigraphy-001'].resource.sourceEvidenceLocator)
+            .toContain('method10_page_0067.png');
+        expect(documentsById['source-index-basic-training-stratigraphy-001'].resource.sourceEvidenceDomain)
+            .toContain('fieldSurvey');
+        expect(documentsById['source-index-basic-training-stratigraphy-001'].resource.sourceEvidenceUse)
+            .toContain('preventAutoClassification');
+        expect(documentsById['source-index-basic-training-stratigraphy-001'].resource.verificationState)
+            .toBe('candidate');
         expect(documentsById['source-index-dictionary-001'].resource.sourceEvidenceMaterial)
             .toContain('originalScript');
         expect(documentsById['source-index-dictionary-001'].resource.sourceEvidenceLocator)
@@ -1946,6 +1956,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('트렌치·토층둑 배치와 역광 회피');
         expect(sample.sourceReviewNote)
             .toContain('유물 높이와 바닥대비고');
+        expect(sample.sourceReviewNote)
+            .toContain('basic_training_stratigraphy_pages/method11_page_0034.png');
+        expect(sample.sourceReviewNote)
+            .toContain('method10_page_0067.png');
         expect(documentsById['segment-stratigraphy-fill-001'].resource.stratigraphicObservationProcedure)
             .toContain('repeatedObservation');
         expect(documentsById['segment-stratigraphy-fill-001'].resource.stratigraphicObservationProcedure)

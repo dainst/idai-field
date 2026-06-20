@@ -137,6 +137,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-20 원PDF 재확인에서는 `method12_faunal_source_pages/page_019,032-035.png`, `method25_faunal_source_pages/page_170,172,174-177.png`, `dictionary2012_neolithic_faunal_terms_pages/page_150,161,244,571.png`를 대조했다. 고환경분석 강의의 산성토양·패총·석회암동굴 보존조건과 2mm·5mm 물체질, 제5회 교육자료의 동물유체 수습·보존 및 NISP/MNE/MNI/MAU 도식, 신석기 전문사전의 동물고고학·동물유체·동정표본수·블록시료채집법·최소개체수/최소단위수/최소부위수 항목을 확인해 `source-index-faunal-quantification-001`을 `candidate` 상태로 낮췄다.
 
+2026-06-20 신석기시대편 사전의 패총·어구·토기 관련 화면도 `dictionary2012_neolithic_shell_pottery_pages/page_0006,0010,0011,0013,0014,0022,0027,0032,0033,0038,0065,0082.png`로 재대조했다. 일러두기의 표제어·유적명 처리, 가거도패총의 층위와 유구·유물 복합성, 가공유적의 처리장 해석, 결합식조침·고정식작살·어망추·조침 찾아가기, 고산리식토기와 그물문토기 사례를 확인해 `source-index-neolithic-dictionary-001`을 추가했다. 이 색인은 패총 이름, 패각층, 어구 부품, 토기 형식명, 생업 해석을 하나로 병합하지 않는 근거로 쓴다.
+
 2026-06-20 고환경분석 탄화곡물 장의 75-78쪽도 고해상도 화면으로 다시 확인했다. 현생 탄화 밀·보리, 무안 양장리와 장흥 상방촌 사례, 길이·폭·두께 계측도, 폭/두께 산점도 H/Y/P 군집, 1mm 축척사진은 확인되지만, 도판별 원출처 표기는 슬라이드 안에 없다. 따라서 이 자료는 `plantRemainIdentificationRecord`와 식물유체 샘플의 설계 근거로 유지하되, `source-index-archaeobotany-001`에는 `provenanceChecked`를 붙이지 않고 `futurePdfRecheck`와 `pendingDecision`을 유지한다.
 
 2026-06-19 저습지 조사방법 자료도 구현 단위로 압축했다. 제2회 조사연구원 교육자료의 저습지 조사방법은 항공사진 60% 중첩, 개발 전·다시기 항공사진, 고지도, 입체경, 1:5,000 전자지도, 지질도, 형질변경 지도, 보링자료, 등고선도를 준비하고 지역환경에서 극미지형까지 내려가며 고하천·자연제방·단구면·배후습지를 판독하라고 요구한다. 이 묶음은 `Survey`의 `wetlandAnalysisSource`, `wetlandLandformInterpretation`, `wetlandSurveyTargeting`과 `FeatureSegment`의 `wetlandMicrotopographyRecord` 값 목록으로 옮겨 지표 판독, 시굴 위치 선정, 매몰 수전·1회성 퇴적·미화석 분석 연결을 분리했다. `wetland-survey-microtopography-sample.json`으로 준비자료, 지형판독, 시굴 대상 선정, 극미지형 기록, 화분·식물규산체·규조 시료 연결이 값목록과 맞는지 검증한다.
@@ -318,6 +320,8 @@ C:\Users\nuri9\Downloads\조사방법론
 2026-06-20 일반 사전의 `조개더미/조개무지/패총` 찾아가기와 신석기 패총 방법론의 패각층 분리 요구를 `term-authority-alias-sample.json`에 추가했다. 패총은 검색 표제어로 연결하지만, `패각층/조가비층`은 층위 단위로 남기고 주거지·노지·무덤·적석·후대 재점유는 별도 유구 관계로 검토한다.
 
 2026-06-20 일반 사전 1·2권의 대표 화면 13쪽을 `dictionary2001_general_terms_pages`로 렌더링해 `source-index-dictionary-001`을 재대조했다. 일러두기의 유적명 표기·복합 유적 처리 원칙, 가락동 집자리·고강동 유적의 주거지/주혈/노지 관계, 가음정동·욕지도·아다카 조개무지의 패총/패각층 분리, 양산 부부총·돌무지무덤의 돌방무덤/석실묘 구조 관계를 확인했으므로 캡션 미확인 플래그는 닫고 후보 색인으로 낮춘다. 다만 2001년 일반 사전 OCR은 공백·한자 오독이 계속 남으므로 대량 가져오기와 UI 노출은 보류한다.
+
+2026-06-20 같은 흐름으로 신석기시대편 사전의 일러두기와 가거도패총·가공유적·어구·토기 화면을 별도 색인으로 묶었다. `source-index-neolithic-dictionary-001`은 `dictionary2012_neolithic_shell_pottery_pages` 원문 화면을 근거로 `조개더미/조개무지/패총` 검색어, 패각층·혼토패각층, 결합식조침 부품, 어망추·조침 별칭, 고산리식토기·그물문토기 형식명을 분리해 검토하게 한다.
 
 2026-06-20 `제1회 매장문화재 조사연구원 교육` 도면작성법 OCR의 단계도면 대목을 다시 읽어 `mediaQualityCheck`를 보강했다. 별도 방안지·트레이싱지, 기준 방안선, 연결표시, 상면·바닥 분리, 중복 선후관계, BM·해발고도, 차수별 레벨 색상, 현장 완료·보완 이력을 Drawing과 현장 중 보고서 검수가 함께 확인하도록 했다.
 

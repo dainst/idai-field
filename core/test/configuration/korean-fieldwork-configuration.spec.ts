@@ -829,6 +829,20 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('directPdfChecked');
         expect(documentsById['source-index-faunal-quantification-001'].resource.verificationState)
             .toBe('candidate');
+        expect(documentsById['source-index-neolithic-dictionary-001'].resource.sourceEvidenceDomain)
+            .toContain('neolithicSite');
+        expect(documentsById['source-index-neolithic-dictionary-001'].resource.sourceEvidenceDomain)
+            .toContain('dictionaryTerminology');
+        expect(documentsById['source-index-neolithic-dictionary-001'].resource.sourceEvidenceLocator)
+            .toContain('dictionary2012_neolithic_shell_pottery_pages/page_0010.png');
+        expect(documentsById['source-index-neolithic-dictionary-001'].resource.sourceEvidenceLocator)
+            .toContain('page_0065.png');
+        expect(documentsById['source-index-neolithic-dictionary-001'].resource.sourceEvidenceUse)
+            .toContain('preventAutoClassification');
+        expect(documentsById['source-index-neolithic-dictionary-001'].resource.sourceEvidenceVerification)
+            .toContain('directPdfChecked');
+        expect(documentsById['source-index-neolithic-dictionary-001'].resource.verificationState)
+            .toBe('candidate');
         expect(documentsById['source-index-pit-dwelling-001'].resource.sourceEvidenceDomain)
             .toContain('buildingSite');
         expect(documentsById['source-index-pit-dwelling-001'].resource.sourceEvidenceLocator)

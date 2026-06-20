@@ -14,7 +14,8 @@
     "저습지 조사방법의 항공사진·고지도·보링자료·미지형 판독·극미지형 관찰 요구가 현재 습윤 여부로 축소되지 않고 시굴·시료 설계 근거로 남는가.",
     "보존과학 자료의 수침목재·금속·토도류·지류직물·인골·토양 분석 요구가 유물/시료 기록과 파괴분석 승인 근거로 이어지는가.",
     "조사기초과정의 층 구분·기재법이 색조나 층명 확정이 아니라 입자·층리면·퇴적구조·후성작용·자연/인위 폐기 구분 근거로 남는가.",
-    "고고학연구 입문 자료의 연구질문·편년전제·순서배열·생업경제 자료연쇄가 해석값 자동확정 방지 근거로 남는가."
+    "고고학연구 입문 자료의 연구질문·편년전제·순서배열·생업경제 자료연쇄가 해석값 자동확정 방지 근거로 남는가.",
+    "신석기 사전의 패총·어구·토기 표제어가 유적명·층위·유물·편년값을 자동 병합하지 않고 검색어와 관찰값 분리 근거로 남는가."
   ],
   "documents": [
     {
@@ -510,6 +511,55 @@
           "observationInterpretationSeparated",
           "criteriaConsistency",
           "crossReviewNeeded"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "source-index-neolithic-dictionary-001",
+        "identifier": "SRC-DICT-NEOLITHIC-001",
+        "shortDescription": "신석기 사전 패총·어구·토기 근거 색인",
+        "category": "SourceEvidenceIndex",
+        "relations": {
+          "liesWithin": ["project-source-evidence-001"]
+        },
+        "description": "한국고고학전문사전 신석기시대편의 일러두기, 가거도패총, 가공유적, 결합식조침·작살, 어망추·조침 찾아가기, 고산리식토기 관련 원문 화면을 패총·어로·토기 편년 용어의 검색어와 관찰값 분리 근거로 묶는다.",
+        "sourceEvidenceCitation": "국립문화유산연구원, 2012, 한국고고학전문사전 신석기시대편",
+        "sourceEvidenceLocator": "신석기시대편 PDF 6, 10, 11, 13, 14, 22, 27, 32, 33, 38, 65, 82쪽 직접 대조(dictionary2012_neolithic_shell_pottery_pages/page_0006.png, dictionary2012_neolithic_shell_pottery_pages/page_0010.png, page_0011.png, page_0013.png, page_0014.png, page_0022.png, page_0027.png, page_0032.png, page_0033.png, page_0038.png, page_0065.png, page_0082.png). 일러두기의 유적명·패총 표기 원칙, 가거도패총의 22개층·순패각층·혼토패각층·수혈유구·집석노지·황갈색경화층, 가공유적의 패총 처리장 해석, 결합식조침·고정식작살·어망추·조침 표제어 관계, 고산리식토기와 그물문토기 사례를 화면으로 확인했다.",
+        "sourceEvidenceMaterial": [
+          "originalScript",
+          "sourceCitation",
+          "caseStudy",
+          "caption",
+          "photo",
+          "diagram"
+        ],
+        "sourceEvidenceDomain": [
+          "neolithicSite",
+          "dictionaryTerminology",
+          "zooarchaeology"
+        ],
+        "sourceEvidenceVerification": [
+          "pageChecked",
+          "directPdfChecked",
+          "originalScriptChecked",
+          "caseNameChecked",
+          "captionChecked"
+        ],
+        "sourceEvidenceUse": [
+          "fieldDesignEvidence",
+          "termAuthorityEvidence",
+          "sampleValidationEvidence",
+          "comparativeReference",
+          "preventAutoClassification",
+          "sourceTraceability"
+        ],
+        "recordCreationTiming": "postExcavationDerived",
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "reproducibleRecord"
         ],
         "verificationState": "candidate"
       }

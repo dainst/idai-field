@@ -796,10 +796,18 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('buildingSite');
         expect(documentsById['source-index-pit-dwelling-001'].resource.sourceEvidenceLocator)
             .toContain('method19_pit_dwellings_pages205_258');
+        expect(documentsById['source-index-pit-dwelling-001'].resource.sourceEvidenceLocator)
+            .toContain('촬영 지점 고정');
+        expect(documentsById['source-index-pit-dwelling-001'].resource.sourceEvidenceLocator)
+            .toContain('토층둑이 조사면 역광에 오지 않게');
+        expect(documentsById['source-index-pit-dwelling-001'].resource.sourceEvidenceLocator)
+            .toContain('바닥대비고');
         expect(documentsById['source-index-pit-dwelling-001'].resource.sourceEvidenceVerification)
             .toContain('captionChecked');
         expect(documentsById['source-index-pit-dwelling-001'].resource.sourceEvidenceVerification)
             .toContain('directPdfChecked');
+        expect(documentsById['source-index-pit-dwelling-001'].resource.sourceEvidenceVerification)
+            .toContain('ocrCorrectionNeeded');
         expect(documentsById['source-index-pit-dwelling-001'].resource.sourceEvidenceUse)
             .toContain('reportCrossCheckEvidence');
         expect(documentsById['source-index-pit-dwelling-001'].resource.sourceEvidenceUse)
@@ -1885,6 +1893,10 @@ describe('KoreanFieldwork project configuration', () => {
 
         expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
 
+        expect(sample.sourceReviewNote)
+            .toContain('트렌치·토층둑 배치와 역광 회피');
+        expect(sample.sourceReviewNote)
+            .toContain('유물 높이와 바닥대비고');
         expect(documentsById['segment-stratigraphy-fill-001'].resource.stratigraphicObservationProcedure)
             .toContain('repeatedObservation');
         expect(documentsById['segment-stratigraphy-fill-001'].resource.stratigraphicObservationProcedure)
@@ -1927,6 +1939,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('boundaryLineConventionApplied');
         expect(documentsById['segment-stratigraphy-fill-001'].resource.termSearchMapping)
             .toContain('doNotMergeToSingleTerm');
+        expect(documentsById['segment-stratigraphy-fill-001'].resource.termAuthorityStatus)
+            .toContain('pdfCrossChecked');
+        expect(documentsById['segment-stratigraphy-fill-001'].resource.termAuthorityStatus)
+            .not.toContain('captionNeedsCheck');
         expect(documentsById['segment-stratigraphy-fill-001'].resource.chronologyArgument)
             .toContain('heirloomOrReuseRisk');
         expect(documentsById['segment-stratigraphy-fill-001'].resource.chronologyUnitDecision)

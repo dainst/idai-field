@@ -1,6 +1,7 @@
 {
   "title": "Korean stratigraphy and feature lifecycle workflow sample",
   "purpose": "Validate that Korean FeatureSegment records keep stratigraphic observation procedure, layer naming, fill interpretation, post-depositional misread guards, block inclusions, burial process, chronology, and terminology checks together before layer or feature attribution is fixed.",
+  "sourceReviewNote": "2026-06-20 발굴조사_업무의_이해_교재_(2).pdf 206-212쪽과 현장조사_방법과_해석.pdf 119-120쪽 원문 화면을 다시 대조했다. 수혈주거지는 사진 촬영 지점 고정, 트렌치·토층둑 배치와 역광 회피, 토층둑 비닐 보호, 바닥면·생활면·나무질·불다짐면 판정 보류, 조사원이 직접 바닥을 정리하며 확인하는 절차, 분층기재와 층내 유물·유기물·숯·소토 포함 여부, 유물 높이와 바닥대비고 기록을 요구한다. 캡션과 화면 문구는 직접 확인했지만 일부 OCR 텍스트층 오독은 별도 색인의 ocrCorrectionNeeded로 유지한다.",
   "validationQuestions": [
     "토층 기록이 토색·층명 하나가 아니라 관찰 절차, 입도·경계면, 층명 변경 이력, 문화층 표시와 함께 남는가.",
     "유구 내부토가 인위매립·붕락·자연유입·폐기 후 퇴적 같은 과정으로 나뉘고, 이질토 블록을 자동으로 인위층으로 확정하지 않는가.",
@@ -392,7 +393,7 @@
           "specialistDictionarySource",
           "institutionalUsage",
           "reportOutputChecked",
-          "captionNeedsCheck",
+          "pdfCrossChecked",
           "valueListCandidate",
           "pendingDecision"
         ],

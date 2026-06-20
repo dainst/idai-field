@@ -836,6 +836,20 @@ describe('KoreanFieldwork project configuration', () => {
             .not.toContain('futurePdfRecheck');
         expect(documentsById['source-index-iron-process-method-001'].resource.verificationState)
             .toBe('candidate');
+        expect(documentsById['source-index-tile-kiln-method-001'].resource.sourceEvidenceDomain)
+            .toContain('productionSite');
+        expect(documentsById['source-index-tile-kiln-method-001'].resource.sourceEvidenceLocator)
+            .toContain('tile_kiln_rendered/page_014.png');
+        expect(documentsById['source-index-tile-kiln-method-001'].resource.sourceEvidenceLocator)
+            .toContain('page_022.png');
+        expect(documentsById['source-index-tile-kiln-method-001'].resource.sourceEvidenceUse)
+            .toContain('analysisPlanEvidence');
+        expect(documentsById['source-index-tile-kiln-method-001'].resource.sourceEvidenceUse)
+            .toContain('preventAutoClassification');
+        expect(documentsById['source-index-tile-kiln-method-001'].resource.sourceEvidenceVerification)
+            .toContain('directPdfChecked');
+        expect(documentsById['source-index-tile-kiln-method-001'].resource.verificationState)
+            .toBe('candidate');
         expect(documentsById['source-index-bronze-dictionary-001'].resource.sourceEvidenceDomain)
             .toContain('buildingSite');
         expect(documentsById['source-index-bronze-dictionary-001'].resource.sourceEvidenceDomain)
@@ -1910,6 +1924,7 @@ describe('KoreanFieldwork project configuration', () => {
 
         expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
 
+        expect(sample.sourceReviewNote).toContain('기와가마_조사법2011년_9월.pdf 14-22쪽');
         expect(documentsById['feature-pottery-kiln-001'].resource.potteryKilnYardFacility)
             .toContain('formingArea');
         expect(documentsById['feature-pottery-kiln-001'].resource.productionProcessSystem)
@@ -1928,6 +1943,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('multipleDatingMethodsCompared');
         expect(documentsById['feature-tile-kiln-001'].resource.tileKilnExcavationControl)
             .toContain('ashDumpLinkedBaulk');
+        expect(documentsById['feature-tile-kiln-001'].resource.tileKilnExcavationControl)
+            .toContain('twentyThirtyCmBaulk');
         expect(documentsById['feature-tile-kiln-001'].resource.tileKilnExcavationControl)
             .toContain('finalAxisAdjusted');
         expect(documentsById['feature-tile-kiln-001'].resource.tileKilnExcavationControl)
@@ -1948,6 +1965,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('patternByLayerRecorded');
         expect(documentsById['sample-tile-kiln-001'].resource.tileKilnAnalysisPlan)
             .toContain('consumerTileComparison');
+        expect(documentsById['sample-tile-kiln-001'].resource.tileKilnAnalysisPlan)
+            .toContain('archaeomagneticMultiPoint');
         expect(documentsById['photo-tile-kiln-media-001'].resource.mediaQualityCheck)
             .toContain('interiorOppositeDirectionViews');
         expect(documentsById['photo-tile-kiln-media-001'].resource.mediaQualityCheck)

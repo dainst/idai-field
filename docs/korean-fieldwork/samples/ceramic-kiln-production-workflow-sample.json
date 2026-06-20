@@ -1,10 +1,11 @@
 {
   "title": "Korean ceramic kiln production workflow sample",
   "purpose": "Validate that pottery, tile, and porcelain kiln records keep production space, kiln-part investigation, find context, and analysis planning connected instead of reducing ceramic production sites to one kiln type name.",
+  "sourceReviewNote": "2026-06-20 매장문화재전문교육_조사기술특강_기와가마_조사법2011년_9월.pdf 14-22쪽 원문 화면을 tile_kiln_rendered/page_014.png-page_022.png로 대조했다. 자료는 조사 전 자연·지리·역사 환경 검토, 제토량과 적재장소 예측, 10x10m Grid와 조정 사유, 장축·중앙·회구부 연결 둑, 20~30cm 폭 둑 2~3개소, 내부토·회구부 퇴적순서, 요전부·아궁이·연소실·소성실·연도·배연구·회구부의 부위별 기록, 주변 생산시설과 가마군 관계, C14 위치별 유기물과 고고지자기 다지점 시료를 요구한다.",
   "validationQuestions": [
     "토기요장 운영 규모가 가마 수·동시조업·공급 범위 후보로 남고 생산량으로 바로 확정되지 않는가.",
     "토기가마 기록이 구조요 명칭보다 화구·연소부·소성부·연도부·회구부와 요장 시설, 해석위험, 분석시료를 함께 남기는가.",
-    "기와가마 기록이 요체만이 아니라 요전부, 회구부, 폐기장, 채토공, 제작공방, 층위별 기와 문양, 연대·태토 시료까지 연결되는가.",
+    "기와가마 기록이 요체만이 아니라 요전부, 회구부, 폐기장, 채토공, 제작공방, Grid·둑 설정, 층위별 기와 문양, 연대·태토 시료까지 연결되는가.",
     "자기요장 기록이 가마 하나가 아니라 토취장, 수비공, 공방 공정, 봉통부·번조실·연도부, 갑발·도지미, 소비지 비교를 한 생산체계로 묶는가.",
     "요업 출토품과 시료가 최종조업품·단일연대·생산지 확정값으로 자동 처리되지 않고 검토 상태를 유지하는가."
   ],

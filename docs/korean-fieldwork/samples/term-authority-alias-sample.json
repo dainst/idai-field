@@ -4,6 +4,7 @@
   "validationQuestions": [
     "조개더미·조개무지 검색어가 패총 표제어로 연결되되, 패각층·조가비층은 층위 단위로 분리되는가.",
     "표준 용어와 현장 관용어를 모두 검색하되 저장값은 권위어로 정규화되는가.",
+    "청동기 표준안의 고인돌/지석묘, 돌널/석관, 껴묻거리/부장품 대응이 하위 구조와 위치 맥락을 덮어쓰지 않는가.",
     "가마·요·요지·가마터, 한뎃가마·노천요, 평요 분야분리, 수비장·건조장 찾아가기 관계가 현장 원문과 보고서 출력어를 덮어쓰지 않는가.",
     "판단 보류가 확정값으로 덮이지 않고 검토 이력으로 남는가.",
     "기존 대장·사진 캡션·야장 값을 가져올 때 원자료 필드와 원문 맥락, 수동 검토 메모가 남는가."
@@ -16,7 +17,7 @@
         "shortDescription": "사전 표제어와 현장 관용어의 검색/저장값 분리 검증",
         "category": "FeatureGroup",
         "relations": {},
-        "featurePackage": ["buildingSite", "shellMidden", "kilnSite", "ironProductionSite"],
+        "featurePackage": ["buildingSite", "shellMidden", "kilnSite", "ironProductionSite", "tomb"],
         "termRelation": ["preferredTerm", "alias", "reportOutputTerm"],
         "termSearchMapping": [
           "fieldSearchTermAccepted",
@@ -431,6 +432,177 @@
           "doNotMergeToSingleTerm"
         ],
         "termAuthorityStatus": ["latestSupplementSource", "sourcePageLinked", "valueListCandidate"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-authority-dolmen",
+        "identifier": "고인돌",
+        "shortDescription": "지석묘 계열 권위 표제어",
+        "category": "TermAuthority",
+        "relations": {
+          "liesWithin": ["term-group-korean-archaeology"]
+        },
+        "description": "청동기시대편 증보판 표준안은 고인돌을 지석묘와 연결하지만, 덮개식·무지석식·바둑판식·탁자식·남방식·북방식 같은 하위유형과 덮개돌·받침돌·무덤방·묘역시설 관찰값은 별도 구조 기록으로 남긴다.",
+        "termDictionaryDomain": ["bronzeAge", "tomb", "generalArchaeology"],
+        "termApplicationScope": ["valueListEntry", "reportOutput", "searchAlias", "sourceDictionaryLink"],
+        "termSourcePriority": ["latestSupplementDictionary", "domainSpecialistDictionary", "methodologyTerm"],
+        "termRelation": ["preferredTerm", "alias", "narrowerTerm"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "fieldUsagePreserved",
+          "structureSubtypeSeparated",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["latestSupplementSource", "sourcePageLinked", "pdfCrossChecked", "valueListCandidate"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-alias-dolmen-jiseokmyo",
+        "identifier": "지석묘",
+        "shortDescription": "청동기 표준안 별칭: 지석묘",
+        "category": "TermAlias",
+        "relations": {
+          "liesWithin": ["term-authority-dolmen"]
+        },
+        "description": "보고서·기존 대장·사진 캡션의 지석묘를 고인돌 권위 표제어와 연결하되, 개석식·기반식·탁자식 같은 구조 하위유형은 별도 관찰값으로 유지한다.",
+        "termAliasText": "지석묘",
+        "termAliasRole": ["dictionarySeeAlso", "fieldSynonym", "reportOutputName"],
+        "termAliasHandling": [
+          "autocompleteAccepted",
+          "preferredHeadwordTarget",
+          "keepAliasForSearch",
+          "reportOutputSeparate",
+          "domainScoped",
+          "doNotOverwriteObservedTerm"
+        ],
+        "termRelation": ["alias", "domainRestricted"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "reportOutputSeparated",
+          "structureSubtypeSeparated",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["latestSupplementSource", "sourcePageLinked", "pdfCrossChecked"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-authority-stone-cist",
+        "identifier": "돌널",
+        "shortDescription": "석관 계열 권위 표제어",
+        "category": "TermAuthority",
+        "relations": {
+          "liesWithin": ["term-group-korean-archaeology"]
+        },
+        "description": "청동기 표준안은 돌널을 석관과 연결하지만, 돌널무덤·돌덧널무덤·도랑돌널무덤처럼 매장시설 단위가 달라지는 경우는 묘광, 판석, 바닥시설, 도랑 관계를 별도 기록으로 남긴다.",
+        "termDictionaryDomain": ["bronzeAge", "tomb", "generalArchaeology"],
+        "termApplicationScope": ["valueListEntry", "reportOutput", "searchAlias", "sourceDictionaryLink"],
+        "termSourcePriority": ["latestSupplementDictionary", "domainSpecialistDictionary"],
+        "termRelation": ["preferredTerm", "alias", "narrowerTerm"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "fieldUsagePreserved",
+          "structureSubtypeSeparated",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["latestSupplementSource", "sourcePageLinked", "pdfCrossChecked", "valueListCandidate"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-alias-stone-cist-seokgwan",
+        "identifier": "석관",
+        "shortDescription": "청동기 표준안 별칭: 석관",
+        "category": "TermAlias",
+        "relations": {
+          "liesWithin": ["term-authority-stone-cist"]
+        },
+        "description": "석관이라는 한자어 입력을 돌널 표준안과 연결하되, 돌널무덤과 석관묘 같은 무덤 단위 표제어까지 자동 병합하지 않는다.",
+        "termAliasText": "석관",
+        "termAliasRole": ["dictionarySeeAlso", "fieldSynonym", "reportOutputName"],
+        "termAliasHandling": [
+          "autocompleteAccepted",
+          "preferredHeadwordTarget",
+          "keepAliasForSearch",
+          "reportOutputSeparate",
+          "domainScoped",
+          "doNotOverwriteObservedTerm"
+        ],
+        "termRelation": ["alias", "structuralSimilarity"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "reportOutputSeparated",
+          "structureSubtypeSeparated",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["latestSupplementSource", "sourcePageLinked", "pdfCrossChecked"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-authority-grave-goods",
+        "identifier": "껴묻거리",
+        "shortDescription": "부장품 계열 권위 표제어",
+        "category": "TermAuthority",
+        "relations": {
+          "liesWithin": ["term-group-korean-archaeology"]
+        },
+        "description": "청동기 표준안은 껴묻거리와 부장품을 연결하지만, 유물이 관내·관외·무덤방·도랑·제사장 어느 위치에 있었는지와 착장품·매납품·제의품 가능성은 별도 맥락 기록으로 남긴다.",
+        "termDictionaryDomain": ["bronzeAge", "tomb", "generalArchaeology"],
+        "termApplicationScope": ["valueListEntry", "reportOutput", "searchAlias", "sourceDictionaryLink"],
+        "termSourcePriority": ["latestSupplementDictionary", "domainSpecialistDictionary", "generalArchaeologyDictionary"],
+        "termRelation": ["preferredTerm", "alias", "functionalSimilarity"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "fieldUsagePreserved",
+          "structureSubtypeSeparated",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["latestSupplementSource", "sourcePageLinked", "pdfCrossChecked", "valueListCandidate"],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-alias-grave-goods-bujangpum",
+        "identifier": "부장품",
+        "shortDescription": "청동기 표준안 별칭: 부장품",
+        "category": "TermAlias",
+        "relations": {
+          "liesWithin": ["term-authority-grave-goods"]
+        },
+        "description": "부장품이라는 보고서 관용어를 검색·출력어로 허용하되, 피장자 착장 위치와 매장공간 위치관계를 덮어쓰지 않는다.",
+        "termAliasText": "부장품",
+        "termAliasRole": ["dictionarySeeAlso", "fieldSynonym", "reportOutputName"],
+        "termAliasHandling": [
+          "autocompleteAccepted",
+          "preferredHeadwordTarget",
+          "keepAliasForSearch",
+          "reportOutputSeparate",
+          "domainScoped",
+          "doNotOverwriteObservedTerm"
+        ],
+        "termRelation": ["alias", "functionalSimilarity"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "preferredHeadwordLinked",
+          "reportOutputSeparated",
+          "fieldUsagePreserved",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["latestSupplementSource", "sourcePageLinked", "pdfCrossChecked"],
         "verificationState": "candidate"
       }
     },

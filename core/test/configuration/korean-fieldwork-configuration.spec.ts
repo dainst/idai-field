@@ -166,6 +166,26 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('평요 平窯 토기·기와');
         expect(documentsById['term-relationship-flat-kiln-domain-split'].resource.termSearchMapping)
             .toContain('doNotMergeToSingleTerm');
+        expect(documentsById['term-authority-dolmen'].resource.identifier)
+            .toBe('고인돌');
+        expect(documentsById['term-authority-dolmen'].resource.termDictionaryDomain)
+            .toEqual(['bronzeAge', 'tomb', 'generalArchaeology']);
+        expect(documentsById['term-authority-dolmen'].resource.termSearchMapping)
+            .toContain('structureSubtypeSeparated');
+        expect(documentsById['term-alias-dolmen-jiseokmyo'].resource.relations.liesWithin)
+            .toEqual(['term-authority-dolmen']);
+        expect(documentsById['term-alias-dolmen-jiseokmyo'].resource.termAliasText)
+            .toBe('지석묘');
+        expect(documentsById['term-authority-stone-cist'].resource.identifier)
+            .toBe('돌널');
+        expect(documentsById['term-alias-stone-cist-seokgwan'].resource.termAliasHandling)
+            .toContain('doNotOverwriteObservedTerm');
+        expect(documentsById['term-authority-grave-goods'].resource.identifier)
+            .toBe('껴묻거리');
+        expect(documentsById['term-alias-grave-goods-bujangpum'].resource.termAliasRole)
+            .toContain('reportOutputName');
+        expect(documentsById['term-alias-grave-goods-bujangpum'].resource.termSearchMapping)
+            .toContain('doNotMergeToSingleTerm');
         expect(documentsById['term-authority-block-sampling'].resource.termDictionaryDomain)
             .toContain('neolithic');
         expect(documentsById['term-alias-block-sampling-bulk'].resource.termAliasText)
@@ -176,6 +196,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('manualReviewRequired');
         expect(documentsById['term-group-korean-archaeology'].resource.featurePackage)
             .toContain('shellMidden');
+        expect(documentsById['term-group-korean-archaeology'].resource.featurePackage)
+            .toContain('tomb');
         expect(documentsById['term-authority-shell-midden'].resource.identifier)
             .toBe('패총');
         expect(documentsById['term-authority-shell-midden'].resource.termSearchMapping)

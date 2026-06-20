@@ -347,6 +347,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-20 `지표조사_업무_이해_교재.pdf` PDF 58-59쪽(인쇄 50-51쪽)을 추가로 대조했다. 지표조사는 사업 예정부지 500m 이내 지정문화재와 현상변경 절차를 사전 확인하고, 현장에서는 전 구역 도보 확인, 조사자 위치 지속 확인, 유물 원위치·외부반입토 이동경로 검토를 남겨야 한다. 이 요구는 `surfaceSurveyFieldSequence`, `surfaceSurveyMapRequirement`, `surfaceSurveyScopeDefinition`, `surfaceSurveyObservation` 값목록과 `surface-survey-scope-absence-sample.json`에 반영했다.
 
+2026-06-20 청동기시대편 증보판 Ⅰ권 993-1002쪽의 전문 용어 한글 표준안을 추가 대조해 `term-authority-alias-sample.json`을 보강했다. `고인돌/지석묘`, `돌널/석관`, `껴묻거리/부장품` 관계는 검색·보고서 출력어로 연결하되 하위구조, 무덤 단위, 부장 위치 맥락을 덮어쓰지 않도록 `TermAuthority`와 `TermAlias` 샘플로 검증한다. `source-index-bronze-dictionary-001`의 표준안 locator도 같은 쪽 범위로 넓혔다.
+
 ## 주의
 
 공개 자료라 하더라도 원문 전체나 장문 번역을 저장소에 옮기지는 않는다. 이 저장소에는 출처, 요약, 조사 원칙, 기록 항목, iDAI.field 적용 설계만 남긴다.

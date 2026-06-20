@@ -18648,11 +18648,26 @@
       "residualTraitReviewed": {
         "label": "Residual trait reviewed"
       },
+      "attributeTypeSeparated": {
+        "label": "Attribute and type separated"
+      },
       "relatedArtifactGroup": {
         "label": "Related artifact group"
       },
       "attributeCombination": {
         "label": "Attribute combination"
+      },
+      "functionUseContextReviewed": {
+        "label": "Function/use context reviewed"
+      },
+      "regionalStyleDifferenceReviewed": {
+        "label": "Regional style difference reviewed"
+      },
+      "objectiveClassificationRuleRecorded": {
+        "label": "Objective classification rule recorded"
+      },
+      "overSubdivisionAvoided": {
+        "label": "Over-subdivision avoided"
       },
       "typeCandidate": {
         "label": "Type candidate"
@@ -18670,7 +18685,7 @@
         "label": "Pending decision"
       }
     },
-    "description": "Korean fieldwork typology argument list for recording representative attributes, variation, related artifact groups, and alternative classifications before fixing a type name"
+    "description": "Korean fieldwork typology argument list for recording representative attributes, attribute/type separation, variation, function/use and regional differences, objective classification rules, over-subdivision cautions, related artifact groups, and alternative classifications before fixing a type name"
   },
   "KoreanFieldwork-chronologyArgument": {
     "values": {
@@ -18689,8 +18704,23 @@
       "markerArtifact": {
         "label": "Marker artifact"
       },
+      "temporalAttributeReviewed": {
+        "label": "Temporal attribute reviewed"
+      },
+      "repeatedAssociationChecked": {
+        "label": "Repeated association checked"
+      },
       "existingChronologyApplied": {
         "label": "Existing chronology applied"
+      },
+      "independentMethodVerified": {
+        "label": "Independent method verified"
+      },
+      "typeDifferenceNotTimeAssumed": {
+        "label": "Type difference not assumed as time difference"
+      },
+      "coexistenceDurationConsidered": {
+        "label": "Coexistence duration considered"
       },
       "regionalLagRisk": {
         "label": "Regional lag risk"
@@ -18708,7 +18738,7 @@
         "label": "Pending decision"
       }
     },
-    "description": "Korean fieldwork chronology argument list for keeping period decisions tied to stratigraphy, associated finds, absolute dates, marker artifacts, and alternative chronologies"
+    "description": "Korean fieldwork chronology argument list for keeping period decisions tied to stratigraphy, repeated associations, absolute dates, marker artifacts, temporal attributes, independent checks, coexistence duration, regional lag, heirloom/reuse risk, and alternative chronologies"
   },
   "KoreanFieldwork-chronologyUnitDecision": {
     "values": {

@@ -5,7 +5,8 @@
     "도표·사진·표·사례명이 단순 메모로 흩어지지 않고 어떤 필드 설계의 근거인지 남는가.",
     "OCR로 읽은 캡션·한자·수치가 원PDF 대조 상태와 함께 보류될 수 있는가.",
     "사례 색인이 자동분류 근거가 아니라 비교·해석주의·후속 PDF 재대조 근거로 남는가.",
-    "구석기 사전의 접합·석재·사용흔·국외 비교용어가 필드 설계 근거와 자동분류 방지 근거로 분리되는가."
+    "구석기 사전의 접합·석재·사용흔·국외 비교용어가 필드 설계 근거와 자동분류 방지 근거로 분리되는가.",
+    "형식학 강의자료의 시간성·공반·기능·지역차 검토가 편년 자동확정 방지 근거로 남는가."
   ],
   "documents": [
     {
@@ -116,6 +117,50 @@
           "chronologyArgumentEvidence",
           "analysisPlanEvidence",
           "interpretationCaution",
+          "sourceTraceability"
+        ],
+        "recordCreationTiming": "postExcavationDerived",
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated",
+          "criteriaConsistency",
+          "crossReviewNeeded"
+        ],
+        "verificationState": "candidate"
+      }
+    },
+    {
+      "resource": {
+        "id": "source-index-typology-method-001",
+        "identifier": "SRC-TYPOLOGY-METHOD-001",
+        "shortDescription": "형식학·상대편년 검증근거 색인",
+        "category": "SourceEvidenceIndex",
+        "relations": {
+          "liesWithin": ["project-source-evidence-001"]
+        },
+        "description": "형식학적 연구의 이해 자료에서 속성·형식·기종·양식 구분, 공반 반복성, 기능·용도와 지역차, 시간적 속성, 독립 검증 필요성을 형식·편년 논증 필드의 근거로 남긴다.",
+        "sourceEvidenceCitation": "형식학적 연구의 이해, KAAH 2015년도 매장문화재조사 전문교육",
+        "sourceEvidenceLocator": "추출문 Page 14, 23, 43, 45, 47, 50 및 원문 렌더링 method31_page_023, 043, 045, 050 직접 대조",
+        "sourceEvidenceMaterial": [
+          "sourceCitation",
+          "diagram",
+          "checklist",
+          "caseStudy"
+        ],
+        "sourceEvidenceDomain": [
+          "researchMethod",
+          "reportWriting"
+        ],
+        "sourceEvidenceVerification": [
+          "pageChecked",
+          "directPdfChecked",
+          "caseNameChecked",
+          "captionNeedsCheck"
+        ],
+        "sourceEvidenceUse": [
+          "fieldDesignEvidence",
+          "chronologyArgumentEvidence",
+          "interpretationCaution",
+          "preventAutoClassification",
           "sourceTraceability"
         ],
         "recordCreationTiming": "postExcavationDerived",

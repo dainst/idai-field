@@ -62,7 +62,7 @@
 | 봉수 유구·운영 분리 | 봉수대 이름 하나로 저장하면 연대·연소실·건물지 같은 물리시설과 직봉·대응봉수·감관 같은 운영망이 섞인다. | `beaconPhysicalFacility`, `beaconNetworkOperation`, `fortressBeaconRelation`이 봉수 물리 유구, 문헌 기반 노선·운영, 산성·봉수 복합관계를 `Feature`에서 따로 남긴다. |
 | 생산유적 세부 패키지 | 기와가마·토기가마·자기가마·제철유적은 요체 하나가 아니라 원료, 작업장, 부위별 조사, 폐기장, 분석시료, 소비지 비교가 맞물린 생산 체계다. | `KilnYardSystem`, `TileKilnInvestigation`, `ProductionSampleReliability`, `ProductionConsumptionLink`처럼 생산공간, 부위별 수습, 연대·태토분석 신뢰도, 생산지-소비지 대조를 분리한다. |
 | 생산유적 용어 정규화 | `가마/요/요지`, `노/로`, `철재/슬래그`를 같은 단어로 합치면 현장 원문과 공정 판단 근거가 사라진다. | `productionTermNormalization`, `ironProcessClassification`, `ironResidueSubtype`이 입력어, 우선표제어, 생산분야, 공정후보, 분석후확정을 분리한다. |
-| 형식·편년·해석 논증 | 형식명과 시대값은 관찰값이 아니라 속성, 층위, 공반, 기존 편년안, 대안 검토가 결합된 해석이다. | `typologyArgument`, `chronologyArgument`, `assemblageRelation`, `interpretationArgument`로 대표 속성, 변이, 공반 관계, 전승품·재사용 위험, 대안 편년, 관찰·해석 분리, 채택 근거를 남긴다. |
+| 형식·편년·해석 논증 | 형식명과 시대값은 관찰값이 아니라 속성, 층위, 공반, 기존 편년안, 대안 검토가 결합된 해석이다. 형식 차이가 곧 시간 차이라는 전제, 기능·지역차를 시간차로 읽는 위험, 표지유물 편중과 공반 한 번으로 동시성을 확정하는 위험을 함께 검토해야 한다. | `typologyArgument`, `chronologyArgument`, `chronologyUnitDecision`, `assemblageRelation`, `interpretationArgument`로 대표 속성, 속성·형식 구분, 기능·용도 맥락, 지역 양식차, 객관 분류기준, 공반 반복성, 시간적 속성, 독립검증, 형식 공존기간, 전승품·재사용 위험, 대안 편년, 관찰·해석 분리, 채택 근거를 남긴다. |
 | 위험값과 판단 보류 | 후보석기 폐기, 구석기 가능층 누락, 후대 혼입, 대형자료 선별, 색조 오인 같은 위험은 조사 결과를 바꾼다. | `Risk/Uncertainty` 필드를 공통화하고 검토 완료 전에는 기록을 닫지 않게 한다. |
 
 ## 첫 구현 단위

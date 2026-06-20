@@ -6894,11 +6894,26 @@
       "residualTraitReviewed": {
         "label": "흔적기관 검토"
       },
+      "attributeTypeSeparated": {
+        "label": "속성·형식 구분"
+      },
       "relatedArtifactGroup": {
         "label": "관련 유물군"
       },
       "attributeCombination": {
         "label": "속성 조합"
+      },
+      "functionUseContextReviewed": {
+        "label": "기능·용도 맥락 검토"
+      },
+      "regionalStyleDifferenceReviewed": {
+        "label": "지역 양식차 검토"
+      },
+      "objectiveClassificationRuleRecorded": {
+        "label": "객관 분류기준 기록"
+      },
+      "overSubdivisionAvoided": {
+        "label": "과도한 세분 회피"
       },
       "typeCandidate": {
         "label": "형식 후보"
@@ -6916,7 +6931,7 @@
         "label": "판단 보류"
       }
     },
-    "description": "형식명을 확정값으로 바로 저장하지 않고 대표 속성, 변이, 관련 유물군, 대안 분류를 함께 남기기 위한 목록"
+    "description": "형식명을 확정값으로 바로 저장하지 않고 대표 속성, 속성·형식 구분, 변이, 기능·용도와 지역차, 객관 분류기준, 과도한 세분 회피, 관련 유물군, 대안 분류를 함께 남기기 위한 목록"
   },
   "KoreanFieldwork-chronologyArgument": {
     "values": {
@@ -6935,8 +6950,23 @@
       "markerArtifact": {
         "label": "표지유물"
       },
+      "temporalAttributeReviewed": {
+        "label": "시간적 속성 검토"
+      },
+      "repeatedAssociationChecked": {
+        "label": "공반 반복성 확인"
+      },
       "existingChronologyApplied": {
         "label": "기존 편년안 적용"
+      },
+      "independentMethodVerified": {
+        "label": "독립 방법 검증"
+      },
+      "typeDifferenceNotTimeAssumed": {
+        "label": "형식차=시간차 단정 금지"
+      },
+      "coexistenceDurationConsidered": {
+        "label": "형식 공존기간 고려"
       },
       "regionalLagRisk": {
         "label": "지역차·확산지체 위험"
@@ -6954,7 +6984,7 @@
         "label": "판단 보류"
       }
     },
-    "description": "시대값을 단일 선택으로 닫지 않고 층위, 공반, 절대연대, 표지유물, 대안 편년과 함께 검토하기 위한 목록"
+    "description": "시대값을 단일 선택으로 닫지 않고 층위, 공반 반복성, 절대연대, 표지유물, 시간적 속성, 독립 검증, 형식 공존기간, 지역차·확산지체, 전승품·재사용, 대안 편년과 함께 검토하기 위한 목록"
   },
   "KoreanFieldwork-chronologyUnitDecision": {
     "values": {

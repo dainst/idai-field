@@ -5,6 +5,7 @@
     "토기 제작실험 변수와 분류 판단근거가 형식명보다 앞선 관찰·비교값으로 남는가.",
     "토기편 기록이 빗살무늬토기·도질토기 같은 이름 하나가 아니라 용어 범위, 태토·비짐, 비짐 기능, 제작 생애와 함께 남는가.",
     "성형흔과 정면흔이 실떼기·회전흔 같은 단일 흔적으로 물레질 뽑기나 제작기법을 확정하지 않고 확대사진과 공정 방향성을 함께 남기는가.",
+    "형식학적 분류가 속성·형식·기능·지역차와 시간성을 분리하고 공반 반복성·독립검증을 거쳐 편년 가설로 남는가.",
     "토기 생산조직 판단이 분업·표준화·형뜨기·생활도자·민족지 사례를 비교 근거로 쓰되 직접 등치하지 않고 보류값을 남기는가.",
     "토기 산지와 공방 귀속, 분포 범위와 사용 중 이동이 단일 생산지 확정이 아니라 원료·암석학 비교와 불확실성 질문으로 남는가.",
     "신석기 생업 유물이 어구명 하나로 닫히지 않고 어망추·조침·작살, 외양성 어종, 해양포유류, 포경 증거 수준, 해류·계절성, 교류품 후보와 함께 남는가."
@@ -206,7 +207,11 @@
         "typologyArgument": [
           "representativeAttribute",
           "variationRecorded",
+          "attributeTypeSeparated",
           "attributeCombination",
+          "functionUseContextReviewed",
+          "regionalStyleDifferenceReviewed",
+          "overSubdivisionAvoided",
           "typeCandidate",
           "alternativeClassification",
           "pendingDecision"
@@ -214,6 +219,11 @@
         "chronologyArgument": [
           "stratigraphicRelation",
           "associatedFinds",
+          "temporalAttributeReviewed",
+          "repeatedAssociationChecked",
+          "independentMethodVerified",
+          "typeDifferenceNotTimeAssumed",
+          "coexistenceDurationConsidered",
           "regionalLagRisk",
           "alternativeChronology",
           "pendingDecision"
@@ -379,8 +389,11 @@
         ],
         "typologyArgument": [
           "representativeAttribute",
+          "attributeTypeSeparated",
           "residualTraitReviewed",
           "relatedArtifactGroup",
+          "objectiveClassificationRuleRecorded",
+          "functionUseContextReviewed",
           "alternativeClassification",
           "specialistReviewNeeded",
           "pendingDecision"

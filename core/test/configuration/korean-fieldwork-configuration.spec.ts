@@ -641,6 +641,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('alluvialSite');
         expect(documentsById['source-index-alluvial-neolithic-001'].resource.sourceEvidenceVerification)
             .toContain('directPdfChecked');
+        expect(documentsById['source-index-typology-method-001'].resource.sourceEvidenceUse)
+            .toContain('chronologyArgumentEvidence');
+        expect(documentsById['source-index-typology-method-001'].resource.sourceEvidenceUse)
+            .toContain('preventAutoClassification');
+        expect(documentsById['source-index-typology-method-001'].resource.sourceEvidenceLocator)
+            .toContain('Page 14, 23, 43, 45, 47, 50');
         expect(documentsById['source-index-alluvial-soilmap-001'].resource.sourceEvidenceLocator)
             .toContain('PDF 497-525');
         expect(documentsById['source-index-alluvial-soilmap-001'].resource.sourceEvidenceDomain)
@@ -1369,6 +1375,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('porosityControl');
         expect(documentsById['find-neolithic-pottery-001'].resource.potteryProductionLifeRecord)
             .toContain('fabricPreparation');
+        expect(documentsById['find-neolithic-pottery-001'].resource.typologyArgument)
+            .toContain('attributeTypeSeparated');
+        expect(documentsById['find-neolithic-pottery-001'].resource.chronologyArgument)
+            .toContain('typeDifferenceNotTimeAssumed');
+        expect(documentsById['find-neolithic-pottery-001'].resource.chronologyArgument)
+            .toContain('independentMethodVerified');
         expect(documentsById['find-pottery-forming-trace-001'].resource.potteryFormingTraceAssessment)
             .toContain('stringCutTrace');
         expect(documentsById['find-pottery-forming-trace-001'].resource.potteryFormingCaution)
@@ -1389,6 +1401,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('shrinkageRateRecorded');
         expect(documentsById['find-pottery-forming-trace-001'].resource.potteryClassificationBasis)
             .toContain('technicalGroupSorted');
+        expect(documentsById['find-pottery-forming-trace-001'].resource.typologyArgument)
+            .toContain('objectiveClassificationRuleRecorded');
         expect(documentsById['find-pottery-forming-trace-001'].resource.potteryProvenanceDistributionReview)
             .toContain('workshopAttributionUncertain');
         expect(documentsById['find-neolithic-fishing-gear-001'].resource.neolithicSubsistenceEvidence)
@@ -4218,9 +4232,21 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-typologyArgument']
             .values.representativeAttribute.label)
             .toBe('Representative attribute');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-typologyArgument']
+            .values.attributeTypeSeparated.label)
+            .toBe('속성·형식 구분');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-typologyArgument']
+            .values.overSubdivisionAvoided.label)
+            .toBe('Over-subdivision avoided');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-chronologyArgument']
             .values.alternativeChronology.label)
             .toBe('Alternative chronology');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-chronologyArgument']
+            .values.typeDifferenceNotTimeAssumed.label)
+            .toBe('Type difference not assumed as time difference');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-chronologyArgument']
+            .values.repeatedAssociationChecked.label)
+            .toBe('공반 반복성 확인');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-chronologyUnitDecision']
             .values.markerArtifactBiasChecked.label)
             .toBe('Marker artifact bias checked');

@@ -87,6 +87,11 @@ describe('KoreanFieldwork project configuration', () => {
 
         expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
 
+        expect(sample.sourceReviewNote)
+            .toContain('dictionary2001_general_terms_pages');
+        expect(sample.sourceReviewNote)
+            .toContain('대량 가져오기와 UI 노출은 보류');
+
         documents
             .filter((document: any) => document.resource.category !== 'FeatureGroup')
             .forEach((document: any) => {
@@ -837,7 +842,11 @@ describe('KoreanFieldwork project configuration', () => {
         expect(documentsById['source-index-dictionary-001'].resource.sourceEvidenceVerification)
             .toContain('ocrCorrectionNeeded');
         expect(documentsById['source-index-dictionary-001'].resource.sourceEvidenceVerification)
+            .toContain('uiExposureDeferred');
+        expect(documentsById['source-index-dictionary-001'].resource.sourceEvidenceVerification)
             .not.toContain('captionNeedsCheck');
+        expect(documentsById['source-index-dictionary-001'].resource.sourceEvidenceVerification)
+            .not.toContain('futurePdfRecheck');
         expect(documentsById['source-index-dictionary-001'].resource.sourceEvidenceUse)
             .not.toContain('futurePdfRecheck');
         expect(documentsById['source-index-dictionary-001'].resource.verificationState)

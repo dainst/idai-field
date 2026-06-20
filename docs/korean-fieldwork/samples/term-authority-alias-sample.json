@@ -1,6 +1,7 @@
 {
   "title": "Korean fieldwork term authority and alias sample",
   "purpose": "Validate that Korean archaeological field terms can be searched by local aliases while stored authority terms remain separate from observed field wording.",
+  "sourceReviewNote": "2026-06-20 2001 한국고고학사전 1권 6, 10, 17, 24, 62, 97, 312쪽 및 2권 4, 6, 32, 36, 120, 537쪽 원문 화면을 dictionary2001_general_terms_pages로 대조했다. 일반 사전은 집자리/주거지, 조개더미/패총, 돌방무덤/석실묘 같은 검색·보고서 용례와 구조 관계를 확인하는 근거로 쓰되, 공백·한자 OCR 오독과 분야 충돌 위험 때문에 대량 가져오기와 UI 노출은 보류한다.",
   "validationQuestions": [
     "조개더미·조개무지 검색어가 패총 표제어로 연결되되, 패각층·조가비층은 층위 단위로 분리되는가.",
     "표준 용어와 현장 관용어를 모두 검색하되 저장값은 권위어로 정규화되는가.",

@@ -715,10 +715,18 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('productionSite');
         expect(documentsById['source-index-production-dictionary-001'].resource.sourceEvidenceUse)
             .toContain('termAuthorityEvidence');
+        expect(documentsById['source-index-production-dictionary-001'].resource.sourceEvidenceUse)
+            .not.toContain('futurePdfRecheck');
+        expect(documentsById['source-index-production-dictionary-001'].resource.sourceEvidenceLocator)
+            .toContain('dictionary2019_production_terms_pages');
         expect(documentsById['source-index-production-dictionary-001'].resource.sourceEvidenceVerification)
             .toContain('directPdfChecked');
         expect(documentsById['source-index-production-dictionary-001'].resource.sourceEvidenceVerification)
-            .toContain('captionNeedsCheck');
+            .toContain('captionChecked');
+        expect(documentsById['source-index-production-dictionary-001'].resource.sourceEvidenceVerification)
+            .not.toContain('captionNeedsCheck');
+        expect(documentsById['source-index-production-dictionary-001'].resource.verificationState)
+            .toBe('candidate');
         expect(documentsById['source-index-paleolithic-dictionary-001'].resource.sourceEvidenceDomain)
             .toContain('paleolithicSite');
         expect(documentsById['source-index-paleolithic-dictionary-001'].resource.sourceEvidenceUse)

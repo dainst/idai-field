@@ -198,6 +198,8 @@ C:\Users\nuri9\Downloads\조사방법론
 
 2026-06-20 생산유적편 재대조에서는 생산 분야 분리, 찾아가기 관계, `평요 平窯`의 분야별 분리, 번조실·소성실 병합 주의, 요도구와 소성흔의 관계를 다시 확인했다. 새 생산유적 필드를 늘리기보다 기존 생산유적·요업·자기요장 값목록이 자동분류를 막는 수용 단위임을 확인했고, `source-evidence-index-sample.json`의 `source-index-production-dictionary-001`로 원문 근거 색인을 추가했다.
 
+2026-06-20 추가 원PDF 재확인에서는 `dictionary2019_production_terms_pages/page_0008-0010.png`, `page_0051-0054.png`, `page_0064.png`, `page_0247.png`, `page_0339-0340.png`, `page_0343.png`, `page_1147-1149.png`를 대조했다. 생산유적편의 표기 원칙, 분야별 표제어 분리, 갑발·갑발뚜껑·갑발받침·갓모·도침 도판 캡션, 건조장·노천요·도지미/도짐이 찾아가기, 이상재·이기재의 도구·재료 범위를 확인해 `source-index-production-dictionary-001`을 `candidate` 상태로 낮췄다.
+
 2026-06-20 `발굴보고서_작성법_교재.pdf`, `발굴조사_실무.pdf`, 현장 기록관리 OCR 보강본을 다시 대조했다. 보고서 작성은 현장 종료 뒤 문장만 만드는 절차가 아니라 원고, 도면대장, 사진대장, 유물·시료목록, 조사일지, 기준토층, 층위 흐름도, 번호 변환표, 원자료 백업이 서로 맞는지 검수하는 절차로 읽힌다. 이 요구는 새 `ReportEditorialCrossCheck` 카드와 `administrative-workflow-sample.json` 편집 교차검토 사례로 옮겼다.
 
 2026-06-20 추가 독해에서는 같은 보고서 작성 자료와 `발굴조사_실무.pdf`의 편집·인쇄 대목을 다시 대조했다. 보고서 기획회의, 목차·체제 계획, 편집방식 선택, 원색도판 선정, 인쇄소 인계자료, 최종교정, 판형·지질·제본·수량 계획, 고해상도 인쇄원본 PDF 보존은 출판 후처리가 아니라 어떤 원자료를 보고서 대표 증거로 삼을지 결정하는 검수 단계다. 이번 보강은 `KoreanFieldwork-reportPreparationReview`와 `administrative-workflow-sample.json`, 설정 테스트에 반영했다.

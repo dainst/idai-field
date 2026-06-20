@@ -517,9 +517,9 @@
         "relations": {
           "liesWithin": ["project-source-evidence-001"]
         },
-        "description": "생산유적편 일러두기의 분야 분리, 찾아가기 관계, 같은 평요의 분야별 분리, 번조실·소성실 동등성 검토와 요도구·소성흔·공방 부속시설 관계를 생산유적 화면 설계 근거로 남긴다.",
+        "description": "생산유적편 일러두기의 분야 분리, 찾아가기 관계, 같은 평요의 분야별 분리, 번조실·소성실 동등성 검토와 갑발·도침·도지미·이상재·이기재·공방 부속시설 관계를 생산유적 화면 설계 근거로 남긴다.",
         "sourceEvidenceCitation": "한국고고학전문사전 생산유적편",
-        "sourceEvidenceLocator": "생산유적편 일러두기 PDF 8-11쪽 직접 대조 완료; 토기·기와·자기·도기 가마와 요도구·공방 관련 항목 원문 대조 대상",
+        "sourceEvidenceLocator": "생산유적편 PDF 8-10쪽(dictionary2019_production_terms_pages/page_0008-0010.png; 표기용례·분야분리·찾아가기·같은 표제어 분야분리·번조실/소성실 동등성 검토 확인), PDF 51-54쪽(page_0051-0054.png; 갑발·갑발뚜껑·갑발받침·갓모·도침 도판 캡션 확인), PDF 64쪽(page_0064.png; 건조장 찾아가기와 건지리 도기 가마 사례), PDF 247쪽(page_0247.png; 노천요/한뎃가마 정의), PDF 339-340, 343쪽(page_0339-0340,0343.png; 도지미/도짐이 -> 도침 찾아가기 및 도침 정의), PDF 1147-1149쪽(page_1147-1149.png; 이상재·이기재 개념과 도구·재료 범위 확인)",
         "sourceEvidenceMaterial": [
           "originalScript",
           "sourceCitation",
@@ -534,22 +534,21 @@
           "pageChecked",
           "directPdfChecked",
           "originalScriptChecked",
-          "captionNeedsCheck",
-          "ocrCorrectionNeeded"
+          "captionChecked",
+          "caseNameChecked"
         ],
         "sourceEvidenceUse": [
           "fieldDesignEvidence",
           "termAuthorityEvidence",
           "preventAutoClassification",
-          "sourceTraceability",
-          "futurePdfRecheck"
+          "sourceTraceability"
         ],
         "recordCreationTiming": "postExcavationDerived",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
           "crossReviewNeeded"
         ],
-        "verificationState": "needsRecheck"
+        "verificationState": "candidate"
       }
     },
     {

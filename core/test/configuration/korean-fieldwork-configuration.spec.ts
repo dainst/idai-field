@@ -908,6 +908,12 @@ describe('KoreanFieldwork project configuration', () => {
         expect(documentsById['source-index-bronze-dictionary-001'].resource.sourceEvidenceUse)
             .toContain('preventAutoClassification');
         expect(documentsById['source-index-bronze-dictionary-001'].resource.sourceEvidenceLocator)
+            .toContain('dictionary2022_bronze_source_pages');
+        expect(documentsById['source-index-bronze-dictionary-001'].resource.sourceEvidenceLocator)
+            .toContain('vol2_page_0023.png');
+        expect(documentsById['source-index-bronze-dictionary-001'].resource.sourceEvidenceLocator)
+            .toContain('vol1_page_0994.png');
+        expect(documentsById['source-index-bronze-dictionary-001'].resource.sourceEvidenceLocator)
             .toContain('증보판Ⅱ PDF 20-22쪽');
         expect(documentsById['source-index-bronze-dictionary-001'].resource.sourceEvidenceLocator)
             .toContain('PDF 23-24쪽');
@@ -1540,6 +1546,8 @@ describe('KoreanFieldwork project configuration', () => {
 
         expect(sample.sourceReviewNote).toContain('아화리');
         expect(sample.sourceReviewNote).toContain('어량리');
+        expect(sample.sourceReviewNote).toContain('dictionary2022_bronze_source_pages');
+        expect(sample.sourceReviewNote).toContain('원문 화면');
         expect(sample.validationQuestions.join(' '))
             .toContain('제작 관련 숫돌');
         expect(documentsById['fg-bronze-settlement-001'].resource.featurePackage)

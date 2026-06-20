@@ -15670,12 +15670,18 @@
       "firingChamberSoseongsilTerm": { "label": "Soseongsil term" },
       "sujangLinkedToPotteryWorkshop": { "label": "Sujang linked to pottery workshop" },
       "dryingYardLinkedToPotteryWorkshop": { "label": "Drying yard linked to pottery workshop" },
+      "seeAlsoRelationRecorded": { "label": "See-also relation recorded" },
+      "sameSiteDomainSplitRecorded": { "label": "Same-site domain split recorded" },
+      "sameHeadwordDomainSplitRecorded": { "label": "Same-headword domain split recorded" },
+      "hangulHanjaMixedUsagePreserved": { "label": "Hangul-Hanja mixed usage preserved" },
+      "administrativeHeadwordMapped": { "label": "Administrative headword mapped" },
+      "firingChamberEquivalenceReviewed": { "label": "Firing chamber equivalence reviewed" },
       "originalWordingPreserved": { "label": "Original wording preserved" },
       "productionDomainRecorded": { "label": "Production domain recorded" },
       "reportOutputTermSeparated": { "label": "Report output term separated" },
       "pendingDecision": { "label": "Pending decision" }
     },
-    "description": "Korean production-site term-normalization checks for preserving observed terms, authority headwords, report output terms, and production domains for kiln and workshop terminology"
+    "description": "Korean production-site term-normalization checks for preserving observed terms, authority headwords, report output terms, production domains, see-also mappings, and same-headword domain splits for kiln and workshop terminology"
   },
   "KoreanFieldwork-featurePackage": {
     "values": {

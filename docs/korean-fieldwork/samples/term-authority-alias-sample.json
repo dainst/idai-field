@@ -811,6 +811,8 @@
           "kilnSiteGamateoTerm",
           "kilnGamaTerm",
           "kilnYoTerm",
+          "hangulHanjaMixedUsagePreserved",
+          "administrativeHeadwordMapped",
           "originalWordingPreserved",
           "productionDomainRecorded",
           "reportOutputTermSeparated"
@@ -939,6 +941,8 @@
         "productionTermNormalization": [
           "openKilnNocheonyoTerm",
           "openKilnHandetgamaTerm",
+          "seeAlsoRelationRecorded",
+          "hangulHanjaMixedUsagePreserved",
           "originalWordingPreserved",
           "productionDomainRecorded",
           "reportOutputTermSeparated"
@@ -952,7 +956,7 @@
           "structureSubtypeSeparated",
           "doNotMergeToSingleTerm"
         ],
-        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "valueListCandidate"],
+        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "pdfCrossChecked", "valueListCandidate"],
         "verificationState": "candidate"
       }
     },
@@ -984,7 +988,7 @@
           "fieldUsagePreserved",
           "domainScopeSet"
         ],
-        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "pendingDecision"],
+        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "pdfCrossChecked"],
         "verificationState": "candidate"
       }
     },
@@ -1009,6 +1013,7 @@
         ],
         "productionTermNormalization": [
           "flatKilnPyeongyoTerm",
+          "sameHeadwordDomainSplitRecorded",
           "productionDomainRecorded",
           "originalWordingPreserved",
           "pendingDecision"
@@ -1023,6 +1028,7 @@
         "termAuthorityStatus": [
           "specialistDictionarySource",
           "sourcePageLinked",
+          "pdfCrossChecked",
           "duplicateHeadwordConflict",
           "domainConflictReview",
           "valueListCandidate"
@@ -1051,6 +1057,7 @@
         ],
         "productionTermNormalization": [
           "flatKilnPyeongyoTerm",
+          "sameHeadwordDomainSplitRecorded",
           "productionDomainRecorded",
           "originalWordingPreserved",
           "pendingDecision"
@@ -1065,6 +1072,7 @@
         "termAuthorityStatus": [
           "specialistDictionarySource",
           "sourcePageLinked",
+          "pdfCrossChecked",
           "duplicateHeadwordConflict",
           "domainConflictReview",
           "valueListCandidate"
@@ -1095,6 +1103,7 @@
         "termAuthorityStatus": [
           "specialistDictionarySource",
           "sourcePageLinked",
+          "pdfCrossChecked",
           "duplicateHeadwordConflict",
           "domainConflictReview",
           "valueListCandidate"
@@ -1118,6 +1127,8 @@
         "productionTermNormalization": [
           "sujangLinkedToPotteryWorkshop",
           "dryingYardLinkedToPotteryWorkshop",
+          "seeAlsoRelationRecorded",
+          "sameSiteDomainSplitRecorded",
           "originalWordingPreserved",
           "productionDomainRecorded",
           "reportOutputTermSeparated"
@@ -1131,7 +1142,7 @@
           "importMappingNeeded",
           "doNotMergeToSingleTerm"
         ],
-        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "valueListCandidate"],
+        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "pdfCrossChecked", "valueListCandidate"],
         "verificationState": "candidate"
       }
     },
@@ -1166,7 +1177,7 @@
           "structureSubtypeSeparated",
           "doNotMergeToSingleTerm"
         ],
-        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "pendingDecision"],
+        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "pdfCrossChecked", "pendingDecision"],
         "verificationState": "pendingDecision"
       }
     },
@@ -1190,8 +1201,41 @@
           "structureSubtypeSeparated",
           "doNotMergeToSingleTerm"
         ],
-        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "pendingDecision"],
+        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "pdfCrossChecked", "pendingDecision"],
         "verificationState": "pendingDecision"
+      }
+    },
+    {
+      "resource": {
+        "id": "term-authority-firing-chamber-terms",
+        "identifier": "번조실 / 소성실",
+        "shortDescription": "생산유적편 번조실·소성실 용어 동등성 검토",
+        "category": "TermAuthority",
+        "relations": {
+          "liesWithin": ["term-group-korean-archaeology"]
+        },
+        "description": "생산유적편 일러두기는 토기 가마와 자기 가마 분야에서 번조실과 소성실의 구조적 의미를 같은 뜻으로 서술한다. 한국형 야장에서는 두 용어를 검색과 도움말에서 연결하되, 사진 캡션·유구대장 원문과 생산 분야는 그대로 보존한다.",
+        "termDictionaryDomain": ["pottery", "roofTile", "porcelain", "earthenware"],
+        "termApplicationScope": ["valueListEntry", "searchAlias", "sourceDictionaryLink", "helpText"],
+        "termSourcePriority": ["domainSpecialistDictionary", "methodologyTerm", "pdfCrossCheckRequired"],
+        "productionTermNormalization": [
+          "firingChamberBeonjosilTerm",
+          "firingChamberSoseongsilTerm",
+          "firingChamberEquivalenceReviewed",
+          "originalWordingPreserved",
+          "productionDomainRecorded",
+          "pendingDecision"
+        ],
+        "termRelation": ["structuralSimilarity", "functionalSimilarity", "domainRestricted"],
+        "termSearchMapping": [
+          "fieldSearchTermAccepted",
+          "fieldUsagePreserved",
+          "domainScopeSet",
+          "ambiguousSynonymFlagged",
+          "doNotMergeToSingleTerm"
+        ],
+        "termAuthorityStatus": ["specialistDictionarySource", "sourcePageLinked", "pdfCrossChecked", "valueListCandidate"],
+        "verificationState": "candidate"
       }
     },
     {

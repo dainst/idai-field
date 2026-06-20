@@ -3916,12 +3916,18 @@
       "firingChamberSoseongsilTerm": { "label": "소성실" },
       "sujangLinkedToPotteryWorkshop": { "label": "수비장-토기공방 연결" },
       "dryingYardLinkedToPotteryWorkshop": { "label": "건조장-토기공방 연결" },
+      "seeAlsoRelationRecorded": { "label": "찾아가기 관계 기록" },
+      "sameSiteDomainSplitRecorded": { "label": "동일유적 분야별 분리" },
+      "sameHeadwordDomainSplitRecorded": { "label": "동형표제어 분야별 분리" },
+      "hangulHanjaMixedUsagePreserved": { "label": "한글·한자어 혼용 보존" },
+      "administrativeHeadwordMapped": { "label": "행정동리 표제어 연결" },
+      "firingChamberEquivalenceReviewed": { "label": "번조실·소성실 동등성 검토" },
       "originalWordingPreserved": { "label": "원문표기 보존" },
       "productionDomainRecorded": { "label": "생산분야 기록" },
       "reportOutputTermSeparated": { "label": "보고서 출력어 분리" },
       "pendingDecision": { "label": "판단 보류" }
     },
-    "description": "생산유적편 사전의 가마, 요, 요지, 가마터, 한뎃가마, 노천요, 평요, 번조실, 소성실 같은 입력어를 현장 원문, 우선 표제어, 보고서 출력어, 생산분야로 분리해 관리하기 위한 목록"
+    "description": "생산유적편 사전의 가마, 요, 요지, 가마터, 한뎃가마, 노천요, 평요, 번조실, 소성실 같은 입력어를 현장 원문, 우선 표제어, 보고서 출력어, 생산분야, 찾아가기 관계, 동일 표제어의 분야 분리로 관리하기 위한 목록"
   },
   "KoreanFieldwork-featurePackage": {
     "values": {

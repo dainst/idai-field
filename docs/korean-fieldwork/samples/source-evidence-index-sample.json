@@ -466,9 +466,9 @@
         "relations": {
           "liesWithin": ["project-source-evidence-001"]
         },
-        "description": "생산유적편 일러두기의 분야 분리, 찾아가기 관계, 같은 평요의 분야별 분리, 번조실·소성실 병합 주의와 요도구·소성흔·공방 부속시설 관계를 생산유적 화면 설계 근거로 남긴다.",
+        "description": "생산유적편 일러두기의 분야 분리, 찾아가기 관계, 같은 평요의 분야별 분리, 번조실·소성실 동등성 검토와 요도구·소성흔·공방 부속시설 관계를 생산유적 화면 설계 근거로 남긴다.",
         "sourceEvidenceCitation": "한국고고학전문사전 생산유적편",
-        "sourceEvidenceLocator": "생산유적편 일러두기 PDF 8-11쪽; 토기·기와·자기·도기 가마와 요도구·공방 관련 항목 원문 대조 대상",
+        "sourceEvidenceLocator": "생산유적편 일러두기 PDF 8-11쪽 직접 대조 완료; 토기·기와·자기·도기 가마와 요도구·공방 관련 항목 원문 대조 대상",
         "sourceEvidenceMaterial": [
           "originalScript",
           "sourceCitation",
@@ -481,6 +481,7 @@
         ],
         "sourceEvidenceVerification": [
           "pageChecked",
+          "directPdfChecked",
           "originalScriptChecked",
           "captionNeedsCheck",
           "ocrCorrectionNeeded"

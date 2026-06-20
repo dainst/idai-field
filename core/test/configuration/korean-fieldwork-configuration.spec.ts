@@ -120,6 +120,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('doNotMergeToSingleTerm');
         expect(documentsById['term-authority-kiln-site'].resource.productionTermNormalization)
             .toContain('kilnSiteGamateoTerm');
+        expect(documentsById['term-authority-kiln-site'].resource.productionTermNormalization)
+            .toContain('administrativeHeadwordMapped');
         expect(documentsById['term-alias-kiln-site-kiln'].resource.termAliasText)
             .toBe('가마');
         expect(documentsById['term-alias-kiln-site-kiln'].resource.verificationState)
@@ -150,8 +152,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('sameHeadwordDomainSeparated');
         expect(documentsById['term-authority-flat-kiln-pottery-tile'].resource.productionTermNormalization)
             .toContain('flatKilnPyeongyoTerm');
+        expect(documentsById['term-authority-flat-kiln-pottery-tile'].resource.productionTermNormalization)
+            .toContain('sameHeadwordDomainSplitRecorded');
         expect(documentsById['term-authority-flat-kiln-pottery-tile'].resource.termAuthorityStatus)
             .toContain('duplicateHeadwordConflict');
+        expect(documentsById['term-authority-flat-kiln-pottery-tile'].resource.termAuthorityStatus)
+            .toContain('pdfCrossChecked');
         expect(documentsById['term-authority-flat-kiln-pottery-tile'].resource.termAuthorityStatus)
             .toContain('domainConflictReview');
         expect(documentsById['term-authority-flat-kiln-porcelain-earthenware'].resource.termDictionaryDomain)
@@ -192,6 +198,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('periodScopeSet');
         expect(documentsById['term-authority-pottery-workshop'].resource.termSearchMapping)
             .toContain('importMappingNeeded');
+        expect(documentsById['term-authority-pottery-workshop'].resource.productionTermNormalization)
+            .toContain('seeAlsoRelationRecorded');
         expect(documentsById['term-import-pottery-workshop-subijang'].resource.termImportAuthorityText)
             .toBe('토기 공방');
         expect(documentsById['term-import-pottery-workshop-subijang'].resource.termImportSourceFieldText)
@@ -202,6 +210,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('TermRelationship');
         expect(documentsById['term-relationship-pottery-workshop-facilities'].resource.termRelation)
             .toContain('partWholeRelation');
+        expect(documentsById['term-authority-firing-chamber-terms'].resource.productionTermNormalization)
+            .toContain('firingChamberEquivalenceReviewed');
+        expect(documentsById['term-authority-firing-chamber-terms'].resource.termAuthorityStatus)
+            .toContain('pdfCrossChecked');
         expect(documentsById['term-relationship-fortification-gate-defense'].resource.termRelation)
             .toContain('spatialRelation');
         expect(documentsById['term-relationship-pit-building-internal-facilities'].resource.termSearchMapping)
@@ -675,6 +687,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('productionSite');
         expect(documentsById['source-index-production-dictionary-001'].resource.sourceEvidenceUse)
             .toContain('termAuthorityEvidence');
+        expect(documentsById['source-index-production-dictionary-001'].resource.sourceEvidenceVerification)
+            .toContain('directPdfChecked');
         expect(documentsById['source-index-production-dictionary-001'].resource.sourceEvidenceVerification)
             .toContain('captionNeedsCheck');
         expect(documentsById['source-index-tomb-dictionary-001'].resource.sourceEvidenceDomain)
@@ -3749,6 +3763,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-productionTermNormalization']
             .values.kilnSiteGamateoTerm.label)
             .toBe('Gamateo term');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-productionTermNormalization']
+            .values.sameHeadwordDomainSplitRecorded.label)
+            .toBe('Same-headword domain split recorded');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-productionSiteAssociatedFacility']
             .values.levigationArea.label)
             .toBe('Levigation area');
@@ -4561,6 +4578,9 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-productionTermNormalization']
             .values.sujangLinkedToPotteryWorkshop.label)
             .toBe('수비장-토기공방 연결');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-productionTermNormalization']
+            .values.firingChamberEquivalenceReviewed.label)
+            .toBe('번조실·소성실 동등성 검토');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-artifactCleaningDryingControl']
             .values.rapidDryingAvoided.label)
             .toBe('급건조 방지');

@@ -754,6 +754,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toContain('preventAutoClassification');
         expect(documentsById['source-index-bronze-dictionary-001'].resource.sourceEvidenceLocator)
             .toContain('증보판Ⅱ PDF 20-22쪽');
+        expect(documentsById['source-index-bronze-dictionary-001'].resource.sourceEvidenceLocator)
+            .toContain('PDF 23-24쪽');
+        expect(documentsById['source-index-bronze-dictionary-001'].resource.sourceEvidenceLocator)
+            .toContain('어량리');
         expect(documentsById['source-index-bronze-dictionary-001'].resource.sourceEvidenceVerification)
             .toContain('directPdfChecked');
         expect(documentsById['source-index-bronze-dictionary-001'].resource.verificationState)
@@ -1314,6 +1318,10 @@ describe('KoreanFieldwork project configuration', () => {
 
         expectSampleDocumentsToUseConfiguredFormsAndValuelists(sample, config, valuelists);
 
+        expect(sample.sourceReviewNote).toContain('아화리');
+        expect(sample.sourceReviewNote).toContain('어량리');
+        expect(sample.validationQuestions.join(' '))
+            .toContain('제작 관련 숫돌');
         expect(documentsById['fg-bronze-settlement-001'].resource.featurePackage)
             .toContain('pitDwelling');
         expect(documentsById['fg-bronze-settlement-001'].resource.settlementSpatialInterpretation)

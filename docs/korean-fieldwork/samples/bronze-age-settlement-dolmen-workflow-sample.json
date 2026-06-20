@@ -1,12 +1,14 @@
 {
   "title": "Korean Bronze Age settlement, dolmen, and enclosure workflow sample",
   "purpose": "Validate that Bronze Age settlement records keep pit-building investigation procedure, dwelling type evidence, dolmen structure, enclosure interpretation, and pottery terminology separate from premature type-name confirmation.",
+  "sourceReviewNote": "2026-06-20 청동기시대편 증보판Ⅱ PDF 23-24쪽의 아화리·안간리, 35쪽의 약사동, 38쪽의 양교리, 46-47쪽과 50-52쪽의 어량리 계열 사례를 텍스트 추출문으로 재대조했다. 집자리 유형명은 중앙 타원형 구덩이·양단 주혈뿐 아니라 화덕 자리 형식과 위치, 벽 도랑·벽 기둥 구멍, 배수구, 외부 돌출구, 바닥 점토·불다짐, 저장 구덩이 위치, 집자리 군집 간격, 주거·묘역 분리, 제작 관련 숫돌·미완성 석기·옥기 가공 흔적과 함께 보류·검토되어야 한다.",
   "validationQuestions": [
     "수혈건물지 후보가 주거지로 바로 확정되지 않고 기능 후보, 생애단계, 단계별 노출 순서, 토층둑 전략, 조사 절차, 트렌치 전략, 바닥·벽선 보존 근거를 남기는가.",
     "송국리식·가락동식 같은 유형명 후보가 평면형, 중앙 타원형 구덩이, 양단 주혈, 벽도랑, 취락·묘역 관계 같은 관찰값 뒤에 남는가.",
     "수혈건물지 자연과학 시료가 분석명만이 아니라 채취 시점, 위치도면, 세척 회피, 오염위험과 함께 남는가.",
     "유구·유물 해석이 연구질문, 관찰·해석 분리, 대안해석, 자연·후퇴적 가능성, 보고서 채택 근거와 함께 남는가.",
-    "고인돌·지석묘, 환호, 무문토기·민무늬토기 관계가 권위어와 현장 관용어를 섞지 않고 구조·기능·공반·편년 근거와 연결되는가."
+    "고인돌·지석묘, 환호, 무문토기·민무늬토기 관계가 권위어와 현장 관용어를 섞지 않고 구조·기능·공반·편년 근거와 연결되는가.",
+    "제작 관련 숫돌·미완성 석기·옥기 가공 흔적이 집자리 유형명을 자동 확정하지 않고 활동공간·생산흔 검토값으로 남는가."
   ],
   "documents": [
     {

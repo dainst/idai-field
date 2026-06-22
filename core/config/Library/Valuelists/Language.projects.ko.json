@@ -4134,6 +4134,45 @@
     },
     "description": "항공 이미지 배경 레이어의 공간 신뢰도"
   },
+  "KoreanFieldwork-layerSequenceMeaning": {
+    "values": {
+      "latestToEarliest": { "label": "최근층부터" },
+      "earliestToLatest": { "label": "오래된층부터" },
+      "unclear": { "label": "불명확" },
+      "custom": { "label": "사용자 정의" }
+    },
+    "description": "토층 사진 위 번호가 퇴적 순서를 어떻게 의미하는지 구분하기 위한 목록"
+  },
+  "KoreanFieldwork-soilColorMoistureState": {
+    "values": {
+      "dry": { "label": "건조" },
+      "moist": { "label": "습윤" },
+      "wet": { "label": "젖음" },
+      "unclear": { "label": "불명확" }
+    },
+    "description": "토색 기록 시 흙의 수분 상태를 함께 남기기 위한 목록"
+  },
+  "KoreanFieldwork-soilColorCaptureCondition": {
+    "values": {
+      "naturalLight": { "label": "자연광" },
+      "shade": { "label": "그늘" },
+      "artificialLight": { "label": "실내조명" },
+      "flash": { "label": "플래시" },
+      "calibrationTargetUsed": { "label": "보정판 사용" },
+      "poorCondition": { "label": "촬영조건 불량" }
+    },
+    "description": "토색 사진을 해석할 때 필요한 촬영 조건을 남기기 위한 목록"
+  },
+  "KoreanFieldwork-soilColorAssistStatus": {
+    "values": {
+      "notRun": { "label": "미실행" },
+      "manualRecorded": { "label": "수동기록" },
+      "candidatesAvailable": { "label": "후보있음" },
+      "reviewed": { "label": "검토완료" },
+      "lowConfidence": { "label": "신뢰낮음" }
+    },
+    "description": "토색 자동 보조 결과와 사람 검토 상태를 분리해서 남기기 위한 목록"
+  },
   "KoreanFieldwork-surfaceSurveyObservation": {
     "values": {
       "terrainCharacteristic": {

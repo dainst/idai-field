@@ -36756,6 +36756,76 @@
       "surveyedAlignment"
     ]
   },
+  "KoreanFieldwork-layerSequenceMeaning": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-22",
+    "values": {
+      "latestToEarliest": {},
+      "earliestToLatest": {},
+      "unclear": {},
+      "custom": {}
+    },
+    "order": [
+      "latestToEarliest",
+      "earliestToLatest",
+      "unclear",
+      "custom"
+    ]
+  },
+  "KoreanFieldwork-soilColorMoistureState": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-22",
+    "values": {
+      "dry": {},
+      "moist": {},
+      "wet": {},
+      "unclear": {}
+    },
+    "order": [
+      "dry",
+      "moist",
+      "wet",
+      "unclear"
+    ]
+  },
+  "KoreanFieldwork-soilColorCaptureCondition": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-22",
+    "values": {
+      "naturalLight": {},
+      "shade": {},
+      "artificialLight": {},
+      "flash": {},
+      "calibrationTargetUsed": {},
+      "poorCondition": {}
+    },
+    "order": [
+      "naturalLight",
+      "shade",
+      "artificialLight",
+      "flash",
+      "calibrationTargetUsed",
+      "poorCondition"
+    ]
+  },
+  "KoreanFieldwork-soilColorAssistStatus": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-22",
+    "values": {
+      "notRun": {},
+      "manualRecorded": {},
+      "candidatesAvailable": {},
+      "reviewed": {},
+      "lowConfidence": {}
+    },
+    "order": [
+      "notRun",
+      "manualRecorded",
+      "candidatesAvailable",
+      "reviewed",
+      "lowConfidence"
+    ]
+  },
   "KoreanFieldwork-surfaceSurveyObservation": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

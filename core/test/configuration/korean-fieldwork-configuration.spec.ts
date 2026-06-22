@@ -4,9 +4,11 @@ import { ConfigReader } from '../../src/configuration/boot/config-reader';
 import {
     getConfigurationName,
     KOREAN_FIELDWORK_CONFIGURATION_NAME,
+    KOREAN_FIELDWORK_LAYER_SEQUENCE_MEANING_DEFAULT,
     KOREAN_FIELDWORK_PROJECT_IDENTIFIER,
     KOREAN_FIELDWORK_PROJECT_LABEL,
     KOREAN_FIELDWORK_PROJECT_PREFIX,
+    KOREAN_FIELDWORK_SOIL_COLOR_ASSIST_STATUS_DEFAULT,
     KOREAN_FIELDWORK_TEMPLATE_ID,
     PROJECT_MAPPING
 } from '../../src/configuration/project-configuration-names';
@@ -99,10 +101,12 @@ describe('KoreanFieldwork project configuration', () => {
             'FeatureGroup',
             'Feature',
             'FeatureSegment',
+            'Layer',
             'Find',
             'Sample',
             'Drawing',
             'Photo',
+            'SoilProfilePhoto',
             'AerialMapLayer',
             'PenMemo',
             'FieldRecordQualityReview',
@@ -118,11 +122,13 @@ describe('KoreanFieldwork project configuration', () => {
             'FeatureGroup:default',
             'Feature:default',
             'FeatureSegment:default',
+            'Layer:default',
             'Find:default',
             'Sample:default',
             'Image:default',
             'Drawing:default',
             'Photo:default',
+            'SoilProfilePhoto',
             'AerialMapLayer',
             'PenMemo',
             'FieldRecordQualityReview',
@@ -142,6 +148,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(template.configuration.forms.SourceEvidenceIndex.parent).toBe('Project');
         expect(template.configuration.forms.TermAuthority.parent).toBe('FeatureGroup');
         expect(template.configuration.forms.TermAlias.parent).toBe('TermAuthority');
+        expect(template.configuration.forms.SoilProfilePhoto.parent).toBe('Image');
         expect(template.configuration.forms.PenMemo.parent).toBe('Image');
         expect(template.configuration.forms.AerialMapLayer.parent).toBe('Image');
 
@@ -290,6 +297,83 @@ describe('KoreanFieldwork project configuration', () => {
             .values.manualControlPoints.label).toBe('Manual control points');
         expect(languages.ko.categories.AerialMapLayer.label).toBe('항공 지도 레이어');
         expect(languages.en.categories.AerialMapLayer.label).toBe('Aerial map layer');
+    });
+
+
+    it('supports soil profile photos and numbered Layer soil color records', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const languages = configReader.getConfigLanguages();
+        const valuelistLanguages = configReader.getValuelistsLanguages();
+        const layerForm = config.forms['Layer:default'];
+        const soilProfilePhotoForm = config.forms.SoilProfilePhoto;
+        const layerKoreanGroup = layerForm.groups.find((group: any) => group.name === 'koreanFieldwork');
+        const soilProfileKoreanGroup = soilProfilePhotoForm.groups.find((group: any) => group.name === 'koreanFieldwork');
+        const soilProfileWorkflowGroup = soilProfilePhotoForm.groups.find((group: any) => group.name === 'workflow');
+
+        expect(layerForm.fields.layerSequenceNumber.inputType).toBe('unsignedInteger');
+        expect(layerForm.fields.layerSequenceMeaning.inputType).toBe('dropdown');
+        expect(layerForm.fields.soilColorMunsellManual.inputType).toBe('input');
+        expect(layerForm.fields.soilColorReviewed.inputType).toBe('input');
+        expect(layerForm.fields.soilColorRoi.inputType).toBe('text');
+        expect(layerForm.fields.soilColorAssistCandidates.inputType).toBe('text');
+        expect(layerForm.fields.soilColorAssistStatus.inputType).toBe('dropdown');
+        expect(layerForm.valuelists.layerSequenceMeaning)
+            .toBe('KoreanFieldwork-layerSequenceMeaning');
+        expect(layerForm.valuelists.soilColorMoistureState)
+            .toBe('KoreanFieldwork-soilColorMoistureState');
+        expect(layerForm.valuelists.soilColorCaptureCondition)
+            .toBe('KoreanFieldwork-soilColorCaptureCondition');
+        expect(layerForm.valuelists.soilColorAssistStatus)
+            .toBe('KoreanFieldwork-soilColorAssistStatus');
+        expect(layerKoreanGroup.fields.slice(0, 12)).toEqual([
+            'layerSequenceNumber',
+            'layerSequenceMeaning',
+            'layerThicknessApprox',
+            'layerBoundaryDescription',
+            'soilColorMunsellManual',
+            'soilColorReviewed',
+            'soilColorMoistureState',
+            'soilColorCaptureCondition',
+            'soilColorRoi',
+            'soilColorAssistCandidates',
+            'soilColorAssistStatus',
+            'soilColorNote'
+        ]);
+
+        expect(soilProfilePhotoForm.parent).toBe('Image');
+        expect(soilProfilePhotoForm.fields.soilProfileAnnotationStrokes.inputType).toBe('text');
+        expect(soilProfilePhotoForm.fields.soilProfileAnnotationStrokes.mandatory).toBe(true);
+        expect(soilProfilePhotoForm.fields.soilProfileLayerMarkers.inputType).toBe('text');
+        expect(soilProfilePhotoForm.fields.soilProfileLayerIds.inputType).toBe('text');
+        expect(soilProfilePhotoForm.valuelists.layerSequenceMeaning)
+            .toBe('KoreanFieldwork-layerSequenceMeaning');
+        expect(soilProfilePhotoForm.valuelists.soilColorCaptureCondition)
+            .toBe('KoreanFieldwork-soilColorCaptureCondition');
+        expect(soilProfileWorkflowGroup.fields).toContain('depicts');
+        expect(soilProfileKoreanGroup.fields).toContain('soilProfileLayerMarkers');
+        expect(soilProfileKoreanGroup.fields).toContain('soilProfileLayerIds');
+
+        expect(config.order).toContain('Layer');
+        expect(config.order).toContain('SoilProfilePhoto');
+        expect(valuelists['KoreanFieldwork-layerSequenceMeaning'].values.latestToEarliest).toBeDefined();
+        expect(valuelists['KoreanFieldwork-soilColorMoistureState'].values.moist).toBeDefined();
+        expect(valuelists['KoreanFieldwork-soilColorCaptureCondition'].values.calibrationTargetUsed).toBeDefined();
+        expect(valuelists['KoreanFieldwork-soilColorAssistStatus']
+            .values[KOREAN_FIELDWORK_SOIL_COLOR_ASSIST_STATUS_DEFAULT]).toBeDefined();
+        expect(KOREAN_FIELDWORK_LAYER_SEQUENCE_MEANING_DEFAULT).toBe('latestToEarliest');
+        expect(KOREAN_FIELDWORK_SOIL_COLOR_ASSIST_STATUS_DEFAULT).toBe('notRun');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-layerSequenceMeaning']
+            .values.latestToEarliest.label).toBe('최근층부터');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-soilColorAssistStatus']
+            .values.notRun.label).toBe('미실행');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-soilColorCaptureCondition']
+            .values.calibrationTargetUsed.label).toBe('Calibration target used');
+        expect(languages.ko.categories.Layer.label).toBe('토층');
+        expect(languages.ko.categories.SoilProfilePhoto.label).toBe('토층 단면 사진');
+        expect(languages.en.categories.SoilProfilePhoto.label).toBe('Soil profile photo');
     });
 
 

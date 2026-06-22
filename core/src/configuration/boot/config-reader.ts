@@ -250,5 +250,7 @@ export class ConfigReader {
 
     getCustomLanguageConfigurations = (projectPrefix: string) => CUSTOM_LANGUAGE_CONFIGURATIONS[projectPrefix];
 
+    getConfigLanguages = (): any => CUSTOM_LANGUAGE_CONFIGURATIONS[KOREAN_FIELDWORK_CONFIGURATION_NAME];
+
     getValuelistsLanguages = (): any => VALUELISTS_LANGUAGES;
 }

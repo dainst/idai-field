@@ -12,6 +12,10 @@ import useMapData from '@/hooks/use-mapdata';
 import { DocumentRepository } from '@/repositories/document-repository';
 import { ConfigurationContext } from '@/contexts/configuration-context';
 import GLMap from './GLMap/GLMap';
+import {
+  createKoreanFieldworkChildRelations,
+  createSoilProfilePhotoDraft as buildSoilProfilePhotoDraft,
+} from './korean-fieldwork-drafts';
 import MapBottomSheet from './MapBottomSheet';
 
 // define projection standards
@@ -79,16 +83,10 @@ const Map: React.FC<MapProps> = (props) => {
     })();
   }, []);
 
-  const createRelations = (parentDoc: Document): { [relationName: string]: string[] } => {
-    const parentRelations = parentDoc.resource.relations ?? {};
-
-    if (!parentRelations.isRecordedIn) return { isRecordedIn: [parentDoc.resource.id] };
-
-    return {
-      isRecordedIn: [parentRelations.isRecordedIn[0]],
-      liesWithin: [parentDoc.resource.id],
-    };
-  };
+  const canCreateSoilProfilePhoto =
+    !!highlightedDoc &&
+    !!config?.getCategory('SoilProfilePhoto') &&
+    ['Operation', 'Feature', 'FeatureSegment'].includes(highlightedDoc.resource.category);
 
   const createFeatureCandidateAtCurrentLocation = async () => {
     if (!highlightedDoc || !location || !config?.getCategory('Feature')) return;
@@ -97,7 +95,7 @@ const Map: React.FC<MapProps> = (props) => {
       resource: {
         identifier: `feature-candidate-${Date.now()}`,
         category: 'Feature',
-        relations: createRelations(highlightedDoc),
+        relations: createKoreanFieldworkChildRelations(highlightedDoc),
         geometry: {
           type: 'Point',
           coordinates: [location.x, location.y],
@@ -127,6 +125,14 @@ const Map: React.FC<MapProps> = (props) => {
     });
 
     props.editDocument(createdDocument.resource.id, 'PenMemo');
+  };
+
+  const createSoilProfilePhotoDraft = async () => {
+    if (!highlightedDoc || !canCreateSoilProfilePhoto) return;
+
+    const createdDocument = await props.repository.create(buildSoilProfilePhotoDraft(highlightedDoc));
+
+    props.editDocument(createdDocument.resource.id, 'SoilProfilePhoto');
   };
 
   const onParentIdSelected = (docId: string) => {
@@ -164,8 +170,10 @@ const Map: React.FC<MapProps> = (props) => {
         focusHandler={focusMapOnDocumentId}
         canCreateLocationCandidate={!!location}
         canCreatePenMemo={!!config?.getCategory('PenMemo')}
+        canCreateSoilProfilePhoto={canCreateSoilProfilePhoto}
         createFeatureCandidateAtCurrentLocation={createFeatureCandidateAtCurrentLocation}
         createPenMemoDraft={createPenMemoDraft}
+        createSoilProfilePhotoDraft={createSoilProfilePhotoDraft}
       />
     </View>
   );

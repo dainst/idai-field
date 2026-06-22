@@ -14,8 +14,10 @@ interface MapBottomSheetProps {
   focusHandler: (docId: string) => void;
   canCreateLocationCandidate: boolean;
   canCreatePenMemo: boolean;
+  canCreateSoilProfilePhoto: boolean;
   createFeatureCandidateAtCurrentLocation: () => void;
   createPenMemoDraft: () => void;
+  createSoilProfilePhotoDraft: () => void;
 }
 
 const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
@@ -26,8 +28,10 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
   focusHandler,
   canCreateLocationCandidate,
   canCreatePenMemo,
+  canCreateSoilProfilePhoto,
   createFeatureCandidateAtCurrentLocation,
   createPenMemoDraft,
+  createSoilProfilePhotoDraft,
 }) => {
   const ICON_SIZE = 20;
   const snapPoints = useMemo(() => [0.1, 0.4, 0.8], []);
@@ -80,6 +84,14 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
           isDisabled={!canCreatePenMemo}
           onPress={createPenMemoDraft}
           icon={<MaterialIcons name="edit-note" size={ICON_SIZE} />}
+        />
+        <Button
+          style={styles.button}
+          variant="secondary"
+          title="토층"
+          isDisabled={!canCreateSoilProfilePhoto}
+          onPress={createSoilProfilePhotoDraft}
+          icon={<MaterialIcons name="photo-camera" size={ICON_SIZE} />}
         />
         <Button
           style={styles.button}

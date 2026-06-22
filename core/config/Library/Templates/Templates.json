@@ -573,6 +573,10 @@
           "hidden": [],
           "fields": {}
         },
+        "Layer:default": {
+          "hidden": [],
+          "fields": {}
+        },
         "Find:default": {
           "hidden": [],
           "fields": {}
@@ -590,6 +594,11 @@
           "fields": {}
         },
         "Photo:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "SoilProfilePhoto": {
+          "parent": "Image",
           "hidden": [],
           "fields": {}
         },
@@ -632,10 +641,12 @@
         "FeatureGroup",
         "Feature",
         "FeatureSegment",
+        "Layer",
         "Find",
         "Sample",
         "Drawing",
         "Photo",
+        "SoilProfilePhoto",
         "AerialMapLayer",
         "PenMemo",
         "FieldRecordQualityReview",

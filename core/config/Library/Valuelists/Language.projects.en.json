@@ -15888,6 +15888,45 @@
     },
     "description": "Expected spatial reliability of an aerial image background layer"
   },
+  "KoreanFieldwork-layerSequenceMeaning": {
+    "values": {
+      "latestToEarliest": { "label": "Latest to earliest" },
+      "earliestToLatest": { "label": "Earliest to latest" },
+      "unclear": { "label": "Unclear" },
+      "custom": { "label": "Custom" }
+    },
+    "description": "Meaning of layer numbers written on a soil profile photo"
+  },
+  "KoreanFieldwork-soilColorMoistureState": {
+    "values": {
+      "dry": { "label": "Dry" },
+      "moist": { "label": "Moist" },
+      "wet": { "label": "Wet" },
+      "unclear": { "label": "Unclear" }
+    },
+    "description": "Moisture state to record together with soil color observations"
+  },
+  "KoreanFieldwork-soilColorCaptureCondition": {
+    "values": {
+      "naturalLight": { "label": "Natural light" },
+      "shade": { "label": "Shade" },
+      "artificialLight": { "label": "Artificial light" },
+      "flash": { "label": "Flash" },
+      "calibrationTargetUsed": { "label": "Calibration target used" },
+      "poorCondition": { "label": "Poor capture condition" }
+    },
+    "description": "Photo capture condition needed for interpreting soil color records"
+  },
+  "KoreanFieldwork-soilColorAssistStatus": {
+    "values": {
+      "notRun": { "label": "Not run" },
+      "manualRecorded": { "label": "Manual record" },
+      "candidatesAvailable": { "label": "Candidates available" },
+      "reviewed": { "label": "Reviewed" },
+      "lowConfidence": { "label": "Low confidence" }
+    },
+    "description": "Status for keeping automatic soil-color assistance separate from human review"
+  },
   "KoreanFieldwork-surfaceSurveyObservation": {
     "values": {
       "terrainCharacteristic": {

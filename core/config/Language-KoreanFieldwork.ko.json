@@ -1368,6 +1368,88 @@
         }
       }
     },
+    "Layer": {
+      "label": "토층",
+      "fields": {
+        "layerSequenceNumber": {
+          "label": "토층 번호"
+        },
+        "layerSequenceMeaning": {
+          "label": "번호 순서 의미"
+        },
+        "layerThicknessApprox": {
+          "label": "대략 두께"
+        },
+        "layerBoundaryDescription": {
+          "label": "층 경계 설명"
+        },
+        "soilColorMunsellManual": {
+          "label": "수동 Munsell 토색"
+        },
+        "soilColorReviewed": {
+          "label": "검토 토색"
+        },
+        "soilColorMoistureState": {
+          "label": "수분 상태"
+        },
+        "soilColorCaptureCondition": {
+          "label": "촬영 조건"
+        },
+        "soilColorRoi": {
+          "label": "토색 ROI JSON"
+        },
+        "soilColorAssistCandidates": {
+          "label": "토색 보조 후보"
+        },
+        "soilColorAssistStatus": {
+          "label": "토색 보조 상태"
+        },
+        "soilColorNote": {
+          "label": "토색 메모"
+        },
+        "fieldRecordQuality": {
+          "label": "현장기록 품질"
+        },
+        "recordCreationTiming": {
+          "label": "기록 생성 시점"
+        },
+        "verificationState": {
+          "label": "검증 상태"
+        }
+      }
+    },
+    "SoilProfilePhoto": {
+      "label": "토층 단면 사진",
+      "fields": {
+        "soilProfileAnnotationStrokes": {
+          "label": "펜 annotation JSON"
+        },
+        "soilProfileLayerMarkers": {
+          "label": "토층 번호·영역 JSON"
+        },
+        "soilProfileLayerIds": {
+          "label": "연결 Layer id JSON"
+        },
+        "layerSequenceMeaning": {
+          "label": "번호 순서 의미"
+        },
+        "soilColorCaptureCondition": {
+          "label": "촬영 조건"
+        },
+        "soilProfileCaptureNote": {
+          "label": "촬영 메모"
+        },
+        "fieldRecordQuality": {
+          "label": "현장기록 품질"
+        },
+        "recordCreationTiming": {
+          "label": "기록 생성 시점"
+        },
+        "verificationState": {
+          "label": "검증 상태"
+        }
+      }
+    },
     "AerialMapLayer": {
       "label": "항공 지도 레이어",
       "fields": {

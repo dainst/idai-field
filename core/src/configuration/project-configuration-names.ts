@@ -7,6 +7,8 @@ export const KOREAN_FIELDWORK_PROJECT_LABEL = '한국형 야장';
 export const KOREAN_FIELDWORK_PROJECT_PREFIX = `${KOREAN_FIELDWORK_PROJECT_IDENTIFIER}-`;
 export const KOREAN_FIELDWORK_PROJECT_LANGUAGES: ReadonlyArray<string> = ['ko', 'en'];
 export const KOREAN_FIELDWORK_TEMPLATE_ID = 'koreanFieldwork';
+export const KOREAN_FIELDWORK_LAYER_SEQUENCE_MEANING_DEFAULT = 'latestToEarliest';
+export const KOREAN_FIELDWORK_SOIL_COLOR_ASSIST_STATUS_DEFAULT = 'notRun';
 
 export const PROJECT_MAPPING = {
     'abbircella': { prefix: 'AbbirCella', label: 'AbbirCella' },

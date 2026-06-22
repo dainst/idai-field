@@ -1368,6 +1368,88 @@
         }
       }
     },
+    "Layer": {
+      "label": "Soil layer",
+      "fields": {
+        "layerSequenceNumber": {
+          "label": "Layer number"
+        },
+        "layerSequenceMeaning": {
+          "label": "Number sequence meaning"
+        },
+        "layerThicknessApprox": {
+          "label": "Approximate thickness"
+        },
+        "layerBoundaryDescription": {
+          "label": "Layer boundary description"
+        },
+        "soilColorMunsellManual": {
+          "label": "Manual Munsell soil color"
+        },
+        "soilColorReviewed": {
+          "label": "Reviewed soil color"
+        },
+        "soilColorMoistureState": {
+          "label": "Moisture state"
+        },
+        "soilColorCaptureCondition": {
+          "label": "Capture condition"
+        },
+        "soilColorRoi": {
+          "label": "Soil color ROI JSON"
+        },
+        "soilColorAssistCandidates": {
+          "label": "Soil color assist candidates"
+        },
+        "soilColorAssistStatus": {
+          "label": "Soil color assist status"
+        },
+        "soilColorNote": {
+          "label": "Soil color note"
+        },
+        "fieldRecordQuality": {
+          "label": "Field record quality"
+        },
+        "recordCreationTiming": {
+          "label": "Record creation timing"
+        },
+        "verificationState": {
+          "label": "Verification state"
+        }
+      }
+    },
+    "SoilProfilePhoto": {
+      "label": "Soil profile photo",
+      "fields": {
+        "soilProfileAnnotationStrokes": {
+          "label": "Annotation stroke JSON"
+        },
+        "soilProfileLayerMarkers": {
+          "label": "Layer marker JSON"
+        },
+        "soilProfileLayerIds": {
+          "label": "Linked Layer id JSON"
+        },
+        "layerSequenceMeaning": {
+          "label": "Number sequence meaning"
+        },
+        "soilColorCaptureCondition": {
+          "label": "Capture condition"
+        },
+        "soilProfileCaptureNote": {
+          "label": "Capture note"
+        },
+        "fieldRecordQuality": {
+          "label": "Field record quality"
+        },
+        "recordCreationTiming": {
+          "label": "Record creation timing"
+        },
+        "verificationState": {
+          "label": "Verification state"
+        }
+      }
+    },
     "AerialMapLayer": {
       "label": "Aerial map layer",
       "fields": {

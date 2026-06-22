@@ -1,109 +1,178 @@
-# iDAI.field | Field <a href='https://field.idai.world/'><img src='/desktop/img/logo.png' align="right" height="200" /></a>
+# Korean Field Notebook
 
-<!-- badges: start -->
-[![latest release](https://img.shields.io/github/v/release/dainst/idai-field)](https://github.com/dainst/releases)
-[![Manual](https://img.shields.io/badge/Manual-field.idai.world-green)](https://field.idai.world/manual)
-<!-- badges: end -->
+한국 고고학 현장 조사를 위한 디지털 야장 실험 프로젝트입니다. 이 저장소는 독일고고학연구소(DAI)와 GBV가 개발한 [iDAI.field](https://github.com/dainst/idai-field)에서 비롯된 파생 프로젝트이며, 원 프로젝트의 구조를 바탕으로 한국 매장문화재 조사 실정에 맞는 기록 흐름을 구현해 나갑니다.
 
-Field는 고고학 발굴 현장의 야장, 유물 기록, 이미지, 지도, 동기화 작업을 유연하게 처리하기 위한 오픈소스 기록 도구입니다. 독일고고학연구소([DAI](https://www.dainst.org))와 GBV 공동도서관 네트워크 본부([GBV](https://en.gbv.de/))가 협력해 개발하고 있으며, 누구나 무료로 사용할 수 있습니다.
+이 프로젝트는 원본 iDAI.field를 대체하거나 훼손하려는 것이 아니라, 한국 현장에서 필요한 야장 흐름을 독립적으로 실험하기 위한 저장소입니다.
 
-## Field 소개
+## 출처와 라이선스
 
-Field의 배경과 설계 의도는 다음 논문에서 자세히 확인할 수 있습니다.
+- 원 프로젝트: [dainst/idai-field](https://github.com/dainst/idai-field)
+- 원 프로젝트 웹사이트: [field.idai.world](https://field.idai.world/)
+- 원 프로젝트 문서: [iDAI.field wiki](https://github.com/dainst/idai-field/wiki)
+- 라이선스: Apache License 2.0
+- 출처 고지: [NOTICE.md](NOTICE.md)
 
-S. Hohl - T. Kleinke - F. Riebschlager - J. Watson, **iDAI.field: developing software for the documentation of archaeological fieldwork**, AeC 34, 1, 2023, 85-94, doi: [10.19282/ac.34.1.2023.10](https://doi.org/10.19282/ac.34.1.2023.10).
+이 저장소는 iDAI.field에서 파생되었습니다. 원 저작권과 Apache-2.0 라이선스 고지는 보존하며, 한국형 야장 기능, 한국어 문서, 한국 고고학 조사방법론 기반 설정과 UX는 이 저장소에서 별도로 발전시킵니다.
 
-논문의 핵심 내용과 한국 고고학 야장 설계에 주는 단서는 [한국어 해설 문서](docs/papers/hohl-et-al-2023-idai-field.ko.md)로 정리했습니다. 원문 전체는 공식 DOI/PDF를 통해 확인하세요.
+관련 논문:
 
-한국 매장문화재 조사 방법론을 바탕으로 Field를 한국형 야장 도구로 바꾸기 위한 분석은 [한국형 야장 적용 연구 노트](docs/korean-fieldwork/README.md)에 정리했습니다.
+> S. Hohl, T. Kleinke, F. Riebschläger, J. Watson, **iDAI.field: developing software for the documentation of archaeological fieldwork**, *Archeologia e Calcolatori* 34.1, 2023, 85-94. DOI: [10.19282/ac.34.1.2023.10](https://doi.org/10.19282/ac.34.1.2023.10)
 
-Field를 사용하면 고고학 연구자는 다음 작업을 할 수 있습니다.
+한국형 적용을 위해 정리한 내부 문서:
 
-* 발굴 현장에서 생산되는 데이터와 이미지를 기록, 공유, 보관
-* Field가 제공하는 최소 공통 모델 위에 프로젝트별 데이터 모델 구성
-* 기록 자료를 지도 위에 배치하고 공간적으로 관리
-* 형식 자료와 수장/보관 정보를 관리
-* 발굴 데이터를 동기화하고 공개
+- [한국형 야장 적용 연구 노트](docs/korean-fieldwork/README.md)
+- [iDAI.field wiki 한국어 번역](docs/wiki/README.md)
+- [Hohl et al. 2023 논문 한국어 요약/번역 노트](docs/papers/hohl-et-al-2023-idai-field.ko.md)
 
-## 사용자와 관심 프로젝트를 위한 안내
+## 목표
 
-Field를 실제 조사와 연구에 적용하는 사례를 언제나 환영합니다. 연구에 Field를 사용한다면 [Field 사용자 메일링 리스트](https://lists.fu-berlin.de/listinfo/idaifield2-user)([idaifield2-user@dainst.de](mailto:idaifield2-user@dainst.de))에 가입해 다른 사용자와 팁을 공유하고 새 릴리스 소식을 받을 수 있습니다. 이 저장소의 [Discussions](https://github.com/dainst/idai-field/discussions)에도 자유롭게 참여할 수 있습니다.
+한국 고고학 현장의 실제 기록 흐름에 맞춰, 태블릿과 데스크톱을 함께 쓰는 야장 플랫폼을 만듭니다.
 
-## 개발자와 기여자를 위한 안내
+- 현장에서 유구 후보를 빠르게 그리고 기록하기
+- SHP, DXF, GeoJSON 조사 경계와 배경 레이어를 데스크톱에서 정리하기
+- 드론사진이나 정사영상을 선택적으로 배경 레이어로 맞추기
+- 태블릿 GPS를 정밀 측량값이 아니라 현재 위치 참고점으로 활용하기
+- 유구의 시기, 성격, 조사 상태, 공간 기록 출처를 분리해서 남기기
+- 사진, 도면, 펜메모, 시료, 유물, 일지를 유구와 연결하기
+- 토층 단면 사진 위에 펜으로 번호와 경계선을 표시하고, 각 토층의 색과 순서를 기록하기
+- 자동 OCR이나 자동 토색 판정은 원본 기록을 대체하지 않는 보조 기능으로 다루기
 
-이 저장소는 여섯 패키지로 구성된 모노레포입니다.
+## 현재 구현 방향
 
-* [Field Desktop](desktop): Angular와 Electron 기반 데스크톱 애플리케이션
-* [Field Mobile](mobile): React Native 기반 모바일 애플리케이션(초기 개발 단계, 아직 릴리스 없음)
-* [Field Hub](server): 선택적으로 사용할 수 있는 동기화 서버 애플리케이션
-* [Field Core](core): 공통 TypeScript 모듈
-* [iDAI.field Web](web): [iDAI.field Web 공개 플랫폼](https://field.idai.world)
-* [Field Publication](publication): 새 Field 공개 플랫폼(개발 중, 아직 릴리스 없음)
+### 한국형 설정
 
-## 사용법
+`KoreanFieldwork` 설정은 한국형 야장 템플릿을 제공합니다. 프로젝트 생성 시 `한국형 야장` 템플릿을 선택하면 한국어를 기본 언어로 쓰고, 한국 현장 조사에 필요한 값목록과 폼을 우선 노출합니다.
 
-자세한 사용법은 [한국어 Wiki 번역](docs/wiki/README.md)과 데스크톱 앱의 한국어 도움말을 참고하세요. 원문 Wiki는 비교를 위해 [docs/wiki/original](docs/wiki/original/)에 보관했습니다.
+주요 기록 단위:
 
-## 개발
+- `Project`, `Operation`, `DailyLog`
+- `Survey`, `FeatureGroup`, `Feature`, `FeatureSegment`
+- `Layer`
+- `Find`, `Sample`
+- `Drawing`, `Photo`, `SoilProfilePhoto`, `AerialMapLayer`, `PenMemo`
+- `FieldRecordQualityReview`, `SourceEvidenceIndex`, `TermAuthority`, `TermAlias`
 
-이 저장소는 하위 패키지 의존성 관리를 위해 [lerna](https://github.com/lerna/lerna)를 사용합니다. 처음 코드를 받은 뒤에는 다음 명령으로 의존성을 준비합니다.
+### 지도 기반 유구 후보
 
-    $ npm run bootstrap
+한국 현장에서는 전면 제토 뒤 서로 다른 시대와 성격의 유구가 한 평면에 노출되는 일이 많습니다. 이 프로젝트는 지도 위에서 대략적인 유구 후보를 그리고, 이후 조사하면서 성격, 시기, 상태, 사진, 펜메모를 붙여 가는 흐름을 우선합니다.
 
-개별 개발 환경 설정은 각 하위 패키지의 README를 참고하세요.
+유구 관련 기본 상태:
+
+- 후보
+- 조사중
+- 확정
+- 제외
+- 병합
+- 분할
+
+공간 기록 출처:
+
+- 태블릿 스케치
+- GPS 대략 위치
+- SHP import
+- DXF import
+- 정식 측량
+- 최종 CAD
+
+### 드론사진과 배경 레이어
+
+드론사진은 필수가 아닙니다. 조사 경계와 도면만으로 기록할 수도 있고, 현장 여건이 좋을 때 드론사진이나 정사영상을 배경에 맞춰 사용할 수 있습니다.
+
+지원하려는 흐름:
+
+- 데스크톱에서 조사 경계 SHP/DXF/GeoJSON import
+- GeoTIFF 또는 world file이 있는 이미지의 자동 georeference
+- 좌표가 없는 드론사진의 기준점 수동 정합
+- 태블릿에서 드론사진 배경 켜기/끄기
+- 드론사진 위에서 그린 유구 후보를 나중에 정식 측량/CAD 성과물로 보정
+
+드론사진은 참고 레이어이며, 유구 geometry를 자동으로 덮어쓰지 않습니다.
+
+### 펜메모와 전사
+
+현장에서는 텍스트 입력보다 펜으로 빠르게 적는 일이 더 자연스러울 수 있습니다. `PenMemo`는 원본 stroke JSON, 미리보기 이미지, 자동 전사문, 검토 전사문을 분리해서 저장합니다.
+
+원칙:
+
+- 원본 손글씨는 항상 보존
+- 자동 OCR 결과는 보조 데이터
+- 사람이 고친 검토 전사문은 별도 필드
+- OCR 실패가 기록 손실로 이어지지 않게 설계
+
+### 토층 사진과 토색 기록
+
+한국 고고학에서 토층은 매우 중요한 현장 기록입니다. 이 프로젝트는 태블릿 카메라로 토층 단면을 가볍게 찍고, 사진 위에 펜으로 `1, 2, 3, 4...` 순서를 적은 뒤 각 번호를 `Layer` 기록과 연결하는 흐름을 준비합니다.
+
+토층 번호 기본 해석:
+
+- `1` = 가장 최근에 쌓인 층
+- 숫자가 커질수록 더 먼저 쌓인 층
+
+토색 기록 원칙:
+
+- 상용 토색첩 이미지는 저장소에 포함하지 않음
+- Munsell HVC 형식의 문자열 기록을 우선
+- 수동 입력값과 사람이 검토한 값은 별도 필드
+- ROI와 촬영 조건은 저장하되, 자동 색상 추천은 후속 보조 기능으로 취급
+
+## 개발 구조
+
+이 저장소는 iDAI.field의 monorepo 구조를 유지합니다.
+
+- [Field Desktop](desktop): Angular/Electron 기반 데스크톱 앱
+- [Field Mobile](mobile): React Native 기반 모바일/태블릿 앱
+- [Field Hub](server): 선택형 동기화 서버
+- [Field Core](core): 공통 TypeScript 모듈과 설정
+- [iDAI.field Web](web): 웹 공개 플랫폼 기반 코드
+- [Field Publication](publication): 공개/출판 플랫폼 기반 코드
+
+처음 개발 환경을 준비할 때는 원 프로젝트와 마찬가지로 의존성을 bootstrap합니다.
+
+```bash
+npm run bootstrap
+```
+
+현재 Windows 로컬 실행 보조 스크립트는 다음 파일을 참고합니다.
+
+```powershell
+.\run-idai-field-ko.ps1
+```
+
+## 원본 README
+
+아래에는 파생 출처 확인을 위해 iDAI.field 원본 README의 핵심 내용을 보존합니다.
 
 <details>
-<summary>원문 README (English) 펼치기</summary>
+<summary>Original iDAI.field README excerpt</summary>
 
-# iDAI.field | Field <a href='https://field.idai.world/'><img src='/desktop/img/logo.png' align="right" height="200" /></a>
+# iDAI.field | Field
 
-<!-- badges: start -->
-[![latest release](https://img.shields.io/github/v/release/dainst/idai-field)](https://github.com/dainst/releases)
-[![Manual](https://img.shields.io/badge/Manual-field.idai.world-green)](https://field.idai.world/manual)
-<!-- badges: end -->
-
-Field is a modern take on flexible field and find recording for archaeological excavations. It is developed as a cooperation between the German Archaeological Institute ([DAI](https://www.dainst.org)) and the Head Office of the GBV Common Library Network ([GBV](https://en.gbv.de/)). Field is completely Open Source and free to use!
+Field is a modern take on flexible field and find recording for archaeological excavations. It is developed as a cooperation between the German Archaeological Institute ([DAI](https://www.dainst.org)) and the Head Office of the GBV Common Library Network ([GBV](https://en.gbv.de/)). Field is completely Open Source and free to use.
 
 ## About Field
 
-For an overview of the genesis and the idea behind Field, check out one of our latest articles:
+For an overview of the genesis and the idea behind Field, see:
 
-S. Hohl - T. Kleinke - F. Riebschlager - J. Watson, **iDAI.field: developing software for the documentation of archaeological fieldwork**, AeC 34, 1, 2023, 85-94, doi: [10.19282/ac.34.1.2023.10](https://doi.org/10.19282/ac.34.1.2023.10).
+S. Hohl - T. Kleinke - F. Riebschläger - J. Watson, **iDAI.field: developing software for the documentation of archaeological fieldwork**, AeC 34, 1, 2023, 85-94, doi: [10.19282/ac.34.1.2023.10](https://doi.org/10.19282/ac.34.1.2023.10).
 
 Using Field, archaeologists can:
 
-* record, share and store all data and images produced on the excavation
-* customize their own data model on top of a minimal shared model as defined by Field
-* locate all of their records on a map
-* manage types and inventories
-* sync & publish their excavation data
+- record, share and store all data and images produced on the excavation
+- customize their own data model on top of a minimal shared model as defined by Field
+- locate all of their records on a map
+- manage types and inventories
+- sync and publish their excavation data
 
 ## Information for users and interested projects
-We are always happy to hear about your Field projects! If you are using Field in your research, consider [signing up for the Field users mailing list](https://lists.fu-berlin.de/listinfo/idaifield2-user) ([idaifield2-user@dainst.de](mailto:idaifield2-user@dainst.de)), where you can exchange tips and tricks with other users and get updates about new releases. Feel free to also join in the [Discussions](https://github.com/dainst/idai-field/discussions) in this repository.
 
-## Information for developers and collaborators
-
-This is a monorepo containing six packages:
-
-* [Field Desktop](desktop): The Field Desktop application based on Angular and Electron
-* [Field Mobile](mobile): The Field Mobile application based on React Native (early development, no release yet)
-* [Field Hub](server): The (optional) synchronisation server application.
-* [Field Core](core): Shared TypeScript modules
-* [iDAI.field Web](web): The [iDAI.field Web publication platform](https://field.idai.world)
-* [Field Publication](publication): The new Field publication platform (in development, no release yet)
-
-## Usage
-
-Please refer to the [wiki](https://github.com/dainst/idai-field/wiki).
+The original project invites users to join the [Field users mailing list](https://lists.fu-berlin.de/listinfo/idaifield2-user) and the [GitHub Discussions](https://github.com/dainst/idai-field/discussions).
 
 ## Development
 
-The repository uses [lerna](https://github.com/lerna/lerna) to manage sub-package dependecies.
-When first checking out the code base, bootstrap the dependencies with:
+The original repository uses [lerna](https://github.com/lerna/lerna) to manage sub-package dependencies.
 
-    $ npm run bootstrap
-
-Refer to the sub-package READMEs for detailed instructions on how to set up individual
-development environments.
+```bash
+npm run bootstrap
+```
 
 </details>

@@ -3270,6 +3270,138 @@
         }
       ]
     },
+    "Layer:default": {
+      "hidden": [],
+      "fields": {
+        "layerSequenceNumber": {
+          "inputType": "unsignedInteger",
+          "constraintIndexed": true
+        },
+        "layerSequenceMeaning": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "layerThicknessApprox": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "layerBoundaryDescription": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "soilColorMunsellManual": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "soilColorReviewed": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "soilColorMoistureState": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "soilColorCaptureCondition": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "soilColorRoi": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "soilColorAssistCandidates": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "soilColorAssistStatus": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "soilColorNote": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "fieldRecordQuality": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "recordCreationTiming": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "verificationState": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "period": "KoreanFieldwork-featurePeriod",
+        "layerSequenceMeaning": "KoreanFieldwork-layerSequenceMeaning",
+        "soilColorMoistureState": "KoreanFieldwork-soilColorMoistureState",
+        "soilColorCaptureCondition": "KoreanFieldwork-soilColorCaptureCondition",
+        "soilColorAssistStatus": "KoreanFieldwork-soilColorAssistStatus",
+        "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
+        "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
+        "verificationState": "KoreanFieldwork-verificationState"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
+        },
+        {
+          "name": "hierarchy",
+          "fields": ["hasChildren"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["depicts", "isSubjectOf", "isResultOf"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description"]
+        },
+        {
+          "name": "koreanFieldwork",
+          "fields": [
+            "layerSequenceNumber",
+            "layerSequenceMeaning",
+            "layerThicknessApprox",
+            "layerBoundaryDescription",
+            "soilColorMunsellManual",
+            "soilColorReviewed",
+            "soilColorMoistureState",
+            "soilColorCaptureCondition",
+            "soilColorRoi",
+            "soilColorAssistCandidates",
+            "soilColorAssistStatus",
+            "soilColorNote",
+            "fieldRecordQuality",
+            "recordCreationTiming",
+            "verificationState"
+          ]
+        },
+        {
+          "name": "stratigraphy",
+          "fields": [
+            "isAbove", "isBelow", "cuts", "isCutBy", "fills", "isFilledBy", "abuts", "isAbuttedBy",
+            "bondsWith", "borders"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": ["dimensionHeight", "dimensionVerticalExtent"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "spatialLocation", "isPresentIn"]
+        },
+        {
+          "name": "time",
+          "fields": ["period", "dating", "isBefore", "isAfter", "isContemporaryWith"]
+        }
+      ]
+    },
     "Image:default": {
       "hidden": [],
       "fields": {
@@ -3604,6 +3736,85 @@
         }
       ]
     },
+    "SoilProfilePhoto": {
+      "parent": "Image",
+      "color": "#8f7350",
+      "hidden": [],
+      "fields": {
+        "soilProfileAnnotationStrokes": {
+          "inputType": "text",
+          "mandatory": true,
+          "constraintIndexed": true
+        },
+        "soilProfileLayerMarkers": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "soilProfileLayerIds": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "layerSequenceMeaning": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "soilColorCaptureCondition": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "soilProfileCaptureNote": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "fieldRecordQuality": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "recordCreationTiming": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "verificationState": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "layerSequenceMeaning": "KoreanFieldwork-layerSequenceMeaning",
+        "soilColorCaptureCondition": "KoreanFieldwork-soilColorCaptureCondition",
+        "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
+        "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
+        "verificationState": "KoreanFieldwork-verificationState"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "draughtsmen", "processor", "campaign", "date", "isSameAs"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["depicts", "isSubjectOf", "isResultOf"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "height", "width", "originalFilename", "literature", "imageRights"]
+        },
+        {
+          "name": "koreanFieldwork",
+          "fields": [
+            "soilProfileAnnotationStrokes",
+            "soilProfileLayerMarkers",
+            "soilProfileLayerIds",
+            "layerSequenceMeaning",
+            "soilColorCaptureCondition",
+            "soilProfileCaptureNote",
+            "fieldRecordQuality",
+            "recordCreationTiming",
+            "verificationState"
+          ]
+        }
+      ]
+    },
     "AerialMapLayer": {
       "parent": "Image",
       "color": "#4f8f8b",
@@ -3751,6 +3962,7 @@
     "Sample",
     "Drawing",
     "Photo",
+    "SoilProfilePhoto",
     "AerialMapLayer",
     "PenMemo",
     "Image",

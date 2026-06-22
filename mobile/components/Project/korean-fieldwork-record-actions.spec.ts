@@ -58,6 +58,32 @@ describe('Korean fieldwork record actions', () => {
     );
   });
 
+  it('keeps compact card actions in the fieldwork work order', () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1', {}, {
+      featureRecordingStatus: 'confirmed',
+      featureInvestigationChecklist: [
+        'preInvestigationPhotoTaken',
+        'inProgressPhotoTaken',
+      ],
+      fieldRecordQuality: ['immediateRecording'],
+      recordCreationTiming: 'duringFieldwork',
+    });
+
+    const summary = getKoreanFieldworkRecordActionSummary(
+      feature,
+      [feature],
+      [C.FEATURE_SEGMENT, C.PHOTO]
+    );
+
+    expect(summary.checklistDone).toBe(2);
+    expect(summary.checklistTotal).toBe(8);
+    expect(summary.actions.map((action) => action.id).slice(0, 3)).toEqual([
+      'issue-feature-complete-photo-feature-1',
+      'create-FeatureSegment',
+      'create-photos',
+    ]);
+  });
+
   it('opens existing evidence when there is no missing evidence action to create', () => {
     const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
     const photo = createDoc('photo-1', C.PHOTO, '수혈 1 사진', {

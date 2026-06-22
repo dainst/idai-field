@@ -6,6 +6,7 @@ import {
 import { router } from 'expo-router';
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 import {
+  GestureResponderEvent,
   ScrollView,
   StyleSheet,
   Text,
@@ -41,6 +42,10 @@ import {
   getKoreanFieldworkEvidenceChips,
   KoreanFieldworkEvidenceChip,
 } from '@/components/Project/korean-fieldwork-record-evidence';
+import {
+  getKoreanFieldworkRecordActionSummary,
+  KoreanFieldworkRecordActionItem,
+} from '@/components/Project/korean-fieldwork-record-actions';
 import {
   getKoreanFieldworkPriorityTasks,
   getKoreanFieldworkTodayActionTargets,
@@ -914,10 +919,23 @@ const RecordRow: React.FC<{
   const description = getRecordDescription(document);
   const statusChips = getKoreanFieldworkRecordStatusChips(document);
   const evidenceChips = getKoreanFieldworkEvidenceChips(document, documents);
-  const allowedEvidenceCategories = useMemo(
-    () => new Set(getKoreanFieldworkAllowedChildCategoryNames(document, config)),
+  const allowedAddCategoryNames = useMemo(
+    () => getKoreanFieldworkAllowedChildCategoryNames(document, config),
     [config, document]
   );
+  const allowedEvidenceCategories = useMemo(
+    () => new Set(allowedAddCategoryNames),
+    [allowedAddCategoryNames]
+  );
+  const actionSummary = useMemo(
+    () => getKoreanFieldworkRecordActionSummary(
+      document,
+      documents,
+      allowedAddCategoryNames
+    ),
+    [allowedAddCategoryNames, document, documents]
+  );
+  const visibleActions = actionSummary.actions.slice(0, 2);
 
   return (
     <TouchableOpacity
@@ -984,6 +1002,22 @@ const RecordRow: React.FC<{
             {description}
           </Text>
         )}
+        {actionSummary.isTracked && (
+          <RecordWorkSummary
+            summary={actionSummary}
+            actions={visibleActions}
+            onActionPress={(action) => {
+              if (action.type === 'openDocument' && action.document) {
+                onOpenEvidence(action.document);
+                return;
+              }
+
+              if (action.type === 'createDocument' && action.categoryName) {
+                onAddEvidence(document, action.categoryName);
+              }
+            }}
+          />
+        )}
       </View>
       <View style={styles.recordActions}>
         <TouchableOpacity
@@ -1014,6 +1048,79 @@ const RecordRow: React.FC<{
     </TouchableOpacity>
   );
 };
+
+const RecordWorkSummary: React.FC<{
+  summary: ReturnType<typeof getKoreanFieldworkRecordActionSummary>;
+  actions: KoreanFieldworkRecordActionItem[];
+  onActionPress: (action: KoreanFieldworkRecordActionItem) => void;
+}> = ({ summary, actions, onActionPress }) => (
+  <View style={styles.recordWorkPanel}>
+    <View style={styles.recordWorkSummaryRow}>
+      <View style={styles.recordWorkPercentTrack}>
+        <View
+          style={[
+            styles.recordWorkPercentFill,
+            recordWorkPercentFillStyle(summary.tone),
+            { width: `${summary.completionPercent}%` },
+          ]}
+        />
+      </View>
+      <Text style={[styles.recordWorkPercent, recordWorkPercentTextStyle(summary.tone)]}>
+        {summary.completionPercent}%
+      </Text>
+      <Text style={styles.recordWorkMetric}>하위 {summary.structureCount}</Text>
+      <Text style={styles.recordWorkMetric}>증거 {summary.evidenceCount}</Text>
+      {summary.issueCount > 0 && (
+        <Text style={styles.recordWorkIssue}>점검 {summary.issueCount}</Text>
+      )}
+      {summary.checklistTotal > 0 && (
+        <Text style={styles.recordWorkMetric}>
+          과정 {summary.checklistDone}/{summary.checklistTotal}
+        </Text>
+      )}
+    </View>
+    {actions.length > 0 && (
+      <View style={styles.recordWorkActionRow}>
+        {actions.map((action) => (
+          <RecordWorkActionButton
+            key={action.id}
+            action={action}
+            onPress={(event) => {
+              event.stopPropagation();
+              onActionPress(action);
+            }}
+          />
+        ))}
+      </View>
+    )}
+  </View>
+);
+
+const RecordWorkActionButton: React.FC<{
+  action: KoreanFieldworkRecordActionItem;
+  onPress: (event: GestureResponderEvent) => void;
+}> = ({ action, onPress }) => (
+  <TouchableOpacity
+    activeOpacity={0.84}
+    accessibilityLabel={action.label}
+    onPress={onPress}
+    style={[styles.recordWorkActionButton, recordWorkActionStyle(action.tone)]}
+  >
+    <MaterialIcons
+      name={action.icon as keyof typeof MaterialIcons.glyphMap}
+      size={14}
+      color={recordWorkActionColor(action.tone)}
+    />
+    <View style={styles.recordWorkActionTextWrap}>
+      <Text style={styles.recordWorkActionLabel} numberOfLines={1}>
+        {action.label}
+      </Text>
+      <Text style={styles.recordWorkActionDetail} numberOfLines={1}>
+        {action.detail}
+      </Text>
+    </View>
+  </TouchableOpacity>
+);
 
 const EvidenceChip: React.FC<{
   chip: KoreanFieldworkEvidenceChip;
@@ -1095,6 +1202,72 @@ const statusChipTextToneStyle = (
       return styles.statusChipTextInfo;
     default:
       return styles.statusChipTextNeutral;
+  }
+};
+
+const recordWorkPercentFillStyle = (
+  tone: KoreanFieldworkStatusTone
+) => {
+  switch (tone) {
+    case 'success':
+      return styles.recordWorkPercentFillSuccess;
+    case 'warning':
+      return styles.recordWorkPercentFillWarning;
+    case 'danger':
+      return styles.recordWorkPercentFillDanger;
+    case 'info':
+      return styles.recordWorkPercentFillInfo;
+    default:
+      return styles.recordWorkPercentFillNeutral;
+  }
+};
+
+const recordWorkPercentTextStyle = (
+  tone: KoreanFieldworkStatusTone
+) => {
+  switch (tone) {
+    case 'success':
+      return styles.recordWorkPercentSuccess;
+    case 'warning':
+      return styles.recordWorkPercentWarning;
+    case 'danger':
+      return styles.recordWorkPercentDanger;
+    case 'info':
+      return styles.recordWorkPercentInfo;
+    default:
+      return styles.recordWorkPercentNeutral;
+  }
+};
+
+const recordWorkActionStyle = (
+  tone: KoreanFieldworkStatusTone
+) => {
+  switch (tone) {
+    case 'success':
+      return styles.recordWorkActionSuccess;
+    case 'warning':
+      return styles.recordWorkActionWarning;
+    case 'danger':
+      return styles.recordWorkActionDanger;
+    case 'info':
+      return styles.recordWorkActionInfo;
+    default:
+      return styles.recordWorkActionNeutral;
+  }
+};
+
+const recordWorkActionColor = (tone: KoreanFieldworkStatusTone): string => {
+  switch (tone) {
+    case 'success':
+      return '#027a48';
+    case 'warning':
+      return '#b54708';
+    case 'danger':
+      return colors.danger;
+    case 'info':
+      return '#175cd3';
+    default:
+      return '#475467';
   }
 };
 
@@ -1706,6 +1879,127 @@ const styles = StyleSheet.create({
     fontSize: 12,
     lineHeight: 17,
     marginTop: 4,
+  },
+  recordWorkPanel: {
+    backgroundColor: '#f8fafc',
+    borderColor: '#eaecf0',
+    borderRadius: 6,
+    borderWidth: 1,
+    marginTop: 7,
+    paddingHorizontal: 8,
+    paddingVertical: 7,
+  },
+  recordWorkSummaryRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  recordWorkPercentTrack: {
+    backgroundColor: '#e4e7ec',
+    borderRadius: 4,
+    flex: 1,
+    height: 8,
+    marginRight: 7,
+    overflow: 'hidden',
+  },
+  recordWorkPercentFill: {
+    borderRadius: 4,
+    height: 8,
+  },
+  recordWorkPercentFillNeutral: {
+    backgroundColor: '#98a2b3',
+  },
+  recordWorkPercentFillInfo: {
+    backgroundColor: '#1570ef',
+  },
+  recordWorkPercentFillSuccess: {
+    backgroundColor: '#12b76a',
+  },
+  recordWorkPercentFillWarning: {
+    backgroundColor: '#f79009',
+  },
+  recordWorkPercentFillDanger: {
+    backgroundColor: colors.danger,
+  },
+  recordWorkPercent: {
+    fontSize: 11,
+    fontWeight: '900',
+    marginRight: 7,
+    minWidth: 34,
+    textAlign: 'right',
+  },
+  recordWorkPercentNeutral: {
+    color: '#475467',
+  },
+  recordWorkPercentInfo: {
+    color: '#175cd3',
+  },
+  recordWorkPercentSuccess: {
+    color: '#027a48',
+  },
+  recordWorkPercentWarning: {
+    color: '#b54708',
+  },
+  recordWorkPercentDanger: {
+    color: colors.danger,
+  },
+  recordWorkMetric: {
+    color: '#667085',
+    fontSize: 11,
+    fontWeight: '800',
+    marginLeft: 5,
+  },
+  recordWorkIssue: {
+    color: colors.danger,
+    fontSize: 11,
+    fontWeight: '900',
+    marginLeft: 5,
+  },
+  recordWorkActionRow: {
+    flexDirection: 'row',
+    marginHorizontal: -3,
+    marginTop: 7,
+  },
+  recordWorkActionButton: {
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderRadius: 6,
+    borderWidth: 1,
+    flex: 1,
+    flexDirection: 'row',
+    marginHorizontal: 3,
+    minHeight: 42,
+    paddingHorizontal: 7,
+    paddingVertical: 6,
+  },
+  recordWorkActionNeutral: {
+    borderColor: '#d0d5dd',
+  },
+  recordWorkActionInfo: {
+    borderColor: '#b2ddff',
+  },
+  recordWorkActionSuccess: {
+    borderColor: '#abefc6',
+  },
+  recordWorkActionWarning: {
+    borderColor: '#fedf89',
+  },
+  recordWorkActionDanger: {
+    borderColor: '#fecdca',
+  },
+  recordWorkActionTextWrap: {
+    flex: 1,
+    marginLeft: 5,
+    minWidth: 0,
+  },
+  recordWorkActionLabel: {
+    color: '#27343b',
+    fontSize: 11,
+    fontWeight: '900',
+  },
+  recordWorkActionDetail: {
+    color: '#667085',
+    fontSize: 10,
+    marginTop: 1,
   },
   issueBadge: {
     alignItems: 'center',

@@ -20,6 +20,12 @@ import {
   getKoreanFieldworkCategoryLabel,
   KOREAN_FIELDWORK_CATEGORIES,
 } from '@/components/Project/korean-fieldwork-categories';
+import {
+  formatKoreanFieldworkParentPath,
+  getKoreanFieldworkRecordStatusChips,
+  KoreanFieldworkStatusChip,
+  KoreanFieldworkStatusTone,
+} from '@/components/Project/korean-fieldwork-record-summary';
 import { ConfigurationContext } from '@/contexts/configuration-context';
 import LabelsContext from '@/contexts/labels/labels-context';
 import { ProjectContext } from '@/contexts/project-context';
@@ -208,6 +214,14 @@ const DocumentsList: React.FC = () => {
   const otherDocuments = filteredDocuments.filter((document) =>
     !groupedDocumentIds.has(document.resource.id)
   );
+  const primaryOperation = documents.find((document) =>
+    document.resource.category === KOREAN_FIELDWORK_CATEGORIES.OPERATION
+  );
+  const featureDraftParent = documents.find((document) =>
+    document.resource.category === KOREAN_FIELDWORK_CATEGORIES.TRENCH
+  ) ?? documents.find((document) =>
+    document.resource.category === KOREAN_FIELDWORK_CATEGORIES.FEATURE_GROUP
+  ) ?? primaryOperation;
   const issueDocument = todaySummary.openIssues
     .map((issue) => documentsById.get(issue.documentId))
     .find((document): document is Document => !!document);
@@ -245,11 +259,25 @@ const DocumentsList: React.FC = () => {
   };
   const openDailyLog = () => {
     const [dailyLog] = todaySummary.dailyLogs;
-    dailyLog ? editDocument(dailyLog) : openMap();
+    if (dailyLog) {
+      editDocument(dailyLog);
+      return;
+    }
+
+    primaryOperation
+      ? navigateAddCategory(KOREAN_FIELDWORK_CATEGORIES.DAILY_LOG, primaryOperation)
+      : openMap();
   };
   const openFirstCandidate = () => {
     const [candidate] = todaySummary.featureCandidates;
-    candidate ? onDocumentSelected(candidate) : openMap();
+    if (candidate) {
+      onDocumentSelected(candidate);
+      return;
+    }
+
+    featureDraftParent
+      ? navigateAddCategory(KOREAN_FIELDWORK_CATEGORIES.FEATURE, featureDraftParent)
+      : openMap();
   };
   const openFirstIssue = () => issueDocument
     ? onDocumentSelected(issueDocument)
@@ -303,7 +331,9 @@ const DocumentsList: React.FC = () => {
           <QuickAction
             icon="event-note"
             label="오늘 일지"
-            detail={todaySummary.dailyLogs.length > 0 ? '작성 내용 보기' : '지도에서 새 기록'}
+            detail={todaySummary.dailyLogs.length > 0
+              ? '작성 내용 보기'
+              : primaryOperation ? '바로 작성' : '조사구역 필요'}
             onPress={openDailyLog}
           />
           <QuickAction
@@ -311,7 +341,7 @@ const DocumentsList: React.FC = () => {
             label="유구 후보"
             detail={todaySummary.featureCandidates.length > 0
               ? `${todaySummary.featureCandidates.length}건 확인`
-              : '현재 위치로 작성'}
+              : featureDraftParent ? '후보 추가' : '조사구역 필요'}
             onPress={openFirstCandidate}
           />
           <QuickAction
@@ -543,7 +573,7 @@ const RecordSection: React.FC<{
       <RecordRow
         key={document.resource.id}
         document={document}
-        parentDocument={getPrimaryParent(document, documentsById)}
+        contextPath={formatKoreanFieldworkParentPath(document, documentsById)}
         categoryLabel={getCategoryLabel(document.resource.category)}
         issueCount={issueCountByDocumentId[document.resource.id] ?? 0}
         onOpen={() => onOpenDocument(document)}
@@ -557,7 +587,7 @@ const RecordSection: React.FC<{
 
 const RecordRow: React.FC<{
   document: Document;
-  parentDocument: Document | undefined;
+  contextPath: string | undefined;
   categoryLabel: string;
   issueCount: number;
   onOpen: () => void;
@@ -566,7 +596,7 @@ const RecordRow: React.FC<{
   onEdit: () => void;
 }> = ({
   document,
-  parentDocument,
+  contextPath,
   categoryLabel,
   issueCount,
   onOpen,
@@ -578,6 +608,7 @@ const RecordRow: React.FC<{
   const category = config.getCategory(document.resource.category);
   const title = document.resource.identifier || document.resource.id;
   const description = getRecordDescription(document);
+  const statusChips = getKoreanFieldworkRecordStatusChips(document);
 
   return (
     <TouchableOpacity
@@ -601,8 +632,15 @@ const RecordRow: React.FC<{
           )}
         </View>
         <Text style={styles.recordMeta} numberOfLines={1}>
-          {categoryLabel}{parentDocument ? ` · 상위 ${parentDocument.resource.identifier}` : ''}
+          {categoryLabel}{contextPath ? ` · 맥락 ${contextPath}` : ''}
         </Text>
+        {statusChips.length > 0 && (
+          <View style={styles.statusChipRow}>
+            {statusChips.map((chip) => (
+              <StatusChip key={`${title}-${chip.label}`} chip={chip} />
+            ))}
+          </View>
+        )}
         {description && (
           <Text style={styles.recordDescription} numberOfLines={2}>
             {description}
@@ -639,20 +677,46 @@ const RecordRow: React.FC<{
   );
 };
 
-const getPrimaryParent = (
-  document: Document,
-  documentsById: Map<string, Document>
-): Document | undefined => {
-  const relations = document.resource.relations ?? {};
-  const parentId = [
-    relations.isRecordedIn,
-    relations.liesWithin,
-    relations.isRecordedInFeature,
-  ]
-    .filter((value): value is string[] => Array.isArray(value))
-    .flat()[0];
+const StatusChip: React.FC<{ chip: KoreanFieldworkStatusChip }> = ({ chip }) => (
+  <View style={[styles.statusChip, statusChipToneStyle(chip.tone)]}>
+    <Text style={[styles.statusChipText, statusChipTextToneStyle(chip.tone)]}>
+      {chip.label}
+    </Text>
+  </View>
+);
 
-  return parentId ? documentsById.get(parentId) : undefined;
+const statusChipToneStyle = (
+  tone: KoreanFieldworkStatusTone
+) => {
+  switch (tone) {
+    case 'success':
+      return styles.statusChipSuccess;
+    case 'warning':
+      return styles.statusChipWarning;
+    case 'danger':
+      return styles.statusChipDanger;
+    case 'info':
+      return styles.statusChipInfo;
+    default:
+      return styles.statusChipNeutral;
+  }
+};
+
+const statusChipTextToneStyle = (
+  tone: KoreanFieldworkStatusTone
+) => {
+  switch (tone) {
+    case 'success':
+      return styles.statusChipTextSuccess;
+    case 'warning':
+      return styles.statusChipTextWarning;
+    case 'danger':
+      return styles.statusChipTextDanger;
+    case 'info':
+      return styles.statusChipTextInfo;
+    default:
+      return styles.statusChipTextNeutral;
+  }
 };
 
 const getRecordDescription = (document: Document): string | undefined => {
@@ -1019,6 +1083,58 @@ const styles = StyleSheet.create({
     color: '#667085',
     fontSize: 12,
     marginTop: 2,
+  },
+  statusChipRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginTop: 5,
+  },
+  statusChip: {
+    borderRadius: 5,
+    borderWidth: 1,
+    marginBottom: 4,
+    marginRight: 5,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+  },
+  statusChipNeutral: {
+    backgroundColor: '#f8fafc',
+    borderColor: '#d0d5dd',
+  },
+  statusChipInfo: {
+    backgroundColor: '#eff8ff',
+    borderColor: '#b2ddff',
+  },
+  statusChipSuccess: {
+    backgroundColor: '#ecfdf3',
+    borderColor: '#abefc6',
+  },
+  statusChipWarning: {
+    backgroundColor: '#fffaeb',
+    borderColor: '#fedf89',
+  },
+  statusChipDanger: {
+    backgroundColor: '#fff1f3',
+    borderColor: '#fecdca',
+  },
+  statusChipText: {
+    fontSize: 11,
+    fontWeight: '800',
+  },
+  statusChipTextNeutral: {
+    color: '#475467',
+  },
+  statusChipTextInfo: {
+    color: '#175cd3',
+  },
+  statusChipTextSuccess: {
+    color: '#027a48',
+  },
+  statusChipTextWarning: {
+    color: '#b54708',
+  },
+  statusChipTextDanger: {
+    color: colors.danger,
   },
   recordDescription: {
     color: '#344054',

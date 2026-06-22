@@ -13,11 +13,14 @@ import {
 import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '@/utils/colors';
 import DocumentButton from '@/components/common/DocumentButton';
+import { KOREAN_FIELDWORK_CATEGORIES } from './korean-fieldwork-categories';
+import { getKoreanFieldworkTodayActionTargets } from './korean-fieldwork-today-actions';
 
 interface KoreanFieldworkTodayBoardProps {
   summary: KoreanFieldworkTodaySummary;
   documents?: Document[];
   onEditDocument: (docId: string, categoryName: string) => void;
+  onAddDocumentOfCategory?: (parentDoc: Document, categoryName: string) => void;
   onOpenDocument?: (document: Document) => void;
 }
 
@@ -25,26 +28,45 @@ const KoreanFieldworkTodayBoard: React.FC<KoreanFieldworkTodayBoardProps> = ({
   summary,
   documents = [],
   onEditDocument,
+  onAddDocumentOfCategory,
   onOpenDocument,
 }) => {
-  const [dailyLog] = summary.dailyLogs;
-  const [featureCandidate] = summary.featureCandidates;
-  const issueDocument = useMemo(() => {
-    const documentsById = new Map(documents.map((document) => [
-      document.resource.id,
-      document,
-    ]));
-
-    return summary.openIssues
-      .map((issue) => documentsById.get(issue.documentId))
-      .find((document): document is Document => !!document);
-  }, [documents, summary.openIssues]);
+  const actionTargets = useMemo(
+    () => getKoreanFieldworkTodayActionTargets(summary, documents),
+    [documents, summary]
+  );
 
   const openDocument = (document: Document | undefined) => {
     if (!document) return;
     onOpenDocument
       ? onOpenDocument(document)
       : onEditDocument(document.resource.id, document.resource.category);
+  };
+  const openDailyLog = () => {
+    if (actionTargets.dailyLog) {
+      openDocument(actionTargets.dailyLog);
+      return;
+    }
+
+    if (actionTargets.primaryOperation && onAddDocumentOfCategory) {
+      onAddDocumentOfCategory(
+        actionTargets.primaryOperation,
+        KOREAN_FIELDWORK_CATEGORIES.DAILY_LOG
+      );
+    }
+  };
+  const openFeatureCandidate = () => {
+    if (actionTargets.featureCandidate) {
+      openDocument(actionTargets.featureCandidate);
+      return;
+    }
+
+    if (actionTargets.featureDraftParent && onAddDocumentOfCategory) {
+      onAddDocumentOfCategory(
+        actionTargets.featureDraftParent,
+        KOREAN_FIELDWORK_CATEGORIES.FEATURE
+      );
+    }
   };
 
   return (
@@ -63,18 +85,26 @@ const KoreanFieldworkTodayBoard: React.FC<KoreanFieldworkTodayBoardProps> = ({
         <SummaryAction
           icon="event-note"
           label="오늘 일지"
-          detail={dailyLog ? dailyLog.resource.identifier : '아직 없음'}
-          isDisabled={!dailyLog}
-          onPress={() => openDocument(dailyLog)}
+          detail={actionTargets.dailyLog
+            ? actionTargets.dailyLog.resource.identifier
+            : actionTargets.primaryOperation ? '바로 작성' : '조사구역 필요'}
+          isDisabled={
+            !actionTargets.dailyLog
+            && (!actionTargets.primaryOperation || !onAddDocumentOfCategory)
+          }
+          onPress={openDailyLog}
         />
         <SummaryAction
           icon="add-location-alt"
           label="유구 후보"
-          detail={featureCandidate
+          detail={actionTargets.featureCandidate
             ? `${summary.featureCandidates.length}건`
-            : 'GPS로 생성'}
-          isDisabled={!featureCandidate}
-          onPress={() => openDocument(featureCandidate)}
+            : actionTargets.featureDraftParent ? '후보 추가' : '조사구역 필요'}
+          isDisabled={
+            !actionTargets.featureCandidate
+            && (!actionTargets.featureDraftParent || !onAddDocumentOfCategory)
+          }
+          onPress={openFeatureCandidate}
         />
         <SummaryAction
           icon="fact-check"
@@ -83,8 +113,8 @@ const KoreanFieldworkTodayBoard: React.FC<KoreanFieldworkTodayBoardProps> = ({
             ? `${summary.openIssues.length}건 확인`
             : '문제 없음'}
           warning={summary.openIssues.length > 0}
-          isDisabled={summary.openIssues.length === 0 || !issueDocument}
-          onPress={() => openDocument(issueDocument)}
+          isDisabled={summary.openIssues.length === 0 || !actionTargets.issueDocument}
+          onPress={() => openDocument(actionTargets.issueDocument)}
         />
       </View>
       {summary.openIssues.length > 0 && (

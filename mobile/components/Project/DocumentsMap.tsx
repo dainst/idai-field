@@ -195,6 +195,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
         summary={todaySummary}
         documents={documents}
         onEditDocument={handleEditDocument}
+        onAddDocumentOfCategory={handleAddDocumentOfCategory}
         onOpenDocument={onDocumentSelected}
       />
       <View style={styles.container}>

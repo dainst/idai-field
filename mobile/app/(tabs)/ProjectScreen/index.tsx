@@ -26,6 +26,7 @@ import {
   KoreanFieldworkStatusChip,
   KoreanFieldworkStatusTone,
 } from '@/components/Project/korean-fieldwork-record-summary';
+import { getKoreanFieldworkTodayActionTargets } from '@/components/Project/korean-fieldwork-today-actions';
 import { ConfigurationContext } from '@/contexts/configuration-context';
 import LabelsContext from '@/contexts/labels/labels-context';
 import { ProjectContext } from '@/contexts/project-context';
@@ -214,17 +215,10 @@ const DocumentsList: React.FC = () => {
   const otherDocuments = filteredDocuments.filter((document) =>
     !groupedDocumentIds.has(document.resource.id)
   );
-  const primaryOperation = documents.find((document) =>
-    document.resource.category === KOREAN_FIELDWORK_CATEGORIES.OPERATION
+  const actionTargets = useMemo(
+    () => getKoreanFieldworkTodayActionTargets(todaySummary, documents),
+    [documents, todaySummary]
   );
-  const featureDraftParent = documents.find((document) =>
-    document.resource.category === KOREAN_FIELDWORK_CATEGORIES.TRENCH
-  ) ?? documents.find((document) =>
-    document.resource.category === KOREAN_FIELDWORK_CATEGORIES.FEATURE_GROUP
-  ) ?? primaryOperation;
-  const issueDocument = todaySummary.openIssues
-    .map((issue) => documentsById.get(issue.documentId))
-    .find((document): document is Document => !!document);
   const hierarchyLabel = hierarchyPath.length > 0
     ? hierarchyPath.map((document) => document.resource.identifier).join(' / ')
     : '전체 조사자료';
@@ -258,29 +252,33 @@ const DocumentsList: React.FC = () => {
     });
   };
   const openDailyLog = () => {
-    const [dailyLog] = todaySummary.dailyLogs;
-    if (dailyLog) {
-      editDocument(dailyLog);
+    if (actionTargets.dailyLog) {
+      editDocument(actionTargets.dailyLog);
       return;
     }
 
-    primaryOperation
-      ? navigateAddCategory(KOREAN_FIELDWORK_CATEGORIES.DAILY_LOG, primaryOperation)
+    actionTargets.primaryOperation
+      ? navigateAddCategory(
+        KOREAN_FIELDWORK_CATEGORIES.DAILY_LOG,
+        actionTargets.primaryOperation
+      )
       : openMap();
   };
   const openFirstCandidate = () => {
-    const [candidate] = todaySummary.featureCandidates;
-    if (candidate) {
-      onDocumentSelected(candidate);
+    if (actionTargets.featureCandidate) {
+      onDocumentSelected(actionTargets.featureCandidate);
       return;
     }
 
-    featureDraftParent
-      ? navigateAddCategory(KOREAN_FIELDWORK_CATEGORIES.FEATURE, featureDraftParent)
+    actionTargets.featureDraftParent
+      ? navigateAddCategory(
+        KOREAN_FIELDWORK_CATEGORIES.FEATURE,
+        actionTargets.featureDraftParent
+      )
       : openMap();
   };
-  const openFirstIssue = () => issueDocument
-    ? onDocumentSelected(issueDocument)
+  const openFirstIssue = () => actionTargets.issueDocument
+    ? onDocumentSelected(actionTargets.issueDocument)
     : openMap();
 
   return (
@@ -333,7 +331,7 @@ const DocumentsList: React.FC = () => {
             label="오늘 일지"
             detail={todaySummary.dailyLogs.length > 0
               ? '작성 내용 보기'
-              : primaryOperation ? '바로 작성' : '조사구역 필요'}
+              : actionTargets.primaryOperation ? '바로 작성' : '조사구역 필요'}
             onPress={openDailyLog}
           />
           <QuickAction
@@ -341,7 +339,7 @@ const DocumentsList: React.FC = () => {
             label="유구 후보"
             detail={todaySummary.featureCandidates.length > 0
               ? `${todaySummary.featureCandidates.length}건 확인`
-              : featureDraftParent ? '후보 추가' : '조사구역 필요'}
+              : actionTargets.featureDraftParent ? '후보 추가' : '조사구역 필요'}
             onPress={openFirstCandidate}
           />
           <QuickAction

@@ -146,6 +146,13 @@ describe('DocumentEdit', () => {
     expect(renderAPI.queryByTestId('documentForm')).toBeTruthy();
   });
 
+  it('shows Korean fieldwork context panel above the edit form', async () => {
+    await waitFor(() => renderAPI.getByTestId('documentForm'));
+
+    expect(renderAPI.queryByTestId('koreanFieldworkRecordContextPanel'))
+      .toBeTruthy();
+  });
+
   it('should set input fields with correct values', async () => {
     const { getByTestId } = renderAPI;
 

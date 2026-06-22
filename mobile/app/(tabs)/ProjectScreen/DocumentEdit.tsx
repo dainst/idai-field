@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { CategoryForm, Resource } from 'idai-field-core';
+import { CategoryForm, Document, Resource } from 'idai-field-core';
 import React, { useContext, useEffect, useState } from 'react';
 import { Keyboard, StyleSheet, Text, View } from 'react-native';
 import { ConfigurationContext } from '@/contexts/configuration-context';
@@ -12,13 +12,14 @@ import DocumentForm from '@/components/common/forms/DocumentForm';
 import SoilProfileCameraButton, {
   SoilProfileCaptureData,
 } from '@/components/Project/SoilProfileCameraButton';
+import KoreanFieldworkRecordContextPanel from '@/components/Project/KoreanFieldworkRecordContextPanel';
 import { ToastType } from '@/components/common/Toast/ToastProvider';
 import { router, useGlobalSearchParams } from 'expo-router';
 import { ProjectContext } from '@/contexts/project-context';
 
 const DocumentEdit: React.FC = () => {
   const { showToast } = useToast();
-  const { repository } = useContext(ProjectContext);
+  const { documents, repository } = useContext(ProjectContext);
 
   // TODO: configure expo router to load params
   const params = useGlobalSearchParams();
@@ -78,6 +79,15 @@ const DocumentEdit: React.FC = () => {
   const updateSoilProfileCapture = (data: SoilProfileCaptureData) => {
     setResource((oldResource) => oldResource && { ...oldResource, ...data });
   };
+  const openRelatedDocument = (relatedDocument: Document) => {
+    router.navigate({
+      pathname: '/ProjectScreen/DocumentEdit',
+      params: {
+        docId: relatedDocument.resource.id,
+        categoryName: relatedDocument.resource.category,
+      },
+    });
+  };
 
   if (!docId) {
     return <DocumentEditLoadingState text="편집할 기록 정보를 찾는 중입니다." />;
@@ -114,6 +124,13 @@ const DocumentEdit: React.FC = () => {
         document.resource.identifier
       }`}
       returnBtnHandler={onReturn}
+      formHeader={
+        <KoreanFieldworkRecordContextPanel
+          document={document}
+          documents={documents ?? []}
+          onOpenDocument={openRelatedDocument}
+        />
+      }
       resource={resource}
       updateFunction={updateResource}
       resourceActions={

@@ -31,6 +31,7 @@ interface DocumentFormProps {
   headerText: string;
   returnBtnHandler: () => void;
   titleBarRight: ReactNode;
+  formHeader?: ReactNode;
   resourceActions?: ReactNode;
   resource: Resource | NewResource | undefined;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -45,6 +46,7 @@ const DocumentForm: React.FC<DocumentFormProps> = ({
   headerText,
   returnBtnHandler,
   titleBarRight,
+  formHeader,
   resourceActions,
   resource,
   updateFunction,
@@ -84,6 +86,11 @@ const DocumentForm: React.FC<DocumentFormProps> = ({
       {resourceActions && (
         <View style={styles.resourceActions}>
           {resourceActions}
+        </View>
+      )}
+      {formHeader && (
+        <View style={styles.formHeader}>
+          {formHeader}
         </View>
       )}
       <View style={styles.groupsContainer}>
@@ -168,6 +175,10 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   resourceActions: {
+    marginTop: 8,
+  },
+  formHeader: {
+    marginHorizontal: 5,
     marginTop: 8,
   },
   groupPickerContainer: {

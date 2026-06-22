@@ -5,6 +5,7 @@ import {
 import {
   FIELDWORK_QUICK_FIELDS,
   getKoreanFieldworkQuickRecordAvailability,
+  getKoreanFieldworkQuickPresetUpdates,
   getStringArrayFieldValues,
   hasKoreanFieldworkQuickRecordActions,
   toggleStringArrayFieldValue,
@@ -29,6 +30,7 @@ describe('Korean fieldwork quick record helpers', () => {
 
     expect(availability).toEqual({
       checklist: true,
+      featureStatus: false,
       quality: true,
       verification: true,
       timing: true,
@@ -44,6 +46,7 @@ describe('Korean fieldwork quick record helpers', () => {
 
     expect(availability).toEqual({
       checklist: false,
+      featureStatus: false,
       quality: true,
       verification: false,
       timing: false,
@@ -58,6 +61,22 @@ describe('Korean fieldwork quick record helpers', () => {
 
     expect(availability.checklist).toBe(false);
     expect(hasKoreanFieldworkQuickRecordActions(availability)).toBe(false);
+  });
+
+  it('shows feature status quick actions only when the form exposes the status field', () => {
+    const availability = getKoreanFieldworkQuickRecordAvailability(
+      createCategoryForm([FIELDWORK_QUICK_FIELDS.featureStatus]),
+      createResource(C.FEATURE)
+    );
+
+    expect(availability).toEqual({
+      checklist: false,
+      featureStatus: true,
+      quality: false,
+      verification: false,
+      timing: false,
+    });
+    expect(hasKoreanFieldworkQuickRecordActions(availability)).toBe(true);
   });
 
   it('toggles string-array field values and ignores malformed entries', () => {
@@ -89,6 +108,60 @@ describe('Korean fieldwork quick record helpers', () => {
       'factualAccuracy',
       'correctionNeeded',
     ]);
+  });
+
+  it('builds safe start and closeout preset updates from available fields', () => {
+    const resource = createResource(C.FEATURE, {
+      featureInvestigationChecklist: ['preInvestigationPhotoTaken'],
+      fieldRecordQuality: ['immediateRecording'],
+      verificationState: 'pendingDecision',
+      recordCreationTiming: '',
+    });
+    const availability = {
+      checklist: true,
+      featureStatus: true,
+      quality: true,
+      verification: true,
+      timing: true,
+    };
+
+    expect(getKoreanFieldworkQuickPresetUpdates(
+      resource,
+      availability,
+      'startFeatureInvestigation'
+    )).toEqual({
+      featureRecordingStatus: 'investigating',
+      featureInvestigationChecklist: [
+        'preInvestigationPhotoTaken',
+        'inProgressPhotoTaken',
+      ],
+      fieldRecordQuality: ['immediateRecording'],
+      recordCreationTiming: 'duringFieldwork',
+      verificationState: 'observedInField',
+    });
+
+    expect(getKoreanFieldworkQuickPresetUpdates(
+      {
+        ...resource,
+        recordCreationTiming: 'sameDayFieldRecord',
+        verificationState: 'needsRecheck',
+      },
+      availability,
+      'closeFeatureInvestigation'
+    )).toEqual({
+      featureRecordingStatus: 'confirmed',
+      featureInvestigationChecklist: [
+        'preInvestigationPhotoTaken',
+        'completionPhotoTaken',
+        'measuredDrawingCompleted',
+      ],
+      fieldRecordQuality: [
+        'immediateRecording',
+        'factualAccuracy',
+        'observationInterpretationSeparated',
+        'fieldToReportContinuity',
+      ],
+    });
   });
 });
 

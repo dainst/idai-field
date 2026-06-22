@@ -83,6 +83,11 @@ const DocumentEdit: React.FC = () => {
       (oldResource) => oldResource && { ...oldResource, [key]: value }
     );
   };
+  const applyResourceUpdates = (updates: Record<string, unknown>) => {
+    setResource(
+      (oldResource) => oldResource && { ...oldResource, ...updates }
+    );
+  };
 
   const updateSoilProfileCapture = (data: SoilProfileCaptureData) => {
     setResource((oldResource) => oldResource && { ...oldResource, ...data });
@@ -172,6 +177,7 @@ const DocumentEdit: React.FC = () => {
             category={category}
             resource={resource}
             onUpdateResourceField={updateResource}
+            onUpdateResourceFields={applyResourceUpdates}
           />
         </View>
       }

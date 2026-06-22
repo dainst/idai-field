@@ -12,12 +12,31 @@ export interface KoreanFieldworkQuickOption {
   label: string;
 }
 
+export interface KoreanFieldworkQuickPreset {
+  id: KoreanFieldworkQuickPresetId;
+  label: string;
+  detail: string;
+  icon: string;
+}
+
+export type KoreanFieldworkQuickPresetId =
+  'startFeatureInvestigation'
+  | 'closeFeatureInvestigation';
+
 export const FIELDWORK_QUICK_FIELDS = {
   checklist: 'featureInvestigationChecklist',
+  featureStatus: 'featureRecordingStatus',
   quality: 'fieldRecordQuality',
   verification: 'verificationState',
   timing: 'recordCreationTiming',
 } as const;
+
+export const FEATURE_STATUS_QUICK_OPTIONS: readonly KoreanFieldworkQuickOption[] = [
+  { value: 'candidate', label: '후보' },
+  { value: 'investigating', label: '조사중' },
+  { value: 'confirmed', label: '확정' },
+  { value: 'rejected', label: '제외' },
+];
 
 export const FEATURE_CHECKLIST_QUICK_OPTIONS: readonly KoreanFieldworkQuickOption[] = [
   { value: 'preInvestigationPhotoTaken', label: '조사 전 사진' },
@@ -26,7 +45,9 @@ export const FEATURE_CHECKLIST_QUICK_OPTIONS: readonly KoreanFieldworkQuickOptio
   { value: 'measuredDrawingCompleted', label: '실측' },
   { value: 'preRecoveryFindPhotoTaken', label: '수습 전 사진' },
   { value: 'findsRecovered', label: '유물 수습' },
+  { value: 'findRecordsLinked', label: '유물 기록 연결' },
   { value: 'samplesCollected', label: '시료' },
+  { value: 'penMemoReviewed', label: '펜메모 검토' },
   { value: 'completionPhotoTaken', label: '완료 사진' },
 ];
 
@@ -51,6 +72,21 @@ export const TIMING_QUICK_OPTIONS: readonly KoreanFieldworkQuickOption[] = [
   { value: 'sameDayFieldRecord', label: '당일 기록' },
   { value: 'fieldOnlyObservation', label: '현장 한정' },
   { value: 'handoverStage', label: '인계 단계' },
+];
+
+export const FEATURE_WORKFLOW_QUICK_PRESETS: readonly KoreanFieldworkQuickPreset[] = [
+  {
+    id: 'startFeatureInvestigation',
+    label: '조사 시작',
+    detail: '조사중 전환, 조사 전·중 사진, 즉기 기록',
+    icon: 'play-circle-outline',
+  },
+  {
+    id: 'closeFeatureInvestigation',
+    label: '마감 기본',
+    detail: '확정 전환, 완료 사진, 실측, 기록 품질',
+    icon: 'task-alt',
+  },
 ];
 
 const C = KOREAN_FIELDWORK_CATEGORIES;
@@ -78,6 +114,7 @@ const FIELDWORK_RECORD_CATEGORIES = new Set<string>([
 
 export interface KoreanFieldworkQuickRecordAvailability {
   checklist: boolean;
+  featureStatus: boolean;
   quality: boolean;
   verification: boolean;
   timing: boolean;
@@ -92,6 +129,8 @@ export const getKoreanFieldworkQuickRecordAvailability = (
   return {
     checklist: FEATURE_CATEGORIES.has(resource.category)
       && fieldNames.has(FIELDWORK_QUICK_FIELDS.checklist),
+    featureStatus: FEATURE_CATEGORIES.has(resource.category)
+      && fieldNames.has(FIELDWORK_QUICK_FIELDS.featureStatus),
     quality: FIELDWORK_RECORD_CATEGORIES.has(resource.category)
       && fieldNames.has(FIELDWORK_QUICK_FIELDS.quality),
     verification: FIELDWORK_RECORD_CATEGORIES.has(resource.category)
@@ -105,9 +144,32 @@ export const hasKoreanFieldworkQuickRecordActions = (
   availability: KoreanFieldworkQuickRecordAvailability
 ): boolean =>
   availability.checklist
+  || availability.featureStatus
   || availability.quality
   || availability.verification
   || availability.timing;
+
+export const getKoreanFieldworkQuickPresets = (
+  availability: KoreanFieldworkQuickRecordAvailability
+): readonly KoreanFieldworkQuickPreset[] =>
+  availability.checklist || availability.featureStatus
+    ? FEATURE_WORKFLOW_QUICK_PRESETS
+    : [];
+
+export const getKoreanFieldworkQuickPresetUpdates = (
+  resource: NewResource,
+  availability: KoreanFieldworkQuickRecordAvailability,
+  presetId: KoreanFieldworkQuickPresetId
+): Record<string, unknown> => {
+  switch (presetId) {
+    case 'startFeatureInvestigation':
+      return getStartFeatureInvestigationUpdates(resource, availability);
+    case 'closeFeatureInvestigation':
+      return getCloseFeatureInvestigationUpdates(resource, availability);
+    default:
+      return {};
+  }
+};
 
 export const getStringArrayFieldValues = (
   resource: NewResource,
@@ -132,6 +194,113 @@ export const toggleStringArrayFieldValue = (
     : [...values, value];
 };
 
+const getStartFeatureInvestigationUpdates = (
+  resource: NewResource,
+  availability: KoreanFieldworkQuickRecordAvailability
+): Record<string, unknown> => {
+  const updates: Record<string, unknown> = {};
+
+  if (availability.featureStatus) {
+    updates[FIELDWORK_QUICK_FIELDS.featureStatus] = 'investigating';
+  }
+
+  if (availability.checklist) {
+    updates[FIELDWORK_QUICK_FIELDS.checklist] = mergeStringArrayFieldValues(
+      resource,
+      FIELDWORK_QUICK_FIELDS.checklist,
+      ['preInvestigationPhotoTaken', 'inProgressPhotoTaken']
+    );
+  }
+
+  if (availability.quality) {
+    updates[FIELDWORK_QUICK_FIELDS.quality] = mergeStringArrayFieldValues(
+      resource,
+      FIELDWORK_QUICK_FIELDS.quality,
+      ['immediateRecording']
+    );
+  }
+
+  if (availability.timing && !hasTextValue(
+    getResourceFieldValue(resource, FIELDWORK_QUICK_FIELDS.timing)
+  )) {
+    updates[FIELDWORK_QUICK_FIELDS.timing] = 'duringFieldwork';
+  }
+
+  if (availability.verification && canUseObservedInField(resource)) {
+    updates[FIELDWORK_QUICK_FIELDS.verification] = 'observedInField';
+  }
+
+  return updates;
+};
+
+const getCloseFeatureInvestigationUpdates = (
+  resource: NewResource,
+  availability: KoreanFieldworkQuickRecordAvailability
+): Record<string, unknown> => {
+  const updates: Record<string, unknown> = {};
+
+  if (availability.featureStatus) {
+    updates[FIELDWORK_QUICK_FIELDS.featureStatus] = 'confirmed';
+  }
+
+  if (availability.checklist) {
+    updates[FIELDWORK_QUICK_FIELDS.checklist] = mergeStringArrayFieldValues(
+      resource,
+      FIELDWORK_QUICK_FIELDS.checklist,
+      ['completionPhotoTaken', 'measuredDrawingCompleted']
+    );
+  }
+
+  if (availability.quality) {
+    updates[FIELDWORK_QUICK_FIELDS.quality] = mergeStringArrayFieldValues(
+      resource,
+      FIELDWORK_QUICK_FIELDS.quality,
+      [
+        'factualAccuracy',
+        'observationInterpretationSeparated',
+        'fieldToReportContinuity',
+      ]
+    );
+  }
+
+  if (availability.timing && !hasTextValue(
+    getResourceFieldValue(resource, FIELDWORK_QUICK_FIELDS.timing)
+  )) {
+    updates[FIELDWORK_QUICK_FIELDS.timing] = 'sameDayFieldRecord';
+  }
+
+  if (availability.verification && canUseObservedInField(resource)) {
+    updates[FIELDWORK_QUICK_FIELDS.verification] = 'observedInField';
+  }
+
+  return updates;
+};
+
+const mergeStringArrayFieldValues = (
+  resource: NewResource,
+  fieldName: string,
+  values: string[]
+): string[] => {
+  const mergedValues = [...getStringArrayFieldValues(resource, fieldName)];
+
+  values.forEach((value) => {
+    if (!mergedValues.includes(value)) mergedValues.push(value);
+  });
+
+  return mergedValues;
+};
+
+const canUseObservedInField = (resource: NewResource): boolean => {
+  const verificationState = getResourceFieldValue(
+    resource,
+    FIELDWORK_QUICK_FIELDS.verification
+  );
+
+  return !hasTextValue(verificationState)
+    || verificationState === 'candidate'
+    || verificationState === 'pendingDecision';
+};
+
 const getCategoryFieldNames = (category: CategoryForm | undefined): Set<string> => {
   if (!category) return new Set();
 
@@ -146,3 +315,6 @@ export const getResourceFieldValue = (
 ): unknown => (
   resource as unknown as Record<string, unknown>
 )[fieldName];
+
+const hasTextValue = (value: unknown): boolean =>
+  typeof value === 'string' && value.trim().length > 0;

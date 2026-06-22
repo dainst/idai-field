@@ -13,12 +13,16 @@ import {
 } from 'react-native';
 import {
   FEATURE_CHECKLIST_QUICK_OPTIONS,
+  FEATURE_STATUS_QUICK_OPTIONS,
   FIELDWORK_QUICK_FIELDS,
   getKoreanFieldworkQuickRecordAvailability,
+  getKoreanFieldworkQuickPresetUpdates,
+  getKoreanFieldworkQuickPresets,
   getResourceFieldValue,
   getStringArrayFieldValues,
   hasKoreanFieldworkQuickRecordActions,
   KoreanFieldworkQuickOption,
+  KoreanFieldworkQuickPreset,
   QUALITY_QUICK_OPTIONS,
   TIMING_QUICK_OPTIONS,
   toggleStringArrayFieldValue,
@@ -29,28 +33,83 @@ interface KoreanFieldworkQuickRecordPanelProps {
   category: CategoryForm;
   resource: NewResource;
   onUpdateResourceField: (fieldName: string, value: unknown) => void;
+  onUpdateResourceFields?: (updates: Record<string, unknown>) => void;
 }
 
 const KoreanFieldworkQuickRecordPanel: React.FC<KoreanFieldworkQuickRecordPanelProps> = ({
   category,
   resource,
   onUpdateResourceField,
+  onUpdateResourceFields,
 }) => {
   const availability = useMemo(
     () => getKoreanFieldworkQuickRecordAvailability(category, resource),
     [category, resource]
   );
+  const presets = useMemo(
+    () => getKoreanFieldworkQuickPresets(availability),
+    [availability]
+  );
 
   if (!hasKoreanFieldworkQuickRecordActions(availability)) return null;
+
+  const applyPreset = (preset: KoreanFieldworkQuickPreset) => {
+    const updates = getKoreanFieldworkQuickPresetUpdates(
+      resource,
+      availability,
+      preset.id
+    );
+
+    if (Object.keys(updates).length === 0) return;
+
+    if (onUpdateResourceFields) {
+      onUpdateResourceFields(updates);
+      return;
+    }
+
+    Object.entries(updates).forEach(([fieldName, value]) =>
+      onUpdateResourceField(fieldName, value)
+    );
+  };
 
   return (
     <View style={styles.container} testID="koreanFieldworkQuickRecordPanel">
       <View style={styles.headerRow}>
         <View style={styles.headerTitleRow}>
           <MaterialIcons name="fact-check" size={18} color="#175cd3" />
-          <Text style={styles.title}>현장 점검</Text>
+          <Text style={styles.title}>현장 빠른 입력</Text>
         </View>
       </View>
+
+      {presets.length > 0 && (
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.presetRow}
+        >
+          {presets.map((preset) => (
+            <PresetButton
+              key={preset.id}
+              preset={preset}
+              onPress={() => applyPreset(preset)}
+            />
+          ))}
+        </ScrollView>
+      )}
+
+      {availability.featureStatus && (
+        <QuickSection title="유구 진행">
+          <OptionRow
+            options={FEATURE_STATUS_QUICK_OPTIONS}
+            activeValues={getSingleValue(resource, FIELDWORK_QUICK_FIELDS.featureStatus)}
+            onPress={(value) => onUpdateResourceField(
+              FIELDWORK_QUICK_FIELDS.featureStatus,
+              value
+            )}
+            singleChoice
+          />
+        </QuickSection>
+      )}
 
       {availability.checklist && (
         <QuickSection title="조사 과정표">
@@ -122,6 +181,32 @@ const KoreanFieldworkQuickRecordPanel: React.FC<KoreanFieldworkQuickRecordPanelP
     </View>
   );
 };
+
+const PresetButton: React.FC<{
+  preset: KoreanFieldworkQuickPreset;
+  onPress: () => void;
+}> = ({ preset, onPress }) => (
+  <TouchableOpacity
+    activeOpacity={0.84}
+    onPress={onPress}
+    style={styles.presetButton}
+    testID={`quickRecordPreset_${preset.id}`}
+  >
+    <MaterialIcons
+      name={preset.icon as keyof typeof MaterialIcons.glyphMap}
+      size={17}
+      color="#175cd3"
+    />
+    <View style={styles.presetTextWrap}>
+      <Text style={styles.presetLabel} numberOfLines={1}>
+        {preset.label}
+      </Text>
+      <Text style={styles.presetDetail} numberOfLines={1}>
+        {preset.detail}
+      </Text>
+    </View>
+  </TouchableOpacity>
+);
 
 const QuickSection: React.FC<{
   title: string;
@@ -219,6 +304,37 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '900',
     marginLeft: 5,
+  },
+  presetRow: {
+    paddingRight: 8,
+    paddingTop: 9,
+  },
+  presetButton: {
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderColor: '#b2ddff',
+    borderRadius: 6,
+    borderWidth: 1,
+    flexDirection: 'row',
+    marginRight: 7,
+    minHeight: 45,
+    paddingHorizontal: 9,
+    width: 188,
+  },
+  presetTextWrap: {
+    flex: 1,
+    marginLeft: 6,
+  },
+  presetLabel: {
+    color: '#175cd3',
+    fontSize: 12,
+    fontWeight: '900',
+  },
+  presetDetail: {
+    color: '#667085',
+    fontSize: 10,
+    fontWeight: '700',
+    marginTop: 2,
   },
   section: {
     marginTop: 8,

@@ -216,6 +216,7 @@ const DocumentAdd: React.FC = () => {
             category={category}
             resource={newResource}
             onUpdateResourceField={updateResource}
+            onUpdateResourceFields={applyResourceUpdates}
           />
         </View>
       }

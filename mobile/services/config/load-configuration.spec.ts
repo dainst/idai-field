@@ -1,9 +1,18 @@
-import { ConfigReader, ConfigurationDocument, IdGenerator, PouchdbDatastore } from 'idai-field-core';
+import {
+  ConfigReader,
+  ConfigurationDocument,
+  DEFAULT_PROJECT_LANGUAGES,
+  IdGenerator,
+  KOREAN_FIELDWORK_GROUP_NAME,
+  KOREAN_FIELDWORK_PROJECT_LANGUAGES,
+  KOREAN_FIELDWORK_PROJECT_PREFIX,
+  PouchdbDatastore,
+} from 'idai-field-core';
 import PouchDB from 'pouchdb-node';
 import loadConfiguration from './load-configuration';
 
 describe('loadConfiguration()', () => {
-  const project = 'korean-fieldwork-mobile-test';
+  const project = `${KOREAN_FIELDWORK_PROJECT_PREFIX}mobile-test`;
   const defaultProject = 'default-mobile-test';
   let pouchdbDatastore: PouchdbDatastore;
 
@@ -55,21 +64,21 @@ describe('loadConfiguration()', () => {
     const config = await loadConfiguration(
       pouchdbDatastore,
       project,
-      ['ko', 'en'],
+      KOREAN_FIELDWORK_PROJECT_LANGUAGES.slice(),
       'Testuser'
     );
 
     expect(config.getCategory('DailyLog')).toBeDefined();
     expect(config.getCategory('TermAuthority')).toBeDefined();
     expect(config.getCategory('Feature')!.groups[0]?.name).toBe('stem');
-    expect(config.getCategory('Feature')!.groups.map(group => group.name)).toContain('koreanFieldwork');
+    expect(config.getCategory('Feature')!.groups.map(group => group.name)).toContain(KOREAN_FIELDWORK_GROUP_NAME);
   });
 
   it('falls back to the default configuration if no project configuration document exists', async () => {
     const config = await loadConfiguration(
       pouchdbDatastore,
       defaultProject,
-      ['en'],
+      DEFAULT_PROJECT_LANGUAGES.slice(),
       'Testuser'
     );
 
@@ -88,6 +97,6 @@ const createKoreanFieldworkConfigurationDocument = async (project: string) => {
     project,
     'Testuser'
   );
-  configurationDocument.resource.projectLanguages = ['ko', 'en'];
+  configurationDocument.resource.projectLanguages = KOREAN_FIELDWORK_PROJECT_LANGUAGES.slice();
   return configurationDocument;
 };

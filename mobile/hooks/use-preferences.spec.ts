@@ -1,9 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { KOREAN_FIELDWORK_PROJECT_LANGUAGES, KOREAN_FIELDWORK_PROJECT_PREFIX } from 'idai-field-core';
 import { act, renderHook, waitFor } from '@testing-library/react-native';
 import { defaultMapSettings } from '../components/Project/Map/map-settings';
 import usePreferences from './use-preferences';
 
 describe('usePreferences', () => {
+    const koreanFieldworkProject = `${KOREAN_FIELDWORK_PROJECT_PREFIX}test`;
 
     beforeEach(() => {
 
@@ -41,11 +43,12 @@ describe('usePreferences', () => {
         const { result } = await renderUsePreferences();
 
         await act(async () => {
-            result.current.setCurrentProject('korean-fieldwork-test', ['ko', 'en']);
+            result.current.setCurrentProject(koreanFieldworkProject, KOREAN_FIELDWORK_PROJECT_LANGUAGES.slice());
         });
 
-        expect(result.current.preferences.languages).toEqual(['ko', 'en']);
-        expect(result.current.preferences.projects['korean-fieldwork-test'].languages).toEqual(['ko', 'en']);
+        expect(result.current.preferences.languages).toEqual(KOREAN_FIELDWORK_PROJECT_LANGUAGES);
+        expect(result.current.preferences.projects[koreanFieldworkProject].languages)
+            .toEqual(KOREAN_FIELDWORK_PROJECT_LANGUAGES);
     });
 
 
@@ -54,12 +57,12 @@ describe('usePreferences', () => {
         const { result } = await renderUsePreferences();
 
         await act(async () => {
-            result.current.setCurrentProject('korean-fieldwork-test', ['ko', 'en']);
+            result.current.setCurrentProject(koreanFieldworkProject, KOREAN_FIELDWORK_PROJECT_LANGUAGES.slice());
             result.current.setCurrentProject('default-test', ['en']);
-            result.current.setCurrentProject('korean-fieldwork-test');
+            result.current.setCurrentProject(koreanFieldworkProject);
         });
 
-        expect(result.current.preferences.languages).toEqual(['ko', 'en']);
+        expect(result.current.preferences.languages).toEqual(KOREAN_FIELDWORK_PROJECT_LANGUAGES);
     });
 
 
@@ -68,8 +71,8 @@ describe('usePreferences', () => {
         const { result } = await renderUsePreferences();
 
         await act(async () => {
-            result.current.setCurrentProject('korean-fieldwork-test', ['ko', 'en']);
-            result.current.setProjectSettings('korean-fieldwork-test', {
+            result.current.setCurrentProject(koreanFieldworkProject, KOREAN_FIELDWORK_PROJECT_LANGUAGES.slice());
+            result.current.setProjectSettings(koreanFieldworkProject, {
                 url: 'https://test.url',
                 password: 'testword',
                 connected: true,
@@ -77,7 +80,8 @@ describe('usePreferences', () => {
             });
         });
 
-        expect(result.current.preferences.projects['korean-fieldwork-test'].languages).toEqual(['ko', 'en']);
+        expect(result.current.preferences.projects[koreanFieldworkProject].languages)
+            .toEqual(KOREAN_FIELDWORK_PROJECT_LANGUAGES);
     });
 
 

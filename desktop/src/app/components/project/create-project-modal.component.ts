@@ -1,7 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { isEmpty  } from 'tsfun';
-import { Labels, Template, I18N, ProjectConfiguration, CategoryForm } from 'idai-field-core';
+import {
+    CategoryForm,
+    I18N,
+    KOREAN_FIELDWORK_PROJECT_LANGUAGES,
+    KOREAN_FIELDWORK_PROJECT_PREFIX,
+    KOREAN_FIELDWORK_TEMPLATE_ID,
+    Labels,
+    ProjectConfiguration,
+    Template
+} from 'idai-field-core';
 import { ProjectIdentifierValidation } from '../../model/project-identifier-validation';
 import { ConfigurationIndex } from '../../services/configuration/index/configuration-index';
 import { Language, Languages } from '../../services/languages';
@@ -16,9 +25,6 @@ import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
 
 const remote = window.require('@electron/remote');
-const KOREAN_FIELDWORK_TEMPLATE = 'koreanFieldwork';
-const KOREAN_FIELDWORK_PROJECT_PREFIX = 'korean-fieldwork-';
-const KOREAN_FIELDWORK_LANGUAGES = ['ko', 'en'];
 
 
 @Component({
@@ -211,11 +217,11 @@ export class CreateProjectModalComponent implements OnInit {
 
     private applyTemplateDefaults() {
 
-        if (this.selectedTemplate?.name !== KOREAN_FIELDWORK_TEMPLATE) return;
+        if (this.selectedTemplate?.name !== KOREAN_FIELDWORK_TEMPLATE_ID) return;
 
         if (!this.projectIdentifier) this.projectIdentifier = KOREAN_FIELDWORK_PROJECT_PREFIX;
         if (!this.selectedLanguages || this.selectedLanguages.length === 0) {
-            this.selectedLanguages = KOREAN_FIELDWORK_LANGUAGES;
+            this.selectedLanguages = KOREAN_FIELDWORK_PROJECT_LANGUAGES.slice();
             this.selectedLanguageObjects = this.selectedLanguages.map(languageCode => this.languages[languageCode]);
         }
     }

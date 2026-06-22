@@ -4,6 +4,7 @@ import {
   CategoryForm,
   Field,
   Group,
+  KOREAN_FIELDWORK_GROUP_NAME,
   // Groups,
   NewResource,
   Resource,
@@ -36,7 +37,6 @@ interface DocumentFormProps {
 }
 
 const BTN_SIZE = 18;
-const KOREAN_FIELDWORK_GROUP = 'koreanFieldwork';
 const GROUP_PICKER_THRESHOLD = 6;
 
 const DocumentForm: React.FC<DocumentFormProps> = ({
@@ -131,12 +131,12 @@ const shouldShow = (field: Field) =>
   field !== undefined && field.editable === true;
 
 const prioritizeKoreanFieldworkGroup = (groups: Group[]): Group[] => {
-  const koreanFieldworkGroup = groups.find((group) => group.name === KOREAN_FIELDWORK_GROUP);
+  const koreanFieldworkGroup = groups.find((group) => group.name === KOREAN_FIELDWORK_GROUP_NAME);
   if (!koreanFieldworkGroup) return groups;
 
   return [
     koreanFieldworkGroup,
-    ...groups.filter((group) => group.name !== KOREAN_FIELDWORK_GROUP),
+    ...groups.filter((group) => group.name !== KOREAN_FIELDWORK_GROUP_NAME),
   ];
 };
 

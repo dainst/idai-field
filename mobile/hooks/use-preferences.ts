@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { DEFAULT_PROJECT_LANGUAGES, getDefaultProjectLanguages } from 'idai-field-core';
 import { useEffect, useState } from 'react';
 import { compose, detach, prepend, set, subtract, update } from 'tsfun';
 import { Preferences, ProjectSettings } from '@/models/preferences';
@@ -72,7 +73,7 @@ const usePreferences = (): UsePreferences => {
 
   const setLanguages = (languages: string[]) =>
     setPreferences((preferences) => {
-      if (!preferences.currentProject) return { ...preferences, languages };
+      if (!preferences.currentProject) return { ...preferences, languages: languages.slice() };
 
       return {
         ...preferences,
@@ -129,16 +130,12 @@ const savePreferences = async (preferences: Preferences) =>
   await AsyncStorage.setItem('preferences', JSON.stringify(preferences));
 
 export const getDefaultPreferences = (): Preferences => ({
-  languages: ['en'], // TODO make language configurable
+  languages: DEFAULT_PROJECT_LANGUAGES.slice(),
   currentProject: '',
   username: '',
   recentProjects: [],
   projects: {},
 });
-
-const KOREAN_FIELDWORK_PROJECT_PREFIX = 'korean-fieldwork';
-const DEFAULT_PROJECT_LANGUAGES = ['en'];
-const KOREAN_FIELDWORK_LANGUAGES = ['ko', 'en'];
 
 const getDefaultProjectSettings = (project: string = ''): ProjectSettings => ({
   url: '',
@@ -176,18 +173,15 @@ const normalizeProjectSettings = (
   project: string,
   projectSettings: Partial<ProjectSettings>,
   previousProjectSettings?: ProjectSettings
-): ProjectSettings => ({
-  ...getDefaultProjectSettings(project),
-  ...previousProjectSettings,
-  ...projectSettings,
-  languages: projectSettings.languages
+): ProjectSettings => {
+  const languages = projectSettings.languages
     ?? previousProjectSettings?.languages
-    ?? getDefaultProjectLanguages(project),
-});
+    ?? getDefaultProjectLanguages(project);
 
-const getDefaultProjectLanguages = (project: string): string[] =>
-  isKoreanFieldworkProject(project) ? KOREAN_FIELDWORK_LANGUAGES : DEFAULT_PROJECT_LANGUAGES;
-
-const isKoreanFieldworkProject = (project: string): boolean =>
-  project === KOREAN_FIELDWORK_PROJECT_PREFIX
-  || project.startsWith(`${KOREAN_FIELDWORK_PROJECT_PREFIX}-`);
+  return {
+    ...getDefaultProjectSettings(project),
+    ...previousProjectSettings,
+    ...projectSettings,
+    languages: languages.slice(),
+  };
+};

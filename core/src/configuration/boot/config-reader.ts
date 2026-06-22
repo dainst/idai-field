@@ -122,6 +122,7 @@ import libraryValuelistsLanguageProjectsIt from '../../../config/Library/Valueli
 import libraryValuelistsLanguageProjectsKo from '../../../config/Library/Valuelists/Language.projects.ko.json';
 import libraryValuelistsLanguageProjectsTr from '../../../config/Library/Valuelists/Language.projects.tr.json';
 import { LanguageConfiguration } from '../model';
+import { KOREAN_FIELDWORK_CONFIGURATION_NAME } from '../project-configuration-names';
 
 
 const PATH_MAP: Record<string, any> = {
@@ -226,7 +227,7 @@ const CUSTOM_LANGUAGE_CONFIGURATIONS: Record<string, { [language: string]: Langu
     'KarthagoCircus': { en: languageKarthagoCircus_en, fr: languageKarthagoCircus_fr },
     'Kephissostal': { de: languageKephissostal_de },
     'KGR': { de: languageKGR_de },
-    'KoreanFieldwork': { en: languageKoreanFieldwork_en, ko: languageKoreanFieldwork_ko },
+    [KOREAN_FIELDWORK_CONFIGURATION_NAME]: { en: languageKoreanFieldwork_en, ko: languageKoreanFieldwork_ko },
     'Meninx': { de: languageMeninx_de, en: languageMeninx_en },
     'Milet': { de: languageMilet_de, en: languageMilet_en, fr: languageMilet_fr },
     'MonTur': { de: languageMonTur_de },

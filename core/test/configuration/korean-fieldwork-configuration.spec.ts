@@ -1,7 +1,15 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { ConfigReader } from '../../src/configuration/boot/config-reader';
-import { getConfigurationName, PROJECT_MAPPING } from '../../src/configuration/project-configuration-names';
+import {
+    getConfigurationName,
+    KOREAN_FIELDWORK_CONFIGURATION_NAME,
+    KOREAN_FIELDWORK_PROJECT_IDENTIFIER,
+    KOREAN_FIELDWORK_PROJECT_LABEL,
+    KOREAN_FIELDWORK_PROJECT_PREFIX,
+    KOREAN_FIELDWORK_TEMPLATE_ID,
+    PROJECT_MAPPING
+} from '../../src/configuration/project-configuration-names';
 import { ConstraintIndex } from '../../src/index/constraint-index';
 
 
@@ -67,10 +75,11 @@ describe('KoreanFieldwork project configuration', () => {
 
     it('maps Korean fieldwork project identifiers to the KoreanFieldwork configuration', () => {
 
-        expect(getConfigurationName('korean-fieldwork')).toBe('KoreanFieldwork');
-        expect(getConfigurationName('korean-fieldwork-training')).toBe('KoreanFieldwork');
-        expect(PROJECT_MAPPING['korean-fieldwork'].prefix).toBe('KoreanFieldwork');
-        expect(PROJECT_MAPPING['korean-fieldwork'].label).toBe('한국형 야장');
+        expect(getConfigurationName(KOREAN_FIELDWORK_PROJECT_IDENTIFIER)).toBe(KOREAN_FIELDWORK_CONFIGURATION_NAME);
+        expect(getConfigurationName(`${KOREAN_FIELDWORK_PROJECT_PREFIX}training`))
+            .toBe(KOREAN_FIELDWORK_CONFIGURATION_NAME);
+        expect(PROJECT_MAPPING[KOREAN_FIELDWORK_PROJECT_IDENTIFIER].prefix).toBe(KOREAN_FIELDWORK_CONFIGURATION_NAME);
+        expect(PROJECT_MAPPING[KOREAN_FIELDWORK_PROJECT_IDENTIFIER].label).toBe(KOREAN_FIELDWORK_PROJECT_LABEL);
     });
 
 
@@ -81,7 +90,7 @@ describe('KoreanFieldwork project configuration', () => {
         const templateLanguagesKo = configReader.read('/Library/Templates/Language.ko.json');
         const templateLanguagesEn = configReader.read('/Library/Templates/Language.en.json');
         const koreanFieldworkConfig = configReader.read('/Config-KoreanFieldwork.json');
-        const template = templates.koreanFieldwork;
+        const template = templates[KOREAN_FIELDWORK_TEMPLATE_ID];
         const expectedForms = [
             'Project',
             'Operation',
@@ -119,8 +128,8 @@ describe('KoreanFieldwork project configuration', () => {
         ];
 
         expect(template).toBeDefined();
-        expect(templateLanguagesKo.koreanFieldwork.label).toBe('한국형 야장');
-        expect(templateLanguagesEn.koreanFieldwork.label).toBe('Korean field notebook');
+        expect(templateLanguagesKo[KOREAN_FIELDWORK_TEMPLATE_ID].label).toBe(KOREAN_FIELDWORK_PROJECT_LABEL);
+        expect(templateLanguagesEn[KOREAN_FIELDWORK_TEMPLATE_ID].label).toBe('Korean field notebook');
         expect(template.configuration.languages.ko).toBeDefined();
         expect(template.configuration.languages.en).toBeDefined();
         expect(template.configuration.order).toEqual(expectedForms);

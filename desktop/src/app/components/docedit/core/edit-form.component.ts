@@ -1,13 +1,10 @@
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
 import { isUndefinedOrEmpty, clone, Map } from 'tsfun';
-import { Condition, Document, Field, Group, Labels, Resource } from 'idai-field-core';
+import { Condition, Document, Field, Group, KOREAN_FIELDWORK_GROUP_NAME, Labels, Resource } from 'idai-field-core';
 import { Language, Languages } from '../../../services/languages';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { Messages } from '../../messages/messages';
 import { M } from '../../messages/m';
-
-const KOREAN_FIELDWORK_GROUP = 'koreanFieldwork';
-
 
 @Component({
     selector: 'edit-form',
@@ -146,7 +143,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     private prioritizeKoreanFieldworkGroup() {
 
-        const koreanFieldworkGroupIndex = this.groups.findIndex(group => group.name === KOREAN_FIELDWORK_GROUP);
+        const koreanFieldworkGroupIndex = this.groups.findIndex(group => group.name === KOREAN_FIELDWORK_GROUP_NAME);
         if (koreanFieldworkGroupIndex < 1) return;
 
         const [koreanFieldworkGroup] = this.groups.splice(koreanFieldworkGroupIndex, 1);

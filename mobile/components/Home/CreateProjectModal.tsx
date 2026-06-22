@@ -1,4 +1,11 @@
 import { Ionicons } from '@expo/vector-icons';
+import {
+  DEFAULT_PROJECT_LANGUAGES,
+  KOREAN_FIELDWORK_PROJECT_LABEL,
+  KOREAN_FIELDWORK_PROJECT_LANGUAGES,
+  KOREAN_FIELDWORK_PROJECT_PREFIX,
+  KOREAN_FIELDWORK_TEMPLATE_ID,
+} from 'idai-field-core';
 import React, { useState } from 'react';
 import { Modal, View, StyleSheet, Platform, KeyboardAvoidingView, Text } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -13,18 +20,17 @@ interface CreateProjectModalProps {
   onClose: () => void;
 }
 
-const DEFAULT_PROJECT_LANGUAGES = ['en'];
-const KOREAN_FIELDWORK_LANGUAGES = ['ko', 'en'];
-const KOREAN_FIELDWORK_PROJECT_PREFIX = 'korean-fieldwork-';
+const DEFAULT_PROJECT_TYPE = 'default';
+type ProjectType = typeof DEFAULT_PROJECT_TYPE | typeof KOREAN_FIELDWORK_TEMPLATE_ID;
 
 const CreateProjectModal: React.FC<CreateProjectModalProps> = ({
   onProjectCreated,
   onClose,
 }) => {
   const [project, setProject] = useState<string>('');
-  const [projectType, setProjectType] = useState<'default' | 'koreanFieldwork'>('default');
+  const [projectType, setProjectType] = useState<ProjectType>(DEFAULT_PROJECT_TYPE);
   const insets = useSafeAreaInsets();
-  const isKoreanFieldwork = projectType === 'koreanFieldwork';
+  const isKoreanFieldwork = projectType === KOREAN_FIELDWORK_TEMPLATE_ID;
   const isProjectValid = isKoreanFieldwork
     ? project.trim().length > KOREAN_FIELDWORK_PROJECT_PREFIX.length
     : project.trim() !== '';
@@ -33,24 +39,24 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({
     if (!isProjectValid) return;
     onProjectCreated(
       project.trim(),
-      isKoreanFieldwork ? KOREAN_FIELDWORK_LANGUAGES : DEFAULT_PROJECT_LANGUAGES
+      (isKoreanFieldwork ? KOREAN_FIELDWORK_PROJECT_LANGUAGES : DEFAULT_PROJECT_LANGUAGES).slice()
     );
     setProject('');
-    setProjectType('default');
+    setProjectType(DEFAULT_PROJECT_TYPE);
     onClose();
   };
 
   const onCancel = () => {
     setProject('');
-    setProjectType('default');
+    setProjectType(DEFAULT_PROJECT_TYPE);
     onClose();
   };
 
-  const selectProjectType = (type: 'default' | 'koreanFieldwork') => {
+  const selectProjectType = (type: ProjectType) => {
     setProjectType(type);
     setProject((currentProject) => {
-      if (type === 'koreanFieldwork' && !currentProject.trim()) return KOREAN_FIELDWORK_PROJECT_PREFIX;
-      if (type === 'default' && currentProject === KOREAN_FIELDWORK_PROJECT_PREFIX) return '';
+      if (type === KOREAN_FIELDWORK_TEMPLATE_ID && !currentProject.trim()) return KOREAN_FIELDWORK_PROJECT_PREFIX;
+      if (type === DEFAULT_PROJECT_TYPE && currentProject === KOREAN_FIELDWORK_PROJECT_PREFIX) return '';
       return currentProject;
     });
   };
@@ -100,15 +106,15 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({
               <Button
                 testID="project-type-default"
                 title="Default"
-                variant={projectType === 'default' ? 'primary' : 'secondary'}
-                onPress={() => selectProjectType('default')}
+                variant={projectType === DEFAULT_PROJECT_TYPE ? 'primary' : 'secondary'}
+                onPress={() => selectProjectType(DEFAULT_PROJECT_TYPE)}
                 style={styles.projectTypeButton}
               />
               <Button
                 testID="project-type-korean-fieldwork"
-                title="한국형 야장"
+                title={KOREAN_FIELDWORK_PROJECT_LABEL}
                 variant={isKoreanFieldwork ? 'primary' : 'secondary'}
-                onPress={() => selectProjectType('koreanFieldwork')}
+                onPress={() => selectProjectType(KOREAN_FIELDWORK_TEMPLATE_ID)}
                 style={styles.projectTypeButton}
               />
             </View>
@@ -122,7 +128,7 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({
               autoCorrect={false}
               autoFocus
               helpText={isKoreanFieldwork
-                ? '한국형 야장은 korean-fieldwork- 접두어와 ko/en 프로젝트 언어를 사용합니다.'
+                ? `${KOREAN_FIELDWORK_PROJECT_LABEL}은 ${KOREAN_FIELDWORK_PROJECT_PREFIX} 접두어와 ${KOREAN_FIELDWORK_PROJECT_LANGUAGES.join('/')} 프로젝트 언어를 사용합니다.`
                 : 'The project name is the unique identifier for the project. Make sure to use the exact same project name if you intend to sync to other instances of Field.'}
               invalidText="Project name must not be empty."
               isValid={isProjectValid}

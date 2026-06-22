@@ -5,6 +5,7 @@ import { Relation } from '../model/configuration/relation';
 import { BuiltInCategoryDefinition } from './model/category/built-in-category-definition';
 import { BuiltInFieldDefinition } from './model/field/built-in-field-definition';
 import { DateConfiguration } from '../model/configuration/date-configuration';
+import { KOREAN_FIELDWORK_CONFIGURATION_NAME } from './project-configuration-names';
 
 
 /**
@@ -1783,7 +1784,7 @@ export class BuiltInConfiguration {
             };
         }
 
-        if (customConfigurationName === 'KoreanFieldwork') {
+        if (customConfigurationName === KOREAN_FIELDWORK_CONFIGURATION_NAME) {
             this.builtInCategories.Project.supercategory = true;
             this.builtInCategories.Project.userDefinedSubcategoriesAllowed = true;
             this.builtInCategories.Operation.userDefinedSubcategoriesAllowed = true;

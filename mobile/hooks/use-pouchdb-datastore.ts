@@ -2,6 +2,8 @@ import {
   ConfigReader,
   ConfigurationDocument,
   IdGenerator,
+  isKoreanFieldworkProject,
+  KOREAN_FIELDWORK_PROJECT_LANGUAGES,
   PouchdbDatastore,
   SampleDataLoaderBase,
 } from 'idai-field-core';
@@ -81,8 +83,6 @@ const createProjectDocument = (project: string) => ({
   modified: [],
 });
 
-const KOREAN_FIELDWORK_PROJECT_PREFIX = 'korean-fieldwork';
-const KOREAN_FIELDWORK_LANGUAGES = ['ko', 'en'];
 const createConfigurationDocument = async (
   project: string
 ): Promise<ConfigurationDocument | undefined> => {
@@ -96,10 +96,6 @@ const createConfigurationDocument = async (
     project,
     ''
   );
-  configurationDocument.resource.projectLanguages = KOREAN_FIELDWORK_LANGUAGES;
+  configurationDocument.resource.projectLanguages = KOREAN_FIELDWORK_PROJECT_LANGUAGES.slice();
   return configurationDocument;
 };
-
-const isKoreanFieldworkProject = (project: string): boolean =>
-  project === KOREAN_FIELDWORK_PROJECT_PREFIX
-  || project.startsWith(`${KOREAN_FIELDWORK_PROJECT_PREFIX}-`);

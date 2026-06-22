@@ -1,4 +1,13 @@
 // Ordered by Name
+export const DEFAULT_PROJECT_LANGUAGES: ReadonlyArray<string> = ['en'];
+export const KOREAN_FIELDWORK_CONFIGURATION_NAME = 'KoreanFieldwork';
+export const KOREAN_FIELDWORK_GROUP_NAME = 'koreanFieldwork';
+export const KOREAN_FIELDWORK_PROJECT_IDENTIFIER = 'korean-fieldwork';
+export const KOREAN_FIELDWORK_PROJECT_LABEL = '한국형 야장';
+export const KOREAN_FIELDWORK_PROJECT_PREFIX = `${KOREAN_FIELDWORK_PROJECT_IDENTIFIER}-`;
+export const KOREAN_FIELDWORK_PROJECT_LANGUAGES: ReadonlyArray<string> = ['ko', 'en'];
+export const KOREAN_FIELDWORK_TEMPLATE_ID = 'koreanFieldwork';
+
 export const PROJECT_MAPPING = {
     'abbircella': { prefix: 'AbbirCella', label: 'AbbirCella' },
     'al-ula': { prefix: 'AlUla', label: 'Al Ula' },
@@ -16,7 +25,10 @@ export const PROJECT_MAPPING = {
     'karthagocircus': { prefix: 'KarthagoCircus', label: 'Karthago Circus' },
     'kephissostal': { prefix: 'Kephissostal', label: 'Kephissostal' },
     'kgr': { prefix: 'KGR', label: 'KGR' },
-    'korean-fieldwork': { prefix: 'KoreanFieldwork', label: '한국형 야장' },
+    [KOREAN_FIELDWORK_PROJECT_IDENTIFIER]: {
+        prefix: KOREAN_FIELDWORK_CONFIGURATION_NAME,
+        label: KOREAN_FIELDWORK_PROJECT_LABEL
+    },
     'meninx-project': { prefix: 'Meninx', label: 'Meninx' },
     'milet': { prefix: 'Milet', label: 'Milet' },
     'monte-turcisi': { prefix: 'MonTur', label: 'Monte Turcisi' },
@@ -38,4 +50,19 @@ export function getConfigurationName(projectIdentifier: string): string {
     }
 
     return 'Default';
+}
+
+
+export function isKoreanFieldworkProject(projectIdentifier: string): boolean {
+
+    return getConfigurationName(projectIdentifier) === KOREAN_FIELDWORK_CONFIGURATION_NAME;
+}
+
+
+export function getDefaultProjectLanguages(projectIdentifier: string): string[] {
+
+    return (isKoreanFieldworkProject(projectIdentifier)
+        ? KOREAN_FIELDWORK_PROJECT_LANGUAGES
+        : DEFAULT_PROJECT_LANGUAGES
+    ).slice();
 }

@@ -1,7 +1,6 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import {
   Document,
-  KoreanFieldworkReadinessIssue,
   getKoreanFieldworkTodaySummary,
 } from 'idai-field-core';
 import { router } from 'expo-router';
@@ -23,6 +22,11 @@ import {
   KOREAN_FIELDWORK_CATEGORIES,
 } from '@/components/Project/korean-fieldwork-categories';
 import { getKoreanFieldworkAllowedChildCategoryNames } from '@/components/Project/korean-fieldwork-child-records';
+import {
+  getKoreanFieldworkCloseoutSummary,
+  KoreanFieldworkCloseoutStatus,
+  KoreanFieldworkCloseoutSummary,
+} from '@/components/Project/korean-fieldwork-closeout';
 import {
   formatKoreanFieldworkParentPath,
   getKoreanFieldworkRecordStatusChips,
@@ -235,6 +239,10 @@ const DocumentsList: React.FC = () => {
     () => getKoreanFieldworkPriorityTasks(todaySummary, documents, 5),
     [documents, todaySummary]
   );
+  const closeoutSummary = useMemo(
+    () => getKoreanFieldworkCloseoutSummary(todaySummary.openIssues, 5),
+    [todaySummary.openIssues]
+  );
   const hierarchyLabel = hierarchyPath.length > 0
     ? hierarchyPath.map((document) => document.resource.identifier).join(' / ')
     : '전체 조사자료';
@@ -440,13 +448,11 @@ const DocumentsList: React.FC = () => {
           </ScrollView>
         </View>
 
-        {todaySummary.openIssues.length > 0 && (
-          <IssueStrip
-            issues={todaySummary.openIssues}
-            documentsById={documentsById}
-            onOpenDocument={onDocumentSelected}
-          />
-        )}
+        <CloseoutPanel
+          summary={closeoutSummary}
+          documentsById={documentsById}
+          onOpenDocument={onDocumentSelected}
+        />
 
         <View style={styles.recordsBand}>
           <View style={styles.sectionHeader}>
@@ -547,39 +553,154 @@ const QuickAction: React.FC<{
   </TouchableOpacity>
 );
 
-const IssueStrip: React.FC<{
-  issues: KoreanFieldworkReadinessIssue[];
+const CloseoutPanel: React.FC<{
+  summary: KoreanFieldworkCloseoutSummary;
   documentsById: Map<string, Document>;
   onOpenDocument: (document: Document) => void;
-}> = ({ issues, documentsById, onOpenDocument }) => (
-  <View style={styles.issueStrip}>
-    <View style={styles.issueStripTitleRow}>
-      <MaterialIcons name="warning" size={18} color={colors.danger} />
-      <Text style={styles.issueStripTitle}>마감 전 확인 필요</Text>
+}> = ({ summary, documentsById, onOpenDocument }) => (
+  <View style={[styles.closeoutPanel, closeoutPanelStyle(summary.status)]}>
+    <View style={styles.closeoutHeader}>
+      <View style={styles.closeoutTitleRow}>
+        <MaterialIcons
+          name={closeoutIcon(summary.status)}
+          size={19}
+          color={closeoutColor(summary.status)}
+        />
+        <Text style={[styles.closeoutTitle, { color: closeoutColor(summary.status) }]}>
+          오늘 마감 점검 · {summary.title}
+        </Text>
+      </View>
+      <View style={styles.closeoutCountRow}>
+        <CloseoutCount label="중대" value={summary.counts.critical} tone="critical" />
+        <CloseoutCount label="주의" value={summary.counts.warning} tone="warning" />
+        <CloseoutCount label="참고" value={summary.counts.info} tone="info" />
+      </View>
     </View>
-    {issues.slice(0, 3).map((issue) => {
+    <Text style={styles.closeoutDetail}>{summary.detail}</Text>
+    {summary.issues.map((issue) => {
       const document = documentsById.get(issue.documentId);
 
       return (
         <TouchableOpacity
           key={`${issue.documentId}-${issue.ruleId}`}
           activeOpacity={0.86}
-          style={styles.issueRow}
+          style={[styles.closeoutIssueRow, closeoutIssueStyle(issue.severity)]}
           disabled={!document}
           onPress={() => document && onOpenDocument(document)}
         >
-          <Text style={styles.issueIdentifier} numberOfLines={1}>
-            {issue.identifier}
-          </Text>
-          <Text style={styles.issueAction} numberOfLines={2}>
-            {issue.recommendedAction}
-          </Text>
-          <MaterialIcons name="chevron-right" size={18} color="#7a3d3d" />
+          <View style={[styles.closeoutSeverityBar, closeoutSeverityBarStyle(issue.severity)]} />
+          <View style={styles.closeoutIssueText}>
+            <Text style={styles.closeoutIssueIdentifier} numberOfLines={1}>
+              {issue.identifier}
+            </Text>
+            <Text style={styles.closeoutIssueAction} numberOfLines={2}>
+              {issue.recommendedAction}
+            </Text>
+          </View>
+          {document && (
+            <MaterialIcons name="chevron-right" size={18} color="#667085" />
+          )}
         </TouchableOpacity>
       );
     })}
   </View>
 );
+
+const CloseoutCount: React.FC<{
+  label: string;
+  value: number;
+  tone: 'critical'|'warning'|'info';
+}> = ({ label, value, tone }) => (
+  <View style={[styles.closeoutCount, closeoutCountStyle(tone)]}>
+    <Text style={[styles.closeoutCountValue, { color: closeoutCountColor(tone) }]}>
+      {value}
+    </Text>
+    <Text style={styles.closeoutCountLabel}>{label}</Text>
+  </View>
+);
+
+const closeoutPanelStyle = (status: KoreanFieldworkCloseoutStatus) => {
+  switch (status) {
+    case 'blocked':
+      return styles.closeoutPanelBlocked;
+    case 'needsReview':
+      return styles.closeoutPanelReview;
+    default:
+      return styles.closeoutPanelClear;
+  }
+};
+
+const closeoutCountStyle = (tone: 'critical'|'warning'|'info') => {
+  switch (tone) {
+    case 'critical':
+      return styles.closeoutCountBlocked;
+    case 'warning':
+      return styles.closeoutCountReview;
+    default:
+      return styles.closeoutCountInfo;
+  }
+};
+
+const closeoutIcon = (
+  status: KoreanFieldworkCloseoutStatus
+): keyof typeof MaterialIcons.glyphMap => {
+  switch (status) {
+    case 'blocked':
+      return 'report';
+    case 'needsReview':
+      return 'fact-check';
+    default:
+      return 'verified';
+  }
+};
+
+const closeoutColor = (status: KoreanFieldworkCloseoutStatus): string => {
+  switch (status) {
+    case 'blocked':
+      return colors.danger;
+    case 'needsReview':
+      return '#b54708';
+    default:
+      return '#027a48';
+  }
+};
+
+const closeoutCountColor = (tone: 'critical'|'warning'|'info'): string => {
+  switch (tone) {
+    case 'critical':
+      return colors.danger;
+    case 'warning':
+      return '#b54708';
+    default:
+      return '#175cd3';
+  }
+};
+
+const closeoutIssueStyle = (
+  severity: 'critical'|'warning'|'info'
+) => {
+  switch (severity) {
+    case 'critical':
+      return styles.closeoutIssueCritical;
+    case 'warning':
+      return styles.closeoutIssueWarning;
+    default:
+      return styles.closeoutIssueInfo;
+  }
+};
+
+const closeoutSeverityBarStyle = (
+  severity: 'critical'|'warning'|'info'
+) => {
+  switch (severity) {
+    case 'critical':
+      return styles.closeoutSeverityCritical;
+    case 'warning':
+      return styles.closeoutSeverityWarning;
+    default:
+      return styles.closeoutSeverityInfo;
+  }
+};
 
 const RecordSection: React.FC<{
   title: string;
@@ -1074,47 +1195,127 @@ const styles = StyleSheet.create({
   filterChipTextActive: {
     color: 'white',
   },
-  issueStrip: {
-    backgroundColor: '#fff8f8',
-    borderBottomColor: '#f0b7bd',
+  closeoutPanel: {
     borderBottomWidth: 1,
     paddingHorizontal: 16,
-    paddingVertical: 10,
+    paddingVertical: 11,
   },
-  issueStripTitleRow: {
-    alignItems: 'center',
+  closeoutPanelBlocked: {
+    backgroundColor: '#fff8f8',
+    borderBottomColor: '#f0b7bd',
+  },
+  closeoutPanelReview: {
+    backgroundColor: '#fffbeb',
+    borderBottomColor: '#fedf89',
+  },
+  closeoutPanelClear: {
+    backgroundColor: '#f6fef9',
+    borderBottomColor: '#abefc6',
+  },
+  closeoutHeader: {
+    alignItems: 'flex-start',
     flexDirection: 'row',
-    marginBottom: 6,
+    justifyContent: 'space-between',
   },
-  issueStripTitle: {
-    color: colors.danger,
+  closeoutTitleRow: {
+    alignItems: 'center',
+    flex: 1,
+    flexDirection: 'row',
+    paddingRight: 8,
+  },
+  closeoutTitle: {
     fontSize: 14,
-    fontWeight: '800',
+    fontWeight: '900',
     marginLeft: 6,
   },
-  issueRow: {
+  closeoutDetail: {
+    color: '#475467',
+    fontSize: 12,
+    lineHeight: 17,
+    marginTop: 5,
+  },
+  closeoutCountRow: {
+    flexDirection: 'row',
+  },
+  closeoutCount: {
+    alignItems: 'center',
+    borderRadius: 6,
+    borderWidth: 1,
+    marginLeft: 4,
+    minWidth: 42,
+    paddingHorizontal: 6,
+    paddingVertical: 4,
+  },
+  closeoutCountBlocked: {
+    backgroundColor: '#fff1f3',
+    borderColor: '#fecdca',
+  },
+  closeoutCountReview: {
+    backgroundColor: '#fffaeb',
+    borderColor: '#fedf89',
+  },
+  closeoutCountInfo: {
+    backgroundColor: '#eff8ff',
+    borderColor: '#b2ddff',
+  },
+  closeoutCountValue: {
+    fontSize: 13,
+    fontWeight: '900',
+  },
+  closeoutCountLabel: {
+    color: '#667085',
+    fontSize: 10,
+    fontWeight: '800',
+    marginTop: 1,
+  },
+  closeoutIssueRow: {
     alignItems: 'center',
     backgroundColor: 'white',
-    borderColor: '#f0d0d0',
     borderRadius: 6,
     borderWidth: 1,
     flexDirection: 'row',
-    marginTop: 5,
-    minHeight: 42,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
+    marginTop: 7,
+    minHeight: 50,
+    overflow: 'hidden',
+    paddingRight: 9,
   },
-  issueIdentifier: {
-    color: '#552626',
-    fontSize: 12,
-    fontWeight: '800',
-    marginRight: 8,
-    width: 96,
+  closeoutIssueCritical: {
+    borderColor: '#fecdca',
   },
-  issueAction: {
-    color: '#5f2525',
+  closeoutIssueWarning: {
+    borderColor: '#fedf89',
+  },
+  closeoutIssueInfo: {
+    borderColor: '#b2ddff',
+  },
+  closeoutSeverityBar: {
+    alignSelf: 'stretch',
+    width: 4,
+  },
+  closeoutSeverityCritical: {
+    backgroundColor: colors.danger,
+  },
+  closeoutSeverityWarning: {
+    backgroundColor: '#dc6803',
+  },
+  closeoutSeverityInfo: {
+    backgroundColor: '#1570ef',
+  },
+  closeoutIssueText: {
     flex: 1,
+    paddingHorizontal: 10,
+    paddingVertical: 7,
+  },
+  closeoutIssueIdentifier: {
+    color: '#27343b',
     fontSize: 12,
+    fontWeight: '900',
+  },
+  closeoutIssueAction: {
+    color: '#475467',
+    fontSize: 12,
+    lineHeight: 16,
+    marginTop: 2,
   },
   recordsBand: {
     paddingHorizontal: 16,

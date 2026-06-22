@@ -1,4 +1,9 @@
-import { Document, RelationsManager, SyncStatus } from 'idai-field-core';
+import {
+  Document,
+  getKoreanFieldworkTodaySummary,
+  RelationsManager,
+  SyncStatus,
+} from 'idai-field-core';
 import React, {
   ReactElement,
   useCallback,
@@ -12,6 +17,7 @@ import { DocumentRepository } from '@/repositories/document-repository';
 import { ToastType } from '@/components/common/Toast/ToastProvider';
 import DocumentAddModal from './DocumentAddModal';
 import DocumentRemoveModal from './DocumentRemoveModal';
+import KoreanFieldworkTodayBoard from './KoreanFieldworkTodayBoard';
 
 import Map from './Map/Map';
 import { router, useGlobalSearchParams } from 'expo-router';
@@ -40,6 +46,10 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
 
   const { showToast } = useToast();
   const { documents, isInOverview } = useContext(ProjectContext);
+  const todaySummary = useMemo(
+    () => getKoreanFieldworkTodaySummary(documents),
+    [documents]
+  );
 
   const onQrCodeScanned = useCallback(
     (data: string) => {
@@ -139,6 +149,10 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
           onQrCodeScanned,
         }}
       />
+      <KoreanFieldworkTodayBoard
+        summary={todaySummary}
+        onEditDocument={handleEditDocument}
+      />
       <View style={styles.container}>
         <Map
           repository={repository}
@@ -151,6 +165,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
           editDocument={handleEditDocument}
           removeDocument={openRemoveDocument}
           selectParent={selectParent}
+          readinessIssues={todaySummary.openIssues}
         />
       </View>
     </View>

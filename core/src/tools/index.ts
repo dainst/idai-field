@@ -18,3 +18,4 @@ export * from './i18n';
 export * from './in-place';
 export * from './validation-util';
 export * from './compare';
+export * from './korean-fieldwork-readiness';

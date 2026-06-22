@@ -14,6 +14,10 @@ import LabelsContext from '@/contexts/labels/labels-context';
 import useToast from '@/hooks/use-toast';
 import Button from '@/components/common/Button';
 import DocumentForm from '@/components/common/forms/DocumentForm';
+import SoilProfileCameraButton, {
+  SoilProfileCaptureData,
+} from '@/components/Project/SoilProfileCameraButton';
+import { createSoilProfilePhotoDraft } from '@/components/Project/Map/korean-fieldwork-drafts';
 import { ToastType } from '@/components/common/Toast/ToastProvider';
 // import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
 import { router } from 'expo-router';
@@ -41,15 +45,17 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({
 
   const setResourceToDefault = useCallback(
     () =>
-      setNewResource({
-        identifier: '',
-        relations: createRelations(parentDoc),
-        category: categoryName,
-      }),
+      setNewResource(categoryName === 'SoilProfilePhoto'
+        ? createSoilProfilePhotoDraft(parentDoc).resource
+        : {
+          identifier: '',
+          relations: createRelations(parentDoc),
+          category: categoryName,
+        }),
     [parentDoc, categoryName]
   );
 
-  useEffect(() => setResourceToDefault, [setResourceToDefault, category]);
+  useEffect(() => setResourceToDefault(), [setResourceToDefault, category]);
 
   useEffect(() => {
     if (newResource?.identifier) setSaveBtnEnabled(true);
@@ -78,6 +84,10 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({
     setNewResource(
       (oldResource) => oldResource && { ...oldResource, [key]: value }
     );
+
+  const updateSoilProfileCapture = (data: SoilProfileCaptureData) => {
+    setNewResource((oldResource) => oldResource && { ...oldResource, ...data });
+  };
 
   const saveButtonHandler = () => {
     if (newResource) {
@@ -135,6 +145,11 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({
       returnBtnHandler={onReturn}
       resource={newResource}
       updateFunction={updateResource}
+      resourceActions={
+        categoryName === 'SoilProfilePhoto'
+          ? <SoilProfileCameraButton onCapture={updateSoilProfileCapture} />
+          : undefined
+      }
     />
   );
 };

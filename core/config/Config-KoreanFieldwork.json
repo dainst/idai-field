@@ -1656,6 +1656,103 @@
         }
       ]
     },
+    "SurveyBoundary": {
+      "parent": "Operation",
+      "color": "#2d6cdf",
+      "hidden": [],
+      "fields": {
+        "geometry": {
+          "geometryTypes": ["LineString", "MultiLineString"],
+          "constraintIndexed": true
+        },
+        "surveyBoundaryType": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "surveyBoundarySource": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "surveyBoundaryAccuracy": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "surveyBoundaryNote": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "referenceBasemapProvider": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "referenceBasemapAttribution": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "referenceBasemapNote": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "fieldRecordQuality": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "recordCreationTiming": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "verificationState": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "surveyBoundaryType": "KoreanFieldwork-surveyBoundaryType",
+        "surveyBoundarySource": "KoreanFieldwork-surveyBoundarySource",
+        "surveyBoundaryAccuracy": "KoreanFieldwork-surveyBoundaryAccuracy",
+        "referenceBasemapProvider": "KoreanFieldwork-referenceBasemapProvider",
+        "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
+        "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
+        "verificationState": "KoreanFieldwork-verificationState"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
+        },
+        {
+          "name": "hierarchy",
+          "fields": ["liesWithin"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description"]
+        },
+        {
+          "name": "koreanFieldwork",
+          "fields": [
+            "surveyBoundaryType",
+            "surveyBoundarySource",
+            "surveyBoundaryAccuracy",
+            "surveyBoundaryNote",
+            "referenceBasemapProvider",
+            "referenceBasemapAttribution",
+            "referenceBasemapNote",
+            "fieldRecordQuality",
+            "recordCreationTiming",
+            "verificationState"
+          ]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "spatialLocation"]
+        }
+      ]
+    },
     "FeatureGroup:default": {
       "hidden": [],
       "fields": {
@@ -1673,6 +1770,22 @@
         },
         "geometryConfidence": {
           "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "featureGeometryEditStatus": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "featureGeometryReferenceLayerId": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "featureGeometryRevisionHistory": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "featureGeometryRevisionNote": {
+          "inputType": "text",
           "constraintIndexed": true
         },
         "fieldRecordQuality": {
@@ -1710,6 +1823,7 @@
         "featureRecordingStatus": "KoreanFieldwork-featureRecordingStatus",
         "geometrySource": "KoreanFieldwork-geometrySource",
         "geometryConfidence": "KoreanFieldwork-geometryConfidence",
+        "featureGeometryEditStatus": "KoreanFieldwork-featureGeometryEditStatus",
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
         "settlementSpatialInterpretation": "KoreanFieldwork-settlementSpatialInterpretation",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
@@ -1742,6 +1856,10 @@
             "featureRecordingStatus",
             "geometrySource",
             "geometryConfidence",
+            "featureGeometryEditStatus",
+            "featureGeometryReferenceLayerId",
+            "featureGeometryRevisionHistory",
+            "featureGeometryRevisionNote",
             "fieldRecordQuality",
             "settlementSpatialInterpretation",
             "recordCreationTiming",
@@ -1782,6 +1900,34 @@
         },
         "geometryConfidence": {
           "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "featureGeometryEditStatus": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "featureGeometryReferenceLayerId": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "featureGeometryRevisionHistory": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "featureGeometryRevisionNote": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "featureInvestigationChecklist": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "featureSoilProfilePhotoCount": {
+          "inputType": "unsignedInt",
+          "constraintIndexed": true
+        },
+        "featureChecklistNote": {
+          "inputType": "text",
           "constraintIndexed": true
         },
         "fieldRecordQuality": {
@@ -2162,6 +2308,8 @@
         "featureRecordingStatus": "KoreanFieldwork-featureRecordingStatus",
         "geometrySource": "KoreanFieldwork-geometrySource",
         "geometryConfidence": "KoreanFieldwork-geometryConfidence",
+        "featureGeometryEditStatus": "KoreanFieldwork-featureGeometryEditStatus",
+        "featureInvestigationChecklist": "KoreanFieldwork-featureInvestigationChecklist",
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
         "typologyArgument": "KoreanFieldwork-typologyArgument",
         "chronologyArgument": "KoreanFieldwork-chronologyArgument",
@@ -2280,6 +2428,13 @@
             "featureRecordingStatus",
             "geometrySource",
             "geometryConfidence",
+            "featureGeometryEditStatus",
+            "featureGeometryReferenceLayerId",
+            "featureGeometryRevisionHistory",
+            "featureGeometryRevisionNote",
+            "featureInvestigationChecklist",
+            "featureSoilProfilePhotoCount",
+            "featureChecklistNote",
             "fieldRecordQuality",
             "typologyArgument",
             "chronologyArgument",
@@ -2414,6 +2569,34 @@
           "inputType": "dropdown",
           "constraintIndexed": true
         },
+        "featureGeometryEditStatus": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "featureGeometryReferenceLayerId": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "featureGeometryRevisionHistory": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "featureGeometryRevisionNote": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "featureInvestigationChecklist": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "featureSoilProfilePhotoCount": {
+          "inputType": "unsignedInt",
+          "constraintIndexed": true
+        },
+        "featureChecklistNote": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
         "fieldRecordQuality": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -2543,6 +2726,8 @@
         "featureRecordingStatus": "KoreanFieldwork-featureRecordingStatus",
         "geometrySource": "KoreanFieldwork-geometrySource",
         "geometryConfidence": "KoreanFieldwork-geometryConfidence",
+        "featureGeometryEditStatus": "KoreanFieldwork-featureGeometryEditStatus",
+        "featureInvestigationChecklist": "KoreanFieldwork-featureInvestigationChecklist",
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
         "chronologyArgument": "KoreanFieldwork-chronologyArgument",
         "chronologyUnitDecision": "KoreanFieldwork-chronologyUnitDecision",
@@ -2598,6 +2783,13 @@
             "featureRecordingStatus",
             "geometrySource",
             "geometryConfidence",
+            "featureGeometryEditStatus",
+            "featureGeometryReferenceLayerId",
+            "featureGeometryRevisionHistory",
+            "featureGeometryRevisionNote",
+            "featureInvestigationChecklist",
+            "featureSoilProfilePhotoCount",
+            "featureChecklistNote",
             "fieldRecordQuality",
             "chronologyArgument",
             "chronologyUnitDecision",
@@ -3274,7 +3466,7 @@
       "hidden": [],
       "fields": {
         "layerSequenceNumber": {
-          "inputType": "unsignedInteger",
+          "inputType": "unsignedInt",
           "constraintIndexed": true
         },
         "layerSequenceMeaning": {
@@ -3432,12 +3624,29 @@
         "aerialLayerOpacity": {
           "inputType": "unsignedFloat",
           "constraintIndexed": true
+        },
+        "aerialLayerUpdateStage": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "aerialLayerRevisionGroup": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "aerialLayerRevisionNumber": {
+          "inputType": "unsignedInt",
+          "constraintIndexed": true
+        },
+        "aerialLayerPreviousRevisionId": {
+          "inputType": "input",
+          "constraintIndexed": true
         }
       },
       "valuelists": {
         "aerialLayerType": "KoreanFieldwork-aerialLayerType",
         "aerialGeoreferenceMethod": "KoreanFieldwork-aerialGeoreferenceMethod",
-        "aerialLayerAccuracy": "KoreanFieldwork-aerialLayerAccuracy"
+        "aerialLayerAccuracy": "KoreanFieldwork-aerialLayerAccuracy",
+        "aerialLayerUpdateStage": "KoreanFieldwork-aerialLayerUpdateStage"
       },
       "groups": [
         {
@@ -3461,7 +3670,11 @@
             "aerialControlPoints",
             "aerialCaptureDate",
             "aerialCaptureNote",
-            "aerialLayerOpacity"
+            "aerialLayerOpacity",
+            "aerialLayerUpdateStage",
+            "aerialLayerRevisionGroup",
+            "aerialLayerRevisionNumber",
+            "aerialLayerPreviousRevisionId"
           ]
         }
       ]
@@ -3567,6 +3780,22 @@
         },
         "aerialLayerOpacity": {
           "inputType": "unsignedFloat",
+          "constraintIndexed": true
+        },
+        "aerialLayerUpdateStage": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "aerialLayerRevisionGroup": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "aerialLayerRevisionNumber": {
+          "inputType": "unsignedInt",
+          "constraintIndexed": true
+        },
+        "aerialLayerPreviousRevisionId": {
+          "inputType": "input",
           "constraintIndexed": true
         }
       },
@@ -3677,6 +3906,50 @@
         "mediaRights": {
           "inputType": "checkboxes",
           "constraintIndexed": true
+        },
+        "aerialLayerType": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "aerialGeoreferenceMethod": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "aerialLayerAccuracy": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "aerialControlPoints": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "aerialCaptureDate": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "aerialCaptureNote": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "aerialLayerOpacity": {
+          "inputType": "unsignedFloat",
+          "constraintIndexed": true
+        },
+        "aerialLayerUpdateStage": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "aerialLayerRevisionGroup": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "aerialLayerRevisionNumber": {
+          "inputType": "unsignedInt",
+          "constraintIndexed": true
+        },
+        "aerialLayerPreviousRevisionId": {
+          "inputType": "input",
+          "constraintIndexed": true
         }
       },
       "valuelists": {
@@ -3693,7 +3966,8 @@
         "mediaRights": "KoreanFieldwork-mediaRights",
         "aerialLayerType": "KoreanFieldwork-aerialLayerType",
         "aerialGeoreferenceMethod": "KoreanFieldwork-aerialGeoreferenceMethod",
-        "aerialLayerAccuracy": "KoreanFieldwork-aerialLayerAccuracy"
+        "aerialLayerAccuracy": "KoreanFieldwork-aerialLayerAccuracy",
+        "aerialLayerUpdateStage": "KoreanFieldwork-aerialLayerUpdateStage"
       },
       "groups": [
         {
@@ -3731,7 +4005,11 @@
             "aerialControlPoints",
             "aerialCaptureDate",
             "aerialCaptureNote",
-            "aerialLayerOpacity"
+            "aerialLayerOpacity",
+            "aerialLayerUpdateStage",
+            "aerialLayerRevisionGroup",
+            "aerialLayerRevisionNumber",
+            "aerialLayerPreviousRevisionId"
           ]
         }
       ]
@@ -3741,6 +4019,22 @@
       "color": "#8f7350",
       "hidden": [],
       "fields": {
+        "soilProfilePhotoUri": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "soilProfilePhotoSizeHintKb": {
+          "inputType": "unsignedInt",
+          "constraintIndexed": true
+        },
+        "soilProfilePhotoQuality": {
+          "inputType": "unsignedFloat",
+          "constraintIndexed": true
+        },
+        "soilProfilePhotoCapturedAt": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
         "soilProfileAnnotationStrokes": {
           "inputType": "text",
           "mandatory": true,
@@ -3760,6 +4054,14 @@
         },
         "soilColorCaptureCondition": {
           "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "soilProfileColorSwatches": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "soilProfileColorNote": {
+          "inputType": "text",
           "constraintIndexed": true
         },
         "soilProfileCaptureNote": {
@@ -3802,11 +4104,17 @@
         {
           "name": "koreanFieldwork",
           "fields": [
+            "soilProfilePhotoUri",
+            "soilProfilePhotoSizeHintKb",
+            "soilProfilePhotoQuality",
+            "soilProfilePhotoCapturedAt",
             "soilProfileAnnotationStrokes",
             "soilProfileLayerMarkers",
             "soilProfileLayerIds",
             "layerSequenceMeaning",
             "soilColorCaptureCondition",
+            "soilProfileColorSwatches",
+            "soilProfileColorNote",
             "soilProfileCaptureNote",
             "fieldRecordQuality",
             "recordCreationTiming",
@@ -3847,12 +4155,29 @@
         "aerialLayerOpacity": {
           "inputType": "unsignedFloat",
           "constraintIndexed": true
+        },
+        "aerialLayerUpdateStage": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "aerialLayerRevisionGroup": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "aerialLayerRevisionNumber": {
+          "inputType": "unsignedInt",
+          "constraintIndexed": true
+        },
+        "aerialLayerPreviousRevisionId": {
+          "inputType": "input",
+          "constraintIndexed": true
         }
       },
       "valuelists": {
         "aerialLayerType": "KoreanFieldwork-aerialLayerType",
         "aerialGeoreferenceMethod": "KoreanFieldwork-aerialGeoreferenceMethod",
-        "aerialLayerAccuracy": "KoreanFieldwork-aerialLayerAccuracy"
+        "aerialLayerAccuracy": "KoreanFieldwork-aerialLayerAccuracy",
+        "aerialLayerUpdateStage": "KoreanFieldwork-aerialLayerUpdateStage"
       },
       "groups": [
         {
@@ -3876,7 +4201,11 @@
             "aerialControlPoints",
             "aerialCaptureDate",
             "aerialCaptureNote",
-            "aerialLayerOpacity"
+            "aerialLayerOpacity",
+            "aerialLayerUpdateStage",
+            "aerialLayerRevisionGroup",
+            "aerialLayerRevisionNumber",
+            "aerialLayerPreviousRevisionId"
           ]
         }
       ]
@@ -3953,6 +4282,7 @@
     "Trench",
     "Survey",
     "Place",
+    "SurveyBoundary",
     "FeatureGroup",
     "Feature",
     "FeatureSegment",

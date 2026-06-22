@@ -1,5 +1,8 @@
 import * as Location from 'expo-location';
-import { Document } from 'idai-field-core';
+import {
+  Document,
+  KoreanFieldworkReadinessIssue,
+} from 'idai-field-core';
 import proj4 from 'proj4';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import {
@@ -13,10 +16,16 @@ import { DocumentRepository } from '@/repositories/document-repository';
 import { ConfigurationContext } from '@/contexts/configuration-context';
 import GLMap from './GLMap/GLMap';
 import {
-  createKoreanFieldworkChildRelations,
+  createFeatureCandidateDraft as buildFeatureCandidateDraft,
   createSoilProfilePhotoDraft as buildSoilProfilePhotoDraft,
+  createSurveyBoundaryDraft as buildSurveyBoundaryDraft,
 } from './korean-fieldwork-drafts';
 import MapBottomSheet from './MapBottomSheet';
+
+const FEATURE_GEOMETRY_EDIT_STATUS_NEEDS_AERIAL_ALIGNMENT = 'needsAerialAlignment';
+const FEATURE_GEOMETRY_EDIT_STATUS_ADJUSTED_TO_AERIAL_LAYER = 'adjustedToAerialLayer';
+const GEOMETRY_SOURCE_AERIAL_LAYER_TRACE = 'aerialLayerTrace';
+const GEOMETRY_CONFIDENCE_AERIAL_ALIGNED = 'aerialAligned';
 
 // define projection standards
 proj4.defs(
@@ -38,6 +47,7 @@ interface MapProps {
   editDocument: (docID: string, categoryName: string) => void;
   removeDocument: (doc: Document) => void;
   selectParent: (doc: Document) => void;
+  readinessIssues: KoreanFieldworkReadinessIssue[];
 }
 
 const Map: React.FC<MapProps> = (props) => {
@@ -88,23 +98,17 @@ const Map: React.FC<MapProps> = (props) => {
     !!config?.getCategory('SoilProfilePhoto') &&
     ['Operation', 'Feature', 'FeatureSegment'].includes(highlightedDoc.resource.category);
 
+  const canCreateSurveyBoundary =
+    !!highlightedDoc &&
+    !!config?.getCategory('SurveyBoundary') &&
+    highlightedDoc.resource.category === 'Operation';
+
   const createFeatureCandidateAtCurrentLocation = async () => {
     if (!highlightedDoc || !location || !config?.getCategory('Feature')) return;
 
-    const createdDocument = await props.repository.create({
-      resource: {
-        identifier: `feature-candidate-${Date.now()}`,
-        category: 'Feature',
-        relations: createKoreanFieldworkChildRelations(highlightedDoc),
-        geometry: {
-          type: 'Point',
-          coordinates: [location.x, location.y],
-        },
-        featureRecordingStatus: 'candidate',
-        geometrySource: 'gpsApproximate',
-        geometryConfidence: 'rough',
-      },
-    });
+    const createdDocument = await props.repository.create(
+      buildFeatureCandidateDraft(highlightedDoc, location)
+    );
 
     setHighlightedDoc(createdDocument);
   };
@@ -133,6 +137,57 @@ const Map: React.FC<MapProps> = (props) => {
     const createdDocument = await props.repository.create(buildSoilProfilePhotoDraft(highlightedDoc));
 
     props.editDocument(createdDocument.resource.id, 'SoilProfilePhoto');
+  };
+
+  const createSurveyBoundaryDraft = async () => {
+    if (!highlightedDoc || !canCreateSurveyBoundary) return;
+
+    const createdDocument = await props.repository.create(buildSurveyBoundaryDraft(highlightedDoc));
+
+    props.editDocument(createdDocument.resource.id, 'SurveyBoundary');
+  };
+
+  const updateHighlightedFeatureGeometryState = async (
+    featureGeometryEditStatus: string,
+    patch: Record<string, unknown> = {}
+  ) => {
+    if (
+      !highlightedDoc ||
+      !['Feature', 'FeatureSegment'].includes(highlightedDoc.resource.category)
+    ) {
+      return;
+    }
+
+    const updatedDocument = await props.repository.update({
+      ...highlightedDoc,
+      resource: {
+        ...highlightedDoc.resource,
+        ...patch,
+        featureGeometryEditStatus,
+        featureGeometryRevisionHistory: appendGeometryRevisionHistory(
+          highlightedDoc,
+          featureGeometryEditStatus
+        ),
+      },
+    });
+
+    setHighlightedDoc(updatedDocument);
+  };
+
+  const markGeometryNeedsAerialAlignment = async () => {
+    await updateHighlightedFeatureGeometryState(
+      FEATURE_GEOMETRY_EDIT_STATUS_NEEDS_AERIAL_ALIGNMENT
+    );
+  };
+
+  const markGeometryAdjustedToAerialLayer = async () => {
+    await updateHighlightedFeatureGeometryState(
+      FEATURE_GEOMETRY_EDIT_STATUS_ADJUSTED_TO_AERIAL_LAYER,
+      {
+        geometrySource: GEOMETRY_SOURCE_AERIAL_LAYER_TRACE,
+        geometryConfidence: GEOMETRY_CONFIDENCE_AERIAL_ALIGNED,
+      }
+    );
   };
 
   const onParentIdSelected = (docId: string) => {
@@ -171,9 +226,16 @@ const Map: React.FC<MapProps> = (props) => {
         canCreateLocationCandidate={!!location}
         canCreatePenMemo={!!config?.getCategory('PenMemo')}
         canCreateSoilProfilePhoto={canCreateSoilProfilePhoto}
+        canCreateSurveyBoundary={canCreateSurveyBoundary}
         createFeatureCandidateAtCurrentLocation={createFeatureCandidateAtCurrentLocation}
         createPenMemoDraft={createPenMemoDraft}
         createSoilProfilePhotoDraft={createSoilProfilePhotoDraft}
+        createSurveyBoundaryDraft={createSurveyBoundaryDraft}
+        markGeometryNeedsAerialAlignment={markGeometryNeedsAerialAlignment}
+        markGeometryAdjustedToAerialLayer={markGeometryAdjustedToAerialLayer}
+        readinessIssues={props.readinessIssues.filter((issue) =>
+          issue.documentId === highlightedDoc?.resource.id
+        )}
       />
     </View>
   );
@@ -188,3 +250,37 @@ const styles = StyleSheet.create({
 });
 
 export default Map;
+
+const appendGeometryRevisionHistory = (
+  document: Document,
+  status: string
+): string => {
+  const resource = document.resource as any;
+  const previousHistory = parseGeometryRevisionHistory(
+    resource.featureGeometryRevisionHistory
+  );
+
+  return JSON.stringify([
+    ...previousHistory,
+    {
+      at: new Date().toISOString(),
+      status,
+      geometry: resource.geometry,
+      geometrySource: resource.geometrySource,
+      geometryConfidence: resource.geometryConfidence,
+      referenceLayerId: resource.featureGeometryReferenceLayerId,
+    },
+  ]);
+};
+
+const parseGeometryRevisionHistory = (history: unknown): unknown[] => {
+  if (Array.isArray(history)) return history;
+  if (typeof history !== 'string' || history.trim() === '') return [];
+
+  try {
+    const parsedHistory = JSON.parse(history);
+    return Array.isArray(parsedHistory) ? parsedHistory : [];
+  } catch {
+    return [];
+  }
+};

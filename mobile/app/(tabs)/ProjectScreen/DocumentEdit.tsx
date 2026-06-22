@@ -9,30 +9,33 @@ import useToast from '@/hooks/use-toast';
 
 import Button from '@/components/common/Button';
 import DocumentForm from '@/components/common/forms/DocumentForm';
+import SoilProfileCameraButton, {
+  SoilProfileCaptureData,
+} from '@/components/Project/SoilProfileCameraButton';
 import { ToastType } from '@/components/common/Toast/ToastProvider';
 import { router, useGlobalSearchParams } from 'expo-router';
 import { ProjectContext } from '@/contexts/project-context';
 
-interface DocumentEditProps {
-  docId: string;
-  categoryName: string;
-}
-
-const DocumentEdit: React.FC<DocumentEditProps> = () => {
+const DocumentEdit: React.FC = () => {
   const { showToast } = useToast();
   const { repository } = useContext(ProjectContext);
 
   // TODO: configure expo router to load params
-  const { params } = useGlobalSearchParams();
+  const params = useGlobalSearchParams();
+  const docId = getParam(params.docId);
+  const categoryName = getParam(params.categoryName);
 
   const config = useContext(ConfigurationContext);
   const { labels } = useContext(LabelsContext);
 
-  const document = useDocument(repository, 'docId');
+  const document = useDocument(repository, docId);
   const [category, setCategory] = useState<CategoryForm>();
   const [resource, setResource] = useState<Resource>();
 
-  useEffect(() => setCategory(config.getCategory('categoryName')), [config]);
+  useEffect(() => {
+    const formName = categoryName ?? document?.resource.category;
+    if (formName) setCategory(config.getCategory(formName));
+  }, [categoryName, config, document]);
 
   useEffect(() => {
     if (document) setResource(document.resource);
@@ -70,6 +73,10 @@ const DocumentEdit: React.FC<DocumentEditProps> = () => {
     );
   };
 
+  const updateSoilProfileCapture = (data: SoilProfileCaptureData) => {
+    setResource((oldResource) => oldResource && { ...oldResource, ...data });
+  };
+
   if (!category || !labels || !document || !resource) return null;
 
   return (
@@ -91,8 +98,16 @@ const DocumentEdit: React.FC<DocumentEditProps> = () => {
       returnBtnHandler={onReturn}
       resource={resource}
       updateFunction={updateResource}
+      resourceActions={
+        resource.category === 'SoilProfilePhoto'
+          ? <SoilProfileCameraButton onCapture={updateSoilProfileCapture} />
+          : undefined
+      }
     />
   );
 };
+
+const getParam = (param: string | string[] | undefined): string | undefined =>
+  Array.isArray(param) ? param[0] : param;
 
 export default DocumentEdit;

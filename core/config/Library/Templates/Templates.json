@@ -561,6 +561,15 @@
           "hidden": [],
           "fields": {}
         },
+        "SurveyBoundary": {
+          "parent": "Operation",
+          "hidden": [],
+          "fields": {
+            "geometry": {
+              "geometryTypes": ["LineString", "MultiLineString"]
+            }
+          }
+        },
         "FeatureGroup:default": {
           "hidden": [],
           "fields": {}
@@ -638,6 +647,7 @@
         "Operation",
         "DailyLog",
         "Survey",
+        "SurveyBoundary",
         "FeatureGroup",
         "Feature",
         "FeatureSegment",

@@ -36654,12 +36654,41 @@
       "split"
     ]
   },
+  "KoreanFieldwork-featureInvestigationChecklist": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-22",
+    "values": {
+      "preInvestigationPhotoTaken": {},
+      "inProgressPhotoTaken": {},
+      "soilProfilePhotoLinked": {},
+      "completionPhotoTaken": {},
+      "measuredDrawingCompleted": {},
+      "preRecoveryFindPhotoTaken": {},
+      "findsRecovered": {},
+      "findRecordsLinked": {},
+      "samplesCollected": {},
+      "penMemoReviewed": {}
+    },
+    "order": [
+      "preInvestigationPhotoTaken",
+      "inProgressPhotoTaken",
+      "soilProfilePhotoLinked",
+      "completionPhotoTaken",
+      "measuredDrawingCompleted",
+      "preRecoveryFindPhotoTaken",
+      "findsRecovered",
+      "findRecordsLinked",
+      "samplesCollected",
+      "penMemoReviewed"
+    ]
+  },
   "KoreanFieldwork-geometrySource": {
     "createdBy": "codex",
     "creationDate": "2026-06-22",
     "values": {
       "tabletSketch": {},
       "gpsApproximate": {},
+      "aerialLayerTrace": {},
       "importedShp": {},
       "importedDxf": {},
       "surveyedFinal": {},
@@ -36668,6 +36697,7 @@
     "order": [
       "tabletSketch",
       "gpsApproximate",
+      "aerialLayerTrace",
       "importedShp",
       "importedDxf",
       "surveyedFinal",
@@ -36680,14 +36710,122 @@
     "values": {
       "rough": {},
       "fieldSketch": {},
+      "aerialAligned": {},
       "surveyed": {},
       "final": {}
     },
     "order": [
       "rough",
       "fieldSketch",
+      "aerialAligned",
       "surveyed",
       "final"
+    ]
+  },
+  "KoreanFieldwork-featureGeometryEditStatus": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-22",
+    "values": {
+      "roughSketch": {},
+      "needsAerialAlignment": {},
+      "adjustedToAerialLayer": {},
+      "adjustedToSurveyLine": {},
+      "finalAccepted": {}
+    },
+    "order": [
+      "roughSketch",
+      "needsAerialAlignment",
+      "adjustedToAerialLayer",
+      "adjustedToSurveyLine",
+      "finalAccepted"
+    ]
+  },
+  "KoreanFieldwork-surveyBoundaryType": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-22",
+    "values": {
+      "projectBoundary": {},
+      "operationBoundary": {},
+      "excavationLimit": {},
+      "permitBoundary": {},
+      "trenchBoundary": {},
+      "parcelBoundary": {},
+      "safetyBuffer": {}
+    },
+    "order": [
+      "projectBoundary",
+      "operationBoundary",
+      "excavationLimit",
+      "permitBoundary",
+      "trenchBoundary",
+      "parcelBoundary",
+      "safetyBuffer"
+    ]
+  },
+  "KoreanFieldwork-surveyBoundarySource": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-22",
+    "values": {
+      "manualBasemapTrace": {},
+      "gpsWalkover": {},
+      "csvImport": {},
+      "geoJsonImport": {},
+      "shpImport": {},
+      "dxfImport": {},
+      "officialSurvey": {},
+      "finalCad": {}
+    },
+    "order": [
+      "manualBasemapTrace",
+      "gpsWalkover",
+      "csvImport",
+      "geoJsonImport",
+      "shpImport",
+      "dxfImport",
+      "officialSurvey",
+      "finalCad"
+    ]
+  },
+  "KoreanFieldwork-surveyBoundaryAccuracy": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-22",
+    "values": {
+      "visualReference": {},
+      "approximateGps": {},
+      "importedReference": {},
+      "surveyed": {},
+      "final": {}
+    },
+    "order": [
+      "visualReference",
+      "approximateGps",
+      "importedReference",
+      "surveyed",
+      "final"
+    ]
+  },
+  "KoreanFieldwork-referenceBasemapProvider": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-22",
+    "values": {
+      "none": {},
+      "openStreetMap": {},
+      "googleRoadmap": {},
+      "googleSatellite": {},
+      "googleHybrid": {},
+      "customWmts": {},
+      "importedRasterLayer": {},
+      "importedVectorLayer": {}
+    },
+    "order": [
+      "none",
+      "openStreetMap",
+      "googleRoadmap",
+      "googleSatellite",
+      "googleHybrid",
+      "customWmts",
+      "importedRasterLayer",
+      "importedVectorLayer"
     ]
   },
   "KoreanFieldwork-penMemoTranscriptionStatus": {
@@ -36754,6 +36892,24 @@
       "approximateAlignment",
       "fieldControlPointAligned",
       "surveyedAlignment"
+    ]
+  },
+  "KoreanFieldwork-aerialLayerUpdateStage": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-22",
+    "values": {
+      "initialReference": {},
+      "cleaningInProgressUpdate": {},
+      "dailyDroneUpdate": {},
+      "postExposureUpdate": {},
+      "finalReference": {}
+    },
+    "order": [
+      "initialReference",
+      "cleaningInProgressUpdate",
+      "dailyDroneUpdate",
+      "postExposureUpdate",
+      "finalReference"
     ]
   },
   "KoreanFieldwork-layerSequenceMeaning": {

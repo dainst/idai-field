@@ -4077,10 +4077,26 @@
     },
     "description": "전면 제토 뒤 보이는 흔적을 유구 후보로 만들고 조사 과정에서 상태를 갱신하기 위한 목록"
   },
+  "KoreanFieldwork-featureInvestigationChecklist": {
+    "values": {
+      "preInvestigationPhotoTaken": { "label": "조사 전 사진" },
+      "inProgressPhotoTaken": { "label": "조사 중 사진" },
+      "soilProfilePhotoLinked": { "label": "토층사진" },
+      "completionPhotoTaken": { "label": "조사 완료 사진" },
+      "measuredDrawingCompleted": { "label": "실측 완료" },
+      "preRecoveryFindPhotoTaken": { "label": "수습 전 유물사진" },
+      "findsRecovered": { "label": "유물 수습" },
+      "findRecordsLinked": { "label": "유물 기록 연결" },
+      "samplesCollected": { "label": "시료 채취" },
+      "penMemoReviewed": { "label": "펜메모 검토" }
+    },
+    "description": "유구별 조사 전·중·완료 사진, 토층사진, 실측, 유물 수습 상태를 현장에서 확인하기 위한 목록"
+  },
   "KoreanFieldwork-geometrySource": {
     "values": {
       "tabletSketch": { "label": "태블릿 스케치" },
       "gpsApproximate": { "label": "GPS 대략 위치" },
+      "aerialLayerTrace": { "label": "드론 배경 추적" },
       "importedShp": { "label": "SHP import" },
       "importedDxf": { "label": "DXF import" },
       "surveyedFinal": { "label": "정식 측량" },
@@ -4092,10 +4108,69 @@
     "values": {
       "rough": { "label": "대략" },
       "fieldSketch": { "label": "현장 스케치" },
+      "aerialAligned": { "label": "드론 배경 맞춤" },
       "surveyed": { "label": "측량 반영" },
       "final": { "label": "최종" }
     },
     "description": "태블릿 기록, 현장 스케치, 측량 반영, 최종 도면 사이의 공간 신뢰도를 구분하기 위한 목록"
+  },
+  "KoreanFieldwork-featureGeometryEditStatus": {
+    "values": {
+      "roughSketch": { "label": "대략 스케치" },
+      "needsAerialAlignment": { "label": "보정 필요" },
+      "adjustedToAerialLayer": { "label": "드론 배경 맞춤" },
+      "adjustedToSurveyLine": { "label": "측량선 맞춤" },
+      "finalAccepted": { "label": "최종 확정" }
+    },
+    "description": "유구 기록 정보는 유지하면서 geometry만 드론 배경, 측량선, 최종 성과에 맞춰 다듬는 상태"
+  },
+  "KoreanFieldwork-surveyBoundaryType": {
+    "values": {
+      "projectBoundary": { "label": "전체 조사경계" },
+      "operationBoundary": { "label": "조사구역 경계" },
+      "excavationLimit": { "label": "발굴 한계선" },
+      "permitBoundary": { "label": "허가 범위" },
+      "trenchBoundary": { "label": "트렌치 경계" },
+      "parcelBoundary": { "label": "필지 경계" },
+      "safetyBuffer": { "label": "안전 완충선" }
+    },
+    "description": "선형 조사경계가 현장에서 어떤 범위를 뜻하는지 구분하기 위한 목록"
+  },
+  "KoreanFieldwork-surveyBoundarySource": {
+    "values": {
+      "manualBasemapTrace": { "label": "배경지도 수동 추적" },
+      "gpsWalkover": { "label": "GPS 답사 기록" },
+      "csvImport": { "label": "CSV 가져오기" },
+      "geoJsonImport": { "label": "GeoJSON 가져오기" },
+      "shpImport": { "label": "SHP 가져오기" },
+      "dxfImport": { "label": "DXF 가져오기" },
+      "officialSurvey": { "label": "정식 측량" },
+      "finalCad": { "label": "최종 CAD" }
+    },
+    "description": "조사경계 geometry가 만들어지거나 들어온 경로를 구분하기 위한 목록"
+  },
+  "KoreanFieldwork-surveyBoundaryAccuracy": {
+    "values": {
+      "visualReference": { "label": "참고용" },
+      "approximateGps": { "label": "GPS 대략" },
+      "importedReference": { "label": "가져온 참고자료" },
+      "surveyed": { "label": "측량 반영" },
+      "final": { "label": "최종" }
+    },
+    "description": "조사경계의 공간 신뢰도를 구분하기 위한 목록"
+  },
+  "KoreanFieldwork-referenceBasemapProvider": {
+    "values": {
+      "none": { "label": "없음" },
+      "openStreetMap": { "label": "OpenStreetMap" },
+      "googleRoadmap": { "label": "Google 지도" },
+      "googleSatellite": { "label": "Google 위성" },
+      "googleHybrid": { "label": "Google 하이브리드" },
+      "customWmts": { "label": "사용자 WMTS/TMS" },
+      "importedRasterLayer": { "label": "가져온 래스터 레이어" },
+      "importedVectorLayer": { "label": "가져온 벡터 레이어" }
+    },
+    "description": "경계를 따라 그릴 때 참고한 선택 배경지도 목록. 공급자 API 키는 야장 기록이 아니라 로컬 앱 설정에 둔다"
   },
   "KoreanFieldwork-penMemoTranscriptionStatus": {
     "values": {
@@ -4133,6 +4208,16 @@
       "surveyedAlignment": { "label": "측량 성과 정합" }
     },
     "description": "항공 이미지 배경 레이어의 공간 신뢰도"
+  },
+  "KoreanFieldwork-aerialLayerUpdateStage": {
+    "values": {
+      "initialReference": { "label": "초기 참고" },
+      "cleaningInProgressUpdate": { "label": "제토 중 갱신" },
+      "dailyDroneUpdate": { "label": "일일 드론 갱신" },
+      "postExposureUpdate": { "label": "노출 후 갱신" },
+      "finalReference": { "label": "최종 참고" }
+    },
+    "description": "제토와 조사가 진행되는 동안 갱신될 수 있는 드론·항공 배경 레이어의 단계"
   },
   "KoreanFieldwork-layerSequenceMeaning": {
     "values": {

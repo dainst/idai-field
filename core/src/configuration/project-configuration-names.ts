@@ -9,6 +9,12 @@ export const KOREAN_FIELDWORK_PROJECT_LANGUAGES: ReadonlyArray<string> = ['ko', 
 export const KOREAN_FIELDWORK_TEMPLATE_ID = 'koreanFieldwork';
 export const KOREAN_FIELDWORK_LAYER_SEQUENCE_MEANING_DEFAULT = 'latestToEarliest';
 export const KOREAN_FIELDWORK_SOIL_COLOR_ASSIST_STATUS_DEFAULT = 'notRun';
+export const KOREAN_FIELDWORK_SOIL_PROFILE_PHOTO_SIZE_HINT_KB_DEFAULT = 512;
+export const KOREAN_FIELDWORK_SOIL_PROFILE_PHOTO_QUALITY_DEFAULT = 0.35;
+export const KOREAN_FIELDWORK_SURVEY_BOUNDARY_TYPE_DEFAULT = 'operationBoundary';
+export const KOREAN_FIELDWORK_SURVEY_BOUNDARY_SOURCE_DEFAULT = 'manualBasemapTrace';
+export const KOREAN_FIELDWORK_SURVEY_BOUNDARY_ACCURACY_DEFAULT = 'visualReference';
+export const KOREAN_FIELDWORK_REFERENCE_BASEMAP_PROVIDER_DEFAULT = 'none';
 
 export const PROJECT_MAPPING = {
     'abbircella': { prefix: 'AbbirCella', label: 'AbbirCella' },

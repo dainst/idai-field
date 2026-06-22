@@ -31,6 +31,7 @@ interface DocumentFormProps {
   headerText: string;
   returnBtnHandler: () => void;
   titleBarRight: ReactNode;
+  resourceActions?: ReactNode;
   resource: Resource | NewResource | undefined;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   updateFunction: (key: string, value: any) => void;
@@ -44,6 +45,7 @@ const DocumentForm: React.FC<DocumentFormProps> = ({
   headerText,
   returnBtnHandler,
   titleBarRight,
+  resourceActions,
   resource,
   updateFunction,
 }) => {
@@ -79,6 +81,11 @@ const DocumentForm: React.FC<DocumentFormProps> = ({
         }
         right={titleBarRight}
       />
+      {resourceActions && (
+        <View style={styles.resourceActions}>
+          {resourceActions}
+        </View>
+      )}
       <View style={styles.groupsContainer}>
         <FlatList
           data={groups}
@@ -159,6 +166,9 @@ const styles = StyleSheet.create({
   groupsContainer: {
     margin: 5,
     padding: 5,
+  },
+  resourceActions: {
+    marginTop: 8,
   },
   groupPickerContainer: {
     marginTop: 8,

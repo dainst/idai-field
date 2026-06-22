@@ -569,6 +569,41 @@
         }
       }
     },
+    "SurveyBoundary": {
+      "label": "조사경계",
+      "fields": {
+        "surveyBoundaryType": {
+          "label": "경계 유형"
+        },
+        "surveyBoundarySource": {
+          "label": "경계 입력 출처"
+        },
+        "surveyBoundaryAccuracy": {
+          "label": "경계 정확도"
+        },
+        "surveyBoundaryNote": {
+          "label": "경계 메모"
+        },
+        "referenceBasemapProvider": {
+          "label": "참고 배경지도"
+        },
+        "referenceBasemapAttribution": {
+          "label": "참고 배경지도 출처"
+        },
+        "referenceBasemapNote": {
+          "label": "참고 배경지도 메모"
+        },
+        "fieldRecordQuality": {
+          "label": "현장기록 품질"
+        },
+        "recordCreationTiming": {
+          "label": "기록 생성 시점"
+        },
+        "verificationState": {
+          "label": "검증상태"
+        }
+      }
+    },
     "FeatureGroup": {
       "fields": {
         "featurePackage": {
@@ -582,6 +617,18 @@
         },
         "geometryConfidence": {
           "label": "공간 신뢰도"
+        },
+        "featureGeometryEditStatus": {
+          "label": "유구선 보정 상태"
+        },
+        "featureGeometryReferenceLayerId": {
+          "label": "참조 배경 레이어 ID"
+        },
+        "featureGeometryRevisionHistory": {
+          "label": "유구선 보정 이력"
+        },
+        "featureGeometryRevisionNote": {
+          "label": "유구선 보정 메모"
         },
         "featureInterpretationType": {
           "label": "유구 성격"
@@ -625,6 +672,27 @@
         },
         "geometryConfidence": {
           "label": "공간 신뢰도"
+        },
+        "featureGeometryEditStatus": {
+          "label": "유구선 보정 상태"
+        },
+        "featureGeometryReferenceLayerId": {
+          "label": "참조 배경 레이어 ID"
+        },
+        "featureGeometryRevisionHistory": {
+          "label": "유구선 보정 이력"
+        },
+        "featureGeometryRevisionNote": {
+          "label": "유구선 보정 메모"
+        },
+        "featureInvestigationChecklist": {
+          "label": "조사 체크리스트"
+        },
+        "featureSoilProfilePhotoCount": {
+          "label": "토층사진 수"
+        },
+        "featureChecklistNote": {
+          "label": "체크리스트 메모"
         },
         "fieldRecordQuality": {
           "label": "현장기록 품질"
@@ -917,6 +985,27 @@
         },
         "geometryConfidence": {
           "label": "공간 신뢰도"
+        },
+        "featureGeometryEditStatus": {
+          "label": "유구선 보정 상태"
+        },
+        "featureGeometryReferenceLayerId": {
+          "label": "참조 배경 레이어 ID"
+        },
+        "featureGeometryRevisionHistory": {
+          "label": "유구선 보정 이력"
+        },
+        "featureGeometryRevisionNote": {
+          "label": "유구선 보정 메모"
+        },
+        "featureInvestigationChecklist": {
+          "label": "조사 체크리스트"
+        },
+        "featureSoilProfilePhotoCount": {
+          "label": "토층사진 수"
+        },
+        "featureChecklistNote": {
+          "label": "체크리스트 메모"
         },
         "fieldRecordQuality": {
           "label": "현장기록 품질"
@@ -1365,6 +1454,18 @@
         },
         "aerialLayerOpacity": {
           "label": "레이어 투명도"
+        },
+        "aerialLayerUpdateStage": {
+          "label": "레이어 갱신 단계"
+        },
+        "aerialLayerRevisionGroup": {
+          "label": "레이어 버전 묶음"
+        },
+        "aerialLayerRevisionNumber": {
+          "label": "레이어 버전 번호"
+        },
+        "aerialLayerPreviousRevisionId": {
+          "label": "이전 레이어 버전 ID"
         }
       }
     },
@@ -1421,6 +1522,18 @@
     "SoilProfilePhoto": {
       "label": "토층 단면 사진",
       "fields": {
+        "soilProfilePhotoUri": {
+          "label": "야장용 사진 URI"
+        },
+        "soilProfilePhotoSizeHintKb": {
+          "label": "사진 크기 기준(KB)"
+        },
+        "soilProfilePhotoQuality": {
+          "label": "촬영 품질"
+        },
+        "soilProfilePhotoCapturedAt": {
+          "label": "촬영 시각"
+        },
         "soilProfileAnnotationStrokes": {
           "label": "펜 annotation JSON"
         },
@@ -1435,6 +1548,12 @@
         },
         "soilColorCaptureCondition": {
           "label": "촬영 조건"
+        },
+        "soilProfileColorSwatches": {
+          "label": "색상 지정 JSON"
+        },
+        "soilProfileColorNote": {
+          "label": "색상 메모"
         },
         "soilProfileCaptureNote": {
           "label": "촬영 메모"
@@ -1473,6 +1592,18 @@
         },
         "aerialLayerOpacity": {
           "label": "레이어 투명도"
+        },
+        "aerialLayerUpdateStage": {
+          "label": "레이어 갱신 단계"
+        },
+        "aerialLayerRevisionGroup": {
+          "label": "레이어 버전 묶음"
+        },
+        "aerialLayerRevisionNumber": {
+          "label": "레이어 버전 번호"
+        },
+        "aerialLayerPreviousRevisionId": {
+          "label": "이전 레이어 버전 ID"
         }
       }
     },
@@ -1557,6 +1688,18 @@
         },
         "aerialLayerOpacity": {
           "label": "레이어 투명도"
+        },
+        "aerialLayerUpdateStage": {
+          "label": "레이어 갱신 단계"
+        },
+        "aerialLayerRevisionGroup": {
+          "label": "레이어 버전 묶음"
+        },
+        "aerialLayerRevisionNumber": {
+          "label": "레이어 버전 번호"
+        },
+        "aerialLayerPreviousRevisionId": {
+          "label": "이전 레이어 버전 ID"
         }
       }
     }

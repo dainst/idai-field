@@ -5,6 +5,19 @@ import {
 
 export const LAYER_SEQUENCE_MEANING_DEFAULT = 'latestToEarliest';
 export const SOIL_COLOR_ASSIST_STATUS_DEFAULT = 'notRun';
+export const SOIL_PROFILE_PHOTO_SIZE_HINT_KB_DEFAULT = 512;
+export const SOIL_PROFILE_PHOTO_QUALITY_DEFAULT = 0.35;
+export const SURVEY_BOUNDARY_TYPE_DEFAULT = 'operationBoundary';
+export const SURVEY_BOUNDARY_SOURCE_DEFAULT = 'manualBasemapTrace';
+export const SURVEY_BOUNDARY_ACCURACY_DEFAULT = 'visualReference';
+export const REFERENCE_BASEMAP_PROVIDER_DEFAULT = 'none';
+export const FEATURE_RECORDING_STATUS_CANDIDATE = 'candidate';
+export const GEOMETRY_SOURCE_GPS_APPROXIMATE = 'gpsApproximate';
+export const GEOMETRY_CONFIDENCE_ROUGH = 'rough';
+export const FEATURE_GEOMETRY_EDIT_STATUS_ROUGH_SKETCH = 'roughSketch';
+export const FEATURE_GEOMETRY_REVISION_HISTORY_DEFAULT = '[]';
+
+export type MapLocation = { x: number; y: number };
 
 export const createDepictsRelation = (targetDoc: Document): { depicts: string[] } => ({
   depicts: [targetDoc.resource.id],
@@ -31,6 +44,9 @@ export const createSoilProfilePhotoDraft = (targetDoc: Document): NewDocument =>
     soilProfileAnnotationStrokes: '[]',
     soilProfileLayerMarkers: '[]',
     soilProfileLayerIds: '[]',
+    soilProfileColorSwatches: '[]',
+    soilProfilePhotoSizeHintKb: SOIL_PROFILE_PHOTO_SIZE_HINT_KB_DEFAULT,
+    soilProfilePhotoQuality: SOIL_PROFILE_PHOTO_QUALITY_DEFAULT,
     layerSequenceMeaning: LAYER_SEQUENCE_MEANING_DEFAULT,
   },
 });
@@ -46,5 +62,39 @@ export const createLayerDraft = (
     layerSequenceNumber: sequenceNumber,
     layerSequenceMeaning: LAYER_SEQUENCE_MEANING_DEFAULT,
     soilColorAssistStatus: SOIL_COLOR_ASSIST_STATUS_DEFAULT,
+  },
+});
+
+export const createFeatureCandidateDraft = (
+  parentDoc: Document,
+  location: MapLocation
+): NewDocument => ({
+  resource: {
+    identifier: `feature-candidate-${Date.now()}`,
+    category: 'Feature',
+    relations: createKoreanFieldworkChildRelations(parentDoc),
+    geometry: {
+      type: 'Point',
+      coordinates: [location.x, location.y],
+    },
+    featureRecordingStatus: FEATURE_RECORDING_STATUS_CANDIDATE,
+    geometrySource: GEOMETRY_SOURCE_GPS_APPROXIMATE,
+    geometryConfidence: GEOMETRY_CONFIDENCE_ROUGH,
+    featureGeometryEditStatus: FEATURE_GEOMETRY_EDIT_STATUS_ROUGH_SKETCH,
+    featureGeometryRevisionHistory: FEATURE_GEOMETRY_REVISION_HISTORY_DEFAULT,
+    featureInvestigationChecklist: [],
+    featureSoilProfilePhotoCount: 0,
+  },
+});
+
+export const createSurveyBoundaryDraft = (parentDoc: Document): NewDocument => ({
+  resource: {
+    identifier: `survey-boundary-${Date.now()}`,
+    category: 'SurveyBoundary',
+    relations: createKoreanFieldworkChildRelations(parentDoc),
+    surveyBoundaryType: SURVEY_BOUNDARY_TYPE_DEFAULT,
+    surveyBoundarySource: SURVEY_BOUNDARY_SOURCE_DEFAULT,
+    surveyBoundaryAccuracy: SURVEY_BOUNDARY_ACCURACY_DEFAULT,
+    referenceBasemapProvider: REFERENCE_BASEMAP_PROVIDER_DEFAULT,
   },
 });

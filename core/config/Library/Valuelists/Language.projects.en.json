@@ -15831,10 +15831,26 @@
     },
     "description": "Workflow status for creating visible stripped-surface traces as feature candidates and updating them during investigation"
   },
+  "KoreanFieldwork-featureInvestigationChecklist": {
+    "values": {
+      "preInvestigationPhotoTaken": { "label": "Before photo" },
+      "inProgressPhotoTaken": { "label": "During photo" },
+      "soilProfilePhotoLinked": { "label": "Soil profile photo" },
+      "completionPhotoTaken": { "label": "After photo" },
+      "measuredDrawingCompleted": { "label": "Measured drawing" },
+      "preRecoveryFindPhotoTaken": { "label": "Pre-recovery find photo" },
+      "findsRecovered": { "label": "Finds recovered" },
+      "findRecordsLinked": { "label": "Find records linked" },
+      "samplesCollected": { "label": "Samples collected" },
+      "penMemoReviewed": { "label": "Pen memo reviewed" }
+    },
+    "description": "Feature-level field checklist for staged photography, soil profile photos, measured drawing, and find recovery"
+  },
   "KoreanFieldwork-geometrySource": {
     "values": {
       "tabletSketch": { "label": "Tablet sketch" },
       "gpsApproximate": { "label": "Approximate GPS position" },
+      "aerialLayerTrace": { "label": "Aerial layer trace" },
       "importedShp": { "label": "SHP import" },
       "importedDxf": { "label": "DXF import" },
       "surveyedFinal": { "label": "Formal survey" },
@@ -15846,10 +15862,69 @@
     "values": {
       "rough": { "label": "Rough" },
       "fieldSketch": { "label": "Field sketch" },
+      "aerialAligned": { "label": "Aerial layer aligned" },
       "surveyed": { "label": "Surveyed" },
       "final": { "label": "Final" }
     },
     "description": "Spatial confidence level for distinguishing rough tablet records, field sketches, surveyed data, and final geometry"
+  },
+  "KoreanFieldwork-featureGeometryEditStatus": {
+    "values": {
+      "roughSketch": { "label": "Rough sketch" },
+      "needsAerialAlignment": { "label": "Needs aerial alignment" },
+      "adjustedToAerialLayer": { "label": "Adjusted to aerial layer" },
+      "adjustedToSurveyLine": { "label": "Adjusted to survey line" },
+      "finalAccepted": { "label": "Final accepted" }
+    },
+    "description": "Editing state of a feature geometry while preserving the feature record and refining only the shape"
+  },
+  "KoreanFieldwork-surveyBoundaryType": {
+    "values": {
+      "projectBoundary": { "label": "Project boundary" },
+      "operationBoundary": { "label": "Operation boundary" },
+      "excavationLimit": { "label": "Excavation limit" },
+      "permitBoundary": { "label": "Permit boundary" },
+      "trenchBoundary": { "label": "Trench boundary" },
+      "parcelBoundary": { "label": "Parcel boundary" },
+      "safetyBuffer": { "label": "Safety buffer" }
+    },
+    "description": "Functional type of a line-based survey or excavation boundary"
+  },
+  "KoreanFieldwork-surveyBoundarySource": {
+    "values": {
+      "manualBasemapTrace": { "label": "Manual basemap trace" },
+      "gpsWalkover": { "label": "GPS walkover" },
+      "csvImport": { "label": "CSV import" },
+      "geoJsonImport": { "label": "GeoJSON import" },
+      "shpImport": { "label": "SHP import" },
+      "dxfImport": { "label": "DXF import" },
+      "officialSurvey": { "label": "Official survey" },
+      "finalCad": { "label": "Final CAD" }
+    },
+    "description": "How a survey boundary geometry was created or imported"
+  },
+  "KoreanFieldwork-surveyBoundaryAccuracy": {
+    "values": {
+      "visualReference": { "label": "Visual reference" },
+      "approximateGps": { "label": "Approximate GPS" },
+      "importedReference": { "label": "Imported reference" },
+      "surveyed": { "label": "Surveyed" },
+      "final": { "label": "Final" }
+    },
+    "description": "Spatial reliability of a survey boundary"
+  },
+  "KoreanFieldwork-referenceBasemapProvider": {
+    "values": {
+      "none": { "label": "None" },
+      "openStreetMap": { "label": "OpenStreetMap" },
+      "googleRoadmap": { "label": "Google Maps road map" },
+      "googleSatellite": { "label": "Google Maps satellite" },
+      "googleHybrid": { "label": "Google Maps hybrid" },
+      "customWmts": { "label": "Custom WMTS/TMS" },
+      "importedRasterLayer": { "label": "Imported raster layer" },
+      "importedVectorLayer": { "label": "Imported vector layer" }
+    },
+    "description": "Optional reference basemap used while tracing a boundary; provider access keys are kept in local app settings, not field records"
   },
   "KoreanFieldwork-penMemoTranscriptionStatus": {
     "values": {
@@ -15887,6 +15962,16 @@
       "surveyedAlignment": { "label": "Surveyed alignment" }
     },
     "description": "Expected spatial reliability of an aerial image background layer"
+  },
+  "KoreanFieldwork-aerialLayerUpdateStage": {
+    "values": {
+      "initialReference": { "label": "Initial reference" },
+      "cleaningInProgressUpdate": { "label": "Cleaning in-progress update" },
+      "dailyDroneUpdate": { "label": "Daily drone update" },
+      "postExposureUpdate": { "label": "Post-exposure update" },
+      "finalReference": { "label": "Final reference" }
+    },
+    "description": "Revision stage for drone or aerial background layers that can be updated during stripping and excavation"
   },
   "KoreanFieldwork-layerSequenceMeaning": {
     "values": {

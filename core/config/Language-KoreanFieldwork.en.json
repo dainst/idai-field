@@ -569,6 +569,41 @@
         }
       }
     },
+    "SurveyBoundary": {
+      "label": "Survey boundary",
+      "fields": {
+        "surveyBoundaryType": {
+          "label": "Boundary type"
+        },
+        "surveyBoundarySource": {
+          "label": "Boundary source"
+        },
+        "surveyBoundaryAccuracy": {
+          "label": "Boundary accuracy"
+        },
+        "surveyBoundaryNote": {
+          "label": "Boundary note"
+        },
+        "referenceBasemapProvider": {
+          "label": "Reference basemap provider"
+        },
+        "referenceBasemapAttribution": {
+          "label": "Reference basemap attribution"
+        },
+        "referenceBasemapNote": {
+          "label": "Reference basemap note"
+        },
+        "fieldRecordQuality": {
+          "label": "Field record quality"
+        },
+        "recordCreationTiming": {
+          "label": "Record creation timing"
+        },
+        "verificationState": {
+          "label": "Verification state"
+        }
+      }
+    },
     "FeatureGroup": {
       "fields": {
         "featurePackage": {
@@ -582,6 +617,18 @@
         },
         "geometryConfidence": {
           "label": "Geometry confidence"
+        },
+        "featureGeometryEditStatus": {
+          "label": "Geometry edit status"
+        },
+        "featureGeometryReferenceLayerId": {
+          "label": "Reference layer id"
+        },
+        "featureGeometryRevisionHistory": {
+          "label": "Geometry revision history"
+        },
+        "featureGeometryRevisionNote": {
+          "label": "Geometry revision note"
         },
         "featureInterpretationType": {
           "label": "Feature interpretation type"
@@ -625,6 +672,27 @@
         },
         "geometryConfidence": {
           "label": "Geometry confidence"
+        },
+        "featureGeometryEditStatus": {
+          "label": "Geometry edit status"
+        },
+        "featureGeometryReferenceLayerId": {
+          "label": "Reference layer id"
+        },
+        "featureGeometryRevisionHistory": {
+          "label": "Geometry revision history"
+        },
+        "featureGeometryRevisionNote": {
+          "label": "Geometry revision note"
+        },
+        "featureInvestigationChecklist": {
+          "label": "Investigation checklist"
+        },
+        "featureSoilProfilePhotoCount": {
+          "label": "Soil profile photo count"
+        },
+        "featureChecklistNote": {
+          "label": "Checklist note"
         },
         "fieldRecordQuality": {
           "label": "Field record quality"
@@ -917,6 +985,27 @@
         },
         "geometryConfidence": {
           "label": "Geometry confidence"
+        },
+        "featureGeometryEditStatus": {
+          "label": "Geometry edit status"
+        },
+        "featureGeometryReferenceLayerId": {
+          "label": "Reference layer id"
+        },
+        "featureGeometryRevisionHistory": {
+          "label": "Geometry revision history"
+        },
+        "featureGeometryRevisionNote": {
+          "label": "Geometry revision note"
+        },
+        "featureInvestigationChecklist": {
+          "label": "Investigation checklist"
+        },
+        "featureSoilProfilePhotoCount": {
+          "label": "Soil profile photo count"
+        },
+        "featureChecklistNote": {
+          "label": "Checklist note"
         },
         "fieldRecordQuality": {
           "label": "Field record quality"
@@ -1365,6 +1454,18 @@
         },
         "aerialLayerOpacity": {
           "label": "Layer opacity"
+        },
+        "aerialLayerUpdateStage": {
+          "label": "Layer update stage"
+        },
+        "aerialLayerRevisionGroup": {
+          "label": "Layer revision group"
+        },
+        "aerialLayerRevisionNumber": {
+          "label": "Layer revision number"
+        },
+        "aerialLayerPreviousRevisionId": {
+          "label": "Previous layer revision id"
         }
       }
     },
@@ -1421,6 +1522,18 @@
     "SoilProfilePhoto": {
       "label": "Soil profile photo",
       "fields": {
+        "soilProfilePhotoUri": {
+          "label": "Field photo URI"
+        },
+        "soilProfilePhotoSizeHintKb": {
+          "label": "Photo size guideline (KB)"
+        },
+        "soilProfilePhotoQuality": {
+          "label": "Capture quality"
+        },
+        "soilProfilePhotoCapturedAt": {
+          "label": "Captured at"
+        },
         "soilProfileAnnotationStrokes": {
           "label": "Annotation stroke JSON"
         },
@@ -1435,6 +1548,12 @@
         },
         "soilColorCaptureCondition": {
           "label": "Capture condition"
+        },
+        "soilProfileColorSwatches": {
+          "label": "Color swatch JSON"
+        },
+        "soilProfileColorNote": {
+          "label": "Color note"
         },
         "soilProfileCaptureNote": {
           "label": "Capture note"
@@ -1473,6 +1592,18 @@
         },
         "aerialLayerOpacity": {
           "label": "Layer opacity"
+        },
+        "aerialLayerUpdateStage": {
+          "label": "Layer update stage"
+        },
+        "aerialLayerRevisionGroup": {
+          "label": "Layer revision group"
+        },
+        "aerialLayerRevisionNumber": {
+          "label": "Layer revision number"
+        },
+        "aerialLayerPreviousRevisionId": {
+          "label": "Previous layer revision id"
         }
       }
     },
@@ -1557,6 +1688,18 @@
         },
         "aerialLayerOpacity": {
           "label": "Layer opacity"
+        },
+        "aerialLayerUpdateStage": {
+          "label": "Layer update stage"
+        },
+        "aerialLayerRevisionGroup": {
+          "label": "Layer revision group"
+        },
+        "aerialLayerRevisionNumber": {
+          "label": "Layer revision number"
+        },
+        "aerialLayerPreviousRevisionId": {
+          "label": "Previous layer revision id"
         }
       }
     }

@@ -1,7 +1,20 @@
 import {
+  createFeatureCandidateDraft,
   createLayerDraft,
   createSoilProfilePhotoDraft,
+  createSurveyBoundaryDraft,
+  FEATURE_GEOMETRY_EDIT_STATUS_ROUGH_SKETCH,
+  FEATURE_GEOMETRY_REVISION_HISTORY_DEFAULT,
+  FEATURE_RECORDING_STATUS_CANDIDATE,
+  GEOMETRY_CONFIDENCE_ROUGH,
+  GEOMETRY_SOURCE_GPS_APPROXIMATE,
   LAYER_SEQUENCE_MEANING_DEFAULT,
+  REFERENCE_BASEMAP_PROVIDER_DEFAULT,
+  SOIL_PROFILE_PHOTO_QUALITY_DEFAULT,
+  SOIL_PROFILE_PHOTO_SIZE_HINT_KB_DEFAULT,
+  SURVEY_BOUNDARY_ACCURACY_DEFAULT,
+  SURVEY_BOUNDARY_SOURCE_DEFAULT,
+  SURVEY_BOUNDARY_TYPE_DEFAULT,
   SOIL_COLOR_ASSIST_STATUS_DEFAULT,
 } from './korean-fieldwork-drafts';
 
@@ -12,6 +25,35 @@ describe('Korean fieldwork map drafts', () => {
 
   afterEach(() => {
     jest.restoreAllMocks();
+  });
+
+  it('creates Feature candidate drafts with an empty investigation checklist', () => {
+    const operationDoc = {
+      resource: {
+        id: 'operation-1',
+        category: 'Operation',
+        relations: {},
+      },
+    } as any;
+
+    const draft = createFeatureCandidateDraft(operationDoc, { x: 127, y: 37 });
+
+    expect(draft.resource).toMatchObject({
+      identifier: 'feature-candidate-1700000000000',
+      category: 'Feature',
+      relations: { isRecordedIn: ['operation-1'] },
+      geometry: {
+        type: 'Point',
+        coordinates: [127, 37],
+      },
+      featureRecordingStatus: FEATURE_RECORDING_STATUS_CANDIDATE,
+      geometrySource: GEOMETRY_SOURCE_GPS_APPROXIMATE,
+      geometryConfidence: GEOMETRY_CONFIDENCE_ROUGH,
+      featureGeometryEditStatus: FEATURE_GEOMETRY_EDIT_STATUS_ROUGH_SKETCH,
+      featureGeometryRevisionHistory: FEATURE_GEOMETRY_REVISION_HISTORY_DEFAULT,
+      featureInvestigationChecklist: [],
+      featureSoilProfilePhotoCount: 0,
+    });
   });
 
   it('creates an offline-safe soil profile photo draft linked to the highlighted document', () => {
@@ -31,6 +73,9 @@ describe('Korean fieldwork map drafts', () => {
       soilProfileAnnotationStrokes: '[]',
       soilProfileLayerMarkers: '[]',
       soilProfileLayerIds: '[]',
+      soilProfileColorSwatches: '[]',
+      soilProfilePhotoSizeHintKb: SOIL_PROFILE_PHOTO_SIZE_HINT_KB_DEFAULT,
+      soilProfilePhotoQuality: SOIL_PROFILE_PHOTO_QUALITY_DEFAULT,
       layerSequenceMeaning: LAYER_SEQUENCE_MEANING_DEFAULT,
     });
   });
@@ -73,5 +118,28 @@ describe('Korean fieldwork map drafts', () => {
       isRecordedIn: ['operation-1'],
       liesWithin: ['feature-1'],
     });
+  });
+
+  it('creates SurveyBoundary drafts as operation-level line boundary records', () => {
+    const operationDoc = {
+      resource: {
+        id: 'operation-1',
+        category: 'Operation',
+        relations: {},
+      },
+    } as any;
+
+    const draft = createSurveyBoundaryDraft(operationDoc);
+
+    expect(draft.resource).toMatchObject({
+      identifier: 'survey-boundary-1700000000000',
+      category: 'SurveyBoundary',
+      relations: { isRecordedIn: ['operation-1'] },
+      surveyBoundaryType: SURVEY_BOUNDARY_TYPE_DEFAULT,
+      surveyBoundarySource: SURVEY_BOUNDARY_SOURCE_DEFAULT,
+      surveyBoundaryAccuracy: SURVEY_BOUNDARY_ACCURACY_DEFAULT,
+      referenceBasemapProvider: REFERENCE_BASEMAP_PROVIDER_DEFAULT,
+    });
+    expect(draft.resource.geometry).toBeUndefined();
   });
 });

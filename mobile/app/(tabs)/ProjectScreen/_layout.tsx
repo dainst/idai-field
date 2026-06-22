@@ -42,6 +42,13 @@ export default function Layout() {
               }}
             />
             <Drawer.Screen
+              name="DocumentEdit"
+              options={{
+                drawerItemStyle: { display: 'none' },
+                title: 'Edit Document',
+              }}
+            />
+            <Drawer.Screen
               name="DocumentsMap"
               options={{
                 drawerLabel: 'Documents Map',

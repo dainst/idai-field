@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { ConfigReader } from '../../src/configuration/boot/config-reader';
 import {
+    DEFAULT_PROJECT_LANGUAGES,
     getConfigurationName,
     KOREAN_FIELDWORK_CONFIGURATION_NAME,
     KOREAN_FIELDWORK_LAYER_SEQUENCE_MEANING_DEFAULT,
@@ -89,6 +90,7 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe(KOREAN_FIELDWORK_CONFIGURATION_NAME);
         expect(PROJECT_MAPPING[KOREAN_FIELDWORK_PROJECT_IDENTIFIER].prefix).toBe(KOREAN_FIELDWORK_CONFIGURATION_NAME);
         expect(PROJECT_MAPPING[KOREAN_FIELDWORK_PROJECT_IDENTIFIER].label).toBe(KOREAN_FIELDWORK_PROJECT_LABEL);
+        expect(DEFAULT_PROJECT_LANGUAGES).toEqual(['en']);
         expect(KOREAN_FIELDWORK_PROJECT_LANGUAGES).toEqual(['ko']);
     });
 
@@ -315,7 +317,7 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Aerial layer trace');
         expect(languages.ko.categories.Feature.label).toBe('유구');
         expect(languages.ko.categories.FeatureGroup.label).toBe('유구군');
-        expect(languages.ko.categories.FeatureSegment.label).toBe('피트·유구 세부 기록');
+        expect(languages.ko.categories.FeatureSegment.label).toBe('피트·유구 구간');
         expect(languages.ko.categories.Place.label).toBe('유적/지점');
         expect(languages.ko.categories.Trench.label).toBe('트렌치/조사갱');
         expect(languages.ko.categories.FieldRecordQualityReview.label).toBe('현장기록 품질검수');

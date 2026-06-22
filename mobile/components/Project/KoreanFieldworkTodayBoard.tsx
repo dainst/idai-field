@@ -13,8 +13,12 @@ import {
 import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '@/utils/colors';
 import DocumentButton from '@/components/common/DocumentButton';
+import KoreanFieldworkPriorityTaskList from './KoreanFieldworkPriorityTaskList';
 import { KOREAN_FIELDWORK_CATEGORIES } from './korean-fieldwork-categories';
-import { getKoreanFieldworkTodayActionTargets } from './korean-fieldwork-today-actions';
+import {
+  getKoreanFieldworkPriorityTasks,
+  getKoreanFieldworkTodayActionTargets,
+} from './korean-fieldwork-today-actions';
 
 interface KoreanFieldworkTodayBoardProps {
   summary: KoreanFieldworkTodaySummary;
@@ -22,6 +26,7 @@ interface KoreanFieldworkTodayBoardProps {
   onEditDocument: (docId: string, categoryName: string) => void;
   onAddDocumentOfCategory?: (parentDoc: Document, categoryName: string) => void;
   onOpenDocument?: (document: Document) => void;
+  onOpenMap?: () => void;
 }
 
 const KoreanFieldworkTodayBoard: React.FC<KoreanFieldworkTodayBoardProps> = ({
@@ -30,9 +35,18 @@ const KoreanFieldworkTodayBoard: React.FC<KoreanFieldworkTodayBoardProps> = ({
   onEditDocument,
   onAddDocumentOfCategory,
   onOpenDocument,
+  onOpenMap,
 }) => {
+  const documentsById = useMemo(
+    () => new Map(documents.map((document) => [document.resource.id, document])),
+    [documents]
+  );
   const actionTargets = useMemo(
     () => getKoreanFieldworkTodayActionTargets(summary, documents),
+    [documents, summary]
+  );
+  const priorityTasks = useMemo(
+    () => getKoreanFieldworkPriorityTasks(summary, documents, 4),
     [documents, summary]
   );
 
@@ -117,20 +131,13 @@ const KoreanFieldworkTodayBoard: React.FC<KoreanFieldworkTodayBoardProps> = ({
           onPress={() => openDocument(actionTargets.issueDocument)}
         />
       </View>
-      {summary.openIssues.length > 0 && (
-        <View style={styles.warningPanel}>
-          <Text style={styles.warningTitle}>현장 마감 전 확인</Text>
-          {summary.openIssues.slice(0, 2).map((issue) => (
-            <Text
-              key={`${issue.documentId}-${issue.ruleId}`}
-              style={styles.warningMessage}
-              numberOfLines={2}
-            >
-              {issue.identifier}: {issue.recommendedAction}
-            </Text>
-          ))}
-        </View>
-      )}
+      <KoreanFieldworkPriorityTaskList
+        tasks={priorityTasks}
+        documentsById={documentsById}
+        onAddDocumentOfCategory={onAddDocumentOfCategory}
+        onOpenDocument={openDocument}
+        onOpenMap={onOpenMap}
+      />
       {summary.featureCandidates.length > 0 && (
         <ScrollView
           horizontal
@@ -282,24 +289,6 @@ const styles = StyleSheet.create({
   },
   warningText: {
     color: colors.danger,
-  },
-  warningPanel: {
-    backgroundColor: '#fff6f6',
-    borderLeftColor: colors.danger,
-    borderLeftWidth: 3,
-    marginTop: 8,
-    paddingHorizontal: 8,
-    paddingVertical: 6,
-  },
-  warningTitle: {
-    color: colors.danger,
-    fontSize: 12,
-    fontWeight: 'bold',
-  },
-  warningMessage: {
-    color: '#5f2525',
-    fontSize: 11,
-    marginTop: 2,
   },
   candidates: {
     alignItems: 'center',

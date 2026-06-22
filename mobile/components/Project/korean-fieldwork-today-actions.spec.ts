@@ -1,4 +1,7 @@
-import { getKoreanFieldworkTodayActionTargets } from './korean-fieldwork-today-actions';
+import {
+  getKoreanFieldworkPriorityTasks,
+  getKoreanFieldworkTodayActionTargets,
+} from './korean-fieldwork-today-actions';
 import { KOREAN_FIELDWORK_CATEGORIES } from './korean-fieldwork-categories';
 
 const C = KOREAN_FIELDWORK_CATEGORIES;
@@ -59,6 +62,76 @@ describe('Korean fieldwork today actions', () => {
       createSummary() as any,
       [operation] as any
     ).featureDraftParent).toBe(operation);
+  });
+
+  it('builds actionable startup tasks for missing tablet field records', () => {
+    const operation = createDoc('operation-1', C.OPERATION);
+    const tasks = getKoreanFieldworkPriorityTasks(
+      createSummary() as any,
+      [operation] as any
+    );
+
+    expect(tasks.map((task) => task.id)).toEqual([
+      'create-daily-log',
+      'create-survey-boundary',
+      'create-trench',
+      'create-feature-candidate',
+    ]);
+    expect(tasks[0].action).toEqual({
+      type: 'createDocument',
+      parentDocumentId: 'operation-1',
+      categoryName: C.DAILY_LOG,
+    });
+    expect(tasks[3].action).toEqual({
+      type: 'createDocument',
+      parentDocumentId: 'operation-1',
+      categoryName: C.FEATURE,
+    });
+  });
+
+  it('uses trench as the parent for the feature candidate priority task', () => {
+    const operation = createDoc('operation-1', C.OPERATION);
+    const trench = createDoc('trench-1', C.TRENCH);
+    const tasks = getKoreanFieldworkPriorityTasks(
+      createSummary() as any,
+      [operation, trench] as any
+    );
+
+    expect(tasks.find((task) =>
+      task.id === 'create-feature-candidate'
+    )?.action).toEqual({
+      type: 'createDocument',
+      parentDocumentId: 'trench-1',
+      categoryName: C.FEATURE,
+    });
+  });
+
+  it('adds issue tasks that open the affected document', () => {
+    const operation = createDoc('operation-1', C.OPERATION);
+    const sample = createDoc('sample-1', C.SAMPLE);
+    const summary = createSummary({
+      dailyLogs: [createDoc('daily-log-1', C.DAILY_LOG)],
+      surveyBoundaries: [createDoc('boundary-1', C.SURVEY_BOUNDARY)],
+      openIssues: [{
+        documentId: 'sample-1',
+        identifier: 'sample-1',
+        recommendedAction: '시료 목적을 기록하세요.',
+        ruleId: 'sample-purpose',
+        severity: 'warning',
+      }],
+    });
+
+    const tasks = getKoreanFieldworkPriorityTasks(
+      summary as any,
+      [operation, sample, createDoc('trench-1', C.TRENCH)] as any
+    );
+
+    expect(tasks.find((task) =>
+      task.id === 'issue-sample-1-sample-purpose'
+    )?.action).toEqual({
+      type: 'openDocument',
+      documentId: 'sample-1',
+    });
   });
 });
 

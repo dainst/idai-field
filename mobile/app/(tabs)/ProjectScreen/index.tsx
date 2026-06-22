@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import CategoryIcon from '@/components/common/CategoryIcon';
 import DocumentAddModal from '@/components/Project/DocumentAddModal';
+import KoreanFieldworkPriorityTaskList from '@/components/Project/KoreanFieldworkPriorityTaskList';
 import {
   getKoreanFieldworkCategoryLabel,
   KOREAN_FIELDWORK_CATEGORIES,
@@ -26,7 +27,10 @@ import {
   KoreanFieldworkStatusChip,
   KoreanFieldworkStatusTone,
 } from '@/components/Project/korean-fieldwork-record-summary';
-import { getKoreanFieldworkTodayActionTargets } from '@/components/Project/korean-fieldwork-today-actions';
+import {
+  getKoreanFieldworkPriorityTasks,
+  getKoreanFieldworkTodayActionTargets,
+} from '@/components/Project/korean-fieldwork-today-actions';
 import { ConfigurationContext } from '@/contexts/configuration-context';
 import LabelsContext from '@/contexts/labels/labels-context';
 import { ProjectContext } from '@/contexts/project-context';
@@ -219,6 +223,10 @@ const DocumentsList: React.FC = () => {
     () => getKoreanFieldworkTodayActionTargets(todaySummary, documents),
     [documents, todaySummary]
   );
+  const priorityTasks = useMemo(
+    () => getKoreanFieldworkPriorityTasks(todaySummary, documents, 5),
+    [documents, todaySummary]
+  );
   const hierarchyLabel = hierarchyPath.length > 0
     ? hierarchyPath.map((document) => document.resource.identifier).join(' / ')
     : '전체 조사자료';
@@ -352,6 +360,19 @@ const DocumentsList: React.FC = () => {
             warning={todaySummary.openIssues.length > 0}
           />
         </View>
+
+        {priorityTasks.length > 0 && (
+          <View style={styles.priorityTaskBand}>
+            <KoreanFieldworkPriorityTaskList
+              tasks={priorityTasks}
+              documentsById={documentsById}
+              onAddDocumentOfCategory={(parentDoc, categoryName) =>
+                navigateAddCategory(categoryName, parentDoc)}
+              onOpenDocument={onDocumentSelected}
+              onOpenMap={openMap}
+            />
+          </View>
+        )}
 
         <View style={styles.searchBand}>
           <View style={styles.searchBox}>
@@ -849,6 +870,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 12,
     paddingVertical: 10,
+  },
+  priorityTaskBand: {
+    backgroundColor: 'white',
+    borderBottomColor: '#d0d5dd',
+    borderBottomWidth: 1,
+    paddingHorizontal: 16,
+    paddingBottom: 12,
+    paddingTop: 4,
   },
   quickAction: {
     alignItems: 'center',

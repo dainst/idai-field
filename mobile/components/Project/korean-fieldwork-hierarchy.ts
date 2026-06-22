@@ -4,6 +4,10 @@ import {
   KOREAN_FIELDWORK_CATEGORIES,
 } from './korean-fieldwork-categories';
 import { getKoreanFieldworkPrimaryParent } from './korean-fieldwork-record-summary';
+import {
+  isKoreanFieldworkDocumentAncestorOfScope,
+  isKoreanFieldworkDocumentInScope,
+} from './korean-fieldwork-scope';
 
 export interface KoreanFieldworkHierarchyItem {
   document: Document;
@@ -46,8 +50,12 @@ export const getKoreanFieldworkHierarchyLanes = (
     .filter((document) =>
       HIERARCHY_CATEGORY_SET.has(document.resource.category)
       && (
-        isInScope(document, scopeParent, documentsById)
-        || isAncestorOfScope(document, scopeParent, documentsById)
+        isKoreanFieldworkDocumentInScope(document, scopeParent, documentsById)
+        || isKoreanFieldworkDocumentAncestorOfScope(
+          document,
+          scopeParent,
+          documentsById
+        )
       )
     );
 
@@ -113,53 +121,6 @@ const toHierarchyItem = (
     issueCount: issueCountByDocumentId[document.resource.id] ?? 0,
     isCurrentScope: document.resource.id === scopeParent?.resource.id,
   };
-};
-
-const isInScope = (
-  document: Document,
-  scopeParent: Document | undefined,
-  documentsById: Map<string, Document>
-): boolean => {
-  if (!scopeParent) return true;
-  if (document.resource.id === scopeParent.resource.id) return true;
-
-  let currentDocument: Document | undefined = document;
-  const visitedIds = new Set<string>([document.resource.id]);
-
-  for (let depth = 0; depth < 8; depth += 1) {
-    const parent = getKoreanFieldworkPrimaryParent(currentDocument, documentsById);
-    if (!parent || visitedIds.has(parent.resource.id)) return false;
-    if (parent.resource.id === scopeParent.resource.id) return true;
-
-    visitedIds.add(parent.resource.id);
-    currentDocument = parent;
-  }
-
-  return false;
-};
-
-const isAncestorOfScope = (
-  document: Document,
-  scopeParent: Document | undefined,
-  documentsById: Map<string, Document>
-): boolean => {
-  if (!scopeParent || document.resource.id === scopeParent.resource.id) {
-    return false;
-  }
-
-  let currentDocument = scopeParent;
-  const visitedIds = new Set<string>([scopeParent.resource.id]);
-
-  for (let depth = 0; depth < 8; depth += 1) {
-    const parent = getKoreanFieldworkPrimaryParent(currentDocument, documentsById);
-    if (!parent || visitedIds.has(parent.resource.id)) return false;
-    if (parent.resource.id === document.resource.id) return true;
-
-    visitedIds.add(parent.resource.id);
-    currentDocument = parent;
-  }
-
-  return false;
 };
 
 const compareHierarchyDocuments = (

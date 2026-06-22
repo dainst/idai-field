@@ -190,8 +190,8 @@ const DocumentsList: React.FC = () => {
     clearHierarchy,
     hierarchyPath,
     onDocumentSelected,
-    onParentSelected,
     popFromHierarchy,
+    pushToHierarchy,
   } = useContext(ProjectContext);
   const config = useContext(ConfigurationContext);
   const { labels } = useContext(LabelsContext);
@@ -206,9 +206,31 @@ const DocumentsList: React.FC = () => {
     () => new Map(documents.map((document) => [document.resource.id, document])),
     [documents]
   );
+  const currentScopeParent = hierarchyPath[hierarchyPath.length - 1];
   const todaySummary = useMemo(
     () => getKoreanFieldworkTodaySummary(documents),
     [documents]
+  );
+  const actionDocuments = useMemo(() => {
+    const documentsByActionId = new Map<string, Document>();
+    [currentScopeParent, ...documents].forEach((document) => {
+      if (document) documentsByActionId.set(document.resource.id, document);
+    });
+
+    return Array.from(documentsByActionId.values());
+  }, [currentScopeParent, documents]);
+  const actionDocumentsById = useMemo(
+    () => new Map(actionDocuments.map((document) => [
+      document.resource.id,
+      document,
+    ])),
+    [actionDocuments]
+  );
+  const actionSummary = useMemo(
+    () => currentScopeParent
+      ? getKoreanFieldworkTodaySummary(actionDocuments)
+      : todaySummary,
+    [actionDocuments, currentScopeParent, todaySummary]
   );
   const normalizedQuery = query.trim().toLowerCase();
   const activeFilterDefinition = RECORD_FILTERS.find((filter) =>
@@ -278,18 +300,17 @@ const DocumentsList: React.FC = () => {
     !groupedDocumentIds.has(document.resource.id)
   );
   const actionTargets = useMemo(
-    () => getKoreanFieldworkTodayActionTargets(todaySummary, documents),
-    [documents, todaySummary]
+    () => getKoreanFieldworkTodayActionTargets(actionSummary, actionDocuments),
+    [actionDocuments, actionSummary]
   );
   const priorityTasks = useMemo(
-    () => getKoreanFieldworkPriorityTasks(todaySummary, documents, 5),
-    [documents, todaySummary]
+    () => getKoreanFieldworkPriorityTasks(actionSummary, actionDocuments, 5),
+    [actionDocuments, actionSummary]
   );
   const closeoutSummary = useMemo(
     () => getKoreanFieldworkCloseoutSummary(todaySummary.openIssues, 5),
     [todaySummary.openIssues]
   );
-  const currentScopeParent = hierarchyPath[hierarchyPath.length - 1];
   const hierarchyLabel = hierarchyPath.length > 0
     ? hierarchyPath.map((document) => document.resource.identifier).join(' / ')
     : '전체 조사자료';
@@ -407,7 +428,11 @@ const DocumentsList: React.FC = () => {
         <View style={styles.metricsBand}>
           <Metric label="전체 기록" value={documents.length} icon="inventory-2" />
           <Metric label="오늘 일지" value={todaySummary.dailyLogs.length} icon="event-note" />
-          <Metric label="유구 후보" value={todaySummary.featureCandidates.length} icon="add-location-alt" />
+          <Metric
+            label="유구 후보"
+            value={todaySummary.featureCandidates.length}
+            icon="add-location-alt"
+          />
           <Metric
             label="확인 필요"
             value={todaySummary.openIssues.length}
@@ -459,7 +484,7 @@ const DocumentsList: React.FC = () => {
           hierarchyPath={hierarchyPath}
           issueCountByDocumentId={todaySummary.issueCountByDocumentId}
           onOpenDocument={onDocumentSelected}
-          onDrillDown={onParentSelected}
+          onDrillDown={pushToHierarchy}
           onAddChild={openAddChildModal}
         />
 
@@ -495,7 +520,7 @@ const DocumentsList: React.FC = () => {
           <View style={styles.priorityTaskBand}>
             <KoreanFieldworkPriorityTaskList
               tasks={priorityTasks}
-              documentsById={documentsById}
+              documentsById={actionDocumentsById}
               onAddDocumentOfCategory={(parentDoc, categoryName) =>
                 navigateAddCategory(categoryName, parentDoc)}
               onOpenDocument={onDocumentSelected}
@@ -628,7 +653,7 @@ const DocumentsList: React.FC = () => {
               getCategoryLabel={getCategoryLabel}
               issueCountByDocumentId={todaySummary.issueCountByDocumentId}
               onOpenDocument={onDocumentSelected}
-              onDrillDown={onParentSelected}
+              onDrillDown={pushToHierarchy}
               onAddChild={openAddChildModal}
               onAddDocumentOfCategory={(parentDoc, categoryName) =>
                 navigateAddCategory(categoryName, parentDoc)}
@@ -645,7 +670,7 @@ const DocumentsList: React.FC = () => {
               getCategoryLabel={getCategoryLabel}
               issueCountByDocumentId={todaySummary.issueCountByDocumentId}
               onOpenDocument={onDocumentSelected}
-              onDrillDown={onParentSelected}
+              onDrillDown={pushToHierarchy}
               onAddChild={openAddChildModal}
               onAddDocumentOfCategory={(parentDoc, categoryName) =>
                 navigateAddCategory(categoryName, parentDoc)}

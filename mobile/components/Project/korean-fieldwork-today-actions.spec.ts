@@ -106,6 +106,21 @@ describe('Korean fieldwork today actions', () => {
     });
   });
 
+  it('does not restart the project when the current scoped parent is a trench', () => {
+    const trench = createDoc('trench-1', C.TRENCH);
+    const tasks = getKoreanFieldworkPriorityTasks(
+      createSummary() as any,
+      [trench] as any
+    );
+
+    expect(tasks.map((task) => task.id)).toEqual(['create-feature-candidate']);
+    expect(tasks[0].action).toEqual({
+      type: 'createDocument',
+      parentDocumentId: 'trench-1',
+      categoryName: C.FEATURE,
+    });
+  });
+
   it('adds issue tasks that open the affected document', () => {
     const operation = createDoc('operation-1', C.OPERATION);
     const sample = createDoc('sample-1', C.SAMPLE);

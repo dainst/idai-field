@@ -18,6 +18,7 @@ import {
   getKoreanFieldworkEvidenceChips,
   KoreanFieldworkEvidenceChip,
 } from './korean-fieldwork-record-evidence';
+import { isKoreanFieldworkDocumentInScope } from './korean-fieldwork-scope';
 
 const C = KOREAN_FIELDWORK_CATEGORIES;
 
@@ -116,7 +117,7 @@ export const getKoreanFieldworkUnitMatrixItems = (
   return documents
     .filter((document) =>
       UNIT_CATEGORY_SET.has(document.resource.category)
-      && isInScope(document, scopeParent, documentsById)
+      && isKoreanFieldworkDocumentInScope(document, scopeParent, documentsById)
     )
     .map((document) => buildUnitMatrixItem(
       document,
@@ -250,29 +251,6 @@ const getChildrenByParentId = (
   });
 
   return childrenByParentId;
-};
-
-const isInScope = (
-  document: Document,
-  scopeParent: Document | undefined,
-  documentsById: Map<string, Document>
-): boolean => {
-  if (!scopeParent) return true;
-  if (document.resource.id === scopeParent.resource.id) return true;
-
-  let currentDocument = document;
-  const visitedIds = new Set<string>([document.resource.id]);
-
-  for (let depth = 0; depth < 8; depth += 1) {
-    const parent = getKoreanFieldworkPrimaryParent(currentDocument, documentsById);
-    if (!parent || visitedIds.has(parent.resource.id)) return false;
-    if (parent.resource.id === scopeParent.resource.id) return true;
-
-    visitedIds.add(parent.resource.id);
-    currentDocument = parent;
-  }
-
-  return false;
 };
 
 const groupIssuesByDocumentId = (

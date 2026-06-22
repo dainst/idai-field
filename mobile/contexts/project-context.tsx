@@ -2,7 +2,6 @@ import React, {
   createContext,
   useState,
   useContext,
-  useMemo,
   Dispatch,
   SetStateAction,
 } from 'react';
@@ -45,7 +44,6 @@ export const ProjectContextProvider = ({ children }) => {
 
   const config = useContext(ConfigurationContext);
   const preferences = useContext(PreferencesContext);
-  const categories = useMemo(() => config?.getCategories() || [], [config]);
 
   const pouchdbDatastore = usePouchDbDatastore(
     preferences.preferences.currentProject
@@ -53,7 +51,7 @@ export const ProjectContextProvider = ({ children }) => {
 
   const repository = useRepository(
     preferences.preferences.username,
-    categories,
+    config,
     pouchdbDatastore
   );
 

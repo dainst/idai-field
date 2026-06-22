@@ -21,8 +21,15 @@ const useSearch = (
   }, [issueSearch]);
 
   useEffect(() => {
-    const s = repository?.remoteChanged().subscribe(() => issueSearch());
-    return () => s?.unsubscribe();
+    const localChanges = repository?.changed().subscribe(() => issueSearch());
+    const remoteChanges = repository
+      ?.remoteChanged()
+      .subscribe(() => issueSearch());
+
+    return () => {
+      localChanges?.unsubscribe();
+      remoteChanges?.unsubscribe();
+    };
   }, [repository, issueSearch]);
 
   return documents;

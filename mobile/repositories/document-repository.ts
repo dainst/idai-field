@@ -1,12 +1,10 @@
 import {
   basicIndexConfiguration,
-  CategoryForm,
   ChangesStream,
   ConstraintIndex,
   Datastore,
   Document,
   DocumentCache,
-  Forest,
   Indexer,
   IndexFacade,
   NewDocument,
@@ -38,18 +36,10 @@ export class DocumentRepository {
 
   public static async init(
     username: string,
-    categoryForms: Forest<CategoryForm>,
+    projectConfiguration: ProjectConfiguration,
     pouchdbDatastore: PouchdbDatastore
   ): Promise<DocumentRepository> {
     const db = pouchdbDatastore.getDb();
-    const projectConfiguration = new ProjectConfiguration({
-      forms: categoryForms,
-      categories: {},
-      relations: [],
-      commonFields: {},
-      valuelists: {},
-      projectLanguages:[],
-    });
     const [datastore, changesStream] = await buildDatastore(
       pouchdbDatastore,
       db,

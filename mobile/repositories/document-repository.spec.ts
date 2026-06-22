@@ -7,6 +7,7 @@ import {
   Forest,
   IdGenerator,
   PouchdbDatastore,
+  ProjectConfiguration,
 } from 'idai-field-core';
 import PouchDB from 'pouchdb-node';
 import { last } from 'tsfun';
@@ -24,16 +25,30 @@ describe('DocumentRepository', () => {
     );
     await datastore.createDb(
       project,
-      { _id: 'project', resource: { id: 'project' } },
+      {
+        _id: 'project',
+        resource: {
+          id: 'project',
+          identifier: 'project',
+          category: 'Project',
+          relations: {},
+        },
+      } as any,
+      undefined,
       true
     );
-    const categories: Forest<CategoryForm> = [
-      createCategory('Feature'),
-      createCategory('Find'),
-    ];
     repository = await DocumentRepository.init(
       'testuser',
-      categories,
+      createProjectConfiguration(
+        createOperationFieldCategories('Feature', 'Find'),
+        [
+          {
+            name: 'liesWithin',
+            domain: ['Find'],
+            range: ['Feature'],
+          },
+        ]
+      ),
       datastore
     );
   });
@@ -112,13 +127,18 @@ describe('DocumentRepository', () => {
     ];
     await Promise.all(docs.map(async (d) => await repository.create(d)));
 
-    const { totalCount: count1 } = await repository.find({});
+    const query = { categories: ['Feature', 'Find'] };
+
+    const { totalCount: count1 } = await repository.find(query);
     expect(count1).toEqual(3);
 
-    const { totalCount: count } = await repository.find({ q: 'Test' });
+    const { totalCount: count } = await repository.find({ ...query, q: 'Test' });
     expect(count).toEqual(2);
 
-    const { totalCount: count2 } = await repository.find({ q: 'Document' });
+    const { totalCount: count2 } = await repository.find({
+      ...query,
+      q: 'Document',
+    });
     expect(count2).toEqual(3);
   });
 
@@ -135,6 +155,82 @@ describe('DocumentRepository', () => {
     });
     expect(foundDocs).toHaveLength(1);
     expect(foundDocs[0].resource.id).toEqual('id1');
+  });
+
+  it('keeps relation-aware child records visible in default searches', async () => {
+    const datastore = new PouchdbDatastore(
+      (name: string) => new PouchDB(name),
+      new IdGenerator()
+    );
+    const relationProject = 'relation-aware-testdb';
+    await datastore.createDb(
+      relationProject,
+      {
+        _id: 'project',
+        resource: {
+          id: 'project',
+          identifier: 'project',
+          category: 'Project',
+          relations: {},
+        },
+      } as any,
+      undefined,
+      true
+    );
+
+    const operationFieldCategories = createOperationFieldCategories('Trench');
+    const trenchCategory = operationFieldCategories[0].trees[0];
+    trenchCategory.item.mustLieWithin = true;
+
+    const relationAwareRepository = await DocumentRepository.init(
+      'testuser',
+      createProjectConfiguration(
+        operationFieldCategories,
+        [
+          {
+            name: 'isRecordedIn',
+            domain: ['Trench'],
+            range: ['Operation'],
+          },
+          {
+            name: 'liesWithin',
+            domain: ['Trench'],
+            range: ['Operation'],
+          },
+        ]
+      ),
+      datastore
+    );
+
+    const operation = await relationAwareRepository.create({
+      resource: {
+        id: 'operation-1',
+        identifier: 'operation-1',
+        category: 'Operation',
+        relations: {},
+      },
+    });
+    const trench = await relationAwareRepository.create({
+      resource: {
+        id: 'trench-1',
+        identifier: 'trench-1',
+        category: 'Trench',
+        relations: {
+          isRecordedIn: [operation.resource.id],
+          liesWithin: [operation.resource.id],
+        },
+      },
+    });
+
+    const { documents } = await relationAwareRepository.find({
+      categories: ['Operation', 'Trench'],
+    });
+
+    expect(documents.map((document) => document.resource.id)).toContain(
+      trench.resource.id
+    );
+
+    await relationAwareRepository.destroy(relationProject);
   });
 
   xit('notifies of creation', async () => {
@@ -174,3 +270,29 @@ describe('DocumentRepository', () => {
     expect(deletedDoc.resource.id).toEqual(testDoc.resource.id);
   });
 });
+
+const createOperationFieldCategories = (
+  ...categoryNames: string[]
+): Forest<CategoryForm> => {
+  const operationCategory = createCategory('Operation');
+  operationCategory.trees = categoryNames.map((categoryName) => {
+    const category = createCategory(categoryName);
+    category.item.parentCategory = operationCategory.item;
+    return category;
+  });
+
+  return [operationCategory];
+};
+
+const createProjectConfiguration = (
+  forms: Forest<CategoryForm>,
+  relations: any[] = []
+): ProjectConfiguration =>
+  new ProjectConfiguration({
+    forms,
+    categories: {},
+    relations,
+    commonFields: {},
+    valuelists: {},
+    projectLanguages: [],
+  });

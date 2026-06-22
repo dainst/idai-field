@@ -83,6 +83,19 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
     setIsAddModalOpen(true);
   };
 
+  const handleAddDocumentOfCategory = (
+    parentDoc: Document,
+    categoryName: string
+  ) => {
+    router.navigate({
+      pathname: '/ProjectScreen/DocumentAdd',
+      params: {
+        parentDocId: parentDoc.resource.id,
+        categoryName,
+      },
+    });
+  };
+
   const handleEditDocument = (docId: string, categoryName: string) => {
     router.navigate({
       pathname: '/ProjectScreen/DocumentEdit',
@@ -191,6 +204,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
           selectedDocumentIds={selectedDocumentIds}
           highlightedDocId={highlightedDocId}
           addDocument={handleAddDocument}
+          addDocumentOfCategory={handleAddDocumentOfCategory}
           editDocument={handleEditDocument}
           removeDocument={openRemoveDocument}
           selectParent={selectParent}

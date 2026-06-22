@@ -73,7 +73,11 @@ describe('loadConfiguration()', () => {
     expect(config.getCategory('DailyLog')).toBeDefined();
     expect(config.getCategory('TermAuthority')).toBeDefined();
     expect(config.getCategory('Feature')!.groups[0]?.name).toBe('stem');
-    expect(config.getCategory('Feature')!.groups.map(group => group.name)).toContain(KOREAN_FIELDWORK_GROUP_NAME);
+    expect(config.getCategory('Feature')!.groups.map(group => group.name))
+      .toContain(KOREAN_FIELDWORK_GROUP_NAME);
+    expect(config.getCategory('Trench')!.groups.map(group => group.name))
+      .toContain(KOREAN_FIELDWORK_GROUP_NAME);
+    expect(config.isAllowedRelationDomainCategory('Trench', 'Operation', 'isRecordedIn')).toBe(true);
     expect(config.isAllowedRelationDomainCategory('Trench', 'Operation', 'liesWithin')).toBe(true);
     expect(config.isAllowedRelationDomainCategory('FeatureGroup', 'Operation', 'isRecordedIn')).toBe(true);
     expect(config.isAllowedRelationDomainCategory('FeatureSegment', 'Feature', 'liesWithin')).toBe(true);
@@ -121,6 +125,9 @@ describe('loadConfiguration()', () => {
 
       expect(config.getProjectLanguages()).toEqual(['ko']);
       expect(config.getCategory('Trench')).toBeDefined();
+      expect(config.getCategory('Trench')!.groups.map(group => group.name))
+        .toContain(KOREAN_FIELDWORK_GROUP_NAME);
+      expect(config.isAllowedRelationDomainCategory('Trench', 'Operation', 'isRecordedIn')).toBe(true);
       expect(config.isAllowedRelationDomainCategory('Trench', 'Operation', 'liesWithin')).toBe(true);
       expect(config.isAllowedRelationDomainCategory('FeatureSegment', 'Operation', 'isRecordedIn')).toBe(true);
       expect(config.isAllowedRelationDomainCategory('DailyLog', 'Operation', 'isRecordedIn')).toBe(true);

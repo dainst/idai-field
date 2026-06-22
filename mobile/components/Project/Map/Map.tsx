@@ -54,6 +54,7 @@ interface MapProps {
   selectedDocumentIds: string[];
   highlightedDocId?: string;
   addDocument: (parentDoc: Document) => void;
+  addDocumentOfCategory: (parentDoc: Document, categoryName: string) => void;
   editDocument: (docID: string, categoryName: string) => void;
   removeDocument: (doc: Document) => void;
   selectParent: (doc: Document) => void;
@@ -119,7 +120,10 @@ const Map: React.FC<MapProps> = (props) => {
   const operationDocuments = props.documents.filter(
     (document) => document.resource.category === KOREAN_FIELDWORK_CATEGORIES.OPERATION
   );
+  const [primaryOperation] = operationDocuments;
   const canCreateOperation = !!config?.getCategory(KOREAN_FIELDWORK_CATEGORIES.OPERATION);
+  const canCreateTrench =
+    !!primaryOperation && !!config?.getCategory(KOREAN_FIELDWORK_CATEGORIES.TRENCH);
   const hasRenderableMapContent = geoDocuments.length > 0 || layerDocuments.length > 0;
   const shouldShowStartPanel = operationDocuments.length === 0 || !hasRenderableMapContent;
 
@@ -130,6 +134,20 @@ const Map: React.FC<MapProps> = (props) => {
 
     setHighlightedDoc(createdDocument);
     props.editDocument(createdDocument.resource.id, KOREAN_FIELDWORK_CATEGORIES.OPERATION);
+  };
+
+  const editPrimaryOperation = () => {
+    if (!primaryOperation) return;
+
+    setHighlightedDoc(primaryOperation);
+    props.editDocument(primaryOperation.resource.id, KOREAN_FIELDWORK_CATEGORIES.OPERATION);
+  };
+
+  const createTrenchInPrimaryOperation = () => {
+    if (!primaryOperation || !canCreateTrench) return;
+
+    setHighlightedDoc(primaryOperation);
+    props.addDocumentOfCategory(primaryOperation, KOREAN_FIELDWORK_CATEGORIES.TRENCH);
   };
 
   const createFeatureCandidateAtCurrentLocation = async () => {
@@ -289,24 +307,34 @@ const Map: React.FC<MapProps> = (props) => {
         <View style={styles.startPanel}>
           <Text style={styles.startEyebrow}>한국형 야장</Text>
           <Text style={styles.startTitle}>
-            {operationDocuments.length === 0 ? '조사구역부터 시작' : '지도 기록 준비'}
+            {primaryOperation ? '조사구역 기록 준비' : '조사구역부터 시작'}
           </Text>
           <Text style={styles.startHierarchy}>
             조사구역 → 트렌치/조사갱 → 유구군·유구 → 피트·층위
           </Text>
           <View style={styles.startActions}>
-            <Button
-              variant="success"
-              title="조사구역 만들기"
-              isDisabled={!canCreateOperation}
-              onPress={createOperationAndEdit}
-            />
-            <Button
-              variant="primary"
-              title={canCreateFeatureCandidate ? '유구 후보 기록' : '유구 후보 대기'}
-              isDisabled={!canCreateFeatureCandidate}
-              onPress={createFeatureCandidateAndEdit}
-            />
+            {!primaryOperation ? (
+              <Button
+                variant="success"
+                title="조사구역 만들기"
+                isDisabled={!canCreateOperation}
+                onPress={createOperationAndEdit}
+              />
+            ) : (
+              <>
+                <Button
+                  variant="success"
+                  title="트렌치/조사갱 추가"
+                  isDisabled={!canCreateTrench}
+                  onPress={createTrenchInPrimaryOperation}
+                />
+                <Button
+                  variant="primary"
+                  title="조사구역 편집"
+                  onPress={editPrimaryOperation}
+                />
+              </>
+            )}
           </View>
         </View>
       )}

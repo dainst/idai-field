@@ -1,10 +1,10 @@
-import { CategoryForm, Forest, PouchdbDatastore } from 'idai-field-core';
+import { PouchdbDatastore, ProjectConfiguration } from 'idai-field-core';
 import { useEffect, useState } from 'react';
 import { DocumentRepository } from '@/repositories/document-repository';
 
 const useRepository = (
   username: string,
-  categories: Forest<CategoryForm>,
+  config: ProjectConfiguration | undefined,
   pouchdbDatastore: PouchdbDatastore | undefined
 ): DocumentRepository | undefined => {
   const [repository, setRepository] = useState<DocumentRepository>();
@@ -12,7 +12,7 @@ const useRepository = (
   useEffect(() => {
     let isCancelled = false;
 
-    if (!pouchdbDatastore || !categories) {
+    if (!pouchdbDatastore || !config) {
       setRepository(undefined);
       return () => {
         isCancelled = true;
@@ -21,7 +21,7 @@ const useRepository = (
 
     setRepository(undefined);
 
-    setupRepository(username, categories, pouchdbDatastore)
+    setupRepository(username, config, pouchdbDatastore)
       .then((repository) => {
         if (!isCancelled) setRepository(repository);
       })
@@ -33,19 +33,19 @@ const useRepository = (
     return () => {
       isCancelled = true;
     };
-  }, [username, categories, pouchdbDatastore]);
+  }, [username, config, pouchdbDatastore]);
 
   return repository;
 };
 
 const setupRepository = async (
   username: string,
-  categories: Forest<CategoryForm>,
+  config: ProjectConfiguration,
   pouchdbDatastore: PouchdbDatastore
 ): Promise<DocumentRepository> =>
   DocumentRepository.init(
     username,
-    categories,
+    config,
     pouchdbDatastore
   );
 

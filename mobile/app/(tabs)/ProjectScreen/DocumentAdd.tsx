@@ -1,11 +1,8 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import {
   CategoryForm,
-  Document,
   NewDocument,
   NewResource,
-  ProjectConfiguration,
-  Resource,
 } from 'idai-field-core';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Keyboard, StyleSheet, Text, View } from 'react-native';
@@ -18,8 +15,10 @@ import DocumentForm from '@/components/common/forms/DocumentForm';
 import SoilProfileCameraButton, {
   SoilProfileCaptureData,
 } from '@/components/Project/SoilProfileCameraButton';
-import { createSoilProfilePhotoDraft } from '@/components/Project/Map/korean-fieldwork-drafts';
-import { KOREAN_FIELDWORK_CATEGORIES } from '@/components/Project/korean-fieldwork-categories';
+import {
+  createKoreanFieldworkDraftRelations,
+  createKoreanFieldworkDraftResource,
+} from '@/components/Project/korean-fieldwork-document-drafts';
 import { ToastType } from '@/components/common/Toast/ToastProvider';
 import { router, useGlobalSearchParams } from 'expo-router';
 import { ProjectContext } from '@/contexts/project-context';
@@ -46,13 +45,9 @@ const DocumentAdd: React.FC = () => {
         return;
       }
 
-      setNewResource(categoryName === 'SoilProfilePhoto'
-        ? createSoilProfilePhotoDraft(parentDoc).resource
-        : {
-          identifier: '',
-          relations: createRelations(parentDoc, categoryName, config),
-          category: categoryName,
-        });
+      setNewResource(
+        createKoreanFieldworkDraftResource(parentDoc, categoryName, config)
+      );
     },
     [parentDoc, categoryName, config]
   );
@@ -158,46 +153,7 @@ const DocumentAdd: React.FC = () => {
   );
 };
 
-export const createRelations = (
-  parentDoc: Document,
-  categoryName: string,
-  config: ProjectConfiguration
-): Resource.Relations => {
-  const parentCategoryName = parentDoc.resource.category;
-  const parentRecordedIn = parentDoc.resource.relations?.isRecordedIn?.[0];
-  const isAllowedRelation = (relationName: string) =>
-    config.isAllowedRelationDomainCategory(
-      categoryName,
-      parentCategoryName,
-      relationName
-    );
-
-  if (
-    categoryName === KOREAN_FIELDWORK_CATEGORIES.AERIAL_MAP_LAYER
-    && isAllowedRelation('isMapLayerOf')
-  ) {
-    return { isMapLayerOf: [parentDoc.resource.id] };
-  }
-
-  if (isAllowedRelation('depicts')) {
-    return { depicts: [parentDoc.resource.id] };
-  }
-
-  if (isAllowedRelation('isRecordedIn')) {
-    return { isRecordedIn: [parentDoc.resource.id] };
-  }
-
-  if (isAllowedRelation('liesWithin')) {
-    return {
-      ...(parentRecordedIn ? { isRecordedIn: [parentRecordedIn] } : {}),
-      liesWithin: [parentDoc.resource.id],
-    };
-  }
-
-  return parentRecordedIn
-    ? { isRecordedIn: [parentRecordedIn], liesWithin: [parentDoc.resource.id] }
-    : { isRecordedIn: [parentDoc.resource.id] };
-};
+export const createRelations = createKoreanFieldworkDraftRelations;
 
 export default DocumentAdd;
 

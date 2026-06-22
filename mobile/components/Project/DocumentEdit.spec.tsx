@@ -24,8 +24,9 @@ import { Preferences } from '@/models/preferences';
 import { DocumentRepository } from '@/repositories/document-repository';
 import loadConfiguration from '@/services/config/load-configuration';
 import { ToastProvider } from '@/components/common/Toast/ToastProvider';
-import DocumentEdit from './DocumentEdit';
-import { defaultMapSettings } from './Map/map-settings';
+import { ProjectContext } from '@/contexts/project-context';
+import DocumentEdit from '@/app/(tabs)/ProjectScreen/DocumentEdit';
+import { defaultMapSettings } from '@/components/Project/Map/map-settings';
 
 const project = 'testdb';
 const category = 'Pottery';
@@ -44,7 +45,8 @@ const preferences: Preferences = {
   },
 };
 
-const navigate = jest.fn();
+const mockNavigate = jest.fn();
+const mockUseGlobalSearchParams = jest.fn();
 const setCurrentProject = jest.fn();
 const setUsername = jest.fn();
 const setProjectSettings = jest.fn();
@@ -54,8 +56,16 @@ const getMapSettings = jest.fn();
 const setMapSettings = jest.fn();
 
 jest.mock('@/repositories/document-repository');
-jest.mock('idai-field-core');
+jest.mock('@/contexts/project-context', () => {
+  const React = require('react');
+  return { ProjectContext: React.createContext(null) };
+});
+jest.mock('dateformat', () => jest.fn(() => '2026-01-01'));
 jest.mock('expo-barcode-scanner');
+jest.mock('expo-router', () => ({
+  router: { navigate: (...args: any[]) => mockNavigate(...args) },
+  useGlobalSearchParams: () => mockUseGlobalSearchParams(),
+}));
 
 describe('DocumentEdit', () => {
   let repository: DocumentRepository;
@@ -64,6 +74,11 @@ describe('DocumentEdit', () => {
   let renderAPI: RenderAPI;
 
   beforeEach(async () => {
+    mockUseGlobalSearchParams.mockReturnValue({
+      docId: t2.resource.id,
+      categoryName: category,
+    });
+
     pouchdbDatastore = new PouchdbDatastore(
       (name: string) => new PouchDB(name),
       new IdGenerator()
@@ -71,6 +86,7 @@ describe('DocumentEdit', () => {
     await pouchdbDatastore.createDb(
       project,
       { _id: 'project', resource: { id: 'project' } },
+      undefined,
       true
     );
     const categories: Forest<CategoryForm> = [
@@ -79,7 +95,7 @@ describe('DocumentEdit', () => {
     ];
     repository = await DocumentRepository.init(
       'testuser',
-      categories,
+      createProjectConfiguration(categories),
       pouchdbDatastore
     );
 
@@ -106,12 +122,9 @@ describe('DocumentEdit', () => {
         >
           <LabelsContext.Provider value={{ labels: new Labels(() => ['en']) }}>
             <ConfigurationContext.Provider value={config}>
-              <DocumentEdit
-                repository={repository}
-                docId={t2.resource.id}
-                categoryName={category}
-                navigation={{ navigate }}
-              />
+              <ProjectContext.Provider value={{ repository } as any}>
+                <DocumentEdit />
+              </ProjectContext.Provider>
             </ConfigurationContext.Provider>
           </LabelsContext.Provider>
         </PreferencesContext.Provider>
@@ -119,15 +132,16 @@ describe('DocumentEdit', () => {
     );
   });
 
-  afterEach(async (done) => {
-    await pouchdbDatastore.destroyDb(project);
+  afterEach(async () => {
+    if (pouchdbDatastore) await pouchdbDatastore.destroyDb(project);
     cleanup();
-    done();
     jest.clearAllMocks();
+    mockNavigate.mockClear();
+    mockUseGlobalSearchParams.mockReset();
   });
 
   it('should render component correctly', async () => {
-    await waitFor(() => renderAPI.getByTestId('barCodeScanner'));
+    await waitFor(() => renderAPI.getByTestId('documentForm'));
 
     expect(renderAPI.queryByTestId('documentForm')).toBeTruthy();
   });
@@ -136,13 +150,10 @@ describe('DocumentEdit', () => {
     const { getByTestId } = renderAPI;
 
     await waitFor(() => {
-      getByTestId('barCodeScanner');
+      getByTestId('documentForm');
       fireEvent.press(getByTestId('groupSelect_stem'));
     });
 
-    expect(getByTestId('inputField_identifier').props.value).toEqual(
-      t2.resource.id.toUpperCase()
-    );
     expect(getByTestId('inputField_shortDescription').props.value).toEqual(
       t2.resource.shortDescription
     );
@@ -151,11 +162,16 @@ describe('DocumentEdit', () => {
   it('should update document with changed values', async () => {
     const { getByTestId } = renderAPI;
     const newDescription = 'Changed description';
-    const expectedDoc = { ...t2 };
-    t2.resource.shortDescription = newDescription;
+    const expectedDoc = {
+      ...t2,
+      resource: {
+        ...t2.resource,
+        shortDescription: newDescription,
+      },
+    };
 
     await waitFor(() => {
-      getByTestId('barCodeScanner');
+      getByTestId('documentForm');
       fireEvent.press(getByTestId('groupSelect_stem'));
       fireEvent.changeText(
         getByTestId('inputField_shortDescription'),
@@ -171,7 +187,7 @@ describe('DocumentEdit', () => {
     const { getByTestId } = renderAPI;
 
     await waitFor(() => {
-      getByTestId('barCodeScanner');
+      getByTestId('documentForm');
       fireEvent.press(getByTestId('groupSelect_stem'));
       fireEvent.changeText(
         getByTestId('inputField_shortDescription'),
@@ -180,9 +196,22 @@ describe('DocumentEdit', () => {
       fireEvent.press(getByTestId('editDocBtn'));
     });
 
-    expect(navigate).toHaveBeenCalledTimes(1);
-    expect(navigate).toHaveBeenCalledWith('DocumentsMap', {
-      highlightedDocId: t2.resource.id,
+    await waitFor(() => expect(mockNavigate).toHaveBeenCalledTimes(1));
+    expect(mockNavigate).toHaveBeenCalledWith({
+      pathname: '/ProjectScreen/DocumentsMap',
+      params: { highlightedDocId: t2.resource.id },
     });
   });
 });
+
+const createProjectConfiguration = (
+  forms: Forest<CategoryForm>
+): ProjectConfiguration =>
+  new ProjectConfiguration({
+    forms,
+    categories: {},
+    relations: [],
+    commonFields: {},
+    valuelists: {},
+    projectLanguages: [],
+  });

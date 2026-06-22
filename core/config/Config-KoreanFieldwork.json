@@ -545,15 +545,71 @@
     "Trench:default": {
       "hidden": [],
       "fields": {
+        "isRecordedIn": {
+          "inputType": "relation",
+          "range": ["Operation"]
+        },
         "liesWithin": {
           "inputType": "relation",
           "range": ["Operation"]
+        },
+        "recordCreationTiming": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "fieldRecordQuality": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "verificationState": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
         }
+      },
+      "valuelists": {
+        "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
+        "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
+        "verificationState": "KoreanFieldwork-verificationState"
       },
       "groups": [
         {
+          "name": "stem",
+          "fields": [
+            "identifier",
+            "category",
+            "shortDescription",
+            "processor",
+            "campaign",
+            "date"
+          ]
+        },
+        {
           "name": "hierarchy",
-          "fields": ["hasChildren", "liesWithin"]
+          "fields": ["hasChildren", "isRecordedIn", "liesWithin"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["isSubjectOf", "isResultOf"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description"]
+        },
+        {
+          "name": "koreanFieldwork",
+          "fields": [
+            "recordCreationTiming",
+            "fieldRecordQuality",
+            "verificationState"
+          ]
+        },
+        {
+          "name": "dimension",
+          "fields": ["area", "dimensionLength", "dimensionWidth"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "spatialLocation"]
         }
       ]
     },

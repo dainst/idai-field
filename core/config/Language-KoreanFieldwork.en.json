@@ -460,7 +460,18 @@
       }
     },
     "Trench": {
-      "label": "Trench/investigation trench"
+      "label": "Trench/investigation trench",
+      "fields": {
+        "fieldRecordQuality": {
+          "label": "Field record quality"
+        },
+        "recordCreationTiming": {
+          "label": "Record creation timing"
+        },
+        "verificationState": {
+          "label": "Verification state"
+        }
+      }
     },
     "Survey": {
       "label": "Surface survey",

@@ -159,10 +159,25 @@ describe('KoreanFieldwork project configuration', () => {
             .toEqual(['Operation']);
         expect(koreanFieldworkConfig.forms.DailyLog.fields.isRecordedIn.range)
             .toEqual(['Operation']);
+        expect(template.configuration.forms['Trench:default'].fields.isRecordedIn.range)
+            .toEqual(['Operation']);
+        expect(koreanFieldworkConfig.forms['Trench:default'].fields.isRecordedIn.range)
+            .toEqual(['Operation']);
         expect(template.configuration.forms['Trench:default'].fields.liesWithin.range)
             .toEqual(['Operation']);
         expect(koreanFieldworkConfig.forms['Trench:default'].fields.liesWithin.range)
             .toEqual(['Operation']);
+        expect(template.configuration.forms['Trench:default'].fields.recordCreationTiming.inputType)
+            .toBe('dropdown');
+        expect(template.configuration.forms['Trench:default'].fields.fieldRecordQuality.inputType)
+            .toBe('checkboxes');
+        expect(template.configuration.forms['Trench:default'].fields.verificationState.inputType)
+            .toBe('dropdown');
+        expect(template.configuration.forms['Trench:default'].valuelists.fieldRecordQuality)
+            .toBe('KoreanFieldwork-fieldRecordQuality');
+        expect(template.configuration.forms['Trench:default'].groups
+            .map((group: any) => group.name))
+            .toContain('koreanFieldwork');
         expect(template.configuration.forms.SurveyBoundary.parent).toBe('Operation');
         expect(template.configuration.forms.SurveyBoundary.fields.isRecordedIn.range)
             .toEqual(['Operation']);
@@ -2773,6 +2788,7 @@ describe('KoreanFieldwork project configuration', () => {
         const config = configReader.read('/Config-KoreanFieldwork.json');
         const operationForm = config.forms['Operation:default'];
         const projectForm = config.forms['Project:default'];
+        const trenchForm = config.forms['Trench:default'];
         const surveyForm = config.forms['Survey:default'];
         const featureForm = config.forms['Feature:default'];
         const featureGroupForm = config.forms['FeatureGroup:default'];
@@ -2803,6 +2819,11 @@ describe('KoreanFieldwork project configuration', () => {
         expect(projectForm.fields.investigationRecordHandover.inputType).toBe('checkboxes');
         expect(operationForm.fields.recordCreationTiming.inputType).toBe('dropdown');
         expect(operationForm.fields.investigationRecordHandover.inputType).toBe('checkboxes');
+        expect(trenchForm.fields.recordCreationTiming.inputType).toBe('dropdown');
+        expect(trenchForm.fields.fieldRecordQuality.inputType).toBe('checkboxes');
+        expect(trenchForm.fields.verificationState.inputType).toBe('dropdown');
+        expect(trenchForm.groups.map((group: any) => group.name))
+            .toContain('koreanFieldwork');
         expect(featureGroupForm.fields.featurePackage.inputType).toBe('checkboxes');
         expect(featureGroupForm.fields.recordCreationTiming.inputType).toBe('dropdown');
         expect(featureForm.fields.featurePackage.inputType).toBe('checkboxes');

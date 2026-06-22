@@ -56,6 +56,10 @@ import {
   KoreanFieldworkRecordWorkFilterId,
   matchesKoreanFieldworkRecordWorkFilter,
 } from '@/components/Project/korean-fieldwork-record-work-filters';
+import {
+  getKoreanFieldworkReturnParam,
+  KOREAN_FIELDWORK_RETURN_TARGETS,
+} from '@/components/Project/korean-fieldwork-navigation';
 import { ConfigurationContext } from '@/contexts/configuration-context';
 import LabelsContext from '@/contexts/labels/labels-context';
 import { ProjectContext } from '@/contexts/project-context';
@@ -297,6 +301,9 @@ const DocumentsList: React.FC = () => {
       params: {
         docId,
         categoryName,
+        ...getKoreanFieldworkReturnParam(
+          KOREAN_FIELDWORK_RETURN_TARGETS.FIELD_BOARD
+        ),
       },
     });
   };
@@ -325,6 +332,9 @@ const DocumentsList: React.FC = () => {
       params: {
         parentDocId: parentDoc.resource.id,
         categoryName,
+        ...getKoreanFieldworkReturnParam(
+          KOREAN_FIELDWORK_RETURN_TARGETS.FIELD_BOARD
+        ),
       },
     });
   };

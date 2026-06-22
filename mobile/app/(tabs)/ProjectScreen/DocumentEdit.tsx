@@ -22,6 +22,11 @@ import KoreanFieldworkRecordActionPanel from '@/components/Project/KoreanFieldwo
 import KoreanFieldworkRecordContextPanel from '@/components/Project/KoreanFieldworkRecordContextPanel';
 import KoreanFieldworkNarrativeAssistPanel from '@/components/Project/KoreanFieldworkNarrativeAssistPanel';
 import KoreanFieldworkQuickRecordPanel from '@/components/Project/KoreanFieldworkQuickRecordPanel';
+import {
+  getKoreanFieldworkReturnParam,
+  getKoreanFieldworkReturnTarget,
+  navigateToKoreanFieldworkReturnTarget,
+} from '@/components/Project/korean-fieldwork-navigation';
 import { ToastType } from '@/components/common/Toast/ToastProvider';
 import { router, useGlobalSearchParams } from 'expo-router';
 import { ProjectContext } from '@/contexts/project-context';
@@ -35,6 +40,7 @@ const DocumentEdit: React.FC = () => {
   const params = useGlobalSearchParams();
   const docId = getParam(params.docId);
   const categoryName = getParam(params.categoryName);
+  const returnTarget = getKoreanFieldworkReturnTarget(params.returnTo);
 
   const config = useContext(ConfigurationContext);
   const { labels } = useContext(LabelsContext);
@@ -53,7 +59,7 @@ const DocumentEdit: React.FC = () => {
   }, [document]);
 
   const onReturn = () => {
-    router.navigate('/ProjectScreen/DocumentsMap');
+    navigateToKoreanFieldworkReturnTarget(returnTarget, docId);
   };
 
   const editDocument = () => {
@@ -62,12 +68,7 @@ const DocumentEdit: React.FC = () => {
         ?.update({ ...document, resource })
         .then((doc) => {
           showToast(ToastType.Success, `${doc.resource.identifier} 기록을 저장했습니다.`);
-          router.navigate({
-            pathname: '/ProjectScreen/DocumentsMap',
-            params: {
-              highlightedDocId: doc.resource.id,
-            },
-          });
+          navigateToKoreanFieldworkReturnTarget(returnTarget, doc.resource.id);
         })
         .catch((err) => {
           Keyboard.dismiss();
@@ -108,6 +109,7 @@ const DocumentEdit: React.FC = () => {
       params: {
         docId: relatedDocument.resource.id,
         categoryName: relatedDocument.resource.category,
+        ...getKoreanFieldworkReturnParam(returnTarget),
       },
     });
   };
@@ -117,6 +119,7 @@ const DocumentEdit: React.FC = () => {
       params: {
         parentDocId: parentDoc.resource.id,
         categoryName: childCategoryName,
+        ...getKoreanFieldworkReturnParam(returnTarget),
       },
     });
   };

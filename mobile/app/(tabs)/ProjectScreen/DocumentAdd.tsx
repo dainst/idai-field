@@ -24,6 +24,11 @@ import KoreanFieldworkDraftPresetPanel from '@/components/Project/KoreanFieldwor
 import KoreanFieldworkNarrativeAssistPanel from '@/components/Project/KoreanFieldworkNarrativeAssistPanel';
 import KoreanFieldworkQuickRecordPanel from '@/components/Project/KoreanFieldworkQuickRecordPanel';
 import {
+  getKoreanFieldworkReturnParam,
+  getKoreanFieldworkReturnTarget,
+  navigateToKoreanFieldworkReturnTarget,
+} from '@/components/Project/korean-fieldwork-navigation';
+import {
   KoreanFieldworkDraftContinuationTarget,
   MAP_CONTINUATION_TARGET,
 } from '@/components/Project/korean-fieldwork-draft-continuation';
@@ -42,10 +47,10 @@ const DocumentAdd: React.FC = () => {
   const params = useGlobalSearchParams();
   const parentDocId = getParam(params.parentDocId);
   const categoryName = getParam(params.categoryName);
+  const returnTarget = getKoreanFieldworkReturnTarget(params.returnTo);
   const parentDoc = useDocument(repository, parentDocId);
 
   const { showToast } = useToast();
-  const { navigate } = router;
   const [category, setCategory] = useState<CategoryForm>();
   const [newResource, setNewResource] = useState<NewResource>();
   const [saveBtnEnabled, setSaveBtnEnabled] = useState<boolean>(false);
@@ -131,6 +136,7 @@ const DocumentAdd: React.FC = () => {
         params: {
           docId: doc.resource.id,
           categoryName: doc.resource.category,
+          ...getKoreanFieldworkReturnParam(returnTarget),
         },
       });
       return;
@@ -142,23 +148,19 @@ const DocumentAdd: React.FC = () => {
         params: {
           parentDocId: doc.resource.id,
           categoryName: target.categoryName,
+          ...getKoreanFieldworkReturnParam(returnTarget),
         },
       });
       return;
     }
 
     setResourceToDefault();
-    router.navigate({
-      pathname: '/ProjectScreen/DocumentsMap',
-      params: {
-        highlightedDocId: doc.resource.id,
-      },
-    });
+    navigateToKoreanFieldworkReturnTarget(returnTarget, doc.resource.id);
   };
 
   const onReturn = () => {
     setResourceToDefault();
-    navigate('/ProjectScreen/DocumentsMap');
+    navigateToKoreanFieldworkReturnTarget(returnTarget, parentDocId);
   };
 
   if (!categoryName || !parentDoc || !category || !labels || !newResource) {

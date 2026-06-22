@@ -1,5 +1,6 @@
 import {
   getKoreanFieldworkPriorityTasks,
+  getKoreanFieldworkQuickActionStates,
   getKoreanFieldworkTodayActionTargets,
 } from './korean-fieldwork-today-actions';
 import { KOREAN_FIELDWORK_CATEGORIES } from './korean-fieldwork-categories';
@@ -118,6 +119,62 @@ describe('Korean fieldwork today actions', () => {
       type: 'createDocument',
       parentDocumentId: 'trench-1',
       categoryName: C.FEATURE,
+    });
+  });
+
+  it('keeps quick actions scoped to the current trench', () => {
+    const trench = createDoc('trench-1', C.TRENCH);
+    const summary = createSummary();
+    const targets = getKoreanFieldworkTodayActionTargets(
+      summary as any,
+      [trench] as any
+    );
+
+    expect(getKoreanFieldworkQuickActionStates(
+      summary as any,
+      targets,
+      trench as any
+    )).toMatchObject({
+      dailyLog: {
+        detail: '상위 조사구역에서 작성',
+        disabled: true,
+      },
+      featureCandidate: {
+        detail: '후보 추가',
+        action: {
+          type: 'createDocument',
+          parentDocumentId: 'trench-1',
+          categoryName: C.FEATURE,
+        },
+        disabled: false,
+      },
+      closeout: {
+        detail: '현재 문제 없음',
+        disabled: true,
+      },
+    });
+  });
+
+  it('lets operation scopes create daily logs from the quick action row', () => {
+    const operation = createDoc('operation-1', C.OPERATION);
+    const summary = createSummary();
+    const targets = getKoreanFieldworkTodayActionTargets(
+      summary as any,
+      [operation] as any
+    );
+
+    expect(getKoreanFieldworkQuickActionStates(
+      summary as any,
+      targets,
+      operation as any
+    ).dailyLog).toMatchObject({
+      detail: '바로 작성',
+      action: {
+        type: 'createDocument',
+        parentDocumentId: 'operation-1',
+        categoryName: C.DAILY_LOG,
+      },
+      disabled: false,
     });
   });
 

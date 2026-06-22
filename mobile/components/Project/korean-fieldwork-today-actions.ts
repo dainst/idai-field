@@ -35,6 +35,19 @@ export interface KoreanFieldworkTodayActionTargets {
   issueDocument?: Document;
 }
 
+export type KoreanFieldworkQuickActionId =
+  'dailyLog'
+  | 'featureCandidate'
+  | 'closeout';
+
+export interface KoreanFieldworkQuickActionState {
+  id: KoreanFieldworkQuickActionId;
+  detail: string;
+  action?: KoreanFieldworkPriorityTaskAction;
+  warning?: boolean;
+  disabled?: boolean;
+}
+
 export const getKoreanFieldworkTodayActionTargets = (
   summary: KoreanFieldworkTodaySummary,
   documents: Document[]
@@ -51,6 +64,58 @@ export const getKoreanFieldworkTodayActionTargets = (
     featureCandidate: summary.featureCandidates[0],
     featureDraftParent: getFeatureDraftParent(documents, primaryOperation),
     issueDocument: getFirstIssueDocument(summary, documentsById),
+  };
+};
+
+export const getKoreanFieldworkQuickActionStates = (
+  summary: KoreanFieldworkTodaySummary,
+  targets: KoreanFieldworkTodayActionTargets,
+  currentScopeParent?: Document
+): Record<KoreanFieldworkQuickActionId, KoreanFieldworkQuickActionState> => {
+  const dailyLogAction = targets.dailyLog
+    ? toOpenDocumentAction(targets.dailyLog)
+    : targets.primaryOperation
+      ? toCreateDocumentAction(targets.primaryOperation, C.DAILY_LOG)
+      : undefined;
+  const featureCandidateAction = targets.featureCandidate
+    ? toOpenDocumentAction(targets.featureCandidate)
+    : targets.featureDraftParent
+      ? toCreateDocumentAction(targets.featureDraftParent, C.FEATURE)
+      : undefined;
+  const closeoutAction = targets.issueDocument
+    ? toOpenDocumentAction(targets.issueDocument)
+    : undefined;
+
+  return {
+    dailyLog: {
+      id: 'dailyLog',
+      detail: getDailyLogQuickActionDetail(
+        summary,
+        targets,
+        currentScopeParent
+      ),
+      action: dailyLogAction,
+      disabled: !dailyLogAction,
+    },
+    featureCandidate: {
+      id: 'featureCandidate',
+      detail: getFeatureCandidateQuickActionDetail(
+        summary,
+        targets,
+        currentScopeParent
+      ),
+      action: featureCandidateAction,
+      disabled: !featureCandidateAction,
+    },
+    closeout: {
+      id: 'closeout',
+      detail: summary.openIssues.length > 0
+        ? `${summary.openIssues.length}건 남음`
+        : '현재 문제 없음',
+      action: closeoutAction,
+      warning: summary.openIssues.length > 0,
+      disabled: !closeoutAction,
+    },
   };
 };
 
@@ -182,3 +247,43 @@ const hasCategory = (
 ): boolean => documents.some((document) =>
   document.resource.category === categoryName
 );
+
+const getDailyLogQuickActionDetail = (
+  summary: KoreanFieldworkTodaySummary,
+  targets: KoreanFieldworkTodayActionTargets,
+  currentScopeParent: Document | undefined
+): string => {
+  if (summary.dailyLogs.length > 0) return '작성 내용 보기';
+  if (targets.primaryOperation) return '바로 작성';
+  if (currentScopeParent) return '상위 조사구역에서 작성';
+  return '조사구역 필요';
+};
+
+const getFeatureCandidateQuickActionDetail = (
+  summary: KoreanFieldworkTodaySummary,
+  targets: KoreanFieldworkTodayActionTargets,
+  currentScopeParent: Document | undefined
+): string => {
+  if (summary.featureCandidates.length > 0) {
+    return `${summary.featureCandidates.length}건 확인`;
+  }
+  if (targets.featureDraftParent) return '후보 추가';
+  if (currentScopeParent) return '트렌치/유구군 필요';
+  return '조사구역 필요';
+};
+
+const toOpenDocumentAction = (
+  document: Document
+): KoreanFieldworkPriorityTaskAction => ({
+  type: 'openDocument',
+  documentId: document.resource.id,
+});
+
+const toCreateDocumentAction = (
+  parentDocument: Document,
+  categoryName: string
+): KoreanFieldworkPriorityTaskAction => ({
+  type: 'createDocument',
+  parentDocumentId: parentDocument.resource.id,
+  categoryName,
+});

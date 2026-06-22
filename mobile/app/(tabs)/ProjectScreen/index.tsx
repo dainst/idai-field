@@ -48,7 +48,9 @@ import {
 } from '@/components/Project/korean-fieldwork-record-actions';
 import {
   getKoreanFieldworkPriorityTasks,
+  getKoreanFieldworkQuickActionStates,
   getKoreanFieldworkTodayActionTargets,
+  KoreanFieldworkPriorityTaskAction,
 } from '@/components/Project/korean-fieldwork-today-actions';
 import {
   getKoreanFieldworkRecordWorkFilterCounts,
@@ -307,6 +309,14 @@ const DocumentsList: React.FC = () => {
     () => getKoreanFieldworkPriorityTasks(actionSummary, actionDocuments, 5),
     [actionDocuments, actionSummary]
   );
+  const quickActions = useMemo(
+    () => getKoreanFieldworkQuickActionStates(
+      actionSummary,
+      actionTargets,
+      currentScopeParent
+    ),
+    [actionSummary, actionTargets, currentScopeParent]
+  );
   const closeoutSummary = useMemo(
     () => getKoreanFieldworkCloseoutSummary(todaySummary.openIssues, 5),
     [todaySummary.openIssues]
@@ -360,38 +370,33 @@ const DocumentsList: React.FC = () => {
     });
   };
   const openDailyLog = () => {
-    if (actionTargets.dailyLog) {
-      editDocument(actionTargets.dailyLog);
-      return;
-    }
-
-    if (actionTargets.primaryOperation) {
-      navigateAddCategory(
-        KOREAN_FIELDWORK_CATEGORIES.DAILY_LOG,
-        actionTargets.primaryOperation
-      );
-    } else {
-      openMap();
-    }
+    runQuickAction(quickActions.dailyLog.action);
   };
   const openFirstCandidate = () => {
-    if (actionTargets.featureCandidate) {
-      onDocumentSelected(actionTargets.featureCandidate);
-      return;
-    }
+    runQuickAction(quickActions.featureCandidate.action);
+  };
+  const openFirstIssue = () => runQuickAction(quickActions.closeout.action);
+  const runQuickAction = (action?: KoreanFieldworkPriorityTaskAction) => {
+    if (!action) return;
 
-    if (actionTargets.featureDraftParent) {
-      navigateAddCategory(
-        KOREAN_FIELDWORK_CATEGORIES.FEATURE,
-        actionTargets.featureDraftParent
-      );
-    } else {
-      openMap();
+    switch (action.type) {
+      case 'openDocument': {
+        const document = actionDocumentsById.get(action.documentId);
+        if (document) onDocumentSelected(document);
+        return;
+      }
+      case 'createDocument': {
+        const parentDocument = actionDocumentsById.get(action.parentDocumentId);
+        if (parentDocument) {
+          navigateAddCategory(action.categoryName, parentDocument);
+        }
+        return;
+      }
+      case 'openMap':
+        openMap();
+        return;
     }
   };
-  const openFirstIssue = () => actionTargets.issueDocument
-    ? onDocumentSelected(actionTargets.issueDocument)
-    : openMap();
 
   return (
     <View style={styles.screen}>
@@ -492,27 +497,24 @@ const DocumentsList: React.FC = () => {
           <QuickAction
             icon="event-note"
             label="오늘 일지"
-            detail={todaySummary.dailyLogs.length > 0
-              ? '작성 내용 보기'
-              : actionTargets.primaryOperation ? '바로 작성' : '조사구역 필요'}
+            detail={quickActions.dailyLog.detail}
+            disabled={quickActions.dailyLog.disabled}
             onPress={openDailyLog}
           />
           <QuickAction
             icon="add-location-alt"
             label="유구 후보"
-            detail={todaySummary.featureCandidates.length > 0
-              ? `${todaySummary.featureCandidates.length}건 확인`
-              : actionTargets.featureDraftParent ? '후보 추가' : '조사구역 필요'}
+            detail={quickActions.featureCandidate.detail}
+            disabled={quickActions.featureCandidate.disabled}
             onPress={openFirstCandidate}
           />
           <QuickAction
             icon="fact-check"
             label="마감 점검"
-            detail={todaySummary.openIssues.length > 0
-              ? `${todaySummary.openIssues.length}건 남음`
-              : '현재 문제 없음'}
+            detail={quickActions.closeout.detail}
+            disabled={quickActions.closeout.disabled}
             onPress={openFirstIssue}
-            warning={todaySummary.openIssues.length > 0}
+            warning={quickActions.closeout.warning}
           />
         </View>
 
@@ -707,17 +709,30 @@ const QuickAction: React.FC<{
   label: string;
   detail: string;
   onPress: () => void;
+  disabled?: boolean;
   warning?: boolean;
-}> = ({ icon, label, detail, onPress, warning = false }) => (
+}> = ({
+  icon,
+  label,
+  detail,
+  onPress,
+  disabled = false,
+  warning = false,
+}) => (
   <TouchableOpacity
     activeOpacity={0.86}
-    style={[styles.quickAction, warning && styles.quickActionWarning]}
+    disabled={disabled}
+    style={[
+      styles.quickAction,
+      warning && styles.quickActionWarning,
+      disabled && styles.quickActionDisabled,
+    ]}
     onPress={onPress}
   >
     <MaterialIcons
       name={icon}
       size={21}
-      color={warning ? colors.danger : '#2f5f4a'}
+      color={disabled ? '#98a2b3' : warning ? colors.danger : '#2f5f4a'}
     />
     <View style={styles.quickActionText}>
       <Text style={styles.quickActionLabel} numberOfLines={1}>{label}</Text>
@@ -1472,6 +1487,9 @@ const styles = StyleSheet.create({
   quickActionWarning: {
     backgroundColor: '#fff7f7',
     borderColor: '#f0b7bd',
+  },
+  quickActionDisabled: {
+    opacity: 0.55,
   },
   quickActionText: {
     flex: 1,

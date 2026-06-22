@@ -5,7 +5,7 @@ import {
   getKoreanFieldworkTodaySummary,
 } from 'idai-field-core';
 import { router } from 'expo-router';
-import React, { useContext, useMemo, useState } from 'react';
+import React, { useCallback, useContext, useMemo, useState } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -28,6 +28,10 @@ import {
   KoreanFieldworkStatusChip,
   KoreanFieldworkStatusTone,
 } from '@/components/Project/korean-fieldwork-record-summary';
+import {
+  getKoreanFieldworkEvidenceChips,
+  KoreanFieldworkEvidenceChip,
+} from '@/components/Project/korean-fieldwork-record-evidence';
 import {
   getKoreanFieldworkPriorityTasks,
   getKoreanFieldworkTodayActionTargets,
@@ -184,12 +188,12 @@ const DocumentsList: React.FC = () => {
     filter.id === activeFilter
   ) ?? RECORD_FILTERS[0];
 
-  const getCategoryLabel = (categoryName: string) => {
+  const getCategoryLabel = useCallback((categoryName: string) => {
     const category = config.getCategory(categoryName);
     if (category && labels) return labels.get(category);
 
     return getKoreanFieldworkCategoryLabel(categoryName);
-  };
+  }, [config, labels]);
 
   const filteredDocuments = useMemo(() => documents.filter((document) => {
     const filterCategories = activeFilterDefinition.categories;
@@ -268,12 +272,14 @@ const DocumentsList: React.FC = () => {
       return;
     }
 
-    actionTargets.primaryOperation
-      ? navigateAddCategory(
+    if (actionTargets.primaryOperation) {
+      navigateAddCategory(
         KOREAN_FIELDWORK_CATEGORIES.DAILY_LOG,
         actionTargets.primaryOperation
-      )
-      : openMap();
+      );
+    } else {
+      openMap();
+    }
   };
   const openFirstCandidate = () => {
     if (actionTargets.featureCandidate) {
@@ -281,12 +287,14 @@ const DocumentsList: React.FC = () => {
       return;
     }
 
-    actionTargets.featureDraftParent
-      ? navigateAddCategory(
+    if (actionTargets.featureDraftParent) {
+      navigateAddCategory(
         KOREAN_FIELDWORK_CATEGORIES.FEATURE,
         actionTargets.featureDraftParent
-      )
-      : openMap();
+      );
+    } else {
+      openMap();
+    }
   };
   const openFirstIssue = () => actionTargets.issueDocument
     ? onDocumentSelected(actionTargets.issueDocument)
@@ -590,35 +598,41 @@ const RecordSection: React.FC<{
   onDrillDown,
   onAddChild,
   onEditDocument,
-}) => (
-  <View style={styles.recordSection}>
-    <View style={styles.recordSectionHeader}>
-      <View style={styles.recordSectionTitleWrap}>
-        <Text style={styles.recordSectionTitle}>{title}</Text>
-        <Text style={styles.recordSectionSubtitle} numberOfLines={1}>
-          {subtitle}
-        </Text>
+}) => {
+  const allDocuments = Array.from(documentsById.values());
+
+  return (
+    <View style={styles.recordSection}>
+      <View style={styles.recordSectionHeader}>
+        <View style={styles.recordSectionTitleWrap}>
+          <Text style={styles.recordSectionTitle}>{title}</Text>
+          <Text style={styles.recordSectionSubtitle} numberOfLines={1}>
+            {subtitle}
+          </Text>
+        </View>
+        <Text style={styles.recordSectionCount}>{documents.length}</Text>
       </View>
-      <Text style={styles.recordSectionCount}>{documents.length}</Text>
+      {documents.map((document) => (
+        <RecordRow
+          key={document.resource.id}
+          document={document}
+          documents={allDocuments}
+          contextPath={formatKoreanFieldworkParentPath(document, documentsById)}
+          categoryLabel={getCategoryLabel(document.resource.category)}
+          issueCount={issueCountByDocumentId[document.resource.id] ?? 0}
+          onOpen={() => onOpenDocument(document)}
+          onDrillDown={() => onDrillDown(document)}
+          onAddChild={() => onAddChild(document)}
+          onEdit={() => onEditDocument(document)}
+        />
+      ))}
     </View>
-    {documents.map((document) => (
-      <RecordRow
-        key={document.resource.id}
-        document={document}
-        contextPath={formatKoreanFieldworkParentPath(document, documentsById)}
-        categoryLabel={getCategoryLabel(document.resource.category)}
-        issueCount={issueCountByDocumentId[document.resource.id] ?? 0}
-        onOpen={() => onOpenDocument(document)}
-        onDrillDown={() => onDrillDown(document)}
-        onAddChild={() => onAddChild(document)}
-        onEdit={() => onEditDocument(document)}
-      />
-    ))}
-  </View>
-);
+  );
+};
 
 const RecordRow: React.FC<{
   document: Document;
+  documents: Document[];
   contextPath: string | undefined;
   categoryLabel: string;
   issueCount: number;
@@ -628,6 +642,7 @@ const RecordRow: React.FC<{
   onEdit: () => void;
 }> = ({
   document,
+  documents,
   contextPath,
   categoryLabel,
   issueCount,
@@ -641,6 +656,7 @@ const RecordRow: React.FC<{
   const title = document.resource.identifier || document.resource.id;
   const description = getRecordDescription(document);
   const statusChips = getKoreanFieldworkRecordStatusChips(document);
+  const evidenceChips = getKoreanFieldworkEvidenceChips(document, documents);
 
   return (
     <TouchableOpacity
@@ -670,6 +686,13 @@ const RecordRow: React.FC<{
           <View style={styles.statusChipRow}>
             {statusChips.map((chip) => (
               <StatusChip key={`${title}-${chip.label}`} chip={chip} />
+            ))}
+          </View>
+        )}
+        {evidenceChips.length > 0 && (
+          <View style={styles.evidenceChipRow}>
+            {evidenceChips.map((chip) => (
+              <EvidenceChip key={`${title}-${chip.id}`} chip={chip} />
             ))}
           </View>
         )}
@@ -706,6 +729,25 @@ const RecordRow: React.FC<{
         </TouchableOpacity>
       </View>
     </TouchableOpacity>
+  );
+};
+
+const EvidenceChip: React.FC<{ chip: KoreanFieldworkEvidenceChip }> = ({ chip }) => {
+  const isFilled = chip.tone === 'filled';
+  const textStyle = isFilled
+    ? styles.evidenceChipTextFilled
+    : styles.evidenceChipTextEmpty;
+
+  return (
+    <View
+      style={[
+        styles.evidenceChip,
+        isFilled ? styles.evidenceChipFilled : styles.evidenceChipEmpty,
+      ]}
+    >
+      <Text style={[styles.evidenceChipLabel, textStyle]}>{chip.label}</Text>
+      <Text style={[styles.evidenceChipCount, textStyle]}>{chip.count}</Text>
+    </View>
   );
 };
 
@@ -1175,6 +1217,45 @@ const styles = StyleSheet.create({
   },
   statusChipTextDanger: {
     color: colors.danger,
+  },
+  evidenceChipRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginHorizontal: -2,
+    marginTop: 5,
+  },
+  evidenceChip: {
+    alignItems: 'center',
+    borderRadius: 6,
+    borderWidth: 1,
+    flexDirection: 'row',
+    height: 24,
+    marginBottom: 4,
+    marginHorizontal: 2,
+    paddingHorizontal: 6,
+  },
+  evidenceChipFilled: {
+    backgroundColor: '#eef4ff',
+    borderColor: '#c7d7fe',
+  },
+  evidenceChipEmpty: {
+    backgroundColor: '#f8fafc',
+    borderColor: '#eaecf0',
+  },
+  evidenceChipLabel: {
+    fontSize: 11,
+    fontWeight: '700',
+  },
+  evidenceChipCount: {
+    fontSize: 11,
+    fontWeight: '900',
+    marginLeft: 4,
+  },
+  evidenceChipTextFilled: {
+    color: '#3538cd',
+  },
+  evidenceChipTextEmpty: {
+    color: '#98a2b3',
   },
   recordDescription: {
     color: '#344054',

@@ -22,8 +22,8 @@ defmodule FieldHubWeb.Live.ProjectShowTest do
 
   @endpoint FieldHubWeb.Endpoint
 
-  @project "test_project"
-  @user_name "test_project"
+  @project "live_project_show_test"
+  @user_name @project
   @user_password "test_password"
 
   @admin_user Application.compile_env(:field_hub, :couchdb_admin_name)

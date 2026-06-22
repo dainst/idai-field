@@ -7,7 +7,7 @@ defmodule FieldHub.CouchServiceTest do
 
   use ExUnit.Case
 
-  @project "test"
+  @project "couch_service_test"
   @user_name @project
   @user_password "test_password"
 

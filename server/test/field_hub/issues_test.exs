@@ -9,8 +9,8 @@ defmodule FieldHub.IssuesTest do
 
   use ExUnit.Case
 
-  @project "test"
-  @user_name "test_user"
+  @project "issues_test"
+  @user_name @project
   @user_password "test_password"
 
   @project_doc File.read!("test/fixtures/documents/project.json")

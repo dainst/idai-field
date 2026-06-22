@@ -303,6 +303,13 @@ const DocumentsList: React.FC = () => {
   const editDocument = (document: Document) => {
     editDocumentById(document.resource.id, document.resource.category);
   };
+  const getAllowedAddCategoryNames = useCallback(
+    (document: Document) => getKoreanFieldworkAllowedChildCategoryNames(
+      document,
+      config
+    ),
+    [config]
+  );
   const openAddChildModal = (document: Document) => setAddModalParent(document);
   const closeAddChildModal = () => setAddModalParent(undefined);
   const navigateAddCategory = (
@@ -402,6 +409,9 @@ const DocumentsList: React.FC = () => {
         <KoreanFieldworkWorkbenchPanel
           summary={todaySummary}
           documents={documents}
+          getAllowedAddCategoryNames={getAllowedAddCategoryNames}
+          onAddDocumentOfCategory={(parentDoc, categoryName) =>
+            navigateAddCategory(categoryName, parentDoc)}
           onEditDocument={editDocumentById}
         />
 

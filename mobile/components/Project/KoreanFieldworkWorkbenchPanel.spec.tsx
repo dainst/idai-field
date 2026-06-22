@@ -44,6 +44,32 @@ describe('KoreanFieldworkWorkbenchPanel', () => {
     expect(handleEditDocument).toHaveBeenCalledWith('feature-1', C.FEATURE);
   });
 
+  it('starts recommended evidence records from workbench cards', () => {
+    const handleEditDocument = jest.fn();
+    const handleAddDocumentOfCategory = jest.fn();
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1', {}, {
+      featureRecordingStatus: 'candidate',
+      featureInvestigationChecklist: [],
+      fieldRecordQuality: [],
+      verificationState: 'candidate',
+    });
+    const { getByTestId, getByText } = render(
+      <KoreanFieldworkWorkbenchPanel
+        documents={[feature] as any}
+        getAllowedAddCategoryNames={() => [C.PHOTO]}
+        onAddDocumentOfCategory={handleAddDocumentOfCategory}
+        onEditDocument={handleEditDocument}
+        summary={createSummary([])}
+      />
+    );
+
+    expect(getByText('사진 추가')).toBeTruthy();
+    fireEvent.press(getByTestId('workbenchAction_feature-1_create-photos'));
+
+    expect(handleAddDocumentOfCategory).toHaveBeenCalledWith(feature, C.PHOTO);
+    expect(handleEditDocument).not.toHaveBeenCalled();
+  });
+
   it('does not render when every record is already settled', () => {
     const { queryByTestId } = render(
       <KoreanFieldworkWorkbenchPanel

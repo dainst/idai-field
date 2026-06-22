@@ -5,6 +5,7 @@ import {
 } from 'idai-field-core';
 import React, { useMemo } from 'react';
 import {
+  GestureResponderEvent,
   ScrollView,
   StyleSheet,
   Text,
@@ -16,12 +17,18 @@ import {
   getKoreanFieldworkWorkbenchItems,
   KoreanFieldworkWorkbenchItem,
 } from './korean-fieldwork-workbench';
+import {
+  getKoreanFieldworkRecordActionSummary,
+  KoreanFieldworkRecordActionItem,
+} from './korean-fieldwork-record-actions';
 import { KoreanFieldworkStatusTone } from './korean-fieldwork-record-summary';
 
 interface KoreanFieldworkWorkbenchPanelProps {
   summary: KoreanFieldworkTodaySummary;
   documents: Document[];
   onEditDocument: (docId: string, categoryName: string) => void;
+  onAddDocumentOfCategory?: (parentDoc: Document, categoryName: string) => void;
+  getAllowedAddCategoryNames?: (document: Document) => string[];
   maxItems?: number;
 }
 
@@ -29,6 +36,8 @@ const KoreanFieldworkWorkbenchPanel: React.FC<KoreanFieldworkWorkbenchPanelProps
   summary,
   documents,
   onEditDocument,
+  onAddDocumentOfCategory,
+  getAllowedAddCategoryNames,
   maxItems = 8,
 }) => {
   const items = useMemo(
@@ -53,7 +62,29 @@ const KoreanFieldworkWorkbenchPanel: React.FC<KoreanFieldworkWorkbenchPanelProps
         {items.map((item) => (
           <WorkbenchCard
             key={item.id}
+            actions={getKoreanFieldworkRecordActionSummary(
+              item.document,
+              documents,
+              getAllowedAddCategoryNames?.(item.document) ?? []
+            ).actions.slice(0, 2)}
             item={item}
+            onActionPress={(action) => {
+              if (action.type === 'openDocument' && action.document) {
+                onEditDocument(
+                  action.document.resource.id,
+                  action.document.resource.category
+                );
+                return;
+              }
+
+              if (
+                action.type === 'createDocument'
+                && action.categoryName
+                && onAddDocumentOfCategory
+              ) {
+                onAddDocumentOfCategory(item.document, action.categoryName);
+              }
+            }}
             onPress={() => onEditDocument(
               item.document.resource.id,
               item.document.resource.category
@@ -67,8 +98,15 @@ const KoreanFieldworkWorkbenchPanel: React.FC<KoreanFieldworkWorkbenchPanelProps
 
 const WorkbenchCard: React.FC<{
   item: KoreanFieldworkWorkbenchItem;
+  actions: KoreanFieldworkRecordActionItem[];
+  onActionPress: (action: KoreanFieldworkRecordActionItem) => void;
   onPress: () => void;
-}> = ({ item, onPress }) => (
+}> = ({
+  item,
+  actions,
+  onActionPress,
+  onPress,
+}) => (
   <TouchableOpacity
     activeOpacity={0.86}
     onPress={onPress}
@@ -109,6 +147,61 @@ const WorkbenchCard: React.FC<{
         ))}
       </View>
     )}
+    <View style={styles.actionRow}>
+      <WorkbenchAction
+        icon="open-in-new"
+        label="열기"
+        onPress={(event) => {
+          event?.stopPropagation?.();
+          onPress();
+        }}
+        testID={`workbenchOpen_${item.id}`}
+        tone={item.tone}
+      />
+      {actions.map((action) => (
+        <WorkbenchAction
+          key={action.id}
+          icon={action.icon as keyof typeof MaterialIcons.glyphMap}
+          label={action.label}
+          onPress={(event) => {
+            event?.stopPropagation?.();
+            onActionPress(action);
+          }}
+          testID={`workbenchAction_${item.id}_${action.id}`}
+          tone={action.tone}
+        />
+      ))}
+    </View>
+  </TouchableOpacity>
+);
+
+const WorkbenchAction: React.FC<{
+  icon: keyof typeof MaterialIcons.glyphMap;
+  label: string;
+  onPress: (event?: GestureResponderEvent) => void;
+  testID: string;
+  tone: KoreanFieldworkStatusTone;
+}> = ({
+  icon,
+  label,
+  onPress,
+  testID,
+  tone,
+}) => (
+  <TouchableOpacity
+    accessibilityLabel={label}
+    activeOpacity={0.84}
+    onPress={onPress}
+    style={[styles.actionButton, actionButtonToneStyle(tone)]}
+    testID={testID}
+  >
+    <MaterialIcons name={icon} size={14} color={toneIconColor(tone)} />
+    <Text
+      style={[styles.actionLabel, actionLabelToneStyle(tone)]}
+      numberOfLines={1}
+    >
+      {label}
+    </Text>
   </TouchableOpacity>
 );
 
@@ -172,6 +265,36 @@ const statusChipStyle = (tone: KoreanFieldworkStatusTone) => {
   }
 };
 
+const actionButtonToneStyle = (tone: KoreanFieldworkStatusTone) => {
+  switch (tone) {
+    case 'danger':
+      return styles.actionDanger;
+    case 'warning':
+      return styles.actionWarning;
+    case 'info':
+      return styles.actionInfo;
+    case 'success':
+      return styles.actionSuccess;
+    default:
+      return styles.actionNeutral;
+  }
+};
+
+const actionLabelToneStyle = (tone: KoreanFieldworkStatusTone) => {
+  switch (tone) {
+    case 'danger':
+      return styles.actionLabelDanger;
+    case 'warning':
+      return styles.actionLabelWarning;
+    case 'info':
+      return styles.actionLabelInfo;
+    case 'success':
+      return styles.actionLabelSuccess;
+    default:
+      return styles.actionLabelNeutral;
+  }
+};
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#f5fbff',
@@ -208,7 +331,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     borderWidth: 1,
     marginRight: 8,
-    minHeight: 136,
+    minHeight: 166,
     padding: 9,
     width: 214,
   },
@@ -317,6 +440,62 @@ const styles = StyleSheet.create({
   },
   statusDanger: {
     backgroundColor: '#fff1f3',
+    color: colors.danger,
+  },
+  actionRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginTop: 7,
+  },
+  actionButton: {
+    alignItems: 'center',
+    borderRadius: 5,
+    borderWidth: 1,
+    flexDirection: 'row',
+    marginRight: 5,
+    marginTop: 5,
+    minHeight: 30,
+    maxWidth: 112,
+    paddingHorizontal: 6,
+  },
+  actionNeutral: {
+    backgroundColor: '#f8fafc',
+    borderColor: '#d0d5dd',
+  },
+  actionInfo: {
+    backgroundColor: '#eff8ff',
+    borderColor: '#b2ddff',
+  },
+  actionSuccess: {
+    backgroundColor: '#ecfdf3',
+    borderColor: '#abefc6',
+  },
+  actionWarning: {
+    backgroundColor: '#fffaeb',
+    borderColor: '#fedf89',
+  },
+  actionDanger: {
+    backgroundColor: '#fff1f3',
+    borderColor: '#fecdca',
+  },
+  actionLabel: {
+    fontSize: 10,
+    fontWeight: '900',
+    marginLeft: 3,
+  },
+  actionLabelNeutral: {
+    color: '#475467',
+  },
+  actionLabelInfo: {
+    color: '#175cd3',
+  },
+  actionLabelSuccess: {
+    color: '#027a48',
+  },
+  actionLabelWarning: {
+    color: '#b54708',
+  },
+  actionLabelDanger: {
     color: colors.danger,
   },
 });

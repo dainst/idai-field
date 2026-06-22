@@ -19,6 +19,7 @@ import KoreanFieldworkHierarchyBoard from '@/components/Project/KoreanFieldworkH
 import KoreanFieldworkPriorityTaskList from '@/components/Project/KoreanFieldworkPriorityTaskList';
 import KoreanFieldworkProgressBoard from '@/components/Project/KoreanFieldworkProgressBoard';
 import KoreanFieldworkScopePanel from '@/components/Project/KoreanFieldworkScopePanel';
+import KoreanFieldworkUnitMatrix from '@/components/Project/KoreanFieldworkUnitMatrix';
 import KoreanFieldworkWorkbenchPanel from '@/components/Project/KoreanFieldworkWorkbenchPanel';
 import {
   getKoreanFieldworkCategoryLabel,
@@ -246,6 +247,7 @@ const DocumentsList: React.FC = () => {
     () => getKoreanFieldworkCloseoutSummary(todaySummary.openIssues, 5),
     [todaySummary.openIssues]
   );
+  const currentScopeParent = hierarchyPath[hierarchyPath.length - 1];
   const hierarchyLabel = hierarchyPath.length > 0
     ? hierarchyPath.map((document) => document.resource.identifier).join(' / ')
     : '전체 조사자료';
@@ -382,6 +384,15 @@ const DocumentsList: React.FC = () => {
           onBackScope={popFromHierarchy}
           onClearScope={clearHierarchy}
           onOpenMap={openMap}
+        />
+
+        <KoreanFieldworkUnitMatrix
+          summary={todaySummary}
+          documents={documents}
+          scopeParent={currentScopeParent}
+          onOpenDocument={onDocumentSelected}
+          onAddDocumentOfCategory={(parentDoc, categoryName) =>
+            navigateAddCategory(categoryName, parentDoc)}
         />
 
         <KoreanFieldworkHierarchyBoard

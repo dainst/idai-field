@@ -19,6 +19,7 @@ import DocumentAddModal from '@/components/Project/DocumentAddModal';
 import KoreanFieldworkHierarchyBoard from '@/components/Project/KoreanFieldworkHierarchyBoard';
 import KoreanFieldworkPriorityTaskList from '@/components/Project/KoreanFieldworkPriorityTaskList';
 import KoreanFieldworkProgressBoard from '@/components/Project/KoreanFieldworkProgressBoard';
+import KoreanFieldworkSelectedRecordWorkbench from '@/components/Project/KoreanFieldworkSelectedRecordWorkbench';
 import KoreanFieldworkScopePanel from '@/components/Project/KoreanFieldworkScopePanel';
 import KoreanFieldworkUnitMatrix from '@/components/Project/KoreanFieldworkUnitMatrix';
 import KoreanFieldworkWorkbenchPanel from '@/components/Project/KoreanFieldworkWorkbenchPanel';
@@ -212,6 +213,8 @@ const DocumentsList: React.FC = () => {
     useState<KoreanFieldworkRecordWorkFilterId>('all');
   const [query, setQuery] = useState('');
   const [addModalParent, setAddModalParent] = useState<Document>();
+  const [selectedWorkbenchDocumentId, setSelectedWorkbenchDocumentId] =
+    useState<string>();
   const now = useMemo(() => new Date(), []);
 
   const documentsById = useMemo(
@@ -358,6 +361,37 @@ const DocumentsList: React.FC = () => {
     ),
     [config]
   );
+  const defaultWorkbenchDocument = useMemo(
+    () => actionTargets.issueDocument
+      ?? actionTargets.featureCandidate
+      ?? actionTargets.primaryOperation
+      ?? filteredDocuments[0],
+    [
+      actionTargets.featureCandidate,
+      actionTargets.issueDocument,
+      actionTargets.primaryOperation,
+      filteredDocuments,
+    ]
+  );
+  const selectedWorkbenchDocument = useMemo(
+    () => selectedWorkbenchDocumentId
+      ? documentsById.get(selectedWorkbenchDocumentId) ?? defaultWorkbenchDocument
+      : defaultWorkbenchDocument,
+    [
+      defaultWorkbenchDocument,
+      documentsById,
+      selectedWorkbenchDocumentId,
+    ]
+  );
+  const selectedWorkbenchAllowedAddCategoryNames = useMemo(
+    () => selectedWorkbenchDocument
+      ? getAllowedAddCategoryNames(selectedWorkbenchDocument)
+      : [],
+    [getAllowedAddCategoryNames, selectedWorkbenchDocument]
+  );
+  const selectWorkbenchDocument = (document: Document) => {
+    setSelectedWorkbenchDocumentId(document.resource.id);
+  };
   const openAddChildModal = (document: Document) => setAddModalParent(document);
   const closeAddChildModal = () => setAddModalParent(undefined);
   const navigateAddCategory = (
@@ -378,6 +412,33 @@ const DocumentsList: React.FC = () => {
         ),
       },
     });
+  };
+  const updateWorkbenchResourceFields = (
+    document: Document,
+    updates: Record<string, unknown>
+  ) => {
+    if (!repository) return;
+
+    repository.update({
+      ...document,
+      resource: {
+        ...document.resource,
+        ...updates,
+      },
+    })
+      .then((updatedDocument) => {
+        setSelectedWorkbenchDocumentId(updatedDocument.resource.id);
+        showToast(
+          ToastType.Success,
+          `${updatedDocument.resource.identifier} 현장 확인을 반영했습니다.`
+        );
+      })
+      .catch((error) => {
+        showToast(
+          ToastType.Error,
+          `${document.resource.identifier} 현장 확인을 반영하지 못했습니다. ${error}`
+        );
+      });
   };
   const applyCloseoutBatchUpdates = (
     batchUpdates: KoreanFieldworkCloseoutBatchUpdate[]
@@ -440,7 +501,7 @@ const DocumentsList: React.FC = () => {
     switch (action.type) {
       case 'openDocument': {
         const document = actionDocumentsById.get(action.documentId);
-        if (document) onDocumentSelected(document);
+        if (document) selectWorkbenchDocument(document);
         return;
       }
       case 'createDocument': {
@@ -503,6 +564,22 @@ const DocumentsList: React.FC = () => {
             warning={todaySummary.openIssues.length > 0}
           />
         </View>
+
+        {selectedWorkbenchDocument && (
+          <KoreanFieldworkSelectedRecordWorkbench
+            document={selectedWorkbenchDocument}
+            documents={documents}
+            allowedAddCategoryNames={selectedWorkbenchAllowedAddCategoryNames}
+            onAddChild={openAddChildModal}
+            onAddDocumentOfCategory={(parentDoc, categoryName) =>
+              navigateAddCategory(categoryName, parentDoc)}
+            onClearSelection={() => setSelectedWorkbenchDocumentId(undefined)}
+            onEditDocument={editDocument}
+            onOpenDocument={selectWorkbenchDocument}
+            onOpenMapDocument={onDocumentSelected}
+            onUpdateResourceFields={updateWorkbenchResourceFields}
+          />
+        )}
 
         <KoreanFieldworkWorkbenchPanel
           summary={todaySummary}
@@ -715,7 +792,8 @@ const DocumentsList: React.FC = () => {
               documentsById={documentsById}
               getCategoryLabel={getCategoryLabel}
               issueCountByDocumentId={todaySummary.issueCountByDocumentId}
-              onOpenDocument={onDocumentSelected}
+              selectedDocumentId={selectedWorkbenchDocument?.resource.id}
+              onOpenDocument={selectWorkbenchDocument}
               onDrillDown={pushToHierarchy}
               onAddChild={openAddChildModal}
               onAddDocumentOfCategory={(parentDoc, categoryName) =>
@@ -732,7 +810,8 @@ const DocumentsList: React.FC = () => {
               documentsById={documentsById}
               getCategoryLabel={getCategoryLabel}
               issueCountByDocumentId={todaySummary.issueCountByDocumentId}
-              onOpenDocument={onDocumentSelected}
+              selectedDocumentId={selectedWorkbenchDocument?.resource.id}
+              onOpenDocument={selectWorkbenchDocument}
               onDrillDown={pushToHierarchy}
               onAddChild={openAddChildModal}
               onAddDocumentOfCategory={(parentDoc, categoryName) =>
@@ -1041,6 +1120,7 @@ const RecordSection: React.FC<{
   documentsById: Map<string, Document>;
   getCategoryLabel: (categoryName: string) => string;
   issueCountByDocumentId: { [documentId: string]: number };
+  selectedDocumentId?: string;
   onOpenDocument: (document: Document) => void;
   onDrillDown: (document: Document) => void;
   onAddChild: (document: Document) => void;
@@ -1053,6 +1133,7 @@ const RecordSection: React.FC<{
   documentsById,
   getCategoryLabel,
   issueCountByDocumentId,
+  selectedDocumentId,
   onOpenDocument,
   onDrillDown,
   onAddChild,
@@ -1080,6 +1161,7 @@ const RecordSection: React.FC<{
           contextPath={formatKoreanFieldworkParentPath(document, documentsById)}
           categoryLabel={getCategoryLabel(document.resource.category)}
           issueCount={issueCountByDocumentId[document.resource.id] ?? 0}
+          selected={selectedDocumentId === document.resource.id}
           onOpen={() => onOpenDocument(document)}
           onDrillDown={() => onDrillDown(document)}
           onAddChild={() => onAddChild(document)}
@@ -1098,6 +1180,7 @@ const RecordRow: React.FC<{
   contextPath: string | undefined;
   categoryLabel: string;
   issueCount: number;
+  selected: boolean;
   onOpen: () => void;
   onDrillDown: () => void;
   onAddChild: () => void;
@@ -1110,6 +1193,7 @@ const RecordRow: React.FC<{
   contextPath,
   categoryLabel,
   issueCount,
+  selected,
   onOpen,
   onDrillDown,
   onAddChild,
@@ -1144,8 +1228,9 @@ const RecordRow: React.FC<{
   return (
     <TouchableOpacity
       activeOpacity={0.88}
-      style={styles.recordRow}
+      style={[styles.recordRow, selected && styles.recordRowSelected]}
       onPress={onOpen}
+      testID={`recordRow_${document.resource.id}`}
     >
       <View style={styles.recordIcon}>
         {category
@@ -1993,6 +2078,12 @@ const styles = StyleSheet.create({
     minHeight: 74,
     paddingHorizontal: 10,
     paddingVertical: 8,
+  },
+  recordRowSelected: {
+    backgroundColor: '#f0fdf4',
+    borderLeftColor: '#2f5f4a',
+    borderLeftWidth: 4,
+    paddingLeft: 6,
   },
   recordIcon: {
     alignItems: 'center',

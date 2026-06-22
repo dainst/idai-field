@@ -33,8 +33,16 @@ defmodule FieldPublicationWeb.Router do
   end
 
   scope "/api/json" do
-    get "/raw/:project_name/:draft_date/:uuid", FieldPublicationWeb.Api.JSON, :raw
-    get "/extended/:project_name/:draft_date/:uuid", FieldPublicationWeb.Api.JSON, :extended
+    pipe_through :fetch_session
+    pipe_through :fetch_current_user
+    pipe_through [:browser, :require_published_or_project_access]
+
+    get "/raw/:project_id/:draft_date/:uuid", FieldPublicationWeb.Api.JSON, :raw
+    get "/extended/:project_id/:draft_date/:uuid", FieldPublicationWeb.Api.JSON, :extended
+
+    get "/geometry_feature_collections/:project_id/:draft_date",
+        FieldPublicationWeb.Api.JSON,
+        :geometry_feature_collections
   end
 
   # If user is already logged but tries to access '/log_in' we redirects to the user's
@@ -99,6 +107,7 @@ defmodule FieldPublicationWeb.Router do
 
     live_session :require_published_or_project_access,
       on_mount: [{FieldPublicationWeb.UserAuth, :ensure_project_published_or_project_access}] do
+      live "/search/:project_id/:draft_date", Presentation.PublicationSearch
       live "/:project_id", Presentation.DocumentLive
       live "/:project_id/:draft_date", Presentation.DocumentLive
       live "/:project_id/:draft_date/:uuid", Presentation.DocumentLive

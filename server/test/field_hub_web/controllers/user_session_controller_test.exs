@@ -6,7 +6,7 @@ defmodule FieldHubWeb.UserSessionControllerTest do
   alias FieldHub.TestHelper
   alias FieldHubWeb.UserAuth
 
-  @project_key "test_project"
+  @project_key "user_session_controller_test"
   @project_password "test_password"
 
   setup_all %{} do

@@ -56,6 +56,29 @@ defmodule FieldPublication.FileService do
     "#{get_web_images_path(project_key)}/#{uuid}.tif"
   end
 
+  def get_iiif_cache_path(project_key) when is_binary(project_key) do
+    Path.join([
+      @file_store_path,
+      "iiif_cache",
+      project_key
+    ])
+  end
+
+  def get_iiif_cache_path(%Plug.Conn{
+        path_info: [id, region, scaling, rotation, quality_and_format]
+      }) do
+    [project_key, uuid] = String.split(id, "%2F")
+
+    Path.join([
+      get_iiif_cache_path(project_key),
+      uuid,
+      region,
+      scaling,
+      rotation,
+      quality_and_format
+    ])
+  end
+
   def get_map_tiles_base_path(project_key) do
     "#{@file_store_path}/map_tiles/#{project_key}"
   end

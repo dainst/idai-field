@@ -554,6 +554,218 @@ defmodule FieldPublication.Publications.Data do
      }}
   end
 
+  def list_with_geometries(%Publication{} = publication) do
+    db_name = get_meta_database_name(publication)
+
+    CouchService.get_document_stream(
+      %{
+        selector: %{"preview.geometry": %{"$ne": nil}},
+        use_index: "previews-with-geometry-index"
+      },
+      db_name
+    )
+    |> Stream.map(fn %{"preview" => preview} ->
+      preview
+    end)
+    |> Stream.map(&document_map_to_struct/1)
+  end
+
+  def get_project_geometry_feature_collections(
+        %Publication{project_name: project_key, draft_date: draft_date} = publication
+      ) do
+    cache_doc_name = "geometry_feature_collections_#{project_key}_#{draft_date}"
+
+    Cachex.get(:application_documents, cache_doc_name)
+    |> case do
+      {:ok, hit} when hit != nil ->
+        hit
+
+      _ ->
+        hierarchy = get_document_hierarchy(publication)
+
+        {category_labels, feature_collections} =
+          list_with_geometries(publication)
+          |> Enum.map(
+            &create_map_feature(
+              &1,
+              hierarchy,
+              publication
+            )
+          )
+          |> Enum.reduce({%{}, %{}}, fn {:ok, {category_labels, feature}},
+                                        {labels, collections} ->
+            category = feature.properties.category
+
+            updated_labels =
+              case Map.get(labels, category) do
+                nil -> Map.put(labels, category, category_labels)
+                _existing -> labels
+              end
+
+            updated_collections =
+              case Map.get(collections, category) do
+                nil ->
+                  # Create a new feature collection for this category with the first feature
+                  # as its first member.
+                  Map.put(collections, category, %{
+                    type: "FeatureCollection",
+                    properties: %{
+                      group: category
+                    },
+                    features: [feature]
+                  })
+
+                existing_collection ->
+                  # Otherwise add the feature to the existing collection.
+                  updated_collection =
+                    Map.update!(existing_collection, :features, fn existing_features ->
+                      existing_features ++ [feature]
+                    end)
+
+                  Map.put(collections, category, updated_collection)
+              end
+
+            {updated_labels, updated_collections}
+          end)
+
+        result =
+          %{
+            category_labels: category_labels,
+            feature_collections: feature_collections
+          }
+
+        Cachex.put(:application_documents, cache_doc_name, result)
+
+        result
+    end
+  end
+
+  def get_map_feature_collection(documents, %Publication{} = publication)
+      when is_list(documents) do
+    hierarchy = get_document_hierarchy(publication)
+
+    {label_info, features} =
+      documents
+      |> Stream.map(fn %Document{} = document ->
+        create_map_feature(document, hierarchy, publication)
+      end)
+      |> Stream.reject(fn
+        {:error, _} -> true
+        _ -> false
+      end)
+      |> Enum.reduce(
+        {%{}, []},
+        fn {
+             :ok,
+             {category_labels, %{properties: %{category: category}} = feature}
+           },
+           {existing_labels_map, existing_feature_list} ->
+          updated_labels = Map.put_new(existing_labels_map, category, category_labels)
+          updated_features = existing_feature_list ++ [feature]
+
+          {updated_labels, updated_features}
+        end
+      )
+
+    %{
+      type: "FeatureCollection",
+      properties: %{
+        category_labels: label_info
+      },
+      features: features
+    }
+  end
+
+  def create_map_feature(
+        %Document{
+          geometry: nil
+        },
+        _hierarchy,
+        _publication
+      ) do
+    {:error, :no_geometry}
+  end
+
+  def create_map_feature(
+        %Document{
+          category: %Category{color: color, labels: category_labels, name: category_key},
+          id: uuid,
+          description: description,
+          identifier: identifier,
+          geometry: geometry
+        },
+        hierarchy,
+        publication
+      ) do
+    description =
+      case description do
+        nil ->
+          %{}
+
+        value when is_binary(value) ->
+          # Using the same key as Field Desktop, that is why it is no written with underscore.
+          %{unspecifiedLanguage: value}
+
+        values when is_map(values) ->
+          values
+      end
+
+    {
+      :ok,
+      {
+        category_labels,
+        %{
+          type: "Feature",
+          geometry: geometry,
+          properties: %{
+            type: geometry["type"],
+            uuid: uuid,
+            identifier: identifier,
+            color: color,
+            description: description,
+            category: category_key,
+            parent: uuid_of_next_ancestor_with_geometry(uuid, hierarchy, publication)
+          }
+        }
+      }
+    }
+  end
+
+  def next_ancestor_with_geometry(uuid, hierarchy, publication) do
+    Map.get(hierarchy, uuid)
+    |> case do
+      %{"parent" => nil} ->
+        nil
+
+      %{"parent" => parent_uuid} ->
+        get_preview_documents([parent_uuid], publication)
+
+      nil ->
+        nil
+    end
+    |> case do
+      [%Document{id: parent_uuid, geometry: nil}] ->
+        next_ancestor_with_geometry(parent_uuid, hierarchy, publication)
+
+      [%Document{} = parent_with_geometry] ->
+        parent_with_geometry
+
+      _ ->
+        nil
+    end
+  end
+
+  def uuid_of_next_ancestor_with_geometry(uuid, hierarchy, publication) do
+    next_ancestor_with_geometry(uuid, hierarchy, publication)
+    |> case do
+      %Document{id: uuid} ->
+        uuid
+
+      _ ->
+        nil
+    end
+  end
+
   def get_geometries_by_category(%Publication{} = publication) do
     color_mapping =
       publication
@@ -1089,6 +1301,7 @@ defmodule FieldPublication.Publications.Data do
       relations
       |> Map.values()
       |> List.flatten()
+      |> Enum.uniq()
       |> get_preview_documents(publication)
 
     # ...then sort them into their respective relation groups, including the translated labels for those groups.
@@ -1136,8 +1349,9 @@ defmodule FieldPublication.Publications.Data do
         end)
         |> Enum.into(%{}),
       docs:
-        get_document_hierarchy(uuid, publication)
-        |> Map.get("children")
+        uuid
+        |> get_document_hierarchy(publication)
+        |> Map.get("children", [])
         |> get_preview_documents(publication)
     }
   end

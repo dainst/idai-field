@@ -8,8 +8,8 @@ defmodule FieldHubWeb.Api.Rest.FileTest do
 
   @cache_name Application.compile_env(:field_hub, :file_index_cache_name)
 
-  @project "test_project"
-  @user_name "test_user"
+  @project "api_rest_file_test"
+  @user_name @project
   @user_password "test_password"
   @example_file_path "test/fixtures/logo.png"
   @example_file File.read!(@example_file_path)

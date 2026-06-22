@@ -378,11 +378,11 @@ defmodule FieldPublication.Processing do
     {:noreply, cleanup(ref, running_tasks)}
   end
 
-  def handle_info({:DOWN, ref, :process, _pid, _reason}, running_tasks) do
+  def handle_info({:DOWN, ref, :process, _pid, reason}, running_tasks) do
     Logger.error("A processing task failed irregularly.")
 
     try do
-      report_crash_to_publication(ref, running_tasks)
+      report_crash_to_publication(ref, reason, running_tasks)
     after
       :ok
     end
@@ -390,12 +390,12 @@ defmodule FieldPublication.Processing do
     {:noreply, cleanup(ref, running_tasks)}
   end
 
-  defp report_crash_to_publication(ref, running_tasks) do
+  defp report_crash_to_publication(ref, reason, running_tasks) do
     Enum.find(running_tasks, fn {task, _type, _context} ->
       task.ref == ref
     end)
     |> case do
-      {_task, type, context} ->
+      {_task, _type, context} ->
         Publications.get(context)
         |> case do
           {:ok, publication} ->
@@ -414,7 +414,7 @@ defmodule FieldPublication.Processing do
                 type: "general_processing_crash",
                 reported_by: @data_report_key,
                 severity: :error,
-                message: "processing task #{type} crashed"
+                message: inspect(reason)
               }),
               publication
             )

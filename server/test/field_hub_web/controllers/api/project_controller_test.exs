@@ -5,7 +5,7 @@ defmodule FieldHubWeb.Api.Rest.ProjectTest do
     TestHelper
   }
 
-  @project "test_project"
+  @project "api_rest_project_test"
   @project_user_password "test_project_password"
   @project_user_auth "Basic #{Base.encode64("#{@project}:#{@project_user_password}")}"
 

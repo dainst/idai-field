@@ -57,7 +57,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLiveTest do
              "This example project serves as a point of entry for people new to the application."
 
     # Publication comment text
-    assert html =~ "This is a publication created by Field Publication’s seed.exs."
+    assert html =~ "This is a publication created by Field Publication&#39;s seed.exs."
   end
 
   test "image document gets rendered", %{

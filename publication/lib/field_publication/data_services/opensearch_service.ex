@@ -141,7 +141,7 @@ defmodule FieldPublication.OpenSearchService do
       headers()
     )
     |> Finch.request(FieldPublication.Finch)
-    |> then(fn {:ok, %{status: 200, body: body}} ->
+    |> then(fn {:ok, %{body: body}} ->
       Jason.decode!(body)
       |> Map.get("count", 0)
     end)

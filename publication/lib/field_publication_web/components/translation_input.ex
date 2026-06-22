@@ -74,7 +74,7 @@ defmodule FieldPublicationWeb.Components.TranslationInput do
           <div class="text-lg mb-8 font-thin">Preview</div>
           <div class="markdown">
             <% text = Phoenix.HTML.Form.input_value(nested, :text) || "" %>
-            {Earmark.as_html!(text)
+            {MDEx.to_html!(text)
             |> Phoenix.HTML.raw()}
           </div>
         </div>

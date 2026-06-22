@@ -62,7 +62,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
   end
 
   def handle_params(
-        _neither_date_nor_language_were_requested,
+        _no_date_was_requested,
         _uri,
         %{assigns: %{publications: publications, project_name: project_name}} = socket
       ) do
@@ -110,11 +110,34 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
   def handle_event(
         "search",
         %{"search_input" => q},
-        %{assigns: %{publication: %Publication{project_name: project_name}}} = socket
+        %{
+          assigns: %{
+            publication: %Publication{project_name: project_name, draft_date: draft_date}
+          }
+        } = socket
       ) do
     {
       :noreply,
-      redirect(socket, to: ~p"/search?#{%{q: q, filters: %{project_key: project_name}}}")
+      redirect(socket,
+        to: ~p"/projects/search/#{project_name}/#{draft_date}?#{%{q: q}}"
+      )
+    }
+  end
+
+  def handle_info(
+        {:drawn_selection, geometry},
+        %{
+          assigns: %{
+            publication: %Publication{project_name: project_name, draft_date: draft_date}
+          }
+        } = socket
+      ) do
+    query =
+      FieldPublicationWeb.Presentation.PublicationSearch.drawn_selection_to_parameter(geometry)
+
+    {
+      :noreply,
+      push_navigate(socket, to: ~p"/projects/search/#{project_name}/#{draft_date}?#{query}")
     }
   end
 

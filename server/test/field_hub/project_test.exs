@@ -9,7 +9,7 @@ defmodule FieldHub.ProjectTest do
 
   use ExUnit.Case
 
-  @project "test"
+  @project "project_test"
   @admin_name Application.compile_env(:field_hub, :couchdb_admin_name)
   @user_name "test_user"
   @user_password "test_password"

@@ -3,7 +3,7 @@ defmodule FieldHub.UserTest do
 
   use ExUnit.Case
 
-  @user_name "test_user"
+  @user_name "user_test"
   @user_password "test_password"
 
   setup %{} do

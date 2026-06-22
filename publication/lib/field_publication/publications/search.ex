@@ -43,6 +43,7 @@ defmodule FieldPublication.Publications.Search do
       :publication_draft_date,
       :configuration_based_field_mappings,
       :geometry,
+      :parent_geometry,
       :full_doc,
       :full_doc_as_text
     ]
@@ -242,7 +243,16 @@ defmodule FieldPublication.Publications.Search do
     end
   end
 
-  def search(q, filter, from \\ 0, size \\ 100) do
+  def search(q, filter, geometry_filter, from \\ 0, size \\ 100, publication \\ nil) do
+    index =
+      if publication == nil do
+        "project*"
+      else
+        get_search_alias(publication)
+        |> OpenSearchService.get_indices_behind_alias()
+        |> List.first()
+      end
+
     q =
       case q do
         "" ->
@@ -278,7 +288,7 @@ defmodule FieldPublication.Publications.Search do
             ]
           }
         },
-        aggs: generate_aggregations_queries(),
+        aggs: generate_aggregations_queries(index),
         from: from,
         size: size
       }
@@ -294,6 +304,41 @@ defmodule FieldPublication.Publications.Search do
         end
       end)
 
+    filter_params =
+      if geometry_filter do
+        filter_params ++
+          [
+            %{
+              bool: %{
+                should: [
+                  %{
+                    geo_shape: %{
+                      geometry: %{
+                        shape: %{
+                          type: "polygon",
+                          coordinates: [geometry_filter]
+                        }
+                      }
+                    }
+                  },
+                  %{
+                    geo_shape: %{
+                      parent_geometry: %{
+                        shape: %{
+                          type: "polygon",
+                          coordinates: [geometry_filter]
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+      else
+        filter_params
+      end
+
     payload =
       if Enum.empty?(filter_params) do
         payload
@@ -303,7 +348,7 @@ defmodule FieldPublication.Publications.Search do
         put_in(payload.query.bool, boolean_query)
       end
 
-    OpenSearchService.run_query("project_*", payload)
+    OpenSearchService.run_query(index, payload)
     |> case do
       {:ok, %{status: 200, body: body}} ->
         body = Jason.decode!(body)
@@ -319,7 +364,10 @@ defmodule FieldPublication.Publications.Search do
             body
             |> Map.get("aggregations", %{})
             |> Stream.map(&parse_aggregation_result/1)
-            |> Stream.reject(fn {_field, buckets} -> buckets == [] end)
+            |> Stream.reject(fn {_field, buckets} ->
+              # Ignore empty buckets or ones that have only one entry.
+              buckets == [] || Enum.count(buckets) == 1
+            end)
             |> Enum.sort_by(
               # Sorts the aggregations by descending size of all bucket entries
               fn {_field, buckets} ->
@@ -331,8 +379,8 @@ defmodule FieldPublication.Publications.Search do
     end
   end
 
-  defp generate_aggregations_queries() do
-    {:ok, %{status: 200, body: body}} = OpenSearchService.get_mapping("project*")
+  defp generate_aggregations_queries(index) do
+    {:ok, %{status: 200, body: body}} = OpenSearchService.get_mapping(index)
 
     _keyword_fields =
       Jason.decode!(body)
@@ -428,6 +476,10 @@ defmodule FieldPublication.Publications.Search do
         type: "geo_shape",
         store: true
       },
+      parent_geometry: %{
+        type: "geo_shape",
+        store: true
+      },
       full_doc: %{
         type: "flat_object"
       },
@@ -511,6 +563,29 @@ defmodule FieldPublication.Publications.Search do
           val
       end
 
+    hierarchy = Data.get_document_hierarchy(publication)
+
+    parent_geo =
+      Data.next_ancestor_with_geometry(res["id"], hierarchy, publication)
+      |> case do
+        nil ->
+          nil
+
+        %{id: uuid, geometry: geometry} = _doc ->
+          case Map.get(hierarchy, uuid) do
+            %{"parent" => nil} ->
+              # Only include parent documents that have a parent themself,
+              # otherwise too many documents will get included in the search
+              # result if there is one main document that encompasses all others.
+              #
+              # There might be a better solution to reduce "false positive"?
+              nil
+
+            _ ->
+              geometry
+          end
+      end
+
     base_document =
       %SearchDocument{
         id: res["id"],
@@ -523,6 +598,7 @@ defmodule FieldPublication.Publications.Search do
         project_key: publication.project_name,
         configuration_based_field_mappings: %{},
         geometry: geo,
+        parent_geometry: parent_geo,
         full_doc: full_doc,
         full_doc_as_text: Jason.encode!(full_doc)
       }
@@ -1029,13 +1105,17 @@ defmodule FieldPublication.Publications.Search do
              "_id" => uuid,
              "status" => 400,
              "error" => %{
-               "reason" => "failed to parse field [geometry] of type [geo_shape]",
+               "reason" => msg,
                "caused_by" => %{"caused_by" => %{"reason" => reason}}
              }
            }
          },
          %Publication{} = publication
-       ) do
+       )
+       when msg in [
+              "failed to parse field [geometry] of type [geo_shape]",
+              "failed to parse field [parent_geometry] of type [geo_shape]"
+            ] do
     Publications.Data.report_data_issue(
       uuid,
       LogEntry.create(%{
@@ -1056,13 +1136,17 @@ defmodule FieldPublication.Publications.Search do
              "_id" => uuid,
              "status" => 400,
              "error" => %{
-               "reason" => "failed to parse field [geometry] of type [geo_shape]",
+               "reason" => msg,
                "caused_by" => %{"reason" => reason}
              }
            }
          },
          %Publication{} = publication
-       ) do
+       )
+       when msg in [
+              "failed to parse field [geometry] of type [geo_shape]",
+              "failed to parse field [parent_geometry] of type [geo_shape]"
+            ] do
     Publications.Data.report_data_issue(
       uuid,
       LogEntry.create(%{

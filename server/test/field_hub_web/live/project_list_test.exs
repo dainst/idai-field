@@ -1,4 +1,4 @@
-defmodule FieldHubWeb.ProjectListTest do
+defmodule FieldHubWeb.Live.ProjectListTest do
   use FieldHubWeb.ConnCase
 
   import Phoenix.ConnTest
@@ -9,7 +9,7 @@ defmodule FieldHubWeb.ProjectListTest do
   alias FieldHubWeb.UserAuth
 
   @admin_user Application.compile_env(:field_hub, :couchdb_admin_name)
-  @project_key "test_project"
+  @project_key "live_project_list_test"
   @project_password "test_password"
 
   @empty_project_key "empty_project"

@@ -2,6 +2,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
   use FieldPublicationWeb, :html
 
   require Logger
+  alias FieldPublication.DatabaseSchema.Publication
   alias FieldPublication.Publications.Data.Field
   alias FieldPublication.Publications.Search
   alias FieldPublicationWeb.Components.LanguageSelection
@@ -10,6 +11,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     input_type in (Search.get_keyword_inputs() ++ Search.get_keyword_multi_inputs())
   end
 
+  attr(:publication, Publication, required: true)
   attr(:field, Field)
   attr(:hide_language_selection?, :boolean, default: false)
 
@@ -33,7 +35,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
       value={@field.value}
       id={@field.name}
     >
-      <.maybe_search_link field={@field}>
+      <.maybe_search_link field={@field} publication={@publication}>
         {text}
       </.maybe_search_link>
     </.maybe_language_select>
@@ -52,7 +54,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
       value={@field.value}
       id={@field.name}
     >
-      <.maybe_search_link field={@field}>
+      <.maybe_search_link field={@field} publication={@publication}>
         {text}
       </.maybe_search_link>
     </.maybe_language_select>
@@ -71,7 +73,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
         value={value}
         id={"#{@field.name}_#{value}"}
       >
-        <.maybe_search_link field={@field} value={value}>
+        <.maybe_search_link field={@field} value={value} publication={@publication}>
           {text}
         </.maybe_search_link>
       </.maybe_language_select>
@@ -95,7 +97,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
         value={start_value}
         id={"#{@field.name}_#{start_value}"}
       >
-        <.maybe_search_link field={@field} value={start_value}>
+        <.maybe_search_link field={@field} value={start_value} publication={@publication}>
           {text}
         </.maybe_search_link>
       </.maybe_language_select>
@@ -111,7 +113,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
             "#{@field.name}_#{end_value}" |> Base.encode16() |> String.replace_prefix("", "language_")
           }
         >
-          <.maybe_search_link field={@field} value={end_value}>
+          <.maybe_search_link field={@field} value={end_value} publication={@publication}>
             {text}
           </.maybe_search_link>
         </.maybe_language_select>
@@ -214,13 +216,11 @@ defmodule FieldPublicationWeb.Components.Data.Field do
       value={@field.value}
       id={@field.name}
     >
-      <.maybe_search_link field={@field}>
-        <span class="markdown">
-          {text
-          |> Earmark.as_html!()
-          |> Phoenix.HTML.raw()}
-        </span>
-      </.maybe_search_link>
+      <span class="markdown">
+        {text
+        |> MDEx.to_html!
+        |> Phoenix.HTML.raw()}
+      </span>
     </.maybe_language_select>
     """
   end
@@ -352,6 +352,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     """
   end
 
+  attr(:publication, Publication, required: true)
   attr(:field, Field, required: true)
 
   attr(:value, :string,
@@ -367,7 +368,9 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     <% value = if @value, do: @value, else: @field.value %>
     <%= cond do %>
       <% is_search_keyword?(@field.input_type) -> %>
-        <.link navigate={~p"/search?#{%{filters: %{"#{@field.name}_keyword" => value}}}"}>
+        <.link navigate={
+          ~p"/projects/search/#{@publication.project_name}/#{@publication.draft_date}?#{%{filters: %{"#{@field.name}_keyword" => value}}}"
+        }>
           {render_slot(@inner_block)}
         </.link>
         <!-- TODO: Add further variants that are not keywords? -->

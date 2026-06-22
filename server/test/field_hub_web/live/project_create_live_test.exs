@@ -20,7 +20,7 @@ defmodule FieldHubWeb.Live.ProjectCreateTest do
   @admin_user Application.compile_env(:field_hub, :couchdb_admin_name)
   @identifier_length Application.compile_env(:field_hub, :max_project_identifier_length)
 
-  @project "test_project"
+  @project "live_project_create_test"
   test "redirect to login if not authenticated", %{conn: conn} do
     # Test the authentication plug (http)
     assert {:error, {:redirect, %{flash: _, to: "/ui/session/log_in"}}} =

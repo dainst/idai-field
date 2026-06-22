@@ -67,7 +67,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                 <%= for %Field{} = field <- fields do %>
                   <.labeled_value class="border p-0.5 border-black/20">
                     <:label><.render_field_label field={field} /></:label>
-                    <.render_field_data field={field} />
+                    <.render_field_data field={field} publication={@publication} />
                   </.labeled_value>
                 <% end %>
               </div>
@@ -139,23 +139,14 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
               {pick_default_translation(other_relation.labels)} ({Enum.count(other_relation.docs)})
             </.group_heading>
             <div class="overflow-auto overscroll-contain max-h-[400px]">
-              <%= for %Document{geometry: geometry} = doc <- other_relation.docs do %>
-                <%= if geometry do %>
-                  <div
-                    id={"relations_map_highlighter_#{doc.id}"}
-                    phx-hook="HoverHighlightMapFeature"
-                    target_dom_element="generic_doc_map"
-                    target_id={doc.id}
-                  >
-                    <.document_link
-                      doc={doc}
-                      image_count={10}
-                      geometry_indicator={true}
-                    />
-                  </div>
-                <% else %>
-                  <.document_link doc={doc} image_count={10} geometry_indicator={true} />
-                <% end %>
+              <%= for doc <- other_relation.docs do %>
+                  <.document_link
+                    id={"#{other_relation.name}-#{doc.id}"}
+                    doc={doc}
+                    image_count={10}
+                    geometry_indicator={true}
+                    hover_target="generic_doc_map"
+                  />
               <% end %>
             </div>
           </section>
@@ -283,7 +274,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                 <%= for %Field{} = field <- fields do %>
                   <.labeled_value class="p-0.5">
                     <:label><.render_field_label field={field} /></:label>
-                    <.render_field_data field={field} />
+                    <.render_field_data field={field} publication={@publication} />
                   </.labeled_value>
                 <% end %>
               </section>
@@ -423,7 +414,11 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
     ~H"""
     <div>
       <.document_heading>
-        <.render_field_data field={Data.get_field(@doc, "shortName")} hide_language_selection?={true} />
+        <.render_field_data
+          field={Data.get_field(@doc, "shortName")}
+          hide_language_selection?={true}
+          publication={@publication}
+        />
       </.document_heading>
       <% depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
       <%= if depicted_in != nil do %>
@@ -474,7 +469,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
               >
                 <span class="markdown">
                   {comment
-                  |> Earmark.as_html!()
+                  |> MDEx.to_html!()
                   |> Phoenix.HTML.raw()}
                 </span>
               </.live_component>
@@ -489,7 +484,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           <%= if institution do %>
             <.labeled_value>
               <:label><.render_field_label field={institution} /></:label>
-              <.render_field_data field={institution} />
+              <.render_field_data field={institution} publication={@publication} />
             </.labeled_value>
           <% end %>
 
@@ -513,7 +508,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           <%= if supervisor do %>
             <.labeled_value>
               <:label><.render_field_label field={supervisor} /></:label>
-              <.render_field_data field={supervisor} />
+              <.render_field_data field={supervisor} publication={@publication} />
             </.labeled_value>
           <% end %>
 
@@ -527,9 +522,9 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
 
           <% bibliographic_references = Data.get_field(@doc, "bibliographicReferences") %>
           <%= if bibliographic_references do %>
-            <.labeled_value>
+            <.labeled_value class="max-h-78 overflow-y-auto">
               <:label><.render_field_label field={bibliographic_references} /></:label>
-              <.render_field_data field={bibliographic_references} />
+              <.render_field_data field={bibliographic_references} publication={@publication} />
             </.labeled_value>
           <% end %>
           <% url = Data.get_field_value(@doc, "projectURI") %>
@@ -548,19 +543,20 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
         <.group_heading>
           {gettext("Main documents")}
         </.group_heading>
-        <div class="grid grid-cols-4 gap-1">
+        <div class="grid grid-cols-4 gap-1 max-h-96 overflow-y-auto">
           <%= for doc <- @top_level_docs do %>
             <.document_link image_count={10} doc={doc} />
           <% end %>
         </div>
       </div>
-      <div class="flex flex-row gap-4 mt-4">
+      <div class="flex flex-row gap-4 mt-4" id="map-offset-element">
         <div class="basis-2/3 flex-none p-2">
           <.live_component
-            module={FieldPublicationWeb.Presentation.Components.ProjectViewMap}
+            module={FieldPublicationWeb.Presentation.Components.FullProjectMap}
             id="project_doc_map"
             style="height: 600px; background-color: var(--panel-color)"
             publication={@publication}
+            preset_geometry={nil}
           />
         </div>
 
@@ -595,10 +591,10 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
           id={"category_link_#{category_name}"}
           phx-hook="HoverHighlightMapFeature"
           target_dom_element="project_doc_map"
-          target_id={"#{Enum.join(get_child_category_names(children) ++ [category_name], ",")}"}
+          target_id={"categories-#{Enum.join(get_child_category_names(children) ++ [category_name], ",")}"}
         >
           <.link navigate={
-            ~p"/search?#{%{filters: %{category: category_name, project_key: @publication.project_name}}}"
+            ~p"/projects/search/#{@publication.project_name}/#{@publication.draft_date}?#{%{filters: %{category: category_name}}}"
           }>
             <div class="flex flex-row mb-0.5 p-1">
               <span style={"color: #{desaturate_category_color(color)}"}>

@@ -1,105 +1,97 @@
 import Map from "ol/Map.js";
 import View from "ol/View.js";
-import { createEmpty, extend } from "ol/extent.js";
+import { createEmpty, extend, isEmpty } from "ol/extent.js";
 import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
 import GeoJSON from "ol/format/GeoJSON.js";
-import { asArray } from "ol/color";
-import Overlay from "ol/Overlay.js";
+import Style from "ol/style/Style.js";
+import { Fill, Stroke } from "ol/style.js";
+import Draw from "ol/interaction/Draw.js";
 
 import {
-    createTileLayer,
-    getVisibilityKey,
     styleFunction,
-} from "./map-helper-functions.js";
-
-async function checkForHitInOrder(layers, coords) {
-    let hits = [];
-    for (const layer of layers) {
-        const features = await layer.getFeatures(coords);
-
-        if (features.length) {
-            hits = hits.concat(features);
-        }
-    }
-
-    return hits;
-}
-
-function setFillForLayer(layer, value) {
-    if (!layer) return;
-
-    let features = layer.getSource().getFeatures();
-    for (let feature of features) {
-        let properties = feature.getProperties();
-        properties.fill = value;
-        feature.setProperties(properties);
-    }
-}
+    setFillForLayer,
+    clearAllHighlights,
+    highlightFeature,
+} from "./map/features";
+import PublicationTileLayers from "./map/tile-layers";
+import PreviewOverlay from "./map/preview-overlay.js";
+import PublicationSelection from "./map/selection";
 
 export default getDocumentViewMapHook = () => {
     return {
         map: null,
-        projectName: null,
+        projectKey: null,
+        projectDraftDate: null,
+        publicationTileLayers: null,
         docId: null,
-        projectTileLayers: [],
-        projectTileLayerExtent: null,
-        documentTileLayers: [],
-        documentTileLayerExtent: null,
         parentLayer: null,
         ancestorLayer: null,
         docLayer: null,
         childrenLayer: null,
-        identifierOverlay: null,
-        identifierOverlayContent: null,
-
+        hoveredFeatures: [],
+        pinnedFeatures: [],
+        selectionMode: false,
         mounted() {
             this.initialize();
             this.handleEvent(
                 `document-map-set-project-layers-${this.el.id}`,
-                ({ project, project_tile_layers }) => {
-                    this.setTileLayers(project, project_tile_layers, "project");
+                ({ project_tile_layers }) => {
+                    this.publicationTileLayers.setProjectLayers(
+                        project_tile_layers,
+                    );
                 },
             );
             this.handleEvent(
                 `document-map-set-document-layers-${this.el.id}`,
-                ({ project, document_tile_layers }) => {
-                    this.setTileLayers(
-                        project,
+                ({ document_tile_layers }) => {
+                    this.publicationTileLayers.setDocumentLayers(
                         document_tile_layers,
-                        "document",
                     );
                 },
             );
-            this.handleEvent(
-                `document-map-update-${this.el.id}`,
-                ({
-                    project,
-                    document_feature,
-                    children_features,
-                    parent_features,
-                    ancestor_features,
-                }) => {
-                    this.projectName = project;
-                    this.setMapFeatures(
-                        parent_features,
-                        document_feature,
-                        children_features,
-                        ancestor_features,
-                    );
-                },
-            );
+
             this.handleEvent(
                 `document-map-set-layer-visibility-${this.el.id}`,
                 ({ uuid, visibility }) => {
-                    this.toggleLayerVisibility(uuid, visibility);
+                    this.publicationTileLayers.toggleLayerVisibility(
+                        uuid,
+                        visibility,
+                    );
+                },
+            );
+
+            this.handleEvent(
+                `document-map-update-${this.el.id}`,
+                ({
+                    document_uuid,
+                    document_feature_info,
+                    children_features,
+                    parent_features,
+                }) => {
+                    this.docId = document_uuid;
+                    this.setMapFeatures(
+                        document_feature_info.category_labels
+                            ? document_feature_info.category_labels
+                            : null,
+                        document_feature_info.feature
+                            ? document_feature_info.feature
+                            : null,
+                        parent_features,
+                        children_features,
+                    );
                 },
             );
 
             this.handleEvent(
                 `map-highlight-feature-${this.el.id}`,
                 ({ feature_id }) => {
-                    this.clearAllHighlights();
+                    clearAllHighlights([
+                        this.ancestorLayer,
+                        this.parentLayer,
+                        this.docLayer,
+                        this.childrenLayer,
+                    ]);
                     const vectorLayerFeatures = this.map
                         .getAllLayers()
                         .filter((layer) => layer instanceof VectorLayer)
@@ -110,197 +102,210 @@ export default getDocumentViewMapHook = () => {
                         return f.getProperties().uuid == feature_id;
                     });
 
-                    if (feature) this.highlightFeature(feature);
+                    if (feature) highlightFeature(feature);
                 },
             );
 
+            this.handleEvent(`close-preview-list-${this.el.id}`, () => {
+                if (this.map) {
+                    this.pinnedFeatures = [];
+                    this.overlay.update(this.pinnedFeatures);
+                    this.updateTooltip(this.pinnedFeatures);
+                }
+            });
+
             this.handleEvent(`map-clear-highlights-${this.el.id}`, () => {
-                this.clearAllHighlights();
+                clearAllHighlights([
+                    this.ancestorLayer,
+                    this.parentLayer,
+                    this.docLayer,
+                    this.childrenLayer,
+                ]);
 
                 setFillForLayer(this.docLayer, true);
             });
+
+            this.handleEvent(
+                `render-selection-polygon-${this.el.id}`,
+                ({ geometry }) => {
+                    this.selection.presetSelection(geometry);
+                },
+            );
+
+            this.handleEvent(
+                `set-draw-box-mode-${this.el.id}`,
+                ({ new_value }) => {
+                    this.selectionMode = new_value;
+                    if (new_value == true) {
+                        this.pinnedFeatures = [];
+                        this.hoveredFeatures = [];
+
+                        this.overlay.update([]);
+                        this.selection.startDrawing();
+                    } else {
+                        this.selection.stopDrawing();
+                    }
+                },
+            );
         },
 
         initialize() {
             const _this = this;
 
-            this.identifierOverlayContent = document.getElementById(
-                `${this.el.getAttribute("id")}-identifier-tooltip-content`,
-            );
-            const overlayDiv = document.getElementById(
-                `${this.el.getAttribute("id")}-identifier-tooltip`,
-            );
-
-            this.identifierOverlay = new Overlay({
-                element: overlayDiv,
-                offset: [5, 5],
-            });
-
-            document.getElementById(
-                `${this.el.getAttribute("id")}-map`,
-            ).innerHTML = "";
+            this.projectKey = this.el.getAttribute("project_key");
+            this.projectDraftDate = this.el.getAttribute("draft_date");
+            this.language = this.el.getAttribute("language");
 
             this.map = new Map({
                 target: `${this.el.getAttribute("id")}-map`,
                 view: new View(),
-                overlays: [this.identifierOverlay],
             });
 
-            _this.identifierOverlay.setPosition(undefined);
+            const overlayDiv = document.getElementById(
+                `${this.el.getAttribute("id")}-identifier-tooltip`,
+            );
+
+            this.overlay = new PreviewOverlay(
+                this,
+                this.map,
+                overlayDiv,
+                this.projectKey,
+                this.projectDraftDate,
+            );
+
+            this.publicationTileLayers = new PublicationTileLayers(
+                this,
+                this.map,
+                this.projectKey,
+                this.draftDate,
+            );
+
+            this.selection = new PublicationSelection(this, this.map, () => {
+                this.selectionMode = false;
+            });
 
             this.el.addEventListener("pointerenter", function (e) {
                 setFillForLayer(_this.docLayer, false);
             });
 
             this.el.addEventListener("pointerleave", function (e) {
-                [
-                    _this.ancestorLayer,
-                    _this.parentLayer,
-                    _this.childrenLayer,
-                ].map((layer) => {
+                [_this.parentLayer, _this.childrenLayer].map((layer) => {
                     setFillForLayer(layer, false);
                 });
 
                 setFillForLayer(_this.docLayer, true);
-                _this.identifierOverlay.setPosition(undefined);
+                _this.overlay.hide();
             });
 
             this.map.on("pointermove", async function (e) {
-                if (e.dragging) {
+                if (
+                    e.dragging ||
+                    _this.selectionMode ||
+                    _this.pinnedFeatures.length != 0
+                ) {
                     return;
                 }
 
                 [
-                    _this.ancestorLayer,
+                    // _this.ancestorLayer,
                     _this.parentLayer,
                     _this.childrenLayer,
                 ].map((layer) => {
                     setFillForLayer(layer, false);
                 });
 
-                _this.identifierOverlay.setPosition(undefined);
+                const hitFeatures = _this.map.getFeaturesAtPixel(e.pixel, {
+                    layerFilter: (layer) => {
+                        const properties = layer.getProperties();
+                        return (
+                            properties &&
+                            !properties.mainDocumentLayer &&
+                            !properties.drawn
+                        );
+                    },
+                });
 
-                const hitFeatures = await checkForHitInOrder(
-                    [
-                        _this.childrenLayer,
-                        _this.parentLayer,
-                        _this.ancestorLayer,
-                    ],
-                    e.pixel,
-                );
+                _this.hoveredFeatures = hitFeatures;
 
-                if (hitFeatures.length != 0) {
-                    _this.highlightFeature(hitFeatures[0], e.coordinate);
+                for (feature of _this.hoveredFeatures) {
+                    highlightFeature(feature);
+                }
 
-                    if (e.coordinate) {
-                        _this.generateTooltip([hitFeatures[0]], e.coordinate);
-                    }
+                if (e.coordinate) {
+                    _this.overlay.update(
+                        hitFeatures,
+                        _this.categoryLabels,
+                        e.coordinate,
+                        _this.language,
+                    );
                 }
             });
 
             this.map.on("singleclick", async function (e) {
-                const hitFeatures = await checkForHitInOrder(
-                    [
-                        _this.childrenLayer,
-                        _this.parentLayer,
-                        _this.ancestorLayer,
-                    ],
-                    e.pixel,
-                );
+                if (_this.selectionMode) return;
 
-                if (hitFeatures.length > 0) {
-                    let properties = hitFeatures[0].getProperties();
-                    _this.pushEvent("geometry-clicked", {
-                        uuid: properties.uuid,
-                    });
+                if (_this.hoveredFeatures.length > 1) {
+                    _this.pinnedFeatures = _this.hoveredFeatures;
+                    _this.hoveredFeatures = [];
+                    _this.overlay.update(
+                        _this.pinnedFeatures,
+                        _this.categoryLabels,
+                        e.coordinate,
+                        _this.language,
+                        true,
+                    );
+                } else if (_this.hoveredFeatures.length === 1) {
+                    const properties = _this.hoveredFeatures[0].getProperties();
+                    _this
+                        .js()
+                        .patch(
+                            `/projects/${_this.projectKey}/${_this.projectDraftDate}/${properties.uuid}`,
+                        );
+                    _this.overlay.hide();
                 }
             });
         },
-        setTileLayers(projectName, tileLayersInfo, groupName) {
-            let layerGroup = [];
-            let layerGroupExtent = createEmpty();
-
-            for (let info of tileLayersInfo) {
-                const layer = createTileLayer(info, projectName);
-
-                layerGroup.push(layer);
-
-                const preference = localStorage.getItem(
-                    getVisibilityKey(projectName, layer.get("name")),
-                );
-                let visible = null;
-
-                if (preference == "true") {
-                    visible = true;
-                } else if (preference == "false") {
-                    visible = false;
-                }
-
-                if (visible != null) {
-                    layer.setVisible(visible);
-                    this.pushEventTo(this.el, "visibility-preference", {
-                        uuid: layer.get("name"),
-                        group: groupName,
-                        value: visible,
-                    });
-                }
-
-                layerGroupExtent = extend(layerGroupExtent, layer.getExtent());
-                this.map.addLayer(layer);
-            }
-
-            if (groupName == "project") {
-                this.projectTileLayers = layerGroup;
-                this.projectTileLayerExtent = layerGroupExtent;
-            } else if (groupName == "document") {
-                this.documentTileLayers = layerGroup;
-                this.documentTileLayerExtent = layerGroupExtent;
-            }
-
-            this.updateZIndices();
-        },
-
-        updateZIndices() {
-            const layerCount =
-                0 +
-                this.documentTileLayers.length +
-                this.projectTileLayers.length;
-            const combined = this.documentTileLayers.concat(
-                this.projectTileLayers,
-            );
-
-            for (let i = 0; i < layerCount; i++) {
-                combined[i].setZIndex(layerCount - i - 200);
-            }
-        },
-
         async setMapFeatures(
-            parentFeatures,
+            documentCategoryLabels,
             documentFeature,
-            childrenFeatures,
-            ancestorFeatures,
+            parentCollection,
+            childCollection,
         ) {
-            this.docId = documentFeature.properties.uuid;
-
             if (this.childrenLayer) this.map.removeLayer(this.childrenLayer);
             if (this.docLayer) this.map.removeLayer(this.docLayer);
             if (this.parentLayer) this.map.removeLayer(this.parentLayer);
             if (this.ancestorLayer) this.map.removeLayer(this.ancestorLayer);
 
-            const ancestorVectorSoruce = new VectorSource({
-                features: new GeoJSON().readFeatures(ancestorFeatures),
-            });
+            this.categoryLabels = {};
 
-            this.ancestorLayer = new VectorLayer({
-                name: "ancestorLayer",
-                source: ancestorVectorSoruce,
-                style: styleFunction,
-            });
+            let documentVectorSource = null;
+            if (documentFeature) {
+                this.categoryLabels[documentFeature.properties.category] =
+                    documentCategoryLabels;
 
-            this.map.addLayer(this.ancestorLayer);
+                documentFeature.properties.fill = true;
+
+                documentVectorSource = new VectorSource({
+                    features: new GeoJSON().readFeatures(documentFeature),
+                });
+
+                this.docLayer = new VectorLayer({
+                    source: documentVectorSource,
+                    style: styleFunction,
+                    properties: {
+                        mainDocumentLayer: true,
+                    },
+                });
+                this.map.addLayer(this.docLayer);
+            }
+
+            for (categoryKey in parentCollection.properties.category_labels) {
+                this.categoryLabels[categoryKey] =
+                    parentCollection.properties.category_labels[categoryKey];
+            }
 
             const parentVectorSource = new VectorSource({
-                features: new GeoJSON().readFeatures(parentFeatures),
+                features: new GeoJSON().readFeatures(parentCollection),
             });
 
             this.parentLayer = new VectorLayer({
@@ -311,25 +316,17 @@ export default getDocumentViewMapHook = () => {
 
             this.map.addLayer(this.parentLayer);
 
-            documentFeature.properties.fill = true;
-
-            const vectorSource = new VectorSource({
-                features: new GeoJSON().readFeatures(documentFeature),
-            });
-
-            this.docLayer = new VectorLayer({
-                source: vectorSource,
-                style: styleFunction,
-            });
-
-            this.map.addLayer(this.docLayer);
+            for (categoryKey in childCollection.properties.category_labels) {
+                this.categoryLabels[categoryKey] =
+                    childCollection.properties.category_labels[categoryKey];
+            }
 
             const childrenVectorSource = new VectorSource({
-                features: new GeoJSON().readFeatures(childrenFeatures),
+                features: new GeoJSON().readFeatures(childCollection),
             });
 
             this.childrenLayer = new VectorLayer({
-                name: "childLayer",
+                name: "childrenLayer",
                 source: childrenVectorSource,
                 style: styleFunction,
             });
@@ -341,10 +338,14 @@ export default getDocumentViewMapHook = () => {
                 aggregatedExtent,
                 parentVectorSource.getExtent(),
             );
-            aggregatedExtent = extend(
-                aggregatedExtent,
-                vectorSource.getExtent(),
-            );
+
+            if (documentFeature) {
+                aggregatedExtent = extend(
+                    aggregatedExtent,
+                    documentVectorSource.getExtent(),
+                );
+            }
+
             aggregatedExtent = extend(
                 aggregatedExtent,
                 childrenVectorSource.getExtent(),
@@ -353,11 +354,15 @@ export default getDocumentViewMapHook = () => {
             let fullExtent = createEmpty();
 
             fullExtent = extend(fullExtent, aggregatedExtent);
+            fullExtent = extend(
+                fullExtent,
+                this.publicationTileLayers.getExtents().project,
+            );
 
-            if (this.projectTileLayerExtent)
-                fullExtent = extend(fullExtent, this.projectTileLayerExtent);
-            if (this.documentTileLayerExtent)
-                fullExtent = extend(fullExtent, this.documentTileLayerExtent);
+            fullExtent = extend(
+                fullExtent,
+                this.publicationTileLayers.getExtents().document,
+            );
 
             this.map.getView().fit(fullExtent, { padding: [10, 10, 10, 10] });
             this.map.setView(
@@ -368,84 +373,20 @@ export default getDocumentViewMapHook = () => {
                     maxZoom: 40,
                 }),
             );
-            this.map
-                .getView()
-                .fit(aggregatedExtent, { padding: [10, 10, 10, 10] });
 
-            this.clearAllHighlights();
-        },
-        highlightFeature(feature) {
-            let properties = feature.getProperties();
+            if (!isEmpty(aggregatedExtent)) {
+                this.map
+                    .getView()
+                    .fit(aggregatedExtent, { padding: [10, 10, 10, 10] });
+            }
 
-            properties.fill = true;
-            feature.setProperties(properties);
-        },
-        generateTooltip(features, coordinate) {
-            let tooltipContentNode = document.getElementById(
-                `${this.el.getAttribute("id")}-identifier-tooltip-content`,
-            );
-
-            let html = "";
-
-            features.forEach((feature) => {
-                let properties = feature.getProperties();
-
-                const label = `${properties.identifier} | ${properties.description}`;
-                const [r, g, b, a] = asArray(properties.color);
-
-                html += `
-                <div class="first-of-type:mt-0 mt-px border rounded-sm border-black flex">
-                  <div style="background: rgba(${r}, ${g}, ${b})" class="saturate-50 pl-2 text-black"}>
-                    <div class="h-full bg-white/60 p-1 font-thin">
-                        ${properties.category}
-                    </div>
-                  </div>
-                  <div class="grow p-1 h-full bg-white rounded-r-sm">
-                    ${properties.identifier} | ${properties.description}
-                  </div>
-                </div>
-                `;
-            });
-
-            const anchorPixel = this.map.getPixelFromCoordinate(coordinate);
-            const mapSize = this.map.getSize();
-
-            const right = anchorPixel[0] > mapSize[0] * 0.5 ? "right" : "left";
-            const bottom = anchorPixel[1] > mapSize[1] * 0.5 ? "bottom" : "top";
-
-            const offsetX = right == "right" ? -5 : 5;
-            const offsetY = bottom == "bottom" ? -5 : 5;
-
-            this.identifierOverlay.setPositioning(`${bottom}-${right}`);
-            this.identifierOverlay.setOffset([offsetX, offsetY]);
-
-            tooltipContentNode.innerHTML = html;
-            this.identifierOverlay.setPosition(coordinate);
-        },
-        clearAllHighlights() {
-            [
+            clearAllHighlights([
                 this.ancestorLayer,
                 this.parentLayer,
                 this.docLayer,
                 this.childrenLayer,
-            ].map((layer) => {
-                setFillForLayer(layer, false);
-            });
-
-            this.identifierOverlay.setPosition(undefined);
-        },
-        toggleLayerVisibility(uuid, visibility) {
-            const layer = this.map
-                .getLayers()
-                .getArray()
-                .find((layer) => layer.get("name") == uuid);
-            if (layer) {
-                layer.setVisible(visibility);
-                localStorage.setItem(
-                    getVisibilityKey(this.projectName, layer.get("name")),
-                    visibility,
-                );
-            }
+            ]);
+            setFillForLayer(this.docLayer, true);
         },
     };
 };

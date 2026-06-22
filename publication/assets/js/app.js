@@ -24,7 +24,7 @@ import topbar from "../vendor/topbar";
 
 import getWorldMapHook from "./world-map-hook";
 import getDocumentViewMapHook from "./document-view-map-hook";
-import getProjectViewMapHook from "./project-view-map-hook";
+import getFullProjectMapHook from "./full-project-map.hook";
 import getIIIFHook from "./iiif-hook";
 
 let csrfToken = document
@@ -35,7 +35,7 @@ let Hooks = {};
 
 Hooks.WorldMap = getWorldMapHook();
 Hooks.DocumentViewMap = getDocumentViewMapHook();
-Hooks.ProjectViewMap = getProjectViewMapHook();
+Hooks.FullProjectMap = getFullProjectMapHook();
 Hooks.IIIFViewer = getIIIFHook();
 Hooks.HoverHighlightMapFeature = {
     // This hook allows arbitrary DOM elements to trigger highlights on a target open layers map on mousemove events.

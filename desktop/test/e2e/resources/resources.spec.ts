@@ -274,6 +274,7 @@ test.describe('resources', () => {
         await navigateTo('projectLanguages');
         await ProjectLanguagesModalPage.clickDeleteLanguage('es');
         await ProjectLanguagesModalPage.clickDeleteLanguage('it');
+        await ProjectLanguagesModalPage.clickDeleteLanguage('ko');
         await ProjectLanguagesModalPage.clickDeleteLanguage('pt');
         await ProjectLanguagesModalPage.clickConfirm();
         await ConfigurationPage.changeMultiLanguageSetting('shortDescription', 'Feature');

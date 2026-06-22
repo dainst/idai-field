@@ -1,6 +1,7 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import {
   CategoryForm,
+  Document,
   NewDocument,
   NewResource,
 } from 'idai-field-core';
@@ -15,9 +16,14 @@ import DocumentForm from '@/components/common/forms/DocumentForm';
 import SoilProfileCameraButton, {
   SoilProfileCaptureData,
 } from '@/components/Project/SoilProfileCameraButton';
+import KoreanFieldworkDraftContinuationPanel from '@/components/Project/KoreanFieldworkDraftContinuationPanel';
 import KoreanFieldworkDraftContextPanel from '@/components/Project/KoreanFieldworkDraftContextPanel';
 import KoreanFieldworkDraftPresetPanel from '@/components/Project/KoreanFieldworkDraftPresetPanel';
 import KoreanFieldworkQuickRecordPanel from '@/components/Project/KoreanFieldworkQuickRecordPanel';
+import {
+  KoreanFieldworkDraftContinuationTarget,
+  MAP_CONTINUATION_TARGET,
+} from '@/components/Project/korean-fieldwork-draft-continuation';
 import {
   createKoreanFieldworkDraftRelations,
   createKoreanFieldworkDraftResource,
@@ -83,7 +89,9 @@ const DocumentAdd: React.FC = () => {
     setNewResource((oldResource) => oldResource && { ...oldResource, ...data });
   };
 
-  const saveButtonHandler = () => {
+  const saveButtonHandler = (
+    target: KoreanFieldworkDraftContinuationTarget = MAP_CONTINUATION_TARGET
+  ) => {
     if (newResource) {
       const newDocument: NewDocument = {
         resource: newResource,
@@ -92,13 +100,7 @@ const DocumentAdd: React.FC = () => {
         ?.create(newDocument)
         .then((doc) => {
           showToast(ToastType.Success, `${doc.resource.identifier} 기록을 만들었습니다.`);
-          setResourceToDefault();
-          router.navigate({
-            pathname: '/ProjectScreen/DocumentsMap',
-            params: {
-              highlightedDocId: doc.resource.id,
-            },
-          });
+          continueAfterSave(target, doc);
         })
         .catch((_err) => {
           Keyboard.dismiss();
@@ -106,6 +108,46 @@ const DocumentAdd: React.FC = () => {
           console.log(_err);
         });
     }
+  };
+
+  const continueAfterSave = (
+    target: KoreanFieldworkDraftContinuationTarget,
+    doc: Document
+  ) => {
+    if (target.mode === 'same') {
+      setResourceToDefault();
+      return;
+    }
+
+    if (target.mode === 'edit') {
+      router.navigate({
+        pathname: '/ProjectScreen/DocumentEdit',
+        params: {
+          docId: doc.resource.id,
+          categoryName: doc.resource.category,
+        },
+      });
+      return;
+    }
+
+    if (target.mode === 'addChild' && target.categoryName) {
+      router.navigate({
+        pathname: '/ProjectScreen/DocumentAdd',
+        params: {
+          parentDocId: doc.resource.id,
+          categoryName: target.categoryName,
+        },
+      });
+      return;
+    }
+
+    setResourceToDefault();
+    router.navigate({
+      pathname: '/ProjectScreen/DocumentsMap',
+      params: {
+        highlightedDocId: doc.resource.id,
+      },
+    });
   };
 
   const onReturn = () => {
@@ -133,7 +175,7 @@ const DocumentAdd: React.FC = () => {
       titleBarRight={
         <Button
           variant="success"
-          onPress={saveButtonHandler}
+          onPress={() => saveButtonHandler()}
           title="저장"
           isDisabled={!saveBtnEnabled}
           icon={
@@ -159,6 +201,11 @@ const DocumentAdd: React.FC = () => {
             category={category}
             resource={newResource}
             onApplyPreset={applyResourceUpdates}
+          />
+          <KoreanFieldworkDraftContinuationPanel
+            categoryName={categoryName}
+            config={config}
+            onSaveWithTarget={saveButtonHandler}
           />
           <KoreanFieldworkQuickRecordPanel
             category={category}

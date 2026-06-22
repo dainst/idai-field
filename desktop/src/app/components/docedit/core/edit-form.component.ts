@@ -6,6 +6,8 @@ import { AngularUtility } from '../../../angular/angular-utility';
 import { Messages } from '../../messages/messages';
 import { M } from '../../messages/m';
 
+const KOREAN_FIELDWORK_GROUP = 'koreanFieldwork';
+
 
 @Component({
     selector: 'edit-form',
@@ -66,6 +68,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
             const group = clone(originalGroup);
             this.groups.push(group);
         }
+        this.prioritizeKoreanFieldworkGroup();
         this.groups = this.groups.concat(this.extraGroups);
 
         if (!this.shouldShow(this.activeGroup)) this.selectFirstNonEmptyGroup();    
@@ -138,6 +141,16 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     private selectFirstNonEmptyGroup() {
 
         this.activateGroup(this.groups.find((group: Group) => this.shouldShow(group.name))?.name ?? this.groups[0].name);
+    }
+
+
+    private prioritizeKoreanFieldworkGroup() {
+
+        const koreanFieldworkGroupIndex = this.groups.findIndex(group => group.name === KOREAN_FIELDWORK_GROUP);
+        if (koreanFieldworkGroupIndex < 1) return;
+
+        const [koreanFieldworkGroup] = this.groups.splice(koreanFieldworkGroupIndex, 1);
+        this.groups.unshift(koreanFieldworkGroup);
     }
 
 

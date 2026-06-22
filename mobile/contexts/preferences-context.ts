@@ -9,6 +9,7 @@ export const PreferencesContext = React.createContext<UsePreferences>({
     setCurrentProject: (_project: string) => {},
     setUsername: (_project: string) => {},
     setProjectSettings: (_project: string, _projectSettings: ProjectSettings) => {},
+    setLanguages: (_languages: string[]) => {},
     removeProject: (_project: string) => {},
     getMapSettings: (_project: string) => ({ pointRadius: defaultPointRadius }),
     setMapSettings: (_project: string, _mapSettings: MapSettings) => {}

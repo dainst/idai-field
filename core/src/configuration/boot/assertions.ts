@@ -104,6 +104,8 @@ export module Assertions {
             filter((_, categoryName) => !builtInCategories[categoryName]),
             getDefinedParents,
             forEach((parent: any) => {
+                if (Object.keys(categories).find(is(parent))) return;
+
                 const found = Object.keys(builtInCategories).find(is(parent));
                 if (!found) throw [ConfigurationErrors.INVALID_CONFIG_PARENT_NOT_DEFINED, parent];
                 const foundBuiltIn = builtInCategories[found];

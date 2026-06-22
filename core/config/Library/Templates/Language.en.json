@@ -11,6 +11,9 @@
     "minimalSurvey": {
       "label": "Basic (Survey)"
     },
+    "koreanFieldwork": {
+      "label": "Korean field notebook"
+    },
     "archaeoDox": {
       "label": "archaeoDox",
       "languageConfiguration": {
@@ -22,4 +25,3 @@
       }
     }
   }
-  

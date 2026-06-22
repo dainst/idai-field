@@ -160,10 +160,9 @@ function getParentCategoryName(customForm: CustomFormDefinition, customFormName:
     let parentCategory: string = customForm.parent;
 
     if (!parentCategory) {
-        const category = forms[customFormName]
-            ? categories[forms[customFormName].categoryName]
-            : categories[customFormName];
-        parentCategory = category.parent;
+        const categoryName = forms[customFormName]?.categoryName ?? customFormName.split(':')[0];
+        const category = categories[categoryName] ?? categories[customFormName];
+        parentCategory = category?.parent;
     }
 
     return parentCategory;

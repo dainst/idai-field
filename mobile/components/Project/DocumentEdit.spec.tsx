@@ -48,6 +48,7 @@ const navigate = jest.fn();
 const setCurrentProject = jest.fn();
 const setUsername = jest.fn();
 const setProjectSettings = jest.fn();
+const setLanguages = jest.fn();
 const removeProject = jest.fn();
 const getMapSettings = jest.fn();
 const setMapSettings = jest.fn();
@@ -97,6 +98,7 @@ describe('DocumentEdit', () => {
             setCurrentProject,
             setUsername,
             setProjectSettings,
+            setLanguages,
             removeProject,
             getMapSettings,
             setMapSettings,

@@ -12,7 +12,13 @@
     "postinstall": "patch-package"
   },
   "jest": {
-    "preset": "jest-expo"
+    "preset": "jest-expo",
+    "setupFiles": [
+      "./test/jest.setup.js"
+    ],
+    "moduleNameMapper": {
+      "^uuid$": "<rootDir>/node_modules/uuid"
+    }
   },
   "dependencies": {
     "@expo/metro-config": "^0.18.11",

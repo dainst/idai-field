@@ -1,4 +1,5 @@
 import { IdGenerator, PouchdbDatastore, SampleDataLoaderBase } from 'idai-field-core';
+import koreanFieldworkConfiguration from 'idai-field-core/config/Config-KoreanFieldwork.json';
 import { useEffect, useState } from 'react';
 import PouchDB from 'pouchdb-core'
 
@@ -38,7 +39,8 @@ const buildpouchdbDatastore = async (
     try {
     const db = await datastore.createDb(
       project,
-      { _id: 'project', resource: { id: 'project' } },
+      createProjectDocument(project),
+      createConfigurationDocument(project),
       project === 'test'
     );
      db.allDocs({
@@ -61,3 +63,95 @@ const buildpouchdbDatastore = async (
  
   
 };
+
+const createProjectDocument = (project: string) => ({
+  _id: 'project',
+  resource: {
+    id: 'project',
+    identifier: project,
+    category: 'Project',
+    relations: {},
+  },
+  created: { user: '', date: new Date() },
+  modified: [],
+});
+
+const KOREAN_FIELDWORK_PROJECT_PREFIX = 'korean-fieldwork';
+const KOREAN_FIELDWORK_LANGUAGES = ['ko', 'en'];
+const KOREAN_FIELDWORK_FORMS = [
+  'Project:default',
+  'Operation:default',
+  'Survey:default',
+  'FeatureGroup:default',
+  'Feature:default',
+  'FeatureSegment:default',
+  'Find:default',
+  'Sample:default',
+  'Image:default',
+  'Drawing:default',
+  'Photo:default',
+  'DailyLog',
+  'FieldRecordQualityReview',
+  'SourceEvidenceIndex',
+  'TermAuthority',
+  'TermAlias',
+];
+const KOREAN_FIELDWORK_ORDER = [
+  'Project',
+  'Operation',
+  'DailyLog',
+  'Survey',
+  'FeatureGroup',
+  'Feature',
+  'FeatureSegment',
+  'Find',
+  'Sample',
+  'Drawing',
+  'Photo',
+  'FieldRecordQualityReview',
+  'SourceEvidenceIndex',
+  'TermAuthority',
+  'TermAlias',
+];
+const KOREAN_FIELDWORK_PARENTS = {
+  DailyLog: 'Operation',
+  FieldRecordQualityReview: 'Operation',
+  SourceEvidenceIndex: 'Project',
+  TermAuthority: 'FeatureGroup',
+  TermAlias: 'TermAuthority',
+};
+
+const createConfigurationDocument = (project: string) => ({
+  _id: 'configuration',
+  resource: {
+    id: 'configuration',
+    identifier: 'Configuration',
+    category: 'Configuration',
+    relations: {},
+    forms: createConfigurationForms(project),
+    order: getConfigurationOrder(project),
+    languages: {},
+    valuelists: getConfigurationValuelists(project),
+    projectLanguages: getProjectLanguages(project),
+  },
+  created: { user: '', date: new Date() },
+  modified: [],
+});
+
+const isKoreanFieldworkProject = (project: string): boolean =>
+  project === KOREAN_FIELDWORK_PROJECT_PREFIX
+  || project.startsWith(`${KOREAN_FIELDWORK_PROJECT_PREFIX}-`);
+
+const createConfigurationForms = (project: string) =>
+  isKoreanFieldworkProject(project)
+    ? (koreanFieldworkConfiguration as any).forms
+    : {};
+
+const getConfigurationOrder = (project: string): string[] =>
+  isKoreanFieldworkProject(project) ? (koreanFieldworkConfiguration as any).order : [];
+
+const getConfigurationValuelists = (project: string) =>
+  isKoreanFieldworkProject(project) ? (koreanFieldworkConfiguration as any).valuelists : {};
+
+const getProjectLanguages = (project: string): string[] =>
+  isKoreanFieldworkProject(project) ? KOREAN_FIELDWORK_LANGUAGES : [];

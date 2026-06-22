@@ -5,6 +5,7 @@ import {
   PouchdbDatastore,
   ProjectConfiguration,
   ConfigurationDocument,
+  getConfigurationName,
 } from 'idai-field-core';
 
 const loadConfiguration = async (
@@ -27,7 +28,7 @@ const loadConfiguration = async (
   const configurator = new AppConfigurator(
     new ConfigLoader(new ConfigReader())
   );
-  return await configurator.go(username, config);
+  return await configurator.go(getConfigurationName(project), config);
 };
 
 export default loadConfiguration;

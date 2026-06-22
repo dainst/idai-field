@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import { Picker } from '@react-native-picker/picker';
 import {
   CategoryForm,
   Field,
@@ -7,7 +8,7 @@ import {
   NewResource,
   Resource,
 } from 'idai-field-core';
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useMemo, useState } from 'react';
 import {
   FlatList,
   SafeAreaView,
@@ -35,6 +36,8 @@ interface DocumentFormProps {
 }
 
 const BTN_SIZE = 18;
+const KOREAN_FIELDWORK_GROUP = 'koreanFieldwork';
+const GROUP_PICKER_THRESHOLD = 6;
 
 const DocumentForm: React.FC<DocumentFormProps> = ({
   category,
@@ -44,9 +47,10 @@ const DocumentForm: React.FC<DocumentFormProps> = ({
   resource,
   updateFunction,
 }) => {
-  const [activeGroup, setActiveGroup] = useState<Group>(category.groups[0]);
+  const groups = useMemo(() => prioritizeKoreanFieldworkGroup(category.groups), [category.groups]);
+  const [activeGroup, setActiveGroup] = useState<Group>(groups[0]);
 
-  useEffect(() => setActiveGroup(category?.groups[0]), [category]);
+  useEffect(() => setActiveGroup(groups[0]), [groups]);
   const renderItem = ({ item }: { item: Group }) => (
     <TouchableOpacity
       onPress={() => setActiveGroup(item)}
@@ -77,12 +81,30 @@ const DocumentForm: React.FC<DocumentFormProps> = ({
       />
       <View style={styles.groupsContainer}>
         <FlatList
-          data={category.groups}
+          data={groups}
           keyExtractor={(group) => group.name}
           renderItem={renderItem}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
         />
+        {groups.length >= GROUP_PICKER_THRESHOLD && (
+          <View style={styles.groupPickerContainer}>
+            <Picker
+              testID="groupPicker"
+              selectedValue={activeGroup.name}
+              onValueChange={(groupName) => setActiveGroup(getGroup(groups, groupName.toString()))}
+              style={styles.groupPicker}
+            >
+              {groups.map((group) => (
+                <Picker.Item
+                  key={group.name}
+                  label={group.name}
+                  value={group.name}
+                />
+              ))}
+            </Picker>
+          </View>
+        )}
       </View>
       <View style={styles.groupForm}>
         <FlatList
@@ -108,7 +130,20 @@ const DocumentForm: React.FC<DocumentFormProps> = ({
 const shouldShow = (field: Field) =>
   field !== undefined && field.editable === true;
 
-const styleGroupText = (activeGroup: Group, group: Group): TextStyle =>
+const prioritizeKoreanFieldworkGroup = (groups: Group[]): Group[] => {
+  const koreanFieldworkGroup = groups.find((group) => group.name === KOREAN_FIELDWORK_GROUP);
+  if (!koreanFieldworkGroup) return groups;
+
+  return [
+    koreanFieldworkGroup,
+    ...groups.filter((group) => group.name !== KOREAN_FIELDWORK_GROUP),
+  ];
+};
+
+const getGroup = (groups: Group[], groupName: string): Group =>
+  groups.find((group) => group.name === groupName) ?? groups[0];
+
+const styleGroupText = (group: Group, activeGroup: Group): TextStyle =>
   group.name === activeGroup.name
     ? { ...styles.groupText, ...styles.groupTextActive }
     : styles.groupText;
@@ -124,6 +159,16 @@ const styles = StyleSheet.create({
   groupsContainer: {
     margin: 5,
     padding: 5,
+  },
+  groupPickerContainer: {
+    marginTop: 8,
+    borderWidth: 1,
+    borderColor: colors.primary,
+    borderRadius: 6,
+    overflow: 'hidden',
+  },
+  groupPicker: {
+    width: '100%',
   },
   groupForm: {
     padding: 10,

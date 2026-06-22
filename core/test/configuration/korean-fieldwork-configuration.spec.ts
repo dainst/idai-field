@@ -70,6 +70,70 @@ describe('KoreanFieldwork project configuration', () => {
         expect(getConfigurationName('korean-fieldwork')).toBe('KoreanFieldwork');
         expect(getConfigurationName('korean-fieldwork-training')).toBe('KoreanFieldwork');
         expect(PROJECT_MAPPING['korean-fieldwork'].prefix).toBe('KoreanFieldwork');
+        expect(PROJECT_MAPPING['korean-fieldwork'].label).toBe('한국형 야장');
+    });
+
+
+    it('provides a KoreanFieldwork starter template with stable UTF-8 labels', () => {
+
+        const configReader = new ConfigReader();
+        const templates = configReader.read('/Library/Templates/Templates.json');
+        const templateLanguagesKo = configReader.read('/Library/Templates/Language.ko.json');
+        const templateLanguagesEn = configReader.read('/Library/Templates/Language.en.json');
+        const koreanFieldworkConfig = configReader.read('/Config-KoreanFieldwork.json');
+        const template = templates.koreanFieldwork;
+        const expectedForms = [
+            'Project',
+            'Operation',
+            'DailyLog',
+            'Survey',
+            'FeatureGroup',
+            'Feature',
+            'FeatureSegment',
+            'Find',
+            'Sample',
+            'Drawing',
+            'Photo',
+            'FieldRecordQualityReview',
+            'SourceEvidenceIndex',
+            'TermAuthority',
+            'TermAlias'
+        ];
+        const expectedTemplateForms = [
+            'Project:default',
+            'Operation:default',
+            'DailyLog',
+            'Survey:default',
+            'FeatureGroup:default',
+            'Feature:default',
+            'FeatureSegment:default',
+            'Find:default',
+            'Sample:default',
+            'Image:default',
+            'Drawing:default',
+            'Photo:default',
+            'FieldRecordQualityReview',
+            'SourceEvidenceIndex',
+            'TermAuthority',
+            'TermAlias'
+        ];
+
+        expect(template).toBeDefined();
+        expect(templateLanguagesKo.koreanFieldwork.label).toBe('한국형 야장');
+        expect(templateLanguagesEn.koreanFieldwork.label).toBe('Korean field notebook');
+        expect(template.configuration.languages.ko).toBeDefined();
+        expect(template.configuration.languages.en).toBeDefined();
+        expect(template.configuration.order).toEqual(expectedForms);
+        expect(template.configuration.forms.DailyLog.parent).toBe('Operation');
+        expect(template.configuration.forms.FieldRecordQualityReview.parent).toBe('Operation');
+        expect(template.configuration.forms.SourceEvidenceIndex.parent).toBe('Project');
+        expect(template.configuration.forms.TermAuthority.parent).toBe('FeatureGroup');
+        expect(template.configuration.forms.TermAlias.parent).toBe('TermAuthority');
+
+        expectedTemplateForms.forEach(formName => {
+            expect(template.configuration.forms[formName]).toBeDefined();
+            expect(koreanFieldworkConfig.forms[formName]).toBeDefined();
+        });
     });
 
 
@@ -2851,8 +2915,6 @@ describe('KoreanFieldwork project configuration', () => {
         expect(termAliasForm.valuelists.termAliasHandling).toBe('KoreanFieldwork-termAliasHandling');
         expect(termAliasForm.valuelists.termSearchMapping).toBe('KoreanFieldwork-termSearchMapping');
         expect(termAliasForm.valuelists.termAuthorityStatus).toBe('KoreanFieldwork-termAuthorityStatus');
-        expect(termImportMappingForm.valuelists.termAliasHandling)
-            .toBe('KoreanFieldwork-termAliasHandling');
         expect(termImportMappingForm.valuelists.termSearchMapping)
             .toBe('KoreanFieldwork-termSearchMapping');
         expect(termImportMappingForm.valuelists.termAuthorityStatus)

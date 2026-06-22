@@ -49,6 +49,7 @@ const navigate = jest.fn();
 const setCurrentProject = jest.fn();
 const setUsername = jest.fn();
 const setProjectSettings = jest.fn();
+const setLanguages = jest.fn();
 const removeProject = jest.fn();
 const setMapSettings = jest.fn();
 const getMapSettings = jest.fn();
@@ -109,6 +110,7 @@ describe('DocumentAdd', () => {
             setCurrentProject,
             setUsername,
             setProjectSettings,
+            setLanguages,
             removeProject,
             setMapSettings,
             getMapSettings,

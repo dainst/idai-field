@@ -79,6 +79,14 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "recordCreationTiming": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "fieldRecordQuality": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
         "verificationState": {
           "inputType": "dropdown",
           "constraintIndexed": true
@@ -104,6 +112,8 @@
         "koreanArchaeologyInstitutionalRisk": "KoreanFieldwork-koreanArchaeologyInstitutionalRisk",
         "researchRoleAssignment": "KoreanFieldwork-researchRoleAssignment",
         "researchProcessBalance": "KoreanFieldwork-researchProcessBalance",
+        "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
+        "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
         "verificationState": "KoreanFieldwork-verificationState"
       },
       "groups": [
@@ -947,7 +957,6 @@
         }
       },
       "valuelists": {
-        "termAliasHandling": "KoreanFieldwork-termAliasHandling",
         "termAuthorityStatus": "KoreanFieldwork-termAuthorityStatus",
         "termRelation": "KoreanFieldwork-termRelation",
         "termSearchMapping": "KoreanFieldwork-termSearchMapping",
@@ -979,7 +988,6 @@
             "termImportSourceFieldText",
             "termImportContextText",
             "termImportReviewNoteText",
-            "termAliasHandling",
             "termRelation",
             "termSearchMapping",
             "termAuthorityStatus",
@@ -1109,7 +1117,7 @@
         },
         {
           "name": "properties",
-          "fields": ["description", "diaryAbstract"]
+          "fields": ["description"]
         },
         {
           "name": "koreanFieldwork",
@@ -1177,7 +1185,7 @@
         },
         {
           "name": "properties",
-          "fields": ["description", "diaryAbstract"]
+          "fields": ["description"]
         },
         {
           "name": "koreanFieldwork",
@@ -1246,7 +1254,7 @@
         },
         {
           "name": "properties",
-          "fields": ["description", "diaryAbstract"]
+          "fields": ["description"]
         },
         {
           "name": "koreanFieldwork",
@@ -1308,7 +1316,7 @@
         },
         {
           "name": "properties",
-          "fields": ["description", "diaryAbstract"]
+          "fields": ["description"]
         },
         {
           "name": "koreanFieldwork",
@@ -1372,7 +1380,7 @@
         },
         {
           "name": "properties",
-          "fields": ["description", "diaryAbstract"]
+          "fields": ["description"]
         },
         {
           "name": "koreanFieldwork",
@@ -1433,7 +1441,7 @@
         },
         {
           "name": "properties",
-          "fields": ["description", "diaryAbstract"]
+          "fields": ["description"]
         },
         {
           "name": "koreanFieldwork",
@@ -1502,7 +1510,7 @@
         },
         {
           "name": "properties",
-          "fields": ["description", "diaryAbstract"]
+          "fields": ["description"]
         },
         {
           "name": "koreanFieldwork",
@@ -1564,7 +1572,7 @@
         },
         {
           "name": "properties",
-          "fields": ["description", "diaryAbstract"]
+          "fields": ["description"]
         },
         {
           "name": "koreanFieldwork",
@@ -1709,7 +1717,7 @@
         },
         {
           "name": "properties",
-          "fields": ["description", "color"]
+          "fields": ["description"]
         },
         {
           "name": "koreanFieldwork",
@@ -2222,7 +2230,7 @@
         },
         {
           "name": "properties",
-          "fields": ["description", "color", "hasDisturbance", "featureForm", "featureBorders", "comparison"]
+          "fields": ["description", "hasDisturbance", "featureForm", "featureBorders", "comparison"]
         },
         {
           "name": "koreanFieldwork",
@@ -2521,7 +2529,7 @@
         },
         {
           "name": "properties",
-          "fields": ["description", "color"]
+          "fields": ["description"]
         },
         {
           "name": "koreanFieldwork",
@@ -3198,6 +3206,10 @@
           "fields": ["geometry", "spatialLocation"]
         }
       ]
+    },
+    "Image:default": {
+      "hidden": [],
+      "fields": {}
     },
     "Drawing:default": {
       "hidden": [],

@@ -95,9 +95,10 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ deleteProject }) => {
   }, [preferences.preferences.recentProjects]);
 
   const openProject = useCallback(
-    (project: string) => {
+    (project: string, languages?: string[]) => {
       if (!project) return;
       setSelectedProject(project);
+      if (languages) preferences.setLanguages(languages);
       preferences.setCurrentProject(project);
       navigate('/ProjectScreen');
     },

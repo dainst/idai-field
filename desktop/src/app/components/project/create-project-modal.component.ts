@@ -16,6 +16,9 @@ import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
 
 const remote = window.require('@electron/remote');
+const KOREAN_FIELDWORK_TEMPLATE = 'koreanFieldwork';
+const KOREAN_FIELDWORK_PROJECT_PREFIX = 'korean-fieldwork-';
+const KOREAN_FIELDWORK_LANGUAGES = ['ko', 'en'];
 
 
 @Component({
@@ -98,6 +101,7 @@ export class CreateProjectModalComponent implements OnInit {
     public selectTemplate(templateName: string) {
 
         this.selectedTemplate = this.getTemplate(templateName);
+        this.applyTemplateDefaults();
     }
 
 
@@ -127,6 +131,7 @@ export class CreateProjectModalComponent implements OnInit {
         if (!this.isFilledIn()) return;
 
         if (this.page < 2) {
+            if (this.page === 0) this.applyTemplateDefaults();
             this.page++;
         } else {
             await this.createProject();
@@ -201,5 +206,17 @@ export class CreateProjectModalComponent implements OnInit {
                 ];
             }
         }
-    } 
+    }
+
+
+    private applyTemplateDefaults() {
+
+        if (this.selectedTemplate?.name !== KOREAN_FIELDWORK_TEMPLATE) return;
+
+        if (!this.projectIdentifier) this.projectIdentifier = KOREAN_FIELDWORK_PROJECT_PREFIX;
+        if (!this.selectedLanguages || this.selectedLanguages.length === 0) {
+            this.selectedLanguages = KOREAN_FIELDWORK_LANGUAGES;
+            this.selectedLanguageObjects = this.selectedLanguages.map(languageCode => this.languages[languageCode]);
+        }
+    }
 }

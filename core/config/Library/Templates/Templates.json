@@ -540,6 +540,103 @@
       ]
     }
   },
+  "koreanFieldwork": {
+    "author": "DAI / Korean fieldwork adaptation",
+    "configuration": {
+      "forms": {
+        "Project:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Operation:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "DailyLog": {
+          "parent": "Operation",
+          "hidden": [],
+          "fields": {}
+        },
+        "Survey:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "FeatureGroup:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Feature:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "FeatureSegment:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Find:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Sample:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Image:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Drawing:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "Photo:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "FieldRecordQualityReview": {
+          "parent": "Operation",
+          "hidden": [],
+          "fields": {}
+        },
+        "SourceEvidenceIndex": {
+          "parent": "Project",
+          "hidden": [],
+          "fields": {}
+        },
+        "TermAuthority": {
+          "parent": "FeatureGroup",
+          "hidden": [],
+          "fields": {}
+        },
+        "TermAlias": {
+          "parent": "TermAuthority",
+          "hidden": [],
+          "fields": {}
+        }
+      },
+      "order": [
+        "Project",
+        "Operation",
+        "DailyLog",
+        "Survey",
+        "FeatureGroup",
+        "Feature",
+        "FeatureSegment",
+        "Find",
+        "Sample",
+        "Drawing",
+        "Photo",
+        "FieldRecordQualityReview",
+        "SourceEvidenceIndex",
+        "TermAuthority",
+        "TermAlias"
+      ],
+      "languages": {
+        "ko": {},
+        "en": {}
+      }
+    }
+  },
   "archaeoDox": {
     "author": "Archäologisches Museum Hamburg",
     "configuration": {

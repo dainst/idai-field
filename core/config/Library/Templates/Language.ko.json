@@ -11,6 +11,9 @@
   "minimalSurvey": {
     "label": "기본(지표조사)"
   },
+  "koreanFieldwork": {
+    "label": "한국형 야장"
+  },
   "archaeoDox": {
     "label": "고고학자",
     "languageConfiguration": {

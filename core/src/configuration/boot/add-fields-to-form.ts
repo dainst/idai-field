@@ -75,7 +75,7 @@ function getField(fieldName: string, form: TransientFormDefinition, categories: 
     const parentName: string|undefined = form.parent ?? categories[form.categoryName]?.parent;
 
     const parentCategoryFields: Map<Field> = parentName
-        ? categories[parentName].fields as Map<Field>
+        ? ((categories[parentName]?.fields as Map<Field>) ?? {})
         : {};
 
     let field: Field = builtInFields[fieldName]

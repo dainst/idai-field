@@ -16,6 +16,8 @@ import { EditSaveDialogComponent } from '../widgets/edit-save-dialog.component';
 import { MessagesConversion } from './messages-conversion';
 import { MAX_NUMBER_OF_DUPLICATES } from './duplication-util';
 
+const KOREAN_FIELDWORK_GROUP = 'koreanFieldwork';
+
 
 @Component({
     selector: 'detail-modal',
@@ -222,7 +224,10 @@ export class DoceditComponent {
 
         this.fieldDefinitions = CategoryForm.getFields(category);
         this.groups = category.groups;
-        if (!this.activeGroup && this.groups.length > 0) this.activeGroup = this.groups[0].name;
+        if (!this.activeGroup && this.groups.length > 0) {
+            this.activeGroup = this.groups.find(group => group.name === KOREAN_FIELDWORK_GROUP)?.name
+                ?? this.groups[0].name;
+        }
         this.identifierPrefix = category.identifierPrefix;
     }
 

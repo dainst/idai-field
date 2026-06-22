@@ -1782,5 +1782,11 @@ export class BuiltInConfiguration {
                 inputType: 'text'
             };
         }
+
+        if (customConfigurationName === 'KoreanFieldwork') {
+            this.builtInCategories.Project.supercategory = true;
+            this.builtInCategories.Project.userDefinedSubcategoriesAllowed = true;
+            this.builtInCategories.Operation.userDefinedSubcategoriesAllowed = true;
+        }
     }
 }

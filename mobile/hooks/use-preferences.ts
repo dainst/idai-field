@@ -13,6 +13,7 @@ export interface UsePreferences {
     project: string,
     projectSettings: ProjectSettings
   ) => void;
+  setLanguages: (languages: string[]) => void;
   removeProject: (project: string) => void;
   getMapSettings: (project: string) => MapSettings;
   setMapSettings: (project: string, mapSettings: MapSettings) => void;
@@ -50,6 +51,9 @@ const usePreferences = (): UsePreferences => {
   const setUsername = (username: string) =>
     setPreferences(update('username', username));
 
+  const setLanguages = (languages: string[]) =>
+    setPreferences(update('languages', languages));
+
   const removeProject = (project: string) =>
     setPreferences(
       compose(
@@ -73,6 +77,7 @@ const usePreferences = (): UsePreferences => {
     setCurrentProject,
     setUsername,
     setProjectSettings,
+    setLanguages,
     removeProject,
     getMapSettings,
     setMapSettings,

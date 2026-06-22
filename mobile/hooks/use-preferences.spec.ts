@@ -1,6 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { renderHook } from '@testing-library/react-hooks';
-import { act } from '@testing-library/react-native';
+import { act, renderHook, waitFor } from '@testing-library/react-native';
 import { defaultMapSettings } from '../components/Project/Map/map-settings';
 import usePreferences from './use-preferences';
 
@@ -9,14 +8,13 @@ describe('usePreferences', () => {
     beforeEach(() => {
 
         AsyncStorage.clear();
+        jest.clearAllMocks();
     });
 
 
     it('should provide sensible default preferences', async () => {
 
-        const { result, waitForNextUpdate } = renderHook(() => usePreferences());
-
-        await waitForNextUpdate();
+        const { result } = await renderUsePreferences();
       
         expect(result.current.preferences.currentProject).toBe('');
         expect(result.current.preferences.recentProjects).toHaveLength(0);
@@ -28,9 +26,7 @@ describe('usePreferences', () => {
 
     it('should set username', async () => {
 
-        const { result, waitForNextUpdate } = renderHook(() => usePreferences());
-
-        await waitForNextUpdate();
+        const { result } = await renderUsePreferences();
 
         await act(async () => {
             result.current.setUsername('Tester');
@@ -40,11 +36,21 @@ describe('usePreferences', () => {
     });
 
 
+    it('should set project languages', async () => {
+
+        const { result } = await renderUsePreferences();
+
+        await act(async () => {
+            result.current.setLanguages(['ko', 'en']);
+        });
+
+        expect(result.current.preferences.languages).toEqual(['ko', 'en']);
+    });
+
+
     it('should set project settings', async () => {
 
-        const { result, waitForNextUpdate } = renderHook(() => usePreferences());
-
-        await waitForNextUpdate();
+        const { result } = await renderUsePreferences();
 
         await act(async () => {
             result.current.setProjectSettings('test2', {
@@ -64,9 +70,7 @@ describe('usePreferences', () => {
 
     it('should persist project settings', async () => {
 
-        const { result, waitForNextUpdate } = renderHook(() => usePreferences());
-
-        await waitForNextUpdate();
+        const { result } = await renderUsePreferences();
 
         await act(async () => {
             result.current.setProjectSettings('test2', {
@@ -79,12 +83,12 @@ describe('usePreferences', () => {
 
         expect(AsyncStorage.setItem).toBeCalledWith('preferences', JSON.stringify(result.current.preferences));
 
-        const { result: result2, waitForNextUpdate: waitForNextUpdate2 } = renderHook(() => usePreferences());
+        const { result: result2 } = renderHook(() => usePreferences());
 
         // generates a warning
         // see https://github.com/testing-library/react-hooks-testing-library/issues/14
         jest.spyOn(console, 'error').mockImplementation(jest.fn());
-        await waitForNextUpdate2();
+        await waitFor(() => expect(result2.current.preferences.projects['test2']).toBeDefined());
         
         expect(AsyncStorage.getItem).toBeCalledWith('preferences');
       
@@ -97,9 +101,7 @@ describe('usePreferences', () => {
 
     it('should prepend the current project to recent projects', async () => {
 
-        const { result, waitForNextUpdate } = renderHook(() => usePreferences());
-
-        await waitForNextUpdate();
+        const { result } = await renderUsePreferences();
 
         await act(async () => {
             result.current.setCurrentProject('test1');
@@ -126,9 +128,7 @@ describe('usePreferences', () => {
 
     it('should remove project', async () => {
 
-        const { result, waitForNextUpdate } = renderHook(() => usePreferences());
-
-        await waitForNextUpdate();
+        const { result } = await renderUsePreferences();
 
         await act(async () => {
             result.current.setCurrentProject('test1');
@@ -145,3 +145,10 @@ describe('usePreferences', () => {
     });
 
 });
+
+const renderUsePreferences = async () => {
+
+    const renderResult = renderHook(() => usePreferences());
+    await waitFor(() => expect(AsyncStorage.getItem).toBeCalledWith('preferences'));
+    return renderResult;
+};

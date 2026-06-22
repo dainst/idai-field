@@ -19,7 +19,7 @@ export interface KoreanFieldworkAddOptionGroups {
 
 const C = KOREAN_FIELDWORK_CATEGORIES;
 
-const PRIMARY_OPTIONS_BY_PARENT: Readonly<Record<string, ReadonlyArray<string>>> = {
+const PRIMARY_OPTIONS_BY_PARENT: Readonly<Record<string, readonly string[]>> = {
   [C.OPERATION]: [
     C.TRENCH,
     C.FEATURE_GROUP,
@@ -117,11 +117,11 @@ const PRIMARY_ONLY_CATEGORIES = new Set([
 ]);
 
 export const KOREAN_FIELDWORK_HIERARCHY_HELP =
-  '조사구역 · 트렌치/조사갱 · 유구군/유구 · 피트/층위';
+  '조사구역 · 트렌치/조사갱 · 유구군/유구 · 피트·유구 구간/층위';
 
 export const getKoreanFieldworkAddOptions = (
   parentCategoryName: string,
-  allowedCategoryNames: ReadonlyArray<string>
+  allowedCategoryNames: readonly string[]
 ): KoreanFieldworkAddOptionGroups => {
   const allowedSet = new Set(allowedCategoryNames.filter(isVisibleAddCategory));
   const primaryNames = (PRIMARY_OPTIONS_BY_PARENT[parentCategoryName] ?? [])

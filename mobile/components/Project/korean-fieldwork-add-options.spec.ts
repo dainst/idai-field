@@ -29,7 +29,7 @@ describe('korean fieldwork add options', () => {
     expect(options.other).toEqual([]);
   });
 
-  it('uses FeatureSegment as the tablet pit/detail record under features', () => {
+  it('uses FeatureSegment as the tablet pit/feature segment record under features', () => {
     const options = getKoreanFieldworkAddOptions(C.FEATURE, [
       C.FEATURE_SEGMENT,
       C.LAYER,
@@ -40,7 +40,7 @@ describe('korean fieldwork add options', () => {
 
     expect(options.primary[0]).toMatchObject({
       categoryName: C.FEATURE_SEGMENT,
-      label: '피트·유구 세부 기록',
+      label: '피트·유구 구간',
     });
     expect(options.primary.map((option) => option.categoryName)).not.toContain(C.PLACE);
   });

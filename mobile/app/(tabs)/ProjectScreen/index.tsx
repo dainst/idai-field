@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import CategoryIcon from '@/components/common/CategoryIcon';
 import DocumentAddModal from '@/components/Project/DocumentAddModal';
+import KoreanFieldworkHierarchyBoard from '@/components/Project/KoreanFieldworkHierarchyBoard';
 import KoreanFieldworkPriorityTaskList from '@/components/Project/KoreanFieldworkPriorityTaskList';
 import KoreanFieldworkScopePanel from '@/components/Project/KoreanFieldworkScopePanel';
 import {
@@ -124,7 +125,7 @@ const RECORD_GROUPS: RecordGroup[] = [
     ],
   },
   {
-    title: '트렌치·유구군·유구·피트·층위',
+    title: '트렌치·유구군·유구·피트·구간·층위',
     subtitle: '한국 야장 기록의 중심 단위',
     categories: [
       KOREAN_FIELDWORK_CATEGORIES.TRENCH,
@@ -361,6 +362,16 @@ const DocumentsList: React.FC = () => {
           onBackScope={popFromHierarchy}
           onClearScope={clearHierarchy}
           onOpenMap={openMap}
+        />
+
+        <KoreanFieldworkHierarchyBoard
+          documents={documents}
+          documentsById={documentsById}
+          hierarchyPath={hierarchyPath}
+          issueCountByDocumentId={todaySummary.issueCountByDocumentId}
+          onOpenDocument={onDocumentSelected}
+          onDrillDown={onParentSelected}
+          onAddChild={openAddChildModal}
         />
 
         <View style={styles.actionBand}>

@@ -310,7 +310,7 @@ const Map: React.FC<MapProps> = (props) => {
             {primaryOperation ? '조사구역 기록 준비' : '조사구역부터 시작'}
           </Text>
           <Text style={styles.startHierarchy}>
-            조사구역 → 트렌치/조사갱 → 유구군·유구 → 피트·층위
+            조사구역 → 트렌치/조사갱 → 유구군·유구 → 피트·유구 구간·층위
           </Text>
           <View style={styles.startActions}>
             {!primaryOperation ? (

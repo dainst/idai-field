@@ -995,7 +995,7 @@
       }
     },
     "FeatureSegment": {
-      "label": "Pit / feature detail record",
+      "label": "Pit / feature segment",
       "fields": {
         "featurePackage": {
           "label": "Feature package"

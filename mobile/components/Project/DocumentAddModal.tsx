@@ -164,7 +164,7 @@ const DocumentAddModal: React.FC<AddModalProps> = ({
                   바로 만들 수 있는 하위 기록이 없습니다
                 </Text>
                 <Text style={styles.emptyText}>
-                  조사구역, 트렌치, 유구, 피트·층위 흐름에 맞는 상위 기록을 먼저 선택해 주세요.
+                  조사구역, 트렌치, 유구, 피트·유구 구간·층위 흐름에 맞는 상위 기록을 먼저 선택해 주세요.
                 </Text>
               </View>
             )}

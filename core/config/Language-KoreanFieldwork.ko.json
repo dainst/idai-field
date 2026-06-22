@@ -995,7 +995,7 @@
       }
     },
     "FeatureSegment": {
-      "label": "피트·유구 세부 기록",
+      "label": "피트·유구 구간",
       "fields": {
         "featurePackage": {
           "label": "유적·유구 패키지"

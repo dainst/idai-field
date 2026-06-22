@@ -146,6 +146,38 @@ describe('KoreanFieldwork project configuration', () => {
     });
 
 
+    it('supports per-feature Korean period and interpretation type recording', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const valuelistLanguages = configReader.getValuelistsLanguages();
+        const featureForm = config.forms['Feature:default'];
+        const featureGroupForm = config.forms['FeatureGroup:default'];
+        const featureSegmentForm = config.forms['FeatureSegment:default'];
+        const koreanFieldworkGroup = featureForm.groups.find((group: any) => group.name === 'koreanFieldwork');
+
+        expect(featureGroupForm.valuelists.period).toBe('KoreanFieldwork-featurePeriod');
+        expect(featureForm.valuelists.period).toBe('KoreanFieldwork-featurePeriod');
+        expect(featureSegmentForm.valuelists.period).toBe('KoreanFieldwork-featurePeriod');
+        expect(featureForm.fields.featureInterpretationType.inputType).toBe('checkboxes');
+        expect(featureForm.valuelists.featureInterpretationType).toBe('KoreanFieldwork-featureInterpretationType');
+        expect(koreanFieldworkGroup.fields.slice(0, 2)).toEqual(['featurePackage', 'featureInterpretationType']);
+
+        expect(valuelists['KoreanFieldwork-featurePeriod'].values.paleolithic).toBeDefined();
+        expect(valuelists['KoreanFieldwork-featurePeriod'].values.joseon).toBeDefined();
+        expect(valuelists['KoreanFieldwork-featurePeriod'].values.undated).toBeDefined();
+        expect(valuelists['KoreanFieldwork-featureInterpretationType'].values.pitFeature).toBeDefined();
+        expect(valuelists['KoreanFieldwork-featureInterpretationType'].values.cultivationFeature).toBeDefined();
+        expect(valuelists['KoreanFieldwork-featureInterpretationType'].values.featureLineUncertain).toBeDefined();
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-featurePeriod'].values.joseon.label).toBe('조선');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-featureInterpretationType'].values.pitFeature.label)
+            .toBe('수혈유구');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-featureInterpretationType'].values.pitFeature.label)
+            .toBe('Pit feature');
+    });
+
+
     it('keeps the Korean term authority alias sample aligned with configured forms and valuelists', () => {
 
         const configReader = new ConfigReader();

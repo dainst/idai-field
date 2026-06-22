@@ -574,6 +574,9 @@
         "featurePackage": {
           "label": "Feature package"
         },
+        "featureInterpretationType": {
+          "label": "Feature interpretation type"
+        },
         "fieldRecordQuality": {
           "label": "Field record quality"
         },

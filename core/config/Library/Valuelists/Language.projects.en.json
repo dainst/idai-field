@@ -15766,6 +15766,60 @@
     },
     "description": "Korean field notebook package types derived from the supplementary methodology and dictionary readings"
   },
+  "KoreanFieldwork-featurePeriod": {
+    "values": {
+      "paleolithic": { "label": "Paleolithic" },
+      "neolithic": { "label": "Neolithic" },
+      "bronzeAge": { "label": "Bronze Age" },
+      "earlyIronAge": { "label": "Early Iron Age" },
+      "protoThreeKingdoms": { "label": "Proto-Three Kingdoms" },
+      "threeKingdoms": { "label": "Three Kingdoms" },
+      "goguryeo": { "label": "Goguryeo" },
+      "baekje": { "label": "Baekje" },
+      "silla": { "label": "Silla" },
+      "gaya": { "label": "Gaya" },
+      "unifiedSilla": { "label": "Unified Silla" },
+      "balhae": { "label": "Balhae" },
+      "goryeo": { "label": "Goryeo" },
+      "joseon": { "label": "Joseon" },
+      "koreanEmpire": { "label": "Korean Empire" },
+      "japaneseColonial": { "label": "Japanese colonial period" },
+      "liberationKoreanWar": { "label": "Liberation and Korean War period" },
+      "modernContemporary": { "label": "Modern and contemporary" },
+      "mixedPeriod": { "label": "Mixed period" },
+      "undated": { "label": "Undated" }
+    },
+    "description": "Korean archaeological period list for recording the period of each feature exposed on the same stripped surface"
+  },
+  "KoreanFieldwork-featureInterpretationType": {
+    "values": {
+      "dwellingSite": { "label": "Dwelling site" },
+      "surfaceBuilding": { "label": "Surface building" },
+      "pitFeature": { "label": "Pit feature" },
+      "storagePit": { "label": "Storage pit" },
+      "posthole": { "label": "Posthole" },
+      "ditchOrGully": { "label": "Ditch or gully" },
+      "moat": { "label": "Moat or enclosure ditch" },
+      "roadSurface": { "label": "Road or surface" },
+      "embankmentOrFoundation": { "label": "Embankment or foundation" },
+      "drainageOrWaterFacility": { "label": "Drainage or water facility" },
+      "tomb": { "label": "Tomb" },
+      "ritualFeature": { "label": "Ritual feature" },
+      "cultivationFeature": { "label": "Cultivation feature" },
+      "shellMidden": { "label": "Shell midden" },
+      "kiln": { "label": "Kiln" },
+      "furnace": { "label": "Furnace or iron feature" },
+      "productionFeature": { "label": "Production feature" },
+      "fortification": { "label": "Fortification feature" },
+      "beaconFeature": { "label": "Beacon feature" },
+      "paleolithicCulturalLayer": { "label": "Paleolithic cultural layer" },
+      "naturalFeature": { "label": "Natural trace" },
+      "disturbance": { "label": "Disturbance" },
+      "featureLineUncertain": { "label": "Unclear feature line" },
+      "other": { "label": "Other" }
+    },
+    "description": "Initial feature interpretation list for recording the character of each exposed feature"
+  },
   "KoreanFieldwork-surfaceSurveyObservation": {
     "values": {
       "terrainCharacteristic": {

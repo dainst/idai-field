@@ -574,6 +574,9 @@
         "featurePackage": {
           "label": "유적·유구 패키지"
         },
+        "featureInterpretationType": {
+          "label": "유구 성격"
+        },
         "fieldRecordQuality": {
           "label": "현장기록 품질"
         },

@@ -1693,6 +1693,7 @@
         }
       },
       "valuelists": {
+        "period": "KoreanFieldwork-featurePeriod",
         "featurePackage": "KoreanFieldwork-featurePackage",
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
         "settlementSpatialInterpretation": "KoreanFieldwork-settlementSpatialInterpretation",
@@ -1746,6 +1747,10 @@
       "hidden": [],
       "fields": {
         "featurePackage": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "featureInterpretationType": {
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
@@ -2121,7 +2126,9 @@
         }
       },
       "valuelists": {
+        "period": "KoreanFieldwork-featurePeriod",
         "featurePackage": "KoreanFieldwork-featurePackage",
+        "featureInterpretationType": "KoreanFieldwork-featureInterpretationType",
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
         "typologyArgument": "KoreanFieldwork-typologyArgument",
         "chronologyArgument": "KoreanFieldwork-chronologyArgument",
@@ -2236,6 +2243,7 @@
           "name": "koreanFieldwork",
           "fields": [
             "featurePackage",
+            "featureInterpretationType",
             "fieldRecordQuality",
             "typologyArgument",
             "chronologyArgument",
@@ -2482,6 +2490,7 @@
         }
       },
       "valuelists": {
+        "period": "KoreanFieldwork-featurePeriod",
         "featurePackage": "KoreanFieldwork-featurePackage",
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
         "chronologyArgument": "KoreanFieldwork-chronologyArgument",

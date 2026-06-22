@@ -4012,6 +4012,60 @@
     },
     "description": "조사방법론 자료에서 반복 확인된 한국형 야장 유적·업무 패키지 목록"
   },
+  "KoreanFieldwork-featurePeriod": {
+    "values": {
+      "paleolithic": { "label": "구석기" },
+      "neolithic": { "label": "신석기" },
+      "bronzeAge": { "label": "청동기" },
+      "earlyIronAge": { "label": "초기철기" },
+      "protoThreeKingdoms": { "label": "원삼국" },
+      "threeKingdoms": { "label": "삼국" },
+      "goguryeo": { "label": "고구려" },
+      "baekje": { "label": "백제" },
+      "silla": { "label": "신라" },
+      "gaya": { "label": "가야" },
+      "unifiedSilla": { "label": "통일신라" },
+      "balhae": { "label": "발해" },
+      "goryeo": { "label": "고려" },
+      "joseon": { "label": "조선" },
+      "koreanEmpire": { "label": "대한제국" },
+      "japaneseColonial": { "label": "일제강점기" },
+      "liberationKoreanWar": { "label": "해방 전후·한국전쟁기" },
+      "modernContemporary": { "label": "근현대" },
+      "mixedPeriod": { "label": "복합시기" },
+      "undated": { "label": "시기미상" }
+    },
+    "description": "전면 제토 뒤 같은 조사면에 노출된 유구별 시대 판정을 한국 고고학 시대구분으로 기록하기 위한 목록"
+  },
+  "KoreanFieldwork-featureInterpretationType": {
+    "values": {
+      "dwellingSite": { "label": "주거지" },
+      "surfaceBuilding": { "label": "지상식 건물지" },
+      "pitFeature": { "label": "수혈유구" },
+      "storagePit": { "label": "저장공" },
+      "posthole": { "label": "주혈" },
+      "ditchOrGully": { "label": "구·도랑" },
+      "moat": { "label": "환호·해자" },
+      "roadSurface": { "label": "도로·노면" },
+      "embankmentOrFoundation": { "label": "성토·기초" },
+      "drainageOrWaterFacility": { "label": "배수·수리시설" },
+      "tomb": { "label": "분묘" },
+      "ritualFeature": { "label": "의례유구" },
+      "cultivationFeature": { "label": "경작유구" },
+      "shellMidden": { "label": "패총" },
+      "kiln": { "label": "가마" },
+      "furnace": { "label": "노·제철유구" },
+      "productionFeature": { "label": "생산유구" },
+      "fortification": { "label": "성곽시설" },
+      "beaconFeature": { "label": "봉수시설" },
+      "paleolithicCulturalLayer": { "label": "구석기 문화층" },
+      "naturalFeature": { "label": "자연흔" },
+      "disturbance": { "label": "교란" },
+      "featureLineUncertain": { "label": "유구선 불명확" },
+      "other": { "label": "기타" }
+    },
+    "description": "전면 제토면에서 각 유구의 1차 성격 판정을 유구 단위로 남기기 위한 목록"
+  },
   "KoreanFieldwork-surfaceSurveyObservation": {
     "values": {
       "terrainCharacteristic": {

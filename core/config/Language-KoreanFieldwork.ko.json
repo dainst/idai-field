@@ -1343,6 +1343,57 @@
         }
       }
     },
+    "Image": {
+      "fields": {
+        "aerialLayerType": {
+          "label": "항공 레이어 유형"
+        },
+        "aerialGeoreferenceMethod": {
+          "label": "지오리퍼런스 방식"
+        },
+        "aerialLayerAccuracy": {
+          "label": "레이어 정확도"
+        },
+        "aerialControlPoints": {
+          "label": "기준점 JSON"
+        },
+        "aerialCaptureDate": {
+          "label": "촬영일"
+        },
+        "aerialCaptureNote": {
+          "label": "촬영 메모"
+        },
+        "aerialLayerOpacity": {
+          "label": "레이어 투명도"
+        }
+      }
+    },
+    "AerialMapLayer": {
+      "label": "항공 지도 레이어",
+      "fields": {
+        "aerialLayerType": {
+          "label": "항공 레이어 유형"
+        },
+        "aerialGeoreferenceMethod": {
+          "label": "지오리퍼런스 방식"
+        },
+        "aerialLayerAccuracy": {
+          "label": "레이어 정확도"
+        },
+        "aerialControlPoints": {
+          "label": "기준점 JSON"
+        },
+        "aerialCaptureDate": {
+          "label": "촬영일"
+        },
+        "aerialCaptureNote": {
+          "label": "촬영 메모"
+        },
+        "aerialLayerOpacity": {
+          "label": "레이어 투명도"
+        }
+      }
+    },
     "PenMemo": {
       "label": "펜메모",
       "fields": {
@@ -1403,6 +1454,27 @@
         },
         "mediaRights": {
           "label": "매체 권리관리"
+        },
+        "aerialLayerType": {
+          "label": "항공 레이어 유형"
+        },
+        "aerialGeoreferenceMethod": {
+          "label": "지오리퍼런스 방식"
+        },
+        "aerialLayerAccuracy": {
+          "label": "레이어 정확도"
+        },
+        "aerialControlPoints": {
+          "label": "기준점 JSON"
+        },
+        "aerialCaptureDate": {
+          "label": "촬영일"
+        },
+        "aerialCaptureNote": {
+          "label": "촬영 메모"
+        },
+        "aerialLayerOpacity": {
+          "label": "레이어 투명도"
         }
       }
     }

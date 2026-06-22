@@ -15860,6 +15860,34 @@
     },
     "description": "Transcription status for preserving pen memo originals while tracking automatic recognition and human review"
   },
+  "KoreanFieldwork-aerialLayerType": {
+    "values": {
+      "orthomosaic": { "label": "Orthomosaic" },
+      "verticalDronePhoto": { "label": "Vertical drone photo" },
+      "obliqueReferencePhoto": { "label": "Oblique reference photo" },
+      "fieldCompositeReferenceMap": { "label": "Field composite reference map" }
+    },
+    "description": "Type of aerial or drone image used as a field map background layer"
+  },
+  "KoreanFieldwork-aerialGeoreferenceMethod": {
+    "values": {
+      "embeddedCoordinates": { "label": "Embedded coordinates" },
+      "worldFile": { "label": "World file" },
+      "manualControlPoints": { "label": "Manual control points" },
+      "boundaryAlignment": { "label": "Boundary alignment" },
+      "externalGisCorrection": { "label": "External GIS correction" }
+    },
+    "description": "How an aerial image background layer was aligned to map coordinates"
+  },
+  "KoreanFieldwork-aerialLayerAccuracy": {
+    "values": {
+      "referenceOnly": { "label": "Reference only" },
+      "approximateAlignment": { "label": "Approximate alignment" },
+      "fieldControlPointAligned": { "label": "Field control point aligned" },
+      "surveyedAlignment": { "label": "Surveyed alignment" }
+    },
+    "description": "Expected spatial reliability of an aerial image background layer"
+  },
   "KoreanFieldwork-surfaceSurveyObservation": {
     "values": {
       "terrainCharacteristic": {

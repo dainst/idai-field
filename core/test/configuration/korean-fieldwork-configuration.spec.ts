@@ -103,6 +103,7 @@ describe('KoreanFieldwork project configuration', () => {
             'Sample',
             'Drawing',
             'Photo',
+            'AerialMapLayer',
             'PenMemo',
             'FieldRecordQualityReview',
             'SourceEvidenceIndex',
@@ -122,6 +123,7 @@ describe('KoreanFieldwork project configuration', () => {
             'Image:default',
             'Drawing:default',
             'Photo:default',
+            'AerialMapLayer',
             'PenMemo',
             'FieldRecordQualityReview',
             'SourceEvidenceIndex',
@@ -141,6 +143,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(template.configuration.forms.TermAuthority.parent).toBe('FeatureGroup');
         expect(template.configuration.forms.TermAlias.parent).toBe('TermAuthority');
         expect(template.configuration.forms.PenMemo.parent).toBe('Image');
+        expect(template.configuration.forms.AerialMapLayer.parent).toBe('Image');
 
         expectedTemplateForms.forEach(formName => {
             expect(template.configuration.forms[formName]).toBeDefined();
@@ -231,6 +234,62 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('전사 대기');
         expect(languages.ko.categories.PenMemo.label).toBe('펜메모');
         expect(languages.en.categories.PenMemo.label).toBe('Pen memo');
+    });
+
+
+    it('supports aerial map layer metadata for drone and orthomosaic backgrounds', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const languages = configReader.getConfigLanguages();
+        const valuelistLanguages = configReader.getValuelistsLanguages();
+        const imageForm = config.forms['Image:default'];
+        const photoForm = config.forms['Photo:default'];
+        const aerialLayerForm = config.forms.AerialMapLayer;
+        const aerialFields = [
+            'aerialLayerType',
+            'aerialGeoreferenceMethod',
+            'aerialLayerAccuracy',
+            'aerialControlPoints',
+            'aerialCaptureDate',
+            'aerialCaptureNote',
+            'aerialLayerOpacity'
+        ];
+
+        expect(aerialLayerForm.parent).toBe('Image');
+        expect(config.order).toContain('AerialMapLayer');
+        expect(aerialLayerForm.fields.aerialLayerType.inputType).toBe('dropdown');
+        expect(aerialLayerForm.fields.aerialLayerType.mandatory).toBe(true);
+        expect(aerialLayerForm.fields.aerialControlPoints.inputType).toBe('text');
+        expect(aerialLayerForm.fields.aerialLayerOpacity.inputType).toBe('unsignedFloat');
+        expect(aerialLayerForm.valuelists.aerialLayerType).toBe('KoreanFieldwork-aerialLayerType');
+        expect(aerialLayerForm.valuelists.aerialGeoreferenceMethod)
+            .toBe('KoreanFieldwork-aerialGeoreferenceMethod');
+        expect(aerialLayerForm.valuelists.aerialLayerAccuracy)
+            .toBe('KoreanFieldwork-aerialLayerAccuracy');
+
+        aerialFields.forEach(fieldName => {
+            expect(imageForm.fields[fieldName]).toBeDefined();
+            expect(photoForm.fields[fieldName]).toBeDefined();
+            expect(aerialLayerForm.groups.find((group: any) => group.name === 'koreanFieldwork').fields)
+                .toContain(fieldName);
+        });
+        expect(aerialLayerForm.groups.find((group: any) => group.name === 'workflow').fields)
+            .toContain('isMapLayerOf');
+
+        expect(valuelists['KoreanFieldwork-aerialLayerType'].values.orthomosaic).toBeDefined();
+        expect(valuelists['KoreanFieldwork-aerialLayerType'].values.obliqueReferencePhoto).toBeDefined();
+        expect(valuelists['KoreanFieldwork-aerialGeoreferenceMethod'].values.embeddedCoordinates).toBeDefined();
+        expect(valuelists['KoreanFieldwork-aerialGeoreferenceMethod'].values.manualControlPoints).toBeDefined();
+        expect(valuelists['KoreanFieldwork-aerialLayerAccuracy'].values.referenceOnly).toBeDefined();
+        expect(valuelists['KoreanFieldwork-aerialLayerAccuracy'].values.surveyedAlignment).toBeDefined();
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-aerialLayerType'].values.orthomosaic.label)
+            .toBe('정사영상');
+        expect(valuelistLanguages.projects.en['KoreanFieldwork-aerialGeoreferenceMethod']
+            .values.manualControlPoints.label).toBe('Manual control points');
+        expect(languages.ko.categories.AerialMapLayer.label).toBe('항공 지도 레이어');
+        expect(languages.en.categories.AerialMapLayer.label).toBe('Aerial map layer');
     });
 
 

@@ -15,6 +15,7 @@ import { UploadStatus } from './upload-status';
 import { ImageManipulationErrors } from '../../../services/imagestore/manipulation/image-manipulation';
 import { ImageMetadata, extendMetadataByFileData } from '../../../services/imagestore/file-metadata';
 import { getGeoreferenceFromGeotiff } from '../georeference/geotiff-import';
+import { createGeoreferenceFromControlPoints } from '../georeference/control-point-georeference';
 import { createDisplayVariant } from '../../../services/imagestore/manipulation/create-display-variant';
 import { ImagesState } from '../overview/view/images-state';
 import { getAsynchronousFs } from '../../../services/get-asynchronous-fs';
@@ -243,6 +244,7 @@ export class ImageUploader {
     private async saveWldFile(filePath: string, document: Document) {
 
         document.resource.georeference = await readWldFile(filePath, document);
+        this.setResourceFieldIfConfigured(document, 'aerialGeoreferenceMethod', 'worldFile');
         await this.relationsManager.update(document);
     }
 
@@ -348,7 +350,21 @@ export class ImageUploader {
         const georeference: ImageGeoreference = ExtensionUtil.getExtension(fileName).includes('tif')
             ? await getGeoreferenceFromGeotiff(buffer)
             : undefined;
-        if (georeference) document.resource.georeference = georeference;
+        if (georeference) {
+            document.resource.georeference = georeference;
+            this.setResourceFieldIfConfigured(document, 'aerialGeoreferenceMethod', 'embeddedCoordinates');
+        } else if (extendedMetadata.aerialControlPoints && extendedMetadata.width && extendedMetadata.height) {
+            const controlPointGeoreference: ImageGeoreference|undefined = createGeoreferenceFromControlPoints(
+                extendedMetadata.aerialControlPoints,
+                extendedMetadata.width,
+                extendedMetadata.height
+            );
+            if (controlPointGeoreference) {
+                document.resource.georeference = controlPointGeoreference;
+                this.setResourceFieldIfConfigured(document, 'aerialGeoreferenceMethod', 'manualControlPoints');
+                this.setResourceFieldIfConfigured(document, 'aerialLayerAccuracy', 'fieldControlPointAligned');
+            }
+        }
 
         return await this.relationsManager.update(document);
     }
@@ -374,6 +390,28 @@ export class ImageUploader {
         }
         if (draughtsmenField && extendedMetadata.draughtsmen?.length) {
             document.resource.draughtsmen = extendedMetadata.draughtsmen;
+        }
+
+        this.setResourceFieldIfConfigured(document, 'aerialLayerType', extendedMetadata.aerialLayerType);
+        this.setResourceFieldIfConfigured(document, 'aerialGeoreferenceMethod', extendedMetadata.aerialGeoreferenceMethod);
+        this.setResourceFieldIfConfigured(document, 'aerialLayerAccuracy', extendedMetadata.aerialLayerAccuracy);
+        this.setResourceFieldIfConfigured(document, 'aerialControlPoints', extendedMetadata.aerialControlPoints);
+        this.setResourceFieldIfConfigured(document, 'aerialCaptureDate', extendedMetadata.aerialCaptureDate);
+        this.setResourceFieldIfConfigured(document, 'aerialCaptureNote', extendedMetadata.aerialCaptureNote);
+        this.setResourceFieldIfConfigured(document, 'aerialLayerOpacity', extendedMetadata.aerialLayerOpacity);
+    }
+
+
+    private setResourceFieldIfConfigured(document: Document|NewImageDocument,
+                                         fieldName: string,
+                                         value: any) {
+
+        if (value === undefined || value === null || value === '') return;
+
+        const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
+        if (!category) return;
+        if (CategoryForm.getField(category, fieldName)) {
+            (document.resource as any)[fieldName] = value;
         }
     }
 }

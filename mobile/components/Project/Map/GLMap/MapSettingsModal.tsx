@@ -24,8 +24,9 @@ interface MapSettingsModalProps {
   onClose: () => void;
   pointRadius: number;
   onChangePointRadius: (radius: number) => void;
-  layerInfo: { doc: Document; visible: boolean }[];
+  layerInfo: { doc: Document; visible: boolean; opacity: number }[];
   showLayer: (docId: string) => void;
+  setLayerOpacity: (docId: string, opacity: number) => void;
   focusMapOnLayer: (docId: string) => void;
 }
 
@@ -35,43 +36,61 @@ const MapSettingsModal: React.FC<MapSettingsModalProps> = ({
   onChangePointRadius,
   layerInfo,
   showLayer,
+  setLayerOpacity,
   focusMapOnLayer,
 }) => {
   const renderItem = ({
     item,
   }: {
-    item: { doc: Document; visible: boolean };
+    item: { doc: Document; visible: boolean; opacity: number };
   }) => (
-    <Row style={{ margin: 2 }}>
-      <TouchableOpacity
-        style={{ marginRight: 5 }}
-        onPress={() => showLayer(item.doc.resource.id)}
-      >
-        <Ionicons
-          name={item.visible ? 'eye' : 'eye-off'}
-          size={24}
-          color={ICON_COLOR}
-        />
-      </TouchableOpacity>
-      {item.visible && (
-        <TouchableOpacity onPress={() => focusMapOnLayer(item.doc.resource.id)}>
-          <MaterialIcons
-            name="center-focus-strong"
-            size={ICON_SIZE}
+    <View style={styles.layerRow}>
+      <Row style={{ margin: 2 }}>
+        <TouchableOpacity
+          style={{ marginRight: 5 }}
+          onPress={() => showLayer(item.doc.resource.id)}
+        >
+          <Ionicons
+            name={item.visible ? 'eye' : 'eye-off'}
+            size={24}
             color={ICON_COLOR}
           />
         </TouchableOpacity>
-      )}
-      <Text
-        style={{
-          fontSize: 18,
-          marginLeft: !item.visible ? ICON_SIZE : 0,
-          padding: 2,
-        }}
-      >
-        {item.doc.resource.id}
-      </Text>
-    </Row>
+        {item.visible && (
+          <TouchableOpacity
+            onPress={() => focusMapOnLayer(item.doc.resource.id)}
+          >
+            <MaterialIcons
+              name="center-focus-strong"
+              size={ICON_SIZE}
+              color={ICON_COLOR}
+            />
+          </TouchableOpacity>
+        )}
+        <Text
+          style={{
+            fontSize: 18,
+            marginLeft: !item.visible ? ICON_SIZE : 0,
+            padding: 2,
+          }}
+        >
+          {item.doc.resource.identifier || item.doc.resource.id}
+        </Text>
+      </Row>
+      <Slider
+        style={styles.layerOpacitySlider}
+        minimumValue={0}
+        maximumValue={1}
+        minimumTrackTintColor="#5572a1"
+        maximumTrackTintColor="gray"
+        thumbTintColor={colors.primary}
+        value={item.opacity}
+        step={0.05}
+        onValueChange={(opacity) =>
+          setLayerOpacity(item.doc.resource.id, opacity)
+        }
+      />
+    </View>
   );
 
   return (
@@ -162,6 +181,14 @@ const styles = StyleSheet.create({
   },
   sectionHeader: {
     fontSize: 18,
+  },
+  layerRow: {
+    marginVertical: 4,
+  },
+  layerOpacitySlider: {
+    width: 220,
+    height: 32,
+    marginLeft: ICON_SIZE + 8,
   },
 });
 

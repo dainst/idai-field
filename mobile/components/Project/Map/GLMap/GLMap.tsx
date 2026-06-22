@@ -47,6 +47,8 @@ const cameraDefaultPos = {
   z: 5,
 };
 
+type LayerInfo = { doc: Document; visible: boolean; opacity: number };
+
 interface GLMapProps {
   setHighlightedDocId: (docId: string) => void;
   highlightedDocId: string | undefined;
@@ -89,7 +91,7 @@ const GLMap: React.FC<GLMapProps> = ({
     getMapSettings(preferences.currentProject).pointRadius
   );
   const [layerInfo, setLayerInfo] = useState<
-    { doc: Document; visible: boolean }[]
+    LayerInfo[]
   >([]);
 
   const camera = useRef<OrthographicCamera>(
@@ -147,15 +149,75 @@ const GLMap: React.FC<GLMapProps> = ({
     layer.visible = layerInfo[layerDocIndex].visible ? false : true;
     setLayerInfo(
       layerInfo.map((item, i) =>
-        i !== layerDocIndex ? item : { doc: item.doc, visible: !item.visible }
+        i !== layerDocIndex ? item : { ...item, visible: !item.visible }
+      )
+    );
+    renderScene();
+  };
+
+  const getLayerOpacity = useCallback((doc: Document): number => {
+    const rawOpacity = (doc.resource as any).aerialLayerOpacity;
+    const parsedOpacity =
+      typeof rawOpacity === 'number' ? rawOpacity : parseFloat(rawOpacity);
+
+    if (!isNaN(parsedOpacity)) return Math.max(0, Math.min(1, parsedOpacity));
+    return doc.resource.category === 'AerialMapLayer' ||
+      (doc.resource as any).aerialLayerType
+      ? 0.65
+      : 1;
+  }, []);
+
+  const getLayerImageUri = useCallback((doc: Document): string | undefined => {
+    const resource = doc.resource as any;
+
+    return (
+      resource.aerialLayerImageUri ||
+      resource.displayImageUri ||
+      resource.imageUri ||
+      resource.localImageUri ||
+      resource.fileUri ||
+      resource.uri
+    );
+  }, []);
+
+  const setLayerOpacity = (docId: string, opacity: number) => {
+    const clampedOpacity = Math.max(0, Math.min(1, opacity));
+    const layer = scene.getObjectByProperty('uuid', docId) as any;
+    if (layer?.material) {
+      layer.material.opacity = clampedOpacity;
+      layer.material.transparent = true;
+      layer.material.needsUpdate = true;
+    }
+    setLayerInfo((currentLayerInfo) =>
+      currentLayerInfo.map((item) =>
+        item.doc.resource.id !== docId
+          ? item
+          : {
+              ...item,
+              opacity: clampedOpacity,
+              doc: {
+                ...item.doc,
+                resource: {
+                  ...item.doc.resource,
+                  aerialLayerOpacity: clampedOpacity,
+                },
+              },
+            }
       )
     );
     renderScene();
   };
 
   useEffect(
-    () => setLayerInfo(layerDocuments.map((doc) => ({ doc, visible: false }))),
-    [layerDocuments]
+    () =>
+      setLayerInfo(
+        layerDocuments.map((doc) => ({
+          doc,
+          visible: false,
+          opacity: getLayerOpacity(doc),
+        }))
+      ),
+    [layerDocuments, getLayerOpacity]
   );
 
   useEffect(() => {
@@ -174,7 +236,11 @@ const GLMap: React.FC<GLMapProps> = ({
       addDocumentToScene(doc, documentToWorldMatrix, scene, config)
     );
     layerDocuments.forEach((doc) =>
-      addLayerToScene(doc, documentToWorldMatrix, scene)
+      addLayerToScene(doc, documentToWorldMatrix, scene, {
+        getLayerImageUri,
+        getLayerOpacity,
+        onTextureLoaded: renderScene,
+      })
     );
     if (location) {
       addlocationPointToScene(documentToWorldMatrix, scene, [
@@ -192,6 +258,8 @@ const GLMap: React.FC<GLMapProps> = ({
     pointRadius,
     layerDocuments,
     location,
+    getLayerImageUri,
+    getLayerOpacity,
   ]);
 
   useEffect(() => {
@@ -304,6 +372,7 @@ const GLMap: React.FC<GLMapProps> = ({
           onChangePointRadius={(radius: number) => setPointRadius(radius)}
           layerInfo={layerInfo}
           showLayer={showLayer}
+          setLayerOpacity={setLayerOpacity}
           focusMapOnLayer={focusMapOnDocumentId}
         />
       )}

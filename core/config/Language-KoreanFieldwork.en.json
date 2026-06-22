@@ -1343,6 +1343,57 @@
         }
       }
     },
+    "Image": {
+      "fields": {
+        "aerialLayerType": {
+          "label": "Aerial layer type"
+        },
+        "aerialGeoreferenceMethod": {
+          "label": "Georeference method"
+        },
+        "aerialLayerAccuracy": {
+          "label": "Layer accuracy"
+        },
+        "aerialControlPoints": {
+          "label": "Control points JSON"
+        },
+        "aerialCaptureDate": {
+          "label": "Capture date"
+        },
+        "aerialCaptureNote": {
+          "label": "Capture note"
+        },
+        "aerialLayerOpacity": {
+          "label": "Layer opacity"
+        }
+      }
+    },
+    "AerialMapLayer": {
+      "label": "Aerial map layer",
+      "fields": {
+        "aerialLayerType": {
+          "label": "Aerial layer type"
+        },
+        "aerialGeoreferenceMethod": {
+          "label": "Georeference method"
+        },
+        "aerialLayerAccuracy": {
+          "label": "Layer accuracy"
+        },
+        "aerialControlPoints": {
+          "label": "Control points JSON"
+        },
+        "aerialCaptureDate": {
+          "label": "Capture date"
+        },
+        "aerialCaptureNote": {
+          "label": "Capture note"
+        },
+        "aerialLayerOpacity": {
+          "label": "Layer opacity"
+        }
+      }
+    },
     "PenMemo": {
       "label": "Pen memo",
       "fields": {
@@ -1403,6 +1454,27 @@
         },
         "mediaRights": {
           "label": "Media rights management"
+        },
+        "aerialLayerType": {
+          "label": "Aerial layer type"
+        },
+        "aerialGeoreferenceMethod": {
+          "label": "Georeference method"
+        },
+        "aerialLayerAccuracy": {
+          "label": "Layer accuracy"
+        },
+        "aerialControlPoints": {
+          "label": "Control points JSON"
+        },
+        "aerialCaptureDate": {
+          "label": "Capture date"
+        },
+        "aerialCaptureNote": {
+          "label": "Capture note"
+        },
+        "aerialLayerOpacity": {
+          "label": "Layer opacity"
         }
       }
     }

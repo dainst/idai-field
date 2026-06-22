@@ -8073,6 +8073,38 @@
           <context context-type="linenumber">109,115</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="imageUpload.imageMetadataModal.aerialLayerUpload" datatype="html">
+        <source>Als Drohnen-/Luftbild-Kartenebene importieren</source>
+        <target state="translated">Import as drone/aerial map layer</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/upload/image-upload-metadata-modal.html</context>
+          <context context-type="linenumber">38,72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageUpload.imageMetadataModal.aerialLayerType" datatype="html">
+        <source>Ebenentyp</source>
+        <target state="translated">Layer type</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/upload/image-upload-metadata-modal.html</context>
+          <context context-type="linenumber">38,72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageUpload.imageMetadataModal.aerialLayerAccuracy" datatype="html">
+        <source>Genauigkeit</source>
+        <target state="translated">Accuracy</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/upload/image-upload-metadata-modal.html</context>
+          <context context-type="linenumber">38,72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageUpload.imageMetadataModal.aerialLayerOpacity" datatype="html">
+        <source>Deckkraft</source>
+        <target state="translated">Opacity</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/upload/image-upload-metadata-modal.html</context>
+          <context context-type="linenumber">38,72</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="imageUpload.imageMetadataModal.readFromMetadata" datatype="html">
         <source>Aus Bild-Metadaten auslesen</source>
         <target state="translated">Görüntü meta verilerinden oku</target>

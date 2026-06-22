@@ -28,6 +28,60 @@
                      [selectedCategories]="getSelectedCategoryNames()"
                      (onCategoryPicked)="setCategory($event)"></category-picker>
 
+    <div *ngIf="hasAerialLayerSupport()" class="form-check mt-3">
+        <label class="form-check-label">
+            <input id="aerialLayerUploadCheckbox"
+                   class="form-check-input"
+                   type="checkbox"
+                   [checked]="isAerialLayerUpload"
+                   (change)="toggleAerialLayerUpload()">
+            <span i18n="@@imageUpload.imageMetadataModal.aerialLayerUpload">
+                Als Drohnen-/Luftbild-Kartenebene importieren
+            </span>
+        </label>
+    </div>
+
+    <div *ngIf="isAerialLayerUpload" class="mt-2">
+        <div class="row g-2">
+            <div class="col">
+                <label class="form-label" for="aerialLayerTypeSelect"
+                       i18n="@@imageUpload.imageMetadataModal.aerialLayerType">Ebenentyp</label>
+                <select id="aerialLayerTypeSelect"
+                        class="form-control"
+                        [value]="metadata.aerialLayerType"
+                        (change)="setAerialLayerType($any($event.target).value)">
+                    <option *ngFor="let option of getAerialLayerTypeOptions()" [value]="option.value">
+                        {{option.label}}
+                    </option>
+                </select>
+            </div>
+            <div class="col">
+                <label class="form-label" for="aerialLayerAccuracySelect"
+                       i18n="@@imageUpload.imageMetadataModal.aerialLayerAccuracy">Genauigkeit</label>
+                <select id="aerialLayerAccuracySelect"
+                        class="form-control"
+                        [value]="metadata.aerialLayerAccuracy"
+                        (change)="setAerialLayerAccuracy($any($event.target).value)">
+                    <option *ngFor="let option of getAerialLayerAccuracyOptions()" [value]="option.value">
+                        {{option.label}}
+                    </option>
+                </select>
+            </div>
+            <div class="col">
+                <label class="form-label" for="aerialLayerOpacityInput"
+                       i18n="@@imageUpload.imageMetadataModal.aerialLayerOpacity">Deckkraft</label>
+                <input id="aerialLayerOpacityInput"
+                       class="form-control"
+                       type="number"
+                       min="0"
+                       max="1"
+                       step="0.05"
+                       [value]="metadata.aerialLayerOpacity"
+                       (change)="setAerialLayerOpacity($any($event.target).value)">
+            </div>
+        </div>
+    </div>
+
     <div *ngIf="isFieldConfigured('Image', 'draughtsmen') && projectStaff.length > 0">
         <div id="draughtsmen-section-title">
             {{getFieldLabel('Image', 'draughtsmen')}}

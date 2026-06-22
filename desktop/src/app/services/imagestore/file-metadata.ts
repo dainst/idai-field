@@ -10,7 +10,14 @@ export type ImageMetadata = {
     height?: number,
     width?: number,
     draughtsmen: string[],
-    date?: Date
+    date?: Date,
+    aerialLayerType?: string,
+    aerialGeoreferenceMethod?: string,
+    aerialLayerAccuracy?: string,
+    aerialControlPoints?: string,
+    aerialCaptureDate?: string,
+    aerialCaptureNote?: string,
+    aerialLayerOpacity?: number
 }
 
 

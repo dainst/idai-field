@@ -36706,6 +36706,56 @@
       "failed"
     ]
   },
+  "KoreanFieldwork-aerialLayerType": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-22",
+    "values": {
+      "orthomosaic": {},
+      "verticalDronePhoto": {},
+      "obliqueReferencePhoto": {},
+      "fieldCompositeReferenceMap": {}
+    },
+    "order": [
+      "orthomosaic",
+      "verticalDronePhoto",
+      "obliqueReferencePhoto",
+      "fieldCompositeReferenceMap"
+    ]
+  },
+  "KoreanFieldwork-aerialGeoreferenceMethod": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-22",
+    "values": {
+      "embeddedCoordinates": {},
+      "worldFile": {},
+      "manualControlPoints": {},
+      "boundaryAlignment": {},
+      "externalGisCorrection": {}
+    },
+    "order": [
+      "embeddedCoordinates",
+      "worldFile",
+      "manualControlPoints",
+      "boundaryAlignment",
+      "externalGisCorrection"
+    ]
+  },
+  "KoreanFieldwork-aerialLayerAccuracy": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-22",
+    "values": {
+      "referenceOnly": {},
+      "approximateAlignment": {},
+      "fieldControlPointAligned": {},
+      "surveyedAlignment": {}
+    },
+    "order": [
+      "referenceOnly",
+      "approximateAlignment",
+      "fieldControlPointAligned",
+      "surveyedAlignment"
+    ]
+  },
   "KoreanFieldwork-surfaceSurveyObservation": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

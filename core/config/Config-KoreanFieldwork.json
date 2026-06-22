@@ -3272,7 +3272,67 @@
     },
     "Image:default": {
       "hidden": [],
-      "fields": {}
+      "fields": {
+        "aerialLayerType": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "aerialGeoreferenceMethod": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "aerialLayerAccuracy": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "aerialControlPoints": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "aerialCaptureDate": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "aerialCaptureNote": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "aerialLayerOpacity": {
+          "inputType": "unsignedFloat",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "aerialLayerType": "KoreanFieldwork-aerialLayerType",
+        "aerialGeoreferenceMethod": "KoreanFieldwork-aerialGeoreferenceMethod",
+        "aerialLayerAccuracy": "KoreanFieldwork-aerialLayerAccuracy"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "draughtsmen", "processor", "campaign", "date"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["depicts", "isMapLayerOf", "isSubjectOf", "isResultOf"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "height", "width", "originalFilename", "literature", "imageRights"]
+        },
+        {
+          "name": "koreanFieldwork",
+          "fields": [
+            "aerialLayerType",
+            "aerialGeoreferenceMethod",
+            "aerialLayerAccuracy",
+            "aerialControlPoints",
+            "aerialCaptureDate",
+            "aerialCaptureNote",
+            "aerialLayerOpacity"
+          ]
+        }
+      ]
     },
     "Drawing:default": {
       "hidden": [],
@@ -3347,6 +3407,34 @@
         },
         "mediaRights": {
           "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "aerialLayerType": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "aerialGeoreferenceMethod": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "aerialLayerAccuracy": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "aerialControlPoints": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "aerialCaptureDate": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "aerialCaptureNote": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "aerialLayerOpacity": {
+          "inputType": "unsignedFloat",
           "constraintIndexed": true
         }
       },
@@ -3470,7 +3558,10 @@
         "gpsPhotoLinkRecord": "KoreanFieldwork-gpsPhotoLinkRecord",
         "reportCrossCheck": "KoreanFieldwork-reportCrossCheck",
         "accessControlTag": "KoreanFieldwork-accessControlTag",
-        "mediaRights": "KoreanFieldwork-mediaRights"
+        "mediaRights": "KoreanFieldwork-mediaRights",
+        "aerialLayerType": "KoreanFieldwork-aerialLayerType",
+        "aerialGeoreferenceMethod": "KoreanFieldwork-aerialGeoreferenceMethod",
+        "aerialLayerAccuracy": "KoreanFieldwork-aerialLayerAccuracy"
       },
       "groups": [
         {
@@ -3479,7 +3570,7 @@
         },
         {
           "name": "workflow",
-          "fields": ["isSubjectOf", "isResultOf"]
+          "fields": ["depicts", "isMapLayerOf", "isSubjectOf", "isResultOf"]
         },
         {
           "name": "properties",
@@ -3501,7 +3592,81 @@
             "gpsPhotoLinkRecord",
             "reportCrossCheck",
             "accessControlTag",
-            "mediaRights"
+            "mediaRights",
+            "aerialLayerType",
+            "aerialGeoreferenceMethod",
+            "aerialLayerAccuracy",
+            "aerialControlPoints",
+            "aerialCaptureDate",
+            "aerialCaptureNote",
+            "aerialLayerOpacity"
+          ]
+        }
+      ]
+    },
+    "AerialMapLayer": {
+      "parent": "Image",
+      "color": "#4f8f8b",
+      "hidden": [],
+      "fields": {
+        "aerialLayerType": {
+          "inputType": "dropdown",
+          "mandatory": true,
+          "constraintIndexed": true
+        },
+        "aerialGeoreferenceMethod": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "aerialLayerAccuracy": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "aerialControlPoints": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "aerialCaptureDate": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "aerialCaptureNote": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "aerialLayerOpacity": {
+          "inputType": "unsignedFloat",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "aerialLayerType": "KoreanFieldwork-aerialLayerType",
+        "aerialGeoreferenceMethod": "KoreanFieldwork-aerialGeoreferenceMethod",
+        "aerialLayerAccuracy": "KoreanFieldwork-aerialLayerAccuracy"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "draughtsmen", "processor", "campaign", "date", "isSameAs"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["depicts", "isMapLayerOf", "isSubjectOf", "isResultOf"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "height", "width", "originalFilename", "literature", "imageRights"]
+        },
+        {
+          "name": "koreanFieldwork",
+          "fields": [
+            "aerialLayerType",
+            "aerialGeoreferenceMethod",
+            "aerialLayerAccuracy",
+            "aerialControlPoints",
+            "aerialCaptureDate",
+            "aerialCaptureNote",
+            "aerialLayerOpacity"
           ]
         }
       ]
@@ -3587,6 +3752,7 @@
     "Sample",
     "Drawing",
     "Photo",
+    "AerialMapLayer",
     "PenMemo",
     "Image",
     "TypeCatalog",

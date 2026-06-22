@@ -33,6 +33,7 @@ export class ImageUploadMetadataModalComponent implements OnInit {
     public topLevelCategories: Array<CategoryForm>;
     public projectStaff: string[];
     public metadata: ImageMetadata;
+    public isAerialLayerUpload: boolean = false;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -58,6 +59,8 @@ export class ImageUploadMetadataModalComponent implements OnInit {
 
     public getSelectedCategoryNames = () => [this.metadata.category];
 
+    public hasAerialLayerSupport = () => this.projectConfiguration.getCategory('AerialMapLayer') !== undefined;
+
 
     ngOnInit() {
         
@@ -76,6 +79,58 @@ export class ImageUploadMetadataModalComponent implements OnInit {
     public setCategory(category: CategoryForm) {
 
         this.metadata.category = category.name;
+    }
+
+
+    public toggleAerialLayerUpload() {
+
+        this.isAerialLayerUpload = !this.isAerialLayerUpload;
+        if (this.isAerialLayerUpload) {
+            if (this.hasAerialLayerSupport()) this.metadata.category = 'AerialMapLayer';
+            this.metadata.aerialLayerType = this.metadata.aerialLayerType ?? 'orthomosaic';
+            this.metadata.aerialGeoreferenceMethod = this.metadata.aerialGeoreferenceMethod ?? 'manualControlPoints';
+            this.metadata.aerialLayerAccuracy = this.metadata.aerialLayerAccuracy ?? 'approximateAlignment';
+            this.metadata.aerialLayerOpacity = this.metadata.aerialLayerOpacity ?? 0.65;
+        }
+    }
+
+
+    public setAerialLayerType(value: string) {
+
+        this.metadata.aerialLayerType = value;
+    }
+
+
+    public setAerialLayerAccuracy(value: string) {
+
+        this.metadata.aerialLayerAccuracy = value;
+    }
+
+
+    public setAerialLayerOpacity(value: string) {
+
+        const parsed = parseFloat(value);
+        this.metadata.aerialLayerOpacity = isNaN(parsed) ? undefined : Math.max(0, Math.min(1, parsed));
+    }
+
+
+    public getAerialLayerTypeOptions = () => this.getValuelistOptions('aerialLayerType');
+
+    public getAerialLayerAccuracyOptions = () => this.getValuelistOptions('aerialLayerAccuracy');
+
+
+    private getValuelistOptions(fieldName: string): { value: string, label: string }[] {
+
+        const category: CategoryForm = this.projectConfiguration.getCategory(this.metadata.category)
+            ?? this.projectConfiguration.getCategory('AerialMapLayer');
+        const valuelist: Valuelist|undefined = CategoryForm.getField(category, fieldName)?.valuelist;
+
+        if (!valuelist) return [];
+
+        return (valuelist.order ?? Object.keys(valuelist.values)).map(value => ({
+            value,
+            label: this.labels.getValueLabel(valuelist, value)
+        }));
     }
 
 

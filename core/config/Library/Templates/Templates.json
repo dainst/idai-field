@@ -593,6 +593,11 @@
           "hidden": [],
           "fields": {}
         },
+        "AerialMapLayer": {
+          "parent": "Image",
+          "hidden": [],
+          "fields": {}
+        },
         "PenMemo": {
           "parent": "Image",
           "hidden": [],
@@ -631,6 +636,7 @@
         "Sample",
         "Drawing",
         "Photo",
+        "AerialMapLayer",
         "PenMemo",
         "FieldRecordQualityReview",
         "SourceEvidenceIndex",

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import { TextureLoader } from 'expo-three';
 import { Position } from 'geojson';
 import {
@@ -12,6 +11,7 @@ import { Matrix4 } from 'react-native-redash';
 import {
   BufferGeometry,
   CircleGeometry,
+  DoubleSide,
   Line,
   LineBasicMaterial,
   Mesh,
@@ -25,6 +25,7 @@ import {
   Vector2,
 } from 'three';
 import {
+  defaultPointRadius,
   highlightedColor,
   highlightedStrokeWidth,
   lineRenderingOrder,
@@ -33,7 +34,12 @@ import {
 } from '../constants';
 import { getLayerCoordinates, processTransform2d } from '../cs-transform';
 import { arrayDim } from '../cs-transform/document-to-world/utils/cs-transform-utils';
-import { defaultPointRadius } from '../constants';
+
+export interface LayerRenderOptions {
+  getLayerImageUri?: (doc: Document) => string | undefined;
+  getLayerOpacity?: (doc: Document) => number;
+  onTextureLoaded?: () => void;
+}
 
 interface ShapeFunction<
   T extends Position | Position[] | Position[][] | Position[][][]
@@ -454,7 +460,8 @@ const getUserData = (docId: string, scene: Scene): ObjectData | undefined =>
 export const addLayerToScene = (
   doc: Document,
   documentToWorldMatrix: Matrix4,
-  scene: Scene
+  scene: Scene,
+  options?: LayerRenderOptions
 ): void => {
   const georeference = doc.resource.georeference as ImageGeoreference;
   if (!georeference) throw new Error('No georeference!');
@@ -495,16 +502,22 @@ export const addLayerToScene = (
   const height = new Vector2(...topLeftTrans).distanceTo(
     new Vector2(...bottomLeftTrans)
   );
-  //TODO: Change TextureLoader to also load images from image server
-  const texture = new TextureLoader().load(
-    doc.resource.id === 'o25'
-      ? require('@/assets/images/o25.png')
-      : require('@/assets/images/o26.png')
-  );
-  texture.repeat.set(Math.pow(width, -1), Math.pow(height, -1));
-  texture.offset.set(-bottomLeftTrans[0] / width, -bottomLeftTrans[1] / height);
-
-  const material = new MeshBasicMaterial({ map: texture });
+  const opacity = options?.getLayerOpacity
+    ? options.getLayerOpacity(doc)
+    : getResourceLayerOpacity(doc);
+  const imageUri = options?.getLayerImageUri
+    ? options.getLayerImageUri(doc)
+    : getResourceLayerImageUri(doc);
+  const material = imageUri
+    ? createTextureMaterial(
+        imageUri,
+        width,
+        height,
+        bottomLeftTrans,
+        opacity,
+        options?.onTextureLoaded
+      )
+    : createMissingImageLayerMaterial(opacity);
   const layerObject = new Mesh(new ShapeBufferGeometry(shape), material);
   layerObject.renderOrder = -Infinity; //top put all layers behind other polygons
   layerObject.name = doc.resource.identifier;
@@ -512,4 +525,57 @@ export const addLayerToScene = (
   layerObject.visible = false;
 
   scene.add(layerObject);
+};
+
+const createTextureMaterial = (
+  imageUri: string,
+  width: number,
+  height: number,
+  bottomLeftTrans: Position,
+  opacity: number,
+  onTextureLoaded?: () => void
+) => {
+  const texture = new TextureLoader().load(imageUri, onTextureLoaded);
+  texture.repeat.set(Math.pow(width, -1), Math.pow(height, -1));
+  texture.offset.set(-bottomLeftTrans[0] / width, -bottomLeftTrans[1] / height);
+
+  return new MeshBasicMaterial({
+    map: texture,
+    transparent: true,
+    opacity,
+    side: DoubleSide,
+  });
+};
+
+const createMissingImageLayerMaterial = (opacity: number) =>
+  new MeshBasicMaterial({
+    color: 0xd8d0bd,
+    transparent: true,
+    opacity: Math.min(opacity, 0.35),
+    side: DoubleSide,
+  });
+
+const getResourceLayerImageUri = (doc: Document): string | undefined => {
+  const resource = doc.resource as any;
+
+  return (
+    resource.aerialLayerImageUri ||
+    resource.displayImageUri ||
+    resource.imageUri ||
+    resource.localImageUri ||
+    resource.fileUri ||
+    resource.uri
+  );
+};
+
+const getResourceLayerOpacity = (doc: Document): number => {
+  const rawOpacity = (doc.resource as any).aerialLayerOpacity;
+  const parsedOpacity =
+    typeof rawOpacity === 'number' ? rawOpacity : parseFloat(rawOpacity);
+
+  if (!isNaN(parsedOpacity)) return Math.max(0, Math.min(1, parsedOpacity));
+  return doc.resource.category === 'AerialMapLayer' ||
+    (doc.resource as any).aerialLayerType
+    ? 0.65
+    : 1;
 };

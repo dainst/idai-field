@@ -4106,6 +4106,34 @@
     },
     "description": "펜메모 원본을 보존한 상태에서 자동 전사와 사람 검토 상태를 구분하기 위한 목록"
   },
+  "KoreanFieldwork-aerialLayerType": {
+    "values": {
+      "orthomosaic": { "label": "정사영상" },
+      "verticalDronePhoto": { "label": "수직 드론사진" },
+      "obliqueReferencePhoto": { "label": "비스듬한 참고사진" },
+      "fieldCompositeReferenceMap": { "label": "현장 합성 참고도" }
+    },
+    "description": "현장 지도 배경으로 쓰는 항공·드론 이미지 레이어 유형"
+  },
+  "KoreanFieldwork-aerialGeoreferenceMethod": {
+    "values": {
+      "embeddedCoordinates": { "label": "내장 좌표" },
+      "worldFile": { "label": "월드 파일" },
+      "manualControlPoints": { "label": "기준점 수동 보정" },
+      "boundaryAlignment": { "label": "조사경계 맞춤" },
+      "externalGisCorrection": { "label": "외부 GIS 보정" }
+    },
+    "description": "항공 이미지 배경 레이어를 지도 좌표에 맞춘 방식"
+  },
+  "KoreanFieldwork-aerialLayerAccuracy": {
+    "values": {
+      "referenceOnly": { "label": "참고용" },
+      "approximateAlignment": { "label": "대략 정합" },
+      "fieldControlPointAligned": { "label": "현장 기준점 정합" },
+      "surveyedAlignment": { "label": "측량 성과 정합" }
+    },
+    "description": "항공 이미지 배경 레이어의 공간 신뢰도"
+  },
   "KoreanFieldwork-surfaceSurveyObservation": {
     "values": {
       "terrainCharacteristic": {

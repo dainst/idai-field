@@ -83,7 +83,10 @@ export class LayerMapComponent extends MapComponent {
 
         for (let [resourceId, imageOverlay] of Object.entries(this.imageOverlays)) {
             const imageContainer: ImageContainer = await this.layerImageProvider.getImageContainer(resourceId);
+            const layerDocument: ImageDocument|undefined
+                = this.layerManager.getLayers().find(layer => layer.resource.id === resourceId);
             imageOverlay.setUrl(imageContainer.imgSrc ? imageContainer.imgSrc : imageContainer.thumbSrc as any);
+            if (layerDocument) imageOverlay.setOpacity(this.getLayerOpacity(layerDocument));
         }
     }
 
@@ -183,7 +186,19 @@ export class LayerMapComponent extends MapComponent {
             [georeference.topLeftCoordinates,
             georeference.topRightCoordinates,
             georeference.bottomLeftCoordinates],
-            { pane: layerDocument.resource.id }).addTo(this.map);
+            { pane: layerDocument.resource.id, opacity: this.getLayerOpacity(layerDocument) }).addTo(this.map);
+    }
+
+
+    private getLayerOpacity(layerDocument: ImageDocument): number {
+
+        const rawOpacity = (layerDocument.resource as any).aerialLayerOpacity;
+        const opacity = typeof rawOpacity === 'number' ? rawOpacity : parseFloat(rawOpacity);
+
+        if (!isNaN(opacity)) return Math.max(0, Math.min(1, opacity));
+        return layerDocument.resource.category === 'AerialMapLayer' || (layerDocument.resource as any).aerialLayerType
+            ? 0.65
+            : 1;
     }
 
 

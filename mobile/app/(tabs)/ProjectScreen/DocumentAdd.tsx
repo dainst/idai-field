@@ -16,6 +16,7 @@ import SoilProfileCameraButton, {
   SoilProfileCaptureData,
 } from '@/components/Project/SoilProfileCameraButton';
 import KoreanFieldworkDraftContextPanel from '@/components/Project/KoreanFieldworkDraftContextPanel';
+import KoreanFieldworkDraftPresetPanel from '@/components/Project/KoreanFieldworkDraftPresetPanel';
 import KoreanFieldworkQuickRecordPanel from '@/components/Project/KoreanFieldworkQuickRecordPanel';
 import {
   createKoreanFieldworkDraftRelations,
@@ -71,6 +72,11 @@ const DocumentAdd: React.FC = () => {
   const updateResource = (key: string, value: unknown) =>
     setNewResource(
       (oldResource) => oldResource && { ...oldResource, [key]: value }
+    );
+
+  const applyResourceUpdates = (updates: Record<string, unknown>) =>
+    setNewResource(
+      (oldResource) => oldResource && { ...oldResource, ...updates }
     );
 
   const updateSoilProfileCapture = (data: SoilProfileCaptureData) => {
@@ -148,6 +154,11 @@ const DocumentAdd: React.FC = () => {
           <KoreanFieldworkDraftContextPanel
             parentDocument={parentDoc}
             resource={newResource}
+          />
+          <KoreanFieldworkDraftPresetPanel
+            category={category}
+            resource={newResource}
+            onApplyPreset={applyResourceUpdates}
           />
           <KoreanFieldworkQuickRecordPanel
             category={category}

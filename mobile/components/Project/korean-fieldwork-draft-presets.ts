@@ -1,0 +1,167 @@
+import {
+  CategoryForm,
+  NewResource,
+} from 'idai-field-core';
+import { KOREAN_FIELDWORK_CATEGORIES } from './korean-fieldwork-categories';
+
+export interface KoreanFieldworkDraftPreset {
+  id: string;
+  label: string;
+  detail: string;
+  icon: string;
+  categoryNames: readonly string[];
+  updates: Readonly<Record<string, unknown>>;
+}
+
+export interface KoreanFieldworkAvailableDraftPreset extends KoreanFieldworkDraftPreset {
+  updates: Record<string, unknown>;
+  fieldNames: string[];
+}
+
+const C = KOREAN_FIELDWORK_CATEGORIES;
+
+const FIELDWORK_RECORD_CATEGORIES = [
+  C.OPERATION,
+  C.TRENCH,
+  C.FEATURE_GROUP,
+  C.FEATURE,
+  C.FEATURE_SEGMENT,
+  C.LAYER,
+  C.SURVEY,
+  C.SURVEY_BOUNDARY,
+  C.FIND,
+  C.FIND_COLLECTION,
+  C.SAMPLE,
+  C.PHOTO,
+  C.SOIL_PROFILE_PHOTO,
+  C.DRAWING,
+  C.PEN_MEMO,
+  C.DAILY_LOG,
+  C.FIELD_RECORD_QUALITY_REVIEW,
+] as const;
+
+const FEATURE_RECORD_CATEGORIES = [
+  C.FEATURE_GROUP,
+  C.FEATURE,
+  C.FEATURE_SEGMENT,
+] as const;
+
+export const KOREAN_FIELDWORK_DRAFT_PRESETS: readonly KoreanFieldworkDraftPreset[] = [
+  {
+    id: 'field-start',
+    label: '현장 착수',
+    detail: '현장 중 작성, 즉시 기록, 관찰 확인',
+    icon: 'play-circle-outline',
+    categoryNames: FIELDWORK_RECORD_CATEGORIES,
+    updates: {
+      recordCreationTiming: 'duringFieldwork',
+      fieldRecordQuality: ['immediateRecording'],
+      verificationState: 'observedInField',
+    },
+  },
+  {
+    id: 'needs-review',
+    label: '재확인',
+    detail: '판단 보류나 보완이 필요한 상태',
+    icon: 'report-problem',
+    categoryNames: FIELDWORK_RECORD_CATEGORIES,
+    updates: {
+      recordCreationTiming: 'duringFieldwork',
+      fieldRecordQuality: ['correctionNeeded'],
+      verificationState: 'needsRecheck',
+    },
+  },
+  {
+    id: 'feature-candidate',
+    label: '유구 후보',
+    detail: '노출 직후 후보로 표시하고 조사 전 사진부터',
+    icon: 'lightbulb-outline',
+    categoryNames: FEATURE_RECORD_CATEGORIES,
+    updates: {
+      featureRecordingStatus: 'candidate',
+      recordCreationTiming: 'duringFieldwork',
+      fieldRecordQuality: ['immediateRecording'],
+      verificationState: 'candidate',
+      featureInvestigationChecklist: ['preInvestigationPhotoTaken'],
+    },
+  },
+  {
+    id: 'feature-investigation',
+    label: '조사 진행',
+    detail: '사진과 실측을 이어갈 조사 중 상태',
+    icon: 'construction',
+    categoryNames: FEATURE_RECORD_CATEGORIES,
+    updates: {
+      featureRecordingStatus: 'investigating',
+      recordCreationTiming: 'duringFieldwork',
+      fieldRecordQuality: ['immediateRecording'],
+      verificationState: 'observedInField',
+      featureInvestigationChecklist: [
+        'preInvestigationPhotoTaken',
+        'inProgressPhotoTaken',
+      ],
+    },
+  },
+  {
+    id: 'feature-closeout',
+    label: '완료 점검',
+    detail: '마감 사진, 실측, 유물 수습을 한 번에 확인',
+    icon: 'task-alt',
+    categoryNames: FEATURE_RECORD_CATEGORIES,
+    updates: {
+      featureRecordingStatus: 'confirmed',
+      recordCreationTiming: 'sameDayFieldRecord',
+      fieldRecordQuality: [
+        'immediateRecording',
+        'factualAccuracy',
+        'observationInterpretationSeparated',
+      ],
+      verificationState: 'observedInField',
+      featureInvestigationChecklist: [
+        'measuredDrawingCompleted',
+        'findsRecovered',
+        'completionPhotoTaken',
+      ],
+    },
+  },
+];
+
+export const getKoreanFieldworkDraftPresets = (
+  category: CategoryForm | undefined,
+  resource: NewResource
+): KoreanFieldworkAvailableDraftPreset[] => {
+  const categoryFieldNames = getCategoryFieldNames(category);
+
+  return KOREAN_FIELDWORK_DRAFT_PRESETS
+    .filter((preset) => preset.categoryNames.includes(resource.category))
+    .map((preset) => makeAvailablePreset(preset, categoryFieldNames))
+    .filter((preset): preset is KoreanFieldworkAvailableDraftPreset =>
+      preset !== undefined
+    );
+};
+
+const makeAvailablePreset = (
+  preset: KoreanFieldworkDraftPreset,
+  categoryFieldNames: Set<string>
+): KoreanFieldworkAvailableDraftPreset | undefined => {
+  const updateEntries = Object.entries(preset.updates)
+    .filter(([fieldName]) => categoryFieldNames.has(fieldName));
+
+  if (updateEntries.length === 0) return undefined;
+
+  return {
+    ...preset,
+    updates: Object.fromEntries(updateEntries),
+    fieldNames: updateEntries.map(([fieldName]) => fieldName),
+  };
+};
+
+const getCategoryFieldNames = (
+  category: CategoryForm | undefined
+): Set<string> => {
+  if (!category) return new Set();
+
+  return new Set(category.groups.flatMap((group) =>
+    group.fields.map((field) => field.name)
+  ));
+};

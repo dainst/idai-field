@@ -3611,7 +3611,6 @@
       "fields": {
         "aerialLayerType": {
           "inputType": "dropdown",
-          "mandatory": true,
           "constraintIndexed": true
         },
         "aerialGeoreferenceMethod": {

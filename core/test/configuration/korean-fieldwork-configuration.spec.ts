@@ -260,7 +260,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(aerialLayerForm.parent).toBe('Image');
         expect(config.order).toContain('AerialMapLayer');
         expect(aerialLayerForm.fields.aerialLayerType.inputType).toBe('dropdown');
-        expect(aerialLayerForm.fields.aerialLayerType.mandatory).toBe(true);
+        expect(aerialLayerForm.fields.aerialLayerType.mandatory).toBeUndefined();
         expect(aerialLayerForm.fields.aerialControlPoints.inputType).toBe('text');
         expect(aerialLayerForm.fields.aerialLayerOpacity.inputType).toBe('unsignedFloat');
         expect(aerialLayerForm.valuelists.aerialLayerType).toBe('KoreanFieldwork-aerialLayerType');

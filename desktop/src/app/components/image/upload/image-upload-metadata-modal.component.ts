@@ -88,8 +88,7 @@ export class ImageUploadMetadataModalComponent implements OnInit {
         if (this.isAerialLayerUpload) {
             if (this.hasAerialLayerSupport()) this.metadata.category = 'AerialMapLayer';
             this.metadata.aerialLayerType = this.metadata.aerialLayerType ?? 'orthomosaic';
-            this.metadata.aerialGeoreferenceMethod = this.metadata.aerialGeoreferenceMethod ?? 'manualControlPoints';
-            this.metadata.aerialLayerAccuracy = this.metadata.aerialLayerAccuracy ?? 'approximateAlignment';
+            this.metadata.aerialLayerAccuracy = this.metadata.aerialLayerAccuracy ?? 'referenceOnly';
             this.metadata.aerialLayerOpacity = this.metadata.aerialLayerOpacity ?? 0.65;
         }
     }

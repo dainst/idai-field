@@ -16,6 +16,7 @@ import DocumentForm from '@/components/common/forms/DocumentForm';
 import SoilProfileCameraButton, {
   SoilProfileCaptureData,
 } from '@/components/Project/SoilProfileCameraButton';
+import KoreanFieldworkRecordActionPanel from '@/components/Project/KoreanFieldworkRecordActionPanel';
 import KoreanFieldworkRecordContextPanel from '@/components/Project/KoreanFieldworkRecordContextPanel';
 import KoreanFieldworkQuickRecordPanel from '@/components/Project/KoreanFieldworkQuickRecordPanel';
 import { ToastType } from '@/components/common/Toast/ToastProvider';
@@ -149,6 +150,13 @@ const DocumentEdit: React.FC = () => {
       formHeader={
         <View>
           <KoreanFieldworkRecordContextPanel
+            document={effectiveDocument}
+            documents={documents ?? []}
+            allowedAddCategoryNames={allowedAddCategoryNames}
+            onAddDocumentOfCategory={addRelatedDocument}
+            onOpenDocument={openRelatedDocument}
+          />
+          <KoreanFieldworkRecordActionPanel
             document={effectiveDocument}
             documents={documents ?? []}
             allowedAddCategoryNames={allowedAddCategoryNames}

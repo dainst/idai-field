@@ -165,6 +165,7 @@ const DocumentEdit: React.FC = () => {
             allowedAddCategoryNames={allowedAddCategoryNames}
             onAddDocumentOfCategory={addRelatedDocument}
             onOpenDocument={openRelatedDocument}
+            onUpdateResourceFields={applyResourceUpdates}
           />
           <KoreanFieldworkRecordActionPanel
             document={effectiveDocument}

@@ -71,18 +71,73 @@ describe('KoreanFieldworkRecordContextPanel', () => {
 
     expect(handleAddDocumentOfCategory).not.toHaveBeenCalled();
   });
+
+  it('resolves current record checklist issues from the context panel', () => {
+    const feature = createDoc('feature-1', C.FEATURE, '유구 1', {}, {
+      featureRecordingStatus: 'confirmed',
+      featureInvestigationChecklist: ['measuredDrawingCompleted'],
+    });
+    const handleUpdateResourceFields = jest.fn();
+    const { getByTestId } = render(
+      <KoreanFieldworkRecordContextPanel
+        document={feature}
+        documents={[feature]}
+        allowedAddCategoryNames={[]}
+        onOpenDocument={jest.fn()}
+        onUpdateResourceFields={handleUpdateResourceFields}
+      />
+    );
+
+    fireEvent.press(getByTestId(
+      'issueResolution_feature-complete-photo_feature-1'
+    ));
+
+    expect(handleUpdateResourceFields).toHaveBeenCalledWith({
+      featureInvestigationChecklist: [
+        'measuredDrawingCompleted',
+        'completionPhotoTaken',
+      ],
+    });
+  });
+
+  it('starts missing soil profile photo records from a readiness issue', () => {
+    const feature = createDoc('feature-1', C.FEATURE, '유구 1', {}, {
+      featureSoilProfilePhotoCount: 1,
+      featureInvestigationChecklist: ['soilProfilePhotoLinked'],
+    });
+    const handleAddDocumentOfCategory = jest.fn();
+    const { getByTestId } = render(
+      <KoreanFieldworkRecordContextPanel
+        document={feature}
+        documents={[feature]}
+        allowedAddCategoryNames={[C.SOIL_PROFILE_PHOTO]}
+        onAddDocumentOfCategory={handleAddDocumentOfCategory}
+        onOpenDocument={jest.fn()}
+        onUpdateResourceFields={jest.fn()}
+      />
+    );
+
+    fireEvent.press(getByTestId(
+      'issueResolution_soil-profile-photo-count_feature-1'
+    ));
+
+    expect(handleAddDocumentOfCategory)
+      .toHaveBeenCalledWith(feature, C.SOIL_PROFILE_PHOTO);
+  });
 });
 
 const createDoc = (
   id: string,
   category: string,
   identifier: string,
-  relations: Record<string, string[]> = {}
+  relations: Record<string, string[]> = {},
+  extraResource: Record<string, unknown> = {}
 ) => ({
   resource: {
     id,
     identifier,
     category,
     relations,
+    ...extraResource,
   },
 } as any);

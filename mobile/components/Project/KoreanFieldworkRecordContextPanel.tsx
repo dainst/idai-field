@@ -23,6 +23,10 @@ import {
   getKoreanFieldworkCategoryLabel,
   KOREAN_FIELDWORK_CATEGORIES,
 } from './korean-fieldwork-categories';
+import {
+  getKoreanFieldworkIssueResolutionAction,
+  KoreanFieldworkIssueResolutionAction,
+} from './korean-fieldwork-issue-resolution';
 
 interface KoreanFieldworkRecordContextPanelProps {
   document: Document;
@@ -30,6 +34,7 @@ interface KoreanFieldworkRecordContextPanelProps {
   allowedAddCategoryNames?: string[];
   onAddDocumentOfCategory?: (parentDoc: Document, categoryName: string) => void;
   onOpenDocument: (document: Document) => void;
+  onUpdateResourceFields?: (updates: Record<string, unknown>) => void;
 }
 
 export interface EvidenceMetric {
@@ -46,6 +51,7 @@ const KoreanFieldworkRecordContextPanel: React.FC<KoreanFieldworkRecordContextPa
   allowedAddCategoryNames = [],
   onAddDocumentOfCategory,
   onOpenDocument,
+  onUpdateResourceFields,
 }) => {
   const documentsById = useMemo(
     () => new Map(documents.map((candidate) => [candidate.resource.id, candidate])),
@@ -106,28 +112,40 @@ const KoreanFieldworkRecordContextPanel: React.FC<KoreanFieldworkRecordContextPa
       {visibleIssues.length > 0 && (
         <View style={styles.issuePanel}>
           <Text style={styles.issuePanelTitle}>마감 전 확인</Text>
-          {visibleIssues.map((issue) => (
-            <TouchableOpacity
-              key={`${issue.documentId}-${issue.ruleId}`}
-              activeOpacity={0.86}
-              style={styles.issueRow}
-              onPress={() => {
-                const issueDocument = documentsById.get(issue.documentId);
-                if (issueDocument) onOpenDocument(issueDocument);
-              }}
-            >
-              <View style={[styles.issueSeverity, issueSeverityStyle(issue)]} />
-              <View style={styles.issueText}>
-                <Text style={styles.issueTitle} numberOfLines={1}>
-                  {issue.identifier}
-                </Text>
-                <Text style={styles.issueAction} numberOfLines={2}>
-                  {issue.recommendedAction}
-                </Text>
+          {visibleIssues.map((issue) => {
+            const issueDocument = documentsById.get(issue.documentId);
+            const resolutionAction = getKoreanFieldworkIssueResolutionAction(
+              issue,
+              document,
+              allowedAddCategoryNames
+            );
+
+            return (
+              <View
+                key={`${issue.documentId}-${issue.ruleId}`}
+                style={styles.issueRow}
+              >
+                <View style={[styles.issueSeverity, issueSeverityStyle(issue)]} />
+                <View style={styles.issueText}>
+                  <Text style={styles.issueTitle} numberOfLines={1}>
+                    {issue.identifier}
+                  </Text>
+                  <Text style={styles.issueAction} numberOfLines={2}>
+                    {issue.recommendedAction}
+                  </Text>
+                </View>
+                <IssueActionControls
+                  issue={issue}
+                  issueDocument={issueDocument}
+                  resolutionAction={resolutionAction}
+                  onAddDocumentOfCategory={onAddDocumentOfCategory}
+                  onOpenDocument={onOpenDocument}
+                  onUpdateResourceFields={onUpdateResourceFields}
+                  rootDocument={document}
+                />
               </View>
-              <MaterialIcons name="chevron-right" size={18} color="#7a3d3d" />
-            </TouchableOpacity>
-          ))}
+            );
+          })}
         </View>
       )}
     </View>
@@ -254,6 +272,108 @@ const StatusChip: React.FC<{ chip: KoreanFieldworkStatusChip }> = ({ chip }) => 
   </View>
 );
 
+const IssueActionControls: React.FC<{
+  issue: KoreanFieldworkReadinessIssue;
+  issueDocument: Document | undefined;
+  resolutionAction: KoreanFieldworkIssueResolutionAction | undefined;
+  rootDocument: Document;
+  onAddDocumentOfCategory?: (parentDoc: Document, categoryName: string) => void;
+  onOpenDocument: (document: Document) => void;
+  onUpdateResourceFields?: (updates: Record<string, unknown>) => void;
+}> = ({
+  issue,
+  issueDocument,
+  resolutionAction,
+  rootDocument,
+  onAddDocumentOfCategory,
+  onOpenDocument,
+  onUpdateResourceFields,
+}) => {
+  const canRunResolution = canRunIssueResolution(
+    resolutionAction,
+    onAddDocumentOfCategory,
+    onUpdateResourceFields
+  );
+
+  return (
+    <View style={styles.issueActionColumn}>
+      {canRunResolution && resolutionAction && (
+        <TouchableOpacity
+          activeOpacity={0.84}
+          accessibilityLabel={resolutionAction.label}
+          onPress={() => runIssueResolution(
+            resolutionAction,
+            rootDocument,
+            onAddDocumentOfCategory,
+            onUpdateResourceFields
+          )}
+          style={[
+            styles.issueResolutionButton,
+            issueResolutionButtonStyle(resolutionAction.tone),
+          ]}
+          testID={`issueResolution_${issue.ruleId}_${issue.documentId}`}
+        >
+          <MaterialIcons
+            name={resolutionAction.icon as keyof typeof MaterialIcons.glyphMap}
+            size={14}
+            color={issueResolutionIconColor(resolutionAction.tone)}
+          />
+          <Text
+            style={[
+              styles.issueResolutionText,
+              issueResolutionTextStyle(resolutionAction.tone),
+            ]}
+            numberOfLines={1}
+          >
+            {resolutionAction.label}
+          </Text>
+        </TouchableOpacity>
+      )}
+      {!!issueDocument && (
+        <TouchableOpacity
+          activeOpacity={0.84}
+          accessibilityLabel="기록 열기"
+          onPress={() => onOpenDocument(issueDocument)}
+          style={styles.issueOpenButton}
+          testID={`issueOpen_${issue.ruleId}_${issue.documentId}`}
+        >
+          <MaterialIcons name="open-in-new" size={15} color="#7a3d3d" />
+        </TouchableOpacity>
+      )}
+    </View>
+  );
+};
+
+const canRunIssueResolution = (
+  action: KoreanFieldworkIssueResolutionAction | undefined,
+  onAddDocumentOfCategory: ((parentDoc: Document, categoryName: string) => void) | undefined,
+  onUpdateResourceFields: ((updates: Record<string, unknown>) => void) | undefined
+): boolean => {
+  if (!action) return false;
+  if (action.type === 'updateFields') return !!action.updates && !!onUpdateResourceFields;
+  if (action.type === 'createDocument') {
+    return !!action.categoryName && !!onAddDocumentOfCategory;
+  }
+
+  return false;
+};
+
+const runIssueResolution = (
+  action: KoreanFieldworkIssueResolutionAction,
+  rootDocument: Document,
+  onAddDocumentOfCategory: ((parentDoc: Document, categoryName: string) => void) | undefined,
+  onUpdateResourceFields: ((updates: Record<string, unknown>) => void) | undefined
+) => {
+  if (action.type === 'updateFields' && action.updates && onUpdateResourceFields) {
+    onUpdateResourceFields(action.updates);
+    return;
+  }
+
+  if (action.type === 'createDocument' && action.categoryName && onAddDocumentOfCategory) {
+    onAddDocumentOfCategory(rootDocument, action.categoryName);
+  }
+};
+
 const statusChipToneStyle = (tone: KoreanFieldworkStatusTone) => {
   switch (tone) {
     case 'success':
@@ -290,6 +410,39 @@ const issueSeverityStyle = (issue: KoreanFieldworkReadinessIssue) =>
     : issue.severity === 'warning'
       ? styles.issueSeverityWarning
       : styles.issueSeverityInfo;
+
+const issueResolutionButtonStyle = (tone: KoreanFieldworkStatusTone) => {
+  switch (tone) {
+    case 'danger':
+      return styles.issueResolutionDanger;
+    case 'info':
+      return styles.issueResolutionInfo;
+    default:
+      return styles.issueResolutionWarning;
+  }
+};
+
+const issueResolutionTextStyle = (tone: KoreanFieldworkStatusTone) => {
+  switch (tone) {
+    case 'danger':
+      return styles.issueResolutionTextDanger;
+    case 'info':
+      return styles.issueResolutionTextInfo;
+    default:
+      return styles.issueResolutionTextWarning;
+  }
+};
+
+const issueResolutionIconColor = (tone: KoreanFieldworkStatusTone): string => {
+  switch (tone) {
+    case 'danger':
+      return colors.danger;
+    case 'info':
+      return '#175cd3';
+    default:
+      return '#b54708';
+  }
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -449,6 +602,56 @@ const styles = StyleSheet.create({
     minHeight: 44,
     paddingHorizontal: 8,
     paddingVertical: 6,
+  },
+  issueActionColumn: {
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    marginLeft: 6,
+  },
+  issueResolutionButton: {
+    alignItems: 'center',
+    borderRadius: 5,
+    borderWidth: 1,
+    flexDirection: 'row',
+    minHeight: 31,
+    paddingHorizontal: 7,
+  },
+  issueResolutionWarning: {
+    backgroundColor: '#fffaeb',
+    borderColor: '#fedf89',
+  },
+  issueResolutionDanger: {
+    backgroundColor: '#fff1f3',
+    borderColor: '#fecdca',
+  },
+  issueResolutionInfo: {
+    backgroundColor: '#eff8ff',
+    borderColor: '#b2ddff',
+  },
+  issueResolutionText: {
+    fontSize: 11,
+    fontWeight: '900',
+    marginLeft: 3,
+  },
+  issueResolutionTextWarning: {
+    color: '#b54708',
+  },
+  issueResolutionTextDanger: {
+    color: colors.danger,
+  },
+  issueResolutionTextInfo: {
+    color: '#175cd3',
+  },
+  issueOpenButton: {
+    alignItems: 'center',
+    backgroundColor: '#fff8f8',
+    borderColor: '#f0d0d0',
+    borderRadius: 5,
+    borderWidth: 1,
+    justifyContent: 'center',
+    marginTop: 5,
+    minHeight: 29,
+    minWidth: 36,
   },
   issueSeverity: {
     borderRadius: 2,

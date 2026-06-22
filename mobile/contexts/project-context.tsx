@@ -23,7 +23,8 @@ interface ProjectContextType {
   documents: Document[];
   hierarchyPath: Document[];
   pushToHierarchy: (doc: Document) => void;
-  popFromHierarchy: (doc: Document) => void;
+  popFromHierarchy: () => void;
+  clearHierarchy: () => void;
   onDocumentSelected: (doc: Document) => void;
   onParentSelected: (doc: Document) => void;
   isInOverview: (category: string) => boolean;
@@ -73,6 +74,7 @@ export const ProjectContextProvider = ({ children }) => {
     hierarchyPath,
     pushToHierarchy,
     popFromHierarchy,
+    clearHierarchy,
     isInOverview,
   } = useProjectData(repository, q);
 
@@ -109,6 +111,7 @@ const onParentSelected = (doc: Document) => {
         hierarchyPath,
         pushToHierarchy,
         popFromHierarchy,
+        clearHierarchy,
         isInOverview,
         q,
         setQ,

@@ -17,6 +17,7 @@ import {
 import CategoryIcon from '@/components/common/CategoryIcon';
 import DocumentAddModal from '@/components/Project/DocumentAddModal';
 import KoreanFieldworkPriorityTaskList from '@/components/Project/KoreanFieldworkPriorityTaskList';
+import KoreanFieldworkScopePanel from '@/components/Project/KoreanFieldworkScopePanel';
 import {
   getKoreanFieldworkCategoryLabel,
   KOREAN_FIELDWORK_CATEGORIES,
@@ -158,9 +159,11 @@ const RECORD_GROUPS: RecordGroup[] = [
 const DocumentsList: React.FC = () => {
   const {
     documents,
+    clearHierarchy,
     hierarchyPath,
     onDocumentSelected,
     onParentSelected,
+    popFromHierarchy,
   } = useContext(ProjectContext);
   const config = useContext(ConfigurationContext);
   const { labels } = useContext(LabelsContext);
@@ -332,6 +335,16 @@ const DocumentsList: React.FC = () => {
             warning={todaySummary.openIssues.length > 0}
           />
         </View>
+
+        <KoreanFieldworkScopePanel
+          documents={documents}
+          hierarchyPath={hierarchyPath}
+          issueCount={todaySummary.openIssues.length}
+          onAddChild={openAddChildModal}
+          onBackScope={popFromHierarchy}
+          onClearScope={clearHierarchy}
+          onOpenMap={openMap}
+        />
 
         <View style={styles.actionBand}>
           <QuickAction

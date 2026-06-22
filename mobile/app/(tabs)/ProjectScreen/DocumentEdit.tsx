@@ -20,6 +20,7 @@ import SoilProfileCameraButton, {
 } from '@/components/Project/SoilProfileCameraButton';
 import KoreanFieldworkRecordActionPanel from '@/components/Project/KoreanFieldworkRecordActionPanel';
 import KoreanFieldworkRecordContextPanel from '@/components/Project/KoreanFieldworkRecordContextPanel';
+import KoreanFieldworkNarrativeAssistPanel from '@/components/Project/KoreanFieldworkNarrativeAssistPanel';
 import KoreanFieldworkQuickRecordPanel from '@/components/Project/KoreanFieldworkQuickRecordPanel';
 import { ToastType } from '@/components/common/Toast/ToastProvider';
 import { router, useGlobalSearchParams } from 'expo-router';
@@ -173,6 +174,11 @@ const DocumentEdit: React.FC = () => {
             allowedAddCategoryNames={allowedAddCategoryNames}
             onAddDocumentOfCategory={addRelatedDocument}
             onOpenDocument={openRelatedDocument}
+          />
+          <KoreanFieldworkNarrativeAssistPanel
+            category={category}
+            resource={resource}
+            onUpdateResourceField={updateResource}
           />
           <KoreanFieldworkQuickRecordPanel
             category={category}

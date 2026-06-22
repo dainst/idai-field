@@ -83,60 +83,66 @@ const DocumentForm: React.FC<DocumentFormProps> = ({
         }
         right={titleBarRight}
       />
-      {resourceActions && (
-        <View style={styles.resourceActions}>
-          {resourceActions}
-        </View>
-      )}
-      {formHeader && (
-        <View style={styles.formHeader}>
-          {formHeader}
-        </View>
-      )}
-      <View style={styles.groupsContainer}>
-        <FlatList
-          data={groups}
-          keyExtractor={(group) => group.name}
-          renderItem={renderItem}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-        />
-        {groups.length >= GROUP_PICKER_THRESHOLD && (
-          <View style={styles.groupPickerContainer}>
-            <Picker
-              testID="groupPicker"
-              selectedValue={activeGroup.name}
-              onValueChange={(groupName) => setActiveGroup(getGroup(groups, groupName.toString()))}
-              style={styles.groupPicker}
-            >
-              {groups.map((group) => (
-                <Picker.Item
-                  key={group.name}
-                  label={group.name}
-                  value={group.name}
-                />
-              ))}
-            </Picker>
-          </View>
+      <FlatList
+        contentContainerStyle={styles.formContent}
+        data={activeGroup.fields.filter(
+          (fieldDef) => shouldShow(fieldDef) && resource
         )}
-      </View>
-      <View style={styles.groupForm}>
-        <FlatList
-          data={activeGroup.fields.filter(
-            (fieldDef) => shouldShow(fieldDef) && resource
-          )}
-          keyExtractor={(field) => field.name}
-          renderItem={({ item }) => (
-            <EditFormField
-              setFunction={updateFunction}
-              field={item}
-              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-              currentValue={resource![item.name]}
-            />
-          )}
-          showsVerticalScrollIndicator={false}
-        />
-      </View>
+        keyExtractor={(field) => field.name}
+        keyboardShouldPersistTaps="handled"
+        ListHeaderComponent={(
+          <>
+            {resourceActions && (
+              <View style={styles.resourceActions}>
+                {resourceActions}
+              </View>
+            )}
+            {formHeader && (
+              <View style={styles.formHeader}>
+                {formHeader}
+              </View>
+            )}
+            <View style={styles.groupsContainer}>
+              <FlatList
+                data={groups}
+                keyExtractor={(group) => group.name}
+                renderItem={renderItem}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+              />
+              {groups.length >= GROUP_PICKER_THRESHOLD && (
+                <View style={styles.groupPickerContainer}>
+                  <Picker
+                    testID="groupPicker"
+                    selectedValue={activeGroup.name}
+                    onValueChange={(groupName) =>
+                      setActiveGroup(getGroup(groups, groupName.toString()))}
+                    style={styles.groupPicker}
+                  >
+                    {groups.map((group) => (
+                      <Picker.Item
+                        key={group.name}
+                        label={group.name}
+                        value={group.name}
+                      />
+                    ))}
+                  </Picker>
+                </View>
+              )}
+            </View>
+          </>
+        )}
+        renderItem={({ item }) => (
+          <EditFormField
+            setFunction={updateFunction}
+            field={item}
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            currentValue={resource![item.name]}
+          />
+        )}
+        showsVerticalScrollIndicator={false}
+        style={styles.formScroll}
+      />
     </SafeAreaView>
   );
 };
@@ -181,6 +187,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     marginTop: 8,
   },
+  formContent: {
+    paddingBottom: 36,
+  },
+  formScroll: {
+    flex: 1,
+  },
   groupPickerContainer: {
     marginTop: 8,
     borderWidth: 1,
@@ -190,9 +202,6 @@ const styles = StyleSheet.create({
   },
   groupPicker: {
     width: '100%',
-  },
-  groupForm: {
-    padding: 10,
   },
   groupBtn: {
     margin: 4,

@@ -21,6 +21,7 @@ import SoilProfileCameraButton, {
 import KoreanFieldworkDraftContinuationPanel from '@/components/Project/KoreanFieldworkDraftContinuationPanel';
 import KoreanFieldworkDraftContextPanel from '@/components/Project/KoreanFieldworkDraftContextPanel';
 import KoreanFieldworkDraftPresetPanel from '@/components/Project/KoreanFieldworkDraftPresetPanel';
+import KoreanFieldworkNarrativeAssistPanel from '@/components/Project/KoreanFieldworkNarrativeAssistPanel';
 import KoreanFieldworkQuickRecordPanel from '@/components/Project/KoreanFieldworkQuickRecordPanel';
 import {
   KoreanFieldworkDraftContinuationTarget,
@@ -206,6 +207,11 @@ const DocumentAdd: React.FC = () => {
             category={category}
             resource={newResource}
             onApplyPreset={applyResourceUpdates}
+          />
+          <KoreanFieldworkNarrativeAssistPanel
+            category={category}
+            resource={newResource}
+            onUpdateResourceField={updateResource}
           />
           <KoreanFieldworkDraftContinuationPanel
             categoryName={categoryName}

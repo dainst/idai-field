@@ -593,6 +593,11 @@
           "hidden": [],
           "fields": {}
         },
+        "PenMemo": {
+          "parent": "Image",
+          "hidden": [],
+          "fields": {}
+        },
         "FieldRecordQualityReview": {
           "parent": "Operation",
           "hidden": [],
@@ -626,6 +631,7 @@
         "Sample",
         "Drawing",
         "Photo",
+        "PenMemo",
         "FieldRecordQualityReview",
         "SourceEvidenceIndex",
         "TermAuthority",

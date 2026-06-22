@@ -574,6 +574,15 @@
         "featurePackage": {
           "label": "유적·유구 패키지"
         },
+        "featureRecordingStatus": {
+          "label": "유구 기록 상태"
+        },
+        "geometrySource": {
+          "label": "공간 기록 출처"
+        },
+        "geometryConfidence": {
+          "label": "공간 신뢰도"
+        },
         "featureInterpretationType": {
           "label": "유구 성격"
         },
@@ -604,6 +613,18 @@
       "fields": {
         "featurePackage": {
           "label": "유적·유구 패키지"
+        },
+        "featureInterpretationType": {
+          "label": "유구 성격"
+        },
+        "featureRecordingStatus": {
+          "label": "유구 기록 상태"
+        },
+        "geometrySource": {
+          "label": "공간 기록 출처"
+        },
+        "geometryConfidence": {
+          "label": "공간 신뢰도"
         },
         "fieldRecordQuality": {
           "label": "현장기록 품질"
@@ -887,6 +908,15 @@
       "fields": {
         "featurePackage": {
           "label": "유적·유구 패키지"
+        },
+        "featureRecordingStatus": {
+          "label": "유구 기록 상태"
+        },
+        "geometrySource": {
+          "label": "공간 기록 출처"
+        },
+        "geometryConfidence": {
+          "label": "공간 신뢰도"
         },
         "fieldRecordQuality": {
           "label": "현장기록 품질"
@@ -1310,6 +1340,32 @@
         },
         "mediaRights": {
           "label": "매체 권리관리"
+        }
+      }
+    },
+    "PenMemo": {
+      "label": "펜메모",
+      "fields": {
+        "penMemoStrokes": {
+          "label": "원본 stroke JSON"
+        },
+        "penMemoPreviewImageId": {
+          "label": "미리보기 이미지 id"
+        },
+        "penMemoAutoTranscript": {
+          "label": "자동 전사문"
+        },
+        "penMemoReviewedTranscript": {
+          "label": "검토 전사문"
+        },
+        "penMemoTranscriptionStatus": {
+          "label": "전사 상태"
+        },
+        "penMemoRecognitionEngine": {
+          "label": "OCR 엔진"
+        },
+        "penMemoRecognitionConfidence": {
+          "label": "OCR 신뢰도"
         }
       }
     },

@@ -27,6 +27,8 @@ export module MessagesConversion {
 
         if (msg === ReaderErrors.FILE_UNREADABLE) replacement = M.IMPORT_READER_FILE_UNREADABLE;
         if (msg === ReaderErrors.SHAPEFILE_READ) replacement = M.IMPORT_READER_SHAPEFILE_READ_ERROR;
+        if (msg === ReaderErrors.VECTOR_READ) replacement = M.IMPORT_READER_SHAPEFILE_READ_ERROR;
+        if (msg === ReaderErrors.VECTOR_GENERIC) replacement = M.IMPORT_READER_SHAPEFILE_READ_ERROR;
         if (msg === ReaderErrors.CATALOG_GENERIC) replacement = M.IMPORT_PARSER_CATALOG_GENERIC;
 
         if (msg === ParserErrors.FILE_INVALID_JSON) replacement = M.IMPORT_PARSER_INVALID_JSON;

@@ -18,12 +18,12 @@ import { CatalogFilesystemReader } from './reader/catalog-filesystem-reader';
 import { FilesystemReader } from './reader/filesystem-reader';
 import { HttpReader } from './reader/http-reader';
 import { Reader } from './reader/reader';
-import { ShapefileFilesystemReader } from './reader/shapefile-filesystem-reader';
+import { DxfFilesystemReader, ShapefileFilesystemReader } from './reader/shapefile-filesystem-reader';
 import { Settings } from '../../services/settings/settings';
 import { ImageRelationsManager } from '../../services/image-relations-manager';
 
 
-export type ImporterFormat = 'native'|'geojson'|'geojson-gazetteer'|'shapefile'|'csv'|'catalog';
+export type ImporterFormat = 'native'|'geojson'|'geojson-gazetteer'|'shapefile'|'dxf'|'csv'|'catalog';
 
 export type ImporterReport = { errors: any[], successfulImports: number, ignoredIdentifiers: string[] };
 
@@ -124,6 +124,7 @@ export module Importer {
                     { mergeMode: false, permitDeletions: false });
                 break;
             case 'shapefile':
+            case 'dxf':
             case 'geojson':
                 importFunction = buildImportDocuments(
                     { validator },
@@ -200,6 +201,7 @@ export module Importer {
 
         if (options.sourceType !== 'file') return new HttpReader(options.url, http);
         if (options.format === 'shapefile') return new ShapefileFilesystemReader(options.filePath);
+        if (options.format === 'dxf') return new DxfFilesystemReader(options.filePath);
         if (options.format === 'catalog') return new CatalogFilesystemReader(options.filePath, settings, imagestore);
         return new FilesystemReader(options.filePath);
     }
@@ -219,6 +221,7 @@ export module Importer {
                 );
             case 'geojson':
             case 'shapefile':
+            case 'dxf':
                 return GeojsonParser.getParse();
             case 'native':
                 return NativeJsonlParser.parse;

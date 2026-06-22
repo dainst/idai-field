@@ -49,7 +49,7 @@ export class ImportComponent implements OnInit {
     public running: boolean = false;
     public ignoredIdentifiers: string[] = [];
 
-    public readonly allowedFileExtensions: string = '.csv, .jsonl, .geojson, .json, .shp, .catalog';
+    public readonly allowedFileExtensions: string = '.csv, .jsonl, .geojson, .json, .shp, .dxf, .catalog';
     public readonly allowedHttpFileExtensions: string = '.csv, .jsonl, .geojson, .json';
 
 
@@ -319,7 +319,7 @@ export class ImportComponent implements OnInit {
     private showIgnoredIdentifiersWarning(ignoredIdentifiers: string[]) {
 
         this.messages.add([
-            (this.importState.mergeMode || ['geojson', 'shapefile'].includes(this.importState.format))
+            (this.importState.mergeMode || ['geojson', 'shapefile', 'dxf'].includes(this.importState.format))
                 ? ignoredIdentifiers.length === 1
                     ? M.IMPORT_WARNING_IGNORED_MISSING_IDENTIFIER
                     : M.IMPORT_WARNING_IGNORED_MISSING_IDENTIFIERS
@@ -405,7 +405,7 @@ export class ImportComponent implements OnInit {
         return [
             {
                 name: $localize `:@@import.selectFile.filters.all:Alle unterstützten Formate`,
-                extensions: ['csv', 'jsonl', 'geojson', 'json', 'shp', 'catalog']
+                extensions: ['csv', 'jsonl', 'geojson', 'json', 'shp', 'dxf', 'catalog']
             },
             {
                 name: 'CSV',
@@ -422,6 +422,10 @@ export class ImportComponent implements OnInit {
             {
                 name: 'Shapefile',
                 extensions: ['shp']
+            },
+            {
+                name: 'DXF',
+                extensions: ['dxf']
             },
             {
                 name: $localize `:@@import.selectFile.filters.catalog:Field-Typenkatalog`,
@@ -443,6 +447,8 @@ export class ImportComponent implements OnInit {
                 return 'geojson';
             case 'shp':
                 return 'shapefile';
+            case 'dxf':
+                return 'dxf';
             case 'csv':
                 return 'csv';
             default:

@@ -11,9 +11,11 @@ const TEMP_DIRECTORY_PATH: string = remote ? remote.getGlobal('appDataPath') + '
 /**
  * @author Thomas Kleinke
  */
-export class ShapefileFilesystemReader implements Reader {
+class VectorFilesystemReader implements Reader {
 
-    constructor(private filePath: string) {}
+    constructor(private filePath: string,
+                private readError: string,
+                private genericError: string) {}
 
 
     public async go(): Promise<string> {
@@ -33,16 +35,34 @@ export class ShapefileFilesystemReader implements Reader {
             );
         } catch (err) {
             console.error(err);
-            throw [ReaderErrors.SHAPEFILE_READ];
+            throw [this.readError];
         }
 
         try {
             return fs.readFileSync(TEMP_DIRECTORY_PATH + baseFileName + '.geojson', 'utf-8');
         } catch (err) {
             console.error(err);
-            throw [ReaderErrors.SHAPEFILE_GENERIC];
+            throw [this.genericError];
         } finally {
             fs.rmSync(TEMP_DIRECTORY_PATH + baseFileName + '.geojson');
         }
+    }
+}
+
+
+export class ShapefileFilesystemReader extends VectorFilesystemReader {
+
+    constructor(filePath: string) {
+
+        super(filePath, ReaderErrors.SHAPEFILE_READ, ReaderErrors.SHAPEFILE_GENERIC);
+    }
+}
+
+
+export class DxfFilesystemReader extends VectorFilesystemReader {
+
+    constructor(filePath: string) {
+
+        super(filePath, ReaderErrors.VECTOR_READ, ReaderErrors.VECTOR_GENERIC);
     }
 }

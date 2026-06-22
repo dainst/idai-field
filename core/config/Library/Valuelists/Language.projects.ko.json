@@ -4066,6 +4066,46 @@
     },
     "description": "전면 제토면에서 각 유구의 1차 성격 판정을 유구 단위로 남기기 위한 목록"
   },
+  "KoreanFieldwork-featureRecordingStatus": {
+    "values": {
+      "candidate": { "label": "후보" },
+      "investigating": { "label": "조사중" },
+      "confirmed": { "label": "확정" },
+      "rejected": { "label": "제외" },
+      "merged": { "label": "병합" },
+      "split": { "label": "분할" }
+    },
+    "description": "전면 제토 뒤 보이는 흔적을 유구 후보로 만들고 조사 과정에서 상태를 갱신하기 위한 목록"
+  },
+  "KoreanFieldwork-geometrySource": {
+    "values": {
+      "tabletSketch": { "label": "태블릿 스케치" },
+      "gpsApproximate": { "label": "GPS 대략 위치" },
+      "importedShp": { "label": "SHP import" },
+      "importedDxf": { "label": "DXF import" },
+      "surveyedFinal": { "label": "정식 측량" },
+      "finalCad": { "label": "최종 CAD" }
+    },
+    "description": "유구 위치와 도형이 어떤 현장·후처리 경로에서 온 것인지 구분하기 위한 목록"
+  },
+  "KoreanFieldwork-geometryConfidence": {
+    "values": {
+      "rough": { "label": "대략" },
+      "fieldSketch": { "label": "현장 스케치" },
+      "surveyed": { "label": "측량 반영" },
+      "final": { "label": "최종" }
+    },
+    "description": "태블릿 기록, 현장 스케치, 측량 반영, 최종 도면 사이의 공간 신뢰도를 구분하기 위한 목록"
+  },
+  "KoreanFieldwork-penMemoTranscriptionStatus": {
+    "values": {
+      "pending": { "label": "전사 대기" },
+      "autoTranscribed": { "label": "자동 전사됨" },
+      "reviewed": { "label": "검토 완료" },
+      "failed": { "label": "전사 실패" }
+    },
+    "description": "펜메모 원본을 보존한 상태에서 자동 전사와 사람 검토 상태를 구분하기 위한 목록"
+  },
   "KoreanFieldwork-surfaceSurveyObservation": {
     "values": {
       "terrainCharacteristic": {

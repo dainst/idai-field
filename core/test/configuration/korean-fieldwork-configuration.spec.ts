@@ -103,6 +103,7 @@ describe('KoreanFieldwork project configuration', () => {
             'Sample',
             'Drawing',
             'Photo',
+            'PenMemo',
             'FieldRecordQualityReview',
             'SourceEvidenceIndex',
             'TermAuthority',
@@ -121,6 +122,7 @@ describe('KoreanFieldwork project configuration', () => {
             'Image:default',
             'Drawing:default',
             'Photo:default',
+            'PenMemo',
             'FieldRecordQualityReview',
             'SourceEvidenceIndex',
             'TermAuthority',
@@ -138,6 +140,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(template.configuration.forms.SourceEvidenceIndex.parent).toBe('Project');
         expect(template.configuration.forms.TermAuthority.parent).toBe('FeatureGroup');
         expect(template.configuration.forms.TermAlias.parent).toBe('TermAuthority');
+        expect(template.configuration.forms.PenMemo.parent).toBe('Image');
 
         expectedTemplateForms.forEach(formName => {
             expect(template.configuration.forms[formName]).toBeDefined();
@@ -146,7 +149,7 @@ describe('KoreanFieldwork project configuration', () => {
     });
 
 
-    it('supports per-feature Korean period and interpretation type recording', () => {
+    it('supports per-feature Korean period, interpretation, status, and geometry provenance recording', () => {
 
         const configReader = new ConfigReader();
         const config = configReader.read('/Config-KoreanFieldwork.json');
@@ -162,7 +165,21 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureSegmentForm.valuelists.period).toBe('KoreanFieldwork-featurePeriod');
         expect(featureForm.fields.featureInterpretationType.inputType).toBe('checkboxes');
         expect(featureForm.valuelists.featureInterpretationType).toBe('KoreanFieldwork-featureInterpretationType');
-        expect(koreanFieldworkGroup.fields.slice(0, 2)).toEqual(['featurePackage', 'featureInterpretationType']);
+        expect(featureForm.fields.featureRecordingStatus.inputType).toBe('dropdown');
+        expect(featureForm.fields.geometrySource.inputType).toBe('dropdown');
+        expect(featureForm.fields.geometryConfidence.inputType).toBe('dropdown');
+        expect(featureGroupForm.valuelists.featureRecordingStatus).toBe('KoreanFieldwork-featureRecordingStatus');
+        expect(featureForm.valuelists.featureRecordingStatus).toBe('KoreanFieldwork-featureRecordingStatus');
+        expect(featureSegmentForm.valuelists.featureRecordingStatus).toBe('KoreanFieldwork-featureRecordingStatus');
+        expect(featureForm.valuelists.geometrySource).toBe('KoreanFieldwork-geometrySource');
+        expect(featureForm.valuelists.geometryConfidence).toBe('KoreanFieldwork-geometryConfidence');
+        expect(koreanFieldworkGroup.fields.slice(0, 5)).toEqual([
+            'featurePackage',
+            'featureInterpretationType',
+            'featureRecordingStatus',
+            'geometrySource',
+            'geometryConfidence'
+        ]);
 
         expect(valuelists['KoreanFieldwork-featurePeriod'].values.paleolithic).toBeDefined();
         expect(valuelists['KoreanFieldwork-featurePeriod'].values.joseon).toBeDefined();
@@ -170,11 +187,50 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelists['KoreanFieldwork-featureInterpretationType'].values.pitFeature).toBeDefined();
         expect(valuelists['KoreanFieldwork-featureInterpretationType'].values.cultivationFeature).toBeDefined();
         expect(valuelists['KoreanFieldwork-featureInterpretationType'].values.featureLineUncertain).toBeDefined();
+        expect(valuelists['KoreanFieldwork-featureRecordingStatus'].values.candidate).toBeDefined();
+        expect(valuelists['KoreanFieldwork-geometrySource'].values.tabletSketch).toBeDefined();
+        expect(valuelists['KoreanFieldwork-geometrySource'].values.importedDxf).toBeDefined();
+        expect(valuelists['KoreanFieldwork-geometryConfidence'].values.rough).toBeDefined();
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-featurePeriod'].values.joseon.label).toBe('조선');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-featureInterpretationType'].values.pitFeature.label)
             .toBe('수혈유구');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-featureRecordingStatus'].values.candidate.label)
+            .toBe('후보');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-geometrySource'].values.tabletSketch.label)
+            .toBe('태블릿 스케치');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-featureInterpretationType'].values.pitFeature.label)
             .toBe('Pit feature');
+    });
+
+
+    it('supports pen memo documents without overwriting originals during transcription', () => {
+
+        const configReader = new ConfigReader();
+        const config = configReader.read('/Config-KoreanFieldwork.json');
+        const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const languages = configReader.getConfigLanguages();
+        const valuelistLanguages = configReader.getValuelistsLanguages();
+        const penMemoForm = config.forms.PenMemo;
+        const koreanFieldworkGroup = penMemoForm.groups.find((group: any) => group.name === 'koreanFieldwork');
+        const workflowGroup = penMemoForm.groups.find((group: any) => group.name === 'workflow');
+
+        expect(penMemoForm.parent).toBe('Image');
+        expect(penMemoForm.fields.penMemoStrokes.inputType).toBe('text');
+        expect(penMemoForm.fields.penMemoStrokes.mandatory).toBe(true);
+        expect(penMemoForm.fields.penMemoAutoTranscript.inputType).toBe('text');
+        expect(penMemoForm.fields.penMemoReviewedTranscript.inputType).toBe('text');
+        expect(penMemoForm.fields.penMemoTranscriptionStatus.inputType).toBe('dropdown');
+        expect(penMemoForm.valuelists.penMemoTranscriptionStatus)
+            .toBe('KoreanFieldwork-penMemoTranscriptionStatus');
+        expect(koreanFieldworkGroup.fields).toContain('penMemoStrokes');
+        expect(koreanFieldworkGroup.fields).toContain('penMemoAutoTranscript');
+        expect(koreanFieldworkGroup.fields).toContain('penMemoReviewedTranscript');
+        expect(workflowGroup.fields).toContain('depicts');
+        expect(valuelists['KoreanFieldwork-penMemoTranscriptionStatus'].values.pending).toBeDefined();
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-penMemoTranscriptionStatus'].values.pending.label)
+            .toBe('전사 대기');
+        expect(languages.ko.categories.PenMemo.label).toBe('펜메모');
+        expect(languages.en.categories.PenMemo.label).toBe('Pen memo');
     });
 
 

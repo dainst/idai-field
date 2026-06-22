@@ -15820,6 +15820,46 @@
     },
     "description": "Initial feature interpretation list for recording the character of each exposed feature"
   },
+  "KoreanFieldwork-featureRecordingStatus": {
+    "values": {
+      "candidate": { "label": "Candidate" },
+      "investigating": { "label": "Investigating" },
+      "confirmed": { "label": "Confirmed" },
+      "rejected": { "label": "Rejected" },
+      "merged": { "label": "Merged" },
+      "split": { "label": "Split" }
+    },
+    "description": "Workflow status for creating visible stripped-surface traces as feature candidates and updating them during investigation"
+  },
+  "KoreanFieldwork-geometrySource": {
+    "values": {
+      "tabletSketch": { "label": "Tablet sketch" },
+      "gpsApproximate": { "label": "Approximate GPS position" },
+      "importedShp": { "label": "SHP import" },
+      "importedDxf": { "label": "DXF import" },
+      "surveyedFinal": { "label": "Formal survey" },
+      "finalCad": { "label": "Final CAD" }
+    },
+    "description": "Source of a feature geometry across field sketching, imports, survey, and final CAD processing"
+  },
+  "KoreanFieldwork-geometryConfidence": {
+    "values": {
+      "rough": { "label": "Rough" },
+      "fieldSketch": { "label": "Field sketch" },
+      "surveyed": { "label": "Surveyed" },
+      "final": { "label": "Final" }
+    },
+    "description": "Spatial confidence level for distinguishing rough tablet records, field sketches, surveyed data, and final geometry"
+  },
+  "KoreanFieldwork-penMemoTranscriptionStatus": {
+    "values": {
+      "pending": { "label": "Pending transcription" },
+      "autoTranscribed": { "label": "Auto-transcribed" },
+      "reviewed": { "label": "Reviewed" },
+      "failed": { "label": "Transcription failed" }
+    },
+    "description": "Transcription status for preserving pen memo originals while tracking automatic recognition and human review"
+  },
   "KoreanFieldwork-surfaceSurveyObservation": {
     "values": {
       "terrainCharacteristic": {

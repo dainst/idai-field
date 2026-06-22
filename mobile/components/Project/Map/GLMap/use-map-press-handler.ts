@@ -31,8 +31,12 @@ const useMapPressHandler = (
         pressStartTime.current = performance.now();
         // filter objects to be selected and sort by renderOrder in descending order
         const filteredSortedInters = intersections
-            .filter(intersection => intersection.object.parent?.userData['isSelected'])
+            .filter(intersection => intersection.object.parent?.userData?.type)
             .sort((a,b) => {
+                const aSelected = a.object.parent?.userData?.isSelected ? 1 : 0;
+                const bSelected = b.object.parent?.userData?.isSelected ? 1 : 0;
+                if (aSelected !== bSelected) return bSelected - aSelected;
+
                 const aOrder = a.object.renderOrder;
                 const bOrder = b.object.renderOrder;
                 return (aOrder < bOrder) ? 1 : (aOrder > bOrder) ? -1 : 0;

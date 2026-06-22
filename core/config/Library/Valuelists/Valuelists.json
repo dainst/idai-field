@@ -36634,6 +36634,78 @@
       "other"
     ]
   },
+  "KoreanFieldwork-featureRecordingStatus": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-22",
+    "values": {
+      "candidate": {},
+      "investigating": {},
+      "confirmed": {},
+      "rejected": {},
+      "merged": {},
+      "split": {}
+    },
+    "order": [
+      "candidate",
+      "investigating",
+      "confirmed",
+      "rejected",
+      "merged",
+      "split"
+    ]
+  },
+  "KoreanFieldwork-geometrySource": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-22",
+    "values": {
+      "tabletSketch": {},
+      "gpsApproximate": {},
+      "importedShp": {},
+      "importedDxf": {},
+      "surveyedFinal": {},
+      "finalCad": {}
+    },
+    "order": [
+      "tabletSketch",
+      "gpsApproximate",
+      "importedShp",
+      "importedDxf",
+      "surveyedFinal",
+      "finalCad"
+    ]
+  },
+  "KoreanFieldwork-geometryConfidence": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-22",
+    "values": {
+      "rough": {},
+      "fieldSketch": {},
+      "surveyed": {},
+      "final": {}
+    },
+    "order": [
+      "rough",
+      "fieldSketch",
+      "surveyed",
+      "final"
+    ]
+  },
+  "KoreanFieldwork-penMemoTranscriptionStatus": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-22",
+    "values": {
+      "pending": {},
+      "autoTranscribed": {},
+      "reviewed": {},
+      "failed": {}
+    },
+    "order": [
+      "pending",
+      "autoTranscribed",
+      "reviewed",
+      "failed"
+    ]
+  },
   "KoreanFieldwork-surfaceSurveyObservation": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",

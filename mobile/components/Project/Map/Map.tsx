@@ -1,7 +1,7 @@
 import * as Location from 'expo-location';
 import { Document } from 'idai-field-core';
 import proj4 from 'proj4';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import {
   LayoutChangeEvent,
   LayoutRectangle,
@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import useMapData from '@/hooks/use-mapdata';
 import { DocumentRepository } from '@/repositories/document-repository';
+import { ConfigurationContext } from '@/contexts/configuration-context';
 import GLMap from './GLMap/GLMap';
 import MapBottomSheet from './MapBottomSheet';
 
@@ -36,6 +37,7 @@ interface MapProps {
 }
 
 const Map: React.FC<MapProps> = (props) => {
+  const config = useContext(ConfigurationContext);
   const [screen, setScreen] = useState<LayoutRectangle>();
   const [highlightedDoc, setHighlightedDoc] = useState<Document>();
   const [location, setLocation] = useState<{ x: number; y: number }>();
@@ -62,7 +64,7 @@ const Map: React.FC<MapProps> = (props) => {
 
   useEffect(() => {
     (async () => {
-      const { status } = await Location.requestBackgroundPermissionsAsync();
+      const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         console.log('Permission to access location was denied');
         return;
@@ -74,9 +76,58 @@ const Map: React.FC<MapProps> = (props) => {
       const p = { x: longitude, y: latitude };
       const newCoords = proj4('EPSG:4326', 'EPSG:3857', p);
       setLocation(newCoords);
-      console.log(p);
     })();
   }, []);
+
+  const createRelations = (parentDoc: Document): { [relationName: string]: string[] } => {
+    const parentRelations = parentDoc.resource.relations ?? {};
+
+    if (!parentRelations.isRecordedIn) return { isRecordedIn: [parentDoc.resource.id] };
+
+    return {
+      isRecordedIn: [parentRelations.isRecordedIn[0]],
+      liesWithin: [parentDoc.resource.id],
+    };
+  };
+
+  const createFeatureCandidateAtCurrentLocation = async () => {
+    if (!highlightedDoc || !location || !config?.getCategory('Feature')) return;
+
+    const createdDocument = await props.repository.create({
+      resource: {
+        identifier: `feature-candidate-${Date.now()}`,
+        category: 'Feature',
+        relations: createRelations(highlightedDoc),
+        geometry: {
+          type: 'Point',
+          coordinates: [location.x, location.y],
+        },
+        featureRecordingStatus: 'candidate',
+        geometrySource: 'gpsApproximate',
+        geometryConfidence: 'rough',
+      },
+    });
+
+    setHighlightedDoc(createdDocument);
+  };
+
+  const createPenMemoDraft = async () => {
+    if (!highlightedDoc || !config?.getCategory('PenMemo')) return;
+
+    const createdDocument = await props.repository.create({
+      resource: {
+        identifier: `pen-memo-${Date.now()}`,
+        category: 'PenMemo',
+        relations: {
+          depicts: [highlightedDoc.resource.id],
+        },
+        penMemoStrokes: '[]',
+        penMemoTranscriptionStatus: 'pending',
+      },
+    });
+
+    props.editDocument(createdDocument.resource.id, 'PenMemo');
+  };
 
   const onParentIdSelected = (docId: string) => {
     const doc = geoDocuments.find((doc) => doc.resource.id === docId);
@@ -88,7 +139,7 @@ const Map: React.FC<MapProps> = (props) => {
 
   return (
     <View style={styles.container} onLayout={handleLayoutChange}>
-      {/* {screen && documentToWorldMatrix && screenToWorldMatrix && (
+      {screen && documentToWorldMatrix && screenToWorldMatrix && (
         <GLMap
           setHighlightedDocId={setHighlightedDocFromId}
           highlightedDocId={highlightedDoc?.resource.id}
@@ -104,13 +155,17 @@ const Map: React.FC<MapProps> = (props) => {
           layerDocuments={layerDocuments}
           focusMapOnDocumentId={focusMapOnDocumentId}
         />
-      )} */}
+      )}
       <MapBottomSheet
         document={highlightedDoc}
         addDocument={props.addDocument}
         editDocument={props.editDocument}
         removeDocument={props.removeDocument}
         focusHandler={focusMapOnDocumentId}
+        canCreateLocationCandidate={!!location}
+        canCreatePenMemo={!!config?.getCategory('PenMemo')}
+        createFeatureCandidateAtCurrentLocation={createFeatureCandidateAtCurrentLocation}
+        createPenMemoDraft={createPenMemoDraft}
       />
     </View>
   );

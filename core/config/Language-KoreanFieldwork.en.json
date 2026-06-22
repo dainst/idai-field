@@ -574,6 +574,15 @@
         "featurePackage": {
           "label": "Feature package"
         },
+        "featureRecordingStatus": {
+          "label": "Feature recording status"
+        },
+        "geometrySource": {
+          "label": "Geometry source"
+        },
+        "geometryConfidence": {
+          "label": "Geometry confidence"
+        },
         "featureInterpretationType": {
           "label": "Feature interpretation type"
         },
@@ -604,6 +613,18 @@
       "fields": {
         "featurePackage": {
           "label": "Feature package"
+        },
+        "featureInterpretationType": {
+          "label": "Feature interpretation type"
+        },
+        "featureRecordingStatus": {
+          "label": "Feature recording status"
+        },
+        "geometrySource": {
+          "label": "Geometry source"
+        },
+        "geometryConfidence": {
+          "label": "Geometry confidence"
         },
         "fieldRecordQuality": {
           "label": "Field record quality"
@@ -887,6 +908,15 @@
       "fields": {
         "featurePackage": {
           "label": "Feature package"
+        },
+        "featureRecordingStatus": {
+          "label": "Feature recording status"
+        },
+        "geometrySource": {
+          "label": "Geometry source"
+        },
+        "geometryConfidence": {
+          "label": "Geometry confidence"
         },
         "fieldRecordQuality": {
           "label": "Field record quality"
@@ -1310,6 +1340,32 @@
         },
         "mediaRights": {
           "label": "Media rights management"
+        }
+      }
+    },
+    "PenMemo": {
+      "label": "Pen memo",
+      "fields": {
+        "penMemoStrokes": {
+          "label": "Original stroke JSON"
+        },
+        "penMemoPreviewImageId": {
+          "label": "Preview image id"
+        },
+        "penMemoAutoTranscript": {
+          "label": "Automatic transcript"
+        },
+        "penMemoReviewedTranscript": {
+          "label": "Reviewed transcript"
+        },
+        "penMemoTranscriptionStatus": {
+          "label": "Transcription status"
+        },
+        "penMemoRecognitionEngine": {
+          "label": "OCR engine"
+        },
+        "penMemoRecognitionConfidence": {
+          "label": "OCR confidence"
         }
       }
     },

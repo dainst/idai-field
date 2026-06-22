@@ -169,8 +169,6 @@ const GLMap: React.FC<GLMapProps> = ({
   }, [viewBox]);
 
   useEffect(() => {
-    if (!geoDocuments.length) return;
-
     scene.clear();
     geoDocuments.forEach((doc) =>
       addDocumentToScene(doc, documentToWorldMatrix, scene, config)
@@ -178,6 +176,12 @@ const GLMap: React.FC<GLMapProps> = ({
     layerDocuments.forEach((doc) =>
       addLayerToScene(doc, documentToWorldMatrix, scene)
     );
+    if (location) {
+      addlocationPointToScene(documentToWorldMatrix, scene, [
+        location.x,
+        location.y,
+      ]);
+    }
     renderScene();
   }, [
     geoDocuments,
@@ -187,6 +191,7 @@ const GLMap: React.FC<GLMapProps> = ({
     renderScene,
     pointRadius,
     layerDocuments,
+    location,
   ]);
 
   useEffect(() => {
@@ -218,16 +223,6 @@ const GLMap: React.FC<GLMapProps> = ({
     });
     renderScene();
   }, [scene, selectedDocumentIds, previousSelectedDocIds, renderScene]);
-
-  useEffect(() => {
-    if (!location) return;
-    addlocationPointToScene(documentToWorldMatrix, scene, [
-      location.x,
-      location.y,
-    ]);
-    renderScene();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location, scene, documentToWorldMatrix]);
 
   useEffect(() => {
     if (renderer.current && glContextToScreenFactor.current) {
@@ -298,7 +293,7 @@ const GLMap: React.FC<GLMapProps> = ({
     renderScene();
   };
 
-  if (!camera || !scene.children.length) return null;
+  if (!camera) return null;
 
   return (
     <View style={styles.mapSettingsContainer}>

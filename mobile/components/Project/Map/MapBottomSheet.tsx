@@ -12,6 +12,10 @@ interface MapBottomSheetProps {
   editDocument: (docId: string, categoryName: string) => void;
   removeDocument: (doc: Document) => void;
   focusHandler: (docId: string) => void;
+  canCreateLocationCandidate: boolean;
+  canCreatePenMemo: boolean;
+  createFeatureCandidateAtCurrentLocation: () => void;
+  createPenMemoDraft: () => void;
 }
 
 const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
@@ -20,6 +24,10 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
   editDocument,
   removeDocument,
   focusHandler,
+  canCreateLocationCandidate,
+  canCreatePenMemo,
+  createFeatureCandidateAtCurrentLocation,
+  createPenMemoDraft,
 }) => {
   const ICON_SIZE = 20;
   const snapPoints = useMemo(() => [0.1, 0.4, 0.8], []);
@@ -53,9 +61,25 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
         <Button
           style={styles.button}
           variant="success"
-          title="Add Child"
+          title="Add"
           onPress={addChildPressHandler}
           icon={<Ionicons name="add" size={ICON_SIZE} />}
+        />
+        <Button
+          style={styles.button}
+          variant="success"
+          title="후보"
+          isDisabled={!canCreateLocationCandidate}
+          onPress={createFeatureCandidateAtCurrentLocation}
+          icon={<MaterialIcons name="add-location-alt" size={ICON_SIZE} />}
+        />
+        <Button
+          style={styles.button}
+          variant="secondary"
+          title="펜"
+          isDisabled={!canCreatePenMemo}
+          onPress={createPenMemoDraft}
+          icon={<MaterialIcons name="edit-note" size={ICON_SIZE} />}
         />
         <Button
           style={styles.button}

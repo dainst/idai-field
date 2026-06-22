@@ -208,6 +208,12 @@
                         Bezeichner (Feld <em>identifier</em>). Datensätze im Shapefile, die nicht zugeordnet
                         werden können, werden ignoriert.
                     </div>
+
+                    <div *ngIf="importState.format === 'dxf'" class="import-info">
+                        Beim DXF-Import wird die Datei mit GDAL in GeoJSON umgewandelt. Es werden keine neuen
+                        Ressourcen angelegt, sondern existierenden Ressourcen Geometrien hinzugefügt. Die
+                        Zuordnung von Datensätzen geschieht per Bezeichner (Feld <em>identifier</em>).
+                    </div>
                 </div>
                 <div *ngIf="ignoredIdentifiers.length > 1" class="col-lg-6 mx-lg-auto py-4">
                     <div class="card bg-light">

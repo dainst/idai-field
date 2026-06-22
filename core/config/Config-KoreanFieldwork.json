@@ -1663,6 +1663,18 @@
           "inputType": "checkboxes",
           "constraintIndexed": true
         },
+        "featureRecordingStatus": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "geometrySource": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "geometryConfidence": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
         "fieldRecordQuality": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1695,6 +1707,9 @@
       "valuelists": {
         "period": "KoreanFieldwork-featurePeriod",
         "featurePackage": "KoreanFieldwork-featurePackage",
+        "featureRecordingStatus": "KoreanFieldwork-featureRecordingStatus",
+        "geometrySource": "KoreanFieldwork-geometrySource",
+        "geometryConfidence": "KoreanFieldwork-geometryConfidence",
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
         "settlementSpatialInterpretation": "KoreanFieldwork-settlementSpatialInterpretation",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
@@ -1724,6 +1739,9 @@
           "name": "koreanFieldwork",
           "fields": [
             "featurePackage",
+            "featureRecordingStatus",
+            "geometrySource",
+            "geometryConfidence",
             "fieldRecordQuality",
             "settlementSpatialInterpretation",
             "recordCreationTiming",
@@ -1752,6 +1770,18 @@
         },
         "featureInterpretationType": {
           "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "featureRecordingStatus": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "geometrySource": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "geometryConfidence": {
+          "inputType": "dropdown",
           "constraintIndexed": true
         },
         "fieldRecordQuality": {
@@ -2129,6 +2159,9 @@
         "period": "KoreanFieldwork-featurePeriod",
         "featurePackage": "KoreanFieldwork-featurePackage",
         "featureInterpretationType": "KoreanFieldwork-featureInterpretationType",
+        "featureRecordingStatus": "KoreanFieldwork-featureRecordingStatus",
+        "geometrySource": "KoreanFieldwork-geometrySource",
+        "geometryConfidence": "KoreanFieldwork-geometryConfidence",
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
         "typologyArgument": "KoreanFieldwork-typologyArgument",
         "chronologyArgument": "KoreanFieldwork-chronologyArgument",
@@ -2244,6 +2277,9 @@
           "fields": [
             "featurePackage",
             "featureInterpretationType",
+            "featureRecordingStatus",
+            "geometrySource",
+            "geometryConfidence",
             "fieldRecordQuality",
             "typologyArgument",
             "chronologyArgument",
@@ -2364,6 +2400,18 @@
       "fields": {
         "featurePackage": {
           "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "featureRecordingStatus": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "geometrySource": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "geometryConfidence": {
+          "inputType": "dropdown",
           "constraintIndexed": true
         },
         "fieldRecordQuality": {
@@ -2492,6 +2540,9 @@
       "valuelists": {
         "period": "KoreanFieldwork-featurePeriod",
         "featurePackage": "KoreanFieldwork-featurePackage",
+        "featureRecordingStatus": "KoreanFieldwork-featureRecordingStatus",
+        "geometrySource": "KoreanFieldwork-geometrySource",
+        "geometryConfidence": "KoreanFieldwork-geometryConfidence",
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
         "chronologyArgument": "KoreanFieldwork-chronologyArgument",
         "chronologyUnitDecision": "KoreanFieldwork-chronologyUnitDecision",
@@ -2544,6 +2595,9 @@
           "name": "koreanFieldwork",
           "fields": [
             "featurePackage",
+            "featureRecordingStatus",
+            "geometrySource",
+            "geometryConfidence",
             "fieldRecordQuality",
             "chronologyArgument",
             "chronologyUnitDecision",
@@ -3451,6 +3505,71 @@
           ]
         }
       ]
+    },
+    "PenMemo": {
+      "parent": "Image",
+      "color": "#7161a8",
+      "hidden": [],
+      "fields": {
+        "penMemoStrokes": {
+          "inputType": "text",
+          "mandatory": true,
+          "constraintIndexed": true
+        },
+        "penMemoPreviewImageId": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "penMemoAutoTranscript": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "penMemoReviewedTranscript": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "penMemoTranscriptionStatus": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "penMemoRecognitionEngine": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "penMemoRecognitionConfidence": {
+          "inputType": "unsignedFloat",
+          "constraintIndexed": true
+        }
+      },
+      "valuelists": {
+        "penMemoTranscriptionStatus": "KoreanFieldwork-penMemoTranscriptionStatus"
+      },
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "campaign", "date", "isSameAs"]
+        },
+        {
+          "name": "workflow",
+          "fields": ["depicts", "isSubjectOf", "isResultOf"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description", "originalFilename", "imageRights"]
+        },
+        {
+          "name": "koreanFieldwork",
+          "fields": [
+            "penMemoStrokes",
+            "penMemoPreviewImageId",
+            "penMemoAutoTranscript",
+            "penMemoReviewedTranscript",
+            "penMemoTranscriptionStatus",
+            "penMemoRecognitionEngine",
+            "penMemoRecognitionConfidence"
+          ]
+        }
+      ]
     }
   },
   "order": [
@@ -3468,6 +3587,7 @@
     "Sample",
     "Drawing",
     "Photo",
+    "PenMemo",
     "Image",
     "TypeCatalog",
     "Type",

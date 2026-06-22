@@ -14,6 +14,8 @@ import useToast from '@/hooks/use-toast';
 import Button from '@/components/common/Button';
 import DocumentForm from '@/components/common/forms/DocumentForm';
 import SoilProfileCameraButton, {
+  FieldworkPhotoCaptureData,
+  PhotoCameraButton,
   SoilProfileCaptureData,
 } from '@/components/Project/SoilProfileCameraButton';
 import KoreanFieldworkRecordActionPanel from '@/components/Project/KoreanFieldworkRecordActionPanel';
@@ -83,6 +85,9 @@ const DocumentEdit: React.FC = () => {
   };
 
   const updateSoilProfileCapture = (data: SoilProfileCaptureData) => {
+    setResource((oldResource) => oldResource && { ...oldResource, ...data });
+  };
+  const updatePhotoCapture = (data: FieldworkPhotoCaptureData) => {
     setResource((oldResource) => oldResource && { ...oldResource, ...data });
   };
   const allowedAddCategoryNames = useMemo(
@@ -172,17 +177,48 @@ const DocumentEdit: React.FC = () => {
       }
       resource={resource}
       updateFunction={updateResource}
-      resourceActions={
-        resource.category === 'SoilProfilePhoto'
-          ? <SoilProfileCameraButton onCapture={updateSoilProfileCapture} />
-          : undefined
-      }
+      resourceActions={renderPhotoResourceActions(
+        resource,
+        updatePhotoCapture,
+        updateSoilProfileCapture
+      )}
     />
   );
 };
 
 const getParam = (param: string | string[] | undefined): string | undefined =>
   Array.isArray(param) ? param[0] : param;
+
+const renderPhotoResourceActions = (
+  resource: Resource,
+  updatePhotoCapture: (data: FieldworkPhotoCaptureData) => void,
+  updateSoilProfileCapture: (data: SoilProfileCaptureData) => void
+) => {
+  if (resource.category === 'Photo') {
+    return (
+      <PhotoCameraButton
+        capturedUri={getStringValue(resource.imageUri ?? resource.fieldworkPhotoUri)}
+        onCapture={updatePhotoCapture}
+      />
+    );
+  }
+
+  if (resource.category === 'SoilProfilePhoto') {
+    return (
+      <SoilProfileCameraButton
+        capturedUri={getStringValue(resource.soilProfilePhotoUri)}
+        onCapture={updateSoilProfileCapture}
+      />
+    );
+  }
+
+  return undefined;
+};
+
+const getStringValue = (value: unknown): string | undefined =>
+  typeof value === 'string' && value.trim().length > 0
+    ? value
+    : undefined;
 
 const getMissingDependencies = (
   dependencies: [boolean, string][]

@@ -16,6 +16,15 @@ import {
   SOIL_PROFILE_PHOTO_SIZE_HINT_KB_DEFAULT,
 } from './Map/korean-fieldwork-drafts';
 
+export interface FieldworkPhotoCaptureData {
+  imageUri: string;
+  originalFilename: string;
+  fieldworkPhotoUri: string;
+  fieldworkPhotoSizeHintKb: number;
+  fieldworkPhotoQuality: number;
+  fieldworkPhotoCapturedAt: string;
+}
+
 export interface SoilProfileCaptureData {
   soilProfilePhotoUri: string;
   soilProfilePhotoSizeHintKb: number;
@@ -23,11 +32,87 @@ export interface SoilProfileCaptureData {
   soilProfilePhotoCapturedAt: string;
 }
 
-interface SoilProfileCameraButtonProps {
-  onCapture: (data: SoilProfileCaptureData) => void;
+interface FieldworkCameraButtonProps<TCaptureData> {
+  buttonTitle: string;
+  captureButtonTestID: string;
+  closeButtonTestID: string;
+  openButtonTestID: string;
+  capturedUri?: string;
+  onCapture: (data: TCaptureData) => void;
+  createCaptureData: (uri: string, capturedAt: Date) => TCaptureData;
 }
 
-const SoilProfileCameraButton: React.FC<SoilProfileCameraButtonProps> = ({ onCapture }) => {
+interface SoilProfileCameraButtonProps {
+  onCapture: (data: SoilProfileCaptureData) => void;
+  capturedUri?: string;
+}
+
+interface PhotoCameraButtonProps {
+  onCapture: (data: FieldworkPhotoCaptureData) => void;
+  capturedUri?: string;
+}
+
+export const createFieldworkPhotoCaptureData = (
+  uri: string,
+  capturedAt: Date = new Date()
+): FieldworkPhotoCaptureData => ({
+  imageUri: uri,
+  originalFilename: getFilenameFromUri(uri),
+  fieldworkPhotoUri: uri,
+  fieldworkPhotoSizeHintKb: SOIL_PROFILE_PHOTO_SIZE_HINT_KB_DEFAULT,
+  fieldworkPhotoQuality: SOIL_PROFILE_PHOTO_QUALITY_DEFAULT,
+  fieldworkPhotoCapturedAt: capturedAt.toISOString(),
+});
+
+export const createSoilProfileCaptureData = (
+  uri: string,
+  capturedAt: Date = new Date()
+): SoilProfileCaptureData => ({
+  soilProfilePhotoUri: uri,
+  soilProfilePhotoSizeHintKb: SOIL_PROFILE_PHOTO_SIZE_HINT_KB_DEFAULT,
+  soilProfilePhotoQuality: SOIL_PROFILE_PHOTO_QUALITY_DEFAULT,
+  soilProfilePhotoCapturedAt: capturedAt.toISOString(),
+});
+
+export const PhotoCameraButton: React.FC<PhotoCameraButtonProps> = ({
+  onCapture,
+  capturedUri,
+}) => (
+  <FieldworkCameraButton
+    buttonTitle="현장사진 촬영"
+    captureButtonTestID="fieldworkPhotoCameraCaptureButton"
+    closeButtonTestID="fieldworkPhotoCameraCloseButton"
+    openButtonTestID="fieldworkPhotoCameraButton"
+    capturedUri={capturedUri}
+    onCapture={onCapture}
+    createCaptureData={createFieldworkPhotoCaptureData}
+  />
+);
+
+const SoilProfileCameraButton: React.FC<SoilProfileCameraButtonProps> = ({
+  onCapture,
+  capturedUri,
+}) => (
+  <FieldworkCameraButton
+    buttonTitle="토층사진 촬영"
+    captureButtonTestID="soilProfileCameraCaptureButton"
+    closeButtonTestID="soilProfileCameraCloseButton"
+    openButtonTestID="soilProfileCameraButton"
+    capturedUri={capturedUri}
+    onCapture={onCapture}
+    createCaptureData={createSoilProfileCaptureData}
+  />
+);
+
+const FieldworkCameraButton = <TCaptureData,>({
+  buttonTitle,
+  captureButtonTestID,
+  closeButtonTestID,
+  openButtonTestID,
+  capturedUri,
+  onCapture,
+  createCaptureData,
+}: FieldworkCameraButtonProps<TCaptureData>) => {
   const cameraRef = useRef<CameraView | null>(null);
   const [cameraActive, setCameraActive] = useState(false);
   const [permissionDenied, setPermissionDenied] = useState(false);
@@ -59,12 +144,7 @@ const SoilProfileCameraButton: React.FC<SoilProfileCameraButtonProps> = ({ onCap
 
       if (!picture) return;
 
-      onCapture({
-        soilProfilePhotoUri: picture.uri,
-        soilProfilePhotoSizeHintKb: SOIL_PROFILE_PHOTO_SIZE_HINT_KB_DEFAULT,
-        soilProfilePhotoQuality: SOIL_PROFILE_PHOTO_QUALITY_DEFAULT,
-        soilProfilePhotoCapturedAt: new Date().toISOString(),
-      });
+      onCapture(createCaptureData(picture.uri, new Date()));
       setCameraActive(false);
     } finally {
       setIsCapturing(false);
@@ -75,11 +155,19 @@ const SoilProfileCameraButton: React.FC<SoilProfileCameraButtonProps> = ({ onCap
     <View style={styles.container}>
       <Button
         variant="primary"
-        title="토층사진 촬영"
+        title={buttonTitle}
         icon={<Ionicons name="camera-outline" size={18} />}
         onPress={() => { void openCamera(); }}
-        testID="soilProfileCameraButton"
+        testID={openButtonTestID}
       />
+      {!!capturedUri && (
+        <View style={styles.capturedNotice}>
+          <Ionicons name="image-outline" size={16} color="#027a48" />
+          <Text style={styles.capturedText} numberOfLines={1}>
+            촬영됨 · {getFilenameFromUri(capturedUri)}
+          </Text>
+        </View>
+      )}
       {permissionDenied && (
         <Text style={styles.warning}>카메라 권한이 필요합니다.</Text>
       )}
@@ -100,7 +188,7 @@ const SoilProfileCameraButton: React.FC<SoilProfileCameraButtonProps> = ({ onCap
               variant="transparent"
               icon={<Ionicons name="close" size={25} />}
               onPress={() => setCameraActive(false)}
-              testID="soilProfileCameraCloseButton"
+              testID={closeButtonTestID}
             />
             <Button
               variant="primary"
@@ -108,7 +196,7 @@ const SoilProfileCameraButton: React.FC<SoilProfileCameraButtonProps> = ({ onCap
               icon={<Ionicons name="radio-button-on" size={18} />}
               isDisabled={isCapturing}
               onPress={() => { void takePicture(); }}
-              testID="soilProfileCameraCaptureButton"
+              testID={captureButtonTestID}
             />
           </View>
         </View>
@@ -117,11 +205,37 @@ const SoilProfileCameraButton: React.FC<SoilProfileCameraButtonProps> = ({ onCap
   );
 };
 
+const getFilenameFromUri = (uri: string): string => {
+  const [path] = uri.split('?');
+  const filename = path.split('/').filter(Boolean).pop();
+
+  return filename && filename.trim().length > 0
+    ? decodeURIComponent(filename)
+    : `fieldwork-photo-${Date.now()}.jpg`;
+};
+
 const styles = StyleSheet.create({
   container: {
     gap: 6,
     paddingHorizontal: 14,
     paddingVertical: 8,
+  },
+  capturedNotice: {
+    alignItems: 'center',
+    backgroundColor: '#ecfdf3',
+    borderColor: '#abefc6',
+    borderRadius: 6,
+    borderWidth: 1,
+    flexDirection: 'row',
+    minHeight: 34,
+    paddingHorizontal: 9,
+  },
+  capturedText: {
+    color: '#027a48',
+    flex: 1,
+    fontSize: 12,
+    fontWeight: '800',
+    marginLeft: 6,
   },
   warning: {
     color: '#b00020',

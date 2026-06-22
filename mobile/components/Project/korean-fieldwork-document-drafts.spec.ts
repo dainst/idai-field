@@ -136,6 +136,28 @@ describe('Korean fieldwork document drafts', () => {
     });
   });
 
+  it('creates regular Photo drafts with fieldwork capture defaults', () => {
+    const trenchDoc = createDoc('trench-1', C.TRENCH);
+    const config = allowRelations({
+      [`${C.PHOTO}:${C.TRENCH}`]: ['depicts'],
+    });
+
+    const draft = createKoreanFieldworkDraftResource(
+      trenchDoc,
+      C.PHOTO,
+      config
+    );
+
+    expect(draft).toMatchObject({
+      identifier: 'photo-1700000000000',
+      category: C.PHOTO,
+      relations: { depicts: ['trench-1'] },
+      fieldworkPhotoSizeHintKb: SOIL_PROFILE_PHOTO_SIZE_HINT_KB_DEFAULT,
+      fieldworkPhotoQuality: SOIL_PROFILE_PHOTO_QUALITY_DEFAULT,
+      mediaEvidenceRole: ['fieldResultRecord'],
+    });
+  });
+
   it('creates SurveyBoundary drafts with operation-level boundary defaults', () => {
     const operationDoc = createDoc('operation-1', C.OPERATION);
     const config = allowRelations({

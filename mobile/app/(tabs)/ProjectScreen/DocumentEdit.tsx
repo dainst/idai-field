@@ -17,6 +17,7 @@ import SoilProfileCameraButton, {
   SoilProfileCaptureData,
 } from '@/components/Project/SoilProfileCameraButton';
 import KoreanFieldworkRecordContextPanel from '@/components/Project/KoreanFieldworkRecordContextPanel';
+import KoreanFieldworkQuickRecordPanel from '@/components/Project/KoreanFieldworkQuickRecordPanel';
 import { ToastType } from '@/components/common/Toast/ToastProvider';
 import { router, useGlobalSearchParams } from 'expo-router';
 import { ProjectContext } from '@/contexts/project-context';
@@ -74,8 +75,7 @@ const DocumentEdit: React.FC = () => {
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const updateResource = (key: string, value: any) => {
+  const updateResource = (key: string, value: unknown) => {
     setResource(
       (oldResource) => oldResource && { ...oldResource, [key]: value }
     );
@@ -127,6 +127,8 @@ const DocumentEdit: React.FC = () => {
     );
   }
 
+  const effectiveDocument = { ...document, resource };
+
   return (
     <DocumentForm
       titleBarRight={
@@ -145,13 +147,20 @@ const DocumentEdit: React.FC = () => {
       }`}
       returnBtnHandler={onReturn}
       formHeader={
-        <KoreanFieldworkRecordContextPanel
-          document={document}
-          documents={documents ?? []}
-          allowedAddCategoryNames={allowedAddCategoryNames}
-          onAddDocumentOfCategory={addRelatedDocument}
-          onOpenDocument={openRelatedDocument}
-        />
+        <View>
+          <KoreanFieldworkRecordContextPanel
+            document={effectiveDocument}
+            documents={documents ?? []}
+            allowedAddCategoryNames={allowedAddCategoryNames}
+            onAddDocumentOfCategory={addRelatedDocument}
+            onOpenDocument={openRelatedDocument}
+          />
+          <KoreanFieldworkQuickRecordPanel
+            category={category}
+            resource={resource}
+            onUpdateResourceField={updateResource}
+          />
+        </View>
       }
       resource={resource}
       updateFunction={updateResource}

@@ -45,6 +45,12 @@ import {
   getKoreanFieldworkPriorityTasks,
   getKoreanFieldworkTodayActionTargets,
 } from '@/components/Project/korean-fieldwork-today-actions';
+import {
+  getKoreanFieldworkRecordWorkFilterCounts,
+  KOREAN_FIELDWORK_RECORD_WORK_FILTERS,
+  KoreanFieldworkRecordWorkFilterId,
+  matchesKoreanFieldworkRecordWorkFilter,
+} from '@/components/Project/korean-fieldwork-record-work-filters';
 import { ConfigurationContext } from '@/contexts/configuration-context';
 import LabelsContext from '@/contexts/labels/labels-context';
 import { ProjectContext } from '@/contexts/project-context';
@@ -181,8 +187,11 @@ const DocumentsList: React.FC = () => {
   const config = useContext(ConfigurationContext);
   const { labels } = useContext(LabelsContext);
   const [activeFilter, setActiveFilter] = useState<FilterId>('all');
+  const [activeWorkFilter, setActiveWorkFilter] =
+    useState<KoreanFieldworkRecordWorkFilterId>('all');
   const [query, setQuery] = useState('');
   const [addModalParent, setAddModalParent] = useState<Document>();
+  const now = useMemo(() => new Date(), []);
 
   const documentsById = useMemo(
     () => new Map(documents.map((document) => [document.resource.id, document])),
@@ -204,20 +213,44 @@ const DocumentsList: React.FC = () => {
     return getKoreanFieldworkCategoryLabel(categoryName);
   }, [config, labels]);
 
-  const filteredDocuments = useMemo(() => documents.filter((document) => {
+  const categoryFilteredDocuments = useMemo(() => documents.filter((document) => {
     const filterCategories = activeFilterDefinition.categories;
-    const matchesFilter = filterCategories.length === 0
+    return filterCategories.length === 0
       || filterCategories.includes(document.resource.category);
+  }), [
+    activeFilterDefinition,
+    documents,
+  ]);
+  const workFilterCounts = useMemo(
+    () => getKoreanFieldworkRecordWorkFilterCounts(
+      categoryFilteredDocuments,
+      documents,
+      todaySummary.issueCountByDocumentId,
+      now
+    ),
+    [categoryFilteredDocuments, documents, now, todaySummary.issueCountByDocumentId]
+  );
+  const filteredDocuments = useMemo(() => categoryFilteredDocuments.filter((document) => {
+    const matchesWorkFilter = matchesKoreanFieldworkRecordWorkFilter(
+      document,
+      activeWorkFilter,
+      documents,
+      todaySummary.issueCountByDocumentId,
+      now
+    );
     const matchesQuery = !normalizedQuery
       || getSearchableText(document, getCategoryLabel(document.resource.category))
         .includes(normalizedQuery);
 
-    return matchesFilter && matchesQuery;
+    return matchesWorkFilter && matchesQuery;
   }), [
-    activeFilterDefinition,
+    activeWorkFilter,
+    categoryFilteredDocuments,
     documents,
     getCategoryLabel,
+    now,
     normalizedQuery,
+    todaySummary.issueCountByDocumentId,
   ]);
 
   const groupedDocuments = useMemo(() => RECORD_GROUPS
@@ -487,6 +520,54 @@ const DocumentsList: React.FC = () => {
                 </Text>
               </TouchableOpacity>
             ))}
+          </ScrollView>
+          <View style={styles.workFilterHeader}>
+            <Text style={styles.workFilterTitle}>작업 상태</Text>
+            <Text style={styles.workFilterCount}>
+              {workFilterCounts[activeWorkFilter]}건
+            </Text>
+          </View>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.workFilterRow}
+          >
+            {KOREAN_FIELDWORK_RECORD_WORK_FILTERS.map((filter) => {
+              const isActive = activeWorkFilter === filter.id;
+              return (
+                <TouchableOpacity
+                  key={filter.id}
+                  activeOpacity={0.86}
+                  style={[
+                    styles.workFilterChip,
+                    isActive && styles.workFilterChipActive,
+                  ]}
+                  onPress={() => setActiveWorkFilter(filter.id)}
+                >
+                  <MaterialIcons
+                    name={filter.icon as keyof typeof MaterialIcons.glyphMap}
+                    size={15}
+                    color={isActive ? 'white' : '#344054'}
+                  />
+                  <Text
+                    style={[
+                      styles.workFilterChipText,
+                      isActive && styles.workFilterChipTextActive,
+                    ]}
+                  >
+                    {filter.label}
+                  </Text>
+                  <Text
+                    style={[
+                      styles.workFilterChipCount,
+                      isActive && styles.workFilterChipTextActive,
+                    ]}
+                  >
+                    {workFilterCounts[filter.id]}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
           </ScrollView>
         </View>
 
@@ -1236,6 +1317,58 @@ const styles = StyleSheet.create({
   },
   filterChipTextActive: {
     color: 'white',
+  },
+  workFilterHeader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingTop: 12,
+  },
+  workFilterTitle: {
+    color: '#344054',
+    fontSize: 12,
+    fontWeight: '900',
+  },
+  workFilterCount: {
+    color: '#667085',
+    fontSize: 12,
+    fontWeight: '800',
+  },
+  workFilterRow: {
+    paddingTop: 8,
+  },
+  workFilterChip: {
+    alignItems: 'center',
+    backgroundColor: '#f8fafc',
+    borderColor: '#cbd5e1',
+    borderRadius: 6,
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginRight: 8,
+    minHeight: 36,
+    paddingHorizontal: 10,
+  },
+  workFilterChipActive: {
+    backgroundColor: '#175cd3',
+    borderColor: '#175cd3',
+  },
+  workFilterChipText: {
+    color: '#344054',
+    fontSize: 12,
+    fontWeight: '800',
+    marginLeft: 5,
+  },
+  workFilterChipTextActive: {
+    color: 'white',
+  },
+  workFilterChipCount: {
+    color: '#344054',
+    fontSize: 12,
+    fontWeight: '900',
+    marginLeft: 6,
+    minWidth: 14,
+    textAlign: 'right',
   },
   closeoutPanel: {
     borderBottomWidth: 1,

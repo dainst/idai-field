@@ -10,6 +10,8 @@ export interface KoreanFieldworkEvidenceChip {
   label: string;
   count: number;
   tone: 'filled'|'empty';
+  documents: Document[];
+  createCategoryName?: string;
 }
 
 const C = KOREAN_FIELDWORK_CATEGORIES;
@@ -27,38 +29,51 @@ const EVIDENCE_DEFINITIONS = [
   {
     id: 'featureSegments',
     label: '피트',
-    getCount: (bundle: EvidenceBundle) => bundle.featureSegments.length,
+    getDocuments: (bundle: EvidenceBundle) => bundle.featureSegments,
     categories: [C.OPERATION, C.TRENCH, C.FEATURE_GROUP, C.FEATURE],
+    createCategoryName: C.FEATURE_SEGMENT,
   },
   {
     id: 'layers',
     label: '층위',
-    getCount: (bundle: EvidenceBundle) => bundle.layers.length,
+    getDocuments: (bundle: EvidenceBundle) => bundle.layers,
     categories: [C.TRENCH, C.FEATURE_GROUP, C.FEATURE, C.FEATURE_SEGMENT],
+    createCategoryName: C.LAYER,
   },
   {
     id: 'photos',
     label: '사진',
-    getCount: (bundle: EvidenceBundle) => bundle.photos.length,
+    getDocuments: (bundle: EvidenceBundle) => bundle.photos,
     categories: EVIDENCE_TARGET_CATEGORIES,
+    createCategoryName: C.PHOTO,
   },
   {
     id: 'soilProfilePhotos',
     label: '토층',
-    getCount: (bundle: EvidenceBundle) => bundle.soilProfilePhotos.length,
+    getDocuments: (bundle: EvidenceBundle) => bundle.soilProfilePhotos,
     categories: [C.OPERATION, C.FEATURE, C.FEATURE_SEGMENT],
+    createCategoryName: C.SOIL_PROFILE_PHOTO,
+  },
+  {
+    id: 'drawings',
+    label: '도면',
+    getDocuments: (bundle: EvidenceBundle) => bundle.drawings,
+    categories: EVIDENCE_TARGET_CATEGORIES,
+    createCategoryName: C.DRAWING,
   },
   {
     id: 'finds',
     label: '유물',
-    getCount: (bundle: EvidenceBundle) => bundle.finds.length,
+    getDocuments: (bundle: EvidenceBundle) => bundle.finds,
     categories: EVIDENCE_TARGET_CATEGORIES,
+    createCategoryName: C.FIND,
   },
   {
     id: 'samples',
     label: '시료',
-    getCount: (bundle: EvidenceBundle) => bundle.samples.length,
+    getDocuments: (bundle: EvidenceBundle) => bundle.samples,
     categories: EVIDENCE_TARGET_CATEGORIES,
+    createCategoryName: C.SAMPLE,
   },
 ];
 
@@ -77,13 +92,16 @@ export const getKoreanFieldworkEvidenceChips = (
       definition.categories.includes(document.resource.category)
     )
     .map((definition) => {
-      const count = definition.getCount(bundle);
+      const evidenceDocuments = definition.getDocuments(bundle);
+      const count = evidenceDocuments.length;
 
       return {
         id: definition.id,
         label: definition.label,
         count,
         tone: count > 0 ? 'filled' : 'empty',
+        documents: evidenceDocuments,
+        createCategoryName: definition.createCategoryName,
       };
     });
 };

@@ -2,9 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import {
   CategoryForm,
   Document,
-  ProjectConfiguration,
   Resource,
-  Tree,
 } from 'idai-field-core';
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { Keyboard, StyleSheet, Text, View } from 'react-native';
@@ -22,6 +20,7 @@ import KoreanFieldworkRecordContextPanel from '@/components/Project/KoreanFieldw
 import { ToastType } from '@/components/common/Toast/ToastProvider';
 import { router, useGlobalSearchParams } from 'expo-router';
 import { ProjectContext } from '@/contexts/project-context';
+import { getKoreanFieldworkAllowedChildCategoryNames } from '@/components/Project/korean-fieldwork-child-records';
 
 const DocumentEdit: React.FC = () => {
   const { showToast } = useToast();
@@ -87,11 +86,7 @@ const DocumentEdit: React.FC = () => {
   };
   const allowedAddCategoryNames = useMemo(
     () => document
-      ? Tree.flatten(config.getCategories())
-        .filter((candidateCategory) =>
-          canCreateChildRecord(candidateCategory, document, config)
-        )
-        .map((candidateCategory) => candidateCategory.name)
+      ? getKoreanFieldworkAllowedChildCategoryNames(document, config)
       : [],
     [config, document]
   );
@@ -179,28 +174,6 @@ const getMissingDependencies = (
     .filter(([isMissing]) => isMissing)
     .map(([, label]) => label)
     .join(', ');
-
-const canCreateChildRecord = (
-  category: CategoryForm,
-  parentDoc: Document,
-  config: ProjectConfiguration
-): boolean => {
-  if (category.name === 'Image') return false;
-
-  const canUseRelation = (relationName: string) =>
-    config.isAllowedRelationDomainCategory(
-      category.name,
-      parentDoc.resource.category,
-      relationName
-    );
-
-  return (
-    (canUseRelation('isRecordedIn') && !category.mustLieWithin)
-    || canUseRelation('liesWithin')
-    || canUseRelation('depicts')
-    || canUseRelation('isMapLayerOf')
-  );
-};
 
 const DocumentEditLoadingState: React.FC<{ text: string }> = ({ text }) => (
   <View style={styles.loadingContainer}>

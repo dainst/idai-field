@@ -25,6 +25,7 @@ import {
   getKoreanFieldworkCategoryLabel,
   KOREAN_FIELDWORK_CATEGORY_ORDER,
 } from './korean-fieldwork-categories';
+import { canCreateKoreanFieldworkChildRecord } from './korean-fieldwork-child-records';
 
 const ICON_SIZE = 34;
 
@@ -46,22 +47,8 @@ const DocumentAddModal: React.FC<AddModalProps> = ({
   const { labels } = useContext(LabelsContext);
 
   const isAllowedCategory = useCallback(
-    (category: CategoryForm) => {
-      if (category.name === 'Image' || !parentDoc) return false;
-      const canUseRelation = (relationName: string) =>
-        config.isAllowedRelationDomainCategory(
-          category.name,
-          parentDoc.resource.category,
-          relationName
-        );
-
-      return (
-        (canUseRelation('isRecordedIn') && !category.mustLieWithin)
-        || canUseRelation('liesWithin')
-        || canUseRelation('depicts')
-        || canUseRelation('isMapLayerOf')
-      );
-    },
+    (category: CategoryForm) =>
+      !!parentDoc && canCreateKoreanFieldworkChildRecord(category, parentDoc, config),
     [parentDoc, config]
   );
 

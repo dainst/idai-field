@@ -22,6 +22,7 @@ import {
   getKoreanFieldworkCategoryLabel,
   KOREAN_FIELDWORK_CATEGORIES,
 } from '@/components/Project/korean-fieldwork-categories';
+import { getKoreanFieldworkAllowedChildCategoryNames } from '@/components/Project/korean-fieldwork-child-records';
 import {
   formatKoreanFieldworkParentPath,
   getKoreanFieldworkRecordStatusChips,
@@ -475,6 +476,8 @@ const DocumentsList: React.FC = () => {
               onOpenDocument={onDocumentSelected}
               onDrillDown={onParentSelected}
               onAddChild={openAddChildModal}
+              onAddDocumentOfCategory={(parentDoc, categoryName) =>
+                navigateAddCategory(categoryName, parentDoc)}
               onEditDocument={editDocument}
             />
           ))}
@@ -490,6 +493,8 @@ const DocumentsList: React.FC = () => {
               onOpenDocument={onDocumentSelected}
               onDrillDown={onParentSelected}
               onAddChild={openAddChildModal}
+              onAddDocumentOfCategory={(parentDoc, categoryName) =>
+                navigateAddCategory(categoryName, parentDoc)}
               onEditDocument={editDocument}
             />
           )}
@@ -586,6 +591,7 @@ const RecordSection: React.FC<{
   onOpenDocument: (document: Document) => void;
   onDrillDown: (document: Document) => void;
   onAddChild: (document: Document) => void;
+  onAddDocumentOfCategory: (parentDoc: Document, categoryName: string) => void;
   onEditDocument: (document: Document) => void;
 }> = ({
   title,
@@ -597,6 +603,7 @@ const RecordSection: React.FC<{
   onOpenDocument,
   onDrillDown,
   onAddChild,
+  onAddDocumentOfCategory,
   onEditDocument,
 }) => {
   const allDocuments = Array.from(documentsById.values());
@@ -623,6 +630,8 @@ const RecordSection: React.FC<{
           onOpen={() => onOpenDocument(document)}
           onDrillDown={() => onDrillDown(document)}
           onAddChild={() => onAddChild(document)}
+          onOpenEvidence={onOpenDocument}
+          onAddEvidence={onAddDocumentOfCategory}
           onEdit={() => onEditDocument(document)}
         />
       ))}
@@ -639,6 +648,8 @@ const RecordRow: React.FC<{
   onOpen: () => void;
   onDrillDown: () => void;
   onAddChild: () => void;
+  onOpenEvidence: (document: Document) => void;
+  onAddEvidence: (parentDoc: Document, categoryName: string) => void;
   onEdit: () => void;
 }> = ({
   document,
@@ -649,6 +660,8 @@ const RecordRow: React.FC<{
   onOpen,
   onDrillDown,
   onAddChild,
+  onOpenEvidence,
+  onAddEvidence,
   onEdit,
 }) => {
   const config = useContext(ConfigurationContext);
@@ -657,6 +670,10 @@ const RecordRow: React.FC<{
   const description = getRecordDescription(document);
   const statusChips = getKoreanFieldworkRecordStatusChips(document);
   const evidenceChips = getKoreanFieldworkEvidenceChips(document, documents);
+  const allowedEvidenceCategories = useMemo(
+    () => new Set(getKoreanFieldworkAllowedChildCategoryNames(document, config)),
+    [config, document]
+  );
 
   return (
     <TouchableOpacity
@@ -691,9 +708,31 @@ const RecordRow: React.FC<{
         )}
         {evidenceChips.length > 0 && (
           <View style={styles.evidenceChipRow}>
-            {evidenceChips.map((chip) => (
-              <EvidenceChip key={`${title}-${chip.id}`} chip={chip} />
-            ))}
+            {evidenceChips.map((chip) => {
+              const [firstEvidenceDocument] = chip.documents;
+              const canCreate = !firstEvidenceDocument
+                && !!chip.createCategoryName
+                && allowedEvidenceCategories.has(chip.createCategoryName);
+              const isPressable = !!firstEvidenceDocument || canCreate;
+
+              return (
+                <EvidenceChip
+                  key={`${title}-${chip.id}`}
+                  chip={chip}
+                  canCreate={canCreate}
+                  disabled={!isPressable}
+                  onPress={() => {
+                    if (firstEvidenceDocument) {
+                      onOpenEvidence(firstEvidenceDocument);
+                      return;
+                    }
+                    if (canCreate && chip.createCategoryName) {
+                      onAddEvidence(document, chip.createCategoryName);
+                    }
+                  }}
+                />
+              );
+            })}
           </View>
         )}
         {description && (
@@ -732,22 +771,44 @@ const RecordRow: React.FC<{
   );
 };
 
-const EvidenceChip: React.FC<{ chip: KoreanFieldworkEvidenceChip }> = ({ chip }) => {
+const EvidenceChip: React.FC<{
+  chip: KoreanFieldworkEvidenceChip;
+  canCreate: boolean;
+  disabled: boolean;
+  onPress: () => void;
+}> = ({
+  chip,
+  canCreate,
+  disabled,
+  onPress,
+}) => {
   const isFilled = chip.tone === 'filled';
-  const textStyle = isFilled
+  const textStyle = isFilled || canCreate
     ? styles.evidenceChipTextFilled
     : styles.evidenceChipTextEmpty;
 
   return (
-    <View
+    <TouchableOpacity
+      activeOpacity={0.82}
+      accessibilityLabel={`${chip.label} ${chip.count}건${canCreate ? ', 추가' : ''}`}
+      disabled={disabled}
+      onPress={(event) => {
+        event.stopPropagation();
+        onPress();
+      }}
       style={[
         styles.evidenceChip,
         isFilled ? styles.evidenceChipFilled : styles.evidenceChipEmpty,
+        canCreate && styles.evidenceChipCreate,
+        disabled && styles.evidenceChipDisabled,
       ]}
     >
       <Text style={[styles.evidenceChipLabel, textStyle]}>{chip.label}</Text>
       <Text style={[styles.evidenceChipCount, textStyle]}>{chip.count}</Text>
-    </View>
+      {canCreate && (
+        <MaterialIcons name="add" size={13} color="#175cd3" />
+      )}
+    </TouchableOpacity>
   );
 };
 
@@ -1241,6 +1302,13 @@ const styles = StyleSheet.create({
   evidenceChipEmpty: {
     backgroundColor: '#f8fafc',
     borderColor: '#eaecf0',
+  },
+  evidenceChipCreate: {
+    backgroundColor: '#eff8ff',
+    borderColor: '#b2ddff',
+  },
+  evidenceChipDisabled: {
+    opacity: 0.75,
   },
   evidenceChipLabel: {
     fontSize: 11,

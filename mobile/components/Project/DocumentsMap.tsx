@@ -45,7 +45,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
   const params = useGlobalSearchParams();
 
   const { showToast } = useToast();
-  const { documents, isInOverview, onDocumentSelected } = useContext(ProjectContext);
+  const { documents, onDocumentSelected } = useContext(ProjectContext);
   const todaySummary = useMemo(
     () => getKoreanFieldworkTodaySummary(documents),
     [documents]
@@ -162,7 +162,6 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
           onClose={closeAddModal}
           parentDoc={highlightedDoc}
           onAddCategory={navigateAddCategory}
-          isInOverview={isInOverview}
         />
       )}
       {isDeleteModelOpen && (

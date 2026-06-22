@@ -18830,7 +18830,7 @@
         "label": "Feature record"
       },
       "featureSegmentRecord": {
-        "label": "Feature segment record"
+        "label": "Pit / feature detail record"
       },
       "findRecord": {
         "label": "Find record"

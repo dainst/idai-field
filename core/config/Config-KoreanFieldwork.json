@@ -161,6 +161,10 @@
       "color": "#5f7f8f",
       "hidden": [],
       "fields": {
+        "isRecordedIn": {
+          "inputType": "relation",
+          "range": ["Operation"]
+        },
         "reviewedRecordUnit": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -217,6 +221,10 @@
       "color": "#6f8758",
       "hidden": [],
       "fields": {
+        "isRecordedIn": {
+          "inputType": "relation",
+          "range": ["Operation"]
+        },
         "operationRoleResponsibility": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -531,6 +539,21 @@
         {
           "name": "position",
           "fields": ["geometry", "spatialLocation"]
+        }
+      ]
+    },
+    "Trench:default": {
+      "hidden": [],
+      "fields": {
+        "liesWithin": {
+          "inputType": "relation",
+          "range": ["Operation"]
+        }
+      },
+      "groups": [
+        {
+          "name": "hierarchy",
+          "fields": ["hasChildren", "liesWithin"]
         }
       ]
     },
@@ -1661,6 +1684,10 @@
       "color": "#2d6cdf",
       "hidden": [],
       "fields": {
+        "isRecordedIn": {
+          "inputType": "relation",
+          "range": ["Operation"]
+        },
         "geometry": {
           "geometryTypes": ["LineString", "MultiLineString"],
           "constraintIndexed": true
@@ -1722,7 +1749,7 @@
         },
         {
           "name": "hierarchy",
-          "fields": ["liesWithin"]
+          "fields": ["isRecordedIn"]
         },
         {
           "name": "workflow",
@@ -2561,6 +2588,10 @@
     "FeatureSegment:default": {
       "hidden": [],
       "fields": {
+        "isRecordedIn": {
+          "inputType": "relation",
+          "range": ["Operation", "Trench", "ExcavationArea"]
+        },
         "featurePackage": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -4287,8 +4318,10 @@
   "order": [
     "Project",
     "Operation",
-    "Feature",
     "Trench",
+    "FeatureGroup",
+    "Feature",
+    "FeatureSegment",
     "Layer",
     "Survey",
     "SurveyBoundary",
@@ -4300,8 +4333,6 @@
     "SoilProfilePhoto",
     "AerialMapLayer",
     "PenMemo",
-    "FeatureGroup",
-    "FeatureSegment",
     "Place",
     "Image",
     "TypeCatalog",

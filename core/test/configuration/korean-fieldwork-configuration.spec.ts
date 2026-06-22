@@ -104,8 +104,10 @@ describe('KoreanFieldwork project configuration', () => {
         const expectedForms = [
             'Project',
             'Operation',
-            'Feature',
             'Trench',
+            'FeatureGroup',
+            'Feature',
+            'FeatureSegment',
             'Layer',
             'Survey',
             'SurveyBoundary',
@@ -117,8 +119,6 @@ describe('KoreanFieldwork project configuration', () => {
             'AerialMapLayer',
             'PenMemo',
             'DailyLog',
-            'FeatureGroup',
-            'FeatureSegment',
             'FieldRecordQualityReview',
             'SourceEvidenceIndex',
             'TermAuthority',
@@ -127,6 +127,7 @@ describe('KoreanFieldwork project configuration', () => {
         const expectedTemplateForms = [
             'Project:default',
             'Operation:default',
+            'Trench:default',
             'DailyLog',
             'Survey:default',
             'SurveyBoundary',
@@ -154,10 +155,24 @@ describe('KoreanFieldwork project configuration', () => {
         expect(Object.keys(template.configuration.languages)).toEqual(['ko']);
         expect(template.configuration.order).toEqual(expectedForms);
         expect(template.configuration.forms.DailyLog.parent).toBe('Operation');
+        expect(template.configuration.forms.DailyLog.fields.isRecordedIn.range)
+            .toEqual(['Operation']);
+        expect(koreanFieldworkConfig.forms.DailyLog.fields.isRecordedIn.range)
+            .toEqual(['Operation']);
+        expect(template.configuration.forms['Trench:default'].fields.liesWithin.range)
+            .toEqual(['Operation']);
+        expect(koreanFieldworkConfig.forms['Trench:default'].fields.liesWithin.range)
+            .toEqual(['Operation']);
         expect(template.configuration.forms.SurveyBoundary.parent).toBe('Operation');
+        expect(template.configuration.forms.SurveyBoundary.fields.isRecordedIn.range)
+            .toEqual(['Operation']);
         expect(template.configuration.forms.SurveyBoundary.fields.geometry.geometryTypes)
             .toEqual(['LineString', 'MultiLineString']);
         expect(template.configuration.forms.FieldRecordQualityReview.parent).toBe('Operation');
+        expect(template.configuration.forms.FieldRecordQualityReview.fields.isRecordedIn.range)
+            .toEqual(['Operation']);
+        expect(koreanFieldworkConfig.forms.FieldRecordQualityReview.fields.isRecordedIn.range)
+            .toEqual(['Operation']);
         expect(template.configuration.forms.SourceEvidenceIndex.parent).toBe('Project');
         expect(template.configuration.forms.TermAuthority.parent).toBe('FeatureGroup');
         expect(template.configuration.forms.TermAlias.parent).toBe('TermAuthority');
@@ -184,15 +199,16 @@ describe('KoreanFieldwork project configuration', () => {
         const featureSegmentForm = config.forms['FeatureSegment:default'];
         const koreanFieldworkGroup = featureForm.groups.find((group: any) => group.name === 'koreanFieldwork');
 
-        expect(config.order.slice(0, 8)).toEqual([
+        expect(config.order.slice(0, 9)).toEqual([
             'Project',
             'Operation',
-            'Feature',
             'Trench',
+            'FeatureGroup',
+            'Feature',
+            'FeatureSegment',
             'Layer',
             'Survey',
-            'SurveyBoundary',
-            'Find'
+            'SurveyBoundary'
         ]);
         expect(featureGroupForm.valuelists.period).toBe('KoreanFieldwork-featurePeriod');
         expect(featureForm.valuelists.period).toBe('KoreanFieldwork-featurePeriod');
@@ -210,6 +226,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.fields.isRecordedIn.range).toEqual(['Operation', 'Trench', 'ExcavationArea']);
         expect(featureGroupForm.fields.isRecordedIn.inputType).toBe('relation');
         expect(featureGroupForm.fields.isRecordedIn.range).toEqual(['Operation', 'Trench', 'ExcavationArea']);
+        expect(featureSegmentForm.fields.isRecordedIn.inputType).toBe('relation');
+        expect(featureSegmentForm.fields.isRecordedIn.range).toEqual(['Operation', 'Trench', 'ExcavationArea']);
         expect(featureForm.fields.featureInvestigationChecklist.inputType).toBe('checkboxes');
         expect(featureForm.fields.featureSoilProfilePhotoCount.inputType).toBe('unsignedInt');
         expect(featureForm.fields.featureChecklistNote.inputType).toBe('text');
@@ -282,7 +300,7 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Aerial layer trace');
         expect(languages.ko.categories.Feature.label).toBe('유구');
         expect(languages.ko.categories.FeatureGroup.label).toBe('유구군');
-        expect(languages.ko.categories.FeatureSegment.label).toBe('유구 세부 기록');
+        expect(languages.ko.categories.FeatureSegment.label).toBe('피트·유구 세부 기록');
         expect(languages.ko.categories.Place.label).toBe('유적/지점');
         expect(languages.ko.categories.Trench.label).toBe('트렌치/조사갱');
         expect(languages.ko.categories.FieldRecordQualityReview.label).toBe('현장기록 품질검수');
@@ -308,6 +326,8 @@ describe('KoreanFieldwork project configuration', () => {
 
         expect(surveyBoundaryForm.parent).toBe('Operation');
         expect(config.order).toContain('SurveyBoundary');
+        expect(surveyBoundaryForm.fields.isRecordedIn.inputType).toBe('relation');
+        expect(surveyBoundaryForm.fields.isRecordedIn.range).toEqual(['Operation']);
         expect(surveyBoundaryForm.fields.geometry.geometryTypes).toEqual(['LineString', 'MultiLineString']);
         expect(surveyBoundaryForm.fields.surveyBoundaryType.inputType).toBe('dropdown');
         expect(surveyBoundaryForm.fields.surveyBoundarySource.inputType).toBe('dropdown');

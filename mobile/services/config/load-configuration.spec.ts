@@ -74,6 +74,60 @@ describe('loadConfiguration()', () => {
     expect(config.getCategory('TermAuthority')).toBeDefined();
     expect(config.getCategory('Feature')!.groups[0]?.name).toBe('stem');
     expect(config.getCategory('Feature')!.groups.map(group => group.name)).toContain(KOREAN_FIELDWORK_GROUP_NAME);
+    expect(config.isAllowedRelationDomainCategory('Trench', 'Operation', 'liesWithin')).toBe(true);
+    expect(config.isAllowedRelationDomainCategory('FeatureGroup', 'Operation', 'isRecordedIn')).toBe(true);
+    expect(config.isAllowedRelationDomainCategory('FeatureSegment', 'Feature', 'liesWithin')).toBe(true);
+    expect(config.isAllowedRelationDomainCategory('FeatureSegment', 'Operation', 'isRecordedIn')).toBe(true);
+    expect(config.isAllowedRelationDomainCategory('DailyLog', 'Operation', 'isRecordedIn')).toBe(true);
+    expect(config.isAllowedRelationDomainCategory('FieldRecordQualityReview', 'Operation', 'isRecordedIn')).toBe(true);
+  });
+
+  it('updates older KoreanFieldwork configuration documents at runtime', async () => {
+    const staleProject = `${KOREAN_FIELDWORK_PROJECT_PREFIX}stale-mobile-test`;
+    const staleConfiguration = await createKoreanFieldworkConfigurationDocument(staleProject);
+    delete staleConfiguration.resource.forms['Trench:default'];
+    delete staleConfiguration.resource.forms.DailyLog.fields.isRecordedIn;
+    delete staleConfiguration.resource.forms.FieldRecordQualityReview.fields.isRecordedIn;
+    delete staleConfiguration.resource.forms['FeatureSegment:default'].fields.isRecordedIn;
+    staleConfiguration.resource.order = staleConfiguration.resource.order.filter(
+      (formName) => formName !== 'Trench:default'
+    );
+    staleConfiguration.resource.projectLanguages = ['ko', 'en'];
+
+    try {
+      await pouchdbDatastore.createDb(
+        staleProject,
+        {
+          _id: 'project',
+          resource: {
+            id: 'project',
+            identifier: staleProject,
+            category: 'Project',
+            relations: {},
+          },
+          created: { user: 'Testuser', date: new Date() },
+          modified: [],
+        },
+        staleConfiguration,
+        true
+      );
+
+      const config = await loadConfiguration(
+        pouchdbDatastore,
+        staleProject,
+        KOREAN_FIELDWORK_PROJECT_LANGUAGES.slice(),
+        'Testuser'
+      );
+
+      expect(config.getProjectLanguages()).toEqual(['ko']);
+      expect(config.getCategory('Trench')).toBeDefined();
+      expect(config.isAllowedRelationDomainCategory('Trench', 'Operation', 'liesWithin')).toBe(true);
+      expect(config.isAllowedRelationDomainCategory('FeatureSegment', 'Operation', 'isRecordedIn')).toBe(true);
+      expect(config.isAllowedRelationDomainCategory('DailyLog', 'Operation', 'isRecordedIn')).toBe(true);
+      expect(config.isAllowedRelationDomainCategory('FieldRecordQualityReview', 'Operation', 'isRecordedIn')).toBe(true);
+    } finally {
+      await pouchdbDatastore.destroyDb(staleProject);
+    }
   });
 
   it('falls back to the default configuration if no project configuration document exists', async () => {

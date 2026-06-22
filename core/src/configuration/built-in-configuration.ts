@@ -1788,6 +1788,25 @@ export class BuiltInConfiguration {
             this.builtInCategories.Project.supercategory = true;
             this.builtInCategories.Project.userDefinedSubcategoriesAllowed = true;
             this.builtInCategories.Operation.userDefinedSubcategoriesAllowed = true;
+
+            this.builtInRelations.push({
+                name: 'liesWithin',
+                domain: ['Trench'],
+                range: ['Operation'],
+                editable: false,
+                visible: false,
+                inputType: 'relation'
+            });
+
+            this.builtInRelations.push({
+                name: 'isRecordedIn',
+                domain: ['Feature', 'FeatureGroup', 'FeatureSegment'],
+                range: ['Operation', 'Trench', 'ExcavationArea'],
+                editable: false,
+                visible: false,
+                inputType: 'relation'
+            });
+
         }
     }
 }

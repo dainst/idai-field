@@ -15,7 +15,11 @@ import {
   View,
 } from 'react-native';
 import CategoryIcon from '@/components/common/CategoryIcon';
-import { KOREAN_FIELDWORK_CATEGORIES } from '@/components/Project/korean-fieldwork-categories';
+import DocumentAddModal from '@/components/Project/DocumentAddModal';
+import {
+  getKoreanFieldworkCategoryLabel,
+  KOREAN_FIELDWORK_CATEGORIES,
+} from '@/components/Project/korean-fieldwork-categories';
 import { ConfigurationContext } from '@/contexts/configuration-context';
 import LabelsContext from '@/contexts/labels/labels-context';
 import { ProjectContext } from '@/contexts/project-context';
@@ -48,12 +52,12 @@ const RECORD_FILTERS: RecordFilter[] = [
   },
   {
     id: 'feature',
-    label: '유구·트렌치',
+    label: '트렌치·유구',
     categories: [
+      KOREAN_FIELDWORK_CATEGORIES.TRENCH,
       KOREAN_FIELDWORK_CATEGORIES.FEATURE_GROUP,
       KOREAN_FIELDWORK_CATEGORIES.FEATURE,
       KOREAN_FIELDWORK_CATEGORIES.FEATURE_SEGMENT,
-      KOREAN_FIELDWORK_CATEGORIES.TRENCH,
       KOREAN_FIELDWORK_CATEGORIES.LAYER,
     ],
   },
@@ -99,13 +103,13 @@ const RECORD_GROUPS: RecordGroup[] = [
     ],
   },
   {
-    title: '유구군·유구·트렌치·층위',
+    title: '트렌치·유구군·유구·피트·층위',
     subtitle: '한국 야장 기록의 중심 단위',
     categories: [
+      KOREAN_FIELDWORK_CATEGORIES.TRENCH,
       KOREAN_FIELDWORK_CATEGORIES.FEATURE_GROUP,
       KOREAN_FIELDWORK_CATEGORIES.FEATURE,
       KOREAN_FIELDWORK_CATEGORIES.FEATURE_SEGMENT,
-      KOREAN_FIELDWORK_CATEGORIES.TRENCH,
       KOREAN_FIELDWORK_CATEGORIES.LAYER,
     ],
   },
@@ -140,29 +144,6 @@ const RECORD_GROUPS: RecordGroup[] = [
   },
 ];
 
-const FIELDWORK_CATEGORY_LABELS: { [categoryName: string]: string } = {
-  [KOREAN_FIELDWORK_CATEGORIES.AERIAL_MAP_LAYER]: '항공지도',
-  [KOREAN_FIELDWORK_CATEGORIES.DAILY_LOG]: '일지',
-  [KOREAN_FIELDWORK_CATEGORIES.DRAWING]: '도면',
-  [KOREAN_FIELDWORK_CATEGORIES.FEATURE]: '유구',
-  [KOREAN_FIELDWORK_CATEGORIES.FEATURE_GROUP]: '유구군',
-  [KOREAN_FIELDWORK_CATEGORIES.FEATURE_SEGMENT]: '유구 구간',
-  [KOREAN_FIELDWORK_CATEGORIES.FIELD_RECORD_QUALITY_REVIEW]: '기록 점검',
-  [KOREAN_FIELDWORK_CATEGORIES.FIND]: '유물',
-  [KOREAN_FIELDWORK_CATEGORIES.FIND_COLLECTION]: '유물 일괄',
-  [KOREAN_FIELDWORK_CATEGORIES.LAYER]: '층위',
-  [KOREAN_FIELDWORK_CATEGORIES.OPERATION]: '조사구역',
-  [KOREAN_FIELDWORK_CATEGORIES.PEN_MEMO]: '펜 메모',
-  [KOREAN_FIELDWORK_CATEGORIES.PHOTO]: '사진',
-  [KOREAN_FIELDWORK_CATEGORIES.PLACE]: '지점',
-  [KOREAN_FIELDWORK_CATEGORIES.SAMPLE]: '시료',
-  [KOREAN_FIELDWORK_CATEGORIES.SOIL_PROFILE_PHOTO]: '토층 사진',
-  [KOREAN_FIELDWORK_CATEGORIES.SOURCE_EVIDENCE_INDEX]: '근거 색인',
-  [KOREAN_FIELDWORK_CATEGORIES.SURVEY]: '측량',
-  [KOREAN_FIELDWORK_CATEGORIES.SURVEY_BOUNDARY]: '조사 경계',
-  [KOREAN_FIELDWORK_CATEGORIES.TRENCH]: '트렌치',
-};
-
 const DocumentsList: React.FC = () => {
   const {
     documents,
@@ -174,6 +155,7 @@ const DocumentsList: React.FC = () => {
   const { labels } = useContext(LabelsContext);
   const [activeFilter, setActiveFilter] = useState<FilterId>('all');
   const [query, setQuery] = useState('');
+  const [addModalParent, setAddModalParent] = useState<Document>();
 
   const documentsById = useMemo(
     () => new Map(documents.map((document) => [document.resource.id, document])),
@@ -192,7 +174,7 @@ const DocumentsList: React.FC = () => {
     const category = config.getCategory(categoryName);
     if (category && labels) return labels.get(category);
 
-    return FIELDWORK_CATEGORY_LABELS[categoryName] ?? categoryName;
+    return getKoreanFieldworkCategoryLabel(categoryName);
   };
 
   const filteredDocuments = useMemo(() => documents.filter((document) => {
@@ -243,6 +225,24 @@ const DocumentsList: React.FC = () => {
       },
     });
   };
+  const openAddChildModal = (document: Document) => setAddModalParent(document);
+  const closeAddChildModal = () => setAddModalParent(undefined);
+  const navigateAddCategory = (
+    categoryName: string,
+    parentDoc: Document | undefined
+  ) => {
+    closeAddChildModal();
+
+    if (!parentDoc) return;
+
+    router.navigate({
+      pathname: '/ProjectScreen/DocumentAdd',
+      params: {
+        parentDocId: parentDoc.resource.id,
+        categoryName,
+      },
+    });
+  };
   const openDailyLog = () => {
     const [dailyLog] = todaySummary.dailyLogs;
     dailyLog ? editDocument(dailyLog) : openMap();
@@ -257,6 +257,13 @@ const DocumentsList: React.FC = () => {
 
   return (
     <View style={styles.screen}>
+      {addModalParent && (
+        <DocumentAddModal
+          onClose={closeAddChildModal}
+          parentDoc={addModalParent}
+          onAddCategory={navigateAddCategory}
+        />
+      )}
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={styles.content}
@@ -324,7 +331,7 @@ const DocumentsList: React.FC = () => {
             <TextInput
               value={query}
               onChangeText={setQuery}
-              placeholder="식별자, 설명, 유구·트렌치·시료 검색"
+              placeholder="식별자, 설명, 트렌치·유구·시료 검색"
               placeholderTextColor="#6f7782"
               style={styles.searchInput}
             />
@@ -381,7 +388,7 @@ const DocumentsList: React.FC = () => {
               <MaterialIcons name="assignment-late" size={24} color="#697386" />
               <Text style={styles.emptyTitle}>표시할 기록이 없습니다</Text>
               <Text style={styles.emptyText}>
-                검색어나 분류를 바꾸거나, 지도 야장에서 조사구역·유구·트렌치를 추가하세요.
+                검색어나 분류를 바꾸거나, 지도 야장에서 조사구역·트렌치·유구를 추가하세요.
               </Text>
             </View>
           )}
@@ -397,6 +404,7 @@ const DocumentsList: React.FC = () => {
               issueCountByDocumentId={todaySummary.issueCountByDocumentId}
               onOpenDocument={onDocumentSelected}
               onDrillDown={onParentSelected}
+              onAddChild={openAddChildModal}
               onEditDocument={editDocument}
             />
           ))}
@@ -411,6 +419,7 @@ const DocumentsList: React.FC = () => {
               issueCountByDocumentId={todaySummary.issueCountByDocumentId}
               onOpenDocument={onDocumentSelected}
               onDrillDown={onParentSelected}
+              onAddChild={openAddChildModal}
               onEditDocument={editDocument}
             />
           )}
@@ -506,6 +515,7 @@ const RecordSection: React.FC<{
   issueCountByDocumentId: { [documentId: string]: number };
   onOpenDocument: (document: Document) => void;
   onDrillDown: (document: Document) => void;
+  onAddChild: (document: Document) => void;
   onEditDocument: (document: Document) => void;
 }> = ({
   title,
@@ -516,6 +526,7 @@ const RecordSection: React.FC<{
   issueCountByDocumentId,
   onOpenDocument,
   onDrillDown,
+  onAddChild,
   onEditDocument,
 }) => (
   <View style={styles.recordSection}>
@@ -537,6 +548,7 @@ const RecordSection: React.FC<{
         issueCount={issueCountByDocumentId[document.resource.id] ?? 0}
         onOpen={() => onOpenDocument(document)}
         onDrillDown={() => onDrillDown(document)}
+        onAddChild={() => onAddChild(document)}
         onEdit={() => onEditDocument(document)}
       />
     ))}
@@ -550,6 +562,7 @@ const RecordRow: React.FC<{
   issueCount: number;
   onOpen: () => void;
   onDrillDown: () => void;
+  onAddChild: () => void;
   onEdit: () => void;
 }> = ({
   document,
@@ -558,6 +571,7 @@ const RecordRow: React.FC<{
   issueCount,
   onOpen,
   onDrillDown,
+  onAddChild,
   onEdit,
 }) => {
   const config = useContext(ConfigurationContext);
@@ -597,6 +611,15 @@ const RecordRow: React.FC<{
       </View>
       <View style={styles.recordActions}>
         <TouchableOpacity
+          accessibilityLabel={`${title} 하위 기록 추가`}
+          style={styles.iconButton}
+          onPress={onAddChild}
+          hitSlop={8}
+        >
+          <MaterialIcons name="add" size={20} color="#475467" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          accessibilityLabel={`${title} 하위 기록 보기`}
           style={styles.iconButton}
           onPress={onDrillDown}
           hitSlop={8}
@@ -604,6 +627,7 @@ const RecordRow: React.FC<{
           <MaterialIcons name="account-tree" size={20} color="#475467" />
         </TouchableOpacity>
         <TouchableOpacity
+          accessibilityLabel={`${title} 편집`}
           style={styles.iconButton}
           onPress={onEdit}
           hitSlop={8}

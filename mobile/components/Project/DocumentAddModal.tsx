@@ -1,17 +1,32 @@
 import { Ionicons } from '@expo/vector-icons';
 import { CategoryForm, Document, Tree } from 'idai-field-core';
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { Modal, ScrollView, StyleSheet, View, ViewStyle } from 'react-native';
+import React, { useCallback, useContext, useMemo } from 'react';
+import {
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { ConfigurationContext } from '@/contexts/configuration-context';
 import Button from '@/components/common/Button';
 import Card from '@/components/common/Card';
-import CategoryButton from '@/components/common/CategoryButton';
 import CategoryIcon from '@/components/common/CategoryIcon';
 import Heading from '@/components/common/Heading';
 import TitleBar from '@/components/common/TitleBar';
-import { KOREAN_FIELDWORK_CATEGORY_ORDER } from './korean-fieldwork-categories';
+import LabelsContext from '@/contexts/labels/labels-context';
+import {
+  getKoreanFieldworkAddOptions,
+  KoreanFieldworkAddOption,
+  KOREAN_FIELDWORK_HIERARCHY_HELP,
+} from './korean-fieldwork-add-options';
+import {
+  getKoreanFieldworkCategoryLabel,
+  KOREAN_FIELDWORK_CATEGORY_ORDER,
+} from './korean-fieldwork-categories';
 
-const ICON_SIZE = 30;
+const ICON_SIZE = 34;
 
 interface AddModalProps {
   onAddCategory: (
@@ -19,82 +34,87 @@ interface AddModalProps {
     parentDoc: Document | undefined
   ) => void;
   onClose: () => void;
-  isInOverview: (category: string) => boolean;
   parentDoc?: Document;
 }
 
 const DocumentAddModal: React.FC<AddModalProps> = ({
   onAddCategory,
   onClose,
-  isInOverview,
   parentDoc,
 }) => {
   const config = useContext(ConfigurationContext);
-
-  const [categories, setCategories] = useState<CategoryForm[]>([]);
+  const { labels } = useContext(LabelsContext);
 
   const isAllowedCategory = useCallback(
     (category: CategoryForm) => {
       if (category.name === 'Image' || !parentDoc) return false;
-      if (isInOverview(parentDoc.resource.category)) {
-        if (
-          !config.isAllowedRelationDomainCategory(
-            category.name,
-            parentDoc.resource.category,
-            'isRecordedIn'
-          )
-        )
-          return false;
-        return !category.mustLieWithin;
-      } else {
-        return config.isAllowedRelationDomainCategory(
+      const canUseRelation = (relationName: string) =>
+        config.isAllowedRelationDomainCategory(
           category.name,
           parentDoc.resource.category,
-          'liesWithin'
+          relationName
         );
-      }
+
+      return (
+        (canUseRelation('isRecordedIn') && !category.mustLieWithin)
+        || canUseRelation('liesWithin')
+        || canUseRelation('depicts')
+        || canUseRelation('isMapLayerOf')
+      );
     },
-    [isInOverview, parentDoc, config]
+    [parentDoc, config]
   );
 
-  useEffect(() => {
-    const categories: CategoryForm[] = [];
-    Tree.flatten(config.getCategories()).forEach((category) => {
-      if (
-        isAllowedCategory(category) &&
-        (!category.parentCategory ||
-          !isAllowedCategory(category.parentCategory))
-      )
-        categories.push(category);
-    });
-    setCategories(categories.sort(compareKoreanFieldworkCategories));
-  }, [isAllowedCategory, config]);
-
-  const renderButton = (
-    category: CategoryForm,
-    style: ViewStyle,
-    key?: string
-  ) => (
-    <CategoryButton
-      size={ICON_SIZE}
-      category={category}
-      style={style}
-      key={key}
-      onPress={() => onAddCategory(category.name, parentDoc)}
-    />
+  const allowedCategories = useMemo(
+    () => Tree.flatten(config.getCategories())
+      .filter(isAllowedCategory)
+      .sort(compareKoreanFieldworkCategories),
+    [config, isAllowedCategory]
   );
 
-  const renderCategoryChilds = (category: CategoryForm) => (
-    <View style={categoryChildStyles.container}>
-      {[...category.children].sort(compareKoreanFieldworkCategories).map((category) =>
-        renderButton(category, { margin: 2.5 }, category.name)
-      )}
-    </View>
+  const categoriesByName = useMemo(
+    () => new Map(allowedCategories.map((category) => [category.name, category])),
+    [allowedCategories]
+  );
+
+  const optionGroups = useMemo(
+    () => getKoreanFieldworkAddOptions(
+      parentDoc?.resource.category ?? '',
+      allowedCategories.map((category) => category.name)
+    ),
+    [allowedCategories, parentDoc]
   );
 
   if (!parentDoc) return null;
   const parentCategory = config.getCategory(parentDoc.resource.category);
   if (!parentCategory) return null;
+  const hasPrimaryOptions = optionGroups.primary.length > 0;
+  const hasOtherOptions = optionGroups.other.length > 0;
+  const parentCategoryLabel = labels?.get(parentCategory)
+    ?? getKoreanFieldworkCategoryLabel(parentCategory.name);
+
+  const renderOption = (option: KoreanFieldworkAddOption) => {
+    const category = categoriesByName.get(option.categoryName);
+    if (!category) return null;
+
+    return (
+      <TouchableOpacity
+        key={option.categoryName}
+        activeOpacity={0.86}
+        style={styles.optionRow}
+        onPress={() => onAddCategory(option.categoryName, parentDoc)}
+      >
+        <CategoryIcon category={category} size={ICON_SIZE} />
+        <View style={styles.optionText}>
+          <Text style={styles.optionLabel}>{option.label}</Text>
+          <Text style={styles.optionDescription} numberOfLines={2}>
+            {option.description}
+          </Text>
+        </View>
+        <Ionicons name="chevron-forward" size={18} color="#475467" />
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <Modal
@@ -110,7 +130,7 @@ const DocumentAddModal: React.FC<AddModalProps> = ({
               <>
                 <CategoryIcon category={parentCategory} size={25} />
                 <Heading style={styles.heading}>
-                  {parentDoc?.resource.identifier}에 기록 추가
+                  기록 종류 선택
                 </Heading>
               </>
             }
@@ -124,24 +144,49 @@ const DocumentAddModal: React.FC<AddModalProps> = ({
             }
           />
           <ScrollView style={styles.categories}>
-            {categories.map((category) => (
-              <View key={category.name}>
-                {renderButton(category, { margin: 5 })}
-                {renderCategoryChilds(category)}
+            <View style={styles.parentPanel}>
+              <Text style={styles.parentLabel} numberOfLines={1}>
+                상위 기록: {parentDoc.resource.identifier}
+              </Text>
+              <Text style={styles.parentMeta}>
+                {parentCategoryLabel}에서 이어서 만들 기록을 고르세요.
+              </Text>
+              <Text style={styles.hierarchyHelp}>
+                {KOREAN_FIELDWORK_HIERARCHY_HELP}
+              </Text>
+            </View>
+
+            {hasPrimaryOptions && (
+              <View style={styles.optionSection}>
+                <Text style={styles.sectionTitle}>권장 기록</Text>
+                {optionGroups.primary.map(renderOption)}
               </View>
-            ))}
+            )}
+
+            {hasOtherOptions && (
+              <View style={styles.optionSection}>
+                <Text style={styles.sectionTitle}>그 밖의 기록</Text>
+                {optionGroups.other.map(renderOption)}
+              </View>
+            )}
+
+            {!hasPrimaryOptions && !hasOtherOptions && (
+              <View style={styles.emptyState}>
+                <Ionicons name="information-circle-outline" size={24} color="#667085" />
+                <Text style={styles.emptyTitle}>
+                  바로 만들 수 있는 하위 기록이 없습니다
+                </Text>
+                <Text style={styles.emptyText}>
+                  조사구역, 트렌치, 유구, 피트·층위 흐름에 맞는 상위 기록을 먼저 선택해 주세요.
+                </Text>
+              </View>
+            )}
           </ScrollView>
         </Card>
       </View>
     </Modal>
   );
 };
-
-const categoryChildStyles = StyleSheet.create({
-  container: {
-    marginLeft: 20,
-  },
-});
 
 const compareKoreanFieldworkCategories = (
   categoryA: CategoryForm,
@@ -161,14 +206,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    marginTop: 200,
+    justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'rgba(17, 24, 39, 0.42)',
   },
   card: {
+    maxHeight: '84%',
     padding: 10,
-    height: '60%',
-    width: '60%',
-    opacity: 0.9,
+    width: '72%',
   },
   heading: {
     marginLeft: 10,
@@ -176,8 +221,89 @@ const styles = StyleSheet.create({
   categories: {
     margin: 10,
   },
-  categoryChildContainer: {
-    marginLeft: 20,
+  parentPanel: {
+    backgroundColor: '#f8fafc',
+    borderColor: '#d0d5dd',
+    borderRadius: 6,
+    borderWidth: 1,
+    marginBottom: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+  },
+  parentLabel: {
+    color: '#1f2937',
+    fontSize: 15,
+    fontWeight: '800',
+  },
+  parentMeta: {
+    color: '#526272',
+    fontSize: 13,
+    lineHeight: 18,
+    marginTop: 4,
+  },
+  hierarchyHelp: {
+    color: '#2f6f4e',
+    fontSize: 12,
+    fontWeight: '800',
+    marginTop: 6,
+  },
+  optionSection: {
+    marginBottom: 12,
+  },
+  sectionTitle: {
+    color: '#344054',
+    fontSize: 13,
+    fontWeight: '900',
+    marginBottom: 6,
+  },
+  optionRow: {
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderColor: '#d0d5dd',
+    borderRadius: 6,
+    borderWidth: 1,
+    flexDirection: 'row',
+    marginBottom: 8,
+    minHeight: 72,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+  },
+  optionText: {
+    flex: 1,
+    marginLeft: 10,
+    paddingRight: 10,
+  },
+  optionLabel: {
+    color: '#1f2937',
+    fontSize: 16,
+    fontWeight: '900',
+  },
+  optionDescription: {
+    color: '#667085',
+    fontSize: 12,
+    lineHeight: 17,
+    marginTop: 3,
+  },
+  emptyState: {
+    alignItems: 'center',
+    borderColor: '#d0d5dd',
+    borderRadius: 6,
+    borderWidth: 1,
+    paddingHorizontal: 16,
+    paddingVertical: 20,
+  },
+  emptyTitle: {
+    color: '#27343b',
+    fontSize: 15,
+    fontWeight: '900',
+    marginTop: 8,
+  },
+  emptyText: {
+    color: '#667085',
+    fontSize: 13,
+    lineHeight: 19,
+    marginTop: 4,
+    textAlign: 'center',
   },
 });
 

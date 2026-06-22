@@ -292,7 +292,7 @@ const Map: React.FC<MapProps> = (props) => {
             {operationDocuments.length === 0 ? '조사구역부터 시작' : '지도 기록 준비'}
           </Text>
           <Text style={styles.startHierarchy}>
-            조사구역 → 유구군·유구 → 트렌치 → 피트·층위
+            조사구역 → 트렌치/조사갱 → 유구군·유구 → 피트·층위
           </Text>
           <View style={styles.startActions}>
             <Button

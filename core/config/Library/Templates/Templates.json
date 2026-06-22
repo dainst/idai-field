@@ -552,10 +552,24 @@
           "hidden": [],
           "fields": {}
         },
+        "Trench:default": {
+          "hidden": [],
+          "fields": {
+            "liesWithin": {
+              "inputType": "relation",
+              "range": ["Operation"]
+            }
+          }
+        },
         "DailyLog": {
           "parent": "Operation",
           "hidden": [],
-          "fields": {}
+          "fields": {
+            "isRecordedIn": {
+              "inputType": "relation",
+              "range": ["Operation"]
+            }
+          }
         },
         "Survey:default": {
           "hidden": [],
@@ -565,6 +579,10 @@
           "parent": "Operation",
           "hidden": [],
           "fields": {
+            "isRecordedIn": {
+              "inputType": "relation",
+              "range": ["Operation"]
+            },
             "geometry": {
               "geometryTypes": ["LineString", "MultiLineString"]
             }
@@ -580,7 +598,12 @@
         },
         "FeatureSegment:default": {
           "hidden": [],
-          "fields": {}
+          "fields": {
+            "isRecordedIn": {
+              "inputType": "relation",
+              "range": ["Operation", "Trench", "ExcavationArea"]
+            }
+          }
         },
         "Layer:default": {
           "hidden": [],
@@ -624,7 +647,12 @@
         "FieldRecordQualityReview": {
           "parent": "Operation",
           "hidden": [],
-          "fields": {}
+          "fields": {
+            "isRecordedIn": {
+              "inputType": "relation",
+              "range": ["Operation"]
+            }
+          }
         },
         "SourceEvidenceIndex": {
           "parent": "Project",
@@ -645,8 +673,10 @@
       "order": [
         "Project",
         "Operation",
-        "Feature",
         "Trench",
+        "FeatureGroup",
+        "Feature",
+        "FeatureSegment",
         "Layer",
         "Survey",
         "SurveyBoundary",
@@ -658,8 +688,6 @@
         "AerialMapLayer",
         "PenMemo",
         "DailyLog",
-        "FeatureGroup",
-        "FeatureSegment",
         "FieldRecordQualityReview",
         "SourceEvidenceIndex",
         "TermAuthority",

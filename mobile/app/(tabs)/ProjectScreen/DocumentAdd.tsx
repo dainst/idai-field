@@ -4,11 +4,11 @@ import {
   Document,
   NewDocument,
   NewResource,
+  ProjectConfiguration,
   Resource,
 } from 'idai-field-core';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Keyboard, StyleSheet, Text, View } from 'react-native';
-import { isUndefinedOrEmpty } from 'tsfun';
 import { ConfigurationContext } from '@/contexts/configuration-context';
 import LabelsContext from '@/contexts/labels/labels-context';
 import useDocument from '@/hooks/use-document';
@@ -19,8 +19,8 @@ import SoilProfileCameraButton, {
   SoilProfileCaptureData,
 } from '@/components/Project/SoilProfileCameraButton';
 import { createSoilProfilePhotoDraft } from '@/components/Project/Map/korean-fieldwork-drafts';
+import { KOREAN_FIELDWORK_CATEGORIES } from '@/components/Project/korean-fieldwork-categories';
 import { ToastType } from '@/components/common/Toast/ToastProvider';
-// import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
 import { router, useGlobalSearchParams } from 'expo-router';
 import { ProjectContext } from '@/contexts/project-context';
 
@@ -50,11 +50,11 @@ const DocumentAdd: React.FC = () => {
         ? createSoilProfilePhotoDraft(parentDoc).resource
         : {
           identifier: '',
-          relations: createRelations(parentDoc),
+          relations: createRelations(parentDoc, categoryName, config),
           category: categoryName,
         });
     },
-    [parentDoc, categoryName]
+    [parentDoc, categoryName, config]
   );
 
   useEffect(() => setResourceToDefault(), [setResourceToDefault, category]);
@@ -64,18 +64,6 @@ const DocumentAdd: React.FC = () => {
     else setSaveBtnEnabled(false);
   }, [newResource]);
 
-  // useEffect(()=> {
-  //   const createRepo = async ()=> {
-  //     try {
-  //        await repository?.create(multiPolyTrench)
-  //       // console.log(doc)
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-
-  //   }
-  //   createRepo()
-  // },[repository])
   useEffect(
     () => {
       if (categoryName) setCategory(config.getCategory(categoryName));
@@ -170,18 +158,45 @@ const DocumentAdd: React.FC = () => {
   );
 };
 
-const createRelations = (parentDoc: Document): Resource.Relations => {
-  const parentDocIsOperation = () =>
-    isUndefinedOrEmpty(parentDoc.resource.relations.isRecordedIn);
-  const relations: Resource.Relations = { isRecordedIn: [] };
+export const createRelations = (
+  parentDoc: Document,
+  categoryName: string,
+  config: ProjectConfiguration
+): Resource.Relations => {
+  const parentCategoryName = parentDoc.resource.category;
+  const parentRecordedIn = parentDoc.resource.relations?.isRecordedIn?.[0];
+  const isAllowedRelation = (relationName: string) =>
+    config.isAllowedRelationDomainCategory(
+      categoryName,
+      parentCategoryName,
+      relationName
+    );
 
-  if (parentDocIsOperation()) {
-    relations['isRecordedIn'] = [parentDoc.resource.id];
-  } else {
-    relations['isRecordedIn'] = [parentDoc.resource.relations.isRecordedIn[0]];
-    relations['liesWithin'] = [parentDoc.resource.id];
+  if (
+    categoryName === KOREAN_FIELDWORK_CATEGORIES.AERIAL_MAP_LAYER
+    && isAllowedRelation('isMapLayerOf')
+  ) {
+    return { isMapLayerOf: [parentDoc.resource.id] };
   }
-  return relations;
+
+  if (isAllowedRelation('depicts')) {
+    return { depicts: [parentDoc.resource.id] };
+  }
+
+  if (isAllowedRelation('isRecordedIn')) {
+    return { isRecordedIn: [parentDoc.resource.id] };
+  }
+
+  if (isAllowedRelation('liesWithin')) {
+    return {
+      ...(parentRecordedIn ? { isRecordedIn: [parentRecordedIn] } : {}),
+      liesWithin: [parentDoc.resource.id],
+    };
+  }
+
+  return parentRecordedIn
+    ? { isRecordedIn: [parentRecordedIn], liesWithin: [parentDoc.resource.id] }
+    : { isRecordedIn: [parentDoc.resource.id] };
 };
 
 export default DocumentAdd;

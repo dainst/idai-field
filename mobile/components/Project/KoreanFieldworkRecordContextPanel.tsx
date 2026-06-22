@@ -19,11 +19,16 @@ import {
   KoreanFieldworkStatusChip,
   KoreanFieldworkStatusTone,
 } from './korean-fieldwork-record-summary';
-import { getKoreanFieldworkCategoryLabel } from './korean-fieldwork-categories';
+import {
+  getKoreanFieldworkCategoryLabel,
+  KOREAN_FIELDWORK_CATEGORIES,
+} from './korean-fieldwork-categories';
 
 interface KoreanFieldworkRecordContextPanelProps {
   document: Document;
   documents: Document[];
+  allowedAddCategoryNames?: string[];
+  onAddDocumentOfCategory?: (parentDoc: Document, categoryName: string) => void;
   onOpenDocument: (document: Document) => void;
 }
 
@@ -32,11 +37,14 @@ export interface EvidenceMetric {
   label: string;
   icon: keyof typeof MaterialIcons.glyphMap;
   documents: Document[];
+  createCategoryName?: string;
 }
 
 const KoreanFieldworkRecordContextPanel: React.FC<KoreanFieldworkRecordContextPanelProps> = ({
   document,
   documents,
+  allowedAddCategoryNames = [],
+  onAddDocumentOfCategory,
   onOpenDocument,
 }) => {
   const documentsById = useMemo(
@@ -50,6 +58,10 @@ const KoreanFieldworkRecordContextPanel: React.FC<KoreanFieldworkRecordContextPa
     [document, documents]
   );
   const metrics = getEvidenceMetrics(evidenceBundle);
+  const allowedAddCategorySet = useMemo(
+    () => new Set(allowedAddCategoryNames),
+    [allowedAddCategoryNames]
+  );
   const visibleIssues = evidenceBundle.issues.slice(0, 3);
 
   return (
@@ -82,7 +94,10 @@ const KoreanFieldworkRecordContextPanel: React.FC<KoreanFieldworkRecordContextPa
         {metrics.map((metric) => (
           <EvidenceButton
             key={metric.id}
+            rootDocument={document}
             metric={metric}
+            allowedAddCategoryNames={allowedAddCategorySet}
+            onAddDocumentOfCategory={onAddDocumentOfCategory}
             onOpenDocument={onOpenDocument}
           />
         ))}
@@ -127,61 +142,94 @@ export const getEvidenceMetrics = (
     label: '피트',
     icon: 'account-tree',
     documents: evidenceBundle.featureSegments,
+    createCategoryName: KOREAN_FIELDWORK_CATEGORIES.FEATURE_SEGMENT,
   },
   {
     id: 'layers',
     label: '층위',
     icon: 'layers',
     documents: evidenceBundle.layers,
+    createCategoryName: KOREAN_FIELDWORK_CATEGORIES.LAYER,
   },
   {
     id: 'photos',
     label: '사진',
     icon: 'photo-camera',
     documents: evidenceBundle.photos,
+    createCategoryName: KOREAN_FIELDWORK_CATEGORIES.PHOTO,
   },
   {
     id: 'soilProfilePhotos',
     label: '토층',
     icon: 'terrain',
     documents: evidenceBundle.soilProfilePhotos,
+    createCategoryName: KOREAN_FIELDWORK_CATEGORIES.SOIL_PROFILE_PHOTO,
   },
   {
     id: 'drawings',
     label: '도면',
     icon: 'architecture',
     documents: evidenceBundle.drawings,
+    createCategoryName: KOREAN_FIELDWORK_CATEGORIES.DRAWING,
   },
   {
     id: 'finds',
     label: '유물',
     icon: 'inventory-2',
     documents: evidenceBundle.finds,
+    createCategoryName: KOREAN_FIELDWORK_CATEGORIES.FIND,
   },
   {
     id: 'samples',
     label: '시료',
     icon: 'science',
     documents: evidenceBundle.samples,
+    createCategoryName: KOREAN_FIELDWORK_CATEGORIES.SAMPLE,
   },
 ];
 
 const EvidenceButton: React.FC<{
+  rootDocument: Document;
   metric: EvidenceMetric;
+  allowedAddCategoryNames: Set<string>;
+  onAddDocumentOfCategory?: (parentDoc: Document, categoryName: string) => void;
   onOpenDocument: (document: Document) => void;
-}> = ({ metric, onOpenDocument }) => {
+}> = ({
+  rootDocument,
+  metric,
+  allowedAddCategoryNames,
+  onAddDocumentOfCategory,
+  onOpenDocument,
+}) => {
   const [firstDocument] = metric.documents;
-  const isDisabled = !firstDocument;
+  const canCreateMissingEvidence = !firstDocument
+    && !!metric.createCategoryName
+    && allowedAddCategoryNames.has(metric.createCategoryName)
+    && !!onAddDocumentOfCategory;
+  const isDisabled = !firstDocument && !canCreateMissingEvidence;
 
   return (
     <TouchableOpacity
       activeOpacity={0.86}
       disabled={isDisabled}
-      onPress={() => firstDocument && onOpenDocument(firstDocument)}
-      style={[styles.metric, isDisabled && styles.metricEmpty]}
+      testID={`evidenceMetric_${metric.id}`}
+      onPress={() => {
+        if (firstDocument) {
+          onOpenDocument(firstDocument);
+          return;
+        }
+        if (canCreateMissingEvidence && metric.createCategoryName) {
+          onAddDocumentOfCategory(rootDocument, metric.createCategoryName);
+        }
+      }}
+      style={[
+        styles.metric,
+        isDisabled && styles.metricEmpty,
+        canCreateMissingEvidence && styles.metricCreate,
+      ]}
     >
       <MaterialIcons
-        name={metric.icon}
+        name={canCreateMissingEvidence ? 'add-circle-outline' : metric.icon}
         size={16}
         color={isDisabled ? '#98a2b3' : '#2f5f4a'}
       />
@@ -191,6 +239,9 @@ const EvidenceButton: React.FC<{
       <Text style={styles.metricLabel} numberOfLines={1}>
         {metric.label}
       </Text>
+      {canCreateMissingEvidence && (
+        <Text style={styles.metricActionLabel}>추가</Text>
+      )}
     </TouchableOpacity>
   );
 };
@@ -354,6 +405,10 @@ const styles = StyleSheet.create({
   metricEmpty: {
     backgroundColor: '#f2f4f7',
   },
+  metricCreate: {
+    backgroundColor: '#ecfdf3',
+    borderColor: '#abefc6',
+  },
   metricValue: {
     color: '#27343b',
     fontSize: 13,
@@ -368,6 +423,12 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: '800',
     marginLeft: 3,
+  },
+  metricActionLabel: {
+    color: '#027a48',
+    fontSize: 11,
+    fontWeight: '900',
+    marginLeft: 4,
   },
   issuePanel: {
     marginTop: 10,

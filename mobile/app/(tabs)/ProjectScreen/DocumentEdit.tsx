@@ -1,6 +1,12 @@
 import { Ionicons } from '@expo/vector-icons';
-import { CategoryForm, Document, Resource } from 'idai-field-core';
-import React, { useContext, useEffect, useState } from 'react';
+import {
+  CategoryForm,
+  Document,
+  ProjectConfiguration,
+  Resource,
+  Tree,
+} from 'idai-field-core';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { Keyboard, StyleSheet, Text, View } from 'react-native';
 import { ConfigurationContext } from '@/contexts/configuration-context';
 import LabelsContext from '@/contexts/labels/labels-context';
@@ -79,12 +85,31 @@ const DocumentEdit: React.FC = () => {
   const updateSoilProfileCapture = (data: SoilProfileCaptureData) => {
     setResource((oldResource) => oldResource && { ...oldResource, ...data });
   };
+  const allowedAddCategoryNames = useMemo(
+    () => document
+      ? Tree.flatten(config.getCategories())
+        .filter((candidateCategory) =>
+          canCreateChildRecord(candidateCategory, document, config)
+        )
+        .map((candidateCategory) => candidateCategory.name)
+      : [],
+    [config, document]
+  );
   const openRelatedDocument = (relatedDocument: Document) => {
     router.navigate({
       pathname: '/ProjectScreen/DocumentEdit',
       params: {
         docId: relatedDocument.resource.id,
         categoryName: relatedDocument.resource.category,
+      },
+    });
+  };
+  const addRelatedDocument = (parentDoc: Document, childCategoryName: string) => {
+    router.navigate({
+      pathname: '/ProjectScreen/DocumentAdd',
+      params: {
+        parentDocId: parentDoc.resource.id,
+        categoryName: childCategoryName,
       },
     });
   };
@@ -128,6 +153,8 @@ const DocumentEdit: React.FC = () => {
         <KoreanFieldworkRecordContextPanel
           document={document}
           documents={documents ?? []}
+          allowedAddCategoryNames={allowedAddCategoryNames}
+          onAddDocumentOfCategory={addRelatedDocument}
           onOpenDocument={openRelatedDocument}
         />
       }
@@ -152,6 +179,28 @@ const getMissingDependencies = (
     .filter(([isMissing]) => isMissing)
     .map(([, label]) => label)
     .join(', ');
+
+const canCreateChildRecord = (
+  category: CategoryForm,
+  parentDoc: Document,
+  config: ProjectConfiguration
+): boolean => {
+  if (category.name === 'Image') return false;
+
+  const canUseRelation = (relationName: string) =>
+    config.isAllowedRelationDomainCategory(
+      category.name,
+      parentDoc.resource.category,
+      relationName
+    );
+
+  return (
+    (canUseRelation('isRecordedIn') && !category.mustLieWithin)
+    || canUseRelation('liesWithin')
+    || canUseRelation('depicts')
+    || canUseRelation('isMapLayerOf')
+  );
+};
 
 const DocumentEditLoadingState: React.FC<{ text: string }> = ({ text }) => (
   <View style={styles.loadingContainer}>

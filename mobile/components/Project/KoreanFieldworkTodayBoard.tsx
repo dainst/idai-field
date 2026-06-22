@@ -14,6 +14,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '@/utils/colors';
 import DocumentButton from '@/components/common/DocumentButton';
 import KoreanFieldworkPriorityTaskList from './KoreanFieldworkPriorityTaskList';
+import KoreanFieldworkWorkbenchPanel from './KoreanFieldworkWorkbenchPanel';
 import { KOREAN_FIELDWORK_CATEGORIES } from './korean-fieldwork-categories';
 import {
   getKoreanFieldworkPriorityTasks,
@@ -52,9 +53,12 @@ const KoreanFieldworkTodayBoard: React.FC<KoreanFieldworkTodayBoardProps> = ({
 
   const openDocument = (document: Document | undefined) => {
     if (!document) return;
-    onOpenDocument
-      ? onOpenDocument(document)
-      : onEditDocument(document.resource.id, document.resource.category);
+    if (onOpenDocument) {
+      onOpenDocument(document);
+      return;
+    }
+
+    onEditDocument(document.resource.id, document.resource.category);
   };
   const openDailyLog = () => {
     if (actionTargets.dailyLog) {
@@ -131,6 +135,11 @@ const KoreanFieldworkTodayBoard: React.FC<KoreanFieldworkTodayBoardProps> = ({
           onPress={() => openDocument(actionTargets.issueDocument)}
         />
       </View>
+      <KoreanFieldworkWorkbenchPanel
+        summary={summary}
+        documents={documents}
+        onEditDocument={onEditDocument}
+      />
       <KoreanFieldworkPriorityTaskList
         tasks={priorityTasks}
         documentsById={documentsById}

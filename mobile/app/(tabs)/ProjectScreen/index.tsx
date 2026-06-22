@@ -18,6 +18,7 @@ import DocumentAddModal from '@/components/Project/DocumentAddModal';
 import KoreanFieldworkHierarchyBoard from '@/components/Project/KoreanFieldworkHierarchyBoard';
 import KoreanFieldworkPriorityTaskList from '@/components/Project/KoreanFieldworkPriorityTaskList';
 import KoreanFieldworkScopePanel from '@/components/Project/KoreanFieldworkScopePanel';
+import KoreanFieldworkWorkbenchPanel from '@/components/Project/KoreanFieldworkWorkbenchPanel';
 import {
   getKoreanFieldworkCategoryLabel,
   KOREAN_FIELDWORK_CATEGORIES,
@@ -249,14 +250,17 @@ const DocumentsList: React.FC = () => {
     : '전체 조사자료';
 
   const openMap = () => router.navigate('/ProjectScreen/DocumentsMap');
-  const editDocument = (document: Document) => {
+  const editDocumentById = (docId: string, categoryName: string) => {
     router.navigate({
       pathname: '/ProjectScreen/DocumentEdit',
       params: {
-        docId: document.resource.id,
-        categoryName: document.resource.category,
+        docId,
+        categoryName,
       },
     });
+  };
+  const editDocument = (document: Document) => {
+    editDocumentById(document.resource.id, document.resource.category);
   };
   const openAddChildModal = (document: Document) => setAddModalParent(document);
   const closeAddChildModal = () => setAddModalParent(undefined);
@@ -353,6 +357,12 @@ const DocumentsList: React.FC = () => {
             warning={todaySummary.openIssues.length > 0}
           />
         </View>
+
+        <KoreanFieldworkWorkbenchPanel
+          summary={todaySummary}
+          documents={documents}
+          onEditDocument={editDocumentById}
+        />
 
         <KoreanFieldworkScopePanel
           documents={documents}

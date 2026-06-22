@@ -19,7 +19,8 @@
         <span i18n="@@widgets.languagesList.noLanguagesSelected">Keine Sprachen ausgewählt</span>
     </li>
 </ul>
-<div id="add-language" class="circular-button green-button"
+<div *ngIf="hasUnselectedLanguages()"
+     id="add-language" class="circular-button green-button"
      (click)="addLanguage()"
      ngbTooltip="Sprache hinzufügen"
      i18n-ngbTooltip="@@settings.addLanguage"

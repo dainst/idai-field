@@ -1756,6 +1756,10 @@
     "FeatureGroup:default": {
       "hidden": [],
       "fields": {
+        "isRecordedIn": {
+          "inputType": "relation",
+          "range": ["Operation", "Trench", "ExcavationArea"]
+        },
         "featurePackage": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -1882,6 +1886,10 @@
     "Feature:default": {
       "hidden": [],
       "fields": {
+        "isRecordedIn": {
+          "inputType": "relation",
+          "range": ["Operation", "Trench", "ExcavationArea"]
+        },
         "featurePackage": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -4279,14 +4287,11 @@
   "order": [
     "Project",
     "Operation",
-    "Trench",
-    "Survey",
-    "Place",
-    "SurveyBoundary",
-    "FeatureGroup",
     "Feature",
-    "FeatureSegment",
+    "Trench",
     "Layer",
+    "Survey",
+    "SurveyBoundary",
     "Find",
     "FindCollection",
     "Sample",
@@ -4295,6 +4300,9 @@
     "SoilProfilePhoto",
     "AerialMapLayer",
     "PenMemo",
+    "FeatureGroup",
+    "FeatureSegment",
+    "Place",
     "Image",
     "TypeCatalog",
     "Type",

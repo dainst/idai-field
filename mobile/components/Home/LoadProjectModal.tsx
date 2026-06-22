@@ -50,10 +50,10 @@ const LoadProjectModal: React.FC<LoadProjectModalProps> = ({ onClose, onProjectL
             >
                 <View style={styles.content}>
                     <TitleBar
-                        title={<Heading>Load project from server</Heading>}
+                        title={<Heading>서버에서 프로젝트 가져오기</Heading>}
                         left={
                             <Button
-                                title="Cancel"
+                                title="닫기"
                                 variant="transparent"
                                 icon={<Ionicons name="close-outline" size={16} />}
                                 onPress={onCancel}
@@ -61,7 +61,7 @@ const LoadProjectModal: React.FC<LoadProjectModalProps> = ({ onClose, onProjectL
                         }
                         right={
                             <Button
-                                title="Load"
+                                title="가져오기"
                                 variant="mellow"
                                 onPress={onCreate}
                                 isDisabled={!project || !url || !password}
@@ -71,7 +71,7 @@ const LoadProjectModal: React.FC<LoadProjectModalProps> = ({ onClose, onProjectL
                     
                     <View style={styles.formContainer}>
                         <Input
-                            placeholder="Project"
+                            placeholder="프로젝트 이름"
                             testID="load-input"
                             value={project}
                             onChangeText={setProject}
@@ -89,7 +89,7 @@ const LoadProjectModal: React.FC<LoadProjectModalProps> = ({ onClose, onProjectL
                             style={styles.input}
                         />
                         <Input
-                            placeholder="Password"
+                            placeholder="비밀번호"
                             secureTextEntry
                             value={password}
                             onChangeText={setPassword}

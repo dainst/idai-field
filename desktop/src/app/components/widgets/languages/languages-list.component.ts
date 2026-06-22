@@ -26,14 +26,20 @@ export class LanguagesListComponent {
 
     public showNoLanguagesSelectedMessage = () => this.selectedLanguages && this.selectedLanguages.length === 0;
 
+    public hasUnselectedLanguages = () => Object.keys(
+        Languages.getUnselectedLanguages(this.languages ?? {}, this.selectedLanguages ?? [])
+    ).length > 0;
+
 
     public async addLanguage() {
+
+        if (!this.hasUnselectedLanguages()) return;
 
         this.onModalToggled.emit(true);
 
         const modalReference: NgbModalRef = this.modalService.open(LanguagePickerModalComponent, { animation: false });
         modalReference.componentInstance.languages = Languages.getUnselectedLanguages(
-            this.languages, this.selectedLanguages
+            this.languages ?? {}, this.selectedLanguages ?? []
         );
         modalReference.componentInstance.initialize();
 

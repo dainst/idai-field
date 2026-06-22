@@ -155,6 +155,7 @@
       }
     },
     "Project": {
+      "label": "유적/프로젝트",
       "fields": {
         "digitalSourcePreservation": {
           "label": "디지털 원자료 보존"
@@ -384,7 +385,11 @@
         }
       }
     },
+    "Place": {
+      "label": "유적/지점"
+    },
     "Operation": {
+      "label": "조사구역",
       "fields": {
         "dailyLogContent": {
           "label": "일일 작업기록"
@@ -454,7 +459,11 @@
         }
       }
     },
+    "Trench": {
+      "label": "트렌치/조사갱"
+    },
     "Survey": {
+      "label": "지표조사",
       "fields": {
         "fieldRecordQuality": {
           "label": "현장기록 품질"
@@ -605,6 +614,7 @@
       }
     },
     "FeatureGroup": {
+      "label": "유구군",
       "fields": {
         "featurePackage": {
           "label": "유적·유구 패키지"
@@ -657,6 +667,7 @@
       }
     },
     "Feature": {
+      "label": "유구",
       "fields": {
         "featurePackage": {
           "label": "유적·유구 패키지"
@@ -973,6 +984,7 @@
       }
     },
     "FeatureSegment": {
+      "label": "유구 세부 기록",
       "fields": {
         "featurePackage": {
           "label": "유적·유구 패키지"
@@ -1100,6 +1112,7 @@
       }
     },
     "Find": {
+      "label": "유물",
       "fields": {
         "fieldRecordQuality": {
           "label": "현장기록 품질"
@@ -1266,6 +1279,7 @@
       }
     },
     "Sample": {
+      "label": "시료",
       "fields": {
         "fieldRecordQuality": {
           "label": "현장기록 품질"
@@ -1375,6 +1389,7 @@
       }
     },
     "Drawing": {
+      "label": "도면",
       "fields": {
         "mediaEvidenceRole": {
           "label": "매체 증거 역할"
@@ -1470,7 +1485,7 @@
       }
     },
     "Layer": {
-      "label": "토층",
+      "label": "층위",
       "fields": {
         "layerSequenceNumber": {
           "label": "토층 번호"
@@ -1634,6 +1649,7 @@
       }
     },
     "Photo": {
+      "label": "사진",
       "fields": {
         "mediaEvidenceRole": {
           "label": "매체 증거 역할"

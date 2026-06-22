@@ -7,6 +7,7 @@ import {
     KOREAN_FIELDWORK_LAYER_SEQUENCE_MEANING_DEFAULT,
     KOREAN_FIELDWORK_PROJECT_IDENTIFIER,
     KOREAN_FIELDWORK_PROJECT_LABEL,
+    KOREAN_FIELDWORK_PROJECT_LANGUAGES,
     KOREAN_FIELDWORK_PROJECT_PREFIX,
     KOREAN_FIELDWORK_REFERENCE_BASEMAP_PROVIDER_DEFAULT,
     KOREAN_FIELDWORK_SOIL_COLOR_ASSIST_STATUS_DEFAULT,
@@ -88,6 +89,7 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe(KOREAN_FIELDWORK_CONFIGURATION_NAME);
         expect(PROJECT_MAPPING[KOREAN_FIELDWORK_PROJECT_IDENTIFIER].prefix).toBe(KOREAN_FIELDWORK_CONFIGURATION_NAME);
         expect(PROJECT_MAPPING[KOREAN_FIELDWORK_PROJECT_IDENTIFIER].label).toBe(KOREAN_FIELDWORK_PROJECT_LABEL);
+        expect(KOREAN_FIELDWORK_PROJECT_LANGUAGES).toEqual(['ko']);
     });
 
 
@@ -102,13 +104,11 @@ describe('KoreanFieldwork project configuration', () => {
         const expectedForms = [
             'Project',
             'Operation',
-            'DailyLog',
+            'Feature',
+            'Trench',
+            'Layer',
             'Survey',
             'SurveyBoundary',
-            'FeatureGroup',
-            'Feature',
-            'FeatureSegment',
-            'Layer',
             'Find',
             'Sample',
             'Drawing',
@@ -116,6 +116,9 @@ describe('KoreanFieldwork project configuration', () => {
             'SoilProfilePhoto',
             'AerialMapLayer',
             'PenMemo',
+            'DailyLog',
+            'FeatureGroup',
+            'FeatureSegment',
             'FieldRecordQualityReview',
             'SourceEvidenceIndex',
             'TermAuthority',
@@ -148,8 +151,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(template).toBeDefined();
         expect(templateLanguagesKo[KOREAN_FIELDWORK_TEMPLATE_ID].label).toBe(KOREAN_FIELDWORK_PROJECT_LABEL);
         expect(templateLanguagesEn[KOREAN_FIELDWORK_TEMPLATE_ID].label).toBe('Korean field notebook');
-        expect(template.configuration.languages.ko).toBeDefined();
-        expect(template.configuration.languages.en).toBeDefined();
+        expect(Object.keys(template.configuration.languages)).toEqual(['ko']);
         expect(template.configuration.order).toEqual(expectedForms);
         expect(template.configuration.forms.DailyLog.parent).toBe('Operation');
         expect(template.configuration.forms.SurveyBoundary.parent).toBe('Operation');
@@ -175,12 +177,23 @@ describe('KoreanFieldwork project configuration', () => {
         const configReader = new ConfigReader();
         const config = configReader.read('/Config-KoreanFieldwork.json');
         const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
+        const languages = configReader.getCustomLanguageConfigurations('KoreanFieldwork');
         const valuelistLanguages = configReader.getValuelistsLanguages();
         const featureForm = config.forms['Feature:default'];
         const featureGroupForm = config.forms['FeatureGroup:default'];
         const featureSegmentForm = config.forms['FeatureSegment:default'];
         const koreanFieldworkGroup = featureForm.groups.find((group: any) => group.name === 'koreanFieldwork');
 
+        expect(config.order.slice(0, 8)).toEqual([
+            'Project',
+            'Operation',
+            'Feature',
+            'Trench',
+            'Layer',
+            'Survey',
+            'SurveyBoundary',
+            'Find'
+        ]);
         expect(featureGroupForm.valuelists.period).toBe('KoreanFieldwork-featurePeriod');
         expect(featureForm.valuelists.period).toBe('KoreanFieldwork-featurePeriod');
         expect(featureSegmentForm.valuelists.period).toBe('KoreanFieldwork-featurePeriod');
@@ -193,6 +206,10 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.fields.featureGeometryReferenceLayerId.inputType).toBe('input');
         expect(featureForm.fields.featureGeometryRevisionHistory.inputType).toBe('text');
         expect(featureForm.fields.featureGeometryRevisionNote.inputType).toBe('text');
+        expect(featureForm.fields.isRecordedIn.inputType).toBe('relation');
+        expect(featureForm.fields.isRecordedIn.range).toEqual(['Operation', 'Trench', 'ExcavationArea']);
+        expect(featureGroupForm.fields.isRecordedIn.inputType).toBe('relation');
+        expect(featureGroupForm.fields.isRecordedIn.range).toEqual(['Operation', 'Trench', 'ExcavationArea']);
         expect(featureForm.fields.featureInvestigationChecklist.inputType).toBe('checkboxes');
         expect(featureForm.fields.featureSoilProfilePhotoCount.inputType).toBe('unsignedInt');
         expect(featureForm.fields.featureChecklistNote.inputType).toBe('text');
@@ -263,6 +280,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Pit feature');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-geometrySource'].values.aerialLayerTrace.label)
             .toBe('Aerial layer trace');
+        expect(languages.ko.categories.Feature.label).toBe('유구');
+        expect(languages.ko.categories.FeatureGroup.label).toBe('유구군');
+        expect(languages.ko.categories.FeatureSegment.label).toBe('유구 세부 기록');
+        expect(languages.ko.categories.Place.label).toBe('유적/지점');
+        expect(languages.ko.categories.Trench.label).toBe('트렌치/조사갱');
+        expect(languages.ko.categories.FieldRecordQualityReview.label).toBe('현장기록 품질검수');
         expect(languages.ko.categories.Feature.fields.featureInvestigationChecklist.label)
             .toBe('조사 체크리스트');
         expect(languages.ko.categories.Feature.fields.featureGeometryEditStatus.label)
@@ -523,7 +546,7 @@ describe('KoreanFieldwork project configuration', () => {
             .values.notRun.label).toBe('미실행');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-soilColorCaptureCondition']
             .values.calibrationTargetUsed.label).toBe('Calibration target used');
-        expect(languages.ko.categories.Layer.label).toBe('토층');
+        expect(languages.ko.categories.Layer.label).toBe('층위');
         expect(languages.ko.categories.SoilProfilePhoto.label).toBe('토층 단면 사진');
         expect(languages.ko.categories.SoilProfilePhoto.fields.soilProfilePhotoSizeHintKb.label)
             .toBe('사진 크기 기준(KB)');

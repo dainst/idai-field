@@ -54,10 +54,10 @@ const DeleteProjectModal: React.FC<DeleteProjectModalProps> = ({
       >
         <View style={styles.content}>
           <TitleBar
-            title={<Heading>Delete project</Heading>}
+            title={<Heading>프로젝트 삭제</Heading>}
             left={
               <Button
-                title="Cancel"
+                title="닫기"
                 variant="transparent"
                 icon={<Ionicons name="close-outline" size={16} />}
                 onPress={onCancel}
@@ -65,7 +65,7 @@ const DeleteProjectModal: React.FC<DeleteProjectModalProps> = ({
             }
             right={
               <Button
-                title="Delete"
+                title="삭제"
                 variant="danger"
                 onPress={onDelete}
                 isDisabled={project !== projectVal}
@@ -76,11 +76,10 @@ const DeleteProjectModal: React.FC<DeleteProjectModalProps> = ({
           <View style={styles.formContainer}>
             <View style={styles.warningContainer}>
               <Text style={styles.warningText}>
-                This will delete the project and all associated data.
+                프로젝트와 연결된 모든 로컬 데이터를 삭제합니다.
               </Text>
               <Text style={styles.confirmationText}>
-                Type <Text style={styles.projectName}>{project}</Text> to
-                confirm.
+                삭제하려면 <Text style={styles.projectName}>{project}</Text>를 정확히 입력하세요.
               </Text>
             </View>
             
@@ -92,9 +91,9 @@ const DeleteProjectModal: React.FC<DeleteProjectModalProps> = ({
               autoComplete="off"
               autoCorrect={false}
               autoFocus
-              placeholder="Enter project name"
+              placeholder="프로젝트 이름 입력"
               style={styles.input}
-              invalidText="Project name must match exactly"
+              invalidText="프로젝트 이름이 정확히 일치해야 합니다."
               isValid={projectVal === project || projectVal === ''}
             />
           </View>

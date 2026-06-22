@@ -25,7 +25,7 @@ const RecentProjects: React.FC<RecentProjectsProps> = ({
   return (
     <View style={styles.projectPickerContainer}>
       <View style={styles.headerContainer}>
-        <Text style={styles.headerText}>Open existing project:</Text>
+        <Text style={styles.headerText}>기존 프로젝트 열기</Text>
       </View>
 
       <View style={styles.pickerContainer}>
@@ -45,7 +45,7 @@ const RecentProjects: React.FC<RecentProjectsProps> = ({
           style={styles.openButton}
           icon={<Ionicons name="folder-open" size={16} />}
           onPress={() => openProject(selectedProject)}
-          title="Open"
+          title="열기"
           variant="primary"
           isDisabled={usernameNotSet}
         />

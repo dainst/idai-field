@@ -50,6 +50,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
     () => getKoreanFieldworkTodaySummary(documents),
     [documents]
   );
+  const highlightedDocId = getStringParam(params?.highlightedDocId);
 
   const onQrCodeScanned = useCallback(
     (data: string) => {
@@ -156,11 +157,12 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
       <View style={styles.container}>
         <Map
           repository={repository}
+          documents={documents}
           selectedDocumentIds={useMemo(
             () => documents.map((doc) => doc.resource.id),
             [documents]
           )}
-          highlightedDocId={params?.highlightedDocId}
+          highlightedDocId={highlightedDocId}
           addDocument={handleAddDocument}
           editDocument={handleEditDocument}
           removeDocument={openRemoveDocument}
@@ -171,6 +173,10 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
     </View>
   );
 };
+
+const getStringParam = (
+  param: string | string[] | undefined
+): string | undefined => Array.isArray(param) ? param[0] : param;
 
 const styles = StyleSheet.create({
   container: {

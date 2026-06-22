@@ -645,13 +645,11 @@
       "order": [
         "Project",
         "Operation",
-        "DailyLog",
+        "Feature",
+        "Trench",
+        "Layer",
         "Survey",
         "SurveyBoundary",
-        "FeatureGroup",
-        "Feature",
-        "FeatureSegment",
-        "Layer",
         "Find",
         "Sample",
         "Drawing",
@@ -659,14 +657,16 @@
         "SoilProfilePhoto",
         "AerialMapLayer",
         "PenMemo",
+        "DailyLog",
+        "FeatureGroup",
+        "FeatureSegment",
         "FieldRecordQualityReview",
         "SourceEvidenceIndex",
         "TermAuthority",
         "TermAlias"
       ],
       "languages": {
-        "ko": {},
-        "en": {}
+        "ko": {}
       }
     }
   },

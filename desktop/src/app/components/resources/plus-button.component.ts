@@ -14,6 +14,24 @@ import { ComponentHelpers } from '../component-helpers';
 export type PlusButtonStatus = 'enabled'|'disabled-hierarchy';
 
 
+const KOREAN_FIELDWORK_FEATURE_CATEGORY = 'Feature';
+const KOREAN_FIELDWORK_FEATURE_GEOMETRY_TYPE: FieldGeometryType = 'Polygon';
+const KOREAN_FIELDWORK_FEATURE_DEFAULT_FIELD_VALUES: Map<any> = {
+    featureRecordingStatus: 'candidate',
+    geometrySource: 'tabletSketch',
+    geometryConfidence: 'rough',
+    featureGeometryEditStatus: 'roughSketch',
+    featureInvestigationChecklist: []
+};
+const KOREAN_FIELDWORK_FEATURE_VALUELISTS: Map<string> = {
+    featureRecordingStatus: 'KoreanFieldwork-featureRecordingStatus',
+    geometrySource: 'KoreanFieldwork-geometrySource',
+    geometryConfidence: 'KoreanFieldwork-geometryConfidence',
+    featureGeometryEditStatus: 'KoreanFieldwork-featureGeometryEditStatus',
+    featureInvestigationChecklist: 'KoreanFieldwork-featureInvestigationChecklist'
+};
+
+
 @Component({
     selector: 'plus-button',
     templateUrl: './plus-button.html',
@@ -105,7 +123,7 @@ export class PlusButtonComponent implements OnInit, OnChanges, OnDestroy {
             }
         };
 
-        Object.assign(newDocument.resource, this.defaultFieldValues);
+        Object.assign(newDocument.resource, this.getDefaultFieldValues(geometryType));
 
         if (this.skipFormAndReturnNewDocument) {
             this.documentRequested.emit(newDocument);
@@ -161,6 +179,24 @@ export class PlusButtonComponent implements OnInit, OnChanges, OnDestroy {
     public isAllowedGeometryType(geometryType: FieldGeometryType): boolean {
         
         return CategoryForm.isAllowedGeometryType(this.selectedCategory, geometryType);
+    }
+
+
+    public isFeatureQuickCreateVisible(): boolean {
+
+        const featureCategory: CategoryForm|undefined = this.getKoreanFieldworkFeatureCategory();
+        return !!featureCategory && CategoryForm.isAllowedGeometryType(
+            featureCategory, KOREAN_FIELDWORK_FEATURE_GEOMETRY_TYPE
+        );
+    }
+
+
+    public async startFeaturePolygonCreation() {
+
+        this.selectedCategory = this.getKoreanFieldworkFeatureCategory();
+        if (!this.selectedCategory) return;
+
+        await this.startDocumentCreation(KOREAN_FIELDWORK_FEATURE_GEOMETRY_TYPE);
     }
 
 
@@ -257,6 +293,57 @@ export class PlusButtonComponent implements OnInit, OnChanges, OnDestroy {
             console.error('Invalid view:', this.viewFacade.getView());
             return [];
         }
+    }
+
+
+    private findSelectableCategory(categoryName: string,
+                                   categories: Array<CategoryForm> = this.topLevelCategoriesArray): CategoryForm|undefined {
+
+        for (const category of categories ?? []) {
+            if (category.name === categoryName) return category;
+
+            const childCategory: CategoryForm|undefined = category.children
+                ? this.findSelectableCategory(categoryName, category.children)
+                : undefined;
+            if (childCategory) return childCategory;
+        }
+
+        return undefined;
+    }
+
+
+    private getKoreanFieldworkFeatureCategory(): CategoryForm|undefined {
+
+        const featureCategory: CategoryForm|undefined = this.findSelectableCategory(KOREAN_FIELDWORK_FEATURE_CATEGORY);
+        return this.isKoreanFieldworkFeatureCategory(featureCategory)
+            ? featureCategory
+            : undefined;
+    }
+
+
+    private isKoreanFieldworkFeatureCategory(category: CategoryForm|undefined): boolean {
+
+        if (category?.name !== KOREAN_FIELDWORK_FEATURE_CATEGORY) return false;
+
+        return Object.keys(KOREAN_FIELDWORK_FEATURE_VALUELISTS).every(fieldName =>
+            CategoryForm.getField(category, fieldName)?.valuelist?.id
+                === KOREAN_FIELDWORK_FEATURE_VALUELISTS[fieldName]
+        );
+    }
+
+
+    private getDefaultFieldValues(geometryType: string): Map<any> {
+
+        const defaultFieldValues = { ...this.defaultFieldValues };
+
+        if (this.isKoreanFieldworkFeatureCategory(this.selectedCategory) && geometryType !== 'none') {
+            return {
+                ...KOREAN_FIELDWORK_FEATURE_DEFAULT_FIELD_VALUES,
+                ...defaultFieldValues
+            };
+        }
+
+        return defaultFieldValues;
     }
 
 

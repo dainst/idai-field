@@ -81,10 +81,10 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({
       >
         <View style={styles.content}>
           <TitleBar
-            title={<Heading>Create project</Heading>}
+            title={<Heading>새 프로젝트 만들기</Heading>}
             left={
               <Button
-                title="Cancel"
+                title="닫기"
                 variant="transparent"
                 icon={<Ionicons name="close-outline" size={16} />}
                 onPress={onCancel}
@@ -92,7 +92,7 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({
             }
             right={
               <Button
-                title="Create"
+                title="만들기"
                 variant="success"
                 onPress={onCreate}
                 isDisabled={!isProjectValid}
@@ -101,11 +101,11 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({
           />
           
           <View style={styles.formContainer}>
-            <Text style={styles.label}>Project type</Text>
+            <Text style={styles.label}>프로젝트 유형</Text>
             <View style={styles.projectTypeButtons}>
               <Button
                 testID="project-type-default"
-                title="Default"
+                title="기본 iDAI"
                 variant={projectType === DEFAULT_PROJECT_TYPE ? 'primary' : 'secondary'}
                 onPress={() => selectProjectType(DEFAULT_PROJECT_TYPE)}
                 style={styles.projectTypeButton}
@@ -120,7 +120,7 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({
             </View>
             <Input
               testID="project-input"
-              label="Project name"
+              label="프로젝트 이름"
               value={project}
               onChangeText={setProject}
               autoCapitalize="none"
@@ -128,9 +128,9 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({
               autoCorrect={false}
               autoFocus
               helpText={isKoreanFieldwork
-                ? `${KOREAN_FIELDWORK_PROJECT_LABEL}은 ${KOREAN_FIELDWORK_PROJECT_PREFIX} 접두어와 ${KOREAN_FIELDWORK_PROJECT_LANGUAGES.join('/')} 프로젝트 언어를 사용합니다.`
-                : 'The project name is the unique identifier for the project. Make sure to use the exact same project name if you intend to sync to other instances of Field.'}
-              invalidText="Project name must not be empty."
+                ? `${KOREAN_FIELDWORK_PROJECT_LABEL}은 ${KOREAN_FIELDWORK_PROJECT_PREFIX} 접두어와 한국어 야장 설정을 사용합니다.`
+                : '프로젝트 이름은 동기화에 쓰이는 고유 식별자입니다. 다른 기기와 동기화하려면 같은 이름을 정확히 사용하세요.'}
+              invalidText="프로젝트 이름을 입력해야 합니다."
               isValid={isProjectValid}
               style={styles.input}
             />

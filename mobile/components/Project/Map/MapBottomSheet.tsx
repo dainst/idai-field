@@ -10,6 +10,7 @@ import Button from '@/components/common/Button';
 import DocumentButton from '@/components/common/DocumentButton';
 import Row from '@/components/common/Row';
 import { colors } from '@/utils/colors';
+import { FEATURE_WORKFLOW_CATEGORIES } from '../korean-fieldwork-categories';
 
 interface MapBottomSheetProps {
   document: Document | undefined;
@@ -80,9 +81,7 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
     ? (document.resource as any).featureInvestigationChecklist
     : [];
   const checkedFeatureChecklistValues = new Set(featureChecklistValues);
-  const isFeatureWorkflowVisible = ['Feature', 'FeatureSegment'].includes(
-    document.resource.category
-  );
+  const isFeatureWorkflowVisible = FEATURE_WORKFLOW_CATEGORIES.includes(document.resource.category);
   const geometryEditStatus =
     (document.resource as any).featureGeometryEditStatus ?? 'roughSketch';
 
@@ -97,7 +96,7 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
         />
         <Button
           style={[styles.button, styles.focusBtn]}
-          title="Focus"
+          title="보기"
           onPress={() => focusHandler(docId)}
           icon={
             <MaterialIcons
@@ -110,14 +109,14 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
         <Button
           style={styles.button}
           variant="success"
-          title="Add"
+          title="하위추가"
           onPress={addChildPressHandler}
           icon={<Ionicons name="add" size={iconSize} />}
         />
         <Button
           style={styles.button}
           variant="success"
-          title="후보"
+          title="현재위치"
           isDisabled={!canCreateLocationCandidate}
           onPress={createFeatureCandidateAtCurrentLocation}
           icon={<MaterialIcons name="add-location-alt" size={iconSize} />}
@@ -149,7 +148,7 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
         <Button
           style={styles.button}
           variant="primary"
-          title="Edit"
+          title="편집"
           onPress={() => editDocument(docId, document.resource.category)}
           icon={<Ionicons name="create-outline" size={iconSize} />}
         />
@@ -162,7 +161,7 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
       </Row>
       {isFeatureWorkflowVisible && (
         <View style={styles.panel}>
-          <Text style={styles.fieldLabel}>조사 흐름</Text>
+          <Text style={styles.fieldLabel}>조사 과정표</Text>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -236,7 +235,7 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
       <View style={styles.docOverviewContainer}>
         {document.resource.shortDescription && (
           <View>
-            <Text style={styles.fieldLabel}>Short Description:</Text>
+            <Text style={styles.fieldLabel}>간단 설명:</Text>
             <Text style={{ paddingLeft: 10 }}>
               {document.resource.shortDescription}
             </Text>

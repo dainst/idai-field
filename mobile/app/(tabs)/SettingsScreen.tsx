@@ -39,12 +39,12 @@ const SettingsScreen: React.FC = () => {
     >
       <View style={styles.content}>
         <TitleBar
-          title={<Heading>Settings</Heading>}
+          title={<Heading>설정</Heading>}
           left={
             <Button
               variant="transparent"
               onPress={() => router.back()}
-              title="Cancel"
+              title="취소"
               icon={<Ionicons name="close-outline" size={16} />}
             />
           }
@@ -52,7 +52,7 @@ const SettingsScreen: React.FC = () => {
             <Button
               variant="success"
               onPress={saveSettings}
-              title="Save"
+              title="저장"
               isDisabled={usernameVal === ''}
             />
           }
@@ -60,15 +60,14 @@ const SettingsScreen: React.FC = () => {
 
         <Column style={styles.formContainer}>
           <Input
-            label="Editor name"
+            label="작업자 이름"
             value={usernameVal}
             onChangeText={setUsernameVal}
             autoCorrect={false}
             autoFocus
-            helpText="The editor name is saved in the editing history in order
-                        to allow dataset changes to be attributable to a person."
+            helpText="작업자 이름은 편집 이력에 저장되어 누가 기록을 만들고 수정했는지 확인하는 데 사용됩니다."
             isValid={usernameVal !== ''}
-            invalidText="Editor name must not be empty."
+            invalidText="작업자 이름을 입력해야 합니다."
             style={styles.input}
           />
         </Column>

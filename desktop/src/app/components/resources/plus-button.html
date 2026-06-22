@@ -40,6 +40,14 @@
             <div class="popover-custom-title">
                 <span i18n="@@resources.plusButton.selectCategory">Bitte wählen Sie eine Kategorie aus.</span>
             </div>
+            <div *ngIf="isFeatureQuickCreateVisible()"
+                 id="quick-create-feature-polygon"
+                 class="list-group-item popover-item"
+                 (click)="startFeaturePolygonCreation()">
+                <span class="mdi mdi-shape-polygon-plus mdi-18px"></span>
+                <span class="button-label"
+                      i18n="@@resources.plusButton.koreanFeatureQuickCreate">유구 그리기</span>
+            </div>
             <category-picker [topLevelCategoriesArray]="topLevelCategoriesArray"
                              (onCategoryPicked)="chooseCategory($event)"></category-picker>
         </div>

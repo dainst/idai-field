@@ -111,12 +111,12 @@ const MapSettingsModal: React.FC<MapSettingsModalProps> = ({
                   color={colors.primary}
                   style={{ marginRight: 2 }}
                 />
-                <Heading>Map Settings</Heading>
+                <Heading>지도 설정</Heading>
               </>
             }
             left={
               <Button
-                title="Close"
+                title="닫기"
                 variant="transparent"
                 icon={<Ionicons name="close-outline" size={16} />}
                 onPress={onClose}
@@ -124,7 +124,7 @@ const MapSettingsModal: React.FC<MapSettingsModalProps> = ({
             }
           />
           <Row style={styles.sliderContainer}>
-            <Text style={styles.sectionHeader}>Point radius: </Text>
+            <Text style={styles.sectionHeader}>점 크기: </Text>
             <Slider
               style={styles.slider}
               minimumValue={0.2}
@@ -139,7 +139,7 @@ const MapSettingsModal: React.FC<MapSettingsModalProps> = ({
           </Row>
           {layerInfo.length > 0 && (
             <>
-              <Text style={styles.sectionHeader}>Layers</Text>
+              <Text style={styles.sectionHeader}>레이어</Text>
               <FlatList
                 data={layerInfo}
                 keyExtractor={(item) => item.doc.resource.id}

@@ -4,36 +4,54 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 
 ## Get started
 
-1. Install dependencies
+1. Build the shared core package from the repository root:
 
    ```bash
+   cd ../core
+   npm install
+   npm run build
+   ```
+
+2. Install mobile dependencies:
+
+   ```bash
+   cd ../mobile
    npm install
    ```
 
-2. Install pouchdb-async-storage-adapter
-   The old pouchdb asyncstorage adapter [here](https://github.com/seigel/pouchdb-react-native/tree/master/packages/pouchdb-adapter-asyncstorage) is no longer maintained nor it updated with the latest version of pouchdb. 
-   instead we are using an updated fork which at the time of writing this document is not yet clear what would be the final name/url for this package and thus needs to be installed locally for now using [yalc](https://www.npmjs.com/package/yalc).
-   1. in a separate folder clone the fork `git clone git@github.com:neighbourhoodie/pouchdb-asyncstorage-adapter.git`
-   2. `cd pouchdb-asyncstorage-adapter`
-   3. `npx yalc publish`
-   4. go back to mobile app folder and run `npx yalc add @neighbourhoodie/pouchdb-asyncstorage-adapter`
-      this will link the adapter so it can be bundled with the app.
-      if you get this error while building the app after an npm install 
-      ```
-            38 | type Registry<TEventToArgsMap: {...}> = {
-            > 39 |   [K in keyof TEventToArgsMap]: Set<Registration<TEventToArgsMap[K]>>,
-            |      ^
-         40 | };
-         41 |
-         42 | /**]
-      ``` you need to run `npx yalc add @neighbourhoodie/pouchdb-asyncstorage-adapter` again after npm install.
+The async storage adapter is pinned to a public GitHub commit in `package.json`.
+No local `yalc` package is required.
 
-3. Start the app
+3. Start the development build
 
    ```bash
-    npx expo start
+   npx expo start --dev-client --host localhost
    ```
-2. Run iOS
+
+Expo Go is not supported for this app because the project uses native modules.
+Use a development build or a standalone Android APK.
+
+## Android tablet APK
+
+From the repository root on Windows:
+
+```powershell
+.\build-idai-field-android-apk.ps1 -Variant release
+.\install-idai-field-android-apk.ps1 -ApkPath .\dist\android\idai-field-mobile-release.apk
+```
+
+For USB development on an installed development build:
+
+```powershell
+.\run-idai-field-tablet-ko.ps1 -InstallDebug
+.\run-idai-field-tablet-ko.ps1
+```
+
+Korean installation notes for field users are in
+[`docs/korean-fieldwork/android-tablet-install.ko.md`](../docs/korean-fieldwork/android-tablet-install.ko.md).
+
+## Run iOS
+
    ```bash
    npm run ios
    ```
@@ -42,7 +60,6 @@ In the output, you'll find options to open the app in a
 - [development build](https://docs.expo.dev/develop/development-builds/introduction/)
 - [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
 - [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
 You can start developing by editing the files inside the **mobile** directory.
 

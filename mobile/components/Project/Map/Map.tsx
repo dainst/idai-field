@@ -9,17 +9,25 @@ import {
   LayoutChangeEvent,
   LayoutRectangle,
   StyleSheet,
+  Text,
   View,
 } from 'react-native';
 import useMapData from '@/hooks/use-mapdata';
 import { DocumentRepository } from '@/repositories/document-repository';
 import { ConfigurationContext } from '@/contexts/configuration-context';
+import Button from '@/components/common/Button';
 import GLMap from './GLMap/GLMap';
 import {
   createFeatureCandidateDraft as buildFeatureCandidateDraft,
   createSoilProfilePhotoDraft as buildSoilProfilePhotoDraft,
   createSurveyBoundaryDraft as buildSurveyBoundaryDraft,
 } from './korean-fieldwork-drafts';
+import {
+  FEATURE_CANDIDATE_PARENT_CATEGORIES,
+  FEATURE_WORKFLOW_CATEGORIES,
+  KOREAN_FIELDWORK_CATEGORIES,
+  SOIL_PROFILE_PHOTO_TARGET_CATEGORIES,
+} from '../korean-fieldwork-categories';
 import MapBottomSheet from './MapBottomSheet';
 
 const FEATURE_GEOMETRY_EDIT_STATUS_NEEDS_AERIAL_ALIGNMENT = 'needsAerialAlignment';
@@ -41,6 +49,7 @@ proj4.defs(
 
 interface MapProps {
   repository: DocumentRepository;
+  documents: Document[];
   selectedDocumentIds: string[];
   highlightedDocId?: string;
   addDocument: (parentDoc: Document) => void;
@@ -95,31 +104,46 @@ const Map: React.FC<MapProps> = (props) => {
 
   const canCreateSoilProfilePhoto =
     !!highlightedDoc &&
-    !!config?.getCategory('SoilProfilePhoto') &&
-    ['Operation', 'Feature', 'FeatureSegment'].includes(highlightedDoc.resource.category);
+    !!config?.getCategory(KOREAN_FIELDWORK_CATEGORIES.SOIL_PROFILE_PHOTO) &&
+    SOIL_PROFILE_PHOTO_TARGET_CATEGORIES.includes(highlightedDoc.resource.category);
 
   const canCreateSurveyBoundary =
     !!highlightedDoc &&
-    !!config?.getCategory('SurveyBoundary') &&
-    highlightedDoc.resource.category === 'Operation';
+    !!config?.getCategory(KOREAN_FIELDWORK_CATEGORIES.SURVEY_BOUNDARY) &&
+    highlightedDoc.resource.category === KOREAN_FIELDWORK_CATEGORIES.OPERATION;
+
+  const featureParent = getFeatureCandidateParent(highlightedDoc, props.documents);
+  const canCreateFeatureCandidate =
+    !!featureParent && !!location && !!config?.getCategory(KOREAN_FIELDWORK_CATEGORIES.FEATURE);
 
   const createFeatureCandidateAtCurrentLocation = async () => {
-    if (!highlightedDoc || !location || !config?.getCategory('Feature')) return;
+    if (!featureParent || !location || !config?.getCategory(KOREAN_FIELDWORK_CATEGORIES.FEATURE)) return;
 
     const createdDocument = await props.repository.create(
-      buildFeatureCandidateDraft(highlightedDoc, location)
+      buildFeatureCandidateDraft(featureParent, location)
     );
 
     setHighlightedDoc(createdDocument);
   };
 
+  const createFeatureCandidateAndEdit = async () => {
+    if (!featureParent || !location || !config?.getCategory(KOREAN_FIELDWORK_CATEGORIES.FEATURE)) return;
+
+    const createdDocument = await props.repository.create(
+      buildFeatureCandidateDraft(featureParent, location)
+    );
+
+    setHighlightedDoc(createdDocument);
+    props.editDocument(createdDocument.resource.id, KOREAN_FIELDWORK_CATEGORIES.FEATURE);
+  };
+
   const createPenMemoDraft = async () => {
-    if (!highlightedDoc || !config?.getCategory('PenMemo')) return;
+    if (!highlightedDoc || !config?.getCategory(KOREAN_FIELDWORK_CATEGORIES.PEN_MEMO)) return;
 
     const createdDocument = await props.repository.create({
       resource: {
         identifier: `pen-memo-${Date.now()}`,
-        category: 'PenMemo',
+        category: KOREAN_FIELDWORK_CATEGORIES.PEN_MEMO,
         relations: {
           depicts: [highlightedDoc.resource.id],
         },
@@ -128,7 +152,7 @@ const Map: React.FC<MapProps> = (props) => {
       },
     });
 
-    props.editDocument(createdDocument.resource.id, 'PenMemo');
+    props.editDocument(createdDocument.resource.id, KOREAN_FIELDWORK_CATEGORIES.PEN_MEMO);
   };
 
   const createSoilProfilePhotoDraft = async () => {
@@ -136,7 +160,7 @@ const Map: React.FC<MapProps> = (props) => {
 
     const createdDocument = await props.repository.create(buildSoilProfilePhotoDraft(highlightedDoc));
 
-    props.editDocument(createdDocument.resource.id, 'SoilProfilePhoto');
+    props.editDocument(createdDocument.resource.id, KOREAN_FIELDWORK_CATEGORIES.SOIL_PROFILE_PHOTO);
   };
 
   const createSurveyBoundaryDraft = async () => {
@@ -144,7 +168,7 @@ const Map: React.FC<MapProps> = (props) => {
 
     const createdDocument = await props.repository.create(buildSurveyBoundaryDraft(highlightedDoc));
 
-    props.editDocument(createdDocument.resource.id, 'SurveyBoundary');
+    props.editDocument(createdDocument.resource.id, KOREAN_FIELDWORK_CATEGORIES.SURVEY_BOUNDARY);
   };
 
   const updateHighlightedFeatureGeometryState = async (
@@ -153,7 +177,7 @@ const Map: React.FC<MapProps> = (props) => {
   ) => {
     if (
       !highlightedDoc ||
-      !['Feature', 'FeatureSegment'].includes(highlightedDoc.resource.category)
+      !FEATURE_WORKFLOW_CATEGORIES.includes(highlightedDoc.resource.category)
     ) {
       return;
     }
@@ -217,14 +241,25 @@ const Map: React.FC<MapProps> = (props) => {
           focusMapOnDocumentId={focusMapOnDocumentId}
         />
       )}
+      <View style={styles.quickCreateContainer}>
+        <Button
+          variant="success"
+          title={canCreateFeatureCandidate ? '유구 만들기' : 'GPS 확인 중'}
+          isDisabled={!canCreateFeatureCandidate}
+          onPress={createFeatureCandidateAndEdit}
+        />
+        <Text style={styles.quickCreateHint}>
+          현재 위치에 후보를 만들고 바로 입력합니다.
+        </Text>
+      </View>
       <MapBottomSheet
         document={highlightedDoc}
         addDocument={props.addDocument}
         editDocument={props.editDocument}
         removeDocument={props.removeDocument}
         focusHandler={focusMapOnDocumentId}
-        canCreateLocationCandidate={!!location}
-        canCreatePenMemo={!!config?.getCategory('PenMemo')}
+        canCreateLocationCandidate={canCreateFeatureCandidate}
+        canCreatePenMemo={!!config?.getCategory(KOREAN_FIELDWORK_CATEGORIES.PEN_MEMO)}
         canCreateSoilProfilePhoto={canCreateSoilProfilePhoto}
         canCreateSurveyBoundary={canCreateSurveyBoundary}
         createFeatureCandidateAtCurrentLocation={createFeatureCandidateAtCurrentLocation}
@@ -247,9 +282,41 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     justifyContent: 'center',
   },
+  quickCreateContainer: {
+    position: 'absolute',
+    right: 12,
+    top: 12,
+    width: 190,
+  },
+  quickCreateHint: {
+    backgroundColor: 'rgba(255,255,255,0.92)',
+    borderRadius: 4,
+    color: '#333',
+    fontSize: 11,
+    marginTop: 4,
+    paddingHorizontal: 6,
+    paddingVertical: 4,
+    textAlign: 'center',
+  },
 });
 
 export default Map;
+
+const getFeatureCandidateParent = (
+  highlightedDoc: Document | undefined,
+  documents: Document[]
+): Document | undefined => {
+  if (
+    highlightedDoc &&
+    FEATURE_CANDIDATE_PARENT_CATEGORIES.includes(highlightedDoc.resource.category)
+  ) {
+    return highlightedDoc;
+  }
+
+  return documents.find(
+    (document) => document.resource.category === KOREAN_FIELDWORK_CATEGORIES.OPERATION
+  );
+};
 
 const appendGeometryRevisionHistory = (
   document: Document,

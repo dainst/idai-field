@@ -11,7 +11,11 @@ import { FieldResource } from './field-resource';
 import { Valuelist } from '../configuration/valuelist';
 import { BaseGroupDefinition } from '../../configuration/model/form/base-form-definition';
 import { ConfigReader } from '../../configuration/boot/config-reader';
-import { getConfigurationName } from '../../configuration/project-configuration-names';
+import {
+    getConfigurationName,
+    KOREAN_FIELDWORK_CONFIGURATION_NAME,
+    KOREAN_FIELDWORK_PROJECT_LANGUAGES
+} from '../../configuration/project-configuration-names';
 import { sampleDataLabels } from '../../datastore/sampledata/sample-data-labels';
 import { ScanCodeConfiguration } from '../configuration/scan-code-configuration';
 import { ConfigurationMigrator } from '../../configuration/configuration-migrator';
@@ -297,7 +301,12 @@ export namespace ConfigurationDocument {
 
         const customConfigurationName: string = getConfigurationName(projectIdentifier);
         const customConfiguration = await configReader.read('/Config-' + customConfigurationName + '.json');
-        const languageConfigurations = configReader.getCustomLanguageConfigurations(customConfigurationName);
+        const languageConfigurations = customConfigurationName === KOREAN_FIELDWORK_CONFIGURATION_NAME
+            ? pickLanguageConfigurations(
+                configReader.getCustomLanguageConfigurations(customConfigurationName),
+                KOREAN_FIELDWORK_PROJECT_LANGUAGES
+            )
+            : configReader.getCustomLanguageConfigurations(customConfigurationName);
 
         const configurationDocument = {
             _id: 'configuration',
@@ -320,6 +329,15 @@ export namespace ConfigurationDocument {
         };
 
         return configurationDocument;
+    }
+
+
+    function pickLanguageConfigurations(languageConfigurations: any, languages: ReadonlyArray<string>) {
+
+        return languages.reduce((result: any, language: string) => {
+            if (languageConfigurations?.[language]) result[language] = languageConfigurations[language];
+            return result;
+        }, {});
     }
 
 

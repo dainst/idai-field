@@ -24,7 +24,7 @@
 <div *ngIf="page === 1" id="create-project-modal-body" class="modal-body">
     <div i18n="@@project.createModal.languages"
          class="create-project-modal-heading">Projektsprachen:</div>
-    <languages-list [languages]="languages" 
+    <languages-list [languages]="getSelectableLanguages()"
                     [selectedLanguages]="selectedLanguages"
                     (onModalToggled)="modalOpened = $event"
                     (onChanged)="onLanguagesChanged()"></languages-list>

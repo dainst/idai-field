@@ -24,6 +24,7 @@
 - [한국형 야장 구현 요구사항](field-notebook-requirements.md)
 - [한국형 공통 기록 모델 v0](korean-core-recording-model.md)
 - [iDAI.field 접목 로드맵](idai-adaptation-roadmap.md)
+- [Android 태블릿 설치 안내](android-tablet-install.ko.md)
 
 ## 권별 분석 노트
 

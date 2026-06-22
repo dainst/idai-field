@@ -21,7 +21,7 @@ export default function TabLayout() {
             <Tabs.Screen
               name="index"
               options={{
-                title: 'Home Screen',
+                title: '홈',
                 tabBarIcon: ({ color }) => (
                   <FontAwesome size={28} name="home" color={color} />
                 ),
@@ -30,7 +30,7 @@ export default function TabLayout() {
             <Tabs.Screen
               name="SettingsScreen"
               options={{
-                title: 'Settings',
+                title: '설정',
                 tabBarIcon: ({ color }) => (
                   <FontAwesome size={28} name="cog" color={color} />
                 ),
@@ -39,7 +39,7 @@ export default function TabLayout() {
             <Tabs.Screen
               name="ProjectScreen"
               options={{
-                title: 'Project',
+                title: '야장',
                 tabBarIcon: ({ color }) => (
                   <FontAwesome size={28} name="edit" color={color} />
                 ),

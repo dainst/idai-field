@@ -73,6 +73,15 @@ export class CreateProjectModalComponent implements OnInit {
     public getTemplateDescription = (templateName: string) =>
         this.labels.getDescription(this.getTemplate(templateName));
 
+    public getSelectableLanguages = () => {
+
+        if (!this.isKoreanFieldworkTemplate()) return this.languages;
+
+        return this.languages?.ko
+            ? { ko: this.languages.ko }
+            : {};
+    }
+
     public getIdentifierMaxLength = () => ProjectIdentifierValidation.PROJECT_IDENTIFIER_MAX_LENGTH;
 
     public goBack = () => this.page--;
@@ -98,6 +107,11 @@ export class CreateProjectModalComponent implements OnInit {
 
 
     public onLanguagesChanged() {
+
+        if (this.isKoreanFieldworkTemplate()) {
+            this.applyTemplateDefaults();
+            return;
+        }
 
         this.selectedLanguageObjects = this.selectedLanguages.map(languageCode => this.languages[languageCode]);
         this.resetProjectName();
@@ -217,12 +231,13 @@ export class CreateProjectModalComponent implements OnInit {
 
     private applyTemplateDefaults() {
 
-        if (this.selectedTemplate?.name !== KOREAN_FIELDWORK_TEMPLATE_ID) return;
+        if (!this.isKoreanFieldworkTemplate()) return;
 
         if (!this.projectIdentifier) this.projectIdentifier = KOREAN_FIELDWORK_PROJECT_PREFIX;
-        if (!this.selectedLanguages || this.selectedLanguages.length === 0) {
-            this.selectedLanguages = KOREAN_FIELDWORK_PROJECT_LANGUAGES.slice();
-            this.selectedLanguageObjects = this.selectedLanguages.map(languageCode => this.languages[languageCode]);
-        }
+        this.selectedLanguages = KOREAN_FIELDWORK_PROJECT_LANGUAGES.slice();
+        this.selectedLanguageObjects = this.selectedLanguages.map(languageCode => this.languages[languageCode]);
     }
+
+
+    private isKoreanFieldworkTemplate = () => this.selectedTemplate?.name === KOREAN_FIELDWORK_TEMPLATE_ID;
 }

@@ -29,14 +29,14 @@ const ConnectPouchForm: React.FC<ConnectPouchFormProps> = ({ settings, onConnect
     return (
         <>
             <TitleBar
-                title={ <Heading>Connect</Heading> }
+                title={ <Heading>동기화 연결</Heading> }
                 left={ <Button
-                    title="Cancel"
+                    title="닫기"
                     variant="transparent"
                     icon={ <Ionicons name="close-outline" size={ 16 } /> }
                     onPress={ onClose }
                 /> }
-                right={ <Button variant="success" title="Connect" onPress={ onSubmit } /> }
+                right={ <Button variant="success" title="연결" onPress={ onSubmit } /> }
             />
             <Column>
                 <Input placeholder="URL"
@@ -46,7 +46,7 @@ const ConnectPouchForm: React.FC<ConnectPouchFormProps> = ({ settings, onConnect
                     autoCorrect={ false }
                     autoFocus
                 />
-                <Input placeholder="Password"
+                <Input placeholder="비밀번호"
                     secureTextEntry
                     value={ password }
                     onChangeText={ setPassword }

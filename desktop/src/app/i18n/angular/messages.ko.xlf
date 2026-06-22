@@ -2665,9 +2665,16 @@
       </trans-unit>
       <trans-unit id="resources.plusButton.selectCategory" datatype="html">
         <source>Bitte wählen Sie eine Kategorie aus.</source>
-        <target state="translated">카테고리를 선택해주세요.</target><context-group purpose="location">
+        <target state="translated">기록 단위를 선택하세요.</target><context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
           <context context-type="linenumber">61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.plusButton.koreanFeatureQuickCreate" datatype="html">
+        <source>유구 그리기</source>
+        <target state="translated">유구 그리기</target><context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/plus-button.html</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.edit" datatype="html">
@@ -2679,42 +2686,42 @@
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType" datatype="html">
         <source>Bitte wählen Sie einen Geometrietyp aus.</source>
-        <target state="translated">도형 유형을 선택하세요.</target><context-group purpose="location">
+        <target state="translated">도형을 선택하세요.</target><context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
           <context context-type="linenumber">97</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.polygon" datatype="html">
         <source>Polygon</source>
-        <target state="translated">다각형</target><context-group purpose="location">
+        <target state="translated">면으로 그리기</target><context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
           <context context-type="linenumber">131</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.polyline" datatype="html">
         <source>Polyline</source>
-        <target state="translated">폴리라인</target><context-group purpose="location">
+        <target state="translated">선으로 그리기</target><context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
           <context context-type="linenumber">161</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.point" datatype="html">
         <source>Punkt</source>
-        <target state="translated">포인트</target><context-group purpose="location">
+        <target state="translated">점으로 찍기</target><context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
           <context context-type="linenumber">183</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.noGeometryData" datatype="html">
         <source>Keine Geometriedaten</source>
-        <target state="translated">기하학 데이터 없음</target><context-group purpose="location">
+        <target state="translated">도형 없이 기록만</target><context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/plus-button.component.ts</context>
           <context context-type="linenumber">208</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.list.headers.category" datatype="html">
         <source>Kategorie</source>
-        <target state="translated">카테고리</target><context-group purpose="location">
+        <target state="translated">기록 종류</target><context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/list.component.ts</context>
           <context context-type="linenumber">42</context>
         </context-group>
@@ -2850,7 +2857,7 @@
       </trans-unit>
       <trans-unit id="widgets.categoryPicker.allCategories" datatype="html">
         <source>Alle Kategorien</source>
-        <target state="translated">모든 카테고리</target><context-group purpose="location">
+        <target state="translated">모든 기록</target><context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/category-picker.component.ts</context>
           <context context-type="linenumber">51</context>
         </context-group>

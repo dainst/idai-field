@@ -97,7 +97,7 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({
       repository
         ?.create(newDocument)
         .then((doc) => {
-          showToast(ToastType.Success, `Created ${doc.resource.identifier}`);
+          showToast(ToastType.Success, `${doc.resource.identifier} 기록을 만들었습니다.`);
           setResourceToDefault();
           router.setParams({
             highlightedDocId: doc.resource.id,
@@ -106,7 +106,7 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({
         })
         .catch((_err) => {
           Keyboard.dismiss();
-          showToast(ToastType.Error, 'Could not create resource!');
+          showToast(ToastType.Error, '기록을 만들지 못했습니다.');
           console.log(_err);
         });
     }
@@ -124,7 +124,7 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({
         <Button
           variant="success"
           onPress={saveButtonHandler}
-          title="Save"
+          title="저장"
           isDisabled={!saveBtnEnabled}
           icon={
             <MaterialIcons
@@ -137,11 +137,7 @@ const DocumentAdd: React.FC<DocumentAddProps> = ({
         />
       }
       category={category}
-      // headerText={`Add ${labels.get(category)} to ${
-      //   parentDoc.resource?.identifier ||'no parent'
-      // }`}
-      headerText={`asdasd '
-      }`}
+      headerText={`${labels.get(category)} 만들기`}
       returnBtnHandler={onReturn}
       resource={newResource}
       updateFunction={updateResource}

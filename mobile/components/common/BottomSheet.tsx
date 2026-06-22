@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { ReactNode, useRef, useState } from 'react';
 import { Animated, Dimensions, LayoutChangeEvent, StyleSheet, View } from 'react-native';
 import {
     HandlerStateChangeEvent,
@@ -9,7 +9,8 @@ import {
 //taken from https://snack.expo.io/@adamgrzybowski/react-native-gesture-handler-demo
 
 interface BottomSheetProps {
-    snapPointsFromTop: number[]
+    snapPointsFromTop: number[];
+    children?: ReactNode;
 }
 
 const USE_NATIVE_DRIVER = true;

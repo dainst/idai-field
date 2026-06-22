@@ -25,7 +25,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   return (
     <Row style={[styles.container, { marginTop: insets.top + 5 }]}>
       <Input
-        placeholder="Search..."
+        placeholder="기록 검색..."
         style={styles.input}
         onChangeText={setQ}
         onEndEditing={() => issueSearch(q)}

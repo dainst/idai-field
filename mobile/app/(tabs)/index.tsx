@@ -31,7 +31,7 @@ const Header: React.FC<{
           style={styles.usernameWarningText}
         />
         <Text style={styles.usernameWarningText}>
-          Make sure to set your name!
+          작업자 이름을 설정하세요.
         </Text>
         <Ionicons
           name="arrow-forward"
@@ -58,7 +58,7 @@ const BottomActions: React.FC<{
     <Button
       icon={<Ionicons name="add-circle" size={16} />}
       onPress={onCreatePress}
-      title="Create new project"
+      title="새 프로젝트 만들기"
       variant="success"
       style={styles.bottomActionButton}
       isDisabled={isDisabled}
@@ -66,14 +66,14 @@ const BottomActions: React.FC<{
     <Button
       icon={<Ionicons name="cloud-download-outline" size={16} />}
       onPress={onLoadPress}
-      title="Load project from server"
+      title="서버에서 프로젝트 가져오기"
       style={styles.bottomActionButton}
       variant="mellow"
     />
     <Button
       icon={<Ionicons name="folder-open" size={16} />}
       onPress={onTestPress}
-      title="Open test project"
+      title="테스트 프로젝트 열기"
       style={styles.bottomActionButton}
       isDisabled={isDisabled}
     />

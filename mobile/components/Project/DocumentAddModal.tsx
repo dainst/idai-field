@@ -9,6 +9,7 @@ import CategoryButton from '@/components/common/CategoryButton';
 import CategoryIcon from '@/components/common/CategoryIcon';
 import Heading from '@/components/common/Heading';
 import TitleBar from '@/components/common/TitleBar';
+import { KOREAN_FIELDWORK_CATEGORY_ORDER } from './korean-fieldwork-categories';
 
 const ICON_SIZE = 30;
 
@@ -66,7 +67,7 @@ const DocumentAddModal: React.FC<AddModalProps> = ({
       )
         categories.push(category);
     });
-    setCategories(categories);
+    setCategories(categories.sort(compareKoreanFieldworkCategories));
   }, [isAllowedCategory, config]);
 
   const renderButton = (
@@ -85,7 +86,7 @@ const DocumentAddModal: React.FC<AddModalProps> = ({
 
   const renderCategoryChilds = (category: CategoryForm) => (
     <View style={categoryChildStyles.container}>
-      {category.children.map((category) =>
+      {[...category.children].sort(compareKoreanFieldworkCategories).map((category) =>
         renderButton(category, { margin: 2.5 }, category.name)
       )}
     </View>
@@ -109,13 +110,13 @@ const DocumentAddModal: React.FC<AddModalProps> = ({
               <>
                 <CategoryIcon category={parentCategory} size={25} />
                 <Heading style={styles.heading}>
-                  Add child to {parentDoc?.resource.identifier}
+                  {parentDoc?.resource.identifier}에 기록 추가
                 </Heading>
               </>
             }
             left={
               <Button
-                title="Cancel"
+                title="닫기"
                 variant="transparent"
                 icon={<Ionicons name="close-outline" size={16} />}
                 onPress={onClose}
@@ -141,6 +142,20 @@ const categoryChildStyles = StyleSheet.create({
     marginLeft: 20,
   },
 });
+
+const compareKoreanFieldworkCategories = (
+  categoryA: CategoryForm,
+  categoryB: CategoryForm
+): number => {
+  const indexA = KOREAN_FIELDWORK_CATEGORY_ORDER.indexOf(categoryA.name);
+  const indexB = KOREAN_FIELDWORK_CATEGORY_ORDER.indexOf(categoryB.name);
+  const orderA = indexA === -1 ? Number.MAX_SAFE_INTEGER : indexA;
+  const orderB = indexB === -1 ? Number.MAX_SAFE_INTEGER : indexB;
+
+  return orderA === orderB
+    ? categoryA.name.localeCompare(categoryB.name)
+    : orderA - orderB;
+};
 
 const styles = StyleSheet.create({
   container: {

@@ -155,6 +155,7 @@
       }
     },
     "Project": {
+      "label": "Site/project",
       "fields": {
         "digitalSourcePreservation": {
           "label": "Digital source preservation"
@@ -384,7 +385,11 @@
         }
       }
     },
+    "Place": {
+      "label": "Site/location"
+    },
     "Operation": {
+      "label": "Investigation area",
       "fields": {
         "dailyLogContent": {
           "label": "Daily work log"
@@ -454,7 +459,11 @@
         }
       }
     },
+    "Trench": {
+      "label": "Trench/investigation trench"
+    },
     "Survey": {
+      "label": "Surface survey",
       "fields": {
         "fieldRecordQuality": {
           "label": "Field record quality"
@@ -605,6 +614,7 @@
       }
     },
     "FeatureGroup": {
+      "label": "Feature group",
       "fields": {
         "featurePackage": {
           "label": "Feature package"
@@ -657,6 +667,7 @@
       }
     },
     "Feature": {
+      "label": "Feature",
       "fields": {
         "featurePackage": {
           "label": "Feature package"
@@ -973,6 +984,7 @@
       }
     },
     "FeatureSegment": {
+      "label": "Feature detail record",
       "fields": {
         "featurePackage": {
           "label": "Feature package"
@@ -1100,6 +1112,7 @@
       }
     },
     "Find": {
+      "label": "Find",
       "fields": {
         "fieldRecordQuality": {
           "label": "Field record quality"
@@ -1266,6 +1279,7 @@
       }
     },
     "Sample": {
+      "label": "Sample",
       "fields": {
         "fieldRecordQuality": {
           "label": "Field record quality"
@@ -1375,6 +1389,7 @@
       }
     },
     "Drawing": {
+      "label": "Drawing",
       "fields": {
         "mediaEvidenceRole": {
           "label": "Media evidence role"
@@ -1470,7 +1485,7 @@
       }
     },
     "Layer": {
-      "label": "Soil layer",
+      "label": "Stratigraphic layer",
       "fields": {
         "layerSequenceNumber": {
           "label": "Layer number"
@@ -1634,6 +1649,7 @@
       }
     },
     "Photo": {
+      "label": "Photo",
       "fields": {
         "mediaEvidenceRole": {
           "label": "Media evidence role"

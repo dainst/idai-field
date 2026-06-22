@@ -4,8 +4,10 @@
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "tablet": "expo start --dev-client --host localhost",
+    "tablet:lan": "expo start --dev-client --lan",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "expo lint",
@@ -23,7 +25,7 @@
   "dependencies": {
     "@expo/metro-config": "^0.18.11",
     "@expo/vector-icons": "^14.0.2",
-    "@neighbourhoodie/pouchdb-asyncstorage-adapter": "file:.yalc/@neighbourhoodie/pouchdb-asyncstorage-adapter",
+    "@neighbourhoodie/pouchdb-asyncstorage-adapter": "https://github.com/neighbourhoodie/pouchdb-asyncstorage-adapter/archive/aba5283242f928e3732d516d47ca46e653f40bf1.tar.gz",
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-native-community/datetimepicker": "8.0.1",
     "@react-native-community/slider": "4.5.2",
@@ -37,7 +39,10 @@
     "dateformat": "^5.0.3",
     "expo": "~51.0.28",
     "expo-barcode-scanner": "^13.0.1",
+    "expo-camera": "~15.0.16",
     "expo-constants": "~16.0.2",
+    "expo-dev-client": "~4.0.29",
+    "expo-file-system": "~17.0.1",
     "expo-font": "~12.0.9",
     "expo-gl": "^14.0.2",
     "expo-linking": "~6.3.1",
@@ -70,8 +75,7 @@
     "react-native-web": "~0.19.10",
     "rxjs": "^7.8.1",
     "three": "^0.166.0",
-    "tsfun": "5.5.38",
-    "expo-camera": "~15.0.16"
+    "tsfun": "5.5.38"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

@@ -2,6 +2,7 @@ import {
   Document,
   NewDocument,
 } from 'idai-field-core';
+import { KOREAN_FIELDWORK_CATEGORIES } from '../korean-fieldwork-categories';
 
 export const LAYER_SEQUENCE_MEANING_DEFAULT = 'latestToEarliest';
 export const SOIL_COLOR_ASSIST_STATUS_DEFAULT = 'notRun';
@@ -39,7 +40,7 @@ export const createKoreanFieldworkChildRelations = (
 export const createSoilProfilePhotoDraft = (targetDoc: Document): NewDocument => ({
   resource: {
     identifier: `soil-profile-photo-${Date.now()}`,
-    category: 'SoilProfilePhoto',
+    category: KOREAN_FIELDWORK_CATEGORIES.SOIL_PROFILE_PHOTO,
     relations: createDepictsRelation(targetDoc),
     soilProfileAnnotationStrokes: '[]',
     soilProfileLayerMarkers: '[]',
@@ -57,7 +58,7 @@ export const createLayerDraft = (
 ): NewDocument => ({
   resource: {
     identifier: `layer-${Date.now()}-${sequenceNumber}`,
-    category: 'Layer',
+    category: KOREAN_FIELDWORK_CATEGORIES.LAYER,
     relations: createKoreanFieldworkChildRelations(parentDoc),
     layerSequenceNumber: sequenceNumber,
     layerSequenceMeaning: LAYER_SEQUENCE_MEANING_DEFAULT,
@@ -71,7 +72,7 @@ export const createFeatureCandidateDraft = (
 ): NewDocument => ({
   resource: {
     identifier: `feature-candidate-${Date.now()}`,
-    category: 'Feature',
+    category: KOREAN_FIELDWORK_CATEGORIES.FEATURE,
     relations: createKoreanFieldworkChildRelations(parentDoc),
     geometry: {
       type: 'Point',
@@ -90,7 +91,7 @@ export const createFeatureCandidateDraft = (
 export const createSurveyBoundaryDraft = (parentDoc: Document): NewDocument => ({
   resource: {
     identifier: `survey-boundary-${Date.now()}`,
-    category: 'SurveyBoundary',
+    category: KOREAN_FIELDWORK_CATEGORIES.SURVEY_BOUNDARY,
     relations: createKoreanFieldworkChildRelations(parentDoc),
     surveyBoundaryType: SURVEY_BOUNDARY_TYPE_DEFAULT,
     surveyBoundarySource: SURVEY_BOUNDARY_SOURCE_DEFAULT,

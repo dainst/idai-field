@@ -50,7 +50,7 @@ const DocumentEdit: React.FC = () => {
       repository
         ?.update({ ...document, resource })
         .then((doc) => {
-          showToast(ToastType.Success, `Edited ${doc.resource.identifier}`);
+          showToast(ToastType.Success, `${doc.resource.identifier} 기록을 저장했습니다.`);
           router.setParams({
             highlightedDocId: doc.resource.id,
           });
@@ -60,7 +60,7 @@ const DocumentEdit: React.FC = () => {
           Keyboard.dismiss();
           showToast(
             ToastType.Error,
-            `Could not update ${document.resource.identifier}: ${err}`
+            `${document.resource.identifier} 기록을 저장하지 못했습니다: ${err}`
           );
         });
     }
@@ -85,14 +85,14 @@ const DocumentEdit: React.FC = () => {
         <Button
           variant="primary"
           onPress={editDocument}
-          title="Edit"
+          title="저장"
           icon={
             <Ionicons name="create-outline" size={18} testID="editDocBtn" />
           }
         />
       }
       category={category}
-      headerText={`Edit ${labels.get(category)} ${
+      headerText={`${labels.get(category)} 편집: ${
         document.resource.identifier
       }`}
       returnBtnHandler={onReturn}

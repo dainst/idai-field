@@ -12,14 +12,14 @@ interface DisconnectPouchFormProps {
 const DisconnectPouchForm: React.FC<DisconnectPouchFormProps> = ({ onDisconnect, onClose }) => {
     return (
         <TitleBar
-            title={ <Heading>Connected</Heading> }
+            title={ <Heading>연결됨</Heading> }
             left={ <Button
-                title="Cancel"
+                title="닫기"
                 variant="transparent"
                 icon={ <Ionicons name="close-outline" size={ 16 } /> }
                 onPress={ onClose }
             /> }
-            right={ <Button variant="danger" onPress={ onDisconnect } title="Disconnect" /> }
+            right={ <Button variant="danger" onPress={ onDisconnect } title="연결 해제" /> }
         />
     );
 };

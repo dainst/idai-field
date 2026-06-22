@@ -1,3 +1,7 @@
+param(
+    [switch]$CheckOnly
+)
+
 $ErrorActionPreference = 'Stop'
 
 $repoDir = $PSScriptRoot
@@ -49,6 +53,30 @@ function Test-FieldServer {
     }
 }
 
+function Stop-StaleFieldServer {
+    try {
+        $listeners = Get-NetTCPConnection -LocalPort 4200 -State Listen -ErrorAction SilentlyContinue |
+            Select-Object -ExpandProperty OwningProcess -Unique
+
+        foreach ($listenerPid in $listeners) {
+            $process = Get-CimInstance Win32_Process -Filter "ProcessId=$listenerPid" -ErrorAction SilentlyContinue
+            if (-not $process) { continue }
+
+            $commandLine = [string]$process.CommandLine
+            $isCurrentRepoServer = $commandLine.Contains($repoDir) -or
+                $commandLine -match 'ng(\.cmd)?\s+serve' -or
+                $commandLine -match '@angular[\\/]cli'
+
+            if ($isCurrentRepoServer) {
+                Write-Host "Stopping stale development server on port 4200 (PID $listenerPid)."
+                & taskkill.exe /PID $listenerPid /T /F | Out-Null
+            }
+        }
+    } catch {
+        Write-Host "Could not check for stale development server: $($_.Exception.Message)"
+    }
+}
+
 function Stop-ProcessTree {
     param([System.Diagnostics.Process] $Process)
 
@@ -72,10 +100,19 @@ try {
         throw "Electron runtime was not found: $electronExe"
     }
 
+    if ($CheckOnly) {
+        Write-Host "Launcher check passed."
+        Write-Host "Node/npm runtime: $nodeDir"
+        Write-Host "Desktop app: $appDir"
+        Write-Host "Electron: $electronExe"
+        exit 0
+    }
+
     $env:Path = "$nodeDir;$env:Path"
     Set-Location -LiteralPath $appDir
 
     Write-Host 'Starting iDAI Field in Korean.'
+    Stop-StaleFieldServer
 
     if (Test-FieldServer) {
         Write-Host 'Development server is already ready.'

@@ -45,12 +45,12 @@ const DocumentRemoveModal: React.FC<RemoveModalProps> = ({
             title={
               <>
                 <CategoryIcon category={category} size={25} />
-                <Heading style={styles.heading}>Remove {identifier}</Heading>
+                <Heading style={styles.heading}>{identifier} 삭제</Heading>
               </>
             }
             left={
               <Button
-                title="Cancel"
+                title="취소"
                 variant="transparent"
                 icon={<Ionicons name="close-outline" size={16} />}
                 onPress={onClose}
@@ -58,7 +58,7 @@ const DocumentRemoveModal: React.FC<RemoveModalProps> = ({
             }
             right={
               <Button
-                title={'Delete'}
+                title="삭제"
                 variant={'danger'}
                 onPress={() => onRemoveDocument(doc)}
                 isDisabled={docValue !== identifier}
@@ -67,11 +67,10 @@ const DocumentRemoveModal: React.FC<RemoveModalProps> = ({
           />
           <View style={styles.form}>
             <Text>
-              This will delete resource {identifier} and all associated data
+              {identifier} 기록과 연결된 모든 데이터를 삭제합니다.
             </Text>
             <Text>
-              Type <Text style={{ fontWeight: 'bold' }}>{identifier} </Text>to
-              confirm
+              삭제하려면 <Text style={{ fontWeight: 'bold' }}>{identifier}</Text>를 정확히 입력하세요.
             </Text>
             <Input
               value={docValue}

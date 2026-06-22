@@ -4,7 +4,13 @@ import {
   KoreanFieldworkReadinessIssue,
 } from 'idai-field-core';
 import React, { useMemo } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import BottomSheet from '@/components/common/BottomSheet';
 import Button from '@/components/common/Button';
 import DocumentButton from '@/components/common/DocumentButton';
@@ -28,6 +34,7 @@ interface MapBottomSheetProps {
   createSurveyBoundaryDraft: () => void;
   markGeometryNeedsAerialAlignment: () => void;
   markGeometryAdjustedToAerialLayer: () => void;
+  toggleFeatureWorkflowStep: (stepValue: string) => void;
   readinessIssues: KoreanFieldworkReadinessIssue[];
 }
 
@@ -66,6 +73,7 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
   createSurveyBoundaryDraft,
   markGeometryNeedsAerialAlignment,
   markGeometryAdjustedToAerialLayer,
+  toggleFeatureWorkflowStep,
   readinessIssues,
 }) => {
   const iconSize = 20;
@@ -171,7 +179,9 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
               const checked = checkedFeatureChecklistValues.has(item.value);
               return (
                 <View key={item.value} style={styles.workflowStepWrap}>
-                  <View
+                  <TouchableOpacity
+                    activeOpacity={0.82}
+                    onPress={() => toggleFeatureWorkflowStep(item.value)}
                     style={[
                       styles.workflowStep,
                       checked && styles.workflowStepChecked,
@@ -183,7 +193,7 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
                       color={checked ? '#2f6f4e' : '#666'}
                     />
                     <Text style={styles.workflowStepLabel}>{item.label}</Text>
-                  </View>
+                  </TouchableOpacity>
                   {index < FEATURE_WORKFLOW_STEPS.length - 1 && (
                     <MaterialIcons name="chevron-right" size={16} color="#999" />
                   )}

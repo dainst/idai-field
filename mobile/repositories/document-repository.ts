@@ -1,6 +1,5 @@
 import {
   basicIndexConfiguration,
-  DocumentConverter,
   CategoryForm,
   ChangesStream,
   ConstraintIndex,
@@ -52,7 +51,6 @@ export class DocumentRepository {
       projectLanguages:[],
     });
     const [datastore, changesStream] = await buildDatastore(
-      categoryForms,
       pouchdbDatastore,
       db,
       username,
@@ -93,7 +91,6 @@ export class DocumentRepository {
 }
 
 const buildDatastore = async (
-  categories: Forest<CategoryForm>,
   pouchdbDatastore: PouchdbDatastore,
   db: PouchDB.Database,
   username: string,
@@ -101,31 +98,30 @@ const buildDatastore = async (
 ): Promise<[Datastore, ChangesStream]> => {
   const indexFacade = buildIndexFacade(projectConfiguration);
   const documentCache = new DocumentCache();
-  const converter = new DocumentConverter(projectConfiguration);
 
   await Indexer.reindex(
     indexFacade,
     db,
     documentCache,
-    converter,
     projectConfiguration,
     false
   );
 
+  const datastore = new Datastore(
+    pouchdbDatastore,
+    indexFacade,
+    documentCache,
+    projectConfiguration,
+    () => username
+  );
+
   return [
-    new Datastore(
-      pouchdbDatastore,
-      indexFacade,
-      documentCache,
-      converter,
-      projectConfiguration,
-      () => username
-    ),
+    datastore,
     new ChangesStream(
       pouchdbDatastore,
+      datastore,
       indexFacade,
       documentCache,
-      converter,
       projectConfiguration,
       () => username
     ),

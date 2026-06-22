@@ -70,7 +70,7 @@ const CONTAINMENT_RELATIONS = ['liesWithin', 'isRecordedInFeature'];
 export const KOREAN_FIELDWORK_READINESS_RULES: KoreanFieldworkReadinessRule[] = [
     {
         id: 'feature-complete-photo',
-        label: 'Completed features should keep a completion photo check',
+        label: '완료된 유구는 완료 사진 확인을 남겨야 함',
         relatedFields: ['featureRecordingStatus', 'featureInvestigationChecklist'],
         evaluate: (document) => {
             if (!isFeatureLike(document)) return [];
@@ -81,15 +81,15 @@ export const KOREAN_FIELDWORK_READINESS_RULES: KoreanFieldworkReadinessRule[] = 
                 document,
                 'feature-complete-photo',
                 'warning',
-                'Feature is confirmed but the completion photo checklist item is not checked.',
+                '유구가 확인 상태지만 완료 사진 항목이 체크되지 않았습니다.',
                 ['featureRecordingStatus', 'featureInvestigationChecklist'],
-                'Confirm whether the completion photo is linked before field closeout.'
+                '현장 마감 전 완료 사진을 연결했는지 확인하세요.'
             )];
         }
     },
     {
         id: 'finds-recovered-pre-photo',
-        label: 'Find recovery should keep a pre-recovery photo check',
+        label: '유물 수습 전 사진 확인',
         relatedFields: ['featureInvestigationChecklist'],
         evaluate: (document) => {
             if (!isFeatureLike(document)) return [];
@@ -100,15 +100,15 @@ export const KOREAN_FIELDWORK_READINESS_RULES: KoreanFieldworkReadinessRule[] = 
                 document,
                 'finds-recovered-pre-photo',
                 'warning',
-                'Finds are marked recovered but the pre-recovery find photo checklist item is not checked.',
+                '유물 수습은 표시되어 있지만 수습 전 사진 항목이 체크되지 않았습니다.',
                 ['featureInvestigationChecklist'],
-                'Check the pre-recovery photo state or explain the exception in the feature note.'
+                '수습 전 사진 상태를 확인하거나 예외 사유를 유구 메모에 남기세요.'
             )];
         }
     },
     {
         id: 'soil-profile-photo-count',
-        label: 'Soil profile photo count should match linked SoilProfilePhoto records',
+        label: '토층 사진 수와 연결 기록 확인',
         relatedFields: ['featureSoilProfilePhotoCount', 'featureInvestigationChecklist'],
         evaluate: (document, documents) => {
             if (!isFeatureLike(document)) return [];
@@ -125,15 +125,15 @@ export const KOREAN_FIELDWORK_READINESS_RULES: KoreanFieldworkReadinessRule[] = 
                 document,
                 'soil-profile-photo-count',
                 'warning',
-                'Soil profile photos are expected but linked SoilProfilePhoto records are missing.',
+                '토층 사진이 필요한 상태지만 연결된 토층 사진 기록이 부족합니다.',
                 ['featureSoilProfilePhotoCount', 'featureInvestigationChecklist'],
-                'Link or create the soil profile photo records before closing the feature.'
+                '유구를 마감하기 전 토층 사진 기록을 만들거나 연결하세요.'
             )];
         }
     },
     {
         id: 'feature-geometry-needs-aerial-alignment',
-        label: 'Feature geometry marked for aerial layer alignment should be reviewed',
+        label: '항공 레이어 보정 필요 유구선 확인',
         relatedFields: [
             'featureGeometryEditStatus',
             'featureGeometryReferenceLayerId',
@@ -147,19 +147,19 @@ export const KOREAN_FIELDWORK_READINESS_RULES: KoreanFieldworkReadinessRule[] = 
                 document,
                 'feature-geometry-needs-aerial-alignment',
                 'info',
-                'Feature geometry is marked for aerial layer alignment.',
+                '유구선이 항공 레이어 보정 필요 상태입니다.',
                 [
                     'featureGeometryEditStatus',
                     'featureGeometryReferenceLayerId',
                     'featureGeometryRevisionHistory'
                 ],
-                'Adjust the feature line against the current drone or aerial layer while preserving the existing feature record.'
+                '기존 유구 기록은 유지한 채 현재 드론·항공 레이어 기준으로 유구선을 보정하세요.'
             )];
         }
     },
     {
         id: 'sample-purpose',
-        label: 'Samples should keep their analysis purpose',
+        label: '시료 채취 목적 확인',
         relatedFields: ['samplePurpose'],
         evaluate: (document) => {
             if (document.resource.category !== 'Sample') return [];
@@ -169,15 +169,15 @@ export const KOREAN_FIELDWORK_READINESS_RULES: KoreanFieldworkReadinessRule[] = 
                 document,
                 'sample-purpose',
                 'warning',
-                'Sample is missing an analysis or collection purpose.',
+                '시료의 분석 또는 채취 목적이 비어 있습니다.',
                 ['samplePurpose'],
-                'Record why the sample was collected before handover.'
+                '인계 전 해당 시료를 채취한 이유를 기록하세요.'
             )];
         }
     },
     {
         id: 'find-label-register',
-        label: 'Finds should keep label/register linkage',
+        label: '유물 라벨·대장 연결 확인',
         relatedFields: ['artifactLabelRegisterLink'],
         evaluate: (document) => {
             if (document.resource.category !== 'Find') return [];
@@ -187,15 +187,15 @@ export const KOREAN_FIELDWORK_READINESS_RULES: KoreanFieldworkReadinessRule[] = 
                 document,
                 'find-label-register',
                 'info',
-                'Find has no artifact label/register linkage recorded.',
+                '유물의 라벨·대장 연결 정보가 기록되지 않았습니다.',
                 ['artifactLabelRegisterLink'],
-                'Check label, bag, register, and later inventory linkage.'
+                '라벨, 봉투, 유물대장, 이후 목록화 연결 상태를 확인하세요.'
             )];
         }
     },
     {
         id: 'field-only-timing',
-        label: 'Field-only observations should keep creation timing',
+        label: '현장 한정 관찰 기록 시점 확인',
         relatedFields: ['fieldOnlyMissingCheck', 'firstExposureRecord', 'recordCreationTiming'],
         evaluate: (document) => {
             if (!hasValue(document.resource.fieldOnlyMissingCheck)
@@ -206,15 +206,15 @@ export const KOREAN_FIELDWORK_READINESS_RULES: KoreanFieldworkReadinessRule[] = 
                 document,
                 'field-only-timing',
                 'warning',
-                'Field-only observations are present but record creation timing is missing.',
+                '현장에서만 확인 가능한 관찰 내용이 있지만 기록 생성 시점이 비어 있습니다.',
                 ['fieldOnlyMissingCheck', 'firstExposureRecord', 'recordCreationTiming'],
-                'Mark when this observation was recorded so later review can judge recoverability.'
+                '추후 검토자가 복원 가능성을 판단할 수 있도록 관찰 기록 시점을 표시하세요.'
             )];
         }
     },
     {
         id: 'report-cross-check',
-        label: 'Report preparation records should keep report cross-check fields',
+        label: '보고서 작성 전 교차 확인 대상 확인',
         relatedFields: ['reportCrossCheck'],
         evaluate: (document) => {
             if (!REPORT_REVIEW_CATEGORIES.includes(document.resource.category)) return [];
@@ -224,9 +224,9 @@ export const KOREAN_FIELDWORK_READINESS_RULES: KoreanFieldworkReadinessRule[] = 
                 document,
                 'report-cross-check',
                 'warning',
-                'Report review record has no report cross-check targets.',
+                '보고서 검토 기록에 교차 확인 대상이 없습니다.',
                 ['reportCrossCheck'],
-                'Link the manuscript, photo register, drawing register, find list, or sample list checks.'
+                '원고, 사진대장, 도면대장, 유물목록, 시료목록 중 확인 대상을 연결하세요.'
             )];
         }
     }

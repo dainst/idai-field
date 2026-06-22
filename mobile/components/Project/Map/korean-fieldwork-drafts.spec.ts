@@ -1,6 +1,7 @@
 import {
   createFeatureCandidateDraft,
   createLayerDraft,
+  createOperationDraft,
   createSoilProfilePhotoDraft,
   createSurveyBoundaryDraft,
   FEATURE_GEOMETRY_EDIT_STATUS_ROUGH_SKETCH,
@@ -25,6 +26,16 @@ describe('Korean fieldwork map drafts', () => {
 
   afterEach(() => {
     jest.restoreAllMocks();
+  });
+
+  it('creates Operation drafts as root 조사구역 records', () => {
+    const draft = createOperationDraft();
+
+    expect(draft.resource).toMatchObject({
+      identifier: 'operation-1700000000000',
+      category: 'Operation',
+      relations: {},
+    });
   });
 
   it('creates Feature candidate drafts with an empty investigation checklist', () => {

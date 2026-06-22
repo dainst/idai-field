@@ -1,5 +1,5 @@
 // Ordered by Name
-export const DEFAULT_PROJECT_LANGUAGES: ReadonlyArray<string> = ['en'];
+export const DEFAULT_PROJECT_LANGUAGES: ReadonlyArray<string> = ['ko'];
 export const KOREAN_FIELDWORK_CONFIGURATION_NAME = 'KoreanFieldwork';
 export const KOREAN_FIELDWORK_GROUP_NAME = 'koreanFieldwork';
 export const KOREAN_FIELDWORK_PROJECT_IDENTIFIER = 'korean-fieldwork';

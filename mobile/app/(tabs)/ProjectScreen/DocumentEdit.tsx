@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { CategoryForm, Resource } from 'idai-field-core';
 import React, { useContext, useEffect, useState } from 'react';
-import { Keyboard } from 'react-native';
+import { Keyboard, StyleSheet, Text, View } from 'react-native';
 import { ConfigurationContext } from '@/contexts/configuration-context';
 import LabelsContext from '@/contexts/labels/labels-context';
 import useDocument from '@/hooks/use-document';
@@ -51,10 +51,12 @@ const DocumentEdit: React.FC = () => {
         ?.update({ ...document, resource })
         .then((doc) => {
           showToast(ToastType.Success, `${doc.resource.identifier} 기록을 저장했습니다.`);
-          router.setParams({
-            highlightedDocId: doc.resource.id,
+          router.navigate({
+            pathname: '/ProjectScreen/DocumentsMap',
+            params: {
+              highlightedDocId: doc.resource.id,
+            },
           });
-          router.navigate('/ProjectScreen/DocumentsMap');
         })
         .catch((err) => {
           Keyboard.dismiss();
@@ -77,7 +79,23 @@ const DocumentEdit: React.FC = () => {
     setResource((oldResource) => oldResource && { ...oldResource, ...data });
   };
 
-  if (!category || !labels || !document || !resource) return null;
+  if (!docId) {
+    return <DocumentEditLoadingState text="편집할 기록 정보를 찾는 중입니다." />;
+  }
+
+  if (!category || !labels || !document || !resource) {
+    return (
+      <DocumentEditLoadingState
+        text={`기록 편집 화면을 준비하고 있습니다.\n남은 항목: ${getMissingDependencies([
+          [!repository, '저장소'],
+          [!document, '기록'],
+          [!category, '양식'],
+          [!labels, '라벨'],
+          [!resource, '입력값'],
+        ])}`}
+      />
+    );
+  }
 
   return (
     <DocumentForm
@@ -109,5 +127,33 @@ const DocumentEdit: React.FC = () => {
 
 const getParam = (param: string | string[] | undefined): string | undefined =>
   Array.isArray(param) ? param[0] : param;
+
+const getMissingDependencies = (
+  dependencies: [boolean, string][]
+): string =>
+  dependencies
+    .filter(([isMissing]) => isMissing)
+    .map(([, label]) => label)
+    .join(', ');
+
+const DocumentEditLoadingState: React.FC<{ text: string }> = ({ text }) => (
+  <View style={styles.loadingContainer}>
+    <Text style={styles.loadingText}>{text}</Text>
+  </View>
+);
+
+const styles = StyleSheet.create({
+  loadingContainer: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+    padding: 24,
+  },
+  loadingText: {
+    color: '#526272',
+    fontSize: 14,
+    textAlign: 'center',
+  },
+});
 
 export default DocumentEdit;

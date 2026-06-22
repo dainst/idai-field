@@ -88,14 +88,14 @@ export class PouchdbDatastore {
                 await db.get('project');
             } catch {
                 await db.put(projectDocument);
+            }
+        }
 
-                if (configurationDocument) {
-                    try {
-                        await db.get('configuration');
-                    } catch {
-                        await db.put(configurationDocument);
-                    }
-                }
+        if (configurationDocument) {
+            try {
+                await db.get('configuration');
+            } catch {
+                await db.put(configurationDocument);
             }
         }
 

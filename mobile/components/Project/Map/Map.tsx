@@ -19,6 +19,7 @@ import Button from '@/components/common/Button';
 import GLMap from './GLMap/GLMap';
 import {
   createFeatureCandidateDraft as buildFeatureCandidateDraft,
+  createOperationDraft as buildOperationDraft,
   createSoilProfilePhotoDraft as buildSoilProfilePhotoDraft,
   createSurveyBoundaryDraft as buildSurveyBoundaryDraft,
 } from './korean-fieldwork-drafts';
@@ -115,6 +116,21 @@ const Map: React.FC<MapProps> = (props) => {
   const featureParent = getFeatureCandidateParent(highlightedDoc, props.documents);
   const canCreateFeatureCandidate =
     !!featureParent && !!location && !!config?.getCategory(KOREAN_FIELDWORK_CATEGORIES.FEATURE);
+  const operationDocuments = props.documents.filter(
+    (document) => document.resource.category === KOREAN_FIELDWORK_CATEGORIES.OPERATION
+  );
+  const canCreateOperation = !!config?.getCategory(KOREAN_FIELDWORK_CATEGORIES.OPERATION);
+  const hasRenderableMapContent = geoDocuments.length > 0 || layerDocuments.length > 0;
+  const shouldShowStartPanel = operationDocuments.length === 0 || !hasRenderableMapContent;
+
+  const createOperationAndEdit = async () => {
+    if (!canCreateOperation) return;
+
+    const createdDocument = await props.repository.create(buildOperationDraft());
+
+    setHighlightedDoc(createdDocument);
+    props.editDocument(createdDocument.resource.id, KOREAN_FIELDWORK_CATEGORIES.OPERATION);
+  };
 
   const createFeatureCandidateAtCurrentLocation = async () => {
     if (!featureParent || !location || !config?.getCategory(KOREAN_FIELDWORK_CATEGORIES.FEATURE)) return;
@@ -214,6 +230,34 @@ const Map: React.FC<MapProps> = (props) => {
     );
   };
 
+  const toggleFeatureWorkflowStep = async (stepValue: string) => {
+    if (
+      !highlightedDoc ||
+      !FEATURE_WORKFLOW_CATEGORIES.includes(highlightedDoc.resource.category)
+    ) {
+      return;
+    }
+
+    const currentValues = Array.isArray(
+      (highlightedDoc.resource as any).featureInvestigationChecklist
+    )
+      ? (highlightedDoc.resource as any).featureInvestigationChecklist
+      : [];
+    const nextValues = currentValues.includes(stepValue)
+      ? currentValues.filter((value: string) => value !== stepValue)
+      : [...currentValues, stepValue];
+
+    const updatedDocument = await props.repository.update({
+      ...highlightedDoc,
+      resource: {
+        ...highlightedDoc.resource,
+        featureInvestigationChecklist: nextValues,
+      },
+    });
+
+    setHighlightedDoc(updatedDocument);
+  };
+
   const onParentIdSelected = (docId: string) => {
     const doc = geoDocuments.find((doc) => doc.resource.id === docId);
     doc && props.selectParent(doc);
@@ -241,15 +285,40 @@ const Map: React.FC<MapProps> = (props) => {
           focusMapOnDocumentId={focusMapOnDocumentId}
         />
       )}
+      {shouldShowStartPanel && (
+        <View style={styles.startPanel}>
+          <Text style={styles.startEyebrow}>한국형 야장</Text>
+          <Text style={styles.startTitle}>
+            {operationDocuments.length === 0 ? '조사구역부터 시작' : '지도 기록 준비'}
+          </Text>
+          <Text style={styles.startHierarchy}>
+            조사구역 → 유구군·유구 → 트렌치 → 피트·층위
+          </Text>
+          <View style={styles.startActions}>
+            <Button
+              variant="success"
+              title="조사구역 만들기"
+              isDisabled={!canCreateOperation}
+              onPress={createOperationAndEdit}
+            />
+            <Button
+              variant="primary"
+              title={canCreateFeatureCandidate ? '유구 후보 기록' : '유구 후보 대기'}
+              isDisabled={!canCreateFeatureCandidate}
+              onPress={createFeatureCandidateAndEdit}
+            />
+          </View>
+        </View>
+      )}
       <View style={styles.quickCreateContainer}>
         <Button
           variant="success"
-          title={canCreateFeatureCandidate ? '유구 만들기' : 'GPS 확인 중'}
+          title={canCreateFeatureCandidate ? '유구 후보 기록' : 'GPS 확인 중'}
           isDisabled={!canCreateFeatureCandidate}
           onPress={createFeatureCandidateAndEdit}
         />
         <Text style={styles.quickCreateHint}>
-          현재 위치에 후보를 만들고 바로 입력합니다.
+          현재 위치에 유구 후보를 만들고 바로 입력합니다.
         </Text>
       </View>
       <MapBottomSheet
@@ -268,6 +337,7 @@ const Map: React.FC<MapProps> = (props) => {
         createSurveyBoundaryDraft={createSurveyBoundaryDraft}
         markGeometryNeedsAerialAlignment={markGeometryNeedsAerialAlignment}
         markGeometryAdjustedToAerialLayer={markGeometryAdjustedToAerialLayer}
+        toggleFeatureWorkflowStep={toggleFeatureWorkflowStep}
         readinessIssues={props.readinessIssues.filter((issue) =>
           issue.documentId === highlightedDoc?.resource.id
         )}
@@ -280,13 +350,50 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignContent: 'center',
+    backgroundColor: '#eef2f4',
     justifyContent: 'center',
+  },
+  startPanel: {
+    backgroundColor: 'rgba(255,255,255,0.96)',
+    borderColor: '#cbd5df',
+    borderRadius: 6,
+    borderWidth: 1,
+    elevation: 8,
+    left: 20,
+    padding: 16,
+    position: 'absolute',
+    right: 20,
+    top: 20,
+    zIndex: 20,
+  },
+  startEyebrow: {
+    color: '#4f6574',
+    fontSize: 12,
+    fontWeight: '700',
+    marginBottom: 4,
+  },
+  startTitle: {
+    color: '#20313a',
+    fontSize: 22,
+    fontWeight: '800',
+    marginBottom: 6,
+  },
+  startHierarchy: {
+    color: '#526272',
+    fontSize: 13,
+    lineHeight: 18,
+    marginBottom: 14,
+  },
+  startActions: {
+    flexDirection: 'row',
+    gap: 10,
   },
   quickCreateContainer: {
     position: 'absolute',
     right: 12,
     top: 12,
     width: 190,
+    zIndex: 15,
   },
   quickCreateHint: {
     backgroundColor: 'rgba(255,255,255,0.92)',

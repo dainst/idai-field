@@ -1,5 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { KOREAN_FIELDWORK_PROJECT_LANGUAGES, KOREAN_FIELDWORK_PROJECT_PREFIX } from 'idai-field-core';
+import {
+    KOREAN_FIELDWORK_PROJECT_LANGUAGES,
+    KOREAN_FIELDWORK_PROJECT_PREFIX,
+} from '@/constants/korean-fieldwork-project';
 import { act, renderHook, waitFor } from '@testing-library/react-native';
 import { defaultMapSettings } from '../components/Project/Map/map-settings';
 import usePreferences from './use-preferences';
@@ -20,7 +23,7 @@ describe('usePreferences', () => {
       
         expect(result.current.preferences.currentProject).toBe('');
         expect(result.current.preferences.recentProjects).toHaveLength(0);
-        expect(result.current.preferences.languages).toEqual(['en']);
+        expect(result.current.preferences.languages).toEqual(KOREAN_FIELDWORK_PROJECT_LANGUAGES);
         expect(result.current.preferences.username).toBe('');
         expect(result.current.preferences.projects).toEqual({});
     });

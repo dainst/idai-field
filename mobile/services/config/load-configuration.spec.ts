@@ -1,17 +1,19 @@
 import {
   ConfigReader,
   ConfigurationDocument,
-  DEFAULT_PROJECT_LANGUAGES,
   IdGenerator,
-  KOREAN_FIELDWORK_GROUP_NAME,
-  KOREAN_FIELDWORK_PROJECT_LANGUAGES,
-  KOREAN_FIELDWORK_PROJECT_PREFIX,
   PouchdbDatastore,
 } from 'idai-field-core';
+import {
+  DEFAULT_PROJECT_LANGUAGES,
+  KOREAN_FIELDWORK_PROJECT_LANGUAGES,
+  KOREAN_FIELDWORK_PROJECT_PREFIX,
+} from '@/constants/korean-fieldwork-project';
 import PouchDB from 'pouchdb-node';
 import loadConfiguration from './load-configuration';
 
 describe('loadConfiguration()', () => {
+  const KOREAN_FIELDWORK_GROUP_NAME = 'koreanFieldwork';
   const project = `${KOREAN_FIELDWORK_PROJECT_PREFIX}mobile-test`;
   const defaultProject = 'default-mobile-test';
   let pouchdbDatastore: PouchdbDatastore;

@@ -19,6 +19,7 @@
       "./test/jest.setup.js"
     ],
     "moduleNameMapper": {
+      "^idai-field-core$": "<rootDir>/../core",
       "^uuid$": "<rootDir>/node_modules/uuid"
     }
   },

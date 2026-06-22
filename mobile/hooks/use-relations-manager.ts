@@ -9,10 +9,18 @@ const useRelationsManager = (
   const [relationsManager, setRelationsManager] = useState<RelationsManager>();
 
   useEffect(() => {
-    if (datastore && projectConfiguration && username) {
+    if (!datastore || !projectConfiguration || !username) {
+      setRelationsManager(undefined);
+      return;
+    }
+
+    try {
       setRelationsManager(
         new RelationsManager(datastore, projectConfiguration)
       );
+    } catch (error) {
+      console.error('Could not initialize relations manager', error);
+      setRelationsManager(undefined);
     }
   }, [datastore, projectConfiguration, username]);
 

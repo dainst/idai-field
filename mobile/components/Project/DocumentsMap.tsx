@@ -26,7 +26,7 @@ import { ProjectContext } from '@/contexts/project-context';
 interface DocumentsMapProps {
   repository: DocumentRepository;
   syncStatus: SyncStatus;
-  relationsManager: RelationsManager;
+  relationsManager?: RelationsManager;
   issueSearch: (q: string) => void;
   selectParent: (doc: Document) => void;
 }
@@ -45,9 +45,13 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
   const params = useGlobalSearchParams();
 
   const { showToast } = useToast();
-  const { documents, isInOverview } = useContext(ProjectContext);
+  const { documents, isInOverview, onDocumentSelected } = useContext(ProjectContext);
   const todaySummary = useMemo(
     () => getKoreanFieldworkTodaySummary(documents),
+    [documents]
+  );
+  const selectedDocumentIds = useMemo(
+    () => documents.map((doc) => doc.resource.id),
     [documents]
   );
   const highlightedDocId = getStringParam(params?.highlightedDocId);
@@ -57,11 +61,13 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
       repository
         ?.find({ constraints: { 'identifier:match': data } })
         .then(({ documents: [doc] }) => {
-          router.setParams({
-            docId: doc.resource.id,
-            categoryName: doc.resource.category,
+          router.navigate({
+            pathname: '/ProjectScreen/DocumentEdit',
+            params: {
+              docId: doc.resource.id,
+              categoryName: doc.resource.category,
+            },
           });
-          router.navigate('/ProjectScreen/DocumentEdit');
         })
         .catch(() =>
           Alert.alert('Not found', `Resource  '${data}' is not available`, [
@@ -78,13 +84,23 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
   };
 
   const handleEditDocument = (docId: string, categoryName: string) => {
-    router.setParams({ docId, categoryName });
-    router.navigate('/ProjectScreen/DocumentEdit');
+    router.navigate({
+      pathname: '/ProjectScreen/DocumentEdit',
+      params: { docId, categoryName },
+    });
   };
 
   const closeAddModal = () => setIsAddModalOpen(false);
 
   const openRemoveDocument = (doc: Document) => {
+    if (!relationsManager) {
+      showToast(
+        ToastType.Error,
+        '관계 색인을 준비하는 중입니다. 잠시 후 다시 삭제해 주세요.'
+      );
+      return;
+    }
+
     setHighlightedDoc(doc);
     setIsDeleteModelOpen(true);
   };
@@ -92,6 +108,14 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
   const closeDeleteModal = () => setIsDeleteModelOpen(false);
 
   const onRemoveDocument = (doc: Document | undefined) => {
+    if (!relationsManager) {
+      showToast(
+        ToastType.Error,
+        '관계 색인을 준비하는 중입니다. 잠시 후 다시 삭제해 주세요.'
+      );
+      return;
+    }
+
     if (doc) {
       const isRecordedIn = doc.resource.relations.isRecordedIn
         ? doc.resource.relations.isRecordedIn[0]
@@ -103,10 +127,10 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
         .then(() => {
           setIsDeleteModelOpen(false);
           showToast(ToastType.Info, `Removed ${identifier}`);
-          router.setParams(
-            isRecordedIn ? { highlightedDocId: isRecordedIn } : {}
-          );
-          router.navigate('/ProjectScreen/DocumentsMap');
+          router.navigate({
+            pathname: '/ProjectScreen/DocumentsMap',
+            params: isRecordedIn ? { highlightedDocId: isRecordedIn } : {},
+          });
         })
         .catch((err) => {
           showToast(ToastType.Error, `Could not remove ${identifier}: ${err}`);
@@ -121,8 +145,13 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
   ) => {
     closeAddModal();
     if (parentDoc) {
-      router.setParams({ parentDocId: parentDoc?._id, categoryName });
-      router.navigate('/ProjectScreen/DocumentAdd');
+      router.navigate({
+        pathname: '/ProjectScreen/DocumentAdd',
+        params: {
+          parentDocId: parentDoc.resource.id,
+          categoryName,
+        },
+      });
     }
   };
 
@@ -152,16 +181,15 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
       />
       <KoreanFieldworkTodayBoard
         summary={todaySummary}
+        documents={documents}
         onEditDocument={handleEditDocument}
+        onOpenDocument={onDocumentSelected}
       />
       <View style={styles.container}>
         <Map
           repository={repository}
           documents={documents}
-          selectedDocumentIds={useMemo(
-            () => documents.map((doc) => doc.resource.id),
-            [documents]
-          )}
+          selectedDocumentIds={selectedDocumentIds}
           highlightedDocId={highlightedDocId}
           addDocument={handleAddDocument}
           editDocument={handleEditDocument}

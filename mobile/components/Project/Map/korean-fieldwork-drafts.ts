@@ -20,6 +20,14 @@ export const FEATURE_GEOMETRY_REVISION_HISTORY_DEFAULT = '[]';
 
 export type MapLocation = { x: number; y: number };
 
+export const createOperationDraft = (): NewDocument => ({
+  resource: {
+    identifier: `operation-${Date.now()}`,
+    category: KOREAN_FIELDWORK_CATEGORIES.OPERATION,
+    relations: {},
+  },
+});
+
 export const createDepictsRelation = (targetDoc: Document): { depicts: string[] } => ({
   depicts: [targetDoc.resource.id],
 });

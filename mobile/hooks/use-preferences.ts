@@ -1,10 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { DEFAULT_PROJECT_LANGUAGES, getDefaultProjectLanguages } from 'idai-field-core';
 import { useEffect, useState } from 'react';
 import { compose, detach, prepend, set, subtract, update } from 'tsfun';
 import { Preferences, ProjectSettings } from '@/models/preferences';
 import { defaultPointRadius } from '@/components/Project/Map/GLMap/constants';
 import { MapSettings } from '@/components/Project/Map/map-settings';
+import { getDefaultProjectLanguages } from '@/constants/korean-fieldwork-project';
 
 export interface UsePreferences {
   preferences: Preferences;
@@ -33,15 +33,12 @@ const usePreferences = (): UsePreferences => {
     savePreferences(preferences);
   }, [preferences]);
 
-  const setCurrentProject = (project: string, languages?: string[]) =>
+  const setCurrentProject = (project: string, _languages?: string[]) =>
     setPreferences((preferences) => {
       const previousProjectSettings = preferences.projects[project];
       const projectSettings = normalizeProjectSettings(
         project,
-        {
-          ...(previousProjectSettings ?? {}),
-          languages: languages ?? previousProjectSettings?.languages ?? getDefaultProjectLanguages(project),
-        },
+        previousProjectSettings ?? {},
         previousProjectSettings
       );
 
@@ -71,9 +68,13 @@ const usePreferences = (): UsePreferences => {
   const setUsername = (username: string) =>
     setPreferences(update('username', username));
 
-  const setLanguages = (languages: string[]) =>
+  const setLanguages = (_languages: string[]) =>
     setPreferences((preferences) => {
-      if (!preferences.currentProject) return { ...preferences, languages: languages.slice() };
+      const languages = preferences.currentProject
+        ? getDefaultProjectLanguages(preferences.currentProject)
+        : getDefaultProjectLanguages('');
+
+      if (!preferences.currentProject) return { ...preferences, languages };
 
       return {
         ...preferences,
@@ -130,7 +131,7 @@ const savePreferences = async (preferences: Preferences) =>
   await AsyncStorage.setItem('preferences', JSON.stringify(preferences));
 
 export const getDefaultPreferences = (): Preferences => ({
-  languages: DEFAULT_PROJECT_LANGUAGES.slice(),
+  languages: getDefaultProjectLanguages(''),
   currentProject: '',
   username: '',
   recentProjects: [],
@@ -174,14 +175,10 @@ const normalizeProjectSettings = (
   projectSettings: Partial<ProjectSettings>,
   previousProjectSettings?: ProjectSettings
 ): ProjectSettings => {
-  const languages = projectSettings.languages
-    ?? previousProjectSettings?.languages
-    ?? getDefaultProjectLanguages(project);
-
   return {
     ...getDefaultProjectSettings(project),
     ...previousProjectSettings,
     ...projectSettings,
-    languages: languages.slice(),
+    languages: getDefaultProjectLanguages(project),
   };
 };

@@ -2,13 +2,15 @@ import {
   ConfigReader,
   ConfigurationDocument,
   IdGenerator,
-  isKoreanFieldworkProject,
-  KOREAN_FIELDWORK_PROJECT_LANGUAGES,
   PouchdbDatastore,
   SampleDataLoaderBase,
 } from 'idai-field-core';
 import { useEffect, useState } from 'react';
 import PouchDB from 'pouchdb-core'
+import {
+  isKoreanFieldworkProject,
+  KOREAN_FIELDWORK_PROJECT_LANGUAGES,
+} from '@/constants/korean-fieldwork-project';
 
 PouchDB.plugin(require('@neighbourhoodie/pouchdb-asyncstorage-adapter').default)
 

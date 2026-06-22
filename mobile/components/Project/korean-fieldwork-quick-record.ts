@@ -1,6 +1,6 @@
 import {
   CategoryForm,
-  Resource,
+  NewResource,
 } from 'idai-field-core';
 import {
   FEATURE_WORKFLOW_CATEGORIES,
@@ -85,7 +85,7 @@ export interface KoreanFieldworkQuickRecordAvailability {
 
 export const getKoreanFieldworkQuickRecordAvailability = (
   category: CategoryForm | undefined,
-  resource: Resource
+  resource: NewResource
 ): KoreanFieldworkQuickRecordAvailability => {
   const fieldNames = getCategoryFieldNames(category);
 
@@ -110,7 +110,7 @@ export const hasKoreanFieldworkQuickRecordActions = (
   || availability.timing;
 
 export const getStringArrayFieldValues = (
-  resource: Resource,
+  resource: NewResource,
   fieldName: string
 ): string[] => {
   const fieldValue = getResourceFieldValue(resource, fieldName);
@@ -121,7 +121,7 @@ export const getStringArrayFieldValues = (
 };
 
 export const toggleStringArrayFieldValue = (
-  resource: Resource,
+  resource: NewResource,
   fieldName: string,
   value: string
 ): string[] => {
@@ -141,7 +141,7 @@ const getCategoryFieldNames = (category: CategoryForm | undefined): Set<string> 
 };
 
 export const getResourceFieldValue = (
-  resource: Resource,
+  resource: NewResource,
   fieldName: string
 ): unknown => (
   resource as unknown as Record<string, unknown>

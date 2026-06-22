@@ -1,7 +1,7 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import {
   CategoryForm,
-  Resource,
+  NewResource,
 } from 'idai-field-core';
 import React, { useMemo } from 'react';
 import {
@@ -27,7 +27,7 @@ import {
 
 interface KoreanFieldworkQuickRecordPanelProps {
   category: CategoryForm;
-  resource: Resource;
+  resource: NewResource;
   onUpdateResourceField: (fieldName: string, value: unknown) => void;
 }
 
@@ -189,7 +189,7 @@ const OptionRow: React.FC<{
 };
 
 const getSingleValue = (
-  resource: Resource,
+  resource: NewResource,
   fieldName: string
 ): string[] => {
   const fieldValue = getResourceFieldValue(resource, fieldName);

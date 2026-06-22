@@ -15,6 +15,8 @@ import DocumentForm from '@/components/common/forms/DocumentForm';
 import SoilProfileCameraButton, {
   SoilProfileCaptureData,
 } from '@/components/Project/SoilProfileCameraButton';
+import KoreanFieldworkDraftContextPanel from '@/components/Project/KoreanFieldworkDraftContextPanel';
+import KoreanFieldworkQuickRecordPanel from '@/components/Project/KoreanFieldworkQuickRecordPanel';
 import {
   createKoreanFieldworkDraftRelations,
   createKoreanFieldworkDraftResource,
@@ -66,8 +68,7 @@ const DocumentAdd: React.FC = () => {
     [config, categoryName]
   );
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const updateResource = (key: string, value: any) =>
+  const updateResource = (key: string, value: unknown) =>
     setNewResource(
       (oldResource) => oldResource && { ...oldResource, [key]: value }
     );
@@ -142,6 +143,19 @@ const DocumentAdd: React.FC = () => {
       category={category}
       headerText={`${labels.get(category)} 만들기`}
       returnBtnHandler={onReturn}
+      formHeader={
+        <View>
+          <KoreanFieldworkDraftContextPanel
+            parentDocument={parentDoc}
+            resource={newResource}
+          />
+          <KoreanFieldworkQuickRecordPanel
+            category={category}
+            resource={newResource}
+            onUpdateResourceField={updateResource}
+          />
+        </View>
+      }
       resource={newResource}
       updateFunction={updateResource}
       resourceActions={

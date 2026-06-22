@@ -149,6 +149,13 @@ describe('DocumentAdd', () => {
     expect(renderAPI.queryByTestId('documentForm')).toBeTruthy();
   });
 
+  it('shows the Korean fieldwork draft context above the add form', async () => {
+    await waitFor(() => renderAPI.getByTestId('documentForm'));
+
+    expect(renderAPI.queryByTestId('koreanFieldworkDraftContextPanel'))
+      .toBeTruthy();
+  });
+
   it('should create a new Document with entered values and correctly set relations field', async () => {
     const { getByTestId } = renderAPI;
 

@@ -33,6 +33,12 @@ import {
   KoreanFieldworkCloseoutSummary,
 } from '@/components/Project/korean-fieldwork-closeout';
 import {
+  getKoreanFieldworkCloseoutBatchUpdates,
+  getKoreanFieldworkCloseoutIssueActions,
+  KoreanFieldworkCloseoutBatchUpdate,
+} from '@/components/Project/korean-fieldwork-closeout-actions';
+import { KoreanFieldworkIssueResolutionAction } from '@/components/Project/korean-fieldwork-issue-resolution';
+import {
   formatKoreanFieldworkParentPath,
   getKoreanFieldworkRecordStatusChips,
   KoreanFieldworkStatusChip,
@@ -65,6 +71,8 @@ import {
 import { ConfigurationContext } from '@/contexts/configuration-context';
 import LabelsContext from '@/contexts/labels/labels-context';
 import { ProjectContext } from '@/contexts/project-context';
+import { ToastType } from '@/components/common/Toast/ToastProvider';
+import useToast from '@/hooks/use-toast';
 import { colors } from '@/utils/colors';
 
 type FilterId = 'all'|'operation'|'feature'|'find'|'media'|'review';
@@ -187,6 +195,7 @@ const RECORD_GROUPS: RecordGroup[] = [
 ];
 
 const DocumentsList: React.FC = () => {
+  const { showToast } = useToast();
   const {
     documents,
     clearHierarchy,
@@ -194,6 +203,7 @@ const DocumentsList: React.FC = () => {
     onDocumentSelected,
     popFromHierarchy,
     pushToHierarchy,
+    repository,
   } = useContext(ProjectContext);
   const config = useContext(ConfigurationContext);
   const { labels } = useContext(LabelsContext);
@@ -368,6 +378,54 @@ const DocumentsList: React.FC = () => {
         ),
       },
     });
+  };
+  const applyCloseoutBatchUpdates = (
+    batchUpdates: KoreanFieldworkCloseoutBatchUpdate[]
+  ) => {
+    if (!repository || batchUpdates.length === 0) return;
+
+    Promise.all(batchUpdates.map((batchUpdate) =>
+      repository.update({
+        ...batchUpdate.document,
+        resource: {
+          ...batchUpdate.document.resource,
+          ...batchUpdate.updates,
+        },
+      })
+    ))
+      .then(() => {
+        const issueCount = batchUpdates.reduce(
+          (count, batchUpdate) => count + batchUpdate.issueCount,
+          0
+        );
+        showToast(
+          ToastType.Success,
+          `마감 점검 ${issueCount}건을 현장 확인 처리했습니다.`
+        );
+      })
+      .catch((error) => {
+        showToast(
+          ToastType.Error,
+          `마감 점검을 처리하지 못했습니다. ${error}`
+        );
+      });
+  };
+  const runCloseoutResolution = (
+    document: Document,
+    action: KoreanFieldworkIssueResolutionAction
+  ) => {
+    if (action.type === 'createDocument' && action.categoryName) {
+      navigateAddCategory(action.categoryName, document);
+      return;
+    }
+
+    if (action.type === 'updateFields' && action.updates) {
+      applyCloseoutBatchUpdates([{
+        document,
+        updates: action.updates,
+        issueCount: 1,
+      }]);
+    }
   };
   const openDailyLog = () => {
     runQuickAction(quickActions.dailyLog.action);
@@ -626,7 +684,10 @@ const DocumentsList: React.FC = () => {
         <CloseoutPanel
           summary={closeoutSummary}
           documentsById={documentsById}
+          getAllowedAddCategoryNames={getAllowedAddCategoryNames}
           onOpenDocument={onDocumentSelected}
+          onRunBatchUpdates={applyCloseoutBatchUpdates}
+          onRunResolution={runCloseoutResolution}
         />
 
         <View style={styles.recordsBand}>
@@ -744,8 +805,21 @@ const QuickAction: React.FC<{
 const CloseoutPanel: React.FC<{
   summary: KoreanFieldworkCloseoutSummary;
   documentsById: Map<string, Document>;
+  getAllowedAddCategoryNames: (document: Document) => string[];
   onOpenDocument: (document: Document) => void;
-}> = ({ summary, documentsById, onOpenDocument }) => (
+  onRunBatchUpdates: (batchUpdates: KoreanFieldworkCloseoutBatchUpdate[]) => void;
+  onRunResolution: (
+    document: Document,
+    action: KoreanFieldworkIssueResolutionAction
+  ) => void;
+}> = ({
+  summary,
+  documentsById,
+  getAllowedAddCategoryNames,
+  onOpenDocument,
+  onRunBatchUpdates,
+  onRunResolution,
+}) => (
   <View style={[styles.closeoutPanel, closeoutPanelStyle(summary.status)]}>
     <View style={styles.closeoutHeader}>
       <View style={styles.closeoutTitleRow}>
@@ -765,8 +839,19 @@ const CloseoutPanel: React.FC<{
       </View>
     </View>
     <Text style={styles.closeoutDetail}>{summary.detail}</Text>
-    {summary.issues.map((issue) => {
-      const document = documentsById.get(issue.documentId);
+    <CloseoutBatchResolveButton
+      issueActions={getKoreanFieldworkCloseoutIssueActions(
+        summary.issues,
+        documentsById,
+        getAllowedAddCategoryNames
+      )}
+      onRunBatchUpdates={onRunBatchUpdates}
+    />
+    {getKoreanFieldworkCloseoutIssueActions(
+      summary.issues,
+      documentsById,
+      getAllowedAddCategoryNames
+    ).map(({ issue, document, resolutionAction }) => {
 
       return (
         <TouchableOpacity
@@ -785,13 +870,72 @@ const CloseoutPanel: React.FC<{
               {issue.recommendedAction}
             </Text>
           </View>
-          {document && (
+          {document && resolutionAction ? (
+            <CloseoutIssueActionButton
+              action={resolutionAction}
+              issueKey={`${issue.documentId}-${issue.ruleId}`}
+              onPress={(event) => {
+                event?.stopPropagation?.();
+                onRunResolution(document, resolutionAction);
+              }}
+            />
+          ) : document && (
             <MaterialIcons name="chevron-right" size={18} color="#667085" />
           )}
         </TouchableOpacity>
       );
     })}
   </View>
+);
+
+const CloseoutBatchResolveButton: React.FC<{
+  issueActions: ReturnType<typeof getKoreanFieldworkCloseoutIssueActions>;
+  onRunBatchUpdates: (batchUpdates: KoreanFieldworkCloseoutBatchUpdate[]) => void;
+}> = ({ issueActions, onRunBatchUpdates }) => {
+  const batchUpdates = getKoreanFieldworkCloseoutBatchUpdates(issueActions);
+  const issueCount = batchUpdates.reduce(
+    (count, batchUpdate) => count + batchUpdate.issueCount,
+    0
+  );
+
+  if (batchUpdates.length === 0) return null;
+
+  return (
+    <TouchableOpacity
+      activeOpacity={0.86}
+      onPress={() => onRunBatchUpdates(batchUpdates)}
+      style={styles.closeoutBatchButton}
+      testID="closeoutBatchResolve"
+    >
+      <MaterialIcons name="done-all" size={18} color="#027a48" />
+      <Text style={styles.closeoutBatchButtonText}>
+        바로 정리 {issueCount}건
+      </Text>
+    </TouchableOpacity>
+  );
+};
+
+const CloseoutIssueActionButton: React.FC<{
+  action: KoreanFieldworkIssueResolutionAction;
+  issueKey: string;
+  onPress: (event?: GestureResponderEvent) => void;
+}> = ({ action, issueKey, onPress }) => (
+  <TouchableOpacity
+    accessibilityLabel={action.label}
+    activeOpacity={0.86}
+    onPress={onPress}
+    style={styles.closeoutIssueActionButton}
+    testID={`closeoutResolve_${issueKey}`}
+  >
+    <MaterialIcons
+      name={action.icon as keyof typeof MaterialIcons.glyphMap}
+      size={16}
+      color={action.tone === 'danger' ? colors.danger : '#2f5f4a'}
+    />
+    <Text style={styles.closeoutIssueActionButtonText} numberOfLines={1}>
+      {action.label}
+    </Text>
+  </TouchableOpacity>
 );
 
 const CloseoutCount: React.FC<{
@@ -1645,6 +1789,24 @@ const styles = StyleSheet.create({
     lineHeight: 17,
     marginTop: 5,
   },
+  closeoutBatchButton: {
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+    backgroundColor: '#ecfdf3',
+    borderColor: '#abefc6',
+    borderRadius: 6,
+    borderWidth: 1,
+    flexDirection: 'row',
+    marginTop: 9,
+    minHeight: 36,
+    paddingHorizontal: 10,
+  },
+  closeoutBatchButtonText: {
+    color: '#027a48',
+    fontSize: 12,
+    fontWeight: '900',
+    marginLeft: 5,
+  },
   closeoutCountRow: {
     flexDirection: 'row',
   },
@@ -1727,6 +1889,24 @@ const styles = StyleSheet.create({
     fontSize: 12,
     lineHeight: 16,
     marginTop: 2,
+  },
+  closeoutIssueActionButton: {
+    alignItems: 'center',
+    backgroundColor: '#f0fdf4',
+    borderColor: '#bbf7d0',
+    borderRadius: 6,
+    borderWidth: 1,
+    flexDirection: 'row',
+    maxWidth: 132,
+    minHeight: 34,
+    paddingHorizontal: 8,
+  },
+  closeoutIssueActionButtonText: {
+    color: '#2f5f4a',
+    flexShrink: 1,
+    fontSize: 11,
+    fontWeight: '900',
+    marginLeft: 4,
   },
   recordsBand: {
     paddingHorizontal: 16,

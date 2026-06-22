@@ -17,6 +17,7 @@ import CategoryIcon from '@/components/common/CategoryIcon';
 import DocumentAddModal from '@/components/Project/DocumentAddModal';
 import KoreanFieldworkHierarchyBoard from '@/components/Project/KoreanFieldworkHierarchyBoard';
 import KoreanFieldworkPriorityTaskList from '@/components/Project/KoreanFieldworkPriorityTaskList';
+import KoreanFieldworkProgressBoard from '@/components/Project/KoreanFieldworkProgressBoard';
 import KoreanFieldworkScopePanel from '@/components/Project/KoreanFieldworkScopePanel';
 import KoreanFieldworkWorkbenchPanel from '@/components/Project/KoreanFieldworkWorkbenchPanel';
 import {
@@ -362,6 +363,15 @@ const DocumentsList: React.FC = () => {
           summary={todaySummary}
           documents={documents}
           onEditDocument={editDocumentById}
+        />
+
+        <KoreanFieldworkProgressBoard
+          summary={todaySummary}
+          documents={documents}
+          onAddDocumentOfCategory={(parentDoc, categoryName) =>
+            navigateAddCategory(categoryName, parentDoc)}
+          onOpenDocument={onDocumentSelected}
+          onOpenMap={openMap}
         />
 
         <KoreanFieldworkScopePanel

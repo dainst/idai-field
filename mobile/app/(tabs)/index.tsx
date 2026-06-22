@@ -98,8 +98,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ deleteProject }) => {
     (project: string, languages?: string[]) => {
       if (!project) return;
       setSelectedProject(project);
-      if (languages) preferences.setLanguages(languages);
-      preferences.setCurrentProject(project);
+      preferences.setCurrentProject(project, languages);
       navigate('/ProjectScreen');
     },
     [navigate, preferences]

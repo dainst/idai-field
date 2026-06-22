@@ -6,7 +6,7 @@ import { MapSettings } from './../components/Project/Map/map-settings';
 
 export const PreferencesContext = React.createContext<UsePreferences>({
     preferences: getDefaultPreferences(),
-    setCurrentProject: (_project: string) => {},
+    setCurrentProject: (_project: string, _languages?: string[]) => {},
     setUsername: (_project: string) => {},
     setProjectSettings: (_project: string, _projectSettings: ProjectSettings) => {},
     setLanguages: (_languages: string[]) => {},

@@ -41,10 +41,43 @@ describe('usePreferences', () => {
         const { result } = await renderUsePreferences();
 
         await act(async () => {
-            result.current.setLanguages(['ko', 'en']);
+            result.current.setCurrentProject('korean-fieldwork-test', ['ko', 'en']);
         });
 
         expect(result.current.preferences.languages).toEqual(['ko', 'en']);
+        expect(result.current.preferences.projects['korean-fieldwork-test'].languages).toEqual(['ko', 'en']);
+    });
+
+
+    it('should restore saved project languages when switching recent projects', async () => {
+
+        const { result } = await renderUsePreferences();
+
+        await act(async () => {
+            result.current.setCurrentProject('korean-fieldwork-test', ['ko', 'en']);
+            result.current.setCurrentProject('default-test', ['en']);
+            result.current.setCurrentProject('korean-fieldwork-test');
+        });
+
+        expect(result.current.preferences.languages).toEqual(['ko', 'en']);
+    });
+
+
+    it('should preserve project languages when updating sync settings', async () => {
+
+        const { result } = await renderUsePreferences();
+
+        await act(async () => {
+            result.current.setCurrentProject('korean-fieldwork-test', ['ko', 'en']);
+            result.current.setProjectSettings('korean-fieldwork-test', {
+                url: 'https://test.url',
+                password: 'testword',
+                connected: true,
+                mapSettings: defaultMapSettings(),
+            });
+        });
+
+        expect(result.current.preferences.projects['korean-fieldwork-test'].languages).toEqual(['ko', 'en']);
     });
 
 
@@ -57,6 +90,7 @@ describe('usePreferences', () => {
                 url: 'https://test.url',
                 password: 'testword',
                 connected: true,
+                languages: ['en'],
                 mapSettings: defaultMapSettings(),
             });
         });
@@ -77,6 +111,7 @@ describe('usePreferences', () => {
                 url: 'https://test.url',
                 password: 'testword',
                 connected: true,
+                languages: ['en'],
                 mapSettings: defaultMapSettings(),
             });
         });

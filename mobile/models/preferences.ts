@@ -11,5 +11,6 @@ export interface ProjectSettings {
     url: string;
     password: string;
     connected: boolean;
+    languages?: string[];
     mapSettings: MapSettings;
 }

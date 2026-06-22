@@ -104,15 +104,33 @@ export module Assertions {
             filter((_, categoryName) => !builtInCategories[categoryName]),
             getDefinedParents,
             forEach((parent: any) => {
-                if (Object.keys(categories).find(is(parent))) return;
-
-                const found = Object.keys(builtInCategories).find(is(parent));
-                if (!found) throw [ConfigurationErrors.INVALID_CONFIG_PARENT_NOT_DEFINED, parent];
-                const foundBuiltIn = builtInCategories[found];
-                if (!foundBuiltIn.supercategory || !foundBuiltIn.userDefinedSubcategoriesAllowed) {
-                    throw [ConfigurationErrors.TRYING_TO_SUBTYPE_A_NON_EXTENDABLE_CATEGORY, parent];
-                }
+                assertParentIsLegal(parent, builtInCategories, categories);
             }));
+    }
+
+
+    function assertParentIsLegal(parent: string|undefined,
+                                 builtInCategories: Map<BuiltInCategoryDefinition>,
+                                 categories: Map<LibraryCategoryDefinition|CustomFormDefinition>,
+                                 visitedParents: string[] = []) {
+
+        if (!parent) return;
+        if (visitedParents.includes(parent)) {
+            throw [ConfigurationErrors.INVALID_CONFIG_PARENT_NOT_DEFINED, parent];
+        }
+
+        const customParent = categories[parent];
+        if (customParent && !builtInCategories[parent]) {
+            assertParentIsLegal(customParent.parent, builtInCategories, categories, visitedParents.concat(parent));
+            return;
+        }
+
+        const found = Object.keys(builtInCategories).find(is(parent));
+        if (!found) throw [ConfigurationErrors.INVALID_CONFIG_PARENT_NOT_DEFINED, parent];
+        const foundBuiltIn = builtInCategories[found];
+        if (!foundBuiltIn.supercategory || !foundBuiltIn.userDefinedSubcategoriesAllowed) {
+            throw [ConfigurationErrors.TRYING_TO_SUBTYPE_A_NON_EXTENDABLE_CATEGORY, parent];
+        }
     }
 
 

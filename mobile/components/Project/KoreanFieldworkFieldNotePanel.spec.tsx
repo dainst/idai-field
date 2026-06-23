@@ -251,6 +251,31 @@ describe('KoreanFieldworkFieldNotePanel', () => {
     expect(getByText('기록 카드에서 불러옴')).toBeTruthy();
   });
 
+  it('loads record reinforcement prompts into the tablet note draft', () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1', {
+      featureRecordingStatus: 'confirmed',
+      featureInvestigationChecklist: [],
+    });
+
+    const { getByTestId, getByText } = renderPanel(feature);
+
+    fireEvent.changeText(
+      getByTestId('fieldNoteTextInput'),
+      '남쪽 경계는 추가 정리 필요.'
+    );
+    fireEvent.press(getByTestId(
+      'fieldNoteIssuePrompt_feature-complete-photo-feature-1'
+    ));
+
+    expect(getByTestId('fieldNoteTextInput').props.value).toBe([
+      '남쪽 경계는 추가 정리 필요.',
+      '유구가 확인 상태지만 완료 사진 항목이 체크되지 않았습니다.',
+    ].join('\n'));
+    expect(getByTestId('fieldNoteNextWorkInput').props.value)
+      .toBe('현장 마감 전 완료 사진을 연결했는지 확인하세요.');
+    expect(getByText('보강 항목에서 불러옴')).toBeTruthy();
+  });
+
   it('applies the tablet note to the selected record card fields', async () => {
     const feature = createDoc('feature-1', C.FEATURE, '수혈 1', {
       description: '기존 노출 양상.',

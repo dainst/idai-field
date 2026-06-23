@@ -11,6 +11,7 @@ import {
   getKoreanFieldworkFieldNoteFollowUpActions,
   getKoreanFieldworkFieldNoteGuidance,
   getKoreanFieldworkFieldNoteHistoryItems,
+  getKoreanFieldworkFieldNoteIssuePrompts,
   getKoreanFieldworkFieldNoteObservationPrompts,
   getKoreanFieldworkFieldNotePresets,
   getKoreanFieldworkFieldNoteReportPreview,
@@ -179,6 +180,30 @@ describe('korean-fieldwork-field-notes', () => {
     }, feature)).toEqual([
       expect.objectContaining({ id: 'observation-recorded' }),
       expect.objectContaining({ id: 'report-continuity' }),
+    ]);
+  });
+
+  it('turns selected record gaps into tablet note prompts', () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1', {
+      featureRecordingStatus: 'confirmed',
+      featureInvestigationChecklist: [],
+    });
+
+    const prompts = getKoreanFieldworkFieldNoteIssuePrompts(
+      feature,
+      [feature]
+    );
+
+    expect(prompts).toEqual([
+      expect.objectContaining({
+        id: 'feature-complete-photo-feature-1',
+        label: '기록 보강',
+        detail: '현장 마감 전 완료 사진을 연결했는지 확인하세요.',
+        input: {
+          observation: '유구가 확인 상태지만 완료 사진 항목이 체크되지 않았습니다.',
+          nextWork: '현장 마감 전 완료 사진을 연결했는지 확인하세요.',
+        },
+      }),
     ]);
   });
 

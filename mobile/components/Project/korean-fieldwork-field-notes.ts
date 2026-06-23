@@ -1,5 +1,7 @@
 import {
+  buildEvidenceBundle,
   Document,
+  KoreanFieldworkReadinessIssue,
   NewDocument,
   ProjectConfiguration,
 } from 'idai-field-core';
@@ -73,6 +75,14 @@ export interface KoreanFieldworkFieldNoteGuidanceItem {
   label: string;
   detail: string;
   tone: KoreanFieldworkFieldNoteGuidanceTone;
+}
+
+export interface KoreanFieldworkFieldNoteIssuePrompt {
+  id: string;
+  label: string;
+  detail: string;
+  severity: KoreanFieldworkReadinessIssue['severity'];
+  input: KoreanFieldworkFieldNoteInput;
 }
 
 export interface KoreanFieldworkFieldNoteReportPreview {
@@ -840,6 +850,22 @@ export const getKoreanFieldworkFieldNoteGuidance = (
   return items.slice(0, 3);
 };
 
+export const getKoreanFieldworkFieldNoteIssuePrompts = (
+  document: Document,
+  documents: Document[],
+  limit = 3
+): KoreanFieldworkFieldNoteIssuePrompt[] =>
+  buildEvidenceBundle(document, documents).issues
+    .filter((issue) => issue.documentId === document.resource.id)
+    .slice(0, limit)
+    .map((issue) => ({
+      id: `${issue.ruleId}-${issue.documentId}`,
+      label: getIssuePromptLabel(issue),
+      detail: issue.recommendedAction,
+      severity: issue.severity,
+      input: getIssuePromptInput(issue),
+    }));
+
 export const getKoreanFieldworkFieldNoteReportPreview = (
   input: KoreanFieldworkFieldNoteInput,
   document: Document
@@ -1258,6 +1284,28 @@ const shouldPromptNextWork = (document: Document): boolean =>
   FEATURE_PROGRESS_CATEGORIES.has(document.resource.category)
   || document.resource.category === C.FIND
   || document.resource.category === C.SAMPLE;
+
+const getIssuePromptLabel = (
+  issue: KoreanFieldworkReadinessIssue
+): string => {
+  switch (issue.severity) {
+    case 'critical':
+      return '중요 보강';
+    case 'info':
+      return '참고 보강';
+    default:
+      return '기록 보강';
+  }
+};
+
+const getIssuePromptInput = (
+  issue: KoreanFieldworkReadinessIssue
+): KoreanFieldworkFieldNoteInput => removeEmptyFieldNoteInputValues(
+  trimFieldNoteInput({
+    observation: issue.message,
+    nextWork: issue.recommendedAction,
+  })
+);
 
 const mergeFieldNoteValue = (
   currentValue: string | undefined,

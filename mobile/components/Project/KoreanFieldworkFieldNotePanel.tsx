@@ -21,6 +21,7 @@ import {
   getKoreanFieldworkFieldNoteFollowUpActions,
   getKoreanFieldworkFieldNoteGuidance,
   getKoreanFieldworkFieldNoteHistoryItems,
+  getKoreanFieldworkFieldNoteIssuePrompts,
   getKoreanFieldworkFieldNoteObservationPrompts,
   getKoreanFieldworkFieldNotePresets,
   getKoreanFieldworkFieldNoteRecordUpdates,
@@ -34,6 +35,7 @@ import {
   KoreanFieldworkFieldNoteGuidanceTone,
   KoreanFieldworkFieldNoteHistoryItem,
   KoreanFieldworkFieldNoteInput,
+  KoreanFieldworkFieldNoteIssuePrompt,
   KoreanFieldworkFieldNoteMode,
   KoreanFieldworkFieldNoteObservationPrompt,
   KoreanFieldworkFieldNotePreset,
@@ -116,6 +118,8 @@ const KoreanFieldworkFieldNotePanel: React.FC<
   const [isSavingAndApplying, setIsSavingAndApplying] = useState(false);
   const [recordSeedStatus, setRecordSeedStatus] =
     useState<string>();
+  const [issuePromptStatus, setIssuePromptStatus] =
+    useState<string>();
   const [appliedRecordUpdateSignature, setAppliedRecordUpdateSignature] =
     useState<string>();
   const [savedFollowUpActions, setSavedFollowUpActions] =
@@ -161,6 +165,13 @@ const KoreanFieldworkFieldNotePanel: React.FC<
   const guidanceItems = useMemo(
     () => getKoreanFieldworkFieldNoteGuidance(noteInput, selectedDocument),
     [noteInput, selectedDocument]
+  );
+  const issuePrompts = useMemo(
+    () => getKoreanFieldworkFieldNoteIssuePrompts(
+      selectedDocument,
+      documents
+    ),
+    [documents, selectedDocument]
   );
   const reportPreview = useMemo(
     () => getKoreanFieldworkFieldNoteReportPreview(
@@ -240,6 +251,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     setContinuationStatus(undefined);
     setRecordApplyStatus(undefined);
     setRecordSeedStatus(undefined);
+    setIssuePromptStatus(undefined);
     setAppliedRecordUpdateSignature(undefined);
     setSavedFollowUpActions([]);
     setNoteInput(EMPTY_FIELD_NOTE_INPUT);
@@ -292,6 +304,9 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     }
 
     setSavedFollowUpActions([]);
+    setRecordApplyStatus(undefined);
+    setRecordSeedStatus(undefined);
+    setIssuePromptStatus(undefined);
     setNoteInput((currentInput) =>
       mergeKoreanFieldworkFieldNoteInput(currentInput, continuationSeed.input)
     );
@@ -340,6 +355,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     setContinuationStatus(undefined);
     setRecordApplyStatus(undefined);
     setRecordSeedStatus(undefined);
+    setIssuePromptStatus(undefined);
     setAppliedRecordUpdateSignature(undefined);
     setNoteInput((currentInput) => ({
       ...currentInput,
@@ -351,6 +367,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     setContinuationStatus(undefined);
     setRecordApplyStatus(undefined);
     setRecordSeedStatus(undefined);
+    setIssuePromptStatus(undefined);
     setAppliedRecordUpdateSignature(undefined);
     setNoteInput((currentInput) =>
       mergeKoreanFieldworkFieldNoteInput(currentInput, preset.input)
@@ -363,6 +380,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     setContinuationStatus(undefined);
     setRecordApplyStatus(undefined);
     setRecordSeedStatus(undefined);
+    setIssuePromptStatus(undefined);
     setAppliedRecordUpdateSignature(undefined);
     setNoteInput((currentInput) =>
       applyKoreanFieldworkFieldNoteObservationPrompt(currentInput, prompt)
@@ -375,6 +393,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     setContinuationStatus(undefined);
     setRecordApplyStatus(undefined);
     setRecordSeedStatus(undefined);
+    setIssuePromptStatus(undefined);
     setAppliedRecordUpdateSignature(undefined);
     setNoteInput((currentInput) =>
       mergeKoreanFieldworkFieldNoteInput(currentInput, item.input)
@@ -387,9 +406,21 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     setContinuationStatus(undefined);
     setRecordApplyStatus(undefined);
     setAppliedRecordUpdateSignature(undefined);
+    setIssuePromptStatus(undefined);
     setRecordSeedStatus('기록 카드에서 불러옴');
     setNoteInput((currentInput) =>
       mergeKoreanFieldworkFieldNoteInput(currentInput, recordSeed)
+    );
+  };
+  const applyIssuePrompt = (prompt: KoreanFieldworkFieldNoteIssuePrompt) => {
+    setSavedFollowUpActions([]);
+    setContinuationStatus(undefined);
+    setRecordApplyStatus(undefined);
+    setRecordSeedStatus(undefined);
+    setAppliedRecordUpdateSignature(undefined);
+    setIssuePromptStatus('보강 항목에서 불러옴');
+    setNoteInput((currentInput) =>
+      mergeKoreanFieldworkFieldNoteInput(currentInput, prompt.input)
     );
   };
   const applyNoteToRecord = async () => {
@@ -442,6 +473,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
       }
       setDraftStatus(undefined);
       setRecordSeedStatus(undefined);
+      setIssuePromptStatus(undefined);
       setSavedFollowUpActions(followUpActions);
       setNoteInput(EMPTY_FIELD_NOTE_INPUT);
     } catch {
@@ -461,6 +493,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     setContinuationStatus(undefined);
     setRecordApplyStatus(undefined);
     setRecordSeedStatus(undefined);
+    setIssuePromptStatus(undefined);
     setAppliedRecordUpdateSignature(undefined);
     setSavedFollowUpActions([]);
     if (draftKey) {
@@ -577,6 +610,15 @@ const KoreanFieldworkFieldNotePanel: React.FC<
           <MaterialIcons name="content-paste-go" size={14} color="#175cd3" />
           <Text style={styles.recordSeedStatusLabel}>
             {recordSeedStatus}
+          </Text>
+        </View>
+      )}
+
+      {!!issuePromptStatus && (
+        <View style={styles.issuePromptStatusRow} testID="fieldNoteIssuePromptStatus">
+          <MaterialIcons name="playlist-add-check" size={14} color="#b54708" />
+          <Text style={styles.issuePromptStatusLabel}>
+            {issuePromptStatus}
           </Text>
         </View>
       )}
@@ -721,6 +763,28 @@ const KoreanFieldworkFieldNotePanel: React.FC<
           <GuidanceRow key={item.id} item={item} />
         ))}
       </View>
+
+      {issuePrompts.length > 0 && (
+        <View style={styles.issuePromptPanel}>
+          <View style={styles.issuePromptHeader}>
+            <MaterialIcons name="playlist-add-check" size={16} color="#344054" />
+            <Text style={styles.issuePromptTitle}>기록 보강</Text>
+          </View>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.issuePromptRow}
+          >
+            {issuePrompts.map((prompt) => (
+              <IssuePromptButton
+                key={prompt.id}
+                onPress={() => applyIssuePrompt(prompt)}
+                prompt={prompt}
+              />
+            ))}
+          </ScrollView>
+        </View>
+      )}
 
       {reportPreview && (
         <ReportPreviewCard preview={reportPreview} />
@@ -980,6 +1044,35 @@ const ObservationPromptButton: React.FC<{
         {prompt.label}
       </Text>
       <Text style={styles.observationPromptDetail} numberOfLines={1}>
+        {prompt.detail}
+      </Text>
+    </View>
+  </TouchableOpacity>
+);
+
+const IssuePromptButton: React.FC<{
+  prompt: KoreanFieldworkFieldNoteIssuePrompt;
+  onPress: () => void;
+}> = ({ prompt, onPress }) => (
+  <TouchableOpacity
+    activeOpacity={0.86}
+    onPress={onPress}
+    style={[
+      styles.issuePromptButton,
+      prompt.severity === 'critical' && styles.issuePromptButtonCritical,
+    ]}
+    testID={`fieldNoteIssuePrompt_${prompt.id}`}
+  >
+    <MaterialIcons
+      name={prompt.severity === 'info' ? 'info-outline' : 'playlist-add'}
+      size={16}
+      color={prompt.severity === 'critical' ? '#b42318' : '#b54708'}
+    />
+    <View style={styles.issuePromptText}>
+      <Text style={styles.issuePromptLabel} numberOfLines={1}>
+        {prompt.label}
+      </Text>
+      <Text style={styles.issuePromptDetail} numberOfLines={2}>
         {prompt.detail}
       </Text>
     </View>
@@ -1462,6 +1555,23 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     marginLeft: 5,
   },
+  issuePromptStatusRow: {
+    alignItems: 'center',
+    backgroundColor: '#fffbeb',
+    borderColor: '#fedf89',
+    borderRadius: 6,
+    borderWidth: 1,
+    flexDirection: 'row',
+    marginTop: 9,
+    minHeight: 34,
+    paddingHorizontal: 8,
+  },
+  issuePromptStatusLabel: {
+    color: '#b54708',
+    fontSize: 11,
+    fontWeight: '900',
+    marginLeft: 5,
+  },
   modeRow: {
     flexDirection: 'row',
     marginTop: 10,
@@ -1671,6 +1781,61 @@ const styles = StyleSheet.create({
     color: '#667085',
     fontSize: 11,
     lineHeight: 15,
+    marginTop: 1,
+  },
+  issuePromptPanel: {
+    backgroundColor: '#ffffff',
+    borderColor: '#fedf89',
+    borderRadius: 6,
+    borderWidth: 1,
+    marginTop: 10,
+    paddingHorizontal: 9,
+    paddingVertical: 8,
+  },
+  issuePromptHeader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  issuePromptTitle: {
+    color: '#344054',
+    fontSize: 12,
+    fontWeight: '900',
+    marginLeft: 5,
+  },
+  issuePromptRow: {
+    paddingTop: 8,
+  },
+  issuePromptButton: {
+    alignItems: 'center',
+    backgroundColor: '#fffbeb',
+    borderColor: '#fedf89',
+    borderRadius: 6,
+    borderWidth: 1,
+    flexDirection: 'row',
+    marginRight: 7,
+    minHeight: 50,
+    paddingHorizontal: 9,
+    width: 154,
+  },
+  issuePromptButtonCritical: {
+    backgroundColor: '#fff1f3',
+    borderColor: '#fecdca',
+  },
+  issuePromptText: {
+    flex: 1,
+    marginLeft: 6,
+    minWidth: 0,
+  },
+  issuePromptLabel: {
+    color: '#b54708',
+    fontSize: 12,
+    fontWeight: '900',
+  },
+  issuePromptDetail: {
+    color: '#475467',
+    fontSize: 10,
+    fontWeight: '700',
+    lineHeight: 13,
     marginTop: 1,
   },
   reportPreviewPanel: {

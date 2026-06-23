@@ -28,7 +28,7 @@ import { colors } from '@/utils/colors';
 import Button from '../Button';
 import CategoryIcon from '../CategoryIcon';
 import Heading from '../Heading';
-import I18NLabel from '../I18NLabel';
+import I18NLabel, { getKoreanFieldworkDisplayLabel } from '../I18NLabel';
 import TitleBar from '../TitleBar';
 import EditFormField from './EditFormField';
 import LabelsContext from '@/contexts/labels/labels-context';
@@ -130,7 +130,10 @@ const DocumentForm: React.FC<DocumentFormProps> = ({
                     {groups.map((group) => (
                       <Picker.Item
                         key={group.name}
-                        label={labels?.get(group) ?? group.name}
+                        label={getKoreanFieldworkDisplayLabel(
+                          group,
+                          labels?.get(group) ?? group.name
+                        )}
                         value={group.name}
                       />
                     ))}

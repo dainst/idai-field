@@ -13,7 +13,9 @@ import {
   REFERENCE_BASEMAP_PROVIDER_DEFAULT,
   SOIL_PROFILE_PHOTO_QUALITY_DEFAULT,
   SOIL_PROFILE_PHOTO_SIZE_HINT_KB_DEFAULT,
+  SURVEY_BOUNDARY_ACCURACY_APPROXIMATE_GPS,
   SURVEY_BOUNDARY_ACCURACY_DEFAULT,
+  SURVEY_BOUNDARY_SOURCE_GPS_WALKOVER,
   SURVEY_BOUNDARY_SOURCE_DEFAULT,
   SURVEY_BOUNDARY_TYPE_DEFAULT,
   SOIL_COLOR_ASSIST_STATUS_DEFAULT,
@@ -174,5 +176,32 @@ describe('Korean fieldwork map drafts', () => {
       referenceBasemapProvider: REFERENCE_BASEMAP_PROVIDER_DEFAULT,
     });
     expect(draft.resource.geometry).toBeUndefined();
+  });
+
+  it('creates SurveyBoundary drafts around the current GPS position when available', () => {
+    const operationDoc = {
+      resource: {
+        id: 'operation-1',
+        category: 'Operation',
+        relations: {},
+      },
+    } as any;
+
+    const draft = createSurveyBoundaryDraft(operationDoc, { x: 1000, y: 2000 });
+
+    expect(draft.resource).toMatchObject({
+      surveyBoundarySource: SURVEY_BOUNDARY_SOURCE_GPS_WALKOVER,
+      surveyBoundaryAccuracy: SURVEY_BOUNDARY_ACCURACY_APPROXIMATE_GPS,
+      geometry: {
+        type: 'LineString',
+        coordinates: [
+          [980, 1980],
+          [1020, 1980],
+          [1020, 2020],
+          [980, 2020],
+          [980, 1980],
+        ],
+      },
+    });
   });
 });

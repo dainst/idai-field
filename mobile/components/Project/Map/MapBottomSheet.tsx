@@ -126,7 +126,7 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
         <Button
           style={styles.button}
           variant="success"
-          title="현재위치"
+          title="유구 추가"
           isDisabled={!canCreateLocationCandidate}
           onPress={createFeatureCandidateAtCurrentLocation}
           icon={<MaterialIcons name="add-location-alt" size={iconSize} />}
@@ -150,7 +150,7 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
         <Button
           style={styles.button}
           variant="secondary"
-          title="경계"
+          title="조사경계"
           isDisabled={!canCreateSurveyBoundary}
           onPress={createSurveyBoundaryDraft}
           icon={<MaterialIcons name="timeline" size={iconSize} />}

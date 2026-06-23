@@ -5,9 +5,10 @@ import { Attribution, defaults as defaultControls } from 'ol/control';
 import { boundingExtent } from 'ol/extent';
 import GeoJSON from 'ol/format/GeoJSON';
 import { Geometry } from 'ol/geom';
-import { Vector as VectorLayer } from 'ol/layer';
+import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 import Map from 'ol/Map';
 import { Cluster, Vector as VectorSource } from 'ol/source';
+import OSM from 'ol/source/OSM';
 import { Fill, Icon, Stroke, Style, Text } from 'ol/style';
 import View from 'ol/View';
 import React, { CSSProperties, ReactElement, useEffect, useState } from 'react';
@@ -20,7 +21,7 @@ import { getProjectLabel } from '../projects';
 import './overview-map.css';
 
 
-const MAPBOX_KEY = 'pk.eyJ1Ijoic2ViYXN0aWFuY3V5IiwiYSI6ImNrOTQxZjA4MzAxaGIzZnBwZzZ4c21idHIifQ._2-exYw4CZRjn9WoLx8i1A';
+const DEFAULT_MAPBOX_STYLE_ID = 'sebastiancuy/ckff2undp0v1o19mhucq9oycb';
 
 const FIT_OPTIONS = {
     padding: [ 200, 200, 200, 200 ],
@@ -123,9 +124,7 @@ export default function OverviewMap({ documents, filter, withSearchResults }
         return () => map.un('click', onClick);
     }, [map, searchParams, withSearchResults]);
 
-    return <div className="overview-map" id="ol-overview-map" style={ mapStyle }>
-        <div id="mapbox-logo" />
-    </div>;
+    return <div className="overview-map" id="ol-overview-map" style={ mapStyle } />;
 }
 
 
@@ -140,9 +139,30 @@ const createMap = (): Map => {
         })
     });
 
-    olms(map, 'https://api.mapbox.com/styles/v1/sebastiancuy/ckff2undp0v1o19mhucq9oycb?access_token=' + MAPBOX_KEY);
+    const mapboxStyleUrl = getMapboxStyleUrl();
+    if (mapboxStyleUrl) {
+        olms(map, mapboxStyleUrl);
+    } else {
+        map.addLayer(new TileLayer({ source: new OSM() }));
+    }
 
     return map;
+};
+
+
+const getMapboxStyleUrl = (): string|undefined => {
+
+    const accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
+    if (!accessToken) return undefined;
+
+    const styleUrl = process.env.REACT_APP_MAPBOX_STYLE_URL;
+    if (styleUrl) {
+        const separator = styleUrl.includes('?') ? '&' : '?';
+        return `${styleUrl}${separator}access_token=${accessToken}`;
+    }
+
+    const styleId = process.env.REACT_APP_MAPBOX_STYLE_ID ?? DEFAULT_MAPBOX_STYLE_ID;
+    return `https://api.mapbox.com/styles/v1/${styleId}?access_token=${accessToken}`;
 };
 
 
@@ -158,13 +178,7 @@ const getGeoJSONLayer = (featureCollection: FeatureCollection, t: TFunction): Ve
 
     const clusterSource = new Cluster({
         distance: CLUSTER_DISTANCE,
-        source: vectorSource,
-        attributions: [
-            '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © '
-                + '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> '
-                + '<strong><a href="https://www.mapbox.com/map-feedback/"'
-                + 'target="_blank">Improve this map</a></strong>'
-        ]
+        source: vectorSource
     });
 
     const vectorLayer = new VectorLayer({

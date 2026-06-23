@@ -22,6 +22,7 @@ import {
   createOperationDraft as buildOperationDraft,
   createSoilProfilePhotoDraft as buildSoilProfilePhotoDraft,
   createSurveyBoundaryDraft as buildSurveyBoundaryDraft,
+  MapLocation,
 } from './korean-fieldwork-drafts';
 import {
   FEATURE_CANDIDATE_PARENT_CATEGORIES,
@@ -67,7 +68,7 @@ const Map: React.FC<MapProps> = (props) => {
   const config = useContext(ConfigurationContext);
   const [screen, setScreen] = useState<LayoutRectangle>();
   const [highlightedDoc, setHighlightedDoc] = useState<Document>();
-  const [location, setLocation] = useState<{ x: number; y: number }>();
+  const [location, setLocation] = useState<MapLocation>();
 
   const [
     geoDocuments,
@@ -90,6 +91,16 @@ const Map: React.FC<MapProps> = (props) => {
   }, [props.highlightedDocId, setHighlightedDocFromId]);
 
   useEffect(() => {
+    let subscription: Location.LocationSubscription | undefined;
+    let isMounted = true;
+
+    const updateLocation = (coords: Location.LocationObjectCoords) => {
+      const { latitude, longitude } = coords;
+      const position = { x: longitude, y: latitude };
+      const projected = proj4('EPSG:4326', 'EPSG:3857', position);
+      if (isMounted) setLocation(projected);
+    };
+
     (async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
@@ -97,13 +108,25 @@ const Map: React.FC<MapProps> = (props) => {
         return;
       }
 
-      const location = await Location.getCurrentPositionAsync({});
-      const { latitude, longitude } = location.coords;
-      // longitude for x and latitude for y
-      const p = { x: longitude, y: latitude };
-      const newCoords = proj4('EPSG:4326', 'EPSG:3857', p);
-      setLocation(newCoords);
+      const currentLocation = await Location.getCurrentPositionAsync({});
+      updateLocation(currentLocation.coords);
+
+      const nextSubscription = await Location.watchPositionAsync(
+        {
+          accuracy: Location.Accuracy.Balanced,
+          distanceInterval: 2,
+          timeInterval: 5000,
+        },
+        (nextLocation) => updateLocation(nextLocation.coords)
+      );
+      if (isMounted) subscription = nextSubscription;
+      else nextSubscription.remove();
     })();
+
+    return () => {
+      isMounted = false;
+      subscription?.remove();
+    };
   }, []);
 
   const canCreateSoilProfilePhoto =
@@ -111,18 +134,24 @@ const Map: React.FC<MapProps> = (props) => {
     !!config?.getCategory(KOREAN_FIELDWORK_CATEGORIES.SOIL_PROFILE_PHOTO) &&
     SOIL_PROFILE_PHOTO_TARGET_CATEGORIES.includes(highlightedDoc.resource.category);
 
-  const canCreateSurveyBoundary =
-    !!highlightedDoc &&
-    !!config?.getCategory(KOREAN_FIELDWORK_CATEGORIES.SURVEY_BOUNDARY) &&
-    highlightedDoc.resource.category === KOREAN_FIELDWORK_CATEGORIES.OPERATION;
-
-  const featureParent = getFeatureCandidateParent(highlightedDoc, props.documents);
-  const canCreateFeatureCandidate =
-    !!featureParent && !!location && !!config?.getCategory(KOREAN_FIELDWORK_CATEGORIES.FEATURE);
   const operationDocuments = props.documents.filter(
     (document) => document.resource.category === KOREAN_FIELDWORK_CATEGORIES.OPERATION
   );
   const [primaryOperation] = operationDocuments;
+
+  const canCreateSurveyBoundary =
+    !!highlightedDoc &&
+    !!location &&
+    !!config?.getCategory(KOREAN_FIELDWORK_CATEGORIES.SURVEY_BOUNDARY) &&
+    highlightedDoc.resource.category === KOREAN_FIELDWORK_CATEGORIES.OPERATION;
+  const canCreateSurveyBoundaryInPrimaryOperation =
+    !!primaryOperation &&
+    !!location &&
+    !!config?.getCategory(KOREAN_FIELDWORK_CATEGORIES.SURVEY_BOUNDARY);
+
+  const featureParent = getFeatureCandidateParent(highlightedDoc, props.documents);
+  const canCreateFeatureCandidate =
+    !!featureParent && !!location && !!config?.getCategory(KOREAN_FIELDWORK_CATEGORIES.FEATURE);
   const canCreateOperation = !!config?.getCategory(KOREAN_FIELDWORK_CATEGORIES.OPERATION);
   const canCreateTrench =
     !!primaryOperation && !!config?.getCategory(KOREAN_FIELDWORK_CATEGORIES.TRENCH);
@@ -199,12 +228,27 @@ const Map: React.FC<MapProps> = (props) => {
     props.editDocument(createdDocument.resource.id, KOREAN_FIELDWORK_CATEGORIES.SOIL_PROFILE_PHOTO);
   };
 
+  const createSurveyBoundaryForOperation = async (operationDoc: Document) => {
+    if (!location || !config?.getCategory(KOREAN_FIELDWORK_CATEGORIES.SURVEY_BOUNDARY)) return;
+
+    const createdDocument = await props.repository.create(
+      buildSurveyBoundaryDraft(operationDoc, location)
+    );
+
+    setHighlightedDoc(createdDocument);
+    props.editDocument(createdDocument.resource.id, KOREAN_FIELDWORK_CATEGORIES.SURVEY_BOUNDARY);
+  };
+
   const createSurveyBoundaryDraft = async () => {
     if (!highlightedDoc || !canCreateSurveyBoundary) return;
 
-    const createdDocument = await props.repository.create(buildSurveyBoundaryDraft(highlightedDoc));
+    await createSurveyBoundaryForOperation(highlightedDoc);
+  };
 
-    props.editDocument(createdDocument.resource.id, KOREAN_FIELDWORK_CATEGORIES.SURVEY_BOUNDARY);
+  const createPrimarySurveyBoundaryDraft = async () => {
+    if (!primaryOperation || !canCreateSurveyBoundaryInPrimaryOperation) return;
+
+    await createSurveyBoundaryForOperation(primaryOperation);
   };
 
   const updateHighlightedFeatureGeometryState = async (
@@ -337,6 +381,12 @@ const Map: React.FC<MapProps> = (props) => {
                   onPress={createTrenchInPrimaryOperation}
                 />
                 <Button
+                  variant="secondary"
+                  title={location ? '조사경계 그리기' : 'GPS 확인 중'}
+                  isDisabled={!canCreateSurveyBoundaryInPrimaryOperation}
+                  onPress={createPrimarySurveyBoundaryDraft}
+                />
+                <Button
                   variant="primary"
                   title="조사구역 편집"
                   onPress={editPrimaryOperation}
@@ -349,12 +399,12 @@ const Map: React.FC<MapProps> = (props) => {
       <View style={styles.quickCreateContainer}>
         <Button
           variant="success"
-          title={canCreateFeatureCandidate ? '유구 기록' : 'GPS 확인 중'}
+          title={canCreateFeatureCandidate ? '유구 위치 기록' : 'GPS 확인 중'}
           isDisabled={!canCreateFeatureCandidate}
           onPress={createFeatureCandidateAndEdit}
         />
         <Text style={styles.quickCreateHint}>
-          현재 위치에 유구를 만들고 바로 입력합니다.
+          현 위치에 유구 점을 찍고 바로 입력합니다.
         </Text>
       </View>
       <MapBottomSheet
@@ -423,6 +473,7 @@ const styles = StyleSheet.create({
   },
   startActions: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: 10,
   },
   quickCreateContainer: {

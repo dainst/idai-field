@@ -2,16 +2,21 @@ import {
   act,
   fireEvent,
   render,
+  waitFor,
 } from '@testing-library/react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Document } from 'idai-field-core';
 import React from 'react';
 import { KOREAN_FIELDWORK_CATEGORIES } from './korean-fieldwork-categories';
 import KoreanFieldworkFieldNotePanel from './KoreanFieldworkFieldNotePanel';
+import { createKoreanFieldworkFieldNoteDraftKey } from './korean-fieldwork-field-note-drafts';
 
 const C = KOREAN_FIELDWORK_CATEGORIES;
 
 describe('KoreanFieldworkFieldNotePanel', () => {
   beforeEach(() => {
+    AsyncStorage.clear();
+    jest.clearAllMocks();
     jest.useFakeTimers();
   });
 
@@ -235,6 +240,116 @@ describe('KoreanFieldworkFieldNotePanel', () => {
     });
 
     expect(handleOpenDocument).toHaveBeenCalledWith(memo);
+  });
+
+  it('autosaves typed field notes and restores them for the same project record', async () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
+    const draftKey = createKoreanFieldworkFieldNoteDraftKey(
+      'project-1',
+      feature.resource.id
+    );
+    const { getByTestId, unmount } = renderPanel(feature, {
+      draftScopeId: 'project-1',
+    });
+
+    await waitFor(() =>
+      expect(AsyncStorage.getItem).toHaveBeenCalledWith(draftKey)
+    );
+
+    fireEvent.changeText(
+      getByTestId('fieldNoteTextInput'),
+      '바닥면 정리 중 원형 윤곽 확인.'
+    );
+
+    await waitFor(() =>
+      expect(AsyncStorage.setItem).toHaveBeenCalledWith(
+        draftKey,
+        expect.stringContaining('바닥면 정리 중 원형 윤곽 확인.')
+      )
+    );
+    unmount();
+
+    const { getByTestId: getRestoredByTestId } = renderPanel(feature, {
+      draftScopeId: 'project-1',
+    });
+
+    await waitFor(() =>
+      expect(getRestoredByTestId('fieldNoteTextInput').props.value).toBe(
+        '바닥면 정리 중 원형 윤곽 확인.'
+      )
+    );
+  });
+
+  it('clears the autosaved draft after the note is saved', async () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
+    const draftKey = createKoreanFieldworkFieldNoteDraftKey(
+      'project-1',
+      feature.resource.id
+    );
+    const handleCreateNote = jest.fn().mockResolvedValue(undefined);
+
+    const { getByTestId } = renderPanel(feature, {
+      draftScopeId: 'project-1',
+      onCreateNote: handleCreateNote,
+    });
+
+    await waitFor(() =>
+      expect(AsyncStorage.getItem).toHaveBeenCalledWith(draftKey)
+    );
+    fireEvent.changeText(
+      getByTestId('fieldNoteTextInput'),
+      '단면 정리 후 사진 보강.'
+    );
+    await waitFor(() =>
+      expect(AsyncStorage.setItem).toHaveBeenCalledWith(
+        draftKey,
+        expect.stringContaining('단면 정리 후 사진 보강.')
+      )
+    );
+
+    await act(async () => {
+      fireEvent.press(getByTestId('fieldNoteSave'));
+      await Promise.resolve();
+      jest.runOnlyPendingTimers();
+    });
+
+    expect(handleCreateNote).toHaveBeenCalled();
+    expect(AsyncStorage.removeItem).toHaveBeenCalledWith(draftKey);
+    expect(getByTestId('fieldNoteTextInput').props.value).toBe('');
+  });
+
+  it('lets the fieldworker discard an autosaved draft', async () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
+    const draftKey = createKoreanFieldworkFieldNoteDraftKey(
+      'project-1',
+      feature.resource.id
+    );
+    const { getByTestId } = renderPanel(feature, {
+      draftScopeId: 'project-1',
+    });
+
+    await waitFor(() =>
+      expect(AsyncStorage.getItem).toHaveBeenCalledWith(draftKey)
+    );
+    fireEvent.changeText(
+      getByTestId('fieldNoteTextInput'),
+      '임시로 적은 야장 내용.'
+    );
+    await waitFor(() =>
+      expect(AsyncStorage.setItem).toHaveBeenCalledWith(
+        draftKey,
+        expect.stringContaining('임시로 적은 야장 내용.')
+      )
+    );
+
+    await act(async () => {
+      fireEvent.press(getByTestId('fieldNoteDraftClear'));
+      await Promise.resolve();
+      jest.runOnlyPendingTimers();
+    });
+
+    expect(getByTestId('fieldNoteTextInput').props.value).toBe('');
+    expect(AsyncStorage.removeItem).toHaveBeenCalledWith(draftKey);
   });
 
   it('clears unsaved text when the selected record changes', () => {

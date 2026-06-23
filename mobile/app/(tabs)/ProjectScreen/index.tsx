@@ -80,6 +80,7 @@ import {
 } from '@/components/Project/korean-fieldwork-navigation';
 import { ConfigurationContext } from '@/contexts/configuration-context';
 import LabelsContext from '@/contexts/labels/labels-context';
+import { PreferencesContext } from '@/contexts/preferences-context';
 import { ProjectContext } from '@/contexts/project-context';
 import { ToastType } from '@/components/common/Toast/ToastProvider';
 import useToast from '@/hooks/use-toast';
@@ -216,6 +217,7 @@ const DocumentsList: React.FC = () => {
     repository,
   } = useContext(ProjectContext);
   const config = useContext(ConfigurationContext);
+  const preferencesContext = useContext(PreferencesContext);
   const { labels } = useContext(LabelsContext);
   const [activeFilter, setActiveFilter] = useState<FilterId>('all');
   const [activeWorkFilter, setActiveWorkFilter] =
@@ -703,6 +705,7 @@ const DocumentsList: React.FC = () => {
               documents={documents}
               operationDocument={selectedFieldNoteOperation}
               existingDailyLog={selectedFieldNoteDailyLog}
+              draftScopeId={preferencesContext.preferences.currentProject}
               allowedAddCategoryNames={selectedWorkbenchAllowedAddCategoryNames}
               canCreateRecordMemo={canCreateSelectedRecordMemo}
               canCreateDailyLog={canCreateSelectedDailyLog}

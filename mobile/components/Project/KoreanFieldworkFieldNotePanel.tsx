@@ -30,12 +30,20 @@ import {
   KoreanFieldworkFieldNotePreset,
   mergeKoreanFieldworkFieldNoteInput,
 } from './korean-fieldwork-field-notes';
+import {
+  createKoreanFieldworkFieldNoteDraftKey,
+  hasKoreanFieldworkFieldNoteDraftText,
+  loadKoreanFieldworkFieldNoteDraft,
+  removeKoreanFieldworkFieldNoteDraft,
+  saveKoreanFieldworkFieldNoteDraft,
+} from './korean-fieldwork-field-note-drafts';
 
 interface KoreanFieldworkFieldNotePanelProps {
   selectedDocument: Document;
   documents: Document[];
   operationDocument?: Document;
   existingDailyLog?: Document;
+  draftScopeId?: string;
   allowedAddCategoryNames: string[];
   canCreateRecordMemo: boolean;
   canCreateDailyLog: boolean;
@@ -62,6 +70,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
   documents,
   operationDocument,
   existingDailyLog,
+  draftScopeId,
   allowedAddCategoryNames,
   canCreateRecordMemo,
   canCreateDailyLog,
@@ -75,6 +84,9 @@ const KoreanFieldworkFieldNotePanel: React.FC<
   const [noteInput, setNoteInput] =
     useState<KoreanFieldworkFieldNoteInput>(EMPTY_FIELD_NOTE_INPUT);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isDraftLoaded, setIsDraftLoaded] = useState(false);
+  const [draftStatus, setDraftStatus] =
+    useState<'loaded'|'saved'|undefined>();
   const summaries = useMemo(
     () => getKoreanFieldworkFieldNoteSummaries(
       selectedDocument,
@@ -120,6 +132,16 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     () => buildKoreanFieldworkFieldNoteText(noteInput),
     [noteInput]
   );
+  const draftKey = useMemo(
+    () => draftScopeId
+      ? createKoreanFieldworkFieldNoteDraftKey(
+        draftScopeId,
+        selectedDocument.resource.id
+      )
+      : undefined,
+    [draftScopeId, selectedDocument.resource.id]
+  );
+  const hasDraftText = hasKoreanFieldworkFieldNoteDraftText(noteInput);
   const isBusy = isSaving || isSubmitting;
   const isSaveDisabled =
     isBusy || !selectedModeEnabled || normalizedText.length === 0;
@@ -138,8 +160,78 @@ const KoreanFieldworkFieldNotePanel: React.FC<
   }, [canCreateDailyLog, canCreateRecordMemo, mode]);
 
   useEffect(() => {
+    let isActive = true;
+
+    setIsDraftLoaded(false);
+    setDraftStatus(undefined);
     setNoteInput(EMPTY_FIELD_NOTE_INPUT);
-  }, [selectedDocument.resource.id]);
+
+    if (!draftKey) {
+      setIsDraftLoaded(true);
+      return () => {
+        isActive = false;
+      };
+    }
+
+    loadKoreanFieldworkFieldNoteDraft(draftKey)
+      .then((draft) => {
+        if (!isActive) return;
+
+        if (draft) {
+          setNoteInput(draft.input);
+          setDraftStatus('loaded');
+          if (getModeEnabled(
+            draft.mode,
+            canCreateRecordMemo,
+            canCreateDailyLog
+          )) {
+            setMode(draft.mode);
+          }
+        }
+      })
+      .catch(() => undefined)
+      .finally(() => {
+        if (isActive) setIsDraftLoaded(true);
+      });
+
+    return () => {
+      isActive = false;
+    };
+  }, [
+    canCreateDailyLog,
+    canCreateRecordMemo,
+    draftKey,
+    selectedDocument.resource.id,
+  ]);
+
+  useEffect(() => {
+    if (!draftKey || !isDraftLoaded) return;
+
+    let isActive = true;
+
+    if (!hasDraftText) {
+      removeKoreanFieldworkFieldNoteDraft(draftKey)
+        .then(() => {
+          if (isActive) setDraftStatus(undefined);
+        })
+        .catch(() => undefined);
+      return () => {
+        isActive = false;
+      };
+    }
+
+    saveKoreanFieldworkFieldNoteDraft(draftKey, {
+      input: noteInput,
+      mode,
+      updatedAt: new Date().toISOString(),
+    }).then(() => {
+      if (isActive) setDraftStatus('saved');
+    }).catch(() => undefined);
+
+    return () => {
+      isActive = false;
+    };
+  }, [draftKey, hasDraftText, isDraftLoaded, mode, noteInput]);
 
   const updateNoteInput = (
     fieldName: keyof KoreanFieldworkFieldNoteInput,
@@ -169,9 +261,22 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     try {
       setIsSubmitting(true);
       await onCreateNote(mode, normalizedText);
+      if (draftKey) {
+        await removeKoreanFieldworkFieldNoteDraft(draftKey)
+          .catch(() => undefined);
+      }
+      setDraftStatus(undefined);
       setNoteInput(EMPTY_FIELD_NOTE_INPUT);
     } finally {
       setIsSubmitting(false);
+    }
+  };
+  const clearDraft = async () => {
+    setNoteInput(EMPTY_FIELD_NOTE_INPUT);
+    setDraftStatus(undefined);
+    if (draftKey) {
+      await removeKoreanFieldworkFieldNoteDraft(draftKey)
+        .catch(() => undefined);
     }
   };
 
@@ -186,6 +291,32 @@ const KoreanFieldworkFieldNotePanel: React.FC<
           {selectedDocument.resource.identifier || selectedDocument.resource.id}
         </Text>
       </View>
+
+      {!!draftKey && (hasDraftText || draftStatus) && (
+        <View style={styles.draftStatusRow}>
+          <View style={styles.draftStatusText}>
+            <MaterialIcons
+              name={draftStatus === 'loaded' ? 'restore' : 'save-alt'}
+              size={14}
+              color="#175cd3"
+            />
+            <Text style={styles.draftStatusLabel}>
+              {draftStatus === 'loaded' ? '임시저장 불러옴' : '임시저장됨'}
+            </Text>
+          </View>
+          {hasDraftText && (
+            <TouchableOpacity
+              activeOpacity={0.86}
+              onPress={clearDraft}
+              style={styles.draftClearButton}
+              testID="fieldNoteDraftClear"
+            >
+              <MaterialIcons name="delete-outline" size={15} color="#b42318" />
+              <Text style={styles.draftClearText}>지우기</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      )}
 
       <View style={styles.modeRow}>
         <ModeButton
@@ -735,6 +866,44 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginLeft: 10,
     textAlign: 'right',
+  },
+  draftStatusRow: {
+    alignItems: 'center',
+    backgroundColor: '#eff8ff',
+    borderColor: '#b2ddff',
+    borderRadius: 6,
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 9,
+    minHeight: 34,
+    paddingHorizontal: 8,
+  },
+  draftStatusText: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  draftStatusLabel: {
+    color: '#175cd3',
+    fontSize: 11,
+    fontWeight: '900',
+    marginLeft: 5,
+  },
+  draftClearButton: {
+    alignItems: 'center',
+    backgroundColor: '#fff1f3',
+    borderColor: '#fecdca',
+    borderRadius: 5,
+    borderWidth: 1,
+    flexDirection: 'row',
+    minHeight: 26,
+    paddingHorizontal: 7,
+  },
+  draftClearText: {
+    color: '#b42318',
+    fontSize: 11,
+    fontWeight: '900',
+    marginLeft: 3,
   },
   modeRow: {
     flexDirection: 'row',

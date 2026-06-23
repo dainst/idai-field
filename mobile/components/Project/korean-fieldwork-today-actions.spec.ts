@@ -90,6 +90,110 @@ describe('Korean fieldwork today actions', () => {
     });
   });
 
+  it('keeps 표본·시굴조사 centered on trench records before feature entry', () => {
+    const operation = createDoc('operation-1', C.OPERATION);
+    const tasks = getKoreanFieldworkPriorityTasks(
+      createSummary() as any,
+      [operation] as any,
+      5,
+      'trialTrench'
+    );
+
+    expect(tasks.map((task) => task.id)).toEqual([
+      'create-daily-log',
+      'create-survey-boundary',
+      'create-trench',
+    ]);
+    expect(tasks.map((task) => task.id)).not.toContain('create-detected-feature');
+    expect(tasks[2]).toMatchObject({
+      title: '표본·시굴 트렌치 설정',
+      action: {
+        type: 'createDocument',
+        parentDocumentId: 'operation-1',
+        categoryName: C.TRENCH,
+      },
+    });
+  });
+
+  it('uses trench children for 표본·시굴 토층 and 유구 확인 tasks', () => {
+    const operation = createDoc('operation-1', C.OPERATION);
+    const trench = createDoc('trench-1', C.TRENCH, {
+      relations: { isRecordedIn: ['operation-1'] },
+    });
+    const tasks = getKoreanFieldworkPriorityTasks(
+      createSummary() as any,
+      [operation, trench] as any,
+      5,
+      'trialTrench'
+    );
+
+    expect(tasks.find((task) => task.id === 'create-trench-layer')?.action)
+      .toEqual({
+        type: 'createDocument',
+        parentDocumentId: 'trench-1',
+        categoryName: C.LAYER,
+      });
+    expect(tasks.find((task) => task.id === 'create-detected-feature')?.action)
+      .toEqual({
+        type: 'createDocument',
+        parentDocumentId: 'trench-1',
+        categoryName: C.FEATURE,
+      });
+  });
+
+  it('starts 발굴조사 from detected feature records instead of trench setup', () => {
+    const operation = createDoc('operation-1', C.OPERATION);
+    const tasks = getKoreanFieldworkPriorityTasks(
+      createSummary() as any,
+      [operation] as any,
+      5,
+      'excavation'
+    );
+
+    expect(tasks.map((task) => task.id)).toEqual([
+      'create-daily-log',
+      'create-survey-boundary',
+      'create-detected-feature',
+    ]);
+    expect(tasks.map((task) => task.id)).not.toContain('create-trench');
+    expect(tasks[2]).toMatchObject({
+      title: '검출 유구 기록',
+      action: {
+        type: 'createDocument',
+        parentDocumentId: 'operation-1',
+        categoryName: C.FEATURE,
+      },
+    });
+  });
+
+  it('guides 발굴조사 feature records through photos, sectioning, and drawings', () => {
+    const operation = createDoc('operation-1', C.OPERATION);
+    const feature = createDoc('feature-1', C.FEATURE, {
+      relations: { liesWithin: ['operation-1'] },
+    });
+    const tasks = getKoreanFieldworkPriorityTasks(
+      createSummary({
+        dailyLogs: [createDoc('daily-log-1', C.DAILY_LOG)],
+        surveyBoundaries: [createDoc('boundary-1', C.SURVEY_BOUNDARY)],
+      }) as any,
+      [operation, feature] as any,
+      5,
+      'excavation'
+    );
+
+    expect(tasks.map((task) => task.id)).toEqual([
+      'create-pre-investigation-photo',
+      'create-excavation-section',
+      'create-excavation-profile-photo',
+      'create-excavation-drawing',
+    ]);
+    expect(tasks[0].action).toEqual({
+      type: 'createDocument',
+      parentDocumentId: 'feature-1',
+      categoryName: C.PHOTO,
+    });
+  });
+
   it('uses trench as the parent for the feature candidate priority task', () => {
     const operation = createDoc('operation-1', C.OPERATION);
     const trench = createDoc('trench-1', C.TRENCH);

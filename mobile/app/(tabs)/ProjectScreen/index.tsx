@@ -360,8 +360,13 @@ const DocumentsList: React.FC = () => {
     [actionDocuments, actionSummary]
   );
   const priorityTasks = useMemo(
-    () => getKoreanFieldworkPriorityTasks(actionSummary, actionDocuments, 5),
-    [actionDocuments, actionSummary]
+    () => getKoreanFieldworkPriorityTasks(
+      actionSummary,
+      actionDocuments,
+      5,
+      investigationModeId
+    ),
+    [actionDocuments, actionSummary, investigationModeId]
   );
   const quickActions = useMemo(
     () => getKoreanFieldworkQuickActionStates(

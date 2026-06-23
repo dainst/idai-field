@@ -4,9 +4,11 @@ import {
   buildKoreanFieldworkFieldNoteText,
   createKoreanFieldworkDailyLogDraft,
   createKoreanFieldworkRecordMemoDraft,
+  extractKoreanFieldworkFieldNoteInput,
   getKoreanFieldworkFieldNoteChecklist,
   getKoreanFieldworkFieldNoteEvidenceActions,
   getKoreanFieldworkFieldNoteGuidance,
+  getKoreanFieldworkFieldNoteHistoryItems,
   getKoreanFieldworkFieldNotePresets,
   getKoreanFieldworkDailyLogAppendUpdates,
   getKoreanFieldworkDailyLogForOperation,
@@ -130,6 +132,63 @@ describe('korean-fieldwork-field-notes', () => {
       [feature, photo],
       [C.FIND]
     ).map((action) => action.id)).toEqual(['finds']);
+  });
+
+  it('extracts structured field note input from saved memo text', () => {
+    expect(extractKoreanFieldworkFieldNoteInput([
+      '[관찰 내용] 바닥면에서 원형 윤곽 확인.',
+      '[해석] 주공 가능성 있음.',
+      '[다음 작업] 사진 보강 후 단면 정리.',
+      '[사진·도면·유물·시료 번호] 사진 12, 도면 3',
+    ].join('\n'))).toEqual({
+      observation: '바닥면에서 원형 윤곽 확인.',
+      interpretation: '주공 가능성 있음.',
+      nextWork: '사진 보강 후 단면 정리.',
+      evidenceNumbers: '사진 12, 도면 3',
+    });
+  });
+
+  it('builds recent field note history for the selected record only', () => {
+    const operation = createDoc('operation-1', C.OPERATION, 'A 구역');
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
+    const memo = createDoc('memo-1', C.PEN_MEMO, '메모 1', {
+      relations: { depicts: [feature.resource.id] },
+      penMemoReviewedTranscript: [
+        '[관찰 내용] 바닥면 정리 중 원형 윤곽 확인.',
+        '[다음 작업] 사진 보강.',
+      ].join('\n'),
+    });
+    memo.created.date = new Date('2026-06-23T01:00:00.000Z');
+    const dailyLog = createDoc('daily-log-1', C.DAILY_LOG, '6월 23일 작업일지', {
+      relations: { isRecordedIn: [operation.resource.id] },
+      description: [
+        '09:00 수혈 1 - [관찰 내용] 사진 보강 완료.',
+        '[다음 작업] 도면 정리.',
+        '10:00 수혈 2 - 유물 수습.',
+        '11:00 수혈 1 - [관찰 내용] 단면 정리 완료.',
+        '[다음 작업] 유물 출토 위치 보강.',
+      ].join('\n'),
+    });
+    dailyLog.created.date = new Date('2026-06-23T02:00:00.000Z');
+
+    const history = getKoreanFieldworkFieldNoteHistoryItems(
+      feature,
+      [memo, dailyLog],
+      operation
+    );
+
+    expect(history.map((item) => item.document.resource.id)).toEqual([
+      'daily-log-1',
+      'memo-1',
+    ]);
+    expect(history[0]).toMatchObject({
+      detail: '유물 출토 위치 보강.',
+      canLoadIntoDraft: true,
+      input: {
+        observation: '단면 정리 완료.',
+        nextWork: '유물 출토 위치 보강.',
+      },
+    });
   });
 
   it('finds the operation for a selected trench or feature record', () => {

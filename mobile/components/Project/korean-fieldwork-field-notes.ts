@@ -35,6 +35,16 @@ export interface KoreanFieldworkFieldNoteSummary {
   categoryLabel: string;
 }
 
+export interface KoreanFieldworkFieldNoteHistoryItem {
+  document: Document;
+  label: string;
+  detail: string;
+  categoryLabel: string;
+  dateLabel: string;
+  input: KoreanFieldworkFieldNoteInput;
+  canLoadIntoDraft: boolean;
+}
+
 export interface KoreanFieldworkFieldNoteChecklistItem {
   id: keyof KoreanFieldworkFieldNoteInput;
   label: string;
@@ -65,6 +75,16 @@ export interface KoreanFieldworkFieldNoteEvidenceAction {
   categoryName: string;
   existingCount: number;
 }
+
+const FIELD_NOTE_SECTION_DEFINITIONS: {
+  id: keyof KoreanFieldworkFieldNoteInput;
+  label: string;
+}[] = [
+  { id: 'observation', label: '관찰 내용' },
+  { id: 'interpretation', label: '해석' },
+  { id: 'nextWork', label: '다음 작업' },
+  { id: 'evidenceNumbers', label: '사진·도면·유물·시료 번호' },
+];
 
 export const createKoreanFieldworkRecordMemoDraft = (
   document: Document,
@@ -219,19 +239,65 @@ export const getKoreanFieldworkFieldNoteSummaries = (
   }));
 };
 
+export const getKoreanFieldworkFieldNoteHistoryItems = (
+  document: Document,
+  documents: Document[],
+  operationDocument?: Document,
+  limit = 4
+): KoreanFieldworkFieldNoteHistoryItem[] => documents
+  .flatMap((candidate) => {
+    if (isRelatedRecordMemo(candidate, document)) {
+      return createFieldNoteHistoryItem(candidate, getDocumentFieldNoteText(
+        candidate
+      ));
+    }
+
+    if (isRelatedDailyLog(candidate, operationDocument)) {
+      return createFieldNoteHistoryItem(
+        candidate,
+        getRelevantDailyLogEntry(candidate, document)
+      );
+    }
+
+    return [];
+  })
+  .sort((itemA, itemB) => compareNewestFirst(itemA.document, itemB.document))
+  .slice(0, limit);
+
 export const normalizeFieldNoteText = (text: string): string =>
   text.replace(/\r\n/g, '\n').trim();
 
 export const buildKoreanFieldworkFieldNoteText = (
   input: KoreanFieldworkFieldNoteInput
-): string => [
-  formatFieldNoteSection('관찰 내용', input.observation),
-  formatFieldNoteSection('해석', input.interpretation),
-  formatFieldNoteSection('다음 작업', input.nextWork),
-  formatFieldNoteSection('사진·도면·유물·시료 번호', input.evidenceNumbers),
-]
+): string => FIELD_NOTE_SECTION_DEFINITIONS
+  .map((section) => formatFieldNoteSection(section.label, input[section.id]))
   .filter((section): section is string => !!section)
   .join('\n');
+
+export const extractKoreanFieldworkFieldNoteInput = (
+  text: string
+): KoreanFieldworkFieldNoteInput => {
+  const input: KoreanFieldworkFieldNoteInput = {};
+  let currentField: keyof KoreanFieldworkFieldNoteInput | undefined;
+
+  normalizeFieldNoteText(text).split('\n').forEach((rawLine) => {
+    const line = stripDailyLogEntryPrefix(rawLine.trim());
+    const match = line.match(/^\[([^\]]+)\]\s*(.*)$/);
+    const field = match ? getFieldNoteSectionId(match[1]) : undefined;
+
+    if (field) {
+      currentField = field;
+      appendFieldNoteInputLine(input, field, match?.[2] ?? '');
+      return;
+    }
+
+    if (currentField && line.length > 0) {
+      appendFieldNoteInputLine(input, currentField, line);
+    }
+  });
+
+  return trimFieldNoteInput(input);
+};
 
 export const getKoreanFieldworkFieldNoteChecklist = (
   input: KoreanFieldworkFieldNoteInput
@@ -633,6 +699,162 @@ const mergeFieldNoteValue = (
 
   return `${currentText}\n${nextText}`;
 };
+
+const createFieldNoteHistoryItem = (
+  document: Document,
+  text: string
+): KoreanFieldworkFieldNoteHistoryItem[] => {
+  const noteText = normalizeFieldNoteText(text);
+  if (!noteText) return [];
+
+  const input = extractKoreanFieldworkFieldNoteInput(noteText);
+
+  return [{
+    document,
+    label: document.resource.identifier || document.resource.id,
+    detail: getFieldNoteHistoryDetail(noteText),
+    categoryLabel: getKoreanFieldworkCategoryLabel(document.resource.category),
+    dateLabel: getFieldNoteHistoryDateLabel(document),
+    input,
+    canLoadIntoDraft: hasAnyFieldNoteInput(input),
+  }];
+};
+
+const getDocumentFieldNoteText = (document: Document): string =>
+  [
+    getStringField(document, 'penMemoReviewedTranscript'),
+    getStringField(document, 'penMemoAutoTranscript'),
+    getStringField(document, 'description'),
+    getStringField(document, 'diaryAbstract'),
+    getStringField(document, 'shortDescription'),
+  ].find((value) => value.length > 0) ?? '';
+
+const getRelevantDailyLogEntry = (
+  dailyLogDocument: Document,
+  contextDocument: Document
+): string => {
+  const description = getStringField(dailyLogDocument, 'description');
+  if (!description) return '';
+
+  const lines = description
+    .split('\n')
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0);
+
+  if (lines.length === 0) return '';
+
+  const contextTokens = getDailyLogContextTokens(contextDocument);
+  const matchingIndex = contextDocument.resource.category === C.OPERATION
+    ? findLastDailyLogEntryIndex(lines)
+    : findLastMatchingDailyLogEntryIndex(lines, contextTokens);
+
+  if (matchingIndex < 0) return '';
+
+  return collectDailyLogEntryBlock(lines, matchingIndex).join('\n');
+};
+
+const getDailyLogContextTokens = (document: Document): string[] =>
+  [
+    document.resource.identifier,
+    document.resource.id,
+  ].filter((token): token is string =>
+    typeof token === 'string' && token.trim().length > 0
+  );
+
+const findLastDailyLogEntryIndex = (lines: string[]): number => {
+  for (let index = lines.length - 1; index >= 0; index--) {
+    if (isDailyLogEntryStart(lines[index])) return index;
+  }
+
+  return lines.length - 1;
+};
+
+const findLastMatchingDailyLogEntryIndex = (
+  lines: string[],
+  contextTokens: string[]
+): number => {
+  for (let index = lines.length - 1; index >= 0; index--) {
+    if (
+      contextTokens.some((token) => lines[index].includes(token))
+      && (isDailyLogEntryStart(lines[index]) || index === 0)
+    ) {
+      return index;
+    }
+  }
+
+  return -1;
+};
+
+const collectDailyLogEntryBlock = (
+  lines: string[],
+  startIndex: number
+): string[] => {
+  const block: string[] = [];
+
+  for (let index = startIndex; index < lines.length; index++) {
+    if (index > startIndex && isDailyLogEntryStart(lines[index])) break;
+    block.push(lines[index]);
+  }
+
+  return block;
+};
+
+const isDailyLogEntryStart = (line: string): boolean =>
+  /^\d{2}:\d{2}\s+/.test(line);
+
+const getFieldNoteHistoryDetail = (text: string): string => {
+  const line = getLastMeaningfulLine(text);
+  return stripFieldNoteSectionLabel(stripDailyLogEntryPrefix(line));
+};
+
+const getFieldNoteHistoryDateLabel = (document: Document): string => {
+  const date = getStringField(document, 'date');
+  if (date) return date;
+
+  const timestamp = getTimestamp(document);
+  return timestamp > 0 ? formatDate(new Date(timestamp)) : '';
+};
+
+const getFieldNoteSectionId = (
+  label: string
+): keyof KoreanFieldworkFieldNoteInput | undefined =>
+  FIELD_NOTE_SECTION_DEFINITIONS.find((section) =>
+    section.label === label
+  )?.id;
+
+const appendFieldNoteInputLine = (
+  input: KoreanFieldworkFieldNoteInput,
+  field: keyof KoreanFieldworkFieldNoteInput,
+  line: string
+) => {
+  const text = line.trim();
+  if (!text) return;
+
+  input[field] = [input[field], text]
+    .filter((value): value is string => !!value && value.length > 0)
+    .join('\n');
+};
+
+const trimFieldNoteInput = (
+  input: KoreanFieldworkFieldNoteInput
+): KoreanFieldworkFieldNoteInput => ({
+  observation: normalizeFieldNoteText(input.observation ?? ''),
+  interpretation: normalizeFieldNoteText(input.interpretation ?? ''),
+  nextWork: normalizeFieldNoteText(input.nextWork ?? ''),
+  evidenceNumbers: normalizeFieldNoteText(input.evidenceNumbers ?? ''),
+});
+
+const hasAnyFieldNoteInput = (
+  input: KoreanFieldworkFieldNoteInput
+): boolean => FIELD_NOTE_SECTION_DEFINITIONS.some((section) =>
+  hasText(input[section.id])
+);
+
+const stripDailyLogEntryPrefix = (line: string): string =>
+  line.replace(/^\d{2}:\d{2}\s+.+?\s-\s+/, '');
+
+const stripFieldNoteSectionLabel = (line: string): string =>
+  line.replace(/^\[[^\]]+\]\s*/, '');
 
 const getFieldNoteDetail = (document: Document): string =>
   getLastMeaningfulLine(

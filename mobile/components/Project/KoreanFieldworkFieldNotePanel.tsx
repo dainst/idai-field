@@ -18,11 +18,13 @@ import {
   getKoreanFieldworkFieldNoteChecklist,
   getKoreanFieldworkFieldNoteEvidenceActions,
   getKoreanFieldworkFieldNoteGuidance,
+  getKoreanFieldworkFieldNoteHistoryItems,
   getKoreanFieldworkFieldNotePresets,
   getKoreanFieldworkFieldNoteSummaries,
   KoreanFieldworkFieldNoteEvidenceAction,
   KoreanFieldworkFieldNoteGuidanceItem,
   KoreanFieldworkFieldNoteGuidanceTone,
+  KoreanFieldworkFieldNoteHistoryItem,
   KoreanFieldworkFieldNoteInput,
   KoreanFieldworkFieldNoteMode,
   KoreanFieldworkFieldNotePreset,
@@ -75,6 +77,14 @@ const KoreanFieldworkFieldNotePanel: React.FC<
   const [isSubmitting, setIsSubmitting] = useState(false);
   const summaries = useMemo(
     () => getKoreanFieldworkFieldNoteSummaries(
+      selectedDocument,
+      documents,
+      operationDocument
+    ),
+    [documents, operationDocument, selectedDocument]
+  );
+  const historyItems = useMemo(
+    () => getKoreanFieldworkFieldNoteHistoryItems(
       selectedDocument,
       documents,
       operationDocument
@@ -143,6 +153,13 @@ const KoreanFieldworkFieldNotePanel: React.FC<
   const applyPreset = (preset: KoreanFieldworkFieldNotePreset) => {
     setNoteInput((currentInput) =>
       mergeKoreanFieldworkFieldNoteInput(currentInput, preset.input)
+    );
+  };
+  const applyHistoryItem = (item: KoreanFieldworkFieldNoteHistoryItem) => {
+    if (!item.canLoadIntoDraft) return;
+
+    setNoteInput((currentInput) =>
+      mergeKoreanFieldworkFieldNoteInput(currentInput, item.input)
     );
   };
 
@@ -290,6 +307,23 @@ const KoreanFieldworkFieldNotePanel: React.FC<
               />
             ))}
           </ScrollView>
+        </View>
+      )}
+
+      {historyItems.length > 0 && (
+        <View style={styles.historyPanel}>
+          <View style={styles.historyHeader}>
+            <MaterialIcons name="history" size={16} color="#344054" />
+            <Text style={styles.historyTitle}>최근 야장</Text>
+          </View>
+          {historyItems.map((item) => (
+            <HistoryRow
+              item={item}
+              key={item.document.resource.id}
+              onLoad={() => applyHistoryItem(item)}
+              onOpen={() => onOpenDocument(item.document)}
+            />
+          ))}
         </View>
       )}
 
@@ -486,6 +520,56 @@ const EvidenceActionButton: React.FC<{
       </Text>
     </View>
   </TouchableOpacity>
+);
+
+const HistoryRow: React.FC<{
+  item: KoreanFieldworkFieldNoteHistoryItem;
+  onLoad: () => void;
+  onOpen: () => void;
+}> = ({ item, onLoad, onOpen }) => (
+  <View
+    style={styles.historyRow}
+    testID={`fieldNoteHistory_${item.document.resource.id}`}
+  >
+    <View style={styles.historyText}>
+      <View style={styles.historyMetaRow}>
+        <Text style={styles.historyCategory} numberOfLines={1}>
+          {item.categoryLabel}
+        </Text>
+        {!!item.dateLabel && (
+          <Text style={styles.historyDate} numberOfLines={1}>
+            {item.dateLabel}
+          </Text>
+        )}
+      </View>
+      <Text style={styles.historyLabel} numberOfLines={1}>
+        {item.label}
+      </Text>
+      <Text style={styles.historyDetail} numberOfLines={2}>
+        {item.detail}
+      </Text>
+    </View>
+    <View style={styles.historyActions}>
+      <TouchableOpacity
+        activeOpacity={0.86}
+        onPress={onOpen}
+        style={styles.historyIconButton}
+        testID={`fieldNoteHistoryOpen_${item.document.resource.id}`}
+      >
+        <MaterialIcons name="open-in-new" size={16} color="#344054" />
+      </TouchableOpacity>
+      {item.canLoadIntoDraft && (
+        <TouchableOpacity
+          activeOpacity={0.86}
+          onPress={onLoad}
+          style={[styles.historyIconButton, styles.historyLoadButton]}
+          testID={`fieldNoteHistoryLoad_${item.document.resource.id}`}
+        >
+          <MaterialIcons name="content-copy" size={16} color="#175cd3" />
+        </TouchableOpacity>
+      )}
+    </View>
+  </View>
 );
 
 const FieldNoteInputBlock: React.FC<{
@@ -835,6 +919,90 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontWeight: '700',
     marginTop: 1,
+  },
+  historyPanel: {
+    backgroundColor: '#f8fafc',
+    borderColor: '#d0d5dd',
+    borderRadius: 6,
+    borderWidth: 1,
+    marginTop: 10,
+    paddingHorizontal: 9,
+    paddingVertical: 8,
+  },
+  historyHeader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginBottom: 6,
+  },
+  historyTitle: {
+    color: '#344054',
+    fontSize: 12,
+    fontWeight: '900',
+    marginLeft: 5,
+  },
+  historyRow: {
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+    borderColor: '#eaecf0',
+    borderRadius: 5,
+    borderWidth: 1,
+    flexDirection: 'row',
+    marginTop: 6,
+    minHeight: 62,
+    paddingHorizontal: 8,
+    paddingVertical: 7,
+  },
+  historyText: {
+    flex: 1,
+    minWidth: 0,
+  },
+  historyMetaRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  historyCategory: {
+    color: '#175cd3',
+    fontSize: 10,
+    fontWeight: '900',
+    marginRight: 6,
+  },
+  historyDate: {
+    color: '#667085',
+    flex: 1,
+    fontSize: 10,
+    fontWeight: '700',
+  },
+  historyLabel: {
+    color: '#101828',
+    fontSize: 12,
+    fontWeight: '900',
+    marginTop: 2,
+  },
+  historyDetail: {
+    color: '#475467',
+    fontSize: 11,
+    lineHeight: 15,
+    marginTop: 2,
+  },
+  historyActions: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginLeft: 8,
+  },
+  historyIconButton: {
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+    borderColor: '#d0d5dd',
+    borderRadius: 6,
+    borderWidth: 1,
+    height: 32,
+    justifyContent: 'center',
+    marginLeft: 5,
+    width: 32,
+  },
+  historyLoadButton: {
+    backgroundColor: '#eff8ff',
+    borderColor: '#b2ddff',
   },
   inputBlock: {
     marginTop: 10,

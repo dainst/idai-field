@@ -191,6 +191,52 @@ describe('KoreanFieldworkFieldNotePanel', () => {
     expect(queryByTestId('fieldNoteEvidenceAction_photos')).toBeNull();
   });
 
+  it('loads a recent structured field note into the tablet note form', async () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
+    const memo = createDoc('memo-1', C.PEN_MEMO, '메모 1', {
+      relations: { depicts: [feature.resource.id] },
+      penMemoReviewedTranscript: [
+        '[관찰 내용] 바닥면에서 원형 윤곽 확인.',
+        '[해석] 주공 가능성 있음.',
+        '[다음 작업] 사진 보강 후 단면 정리.',
+        '[사진·도면·유물·시료 번호] 사진 12, 도면 3',
+      ].join('\n'),
+    });
+    const handleOpenDocument = jest.fn();
+
+    const { getByTestId } = renderPanel(feature, {
+      documents: [feature, memo],
+      onOpenDocument: handleOpenDocument,
+    });
+
+    expect(getByTestId('fieldNoteHistory_memo-1')).toBeTruthy();
+
+    await act(async () => {
+      fireEvent.press(getByTestId('fieldNoteHistoryLoad_memo-1'));
+      jest.runOnlyPendingTimers();
+    });
+
+    expect(getByTestId('fieldNoteTextInput').props.value).toBe(
+      '바닥면에서 원형 윤곽 확인.'
+    );
+    expect(getByTestId('fieldNoteInterpretationInput').props.value).toBe(
+      '주공 가능성 있음.'
+    );
+    expect(getByTestId('fieldNoteNextWorkInput').props.value).toBe(
+      '사진 보강 후 단면 정리.'
+    );
+    expect(getByTestId('fieldNoteEvidenceNumbersInput').props.value).toBe(
+      '사진 12, 도면 3'
+    );
+
+    await act(async () => {
+      fireEvent.press(getByTestId('fieldNoteHistoryOpen_memo-1'));
+      jest.runOnlyPendingTimers();
+    });
+
+    expect(handleOpenDocument).toHaveBeenCalledWith(memo);
+  });
+
   it('clears unsaved text when the selected record changes', () => {
     const feature = createDoc('feature-1', C.FEATURE, '유구 1');
     const trench = createDoc('trench-1', C.TRENCH, '트렌치 1');

@@ -9,7 +9,7 @@ describe('Korean fieldwork record evidence', () => {
     const pit = createDoc('pit-1', C.FEATURE_SEGMENT, '피트 1', {
       liesWithin: ['feature-1'],
     });
-    const layer = createDoc('layer-1', C.LAYER, '층위 1', {
+    const layer = createDoc('layer-1', C.LAYER, '토층 1', {
       liesWithin: ['feature-1'],
     });
     const photo = createDoc('photo-1', C.PHOTO, '사진 1', {
@@ -44,7 +44,7 @@ describe('Korean fieldwork record evidence', () => {
       },
       {
         id: 'layers',
-        label: '층위',
+        label: '토층',
         count: 1,
         tone: 'filled',
         createCategoryName: C.LAYER,

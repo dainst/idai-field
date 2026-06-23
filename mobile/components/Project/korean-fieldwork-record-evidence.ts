@@ -35,7 +35,7 @@ const EVIDENCE_DEFINITIONS = [
   },
   {
     id: 'layers',
-    label: '층위',
+    label: '토층',
     getDocuments: (bundle: EvidenceBundle) => bundle.layers,
     categories: [C.TRENCH, C.FEATURE_GROUP, C.FEATURE, C.FEATURE_SEGMENT],
     createCategoryName: C.LAYER,

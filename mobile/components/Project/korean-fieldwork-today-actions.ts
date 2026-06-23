@@ -314,7 +314,7 @@ const appendTrialTrenchPriorityTasks = (
         id: 'create-pit-layer',
         icon: 'format-color-fill',
         title: '피트 토층 기록',
-        detail: `${segment.resource.identifier}의 토층도와 층위 관찰을 이어서 기록하세요.`,
+        detail: `${segment.resource.identifier}의 토층도와 토층 관찰을 이어서 기록하세요.`,
         tone: 'warning',
         action: toCreateDocumentAction(segment, C.LAYER),
       });

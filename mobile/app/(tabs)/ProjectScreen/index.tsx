@@ -135,7 +135,6 @@ const RECORD_FILTERS: RecordFilter[] = [
     label: '트렌치·유구',
     categories: [
       KOREAN_FIELDWORK_CATEGORIES.TRENCH,
-      KOREAN_FIELDWORK_CATEGORIES.FEATURE_GROUP,
       KOREAN_FIELDWORK_CATEGORIES.FEATURE,
       KOREAN_FIELDWORK_CATEGORIES.FEATURE_SEGMENT,
       KOREAN_FIELDWORK_CATEGORIES.LAYER,
@@ -183,11 +182,10 @@ const RECORD_GROUPS: RecordGroup[] = [
     ],
   },
   {
-    title: '유구와 층위',
-    subtitle: '트렌치부터 피트까지 필요한 단위',
+    title: '유구와 토층',
+    subtitle: '트렌치, 유구, 피트, 토층 기록',
     categories: [
       KOREAN_FIELDWORK_CATEGORIES.TRENCH,
-      KOREAN_FIELDWORK_CATEGORIES.FEATURE_GROUP,
       KOREAN_FIELDWORK_CATEGORIES.FEATURE,
       KOREAN_FIELDWORK_CATEGORIES.FEATURE_SEGMENT,
       KOREAN_FIELDWORK_CATEGORIES.LAYER,
@@ -863,7 +861,7 @@ const DocumentsList: React.FC = () => {
               {showFieldworkDetails ? '상세 기록 접기' : '상세 기록 보기'}
             </Text>
             <Text style={styles.detailToggleDescription} numberOfLines={1}>
-              진행판, 단위 매트릭스, 계층판
+              진행판, 조사 흐름, 기록 관계
             </Text>
           </View>
           <MaterialIcons
@@ -889,6 +887,7 @@ const DocumentsList: React.FC = () => {
               summary={todaySummary}
               documents={documents}
               scopeParent={currentScopeParent}
+              investigationModeId={investigationModeId}
               onOpenDocument={onDocumentSelected}
               onAddDocumentOfCategory={(parentDoc, categoryName) =>
                 navigateAddCategory(categoryName, parentDoc)}

@@ -23,7 +23,7 @@ describe('KoreanFieldworkUnitMatrix', () => {
       />
     );
 
-    expect(getByText('조사 단위표')).toBeTruthy();
+    expect(getByText('조사 흐름표')).toBeTruthy();
     expect(getByText('조사구역 1')).toBeTruthy();
 
     fireEvent.press(getByTestId('unitMatrixOpen_operation-1'));

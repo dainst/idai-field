@@ -1706,7 +1706,7 @@
       "alternativeSpatialInterpretation": { "label": "대안 공간해석" },
       "pendingDecision": { "label": "추가 확인" }
     },
-    "description": "취락 단위에서 중복관계, 동시기성, 한 시점 규모, 공간구획, 폐기 양상, 바닥 유물분포, 주거지 간 유물 접합, 식물유체와 잔류물·내용물 분석, 반복 축조 원인을 유구 묶음의 근거로 검토하기 위한 목록"
+    "description": "취락 단위에서 중복관계, 동시기성, 한 시점 규모, 공간구획, 폐기 양상, 바닥 유물분포, 주거지 간 유물 접합, 식물유체와 잔류물·내용물 분석, 반복 축조 원인을 관련 유구의 근거로 검토하기 위한 목록"
   },
   "KoreanFieldwork-productionProcessSystem": {
     "values": {
@@ -7076,7 +7076,7 @@
         "label": "조사구역·작업기록"
       },
       "featureGroupRecord": {
-        "label": "유구 묶음 기록"
+        "label": "관련 유구 기록"
       },
       "featureRecord": {
         "label": "유구 기록"

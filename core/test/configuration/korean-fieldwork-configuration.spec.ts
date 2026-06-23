@@ -320,7 +320,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-geometrySource'].values.aerialLayerTrace.label)
             .toBe('Aerial layer trace');
         expect(languages.ko.categories.Feature.label).toBe('유구');
-        expect(languages.ko.categories.FeatureGroup.label).toBe('유구 묶음');
+        expect(languages.ko.categories.FeatureGroup.label).toBe('관련 유구');
         expect(languages.ko.categories.FeatureSegment.label).toBe('피트');
         expect(languages.ko.categories.Place.label).toBe('유적/지점');
         expect(languages.ko.categories.Trench.label).toBe('트렌치');
@@ -493,9 +493,9 @@ describe('KoreanFieldwork project configuration', () => {
             .values.manualControlPoints.label).toBe('Manual control points');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-aerialLayerUpdateStage']
             .values.dailyDroneUpdate.label).toBe('Daily drone update');
-        expect(languages.ko.categories.AerialMapLayer.label).toBe('항공 지도 레이어');
+        expect(languages.ko.categories.AerialMapLayer.label).toBe('항공사진 지도');
         expect(languages.ko.categories.AerialMapLayer.fields.aerialLayerUpdateStage.label)
-            .toBe('레이어 갱신 단계');
+            .toBe('지도 갱신 단계');
         expect(languages.en.categories.AerialMapLayer.label).toBe('Aerial map layer');
     });
 
@@ -528,18 +528,9 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-soilColorCaptureCondition');
         expect(layerForm.valuelists.soilColorAssistStatus)
             .toBe('KoreanFieldwork-soilColorAssistStatus');
-        expect(layerKoreanGroup.fields.slice(0, 12)).toEqual([
+        expect(layerKoreanGroup.fields).toEqual([
             'layerSequenceNumber',
-            'layerSequenceMeaning',
-            'layerThicknessApprox',
-            'layerBoundaryDescription',
             'soilColorMunsellManual',
-            'soilColorReviewed',
-            'soilColorMoistureState',
-            'soilColorCaptureCondition',
-            'soilColorRoi',
-            'soilColorAssistCandidates',
-            'soilColorAssistStatus',
             'soilColorNote'
         ]);
 
@@ -559,14 +550,16 @@ describe('KoreanFieldwork project configuration', () => {
         expect(soilProfilePhotoForm.valuelists.soilColorCaptureCondition)
             .toBe('KoreanFieldwork-soilColorCaptureCondition');
         expect(soilProfileWorkflowGroup.fields).toContain('depicts');
-        expect(soilProfileKoreanGroup.fields.slice(0, 4)).toEqual([
-            'soilProfilePhotoUri',
-            'soilProfilePhotoSizeHintKb',
-            'soilProfilePhotoQuality',
-            'soilProfilePhotoCapturedAt'
+        expect(soilProfileKoreanGroup.fields).toEqual([
+            'soilProfilePhotoCapturedAt',
+            'soilProfileAnnotationStrokes',
+            'soilProfileLayerMarkers',
+            'soilColorCaptureCondition',
+            'soilProfileColorSwatches',
+            'soilProfileColorNote',
+            'soilProfileCaptureNote'
         ]);
         expect(soilProfileKoreanGroup.fields).toContain('soilProfileLayerMarkers');
-        expect(soilProfileKoreanGroup.fields).toContain('soilProfileLayerIds');
         expect(soilProfileKoreanGroup.fields).toContain('soilProfileColorSwatches');
         expect(soilProfileKoreanGroup.fields).toContain('soilProfileColorNote');
 
@@ -587,12 +580,12 @@ describe('KoreanFieldwork project configuration', () => {
             .values.notRun.label).toBe('미실행');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-soilColorCaptureCondition']
             .values.calibrationTargetUsed.label).toBe('Calibration target used');
-        expect(languages.ko.categories.Layer.label).toBe('층위');
+        expect(languages.ko.categories.Layer.label).toBe('토층');
         expect(languages.ko.categories.SoilProfilePhoto.label).toBe('토층 단면 사진');
         expect(languages.ko.categories.SoilProfilePhoto.fields.soilProfilePhotoSizeHintKb.label)
             .toBe('사진 크기 기준(KB)');
         expect(languages.ko.categories.SoilProfilePhoto.fields.soilProfileColorSwatches.label)
-            .toBe('색상 지정 JSON');
+            .toBe('번호별 토색');
         expect(languages.en.categories.SoilProfilePhoto.label).toBe('Soil profile photo');
     });
 

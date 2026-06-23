@@ -12,23 +12,19 @@ describe('Korean fieldwork hierarchy lanes', () => {
     const trench = createDoc('trench-1', C.TRENCH, 'T1', {
       isRecordedIn: [operation.resource.id],
     });
-    const featureGroup = createDoc('feature-group-1', C.FEATURE_GROUP, '수혈군 1', {
-      liesWithin: [trench.resource.id],
-    });
     const feature = createDoc('feature-1', C.FEATURE, '수혈 1', {
-      liesWithin: [featureGroup.resource.id],
+      liesWithin: [trench.resource.id],
     });
     const segment = createDoc('segment-1', C.FEATURE_SEGMENT, '피트 1', {
       liesWithin: [feature.resource.id],
     });
-    const layer = createDoc('layer-1', C.LAYER, '층위 1', {
+    const layer = createDoc('layer-1', C.LAYER, '토층 1', {
       liesWithin: [segment.resource.id],
     });
     const unrelatedFeature = createDoc('feature-2', C.FEATURE, '다른 유구');
     const documents = [
       operation,
       trench,
-      featureGroup,
       feature,
       segment,
       layer,
@@ -63,7 +59,7 @@ describe('Korean fieldwork hierarchy lanes', () => {
       item.document.resource.identifier
     )).toEqual(['수혈 1']);
     expect(getLane(lanes, C.FEATURE).items[0].issueCount).toBe(2);
-    expect(getLane(lanes, C.FEATURE_SEGMENT).label).toBe('피트·세부 단위');
+    expect(getLane(lanes, C.FEATURE_SEGMENT).label).toBe('피트');
     expect(getLane(lanes, C.LAYER).items[0].parentIdentifier).toBe('피트 1');
   });
 

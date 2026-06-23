@@ -41,7 +41,7 @@ describe('KoreanFieldworkHierarchyBoard', () => {
     expect(getByText('조사 흐름')).toBeTruthy();
     expect(getAllByText('T1').length).toBeGreaterThan(0);
     expect(getByText('수혈 1')).toBeTruthy();
-    expect(getByText('피트·세부 단위')).toBeTruthy();
+    expect(getByText('피트')).toBeTruthy();
 
     fireEvent.press(getByText('수혈 1'));
     fireEvent.press(getByLabelText('수혈 1 하위 범위로 이동'));

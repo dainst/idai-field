@@ -22,7 +22,6 @@ const C = KOREAN_FIELDWORK_CATEGORIES;
 const PRIMARY_OPTIONS_BY_PARENT: Readonly<Record<string, readonly string[]>> = {
   [C.OPERATION]: [
     C.TRENCH,
-    C.FEATURE_GROUP,
     C.FEATURE,
     C.SURVEY_BOUNDARY,
     C.DAILY_LOG,
@@ -31,7 +30,6 @@ const PRIMARY_OPTIONS_BY_PARENT: Readonly<Record<string, readonly string[]>> = {
     C.PEN_MEMO,
   ],
   [C.TRENCH]: [
-    C.FEATURE_GROUP,
     C.FEATURE,
     C.LAYER,
     C.FIND,
@@ -44,7 +42,6 @@ const PRIMARY_OPTIONS_BY_PARENT: Readonly<Record<string, readonly string[]>> = {
   ],
   [C.FEATURE_GROUP]: [
     C.FEATURE,
-    C.FEATURE_GROUP,
     C.LAYER,
     C.FIND,
     C.SAMPLE,
@@ -117,7 +114,7 @@ const PRIMARY_ONLY_CATEGORIES = new Set([
 ]);
 
 export const KOREAN_FIELDWORK_HIERARCHY_HELP =
-  '조사 방식에 맞춰 트렌치·유구·피트·층위를 필요한 만큼 이어갑니다.';
+  '조사 방식에 맞춰 트렌치·유구·피트·토층을 필요한 만큼 이어갑니다.';
 
 export const getKoreanFieldworkAddOptions = (
   parentCategoryName: string,

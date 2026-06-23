@@ -1,6 +1,14 @@
 {
   "groups": {
-    "koreanFieldwork": "디지털 야장"
+    "stem": "기본 정보",
+    "hierarchy": "상위·하위 관계",
+    "workflow": "연결 기록",
+    "properties": "기본 내용",
+    "koreanFieldwork": "디지털 야장",
+    "dimension": "크기",
+    "position": "위치",
+    "stratigraphy": "층위 관계",
+    "time": "시기"
   },
   "categories": {
     "FieldRecordQualityReview": {
@@ -628,7 +636,7 @@
       }
     },
     "FeatureGroup": {
-      "label": "유구 묶음",
+      "label": "관련 유구",
       "fields": {
         "featurePackage": {
           "label": "유적·유구 패키지"
@@ -1473,7 +1481,7 @@
           "label": "레이어 정확도"
         },
         "aerialControlPoints": {
-          "label": "기준점 JSON"
+          "label": "기준점 정보"
         },
         "aerialCaptureDate": {
           "label": "촬영일"
@@ -1499,13 +1507,13 @@
       }
     },
     "Layer": {
-      "label": "층위",
+      "label": "토층",
       "fields": {
         "layerSequenceNumber": {
           "label": "토층 번호"
         },
         "layerSequenceMeaning": {
-          "label": "번호 순서 의미"
+          "label": "번호 순서"
         },
         "layerThicknessApprox": {
           "label": "대략 두께"
@@ -1514,10 +1522,10 @@
           "label": "층 경계 설명"
         },
         "soilColorMunsellManual": {
-          "label": "수동 Munsell 토색"
+          "label": "토색"
         },
         "soilColorReviewed": {
-          "label": "검토 토색"
+          "label": "정리한 토색"
         },
         "soilColorMoistureState": {
           "label": "수분 상태"
@@ -1526,7 +1534,7 @@
           "label": "촬영 조건"
         },
         "soilColorRoi": {
-          "label": "토색 ROI JSON"
+          "label": "토색 지정 영역"
         },
         "soilColorAssistCandidates": {
           "label": "토색 보조 후보"
@@ -1552,7 +1560,7 @@
       "label": "토층 단면 사진",
       "fields": {
         "soilProfilePhotoUri": {
-          "label": "야장용 사진 URI"
+          "label": "사진 파일"
         },
         "soilProfilePhotoSizeHintKb": {
           "label": "사진 크기 기준(KB)"
@@ -1564,22 +1572,22 @@
           "label": "촬영 시각"
         },
         "soilProfileAnnotationStrokes": {
-          "label": "펜 annotation JSON"
+          "label": "펜 표시"
         },
         "soilProfileLayerMarkers": {
-          "label": "토층 번호·영역 JSON"
+          "label": "토층 번호 표시"
         },
         "soilProfileLayerIds": {
-          "label": "연결 Layer id JSON"
+          "label": "연결 토층 ID"
         },
         "layerSequenceMeaning": {
-          "label": "번호 순서 의미"
+          "label": "번호 순서"
         },
         "soilColorCaptureCondition": {
           "label": "촬영 조건"
         },
         "soilProfileColorSwatches": {
-          "label": "색상 지정 JSON"
+          "label": "번호별 토색"
         },
         "soilProfileColorNote": {
           "label": "색상 메모"
@@ -1599,19 +1607,19 @@
       }
     },
     "AerialMapLayer": {
-      "label": "항공 지도 레이어",
+      "label": "항공사진 지도",
       "fields": {
         "aerialLayerType": {
-          "label": "항공 레이어 유형"
+          "label": "항공사진 종류"
         },
         "aerialGeoreferenceMethod": {
           "label": "지오리퍼런스 방식"
         },
         "aerialLayerAccuracy": {
-          "label": "레이어 정확도"
+          "label": "지도 정확도"
         },
         "aerialControlPoints": {
-          "label": "기준점 JSON"
+          "label": "기준점 정보"
         },
         "aerialCaptureDate": {
           "label": "촬영일"
@@ -1620,19 +1628,19 @@
           "label": "촬영 메모"
         },
         "aerialLayerOpacity": {
-          "label": "레이어 투명도"
+          "label": "지도 투명도"
         },
         "aerialLayerUpdateStage": {
-          "label": "레이어 갱신 단계"
+          "label": "지도 갱신 단계"
         },
         "aerialLayerRevisionGroup": {
-          "label": "레이어 버전 묶음"
+          "label": "지도 버전"
         },
         "aerialLayerRevisionNumber": {
-          "label": "레이어 버전 번호"
+          "label": "지도 버전 번호"
         },
         "aerialLayerPreviousRevisionId": {
-          "label": "이전 레이어 버전 ID"
+          "label": "이전 지도 버전 ID"
         }
       }
     },
@@ -1640,10 +1648,10 @@
       "label": "펜메모",
       "fields": {
         "penMemoStrokes": {
-          "label": "원본 stroke JSON"
+          "label": "펜 원본"
         },
         "penMemoPreviewImageId": {
-          "label": "미리보기 이미지 id"
+          "label": "미리보기 이미지"
         },
         "penMemoAutoTranscript": {
           "label": "자동 전사문"
@@ -1655,10 +1663,10 @@
           "label": "전사 상태"
         },
         "penMemoRecognitionEngine": {
-          "label": "OCR 엔진"
+          "label": "문자인식 방식"
         },
         "penMemoRecognitionConfidence": {
-          "label": "OCR 신뢰도"
+          "label": "문자인식 신뢰도"
         }
       }
     },
@@ -1708,7 +1716,7 @@
           "label": "레이어 정확도"
         },
         "aerialControlPoints": {
-          "label": "기준점 JSON"
+          "label": "기준점 정보"
         },
         "aerialCaptureDate": {
           "label": "촬영일"

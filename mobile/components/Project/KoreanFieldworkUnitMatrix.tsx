@@ -18,6 +18,7 @@ import {
   KoreanFieldworkUnitMatrixItem,
 } from './korean-fieldwork-unit-matrix';
 import { KoreanFieldworkStatusTone } from './korean-fieldwork-record-summary';
+import { KoreanFieldworkInvestigationModeId } from './korean-fieldwork-investigation-mode';
 
 interface KoreanFieldworkUnitMatrixProps {
   summary: KoreanFieldworkTodaySummary;
@@ -26,6 +27,7 @@ interface KoreanFieldworkUnitMatrixProps {
   onOpenDocument: (document: Document) => void;
   onAddDocumentOfCategory: (parentDoc: Document, categoryName: string) => void;
   maxItems?: number;
+  investigationModeId?: KoreanFieldworkInvestigationModeId;
 }
 
 const KoreanFieldworkUnitMatrix: React.FC<KoreanFieldworkUnitMatrixProps> = ({
@@ -35,15 +37,17 @@ const KoreanFieldworkUnitMatrix: React.FC<KoreanFieldworkUnitMatrixProps> = ({
   onOpenDocument,
   onAddDocumentOfCategory,
   maxItems = 14,
+  investigationModeId,
 }) => {
   const items = useMemo(
     () => getKoreanFieldworkUnitMatrixItems(
       summary,
       documents,
       scopeParent,
-      maxItems
+      maxItems,
+      investigationModeId
     ),
-    [documents, maxItems, scopeParent, summary]
+    [documents, investigationModeId, maxItems, scopeParent, summary]
   );
 
   if (items.length === 0) return null;
@@ -52,13 +56,13 @@ const KoreanFieldworkUnitMatrix: React.FC<KoreanFieldworkUnitMatrixProps> = ({
     <View style={styles.container} testID="koreanFieldworkUnitMatrix">
       <View style={styles.titleRow}>
         <MaterialIcons name="table-chart" size={18} color="#344054" />
-        <Text style={styles.title}>조사 단위표</Text>
+        <Text style={styles.title}>조사 흐름표</Text>
         <Text style={styles.count}>{items.length}</Text>
       </View>
       <Text style={styles.subtitle} numberOfLines={1}>
         {scopeParent
           ? `${scopeParent.resource.identifier || scopeParent.resource.id} 범위`
-          : '전체 범위'}의 하위·자료·확인 상태를 비교합니다.
+          : '전체 범위'}의 다음 기록과 연결 자료를 비교합니다.
       </Text>
 
       <ScrollView
@@ -72,7 +76,7 @@ const KoreanFieldworkUnitMatrix: React.FC<KoreanFieldworkUnitMatrixProps> = ({
             <HeaderCell label="진행" style={styles.progressColumn} />
             <HeaderCell label="자료" style={styles.evidenceColumn} />
             <HeaderCell label="동작" style={styles.actionColumn} />
-            <HeaderCell label="확인" style={styles.issueColumn} />
+            <HeaderCell label="보완" style={styles.issueColumn} />
           </View>
           {items.map((item) => (
             <UnitRow

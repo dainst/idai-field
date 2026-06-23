@@ -508,11 +508,11 @@ export const getKoreanFieldworkFieldNotePresets = (
     return [
       {
         id: 'layer',
-        label: '층위',
+        label: '토층',
         input: {
           observation: '토색, 토질, 포함물, 상·하부 경계를 확인.',
-          interpretation: '층위 성격과 형성 과정을 관찰 근거와 분리해 기록.',
-          nextWork: '단면 정리 후 층위 번호와 사진·도면 번호 연결.',
+          interpretation: '토층 성격과 형성 과정을 관찰 근거와 분리해 기록.',
+          nextWork: '단면 정리 후 토층 번호와 사진·도면 번호 연결.',
         },
       },
       ...commonPresets,
@@ -562,7 +562,7 @@ export const getKoreanFieldworkFieldNoteObservationPrompts = (
           id: 'group-scope',
           label: '군집 범위',
           detail: '분포·간격·경계',
-          observation: '유구 묶음의 분포 범위, 개별 유구 간격, 묶음 경계를 기록.',
+          observation: '같은 성격의 유구 분포 범위, 개별 유구 간격, 경계를 기록.',
         },
         {
           id: 'group-pattern',
@@ -606,12 +606,12 @@ export const getKoreanFieldworkFieldNoteObservationPrompts = (
           detail: '범위·방향·기준점',
           observation: '트렌치 범위, 방향, 기준점, 조사구역과의 관계를 기록.',
         },
-        {
-          id: 'trench-layer',
-          label: '층위·노출',
-          detail: '토층·검출면',
-          observation: '트렌치에서 확인한 층위, 검출면, 노출 상태를 기록.',
-        },
+      {
+        id: 'trench-layer',
+        label: '토층·노출',
+        detail: '토층·검출면',
+        observation: '트렌치에서 확인한 토층, 검출면, 노출 상태를 기록.',
+      },
         {
           id: 'trench-feature',
           label: '확인 유구',

@@ -19,13 +19,17 @@ import {
   KoreanFieldworkEvidenceChip,
 } from './korean-fieldwork-record-evidence';
 import { isKoreanFieldworkDocumentInScope } from './korean-fieldwork-scope';
+import { KoreanFieldworkInvestigationModeId } from './korean-fieldwork-investigation-mode';
+import {
+  getKoreanFieldworkChecklistQuickOptions,
+  isKoreanFieldworkChecklistRecord,
+} from './korean-fieldwork-quick-record';
 
 const C = KOREAN_FIELDWORK_CATEGORIES;
 
 const UNIT_CATEGORIES = [
   C.OPERATION,
   C.TRENCH,
-  C.FEATURE_GROUP,
   C.FEATURE,
   C.FEATURE_SEGMENT,
   C.LAYER,
@@ -40,39 +44,6 @@ const EVIDENCE_CHIP_IDS = new Set<string>([
   'finds',
   'samples',
 ]);
-
-const QUALITY_TRACKED_CATEGORIES = new Set<string>([
-  C.OPERATION,
-  C.TRENCH,
-  C.FEATURE_GROUP,
-  C.FEATURE,
-  C.FEATURE_SEGMENT,
-  C.LAYER,
-]);
-
-const FEATURE_WORKFLOW_CATEGORIES = new Set<string>([
-  C.FEATURE,
-  C.FEATURE_SEGMENT,
-]);
-
-const FEATURE_CHECKLIST_STEPS = [
-  'preInvestigationPhotoTaken',
-  'inProgressPhotoTaken',
-  'soilProfilePhotoLinked',
-  'measuredDrawingCompleted',
-  'preRecoveryFindPhotoTaken',
-  'findsRecovered',
-  'samplesCollected',
-  'completionPhotoTaken',
-];
-
-const NEXT_CHILD_CATEGORY: Readonly<Record<string, string | undefined>> = {
-  [C.OPERATION]: C.TRENCH,
-  [C.TRENCH]: C.FEATURE,
-  [C.FEATURE_GROUP]: C.FEATURE,
-  [C.FEATURE]: C.FEATURE_SEGMENT,
-  [C.FEATURE_SEGMENT]: C.LAYER,
-};
 
 export interface KoreanFieldworkUnitMatrixItem {
   id: string;
@@ -98,7 +69,8 @@ export const getKoreanFieldworkUnitMatrixItems = (
   summary: KoreanFieldworkTodaySummary,
   documents: Document[],
   scopeParent?: Document,
-  maxItems = 14
+  maxItems = 14,
+  investigationModeId?: KoreanFieldworkInvestigationModeId
 ): KoreanFieldworkUnitMatrixItem[] => {
   const documentsById = new Map(documents.map((document) => [
     document.resource.id,
@@ -117,7 +89,8 @@ export const getKoreanFieldworkUnitMatrixItems = (
       documents,
       documentsById,
       childrenByParentId,
-      issuesByDocumentId.get(document.resource.id) ?? []
+      issuesByDocumentId.get(document.resource.id) ?? [],
+      investigationModeId
     ))
     .sort((itemA, itemB) => compareUnitMatrixItems(itemA, itemB, scopeParent))
     .slice(0, maxItems);
@@ -128,26 +101,38 @@ const buildUnitMatrixItem = (
   documents: Document[],
   documentsById: Map<string, Document>,
   childrenByParentId: Map<string, Document[]>,
-  issues: KoreanFieldworkReadinessIssue[]
+  issues: KoreanFieldworkReadinessIssue[],
+  investigationModeId?: KoreanFieldworkInvestigationModeId
 ): KoreanFieldworkUnitMatrixItem => {
   const directChildren = childrenByParentId.get(document.resource.id) ?? [];
   const evidenceChips = getKoreanFieldworkEvidenceChips(document, documents);
   const evidenceCount = getEvidenceCount(evidenceChips);
+  const nextChildCategoryName = getNextChildCategoryName(
+    document.resource.category,
+    investigationModeId
+  );
   const childStructureCount = directChildren.filter((child) =>
     UNIT_CATEGORY_SET.has(child.resource.category)
   ).length;
-  const checklistTotal = FEATURE_WORKFLOW_CATEGORIES.has(document.resource.category)
-    ? FEATURE_CHECKLIST_STEPS.length
+  const checklistSteps = getKoreanFieldworkChecklistQuickOptions(investigationModeId)
+    .map((option) => option.value);
+  const checklistTotal = isKoreanFieldworkChecklistRecord(
+    document.resource.category,
+    investigationModeId
+  )
+    ? checklistSteps.length
     : 0;
-  const checklistDone = checklistTotal > 0 ? getChecklistDoneCount(document) : 0;
+  const checklistDone = checklistTotal > 0
+    ? getChecklistDoneCount(document, checklistSteps)
+    : 0;
   const hasCriticalIssue = issues.some((issue) => issue.severity === 'critical');
   const completionPercent = getCompletionPercent(
-    document,
     childStructureCount,
     evidenceCount,
     issues.length,
     checklistDone,
-    checklistTotal
+    checklistTotal,
+    !!nextChildCategoryName
   );
 
   return {
@@ -166,7 +151,7 @@ const buildUnitMatrixItem = (
     tone: getTone(hasCriticalIssue, issues.length, completionPercent, evidenceCount),
     statusChips: getKoreanFieldworkRecordStatusChips(document),
     evidenceChips,
-    nextChildCategoryName: NEXT_CHILD_CATEGORY[document.resource.category],
+    nextChildCategoryName,
     photoCategoryName: evidenceChips.some((chip) => chip.createCategoryName === C.PHOTO)
       ? C.PHOTO
       : undefined,
@@ -174,25 +159,19 @@ const buildUnitMatrixItem = (
 };
 
 const getCompletionPercent = (
-  document: Document,
   childStructureCount: number,
   evidenceCount: number,
   issueCount: number,
   checklistDone: number,
-  checklistTotal: number
+  checklistTotal: number,
+  needsChildStructure: boolean
 ): number => {
-  const resource = document.resource as unknown as Record<string, unknown>;
   const checks: boolean[] = [
     issueCount === 0,
     evidenceCount > 0,
-    hasTextValue(resource.recordCreationTiming),
   ];
 
-  if (QUALITY_TRACKED_CATEGORIES.has(document.resource.category)) {
-    checks.push(getStringArray(resource.fieldRecordQuality).length > 0);
-  }
-
-  if (NEXT_CHILD_CATEGORY[document.resource.category]) {
+  if (needsChildStructure) {
     checks.push(childStructureCount > 0);
   }
 
@@ -253,19 +232,34 @@ const groupIssuesByDocumentId = (
     return index;
   }, new Map<string, KoreanFieldworkReadinessIssue[]>());
 
-const getChecklistDoneCount = (document: Document): number =>
+const getNextChildCategoryName = (
+  categoryName: string,
+  investigationModeId?: KoreanFieldworkInvestigationModeId
+): string | undefined => {
+  if (categoryName === C.OPERATION) {
+    return investigationModeId === 'excavation' ? C.FEATURE : C.TRENCH;
+  }
+
+  if (categoryName === C.TRENCH) return C.FEATURE;
+  if (categoryName === C.FEATURE) return C.FEATURE_SEGMENT;
+  if (categoryName === C.FEATURE_SEGMENT) return C.LAYER;
+
+  return undefined;
+};
+
+const getChecklistDoneCount = (
+  document: Document,
+  checklistSteps: string[]
+): number =>
   getStringArray((document.resource as unknown as Record<string, unknown>)
     .featureInvestigationChecklist)
-    .filter((value) => FEATURE_CHECKLIST_STEPS.includes(value))
+    .filter((value) => checklistSteps.includes(value))
     .length;
 
 const getStringArray = (value: unknown): string[] =>
   Array.isArray(value)
     ? value.filter((entry): entry is string => typeof entry === 'string')
     : [];
-
-const hasTextValue = (value: unknown): boolean =>
-  typeof value === 'string' && value.trim().length > 0;
 
 const compareUnitMatrixItems = (
   itemA: KoreanFieldworkUnitMatrixItem,

@@ -19,12 +19,12 @@ describe('korean fieldwork add options', () => {
 
     expect(options.primary.map((option) => option.categoryName)).toEqual([
       C.TRENCH,
-      C.FEATURE_GROUP,
       C.FEATURE,
       C.SURVEY_BOUNDARY,
       C.PEN_MEMO,
     ]);
-    expect(options.primary.map((option) => option.label)).toContain('유구 묶음');
+    expect(options.primary.map((option) => option.categoryName))
+      .not.toContain(C.FEATURE_GROUP);
     expect(options.primary.map((option) => option.label)).not.toContain('유적/지점');
     expect(options.other).toEqual([]);
   });
@@ -40,7 +40,7 @@ describe('korean fieldwork add options', () => {
 
     expect(options.primary[0]).toMatchObject({
       categoryName: C.FEATURE_SEGMENT,
-      label: '피트·세부 단위',
+      label: '피트',
     });
     expect(options.primary.map((option) => option.categoryName)).not.toContain(C.PLACE);
   });
@@ -64,6 +64,7 @@ describe('korean fieldwork add options', () => {
   it('hides generic model categories from the Korean fieldwork add picker', () => {
     expect(isVisibleAddCategory(C.PLACE)).toBe(false);
     expect(isVisibleAddCategory('Image')).toBe(false);
+    expect(isVisibleAddCategory(C.FEATURE_GROUP)).toBe(false);
     expect(isVisibleAddCategory(C.FEATURE)).toBe(true);
   });
 });

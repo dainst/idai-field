@@ -58,7 +58,7 @@ describe('korean-fieldwork-field-notes', () => {
   });
 
   it('provides context presets and merges them into existing tablet notes', () => {
-    const layer = createDoc('layer-1', C.LAYER, '층위 1');
+    const layer = createDoc('layer-1', C.LAYER, '토층 1');
     const presets = getKoreanFieldworkFieldNotePresets(layer);
     const layerPreset = presets.find((preset) => preset.id === 'layer');
 
@@ -123,7 +123,7 @@ describe('korean-fieldwork-field-notes', () => {
       'trench-feature',
     ]);
     expect(getKoreanFieldworkFieldNoteObservationPrompts(
-      createDoc('layer-1', C.LAYER, '층위 1')
+      createDoc('layer-1', C.LAYER, '토층 1')
     ).map((prompt) => prompt.id)).toEqual([
       'soil',
       'layer-boundary',

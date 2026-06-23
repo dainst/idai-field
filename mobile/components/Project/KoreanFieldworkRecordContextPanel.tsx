@@ -164,7 +164,7 @@ export const getEvidenceMetrics = (
   },
   {
     id: 'layers',
-    label: '층위',
+    label: '토층',
     icon: 'layers',
     documents: evidenceBundle.layers,
     createCategoryName: KOREAN_FIELDWORK_CATEGORIES.LAYER,

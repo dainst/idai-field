@@ -46,10 +46,52 @@ describe('Korean fieldwork unit matrix', () => {
       evidenceCount: 1,
       issueCount: 1,
       checklistDone: 1,
-      checklistTotal: 8,
+      checklistTotal: 10,
       nextChildCategoryName: C.FEATURE_SEGMENT,
       photoCategoryName: C.PHOTO,
       tone: 'warning',
+    });
+  });
+
+  it('uses excavation mode to add features directly below an operation', () => {
+    const operation = createDoc('operation-1', C.OPERATION, '조사구역 1');
+
+    const items = getKoreanFieldworkUnitMatrixItems(
+      createSummary([]),
+      [operation],
+      undefined,
+      14,
+      'excavation'
+    );
+
+    expect(items.find((item) => item.id === 'operation-1')).toMatchObject({
+      nextChildCategoryName: C.FEATURE,
+    });
+  });
+
+  it('tracks trench process checks in trial trench mode', () => {
+    const operation = createDoc('operation-1', C.OPERATION, '조사구역 1');
+    const trench = createDoc('trench-1', C.TRENCH, 'T1', {
+      liesWithin: ['operation-1'],
+    }, {
+      featureInvestigationChecklist: [
+        'trenchSoilCleaned',
+        'trenchFeatureChecked',
+      ],
+    });
+
+    const items = getKoreanFieldworkUnitMatrixItems(
+      createSummary([]),
+      [operation, trench],
+      undefined,
+      14,
+      'trialTrench'
+    );
+
+    expect(items.find((item) => item.id === 'trench-1')).toMatchObject({
+      checklistDone: 2,
+      checklistTotal: 9,
+      nextChildCategoryName: C.FEATURE,
     });
   });
 

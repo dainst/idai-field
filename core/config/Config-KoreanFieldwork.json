@@ -3658,20 +3658,8 @@
           "name": "koreanFieldwork",
           "fields": [
             "layerSequenceNumber",
-            "layerSequenceMeaning",
-            "layerThicknessApprox",
-            "layerBoundaryDescription",
             "soilColorMunsellManual",
-            "soilColorReviewed",
-            "soilColorMoistureState",
-            "soilColorCaptureCondition",
-            "soilColorRoi",
-            "soilColorAssistCandidates",
-            "soilColorAssistStatus",
-            "soilColorNote",
-            "fieldRecordQuality",
-            "recordCreationTiming",
-            "verificationState"
+            "soilColorNote"
           ]
         },
         {
@@ -4205,21 +4193,13 @@
         {
           "name": "koreanFieldwork",
           "fields": [
-            "soilProfilePhotoUri",
-            "soilProfilePhotoSizeHintKb",
-            "soilProfilePhotoQuality",
             "soilProfilePhotoCapturedAt",
             "soilProfileAnnotationStrokes",
             "soilProfileLayerMarkers",
-            "soilProfileLayerIds",
-            "layerSequenceMeaning",
             "soilColorCaptureCondition",
             "soilProfileColorSwatches",
             "soilProfileColorNote",
-            "soilProfileCaptureNote",
-            "fieldRecordQuality",
-            "recordCreationTiming",
-            "verificationState"
+            "soilProfileCaptureNote"
           ]
         }
       ]

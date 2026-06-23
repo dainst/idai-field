@@ -30,7 +30,7 @@ describe('KoreanFieldworkNotebookLedger', () => {
     });
     const handleOpenDocument = jest.fn();
 
-    const { getByTestId, getByText } = render(
+    const { getByTestId, getByText, queryByText } = render(
       <KoreanFieldworkNotebookLedger
         documents={[operation, feature, memo, dailyLog]}
         onOpenDocument={handleOpenDocument}
@@ -41,6 +41,15 @@ describe('KoreanFieldworkNotebookLedger', () => {
     expect(getByText('배수로 정리.')).toBeTruthy();
     expect(getByText('바닥면 정리 중 원형 윤곽 확인.')).toBeTruthy();
     expect(getByText('번호 보강')).toBeTruthy();
+
+    fireEvent.press(getByTestId('fieldNotebookFilter_needsEvidence'));
+
+    expect(getByText('바닥면 정리 중 원형 윤곽 확인.')).toBeTruthy();
+    expect(queryByText('배수로 정리.')).toBeNull();
+
+    fireEvent.press(getByTestId('fieldNotebookFilter_nextWork'));
+
+    expect(getByText('배수로 정리.')).toBeTruthy();
 
     fireEvent.press(getByTestId('fieldNotebookEntry_memo-1'));
 

@@ -1,6 +1,6 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { Document } from 'idai-field-core';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   GestureResponderEvent,
   StyleSheet,
@@ -13,6 +13,8 @@ import {
   getKoreanFieldworkNotebookEntries,
   KoreanFieldworkNotebookEntry,
 } from './korean-fieldwork-field-notes';
+
+type NotebookLedgerFilter = 'recent'|'nextWork'|'needsEvidence';
 
 interface KoreanFieldworkNotebookLedgerProps {
   documents: Document[];
@@ -29,14 +31,26 @@ const KoreanFieldworkNotebookLedger: React.FC<
   onOpenDocument,
   onContinueEntry,
 }) => {
+  const [activeFilter, setActiveFilter] =
+    useState<NotebookLedgerFilter>('recent');
   const entries = useMemo(
     () => getKoreanFieldworkNotebookEntries(documents, maxEntries),
     [documents, maxEntries]
   );
-  const nextWorkCount = entries.filter((entry) => entry.nextWork).length;
-  const evidenceMissingCount = entries.filter((entry) =>
-    entry.needsEvidenceNumbers
-  ).length;
+  const nextWorkEntries = useMemo(
+    () => entries.filter((entry) => entry.nextWork),
+    [entries]
+  );
+  const evidenceMissingEntries = useMemo(
+    () => entries.filter((entry) => entry.needsEvidenceNumbers),
+    [entries]
+  );
+  const visibleEntries = getVisibleNotebookEntries(
+    activeFilter,
+    entries,
+    nextWorkEntries,
+    evidenceMissingEntries
+  );
 
   if (entries.length === 0) return null;
 
@@ -48,16 +62,31 @@ const KoreanFieldworkNotebookLedger: React.FC<
           <Text style={styles.title}>야장 흐름</Text>
         </View>
         <View style={styles.metricRow}>
-          <LedgerMetric label="최근" value={entries.length} />
-          <LedgerMetric label="다음" value={nextWorkCount} />
-          <LedgerMetric
+          <LedgerFilterChip
+            filterId="recent"
+            isActive={activeFilter === 'recent'}
+            label="최근"
+            onPress={setActiveFilter}
+            value={entries.length}
+          />
+          <LedgerFilterChip
+            filterId="nextWork"
+            isActive={activeFilter === 'nextWork'}
+            label="다음"
+            onPress={setActiveFilter}
+            value={nextWorkEntries.length}
+          />
+          <LedgerFilterChip
+            filterId="needsEvidence"
+            isActive={activeFilter === 'needsEvidence'}
             label="번호"
-            value={evidenceMissingCount}
-            warning={evidenceMissingCount > 0}
+            onPress={setActiveFilter}
+            value={evidenceMissingEntries.length}
+            warning={evidenceMissingEntries.length > 0}
           />
         </View>
       </View>
-      {entries.map((entry) => (
+      {visibleEntries.map((entry) => (
         <NotebookEntryRow
           entry={entry}
           key={entry.id}
@@ -67,6 +96,22 @@ const KoreanFieldworkNotebookLedger: React.FC<
       ))}
     </View>
   );
+};
+
+const getVisibleNotebookEntries = (
+  filter: NotebookLedgerFilter,
+  entries: KoreanFieldworkNotebookEntry[],
+  nextWorkEntries: KoreanFieldworkNotebookEntry[],
+  evidenceMissingEntries: KoreanFieldworkNotebookEntry[]
+): KoreanFieldworkNotebookEntry[] => {
+  switch (filter) {
+    case 'nextWork':
+      return nextWorkEntries;
+    case 'needsEvidence':
+      return evidenceMissingEntries;
+    default:
+      return entries;
+  }
 };
 
 const NotebookEntryRow: React.FC<{
@@ -150,17 +195,53 @@ const NotebookEntryRow: React.FC<{
   );
 };
 
-const LedgerMetric: React.FC<{
+const LedgerFilterChip: React.FC<{
+  filterId: NotebookLedgerFilter;
+  isActive: boolean;
   label: string;
+  onPress: (filterId: NotebookLedgerFilter) => void;
   value: number;
   warning?: boolean;
-}> = ({ label, value, warning = false }) => (
-  <View style={[styles.metric, warning && styles.metricWarning]}>
-    <Text style={[styles.metricValue, warning && styles.warningText]}>
+}> = ({
+  filterId,
+  isActive,
+  label,
+  onPress,
+  value,
+  warning = false,
+}) => (
+  <TouchableOpacity
+    activeOpacity={0.86}
+    disabled={value === 0}
+    onPress={() => onPress(filterId)}
+    style={[
+      styles.metric,
+      isActive && styles.metricActive,
+      warning && styles.metricWarning,
+      value === 0 && styles.metricDisabled,
+    ]}
+    testID={`fieldNotebookFilter_${filterId}`}
+  >
+    <Text
+      style={[
+        styles.metricValue,
+        isActive && styles.metricValueActive,
+        warning && styles.warningText,
+        value === 0 && styles.metricTextDisabled,
+      ]}
+    >
       {value}
     </Text>
-    <Text style={styles.metricLabel}>{label}</Text>
-  </View>
+    <Text
+      style={[
+        styles.metricLabel,
+        isActive && styles.metricLabelActive,
+        value === 0 && styles.metricTextDisabled,
+      ]}
+    >
+      {label}
+    </Text>
+  </TouchableOpacity>
 );
 
 const styles = StyleSheet.create({
@@ -203,20 +284,37 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
     paddingVertical: 4,
   },
+  metricActive: {
+    backgroundColor: '#eff8ff',
+    borderColor: '#175cd3',
+  },
   metricWarning: {
     backgroundColor: '#fff1f3',
     borderColor: '#fecdca',
+  },
+  metricDisabled: {
+    backgroundColor: '#f2f4f7',
+    borderColor: '#eaecf0',
   },
   metricValue: {
     color: '#344054',
     fontSize: 13,
     fontWeight: '900',
   },
+  metricValueActive: {
+    color: '#175cd3',
+  },
   metricLabel: {
     color: '#667085',
     fontSize: 10,
     fontWeight: '800',
     marginTop: 1,
+  },
+  metricLabelActive: {
+    color: '#175cd3',
+  },
+  metricTextDisabled: {
+    color: '#98a2b3',
   },
   warningText: {
     color: colors.danger,

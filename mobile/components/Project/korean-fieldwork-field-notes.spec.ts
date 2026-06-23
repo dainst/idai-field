@@ -14,6 +14,7 @@ import {
   getKoreanFieldworkFieldNoteObservationPrompts,
   getKoreanFieldworkFieldNotePresets,
   getKoreanFieldworkFieldNoteReportPreview,
+  getKoreanFieldworkNotebookEntries,
   getKoreanFieldworkDailyLogAppendUpdates,
   getKoreanFieldworkDailyLogForOperation,
   getKoreanFieldworkFieldNoteOperation,
@@ -313,6 +314,62 @@ describe('korean-fieldwork-field-notes', () => {
         observation: '단면 정리 완료.',
         nextWork: '유물 출토 위치 보강.',
       },
+    });
+  });
+
+  it('builds a notebook ledger across memos and daily log entries', () => {
+    const operation = createDoc('operation-1', C.OPERATION, 'A 구역');
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
+    const memo = createDoc('memo-1', C.PEN_MEMO, '메모 1', {
+      relations: { depicts: [feature.resource.id] },
+      date: '2026-06-23',
+      penMemoReviewedTranscript: [
+        '[관찰 내용] 바닥면 정리 중 원형 윤곽 확인.',
+        '[다음 작업] 사진 보강.',
+      ].join('\n'),
+    });
+    const dailyLog = createDoc('daily-log-1', C.DAILY_LOG, '6월 23일 작업일지', {
+      relations: { isRecordedIn: [operation.resource.id] },
+      date: '2026-06-23',
+      description: [
+        '09:00 수혈 1 - [관찰 내용] 사진 보강 완료.',
+        '[사진·도면·유물·시료 번호] 사진 12',
+        '10:30 A 구역 - [관찰 내용] 배수로 정리.',
+        '[다음 작업] 북쪽 트렌치 배수 상태 확인.',
+      ].join('\n'),
+    });
+
+    const entries = getKoreanFieldworkNotebookEntries([
+      operation,
+      feature,
+      memo,
+      dailyLog,
+    ]);
+
+    expect(entries.map((entry) => entry.id)).toEqual([
+      'daily-log-1-1',
+      'daily-log-1-0',
+      'memo-1',
+    ]);
+    expect(entries[0]).toMatchObject({
+      sourceLabel: '일지',
+      targetLabel: 'A 구역',
+      targetCategoryLabel: '조사구역',
+      detail: '배수로 정리.',
+      nextWork: '북쪽 트렌치 배수 상태 확인.',
+      needsEvidenceNumbers: false,
+    });
+    expect(entries[1]).toMatchObject({
+      targetLabel: '수혈 1',
+      evidenceNumbers: '사진 12',
+      needsEvidenceNumbers: false,
+    });
+    expect(entries[2]).toMatchObject({
+      sourceLabel: '메모',
+      targetLabel: '수혈 1',
+      detail: '바닥면 정리 중 원형 윤곽 확인.',
+      nextWork: '사진 보강.',
+      needsEvidenceNumbers: true,
     });
   });
 

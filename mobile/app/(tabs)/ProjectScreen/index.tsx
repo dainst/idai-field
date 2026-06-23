@@ -18,6 +18,7 @@ import CategoryIcon from '@/components/common/CategoryIcon';
 import DocumentAddModal from '@/components/Project/DocumentAddModal';
 import KoreanFieldworkFieldNotePanel from '@/components/Project/KoreanFieldworkFieldNotePanel';
 import KoreanFieldworkHierarchyBoard from '@/components/Project/KoreanFieldworkHierarchyBoard';
+import KoreanFieldworkNotebookLedger from '@/components/Project/KoreanFieldworkNotebookLedger';
 import KoreanFieldworkPriorityTaskList from '@/components/Project/KoreanFieldworkPriorityTaskList';
 import KoreanFieldworkProgressBoard from '@/components/Project/KoreanFieldworkProgressBoard';
 import KoreanFieldworkSelectedRecordWorkbench from '@/components/Project/KoreanFieldworkSelectedRecordWorkbench';
@@ -717,6 +718,11 @@ const DocumentsList: React.FC = () => {
             />
           </>
         )}
+
+        <KoreanFieldworkNotebookLedger
+          documents={documents}
+          onOpenDocument={selectWorkbenchDocument}
+        />
 
         <KoreanFieldworkWorkbenchPanel
           summary={todaySummary}

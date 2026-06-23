@@ -95,6 +95,26 @@ export interface KoreanFieldworkFieldNoteFollowUpAction
   reason: string;
 }
 
+export interface KoreanFieldworkNotebookEntry {
+  id: string;
+  sourceDocument: Document;
+  targetDocument?: Document;
+  sourceLabel: string;
+  targetLabel: string;
+  targetCategoryLabel: string;
+  dateLabel: string;
+  detail: string;
+  nextWork: string;
+  evidenceNumbers: string;
+  needsEvidenceNumbers: boolean;
+  input: KoreanFieldworkFieldNoteInput;
+}
+
+interface KoreanFieldworkNotebookEntryWithSortKey
+  extends KoreanFieldworkNotebookEntry {
+  sortKey: number;
+}
+
 const FIELD_NOTE_SECTION_DEFINITIONS: {
   id: keyof KoreanFieldworkFieldNoteInput;
   label: string;
@@ -282,6 +302,33 @@ export const getKoreanFieldworkFieldNoteHistoryItems = (
   })
   .sort((itemA, itemB) => compareNewestFirst(itemA.document, itemB.document))
   .slice(0, limit);
+
+export const getKoreanFieldworkNotebookEntries = (
+  documents: Document[],
+  limit = 6
+): KoreanFieldworkNotebookEntry[] => {
+  const documentsById = new Map(documents.map((document) => [
+    document.resource.id,
+    document,
+  ]));
+
+  return documents
+    .flatMap((document) => {
+      if (document.resource.category === C.PEN_MEMO) {
+        return createNotebookEntryFromRecordMemo(document, documentsById);
+      }
+      if (document.resource.category === C.DAILY_LOG) {
+        return createNotebookEntriesFromDailyLog(document, documents);
+      }
+
+      return [];
+    })
+    .sort((entryA, entryB) =>
+      getNotebookEntryTimestamp(entryB) - getNotebookEntryTimestamp(entryA)
+    )
+    .slice(0, limit)
+    .map(({ sortKey, ...entry }) => entry);
+};
 
 export const normalizeFieldNoteText = (text: string): string =>
   text.replace(/\r\n/g, '\n').trim();
@@ -1078,6 +1125,181 @@ const createFieldNoteHistoryItem = (
     canLoadIntoDraft: hasAnyFieldNoteInput(input),
   }];
 };
+
+const createNotebookEntryFromRecordMemo = (
+  memoDocument: Document,
+  documentsById: Map<string, Document>
+): KoreanFieldworkNotebookEntryWithSortKey[] => {
+  const noteText = getDocumentFieldNoteText(memoDocument);
+  if (!noteText) return [];
+
+  const targetDocument = getRelationIds(memoDocument, 'depicts')
+    .map((documentId) => documentsById.get(documentId))
+    .find((document): document is Document => !!document);
+
+  return [
+    createNotebookEntry({
+      id: memoDocument.resource.id,
+      sourceDocument: memoDocument,
+      sourceLabel: '메모',
+      targetDocument,
+      text: noteText,
+    }),
+  ];
+};
+
+const createNotebookEntriesFromDailyLog = (
+  dailyLogDocument: Document,
+  documents: Document[]
+): KoreanFieldworkNotebookEntryWithSortKey[] => {
+  const blocks = getDailyLogEntryBlocks(dailyLogDocument);
+
+  return blocks.map((block, index) => {
+    const targetDocument = block.contextLabel
+      ? findDailyLogContextDocument(block.contextLabel, documents)
+      : undefined;
+
+    return createNotebookEntry({
+      id: `${dailyLogDocument.resource.id}-${index}`,
+      sourceDocument: dailyLogDocument,
+      sourceLabel: '일지',
+      targetDocument,
+      targetLabelFallback: block.contextLabel,
+      text: block.lines.join('\n'),
+      timeLabel: block.timeLabel,
+      order: index,
+    });
+  });
+};
+
+const createNotebookEntry = ({
+  id,
+  sourceDocument,
+  sourceLabel,
+  targetDocument,
+  targetLabelFallback,
+  text,
+  timeLabel,
+  order = 0,
+}: {
+  id: string;
+  sourceDocument: Document;
+  sourceLabel: string;
+  targetDocument?: Document;
+  targetLabelFallback?: string;
+  text: string;
+  timeLabel?: string;
+  order?: number;
+}): KoreanFieldworkNotebookEntryWithSortKey => {
+  const input = extractKoreanFieldworkFieldNoteInput(text);
+  const targetLabel = targetDocument
+    ? targetDocument.resource.identifier || targetDocument.resource.id
+    : targetLabelFallback || sourceDocument.resource.identifier || sourceDocument.resource.id;
+  const targetCategoryLabel = targetDocument
+    ? getKoreanFieldworkCategoryLabel(targetDocument.resource.category)
+    : getKoreanFieldworkCategoryLabel(sourceDocument.resource.category);
+  const detail = getNotebookEntryDetail(input, text);
+  const nextWork = normalizeFieldNoteText(input.nextWork ?? '');
+  const evidenceNumbers = normalizeFieldNoteText(input.evidenceNumbers ?? '');
+  const needsEvidenceNumbers = !evidenceNumbers
+    && shouldPromptEvidenceNumbers(input, targetDocument ?? sourceDocument);
+
+  return {
+    id,
+    sourceDocument,
+    targetDocument,
+    sourceLabel,
+    targetLabel,
+    targetCategoryLabel,
+    dateLabel: getNotebookEntryDateLabel(sourceDocument, timeLabel),
+    detail,
+    nextWork,
+    evidenceNumbers,
+    needsEvidenceNumbers,
+    input,
+    sortKey: getNotebookEntrySortKey(sourceDocument, timeLabel, order),
+  };
+};
+
+const getNotebookEntryDetail = (
+  input: KoreanFieldworkFieldNoteInput,
+  text: string
+): string =>
+  normalizeFieldNoteText(input.observation ?? '')
+  || normalizeFieldNoteText(input.interpretation ?? '')
+  || stripFieldNoteSectionLabel(stripDailyLogEntryPrefix(getLastMeaningfulLine(text)));
+
+const getNotebookEntryDateLabel = (
+  document: Document,
+  timeLabel: string | undefined
+): string => [
+  getFieldNoteHistoryDateLabel(document),
+  timeLabel,
+].filter((value): value is string => !!value && value.length > 0).join(' ');
+
+const getNotebookEntryTimestamp = (
+  entry: KoreanFieldworkNotebookEntryWithSortKey
+): number => entry.sortKey;
+
+const getNotebookEntrySortKey = (
+  document: Document,
+  timeLabel: string | undefined,
+  order: number
+): number => {
+  const date = getStringField(document, 'date');
+  const dateTimestamp = date
+    ? new Date(`${date}T00:00:00`).getTime()
+    : getTimestamp(document);
+  const baseTimestamp = Number.isNaN(dateTimestamp) ? getTimestamp(document) : dateTimestamp;
+  const minutes = timeLabel ? getTimeLabelMinutes(timeLabel) : 0;
+
+  return baseTimestamp + (minutes * 60 * 1000) + order;
+};
+
+const getTimeLabelMinutes = (timeLabel: string): number => {
+  const match = timeLabel.match(/^(\d{2}):(\d{2})$/);
+  if (!match) return 0;
+
+  return (Number(match[1]) * 60) + Number(match[2]);
+};
+
+const getDailyLogEntryBlocks = (
+  dailyLogDocument: Document
+): {
+  contextLabel?: string;
+  lines: string[];
+  timeLabel?: string;
+}[] => {
+  const lines = getStringField(dailyLogDocument, 'description')
+    .split('\n')
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0);
+  const blocks: { contextLabel?: string; lines: string[]; timeLabel?: string }[] = [];
+
+  lines.forEach((line) => {
+    const match = line.match(/^(\d{2}:\d{2})\s+(.+?)\s-\s+(.*)$/);
+    if (match || blocks.length === 0) {
+      blocks.push({
+        contextLabel: match?.[2],
+        lines: [match ? `${match[1]} ${match[2]} - ${match[3]}` : line],
+        timeLabel: match?.[1],
+      });
+      return;
+    }
+
+    blocks[blocks.length - 1].lines.push(line);
+  });
+
+  return blocks.filter((block) => block.lines.length > 0);
+};
+
+const findDailyLogContextDocument = (
+  contextLabel: string,
+  documents: Document[]
+): Document | undefined => documents.find((document) =>
+  document.resource.identifier === contextLabel
+  || document.resource.id === contextLabel
+);
 
 const getDocumentFieldNoteText = (document: Document): string =>
   [

@@ -60,7 +60,7 @@ export interface KoreanFieldworkProgressItem {
 export const KOREAN_FIELDWORK_PROGRESS_STAGES: KoreanFieldworkProgressStage[] = [
   { id: 'setup', label: '착수' },
   { id: 'investigation', label: '조사' },
-  { id: 'evidence', label: '증거' },
+  { id: 'evidence', label: '자료' },
   { id: 'review', label: '보완' },
   { id: 'closeout', label: '마감' },
 ];

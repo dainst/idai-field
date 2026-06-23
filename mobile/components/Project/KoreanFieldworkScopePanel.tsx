@@ -196,7 +196,7 @@ export const getScopeStats = (
     value: countCategories(documents, STRUCTURE_CATEGORIES),
   },
   {
-    label: '증거',
+    label: '자료',
     value: countCategories(documents, EVIDENCE_CATEGORIES),
   },
   {
@@ -211,7 +211,7 @@ export const getScopeStats = (
 
 const countCategories = (
   documents: Document[],
-  categories: ReadonlyArray<string>
+  categories: readonly string[]
 ): number => {
   const categorySet = new Set(categories);
 

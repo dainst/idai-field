@@ -58,7 +58,7 @@ const KoreanFieldworkUnitMatrix: React.FC<KoreanFieldworkUnitMatrixProps> = ({
       <Text style={styles.subtitle} numberOfLines={1}>
         {scopeParent
           ? `${scopeParent.resource.identifier || scopeParent.resource.id} 범위`
-          : '전체 범위'}의 하위·증거·확인 상태를 비교합니다.
+          : '전체 범위'}의 하위·자료·확인 상태를 비교합니다.
       </Text>
 
       <ScrollView
@@ -70,7 +70,7 @@ const KoreanFieldworkUnitMatrix: React.FC<KoreanFieldworkUnitMatrixProps> = ({
           <View style={styles.headerRow}>
             <HeaderCell label="단위" style={styles.unitColumn} />
             <HeaderCell label="진행" style={styles.progressColumn} />
-            <HeaderCell label="증거" style={styles.evidenceColumn} />
+            <HeaderCell label="자료" style={styles.evidenceColumn} />
             <HeaderCell label="동작" style={styles.actionColumn} />
             <HeaderCell label="확인" style={styles.issueColumn} />
           </View>
@@ -164,7 +164,7 @@ const UnitRow: React.FC<{
     <View style={styles.evidenceColumn}>
       <View style={styles.evidenceWrap}>
         {item.evidenceCount === 0 ? (
-          <Text style={styles.emptyEvidence}>증거 없음</Text>
+          <Text style={styles.emptyEvidence}>연결 기록 없음</Text>
         ) : item.evidenceChips
           .filter((chip) => chip.count > 0)
           .slice(0, 3)

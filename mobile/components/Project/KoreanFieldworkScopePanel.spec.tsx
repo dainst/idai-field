@@ -66,7 +66,7 @@ describe('KoreanFieldworkScopePanel', () => {
     expect(handleClearScope).toHaveBeenCalledTimes(1);
   });
 
-  it('counts structure, evidence, review, and issue records for the current scope', () => {
+  it('counts structure, material, review, and issue records for the current scope', () => {
     expect(getScopeStats([
       createDoc('trench-1', C.TRENCH, 'T1'),
       createDoc('feature-1', C.FEATURE, '유구 1'),
@@ -75,7 +75,7 @@ describe('KoreanFieldworkScopePanel', () => {
       createDoc('daily-log-1', C.DAILY_LOG, '작업일지'),
     ] as any, 2)).toEqual([
       { label: '구조', value: 2 },
-      { label: '증거', value: 2 },
+      { label: '자료', value: 2 },
       { label: '일지·점검', value: 1 },
       { label: '확인', value: 2 },
     ]);

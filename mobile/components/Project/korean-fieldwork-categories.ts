@@ -47,7 +47,7 @@ export const KOREAN_FIELDWORK_CATEGORY_LABELS: Readonly<Record<string, string>> 
 export const KOREAN_FIELDWORK_CATEGORY_DESCRIPTIONS: Readonly<Record<string, string>> = {
   [KOREAN_FIELDWORK_CATEGORIES.AERIAL_MAP_LAYER]: '드론 정사영상, 기준 배경지도, 현장 보정용 레이어를 남깁니다.',
   [KOREAN_FIELDWORK_CATEGORIES.DAILY_LOG]: '오늘의 작업 범위, 담당자, 관찰 내용과 변경사항을 묶습니다.',
-  [KOREAN_FIELDWORK_CATEGORIES.DRAWING]: '실측도, 분포도, 보정 도면 등 도면 증거를 연결합니다.',
+  [KOREAN_FIELDWORK_CATEGORIES.DRAWING]: '실측도, 분포도, 보정 도면 등 도면 자료를 연결합니다.',
   [KOREAN_FIELDWORK_CATEGORIES.FEATURE]: '수혈, 주거지, 목책, 구상유구처럼 개별 유구를 기록합니다.',
   [KOREAN_FIELDWORK_CATEGORIES.FEATURE_GROUP]: '목책열, 수혈군, 건물지군처럼 함께 해석되는 유구 묶음입니다.',
   [KOREAN_FIELDWORK_CATEGORIES.FEATURE_SEGMENT]: '피트, 절개 구간, 내부 퇴적처럼 유구 안에서 따로 조사한 세부 단위입니다.',
@@ -60,7 +60,7 @@ export const KOREAN_FIELDWORK_CATEGORY_DESCRIPTIONS: Readonly<Record<string, str
   [KOREAN_FIELDWORK_CATEGORIES.PHOTO]: '현장 사진, 유물 사진, 보고서용 사진 근거를 연결합니다.',
   [KOREAN_FIELDWORK_CATEGORIES.SAMPLE]: '토양, 목탄, 유기물, 자연과학 분석용 시료를 기록합니다.',
   [KOREAN_FIELDWORK_CATEGORIES.SOIL_PROFILE_PHOTO]: '토층 단면 사진과 층위 표시, 토색 보조 기록을 연결합니다.',
-  [KOREAN_FIELDWORK_CATEGORIES.SOURCE_EVIDENCE_INDEX]: '보고서·문헌·원자료 근거를 나중에 추적할 수 있게 색인합니다.',
+  [KOREAN_FIELDWORK_CATEGORIES.SOURCE_EVIDENCE_INDEX]: '보고서·문헌·원자료의 근거자료를 나중에 추적할 수 있게 색인합니다.',
   [KOREAN_FIELDWORK_CATEGORIES.SURVEY]: '지표조사, 시굴 전 단계, 조사 방법과 관찰 조건을 기록합니다.',
   [KOREAN_FIELDWORK_CATEGORIES.SURVEY_BOUNDARY]: '조사 범위, 구역선, 배경지도 출처와 정확도를 기록합니다.',
   [KOREAN_FIELDWORK_CATEGORIES.TRENCH]: '시굴·발굴 트렌치의 위치와 범위를 잡습니다.',

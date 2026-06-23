@@ -68,6 +68,52 @@ describe('KoreanFieldworkSelectedRecordWorkbench', () => {
       ],
     });
   });
+
+  it('applies a later report identifier while preserving the field number', () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 17');
+    const handleUpdateResourceFields = jest.fn();
+
+    const { getAllByText, getByTestId, getByText } = renderWorkbench(feature, {
+      onUpdateResourceFields: handleUpdateResourceFields,
+    });
+
+    expect(getByText('번호 정리')).toBeTruthy();
+    expect(getAllByText('수혈 17').length).toBeGreaterThanOrEqual(2);
+
+    fireEvent.changeText(
+      getByTestId('identifierRevisionNextInput'),
+      '조선시대 3호 수혈'
+    );
+    fireEvent.changeText(
+      getByTestId('identifierRevisionReasonInput'),
+      '전면 제토 후 번호 재배정'
+    );
+    fireEvent.press(getByTestId('selectedRecordApplyIdentifierRevision'));
+
+    expect(handleUpdateResourceFields).toHaveBeenCalledWith(feature, expect.objectContaining({
+      identifier: '조선시대 3호 수혈',
+      fieldIdentifier: '수혈 17',
+      reportIdentifier: '조선시대 3호 수혈',
+      identifierRevisionNote: '전면 제토 후 번호 재배정',
+    }));
+    expect(handleUpdateResourceFields.mock.calls[0][1].identifierRevisionHistory)
+      .toEqual([
+        expect.objectContaining({
+          previousIdentifier: '수혈 17',
+          nextIdentifier: '조선시대 3호 수혈',
+          fieldIdentifier: '수혈 17',
+          reason: '전면 제토 후 번호 재배정',
+        }),
+      ]);
+  });
+
+  it('does not show identifier revision controls for trench records', () => {
+    const trench = createDoc('trench-1', C.TRENCH, 'T1');
+
+    const { queryByTestId } = renderWorkbench(trench);
+
+    expect(queryByTestId('identifierRevisionPanel')).toBeNull();
+  });
 });
 
 const renderWorkbench = (

@@ -7,6 +7,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Document } from 'idai-field-core';
 import React from 'react';
+import { StyleSheet } from 'react-native';
 import { KOREAN_FIELDWORK_CATEGORIES } from './korean-fieldwork-categories';
 import KoreanFieldworkFieldNotePanel from './KoreanFieldworkFieldNotePanel';
 import { createKoreanFieldworkFieldNoteDraftKey } from './korean-fieldwork-field-note-drafts';
@@ -60,6 +61,25 @@ describe('KoreanFieldworkFieldNotePanel', () => {
         '[사진·도면·유물·시료 번호] 사진 12-14, 도면 3',
       ].join('\n')
     );
+  });
+
+  it('expands note inputs when a tablet pen touches the writing area', () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
+
+    const { getByTestId } = renderPanel(feature);
+
+    fireEvent(
+      getByTestId('fieldNoteTextInputBlock'),
+      'pointerDown',
+      { nativeEvent: { pointerType: 'pen' } }
+    );
+
+    expect(StyleSheet.flatten(getByTestId('fieldNoteTextInput').props.style))
+      .toMatchObject({
+        minHeight: 124,
+        fontSize: 16,
+        lineHeight: 24,
+      });
   });
 
   it('switches to daily log mode and opens linked summaries', async () => {

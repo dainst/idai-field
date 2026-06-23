@@ -197,7 +197,7 @@ const RECORD_GROUPS: RecordGroup[] = [
   },
   {
     title: '사진·도면·메모',
-    subtitle: '현장 증거와 보조 기록',
+    subtitle: '현장 사진, 도면, 메모 기록',
     categories: [
       KOREAN_FIELDWORK_CATEGORIES.PHOTO,
       KOREAN_FIELDWORK_CATEGORIES.SOIL_PROFILE_PHOTO,
@@ -1560,7 +1560,7 @@ const RecordWorkSummary: React.FC<{
         {summary.completionPercent}%
       </Text>
       <Text style={styles.recordWorkMetric}>하위 {summary.structureCount}</Text>
-      <Text style={styles.recordWorkMetric}>증거 {summary.evidenceCount}</Text>
+      <Text style={styles.recordWorkMetric}>자료 {summary.evidenceCount}</Text>
       {summary.issueCount > 0 && (
         <Text style={styles.recordWorkIssue}>점검 {summary.issueCount}</Text>
       )}

@@ -82,7 +82,7 @@ export const getKoreanFieldworkDraftContinuationOptions = (
     {
       id: 'edit',
       label: '저장 후 열기',
-      detail: '방금 만든 기록에서 하위·증거 작업을 바로 이어갑니다.',
+      detail: '방금 만든 기록에서 하위·자료 작업을 바로 이어갑니다.',
       icon: 'open-in-new',
       target: { mode: 'edit' },
     },
@@ -114,7 +114,7 @@ export const getKoreanFieldworkDraftContinuationOptions = (
     options.push({
       id: 'evidence',
       label: `${getKoreanFieldworkCategoryLabel(evidenceCategoryName)} 추가`,
-      detail: '저장한 기록에 사진·도면·시료 같은 증거를 바로 붙입니다.',
+      detail: '저장한 기록에 사진·도면·시료 같은 자료를 바로 붙입니다.',
       icon: getEvidenceIcon(evidenceCategoryName),
       target: {
         mode: 'addChild',

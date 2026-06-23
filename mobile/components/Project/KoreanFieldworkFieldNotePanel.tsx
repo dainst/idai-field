@@ -44,6 +44,10 @@ import {
   mergeKoreanFieldworkFieldNoteInput,
 } from './korean-fieldwork-field-notes';
 import {
+  isKoreanFieldworkStylusPointer,
+  KoreanFieldworkPointerInputEvent,
+} from './korean-fieldwork-stylus-input';
+import {
   createKoreanFieldworkFieldNoteDraftKey,
   hasKoreanFieldworkFieldNoteDraftText,
   loadKoreanFieldworkFieldNoteDraft,
@@ -120,6 +124,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     useState<string>();
   const [issuePromptStatus, setIssuePromptStatus] =
     useState<string>();
+  const [isStylusInputMode, setIsStylusInputMode] = useState(false);
   const [appliedRecordUpdateSignature, setAppliedRecordUpdateSignature] =
     useState<string>();
   const [savedFollowUpActions, setSavedFollowUpActions] =
@@ -362,6 +367,11 @@ const KoreanFieldworkFieldNotePanel: React.FC<
       [fieldName]: value,
     }));
   };
+  const handlePointerInput = (event: KoreanFieldworkPointerInputEvent) => {
+    if (isKoreanFieldworkStylusPointer(event.nativeEvent?.pointerType)) {
+      setIsStylusInputMode(true);
+    }
+  };
   const applyPreset = (preset: KoreanFieldworkFieldNotePreset) => {
     setSavedFollowUpActions([]);
     setContinuationStatus(undefined);
@@ -509,9 +519,34 @@ const KoreanFieldworkFieldNotePanel: React.FC<
           <MaterialIcons name="edit-note" size={20} color="#175cd3" />
           <Text style={styles.title}>야장 입력</Text>
         </View>
-        <Text style={styles.headerMeta} numberOfLines={1}>
-          {selectedDocument.resource.identifier || selectedDocument.resource.id}
-        </Text>
+        <View style={styles.headerActions}>
+          <TouchableOpacity
+            activeOpacity={0.86}
+            onPress={() => setIsStylusInputMode((current) => !current)}
+            style={[
+              styles.stylusModeButton,
+              isStylusInputMode && styles.stylusModeButtonActive,
+            ]}
+            testID="fieldNoteStylusModeToggle"
+          >
+            <MaterialIcons
+              name="draw"
+              size={15}
+              color={isStylusInputMode ? '#175cd3' : '#667085'}
+            />
+            <Text
+              style={[
+                styles.stylusModeText,
+                isStylusInputMode && styles.stylusModeTextActive,
+              ]}
+            >
+              펜 입력
+            </Text>
+          </TouchableOpacity>
+          <Text style={styles.headerMeta} numberOfLines={1}>
+            {selectedDocument.resource.identifier || selectedDocument.resource.id}
+          </Text>
+        </View>
       </View>
 
       {savedFollowUpActions.length > 0 && (
@@ -832,33 +867,41 @@ const KoreanFieldworkFieldNotePanel: React.FC<
 
       <FieldNoteInputBlock
         icon="visibility"
+        isStylusInputMode={isStylusInputMode}
         label="관찰 내용"
         onChangeText={(value) => updateNoteInput('observation', value)}
+        onPointerInput={handlePointerInput}
         placeholder="색, 토질, 형태, 경계, 절단관계처럼 현장에서 본 사실"
         testID="fieldNoteTextInput"
         value={noteInput.observation ?? ''}
       />
       <FieldNoteInputBlock
         icon="psychology"
+        isStylusInputMode={isStylusInputMode}
         label="해석"
         onChangeText={(value) => updateNoteInput('interpretation', value)}
+        onPointerInput={handlePointerInput}
         placeholder="수혈·주혈·구상유구 등으로 보는 이유와 아직 애매한 점"
         testID="fieldNoteInterpretationInput"
         value={noteInput.interpretation ?? ''}
       />
       <FieldNoteInputBlock
         icon="task-alt"
+        isStylusInputMode={isStylusInputMode}
         label="다음 작업"
         onChangeText={(value) => updateNoteInput('nextWork', value)}
+        onPointerInput={handlePointerInput}
         placeholder="사진 보강, 단면 정리, 실측, 유물·시료 수습 등"
         testID="fieldNoteNextWorkInput"
         value={noteInput.nextWork ?? ''}
       />
       <FieldNoteInputBlock
         icon="tag"
+        isStylusInputMode={isStylusInputMode}
         label="사진·도면·유물·시료 번호"
         minHeight={52}
         onChangeText={(value) => updateNoteInput('evidenceNumbers', value)}
+        onPointerInput={handlePointerInput}
         placeholder="예: 사진 12-15, 도면 3, 유물 24, 시료 S-02"
         testID="fieldNoteEvidenceNumbersInput"
         value={noteInput.evidenceNumbers ?? ''}
@@ -1235,22 +1278,30 @@ const HistoryRow: React.FC<{
 
 const FieldNoteInputBlock: React.FC<{
   icon: keyof typeof MaterialIcons.glyphMap;
+  isStylusInputMode: boolean;
   label: string;
   minHeight?: number;
   onChangeText: (value: string) => void;
+  onPointerInput: (event: KoreanFieldworkPointerInputEvent) => void;
   placeholder: string;
   testID: string;
   value: string;
 }> = ({
   icon,
+  isStylusInputMode,
   label,
   minHeight = 78,
   onChangeText,
+  onPointerInput,
   placeholder,
   testID,
   value,
 }) => (
-  <View style={styles.inputBlock}>
+  <View
+    onPointerDown={onPointerInput}
+    style={[styles.inputBlock, isStylusInputMode && styles.inputBlockStylus]}
+    testID={`${testID}Block`}
+  >
     <View style={styles.inputLabelRow}>
       <MaterialIcons name={icon} size={15} color="#344054" />
       <Text style={styles.inputLabel}>{label}</Text>
@@ -1260,7 +1311,11 @@ const FieldNoteInputBlock: React.FC<{
       onChangeText={onChangeText}
       placeholder={placeholder}
       placeholderTextColor="#667085"
-      style={[styles.input, { minHeight }]}
+      style={[
+        styles.input,
+        { minHeight: isStylusInputMode ? Math.max(minHeight, 124) : minHeight },
+        isStylusInputMode && styles.inputStylus,
+      ]}
       testID={testID}
       textAlignVertical="top"
       value={value}
@@ -1394,8 +1449,39 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 12,
     fontWeight: '700',
-    marginLeft: 10,
+    marginLeft: 7,
     textAlign: 'right',
+  },
+  headerActions: {
+    alignItems: 'center',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginLeft: 8,
+    minWidth: 0,
+  },
+  stylusModeButton: {
+    alignItems: 'center',
+    backgroundColor: '#f8fafc',
+    borderColor: '#d0d5dd',
+    borderRadius: 6,
+    borderWidth: 1,
+    flexDirection: 'row',
+    minHeight: 31,
+    paddingHorizontal: 8,
+  },
+  stylusModeButtonActive: {
+    backgroundColor: '#eff8ff',
+    borderColor: '#84caff',
+  },
+  stylusModeText: {
+    color: '#667085',
+    fontSize: 11,
+    fontWeight: '900',
+    marginLeft: 3,
+  },
+  stylusModeTextActive: {
+    color: '#175cd3',
   },
   savedFollowUpPanel: {
     backgroundColor: '#f0fdf4',
@@ -2022,6 +2108,9 @@ const styles = StyleSheet.create({
   inputBlock: {
     marginTop: 10,
   },
+  inputBlockStylus: {
+    marginTop: 12,
+  },
   inputLabelRow: {
     alignItems: 'center',
     flexDirection: 'row',
@@ -2070,6 +2159,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     paddingHorizontal: 10,
     paddingVertical: 8,
+  },
+  inputStylus: {
+    borderColor: '#84caff',
+    fontSize: 16,
+    lineHeight: 24,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
   },
   footerRow: {
     alignItems: 'center',

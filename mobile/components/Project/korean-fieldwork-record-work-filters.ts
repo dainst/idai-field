@@ -23,7 +23,7 @@ export const KOREAN_FIELDWORK_RECORD_WORK_FILTERS: readonly KoreanFieldworkRecor
   { id: 'all', label: '전체', icon: 'format-list-bulleted' },
   { id: 'needsReview', label: '확인 필요', icon: 'priority-high' },
   { id: 'pending', label: '조사 중', icon: 'rule' },
-  { id: 'missingEvidence', label: '증거 보완', icon: 'add-photo-alternate' },
+  { id: 'missingEvidence', label: '자료 보강', icon: 'add-photo-alternate' },
   { id: 'today', label: '오늘 작성', icon: 'today' },
 ];
 

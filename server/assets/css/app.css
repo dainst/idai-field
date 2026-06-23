@@ -259,17 +259,23 @@ main {
 
 .sortable-list-heading {
     cursor: pointer;
-    border: 1px solid transparent;
+    border: 1px solid transparent;   
+    background-color: #f8f8f8; 
+    position: sticky;
+    top: 0;
+    z-index: 1000; 
 }
 
 .sortable-list-heading:hover {
     border: 1px solid #000000;
 }
 
-.sortable-list-heading.asc:before {
-    content: "▵";
+.sortable-list-heading.asc:after {
+    content: "▲";
+    margin-left: 0.4em;
 }
 
-.sortable-list-heading.desc:before {
-    content: "▿";
+.sortable-list-heading.desc:after {
+    content: "▼";    
+    margin-left: 0.4em; 
 }

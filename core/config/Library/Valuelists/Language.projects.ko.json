@@ -7888,7 +7888,7 @@
       "satelliteStateChecked": { "label": "위성 상태 확인" },
       "observationTimeRecorded": { "label": "관측시간 기록" },
       "rawDataPreserved": { "label": "원시데이터 보존" },
-      "realtimeProcessingRecorded": { "label": "실시간 처리 기록" },
+      "realtimeProcessingRecorded": { "label": "관측 처리 기록" },
       "coordinateSystemRecorded": { "label": "좌표계 기록" },
       "geoidRecorded": { "label": "지오이드 기록" },
       "satelliteCountRecorded": { "label": "위성수 기록" },

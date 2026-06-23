@@ -413,7 +413,7 @@
           "label": "제토·둑·안전 관리"
         },
         "gpsSurveyQualityRecord": {
-          "label": "GPS 측량 품질기록"
+          "label": "GPS 측량 기록"
         },
         "gpsNmeaRecord": {
           "label": "GPS NMEA 정보기록"
@@ -1332,7 +1332,7 @@
           "label": "고고지자기 방향 기록"
         },
         "archaeomagneticResultQuality": {
-          "label": "고고지자기 결과 품질"
+          "label": "고고지자기 결과 상태"
         },
         "archaeomagneticChronologyInterpretation": {
           "label": "고고지자기 연대 해석"
@@ -1555,7 +1555,7 @@
           "label": "사진 크기 기준(KB)"
         },
         "soilProfilePhotoQuality": {
-          "label": "촬영 품질"
+          "label": "촬영 상태"
         },
         "soilProfilePhotoCapturedAt": {
           "label": "촬영 시각"

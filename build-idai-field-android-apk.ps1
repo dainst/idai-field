@@ -183,6 +183,49 @@ function Invoke-CheckedCommand {
     }
 }
 
+function Assert-PathIsInside {
+    param(
+        [string]$Path,
+        [string]$ParentPath
+    )
+
+    $resolvedPath = (Resolve-Path -LiteralPath $Path).Path
+    $resolvedParentPath = (Resolve-Path -LiteralPath $ParentPath).Path
+    $parentPrefix = $resolvedParentPath.TrimEnd('\') + '\'
+
+    if (-not $resolvedPath.StartsWith($parentPrefix, [System.StringComparison]::OrdinalIgnoreCase)) {
+        throw "Refusing to modify path outside expected directory: $resolvedPath"
+    }
+
+    return $resolvedPath
+}
+
+function Sync-LocalCorePackageForMobile {
+    $coreDistDir = Join-Path $coreDir 'dist'
+    $mobileCorePackageDir = Join-Path $mobileDir 'node_modules\idai-field-core'
+
+    if (-not (Test-Path -LiteralPath $coreDistDir)) {
+        throw "Built core package was not found: $coreDistDir"
+    }
+    if (-not (Test-Path -LiteralPath $mobileCorePackageDir)) {
+        throw "mobile idai-field-core package was not found: $mobileCorePackageDir"
+    }
+
+    $resolvedPackageDir = Assert-PathIsInside -Path $mobileCorePackageDir -ParentPath $mobileDir
+    $targetDistDir = Join-Path $resolvedPackageDir 'dist'
+
+    if (Test-Path -LiteralPath $targetDistDir) {
+        $resolvedTargetDistDir = Assert-PathIsInside -Path $targetDistDir -ParentPath $resolvedPackageDir
+        Remove-Item -LiteralPath $resolvedTargetDistDir -Recurse -Force
+    }
+
+    Copy-Item -LiteralPath $coreDistDir -Destination $resolvedPackageDir -Recurse -Force
+    Copy-Item -LiteralPath (Join-Path $coreDir 'package.json') -Destination (Join-Path $resolvedPackageDir 'package.json') -Force
+    Copy-Item -LiteralPath (Join-Path $coreDir 'README.md') -Destination (Join-Path $resolvedPackageDir 'README.md') -Force
+
+    Write-Host 'Synced local core package into mobile node_modules.'
+}
+
 if ($Help) {
     Show-Usage
     exit 0
@@ -217,6 +260,12 @@ try {
 
     Write-Host 'Building core package.'
     Invoke-CheckedCommand -Command 'npm' -Arguments @('run', 'build') -WorkingDirectory $coreDir
+    Sync-LocalCorePackageForMobile
+
+    $variantPascal = if ($Variant -eq 'debug') { 'Debug' } else { 'Release' }
+    $bundleTask = "app:createBundle${variantPascal}JsAndAssets"
+    Write-Host "Refreshing Android JS bundle: $bundleTask"
+    Invoke-CheckedCommand -Command (Join-Path $androidDir 'gradlew.bat') -Arguments @('--no-daemon', '--rerun-tasks', $bundleTask) -WorkingDirectory $androidDir
 
     $gradleTask = if ($Variant -eq 'debug') { 'app:assembleDebug' } else { 'app:assembleRelease' }
     Write-Host "Building Android APK: $gradleTask"

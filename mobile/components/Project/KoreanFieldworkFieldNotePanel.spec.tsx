@@ -138,7 +138,40 @@ describe('KoreanFieldworkFieldNotePanel', () => {
     );
   });
 
-  it('shows live field note guidance while writing', () => {
+  it('adds observation prompts to the tablet field note text', async () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
+    const handleCreateNote = jest.fn().mockResolvedValue(undefined);
+
+    const { getByTestId } = renderPanel(feature, {
+      onCreateNote: handleCreateNote,
+    });
+
+    await act(async () => {
+      fireEvent.press(getByTestId('fieldNoteObservationPrompt_plan-boundary'));
+      fireEvent.press(getByTestId('fieldNoteObservationPrompt_size-direction'));
+      jest.runOnlyPendingTimers();
+    });
+
+    expect(getByTestId('fieldNoteTextInput').props.value).toContain(
+      '평면 형태, 윤곽선, 경계의 명확도와 절단관계를 기록.'
+    );
+    expect(getByTestId('fieldNoteTextInput').props.value).toContain(
+      '장축·단축·깊이, 방향, 기준점을 기록.'
+    );
+
+    await act(async () => {
+      fireEvent.press(getByTestId('fieldNoteSave'));
+      await Promise.resolve();
+      jest.runOnlyPendingTimers();
+    });
+
+    expect(handleCreateNote).toHaveBeenCalledWith(
+      'recordMemo',
+      expect.stringContaining('[관찰 내용]')
+    );
+  });
+
+  it('shows field note guidance while writing', () => {
     const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
 
     const { getByTestId, queryByTestId } = renderPanel(feature);

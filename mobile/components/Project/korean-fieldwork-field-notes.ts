@@ -58,6 +58,13 @@ export interface KoreanFieldworkFieldNotePreset {
   input: KoreanFieldworkFieldNoteInput;
 }
 
+export interface KoreanFieldworkFieldNoteObservationPrompt {
+  id: string;
+  label: string;
+  detail: string;
+  observation: string;
+}
+
 export type KoreanFieldworkFieldNoteGuidanceTone =
   'complete'|'guide'|'attention';
 
@@ -418,6 +425,191 @@ export const getKoreanFieldworkFieldNotePresets = (
 
   return commonPresets;
 };
+
+export const getKoreanFieldworkFieldNoteObservationPrompts = (
+  document: Document
+): KoreanFieldworkFieldNoteObservationPrompt[] => {
+  switch (document.resource.category) {
+    case C.FEATURE_GROUP:
+      return [
+        {
+          id: 'group-scope',
+          label: '군집 범위',
+          detail: '분포·간격·경계',
+          observation: '유구군의 분포 범위, 개별 유구 간격, 군집 경계를 기록.',
+        },
+        {
+          id: 'group-pattern',
+          label: '배열·반복',
+          detail: '방향·규칙성',
+          observation: '반복되는 배열, 방향, 규모 차이와 규칙성을 기록.',
+        },
+        {
+          id: 'group-relation',
+          label: '선후 관계',
+          detail: '중복·절단',
+          observation: '유구군 안팎의 중복, 절단, 선후관계를 기록.',
+        },
+      ];
+    case C.FEATURE_SEGMENT:
+      return [
+        {
+          id: 'segment-boundary',
+          label: '구간 경계',
+          detail: '시작·끝·접속',
+          observation: '유구 구간의 시작과 끝, 다른 구간과의 접속·절단관계를 기록.',
+        },
+        {
+          id: 'segment-profile',
+          label: '단면 변화',
+          detail: '깊이·폭·퇴적',
+          observation: '구간별 폭, 깊이, 내부토, 바닥면 변화를 기록.',
+        },
+        {
+          id: 'segment-context',
+          label: '주변 관계',
+          detail: '인접 유구·층',
+          observation: '인접 유구, 층위, 조사구역 안 위치와의 관계를 기록.',
+        },
+      ];
+    case C.TRENCH:
+      return [
+        {
+          id: 'trench-position',
+          label: '트렌치 위치',
+          detail: '범위·방향·기준점',
+          observation: '트렌치 범위, 방향, 기준점, 조사구역과의 관계를 기록.',
+        },
+        {
+          id: 'trench-layer',
+          label: '층위·노출',
+          detail: '토층·검출면',
+          observation: '트렌치에서 확인한 층위, 검출면, 노출 상태를 기록.',
+        },
+        {
+          id: 'trench-feature',
+          label: '확인 유구',
+          detail: '위치·연결',
+          observation: '트렌치 안에서 확인한 유구 위치, 경계, 연결 관계를 기록.',
+        },
+      ];
+    case C.LAYER:
+      return [
+        {
+          id: 'soil',
+          label: '토색·토질',
+          detail: '색·입도·포함물',
+          observation: '토색, 토질, 입도, 포함물과 다짐 정도를 기록.',
+        },
+        {
+          id: 'layer-boundary',
+          label: '층 경계',
+          detail: '상하부·점이',
+          observation: '상·하부 경계의 명확도, 점이 양상, 접촉 관계를 기록.',
+        },
+        {
+          id: 'formation',
+          label: '퇴적 관계',
+          detail: '형성·교란',
+          observation: '퇴적 방향, 교란 흔적, 주변 유구와의 관계를 기록.',
+        },
+      ];
+    case C.FIND:
+      return [
+        {
+          id: 'find-context',
+          label: '출토맥락',
+          detail: '위치·층위·주변',
+          observation: '출토 위치, 층위, 주변 유구와의 관계를 기록.',
+        },
+        {
+          id: 'find-condition',
+          label: '상태·수량',
+          detail: '보존·파손·수량',
+          observation: '보존 상태, 파손 여부, 수량과 수습 단위를 기록.',
+        },
+        {
+          id: 'find-collection',
+          label: '수습·보관',
+          detail: '봉투·상자·번호',
+          observation: '수습 번호, 봉투·상자 표기, 보관 상태를 기록.',
+        },
+      ];
+    case C.SAMPLE:
+      return [
+        {
+          id: 'sample-context',
+          label: '채취맥락',
+          detail: '위치·층위·대상',
+          observation: '채취 위치, 층위, 대상 유구와 채취 이유를 기록.',
+        },
+        {
+          id: 'sample-method',
+          label: '채취방법',
+          detail: '도구·범위·오염',
+          observation: '채취 범위, 사용 도구, 오염 가능성과 현장 조건을 기록.',
+        },
+        {
+          id: 'sample-storage',
+          label: '포장·보관',
+          detail: '용기·표기·상태',
+          observation: '시료 번호, 포장 용기, 표기, 보관 상태를 기록.',
+        },
+      ];
+    case C.PHOTO:
+    case C.DRAWING:
+      return [
+        {
+          id: 'media-target',
+          label: '대상·방향',
+          detail: '피사체·기준점',
+          observation: '촬영·실측 대상, 방향, 기준점을 기록.',
+        },
+        {
+          id: 'media-scale',
+          label: '축척·방위',
+          detail: '스케일·방위표',
+          observation: '스케일, 방위, 기준점, 누락 구역 여부를 기록.',
+        },
+      ];
+    case C.FEATURE:
+    default:
+      return [
+        {
+          id: 'plan-boundary',
+          label: '평면·경계',
+          detail: '형태·윤곽·절단',
+          observation: '평면 형태, 윤곽선, 경계의 명확도와 절단관계를 기록.',
+        },
+        {
+          id: 'size-direction',
+          label: '규모·방향',
+          detail: '장축·단축·깊이',
+          observation: '장축·단축·깊이, 방향, 기준점을 기록.',
+        },
+        {
+          id: 'fill-floor',
+          label: '내부토·바닥',
+          detail: '토색·토질·시설',
+          observation: '내부토의 토색·토질·포함물, 바닥면과 내부시설 여부를 기록.',
+        },
+        {
+          id: 'overlap',
+          label: '중복 관계',
+          detail: '선후·절단',
+          observation: '주변 유구와의 중복, 절단, 선후관계를 기록.',
+        },
+      ];
+  }
+};
+
+export const applyKoreanFieldworkFieldNoteObservationPrompt = (
+  currentInput: KoreanFieldworkFieldNoteInput,
+  prompt: KoreanFieldworkFieldNoteObservationPrompt
+): KoreanFieldworkFieldNoteInput => ({
+  ...currentInput,
+  observation: mergeFieldNoteValue(currentInput.observation, prompt.observation),
+});
 
 export const mergeKoreanFieldworkFieldNoteInput = (
   currentInput: KoreanFieldworkFieldNoteInput,

@@ -14,12 +14,14 @@ import {
   View,
 } from 'react-native';
 import {
+  applyKoreanFieldworkFieldNoteObservationPrompt,
   buildKoreanFieldworkFieldNoteText,
   getKoreanFieldworkFieldNoteChecklist,
   getKoreanFieldworkFieldNoteEvidenceActions,
   getKoreanFieldworkFieldNoteFollowUpActions,
   getKoreanFieldworkFieldNoteGuidance,
   getKoreanFieldworkFieldNoteHistoryItems,
+  getKoreanFieldworkFieldNoteObservationPrompts,
   getKoreanFieldworkFieldNotePresets,
   getKoreanFieldworkFieldNoteReportPreview,
   getKoreanFieldworkFieldNoteSummaries,
@@ -30,6 +32,7 @@ import {
   KoreanFieldworkFieldNoteHistoryItem,
   KoreanFieldworkFieldNoteInput,
   KoreanFieldworkFieldNoteMode,
+  KoreanFieldworkFieldNoteObservationPrompt,
   KoreanFieldworkFieldNotePreset,
   KoreanFieldworkFieldNoteReportPreview,
   mergeKoreanFieldworkFieldNoteInput,
@@ -111,6 +114,10 @@ const KoreanFieldworkFieldNotePanel: React.FC<
   );
   const presets = useMemo(
     () => getKoreanFieldworkFieldNotePresets(selectedDocument),
+    [selectedDocument]
+  );
+  const observationPrompts = useMemo(
+    () => getKoreanFieldworkFieldNoteObservationPrompts(selectedDocument),
     [selectedDocument]
   );
   const checklist = useMemo(
@@ -261,6 +268,14 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     setSavedFollowUpActions([]);
     setNoteInput((currentInput) =>
       mergeKoreanFieldworkFieldNoteInput(currentInput, preset.input)
+    );
+  };
+  const applyObservationPrompt = (
+    prompt: KoreanFieldworkFieldNoteObservationPrompt
+  ) => {
+    setSavedFollowUpActions([]);
+    setNoteInput((currentInput) =>
+      applyKoreanFieldworkFieldNoteObservationPrompt(currentInput, prompt)
     );
   };
   const applyHistoryItem = (item: KoreanFieldworkFieldNoteHistoryItem) => {
@@ -459,6 +474,28 @@ const KoreanFieldworkFieldNotePanel: React.FC<
         ))}
       </ScrollView>
 
+      {observationPrompts.length > 0 && (
+        <View style={styles.observationPromptPanel}>
+          <View style={styles.observationPromptHeader}>
+            <MaterialIcons name="checklist" size={16} color="#344054" />
+            <Text style={styles.observationPromptTitle}>관찰 항목</Text>
+          </View>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.observationPromptRow}
+          >
+            {observationPrompts.map((prompt) => (
+              <ObservationPromptButton
+                key={prompt.id}
+                onPress={() => applyObservationPrompt(prompt)}
+                prompt={prompt}
+              />
+            ))}
+          </ScrollView>
+        </View>
+      )}
+
       <View style={styles.guidancePanel}>
         <View style={styles.guidanceHeader}>
           <MaterialIcons name="rule" size={16} color="#344054" />
@@ -654,6 +691,28 @@ const ModeButton: React.FC<{
         numberOfLines={1}
       >
         {detail}
+      </Text>
+    </View>
+  </TouchableOpacity>
+);
+
+const ObservationPromptButton: React.FC<{
+  prompt: KoreanFieldworkFieldNoteObservationPrompt;
+  onPress: () => void;
+}> = ({ prompt, onPress }) => (
+  <TouchableOpacity
+    activeOpacity={0.86}
+    onPress={onPress}
+    style={styles.observationPromptButton}
+    testID={`fieldNoteObservationPrompt_${prompt.id}`}
+  >
+    <MaterialIcons name="add-task" size={16} color="#175cd3" />
+    <View style={styles.observationPromptText}>
+      <Text style={styles.observationPromptLabel} numberOfLines={1}>
+        {prompt.label}
+      </Text>
+      <Text style={styles.observationPromptDetail} numberOfLines={1}>
+        {prompt.detail}
       </Text>
     </View>
   </TouchableOpacity>
@@ -1152,6 +1211,56 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '900',
     marginLeft: 5,
+  },
+  observationPromptPanel: {
+    backgroundColor: '#ffffff',
+    borderColor: '#d0d5dd',
+    borderRadius: 6,
+    borderWidth: 1,
+    marginTop: 10,
+    paddingHorizontal: 9,
+    paddingVertical: 8,
+  },
+  observationPromptHeader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  observationPromptTitle: {
+    color: '#344054',
+    fontSize: 12,
+    fontWeight: '900',
+    marginLeft: 5,
+  },
+  observationPromptRow: {
+    paddingTop: 8,
+  },
+  observationPromptButton: {
+    alignItems: 'center',
+    backgroundColor: '#eff8ff',
+    borderColor: '#b2ddff',
+    borderRadius: 6,
+    borderWidth: 1,
+    flexDirection: 'row',
+    marginRight: 7,
+    minHeight: 44,
+    paddingHorizontal: 9,
+    width: 132,
+  },
+  observationPromptText: {
+    flex: 1,
+    marginLeft: 6,
+    minWidth: 0,
+  },
+  observationPromptLabel: {
+    color: '#175cd3',
+    fontSize: 12,
+    fontWeight: '900',
+  },
+  observationPromptDetail: {
+    color: '#667085',
+    fontSize: 10,
+    fontWeight: '700',
+    marginTop: 1,
   },
   guidancePanel: {
     backgroundColor: '#f8fafc',

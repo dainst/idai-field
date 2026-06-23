@@ -1,6 +1,7 @@
 import { Document } from 'idai-field-core';
 import { KOREAN_FIELDWORK_CATEGORIES } from './korean-fieldwork-categories';
 import {
+  applyKoreanFieldworkFieldNoteObservationPrompt,
   buildKoreanFieldworkFieldNoteText,
   createKoreanFieldworkDailyLogDraft,
   createKoreanFieldworkRecordMemoDraft,
@@ -10,6 +11,7 @@ import {
   getKoreanFieldworkFieldNoteFollowUpActions,
   getKoreanFieldworkFieldNoteGuidance,
   getKoreanFieldworkFieldNoteHistoryItems,
+  getKoreanFieldworkFieldNoteObservationPrompts,
   getKoreanFieldworkFieldNotePresets,
   getKoreanFieldworkFieldNoteReportPreview,
   getKoreanFieldworkDailyLogAppendUpdates,
@@ -67,6 +69,74 @@ describe('korean-fieldwork-field-notes', () => {
       interpretation: layerPreset!.input.interpretation,
       nextWork: layerPreset!.input.nextWork,
     });
+  });
+
+  it('offers category-specific observation prompts for tablet notes', () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
+    const featurePrompts = getKoreanFieldworkFieldNoteObservationPrompts(feature);
+    const boundaryPrompt = featurePrompts.find((prompt) =>
+      prompt.id === 'plan-boundary'
+    );
+
+    expect(featurePrompts.map((prompt) => prompt.id)).toEqual([
+      'plan-boundary',
+      'size-direction',
+      'fill-floor',
+      'overlap',
+    ]);
+    expect(applyKoreanFieldworkFieldNoteObservationPrompt(
+      { observation: '바닥면 정리 중.' },
+      boundaryPrompt!
+    ).observation).toBe([
+      '바닥면 정리 중.',
+      boundaryPrompt!.observation,
+    ].join('\n'));
+    expect(applyKoreanFieldworkFieldNoteObservationPrompt(
+      { observation: boundaryPrompt!.observation },
+      boundaryPrompt!
+    ).observation).toBe(boundaryPrompt!.observation);
+    expect(getKoreanFieldworkFieldNoteObservationPrompts(
+      createDoc('feature-group-1', C.FEATURE_GROUP, '수혈군 1')
+    ).map((prompt) => prompt.id)).toEqual([
+      'group-scope',
+      'group-pattern',
+      'group-relation',
+    ]);
+    expect(getKoreanFieldworkFieldNoteObservationPrompts(
+      createDoc('segment-1', C.FEATURE_SEGMENT, '유구 구간 1')
+    ).map((prompt) => prompt.id)).toEqual([
+      'segment-boundary',
+      'segment-profile',
+      'segment-context',
+    ]);
+    expect(getKoreanFieldworkFieldNoteObservationPrompts(
+      createDoc('trench-1', C.TRENCH, '트렌치 1')
+    ).map((prompt) => prompt.id)).toEqual([
+      'trench-position',
+      'trench-layer',
+      'trench-feature',
+    ]);
+    expect(getKoreanFieldworkFieldNoteObservationPrompts(
+      createDoc('layer-1', C.LAYER, '층위 1')
+    ).map((prompt) => prompt.id)).toEqual([
+      'soil',
+      'layer-boundary',
+      'formation',
+    ]);
+    expect(getKoreanFieldworkFieldNoteObservationPrompts(
+      createDoc('find-1', C.FIND, '유물 1')
+    ).map((prompt) => prompt.id)).toEqual([
+      'find-context',
+      'find-condition',
+      'find-collection',
+    ]);
+    expect(getKoreanFieldworkFieldNoteObservationPrompts(
+      createDoc('sample-1', C.SAMPLE, '시료 1')
+    ).map((prompt) => prompt.id)).toEqual([
+      'sample-context',
+      'sample-method',
+      'sample-storage',
+    ]);
   });
 
   it('guides tablet note writing without forcing a verification state', () => {

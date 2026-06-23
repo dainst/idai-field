@@ -20,6 +20,6 @@ software for the documentation of archaeological fieldwork", Archeologia e
 Calcolatori 34.1, 2023, 85-94. DOI: https://doi.org/10.19282/ac.34.1.2023.10
 
 이 저장소는 독일고고학연구소(DAI)와 GBV가 개발한 iDAI.field에서 비롯된
-한국형 야장 실험 프로젝트입니다. 원저작권, Apache-2.0 라이선스, 원 프로젝트
-출처를 보존하면서 한국 매장문화재 조사 현장에 맞는 기록 흐름을 별도로
-발전시키는 것을 목표로 합니다.
+디지털 야장 포크입니다. 원저작권, Apache-2.0 라이선스, 원 프로젝트 출처를
+보존하면서 한국 매장문화재 조사 현장에 맞는 기록 흐름을 별도로 발전시키는
+것을 목표로 합니다.

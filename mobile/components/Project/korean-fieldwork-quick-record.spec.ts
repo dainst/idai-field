@@ -4,6 +4,7 @@ import {
 } from 'idai-field-core';
 import {
   FIELDWORK_QUICK_FIELDS,
+  getKoreanFieldworkChecklistQuickOptions,
   getKoreanFieldworkQuickRecordAvailability,
   getKoreanFieldworkQuickPresetUpdates,
   getStringArrayFieldValues,
@@ -161,6 +162,74 @@ describe('Korean fieldwork quick record helpers', () => {
         'fieldToReportContinuity',
       ],
     });
+  });
+
+  it('uses investigation-specific checklist labels and values', () => {
+    expect(getKoreanFieldworkChecklistQuickOptions('trialTrench')).toEqual([
+      { value: 'trenchSoilCleaned', label: '토층 정리' },
+      { value: 'trenchFeatureChecked', label: '유구 확인' },
+      { value: 'trenchPitOpened', label: '피트 조사' },
+      { value: 'trenchPitProfileDrawn', label: '피트 토층도' },
+      { value: 'trenchOverviewPhotoTaken', label: '정방향 사진' },
+      { value: 'trenchObliquePhotoTaken', label: '사선 사진' },
+      { value: 'soilProfilePhotoLinked', label: '기준 토층사진' },
+      { value: 'inProgressPhotoTaken', label: '유구 사진' },
+      { value: 'penMemoReviewed', label: '펜메모 검토' },
+    ]);
+    expect(getKoreanFieldworkChecklistQuickOptions('excavation')
+      .map((option) => option.value)).toEqual([
+      'preInvestigationPhotoTaken',
+      'inProgressPhotoTaken',
+      'soilProfilePhotoLinked',
+      'preRecoveryFindPhotoTaken',
+      'findsRecovered',
+      'findRecordsLinked',
+      'samplesCollected',
+      'completionPhotoTaken',
+      'measuredDrawingCompleted',
+      'penMemoReviewed',
+    ]);
+  });
+
+  it('applies mode-aware preset checklist updates', () => {
+    const resource = createResource(C.FEATURE, {
+      featureInvestigationChecklist: ['preInvestigationPhotoTaken'],
+      fieldRecordQuality: [],
+      recordCreationTiming: '',
+    });
+    const availability = {
+      checklist: true,
+      featureStatus: true,
+      quality: true,
+      verification: false,
+      timing: true,
+    };
+
+    expect(getKoreanFieldworkQuickPresetUpdates(
+      resource,
+      availability,
+      'startFeatureInvestigation',
+      'trialTrench'
+    ).featureInvestigationChecklist).toEqual([
+      'preInvestigationPhotoTaken',
+      'trenchSoilCleaned',
+      'trenchFeatureChecked',
+    ]);
+
+    expect(getKoreanFieldworkQuickPresetUpdates(
+      resource,
+      availability,
+      'closeFeatureInvestigation',
+      'trialTrench'
+    ).featureInvestigationChecklist).toEqual([
+      'preInvestigationPhotoTaken',
+      'trenchPitOpened',
+      'trenchPitProfileDrawn',
+      'trenchOverviewPhotoTaken',
+      'trenchObliquePhotoTaken',
+      'soilProfilePhotoLinked',
+      'inProgressPhotoTaken',
+    ]);
   });
 });
 

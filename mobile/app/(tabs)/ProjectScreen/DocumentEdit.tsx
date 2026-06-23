@@ -31,10 +31,16 @@ import { ToastType } from '@/components/common/Toast/ToastProvider';
 import { router, useGlobalSearchParams } from 'expo-router';
 import { ProjectContext } from '@/contexts/project-context';
 import { getKoreanFieldworkAllowedChildCategoryNames } from '@/components/Project/korean-fieldwork-child-records';
+import { PreferencesContext } from '@/contexts/preferences-context';
+import {
+  KoreanFieldworkInvestigationModeId,
+  loadKoreanFieldworkInvestigationModeId,
+} from '@/components/Project/korean-fieldwork-investigation-mode';
 
 const DocumentEdit: React.FC = () => {
   const { showToast } = useToast();
   const { documents, repository } = useContext(ProjectContext);
+  const preferencesContext = useContext(PreferencesContext);
 
   // TODO: configure expo router to load params
   const params = useGlobalSearchParams();
@@ -48,6 +54,9 @@ const DocumentEdit: React.FC = () => {
   const document = useDocument(repository, docId);
   const [category, setCategory] = useState<CategoryForm>();
   const [resource, setResource] = useState<Resource>();
+  const [investigationModeId, setInvestigationModeId] =
+    useState<KoreanFieldworkInvestigationModeId>();
+  const projectId = preferencesContext.preferences.currentProject;
 
   useEffect(() => {
     const formName = categoryName ?? document?.resource.category;
@@ -57,6 +66,21 @@ const DocumentEdit: React.FC = () => {
   useEffect(() => {
     if (document) setResource(document.resource);
   }, [document]);
+
+  useEffect(() => {
+    let isActive = true;
+    setInvestigationModeId(undefined);
+
+    loadKoreanFieldworkInvestigationModeId(projectId)
+      .then((modeId) => {
+        if (isActive && modeId) setInvestigationModeId(modeId);
+      })
+      .catch(() => undefined);
+
+    return () => {
+      isActive = false;
+    };
+  }, [projectId]);
 
   const onReturn = () => {
     navigateToKoreanFieldworkReturnTarget(returnTarget, docId);
@@ -185,6 +209,7 @@ const DocumentEdit: React.FC = () => {
           />
           <KoreanFieldworkQuickRecordPanel
             category={category}
+            investigationModeId={investigationModeId}
             resource={resource}
             onUpdateResourceField={updateResource}
             onUpdateResourceFields={applyResourceUpdates}

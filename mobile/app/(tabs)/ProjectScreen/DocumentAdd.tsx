@@ -39,11 +39,17 @@ import {
 import { ToastType } from '@/components/common/Toast/ToastProvider';
 import { router, useGlobalSearchParams } from 'expo-router';
 import { ProjectContext } from '@/contexts/project-context';
+import { PreferencesContext } from '@/contexts/preferences-context';
+import {
+  KoreanFieldworkInvestigationModeId,
+  loadKoreanFieldworkInvestigationModeId,
+} from '@/components/Project/korean-fieldwork-investigation-mode';
 
 const DocumentAdd: React.FC = () => {
   const config = useContext(ConfigurationContext);
   const { labels } = useContext(LabelsContext);
   const { repository } = useContext(ProjectContext);
+  const preferencesContext = useContext(PreferencesContext);
   const params = useGlobalSearchParams();
   const parentDocId = getParam(params.parentDocId);
   const categoryName = getParam(params.categoryName);
@@ -55,6 +61,9 @@ const DocumentAdd: React.FC = () => {
   const [category, setCategory] = useState<CategoryForm>();
   const [newResource, setNewResource] = useState<NewResource>();
   const [saveBtnEnabled, setSaveBtnEnabled] = useState<boolean>(false);
+  const [investigationModeId, setInvestigationModeId] =
+    useState<KoreanFieldworkInvestigationModeId>();
+  const projectId = preferencesContext.preferences.currentProject;
 
   const setResourceToDefault = useCallback(
     () => {
@@ -85,6 +94,21 @@ const DocumentAdd: React.FC = () => {
     },
     [config, categoryName]
   );
+
+  useEffect(() => {
+    let isActive = true;
+    setInvestigationModeId(undefined);
+
+    loadKoreanFieldworkInvestigationModeId(projectId)
+      .then((modeId) => {
+        if (isActive && modeId) setInvestigationModeId(modeId);
+      })
+      .catch(() => undefined);
+
+    return () => {
+      isActive = false;
+    };
+  }, [projectId]);
 
   const updateResource = (key: string, value: unknown) =>
     setNewResource(
@@ -225,6 +249,7 @@ const DocumentAdd: React.FC = () => {
           />
           <KoreanFieldworkQuickRecordPanel
             category={category}
+            investigationModeId={investigationModeId}
             resource={newResource}
             onUpdateResourceField={updateResource}
             onUpdateResourceFields={applyResourceUpdates}

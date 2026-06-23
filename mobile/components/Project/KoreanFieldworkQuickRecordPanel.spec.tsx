@@ -99,6 +99,42 @@ describe('KoreanFieldworkQuickRecordPanel', () => {
     expect(handleUpdateResourceField).not.toHaveBeenCalled();
   });
 
+  it('renders mode-aware trench checklist options and preset values', () => {
+    const handleUpdateResourceFields = jest.fn();
+    const { getByTestId, getByText, queryByText } = render(
+      <KoreanFieldworkQuickRecordPanel
+        category={createCategoryForm([
+          FIELDWORK_QUICK_FIELDS.checklist,
+          FIELDWORK_QUICK_FIELDS.featureStatus,
+          FIELDWORK_QUICK_FIELDS.quality,
+          FIELDWORK_QUICK_FIELDS.timing,
+        ])}
+        investigationModeId="trialTrench"
+        resource={createResource(C.FEATURE, {
+          featureRecordingStatus: 'candidate',
+          featureInvestigationChecklist: ['preInvestigationPhotoTaken'],
+          fieldRecordQuality: [],
+          recordCreationTiming: '',
+        })}
+        onUpdateResourceField={jest.fn()}
+        onUpdateResourceFields={handleUpdateResourceFields}
+      />
+    );
+
+    expect(getByText('피트 토층도')).toBeTruthy();
+    expect(queryByText('유물 수습')).toBeNull();
+
+    fireEvent.press(getByTestId('quickRecordPreset_startFeatureInvestigation'));
+
+    expect(handleUpdateResourceFields).toHaveBeenCalledWith(expect.objectContaining({
+      featureInvestigationChecklist: [
+        'preInvestigationPhotoTaken',
+        'trenchSoilCleaned',
+        'trenchFeatureChecked',
+      ],
+    }));
+  });
+
   it('updates the single-choice timing field directly', () => {
     const handleUpdateResourceField = jest.fn();
     const { getByTestId } = render(

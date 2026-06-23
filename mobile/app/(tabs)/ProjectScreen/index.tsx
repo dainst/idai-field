@@ -390,7 +390,7 @@ const DocumentsList: React.FC = () => {
 
     loadKoreanFieldworkInvestigationModeId(projectId)
       .then((modeId) => {
-        if (isActive) setInvestigationModeId(modeId);
+        if (isActive && modeId) setInvestigationModeId(modeId);
       })
       .catch(() => undefined);
 

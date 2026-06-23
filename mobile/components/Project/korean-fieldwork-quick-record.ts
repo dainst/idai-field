@@ -6,6 +6,7 @@ import {
   FEATURE_WORKFLOW_CATEGORIES,
   KOREAN_FIELDWORK_CATEGORIES,
 } from './korean-fieldwork-categories';
+import { KoreanFieldworkInvestigationModeId } from './korean-fieldwork-investigation-mode';
 
 export interface KoreanFieldworkQuickOption {
   value: string;
@@ -51,6 +52,31 @@ export const FEATURE_CHECKLIST_QUICK_OPTIONS: readonly KoreanFieldworkQuickOptio
   { value: 'completionPhotoTaken', label: '완료 사진' },
 ];
 
+const TRIAL_TRENCH_CHECKLIST_QUICK_OPTIONS: readonly KoreanFieldworkQuickOption[] = [
+  { value: 'trenchSoilCleaned', label: '토층 정리' },
+  { value: 'trenchFeatureChecked', label: '유구 확인' },
+  { value: 'trenchPitOpened', label: '피트 조사' },
+  { value: 'trenchPitProfileDrawn', label: '피트 토층도' },
+  { value: 'trenchOverviewPhotoTaken', label: '정방향 사진' },
+  { value: 'trenchObliquePhotoTaken', label: '사선 사진' },
+  { value: 'soilProfilePhotoLinked', label: '기준 토층사진' },
+  { value: 'inProgressPhotoTaken', label: '유구 사진' },
+  { value: 'penMemoReviewed', label: '펜메모 검토' },
+];
+
+const EXCAVATION_CHECKLIST_QUICK_OPTIONS: readonly KoreanFieldworkQuickOption[] = [
+  { value: 'preInvestigationPhotoTaken', label: '조사 전 사진' },
+  { value: 'inProgressPhotoTaken', label: '조사 중 사진' },
+  { value: 'soilProfilePhotoLinked', label: '토층사진' },
+  { value: 'preRecoveryFindPhotoTaken', label: '수습 전 사진' },
+  { value: 'findsRecovered', label: '유물 수습' },
+  { value: 'findRecordsLinked', label: '유물 기록' },
+  { value: 'samplesCollected', label: '시료' },
+  { value: 'completionPhotoTaken', label: '완료 사진' },
+  { value: 'measuredDrawingCompleted', label: '실측' },
+  { value: 'penMemoReviewed', label: '펜메모 검토' },
+];
+
 export const QUALITY_QUICK_OPTIONS: readonly KoreanFieldworkQuickOption[] = [
   { value: 'immediateRecording', label: '현장 기록' },
   { value: 'factualAccuracy', label: '관찰 내용' },
@@ -85,6 +111,21 @@ export const FEATURE_WORKFLOW_QUICK_PRESETS: readonly KoreanFieldworkQuickPreset
     id: 'closeFeatureInvestigation',
     label: '마감 기본',
     detail: '확정 전환, 완료 사진, 실측, 정리 단계 메모',
+    icon: 'task-alt',
+  },
+];
+
+const TRIAL_TRENCH_WORKFLOW_QUICK_PRESETS: readonly KoreanFieldworkQuickPreset[] = [
+  {
+    id: 'startFeatureInvestigation',
+    label: '트렌치 조사 시작',
+    detail: '토층 정리, 유구 확인, 현장 기록',
+    icon: 'play-circle-outline',
+  },
+  {
+    id: 'closeFeatureInvestigation',
+    label: '트렌치 마감',
+    detail: '피트, 토층도, 사진 기록 확인',
     icon: 'task-alt',
   },
 ];
@@ -148,22 +189,47 @@ export const hasKoreanFieldworkQuickRecordActions = (
   || availability.timing;
 
 export const getKoreanFieldworkQuickPresets = (
-  availability: KoreanFieldworkQuickRecordAvailability
+  availability: KoreanFieldworkQuickRecordAvailability,
+  investigationModeId?: KoreanFieldworkInvestigationModeId
 ): readonly KoreanFieldworkQuickPreset[] =>
   availability.checklist || availability.featureStatus
-    ? FEATURE_WORKFLOW_QUICK_PRESETS
+    ? investigationModeId === 'trialTrench'
+      ? TRIAL_TRENCH_WORKFLOW_QUICK_PRESETS
+      : FEATURE_WORKFLOW_QUICK_PRESETS
     : [];
+
+export const getKoreanFieldworkChecklistQuickOptions = (
+  investigationModeId?: KoreanFieldworkInvestigationModeId
+): readonly KoreanFieldworkQuickOption[] => {
+  switch (investigationModeId) {
+    case 'trialTrench':
+      return TRIAL_TRENCH_CHECKLIST_QUICK_OPTIONS;
+    case 'excavation':
+      return EXCAVATION_CHECKLIST_QUICK_OPTIONS;
+    default:
+      return FEATURE_CHECKLIST_QUICK_OPTIONS;
+  }
+};
 
 export const getKoreanFieldworkQuickPresetUpdates = (
   resource: NewResource,
   availability: KoreanFieldworkQuickRecordAvailability,
-  presetId: KoreanFieldworkQuickPresetId
+  presetId: KoreanFieldworkQuickPresetId,
+  investigationModeId?: KoreanFieldworkInvestigationModeId
 ): Record<string, unknown> => {
   switch (presetId) {
     case 'startFeatureInvestigation':
-      return getStartFeatureInvestigationUpdates(resource, availability);
+      return getStartFeatureInvestigationUpdates(
+        resource,
+        availability,
+        investigationModeId
+      );
     case 'closeFeatureInvestigation':
-      return getCloseFeatureInvestigationUpdates(resource, availability);
+      return getCloseFeatureInvestigationUpdates(
+        resource,
+        availability,
+        investigationModeId
+      );
     default:
       return {};
   }
@@ -194,7 +260,8 @@ export const toggleStringArrayFieldValue = (
 
 const getStartFeatureInvestigationUpdates = (
   resource: NewResource,
-  availability: KoreanFieldworkQuickRecordAvailability
+  availability: KoreanFieldworkQuickRecordAvailability,
+  investigationModeId?: KoreanFieldworkInvestigationModeId
 ): Record<string, unknown> => {
   const updates: Record<string, unknown> = {};
 
@@ -206,7 +273,7 @@ const getStartFeatureInvestigationUpdates = (
     updates[FIELDWORK_QUICK_FIELDS.checklist] = mergeStringArrayFieldValues(
       resource,
       FIELDWORK_QUICK_FIELDS.checklist,
-      ['preInvestigationPhotoTaken', 'inProgressPhotoTaken']
+      getStartChecklistValues(investigationModeId)
     );
   }
 
@@ -229,7 +296,8 @@ const getStartFeatureInvestigationUpdates = (
 
 const getCloseFeatureInvestigationUpdates = (
   resource: NewResource,
-  availability: KoreanFieldworkQuickRecordAvailability
+  availability: KoreanFieldworkQuickRecordAvailability,
+  investigationModeId?: KoreanFieldworkInvestigationModeId
 ): Record<string, unknown> => {
   const updates: Record<string, unknown> = {};
 
@@ -241,7 +309,7 @@ const getCloseFeatureInvestigationUpdates = (
     updates[FIELDWORK_QUICK_FIELDS.checklist] = mergeStringArrayFieldValues(
       resource,
       FIELDWORK_QUICK_FIELDS.checklist,
-      ['completionPhotoTaken', 'measuredDrawingCompleted']
+      getCloseChecklistValues(investigationModeId)
     );
   }
 
@@ -264,6 +332,44 @@ const getCloseFeatureInvestigationUpdates = (
   }
 
   return updates;
+};
+
+const getStartChecklistValues = (
+  investigationModeId?: KoreanFieldworkInvestigationModeId
+): string[] => {
+  switch (investigationModeId) {
+    case 'trialTrench':
+      return [
+        'trenchSoilCleaned',
+        'trenchFeatureChecked',
+      ];
+    default:
+      return [
+        'preInvestigationPhotoTaken',
+        'inProgressPhotoTaken',
+      ];
+  }
+};
+
+const getCloseChecklistValues = (
+  investigationModeId?: KoreanFieldworkInvestigationModeId
+): string[] => {
+  switch (investigationModeId) {
+    case 'trialTrench':
+      return [
+        'trenchPitOpened',
+        'trenchPitProfileDrawn',
+        'trenchOverviewPhotoTaken',
+        'trenchObliquePhotoTaken',
+        'soilProfilePhotoLinked',
+        'inProgressPhotoTaken',
+      ];
+    default:
+      return [
+        'completionPhotoTaken',
+        'measuredDrawingCompleted',
+      ];
+  }
 };
 
 const mergeStringArrayFieldValues = (

@@ -12,9 +12,9 @@ import {
   View,
 } from 'react-native';
 import {
-  FEATURE_CHECKLIST_QUICK_OPTIONS,
   FEATURE_STATUS_QUICK_OPTIONS,
   FIELDWORK_QUICK_FIELDS,
+  getKoreanFieldworkChecklistQuickOptions,
   getKoreanFieldworkQuickRecordAvailability,
   getKoreanFieldworkQuickPresetUpdates,
   getKoreanFieldworkQuickPresets,
@@ -27,9 +27,11 @@ import {
   TIMING_QUICK_OPTIONS,
   toggleStringArrayFieldValue,
 } from './korean-fieldwork-quick-record';
+import { KoreanFieldworkInvestigationModeId } from './korean-fieldwork-investigation-mode';
 
 interface KoreanFieldworkQuickRecordPanelProps {
   category: CategoryForm;
+  investigationModeId?: KoreanFieldworkInvestigationModeId;
   resource: NewResource;
   onUpdateResourceField: (fieldName: string, value: unknown) => void;
   onUpdateResourceFields?: (updates: Record<string, unknown>) => void;
@@ -37,6 +39,7 @@ interface KoreanFieldworkQuickRecordPanelProps {
 
 const KoreanFieldworkQuickRecordPanel: React.FC<KoreanFieldworkQuickRecordPanelProps> = ({
   category,
+  investigationModeId,
   resource,
   onUpdateResourceField,
   onUpdateResourceFields,
@@ -46,8 +49,12 @@ const KoreanFieldworkQuickRecordPanel: React.FC<KoreanFieldworkQuickRecordPanelP
     [category, resource]
   );
   const presets = useMemo(
-    () => getKoreanFieldworkQuickPresets(availability),
-    [availability]
+    () => getKoreanFieldworkQuickPresets(availability, investigationModeId),
+    [availability, investigationModeId]
+  );
+  const checklistOptions = useMemo(
+    () => getKoreanFieldworkChecklistQuickOptions(investigationModeId),
+    [investigationModeId]
   );
 
   if (!hasKoreanFieldworkQuickRecordActions(availability)) return null;
@@ -56,7 +63,8 @@ const KoreanFieldworkQuickRecordPanel: React.FC<KoreanFieldworkQuickRecordPanelP
     const updates = getKoreanFieldworkQuickPresetUpdates(
       resource,
       availability,
-      preset.id
+      preset.id,
+      investigationModeId
     );
 
     if (Object.keys(updates).length === 0) return;
@@ -113,7 +121,7 @@ const KoreanFieldworkQuickRecordPanel: React.FC<KoreanFieldworkQuickRecordPanelP
       {availability.checklist && (
         <QuickSection title="조사 과정표">
           <OptionRow
-            options={FEATURE_CHECKLIST_QUICK_OPTIONS}
+            options={checklistOptions}
             activeValues={getStringArrayFieldValues(
               resource,
               FIELDWORK_QUICK_FIELDS.checklist

@@ -625,7 +625,7 @@
       }
     },
     "FeatureGroup": {
-      "label": "유구군",
+      "label": "유구 묶음",
       "fields": {
         "featurePackage": {
           "label": "유적·유구 패키지"

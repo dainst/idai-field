@@ -78,10 +78,10 @@
         "label": "유구별 서사 기록"
       },
       "fieldToReportContinuity": {
-        "label": "보고서 연속성"
+        "label": "보고서 정리 메모"
       },
       "excavatorReportAuthorLink": {
-        "label": "조사자 보고서기술 연결"
+        "label": "조사자 메모 연결"
       },
       "crossReviewNeeded": {
         "label": "교차검토 필요"
@@ -93,7 +93,7 @@
         "label": "추가 확인"
       }
     },
-    "description": "현장 기록의 관찰 내용, 관찰·해석, 유구별 서사와 보고서 연속성을 관리하기 위한 목록"
+    "description": "현장 기록의 관찰 내용, 관찰·해석, 유구별 기록과 보고서 정리 메모를 관리하기 위한 목록"
   },
   "KoreanFieldwork-excavationControlSafety": {
     "values": {
@@ -1706,7 +1706,7 @@
       "alternativeSpatialInterpretation": { "label": "대안 공간해석" },
       "pendingDecision": { "label": "추가 확인" }
     },
-    "description": "취락 단위에서 중복관계, 동시기성, 한 시점 규모, 공간구획, 폐기 양상, 바닥 유물분포, 주거지 간 유물 접합, 식물유체와 잔류물·내용물 분석, 반복 축조 원인을 유구군 근거로 묶어 검토하기 위한 목록"
+    "description": "취락 단위에서 중복관계, 동시기성, 한 시점 규모, 공간구획, 폐기 양상, 바닥 유물분포, 주거지 간 유물 접합, 식물유체와 잔류물·내용물 분석, 반복 축조 원인을 유구 묶음의 근거로 검토하기 위한 목록"
   },
   "KoreanFieldwork-productionProcessSystem": {
     "values": {
@@ -1878,7 +1878,7 @@
       "roastingFeatureNearby": { "label": "배소시설 인접" },
       "wasteDepositLinked": { "label": "폐기장 연결" },
       "workshopLinked": { "label": "공방 연결" },
-      "ritualDepositCandidate": { "label": "제의유구 후보" },
+      "ritualDepositCandidate": { "label": "제의 관련 가능성" },
       "pendingDecision": { "label": "추가 확인" }
     },
     "description": "제철 노의 평면, 단면, 벽체, 바닥, 송풍·배재 구조, 보수·재사용, 원료·연료 저장, 폐기장과 공방 연결을 현장에서 빠뜨리지 않기 위한 목록"
@@ -4068,20 +4068,26 @@
   },
   "KoreanFieldwork-featureRecordingStatus": {
     "values": {
-      "candidate": { "label": "후보" },
+      "candidate": { "label": "검출" },
       "investigating": { "label": "조사중" },
       "confirmed": { "label": "확정" },
       "rejected": { "label": "제외" },
       "merged": { "label": "병합" },
       "split": { "label": "분할" }
     },
-    "description": "전면 제토 뒤 보이는 흔적을 유구 후보로 만들고 조사 과정에서 상태를 갱신하기 위한 목록"
+    "description": "전면 제토 뒤 확인한 유구의 조사 상태를 갱신하기 위한 목록"
   },
   "KoreanFieldwork-featureInvestigationChecklist": {
     "values": {
       "preInvestigationPhotoTaken": { "label": "조사 전 사진" },
       "inProgressPhotoTaken": { "label": "조사 중 사진" },
       "soilProfilePhotoLinked": { "label": "토층사진" },
+      "trenchSoilCleaned": { "label": "토층 정리" },
+      "trenchFeatureChecked": { "label": "유구 확인" },
+      "trenchPitOpened": { "label": "피트 조사" },
+      "trenchPitProfileDrawn": { "label": "피트 토층도" },
+      "trenchOverviewPhotoTaken": { "label": "정방향 사진" },
+      "trenchObliquePhotoTaken": { "label": "사선 사진" },
       "completionPhotoTaken": { "label": "조사 완료 사진" },
       "measuredDrawingCompleted": { "label": "실측 완료" },
       "preRecoveryFindPhotoTaken": { "label": "수습 전 유물사진" },
@@ -4090,7 +4096,7 @@
       "samplesCollected": { "label": "시료 채취" },
       "penMemoReviewed": { "label": "펜메모 검토" }
     },
-    "description": "유구별 조사 전·중·완료 사진, 토층사진, 실측, 유물 수습 상태를 현장에서 확인하기 위한 목록"
+    "description": "표본·시굴 트렌치와 발굴 유구의 조사 사진, 토층, 피트, 실측, 유물 수습 상태를 현장에서 확인하기 위한 목록"
   },
   "KoreanFieldwork-geometrySource": {
     "values": {
@@ -7070,7 +7076,7 @@
         "label": "조사구역·작업기록"
       },
       "featureGroupRecord": {
-        "label": "유구군 기록"
+        "label": "유구 묶음 기록"
       },
       "featureRecord": {
         "label": "유구 기록"

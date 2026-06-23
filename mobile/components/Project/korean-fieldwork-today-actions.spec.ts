@@ -173,7 +173,7 @@ describe('Korean fieldwork today actions', () => {
     });
   });
 
-  it('uses trench children for 표본·시굴 토층 and 유구 확인 tasks', () => {
+  it('uses trench children for 표본·시굴 토층사진 and 유구 확인 tasks', () => {
     const operation = createDoc('operation-1', C.OPERATION);
     const trench = createDoc('trench-1', C.TRENCH, {
       relations: { isRecordedIn: ['operation-1'] },
@@ -185,11 +185,11 @@ describe('Korean fieldwork today actions', () => {
       'trialTrench'
     );
 
-    expect(tasks.find((task) => task.id === 'create-trench-layer')?.action)
+    expect(tasks.find((task) => task.id === 'create-trench-profile-photo')?.action)
       .toEqual({
         type: 'createDocument',
         parentDocumentId: 'trench-1',
-        categoryName: C.LAYER,
+        categoryName: C.SOIL_PROFILE_PHOTO,
       });
     expect(tasks.find((task) => task.id === 'create-detected-feature')?.action)
       .toEqual({

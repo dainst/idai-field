@@ -21,7 +21,6 @@ const FEATURE_PROGRESS_CATEGORIES = new Set<string>([
   C.FEATURE,
   C.FEATURE_GROUP,
   C.FEATURE_SEGMENT,
-  C.LAYER,
   C.TRENCH,
 ]);
 
@@ -507,12 +506,25 @@ export const getKoreanFieldworkFieldNotePresets = (
   if (category === C.LAYER) {
     return [
       {
-        id: 'layer',
-        label: '토층',
+        id: 'layerColorMemo',
+        label: '번호·토색',
         input: {
-          observation: '토색, 토질, 포함물, 상·하부 경계를 확인.',
-          interpretation: '토층 성격과 형성 과정을 관찰 근거와 분리해 기록.',
-          nextWork: '단면 정리 후 토층 번호와 사진·도면 번호 연결.',
+          observation: '사진 위 표시 번호별 토색을 기록. 예: 1 회갈색 사질토, 2 암갈색 점질토.',
+          nextWork: '사진 주석 번호와 토색 메모가 서로 맞는지 확인.',
+        },
+      },
+      ...commonPresets,
+    ];
+  }
+
+  if (category === C.SOIL_PROFILE_PHOTO) {
+    return [
+      {
+        id: 'soilProfilePhoto',
+        label: '사진·토색',
+        input: {
+          observation: '사진 위 표시 번호별 토색을 기록. 예: 1 회갈색 사질토, 2 암갈색 점질토.',
+          nextWork: '누락된 번호, 토색, 촬영 방향을 확인.',
         },
       },
       ...commonPresets,
@@ -622,22 +634,43 @@ export const getKoreanFieldworkFieldNoteObservationPrompts = (
     case C.LAYER:
       return [
         {
-          id: 'soil',
-          label: '토색·토질',
-          detail: '색·입도·포함물',
-          observation: '토색, 토질, 입도, 포함물과 다짐 정도를 기록.',
+          id: 'layer-number-color',
+          label: '번호·토색',
+          detail: '사진 표시 번호별',
+          observation: '사진 위 표시 번호별 토색을 기록. 예: 1 회갈색 사질토, 2 암갈색 점질토.',
         },
         {
-          id: 'layer-boundary',
-          label: '층 경계',
-          detail: '상하부·점이',
-          observation: '상·하부 경계의 명확도, 점이 양상, 접촉 관계를 기록.',
+          id: 'layer-photo-mark',
+          label: '사진 표시',
+          detail: '번호·방향',
+          observation: '토층 번호가 사진 위 표시와 맞는지, 촬영 방향과 기준면을 기록.',
         },
         {
-          id: 'formation',
-          label: '퇴적 관계',
-          detail: '형성·교란',
-          observation: '퇴적 방향, 교란 흔적, 주변 유구와의 관계를 기록.',
+          id: 'layer-note',
+          label: '필요 메모',
+          detail: '애매한 경계만',
+          observation: '색 변화가 애매하거나 경계가 흐린 부분만 간단히 메모.',
+        },
+      ];
+    case C.SOIL_PROFILE_PHOTO:
+      return [
+        {
+          id: 'soil-photo-number-color',
+          label: '번호·토색',
+          detail: '사진 표시 번호별',
+          observation: '사진 위 표시 번호별 토색을 기록. 예: 1 회갈색 사질토, 2 암갈색 점질토.',
+        },
+        {
+          id: 'soil-photo-direction',
+          label: '촬영 방향',
+          detail: '벽면·기준',
+          observation: '촬영한 벽면, 방향, 기준면과 스케일 위치를 기록.',
+        },
+        {
+          id: 'soil-photo-missing',
+          label: '누락 확인',
+          detail: '번호·토색',
+          observation: '사진에 적은 번호와 토색 메모가 빠짐없이 대응되는지 확인.',
         },
       ];
     case C.FIND:
@@ -1181,7 +1214,7 @@ const FIELD_NOTE_EVIDENCE_ACTION_IDS = new Set<string>([
 
 const FIELD_NOTE_EVIDENCE_NUMBER_LABELS: Record<string, string> = {
   photos: '사진',
-  soilProfilePhotos: '토층 사진',
+  soilProfilePhotos: '토층사진',
   drawings: '도면',
   finds: '유물',
   samples: '시료',
@@ -1261,7 +1294,8 @@ const FIELD_NOTE_EVIDENCE_ACTION_ORDER = [
 const getObservationPrompt = (document: Document): string => {
   switch (document.resource.category) {
     case C.LAYER:
-      return '토색, 토질, 포함물, 상·하부 경계부터 적어두세요.';
+    case C.SOIL_PROFILE_PHOTO:
+      return '사진 위 토층 번호와 번호별 토색부터 적어두세요.';
     case C.FIND:
     case C.SAMPLE:
       return '출토 위치, 층위, 주변 유구와의 관계부터 적어두세요.';

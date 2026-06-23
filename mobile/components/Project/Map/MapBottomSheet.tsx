@@ -142,7 +142,7 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
         <Button
           style={styles.button}
           variant="secondary"
-          title="토층"
+          title="토층사진"
           isDisabled={!canCreateSoilProfilePhoto}
           onPress={createSoilProfilePhotoDraft}
           icon={<MaterialIcons name="photo-camera" size={iconSize} />}

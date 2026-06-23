@@ -114,7 +114,7 @@ const PRIMARY_ONLY_CATEGORIES = new Set([
 ]);
 
 export const KOREAN_FIELDWORK_HIERARCHY_HELP =
-  '조사 방식에 맞춰 트렌치·유구·피트·토층을 필요한 만큼 이어갑니다.';
+  '조사 방식에 맞춰 트렌치·유구·피트를 만들고, 토층은 사진 위 표시와 번호별 토색 메모로 남깁니다.';
 
 export const getKoreanFieldworkAddOptions = (
   parentCategoryName: string,

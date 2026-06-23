@@ -60,10 +60,13 @@ describe('korean-fieldwork-field-notes', () => {
   it('provides context presets and merges them into existing tablet notes', () => {
     const layer = createDoc('layer-1', C.LAYER, '토층 1');
     const presets = getKoreanFieldworkFieldNotePresets(layer);
-    const layerPreset = presets.find((preset) => preset.id === 'layer');
+    const layerPreset = presets.find((preset) =>
+      preset.id === 'layerColorMemo'
+    );
 
     expect(layerPreset).toBeDefined();
     expect(presets.map((preset) => preset.id)).toContain('photoDrawing');
+    expect(layerPreset!.input.observation).toContain('번호별 토색');
     expect(mergeKoreanFieldworkFieldNoteInput(
       { observation: '동벽에서 회갈색 사질토 확인.' },
       layerPreset!.input
@@ -72,7 +75,7 @@ describe('korean-fieldwork-field-notes', () => {
         '동벽에서 회갈색 사질토 확인.',
         layerPreset!.input.observation,
       ].join('\n'),
-      interpretation: layerPreset!.input.interpretation,
+      interpretation: '',
       nextWork: layerPreset!.input.nextWork,
     });
   });
@@ -125,9 +128,16 @@ describe('korean-fieldwork-field-notes', () => {
     expect(getKoreanFieldworkFieldNoteObservationPrompts(
       createDoc('layer-1', C.LAYER, '토층 1')
     ).map((prompt) => prompt.id)).toEqual([
-      'soil',
-      'layer-boundary',
-      'formation',
+      'layer-number-color',
+      'layer-photo-mark',
+      'layer-note',
+    ]);
+    expect(getKoreanFieldworkFieldNoteObservationPrompts(
+      createDoc('soil-photo-1', C.SOIL_PROFILE_PHOTO, '토층사진 1')
+    ).map((prompt) => prompt.id)).toEqual([
+      'soil-photo-number-color',
+      'soil-photo-direction',
+      'soil-photo-missing',
     ]);
     expect(getKoreanFieldworkFieldNoteObservationPrompts(
       createDoc('find-1', C.FIND, '유물 1')

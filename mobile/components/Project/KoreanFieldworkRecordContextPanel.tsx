@@ -154,57 +154,62 @@ const KoreanFieldworkRecordContextPanel: React.FC<KoreanFieldworkRecordContextPa
 
 export const getEvidenceMetrics = (
   evidenceBundle: EvidenceBundle
-): EvidenceMetric[] => [
-  {
-    id: 'featureSegments',
-    label: '피트',
-    icon: 'account-tree',
-    documents: evidenceBundle.featureSegments,
-    createCategoryName: KOREAN_FIELDWORK_CATEGORIES.FEATURE_SEGMENT,
-  },
-  {
-    id: 'layers',
-    label: '토층',
-    icon: 'layers',
-    documents: evidenceBundle.layers,
-    createCategoryName: KOREAN_FIELDWORK_CATEGORIES.LAYER,
-  },
-  {
-    id: 'photos',
-    label: '사진',
-    icon: 'photo-camera',
-    documents: evidenceBundle.photos,
-    createCategoryName: KOREAN_FIELDWORK_CATEGORIES.PHOTO,
-  },
-  {
-    id: 'soilProfilePhotos',
-    label: '토층',
-    icon: 'terrain',
-    documents: evidenceBundle.soilProfilePhotos,
-    createCategoryName: KOREAN_FIELDWORK_CATEGORIES.SOIL_PROFILE_PHOTO,
-  },
-  {
-    id: 'drawings',
-    label: '도면',
-    icon: 'architecture',
-    documents: evidenceBundle.drawings,
-    createCategoryName: KOREAN_FIELDWORK_CATEGORIES.DRAWING,
-  },
-  {
-    id: 'finds',
-    label: '유물',
-    icon: 'inventory-2',
-    documents: evidenceBundle.finds,
-    createCategoryName: KOREAN_FIELDWORK_CATEGORIES.FIND,
-  },
-  {
-    id: 'samples',
-    label: '시료',
-    icon: 'science',
-    documents: evidenceBundle.samples,
-    createCategoryName: KOREAN_FIELDWORK_CATEGORIES.SAMPLE,
-  },
-];
+): EvidenceMetric[] => {
+  const metrics: EvidenceMetric[] = [
+    {
+      id: 'featureSegments',
+      label: '피트',
+      icon: 'account-tree',
+      documents: evidenceBundle.featureSegments,
+      createCategoryName: KOREAN_FIELDWORK_CATEGORIES.FEATURE_SEGMENT,
+    },
+    {
+      id: 'layers',
+      label: '토색 메모',
+      icon: 'layers',
+      documents: evidenceBundle.layers,
+    },
+    {
+      id: 'photos',
+      label: '사진',
+      icon: 'photo-camera',
+      documents: evidenceBundle.photos,
+      createCategoryName: KOREAN_FIELDWORK_CATEGORIES.PHOTO,
+    },
+    {
+      id: 'soilProfilePhotos',
+      label: '토층사진',
+      icon: 'terrain',
+      documents: evidenceBundle.soilProfilePhotos,
+      createCategoryName: KOREAN_FIELDWORK_CATEGORIES.SOIL_PROFILE_PHOTO,
+    },
+    {
+      id: 'drawings',
+      label: '도면',
+      icon: 'architecture',
+      documents: evidenceBundle.drawings,
+      createCategoryName: KOREAN_FIELDWORK_CATEGORIES.DRAWING,
+    },
+    {
+      id: 'finds',
+      label: '유물',
+      icon: 'inventory-2',
+      documents: evidenceBundle.finds,
+      createCategoryName: KOREAN_FIELDWORK_CATEGORIES.FIND,
+    },
+    {
+      id: 'samples',
+      label: '시료',
+      icon: 'science',
+      documents: evidenceBundle.samples,
+      createCategoryName: KOREAN_FIELDWORK_CATEGORIES.SAMPLE,
+    },
+  ];
+
+  return metrics.filter((metric) =>
+    metric.documents.length > 0 || metric.createCategoryName
+  );
+};
 
 const EvidenceButton: React.FC<{
   rootDocument: Document;

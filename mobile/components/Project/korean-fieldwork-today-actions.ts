@@ -268,14 +268,14 @@ const appendTrialTrenchPriorityTasks = (
     return;
   }
 
-  if (!hasDirectChildCategory(trench, C.LAYER, documents, documentsById)) {
+  if (!hasDirectChildCategory(trench, C.SOIL_PROFILE_PHOTO, documents, documentsById)) {
     tasks.push({
-      id: 'create-trench-layer',
-      icon: 'layers',
-      title: '트렌치 토층 기록',
-      detail: `${trench.resource.identifier}의 토층 정리 상태와 기준 단면을 기록하세요.`,
+      id: 'create-trench-profile-photo',
+      icon: 'photo-camera',
+      title: '트렌치 토층사진',
+      detail: '기준 단면 사진에 번호를 표시하고 번호별 토색을 남기세요.',
       tone: 'info',
-      action: toCreateDocumentAction(trench, C.LAYER),
+      action: toCreateDocumentAction(trench, C.SOIL_PROFILE_PHOTO),
     });
   }
 
@@ -309,15 +309,6 @@ const appendTrialTrenchPriorityTasks = (
         tone: 'info',
         action: toCreateDocumentAction(feature, C.FEATURE_SEGMENT),
       });
-    } else if (!hasDirectChildCategory(segment, C.LAYER, documents, documentsById)) {
-      tasks.push({
-        id: 'create-pit-layer',
-        icon: 'format-color-fill',
-        title: '피트 토층 기록',
-        detail: `${segment.resource.identifier}의 토층도와 토층 관찰을 이어서 기록하세요.`,
-        tone: 'warning',
-        action: toCreateDocumentAction(segment, C.LAYER),
-      });
     }
 
     const profileParent = segment ?? feature;
@@ -325,8 +316,8 @@ const appendTrialTrenchPriorityTasks = (
       tasks.push({
         id: 'create-pit-profile-photo',
         icon: 'photo-camera',
-        title: '기준 토층 사진',
-        detail: '기준 단면이나 피트 토층 사진을 기록 단위에 연결하세요.',
+        title: '피트 토층사진',
+        detail: '피트 단면 사진에 번호를 표시하고 번호별 토색을 남기세요.',
         tone: 'info',
         action: toCreateDocumentAction(profileParent, C.SOIL_PROFILE_PHOTO),
       });
@@ -393,15 +384,6 @@ const appendExcavationPriorityTasks = (
       tone: 'info',
       action: toCreateDocumentAction(feature, C.FEATURE_SEGMENT),
     });
-  } else if (!hasDirectChildCategory(segment, C.LAYER, documents, documentsById)) {
-    tasks.push({
-      id: 'create-excavation-layer',
-      icon: 'layers',
-      title: '토층 기록',
-      detail: `${segment.resource.identifier}의 토층과 중복 관계를 기록하세요.`,
-      tone: 'info',
-      action: toCreateDocumentAction(segment, C.LAYER),
-    });
   }
 
   const profileParent = segment ?? feature;
@@ -409,8 +391,8 @@ const appendExcavationPriorityTasks = (
     tasks.push({
       id: 'create-excavation-profile-photo',
       icon: 'photo-camera',
-      title: '토층 사진',
-      detail: '토층둑이나 절개면 사진을 조사 기록에 연결하세요.',
+      title: '토층사진',
+      detail: '토층둑이나 절개면 사진에 번호를 표시하고 번호별 토색을 남기세요.',
       tone: 'info',
       action: toCreateDocumentAction(profileParent, C.SOIL_PROFILE_PHOTO),
     });

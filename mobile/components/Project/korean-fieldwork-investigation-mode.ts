@@ -39,7 +39,7 @@ export const KOREAN_FIELDWORK_INVESTIGATION_MODES: readonly KoreanFieldworkInves
       '유물 성격과 시대 추정',
       '조사 전 사진',
       '반절·토층둑·조사 중 사진',
-      '토층 사진과 유물 노출 사진',
+      '토층사진과 유물 노출 사진',
       '유물 수습과 완료 사진',
       '실측',
     ],

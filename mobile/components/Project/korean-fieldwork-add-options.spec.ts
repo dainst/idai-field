@@ -42,6 +42,8 @@ describe('korean fieldwork add options', () => {
       categoryName: C.FEATURE_SEGMENT,
       label: '피트',
     });
+    expect(options.primary.map((option) => option.categoryName))
+      .not.toContain(C.LAYER);
     expect(options.primary.map((option) => option.categoryName)).not.toContain(C.PLACE);
   });
 
@@ -65,6 +67,7 @@ describe('korean fieldwork add options', () => {
     expect(isVisibleAddCategory(C.PLACE)).toBe(false);
     expect(isVisibleAddCategory('Image')).toBe(false);
     expect(isVisibleAddCategory(C.FEATURE_GROUP)).toBe(false);
+    expect(isVisibleAddCategory(C.LAYER)).toBe(false);
     expect(isVisibleAddCategory(C.FEATURE)).toBe(true);
   });
 });

@@ -9,7 +9,13 @@ import {
   NewResource,
   Resource,
 } from 'idai-field-core';
-import React, { ReactNode, useEffect, useMemo, useState } from 'react';
+import React, {
+  ReactNode,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import {
   FlatList,
   SafeAreaView,
@@ -25,6 +31,7 @@ import Heading from '../Heading';
 import I18NLabel from '../I18NLabel';
 import TitleBar from '../TitleBar';
 import EditFormField from './EditFormField';
+import LabelsContext from '@/contexts/labels/labels-context';
 
 interface DocumentFormProps {
   category: CategoryForm;
@@ -51,6 +58,7 @@ const DocumentForm: React.FC<DocumentFormProps> = ({
   resource,
   updateFunction,
 }) => {
+  const { labels } = useContext(LabelsContext);
   const groups = useMemo(() => prioritizeKoreanFieldworkGroup(category.groups), [category.groups]);
   const [activeGroup, setActiveGroup] = useState<Group>(groups[0]);
 
@@ -122,7 +130,7 @@ const DocumentForm: React.FC<DocumentFormProps> = ({
                     {groups.map((group) => (
                       <Picker.Item
                         key={group.name}
-                        label={group.name}
+                        label={labels?.get(group) ?? group.name}
                         value={group.name}
                       />
                     ))}

@@ -44,10 +44,10 @@ describe('Korean fieldwork record evidence', () => {
       },
       {
         id: 'layers',
-        label: '토층',
+        label: '토색 메모',
         count: 1,
         tone: 'filled',
-        createCategoryName: C.LAYER,
+        createCategoryName: undefined,
         documentIds: ['layer-1'],
       },
       {
@@ -60,7 +60,7 @@ describe('Korean fieldwork record evidence', () => {
       },
       {
         id: 'soilProfilePhotos',
-        label: '토층',
+        label: '토층사진',
         count: 0,
         tone: 'empty',
         createCategoryName: C.SOIL_PROFILE_PHOTO,

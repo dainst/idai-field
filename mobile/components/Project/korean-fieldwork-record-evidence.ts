@@ -16,6 +16,14 @@ export interface KoreanFieldworkEvidenceChip {
 
 const C = KOREAN_FIELDWORK_CATEGORIES;
 
+interface EvidenceDefinition {
+  id: string;
+  label: string;
+  getDocuments: (bundle: EvidenceBundle) => Document[];
+  categories: string[];
+  createCategoryName?: string;
+}
+
 const EVIDENCE_TARGET_CATEGORIES = [
   C.OPERATION,
   C.TRENCH,
@@ -25,7 +33,7 @@ const EVIDENCE_TARGET_CATEGORIES = [
   C.LAYER,
 ];
 
-const EVIDENCE_DEFINITIONS = [
+const EVIDENCE_DEFINITIONS: EvidenceDefinition[] = [
   {
     id: 'featureSegments',
     label: '피트',
@@ -35,10 +43,9 @@ const EVIDENCE_DEFINITIONS = [
   },
   {
     id: 'layers',
-    label: '토층',
+    label: '토색 메모',
     getDocuments: (bundle: EvidenceBundle) => bundle.layers,
     categories: [C.TRENCH, C.FEATURE_GROUP, C.FEATURE, C.FEATURE_SEGMENT],
-    createCategoryName: C.LAYER,
   },
   {
     id: 'photos',
@@ -49,9 +56,9 @@ const EVIDENCE_DEFINITIONS = [
   },
   {
     id: 'soilProfilePhotos',
-    label: '토층',
+    label: '토층사진',
     getDocuments: (bundle: EvidenceBundle) => bundle.soilProfilePhotos,
-    categories: [C.OPERATION, C.FEATURE, C.FEATURE_SEGMENT],
+    categories: [C.OPERATION, C.TRENCH, C.FEATURE, C.FEATURE_SEGMENT],
     createCategoryName: C.SOIL_PROFILE_PHOTO,
   },
   {
@@ -91,17 +98,18 @@ export const getKoreanFieldworkEvidenceChips = (
     .filter((definition) =>
       definition.categories.includes(document.resource.category)
     )
-    .map((definition) => {
+    .flatMap((definition) => {
       const evidenceDocuments = definition.getDocuments(bundle);
       const count = evidenceDocuments.length;
+      if (count === 0 && !definition.createCategoryName) return [];
 
-      return {
+      return [{
         id: definition.id,
         label: definition.label,
         count,
         tone: count > 0 ? 'filled' : 'empty',
         documents: evidenceDocuments,
         createCategoryName: definition.createCategoryName,
-      };
+      }];
     });
 };

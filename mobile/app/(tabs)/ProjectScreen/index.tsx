@@ -495,7 +495,18 @@ const DocumentsList: React.FC = () => {
     try {
       setIsCreatingFieldNote(true);
 
-      if (mode === 'dailyLog') {
+      const savedIdentifiers: string[] = [];
+      const saveRecordMemo = async () => {
+        const createdDocument = await repository.create(
+          createKoreanFieldworkRecordMemoDraft(
+            selectedWorkbenchDocument,
+            text,
+            config
+          )
+        );
+        savedIdentifiers.push(createdDocument.resource.identifier);
+      };
+      const saveDailyLog = async () => {
         if (!selectedFieldNoteOperation) return;
 
         if (selectedFieldNoteDailyLog) {
@@ -512,10 +523,7 @@ const DocumentsList: React.FC = () => {
             },
           });
 
-          showToast(
-            ToastType.Success,
-            `${updatedDocument.resource.identifier}에 야장 메모를 추가했습니다.`
-          );
+          savedIdentifiers.push(updatedDocument.resource.identifier);
           return;
         }
 
@@ -528,24 +536,17 @@ const DocumentsList: React.FC = () => {
           )
         );
 
-        showToast(
-          ToastType.Success,
-          `${createdDocument.resource.identifier} 작업일지를 만들었습니다.`
-        );
-        return;
-      }
+        savedIdentifiers.push(createdDocument.resource.identifier);
+      };
 
-      const createdDocument = await repository.create(
-        createKoreanFieldworkRecordMemoDraft(
-          selectedWorkbenchDocument,
-          text,
-          config
-        )
-      );
+      if (mode === 'recordMemo' || mode === 'both') await saveRecordMemo();
+      if (mode === 'dailyLog' || mode === 'both') await saveDailyLog();
+
+      if (savedIdentifiers.length === 0) return;
 
       showToast(
         ToastType.Success,
-        `${createdDocument.resource.identifier} 메모를 저장했습니다.`
+        `${savedIdentifiers.join(', ')}에 야장을 저장했습니다.`
       );
     } catch (error) {
       showToast(

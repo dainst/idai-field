@@ -16,9 +16,12 @@ import {
 import {
   buildKoreanFieldworkFieldNoteText,
   getKoreanFieldworkFieldNoteChecklist,
+  getKoreanFieldworkFieldNotePresets,
   getKoreanFieldworkFieldNoteSummaries,
   KoreanFieldworkFieldNoteInput,
   KoreanFieldworkFieldNoteMode,
+  KoreanFieldworkFieldNotePreset,
+  mergeKoreanFieldworkFieldNoteInput,
 } from './korean-fieldwork-field-notes';
 
 interface KoreanFieldworkFieldNotePanelProps {
@@ -69,13 +72,19 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     ),
     [documents, operationDocument, selectedDocument]
   );
+  const presets = useMemo(
+    () => getKoreanFieldworkFieldNotePresets(selectedDocument),
+    [selectedDocument]
+  );
   const checklist = useMemo(
     () => getKoreanFieldworkFieldNoteChecklist(noteInput),
     [noteInput]
   );
-  const selectedModeEnabled = mode === 'recordMemo'
-    ? canCreateRecordMemo
-    : canCreateDailyLog;
+  const selectedModeEnabled = getModeEnabled(
+    mode,
+    canCreateRecordMemo,
+    canCreateDailyLog
+  );
   const normalizedText = useMemo(
     () => buildKoreanFieldworkFieldNoteText(noteInput),
     [noteInput]
@@ -85,6 +94,10 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     isBusy || !selectedModeEnabled || normalizedText.length === 0;
 
   useEffect(() => {
+    if (mode === 'both' && (!canCreateRecordMemo || !canCreateDailyLog)) {
+      setMode(canCreateRecordMemo ? 'recordMemo' : 'dailyLog');
+      return;
+    }
     if (mode === 'dailyLog' && !canCreateDailyLog && canCreateRecordMemo) {
       setMode('recordMemo');
     }
@@ -105,6 +118,11 @@ const KoreanFieldworkFieldNotePanel: React.FC<
       ...currentInput,
       [fieldName]: value,
     }));
+  };
+  const applyPreset = (preset: KoreanFieldworkFieldNotePreset) => {
+    setNoteInput((currentInput) =>
+      mergeKoreanFieldworkFieldNoteInput(currentInput, preset.input)
+    );
   };
 
   const saveNote = async () => {
@@ -152,6 +170,15 @@ const KoreanFieldworkFieldNotePanel: React.FC<
           onPress={() => setMode('dailyLog')}
           testID="fieldNoteMode_dailyLog"
         />
+        <ModeButton
+          icon="library-add-check"
+          label="둘 다 저장"
+          detail="기록과 일지"
+          isActive={mode === 'both'}
+          isDisabled={!canCreateRecordMemo || !canCreateDailyLog}
+          onPress={() => setMode('both')}
+          testID="fieldNoteMode_both"
+        />
       </View>
 
       <View style={styles.checklistRow}>
@@ -186,6 +213,31 @@ const KoreanFieldworkFieldNotePanel: React.FC<
           </View>
         ))}
       </View>
+
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.presetRow}
+      >
+        {presets.map((preset) => (
+          <TouchableOpacity
+            activeOpacity={0.86}
+            key={preset.id}
+            onPress={() => applyPreset(preset)}
+            style={styles.presetButton}
+            testID={`fieldNotePreset_${preset.id}`}
+          >
+            <MaterialIcons
+              name={getPresetIcon(preset.id)}
+              size={16}
+              color="#2f5f4a"
+            />
+            <Text style={styles.presetButtonText} numberOfLines={1}>
+              {preset.label}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
 
       <FieldNoteInputBlock
         icon="visibility"
@@ -374,8 +426,38 @@ const getSaveLabel = (
   isBusy: boolean
 ): string => {
   if (isBusy) return '저장 중';
+  if (mode === 'both') return existingDailyLog ? '둘 다 저장' : '메모+일지';
   if (mode === 'dailyLog') return existingDailyLog ? '일지에 추가' : '일지 만들기';
   return '메모 저장';
+};
+
+const getModeEnabled = (
+  mode: KoreanFieldworkFieldNoteMode,
+  canCreateRecordMemo: boolean,
+  canCreateDailyLog: boolean
+): boolean => {
+  if (mode === 'both') return canCreateRecordMemo && canCreateDailyLog;
+  return mode === 'recordMemo' ? canCreateRecordMemo : canCreateDailyLog;
+};
+
+const getPresetIcon = (
+  presetId: string
+): keyof typeof MaterialIcons.glyphMap => {
+  switch (presetId) {
+    case 'boundary':
+      return 'polyline';
+    case 'photoDrawing':
+      return 'photo-camera';
+    case 'findSample':
+    case 'findSampleContext':
+      return 'inventory';
+    case 'layer':
+      return 'layers';
+    case 'featureProgress':
+      return 'account-tree';
+    default:
+      return 'edit-note';
+  }
 };
 
 const styles = StyleSheet.create({
@@ -465,6 +547,26 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontWeight: '700',
     marginTop: 1,
+  },
+  presetRow: {
+    paddingTop: 10,
+  },
+  presetButton: {
+    alignItems: 'center',
+    backgroundColor: '#f0fdf4',
+    borderColor: '#bbf7d0',
+    borderRadius: 6,
+    borderWidth: 1,
+    flexDirection: 'row',
+    height: 34,
+    marginRight: 7,
+    paddingHorizontal: 9,
+  },
+  presetButtonText: {
+    color: '#2f5f4a',
+    fontSize: 12,
+    fontWeight: '900',
+    marginLeft: 5,
   },
   inputBlock: {
     marginTop: 10,

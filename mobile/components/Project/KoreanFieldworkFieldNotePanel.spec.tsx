@@ -97,6 +97,42 @@ describe('KoreanFieldworkFieldNotePanel', () => {
     expect(handleOpenDocument).toHaveBeenCalledWith(dailyLog);
   });
 
+  it('applies a field preset and saves it to both record memo and daily log', async () => {
+    const operation = createDoc('operation-1', C.OPERATION, 'A 구역');
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
+    const handleCreateNote = jest.fn().mockResolvedValue(undefined);
+
+    const { getByTestId } = renderPanel(feature, {
+      documents: [feature, operation],
+      operationDocument: operation,
+      onCreateNote: handleCreateNote,
+    });
+
+    await act(async () => {
+      fireEvent.press(getByTestId('fieldNotePreset_featureProgress'));
+      fireEvent.press(getByTestId('fieldNoteMode_both'));
+      jest.runOnlyPendingTimers();
+    });
+    fireEvent.changeText(
+      getByTestId('fieldNoteEvidenceNumbersInput'),
+      '사진 21-24, 도면 5'
+    );
+    await act(async () => {
+      fireEvent.press(getByTestId('fieldNoteSave'));
+      await Promise.resolve();
+      jest.runOnlyPendingTimers();
+    });
+
+    expect(handleCreateNote).toHaveBeenCalledWith(
+      'both',
+      expect.stringContaining('[관찰 내용]')
+    );
+    expect(handleCreateNote).toHaveBeenCalledWith(
+      'both',
+      expect.stringContaining('사진 21-24, 도면 5')
+    );
+  });
+
   it('clears unsaved text when the selected record changes', () => {
     const feature = createDoc('feature-1', C.FEATURE, '유구 1');
     const trench = createDoc('trench-1', C.TRENCH, '트렌치 1');

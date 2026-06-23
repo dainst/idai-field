@@ -5,10 +5,12 @@ import {
   createKoreanFieldworkDailyLogDraft,
   createKoreanFieldworkRecordMemoDraft,
   getKoreanFieldworkFieldNoteChecklist,
+  getKoreanFieldworkFieldNotePresets,
   getKoreanFieldworkDailyLogAppendUpdates,
   getKoreanFieldworkDailyLogForOperation,
   getKoreanFieldworkFieldNoteOperation,
   getKoreanFieldworkFieldNoteSummaries,
+  mergeKoreanFieldworkFieldNoteInput,
 } from './korean-fieldwork-field-notes';
 
 const C = KOREAN_FIELDWORK_CATEGORIES;
@@ -39,6 +41,26 @@ describe('korean-fieldwork-field-notes', () => {
       ['nextWork', false],
       ['evidenceNumbers', false],
     ]);
+  });
+
+  it('provides context presets and merges them into existing tablet notes', () => {
+    const layer = createDoc('layer-1', C.LAYER, '층위 1');
+    const presets = getKoreanFieldworkFieldNotePresets(layer);
+    const layerPreset = presets.find((preset) => preset.id === 'layer');
+
+    expect(layerPreset).toBeDefined();
+    expect(presets.map((preset) => preset.id)).toContain('photoDrawing');
+    expect(mergeKoreanFieldworkFieldNoteInput(
+      { observation: '동벽에서 회갈색 사질토 확인.' },
+      layerPreset!.input
+    )).toMatchObject({
+      observation: [
+        '동벽에서 회갈색 사질토 확인.',
+        layerPreset!.input.observation,
+      ].join('\n'),
+      interpretation: layerPreset!.input.interpretation,
+      nextWork: layerPreset!.input.nextWork,
+    });
   });
 
   it('finds the operation for a selected trench or feature record', () => {

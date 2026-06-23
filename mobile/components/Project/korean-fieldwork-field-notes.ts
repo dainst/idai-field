@@ -18,7 +18,7 @@ const FEATURE_PROGRESS_CATEGORIES = new Set<string>([
   C.TRENCH,
 ]);
 
-export type KoreanFieldworkFieldNoteMode = 'recordMemo'|'dailyLog';
+export type KoreanFieldworkFieldNoteMode = 'recordMemo'|'dailyLog'|'both';
 
 export interface KoreanFieldworkFieldNoteInput {
   observation?: string;
@@ -39,6 +39,12 @@ export interface KoreanFieldworkFieldNoteChecklistItem {
   label: string;
   detail: string;
   isComplete: boolean;
+}
+
+export interface KoreanFieldworkFieldNotePreset {
+  id: string;
+  label: string;
+  input: KoreanFieldworkFieldNoteInput;
 }
 
 export const createKoreanFieldworkRecordMemoDraft = (
@@ -237,6 +243,104 @@ export const getKoreanFieldworkFieldNoteChecklist = (
   },
 ];
 
+export const getKoreanFieldworkFieldNotePresets = (
+  document: Document
+): KoreanFieldworkFieldNotePreset[] => {
+  const category = document.resource.category;
+  const commonPresets: KoreanFieldworkFieldNotePreset[] = [
+    {
+      id: 'boundary',
+      label: '경계',
+      input: {
+        observation: '경계선, 색·토질 차이, 절단관계를 확인.',
+        nextWork: '경계 재정리 후 사진·도면 번호 기록.',
+      },
+    },
+    {
+      id: 'photoDrawing',
+      label: '사진·도면',
+      input: {
+        observation: '촬영·실측 기준점과 방향을 확인.',
+        nextWork: '사진·도면 번호를 야장에 연결.',
+      },
+    },
+    {
+      id: 'findSample',
+      label: '유물·시료',
+      input: {
+        observation: '유물·시료의 출토 위치와 층위 관계를 확인.',
+        nextWork: '수습·채취 번호와 보관 상태 기록.',
+      },
+    },
+  ];
+
+  if (category === C.LAYER) {
+    return [
+      {
+        id: 'layer',
+        label: '층위',
+        input: {
+          observation: '토색, 토질, 포함물, 상·하부 경계를 확인.',
+          interpretation: '층위 성격과 형성 과정을 관찰 근거와 분리해 기록.',
+          nextWork: '단면 정리 후 층위 번호와 사진·도면 번호 연결.',
+        },
+      },
+      ...commonPresets,
+    ];
+  }
+
+  if (FEATURE_PROGRESS_CATEGORIES.has(category)) {
+    return [
+      {
+        id: 'featureProgress',
+        label: '유구 진행',
+        input: {
+          observation: '평면 형태, 규모, 내부 퇴적, 중복 관계를 확인.',
+          interpretation: '유구 성격은 관찰 근거와 함께 보완.',
+          nextWork: '단면 정리, 사진 보강, 실측, 유물·시료 수습 여부 확인.',
+        },
+      },
+      ...commonPresets,
+    ];
+  }
+
+  if (category === C.FIND || category === C.SAMPLE) {
+    return [
+      {
+        id: 'findSampleContext',
+        label: '출토맥락',
+        input: {
+          observation: '출토 위치, 층위, 주변 유구와의 관계를 확인.',
+          nextWork: '번호, 봉투·상자 표기, 사진 여부를 기록.',
+        },
+      },
+      commonPresets[2],
+      commonPresets[1],
+    ];
+  }
+
+  return commonPresets;
+};
+
+export const mergeKoreanFieldworkFieldNoteInput = (
+  currentInput: KoreanFieldworkFieldNoteInput,
+  nextInput: KoreanFieldworkFieldNoteInput
+): KoreanFieldworkFieldNoteInput => ({
+  observation: mergeFieldNoteValue(
+    currentInput.observation,
+    nextInput.observation
+  ),
+  interpretation: mergeFieldNoteValue(
+    currentInput.interpretation,
+    nextInput.interpretation
+  ),
+  nextWork: mergeFieldNoteValue(currentInput.nextWork, nextInput.nextWork),
+  evidenceNumbers: mergeFieldNoteValue(
+    currentInput.evidenceNumbers,
+    nextInput.evidenceNumbers
+  ),
+});
+
 const findOperationInParentPath = (
   document: Document,
   documentsById: Map<string, Document>
@@ -358,6 +462,19 @@ const formatFieldNoteSection = (
 
 const hasText = (value: string | undefined): boolean =>
   normalizeFieldNoteText(value ?? '').length > 0;
+
+const mergeFieldNoteValue = (
+  currentValue: string | undefined,
+  nextValue: string | undefined
+): string => {
+  const currentText = normalizeFieldNoteText(currentValue ?? '');
+  const nextText = normalizeFieldNoteText(nextValue ?? '');
+
+  if (!currentText) return nextText;
+  if (!nextText || currentText.includes(nextText)) return currentText;
+
+  return `${currentText}\n${nextText}`;
+};
 
 const getFieldNoteDetail = (document: Document): string =>
   getLastMeaningfulLine(

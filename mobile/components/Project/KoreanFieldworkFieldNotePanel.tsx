@@ -16,9 +16,11 @@ import {
 import {
   buildKoreanFieldworkFieldNoteText,
   getKoreanFieldworkFieldNoteChecklist,
+  getKoreanFieldworkFieldNoteEvidenceActions,
   getKoreanFieldworkFieldNoteGuidance,
   getKoreanFieldworkFieldNotePresets,
   getKoreanFieldworkFieldNoteSummaries,
+  KoreanFieldworkFieldNoteEvidenceAction,
   KoreanFieldworkFieldNoteGuidanceItem,
   KoreanFieldworkFieldNoteGuidanceTone,
   KoreanFieldworkFieldNoteInput,
@@ -32,6 +34,7 @@ interface KoreanFieldworkFieldNotePanelProps {
   documents: Document[];
   operationDocument?: Document;
   existingDailyLog?: Document;
+  allowedAddCategoryNames: string[];
   canCreateRecordMemo: boolean;
   canCreateDailyLog: boolean;
   isSaving?: boolean;
@@ -39,6 +42,7 @@ interface KoreanFieldworkFieldNotePanelProps {
     mode: KoreanFieldworkFieldNoteMode,
     text: string
   ) => Promise<void>;
+  onAddDocumentOfCategory: (document: Document, categoryName: string) => void;
   onOpenDocument: (document: Document) => void;
 }
 
@@ -56,10 +60,12 @@ const KoreanFieldworkFieldNotePanel: React.FC<
   documents,
   operationDocument,
   existingDailyLog,
+  allowedAddCategoryNames,
   canCreateRecordMemo,
   canCreateDailyLog,
   isSaving = false,
   onCreateNote,
+  onAddDocumentOfCategory,
   onOpenDocument,
 }) => {
   const [mode, setMode] =
@@ -86,6 +92,14 @@ const KoreanFieldworkFieldNotePanel: React.FC<
   const guidanceItems = useMemo(
     () => getKoreanFieldworkFieldNoteGuidance(noteInput, selectedDocument),
     [noteInput, selectedDocument]
+  );
+  const evidenceActions = useMemo(
+    () => getKoreanFieldworkFieldNoteEvidenceActions(
+      selectedDocument,
+      documents,
+      allowedAddCategoryNames
+    ),
+    [allowedAddCategoryNames, documents, selectedDocument]
   );
   const selectedModeEnabled = getModeEnabled(
     mode,
@@ -256,6 +270,29 @@ const KoreanFieldworkFieldNotePanel: React.FC<
         ))}
       </View>
 
+      {evidenceActions.length > 0 && (
+        <View style={styles.evidenceActionPanel}>
+          <View style={styles.evidenceActionHeader}>
+            <MaterialIcons name="add-photo-alternate" size={16} color="#344054" />
+            <Text style={styles.evidenceActionTitle}>연결 기록</Text>
+          </View>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.evidenceActionRow}
+          >
+            {evidenceActions.map((action) => (
+              <EvidenceActionButton
+                action={action}
+                key={action.id}
+                onPress={() =>
+                  onAddDocumentOfCategory(selectedDocument, action.categoryName)}
+              />
+            ))}
+          </ScrollView>
+        </View>
+      )}
+
       <FieldNoteInputBlock
         icon="visibility"
         label="관찰 내용"
@@ -425,6 +462,32 @@ const GuidanceRow: React.FC<{
   </View>
 );
 
+const EvidenceActionButton: React.FC<{
+  action: KoreanFieldworkFieldNoteEvidenceAction;
+  onPress: () => void;
+}> = ({ action, onPress }) => (
+  <TouchableOpacity
+    activeOpacity={0.86}
+    onPress={onPress}
+    style={styles.evidenceActionButton}
+    testID={`fieldNoteEvidenceAction_${action.id}`}
+  >
+    <MaterialIcons
+      name={getEvidenceActionIcon(action.id)}
+      size={17}
+      color="#175cd3"
+    />
+    <View style={styles.evidenceActionText}>
+      <Text style={styles.evidenceActionLabel} numberOfLines={1}>
+        {action.label}
+      </Text>
+      <Text style={styles.evidenceActionDetail} numberOfLines={1}>
+        {action.detail}
+      </Text>
+    </View>
+  </TouchableOpacity>
+);
+
 const FieldNoteInputBlock: React.FC<{
   icon: keyof typeof MaterialIcons.glyphMap;
   label: string;
@@ -497,6 +560,24 @@ const getPresetIcon = (
       return 'account-tree';
     default:
       return 'edit-note';
+  }
+};
+
+const getEvidenceActionIcon = (
+  actionId: string
+): keyof typeof MaterialIcons.glyphMap => {
+  switch (actionId) {
+    case 'photos':
+    case 'soilProfilePhotos':
+      return 'photo-camera';
+    case 'drawings':
+      return 'architecture';
+    case 'finds':
+      return 'inventory-2';
+    case 'samples':
+      return 'science';
+    default:
+      return 'add';
   }
 };
 
@@ -703,6 +784,56 @@ const styles = StyleSheet.create({
     color: '#667085',
     fontSize: 11,
     lineHeight: 15,
+    marginTop: 1,
+  },
+  evidenceActionPanel: {
+    backgroundColor: '#ffffff',
+    borderColor: '#d0d5dd',
+    borderRadius: 6,
+    borderWidth: 1,
+    marginTop: 10,
+    paddingHorizontal: 9,
+    paddingVertical: 8,
+  },
+  evidenceActionHeader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  evidenceActionTitle: {
+    color: '#344054',
+    fontSize: 12,
+    fontWeight: '900',
+    marginLeft: 5,
+  },
+  evidenceActionRow: {
+    paddingTop: 8,
+  },
+  evidenceActionButton: {
+    alignItems: 'center',
+    backgroundColor: '#eff8ff',
+    borderColor: '#b2ddff',
+    borderRadius: 6,
+    borderWidth: 1,
+    flexDirection: 'row',
+    marginRight: 7,
+    minHeight: 45,
+    paddingHorizontal: 9,
+    width: 142,
+  },
+  evidenceActionText: {
+    flex: 1,
+    marginLeft: 6,
+    minWidth: 0,
+  },
+  evidenceActionLabel: {
+    color: '#175cd3',
+    fontSize: 12,
+    fontWeight: '900',
+  },
+  evidenceActionDetail: {
+    color: '#667085',
+    fontSize: 10,
+    fontWeight: '700',
     marginTop: 1,
   },
   inputBlock: {

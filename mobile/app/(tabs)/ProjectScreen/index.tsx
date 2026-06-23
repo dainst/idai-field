@@ -703,10 +703,13 @@ const DocumentsList: React.FC = () => {
               documents={documents}
               operationDocument={selectedFieldNoteOperation}
               existingDailyLog={selectedFieldNoteDailyLog}
+              allowedAddCategoryNames={selectedWorkbenchAllowedAddCategoryNames}
               canCreateRecordMemo={canCreateSelectedRecordMemo}
               canCreateDailyLog={canCreateSelectedDailyLog}
               isSaving={isCreatingFieldNote}
               onCreateNote={createFieldNote}
+              onAddDocumentOfCategory={(parentDoc, categoryName) =>
+                navigateAddCategory(categoryName, parentDoc)}
               onOpenDocument={selectWorkbenchDocument}
             />
           </>

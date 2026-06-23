@@ -5,6 +5,7 @@ import {
   createKoreanFieldworkDailyLogDraft,
   createKoreanFieldworkRecordMemoDraft,
   getKoreanFieldworkFieldNoteChecklist,
+  getKoreanFieldworkFieldNoteEvidenceActions,
   getKoreanFieldworkFieldNoteGuidance,
   getKoreanFieldworkFieldNotePresets,
   getKoreanFieldworkDailyLogAppendUpdates,
@@ -100,6 +101,35 @@ describe('korean-fieldwork-field-notes', () => {
       expect.objectContaining({ id: 'observation-recorded' }),
       expect.objectContaining({ id: 'report-continuity' }),
     ]);
+  });
+
+  it('returns allowed evidence creation actions for the selected field note record', () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
+    const photo = createDoc('photo-1', C.PHOTO, '사진 1', {
+      relations: { depicts: [feature.resource.id] },
+    });
+
+    expect(getKoreanFieldworkFieldNoteEvidenceActions(
+      feature,
+      [feature, photo],
+      [C.PHOTO, C.DRAWING]
+    )).toEqual([
+      expect.objectContaining({
+        id: 'photos',
+        categoryName: C.PHOTO,
+        existingCount: 1,
+      }),
+      expect.objectContaining({
+        id: 'drawings',
+        categoryName: C.DRAWING,
+        existingCount: 0,
+      }),
+    ]);
+    expect(getKoreanFieldworkFieldNoteEvidenceActions(
+      feature,
+      [feature, photo],
+      [C.FIND]
+    ).map((action) => action.id)).toEqual(['finds']);
   });
 
   it('finds the operation for a selected trench or feature record', () => {

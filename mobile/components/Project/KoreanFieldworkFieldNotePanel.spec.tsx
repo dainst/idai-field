@@ -164,6 +164,33 @@ describe('KoreanFieldworkFieldNotePanel', () => {
     )).toBeNull();
   });
 
+  it('starts evidence records directly from the tablet note panel', () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
+    const handleAddDocumentOfCategory = jest.fn();
+
+    const { getByTestId } = renderPanel(feature, {
+      allowedAddCategoryNames: [C.PHOTO, C.DRAWING, C.FIND, C.SAMPLE],
+      onAddDocumentOfCategory: handleAddDocumentOfCategory,
+    });
+
+    fireEvent.press(getByTestId('fieldNoteEvidenceAction_photos'));
+
+    expect(handleAddDocumentOfCategory).toHaveBeenCalledWith(
+      feature,
+      C.PHOTO
+    );
+  });
+
+  it('does not show evidence actions that are not allowed under the record', () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
+
+    const { queryByTestId } = renderPanel(feature, {
+      allowedAddCategoryNames: [C.DAILY_LOG],
+    });
+
+    expect(queryByTestId('fieldNoteEvidenceAction_photos')).toBeNull();
+  });
+
   it('clears unsaved text when the selected record changes', () => {
     const feature = createDoc('feature-1', C.FEATURE, '유구 1');
     const trench = createDoc('trench-1', C.TRENCH, '트렌치 1');
@@ -178,9 +205,11 @@ describe('KoreanFieldworkFieldNotePanel', () => {
       <KoreanFieldworkFieldNotePanel
         selectedDocument={trench}
         documents={[feature, trench]}
+        allowedAddCategoryNames={[]}
         canCreateRecordMemo
         canCreateDailyLog
         onCreateNote={jest.fn().mockResolvedValue(undefined)}
+        onAddDocumentOfCategory={jest.fn()}
         onOpenDocument={jest.fn()}
       />
     );
@@ -198,9 +227,11 @@ const renderPanel = (
   <KoreanFieldworkFieldNotePanel
     selectedDocument={selectedDocument}
     documents={[selectedDocument]}
+    allowedAddCategoryNames={[C.PHOTO, C.DRAWING, C.FIND, C.SAMPLE]}
     canCreateRecordMemo
     canCreateDailyLog
     onCreateNote={jest.fn().mockResolvedValue(undefined)}
+    onAddDocumentOfCategory={jest.fn()}
     onOpenDocument={jest.fn()}
     {...overrides}
   />

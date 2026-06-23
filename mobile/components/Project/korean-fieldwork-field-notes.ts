@@ -8,6 +8,7 @@ import {
   getKoreanFieldworkCategoryLabel,
   KOREAN_FIELDWORK_CATEGORIES,
 } from './korean-fieldwork-categories';
+import { getKoreanFieldworkEvidenceChips } from './korean-fieldwork-record-evidence';
 
 const C = KOREAN_FIELDWORK_CATEGORIES;
 const FEATURE_PROGRESS_CATEGORIES = new Set<string>([
@@ -55,6 +56,14 @@ export interface KoreanFieldworkFieldNoteGuidanceItem {
   label: string;
   detail: string;
   tone: KoreanFieldworkFieldNoteGuidanceTone;
+}
+
+export interface KoreanFieldworkFieldNoteEvidenceAction {
+  id: string;
+  label: string;
+  detail: string;
+  categoryName: string;
+  existingCount: number;
 }
 
 export const createKoreanFieldworkRecordMemoDraft = (
@@ -418,6 +427,30 @@ export const getKoreanFieldworkFieldNoteGuidance = (
   return items.slice(0, 3);
 };
 
+export const getKoreanFieldworkFieldNoteEvidenceActions = (
+  document: Document,
+  documents: Document[],
+  allowedAddCategoryNames: string[]
+): KoreanFieldworkFieldNoteEvidenceAction[] => {
+  const allowedCategories = new Set(allowedAddCategoryNames);
+
+  return getKoreanFieldworkEvidenceChips(document, documents)
+    .filter((chip) =>
+      FIELD_NOTE_EVIDENCE_ACTION_IDS.has(chip.id)
+      && !!chip.createCategoryName
+      && allowedCategories.has(chip.createCategoryName)
+    )
+    .map((chip) => ({
+      id: chip.id,
+      label: `${chip.label} 추가`,
+      detail: chip.count > 0
+        ? `연결된 기록 ${chip.count}건`
+        : '아직 연결된 기록 없음',
+      categoryName: chip.createCategoryName!,
+      existingCount: chip.count,
+    }));
+};
+
 const findOperationInParentPath = (
   document: Document,
   documentsById: Map<string, Document>
@@ -539,6 +572,14 @@ const formatFieldNoteSection = (
 
 const hasText = (value: string | undefined): boolean =>
   normalizeFieldNoteText(value ?? '').length > 0;
+
+const FIELD_NOTE_EVIDENCE_ACTION_IDS = new Set<string>([
+  'photos',
+  'soilProfilePhotos',
+  'drawings',
+  'finds',
+  'samples',
+]);
 
 const getObservationPrompt = (document: Document): string => {
   switch (document.resource.category) {

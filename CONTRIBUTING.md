@@ -11,7 +11,7 @@ There are many ways to contribute:
 - Submit a bug in [GitHub Issues](https://github.com/dainst/idai-field/issues).
 - Start a discussion in [GitHub Discussion](https://github.com/dainst/idai-field/discussions).
 - Submit a Pull Request with proposed changes, or work on an open ticket. (Feel free to get in touch with us via Discussions first, we cannot merge all suggestions.)
-- Join our [Field Assembly](https://community.nfdi4objects.net/assemblies/field) on the NFDI4Objects Community-Hub.
+- Join our [Field Assembly](https://community.nfdi4objects.net/assemblies/field) on the NFDI4Objects Community Hub.
 
 ## How do I claim an Issue?
 
@@ -24,7 +24,7 @@ Becoming an assignee to an issue follows this workflow:
 
 ## How can I test my changes before submitting a PR?
 
-See the respectice README.md of each project on how to run tests locally. 
+See the respective README.md of each project on how to run tests locally. 
 
 ## Any requirements for a Pull Request (PR)?
 

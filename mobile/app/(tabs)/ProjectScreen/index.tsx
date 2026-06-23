@@ -878,6 +878,7 @@ const DocumentsList: React.FC = () => {
             <KoreanFieldworkProgressBoard
               summary={todaySummary}
               documents={documents}
+              investigationModeId={investigationModeId}
               onAddDocumentOfCategory={(parentDoc, categoryName) =>
                 navigateAddCategory(categoryName, parentDoc)}
               onOpenDocument={onDocumentSelected}

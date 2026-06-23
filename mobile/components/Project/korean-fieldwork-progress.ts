@@ -13,6 +13,11 @@ import {
   KoreanFieldworkStatusTone,
 } from './korean-fieldwork-record-summary';
 import { getKoreanFieldworkEvidenceChips } from './korean-fieldwork-record-evidence';
+import { KoreanFieldworkInvestigationModeId } from './korean-fieldwork-investigation-mode';
+import {
+  getKoreanFieldworkChecklistQuickOptions,
+  isKoreanFieldworkChecklistRecord,
+} from './korean-fieldwork-quick-record';
 
 const C = KOREAN_FIELDWORK_CATEGORIES;
 
@@ -82,23 +87,6 @@ const HIERARCHY_CATEGORIES = new Set<string>([
   C.LAYER,
 ]);
 
-const FEATURE_WORKFLOW_CATEGORIES = new Set<string>([
-  C.FEATURE,
-  C.FEATURE_GROUP,
-  C.FEATURE_SEGMENT,
-]);
-
-const FEATURE_CHECKLIST_STEPS = [
-  'preInvestigationPhotoTaken',
-  'inProgressPhotoTaken',
-  'soilProfilePhotoLinked',
-  'measuredDrawingCompleted',
-  'preRecoveryFindPhotoTaken',
-  'findsRecovered',
-  'samplesCollected',
-  'completionPhotoTaken',
-];
-
 const EVIDENCE_CHIP_IDS = new Set<string>([
   'photos',
   'soilProfilePhotos',
@@ -110,7 +98,8 @@ const EVIDENCE_CHIP_IDS = new Set<string>([
 export const getKoreanFieldworkProgressItems = (
   summary: KoreanFieldworkTodaySummary,
   documents: Document[],
-  maxItems = 8
+  maxItems = 8,
+  investigationModeId?: KoreanFieldworkInvestigationModeId
 ): KoreanFieldworkProgressItem[] => {
   const documentsById = new Map(documents.map((document) => [
     document.resource.id,
@@ -126,7 +115,8 @@ export const getKoreanFieldworkProgressItems = (
       documents,
       documentsById,
       childrenByParentId,
-      issuesByDocumentId
+      issuesByDocumentId,
+      investigationModeId
     ))
     .sort(compareProgressItems)
     .slice(0, maxItems);
@@ -137,7 +127,8 @@ const buildProgressItem = (
   documents: Document[],
   documentsById: Map<string, Document>,
   childrenByParentId: Map<string, Document[]>,
-  issuesByDocumentId: Map<string, KoreanFieldworkReadinessIssue[]>
+  issuesByDocumentId: Map<string, KoreanFieldworkReadinessIssue[]>,
+  investigationModeId?: KoreanFieldworkInvestigationModeId
 ): KoreanFieldworkProgressItem => {
   const descendants = getDescendants(document, childrenByParentId);
   const scopedDocuments = [document, ...descendants];
@@ -145,8 +136,20 @@ const buildProgressItem = (
   const scopedIssues = Array.from(scopedDocumentIds)
     .flatMap((documentId) => issuesByDocumentId.get(documentId) ?? []);
   const firstIssue = scopedIssues[0];
-  const metrics = getProgressMetrics(document, scopedDocuments, documents, scopedIssues);
-  const stage = getProgressStage(document, descendants, scopedIssues, metrics);
+  const metrics = getProgressMetrics(
+    document,
+    scopedDocuments,
+    documents,
+    scopedIssues,
+    investigationModeId
+  );
+  const stage = getProgressStage(
+    document,
+    descendants,
+    scopedIssues,
+    metrics,
+    investigationModeId
+  );
 
   return {
     id: document.resource.id,
@@ -155,7 +158,14 @@ const buildProgressItem = (
     categoryLabel: getKoreanFieldworkCategoryLabel(document.resource.category),
     parentPath: formatKoreanFieldworkParentPath(document, documentsById),
     ...stage,
-    action: getProgressAction(document, descendants, firstIssue, stage.stageId),
+    action: getProgressAction(
+      document,
+      descendants,
+      firstIssue,
+      stage.stageId,
+      stage.actionLabel,
+      investigationModeId
+    ),
     metrics,
   };
 };
@@ -164,7 +174,8 @@ const getProgressStage = (
   document: Document,
   descendants: Document[],
   issues: KoreanFieldworkReadinessIssue[],
-  metrics: KoreanFieldworkProgressMetrics
+  metrics: KoreanFieldworkProgressMetrics,
+  investigationModeId?: KoreanFieldworkInvestigationModeId
 ): Omit<KoreanFieldworkProgressItem, 'id'|'document'|'title'|'categoryLabel'|'parentPath'|'action'|'metrics'> => {
   const resource = getResource(document);
   const issueCount = issues.length;
@@ -181,6 +192,19 @@ const getProgressStage = (
 
   if (
     document.resource.category === C.OPERATION
+    && investigationModeId === 'excavation'
+    && !descendants.some((descendant) => descendant.resource.category === C.FEATURE)
+  ) {
+    return toStage(
+      'investigation',
+      'warning',
+      '제토 뒤 확인한 유구를 조사구역 아래에 먼저 기록하세요.',
+      '검출 유구 기록'
+    );
+  }
+
+  if (
+    document.resource.category === C.OPERATION
     && !descendants.some((descendant) => descendant.resource.category === C.TRENCH)
   ) {
     return toStage(
@@ -191,22 +215,7 @@ const getProgressStage = (
     );
   }
 
-  if (
-    [C.TRENCH, C.FEATURE_GROUP].includes(document.resource.category)
-    && !descendants.some((descendant) => (
-      descendant.resource.category === C.FEATURE
-      || descendant.resource.category === C.FEATURE_GROUP
-    ))
-  ) {
-    return toStage(
-      'investigation',
-      'info',
-      '이 범위에서 확인된 유구를 먼저 기록하세요.',
-      '유구 추가'
-    );
-  }
-
-  if (isFeatureWorkflowDocument(document)) {
+  if (isWorkflowChecklistDocument(document, investigationModeId)) {
     const recordingStatus = resource.featureRecordingStatus;
     const isOpenFeatureStatus = recordingStatus === 'candidate'
       || recordingStatus === 'investigating';
@@ -223,6 +232,21 @@ const getProgressStage = (
         '조사 과정 열기'
       );
     }
+  }
+
+  if (
+    [C.TRENCH, C.FEATURE_GROUP].includes(document.resource.category)
+    && !descendants.some((descendant) => (
+      descendant.resource.category === C.FEATURE
+      || descendant.resource.category === C.FEATURE_GROUP
+    ))
+  ) {
+    return toStage(
+      'investigation',
+      'info',
+      '이 범위에서 확인된 유구를 먼저 기록하세요.',
+      '유구 추가'
+    );
   }
 
   if (metrics.evidenceCount === 0) {
@@ -275,7 +299,9 @@ const getProgressAction = (
   document: Document,
   descendants: Document[],
   firstIssue: KoreanFieldworkReadinessIssue | undefined,
-  stageId: KoreanFieldworkProgressStageId
+  stageId: KoreanFieldworkProgressStageId,
+  actionLabel: string,
+  investigationModeId?: KoreanFieldworkInvestigationModeId
 ): KoreanFieldworkProgressAction => {
   if (firstIssue) {
     return { type: 'openDocument', documentId: firstIssue.documentId };
@@ -290,6 +316,21 @@ const getProgressAction = (
   }
 
   if (stageId === 'investigation') {
+    if (actionLabel === '조사 과정 열기') {
+      return { type: 'openDocument', documentId: document.resource.id };
+    }
+
+    if (
+      document.resource.category === C.OPERATION
+      && investigationModeId === 'excavation'
+    ) {
+      return {
+        type: 'createDocument',
+        parentDocumentId: document.resource.id,
+        categoryName: C.FEATURE,
+      };
+    }
+
     if ([C.TRENCH, C.FEATURE_GROUP].includes(document.resource.category)) {
       return {
         type: 'createDocument',
@@ -320,12 +361,18 @@ const getProgressMetrics = (
   document: Document,
   scopedDocuments: Document[],
   allDocuments: Document[],
-  issues: KoreanFieldworkReadinessIssue[]
+  issues: KoreanFieldworkReadinessIssue[],
+  investigationModeId?: KoreanFieldworkInvestigationModeId
 ): KoreanFieldworkProgressMetrics => {
-  const featureWorkflowDocuments = scopedDocuments.filter(isFeatureWorkflowDocument);
-  const checklistTotal = featureWorkflowDocuments.length * FEATURE_CHECKLIST_STEPS.length;
+  const checklistStepValues = getKoreanFieldworkChecklistQuickOptions(
+    investigationModeId
+  ).map((option) => option.value);
+  const featureWorkflowDocuments = scopedDocuments.filter((scopedDocument) =>
+    isWorkflowChecklistDocument(scopedDocument, investigationModeId)
+  );
+  const checklistTotal = featureWorkflowDocuments.length * checklistStepValues.length;
   const checklistDone = featureWorkflowDocuments.reduce((count, featureDocument) =>
-    count + getChecklistDoneCount(featureDocument), 0);
+    count + getChecklistDoneCount(featureDocument, checklistStepValues), 0);
 
   return {
     hierarchyCount: scopedDocuments
@@ -413,13 +460,21 @@ const getReviewReasons = (
   return reasons;
 };
 
-const getChecklistDoneCount = (document: Document): number =>
+const getChecklistDoneCount = (
+  document: Document,
+  checklistStepValues: string[]
+): number =>
   getStringArray(getResource(document).featureInvestigationChecklist)
-    .filter((value) => FEATURE_CHECKLIST_STEPS.includes(value))
+    .filter((value) => checklistStepValues.includes(value))
     .length;
 
-const isFeatureWorkflowDocument = (document: Document): boolean =>
-  FEATURE_WORKFLOW_CATEGORIES.has(document.resource.category);
+const isWorkflowChecklistDocument = (
+  document: Document,
+  investigationModeId?: KoreanFieldworkInvestigationModeId
+): boolean => isKoreanFieldworkChecklistRecord(
+  document.resource.category,
+  investigationModeId
+);
 
 const getResource = (
   document: Document

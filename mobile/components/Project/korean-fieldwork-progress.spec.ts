@@ -37,6 +37,67 @@ describe('Korean fieldwork progress', () => {
       ]);
   });
 
+  it('starts excavation progress from detected features instead of trench setup', () => {
+    const operation = createDoc('operation-1', C.OPERATION, '조사구역 1', {}, {
+      fieldRecordQuality: [],
+      recordCreationTiming: 'duringFieldwork',
+      verificationState: 'observedInField',
+    });
+
+    expect(getKoreanFieldworkProgressItems(
+      createSummary([]),
+      [operation],
+      8,
+      'excavation'
+    )).toMatchObject([
+      {
+        id: 'operation-1',
+        stageId: 'investigation',
+        stageLabel: '조사',
+        tone: 'warning',
+        actionLabel: '검출 유구 기록',
+        action: {
+          type: 'createDocument',
+          parentDocumentId: 'operation-1',
+          categoryName: C.FEATURE,
+        },
+      },
+    ]);
+  });
+
+  it('tracks trial trench workflow steps on trench records', () => {
+    const trench = createDoc('trench-1', C.TRENCH, 'T1', {}, {
+      featureInvestigationChecklist: [
+        'trenchSoilCleaned',
+        'trenchFeatureChecked',
+      ],
+      fieldRecordQuality: ['immediateRecording'],
+      recordCreationTiming: 'duringFieldwork',
+    });
+
+    expect(getKoreanFieldworkProgressItems(
+      createSummary([]),
+      [trench],
+      8,
+      'trialTrench'
+    )).toMatchObject([
+      {
+        id: 'trench-1',
+        stageId: 'investigation',
+        stageLabel: '조사',
+        actionLabel: '조사 과정 열기',
+        action: {
+          type: 'openDocument',
+          documentId: 'trench-1',
+        },
+        metrics: {
+          checklistDone: 2,
+          checklistTotal: 9,
+        },
+      },
+    ]);
+  });
+
   it('prioritizes scoped closeout issues above lower progress stages', () => {
     const operation = createDoc('operation-1', C.OPERATION, '조사구역 1');
     const trench = createDoc('trench-1', C.TRENCH, 'T1', {
@@ -79,7 +140,7 @@ describe('Korean fieldwork progress', () => {
         hierarchyCount: 2,
         issueCount: 1,
         checklistDone: 8,
-        checklistTotal: 8,
+        checklistTotal: 10,
       },
     });
   });
@@ -94,7 +155,9 @@ describe('Korean fieldwork progress', () => {
         'measuredDrawingCompleted',
         'preRecoveryFindPhotoTaken',
         'findsRecovered',
+        'findRecordsLinked',
         'samplesCollected',
+        'penMemoReviewed',
         'completionPhotoTaken',
       ],
       fieldRecordQuality: ['immediateRecording'],
@@ -114,8 +177,8 @@ describe('Korean fieldwork progress', () => {
           tone: 'success',
           metrics: {
             evidenceCount: 1,
-            checklistDone: 8,
-            checklistTotal: 8,
+            checklistDone: 10,
+            checklistTotal: 10,
           },
         },
       ]);

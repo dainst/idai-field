@@ -20,6 +20,7 @@ import {
   KOREAN_FIELDWORK_PROGRESS_STAGES,
 } from './korean-fieldwork-progress';
 import { KoreanFieldworkStatusTone } from './korean-fieldwork-record-summary';
+import { KoreanFieldworkInvestigationModeId } from './korean-fieldwork-investigation-mode';
 
 interface KoreanFieldworkProgressBoardProps {
   summary: KoreanFieldworkTodaySummary;
@@ -28,6 +29,7 @@ interface KoreanFieldworkProgressBoardProps {
   onOpenDocument: (document: Document) => void;
   onOpenMap?: () => void;
   maxItems?: number;
+  investigationModeId?: KoreanFieldworkInvestigationModeId;
 }
 
 const KoreanFieldworkProgressBoard: React.FC<KoreanFieldworkProgressBoardProps> = ({
@@ -37,14 +39,20 @@ const KoreanFieldworkProgressBoard: React.FC<KoreanFieldworkProgressBoardProps> 
   onOpenDocument,
   onOpenMap,
   maxItems = 8,
+  investigationModeId,
 }) => {
   const documentsById = useMemo(
     () => new Map(documents.map((document) => [document.resource.id, document])),
     [documents]
   );
   const items = useMemo(
-    () => getKoreanFieldworkProgressItems(summary, documents, maxItems),
-    [documents, maxItems, summary]
+    () => getKoreanFieldworkProgressItems(
+      summary,
+      documents,
+      maxItems,
+      investigationModeId
+    ),
+    [documents, investigationModeId, maxItems, summary]
   );
 
   if (items.length === 0) return null;

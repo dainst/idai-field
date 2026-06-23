@@ -39,6 +39,34 @@ describe('KoreanFieldworkProgressBoard', () => {
     );
   });
 
+  it('runs excavation progress from the operation into a feature record', () => {
+    const operation = createDoc('operation-1', C.OPERATION, '조사구역 1', {}, {
+      fieldRecordQuality: [],
+      recordCreationTiming: 'duringFieldwork',
+      verificationState: 'observedInField',
+    });
+    const handleAddDocumentOfCategory = jest.fn();
+
+    const { getByTestId, getByText } = render(
+      <KoreanFieldworkProgressBoard
+        summary={createSummary()}
+        documents={[operation]}
+        investigationModeId="excavation"
+        onAddDocumentOfCategory={handleAddDocumentOfCategory}
+        onOpenDocument={jest.fn()}
+      />
+    );
+
+    expect(getByText('검출 유구 기록')).toBeTruthy();
+
+    fireEvent.press(getByTestId('progressAction_operation-1'));
+
+    expect(handleAddDocumentOfCategory).toHaveBeenCalledWith(
+      operation,
+      C.FEATURE
+    );
+  });
+
   it('opens the record when a progress card is pressed', () => {
     const feature = createDoc('feature-1', C.FEATURE, '수혈 1', {}, {
       featureRecordingStatus: 'candidate',

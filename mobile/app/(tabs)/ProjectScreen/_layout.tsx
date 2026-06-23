@@ -51,8 +51,8 @@ export default function Layout() {
             <Drawer.Screen
               name="DocumentsMap"
               options={{
-                drawerLabel: '지도 야장',
-                title: '지도 야장',
+                drawerLabel: '지도',
+                title: '지도',
               }}
             />
           </Drawer>

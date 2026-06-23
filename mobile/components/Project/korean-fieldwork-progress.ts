@@ -61,7 +61,7 @@ export const KOREAN_FIELDWORK_PROGRESS_STAGES: KoreanFieldworkProgressStage[] = 
   { id: 'setup', label: '착수' },
   { id: 'investigation', label: '조사' },
   { id: 'evidence', label: '증거' },
-  { id: 'review', label: '검토' },
+  { id: 'review', label: '보완' },
   { id: 'closeout', label: '마감' },
 ];
 
@@ -105,13 +105,6 @@ const EVIDENCE_CHIP_IDS = new Set<string>([
   'drawings',
   'finds',
   'samples',
-]);
-
-const VERIFICATION_REVIEW_STATES = new Set<string>([
-  'candidate',
-  'conflictingEvidence',
-  'needsRecheck',
-  'pendingDecision',
 ]);
 
 export const getKoreanFieldworkProgressItems = (
@@ -193,8 +186,8 @@ const getProgressStage = (
     return toStage(
       'setup',
       'warning',
-      '조사구역 아래에 트렌치/조사갱을 먼저 잡아야 후속 기록이 이어집니다.',
-      '트렌치/조사갱 추가'
+      '조사구역 아래에 트렌치를 먼저 잡아야 후속 기록이 이어집니다.',
+      '트렌치 추가'
     );
   }
 
@@ -226,7 +219,7 @@ const getProgressStage = (
         recordingStatus === 'candidate' ? 'warning' : 'info',
         metrics.checklistTotal > 0
           ? `조사 과정 ${metrics.checklistDone}/${metrics.checklistTotal}을 현장에서 확인하세요.`
-          : '유구 후보 판단을 확정해야 합니다.',
+          : '유구 후보의 경계와 충전토를 이어서 기록하세요.',
         '조사 과정 열기'
       );
     }
@@ -246,8 +239,8 @@ const getProgressStage = (
     return toStage(
       'review',
       'warning',
-      `${reviewReasons.join(', ')} 항목을 확인하세요.`,
-      '점검 열기'
+      `${reviewReasons.join(', ')} 항목을 보완하세요.`,
+      '기록 보완'
     );
   }
 
@@ -411,16 +404,10 @@ const getReviewReasons = (
 
   if (Array.isArray(resource.fieldRecordQuality)
       && resource.fieldRecordQuality.length === 0) {
-    reasons.push('품질');
+    reasons.push('기록');
   }
   if (!hasTextValue(resource.recordCreationTiming)) {
     reasons.push('시점');
-  }
-  if (
-    typeof resource.verificationState === 'string'
-    && VERIFICATION_REVIEW_STATES.has(resource.verificationState)
-  ) {
-    reasons.push('검증');
   }
 
   return reasons;

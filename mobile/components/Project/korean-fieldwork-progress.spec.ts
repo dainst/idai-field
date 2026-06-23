@@ -23,7 +23,7 @@ describe('Korean fieldwork progress', () => {
           stageId: 'setup',
           stageLabel: '착수',
           tone: 'warning',
-          actionLabel: '트렌치/조사갱 추가',
+          actionLabel: '트렌치 추가',
           action: {
             type: 'createDocument',
             parentDocumentId: 'operation-1',

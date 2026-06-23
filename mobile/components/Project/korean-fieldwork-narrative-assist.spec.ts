@@ -79,7 +79,7 @@ describe('Korean fieldwork narrative assist', () => {
         shortDescription: '이전 설명',
       }),
       photoSnippet!
-    )).toBe('현장 판단 근거 확인용 사진.');
+    )).toBe('현장 관찰 근거 확인용 사진.');
   });
 });
 

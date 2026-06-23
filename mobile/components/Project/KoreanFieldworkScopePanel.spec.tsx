@@ -55,7 +55,7 @@ describe('KoreanFieldworkScopePanel', () => {
       />
     );
 
-    expect(getByText('트렌치/조사갱 · T1')).toBeTruthy();
+    expect(getByText('트렌치 · T1')).toBeTruthy();
 
     fireEvent.press(getByTestId('scopeAddChild'));
     fireEvent.press(getByTestId('scopeBack'));

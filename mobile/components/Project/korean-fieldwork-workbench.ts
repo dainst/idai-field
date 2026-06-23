@@ -141,7 +141,7 @@ const getWorkbenchReasons = (
 
   if (FEATURE_WORKFLOW_CATEGORIES.has(document.resource.category)) {
     const featureRecordingStatus = resource.featureRecordingStatus;
-    if (featureRecordingStatus === 'candidate') reasons.push('후보 판단');
+    if (featureRecordingStatus === 'candidate') reasons.push('유구 후보');
     if (featureRecordingStatus === 'investigating') reasons.push('조사 진행');
 
     const checkedStepCount = getStringArray(resource.featureInvestigationChecklist)
@@ -154,17 +154,11 @@ const getWorkbenchReasons = (
 
   if (QUALITY_TRACKED_CATEGORIES.has(document.resource.category)
       && getStringArray(resource.fieldRecordQuality).length === 0) {
-    reasons.push('품질 미점검');
+    reasons.push('기록 보완');
   }
 
   if (!hasTextValue(resource.recordCreationTiming)) {
     reasons.push('시점 미입력');
-  }
-
-  if (resource.verificationState === 'pendingDecision'
-      || resource.verificationState === 'needsRecheck'
-      || resource.verificationState === 'candidate') {
-    reasons.push('검증 대기');
   }
 
   return dedupe(reasons).slice(0, 4);
@@ -177,7 +171,7 @@ const getWorkbenchTone = (
 ): KoreanFieldworkStatusTone => {
   if (issues.some((issue) => issue.severity === 'critical')) return 'danger';
   if (issues.length > 0) return 'warning';
-  if (reasons.includes('후보 판단') || reasons.includes('검증 대기')) return 'warning';
+  if (reasons.includes('유구 후보') || reasons.includes('조사 진행')) return 'info';
   if (document.resource.category === C.FEATURE
       || document.resource.category === C.FEATURE_SEGMENT) return 'info';
 

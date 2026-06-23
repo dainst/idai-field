@@ -81,9 +81,9 @@ describe('Korean fieldwork record summary', () => {
 
     expect(getKoreanFieldworkRecordStatusChips(feature)).toEqual([
       { label: '유구 후보', tone: 'warning' },
-      { label: '재확인', tone: 'warning' },
       { label: '현장 작성', tone: 'success' },
       { label: '약도', tone: 'warning' },
+      { label: '기록 보완', tone: 'warning' },
     ]);
   });
 
@@ -95,7 +95,7 @@ describe('Korean fieldwork record summary', () => {
     });
 
     expect(getKoreanFieldworkRecordStatusChips(trench)).toContainEqual({
-      label: '품질 2',
+      label: '기록 확인 2',
       tone: 'success',
     });
   });

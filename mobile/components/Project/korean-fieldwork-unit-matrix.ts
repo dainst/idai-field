@@ -66,13 +66,6 @@ const FEATURE_CHECKLIST_STEPS = [
   'completionPhotoTaken',
 ];
 
-const REVIEW_STATES = new Set<string>([
-  'candidate',
-  'conflictingEvidence',
-  'needsRecheck',
-  'pendingDecision',
-]);
-
 const NEXT_CHILD_CATEGORY: Readonly<Record<string, string | undefined>> = {
   [C.OPERATION]: C.TRENCH,
   [C.TRENCH]: C.FEATURE,
@@ -205,10 +198,6 @@ const getCompletionPercent = (
 
   if (checklistTotal > 0) {
     checks.push(checklistDone >= checklistTotal);
-  }
-
-  if (typeof resource.verificationState === 'string') {
-    checks.push(!REVIEW_STATES.has(resource.verificationState));
   }
 
   const passed = checks.filter(Boolean).length;

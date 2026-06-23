@@ -32,16 +32,6 @@ const FEATURE_RECORDING_STATUS_LABELS: Readonly<Record<string, KoreanFieldworkSt
   merged: { label: '병합', tone: 'info' },
 };
 
-const VERIFICATION_STATE_LABELS: Readonly<Record<string, KoreanFieldworkStatusChip>> = {
-  observedInField: { label: '현장 관찰', tone: 'success' },
-  candidate: { label: '후보', tone: 'warning' },
-  inferred: { label: '추정', tone: 'info' },
-  conflictingEvidence: { label: '근거 충돌', tone: 'danger' },
-  notObserved: { label: '미관찰', tone: 'neutral' },
-  needsRecheck: { label: '재확인', tone: 'warning' },
-  pendingDecision: { label: '판단 보류', tone: 'warning' },
-};
-
 const RECORD_CREATION_TIMING_LABELS: Readonly<Record<string, KoreanFieldworkStatusChip>> = {
   duringFieldwork: { label: '현장 작성', tone: 'success' },
   fieldOnlyObservation: { label: '현장 한정', tone: 'warning' },
@@ -128,15 +118,14 @@ export const getKoreanFieldworkRecordStatusChips = (
   const chips: KoreanFieldworkStatusChip[] = [];
 
   pushMappedChip(chips, resource.featureRecordingStatus, FEATURE_RECORDING_STATUS_LABELS);
-  pushMappedChip(chips, resource.verificationState, VERIFICATION_STATE_LABELS);
   pushMappedChip(chips, resource.recordCreationTiming, RECORD_CREATION_TIMING_LABELS);
   pushMappedChip(chips, resource.featureGeometryEditStatus, GEOMETRY_EDIT_STATUS_LABELS);
 
   if (Array.isArray(resource.fieldRecordQuality)) {
     chips.push(resource.fieldRecordQuality.length > 0
-      ? { label: `품질 ${resource.fieldRecordQuality.length}`, tone: 'success' }
+      ? { label: `기록 확인 ${resource.fieldRecordQuality.length}`, tone: 'success' }
       : {
-        label: '품질 미점검',
+        label: '기록 보완',
         tone: QUALITY_TRACKED_CATEGORIES.has(resource.category) ? 'warning' : 'neutral',
       });
   }

@@ -8,6 +8,8 @@ import Input from '@/components/common/Input';
 import TitleBar from '@/components/common/TitleBar';
 import { colors } from '@/utils/colors';
 
+export const DELETE_PROJECT_CONFIRMATION_PASSWORD = '1234';
+
 interface DeleteProjectModalProps {
   project: string;
   onProjectDeleted: (project: string) => void;
@@ -19,18 +21,18 @@ const DeleteProjectModal: React.FC<DeleteProjectModalProps> = ({
   onProjectDeleted,
   onClose,
 }) => {
-  const [projectVal, setProjectVal] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const insets = useSafeAreaInsets();
 
   const onDelete = () => {
-    if (projectVal !== project) return;
+    if (password !== DELETE_PROJECT_CONFIRMATION_PASSWORD) return;
     onProjectDeleted(project);
-    setProjectVal('');
+    setPassword('');
     onClose();
   };
 
   const onCancel = () => {
-    setProjectVal('');
+    setPassword('');
     onClose();
   };
 
@@ -68,7 +70,7 @@ const DeleteProjectModal: React.FC<DeleteProjectModalProps> = ({
                 title="삭제"
                 variant="danger"
                 onPress={onDelete}
-                isDisabled={project !== projectVal}
+                isDisabled={password !== DELETE_PROJECT_CONFIRMATION_PASSWORD}
               />
             }
           />
@@ -76,25 +78,30 @@ const DeleteProjectModal: React.FC<DeleteProjectModalProps> = ({
           <View style={styles.formContainer}>
             <View style={styles.warningContainer}>
               <Text style={styles.warningText}>
-                프로젝트와 연결된 모든 로컬 데이터를 삭제합니다.
+                {project} 프로젝트와 연결된 이 기기의 로컬 데이터를 삭제합니다.
               </Text>
               <Text style={styles.confirmationText}>
-                삭제하려면 <Text style={styles.projectName}>{project}</Text>를 정확히 입력하세요.
+                삭제 비밀번호 <Text style={styles.projectName}>
+                  {DELETE_PROJECT_CONFIRMATION_PASSWORD}
+                </Text>를 입력하세요.
               </Text>
             </View>
             
             <Input
-              testID="project-input"
-              value={projectVal}
-              onChangeText={setProjectVal}
+              testID="delete-password-input"
+              value={password}
+              onChangeText={setPassword}
               autoCapitalize="none"
               autoComplete="off"
               autoCorrect={false}
               autoFocus
-              placeholder="프로젝트 이름 입력"
+              keyboardType="number-pad"
+              maxLength={4}
+              placeholder="삭제 비밀번호 입력"
+              secureTextEntry
               style={styles.input}
-              invalidText="프로젝트 이름이 정확히 일치해야 합니다."
-              isValid={projectVal === project || projectVal === ''}
+              invalidText="삭제 비밀번호가 맞지 않습니다."
+              isValid={password === DELETE_PROJECT_CONFIRMATION_PASSWORD || password === ''}
             />
           </View>
         </View>

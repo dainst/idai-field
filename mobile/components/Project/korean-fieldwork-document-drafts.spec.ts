@@ -50,7 +50,6 @@ describe('Korean fieldwork document drafts', () => {
       },
       recordCreationTiming: 'duringFieldwork',
       fieldRecordQuality: [],
-      verificationState: 'pendingDecision',
     });
   });
 

@@ -25,12 +25,12 @@ describe('Korean fieldwork record work filters', () => {
     )).toBe(false);
   });
 
-  it('matches candidate and recheck records', () => {
+  it('matches candidate and investigating feature records', () => {
     const candidate = createDocument('candidate', C.FEATURE, {
       featureRecordingStatus: 'candidate',
     });
-    const recheck = createDocument('recheck', C.TRENCH, {
-      verificationState: 'needsRecheck',
+    const investigating = createDocument('investigating', C.FEATURE, {
+      featureRecordingStatus: 'investigating',
     });
     const observed = createDocument('observed', C.TRENCH, {
       verificationState: 'observedInField',
@@ -38,7 +38,7 @@ describe('Korean fieldwork record work filters', () => {
 
     expect(matchesKoreanFieldworkRecordWorkFilter(candidate, 'pending', [], {}))
       .toBe(true);
-    expect(matchesKoreanFieldworkRecordWorkFilter(recheck, 'pending', [], {}))
+    expect(matchesKoreanFieldworkRecordWorkFilter(investigating, 'pending', [], {}))
       .toBe(true);
     expect(matchesKoreanFieldworkRecordWorkFilter(observed, 'pending', [], {}))
       .toBe(false);

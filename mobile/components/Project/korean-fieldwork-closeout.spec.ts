@@ -9,7 +9,7 @@ describe('Korean fieldwork closeout summary', () => {
     ] as any);
 
     expect(summary.status).toBe('blocked');
-    expect(summary.title).toBe('마감 보류');
+    expect(summary.title).toBe('마감 보완');
     expect(summary.counts).toEqual({ critical: 1, warning: 1, info: 1 });
     expect(summary.issues.map((issue) => issue.ruleId)).toEqual(['c', 'w', 'i']);
   });

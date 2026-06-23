@@ -319,8 +319,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.ko.categories.FeatureGroup.label).toBe('유구군');
         expect(languages.ko.categories.FeatureSegment.label).toBe('피트·유구 구간');
         expect(languages.ko.categories.Place.label).toBe('유적/지점');
-        expect(languages.ko.categories.Trench.label).toBe('트렌치/조사갱');
-        expect(languages.ko.categories.FieldRecordQualityReview.label).toBe('현장기록 품질검수');
+        expect(languages.ko.categories.Trench.label).toBe('트렌치');
+        expect(languages.ko.categories.FieldRecordQualityReview.label).toBe('기록 보완 점검');
         expect(languages.ko.categories.Feature.fields.featureInvestigationChecklist.label)
             .toBe('조사 체크리스트');
         expect(languages.ko.categories.Feature.fields.featureGeometryEditStatus.label)
@@ -4474,7 +4474,7 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Feature-specific narrative');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-fieldRecordQuality']
             .values.fieldToReportContinuity.label)
-            .toBe('현장-보고서 연속성');
+            .toBe('보고서 연속성');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-excavationControlSafety']
             .values.machineStrippingDepthControlled.label)
             .toBe('Machine stripping depth controlled');

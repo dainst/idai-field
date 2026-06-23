@@ -32,7 +32,7 @@ export const getKoreanFieldworkCloseoutSummary = (
   if (counts.critical > 0) {
     return {
       status: 'blocked',
-      title: '마감 보류',
+      title: '마감 보완',
       detail: `중대 누락 ${counts.critical}건을 먼저 확인해야 합니다.`,
       counts,
       issues: sortedIssues.slice(0, maxIssues),

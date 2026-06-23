@@ -27,7 +27,7 @@ describe('KoreanFieldworkWorkbenchPanel', () => {
       }),
     ];
 
-    const { getByTestId, getByText } = render(
+    const { getAllByText, getByTestId, getByText } = render(
       <KoreanFieldworkWorkbenchPanel
         summary={createSummary([createIssue('feature-1')])}
         documents={documents as any}
@@ -37,7 +37,7 @@ describe('KoreanFieldworkWorkbenchPanel', () => {
 
     expect(getByText('현장 작업대')).toBeTruthy();
     expect(getByText('수혈 1')).toBeTruthy();
-    expect(getByText('후보 판단')).toBeTruthy();
+    expect(getAllByText('유구 후보').length).toBeGreaterThan(0);
 
     fireEvent.press(getByTestId('workbenchItem_feature-1'));
 

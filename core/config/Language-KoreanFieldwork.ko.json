@@ -1,16 +1,16 @@
 {
   "groups": {
-    "koreanFieldwork": "한국형 야장"
+    "koreanFieldwork": "디지털 야장"
   },
   "categories": {
     "FieldRecordQualityReview": {
-      "label": "현장기록 품질검수",
+      "label": "기록 보완 점검",
       "fields": {
         "qualityCorrectionBasis": {
           "label": "수정·보완 근거"
         },
         "qualityReviewStage": {
-          "label": "품질검수 단계"
+          "label": "보완 단계"
         },
         "reviewedRecordUnit": {
           "label": "검수 대상 기록"
@@ -47,7 +47,7 @@
           "label": "검수 대상"
         },
         "mediaQualityCheck": {
-          "label": "매체 품질검수"
+          "label": "매체 기록 확인"
         },
         "operationRoleResponsibility": {
           "label": "작업 역할·책임"
@@ -56,7 +56,7 @@
           "label": "보고서 교차검토"
         },
         "verificationState": {
-          "label": "검증상태"
+          "label": "기록 상태"
         }
       }
     },
@@ -200,7 +200,7 @@
           "label": "연구과정 연결상태"
         },
         "verificationState": {
-          "label": "검증상태"
+          "label": "기록 상태"
         }
       }
     },
@@ -226,7 +226,7 @@
           "label": "보고서 제출 흐름"
         },
         "verificationState": {
-          "label": "검증상태"
+          "label": "기록 상태"
         }
       }
     },
@@ -246,7 +246,7 @@
           "label": "검토 대상"
         },
         "verificationState": {
-          "label": "검증상태"
+          "label": "기록 상태"
         }
       }
     },
@@ -269,7 +269,7 @@
           "label": "기준 버전"
         },
         "verificationState": {
-          "label": "검증상태"
+          "label": "기록 상태"
         }
       }
     },
@@ -289,7 +289,7 @@
           "label": "편집 검토 대상"
         },
         "verificationState": {
-          "label": "검증상태"
+          "label": "기록 상태"
         }
       }
     },
@@ -315,7 +315,7 @@
           "label": "자산 종류"
         },
         "verificationState": {
-          "label": "검증상태"
+          "label": "기록 상태"
         }
       }
     },
@@ -338,7 +338,7 @@
           "label": "제출기관"
         },
         "verificationState": {
-          "label": "검증상태"
+          "label": "기록 상태"
         }
       }
     },
@@ -358,7 +358,7 @@
           "label": "국가귀속 선별 기록"
         },
         "verificationState": {
-          "label": "검증상태"
+          "label": "기록 상태"
         }
       }
     },
@@ -381,7 +381,7 @@
           "label": "공정 연결 검토"
         },
         "verificationState": {
-          "label": "검증상태"
+          "label": "기록 상태"
         }
       }
     },
@@ -401,7 +401,7 @@
           "label": "디지털 원자료 보존"
         },
         "fieldRecordQuality": {
-          "label": "현장기록 품질"
+          "label": "기록 확인"
         },
         "operationRoleResponsibility": {
           "label": "작업 역할·책임"
@@ -422,7 +422,7 @@
           "label": "현장 DB 운영위험"
         },
         "digitalSurveyQualityControl": {
-          "label": "디지털 조사 품질검수"
+          "label": "디지털 기록 확인"
         },
         "investigationRecordHandover": {
           "label": "조사자료 인계"
@@ -455,21 +455,21 @@
           "label": "실험고고학 설계"
         },
         "verificationState": {
-          "label": "검증상태"
+          "label": "기록 상태"
         }
       }
     },
     "Trench": {
-      "label": "트렌치/조사갱",
+      "label": "트렌치",
       "fields": {
         "fieldRecordQuality": {
-          "label": "현장기록 품질"
+          "label": "기록 확인"
         },
         "recordCreationTiming": {
           "label": "기록 생성 시점"
         },
         "verificationState": {
-          "label": "검증상태"
+          "label": "기록 상태"
         }
       }
     },
@@ -477,7 +477,7 @@
       "label": "지표조사",
       "fields": {
         "fieldRecordQuality": {
-          "label": "현장기록 품질"
+          "label": "기록 확인"
         },
         "recordCreationTiming": {
           "label": "기록 생성 시점"
@@ -585,7 +585,7 @@
           "label": "저습지 판독·시굴 연결"
         },
         "verificationState": {
-          "label": "검증상태"
+          "label": "기록 상태"
         }
       }
     },
@@ -614,13 +614,13 @@
           "label": "참고 배경지도 메모"
         },
         "fieldRecordQuality": {
-          "label": "현장기록 품질"
+          "label": "기록 확인"
         },
         "recordCreationTiming": {
           "label": "기록 생성 시점"
         },
         "verificationState": {
-          "label": "검증상태"
+          "label": "기록 상태"
         }
       }
     },
@@ -655,7 +655,7 @@
           "label": "유구 성격"
         },
         "fieldRecordQuality": {
-          "label": "현장기록 품질"
+          "label": "기록 확인"
         },
         "settlementSpatialInterpretation": {
           "label": "취락 공간 해석"
@@ -670,10 +670,10 @@
           "label": "용어 검색·매핑"
         },
         "termAuthorityStatus": {
-          "label": "용어 검증상태"
+          "label": "용어 확인 상태"
         },
         "verificationState": {
-          "label": "검증상태"
+          "label": "기록 상태"
         }
       }
     },
@@ -717,7 +717,7 @@
           "label": "체크리스트 메모"
         },
         "fieldRecordQuality": {
-          "label": "현장기록 품질"
+          "label": "기록 확인"
         },
         "typologyArgument": {
           "label": "형식 논증"
@@ -987,10 +987,10 @@
           "label": "용어 검색·매핑"
         },
         "termAuthorityStatus": {
-          "label": "용어 검증상태"
+          "label": "용어 확인 상태"
         },
         "verificationState": {
-          "label": "검증상태"
+          "label": "기록 상태"
         }
       }
     },
@@ -1031,7 +1031,7 @@
           "label": "체크리스트 메모"
         },
         "fieldRecordQuality": {
-          "label": "현장기록 품질"
+          "label": "기록 확인"
         },
         "chronologyArgument": {
           "label": "편년 논증"
@@ -1115,10 +1115,10 @@
           "label": "용어 검색·매핑"
         },
         "termAuthorityStatus": {
-          "label": "용어 검증상태"
+          "label": "용어 확인 상태"
         },
         "verificationState": {
-          "label": "검증상태"
+          "label": "기록 상태"
         }
       }
     },
@@ -1126,7 +1126,7 @@
       "label": "유물",
       "fields": {
         "fieldRecordQuality": {
-          "label": "현장기록 품질"
+          "label": "기록 확인"
         },
         "typologyArgument": {
           "label": "형식 논증"
@@ -1282,10 +1282,10 @@
           "label": "용어 검색·매핑"
         },
         "termAuthorityStatus": {
-          "label": "용어 검증상태"
+          "label": "용어 확인 상태"
         },
         "verificationState": {
-          "label": "검증상태"
+          "label": "기록 상태"
         }
       }
     },
@@ -1293,7 +1293,7 @@
       "label": "시료",
       "fields": {
         "fieldRecordQuality": {
-          "label": "현장기록 품질"
+          "label": "기록 확인"
         },
         "fieldOnlyMissingCheck": {
           "label": "현장시점 누락점검"
@@ -1395,7 +1395,7 @@
           "label": "동물유체 계량지표"
         },
         "verificationState": {
-          "label": "검증상태"
+          "label": "기록 상태"
         }
       }
     },
@@ -1406,7 +1406,7 @@
           "label": "매체 증거 역할"
         },
         "mediaQualityCheck": {
-          "label": "매체 품질검수"
+          "label": "매체 기록 확인"
         },
         "digitalSourcePreservation": {
           "label": "디지털 원자료 보존"
@@ -1535,13 +1535,13 @@
           "label": "토색 메모"
         },
         "fieldRecordQuality": {
-          "label": "현장기록 품질"
+          "label": "기록 확인"
         },
         "recordCreationTiming": {
           "label": "기록 생성 시점"
         },
         "verificationState": {
-          "label": "검증 상태"
+          "label": "기록 상태"
         }
       }
     },
@@ -1585,13 +1585,13 @@
           "label": "촬영 메모"
         },
         "fieldRecordQuality": {
-          "label": "현장기록 품질"
+          "label": "기록 확인"
         },
         "recordCreationTiming": {
           "label": "기록 생성 시점"
         },
         "verificationState": {
-          "label": "검증 상태"
+          "label": "기록 상태"
         }
       }
     },
@@ -1666,7 +1666,7 @@
           "label": "매체 증거 역할"
         },
         "mediaQualityCheck": {
-          "label": "매체 품질검수"
+          "label": "매체 기록 확인"
         },
         "photoCaptureSafetyReview": {
           "label": "사진촬영 안전검토"

@@ -25,7 +25,7 @@ const DocumentMapContainer: React.FC = () => {
 
 const ProjectMapLoadingState: React.FC = () => (
   <View style={styles.loadingContainer}>
-    <Text style={styles.loadingTitle}>지도 야장을 준비하고 있습니다</Text>
+    <Text style={styles.loadingTitle}>지도를 준비하고 있습니다</Text>
     <Text style={styles.loadingText}>
       현장 기록 저장소와 동기화 상태를 확인하는 중입니다.
     </Text>

@@ -23,7 +23,7 @@
         "label": "정리·분석 단계 파생"
       }
     },
-    "description": "현장에서만 남길 수 있는 관찰값과 나중에 산출되는 기록을 구분하기 위한 한국형 야장 기록 생성 시점 목록"
+    "description": "현장에서만 남길 수 있는 관찰값과 나중에 산출되는 기록을 구분하기 위한 디지털 야장 기록 생성 시점 목록"
   },
   "KoreanFieldwork-verificationState": {
     "values": {
@@ -46,30 +46,30 @@
         "label": "재검토 필요"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
-    "description": "현장 관찰과 해석을 분리하고 판단 보류를 정상값으로 남기기 위한 검증 상태 목록"
+    "description": "기존 기록 상태 값을 한국어 화면에서 호환 표시하기 위한 목록"
   },
   "KoreanFieldwork-fieldRecordQuality": {
     "values": {
       "factualAccuracy": {
-        "label": "사실 왜곡 없음"
+        "label": "관찰 내용"
       },
       "immediateRecording": {
-        "label": "즉기 기록"
+        "label": "현장 기록"
       },
       "memoryRelianceRisk": {
         "label": "기억 의존 위험"
       },
       "observationInterpretationSeparated": {
-        "label": "관찰·해석 구분"
+        "label": "관찰·해석"
       },
       "criteriaConsistency": {
         "label": "조사자 간 기준 일치"
       },
       "reproducibleRecord": {
-        "label": "재현 가능"
+        "label": "기록 근거"
       },
       "researchQuestionFit": {
         "label": "연구목적 적합"
@@ -78,7 +78,7 @@
         "label": "유구별 서사 기록"
       },
       "fieldToReportContinuity": {
-        "label": "현장-보고서 연속성"
+        "label": "보고서 연속성"
       },
       "excavatorReportAuthorLink": {
         "label": "조사자 보고서기술 연결"
@@ -90,10 +90,10 @@
         "label": "보완 필요"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
-    "description": "현장 강의자료에서 반복된 기록 정확성, 즉시성, 재현 가능성, 관찰·해석 분리, 유구별 서사와 보고서 기술 연속성 요구를 관리하기 위한 목록"
+    "description": "현장 기록의 관찰 내용, 관찰·해석, 유구별 서사와 보고서 연속성을 관리하기 위한 목록"
   },
   "KoreanFieldwork-excavationControlSafety": {
     "values": {
@@ -167,7 +167,7 @@
         "label": "철수 전 기록물 점검"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "구획·둑 설정, 배수, 하강조사, 장비 제토, 일일 제토량, 굴삭기 규격·조합, 표토 두께와 토량, 적토장·반출, 생토 위 퇴적두께, 유구 내부토 차이, 기준단면 보존, 촬영, 안전조치, 철수 전 기록물 점검을 작업 단위에서 관리하기 위한 목록"
@@ -223,7 +223,7 @@
         "label": "복구 불가능 경고"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "층 경계, 유구 윤곽, 수습 전 상태, 사진 각도, 위치·고도·방향, 시료 위치처럼 현장 종료 뒤 복구하기 어려운 값의 누락을 점검하기 위한 목록"
@@ -273,7 +273,7 @@
         "label": "이관"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "유물이 출토 위치와 수습번호만 남기고 끝나지 않도록 현장수습, 응급처치, 보존처리, 보고서, 선별회의, 국가귀속, 포장·이송, 이관을 하나의 생애주기로 추적하기 위한 목록"
@@ -292,7 +292,7 @@
       "shockAbsorptionChecked": { "label": "완충재·충격 방지 확인" },
       "transportBoxLabeled": { "label": "운반상자 표지" },
       "largeArtifactSeparateTransport": { "label": "대형유물 별도 이송" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "유물 포장·운반 때 재질별 취약성, 담당자 인수인계, 동행자, 완충·장력, 상자 표지와 대형유물 별도 이송 여부를 점검하기 위한 목록"
   },
@@ -310,7 +310,7 @@
       "largeArtifactTransportEquipment": { "label": "대형유물 이송장치" },
       "temporaryReceiptLinked": { "label": "임시보관증 연결" },
       "preReportConditionChecked": { "label": "보고서 전 상태 점검" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "임시수장고에서 국가귀속 대상, 학술자료, 미등록·폐기 후보, 재질별 분리, 공조, 동선, 대형유물 포장·이송과 임시보관증을 관리하기 위한 목록"
   },
@@ -327,7 +327,7 @@
       "researchMaterialCandidateReviewed": { "label": "학술자료 후보 검토" },
       "discardCandidateReviewed": { "label": "폐기유물 후보 검토" },
       "specialistReviewNeeded": { "label": "전문검토 필요" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "유물 수거 사진, 세척, 접합 후보, 복원상태와 학술자료·폐기유물 후보 판단이 현장 기록과 끊기지 않게 관리하기 위한 목록"
   },
@@ -345,7 +345,7 @@
       "futureResearchCandidate": { "label": "후속연구 후보" },
       "collectionStatusRecorded": { "label": "수습 여부 기록" },
       "notCollectedReasonRecorded": { "label": "미수습 사유 기록" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "국가귀속·보고서 수록 대상만 유물로 좁히지 않고 탄화곡물, 목탄, 슬래그, 동물뼈, 조개, 유기물 시료, 자연과학분석 후보, 후속연구 후보와 수습·미수습 사유를 함께 관리하기 위한 목록"
   },
@@ -375,7 +375,7 @@
       "markingCoatingRiskReviewed": { "label": "표기·코팅 탈락위험 검토" },
       "fieldSerialInventoryNumberLinked": { "label": "일련번호·정리번호 연결" },
       "ledgerRegisterPermanent": { "label": "꼬리표와 대장 보존" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "현장 꼬리표의 조사기관, 일자, 지점, 발굴칸, 일련번호, 지층, 유물층, 유물명, 재질·암질, 좌표, 깊이, 치수, 무게가 유물대장, 고유 등록번호, 정리번호와 끊기지 않게 하고, 실물 표기 방법·최소 표기 범위·취약면 회피·코팅 탈락 위험을 함께 점검하기 위한 목록"
   },
@@ -398,7 +398,7 @@
       "residueAnalysisPotentialPreserved": { "label": "잔류물 분석 가능성 보존" },
       "functionInterpretationDeferred": { "label": "기능판정 보류" },
       "specialistReviewNeeded": { "label": "전문검토 필요" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "구석기 유물 수습 전에 흙기둥 높이, 절대·3차원 좌표, 문화층 번호, 일련번호를 확인하고 수습 뒤 문화층·칸별 보관과 좌표 목록·분포도·접합관계도, 사용흔·잔류물 보존 조건 연결을 추적하기 위한 목록"
   },
@@ -447,7 +447,7 @@
         "label": "수량 근거 비고"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "보고서·국가귀속용 수량을 파편 수로 자동 계산하지 않고 건, 점, 동일개체, 부속구, 실제 개수, 보존처리 단위와 근거사진을 분리하기 위한 목록"
@@ -465,7 +465,7 @@
       "northArrowIncluded": { "label": "방위판 포함" },
       "adheringSoilPreserved": { "label": "부착토 보존" },
       "washingCaution": { "label": "세척 주의" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "지표 수습 유물이 위치·지도·사진·부착토 정보를 잃지 않도록 개별 포장, 유물카드, 지도 표시, GPS, 지번, 근경·원경 사진, 눈금자·방위판, 세척주의를 확인하기 위한 목록"
   },
@@ -485,7 +485,7 @@
       "mapLocationApproximate": { "label": "지도 위치 개략" },
       "followUpSurveyNeeded": { "label": "후속 확인조사 필요" },
       "normalExcavationContextNotAssumed": { "label": "일반 발굴맥락으로 보지 않음" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "주민 신고, 공사·경작 중 발견, 지표 채집, 기존 소장·보고서 자료처럼 원위치와 출토 맥락이 흔들릴 수 있는 유물을 일반 발굴 출토품과 구분하기 위한 목록"
   },
@@ -502,7 +502,7 @@
       "boneHornContamination": { "label": "골각 오염" },
       "protectiveGear": { "label": "보호장구" },
       "specialistRequest": { "label": "전문가 의뢰" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "유물을 세척하거나 건조하기 전 소형유물·미세박편 유실, 물체질 필요, 수분·빛·염·산화·수축·오염 위험과 보호장구·전문가 의뢰 여부를 기록하기 위한 목록"
   },
@@ -518,7 +518,7 @@
       "waterloggedStorage": { "label": "수침 보관" },
       "shadeDrying": { "label": "그늘 건조" },
       "rapidDryingAvoided": { "label": "급건조 방지" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "유구 단위와 수습번호가 세척·건조 과정에서 섞이지 않도록 물세척·건식세척·초음파·기계세척·수침보관·그늘건조·급건조 방지 여부를 기록하기 위한 목록"
   },
@@ -663,7 +663,7 @@
         "label": "정기점검"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "교재의 수장·전시 환경 기준을 고정 규칙이 아니라 기관별 기준 출처, 현재 기준 대조, 재질별 범위, 모니터링 로그, 실측값, 공기오염·생물피해 관리, 온습도 피크·결로 방지, 이관 동선, 대형유물 지지·인력, 일탈 기록과 재질별 관리 상태로 추적하기 위한 목록"
@@ -680,7 +680,7 @@
       "destructiveSampleFlag": { "label": "파괴시료 여부" },
       "remainingSampleStorage": { "label": "잔여시료 보관" },
       "resultLinked": { "label": "결과 연결" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "보존과학 의뢰에서 목적, 재질, 출토맥락, 기관, 분석방법, 파괴 여부, 잔여시료 보관, 결과 연결을 함께 관리하기 위한 목록"
   },
@@ -698,7 +698,7 @@
       "chemicalAmountRecorded": { "label": "사용량 기록" },
       "c14ImpactReview": { "label": "C14 영향 검토" },
       "conservationTreatmentImpactReview": { "label": "보존처리 영향 검토" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "수침목재와 수침 유기물의 외기 노출, 건조수축, 임시약제 영향, 보존처리 전 보관 조건을 기록하기 위한 목록"
   },
@@ -716,7 +716,7 @@
       "woodSpeciesAnalysisPlanned": { "label": "수종분석 계획" },
       "dendrochronologyCandidate": { "label": "연륜연대 후보" },
       "conservationBeforeAnalysis": { "label": "분석 전 보존처리" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "목재유물의 수침상태, 수분·자외선 위험, 표면흔, 가공흔, 시료 위치, 수종분석, 연륜연대 후보, 분석 전 보존처리 판단을 현장 단계에서 기록하기 위한 목록"
   },
@@ -730,7 +730,7 @@
       "dryingShrinkageRisk": { "label": "건조수축 위험" },
       "layeredStructurePhoto": { "label": "층상구조 사진" },
       "crossSectionAnalysisCandidate": { "label": "단면분석 후보" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "칠기의 목질부와 칠도막을 분리해 갈라짐, 박락, 약품 변형, 건조수축, 층상구조 사진과 단면분석 후보를 기록하기 위한 목록"
   },
@@ -748,7 +748,7 @@
       "alloyRatio": { "label": "합금비" },
       "sampleLocation": { "label": "시료채취 위치" },
       "cuttingPolishingApproval": { "label": "절단·연마 승인" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "금속유물 분석에서 재질, 분석법, 시료 위치, 절단·연마 승인, 미세조직, 비금속개재물, 합금비, 산지 질문을 함께 기록하기 위한 목록"
   },
@@ -765,7 +765,7 @@
       "dryCleaning": { "label": "건식세척" },
       "wetCleaningCaution": { "label": "물세척 주의" },
       "dryingMethod": { "label": "건조 방식" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "토기·도자기의 태토, 유약, 염결정, 곰팡이, 수화, 해양 고착물, 과거 복원재, 세척과 건조 방식을 분리해 관리하기 위한 목록"
   },
@@ -790,7 +790,7 @@
       "neutralStorageBox": { "label": "중성 보관함" },
       "paulowniaBox": { "label": "오동상자" },
       "pencilRecord": { "label": "연필 기록" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "지류·직물 유물을 출토 직전 환경과 급격히 다르게 만들지 않도록 공기·빛·온습도·오염·포장·기록 조건을 함께 관리하기 위한 목록"
   },
@@ -805,7 +805,7 @@
       "reversibleMaterial": { "label": "가역 재료" },
       "retreatmentPossible": { "label": "재처리 가능성" },
       "storageEnvironmentResponse": { "label": "수장환경 대응" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "보존처리 전 원형·가치·외형·구조·재질·증거 훼손 위험과 가역성, 재처리 가능성, 수장환경 대응을 검토하기 위한 목록"
   },
@@ -820,7 +820,7 @@
       "controlledSpace": { "label": "통제 공간" },
       "labHandover": { "label": "분석실 인계" },
       "beforeConsolidationReview": { "label": "경화처리 전 검토" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "인골 DNA 분석 가능성을 해치지 않도록 접촉자, 보호구, 세척 금지, 별도 포장, 선채취, 보관, 접근 통제, 분석실 인계를 관리하기 위한 목록"
   },
@@ -839,7 +839,7 @@
       "sem": { "label": "SEM" },
       "analysisQuestionRecorded": { "label": "분석 질문 기록" },
       "interpretationImpactRecorded": { "label": "해석 영향 기록" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "묘 내부토와 외부 대조토, 깊이·색상별 채취, 냉장 보관, 토양·유기물 분석법, 분석 질문과 해석 환류를 관리하기 위한 목록"
   },
@@ -860,7 +860,7 @@
       "cuttingGrindingEtchingRecorded": { "label": "절단·연마·부식 기록" },
       "remainingSampleStorage": { "label": "잔여시료 보관" },
       "analysisImpactReview": { "label": "분석결과 영향 검토" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "비파괴·준파괴·파괴 분석의 보존 영향, 표면오염, 부식층, 분석 한계, 승인, 시료 제작 이력, 잔여시료와 해석 영향을 기록하기 위한 목록"
   },
@@ -900,7 +900,7 @@
         "label": "내부조사 전 확정"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "제토와 동시에 가장 잘 보이는 유구 윤곽선, 어깨선, 중복관계, 건조 위험을 최초 노출 순간에 남기기 위한 목록"
@@ -921,7 +921,7 @@
       "thinLensDeposit": { "label": "박층·렌즈상 퇴적" },
       "abruptGrainSizeChange": { "label": "급격한 입도 변화" },
       "singleEventDepositKept": { "label": "단일 사건층 유지" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "색 차이만으로 층을 나누지 않고 입도, 구조, 삭평, 토양화, 구지표, 문화층과 과도한 세분 보류 근거를 함께 남기기 위한 목록"
   },
@@ -936,7 +936,7 @@
       "siltClayMudWordingReviewed": { "label": "실트·점토·니 표현 검토" },
       "laboratoryGrainSizeComparison": { "label": "실내 입도분석 대조" },
       "expertReviewRequested": { "label": "전문가 판정 의뢰" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "입자 크기와 입도 조성을 현장에서 어떤 방법으로 확인했는지, 실내분석이나 전문가 판정이 필요한지를 남기기 위한 목록"
   },
@@ -960,7 +960,7 @@
       "wavyBoundary": { "label": "파상" },
       "irregularBoundary": { "label": "불규칙" },
       "discontinuousBoundary": { "label": "불연속" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "층리면과 층계, 구지표면·생활면·유구면·확인면, 가공면·기능면, 경계 명료도와 형상을 따로 남기기 위한 목록"
   },
@@ -979,7 +979,7 @@
       "ironManganeseColorRendered": { "label": "산화철·망간 색채표현" },
       "boundaryLineConventionApplied": { "label": "경계선 표현규칙 적용" },
       "excavationDepthLineSeparated": { "label": "굴삭 심도선 분리" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "층상단면도에 층 경계선만이 아니라 입자, 퇴적·변형 구조, 후성물질, 혼입물, 철·망간 색채와 굴삭 심도선을 함께 표현했는지 기록하기 위한 목록"
   },
@@ -997,8 +997,8 @@
       "postRelatedReduction": { "label": "말목 주변 환원화" },
       "btBandCandidate": { "label": "Bt-band 후보" },
       "pedogenicPostDepositionalChange": { "label": "토양화 후성작용" },
-      "separateLayerDecisionDeferred": { "label": "별도층 판단 보류" },
-      "pendingDecision": { "label": "판단 보류" }
+      "separateLayerDecisionDeferred": { "label": "별도층 추가 확인" },
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "색조, 산화·환원, 지하수, 논둑·수로, 철·망간 집적, 뿌리·말목 변색, Bt-band를 별도 층이나 유구로 오인하지 않기 위한 목록"
   },
@@ -1015,7 +1015,7 @@
       "featureDetectionSurfaceNumber": { "label": "유구 확인면 번호" },
       "institutionalStandard": { "label": "기관 기준" },
       "changeHistory": { "label": "변경 이력" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "층명과 기호가 토양층위, 퇴적층위, 문화층, 유구 확인면을 뒤섞지 않도록 번호체계와 변경 이력을 남기기 위한 목록"
   },
@@ -1033,7 +1033,7 @@
       "packingDeposit": { "label": "충전토" },
       "postAbandonmentDeposit": { "label": "폐기 후 퇴적층" },
       "attributionCaution": { "label": "귀속 주의" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "유구 내부토를 복토 하나로 합치지 않고 축조, 사용, 폐기, 매몰 과정과 유물 귀속 주의를 분리하기 위한 목록"
   },
@@ -1049,7 +1049,7 @@
       "modernFeatureLayer": { "label": "근현대 유구 소속층" },
       "targetPeriodChecked": { "label": "조사대상시대 확인" },
       "relatedFeatureChecked": { "label": "관계유구 확인" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "생토·부식토·표토·상부퇴적토·유구 매몰토·교란토가 절대 층명이 아니라 조사대상시대와 관계유구에 따라 달라지는 판단값임을 기록하기 위한 목록"
   },
@@ -1072,7 +1072,7 @@
       "overallStratigraphyFlowPrepared": { "label": "전체 층위 흐름도 준비" },
       "stratigraphicPhotoLinked": { "label": "기준 층위 사진 연결" },
       "absoluteDatePlottedOnSection": { "label": "연대측정값 층위도 표시" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "토층 단면을 정리한 뒤 빛 조건, 반복 관찰, 층간 비교와 문화층 표시까지 현장 관찰 절차를 남기기 위한 목록"
   },
@@ -1093,7 +1093,7 @@
       "scientificAnalysisData": { "label": "자연과학 분석자료" },
       "findLayerRelationRecorded": { "label": "유물-층위 관계 기록" },
       "depositProcessNarrativeChecked": { "label": "퇴적 과정 서술 검토" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "유구 내부층을 입지, 기능, 문화층·자연층 관계와 축조·사용·폐기·매몰 과정으로 검토하기 위한 목록"
   },
@@ -1110,7 +1110,7 @@
       "formationLayerCandidate": { "label": "가공시 형성층 후보" },
       "artifactSpansBlock": { "label": "유물 블록 걸침" },
       "exposureTimingReviewed": { "label": "노출시기 검토" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "유구 내부 이질토 블록을 인위매립으로 자동 판정하지 않고 유래, 마모, 붕락, 가공시 형성, 유물 걸침 여부를 나누어 판단하기 위한 목록"
   },
@@ -1128,7 +1128,7 @@
       "burntSoilInclusion": { "label": "소토 혼입" },
       "charcoalAshInclusion": { "label": "탄화재 혼입" },
       "bulkArtifactBurial": { "label": "일괄유물 매몰" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "매몰이 급격했는지 점진적이었는지, 인위매립·자연유입·수성퇴적·붕락·휴지기와 유물 일괄성을 분리해 검토하기 위한 목록"
   },
@@ -1151,7 +1151,7 @@
       "registerCrossChecked": { "label": "대장 대조" },
       "mediaCrossChecked": { "label": "사진·도면 대조" },
       "unresolvedRelation": { "label": "관계 미해결" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "맥락번호, 상하·동시·절단·피복 관계, 둑 제거와 격자경계 대조, 관계 수정 사유, 도면·사진 번호, 보고서 반영, 최초·변경 번호와 미해결 관계를 기록하기 위한 목록"
   },
@@ -1163,7 +1163,7 @@
       "referenceSampleComparison": { "label": "표본시료 대조" },
       "quantitativeAnalysisNeeded": { "label": "정량분석 대조 필요" },
       "assessmentMethodStandardized": { "label": "판정법 통일" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "토성을 현장에서 어떻게 판정했는지와 정량분석 또는 표준화가 필요한지를 남기기 위한 목록"
   },
@@ -1206,7 +1206,7 @@
         "label": "탐색 트렌치 사유"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "수혈건물지의 최초 노출, 어깨선, 둑 설정, 단면 촬영·보양, 탐색 트렌치 사유를 현장에서 바로 남기기 위한 목록"
@@ -1262,7 +1262,7 @@
         "label": "사용면·최초굴착면 구분"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "수혈건물지 바닥면과 주혈, 노지, 부뚜막, 벽구, 저장공, 배수·집수시설, 뜬 유물의 자연유입·의도폐기 판단, 수거 전 실측 여부, 사용면·최초굴착면 구분을 기록하기 위한 목록"
@@ -1285,7 +1285,7 @@
       "findStratigraphicPositionLinked": { "label": "유물 분층 위치 연결" },
       "findHeightRecorded": { "label": "유물 높이 기록" },
       "heightAboveFloorRecorded": { "label": "바닥대비고 기록" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "수혈주거지 내부토를 후대층, 2차·1차 매몰토, 주변 유입토, 바닥퇴적토, 벽가토, 바닥다짐토, 기능면, 구축시 퇴적토, 가공면으로 나누고, 층 의미와 유물 높이·바닥대비고를 함께 남기기 위한 목록"
   },
@@ -1337,7 +1337,7 @@
         "label": "발화지점 전문가 자문"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "화재 수혈건물지의 목탄, 탄화재 노출 중 수분 유지, 소토, 재층, 피열흔, 탄화재 방향, 평면·입단면도, 시료 지점, 발화지점 전문가 자문을 화재 원인 확정값이 아니라 단계별 증거로 관리하기 위한 목록"
@@ -1381,7 +1381,7 @@
         "label": "선후관계 미해결"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "중복 수혈건물지에서 1차·2차 평면제토, 단면조사, 과다 트렌치 위험, 후행·선행 조사순서와 미해결 관계를 기록하기 위한 목록"
@@ -1425,7 +1425,7 @@
         "label": "유물·시료 수습시점 연결"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "수혈건물지 평면확인부터 토층둑, 1~3차 노출, 외부시설 조사, 동일 촬영지점·위치와 드론 경로, 해체 후 최종평면까지 단계 비교가 가능하게 기록하기 위한 목록"
@@ -1469,7 +1469,7 @@
         "label": "사진각도 계획"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "수혈건물지 토층둑과 탐색 트렌치를 평면형태, 규모, 지형, 조명방향, 돌출시설, 벽·바닥 관계, 중복 경계와 부분 정보 위험에 따라 설정했는지 기록하기 위한 목록"
@@ -1490,7 +1490,7 @@
       "cookingVessel": { "label": "조리용기" },
       "storagePit": { "label": "저장공" },
       "functionNotAssumed": { "label": "성격 자동판정 금지" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "수혈유구를 주거지로 바로 확정하지 않고 창고, 공방, 공공시설, 함정, 화장실, 폐기장, 태토 채취장과 기능 근거를 함께 검토하기 위한 목록"
   },
@@ -1509,7 +1509,7 @@
       "burialFill": { "label": "매몰" },
       "houseBurialCandidate": { "label": "가옥장 후보" },
       "refusePitReuse": { "label": "폐기장 전용" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "수혈건물지를 한 번의 유형명으로 닫지 않고 계획, 부지 선정, 축조, 생활, 보수, 폐기, 재사용, 매몰, 가옥장·폐기장 전용 후보까지 생애단계로 기록하기 위한 목록"
   },
@@ -1533,7 +1533,7 @@
       "ritualCandidate": { "label": "의례 후보" },
       "workshopOrDryingCandidate": { "label": "작업·건조장 후보" },
       "reconstructionEvidenceSeparated": { "label": "복원 근거 분리" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "지상식·고상식·반고상식·벽주식 건물 후보를 생활면, 주혈 배열, 목주 잔존, 입지, 독립동지주, 회랑·노대, 기능 후보와 분리해 기록하기 위한 목록"
   },
@@ -1558,7 +1558,7 @@
       "baySpacingChecked": { "label": "주간거리 확인" },
       "lengthwiseExtensionCandidate": { "label": "길이방향 증축 후보" },
       "widthwiseExtensionCandidate": { "label": "폭방향 확장 후보" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "주혈군을 방안실, 함척, 중심못, 색실, 고위·평행·대각·개별 사진, 한 칸 바깥 포함 여부, 축과 주간거리까지 조사·촬영 단위로 기록하기 위한 목록"
   },
@@ -1583,7 +1583,7 @@
       "postholeIndependentFoundationCheck": { "label": "굴립주·독립기초 구분" },
       "noTraceConfirmed": { "label": "흔적 없음 확인" },
       "preservationDecisionRecorded": { "label": "보존·처리 결정 기록" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "초석이 남지 않은 건물지에서도 상면흔, 설치굴광, 적심석, 보강토, 발취공, 폐기공, 지하식 초석, 지복석, 처마지주, 비계 주공, 기준말뚝과 보존 결정을 기록하기 위한 목록"
   },
@@ -1601,7 +1601,7 @@
       "alternativeHypothesisRecorded": { "label": "대안 가설 기록" },
       "findDatingContextChecked": { "label": "유물 편년 맥락 확인" },
       "expertReviewNeeded": { "label": "전문가 검토 필요" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "건물지 복원안이 건축사·민속건축·생활사·구조 검토와 비교자료, 대안 가설, 유물 편년 맥락을 거쳐 원자료와 분리되어 있는지 기록하기 위한 목록"
   },
@@ -1621,7 +1621,7 @@
       "toolMarkOrRepairTrace": { "label": "공구흔·수리흔" },
       "constructionChangeRecorded": { "label": "시공 변경 기록" },
       "originalAndHypothesisSeparated": { "label": "원자료·가설 분리" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "칸수, 주간거리, 영조척 후보, 오차 범위, 내진·외진, 지붕·벽체·난방·출입 가설, 기와 분포와 목재 부재 관찰을 복원 근거로 기록하기 위한 목록"
   },
@@ -1647,7 +1647,7 @@
       "restorationDeferred": { "label": "복원 보류" },
       "originalDistinguishableMaterial": { "label": "원유구 구별 재료" },
       "publicUsePurposeRecorded": { "label": "활용 목적 기록" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "건물지 탐사 준비, GPR 한계, 3D 스캔 좌표·정합·원점군 보존, 보존·복원·활용 결정의 근거를 기록하기 위한 목록"
   },
@@ -1666,7 +1666,7 @@
       "sectioning": { "label": "절개" },
       "finalDrawingAfterDismantling": { "label": "해체 후 최종도면" },
       "reviewPhoto": { "label": "검토 사진" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "생활유적 조사에서 사전조사, 평면, 중복관계, 트렌치와 둑, 하강, 내부 정리, 바닥, 절개와 검토 사진 순서를 추적하기 위한 목록"
   },
@@ -1683,7 +1683,7 @@
       "contourRelation": { "label": "등고선 관계" },
       "sectionContinuity": { "label": "단면 연속성" },
       "drawingInversionRisk": { "label": "도면 역전 위험" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "생활유적 트렌치를 많이 넣는 방식이 아니라 최소 훼손으로 바닥면, 벽선, 단면 연속성과 도면 작성 위험을 함께 검토하기 위한 목록"
   },
@@ -1704,7 +1704,7 @@
       "residueContentAnalysisLinked": { "label": "잔류물·내용물 분석 연결" },
       "repeatedConstructionCauseReviewed": { "label": "반복 축조 원인 검토" },
       "alternativeSpatialInterpretation": { "label": "대안 공간해석" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "취락 단위에서 중복관계, 동시기성, 한 시점 규모, 공간구획, 폐기 양상, 바닥 유물분포, 주거지 간 유물 접합, 식물유체와 잔류물·내용물 분석, 반복 축조 원인을 유구군 근거로 묶어 검토하기 위한 목록"
   },
@@ -1731,7 +1731,7 @@
       "multiWorkshopCoexistenceReviewed": { "label": "복수 공방 공존 검토" },
       "supplyShareQuestionRecorded": { "label": "공급 비중 질문 기록" },
       "marketDominanceQuestioned": { "label": "시장 지배 여부 질문" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "생산유적을 노·가마 형태만으로 보지 않고 원료 채취부터 폐기까지의 공정, 참조그룹, 지역 식별목록, 원료 선택 집단, 전문화 단계, 소비지 토기편 분포, 복수 공방 공존, 공급 비중과 시장 지배 질문을 함께 기록하기 위한 목록"
   },
@@ -1750,7 +1750,7 @@
       "dwelling": { "label": "주거지" },
       "charcoalKiln": { "label": "숯가마" },
       "wasteDeposit": { "label": "폐기장" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "기와·토기·자기 가마 같은 생산유적의 채토장, 저장공, 녹로 축혈, 공방, 수비장, 건조장, 집수·배수시설, 주거지, 숯가마, 폐기장을 생산 체계와 연결하기 위한 목록"
   },
@@ -1775,7 +1775,7 @@
       "leadIsotopeProvenancePlanned": { "label": "납동위원소 산지 분석 계획" },
       "officialOrTempleWorkshopCandidate": { "label": "관영·사찰 공방 후보" },
       "supplyNetworkReviewed": { "label": "공급망 검토" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "청동생산유적에서 채광·정련·주조, 도가니 정치, 송풍관 위치, 용범, 잔류물 수습, 합금 조성, 납동위원소 산지, 공방 성격을 분리해 기록하기 위한 목록"
   },
@@ -1799,7 +1799,7 @@
       "replicationExperimentCompared": { "label": "복원실험 비교" },
       "officialWorkshopCandidate": { "label": "관영 공방 후보" },
       "importedRawMaterialOpen": { "label": "수입 원료 가능성 열어둠" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "유리생산유적에서 구슬 제작, 토제 용범, 구멍·심재, 도가니, 유리 용착, 소형 노시설, 폐기수혈, 조성·XRF 분석, 납동위원소 산지, 복원실험과 원료 불확실성을 함께 남기기 위한 목록"
   },
@@ -1819,7 +1819,7 @@
       "metallurgicalAnalysisNeeded": { "label": "금속학 분석 필요" },
       "analysisConfirmed": { "label": "분석 후 확정" },
       "alternativeProcessOpen": { "label": "대안 공정 열림" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "제철유구를 노 형태만으로 확정하지 않고 제련, 단야, 용해·주조, 초강, 공정 혼재, 구조 근거, 부산물 근거, 분석 후 확정을 분리하기 위한 목록"
   },
@@ -1836,7 +1836,7 @@
       "multipleProcessCandidate": { "label": "복수 공정 후보" },
       "classificationAfterAnalysis": { "label": "분석 후 분류" },
       "classificationDeferred": { "label": "분류 보류" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "제철 노 이름을 공정 확정값으로 바로 쓰지 않고 제련로, 단야로, 정련단야로, 단련단야로, 용해로, 제강로, 배소로 후보와 분석 후 분류 상태를 분리하기 위한 목록"
   },
@@ -1854,7 +1854,7 @@
       "residueFlow": { "label": "부산물 흐름" },
       "alternativeRelationOpen": { "label": "대안 연결 열림" },
       "analysisFeedbackNeeded": { "label": "분석 환류 필요" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "제철유적에서 이전 공정 산출물이 다음 공정 원료로 이어지는 관계를 공정 확정 전에 보존하기 위한 목록"
   },
@@ -1879,7 +1879,7 @@
       "wasteDepositLinked": { "label": "폐기장 연결" },
       "workshopLinked": { "label": "공방 연결" },
       "ritualDepositCandidate": { "label": "제의유구 후보" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "제철 노의 평면, 단면, 벽체, 바닥, 송풍·배재 구조, 보수·재사용, 원료·연료 저장, 폐기장과 공방 연결을 현장에서 빠뜨리지 않기 위한 목록"
   },
@@ -1905,7 +1905,7 @@
       "additiveCandidate": { "label": "첨가제 후보" },
       "moldFragment": { "label": "용범편" },
       "crucibleCandidate": { "label": "도가니 후보" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "제철 관련 유물과 부산물을 철광석, 사철, 목탄, 노벽, 송풍관, 유출재, 노내재, 환원괴, 단야재, 단조박편, 입상재, 용범편처럼 공정 해석 단위로 나누기 위한 목록"
   },
@@ -1931,7 +1931,7 @@
       "archaeomagneticSample": { "label": "고고지자기 시료" },
       "woodSpeciesAnalysis": { "label": "수종분석" },
       "analysisFeedbackRecorded": { "label": "분석 환류 기록" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "제철 시료를 분석기관에 보내기 전에 육안관찰, 자석반응, 채취 위치, 절단 위치, 파괴 승인, 분석법, 산화물 해석, 연대·수종분석과 결과 환류를 함께 관리하기 위한 목록"
   },
@@ -1953,7 +1953,7 @@
       "ditchRecutChecked": { "label": "주구 재굴착 확인" },
       "moundConstructionSequence": { "label": "성토·매장 선후" },
       "preservedAreaMarked": { "label": "보존 구역 표시" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "고분 봉토와 분구 조사에서 발굴 전 현황, 등고·교란, 조사둑, 제토 단위, 구지표, 성토 단위, 호석·주구, 재굴착, 보존 구역을 빠뜨리지 않기 위한 목록"
   },
@@ -1975,7 +1975,7 @@
       "robberyDisturbanceSeparated": { "label": "도굴·교란 분리" },
       "foundationAfterDismantling": { "label": "해체 후 기초 기록" },
       "preservationDecisionLinked": { "label": "보존 판단 연결" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "고분 매장주체부 조사에서 묘광, 관·곽·실, 개석, 밀봉토, 내부토, 소형유물, 벽면·바닥, 폐쇄시설, 입구·묘도, 추가장, 도굴·교란, 해체 후 기초와 보존 판단을 분리하기 위한 목록"
   },
@@ -1991,7 +1991,7 @@
       "scheduleBudgetConstraint": { "label": "기간·예산 제약" },
       "previousInvestigationCompared": { "label": "선행조사 대조" },
       "damageMinimized": { "label": "훼손 최소화" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "고총고분 조사의 목적과 제약을 먼저 남겨 트렌치 방향, 조사 범위, 봉분·매장주체부 우선순위를 설명하기 위한 목록"
   },
@@ -2008,7 +2008,7 @@
       "planRemovalCombined": { "label": "평면 제토 병행" },
       "sectionPlanCompared": { "label": "단면·평면 대조" },
       "partialInformationCaution": { "label": "부분정보 주의" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "봉분 4분·십자 트렌치가 매장주체부와 지형을 어떻게 가로지르는지, 단면과 평면 정보가 함께 검토되었는지 기록하기 위한 목록"
   },
@@ -2024,7 +2024,7 @@
       "fieldSubdivisionKept": { "label": "현장 세분 유지" },
       "labMergePossible": { "label": "실내 합침 가능" },
       "labSubdivisionImpossible": { "label": "실내 세분 불가" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "봉분 성토재를 현장에서 세분해 성토 단위, 운반 단위, 구획성토와 성토공정을 되살릴 수 있게 하기 위한 목록"
   },
@@ -2042,7 +2042,7 @@
       "ritualDepositStageRecorded": { "label": "제사·매납 축조단계 기록" },
       "sharedDitchSequenceChecked": { "label": "공유 주구 선후 확인" },
       "moundFacilityRelationUnresolved": { "label": "봉분·시설 관계 미해결" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "연접·표형·중복 봉분에서 매장주체부 축선, 중심 어긋남, 관계 확인 트렌치, 최신 매장시설 우선 노출, 반복 촬영 순서, 제사·매납 축조단계, 공유 주구 선후관계와 미해결 관계를 기록하기 위한 목록"
   },
@@ -2059,7 +2059,7 @@
       "packingMethod": { "label": "충전 방식" },
       "topCoverSoil": { "label": "상면 피복토" },
       "plasterClayRemaining": { "label": "미장토 잔존" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "석곽·석실 벽체와 충전공간에서 개석, 석재, 점질토, 목재 받침, 충전재와 미장토를 분리해 기록하기 위한 목록"
   },
@@ -2075,7 +2075,7 @@
       "smallTabletSerialNumber": { "label": "소찰 일련번호" },
       "bulkRecovery": { "label": "일괄수습" },
       "laboratorySeparationPlanned": { "label": "연구실 분리해체" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "분묘 내부에서 조도, 교란토 체질, 바닥 근처 정밀조사, 소형유물·유기물 보존, 고유번호와 일괄수습 계획을 관리하기 위한 목록"
   },
@@ -2093,7 +2093,7 @@
       "additionalBurialEvidence": { "label": "추가장 근거" },
       "structureRiteMismatch": { "label": "묘제·장제 불일치" },
       "typeNamePending": { "label": "묘형명 보류" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "수혈식석곽, 횡구식석곽·석실, 횡혈식석실을 입구·묘도·연도·현실·관대·추가장 근거로 판정하기 위한 목록"
   },
@@ -2112,7 +2112,7 @@
       "floorDrainageChecked": { "label": "바닥·배수 확인" },
       "reopenedOrRepaired": { "label": "재개방·수리 흔적" },
       "sequenceComparedWithBurial": { "label": "매장 순서와 대조" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "횡구·횡혈계 고분의 묘도, 연도, 현문, 폐쇄석·폐쇄토와 재개방·수리 흔적을 매장 순서와 대조하기 위한 목록"
   },
@@ -2131,7 +2131,7 @@
       "graveGoodsByPlatform": { "label": "시상별 부장품 위치" },
       "removalReverseSequence": { "label": "제거 역순 기록" },
       "sectionAfterRemoval": { "label": "제거 후 단면" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "관대와 시상을 피장자 수, 두침·족좌, 표면 마감, 중첩·접속, 추가장 공간, 부장품 위치와 해체 순서로 기록하기 위한 목록"
   },
@@ -2153,7 +2153,7 @@
       "constructionStageLinked": { "label": "축조공정 연결" },
       "inSituPreservationDuringMoundWork": { "label": "봉분 작업 중 원위치 유존" },
       "redepositionCaution": { "label": "재퇴적 주의" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "분묘 제사와 매납 자료를 봉토, 주구, 묘도·연도, 폐쇄 전후, 현실 내부, 위치·레벨, 축조공정과 원위치 유존 맥락으로 분리하기 위한 목록"
   },
@@ -2174,7 +2174,7 @@
       "functionNotAssumed": { "label": "기능 단정 보류" },
       "collectionUnitRecorded": { "label": "수습 단위 기록" },
       "relationToHumanRemains": { "label": "인골과 위치관계" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "고분 부장품과 제사자료를 착장, 관 내부·외부, 매장주체부, 봉토·주구, 입구·폐쇄부, 의도적 파손, 공헌, 외래요소 후보, 수습 단위와 인골 위치관계로 나누기 위한 목록"
   },
@@ -2198,7 +2198,7 @@
       "slowShadeDrying": { "label": "그늘 장기건조" },
       "bonePartSideIndividualSequence": { "label": "부위·좌우·개체 순서" },
       "analysisCriteriaRecorded": { "label": "분석 기준 기록" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "인골 수습에서 전문가 협의, 노출 순서, 오염 방지, 도구, 차양, 물 사용, 1/5 도면, 부장품 위치관계, 포장·주기, 보존처리, 건조, 개체식별과 분석 기준을 함께 관리하기 위한 목록"
   },
@@ -2221,8 +2221,8 @@
       "baulkOrSubBaulkSet": { "label": "둑·보조둑 설정" },
       "underlyingFeatureChecked": { "label": "하부 유구 확인" },
       "intrusiveFeatureChecked": { "label": "관입 유구 확인" },
-      "formationProcessOpen": { "label": "형성과정 판단 보류" },
-      "pendingDecision": { "label": "판단 보류" }
+      "formationProcessOpen": { "label": "형성과정 추가 확인" },
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "패총층을 순패층·혼토패층·혼패토층·파쇄패층으로 나누고, 패각 파쇄도, 흙 혼입, 사면 붕괴, 해안 모래 유입, 풍화, 재퇴적, 평면·단면 병행, 둑 설정, 하부·관입 유구와 형성과정 보류를 기록하기 위한 목록"
   },
@@ -2242,7 +2242,7 @@
       "laterReuseSeparated": { "label": "후대 재사용 분리" },
       "periodDistributionSeparated": { "label": "시대별 분포 분리" },
       "exchangeContextCandidate": { "label": "교류 맥락 후보" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "패총을 조개층 단독 유구가 아니라 주거지, 야외노지, 저장공, 매장·의례, 함정·밭 후보, 해안·수계, 내륙화 해안, 조간대·내만·하구·도서, 해류·계절성, 후대 재사용, 시대별 분포, 교류 맥락과 연결하기 위한 목록"
   },
@@ -2266,7 +2266,7 @@
       "potteryChronologyLinked": { "label": "토기 편년 연결" },
       "exchangeGoodsCandidate": { "label": "교류품 후보" },
       "functionNotAssumed": { "label": "기능 단정 보류" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "신석기 패총과 취락에서 패류 채취구, 어망추, 조침, 작살, 골제·패제 어로구, 통나무배, 외양성 어종, 해양포유류, 직접·간접 포경 근거, 어종과 해류의 계절성, 지역 생업 패턴, 토기 편년, 교류품 후보와 기능 보류를 기록하기 위한 목록"
   },
@@ -2288,7 +2288,7 @@
       "preservationBeforeSeparation": { "label": "분리 전 보존처리" },
       "dryOrWetProcessingRecorded": { "label": "건식·습식 처리 기록" },
       "specialistConsulted": { "label": "전문가 협의" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "패총 시료를 층위별 벌크시료, 블록시료, 부피 기록, 전체·표본 물체질, 체눈 크기, 부유선별, 패류·어골·동물뼈·식물유체 분리, 분리 전 보존처리, 건식·습식 처리, 전문가 협의와 함께 관리하기 위한 목록"
   },
@@ -2309,7 +2309,7 @@
       "regionalSeaLevelCurveLinked": { "label": "지역 해수면 곡선 연결" },
       "proxyAssemblageNotSingleSpecies": { "label": "단일종 아닌 군집 해석" },
       "archaeologicalContextLinked": { "label": "고고학 맥락 연결" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "고환경 시료에서 화분, 규조, 식물규산체, 탄화곡물, 목탄, 패류·유공충 군집, 코어 깊이와 표고, 오염위험, 보존 편향, 패각 해양저수지효과, 연대 전처리, 지역 해수면 곡선, 프록시 군집과 고고학 맥락을 함께 기록하기 위한 목록"
   },
@@ -2327,7 +2327,7 @@
       "sampleCountPrioritized": { "label": "시료 수 우선" },
       "largeSampleNotPrioritized": { "label": "대형시료 우선 아님" },
       "contextDistributionRecorded": { "label": "출토분포 기록" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "식물고고학 시료를 분석자료, 연구질문, 표본추출법, AMS·식생·식생활·건축재·연료 질문, 채취지점 다양성과 출토분포로 설계하기 위한 목록"
   },
@@ -2344,7 +2344,7 @@
       "collectionPointRecorded": { "label": "채취 지점 기록" },
       "unanalyzedArea": { "label": "미분석 구역" },
       "sampleBiasRecorded": { "label": "표본 편향 기록" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "식물유체가 임의 채취인지 계획 표본인지, 격자·층위·유구 단위와 미분석 구역, 표본 편향을 함께 남기기 위한 목록"
   },
@@ -2361,7 +2361,7 @@
       "labProcessing": { "label": "실내 처리" },
       "unprocessedReason": { "label": "미처리 사유" },
       "processingBiasRecorded": { "label": "처리 편향 기록" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "물체질과 플로테이션 여부, 처리 전 토양량, 잔류물·부유물, 체눈, 현장·실내 처리, 미처리 사유와 처리 편향을 기록하기 위한 목록"
   },
@@ -2396,7 +2396,7 @@
       "scaledPhotoLinked": { "label": "축척사진 연결" },
       "identificationConfidence": { "label": "동정 신뢰도" },
       "alternativeTaxon": { "label": "대체 분류군" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "식물유체 동정을 현생 비교표본, 형태·탄화 비교, 노출 즉시 채취, 수분상태 유지, 단면 관찰, 영구 프레파라트, 현미경 관찰, 검색표 대조, 연륜연대 후보, 사진, 계측치, 계측축, 크기비율, 산점도 군집, 비교집단, 신뢰도와 대체 분류군으로 검토하기 위한 목록"
   },
@@ -2416,7 +2416,7 @@
       "cropIntroduction": { "label": "작물 도입" },
       "cropMorphologyChange": { "label": "작물 형태 변화" },
       "dwellingDistributionCompared": { "label": "주거별 분포 비교" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "식물유체 자체분석과 문화역사 해석을 분리하고, 식생·건축재·농경문화·식생활·수확저장·작물 변화와 공간분포 해석을 분석근거에 연결하기 위한 목록"
   },
@@ -2434,7 +2434,7 @@
       "starchContaminationRisk": { "label": "전분 오염 가능" },
       "impressionPreservationState": { "label": "압흔 보존상태" },
       "absenceNotAssumed": { "label": "부재 단정 금지" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "식물유체가 검출되지 않은 결과를 유적 내 부재로 단정하지 않도록 미분석 구역, 표본 수, 보존, 처리법, 표본 편향, 연구질문 한계와 프록시별 보존 한계를 남기기 위한 목록"
   },
@@ -2457,7 +2457,7 @@
       "smallFishBirdRodentRisk": { "label": "소형 어골·조류·설치류 누락 위험" },
       "juvenileIndividualRisk": { "label": "어린개체 누락 위험" },
       "sampleAmountInsufficient": { "label": "표본량 부족" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "동물유체 수습에서 토양 보존 조건, 전체 체질·물체질·건식체질, 체눈 크기, 블록샘플, 반복 채취, 선별수습 사유와 소형자료 누락 위험을 기록하기 위한 목록"
   },
@@ -2475,7 +2475,7 @@
       "distributedBoxStorage": { "label": "상자 분산 보관" },
       "packingMaterialRecorded": { "label": "포장재 기록" },
       "noOverCleaning": { "label": "과세척 금지" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "동물뼈가 노출·수송 중 부서지지 않도록 토양 지지, 탈수, 표면 처리, 저농도 강화, 전문가 수습, 유구·층별 분리와 포장재를 관리하기 위한 목록"
   },
@@ -2496,7 +2496,7 @@
       "fragmentationRecorded": { "label": "파편화 기록" },
       "identificationUncertain": { "label": "동정 불확실" },
       "identifierRecorded": { "label": "동정자 기록" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "동물유체 동정을 골격도감, 현생 비교표본, 인근 유적 보고서, 동물종, 부위, 좌우, 성장도, 파편화, 동정 불확실성과 동정자 기록으로 관리하기 위한 목록"
   },
@@ -2520,7 +2520,7 @@
       "animalDisturbance": { "label": "동물 교란" },
       "humanAction": { "label": "사람 행위" },
       "modificationCauseUnresolved": { "label": "변형 원인 미해결" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "동물뼈 표면 변형을 절단·도살·화흔 같은 행위 흔적과 풍화·동결융해·물흐름·토양·미생물·뿌리·동물 교란 같은 후퇴적 변형으로 나누어 관찰하기 위한 목록"
   },
@@ -2542,7 +2542,7 @@
       "complementaryIndexNeeded": { "label": "보완지수 필요" },
       "smallSampleWarning": { "label": "소표본 주의" },
       "singleIndexNotUsed": { "label": "단일지수 단독사용 금지" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "동물유체 계량을 NISP, MNE, MNI, MAU, %MAU, 상대빈도, 부위빈도, 연령·성비, 산출방식, 사용목적, 한계와 보완지수로 관리하기 위한 목록"
   },
@@ -2573,7 +2573,7 @@
       "burialAreaSeparated": { "label": "묘역 분리" },
       "radiocarbonLinked": { "label": "방사성탄소연대 연결" },
       "typeNameNotAssumed": { "label": "유형명 단정 보류" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "청동기 주거지를 가락동식·둔산식·역삼동식·관산리식·검단리식·휴암리식·송국리식 같은 유형명 후보와 평면, 화덕, 주춧돌, 중앙 타원형 구덩이, 양단 주혈, 벽도랑, 외곽 둘레도랑, 가옥장 전용 후보, 배수·제습, 주거군, 묘역, 연대 근거로 나누어 기록하기 위한 목록"
   },
@@ -2597,7 +2597,7 @@
       "laterGraveMarkerReuse": { "label": "후대 묘표석 재사용" },
       "relocationRestorationRecorded": { "label": "이전·복원 이력" },
       "settlementRelationRecorded": { "label": "인접 취락 관계" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "고인돌·지석묘를 덮개돌, 받침돌, 무덤방, 묘역시설, 바둑판식·덮개식 후보, 돌두름형·돌덧널형, 판돌 벽석, 바닥 판석, 매장주체부 유무, 제단·기념물 후보, 성혈·알구멍, 채석흔, 후대 재사용, 이전·복원과 인접 취락 관계로 나누어 기록하기 위한 목록"
   },
@@ -2619,7 +2619,7 @@
       "shortUseCandidate": { "label": "단기 사용 후보" },
       "floodBurialEvent": { "label": "홍수 매몰 사건" },
       "spatialSeparationRecorded": { "label": "공간 구획 기록" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "청동기 환호를 방어시설로만 고정하지 않고 방어, 경계, 배수·집수, 의례, 다중 환호, 단면형태, 출입구, 내부 퇴적, 자연퇴적, 재굴착·수축흔, 취락·주거 중복 관계, 단기 사용, 홍수 매몰, 공간 구획으로 나누어 기록하기 위한 목록"
   },
@@ -2639,7 +2639,7 @@
       "standardTermChecked": { "label": "표준 용어 확인" },
       "aliasMappingRequired": { "label": "이칭 매핑 필요" },
       "contextNotStyleOnly": { "label": "문양명 단독 해석 금지" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "청동기 토기와 용어를 무문토기·민무늬토기, 가락동식·검단리식 토기, 구순각목·공렬·이중구연, 붉은간토기·검은간토기, 편년, 공반 맥락, 표준 용어, 이칭 매핑, 문양명 단독 해석 금지로 나누기 위한 목록"
   },
@@ -2685,7 +2685,7 @@
         "label": "보완 필요"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "휴대용 개인 야장, 현장 약식실측, 시행착오 관찰, 보고서 미수록 판단, 제출 원본이 검토·열람 가능한 공적 기록이 되도록 관리하기 위한 목록"
@@ -2732,7 +2732,7 @@
         "label": "다음 작업계획"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "매일 남겨야 하는 조사단 공정, 날씨, 인원, 장비, 출토, 방문자, 변경 사유를 보고서 대조가 가능한 원기록으로 관리하기 위한 목록"
@@ -2791,7 +2791,7 @@
         "label": "역할 공백 확인"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "조사단장, 책임조사원, 현장팀장, 측량·사진·도면·안전·민원·유물정리·시료·일지·보고서 담당과 검토 책임을 작업 단위에서 확인하기 위한 목록"
@@ -2853,7 +2853,7 @@
         "label": "자료 인수인계 준비"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "허가서 비치, 착수신고 안내, 보안, 주민·관할기관 통보, 유적보호 주의사항, 기상 대비, 야간방범, 임시유물·기록물 보관, 철수 전 미작성자료 조치를 작업 단위에서 확인하기 위한 목록"
@@ -2897,7 +2897,7 @@
         "label": "다음 작업계획 근거"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "작업일지가 조사 진행 기록이자 기관·발주처 사이 사실관계를 확인하는 증거 자료로 쓰일 수 있는지 표시하기 위한 목록"
@@ -2938,7 +2938,7 @@
         "label": "보고서 반영 확인"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "작업일지가 당일 사실 기록으로 남고 사진·도면·유물·시료 목록과 번호 변환표에 연결되는지 검토하기 위한 목록"
@@ -3021,7 +3021,7 @@
         "label": "보존연한 없음"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "보고서에 수록되지 않은 원야장, 원도면, 원사진, 아날로그 필름, 슬라이드 필름, 밀착인화, 전자야장 원본과 실물 유물 열람 이력까지 영구 관리하기 위한 원자료 보존·열람 목록"
@@ -3077,7 +3077,7 @@
         "label": "결과통보"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "조사 의뢰부터 허가, 착수, 완료신고, 보고서 제출까지 조사사업 행정 흐름을 추적하기 위한 목록"
@@ -3127,7 +3127,7 @@
         "label": "계획수립 전제 검토"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "조사의뢰 접수부터 기초자료 확보, 현장답사, 접수 담당, 민원·지장물 위험, 전문기관 배정까지 조사계획 수립 전 상태를 추적하기 위한 목록"
@@ -3192,7 +3192,7 @@
         "label": "변경·연장 신청 경로 확인"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "발굴허가 신청서, 조사계획서, 산출내역, 토지·임야조서, 공사계획, 위치도, 현상변경·영향검토, 위원회 심의, 이해관계, 허가서 통지와 변경·연장 경로를 추적하기 위한 목록"
@@ -3227,7 +3227,7 @@
         "label": "위반위험"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "발굴허가서와 허가조건, 조사기간, 변경사항, 현장점검 대응을 현장 기록과 함께 관리하기 위한 목록"
@@ -3310,7 +3310,7 @@
         "label": "재평가 트리거"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "보존조치가 보존의견·평가자료·결정조건에서 현지보존·이전보존·기록보존, 이행 도면·사진·관리계획, 관리주체, 점검, 재평가로 이어지는 과정을 추적하기 위한 목록"
@@ -3345,7 +3345,7 @@
         "label": "인계확인"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "표본·시굴·정밀발굴 사이에서 앞 단계 기록, 출토유물, 약식보고서, 후속기관 인계를 추적하기 위한 목록"
@@ -3366,7 +3366,7 @@
       "collaborationPortalEntered": { "label": "협업포털 입력" },
       "publicReleaseChecked": { "label": "공개상태 확인" },
       "sourceRecordLinked": { "label": "원기록 연결" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "완료신고, 완료자료, 약식보고서, 보존조치 결과보고, 최종보고서, PDF, 전자행정, 제출확인, 초록, 협업포털, 공개상태와 원기록 연결을 관리하기 위한 목록"
   },
@@ -3451,7 +3451,7 @@
         "label": "원기록 연결 보존"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "보고서 일러두기, 허가번호, 방위, 축척, 고도, 토색, 도면기호, 실측 기준, 기획회의, 편집방식, 원색도판, 인쇄소 인계·교정, 판형·제본 계획, 원야장·원도면·원사진·목록·번호 변환표와 도면·사진 일치 여부를 관리하기 위한 목록"
@@ -3481,7 +3481,7 @@
       "reportLegendUpdated": { "label": "일러두기 갱신" },
       "teamNotified": { "label": "조사팀 공유" },
       "sourceRecordLinked": { "label": "원기록 연결" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "일러두기, 방위, 축척, 해발고도, 토색, 도면기호, 유구·유물번호, 유물 기술·선별, 용어 기준의 변경 사유와 이전 버전, 대장 갱신, 팀 공유, 원기록 연결을 관리하기 위한 목록"
   },
@@ -3509,7 +3509,7 @@
       "conventionalPhotoAlbum": { "label": "사진첩 재래식 매체" },
       "manuscriptDrawingArchive": { "label": "수기 도면 재래식 매체" },
       "integratedDbmsLinked": { "label": "통합 DBMS 연결" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "보고서 작업파일, 전자보고서, 각종 DB, GIS, GPS·NMEA·shapefile·지리보정·UAV·LiDAR·3D 원천자료와 재래식 매체를 현장기록에서 이어 관리하기 위한 정보화 자산 종류 목록"
   },
@@ -3536,7 +3536,7 @@
       "dbmsConnectionChecked": { "label": "DBMS 연결 확인" },
       "longTermArchiveLocation": { "label": "장기보존 위치" },
       "restrictedAccessMarked": { "label": "제한열람 표시" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "원기록 연결, 파일경로, 포맷, 좌표계, 기준점, 오차, 처리 workflow, 파생 산출물, 제출 묶음, 체크섬, 권한, 백업, 마이그레이션, DBMS 연결, 장기보존 위치를 추적하기 위한 정보화 자산 관리 목록"
   },
@@ -3557,7 +3557,7 @@
       "postConservationCorrection": { "label": "보존처리 후 정정" },
       "shapeQuantityChanged": { "label": "형상·수량 변경" },
       "reevaluationNeeded": { "label": "재평가 필요" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "국가귀속 전 소유권 공고와 판정, 선별회의, 임시보관증, 보관관리기관, 국가귀속대장, 보존처리 뒤 정정신고와 재평가를 추적하기 위한 목록"
   },
@@ -3644,7 +3644,7 @@
         "label": "단일 용어 병합 금지"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "집자리/주거지, 조개더미/패총, 가마/요/요지처럼 현장 검색어와 권위 표제어, 보고서 출력어를 넓게 연결하되 저장값을 하나로 병합하지 않기 위한 목록"
@@ -3665,7 +3665,7 @@
       "administrativePlaceVariant": { "label": "행정지명 변형" },
       "ocrVariant": { "label": "OCR 변형" },
       "deprecatedTerm": { "label": "폐기어 후보" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "사전 표제어의 동의어, 이칭, 찾아가기, 보고서명, 행정지명, 원어·한자 표기, OCR 변형을 별칭 카드에서 구분하기 위한 목록"
   },
@@ -3682,7 +3682,7 @@
       "pdfCrossCheckRequired": { "label": "원PDF 대조 필요" },
       "manualReviewRequired": { "label": "수동 검토 필요" },
       "doNotOverwriteObservedTerm": { "label": "현장 관찰어 덮어쓰기 금지" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "별칭을 자동완성, 검색어, 보고서 출력, 가져오기 매핑에서 어떻게 처리할지 정하고 권위 표제어로 연결하기 전 검토 조건을 남기기 위한 목록"
   },
@@ -3740,7 +3740,7 @@
         "label": "UI 노출 보류"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "고고학사전 표제어와 현장 관용어를 앱 값 목록으로 올리기 전에 출처, 원문 대조, OCR 품질, 자료군 범위, 대량 가져오기 가능성, 동일 표제어·분야 충돌, UI 노출 가능성을 표시하기 위한 목록"
@@ -3793,7 +3793,7 @@
         "label": "일반고고학"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "고고학사전 표제어를 어느 전문 분야의 권위 근거로 쓸지 구분하기 위한 목록"
@@ -3834,7 +3834,7 @@
         "label": "UI 노출 보류"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "표제어를 화면명, 값목록, 도움말, 보고서 출력, 검색어, 가져오기 매핑 중 어디에 적용할지 표시하기 위한 목록"
@@ -3863,7 +3863,7 @@
         "label": "원PDF 대조 필수"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "전문사전, 일반사전, 조사방법론, 기관 보고서, 현장 관용어 사이에서 어떤 출처를 우선할지 표시하기 위한 목록"
@@ -3937,7 +3937,7 @@
         "label": "분야별 색인 연결"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "한국고고학사전·전문사전의 표제어·유적명·수치·색인·찾아가기 처리 원칙을 보고서 출력과 검색 정규화 규칙으로 추적하기 위한 목록"
@@ -3967,7 +3967,7 @@
       "originalWordingPreserved": { "label": "원문표기 보존" },
       "productionDomainRecorded": { "label": "생산분야 기록" },
       "reportOutputTermSeparated": { "label": "보고서 출력어 분리" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "생산유적편 사전의 가마, 요, 요지, 가마터, 한뎃가마, 노천요, 평요, 번조실, 소성실 같은 입력어를 현장 원문, 우선 표제어, 보고서 출력어, 생산분야, 찾아가기 관계, 동일 표제어의 분야 분리로 관리하기 위한 목록"
   },
@@ -4010,7 +4010,7 @@
         "label": "보존·행정"
       }
     },
-    "description": "조사방법론 자료에서 반복 확인된 한국형 야장 유적·업무 패키지 목록"
+    "description": "조사방법론 자료에서 반복 확인된 디지털 야장 유적·업무 패키지 목록"
   },
   "KoreanFieldwork-featurePeriod": {
     "values": {
@@ -4312,7 +4312,7 @@
         "label": "표면유물 없음·입지 가능"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "지표조사를 유물산포 확인으로 축소하지 않고 지형, 입지, 원지형 변화, 절개면 토층, 유물포함층, 재퇴적 가능성을 함께 기록하기 위한 목록"
@@ -4353,7 +4353,7 @@
         "label": "누락문헌 보완"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "사전문헌이 현장 판단을 덮어쓰지 않도록 백지상태 관찰, 조사 경로와 시야조건, 조사자 교차확인, 사후 문헌대조를 남기기 위한 목록"
@@ -4403,7 +4403,7 @@
         "label": "공사 중 발견 신고"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "지표조사 결과를 유적 존재 확정값이 아니라 보존, 표본조사, 시굴, 정밀발굴, 토층분포조사, 입회조사로 이어지는 판단근거로 관리하기 위한 목록"
@@ -4425,7 +4425,7 @@
       "firstAidReady": { "label": "응급약품 준비" },
       "probeReady": { "label": "탐침봉 준비" },
       "vegetationRemovalToolsReady": { "label": "식생 제거 도구 준비" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "지표조사를 유물산포 확인으로 축소하지 않도록 조사단, 전문분야, 문헌·지도·기조사자료, 현장 장비와 기록 도구를 출발 전에 점검하기 위한 목록"
   },
@@ -4445,7 +4445,7 @@
       "continuousPositionTracking": { "label": "조사자 위치 지속 확인" },
       "interviewSurveyRecorded": { "label": "탐문·설문 기록" },
       "supplementarySurveyNeeded": { "label": "보완조사 필요" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "지표조사 현장에서 경계·전경·지형 구분을 먼저 확보하고 기존 문화재, 산포, 노출 유구, 절개면, 훼손, 탐문을 순서대로 놓치지 않기 위한 목록"
   },
@@ -4459,7 +4459,7 @@
       "threeDimensionalRecord": { "label": "3D 기록" },
       "fieldMapLinked": { "label": "현장지도 연결" },
       "specialistReviewNeeded": { "label": "전문가 검토 필요" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "비문, 암각화, 노출 구조물처럼 굴토 없이 확인되는 지표조사 대상이 탁본, 간이실측, 사진, 동영상, 3D, 현장지도, 전문가 검토 기록으로 이어지는지 확인하기 위한 목록"
   },
@@ -4480,7 +4480,7 @@
       "surveyResultRecorded": { "label": "조사결과 기록" },
       "surveyProblemRecorded": { "label": "문제점 기록" },
       "permanentMarkerRecord": { "label": "유성펜 기록" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "현지 지표조사일지가 조사명, 조사지역·지점, 조사대상, 조사자, 일시·날씨, 면담자·제보자 연락처와 역할, 질문지, 구술 지명, 제보의 가능성 정보 표시, 보완조사 연결, 조사결과와 문제점, 물기에 지워지지 않는 기록 요건을 갖추었는지 확인하기 위한 목록"
   },
@@ -4499,7 +4499,7 @@
       "dgpsUsed": { "label": "DGPS 사용" },
       "rtkUsed": { "label": "RTK 사용" },
       "twoGpsControlPoints": { "label": "GPS 좌표 2점 이상" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "지표조사 보고서의 범위 표시가 추상적인 점으로 끝나지 않도록 조사범위, 유물산포지, 사업계획도 대조, 축척·도엽·GPS 기준점을 확인하기 위한 목록"
   },
@@ -4520,7 +4520,7 @@
       "targetFeatureSuitabilityReviewed": { "label": "대상 유구 적합성 검토" },
       "terrainConditionLimitReviewed": { "label": "지형 조건 한계 검토" },
       "methodLimitRecorded": { "label": "방법 한계 기록" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "지표조사의 특수조사와 비파괴 탐사를 탐사명만으로 끝내지 않고, 탐침봉·보링·고지형·지도·항공사진 판독, GPR, 전기저항, 자기, 전자유도, 수중탐사의 대상 적합성과 지형 조건 한계를 함께 기록하기 위한 목록"
   },
@@ -4539,7 +4539,7 @@
       "falsePositiveRiskRecorded": { "label": "오탐 위험 기록" },
       "followUpTrenchPlanned": { "label": "후속 트렌치 계획" },
       "excavationMethodDecisionLinked": { "label": "발굴방법 결정 연결" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "물리탐사 이상체가 보고서 그림으로만 남지 않도록 장비·측선·원자료·자료처리, 이상체 영상·종류, 사진, DGPS 위치, 현장 대조, 오탐 위험, 후속 트렌치와 발굴방법 결정을 연결하기 위한 목록"
   },
@@ -4553,7 +4553,7 @@
       "naturalHeritage": { "label": "자연유산" },
       "underwaterHeritage": { "label": "수중문화재" },
       "modernHeritage": { "label": "근대문화유산" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "지표조사 대상을 유물산포지로 축소하지 않고 고고, 건축사, 역사, 미술사, 인류민속, 자연유산, 수중문화재, 근대문화유산까지 검토하기 위한 목록"
   },
@@ -4570,7 +4570,7 @@
       "surrounding50m": { "label": "주변 50m" },
       "designatedHeritage500mInfluence": { "label": "지정문화재 500m 영향권" },
       "alterationPermitProcedureFlagged": { "label": "현상변경 절차 필요 표시" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "사업구역, 형질변경지, 분할사업 전체면적, 토취장·사토장·가설도로·수몰면·설계변경부지와 주변 영향권을 지표조사 범위 산정 근거로 남기기 위한 목록"
   },
@@ -4583,7 +4583,7 @@
       "nineteenSeventiesCandidate": { "label": "1970년대 후보" },
       "urgentProtectionNeeded": { "label": "긴급보호 필요" },
       "legalCriteriaReviewed": { "label": "법령 기준 검토" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "근현대 문화유산과 하한연대가 지표조사에서 누락되지 않도록 해방 전후, 한국전쟁기, 50년 이상, 등록문화재 후보와 법령 기준 검토 상태를 남기기 위한 목록"
   },
@@ -4600,7 +4600,7 @@
       "basicSurvey": { "label": "기본조사" },
       "inDepthSurvey": { "label": "심층조사" },
       "specialistReferral": { "label": "전문가 의뢰" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "조사단이 고고학 전공자만으로 구성되어 건축·민속·자연유산·지질 자료가 누락되는 위험을 줄이기 위한 전문성 점검 목록"
   },
@@ -4613,7 +4613,7 @@
       "afterDesignChange": { "label": "설계변경 후" },
       "preservationReviewTimeSecured": { "label": "보존 검토 시간 확보" },
       "timingRisk": { "label": "시점 부적절 위험" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "지표조사가 사업 입안 단계에 들어가 보존 검토 시간을 확보했는지, 설계 완료 후나 착공 직전으로 밀려 시점 위험이 생겼는지 기록하기 위한 목록"
   },
@@ -4627,7 +4627,7 @@
       "experienceBasedJudgement": { "label": "경험 판단" },
       "surveyLimit": { "label": "조사 한계" },
       "additionalSurveyNeeded": { "label": "추가조사 필요" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "표면 유물이나 노출 유구가 보이지 않을 때도 유적 부재로 바로 확정하지 않고 지형, 입지, 퇴적물, 탐문, 경험 판단과 조사 한계를 분리해 남기기 위한 목록"
   },
@@ -4640,7 +4640,7 @@
       "productionRawMaterialCandidate": { "label": "생산 원료 후보" },
       "surroundingResourceDistribution": { "label": "주변 자원분포" },
       "surroundingAreaDetailedObservation": { "label": "주변지역 정밀관찰" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "유적이 확인되지 않은 주변 지역도 석재·점토·성곽석재·고인돌석재·생산 원료 후보와 자원분포를 설명하는 조사 자료로 남기기 위한 목록"
   },
@@ -4671,7 +4671,7 @@
         "label": "전역조사 원칙 확인"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "표본조사가 후속 발굴 여부를 판단할 수 있는 제한 조사인지, 구릉지·트렌치 사이 공백·문화층 범위 불확실성 때문에 시굴 또는 정밀조사로 넘겨야 하는지 남기기 위한 목록"
@@ -4706,7 +4706,7 @@
         "label": "정밀발굴 방법 산정"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "시굴조사를 유적 존재 확인뿐 아니라 수평·수직 범위, 시대·성격, 정밀발굴 기간·비용·방법 산정 근거로 관리하기 위한 목록"
@@ -4753,7 +4753,7 @@
         "label": "성벽 직교 트렌치"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "지형별 트렌치 방향·간격·폭·깊이, 확장 사유, 안전 조건, 피트 병행 여부를 시굴 설계 근거로 남기기 위한 목록"
@@ -4771,7 +4771,7 @@
       "excavationSurvey": { "label": "발굴조사" },
       "nonSiteSurvey": { "label": "비유적지 조사" },
       "preservationMeasure": { "label": "보존대책" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "구석기유적 가능성을 지표조사, 시굴, 발굴, 비유적지 조사와 보존대책 단계로 나누어 기록하기 위한 목록"
   },
@@ -4788,7 +4788,7 @@
       "geologicalMap": { "label": "지질도" },
       "digitalMap": { "label": "수치지도" },
       "satelliteImage": { "label": "위성사진" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "구석기 입지 가능성을 좁히기 위한 석회암 지대, 단구, 고토양, 기존 유적, 지도와 영상 자료를 기록하기 위한 목록"
   },
@@ -4805,7 +4805,7 @@
       "oneKgSoilSample": { "label": "토양시료 1kg" },
       "charcoalChecked": { "label": "숯조각 확인" },
       "permanentMarkerRecord": { "label": "유성펜 기록" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "구석기 후보 유물과 지점의 행정·자연 지명, 지번, 사진, 고토양·단구퇴적층, 부착토와 토양시료 확보 여부를 기록하기 위한 목록"
   },
@@ -4820,7 +4820,7 @@
       "excavationTransferCoordinatesKept": { "label": "발굴전환 좌표 유지" },
       "excavatorBucketMonitoring": { "label": "굴삭기 삽날 감시" },
       "candidateLithicImmediateCheck": { "label": "후보석기 즉시 판별" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "구석기 시굴에서 평탄지와 비탈지 피트 배치, 좌표 유지, 장비 제토 중 후보석기 즉시 판별을 기록하기 위한 목록"
   },
@@ -4838,7 +4838,7 @@
       "differentialCompositionSample": { "label": "성분차별도 시료" },
       "charcoalSample": { "label": "숯시료" },
       "duplicateSample": { "label": "이중채취" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "구석기 후보 단면의 지층명, 토색, 토양성분, 문화층 관계, 단면 사진·도면, 지층별 시료와 이중채취를 기록하기 위한 목록"
   },
@@ -4853,7 +4853,7 @@
       "aerialPhotoMarked": { "label": "항공사진 표시" },
       "satelliteImageMarked": { "label": "위성사진 표시" },
       "surroundingDetailedObservation": { "label": "주변 정밀관찰" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "구석기 조사에서 유적이 아닌 주변 석재 공급지, 돌감 분포, 암질과 활동범위를 지도·항공사진·위성사진과 함께 기록하기 위한 목록"
   },
@@ -4877,7 +4877,7 @@
       "activityAreaHypothesisRecorded": { "label": "활동공간 가설 기록" },
       "foreignComparisonTermScoped": { "label": "국외 비교용어 범위 한정" },
       "machineStrippingStoppedAfterFind": { "label": "유물 확인 뒤 장비제토 중지" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "구석기 발굴에서 석기와 미세박편의 평면분포, 접합군과 제작순서, 석재별 분포와 산지근거, 자갈돌·탄화물·시료 집중, 활동공간 가설과 국외 비교용어 범위를 현장에서 기록하기 위한 목록"
   },
@@ -4895,7 +4895,7 @@
       "lithicTiltPatternChecked": { "label": "석기 기울기 양상 검토" },
       "absoluteDatingPositionSelected": { "label": "절대연대 위치 선정" },
       "volcanicAshAnalysisCandidate": { "label": "화산재분석 후보" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "구석기 발굴에서 자연층과 문화층이 일치하지 않을 수 있음을 전제로 기준피트, 토양쐐기, 유물 이동·재퇴적, 층간 접합과 연대측정 위치를 검토하기 위한 목록"
   },
@@ -4956,7 +4956,7 @@
         "label": "범위 변경 이력"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "정밀발굴 범위와 조사 난이도를 유구 밀도, 식별 난이도, 중층 여부, 유존지역 면적, 제외 협의와 범위 변경 이력으로 설명하기 위한 목록"
@@ -5012,7 +5012,7 @@
         "label": "의사결정나무"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "GIS와 항공사진 기반 유적 가능성 예측에 사용한 지형, 수계, 토양, 지질, 항공사진, 고지도, 보링자료, 분석기법을 남기기 위한 목록"
@@ -5056,7 +5056,7 @@
         "label": "신속 계획용"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "GIS 예측 결과를 유적 확정값으로 쓰지 않고 현장 확인, 미확인, 누락, 과대예측, 시굴 추천, 추가 답사 필요 상태로 대조하기 위한 목록"
@@ -5081,7 +5081,7 @@
       "boringOrColumnLinked": { "label": "보링·주상도 연결" },
       "trialTrenchTargetSuggested": { "label": "시굴 대상 제안" },
       "noSurfaceFindsNotAbsence": { "label": "표면유물 부재≠유적 부재" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "충적지 지표조사에서 선상지, 범람원, 자연제방, 배후습지, 구하도, 해안 저지, 근현대 형질변경, 보링·주상도, 시굴 대상과 표면유물 부재의 한계를 함께 기록하기 위한 목록"
   },
@@ -5104,7 +5104,7 @@
       "siteAbsenceNotConfirmed": { "label": "유적 부재 확정 금지" },
       "preservationPotentialReviewed": { "label": "보존능 검토" },
       "reportFeedbackRequired": { "label": "보고서 환류 필요" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "정밀토양도와 토양조사보고서를 토양통, 대토양군, 지도 축척, 반영깊이 한계, 주변 유적·주민 제보, 실제 시굴·발굴 결과, 보존능 판단과 함께 검증하기 위한 목록"
   },
@@ -5121,7 +5121,7 @@
       "boringDataLinked": { "label": "보링자료 연결" },
       "tenMeterContourMap": { "label": "10m 등고선도" },
       "microContourMap": { "label": "미세 등고선도" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "저습지 지표조사 전에 중첩 항공사진, 개발 전 항공사진, 고지도, 전자지도, 지질도, 형질변경 지도, 보링자료와 등고선도를 모아 분석 근거를 남기기 위한 목록"
   },
@@ -5139,7 +5139,7 @@
       "boringColumnCompared": { "label": "보링·주상도 대조" },
       "riverIntegrationContext": { "label": "하천 통합 맥락" },
       "erosionDepositionRepeated": { "label": "침식·퇴적 반복" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "저습지를 단순 습윤지가 아니라 지역환경, 지형면, 지형대, 미지형, 극미지형 단계로 좁혀 읽고 하천 통합과 침식·퇴적 반복을 함께 기록하기 위한 목록"
   },
@@ -5157,7 +5157,7 @@
       "trialTrenchPointSelected": { "label": "시굴 지점 선정" },
       "surveyExtentSet": { "label": "조사 범위 설정" },
       "siteAbsenceNotAssumed": { "label": "유적 부재 단정 금지" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "저습지 판독 결과를 고하천, 자연제방, 단구면, 배후습지 표시와 시굴 지점·조사 범위 선정으로 연결하고 유적 부재 단정을 피하기 위한 목록"
   },
@@ -5176,7 +5176,7 @@
       "woodenArtifactContext": { "label": "목재유물 맥락" },
       "seedFaunalRemainContext": { "label": "종자·동물유체 맥락" },
       "landscapeReconstructionLinked": { "label": "유적경관 복원 연결" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "저습지 극미지형과 실제 시굴·발굴에서 확인한 1회성 퇴적, 수전 매몰토층, 배후습지 퇴적, 환경분석과 유적경관 복원 연결을 기록하기 위한 목록"
   },
@@ -5197,7 +5197,7 @@
       "layerCorrelationCandidate": { "label": "층간 대비 후보" },
       "keyBedCandidate": { "label": "건층 후보" },
       "alternativeConceptRecorded": { "label": "대안 개념 기록" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "충적지 층서를 토양층위, 퇴적층위, 고고학 층명, a+b층 세트, 토양경계와 퇴적경계, 건층, 대안 개념으로 나누어 검토하기 위한 목록"
   },
@@ -5217,7 +5217,7 @@
       "sameDetectionSurfaceDifferentDate": { "label": "같은 검출면 내 시기차 가능" },
       "alternativeStratigraphicAttribution": { "label": "대안 소속층위" },
       "datingEvidenceSeparated": { "label": "연대 근거 분리" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "충적지에서 구지표면, 생활면, 유구축조면, 유구검출면, b층 상면 검출, 삭평 후보, 토양화에 따른 검출면 하강, 내부토와 연대 근거를 분리하기 위한 목록"
   },
@@ -5240,7 +5240,7 @@
       "threeDimensionalDistributionChecked": { "label": "3차원 분포 확인" },
       "groundWaterRedoxChange": { "label": "지하수 산화환원 변화" },
       "rootOrPostDiscoloration": { "label": "뿌리·말목 변색" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "충적지 층의 암색대, 매몰고토양, 흑니층, 라미나, 이질토 블록, 생물교란, 불꽃·하중구조, 홍수퇴적, 지하수 산화환원과 변색 위험을 기록하기 위한 목록"
   },
@@ -5280,7 +5280,7 @@
         "label": "오염 통제"
       }
     },
-    "description": "시료명을 분석명으로 끝내지 않고 분석 질문과 채취 목적을 연결하기 위한 한국형 야장 목록"
+    "description": "시료명을 분석명으로 끝내지 않고 분석 질문과 채취 목적을 연결하기 위한 디지털 야장 목록"
   },
   "KoreanFieldwork-sampleCollectionHandling": {
     "values": {
@@ -5327,7 +5327,7 @@
         "label": "위치도면 연결"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "목탄·목재, TL/OSL, 고고지자기, 화분·규조·식물규산체, 수침목재, 인골 DNA, 탄화곡물처럼 채취 순간의 빛·수분·오염·위치 조건이 분석 가능성을 바꾸는 시료를 관리하기 위한 목록"
@@ -5350,7 +5350,7 @@
       "postExcavationCleaningAvoided": { "label": "강한 세척 회피" },
       "locationDrawingLinked": { "label": "위치도면 연결" },
       "contaminationRiskChecked": { "label": "오염위험 검토" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "수혈건물지·수혈주거지의 AMS, 고고지자기, 식물규산체, 부유법, 수종, 레플리카, 사용흔, 전분, 태토, 지방산 분석 시료를 채취 시점·위치도면·세척 회피·오염위험과 함께 관리하기 위한 목록"
   },
@@ -5370,7 +5370,7 @@
       "irrigationFacilityLinked": { "label": "관개시설 연결" },
       "waterManagementFirst": { "label": "물관리 방식 우선" },
       "cropNameNotClassification": { "label": "작물명으로 논밭 확정 금지" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "경작유구의 입지, 충적지 조건, 과거 항공사진, 관개시설, 물관리 방식을 작물명 단정과 분리해 기록하기 위한 목록"
   },
@@ -5387,7 +5387,7 @@
       "safetySecured": { "label": "안전 확보" },
       "contourDirectionAdjusted": { "label": "등고선 방향 보정" },
       "waterFlowDirectionRecorded": { "label": "물흐름 방향 기록" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "경작유구 시굴에서 트렌치 방향, 경작면 고저차, 보조 트렌치, 분포 범위, 기간·비용, 안전을 함께 관리하기 위한 목록"
   },
@@ -5413,7 +5413,7 @@
       "floodRapidBurial": { "label": "홍수 일시매몰" },
       "notAbsoluteCriterion": { "label": "절대 기준 아님" },
       "expertJudgementNeeded": { "label": "전문가 판단 필요" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "논둑·논면, 두둑·고랑, 기능면, 기능 후 퇴적층, 토양구조, 식물 흔적, 산화철·망간, 단일 기준 해석 위험을 함께 남기기 위한 경작유구 판정 목록"
   },
@@ -5439,7 +5439,7 @@
       "relationshipWithOutdoorHearth": { "label": "야외노지와 관계" },
       "relationshipWithPitFeature": { "label": "수혈유구와 관계" },
       "munamriLayerCorrelation": { "label": "문암리식 층위대비" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "경작유구의 유물 연대, 선택적 평면 노출, AMS·OSL·환경시료, 분석 질문, 주거지·노지·수혈 관계를 연대 판단과 묶어 관리하기 위한 목록"
   },
@@ -5461,7 +5461,7 @@
       "waterFlowControlChecked": { "label": "물흐름 조절 확인" },
       "irrigationSystemLinked": { "label": "관개체계 연결" },
       "facilityFunctionUncertain": { "label": "시설 기능 불확실" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "경작유구의 보, 저수지, 수로, 집수시설, 구성재, 물흐름 조절, 시설 기능 불확실성을 논밭 판정과 분리해 기록하기 위한 목록"
   },
@@ -5484,7 +5484,7 @@
       "weatherEquipmentLaborChecked": { "label": "기후·장비·인부 점검" },
       "rapidSectionExposure": { "label": "신속 구간 노출" },
       "surfaceDistortionChecked": { "label": "경작면 변형 확인" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "경작유구의 논·밭 평면 노출에서 시굴 트렌치 복구, 조사층 선정, 즉시 선 확인, 중장비 제토 높이, 인력 노출, 단면·평면 대조를 관리하기 위한 목록"
   },
@@ -5501,7 +5501,7 @@
       "fireboxPresent": { "label": "화구 확인" },
       "firingCombustionSeparated": { "label": "소성실·연소실 분리" },
       "typeNameDeferred": { "label": "명칭 확정 보류" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "토기요 명칭을 성급히 붙이지 않고 소성유구, 구조요, 구조요 후보, 화염 흐름, 화구와 소성실·연소실 분리 근거를 함께 남기기 위한 목록"
   },
@@ -5523,7 +5523,7 @@
       "ceilingFragment": { "label": "천장편" },
       "exteriorReinforcementSoil": { "label": "외면 보강토" },
       "originalGroundCutDepth": { "label": "원지반 굴착 깊이" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "토기가마의 입지와 구조를 요상 경사 하나로 닫지 않고 평면형, 규모, 소성부·연소부 비율, 화염 흐름, 피열색 경계, 함몰 구조와 굴착 깊이로 판단하기 위한 목록"
   },
@@ -5545,7 +5545,7 @@
       "ceilingPostholeCandidate": { "label": "천장 구축 주혈 후보" },
       "wallFloorSectionCut": { "label": "벽체·요상 절개" },
       "stratigraphicCollection": { "label": "층위별 수습" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "화구, 연소부, 소성부, 연도부, 회구부를 부위별로 조사하고 무른 요상, 요상 조성·보수, 요상하부시설, 벽체와 요상 절개, 층위별 수습을 남기기 위한 목록"
   },
@@ -5574,7 +5574,7 @@
       "aerialPhoto": { "label": "항공사진" },
       "colorPhotoRequired": { "label": "컬러사진 필요" },
       "drawingOxidationReductionColored": { "label": "도면 산화·환원 색표기" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "토기가마를 요체만이 아니라 토취장, 수비장, 연토장, 성형장, 태토 저장, 배수, 건조, 주거시설군, 관리건물, 폐기장, 회구부, 운송로, 탐사·사진·도면 기록까지 포함한 요장으로 관리하기 위한 목록"
   },
@@ -5592,7 +5592,7 @@
       "regionalCenterType": { "label": "지역중심형" },
       "diachronicExpansionReviewed": { "label": "통시적 확대 검토" },
       "productionQuantityNotAssumed": { "label": "생산량 단정 금지" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "토기요장의 가마 수, 동시조업 가능성, 규모 구분, 공급 범위와 통시적 확대 여부를 생산량 확정 전에 기록하기 위한 목록"
   },
@@ -5608,7 +5608,7 @@
       "sherdKilnFurnitureReuse": { "label": "토기편 요도구 재사용" },
       "preservationLimitsRecorded": { "label": "보존 한계 기록" },
       "disassemblySkipped": { "label": "해체조사 생략" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "요상 경사 단독판정, 최종 조업품 자동판정, 회구부 자동연결, 회구부 바닥 오인 굴착, 폐요 재사용과 인접요 폐기물 유입을 막기 위한 해석위험 목록"
   },
@@ -5626,7 +5626,7 @@
       "porousBody": { "label": "다공질 태" },
       "firingTemperatureCandidate": { "label": "소성온도 후보" },
       "terminologyRegionDifference": { "label": "용어권역 차이" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "토기·도기·자기·도질토기·스에키 같은 용어권역 차이를 열어두고 유약, 다공질 태, 소성온도 후보를 분리해 기록하기 위한 목록"
   },
@@ -5645,7 +5645,7 @@
       "grainHuskTemper": { "label": "곡물껍질 비짐" },
       "fireResistancePurpose": { "label": "내화 목적" },
       "formingEfficiencyPurpose": { "label": "성형효율 목적" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "토기 태토와 비짐을 단순 포함물로 처리하지 않고 원료 점토, 수비, 비짐 재료와 의도된 기능 후보로 분리해 기록하기 위한 목록"
   },
@@ -5661,7 +5661,7 @@
       "refinedClay": { "label": "정제 태토" },
       "levigatedClay": { "label": "수비 태토" },
       "temperReuse": { "label": "비짐 재활용" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "비짐의 기능을 성형효율, 내화성, 다공성, 건조 조절, 용도와 연결하되 기능 확정을 보류할 수 있게 하는 목록"
   },
@@ -5682,7 +5682,7 @@
       "repairReuse": { "label": "보수·재사용" },
       "discard": { "label": "폐기" },
       "temperReuse": { "label": "비짐 재활용" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "토기 유물을 시기명이나 기종명으로 닫지 않고 채굴, 소지, 성형, 정형, 장식, 소성, 사용, 파손, 보수·재사용, 폐기까지 제작 생애로 기록하기 위한 목록"
   },
@@ -5699,7 +5699,7 @@
       "innerAnvilTrace": { "label": "내박자흔" },
       "hakemeFinishing": { "label": "하케메 조정" },
       "stringCutTrace": { "label": "실떼기" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "성형흔을 손빚기, 테쌓기, 형틀, 물레질, 타날, 내박자흔, 하케메, 실떼기 등으로 관찰하되 단일 흔적으로 제작법을 확정하지 않기 위한 목록"
   },
@@ -5712,7 +5712,7 @@
       "techniquePersistencePossible": { "label": "제법 지속 가능" },
       "paddleUseChecked": { "label": "타날 채용 확인" },
       "tileFormingTraceCompared": { "label": "기와 성형흔 대조" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "실떼기와 회전흔을 물레질 뽑기의 직접 증거로 확정하지 않고 성형·정형 분리, 기술 지속, 기와 성형흔 대조를 남기기 위한 목록"
   },
@@ -5729,7 +5729,7 @@
       "sameDirection": { "label": "동일 방향" },
       "oppositeDirection": { "label": "반대 방향" },
       "magnifiedPhoto": { "label": "확대사진" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "모래알 방향, 조정흔 방향, 회전깎기, 물손질흔, 정치·도치깎기를 확대사진과 함께 남겨 성형과 정형의 공정 방향성을 검토하기 위한 목록"
   },
@@ -5750,7 +5750,7 @@
       "moldSeamObserved": { "label": "형뜨기 분리선 관찰" },
       "productionContextNotAssumed": { "label": "생산맥락 단정 금지" },
       "ethnographicDirectEquationBlocked": { "label": "민족지 직접등치 금지" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "토기 생산조직을 바로 확정하지 않고 가내제작·가내공작·공방공작·대규모공작 후보, 전업성, 성형·시문·채색 분업, 도안 반복, 규격 표준화, 형뜨기 분리선, 민족지 유추 한계를 함께 기록하기 위한 목록"
   },
@@ -5770,7 +5770,7 @@
       "surfaceTracePhotoCompared": { "label": "표면흔 사진 비교" },
       "referenceLimitRecorded": { "label": "참조 한계 기록" },
       "hastyConclusionBlocked": { "label": "성급한 결론 차단" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "토기 한 점이나 단일 흔적으로 판단하지 않고 동일 시기·지역·기종, 기와 성형흔, 생활도자, 민족지·실험 사례, 생산지·유통범위 후보와 참조 한계를 비교하기 위한 목록"
   },
@@ -5791,7 +5791,7 @@
       "specializedWorkshopCandidate": { "label": "전문 공방 후보" },
       "multiTypeWorkshopCandidate": { "label": "다기종 공방 후보" },
       "exchangeModePending": { "label": "교환 방식 보류" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "토기 산지와 공방 귀속을 단일 생산지로 확정하지 않고 원료 점토·암석학 조성, 공방 후보와 불확실성, 현지 생산·반입품, 분포 범위와 사용 중 이동, 공급 비중과 교환 방식 질문을 함께 남기기 위한 목록"
   },
@@ -5818,7 +5818,7 @@
       "shrinkageWarpingObserved": { "label": "수축·비틀림 관찰" },
       "shrinkageRateRecorded": { "label": "수축률 기록" },
       "experimentReferenceLinked": { "label": "실험 참조 연결" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "토기 제작실험이나 복원실험을 유물 관찰과 비교할 때 원료 점토, 점토 수분, 비짐 비율, 성형법, 건조 환경, 땔감 투입량, 소성 분위기 전환, 온도·시간, 가마 폐쇄, 재임 위치, 지지재, 실패흔과 수축률을 함께 기록하기 위한 목록"
   },
@@ -5838,7 +5838,7 @@
       "functionalDifferenceReviewed": { "label": "기능차 검토" },
       "regionalDifferenceReviewed": { "label": "지역차 검토" },
       "typologyNotAssumed": { "label": "형식명 선확정 금지" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "토기 형식명을 먼저 붙이지 않고 관찰·제외·대표 속성, 기술군 분류, 표본수, 변이범위, 기능차와 지역차를 근거로 남기기 위한 목록"
   },
@@ -5864,7 +5864,7 @@
       "naturalAshGlazeSeparated": { "label": "자연유와 구분" },
       "blackGlossSeparated": { "label": "흑색 윤과 구분" },
       "nonFlameContactFabricSeparated": { "label": "화기 비접촉 태와 구분" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "토기 표면의 소성흔 형태, 위치, 개수, 간격, 함몰과 연소흔·자연유·흑색 윤·화기 비접촉 태의 구분을 유물 카드에서 남기기 위한 목록"
   },
@@ -5890,7 +5890,7 @@
       "invertedFiringRecorded": { "label": "도치 소성 기록" },
       "stackLevelCandidate": { "label": "적재 단수 후보" },
       "findLinkedToSurfaceTrace": { "label": "출토 요도구와 표면흔 연결" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "이상재·이기재 기능 후보, 재료, 전용토제품 형식, 중첩소성 조합, 도치 여부, 출토 요도구와 토기 표면흔의 연결을 기록하기 위한 목록"
   },
@@ -5907,7 +5907,7 @@
       "sampleBeforeDisassembly": { "label": "해체 전 시료 확보" },
       "multipleDatingMethodsCompared": { "label": "복수 연대측정법 대조" },
       "analysisQuestionRecorded": { "label": "분석 질문 기록" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "토기가마 조사 완료 전 숯 AMS·C14, 수종분석, 토기 OSL, 태토 성분분석, 소결 요상·요체 고고지자기 시료를 확보하기 위한 목록"
   },
@@ -5925,7 +5925,7 @@
       "finalFiringSurfaceCandidate": { "label": "최종소성면 후보" },
       "specialistConsulted": { "label": "전문가 협의" },
       "destructiveSamplingScopeRecorded": { "label": "파괴 채취 범위 기록" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "고고지자기 시료 후보의 소토 유구 유형, 최종소성면, 전문가 협의, 파괴 채취 범위를 채취 전에 구분하기 위한 목록"
   },
@@ -5947,7 +5947,7 @@
       "reportLinked": { "label": "보고서 연결" },
       "sampleDamaged": { "label": "시료 파손" },
       "samplingImpossible": { "label": "채취 불가" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "잘 구워진 소성면 선택부터 큐브 고정, 번호·주향 표시, 위치도면, 분석실 인계, 결과 수신, 보고서 연결까지 추적하는 목록"
   },
@@ -5963,7 +5963,7 @@
       "declinationSourceRecorded": { "label": "편각 출처 기록" },
       "trueNorthCorrectionApplied": { "label": "진북 보정 적용" },
       "directionBasisConsistent": { "label": "방향 기준 일관" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "고고지자기 시료의 pitch, dip, strike, 클리노미터 측정, 자북·진북 기준, 편각 보정을 함께 남기기 위한 목록"
   },
@@ -5986,7 +5986,7 @@
       "kOverFiveHundred": { "label": "K 500 초과" },
       "acceptedSamplesFiveOrLessCaution": { "label": "채택 시료 5점 이하 주의" },
       "disturbancePossible": { "label": "교란 가능" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "NRM, 교류소자, D/I/L95/K, 채택 시료 수, D.F., 제외 시료와 품질 주의값을 함께 점검하기 위한 목록"
   },
@@ -6004,7 +6004,7 @@
       "featureRelationCompared": { "label": "유구 관계 대조" },
       "typologyCompared": { "label": "형식 편년 대조" },
       "singleDateNotAccepted": { "label": "단독 확정연대 금지" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "고고지자기 추정연대, 오차범위, 비교 표준곡선, 지역차, C14·OSL·층위·형식 편년 대조를 함께 해석하기 위한 목록"
   },
@@ -6028,7 +6028,7 @@
       "protectivePosthole": { "label": "보호시설 주공" },
       "ritualFeature": { "label": "제사유구" },
       "waterFuelTransportChecked": { "label": "점토·물·땔감·운송 확인" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "기와가마를 요체 하나가 아니라 요전부, 회구부, 폐기장, 채토공, 제작공방, 건조장, 보관소, 배수시설까지 포함한 생산공간으로 기록하기 위한 목록"
   },
@@ -6054,7 +6054,7 @@
       "outlineSinteringChecked": { "label": "소결 윤곽 확인" },
       "floorThicknessCut": { "label": "바닥 두께 절개" },
       "wallThicknessCut": { "label": "벽 두께 절개" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "기와가마 제토, 적토장, 격자 조정, 최종 주축과 바닥면 평면선, 가마와 회구부를 연결하는 둑, 구지표와 소결 윤곽 보존을 조사 전에 통제하기 위한 목록"
   },
@@ -6093,7 +6093,7 @@
       "slopeDepositInversionRisk": { "label": "사면 폐기장 층위 역전 주의" },
       "ashLayerPartPreserved": { "label": "재층 일부 보존" },
       "stratigraphicCollection": { "label": "층위별 수습" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "요전부, 아궁이, 연소실, 소성실, 흡화공, 연도, 배연공, 굴뚝, 회구부와 폐기장을 부위별로 조사하고 폐쇄재 대조, 산화·환원 색표기, 입체 단면, 사면 폐기장 층위 역전 위험을 남기게 하는 목록"
   },
@@ -6121,7 +6121,7 @@
       "elongatedRectangleCandidate": { "label": "세장방형화 후보" },
       "massProductionCandidate": { "label": "대량생산 후보" },
       "typeNotDateAlone": { "label": "형식만으로 연대 확정 금지" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "가마군의 공동 요전부, 장축 방향, 중복관계, 축조순서, 평요·등요와 입지 변화, 대형화·장방형화 판단을 형식명 하나로 닫지 않게 하는 목록"
   },
@@ -6141,7 +6141,7 @@
       "kilnResearcherReview": { "label": "가마 연구자 검토" },
       "jointSelectionReviewed": { "label": "유물 선정 공동검토" },
       "tilePotterySharedKilnCandidate": { "label": "와도 겸업 가마 후보" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "기와가마 출토 기와를 생산품, 불량품, 잔여품, 축조재·요도구·보수재, 폐기 후 유입품으로 나누고 층위별 문양과 전문가 공동검토를 남기기 위한 목록"
   },
@@ -6163,7 +6163,7 @@
       "consumerTileComparison": { "label": "소비지 기와 대조" },
       "singleDateNotAccepted": { "label": "단일 연대값 확정 금지" },
       "chronologyErrorCaution": { "label": "편년 오차 주의" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "회구부·아궁이·연소실·소성실별 C14, 고고지자기 다지점 시료, OSL 차광, 기와·가마 태토와 소비지 기와 대조를 한 번에 계획하기 위한 목록"
   },
@@ -6182,7 +6182,7 @@
       "contourParallelLongAxis": { "label": "등고선 평행 장축" },
       "slopeFootLocation": { "label": "경사면 하단 입지" },
       "lowFiringTraceCaution": { "label": "낮은 피열흔 주의" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "목탄요 판정에서 측구식·무측구식, 백탄·흑탄·겸용 후보, 구조 깊이, 지형 조건, 낮은 피열흔 주의를 나누기 위한 목록"
   },
@@ -6204,7 +6204,7 @@
       "posthole": { "label": "주혈" },
       "ceilingFragment": { "label": "천정부편" },
       "wallFragment": { "label": "벽체편" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "측구부탄요의 소성부, 연소부, 분구, 연도·연통, 측구·측구폐쇄석, 작업장, 배수구, 주혈, 천정부편과 벽체편을 구조 부위로 나누는 목록"
   },
@@ -6224,7 +6224,7 @@
       "overheadPhotoAttempted": { "label": "직상방 촬영 시도" },
       "colorDrawingPlanned": { "label": "원색 도면 계획" },
       "colorPlatePlanned": { "label": "원색 도판 계획" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "흐린 유구선과 외부배수구를 보호하고 장축·단축 토층둑, 중앙 트렌치 보류, 폐쇄석 원위치, 원색 도면·도판을 조사 중 관리하기 위한 목록"
   },
@@ -6246,7 +6246,7 @@
       "domesticFuelCandidate": { "label": "생활 연료 후보" },
       "distributionCandidate": { "label": "유통 후보" },
       "preservationMoveCandidate": { "label": "보존·이전 후보" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "피열색, 천정부 초류·목재흔, 굴지구흔, 측구 개수·간격·바닥고, 목탄 반출·보수흔, 연료 사용 해석과 보존 판단을 묶는 목록"
   },
@@ -6263,7 +6263,7 @@
       "samplePositionMapped": { "label": "시료 위치 도면화" },
       "datingMethodsCompared": { "label": "연대측정법 대조" },
       "fuelUseQuestionRecorded": { "label": "연료 사용 질문 기록" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "목탄, 주혈 탄화목, 수종분석, C14, 고고지자기, OSL, 소토 시료와 시료 위치, 연료 사용 질문을 목탄요 분석계획으로 묶는 목록"
   },
@@ -6286,7 +6286,7 @@
       "transportRoute": { "label": "운송로" },
       "consumerSiteComparison": { "label": "소비지 비교" },
       "documentPlaceNameLead": { "label": "문헌·지명 단서" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "자기요장을 토취, 수비, 성형, 시유, 번조, 폐기, 생활공간, 자원, 운송로, 소비지 비교까지 하나의 생산체계로 기록하기 위한 목록"
   },
@@ -6309,7 +6309,7 @@
       "glazeSpecialistWorkshop": { "label": "유약전담공방" },
       "dryingBeforeFiring": { "label": "번조 전 건조" },
       "workshopSpecializationCandidate": { "label": "공방 전문화 후보" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "자기요장 공방에서 원토, 수비, 태토 건조, 연토, 성형, 시문, 유약 제조·저장, 시유, 전문 공방 여부를 공정 순서로 기록하기 위한 목록"
   },
@@ -6338,7 +6338,7 @@
       "flueChannel": { "label": "배연로" },
       "smokePit": { "label": "개자리" },
       "chimneyPart": { "label": "연통부" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "자기가마의 등요·횡혈식·지상식 성격, 요전부, 봉통부, 번조실, 연도부와 칸별 구조 차이를 분리해 기록하기 위한 목록"
   },
@@ -6359,7 +6359,7 @@
       "finalQuantityNotInferred": { "label": "실제 수량 단독추정 금지" },
       "partialPreservationByLayer": { "label": "층위별 부분 보존" },
       "colorMoisturePhoto": { "label": "색·수분 사진" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "자기가마 조사에서 격자, 등고선 트렌치, 지구물리탐사, 하단 봉통부 탐색, 사진 범위, 요도구 위치, 수량 추정 주의를 함께 관리하기 위한 목록"
   },
@@ -6384,7 +6384,7 @@
       "sidePhoto": { "label": "측면 사진" },
       "footPhoto": { "label": "굽 사진" },
       "layerQuantityTable": { "label": "층위별 수량표" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "자기 출토품의 재질·색, 태토, 유색, 시유, 시문, 문양, 기형, 기종, 굽, 사진, 층위별 수량을 기록하기 위한 목록"
   },
@@ -6406,7 +6406,7 @@
       "kilnWallFragment": { "label": "가마벽체편" },
       "brick": { "label": "벽돌" },
       "rawClayLump": { "label": "원토덩어리" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "자기요장의 갑발, 갑발 뚜껑·받침, 도지미, 굽받침, 모래받침, 포개구이, 가마벽체편, 벽돌, 원토덩어리를 맥락별로 기록하기 위한 목록"
   },
@@ -6430,7 +6430,7 @@
       "consumerSherdComparison": { "label": "소비지 자편 비교" },
       "provenanceComparison": { "label": "산지 비교" },
       "analysisQuestionRecorded": { "label": "분석 질문 기록" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "자기요장의 원토, 태토, 자편, 유약, 백토, 가마벽체, 수종, 연대, 소비지 자편 비교를 분석계획으로 묶어 관리하기 위한 목록"
   },
@@ -6526,7 +6526,7 @@
         "label": "미복원"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "2007년 성곽 용어사전 암문 원문 대조에서 확인한 은폐 통로, 운반, 구원 요청, 역습 기능과 구조 단서를 기록하기 위한 목록"
@@ -6585,7 +6585,7 @@
         "label": "수비 인원"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "여장을 단순 유무가 아니라 타구, 총안, 근총안, 원총안, 옥개석, 재료, 담당 수비 인원으로 나누어 기록하기 위한 목록"
@@ -6697,7 +6697,7 @@
       "fuelStorageCandidate": { "label": "연료 보관 후보" },
       "damagedState": { "label": "훼손 상태" },
       "extantRemainsConfirmed": { "label": "현존 유구 확인" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "봉수대를 명칭 하나로 닫지 않고 연대, 연조, 봉조, 연소실, 건물지, 외곽석축, 방호벽 같은 물리 유구 단위로 기록하기 위한 목록"
   },
@@ -6720,7 +6720,7 @@
       "byeoljang": { "label": "별장" },
       "bonggunbo": { "label": "봉군보" },
       "documentaryEvidenceRequired": { "label": "문헌근거 필요" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "직봉, 간봉, 연변봉수, 내지봉수, 대응봉수와 감관·별장·봉군 같은 운영어를 현장 유구 속성과 섞지 않고 문헌 근거와 연결하기 위한 목록"
   },
@@ -6735,7 +6735,7 @@
       "physicalOperationSeparated": { "label": "물리·운영 분리" },
       "routeRelationLinked": { "label": "노선관계 연결" },
       "documentaryRelationLinked": { "label": "문헌관계 연결" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "산성 정상이나 성문 주변 봉수가 망대 선행, 후대 설치, 공동 사용, 기능 변화 중 어느 관계인지 보류값과 함께 기록하기 위한 목록"
   },
@@ -6757,7 +6757,7 @@
       "stoneReinforcement": { "label": "부석·석축 보강" },
       "constructionTraceFootprint": { "label": "족적·동물족적" },
       "constructionTechniquePending": { "label": "축조기법 확정 보류" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "성토·판축·유사판축을 이름으로 확정하지 않고 협판, 고정주, 횡장목, 달구질흔, 판괴연접, 부엽공법 같은 관찰 근거로 관리하기 위한 목록"
   },
@@ -6778,7 +6778,7 @@
       "limitedTrenchExcavation": { "label": "줄구덩이 조사" },
       "fullStrippingAvoided": { "label": "전면 제토 회피" },
       "foundationBeforeWallBody": { "label": "성벽 본체 전 기초조사" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "성벽 본체보다 먼저 확인해야 하는 구지표, 정지면, 기초다짐, 기조 후보, 지정, 지대석 하부와 조사 범위 통제를 기록하기 위한 목록"
   },
@@ -6802,7 +6802,7 @@
       "advisoryOpinionLinked": { "label": "자문의견 연결" },
       "completionInspectionLinked": { "label": "준공검사 연결" },
       "repairReportRequired": { "label": "수리보고 필요" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "성곽 정비가 발굴기록과 끊기지 않도록 현황조사, 성돌·적심석 관리, 해체 단면, 설계변경, 자문, 준공검사를 묶어 기록하기 위한 목록"
   },
@@ -6828,7 +6828,7 @@
       "onsiteConservationPriority": { "label": "현장보존 우선" },
       "modernMaterialDifferentiation": { "label": "현대 재료 구별" },
       "landscapeImpactReviewed": { "label": "경관 영향 검토" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "성곽·행궁 복원과 중건에서 문헌, 사진, 발굴유구, 용척 계산, 원부재, 설계변경, 복원 제외와 현장보존 결정을 한 증거 묶음으로 관리하기 위한 목록"
   },
@@ -6898,7 +6898,7 @@
       "threeDimensionalOutputSecured": { "label": "3D 산출물 확보" },
       "unresolvedIssuePassedToEditor": { "label": "미해결 쟁점 편집자 전달" },
       "correctionAppliedBeforeHandover": { "label": "인계 전 수정 반영" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "현장 단계에서 보고서 편집틀, 원고·도면·사진 정합성, 도면 방향·축척·해발고도, 사진 해상도와 원자료 보존 상태를 함께 검수하기 위한 목록"
   },
@@ -6911,7 +6911,7 @@
       "threeDimensionalScan": { "label": "3D 스캔" },
       "microscopePhoto": { "label": "현미경사진" },
       "complementaryRecordRequired": { "label": "보완기록 필요" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "유물 기록에서 기술, 사진, 탁본, 실측, 3D 스캔, 현미경사진과 보완기록 필요 여부를 함께 관리하기 위한 목록"
   },
@@ -6931,7 +6931,7 @@
       "drawingToolsRecorded": { "label": "실측도구 기록" },
       "complementaryPhotoPlanned": { "label": "보완사진 계획" },
       "rubbingPlanned": { "label": "탁본 계획" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "유물실측 전에 재질, 기종, 잔존상태, 기능, 출토맥락 기본기록, 기준선, 실측선, 투상법, 도면배치, 축척, 실측일·실측자, 도구, 보완사진, 탁본 여부를 점검하기 위한 목록"
   },
@@ -6955,7 +6955,7 @@
       "descriptionSupplement": { "label": "기술 보완" },
       "prePostConservationComparison": { "label": "보존처리 전후 대조" },
       "redrawingNeeded": { "label": "재실측 필요" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "유물실측 결과의 기준선·실측선 판단, 측점, 교정, 모호한 관찰과 계측 곤란 사유, 추정값 표시, 확대관찰, 비교자료 검토, 사진·탁본 대조, 기술 보완, 보존처리 전후 대조, 재실측 필요 여부를 검수하기 위한 목록"
   },
@@ -6978,7 +6978,7 @@
       "fabricColorSurfaceAnnotation": { "label": "태토·색·표면 주기" },
       "manufacturePatternAnnotation": { "label": "제작기법·문양 주기" },
       "dimensionAnnotation": { "label": "규격 주기" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "토기 실측에서 정치상태, 기준선, 실측선, 측점, 단면 우선 기록, 바디 윤곽, 기벽두께, 입면, 문양 측점, 전체·부분 특징, 재질·소성도, 태토·색·표면, 제작기법·문양, 규격 주기 작성을 점검하기 위한 목록"
   },
@@ -6994,7 +6994,7 @@
       "flakingRetouchTrace": { "label": "타제·조정흔" },
       "peckingTrace": { "label": "고타조정흔" },
       "grindingTrace": { "label": "마연흔" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "석기 실측에서 사용방향 정치, 평면·종단면·횡단면·측면, 제3각법 6면, 전개도, 타제·고타·마연흔을 기록하기 위한 목록"
   },
@@ -7010,7 +7010,7 @@
       "waterBoxStorage": { "label": "물상자 보관" },
       "dentRisk": { "label": "찍힘 위험" },
       "dryingShrinkageRisk": { "label": "건조수축 위험" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "수침목재와 목기 실측에서 수분 유지, 보존처리 전후 기록, 습식 제도, 보호·보관, 찍힘과 건조수축 위험을 관리하기 위한 목록"
   },
@@ -7059,7 +7059,7 @@
         "label": "보완요구 추적"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "보고서 평가 결과를 점수표로 닫지 않고 원기록 재검토와 다음 현장 개선으로 되돌리기 위한 환류 항목 목록"
@@ -7103,10 +7103,10 @@
         "label": "보고서 초안"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
-    "description": "현장기록 품질검수에서 어떤 원기록 단위를 검토했는지 표시하기 위한 목록"
+    "description": "기록 보완 점검에서 어떤 원기록 단위를 살폈는지 표시하기 위한 목록"
   },
   "KoreanFieldwork-qualityReviewStage": {
     "values": {
@@ -7135,10 +7135,10 @@
         "label": "보완 후 종료"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
-    "description": "현장기록 품질검수가 어느 단계에서 이루어졌는지 남기는 목록"
+    "description": "기록 보완 점검이 어느 단계에서 이루어졌는지 남기는 목록"
   },
   "KoreanFieldwork-qualityCorrectionBasis": {
     "values": {
@@ -7173,10 +7173,10 @@
         "label": "무근거 덮어쓰기 금지"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
-    "description": "품질검수 과정에서 수정·보완이 어떤 근거로 이루어졌는지 남기는 목록"
+    "description": "기록 보완 과정에서 수정·보완이 어떤 근거로 이루어졌는지 남기는 목록"
   },
   "KoreanFieldwork-typologyArgument": {
     "values": {
@@ -7223,7 +7223,7 @@
         "label": "전문가 검토 필요"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "형식명을 확정값으로 바로 저장하지 않고 대표 속성, 속성·형식 구분, 변이, 기능·용도와 지역차, 객관 분류기준, 과도한 세분 회피, 관련 유물군, 대안 분류를 함께 남기기 위한 목록"
@@ -7276,7 +7276,7 @@
         "label": "채택 근거"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "시대값을 단일 선택으로 닫지 않고 층위, 공반 반복성, 절대연대, 표지유물, 시간적 속성, 독립 검증, 형식 공존기간, 지역차·확산지체, 전승품·재사용, 대안 편년과 함께 검토하기 위한 목록"
@@ -7341,7 +7341,7 @@
         "label": "대안 단위 보존"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "편년값이 유물 형식, 개별 유물, 유구, 유물군, 문화, 층위 또는 제작·사용·폐기·매납 중 어느 단위와 행위 시점을 가리키는지 남기기 위한 목록"
@@ -7376,7 +7376,7 @@
         "label": "동시성 불명"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "공반유물을 곧바로 동시기 근거로 보지 않고 매장단위, 반복성, 우연 공반, 재퇴적과 혼입 가능성을 분리하기 위한 목록"
@@ -7394,7 +7394,7 @@
       "analysisResultImpactReviewed": { "label": "분석결과 영향 검토" },
       "reportSectionLinked": { "label": "보고서 문단 연결" },
       "adoptedArgumentRecorded": { "label": "채택 논증 기록" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "형식명이나 시대값으로 해석을 닫지 않고 연구질문, 관찰·해석 분리, 대안해석, 자연·후퇴적 가능성, 비교근거, 분석결과와 보고서 채택 근거를 함께 남기기 위한 목록"
   },
@@ -7446,7 +7446,7 @@
         "label": "구제발굴"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "유적·유구·유물·유물복합체·환경을 함께 묶고, 조사방법 선택근거와 트렌치·피트·바둑판식·사분법·계단식 조사 방식을 기록하기 위한 목록"
@@ -7484,7 +7484,7 @@
         "label": "예외 사유 기록"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "표토·현대교란·도굴갱·상부퇴적토·유구 매몰토 제거와 축조면·사용면·폐기면 확인을 행위의 역순 원칙으로 점검하기 위한 목록"
@@ -7525,7 +7525,7 @@
         "label": "공개자료 후보"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "사진과 도면이 어떤 현장 판단, 작업단계, 현장결과, 보고서 도판, 보존조치, 공개자료의 근거인지 구분하기 위한 목록"
@@ -7713,7 +7713,7 @@
         "label": "재촬영·재작성 필요"
       },
       "pendingDecision": {
-        "label": "판단 보류"
+        "label": "추가 확인"
       }
     },
     "description": "사진과 도면의 목적, 결과·과정 구분, 방향, 축척, 주기판·방위·스케일 동시촬영, 기준점, 해상도·선명도, 촬영 포맷, 사진야장 대조, 촬영내용 기록, 디지털 메타데이터 대조, 인화 사진 주기, 원본 보존, 수습 전 다방향 사진, 직상방 위주 촬영 회피, 사선·측면 사진, 원경·근경 병행, 관련 구역 동시 기록, 내부 양방향 촬영, 색·수분 상태, 토층 전체·분할·세부 사진, 역광 회피, 레벨링 연계, 대장번호·위치 일치, 평·단·입면 정합, 핵심 단면선, 복수 평면도, 평면·입단면 순서, 추정선과 미조사 점선 구분, 장·단축 단면 연결, 산화·환원 색표기, 단계도면 분리, 별도 방안지·트레이싱지 연결, 기준 방안선·도면 연결표시, 복사도면 위치주기, 상면·바닥 분리, 중복 선후관계, BM·해발고도와 차수별 레벨 색상, 현장 완료·보완 이력, 단계도면 축척·방향·평단면 불일치, 좌우반전·상하반전·뒤집힌 스캔, 저해상도·초점 흔들림·크롭 손상을 점검하기 위한 목록"
@@ -7728,7 +7728,7 @@
       "alternativeCaptureMethod": { "label": "촬영 대체수단 기록" },
       "safetyManagerChecked": { "label": "안전관리자 확인" },
       "photoAngleSupplementNeeded": { "label": "촬영각도 보완 필요" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "사진 기록 품질을 확보하되 조사자 안전을 우선하기 위해 붐대 카메라, 드론, 사다리 위험, 고소촬영 금지, 대체 촬영수단, 안전관리자 확인, 촬영각도 보완 필요를 기록하기 위한 목록"
   },
@@ -7745,7 +7745,7 @@
       "macroLensUsed": { "label": "매크로렌즈 사용" },
       "reportResolution300Dpi": { "label": "보고서 300dpi" },
       "highResolution600Dpi": { "label": "고해상도 600dpi" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "유물사진을 실측도면과 대조 가능한 기록으로 만들기 위해 촬영각도, 수평·수직 촬영, ISO, 노출계, 그레이카드, 화이트밸런스, 배경, 렌즈, 해상도를 기록하기 위한 목록"
   },
@@ -7764,7 +7764,7 @@
       "patternEmphasized": { "label": "문양강조" },
       "textureEmphasized": { "label": "질감강조" },
       "reflectionControlled": { "label": "반사제어" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "유물의 형태·문양·질감과 반사 재질을 객관적으로 표현하기 위해 정면광, 측면광, 광량비, 반사판, 텐팅라이트, 확산광, 편광필터와 반사제어를 기록하기 위한 목록"
   },
@@ -7782,7 +7782,7 @@
       "importantDetailPhoto": { "label": "중요특징 사진" },
       "specialistPhotographyNeeded": { "label": "전문가 촬영 필요" },
       "colorPlateCombination": { "label": "컬러도판 조합" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "보고서 도판에서 유물의 기형, 정면·측면, 내면, 굽, 접사, 질감, 중요 특징과 도면 동시수록 여부를 계획하기 위한 목록"
   },
@@ -7806,7 +7806,7 @@
       "scaleRecorded": { "label": "축척 기록" },
       "coordinateSystemRecorded": { "label": "좌표계 기록" },
       "sourceUrlRecorded": { "label": "출처 URL 기록" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "도면작성 전에 사용한 고지도, 지형도, 항공사진, DEM, 문화유적분포지도와 제작연도·축척·좌표계·출처를 함께 기록하기 위한 목록"
   },
@@ -7826,7 +7826,7 @@
       "beforeAfterDevelopmentCompared": { "label": "개발 전후 비교" },
       "featurePreservationInterpreted": { "label": "유구 잔존상태 해석" },
       "siteDistributionPotential": { "label": "유적분포 가능성" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "역사지도와 항공사진에서 자연제방, 습지, 경작지, 묘지, 역로망, 지형 변화와 유적분포 가능성을 해석할 때 근거를 남기기 위한 목록"
   },
@@ -7844,7 +7844,7 @@
       "layerNamesRomanized": { "label": "레이어명 영문화" },
       "styleReappliedConsistently": { "label": "스타일 반복 적용" },
       "conversionVerified": { "label": "변환 검증" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "수치지형도와 문화재 공간자료를 내려받아 좌표계 확인·변환·객체 선택·파일명과 레이어 관리를 거쳐 도면으로 만드는 흐름을 기록하기 위한 목록"
   },
@@ -7874,7 +7874,7 @@
       "northArrowIncluded": { "label": "방위표 포함" },
       "pdfExported": { "label": "PDF 내보내기" },
       "imageExported": { "label": "이미지 내보내기" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "주변유적분포도와 발굴 위치도면에 조사대상지, 실제 다각형 경계, 좌표계·투영정보, GPS 기준점, 문화재·보호구역, 반경, 범례·축척·방위표, PDF와 이미지·GIS 제출 산출물을 빠뜨리지 않기 위한 목록"
   },
@@ -7894,7 +7894,7 @@
       "satelliteCountRecorded": { "label": "위성수 기록" },
       "dopRecorded": { "label": "DOP 기록" },
       "accuracyRecorded": { "label": "정확도 기록" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "GPS·GNSS 측량값을 좌표 숫자만으로 저장하지 않고 관측 방식, 기준국·이동국, 위성 상태, 관측시간, 원시데이터, 좌표계, 지오이드, DOP와 정확도까지 함께 검수하기 위한 목록"
   },
@@ -7915,7 +7915,7 @@
       "satelliteElevation": { "label": "위성 고도각" },
       "satelliteAzimuth": { "label": "위성 방위각" },
       "snr": { "label": "SNR" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "NMEA 기반 GPS 기록에서 일자·시각·위경도·고도·상태값과 위성수, PDOP·HDOP·VDOP, 위성별 ID·고도각·방위각·SNR을 남기기 위한 목록"
   },
@@ -7931,7 +7931,7 @@
       "digitalMapLinked": { "label": "수치지도 연동" },
       "radiusSearchUsed": { "label": "반경검색 사용" },
       "distanceMeasurementUsed": { "label": "거리재기 사용" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "사진을 위치정보와 자동 연결할 때 GPS 연결, 궤적·등록지점·현재위치 연동, 파일명, 위치별 자동분류, 수치지도·반경검색·거리재기 연결을 기록하기 위한 목록"
   },
@@ -7952,7 +7952,7 @@
       "siteSearchTested": { "label": "유적검색 확인" },
       "radiusSearchTested": { "label": "반경검색 확인" },
       "fieldSyncChecked": { "label": "현장 동기화 확인" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "현장 GIS·DB가 자료 갱신, 분석, 이용성, 미확인 매장문화재 관리, 파일 관리, SHP·DXF 호환, 레이어·도형·속성 편집, 통계·분석, 유적·반경검색과 동기화에서 실패하지 않도록 점검하기 위한 목록"
   },
@@ -7985,13 +7985,13 @@
       "outputFormatRecorded": { "label": "산출물 형식 기록" },
       "externalContractorRecorded": { "label": "외주작업자 기록" },
       "outsourcedOutputAcceptanceChecked": { "label": "외주 산출물 인수검수" },
-      "researcherQualityChecked": { "label": "조사자 품질검수" },
+      "researcherQualityChecked": { "label": "조사자 기록 확인" },
       "fieldResultCrossChecked": { "label": "현장결과 대조" },
       "minimumAnalysisRiskFlagged": { "label": "최소 분석 위험 표시" },
       "reanalysisPossible": { "label": "재분석 가능" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
-    "description": "첨단과학장비 활용 자료에서 뽑은 디지털 조사·측량 품질검수 목록. 장비명보다 원천자료 시점, 원지형 변경 위험, 기준점·좌표계·지리보정, 오차, 원천자료 한계, 유적 성격별 기법 적합성, 취득·표현 계획, 산출물 목적, 외주 결과 검수, 최소 분석 위험, 현장 대조와 재분석 가능성을 함께 남긴다."
+    "description": "첨단과학장비 활용 자료에서 뽑은 디지털 조사·측량 기록 확인 목록. 장비명보다 원천자료 시점, 원지형 변경 위험, 기준점·좌표계·지리보정, 오차, 원천자료 한계, 유적 성격별 기법 적합성, 취득·표현 계획, 산출물 목적, 외주 결과 검수, 최소 분석 위험, 현장 대조와 재분석 가능성을 함께 남긴다."
   },
   "KoreanFieldwork-electronicDrawingSourceWorkflow": {
     "values": {
@@ -8017,7 +8017,7 @@
       "fieldResearcherRechecked": { "label": "현장조사자 재검수" },
       "sourceFilePreserved": { "label": "원본파일 보존" },
       "processedFilePreserved": { "label": "후처리파일 보존" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "전자도면을 단순 결과물이 아니라 스캐너 선정, 점군 획득·병합, 스캔 위치·타겟·점밀도·폐색영역·중복스캔·검사점·필터링 검수, 폴리곤 변환·최적화, CAD·2D·3D·복원 산출물, 원본·후처리 파일 보존 흐름으로 점검하기 위한 목록"
   },
@@ -8032,7 +8032,7 @@
       "referencePlaneCreated": { "label": "기준면 생성" },
       "coordinateSystemMoved": { "label": "좌표계 이동" },
       "alignmentCriterionSet": { "label": "합치 기준 결정" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "유물 전자도면에서 형태 검토, 결과물 정의, 특징 view와 단면 위치 결정, 벡터화, 연구자 요구정보, 기준면·좌표계·합치 기준을 분리해 점검하기 위한 목록"
   },
@@ -8050,7 +8050,7 @@
       "museumTransfer": { "label": "박물관 이관·수탁" },
       "publicDescriptionPrepared": { "label": "공개 설명문 작성" },
       "sourceCitationIncluded": { "label": "출처 표기 포함" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "발굴 성과를 시민, 학교, 연구자, 지자체, 언론에 공개할 때 산출물 형식과 설명문·출처 표기를 함께 남기기 위한 목록"
   },
@@ -8079,7 +8079,7 @@
       "duplicatedProgramRisk": { "label": "중복 프로그램 위험" },
       "operatingCostReviewed": { "label": "운영비 검토" },
       "coordinatingBodyRecorded": { "label": "컨트롤타워 기록" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "현장설명회와 공개·교육 프로그램의 공익성, 대상, 운영 방식, 질문·반응, 참여자 수, 실제 조사구역 보호, 협력기관, 후속 교육, 수익사업 검토와 운영 위험을 기록하기 위한 목록"
   },
@@ -8097,7 +8097,7 @@
       "uncertainInterpretation": { "label": "미확정 해석" },
       "deidentifiedForPublic": { "label": "공개용 비식별화" },
       "reviewBeforeRelease": { "label": "공개 전 검토" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "위치정보, 인골, DNA, 도굴 위험 유물, 소유·개인정보, 미확정 해석이 공개자료로 나가기 전에 공개 등급과 검토 상태를 표시하기 위한 목록"
   },
@@ -8113,7 +8113,7 @@
       "thirdPartyPermissionNeeded": { "label": "제3자 허가 필요" },
       "croppedDerivativeTracked": { "label": "편집본 이력 추적" },
       "sensitiveDetailMasked": { "label": "민감 세부정보 가림" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "사진·영상·3D 자료를 공개하거나 교육자료로 재가공할 때 권리, 출처, 라이선스, 편집본, 민감정보 가림을 관리하기 위한 목록"
   },
@@ -8130,7 +8130,7 @@
       "conflictSafetyRisk": { "label": "분쟁·안전 위험" },
       "rescueCapacityChecked": { "label": "구제발굴 역량 확인" },
       "publicCommunicationPlan": { "label": "공개 소통 계획" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "해외 개발사업과 해외조사에서 현지 법제, 허가, 협력기관, 반출 제한, 보존·공개, 일정·안전 위험을 프로젝트 단계에서 관리하기 위한 목록"
   },
@@ -8148,7 +8148,7 @@
       "excavationResearchSeparation": { "label": "발굴·연구 단절" },
       "dataPublicUseDisconnected": { "label": "자료 공공활용 단절" },
       "institutionalRoleUnclear": { "label": "기관 역할 불명확" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "국내 구제발굴과 조사사업에서 개발 절차화, 일정 압박, 경쟁입찰, 전문성 약화, 분석 배제, 보고서 부실, 기관 역할 불명확처럼 조사 품질을 흔드는 제도적 조건을 프로젝트 단위로 기록하기 위한 목록"
   },
@@ -8165,7 +8165,7 @@
       "reportResponsibility": { "label": "보고서 책임" },
       "localPartner": { "label": "현지 협력기관" },
       "roleGapIdentified": { "label": "역할 공백 확인" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "발굴, 분석, 보존, 공개, 행정, 보고서 작성의 담당 기관과 책임자가 자료 사슬에서 끊기지 않도록 남기기 위한 목록"
   },
@@ -8182,7 +8182,7 @@
       "analysisQuestionDefined": { "label": "분석 질문 정의" },
       "interpretationImpactReviewed": { "label": "해석 영향 검토" },
       "processGapIdentified": { "label": "과정 공백 확인" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "발굴을 자료 수집으로 끝내지 않고 정리, 분류, 분석, 해석, 보고서 고찰, 공개, 보존·정비까지 이어졌는지 점검하기 위한 목록"
   },
@@ -8208,7 +8208,7 @@
       "externalReview": { "label": "외부 재검토" },
       "longTermReplicationPlan": { "label": "중장기 반복계획" },
       "digitalSubstituteLimit": { "label": "디지털 대체자료 한계" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "실험고고학을 복원품 제작이 아니라 문제, 가설, 제작 연쇄, 변수, 대조군, 재료·환경·도구·연료·인력, 건조·소성 일정, 비교 기준, 반복, 실패값과 실패 원인, 외부검토, 디지털 대체자료 한계가 있는 검증 절차로 기록하기 위한 목록"
   },
@@ -8232,7 +8232,7 @@
       "analysisResultTable": { "label": "분석결과표" },
       "diagram": { "label": "도식" },
       "reportEvaluationItem": { "label": "보고서 평가항목" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "원문 PDF에서 가져온 표, 그림, 도판, 사례, 수치, 한자, 출전, 점검표 같은 근거자료 종류를 구분하기 위한 목록"
   },
@@ -8259,7 +8259,7 @@
       "reportWriting": { "label": "보고서 작성" },
       "spatialData": { "label": "도면·GIS·3D" },
       "publicArchaeology": { "label": "대중고고학" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "도표·사례 근거가 어느 조사 영역이나 템플릿 판단에 쓰이는지 구분하기 위한 목록"
   },
@@ -8280,7 +8280,7 @@
       "captionNeedsCheck": { "label": "캡션 대조 필요" },
       "valueListPromotionReady": { "label": "값목록 승격 가능" },
       "uiExposureDeferred": { "label": "UI 노출 보류" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "OCR 추출 근거가 원문 PDF, 도표 번호, 캡션, 사례명, 한자, 수치와 얼마나 대조되었는지 추적하기 위한 목록"
   },
@@ -8298,7 +8298,7 @@
       "preventAutoClassification": { "label": "자동분류 방지" },
       "sourceTraceability": { "label": "출처 추적성" },
       "futurePdfRecheck": { "label": "후속 PDF 재대조" },
-      "pendingDecision": { "label": "판단 보류" }
+      "pendingDecision": { "label": "추가 확인" }
     },
     "description": "도표·사례 근거가 필드 설계, 샘플 검증, 비교, 수치, 용어, 편년, 분석계획, 보고서 교차검토 중 어디에 쓰이는지 기록하기 위한 목록"
   }

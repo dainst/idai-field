@@ -26,7 +26,6 @@ import {
   QUALITY_QUICK_OPTIONS,
   TIMING_QUICK_OPTIONS,
   toggleStringArrayFieldValue,
-  VERIFICATION_QUICK_OPTIONS,
 } from './korean-fieldwork-quick-record';
 
 interface KoreanFieldworkQuickRecordPanelProps {
@@ -132,7 +131,7 @@ const KoreanFieldworkQuickRecordPanel: React.FC<KoreanFieldworkQuickRecordPanelP
       )}
 
       {availability.quality && (
-        <QuickSection title="품질 확인">
+        <QuickSection title="기록 확인">
           <OptionRow
             options={QUALITY_QUICK_OPTIONS}
             activeValues={getStringArrayFieldValues(
@@ -147,20 +146,6 @@ const KoreanFieldworkQuickRecordPanel: React.FC<KoreanFieldworkQuickRecordPanelP
                 value
               )
             )}
-          />
-        </QuickSection>
-      )}
-
-      {availability.verification && (
-        <QuickSection title="검증 상태">
-          <OptionRow
-            options={VERIFICATION_QUICK_OPTIONS}
-            activeValues={getSingleValue(resource, FIELDWORK_QUICK_FIELDS.verification)}
-            onPress={(value) => onUpdateResourceField(
-              FIELDWORK_QUICK_FIELDS.verification,
-              value
-            )}
-            singleChoice
           />
         </QuickSection>
       )}

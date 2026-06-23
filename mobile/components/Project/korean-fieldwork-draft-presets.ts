@@ -50,25 +50,23 @@ export const KOREAN_FIELDWORK_DRAFT_PRESETS: readonly KoreanFieldworkDraftPreset
   {
     id: 'field-start',
     label: '현장 착수',
-    detail: '현장 중 작성, 즉시 기록, 관찰 확인',
+    detail: '현장 중 작성, 관찰 내용과 사진·실측 연결',
     icon: 'play-circle-outline',
     categoryNames: FIELDWORK_RECORD_CATEGORIES,
     updates: {
       recordCreationTiming: 'duringFieldwork',
       fieldRecordQuality: ['immediateRecording'],
-      verificationState: 'observedInField',
     },
   },
   {
     id: 'needs-review',
-    label: '재확인',
-    detail: '판단 보류나 보완이 필요한 상태',
+    label: '기록 보완',
+    detail: '추가 관찰이나 자료 연결이 필요한 상태',
     icon: 'report-problem',
     categoryNames: FIELDWORK_RECORD_CATEGORIES,
     updates: {
       recordCreationTiming: 'duringFieldwork',
       fieldRecordQuality: ['correctionNeeded'],
-      verificationState: 'needsRecheck',
     },
   },
   {
@@ -81,7 +79,6 @@ export const KOREAN_FIELDWORK_DRAFT_PRESETS: readonly KoreanFieldworkDraftPreset
       featureRecordingStatus: 'candidate',
       recordCreationTiming: 'duringFieldwork',
       fieldRecordQuality: ['immediateRecording'],
-      verificationState: 'candidate',
       featureInvestigationChecklist: ['preInvestigationPhotoTaken'],
     },
   },
@@ -95,7 +92,6 @@ export const KOREAN_FIELDWORK_DRAFT_PRESETS: readonly KoreanFieldworkDraftPreset
       featureRecordingStatus: 'investigating',
       recordCreationTiming: 'duringFieldwork',
       fieldRecordQuality: ['immediateRecording'],
-      verificationState: 'observedInField',
       featureInvestigationChecklist: [
         'preInvestigationPhotoTaken',
         'inProgressPhotoTaken',
@@ -113,10 +109,9 @@ export const KOREAN_FIELDWORK_DRAFT_PRESETS: readonly KoreanFieldworkDraftPreset
       recordCreationTiming: 'sameDayFieldRecord',
       fieldRecordQuality: [
         'immediateRecording',
-        'factualAccuracy',
         'observationInterpretationSeparated',
+        'fieldToReportContinuity',
       ],
-      verificationState: 'observedInField',
       featureInvestigationChecklist: [
         'measuredDrawingCompleted',
         'findsRecovered',

@@ -32,7 +32,7 @@ describe('Korean fieldwork quick record helpers', () => {
       checklist: true,
       featureStatus: false,
       quality: true,
-      verification: true,
+      verification: false,
       timing: true,
     });
     expect(hasKoreanFieldworkQuickRecordActions(availability)).toBe(true);
@@ -121,7 +121,7 @@ describe('Korean fieldwork quick record helpers', () => {
       checklist: true,
       featureStatus: true,
       quality: true,
-      verification: true,
+      verification: false,
       timing: true,
     };
 
@@ -137,7 +137,6 @@ describe('Korean fieldwork quick record helpers', () => {
       ],
       fieldRecordQuality: ['immediateRecording'],
       recordCreationTiming: 'duringFieldwork',
-      verificationState: 'observedInField',
     });
 
     expect(getKoreanFieldworkQuickPresetUpdates(

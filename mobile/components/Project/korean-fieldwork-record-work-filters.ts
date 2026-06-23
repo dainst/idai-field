@@ -22,17 +22,10 @@ export type KoreanFieldworkRecordWorkFilterCounts = Record<
 export const KOREAN_FIELDWORK_RECORD_WORK_FILTERS: readonly KoreanFieldworkRecordWorkFilter[] = [
   { id: 'all', label: '전체', icon: 'format-list-bulleted' },
   { id: 'needsReview', label: '확인 필요', icon: 'priority-high' },
-  { id: 'pending', label: '후보·재확인', icon: 'rule' },
+  { id: 'pending', label: '조사 중', icon: 'rule' },
   { id: 'missingEvidence', label: '증거 보완', icon: 'add-photo-alternate' },
   { id: 'today', label: '오늘 작성', icon: 'today' },
 ];
-
-const PENDING_VERIFICATION_STATES = new Set([
-  'candidate',
-  'needsRecheck',
-  'pendingDecision',
-  'conflictingEvidence',
-]);
 
 const PENDING_FEATURE_RECORDING_STATES = new Set([
   'candidate',
@@ -90,8 +83,7 @@ const createEmptyCounts = (): KoreanFieldworkRecordWorkFilterCounts => ({
 const hasPendingFieldworkStatus = (document: Document): boolean => {
   const resource = document.resource as Record<string, unknown>;
 
-  return isTrackedValue(resource.verificationState, PENDING_VERIFICATION_STATES)
-    || isTrackedValue(resource.featureRecordingStatus, PENDING_FEATURE_RECORDING_STATES);
+  return isTrackedValue(resource.featureRecordingStatus, PENDING_FEATURE_RECORDING_STATES);
 };
 
 const hasMissingEvidence = (

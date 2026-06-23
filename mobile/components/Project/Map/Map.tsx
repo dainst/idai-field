@@ -305,12 +305,12 @@ const Map: React.FC<MapProps> = (props) => {
       )}
       {shouldShowStartPanel && (
         <View style={styles.startPanel}>
-          <Text style={styles.startEyebrow}>한국형 야장</Text>
+          <Text style={styles.startEyebrow}>디지털 야장</Text>
           <Text style={styles.startTitle}>
             {primaryOperation ? '조사구역 기록 준비' : '조사구역부터 시작'}
           </Text>
           <Text style={styles.startHierarchy}>
-            조사구역 → 트렌치/조사갱 → 유구군·유구 → 피트·유구 구간·층위
+            조사구역 → 트렌치 → 유구군·유구 → 피트·유구 구간·층위
           </Text>
           <View style={styles.startActions}>
             {!primaryOperation ? (
@@ -324,7 +324,7 @@ const Map: React.FC<MapProps> = (props) => {
               <>
                 <Button
                   variant="success"
-                  title="트렌치/조사갱 추가"
+                  title="트렌치 추가"
                   isDisabled={!canCreateTrench}
                   onPress={createTrenchInPrimaryOperation}
                 />

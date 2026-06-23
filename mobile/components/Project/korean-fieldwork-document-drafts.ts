@@ -43,7 +43,6 @@ const DRAFT_IDENTIFIER_PREFIXES: Readonly<Record<string, string>> = {
 };
 
 const RECORD_CREATION_TIMING_DURING_FIELDWORK = 'duringFieldwork';
-const VERIFICATION_STATE_PENDING_DECISION = 'pendingDecision';
 
 export const createKoreanFieldworkDraftResource = (
   parentDoc: Document,
@@ -72,7 +71,6 @@ export const createKoreanFieldworkDraftResource = (
       ...resource,
       recordCreationTiming: RECORD_CREATION_TIMING_DURING_FIELDWORK,
       fieldRecordQuality: [],
-      verificationState: VERIFICATION_STATE_PENDING_DECISION,
     };
   }
 

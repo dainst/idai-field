@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import CategoryIcon from '@/components/common/CategoryIcon';
 import DocumentAddModal from '@/components/Project/DocumentAddModal';
+import KoreanFieldworkFieldNotePanel from '@/components/Project/KoreanFieldworkFieldNotePanel';
 import KoreanFieldworkHierarchyBoard from '@/components/Project/KoreanFieldworkHierarchyBoard';
 import KoreanFieldworkPriorityTaskList from '@/components/Project/KoreanFieldworkPriorityTaskList';
 import KoreanFieldworkProgressBoard from '@/components/Project/KoreanFieldworkProgressBoard';
@@ -28,6 +29,14 @@ import {
   KOREAN_FIELDWORK_CATEGORIES,
 } from '@/components/Project/korean-fieldwork-categories';
 import { getKoreanFieldworkAllowedChildCategoryNames } from '@/components/Project/korean-fieldwork-child-records';
+import {
+  createKoreanFieldworkDailyLogDraft,
+  createKoreanFieldworkRecordMemoDraft,
+  getKoreanFieldworkDailyLogAppendUpdates,
+  getKoreanFieldworkDailyLogForOperation,
+  getKoreanFieldworkFieldNoteOperation,
+  KoreanFieldworkFieldNoteMode,
+} from '@/components/Project/korean-fieldwork-field-notes';
 import {
   getKoreanFieldworkCloseoutSummary,
   KoreanFieldworkCloseoutStatus,
@@ -215,6 +224,7 @@ const DocumentsList: React.FC = () => {
   const [addModalParent, setAddModalParent] = useState<Document>();
   const [selectedWorkbenchDocumentId, setSelectedWorkbenchDocumentId] =
     useState<string>();
+  const [isCreatingFieldNote, setIsCreatingFieldNote] = useState(false);
   const now = useMemo(() => new Date(), []);
 
   const documentsById = useMemo(
@@ -389,6 +399,42 @@ const DocumentsList: React.FC = () => {
       : [],
     [getAllowedAddCategoryNames, selectedWorkbenchDocument]
   );
+  const selectedFieldNoteOperation = useMemo(
+    () => selectedWorkbenchDocument
+      ? getKoreanFieldworkFieldNoteOperation(
+        selectedWorkbenchDocument,
+        documents
+      )
+      : undefined,
+    [documents, selectedWorkbenchDocument]
+  );
+  const selectedFieldNoteDailyLog = useMemo(
+    () => getKoreanFieldworkDailyLogForOperation(
+      selectedFieldNoteOperation,
+      documents
+    ),
+    [documents, selectedFieldNoteOperation]
+  );
+  const selectedFieldNoteOperationAllowedCategoryNames = useMemo(
+    () => selectedFieldNoteOperation
+      ? getAllowedAddCategoryNames(selectedFieldNoteOperation)
+      : [],
+    [getAllowedAddCategoryNames, selectedFieldNoteOperation]
+  );
+  const canCreateSelectedRecordMemo =
+    selectedWorkbenchAllowedAddCategoryNames.includes(
+      KOREAN_FIELDWORK_CATEGORIES.PEN_MEMO
+    )
+    && !!config.getCategory(KOREAN_FIELDWORK_CATEGORIES.PEN_MEMO);
+  const canCreateSelectedDailyLog =
+    !!selectedFieldNoteDailyLog
+    || (
+      !!selectedFieldNoteOperation
+      && selectedFieldNoteOperationAllowedCategoryNames.includes(
+        KOREAN_FIELDWORK_CATEGORIES.DAILY_LOG
+      )
+      && !!config.getCategory(KOREAN_FIELDWORK_CATEGORIES.DAILY_LOG)
+    );
   const selectWorkbenchDocument = (document: Document) => {
     setSelectedWorkbenchDocumentId(document.resource.id);
   };
@@ -439,6 +485,77 @@ const DocumentsList: React.FC = () => {
           `${document.resource.identifier} 현장 확인을 반영하지 못했습니다. ${error}`
         );
       });
+  };
+  const createFieldNote = async (
+    mode: KoreanFieldworkFieldNoteMode,
+    text: string
+  ) => {
+    if (!repository || !selectedWorkbenchDocument) return;
+
+    try {
+      setIsCreatingFieldNote(true);
+
+      if (mode === 'dailyLog') {
+        if (!selectedFieldNoteOperation) return;
+
+        if (selectedFieldNoteDailyLog) {
+          const updates = getKoreanFieldworkDailyLogAppendUpdates(
+            selectedFieldNoteDailyLog,
+            selectedWorkbenchDocument,
+            text
+          );
+          const updatedDocument = await repository.update({
+            ...selectedFieldNoteDailyLog,
+            resource: {
+              ...selectedFieldNoteDailyLog.resource,
+              ...updates,
+            },
+          });
+
+          showToast(
+            ToastType.Success,
+            `${updatedDocument.resource.identifier}에 야장 메모를 추가했습니다.`
+          );
+          return;
+        }
+
+        const createdDocument = await repository.create(
+          createKoreanFieldworkDailyLogDraft(
+            selectedFieldNoteOperation,
+            selectedWorkbenchDocument,
+            text,
+            config
+          )
+        );
+
+        showToast(
+          ToastType.Success,
+          `${createdDocument.resource.identifier} 작업일지를 만들었습니다.`
+        );
+        return;
+      }
+
+      const createdDocument = await repository.create(
+        createKoreanFieldworkRecordMemoDraft(
+          selectedWorkbenchDocument,
+          text,
+          config
+        )
+      );
+
+      showToast(
+        ToastType.Success,
+        `${createdDocument.resource.identifier} 메모를 저장했습니다.`
+      );
+    } catch (error) {
+      showToast(
+        ToastType.Error,
+        `야장 메모를 저장하지 못했습니다. ${error}`
+      );
+      throw error;
+    } finally {
+      setIsCreatingFieldNote(false);
+    }
   };
   const applyCloseoutBatchUpdates = (
     batchUpdates: KoreanFieldworkCloseoutBatchUpdate[]
@@ -533,7 +650,7 @@ const DocumentsList: React.FC = () => {
       >
         <View style={styles.headerBand}>
           <View style={styles.headerText}>
-            <Text style={styles.kicker}>한국형 디지털 야장</Text>
+            <Text style={styles.kicker}>디지털 야장</Text>
             <Text style={styles.title}>현장 기록판</Text>
             <Text style={styles.contextLine} numberOfLines={1}>
               현재 범위: {hierarchyLabel}
@@ -545,7 +662,7 @@ const DocumentsList: React.FC = () => {
             onPress={openMap}
           >
             <MaterialIcons name="map" size={22} color="white" />
-            <Text style={styles.mapButtonText}>지도 야장</Text>
+            <Text style={styles.mapButtonText}>지도</Text>
           </TouchableOpacity>
         </View>
 
@@ -566,19 +683,32 @@ const DocumentsList: React.FC = () => {
         </View>
 
         {selectedWorkbenchDocument && (
-          <KoreanFieldworkSelectedRecordWorkbench
-            document={selectedWorkbenchDocument}
-            documents={documents}
-            allowedAddCategoryNames={selectedWorkbenchAllowedAddCategoryNames}
-            onAddChild={openAddChildModal}
-            onAddDocumentOfCategory={(parentDoc, categoryName) =>
-              navigateAddCategory(categoryName, parentDoc)}
-            onClearSelection={() => setSelectedWorkbenchDocumentId(undefined)}
-            onEditDocument={editDocument}
-            onOpenDocument={selectWorkbenchDocument}
-            onOpenMapDocument={onDocumentSelected}
-            onUpdateResourceFields={updateWorkbenchResourceFields}
-          />
+          <>
+            <KoreanFieldworkSelectedRecordWorkbench
+              document={selectedWorkbenchDocument}
+              documents={documents}
+              allowedAddCategoryNames={selectedWorkbenchAllowedAddCategoryNames}
+              onAddChild={openAddChildModal}
+              onAddDocumentOfCategory={(parentDoc, categoryName) =>
+                navigateAddCategory(categoryName, parentDoc)}
+              onClearSelection={() => setSelectedWorkbenchDocumentId(undefined)}
+              onEditDocument={editDocument}
+              onOpenDocument={selectWorkbenchDocument}
+              onOpenMapDocument={onDocumentSelected}
+              onUpdateResourceFields={updateWorkbenchResourceFields}
+            />
+            <KoreanFieldworkFieldNotePanel
+              selectedDocument={selectedWorkbenchDocument}
+              documents={documents}
+              operationDocument={selectedFieldNoteOperation}
+              existingDailyLog={selectedFieldNoteDailyLog}
+              canCreateRecordMemo={canCreateSelectedRecordMemo}
+              canCreateDailyLog={canCreateSelectedDailyLog}
+              isSaving={isCreatingFieldNote}
+              onCreateNote={createFieldNote}
+              onOpenDocument={selectWorkbenchDocument}
+            />
+          </>
         )}
 
         <KoreanFieldworkWorkbenchPanel
@@ -778,7 +908,7 @@ const DocumentsList: React.FC = () => {
               <MaterialIcons name="assignment-late" size={24} color="#697386" />
               <Text style={styles.emptyTitle}>표시할 기록이 없습니다</Text>
               <Text style={styles.emptyText}>
-                검색어나 분류를 바꾸거나, 지도 야장에서 조사구역·트렌치·유구를 추가하세요.
+                검색어나 분류를 바꾸거나, 지도에서 조사구역·트렌치·유구를 추가하세요.
               </Text>
             </View>
           )}
@@ -1568,8 +1698,9 @@ const getRecordDescription = (document: Document): string | undefined => {
     resource.description,
     resource.fieldNote,
     resource.interpretation,
-    resource.dailyLogText,
-    resource.penMemoText,
+    resource.diaryAbstract,
+    resource.penMemoReviewedTranscript,
+    resource.penMemoAutoTranscript,
   ].find((value) => typeof value === 'string' && value.trim().length > 0);
 };
 
@@ -1582,8 +1713,9 @@ const getSearchableText = (document: Document, categoryLabel: string): string =>
     resource.description,
     resource.fieldNote,
     resource.interpretation,
-    resource.dailyLogText,
-    resource.penMemoText,
+    resource.diaryAbstract,
+    resource.penMemoReviewedTranscript,
+    resource.penMemoAutoTranscript,
     resource.category,
     categoryLabel,
   ]

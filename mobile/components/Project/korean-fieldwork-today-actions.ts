@@ -132,7 +132,7 @@ export const getKoreanFieldworkPriorityTasks = (
       id: 'start-operation',
       icon: 'map',
       title: '조사구역부터 만들기',
-      detail: '지도 야장에서 현장 조사구역을 먼저 잡아야 기록 흐름이 이어집니다.',
+      detail: '지도에서 현장 조사구역을 먼저 잡아야 기록 흐름이 이어집니다.',
       tone: 'warning',
       action: { type: 'openMap' },
     });
@@ -146,7 +146,7 @@ export const getKoreanFieldworkPriorityTasks = (
         id: 'create-daily-log',
         icon: 'event-note',
         title: '오늘 작업일지 작성',
-        detail: `${targets.primaryOperation.resource.identifier}의 작업 범위와 판단을 남기세요.`,
+        detail: `${targets.primaryOperation.resource.identifier}의 작업 범위와 관찰 내용을 남기세요.`,
         tone: 'warning',
         action: {
           type: 'createDocument',
@@ -175,7 +175,7 @@ export const getKoreanFieldworkPriorityTasks = (
       tasks.push({
         id: 'create-trench',
         icon: 'grid-on',
-        title: '트렌치/조사갱 설정',
+        title: '트렌치 설정',
         detail: '시굴·발굴 구획을 잡아 유구와 피트 기록의 기준을 만드세요.',
         tone: 'info',
         action: {

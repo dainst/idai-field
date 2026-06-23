@@ -24,7 +24,7 @@ describe('KoreanFieldworkDraftContextPanel', () => {
 
     expect(getByText('새 기록 맥락')).toBeTruthy();
     expect(getByText('조사구역 · 조사구역 1')).toBeTruthy();
-    expect(getByText('트렌치/조사갱')).toBeTruthy();
+    expect(getByText('트렌치')).toBeTruthy();
     expect(getByText('소속')).toBeTruthy();
     expect(getByText('조사구역')).toBeTruthy();
   });

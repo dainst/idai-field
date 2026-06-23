@@ -12,7 +12,6 @@ describe('Korean fieldwork draft presets', () => {
     const presets = getKoreanFieldworkDraftPresets(
       createCategoryForm([
         'featureRecordingStatus',
-        'verificationState',
         'featureInvestigationChecklist',
       ]),
       createResource(C.FEATURE)
@@ -24,12 +23,10 @@ describe('Korean fieldwork draft presets', () => {
 
     expect(candidatePreset?.updates).toEqual({
       featureRecordingStatus: 'candidate',
-      verificationState: 'candidate',
       featureInvestigationChecklist: ['preInvestigationPhotoTaken'],
     });
     expect(candidatePreset?.fieldNames).toEqual([
       'featureRecordingStatus',
-      'verificationState',
       'featureInvestigationChecklist',
     ]);
   });
@@ -39,7 +36,6 @@ describe('Korean fieldwork draft presets', () => {
       createCategoryForm([
         'recordCreationTiming',
         'fieldRecordQuality',
-        'verificationState',
       ]),
       createResource(C.OPERATION)
     );

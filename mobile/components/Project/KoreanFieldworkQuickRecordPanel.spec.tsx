@@ -38,7 +38,7 @@ describe('KoreanFieldworkQuickRecordPanel', () => {
     expect(getByText('현장 빠른 입력')).toBeTruthy();
     expect(getByText('유구 진행')).toBeTruthy();
     expect(getByText('조사 과정표')).toBeTruthy();
-    expect(getByText('품질 확인')).toBeTruthy();
+    expect(getByText('기록 확인')).toBeTruthy();
 
     fireEvent.press(getByTestId('quickRecordOption_investigating'));
     fireEvent.press(getByTestId('quickRecordOption_completionPhotoTaken'));
@@ -95,12 +95,11 @@ describe('KoreanFieldworkQuickRecordPanel', () => {
       ],
       fieldRecordQuality: ['immediateRecording'],
       recordCreationTiming: 'duringFieldwork',
-      verificationState: 'observedInField',
     });
     expect(handleUpdateResourceField).not.toHaveBeenCalled();
   });
 
-  it('updates single-choice verification and timing fields directly', () => {
+  it('updates the single-choice timing field directly', () => {
     const handleUpdateResourceField = jest.fn();
     const { getByTestId } = render(
       <KoreanFieldworkQuickRecordPanel
@@ -116,16 +115,10 @@ describe('KoreanFieldworkQuickRecordPanel', () => {
       />
     );
 
-    fireEvent.press(getByTestId('quickRecordOption_observedInField'));
     fireEvent.press(getByTestId('quickRecordOption_sameDayFieldRecord'));
 
     expect(handleUpdateResourceField).toHaveBeenNthCalledWith(
       1,
-      FIELDWORK_QUICK_FIELDS.verification,
-      'observedInField'
-    );
-    expect(handleUpdateResourceField).toHaveBeenNthCalledWith(
-      2,
       FIELDWORK_QUICK_FIELDS.timing,
       'sameDayFieldRecord'
     );

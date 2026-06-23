@@ -48,14 +48,14 @@ describe('Korean fieldwork workbench', () => {
         id: 'feature-1',
         categoryLabel: '유구',
         parentPath: '조사구역 1 > T1',
-        reasons: ['확인 1', '후보 판단', '과정 1/8', '품질 미점검'],
+        reasons: ['확인 1', '유구 후보', '과정 1/8', '기록 보완'],
         tone: 'warning',
       },
       {
         id: 'trench-1',
-        categoryLabel: '트렌치/조사갱',
+        categoryLabel: '트렌치',
         parentPath: '조사구역 1',
-        reasons: ['품질 미점검', '시점 미입력'],
+        reasons: ['기록 보완', '시점 미입력'],
         tone: 'neutral',
       },
     ]);

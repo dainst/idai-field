@@ -76,7 +76,7 @@ describe('Korean fieldwork today actions', () => {
       'create-daily-log',
       'create-survey-boundary',
       'create-trench',
-      'create-feature-candidate',
+      'create-detected-feature',
     ]);
     expect(tasks[0].action).toEqual({
       type: 'createDocument',
@@ -99,7 +99,7 @@ describe('Korean fieldwork today actions', () => {
     );
 
     expect(tasks.find((task) =>
-      task.id === 'create-feature-candidate'
+      task.id === 'create-detected-feature'
     )?.action).toEqual({
       type: 'createDocument',
       parentDocumentId: 'trench-1',
@@ -114,7 +114,7 @@ describe('Korean fieldwork today actions', () => {
       [trench] as any
     );
 
-    expect(tasks.map((task) => task.id)).toEqual(['create-feature-candidate']);
+    expect(tasks.map((task) => task.id)).toEqual(['create-detected-feature']);
     expect(tasks[0].action).toEqual({
       type: 'createDocument',
       parentDocumentId: 'trench-1',
@@ -140,7 +140,7 @@ describe('Korean fieldwork today actions', () => {
         disabled: true,
       },
       featureCandidate: {
-        detail: '후보 추가',
+        detail: '유구 추가',
         action: {
           type: 'createDocument',
           parentDocumentId: 'trench-1',

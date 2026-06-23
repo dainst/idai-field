@@ -92,7 +92,7 @@ const KoreanFieldworkTodayBoard: React.FC<KoreanFieldworkTodayBoardProps> = ({
       <View style={styles.statsRow}>
         <Stat label="일지" value={summary.dailyLogs.length} />
         <Stat label="경계" value={summary.surveyBoundaries.length} />
-        <Stat label="유구 후보" value={summary.featureCandidates.length} />
+        <Stat label="검출 유구" value={summary.featureCandidates.length} />
         <Stat
           label="확인"
           value={summary.openIssues.length}
@@ -114,10 +114,10 @@ const KoreanFieldworkTodayBoard: React.FC<KoreanFieldworkTodayBoardProps> = ({
         />
         <SummaryAction
           icon="add-location-alt"
-          label="유구 후보"
+          label="검출 유구"
           detail={actionTargets.featureCandidate
             ? `${summary.featureCandidates.length}건`
-            : actionTargets.featureDraftParent ? '후보 추가' : '조사구역 필요'}
+            : actionTargets.featureDraftParent ? '유구 추가' : '조사구역 필요'}
           isDisabled={
             !actionTargets.featureCandidate
             && (!actionTargets.featureDraftParent || !onAddDocumentOfCategory)

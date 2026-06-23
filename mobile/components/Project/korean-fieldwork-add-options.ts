@@ -117,7 +117,7 @@ const PRIMARY_ONLY_CATEGORIES = new Set([
 ]);
 
 export const KOREAN_FIELDWORK_HIERARCHY_HELP =
-  '조사구역 · 트렌치 · 유구군/유구 · 피트·유구 구간/층위';
+  '조사 방식에 맞춰 트렌치·유구·피트·층위를 필요한 만큼 이어갑니다.';
 
 export const getKoreanFieldworkAddOptions = (
   parentCategoryName: string,

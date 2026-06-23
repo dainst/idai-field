@@ -71,8 +71,8 @@ export const KOREAN_FIELDWORK_DRAFT_PRESETS: readonly KoreanFieldworkDraftPreset
   },
   {
     id: 'feature-candidate',
-    label: '유구 후보',
-    detail: '노출 직후 후보로 표시하고 조사 전 사진부터',
+    label: '검출 유구',
+    detail: '노출 직후 성격을 정하고 조사 전 사진부터',
     icon: 'lightbulb-outline',
     categoryNames: FEATURE_RECORD_CATEGORIES,
     updates: {

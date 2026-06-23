@@ -82,7 +82,7 @@ describe('Korean fieldwork record summary', () => {
 
     expect(getKoreanFieldworkRecordStatusChips(feature)).toEqual([
       { label: '수혈', tone: 'info' },
-      { label: '유구 후보', tone: 'warning' },
+      { label: '검출 유구', tone: 'warning' },
       { label: '현장 작성', tone: 'success' },
       { label: '약도', tone: 'warning' },
     ]);

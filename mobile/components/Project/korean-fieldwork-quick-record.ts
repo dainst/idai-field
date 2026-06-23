@@ -32,7 +32,7 @@ export const FIELDWORK_QUICK_FIELDS = {
 } as const;
 
 export const FEATURE_STATUS_QUICK_OPTIONS: readonly KoreanFieldworkQuickOption[] = [
-  { value: 'candidate', label: '후보' },
+  { value: 'candidate', label: '검출' },
   { value: 'investigating', label: '조사중' },
   { value: 'confirmed', label: '확정' },
   { value: 'rejected', label: '제외' },
@@ -56,13 +56,13 @@ export const QUALITY_QUICK_OPTIONS: readonly KoreanFieldworkQuickOption[] = [
   { value: 'factualAccuracy', label: '관찰 내용' },
   { value: 'observationInterpretationSeparated', label: '관찰·해석' },
   { value: 'reproducibleRecord', label: '기록 근거' },
-  { value: 'fieldToReportContinuity', label: '보고서 연속성' },
+  { value: 'fieldToReportContinuity', label: '정리 단계 메모' },
   { value: 'correctionNeeded', label: '보완 메모' },
 ];
 
 export const VERIFICATION_QUICK_OPTIONS: readonly KoreanFieldworkQuickOption[] = [
   { value: 'observedInField', label: '관찰 기록' },
-  { value: 'candidate', label: '후보' },
+  { value: 'candidate', label: '검출' },
   { value: 'needsRecheck', label: '추가 확인' },
   { value: 'pendingDecision', label: '기록 보완' },
 ];
@@ -84,7 +84,7 @@ export const FEATURE_WORKFLOW_QUICK_PRESETS: readonly KoreanFieldworkQuickPreset
   {
     id: 'closeFeatureInvestigation',
     label: '마감 기본',
-    detail: '확정 전환, 완료 사진, 실측, 보고서 연속성',
+    detail: '확정 전환, 완료 사진, 실측, 정리 단계 메모',
     icon: 'task-alt',
   },
 ];

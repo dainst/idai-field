@@ -58,7 +58,7 @@ const KoreanFieldworkHierarchyBoard: React.FC<KoreanFieldworkHierarchyBoardProps
           </Text>
         </View>
         <Text style={styles.flowText} numberOfLines={1}>
-          조사구역 → 트렌치 → 유구군 → 유구 → 피트·유구 구간
+          조사 방식에 맞춰 트렌치·유구·피트·층위를 이어갑니다
         </Text>
       </View>
 

@@ -1,5 +1,5 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Tabs } from 'expo-router';
+import { router, Tabs } from 'expo-router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { PreferencesContext } from '@/contexts/preferences-context';
 import usePreferences from '@/hooks/use-preferences';
@@ -45,6 +45,12 @@ export default function TabLayout() {
                   tabBarIcon: ({ color }) => (
                     <FontAwesome size={28} name="edit" color={color} />
                   ),
+                }}
+                listeners={{
+                  tabPress: (event) => {
+                    event.preventDefault();
+                    router.navigate('/ProjectScreen');
+                  },
                 }}
               />
             </Tabs>

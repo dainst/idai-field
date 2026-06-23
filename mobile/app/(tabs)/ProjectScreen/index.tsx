@@ -7,6 +7,7 @@ import { router } from 'expo-router';
 import React, {
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -25,6 +26,7 @@ import DocumentAddModal from '@/components/Project/DocumentAddModal';
 import KoreanFieldworkDailyNotebookDigest from '@/components/Project/KoreanFieldworkDailyNotebookDigest';
 import KoreanFieldworkFieldNotePanel from '@/components/Project/KoreanFieldworkFieldNotePanel';
 import KoreanFieldworkHierarchyBoard from '@/components/Project/KoreanFieldworkHierarchyBoard';
+import KoreanFieldworkInvestigationModePanel from '@/components/Project/KoreanFieldworkInvestigationModePanel';
 import KoreanFieldworkNotebookLedger from '@/components/Project/KoreanFieldworkNotebookLedger';
 import KoreanFieldworkPriorityTaskList from '@/components/Project/KoreanFieldworkPriorityTaskList';
 import KoreanFieldworkProgressBoard from '@/components/Project/KoreanFieldworkProgressBoard';
@@ -90,6 +92,11 @@ import {
   getKoreanFieldworkReturnParam,
   KOREAN_FIELDWORK_RETURN_TARGETS,
 } from '@/components/Project/korean-fieldwork-navigation';
+import {
+  loadKoreanFieldworkInvestigationModeId,
+  saveKoreanFieldworkInvestigationModeId,
+  KoreanFieldworkInvestigationModeId,
+} from '@/components/Project/korean-fieldwork-investigation-mode';
 import { ConfigurationContext } from '@/contexts/configuration-context';
 import LabelsContext from '@/contexts/labels/labels-context';
 import { PreferencesContext } from '@/contexts/preferences-context';
@@ -237,6 +244,8 @@ const DocumentsList: React.FC = () => {
   const [query, setQuery] = useState('');
   const [addModalParent, setAddModalParent] = useState<Document>();
   const [showFieldworkDetails, setShowFieldworkDetails] = useState(false);
+  const [investigationModeId, setInvestigationModeId] =
+    useState<KoreanFieldworkInvestigationModeId>();
   const [selectedWorkbenchDocumentId, setSelectedWorkbenchDocumentId] =
     useState<string>();
   const [fieldNoteContinuation, setFieldNoteContinuation] =
@@ -247,6 +256,7 @@ const DocumentsList: React.FC = () => {
   const fieldNoteContinuationRequestId = useRef(0);
   const [isCreatingFieldNote, setIsCreatingFieldNote] = useState(false);
   const now = useMemo(() => new Date(), []);
+  const projectId = preferencesContext.preferences.currentProject;
 
   const documentsById = useMemo(
     () => new Map(documents.map((document) => [document.resource.id, document])),
@@ -369,6 +379,21 @@ const DocumentsList: React.FC = () => {
     ? hierarchyPath.map((document) => document.resource.identifier).join(' / ')
     : '전체 조사자료';
 
+  useEffect(() => {
+    let isActive = true;
+    setInvestigationModeId(undefined);
+
+    loadKoreanFieldworkInvestigationModeId(projectId)
+      .then((modeId) => {
+        if (isActive) setInvestigationModeId(modeId);
+      })
+      .catch(() => undefined);
+
+    return () => {
+      isActive = false;
+    };
+  }, [projectId]);
+
   const openMap = () => router.navigate('/ProjectScreen/DocumentsMap');
   const editDocumentById = (docId: string, categoryName: string) => {
     router.navigate({
@@ -483,6 +508,11 @@ const DocumentsList: React.FC = () => {
   };
   const openAddChildModal = (document: Document) => setAddModalParent(document);
   const closeAddChildModal = () => setAddModalParent(undefined);
+  const selectInvestigationMode = (modeId: KoreanFieldworkInvestigationModeId) => {
+    setInvestigationModeId(modeId);
+    saveKoreanFieldworkInvestigationModeId(projectId, modeId)
+      .catch(() => undefined);
+  };
   const navigateAddCategory = (
     categoryName: string,
     parentDoc: Document | undefined,
@@ -715,11 +745,16 @@ const DocumentsList: React.FC = () => {
           </TouchableOpacity>
         </View>
 
+        <KoreanFieldworkInvestigationModePanel
+          modeId={investigationModeId}
+          onSelectMode={selectInvestigationMode}
+        />
+
         <View style={styles.metricsBand}>
           <Metric label="전체 기록" value={documents.length} icon="inventory-2" />
           <Metric label="오늘 일지" value={todaySummary.dailyLogs.length} icon="event-note" />
           <Metric
-            label="유구 후보"
+            label="검출 유구"
             value={todaySummary.featureCandidates.length}
             icon="add-location-alt"
           />
@@ -868,7 +903,7 @@ const DocumentsList: React.FC = () => {
           />
           <QuickAction
             icon="add-location-alt"
-            label="유구 후보"
+            label="유구 추가"
             detail={quickActions.featureCandidate.detail}
             disabled={quickActions.featureCandidate.disabled}
             onPress={openFirstCandidate}
@@ -1142,9 +1177,9 @@ const CloseoutPanel: React.FC<{
         </Text>
       </View>
       <View style={styles.closeoutCountRow}>
-        <CloseoutCount label="중대" value={summary.counts.critical} tone="critical" />
-        <CloseoutCount label="주의" value={summary.counts.warning} tone="warning" />
-        <CloseoutCount label="참고" value={summary.counts.info} tone="info" />
+        <CloseoutCount label="먼저" value={summary.counts.critical} tone="critical" />
+        <CloseoutCount label="이어서" value={summary.counts.warning} tone="warning" />
+        <CloseoutCount label="살펴보기" value={summary.counts.info} tone="info" />
       </View>
     </View>
     <Text style={styles.closeoutDetail}>{summary.detail}</Text>

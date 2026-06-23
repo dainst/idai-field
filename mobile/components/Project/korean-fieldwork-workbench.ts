@@ -141,7 +141,7 @@ const getWorkbenchReasons = (
 
   if (FEATURE_WORKFLOW_CATEGORIES.has(document.resource.category)) {
     const featureRecordingStatus = resource.featureRecordingStatus;
-    if (featureRecordingStatus === 'candidate') reasons.push('유구 후보');
+    if (featureRecordingStatus === 'candidate') reasons.push('검출 유구');
     if (featureRecordingStatus === 'investigating') reasons.push('조사 진행');
 
     const checkedStepCount = getStringArray(resource.featureInvestigationChecklist)
@@ -171,7 +171,7 @@ const getWorkbenchTone = (
 ): KoreanFieldworkStatusTone => {
   if (issues.some((issue) => issue.severity === 'critical')) return 'danger';
   if (issues.length > 0) return 'warning';
-  if (reasons.includes('유구 후보') || reasons.includes('조사 진행')) return 'info';
+  if (reasons.includes('검출 유구') || reasons.includes('조사 진행')) return 'info';
   if (document.resource.category === C.FEATURE
       || document.resource.category === C.FEATURE_SEGMENT) return 'info';
 

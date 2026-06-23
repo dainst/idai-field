@@ -109,7 +109,7 @@ describe('korean-fieldwork-field-notes', () => {
       'group-relation',
     ]);
     expect(getKoreanFieldworkFieldNoteObservationPrompts(
-      createDoc('segment-1', C.FEATURE_SEGMENT, '유구 구간 1')
+      createDoc('segment-1', C.FEATURE_SEGMENT, '피트 1')
     ).map((prompt) => prompt.id)).toEqual([
       'segment-boundary',
       'segment-profile',
@@ -296,7 +296,7 @@ describe('korean-fieldwork-field-notes', () => {
     });
     const input = {
       observation: '바닥면에서 원형 윤곽을 확인.',
-      interpretation: '주공 후보로 보이나 절단관계는 추가 확인 필요.',
+      interpretation: '주공으로 보이나 절단관계는 추가 확인 필요.',
       nextWork: '단면 정리 후 사진 보강.',
       evidenceNumbers: '사진 12-14',
     };
@@ -306,14 +306,14 @@ describe('korean-fieldwork-field-notes', () => {
     expect(updates).toEqual({
       fieldNote: [
         '[관찰 내용] 바닥면에서 원형 윤곽을 확인.',
-        '[해석] 주공 후보로 보이나 절단관계는 추가 확인 필요.',
+        '[해석] 주공으로 보이나 절단관계는 추가 확인 필요.',
         '[다음 작업] 단면 정리 후 사진 보강.',
         '[사진·도면·유물·시료 번호] 사진 12-14',
       ].join('\n'),
       description: '기존 노출 양상.\n바닥면에서 원형 윤곽을 확인.',
       interpretation: [
         '기존 해석.',
-        '주공 후보로 보이나 절단관계는 추가 확인 필요.',
+        '주공으로 보이나 절단관계는 추가 확인 필요.',
       ].join('\n'),
     });
 
@@ -333,7 +333,7 @@ describe('korean-fieldwork-field-notes', () => {
         '[다음 작업] 단면 정리 후 사진 보강.',
         '[사진·도면·유물·시료 번호] 사진 12',
       ].join('\n'),
-      interpretation: '주공 후보.',
+      interpretation: '주공으로 보임.',
     });
     const photo = createDoc('photo-1', C.PHOTO, '사진 13', {
       relations: { depicts: [feature.resource.id] },
@@ -348,7 +348,7 @@ describe('korean-fieldwork-field-notes', () => {
       sample,
     ])).toEqual({
       observation: '바닥면에서 원형 윤곽 확인.',
-      interpretation: '주공 후보.',
+      interpretation: '주공으로 보임.',
       nextWork: '단면 정리 후 사진 보강.',
       evidenceNumbers: [
         '사진 12',
@@ -559,7 +559,7 @@ describe('korean-fieldwork-field-notes', () => {
     const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
     const draft = createKoreanFieldworkRecordMemoDraft(
       feature,
-      '바닥면을 정리했고 주공 후보 2기를 추가 확인.',
+      '바닥면을 정리했고 주공으로 보이는 흔적 2기를 추가 확인.',
       fakeConfig,
       new Date(2026, 5, 23, 9, 30)
     );
@@ -567,8 +567,8 @@ describe('korean-fieldwork-field-notes', () => {
     expect(draft.resource).toMatchObject({
       category: C.PEN_MEMO,
       date: '2026-06-23',
-      description: '바닥면을 정리했고 주공 후보 2기를 추가 확인.',
-      penMemoReviewedTranscript: '바닥면을 정리했고 주공 후보 2기를 추가 확인.',
+      description: '바닥면을 정리했고 주공으로 보이는 흔적 2기를 추가 확인.',
+      penMemoReviewedTranscript: '바닥면을 정리했고 주공으로 보이는 흔적 2기를 추가 확인.',
       penMemoTranscriptionStatus: 'reviewed',
       penMemoStrokes: '{"version":1,"strokes":[]}',
       relations: { depicts: [feature.resource.id] },

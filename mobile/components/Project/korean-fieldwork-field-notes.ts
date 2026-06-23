@@ -562,7 +562,7 @@ export const getKoreanFieldworkFieldNoteObservationPrompts = (
           id: 'group-scope',
           label: '군집 범위',
           detail: '분포·간격·경계',
-          observation: '유구군의 분포 범위, 개별 유구 간격, 군집 경계를 기록.',
+          observation: '유구 묶음의 분포 범위, 개별 유구 간격, 묶음 경계를 기록.',
         },
         {
           id: 'group-pattern',
@@ -574,7 +574,7 @@ export const getKoreanFieldworkFieldNoteObservationPrompts = (
           id: 'group-relation',
           label: '선후 관계',
           detail: '중복·절단',
-          observation: '유구군 안팎의 중복, 절단, 선후관계를 기록.',
+          observation: '묶음 안팎의 중복, 절단, 선후관계를 기록.',
         },
       ];
     case C.FEATURE_SEGMENT:
@@ -583,7 +583,7 @@ export const getKoreanFieldworkFieldNoteObservationPrompts = (
           id: 'segment-boundary',
           label: '구간 경계',
           detail: '시작·끝·접속',
-          observation: '유구 구간의 시작과 끝, 다른 구간과의 접속·절단관계를 기록.',
+          observation: '세부 단위의 시작과 끝, 다른 단위와의 접속·절단관계를 기록.',
         },
         {
           id: 'segment-profile',
@@ -850,8 +850,8 @@ export const getKoreanFieldworkFieldNoteGuidance = (
   ) {
     items.push({
       id: 'report-continuity',
-      label: '보고서 연속성',
-      detail: '이 내용은 작업일지와 선택 기록에 함께 남기기 좋습니다.',
+      label: '정리 단계 메모',
+      detail: '조사 뒤 정리할 때 작업일지와 선택 기록을 함께 보기 좋습니다.',
       tone: 'complete',
     });
   }
@@ -1305,7 +1305,7 @@ const getIssuePromptLabel = (
     case 'critical':
       return '중요 보강';
     case 'info':
-      return '참고 보강';
+      return '나중 보강';
     default:
       return '기록 보강';
   }

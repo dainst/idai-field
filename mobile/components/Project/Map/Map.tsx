@@ -310,7 +310,7 @@ const Map: React.FC<MapProps> = (props) => {
             {primaryOperation ? '조사구역 기록 준비' : '조사구역부터 시작'}
           </Text>
           <Text style={styles.startHierarchy}>
-            조사구역 → 트렌치 → 유구군·유구 → 피트·유구 구간·층위
+            조사 방식에 맞춰 트렌치·유구·피트·층위를 이어갑니다
           </Text>
           <View style={styles.startActions}>
             {!primaryOperation ? (
@@ -341,12 +341,12 @@ const Map: React.FC<MapProps> = (props) => {
       <View style={styles.quickCreateContainer}>
         <Button
           variant="success"
-          title={canCreateFeatureCandidate ? '유구 후보 기록' : 'GPS 확인 중'}
+          title={canCreateFeatureCandidate ? '검출 유구 기록' : 'GPS 확인 중'}
           isDisabled={!canCreateFeatureCandidate}
           onPress={createFeatureCandidateAndEdit}
         />
         <Text style={styles.quickCreateHint}>
-          현재 위치에 유구 후보를 만들고 바로 입력합니다.
+          현재 위치에 검출 유구를 만들고 바로 입력합니다.
         </Text>
       </View>
       <MapBottomSheet

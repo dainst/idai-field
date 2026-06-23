@@ -189,10 +189,10 @@ export const getKoreanFieldworkPriorityTasks = (
 
   if (!targets.featureCandidate && targets.featureDraftParent) {
     tasks.push({
-      id: 'create-feature-candidate',
+      id: 'create-detected-feature',
       icon: 'add-location-alt',
-      title: '유구 후보 추가',
-      detail: `${targets.featureDraftParent.resource.identifier} 아래에서 새 유구 후보를 시작하세요.`,
+      title: '검출 유구 추가',
+      detail: `${targets.featureDraftParent.resource.identifier} 아래에서 새 유구 기록을 시작하세요.`,
       tone: 'info',
       action: {
         type: 'createDocument',
@@ -265,10 +265,10 @@ const getFeatureCandidateQuickActionDetail = (
   currentScopeParent: Document | undefined
 ): string => {
   if (summary.featureCandidates.length > 0) {
-    return `${summary.featureCandidates.length}건 확인`;
+    return `${summary.featureCandidates.length}건 기록`;
   }
-  if (targets.featureDraftParent) return '후보 추가';
-  if (currentScopeParent) return '트렌치/유구군 필요';
+  if (targets.featureDraftParent) return '유구 추가';
+  if (currentScopeParent) return '상위 기록 필요';
   return '조사구역 필요';
 };
 

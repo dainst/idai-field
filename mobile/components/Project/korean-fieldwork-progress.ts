@@ -201,8 +201,8 @@ const getProgressStage = (
     return toStage(
       'investigation',
       'info',
-      '이 범위에서 확인되는 유구 후보를 먼저 추가하세요.',
-      '유구 후보 추가'
+      '이 범위에서 확인된 유구를 먼저 기록하세요.',
+      '유구 추가'
     );
   }
 
@@ -219,7 +219,7 @@ const getProgressStage = (
         recordingStatus === 'candidate' ? 'warning' : 'info',
         metrics.checklistTotal > 0
           ? `조사 과정 ${metrics.checklistDone}/${metrics.checklistTotal}을 현장에서 확인하세요.`
-          : '유구 후보의 경계와 충전토를 이어서 기록하세요.',
+          : '검출된 유구의 경계와 충전토를 이어서 기록하세요.',
         '조사 과정 열기'
       );
     }

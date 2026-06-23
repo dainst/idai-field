@@ -39,7 +39,7 @@ describe('KoreanFieldworkFieldNotePanel', () => {
     fireEvent.changeText(getByTestId('fieldNoteTextInput'), '바닥면 정리 중 원형 윤곽 확인.');
     fireEvent.changeText(
       getByTestId('fieldNoteInterpretationInput'),
-      '주공 후보로 보이나 절단관계는 추가 확인 필요.'
+      '주공으로 보이나 절단관계는 추가 확인 필요.'
     );
     fireEvent.changeText(getByTestId('fieldNoteNextWorkInput'), '단면 정리 후 사진 보강.');
     fireEvent.changeText(
@@ -56,7 +56,7 @@ describe('KoreanFieldworkFieldNotePanel', () => {
       'recordMemo',
       [
         '[관찰 내용] 바닥면 정리 중 원형 윤곽 확인.',
-        '[해석] 주공 후보로 보이나 절단관계는 추가 확인 필요.',
+        '[해석] 주공으로 보이나 절단관계는 추가 확인 필요.',
         '[다음 작업] 단면 정리 후 사진 보강.',
         '[사진·도면·유물·시료 번호] 사진 12-14, 도면 3',
       ].join('\n')
@@ -307,7 +307,7 @@ describe('KoreanFieldworkFieldNotePanel', () => {
     const feature = createDoc('feature-1', C.FEATURE, '수혈 1', {
       description: '바닥면에서 원형 윤곽 확인.',
       fieldNote: '[다음 작업] 단면 정리 후 사진 보강.',
-      interpretation: '주공 후보.',
+      interpretation: '주공으로 보임.',
     });
     const photo = createDoc('photo-1', C.PHOTO, '사진 13', {
       relations: { depicts: [feature.resource.id] },
@@ -328,7 +328,7 @@ describe('KoreanFieldworkFieldNotePanel', () => {
       '바닥면에서 원형 윤곽 확인.',
     ].join('\n'));
     expect(getByTestId('fieldNoteInterpretationInput').props.value)
-      .toBe('주공 후보.');
+      .toBe('주공으로 보임.');
     expect(getByTestId('fieldNoteNextWorkInput').props.value)
       .toBe('단면 정리 후 사진 보강.');
     expect(getByTestId('fieldNoteEvidenceNumbersInput').props.value)
@@ -377,7 +377,7 @@ describe('KoreanFieldworkFieldNotePanel', () => {
     );
     fireEvent.changeText(
       getByTestId('fieldNoteInterpretationInput'),
-      '주공 후보로 보이나 절단관계는 추가 확인 필요.'
+      '주공으로 보이나 절단관계는 추가 확인 필요.'
     );
 
     fireEvent.press(getByTestId('fieldNoteApplyToRecord'));
@@ -385,10 +385,10 @@ describe('KoreanFieldworkFieldNotePanel', () => {
     expect(handleApplyToRecord).toHaveBeenCalledWith({
       fieldNote: [
         '[관찰 내용] 바닥면에서 원형 윤곽 확인.',
-        '[해석] 주공 후보로 보이나 절단관계는 추가 확인 필요.',
+        '[해석] 주공으로 보이나 절단관계는 추가 확인 필요.',
       ].join('\n'),
       description: '기존 노출 양상.\n바닥면에서 원형 윤곽 확인.',
-      interpretation: '주공 후보로 보이나 절단관계는 추가 확인 필요.',
+      interpretation: '주공으로 보이나 절단관계는 추가 확인 필요.',
     });
     await waitFor(() =>
       expect(getByTestId('fieldNoteRecordApplyStatus')).toBeTruthy()
@@ -417,7 +417,7 @@ describe('KoreanFieldworkFieldNotePanel', () => {
     );
     fireEvent.changeText(
       getByTestId('fieldNoteInterpretationInput'),
-      '주공 후보로 보이나 절단관계는 추가 확인 필요.'
+      '주공으로 보이나 절단관계는 추가 확인 필요.'
     );
 
     await act(async () => {
@@ -430,16 +430,16 @@ describe('KoreanFieldworkFieldNotePanel', () => {
     expect(handleApplyToRecord).toHaveBeenCalledWith({
       fieldNote: [
         '[관찰 내용] 바닥면에서 원형 윤곽 확인.',
-        '[해석] 주공 후보로 보이나 절단관계는 추가 확인 필요.',
+        '[해석] 주공으로 보이나 절단관계는 추가 확인 필요.',
       ].join('\n'),
       description: '기존 노출 양상.\n바닥면에서 원형 윤곽 확인.',
-      interpretation: '주공 후보로 보이나 절단관계는 추가 확인 필요.',
+      interpretation: '주공으로 보이나 절단관계는 추가 확인 필요.',
     });
     expect(handleCreateNote).toHaveBeenCalledWith(
       'recordMemo',
       [
         '[관찰 내용] 바닥면에서 원형 윤곽 확인.',
-        '[해석] 주공 후보로 보이나 절단관계는 추가 확인 필요.',
+        '[해석] 주공으로 보이나 절단관계는 추가 확인 필요.',
       ].join('\n')
     );
     expect(getByText('저장·반영 완료')).toBeTruthy();

@@ -63,7 +63,7 @@ describe('Korean fieldwork hierarchy lanes', () => {
       item.document.resource.identifier
     )).toEqual(['수혈 1']);
     expect(getLane(lanes, C.FEATURE).items[0].issueCount).toBe(2);
-    expect(getLane(lanes, C.FEATURE_SEGMENT).label).toBe('피트·유구 구간');
+    expect(getLane(lanes, C.FEATURE_SEGMENT).label).toBe('피트·세부 단위');
     expect(getLane(lanes, C.LAYER).items[0].parentIdentifier).toBe('피트 1');
   });
 

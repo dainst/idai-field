@@ -24,7 +24,7 @@ describe('korean fieldwork add options', () => {
       C.SURVEY_BOUNDARY,
       C.PEN_MEMO,
     ]);
-    expect(options.primary.map((option) => option.label)).toContain('유구군');
+    expect(options.primary.map((option) => option.label)).toContain('유구 묶음');
     expect(options.primary.map((option) => option.label)).not.toContain('유적/지점');
     expect(options.other).toEqual([]);
   });
@@ -40,7 +40,7 @@ describe('korean fieldwork add options', () => {
 
     expect(options.primary[0]).toMatchObject({
       categoryName: C.FEATURE_SEGMENT,
-      label: '피트·유구 구간',
+      label: '피트·세부 단위',
     });
     expect(options.primary.map((option) => option.categoryName)).not.toContain(C.PLACE);
   });

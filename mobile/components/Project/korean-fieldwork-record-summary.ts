@@ -26,7 +26,7 @@ const DIRECT_PARENT_RELATIONS = [
 ];
 
 const FEATURE_RECORDING_STATUS_LABELS: Readonly<Record<string, KoreanFieldworkStatusChip>> = {
-  candidate: { label: '유구 후보', tone: 'warning' },
+  candidate: { label: '검출 유구', tone: 'warning' },
   investigating: { label: '조사중', tone: 'info' },
   confirmed: { label: '확정', tone: 'success' },
   rejected: { label: '제외', tone: 'neutral' },

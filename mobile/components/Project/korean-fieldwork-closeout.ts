@@ -32,8 +32,8 @@ export const getKoreanFieldworkCloseoutSummary = (
   if (counts.critical > 0) {
     return {
       status: 'blocked',
-      title: '마감 보완',
-      detail: `중대 누락 ${counts.critical}건을 먼저 확인해야 합니다.`,
+      title: '먼저 볼 항목',
+      detail: `오늘 먼저 처리할 항목 ${counts.critical}건이 남아 있습니다.`,
       counts,
       issues: sortedIssues.slice(0, maxIssues),
     };
@@ -43,7 +43,7 @@ export const getKoreanFieldworkCloseoutSummary = (
     return {
       status: 'needsReview',
       title: '마감 전 확인',
-      detail: `주의 ${counts.warning}건, 참고 ${counts.info}건이 남아 있습니다.`,
+      detail: `이어서 볼 항목 ${counts.warning}건, 살펴볼 항목 ${counts.info}건이 남아 있습니다.`,
       counts,
       issues: sortedIssues.slice(0, maxIssues),
     };

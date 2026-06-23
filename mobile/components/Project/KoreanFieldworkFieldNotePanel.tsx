@@ -3,6 +3,7 @@ import { Document } from 'idai-field-core';
 import React, {
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 import {
@@ -47,6 +48,14 @@ import {
   isKoreanFieldworkStylusPointer,
   KoreanFieldworkPointerInputEvent,
 } from './korean-fieldwork-stylus-input';
+import {
+  buildKoreanFieldworkHandwritingNoteText,
+  hasKoreanFieldworkHandwriting,
+  KoreanFieldworkHandwritingPoint,
+  KoreanFieldworkHandwritingStroke,
+  normalizeKoreanFieldworkHandwritingStrokes,
+  serializeKoreanFieldworkHandwriting,
+} from './korean-fieldwork-handwriting';
 import {
   createKoreanFieldworkFieldNoteDraftKey,
   hasKoreanFieldworkFieldNoteDraftText,
@@ -125,6 +134,8 @@ const KoreanFieldworkFieldNotePanel: React.FC<
   const [issuePromptStatus, setIssuePromptStatus] =
     useState<string>();
   const [isStylusInputMode, setIsStylusInputMode] = useState(false);
+  const [handwritingStrokes, setHandwritingStrokes] =
+    useState<KoreanFieldworkHandwritingStroke[]>([]);
   const [appliedRecordUpdateSignature, setAppliedRecordUpdateSignature] =
     useState<string>();
   const [savedFollowUpActions, setSavedFollowUpActions] =
@@ -185,12 +196,17 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     ),
     [noteInput, selectedDocument]
   );
+  const handwritingNoteText = useMemo(
+    () => buildKoreanFieldworkHandwritingNoteText(handwritingStrokes),
+    [handwritingStrokes]
+  );
   const recordUpdates = useMemo(
     () => getKoreanFieldworkFieldNoteRecordUpdates(
       noteInput,
-      selectedDocument
+      selectedDocument,
+      handwritingNoteText
     ),
-    [noteInput, selectedDocument]
+    [handwritingNoteText, noteInput, selectedDocument]
   );
   const recordUpdateSignature = useMemo(
     () => JSON.stringify(recordUpdates),
@@ -210,8 +226,11 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     canCreateDailyLog
   );
   const normalizedText = useMemo(
-    () => buildKoreanFieldworkFieldNoteText(noteInput),
-    [noteInput]
+    () => [
+      buildKoreanFieldworkFieldNoteText(noteInput),
+      handwritingNoteText,
+    ].filter((value) => value.length > 0).join('\n'),
+    [handwritingNoteText, noteInput]
   );
   const draftKey = useMemo(
     () => draftScopeId
@@ -222,7 +241,10 @@ const KoreanFieldworkFieldNotePanel: React.FC<
       : undefined,
     [draftScopeId, selectedDocument.resource.id]
   );
-  const hasDraftText = hasKoreanFieldworkFieldNoteDraftText(noteInput);
+  const hasDraftText = hasKoreanFieldworkFieldNoteDraftText(
+    noteInput,
+    handwritingStrokes
+  );
   const hasPendingRecordUpdates =
     !!onApplyToRecord
     && Object.keys(recordUpdates).length > 0
@@ -260,6 +282,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     setAppliedRecordUpdateSignature(undefined);
     setSavedFollowUpActions([]);
     setNoteInput(EMPTY_FIELD_NOTE_INPUT);
+    setHandwritingStrokes([]);
 
     if (!draftKey) {
       setIsDraftLoaded(true);
@@ -274,6 +297,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
 
         if (draft) {
           setNoteInput(draft.input);
+          setHandwritingStrokes(draft.handwritingStrokes ?? []);
           setDraftStatus('loaded');
           if (getModeEnabled(
             draft.mode,
@@ -340,6 +364,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     }
 
     saveKoreanFieldworkFieldNoteDraft(draftKey, {
+      handwritingStrokes,
       input: noteInput,
       mode,
       updatedAt: new Date().toISOString(),
@@ -350,7 +375,14 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     return () => {
       isActive = false;
     };
-  }, [draftKey, hasDraftText, isDraftLoaded, mode, noteInput]);
+  }, [
+    draftKey,
+    handwritingStrokes,
+    hasDraftText,
+    isDraftLoaded,
+    mode,
+    noteInput,
+  ]);
 
   const updateNoteInput = (
     fieldName: keyof KoreanFieldworkFieldNoteInput,
@@ -371,6 +403,17 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     if (isKoreanFieldworkStylusPointer(event.nativeEvent?.pointerType)) {
       setIsStylusInputMode(true);
     }
+  };
+  const updateHandwritingStrokes = (
+    nextStrokes: KoreanFieldworkHandwritingStroke[]
+  ) => {
+    setSavedFollowUpActions([]);
+    setContinuationStatus(undefined);
+    setRecordApplyStatus(undefined);
+    setRecordSeedStatus(undefined);
+    setIssuePromptStatus(undefined);
+    setAppliedRecordUpdateSignature(undefined);
+    setHandwritingStrokes(normalizeKoreanFieldworkHandwritingStrokes(nextStrokes));
   };
   const applyPreset = (preset: KoreanFieldworkFieldNotePreset) => {
     setSavedFollowUpActions([]);
@@ -486,6 +529,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
       setIssuePromptStatus(undefined);
       setSavedFollowUpActions(followUpActions);
       setNoteInput(EMPTY_FIELD_NOTE_INPUT);
+      setHandwritingStrokes([]);
     } catch {
       if (applyToRecord) {
         setRecordApplyStatusTone('error');
@@ -506,6 +550,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     setIssuePromptStatus(undefined);
     setAppliedRecordUpdateSignature(undefined);
     setSavedFollowUpActions([]);
+    setHandwritingStrokes([]);
     if (draftKey) {
       await removeKoreanFieldworkFieldNoteDraft(draftKey)
         .catch(() => undefined);
@@ -906,6 +951,14 @@ const KoreanFieldworkFieldNotePanel: React.FC<
         testID="fieldNoteEvidenceNumbersInput"
         value={noteInput.evidenceNumbers ?? ''}
       />
+      {(isStylusInputMode || hasKoreanFieldworkHandwriting(handwritingStrokes)) && (
+        <HandwritingPad
+          isStylusInputMode={isStylusInputMode}
+          onPointerInput={handlePointerInput}
+          onStrokesChange={updateHandwritingStrokes}
+          strokes={handwritingStrokes}
+        />
+      )}
 
       <View style={styles.footerRow}>
         {!!onApplyToRecord && (
@@ -1276,6 +1329,141 @@ const HistoryRow: React.FC<{
   </View>
 );
 
+const HandwritingPad: React.FC<{
+  isStylusInputMode: boolean;
+  onPointerInput: (event: KoreanFieldworkPointerInputEvent) => void;
+  onStrokesChange: (strokes: KoreanFieldworkHandwritingStroke[]) => void;
+  strokes: KoreanFieldworkHandwritingStroke[];
+}> = ({
+  isStylusInputMode,
+  onPointerInput,
+  onStrokesChange,
+  strokes,
+}) => {
+  const activeStrokeRef = useRef<KoreanFieldworkHandwritingStroke>();
+  const [activeStroke, setActiveStroke] =
+    useState<KoreanFieldworkHandwritingStroke>();
+  const visibleStrokes = activeStroke
+    ? strokes.concat(activeStroke)
+    : strokes;
+  const strokeCount = strokes.length;
+  const pointCount = useMemo(
+    () => visibleStrokes.reduce((count, stroke) =>
+      count + stroke.points.length, 0),
+    [visibleStrokes]
+  );
+  const strokePreview = useMemo(
+    () => serializeKoreanFieldworkHandwriting(strokes),
+    [strokes]
+  );
+  const startStroke = (event: KoreanFieldworkPointerInputEvent) => {
+    onPointerInput(event);
+    const point = getHandwritingPoint(event);
+    if (!point) return;
+
+    setActiveHandwritingStroke(
+      { points: [point] },
+      activeStrokeRef,
+      setActiveStroke
+    );
+  };
+  const moveStroke = (event: KoreanFieldworkPointerInputEvent) => {
+    const point = getHandwritingPoint(event);
+    const currentStroke = activeStrokeRef.current;
+    if (!point || !currentStroke) return;
+
+    const previousPoint = currentStroke.points[currentStroke.points.length - 1];
+    if (previousPoint && getPointDistance(previousPoint, point) < 3) return;
+
+    setActiveHandwritingStroke(
+      { points: currentStroke.points.concat(point) },
+      activeStrokeRef,
+      setActiveStroke
+    );
+  };
+  const finishStroke = () => {
+    finishHandwritingStroke(activeStrokeRef, setActiveStroke, strokes, onStrokesChange);
+  };
+
+  return (
+    <View style={styles.handwritingPanel} testID="fieldNoteHandwritingPad">
+      <View style={styles.handwritingHeader}>
+        <View style={styles.handwritingTitleRow}>
+          <MaterialIcons name="gesture" size={16} color="#344054" />
+          <Text style={styles.handwritingTitle}>손그림 메모</Text>
+          <Text style={styles.handwritingCount}>
+            획 {strokeCount} · 점 {pointCount}
+          </Text>
+        </View>
+        <View style={styles.handwritingActions}>
+          <TouchableOpacity
+            activeOpacity={0.86}
+            disabled={strokeCount === 0}
+            onPress={() => onStrokesChange(strokes.slice(0, -1))}
+            style={[
+              styles.handwritingActionButton,
+              strokeCount === 0 && styles.handwritingActionButtonDisabled,
+            ]}
+            testID="fieldNoteHandwritingUndo"
+          >
+            <MaterialIcons
+              name="undo"
+              size={15}
+              color={strokeCount === 0 ? '#98a2b3' : '#475467'}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.86}
+            disabled={strokeCount === 0}
+            onPress={() => onStrokesChange([])}
+            style={[
+              styles.handwritingActionButton,
+              strokeCount === 0 && styles.handwritingActionButtonDisabled,
+            ]}
+            testID="fieldNoteHandwritingClear"
+          >
+            <MaterialIcons
+              name="delete-outline"
+              size={15}
+              color={strokeCount === 0 ? '#98a2b3' : '#b42318'}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+      <View
+        onPointerCancel={finishStroke}
+        onPointerDown={startStroke}
+        onPointerMove={moveStroke}
+        onPointerUp={finishStroke}
+        style={[
+          styles.handwritingCanvas,
+          isStylusInputMode && styles.handwritingCanvasStylus,
+        ]}
+        testID="fieldNoteHandwritingCanvas"
+      >
+        {[0, 1, 2, 3].map((lineIndex) => (
+          <View
+            key={lineIndex}
+            style={[
+              styles.handwritingGuideLine,
+              { top: 36 + lineIndex * 32 },
+            ]}
+          />
+        ))}
+        {visibleStrokes.flatMap((stroke, strokeIndex) =>
+          toHandwritingSegments(stroke, strokeIndex, isStylusInputMode)
+        )}
+      </View>
+      <Text
+        style={styles.handwritingSerialized}
+        testID="fieldNoteHandwritingSerialized"
+      >
+        {strokePreview}
+      </Text>
+    </View>
+  );
+};
+
 const FieldNoteInputBlock: React.FC<{
   icon: keyof typeof MaterialIcons.glyphMap;
   isStylusInputMode: boolean;
@@ -1322,6 +1510,111 @@ const FieldNoteInputBlock: React.FC<{
     />
   </View>
 );
+
+const getHandwritingPoint = (
+  event: KoreanFieldworkPointerInputEvent
+): KoreanFieldworkHandwritingPoint | undefined => {
+  const { locationX, locationY } = event.nativeEvent ?? {};
+  if (typeof locationX !== 'number' || typeof locationY !== 'number') {
+    return undefined;
+  }
+
+  return {
+    x: Math.max(0, Math.round(locationX)),
+    y: Math.max(0, Math.round(locationY)),
+  };
+};
+
+const setActiveHandwritingStroke = (
+  stroke: KoreanFieldworkHandwritingStroke,
+  activeStrokeRef: React.MutableRefObject<
+    KoreanFieldworkHandwritingStroke | undefined
+  >,
+  setActiveStroke: React.Dispatch<
+    React.SetStateAction<KoreanFieldworkHandwritingStroke | undefined>
+  >
+) => {
+  activeStrokeRef.current = stroke;
+  setActiveStroke(stroke);
+};
+
+const finishHandwritingStroke = (
+  activeStrokeRef: React.MutableRefObject<
+    KoreanFieldworkHandwritingStroke | undefined
+  >,
+  setActiveStroke: React.Dispatch<
+    React.SetStateAction<KoreanFieldworkHandwritingStroke | undefined>
+  >,
+  strokes: KoreanFieldworkHandwritingStroke[],
+  onStrokesChange: (strokes: KoreanFieldworkHandwritingStroke[]) => void
+) => {
+  const stroke = activeStrokeRef.current;
+  activeStrokeRef.current = undefined;
+  setActiveStroke(undefined);
+
+  if (!stroke || stroke.points.length === 0) return;
+
+  onStrokesChange(strokes.concat(stroke));
+};
+
+const getPointDistance = (
+  pointA: KoreanFieldworkHandwritingPoint,
+  pointB: KoreanFieldworkHandwritingPoint
+): number => Math.sqrt(
+  ((pointB.x - pointA.x) ** 2) + ((pointB.y - pointA.y) ** 2)
+);
+
+const toHandwritingSegments = (
+  stroke: KoreanFieldworkHandwritingStroke,
+  strokeIndex: number,
+  isStylusInputMode: boolean
+) => {
+  const strokeWidth = isStylusInputMode ? 3 : 2;
+
+  if (stroke.points.length === 1) {
+    const [point] = stroke.points;
+
+    return (
+      <View
+        key={`${strokeIndex}-dot`}
+        style={[
+          styles.handwritingDot,
+          {
+            height: strokeWidth + 2,
+            left: point.x - ((strokeWidth + 2) / 2),
+            top: point.y - ((strokeWidth + 2) / 2),
+            width: strokeWidth + 2,
+          },
+        ]}
+      />
+    );
+  }
+
+  return stroke.points.slice(1).map((point, pointIndex) => {
+    const previousPoint = stroke.points[pointIndex];
+    const distance = getPointDistance(previousPoint, point);
+    const angle = Math.atan2(
+      point.y - previousPoint.y,
+      point.x - previousPoint.x
+    );
+
+    return (
+      <View
+        key={`${strokeIndex}-${pointIndex}`}
+        style={[
+          styles.handwritingSegment,
+          {
+            height: strokeWidth,
+            left: ((previousPoint.x + point.x) / 2) - (distance / 2),
+            top: ((previousPoint.y + point.y) / 2) - (strokeWidth / 2),
+            transform: [{ rotateZ: `${angle}rad` }],
+            width: distance,
+          },
+        ]}
+      />
+    );
+  });
+};
 
 const getSaveLabel = (
   mode: KoreanFieldworkFieldNoteMode,
@@ -2166,6 +2459,92 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     paddingHorizontal: 14,
     paddingVertical: 12,
+  },
+  handwritingPanel: {
+    backgroundColor: '#ffffff',
+    borderColor: '#d0d5dd',
+    borderRadius: 6,
+    borderWidth: 1,
+    marginTop: 10,
+    paddingHorizontal: 9,
+    paddingVertical: 8,
+  },
+  handwritingHeader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  handwritingTitleRow: {
+    alignItems: 'center',
+    flex: 1,
+    flexDirection: 'row',
+    minWidth: 0,
+  },
+  handwritingTitle: {
+    color: '#344054',
+    fontSize: 12,
+    fontWeight: '900',
+    marginLeft: 5,
+  },
+  handwritingCount: {
+    color: '#667085',
+    fontSize: 11,
+    fontWeight: '800',
+    marginLeft: 7,
+  },
+  handwritingActions: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginLeft: 8,
+  },
+  handwritingActionButton: {
+    alignItems: 'center',
+    backgroundColor: '#f8fafc',
+    borderColor: '#d0d5dd',
+    borderRadius: 6,
+    borderWidth: 1,
+    height: 30,
+    justifyContent: 'center',
+    marginLeft: 5,
+    width: 34,
+  },
+  handwritingActionButtonDisabled: {
+    backgroundColor: '#f2f4f7',
+  },
+  handwritingCanvas: {
+    backgroundColor: '#fffdf7',
+    borderColor: '#e4d9bf',
+    borderRadius: 6,
+    borderWidth: 1,
+    height: 168,
+    marginTop: 8,
+    overflow: 'hidden',
+    position: 'relative',
+  },
+  handwritingCanvasStylus: {
+    height: 212,
+  },
+  handwritingGuideLine: {
+    backgroundColor: '#efe3c7',
+    height: 1,
+    left: 0,
+    opacity: 0.85,
+    position: 'absolute',
+    right: 0,
+  },
+  handwritingSegment: {
+    backgroundColor: '#101828',
+    borderRadius: 2,
+    position: 'absolute',
+  },
+  handwritingDot: {
+    backgroundColor: '#101828',
+    borderRadius: 4,
+    position: 'absolute',
+  },
+  handwritingSerialized: {
+    height: 0,
+    opacity: 0,
+    overflow: 'hidden',
   },
   footerRow: {
     alignItems: 'center',

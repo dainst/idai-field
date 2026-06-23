@@ -47,6 +47,7 @@ const DocumentAdd: React.FC = () => {
   const params = useGlobalSearchParams();
   const parentDocId = getParam(params.parentDocId);
   const categoryName = getParam(params.categoryName);
+  const featureType = getParam(params.featureType);
   const returnTarget = getKoreanFieldworkReturnTarget(params.returnTo);
   const parentDoc = useDocument(repository, parentDocId);
 
@@ -63,10 +64,12 @@ const DocumentAdd: React.FC = () => {
       }
 
       setNewResource(
-        createKoreanFieldworkDraftResource(parentDoc, categoryName, config)
+        createKoreanFieldworkDraftResource(parentDoc, categoryName, config, {
+          featureType,
+        })
       );
     },
-    [parentDoc, categoryName, config]
+    [parentDoc, categoryName, config, featureType]
   );
 
   useEffect(() => setResourceToDefault(), [setResourceToDefault, category]);

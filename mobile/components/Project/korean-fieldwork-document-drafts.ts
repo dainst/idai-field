@@ -18,6 +18,7 @@ import {
   SURVEY_BOUNDARY_TYPE_DEFAULT,
 } from './Map/korean-fieldwork-drafts';
 import { KOREAN_FIELDWORK_CATEGORIES } from './korean-fieldwork-categories';
+import { getKoreanFieldworkFeatureTypeOption } from './korean-fieldwork-feature-types';
 
 const C = KOREAN_FIELDWORK_CATEGORIES;
 
@@ -44,13 +45,21 @@ const DRAFT_IDENTIFIER_PREFIXES: Readonly<Record<string, string>> = {
 
 const RECORD_CREATION_TIMING_DURING_FIELDWORK = 'duringFieldwork';
 
+export interface KoreanFieldworkDraftResourceOptions {
+  featureType?: string;
+}
+
 export const createKoreanFieldworkDraftResource = (
   parentDoc: Document,
   categoryName: string,
-  config: ProjectConfiguration
+  config: ProjectConfiguration,
+  options: KoreanFieldworkDraftResourceOptions = {}
 ): NewResource => {
+  const featureTypeOption = categoryName === C.FEATURE
+    ? getKoreanFieldworkFeatureTypeOption(options.featureType)
+    : undefined;
   const resource: NewResource = {
-    identifier: createDraftIdentifier(categoryName),
+    identifier: createDraftIdentifier(categoryName, featureTypeOption?.value),
     relations: createKoreanFieldworkDraftRelations(parentDoc, categoryName, config),
     category: categoryName,
   };
@@ -58,6 +67,7 @@ export const createKoreanFieldworkDraftResource = (
   if (isFeatureWorkflowCategory(categoryName)) {
     return {
       ...resource,
+      ...(featureTypeOption ? { featureType: featureTypeOption.value } : {}),
       featureRecordingStatus: FEATURE_RECORDING_STATUS_CANDIDATE,
       featureGeometryEditStatus: FEATURE_GEOMETRY_EDIT_STATUS_ROUGH_SKETCH,
       featureGeometryRevisionHistory: FEATURE_GEOMETRY_REVISION_HISTORY_DEFAULT,
@@ -170,8 +180,19 @@ export const createKoreanFieldworkDraftRelations = (
     : { isRecordedIn: [parentDoc.resource.id] };
 };
 
-export const createDraftIdentifier = (categoryName: string): string =>
-  `${DRAFT_IDENTIFIER_PREFIXES[categoryName] ?? toKebabCase(categoryName)}-${Date.now()}`;
+export const createDraftIdentifier = (
+  categoryName: string,
+  featureType?: string
+): string => {
+  const featureTypeOption = categoryName === C.FEATURE
+    ? getKoreanFieldworkFeatureTypeOption(featureType)
+    : undefined;
+  const prefix = featureTypeOption?.identifierPrefix
+    ?? DRAFT_IDENTIFIER_PREFIXES[categoryName]
+    ?? toKebabCase(categoryName);
+
+  return `${prefix}-${Date.now()}`;
+};
 
 const isFeatureWorkflowCategory = (categoryName: string): boolean =>
   categoryName === C.FEATURE

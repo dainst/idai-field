@@ -82,6 +82,71 @@ describe('KoreanFieldworkFieldNotePanel', () => {
       });
   });
 
+  it('saves a handwriting pad sketch with the tablet note', async () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
+    const handleCreateNote = jest.fn().mockResolvedValue(undefined);
+
+    const { getByTestId } = renderPanel(feature, {
+      onCreateNote: handleCreateNote,
+    });
+
+    fireEvent.press(getByTestId('fieldNoteStylusModeToggle'));
+    drawHandwritingLine(getByTestId('fieldNoteHandwritingCanvas'));
+
+    expect(getByTestId('fieldNoteHandwritingSerialized').props.children)
+      .toContain('"x":10');
+
+    await act(async () => {
+      fireEvent.press(getByTestId('fieldNoteSave'));
+      await Promise.resolve();
+      jest.runOnlyPendingTimers();
+    });
+
+    expect(handleCreateNote).toHaveBeenCalledWith(
+      'recordMemo',
+      expect.stringContaining('[손그림 메모] 획 1개, 점 2개')
+    );
+    expect(handleCreateNote).toHaveBeenCalledWith(
+      'recordMemo',
+      expect.stringContaining('[손그림 좌표]')
+    );
+  });
+
+  it('restores autosaved handwriting strokes for the same project record', async () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
+    const draftKey = createKoreanFieldworkFieldNoteDraftKey(
+      'project-1',
+      feature.resource.id
+    );
+    const { getByTestId, unmount } = renderPanel(feature, {
+      draftScopeId: 'project-1',
+    });
+
+    await waitFor(() =>
+      expect(AsyncStorage.getItem).toHaveBeenCalledWith(draftKey)
+    );
+
+    fireEvent.press(getByTestId('fieldNoteStylusModeToggle'));
+    drawHandwritingLine(getByTestId('fieldNoteHandwritingCanvas'));
+
+    await waitFor(() =>
+      expect(AsyncStorage.setItem).toHaveBeenCalledWith(
+        draftKey,
+        expect.stringContaining('handwritingStrokes')
+      )
+    );
+    unmount();
+
+    const { getByTestId: getRestoredByTestId } = renderPanel(feature, {
+      draftScopeId: 'project-1',
+    });
+
+    await waitFor(() =>
+      expect(getRestoredByTestId('fieldNoteHandwritingSerialized').props.children)
+        .toContain('"x":10')
+    );
+  });
+
   it('switches to daily log mode and opens linked summaries', async () => {
     const operation = createDoc('operation-1', C.OPERATION, 'A 구역');
     const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
@@ -732,6 +797,20 @@ const renderPanel = (
     {...overrides}
   />
 );
+
+const drawHandwritingLine = (canvas: any) => {
+  act(() => {
+    canvas.props.onPointerDown({
+      nativeEvent: { locationX: 10, locationY: 20, pointerType: 'pen' },
+    });
+    canvas.props.onPointerMove({
+      nativeEvent: { locationX: 40, locationY: 50, pointerType: 'pen' },
+    });
+    canvas.props.onPointerUp({
+      nativeEvent: { locationX: 40, locationY: 50, pointerType: 'pen' },
+    });
+  });
+};
 
 const createDoc = (
   id: string,

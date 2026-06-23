@@ -570,9 +570,26 @@ describe('korean-fieldwork-field-notes', () => {
       description: '바닥면을 정리했고 주공 후보 2기를 추가 확인.',
       penMemoReviewedTranscript: '바닥면을 정리했고 주공 후보 2기를 추가 확인.',
       penMemoTranscriptionStatus: 'reviewed',
-      penMemoStrokes: '[]',
+      penMemoStrokes: '{"version":1,"strokes":[]}',
       relations: { depicts: [feature.resource.id] },
     });
+  });
+
+  it('stores handwriting coordinates in reviewed PenMemo drafts', () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
+    const draft = createKoreanFieldworkRecordMemoDraft(
+      feature,
+      [
+        '[관찰 내용] 바닥면 정리.',
+        '[손그림 좌표] {"version":1,"strokes":[{"points":[{"x":10,"y":20},{"x":40,"y":50}]}]}',
+      ].join('\n'),
+      fakeConfig,
+      new Date(2026, 5, 23, 9, 30)
+    );
+
+    expect(draft.resource.penMemoStrokes).toBe(
+      '{"version":1,"strokes":[{"points":[{"x":10,"y":20},{"x":40,"y":50}]}]}'
+    );
   });
 
   it('creates and appends daily log entries under the operation', () => {

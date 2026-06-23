@@ -154,7 +154,8 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
 
   const navigateAddCategory = (
     categoryName: string,
-    parentDoc: Document | undefined
+    parentDoc: Document | undefined,
+    draftParams: Record<string, string> = {}
   ) => {
     closeAddModal();
     if (parentDoc) {
@@ -163,6 +164,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
         params: {
           parentDocId: parentDoc.resource.id,
           categoryName,
+          ...draftParams,
         },
       });
     }

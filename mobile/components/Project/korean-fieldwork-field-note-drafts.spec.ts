@@ -25,6 +25,9 @@ describe('korean-fieldwork-field-note-drafts', () => {
         observation: ' 바닥면 원형 윤곽 확인. ',
         interpretation: '주공 가능성 있음.',
       },
+      handwritingStrokes: [
+        { points: [{ x: 10.2, y: 20.7 }, { x: 30, y: 40 }] },
+      ],
       updatedAt: '2026-06-23T01:00:00.000Z',
     });
 
@@ -36,6 +39,9 @@ describe('korean-fieldwork-field-note-drafts', () => {
         nextWork: '',
         evidenceNumbers: '',
       },
+      handwritingStrokes: [
+        { points: [{ x: 10, y: 21 }, { x: 30, y: 40 }] },
+      ],
       updatedAt: '2026-06-23T01:00:00.000Z',
     });
     expect(AsyncStorage.setItem).toHaveBeenCalledWith(
@@ -66,5 +72,28 @@ describe('korean-fieldwork-field-note-drafts', () => {
     await removeKoreanFieldworkFieldNoteDraft(key);
 
     expect(AsyncStorage.removeItem).toHaveBeenCalledWith(key);
+  });
+
+  it('keeps handwriting-only drafts', async () => {
+    const key = createKoreanFieldworkFieldNoteDraftKey(
+      'project-1',
+      'feature-1'
+    );
+
+    expect(hasKoreanFieldworkFieldNoteDraftText({}, [
+      { points: [{ x: 1, y: 2 }] },
+    ])).toBe(true);
+
+    await saveKoreanFieldworkFieldNoteDraft(key, {
+      mode: 'recordMemo',
+      input: {},
+      handwritingStrokes: [{ points: [{ x: 1, y: 2 }] }],
+      updatedAt: '2026-06-23T01:00:00.000Z',
+    });
+
+    expect(AsyncStorage.setItem).toHaveBeenCalledWith(
+      key,
+      expect.stringContaining('handwritingStrokes')
+    );
   });
 });

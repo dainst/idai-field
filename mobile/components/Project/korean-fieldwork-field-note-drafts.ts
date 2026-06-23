@@ -4,11 +4,17 @@ import {
   KoreanFieldworkFieldNoteMode,
   normalizeFieldNoteText,
 } from './korean-fieldwork-field-notes';
+import {
+  hasKoreanFieldworkHandwriting,
+  KoreanFieldworkHandwritingStroke,
+  normalizeKoreanFieldworkHandwritingStrokes,
+} from './korean-fieldwork-handwriting';
 
 export interface KoreanFieldworkFieldNoteDraft {
   input: KoreanFieldworkFieldNoteInput;
   mode: KoreanFieldworkFieldNoteMode;
   updatedAt: string;
+  handwritingStrokes?: KoreanFieldworkHandwritingStroke[];
 }
 
 const STORAGE_KEY_PREFIX = 'koreanFieldwork.fieldNoteDraft.v1';
@@ -52,7 +58,10 @@ export const saveKoreanFieldworkFieldNoteDraft = async (
 ) => {
   const normalizedDraft = normalizeDraft(draft);
 
-  if (!hasKoreanFieldworkFieldNoteDraftText(normalizedDraft.input)) {
+  if (!hasKoreanFieldworkFieldNoteDraftText(
+    normalizedDraft.input,
+    normalizedDraft.handwritingStrokes
+  )) {
     await removeKoreanFieldworkFieldNoteDraft(storageKey);
     return;
   }
@@ -67,10 +76,11 @@ export const removeKoreanFieldworkFieldNoteDraft = async (
 };
 
 export const hasKoreanFieldworkFieldNoteDraftText = (
-  input: KoreanFieldworkFieldNoteInput
+  input: KoreanFieldworkFieldNoteInput,
+  handwritingStrokes: readonly KoreanFieldworkHandwritingStroke[] = []
 ): boolean => FIELD_NAMES.some((fieldName) =>
   normalizeFieldNoteText(input[fieldName] ?? '').length > 0
-);
+) || hasKoreanFieldworkHandwriting(handwritingStrokes);
 
 const normalizeDraft = (draft: unknown): KoreanFieldworkFieldNoteDraft => {
   const value = isRecord(draft) ? draft : {};
@@ -81,6 +91,9 @@ const normalizeDraft = (draft: unknown): KoreanFieldworkFieldNoteDraft => {
   const updatedAt = typeof value.updatedAt === 'string'
     ? value.updatedAt
     : new Date(0).toISOString();
+  const handwritingStrokes = normalizeKoreanFieldworkHandwritingStrokes(
+    value.handwritingStrokes
+  );
 
   return {
     input: FIELD_NAMES.reduce((result, fieldName) => ({
@@ -91,6 +104,7 @@ const normalizeDraft = (draft: unknown): KoreanFieldworkFieldNoteDraft => {
     }), {} as KoreanFieldworkFieldNoteInput),
     mode,
     updatedAt,
+    handwritingStrokes,
   };
 };
 

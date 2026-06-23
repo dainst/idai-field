@@ -1,5 +1,6 @@
 import { Document } from 'idai-field-core';
 import { KOREAN_FIELDWORK_CATEGORIES } from './korean-fieldwork-categories';
+import { getKoreanFieldworkFeatureTypeLabel } from './korean-fieldwork-feature-types';
 
 export type KoreanFieldworkStatusTone =
   'neutral'
@@ -116,6 +117,9 @@ export const getKoreanFieldworkRecordStatusChips = (
 ): KoreanFieldworkStatusChip[] => {
   const resource = document.resource as any;
   const chips: KoreanFieldworkStatusChip[] = [];
+  const featureTypeLabel = getKoreanFieldworkFeatureTypeLabel(resource.featureType);
+
+  if (featureTypeLabel) chips.push({ label: featureTypeLabel, tone: 'info' });
 
   pushMappedChip(chips, resource.featureRecordingStatus, FEATURE_RECORDING_STATUS_LABELS);
   pushMappedChip(chips, resource.recordCreationTiming, RECORD_CREATION_TIMING_LABELS);

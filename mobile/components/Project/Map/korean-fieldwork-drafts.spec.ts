@@ -38,7 +38,7 @@ describe('Korean fieldwork map drafts', () => {
     });
   });
 
-  it('creates Feature candidate drafts with an empty investigation checklist', () => {
+  it('creates Feature candidate drafts with a pending feature type and empty investigation checklist', () => {
     const operationDoc = {
       resource: {
         id: 'operation-1',
@@ -50,13 +50,14 @@ describe('Korean fieldwork map drafts', () => {
     const draft = createFeatureCandidateDraft(operationDoc, { x: 127, y: 37 });
 
     expect(draft.resource).toMatchObject({
-      identifier: 'feature-candidate-1700000000000',
+      identifier: '유구-1700000000000',
       category: 'Feature',
       relations: { isRecordedIn: ['operation-1'] },
       geometry: {
         type: 'Point',
         coordinates: [127, 37],
       },
+      featureType: 'unknown',
       featureRecordingStatus: FEATURE_RECORDING_STATUS_CANDIDATE,
       geometrySource: GEOMETRY_SOURCE_GPS_APPROXIMATE,
       geometryConfidence: GEOMETRY_CONFIDENCE_ROUGH,
@@ -64,6 +65,27 @@ describe('Korean fieldwork map drafts', () => {
       featureGeometryRevisionHistory: FEATURE_GEOMETRY_REVISION_HISTORY_DEFAULT,
       featureInvestigationChecklist: [],
       featureSoilProfilePhotoCount: 0,
+    });
+  });
+
+  it('creates map Feature drafts with the selected feature type when provided', () => {
+    const operationDoc = {
+      resource: {
+        id: 'operation-1',
+        category: 'Operation',
+        relations: {},
+      },
+    } as any;
+
+    const draft = createFeatureCandidateDraft(
+      operationDoc,
+      { x: 127, y: 37 },
+      'ditch'
+    );
+
+    expect(draft.resource).toMatchObject({
+      identifier: '구상유구-1700000000000',
+      featureType: 'ditch',
     });
   });
 

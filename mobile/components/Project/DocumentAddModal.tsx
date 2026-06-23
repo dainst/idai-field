@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { CategoryForm, Document, Tree } from 'idai-field-core';
-import React, { useCallback, useContext, useMemo } from 'react';
+import React, { useCallback, useContext, useMemo, useState } from 'react';
 import {
   Modal,
   ScrollView,
@@ -24,15 +24,18 @@ import {
 import {
   getKoreanFieldworkCategoryLabel,
   KOREAN_FIELDWORK_CATEGORY_ORDER,
+  KOREAN_FIELDWORK_CATEGORIES,
 } from './korean-fieldwork-categories';
 import { canCreateKoreanFieldworkChildRecord } from './korean-fieldwork-child-records';
+import { KOREAN_FIELDWORK_FEATURE_TYPE_OPTIONS } from './korean-fieldwork-feature-types';
 
 const ICON_SIZE = 34;
 
 interface AddModalProps {
   onAddCategory: (
     categoryName: string,
-    parentDoc: Document | undefined
+    parentDoc: Document | undefined,
+    draftParams?: Record<string, string>
   ) => void;
   onClose: () => void;
   parentDoc?: Document;
@@ -45,6 +48,7 @@ const DocumentAddModal: React.FC<AddModalProps> = ({
 }) => {
   const config = useContext(ConfigurationContext);
   const { labels } = useContext(LabelsContext);
+  const [isChoosingFeatureType, setIsChoosingFeatureType] = useState(false);
 
   const isAllowedCategory = useCallback(
     (category: CategoryForm) =>
@@ -80,6 +84,15 @@ const DocumentAddModal: React.FC<AddModalProps> = ({
   const parentCategoryLabel = labels?.get(parentCategory)
     ?? getKoreanFieldworkCategoryLabel(parentCategory.name);
 
+  const openAddOption = (option: KoreanFieldworkAddOption) => {
+    if (option.categoryName === KOREAN_FIELDWORK_CATEGORIES.FEATURE) {
+      setIsChoosingFeatureType(true);
+      return;
+    }
+
+    onAddCategory(option.categoryName, parentDoc);
+  };
+
   const renderOption = (option: KoreanFieldworkAddOption) => {
     const category = categoriesByName.get(option.categoryName);
     if (!category) return null;
@@ -89,7 +102,8 @@ const DocumentAddModal: React.FC<AddModalProps> = ({
         key={option.categoryName}
         activeOpacity={0.86}
         style={styles.optionRow}
-        onPress={() => onAddCategory(option.categoryName, parentDoc)}
+        onPress={() => openAddOption(option)}
+        testID={`addCategory_${option.categoryName}`}
       >
         <CategoryIcon category={category} size={ICON_SIZE} />
         <View style={styles.optionText}>
@@ -100,6 +114,49 @@ const DocumentAddModal: React.FC<AddModalProps> = ({
         </View>
         <Ionicons name="chevron-forward" size={18} color="#475467" />
       </TouchableOpacity>
+    );
+  };
+
+  const renderFeatureTypePicker = () => {
+    const featureCategory = categoriesByName.get(KOREAN_FIELDWORK_CATEGORIES.FEATURE);
+    if (!featureCategory) return null;
+
+    return (
+      <View>
+        <View style={styles.parentPanel}>
+          <Text style={styles.parentLabel} numberOfLines={1}>
+            상위 기록: {parentDoc.resource.identifier}
+          </Text>
+          <Text style={styles.parentMeta}>
+            먼저 유구 성격을 고르세요. 확실하지 않으면 미정으로 시작해도 됩니다.
+          </Text>
+        </View>
+        <View style={styles.featureTypeGrid}>
+          {KOREAN_FIELDWORK_FEATURE_TYPE_OPTIONS.map((option) => (
+            <TouchableOpacity
+              activeOpacity={0.86}
+              key={option.value}
+              onPress={() => onAddCategory(
+                KOREAN_FIELDWORK_CATEGORIES.FEATURE,
+                parentDoc,
+                { featureType: option.value }
+              )}
+              style={styles.featureTypeOption}
+              testID={`featureType_${option.value}`}
+            >
+              <CategoryIcon category={featureCategory} size={24} />
+              <View style={styles.featureTypeText}>
+                <Text style={styles.featureTypeLabel} numberOfLines={1}>
+                  {option.label}
+                </Text>
+                <Text style={styles.featureTypeDescription} numberOfLines={2}>
+                  {option.description}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </View>
     );
   };
 
@@ -117,56 +174,65 @@ const DocumentAddModal: React.FC<AddModalProps> = ({
               <>
                 <CategoryIcon category={parentCategory} size={25} />
                 <Heading style={styles.heading}>
-                  기록 종류 선택
+                  {isChoosingFeatureType ? '유구 성격 선택' : '기록 종류 선택'}
                 </Heading>
               </>
             }
             left={
               <Button
-                title="닫기"
+                title={isChoosingFeatureType ? '뒤로' : '닫기'}
                 variant="transparent"
-                icon={<Ionicons name="close-outline" size={16} />}
-                onPress={onClose}
+                icon={<Ionicons
+                  name={isChoosingFeatureType ? 'chevron-back-outline' : 'close-outline'}
+                  size={16}
+                />}
+                onPress={isChoosingFeatureType
+                  ? () => setIsChoosingFeatureType(false)
+                  : onClose}
               />
             }
           />
           <ScrollView style={styles.categories}>
-            <View style={styles.parentPanel}>
-              <Text style={styles.parentLabel} numberOfLines={1}>
-                상위 기록: {parentDoc.resource.identifier}
-              </Text>
-              <Text style={styles.parentMeta}>
-                {parentCategoryLabel}에서 이어서 만들 기록을 고르세요.
-              </Text>
-              <Text style={styles.hierarchyHelp}>
-                {KOREAN_FIELDWORK_HIERARCHY_HELP}
-              </Text>
-            </View>
+            {isChoosingFeatureType ? renderFeatureTypePicker() : (
+              <>
+                <View style={styles.parentPanel}>
+                  <Text style={styles.parentLabel} numberOfLines={1}>
+                    상위 기록: {parentDoc.resource.identifier}
+                  </Text>
+                  <Text style={styles.parentMeta}>
+                    {parentCategoryLabel}에서 이어서 만들 기록을 고르세요.
+                  </Text>
+                  <Text style={styles.hierarchyHelp}>
+                    {KOREAN_FIELDWORK_HIERARCHY_HELP}
+                  </Text>
+                </View>
 
-            {hasPrimaryOptions && (
-              <View style={styles.optionSection}>
-                <Text style={styles.sectionTitle}>권장 기록</Text>
-                {optionGroups.primary.map(renderOption)}
-              </View>
-            )}
+                {hasPrimaryOptions && (
+                  <View style={styles.optionSection}>
+                    <Text style={styles.sectionTitle}>권장 기록</Text>
+                    {optionGroups.primary.map(renderOption)}
+                  </View>
+                )}
 
-            {hasOtherOptions && (
-              <View style={styles.optionSection}>
-                <Text style={styles.sectionTitle}>그 밖의 기록</Text>
-                {optionGroups.other.map(renderOption)}
-              </View>
-            )}
+                {hasOtherOptions && (
+                  <View style={styles.optionSection}>
+                    <Text style={styles.sectionTitle}>그 밖의 기록</Text>
+                    {optionGroups.other.map(renderOption)}
+                  </View>
+                )}
 
-            {!hasPrimaryOptions && !hasOtherOptions && (
-              <View style={styles.emptyState}>
-                <Ionicons name="information-circle-outline" size={24} color="#667085" />
-                <Text style={styles.emptyTitle}>
-                  바로 만들 수 있는 하위 기록이 없습니다
-                </Text>
-                <Text style={styles.emptyText}>
-                  조사구역, 트렌치, 유구, 피트·유구 구간·층위 흐름에 맞는 상위 기록을 먼저 선택해 주세요.
-                </Text>
-              </View>
+                {!hasPrimaryOptions && !hasOtherOptions && (
+                  <View style={styles.emptyState}>
+                    <Ionicons name="information-circle-outline" size={24} color="#667085" />
+                    <Text style={styles.emptyTitle}>
+                      바로 만들 수 있는 하위 기록이 없습니다
+                    </Text>
+                    <Text style={styles.emptyText}>
+                      조사구역, 트렌치, 유구, 피트·유구 구간·층위 흐름에 맞는 상위 기록을 먼저 선택해 주세요.
+                    </Text>
+                  </View>
+                )}
+              </>
             )}
           </ScrollView>
         </Card>
@@ -270,6 +336,40 @@ const styles = StyleSheet.create({
     fontSize: 12,
     lineHeight: 17,
     marginTop: 3,
+  },
+  featureTypeGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  featureTypeOption: {
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderColor: '#d0d5dd',
+    borderRadius: 6,
+    borderWidth: 1,
+    flexDirection: 'row',
+    marginBottom: 8,
+    minHeight: 72,
+    paddingHorizontal: 10,
+    paddingVertical: 9,
+    width: '49%',
+  },
+  featureTypeText: {
+    flex: 1,
+    marginLeft: 8,
+    minWidth: 0,
+  },
+  featureTypeLabel: {
+    color: '#1f2937',
+    fontSize: 15,
+    fontWeight: '900',
+  },
+  featureTypeDescription: {
+    color: '#667085',
+    fontSize: 11,
+    lineHeight: 15,
+    marginTop: 2,
   },
   emptyState: {
     alignItems: 'center',

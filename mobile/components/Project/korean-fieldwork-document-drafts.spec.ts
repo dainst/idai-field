@@ -82,6 +82,34 @@ describe('Korean fieldwork document drafts', () => {
     });
   });
 
+  it('starts Feature drafts with the selected Korean feature type', () => {
+    const trenchDoc = createDoc('trench-1', C.TRENCH, {
+      isRecordedIn: ['operation-1'],
+    });
+    const config = allowRelations({
+      [`${C.FEATURE}:${C.TRENCH}`]: ['liesWithin'],
+    });
+
+    const draft = createKoreanFieldworkDraftResource(
+      trenchDoc,
+      C.FEATURE,
+      config,
+      { featureType: 'pit' }
+    );
+
+    expect(draft).toMatchObject({
+      identifier: '수혈-1700000000000',
+      category: C.FEATURE,
+      relations: {
+        isRecordedIn: ['operation-1'],
+        liesWithin: ['trench-1'],
+      },
+      featureType: 'pit',
+      featureRecordingStatus: FEATURE_RECORDING_STATUS_CANDIDATE,
+      featureInvestigationChecklist: [],
+    });
+  });
+
   it('creates Layer drafts with tablet-friendly sequence defaults', () => {
     const featureDoc = createDoc('feature-1', C.FEATURE, {
       isRecordedIn: ['operation-1'],
@@ -218,6 +246,12 @@ describe('Korean fieldwork document drafts', () => {
   it('uses kebab-case identifiers for categories without a dedicated prefix', () => {
     expect(createDraftIdentifier('CustomRecordType')).toBe(
       'custom-record-type-1700000000000'
+    );
+  });
+
+  it('uses selected feature type labels for temporary feature identifiers', () => {
+    expect(createDraftIdentifier(C.FEATURE, 'posthole')).toBe(
+      '주혈-1700000000000'
     );
   });
 });

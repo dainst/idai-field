@@ -10,6 +10,10 @@ import {
   getKoreanFieldworkCategoryLabel,
   KOREAN_FIELDWORK_CATEGORIES,
 } from './korean-fieldwork-categories';
+import {
+  extractKoreanFieldworkHandwritingFromText,
+  serializeKoreanFieldworkHandwriting,
+} from './korean-fieldwork-handwriting';
 import { getKoreanFieldworkEvidenceChips } from './korean-fieldwork-record-evidence';
 
 const C = KOREAN_FIELDWORK_CATEGORIES;
@@ -166,6 +170,7 @@ export const createKoreanFieldworkRecordMemoDraft = (
   now = new Date()
 ): NewDocument => {
   const noteText = normalizeFieldNoteText(text);
+  const handwritingStrokes = extractKoreanFieldworkHandwritingFromText(noteText);
   const resource = createKoreanFieldworkDraftResource(
     document,
     C.PEN_MEMO,
@@ -180,7 +185,7 @@ export const createKoreanFieldworkRecordMemoDraft = (
       description: noteText,
       penMemoReviewedTranscript: noteText,
       penMemoTranscriptionStatus: 'reviewed',
-      penMemoStrokes: '[]',
+      penMemoStrokes: serializeKoreanFieldworkHandwriting(handwritingStrokes),
     },
   };
 };
@@ -906,9 +911,13 @@ export const getKoreanFieldworkFieldNoteReportPreview = (
 
 export const getKoreanFieldworkFieldNoteRecordUpdates = (
   input: KoreanFieldworkFieldNoteInput,
-  document: Document
+  document: Document,
+  additionalNoteText = ''
 ): KoreanFieldworkFieldNoteRecordUpdates => {
-  const noteText = buildKoreanFieldworkFieldNoteText(input);
+  const noteText = [
+    buildKoreanFieldworkFieldNoteText(input),
+    normalizeFieldNoteText(additionalNoteText),
+  ].filter((value) => value.length > 0).join('\n');
   if (!noteText) return {};
 
   const updates: KoreanFieldworkFieldNoteRecordUpdates = {};

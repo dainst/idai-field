@@ -176,8 +176,8 @@ const RECORD_GROUPS: RecordGroup[] = [
     ],
   },
   {
-    title: '트렌치·유구군·유구·피트·구간·층위',
-    subtitle: '한국 야장 기록의 중심 단위',
+    title: '유구와 층위',
+    subtitle: '트렌치부터 피트까지 필요한 단위',
     categories: [
       KOREAN_FIELDWORK_CATEGORIES.TRENCH,
       KOREAN_FIELDWORK_CATEGORIES.FEATURE_GROUP,
@@ -236,6 +236,7 @@ const DocumentsList: React.FC = () => {
     useState<KoreanFieldworkRecordWorkFilterId>('all');
   const [query, setQuery] = useState('');
   const [addModalParent, setAddModalParent] = useState<Document>();
+  const [showFieldworkDetails, setShowFieldworkDetails] = useState(false);
   const [selectedWorkbenchDocumentId, setSelectedWorkbenchDocumentId] =
     useState<string>();
   const [fieldNoteContinuation, setFieldNoteContinuation] =
@@ -484,7 +485,8 @@ const DocumentsList: React.FC = () => {
   const closeAddChildModal = () => setAddModalParent(undefined);
   const navigateAddCategory = (
     categoryName: string,
-    parentDoc: Document | undefined
+    parentDoc: Document | undefined,
+    draftParams: Record<string, string> = {}
   ) => {
     closeAddChildModal();
 
@@ -495,6 +497,7 @@ const DocumentsList: React.FC = () => {
       params: {
         parentDocId: parentDoc.resource.id,
         categoryName,
+        ...draftParams,
         ...getKoreanFieldworkReturnParam(
           KOREAN_FIELDWORK_RETURN_TARGETS.FIELD_BOARD
         ),
@@ -792,15 +795,6 @@ const DocumentsList: React.FC = () => {
           onEditDocument={editDocumentById}
         />
 
-        <KoreanFieldworkProgressBoard
-          summary={todaySummary}
-          documents={documents}
-          onAddDocumentOfCategory={(parentDoc, categoryName) =>
-            navigateAddCategory(categoryName, parentDoc)}
-          onOpenDocument={onDocumentSelected}
-          onOpenMap={openMap}
-        />
-
         <KoreanFieldworkScopePanel
           documents={documents}
           hierarchyPath={hierarchyPath}
@@ -811,24 +805,58 @@ const DocumentsList: React.FC = () => {
           onOpenMap={openMap}
         />
 
-        <KoreanFieldworkUnitMatrix
-          summary={todaySummary}
-          documents={documents}
-          scopeParent={currentScopeParent}
-          onOpenDocument={onDocumentSelected}
-          onAddDocumentOfCategory={(parentDoc, categoryName) =>
-            navigateAddCategory(categoryName, parentDoc)}
-        />
+        <TouchableOpacity
+          activeOpacity={0.86}
+          onPress={() => setShowFieldworkDetails((current) => !current)}
+          style={styles.detailToggle}
+          testID="fieldworkDetailToggle"
+        >
+          <View style={styles.detailToggleText}>
+            <Text style={styles.detailToggleLabel}>
+              {showFieldworkDetails ? '상세 기록 접기' : '상세 기록 보기'}
+            </Text>
+            <Text style={styles.detailToggleDescription} numberOfLines={1}>
+              진행판, 단위 매트릭스, 계층판
+            </Text>
+          </View>
+          <MaterialIcons
+            name={showFieldworkDetails ? 'expand-less' : 'expand-more'}
+            size={22}
+            color="#344054"
+          />
+        </TouchableOpacity>
 
-        <KoreanFieldworkHierarchyBoard
-          documents={documents}
-          documentsById={documentsById}
-          hierarchyPath={hierarchyPath}
-          issueCountByDocumentId={todaySummary.issueCountByDocumentId}
-          onOpenDocument={onDocumentSelected}
-          onDrillDown={pushToHierarchy}
-          onAddChild={openAddChildModal}
-        />
+        {showFieldworkDetails && (
+          <>
+            <KoreanFieldworkProgressBoard
+              summary={todaySummary}
+              documents={documents}
+              onAddDocumentOfCategory={(parentDoc, categoryName) =>
+                navigateAddCategory(categoryName, parentDoc)}
+              onOpenDocument={onDocumentSelected}
+              onOpenMap={openMap}
+            />
+
+            <KoreanFieldworkUnitMatrix
+              summary={todaySummary}
+              documents={documents}
+              scopeParent={currentScopeParent}
+              onOpenDocument={onDocumentSelected}
+              onAddDocumentOfCategory={(parentDoc, categoryName) =>
+                navigateAddCategory(categoryName, parentDoc)}
+            />
+
+            <KoreanFieldworkHierarchyBoard
+              documents={documents}
+              documentsById={documentsById}
+              hierarchyPath={hierarchyPath}
+              issueCountByDocumentId={todaySummary.issueCountByDocumentId}
+              onOpenDocument={onDocumentSelected}
+              onDrillDown={pushToHierarchy}
+              onAddChild={openAddChildModal}
+            />
+          </>
+        )}
 
         <View style={styles.actionBand}>
           <QuickAction
@@ -1904,6 +1932,30 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingBottom: 12,
     paddingTop: 4,
+  },
+  detailToggle: {
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderBottomColor: '#d0d5dd',
+    borderBottomWidth: 1,
+    flexDirection: 'row',
+    minHeight: 56,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+  },
+  detailToggleText: {
+    flex: 1,
+    minWidth: 0,
+  },
+  detailToggleLabel: {
+    color: '#27343b',
+    fontSize: 14,
+    fontWeight: '900',
+  },
+  detailToggleDescription: {
+    color: '#667085',
+    fontSize: 12,
+    marginTop: 2,
   },
   quickAction: {
     alignItems: 'center',

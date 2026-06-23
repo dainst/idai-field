@@ -1,5 +1,7 @@
 export interface KoreanFieldworkPointerInputEvent {
   nativeEvent?: {
+    locationX?: unknown;
+    locationY?: unknown;
     pointerType?: unknown;
   };
 }

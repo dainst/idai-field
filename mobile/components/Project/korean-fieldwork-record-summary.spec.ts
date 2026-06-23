@@ -72,6 +72,7 @@ describe('Korean fieldwork record summary', () => {
 
   it('summarizes fieldwork state chips from Korean workflow fields', () => {
     const feature = createDoc('feature-1', C.FEATURE, '유구 1', {}, {
+      featureType: 'pit',
       featureRecordingStatus: 'candidate',
       verificationState: 'needsRecheck',
       recordCreationTiming: 'duringFieldwork',
@@ -80,10 +81,10 @@ describe('Korean fieldwork record summary', () => {
     });
 
     expect(getKoreanFieldworkRecordStatusChips(feature)).toEqual([
+      { label: '수혈', tone: 'info' },
       { label: '유구 후보', tone: 'warning' },
       { label: '현장 작성', tone: 'success' },
       { label: '약도', tone: 'warning' },
-      { label: '기록 보완', tone: 'warning' },
     ]);
   });
 

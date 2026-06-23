@@ -3,6 +3,7 @@ import {
   NewDocument,
 } from 'idai-field-core';
 import { KOREAN_FIELDWORK_CATEGORIES } from '../korean-fieldwork-categories';
+import { getKoreanFieldworkFeatureTypeOption } from '../korean-fieldwork-feature-types';
 
 export const LAYER_SEQUENCE_MEANING_DEFAULT = 'latestToEarliest';
 export const SOIL_COLOR_ASSIST_STATUS_DEFAULT = 'notRun';
@@ -76,25 +77,31 @@ export const createLayerDraft = (
 
 export const createFeatureCandidateDraft = (
   parentDoc: Document,
-  location: MapLocation
-): NewDocument => ({
-  resource: {
-    identifier: `feature-candidate-${Date.now()}`,
-    category: KOREAN_FIELDWORK_CATEGORIES.FEATURE,
-    relations: createKoreanFieldworkChildRelations(parentDoc),
-    geometry: {
-      type: 'Point',
-      coordinates: [location.x, location.y],
+  location: MapLocation,
+  featureType = 'unknown'
+): NewDocument => {
+  const featureTypeOption = getKoreanFieldworkFeatureTypeOption(featureType);
+
+  return {
+    resource: {
+      identifier: `${featureTypeOption?.identifierPrefix ?? 'feature-candidate'}-${Date.now()}`,
+      category: KOREAN_FIELDWORK_CATEGORIES.FEATURE,
+      relations: createKoreanFieldworkChildRelations(parentDoc),
+      geometry: {
+        type: 'Point',
+        coordinates: [location.x, location.y],
+      },
+      ...(featureTypeOption ? { featureType: featureTypeOption.value } : {}),
+      featureRecordingStatus: FEATURE_RECORDING_STATUS_CANDIDATE,
+      geometrySource: GEOMETRY_SOURCE_GPS_APPROXIMATE,
+      geometryConfidence: GEOMETRY_CONFIDENCE_ROUGH,
+      featureGeometryEditStatus: FEATURE_GEOMETRY_EDIT_STATUS_ROUGH_SKETCH,
+      featureGeometryRevisionHistory: FEATURE_GEOMETRY_REVISION_HISTORY_DEFAULT,
+      featureInvestigationChecklist: [],
+      featureSoilProfilePhotoCount: 0,
     },
-    featureRecordingStatus: FEATURE_RECORDING_STATUS_CANDIDATE,
-    geometrySource: GEOMETRY_SOURCE_GPS_APPROXIMATE,
-    geometryConfidence: GEOMETRY_CONFIDENCE_ROUGH,
-    featureGeometryEditStatus: FEATURE_GEOMETRY_EDIT_STATUS_ROUGH_SKETCH,
-    featureGeometryRevisionHistory: FEATURE_GEOMETRY_REVISION_HISTORY_DEFAULT,
-    featureInvestigationChecklist: [],
-    featureSoilProfilePhotoCount: 0,
-  },
-});
+  };
+};
 
 export const createSurveyBoundaryDraft = (parentDoc: Document): NewDocument => ({
   resource: {

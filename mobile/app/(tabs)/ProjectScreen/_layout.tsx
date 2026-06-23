@@ -1,16 +1,23 @@
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Drawer } from 'expo-router/drawer';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { PreferencesContext } from '@/contexts/preferences-context';
 import usePouchDbDatastore from '@/hooks/use-pouchdb-datastore';
 import useConfiguration from '@/hooks/use-configuration';
 
 import { ConfigurationContext } from '@/contexts/configuration-context';
-import { Text } from 'react-native';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import { ProjectContextProvider } from '@/contexts/project-context';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function Layout() {
   const { preferences } = useContext(PreferencesContext);
+  const [isTakingLong, setIsTakingLong] = useState(false);
 
   const pouchdbDatastore = usePouchDbDatastore(preferences.currentProject);
 
@@ -21,7 +28,26 @@ export default function Layout() {
     pouchdbDatastore
   );
 
-  if (!config) return <Text>프로젝트 설정을 불러오지 못했습니다.</Text>;
+  useEffect(() => {
+    if (config) {
+      setIsTakingLong(false);
+      return;
+    }
+
+    const timeoutId = setTimeout(() => setIsTakingLong(true), 1400);
+
+    return () => clearTimeout(timeoutId);
+  }, [config, preferences.currentProject]);
+
+  if (!config) {
+    return (
+      <ProjectConfigurationLoadingState
+        projectName={preferences.currentProject}
+        isTakingLong={isTakingLong}
+      />
+    );
+  }
+
   return (
     <ConfigurationContext.Provider value={config}>
       <ProjectContextProvider>
@@ -61,3 +87,77 @@ export default function Layout() {
     </ConfigurationContext.Provider>
   );
 }
+
+const ProjectConfigurationLoadingState = ({
+  projectName,
+  isTakingLong,
+}: {
+  projectName?: string;
+  isTakingLong: boolean;
+}) => (
+  <View style={styles.loadingContainer}>
+    <View style={styles.logoMark}>
+      <MaterialIcons name="edit-note" size={42} color="#2f5f4a" />
+    </View>
+    <Text style={styles.loadingTitle}>디지털 야장</Text>
+    <ActivityIndicator
+      color="#2f5f4a"
+      size="small"
+      style={styles.loadingSpinner}
+    />
+    <Text style={styles.loadingText}>
+      {projectName
+        ? `${projectName} 설정을 불러오는 중입니다.`
+        : '프로젝트 설정을 불러오는 중입니다.'}
+    </Text>
+    {isTakingLong && (
+      <Text style={styles.loadingHint}>
+        저장소와 분류 설정을 확인하고 있습니다.
+      </Text>
+    )}
+  </View>
+);
+
+const styles = StyleSheet.create({
+  loadingContainer: {
+    alignItems: 'center',
+    backgroundColor: '#f7faf8',
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 28,
+  },
+  logoMark: {
+    alignItems: 'center',
+    backgroundColor: '#e8f5ed',
+    borderColor: '#b7dfc4',
+    borderRadius: 18,
+    borderWidth: 1,
+    height: 76,
+    justifyContent: 'center',
+    width: 76,
+  },
+  loadingTitle: {
+    color: '#20313a',
+    fontSize: 22,
+    fontWeight: '900',
+    marginTop: 18,
+  },
+  loadingSpinner: {
+    marginTop: 14,
+  },
+  loadingText: {
+    color: '#526272',
+    fontSize: 14,
+    fontWeight: '700',
+    lineHeight: 20,
+    marginTop: 12,
+    textAlign: 'center',
+  },
+  loadingHint: {
+    color: '#667085',
+    fontSize: 12,
+    lineHeight: 18,
+    marginTop: 8,
+    textAlign: 'center',
+  },
+});

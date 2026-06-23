@@ -23,12 +23,14 @@ import Map from './Map/Map';
 import { router, useGlobalSearchParams } from 'expo-router';
 import SearchBar from './SearchBar';
 import { ProjectContext } from '@/contexts/project-context';
+import { KoreanFieldworkInvestigationModeId } from './korean-fieldwork-investigation-mode';
 interface DocumentsMapProps {
   repository: DocumentRepository;
   syncStatus: SyncStatus;
   relationsManager?: RelationsManager;
   issueSearch: (q: string) => void;
   selectParent: (doc: Document) => void;
+  investigationModeId?: KoreanFieldworkInvestigationModeId;
 }
 
 const DocumentsMap: React.FC<DocumentsMapProps> = ({
@@ -37,6 +39,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
   relationsManager,
   issueSearch,
   selectParent,
+  investigationModeId,
 }): ReactElement => {
   const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
   const [isDeleteModelOpen, setIsDeleteModelOpen] = useState<boolean>(false);
@@ -212,6 +215,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
           removeDocument={openRemoveDocument}
           selectParent={selectParent}
           readinessIssues={todaySummary.openIssues}
+          investigationModeId={investigationModeId}
         />
       </View>
     </View>

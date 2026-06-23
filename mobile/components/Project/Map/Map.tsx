@@ -30,6 +30,7 @@ import {
   SOIL_PROFILE_PHOTO_TARGET_CATEGORIES,
 } from '../korean-fieldwork-categories';
 import MapBottomSheet from './MapBottomSheet';
+import { KoreanFieldworkInvestigationModeId } from '../korean-fieldwork-investigation-mode';
 
 const FEATURE_GEOMETRY_EDIT_STATUS_NEEDS_AERIAL_ALIGNMENT = 'needsAerialAlignment';
 const FEATURE_GEOMETRY_EDIT_STATUS_ADJUSTED_TO_AERIAL_LAYER = 'adjustedToAerialLayer';
@@ -59,6 +60,7 @@ interface MapProps {
   removeDocument: (doc: Document) => void;
   selectParent: (doc: Document) => void;
   readinessIssues: KoreanFieldworkReadinessIssue[];
+  investigationModeId?: KoreanFieldworkInvestigationModeId;
 }
 
 const Map: React.FC<MapProps> = (props) => {
@@ -369,6 +371,7 @@ const Map: React.FC<MapProps> = (props) => {
         readinessIssues={props.readinessIssues.filter((issue) =>
           issue.documentId === highlightedDoc?.resource.id
         )}
+        investigationModeId={props.investigationModeId}
       />
     </View>
   );

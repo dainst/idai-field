@@ -17,6 +17,8 @@ import DocumentButton from '@/components/common/DocumentButton';
 import Row from '@/components/common/Row';
 import { colors } from '@/utils/colors';
 import { FEATURE_WORKFLOW_CATEGORIES } from '../korean-fieldwork-categories';
+import { KoreanFieldworkInvestigationModeId } from '../korean-fieldwork-investigation-mode';
+import { getKoreanFieldworkChecklistQuickOptions } from '../korean-fieldwork-quick-record';
 
 interface MapBottomSheetProps {
   document: Document | undefined;
@@ -36,18 +38,8 @@ interface MapBottomSheetProps {
   markGeometryAdjustedToAerialLayer: () => void;
   toggleFeatureWorkflowStep: (stepValue: string) => void;
   readinessIssues: KoreanFieldworkReadinessIssue[];
+  investigationModeId?: KoreanFieldworkInvestigationModeId;
 }
-
-const FEATURE_WORKFLOW_STEPS = [
-  { value: 'preInvestigationPhotoTaken', label: '조사 전' },
-  { value: 'inProgressPhotoTaken', label: '조사 중' },
-  { value: 'soilProfilePhotoLinked', label: '토층' },
-  { value: 'measuredDrawingCompleted', label: '실측' },
-  { value: 'preRecoveryFindPhotoTaken', label: '수습 전 사진' },
-  { value: 'findsRecovered', label: '유물 수습' },
-  { value: 'samplesCollected', label: '시료' },
-  { value: 'completionPhotoTaken', label: '완료' },
-];
 
 const GEOMETRY_EDIT_STATUS_LABELS: { [status: string]: string } = {
   roughSketch: '대략 스케치',
@@ -75,9 +67,14 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
   markGeometryAdjustedToAerialLayer,
   toggleFeatureWorkflowStep,
   readinessIssues,
+  investigationModeId,
 }) => {
   const iconSize = 20;
   const snapPoints = useMemo(() => [0.1, 0.4, 0.8], []);
+  const featureWorkflowSteps = useMemo(
+    () => getKoreanFieldworkChecklistQuickOptions(investigationModeId),
+    [investigationModeId]
+  );
 
   if (!document) return null;
 
@@ -175,13 +172,14 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.workflowSteps}
           >
-            {FEATURE_WORKFLOW_STEPS.map((item, index) => {
+            {featureWorkflowSteps.map((item, index) => {
               const checked = checkedFeatureChecklistValues.has(item.value);
               return (
                 <View key={item.value} style={styles.workflowStepWrap}>
                   <TouchableOpacity
                     activeOpacity={0.82}
                     onPress={() => toggleFeatureWorkflowStep(item.value)}
+                    testID={`mapWorkflowStep_${item.value}`}
                     style={[
                       styles.workflowStep,
                       checked && styles.workflowStepChecked,
@@ -194,7 +192,7 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
                     />
                     <Text style={styles.workflowStepLabel}>{item.label}</Text>
                   </TouchableOpacity>
-                  {index < FEATURE_WORKFLOW_STEPS.length - 1 && (
+                  {index < featureWorkflowSteps.length - 1 && (
                     <MaterialIcons name="chevron-right" size={16} color="#999" />
                   )}
                 </View>

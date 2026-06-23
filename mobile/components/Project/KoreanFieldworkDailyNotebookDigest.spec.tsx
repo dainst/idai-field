@@ -43,12 +43,17 @@ describe('KoreanFieldworkDailyNotebookDigest', () => {
 
     fireEvent.press(getByTestId('dailyNotebookOpenDailyLog'));
     fireEvent.press(getByTestId('dailyNotebookContinue_남은 작업_memo-1'));
+    fireEvent.press(getByTestId('dailyNotebookContinue_번호 보강_memo-1'));
 
     expect(handleOpenDailyLog).toHaveBeenCalled();
-    expect(handleContinueEntry).toHaveBeenCalledWith(expect.objectContaining({
+    expect(handleContinueEntry).toHaveBeenNthCalledWith(1, expect.objectContaining({
       id: 'memo-1',
       targetDocument: feature,
-    }));
+    }), 'nextWork');
+    expect(handleContinueEntry).toHaveBeenNthCalledWith(2, expect.objectContaining({
+      id: 'memo-1',
+      targetDocument: feature,
+    }), 'evidenceNumbers');
   });
 
   it('shows an empty state when today entries have no remaining work', () => {

@@ -83,8 +83,18 @@ describe('KoreanFieldworkNotebookLedger', () => {
     expect(handleContinueEntry).toHaveBeenCalledWith(expect.objectContaining({
       id: 'memo-1',
       targetDocument: feature,
-    }));
+    }), 'nextWork');
     expect(handleOpenDocument).not.toHaveBeenCalled();
+
+    handleContinueEntry.mockClear();
+
+    fireEvent.press(getByTestId('fieldNotebookFilter_needsEvidence'));
+    fireEvent.press(getByTestId('fieldNotebookContinue_memo-1'));
+
+    expect(handleContinueEntry).toHaveBeenCalledWith(expect.objectContaining({
+      id: 'memo-1',
+      targetDocument: feature,
+    }), 'evidenceNumbers');
   });
 
   it('does not render when there are no notebook entries', () => {

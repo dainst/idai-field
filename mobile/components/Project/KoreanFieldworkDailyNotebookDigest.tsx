@@ -11,6 +11,7 @@ import { colors } from '@/utils/colors';
 import {
   getKoreanFieldworkDailyNotebookDigest,
   KoreanFieldworkNotebookEntry,
+  KoreanFieldworkNotebookContinuationFocus,
 } from './korean-fieldwork-field-notes';
 
 interface KoreanFieldworkDailyNotebookDigestProps {
@@ -18,7 +19,10 @@ interface KoreanFieldworkDailyNotebookDigestProps {
   documents: Document[];
   maxEntries?: number;
   now?: Date;
-  onContinueEntry: (entry: KoreanFieldworkNotebookEntry) => void;
+  onContinueEntry: (
+    entry: KoreanFieldworkNotebookEntry,
+    focus?: KoreanFieldworkNotebookContinuationFocus
+  ) => void;
   onOpenDailyLog: () => void;
 }
 
@@ -102,6 +106,7 @@ const KoreanFieldworkDailyNotebookDigest: React.FC<
           icon="task-alt"
           items={nextWorkItems}
           label="남은 작업"
+          focus="nextWork"
           onContinueEntry={onContinueEntry}
           textForEntry={(entry) => entry.nextWork}
         />
@@ -112,6 +117,7 @@ const KoreanFieldworkDailyNotebookDigest: React.FC<
           icon="tag"
           items={evidenceItems}
           label="번호 보강"
+          focus="evidenceNumbers"
           onContinueEntry={onContinueEntry}
           textForEntry={() => '사진·도면·유물·시료 번호를 이어서 적으세요.'}
           warning
@@ -134,10 +140,15 @@ const DigestSection: React.FC<{
   icon: keyof typeof MaterialIcons.glyphMap;
   items: KoreanFieldworkNotebookEntry[];
   label: string;
-  onContinueEntry: (entry: KoreanFieldworkNotebookEntry) => void;
+  focus: KoreanFieldworkNotebookContinuationFocus;
+  onContinueEntry: (
+    entry: KoreanFieldworkNotebookEntry,
+    focus?: KoreanFieldworkNotebookContinuationFocus
+  ) => void;
   textForEntry: (entry: KoreanFieldworkNotebookEntry) => string;
   warning?: boolean;
 }> = ({
+  focus,
   icon,
   items,
   label,
@@ -160,7 +171,7 @@ const DigestSection: React.FC<{
       <TouchableOpacity
         activeOpacity={0.86}
         key={`${label}-${entry.id}`}
-        onPress={() => onContinueEntry(entry)}
+        onPress={() => onContinueEntry(entry, focus)}
         style={[styles.itemRow, warning && styles.itemRowWarning]}
         testID={`dailyNotebookContinue_${label}_${entry.id}`}
       >

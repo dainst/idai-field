@@ -47,6 +47,7 @@ import {
   KoreanFieldworkFieldNoteContinuationSeed,
   KoreanFieldworkFieldNoteMode,
   KoreanFieldworkNotebookEntry,
+  KoreanFieldworkNotebookContinuationFocus,
 } from '@/components/Project/korean-fieldwork-field-notes';
 import {
   getKoreanFieldworkCloseoutSummary,
@@ -461,9 +462,12 @@ const DocumentsList: React.FC = () => {
   const selectWorkbenchDocument = (document: Document) => {
     setSelectedWorkbenchDocumentId(document.resource.id);
   };
-  const continueNotebookEntry = (entry: KoreanFieldworkNotebookEntry) => {
+  const continueNotebookEntry = (
+    entry: KoreanFieldworkNotebookEntry,
+    focus?: KoreanFieldworkNotebookContinuationFocus
+  ) => {
     const targetDocument = entry.targetDocument ?? entry.sourceDocument;
-    const seed = getKoreanFieldworkNotebookContinuationSeed(entry);
+    const seed = getKoreanFieldworkNotebookContinuationSeed(entry, focus);
 
     fieldNoteContinuationRequestId.current += 1;
 

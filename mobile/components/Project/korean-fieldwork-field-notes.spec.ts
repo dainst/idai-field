@@ -478,6 +478,20 @@ describe('korean-fieldwork-field-notes', () => {
         nextWork: '북쪽 트렌치 배수 상태 확인.',
       },
     });
+    expect(getKoreanFieldworkNotebookContinuationSeed(
+      entries[2],
+      'evidenceNumbers'
+    )).toEqual({
+      id: 'memo-1',
+      sourceLabel: '메모 번호 보강',
+      input: {
+        observation: '바닥면 정리 중 원형 윤곽 확인.',
+        nextWork: [
+          '사진 보강.',
+          '사진·도면·유물·시료 번호를 이어서 확인.',
+        ].join('\n'),
+      },
+    });
   });
 
   it('builds a today digest for tablet daily note review', () => {

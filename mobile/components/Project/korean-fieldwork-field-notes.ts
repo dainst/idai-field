@@ -132,6 +132,9 @@ export interface KoreanFieldworkFieldNoteContinuationSeed {
   input: KoreanFieldworkFieldNoteInput;
 }
 
+export type KoreanFieldworkNotebookContinuationFocus =
+  'nextWork'|'evidenceNumbers';
+
 export interface KoreanFieldworkDailyNotebookDigest {
   dateLabel: string;
   entries: KoreanFieldworkNotebookEntry[];
@@ -362,11 +365,12 @@ export const getKoreanFieldworkNotebookEntries = (
 };
 
 export const getKoreanFieldworkNotebookContinuationSeed = (
-  entry: KoreanFieldworkNotebookEntry
+  entry: KoreanFieldworkNotebookEntry,
+  focus?: KoreanFieldworkNotebookContinuationFocus
 ): KoreanFieldworkFieldNoteContinuationSeed => ({
   id: entry.id,
-  sourceLabel: entry.sourceLabel,
-  input: getKoreanFieldworkNotebookContinuationInput(entry),
+  sourceLabel: getNotebookContinuationSourceLabel(entry, focus),
+  input: getKoreanFieldworkNotebookContinuationInput(entry, focus),
 });
 
 export const getKoreanFieldworkDailyNotebookDigest = (
@@ -1444,15 +1448,37 @@ const getNotebookEntryDetail = (
   || stripFieldNoteSectionLabel(stripDailyLogEntryPrefix(getLastMeaningfulLine(text)));
 
 const getKoreanFieldworkNotebookContinuationInput = (
-  entry: KoreanFieldworkNotebookEntry
+  entry: KoreanFieldworkNotebookEntry,
+  focus: KoreanFieldworkNotebookContinuationFocus | undefined
 ): KoreanFieldworkFieldNoteInput => removeEmptyFieldNoteInputValues(
   trimFieldNoteInput({
     observation: entry.input.observation || entry.detail,
     interpretation: entry.input.interpretation,
-    nextWork: entry.input.nextWork || entry.nextWork,
+    nextWork: getNotebookContinuationNextWork(entry, focus),
     evidenceNumbers: entry.input.evidenceNumbers || entry.evidenceNumbers,
   })
 );
+
+const getNotebookContinuationNextWork = (
+  entry: KoreanFieldworkNotebookEntry,
+  focus: KoreanFieldworkNotebookContinuationFocus | undefined
+): string =>
+  focus === 'evidenceNumbers'
+    ? mergeFieldNoteValue(
+      entry.input.nextWork || entry.nextWork,
+      '사진·도면·유물·시료 번호를 이어서 확인.'
+    )
+    : entry.input.nextWork || entry.nextWork;
+
+const getNotebookContinuationSourceLabel = (
+  entry: KoreanFieldworkNotebookEntry,
+  focus: KoreanFieldworkNotebookContinuationFocus | undefined
+): string => {
+  if (focus === 'evidenceNumbers') return `${entry.sourceLabel} 번호 보강`;
+  if (focus === 'nextWork') return `${entry.sourceLabel} 남은 작업`;
+
+  return entry.sourceLabel;
+};
 
 const getNotebookEntryDateLabel = (
   document: Document,

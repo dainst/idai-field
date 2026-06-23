@@ -12,6 +12,7 @@ import { colors } from '@/utils/colors';
 import {
   getKoreanFieldworkNotebookEntries,
   KoreanFieldworkNotebookEntry,
+  KoreanFieldworkNotebookContinuationFocus,
 } from './korean-fieldwork-field-notes';
 
 type NotebookLedgerFilter = 'recent'|'nextWork'|'needsEvidence';
@@ -20,7 +21,10 @@ interface KoreanFieldworkNotebookLedgerProps {
   documents: Document[];
   maxEntries?: number;
   onOpenDocument: (document: Document) => void;
-  onContinueEntry?: (entry: KoreanFieldworkNotebookEntry) => void;
+  onContinueEntry?: (
+    entry: KoreanFieldworkNotebookEntry,
+    focus?: KoreanFieldworkNotebookContinuationFocus
+  ) => void;
 }
 
 const KoreanFieldworkNotebookLedger: React.FC<
@@ -89,6 +93,7 @@ const KoreanFieldworkNotebookLedger: React.FC<
       {visibleEntries.map((entry) => (
         <NotebookEntryRow
           entry={entry}
+          focus={getNotebookRowContinuationFocus(activeFilter, entry)}
           key={entry.id}
           onContinueEntry={onContinueEntry}
           onOpenDocument={onOpenDocument}
@@ -116,13 +121,17 @@ const getVisibleNotebookEntries = (
 
 const NotebookEntryRow: React.FC<{
   entry: KoreanFieldworkNotebookEntry;
-  onContinueEntry?: (entry: KoreanFieldworkNotebookEntry) => void;
+  focus?: KoreanFieldworkNotebookContinuationFocus;
+  onContinueEntry?: (
+    entry: KoreanFieldworkNotebookEntry,
+    focus?: KoreanFieldworkNotebookContinuationFocus
+  ) => void;
   onOpenDocument: (document: Document) => void;
-}> = ({ entry, onContinueEntry, onOpenDocument }) => {
+}> = ({ entry, focus, onContinueEntry, onOpenDocument }) => {
   const documentToOpen = entry.targetDocument ?? entry.sourceDocument;
   const continueEntry = (event?: GestureResponderEvent) => {
     event?.stopPropagation?.();
-    onContinueEntry?.(entry);
+    onContinueEntry?.(entry, focus);
   };
 
   return (
@@ -193,6 +202,18 @@ const NotebookEntryRow: React.FC<{
       <MaterialIcons name="chevron-right" size={18} color="#667085" />
     </TouchableOpacity>
   );
+};
+
+const getNotebookRowContinuationFocus = (
+  activeFilter: NotebookLedgerFilter,
+  entry: KoreanFieldworkNotebookEntry
+): KoreanFieldworkNotebookContinuationFocus | undefined => {
+  if (activeFilter === 'needsEvidence') return 'evidenceNumbers';
+  if (activeFilter === 'nextWork') return 'nextWork';
+  if (entry.needsEvidenceNumbers && !entry.nextWork) return 'evidenceNumbers';
+  if (entry.nextWork) return 'nextWork';
+
+  return undefined;
 };
 
 const LedgerFilterChip: React.FC<{

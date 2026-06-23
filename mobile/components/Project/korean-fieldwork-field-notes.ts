@@ -737,6 +737,42 @@ export const mergeKoreanFieldworkFieldNoteInput = (
   ),
 });
 
+export const getKoreanFieldworkFieldNoteSeedFromRecord = (
+  document: Document,
+  documents: Document[]
+): KoreanFieldworkFieldNoteInput => {
+  const fieldNoteText = getStringField(document, 'fieldNote');
+  const descriptionText = getStringField(document, 'description');
+  const fieldNoteInput = extractKoreanFieldworkFieldNoteInput(fieldNoteText);
+  const descriptionInput = extractKoreanFieldworkFieldNoteInput(descriptionText);
+  const hasStructuredFieldNote = hasAnyFieldNoteInput(fieldNoteInput);
+  const hasStructuredDescription = hasAnyFieldNoteInput(descriptionInput);
+
+  return removeEmptyFieldNoteInputValues(trimFieldNoteInput({
+    observation: [
+      fieldNoteInput.observation,
+      descriptionInput.observation,
+      hasStructuredFieldNote ? undefined : fieldNoteText,
+      hasStructuredDescription ? undefined : descriptionText,
+      getStringField(document, 'shortDescription'),
+    ].reduce(mergeFieldNoteValue, ''),
+    interpretation: [
+      fieldNoteInput.interpretation,
+      descriptionInput.interpretation,
+      getStringField(document, 'interpretation'),
+    ].reduce(mergeFieldNoteValue, ''),
+    nextWork: [
+      fieldNoteInput.nextWork,
+      descriptionInput.nextWork,
+    ].reduce(mergeFieldNoteValue, ''),
+    evidenceNumbers: [
+      fieldNoteInput.evidenceNumbers,
+      descriptionInput.evidenceNumbers,
+      getFieldNoteEvidenceNumberSeed(document, documents),
+    ].reduce(mergeFieldNoteValue, ''),
+  }));
+};
+
 export const getKoreanFieldworkFieldNoteGuidance = (
   input: KoreanFieldworkFieldNoteInput,
   document: Document
@@ -1103,6 +1139,37 @@ const FIELD_NOTE_EVIDENCE_ACTION_IDS = new Set<string>([
   'finds',
   'samples',
 ]);
+
+const FIELD_NOTE_EVIDENCE_NUMBER_LABELS: Record<string, string> = {
+  photos: '사진',
+  soilProfilePhotos: '토층 사진',
+  drawings: '도면',
+  finds: '유물',
+  samples: '시료',
+};
+
+const getFieldNoteEvidenceNumberSeed = (
+  document: Document,
+  documents: Document[]
+): string => getKoreanFieldworkEvidenceChips(document, documents)
+  .filter((chip) =>
+    FIELD_NOTE_EVIDENCE_ACTION_IDS.has(chip.id) && chip.documents.length > 0
+  )
+  .map((chip) => {
+    const label = FIELD_NOTE_EVIDENCE_NUMBER_LABELS[chip.id] ?? chip.label;
+    const identifiers = chip.documents
+      .map(getEvidenceDocumentLabel)
+      .filter((value, index, values) => values.indexOf(value) === index);
+
+    return identifiers.length > 0
+      ? `${label}: ${identifiers.join(', ')}`
+      : undefined;
+  })
+  .filter((value): value is string => !!value)
+  .join('\n');
+
+const getEvidenceDocumentLabel = (document: Document): string =>
+  document.resource.identifier || document.resource.id;
 
 const FIELD_NOTE_FOLLOW_UP_MATCHERS: {
   actionIds: string[];

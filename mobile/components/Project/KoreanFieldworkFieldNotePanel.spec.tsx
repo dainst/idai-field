@@ -218,6 +218,39 @@ describe('KoreanFieldworkFieldNotePanel', () => {
     expect(getByTestId('fieldNoteReportPreview').props.children).toBeTruthy();
   });
 
+  it('loads selected record card fields into the tablet note draft', () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1', {
+      description: '바닥면에서 원형 윤곽 확인.',
+      fieldNote: '[다음 작업] 단면 정리 후 사진 보강.',
+      interpretation: '주공 후보.',
+    });
+    const photo = createDoc('photo-1', C.PHOTO, '사진 13', {
+      relations: { depicts: [feature.resource.id] },
+    });
+
+    const { getByTestId, getByText } = renderPanel(feature, {
+      documents: [feature, photo],
+    });
+
+    fireEvent.changeText(
+      getByTestId('fieldNoteTextInput'),
+      '북쪽 가장자리는 추가 확인 필요.'
+    );
+    fireEvent.press(getByTestId('fieldNoteLoadRecordSeed'));
+
+    expect(getByTestId('fieldNoteTextInput').props.value).toBe([
+      '북쪽 가장자리는 추가 확인 필요.',
+      '바닥면에서 원형 윤곽 확인.',
+    ].join('\n'));
+    expect(getByTestId('fieldNoteInterpretationInput').props.value)
+      .toBe('주공 후보.');
+    expect(getByTestId('fieldNoteNextWorkInput').props.value)
+      .toBe('단면 정리 후 사진 보강.');
+    expect(getByTestId('fieldNoteEvidenceNumbersInput').props.value)
+      .toBe('사진: 사진 13');
+    expect(getByText('기록 카드에서 불러옴')).toBeTruthy();
+  });
+
   it('applies the tablet note to the selected record card fields', async () => {
     const feature = createDoc('feature-1', C.FEATURE, '수혈 1', {
       description: '기존 노출 양상.',

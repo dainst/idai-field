@@ -21,6 +21,7 @@ import {
   getKoreanFieldworkDailyLogAppendUpdates,
   getKoreanFieldworkDailyLogForOperation,
   getKoreanFieldworkFieldNoteOperation,
+  getKoreanFieldworkFieldNoteSeedFromRecord,
   getKoreanFieldworkFieldNoteSummaries,
   mergeKoreanFieldworkFieldNoteInput,
 } from './korean-fieldwork-field-notes';
@@ -298,6 +299,38 @@ describe('korean-fieldwork-field-notes', () => {
         ...updates,
       },
     })).toEqual({});
+  });
+
+  it('builds a tablet note seed from selected record card fields', () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1', {
+      description: '바닥면에서 원형 윤곽 확인.',
+      fieldNote: [
+        '[다음 작업] 단면 정리 후 사진 보강.',
+        '[사진·도면·유물·시료 번호] 사진 12',
+      ].join('\n'),
+      interpretation: '주공 후보.',
+    });
+    const photo = createDoc('photo-1', C.PHOTO, '사진 13', {
+      relations: { depicts: [feature.resource.id] },
+    });
+    const sample = createDoc('sample-1', C.SAMPLE, '시료 S-01', {
+      relations: { liesWithin: [feature.resource.id] },
+    });
+
+    expect(getKoreanFieldworkFieldNoteSeedFromRecord(feature, [
+      feature,
+      photo,
+      sample,
+    ])).toEqual({
+      observation: '바닥면에서 원형 윤곽 확인.',
+      interpretation: '주공 후보.',
+      nextWork: '단면 정리 후 사진 보강.',
+      evidenceNumbers: [
+        '사진 12',
+        '사진: 사진 13',
+        '시료: 시료 S-01',
+      ].join('\n'),
+    });
   });
 
   it('extracts structured field note input from saved memo text', () => {

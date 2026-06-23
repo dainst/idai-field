@@ -25,6 +25,7 @@ import {
   getKoreanFieldworkFieldNotePresets,
   getKoreanFieldworkFieldNoteRecordUpdates,
   getKoreanFieldworkFieldNoteReportPreview,
+  getKoreanFieldworkFieldNoteSeedFromRecord,
   getKoreanFieldworkFieldNoteSummaries,
   KoreanFieldworkFieldNoteContinuationSeed,
   KoreanFieldworkFieldNoteEvidenceAction,
@@ -112,6 +113,8 @@ const KoreanFieldworkFieldNotePanel: React.FC<
   const [recordApplyStatusTone, setRecordApplyStatusTone] =
     useState<'success' | 'error'>('success');
   const [isApplyingToRecord, setIsApplyingToRecord] = useState(false);
+  const [recordSeedStatus, setRecordSeedStatus] =
+    useState<string>();
   const [appliedRecordUpdateSignature, setAppliedRecordUpdateSignature] =
     useState<string>();
   const [savedFollowUpActions, setSavedFollowUpActions] =
@@ -143,6 +146,16 @@ const KoreanFieldworkFieldNotePanel: React.FC<
   const checklist = useMemo(
     () => getKoreanFieldworkFieldNoteChecklist(noteInput),
     [noteInput]
+  );
+  const recordSeed = useMemo(
+    () => getKoreanFieldworkFieldNoteSeedFromRecord(
+      selectedDocument,
+      documents
+    ),
+    [documents, selectedDocument]
+  );
+  const hasRecordSeed = Object.values(recordSeed).some((value) =>
+    typeof value === 'string' && value.length > 0
   );
   const guidanceItems = useMemo(
     () => getKoreanFieldworkFieldNoteGuidance(noteInput, selectedDocument),
@@ -223,6 +236,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     setAppliedContinuationSeedId(undefined);
     setContinuationStatus(undefined);
     setRecordApplyStatus(undefined);
+    setRecordSeedStatus(undefined);
     setAppliedRecordUpdateSignature(undefined);
     setSavedFollowUpActions([]);
     setNoteInput(EMPTY_FIELD_NOTE_INPUT);
@@ -322,6 +336,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     setSavedFollowUpActions([]);
     setContinuationStatus(undefined);
     setRecordApplyStatus(undefined);
+    setRecordSeedStatus(undefined);
     setAppliedRecordUpdateSignature(undefined);
     setNoteInput((currentInput) => ({
       ...currentInput,
@@ -332,6 +347,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     setSavedFollowUpActions([]);
     setContinuationStatus(undefined);
     setRecordApplyStatus(undefined);
+    setRecordSeedStatus(undefined);
     setAppliedRecordUpdateSignature(undefined);
     setNoteInput((currentInput) =>
       mergeKoreanFieldworkFieldNoteInput(currentInput, preset.input)
@@ -343,6 +359,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     setSavedFollowUpActions([]);
     setContinuationStatus(undefined);
     setRecordApplyStatus(undefined);
+    setRecordSeedStatus(undefined);
     setAppliedRecordUpdateSignature(undefined);
     setNoteInput((currentInput) =>
       applyKoreanFieldworkFieldNoteObservationPrompt(currentInput, prompt)
@@ -354,9 +371,22 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     setSavedFollowUpActions([]);
     setContinuationStatus(undefined);
     setRecordApplyStatus(undefined);
+    setRecordSeedStatus(undefined);
     setAppliedRecordUpdateSignature(undefined);
     setNoteInput((currentInput) =>
       mergeKoreanFieldworkFieldNoteInput(currentInput, item.input)
+    );
+  };
+  const applyRecordSeed = () => {
+    if (!hasRecordSeed) return;
+
+    setSavedFollowUpActions([]);
+    setContinuationStatus(undefined);
+    setRecordApplyStatus(undefined);
+    setAppliedRecordUpdateSignature(undefined);
+    setRecordSeedStatus('기록 카드에서 불러옴');
+    setNoteInput((currentInput) =>
+      mergeKoreanFieldworkFieldNoteInput(currentInput, recordSeed)
     );
   };
   const applyNoteToRecord = async () => {
@@ -393,6 +423,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
           .catch(() => undefined);
       }
       setDraftStatus(undefined);
+      setRecordSeedStatus(undefined);
       setSavedFollowUpActions(followUpActions);
       setNoteInput(EMPTY_FIELD_NOTE_INPUT);
     } finally {
@@ -404,6 +435,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     setDraftStatus(undefined);
     setContinuationStatus(undefined);
     setRecordApplyStatus(undefined);
+    setRecordSeedStatus(undefined);
     setAppliedRecordUpdateSignature(undefined);
     setSavedFollowUpActions([]);
     if (draftKey) {
@@ -515,6 +547,15 @@ const KoreanFieldworkFieldNotePanel: React.FC<
         </View>
       )}
 
+      {!!recordSeedStatus && (
+        <View style={styles.recordSeedStatusRow} testID="fieldNoteRecordSeedStatus">
+          <MaterialIcons name="content-paste-go" size={14} color="#175cd3" />
+          <Text style={styles.recordSeedStatusLabel}>
+            {recordSeedStatus}
+          </Text>
+        </View>
+      )}
+
       <View style={styles.modeRow}>
         <ModeButton
           icon="sticky-note-2"
@@ -579,6 +620,25 @@ const KoreanFieldworkFieldNotePanel: React.FC<
           </View>
         ))}
       </View>
+
+      {hasRecordSeed && (
+        <TouchableOpacity
+          activeOpacity={0.86}
+          onPress={applyRecordSeed}
+          style={styles.recordSeedButton}
+          testID="fieldNoteLoadRecordSeed"
+        >
+          <MaterialIcons name="content-paste-go" size={17} color="#175cd3" />
+          <View style={styles.recordSeedText}>
+            <Text style={styles.recordSeedLabel} numberOfLines={1}>
+              기록 카드 불러오기
+            </Text>
+            <Text style={styles.recordSeedDetail} numberOfLines={1}>
+              설명·해석·연결 번호
+            </Text>
+          </View>
+        </TouchableOpacity>
+      )}
 
       <ScrollView
         horizontal
@@ -1334,6 +1394,23 @@ const styles = StyleSheet.create({
   recordApplyStatusLabelError: {
     color: '#b42318',
   },
+  recordSeedStatusRow: {
+    alignItems: 'center',
+    backgroundColor: '#eff8ff',
+    borderColor: '#b2ddff',
+    borderRadius: 6,
+    borderWidth: 1,
+    flexDirection: 'row',
+    marginTop: 9,
+    minHeight: 34,
+    paddingHorizontal: 8,
+  },
+  recordSeedStatusLabel: {
+    color: '#175cd3',
+    fontSize: 11,
+    fontWeight: '900',
+    marginLeft: 5,
+  },
   modeRow: {
     flexDirection: 'row',
     marginTop: 10,
@@ -1387,6 +1464,33 @@ const styles = StyleSheet.create({
   checklistDetail: {
     color: '#667085',
     fontSize: 10,
+    fontWeight: '700',
+    marginTop: 1,
+  },
+  recordSeedButton: {
+    alignItems: 'center',
+    backgroundColor: '#eff8ff',
+    borderColor: '#b2ddff',
+    borderRadius: 6,
+    borderWidth: 1,
+    flexDirection: 'row',
+    marginTop: 7,
+    minHeight: 44,
+    paddingHorizontal: 9,
+  },
+  recordSeedText: {
+    flex: 1,
+    marginLeft: 7,
+    minWidth: 0,
+  },
+  recordSeedLabel: {
+    color: '#175cd3',
+    fontSize: 12,
+    fontWeight: '900',
+  },
+  recordSeedDetail: {
+    color: '#475467',
+    fontSize: 11,
     fontWeight: '700',
     marginTop: 1,
   },

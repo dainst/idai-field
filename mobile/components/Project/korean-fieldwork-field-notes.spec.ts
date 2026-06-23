@@ -15,6 +15,7 @@ import {
   getKoreanFieldworkFieldNotePresets,
   getKoreanFieldworkFieldNoteReportPreview,
   getKoreanFieldworkNotebookEntries,
+  getKoreanFieldworkNotebookContinuationSeed,
   getKoreanFieldworkDailyLogAppendUpdates,
   getKoreanFieldworkDailyLogForOperation,
   getKoreanFieldworkFieldNoteOperation,
@@ -370,6 +371,15 @@ describe('korean-fieldwork-field-notes', () => {
       detail: '바닥면 정리 중 원형 윤곽 확인.',
       nextWork: '사진 보강.',
       needsEvidenceNumbers: true,
+    });
+
+    expect(getKoreanFieldworkNotebookContinuationSeed(entries[0])).toEqual({
+      id: 'daily-log-1-1',
+      sourceLabel: '일지',
+      input: {
+        observation: '배수로 정리.',
+        nextWork: '북쪽 트렌치 배수 상태 확인.',
+      },
     });
   });
 

@@ -25,6 +25,7 @@ import {
   getKoreanFieldworkFieldNotePresets,
   getKoreanFieldworkFieldNoteReportPreview,
   getKoreanFieldworkFieldNoteSummaries,
+  KoreanFieldworkFieldNoteContinuationSeed,
   KoreanFieldworkFieldNoteEvidenceAction,
   KoreanFieldworkFieldNoteFollowUpAction,
   KoreanFieldworkFieldNoteGuidanceItem,
@@ -51,6 +52,7 @@ interface KoreanFieldworkFieldNotePanelProps {
   operationDocument?: Document;
   existingDailyLog?: Document;
   draftScopeId?: string;
+  continuationSeed?: KoreanFieldworkFieldNoteContinuationSeed;
   allowedAddCategoryNames: string[];
   canCreateRecordMemo: boolean;
   canCreateDailyLog: boolean;
@@ -78,6 +80,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
   operationDocument,
   existingDailyLog,
   draftScopeId,
+  continuationSeed,
   allowedAddCategoryNames,
   canCreateRecordMemo,
   canCreateDailyLog,
@@ -94,6 +97,10 @@ const KoreanFieldworkFieldNotePanel: React.FC<
   const [isDraftLoaded, setIsDraftLoaded] = useState(false);
   const [draftStatus, setDraftStatus] =
     useState<'loaded'|'saved'|undefined>();
+  const [appliedContinuationSeedId, setAppliedContinuationSeedId] =
+    useState<string>();
+  const [continuationStatus, setContinuationStatus] =
+    useState<string>();
   const [savedFollowUpActions, setSavedFollowUpActions] =
     useState<KoreanFieldworkFieldNoteFollowUpAction[]>([]);
   const summaries = useMemo(
@@ -184,6 +191,8 @@ const KoreanFieldworkFieldNotePanel: React.FC<
 
     setIsDraftLoaded(false);
     setDraftStatus(undefined);
+    setAppliedContinuationSeedId(undefined);
+    setContinuationStatus(undefined);
     setSavedFollowUpActions([]);
     setNoteInput(EMPTY_FIELD_NOTE_INPUT);
 
@@ -226,6 +235,27 @@ const KoreanFieldworkFieldNotePanel: React.FC<
   ]);
 
   useEffect(() => {
+    if (
+      !continuationSeed
+      || !isDraftLoaded
+      || appliedContinuationSeedId === continuationSeed.id
+    ) {
+      return;
+    }
+
+    setSavedFollowUpActions([]);
+    setNoteInput((currentInput) =>
+      mergeKoreanFieldworkFieldNoteInput(currentInput, continuationSeed.input)
+    );
+    setContinuationStatus(`${continuationSeed.sourceLabel}에서 가져옴`);
+    setAppliedContinuationSeedId(continuationSeed.id);
+  }, [
+    appliedContinuationSeedId,
+    continuationSeed,
+    isDraftLoaded,
+  ]);
+
+  useEffect(() => {
     if (!draftKey || !isDraftLoaded) return;
 
     let isActive = true;
@@ -259,6 +289,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     value: string
   ) => {
     setSavedFollowUpActions([]);
+    setContinuationStatus(undefined);
     setNoteInput((currentInput) => ({
       ...currentInput,
       [fieldName]: value,
@@ -266,6 +297,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
   };
   const applyPreset = (preset: KoreanFieldworkFieldNotePreset) => {
     setSavedFollowUpActions([]);
+    setContinuationStatus(undefined);
     setNoteInput((currentInput) =>
       mergeKoreanFieldworkFieldNoteInput(currentInput, preset.input)
     );
@@ -274,6 +306,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     prompt: KoreanFieldworkFieldNoteObservationPrompt
   ) => {
     setSavedFollowUpActions([]);
+    setContinuationStatus(undefined);
     setNoteInput((currentInput) =>
       applyKoreanFieldworkFieldNoteObservationPrompt(currentInput, prompt)
     );
@@ -282,6 +315,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     if (!item.canLoadIntoDraft) return;
 
     setSavedFollowUpActions([]);
+    setContinuationStatus(undefined);
     setNoteInput((currentInput) =>
       mergeKoreanFieldworkFieldNoteInput(currentInput, item.input)
     );
@@ -311,6 +345,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
   const clearDraft = async () => {
     setNoteInput(EMPTY_FIELD_NOTE_INPUT);
     setDraftStatus(undefined);
+    setContinuationStatus(undefined);
     setSavedFollowUpActions([]);
     if (draftKey) {
       await removeKoreanFieldworkFieldNoteDraft(draftKey)
@@ -381,6 +416,15 @@ const KoreanFieldworkFieldNotePanel: React.FC<
               <Text style={styles.draftClearText}>지우기</Text>
             </TouchableOpacity>
           )}
+        </View>
+      )}
+
+      {!!continuationStatus && (
+        <View style={styles.continuationStatusRow} testID="fieldNoteContinuationStatus">
+          <MaterialIcons name="subdirectory-arrow-right" size={14} color="#2f5f4a" />
+          <Text style={styles.continuationStatusLabel}>
+            {continuationStatus}
+          </Text>
         </View>
       )}
 
@@ -1135,6 +1179,23 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: '900',
     marginLeft: 3,
+  },
+  continuationStatusRow: {
+    alignItems: 'center',
+    backgroundColor: '#f0fdf4',
+    borderColor: '#bbf7d0',
+    borderRadius: 6,
+    borderWidth: 1,
+    flexDirection: 'row',
+    marginTop: 9,
+    minHeight: 34,
+    paddingHorizontal: 8,
+  },
+  continuationStatusLabel: {
+    color: '#2f5f4a',
+    fontSize: 11,
+    fontWeight: '900',
+    marginLeft: 5,
   },
   modeRow: {
     flexDirection: 'row',

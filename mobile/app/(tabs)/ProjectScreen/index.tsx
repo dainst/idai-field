@@ -4,7 +4,13 @@ import {
   getKoreanFieldworkTodaySummary,
 } from 'idai-field-core';
 import { router } from 'expo-router';
-import React, { useCallback, useContext, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
   GestureResponderEvent,
   ScrollView,
@@ -36,7 +42,10 @@ import {
   getKoreanFieldworkDailyLogAppendUpdates,
   getKoreanFieldworkDailyLogForOperation,
   getKoreanFieldworkFieldNoteOperation,
+  getKoreanFieldworkNotebookContinuationSeed,
+  KoreanFieldworkFieldNoteContinuationSeed,
   KoreanFieldworkFieldNoteMode,
+  KoreanFieldworkNotebookEntry,
 } from '@/components/Project/korean-fieldwork-field-notes';
 import {
   getKoreanFieldworkCloseoutSummary,
@@ -227,6 +236,12 @@ const DocumentsList: React.FC = () => {
   const [addModalParent, setAddModalParent] = useState<Document>();
   const [selectedWorkbenchDocumentId, setSelectedWorkbenchDocumentId] =
     useState<string>();
+  const [fieldNoteContinuation, setFieldNoteContinuation] =
+    useState<{
+      documentId: string;
+      seed: KoreanFieldworkFieldNoteContinuationSeed;
+    }>();
+  const fieldNoteContinuationRequestId = useRef(0);
   const [isCreatingFieldNote, setIsCreatingFieldNote] = useState(false);
   const now = useMemo(() => new Date(), []);
 
@@ -418,6 +433,10 @@ const DocumentsList: React.FC = () => {
     ),
     [documents, selectedFieldNoteOperation]
   );
+  const selectedFieldNoteContinuationSeed = selectedWorkbenchDocument
+    && fieldNoteContinuation?.documentId === selectedWorkbenchDocument.resource.id
+    ? fieldNoteContinuation.seed
+    : undefined;
   const selectedFieldNoteOperationAllowedCategoryNames = useMemo(
     () => selectedFieldNoteOperation
       ? getAllowedAddCategoryNames(selectedFieldNoteOperation)
@@ -440,6 +459,21 @@ const DocumentsList: React.FC = () => {
     );
   const selectWorkbenchDocument = (document: Document) => {
     setSelectedWorkbenchDocumentId(document.resource.id);
+  };
+  const continueNotebookEntry = (entry: KoreanFieldworkNotebookEntry) => {
+    const targetDocument = entry.targetDocument ?? entry.sourceDocument;
+    const seed = getKoreanFieldworkNotebookContinuationSeed(entry);
+
+    fieldNoteContinuationRequestId.current += 1;
+
+    setSelectedWorkbenchDocumentId(targetDocument.resource.id);
+    setFieldNoteContinuation({
+      documentId: targetDocument.resource.id,
+      seed: {
+        ...seed,
+        id: `${seed.id}-${fieldNoteContinuationRequestId.current}`,
+      },
+    });
   };
   const openAddChildModal = (document: Document) => setAddModalParent(document);
   const closeAddChildModal = () => setAddModalParent(undefined);
@@ -551,6 +585,7 @@ const DocumentsList: React.FC = () => {
         ToastType.Success,
         `${savedIdentifiers.join(', ')}에 야장을 저장했습니다.`
       );
+      setFieldNoteContinuation(undefined);
     } catch (error) {
       showToast(
         ToastType.Error,
@@ -707,6 +742,7 @@ const DocumentsList: React.FC = () => {
               operationDocument={selectedFieldNoteOperation}
               existingDailyLog={selectedFieldNoteDailyLog}
               draftScopeId={preferencesContext.preferences.currentProject}
+              continuationSeed={selectedFieldNoteContinuationSeed}
               allowedAddCategoryNames={selectedWorkbenchAllowedAddCategoryNames}
               canCreateRecordMemo={canCreateSelectedRecordMemo}
               canCreateDailyLog={canCreateSelectedDailyLog}
@@ -721,6 +757,7 @@ const DocumentsList: React.FC = () => {
 
         <KoreanFieldworkNotebookLedger
           documents={documents}
+          onContinueEntry={continueNotebookEntry}
           onOpenDocument={selectWorkbenchDocument}
         />
 

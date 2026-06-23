@@ -47,6 +47,37 @@ describe('KoreanFieldworkNotebookLedger', () => {
     expect(handleOpenDocument).toHaveBeenCalledWith(feature);
   });
 
+  it('continues a notebook entry without opening the row directly', () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
+    const memo = createDoc('memo-1', C.PEN_MEMO, '메모 1', {
+      depicts: [feature.resource.id],
+    }, {
+      date: '2026-06-23',
+      penMemoReviewedTranscript: [
+        '[관찰 내용] 바닥면 정리 중 원형 윤곽 확인.',
+        '[다음 작업] 사진 보강.',
+      ].join('\n'),
+    });
+    const handleOpenDocument = jest.fn();
+    const handleContinueEntry = jest.fn();
+
+    const { getByTestId } = render(
+      <KoreanFieldworkNotebookLedger
+        documents={[feature, memo]}
+        onContinueEntry={handleContinueEntry}
+        onOpenDocument={handleOpenDocument}
+      />
+    );
+
+    fireEvent.press(getByTestId('fieldNotebookContinue_memo-1'));
+
+    expect(handleContinueEntry).toHaveBeenCalledWith(expect.objectContaining({
+      id: 'memo-1',
+      targetDocument: feature,
+    }));
+    expect(handleOpenDocument).not.toHaveBeenCalled();
+  });
+
   it('does not render when there are no notebook entries', () => {
     const { queryByTestId } = render(
       <KoreanFieldworkNotebookLedger

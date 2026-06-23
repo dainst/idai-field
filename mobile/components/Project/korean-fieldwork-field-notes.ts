@@ -110,6 +110,12 @@ export interface KoreanFieldworkNotebookEntry {
   input: KoreanFieldworkFieldNoteInput;
 }
 
+export interface KoreanFieldworkFieldNoteContinuationSeed {
+  id: string;
+  sourceLabel: string;
+  input: KoreanFieldworkFieldNoteInput;
+}
+
 interface KoreanFieldworkNotebookEntryWithSortKey
   extends KoreanFieldworkNotebookEntry {
   sortKey: number;
@@ -329,6 +335,14 @@ export const getKoreanFieldworkNotebookEntries = (
     .slice(0, limit)
     .map(({ sortKey, ...entry }) => entry);
 };
+
+export const getKoreanFieldworkNotebookContinuationSeed = (
+  entry: KoreanFieldworkNotebookEntry
+): KoreanFieldworkFieldNoteContinuationSeed => ({
+  id: entry.id,
+  sourceLabel: entry.sourceLabel,
+  input: getKoreanFieldworkNotebookContinuationInput(entry),
+});
 
 export const normalizeFieldNoteText = (text: string): string =>
   text.replace(/\r\n/g, '\n').trim();
@@ -1229,6 +1243,17 @@ const getNotebookEntryDetail = (
   || normalizeFieldNoteText(input.interpretation ?? '')
   || stripFieldNoteSectionLabel(stripDailyLogEntryPrefix(getLastMeaningfulLine(text)));
 
+const getKoreanFieldworkNotebookContinuationInput = (
+  entry: KoreanFieldworkNotebookEntry
+): KoreanFieldworkFieldNoteInput => removeEmptyFieldNoteInputValues(
+  trimFieldNoteInput({
+    observation: entry.input.observation || entry.detail,
+    interpretation: entry.input.interpretation,
+    nextWork: entry.input.nextWork || entry.nextWork,
+    evidenceNumbers: entry.input.evidenceNumbers || entry.evidenceNumbers,
+  })
+);
+
 const getNotebookEntryDateLabel = (
   document: Document,
   timeLabel: string | undefined
@@ -1424,6 +1449,14 @@ const trimFieldNoteInput = (
   nextWork: normalizeFieldNoteText(input.nextWork ?? ''),
   evidenceNumbers: normalizeFieldNoteText(input.evidenceNumbers ?? ''),
 });
+
+const removeEmptyFieldNoteInputValues = (
+  input: KoreanFieldworkFieldNoteInput
+): KoreanFieldworkFieldNoteInput => Object.fromEntries(
+  Object.entries(input).filter(([, value]) =>
+    typeof value === 'string' && value.length > 0
+  )
+) as KoreanFieldworkFieldNoteInput;
 
 const hasAnyFieldNoteInput = (
   input: KoreanFieldworkFieldNoteInput

@@ -334,6 +334,39 @@ describe('KoreanFieldworkFieldNotePanel', () => {
     expect(handleOpenDocument).toHaveBeenCalledWith(memo);
   });
 
+  it('loads a notebook continuation seed into the tablet note form', async () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
+
+    const { getByTestId, queryByTestId } = renderPanel(feature, {
+      continuationSeed: {
+        id: 'memo-1',
+        sourceLabel: '메모',
+        input: {
+          observation: '바닥면에서 원형 윤곽 확인.',
+          nextWork: '사진 보강 후 단면 정리.',
+        },
+      },
+    });
+
+    await waitFor(() =>
+      expect(getByTestId('fieldNoteTextInput').props.value).toBe(
+        '바닥면에서 원형 윤곽 확인.'
+      )
+    );
+
+    expect(getByTestId('fieldNoteNextWorkInput').props.value).toBe(
+      '사진 보강 후 단면 정리.'
+    );
+    expect(getByTestId('fieldNoteContinuationStatus')).toBeTruthy();
+
+    fireEvent.changeText(
+      getByTestId('fieldNoteTextInput'),
+      '사진 보강 완료 후 단면 정리 시작.'
+    );
+
+    expect(queryByTestId('fieldNoteContinuationStatus')).toBeNull();
+  });
+
   it('autosaves typed field notes and restores them for the same project record', async () => {
     const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
     const draftKey = createKoreanFieldworkFieldNoteDraftKey(

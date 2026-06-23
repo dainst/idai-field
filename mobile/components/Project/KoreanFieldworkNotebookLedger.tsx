@@ -2,6 +2,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Document } from 'idai-field-core';
 import React, { useMemo } from 'react';
 import {
+  GestureResponderEvent,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -17,6 +18,7 @@ interface KoreanFieldworkNotebookLedgerProps {
   documents: Document[];
   maxEntries?: number;
   onOpenDocument: (document: Document) => void;
+  onContinueEntry?: (entry: KoreanFieldworkNotebookEntry) => void;
 }
 
 const KoreanFieldworkNotebookLedger: React.FC<
@@ -25,6 +27,7 @@ const KoreanFieldworkNotebookLedger: React.FC<
   documents,
   maxEntries = 5,
   onOpenDocument,
+  onContinueEntry,
 }) => {
   const entries = useMemo(
     () => getKoreanFieldworkNotebookEntries(documents, maxEntries),
@@ -58,6 +61,7 @@ const KoreanFieldworkNotebookLedger: React.FC<
         <NotebookEntryRow
           entry={entry}
           key={entry.id}
+          onContinueEntry={onContinueEntry}
           onOpenDocument={onOpenDocument}
         />
       ))}
@@ -67,9 +71,14 @@ const KoreanFieldworkNotebookLedger: React.FC<
 
 const NotebookEntryRow: React.FC<{
   entry: KoreanFieldworkNotebookEntry;
+  onContinueEntry?: (entry: KoreanFieldworkNotebookEntry) => void;
   onOpenDocument: (document: Document) => void;
-}> = ({ entry, onOpenDocument }) => {
+}> = ({ entry, onContinueEntry, onOpenDocument }) => {
   const documentToOpen = entry.targetDocument ?? entry.sourceDocument;
+  const continueEntry = (event?: GestureResponderEvent) => {
+    event?.stopPropagation?.();
+    onContinueEntry?.(entry);
+  };
 
   return (
     <TouchableOpacity
@@ -125,6 +134,17 @@ const NotebookEntryRow: React.FC<{
           )}
         </View>
       </View>
+      {!!onContinueEntry && (
+        <TouchableOpacity
+          activeOpacity={0.86}
+          onPress={continueEntry}
+          style={styles.continueButton}
+          testID={`fieldNotebookContinue_${entry.id}`}
+        >
+          <MaterialIcons name="edit-note" size={15} color="#2f5f4a" />
+          <Text style={styles.continueButtonText}>이어쓰기</Text>
+        </TouchableOpacity>
+      )}
       <MaterialIcons name="chevron-right" size={18} color="#667085" />
     </TouchableOpacity>
   );
@@ -304,6 +324,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff1f3',
     borderColor: '#fecdca',
     color: colors.danger,
+  },
+  continueButton: {
+    alignItems: 'center',
+    backgroundColor: '#f0fdf4',
+    borderColor: '#bbf7d0',
+    borderRadius: 5,
+    borderWidth: 1,
+    flexDirection: 'row',
+    minHeight: 30,
+    paddingHorizontal: 7,
+  },
+  continueButtonText: {
+    color: '#2f5f4a',
+    fontSize: 10,
+    fontWeight: '900',
+    marginLeft: 3,
   },
 });
 

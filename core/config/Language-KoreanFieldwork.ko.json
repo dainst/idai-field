@@ -12,7 +12,7 @@
   },
   "categories": {
     "FieldRecordQualityReview": {
-      "label": "기록 보완 점검",
+      "label": "기록 보완 메모",
       "fields": {
         "qualityCorrectionBasis": {
           "label": "수정·보완 근거"
@@ -21,7 +21,7 @@
           "label": "보완 단계"
         },
         "reviewedRecordUnit": {
-          "label": "검수 대상 기록"
+          "label": "보완 대상 기록"
         }
       }
     },
@@ -55,7 +55,7 @@
           "label": "검수 대상"
         },
         "mediaQualityCheck": {
-          "label": "매체 기록 확인"
+          "label": "매체 기록 메모"
         },
         "operationRoleResponsibility": {
           "label": "작업 역할·책임"
@@ -409,7 +409,7 @@
           "label": "디지털 원자료 보존"
         },
         "fieldRecordQuality": {
-          "label": "기록 확인"
+          "label": "기록 메모"
         },
         "operationRoleResponsibility": {
           "label": "작업 역할·책임"
@@ -430,7 +430,7 @@
           "label": "현장 DB 운영위험"
         },
         "digitalSurveyQualityControl": {
-          "label": "디지털 기록 확인"
+          "label": "디지털 기록 메모"
         },
         "investigationRecordHandover": {
           "label": "조사자료 인계"
@@ -439,7 +439,7 @@
           "label": "개인 야장 공적기록화"
         },
         "recordCreationTiming": {
-          "label": "기록 생성 시점"
+          "label": "기록 시점"
         },
         "reportCrossCheck": {
           "label": "보고서 교차검토"
@@ -474,10 +474,10 @@
           "label": "조사 과정표"
         },
         "fieldRecordQuality": {
-          "label": "기록 확인"
+          "label": "기록 메모"
         },
         "recordCreationTiming": {
-          "label": "기록 생성 시점"
+          "label": "기록 시점"
         },
         "verificationState": {
           "label": "기록 상태"
@@ -488,10 +488,10 @@
       "label": "지표조사",
       "fields": {
         "fieldRecordQuality": {
-          "label": "기록 확인"
+          "label": "기록 메모"
         },
         "recordCreationTiming": {
-          "label": "기록 생성 시점"
+          "label": "기록 시점"
         },
         "surfaceSurveyObservation": {
           "label": "지표조사 현장관찰"
@@ -625,10 +625,10 @@
           "label": "참고 배경지도 메모"
         },
         "fieldRecordQuality": {
-          "label": "기록 확인"
+          "label": "기록 메모"
         },
         "recordCreationTiming": {
-          "label": "기록 생성 시점"
+          "label": "기록 시점"
         },
         "verificationState": {
           "label": "기록 상태"
@@ -666,13 +666,13 @@
           "label": "유구 성격"
         },
         "fieldRecordQuality": {
-          "label": "기록 확인"
+          "label": "기록 메모"
         },
         "settlementSpatialInterpretation": {
           "label": "취락 공간 해석"
         },
         "recordCreationTiming": {
-          "label": "기록 생성 시점"
+          "label": "기록 시점"
         },
         "termRelation": {
           "label": "용어 관계"
@@ -728,7 +728,7 @@
           "label": "체크리스트 메모"
         },
         "fieldRecordQuality": {
-          "label": "기록 확인"
+          "label": "기록 메모"
         },
         "typologyArgument": {
           "label": "형식 논증"
@@ -989,7 +989,7 @@
           "label": "성곽 복원·중건 근거"
         },
         "recordCreationTiming": {
-          "label": "기록 생성 시점"
+          "label": "기록 시점"
         },
         "termRelation": {
           "label": "용어 관계"
@@ -1042,7 +1042,7 @@
           "label": "체크리스트 메모"
         },
         "fieldRecordQuality": {
-          "label": "기록 확인"
+          "label": "기록 메모"
         },
         "chronologyArgument": {
           "label": "편년 논증"
@@ -1117,7 +1117,7 @@
           "label": "저습지 극미지형 기록"
         },
         "recordCreationTiming": {
-          "label": "기록 생성 시점"
+          "label": "기록 시점"
         },
         "termRelation": {
           "label": "용어 관계"
@@ -1137,7 +1137,7 @@
       "label": "유물",
       "fields": {
         "fieldRecordQuality": {
-          "label": "기록 확인"
+          "label": "기록 메모"
         },
         "typologyArgument": {
           "label": "형식 논증"
@@ -1284,7 +1284,7 @@
           "label": "자기요장 요도구 맥락"
         },
         "recordCreationTiming": {
-          "label": "기록 생성 시점"
+          "label": "기록 시점"
         },
         "termRelation": {
           "label": "용어 관계"
@@ -1304,13 +1304,13 @@
       "label": "시료",
       "fields": {
         "fieldRecordQuality": {
-          "label": "기록 확인"
+          "label": "기록 메모"
         },
         "fieldOnlyMissingCheck": {
           "label": "현장시점 누락점검"
         },
         "recordCreationTiming": {
-          "label": "기록 생성 시점"
+          "label": "기록 시점"
         },
         "samplePurpose": {
           "label": "시료 목적"
@@ -1417,7 +1417,7 @@
           "label": "매체 증거 역할"
         },
         "mediaQualityCheck": {
-          "label": "매체 기록 확인"
+          "label": "매체 기록 메모"
         },
         "digitalSourcePreservation": {
           "label": "디지털 원자료 보존"
@@ -1546,10 +1546,10 @@
           "label": "토색 메모"
         },
         "fieldRecordQuality": {
-          "label": "기록 확인"
+          "label": "기록 메모"
         },
         "recordCreationTiming": {
-          "label": "기록 생성 시점"
+          "label": "기록 시점"
         },
         "verificationState": {
           "label": "기록 상태"
@@ -1596,10 +1596,10 @@
           "label": "촬영 메모"
         },
         "fieldRecordQuality": {
-          "label": "기록 확인"
+          "label": "기록 메모"
         },
         "recordCreationTiming": {
-          "label": "기록 생성 시점"
+          "label": "기록 시점"
         },
         "verificationState": {
           "label": "기록 상태"
@@ -1677,7 +1677,7 @@
           "label": "매체 증거 역할"
         },
         "mediaQualityCheck": {
-          "label": "매체 기록 확인"
+          "label": "매체 기록 메모"
         },
         "photoCaptureSafetyReview": {
           "label": "사진촬영 안전검토"

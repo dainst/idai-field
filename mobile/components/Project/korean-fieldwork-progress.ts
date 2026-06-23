@@ -199,7 +199,7 @@ const getProgressStage = (
       'investigation',
       'warning',
       '제토 뒤 확인한 유구를 조사구역 아래에 먼저 기록하세요.',
-      '검출 유구 기록'
+      '유구 기록'
     );
   }
 
@@ -228,7 +228,7 @@ const getProgressStage = (
         recordingStatus === 'candidate' ? 'warning' : 'info',
         metrics.checklistTotal > 0
           ? `조사 과정 ${metrics.checklistDone}/${metrics.checklistTotal}을 현장에서 확인하세요.`
-          : '검출된 유구의 경계와 충전토를 이어서 기록하세요.',
+          : '유구의 경계와 충전토를 이어서 기록하세요.',
         '조사 과정 열기'
       );
     }

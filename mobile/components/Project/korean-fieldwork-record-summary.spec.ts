@@ -82,8 +82,8 @@ describe('Korean fieldwork record summary', () => {
 
     expect(getKoreanFieldworkRecordStatusChips(feature)).toEqual([
       { label: '수혈', tone: 'info' },
-      { label: '검출 유구', tone: 'warning' },
-      { label: '현장 작성', tone: 'success' },
+      { label: '조사 전', tone: 'warning' },
+      { label: '추가 기록', tone: 'info' },
       { label: '약도', tone: 'warning' },
     ]);
   });
@@ -92,11 +92,11 @@ describe('Korean fieldwork record summary', () => {
     const trench = createDoc('trench-1', C.TRENCH, 'T1', {}, {
       recordCreationTiming: 'duringFieldwork',
       verificationState: 'pendingDecision',
-      fieldRecordQuality: ['immediateRecording', 'factualAccuracy'],
+      fieldRecordQuality: ['immediateRecording', 'observationInterpretationSeparated'],
     });
 
     expect(getKoreanFieldworkRecordStatusChips(trench)).toContainEqual({
-      label: '기록 확인 2',
+      label: '기록 메모 2',
       tone: 'success',
     });
   });

@@ -4,10 +4,10 @@ import React from 'react';
 import {
   FlatList,
   Modal,
+  Pressable,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
 } from 'react-native';
 import Button from '../../Button';
 import Card from '../../Card';
@@ -65,8 +65,8 @@ const ChoiceModal: React.FC<ChoiceModalProps> = ({
           <Ionicons
             name={
               choices[item.label].selected
-                ? 'md-radio-button-on-outline'
-                : 'md-radio-button-off-outline'
+                ? 'radio-button-on-outline'
+                : 'radio-button-off-outline'
             }
             size={ICON_SIZE}
             color={ICON_COLOR}
@@ -87,8 +87,16 @@ const ChoiceModal: React.FC<ChoiceModalProps> = ({
       transparent
       visible={true}
     >
-      <View style={styles.container}>
-        <Card style={styles.card}>
+      <Pressable
+        onPress={resetValues}
+        style={styles.container}
+        testID="choiceModalBackdrop"
+      >
+        <Pressable
+          onPress={(event) => event.stopPropagation()}
+          style={styles.cardShell}
+        >
+          <Card style={styles.card}>
           <TitleBar
             title={
               <Heading>
@@ -119,24 +127,30 @@ const ChoiceModal: React.FC<ChoiceModalProps> = ({
               testID="submitBtnChoiceModal"
             />
           )}
-        </Card>
-      </View>
+          </Card>
+        </Pressable>
+      </Pressable>
     </Modal>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(17, 24, 39, 0.42)',
     flex: 1,
     flexDirection: 'column',
-    marginTop: 200,
-    alignItems: 'center',
+    justifyContent: 'center',
   },
   card: {
     padding: 10,
     height: '60%',
     width: '60%',
     opacity: 0.9,
+  },
+  cardShell: {
+    alignItems: 'center',
+    width: '100%',
   },
 });
 

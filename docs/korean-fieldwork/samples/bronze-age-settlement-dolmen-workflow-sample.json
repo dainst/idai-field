@@ -20,9 +20,7 @@
         "relations": {},
         "fieldRecordQuality": [
           "immediateRecording",
-          "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "researchQuestionFit"
+          "observationInterpretationSeparated"
         ],
         "recordCreationTiming": "duringFieldwork",
         "dailyLogContent": [
@@ -56,7 +54,9 @@
         "shortDescription": "청동기 취락·묘역 복합 구역",
         "category": "FeatureGroup",
         "relations": {
-          "isRecordedIn": ["op-bronze-settlement-001"]
+          "isRecordedIn": [
+            "op-bronze-settlement-001"
+          ]
         },
         "description": "저평지 취락 구역과 낮은 구릉 말단의 고인돌 후보, 외곽 도랑 후보를 한 조사구 안에서 관리하는 샘플.",
         "featurePackage": [
@@ -66,8 +66,8 @@
         ],
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "reproducibleRecord",
-          "crossReviewNeeded"
+          "immediateRecording",
+          "correctionNeeded"
         ],
         "settlementSpatialInterpretation": [
           "dwellingOverlapReviewed",
@@ -108,8 +108,12 @@
         "shortDescription": "송국리식 후보 수혈건물지",
         "category": "Feature",
         "relations": {
-          "isRecordedIn": ["op-bronze-settlement-001"],
-          "liesWithin": ["fg-bronze-settlement-001"]
+          "isRecordedIn": [
+            "op-bronze-settlement-001"
+          ],
+          "liesWithin": [
+            "fg-bronze-settlement-001"
+          ]
         },
         "description": "중앙 타원형 구덩이와 양단 주혈이 보이지만 노지 여부와 기능은 확정하지 않고, 주거·저장·작업 기능 후보와 취락·묘역 관계를 함께 남기는 사례.",
         "featurePackage": [
@@ -118,8 +122,7 @@
         ],
         "fieldRecordQuality": [
           "immediateRecording",
-          "observationInterpretationSeparated",
-          "criteriaConsistency"
+          "observationInterpretationSeparated"
         ],
         "fieldOnlyMissingCheck": [
           "featureOutline",
@@ -138,7 +141,7 @@
           "sectionCrossCheck",
           "confirmedBeforeInternalExcavation"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "pitDwellingExposureBaulk": [
           "initialStratigraphyChecked",
           "shoulderLineRecorded",
@@ -320,8 +323,12 @@
         "shortDescription": "고인돌·지석묘 구조 후보",
         "category": "Feature",
         "relations": {
-          "isRecordedIn": ["op-bronze-settlement-001"],
-          "liesWithin": ["fg-bronze-settlement-001"]
+          "isRecordedIn": [
+            "op-bronze-settlement-001"
+          ],
+          "liesWithin": [
+            "fg-bronze-settlement-001"
+          ]
         },
         "description": "덮개돌과 받침돌, 하부 무덤방 후보가 보이지만 후대 묘표석 재사용과 이전·복원 가능성을 함께 남기는 사례.",
         "featurePackage": [
@@ -329,8 +336,7 @@
         ],
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "fieldOnlyMissingCheck": [
           "featureOutline",
@@ -339,7 +345,7 @@
           "orientationRecorded",
           "sameDayReview"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "dolmenStructureContext": [
           "capstoneRecorded",
           "supportingStoneRecorded",
@@ -390,8 +396,12 @@
         "shortDescription": "환호 후보 외곽 도랑",
         "category": "Feature",
         "relations": {
-          "isRecordedIn": ["op-bronze-settlement-001"],
-          "liesWithin": ["fg-bronze-settlement-001"]
+          "isRecordedIn": [
+            "op-bronze-settlement-001"
+          ],
+          "liesWithin": [
+            "fg-bronze-settlement-001"
+          ]
         },
         "description": "V자 단면과 출입구 후보가 있으나 방어시설로 고정하지 않고 경계·배수·의례 가능성, 자연퇴적과 재굴착 흔적을 함께 남긴다.",
         "featurePackage": [
@@ -399,8 +409,7 @@
         ],
         "fieldRecordQuality": [
           "immediateRecording",
-          "observationInterpretationSeparated",
-          "researchQuestionFit"
+          "observationInterpretationSeparated"
         ],
         "fieldOnlyMissingCheck": [
           "featureOutline",
@@ -409,7 +418,7 @@
           "drawingLineReason",
           "sameDayReview"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "bronzeAgeEnclosureInterpretation": [
           "defensiveCandidate",
           "boundaryCandidate",
@@ -453,8 +462,12 @@
         "shortDescription": "수혈건물지 자연과학 시료 묶음",
         "category": "Sample",
         "relations": {
-          "isRecordedIn": ["op-bronze-settlement-001"],
-          "liesWithin": ["feature-bronze-dwelling-001"]
+          "isRecordedIn": [
+            "op-bronze-settlement-001"
+          ],
+          "liesWithin": [
+            "feature-bronze-dwelling-001"
+          ]
         },
         "description": "화재·매몰·사용면 후보가 남아 있는 수혈건물지에서 AMS, 고고지자기, 식물규산체, 부유법, 수종분석, 레플리카·사용흔·전분·태토·지방산 분석 후보를 채취 시점과 오염위험으로 분리해 관리한다.",
         "fieldOnlyMissingCheck": [
@@ -509,14 +522,17 @@
         "shortDescription": "무문토기·민무늬토기 이칭 검토 토기편",
         "category": "Find",
         "relations": {
-          "isRecordedIn": ["op-bronze-settlement-001"],
-          "liesWithin": ["feature-bronze-dwelling-001"]
+          "isRecordedIn": [
+            "op-bronze-settlement-001"
+          ],
+          "liesWithin": [
+            "feature-bronze-dwelling-001"
+          ]
         },
         "description": "중앙 타원형 구덩이 인근 바닥면에서 확인된 토기편. 무문토기·민무늬토기 이칭과 구순각목·공렬 표지를 기록하되 편년은 층위·공반·절대연대와 함께 보류한다.",
         "fieldRecordQuality": [
           "immediateRecording",
-          "observationInterpretationSeparated",
-          "reproducibleRecord"
+          "observationInterpretationSeparated"
         ],
         "fieldOnlyMissingCheck": [
           "preRemovalCondition",
@@ -604,7 +620,7 @@
           "reportOutputChecked",
           "valueListCandidate"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "verificationState": "candidate"
       }
     }

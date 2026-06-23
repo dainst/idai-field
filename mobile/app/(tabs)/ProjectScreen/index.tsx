@@ -762,7 +762,7 @@ const DocumentsList: React.FC = () => {
           <Metric label="전체 기록" value={documents.length} icon="inventory-2" />
           <Metric label="오늘 일지" value={todaySummary.dailyLogs.length} icon="event-note" />
           <Metric
-            label="검출 유구"
+            label="유구"
             value={todaySummary.featureCandidates.length}
             icon="add-location-alt"
           />

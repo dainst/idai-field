@@ -55,13 +55,14 @@
         "shortDescription": "지표조사 범위 확인 작업",
         "category": "Operation",
         "relations": {
-          "isRecordedIn": ["project-surface-scope-001"]
+          "isRecordedIn": [
+            "project-surface-scope-001"
+          ]
         },
         "fieldRecordQuality": [
           "immediateRecording",
           "observationInterpretationSeparated",
-          "reproducibleRecord",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "recordCreationTiming": "duringFieldwork",
         "dailyLogContent": [
@@ -93,14 +94,14 @@
         "shortDescription": "사업구역·영향권 지표조사",
         "category": "Survey",
         "relations": {
-          "isRecordedIn": ["op-surface-scope-001"]
+          "isRecordedIn": [
+            "op-surface-scope-001"
+          ]
         },
         "description": "본선 확장 구간, 임시 진입로, 사토 예정지, 저류지 주변 영향권을 함께 걸어 표면 유물 부재 구간과 산록부 석재·점토 자원 후보를 구분해 기록한다.",
         "fieldRecordQuality": [
           "immediateRecording",
-          "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "researchQuestionFit"
+          "observationInterpretationSeparated"
         ],
         "recordCreationTiming": "duringFieldwork",
         "surfaceSurveyPreparationCheck": [
@@ -299,16 +300,19 @@
         "shortDescription": "밭둑 절개면 표면 채집 토기편",
         "category": "Find",
         "relations": {
-          "isRecordedIn": ["op-surface-scope-001"],
-          "liesWithin": ["survey-surface-scope-001"]
+          "isRecordedIn": [
+            "op-surface-scope-001"
+          ],
+          "liesWithin": [
+            "survey-surface-scope-001"
+          ]
         },
         "description": "밭둑 절개면에서 단독 확인된 토기편. 산포 범위는 불충분하지만 위치와 부착토, 근경·원경 사진을 남겨 후속 확인조사의 단서로 유지한다.",
         "fieldRecordQuality": [
           "immediateRecording",
-          "observationInterpretationSeparated",
-          "reproducibleRecord"
+          "observationInterpretationSeparated"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "fieldOnlyMissingCheck": [
           "numberedBeforeCollection",
           "photoAngleAndScale",

@@ -22,15 +22,33 @@
         "fieldRecordQuality": [
           "immediateRecording",
           "observationInterpretationSeparated",
-          "fieldToReportContinuity",
-          "excavatorReportAuthorLink",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "recordCreationTiming": "sameDayFieldRecord",
-        "dailyLogContent": ["workDateWeather", "staffRoles", "findSampleCollection", "photoDrawingNumbers"],
-        "dailyLogReview": ["sameDayWritten", "photoDrawingCrossChecked", "findListCrossChecked", "sampleListCrossChecked"],
-        "digitalSourcePreservation": ["originalPhoto", "originalDrawing", "twoLocationBackup"],
-        "reportCrossCheck": ["manuscript", "drawingRegister", "photoRegister", "artifactRegister", "sampleRegister"]
+        "dailyLogContent": [
+          "workDateWeather",
+          "staffRoles",
+          "findSampleCollection",
+          "photoDrawingNumbers"
+        ],
+        "dailyLogReview": [
+          "sameDayWritten",
+          "photoDrawingCrossChecked",
+          "findListCrossChecked",
+          "sampleListCrossChecked"
+        ],
+        "digitalSourcePreservation": [
+          "originalPhoto",
+          "originalDrawing",
+          "twoLocationBackup"
+        ],
+        "reportCrossCheck": [
+          "manuscript",
+          "drawingRegister",
+          "photoRegister",
+          "artifactRegister",
+          "sampleRegister"
+        ]
       }
     },
     {
@@ -40,14 +58,14 @@
         "shortDescription": "수혈건물지 후보",
         "category": "Feature",
         "relations": {
-          "isRecordedIn": ["op-2026-06-19"]
+          "isRecordedIn": [
+            "op-2026-06-19"
+          ]
         },
         "description": "표토 제거와 동시에 어깨선이 보였고, 건조 뒤에는 유구선이 약해질 위험이 있어 최초 노출 사진과 표시 전·후 사진을 모두 남긴다.",
         "fieldRecordQuality": [
           "immediateRecording",
-          "observationInterpretationSeparated",
-          "featureSpecificNarrative",
-          "reproducibleRecord"
+          "observationInterpretationSeparated"
         ],
         "fieldOnlyMissingCheck": [
           "featureOutline",
@@ -77,7 +95,7 @@
           "exceptionReasonRecorded",
           "pendingDecision"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "pitDwellingExposureBaulk": [
           "initialStratigraphyChecked",
           "shoulderLineRecorded",
@@ -134,26 +152,43 @@
         "shortDescription": "상부 내부토",
         "category": "FeatureSegment",
         "relations": {
-          "liesWithin": ["feature-pit-building-001"],
-          "isRecordedIn": ["op-2026-06-19"]
+          "liesWithin": [
+            "feature-pit-building-001"
+          ],
+          "isRecordedIn": [
+            "op-2026-06-19"
+          ]
         },
-        "fieldRecordQuality": ["observationInterpretationSeparated", "criteriaConsistency"],
+        "fieldRecordQuality": [
+          "observationInterpretationSeparated"
+        ],
         "fieldOnlyMissingCheck": [
           "stratigraphicBoundary",
           "drawingLineReason",
           "elevationRecorded",
           "sameDayReview"
         ],
-        "firstExposureRecord": ["sectionCrossCheck", "dryingRisk", "rewettingLimit"],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "firstExposureRecord": [
+          "sectionCrossCheck",
+          "dryingRisk",
+          "rewettingLimit"
+        ],
+        "recordCreationTiming": "sameDayFieldRecord",
         "stratigraphicDivisionBasis": [
           "particleSize",
           "grainSizeComposition",
           "mixedCondition",
           "culturalLayer"
         ],
-        "soilParticleFieldCheck": ["wetSmearChecked", "touchTestChecked", "referenceSampleCompared"],
-        "layerBoundarySurfaceRecord": ["featureDetectionSurface", "clarityRecorded"],
+        "soilParticleFieldCheck": [
+          "wetSmearChecked",
+          "touchTestChecked",
+          "referenceSampleCompared"
+        ],
+        "layerBoundarySurfaceRecord": [
+          "featureDetectionSurface",
+          "clarityRecorded"
+        ],
         "verificationState": "candidate"
       }
     },
@@ -164,18 +199,28 @@
         "shortDescription": "바닥면 출토 토기편",
         "category": "Find",
         "relations": {
-          "liesWithin": ["feature-pit-building-001"],
-          "isRecordedIn": ["op-2026-06-19"]
+          "liesWithin": [
+            "feature-pit-building-001"
+          ],
+          "isRecordedIn": [
+            "op-2026-06-19"
+          ]
         },
-        "fieldRecordQuality": ["immediateRecording", "reproducibleRecord"],
+        "fieldRecordQuality": [
+          "immediateRecording"
+        ],
         "fieldOnlyMissingCheck": [
           "preRemovalCondition",
           "spatialLocation",
           "elevationRecorded",
           "numberedBeforeCollection"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
-        "artifactHandlingWorkflow": ["fieldCollection", "findConditionRecord", "packingTransport"],
+        "recordCreationTiming": "sameDayFieldRecord",
+        "artifactHandlingWorkflow": [
+          "fieldCollection",
+          "findConditionRecord",
+          "packingTransport"
+        ],
         "artifactFieldRestorationLink": [
           "collectionPhotoSeries",
           "preCleaningConditionPhoto",
@@ -192,8 +237,16 @@
           "collectionStatusRecorded",
           "pendingDecision"
         ],
-        "artifactQuantityBasis": ["physicalItemCount", "sameObjectConfirmed", "quantityEvidencePhoto"],
-        "potteryProductionLifeRecord": ["forming", "use", "breakage"],
+        "artifactQuantityBasis": [
+          "physicalItemCount",
+          "sameObjectConfirmed",
+          "quantityEvidencePhoto"
+        ],
+        "potteryProductionLifeRecord": [
+          "forming",
+          "use",
+          "breakage"
+        ],
         "verificationState": "observedInField"
       }
     },
@@ -204,19 +257,29 @@
         "shortDescription": "탄화목재 시료",
         "category": "Sample",
         "relations": {
-          "liesWithin": ["feature-pit-building-001"],
-          "isRecordedIn": ["op-2026-06-19"]
+          "liesWithin": [
+            "feature-pit-building-001"
+          ],
+          "isRecordedIn": [
+            "op-2026-06-19"
+          ]
         },
         "description": "화재 수혈건물지 후보의 탄화재 방향성과 연대 검토를 함께 확인하기 위한 시료.",
-        "fieldRecordQuality": ["immediateRecording", "researchQuestionFit"],
+        "fieldRecordQuality": [
+          "immediateRecording",
+          "observationInterpretationSeparated"
+        ],
         "fieldOnlyMissingCheck": [
           "samplePointMapped",
           "sampleConditionControlled",
           "spatialLocation",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
-        "samplePurpose": ["absoluteDating", "archaeobotany"],
+        "recordCreationTiming": "sameDayFieldRecord",
+        "samplePurpose": [
+          "absoluteDating",
+          "archaeobotany"
+        ],
         "findSampleResearchScope": [
           "charcoal",
           "organicSample",
@@ -240,10 +303,18 @@
         "shortDescription": "최초 노출 유구선 사진",
         "category": "Photo",
         "relations": {
-          "isRecordedIn": ["op-2026-06-19"],
-          "isDepictedIn": ["feature-pit-building-001"]
+          "isRecordedIn": [
+            "op-2026-06-19"
+          ],
+          "isDepictedIn": [
+            "feature-pit-building-001"
+          ]
         },
-        "mediaEvidenceRole": ["workStageRecord", "featureOutlineEvidence", "reportPlateCandidate"],
+        "mediaEvidenceRole": [
+          "workStageRecord",
+          "featureOutlineEvidence",
+          "reportPlateCandidate"
+        ],
         "mediaQualityCheck": [
           "targetPurposeClear",
           "directionRecorded",
@@ -260,9 +331,22 @@
           "alternativeCaptureMethod",
           "safetyManagerChecked"
         ],
-        "digitalSourcePreservation": ["originalPhoto", "originalImage", "twoLocationBackup"],
-        "gpsPhotoLinkRecord": ["currentPositionLinked", "photoFilenameRecorded", "digitalMapLinked"],
-        "reportCrossCheck": ["photoRegister", "manuscript", "numberConversionTable", "sourceMediaBackup"]
+        "digitalSourcePreservation": [
+          "originalPhoto",
+          "originalImage",
+          "twoLocationBackup"
+        ],
+        "gpsPhotoLinkRecord": [
+          "currentPositionLinked",
+          "photoFilenameRecorded",
+          "digitalMapLinked"
+        ],
+        "reportCrossCheck": [
+          "photoRegister",
+          "manuscript",
+          "numberConversionTable",
+          "sourceMediaBackup"
+        ]
       }
     },
     {
@@ -272,11 +356,19 @@
         "shortDescription": "수혈건물지 단계별·다각도 사진 묶음",
         "category": "Photo",
         "relations": {
-          "isRecordedIn": ["op-2026-06-19"],
-          "isDepictedIn": ["feature-pit-building-001"]
+          "isRecordedIn": [
+            "op-2026-06-19"
+          ],
+          "isDepictedIn": [
+            "feature-pit-building-001"
+          ]
         },
         "description": "평면확인, 1~3차 노출, 외부시설 조사까지 같은 촬영지점·위치를 유지하되 직상방 사진만으로 끝내지 않고 사선·측면, 원경·근경, 토층 전체·분할·세부 사진을 함께 남긴다.",
-        "mediaEvidenceRole": ["workStageRecord", "featureOutlineEvidence", "stratigraphicEvidence"],
+        "mediaEvidenceRole": [
+          "workStageRecord",
+          "featureOutlineEvidence",
+          "stratigraphicEvidence"
+        ],
         "mediaQualityCheck": [
           "targetPurposeClear",
           "directionRecorded",
@@ -291,9 +383,21 @@
           "originalUncroppedPreserved",
           "registerNumberMatched"
         ],
-        "photoCaptureSafetyReview": ["droneCapture", "photoAngleSupplementNeeded", "safetyManagerChecked"],
-        "digitalSourcePreservation": ["originalPhoto", "originalImage", "twoLocationBackup"],
-        "reportCrossCheck": ["photoRegister", "manuscript", "sourceMediaBackup"]
+        "photoCaptureSafetyReview": [
+          "droneCapture",
+          "photoAngleSupplementNeeded",
+          "safetyManagerChecked"
+        ],
+        "digitalSourcePreservation": [
+          "originalPhoto",
+          "originalImage",
+          "twoLocationBackup"
+        ],
+        "reportCrossCheck": [
+          "photoRegister",
+          "manuscript",
+          "sourceMediaBackup"
+        ]
       }
     },
     {
@@ -303,8 +407,14 @@
         "shortDescription": "1차 평면도",
         "category": "Drawing",
         "relations": {
-          "isRecordedIn": ["op-2026-06-19"],
-          "isDepictedIn": ["feature-pit-building-001", "find-pit-building-001-001", "sample-pit-building-001-charcoal-001"]
+          "isRecordedIn": [
+            "op-2026-06-19"
+          ],
+          "isDepictedIn": [
+            "feature-pit-building-001",
+            "find-pit-building-001-001",
+            "sample-pit-building-001-charcoal-001"
+          ]
         },
         "mediaEvidenceRole": [
           "workStageRecord",
@@ -337,7 +447,11 @@
           "fieldResearcherReviewed",
           "registerNumberMatched"
         ],
-        "digitalSourcePreservation": ["originalDrawing", "electronicNotebookOriginal", "twoLocationBackup"],
+        "digitalSourcePreservation": [
+          "originalDrawing",
+          "electronicNotebookOriginal",
+          "twoLocationBackup"
+        ],
         "reportCrossCheck": [
           "drawingRegister",
           "artifactRegister",

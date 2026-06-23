@@ -351,7 +351,7 @@ const appendExcavationPriorityTasks = (
   if (!feature) {
     tasks.push(createFeatureTask(
       featureParent,
-      '검출 유구 기록',
+      '유구 기록',
       '제토 뒤 확인한 유구의 성격, 경계, 조사 전 사진 흐름을 시작하세요.'
     ));
     return;
@@ -425,7 +425,7 @@ const createTrenchTask = (
 
 const createFeatureTask = (
   parentDocument: Document,
-  title = '검출 유구 추가',
+  title = '유구 추가',
   detail = `${parentDocument.resource.identifier} 아래에서 새 유구 기록을 시작하세요.`
 ): KoreanFieldworkPriorityTask => ({
   id: 'create-detected-feature',

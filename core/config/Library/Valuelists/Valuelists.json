@@ -31044,22 +31044,12 @@
     "createdBy": "codex",
     "creationDate": "2026-06-19",
     "values": {
-      "planningStage": {},
       "duringFieldwork": {},
-      "sameDayFieldRecord": {},
-      "fieldOnlyObservation": {},
-      "handoverStage": {},
-      "reportStageGenerated": {},
-      "postExcavationDerived": {}
+      "sameDayFieldRecord": {}
     },
     "order": [
-      "planningStage",
-      "duringFieldwork",
       "sameDayFieldRecord",
-      "fieldOnlyObservation",
-      "handoverStage",
-      "reportStageGenerated",
-      "postExcavationDerived"
+      "duringFieldwork"
     ]
   },
   "KoreanFieldwork-verificationState": {
@@ -31088,34 +31078,14 @@
     "createdBy": "codex",
     "creationDate": "2026-06-19",
     "values": {
-      "factualAccuracy": {},
       "immediateRecording": {},
-      "memoryRelianceRisk": {},
       "observationInterpretationSeparated": {},
-      "criteriaConsistency": {},
-      "reproducibleRecord": {},
-      "researchQuestionFit": {},
-      "featureSpecificNarrative": {},
-      "fieldToReportContinuity": {},
-      "excavatorReportAuthorLink": {},
-      "crossReviewNeeded": {},
-      "correctionNeeded": {},
-      "pendingDecision": {}
+      "correctionNeeded": {}
     },
     "order": [
-      "factualAccuracy",
       "immediateRecording",
-      "memoryRelianceRisk",
       "observationInterpretationSeparated",
-      "criteriaConsistency",
-      "reproducibleRecord",
-      "researchQuestionFit",
-      "featureSpecificNarrative",
-      "fieldToReportContinuity",
-      "excavatorReportAuthorLink",
-      "crossReviewNeeded",
-      "correctionNeeded",
-      "pendingDecision"
+      "correctionNeeded"
     ]
   },
   "KoreanFieldwork-excavationControlSafety": {
@@ -36640,18 +36610,12 @@
     "values": {
       "candidate": {},
       "investigating": {},
-      "confirmed": {},
-      "rejected": {},
-      "merged": {},
-      "split": {}
+      "confirmed": {}
     },
     "order": [
       "candidate",
       "investigating",
-      "confirmed",
-      "rejected",
-      "merged",
-      "split"
+      "confirmed"
     ]
   },
   "KoreanFieldwork-featureInvestigationChecklist": {
@@ -36671,7 +36635,6 @@
       "measuredDrawingCompleted": {},
       "preRecoveryFindPhotoTaken": {},
       "findsRecovered": {},
-      "findRecordsLinked": {},
       "samplesCollected": {},
       "penMemoReviewed": {}
     },
@@ -36689,7 +36652,6 @@
       "measuredDrawingCompleted",
       "preRecoveryFindPhotoTaken",
       "findsRecovered",
-      "findRecordsLinked",
       "samplesCollected",
       "penMemoReviewed"
     ]

@@ -19,8 +19,8 @@
         "relations": {},
         "fieldRecordQuality": [
           "immediateRecording",
-          "criteriaConsistency",
-          "crossReviewNeeded"
+          "observationInterpretationSeparated",
+          "correctionNeeded"
         ],
         "recordCreationTiming": "duringFieldwork",
         "dailyLogContent": [
@@ -49,13 +49,14 @@
         "shortDescription": "제철 관련 노 후보",
         "category": "Feature",
         "relations": {
-          "isRecordedIn": ["op-iron-production-001"]
+          "isRecordedIn": [
+            "op-iron-production-001"
+          ]
         },
         "description": "송풍구와 배재 후보 구조, 노벽편과 노내재가 함께 확인되어 제련 후보로 보되, 단야 부산물 가능성도 남겨 분석 전 공정 확정을 보류한 유구.",
         "fieldRecordQuality": [
           "immediateRecording",
-          "observationInterpretationSeparated",
-          "researchQuestionFit"
+          "observationInterpretationSeparated"
         ],
         "fieldOnlyMissingCheck": [
           "featureOutline",
@@ -64,7 +65,7 @@
           "samplePointMapped",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "ironProcessEvidence": [
           "smeltingCandidate",
           "refiningSmithingCandidate",
@@ -110,8 +111,12 @@
         "shortDescription": "환원괴 후보와 단야 원료 연결",
         "category": "IronProcessRelation",
         "relations": {
-          "liesWithin": ["feature-iron-furnace-001"],
-          "isRecordedIn": ["op-iron-production-001"]
+          "liesWithin": [
+            "feature-iron-furnace-001"
+          ],
+          "isRecordedIn": [
+            "op-iron-production-001"
+          ]
         },
         "description": "제련 후보 노 주변 환원괴와 단야 부산물 후보가 함께 확인되어, 이전 공정 산출물이 다음 공정 원료로 이어졌을 가능성을 분석 전 보류값으로 남긴다.",
         "ironPreviousProcessText": "제련 후보",
@@ -140,14 +145,17 @@
         "shortDescription": "노벽·송풍관·유출재 혼합 부산물",
         "category": "Find",
         "relations": {
-          "liesWithin": ["feature-iron-furnace-001"],
-          "isRecordedIn": ["op-iron-production-001"]
+          "liesWithin": [
+            "feature-iron-furnace-001"
+          ],
+          "isRecordedIn": [
+            "op-iron-production-001"
+          ]
         },
         "description": "IF-001 폐기장과 노 주변에서 수습한 부산물 묶음. 노벽, 송풍관, 유출재, 노내재, 단조박편 가능 자료를 분리 기록해 공정 판정의 근거로 남긴다.",
         "fieldRecordQuality": [
           "immediateRecording",
-          "reproducibleRecord",
-          "criteriaConsistency"
+          "observationInterpretationSeparated"
         ],
         "fieldOnlyMissingCheck": [
           "numberedBeforeCollection",
@@ -155,7 +163,7 @@
           "elevationRecorded",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "artifactHandlingWorkflow": [
           "fieldCollection",
           "findConditionRecord",
@@ -195,14 +203,17 @@
         "shortDescription": "제철 부산물 금속학 분석 시료",
         "category": "Sample",
         "relations": {
-          "liesWithin": ["feature-iron-furnace-001"],
-          "isRecordedIn": ["op-iron-production-001"]
+          "liesWithin": [
+            "feature-iron-furnace-001"
+          ],
+          "isRecordedIn": [
+            "op-iron-production-001"
+          ]
         },
         "description": "IF-001 노내재와 단조박편 후보에서 복수 시료를 채취하고 절단 위치와 잔여 시료 보관을 기록해, 분석 후 공정 판정으로 환류하기 위한 시료.",
         "fieldRecordQuality": [
           "immediateRecording",
-          "researchQuestionFit",
-          "reproducibleRecord"
+          "observationInterpretationSeparated"
         ],
         "fieldOnlyMissingCheck": [
           "samplePointMapped",
@@ -210,7 +221,7 @@
           "spatialLocation",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "samplePurpose": [
           "metallurgy"
         ],

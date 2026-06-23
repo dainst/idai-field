@@ -17,9 +17,7 @@
         "relations": {},
         "fieldRecordQuality": [
           "immediateRecording",
-          "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "researchQuestionFit"
+          "observationInterpretationSeparated"
         ],
         "recordCreationTiming": "duringFieldwork",
         "dailyLogContent": [
@@ -55,7 +53,7 @@
         "fieldRecordQuality": [
           "immediateRecording",
           "observationInterpretationSeparated",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "fieldOnlyMissingCheck": [
           "featureOutline",
@@ -65,7 +63,7 @@
           "spatialLocation",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "productionProcessSystem": [
           "rawMaterialProcurement",
           "rawMaterialProcessing",
@@ -124,7 +122,7 @@
         "fieldRecordQuality": [
           "immediateRecording",
           "observationInterpretationSeparated",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "fieldOnlyMissingCheck": [
           "featureOutline",
@@ -134,7 +132,7 @@
           "spatialLocation",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "productionProcessSystem": [
           "rawMaterialProcurement",
           "forming",

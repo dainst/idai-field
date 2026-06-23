@@ -50,18 +50,18 @@ export const KOREAN_FIELDWORK_DRAFT_PRESETS: readonly KoreanFieldworkDraftPreset
   {
     id: 'field-start',
     label: '현장 착수',
-    detail: '현장 중 작성, 관찰 내용과 사진·실측 연결',
+    detail: '당일 기록으로 시작하고 현장 기록을 남김',
     icon: 'play-circle-outline',
     categoryNames: FIELDWORK_RECORD_CATEGORIES,
     updates: {
-      recordCreationTiming: 'duringFieldwork',
+      recordCreationTiming: 'sameDayFieldRecord',
       fieldRecordQuality: ['immediateRecording'],
     },
   },
   {
     id: 'needs-review',
     label: '기록 보완',
-    detail: '추가 관찰이나 자료 연결이 필요한 상태',
+    detail: '추가 기록이 필요한 보완 메모',
     icon: 'report-problem',
     categoryNames: FIELDWORK_RECORD_CATEGORIES,
     updates: {
@@ -71,20 +71,20 @@ export const KOREAN_FIELDWORK_DRAFT_PRESETS: readonly KoreanFieldworkDraftPreset
   },
   {
     id: 'feature-candidate',
-    label: '검출 유구',
-    detail: '노출 직후 성격을 정하고 조사 전 사진부터',
+    label: '조사 전',
+    detail: '유구 성격을 고르고 조사 전 사진부터',
     icon: 'lightbulb-outline',
     categoryNames: FEATURE_RECORD_CATEGORIES,
     updates: {
       featureRecordingStatus: 'candidate',
-      recordCreationTiming: 'duringFieldwork',
+      recordCreationTiming: 'sameDayFieldRecord',
       fieldRecordQuality: ['immediateRecording'],
       featureInvestigationChecklist: ['preInvestigationPhotoTaken'],
     },
   },
   {
     id: 'feature-investigation',
-    label: '조사 진행',
+    label: '조사 중',
     detail: '사진과 실측을 이어갈 조사 중 상태',
     icon: 'construction',
     categoryNames: FEATURE_RECORD_CATEGORIES,
@@ -100,7 +100,7 @@ export const KOREAN_FIELDWORK_DRAFT_PRESETS: readonly KoreanFieldworkDraftPreset
   },
   {
     id: 'feature-closeout',
-    label: '완료 점검',
+    label: '완료',
     detail: '마감 사진, 실측, 유물 수습을 한 번에 확인',
     icon: 'task-alt',
     categoryNames: FEATURE_RECORD_CATEGORIES,
@@ -110,7 +110,6 @@ export const KOREAN_FIELDWORK_DRAFT_PRESETS: readonly KoreanFieldworkDraftPreset
       fieldRecordQuality: [
         'immediateRecording',
         'observationInterpretationSeparated',
-        'fieldToReportContinuity',
       ],
       featureInvestigationChecklist: [
         'measuredDrawingCompleted',

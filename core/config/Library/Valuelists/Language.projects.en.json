@@ -11755,29 +11755,14 @@
   },
   "KoreanFieldwork-recordCreationTiming": {
     "values": {
-      "planningStage": {
-        "label": "Planning stage"
-      },
       "duringFieldwork": {
-        "label": "During fieldwork"
+        "label": "Additional record"
       },
       "sameDayFieldRecord": {
-        "label": "Same-day field record"
-      },
-      "fieldOnlyObservation": {
-        "label": "Field-only observation"
-      },
-      "handoverStage": {
-        "label": "Stage handover"
-      },
-      "reportStageGenerated": {
-        "label": "Generated for report stage"
-      },
-      "postExcavationDerived": {
-        "label": "Post-excavation derived"
+        "label": "Same-day record"
       }
     },
-    "description": "Korean field notebook timing states for distinguishing observations that must be captured in the field from later derived records"
+    "description": "Korean field notebook timing states for same-day and additional records"
   },
   "KoreanFieldwork-verificationState": {
     "values": {
@@ -11807,47 +11792,17 @@
   },
   "KoreanFieldwork-fieldRecordQuality": {
     "values": {
-      "factualAccuracy": {
-        "label": "Factual accuracy"
-      },
       "immediateRecording": {
-        "label": "Immediate recording"
-      },
-      "memoryRelianceRisk": {
-        "label": "Memory-reliance risk"
+        "label": "Field record"
       },
       "observationInterpretationSeparated": {
-        "label": "Observation and interpretation separated"
-      },
-      "criteriaConsistency": {
-        "label": "Criteria consistency"
-      },
-      "reproducibleRecord": {
-        "label": "Reproducible record"
-      },
-      "researchQuestionFit": {
-        "label": "Fits research question"
-      },
-      "featureSpecificNarrative": {
-        "label": "Feature-specific narrative"
-      },
-      "fieldToReportContinuity": {
-        "label": "Field-to-report continuity"
-      },
-      "excavatorReportAuthorLink": {
-        "label": "Excavator-report authorship link"
-      },
-      "crossReviewNeeded": {
-        "label": "Cross-review needed"
+        "label": "Interpretation"
       },
       "correctionNeeded": {
-        "label": "Correction needed"
-      },
-      "pendingDecision": {
-        "label": "Pending decision"
+        "label": "Supplement note"
       }
     },
-    "description": "Korean field notebook record-quality checks for accuracy, immediacy, reproducibility, separation of observation from interpretation, feature-specific narratives, and field-to-report continuity"
+    "description": "Korean field notebook record note states"
   },
   "KoreanFieldwork-excavationControlSafety": {
     "values": {
@@ -15822,14 +15777,11 @@
   },
   "KoreanFieldwork-featureRecordingStatus": {
     "values": {
-      "candidate": { "label": "Candidate" },
-      "investigating": { "label": "Investigating" },
-      "confirmed": { "label": "Confirmed" },
-      "rejected": { "label": "Rejected" },
-      "merged": { "label": "Merged" },
-      "split": { "label": "Split" }
+      "candidate": { "label": "Before investigation" },
+      "investigating": { "label": "During investigation" },
+      "confirmed": { "label": "Complete" }
     },
-    "description": "Workflow status for creating visible stripped-surface traces as feature candidates and updating them during investigation"
+    "description": "Korean field notebook feature investigation status"
   },
   "KoreanFieldwork-featureInvestigationChecklist": {
     "values": {
@@ -15840,7 +15792,6 @@
       "measuredDrawingCompleted": { "label": "Measured drawing" },
       "preRecoveryFindPhotoTaken": { "label": "Pre-recovery find photo" },
       "findsRecovered": { "label": "Finds recovered" },
-      "findRecordsLinked": { "label": "Find records linked" },
       "samplesCollected": { "label": "Samples collected" },
       "penMemoReviewed": { "label": "Pen memo reviewed" }
     },

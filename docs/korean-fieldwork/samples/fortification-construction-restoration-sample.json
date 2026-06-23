@@ -17,9 +17,7 @@
         "relations": {},
         "fieldRecordQuality": [
           "immediateRecording",
-          "observationInterpretationSeparated",
-          "reproducibleRecord",
-          "criteriaConsistency"
+          "observationInterpretationSeparated"
         ],
         "recordCreationTiming": "duringFieldwork",
         "dailyLogContent": [
@@ -55,13 +53,15 @@
         "shortDescription": "판축 후보 성벽 단면",
         "category": "Feature",
         "relations": {
-          "isRecordedIn": ["op-fortification-construction-001"]
+          "isRecordedIn": [
+            "op-fortification-construction-001"
+          ]
         },
         "description": "풍납토성식 중심토루와 외피 판괴 후보가 보이는 성벽 절개 단면. 서로 다른 흙층이 겹친 사실만으로 판축을 확정하지 않고 협판·고정주·횡장목·달구질흔·판괴연접과 기초 조사를 따로 남긴다.",
         "fieldRecordQuality": [
           "immediateRecording",
           "observationInterpretationSeparated",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "fieldOnlyMissingCheck": [
           "featureOutline",
@@ -80,7 +80,7 @@
           "lightingConditionRecorded",
           "confirmedBeforeInternalExcavation"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "fortificationConstructionEvidence": [
           "panchukCandidate",
           "panchukBoardEvidence",
@@ -124,13 +124,14 @@
         "shortDescription": "성곽 정비·복원 근거",
         "category": "Feature",
         "relations": {
-          "isRecordedIn": ["op-fortification-construction-001"]
+          "isRecordedIn": [
+            "op-fortification-construction-001"
+          ]
         },
         "description": "성벽 보수와 행궁 중건 근거를 함께 검토하는 구간. 보수공사 산출물이 아니라 조사 전·중·후 기록, 원부재와 용척 산정, 설계변경, 현장보존 판단을 같은 근거 묶음으로 남긴다.",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "crossReviewNeeded",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "fieldOnlyMissingCheck": [
           "featureOutline",
@@ -140,7 +141,7 @@
           "elevationRecorded",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "postExcavationDerived",
+        "recordCreationTiming": "duringFieldwork",
         "fortificationRepairRecord": [
           "basicSurveyBeforeRepair",
           "segmentVisualSurvey",

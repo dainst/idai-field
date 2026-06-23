@@ -21,7 +21,7 @@
         "fieldRecordQuality": [
           "immediateRecording",
           "observationInterpretationSeparated",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "recordCreationTiming": "duringFieldwork",
         "dailyLogContent": [
@@ -52,13 +52,14 @@
         "shortDescription": "봉토와 매장주체부가 확인된 고분",
         "category": "Feature",
         "relations": {
-          "isRecordedIn": ["op-tomb-burial-001"]
+          "isRecordedIn": [
+            "op-tomb-burial-001"
+          ]
         },
         "description": "봉토 성토 단위와 주구, 매장주체부가 함께 확인된 고분. 묘형명은 보류하고 봉토 조사통제와 매장주체부 관찰값을 먼저 남기는 샘플.",
         "fieldRecordQuality": [
           "immediateRecording",
-          "observationInterpretationSeparated",
-          "reproducibleRecord"
+          "observationInterpretationSeparated"
         ],
         "fieldOnlyMissingCheck": [
           "featureOutline",
@@ -67,7 +68,7 @@
           "drawingLineReason",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "tombMoundInvestigation": [
           "preExcavationSurvey",
           "contourSurvey",
@@ -230,14 +231,17 @@
         "shortDescription": "관 외부와 폐쇄부 주변 부장품",
         "category": "Find",
         "relations": {
-          "liesWithin": ["feature-tomb-mound-001"],
-          "isRecordedIn": ["op-tomb-burial-001"]
+          "liesWithin": [
+            "feature-tomb-mound-001"
+          ],
+          "isRecordedIn": [
+            "op-tomb-burial-001"
+          ]
         },
         "description": "관 외부와 폐쇄부 주변에서 확인된 토기·철기 묶음. 부장품 종류보다 위치와 장송 행위 맥락을 먼저 기록한다.",
         "fieldRecordQuality": [
           "immediateRecording",
-          "reproducibleRecord",
-          "criteriaConsistency"
+          "observationInterpretationSeparated"
         ],
         "fieldOnlyMissingCheck": [
           "preRemovalCondition",
@@ -246,7 +250,7 @@
           "numberedBeforeCollection",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "artifactHandlingWorkflow": [
           "fieldCollection",
           "findConditionRecord",
@@ -281,14 +285,17 @@
         "shortDescription": "매장주체부 인골 수습 시료",
         "category": "Sample",
         "relations": {
-          "liesWithin": ["feature-tomb-mound-001"],
-          "isRecordedIn": ["op-tomb-burial-001"]
+          "liesWithin": [
+            "feature-tomb-mound-001"
+          ],
+          "isRecordedIn": [
+            "op-tomb-burial-001"
+          ]
         },
         "description": "TM-001 매장주체부에서 노출된 인골을 전문가 협의와 오염 관리, 도면화, 포장·주기 기준에 맞추어 수습하는 흐름을 검증하는 시료.",
         "fieldRecordQuality": [
           "immediateRecording",
-          "researchQuestionFit",
-          "reproducibleRecord"
+          "observationInterpretationSeparated"
         ],
         "fieldOnlyMissingCheck": [
           "samplePointMapped",
@@ -296,7 +303,7 @@
           "spatialLocation",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "samplePurpose": [
           "conservation",
           "contaminationControl"

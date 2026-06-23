@@ -21,9 +21,7 @@
         "fieldRecordQuality": [
           "immediateRecording",
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "reproducibleRecord",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "recordCreationTiming": "duringFieldwork",
         "dailyLogContent": [
@@ -61,7 +59,9 @@
         "shortDescription": "내부토 해석 보류 수혈",
         "category": "Feature",
         "relations": {
-          "isRecordedIn": ["op-stratigraphy-lifecycle-001"]
+          "isRecordedIn": [
+            "op-stratigraphy-lifecycle-001"
+          ]
         },
         "description": "평면에서는 수혈로 보이나 내부토에 자연유입, 붕락, 인위매립 후보가 함께 보여 단면 관찰을 먼저 진행하는 유구.",
         "featurePackage": [
@@ -71,8 +71,7 @@
         ],
         "fieldRecordQuality": [
           "immediateRecording",
-          "observationInterpretationSeparated",
-          "criteriaConsistency"
+          "observationInterpretationSeparated"
         ],
         "excavationContextModel": [
           "siteContextLinked",
@@ -98,7 +97,7 @@
           "sameDayReview",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "typologyArgument": [
           "representativeAttribute",
           "variationRecorded",
@@ -122,8 +121,12 @@
         "shortDescription": "수혈 내부토 Ia/상부 매몰층",
         "category": "FeatureSegment",
         "relations": {
-          "isRecordedIn": ["op-stratigraphy-lifecycle-001"],
-          "liesWithin": ["feature-stratigraphy-pit-001"]
+          "isRecordedIn": [
+            "op-stratigraphy-lifecycle-001"
+          ],
+          "liesWithin": [
+            "feature-stratigraphy-pit-001"
+          ]
         },
         "description": "색은 주변 기반층과 다르지만, 이질토 블록과 철·망간 집적, 뿌리 변색이 함께 보여 내부토 성격과 유구 소속 층위를 보류한 단면 단위.",
         "featurePackage": [
@@ -134,8 +137,7 @@
         "fieldRecordQuality": [
           "immediateRecording",
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "fieldOnlyMissingCheck": [
           "stratigraphicBoundary",
@@ -151,7 +153,7 @@
           "rewettingLimit",
           "lightingConditionRecorded"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "stratigraphicObservationProcedure": [
           "verticalFaceCleaned",
           "observationTimeSufficient",

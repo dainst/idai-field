@@ -74,7 +74,7 @@ const KoreanFieldworkTodayBoard: React.FC<KoreanFieldworkTodayBoardProps> = ({
   );
   const featureStatLabel = investigationModeId === 'trialTrench'
     ? '확인 유구'
-    : '검출 유구';
+    : '유구';
 
   const openDocument = (document: Document | undefined) => {
     if (!document) return;

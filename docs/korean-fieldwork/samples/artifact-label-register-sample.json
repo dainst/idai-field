@@ -17,8 +17,7 @@
         "relations": {},
         "fieldRecordQuality": [
           "immediateRecording",
-          "reproducibleRecord",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "recordCreationTiming": "duringFieldwork",
         "dailyLogContent": [
@@ -46,13 +45,14 @@
         "shortDescription": "시굴구덩이 출토 석기 꼬리표",
         "category": "Find",
         "relations": {
-          "isRecordedIn": ["op-artifact-register-001"]
+          "isRecordedIn": [
+            "op-artifact-register-001"
+          ]
         },
         "description": "층위별 봉투에 꼬리표를 동봉하고, 현장 일련번호를 유물대장과 정리번호까지 연결하는지 검증하는 샘플.",
         "fieldRecordQuality": [
           "immediateRecording",
-          "reproducibleRecord",
-          "criteriaConsistency"
+          "observationInterpretationSeparated"
         ],
         "fieldOnlyMissingCheck": [
           "numberedBeforeCollection",
@@ -115,13 +115,14 @@
         "shortDescription": "부속구 수량 산정 예시",
         "category": "Find",
         "relations": {
-          "isRecordedIn": ["op-artifact-register-001"]
+          "isRecordedIn": [
+            "op-artifact-register-001"
+          ]
         },
         "description": "동일 속성 부속구와 분리 가능한 구성품을 건수·점수·실수량으로 나누어 기록하는지 검증하는 샘플.",
         "fieldRecordQuality": [
           "immediateRecording",
-          "observationInterpretationSeparated",
-          "reproducibleRecord"
+          "observationInterpretationSeparated"
         ],
         "artifactHandlingWorkflow": [
           "conditionCheck",

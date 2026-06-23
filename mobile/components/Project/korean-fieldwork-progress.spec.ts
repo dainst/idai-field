@@ -55,7 +55,7 @@ describe('Korean fieldwork progress', () => {
         stageId: 'investigation',
         stageLabel: '조사',
         tone: 'warning',
-        actionLabel: '검출 유구 기록',
+        actionLabel: '유구 기록',
         action: {
           type: 'createDocument',
           parentDocumentId: 'operation-1',
@@ -140,7 +140,7 @@ describe('Korean fieldwork progress', () => {
         hierarchyCount: 2,
         issueCount: 1,
         checklistDone: 8,
-        checklistTotal: 10,
+        checklistTotal: 9,
       },
     });
   });
@@ -155,7 +155,6 @@ describe('Korean fieldwork progress', () => {
         'measuredDrawingCompleted',
         'preRecoveryFindPhotoTaken',
         'findsRecovered',
-        'findRecordsLinked',
         'samplesCollected',
         'penMemoReviewed',
         'completionPhotoTaken',
@@ -177,8 +176,8 @@ describe('Korean fieldwork progress', () => {
           tone: 'success',
           metrics: {
             evidenceCount: 1,
-            checklistDone: 10,
-            checklistTotal: 10,
+            checklistDone: 9,
+            checklistTotal: 9,
           },
         },
       ]);

@@ -349,12 +349,12 @@ const Map: React.FC<MapProps> = (props) => {
       <View style={styles.quickCreateContainer}>
         <Button
           variant="success"
-          title={canCreateFeatureCandidate ? '검출 유구 기록' : 'GPS 확인 중'}
+          title={canCreateFeatureCandidate ? '유구 기록' : 'GPS 확인 중'}
           isDisabled={!canCreateFeatureCandidate}
           onPress={createFeatureCandidateAndEdit}
         />
         <Text style={styles.quickCreateHint}>
-          현재 위치에 검출 유구를 만들고 바로 입력합니다.
+          현재 위치에 유구를 만들고 바로 입력합니다.
         </Text>
       </View>
       <MapBottomSheet

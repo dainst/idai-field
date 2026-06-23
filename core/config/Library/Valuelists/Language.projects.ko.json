@@ -1,29 +1,14 @@
 {
   "KoreanFieldwork-recordCreationTiming": {
     "values": {
-      "planningStage": {
-        "label": "계획 단계"
-      },
       "duringFieldwork": {
-        "label": "현장 중 누적"
+        "label": "추가 기록"
       },
       "sameDayFieldRecord": {
-        "label": "당일 현장기록"
-      },
-      "fieldOnlyObservation": {
-        "label": "현장시에만 가능한 관찰"
-      },
-      "handoverStage": {
-        "label": "조사단계 전환·인계"
-      },
-      "reportStageGenerated": {
-        "label": "보고서 단계 생성"
-      },
-      "postExcavationDerived": {
-        "label": "정리·분석 단계 파생"
+        "label": "당일 기록"
       }
     },
-    "description": "현장에서만 남길 수 있는 관찰값과 나중에 산출되는 기록을 구분하기 위한 디지털 야장 기록 생성 시점 목록"
+    "description": "당일 작성한 기록과 나중에 덧붙인 기록을 구분하기 위한 야장 기록 시점 목록"
   },
   "KoreanFieldwork-verificationState": {
     "values": {
@@ -53,47 +38,17 @@
   },
   "KoreanFieldwork-fieldRecordQuality": {
     "values": {
-      "factualAccuracy": {
-        "label": "관찰 내용"
-      },
       "immediateRecording": {
         "label": "현장 기록"
       },
-      "memoryRelianceRisk": {
-        "label": "기억 의존 위험"
-      },
       "observationInterpretationSeparated": {
-        "label": "관찰·해석"
-      },
-      "criteriaConsistency": {
-        "label": "조사자 간 기준 일치"
-      },
-      "reproducibleRecord": {
-        "label": "기록 근거"
-      },
-      "researchQuestionFit": {
-        "label": "연구목적 적합"
-      },
-      "featureSpecificNarrative": {
-        "label": "유구별 서사 기록"
-      },
-      "fieldToReportContinuity": {
-        "label": "보고서 정리 메모"
-      },
-      "excavatorReportAuthorLink": {
-        "label": "조사자 메모 연결"
-      },
-      "crossReviewNeeded": {
-        "label": "교차검토 필요"
+        "label": "해석"
       },
       "correctionNeeded": {
-        "label": "보완 필요"
-      },
-      "pendingDecision": {
-        "label": "추가 확인"
+        "label": "보완 메모"
       }
     },
-    "description": "현장 기록의 관찰 내용, 관찰·해석, 유구별 기록과 보고서 정리 메모를 관리하기 위한 목록"
+    "description": "현장 기록, 해석, 보완 메모만 빠르게 구분하기 위한 목록"
   },
   "KoreanFieldwork-excavationControlSafety": {
     "values": {
@@ -4068,14 +4023,11 @@
   },
   "KoreanFieldwork-featureRecordingStatus": {
     "values": {
-      "candidate": { "label": "검출" },
-      "investigating": { "label": "조사중" },
-      "confirmed": { "label": "확정" },
-      "rejected": { "label": "제외" },
-      "merged": { "label": "병합" },
-      "split": { "label": "분할" }
+      "candidate": { "label": "조사 전" },
+      "investigating": { "label": "조사 중" },
+      "confirmed": { "label": "완료" }
     },
-    "description": "전면 제토 뒤 확인한 유구의 조사 상태를 갱신하기 위한 목록"
+    "description": "유구 조사 상태를 조사 전, 조사 중, 완료로 구분하기 위한 목록"
   },
   "KoreanFieldwork-featureInvestigationChecklist": {
     "values": {
@@ -4092,7 +4044,6 @@
       "measuredDrawingCompleted": { "label": "실측 완료" },
       "preRecoveryFindPhotoTaken": { "label": "수습 전 유물사진" },
       "findsRecovered": { "label": "유물 수습" },
-      "findRecordsLinked": { "label": "유물 기록 연결" },
       "samplesCollected": { "label": "시료 채취" },
       "penMemoReviewed": { "label": "펜메모 검토" }
     },
@@ -7112,7 +7063,7 @@
         "label": "추가 확인"
       }
     },
-    "description": "기록 보완 점검에서 어떤 원기록 단위를 살폈는지 표시하기 위한 목록"
+    "description": "기록 보완 메모에서 어떤 원기록 단위를 살폈는지 표시하기 위한 목록"
   },
   "KoreanFieldwork-qualityReviewStage": {
     "values": {
@@ -7144,7 +7095,7 @@
         "label": "추가 확인"
       }
     },
-    "description": "기록 보완 점검이 어느 단계에서 이루어졌는지 남기는 목록"
+    "description": "기록 보완 메모가 어느 단계에서 이루어졌는지 남기는 목록"
   },
   "KoreanFieldwork-qualityCorrectionBasis": {
     "values": {
@@ -7991,13 +7942,13 @@
       "outputFormatRecorded": { "label": "산출물 형식 기록" },
       "externalContractorRecorded": { "label": "외주작업자 기록" },
       "outsourcedOutputAcceptanceChecked": { "label": "외주 산출물 인수검수" },
-      "researcherQualityChecked": { "label": "조사자 기록 확인" },
+      "researcherQualityChecked": { "label": "조사자 기록 메모" },
       "fieldResultCrossChecked": { "label": "현장결과 대조" },
       "minimumAnalysisRiskFlagged": { "label": "최소 분석 위험 표시" },
       "reanalysisPossible": { "label": "재분석 가능" },
       "pendingDecision": { "label": "추가 확인" }
     },
-    "description": "첨단과학장비 활용 자료에서 뽑은 디지털 조사·측량 기록 확인 목록. 장비명보다 원천자료 시점, 원지형 변경 위험, 기준점·좌표계·지리보정, 오차, 원천자료 한계, 유적 성격별 기법 적합성, 취득·표현 계획, 산출물 목적, 외주 결과 검수, 최소 분석 위험, 현장 대조와 재분석 가능성을 함께 남긴다."
+    "description": "첨단과학장비 활용 자료에서 뽑은 디지털 조사·측량 기록 메모 목록. 장비명보다 원천자료 시점, 원지형 변경 위험, 기준점·좌표계·지리보정, 오차, 원천자료 한계, 유적 성격별 기법 적합성, 취득·표현 계획, 산출물 목적, 외주 결과 검수, 최소 분석 위험, 현장 대조와 재분석 가능성을 함께 남긴다."
   },
   "KoreanFieldwork-electronicDrawingSourceWorkflow": {
     "values": {

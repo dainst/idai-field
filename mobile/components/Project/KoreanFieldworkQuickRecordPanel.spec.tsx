@@ -38,7 +38,7 @@ describe('KoreanFieldworkQuickRecordPanel', () => {
     expect(getByText('현장 빠른 입력')).toBeTruthy();
     expect(getByText('유구 진행')).toBeTruthy();
     expect(getByText('조사 과정표')).toBeTruthy();
-    expect(getByText('기록 확인')).toBeTruthy();
+    expect(getByText('기록 메모')).toBeTruthy();
 
     fireEvent.press(getByTestId('quickRecordOption_investigating'));
     fireEvent.press(getByTestId('quickRecordOption_completionPhotoTaken'));

@@ -22,9 +22,7 @@
         "fieldRecordQuality": [
           "immediateRecording",
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "researchQuestionFit",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "recordCreationTiming": "duringFieldwork",
         "dailyLogContent": [
@@ -75,7 +73,9 @@
         "shortDescription": "혼토패각층과 생업 유물 출토 구역",
         "category": "Feature",
         "relations": {
-          "isRecordedIn": ["op-pottery-subsistence-001"]
+          "isRecordedIn": [
+            "op-pottery-subsistence-001"
+          ]
         },
         "description": "혼토패각층 안에서 토기편, 어망추, 조침 후보, 외양성 어류·해양포유류 자료가 함께 확인되어 생업과 토기 편년을 분리 검토하는 맥락.",
         "featurePackage": [
@@ -84,8 +84,7 @@
         ],
         "fieldRecordQuality": [
           "immediateRecording",
-          "observationInterpretationSeparated",
-          "criteriaConsistency"
+          "observationInterpretationSeparated"
         ],
         "fieldOnlyMissingCheck": [
           "stratigraphicBoundary",
@@ -95,7 +94,7 @@
           "elevationRecorded",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "shellMiddenStratigraphy": [
           "mixedSoilShellLayer",
           "soilIntrusionRecorded",
@@ -127,15 +126,17 @@
         "shortDescription": "식물섬유 비짐 토기편",
         "category": "Find",
         "relations": {
-          "isRecordedIn": ["op-pottery-subsistence-001"],
-          "liesWithin": ["feature-neolithic-shellmidden-001"]
+          "isRecordedIn": [
+            "op-pottery-subsistence-001"
+          ],
+          "liesWithin": [
+            "feature-neolithic-shellmidden-001"
+          ]
         },
         "description": "평저 후보와 식물섬유·모래 비짐이 보이는 토기편. 고산리식 같은 형식 후보는 보류하고 태토, 비짐, 저온 소성 후보, 음식 조리 관련성을 관찰값으로 남긴다.",
         "fieldRecordQuality": [
           "immediateRecording",
-          "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "researchQuestionFit"
+          "observationInterpretationSeparated"
         ],
         "fieldOnlyMissingCheck": [
           "preRemovalCondition",
@@ -145,7 +146,7 @@
           "numberedBeforeCollection",
           "sameDayReview"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "artifactLabelRegisterLink": [
           "labelCreated",
           "sitePointRecorded",
@@ -262,14 +263,15 @@
         "shortDescription": "회전정면·실떼기 후보 토기 저부편",
         "category": "Find",
         "relations": {
-          "isRecordedIn": ["op-pottery-subsistence-001"]
+          "isRecordedIn": [
+            "op-pottery-subsistence-001"
+          ]
         },
         "description": "저부의 실떼기와 회전정면 흔적이 보이나 물레질 뽑기 단독 증거로 확정하지 않고 성형과 정형 방향을 분리해 남기는 비교 토기편.",
         "fieldRecordQuality": [
           "immediateRecording",
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "fieldOnlyMissingCheck": [
           "preRemovalCondition",
@@ -279,7 +281,7 @@
           "numberedBeforeCollection",
           "sameDayReview"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "ceramicTermScope": [
           "earthenwareTerm",
           "hardFiredPotteryTerm",
@@ -425,16 +427,18 @@
         "shortDescription": "어망추·조침·작살 생업 증거 묶음",
         "category": "Find",
         "relations": {
-          "isRecordedIn": ["op-pottery-subsistence-001"],
-          "liesWithin": ["feature-neolithic-shellmidden-001"]
+          "isRecordedIn": [
+            "op-pottery-subsistence-001"
+          ],
+          "liesWithin": [
+            "feature-neolithic-shellmidden-001"
+          ]
         },
         "description": "석제 어망추와 골각제 조침·작살 후보가 같은 패총층에서 수습되었지만 포경·외해어로 여부는 어골·해양포유류·해류·계절성 근거와 함께 보류한다.",
         "fieldRecordQuality": [
           "immediateRecording",
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "researchQuestionFit",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "fieldOnlyMissingCheck": [
           "preRemovalCondition",
@@ -444,7 +448,7 @@
           "numberedBeforeCollection",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "artifactLabelRegisterLink": [
           "labelCreated",
           "fieldSerialNumber",

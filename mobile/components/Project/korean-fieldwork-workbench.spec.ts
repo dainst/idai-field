@@ -48,7 +48,7 @@ describe('Korean fieldwork workbench', () => {
         id: 'feature-1',
         categoryLabel: '유구',
         parentPath: '조사구역 1 > T1',
-        reasons: ['확인 1', '검출 유구', '과정 1/8', '기록 보완'],
+        reasons: ['확인 1', '조사 전', '과정 1/8', '기록 보완'],
         tone: 'warning',
       },
       {

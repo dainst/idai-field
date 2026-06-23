@@ -18,9 +18,7 @@
         "fieldRecordQuality": [
           "immediateRecording",
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "reproducibleRecord",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "recordCreationTiming": "duringFieldwork",
         "dailyLogContent": [
@@ -54,7 +52,9 @@
         "shortDescription": "아궁이 재층과 완형토기 내부토",
         "category": "Feature",
         "relations": {
-          "isRecordedIn": ["op-archaeobotany-flotation-001"]
+          "isRecordedIn": [
+            "op-archaeobotany-flotation-001"
+          ]
         },
         "description": "수혈건물지 바닥면의 아궁이 재층과 주변 완형토기 내부토가 함께 확인되어 식물유체·동물유체·잔류물 분석을 분리 채취하는 맥락.",
         "featurePackage": [
@@ -63,8 +63,7 @@
         ],
         "fieldRecordQuality": [
           "immediateRecording",
-          "observationInterpretationSeparated",
-          "criteriaConsistency"
+          "observationInterpretationSeparated"
         ],
         "fieldOnlyMissingCheck": [
           "featureOutline",
@@ -75,7 +74,7 @@
           "elevationRecorded",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "pitDwellingFloorFacility": [
           "floorSurfaceIdentified",
           "firstFillNotMisread",
@@ -100,16 +99,18 @@
         "shortDescription": "아궁이 재층 식물유체 시료",
         "category": "Sample",
         "relations": {
-          "isRecordedIn": ["op-archaeobotany-flotation-001"],
-          "isRecordedInFeature": ["feature-hearth-archaeobotany-001"]
+          "isRecordedIn": [
+            "op-archaeobotany-flotation-001"
+          ],
+          "isRecordedInFeature": [
+            "feature-hearth-archaeobotany-001"
+          ]
         },
         "description": "아궁이 재층과 토기 내부토에서 나눈 토양 시료. 처리 전 토양량, 물체질·플로테이션, 잔류물·부유물, 동정 근거와 미검출 조건을 함께 기록한다.",
         "fieldRecordQuality": [
           "immediateRecording",
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "reproducibleRecord",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "fieldOnlyMissingCheck": [
           "samplePointMapped",
@@ -119,7 +120,7 @@
           "sameDayReview",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "samplePurpose": [
           "paleoenvironment",
           "archaeobotany",

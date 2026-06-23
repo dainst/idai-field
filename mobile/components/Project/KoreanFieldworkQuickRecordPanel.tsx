@@ -143,7 +143,7 @@ const KoreanFieldworkQuickRecordPanel: React.FC<KoreanFieldworkQuickRecordPanelP
       )}
 
       {availability.quality && (
-        <QuickSection title="기록 확인">
+        <QuickSection title="기록 메모">
           <OptionRow
             options={QUALITY_QUICK_OPTIONS}
             activeValues={getStringArrayFieldValues(

@@ -18,9 +18,7 @@
         "relations": {},
         "fieldRecordQuality": [
           "immediateRecording",
-          "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "researchQuestionFit"
+          "observationInterpretationSeparated"
         ],
         "recordCreationTiming": "duringFieldwork",
         "dailyLogContent": [
@@ -50,13 +48,14 @@
         "shortDescription": "저습지 항공사진·보링자료 판독",
         "category": "Survey",
         "relations": {
-          "isRecordedIn": ["op-wetland-001"]
+          "isRecordedIn": [
+            "op-wetland-001"
+          ]
         },
         "description": "현재 논·저습지로 이용되는 저지에서 표면유물은 희박하지만, 개발 전 항공사진과 보링자료에서 고하천과 자연제방 후면의 매몰 지형이 반복 확인되어 시굴 대상 후보로 남긴다.",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "recordCreationTiming": "duringFieldwork",
         "surfaceSurveyPreparationCheck": [
@@ -145,14 +144,18 @@
         "shortDescription": "자연제방 후면 시굴 구간",
         "category": "Feature",
         "relations": {
-          "isRecordedIn": ["op-wetland-001"],
-          "liesWithin": ["survey-wetland-001"]
+          "isRecordedIn": [
+            "op-wetland-001"
+          ],
+          "liesWithin": [
+            "survey-wetland-001"
+          ]
         },
         "description": "고하천 후보와 자연제방 후면 사이의 완만한 저지에 둔 시굴 구간. 지표유물 부재를 유적 부재로 처리하지 않고 퇴적 단위와 분석 시료 후보를 분리해 기록한다.",
         "fieldRecordQuality": [
           "immediateRecording",
           "observationInterpretationSeparated",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "fieldOnlyMissingCheck": [
           "featureOutline",
@@ -162,7 +165,7 @@
           "spatialLocation",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "firstExposureRecord": [
           "firstExposurePhoto",
           "featureLineVisible",
@@ -180,14 +183,16 @@
         "shortDescription": "배후습지 매몰 수전 후보층",
         "category": "FeatureSegment",
         "relations": {
-          "isRecordedIn": ["op-wetland-001"],
-          "liesWithin": ["feature-wetland-trench-001"]
+          "isRecordedIn": [
+            "op-wetland-001"
+          ],
+          "liesWithin": [
+            "feature-wetland-trench-001"
+          ]
         },
         "description": "회색 점질토와 유기물대가 반복되는 배후습지 퇴적 단위. 단순 습윤층으로 확정하지 않고 1회성 퇴적, 매몰 수전 가능성, 미화석 분석 연결을 함께 남긴다.",
         "fieldRecordQuality": [
-          "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "researchQuestionFit"
+          "observationInterpretationSeparated"
         ],
         "fieldOnlyMissingCheck": [
           "stratigraphicBoundary",
@@ -197,7 +202,7 @@
           "sameDayReview",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "wetlandMicrotopographyRecord": [
           "singleEventDeposit",
           "trialExcavationConfirmed",
@@ -239,14 +244,19 @@
         "shortDescription": "저습지 미화석·고환경 시료",
         "category": "Sample",
         "relations": {
-          "isRecordedIn": ["op-wetland-001"],
-          "liesWithin": ["segment-wetland-backswamp-001"],
-          "isDepictedIn": ["feature-wetland-trench-001"]
+          "isRecordedIn": [
+            "op-wetland-001"
+          ],
+          "liesWithin": [
+            "segment-wetland-backswamp-001"
+          ],
+          "isDepictedIn": [
+            "feature-wetland-trench-001"
+          ]
         },
         "description": "배후습지 매몰 수전 후보층에서 채취한 화분, 식물규산체, 규조 분석용 시료. 표면 오염 제거와 습윤 보존, 층위·고도 연결을 기록해 유적 부재 판단이나 작물명 단독 해석으로 흐르지 않게 한다.",
         "fieldRecordQuality": [
           "immediateRecording",
-          "researchQuestionFit",
           "observationInterpretationSeparated"
         ],
         "fieldOnlyMissingCheck": [
@@ -256,7 +266,7 @@
           "elevationRecorded",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "samplePurpose": [
           "paleoenvironment",
           "archaeobotany",

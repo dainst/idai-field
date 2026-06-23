@@ -3,6 +3,7 @@ import { CategoryForm, Document, Tree } from 'idai-field-core';
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 import {
   Modal,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -167,8 +168,16 @@ const DocumentAddModal: React.FC<AddModalProps> = ({
       transparent
       visible={true}
     >
-      <View style={styles.container}>
-        <Card style={styles.card}>
+      <Pressable
+        onPress={onClose}
+        style={styles.container}
+        testID="documentAddModalBackdrop"
+      >
+        <Pressable
+          onPress={(event) => event.stopPropagation()}
+          style={styles.cardShell}
+        >
+          <Card style={styles.card}>
           <TitleBar
             title={
               <>
@@ -235,8 +244,9 @@ const DocumentAddModal: React.FC<AddModalProps> = ({
               </>
             )}
           </ScrollView>
-        </Card>
-      </View>
+          </Card>
+        </Pressable>
+      </Pressable>
     </Modal>
   );
 };
@@ -267,6 +277,10 @@ const styles = StyleSheet.create({
     maxHeight: '84%',
     padding: 10,
     width: '72%',
+  },
+  cardShell: {
+    alignItems: 'center',
+    width: '100%',
   },
   heading: {
     marginLeft: 10,

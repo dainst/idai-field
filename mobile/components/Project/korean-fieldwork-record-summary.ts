@@ -26,15 +26,14 @@ const DIRECT_PARENT_RELATIONS = [
 ];
 
 const FEATURE_RECORDING_STATUS_LABELS: Readonly<Record<string, KoreanFieldworkStatusChip>> = {
-  candidate: { label: '검출 유구', tone: 'warning' },
-  investigating: { label: '조사중', tone: 'info' },
-  confirmed: { label: '확정', tone: 'success' },
-  rejected: { label: '제외', tone: 'neutral' },
-  merged: { label: '병합', tone: 'info' },
+  candidate: { label: '조사 전', tone: 'warning' },
+  investigating: { label: '조사 중', tone: 'info' },
+  confirmed: { label: '완료', tone: 'success' },
 };
 
 const RECORD_CREATION_TIMING_LABELS: Readonly<Record<string, KoreanFieldworkStatusChip>> = {
-  duringFieldwork: { label: '현장 작성', tone: 'success' },
+  duringFieldwork: { label: '추가 기록', tone: 'info' },
+  sameDayFieldRecord: { label: '당일 기록', tone: 'success' },
   fieldOnlyObservation: { label: '현장 한정', tone: 'warning' },
   handoverStage: { label: '인계 단계', tone: 'info' },
   reportStageGenerated: { label: '보고 단계', tone: 'neutral' },
@@ -127,7 +126,7 @@ export const getKoreanFieldworkRecordStatusChips = (
 
   if (Array.isArray(resource.fieldRecordQuality)) {
     chips.push(resource.fieldRecordQuality.length > 0
-      ? { label: `기록 확인 ${resource.fieldRecordQuality.length}`, tone: 'success' }
+      ? { label: `기록 메모 ${resource.fieldRecordQuality.length}`, tone: 'success' }
       : {
         label: '기록 보완',
         tone: QUALITY_TRACKED_CATEGORIES.has(resource.category) ? 'warning' : 'neutral',

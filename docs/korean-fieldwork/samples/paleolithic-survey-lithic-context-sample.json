@@ -42,13 +42,14 @@
         "shortDescription": "구석기 후보지 지표·시굴 작업일",
         "category": "Operation",
         "relations": {
-          "isRecordedIn": ["project-paleolithic-survey-001"]
+          "isRecordedIn": [
+            "project-paleolithic-survey-001"
+          ]
         },
         "fieldRecordQuality": [
           "immediateRecording",
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "recordCreationTiming": "duringFieldwork",
         "operationRoleResponsibility": [
@@ -84,16 +85,16 @@
         "shortDescription": "하천단구 구석기 가능성 조사",
         "category": "Survey",
         "relations": {
-          "isRecordedIn": ["op-paleolithic-survey-001"]
+          "isRecordedIn": [
+            "op-paleolithic-survey-001"
+          ]
         },
         "description": "표면 유물은 희박하지만 하천단구와 암갈색 고토양, 기존 신고 지점, 주변 돌감 분포가 겹치는 구역을 현지조사와 시굴 피트로 대조한다.",
         "fieldRecordQuality": [
           "immediateRecording",
-          "observationInterpretationSeparated",
-          "reproducibleRecord",
-          "researchQuestionFit"
+          "observationInterpretationSeparated"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "surfaceSurveyObservation": [
           "terrainCharacteristic",
           "locationPotential",
@@ -188,17 +189,22 @@
         "shortDescription": "석기 집중부 후보",
         "category": "Feature",
         "relations": {
-          "isRecordedIn": ["op-paleolithic-survey-001"],
-          "liesWithin": ["survey-paleolithic-terrace-001"]
+          "isRecordedIn": [
+            "op-paleolithic-survey-001"
+          ],
+          "liesWithin": [
+            "survey-paleolithic-terrace-001"
+          ]
         },
         "description": "시굴 뒤 정밀발굴 범위로 확장한 구역에서 몸돌·격지·미세박편과 자갈돌·탄화물 집중이 겹친다. 석기만 수습하고 끝내지 않고 접합군 번호, 제작순서, 석재 산지근거, 불땐자리·시료 연결을 남겨 제작공간, 폐기공간, 이동 동선 후보를 현장에서 검토한다.",
-        "featurePackage": ["paleolithicSite"],
+        "featurePackage": [
+          "paleolithicSite"
+        ],
         "fieldRecordQuality": [
           "immediateRecording",
-          "observationInterpretationSeparated",
-          "researchQuestionFit"
+          "observationInterpretationSeparated"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "excavationContextModel": [
           "verticalStratigraphyReviewed",
           "horizontalDistributionReviewed",
@@ -238,17 +244,23 @@
         "shortDescription": "고토양 문화층 후보",
         "category": "FeatureSegment",
         "relations": {
-          "isRecordedIn": ["op-paleolithic-survey-001"],
-          "liesWithin": ["feature-paleolithic-lithic-cluster-001"]
+          "isRecordedIn": [
+            "op-paleolithic-survey-001"
+          ],
+          "liesWithin": [
+            "feature-paleolithic-lithic-cluster-001"
+          ]
         },
         "description": "암갈색 고토양과 석기 집중이 겹치지만 자연층 구분과 문화층 구분이 완전히 일치하지 않는다. 기준피트와 단면시료를 유지하면서 유물 수직이동, 재퇴적, 동결융해 교란, 층간 접합 가능성을 검토한다.",
-        "featurePackage": ["paleolithicSite"],
+        "featurePackage": [
+          "paleolithicSite"
+        ],
         "fieldRecordQuality": [
           "immediateRecording",
           "observationInterpretationSeparated",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "chronologyArgument": [
           "stratigraphicRelation",
           "absoluteDate",
@@ -282,16 +294,19 @@
         "shortDescription": "고토양 부착 후보 석기",
         "category": "Find",
         "relations": {
-          "isRecordedIn": ["op-paleolithic-survey-001"],
-          "liesWithin": ["survey-paleolithic-terrace-001"]
+          "isRecordedIn": [
+            "op-paleolithic-survey-001"
+          ],
+          "liesWithin": [
+            "survey-paleolithic-terrace-001"
+          ]
         },
         "description": "밭둑 절개면에서 확인한 비정형 석재편. 유물 확정 전이므로 부착토와 출토지점, 좌표, 치수, 사용흔·잔류물 보존 조건, 유물대장 연결 여부를 남기고 전문검토로 넘긴다.",
         "fieldRecordQuality": [
           "immediateRecording",
-          "observationInterpretationSeparated",
-          "reproducibleRecord"
+          "observationInterpretationSeparated"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "fieldOnlyMissingCheck": [
           "numberedBeforeCollection",
           "photoAngleAndScale",

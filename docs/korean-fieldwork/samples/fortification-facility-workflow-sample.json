@@ -18,8 +18,7 @@
         "relations": {},
         "fieldRecordQuality": [
           "immediateRecording",
-          "observationInterpretationSeparated",
-          "criteriaConsistency"
+          "observationInterpretationSeparated"
         ],
         "recordCreationTiming": "duringFieldwork",
         "dailyLogContent": [
@@ -48,13 +47,14 @@
         "shortDescription": "성문과 암문 부속시설",
         "category": "Feature",
         "relations": {
-          "isRecordedIn": ["op-fortification-001"]
+          "isRecordedIn": [
+            "op-fortification-001"
+          ]
         },
         "description": "성문부와 암문 후보가 겹친 구간. 문지 유형명을 확정하기 전에 육축, 홍예, 오성지, 누조·누혈, 장군목·장군석, 암문 기능과 복원 상태를 분리 기록한다.",
         "fieldRecordQuality": [
           "immediateRecording",
-          "observationInterpretationSeparated",
-          "reproducibleRecord"
+          "observationInterpretationSeparated"
         ],
         "fieldOnlyMissingCheck": [
           "featureOutline",
@@ -63,7 +63,7 @@
           "spatialLocation",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "fortificationGateFacility": [
           "entranceGate",
           "yukchuk",
@@ -113,13 +113,15 @@
         "shortDescription": "수문·은구 배수시설",
         "category": "Feature",
         "relations": {
-          "isRecordedIn": ["op-fortification-001"]
+          "isRecordedIn": [
+            "op-fortification-001"
+          ]
         },
         "description": "성벽 하부의 배수시설 후보. 수문·수구·은구 명칭을 확정하기 전에 아치 수, 수계 연결, 용두형 수로, 상하류 관계와 보수 이력을 기록한다.",
         "fieldRecordQuality": [
           "immediateRecording",
-          "criteriaConsistency",
-          "crossReviewNeeded"
+          "observationInterpretationSeparated",
+          "correctionNeeded"
         ],
         "fieldOnlyMissingCheck": [
           "featureOutline",
@@ -128,7 +130,7 @@
           "elevationRecorded",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "fortificationWaterFacility": [
           "waterGate",
           "drainageOpening",
@@ -153,13 +155,14 @@
         "shortDescription": "왜성 해자와 이동로 후보",
         "category": "Feature",
         "relations": {
-          "isRecordedIn": ["op-fortification-001"]
+          "isRecordedIn": [
+            "op-fortification-001"
+          ]
         },
         "description": "왜성 주변 해자 후보. 물이 찬 해자와 마른 해자, 종·횡 방향 해자의 단면과 기능을 나누어 방어시설인지 이동·수송로인지 검토한다.",
         "fieldRecordQuality": [
           "immediateRecording",
-          "observationInterpretationSeparated",
-          "researchQuestionFit"
+          "observationInterpretationSeparated"
         ],
         "fieldOnlyMissingCheck": [
           "featureOutline",
@@ -168,7 +171,7 @@
           "spatialLocation",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "japaneseFortificationDitch": [
           "waterDitch",
           "dryDitch",
@@ -196,13 +199,15 @@
         "shortDescription": "산성 정상부 봉수대 후보",
         "category": "Feature",
         "relations": {
-          "isRecordedIn": ["op-fortification-001"]
+          "isRecordedIn": [
+            "op-fortification-001"
+          ]
         },
         "description": "산성 정상부의 봉수대 후보. 봉수대·봉화대 이칭은 용어 관계로 확인하고, 연대·연조·연소실·외곽석축·건물지 같은 물리시설과 직봉·대응봉수·감관·봉군보 같은 문헌 운영망을 분리 기록한다. 원문 대조는 성곽·봉수편 `dictionary2011_fortification_terms_pages/page_0021.png`, `page_0029.png`, `page_1372.png`와 한국성곽 용어사전 `dict2007_fortification_page_0133.png`, `dict2007_fortification_page_0165.png`를 근거로 둔다.",
         "fieldRecordQuality": [
           "immediateRecording",
           "observationInterpretationSeparated",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "fieldOnlyMissingCheck": [
           "featureOutline",
@@ -211,7 +216,7 @@
           "spatialLocation",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "beaconPhysicalFacility": [
           "bongsudae",
           "bonghwadaeAlias",

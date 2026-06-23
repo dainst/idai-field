@@ -48,7 +48,9 @@
         "shortDescription": "성곽 도면·제원·사례 색인",
         "category": "SourceEvidenceIndex",
         "relations": {
-          "liesWithin": ["project-source-evidence-001"]
+          "liesWithin": [
+            "project-source-evidence-001"
+          ]
         },
         "description": "제7권 성곽 노트의 풍납토성 단면, 비교성곽 도면, 고려 후기 읍성 일람, 수원화성 제원, 남한산성 행궁 중건 사례와 2007년 성곽 용어사전의 왜성 구조, 성문 부속부재, 암문, 수문·수구·은구, 기타 시설물 용어, 봉수대·연대·연조·직봉·간봉·감관·봉군보 같은 봉수 시설·운영어를 원PDF 쪽수와 캡션 대조 상태까지 묶어 값목록 확정 전 근거 색인으로 둔다.",
         "sourceEvidenceCitation": "국립문화유산연구원, 2012, 한국 매장문화재 조사연구방법론7; 한국고고학전문사전 성곽·봉수편; 2007, 한국성곽 용어사전",
@@ -83,11 +85,11 @@
           "preventAutoClassification",
           "sourceTraceability"
         ],
-        "recordCreationTiming": "postExcavationDerived",
+        "recordCreationTiming": "duringFieldwork",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "crossReviewNeeded",
-          "reproducibleRecord"
+          "correctionNeeded",
+          "immediateRecording"
         ],
         "verificationState": "candidate"
       }
@@ -99,7 +101,9 @@
         "shortDescription": "충적지·신석기 도표와 분석표 색인",
         "category": "SourceEvidenceIndex",
         "relations": {
-          "liesWithin": ["project-source-evidence-001"]
+          "liesWithin": [
+            "project-source-evidence-001"
+          ]
         },
         "description": "제6권 충적지 표·그림·사례와 제8권 문암리 밭유구, 패총 통계, 방사성탄소 결과표, 고생물 도판을 현장 관찰·연대·분석계획 근거로 분리한다.",
         "sourceEvidenceCitation": "국립문화유산연구원, 2010, 한국 매장문화재 조사연구방법론6; 국립문화유산연구원, 2013, 한국 매장문화재 조사연구방법론8",
@@ -131,11 +135,10 @@
           "interpretationCaution",
           "sourceTraceability"
         ],
-        "recordCreationTiming": "postExcavationDerived",
+        "recordCreationTiming": "duringFieldwork",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "verificationState": "candidate"
       }
@@ -147,7 +150,9 @@
         "shortDescription": "형식학·상대편년 검증근거 색인",
         "category": "SourceEvidenceIndex",
         "relations": {
-          "liesWithin": ["project-source-evidence-001"]
+          "liesWithin": [
+            "project-source-evidence-001"
+          ]
         },
         "description": "형식학적 연구의 이해 자료에서 속성·형식·기종·양식 구분, 공반 반복성, 기능·용도와 지역차, 시간적 속성, 독립 검증 필요성, 편년 대상 단위와 제작·사용·폐기/퇴적 시점 구분을 형식·편년 논증 필드의 근거로 남긴다.",
         "sourceEvidenceCitation": "형식학적 연구의 이해, KAAH 2015년도 매장문화재조사 전문교육",
@@ -177,11 +182,10 @@
           "preventAutoClassification",
           "sourceTraceability"
         ],
-        "recordCreationTiming": "postExcavationDerived",
+        "recordCreationTiming": "duringFieldwork",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "verificationState": "candidate"
       }
@@ -193,7 +197,9 @@
         "shortDescription": "연구질문·편년전제·자료연쇄 근거 색인",
         "category": "SourceEvidenceIndex",
         "relations": {
-          "liesWithin": ["project-source-evidence-001"]
+          "liesWithin": [
+            "project-source-evidence-001"
+          ]
         },
         "description": "고고학연구 입문 자료의 연구 목적, 층서 우선 원칙, 교차·경사편년 전제, 순서배열법 전제, 생업경제 자료연쇄를 유구·유물 해석 논증과 편년 논증의 원문 근거로 묶는다.",
         "sourceEvidenceCitation": "매장문화재_전문교육_고고학연구_입문2013년_2월.pdf",
@@ -223,11 +229,10 @@
           "preventAutoClassification",
           "sourceTraceability"
         ],
-        "recordCreationTiming": "postExcavationDerived",
+        "recordCreationTiming": "duringFieldwork",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "verificationState": "candidate"
       }
@@ -239,7 +244,9 @@
         "shortDescription": "정밀토양도·대토양군 사례 색인",
         "category": "SourceEvidenceIndex",
         "relations": {
-          "liesWithin": ["project-source-evidence-001"]
+          "liesWithin": [
+            "project-source-evidence-001"
+          ]
         },
         "description": "제6권 토양조사 자료 활용 장의 정밀토양도 이용 절차, 대토양군 재정리, 창원일반산업단지·합산패총·가술리패총, 울산 태화강, 부산·진해 남문지구, 김해 관동리 사례를 토양도 기반 예측과 실제 시굴·발굴 검증 근거로 분리한다.",
         "sourceEvidenceCitation": "국립문화유산연구원, 2010, 한국 매장문화재 조사연구방법론6, 토양조사 자료의 고고학적 활용",
@@ -273,11 +280,10 @@
           "preventAutoClassification",
           "sourceTraceability"
         ],
-        "recordCreationTiming": "postExcavationDerived",
+        "recordCreationTiming": "duringFieldwork",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "verificationState": "candidate"
       }
@@ -289,7 +295,9 @@
         "shortDescription": "식물유체 표본·동정 도판 색인",
         "category": "SourceEvidenceIndex",
         "relations": {
-          "liesWithin": ["project-source-evidence-001"]
+          "liesWithin": [
+            "project-source-evidence-001"
+          ]
         },
         "description": "고환경분석 특강의 탄화곡물 장에서 보존 편향표, 표본추출 평면도, 플로테이션 도식, 물체질·플로테이션 산출물 비교, 목재 삼단면·SEM 사진, 현생 탄화 곡물과 유적 곡물 비교, 길이·폭·두께 계측축, 산점도 군집, 축척사진을 식물유체 시료 설계와 동정 근거로 묶는다.",
         "sourceEvidenceCitation": "매장문화재전문교육 조사연구특강 유적조사와 고환경분석, 탄화곡물 검출과 분석방법",
@@ -322,11 +330,10 @@
           "sourceTraceability",
           "futurePdfRecheck"
         ],
-        "recordCreationTiming": "postExcavationDerived",
+        "recordCreationTiming": "duringFieldwork",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "verificationState": "candidate"
       }
@@ -338,7 +345,9 @@
         "shortDescription": "유물 건·점수와 수장환경 표 색인",
         "category": "SourceEvidenceIndex",
         "relations": {
-          "liesWithin": ["project-source-evidence-001"]
+          "liesWithin": [
+            "project-source-evidence-001"
+          ]
         },
         "description": "조사요원 기초소양 교육의 유물 정리·보관 장에서 건·점수 산정 예시, 개별 포장·결로 방지, 이관 순서별 격납, 재질별 미세환경, door-to-door 이송, 대형유물 장비·인력, 재질별 매뉴얼 숙지와 수장·전시 환경 표를 유물 카드의 수량·보관 필드 근거로 묶되, 현행 보존환경 기준은 source-index-current-storage-standards-001에서 별도 대조한다.",
         "sourceEvidenceCitation": "조사요원_기초소양_교육.pdf, 유물 정리·보관 장",
@@ -369,11 +378,10 @@
           "interpretationCaution",
           "sourceTraceability"
         ],
-        "recordCreationTiming": "postExcavationDerived",
+        "recordCreationTiming": "duringFieldwork",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "verificationState": "candidate"
       }
@@ -385,7 +393,9 @@
         "shortDescription": "현행 수장환경 기준 교차대조 색인",
         "category": "SourceEvidenceIndex",
         "relations": {
-          "liesWithin": ["project-source-evidence-001"]
+          "liesWithin": [
+            "project-source-evidence-001"
+          ]
         },
         "description": "교재 수장환경 표를 앱 기본 규정으로 고정하지 않고, 공개 보존환경 기준과 대조해 기관별·재질별 기준 출처, 실측 로그, 공기오염·생물피해 모니터링을 유물 보관 기록에 연결한다.",
         "sourceEvidenceCitation": "국립해양박물관 수장고 현황; 국립현대미술관 보존환경; 국립한글박물관 보존환경 관리",
@@ -410,11 +420,10 @@
           "interpretationCaution",
           "sourceTraceability"
         ],
-        "recordCreationTiming": "postExcavationDerived",
+        "recordCreationTiming": "duringFieldwork",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "verificationState": "candidate"
       }
@@ -426,7 +435,9 @@
         "shortDescription": "보존과학 현장수습·분석 근거 색인",
         "category": "SourceEvidenceIndex",
         "relations": {
-          "liesWithin": ["project-source-evidence-001"]
+          "liesWithin": [
+            "project-source-evidence-001"
+          ]
         },
         "description": "보존과학 담당자 과정 자료의 수침목재·칠기, 금속, 토도류, 인골 DNA, 지류·직물, 유기물·토양 분석 대목을 현장 수습, 임시보관, 분석 의뢰, 파괴분석 승인, 보존처리 원칙의 근거로 묶는다.",
         "sourceEvidenceCitation": "매장문화재_전문교육_보존과학_연구의_최신_성과와_과제2013년_9월.pdf",
@@ -458,11 +469,10 @@
           "preventAutoClassification",
           "sourceTraceability"
         ],
-        "recordCreationTiming": "postExcavationDerived",
+        "recordCreationTiming": "duringFieldwork",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "verificationState": "candidate"
       }
@@ -474,7 +484,9 @@
         "shortDescription": "동물유체 수습·계량화 근거 색인",
         "category": "SourceEvidenceIndex",
         "relations": {
-          "liesWithin": ["project-source-evidence-001"]
+          "liesWithin": [
+            "project-source-evidence-001"
+          ]
         },
         "description": "동물유체가 큰 뼈 선별 수습이나 단일 종명 목록으로 축소되지 않도록, 블록시료·체질망·소형자료 누락 위험과 NISP·MNE·MNI·MAU·%MAU의 산출 방식과 한계를 원문 근거로 묶는다.",
         "sourceEvidenceCitation": "매장문화재전문교육 조사연구특강 유적조사와 고환경분석, 동물고고학의 이해; 제5회 매장문화재 조사연구원 교육 2008년 8월, 고고학 유적 내 출토 동물유체의 분석방법; 한국고고학전문사전 신석기시대편, 동물유체·블록시료채집법·NISP/MNI/MNE/MAU 항목",
@@ -506,11 +518,10 @@
           "preventAutoClassification",
           "sourceTraceability"
         ],
-        "recordCreationTiming": "postExcavationDerived",
+        "recordCreationTiming": "duringFieldwork",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "verificationState": "candidate"
       }
@@ -522,7 +533,9 @@
         "shortDescription": "신석기 사전 패총·어구·토기 근거 색인",
         "category": "SourceEvidenceIndex",
         "relations": {
-          "liesWithin": ["project-source-evidence-001"]
+          "liesWithin": [
+            "project-source-evidence-001"
+          ]
         },
         "description": "한국고고학전문사전 신석기시대편의 일러두기, 가거도패총, 가공유적, 결합식조침·작살, 어망추·조침 찾아가기, 고산리식토기 관련 원문 화면을 패총·어로·토기 편년 용어의 검색어와 관찰값 분리 근거로 묶는다.",
         "sourceEvidenceCitation": "국립문화유산연구원, 2012, 한국고고학전문사전 신석기시대편",
@@ -555,11 +568,10 @@
           "preventAutoClassification",
           "sourceTraceability"
         ],
-        "recordCreationTiming": "postExcavationDerived",
+        "recordCreationTiming": "duringFieldwork",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "reproducibleRecord"
+          "immediateRecording"
         ],
         "verificationState": "candidate"
       }
@@ -571,7 +583,9 @@
         "shortDescription": "수혈주거지 도판·사례명 재대조 색인",
         "category": "SourceEvidenceIndex",
         "relations": {
-          "liesWithin": ["project-source-evidence-001"]
+          "liesWithin": [
+            "project-source-evidence-001"
+          ]
         },
         "description": "발굴조사 업무의 이해와 현장조사 방법과 해석의 수혈주거지 장에서 도판, 캡션, 사례명, OCR 오독 후보를 직접 PDF 이미지와 대조해 노출·둑·바닥·사진·화재·중복 조사 필드의 근거 색인으로 묶는다.",
         "sourceEvidenceCitation": "발굴조사_업무의_이해_교재_(2).pdf, 수혈주거지 장; 현장조사_방법과_해석.pdf, 수혈주거지 장",
@@ -605,11 +619,11 @@
           "sourceTraceability",
           "reportCrossCheckEvidence"
         ],
-        "recordCreationTiming": "postExcavationDerived",
+        "recordCreationTiming": "duringFieldwork",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "reproducibleRecord",
-          "crossReviewNeeded"
+          "immediateRecording",
+          "correctionNeeded"
         ],
         "verificationState": "candidate"
       }
@@ -621,7 +635,9 @@
         "shortDescription": "층위·출토맥락 보고서 검토 색인",
         "category": "SourceEvidenceIndex",
         "relations": {
-          "liesWithin": ["project-source-evidence-001"]
+          "liesWithin": [
+            "project-source-evidence-001"
+          ]
         },
         "description": "제5회 매장문화재 조사연구원 교육자료의 층위와 출토맥락 기록 요구를 원PDF 쪽수와 도판까지 확인해 전체 층위 흐름도, 기준 층위 사진, 유물-층위 관계, 연대측정값의 층위도 표시 검토 근거로 분리한다.",
         "sourceEvidenceCitation": "제5회 매장문화재 조사연구원 교육 2008년 8월, 발굴보고서 작성법 및 층위학적 접근과 출토맥락 분석",
@@ -653,11 +669,11 @@
           "interpretationCaution",
           "sourceTraceability"
         ],
-        "recordCreationTiming": "postExcavationDerived",
+        "recordCreationTiming": "duringFieldwork",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "reproducibleRecord",
-          "crossReviewNeeded"
+          "immediateRecording",
+          "correctionNeeded"
         ],
         "verificationState": "candidate"
       }
@@ -669,7 +685,9 @@
         "shortDescription": "조사기초과정 층 구분·기재 근거 색인",
         "category": "SourceEvidenceIndex",
         "relations": {
-          "liesWithin": ["project-source-evidence-001"]
+          "liesWithin": [
+            "project-source-evidence-001"
+          ]
         },
         "description": "조사기초과정 2010·2012년 자료의 층 개념, 층리면, a/b층 구분, 수혈 자연폐기·화재폐기 실험 사진을 층위 관찰 절차, 층명 체계, 내부토 해석, 후성작용 오인 방지의 원문 근거로 묶는다.",
         "sourceEvidenceCitation": "매장문화재전문교육_조사기초과정_2010년_7월.pdf; 매장문화재전문교육_조사기초과정2012년_7월.pdf",
@@ -702,8 +720,7 @@
         "recordCreationTiming": "duringFieldwork",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "verificationState": "candidate"
       }
@@ -715,7 +732,9 @@
         "shortDescription": "사전 한자·캡션·찾아가기 색인",
         "category": "SourceEvidenceIndex",
         "relations": {
-          "liesWithin": ["project-source-evidence-001"]
+          "liesWithin": [
+            "project-source-evidence-001"
+          ]
         },
         "description": "고고학사전의 일러두기, 표제어, 한자·원문 표기, 도판 캡션, 복합 유적명, 찾아가기 관계와 같은 표제어의 분야 분리 예시를 용어 권위 근거로 쓰되 OCR 오독과 분야 차이는 보류값으로 남긴다.",
         "sourceEvidenceCitation": "한국고고학사전 1·2; 한국고고학전문사전 생산유적편·고분편·성곽봉수편",
@@ -748,10 +767,10 @@
           "preventAutoClassification",
           "sourceTraceability"
         ],
-        "recordCreationTiming": "postExcavationDerived",
+        "recordCreationTiming": "duringFieldwork",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "verificationState": "candidate"
       }
@@ -763,7 +782,9 @@
         "shortDescription": "생산유적 사전 용어·요도구 색인",
         "category": "SourceEvidenceIndex",
         "relations": {
-          "liesWithin": ["project-source-evidence-001"]
+          "liesWithin": [
+            "project-source-evidence-001"
+          ]
         },
         "description": "생산유적편 일러두기의 분야 분리, 찾아가기 관계, 같은 평요의 분야별 분리, 번조실·소성실 동등성 검토와 갑발·도침·도지미·이상재·이기재·공방 부속시설 관계를 생산유적 화면 설계 근거로 남긴다.",
         "sourceEvidenceCitation": "한국고고학전문사전 생산유적편",
@@ -791,10 +812,10 @@
           "preventAutoClassification",
           "sourceTraceability"
         ],
-        "recordCreationTiming": "postExcavationDerived",
+        "recordCreationTiming": "duringFieldwork",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "verificationState": "candidate"
       }
@@ -806,7 +827,9 @@
         "shortDescription": "제철유적 공정·조사방법 원문 색인",
         "category": "SourceEvidenceIndex",
         "relations": {
-          "liesWithin": ["project-source-evidence-001"]
+          "liesWithin": [
+            "project-source-evidence-001"
+          ]
         },
         "description": "유적조사방법론 1기 제철유적 장의 제철 공정 도식, 배소·제련·단야·용해·초강로 조사 사진, 제련로 배치 점검표, 단야로 절개법, 격자방안 단조박편·입상재 수습, 구상소철괴 오분류 주의, 부속유구와 목탄 기록을 제철유적 화면과 샘플 검증 근거로 묶는다.",
         "sourceEvidenceCitation": "매장문화재_유적조사방법론(1기).pdf, 제철유적 조사방법 장",
@@ -842,12 +865,11 @@
           "preventAutoClassification",
           "sourceTraceability"
         ],
-        "recordCreationTiming": "postExcavationDerived",
+        "recordCreationTiming": "duringFieldwork",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "crossReviewNeeded",
-          "reproducibleRecord"
+          "correctionNeeded",
+          "immediateRecording"
         ],
         "verificationState": "candidate"
       }
@@ -859,7 +881,9 @@
         "shortDescription": "기와가마 조사방법 원문 색인",
         "category": "SourceEvidenceIndex",
         "relations": {
-          "liesWithin": ["project-source-evidence-001"]
+          "liesWithin": [
+            "project-source-evidence-001"
+          ]
         },
         "description": "기와가마 조사방법 자료에서 조사계획, Grid 구획과 퇴적토 제거, 장축·중앙·회구부 연결 둑, 내부토와 회구부의 층위 판단, 요전부·아궁이·연소실·소성실·연도·배연구·회구부 조사, 주변 생산시설과 가마군 관계, C14·고고지자기 시료 채취 요구를 기와가마 화면과 샘플 검증 근거로 묶는다.",
         "sourceEvidenceCitation": "매장문화재전문교육_조사기술특강_기와가마_조사법2011년_9월.pdf, 기와가마의 조사 방법",
@@ -892,12 +916,11 @@
           "preventAutoClassification",
           "sourceTraceability"
         ],
-        "recordCreationTiming": "postExcavationDerived",
+        "recordCreationTiming": "duringFieldwork",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "crossReviewNeeded",
-          "reproducibleRecord"
+          "correctionNeeded",
+          "immediateRecording"
         ],
         "verificationState": "candidate"
       }
@@ -909,7 +932,9 @@
         "shortDescription": "청동기 사전 주거·고인돌·환호 색인",
         "category": "SourceEvidenceIndex",
         "relations": {
-          "liesWithin": ["project-source-evidence-001"]
+          "liesWithin": [
+            "project-source-evidence-001"
+          ]
         },
         "description": "청동기시대편 증보판의 고인돌 하부구조, 아화리·안간리·약사동·양교리·어량리 계열 집자리 세부시설과 제작 흔적, 연암동식 집자리 외곽 둘레도랑, 연암동 환호의 수축·자연퇴적·시기차·의례 후보, 전문 용어 한글 표준안을 청동기 주거·고인돌·환호·토기 용어 설계 근거로 남긴다.",
         "sourceEvidenceCitation": "한국고고학전문사전 청동기시대편 증보판Ⅰ·Ⅱ",
@@ -942,11 +967,10 @@
           "interpretationCaution",
           "sourceTraceability"
         ],
-        "recordCreationTiming": "postExcavationDerived",
+        "recordCreationTiming": "duringFieldwork",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "verificationState": "candidate"
       }
@@ -958,7 +982,9 @@
         "shortDescription": "구석기 사전 석재·접합·공간분포 색인",
         "category": "SourceEvidenceIndex",
         "relations": {
-          "liesWithin": ["project-source-evidence-001"]
+          "liesWithin": [
+            "project-source-evidence-001"
+          ]
         },
         "description": "구석기시대편의 공간분포, 석기 접합·되맞추기, 석기 제작 기법, 석재 산지, 사용흔분석, 르발루아·무스테리안 같은 국외 비교용어를 구석기 발굴 화면의 공간·산지·기능판정 보류 근거로 남긴다.",
         "sourceEvidenceCitation": "한국고고학전문사전 구석기시대편",
@@ -988,11 +1014,11 @@
           "preventAutoClassification",
           "sourceTraceability"
         ],
-        "recordCreationTiming": "postExcavationDerived",
+        "recordCreationTiming": "duringFieldwork",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "crossReviewNeeded",
-          "reproducibleRecord"
+          "correctionNeeded",
+          "immediateRecording"
         ],
         "verificationState": "candidate"
       }
@@ -1004,7 +1030,9 @@
         "shortDescription": "분묘유구 조사방법 원문 색인",
         "category": "SourceEvidenceIndex",
         "relations": {
-          "liesWithin": ["project-source-evidence-001"]
+          "liesWithin": [
+            "project-source-evidence-001"
+          ]
         },
         "description": "분묘유구 조사법 자료에서 대형봉토분의 환경·입지·분포도, 발굴 준비, 봉분 현황과 도굴구, 구획성토·토낭·토재/석재 조달, 호석·주구·묘도부, 횡구·횡혈식 석실의 묘도·연도·현실·문틀·폐쇄시설, 매장원상, 분묘 도면·사진 기록 순서를 고분 화면과 샘플 검증 근거로 묶는다.",
         "sourceEvidenceCitation": "매장문화재전문교육_조사기술특강_분묘유구_조사법2011년_8월.pdf",
@@ -1039,12 +1067,11 @@
           "preventAutoClassification",
           "sourceTraceability"
         ],
-        "recordCreationTiming": "postExcavationDerived",
+        "recordCreationTiming": "duringFieldwork",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "crossReviewNeeded",
-          "reproducibleRecord"
+          "correctionNeeded",
+          "immediateRecording"
         ],
         "verificationState": "candidate"
       }
@@ -1056,7 +1083,9 @@
         "shortDescription": "고분 사전 용어·위치관계 색인",
         "category": "SourceEvidenceIndex",
         "relations": {
-          "liesWithin": ["project-source-evidence-001"]
+          "liesWithin": [
+            "project-source-evidence-001"
+          ]
         },
         "description": "고분편 일러두기의 묘·분 표기, 매장주체시설·외피시설 분리, 목관·목곽 구분 원칙과 고분유물편의 장구·착장품·부장품·장례·제의 매납 위치 구분을 고분 화면 설계 근거로 남긴다.",
         "sourceEvidenceCitation": "한국고고학전문사전 고분편; 한국고고학전문사전 고분유물편",
@@ -1083,10 +1112,10 @@
           "preventAutoClassification",
           "sourceTraceability"
         ],
-        "recordCreationTiming": "postExcavationDerived",
+        "recordCreationTiming": "duringFieldwork",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "verificationState": "candidate"
       }
@@ -1098,7 +1127,9 @@
         "shortDescription": "첨단과학장비 조사품질 색인",
         "category": "SourceEvidenceIndex",
         "relations": {
-          "liesWithin": ["project-source-evidence-001"]
+          "liesWithin": [
+            "project-source-evidence-001"
+          ]
         },
         "description": "첨단과학장비 활용 자료의 고지형분석, GIS, DGPS, UAV, LiDAR, 3D 레이저스캔, 사진실측, 항공사진 표정·지리보정, 외주 정사작업 유의점을 디지털 조사 품질검수 근거로 남긴다. 원천자료 한계와 취득·표현 계획, 좌표·오차·RMS 검수, 외주 산출물 인수검수, 최소 분석 위험을 장비명과 분리해 추적한다.",
         "sourceEvidenceCitation": "매장문화재조사와 첨단과학장비의 활용",
@@ -1133,11 +1164,11 @@
           "interpretationCaution",
           "sourceTraceability"
         ],
-        "recordCreationTiming": "postExcavationDerived",
+        "recordCreationTiming": "duringFieldwork",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "crossReviewNeeded",
-          "reproducibleRecord"
+          "correctionNeeded",
+          "immediateRecording"
         ],
         "verificationState": "candidate"
       }
@@ -1149,7 +1180,9 @@
         "shortDescription": "유물실측 원리·목기 실측 원문 색인",
         "category": "SourceEvidenceIndex",
         "relations": {
-          "liesWithin": ["project-source-evidence-001"]
+          "liesWithin": [
+            "project-source-evidence-001"
+          ]
         },
         "description": "2014년 유물실측 자료의 실측도면 역할, 기록방식 상호보완, 기준선·실측선 선택, 측점 측정·검점, 단면 우선, 기벽 3-4곳 계측, 문양 측점과 시문 순서, 주기, 석기 6면 투상 요구와 2015년 자료의 수침목재 중심선·습식 실측·보존 전후 기록을 Drawing 샘플 근거로 묶는다.",
         "sourceEvidenceCitation": "유물실측의_이해-충청·호남권역2014년_7월.pdf; 유물실측의_이해_-_호서·호남권역(2015년_8월.pdf",
@@ -1183,12 +1216,11 @@
           "preventAutoClassification",
           "sourceTraceability"
         ],
-        "recordCreationTiming": "postExcavationDerived",
+        "recordCreationTiming": "duringFieldwork",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "crossReviewNeeded",
-          "reproducibleRecord"
+          "correctionNeeded",
+          "immediateRecording"
         ],
         "verificationState": "candidate"
       }
@@ -1200,7 +1232,9 @@
         "shortDescription": "토기 제작실험 변수 색인",
         "category": "SourceEvidenceIndex",
         "relations": {
-          "liesWithin": ["project-source-evidence-001"]
+          "liesWithin": [
+            "project-source-evidence-001"
+          ]
         },
         "description": "토기 제작의 이해와 실습 자료의 태토 채취·수비, 비짐 육안 단정 금지, 성형, 정면·시문, 건조·소성·보수흔, 양산 호계가마 소성실험 수치, 요장 시설 도판·캡션을 토기 제작 생애와 실험 설계 근거로 남긴다.",
         "sourceEvidenceCitation": "토기 제작의 이해와 실습",
@@ -1232,11 +1266,10 @@
           "interpretationCaution",
           "sourceTraceability"
         ],
-        "recordCreationTiming": "postExcavationDerived",
+        "recordCreationTiming": "duringFieldwork",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "verificationState": "candidate"
       }
@@ -1248,7 +1281,9 @@
         "shortDescription": "지표조사 결과 처리 원문 대조 색인",
         "category": "SourceEvidenceIndex",
         "relations": {
-          "liesWithin": ["project-source-evidence-001"]
+          "liesWithin": [
+            "project-source-evidence-001"
+          ]
         },
         "description": "지표조사 업무의 이해 교재의 행정절차, 보고서 구성, 결과 적용, 부재·멸실 판단주의를 Survey 화면의 지표조사 결과 처리와 후속조치 판단 근거로 남긴다.",
         "sourceEvidenceCitation": "지표조사_업무의_이해_교재.pdf",
@@ -1279,11 +1314,10 @@
           "interpretationCaution",
           "sourceTraceability"
         ],
-        "recordCreationTiming": "postExcavationDerived",
+        "recordCreationTiming": "duringFieldwork",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "verificationState": "candidate"
       }
@@ -1295,7 +1329,9 @@
         "shortDescription": "지표조사 부재판단·후속조치 원문 대조 색인",
         "category": "SourceEvidenceIndex",
         "relations": {
-          "liesWithin": ["project-source-evidence-001"]
+          "liesWithin": [
+            "project-source-evidence-001"
+          ]
         },
         "description": "지표조사에서 유적이나 유물이 보이지 않는 결과를 곧바로 부재 확정으로 처리하지 않고, 문헌기록 대조, 지형·입지·시야 조건, 조사경로, 전문가 교차검토, 표본·시굴 필요성으로 이어지는 판단 근거로 관리한다.",
         "sourceEvidenceCitation": "지표조사_업무의_이해_교재.pdf",
@@ -1325,11 +1361,10 @@
           "interpretationCaution",
           "sourceTraceability"
         ],
-        "recordCreationTiming": "postExcavationDerived",
+        "recordCreationTiming": "duringFieldwork",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "verificationState": "candidate"
       }
@@ -1341,7 +1376,9 @@
         "shortDescription": "저습지 지형판독·극미지형 원문 대조 색인",
         "category": "SourceEvidenceIndex",
         "relations": {
-          "liesWithin": ["project-source-evidence-001"]
+          "liesWithin": [
+            "project-source-evidence-001"
+          ]
         },
         "description": "저습지 조사방법 강의자료의 지형환경분석과 발굴조사 대목을 현재 습윤 여부가 아니라 사전 지도·항공사진 판독, 현지 반복확인, 시굴지점 선정, 극미지형 관찰, 미화석 시료 설계의 근거 색인으로 둔다.",
         "sourceEvidenceCitation": "제2회_매장문화재_조사연구원_교육_2007년3월.pdf, 저습지에 대한 고고학적 조사방법 장",
@@ -1378,11 +1415,10 @@
           "preventAutoClassification",
           "sourceTraceability"
         ],
-        "recordCreationTiming": "postExcavationDerived",
+        "recordCreationTiming": "duringFieldwork",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "verificationState": "candidate"
       }
@@ -1394,7 +1430,9 @@
         "shortDescription": "야장·작업일지·품질검수 원문 대조 색인",
         "category": "SourceEvidenceIndex",
         "relations": {
-          "liesWithin": ["project-source-evidence-001"]
+          "liesWithin": [
+            "project-source-evidence-001"
+          ]
         },
         "description": "조사실무, 발굴조사의 이해, 발굴조사 실무, 조사요원 기초소양 교육자료의 야장, 작업일지, 현장시점 기록, 보고서 전 조사자료 검토 대목을 Operation, DailyLog, FieldRecordQualityReview 화면의 근거로 남긴다.",
         "sourceEvidenceCitation": "매장문화재_조사실무.pdf; 발굴조사의_이해.pdf; 발굴조사_실무.pdf; 조사요원_기초소양_교육.pdf",
@@ -1426,12 +1464,11 @@
           "preventAutoClassification",
           "sourceTraceability"
         ],
-        "recordCreationTiming": "postExcavationDerived",
+        "recordCreationTiming": "duringFieldwork",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "crossReviewNeeded",
-          "reproducibleRecord"
+          "correctionNeeded",
+          "immediateRecording"
         ],
         "verificationState": "candidate"
       }

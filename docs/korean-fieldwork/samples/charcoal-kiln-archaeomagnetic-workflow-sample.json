@@ -18,8 +18,7 @@
         "fieldRecordQuality": [
           "immediateRecording",
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "recordCreationTiming": "duringFieldwork",
         "dailyLogContent": [
@@ -51,14 +50,15 @@
         "shortDescription": "구릉 사면 측구부탄요 후보",
         "category": "Feature",
         "relations": {
-          "isRecordedIn": ["op-charcoal-kiln-001"]
+          "isRecordedIn": [
+            "op-charcoal-kiln-001"
+          ]
         },
         "description": "구릉 사면 생토층을 파고 만든 낮은 피열흔의 탄요 후보. 측구, 측면작업장, 외부배수구, 폐쇄석을 먼저 보호하고 중앙 트렌치를 보류한 상태에서 구조와 시료 계획을 분리해 남긴다.",
         "fieldRecordQuality": [
           "immediateRecording",
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "fieldOnlyMissingCheck": [
           "featureOutline",
@@ -70,7 +70,7 @@
           "sameDayReview",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "charcoalKilnIdentification": [
           "charcoalKilnCandidate",
           "sideOpeningCharcoalKilnCandidate",
@@ -149,13 +149,16 @@
         "shortDescription": "목탄·주혈 탄화목 분석 시료",
         "category": "Sample",
         "relations": {
-          "isRecordedIn": ["op-charcoal-kiln-001"],
-          "liesWithin": ["feature-charcoal-kiln-001"]
+          "isRecordedIn": [
+            "op-charcoal-kiln-001"
+          ],
+          "liesWithin": [
+            "feature-charcoal-kiln-001"
+          ]
         },
         "description": "소성부 목탄층과 주혈 탄화목을 수종분석, C14, OSL, 소토 분석과 함께 비교하기 위한 시료 묶음. 목탄 생산 목적과 제철·분묘·생활 연료 후보를 단독 확정하지 않도록 남긴다.",
         "fieldRecordQuality": [
           "immediateRecording",
-          "researchQuestionFit",
           "observationInterpretationSeparated"
         ],
         "fieldOnlyMissingCheck": [
@@ -165,7 +168,7 @@
           "elevationRecorded",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "samplePurpose": [
           "absoluteDating",
           "paleoenvironment",
@@ -204,15 +207,18 @@
         "shortDescription": "측구부탄요 고고지자기 시료",
         "category": "Sample",
         "relations": {
-          "isRecordedIn": ["op-charcoal-kiln-001"],
-          "liesWithin": ["feature-charcoal-kiln-001"]
+          "isRecordedIn": [
+            "op-charcoal-kiln-001"
+          ],
+          "liesWithin": [
+            "feature-charcoal-kiln-001"
+          ]
         },
         "description": "소성부의 잘 구워진 원위치 소토면에서 정방위로 채취한 고고지자기 시료 묶음. 채취 방향, 보정 기준, 제외시료와 결과 품질, C14·OSL·층위 대조를 같은 기록에 이어 붙인다.",
         "fieldRecordQuality": [
           "immediateRecording",
-          "criteriaConsistency",
-          "researchQuestionFit",
-          "crossReviewNeeded"
+          "observationInterpretationSeparated",
+          "correctionNeeded"
         ],
         "fieldOnlyMissingCheck": [
           "samplePointMapped",
@@ -221,7 +227,7 @@
           "elevationRecorded",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "samplePurpose": [
           "absoluteDating",
           "contaminationControl"
@@ -314,8 +320,13 @@
         "shortDescription": "측구·폐쇄석 원위치 사진",
         "category": "Photo",
         "relations": {
-          "isRecordedIn": ["op-charcoal-kiln-001"],
-          "isDepictedIn": ["feature-charcoal-kiln-001", "sample-charcoal-kiln-archmag-001"]
+          "isRecordedIn": [
+            "op-charcoal-kiln-001"
+          ],
+          "isDepictedIn": [
+            "feature-charcoal-kiln-001",
+            "sample-charcoal-kiln-archmag-001"
+          ]
         },
         "mediaEvidenceRole": [
           "workStageRecord",

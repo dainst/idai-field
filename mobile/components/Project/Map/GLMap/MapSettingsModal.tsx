@@ -5,6 +5,7 @@ import React from 'react';
 import {
   FlatList,
   Modal,
+  Pressable,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -100,8 +101,16 @@ const MapSettingsModal: React.FC<MapSettingsModalProps> = ({
       transparent
       visible={true}
     >
-      <View style={styles.container}>
-        <Card style={styles.card}>
+      <Pressable
+        onPress={onClose}
+        style={styles.container}
+        testID="mapSettingsModalBackdrop"
+      >
+        <Pressable
+          onPress={(event) => event.stopPropagation()}
+          style={styles.cardShell}
+        >
+          <Card style={styles.card}>
           <TitleBar
             title={
               <>
@@ -147,24 +156,30 @@ const MapSettingsModal: React.FC<MapSettingsModalProps> = ({
               />
             </>
           )}
-        </Card>
-      </View>
+          </Card>
+        </Pressable>
+      </Pressable>
     </Modal>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(17, 24, 39, 0.42)',
     flex: 1,
     flexDirection: 'column',
-    marginTop: 200,
-    alignItems: 'center',
+    justifyContent: 'center',
   },
   card: {
     padding: 10,
     height: '60%',
     width: '60%',
     opacity: 0.9,
+  },
+  cardShell: {
+    alignItems: 'center',
+    width: '100%',
   },
   heading: {
     marginLeft: 10,

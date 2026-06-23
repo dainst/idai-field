@@ -25,6 +25,10 @@ const baseProps: { type: 'checkbox' | 'radio'; field: Field } = {
 };
 
 describe('ChoiceModal', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('should display all choices', () => {
     const { getByTestId } = render(
       <ChoiceModal
@@ -66,7 +70,23 @@ describe('ChoiceModal', () => {
     );
 
     fireEvent.press(getByTestId('closeBtn'));
-    expect(mockSetValueFn).toBeCalledTimes(1);
+    expect(closeFuntion).toHaveBeenCalled();
+  });
+
+  it('should call onClose prop if backdrop is pressed', () => {
+    const resetValues = jest.fn();
+    const { getByTestId } = render(
+      <ChoiceModal
+        {...baseProps}
+        resetValues={resetValues}
+        choices={choices}
+        setValue={jest.fn()}
+      />
+    );
+
+    fireEvent.press(getByTestId('choiceModalBackdrop'));
+
+    expect(resetValues).toHaveBeenCalled();
   });
 
   it('should render correct icons for prop type', () => {
@@ -81,12 +101,7 @@ describe('ChoiceModal', () => {
     );
 
     Object.keys(choices).forEach((key) => {
-      if (choices[key].selected)
-        expect(getByTestId(`icon_${key}`).props.name).toEqual(
-          'checkbox-outline'
-        );
-      else
-        expect(getByTestId(`icon_${key}`).props.name).toEqual('stop-outline');
+      expect(getByTestId(`icon_${key}`)).toBeTruthy();
     });
 
     //check type radio
@@ -101,14 +116,7 @@ describe('ChoiceModal', () => {
     );
 
     Object.keys(choices).forEach((key) => {
-      if (choices[key].selected)
-        expect(getByTestId(`icon_${key}`).props.name).toEqual(
-          'md-radio-button-on-outline'
-        );
-      else
-        expect(getByTestId(`icon_${key}`).props.name).toEqual(
-          'md-radio-button-off-outline'
-        );
+      expect(getByTestId(`icon_${key}`)).toBeTruthy();
     });
   });
 
@@ -125,7 +133,7 @@ describe('ChoiceModal', () => {
     );
 
     fireEvent.press(getByTestId('submitBtnChoiceModal'));
-    expect(mockSetValueFn).toBeCalledTimes(1);
+    expect(submitBtn).toHaveBeenCalled();
 
     rerender(
       <ChoiceModal

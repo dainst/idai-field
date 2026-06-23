@@ -105,20 +105,20 @@ describe('Korean fieldwork quick record helpers', () => {
       fieldRecordQuality: [
         'immediateRecording',
         7,
-        'factualAccuracy',
+        'observationInterpretationSeparated',
       ],
     });
 
     expect(getStringArrayFieldValues(
       resource,
       FIELDWORK_QUICK_FIELDS.quality
-    )).toEqual(['immediateRecording', 'factualAccuracy']);
+    )).toEqual(['immediateRecording', 'observationInterpretationSeparated']);
 
     expect(toggleStringArrayFieldValue(
       resource,
       FIELDWORK_QUICK_FIELDS.quality,
       'immediateRecording'
-    )).toEqual(['factualAccuracy']);
+    )).toEqual(['observationInterpretationSeparated']);
 
     expect(toggleStringArrayFieldValue(
       resource,
@@ -126,7 +126,7 @@ describe('Korean fieldwork quick record helpers', () => {
       'correctionNeeded'
     )).toEqual([
       'immediateRecording',
-      'factualAccuracy',
+      'observationInterpretationSeparated',
       'correctionNeeded',
     ]);
   });
@@ -177,9 +177,7 @@ describe('Korean fieldwork quick record helpers', () => {
       ],
       fieldRecordQuality: [
         'immediateRecording',
-        'factualAccuracy',
         'observationInterpretationSeparated',
-        'fieldToReportContinuity',
       ],
     });
   });
@@ -203,7 +201,6 @@ describe('Korean fieldwork quick record helpers', () => {
       'soilProfilePhotoLinked',
       'preRecoveryFindPhotoTaken',
       'findsRecovered',
-      'findRecordsLinked',
       'samplesCollected',
       'completionPhotoTaken',
       'measuredDrawingCompleted',

@@ -57,7 +57,7 @@ describe('KoreanFieldworkProgressBoard', () => {
       />
     );
 
-    expect(getByText('검출 유구 기록')).toBeTruthy();
+    expect(getByText('유구 기록')).toBeTruthy();
 
     fireEvent.press(getByTestId('progressAction_operation-1'));
 

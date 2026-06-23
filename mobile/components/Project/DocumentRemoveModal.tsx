@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Document } from 'idai-field-core';
 import React, { useContext, useState } from 'react';
-import { Modal, StyleSheet, Text, View } from 'react-native';
+import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 import { ConfigurationContext } from '@/contexts/configuration-context';
 import Button from '@/components/common/Button';
 import Card from '@/components/common/Card';
@@ -39,8 +39,16 @@ const DocumentRemoveModal: React.FC<RemoveModalProps> = ({
       transparent
       visible={true}
     >
-      <View style={styles.container}>
-        <Card style={styles.card}>
+      <Pressable
+        onPress={onClose}
+        style={styles.container}
+        testID="documentRemoveModalBackdrop"
+      >
+        <Pressable
+          onPress={(event) => event.stopPropagation()}
+          style={styles.cardShell}
+        >
+          <Card style={styles.card}>
           <TitleBar
             title={
               <>
@@ -81,18 +89,20 @@ const DocumentRemoveModal: React.FC<RemoveModalProps> = ({
               autoFocus
             />
           </View>
-        </Card>
-      </View>
+          </Card>
+        </Pressable>
+      </Pressable>
     </Modal>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(17, 24, 39, 0.42)',
     flex: 1,
     flexDirection: 'column',
-    marginTop: 200,
-    alignItems: 'center',
+    justifyContent: 'center',
   },
   heading: {
     marginLeft: 10,
@@ -102,6 +112,10 @@ const styles = StyleSheet.create({
     height: '30%',
     width: '70%',
     opacity: 0.9,
+  },
+  cardShell: {
+    alignItems: 'center',
+    width: '100%',
   },
   form: {
     padding: 10,

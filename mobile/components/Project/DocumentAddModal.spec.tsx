@@ -55,6 +55,38 @@ describe('DocumentAddModal', () => {
       featureType: 'pit',
     });
   });
+
+  it('closes when the backdrop is pressed', () => {
+    const onClose = jest.fn();
+    const parentDoc = {
+      resource: {
+        id: 'trench-1',
+        identifier: 'T1',
+        category: C.TRENCH,
+        relations: {},
+      },
+    } as any;
+
+    const { getByTestId } = render(
+      <LabelsContext.Provider value={{ labels: new Labels(() => ['ko']) }}>
+        <ConfigurationContext.Provider value={createConfig([
+          createCategory(C.TRENCH),
+          createCategory(C.FEATURE),
+        ])}
+        >
+          <DocumentAddModal
+            onAddCategory={jest.fn()}
+            onClose={onClose}
+            parentDoc={parentDoc}
+          />
+        </ConfigurationContext.Provider>
+      </LabelsContext.Provider>
+    );
+
+    fireEvent.press(getByTestId('documentAddModalBackdrop'));
+
+    expect(onClose).toHaveBeenCalled();
+  });
 });
 
 const createConfig = (categories: Forest<CategoryForm>) => ({

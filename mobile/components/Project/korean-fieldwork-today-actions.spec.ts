@@ -215,7 +215,7 @@ describe('Korean fieldwork today actions', () => {
     ]);
     expect(tasks.map((task) => task.id)).not.toContain('create-trench');
     expect(tasks[2]).toMatchObject({
-      title: '검출 유구 기록',
+      title: '유구 기록',
       action: {
         type: 'createDocument',
         parentDocumentId: 'operation-1',

@@ -85,12 +85,13 @@
         "shortDescription": "자연제방 후보 지표조사",
         "category": "Survey",
         "relations": {
-          "isRecordedIn": ["project-stage-transition-001"]
+          "isRecordedIn": [
+            "project-stage-transition-001"
+          ]
         },
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "recordCreationTiming": "duringFieldwork",
         "surfaceSurveyPreparationCheck": [
@@ -150,14 +151,15 @@
         "shortDescription": "표본·시굴 전환 판단",
         "category": "Survey",
         "relations": {
-          "isRecordedIn": ["project-stage-transition-001"]
+          "isRecordedIn": [
+            "project-stage-transition-001"
+          ]
         },
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "researchQuestionFit",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
-        "recordCreationTiming": "handoverStage",
+        "recordCreationTiming": "duringFieldwork",
         "sampleSurveySuitability": [
           "largeAlluvialSite",
           "culturalLayerExtentCheck",
@@ -205,14 +207,15 @@
         "shortDescription": "정밀발굴 전환 인계",
         "category": "Operation",
         "relations": {
-          "isRecordedIn": ["project-stage-transition-001"]
+          "isRecordedIn": [
+            "project-stage-transition-001"
+          ]
         },
         "fieldRecordQuality": [
-          "factualAccuracy",
-          "reproducibleRecord",
-          "crossReviewNeeded"
+          "immediateRecording",
+          "correctionNeeded"
         ],
-        "recordCreationTiming": "handoverStage",
+        "recordCreationTiming": "duringFieldwork",
         "investigationRecordHandover": [
           "sampleSurveyRecord",
           "trialExcavationRecord",

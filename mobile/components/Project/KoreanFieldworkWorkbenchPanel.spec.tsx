@@ -37,7 +37,7 @@ describe('KoreanFieldworkWorkbenchPanel', () => {
 
     expect(getByText('현장 작업대')).toBeTruthy();
     expect(getByText('수혈 1')).toBeTruthy();
-    expect(getAllByText('검출 유구').length).toBeGreaterThan(0);
+    expect(getAllByText('조사 전').length).toBeGreaterThan(0);
 
     fireEvent.press(getByTestId('workbenchItem_feature-1'));
 

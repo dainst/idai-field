@@ -22,8 +22,7 @@
         "fieldRecordQuality": [
           "immediateRecording",
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "recordCreationTiming": "duringFieldwork",
         "dailyLogContent": [
@@ -132,13 +131,14 @@
         "shortDescription": "기준점 연동 유구 구간",
         "category": "Feature",
         "relations": {
-          "isRecordedIn": ["op-media-001"]
+          "isRecordedIn": [
+            "op-media-001"
+          ]
         },
         "description": "현장 기준점과 RTK 관측값을 도면·사진·GIS 레이어에 공통으로 붙인 유구 구간. 좌표와 매체 기록이 보고서 단계에서 서로 분리되지 않게 한다.",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "fieldOnlyMissingCheck": [
           "featureOutline",
@@ -147,7 +147,7 @@
           "spatialLocation",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "verificationState": "pendingDecision"
       }
     },
@@ -158,8 +158,12 @@
         "shortDescription": "실측 대상 토기편",
         "category": "Find",
         "relations": {
-          "isRecordedIn": ["op-media-001"],
-          "liesWithin": ["feature-media-control-001"]
+          "isRecordedIn": [
+            "op-media-001"
+          ],
+          "liesWithin": [
+            "feature-media-control-001"
+          ]
         },
         "description": "문양 측점과 기벽 두께를 다시 확인해야 하는 토기편. 실측 기준선과 사진·탁본 대조를 도면 카드에서 관리한다.",
         "fieldRecordQuality": [
@@ -171,7 +175,7 @@
           "spatialLocation",
           "numberedBeforeCollection"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "verificationState": "candidate"
       }
     },
@@ -182,20 +186,24 @@
         "shortDescription": "석기 전개도 대상품",
         "category": "Find",
         "relations": {
-          "isRecordedIn": ["op-media-001"],
-          "liesWithin": ["feature-media-control-001"]
+          "isRecordedIn": [
+            "op-media-001"
+          ],
+          "liesWithin": [
+            "feature-media-control-001"
+          ]
         },
         "description": "사용방향 정치와 타제·고타·마연흔을 함께 도면화해야 하는 석기. 평면·단면·측면 view를 도면 카드에서 분리한다.",
         "fieldRecordQuality": [
           "immediateRecording",
-          "researchQuestionFit"
+          "observationInterpretationSeparated"
         ],
         "fieldOnlyMissingCheck": [
           "preRemovalCondition",
           "photoAngleAndScale",
           "numberedBeforeCollection"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "verificationState": "candidate"
       }
     },
@@ -206,8 +214,12 @@
         "shortDescription": "GPS 연동 현장 사진",
         "category": "Photo",
         "relations": {
-          "isRecordedIn": ["op-media-001"],
-          "isDepictedIn": ["feature-media-control-001"]
+          "isRecordedIn": [
+            "op-media-001"
+          ],
+          "isDepictedIn": [
+            "feature-media-control-001"
+          ]
         },
         "mediaEvidenceRole": [
           "fieldOverview",
@@ -275,8 +287,12 @@
         "shortDescription": "토기편 실측도 연동 유물사진",
         "category": "Photo",
         "relations": {
-          "isRecordedIn": ["op-media-001"],
-          "isDepictedIn": ["find-media-pottery-001"]
+          "isRecordedIn": [
+            "op-media-001"
+          ],
+          "isDepictedIn": [
+            "find-media-pottery-001"
+          ]
         },
         "description": "실측도면과 같은 각도에서 문양·기벽·접사 사진을 묶어 보고서 도판 후보로 남기는 유물사진 기록.",
         "mediaEvidenceRole": [
@@ -343,8 +359,12 @@
         "shortDescription": "고지도·분포도 작성 근거",
         "category": "Drawing",
         "relations": {
-          "isRecordedIn": ["op-media-001"],
-          "isDepictedIn": ["feature-media-control-001"]
+          "isRecordedIn": [
+            "op-media-001"
+          ],
+          "isDepictedIn": [
+            "feature-media-control-001"
+          ]
         },
         "mediaEvidenceRole": [
           "fieldOverview",
@@ -447,8 +467,12 @@
         "shortDescription": "토기 실측·전자도면",
         "category": "Drawing",
         "relations": {
-          "isRecordedIn": ["op-media-001"],
-          "isDepictedIn": ["find-media-pottery-001"]
+          "isRecordedIn": [
+            "op-media-001"
+          ],
+          "isDepictedIn": [
+            "find-media-pottery-001"
+          ]
         },
         "mediaEvidenceRole": [
           "findContextEvidence",
@@ -570,8 +594,12 @@
         "shortDescription": "석기 실측 view 검수",
         "category": "Drawing",
         "relations": {
-          "isRecordedIn": ["op-media-001"],
-          "isDepictedIn": ["find-media-stone-tool-001"]
+          "isRecordedIn": [
+            "op-media-001"
+          ],
+          "isDepictedIn": [
+            "find-media-stone-tool-001"
+          ]
         },
         "mediaEvidenceRole": [
           "findContextEvidence",
@@ -625,8 +653,12 @@
         "shortDescription": "수침목재 습식 실측",
         "category": "Drawing",
         "relations": {
-          "isRecordedIn": ["op-media-001"],
-          "isDepictedIn": ["feature-media-control-001"]
+          "isRecordedIn": [
+            "op-media-001"
+          ],
+          "isDepictedIn": [
+            "feature-media-control-001"
+          ]
         },
         "mediaEvidenceRole": [
           "preservationActionEvidence",
@@ -682,8 +714,13 @@
         "shortDescription": "3D 스캔 원천자료 흐름",
         "category": "Drawing",
         "relations": {
-          "isRecordedIn": ["op-media-001"],
-          "isDepictedIn": ["feature-media-control-001", "find-media-pottery-001"]
+          "isRecordedIn": [
+            "op-media-001"
+          ],
+          "isDepictedIn": [
+            "feature-media-control-001",
+            "find-media-pottery-001"
+          ]
         },
         "mediaEvidenceRole": [
           "workStageRecord",
@@ -762,8 +799,13 @@
         "shortDescription": "GPS·GIS·shapefile 원천자료 묶음",
         "category": "InformationAsset",
         "relations": {
-          "isRecordedIn": ["op-media-001"],
-          "isResultOf": ["op-media-001", "drawing-media-distribution-001"]
+          "isRecordedIn": [
+            "op-media-001"
+          ],
+          "isResultOf": [
+            "op-media-001",
+            "drawing-media-distribution-001"
+          ]
         },
         "description": "완료신고와 문화재 GIS 제출에 쓰는 조사구역·유구배치 공간자료를 원시 GPS 로그, NMEA 궤적, shapefile, 좌표계, 기준점 대장과 함께 보존한다.",
         "informationAssetTitleText": "MEDIA-001 GPS/GIS 제출 원천자료",
@@ -801,8 +843,13 @@
         "shortDescription": "지리보정·UAV·LiDAR·3D 원천자료 묶음",
         "category": "InformationAsset",
         "relations": {
-          "isRecordedIn": ["op-media-001"],
-          "isResultOf": ["drawing-media-3d-source-001", "photo-media-gps-001"]
+          "isRecordedIn": [
+            "op-media-001"
+          ],
+          "isResultOf": [
+            "drawing-media-3d-source-001",
+            "photo-media-gps-001"
+          ]
         },
         "description": "고지형 분석과 3D 산출물을 다시 검토할 수 있도록 지리보정 래스터, UAV 원사진, LiDAR 점군, 사진측량 프로젝트파일, 3D 원천자료와 처리 workflow를 완성 도면과 분리해 보존한다.",
         "informationAssetTitleText": "MEDIA-001 지리보정·3D 재분석 묶음",

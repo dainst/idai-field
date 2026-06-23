@@ -128,16 +128,18 @@
           "dailyLog"
         ],
         "verificationState": "candidate"
-    }
-  },
-  {
+      }
+    },
+    {
       "resource": {
         "id": "permit-document-admin-001",
         "identifier": "ADMIN-PERMIT-001",
         "shortDescription": "발굴허가 신청 구비서류 점검",
         "category": "ExcavationPermitDocumentSet",
         "relations": {
-          "liesWithin": ["project-admin-workflow-001"]
+          "liesWithin": [
+            "project-admin-workflow-001"
+          ]
         },
         "description": "발굴허가 신청 전에 신청서, 조사계획서, 산출내역, 토지·임야조서, 공사계획과 현상변경 관련 검토를 한 묶음으로 대조한다.",
         "permitApplicationTitleText": "○○지구 매장문화재 발굴허가 신청",
@@ -175,7 +177,9 @@
         "shortDescription": "완료신고와 최종보고서 제출",
         "category": "ReportSubmissionWorkflow",
         "relations": {
-          "liesWithin": ["project-admin-workflow-001"]
+          "liesWithin": [
+            "project-admin-workflow-001"
+          ]
         },
         "description": "완료신고서, 완료자료, 약식보고서, PDF 제출확인과 협업포털 초록 입력을 원도면·사진·유물대장 교차검토와 연결한다.",
         "reportSubmissionDocumentText": "완료신고서·약식보고서·최종보고서 PDF",
@@ -206,7 +210,9 @@
         "shortDescription": "최종보고서 일러두기·원기록 대조",
         "category": "ReportPreparationReview",
         "relations": {
-          "liesWithin": ["project-admin-workflow-001"]
+          "liesWithin": [
+            "project-admin-workflow-001"
+          ]
         },
         "description": "최종보고서 편집 전에 허가번호, 방위, 축척, 해발고도, 토색, 도면기호, 실측 기준과 도면·사진 수록 방향을 일러두기에 정리하고, 편집방식·원색도판·인쇄소 인계자료를 원야장·원도면·원사진·대장류와 연결한다.",
         "reportPreparationSubjectText": "최종보고서 본문·도면·사진 편집 전 검토와 인쇄소 인계 준비",
@@ -250,7 +256,9 @@
         "shortDescription": "보고서 일러두기 기준 변경 이력",
         "category": "ReportStandardHistory",
         "relations": {
-          "liesWithin": ["project-admin-workflow-001"]
+          "liesWithin": [
+            "project-admin-workflow-001"
+          ]
         },
         "description": "최종보고서 1차 편집 뒤 방위 기준과 유구·유물번호 정리 방식이 바뀐 내역을 이전 기준과 함께 보존한다.",
         "reportStandardScopeText": "일러두기·도면·사진·유물대장 공통 기준",
@@ -290,7 +298,9 @@
         "shortDescription": "원고·도면·사진·대장 편집 교차검토",
         "category": "ReportEditorialCrossCheck",
         "relations": {
-          "liesWithin": ["project-admin-workflow-001"]
+          "liesWithin": [
+            "project-admin-workflow-001"
+          ]
         },
         "description": "최종보고서 편집 중 유구번호 변환표와 도면대장, 사진대장, 유물대장의 불일치를 원기록 ID로 다시 대조하고 수정 근거를 남긴다.",
         "reportEditorialSubjectText": "최종보고서 3장 유구 서술과 도면·사진·유물목록 편집본",
@@ -319,8 +329,13 @@
         "shortDescription": "최종보고서와 디지털 원자료 정보화 자산",
         "category": "InformationAsset",
         "relations": {
-          "liesWithin": ["project-admin-workflow-001"],
-          "isResultOf": ["report-submission-admin-001", "report-standard-history-admin-001"]
+          "liesWithin": [
+            "project-admin-workflow-001"
+          ],
+          "isResultOf": [
+            "report-submission-admin-001",
+            "report-standard-history-admin-001"
+          ]
         },
         "description": "최종보고서 PDF와 조판 작업파일, 표준 전자발굴조사보고서, 도판·도면·사진 DB, 지표조사 GIS를 원야장·원도면·원사진·대장류와 연결해 장기보존 위치와 접근권한을 남긴다.",
         "informationAssetTitleText": "○○지구 최종보고서·전자원자료 묶음",
@@ -361,7 +376,9 @@
         "shortDescription": "보고서 수록 유물 국가귀속 선별",
         "category": "StateVestingSelectionRecord",
         "relations": {
-          "liesWithin": ["project-admin-workflow-001"]
+          "liesWithin": [
+            "project-admin-workflow-001"
+          ]
         },
         "description": "보고서 수록 유물과 비귀속 후속연구 자료를 선별회의록, 임시보관증, 국가귀속대장, 보존처리 후 정정 가능성과 함께 추적한다.",
         "stateVestingObjectScopeText": "보고서 수록 유물 1차 선별분과 보존처리 후 정정 후보",
@@ -392,7 +409,9 @@
         "shortDescription": "전문가 검토회의와 부분완료 현장 운영기록",
         "category": "Operation",
         "relations": {
-          "isRecordedIn": ["project-admin-workflow-001"]
+          "isRecordedIn": [
+            "project-admin-workflow-001"
+          ]
         },
         "recordCreationTiming": "duringFieldwork",
         "dailyLogContent": [
@@ -460,15 +479,16 @@
         "shortDescription": "지표조사 결과 처리와 후속조치",
         "category": "Survey",
         "relations": {
-          "isRecordedIn": ["project-admin-workflow-001"]
+          "isRecordedIn": [
+            "project-admin-workflow-001"
+          ]
         },
         "description": "지표조사 업무의 이해 교재 20-26, 28, 36-37, 49, 53쪽 원문 화면을 대조해 보고서 제출, 보존조치 통보, 이격거리·범위 표시, 원형보존·이전복원·발굴조사 의견, 표본·시굴 필요성, 유적 부재·멸실 판단주의가 후속조치 값으로 이어지는지 검증한다.",
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
-        "recordCreationTiming": "handoverStage",
+        "recordCreationTiming": "duringFieldwork",
         "surfaceSurveyObservation": [
           "terrainCharacteristic",
           "locationPotential",

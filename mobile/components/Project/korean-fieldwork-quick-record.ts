@@ -33,10 +33,9 @@ export const FIELDWORK_QUICK_FIELDS = {
 } as const;
 
 export const FEATURE_STATUS_QUICK_OPTIONS: readonly KoreanFieldworkQuickOption[] = [
-  { value: 'candidate', label: '검출' },
-  { value: 'investigating', label: '조사중' },
-  { value: 'confirmed', label: '확정' },
-  { value: 'rejected', label: '제외' },
+  { value: 'candidate', label: '조사 전' },
+  { value: 'investigating', label: '조사 중' },
+  { value: 'confirmed', label: '완료' },
 ];
 
 export const FEATURE_CHECKLIST_QUICK_OPTIONS: readonly KoreanFieldworkQuickOption[] = [
@@ -46,7 +45,6 @@ export const FEATURE_CHECKLIST_QUICK_OPTIONS: readonly KoreanFieldworkQuickOptio
   { value: 'measuredDrawingCompleted', label: '실측' },
   { value: 'preRecoveryFindPhotoTaken', label: '수습 전 사진' },
   { value: 'findsRecovered', label: '유물 수습' },
-  { value: 'findRecordsLinked', label: '유물 기록 연결' },
   { value: 'samplesCollected', label: '시료' },
   { value: 'penMemoReviewed', label: '펜메모 검토' },
   { value: 'completionPhotoTaken', label: '완료 사진' },
@@ -70,7 +68,6 @@ const EXCAVATION_CHECKLIST_QUICK_OPTIONS: readonly KoreanFieldworkQuickOption[] 
   { value: 'soilProfilePhotoLinked', label: '토층사진' },
   { value: 'preRecoveryFindPhotoTaken', label: '수습 전 사진' },
   { value: 'findsRecovered', label: '유물 수습' },
-  { value: 'findRecordsLinked', label: '유물 기록' },
   { value: 'samplesCollected', label: '시료' },
   { value: 'completionPhotoTaken', label: '완료 사진' },
   { value: 'measuredDrawingCompleted', label: '실측' },
@@ -79,38 +76,26 @@ const EXCAVATION_CHECKLIST_QUICK_OPTIONS: readonly KoreanFieldworkQuickOption[] 
 
 export const QUALITY_QUICK_OPTIONS: readonly KoreanFieldworkQuickOption[] = [
   { value: 'immediateRecording', label: '현장 기록' },
-  { value: 'factualAccuracy', label: '관찰 내용' },
-  { value: 'observationInterpretationSeparated', label: '관찰·해석' },
-  { value: 'reproducibleRecord', label: '기록 근거' },
-  { value: 'fieldToReportContinuity', label: '정리 단계 메모' },
+  { value: 'observationInterpretationSeparated', label: '해석' },
   { value: 'correctionNeeded', label: '보완 메모' },
 ];
 
-export const VERIFICATION_QUICK_OPTIONS: readonly KoreanFieldworkQuickOption[] = [
-  { value: 'observedInField', label: '관찰 기록' },
-  { value: 'candidate', label: '검출' },
-  { value: 'needsRecheck', label: '추가 확인' },
-  { value: 'pendingDecision', label: '기록 보완' },
-];
-
 export const TIMING_QUICK_OPTIONS: readonly KoreanFieldworkQuickOption[] = [
-  { value: 'duringFieldwork', label: '현장 중 누적' },
   { value: 'sameDayFieldRecord', label: '당일 기록' },
-  { value: 'fieldOnlyObservation', label: '현장 한정' },
-  { value: 'handoverStage', label: '인계 단계' },
+  { value: 'duringFieldwork', label: '추가 기록' },
 ];
 
 export const FEATURE_WORKFLOW_QUICK_PRESETS: readonly KoreanFieldworkQuickPreset[] = [
   {
     id: 'startFeatureInvestigation',
     label: '조사 시작',
-    detail: '조사중 전환, 조사 전·중 사진, 현장 기록',
+    detail: '조사 중 전환, 조사 전·중 사진, 현장 기록',
     icon: 'play-circle-outline',
   },
   {
     id: 'closeFeatureInvestigation',
-    label: '마감 기본',
-    detail: '확정 전환, 완료 사진, 실측, 정리 단계 메모',
+    label: '조사 완료',
+    detail: '완료 전환, 완료 사진, 실측, 해석 메모',
     icon: 'task-alt',
   },
 ];
@@ -125,7 +110,7 @@ const TRIAL_TRENCH_WORKFLOW_QUICK_PRESETS: readonly KoreanFieldworkQuickPreset[]
   {
     id: 'closeFeatureInvestigation',
     label: '트렌치 마감',
-    detail: '피트, 토층도, 사진 기록 확인',
+    detail: '피트, 토층도, 사진 기록',
     icon: 'task-alt',
   },
 ];
@@ -331,11 +316,7 @@ const getCloseFeatureInvestigationUpdates = (
     updates[FIELDWORK_QUICK_FIELDS.quality] = mergeStringArrayFieldValues(
       resource,
       FIELDWORK_QUICK_FIELDS.quality,
-      [
-        'factualAccuracy',
-        'observationInterpretationSeparated',
-        'fieldToReportContinuity',
-      ]
+      ['immediateRecording', 'observationInterpretationSeparated']
     );
   }
 

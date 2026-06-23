@@ -19,9 +19,7 @@
         "relations": {},
         "fieldRecordQuality": [
           "immediateRecording",
-          "observationInterpretationSeparated",
-          "criteriaConsistency",
-          "researchQuestionFit"
+          "observationInterpretationSeparated"
         ],
         "recordCreationTiming": "duringFieldwork",
         "dailyLogContent": [
@@ -53,13 +51,15 @@
         "shortDescription": "토기가마 후보와 요장 시설",
         "category": "Feature",
         "relations": {
-          "isRecordedIn": ["op-ceramic-kiln-001"]
+          "isRecordedIn": [
+            "op-ceramic-kiln-001"
+          ]
         },
         "description": "요상 경사와 피열흔은 보이지만 구조요 확정 전 단계다. 화구·연소부·소성부·연도부·회구부를 분리하고, 회구부 유물을 최종 조업품으로 자동 연결하지 않는다.",
         "fieldRecordQuality": [
           "immediateRecording",
           "observationInterpretationSeparated",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "fieldOnlyMissingCheck": [
           "featureOutline",
@@ -69,7 +69,7 @@
           "spatialLocation",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "productionProcessSystem": [
           "rawMaterialProcurement",
           "rawMaterialProcessing",
@@ -197,14 +197,17 @@
         "shortDescription": "토기 소성흔과 요도구 후보",
         "category": "Find",
         "relations": {
-          "isRecordedIn": ["op-ceramic-kiln-001"],
-          "liesWithin": ["feature-pottery-kiln-001"]
+          "isRecordedIn": [
+            "op-ceramic-kiln-001"
+          ],
+          "liesWithin": [
+            "feature-pottery-kiln-001"
+          ]
         },
         "description": "저부 소성흔과 토기편 깔림이 확인되지만, 자연유와 연소흔, 요도구 전용 여부를 분리해 검토한다.",
         "fieldRecordQuality": [
           "immediateRecording",
-          "observationInterpretationSeparated",
-          "criteriaConsistency"
+          "observationInterpretationSeparated"
         ],
         "fieldOnlyMissingCheck": [
           "preRemovalCondition",
@@ -212,7 +215,7 @@
           "elevationRecorded",
           "numberedBeforeCollection"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "potteryFiringTraceObservation": [
           "discTrace",
           "ringTrace",
@@ -255,12 +258,15 @@
         "shortDescription": "토기가마 연대·태토·고고지자기 시료",
         "category": "Sample",
         "relations": {
-          "isRecordedIn": ["op-ceramic-kiln-001"],
-          "liesWithin": ["feature-pottery-kiln-001"]
+          "isRecordedIn": [
+            "op-ceramic-kiln-001"
+          ],
+          "liesWithin": [
+            "feature-pottery-kiln-001"
+          ]
         },
         "fieldRecordQuality": [
           "immediateRecording",
-          "researchQuestionFit",
           "observationInterpretationSeparated"
         ],
         "fieldOnlyMissingCheck": [
@@ -270,7 +276,7 @@
           "elevationRecorded",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "samplePurpose": [
           "absoluteDating",
           "ceramicFabric",
@@ -306,13 +312,14 @@
         "shortDescription": "기와가마와 회구부 조사",
         "category": "Feature",
         "relations": {
-          "isRecordedIn": ["op-ceramic-kiln-001"]
+          "isRecordedIn": [
+            "op-ceramic-kiln-001"
+          ]
         },
         "description": "기와가마 요체, 요전부, 회구부, 폐기장, 채토공, 제작공방을 한 생산공간으로 묶고, 가마-회구부 관계와 가마군 운영순서를 토층으로 검증한다.",
         "fieldRecordQuality": [
           "immediateRecording",
-          "observationInterpretationSeparated",
-          "criteriaConsistency"
+          "observationInterpretationSeparated"
         ],
         "fieldOnlyMissingCheck": [
           "featureOutline",
@@ -322,7 +329,7 @@
           "spatialLocation",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "tileKilnStructureContext": [
           "kilnBody",
           "frontWorkingArea",
@@ -423,14 +430,18 @@
         "shortDescription": "회구부 층위별 기와",
         "category": "Find",
         "relations": {
-          "isRecordedIn": ["op-ceramic-kiln-001"],
-          "liesWithin": ["feature-tile-kiln-001"]
+          "isRecordedIn": [
+            "op-ceramic-kiln-001"
+          ],
+          "liesWithin": [
+            "feature-tile-kiln-001"
+          ]
         },
         "description": "회구부 기와를 생산품, 불량품, 보수재, 폐기 후 유입품 후보로 분리하고, 문양 편년을 층위와 함께 검토한다.",
         "fieldRecordQuality": [
           "immediateRecording",
           "observationInterpretationSeparated",
-          "crossReviewNeeded"
+          "correctionNeeded"
         ],
         "fieldOnlyMissingCheck": [
           "preRemovalCondition",
@@ -438,7 +449,7 @@
           "elevationRecorded",
           "numberedBeforeCollection"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "tileKilnFindContext": [
           "productTile",
           "defectiveProduct",
@@ -473,13 +484,16 @@
         "shortDescription": "기와가마 연대·태토 대조 시료",
         "category": "Sample",
         "relations": {
-          "isRecordedIn": ["op-ceramic-kiln-001"],
-          "liesWithin": ["feature-tile-kiln-001"]
+          "isRecordedIn": [
+            "op-ceramic-kiln-001"
+          ],
+          "liesWithin": [
+            "feature-tile-kiln-001"
+          ]
         },
         "fieldRecordQuality": [
           "immediateRecording",
-          "researchQuestionFit",
-          "criteriaConsistency"
+          "observationInterpretationSeparated"
         ],
         "fieldOnlyMissingCheck": [
           "samplePointMapped",
@@ -488,7 +502,7 @@
           "elevationRecorded",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "samplePurpose": [
           "absoluteDating",
           "ceramicFabric",
@@ -529,8 +543,13 @@
         "shortDescription": "기와가마 내부와 회구부 사진",
         "category": "Photo",
         "relations": {
-          "isRecordedIn": ["op-ceramic-kiln-001"],
-          "isDepictedIn": ["feature-tile-kiln-001", "find-tile-kiln-001"]
+          "isRecordedIn": [
+            "op-ceramic-kiln-001"
+          ],
+          "isDepictedIn": [
+            "feature-tile-kiln-001",
+            "find-tile-kiln-001"
+          ]
         },
         "description": "아궁이에서 연도부 방향, 연도부에서 아궁이 방향을 모두 촬영하고, 가마와 회구부·폐기장 관계가 한 프레임에서 확인되는 사진 묶음이다.",
         "mediaEvidenceRole": [
@@ -577,8 +596,12 @@
         "shortDescription": "기와가마 장축·단축 토층도",
         "category": "Drawing",
         "relations": {
-          "isRecordedIn": ["op-ceramic-kiln-001"],
-          "isDepictedIn": ["feature-tile-kiln-001"]
+          "isRecordedIn": [
+            "op-ceramic-kiln-001"
+          ],
+          "isDepictedIn": [
+            "feature-tile-kiln-001"
+          ]
         },
         "description": "장축토층도를 회구부와 연결하고 단축토층도는 연도부, 소성실, 아궁이, 요전부로 나누어 산화·환원 색표기를 대조한다.",
         "mediaEvidenceRole": [
@@ -620,13 +643,14 @@
         "shortDescription": "자기요장 생산체계",
         "category": "Feature",
         "relations": {
-          "isRecordedIn": ["op-ceramic-kiln-001"]
+          "isRecordedIn": [
+            "op-ceramic-kiln-001"
+          ]
         },
         "description": "자기요장을 가마 하나가 아니라 토취장, 수비공, 태토건조장, 연토장, 시유시설, 폐기장, 생활공간, 운송로와 소비지 비교가 붙은 생산체계로 기록한다.",
         "fieldRecordQuality": [
           "immediateRecording",
-          "observationInterpretationSeparated",
-          "researchQuestionFit"
+          "observationInterpretationSeparated"
         ],
         "fieldOnlyMissingCheck": [
           "featureOutline",
@@ -636,7 +660,7 @@
           "spatialLocation",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "porcelainKilnSiteSystem": [
           "claySource",
           "rawClayStorage",
@@ -729,14 +753,17 @@
         "shortDescription": "자편·갑발·도지미 수습 단위",
         "category": "Find",
         "relations": {
-          "isRecordedIn": ["op-ceramic-kiln-001"],
-          "liesWithin": ["feature-porcelain-kiln-001"]
+          "isRecordedIn": [
+            "op-ceramic-kiln-001"
+          ],
+          "liesWithin": [
+            "feature-porcelain-kiln-001"
+          ]
         },
         "description": "자편 관찰과 요도구 맥락을 분리해, 포개구이와 개별번조 판단을 보류한 채 소비지 비교 자료로 연결한다.",
         "fieldRecordQuality": [
           "immediateRecording",
-          "observationInterpretationSeparated",
-          "criteriaConsistency"
+          "observationInterpretationSeparated"
         ],
         "fieldOnlyMissingCheck": [
           "preRemovalCondition",
@@ -744,7 +771,7 @@
           "elevationRecorded",
           "numberedBeforeCollection"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "porcelainFindObservation": [
           "materialColorRecorded",
           "bodyTextureRecorded",
@@ -797,12 +824,15 @@
         "shortDescription": "자기요장 원토·유약·소비지 비교 시료",
         "category": "Sample",
         "relations": {
-          "isRecordedIn": ["op-ceramic-kiln-001"],
-          "liesWithin": ["feature-porcelain-kiln-001"]
+          "isRecordedIn": [
+            "op-ceramic-kiln-001"
+          ],
+          "liesWithin": [
+            "feature-porcelain-kiln-001"
+          ]
         },
         "fieldRecordQuality": [
           "immediateRecording",
-          "researchQuestionFit",
           "observationInterpretationSeparated"
         ],
         "fieldOnlyMissingCheck": [
@@ -812,7 +842,7 @@
           "elevationRecorded",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "samplePurpose": [
           "absoluteDating",
           "ceramicFabric",

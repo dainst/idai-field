@@ -175,8 +175,8 @@
         ],
         "fieldRecordQuality": [
           "observationInterpretationSeparated",
-          "reproducibleRecord",
-          "crossReviewNeeded"
+          "immediateRecording",
+          "correctionNeeded"
         ],
         "recordCreationTiming": "duringFieldwork",
         "verificationState": "pendingDecision"

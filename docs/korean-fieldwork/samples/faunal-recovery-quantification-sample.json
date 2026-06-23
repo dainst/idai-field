@@ -17,8 +17,7 @@
         "relations": {},
         "fieldRecordQuality": [
           "immediateRecording",
-          "observationInterpretationSeparated",
-          "reproducibleRecord"
+          "observationInterpretationSeparated"
         ],
         "recordCreationTiming": "duringFieldwork",
         "dailyLogContent": [
@@ -46,12 +45,13 @@
         "shortDescription": "혼토패각층 패총 단위",
         "category": "Feature",
         "relations": {
-          "isRecordedIn": ["op-faunal-sampling-001"]
+          "isRecordedIn": [
+            "op-faunal-sampling-001"
+          ]
         },
         "description": "순패층이 아니라 토양과 패각이 섞인 층으로, 패각 파쇄와 재퇴적 가능성을 평면·단면에서 함께 확인한 조사 단위.",
         "fieldRecordQuality": [
           "immediateRecording",
-          "criteriaConsistency",
           "observationInterpretationSeparated"
         ],
         "fieldOnlyMissingCheck": [
@@ -60,7 +60,7 @@
           "samplePointMapped",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "shellMiddenStratigraphy": [
           "mixedSoilShellLayer",
           "shellFragmentationRecorded",
@@ -84,14 +84,17 @@
         "shortDescription": "패총 동물유체 블록시료",
         "category": "Sample",
         "relations": {
-          "liesWithin": ["feature-shell-midden-001"],
-          "isRecordedIn": ["op-faunal-sampling-001"]
+          "liesWithin": [
+            "feature-shell-midden-001"
+          ],
+          "isRecordedIn": [
+            "op-faunal-sampling-001"
+          ]
         },
         "description": "SM-001 혼토패각층에서 30x30x15cm 블록시료를 채취하고 물체질 조건과 체눈을 기록한 예시다. 이 치수는 고정 표준이 아니라 조사자가 남긴 실제 채취량으로 다룬다.",
         "fieldRecordQuality": [
           "immediateRecording",
-          "researchQuestionFit",
-          "reproducibleRecord"
+          "observationInterpretationSeparated"
         ],
         "fieldOnlyMissingCheck": [
           "samplePointMapped",
@@ -99,7 +102,7 @@
           "spatialLocation",
           "notRecoverableWarning"
         ],
-        "recordCreationTiming": "fieldOnlyObservation",
+        "recordCreationTiming": "sameDayFieldRecord",
         "samplePurpose": [
           "zooarchaeology",
           "paleoenvironment"

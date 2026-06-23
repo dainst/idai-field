@@ -28,8 +28,9 @@ See the respectice README.md of each project on how to run tests locally.
 
 ## Any requirements for a Pull Request (PR)?
 
-- Before making a PR, make sure you pushed your changes from a branch other than `master`.
-- Name the new branch after the changes are pushed to the PR and link the corresponding issue. 
+- Your changes need to be in a new branch named after your feature or issue. Make sure not to use the `master` branch.
+- If applicable, link the corresponding issue in your pull request.
+- Describe your changes and if applicable the reasoning behind them in your pull request. Be prepared to discuss with us. 
 - Do not introduce new dependencies. (Or discuss with us first, if you must.)
 - Follow the Style Guide
 

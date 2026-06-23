@@ -32,7 +32,7 @@ See the respective README.md of each project on how to run tests locally.
 - If applicable, link the corresponding issue in your pull request.
 - Describe your changes and if applicable the reasoning behind them in your pull request. Be prepared to discuss with us. 
 - Do not introduce new dependencies. (Or discuss with us first, if you must.)
-- Follow the Style Guide
+- Follow the Style Guide for [Angular/TypeScript](https://github.com/dainst/codestyle-guides).
 
 ## Can I use AI tools when contributing?
 

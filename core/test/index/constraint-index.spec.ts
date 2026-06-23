@@ -1,6 +1,7 @@
 import { ConstraintIndex } from '../../src/index/constraint-index';
 import { IndexItem } from '../../src/index/index-item';
 import { Field } from '../../src/model/configuration/field';
+import { Warnings } from '../../src/model/warnings';
 import { doc as helpersDoc } from '../test-helpers';
 
 
@@ -687,6 +688,38 @@ describe('ConstraintIndex', () => {
 
         const result = ConstraintIndex.get(ci, 'period.value:match', 'a1');
         expect(result[0]).toBe('1');
+    });
+
+
+    it('index warnings', () => {
+
+        const docs = [
+            doc('1'),
+            doc('2')
+        ];
+
+        const warnings = Warnings.createDefault();
+        warnings.unconfiguredFields = ['field1'];
+
+        ci = ConstraintIndex.make({
+            'unconfiguredFields:exist': {
+                path: 'warnings.unconfiguredFields',
+                pathArray: ['warnings', 'unconfiguredFields'],
+                type: 'exist'
+            },
+            'unconfiguredFields:contain': {
+                path: 'warnings.unconfiguredFields',
+                pathArray: ['warnings', 'unconfiguredFields'],
+                type: 'contain'
+            }
+        }, categories);
+
+        ConstraintIndex.put(ci, docs[0], warnings);
+        ConstraintIndex.put(ci, docs[1]);
+
+        expect(ConstraintIndex.get(ci, 'unconfiguredFields:exist', 'KNOWN')).toEqual(['1']);
+        expect(ConstraintIndex.get(ci, 'unconfiguredFields:exist', 'UNKNOWN')).toEqual(['2']);
+        expect(ConstraintIndex.get(ci, 'unconfiguredFields:contain', 'field1')).toEqual(['1']);
     });
 
 

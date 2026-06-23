@@ -96,6 +96,7 @@ export interface KoreanFieldworkFieldNoteReportPreview {
 }
 
 export interface KoreanFieldworkFieldNoteRecordUpdates {
+  [fieldName: string]: unknown;
   description?: string;
   fieldNote?: string;
   interpretation?: string;

@@ -63,6 +63,13 @@ import {
   removeKoreanFieldworkFieldNoteDraft,
   saveKoreanFieldworkFieldNoteDraft,
 } from './korean-fieldwork-field-note-drafts';
+import {
+  FIELDWORK_QUICK_FIELDS,
+  getKoreanFieldworkChecklistQuickOptions,
+  isKoreanFieldworkChecklistRecord,
+  KoreanFieldworkQuickOption,
+} from './korean-fieldwork-quick-record';
+import { KoreanFieldworkInvestigationModeId } from './korean-fieldwork-investigation-mode';
 
 interface KoreanFieldworkFieldNotePanelProps {
   selectedDocument: Document;
@@ -70,6 +77,7 @@ interface KoreanFieldworkFieldNotePanelProps {
   operationDocument?: Document;
   existingDailyLog?: Document;
   draftScopeId?: string;
+  investigationModeId?: KoreanFieldworkInvestigationModeId;
   continuationSeed?: KoreanFieldworkFieldNoteContinuationSeed;
   allowedAddCategoryNames: string[];
   canCreateRecordMemo: boolean;
@@ -101,6 +109,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
   operationDocument,
   existingDailyLog,
   draftScopeId,
+  investigationModeId,
   continuationSeed,
   allowedAddCategoryNames,
   canCreateRecordMemo,
@@ -128,11 +137,18 @@ const KoreanFieldworkFieldNotePanel: React.FC<
   const [recordApplyStatusTone, setRecordApplyStatusTone] =
     useState<'success' | 'error'>('success');
   const [isApplyingToRecord, setIsApplyingToRecord] = useState(false);
+  const [isApplyingWorkflowStep, setIsApplyingWorkflowStep] = useState(false);
   const [isSavingAndApplying, setIsSavingAndApplying] = useState(false);
   const [recordSeedStatus, setRecordSeedStatus] =
     useState<string>();
   const [issuePromptStatus, setIssuePromptStatus] =
     useState<string>();
+  const [workflowChecklistStatus, setWorkflowChecklistStatus] =
+    useState<string>();
+  const [workflowChecklistStatusTone, setWorkflowChecklistStatusTone] =
+    useState<'success' | 'error'>('success');
+  const [workflowChecklistOverride, setWorkflowChecklistOverride] =
+    useState<{ documentId: string; values: string[] }>();
   const [isStylusInputMode, setIsStylusInputMode] = useState(false);
   const [handwritingStrokes, setHandwritingStrokes] =
     useState<KoreanFieldworkHandwritingStroke[]>([]);
@@ -220,6 +236,20 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     ),
     [allowedAddCategoryNames, documents, selectedDocument]
   );
+  const workflowChecklistOptions = useMemo(
+    () => getKoreanFieldworkChecklistQuickOptions(investigationModeId),
+    [investigationModeId]
+  );
+  const isWorkflowChecklistVisible =
+    !!onApplyToRecord
+    && isKoreanFieldworkChecklistRecord(
+      selectedDocument.resource.category,
+      investigationModeId
+    );
+  const workflowChecklistValues = workflowChecklistOverride?.documentId
+    === selectedDocument.resource.id
+    ? workflowChecklistOverride.values
+    : getFieldNoteWorkflowChecklistValues(selectedDocument);
   const selectedModeEnabled = getModeEnabled(
     mode,
     canCreateRecordMemo,
@@ -250,7 +280,11 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     && Object.keys(recordUpdates).length > 0
     && appliedRecordUpdateSignature !== recordUpdateSignature;
   const isBusy =
-    isSaving || isSubmitting || isApplyingToRecord || isSavingAndApplying;
+    isSaving
+    || isSubmitting
+    || isApplyingToRecord
+    || isApplyingWorkflowStep
+    || isSavingAndApplying;
   const isSaveDisabled =
     isBusy || !selectedModeEnabled || normalizedText.length === 0;
   const isRecordApplyDisabled = isBusy || !hasPendingRecordUpdates;
@@ -279,6 +313,8 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     setRecordApplyStatus(undefined);
     setRecordSeedStatus(undefined);
     setIssuePromptStatus(undefined);
+    setWorkflowChecklistStatus(undefined);
+    setWorkflowChecklistOverride(undefined);
     setAppliedRecordUpdateSignature(undefined);
     setSavedFollowUpActions([]);
     setNoteInput(EMPTY_FIELD_NOTE_INPUT);
@@ -336,6 +372,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     setRecordApplyStatus(undefined);
     setRecordSeedStatus(undefined);
     setIssuePromptStatus(undefined);
+    setWorkflowChecklistStatus(undefined);
     setNoteInput((currentInput) =>
       mergeKoreanFieldworkFieldNoteInput(currentInput, continuationSeed.input)
     );
@@ -393,6 +430,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     setRecordApplyStatus(undefined);
     setRecordSeedStatus(undefined);
     setIssuePromptStatus(undefined);
+    setWorkflowChecklistStatus(undefined);
     setAppliedRecordUpdateSignature(undefined);
     setNoteInput((currentInput) => ({
       ...currentInput,
@@ -412,6 +450,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     setRecordApplyStatus(undefined);
     setRecordSeedStatus(undefined);
     setIssuePromptStatus(undefined);
+    setWorkflowChecklistStatus(undefined);
     setAppliedRecordUpdateSignature(undefined);
     setHandwritingStrokes(normalizeKoreanFieldworkHandwritingStrokes(nextStrokes));
   };
@@ -421,6 +460,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     setRecordApplyStatus(undefined);
     setRecordSeedStatus(undefined);
     setIssuePromptStatus(undefined);
+    setWorkflowChecklistStatus(undefined);
     setAppliedRecordUpdateSignature(undefined);
     setNoteInput((currentInput) =>
       mergeKoreanFieldworkFieldNoteInput(currentInput, preset.input)
@@ -434,6 +474,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     setRecordApplyStatus(undefined);
     setRecordSeedStatus(undefined);
     setIssuePromptStatus(undefined);
+    setWorkflowChecklistStatus(undefined);
     setAppliedRecordUpdateSignature(undefined);
     setNoteInput((currentInput) =>
       applyKoreanFieldworkFieldNoteObservationPrompt(currentInput, prompt)
@@ -447,6 +488,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     setRecordApplyStatus(undefined);
     setRecordSeedStatus(undefined);
     setIssuePromptStatus(undefined);
+    setWorkflowChecklistStatus(undefined);
     setAppliedRecordUpdateSignature(undefined);
     setNoteInput((currentInput) =>
       mergeKoreanFieldworkFieldNoteInput(currentInput, item.input)
@@ -460,6 +502,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     setRecordApplyStatus(undefined);
     setAppliedRecordUpdateSignature(undefined);
     setIssuePromptStatus(undefined);
+    setWorkflowChecklistStatus(undefined);
     setRecordSeedStatus('기록 카드에서 불러옴');
     setNoteInput((currentInput) =>
       mergeKoreanFieldworkFieldNoteInput(currentInput, recordSeed)
@@ -471,10 +514,42 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     setRecordApplyStatus(undefined);
     setRecordSeedStatus(undefined);
     setAppliedRecordUpdateSignature(undefined);
+    setWorkflowChecklistStatus(undefined);
     setIssuePromptStatus('보강 항목에서 불러옴');
     setNoteInput((currentInput) =>
       mergeKoreanFieldworkFieldNoteInput(currentInput, prompt.input)
     );
+  };
+  const toggleWorkflowChecklistStep = async (
+    option: KoreanFieldworkQuickOption
+  ) => {
+    if (!onApplyToRecord || isApplyingWorkflowStep) return;
+
+    const nextValues = toggleFieldNoteWorkflowChecklistValue(
+      workflowChecklistValues,
+      option.value
+    );
+
+    setWorkflowChecklistOverride({
+      documentId: selectedDocument.resource.id,
+      values: nextValues,
+    });
+    setWorkflowChecklistStatus(undefined);
+    setIsApplyingWorkflowStep(true);
+
+    try {
+      await onApplyToRecord({
+        [FIELDWORK_QUICK_FIELDS.checklist]: nextValues,
+      });
+      setWorkflowChecklistStatusTone('success');
+      setWorkflowChecklistStatus(`${option.label} 반영됨`);
+    } catch {
+      setWorkflowChecklistOverride(undefined);
+      setWorkflowChecklistStatusTone('error');
+      setWorkflowChecklistStatus(`${option.label} 반영 실패`);
+    } finally {
+      setIsApplyingWorkflowStep(false);
+    }
   };
   const applyNoteToRecord = async () => {
     if (isRecordApplyDisabled || !onApplyToRecord) return;
@@ -527,6 +602,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
       setDraftStatus(undefined);
       setRecordSeedStatus(undefined);
       setIssuePromptStatus(undefined);
+      setWorkflowChecklistStatus(undefined);
       setSavedFollowUpActions(followUpActions);
       setNoteInput(EMPTY_FIELD_NOTE_INPUT);
       setHandwritingStrokes([]);
@@ -548,6 +624,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     setRecordApplyStatus(undefined);
     setRecordSeedStatus(undefined);
     setIssuePromptStatus(undefined);
+    setWorkflowChecklistStatus(undefined);
     setAppliedRecordUpdateSignature(undefined);
     setSavedFollowUpActions([]);
     setHandwritingStrokes([]);
@@ -703,6 +780,34 @@ const KoreanFieldworkFieldNotePanel: React.FC<
         </View>
       )}
 
+      {!!workflowChecklistStatus && (
+        <View
+          style={[
+            styles.workflowChecklistStatusRow,
+            workflowChecklistStatusTone === 'error'
+            && styles.workflowChecklistStatusRowError,
+          ]}
+          testID="fieldNoteWorkflowChecklistStatus"
+        >
+          <MaterialIcons
+            name={workflowChecklistStatusTone === 'error'
+              ? 'error-outline'
+              : 'assignment-turned-in'}
+            size={14}
+            color={workflowChecklistStatusTone === 'error' ? '#b42318' : '#027a48'}
+          />
+          <Text
+            style={[
+              styles.workflowChecklistStatusLabel,
+              workflowChecklistStatusTone === 'error'
+              && styles.workflowChecklistStatusLabelError,
+            ]}
+          >
+            {workflowChecklistStatus}
+          </Text>
+        </View>
+      )}
+
       <View style={styles.modeRow}>
         <ModeButton
           icon="sticky-note-2"
@@ -767,6 +872,15 @@ const KoreanFieldworkFieldNotePanel: React.FC<
           </View>
         ))}
       </View>
+
+      {isWorkflowChecklistVisible && (
+        <WorkflowChecklistPanel
+          activeValues={workflowChecklistValues}
+          isDisabled={isBusy}
+          onToggle={toggleWorkflowChecklistStep}
+          options={workflowChecklistOptions}
+        />
+      )}
 
       {hasRecordSeed && (
         <TouchableOpacity
@@ -1066,6 +1180,77 @@ const KoreanFieldworkFieldNotePanel: React.FC<
           ))}
         </ScrollView>
       )}
+    </View>
+  );
+};
+
+const WorkflowChecklistPanel: React.FC<{
+  activeValues: string[];
+  isDisabled: boolean;
+  onToggle: (option: KoreanFieldworkQuickOption) => void;
+  options: readonly KoreanFieldworkQuickOption[];
+}> = ({
+  activeValues,
+  isDisabled,
+  onToggle,
+  options,
+}) => {
+  const activeValueSet = new Set(activeValues);
+  const activeOptionCount = options.filter((option) =>
+    activeValueSet.has(option.value)
+  ).length;
+
+  return (
+    <View
+      style={styles.workflowChecklistPanel}
+      testID="fieldNoteWorkflowChecklistPanel"
+    >
+      <View style={styles.workflowChecklistHeader}>
+        <MaterialIcons name="fact-check" size={16} color="#344054" />
+        <Text style={styles.workflowChecklistTitle}>조사 과정표</Text>
+        <Text style={styles.workflowChecklistCount}>
+          {activeOptionCount}/{options.length}
+        </Text>
+      </View>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.workflowChecklistRow}
+      >
+        {options.map((option) => {
+          const isActive = activeValueSet.has(option.value);
+
+          return (
+            <TouchableOpacity
+              activeOpacity={0.86}
+              disabled={isDisabled}
+              key={option.value}
+              onPress={() => onToggle(option)}
+              style={[
+                styles.workflowChecklistChip,
+                isActive && styles.workflowChecklistChipActive,
+                isDisabled && styles.workflowChecklistChipDisabled,
+              ]}
+              testID={`fieldNoteWorkflowStep_${option.value}`}
+            >
+              <MaterialIcons
+                name={isActive ? 'check-circle' : 'radio-button-unchecked'}
+                size={15}
+                color={isActive ? '#027a48' : '#667085'}
+              />
+              <Text
+                style={[
+                  styles.workflowChecklistChipText,
+                  isActive && styles.workflowChecklistChipTextActive,
+                ]}
+                numberOfLines={1}
+              >
+                {option.label}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
+      </ScrollView>
     </View>
   );
 };
@@ -1616,6 +1801,23 @@ const toHandwritingSegments = (
   });
 };
 
+const getFieldNoteWorkflowChecklistValues = (
+  document: Document
+): string[] => {
+  const value = (document.resource as any)[FIELDWORK_QUICK_FIELDS.checklist];
+
+  return Array.isArray(value)
+    ? value.filter((item): item is string => typeof item === 'string')
+    : [];
+};
+
+const toggleFieldNoteWorkflowChecklistValue = (
+  currentValues: string[],
+  value: string
+): string[] => currentValues.includes(value)
+  ? currentValues.filter((item) => item !== value)
+  : currentValues.concat(value);
+
 const getSaveLabel = (
   mode: KoreanFieldworkFieldNoteMode,
   existingDailyLog: Document | undefined,
@@ -1648,6 +1850,8 @@ const getPresetIcon = (
     case 'findSampleContext':
       return 'inventory';
     case 'layer':
+    case 'layerColorMemo':
+    case 'soilProfilePhoto':
       return 'layers';
     case 'featureProgress':
       return 'account-tree';
@@ -1951,6 +2155,30 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     marginLeft: 5,
   },
+  workflowChecklistStatusRow: {
+    alignItems: 'center',
+    backgroundColor: '#ecfdf3',
+    borderColor: '#abefc6',
+    borderRadius: 6,
+    borderWidth: 1,
+    flexDirection: 'row',
+    marginTop: 9,
+    minHeight: 34,
+    paddingHorizontal: 8,
+  },
+  workflowChecklistStatusRowError: {
+    backgroundColor: '#fef3f2',
+    borderColor: '#fecdca',
+  },
+  workflowChecklistStatusLabel: {
+    color: '#027a48',
+    fontSize: 11,
+    fontWeight: '900',
+    marginLeft: 5,
+  },
+  workflowChecklistStatusLabelError: {
+    color: '#b42318',
+  },
   modeRow: {
     flexDirection: 'row',
     marginTop: 10,
@@ -2006,6 +2234,61 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontWeight: '700',
     marginTop: 1,
+  },
+  workflowChecklistPanel: {
+    backgroundColor: '#f8fafc',
+    borderColor: '#d0d5dd',
+    borderRadius: 6,
+    borderWidth: 1,
+    marginTop: 8,
+    paddingHorizontal: 9,
+    paddingVertical: 8,
+  },
+  workflowChecklistHeader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  workflowChecklistTitle: {
+    color: '#344054',
+    fontSize: 12,
+    fontWeight: '900',
+    marginLeft: 5,
+  },
+  workflowChecklistCount: {
+    color: '#667085',
+    fontSize: 11,
+    fontWeight: '900',
+    marginLeft: 'auto',
+  },
+  workflowChecklistRow: {
+    paddingTop: 8,
+  },
+  workflowChecklistChip: {
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderColor: '#d0d5dd',
+    borderRadius: 6,
+    borderWidth: 1,
+    flexDirection: 'row',
+    marginRight: 7,
+    minHeight: 38,
+    paddingHorizontal: 9,
+  },
+  workflowChecklistChipActive: {
+    backgroundColor: '#ecfdf3',
+    borderColor: '#abefc6',
+  },
+  workflowChecklistChipDisabled: {
+    opacity: 0.72,
+  },
+  workflowChecklistChipText: {
+    color: '#344054',
+    fontSize: 12,
+    fontWeight: '900',
+    marginLeft: 5,
+  },
+  workflowChecklistChipTextActive: {
+    color: '#027a48',
   },
   recordSeedButton: {
     alignItems: 'center',

@@ -399,6 +399,62 @@ describe('KoreanFieldworkFieldNotePanel', () => {
     expect(handleApplyToRecord).toHaveBeenCalledTimes(1);
   });
 
+  it('updates excavation workflow steps directly from the tablet note panel', async () => {
+    const feature = createDoc('feature-1', C.FEATURE, '조선시대 1호 수혈', {
+      featureInvestigationChecklist: [],
+    });
+    const handleApplyToRecord = jest.fn().mockResolvedValue(undefined);
+
+    const { getByTestId, getByText } = renderPanel(feature, {
+      investigationModeId: 'excavation',
+      onApplyToRecord: handleApplyToRecord,
+    });
+
+    expect(getByTestId('fieldNoteWorkflowChecklistPanel')).toBeTruthy();
+    expect(getByText('조사 전 사진')).toBeTruthy();
+
+    await act(async () => {
+      fireEvent.press(getByTestId(
+        'fieldNoteWorkflowStep_preInvestigationPhotoTaken'
+      ));
+      await Promise.resolve();
+      jest.runOnlyPendingTimers();
+    });
+
+    expect(handleApplyToRecord).toHaveBeenCalledWith({
+      featureInvestigationChecklist: ['preInvestigationPhotoTaken'],
+    });
+    expect(getByText('조사 전 사진 반영됨')).toBeTruthy();
+  });
+
+  it('uses trial trench workflow steps for trench notes', async () => {
+    const trench = createDoc('trench-1', C.TRENCH, '1트렌치', {
+      featureInvestigationChecklist: ['trenchSoilCleaned'],
+    });
+    const handleApplyToRecord = jest.fn().mockResolvedValue(undefined);
+
+    const { getByTestId, getByText } = renderPanel(trench, {
+      investigationModeId: 'trialTrench',
+      onApplyToRecord: handleApplyToRecord,
+    });
+
+    expect(getByText('토층 정리')).toBeTruthy();
+    expect(getByText('피트 토층도')).toBeTruthy();
+
+    await act(async () => {
+      fireEvent.press(getByTestId('fieldNoteWorkflowStep_trenchPitOpened'));
+      await Promise.resolve();
+      jest.runOnlyPendingTimers();
+    });
+
+    expect(handleApplyToRecord).toHaveBeenCalledWith({
+      featureInvestigationChecklist: [
+        'trenchSoilCleaned',
+        'trenchPitOpened',
+      ],
+    });
+  });
+
   it('saves the tablet note and applies it to the selected record in one step', async () => {
     const feature = createDoc('feature-1', C.FEATURE, '수혈 1', {
       description: '기존 노출 양상.',

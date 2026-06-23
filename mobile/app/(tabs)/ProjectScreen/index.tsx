@@ -804,6 +804,7 @@ const DocumentsList: React.FC = () => {
               operationDocument={selectedFieldNoteOperation}
               existingDailyLog={selectedFieldNoteDailyLog}
               draftScopeId={preferencesContext.preferences.currentProject}
+              investigationModeId={investigationModeId}
               continuationSeed={selectedFieldNoteContinuationSeed}
               allowedAddCategoryNames={selectedWorkbenchAllowedAddCategoryNames}
               canCreateRecordMemo={canCreateSelectedRecordMemo}

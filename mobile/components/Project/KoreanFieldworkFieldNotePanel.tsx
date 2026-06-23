@@ -16,8 +16,11 @@ import {
 import {
   buildKoreanFieldworkFieldNoteText,
   getKoreanFieldworkFieldNoteChecklist,
+  getKoreanFieldworkFieldNoteGuidance,
   getKoreanFieldworkFieldNotePresets,
   getKoreanFieldworkFieldNoteSummaries,
+  KoreanFieldworkFieldNoteGuidanceItem,
+  KoreanFieldworkFieldNoteGuidanceTone,
   KoreanFieldworkFieldNoteInput,
   KoreanFieldworkFieldNoteMode,
   KoreanFieldworkFieldNotePreset,
@@ -79,6 +82,10 @@ const KoreanFieldworkFieldNotePanel: React.FC<
   const checklist = useMemo(
     () => getKoreanFieldworkFieldNoteChecklist(noteInput),
     [noteInput]
+  );
+  const guidanceItems = useMemo(
+    () => getKoreanFieldworkFieldNoteGuidance(noteInput, selectedDocument),
+    [noteInput, selectedDocument]
   );
   const selectedModeEnabled = getModeEnabled(
     mode,
@@ -239,6 +246,16 @@ const KoreanFieldworkFieldNotePanel: React.FC<
         ))}
       </ScrollView>
 
+      <View style={styles.guidancePanel}>
+        <View style={styles.guidanceHeader}>
+          <MaterialIcons name="rule" size={16} color="#344054" />
+          <Text style={styles.guidanceTitle}>야장 안내</Text>
+        </View>
+        {guidanceItems.map((item) => (
+          <GuidanceRow key={item.id} item={item} />
+        ))}
+      </View>
+
       <FieldNoteInputBlock
         icon="visibility"
         label="관찰 내용"
@@ -385,6 +402,29 @@ const ModeButton: React.FC<{
   </TouchableOpacity>
 );
 
+const GuidanceRow: React.FC<{
+  item: KoreanFieldworkFieldNoteGuidanceItem;
+}> = ({ item }) => (
+  <View
+    style={[styles.guidanceRow, guidanceToneStyle(item.tone)]}
+    testID={`fieldNoteGuidance_${item.id}`}
+  >
+    <MaterialIcons
+      name={guidanceIcon(item.tone)}
+      size={15}
+      color={guidanceIconColor(item.tone)}
+    />
+    <View style={styles.guidanceText}>
+      <Text style={styles.guidanceLabel} numberOfLines={1}>
+        {item.label}
+      </Text>
+      <Text style={styles.guidanceDetail} numberOfLines={2}>
+        {item.detail}
+      </Text>
+    </View>
+  </View>
+);
+
 const FieldNoteInputBlock: React.FC<{
   icon: keyof typeof MaterialIcons.glyphMap;
   label: string;
@@ -457,6 +497,45 @@ const getPresetIcon = (
       return 'account-tree';
     default:
       return 'edit-note';
+  }
+};
+
+const guidanceIcon = (
+  tone: KoreanFieldworkFieldNoteGuidanceTone
+): keyof typeof MaterialIcons.glyphMap => {
+  switch (tone) {
+    case 'complete':
+      return 'check-circle';
+    case 'attention':
+      return 'priority-high';
+    default:
+      return 'lightbulb';
+  }
+};
+
+const guidanceIconColor = (
+  tone: KoreanFieldworkFieldNoteGuidanceTone
+): string => {
+  switch (tone) {
+    case 'complete':
+      return '#027a48';
+    case 'attention':
+      return '#b42318';
+    default:
+      return '#175cd3';
+  }
+};
+
+const guidanceToneStyle = (
+  tone: KoreanFieldworkFieldNoteGuidanceTone
+) => {
+  switch (tone) {
+    case 'complete':
+      return styles.guidanceRowComplete;
+    case 'attention':
+      return styles.guidanceRowAttention;
+    default:
+      return styles.guidanceRowGuide;
   }
 };
 
@@ -567,6 +646,64 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '900',
     marginLeft: 5,
+  },
+  guidancePanel: {
+    backgroundColor: '#f8fafc',
+    borderColor: '#d0d5dd',
+    borderRadius: 6,
+    borderWidth: 1,
+    marginTop: 10,
+    paddingHorizontal: 9,
+    paddingVertical: 8,
+  },
+  guidanceHeader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginBottom: 6,
+  },
+  guidanceTitle: {
+    color: '#344054',
+    fontSize: 12,
+    fontWeight: '900',
+    marginLeft: 5,
+  },
+  guidanceRow: {
+    alignItems: 'center',
+    borderRadius: 5,
+    borderWidth: 1,
+    flexDirection: 'row',
+    marginTop: 5,
+    minHeight: 42,
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+  },
+  guidanceRowComplete: {
+    backgroundColor: '#ecfdf3',
+    borderColor: '#abefc6',
+  },
+  guidanceRowGuide: {
+    backgroundColor: '#eff8ff',
+    borderColor: '#b2ddff',
+  },
+  guidanceRowAttention: {
+    backgroundColor: '#fff1f3',
+    borderColor: '#fecdca',
+  },
+  guidanceText: {
+    flex: 1,
+    marginLeft: 7,
+    minWidth: 0,
+  },
+  guidanceLabel: {
+    color: '#27343b',
+    fontSize: 12,
+    fontWeight: '900',
+  },
+  guidanceDetail: {
+    color: '#667085',
+    fontSize: 11,
+    lineHeight: 15,
+    marginTop: 1,
   },
   inputBlock: {
     marginTop: 10,

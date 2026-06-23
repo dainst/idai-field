@@ -5,6 +5,7 @@ import {
   createKoreanFieldworkDailyLogDraft,
   createKoreanFieldworkRecordMemoDraft,
   getKoreanFieldworkFieldNoteChecklist,
+  getKoreanFieldworkFieldNoteGuidance,
   getKoreanFieldworkFieldNotePresets,
   getKoreanFieldworkDailyLogAppendUpdates,
   getKoreanFieldworkDailyLogForOperation,
@@ -61,6 +62,44 @@ describe('korean-fieldwork-field-notes', () => {
       interpretation: layerPreset!.input.interpretation,
       nextWork: layerPreset!.input.nextWork,
     });
+  });
+
+  it('guides tablet note writing without forcing a verification state', () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
+
+    expect(getKoreanFieldworkFieldNoteGuidance({
+      interpretation: '주혈 가능성이 있음.',
+    }, feature)).toEqual([
+      expect.objectContaining({
+        id: 'interpretation-without-observation',
+        tone: 'attention',
+      }),
+      expect.objectContaining({
+        id: 'next-work',
+        tone: 'guide',
+      }),
+    ]);
+    expect(getKoreanFieldworkFieldNoteGuidance({
+      observation: '평면 원형 윤곽과 회갈색 사질토 확인.',
+      nextWork: '사진 12번 보강 후 단면 정리.',
+    }, feature)).toEqual([
+      expect.objectContaining({
+        id: 'observation-recorded',
+        tone: 'complete',
+      }),
+      expect.objectContaining({
+        id: 'evidence-numbers',
+        tone: 'guide',
+      }),
+    ]);
+    expect(getKoreanFieldworkFieldNoteGuidance({
+      observation: '평면 원형 윤곽과 회갈색 사질토 확인.',
+      nextWork: '단면 정리 완료.',
+      evidenceNumbers: '사진 12-14, 도면 3',
+    }, feature)).toEqual([
+      expect.objectContaining({ id: 'observation-recorded' }),
+      expect.objectContaining({ id: 'report-continuity' }),
+    ]);
   });
 
   it('finds the operation for a selected trench or feature record', () => {

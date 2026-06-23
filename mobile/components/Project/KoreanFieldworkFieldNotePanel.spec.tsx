@@ -133,6 +133,37 @@ describe('KoreanFieldworkFieldNotePanel', () => {
     );
   });
 
+  it('shows live field note guidance while writing', () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
+
+    const { getByTestId, queryByTestId } = renderPanel(feature);
+
+    expect(getByTestId('fieldNoteGuidance_observation-first')).toBeTruthy();
+
+    fireEvent.changeText(
+      getByTestId('fieldNoteInterpretationInput'),
+      '주혈 가능성이 있음.'
+    );
+
+    expect(
+      getByTestId('fieldNoteGuidance_interpretation-without-observation')
+    ).toBeTruthy();
+
+    fireEvent.changeText(
+      getByTestId('fieldNoteTextInput'),
+      '평면 원형 윤곽과 회갈색 사질토 확인.'
+    );
+    fireEvent.changeText(
+      getByTestId('fieldNoteNextWorkInput'),
+      '사진 12번 보강 후 단면 정리.'
+    );
+
+    expect(getByTestId('fieldNoteGuidance_evidence-numbers')).toBeTruthy();
+    expect(queryByTestId(
+      'fieldNoteGuidance_interpretation-without-observation'
+    )).toBeNull();
+  });
+
   it('clears unsaved text when the selected record changes', () => {
     const feature = createDoc('feature-1', C.FEATURE, '유구 1');
     const trench = createDoc('trench-1', C.TRENCH, '트렌치 1');

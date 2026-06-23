@@ -47,6 +47,16 @@ export interface KoreanFieldworkFieldNotePreset {
   input: KoreanFieldworkFieldNoteInput;
 }
 
+export type KoreanFieldworkFieldNoteGuidanceTone =
+  'complete'|'guide'|'attention';
+
+export interface KoreanFieldworkFieldNoteGuidanceItem {
+  id: string;
+  label: string;
+  detail: string;
+  tone: KoreanFieldworkFieldNoteGuidanceTone;
+}
+
 export const createKoreanFieldworkRecordMemoDraft = (
   document: Document,
   text: string,
@@ -341,6 +351,73 @@ export const mergeKoreanFieldworkFieldNoteInput = (
   ),
 });
 
+export const getKoreanFieldworkFieldNoteGuidance = (
+  input: KoreanFieldworkFieldNoteInput,
+  document: Document
+): KoreanFieldworkFieldNoteGuidanceItem[] => {
+  const hasObservation = hasText(input.observation);
+  const hasInterpretation = hasText(input.interpretation);
+  const hasNextWork = hasText(input.nextWork);
+  const hasEvidenceNumbers = hasText(input.evidenceNumbers);
+  const items: KoreanFieldworkFieldNoteGuidanceItem[] = [];
+
+  if (!hasObservation && hasInterpretation) {
+    items.push({
+      id: 'interpretation-without-observation',
+      label: '관찰 근거 필요',
+      detail: '해석을 적었다면 색·토질·경계·중복 관계도 함께 남기세요.',
+      tone: 'attention',
+    });
+  } else if (!hasObservation) {
+    items.push({
+      id: 'observation-first',
+      label: '관찰 내용부터',
+      detail: getObservationPrompt(document),
+      tone: 'guide',
+    });
+  } else {
+    items.push({
+      id: 'observation-recorded',
+      label: '관찰 기록됨',
+      detail: '해석이나 다음 작업이 있으면 따로 이어 적으세요.',
+      tone: 'complete',
+    });
+  }
+
+  if (!hasEvidenceNumbers && shouldPromptEvidenceNumbers(input, document)) {
+    items.push({
+      id: 'evidence-numbers',
+      label: '번호 연결',
+      detail: '사진·도면·유물·시료 번호가 생겼다면 같은 줄에 남기세요.',
+      tone: 'guide',
+    });
+  }
+
+  if (!hasNextWork && shouldPromptNextWork(document)) {
+    items.push({
+      id: 'next-work',
+      label: '다음 작업',
+      detail: '정리, 촬영, 실측, 수습, 보완 확인 중 남은 일을 적어두세요.',
+      tone: 'guide',
+    });
+  }
+
+  if (
+    hasObservation
+    && (hasEvidenceNumbers || !shouldPromptEvidenceNumbers(input, document))
+    && (hasNextWork || !shouldPromptNextWork(document))
+  ) {
+    items.push({
+      id: 'report-continuity',
+      label: '보고서 연속성',
+      detail: '이 내용은 작업일지와 선택 기록에 함께 남기기 좋습니다.',
+      tone: 'complete',
+    });
+  }
+
+  return items.slice(0, 3);
+};
+
 const findOperationInParentPath = (
   document: Document,
   documentsById: Map<string, Document>
@@ -462,6 +539,46 @@ const formatFieldNoteSection = (
 
 const hasText = (value: string | undefined): boolean =>
   normalizeFieldNoteText(value ?? '').length > 0;
+
+const getObservationPrompt = (document: Document): string => {
+  switch (document.resource.category) {
+    case C.LAYER:
+      return '토색, 토질, 포함물, 상·하부 경계부터 적어두세요.';
+    case C.FIND:
+    case C.SAMPLE:
+      return '출토 위치, 층위, 주변 유구와의 관계부터 적어두세요.';
+    case C.PHOTO:
+    case C.DRAWING:
+      return '촬영·실측 대상, 방향, 기준점을 적어두세요.';
+    default:
+      return '형태, 규모, 경계, 절단·중복 관계부터 적어두세요.';
+  }
+};
+
+const shouldPromptEvidenceNumbers = (
+  input: KoreanFieldworkFieldNoteInput,
+  document: Document
+): boolean => {
+  if (document.resource.category === C.PHOTO
+    || document.resource.category === C.DRAWING
+    || document.resource.category === C.FIND
+    || document.resource.category === C.SAMPLE) {
+    return true;
+  }
+
+  return /사진|도면|실측|촬영|유물|시료|수습|채취|번호/.test(
+    [
+      input.observation,
+      input.interpretation,
+      input.nextWork,
+    ].join(' ')
+  );
+};
+
+const shouldPromptNextWork = (document: Document): boolean =>
+  FEATURE_PROGRESS_CATEGORIES.has(document.resource.category)
+  || document.resource.category === C.FIND
+  || document.resource.category === C.SAMPLE;
 
 const mergeFieldNoteValue = (
   currentValue: string | undefined,

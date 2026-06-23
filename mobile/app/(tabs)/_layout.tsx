@@ -49,7 +49,7 @@ export default function TabLayout() {
                 listeners={{
                   tabPress: (event) => {
                     event.preventDefault();
-                    router.navigate('/ProjectScreen');
+                    router.replace('/ProjectScreen');
                   },
                 }}
               />

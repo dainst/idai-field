@@ -23,6 +23,7 @@ import {
   getKoreanFieldworkFieldNoteHistoryItems,
   getKoreanFieldworkFieldNoteObservationPrompts,
   getKoreanFieldworkFieldNotePresets,
+  getKoreanFieldworkFieldNoteRecordUpdates,
   getKoreanFieldworkFieldNoteReportPreview,
   getKoreanFieldworkFieldNoteSummaries,
   KoreanFieldworkFieldNoteContinuationSeed,
@@ -35,6 +36,7 @@ import {
   KoreanFieldworkFieldNoteMode,
   KoreanFieldworkFieldNoteObservationPrompt,
   KoreanFieldworkFieldNotePreset,
+  KoreanFieldworkFieldNoteRecordUpdates,
   KoreanFieldworkFieldNoteReportPreview,
   mergeKoreanFieldworkFieldNoteInput,
 } from './korean-fieldwork-field-notes';
@@ -61,6 +63,9 @@ interface KoreanFieldworkFieldNotePanelProps {
     mode: KoreanFieldworkFieldNoteMode,
     text: string
   ) => Promise<void>;
+  onApplyToRecord?: (
+    updates: KoreanFieldworkFieldNoteRecordUpdates
+  ) => Promise<void> | void;
   onAddDocumentOfCategory: (document: Document, categoryName: string) => void;
   onOpenDocument: (document: Document) => void;
 }
@@ -86,6 +91,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
   canCreateDailyLog,
   isSaving = false,
   onCreateNote,
+  onApplyToRecord,
   onAddDocumentOfCategory,
   onOpenDocument,
 }) => {
@@ -100,6 +106,13 @@ const KoreanFieldworkFieldNotePanel: React.FC<
   const [appliedContinuationSeedId, setAppliedContinuationSeedId] =
     useState<string>();
   const [continuationStatus, setContinuationStatus] =
+    useState<string>();
+  const [recordApplyStatus, setRecordApplyStatus] =
+    useState<string>();
+  const [recordApplyStatusTone, setRecordApplyStatusTone] =
+    useState<'success' | 'error'>('success');
+  const [isApplyingToRecord, setIsApplyingToRecord] = useState(false);
+  const [appliedRecordUpdateSignature, setAppliedRecordUpdateSignature] =
     useState<string>();
   const [savedFollowUpActions, setSavedFollowUpActions] =
     useState<KoreanFieldworkFieldNoteFollowUpAction[]>([]);
@@ -142,6 +155,17 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     ),
     [noteInput, selectedDocument]
   );
+  const recordUpdates = useMemo(
+    () => getKoreanFieldworkFieldNoteRecordUpdates(
+      noteInput,
+      selectedDocument
+    ),
+    [noteInput, selectedDocument]
+  );
+  const recordUpdateSignature = useMemo(
+    () => JSON.stringify(recordUpdates),
+    [recordUpdates]
+  );
   const evidenceActions = useMemo(
     () => getKoreanFieldworkFieldNoteEvidenceActions(
       selectedDocument,
@@ -169,9 +193,14 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     [draftScopeId, selectedDocument.resource.id]
   );
   const hasDraftText = hasKoreanFieldworkFieldNoteDraftText(noteInput);
-  const isBusy = isSaving || isSubmitting;
+  const isBusy = isSaving || isSubmitting || isApplyingToRecord;
   const isSaveDisabled =
     isBusy || !selectedModeEnabled || normalizedText.length === 0;
+  const isRecordApplyDisabled =
+    isBusy
+    || !onApplyToRecord
+    || Object.keys(recordUpdates).length === 0
+    || appliedRecordUpdateSignature === recordUpdateSignature;
 
   useEffect(() => {
     if (mode === 'both' && (!canCreateRecordMemo || !canCreateDailyLog)) {
@@ -193,6 +222,8 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     setDraftStatus(undefined);
     setAppliedContinuationSeedId(undefined);
     setContinuationStatus(undefined);
+    setRecordApplyStatus(undefined);
+    setAppliedRecordUpdateSignature(undefined);
     setSavedFollowUpActions([]);
     setNoteInput(EMPTY_FIELD_NOTE_INPUT);
 
@@ -290,6 +321,8 @@ const KoreanFieldworkFieldNotePanel: React.FC<
   ) => {
     setSavedFollowUpActions([]);
     setContinuationStatus(undefined);
+    setRecordApplyStatus(undefined);
+    setAppliedRecordUpdateSignature(undefined);
     setNoteInput((currentInput) => ({
       ...currentInput,
       [fieldName]: value,
@@ -298,6 +331,8 @@ const KoreanFieldworkFieldNotePanel: React.FC<
   const applyPreset = (preset: KoreanFieldworkFieldNotePreset) => {
     setSavedFollowUpActions([]);
     setContinuationStatus(undefined);
+    setRecordApplyStatus(undefined);
+    setAppliedRecordUpdateSignature(undefined);
     setNoteInput((currentInput) =>
       mergeKoreanFieldworkFieldNoteInput(currentInput, preset.input)
     );
@@ -307,6 +342,8 @@ const KoreanFieldworkFieldNotePanel: React.FC<
   ) => {
     setSavedFollowUpActions([]);
     setContinuationStatus(undefined);
+    setRecordApplyStatus(undefined);
+    setAppliedRecordUpdateSignature(undefined);
     setNoteInput((currentInput) =>
       applyKoreanFieldworkFieldNoteObservationPrompt(currentInput, prompt)
     );
@@ -316,9 +353,29 @@ const KoreanFieldworkFieldNotePanel: React.FC<
 
     setSavedFollowUpActions([]);
     setContinuationStatus(undefined);
+    setRecordApplyStatus(undefined);
+    setAppliedRecordUpdateSignature(undefined);
     setNoteInput((currentInput) =>
       mergeKoreanFieldworkFieldNoteInput(currentInput, item.input)
     );
+  };
+  const applyNoteToRecord = async () => {
+    if (isRecordApplyDisabled || !onApplyToRecord) return;
+
+    setIsApplyingToRecord(true);
+    setRecordApplyStatus(undefined);
+    try {
+      await onApplyToRecord(recordUpdates);
+      setRecordApplyStatusTone('success');
+      setRecordApplyStatus('선택 기록에 반영됨');
+      setAppliedRecordUpdateSignature(recordUpdateSignature);
+    } catch {
+      setRecordApplyStatusTone('error');
+      setRecordApplyStatus('기록 반영 실패');
+      setAppliedRecordUpdateSignature(undefined);
+    } finally {
+      setIsApplyingToRecord(false);
+    }
   };
 
   const saveNote = async () => {
@@ -346,6 +403,8 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     setNoteInput(EMPTY_FIELD_NOTE_INPUT);
     setDraftStatus(undefined);
     setContinuationStatus(undefined);
+    setRecordApplyStatus(undefined);
+    setAppliedRecordUpdateSignature(undefined);
     setSavedFollowUpActions([]);
     if (draftKey) {
       await removeKoreanFieldworkFieldNoteDraft(draftKey)
@@ -424,6 +483,34 @@ const KoreanFieldworkFieldNotePanel: React.FC<
           <MaterialIcons name="subdirectory-arrow-right" size={14} color="#2f5f4a" />
           <Text style={styles.continuationStatusLabel}>
             {continuationStatus}
+          </Text>
+        </View>
+      )}
+
+      {!!recordApplyStatus && (
+        <View
+          style={[
+            styles.recordApplyStatusRow,
+            recordApplyStatusTone === 'error'
+            && styles.recordApplyStatusRowError,
+          ]}
+          testID="fieldNoteRecordApplyStatus"
+        >
+          <MaterialIcons
+            name={recordApplyStatusTone === 'error'
+              ? 'error-outline'
+              : 'assignment-turned-in'}
+            size={14}
+            color={recordApplyStatusTone === 'error' ? '#b42318' : '#027a48'}
+          />
+          <Text
+            style={[
+              styles.recordApplyStatusLabel,
+              recordApplyStatusTone === 'error'
+              && styles.recordApplyStatusLabelError,
+            ]}
+          >
+            {recordApplyStatus}
           </Text>
         </View>
       )}
@@ -629,6 +716,32 @@ const KoreanFieldworkFieldNotePanel: React.FC<
       />
 
       <View style={styles.footerRow}>
+        {!!onApplyToRecord && (
+          <TouchableOpacity
+            activeOpacity={0.86}
+            disabled={isRecordApplyDisabled}
+            onPress={applyNoteToRecord}
+            style={[
+              styles.applyRecordButton,
+              isRecordApplyDisabled && styles.applyRecordButtonDisabled,
+            ]}
+            testID="fieldNoteApplyToRecord"
+          >
+            <MaterialIcons
+              name="assignment-turned-in"
+              size={17}
+              color={isRecordApplyDisabled ? '#98a2b3' : '#2f5f4a'}
+            />
+            <Text
+              style={[
+                styles.applyRecordButtonText,
+                isRecordApplyDisabled && styles.applyRecordButtonTextDisabled,
+              ]}
+            >
+              {isApplyingToRecord ? '반영 중' : '기록 반영'}
+            </Text>
+          </TouchableOpacity>
+        )}
         <TouchableOpacity
           activeOpacity={0.86}
           disabled={isSaveDisabled}
@@ -1197,6 +1310,30 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     marginLeft: 5,
   },
+  recordApplyStatusRow: {
+    alignItems: 'center',
+    backgroundColor: '#ecfdf3',
+    borderColor: '#abefc6',
+    borderRadius: 6,
+    borderWidth: 1,
+    flexDirection: 'row',
+    marginTop: 9,
+    minHeight: 34,
+    paddingHorizontal: 8,
+  },
+  recordApplyStatusLabel: {
+    color: '#027a48',
+    fontSize: 11,
+    fontWeight: '900',
+    marginLeft: 5,
+  },
+  recordApplyStatusRowError: {
+    backgroundColor: '#fef3f2',
+    borderColor: '#fecdca',
+  },
+  recordApplyStatusLabelError: {
+    color: '#b42318',
+  },
   modeRow: {
     flexDirection: 'row',
     marginTop: 10,
@@ -1619,6 +1756,30 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     marginTop: 8,
+  },
+  applyRecordButton: {
+    alignItems: 'center',
+    backgroundColor: '#f0fdf4',
+    borderColor: '#bbf7d0',
+    borderRadius: 6,
+    borderWidth: 1,
+    flexDirection: 'row',
+    marginRight: 8,
+    minHeight: 38,
+    paddingHorizontal: 10,
+  },
+  applyRecordButtonDisabled: {
+    backgroundColor: '#f2f4f7',
+    borderColor: '#d0d5dd',
+  },
+  applyRecordButtonText: {
+    color: '#2f5f4a',
+    fontSize: 12,
+    fontWeight: '900',
+    marginLeft: 5,
+  },
+  applyRecordButtonTextDisabled: {
+    color: '#98a2b3',
   },
   saveButton: {
     alignItems: 'center',

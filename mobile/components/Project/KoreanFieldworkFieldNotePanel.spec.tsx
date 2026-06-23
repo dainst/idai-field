@@ -218,6 +218,63 @@ describe('KoreanFieldworkFieldNotePanel', () => {
     expect(getByTestId('fieldNoteReportPreview').props.children).toBeTruthy();
   });
 
+  it('applies the tablet note to the selected record card fields', async () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1', {
+      description: '기존 노출 양상.',
+    });
+    const handleApplyToRecord = jest.fn();
+
+    const { getByTestId } = renderPanel(feature, {
+      onApplyToRecord: handleApplyToRecord,
+    });
+
+    fireEvent.changeText(
+      getByTestId('fieldNoteTextInput'),
+      '바닥면에서 원형 윤곽 확인.'
+    );
+    fireEvent.changeText(
+      getByTestId('fieldNoteInterpretationInput'),
+      '주공 후보로 보이나 절단관계는 추가 확인 필요.'
+    );
+
+    fireEvent.press(getByTestId('fieldNoteApplyToRecord'));
+
+    expect(handleApplyToRecord).toHaveBeenCalledWith({
+      fieldNote: [
+        '[관찰 내용] 바닥면에서 원형 윤곽 확인.',
+        '[해석] 주공 후보로 보이나 절단관계는 추가 확인 필요.',
+      ].join('\n'),
+      description: '기존 노출 양상.\n바닥면에서 원형 윤곽 확인.',
+      interpretation: '주공 후보로 보이나 절단관계는 추가 확인 필요.',
+    });
+    await waitFor(() =>
+      expect(getByTestId('fieldNoteRecordApplyStatus')).toBeTruthy()
+    );
+
+    fireEvent.press(getByTestId('fieldNoteApplyToRecord'));
+
+    expect(handleApplyToRecord).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not mark the selected record as updated when record apply fails', async () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
+    const handleApplyToRecord = jest.fn().mockRejectedValue(new Error('fail'));
+
+    const { getByTestId, getByText } = renderPanel(feature, {
+      onApplyToRecord: handleApplyToRecord,
+    });
+
+    fireEvent.changeText(
+      getByTestId('fieldNoteTextInput'),
+      '바닥면에서 원형 윤곽 확인.'
+    );
+    fireEvent.press(getByTestId('fieldNoteApplyToRecord'));
+
+    await waitFor(() => expect(getByText('기록 반영 실패')).toBeTruthy());
+
+    expect(handleApplyToRecord).toHaveBeenCalledTimes(1);
+  });
+
   it('starts evidence records directly from the tablet note panel', () => {
     const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
     const handleAddDocumentOfCategory = jest.fn();

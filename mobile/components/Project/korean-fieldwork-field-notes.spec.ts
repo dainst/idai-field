@@ -14,6 +14,7 @@ import {
   getKoreanFieldworkFieldNoteObservationPrompts,
   getKoreanFieldworkFieldNotePresets,
   getKoreanFieldworkFieldNoteReportPreview,
+  getKoreanFieldworkFieldNoteRecordUpdates,
   getKoreanFieldworkDailyNotebookDigest,
   getKoreanFieldworkNotebookEntries,
   getKoreanFieldworkNotebookContinuationSeed,
@@ -260,6 +261,43 @@ describe('korean-fieldwork-field-notes', () => {
       observation: '배수로로 이어지는 선형 흔적 확인.',
     }, createDoc('feature-2', C.FEATURE, '유구 2'))?.sentence)
       .toBe('유구 2는 배수로로 이어지는 선형 흔적 확인.');
+  });
+
+  it('builds selected record updates from tablet field note input', () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1', {
+      description: '기존 노출 양상.',
+      interpretation: '기존 해석.',
+    });
+    const input = {
+      observation: '바닥면에서 원형 윤곽을 확인.',
+      interpretation: '주공 후보로 보이나 절단관계는 추가 확인 필요.',
+      nextWork: '단면 정리 후 사진 보강.',
+      evidenceNumbers: '사진 12-14',
+    };
+
+    const updates = getKoreanFieldworkFieldNoteRecordUpdates(input, feature);
+
+    expect(updates).toEqual({
+      fieldNote: [
+        '[관찰 내용] 바닥면에서 원형 윤곽을 확인.',
+        '[해석] 주공 후보로 보이나 절단관계는 추가 확인 필요.',
+        '[다음 작업] 단면 정리 후 사진 보강.',
+        '[사진·도면·유물·시료 번호] 사진 12-14',
+      ].join('\n'),
+      description: '기존 노출 양상.\n바닥면에서 원형 윤곽을 확인.',
+      interpretation: [
+        '기존 해석.',
+        '주공 후보로 보이나 절단관계는 추가 확인 필요.',
+      ].join('\n'),
+    });
+
+    expect(getKoreanFieldworkFieldNoteRecordUpdates(input, {
+      ...feature,
+      resource: {
+        ...feature.resource,
+        ...updates,
+      },
+    })).toEqual({});
   });
 
   it('extracts structured field note input from saved memo text', () => {

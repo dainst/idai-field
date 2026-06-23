@@ -82,6 +82,12 @@ export interface KoreanFieldworkFieldNoteReportPreview {
   missingParts: string[];
 }
 
+export interface KoreanFieldworkFieldNoteRecordUpdates {
+  description?: string;
+  fieldNote?: string;
+  interpretation?: string;
+}
+
 export interface KoreanFieldworkFieldNoteEvidenceAction {
   id: string;
   label: string;
@@ -830,6 +836,45 @@ export const getKoreanFieldworkFieldNoteReportPreview = (
     ].filter((value): value is string => !!value).join(' · '),
     missingParts,
   };
+};
+
+export const getKoreanFieldworkFieldNoteRecordUpdates = (
+  input: KoreanFieldworkFieldNoteInput,
+  document: Document
+): KoreanFieldworkFieldNoteRecordUpdates => {
+  const noteText = buildKoreanFieldworkFieldNoteText(input);
+  if (!noteText) return {};
+
+  const updates: KoreanFieldworkFieldNoteRecordUpdates = {};
+  const fieldNote = mergeFieldNoteValue(
+    getStringField(document, 'fieldNote'),
+    noteText
+  );
+  const observation = normalizeFieldNoteText(input.observation ?? '');
+  const description = observation
+    ? mergeFieldNoteValue(getStringField(document, 'description'), observation)
+    : '';
+  const interpretation = normalizeFieldNoteText(input.interpretation ?? '')
+    ? mergeFieldNoteValue(
+      getStringField(document, 'interpretation'),
+      input.interpretation
+    )
+    : '';
+
+  if (fieldNote !== getStringField(document, 'fieldNote')) {
+    updates.fieldNote = fieldNote;
+  }
+  if (description && description !== getStringField(document, 'description')) {
+    updates.description = description;
+  }
+  if (
+    interpretation
+    && interpretation !== getStringField(document, 'interpretation')
+  ) {
+    updates.interpretation = interpretation;
+  }
+
+  return updates;
 };
 
 export const getKoreanFieldworkFieldNoteEvidenceActions = (

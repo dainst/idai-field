@@ -501,9 +501,9 @@ const DocumentsList: React.FC = () => {
     document: Document,
     updates: Record<string, unknown>
   ) => {
-    if (!repository) return;
+    if (!repository) return Promise.resolve(false);
 
-    repository.update({
+    return repository.update({
       ...document,
       resource: {
         ...document.resource,
@@ -516,12 +516,14 @@ const DocumentsList: React.FC = () => {
           ToastType.Success,
           `${updatedDocument.resource.identifier} 현장 확인을 반영했습니다.`
         );
+        return true;
       })
       .catch((error) => {
         showToast(
           ToastType.Error,
           `${document.resource.identifier} 현장 확인을 반영하지 못했습니다. ${error}`
         );
+        return false;
       });
   };
   const createFieldNote = async (
@@ -757,6 +759,13 @@ const DocumentsList: React.FC = () => {
               canCreateDailyLog={canCreateSelectedDailyLog}
               isSaving={isCreatingFieldNote}
               onCreateNote={createFieldNote}
+              onApplyToRecord={async (updates) => {
+                const wasUpdated = await updateWorkbenchResourceFields(
+                  selectedWorkbenchDocument,
+                  updates
+                );
+                if (!wasUpdated) throw new Error('record update failed');
+              }}
               onAddDocumentOfCategory={(parentDoc, categoryName) =>
                 navigateAddCategory(categoryName, parentDoc)}
               onOpenDocument={selectWorkbenchDocument}

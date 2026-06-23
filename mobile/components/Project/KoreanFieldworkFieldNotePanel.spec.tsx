@@ -169,6 +169,22 @@ describe('KoreanFieldworkFieldNotePanel', () => {
     )).toBeNull();
   });
 
+  it('shows a report continuity preview while writing a tablet note', () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
+
+    const { getByTestId, queryByTestId } = renderPanel(feature);
+
+    expect(queryByTestId('fieldNoteReportPreview')).toBeNull();
+
+    fireEvent.changeText(
+      getByTestId('fieldNoteTextInput'),
+      '바닥면에서 원형 윤곽을 확인.'
+    );
+
+    expect(getByTestId('fieldNoteReportPreview')).toBeTruthy();
+    expect(getByTestId('fieldNoteReportPreview').props.children).toBeTruthy();
+  });
+
   it('starts evidence records directly from the tablet note panel', () => {
     const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
     const handleAddDocumentOfCategory = jest.fn();

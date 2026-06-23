@@ -68,6 +68,13 @@ export interface KoreanFieldworkFieldNoteGuidanceItem {
   tone: KoreanFieldworkFieldNoteGuidanceTone;
 }
 
+export interface KoreanFieldworkFieldNoteReportPreview {
+  title: string;
+  sentence: string;
+  supportingDetail: string;
+  missingParts: string[];
+}
+
 export interface KoreanFieldworkFieldNoteEvidenceAction {
   id: string;
   label: string;
@@ -498,6 +505,40 @@ export const getKoreanFieldworkFieldNoteGuidance = (
   return items.slice(0, 3);
 };
 
+export const getKoreanFieldworkFieldNoteReportPreview = (
+  input: KoreanFieldworkFieldNoteInput,
+  document: Document
+): KoreanFieldworkFieldNoteReportPreview | undefined => {
+  const observation = normalizeFieldNoteText(input.observation ?? '');
+  if (!observation) return undefined;
+
+  const interpretation = normalizeFieldNoteText(input.interpretation ?? '');
+  const nextWork = normalizeFieldNoteText(input.nextWork ?? '');
+  const evidenceNumbers = normalizeFieldNoteText(input.evidenceNumbers ?? '');
+  const recordLabel = document.resource.identifier || document.resource.id;
+  const categoryLabel = getKoreanFieldworkCategoryLabel(document.resource.category);
+  const missingParts = [
+    !interpretation ? '관찰과 구분한 해석' : undefined,
+    !evidenceNumbers ? '사진·도면·유물·시료 번호' : undefined,
+    !nextWork && shouldPromptNextWork(document) ? '다음 작업' : undefined,
+  ].filter((part): part is string => !!part);
+
+  return {
+    title: `${recordLabel} 보고서 연결 문장`,
+    sentence: [
+      `${formatReportSubject(categoryLabel, recordLabel)} ${trimSentenceEnd(observation)}.`,
+      interpretation
+        ? ` ${trimSentenceEnd(interpretation)}.`
+        : undefined,
+    ].join(''),
+    supportingDetail: [
+      evidenceNumbers ? `근거 번호: ${evidenceNumbers}` : undefined,
+      nextWork ? `다음 작업: ${nextWork}` : undefined,
+    ].filter((value): value is string => !!value).join(' · '),
+    missingParts,
+  };
+};
+
 export const getKoreanFieldworkFieldNoteEvidenceActions = (
   document: Document,
   documents: Document[],
@@ -676,6 +717,46 @@ const formatFieldNoteSection = (
 
 const hasText = (value: string | undefined): boolean =>
   normalizeFieldNoteText(value ?? '').length > 0;
+
+const trimSentenceEnd = (text: string): string =>
+  normalizeFieldNoteText(text).replace(/[.。．\s]+$/g, '');
+
+const formatReportSubject = (
+  categoryLabel: string,
+  recordLabel: string
+): string => {
+  const subjectLabel = recordLabel.startsWith(categoryLabel)
+    ? recordLabel
+    : `${categoryLabel} ${recordLabel}`;
+
+  return `${subjectLabel}${getKoreanSubjectParticle(recordLabel)}`;
+};
+
+const getKoreanSubjectParticle = (text: string): '은'|'는' => {
+  const lastCharacter = normalizeFieldNoteText(text).slice(-1);
+  if (!lastCharacter) return '는';
+
+  const digitSubjectParticles: Record<string, '은'|'는'> = {
+    '0': '은',
+    '1': '은',
+    '2': '는',
+    '3': '은',
+    '4': '는',
+    '5': '는',
+    '6': '은',
+    '7': '은',
+    '8': '은',
+    '9': '는',
+  };
+  if (digitSubjectParticles[lastCharacter]) {
+    return digitSubjectParticles[lastCharacter];
+  }
+
+  const codePoint = lastCharacter.charCodeAt(0);
+  if (codePoint < 0xac00 || codePoint > 0xd7a3) return '는';
+
+  return (codePoint - 0xac00) % 28 === 0 ? '는' : '은';
+};
 
 const FIELD_NOTE_EVIDENCE_ACTION_IDS = new Set<string>([
   'photos',

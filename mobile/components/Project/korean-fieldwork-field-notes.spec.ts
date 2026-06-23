@@ -11,6 +11,7 @@ import {
   getKoreanFieldworkFieldNoteGuidance,
   getKoreanFieldworkFieldNoteHistoryItems,
   getKoreanFieldworkFieldNotePresets,
+  getKoreanFieldworkFieldNoteReportPreview,
   getKoreanFieldworkDailyLogAppendUpdates,
   getKoreanFieldworkDailyLogForOperation,
   getKoreanFieldworkFieldNoteOperation,
@@ -158,6 +159,34 @@ describe('korean-fieldwork-field-notes', () => {
     expect(getKoreanFieldworkFieldNoteFollowUpActions({
       observation: '경계만 확인.',
     }, evidenceActions)).toEqual([]);
+  });
+
+  it('builds a report continuity preview from structured tablet notes', () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
+
+    expect(getKoreanFieldworkFieldNoteReportPreview({}, feature)).toBeUndefined();
+    expect(getKoreanFieldworkFieldNoteReportPreview({
+      observation: '바닥면에서 원형 윤곽을 확인.',
+      interpretation: '주공 가능성이 있다.',
+      nextWork: '사진 보강 후 단면 정리.',
+      evidenceNumbers: '사진 12, 도면 3',
+    }, feature)).toEqual({
+      title: '수혈 1 보고서 연결 문장',
+      sentence: '유구 수혈 1은 바닥면에서 원형 윤곽을 확인. 주공 가능성이 있다.',
+      supportingDetail: '근거 번호: 사진 12, 도면 3 · 다음 작업: 사진 보강 후 단면 정리.',
+      missingParts: [],
+    });
+    expect(getKoreanFieldworkFieldNoteReportPreview({
+      observation: '평면 형태 확인.',
+    }, feature)?.missingParts).toEqual([
+      '관찰과 구분한 해석',
+      '사진·도면·유물·시료 번호',
+      '다음 작업',
+    ]);
+    expect(getKoreanFieldworkFieldNoteReportPreview({
+      observation: '배수로로 이어지는 선형 흔적 확인.',
+    }, createDoc('feature-2', C.FEATURE, '유구 2'))?.sentence)
+      .toBe('유구 2는 배수로로 이어지는 선형 흔적 확인.');
   });
 
   it('extracts structured field note input from saved memo text', () => {

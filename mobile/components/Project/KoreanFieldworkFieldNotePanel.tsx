@@ -21,6 +21,7 @@ import {
   getKoreanFieldworkFieldNoteGuidance,
   getKoreanFieldworkFieldNoteHistoryItems,
   getKoreanFieldworkFieldNotePresets,
+  getKoreanFieldworkFieldNoteReportPreview,
   getKoreanFieldworkFieldNoteSummaries,
   KoreanFieldworkFieldNoteEvidenceAction,
   KoreanFieldworkFieldNoteFollowUpAction,
@@ -30,6 +31,7 @@ import {
   KoreanFieldworkFieldNoteInput,
   KoreanFieldworkFieldNoteMode,
   KoreanFieldworkFieldNotePreset,
+  KoreanFieldworkFieldNoteReportPreview,
   mergeKoreanFieldworkFieldNoteInput,
 } from './korean-fieldwork-field-notes';
 import {
@@ -117,6 +119,13 @@ const KoreanFieldworkFieldNotePanel: React.FC<
   );
   const guidanceItems = useMemo(
     () => getKoreanFieldworkFieldNoteGuidance(noteInput, selectedDocument),
+    [noteInput, selectedDocument]
+  );
+  const reportPreview = useMemo(
+    () => getKoreanFieldworkFieldNoteReportPreview(
+      noteInput,
+      selectedDocument
+    ),
     [noteInput, selectedDocument]
   );
   const evidenceActions = useMemo(
@@ -460,6 +469,10 @@ const KoreanFieldworkFieldNotePanel: React.FC<
         ))}
       </View>
 
+      {reportPreview && (
+        <ReportPreviewCard preview={reportPreview} />
+      )}
+
       {evidenceActions.length > 0 && (
         <View style={styles.evidenceActionPanel}>
           <View style={styles.evidenceActionHeader}>
@@ -719,6 +732,35 @@ const FollowUpActionButton: React.FC<{
       </Text>
     </View>
   </TouchableOpacity>
+);
+
+const ReportPreviewCard: React.FC<{
+  preview: KoreanFieldworkFieldNoteReportPreview;
+}> = ({ preview }) => (
+  <View style={styles.reportPreviewPanel} testID="fieldNoteReportPreview">
+    <View style={styles.reportPreviewHeader}>
+      <MaterialIcons name="article" size={16} color="#344054" />
+      <Text style={styles.reportPreviewTitle} numberOfLines={1}>
+        {preview.title}
+      </Text>
+    </View>
+    <Text style={styles.reportPreviewSentence} numberOfLines={4}>
+      {preview.sentence}
+    </Text>
+    {!!preview.supportingDetail && (
+      <Text style={styles.reportPreviewSupport} numberOfLines={2}>
+        {preview.supportingDetail}
+      </Text>
+    )}
+    {preview.missingParts.length > 0 && (
+      <View style={styles.reportPreviewMissingRow}>
+        <MaterialIcons name="playlist-add" size={14} color="#b54708" />
+        <Text style={styles.reportPreviewMissingText} numberOfLines={2}>
+          보완하면 좋은 항목: {preview.missingParts.join(', ')}
+        </Text>
+      </View>
+    )}
+  </View>
 );
 
 const HistoryRow: React.FC<{
@@ -1168,6 +1210,53 @@ const styles = StyleSheet.create({
     fontSize: 11,
     lineHeight: 15,
     marginTop: 1,
+  },
+  reportPreviewPanel: {
+    backgroundColor: '#fffbeb',
+    borderColor: '#fedf89',
+    borderRadius: 6,
+    borderWidth: 1,
+    marginTop: 10,
+    paddingHorizontal: 9,
+    paddingVertical: 8,
+  },
+  reportPreviewHeader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginBottom: 5,
+  },
+  reportPreviewTitle: {
+    color: '#344054',
+    flex: 1,
+    fontSize: 12,
+    fontWeight: '900',
+    marginLeft: 5,
+  },
+  reportPreviewSentence: {
+    color: '#101828',
+    fontSize: 12,
+    fontWeight: '700',
+    lineHeight: 17,
+  },
+  reportPreviewSupport: {
+    color: '#475467',
+    fontSize: 11,
+    fontWeight: '700',
+    lineHeight: 15,
+    marginTop: 5,
+  },
+  reportPreviewMissingRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginTop: 6,
+  },
+  reportPreviewMissingText: {
+    color: '#b54708',
+    flex: 1,
+    fontSize: 11,
+    fontWeight: '800',
+    lineHeight: 15,
+    marginLeft: 5,
   },
   evidenceActionPanel: {
     backgroundColor: '#ffffff',

@@ -181,7 +181,10 @@ defmodule FieldPublicationWeb.Presentation.PublicationSearch do
         _,
         %{assigns: %{url_parameters: url_parameters, publication: publication}} = socket
       ) do
-    url_parameters = Map.delete(url_parameters, :geometry_filter)
+    url_parameters =
+      url_parameters
+      |> Map.delete(:geometry_filter)
+      |> Map.put(:from, 0)
 
     {
       :noreply,
@@ -197,7 +200,10 @@ defmodule FieldPublicationWeb.Presentation.PublicationSearch do
         {:drawn_selection, values},
         %{assigns: %{url_parameters: url_parameters, publication: publication}} = socket
       ) do
-    url_parameters = Map.merge(url_parameters, drawn_selection_to_parameter(values))
+    url_parameters =
+      url_parameters
+      |> Map.merge(drawn_selection_to_parameter(values))
+      |> Map.put(:from, 0)
 
     {
       :noreply,

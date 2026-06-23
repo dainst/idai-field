@@ -1207,7 +1207,7 @@ const WorkflowChecklistPanel: React.FC<{
     >
       <View style={styles.workflowChecklistHeader}>
         <MaterialIcons name="fact-check" size={16} color="#344054" />
-        <Text style={styles.workflowChecklistTitle}>조사 과정표</Text>
+        <Text style={styles.workflowChecklistTitle}>조사 흐름</Text>
         <Text style={styles.workflowChecklistCount}>
           {activeOptionCount}/{options.length}
         </Text>

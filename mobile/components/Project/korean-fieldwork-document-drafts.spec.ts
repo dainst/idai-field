@@ -106,6 +106,7 @@ describe('Korean fieldwork document drafts', () => {
         liesWithin: ['trench-1'],
       },
       featureType: 'pit',
+      featureInterpretationType: ['pitFeature'],
       featureRecordingStatus: FEATURE_RECORDING_STATUS_CANDIDATE,
       featureInvestigationChecklist: [],
     });

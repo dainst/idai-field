@@ -171,7 +171,7 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
       </Row>
       {isFeatureWorkflowVisible && (
         <View style={styles.panel}>
-          <Text style={styles.fieldLabel}>조사 과정표</Text>
+          <Text style={styles.fieldLabel}>조사 흐름</Text>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}

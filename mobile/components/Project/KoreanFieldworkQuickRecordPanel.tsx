@@ -13,7 +13,10 @@ import {
 } from 'react-native';
 import {
   FEATURE_STATUS_QUICK_OPTIONS,
+  FEATURE_PERIOD_QUICK_OPTIONS,
+  FEATURE_TYPE_QUICK_OPTIONS,
   FIELDWORK_QUICK_FIELDS,
+  getKoreanFieldworkFeatureTypeUpdates,
   getKoreanFieldworkChecklistQuickOptions,
   getKoreanFieldworkQuickRecordAvailability,
   getKoreanFieldworkQuickPresetUpdates,
@@ -63,16 +66,7 @@ const KoreanFieldworkQuickRecordPanel: React.FC<KoreanFieldworkQuickRecordPanelP
 
   if (!hasKoreanFieldworkQuickRecordActions(availability)) return null;
 
-  const applyPreset = (preset: KoreanFieldworkQuickPreset) => {
-    const updates = getKoreanFieldworkQuickPresetUpdates(
-      resource,
-      availability,
-      preset.id,
-      investigationModeId
-    );
-
-    if (Object.keys(updates).length === 0) return;
-
+  const applyUpdates = (updates: Record<string, unknown>) => {
     if (onUpdateResourceFields) {
       onUpdateResourceFields(updates);
       return;
@@ -83,12 +77,25 @@ const KoreanFieldworkQuickRecordPanel: React.FC<KoreanFieldworkQuickRecordPanelP
     );
   };
 
+  const applyPreset = (preset: KoreanFieldworkQuickPreset) => {
+    const updates = getKoreanFieldworkQuickPresetUpdates(
+      resource,
+      availability,
+      preset.id,
+      investigationModeId
+    );
+
+    if (Object.keys(updates).length === 0) return;
+
+    applyUpdates(updates);
+  };
+
   return (
     <View style={styles.container} testID="koreanFieldworkQuickRecordPanel">
       <View style={styles.headerRow}>
         <View style={styles.headerTitleRow}>
           <MaterialIcons name="fact-check" size={18} color="#175cd3" />
-          <Text style={styles.title}>현장 빠른 입력</Text>
+          <Text style={styles.title}>필요할 때 입력</Text>
         </View>
       </View>
 
@@ -108,6 +115,33 @@ const KoreanFieldworkQuickRecordPanel: React.FC<KoreanFieldworkQuickRecordPanelP
         </ScrollView>
       )}
 
+      {availability.featureType && (
+        <QuickSection title="유구 성격">
+          <OptionRow
+            options={FEATURE_TYPE_QUICK_OPTIONS}
+            activeValues={getSingleValue(resource, FIELDWORK_QUICK_FIELDS.featureType)}
+            onPress={(value) => applyUpdates(
+              getKoreanFieldworkFeatureTypeUpdates(resource, value)
+            )}
+            singleChoice
+          />
+        </QuickSection>
+      )}
+
+      {availability.period && (
+        <QuickSection title="시기">
+          <OptionRow
+            options={FEATURE_PERIOD_QUICK_OPTIONS}
+            activeValues={getSingleValue(resource, FIELDWORK_QUICK_FIELDS.period)}
+            onPress={(value) => onUpdateResourceField(
+              FIELDWORK_QUICK_FIELDS.period,
+              value
+            )}
+            singleChoice
+          />
+        </QuickSection>
+      )}
+
       {availability.featureStatus && (
         <QuickSection title="유구 진행">
           <OptionRow
@@ -123,7 +157,7 @@ const KoreanFieldworkQuickRecordPanel: React.FC<KoreanFieldworkQuickRecordPanelP
       )}
 
       {availability.checklist && (
-        <QuickSection title="조사 과정표">
+        <QuickSection title="조사 흐름">
           <OptionRow
             options={checklistOptions}
             activeValues={getStringArrayFieldValues(
@@ -143,7 +177,7 @@ const KoreanFieldworkQuickRecordPanel: React.FC<KoreanFieldworkQuickRecordPanelP
       )}
 
       {availability.quality && (
-        <QuickSection title="기록 메모">
+        <QuickSection title="기록 구분">
           <OptionRow
             options={QUALITY_QUICK_OPTIONS}
             activeValues={getStringArrayFieldValues(

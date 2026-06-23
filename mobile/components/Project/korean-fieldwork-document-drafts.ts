@@ -18,7 +18,10 @@ import {
   SURVEY_BOUNDARY_TYPE_DEFAULT,
 } from './Map/korean-fieldwork-drafts';
 import { KOREAN_FIELDWORK_CATEGORIES } from './korean-fieldwork-categories';
-import { getKoreanFieldworkFeatureTypeOption } from './korean-fieldwork-feature-types';
+import {
+  getKoreanFieldworkFeatureInterpretationTypeValue,
+  getKoreanFieldworkFeatureTypeOption,
+} from './korean-fieldwork-feature-types';
 
 const C = KOREAN_FIELDWORK_CATEGORIES;
 
@@ -65,9 +68,16 @@ export const createKoreanFieldworkDraftResource = (
   };
 
   if (isFeatureWorkflowCategory(categoryName)) {
+    const featureInterpretationTypeValue = getKoreanFieldworkFeatureInterpretationTypeValue(
+      featureTypeOption?.value
+    );
+
     return {
       ...resource,
       ...(featureTypeOption ? { featureType: featureTypeOption.value } : {}),
+      ...(featureInterpretationTypeValue
+        ? { featureInterpretationType: [featureInterpretationTypeValue] }
+        : {}),
       featureRecordingStatus: FEATURE_RECORDING_STATUS_CANDIDATE,
       featureGeometryEditStatus: FEATURE_GEOMETRY_EDIT_STATUS_ROUGH_SKETCH,
       featureGeometryRevisionHistory: FEATURE_GEOMETRY_REVISION_HISTORY_DEFAULT,

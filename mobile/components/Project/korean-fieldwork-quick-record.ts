@@ -6,6 +6,11 @@ import {
   FEATURE_WORKFLOW_CATEGORIES,
   KOREAN_FIELDWORK_CATEGORIES,
 } from './korean-fieldwork-categories';
+import {
+  getKoreanFieldworkFeatureInterpretationTypeValue,
+  KOREAN_FIELDWORK_FEATURE_TYPE_INTERPRETATION_VALUES,
+  KOREAN_FIELDWORK_FEATURE_TYPE_OPTIONS,
+} from './korean-fieldwork-feature-types';
 import { KoreanFieldworkInvestigationModeId } from './korean-fieldwork-investigation-mode';
 
 export interface KoreanFieldworkQuickOption {
@@ -26,7 +31,10 @@ export type KoreanFieldworkQuickPresetId =
 
 export const FIELDWORK_QUICK_FIELDS = {
   checklist: 'featureInvestigationChecklist',
+  featureInterpretationType: 'featureInterpretationType',
   featureStatus: 'featureRecordingStatus',
+  featureType: 'featureType',
+  period: 'period',
   quality: 'fieldRecordQuality',
   verification: 'verificationState',
   timing: 'recordCreationTiming',
@@ -85,6 +93,26 @@ export const TIMING_QUICK_OPTIONS: readonly KoreanFieldworkQuickOption[] = [
   { value: 'duringFieldwork', label: '추가 기록' },
 ];
 
+export const FEATURE_TYPE_QUICK_OPTIONS: readonly KoreanFieldworkQuickOption[] =
+  KOREAN_FIELDWORK_FEATURE_TYPE_OPTIONS.map((option) => ({
+    value: option.value,
+    label: option.label,
+  }));
+
+export const FEATURE_PERIOD_QUICK_OPTIONS: readonly KoreanFieldworkQuickOption[] = [
+  { value: 'undated', label: '시기미상' },
+  { value: 'paleolithic', label: '구석기' },
+  { value: 'neolithic', label: '신석기' },
+  { value: 'bronzeAge', label: '청동기' },
+  { value: 'earlyIronAge', label: '초기철기' },
+  { value: 'protoThreeKingdoms', label: '원삼국' },
+  { value: 'threeKingdoms', label: '삼국' },
+  { value: 'unifiedSilla', label: '통일신라' },
+  { value: 'goryeo', label: '고려' },
+  { value: 'joseon', label: '조선' },
+  { value: 'modernContemporary', label: '근현대' },
+];
+
 export const FEATURE_WORKFLOW_QUICK_PRESETS: readonly KoreanFieldworkQuickPreset[] = [
   {
     id: 'startFeatureInvestigation',
@@ -140,7 +168,9 @@ const FIELDWORK_RECORD_CATEGORIES = new Set<string>([
 
 export interface KoreanFieldworkQuickRecordAvailability {
   checklist: boolean;
+  featureType: boolean;
   featureStatus: boolean;
+  period: boolean;
   quality: boolean;
   verification: boolean;
   timing: boolean;
@@ -159,8 +189,12 @@ export const getKoreanFieldworkQuickRecordAvailability = (
       investigationModeId
     )
       && fieldNames.has(FIELDWORK_QUICK_FIELDS.checklist),
+    featureType: resource.category === C.FEATURE
+      && fieldNames.has(FIELDWORK_QUICK_FIELDS.featureInterpretationType),
     featureStatus: FEATURE_CATEGORIES.has(resource.category)
       && fieldNames.has(FIELDWORK_QUICK_FIELDS.featureStatus),
+    period: resource.category === C.FEATURE
+      && fieldNames.has(FIELDWORK_QUICK_FIELDS.period),
     quality: FIELDWORK_RECORD_CATEGORIES.has(resource.category)
       && fieldNames.has(FIELDWORK_QUICK_FIELDS.quality),
     verification: false,
@@ -173,7 +207,9 @@ export const hasKoreanFieldworkQuickRecordActions = (
   availability: KoreanFieldworkQuickRecordAvailability
 ): boolean =>
   availability.checklist
+  || availability.featureType
   || availability.featureStatus
+  || availability.period
   || availability.quality
   || availability.timing;
 
@@ -255,6 +291,28 @@ export const toggleStringArrayFieldValue = (
   return values.includes(value)
     ? values.filter((candidate) => candidate !== value)
     : [...values, value];
+};
+
+export const getKoreanFieldworkFeatureTypeUpdates = (
+  resource: NewResource,
+  value: string
+): Record<string, unknown> => {
+  const featureInterpretationTypeValue =
+    getKoreanFieldworkFeatureInterpretationTypeValue(value);
+  const currentValues = getStringArrayFieldValues(
+    resource,
+    FIELDWORK_QUICK_FIELDS.featureInterpretationType
+  ).filter((candidate) =>
+    !KOREAN_FIELDWORK_FEATURE_TYPE_INTERPRETATION_VALUES.includes(candidate)
+  );
+
+  return {
+    [FIELDWORK_QUICK_FIELDS.featureType]: value,
+    [FIELDWORK_QUICK_FIELDS.featureInterpretationType]:
+      featureInterpretationTypeValue
+        ? [...currentValues, featureInterpretationTypeValue]
+        : currentValues,
+  };
 };
 
 const getStartFeatureInvestigationUpdates = (

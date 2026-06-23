@@ -88,6 +88,7 @@ describe('Korean fieldwork map drafts', () => {
     expect(draft.resource).toMatchObject({
       identifier: '구상유구-1700000000000',
       featureType: 'ditch',
+      featureInterpretationType: ['ditchOrGully'],
     });
   });
 

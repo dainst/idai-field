@@ -47,12 +47,48 @@ describe('DocumentAddModal', () => {
 
     fireEvent.press(getByTestId(`addCategory_${C.FEATURE}`));
 
-    expect(getByText('유구 성격 선택')).toBeTruthy();
+    expect(getByText('유구 추가')).toBeTruthy();
+    expect(getByText('유구로 바로 만들기')).toBeTruthy();
 
     fireEvent.press(getByTestId('featureType_pit'));
 
     expect(onAddCategory).toHaveBeenCalledWith(C.FEATURE, parentDoc, {
       featureType: 'pit',
+    });
+  });
+
+  it('can create a feature without choosing a detailed type first', () => {
+    const onAddCategory = jest.fn();
+    const parentDoc = {
+      resource: {
+        id: 'trench-1',
+        identifier: 'T1',
+        category: C.TRENCH,
+        relations: {},
+      },
+    } as any;
+
+    const { getByTestId } = render(
+      <LabelsContext.Provider value={{ labels: new Labels(() => ['ko']) }}>
+        <ConfigurationContext.Provider value={createConfig([
+          createCategory(C.TRENCH),
+          createCategory(C.FEATURE),
+        ])}
+        >
+          <DocumentAddModal
+            onAddCategory={onAddCategory}
+            onClose={jest.fn()}
+            parentDoc={parentDoc}
+          />
+        </ConfigurationContext.Provider>
+      </LabelsContext.Provider>
+    );
+
+    fireEvent.press(getByTestId(`addCategory_${C.FEATURE}`));
+    fireEvent.press(getByTestId('featureType_startUnknown'));
+
+    expect(onAddCategory).toHaveBeenCalledWith(C.FEATURE, parentDoc, {
+      featureType: 'unknown',
     });
   });
 

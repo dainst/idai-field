@@ -35,10 +35,10 @@ describe('KoreanFieldworkQuickRecordPanel', () => {
       />
     );
 
-    expect(getByText('현장 빠른 입력')).toBeTruthy();
+    expect(getByText('필요할 때 입력')).toBeTruthy();
     expect(getByText('유구 진행')).toBeTruthy();
-    expect(getByText('조사 과정표')).toBeTruthy();
-    expect(getByText('기록 메모')).toBeTruthy();
+    expect(getByText('조사 흐름')).toBeTruthy();
+    expect(getByText('기록 구분')).toBeTruthy();
 
     fireEvent.press(getByTestId('quickRecordOption_investigating'));
     fireEvent.press(getByTestId('quickRecordOption_completionPhotoTaken'));
@@ -58,6 +58,54 @@ describe('KoreanFieldworkQuickRecordPanel', () => {
       3,
       FIELDWORK_QUICK_FIELDS.quality,
       ['immediateRecording']
+    );
+  });
+
+  it('updates feature type and desktop interpretation fields together', () => {
+    const handleUpdateResourceFields = jest.fn();
+    const { getByTestId, getByText } = render(
+      <KoreanFieldworkQuickRecordPanel
+        category={createCategoryForm([
+          FIELDWORK_QUICK_FIELDS.featureInterpretationType,
+        ])}
+        resource={createResource(C.FEATURE, {
+          featureType: 'unknown',
+          featureInterpretationType: ['pitFeature', 'other'],
+        })}
+        onUpdateResourceField={jest.fn()}
+        onUpdateResourceFields={handleUpdateResourceFields}
+      />
+    );
+
+    expect(getByText('유구 성격')).toBeTruthy();
+
+    fireEvent.press(getByTestId('quickRecordOption_posthole'));
+
+    expect(handleUpdateResourceFields).toHaveBeenCalledWith({
+      featureType: 'posthole',
+      featureInterpretationType: ['other', 'posthole'],
+    });
+  });
+
+  it('updates the feature period from the optional quick setup', () => {
+    const handleUpdateResourceField = jest.fn();
+    const { getByTestId, getByText } = render(
+      <KoreanFieldworkQuickRecordPanel
+        category={createCategoryForm([
+          FIELDWORK_QUICK_FIELDS.period,
+        ])}
+        resource={createResource(C.FEATURE, { period: 'undated' })}
+        onUpdateResourceField={handleUpdateResourceField}
+      />
+    );
+
+    expect(getByText('시기')).toBeTruthy();
+
+    fireEvent.press(getByTestId('quickRecordOption_joseon'));
+
+    expect(handleUpdateResourceField).toHaveBeenCalledWith(
+      FIELDWORK_QUICK_FIELDS.period,
+      'joseon'
     );
   });
 

@@ -5,6 +5,7 @@ import {
 import {
   FIELDWORK_QUICK_FIELDS,
   getKoreanFieldworkChecklistQuickOptions,
+  getKoreanFieldworkFeatureTypeUpdates,
   getKoreanFieldworkQuickRecordAvailability,
   getKoreanFieldworkQuickPresetUpdates,
   getStringArrayFieldValues,
@@ -32,7 +33,9 @@ describe('Korean fieldwork quick record helpers', () => {
 
     expect(availability).toEqual({
       checklist: true,
+      featureType: false,
       featureStatus: false,
+      period: false,
       quality: true,
       verification: false,
       timing: true,
@@ -48,7 +51,9 @@ describe('Korean fieldwork quick record helpers', () => {
 
     expect(availability).toEqual({
       checklist: false,
+      featureType: false,
       featureStatus: false,
+      period: false,
       quality: true,
       verification: false,
       timing: false,
@@ -92,7 +97,9 @@ describe('Korean fieldwork quick record helpers', () => {
 
     expect(availability).toEqual({
       checklist: false,
+      featureType: false,
       featureStatus: true,
+      period: false,
       quality: false,
       verification: false,
       timing: false,
@@ -131,6 +138,23 @@ describe('Korean fieldwork quick record helpers', () => {
     ]);
   });
 
+  it('builds feature type updates without overwriting unrelated interpretation values', () => {
+    const resource = createResource(C.FEATURE, {
+      featureType: 'unknown',
+      featureInterpretationType: ['pitFeature', 'other'],
+    });
+
+    expect(getKoreanFieldworkFeatureTypeUpdates(resource, 'posthole')).toEqual({
+      featureType: 'posthole',
+      featureInterpretationType: ['other', 'posthole'],
+    });
+
+    expect(getKoreanFieldworkFeatureTypeUpdates(resource, 'unknown')).toEqual({
+      featureType: 'unknown',
+      featureInterpretationType: ['other'],
+    });
+  });
+
   it('builds safe start and closeout preset updates from available fields', () => {
     const resource = createResource(C.FEATURE, {
       featureInvestigationChecklist: ['preInvestigationPhotoTaken'],
@@ -140,7 +164,9 @@ describe('Korean fieldwork quick record helpers', () => {
     });
     const availability = {
       checklist: true,
+      featureType: false,
       featureStatus: true,
+      period: false,
       quality: true,
       verification: false,
       timing: true,
@@ -216,7 +242,9 @@ describe('Korean fieldwork quick record helpers', () => {
     });
     const availability = {
       checklist: true,
+      featureType: false,
       featureStatus: true,
+      period: false,
       quality: true,
       verification: false,
       timing: true,

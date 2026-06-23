@@ -3,7 +3,10 @@ import {
   NewDocument,
 } from 'idai-field-core';
 import { KOREAN_FIELDWORK_CATEGORIES } from '../korean-fieldwork-categories';
-import { getKoreanFieldworkFeatureTypeOption } from '../korean-fieldwork-feature-types';
+import {
+  getKoreanFieldworkFeatureInterpretationTypeValue,
+  getKoreanFieldworkFeatureTypeOption,
+} from '../korean-fieldwork-feature-types';
 
 export const LAYER_SEQUENCE_MEANING_DEFAULT = 'latestToEarliest';
 export const SOIL_COLOR_ASSIST_STATUS_DEFAULT = 'notRun';
@@ -84,6 +87,8 @@ export const createFeatureCandidateDraft = (
   featureType = 'unknown'
 ): NewDocument => {
   const featureTypeOption = getKoreanFieldworkFeatureTypeOption(featureType);
+  const featureInterpretationTypeValue =
+    getKoreanFieldworkFeatureInterpretationTypeValue(featureTypeOption?.value);
 
   return {
     resource: {
@@ -95,6 +100,9 @@ export const createFeatureCandidateDraft = (
         coordinates: [location.x, location.y],
       },
       ...(featureTypeOption ? { featureType: featureTypeOption.value } : {}),
+      ...(featureInterpretationTypeValue
+        ? { featureInterpretationType: [featureInterpretationTypeValue] }
+        : {}),
       featureRecordingStatus: FEATURE_RECORDING_STATUS_CANDIDATE,
       geometrySource: GEOMETRY_SOURCE_GPS_APPROXIMATE,
       geometryConfidence: GEOMETRY_CONFIDENCE_ROUGH,

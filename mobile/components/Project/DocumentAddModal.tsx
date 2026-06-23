@@ -129,9 +129,29 @@ const DocumentAddModal: React.FC<AddModalProps> = ({
             상위 기록: {parentDoc.resource.identifier}
           </Text>
           <Text style={styles.parentMeta}>
-            먼저 유구 성격을 고르세요. 확실하지 않으면 미정으로 시작해도 됩니다.
+            성격이 보이면 고르고, 애매하면 바로 유구로 남깁니다.
           </Text>
         </View>
+        <TouchableOpacity
+          activeOpacity={0.86}
+          onPress={() => onAddCategory(
+            KOREAN_FIELDWORK_CATEGORIES.FEATURE,
+            parentDoc,
+            { featureType: 'unknown' }
+          )}
+          style={styles.startUnknownFeature}
+          testID="featureType_startUnknown"
+        >
+          <Ionicons name="add-circle-outline" size={22} color="#027a48" />
+          <View style={styles.featureTypeText}>
+            <Text style={styles.featureTypeLabel} numberOfLines={1}>
+              유구로 바로 만들기
+            </Text>
+            <Text style={styles.featureTypeDescription} numberOfLines={2}>
+              시기와 성격은 조사하면서 다시 고칠 수 있습니다.
+            </Text>
+          </View>
+        </TouchableOpacity>
         <View style={styles.featureTypeGrid}>
           {KOREAN_FIELDWORK_FEATURE_TYPE_OPTIONS.map((option) => (
             <TouchableOpacity
@@ -183,7 +203,7 @@ const DocumentAddModal: React.FC<AddModalProps> = ({
               <>
                 <CategoryIcon category={parentCategory} size={25} />
                 <Heading style={styles.heading}>
-                  {isChoosingFeatureType ? '유구 성격 선택' : '기록 종류 선택'}
+                  {isChoosingFeatureType ? '유구 추가' : '기록 종류 선택'}
                 </Heading>
               </>
             }
@@ -368,6 +388,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 9,
     width: '49%',
+  },
+  startUnknownFeature: {
+    alignItems: 'center',
+    backgroundColor: '#ecfdf3',
+    borderColor: '#abefc6',
+    borderRadius: 6,
+    borderWidth: 1,
+    flexDirection: 'row',
+    marginBottom: 8,
+    minHeight: 66,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
   },
   featureTypeText: {
     flex: 1,

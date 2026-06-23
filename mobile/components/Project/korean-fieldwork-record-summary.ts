@@ -1,6 +1,9 @@
 import { Document } from 'idai-field-core';
 import { KOREAN_FIELDWORK_CATEGORIES } from './korean-fieldwork-categories';
-import { getKoreanFieldworkFeatureTypeLabel } from './korean-fieldwork-feature-types';
+import {
+  getKoreanFieldworkFeatureTypeLabel,
+  getKoreanFieldworkFeatureTypeLabelFromInterpretationType,
+} from './korean-fieldwork-feature-types';
 
 export type KoreanFieldworkStatusTone =
   'neutral'
@@ -116,7 +119,10 @@ export const getKoreanFieldworkRecordStatusChips = (
 ): KoreanFieldworkStatusChip[] => {
   const resource = document.resource as any;
   const chips: KoreanFieldworkStatusChip[] = [];
-  const featureTypeLabel = getKoreanFieldworkFeatureTypeLabel(resource.featureType);
+  const featureTypeLabel = getKoreanFieldworkFeatureTypeLabel(resource.featureType)
+    ?? getKoreanFieldworkFeatureTypeLabelFromInterpretationType(
+      resource.featureInterpretationType
+    );
 
   if (featureTypeLabel) chips.push({ label: featureTypeLabel, tone: 'info' });
 
@@ -126,7 +132,7 @@ export const getKoreanFieldworkRecordStatusChips = (
 
   if (Array.isArray(resource.fieldRecordQuality)) {
     chips.push(resource.fieldRecordQuality.length > 0
-      ? { label: `기록 메모 ${resource.fieldRecordQuality.length}`, tone: 'success' }
+      ? { label: `기록 구분 ${resource.fieldRecordQuality.length}`, tone: 'success' }
       : {
         label: '기록 보완',
         tone: QUALITY_TRACKED_CATEGORIES.has(resource.category) ? 'warning' : 'neutral',

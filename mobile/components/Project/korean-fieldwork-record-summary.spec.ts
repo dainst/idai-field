@@ -96,8 +96,19 @@ describe('Korean fieldwork record summary', () => {
     });
 
     expect(getKoreanFieldworkRecordStatusChips(trench)).toContainEqual({
-      label: '기록 메모 2',
+      label: '기록 구분 2',
       tone: 'success',
+    });
+  });
+
+  it('shows feature type chips from desktop interpretation values', () => {
+    const feature = createDoc('feature-1', C.FEATURE, '유구 1', {}, {
+      featureInterpretationType: ['other', 'pitFeature'],
+    });
+
+    expect(getKoreanFieldworkRecordStatusChips(feature)).toContainEqual({
+      label: '수혈',
+      tone: 'info',
     });
   });
 });

@@ -9,6 +9,7 @@ import {
   getKoreanFieldworkQuickPresetUpdates,
   getStringArrayFieldValues,
   hasKoreanFieldworkQuickRecordActions,
+  isKoreanFieldworkChecklistRecord,
   toggleStringArrayFieldValue,
 } from './korean-fieldwork-quick-record';
 import { KOREAN_FIELDWORK_CATEGORIES } from './korean-fieldwork-categories';
@@ -62,6 +63,25 @@ describe('Korean fieldwork quick record helpers', () => {
 
     expect(availability.checklist).toBe(false);
     expect(hasKoreanFieldworkQuickRecordActions(availability)).toBe(false);
+  });
+
+  it('treats trenches as checklist records only in trial trench mode', () => {
+    const category = createCategoryForm([
+      FIELDWORK_QUICK_FIELDS.checklist,
+      FIELDWORK_QUICK_FIELDS.timing,
+    ]);
+
+    expect(isKoreanFieldworkChecklistRecord(C.TRENCH)).toBe(false);
+    expect(isKoreanFieldworkChecklistRecord(C.TRENCH, 'trialTrench')).toBe(true);
+    expect(getKoreanFieldworkQuickRecordAvailability(
+      category,
+      createResource(C.TRENCH),
+      'trialTrench'
+    )).toMatchObject({
+      checklist: true,
+      featureStatus: false,
+      timing: true,
+    });
   });
 
   it('shows feature status quick actions only when the form exposes the status field', () => {

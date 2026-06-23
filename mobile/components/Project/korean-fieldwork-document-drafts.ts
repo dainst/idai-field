@@ -79,6 +79,7 @@ export const createKoreanFieldworkDraftResource = (
   if (categoryName === C.TRENCH) {
     return {
       ...resource,
+      featureInvestigationChecklist: [],
       recordCreationTiming: RECORD_CREATION_TIMING_DURING_FIELDWORK,
       fieldRecordQuality: [],
     };

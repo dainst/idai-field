@@ -462,6 +462,9 @@
     "Trench": {
       "label": "Trench/investigation trench",
       "fields": {
+        "featureInvestigationChecklist": {
+          "label": "Investigation workflow checklist"
+        },
         "fieldRecordQuality": {
           "label": "Field record quality"
         },

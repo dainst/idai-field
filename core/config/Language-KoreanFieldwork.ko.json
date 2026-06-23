@@ -462,6 +462,9 @@
     "Trench": {
       "label": "트렌치",
       "fields": {
+        "featureInvestigationChecklist": {
+          "label": "조사 과정표"
+        },
         "fieldRecordQuality": {
           "label": "기록 확인"
         },
@@ -995,7 +998,7 @@
       }
     },
     "FeatureSegment": {
-      "label": "피트·유구 구간",
+      "label": "피트",
       "fields": {
         "featurePackage": {
           "label": "유적·유구 패키지"

@@ -16,9 +16,11 @@ import Button from '@/components/common/Button';
 import DocumentButton from '@/components/common/DocumentButton';
 import Row from '@/components/common/Row';
 import { colors } from '@/utils/colors';
-import { FEATURE_WORKFLOW_CATEGORIES } from '../korean-fieldwork-categories';
 import { KoreanFieldworkInvestigationModeId } from '../korean-fieldwork-investigation-mode';
-import { getKoreanFieldworkChecklistQuickOptions } from '../korean-fieldwork-quick-record';
+import {
+  getKoreanFieldworkChecklistQuickOptions,
+  isKoreanFieldworkChecklistRecord,
+} from '../korean-fieldwork-quick-record';
 
 interface MapBottomSheetProps {
   document: Document | undefined;
@@ -86,7 +88,10 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
     ? (document.resource as any).featureInvestigationChecklist
     : [];
   const checkedFeatureChecklistValues = new Set(featureChecklistValues);
-  const isFeatureWorkflowVisible = FEATURE_WORKFLOW_CATEGORIES.includes(document.resource.category);
+  const isFeatureWorkflowVisible = isKoreanFieldworkChecklistRecord(
+    document.resource.category,
+    investigationModeId
+  );
   const geometryEditStatus =
     (document.resource as any).featureGeometryEditStatus ?? 'roughSketch';
 

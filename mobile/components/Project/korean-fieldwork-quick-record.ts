@@ -163,12 +163,16 @@ export interface KoreanFieldworkQuickRecordAvailability {
 
 export const getKoreanFieldworkQuickRecordAvailability = (
   category: CategoryForm | undefined,
-  resource: NewResource
+  resource: NewResource,
+  investigationModeId?: KoreanFieldworkInvestigationModeId
 ): KoreanFieldworkQuickRecordAvailability => {
   const fieldNames = getCategoryFieldNames(category);
 
   return {
-    checklist: FEATURE_CATEGORIES.has(resource.category)
+    checklist: isKoreanFieldworkChecklistRecord(
+      resource.category,
+      investigationModeId
+    )
       && fieldNames.has(FIELDWORK_QUICK_FIELDS.checklist),
     featureStatus: FEATURE_CATEGORIES.has(resource.category)
       && fieldNames.has(FIELDWORK_QUICK_FIELDS.featureStatus),
@@ -210,6 +214,16 @@ export const getKoreanFieldworkChecklistQuickOptions = (
       return FEATURE_CHECKLIST_QUICK_OPTIONS;
   }
 };
+
+export const isKoreanFieldworkChecklistRecord = (
+  categoryName: string,
+  investigationModeId?: KoreanFieldworkInvestigationModeId
+): boolean =>
+  FEATURE_CATEGORIES.has(categoryName)
+  || (
+    categoryName === C.TRENCH
+    && investigationModeId === 'trialTrench'
+  );
 
 export const getKoreanFieldworkQuickPresetUpdates = (
   resource: NewResource,

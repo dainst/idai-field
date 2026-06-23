@@ -175,8 +175,12 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('checkboxes');
         expect(template.configuration.forms['Trench:default'].fields.verificationState.inputType)
             .toBe('dropdown');
+        expect(template.configuration.forms['Trench:default'].fields.featureInvestigationChecklist.inputType)
+            .toBe('checkboxes');
         expect(template.configuration.forms['Trench:default'].valuelists.fieldRecordQuality)
             .toBe('KoreanFieldwork-fieldRecordQuality');
+        expect(template.configuration.forms['Trench:default'].valuelists.featureInvestigationChecklist)
+            .toBe('KoreanFieldwork-featureInvestigationChecklist');
         expect(template.configuration.forms['Trench:default'].groups
             .map((group: any) => group.name))
             .toContain('koreanFieldwork');
@@ -302,7 +306,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-featureInterpretationType'].values.pitFeature.label)
             .toBe('수혈유구');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-featureRecordingStatus'].values.candidate.label)
-            .toBe('후보');
+            .toBe('검출');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-featureInvestigationChecklist']
             .values.preInvestigationPhotoTaken.label).toBe('조사 전 사진');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-featureInvestigationChecklist']
@@ -316,8 +320,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelistLanguages.projects.en['KoreanFieldwork-geometrySource'].values.aerialLayerTrace.label)
             .toBe('Aerial layer trace');
         expect(languages.ko.categories.Feature.label).toBe('유구');
-        expect(languages.ko.categories.FeatureGroup.label).toBe('유구군');
-        expect(languages.ko.categories.FeatureSegment.label).toBe('피트·유구 구간');
+        expect(languages.ko.categories.FeatureGroup.label).toBe('유구 묶음');
+        expect(languages.ko.categories.FeatureSegment.label).toBe('피트');
         expect(languages.ko.categories.Place.label).toBe('유적/지점');
         expect(languages.ko.categories.Trench.label).toBe('트렌치');
         expect(languages.ko.categories.FieldRecordQualityReview.label).toBe('기록 보완 점검');
@@ -4474,7 +4478,7 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Feature-specific narrative');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-fieldRecordQuality']
             .values.fieldToReportContinuity.label)
-            .toBe('보고서 연속성');
+            .toBe('보고서 정리 메모');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-excavationControlSafety']
             .values.machineStrippingDepthControlled.label)
             .toBe('Machine stripping depth controlled');

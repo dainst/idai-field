@@ -14,11 +14,13 @@ import {
   KoreanFieldworkRecordActionItem,
 } from './korean-fieldwork-record-actions';
 import { KoreanFieldworkStatusTone } from './korean-fieldwork-record-summary';
+import { KoreanFieldworkInvestigationModeId } from './korean-fieldwork-investigation-mode';
 
 interface KoreanFieldworkRecordActionPanelProps {
   document: Document;
   documents: Document[];
   allowedAddCategoryNames?: string[];
+  investigationModeId?: KoreanFieldworkInvestigationModeId;
   onAddDocumentOfCategory: (parentDoc: Document, categoryName: string) => void;
   onOpenDocument: (document: Document) => void;
 }
@@ -27,6 +29,7 @@ const KoreanFieldworkRecordActionPanel: React.FC<KoreanFieldworkRecordActionPane
   document,
   documents,
   allowedAddCategoryNames = [],
+  investigationModeId,
   onAddDocumentOfCategory,
   onOpenDocument,
 }) => {
@@ -34,9 +37,10 @@ const KoreanFieldworkRecordActionPanel: React.FC<KoreanFieldworkRecordActionPane
     () => getKoreanFieldworkRecordActionSummary(
       document,
       documents,
-      allowedAddCategoryNames
+      allowedAddCategoryNames,
+      investigationModeId
     ),
-    [allowedAddCategoryNames, document, documents]
+    [allowedAddCategoryNames, document, documents, investigationModeId]
   );
 
   if (!summary.isTracked && summary.actions.length === 0) return null;

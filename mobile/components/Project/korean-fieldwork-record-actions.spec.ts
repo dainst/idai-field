@@ -76,12 +76,33 @@ describe('Korean fieldwork record actions', () => {
     );
 
     expect(summary.checklistDone).toBe(2);
-    expect(summary.checklistTotal).toBe(8);
+    expect(summary.checklistTotal).toBe(10);
     expect(summary.actions.map((action) => action.id).slice(0, 3)).toEqual([
       'issue-feature-complete-photo-feature-1',
       'create-FeatureSegment',
       'create-photos',
     ]);
+  });
+
+  it('uses trial trench checklist progress for trench records in trial mode', () => {
+    const trench = createDoc('trench-1', C.TRENCH, '1호 트렌치', {}, {
+      featureInvestigationChecklist: [
+        'trenchSoilCleaned',
+        'trenchFeatureChecked',
+      ],
+      fieldRecordQuality: ['immediateRecording'],
+      recordCreationTiming: 'duringFieldwork',
+    });
+
+    const summary = getKoreanFieldworkRecordActionSummary(
+      trench,
+      [trench],
+      [C.FEATURE, C.PHOTO],
+      'trialTrench'
+    );
+
+    expect(summary.checklistDone).toBe(2);
+    expect(summary.checklistTotal).toBe(9);
   });
 
   it('opens existing evidence when there is no missing evidence action to create', () => {

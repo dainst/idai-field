@@ -19,11 +19,13 @@ import {
   getKoreanFieldworkReportIdentifier,
 } from './korean-fieldwork-identifier-revision';
 import { formatKoreanFieldworkParentPath } from './korean-fieldwork-record-summary';
+import { KoreanFieldworkInvestigationModeId } from './korean-fieldwork-investigation-mode';
 
 interface KoreanFieldworkSelectedRecordWorkbenchProps {
   document: Document;
   documents: Document[];
   allowedAddCategoryNames: string[];
+  investigationModeId?: KoreanFieldworkInvestigationModeId;
   onAddChild: (document: Document) => void;
   onAddDocumentOfCategory: (parentDoc: Document, categoryName: string) => void;
   onClearSelection: () => void;
@@ -42,6 +44,7 @@ const KoreanFieldworkSelectedRecordWorkbench: React.FC<
   document,
   documents,
   allowedAddCategoryNames,
+  investigationModeId,
   onAddChild,
   onAddDocumentOfCategory,
   onClearSelection,
@@ -127,6 +130,7 @@ const KoreanFieldworkSelectedRecordWorkbench: React.FC<
         document={document}
         documents={documents}
         allowedAddCategoryNames={allowedAddCategoryNames}
+        investigationModeId={investigationModeId}
         onAddDocumentOfCategory={onAddDocumentOfCategory}
         onOpenDocument={onOpenDocument}
       />

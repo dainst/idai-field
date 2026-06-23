@@ -22,10 +22,12 @@ import {
   KoreanFieldworkRecordActionItem,
 } from './korean-fieldwork-record-actions';
 import { KoreanFieldworkStatusTone } from './korean-fieldwork-record-summary';
+import { KoreanFieldworkInvestigationModeId } from './korean-fieldwork-investigation-mode';
 
 interface KoreanFieldworkWorkbenchPanelProps {
   summary: KoreanFieldworkTodaySummary;
   documents: Document[];
+  investigationModeId?: KoreanFieldworkInvestigationModeId;
   onEditDocument: (docId: string, categoryName: string) => void;
   onAddDocumentOfCategory?: (parentDoc: Document, categoryName: string) => void;
   getAllowedAddCategoryNames?: (document: Document) => string[];
@@ -35,6 +37,7 @@ interface KoreanFieldworkWorkbenchPanelProps {
 const KoreanFieldworkWorkbenchPanel: React.FC<KoreanFieldworkWorkbenchPanelProps> = ({
   summary,
   documents,
+  investigationModeId,
   onEditDocument,
   onAddDocumentOfCategory,
   getAllowedAddCategoryNames,
@@ -65,7 +68,8 @@ const KoreanFieldworkWorkbenchPanel: React.FC<KoreanFieldworkWorkbenchPanelProps
             actions={getKoreanFieldworkRecordActionSummary(
               item.document,
               documents,
-              getAllowedAddCategoryNames?.(item.document) ?? []
+              getAllowedAddCategoryNames?.(item.document) ?? [],
+              investigationModeId
             ).actions.slice(0, 2)}
             item={item}
             onActionPress={(action) => {

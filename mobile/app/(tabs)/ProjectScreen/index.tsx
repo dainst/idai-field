@@ -785,6 +785,7 @@ const DocumentsList: React.FC = () => {
               document={selectedWorkbenchDocument}
               documents={documents}
               allowedAddCategoryNames={selectedWorkbenchAllowedAddCategoryNames}
+              investigationModeId={investigationModeId}
               onAddChild={openAddChildModal}
               onAddDocumentOfCategory={(parentDoc, categoryName) =>
                 navigateAddCategory(categoryName, parentDoc)}
@@ -829,6 +830,7 @@ const DocumentsList: React.FC = () => {
         <KoreanFieldworkWorkbenchPanel
           summary={todaySummary}
           documents={documents}
+          investigationModeId={investigationModeId}
           getAllowedAddCategoryNames={getAllowedAddCategoryNames}
           onAddDocumentOfCategory={(parentDoc, categoryName) =>
             navigateAddCategory(categoryName, parentDoc)}
@@ -1062,6 +1064,7 @@ const DocumentsList: React.FC = () => {
               documentsById={documentsById}
               getCategoryLabel={getCategoryLabel}
               issueCountByDocumentId={todaySummary.issueCountByDocumentId}
+              investigationModeId={investigationModeId}
               selectedDocumentId={selectedWorkbenchDocument?.resource.id}
               onOpenDocument={selectWorkbenchDocument}
               onDrillDown={pushToHierarchy}
@@ -1080,6 +1083,7 @@ const DocumentsList: React.FC = () => {
               documentsById={documentsById}
               getCategoryLabel={getCategoryLabel}
               issueCountByDocumentId={todaySummary.issueCountByDocumentId}
+              investigationModeId={investigationModeId}
               selectedDocumentId={selectedWorkbenchDocument?.resource.id}
               onOpenDocument={selectWorkbenchDocument}
               onDrillDown={pushToHierarchy}
@@ -1390,6 +1394,7 @@ const RecordSection: React.FC<{
   documentsById: Map<string, Document>;
   getCategoryLabel: (categoryName: string) => string;
   issueCountByDocumentId: { [documentId: string]: number };
+  investigationModeId?: KoreanFieldworkInvestigationModeId;
   selectedDocumentId?: string;
   onOpenDocument: (document: Document) => void;
   onDrillDown: (document: Document) => void;
@@ -1403,6 +1408,7 @@ const RecordSection: React.FC<{
   documentsById,
   getCategoryLabel,
   issueCountByDocumentId,
+  investigationModeId,
   selectedDocumentId,
   onOpenDocument,
   onDrillDown,
@@ -1431,6 +1437,7 @@ const RecordSection: React.FC<{
           contextPath={formatKoreanFieldworkParentPath(document, documentsById)}
           categoryLabel={getCategoryLabel(document.resource.category)}
           issueCount={issueCountByDocumentId[document.resource.id] ?? 0}
+          investigationModeId={investigationModeId}
           selected={selectedDocumentId === document.resource.id}
           onOpen={() => onOpenDocument(document)}
           onDrillDown={() => onDrillDown(document)}
@@ -1450,6 +1457,7 @@ const RecordRow: React.FC<{
   contextPath: string | undefined;
   categoryLabel: string;
   issueCount: number;
+  investigationModeId?: KoreanFieldworkInvestigationModeId;
   selected: boolean;
   onOpen: () => void;
   onDrillDown: () => void;
@@ -1463,6 +1471,7 @@ const RecordRow: React.FC<{
   contextPath,
   categoryLabel,
   issueCount,
+  investigationModeId,
   selected,
   onOpen,
   onDrillDown,
@@ -1489,9 +1498,10 @@ const RecordRow: React.FC<{
     () => getKoreanFieldworkRecordActionSummary(
       document,
       documents,
-      allowedAddCategoryNames
+      allowedAddCategoryNames,
+      investigationModeId
     ),
-    [allowedAddCategoryNames, document, documents]
+    [allowedAddCategoryNames, document, documents, investigationModeId]
   );
   const visibleActions = actionSummary.actions.slice(0, 2);
 

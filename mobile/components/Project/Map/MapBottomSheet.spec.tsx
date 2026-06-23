@@ -45,13 +45,30 @@ describe('MapBottomSheet', () => {
     expect(getByText('유물 수습')).toBeTruthy();
     expect(queryByText('피트 토층도')).toBeNull();
   });
+
+  it('shows trial trench workflow steps for trench records', () => {
+    const handleToggle = jest.fn();
+    const { getByTestId, getByText } = render(
+      createBottomSheet({
+        document: createDoc(C.TRENCH),
+        investigationModeId: 'trialTrench',
+        toggleFeatureWorkflowStep: handleToggle,
+      })
+    );
+
+    expect(getByText('피트 토층도')).toBeTruthy();
+
+    fireEvent.press(getByTestId('mapWorkflowStep_trenchPitProfileDrawn'));
+
+    expect(handleToggle).toHaveBeenCalledWith('trenchPitProfileDrawn');
+  });
 });
 
 const createBottomSheet = (
   props: Partial<React.ComponentProps<typeof MapBottomSheet>> = {}
 ) => (
   <MapBottomSheet
-    document={createDoc()}
+    document={createDoc(C.FEATURE)}
     addDocument={jest.fn()}
     editDocument={jest.fn()}
     removeDocument={jest.fn()}
@@ -72,11 +89,11 @@ const createBottomSheet = (
   />
 );
 
-const createDoc = () => ({
+const createDoc = (category = C.FEATURE) => ({
   resource: {
     id: 'feature-1',
     identifier: '조선시대 1호 수혈',
-    category: C.FEATURE,
+    category,
     relations: {},
     featureInvestigationChecklist: ['trenchSoilCleaned'],
   },

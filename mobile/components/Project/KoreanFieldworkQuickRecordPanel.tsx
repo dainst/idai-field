@@ -45,8 +45,12 @@ const KoreanFieldworkQuickRecordPanel: React.FC<KoreanFieldworkQuickRecordPanelP
   onUpdateResourceFields,
 }) => {
   const availability = useMemo(
-    () => getKoreanFieldworkQuickRecordAvailability(category, resource),
-    [category, resource]
+    () => getKoreanFieldworkQuickRecordAvailability(
+      category,
+      resource,
+      investigationModeId
+    ),
+    [category, investigationModeId, resource]
   );
   const presets = useMemo(
     () => getKoreanFieldworkQuickPresets(availability, investigationModeId),

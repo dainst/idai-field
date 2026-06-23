@@ -199,6 +199,7 @@ const DocumentEdit: React.FC = () => {
             document={effectiveDocument}
             documents={documents ?? []}
             allowedAddCategoryNames={allowedAddCategoryNames}
+            investigationModeId={investigationModeId}
             onAddDocumentOfCategory={addRelatedDocument}
             onOpenDocument={openRelatedDocument}
           />

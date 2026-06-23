@@ -564,12 +564,17 @@
         "verificationState": {
           "inputType": "dropdown",
           "constraintIndexed": true
+        },
+        "featureInvestigationChecklist": {
+          "inputType": "checkboxes",
+          "constraintIndexed": true
         }
       },
       "valuelists": {
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
-        "verificationState": "KoreanFieldwork-verificationState"
+        "verificationState": "KoreanFieldwork-verificationState",
+        "featureInvestigationChecklist": "KoreanFieldwork-featureInvestigationChecklist"
       },
       "groups": [
         {
@@ -598,6 +603,7 @@
         {
           "name": "koreanFieldwork",
           "fields": [
+            "featureInvestigationChecklist",
             "recordCreationTiming",
             "fieldRecordQuality",
             "verificationState"

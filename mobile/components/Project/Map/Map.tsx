@@ -25,12 +25,12 @@ import {
 } from './korean-fieldwork-drafts';
 import {
   FEATURE_CANDIDATE_PARENT_CATEGORIES,
-  FEATURE_WORKFLOW_CATEGORIES,
   KOREAN_FIELDWORK_CATEGORIES,
   SOIL_PROFILE_PHOTO_TARGET_CATEGORIES,
 } from '../korean-fieldwork-categories';
 import MapBottomSheet from './MapBottomSheet';
 import { KoreanFieldworkInvestigationModeId } from '../korean-fieldwork-investigation-mode';
+import { isKoreanFieldworkChecklistRecord } from '../korean-fieldwork-quick-record';
 
 const FEATURE_GEOMETRY_EDIT_STATUS_NEEDS_AERIAL_ALIGNMENT = 'needsAerialAlignment';
 const FEATURE_GEOMETRY_EDIT_STATUS_ADJUSTED_TO_AERIAL_LAYER = 'adjustedToAerialLayer';
@@ -213,7 +213,10 @@ const Map: React.FC<MapProps> = (props) => {
   ) => {
     if (
       !highlightedDoc ||
-      !FEATURE_WORKFLOW_CATEGORIES.includes(highlightedDoc.resource.category)
+      !isKoreanFieldworkChecklistRecord(
+        highlightedDoc.resource.category,
+        props.investigationModeId
+      )
     ) {
       return;
     }
@@ -253,7 +256,10 @@ const Map: React.FC<MapProps> = (props) => {
   const toggleFeatureWorkflowStep = async (stepValue: string) => {
     if (
       !highlightedDoc ||
-      !FEATURE_WORKFLOW_CATEGORIES.includes(highlightedDoc.resource.category)
+      !isKoreanFieldworkChecklistRecord(
+        highlightedDoc.resource.category,
+        props.investigationModeId
+      )
     ) {
       return;
     }

@@ -13,6 +13,11 @@ import {
   getKoreanFieldworkPrimaryParent,
   KoreanFieldworkStatusTone,
 } from './korean-fieldwork-record-summary';
+import { KoreanFieldworkInvestigationModeId } from './korean-fieldwork-investigation-mode';
+import {
+  getKoreanFieldworkChecklistQuickOptions,
+  isKoreanFieldworkChecklistRecord,
+} from './korean-fieldwork-quick-record';
 
 const C = KOREAN_FIELDWORK_CATEGORIES;
 
@@ -58,22 +63,6 @@ const PREFERRED_EVIDENCE_ACTION_IDS = [
   'samples',
 ];
 
-const FEATURE_WORKFLOW_CATEGORIES = new Set<string>([
-  C.FEATURE,
-  C.FEATURE_SEGMENT,
-]);
-
-const FEATURE_CHECKLIST_STEPS = [
-  'preInvestigationPhotoTaken',
-  'inProgressPhotoTaken',
-  'soilProfilePhotoLinked',
-  'measuredDrawingCompleted',
-  'preRecoveryFindPhotoTaken',
-  'findsRecovered',
-  'samplesCollected',
-  'completionPhotoTaken',
-];
-
 export type KoreanFieldworkRecordActionType = 'createDocument'|'openDocument';
 
 export interface KoreanFieldworkRecordActionItem {
@@ -105,7 +94,8 @@ export interface KoreanFieldworkRecordActionSummary {
 export const getKoreanFieldworkRecordActionSummary = (
   document: Document,
   documents: Document[],
-  allowedAddCategoryNames: string[] = []
+  allowedAddCategoryNames: string[] = [],
+  investigationModeId?: KoreanFieldworkInvestigationModeId
 ): KoreanFieldworkRecordActionSummary => {
   const documentsById = new Map(documents.map((candidate) => [
     candidate.resource.id,
@@ -118,10 +108,12 @@ export const getKoreanFieldworkRecordActionSummary = (
   const evidenceChips = getKoreanFieldworkEvidenceChips(document, documents);
   const evidenceBundle = buildEvidenceBundle(document, documents);
   const issues = sortIssuesForCurrentDocument(document, evidenceBundle.issues);
-  const checklistDone = getChecklistDoneCount(document);
-  const checklistTotal = FEATURE_WORKFLOW_CATEGORIES.has(document.resource.category)
-    ? FEATURE_CHECKLIST_STEPS.length
-    : 0;
+  const checklistStepValues = getChecklistStepValues(
+    document,
+    investigationModeId
+  );
+  const checklistDone = getChecklistDoneCount(document, checklistStepValues);
+  const checklistTotal = checklistStepValues.length;
   const evidenceCount = evidenceChips
     .filter((chip) => EVIDENCE_CHIP_IDS.has(chip.id))
     .reduce((count, chip) => count + chip.count, 0);
@@ -366,12 +358,27 @@ const getSeverityRank = (issue: KoreanFieldworkReadinessIssue): number => {
   }
 };
 
-const getChecklistDoneCount = (document: Document): number =>
+const getChecklistStepValues = (
+  document: Document,
+  investigationModeId?: KoreanFieldworkInvestigationModeId
+): string[] =>
+  isKoreanFieldworkChecklistRecord(
+    document.resource.category,
+    investigationModeId
+  )
+    ? getKoreanFieldworkChecklistQuickOptions(investigationModeId)
+      .map((option) => option.value)
+    : [];
+
+const getChecklistDoneCount = (
+  document: Document,
+  checklistStepValues: string[]
+): number =>
   getStringArray(
     (document.resource as unknown as Record<string, unknown>)
       .featureInvestigationChecklist
   )
-    .filter((value) => FEATURE_CHECKLIST_STEPS.includes(value))
+    .filter((value) => checklistStepValues.includes(value))
     .length;
 
 const getStringArray = (value: unknown): string[] =>

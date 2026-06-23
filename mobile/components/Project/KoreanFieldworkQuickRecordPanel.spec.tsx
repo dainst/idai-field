@@ -135,6 +135,53 @@ describe('KoreanFieldworkQuickRecordPanel', () => {
     }));
   });
 
+  it('renders trial trench checklist controls for trench records', () => {
+    const handleUpdateResourceField = jest.fn();
+    const { getByTestId, getByText } = render(
+      <KoreanFieldworkQuickRecordPanel
+        category={createCategoryForm([
+          FIELDWORK_QUICK_FIELDS.checklist,
+          FIELDWORK_QUICK_FIELDS.timing,
+        ])}
+        investigationModeId="trialTrench"
+        resource={createResource(C.TRENCH, {
+          featureInvestigationChecklist: ['trenchSoilCleaned'],
+          recordCreationTiming: 'duringFieldwork',
+        })}
+        onUpdateResourceField={handleUpdateResourceField}
+      />
+    );
+
+    expect(getByText('토층 정리')).toBeTruthy();
+    expect(getByText('피트 토층도')).toBeTruthy();
+
+    fireEvent.press(getByTestId('quickRecordOption_trenchPitOpened'));
+
+    expect(handleUpdateResourceField).toHaveBeenCalledWith(
+      FIELDWORK_QUICK_FIELDS.checklist,
+      ['trenchSoilCleaned', 'trenchPitOpened']
+    );
+  });
+
+  it('does not show trench checklist controls outside trial trench mode', () => {
+    const { queryByText } = render(
+      <KoreanFieldworkQuickRecordPanel
+        category={createCategoryForm([
+          FIELDWORK_QUICK_FIELDS.checklist,
+          FIELDWORK_QUICK_FIELDS.timing,
+        ])}
+        investigationModeId="excavation"
+        resource={createResource(C.TRENCH, {
+          featureInvestigationChecklist: ['trenchSoilCleaned'],
+          recordCreationTiming: 'duringFieldwork',
+        })}
+        onUpdateResourceField={jest.fn()}
+      />
+    );
+
+    expect(queryByText('피트 토층도')).toBeNull();
+  });
+
   it('updates the single-choice timing field directly', () => {
     const handleUpdateResourceField = jest.fn();
     const { getByTestId } = render(

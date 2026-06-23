@@ -7,6 +7,7 @@ import {
   extractKoreanFieldworkFieldNoteInput,
   getKoreanFieldworkFieldNoteChecklist,
   getKoreanFieldworkFieldNoteEvidenceActions,
+  getKoreanFieldworkFieldNoteFollowUpActions,
   getKoreanFieldworkFieldNoteGuidance,
   getKoreanFieldworkFieldNoteHistoryItems,
   getKoreanFieldworkFieldNotePresets,
@@ -132,6 +133,31 @@ describe('korean-fieldwork-field-notes', () => {
       [feature, photo],
       [C.FIND]
     ).map((action) => action.id)).toEqual(['finds']);
+  });
+
+  it('prioritizes follow-up records mentioned in the tablet field note', () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
+    const photo = createDoc('photo-1', C.PHOTO, '사진 1', {
+      relations: { depicts: [feature.resource.id] },
+    });
+    const evidenceActions = getKoreanFieldworkFieldNoteEvidenceActions(
+      feature,
+      [feature, photo],
+      [C.PHOTO, C.SOIL_PROFILE_PHOTO, C.DRAWING, C.FIND, C.SAMPLE]
+    );
+
+    expect(getKoreanFieldworkFieldNoteFollowUpActions({
+      observation: '단면 정리 후 사진 보강.',
+      nextWork: '도면 3번 정리, 유물 출토 위치 확인.',
+      evidenceNumbers: '사진 12, 도면 3, 유물 24',
+    }, evidenceActions).map((action) => action.id)).toEqual([
+      'soilProfilePhotos',
+      'drawings',
+      'finds',
+    ]);
+    expect(getKoreanFieldworkFieldNoteFollowUpActions({
+      observation: '경계만 확인.',
+    }, evidenceActions)).toEqual([]);
   });
 
   it('extracts structured field note input from saved memo text', () => {

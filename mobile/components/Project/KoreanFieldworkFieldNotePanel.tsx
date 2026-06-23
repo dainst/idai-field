@@ -17,11 +17,13 @@ import {
   buildKoreanFieldworkFieldNoteText,
   getKoreanFieldworkFieldNoteChecklist,
   getKoreanFieldworkFieldNoteEvidenceActions,
+  getKoreanFieldworkFieldNoteFollowUpActions,
   getKoreanFieldworkFieldNoteGuidance,
   getKoreanFieldworkFieldNoteHistoryItems,
   getKoreanFieldworkFieldNotePresets,
   getKoreanFieldworkFieldNoteSummaries,
   KoreanFieldworkFieldNoteEvidenceAction,
+  KoreanFieldworkFieldNoteFollowUpAction,
   KoreanFieldworkFieldNoteGuidanceItem,
   KoreanFieldworkFieldNoteGuidanceTone,
   KoreanFieldworkFieldNoteHistoryItem,
@@ -87,6 +89,8 @@ const KoreanFieldworkFieldNotePanel: React.FC<
   const [isDraftLoaded, setIsDraftLoaded] = useState(false);
   const [draftStatus, setDraftStatus] =
     useState<'loaded'|'saved'|undefined>();
+  const [savedFollowUpActions, setSavedFollowUpActions] =
+    useState<KoreanFieldworkFieldNoteFollowUpAction[]>([]);
   const summaries = useMemo(
     () => getKoreanFieldworkFieldNoteSummaries(
       selectedDocument,
@@ -164,6 +168,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
 
     setIsDraftLoaded(false);
     setDraftStatus(undefined);
+    setSavedFollowUpActions([]);
     setNoteInput(EMPTY_FIELD_NOTE_INPUT);
 
     if (!draftKey) {
@@ -237,12 +242,14 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     fieldName: keyof KoreanFieldworkFieldNoteInput,
     value: string
   ) => {
+    setSavedFollowUpActions([]);
     setNoteInput((currentInput) => ({
       ...currentInput,
       [fieldName]: value,
     }));
   };
   const applyPreset = (preset: KoreanFieldworkFieldNotePreset) => {
+    setSavedFollowUpActions([]);
     setNoteInput((currentInput) =>
       mergeKoreanFieldworkFieldNoteInput(currentInput, preset.input)
     );
@@ -250,6 +257,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
   const applyHistoryItem = (item: KoreanFieldworkFieldNoteHistoryItem) => {
     if (!item.canLoadIntoDraft) return;
 
+    setSavedFollowUpActions([]);
     setNoteInput((currentInput) =>
       mergeKoreanFieldworkFieldNoteInput(currentInput, item.input)
     );
@@ -260,12 +268,17 @@ const KoreanFieldworkFieldNotePanel: React.FC<
 
     try {
       setIsSubmitting(true);
+      const followUpActions = getKoreanFieldworkFieldNoteFollowUpActions(
+        noteInput,
+        evidenceActions
+      );
       await onCreateNote(mode, normalizedText);
       if (draftKey) {
         await removeKoreanFieldworkFieldNoteDraft(draftKey)
           .catch(() => undefined);
       }
       setDraftStatus(undefined);
+      setSavedFollowUpActions(followUpActions);
       setNoteInput(EMPTY_FIELD_NOTE_INPUT);
     } finally {
       setIsSubmitting(false);
@@ -274,6 +287,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
   const clearDraft = async () => {
     setNoteInput(EMPTY_FIELD_NOTE_INPUT);
     setDraftStatus(undefined);
+    setSavedFollowUpActions([]);
     if (draftKey) {
       await removeKoreanFieldworkFieldNoteDraft(draftKey)
         .catch(() => undefined);
@@ -291,6 +305,34 @@ const KoreanFieldworkFieldNotePanel: React.FC<
           {selectedDocument.resource.identifier || selectedDocument.resource.id}
         </Text>
       </View>
+
+      {savedFollowUpActions.length > 0 && (
+        <View style={styles.savedFollowUpPanel}>
+          <View style={styles.savedFollowUpHeader}>
+            <MaterialIcons name="check-circle" size={16} color="#027a48" />
+            <View style={styles.savedFollowUpTitleText}>
+              <Text style={styles.savedFollowUpTitle}>저장 완료</Text>
+              <Text style={styles.savedFollowUpDetail} numberOfLines={2}>
+                방금 쓴 야장과 이어지는 기록을 바로 남기세요.
+              </Text>
+            </View>
+          </View>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.savedFollowUpRow}
+          >
+            {savedFollowUpActions.map((action) => (
+              <FollowUpActionButton
+                action={action}
+                key={action.id}
+                onPress={() =>
+                  onAddDocumentOfCategory(selectedDocument, action.categoryName)}
+              />
+            ))}
+          </ScrollView>
+        </View>
+      )}
 
       {!!draftKey && (hasDraftText || draftStatus) && (
         <View style={styles.draftStatusRow}>
@@ -653,6 +695,32 @@ const EvidenceActionButton: React.FC<{
   </TouchableOpacity>
 );
 
+const FollowUpActionButton: React.FC<{
+  action: KoreanFieldworkFieldNoteFollowUpAction;
+  onPress: () => void;
+}> = ({ action, onPress }) => (
+  <TouchableOpacity
+    activeOpacity={0.86}
+    onPress={onPress}
+    style={styles.followUpActionButton}
+    testID={`fieldNoteFollowUpAction_${action.id}`}
+  >
+    <MaterialIcons
+      name={getEvidenceActionIcon(action.id)}
+      size={18}
+      color="#175cd3"
+    />
+    <View style={styles.followUpActionText}>
+      <Text style={styles.followUpActionLabel} numberOfLines={1}>
+        {action.label}
+      </Text>
+      <Text style={styles.followUpActionReason} numberOfLines={2}>
+        {action.reason}
+      </Text>
+    </View>
+  </TouchableOpacity>
+);
+
 const HistoryRow: React.FC<{
   item: KoreanFieldworkFieldNoteHistoryItem;
   onLoad: () => void;
@@ -866,6 +934,68 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginLeft: 10,
     textAlign: 'right',
+  },
+  savedFollowUpPanel: {
+    backgroundColor: '#f0fdf4',
+    borderColor: '#bbf7d0',
+    borderRadius: 6,
+    borderWidth: 1,
+    marginTop: 9,
+    paddingHorizontal: 9,
+    paddingVertical: 8,
+  },
+  savedFollowUpHeader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  savedFollowUpTitleText: {
+    flex: 1,
+    marginLeft: 7,
+    minWidth: 0,
+  },
+  savedFollowUpTitle: {
+    color: '#027a48',
+    fontSize: 12,
+    fontWeight: '900',
+  },
+  savedFollowUpDetail: {
+    color: '#475467',
+    fontSize: 11,
+    fontWeight: '700',
+    lineHeight: 15,
+    marginTop: 1,
+  },
+  savedFollowUpRow: {
+    paddingTop: 8,
+  },
+  followUpActionButton: {
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+    borderColor: '#abefc6',
+    borderRadius: 6,
+    borderWidth: 1,
+    flexDirection: 'row',
+    marginRight: 7,
+    minHeight: 54,
+    paddingHorizontal: 9,
+    width: 172,
+  },
+  followUpActionText: {
+    flex: 1,
+    marginLeft: 7,
+    minWidth: 0,
+  },
+  followUpActionLabel: {
+    color: '#175cd3',
+    fontSize: 12,
+    fontWeight: '900',
+  },
+  followUpActionReason: {
+    color: '#475467',
+    fontSize: 10,
+    fontWeight: '700',
+    lineHeight: 13,
+    marginTop: 2,
   },
   draftStatusRow: {
     alignItems: 'center',

@@ -76,6 +76,11 @@ export interface KoreanFieldworkFieldNoteEvidenceAction {
   existingCount: number;
 }
 
+export interface KoreanFieldworkFieldNoteFollowUpAction
+  extends KoreanFieldworkFieldNoteEvidenceAction {
+  reason: string;
+}
+
 const FIELD_NOTE_SECTION_DEFINITIONS: {
   id: keyof KoreanFieldworkFieldNoteInput;
   label: string;
@@ -517,6 +522,39 @@ export const getKoreanFieldworkFieldNoteEvidenceActions = (
     }));
 };
 
+export const getKoreanFieldworkFieldNoteFollowUpActions = (
+  input: KoreanFieldworkFieldNoteInput,
+  evidenceActions: KoreanFieldworkFieldNoteEvidenceAction[],
+  limit = 3
+): KoreanFieldworkFieldNoteFollowUpAction[] => {
+  const noteText = normalizeFieldNoteText([
+    input.observation,
+    input.interpretation,
+    input.nextWork,
+    input.evidenceNumbers,
+  ].filter(Boolean).join(' '));
+  if (!noteText) return [];
+
+  const mentionedActions = new Map<string, string>();
+  FIELD_NOTE_FOLLOW_UP_MATCHERS.forEach((matcher) => {
+    if (!matcher.pattern.test(noteText)) return;
+    matcher.actionIds.forEach((actionId) => {
+      if (!mentionedActions.has(actionId)) {
+        mentionedActions.set(actionId, matcher.reason);
+      }
+    });
+  });
+
+  return evidenceActions
+    .filter((action) => mentionedActions.has(action.id))
+    .map((action) => ({
+      ...action,
+      reason: mentionedActions.get(action.id)!,
+    }))
+    .sort(compareFollowUpActions)
+    .slice(0, limit);
+};
+
 const findOperationInParentPath = (
   document: Document,
   documentsById: Map<string, Document>
@@ -646,6 +684,54 @@ const FIELD_NOTE_EVIDENCE_ACTION_IDS = new Set<string>([
   'finds',
   'samples',
 ]);
+
+const FIELD_NOTE_FOLLOW_UP_MATCHERS: {
+  actionIds: string[];
+  pattern: RegExp;
+  reason: string;
+}[] = [
+  {
+    actionIds: ['soilProfilePhotos'],
+    pattern: /토층|단면|벽면/,
+    reason: '야장에 토층·단면 내용이 언급됐습니다.',
+  },
+  {
+    actionIds: ['photos'],
+    pattern: /사진|촬영|전경|세부|보강/,
+    reason: '야장에 사진 기록이 언급됐습니다.',
+  },
+  {
+    actionIds: ['drawings'],
+    pattern: /도면|실측|평면도|단면도|스케치/,
+    reason: '야장에 도면·실측 기록이 언급됐습니다.',
+  },
+  {
+    actionIds: ['finds'],
+    pattern: /유물|출토|수습|토기|자기|석기/,
+    reason: '야장에 유물 기록이 언급됐습니다.',
+  },
+  {
+    actionIds: ['samples'],
+    pattern: /시료|채취|샘플|분석/,
+    reason: '야장에 시료 기록이 언급됐습니다.',
+  },
+];
+
+const compareFollowUpActions = (
+  actionA: KoreanFieldworkFieldNoteFollowUpAction,
+  actionB: KoreanFieldworkFieldNoteFollowUpAction
+): number =>
+  Number(actionA.existingCount > 0) - Number(actionB.existingCount > 0)
+  || FIELD_NOTE_EVIDENCE_ACTION_ORDER.indexOf(actionA.id)
+  - FIELD_NOTE_EVIDENCE_ACTION_ORDER.indexOf(actionB.id);
+
+const FIELD_NOTE_EVIDENCE_ACTION_ORDER = [
+  'soilProfilePhotos',
+  'photos',
+  'drawings',
+  'finds',
+  'samples',
+];
 
 const getObservationPrompt = (document: Document): string => {
   switch (document.resource.category) {

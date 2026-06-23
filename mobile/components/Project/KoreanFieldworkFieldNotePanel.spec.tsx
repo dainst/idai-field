@@ -186,6 +186,49 @@ describe('KoreanFieldworkFieldNotePanel', () => {
     );
   });
 
+  it('suggests follow-up evidence records after saving a tablet note', async () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
+    const handleCreateNote = jest.fn().mockResolvedValue(undefined);
+    const handleAddDocumentOfCategory = jest.fn();
+
+    const { getByTestId, queryByTestId } = renderPanel(feature, {
+      allowedAddCategoryNames: [C.PHOTO, C.DRAWING],
+      onAddDocumentOfCategory: handleAddDocumentOfCategory,
+      onCreateNote: handleCreateNote,
+    });
+
+    fireEvent.changeText(
+      getByTestId('fieldNoteTextInput'),
+      '사진 보강 필요.'
+    );
+    fireEvent.changeText(
+      getByTestId('fieldNoteNextWorkInput'),
+      '도면 정리.'
+    );
+    await act(async () => {
+      fireEvent.press(getByTestId('fieldNoteSave'));
+      await Promise.resolve();
+      jest.runOnlyPendingTimers();
+    });
+
+    expect(getByTestId('fieldNoteFollowUpAction_photos')).toBeTruthy();
+    expect(getByTestId('fieldNoteFollowUpAction_drawings')).toBeTruthy();
+
+    fireEvent.press(getByTestId('fieldNoteFollowUpAction_photos'));
+
+    expect(handleAddDocumentOfCategory).toHaveBeenCalledWith(
+      feature,
+      C.PHOTO
+    );
+
+    fireEvent.changeText(
+      getByTestId('fieldNoteTextInput'),
+      '새 관찰 내용.'
+    );
+
+    expect(queryByTestId('fieldNoteFollowUpAction_photos')).toBeNull();
+  });
+
   it('does not show evidence actions that are not allowed under the record', () => {
     const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
 

@@ -199,6 +199,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
       <KoreanFieldworkTodayBoard
         summary={todaySummary}
         documents={documents}
+        investigationModeId={investigationModeId}
         onEditDocument={handleEditDocument}
         onAddDocumentOfCategory={handleAddDocumentOfCategory}
         onOpenDocument={onDocumentSelected}

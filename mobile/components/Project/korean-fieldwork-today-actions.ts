@@ -42,8 +42,16 @@ export type KoreanFieldworkQuickActionId =
   | 'featureCandidate'
   | 'closeout';
 
+export type KoreanFieldworkQuickActionIcon =
+  'event-note'
+  | 'grid-on'
+  | 'add-location-alt'
+  | 'fact-check';
+
 export interface KoreanFieldworkQuickActionState {
   id: KoreanFieldworkQuickActionId;
+  icon: KoreanFieldworkQuickActionIcon;
+  label: string;
   detail: string;
   action?: KoreanFieldworkPriorityTaskAction;
   warning?: boolean;
@@ -52,7 +60,8 @@ export interface KoreanFieldworkQuickActionState {
 
 export const getKoreanFieldworkTodayActionTargets = (
   summary: KoreanFieldworkTodaySummary,
-  documents: Document[]
+  documents: Document[],
+  investigationModeId?: KoreanFieldworkInvestigationModeId
 ): KoreanFieldworkTodayActionTargets => {
   const documentsById = new Map(documents.map((document) => [
     document.resource.id,
@@ -64,7 +73,11 @@ export const getKoreanFieldworkTodayActionTargets = (
     primaryOperation,
     dailyLog: summary.dailyLogs[0],
     featureCandidate: summary.featureCandidates[0],
-    featureDraftParent: getFeatureDraftParent(documents, primaryOperation),
+    featureDraftParent: getFeatureDraftParent(
+      documents,
+      primaryOperation,
+      investigationModeId
+    ),
     issueDocument: getFirstIssueDocument(summary, documentsById),
   };
 };
@@ -72,18 +85,18 @@ export const getKoreanFieldworkTodayActionTargets = (
 export const getKoreanFieldworkQuickActionStates = (
   summary: KoreanFieldworkTodaySummary,
   targets: KoreanFieldworkTodayActionTargets,
-  currentScopeParent?: Document
+  currentScopeParent?: Document,
+  investigationModeId?: KoreanFieldworkInvestigationModeId
 ): Record<KoreanFieldworkQuickActionId, KoreanFieldworkQuickActionState> => {
   const dailyLogAction = targets.dailyLog
     ? toOpenDocumentAction(targets.dailyLog)
     : targets.primaryOperation
       ? toCreateDocumentAction(targets.primaryOperation, C.DAILY_LOG)
       : undefined;
-  const featureCandidateAction = targets.featureCandidate
-    ? toOpenDocumentAction(targets.featureCandidate)
-    : targets.featureDraftParent
-      ? toCreateDocumentAction(targets.featureDraftParent, C.FEATURE)
-      : undefined;
+  const featureCandidateAction = getFeatureQuickAction(
+    targets,
+    investigationModeId
+  );
   const closeoutAction = targets.issueDocument
     ? toOpenDocumentAction(targets.issueDocument)
     : undefined;
@@ -91,6 +104,8 @@ export const getKoreanFieldworkQuickActionStates = (
   return {
     dailyLog: {
       id: 'dailyLog',
+      icon: 'event-note',
+      label: '오늘 일지',
       detail: getDailyLogQuickActionDetail(
         summary,
         targets,
@@ -101,16 +116,21 @@ export const getKoreanFieldworkQuickActionStates = (
     },
     featureCandidate: {
       id: 'featureCandidate',
+      icon: getFeatureQuickActionIcon(targets, investigationModeId),
+      label: getFeatureQuickActionLabel(targets, investigationModeId),
       detail: getFeatureCandidateQuickActionDetail(
         summary,
         targets,
-        currentScopeParent
+        currentScopeParent,
+        investigationModeId
       ),
       action: featureCandidateAction,
       disabled: !featureCandidateAction,
     },
     closeout: {
       id: 'closeout',
+      icon: 'fact-check',
+      label: '마감 점검',
       detail: summary.openIssues.length > 0
         ? `${summary.openIssues.length}건 남음`
         : '현재 문제 없음',
@@ -127,7 +147,11 @@ export const getKoreanFieldworkPriorityTasks = (
   maxTasks = 5,
   investigationModeId?: KoreanFieldworkInvestigationModeId
 ): KoreanFieldworkPriorityTask[] => {
-  const targets = getKoreanFieldworkTodayActionTargets(summary, documents);
+  const targets = getKoreanFieldworkTodayActionTargets(
+    summary,
+    documents,
+    investigationModeId
+  );
   const tasks: KoreanFieldworkPriorityTask[] = [];
 
   if (!targets.primaryOperation && documents.length === 0) {
@@ -438,12 +462,17 @@ export const getPrimaryOperation = (
 
 export const getFeatureDraftParent = (
   documents: Document[],
-  primaryOperation: Document | undefined = getPrimaryOperation(documents)
+  primaryOperation: Document | undefined = getPrimaryOperation(documents),
+  investigationModeId?: KoreanFieldworkInvestigationModeId
 ): Document | undefined => documents.find((document) =>
   document.resource.category === C.TRENCH
-) ?? documents.find((document) =>
-  document.resource.category === C.FEATURE_GROUP
-) ?? primaryOperation;
+) ?? (
+  investigationModeId === 'trialTrench'
+    ? undefined
+    : documents.find((document) =>
+      document.resource.category === C.FEATURE_GROUP
+    ) ?? primaryOperation
+);
 
 const getFirstIssueDocument = (
   summary: KoreanFieldworkTodaySummary,
@@ -510,15 +539,61 @@ const getDailyLogQuickActionDetail = (
 const getFeatureCandidateQuickActionDetail = (
   summary: KoreanFieldworkTodaySummary,
   targets: KoreanFieldworkTodayActionTargets,
-  currentScopeParent: Document | undefined
+  currentScopeParent: Document | undefined,
+  investigationModeId?: KoreanFieldworkInvestigationModeId
 ): string => {
   if (summary.featureCandidates.length > 0) {
     return `${summary.featureCandidates.length}건 기록`;
+  }
+  if (investigationModeId === 'trialTrench') {
+    if (targets.featureDraftParent) return '트렌치 아래 유구 기록';
+    if (targets.primaryOperation) return '트렌치 먼저 추가';
+    if (currentScopeParent) return '트렌치 필요';
+    return '조사구역 필요';
   }
   if (targets.featureDraftParent) return '유구 추가';
   if (currentScopeParent) return '상위 기록 필요';
   return '조사구역 필요';
 };
+
+const getFeatureQuickAction = (
+  targets: KoreanFieldworkTodayActionTargets,
+  investigationModeId?: KoreanFieldworkInvestigationModeId
+): KoreanFieldworkPriorityTaskAction | undefined => {
+  if (targets.featureCandidate) {
+    return toOpenDocumentAction(targets.featureCandidate);
+  }
+
+  if (investigationModeId === 'trialTrench' && !targets.featureDraftParent) {
+    return targets.primaryOperation
+      ? toCreateDocumentAction(targets.primaryOperation, C.TRENCH)
+      : undefined;
+  }
+
+  return targets.featureDraftParent
+    ? toCreateDocumentAction(targets.featureDraftParent, C.FEATURE)
+    : undefined;
+};
+
+const getFeatureQuickActionLabel = (
+  targets: KoreanFieldworkTodayActionTargets,
+  investigationModeId?: KoreanFieldworkInvestigationModeId
+): string => {
+  if (investigationModeId !== 'trialTrench') return '유구 추가';
+  if (targets.featureCandidate) return '유구 기록';
+  if (targets.featureDraftParent) return '유구 확인';
+  return '트렌치 추가';
+};
+
+const getFeatureQuickActionIcon = (
+  targets: KoreanFieldworkTodayActionTargets,
+  investigationModeId?: KoreanFieldworkInvestigationModeId
+): KoreanFieldworkQuickActionIcon =>
+  investigationModeId === 'trialTrench'
+  && !targets.featureCandidate
+  && !targets.featureDraftParent
+    ? 'grid-on'
+    : 'add-location-alt';
 
 const toOpenDocumentAction = (
   document: Document

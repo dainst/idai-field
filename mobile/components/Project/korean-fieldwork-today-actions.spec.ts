@@ -65,6 +65,64 @@ describe('Korean fieldwork today actions', () => {
     ).featureDraftParent).toBe(operation);
   });
 
+  it('keeps 표본·시굴 quick creation on trench setup before 유구 entry', () => {
+    const operation = createDoc('operation-1', C.OPERATION);
+    const summary = createSummary();
+    const targets = getKoreanFieldworkTodayActionTargets(
+      summary as any,
+      [operation] as any,
+      'trialTrench'
+    );
+
+    expect(targets.featureDraftParent).toBeUndefined();
+    expect(getKoreanFieldworkQuickActionStates(
+      summary as any,
+      targets,
+      undefined,
+      'trialTrench'
+    ).featureCandidate).toMatchObject({
+      icon: 'grid-on',
+      label: '트렌치 추가',
+      detail: '트렌치 먼저 추가',
+      action: {
+        type: 'createDocument',
+        parentDocumentId: 'operation-1',
+        categoryName: C.TRENCH,
+      },
+      disabled: false,
+    });
+  });
+
+  it('switches 표본·시굴 quick creation to 유구 확인 after a trench exists', () => {
+    const operation = createDoc('operation-1', C.OPERATION);
+    const trench = createDoc('trench-1', C.TRENCH, {
+      relations: { isRecordedIn: ['operation-1'] },
+    });
+    const summary = createSummary();
+    const targets = getKoreanFieldworkTodayActionTargets(
+      summary as any,
+      [operation, trench] as any,
+      'trialTrench'
+    );
+
+    expect(getKoreanFieldworkQuickActionStates(
+      summary as any,
+      targets,
+      undefined,
+      'trialTrench'
+    ).featureCandidate).toMatchObject({
+      icon: 'add-location-alt',
+      label: '유구 확인',
+      detail: '트렌치 아래 유구 기록',
+      action: {
+        type: 'createDocument',
+        parentDocumentId: 'trench-1',
+        categoryName: C.FEATURE,
+      },
+      disabled: false,
+    });
+  });
+
   it('builds actionable startup tasks for missing tablet field records', () => {
     const operation = createDoc('operation-1', C.OPERATION);
     const tasks = getKoreanFieldworkPriorityTasks(

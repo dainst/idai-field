@@ -15,11 +15,13 @@ import { colors } from '@/utils/colors';
 import DocumentButton from '@/components/common/DocumentButton';
 import KoreanFieldworkPriorityTaskList from './KoreanFieldworkPriorityTaskList';
 import KoreanFieldworkWorkbenchPanel from './KoreanFieldworkWorkbenchPanel';
-import { KOREAN_FIELDWORK_CATEGORIES } from './korean-fieldwork-categories';
 import {
   getKoreanFieldworkPriorityTasks,
+  getKoreanFieldworkQuickActionStates,
   getKoreanFieldworkTodayActionTargets,
+  KoreanFieldworkPriorityTaskAction,
 } from './korean-fieldwork-today-actions';
+import { KoreanFieldworkInvestigationModeId } from './korean-fieldwork-investigation-mode';
 
 interface KoreanFieldworkTodayBoardProps {
   summary: KoreanFieldworkTodaySummary;
@@ -28,6 +30,7 @@ interface KoreanFieldworkTodayBoardProps {
   onAddDocumentOfCategory?: (parentDoc: Document, categoryName: string) => void;
   onOpenDocument?: (document: Document) => void;
   onOpenMap?: () => void;
+  investigationModeId?: KoreanFieldworkInvestigationModeId;
 }
 
 const KoreanFieldworkTodayBoard: React.FC<KoreanFieldworkTodayBoardProps> = ({
@@ -37,19 +40,41 @@ const KoreanFieldworkTodayBoard: React.FC<KoreanFieldworkTodayBoardProps> = ({
   onAddDocumentOfCategory,
   onOpenDocument,
   onOpenMap,
+  investigationModeId,
 }) => {
   const documentsById = useMemo(
     () => new Map(documents.map((document) => [document.resource.id, document])),
     [documents]
   );
   const actionTargets = useMemo(
-    () => getKoreanFieldworkTodayActionTargets(summary, documents),
-    [documents, summary]
+    () => getKoreanFieldworkTodayActionTargets(
+      summary,
+      documents,
+      investigationModeId
+    ),
+    [documents, investigationModeId, summary]
+  );
+  const quickActions = useMemo(
+    () => getKoreanFieldworkQuickActionStates(
+      summary,
+      actionTargets,
+      undefined,
+      investigationModeId
+    ),
+    [actionTargets, investigationModeId, summary]
   );
   const priorityTasks = useMemo(
-    () => getKoreanFieldworkPriorityTasks(summary, documents, 4),
-    [documents, summary]
+    () => getKoreanFieldworkPriorityTasks(
+      summary,
+      documents,
+      4,
+      investigationModeId
+    ),
+    [documents, investigationModeId, summary]
   );
+  const featureStatLabel = investigationModeId === 'trialTrench'
+    ? '확인 유구'
+    : '검출 유구';
 
   const openDocument = (document: Document | undefined) => {
     if (!document) return;
@@ -60,39 +85,39 @@ const KoreanFieldworkTodayBoard: React.FC<KoreanFieldworkTodayBoardProps> = ({
 
     onEditDocument(document.resource.id, document.resource.category);
   };
-  const openDailyLog = () => {
-    if (actionTargets.dailyLog) {
-      openDocument(actionTargets.dailyLog);
-      return;
-    }
+  const runQuickAction = (action?: KoreanFieldworkPriorityTaskAction) => {
+    if (!action) return;
 
-    if (actionTargets.primaryOperation && onAddDocumentOfCategory) {
-      onAddDocumentOfCategory(
-        actionTargets.primaryOperation,
-        KOREAN_FIELDWORK_CATEGORIES.DAILY_LOG
-      );
+    switch (action.type) {
+      case 'openDocument': {
+        openDocument(documentsById.get(action.documentId));
+        return;
+      }
+      case 'createDocument': {
+        const parentDocument = documentsById.get(action.parentDocumentId);
+        if (parentDocument && onAddDocumentOfCategory) {
+          onAddDocumentOfCategory(parentDocument, action.categoryName);
+        }
+        return;
+      }
+      case 'openMap':
+        if (onOpenMap) onOpenMap();
     }
   };
-  const openFeatureCandidate = () => {
-    if (actionTargets.featureCandidate) {
-      openDocument(actionTargets.featureCandidate);
-      return;
-    }
-
-    if (actionTargets.featureDraftParent && onAddDocumentOfCategory) {
-      onAddDocumentOfCategory(
-        actionTargets.featureDraftParent,
-        KOREAN_FIELDWORK_CATEGORIES.FEATURE
-      );
-    }
-  };
+  const isQuickActionDisabled = (
+    action: KoreanFieldworkPriorityTaskAction | undefined,
+    disabled: boolean | undefined
+  ): boolean =>
+    !!disabled
+    || (action?.type === 'createDocument' && !onAddDocumentOfCategory)
+    || (action?.type === 'openMap' && !onOpenMap);
 
   return (
     <View style={styles.container} testID="koreanFieldworkTodayBoard">
       <View style={styles.statsRow}>
         <Stat label="일지" value={summary.dailyLogs.length} />
         <Stat label="경계" value={summary.surveyBoundaries.length} />
-        <Stat label="검출 유구" value={summary.featureCandidates.length} />
+        <Stat label={featureStatLabel} value={summary.featureCandidates.length} />
         <Stat
           label="확인"
           value={summary.openIssues.length}
@@ -101,43 +126,41 @@ const KoreanFieldworkTodayBoard: React.FC<KoreanFieldworkTodayBoardProps> = ({
       </View>
       <View style={styles.actionsRow}>
         <SummaryAction
-          icon="event-note"
-          label="오늘 일지"
-          detail={actionTargets.dailyLog
-            ? actionTargets.dailyLog.resource.identifier
-            : actionTargets.primaryOperation ? '바로 작성' : '조사구역 필요'}
-          isDisabled={
-            !actionTargets.dailyLog
-            && (!actionTargets.primaryOperation || !onAddDocumentOfCategory)
-          }
-          onPress={openDailyLog}
+          icon={quickActions.dailyLog.icon}
+          label={quickActions.dailyLog.label}
+          detail={quickActions.dailyLog.detail}
+          isDisabled={isQuickActionDisabled(
+            quickActions.dailyLog.action,
+            quickActions.dailyLog.disabled
+          )}
+          onPress={() => runQuickAction(quickActions.dailyLog.action)}
         />
         <SummaryAction
-          icon="add-location-alt"
-          label="검출 유구"
-          detail={actionTargets.featureCandidate
-            ? `${summary.featureCandidates.length}건`
-            : actionTargets.featureDraftParent ? '유구 추가' : '조사구역 필요'}
-          isDisabled={
-            !actionTargets.featureCandidate
-            && (!actionTargets.featureDraftParent || !onAddDocumentOfCategory)
-          }
-          onPress={openFeatureCandidate}
+          icon={quickActions.featureCandidate.icon}
+          label={quickActions.featureCandidate.label}
+          detail={quickActions.featureCandidate.detail}
+          isDisabled={isQuickActionDisabled(
+            quickActions.featureCandidate.action,
+            quickActions.featureCandidate.disabled
+          )}
+          onPress={() => runQuickAction(quickActions.featureCandidate.action)}
         />
         <SummaryAction
-          icon="fact-check"
-          label="마감 점검"
-          detail={summary.openIssues.length > 0
-            ? `${summary.openIssues.length}건 확인`
-            : '문제 없음'}
-          warning={summary.openIssues.length > 0}
-          isDisabled={summary.openIssues.length === 0 || !actionTargets.issueDocument}
-          onPress={() => openDocument(actionTargets.issueDocument)}
+          icon={quickActions.closeout.icon}
+          label={quickActions.closeout.label}
+          detail={quickActions.closeout.detail}
+          warning={quickActions.closeout.warning}
+          isDisabled={isQuickActionDisabled(
+            quickActions.closeout.action,
+            quickActions.closeout.disabled
+          )}
+          onPress={() => runQuickAction(quickActions.closeout.action)}
         />
       </View>
       <KoreanFieldworkWorkbenchPanel
         summary={summary}
         documents={documents}
+        investigationModeId={investigationModeId}
         onEditDocument={onEditDocument}
       />
       <KoreanFieldworkPriorityTaskList

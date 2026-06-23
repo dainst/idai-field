@@ -356,8 +356,12 @@ const DocumentsList: React.FC = () => {
     !groupedDocumentIds.has(document.resource.id)
   );
   const actionTargets = useMemo(
-    () => getKoreanFieldworkTodayActionTargets(actionSummary, actionDocuments),
-    [actionDocuments, actionSummary]
+    () => getKoreanFieldworkTodayActionTargets(
+      actionSummary,
+      actionDocuments,
+      investigationModeId
+    ),
+    [actionDocuments, actionSummary, investigationModeId]
   );
   const priorityTasks = useMemo(
     () => getKoreanFieldworkPriorityTasks(
@@ -372,9 +376,10 @@ const DocumentsList: React.FC = () => {
     () => getKoreanFieldworkQuickActionStates(
       actionSummary,
       actionTargets,
-      currentScopeParent
+      currentScopeParent,
+      investigationModeId
     ),
-    [actionSummary, actionTargets, currentScopeParent]
+    [actionSummary, actionTargets, currentScopeParent, investigationModeId]
   );
   const closeoutSummary = useMemo(
     () => getKoreanFieldworkCloseoutSummary(todaySummary.openIssues, 5),
@@ -902,22 +907,22 @@ const DocumentsList: React.FC = () => {
 
         <View style={styles.actionBand}>
           <QuickAction
-            icon="event-note"
-            label="오늘 일지"
+            icon={quickActions.dailyLog.icon}
+            label={quickActions.dailyLog.label}
             detail={quickActions.dailyLog.detail}
             disabled={quickActions.dailyLog.disabled}
             onPress={openDailyLog}
           />
           <QuickAction
-            icon="add-location-alt"
-            label="유구 추가"
+            icon={quickActions.featureCandidate.icon}
+            label={quickActions.featureCandidate.label}
             detail={quickActions.featureCandidate.detail}
             disabled={quickActions.featureCandidate.disabled}
             onPress={openFirstCandidate}
           />
           <QuickAction
-            icon="fact-check"
-            label="마감 점검"
+            icon={quickActions.closeout.icon}
+            label={quickActions.closeout.label}
             detail={quickActions.closeout.detail}
             disabled={quickActions.closeout.disabled}
             onPress={openFirstIssue}

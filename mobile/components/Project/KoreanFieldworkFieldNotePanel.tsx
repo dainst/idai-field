@@ -113,6 +113,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
   const [recordApplyStatusTone, setRecordApplyStatusTone] =
     useState<'success' | 'error'>('success');
   const [isApplyingToRecord, setIsApplyingToRecord] = useState(false);
+  const [isSavingAndApplying, setIsSavingAndApplying] = useState(false);
   const [recordSeedStatus, setRecordSeedStatus] =
     useState<string>();
   const [appliedRecordUpdateSignature, setAppliedRecordUpdateSignature] =
@@ -206,14 +207,16 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     [draftScopeId, selectedDocument.resource.id]
   );
   const hasDraftText = hasKoreanFieldworkFieldNoteDraftText(noteInput);
-  const isBusy = isSaving || isSubmitting || isApplyingToRecord;
+  const hasPendingRecordUpdates =
+    !!onApplyToRecord
+    && Object.keys(recordUpdates).length > 0
+    && appliedRecordUpdateSignature !== recordUpdateSignature;
+  const isBusy =
+    isSaving || isSubmitting || isApplyingToRecord || isSavingAndApplying;
   const isSaveDisabled =
     isBusy || !selectedModeEnabled || normalizedText.length === 0;
-  const isRecordApplyDisabled =
-    isBusy
-    || !onApplyToRecord
-    || Object.keys(recordUpdates).length === 0
-    || appliedRecordUpdateSignature === recordUpdateSignature;
+  const isRecordApplyDisabled = isBusy || !hasPendingRecordUpdates;
+  const isSaveAndApplyDisabled = isSaveDisabled || !hasPendingRecordUpdates;
 
   useEffect(() => {
     if (mode === 'both' && (!canCreateRecordMemo || !canCreateDailyLog)) {
@@ -408,16 +411,31 @@ const KoreanFieldworkFieldNotePanel: React.FC<
     }
   };
 
-  const saveNote = async () => {
-    if (isSaveDisabled) return;
+  const saveNote = async (applyToRecord = false) => {
+    const shouldApplyToRecord = applyToRecord && hasPendingRecordUpdates;
+    if (isSaveDisabled || (applyToRecord && !shouldApplyToRecord)) return;
 
+    let didApplyToRecord = false;
     try {
       setIsSubmitting(true);
+      setIsSavingAndApplying(applyToRecord);
+      if (applyToRecord) setRecordApplyStatus(undefined);
+
+      if (shouldApplyToRecord && onApplyToRecord) {
+        await onApplyToRecord(recordUpdates);
+        didApplyToRecord = true;
+        setAppliedRecordUpdateSignature(recordUpdateSignature);
+      }
+
       const followUpActions = getKoreanFieldworkFieldNoteFollowUpActions(
         noteInput,
         evidenceActions
       );
       await onCreateNote(mode, normalizedText);
+      if (shouldApplyToRecord) {
+        setRecordApplyStatusTone('success');
+        setRecordApplyStatus('저장·반영 완료');
+      }
       if (draftKey) {
         await removeKoreanFieldworkFieldNoteDraft(draftKey)
           .catch(() => undefined);
@@ -426,8 +444,15 @@ const KoreanFieldworkFieldNotePanel: React.FC<
       setRecordSeedStatus(undefined);
       setSavedFollowUpActions(followUpActions);
       setNoteInput(EMPTY_FIELD_NOTE_INPUT);
+    } catch {
+      if (applyToRecord) {
+        setRecordApplyStatusTone('error');
+        setRecordApplyStatus('저장·반영 실패');
+        if (!didApplyToRecord) setAppliedRecordUpdateSignature(undefined);
+      }
     } finally {
       setIsSubmitting(false);
+      setIsSavingAndApplying(false);
     }
   };
   const clearDraft = async () => {
@@ -802,10 +827,36 @@ const KoreanFieldworkFieldNotePanel: React.FC<
             </Text>
           </TouchableOpacity>
         )}
+        {!!onApplyToRecord && (
+          <TouchableOpacity
+            activeOpacity={0.86}
+            disabled={isSaveAndApplyDisabled}
+            onPress={() => saveNote(true)}
+            style={[
+              styles.saveAndApplyButton,
+              isSaveAndApplyDisabled && styles.saveAndApplyButtonDisabled,
+            ]}
+            testID="fieldNoteSaveAndApply"
+          >
+            <MaterialIcons
+              name="done-all"
+              size={17}
+              color={isSaveAndApplyDisabled ? '#98a2b3' : 'white'}
+            />
+            <Text
+              style={[
+                styles.saveAndApplyButtonText,
+                isSaveAndApplyDisabled && styles.saveAndApplyButtonTextDisabled,
+              ]}
+            >
+              {isSavingAndApplying ? '저장·반영 중' : '저장·반영'}
+            </Text>
+          </TouchableOpacity>
+        )}
         <TouchableOpacity
           activeOpacity={0.86}
           disabled={isSaveDisabled}
-          onPress={saveNote}
+          onPress={() => saveNote()}
           style={[
             styles.saveButton,
             isSaveDisabled && styles.saveButtonDisabled,
@@ -1857,6 +1908,7 @@ const styles = StyleSheet.create({
   },
   footerRow: {
     alignItems: 'center',
+    flexWrap: 'wrap',
     flexDirection: 'row',
     justifyContent: 'flex-end',
     marginTop: 8,
@@ -1883,6 +1935,27 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   applyRecordButtonTextDisabled: {
+    color: '#98a2b3',
+  },
+  saveAndApplyButton: {
+    alignItems: 'center',
+    backgroundColor: '#2f5f4a',
+    borderRadius: 6,
+    flexDirection: 'row',
+    marginRight: 8,
+    minHeight: 38,
+    paddingHorizontal: 12,
+  },
+  saveAndApplyButtonDisabled: {
+    backgroundColor: '#eaecf0',
+  },
+  saveAndApplyButtonText: {
+    color: 'white',
+    fontSize: 12,
+    fontWeight: '900',
+    marginLeft: 5,
+  },
+  saveAndApplyButtonTextDisabled: {
     color: '#98a2b3',
   },
   saveButton: {

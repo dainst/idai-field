@@ -289,6 +289,81 @@ describe('KoreanFieldworkFieldNotePanel', () => {
     expect(handleApplyToRecord).toHaveBeenCalledTimes(1);
   });
 
+  it('saves the tablet note and applies it to the selected record in one step', async () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1', {
+      description: '기존 노출 양상.',
+    });
+    const handleApplyToRecord = jest.fn().mockResolvedValue(undefined);
+    const handleCreateNote = jest.fn().mockResolvedValue(undefined);
+
+    const { getByTestId, getByText } = renderPanel(feature, {
+      onApplyToRecord: handleApplyToRecord,
+      onCreateNote: handleCreateNote,
+    });
+
+    fireEvent.changeText(
+      getByTestId('fieldNoteTextInput'),
+      '바닥면에서 원형 윤곽 확인.'
+    );
+    fireEvent.changeText(
+      getByTestId('fieldNoteInterpretationInput'),
+      '주공 후보로 보이나 절단관계는 추가 확인 필요.'
+    );
+
+    await act(async () => {
+      fireEvent.press(getByTestId('fieldNoteSaveAndApply'));
+      await Promise.resolve();
+      await Promise.resolve();
+      jest.runOnlyPendingTimers();
+    });
+
+    expect(handleApplyToRecord).toHaveBeenCalledWith({
+      fieldNote: [
+        '[관찰 내용] 바닥면에서 원형 윤곽 확인.',
+        '[해석] 주공 후보로 보이나 절단관계는 추가 확인 필요.',
+      ].join('\n'),
+      description: '기존 노출 양상.\n바닥면에서 원형 윤곽 확인.',
+      interpretation: '주공 후보로 보이나 절단관계는 추가 확인 필요.',
+    });
+    expect(handleCreateNote).toHaveBeenCalledWith(
+      'recordMemo',
+      [
+        '[관찰 내용] 바닥면에서 원형 윤곽 확인.',
+        '[해석] 주공 후보로 보이나 절단관계는 추가 확인 필요.',
+      ].join('\n')
+    );
+    expect(getByText('저장·반영 완료')).toBeTruthy();
+    expect(getByTestId('fieldNoteTextInput').props.value).toBe('');
+  });
+
+  it('keeps the tablet note draft when save and apply cannot update the record', async () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
+    const handleApplyToRecord = jest.fn().mockRejectedValue(new Error('fail'));
+    const handleCreateNote = jest.fn().mockResolvedValue(undefined);
+
+    const { getByTestId, getByText } = renderPanel(feature, {
+      onApplyToRecord: handleApplyToRecord,
+      onCreateNote: handleCreateNote,
+    });
+
+    fireEvent.changeText(
+      getByTestId('fieldNoteTextInput'),
+      '바닥면에서 원형 윤곽 확인.'
+    );
+
+    await act(async () => {
+      fireEvent.press(getByTestId('fieldNoteSaveAndApply'));
+      await Promise.resolve();
+      jest.runOnlyPendingTimers();
+    });
+
+    expect(getByText('저장·반영 실패')).toBeTruthy();
+    expect(handleApplyToRecord).toHaveBeenCalledTimes(1);
+    expect(handleCreateNote).not.toHaveBeenCalled();
+    expect(getByTestId('fieldNoteTextInput').props.value)
+      .toBe('바닥면에서 원형 윤곽 확인.');
+  });
+
   it('does not mark the selected record as updated when record apply fails', async () => {
     const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
     const handleApplyToRecord = jest.fn().mockRejectedValue(new Error('fail'));

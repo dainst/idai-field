@@ -22,6 +22,7 @@ import {
 } from 'react-native';
 import CategoryIcon from '@/components/common/CategoryIcon';
 import DocumentAddModal from '@/components/Project/DocumentAddModal';
+import KoreanFieldworkDailyNotebookDigest from '@/components/Project/KoreanFieldworkDailyNotebookDigest';
 import KoreanFieldworkFieldNotePanel from '@/components/Project/KoreanFieldworkFieldNotePanel';
 import KoreanFieldworkHierarchyBoard from '@/components/Project/KoreanFieldworkHierarchyBoard';
 import KoreanFieldworkNotebookLedger from '@/components/Project/KoreanFieldworkNotebookLedger';
@@ -720,6 +721,14 @@ const DocumentsList: React.FC = () => {
             warning={todaySummary.openIssues.length > 0}
           />
         </View>
+
+        <KoreanFieldworkDailyNotebookDigest
+          canOpenDailyLog={!quickActions.dailyLog.disabled}
+          documents={documents}
+          now={now}
+          onContinueEntry={continueNotebookEntry}
+          onOpenDailyLog={openDailyLog}
+        />
 
         {selectedWorkbenchDocument && (
           <>

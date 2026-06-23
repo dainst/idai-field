@@ -14,6 +14,7 @@ import {
   getKoreanFieldworkFieldNoteObservationPrompts,
   getKoreanFieldworkFieldNotePresets,
   getKoreanFieldworkFieldNoteReportPreview,
+  getKoreanFieldworkDailyNotebookDigest,
   getKoreanFieldworkNotebookEntries,
   getKoreanFieldworkNotebookContinuationSeed,
   getKoreanFieldworkDailyLogAppendUpdates,
@@ -381,6 +382,48 @@ describe('korean-fieldwork-field-notes', () => {
         nextWork: '북쪽 트렌치 배수 상태 확인.',
       },
     });
+  });
+
+  it('builds a today digest for tablet daily note review', () => {
+    const operation = createDoc('operation-1', C.OPERATION, 'A 구역');
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
+    const todayMemo = createDoc('memo-1', C.PEN_MEMO, '메모 1', {
+      relations: { depicts: [feature.resource.id] },
+      date: '2026-06-23',
+      penMemoReviewedTranscript: [
+        '[관찰 내용] 바닥면 정리 중 원형 윤곽 확인.',
+        '[다음 작업] 사진 보강.',
+      ].join('\n'),
+    });
+    const oldMemo = createDoc('memo-old', C.PEN_MEMO, '메모 과거', {
+      relations: { depicts: [feature.resource.id] },
+      date: '2026-06-22',
+      penMemoReviewedTranscript: '[관찰 내용] 전날 기록.',
+    });
+    const dailyLog = createDoc('daily-log-1', C.DAILY_LOG, '6월 23일 작업일지', {
+      relations: { isRecordedIn: [operation.resource.id] },
+      date: '2026-06-23',
+      description: [
+        '10:30 A 구역 - [관찰 내용] 배수로 정리.',
+        '[사진·도면·유물·시료 번호] 사진 12',
+      ].join('\n'),
+    });
+
+    const digest = getKoreanFieldworkDailyNotebookDigest(
+      [operation, feature, todayMemo, oldMemo, dailyLog],
+      new Date('2026-06-23T12:00:00.000Z')
+    );
+
+    expect(digest.dateLabel).toBe('2026-06-23');
+    expect(digest.primaryDailyLog).toBe(dailyLog);
+    expect(digest.entries.map((entry) => entry.id)).toEqual([
+      'daily-log-1-0',
+      'memo-1',
+    ]);
+    expect(digest.nextWorkEntries.map((entry) => entry.id)).toEqual(['memo-1']);
+    expect(digest.evidenceMissingEntries.map((entry) => entry.id)).toEqual([
+      'memo-1',
+    ]);
   });
 
   it('finds the operation for a selected trench or feature record', () => {

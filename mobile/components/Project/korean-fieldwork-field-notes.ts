@@ -116,6 +116,15 @@ export interface KoreanFieldworkFieldNoteContinuationSeed {
   input: KoreanFieldworkFieldNoteInput;
 }
 
+export interface KoreanFieldworkDailyNotebookDigest {
+  dateLabel: string;
+  entries: KoreanFieldworkNotebookEntry[];
+  dailyLogDocuments: Document[];
+  primaryDailyLog?: Document;
+  nextWorkEntries: KoreanFieldworkNotebookEntry[];
+  evidenceMissingEntries: KoreanFieldworkNotebookEntry[];
+}
+
 interface KoreanFieldworkNotebookEntryWithSortKey
   extends KoreanFieldworkNotebookEntry {
   sortKey: number;
@@ -343,6 +352,37 @@ export const getKoreanFieldworkNotebookContinuationSeed = (
   sourceLabel: entry.sourceLabel,
   input: getKoreanFieldworkNotebookContinuationInput(entry),
 });
+
+export const getKoreanFieldworkDailyNotebookDigest = (
+  documents: Document[],
+  now = new Date(),
+  maxEntries = 8
+): KoreanFieldworkDailyNotebookDigest => {
+  const dateLabel = formatDate(now);
+  const entries = getKoreanFieldworkNotebookEntries(
+    documents,
+    Number.MAX_SAFE_INTEGER
+  )
+    .filter((entry) => isDocumentDate(entry.sourceDocument, dateLabel))
+    .slice(0, maxEntries);
+  const dailyLogDocuments = documents
+    .filter((document) =>
+      document.resource.category === C.DAILY_LOG
+      && isDocumentDate(document, dateLabel)
+    )
+    .sort(compareNewestFirst);
+
+  return {
+    dateLabel,
+    entries,
+    dailyLogDocuments,
+    primaryDailyLog: dailyLogDocuments[0],
+    nextWorkEntries: entries.filter((entry) => entry.nextWork),
+    evidenceMissingEntries: entries.filter((entry) =>
+      entry.needsEvidenceNumbers
+    ),
+  };
+};
 
 export const normalizeFieldNoteText = (text: string): string =>
   text.replace(/\r\n/g, '\n').trim();
@@ -1419,6 +1459,17 @@ const getFieldNoteHistoryDateLabel = (document: Document): string => {
 
   const timestamp = getTimestamp(document);
   return timestamp > 0 ? formatDate(new Date(timestamp)) : '';
+};
+
+const isDocumentDate = (
+  document: Document,
+  dateLabel: string
+): boolean => {
+  const date = getStringField(document, 'date');
+  if (date) return date === dateLabel;
+
+  const timestamp = getTimestamp(document);
+  return timestamp > 0 && formatDate(new Date(timestamp)) === dateLabel;
 };
 
 const getFieldNoteSectionId = (

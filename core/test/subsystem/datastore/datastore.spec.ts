@@ -133,7 +133,7 @@ describe('subsystem/datastore', () => {
         document2 = await app.datastore.create(document2);
         document3 = await app.datastore.create(document3);
 
-        expect(document3.warnings?.missingOrInvalidParent).toBe(true);
+        expect(app.warningsManager.get(document3)?.missingOrInvalidParent).toBe(true);
 
         const result = await app.datastore.find({ categories: ['Find'] });
         
@@ -156,7 +156,7 @@ describe('subsystem/datastore', () => {
         document2 = await app.datastore.create(document2);
         document3 = await app.datastore.create(document3);
 
-        expect(document3.warnings?.missingOrInvalidParent).toBe(true);
+        expect(app.warningsManager.get(document3)?.missingOrInvalidParent).toBe(true);
 
         const result = await app.datastore.find(
             { categories: ['Find'] },
@@ -184,15 +184,15 @@ describe('subsystem/datastore', () => {
         document2 = await app.datastore.create(document2);
         document3 = await app.datastore.create(document3);
 
-        expect(document2.warnings?.nonUniqueIdentifier).toBe(true);
-        expect(document3.warnings?.nonUniqueIdentifier).toBe(true);
+        expect(app.warningsManager.get(document2)?.nonUniqueIdentifier).toBe(true);
+        expect(app.warningsManager.get(document3)?.nonUniqueIdentifier).toBe(true);
 
         const clonedDocument3 = Document.clone(document3);
         clonedDocument3.resource.identifier = '2';
         await app.datastore.update(clonedDocument3);
         
-        expect(document2.warnings).toBeUndefined();
-        expect(document3.warnings).toBeUndefined();
+        expect(app.warningsManager.get(document2)).toBeUndefined();
+        expect(app.warningsManager.get(document3)).toBeUndefined();
 
         done();
     });
@@ -212,13 +212,13 @@ describe('subsystem/datastore', () => {
         await app.datastore.create(document1);
         document2 = await app.datastore.create(document2);
 
-        expect(document2.warnings?.missingRelationTargets?.relationNames).toEqual(['isAbove']);
-        expect(document2.warnings?.missingRelationTargets?.targetIds).toEqual(['id3']);
+        expect(app.warningsManager.get(document2)?.missingRelationTargets?.relationNames).toEqual(['isAbove']);
+        expect(app.warningsManager.get(document2)?.missingRelationTargets?.targetIds).toEqual(['id3']);
 
         document3 = await app.datastore.create(document3);
 
-        expect(document2.warnings).toBeUndefined();
-        expect(document3.warnings).toBeUndefined();
+        expect(app.warningsManager.get(document2)).toBeUndefined();
+        expect(app.warningsManager.get(document3)).toBeUndefined();
 
         done();
     });
@@ -231,10 +231,10 @@ describe('subsystem/datastore', () => {
 
         document2.resource.relations.isRecordedIn = ['id1'];
         document2 = await app.datastore.create(document2);
-        expect(document2.warnings?.missingOrInvalidParent).toBe(true);
+        expect(app.warningsManager.get(document2)?.missingOrInvalidParent).toBe(true);
 
         await app.datastore.create(document1);
-        expect(document2.warnings).toBeUndefined();
+        expect(app.warningsManager.get(document2)).toBeUndefined();
 
         done();
     });

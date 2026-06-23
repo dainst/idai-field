@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { ChangesStream, Datastore, DocumentCache, IdGenerator, IndexFacade, PouchdbDatastore,
-    ProjectConfiguration } from 'idai-field-core';
+import { ChangesStream, Datastore, DocumentCache, IdGenerator, IndexFacade, PouchdbDatastore, ProjectConfiguration, 
+    WarningsUpdater } from 'idai-field-core';
 import { SettingsProvider } from '../settings/settings-provider';
 import { ExpressServer } from '../express-server/express-server';
 
@@ -22,15 +22,17 @@ const PouchDB = window.require('pouchdb-browser');
                                  indexFacade: IndexFacade,
                                  documentCache: DocumentCache,
                                  settingsProvider: SettingsProvider,
-                                 projectConfiguration: ProjectConfiguration
+                                 projectConfiguration: ProjectConfiguration,
+                                 warningsUpdater: WarningsUpdater
             ): ChangesStream {
 
                 return new ChangesStream(
-                    pouchdbDatastore, datastore, indexFacade, documentCache, projectConfiguration,
+                    pouchdbDatastore, datastore, indexFacade, documentCache, warningsUpdater, projectConfiguration,
                     () => settingsProvider.getSettings().username
                 );
             },
-            deps: [PouchdbDatastore, Datastore, IndexFacade, DocumentCache, SettingsProvider, ProjectConfiguration]
+            deps: [PouchdbDatastore, Datastore, IndexFacade, DocumentCache, SettingsProvider, ProjectConfiguration,
+                WarningsUpdater]
         },
         ExpressServer,
         DocumentCache,
@@ -54,17 +56,20 @@ const PouchDB = window.require('pouchdb-browser');
                                  indexFacade: IndexFacade,
                                  documentCache: DocumentCache,
                                  settingsProvider: SettingsProvider,
-                                 projectConfiguration: ProjectConfiguration
+                                 projectConfiguration: ProjectConfiguration,
+                                 warningsUpdater: WarningsUpdater
             ): Datastore {
                 return new Datastore(
                     pouchdbDatastore,
                     indexFacade,
                     documentCache,
                     projectConfiguration,
+                    warningsUpdater,
                     () => settingsProvider.getSettings().username
                 );
             },
-            deps: [PouchdbDatastore, IndexFacade, DocumentCache, SettingsProvider, ProjectConfiguration]
+            deps: [PouchdbDatastore, IndexFacade, DocumentCache, SettingsProvider, ProjectConfiguration,
+                WarningsUpdater]
         }
     ]
 })

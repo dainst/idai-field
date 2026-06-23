@@ -3,8 +3,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Map, flatten, intersect, isArray, isString, nop, set } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Datastore, Document, FieldDocument, IndexFacade, Labels,
     ProjectConfiguration, WarningType, ConfigReader, Group, Resource, Field, Tree, InvalidDataUtil, OutlierWarnings,
-    RelationTargetWarnings, DateValidationResult, DateSpecification, Condition, Valuelist,
-    ValuelistUtil, FieldResource } from 'idai-field-core';
+    RelationTargetWarnings, DateValidationResult, DateSpecification, Condition, Valuelist, ValuelistUtil,
+    FieldResource, WarningsManager, Warnings } from 'idai-field-core';
 import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
 import { WarningFilter, WarningFilters } from '../../../services/warnings/warning-filters';
@@ -90,6 +90,7 @@ export class WarningsModalComponent extends ContextMenuProvider {
                 private configReader: ConfigReader,
                 private labels: Labels,
                 private warningsService: WarningsService,
+                private warningsManager: WarningsManager,
                 private routingService: Routing,
                 changeDetectorRef: ChangeDetectorRef) {
 
@@ -176,7 +177,7 @@ export class WarningsModalComponent extends ContextMenuProvider {
 
         return this.selectedDocument.resource.relations[section.fieldName]?.filter(targetId => {
             const warnings: RelationTargetWarnings
-                = this.selectedDocument.warnings?.[section.type] as RelationTargetWarnings;
+                = this.warningsManager.get(this.selectedDocument)?.[section.type] as RelationTargetWarnings;
             return warnings?.targetIds.includes(targetId);
         }) ?? [];
     }
@@ -567,15 +568,17 @@ export class WarningsModalComponent extends ContextMenuProvider {
 
     private async updateSections(document: FieldDocument) {
 
+        const warnings: Warnings = this.warningsManager.get(document);
+
         if (!document) {
             this.sections = [];
         } else if (document.resource.category === 'Configuration') {
             this.sections = [{ type: 'conflicts' }];
-        } else if (!document?.warnings) {
+        } else if (!warnings) {
             this.sections = [];
         } else {
             this.sections = [];
-            for (let type of Object.keys(document.warnings)) {
+            for (let type of Object.keys(warnings)) {
                 switch (type) {
                     case 'unconfiguredFields':
                     case 'invalidFields':
@@ -584,26 +587,26 @@ export class WarningsModalComponent extends ContextMenuProvider {
                     case 'unallowedCharacterFields':
                         this.sections = this.sections.concat(
                             await this.createSections(
-                                type as WarningType, document, document.warnings[type] as string[]
+                                type as WarningType, document, warnings, warnings[type] as string[]
                             )
                         );
                         break;
                     case 'missingRelationTargets':
                     case 'invalidRelationTargets':
                         this.sections = this.sections.concat(await this.createSections(
-                            type as WarningType, document,
-                            (document.warnings[type] as RelationTargetWarnings).relationNames
+                            type as WarningType, document, warnings,
+                            (warnings[type] as RelationTargetWarnings).relationNames
                         ));
                         break;
                     case 'outliers':
                         this.sections = this.sections.concat(await this.createSections(
-                            type as WarningType, document,
-                            Object.keys((document.warnings[type] as OutlierWarnings).fields)
+                            type as WarningType, document, warnings,
+                            Object.keys((warnings[type] as OutlierWarnings).fields)
                         ));
                         break;
                     default:
                         this.sections = this.sections.concat([
-                            await this.createSection(type as WarningType, document)
+                            await this.createSection(type as WarningType, document, warnings)
                         ]);
                 }
             }
@@ -611,20 +614,20 @@ export class WarningsModalComponent extends ContextMenuProvider {
     }
 
 
-    private async createSections(type: WarningType, document: FieldDocument,
+    private async createSections(type: WarningType, document: FieldDocument, warnings: Warnings,
                                  fieldNames: string[]): Promise<Array<WarningSection>> {
 
         const newSections: Array<WarningSection> = [];
 
         for (let fieldName of fieldNames) {
-            newSections.push(await this.createSection(type, document, fieldName));
+            newSections.push(await this.createSection(type, document, warnings, fieldName));
         }
 
         return newSections;
     }
 
 
-    private async createSection(type: WarningType, document: FieldDocument,
+    private async createSection(type: WarningType, document: FieldDocument, warnings: Warnings,
                                 fieldName?: string): Promise<WarningSection> {
 
         const category: CategoryForm|undefined = this.projectConfiguration.getCategory(document.resource.category);
@@ -642,7 +645,7 @@ export class WarningsModalComponent extends ContextMenuProvider {
             section.fieldName = fieldName;
         }
         
-        if (document.warnings.unconfiguredCategory) {
+        if (warnings.unconfiguredCategory) {
             section.unconfiguredCategoryName = document.resource.category;
         } else if (document.resource.category !== 'Configuration'
                 && fieldName
@@ -664,7 +667,7 @@ export class WarningsModalComponent extends ContextMenuProvider {
         }
 
         if (type === 'outliers') {
-            const outlierValues: Map<string[]>|string[] = document.warnings.outliers.fields[fieldName];
+            const outlierValues: Map<string[]>|string[] = warnings.outliers.fields[fieldName];
             section.outlierValues = isArray(outlierValues)
                 ? outlierValues
                 : set(flatten(Object.values(outlierValues)));
@@ -683,7 +686,7 @@ export class WarningsModalComponent extends ContextMenuProvider {
         }
 
         if (section.isRelationField) {
-           section.relationTargets = await this.fetchRelationTargets(document, fieldName, type);
+           section.relationTargets = await this.fetchRelationTargets(document, warnings, fieldName, type);
         }
 
         return section;
@@ -700,13 +703,13 @@ export class WarningsModalComponent extends ContextMenuProvider {
     }
 
 
-    private async fetchRelationTargets(document: FieldDocument, fieldName: string,
+    private async fetchRelationTargets(document: FieldDocument, warnings: Warnings, fieldName: string,
                                        type: WarningType): Promise<Array<Document>> {
 
         const targetIds: string[] = type === 'invalidRelationTargets'
             ? intersect(
                 document.resource.relations[fieldName],
-                document.warnings.invalidRelationTargets.targetIds
+                warnings.invalidRelationTargets.targetIds
             ) : document.resource.relations[fieldName];
         
         if (!isArray(targetIds) || !targetIds.every(targetId => isString(targetId))) return undefined;

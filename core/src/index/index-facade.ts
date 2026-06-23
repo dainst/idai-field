@@ -15,6 +15,7 @@ import { getSortedIds } from './get-sorted-ids';
 import { IndexItem, TypeResourceIndexItem } from './index-item';
 import { performQuery } from './perform-query';
 import { Relation } from '../model';
+import { WarningsManager } from '../warnings/warnings-manager';
 
 
 const CONFIGURATION = 'Configuration';
@@ -35,6 +36,7 @@ export class IndexFacade {
     constructor(private constraintIndex: ConstraintIndex,
                 private fulltextIndex: FulltextIndex,
                 private projectConfiguration: ProjectConfiguration,
+                private warningsManager: WarningsManager,
                 private showWarnings: boolean) {}
 
 
@@ -64,7 +66,9 @@ export class IndexFacade {
     public putToSingleIndex(document: Document, constraintIndexName: string) {
 
         IndexFacade.setChildOfRelation(document);
-        ConstraintIndex.put(this.constraintIndex, document, false, constraintIndexName);
+        ConstraintIndex.put(
+            this.constraintIndex, document, this.warningsManager.get(document), false, constraintIndexName
+        );
         IndexFacade.removeChildOfRelation(document);
     }
 
@@ -182,13 +186,14 @@ export class IndexFacade {
             IndexFacade.createAssociatedTypeItem(this.indexItems, document);
         }
 
-        ConstraintIndex.put(this.constraintIndex, document, skipRemoval);
+        ConstraintIndex.put(this.constraintIndex, document, this.warningsManager.get(document), skipRemoval);
         FulltextIndex.put(
             this.fulltextIndex, document,
             getFieldsToIndex(
                 Named.arrayToMap(Tree.flatten(this.projectConfiguration.getCategories())),
                 document.resource.category
             ),
+            this.warningsManager.get(document),
             skipRemoval
         );
 

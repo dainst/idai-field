@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FieldDocument, CategoryForm, IndexFacade, Constraint, RelationsManager, ProjectConfiguration,
-    Datastore} from 'idai-field-core';
+import { FieldDocument, CategoryForm, IndexFacade, Constraint, RelationsManager, ProjectConfiguration, Datastore,
+    WarningsManager } from 'idai-field-core';
 import { Loading } from '../loading';
 import { MoveUtility } from './move-utility';
 import { UtilTranslations } from '../../../util/util-translations';
@@ -41,6 +41,7 @@ export class MoveModalComponent {
                 private relationsManager: RelationsManager,
                 private indexFacade: IndexFacade,
                 private projectConfiguration: ProjectConfiguration,
+                private warningsManager: WarningsManager,
                 private datastore: Datastore,
                 private loading: Loading,
                 private utilTranslations: UtilTranslations,
@@ -49,7 +50,8 @@ export class MoveModalComponent {
 
     public isLoading = () => this.loading.isLoading('moveModal');
 
-    public hasValidParent = () => this.documents.length > 1 || !this.documents[0].warnings?.missingOrInvalidParent;
+    public hasValidParent = () => this.documents.length > 1
+        || !this.warningsManager.get(this.documents[0])?.missingOrInvalidParent;
 
 
     public getConstraints = () => {

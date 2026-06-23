@@ -1,15 +1,29 @@
-import { WarningsUpdater } from '../../src/datastore/warnings-updater';
-import { Warnings } from '../../src/model/document/warnings';
+import { WarningsUpdater } from '../../src/warnings/warnings-updater';
+import { Warnings } from '../../src/model/warnings';
 import { Field } from '../../src/model/configuration/field';
 import { doc } from '../test-helpers';
 import { CategoryForm } from '../../src/model/configuration/category-form';
 import { DateConfiguration } from '../../src/model/configuration/date-configuration';
+import { Document } from '../../src/model/document/document';
+import { WarningsManager } from '../../src/warnings/warnings-manager';
+import { Datastore } from '../../src/datastore/datastore';
 
 
 const createDocument = (id: string, category: string = 'Category') => doc('sd', 'identifier' + id, category, id);
 
 
-function getMockProjectConfiguration(categoryDefinition, parentCategoryDefinition?) {
+function buildWarningsUpdater(warningsUpdater, mockIndexFacade, mockProjectConfiguration, documents) {
+
+    return new WarningsUpdater(
+        warningsUpdater,
+        mockIndexFacade,
+        getMockDocumentCache(documents),
+        mockProjectConfiguration
+    );
+}
+
+
+function getMockProjectConfiguration(categoryDefinition?, parentCategoryDefinition?) {
 
     const mockProjectConfiguration = jasmine.createSpyObj(
         'projectConfiguration',
@@ -53,6 +67,23 @@ function getMockIndexFacade() {
         'mockIndexFacade',
         ['putToSingleIndex', 'getCount', 'notifyObservers', 'find']
     );
+}
+
+
+function getMockDocumentCache(documents: Array<Document>) {
+
+    const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
+    mockDocumentCache.get.and.callFake(resourceId => {
+        return documents.find(document => document.resource.id === resourceId);
+    });
+
+    return mockDocumentCache;
+}
+
+
+function getMockFindFunction(returnedDocuments: Array<Document>) {
+
+    return () => Promise.resolve({ documents: returnedDocuments } as Datastore.FindResult);
 }
 
 
@@ -156,13 +187,19 @@ describe('WarningsUpdater', () => {
             coordinates: [[[10.5, 25.3], [10.7, 25.4], [11.5, 26.6], [10.5, 25.3]]]
         };
 
-        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition, parentCategoryDefinition);
-
-        WarningsUpdater.updateIndexIndependentWarnings(documents[0], mockProjectConfiguration);
-        WarningsUpdater.updateIndexIndependentWarnings(documents[1], mockProjectConfiguration);
-        WarningsUpdater.updateIndexIndependentWarnings(documents[2], mockProjectConfiguration);
+        const warningsManager = new WarningsManager();
         
-        expect(documents[0].warnings).toEqual({
+        const warningsUpdater = buildWarningsUpdater(
+            warningsManager, getMockIndexFacade(),
+            getMockProjectConfiguration(categoryDefinition, parentCategoryDefinition),
+            documents
+        );
+
+        warningsUpdater.updateIndexIndependentWarnings(documents[0]);
+        warningsUpdater.updateIndexIndependentWarnings(documents[1]);
+        warningsUpdater.updateIndexIndependentWarnings(documents[2]);
+        
+        expect(warningsManager.get(documents[0])).toEqual({
             unconfiguredFields: ['unconfiguredField', 'unconfiguredRelation'],
             invalidFields: ['number'],
             missingMandatoryFields: ['mandatoryField', 'mandatoryRelation'],
@@ -173,7 +210,7 @@ describe('WarningsUpdater', () => {
             invalidProcessState: true,
             unallowedGeometryType: true
         });
-        expect(documents[1].warnings).toEqual({
+        expect(warningsManager.get(documents[1])).toEqual({
             unconfiguredFields: [],
             invalidFields: [],
             missingMandatoryFields: [],
@@ -181,7 +218,7 @@ describe('WarningsUpdater', () => {
             unallowedCharacterFields: [],
             unconfiguredCategory: true
         });
-        expect(documents[2].warnings).toBeUndefined();
+        expect(warningsManager.get(documents[2])).toBeUndefined();
     });
 
     
@@ -195,15 +232,19 @@ describe('WarningsUpdater', () => {
         const mockIndexFacade = getMockIndexFacade();
         mockIndexFacade.getCount.and.returnValue(2);
 
-        const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
-        mockDatastore.find.and.returnValue(Promise.resolve({ documents: [documents[1]] }));
+        const warningsManager = new WarningsManager();
 
-        await WarningsUpdater.updateNonUniqueFieldWarning(
-            documents[0], mockIndexFacade, 'identifier', 'nonUniqueIdentifier', mockDatastore, undefined, true
+        const warningsUpdater = buildWarningsUpdater(
+            warningsManager, mockIndexFacade, getMockProjectConfiguration(), documents
         );
 
-        expect(documents[0].warnings?.nonUniqueIdentifier).toBe(true);
-        expect(documents[1].warnings?.nonUniqueIdentifier).toBe(true);
+        await warningsUpdater.updateNonUniqueFieldWarning(
+            documents[0], 'identifier', 'nonUniqueIdentifier', getMockFindFunction([documents[1]]), undefined, true
+        );
+
+        expect(warningsManager.get(documents[0])?.nonUniqueIdentifier).toBe(true);
+        expect(warningsManager.get(documents[1])?.nonUniqueIdentifier).toBe(true);
+
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'nonUniqueIdentifier:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'nonUniqueIdentifier:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
@@ -220,23 +261,29 @@ describe('WarningsUpdater', () => {
             createDocument('2')
         ];
 
-        documents[0].warnings = Warnings.createDefault();
-        documents[0].warnings.nonUniqueIdentifier = true;
-        documents[1].warnings = Warnings.createDefault();
-        documents[1].warnings.nonUniqueIdentifier = true;
-
         const mockIndexFacade = getMockIndexFacade();
         mockIndexFacade.getCount.and.returnValue(1);
 
-        const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
-        mockDatastore.find.and.returnValue(Promise.resolve({ documents: [documents[1]] }));
+        const warningsManager = new WarningsManager();
 
-        await WarningsUpdater.updateNonUniqueFieldWarning(
-            documents[0], mockIndexFacade, 'identifier', 'nonUniqueIdentifier', mockDatastore, 'previousIdentifier', true
+        const warningsUpdater = buildWarningsUpdater(
+            warningsManager, mockIndexFacade, getMockProjectConfiguration(), documents
         );
 
-        expect(documents[0].warnings).toBeUndefined();
-        expect(documents[1].warnings).toBeUndefined();
+        for (let document of documents) {
+            const warnings = Warnings.createDefault();
+            warnings.nonUniqueIdentifier = true;
+            warningsManager.set(document, warnings);
+        }
+
+        await warningsUpdater.updateNonUniqueFieldWarning(
+            documents[0], 'identifier', 'nonUniqueIdentifier', getMockFindFunction([documents[1]]),
+            'previousIdentifier', true
+        );
+
+        expect(warningsManager.get(documents[0])).toBeUndefined();
+        expect(warningsManager.get(documents[1])).toBeUndefined();
+
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'nonUniqueIdentifier:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'nonUniqueIdentifier:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
@@ -261,17 +308,20 @@ describe('WarningsUpdater', () => {
         const mockIndexFacade = getMockIndexFacade();
         mockIndexFacade.find.and.returnValue(['1', '2']);
 
-        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
+        const warningsManager = new WarningsManager();
 
-        const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
-        mockDatastore.find.and.returnValue(Promise.resolve({ documents: [documents[0], documents[1]] }));
-
-        await WarningsUpdater.updateResourceLimitWarning(
-            documents[0], categoryDefinition, mockIndexFacade, mockProjectConfiguration, mockDatastore, true
+        const warningsUpdater = buildWarningsUpdater(
+            warningsManager, mockIndexFacade, getMockProjectConfiguration(categoryDefinition, undefined), documents
         );
 
-        expect(documents[0].warnings?.resourceLimitExceeded).toBe(true);
-        expect(documents[1].warnings?.resourceLimitExceeded).toBe(true);
+        await warningsUpdater.updateResourceLimitWarning(
+            documents[0], categoryDefinition,
+            getMockFindFunction(documents.slice()), true
+        );
+
+        expect(warningsManager.get(documents[0])?.resourceLimitExceeded).toBe(true);
+        expect(warningsManager.get(documents[1])?.resourceLimitExceeded).toBe(true);
+
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'resourceLimitExceeded:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'resourceLimitExceeded:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
@@ -293,25 +343,26 @@ describe('WarningsUpdater', () => {
             createDocument('2')
         ];
 
-        documents[0].warnings = Warnings.createDefault();
-        documents[0].warnings.resourceLimitExceeded = true;
-        documents[1].warnings = Warnings.createDefault();
-        documents[1].warnings.resourceLimitExceeded = true;
-
         const mockIndexFacade = getMockIndexFacade();
         mockIndexFacade.find.and.returnValue(['1', '2']);
 
-        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
+        const warningsManager = new WarningsManager();
 
-        const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
-        mockDatastore.find.and.returnValue(Promise.resolve({ documents: [documents[0], documents[1]] }));
-
-        await WarningsUpdater.updateResourceLimitWarnings(
-            mockDatastore, mockIndexFacade, mockProjectConfiguration, categoryDefinition
+        const warningsUpdater = buildWarningsUpdater(
+            warningsManager, mockIndexFacade, getMockProjectConfiguration(categoryDefinition, undefined), documents
         );
 
-        expect(documents[0].warnings).toBeUndefined();
-        expect(documents[1].warnings).toBeUndefined();
+        for (let document of documents) {
+            const warnings = Warnings.createDefault();
+            warnings.resourceLimitExceeded = true;
+            warningsManager.set(document, warnings);
+        }
+
+        await warningsUpdater.updateResourceLimitWarnings(categoryDefinition, getMockFindFunction(documents.slice()));
+
+        expect(warningsManager.get(documents[0])).toBeUndefined();
+        expect(warningsManager.get(documents[1])).toBeUndefined();
+
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'resourceLimitExceeded:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'resourceLimitExceeded:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
@@ -341,17 +392,22 @@ describe('WarningsUpdater', () => {
         const mockIndexFacade = getMockIndexFacade();
         mockIndexFacade.find.and.returnValue(['1', '2']);
 
-        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition, parentCategoryDefinition);
+        const warningsManager = new WarningsManager();
 
-        const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
-        mockDatastore.find.and.returnValue(Promise.resolve({ documents: [documents[0], documents[1]] }));
-
-        await WarningsUpdater.updateResourceLimitWarning(
-            documents[0], categoryDefinition, mockIndexFacade, mockProjectConfiguration, mockDatastore, true
+        const warningsUpdater = buildWarningsUpdater(
+            warningsManager, mockIndexFacade,
+            getMockProjectConfiguration(categoryDefinition, parentCategoryDefinition),
+            documents
+        );
+        
+        await warningsUpdater.updateResourceLimitWarning(
+            documents[0], categoryDefinition,
+            getMockFindFunction(documents.slice()), true
         );
 
-        expect(documents[0].warnings?.resourceLimitExceeded).toBe(true);
-        expect(documents[1].warnings?.resourceLimitExceeded).toBe(true);
+        expect(warningsManager.get(documents[0])?.resourceLimitExceeded).toBe(true);
+        expect(warningsManager.get(documents[1])?.resourceLimitExceeded).toBe(true);
+
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'resourceLimitExceeded:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'resourceLimitExceeded:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
@@ -378,25 +434,28 @@ describe('WarningsUpdater', () => {
             createDocument('2')
         ];
 
-        documents[0].warnings = Warnings.createDefault();
-        documents[0].warnings.resourceLimitExceeded = true;
-        documents[1].warnings = Warnings.createDefault();
-        documents[1].warnings.resourceLimitExceeded = true;
-
         const mockIndexFacade = getMockIndexFacade();
         mockIndexFacade.find.and.returnValue(['1', '2']);
 
-        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition, parentCategoryDefinition);
+        const warningsManager = new WarningsManager();
 
-        const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
-        mockDatastore.find.and.returnValue(Promise.resolve({ documents: [documents[0], documents[1]] }));
-
-        await WarningsUpdater.updateResourceLimitWarnings(
-            mockDatastore, mockIndexFacade, mockProjectConfiguration, categoryDefinition
+        const warningsUpdater = buildWarningsUpdater(
+            warningsManager, mockIndexFacade,
+            getMockProjectConfiguration(categoryDefinition, parentCategoryDefinition),
+            documents
         );
 
-        expect(documents[0].warnings).toBeUndefined();
-        expect(documents[1].warnings).toBeUndefined();
+        for (let document of documents) {
+            const warnings = Warnings.createDefault();
+            warnings.resourceLimitExceeded = true;
+            warningsManager.set(document, warnings);
+        }
+
+        await warningsUpdater.updateResourceLimitWarnings(categoryDefinition, getMockFindFunction(documents.slice()));
+
+        expect(warningsManager.get(documents[0])).toBeUndefined();
+        expect(warningsManager.get(documents[1])).toBeUndefined();
+
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'resourceLimitExceeded:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'resourceLimitExceeded:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
@@ -418,18 +477,20 @@ describe('WarningsUpdater', () => {
         documents[0].resource.relations['relation3'] = ['missing2'];
 
         const mockIndexFacade = getMockIndexFacade();
+        
+        const warningsManager = new WarningsManager();
 
-        const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
-        mockDocumentCache.get.and.callFake(resourceId => {
-            return documents.find(document => document.resource.id === resourceId);
-        });
+        const warningsUpdater = buildWarningsUpdater(
+            warningsManager, mockIndexFacade, getMockProjectConfiguration(), documents
+        );
 
-        await WarningsUpdater.updateMissingRelationTargetWarning(documents[0], mockIndexFacade, mockDocumentCache);
+        await warningsUpdater.updateMissingRelationTargetWarning(documents[0], getMockFindFunction(documents.slice()));
 
-        expect(documents[0].warnings?.missingRelationTargets).toEqual({
+        expect(warningsManager.get(documents[0])?.missingRelationTargets).toEqual({
             relationNames: ['relation2', 'relation3'],
             targetIds: ['missing1', 'missing2']
         });
+
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'missingRelationTargets:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'missingRelationTargetIds:contain');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
@@ -445,24 +506,27 @@ describe('WarningsUpdater', () => {
             createDocument('2')
         ];
 
-        documents[0].warnings = Warnings.createDefault();
-        documents[0].warnings.missingRelationTargets = {
+        documents[0].resource.relations['relation'] = ['2'];
+
+        const mockIndexFacade = getMockIndexFacade();
+
+        const warningsManager = new WarningsManager();
+
+        const warningsUpdater = buildWarningsUpdater(
+            warningsManager, mockIndexFacade, getMockProjectConfiguration(), documents
+        );
+
+        const warnings = Warnings.createDefault();
+        warnings.missingRelationTargets = {
             relationNames: ['relation'],
             targetIds: ['missing']
         };
+        warningsManager.set(documents[0], warnings);
 
-        documents[0].resource.relations['relation'] = ['2'];
+        await warningsUpdater.updateMissingRelationTargetWarning(documents[0], getMockFindFunction(documents.slice()));
 
-        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex']);
+        expect(warningsManager.get(documents[0])).toBeUndefined();
 
-        const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
-        mockDocumentCache.get.and.callFake(resourceId => {
-            return documents.find(document => document.resource.id === resourceId);
-        });
-
-        await WarningsUpdater.updateMissingRelationTargetWarning(documents[0], mockIndexFacade, mockDocumentCache);
-
-        expect(documents[0].warnings).toBeUndefined();
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'missingRelationTargets:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'missingRelationTargetIds:contain');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
@@ -478,29 +542,29 @@ describe('WarningsUpdater', () => {
             createDocument('2')
         ];
 
-        documents[1].warnings = Warnings.createDefault();
-        documents[1].warnings.missingRelationTargets = {
-            relationNames: ['relation'],
-            targetIds: ['1']
-        };
-
         documents[1].resource.relations['relation'] = ['1'];
 
         const mockIndexFacade = getMockIndexFacade();
-    
-        const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
-        mockDocumentCache.get.and.callFake(resourceId => {
-            return documents.find(document => document.resource.id === resourceId);
-        });
 
-        const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
-        mockDatastore.find.and.returnValue(Promise.resolve({ documents: [documents[1]] }));
+        const warningsManager = new WarningsManager();
 
-        await WarningsUpdater.updateMissingRelationTargetWarning(
-            documents[0], mockIndexFacade, mockDocumentCache, mockDatastore, true
+        const warningsUpdater = buildWarningsUpdater(
+            warningsManager, mockIndexFacade, getMockProjectConfiguration(), documents
         );
 
-        expect(documents[1].warnings).toBeUndefined();
+        const warnings = Warnings.createDefault();
+        warnings.missingRelationTargets = {
+            relationNames: ['relation'],
+            targetIds: ['1']
+        };
+        warningsManager.set(documents[1], warnings);
+
+        await warningsUpdater.updateMissingRelationTargetWarning(
+            documents[0], getMockFindFunction([documents[1]]), true
+        );
+
+        expect(warningsManager.get(documents[1])).toBeUndefined();
+
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'missingRelationTargets:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'missingRelationTargetIds:contain');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
@@ -520,22 +584,27 @@ describe('WarningsUpdater', () => {
 
         const mockIndexFacade = getMockIndexFacade();
 
+        const warningsManager = new WarningsManager();
+
         const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
         mockDocumentCache.get.and.callFake(resourceId => {
             return documents.find(document => document.resource.id === resourceId);
         });
 
-        const mockProjectConfiguration = getMockProjectConfiguration(undefined, undefined);
+        const mockProjectConfiguration = getMockProjectConfiguration();
         mockProjectConfiguration.isAllowedRelationDomainCategory.and.returnValue(false);
 
-        await WarningsUpdater.updateInvalidRelationTargetWarning(
-            documents[0], mockIndexFacade, mockProjectConfiguration, mockDocumentCache
+        const warningsUpdater = buildWarningsUpdater(
+            warningsManager, mockIndexFacade, mockProjectConfiguration, documents
         );
 
-        expect(documents[0].warnings?.invalidRelationTargets).toEqual({
+        await warningsUpdater.updateInvalidRelationTargetWarning(documents[0], getMockFindFunction(documents.slice()));
+
+        expect(warningsManager.get(documents[0])?.invalidRelationTargets).toEqual({
             relationNames: ['relation'],
             targetIds: ['2']
         });
+
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'invalidRelationTargets:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'invalidRelationTargetIds:contain');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
@@ -551,28 +620,27 @@ describe('WarningsUpdater', () => {
             createDocument('2')
         ];
 
-        documents[0].warnings = Warnings.createDefault();
-        documents[0].warnings.invalidRelationTargets = {
+        documents[0].resource.relations['relation'] = ['2'];
+
+        const mockIndexFacade = getMockIndexFacade();
+
+        const warningsManager = new WarningsManager();
+
+        const warningsUpdater = buildWarningsUpdater(
+            warningsManager, mockIndexFacade, getMockProjectConfiguration(), documents
+        );
+
+        const warnings = Warnings.createDefault();
+        warnings.invalidRelationTargets = {
             relationNames: ['relation'],
             targetIds: ['2']
         };
+        warningsManager.set(documents[0], warnings);
 
-        documents[0].resource.relations['relation'] = ['2'];
+        await warningsUpdater.updateInvalidRelationTargetWarning(documents[0], getMockFindFunction(documents.slice()));
 
-        const mockIndexFacade = jasmine.createSpyObj('mockIndexFacade', ['putToSingleIndex']);
-
-        const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
-        mockDocumentCache.get.and.callFake(resourceId => {
-            return documents.find(document => document.resource.id === resourceId);
-        });
-
-        const mockProjectConfiguration = getMockProjectConfiguration(undefined, undefined);
-
-        await WarningsUpdater.updateInvalidRelationTargetWarning(
-            documents[0], mockIndexFacade, mockProjectConfiguration, mockDocumentCache
-        );
-
-        expect(documents[0].warnings).toBeUndefined();
+        expect(warningsManager.get(documents[0])).toBeUndefined();
+    
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'invalidRelationTargets:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'invalidRelationTargetIds:contain');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
@@ -588,31 +656,29 @@ describe('WarningsUpdater', () => {
             createDocument('2')
         ];
 
-        documents[1].warnings = Warnings.createDefault();
-        documents[1].warnings.invalidRelationTargets = {
-            relationNames: ['relation'],
-            targetIds: ['1']
-        };
-
         documents[1].resource.relations['relation'] = ['1'];
 
         const mockIndexFacade = getMockIndexFacade();
-    
-        const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
-        mockDocumentCache.get.and.callFake(resourceId => {
-            return documents.find(document => document.resource.id === resourceId);
-        });
 
-        const mockProjectConfiguration = getMockProjectConfiguration(undefined, undefined);
+        const warningsManager = new WarningsManager();
 
-        const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
-        mockDatastore.find.and.returnValue(Promise.resolve({ documents: [documents[1]] }));
-
-        await WarningsUpdater.updateInvalidRelationTargetWarning(
-            documents[0], mockIndexFacade, mockProjectConfiguration, mockDocumentCache, mockDatastore, true
+        const warningsUpdater = buildWarningsUpdater(
+            warningsManager, mockIndexFacade, getMockProjectConfiguration(), documents
         );
 
-        expect(documents[1].warnings).toBeUndefined();
+        const warnings = Warnings.createDefault();
+        warnings.invalidRelationTargets = {
+            relationNames: ['relation'],
+            targetIds: ['1']
+        };
+        warningsManager.set(documents[1], warnings);
+
+        await warningsUpdater.updateInvalidRelationTargetWarning(
+            documents[0], getMockFindFunction([documents[1]]), true
+        );
+
+        expect(warningsManager.get(documents[1])).toBeUndefined();
+
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'invalidRelationTargets:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'invalidRelationTargetIds:contain');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
@@ -644,18 +710,20 @@ describe('WarningsUpdater', () => {
 
         const mockIndexFacade = getMockIndexFacade();
 
-        const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
-        mockDocumentCache.get.and.callFake(resourceId => {
-            return documents.find(document => document.resource.id === resourceId);
-        });
+        const warningsManager = new WarningsManager();
 
-        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition, parentCategoryDefinition);
-
-        await WarningsUpdater.updateMissingOrInvalidParentWarning(
-            documents[0], mockProjectConfiguration, mockIndexFacade, mockDocumentCache
+        const warningsUpdater = buildWarningsUpdater(
+            warningsManager, mockIndexFacade,
+            getMockProjectConfiguration(categoryDefinition, parentCategoryDefinition),
+            documents
         );
 
-        expect(documents[0].warnings?.missingOrInvalidParent).toBe(true);
+        await warningsUpdater.updateMissingOrInvalidParentWarning(
+            documents[0], getMockFindFunction(documents.slice())
+        );
+
+        expect(warningsManager.get(documents[0])?.missingOrInvalidParent).toBe(true);
+
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'missingOrInvalidParent:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
 
@@ -695,18 +763,20 @@ describe('WarningsUpdater', () => {
 
         const mockIndexFacade = getMockIndexFacade();
 
-        const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
-        mockDocumentCache.get.and.callFake(resourceId => {
-            return documents.find(document => document.resource.id === resourceId);
-        });
+        const warningsManager = new WarningsManager();
 
-        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition, parentCategoryDefinition);
-
-        await WarningsUpdater.updateMissingOrInvalidParentWarning(
-            documents[0], mockProjectConfiguration, mockIndexFacade, mockDocumentCache
+        const warningsUpdater = buildWarningsUpdater(
+            warningsManager, mockIndexFacade,
+            getMockProjectConfiguration(categoryDefinition, parentCategoryDefinition),
+            documents
         );
 
-        expect(documents[0].warnings?.missingOrInvalidParent).toBe(true);
+        await warningsUpdater.updateMissingOrInvalidParentWarning(
+            documents[0], getMockFindFunction(documents.slice())
+        );
+
+        expect(warningsManager.get(documents[0])?.missingOrInvalidParent).toBe(true);
+
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'missingOrInvalidParent:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
 
@@ -743,18 +813,20 @@ describe('WarningsUpdater', () => {
 
         const mockIndexFacade = getMockIndexFacade();
 
-        const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
-        mockDocumentCache.get.and.callFake(resourceId => {
-            return documents.find(document => document.resource.id === resourceId);
-        });
+        const warningsManager = new WarningsManager();
 
-        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition, parentCategoryDefinition);
-
-        await WarningsUpdater.updateMissingOrInvalidParentWarning(
-            documents[0], mockProjectConfiguration, mockIndexFacade, mockDocumentCache
+        const warningsUpdater = buildWarningsUpdater(
+            warningsManager, mockIndexFacade,
+            getMockProjectConfiguration(categoryDefinition, parentCategoryDefinition),
+            documents
         );
 
-        expect(documents[0].warnings?.missingOrInvalidParent).toBe(true);
+        await warningsUpdater.updateMissingOrInvalidParentWarning(
+            documents[0], getMockFindFunction(documents.slice())
+        );
+
+        expect(warningsManager.get(documents[0])?.missingOrInvalidParent).toBe(true);
+
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'missingOrInvalidParent:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
 
@@ -770,8 +842,6 @@ describe('WarningsUpdater', () => {
         ];
 
         documents[0].resource.relations['isRecordedIn'] = ['2'];
-        documents[0].warnings = Warnings.createDefault();
-        documents[0].warnings.missingOrInvalidParent = true;
         documents[1].resource.category = 'ParentCategory';
 
         const parentCategoryDefinition: CategoryForm = {
@@ -786,18 +856,24 @@ describe('WarningsUpdater', () => {
 
         const mockIndexFacade = getMockIndexFacade();
 
-        const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
-        mockDocumentCache.get.and.callFake(resourceId => {
-            return documents.find(document => document.resource.id === resourceId);
-        });
+        const warningsManager = new WarningsManager();
 
-        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition, parentCategoryDefinition);
-
-        await WarningsUpdater.updateMissingOrInvalidParentWarning(
-            documents[0], mockProjectConfiguration, mockIndexFacade, mockDocumentCache
+        const warningsUpdater = buildWarningsUpdater(
+            warningsManager, mockIndexFacade,
+            getMockProjectConfiguration(categoryDefinition, parentCategoryDefinition),
+            documents
         );
 
-        expect(documents[0].warnings).toBeUndefined();
+        const warnings = Warnings.createDefault();
+        warnings.missingOrInvalidParent = true;
+        warningsManager.set(documents[0], warnings);
+
+        await warningsUpdater.updateMissingOrInvalidParentWarning(
+            documents[0], getMockFindFunction(documents.slice())
+        );
+
+        expect(warningsManager.get(documents[0])).toBeUndefined();
+
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'missingOrInvalidParent:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
 
@@ -818,24 +894,14 @@ describe('WarningsUpdater', () => {
 
         documents[0].resource.category = 'ParentCategory';
         documents[1].resource.relations['isRecordedIn'] = ['1'];
-        documents[1].warnings = Warnings.createDefault();
-        documents[1].warnings.missingOrInvalidParent = true;
         documents[2].resource.relations['liesWithin'] = ['2'];
         documents[2].resource.relations['isRecordedIn'] = ['1'];
-        documents[2].warnings = Warnings.createDefault();
-        documents[2].warnings.missingOrInvalidParent = true;
         documents[3].resource.relations['liesWithin'] = ['2'];
         documents[3].resource.relations['isRecordedIn'] = ['1'];
-        documents[3].warnings = Warnings.createDefault();
-        documents[3].warnings.missingOrInvalidParent = true;
         documents[4].resource.relations['liesWithin'] = ['3'];
         documents[4].resource.relations['isRecordedIn'] = ['1'];
-        documents[4].warnings = Warnings.createDefault();
-        documents[4].warnings.missingOrInvalidParent = true;
         documents[5].resource.relations['liesWithin'] = ['4'];
         documents[5].resource.relations['isRecordedIn'] = ['1'];
-        documents[5].warnings = Warnings.createDefault();
-        documents[5].warnings.missingOrInvalidParent = true;
 
         const parentCategoryDefinition: CategoryForm = {
             name: 'ParentCategory',
@@ -849,28 +915,31 @@ describe('WarningsUpdater', () => {
 
         const mockIndexFacade = getMockIndexFacade();
 
-        const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
-        mockDocumentCache.get.and.callFake(resourceId => {
-            return documents.find(document => document.resource.id === resourceId);
-        });
+        const warningsManager = new WarningsManager();
 
-        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition, parentCategoryDefinition);
-
-        const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
-        mockDatastore.find.and.returnValue(Promise.resolve({
-            documents: [documents[1], documents[2], documents[3], documents[4], documents[5]]
-        }));
-
-        await WarningsUpdater.updateMissingOrInvalidParentWarning(
-            documents[0], mockProjectConfiguration, mockIndexFacade, mockDocumentCache, mockDatastore, true
+        const warningsUpdater = buildWarningsUpdater(
+            warningsManager, mockIndexFacade,
+            getMockProjectConfiguration(categoryDefinition, parentCategoryDefinition),
+            documents
         );
 
-        expect(documents[0].warnings).toBeUndefined();
-        expect(documents[1].warnings).toBeUndefined();
-        expect(documents[2].warnings).toBeUndefined();
-        expect(documents[3].warnings).toBeUndefined();
-        expect(documents[4].warnings).toBeUndefined();
-        expect(documents[5].warnings).toBeUndefined();
+        for (let document of documents.slice(1)) {
+            const warnings = Warnings.createDefault();
+            warnings.missingOrInvalidParent = true;
+            warningsManager.set(document, warnings);
+        }
+
+        await warningsUpdater.updateMissingOrInvalidParentWarning(
+            documents[0], getMockFindFunction(documents.slice(1)), true
+        );
+
+        expect(warningsManager.get(documents[0])).toBeUndefined();
+        expect(warningsManager.get(documents[1])).toBeUndefined();
+        expect(warningsManager.get(documents[2])).toBeUndefined();
+        expect(warningsManager.get(documents[3])).toBeUndefined();
+        expect(warningsManager.get(documents[4])).toBeUndefined();
+        expect(warningsManager.get(documents[5])).toBeUndefined();
+
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'missingOrInvalidParent:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[2], 'missingOrInvalidParent:exist');
@@ -980,19 +1049,19 @@ describe('WarningsUpdater', () => {
             { dropdown: 'outlierValue7', checkboxes: ['outlierValue8'], url: 'http://www.example.de' }
         ];
 
-        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
         const mockIndexFacade = getMockIndexFacade();
 
-        const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
-        mockDocumentCache.get.and.callFake(resourceId => {
-            return documents.find(document => document.resource.id === resourceId);
-        });
+        const warningsManager = new WarningsManager();
 
-        await WarningsUpdater.updateOutlierWarning(
-            documents[1], mockProjectConfiguration, categoryDefinition, mockIndexFacade, mockDocumentCache
+        const warningsUpdater = buildWarningsUpdater(
+            warningsManager, mockIndexFacade, getMockProjectConfiguration(categoryDefinition), documents
         );
 
-        expect(documents[1].warnings?.outliers?.fields)
+        await warningsUpdater.updateOutlierWarning(
+            documents[1], categoryDefinition, getMockFindFunction(documents.slice())
+        );
+
+        expect(warningsManager.get(documents[1])?.outliers?.fields)
             .toEqual({
                 editor: ['outlierValue1'],
                 dropdown: ['outlierValue2'],
@@ -1002,9 +1071,10 @@ describe('WarningsUpdater', () => {
                 volume: ['outlierValue6'],
                 composite: { dropdown: ['outlierValue7'], checkboxes: ['outlierValue8'] }
             });
-        expect(documents[1].warnings?.outliers?.values)
+        expect(warningsManager.get(documents[1])?.outliers?.values)
             .toEqual(['outlierValue1', 'outlierValue2', 'outlierValue3', 'outlierValue4', 'outlierValue5',
                 'outlierValue6', 'outlierValue7', 'outlierValue8']);
+
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'outliers:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'outlierValues:contain');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
@@ -1040,19 +1110,20 @@ describe('WarningsUpdater', () => {
 
         documents[1].resource.editor = ['Person'];
 
-        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
         const mockIndexFacade = getMockIndexFacade();
 
-        const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
-        mockDocumentCache.get.and.callFake(resourceId => {
-            return documents.find(document => document.resource.id === resourceId);
-        });
+        const warningsManager = new WarningsManager();
 
-        await WarningsUpdater.updateOutlierWarning(
-            documents[1], mockProjectConfiguration, categoryDefinition, mockIndexFacade, mockDocumentCache
+        const warningsUpdater = buildWarningsUpdater(
+            warningsManager, mockIndexFacade, getMockProjectConfiguration(categoryDefinition), documents
         );
 
-        expect(documents[1].warnings).toBeUndefined();
+        await warningsUpdater.updateOutlierWarning(
+            documents[1], categoryDefinition, getMockFindFunction(documents.slice())
+        );
+
+        expect(warningsManager.get(documents[1])).toBeUndefined();
+
         done();
     });
 
@@ -1130,8 +1201,25 @@ describe('WarningsUpdater', () => {
 
         documents[0].resource.staff = [{ value: 'Person', selectable: true }];
 
-        documents[1].warnings = Warnings.createDefault();
-        documents[1].warnings.outliers = {
+        documents[1].resource.editor = ['Person'];
+        documents[1].resource.dropdown = 'valueDropdown';
+        documents[1].resource.checkboxes = ['valueCheckboxes'];
+        documents[1].resource.dimension = [{ measurementPosition: 'valueDimension', inputValue: 1, inputUnit: 'cm'}];
+        documents[1].resource.weight = [{ measurementPosition: 'valueWeight', inputValue: 1, inputUnit: 'g'}];
+        documents[1].resource.composite = [
+            { dropdown: 'valueSubfieldDropdown', checkboxes: ['valueSubfieldCheckboxes'] }
+        ];
+
+        const mockIndexFacade = getMockIndexFacade();
+
+        const warningsManager = new WarningsManager();
+
+        const warningsUpdater = buildWarningsUpdater(
+            warningsManager, mockIndexFacade, getMockProjectConfiguration(categoryDefinition), documents
+        );
+
+        const warnings = Warnings.createDefault();
+        warnings.outliers = {
             fields: {
                 editor: ['outlierValue'],
                 dropdown: ['outlierValue'],
@@ -1142,28 +1230,14 @@ describe('WarningsUpdater', () => {
             },
             values: ['outlierValue']
         };
-        documents[1].resource.editor = ['Person'];
-        documents[1].resource.dropdown = 'valueDropdown';
-        documents[1].resource.checkboxes = ['valueCheckboxes'];
-        documents[1].resource.dimension = [{ measurementPosition: 'valueDimension', inputValue: 1, inputUnit: 'cm'}];
-        documents[1].resource.weight = [{ measurementPosition: 'valueWeight', inputValue: 1, inputUnit: 'g'}];
-        documents[1].resource.composite = [
-            { dropdown: 'valueSubfieldDropdown', checkboxes: ['valueSubfieldCheckboxes'] }
-        ];
+        warningsManager.set(documents[1], warnings);
 
-        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
-        const mockIndexFacade = getMockIndexFacade();
-
-        const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
-        mockDocumentCache.get.and.callFake(resourceId => {
-            return documents.find(document => document.resource.id === resourceId);
-        });
-
-        await WarningsUpdater.updateOutlierWarning(
-            documents[1], mockProjectConfiguration, categoryDefinition, mockIndexFacade, mockDocumentCache
+        await warningsUpdater.updateOutlierWarning(
+            documents[1], categoryDefinition, getMockFindFunction(documents.slice())
         );
 
-        expect(documents[1].warnings).toBeUndefined();
+        expect(warningsManager.get(documents[1])).toBeUndefined();
+
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'outliers:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'outlierValues:contain');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
@@ -1206,53 +1280,52 @@ describe('WarningsUpdater', () => {
 
         documents[0].resource.staff = [{ value: 'Person', selectable: true }];
 
-        documents[1].warnings = Warnings.createDefault();
-        documents[1].warnings.outliers = { fields: { editor: ['outlierValue'] }, values: ['outlierValue'] };
         documents[1].resource.editor = ['Person'];
 
-        documents[2].warnings = Warnings.createDefault();
-        documents[2].warnings.outliers = {
-            fields: { editor: ['outlierValue'], checkboxes: ['outlierValue'] },
-            values: ['outlierValue']
-        };
         documents[2].resource.editor = ['Person'];
         documents[2].resource.checkboxes = ['outlierValue'];
 
-        documents[3].warnings = Warnings.createDefault();
-        documents[3].warnings.outliers = { fields: { checkboxes: ['outlierValue'] }, values: ['outlierValue'] };
         documents[3].resource.checkboxes = ['outlierValue'];
-
-        const mockProjectConfiguration = getMockProjectConfiguration(categoryDefinition);
 
         const mockIndexFacade = getMockIndexFacade();
 
-        const mockDocumentCache = jasmine.createSpyObj('mockDocumentCache', ['get']);
-        mockDocumentCache.get.and.callFake(resourceId => {
-            return documents.find(document => document.resource.id === resourceId);
-        });
+        const warningsManager = new WarningsManager();
 
-        const mockDatastore = jasmine.createSpyObj('mockDatastore', ['find']);
-        mockDatastore.find.and.returnValue(Promise.resolve({ documents: [documents[1], documents[2], documents[3]] }));
-
-        await WarningsUpdater.updateOutlierWarning(
-            documents[0], mockProjectConfiguration, categoryDefinition, mockIndexFacade, mockDocumentCache,
-            mockDatastore, true
+        const warningsUpdater = buildWarningsUpdater(
+            warningsManager, mockIndexFacade, getMockProjectConfiguration(categoryDefinition), documents
         );
 
-        expect(documents[1].warnings).toBeUndefined();
+        let warnings = Warnings.createDefault();
+        warnings.outliers = { fields: { editor: ['outlierValue'] }, values: ['outlierValue'] };
+        warningsManager.set(documents[1], warnings);
+
+        warnings = Warnings.createDefault();
+        warnings.outliers = {
+            fields: { editor: ['outlierValue'], checkboxes: ['outlierValue'] },
+            values: ['outlierValue']
+        };
+        warningsManager.set(documents[2], warnings);
+
+        warnings = Warnings.createDefault();
+        warnings.outliers = { fields: { checkboxes: ['outlierValue'] }, values: ['outlierValue'] };
+        warningsManager.set(documents[3], warnings);
+
+        await warningsUpdater.updateOutlierWarning(
+            documents[0], categoryDefinition, getMockFindFunction(documents.slice(1)), true
+        );
+
+        expect(warningsManager.get(documents[1])).toBeUndefined();
+        expect(warningsManager.get(documents[2])?.outliers?.fields).toEqual({ checkboxes: ['outlierValue'] });
+        expect(warningsManager.get(documents[2])?.outliers?.values).toEqual(['outlierValue']);
+        expect(warningsManager.get(documents[3])?.outliers?.fields).toEqual({ checkboxes: ['outlierValue'] });
+        expect(warningsManager.get(documents[3])?.outliers?.values).toEqual(['outlierValue']);
+
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'outliers:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'outlierValues:contain');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
-
-        expect(documents[2].warnings?.outliers?.fields).toEqual({ checkboxes: ['outlierValue'] });
-        expect(documents[2].warnings?.outliers?.values).toEqual(['outlierValue']);
-
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[2], 'outliers:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[2], 'outlierValues:contain');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[2], 'warnings:exist');
-
-        expect(documents[3].warnings?.outliers?.fields).toEqual({ checkboxes: ['outlierValue'] });
-        expect(documents[3].warnings?.outliers?.values).toEqual(['outlierValue']);
         expect(mockIndexFacade.putToSingleIndex).not.toHaveBeenCalledWith(documents[3], 'outliers:exist');
         expect(mockIndexFacade.putToSingleIndex).not.toHaveBeenCalledWith(documents[3], 'outlierValues:contain');
         expect(mockIndexFacade.putToSingleIndex).not.toHaveBeenCalledWith(documents[3], 'warnings:exist');

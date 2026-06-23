@@ -28,7 +28,7 @@ export { EditableValue } from './input-types/editable-value';
 export { Query, Constraints, SortMode } from './datastore/query';
 export { Relation } from './configuration/relation';
 export { Resource } from './document/resource';
-export { Warnings, WarningType, RelationTargetWarnings, OutlierWarnings } from './document/warnings';
+export { Warnings, WarningType, RelationTargetWarnings, OutlierWarnings } from './warnings';
 export { Valuelist } from './configuration/valuelist';
 export { Valuelists } from './configuration/valuelist';
 export { ValuelistValue } from './configuration/valuelist-value';

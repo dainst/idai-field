@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { to } from 'tsfun';
-import { FieldDocument, Named, ProjectConfiguration, CategoryForm, Relation,
-    FieldGeometryType } from 'idai-field-core';
+import { FieldDocument, Named, ProjectConfiguration, CategoryForm, Relation, FieldGeometryType, 
+    WarningsManager } from 'idai-field-core';
 import { ResourcesContextMenu } from './resources-context-menu';
 import { MoveUtility } from '../../widgets/move-modal/move-utility';
 import { UtilTranslations } from '../../../util/util-translations';
@@ -30,6 +30,7 @@ export class ResourcesContextMenuComponent {
     
 
     constructor(private projectConfiguration: ProjectConfiguration,
+                private warningsManager: WarningsManager,
                 private utilTranslations: UtilTranslations) {}
 
 
@@ -76,7 +77,7 @@ export class ResourcesContextMenuComponent {
     public isWarningsOptionAvailable(): boolean {
 
         return this.contextMenu.documents.length === 1
-            && this.contextMenu.documents[0].warnings !== undefined;
+            && this.warningsManager.get(this.contextMenu.documents[0]) !== undefined;
     }
 
 

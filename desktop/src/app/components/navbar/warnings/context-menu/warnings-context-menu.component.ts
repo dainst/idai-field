@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Warnings, WarningsManager } from 'idai-field-core';
 import { WarningsContextMenu } from './warnings-context-menu';
 
 
@@ -20,6 +21,9 @@ export class WarningsContextMenuComponent {
     @Output() onSelectAction: EventEmitter<WarningsContextMenuAction> = new EventEmitter<WarningsContextMenuAction>();
 
 
+    constructor(private warningsManager: WarningsManager) {}
+
+
     public selectAction = (action: WarningsContextMenuAction) => this.onSelectAction.emit(action);
 
     public getBottomPosition = (yPosition: number) => WarningsContextMenu.getBottomPosition(yPosition);
@@ -27,7 +31,9 @@ export class WarningsContextMenuComponent {
 
     public areOptionsAvailable(): boolean {
 
-        return !this.contextMenu.document?.warnings.unconfiguredCategory
-            && !this.contextMenu.document?.warnings.missingOrInvalidParent;
+        const warnings: Warnings = this.warningsManager.get(this.contextMenu.document);
+
+        return !warnings?.unconfiguredCategory
+            && !warnings?.missingOrInvalidParent;
     }
 }

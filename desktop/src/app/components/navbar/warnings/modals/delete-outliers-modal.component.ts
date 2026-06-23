@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { flatten, isArray, isObject, isString, isEmpty } from 'tsfun';
-import { BaseField, CategoryForm, Datastore, Measurement, Document, Field,
-    ProjectConfiguration } from 'idai-field-core';
+import { BaseField, CategoryForm, Datastore, Measurement, Document, Field, ProjectConfiguration, 
+    WarningsManager, Warnings } from 'idai-field-core';
 import { DeletionInProgressModalComponent } from '../../../widgets/deletion-in-progress-modal.component';
 import { AngularUtility } from '../../../../angular/angular-utility';
 import { AffectedDocument } from '../affected-document';
@@ -36,6 +36,7 @@ export class DeleteOutliersModalComponent {
                 private modalService: NgbModal,
                 private datastore: Datastore,
                 private projectConfiguration: ProjectConfiguration,
+                private warningsManager: WarningsManager,
                 private menuService: Menus) {}
 
 
@@ -61,10 +62,11 @@ export class DeleteOutliersModalComponent {
         for (let document of foundDocuments) {
             const category: CategoryForm = this.projectConfiguration.getCategory(document.resource.category);
             const affectedDocument: AffectedDocument = { document: document, fields: [] };
+            const warnings: Warnings = this.warningsManager.get(document);
 
-            for (let fieldName of Object.keys(document.warnings.outliers.fields)) {
+            for (let fieldName of Object.keys(warnings.outliers.fields)) {
                 const field: Field = CategoryForm.getField(category, fieldName);
-                if (!this.hasOutlierValue(document, field)) continue;
+                if (!this.hasOutlierValue(warnings, field)) continue;
                 affectedDocument.fields.push(field);
             }
 
@@ -157,6 +159,8 @@ export class DeleteOutliersModalComponent {
     
     private removeValueFromArray(array: any[], field: BaseField, document: Document): any[] {
 
+        const warnings: Warnings = this.warningsManager.get(document);
+
         if (field.inputType === Field.InputType.DIMENSION) {
             array.forEach((entry: Measurement) => {
                 if (entry.measurementPosition === this.outlierValue) delete entry.measurementPosition;
@@ -173,7 +177,7 @@ export class DeleteOutliersModalComponent {
             });
             return array;
         } else if (field.inputType === Field.InputType.COMPOSITE) {
-            array.forEach(entry => this.removeValueFromCompositeEntry(entry, field, document));
+            array.forEach(entry => this.removeValueFromCompositeEntry(entry, field, document, warnings));
             return array.filter(entry => !isEmpty(entry));
         } else {
             return array.filter(entry => entry !== this.outlierValue);
@@ -181,20 +185,20 @@ export class DeleteOutliersModalComponent {
     }
 
 
-    private removeValueFromCompositeEntry(entry: any, field: Field, document: Document) {
+    private removeValueFromCompositeEntry(entry: any, field: Field, document: Document, warnings: Warnings) {
 
         field.subfields.filter(subfield => {
-            return (document.warnings.outliers.fields[field.name][subfield.name])
+            return (warnings.outliers.fields[field.name][subfield.name])
                 ?.includes(this.outlierValue);
         }).forEach(subfield => this.deleteValue(document, entry, subfield));
     }
 
 
-    private hasOutlierValue(document: Document, field: Field): boolean {
+    private hasOutlierValue(warnings: Warnings, field: Field): boolean {
 
         const outlierValues: string[] = field.inputType === Field.InputType.COMPOSITE
-            ?  flatten(Object.values(document.warnings.outliers.fields[field.name]))
-            : (document.warnings.outliers.fields[field.name]);
+            ?  flatten(Object.values(warnings.outliers.fields[field.name]))
+            : (warnings.outliers.fields[field.name]);
 
         return outlierValues.includes(this.outlierValue);
     }

@@ -4,6 +4,7 @@ import { CategoryForm } from '../model/configuration/category-form';
 import { Field } from '../model/configuration/field';
 import { Document } from '../model/document/document';
 import { Resource } from '../model/document/resource';
+import { Warnings } from '../model/warnings';
 
 
 export type IndexType = 'match'|'contain'|'contained'|'exist'|'links';
@@ -82,17 +83,18 @@ export module ConstraintIndex {
     export const clear = (index: ConstraintIndex) => setUp(index);
 
 
-    export function put(index: ConstraintIndex, document: Document, skipRemoval: boolean = false, indexDefinitionName?: string) {
+    export function put(index: ConstraintIndex, document: Document, warnings?: Warnings, skipRemoval: boolean = false,
+                        indexDefinitionName?: string) {
 
         if (indexDefinitionName) {
             const definition: IndexDefinition = index.indexDefinitions[indexDefinitionName];
             if (!definition) throw 'Index definition not found: ' + indexDefinitionName;
             if (!skipRemoval) remove(index, document, indexDefinitionName);
-            putFor(index, index.indexDefinitions[indexDefinitionName], document);
+            putFor(index, index.indexDefinitions[indexDefinitionName], document, warnings);
         } else {
             if (!skipRemoval) remove(index, document);
             for (let key in index.indexDefinitions) {
-                putFor(index, index.indexDefinitions[key], document);
+                putFor(index, index.indexDefinitions[key], document, warnings);
             }
             addToAllIndex(index.allIndex, document);
         }
@@ -167,9 +169,10 @@ export module ConstraintIndex {
     }
 
 
-    function putFor(index: ConstraintIndex, definition: IndexDefinition, document: Document) {
+    function putFor(index: ConstraintIndex, definition: IndexDefinition, document: Document, warnings: Warnings) {
 
-        const contentAtPath = getOn(definition.pathArray, document);
+        const object: any = definition.pathArray?.[0] === 'warnings' ? { warnings } : document;
+        const contentAtPath = getOn(definition.pathArray, object);
         const elements: any[] = getElements(contentAtPath);
 
         for (let element of elements) {

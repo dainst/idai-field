@@ -38,7 +38,6 @@ export class DocumentCache {
         const cachedDocument: Document = this.get(document.resource.id);
 
         if (!document._conflicts) delete cachedDocument._conflicts;
-        if (!document.warnings) delete cachedDocument.warnings;
 
         Object.assign(cachedDocument, document);
 

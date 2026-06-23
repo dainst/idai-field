@@ -34,11 +34,14 @@ describe('IndexFacade', () => {
             }
         }, Tree.flatten(projectConfiguration.getCategories()));
 
+        const mockWarningsManager = jasmine.createSpyObj('warningsManager', ['get']);
+
         const createdFulltextIndex = {};
         const createdIndexFacade = new IndexFacade(
             createdConstraintIndex,
             createdFulltextIndex,
             projectConfiguration,
+            mockWarningsManager,
             true
         );
 

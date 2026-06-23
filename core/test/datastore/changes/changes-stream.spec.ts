@@ -1,4 +1,6 @@
 import { ChangesStream } from '../../../src/datastore/changes/changes-stream';
+import { WarningsUpdater } from '../../../src/warnings/warnings-updater';
+import { WarningsManager } from '../../../src/warnings/warnings-manager';
 import { Field } from '../../../src/model/configuration/field';
 import { Document } from '../../../src/model/document/document';
 
@@ -9,13 +11,14 @@ import { Document } from '../../../src/model/document/document';
  */
 describe('ChangesStream', () => {
 
-    let rcs;
+    let changesStream;
     let doc;
     let pouchdbDatastore;
     let datastore;
     let indexFacade;
     let documentCache;
     let projectConfiguration;
+    let warningsManager;
     let getUsername;
     let onChange;
 
@@ -79,11 +82,15 @@ describe('ChangesStream', () => {
         projectConfiguration.getRegularCategories.and.returnValue([]);
         projectConfiguration.getCategoryWithSubcategories.and.returnValue([category]);
 
-        rcs = new ChangesStream(
+        warningsManager = new WarningsManager();
+        const warningsUpdater = new WarningsUpdater(warningsManager, indexFacade, documentCache, projectConfiguration);
+
+        changesStream = new ChangesStream(
             pouchdbDatastore,
             datastore,
             indexFacade,
             documentCache,
+            warningsUpdater,
             projectConfiguration,
             getUsername);
     });
@@ -208,8 +215,8 @@ describe('ChangesStream', () => {
         });
 
         await onChange(doc);
-        expect(doc.warnings.nonUniqueIdentifier).toBe(true);
-        expect(doc2.warnings.nonUniqueIdentifier).toBe(true);
+        expect(warningsManager.get(doc)?.nonUniqueIdentifier).toBe(true);
+        expect(warningsManager.get(doc2)?.nonUniqueIdentifier).toBe(true);
 
         doc2.resource.identifier = '2';
         documentCache.get.and.returnValue({ resource: { id: 'id2', identifier: '1' } });
@@ -217,8 +224,8 @@ describe('ChangesStream', () => {
         datastore.find.and.returnValue(Promise.resolve({ documents: [doc] }));
 
         await onChange(doc2);
-        expect(doc.warnings).toBeUndefined();
-        expect(doc2.warnings).toBeUndefined();
+        expect(warningsManager.get(doc)).toBeUndefined();
+        expect(warningsManager.get(doc2)).toBeUndefined();
 
         done();
     });

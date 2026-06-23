@@ -1,6 +1,7 @@
 export * from './src/constants';
 export * from './src/datastore';
 export * from './src/configuration';
+export * from './src/warnings';
 export * from './src/index';
 export * from './src/model';
 export * from './src/tools';

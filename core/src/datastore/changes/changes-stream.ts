@@ -6,7 +6,7 @@ import { ObserverUtil } from '../../tools/observer-util';
 import { DocumentCache } from '../document-cache';
 import { isProjectDocument } from '../helpers';
 import { PouchdbDatastore } from '../pouchdb/pouchdb-datastore';
-import { WarningsUpdater } from '../warnings-updater';
+import { WarningsUpdater } from '../../warnings/warnings-updater';
 import { Datastore } from '../datastore';
 import { ProjectConfiguration } from '../../services/project-configuration';
 import { Migrator } from '../migrator';
@@ -34,6 +34,7 @@ export class ChangesStream {
                 private datastore: Datastore,
                 private indexFacade: IndexFacade,
                 private documentCache: DocumentCache,
+                private warningsUpdater: WarningsUpdater,
                 private projectConfiguration: ProjectConfiguration,
                 private getUsername: () => string) {
 
@@ -77,7 +78,7 @@ export class ChangesStream {
     private async welcomeDocument(document: Document) {
 
         Migrator.migrate(document, this.projectConfiguration);
-        WarningsUpdater.updateIndexIndependentWarnings(document, this.projectConfiguration);
+        this.warningsUpdater.updateIndexIndependentWarnings(document);
         this.indexFacade.put(document);
 
         const previousVersion: Document|undefined = this.documentCache.get(document.resource.id);
@@ -90,9 +91,8 @@ export class ChangesStream {
             this.documentCache.set(document);
         }
 
-        await WarningsUpdater.updateIndexDependentWarnings(
-            document, this.indexFacade, this.documentCache, this.projectConfiguration, this.datastore,
-            previousIdentifier, previousScanCode, true
+        await this.warningsUpdater.updateIndexDependentWarnings(
+            document, this.datastore.find, previousIdentifier, previousScanCode, true
         );
 
         ObserverUtil.notify(

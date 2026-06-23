@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { Datastore, Document, FieldResource, Hierarchy, InvalidDataUtil, Labels, ProjectConfiguration,
-    Relation, Resource } from 'idai-field-core';
+    Relation, Resource, WarningsManager } from 'idai-field-core';
 
 
 type InvalidResourceViewField = {
@@ -26,6 +26,7 @@ export class InvalidResourceViewComponent implements OnChanges {
 
     constructor(private datastore: Datastore,
                 private projectConfiguration: ProjectConfiguration,
+                private warningsManager: WarningsManager,
                 private labels: Labels) {}
 
 
@@ -99,7 +100,7 @@ export class InvalidResourceViewComponent implements OnChanges {
     private getRelationField(relationName: string, targetDocument: Document,
                              getNameLabel: boolean = true): InvalidResourceViewField {
 
-        const contentLabel: string = targetDocument.warnings?.unconfiguredCategory
+        const contentLabel: string = this.warningsManager.get(targetDocument)?.unconfiguredCategory
             ? targetDocument.resource.identifier
             : Document.getLabel(targetDocument, this.labels, this.projectConfiguration);
 

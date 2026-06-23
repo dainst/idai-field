@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { nop } from 'tsfun';
 import { CategoryForm, Datastore, ConfigurationDocument, ProjectConfiguration, Document, AppConfigurator,
     getConfigurationName, Field, Group, Labels, IndexFacade, Tree, InPlace, ConfigReader, Indexer,
-    DocumentCache, PouchdbDatastore } from 'idai-field-core';
+    DocumentCache, PouchdbDatastore, WarningsUpdater } from 'idai-field-core';
 import { TabManager } from '../../services/tabs/tab-manager';
 import { Messages } from '../messages/messages';
 import { MessagesConversion } from '../docedit/messages-conversion';
@@ -136,6 +136,7 @@ export class ConfigurationComponent extends ContextMenuProvider implements OnIni
                 private modalService: NgbModal,
                 private documentCache: DocumentCache,
                 private pouchdbDatastore: PouchdbDatastore,
+                private warningsUpdater: WarningsUpdater,
                 private configurationState: ConfigurationState,
                 private utilTranslations: UtilTranslations,
                 private appState: AppState,
@@ -795,6 +796,7 @@ export class ConfigurationComponent extends ContextMenuProvider implements OnIni
             this.indexFacade,
             this.pouchdbDatastore.getDb(),
             this.documentCache,
+            this.warningsUpdater,
             this.projectConfiguration,
             true
         );

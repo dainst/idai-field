@@ -3,7 +3,6 @@ import { NewResource, Resource } from './resource';
 import { Action } from './action';
 import { ObjectUtils } from '../../tools/object-utils';
 import { Labels, ProjectConfiguration } from '../../services';
-import { Warnings } from './warnings';
 import { CategoryForm } from '../configuration/category-form';
 import { Relation } from '../configuration/relation';
 import { Named } from '../../tools/named';
@@ -45,7 +44,6 @@ export interface Document extends NewDocument {
     resource: Resource;
     modified: Array<Action>;
     created: Action;
-    warnings?: Warnings;
     project?: string; // if set, it means that the document belongs to another project
 }
 

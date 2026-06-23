@@ -1,4 +1,5 @@
-import { DecimalPipe, HashLocationStrategy, IMAGE_CONFIG, LocationStrategy, registerLocaleData } from '@angular/common';
+import { DecimalPipe, HashLocationStrategy, IMAGE_CONFIG, LocationStrategy,
+    registerLocaleData } from '@angular/common';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import localeDe from '@angular/common/locales/de';
 import localeEs from '@angular/common/locales/es';
@@ -14,7 +15,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppConfigurator, ConfigLoader, ConfigReader, ConstraintIndex, Datastore, DocumentCache, FulltextIndex,
     IndexFacade, PouchdbDatastore, ProjectConfiguration, Query, RelationsManager, SyncService, Labels,
-    ImageStore, ImageSyncService, ConfigurationSerializer } from 'idai-field-core';
+    ImageStore, ImageSyncService, ConfigurationSerializer, WarningsManager, WarningsUpdater } from 'idai-field-core';
 import { Translations } from '../angular/translations';
 import { AppController } from '../services/app-controller';
 import { StateSerializer } from '../services/state-serializer';
@@ -151,6 +152,7 @@ registerLocaleData(localeUk, 'uk');
                 inject(ImageStore),
                 inject(ExpressServer),
                 inject(DocumentCache),
+                inject(WarningsManager),
                 inject(ThumbnailGenerator),
                 inject(InitializationProgress),
                 inject(ConfigReader),
@@ -191,6 +193,7 @@ registerLocaleData(localeUk, 'uk');
         ThumbnailGenerator,
         FsAdapter,
         AppController,
+        WarningsManager,
         {
             provide: ProjectConfiguration,
             useFactory: (serviceLocator: AppInitializerServiceLocator) => serviceLocator.projectConfiguration,
@@ -214,6 +217,11 @@ registerLocaleData(localeUk, 'uk');
         {
             provide: ConfigurationIndex,
             useFactory: (serviceLocator: AppInitializerServiceLocator) => serviceLocator.configurationIndex,
+            deps: [AppInitializerServiceLocator]
+        },
+        {
+            provide: WarningsUpdater,
+            useFactory: (serviceLocator: AppInitializerServiceLocator) => serviceLocator.warningsUpdater,
             deps: [AppInitializerServiceLocator]
         },
         {

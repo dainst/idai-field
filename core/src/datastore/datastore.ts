@@ -7,10 +7,10 @@ import { Name } from '../tools/named';
 import { DatastoreErrors } from './datastore-errors';
 import { DocumentCache } from './document-cache';
 import { PouchdbDatastore } from './pouchdb/pouchdb-datastore';
-import { WarningsUpdater } from './warnings-updater';
 import { ProjectConfiguration } from '../services/project-configuration';
 import { Indexer } from '../index';
 import { Migrator } from './migrator';
+import { WarningsUpdater } from '../warnings/warnings-updater';
 
 
 export type FindOptions = {
@@ -51,6 +51,7 @@ export class Datastore {
                 private indexFacade: IndexFacade,
                 private documentCache: DocumentCache,
                 private projectConfiguration: ProjectConfiguration,
+                private warningsUpdater: WarningsUpdater,
                 private getUser: () => Name) {}
     
 
@@ -116,7 +117,6 @@ export class Datastore {
     public update: Datastore.Update = async (document: Document, squashRevisionsIds?: string[]): Promise<Document> => {
 
         this.updating = true;
-        delete document.warnings;
 
         try {
             return await this.updateIndex(
@@ -132,8 +132,6 @@ export class Datastore {
     public async bulkUpdate(documents: Array<Document>): Promise<Array<Document>> {
 
         this.updating = true;
-
-        documents.forEach(document => delete document.warnings);
 
         try {
             let resultDocuments: Array<Document> = [];
@@ -196,6 +194,7 @@ export class Datastore {
             this.indexFacade,
             this.datastore.getDb(),
             this.documentCache,
+            this.warningsUpdater,
             this.projectConfiguration,
             true
         );
@@ -226,11 +225,9 @@ export class Datastore {
         await this.datastore.remove(document);
         this.documentCache.remove(document.resource.id);
 
-        await WarningsUpdater.updateResourceLimitWarnings(
-            this,
-            this.indexFacade,
-            this.projectConfiguration,
-            this.projectConfiguration.getCategory(document.resource.category)
+        await this.warningsUpdater.updateResourceLimitWarnings(
+            this.projectConfiguration.getCategory(document.resource.category),
+            this.find
         );
         this.indexFacade.notifyObservers();
     }
@@ -447,7 +444,7 @@ export class Datastore {
     private async updateWarnings(document: Document, notifyObservers: boolean, previousIdentifier?: string,
                                  previousScanCode?: string) {
 
-        WarningsUpdater.updateIndexIndependentWarnings(document, this.projectConfiguration);
+        this.warningsUpdater.updateIndexIndependentWarnings(document);
 
         this.indexFacade.put(document);
 
@@ -456,9 +453,8 @@ export class Datastore {
             previousScanCode = this.documentCache.get(document.resource.id)?.resource.scanCode;
         }
 
-        await WarningsUpdater.updateIndexDependentWarnings(
-            document, this.indexFacade, this.documentCache, this.projectConfiguration, this,
-            previousIdentifier, previousScanCode, true
+        await this.warningsUpdater.updateIndexDependentWarnings(
+            document, this.find, previousIdentifier, previousScanCode, true
         );
         if (notifyObservers) this.indexFacade.notifyObservers();
     }

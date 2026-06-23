@@ -4,7 +4,10 @@ import { Resource } from '../model/document/resource';
 import { ResultSets } from './result-sets';
 import { StringUtils } from '../tools/string-utils';
 import { I18N } from '../tools';
-import { Field, Valuelist, ValuelistValue } from '../model';
+import { Field } from '../model/configuration/field';
+import { Valuelist } from '../model/configuration/valuelist';
+import { ValuelistValue } from '../model/configuration/valuelist-value';
+import { Warnings } from '../model/warnings';
 
 
 export interface FulltextIndex {
@@ -24,14 +27,12 @@ export module FulltextIndex {
     const tokenizationPattern: RegExp = /[ \-_.]/;
 
 
-    export function put(index: FulltextIndex,
-                        document: Document,
-                        fieldsToIndex: Array<Field>,
+    export function put(index: FulltextIndex, document: Document, fieldsToIndex: Array<Field>, warnings?: Warnings,
                         skipRemoval: boolean = false) {
 
         if (!skipRemoval) remove(index, document);
 
-        const category: string = getCategory(document);
+        const category: string = getCategory(document, warnings);
 
         if (!index[category]) index[category] = { '*' : {} } ;
         index[category]['*'][document.resource.id] = true;
@@ -42,7 +43,7 @@ export module FulltextIndex {
             flatMap((field: Field) => getTokens(document.resource[field.name], field)),
             map(StringUtils.toLowerCase),
             map(StringUtils.toArray),
-            forEach(indexToken(index, document))
+            forEach(indexToken(index, document, warnings))
         );
     }
 
@@ -66,8 +67,7 @@ export module FulltextIndex {
      * @param categories if undefined, searches in all categories. If defined, only search hits
      *   indexed under the specified categories will be included in the results.
      */
-    export function get(index: FulltextIndex, s: string,
-                        categories: string[]|undefined): Array<Resource.Id> {
+    export function get(index: FulltextIndex, s: string, categories: string[]|undefined): Array<Resource.Id> {
 
         if (isEmpty(index)) return [];
 
@@ -104,11 +104,11 @@ export module FulltextIndex {
     }
 
 
-    function indexToken(index: FulltextIndex, document: Document) {
+    function indexToken(index: FulltextIndex, document: Document, warnings: Warnings) {
 
         return (tokenAsCharArray: string[]) => {
 
-            const categoryIndex = index[getCategory(document)];
+            const categoryIndex = index[getCategory(document, warnings)];
 
             tokenAsCharArray.reduce((accumulator, letter) => {
                 accumulator += letter;
@@ -201,9 +201,9 @@ export module FulltextIndex {
     }
 
 
-    function getCategory(document: Document): string {
+    function getCategory(document: Document, warnings?: Warnings): string {
 
-        return document.warnings?.unconfiguredCategory
+        return warnings?.unconfiguredCategory
             ? 'UNCONFIGURED'
             : document.resource.category;
     }

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { equal, flatten, isArray, isObject, isString, set } from 'tsfun';
 import { CategoryForm, Datastore, Document, Field, Labels, OptionalRange, ProjectConfiguration, Valuelist,
-    ValuelistUtil, BaseField } from 'idai-field-core';
+    ValuelistUtil, BaseField, WarningsManager, Warnings } from 'idai-field-core';
 import { FixingDataInProgressModalComponent } from './fixing-data-in-progress-modal.component';
 import { AngularUtility } from '../../../../angular/angular-utility';
 import { AffectedDocument } from '../affected-document';
@@ -39,6 +39,7 @@ export class FixOutliersModalComponent {
                 private modalService: NgbModal,
                 private datastore: Datastore,
                 private projectConfiguration: ProjectConfiguration,
+                private warningsManager: WarningsManager,
                 private labels: Labels,
                 private menuService: Menus) {}
 
@@ -75,7 +76,7 @@ export class FixOutliersModalComponent {
             const affectedDocumentComplete: AffectedDocument = { document: document, fields: [] };
             const affectedDocumentCheckboxes: AffectedDocument = { document: document, fields: [] };
             
-            for (let fieldName of Object.keys(document.warnings.outliers.fields)) {
+            for (let fieldName of Object.keys(this.warningsManager.get(document).outliers.fields)) {
                 const field: Field = CategoryForm.getField(category, fieldName);
                 if (!this.hasOutlierValue(document, field)) continue;
                 const valuelist: Valuelist = await this.getValuelist(document, field);
@@ -239,19 +240,24 @@ export class FixOutliersModalComponent {
     
     private replaceValueInCompositeEntry(document: Document, entry: any, field: Field) {
 
+        const warnings: Warnings = this.warningsManager.get(document);
+
         field.subfields.filter(subfield => {
             return subfield.valuelist
                 && equal(subfield.valuelist, this.valuelist)
-                && (document.warnings.outliers.fields[field.name][subfield.name])?.includes(this.outlierValue);
+                && (warnings.outliers.fields[field.name][subfield.name])
+                    ?.includes(this.outlierValue);
         }).forEach(subfield => this.replaceValue(document, entry, subfield));
     }
 
 
     private hasOutlierValue(document: Document, field: Field): boolean {
 
+        const warnings: Warnings = this.warningsManager.get(document);
+
         const outlierValues: string[] = field.inputType === Field.InputType.COMPOSITE
-            ?  flatten(Object.values(document.warnings.outliers.fields[field.name]))
-            : (document.warnings.outliers.fields[field.name]);
+            ?  flatten(Object.values(warnings.outliers.fields[field.name]))
+            : (warnings.outliers.fields[field.name]);
 
         return outlierValues.includes(this.outlierValue);
     }
@@ -259,9 +265,11 @@ export class FixOutliersModalComponent {
 
     private async getValuelist(document: Document, field: Field): Promise<Valuelist> {
 
+        const warnings: Warnings = this.warningsManager.get(document);
+
         const valuelistField: BaseField = field.inputType === Field.InputType.COMPOSITE
             ? field.subfields.find(subfield => {
-                return (document.warnings.outliers.fields[field.name][subfield.name])?.includes(this.outlierValue);
+                return (warnings.outliers.fields[field.name][subfield.name])?.includes(this.outlierValue);
             }) : field;
 
         return ValuelistUtil.getValuelist(

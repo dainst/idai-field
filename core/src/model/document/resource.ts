@@ -9,6 +9,7 @@ import { concatIf } from '../../tools/utils';
 import { Labels, ProjectConfiguration } from '../../services';
 import { Valuelist } from '../configuration/valuelist';
 import { CategoryForm } from '../configuration/category-form';
+import { Relation } from '../configuration/relation';
 
 
 export interface NewResource {
@@ -75,6 +76,14 @@ export module Resource {
 
         if (!resource.relations[relation]) return false;
         return resource.relations[relation].indexOf(target) > -1;
+    }
+
+
+     export function getRelationNames(resource: Resource): string[] {
+
+        return Object.keys(resource.relations).filter(relationName => {
+            return !Relation.Hierarchy.ALL.includes(relationName);
+        });
     }
 
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AppConfigurator, ConfigReader, ConfigurationDocument, DocumentCache, Indexer, IndexFacade,
-    PouchdbDatastore, ProjectConfiguration, Document } from 'idai-field-core';
+    PouchdbDatastore, ProjectConfiguration, Document, WarningsUpdater } from 'idai-field-core';
 import { SampleDataLoader } from './datastore/field/sampledata/sample-data-loader';
 import { ThumbnailGenerator } from './imagestore/thumbnail-generator';
 import { ImagesState } from '../components/image/overview/view/images-state';
@@ -37,6 +37,7 @@ export class AppController {
                 private tabManager: TabManager,
                 private imageDocumentsManager: ImageDocumentsManager,
                 private projectConfiguration: ProjectConfiguration,
+                private warningsUpdater: WarningsUpdater,
                 private configurationIndex: ConfigurationIndex,
                 private configReader: ConfigReader,
                 private appConfigurator: AppConfigurator,
@@ -87,6 +88,7 @@ export class AppController {
             this.indexFacade,
             this.pouchdbDatastore.getDb(),
             this.documentCache,
+            this.warningsUpdater,
             this.projectConfiguration,
             false
         );
@@ -112,6 +114,7 @@ export class AppController {
             this.indexFacade,
             this.pouchdbDatastore.getDb(),
             this.documentCache,
+            this.warningsUpdater,
             this.projectConfiguration,
             false
         );
@@ -128,6 +131,7 @@ export class AppController {
             this.indexFacade,
             this.pouchdbDatastore.getDb(),
             this.documentCache,
+            this.warningsUpdater,
             this.projectConfiguration,
             false
         );
@@ -145,6 +149,7 @@ export class AppController {
             this.indexFacade,
             this.pouchdbDatastore.getDb(),
             this.documentCache,
+            this.warningsUpdater,
             this.projectConfiguration,
             false
         );
@@ -181,6 +186,7 @@ export class AppController {
             this.indexFacade,
             db,
             this.documentCache,
+            this.warningsUpdater,
             this.projectConfiguration,
             false
         );

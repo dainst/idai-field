@@ -1,7 +1,9 @@
 import { Datastore } from '../../src/datastore/datastore';
+import { WarningsUpdater } from '../../src/warnings/warnings-updater';
 import { DocumentCache } from '../../src/datastore/document-cache';
 import { ProjectConfiguration } from '../../src/services/project-configuration';
 import { createCategory, doc } from '../test-helpers';
+import { WarningsManager } from '../../src/warnings/warnings-manager';
 
 
 /**
@@ -25,11 +27,14 @@ describe('Datastore', () => {
 
         const documentCache = new DocumentCache();
 
+        const warningsUpdater = new WarningsUpdater(new WarningsManager(), mockIndexFacade, documentCache, projectConfiguration);
+
         return new Datastore(
             mockdb,
             mockIndexFacade,
             documentCache,
             projectConfiguration,
+            warningsUpdater,
             () => 'username'
         );
     }

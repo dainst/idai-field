@@ -1,7 +1,7 @@
 import { Map, to } from 'tsfun';
-import { ConfigLoader, ConfigReader, ConfigurationDocument, ConstraintIndex,
-    DocumentCache, FulltextIndex, ImageStore, Indexer, IndexFacade, PouchdbDatastore,
-    ProjectConfiguration, Document, Labels, ImageVariant, FileInfo } from 'idai-field-core';
+import { ConfigLoader, ConfigReader, ConfigurationDocument, ConstraintIndex, DocumentCache, FulltextIndex, ImageStore,
+    Indexer, IndexFacade, PouchdbDatastore, ProjectConfiguration, Document, Labels, ImageVariant, FileInfo,
+    WarningsUpdater, WarningsManager } from 'idai-field-core';
 import { AngularUtility } from '../angular/angular-utility';
 import { ThumbnailGenerator } from '../services/imagestore/thumbnail-generator';
 import { InitializationProgress } from './initialization-progress';
@@ -30,6 +30,7 @@ interface Services {
     constraintIndex?: ConstraintIndex;
     indexFacade?: IndexFacade;
     configurationIndex?: ConfigurationIndex;
+    warningsUpdater?: WarningsUpdater;
 }
 
 
@@ -92,6 +93,16 @@ export class AppInitializerServiceLocator {
         }
         return this.services.configurationIndex;
     }
+
+
+    public get warningsUpdater(): WarningsUpdater {
+
+        if (!this.services.warningsUpdater) {
+            console.error('Warnings updater has not yet been provided');
+            throw new Error('Warnings updater has not yet been provided');
+        }
+        return this.services.warningsUpdater;
+    }
 }
 
 
@@ -101,6 +112,7 @@ export const appInitializerFactory = (serviceLocator: AppInitializerServiceLocat
                                       imagestore: ImageStore,
                                       expressServer: ExpressServer,
                                       documentCache: DocumentCache,
+                                      warningsManager: WarningsManager,
                                       thumbnailGenerator: ThumbnailGenerator,
                                       progress: InitializationProgress,
                                       configReader: ConfigReader,
@@ -122,7 +134,7 @@ export const appInitializerFactory = (serviceLocator: AppInitializerServiceLocat
     await createDisplayImages(imagestore, pouchdbDatastore.getDb(), settings.selectedProject, progress);
 
     const services = await loadConfiguration(
-        settingsService, progress, configReader, configLoader, pouchdbDatastore.getDb(),
+        settingsService, progress, configReader, configLoader, documentCache, warningsManager, pouchdbDatastore.getDb(),
         settings.selectedProject, settings.username
     );
     serviceLocator.init(services);
@@ -209,7 +221,8 @@ const loadSampleData = async (settings: Settings, db: any, thumbnailGenerator: T
 
 const loadConfiguration = async (settingsService: SettingsService, progress: InitializationProgress,
                                  configReader: ConfigReader, configLoader: ConfigLoader,
-                                 db: any, projectIdentifier: string, username: string): Promise<Services> => {
+                                 documentCache: DocumentCache, warningsManager: WarningsManager, db: any,
+                                 projectIdentifier: string, username: string): Promise<Services> => {
 
     await progress.setPhase('loadingConfiguration');
 
@@ -222,10 +235,14 @@ const loadConfiguration = async (settingsService: SettingsService, progress: Ini
     }
 
     const { createdConstraintIndex, createdFulltextIndex, createdIndexFacade }
-        = IndexerConfiguration.configureIndexers(configuration);
+        = IndexerConfiguration.configureIndexers(configuration, warningsManager);
 
-    const configurationIndex = await buildConfigurationIndex(
+    const configurationIndex: ConfigurationIndex = await buildConfigurationIndex(
         configReader, configLoader, db, configuration, projectIdentifier, username
+    );
+
+    const warningsUpdater: WarningsUpdater = new WarningsUpdater(
+        warningsManager, createdIndexFacade, documentCache, configuration
     );
 
     return {
@@ -233,7 +250,8 @@ const loadConfiguration = async (settingsService: SettingsService, progress: Ini
         constraintIndex: createdConstraintIndex,
         fulltextIndex: createdFulltextIndex,
         indexFacade: createdIndexFacade,
-        configurationIndex
+        configurationIndex,
+        warningsUpdater
     };
 };
 
@@ -248,6 +266,7 @@ const loadDocuments = async (serviceLocator: AppInitializerServiceLocator, db: a
         serviceLocator.indexFacade,
         db,
         documentCache,
+        serviceLocator.warningsUpdater,
         serviceLocator.projectConfiguration,
         false,
         (count) => progress.setIndexingProgress(count),

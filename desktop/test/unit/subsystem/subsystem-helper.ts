@@ -1,7 +1,7 @@
 import { sameset } from 'tsfun';
 import { AppConfigurator, ChangesStream, ConfigLoader, ConfigReader, createDocuments, Datastore,
     Document, DocumentCache, NiceDocs, PouchdbDatastore, Query, RelationsManager, Resource, SyncService, ImageStore,
-    ImageSyncService, Indexer } from 'idai-field-core';
+    ImageSyncService, Indexer, WarningsManager, WarningsUpdater } from 'idai-field-core';
 import { ExpressServer } from '../../../src/app/services/express-server/express-server';
 import { ImageDocumentsManager } from '../../../src/app/components/image/overview/view/image-documents-manager';
 import { ImageOverviewFacade } from '../../../src/app/components/image/overview/view/image-overview-facade';
@@ -41,7 +41,9 @@ class IdGenerator {
  */
 export async function setupSettingsService(pouchdbDatastore, projectIdentifier = 'testdb') {
 
-    const pouchdbServer = new ExpressServer(undefined, undefined, undefined, undefined, undefined);
+    const pouchdbServer = new ExpressServer(
+        undefined, undefined, undefined, undefined, undefined, undefined, undefined
+    );
     const settingsProvider = new SettingsProvider();
     const fileSystemAdapter = new FsAdapter();
     const mockMessages = new Messages(undefined, 0);
@@ -122,21 +124,30 @@ export async function createApp(projectIdentifier = 'testdb'): Promise<App> {
         settingsService,
         projectConfiguration,
         settingsProvider,
-        imageStore,
-        remoteImageStore
+        imageStore
     } = await setupSettingsService(pouchdbDatastore, projectIdentifier);
 
-    const { createdIndexFacade } = IndexerConfiguration.configureIndexers(projectConfiguration);
+    const warningsManager = new WarningsManager();
 
-    await imageStore.init(settingsProvider.getSettings().imagestorePath, settingsProvider.getSettings().selectedProject);
+    const { createdIndexFacade } = IndexerConfiguration.configureIndexers(projectConfiguration, warningsManager);
+
+    await imageStore.init(
+        settingsProvider.getSettings().imagestorePath,
+        settingsProvider.getSettings().selectedProject
+    );
 
     const documentCache = new DocumentCache();
+
+    const warningsUpdater = new WarningsUpdater(
+        warningsManager, createdIndexFacade, documentCache, projectConfiguration
+    );
 
     const datastore = new Datastore(
         pouchdbDatastore,
         createdIndexFacade,
         documentCache,
         projectConfiguration,
+        warningsUpdater,
         () => settingsProvider.getSettings().username
     );
 
@@ -144,6 +155,7 @@ export async function createApp(projectIdentifier = 'testdb'): Promise<App> {
         createdIndexFacade,
         pouchdbDatastore.getDb(),
         documentCache,
+        warningsUpdater,
         projectConfiguration,
         false
     );
@@ -153,6 +165,7 @@ export async function createApp(projectIdentifier = 'testdb'): Promise<App> {
         datastore,
         createdIndexFacade,
         documentCache,
+        warningsUpdater,
         projectConfiguration,
         () => settingsProvider.getSettings().username
     );

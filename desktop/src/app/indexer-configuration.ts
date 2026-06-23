@@ -1,4 +1,5 @@
-import { basicIndexConfiguration, ConstraintIndex, IndexFacade, ProjectConfiguration, Tree } from 'idai-field-core';
+import { basicIndexConfiguration, ConstraintIndex, IndexFacade, ProjectConfiguration, Tree,
+    WarningsManager } from 'idai-field-core';
 
 
 /**
@@ -7,7 +8,8 @@ import { basicIndexConfiguration, ConstraintIndex, IndexFacade, ProjectConfigura
  */
 export module IndexerConfiguration {
 
-    export function configureIndexers(projectConfiguration: ProjectConfiguration, showWarnings = true) {
+    export function configureIndexers(projectConfiguration: ProjectConfiguration, warningsManager: WarningsManager,
+                                      showWarnings = true) {
 
         const createdConstraintIndex = ConstraintIndex.make({
             ... basicIndexConfiguration,
@@ -35,6 +37,7 @@ export module IndexerConfiguration {
             createdConstraintIndex,
             createdFulltextIndex,
             projectConfiguration,
+            warningsManager,
             showWarnings
         );
 

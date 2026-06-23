@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, ViewChild, Input, OnChanges, OnDestroy,
     ChangeDetectorRef } from '@angular/core';
 import { to } from 'tsfun';
-import { FieldDocument } from 'idai-field-core';
+import { FieldDocument, WarningsManager } from 'idai-field-core';
 import { ResourcesComponent } from '../../resources.component';
 import { Loading } from '../../../widgets/loading';
 import { BaseList } from '../../base-list';
@@ -45,6 +45,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
     constructor(public resourcesComponent: ResourcesComponent,
                 private navigationService: NavigationService,
                 private warningsService: WarningsService,
+                private warningsManager: WarningsManager,
                 changeDetectorRef: ChangeDetectorRef,
                 loading: Loading,
                 viewFacade: ViewFacade,
@@ -65,6 +66,9 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
             if (!this.selectedDocument) this.scrollToLastSelectedSegmentResource();
         });
     }
+
+
+    public hasWarnings = (document: FieldDocument) => this.warningsManager.get(document) !== undefined;
 
 
     ngAfterViewInit() {

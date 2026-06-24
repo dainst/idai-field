@@ -1003,12 +1003,6 @@ defmodule FieldPublication.Publications.Search do
   def evaluate_active_index_state(%Publication{} = publication) do
     database_count = count_database_documents(publication)
 
-    # We do not count documents 'project' or 'configuration' because they are not added to the index.
-    database_count =
-      if database_count >= 2,
-        do: database_count - Enum.count(@not_indexed_document_uuids),
-        else: 0
-
     if database_count == 0 do
       %{
         counter: 0,

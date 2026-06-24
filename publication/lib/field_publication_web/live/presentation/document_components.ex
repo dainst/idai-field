@@ -140,13 +140,13 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
             </.group_heading>
             <div class="overflow-auto overscroll-contain max-h-[400px]">
               <%= for doc <- other_relation.docs do %>
-                  <.document_link
-                    id={"#{other_relation.name}-#{doc.id}"}
-                    doc={doc}
-                    image_count={10}
-                    geometry_indicator={true}
-                    hover_target="generic_doc_map"
-                  />
+                <.document_link
+                  id={"#{other_relation.name}-#{doc.id}"}
+                  doc={doc}
+                  image_count={10}
+                  geometry_indicator={true}
+                  hover_target="generic_doc_map"
+                />
               <% end %>
             </div>
           </section>

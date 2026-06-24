@@ -218,7 +218,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     >
       <span class="markdown">
         {text
-        |> MDEx.to_html!
+        |> MDEx.to_html!()
         |> Phoenix.HTML.raw()}
       </span>
     </.maybe_language_select>

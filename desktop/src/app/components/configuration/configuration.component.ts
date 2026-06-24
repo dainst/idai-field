@@ -798,7 +798,8 @@ export class ConfigurationComponent extends ContextMenuProvider implements OnIni
             this.documentCache,
             this.warningsUpdater,
             this.projectConfiguration,
-            true
+            true,
+            false
         );
     }
 

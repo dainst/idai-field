@@ -23,6 +23,7 @@ import { Menus } from '../services/menus';
 import { ImageUploader } from './image/upload/image-uploader';
 import { UploadModalComponent } from './image/upload/upload-modal.component';
 import { UploadStatus } from './image/upload/upload-status';
+import { SerializationService } from '../services/serialization-service';
 
 const remote = window.require('@electron/remote');
 const ipcRenderer = window.require('electron')?.ipcRenderer;
@@ -67,6 +68,7 @@ export class AppComponent {
                 private menuModalLauncher: MenuModalLauncher,
                 private datastore: Datastore,
                 private autoBackupService: AutoBackupService,
+                private serializationService: SerializationService,
                 private modalService: NgbModal,
                 private menuService: Menus,
                 private syncService: SyncService) {
@@ -169,6 +171,7 @@ export class AppComponent {
             this.closing = true;
             this.syncService.stopSync();
             this.openQuittingModal();
+            this.serializationService.serialize();
             await this.autoBackupService.requestBackupCreation();
 
             ipcRenderer.send('close');
@@ -178,13 +181,11 @@ export class AppComponent {
 
     private openQuittingModal() {
 
-        setTimeout(() => {
-            this.menuService.setContext(MenuContext.BLOCKING_MODAL);
-            this.modalService.open(
-                QuittingModalComponent,
-                { backdrop: 'static', keyboard: false, animation: false }
-            );
-        }, 200);
+        this.menuService.setContext(MenuContext.BLOCKING_MODAL);
+        this.modalService.open(
+            QuittingModalComponent,
+            { backdrop: 'static', keyboard: false, animation: false }
+        );
     }
 
 

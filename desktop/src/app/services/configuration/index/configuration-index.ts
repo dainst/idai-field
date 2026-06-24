@@ -88,6 +88,36 @@ export class ConfigurationIndex {
     }
 
 
+    public load(categoryFormIndex: CategoryFormIndex, categoryFormChildrenIndex: CategoryFormChildrenIndex,
+                fieldIndex: FieldIndex, valuelistIndex: ValuelistIndex, valuelistUsageIndex: ValuelistUsageIndex,
+                groupIndex: GroupIndex, valuelists: Map<Valuelist>, templates: Map<Template>) {
+
+        this.categoryFormIndex = categoryFormIndex;
+        this.categoryFormChildrenIndex = categoryFormChildrenIndex;
+        this.fieldIndex = fieldIndex;
+        this.valuelistIndex = valuelistIndex;
+        this.valuelistUsageIndex = valuelistUsageIndex;
+        this.groupIndex = groupIndex;
+        this.valuelists = valuelists;
+        this.templates = templates;
+    }
+
+
+    public getSerializationObject(): any {
+        
+        return {
+            categoryFormIndex: this.categoryFormIndex,
+            categoryFormChildrenIndex: this.categoryFormChildrenIndex,
+            fieldIndex: this.fieldIndex,
+            valueslistIndex: this.valuelistIndex,
+            valuelistUsageIndex: this.valuelistUsageIndex,
+            groupIndex: this.groupIndex,
+            valuelists: this.valuelists,
+            templates: this.templates
+        }
+    }
+
+
     public createSubIndices(forms: Array<CategoryForm>, categories: Array<Category>, relations: Array<Relation>,
                             commonFields: Array<Field>, valuelists: Array<Valuelist>,
                             usedCategoryForms: Array<CategoryForm>) {

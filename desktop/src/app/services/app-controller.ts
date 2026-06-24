@@ -90,6 +90,7 @@ export class AppController {
             this.documentCache,
             this.warningsUpdater,
             this.projectConfiguration,
+            false,
             false
         );
     }
@@ -116,6 +117,7 @@ export class AppController {
             this.documentCache,
             this.warningsUpdater,
             this.projectConfiguration,
+            false,
             false
         );
     }
@@ -133,6 +135,7 @@ export class AppController {
             this.documentCache,
             this.warningsUpdater,
             this.projectConfiguration,
+            false,
             false
         );
     }
@@ -151,6 +154,7 @@ export class AppController {
             this.documentCache,
             this.warningsUpdater,
             this.projectConfiguration,
+            false,
             false
         );
     }
@@ -188,6 +192,7 @@ export class AppController {
             this.documentCache,
             this.warningsUpdater,
             this.projectConfiguration,
+            false,
             false
         );
 

@@ -1,5 +1,5 @@
 import { Observable, Observer } from 'rxjs';
-import { filter, flow, forEach, includedIn, isDefined, lookup, on, separate, to, values } from 'tsfun';
+import { filter, flow, forEach, includedIn, isDefined, lookup, on, separate, to, values, Map } from 'tsfun';
 import { Field } from '../model/configuration/field';
 import { Document } from '../model/document/document';
 import { Query } from '../model/datastore/query';
@@ -29,15 +29,15 @@ const INSTANCE_OF = 'isInstanceOf';
  */
 export class IndexFacade {
 
-    private observers: Array<Observer<Document>> = [];
-    private indexItems: { [resourceId: string]: IndexItem } = {};
+    private observers: Array<Observer<Document>> = [];;
 
 
     constructor(private constraintIndex: ConstraintIndex,
                 private fulltextIndex: FulltextIndex,
                 private projectConfiguration: ProjectConfiguration,
                 private warningsManager: WarningsManager,
-                private showWarnings: boolean) {}
+                private showWarnings: boolean,
+                private indexItems: { [resourceId: string]: IndexItem } = {}) {}
 
 
     public changesNotifications = (): Observable<Document|undefined> => ObserverUtil.register(this.observers);
@@ -145,6 +145,24 @@ export class IndexFacade {
     public addConstraintIndexDefinitionsForField(field: Field) {
 
         ConstraintIndex.addIndexDefinitionsForField(this.constraintIndex, field);
+    }
+
+
+    public getFulltextIndex(): FulltextIndex {
+
+        return this.fulltextIndex;
+    }
+
+
+    public getConstraintIndex(): ConstraintIndex {
+
+        return this.constraintIndex;
+    }
+
+
+    public getIndexItems(): Map<IndexItem> {
+
+        return this.indexItems;
     }
 
 

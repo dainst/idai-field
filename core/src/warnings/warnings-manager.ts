@@ -1,3 +1,4 @@
+import { Map } from 'tsfun';
 import { Document } from '../model/document/document';
 import { Warnings } from '../model/warnings';
 
@@ -11,6 +12,18 @@ export class WarningsManager {
 
 
     constructor() {}
+
+
+    public getAll(): Map<Warnings> {
+
+        return this.warnings;
+    }
+
+
+    public setAll(warnings: Map<Warnings>) {
+
+        this.warnings = warnings;
+    }
 
 
     public get(document: Document): Warnings {

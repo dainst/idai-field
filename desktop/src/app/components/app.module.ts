@@ -66,6 +66,7 @@ import { ProjectLabelProvider } from '../services/project-label-provider';
 import { AppState } from '../services/app-state';
 import { AutoBackupService } from '../services/backup/auto-backup/auto-backup-service';
 import { ImageToolLauncher } from '../services/imagestore/image-tool-launcher';
+import { SerializationService } from '../services/serialization-service';
 
 
 const remote = window.require('@electron/remote');
@@ -279,6 +280,7 @@ registerLocaleData(localeUk, 'uk');
         AutoBackupService,
         AppState,
         ImageToolLauncher,
+        SerializationService,
         { provide: IMAGE_CONFIG, useValue: { disableImageSizeWarning: true, disableImageLazyLoadWarning: true } },
         provideHttpClient(withInterceptorsFromDi()),
         provideZoneChangeDetection()

@@ -15,11 +15,11 @@ import { ProjectConfiguration } from '../services';
  
     export async function reindex(indexFacade: IndexFacade, db: any, documentCache: DocumentCache,
                                   warningsUpdater: WarningsUpdater, projectConfiguration: ProjectConfiguration,
-                                  keepCachedInstances: boolean,
+                                  keepCachedInstances: boolean, cachingOnly: boolean,
                                   setProgress?: (progress: number) => Promise<void>, setIndexing?: () => Promise<void>,
                                   setError?: (error: string) => Promise<void>) {
 
-        indexFacade.clear();
+        if (!cachingOnly) indexFacade.clear();
 
         let documents = [];
         try {
@@ -36,21 +36,24 @@ import { ProjectConfiguration } from '../services';
             if (keepCachedInstances) {
                 documents = documents.filter(document => !documentCache.get(document.resource?.id));
             }
-            documents = migrateDocuments(documents, projectConfiguration);
+            documents = await migrateDocuments(documents, projectConfiguration, cachingOnly ? setProgress : undefined);
+
             documents.forEach(document => {
-                warningsUpdater.updateIndexIndependentWarnings(document);
+                if (!cachingOnly) warningsUpdater.updateIndexIndependentWarnings(document);
                 documentCache.set(document);
             });
 
             if (keepCachedInstances) {
                 documentCache.getAll().forEach(document => {
-                    warningsUpdater.updateIndexIndependentWarnings(document);
+                    if (!cachingOnly) warningsUpdater.updateIndexIndependentWarnings(document);
                 });
                 documents = documents.concat(documentCache.getAll());
             }
 
-            await indexFacade.putMultiple(documents, setProgress);
-            await addIndexDependentWarnings(indexFacade, documentCache, warningsUpdater, setProgress);
+            if (!cachingOnly) {
+                await indexFacade.putMultiple(documents, setProgress);
+                await addIndexDependentWarnings(indexFacade, documentCache, warningsUpdater, setProgress);
+            }
         } catch (err) {
             console.error(err);
             setError && setError('indexingError');
@@ -71,18 +74,23 @@ import { ProjectConfiguration } from '../services';
     }
 
 
-    function migrateDocuments(documents: Array<Document>,
-                              projectConfiguration: ProjectConfiguration): Array<Document> {
+    async function migrateDocuments(documents: Array<Document>,
+                                    projectConfiguration: ProjectConfiguration,
+                                    setProgress?: (progress: number) => Promise<void>): Promise<Array<Document>> {
 
-        return documents.map(document => {
+        for (let i = 0; i < documents.length; i++) {
             try {
-                Migrator.migrate(document, projectConfiguration);
-                return document;
+                Migrator.migrate(documents[i], projectConfiguration);
+                if (setProgress && (i % 250 === 0 || i === documents.length)) {
+                    await setProgress(i);
+                }
             } catch (err) {
                 console.warn('Error while migrating document: ', err);
                 return undefined;
             }
-        }).filter(not(isUndefined));
+        }
+        
+        return documents.filter(not(isUndefined));
     }
 
 

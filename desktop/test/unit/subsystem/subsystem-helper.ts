@@ -157,6 +157,7 @@ export async function createApp(projectIdentifier = 'testdb'): Promise<App> {
         documentCache,
         warningsUpdater,
         projectConfiguration,
+        false,
         false
     );
 

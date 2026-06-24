@@ -196,7 +196,8 @@ export class Datastore {
             this.documentCache,
             this.warningsUpdater,
             this.projectConfiguration,
-            true
+            true,
+            false
         );
 
         return resultDocuments;

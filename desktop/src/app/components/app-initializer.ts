@@ -1,7 +1,7 @@
 import { Map, to } from 'tsfun';
 import { ConfigLoader, ConfigReader, ConfigurationDocument, ConstraintIndex, DocumentCache, FulltextIndex, ImageStore,
     Indexer, IndexFacade, PouchdbDatastore, ProjectConfiguration, Document, Labels, ImageVariant, FileInfo,
-    WarningsUpdater, WarningsManager } from 'idai-field-core';
+    WarningsUpdater, WarningsManager, Warnings, IndexItem } from 'idai-field-core';
 import { AngularUtility } from '../angular/angular-utility';
 import { ThumbnailGenerator } from '../services/imagestore/thumbnail-generator';
 import { InitializationProgress } from './initialization-progress';
@@ -18,8 +18,10 @@ import { createDisplayVariant } from '../services/imagestore/manipulation/create
 import { Backup } from '../services/backup/model/backup';
 import { BackupService } from '../services/backup/backup-service';
 import { getExistingBackups } from '../services/backup/auto-backup/get-existing-backups';
+import { SerializationObject } from '../services/serialization-service';
 
 const ipcRenderer = window.require('electron')?.ipcRenderer;
+const remote = window.require('@electron/remote');
 const fs = window.require('fs');
 
 
@@ -133,13 +135,18 @@ export const appInitializerFactory = (serviceLocator: AppInitializerServiceLocat
     await copyThumbnailsFromDatabase(settings.selectedProject, pouchdbDatastore, imagestore);
     await createDisplayImages(imagestore, pouchdbDatastore.getDb(), settings.selectedProject, progress);
 
-    const services = await loadConfiguration(
-        settingsService, progress, configReader, configLoader, documentCache, warningsManager, pouchdbDatastore.getDb(),
-        settings.selectedProject, settings.username
-    );
+    const projectConfiguration: ProjectConfiguration = await loadConfiguration(settingsService, progress);
+
+    const loadedData = await loadIndexAndWarnings(pouchdbDatastore.getDb(), settings.selectedProject);
+    const services: Services = loadedData
+        ? await restoreIndexes(projectConfiguration, warningsManager, loadedData.constraintIndex,
+            loadedData.fulltextIndex, loadedData.indexItems, loadedData.warnings, configReader, configLoader,
+            pouchdbDatastore.getDb(), documentCache, settings.selectedProject, settings.username)
+        : await buildIndexes(projectConfiguration, warningsManager, configReader, configLoader,
+            pouchdbDatastore.getDb(), documentCache, settings.selectedProject, settings.username);
     serviceLocator.init(services);
 
-    await loadDocuments(serviceLocator, pouchdbDatastore.getDb(), documentCache, progress);
+    await loadDocuments(serviceLocator, pouchdbDatastore.getDb(), documentCache, progress, loadedData !== undefined);
 
     ipcRenderer.off('requestClose', onRequestClose);
 
@@ -219,45 +226,113 @@ const loadSampleData = async (settings: Settings, db: any, thumbnailGenerator: T
 };
 
 
-const loadConfiguration = async (settingsService: SettingsService, progress: InitializationProgress,
-                                 configReader: ConfigReader, configLoader: ConfigLoader,
-                                 documentCache: DocumentCache, warningsManager: WarningsManager, db: any,
-                                 projectIdentifier: string, username: string): Promise<Services> => {
+const loadConfiguration = async (settingsService: SettingsService,
+                                 progress: InitializationProgress): Promise<ProjectConfiguration> => {
 
     await progress.setPhase('loadingConfiguration');
 
-    let configuration: ProjectConfiguration;
     try {
-        configuration = await settingsService.loadConfiguration();
+        return settingsService.loadConfiguration();
     } catch (err) {
         progress.setError('configurationError', err);
         return Promise.reject('Configuration error');
     }
+}
 
-    const { createdConstraintIndex, createdFulltextIndex, createdIndexFacade }
-        = IndexerConfiguration.configureIndexers(configuration, warningsManager);
 
-    const configurationIndex: ConfigurationIndex = await buildConfigurationIndex(
-        configReader, configLoader, db, configuration, projectIdentifier, username
+const restoreIndexes = async (projectConfiguration: ProjectConfiguration, warningsManager: WarningsManager,
+                        constraintIndex: ConstraintIndex, fulltextIndex: FulltextIndex, indexItems: Map<IndexItem>,
+                        warnings: Map<Warnings>, configReader: ConfigReader, configLoader: ConfigLoader, db: any,
+                        documentCache: DocumentCache, projectIdentifier: string, username: string): Promise<Services> => {
+
+    const indexFacade: IndexFacade = new IndexFacade(
+        constraintIndex, fulltextIndex, projectConfiguration, warningsManager, true, indexItems
     );
 
+    const configurationIndex: ConfigurationIndex = await buildConfigurationIndex(
+        configReader, configLoader, db, projectConfiguration, projectIdentifier, username
+    );
+
+    warningsManager.setAll(warnings);
+
     const warningsUpdater: WarningsUpdater = new WarningsUpdater(
-        warningsManager, createdIndexFacade, documentCache, configuration
+        warningsManager, indexFacade, documentCache, projectConfiguration
     );
 
     return {
-        projectConfiguration: configuration,
-        constraintIndex: createdConstraintIndex,
-        fulltextIndex: createdFulltextIndex,
-        indexFacade: createdIndexFacade,
+        projectConfiguration,
+        constraintIndex,
+        fulltextIndex,
+        indexFacade,
         configurationIndex,
         warningsUpdater
     };
 };
 
 
+const buildIndexes = async (projectConfiguration: ProjectConfiguration, warningsManager: WarningsManager,
+                      configReader: ConfigReader, configLoader: ConfigLoader, db: any,
+                      documentCache: DocumentCache, projectIdentifier: string,
+                      username: string): Promise<Services> => {
+
+    const { createdConstraintIndex, createdFulltextIndex, createdIndexFacade }
+        = IndexerConfiguration.configureIndexers(projectConfiguration, warningsManager);
+
+    const configurationIndex: ConfigurationIndex = await buildConfigurationIndex(
+        configReader, configLoader, db, projectConfiguration, projectIdentifier, username
+    );
+    const warningsUpdater: WarningsUpdater = new WarningsUpdater(
+        warningsManager, createdIndexFacade, documentCache, projectConfiguration
+    );
+
+    return {
+        projectConfiguration,
+        constraintIndex: createdConstraintIndex,
+        fulltextIndex: createdFulltextIndex,
+        indexFacade: createdIndexFacade,
+        configurationIndex,
+        warningsUpdater
+    };
+}
+
+
+const loadIndexAndWarnings = async (db: any, projectIdentifier: string) => {
+
+    const updateSequence: number = (await db.info()).update_seq;
+
+    const fulltextIndex: FulltextIndex = deserialize('fulltextIndex.json', projectIdentifier, updateSequence);
+    const constraintIndex: ConstraintIndex = deserialize('constraintIndex.json', projectIdentifier, updateSequence);
+    const indexItems: Map<IndexItem> = deserialize('indexItems.json', projectIdentifier, updateSequence);
+    const warnings: Map<Warnings> = deserialize('warnings.json', projectIdentifier, updateSequence);
+
+    return warnings && fulltextIndex && constraintIndex// && configurationIndex
+        ? { warnings, fulltextIndex, constraintIndex, indexItems }
+        : undefined;
+}
+
+
+const deserialize = (fileName: string, projectIdentifier: string, updateSequence: number) => {
+
+    try {
+        const filePath: string = remote.getGlobal('appDataPath') + '/index/' + projectIdentifier + '/' + fileName;
+        if (!fs.existsSync(filePath)) return undefined;
+
+        const result: SerializationObject = JSON.parse(fs.readFileSync(filePath));
+
+        if (result.version === remote.app.getVersion() && result.updateSequence === updateSequence) {
+            return result.data;
+        } else {
+            return undefined;
+        }
+    } catch (err) {
+        console.error('Failed to deserialize file ' + fileName, err);
+        return undefined;
+    }
+}
+
+
 const loadDocuments = async (serviceLocator: AppInitializerServiceLocator, db: any, documentCache: DocumentCache,
-                             progress: InitializationProgress) => {
+                             progress: InitializationProgress, useLoadedIndexes: boolean) => {
 
     await progress.setPhase('loadingDocuments');
     progress.setMaxIndexingProgress((await db.info()).doc_count);
@@ -269,6 +344,7 @@ const loadDocuments = async (serviceLocator: AppInitializerServiceLocator, db: a
         serviceLocator.warningsUpdater,
         serviceLocator.projectConfiguration,
         false,
+        useLoadedIndexes,
         (count) => progress.setIndexingProgress(count),
         () => progress.setPhase('indexingDocuments'),
         (error) => progress.setError(error)

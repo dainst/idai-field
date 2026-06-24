@@ -62,155 +62,179 @@ defmodule FieldPublication.Publications.Search do
     }
   end
 
-  def initialize_search_indices(%Publication{} = publication) do
-    publication_alias = get_search_alias(publication)
+  def create_empty_indices(%Publication{} = publication, delete_existing? \\ false) do
+    index_names = get_index_names(publication)
 
-    index_a = "#{publication_alias}__a__"
-    index_b = "#{publication_alias}__b__"
-
-    project_alias =
-      publication.project_name
-      |> Projects.get!()
-      |> get_search_alias()
-
-    aliased_project_index =
-      project_alias
-      |> OpenSearchService.get_indices_behind_alias()
-      |> List.first()
-
-    if aliased_project_index in [index_a, index_b] do
-      OpenSearchService.remove_alias(
-        aliased_project_index,
-        project_alias
-      )
-
-      # TODO?: As a fallback we could search all publications associated to the project,
-      # pick the most current one and use that one as the project alias.
+    if delete_existing? do
+      delete_indices(publication)
     end
 
-    [ok: _, ok: _] =
-      Enum.map([index_a, index_b], &OpenSearchService.delete_index/1)
+    index_names
+    |> Enum.map(fn name ->
+      {name, OpenSearchService.create_index(name)}
+    end)
+    |> Enum.map(fn
+      {name, {:ok, %{status: 400}}} ->
+        {
+          :already_exists,
+          name
+        }
 
-    [ok: %{status: 200}, ok: %{status: 200}] =
-      Enum.map([index_a, index_b], &OpenSearchService.create_index/1)
-
-    OpenSearchService.set_alias(index_a, publication_alias)
+      {name, {:ok, %{status: 200}}} ->
+        {:created, name}
+    end)
   end
 
-  def delete_search_indices(%Publication{} = publication) do
-    publication_alias = get_search_alias(publication)
+  def delete_indices(%Publication{} = publication) do
+    publication
+    |> get_index_names()
+    |> Enum.map(fn name ->
+      {
+        name,
+        OpenSearchService.delete_index(name)
+      }
+    end)
+    |> Enum.map(fn
+      {name, {:ok, %{status: 200}}} ->
+        {
+          :deleted,
+          name
+        }
 
-    OpenSearchService.delete_index("#{publication_alias}__a__")
-    OpenSearchService.delete_index("#{publication_alias}__b__")
-
-    :ok
+      {name, {:ok, %{status: 404}}} ->
+        {:not_found, name}
+    end)
   end
 
-  def switch_active_alias(%Publication{} = publication) do
-    publication_alias = get_search_alias(publication)
+  def toggle_publication_alias(%Publication{} = publication) do
+    alias_name = get_alias(publication)
+    publication_index_names = get_index_names(publication)
 
-    old_index =
-      publication_alias
+    {next_index, old_index} =
+      publication
+      |> get_alias()
       |> OpenSearchService.get_indices_behind_alias()
-      |> List.first("#{publication_alias}__a__")
+      |> case do
+        [] ->
+          # The alias is currently not setup, pick the first index as next index.
+          {List.first(publication_index_names), nil}
 
-    next_index =
-      if String.ends_with?(old_index, "__a__") do
-        "#{publication_alias}__b__"
-      else
-        "#{publication_alias}__a__"
+        [value] when is_binary(value) ->
+          # The alias is in use, pick the currently unused one as next index.
+          {Enum.find(publication_index_names, fn name -> name != value end), value}
       end
 
-    OpenSearchService.remove_alias(old_index, publication_alias)
-    OpenSearchService.set_alias(next_index, publication_alias)
+    if old_index do
+      OpenSearchService.remove_alias(old_index, alias_name)
+    end
 
+    OpenSearchService.set_alias(next_index, alias_name)
+
+    # If this publication is also used in the system wide search via the project alias, switch that
+    # alias too.
     project_alias =
       publication.project_name
       |> Projects.get!()
-      |> get_search_alias()
+      |> get_alias()
 
-    if project_alias
-       |> OpenSearchService.get_indices_behind_alias()
-       |> List.first() == old_index do
-      OpenSearchService.remove_alias(old_index, project_alias)
-      OpenSearchService.set_alias(next_index, project_alias)
+    project_alias
+    |> OpenSearchService.get_indices_behind_alias()
+    |> case do
+      [index_name] when index_name != nil and index_name == old_index ->
+        OpenSearchService.set_alias(next_index, project_alias)
+
+      _ ->
+        :ok
     end
 
-    :ok
-  end
-
-  def reset_inactive_index(%Publication{} = publication, mapping) do
-    publication_alias = get_search_alias(publication)
-
-    inactive_index =
-      publication_alias
-      |> OpenSearchService.get_indices_behind_alias()
-      |> List.first()
-      |> invert_search_index_name()
-
-    OpenSearchService.delete_index(inactive_index)
-    OpenSearchService.create_index(inactive_index, mapping)
+    next_index
   end
 
   def set_project_alias(%Publication{} = publication) do
-    publication_alias = get_search_alias(publication)
+    publication
+    |> get_alias()
+    |> OpenSearchService.get_indices_behind_alias()
+    |> case do
+      [] ->
+        {:error, :no_active_publication_alias}
 
-    project_alias =
-      publication.project_name
-      |> Projects.get!()
-      |> get_search_alias()
+      [index_name] when is_binary(index_name) ->
+        project_alias =
+          publication.project_name
+          |> Projects.get!()
+          |> get_alias()
 
-    old_index =
-      project_alias
-      |> OpenSearchService.get_indices_behind_alias()
-      |> List.first()
+        OpenSearchService.set_alias(index_name, project_alias)
 
-    next_index =
-      publication_alias
-      |> OpenSearchService.get_indices_behind_alias()
-      |> List.first()
-
-    unless old_index == nil do
-      OpenSearchService.remove_alias(old_index, project_alias)
+        {:ok, project_alias}
     end
-
-    OpenSearchService.set_alias(next_index, project_alias)
   end
 
-  def clear_project_alias(%Publication{} = publication) do
-    project_alias =
-      publication.project_name
-      |> Projects.get!()
-      |> get_search_alias()
+  def remove_project_alias(%Publication{} = publication) do
+    publication
+    |> get_alias()
+    |> OpenSearchService.get_indices_behind_alias()
+    |> case do
+      [] ->
+        {:ok, :no_active_project_alias}
+
+      [index_name] when is_binary(index_name) ->
+        project_alias =
+          publication.project_name
+          |> Projects.get!()
+          |> get_alias()
+
+        OpenSearchService.set_alias(index_name, project_alias)
+
+        {:ok, project_alias}
+    end
+  end
+
+  def setup_index(%Publication{} = publication, mapping, active_alias? \\ false)
+      when is_map(mapping) do
+    alias_name = get_alias(publication)
+    publication_index_names = get_index_names(publication)
 
     index =
-      project_alias
+      alias_name
       |> OpenSearchService.get_indices_behind_alias()
-      |> List.first()
+      |> case do
+        [] ->
+          List.first(publication_index_names)
 
-    OpenSearchService.remove_alias(index, project_alias)
+        [aliased_index_name] when is_binary(aliased_index_name) ->
+          Enum.find(publication_index_names, fn name ->
+            name == aliased_index_name == active_alias?
+          end)
+      end
+
+    OpenSearchService.delete_index(index)
+    OpenSearchService.create_index(index, mapping)
+
+    index
+  end
+
+  defp get_index_names(%Publication{} = publication) do
+    publication_alias = get_alias(publication)
+    ["#{publication_alias}__a__", "#{publication_alias}__b__"]
+  end
+
+  def get_alias(%Publication{} = publication) do
+    publication
+    |> Publications.get_doc_id()
+    |> OpenSearchService.encode_chars()
+  end
+
+  def get_alias(%Project{} = project) do
+    project
+    |> Projects.get_document_id()
+    |> OpenSearchService.encode_chars()
   end
 
   def get_doc_count(%Publication{} = publication) do
     publication
     |> get_search_alias()
     |> OpenSearchService.get_doc_count()
-  end
-
-  def index_documents(docs, %Publication{} = publication, inactive_alias \\ true) do
-    index =
-      get_search_alias(publication)
-      |> OpenSearchService.get_indices_behind_alias()
-      |> List.first()
-
-    index =
-      if inactive_alias do
-        invert_search_index_name(index)
-      else
-        index
-      end
-
-    OpenSearchService.insert_documents(docs, index)
   end
 
   def get_category_count(%Publication{} = pub) do
@@ -967,8 +991,17 @@ defmodule FieldPublication.Publications.Search do
 
   @not_indexed_document_uuids ["project", "configuration"]
 
-  def evaluate_active_index_state(%Publication{} = publication) do
+  defp count_database_documents(publication) do
     database_count = Data.get_doc_count(publication)
+
+    # We do not count documents 'project' or 'configuration' because they are not added to the index.
+    if database_count >= 2,
+      do: database_count - Enum.count(@not_indexed_document_uuids),
+      else: 0
+  end
+
+  def evaluate_active_index_state(%Publication{} = publication) do
+    database_count = count_database_documents(publication)
 
     # We do not count documents 'project' or 'configuration' because they are not added to the index.
     database_count =
@@ -999,14 +1032,13 @@ defmodule FieldPublication.Publications.Search do
     mapping = generate_index_mapping(publication)
     special_input_types = evaluate_input_types(publication)
 
-    {:ok, %{status: 200}} = reset_inactive_index(publication, mapping)
+    index_name = setup_index(publication, mapping)
 
-    initial_state =
-      publication
-      |> evaluate_active_index_state()
-      # We will re-index in a moment, so set the state for counter and percentage accordingly
-      |> Map.put(:counter, 0)
-      |> Map.put(:percentage, 0)
+    initial_state = %{
+      counter: 0,
+      percentage: 0,
+      overall: count_database_documents(publication)
+    }
 
     {:ok, counter_pid} =
       Agent.start_link(fn -> initial_state end)
@@ -1042,7 +1074,7 @@ defmodule FieldPublication.Publications.Search do
 
       success_count =
         doc_batch
-        |> index_documents(publication)
+        |> OpenSearchService.insert_documents(index_name)
         |> case do
           {:ok, %{status: 200, body: body}} ->
             Jason.decode!(body)
@@ -1095,7 +1127,7 @@ defmodule FieldPublication.Publications.Search do
     end)
     |> Enum.to_list()
 
-    switch_active_alias(publication)
+    toggle_publication_alias(publication)
     evaluate_system_wide_label_usage()
   end
 
@@ -1247,13 +1279,5 @@ defmodule FieldPublication.Publications.Search do
     [[_full_match, project_name, draft_date_iso_8601]] = Regex.scan(regex, name)
 
     Publications.get(project_name, draft_date_iso_8601)
-  end
-
-  defp invert_search_index_name(index_name) do
-    if String.ends_with?(index_name, "__a__") do
-      String.replace(index_name, "__a__", "__b__")
-    else
-      String.replace(index_name, "__b__", "__a__")
-    end
   end
 end

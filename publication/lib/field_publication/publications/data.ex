@@ -848,13 +848,34 @@ defmodule FieldPublication.Publications.Data do
     end
   end
 
-  def get_doc_count(%Publication{database: db}) do
-    CouchService.get_database(db)
-    |> then(fn {:ok, %{status: 200, body: body}} ->
-      body
-      |> Jason.decode!()
-      |> Map.get("doc_count", 0)
-    end)
+  def get_doc_count(%Publication{database: db}, include_design_documents? \\ false) do
+    document_count_overall =
+      CouchService.get_database(db)
+      |> case do
+        {:ok, %{status: 200, body: body}} ->
+          body
+          |> Jason.decode!()
+          |> Map.get("doc_count", 0)
+
+        _ ->
+          0
+      end
+
+    design_document_count =
+      CouchService.all_design_docs(db)
+      |> case do
+        {:ok, %{status: 200, body: body}} ->
+          body
+          |> Jason.decode!()
+          |> Map.get("total_rows", 0)
+
+        _ ->
+          0
+      end
+
+    if include_design_documents?,
+      do: document_count_overall,
+      else: document_count_overall - design_document_count
   end
 
   def get_raw_document(uuid, %Publication{database: db}) do

@@ -17,7 +17,7 @@ defmodule FieldHub.User do
   - `password` the user's password.
   """
   def create(name, password) do
-    %{status_code: status_code} = CouchService.create_user(name, password)
+    %{status: status_code} = CouchService.create_user(name, password)
 
     case status_code do
       201 ->
@@ -39,10 +39,10 @@ defmodule FieldHub.User do
   def delete(name) do
     CouchService.delete_user(name)
     |> case do
-      %{status_code: 200} ->
+      %{status: 200} ->
         :deleted
 
-      %{status_code: 404} ->
+      %{status: 404} ->
         :unknown
     end
   end
@@ -59,10 +59,10 @@ defmodule FieldHub.User do
   def update_password(name, password) do
     CouchService.update_password(name, password)
     |> case do
-      %{status_code: 201} ->
+      %{status: 201} ->
         :updated
 
-      %{status_code: 404} ->
+      %{status: 404} ->
         :unknown
     end
   end
@@ -76,10 +76,10 @@ defmodule FieldHub.User do
   def exists?(name) do
     CouchService.get_user(name)
     |> case do
-      %{status_code: 200} ->
+      %{status: 200} ->
         true
 
-      %{status_code: 404} ->
+      %{status: 404} ->
         false
     end
   end

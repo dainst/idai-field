@@ -276,7 +276,10 @@ defmodule FieldPublication.Publications do
          {:ok, %{status: 201}} <- CouchService.put_database(publication.database),
          {:ok, %{status: 201}} <- CouchService.put_document(publication.configuration_doc, %{}),
          {:ok, %{status: 201, body: body}} <- CouchService.put_document(doc_id, publication),
-         {:ok, %{status: 200}} <- Search.create_empty_indices(publication, true) do
+         [
+           created: _index_name_a,
+           created: _index_name_b
+         ] <- Search.create_empty_indices(publication, true) do
       %{"rev" => rev} = Jason.decode!(body)
       {:ok, Map.put(publication, :_rev, rev)}
     else
@@ -309,9 +312,7 @@ defmodule FieldPublication.Publications do
            Data.delete_meta_database(publication),
          {:ok, %{status: status}} when status in [200, 404] <-
            delete_configuration_doc(publication),
-         # {:ok, %{status: status}} when status in [200, 404] <-
-         #   delete_hierarchy_doc(publication),
-         :ok <- Search.delete_indices(publication),
+         _not_found_or_deleted <- Search.delete_indices(publication),
          {:ok, %{status: status}} when status in [200, 404] <-
            CouchService.delete_document(doc_id, rev),
          {:ok, %{status: status}} when status in [200, 404] <-

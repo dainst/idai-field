@@ -96,10 +96,7 @@ defmodule FieldPublication.Publications.Search do
     end)
     |> Enum.map(fn
       {name, {:ok, %{status: 200}}} ->
-        {
-          :deleted,
-          name
-        }
+        {:deleted, name}
 
       {name, {:ok, %{status: 404}}} ->
         {:not_found, name}

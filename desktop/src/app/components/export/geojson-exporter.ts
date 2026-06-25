@@ -4,7 +4,7 @@ import { FieldDocument, FieldGeometry, Query, ObjectUtils, Datastore, FieldGeome
 import { M } from '../../components/messages/m';
 import { getAsynchronousFs } from '../../services/get-asynchronous-fs';
 
-const geojsonRewind = window.require('@mapbox/geojson-rewind');
+import geojsonRewind from '@mapbox/geojson-rewind';
 
 
 /**

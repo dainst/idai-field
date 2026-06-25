@@ -5,7 +5,7 @@ import { M } from '../messages/m';
 import { ExportGraphModalComponent } from './export-graph-modal.component';
 import { AngularUtility } from '../../angular/angular-utility';
 
-const remote = window.require('@electron/remote');
+import { electronRemote as remote } from 'src/app/electron/electron';
 
 
 export type MatrixExportFormat = 'dot'|'svg';

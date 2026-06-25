@@ -1,7 +1,7 @@
 import { JimpImageManipulation } from './jimp/jimp-image-manipulation';
 import { SharpImageManipulation } from './sharp/sharp-image-manipulation';
 
-const remote = window.require('@electron/remote');
+import { electronRemote as remote } from 'src/app/electron/electron';
 const imageProcessing: 'sharp'|'jimp' = remote?.getGlobal('imageProcessing') ?? 'sharp';
 
 

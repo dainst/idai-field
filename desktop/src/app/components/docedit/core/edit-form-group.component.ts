@@ -33,6 +33,7 @@ export class EditFormGroup extends ConfigurationInfoProvider implements OnChange
     @Input() languages: Map<Language>;
     @Input() scrollTargetField: string;
     @Input() disabledRelationFields: string[];
+    @Input() hiddenFieldNames: string[];
 
     // Detects changes in fields of input types "dropdown", "radio", "checkboxes" and "boolean"
     @Output() onChanged: EventEmitter<void> = new EventEmitter<void>();
@@ -76,6 +77,7 @@ export class EditFormGroup extends ConfigurationInfoProvider implements OnChange
 
         return field !== undefined
             && field.editable === true
+            && !this.hiddenFieldNames?.includes(field.name)
             && Condition.isFulfilled(field.condition, this.document.resource, this.categoryFields, 'field');
     }
 

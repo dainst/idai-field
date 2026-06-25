@@ -415,9 +415,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentComponents do
                 translations={comments}
               >
                 <span class="markdown">
-                  {comment
-                  |> Earmark.as_html!()
-                  |> Phoenix.HTML.raw()}
+                  {FieldPublicationWeb.Markdown.to_html(comment)}
                 </span>
               </.live_component>
             <% else %>

@@ -1,4 +1,4 @@
-import { Dating, Dimension, Field, OptionalRange } from 'idai-field-core';
+import { Dating, Field, Measurement, OptionalRange } from 'idai-field-core';
 
 export interface FieldBaseProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -9,7 +9,7 @@ export interface FieldBaseProps {
     | number
     | string[]
     | boolean
-    | Dimension[]
+    | Measurement[]
     | OptionalRange<string>
     | Dating[];
 }

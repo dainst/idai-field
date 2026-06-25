@@ -23,8 +23,8 @@ import { Settings } from '../../services/settings/settings';
 import getCategoriesWithoutExcludedCategories = ExportRunner.getCategoriesWithoutExcludedCategories;
 
 
-const remote = window.require('@electron/remote');
-const path = window.require('path');
+import { electronRemote as remote } from 'src/app/electron/electron';
+import { electronPath as path } from 'src/app/electron/electron';
 
 
 @Component({

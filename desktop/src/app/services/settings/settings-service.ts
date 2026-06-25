@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
 import { isString } from 'tsfun';
 import { AppConfigurator, ConfigReader, ConfigurationDocument, getConfigurationName, ImageStore, ImageSyncService,
-    Name, PouchdbDatastore, ProjectConfiguration, SyncService, Template, Document, I18N, validateUrl,
-    ObserverUtil } from 'idai-field-core';
+    KOREAN_FIELDWORK_CONFIGURATION_NAME, KOREAN_FIELDWORK_TEMPLATE_ID, Name, PouchdbDatastore,
+    ProjectConfiguration, SyncService, Template, Document, I18N, validateUrl, ObserverUtil } from 'idai-field-core';
 import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';
 import { ExpressServer } from '../express-server/express-server';
@@ -12,12 +12,18 @@ import { SyncTarget } from './sync-target';
 import { SettingsProvider } from './settings-provider';
 import { SettingsErrors } from './settings-errors';
 
-const ipcRenderer = window.require('electron')?.ipcRenderer;
-const remote = window.require('@electron/remote');
-const PouchDB = window.require('pouchdb-browser');
+import { electronIpc as ipcRenderer } from 'src/app/electron/electron';
+import { electronRemote as remote } from 'src/app/electron/electron';
+import PouchDB from 'pouchdb-browser';
 
 
 type validationMode = 'settings'|'synchronization'|'none';
+
+export interface KoreanFieldworkProjectSetup {
+    projectInvestigationMode: string;
+    projectBoundarySetupState: string;
+    projectBoundarySummary: string;
+}
 
 
 @Injectable()
@@ -118,13 +124,16 @@ export class SettingsService {
     public async loadConfiguration(): Promise<ProjectConfiguration> {
 
         const projectIdentifier: string = this.settingsProvider.getSettings().selectedProject;
-        const configurationName: string = getConfigurationName(projectIdentifier);
 
         const configurationDocument: ConfigurationDocument = await ConfigurationDocument.getConfigurationDocument(
             (id: string) => this.pouchdbDatastore.getDb().get(id),
             this.configReader,
             projectIdentifier,
             this.settingsProvider.getSettings().username
+        );
+        const configurationName: string = getConfigurationName(
+            projectIdentifier,
+            configurationDocument.resource.customConfigurationName
         );
 
         try {
@@ -216,7 +225,8 @@ export class SettingsService {
 
 
     public async createProject(projectIdentifier: string, template: Template, selectedLanguages: string[],
-                               projectName: I18N.String|undefined, destroyBeforeCreate: boolean) {
+                               projectName: I18N.String|undefined, destroyBeforeCreate: boolean,
+                               koreanFieldworkProjectSetup?: KoreanFieldworkProjectSetup) {
 
         this.imageSyncService.stopAllSyncing();
         this.synchronizationService.stopSync();
@@ -224,7 +234,7 @@ export class SettingsService {
         await this.selectProject(projectIdentifier);
 
         const projectDocument: Document = SettingsService.createProjectDocument(
-            this.settingsProvider.getSettings(), projectName
+            this.settingsProvider.getSettings(), projectName, koreanFieldworkProjectSetup
         );
         await this.updateProjectName(projectDocument);
 
@@ -254,7 +264,8 @@ export class SettingsService {
     }
 
 
-    public static createProjectDocument(settings: Settings, projectName?: I18N.String): Document {
+    public static createProjectDocument(settings: Settings, projectName?: I18N.String,
+                                        koreanFieldworkProjectSetup?: KoreanFieldworkProjectSetup): Document {
 
         const projectDocument: Document = {
             _id: 'project',
@@ -270,6 +281,12 @@ export class SettingsService {
         };
 
         if (projectName) projectDocument.resource.shortName = projectName;
+        if (koreanFieldworkProjectSetup) {
+            Object.assign(projectDocument.resource, {
+                ...koreanFieldworkProjectSetup,
+                shortDescription: koreanFieldworkProjectSetup.projectBoundarySummary
+            });
+        }
 
         return projectDocument;
     }
@@ -278,7 +295,7 @@ export class SettingsService {
     public static createConfigurationDocument(settings: Settings, template: Template,
                                               selectedLanguages: string[]): ConfigurationDocument {
 
-        return {
+        const configurationDocument: ConfigurationDocument = {
             _id: 'configuration',
             resource: {
                 category: 'Configuration',
@@ -294,6 +311,12 @@ export class SettingsService {
             created: { user: settings.username, date: new Date() },
             modified: [{ user: settings.username, date: new Date() }]
         };
+
+        if (template.name === KOREAN_FIELDWORK_TEMPLATE_ID) {
+            configurationDocument.resource.customConfigurationName = KOREAN_FIELDWORK_CONFIGURATION_NAME;
+        }
+
+        return configurationDocument;
     }
 
 

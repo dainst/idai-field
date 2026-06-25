@@ -19,7 +19,12 @@ const DisconnectPouchForm: React.FC<DisconnectPouchFormProps> = ({ onDisconnect,
                 icon={ <Ionicons name="close-outline" size={ 16 } /> }
                 onPress={ onClose }
             /> }
-            right={ <Button variant="danger" onPress={ onDisconnect } title="연결 해제" /> }
+            right={ <Button
+                variant="danger"
+                testID="sync-disconnect-submit"
+                onPress={ onDisconnect }
+                title="연결 해제"
+            /> }
         />
     );
 };

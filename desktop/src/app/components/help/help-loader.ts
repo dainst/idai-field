@@ -66,6 +66,13 @@ export module HelpLoader {
 
     function adjustLinks(markdown: string): string {
 
-        return markdown.replace(/a href="/g, 'a target="_blank" href="');
+        const document = new DOMParser().parseFromString(markdown, 'text/html');
+
+        Array.from(document.getElementsByTagName('a')).forEach(anchor => {
+            anchor.target = '_blank';
+            anchor.rel = 'noopener noreferrer';
+        });
+
+        return document.body.innerHTML;
     }
 }

@@ -1,6 +1,6 @@
 import { ImageDocument, ImageStore, ImageVariant } from 'idai-field-core';
 
-const fs = window.require('fs');
+import { electronFs as fs } from 'src/app/electron/electron';
 
 const ERROR_ORIGINAL_IMAGE_FILE_NOT_FOUND: string = 'exportImages.error.originalImageFileNotFound';
 

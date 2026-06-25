@@ -20,7 +20,7 @@ import { AppState } from '../../services/app-state';
 import { AngularUtility } from '../../angular/angular-utility';
 import { ImportExportProcessModalComponent } from '../widgets/import-export-process-modal.component';
 
-const remote = window.require('@electron/remote');
+import { electronRemote as remote } from 'src/app/electron/electron';
 
 
 @Component({

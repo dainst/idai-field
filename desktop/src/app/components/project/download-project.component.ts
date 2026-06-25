@@ -18,8 +18,8 @@ import { AngularUtility } from '../../angular/angular-utility';
 import { getFileSizeLabel } from '../../util/get-file-size-label';
 import { Settings } from '../../services/settings/settings';
 
-const PouchDB = window.require('pouchdb-browser');
-const address = window.require('address');
+import PouchDB from 'pouchdb-browser';
+import { ip as getIpAddress } from 'address';
 
 const CREDENTIALS_TIMER_INTERVAL: number = 500;
 
@@ -375,7 +375,7 @@ export class DownloadProjectComponent {
         const url: string = this.url?.trim();
 
         // Prevent trying to download project from own database
-        return url.replace('http://', '').replace(':3000', '') === address.ip()
+        return url.replace('http://', '').replace(':3000', '') === getIpAddress()
             ? '.'
             : url;
     }

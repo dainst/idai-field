@@ -26,7 +26,7 @@ const FieldLabel: React.FC<FieldLabelProps> = (props) => {
 
   const infoBtnHandle = () => setInfoVisible((oldState) => !oldState);
   const getDescription = () =>
-    labels?.getLabelAndDescription(props.field as Field).description;
+    labels?.getLabelAndDescription(props.field as Field)?.description;
 
   return (
     <View>

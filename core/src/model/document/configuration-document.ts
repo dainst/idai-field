@@ -308,7 +308,7 @@ export namespace ConfigurationDocument {
             )
             : configReader.getCustomLanguageConfigurations(customConfigurationName);
 
-        const configurationDocument = {
+        const configurationDocument: ConfigurationDocument = {
             _id: 'configuration',
             created: {
                 user: username,
@@ -327,6 +327,10 @@ export namespace ConfigurationDocument {
                 projectLanguages: projectIdentifier === 'test' ? Object.keys(sampleDataLabels) : []
             }
         };
+
+        if (customConfigurationName !== 'Default') {
+            configurationDocument.resource.customConfigurationName = customConfigurationName;
+        }
 
         return configurationDocument;
     }

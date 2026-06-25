@@ -8,7 +8,7 @@ import { Menus } from '../services/menus';
 import { MenuModalLauncher } from '../services/menu-modal-launcher';
 import { MenuContext } from '../services/menu-context';
 
-const ipcRenderer = window.require('electron')?.ipcRenderer;
+import { electronIpc as ipcRenderer } from 'src/app/electron/electron';
 
 
 @Injectable()

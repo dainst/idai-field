@@ -331,18 +331,29 @@ defmodule FieldPublicationWeb.UserAuth do
         %{params: %{"project_id" => project_id, "draft_date" => draft_date}} = conn,
         _options
       ) do
-    Publications.get(project_id, draft_date)
+    require_publication_access(conn, project_id, draft_date)
+  end
+
+  def require_json_publication_access(
+        %{params: %{"project_name" => project_name, "draft_date" => draft_date}} = conn,
+        _options
+      ) do
+    require_publication_access(conn, project_name, draft_date)
+  end
+
+  defp require_publication_access(conn, project_name, draft_date) do
+    Publications.get(project_name, draft_date)
     |> case do
       {:error, _} ->
         conn
         |> resp(
           404,
-          "No publication found for project '#{project_id}' with a publication date of '#{draft_date}'."
+          "No publication found for project '#{project_name}' with a publication date of '#{draft_date}'."
         )
         |> halt()
 
       {:ok, %FieldPublication.DatabaseSchema.Publication{} = publication} ->
-        if not Projects.has_publication_access?(publication, conn.assigns.current_user) do
+        if not Projects.has_publication_access?(publication, conn.assigns[:current_user]) do
           conn
           |> resp(403, "You are not allowed to access that page.")
           |> halt()

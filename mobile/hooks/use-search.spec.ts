@@ -16,9 +16,7 @@ describe('useSearch', () => {
     repository = await DocumentRepository.init(
       'test',
       [] as any,
-      new PouchdbDatastore((name) => new PouchDB(name), {
-        generateId: () => '1',
-      })
+      {} as PouchdbDatastore
     );
   });
 
@@ -43,7 +41,7 @@ describe('useSearch', () => {
 
     await act(async () => {
       query = assoc('q', 'test', query);
-      rerender();
+      rerender(undefined);
     });
 
     await waitFor(() => {

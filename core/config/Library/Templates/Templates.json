@@ -546,7 +546,24 @@
       "forms": {
         "Project:default": {
           "hidden": [],
-          "fields": {}
+          "fields": {
+            "projectInvestigationMode": {
+              "inputType": "dropdown",
+              "constraintIndexed": true
+            },
+            "projectBoundarySetupState": {
+              "inputType": "dropdown",
+              "constraintIndexed": true
+            },
+            "projectBoundarySummary": {
+              "inputType": "text",
+              "constraintIndexed": true
+            }
+          },
+          "valuelists": {
+            "projectInvestigationMode": "KoreanFieldwork-projectInvestigationMode",
+            "projectBoundarySetupState": "KoreanFieldwork-projectBoundarySetupState"
+          }
         },
         "Operation:default": {
           "hidden": [],
@@ -577,6 +594,22 @@
             },
             "featureInvestigationChecklist": {
               "inputType": "checkboxes",
+              "constraintIndexed": true
+            },
+            "longAxisOrientation": {
+              "inputType": "input",
+              "constraintIndexed": true
+            },
+            "shortAxisOrientation": {
+              "inputType": "input",
+              "constraintIndexed": true
+            },
+            "orientationReference": {
+              "inputType": "input",
+              "constraintIndexed": true
+            },
+            "orientationNote": {
+              "inputType": "text",
               "constraintIndexed": true
             }
           },
@@ -625,7 +658,14 @@
             },
             {
               "name": "position",
-              "fields": ["geometry", "spatialLocation"]
+              "fields": [
+                "geometry",
+                "spatialLocation",
+                "longAxisOrientation",
+                "shortAxisOrientation",
+                "orientationReference",
+                "orientationNote"
+              ]
             }
           ]
         },
@@ -657,25 +697,124 @@
           }
         },
         "FeatureGroup:default": {
-          "hidden": [],
-          "fields": {}
+          "hidden": ["fieldIdentifier", "reportIdentifier", "identifierRevisionHistory", "identifierRevisionNote"],
+          "fields": {
+            "fieldIdentifier": {
+              "inputType": "input",
+              "constraintIndexed": true
+            },
+            "reportIdentifier": {
+              "inputType": "input",
+              "constraintIndexed": true
+            },
+            "identifierRevisionHistory": {
+              "inputType": "text",
+              "constraintIndexed": true
+            },
+            "identifierRevisionNote": {
+              "inputType": "text",
+              "constraintIndexed": true
+            }
+          }
         },
         "Feature:default": {
-          "hidden": [],
-          "fields": {}
+          "hidden": ["fieldIdentifier", "reportIdentifier", "identifierRevisionHistory", "identifierRevisionNote"],
+          "fields": {
+            "fieldIdentifier": {
+              "inputType": "input",
+              "constraintIndexed": true
+            },
+            "reportIdentifier": {
+              "inputType": "input",
+              "constraintIndexed": true
+            },
+            "identifierRevisionHistory": {
+              "inputType": "text",
+              "constraintIndexed": true
+            },
+            "identifierRevisionNote": {
+              "inputType": "text",
+              "constraintIndexed": true
+            },
+            "longAxisOrientation": {
+              "inputType": "input",
+              "constraintIndexed": true
+            },
+            "shortAxisOrientation": {
+              "inputType": "input",
+              "constraintIndexed": true
+            },
+            "orientationReference": {
+              "inputType": "input",
+              "constraintIndexed": true
+            },
+            "orientationNote": {
+              "inputType": "text",
+              "constraintIndexed": true
+            }
+          }
         },
         "FeatureSegment:default": {
-          "hidden": [],
+          "hidden": ["fieldIdentifier", "reportIdentifier", "identifierRevisionHistory", "identifierRevisionNote"],
           "fields": {
             "isRecordedIn": {
               "inputType": "relation",
               "range": ["Operation", "Trench", "ExcavationArea"]
+            },
+            "fieldIdentifier": {
+              "inputType": "input",
+              "constraintIndexed": true
+            },
+            "reportIdentifier": {
+              "inputType": "input",
+              "constraintIndexed": true
+            },
+            "identifierRevisionHistory": {
+              "inputType": "text",
+              "constraintIndexed": true
+            },
+            "identifierRevisionNote": {
+              "inputType": "text",
+              "constraintIndexed": true
+            },
+            "longAxisOrientation": {
+              "inputType": "input",
+              "constraintIndexed": true
+            },
+            "shortAxisOrientation": {
+              "inputType": "input",
+              "constraintIndexed": true
+            },
+            "orientationReference": {
+              "inputType": "input",
+              "constraintIndexed": true
+            },
+            "orientationNote": {
+              "inputType": "text",
+              "constraintIndexed": true
             }
           }
         },
         "Layer:default": {
           "hidden": [],
-          "fields": {}
+          "fields": {
+            "longAxisOrientation": {
+              "inputType": "input",
+              "constraintIndexed": true
+            },
+            "shortAxisOrientation": {
+              "inputType": "input",
+              "constraintIndexed": true
+            },
+            "orientationReference": {
+              "inputType": "input",
+              "constraintIndexed": true
+            },
+            "orientationNote": {
+              "inputType": "text",
+              "constraintIndexed": true
+            }
+          }
         },
         "Find:default": {
           "hidden": [],

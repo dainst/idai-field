@@ -63,31 +63,35 @@ const useMapData = (
     async (docIds: string[]) => {
       if (!documentToWorldMatrix) return;
 
-      const docs = await repository.getMultiple(docIds);
-      const geometryBoundings = getDocumentsGeometryBoundings(docs);
+      try {
+        const docs = await repository.getMultiple(docIds);
+        const geometryBoundings = getDocumentsGeometryBoundings(docs);
 
-      if (!geometryBoundings) return;
+        if (!geometryBoundings) return;
 
-      const { minX, minY, maxX, maxY } = geometryBoundings;
-      const [left, bottom] = processTransform2d(documentToWorldMatrix, [
-        minX,
-        minY,
-      ]);
-      const [right, top] = processTransform2d(documentToWorldMatrix, [
-        maxX,
-        maxY,
-      ]);
-      setViewBox(
-        getDocumentToWorldTransform(
-          {
-            minX: left,
-            minY: bottom,
-            height: Math.max(top - bottom, right - left) + viewBoxPaddingY,
-            width: Math.max(top - bottom, right - left) + viewBoxPaddingX,
-          },
-          defineWorldCoordinateSystem()
-        )
-      );  
+        const { minX, minY, maxX, maxY } = geometryBoundings;
+        const [left, bottom] = processTransform2d(documentToWorldMatrix, [
+          minX,
+          minY,
+        ]);
+        const [right, top] = processTransform2d(documentToWorldMatrix, [
+          maxX,
+          maxY,
+        ]);
+        setViewBox(
+          getDocumentToWorldTransform(
+            {
+              minX: left,
+              minY: bottom,
+              height: Math.max(top - bottom, right - left) + viewBoxPaddingY,
+              width: Math.max(top - bottom, right - left) + viewBoxPaddingX,
+            },
+            defineWorldCoordinateSystem()
+          )
+        );
+      } catch (error) {
+        console.warn('Unable to focus map on selected documents', error);
+      }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [repository, documentToWorldMatrix]
@@ -99,37 +103,45 @@ const useMapData = (
   const getDocumentsGeometryBoundings = (
     docs: Document[]
   ): GeometryBoundings | null => {
-    if (!docs.length) return null;
+    const usableDocs = docs.filter(isUsableDocument);
+    if (!usableDocs.length) return null;
 
-    let geometryBoundings: GeometryBoundings | null;
-    if (isDocumentLayer(docs)) {
-      const layerVertices = getLayerCoordinates(docs[0].resource.georeference);
-      geometryBoundings = {
-        minX: Math.min(
-          layerVertices.bottomLeftCoordinates[0],
-          layerVertices.topLeftCoordinates[0]
-        ),
-        maxX: Math.max(
-          layerVertices.bottomRightCoordinates[0],
-          layerVertices.topRightCoordinates[0]
-        ),
-        minY: Math.min(
-          layerVertices.bottomLeftCoordinates[1],
-          layerVertices.bottomRightCoordinates[1]
-        ),
-        maxY: Math.max(
-          layerVertices.topLeftCoordinates[1],
-          layerVertices.topRightCoordinates[1]
-        ),
-      };
-    } else {
-      const geoDocs = docs
-        .map((doc) => doc.resource.geometry || null)
-        .filter((doc) => doc !== null) as FieldGeometry[];
-      geometryBoundings = getMinMaxGeometryCoords(geoDocs);
+    try {
+      let geometryBoundings: GeometryBoundings | null;
+      if (isDocumentLayer(usableDocs)) {
+        const georeference = usableDocs[0].resource.georeference;
+        if (!georeference) return null;
+        const layerVertices = getLayerCoordinates(georeference);
+        geometryBoundings = {
+          minX: Math.min(
+            layerVertices.bottomLeftCoordinates[0],
+            layerVertices.topLeftCoordinates[0]
+          ),
+          maxX: Math.max(
+            layerVertices.bottomRightCoordinates[0],
+            layerVertices.topRightCoordinates[0]
+          ),
+          minY: Math.min(
+            layerVertices.bottomLeftCoordinates[1],
+            layerVertices.bottomRightCoordinates[1]
+          ),
+          maxY: Math.max(
+            layerVertices.topLeftCoordinates[1],
+            layerVertices.topRightCoordinates[1]
+          ),
+        };
+      } else {
+        const geoDocs = usableDocs
+          .map((doc) => doc.resource.geometry || null)
+          .filter((doc) => doc !== null) as FieldGeometry[];
+        geometryBoundings = getMinMaxGeometryCoords(geoDocs);
+      }
+
+      return geometryBoundings;
+    } catch (error) {
+      console.warn('Unable to read map geometry bounds', error);
+      return null;
     }
-
-    return geometryBoundings;
   };
 
   const isDocumentLayer = (documents: Document[]) => {
@@ -147,30 +159,42 @@ const useMapData = (
 
     repository
       .find(layerDocSearchQuery)
-      .then((result) => setLayerDocuments(result.documents))
+      .then((result) =>
+        setLayerDocuments(result.documents.filter(hasGeoreference))
+      )
       .catch((err) => console.log('Document not found. Error:', err));
 
     const changedSubscription = repository
       .remoteChanged()
-      .subscribe(
-        (document) =>
-          Document.hasGeometry(document) &&
-          setUpdateDoc({ document, status: 'updated' })
-      );
+      .subscribe((changeInfo) => {
+        const document = changeInfo.document;
+        if (!isUsableDocument(document) || !Document.hasGeometry(document)) return;
+        setUpdateDoc({ document, status: 'updated' });
+      });
 
     return () => changedSubscription.unsubscribe();
   }, [repository]);
 
   useEffect(
-    () =>
-      setGeometryBoundings(getGeometryBoundings(geoDocuments, layerDocuments)),
+    () => {
+      try {
+        setGeometryBoundings(getGeometryBoundings(geoDocuments, layerDocuments));
+      } catch (error) {
+        console.warn('Unable to calculate map bounds', error);
+        setGeometryBoundings(null);
+      }
+    },
     [geoDocuments, layerDocuments]
   );
 
   useEffect(() => {
     const deletedSubscription = repository
       .deleted()
-      .subscribe((document) => setUpdateDoc({ document, status: 'deleted' }));
+      .subscribe((document) => {
+        if (isUsableDocument(document)) {
+          setUpdateDoc({ document, status: 'deleted' });
+        }
+      });
     return () => deletedSubscription.unsubscribe();
   }, [repository]);
 
@@ -203,3 +227,9 @@ const useMapData = (
 };
 
 export default useMapData;
+
+const hasGeoreference = (document: Document | null | undefined): document is Document =>
+  isUsableDocument(document) && !!document.resource.georeference;
+
+const isUsableDocument = (document: Document | null | undefined): document is Document =>
+  !!document?.resource;

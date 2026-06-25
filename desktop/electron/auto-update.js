@@ -3,12 +3,15 @@
 const { autoUpdater } = require('electron-updater');
 const log = require('electron-log');
 const { ipcMain, BrowserWindow, app } = require('electron');
+const path = require('path');
 const messages = require('./messages');
 
 autoUpdater.logger = log;
 
 let updateVersion;
 let started = false;
+
+const modalPreload = () => path.join(app.getAppPath(), 'electron/modals/preload.js');
 
 
 const setUp = async (mainWindow) => {
@@ -29,25 +32,24 @@ const setUp = async (mainWindow) => {
             resizable: false,
             show: false,
             webPreferences: {
-                nodeIntegration: true,
-                contextIsolation: false
+                nodeIntegration: false,
+                contextIsolation: true,
+                preload: modalPreload()
             }
         });
 
-        modal.loadFile(require('path').join(app.getAppPath(), '/electron/modals/auto-update-modal.html'));
+        modal.loadFile(path.join(app.getAppPath(), '/electron/modals/auto-update-modal.html'));
         modal.webContents.on('did-finish-load', async () => {
-            await modal.webContents.executeJavaScript(
-                'document.getElementById("heading").textContent = "' + messages.get('autoUpdate.available.info') + '"; ' +
-                'document.getElementById("release-notes").innerHTML = "' + '<h2>Field Desktop ' + updateVersion + '</h2>' + updateInfo.releaseNotes.replace(/"/g, '\\"').replace(/\n/g, '') + '"; ' +
-                'document.getElementById("yes-button").textContent = "' + messages.get('autoUpdate.available.yes') + '"; ' +
-                'document.getElementById("no-button").textContent = "' + messages.get('autoUpdate.available.no') + '"; ' +
-                'document.getElementById("update-warning").textContent = "' + messages.get('autoUpdate.available.warning') + '";' +
-                'document.getElementById("info-message").textContent = "' + messages.get('autoUpdate.available.question') + '";' +
-                (process.platform !== 'darwin'
-                    ? 'document.getElementById("modal-container").classList.add("with-border");'
-                    : ''
-                )
-            );
+            modal.webContents.send('auto-update-available-data', {
+                heading: messages.get('autoUpdate.available.info'),
+                version: updateVersion,
+                releaseNotes: updateInfo.releaseNotes,
+                yesButton: messages.get('autoUpdate.available.yes'),
+                noButton: messages.get('autoUpdate.available.no'),
+                warning: messages.get('autoUpdate.available.warning'),
+                question: messages.get('autoUpdate.available.question'),
+                withBorder: process.platform !== 'darwin'
+            });
             modal.show();
         });
         modal.on('close', () => {
@@ -92,22 +94,20 @@ const setUp = async (mainWindow) => {
             resizable: false,
             show: false,
             webPreferences: {
-                nodeIntegration: true,
-                contextIsolation: false
+                nodeIntegration: false,
+                contextIsolation: true,
+                preload: modalPreload()
             }
         });
 
-        modal.loadFile(require('path').join(app.getAppPath(), '/electron/modals/download-finished-modal.html'));
+        modal.loadFile(path.join(app.getAppPath(), '/electron/modals/download-finished-modal.html'));
         modal.webContents.on('did-finish-load', async () => {
-            await modal.webContents.executeJavaScript(
-                'document.getElementById("heading").textContent = "' + messages.get('autoUpdate.downloaded.title') + '"; ' +
-                'document.getElementById("info-message").textContent = "' + infoMessage + '"; ' +
-                'document.getElementById("ok-button").textContent = "' + messages.get('autoUpdate.downloaded.ok') + '";' +
-                (process.platform !== 'darwin'
-                    ? 'document.getElementById("modal-container").classList.add("with-border");'
-                    : ''
-                )
-            );
+            modal.webContents.send('download-finished-data', {
+                heading: messages.get('autoUpdate.downloaded.title'),
+                infoMessage,
+                okButton: messages.get('autoUpdate.downloaded.ok'),
+                withBorder: process.platform !== 'darwin'
+            });
             modal.show();
         });
         modal.on('close', () => {

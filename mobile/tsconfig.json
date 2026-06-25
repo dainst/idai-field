@@ -14,6 +14,12 @@
     "esModuleInterop": true,
     "sourceMap": true,
     "paths": {
+      "idai-field-core": [
+        "../core"
+      ],
+      "idai-field-core/*": [
+        "../core/*"
+      ],
       "@/*": [
         "./*"
       ]
@@ -24,5 +30,8 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
+  ],
+  "exclude": [
+    "old/**"
   ]
 }

@@ -1,11 +1,11 @@
 import { Document } from 'idai-field-core';
 import { ProjectIdentifierValidation } from '../../model/project-identifier-validation';
 import { SettingsService } from '../settings/settings-service';
-import { CREATE_BACKUP, createWorker } from '../create-worker';
+import { createBackupFile } from './create-backup';
 
-const fs = window.require('fs');
-const PouchDB = window.require('pouchdb-browser');
-const pouchDBLoad = require('pouchdb-load');
+import { electronFs as fs } from 'src/app/electron/electron';
+import PouchDB from 'pouchdb-browser';
+import pouchDBLoad from 'pouchdb-load';
 
 
 export type RestoreBackupError = 'fileNotFound'|'unsimilarProjectIdentifier'|'invalidFileFormat'|'generic';
@@ -27,16 +27,12 @@ export class BackupService {
     */
     public create(targetFilePath: string, project: string): Promise<boolean> {
 
-        return new Promise(resolve => {
-            const worker: Worker = createWorker(CREATE_BACKUP);
-        
-            worker.onmessage = ({ data }) => {
-                if (data.error) console.error('Error while trying to create backup file', data.error);
-                resolve(data.success);
-            }
-        
-            worker.postMessage({ project, targetFilePath });
-        });
+        return createBackupFile(targetFilePath, project)
+            .then(() => true)
+            .catch(err => {
+                console.error('Error while trying to create backup file', err);
+                return false;
+            });
     }
 
 

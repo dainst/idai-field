@@ -1,6 +1,7 @@
 module.exports = {
     target: 'electron-renderer',
     externals: {
+        'express-pouchdb': 'commonjs express-pouchdb',
         'sharp': 'commonjs sharp'
     },
     resolve: {

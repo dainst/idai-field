@@ -2,9 +2,9 @@ import { Datastore, Document, FieldGeometryType } from 'idai-field-core';
 import { M } from '../messages/m';
 import { GeoJsonExporter } from './geojson-exporter';
 
-const remote = window.require('@electron/remote');
-const ipcRenderer = window.require('electron')?.ipcRenderer;
-const fs = window.require('fs');
+import { electronRemote as remote } from 'src/app/electron/electron';
+import { electronIpc as ipcRenderer } from 'src/app/electron/electron';
+import { electronFs as fs } from 'src/app/electron/electron';
 
 
 type ShapefileType = {

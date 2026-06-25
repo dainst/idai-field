@@ -2,6 +2,7 @@ defmodule FieldPublication.FileService do
   @file_store_path Application.compile_env(:field_publication, :file_store_directory_root)
   @custom_assets_path "#{@file_store_path}/custom_assets/"
   @custom_images_path "#{@custom_assets_path}/images"
+  @admin_image_upload_extensions ~w(.jpg .jpeg .png .webp)
   require Logger
 
   @moduledoc """
@@ -20,20 +21,71 @@ defmodule FieldPublication.FileService do
     |> Enum.map(fn file_name -> {file_name, "#{@custom_images_path}/#{file_name}"} end)
   end
 
-  def store_admin_image_upload(input_path, target_file_name) do
-    target_path = "#{@custom_images_path}/#{target_file_name}"
-
-    if File.exists?(target_path) do
-      {:error, :exists}
-    else
-      File.cp(input_path, target_path)
+  def store_admin_image_upload(input_path, client_file_name) do
+    with {:ok, file_name} <- sanitize_admin_image_file_name(client_file_name),
+         {:ok, stored_file_name, target_path} <- unique_custom_image_path(file_name),
+         :ok <- File.cp(input_path, target_path) do
+      {:ok, stored_file_name}
     end
   end
 
   def delete_admin_image_upload(file_name) do
-    "#{@custom_images_path}/#{file_name}"
-    |> File.rm()
+    with {:ok, target_path} <- custom_image_path(file_name) do
+      File.rm(target_path)
+    end
   end
+
+  defp sanitize_admin_image_file_name(file_name) when is_binary(file_name) do
+    base_name = Path.basename(file_name)
+    extension = base_name |> Path.extname() |> String.downcase()
+    root_name = base_name |> Path.rootname() |> String.replace(~r/[^A-Za-z0-9._-]+/, "_")
+
+    cond do
+      String.contains?(file_name, ["/", "\\"]) ->
+        {:error, :invalid_name}
+
+      base_name != file_name ->
+        {:error, :invalid_name}
+
+      extension not in @admin_image_upload_extensions ->
+        {:error, :unsupported_extension}
+
+      String.trim(root_name, "._-") == "" ->
+        {:error, :invalid_name}
+
+      true ->
+        {:ok, "#{root_name}#{extension}"}
+    end
+  end
+
+  defp sanitize_admin_image_file_name(_), do: {:error, :invalid_name}
+
+  defp unique_custom_image_path(file_name, suffix \\ 0) do
+    extension = Path.extname(file_name)
+    root_name = Path.rootname(file_name)
+    stored_file_name = if suffix == 0, do: file_name, else: "#{root_name}-#{suffix}#{extension}"
+
+    with {:ok, target_path} <- custom_image_path(stored_file_name) do
+      if File.exists?(target_path) do
+        unique_custom_image_path(file_name, suffix + 1)
+      else
+        {:ok, stored_file_name, target_path}
+      end
+    end
+  end
+
+  defp custom_image_path(file_name) when is_binary(file_name) do
+    custom_images_root = Path.expand(@custom_images_path)
+    target_path = Path.expand(Path.join(custom_images_root, file_name))
+
+    if Path.dirname(target_path) == custom_images_root do
+      {:ok, target_path}
+    else
+      {:error, :invalid_name}
+    end
+  end
+
+  defp custom_image_path(_), do: {:error, :invalid_name}
 
   def get_raw_data_path(project_name) when is_binary(project_name) do
     "#{@file_store_path}/raw/#{project_name}"

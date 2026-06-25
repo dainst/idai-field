@@ -1,6 +1,6 @@
 import { AppState } from '../../services/app-state';
 
-const remote = window.require('@electron/remote');
+import { electronRemote as remote } from 'src/app/electron/electron';
 
 
 /**

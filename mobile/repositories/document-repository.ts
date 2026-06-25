@@ -14,7 +14,6 @@ import {
   SyncService,
   Tree,
 } from 'idai-field-core';
-import { Observable } from 'rxjs';
 
 export class DocumentRepository {
   private pouchdbDatastore: PouchdbDatastore;
@@ -70,19 +69,19 @@ export class DocumentRepository {
   public find = (query: Query): Promise<Datastore.FindResult> =>
     this.datastore.find(query);
 
-  public changed = (): Observable<Document> =>
+  public changed = () =>
     this.pouchdbDatastore.changesNotifications();
 
-  public deleted = (): Observable<Document> =>
+  public deleted = () =>
     this.pouchdbDatastore.deletedNotifications();
 
-  public remoteChanged = (): Observable<Document> =>
+  public remoteChanged = () =>
     this.changesStream.remoteChangesNotifications();
 }
 
 const buildDatastore = async (
   pouchdbDatastore: PouchdbDatastore,
-  db: PouchDB.Database,
+  db: any,
   username: string,
   projectConfiguration: ProjectConfiguration
 ): Promise<[Datastore, ChangesStream]> => {

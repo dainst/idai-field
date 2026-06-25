@@ -41,7 +41,7 @@ export default function TabLayout() {
               <Tabs.Screen
                 name="ProjectScreen"
                 options={{
-                  title: '야장',
+                  title: '기록',
                   tabBarIcon: ({ color }) => (
                     <FontAwesome size={28} name="edit" color={color} />
                   ),

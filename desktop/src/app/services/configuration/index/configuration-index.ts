@@ -104,7 +104,9 @@ export class ConfigurationIndex {
     private async buildConfigurationIndex(configurationDocument: ConfigurationDocument,
                                           customProjectConfiguration?: ProjectConfiguration) {
 
-        const builtInConfiguration = new BuiltInConfiguration(getConfigurationName(this.projectIdentifier));
+        const builtInConfiguration = new BuiltInConfiguration(
+            getConfigurationName(this.projectIdentifier, configurationDocument.resource.customConfigurationName)
+        );
         const libraryCategories = await this.configReader.read('/Library/Categories.json');
         const libraryForms = await this.configReader.read('/Library/Forms.json');
         const valuelists = this.configLoader.readValuelists();

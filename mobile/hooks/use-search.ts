@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { DocumentRepository } from '@/repositories/document-repository';
 
 const useSearch = (
-  repository: DocumentRepository,
+  repository: DocumentRepository | undefined,
   query: Query
 ): Document[] => {
   const [documents, setDocuments] = useState<Document[]>([]);

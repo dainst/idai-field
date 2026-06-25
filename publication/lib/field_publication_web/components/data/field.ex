@@ -205,9 +205,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     >
       <.maybe_search_link field={@field}>
         <span class="markdown">
-          {text
-          |> Earmark.as_html!()
-          |> Phoenix.HTML.raw()}
+          {FieldPublicationWeb.Markdown.to_html(text)}
         </span>
       </.maybe_search_link>
     </.maybe_language_select>

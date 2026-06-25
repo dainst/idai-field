@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' http: https: ws:; font-src 'self' data:; img-src 'self' data: blob: file:; object-src 'none'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; worker-src 'self'; base-uri 'none';">
 
     <title>Field Desktop</title>
 
@@ -127,11 +128,7 @@
         }
     </style>
 
-    <script>
-        window.__Zone_disable_requestAnimationFrame = true; // disable patch requestAnimationFrame
-        window.__Zone_disable_on_property = true; // disable patch onProperty such as onclick
-        window.__zone_symbol__UNPATCHED_EVENTS = ['scroll', 'mousemove', 'pointermove', 'wheel', 'mouseout', 'pointerout']; // disable patch specified eventNames
-    </script>
+    <script src="zone-flags.js"></script>
 </head>
 
 <body>

@@ -2,15 +2,24 @@ import {
   ConfigReader,
   ConfigurationDocument,
   IdGenerator,
+  KOREAN_FIELDWORK_CONFIGURATION_NAME,
   PouchdbDatastore,
   SampleDataLoaderBase,
 } from 'idai-field-core';
 import { useEffect, useState } from 'react';
 import PouchDB from 'pouchdb-core'
 import {
-  isKoreanFieldworkProject,
+  KOREAN_FIELDWORK_PROJECT_IDENTIFIER,
   KOREAN_FIELDWORK_PROJECT_LANGUAGES,
 } from '@/constants/korean-fieldwork-project';
+import {
+  createKoreanFieldworkProjectSetupResourceUpdates,
+  loadKoreanFieldworkProjectSetupDefaults,
+} from '@/components/Project/korean-fieldwork-investigation-mode';
+import {
+  isSampleProject,
+  SAMPLE_PROJECT_LABEL,
+} from '@/constants/sample-project';
 
 PouchDB.plugin(require('@neighbourhoodie/pouchdb-asyncstorage-adapter').default)
 
@@ -20,15 +29,28 @@ const usePouchDbDatastore = (project: string): PouchdbDatastore | undefined => {
   const [pouchdbDatastore, setpouchdbDatastore] = useState<PouchdbDatastore>();
 
   useEffect(() => {
+    if (project.trim().length === 0) {
+      setpouchdbDatastore(undefined);
+      return;
+    }
+
+    let isCancelled = false;
+    let activeManager: PouchdbDatastore | undefined;
     const managerPromise = buildpouchdbDatastore(project).then((manager) => {
+      if (isCancelled) {
+        manager.close();
+        return manager;
+      }
+
+      activeManager = manager;
       setpouchdbDatastore(manager);
       return manager;
     });
     return () => {
+      isCancelled = true;
       managerPromise.then((manager) => {
-        // console.log('close', manager.getDb().name);
-        manager.close();
-      });
+        if (activeManager === manager) manager.close();
+      }).catch(() => undefined);
     };
   }, [project]);
 
@@ -48,9 +70,9 @@ const buildpouchdbDatastore = async (
     try {
     const db = await datastore.createDb(
       project,
-      createProjectDocument(project),
+      await createProjectDocument(project),
       await createConfigurationDocument(project),
-      project === 'test'
+      isSampleProject(project)
     );
      db.allDocs({
       include_docs: true,
@@ -63,41 +85,53 @@ const buildpouchdbDatastore = async (
     throw error
   }
   
-    datastore.setupChangesEmitter();
-    if (project === 'test') {
+    if (isSampleProject(project)) {
       const loader = new SampleDataLoaderBase('en');
       await loader.go(datastore.getDb(), 'test');
     }
+    datastore.setupChangesEmitter();
     return datastore;
  
   
 };
 
-const createProjectDocument = (project: string) => ({
-  _id: 'project',
-  resource: {
-    id: 'project',
-    identifier: project,
-    category: 'Project',
-    relations: {},
-  },
-  created: { user: '', date: new Date() },
-  modified: [],
-});
+const createProjectDocument = async (project: string) => {
+  const projectSetupDefaults = isSampleProject(project)
+    ? {}
+    : await loadKoreanFieldworkProjectSetupDefaults(project)
+        .catch(() => ({}));
+
+  return {
+    _id: 'project',
+    resource: {
+      id: 'project',
+      identifier: isSampleProject(project) ? SAMPLE_PROJECT_LABEL : project,
+      category: 'Project',
+      ...(!isSampleProject(project) && {
+        projectBoundarySetupState: 'notStarted',
+        ...createKoreanFieldworkProjectSetupResourceUpdates(projectSetupDefaults),
+      }),
+      relations: {},
+    },
+    created: { user: '', date: new Date() },
+    modified: [],
+  };
+};
 
 const createConfigurationDocument = async (
   project: string
 ): Promise<ConfigurationDocument | undefined> => {
-  if (!isKoreanFieldworkProject(project)) return undefined;
+  if (isSampleProject(project)) return undefined;
 
   const configurationDocument = await ConfigurationDocument.getConfigurationDocument(
     async () => {
       throw new Error('Configuration document not initialized yet');
     },
     new ConfigReader(),
-    project,
+    KOREAN_FIELDWORK_PROJECT_IDENTIFIER,
     ''
   );
   configurationDocument.resource.projectLanguages = KOREAN_FIELDWORK_PROJECT_LANGUAGES.slice();
+  configurationDocument.resource.customConfigurationName = KOREAN_FIELDWORK_CONFIGURATION_NAME;
   return configurationDocument;
 };

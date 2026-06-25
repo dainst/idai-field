@@ -1,5 +1,5 @@
 import { fireEvent, render } from '@testing-library/react-native';
-import { Dimension, Field } from 'idai-field-core';
+import { Field, Measurement } from 'idai-field-core';
 import React from 'react';
 import { ToastProvider } from '../Toast/ToastProvider';
 import DimensionField from './DimensionField';
@@ -51,7 +51,7 @@ describe('DimensionField', () => {
     const newInputValue = 12;
     const comment = 'comment';
     const setFuncMock = jest.fn();
-    const expectedDimension: Dimension = {
+    const expectedDimension: Measurement = {
       inputUnit: 'cm',
       inputValue: newInputValue,
       isImprecise: true,
@@ -74,7 +74,7 @@ describe('DimensionField', () => {
   });
 
   it('should append new Document to array of existing measurements in currentValue prop', () => {
-    const existingDim: Dimension = {
+    const existingDim: Measurement = {
       inputUnit: 'cm',
       inputValue: 5,
       isImprecise: true,
@@ -82,7 +82,7 @@ describe('DimensionField', () => {
       measurementComment: 'comment',
     };
     const newInputValue = 300;
-    const newDim: Dimension = {
+    const newDim: Measurement = {
       inputUnit: 'cm',
       inputValue: newInputValue,
       value: 3000000,
@@ -107,7 +107,7 @@ describe('DimensionField', () => {
   });
 
   it('should update correct dimension of currentValue prop', () => {
-    const firstDim: Dimension = {
+    const firstDim: Measurement = {
       inputUnit: 'cm',
       inputValue: 5,
       isImprecise: true,
@@ -117,7 +117,7 @@ describe('DimensionField', () => {
 
     const comment = 'hello';
     const oldValue = 300;
-    const secondDim: Dimension = {
+    const secondDim: Measurement = {
       inputUnit: 'm',
       inputValue: oldValue,
       value: 3000000,
@@ -125,7 +125,7 @@ describe('DimensionField', () => {
       measurementComment: comment,
     };
     const updatedInputValue = 200;
-    const udpatedDim: Dimension = {
+    const udpatedDim: Measurement = {
       ...secondDim,
       inputValue: updatedInputValue,
       value: updatedInputValue * 1000000,
@@ -155,14 +155,14 @@ describe('DimensionField', () => {
   });
 
   it('should be able to delete correct dimension', () => {
-    const firstDim: Dimension = {
+    const firstDim: Measurement = {
       inputUnit: 'cm',
       inputValue: 5,
       isImprecise: true,
       value: 50000,
       measurementComment: 'comment',
     };
-    const secondDim: Dimension = {
+    const secondDim: Measurement = {
       inputUnit: 'm',
       inputValue: 300,
       value: 3000000,

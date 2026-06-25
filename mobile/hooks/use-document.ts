@@ -25,8 +25,9 @@ const useDocument = (
         if (!isCancelled) setDoc(document);
       })
       .catch((error) => {
+        if (isCancelled) return;
         console.error(error);
-        if (!isCancelled) setDoc(undefined);
+        setDoc(undefined);
       });
 
     return () => {

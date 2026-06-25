@@ -99,7 +99,7 @@ const ProjectConfigurationLoadingState = ({
     <View style={styles.logoMark}>
       <MaterialIcons name="edit-note" size={42} color="#2f5f4a" />
     </View>
-    <Text style={styles.loadingTitle}>디지털 야장</Text>
+    <Text style={styles.loadingTitle}>현장 기록</Text>
     <ActivityIndicator
       color="#2f5f4a"
       size="small"

@@ -1,4 +1,4 @@
-const camelCase = window.require('camelcase');
+import camelCase from 'camelcase';
 
 
 /**

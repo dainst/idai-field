@@ -10,7 +10,7 @@ import { M } from '../../messages/m';
 import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
 
-const remote = window.require('@electron/remote');
+import { electronRemote as remote } from 'src/app/electron/electron';
 
 
 type NamingOption = 'identifier'|'originalFilename';

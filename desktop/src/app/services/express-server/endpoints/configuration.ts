@@ -1,6 +1,6 @@
 import { ConfigurationDocument, ConfigurationSerializer, ConfigReader } from 'idai-field-core';
 
-const PouchDB = window.require('pouchdb-browser');
+import PouchDB from 'pouchdb-browser';
 
 
 /**

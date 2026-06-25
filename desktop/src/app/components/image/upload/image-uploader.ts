@@ -22,8 +22,10 @@ import { getAsynchronousFs } from '../../../services/get-asynchronous-fs';
 import { getSystemTimezone } from '../../../util/timezones';
 import { Validations } from '../../../model/validations';
 import { ValidationErrors } from '../../../model/validation-errors';
+import { getKoreanFieldworkDefaultFieldValues } from '../../../util/korean-fieldwork-draft-defaults';
+import { createSoilColorAssistUpdatesForImageUpload } from '../../../util/korean-fieldwork-soil-color-photo-assist';
 
-const path = window.require('path');
+import { electronPath as path } from 'src/app/electron/electron';
 
 
 export interface ImageUploadResult {
@@ -341,7 +343,12 @@ export class ImageUploader {
 
         Validations.assertNoUnallowedCharactersUsed(document, this.projectConfiguration);
 
+        Object.assign(
+            document.resource,
+            getKoreanFieldworkDefaultFieldValues(this.projectConfiguration.getCategory(extendedMetadata.category))
+        );
         await this.setOptionalMetadata(document, extendedMetadata);
+        await this.setKoreanFieldworkSoilColorAssistFields(document, buffer);
 
         if (depictsRelationTarget && depictsRelationTarget.resource.id) {
             document.resource.relations.depicts = [depictsRelationTarget.resource.id];
@@ -399,6 +406,23 @@ export class ImageUploader {
         this.setResourceFieldIfConfigured(document, 'aerialCaptureDate', extendedMetadata.aerialCaptureDate);
         this.setResourceFieldIfConfigured(document, 'aerialCaptureNote', extendedMetadata.aerialCaptureNote);
         this.setResourceFieldIfConfigured(document, 'aerialLayerOpacity', extendedMetadata.aerialLayerOpacity);
+    }
+
+
+    private async setKoreanFieldworkSoilColorAssistFields(document: NewImageDocument, buffer: Buffer) {
+
+        const updates = await createSoilColorAssistUpdatesForImageUpload(document.resource.category, buffer);
+
+        this.setResourceFieldIfConfigured(
+            document,
+            'soilColorAssistCandidates',
+            updates.soilColorAssistCandidates
+        );
+        this.setResourceFieldIfConfigured(
+            document,
+            'soilColorAssistStatus',
+            updates.soilColorAssistStatus
+        );
     }
 
 

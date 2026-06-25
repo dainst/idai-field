@@ -20,7 +20,7 @@ import { BackupLoadingWarningType,
 import { reloadAndSwitchToHomeRoute } from '../../services/reload';
 import { isArray } from 'tsfun';
 
-const remote = window.require('@electron/remote');
+import { electronRemote as remote } from 'src/app/electron/electron';
 
 
 @Component({

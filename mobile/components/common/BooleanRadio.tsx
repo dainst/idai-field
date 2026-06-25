@@ -23,8 +23,8 @@ const BooleanRadio: <T extends string>(p: BooleanRadioProps<T>) =>
                 <TouchableOpacity onPress={ () => props.clickHandler(label) }>
                     <Ionicons
                         name={ label === props.selectedValue ?
-                            'md-radio-button-on-outline' :
-                            'md-radio-button-off-outline' }
+                            'radio-button-on-outline' :
+                            'radio-button-off-outline' }
                         size={ ICON_SIZE } />
                 </TouchableOpacity>
                 <Text style={ { textTransform: 'capitalize' } }>{label}</Text>
@@ -34,8 +34,8 @@ const BooleanRadio: <T extends string>(p: BooleanRadioProps<T>) =>
                     <TouchableOpacity onPress={ () => props.clickHandler(null) } >
                         <Ionicons
                             name={ props.selectedValue === null ?
-                                'md-radio-button-on-outline' :
-                                'md-radio-button-off-outline' }
+                                'radio-button-on-outline' :
+                                'radio-button-off-outline' }
                             size={ ICON_SIZE } />
                     </TouchableOpacity>
                     <Text>{UNDEFINED_STR}</Text>

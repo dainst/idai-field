@@ -7,7 +7,6 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
 
   alias FieldPublication.Settings
   alias Ecto.Changeset
-  alias Phoenix.HTML
   use FieldPublicationWeb, :live_view
 
   @impl true
@@ -138,20 +137,16 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
         <p :for={err <- upload_errors(@uploads.images)} class="alert alert-danger">
           {error_to_string(err)}
         </p>
+        <p :for={err <- @image_upload_errors} class="alert alert-danger">
+          {error_to_string(err)}
+        </p>
       </div>
       <div :if={Enum.count(@existing_images) != 0}>
         <div class="grid grid-cols-3 gap-4 mt-4">
-          <%= for {file_name, info} <- @existing_images do %>
+          <%= for {file_name, _info} <- @existing_images do %>
             <div class="bg-gray-100 p-4">
               <div class="mb-2 font-thin text-center">{file_name}</div>
-              <%= case info do %>
-                <% {:svg, binary_data} -> %>
-                  <div class="object-contain">
-                    {HTML.raw(binary_data)}
-                  </div>
-                <% :img -> %>
-                  <img class="object-contain" src={~p"/custom/images/#{file_name}"} />
-              <% end %>
+              <img class="object-contain" src={~p"/custom/images/#{file_name}"} />
               <div class="pt-4">
                 <div
                   class="text-(--primary-color) hover:text-(--primary-color-hover) cursor-pointer"
@@ -213,8 +208,9 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
       |> update_form(changeset)
       |> assign(:existing_images, Settings.list_images())
       |> assign(:uploaded_files, [])
+      |> assign(:image_upload_errors, [])
       |> assign(:page_title, "Settings")
-      |> allow_upload(:images, accept: ~w(.jpg .jpeg .svg .webp .png), max_entries: 10)
+      |> allow_upload(:images, accept: ~w(.jpg .jpeg .webp .png), max_entries: 10)
     }
   end
 
@@ -254,20 +250,29 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
   end
 
   def handle_event("cancel-upload", %{"ref" => ref}, socket) do
-    {:noreply, cancel_upload(socket, :logo, ref)}
+    {:noreply, cancel_upload(socket, :images, ref)}
   end
 
   def handle_event("upload", _params, socket) do
-    uploaded_files =
+    upload_results =
       consume_uploaded_entries(socket, :images, fn %{path: path}, entry ->
-        Settings.save_image(path, entry.client_name)
-        {:ok, ~p"/custom/images/#{entry.client_name}"}
+        case Settings.save_image(path, entry.client_name) do
+          {:ok, file_name} -> {:ok, {:ok, ~p"/custom/images/#{file_name}"}}
+          {:error, reason} -> {:ok, {:error, reason}}
+        end
+      end)
+
+    {uploaded_files, image_upload_errors} =
+      Enum.reduce(upload_results, {[], []}, fn
+        {:ok, url}, {files, errors} -> {[url | files], errors}
+        {:error, reason}, {files, errors} -> {files, [reason | errors]}
       end)
 
     {
       :noreply,
       socket
       |> update(:uploaded_files, &(&1 ++ uploaded_files))
+      |> assign(:image_upload_errors, Enum.reverse(image_upload_errors))
       |> assign(:existing_images, Settings.list_images())
     }
   end
@@ -305,19 +310,26 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
   end
 
   def handle_event("delete", %{"name" => name}, socket) do
-    Settings.delete_image_file(name)
+    socket =
+      case Settings.delete_image_file(name) do
+        {:ok, _settings} ->
+          # Force a redirect to the route we are currently on to reload (this is could
+          # be implemented more specific only for cases where `name` was the currently set favicon or logo.
+          redirect(socket, to: ~p"/management/settings")
 
-    {
-      :noreply,
-      # Force a redirect to the route we are currently on to reload (this is could
-      # be implemented more specific only for cases where `name` was the currently set favicon or logo.
-      redirect(socket, to: ~p"/management/settings")
-    }
+        {:error, reason} ->
+          assign(socket, :image_upload_errors, [reason])
+      end
+
+    {:noreply, socket}
   end
 
   defp error_to_string(:too_large), do: "Too large"
   defp error_to_string(:too_many_files), do: "You have selected too many files"
   defp error_to_string(:not_accepted), do: "You have selected an unacceptable file type"
+  defp error_to_string(:invalid_name), do: "Invalid file name"
+  defp error_to_string(:unsupported_extension), do: "Unsupported file type"
+  defp error_to_string(error), do: "Upload failed: #{inspect(error)}"
 
   defp update_form(socket, changeset) do
     assign(socket, :setting_form, to_form(changeset))

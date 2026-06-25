@@ -1,5 +1,5 @@
-const ipcRenderer = window.require('electron')?.ipcRenderer;
-const remote = window.require('@electron/remote');
+import { electronIpc as ipcRenderer } from 'src/app/electron/electron';
+import { electronRemote as remote } from 'src/app/electron/electron';
 
 
 /**

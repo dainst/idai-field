@@ -14,7 +14,7 @@ $repoDir = $PSScriptRoot
 $packageName = 'kr.idai.fieldmobile'
 
 function Show-Usage {
-    Write-Host 'Digital Field Notebook Android APK installer'
+    Write-Host '현장 기록 Android APK installer'
     Write-Host ''
     Write-Host 'Usage:'
     Write-Host '  .\install-idai-field-android-apk.ps1 -ApkPath .\dist\android\idai-field-mobile-release.apk'

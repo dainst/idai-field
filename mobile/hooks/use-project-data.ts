@@ -23,7 +23,7 @@ interface ProjectData {
 }
 
 const useProjectData = (
-  repository: DocumentRepository,
+  repository: DocumentRepository | undefined,
   q: string
 ): ProjectData => {
   const config = useContext(ConfigurationContext);

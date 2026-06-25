@@ -3,7 +3,7 @@ import { Observable, Observer } from 'rxjs';
 import { ObserverUtil } from 'idai-field-core';
 import { MenuContext } from './menu-context';
 
-const remote = window.require('@electron/remote');
+import { electronRemote as remote } from 'src/app/electron/electron';
 
 
 @Injectable()

@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, ReactNode, useState } from 'react';
 
 export enum ToastType {
   Info = 'INFO',
@@ -17,7 +17,7 @@ export type ToastContextType = {
 
 export const ToastContext = createContext<ToastContextType | null>(null);
 
-export const ToastProvider: React.FC = ({ children }) => {
+export const ToastProvider: React.FC<{ children?: ReactNode }> = ({ children }) => {
 
 	const [toastConfig, setToastConfig ] = useState<ToastConfigType | null>(null);
 

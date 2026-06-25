@@ -31,6 +31,7 @@ import { ResourcesMapComponent } from './map/resources-map.component';
 import { MoveModalComponent } from '../widgets/move-modal/move-modal.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { PlusButtonComponent } from './plus-button.component';
+import { KoreanFieldworkPriorityStripComponent } from './korean-fieldwork-priority-strip.component';
 import { ResourcesComponent } from './resources.component';
 import { ResourcesSearchBarComponent } from './searchbar/resources-search-bar.component';
 import { ResourcesSearchConstraintsComponent } from './searchbar/resources-search-constraints.component';
@@ -66,7 +67,7 @@ import { WorkflowOverviewComponent } from './workflow/workflow-overview.componen
 import { TypeScannerModalComponent } from './actions/scan-resource/type-scanner-modal.component';
 
 
-const remote = window.require('@electron/remote');
+import { electronRemote as remote } from 'src/app/electron/electron';
 
 
 @NgModule({
@@ -95,6 +96,7 @@ const remote = window.require('@electron/remote');
         ListComponent,
         RowComponent,
         PlusButtonComponent,
+        KoreanFieldworkPriorityStripComponent,
         SidebarListComponent,
         ListButtonGroupComponent,
         PopoverMenuComponent,

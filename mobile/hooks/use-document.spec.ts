@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, waitFor } from '@testing-library/react-native';
 import { DocumentRepository } from '@/repositories/document-repository';
 import { t2 } from '../test_data/test_docs/t2';
 import useDocument from './use-document';
@@ -18,24 +18,21 @@ describe('useDocument',() => {
 
     it('should return document with resource.id from prop docId',async() => {
         
-        const { result, waitForNextUpdate } = renderHook(() => useDocument(repo,t2.resource.id));
-        await waitForNextUpdate();
+        const { result } = renderHook(() => useDocument(repo,t2.resource.id));
 
-        expect(result.current).toEqual(t2);
+        await waitFor(() => expect(result.current).toEqual(t2));
     });
 
     it('should set return undefined if no document is found',async() => {
 
         jest.spyOn(console, 'error').mockImplementation(jest.fn());
         
-        const { result, waitForNextUpdate, rerender } =
+        const { result, rerender } =
             renderHook(({ docId }) => useDocument(repo,docId), { initialProps: { docId: t2.resource.id } });
-        await waitForNextUpdate();
+        await waitFor(() => expect(result.current).toEqual(t2));
 
         rerender({ docId: 'data2' });
-        await waitForNextUpdate();
 
-
-        expect(result.current).toBeUndefined();
+        await waitFor(() => expect(result.current).toBeUndefined());
     });
 });

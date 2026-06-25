@@ -17,7 +17,7 @@ import { PrintSettings } from './print-settings/print-settings';
 import { Settings } from '../../../../services/settings/settings';
 
 
-const QRCode = window.require('qrcode');
+import QRCode from 'qrcode';
 
 
 type PrintedField = {

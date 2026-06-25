@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { StateSerializer } from './state-serializer';
 
-const path = window.require('path');
-const fs = window.require('fs');
+import { electronPath as path } from 'src/app/electron/electron';
+import { electronFs as fs } from 'src/app/electron/electron';
 
 
 /**

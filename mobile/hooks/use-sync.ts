@@ -1,5 +1,5 @@
 import { Document, PouchdbDatastore, SyncService, SyncStatus } from 'idai-field-core';
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { ProjectSettings } from '@/models/preferences';
 
 interface SyncConfig {
@@ -16,18 +16,41 @@ const useSync = ({
   live = true
 }: SyncConfig): SyncStatus => {
   const [status, setStatus] = useState<SyncStatus>(SyncStatus.Offline);
-  const syncServiceRef = useRef<SyncService | null>(null);
-  const isInitializedRef = useRef(false);
+  const [syncService, setSyncService] = useState<SyncService | null>(null);
+  const [initializedSyncKey, setInitializedSyncKey] = useState<string | null>(
+    null
+  );
 
-  const initializeSyncService = useCallback(() => {
-    if (!pouchdbDatastore || syncServiceRef.current) return;
-    syncServiceRef.current = new SyncService(pouchdbDatastore);
+  useEffect(() => {
+    setInitializedSyncKey(null);
+
+    if (!pouchdbDatastore) {
+      setSyncService(null);
+      setStatus(SyncStatus.Offline);
+      return;
+    }
+
+    const service = new SyncService(pouchdbDatastore);
+    setSyncService(service);
+
+    return () => {
+      try {
+        service.stopSync();
+      } catch (error) {
+        console.error('Failed to stop sync:', error);
+      }
+    };
   }, [pouchdbDatastore]);
 
   useEffect(() => {
-    if (!syncServiceRef.current) return;
+    if (!syncService) {
+      setStatus(SyncStatus.Offline);
+      return;
+    }
 
-    const subscription = syncServiceRef.current
+    setStatus(syncService.getStatus());
+
+    const subscription = syncService
       .statusNotifications()
       .subscribe((newStatus) => {
         setStatus(newStatus);
@@ -36,28 +59,30 @@ const useSync = ({
     return () => {
       subscription.unsubscribe();
     };
-  }, []);
+  }, [syncService]);
 
   useEffect(() => {
     if (
       !projectSettings?.url ||
       !project ||
-      !syncServiceRef.current ||
-      isInitializedRef.current
+      !syncService
     ) {
+      setInitializedSyncKey(null);
       return;
     }
 
+    let isCancelled = false;
+    const syncKey = getSyncKey(project, projectSettings.url, projectSettings.password);
+
     const initSync = async () => {
       try {
-        await syncServiceRef.current?.init(
-          // Testing locally
-          "http://localhost:5984/dai",
+        await syncService.init(
+          projectSettings.url,
           project,
-          projectSettings.password,
+          projectSettings.password ?? '',
           async () => true
         );
-        isInitializedRef.current = true;
+        if (!isCancelled) setInitializedSyncKey(syncKey);
       } catch (error) {
         console.error('Failed to initialize sync:', error);
         setStatus(SyncStatus.Error);
@@ -67,24 +92,32 @@ const useSync = ({
     initSync();
 
     return () => {
-      isInitializedRef.current = false;
+      isCancelled = true;
+      setInitializedSyncKey((currentSyncKey) =>
+        currentSyncKey === syncKey ? null : currentSyncKey
+      );
     };
-  }, [project, projectSettings?.url, projectSettings?.password]);
+  }, [syncService, project, projectSettings?.url, projectSettings?.password]);
 
 
   useEffect(() => {
     if (
-      !syncServiceRef.current ||
+      !syncService ||
       !project ||
       !projectSettings?.connected ||
-      !isInitializedRef.current
+      !initializedSyncKey ||
+      !live
     ) {
       return;
     }
 
-    const startSyncProcess = () => {
+    let isCancelled = false;
+
+    const startSyncProcess = async () => {
       try {
-        syncServiceRef.current?.startSync(true, isNotAnImage);
+        if (!isCancelled) {
+          await syncService.startSync(undefined, true, isNotAnImage);
+        }
       } catch (error) {
         console.error('Failed to start sync:', error);
         setStatus(SyncStatus.Error);
@@ -94,31 +127,22 @@ const useSync = ({
     startSyncProcess();
 
     return () => {
+      isCancelled = true;
       try {
-        syncServiceRef.current?.stopSync();
+        syncService.stopSync();
       } catch (error) {
         console.error('Failed to stop sync:', error);
       }
     };
-  }, [live, project, projectSettings?.connected]);
-
-
-  useEffect(() => {
-    initializeSyncService();
-
-    return () => {
-      if (syncServiceRef.current) {
-        syncServiceRef.current.stopSync();
-        syncServiceRef.current = null;
-      }
-      isInitializedRef.current = false;
-    };
-  }, [initializeSyncService]);
+  }, [syncService, live, project, projectSettings?.connected, initializedSyncKey]);
 
   return status;
 };
 
 const isNotAnImage = (doc: Document) =>
-  !['Image', 'Photo', 'Drawing'].includes(doc.resource.type);
+  !['Image', 'Photo', 'Drawing'].includes(doc.resource.category);
+
+const getSyncKey = (project: string, url: string, password?: string) =>
+  [project, url, password ?? ''].join('\u001f');
 
 export default useSync;

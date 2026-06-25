@@ -10,10 +10,10 @@ describe('cs-transforms',() => {
     it('transform GeoJSON to World',() => {
 
         const transformationMat: Matrix4 = [
-            [2,0,0,4],
-            [0,2,0,-2],
-            [0,0,1,0],
-            [0,0,0,1]];
+            2, 0, 0, 4,
+            0, 2, 0, -2,
+            0, 0, 1, 0,
+            0, 0, 0, 1];
         const position = [8,14.5];
         const expectedTransformedPos = [20, 27];
         expect(processTransform2d(transformationMat, position)).toEqual(expectedTransformedPos);
@@ -31,10 +31,10 @@ describe('cs-transforms',() => {
 
 
         const expectedResult: Matrix4 = [
-            [10,0,0,0],
-            [0,10,0,0],
-            [0,0,1,0],
-            [0,0,0,1]];
+            10, 0, 0, 0,
+            0, 10, 0, 0,
+            0, 0, 1, 0,
+            0, 0, 0, 1];
         
         expect(getDocumentToWorldTransformMatrix(geoBoundings)).toEqual(expectedResult);
     });
@@ -64,10 +64,10 @@ describe('cs-transforms',() => {
     it('is possible to transform a point csWorld -> csViewPort -> csWorld', () => {
         
         const transformationMat: Matrix4 = [
-            [2,0,0,4],
-            [0,2,0,-2],
-            [0,0,1,0],
-            [0,0,0,1]];
+            2, 0, 0, 4,
+            0, 2, 0, -2,
+            0, 0, 1, 0,
+            0, 0, 0, 1];
         const position = [8,14.5];
         const transformedPosition = processTransform2d(transformationMat, position);
         const expectedTransformedPos = [20, 27];

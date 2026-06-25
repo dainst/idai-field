@@ -22,7 +22,11 @@
         <ul>
             <li *ngFor="let chapter of chapters" class="nav nav-pills flex-column"
                 (click)="scrollToChapter(chapter)">
-                <a class="nav-link" [class.active]="chapter === activeChapter" href="javascript: void(0);">
+                <a class="nav-link"
+                   [class.active]="chapter === activeChapter"
+                   role="button"
+                   tabindex="0"
+                   (keydown.enter)="scrollToChapter(chapter)">
                     {{chapter.label}}
                 </a>
             </li>

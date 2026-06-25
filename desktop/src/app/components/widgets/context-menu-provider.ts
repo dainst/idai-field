@@ -1,7 +1,7 @@
 import { ChangeDetectorRef } from '@angular/core';
 import { ContextMenu } from './context-menu';
 
-const remote = window.require('@electron/remote');
+import { electronRemote as remote } from 'src/app/electron/electron';
 const mode = remote?.getGlobal('mode') ?? 'test';
 
 

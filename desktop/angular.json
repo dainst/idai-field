@@ -64,6 +64,7 @@
             "deleteOutputPath": false,
             "assets": [
               "src/favicon.png",
+              "src/zone-flags.js",
               "src/img",
               "src/info",
               "src/config",
@@ -97,8 +98,7 @@
             "extractLicenses": false,
             "buildOptimizer": false,
             "optimization": false,
-            "namedChunks": true,
-            "webWorkerTsConfig": "tsconfig.worker.json"
+            "namedChunks": true
           },
           "configurations": {
             "en": {
@@ -131,6 +131,7 @@
               ],
               "assets": [
                 "src/favicon.png",
+                "src/zone-flags.js",
                 "src/img",
                 "src/info"
               ],

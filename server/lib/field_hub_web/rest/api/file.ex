@@ -90,6 +90,9 @@ defmodule FieldHubWeb.Rest.Api.Rest.File do
   end
 
   def update(conn, %{"project" => project, "id" => uuid, "type" => type}) when is_binary(type) do
+    sanitized_project = Zarex.sanitize(project)
+    sanitized_uuid = Zarex.sanitize(uuid)
+
     with {:parsed_type, parsed_type} when is_atom(parsed_type) <-
            {:parsed_type, parse_type(type)},
          {:parsed_length, {:ok, expected_content_length}} <-
@@ -103,7 +106,7 @@ defmodule FieldHubWeb.Rest.Api.Rest.File do
          } <-
            {
              :io_opened,
-             FileStore.create_write_io_device(uuid, project, parsed_type)
+             FileStore.create_write_io_device(sanitized_uuid, sanitized_project, parsed_type)
            },
          {
            :stream,
@@ -119,9 +122,9 @@ defmodule FieldHubWeb.Rest.Api.Rest.File do
            },
          {:size_check, {:ok, :matches}} <-
            {:size_check, check_sizes(tmp_file_path, expected_content_length)} do
-      FileStore.store_by_moving(uuid, project, parsed_type, tmp_file_path)
+      FileStore.store_by_moving(sanitized_uuid, sanitized_project, parsed_type, tmp_file_path)
 
-      FileStore.clear_cache(project)
+      FileStore.clear_cache(sanitized_project)
 
       send_resp(conn, 201, Jason.encode!(%{info: "File created."}))
     else

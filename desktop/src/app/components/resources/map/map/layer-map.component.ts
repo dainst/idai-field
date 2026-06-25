@@ -11,7 +11,7 @@ import { LayerImageProvider } from './layers/layer-image-provider';
 import { LayerManager, ListDiffResult } from './layers/layer-manager';
 import { MapComponent } from './map.component';
 
-const fs = window.require('fs');
+import { electronFs as fs } from 'src/app/electron/electron';
 
 
 @Component({

@@ -4,6 +4,7 @@ import { Picker } from '@react-native-picker/picker';
 import { Ionicons } from '@expo/vector-icons';
 import Button from '@/components/common/Button';
 import { colors } from '@/utils/colors';
+import { getProjectDisplayName } from '@/constants/sample-project';
 
 interface RecentProjectsProps {
   selectedProject: string;
@@ -11,7 +12,6 @@ interface RecentProjectsProps {
   recentProjects: string[];
   openProject: (project: string) => void;
   setIsDeleteModalOpen: (open: boolean) => void;
-  usernameNotSet: boolean;
 }
 
 const RecentProjects: React.FC<RecentProjectsProps> = ({
@@ -20,10 +20,9 @@ const RecentProjects: React.FC<RecentProjectsProps> = ({
   recentProjects,
   openProject,
   setIsDeleteModalOpen,
-  usernameNotSet,
 }) => {
   return (
-    <View style={styles.projectPickerContainer}>
+    <View style={styles.projectPickerContainer} testID="recent-projects-card">
       <View style={styles.headerContainer}>
         <Text style={styles.headerText}>기존 프로젝트 열기</Text>
       </View>
@@ -35,7 +34,11 @@ const RecentProjects: React.FC<RecentProjectsProps> = ({
           style={styles.picker}
         >
           {recentProjects.map((project) => (
-            <Picker.Item label={project} value={project} key={project} />
+            <Picker.Item
+              label={getProjectDisplayName(project)}
+              value={project}
+              key={project}
+            />
           ))}
         </Picker>
       </View>
@@ -47,7 +50,7 @@ const RecentProjects: React.FC<RecentProjectsProps> = ({
           onPress={() => openProject(selectedProject)}
           title="열기"
           variant="primary"
-          isDisabled={usernameNotSet}
+          testID="open-project-button"
         />
         <Button
           style={styles.deleteButton}
@@ -65,11 +68,8 @@ const styles = StyleSheet.create({
   projectPickerContainer: {
     backgroundColor: colors.secondary,
     padding: 16,
-    borderRadius: 10,
+    borderRadius: 8,
     width: '100%',
-    flex: 2,
-    justifyContent: 'space-between',
-    minHeight: 200,
   },
   headerContainer: {
     marginBottom: 12,
@@ -80,7 +80,6 @@ const styles = StyleSheet.create({
   },
   pickerContainer: {
     borderRadius: 8,
-    flex: 1,
     marginBottom: 16,
     overflow: 'hidden',
   },

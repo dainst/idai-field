@@ -17,7 +17,7 @@ export class ConfigurationSerializer {
     public async getConfigurationAsJSON(projectIdentifier: string, configurationDocument: ConfigurationDocument) {
 
         const projectConfiguration: ProjectConfiguration = await this.appConfigurator.go(
-            getConfigurationName(projectIdentifier),
+            getConfigurationName(projectIdentifier, configurationDocument.resource.customConfigurationName),
             configurationDocument,
             true
         );

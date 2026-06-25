@@ -5,8 +5,8 @@ import { InitializationProgress } from './app/components/initialization-progress
 import { Settings } from './app/services/settings/settings';
 import { environment } from './environments/environment';
 
-const { detect } = window.require('detect-port');
-const log = window.require('electron-log');
+import { detect } from 'detect-port';
+import log from 'electron-log';
 
 
 if (environment.production) enableProdMode();

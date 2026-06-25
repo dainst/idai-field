@@ -4,7 +4,7 @@
     <div *ngIf="context === 'configuration'" class="references-info-title"
          i18n="@@referencesInfo.generalReferences">Allgemeine Verweise:</div>
     <div *ngFor="let reference of references" class="references-info-entry">
-        <a href="{{reference}}" target="_blank">{{reference}}</a>
+        <a [href]="reference" target="_blank" rel="noopener noreferrer">{{reference}}</a>
     </div>
 </div>
 
@@ -12,6 +12,6 @@
     <div class="references-info-title" i18n="@@referencesInfo.semanticReferences">Semantische Verweise:</div>
     <div *ngFor="let reference of semanticReferences" class="references-info-entry semantic-reference">
         <div class="references-info-predicate">{{reference.predicate}}</div>
-        <a href="{{reference.uri}}" target="_blank">{{reference.uri}}</a>
+        <a [href]="reference.uri" target="_blank" rel="noopener noreferrer">{{reference.uri}}</a>
     </div>
 </div>

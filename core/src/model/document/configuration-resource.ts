@@ -14,6 +14,7 @@ export interface ConfigurationResource extends Resource {
     order: string[];
     valuelists: Map<Valuelist>;
     projectLanguages: string[];
+    customConfigurationName?: string;
 }
 
 

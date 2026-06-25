@@ -2,8 +2,8 @@ import { SampleDataLoaderBase } from 'idai-field-core';
 import { getAsynchronousFs } from '../../../get-asynchronous-fs';
 import { ThumbnailGenerator } from '../../../imagestore/thumbnail-generator';
 
-const fs = window.require('fs');
-const remote = window.require('@electron/remote');
+import { electronFs as fs } from 'src/app/electron/electron';
+import { electronRemote as remote } from 'src/app/electron/electron';
 
 
 /**
@@ -50,13 +50,13 @@ export class SampleDataLoader extends SampleDataLoaderBase {
     
     private async copyImageFiles(srcFolderPath: string, destFolderPath: string, fileName: string) {
 
+        const imageBuffer = fs.readFileSync(srcFolderPath + fileName);
+
         fs.mkdirSync(destFolderPath, { recursive: true });
-        fs.createReadStream(srcFolderPath + fileName).pipe(
-            fs.createWriteStream(destFolderPath + '/' + fileName)
-        );
+        fs.writeFileSync(destFolderPath + '/' + fileName, imageBuffer);
 
         const buffer: Buffer = await this.thumbnailGenerator.generate(
-            fs.readFileSync(srcFolderPath + fileName)
+            imageBuffer
         ) as Buffer;
         const thumbnailDir = destFolderPath + '/thumbs';
 

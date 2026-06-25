@@ -1,11 +1,19 @@
 /* eslint-disable no-undef */
 const { getDefaultConfig } = require('@expo/metro-config');
+const exclusionList = require('metro-config/src/defaults/exclusionList');
 const { mergeConfig } = require('metro-config');
 const path = require('path');
 
 const defaultConfig = getDefaultConfig(__dirname);
 const resolveFromMobileNodeModules = (moduleName) =>
     path.resolve(__dirname, 'node_modules', moduleName);
+const corePackageDir = path.resolve(__dirname, '../core');
+const emptyCoreTestModule = path.resolve(__dirname, 'shims/empty-core-test-module.js');
+const corePackageEntryFiles = [
+    path.resolve(corePackageDir, 'dist/index.js'),
+    path.resolve(corePackageDir, 'index.ts'),
+    path.resolve(corePackageDir, 'index.js')
+].map((filePath) => path.normalize(filePath).toLowerCase());
 
 const forcedMobileModules = [
     'react',
@@ -21,13 +29,30 @@ const shouldResolveFromMobileNodeModules = (moduleName) =>
         moduleName === forcedModule || moduleName.startsWith(`${forcedModule}/`)
     );
 
+const isCoreTestExport = (context, moduleName) =>
+    (moduleName === './test' || moduleName === './test/index')
+    && corePackageEntryFiles.includes(path.normalize(context.originModulePath).toLowerCase());
+
 const customConfig = {
     resolver: {
+        blockList: exclusionList([
+            /android[\\\/]\.cxx[\\\/].*/,
+            /android[\\\/]build[\\\/].*/,
+            /android[\\\/]app[\\\/]build[\\\/].*/
+        ]),
         resolveRequest: (context, moduleName, platform) => {
+            if (isCoreTestExport(context, moduleName)) {
+                return context.resolveRequest(
+                    context,
+                    emptyCoreTestModule,
+                    platform
+                );
+            }
+
             if (moduleName === 'idai-field-core') {
                 return context.resolveRequest(
                     context,
-                    path.resolve(__dirname, '../core'),
+                    corePackageDir,
                     platform
                 );
             }

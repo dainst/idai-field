@@ -15,6 +15,30 @@ import { WidgetsModule } from '../widgets/widgets.module';
 import { EditFormFieldComponent } from './core/edit-form-field.component';
 import { EditFormGroup } from './core/edit-form-group.component';
 import { EditFormComponent } from './core/edit-form.component';
+import {
+    KoreanFieldworkFeatureGuidancePanelComponent
+} from './core/korean-fieldwork-feature-guidance-panel.component';
+import {
+    KoreanFieldworkDraftPresetPanelComponent
+} from './core/korean-fieldwork-draft-preset-panel.component';
+import {
+    KoreanFieldworkOrientationPanelComponent
+} from './core/korean-fieldwork-orientation-panel.component';
+import {
+    KoreanFieldworkQuickRecordPanelComponent
+} from './core/korean-fieldwork-quick-record-panel.component';
+import {
+    KoreanFieldworkNarrativeAssistPanelComponent
+} from './core/korean-fieldwork-narrative-assist-panel.component';
+import {
+    KoreanFieldworkRecordContextPanelComponent
+} from './core/korean-fieldwork-record-context-panel.component';
+import {
+    KoreanFieldworkReadinessPanelComponent
+} from './core/korean-fieldwork-readiness-panel.component';
+import {
+    KoreanFieldworkSoilColorPanelComponent
+} from './core/korean-fieldwork-soil-color-panel.component';
 import { BooleanComponent } from './core/forms/boolean.component';
 import { CheckboxesComponent } from './core/forms/checkboxes.component';
 import { DateComponent } from './core/forms/date/date.component';
@@ -86,6 +110,14 @@ import { DateParserFormatter } from './core/forms/date/date-parser-formatter';
         EditFormComponent,
         EditFormFieldComponent,
         EditFormGroup,
+        KoreanFieldworkDraftPresetPanelComponent,
+        KoreanFieldworkFeatureGuidancePanelComponent,
+        KoreanFieldworkNarrativeAssistPanelComponent,
+        KoreanFieldworkOrientationPanelComponent,
+        KoreanFieldworkQuickRecordPanelComponent,
+        KoreanFieldworkRecordContextPanelComponent,
+        KoreanFieldworkReadinessPanelComponent,
+        KoreanFieldworkSoilColorPanelComponent,
         CheckboxesComponent,
         BooleanComponent,
         DropdownComponent,

@@ -1,6 +1,6 @@
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
-import { Dimension } from 'idai-field-core';
+import { Measurement } from 'idai-field-core';
 import React, { useContext, useState } from 'react';
 import {
   FlatList,
@@ -37,7 +37,7 @@ const DimensionField: React.FC<FieldBaseProps> = ({
     useState<MeasurementType | null>('single value');
   const [inputValue, setInputValue] = useState<string>();
   const [inputRangeEndValue, setInputRangeEndValue] = useState<string>();
-  const [inputUnit, setInputUnit] = useState<Dimension.InputUnits>('cm');
+  const [inputUnit, setInputUnit] = useState<Measurement.InputUnit>('cm');
   const [measurementPosition, setMeasurementPosition] =
     useState<MeasuredBy | null>(null);
   const [isImprecise, setIsImprecise] = useState<boolean>(false);
@@ -53,7 +53,7 @@ const DimensionField: React.FC<FieldBaseProps> = ({
 
   const submitHandler = (index?: number) => {
     if (inputValue) {
-      const dimension: Dimension = {
+      const dimension: Measurement = {
         value: parseFloat(inputValue),
         inputValue: parseFloat(inputValue),
         inputUnit,
@@ -69,16 +69,16 @@ const DimensionField: React.FC<FieldBaseProps> = ({
       Object.keys(dimension).forEach(
         (key) => dimension[key] === undefined && delete dimension[key]
       );
-      Dimension.addNormalizedValues(dimension);
+      Measurement.addNormalizedValues(dimension);
       resetForm();
       setFunction(
         field.name,
         Array.isArray(currentValue) && currentValue.length
           ? index !== undefined
-            ? (currentValue as Dimension[]).map((val, i) =>
+            ? (currentValue as Measurement[]).map((val, i) =>
                 i === index ? dimension : val
               )
-            : [...(currentValue as Dimension[]), dimension]
+            : [...(currentValue as Measurement[]), dimension]
           : [dimension]
       );
     } else showToast(ToastType.Error, 'Please enter an input value');
@@ -88,7 +88,7 @@ const DimensionField: React.FC<FieldBaseProps> = ({
     if (currentValue && Array.isArray(currentValue))
       setFunction(
         field.name,
-        (currentValue as Dimension[]).filter((_dim, i) => i !== index)
+        (currentValue as Measurement[]).filter((_dim, i) => i !== index)
       );
   };
 
@@ -107,7 +107,7 @@ const DimensionField: React.FC<FieldBaseProps> = ({
       return;
     }
 
-    const dimension = (currentValue as Dimension[])[index];
+    const dimension = (currentValue as Measurement[])[index];
     if (dimension.inputRangeEndValue) {
       setMeasurementType('range');
       setInputRangeEndValue(dimension.inputRangeEndValue.toString());
@@ -120,7 +120,7 @@ const DimensionField: React.FC<FieldBaseProps> = ({
     dimension.measurementPosition &&
       setMeasurementPosition(dimension.measurementPosition as MeasuredBy);
     dimension.measurementComment &&
-      setMeasurementComment(dimension.measurementComment);
+      setMeasurementComment(getMeasurementCommentLabel(languages)(dimension.measurementComment));
     setEditingIndex(index);
     setShowAddRow(false);
   };
@@ -146,20 +146,22 @@ const DimensionField: React.FC<FieldBaseProps> = ({
     setEditingIndex(null);
   };
 
-  const generateLabel = (dimension: Dimension) =>
-    Dimension.generateLabel(
+  const generateLabel = (dimension: Measurement) =>
+    Measurement.generateLabel(
       dimension,
+      field.inputType,
       (value: number) => value.toLocaleString(languages),
-      getTranslation(languages)
+      getTranslation(languages),
+      getMeasurementCommentLabel(languages)
     );
 
   return (
     <View style={styles.container}>
       <FieldLabel field={field} />
       <FlatList
-        data={currentValue as Dimension[]}
-        keyExtractor={(item: Dimension) => generateLabel(item)}
-        renderItem={({ item, index }: { item: Dimension; index: number }) => (
+        data={currentValue as Measurement[]}
+        keyExtractor={(item: Measurement) => generateLabel(item)}
+        renderItem={({ item, index }: { item: Measurement; index: number }) => (
           <Row style={styles.currentValues}>
             <Text>{generateLabel(item)}</Text>
             <Row style={{ marginLeft: 'auto' }}>
@@ -234,12 +236,12 @@ const DimensionField: React.FC<FieldBaseProps> = ({
               selectedValue={inputUnit}
               mode="dropdown"
               onValueChange={(itemValue) =>
-                setInputUnit(itemValue as Dimension.InputUnits)
+                setInputUnit(itemValue as Measurement.InputUnit)
               }
               itemStyle={styles.pickerItem}
               testID="dimUnit"
             >
-              {Dimension.VALID_INPUT_UNITS.map((unit) => (
+              {Measurement.VALID_INPUT_UNITS.dimension.map((unit) => (
                 <Picker.Item value={unit} label={unit} key={unit} />
               ))}
             </Picker>
@@ -304,6 +306,11 @@ const DimensionField: React.FC<FieldBaseProps> = ({
 
 const getTranslation = (_languages: string[]) => (key: string) =>
   translations[key];
+
+const getMeasurementCommentLabel = (_languages: string[]) => (value: unknown) =>
+  typeof value === 'string'
+    ? value
+    : JSON.stringify(value);
 
 const styles = StyleSheet.create({
   container: {

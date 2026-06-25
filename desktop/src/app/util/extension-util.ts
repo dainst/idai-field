@@ -1,4 +1,4 @@
-const path = window.require('path');
+import { electronPath as path } from 'src/app/electron/electron';
 
 
 /**

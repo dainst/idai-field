@@ -15,6 +15,7 @@ import {
   SOIL_PROFILE_PHOTO_QUALITY_DEFAULT,
   SOIL_PROFILE_PHOTO_SIZE_HINT_KB_DEFAULT,
 } from './Map/korean-fieldwork-drafts';
+import { createSoilColorAssistUpdatesFromPhotoBase64 } from './soil-color-photo-assist';
 
 export interface FieldworkPhotoCaptureData {
   imageUri: string;
@@ -30,16 +31,23 @@ export interface SoilProfileCaptureData {
   soilProfilePhotoSizeHintKb: number;
   soilProfilePhotoQuality: number;
   soilProfilePhotoCapturedAt: string;
+  soilColorAssistCandidates?: string;
+  soilColorAssistStatus?: string;
 }
 
 interface FieldworkCameraButtonProps<TCaptureData> {
   buttonTitle: string;
   captureButtonTestID: string;
   closeButtonTestID: string;
+  includeBase64?: boolean;
   openButtonTestID: string;
   capturedUri?: string;
   onCapture: (data: TCaptureData) => void;
-  createCaptureData: (uri: string, capturedAt: Date) => TCaptureData;
+  createCaptureData: (
+    uri: string,
+    capturedAt: Date,
+    base64?: string
+  ) => TCaptureData;
 }
 
 interface SoilProfileCameraButtonProps {
@@ -54,7 +62,8 @@ interface PhotoCameraButtonProps {
 
 export const createFieldworkPhotoCaptureData = (
   uri: string,
-  capturedAt: Date = new Date()
+  capturedAt: Date = new Date(),
+  _base64?: string
 ): FieldworkPhotoCaptureData => ({
   imageUri: uri,
   originalFilename: getFilenameFromUri(uri),
@@ -66,12 +75,14 @@ export const createFieldworkPhotoCaptureData = (
 
 export const createSoilProfileCaptureData = (
   uri: string,
-  capturedAt: Date = new Date()
+  capturedAt: Date = new Date(),
+  base64?: string
 ): SoilProfileCaptureData => ({
   soilProfilePhotoUri: uri,
   soilProfilePhotoSizeHintKb: SOIL_PROFILE_PHOTO_SIZE_HINT_KB_DEFAULT,
   soilProfilePhotoQuality: SOIL_PROFILE_PHOTO_QUALITY_DEFAULT,
   soilProfilePhotoCapturedAt: capturedAt.toISOString(),
+  ...createSoilColorAssistUpdatesFromPhotoBase64(base64),
 });
 
 export const PhotoCameraButton: React.FC<PhotoCameraButtonProps> = ({
@@ -99,6 +110,7 @@ const SoilProfileCameraButton: React.FC<SoilProfileCameraButtonProps> = ({
     closeButtonTestID="soilProfileCameraCloseButton"
     openButtonTestID="soilProfileCameraButton"
     capturedUri={capturedUri}
+    includeBase64={true}
     onCapture={onCapture}
     createCaptureData={createSoilProfileCaptureData}
   />
@@ -110,6 +122,7 @@ const FieldworkCameraButton = <TCaptureData,>({
   closeButtonTestID,
   openButtonTestID,
   capturedUri,
+  includeBase64 = false,
   onCapture,
   createCaptureData,
 }: FieldworkCameraButtonProps<TCaptureData>) => {
@@ -137,14 +150,14 @@ const FieldworkCameraButton = <TCaptureData,>({
     try {
       const picture = await cameraRef.current.takePictureAsync({
         quality: SOIL_PROFILE_PHOTO_QUALITY_DEFAULT,
-        base64: false,
+        base64: includeBase64,
         exif: false,
         skipProcessing: false,
       });
 
       if (!picture) return;
 
-      onCapture(createCaptureData(picture.uri, new Date()));
+      onCapture(createCaptureData(picture.uri, new Date(), picture.base64));
       setCameraActive(false);
     } finally {
       setIsCapturing(false);

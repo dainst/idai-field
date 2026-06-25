@@ -15,12 +15,14 @@ import { ImageUploader } from '../../components/image/upload/image-uploader';
 import { UploadStatus } from '../../components/image/upload/upload-status';
 import { exportFile } from './endpoints/exportFile';
 
-const express = window.require('express');
-const remote = window.require('@electron/remote');
-const expressPouchDB = window.require('express-pouchdb');
-const expressBasicAuth = window.require('express-basic-auth');
-const bodyParser = window.require('body-parser');
-let PouchDB = window.require('pouchdb-browser');
+import express from 'express';
+import { electronRemote as remote } from 'src/app/electron/electron';
+import expressPouchDB from 'express-pouchdb';
+import expressBasicAuth from 'express-basic-auth';
+import bodyParser from 'body-parser';
+import PouchDBBase from 'pouchdb-browser';
+
+let PouchDB = PouchDBBase;
 
 
 export type ApiState = 'none'|'import'|'fileImport'|'export';

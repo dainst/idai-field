@@ -728,7 +728,10 @@ export class ConfigurationComponent extends ContextMenuProvider implements OnIni
 
         try {
             return this.appConfigurator.go(
-               getConfigurationName(this.settingsProvider.getSettings().selectedProject),
+               getConfigurationName(
+                   this.settingsProvider.getSettings().selectedProject,
+                   configurationDocument.resource.customConfigurationName
+               ),
                Document.clone(configurationDocument)
            );
        } catch (errWithParams) {

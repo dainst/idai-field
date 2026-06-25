@@ -83,7 +83,7 @@ export const KOREAN_FIELDWORK_READINESS_RULES: KoreanFieldworkReadinessRule[] = 
                 'warning',
                 '유구가 확인 상태지만 완료 사진 항목이 체크되지 않았습니다.',
                 ['featureRecordingStatus', 'featureInvestigationChecklist'],
-                '현장 마감 전 완료 사진을 연결했는지 확인하세요.'
+                '현장 마감 전 완료 사진을 남겼는지 확인하세요.'
             )];
         }
     },
@@ -108,7 +108,7 @@ export const KOREAN_FIELDWORK_READINESS_RULES: KoreanFieldworkReadinessRule[] = 
     },
     {
         id: 'soil-profile-photo-count',
-        label: '토층 사진 수와 연결 기록 확인',
+        label: '토층 사진 수와 관련 자료 확인',
         relatedFields: ['featureSoilProfilePhotoCount', 'featureInvestigationChecklist'],
         evaluate: (document, documents) => {
             if (!isFeatureLike(document)) return [];
@@ -125,9 +125,9 @@ export const KOREAN_FIELDWORK_READINESS_RULES: KoreanFieldworkReadinessRule[] = 
                 document,
                 'soil-profile-photo-count',
                 'warning',
-                '토층 사진이 필요한 상태지만 연결된 토층 사진 기록이 부족합니다.',
+                '토층 사진이 필요한 상태지만 관련 토층 사진 기록이 부족합니다.',
                 ['featureSoilProfilePhotoCount', 'featureInvestigationChecklist'],
-                '유구를 마감하기 전 토층 사진 기록을 만들거나 연결하세요.'
+                '유구를 마감하기 전 토층 사진 기록을 만들어 남기세요.'
             )];
         }
     },
@@ -177,7 +177,7 @@ export const KOREAN_FIELDWORK_READINESS_RULES: KoreanFieldworkReadinessRule[] = 
     },
     {
         id: 'find-label-register',
-        label: '유물 라벨·대장 연결 확인',
+        label: '유물 라벨·대장 정리 확인',
         relatedFields: ['artifactLabelRegisterLink'],
         evaluate: (document) => {
             if (document.resource.category !== 'Find') return [];
@@ -187,9 +187,9 @@ export const KOREAN_FIELDWORK_READINESS_RULES: KoreanFieldworkReadinessRule[] = 
                 document,
                 'find-label-register',
                 'info',
-                '유물의 라벨·대장 연결 정보가 기록되지 않았습니다.',
+                '유물의 라벨·대장 정리 정보가 기록되지 않았습니다.',
                 ['artifactLabelRegisterLink'],
-                '라벨, 봉투, 유물대장, 이후 목록화 연결 상태를 확인하세요.'
+                '라벨, 봉투, 유물대장, 이후 목록화 정리 상태를 확인하세요.'
             )];
         }
     },
@@ -226,7 +226,7 @@ export const KOREAN_FIELDWORK_READINESS_RULES: KoreanFieldworkReadinessRule[] = 
                 'warning',
                 '보고서 검토 기록에 교차 확인 대상이 없습니다.',
                 ['reportCrossCheck'],
-                '원고, 사진대장, 도면대장, 유물목록, 시료목록 중 확인 대상을 연결하세요.'
+                '원고, 사진대장, 도면대장, 유물목록, 시료목록 중 확인 대상을 남기세요.'
             )];
         }
     }

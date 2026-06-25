@@ -1,6 +1,6 @@
 import { Component, Input, NgZone } from '@angular/core';
 
-const ipcRenderer = window.require('electron')?.ipcRenderer;
+import { electronIpc as ipcRenderer } from 'src/app/electron/electron';
 
 
 @Component({

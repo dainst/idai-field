@@ -18,7 +18,7 @@ $androidDir = Join-Path $mobileDir 'android'
 $distDir = Join-Path $repoDir 'dist\android'
 
 function Show-Usage {
-    Write-Host 'Digital Field Notebook Android APK builder'
+    Write-Host '현장 기록 Android APK builder'
     Write-Host ''
     Write-Host 'Usage:'
     Write-Host '  .\build-idai-field-android-apk.ps1'
@@ -262,10 +262,13 @@ try {
     Invoke-CheckedCommand -Command 'npm' -Arguments @('run', 'build') -WorkingDirectory $coreDir
     Sync-LocalCorePackageForMobile
 
-    $variantPascal = if ($Variant -eq 'debug') { 'Debug' } else { 'Release' }
-    $bundleTask = "app:createBundle${variantPascal}JsAndAssets"
-    Write-Host "Refreshing Android JS bundle: $bundleTask"
-    Invoke-CheckedCommand -Command (Join-Path $androidDir 'gradlew.bat') -Arguments @('--no-daemon', '--rerun-tasks', $bundleTask) -WorkingDirectory $androidDir
+    if ($Variant -eq 'release') {
+        $bundleTask = 'app:createBundleReleaseJsAndAssets'
+        Write-Host "Refreshing Android JS bundle: $bundleTask"
+        Invoke-CheckedCommand -Command (Join-Path $androidDir 'gradlew.bat') -Arguments @('--no-daemon', '--rerun-tasks', $bundleTask) -WorkingDirectory $androidDir
+    } else {
+        Write-Host 'Skipping Android JS bundle refresh for debug build; debug uses the Metro development server.'
+    }
 
     $gradleTask = if ($Variant -eq 'debug') { 'app:assembleDebug' } else { 'app:assembleRelease' }
     Write-Host "Building Android APK: $gradleTask"
@@ -285,8 +288,8 @@ try {
 
     if ($Install) {
         $installScript = Join-Path $repoDir 'install-idai-field-android-apk.ps1'
-        $installArgs = @('-ApkPath', $targetApk)
-        if ($DeviceSerial) { $installArgs += @('-DeviceSerial', $DeviceSerial) }
+        $installArgs = @{ ApkPath = $targetApk }
+        if ($DeviceSerial) { $installArgs.DeviceSerial = $DeviceSerial }
         & $installScript @installArgs
         if ($LASTEXITCODE -ne 0) { throw 'APK installation failed' }
     }

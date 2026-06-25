@@ -6,7 +6,7 @@ import { SettingsProvider } from '../settings/settings-provider';
 import { SyncTarget } from '../settings/sync-target';
 import { Settings } from '../settings/settings';
 
-const axios = window.require('axios');
+import axios from 'axios';
 
 
 @Injectable()

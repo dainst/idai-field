@@ -56,6 +56,8 @@ import '@angular/localize/init'
 
 declare global {
   interface Window {
+    electronAPI: any;
+    filesystem: any;
     require: any;
   }
 }

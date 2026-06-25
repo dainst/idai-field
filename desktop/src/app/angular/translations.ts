@@ -1,5 +1,5 @@
-const remote = window.require('@electron/remote');
-const fs = window.require('fs');
+import { electronRemote as remote } from 'src/app/electron/electron';
+import { electronFs as fs } from 'src/app/electron/electron';
 
 
 /**

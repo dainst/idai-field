@@ -1,4 +1,5 @@
-const fsPromises = window.require('fs').promises;
+import { electronFs } from 'src/app/electron/electron';
+const fsPromises = electronFs.promises;
 
 
 // If called from Electron app: Return fs.promises instance from Electron main process via window['filesystem']

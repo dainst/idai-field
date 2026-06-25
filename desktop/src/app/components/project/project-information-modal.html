@@ -13,6 +13,207 @@
     </div>
     <div *ngIf="!isLoading()" class="card bg-light">
         <div class="card-body">
+            <div *ngIf="isKoreanFieldworkProject()" class="project-information-korean-fieldwork">
+                <div *ngIf="shouldShowKoreanTodayStats()" class="project-information-korean-today">
+                    <div class="project-information-korean-fieldwork-title">현장 요약</div>
+                    <div class="project-information-korean-today-status"
+                         [class.success]="koreanTodayStats?.statusTone === 'success'"
+                         [class.info]="koreanTodayStats?.statusTone === 'info'"
+                         [class.warning]="koreanTodayStats?.statusTone === 'warning'">
+                        {{koreanTodayStats?.statusLabel}}
+                    </div>
+                    <div class="project-information-korean-today-stats">
+                        <span>일지 {{koreanTodayStats?.dailyLogCount}}</span>
+                        <span>경계 {{koreanTodayStats?.surveyBoundaryCount}}</span>
+                        <span>유구 후보 {{koreanTodayStats?.featureCandidateCount}}</span>
+                        <span>확인 {{koreanTodayStats?.openIssueCount}}</span>
+                    </div>
+                    <div *ngIf="(koreanTodayStats?.openIssueCount ?? 0) > 0"
+                         class="project-information-korean-today-issues">
+                        필수 {{koreanTodayStats?.criticalIssueCount}},
+                        보완 {{koreanTodayStats?.warningIssueCount}},
+                        참고 {{koreanTodayStats?.infoIssueCount}}
+                    </div>
+                    <div *ngIf="getKoreanPriorityIssues().length > 0"
+                         class="project-information-korean-priority">
+                        <div class="project-information-korean-priority-title">우선 확인</div>
+                        <button *ngFor="let issue of getKoreanPriorityIssues()"
+                                type="button"
+                                class="project-information-korean-priority-item"
+                                [class.critical]="issue.severity === 'critical'"
+                                [class.warning]="issue.severity === 'warning'"
+                                [class.info]="issue.severity === 'info'"
+                                (click)="openKoreanPriorityIssue(issue)">
+                            <span class="project-information-korean-priority-identifier">{{issue.identifier}}</span>
+                            <span class="project-information-korean-priority-action">{{issue.recommendedAction}}</span>
+                            <span class="project-information-korean-priority-message">{{issue.message}}</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div *ngIf="shouldShowKoreanNotebookDigest()"
+                     class="project-information-korean-notebook">
+                    <div class="project-information-korean-notebook-header">
+                        <div>
+                            <div class="project-information-korean-fieldwork-title">오늘 야장</div>
+                            <div class="project-information-korean-notebook-date">
+                                {{koreanNotebookDigest?.dateLabel}}
+                            </div>
+                        </div>
+                        <button *ngIf="koreanNotebookDigest?.primaryDailyLog"
+                                type="button"
+                                class="project-information-korean-notebook-open-log"
+                                (click)="openKoreanDailyLog()">
+                            일지 열기
+                        </button>
+                    </div>
+
+                    <div class="project-information-korean-notebook-filters">
+                        <button *ngFor="let filter of koreanNotebookFilters"
+                                type="button"
+                                class="project-information-korean-notebook-filter"
+                                [class.active]="koreanNotebookFilter === filter.id"
+                                [class.warning]="filter.id === 'needsEvidence'
+                                                  && getKoreanNotebookFilterCount(filter.id) > 0"
+                                [disabled]="getKoreanNotebookFilterCount(filter.id) === 0"
+                                (click)="setKoreanNotebookFilter(filter.id)">
+                            <span>{{getKoreanNotebookFilterCount(filter.id)}}</span>
+                            <span>{{filter.label}}</span>
+                        </button>
+                    </div>
+
+                    <div class="project-information-korean-notebook-metrics secondary">
+                        <span>기록 {{getKoreanNotebookEntryCount()}}</span>
+                        <span>일지 {{getKoreanNotebookDailyLogCount()}}</span>
+                        <span>다음 {{getKoreanNotebookNextWorkCount()}}</span>
+                        <span [class.warning]="getKoreanNotebookEvidenceMissingCount() > 0">
+                            번호 {{getKoreanNotebookEvidenceMissingCount()}}
+                        </span>
+                    </div>
+
+                    <div *ngIf="getKoreanNotebookVisibleEntries().length > 0"
+                         class="project-information-korean-notebook-section">
+                        <div *ngFor="let entry of getKoreanNotebookVisibleEntries()"
+                             role="button"
+                             tabindex="0"
+                             class="project-information-korean-notebook-item"
+                             [class.info]="getKoreanNotebookEntryTone(entry) === 'info'"
+                             [class.warning]="getKoreanNotebookEntryTone(entry) === 'warning'"
+                             (click)="openKoreanNotebookEntry(entry)"
+                             (keydown.enter)="openKoreanNotebookEntry(entry)">
+                            <span class="project-information-korean-notebook-target">
+                                {{entry.targetCategoryLabel}} · {{entry.targetLabel}}
+                            </span>
+                            <span class="project-information-korean-notebook-detail">
+                                {{getKoreanNotebookEntryDetail(entry)}}
+                            </span>
+                            <span class="project-information-korean-notebook-chip-row">
+                                <span>{{entry.sourceLabel}}</span>
+                                <span *ngIf="entry.nextWork">다음</span>
+                                <span *ngIf="entry.evidenceNumbers">번호 있음</span>
+                                <span *ngIf="entry.needsEvidenceNumbers" class="warning">번호 보강</span>
+                            </span>
+                            <span class="project-information-korean-notebook-source">
+                                {{entry.sourceLabel}} · {{entry.dateLabel}} · {{getKoreanNotebookEntryOpenLabel(entry)}}
+                            </span>
+                            <span class="project-information-korean-notebook-actions">
+                                <button type="button"
+                                        class="project-information-korean-notebook-action"
+                                        (click)="openKoreanNotebookEntry(entry); $event.stopPropagation()">
+                                    {{getKoreanNotebookEntryOpenLabel(entry)}}
+                                </button>
+                                <button *ngIf="canOpenKoreanNotebookSource(entry)"
+                                        type="button"
+                                        class="project-information-korean-notebook-action secondary"
+                                        (click)="openKoreanNotebookSource(entry); $event.stopPropagation()">
+                                    {{entry.sourceLabel}} 열기
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div *ngIf="getKoreanNotebookVisibleEntries().length === 0"
+                         class="project-information-korean-notebook-empty">
+                        오늘 야장에서 바로 보강할 항목은 없습니다.
+                    </div>
+                </div>
+
+                <div class="project-information-korean-fieldwork-title">한국형 현장 기본값</div>
+                <div class="project-information-korean-fieldwork-current">
+                    <span>현재 조사 방식: {{getKoreanInvestigationModeLabel()}}</span>
+                    <span>현재 조사 경계: {{getKoreanBoundarySummary()}}</span>
+                </div>
+
+                <div *ngIf="hasKoreanWorkflowSteps()" class="project-information-korean-workflow">
+                    <div class="project-information-korean-fieldwork-title">조사 순서</div>
+                    <div class="project-information-korean-workflow-steps">
+                        <div *ngFor="let step of getKoreanWorkflowSteps(); let stepIndex = index"
+                             class="project-information-korean-workflow-step"
+                             [class.done]="step.status === 'done'"
+                             [class.current]="step.status === 'current'"
+                             [class.attention]="step.status === 'attention'"
+                             [class.todo]="step.status === 'todo'">
+                            <span class="project-information-korean-workflow-index">{{stepIndex + 1}}</span>
+                            <span class="project-information-korean-workflow-body">
+                                <span class="project-information-korean-workflow-label">{{step.label}}</span>
+                                <span class="project-information-korean-workflow-detail">{{step.detail}}</span>
+                            </span>
+                            <span class="project-information-korean-workflow-status">
+                                {{getKoreanWorkflowStepStatusLabel(step.status)}}
+                            </span>
+                            <button *ngIf="canRunKoreanWorkflowStep(step)"
+                                    type="button"
+                                    class="project-information-korean-workflow-action"
+                                    (click)="runKoreanWorkflowStep(step)">
+                                {{step.actionLabel}}
+                            </button>
+                            <button *ngIf="canRunKoreanWorkflowStepSecondaryAction(step)"
+                                    type="button"
+                                    class="project-information-korean-workflow-action secondary"
+                                    (click)="runKoreanWorkflowStepSecondaryAction(step)">
+                                {{step.secondaryActionLabel}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-information-korean-fieldwork-label">조사 방식</div>
+                <div class="project-information-korean-fieldwork-mode-grid">
+                    <button *ngFor="let mode of koreanInvestigationModes"
+                            type="button"
+                            class="project-information-korean-fieldwork-mode"
+                            [ngClass]="{ 'active': koreanInvestigationMode === mode.value }"
+                            (click)="setKoreanInvestigationMode(mode.value)">
+                        <span class="project-information-korean-fieldwork-mode-label">{{mode.label}}</span>
+                        <span class="project-information-korean-fieldwork-mode-detail">{{mode.detail}}</span>
+                    </button>
+                </div>
+
+                <div class="project-information-korean-fieldwork-label">조사 경계</div>
+                <textarea class="form-control project-information-korean-fieldwork-boundary"
+                          rows="3"
+                          [(ngModel)]="koreanBoundarySummary"
+                          (ngModelChange)="markKoreanProjectSetupChanged()"></textarea>
+
+                <div class="project-information-korean-fieldwork-actions">
+                    <button type="button"
+                            class="btn btn-primary btn-sm"
+                            [disabled]="!canSaveKoreanProjectSetup()"
+                            [ngClass]="{ 'disabled': !canSaveKoreanProjectSetup() }"
+                            (click)="saveKoreanProjectSetup()">
+                        {{savingKoreanProjectSetup ? '저장 중' : '저장'}}
+                    </button>
+                    <button *ngIf="hasKoreanProjectSetupChanges()"
+                            type="button"
+                            class="btn btn-secondary btn-sm"
+                            [disabled]="savingKoreanProjectSetup"
+                            (click)="resetKoreanProjectSetupEdits()">
+                        되돌리기
+                    </button>
+                    <span *ngIf="koreanProjectSetupSaved"
+                          class="project-information-korean-fieldwork-saved">저장됨</span>
+                </div>
+            </div>
             <div i18n="@@project.informationModal.resourceCount">
                 Ressourcen:
             </div>

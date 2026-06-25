@@ -3,9 +3,9 @@ import { ImageRelationsManager } from '../../../services/image-relations-manager
 import { Settings } from '../../../services/settings/settings';
 import { getExportDocuments } from './get-export-documents';
 
-const fs = window.require('fs');
-const remote = window.require('@electron/remote');
-const ipcRenderer = window.require('electron')?.ipcRenderer;
+import { electronFs as fs } from 'src/app/electron/electron';
+import { electronRemote as remote } from 'src/app/electron/electron';
+import { electronIpc as ipcRenderer } from 'src/app/electron/electron';
 
 
 export const ERROR_FAILED_TO_COPY_IMAGES = 'export.catalog.failedToCopyImages';

@@ -1,4 +1,5 @@
 const { ipcMain, BrowserWindow, app } = require('electron');
+const path = require('path');
 const messages = require('./messages');
 
 
@@ -243,21 +244,19 @@ const getTemplate = (mainWindow, context, config) => {
                     modal: true,
                     show: false,
                     webPreferences: {
-                        nodeIntegration: true,
-                        contextIsolation: false
+                        nodeIntegration: false,
+                        contextIsolation: true,
+                        preload: path.join(app.getAppPath(), 'electron/modals/preload.js')
                     }
                 });
-                modal.loadFile(require('path').join(app.getAppPath(), '/electron/modals/info-modal.html'));
+                modal.loadFile(path.join(app.getAppPath(), '/electron/modals/info-modal.html'));
 
                 modal.webContents.on('did-finish-load', async () => {
-                    await modal.webContents.executeJavaScript(
-                        'document.getElementById("about-version").textContent = "' + app.getVersion() + '"; ' +
-                        'document.getElementById("close-button").textContent = "' + messages.get('info.close') + '";' +
-                        (process.platform !== 'darwin'
-                            ? 'document.getElementById("modal-container").classList.add("with-border");'
-                            : ''
-                        )
-                    );
+                    modal.webContents.send('info-data', {
+                        version: app.getVersion(),
+                        closeButton: messages.get('info.close'),
+                        withBorder: process.platform !== 'darwin'
+                    });
                     modal.show();
                 });
                 modal.on('close', () => {

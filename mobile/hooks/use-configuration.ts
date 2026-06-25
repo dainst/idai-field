@@ -11,11 +11,28 @@ const useConfiguration = (
   const [config, setConfig] = useState<ProjectConfiguration>();
 
   useEffect(() => {
-    if (!pouchdbDatastore || !project) return;
+    let isCancelled = false;
 
-    loadConfiguration(pouchdbDatastore, project, languages, username).then(
-      setConfig
-    );
+    if (!pouchdbDatastore || !project) {
+      setConfig(undefined);
+      return () => {
+        isCancelled = true;
+      };
+    }
+
+    setConfig(undefined);
+    loadConfiguration(pouchdbDatastore, project, languages, username)
+      .then((config) => {
+        if (!isCancelled) setConfig(config);
+      })
+      .catch((error) => {
+        console.error('Could not load project configuration', error);
+        if (!isCancelled) setConfig(undefined);
+      });
+
+    return () => {
+      isCancelled = true;
+    };
   }, [pouchdbDatastore,  project, languages, username]);
 
   return config;

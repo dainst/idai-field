@@ -1,5 +1,4 @@
 import { Component, ElementRef, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { Chapter, HelpLoader } from './help-loader';
 import { TabManager } from '../../services/tabs/tab-manager';
@@ -8,7 +7,7 @@ import { MenuContext } from '../../services/menu-context';
 import { Settings } from '../../services/settings/settings';
 import { AngularUtility } from '../../angular/angular-utility';
 
-const remote = window.require('@electron/remote');
+import { electronRemote as remote } from 'src/app/electron/electron';
 
 
 const HELP_LANGUAGES = ['de', 'en', 'ko', 'tr'];
@@ -28,7 +27,7 @@ const FALLBACK_LANGUAGE = 'en';
  */
 export class HelpComponent implements OnInit {
 
-    public html: SafeHtml;
+    public html: string;
     public chapters: Array<Chapter> = [];
     public activeChapter: Chapter;
     public searchResults: HTMLCollectionOf<Element>;
@@ -44,8 +43,7 @@ export class HelpComponent implements OnInit {
     private static headerTopOffset: number = -62;
 
 
-    constructor(private domSanitizer: DomSanitizer,
-                private http: HttpClient,
+    constructor(private http: HttpClient,
                 private tabManager: TabManager,
                 private changeDetectorRef: ChangeDetectorRef,
                 private menuService: Menus) {}
@@ -62,7 +60,7 @@ export class HelpComponent implements OnInit {
         );
 
         this.htmlString = html;
-        this.html = this.domSanitizer.bypassSecurityTrustHtml(this.htmlString);
+        this.html = this.htmlString;
         this.chapters = chapters;
         if (this.chapters.length > 0) this.activeChapter = this.chapters[0];
     }
@@ -147,7 +145,7 @@ export class HelpComponent implements OnInit {
             ? this.replaceSearchString(searchTerm)
             : this.htmlString;
 
-        this.html = this.domSanitizer.bypassSecurityTrustHtml(updatedHtmlString);
+        this.html = updatedHtmlString;
 
         await AngularUtility.refresh();
 

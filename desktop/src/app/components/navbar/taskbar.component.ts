@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 
-const remote = window.require('@electron/remote');
+import { electronRemote as remote } from 'src/app/electron/electron';
 
 
 @Component({

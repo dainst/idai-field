@@ -14,8 +14,11 @@ const RadioField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValue
     const [valuesObject, setValuesObject] = useState<ItemsObject>({});
 
     
-    const getValues = useCallback(
-        () => field.valuelist && labels ? labels.orderKeysByLabels(field.valuelist) : [],[field, labels]);
+    const getValues = useCallback(() => {
+        if (!field.valuelist) return [];
+        return labels?.orderKeysByLabels(field.valuelist)
+            ?? Object.keys(field.valuelist.values ?? {});
+    },[field, labels]);
 
     const initValuesObject = useCallback(() => {
         const itemData: ItemsObject = {};

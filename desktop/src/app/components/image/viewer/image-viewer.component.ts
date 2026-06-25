@@ -10,7 +10,7 @@ import { Loading } from '../../widgets/loading';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { ImageToolLauncher } from '../../../services/imagestore/image-tool-launcher';
 
-const panzoom = require('panzoom');
+import panzoom from 'panzoom';
 
 
 type LoadingResult = {

@@ -22,10 +22,9 @@ const mockField: Field = {
   inputType: 'radio',
   valuelist: valueList,
 };
-const currentValue = 'one';
+const currentValue = '1';
 
 // Mocking modules
-jest.mock('idai-field-core');
 jest.mock('./ChoiceModal/ChoiceModal');
 
 describe('RadioField', () => {
@@ -48,11 +47,11 @@ describe('RadioField', () => {
 
   it('should have only one field selected', () => {
     const expectedChoices = {
-      one: { selected: true, label: 'one' },
-      two: { selected: false, label: 'two' },
-      three: { selected: false, label: 'three' },
-      four: { selected: false, label: 'four' },
-      five: { selected: false, label: 'five' },
+      5: { selected: false, label: '5' },
+      4: { selected: false, label: '4' },
+      1: { selected: true, label: '1' },
+      3: { selected: false, label: '3' },
+      2: { selected: false, label: '2' },
       [NO_VAL]: { selected: false, label: NO_VAL },
     };
     const { getByTestId } = render(
@@ -74,13 +73,13 @@ describe('RadioField', () => {
 
   // eslint-disable-next-line max-len
   it('should call setFunction with correct props if labels button is pressed and should update valuesObject state', () => {
-    const newValue = 'two';
+    const newValue = '2';
     const expectedNewChoices = {
-      one: { selected: false, label: 'one' },
-      two: { selected: true, label: 'two' },
-      three: { selected: false, label: 'three' },
-      four: { selected: false, label: 'four' },
-      five: { selected: false, label: 'five' },
+      5: { selected: false, label: '5' },
+      4: { selected: false, label: '4' },
+      1: { selected: false, label: '1' },
+      3: { selected: false, label: '3' },
+      2: { selected: true, label: '2' },
       [NO_VAL]: { selected: false, label: NO_VAL },
     };
     const setFunciton = jest.fn();

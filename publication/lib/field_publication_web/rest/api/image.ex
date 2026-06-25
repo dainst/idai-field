@@ -21,14 +21,14 @@ defmodule FieldPublicationWeb.Api.Image do
 
     if File.exists?(path) do
       cache_type =
-        Cachex.exists?(:published_images, {name, uuid})
+        Cachex.get(:published_images, {name, uuid})
         |> case do
-          {:ok, false} ->
-            # Caching in users' browsers only.
-            "private"
+          {:ok, true} ->
+            "public"
 
           _ ->
-            "public"
+            # Caching in users' browsers only.
+            "private"
         end
 
       conn

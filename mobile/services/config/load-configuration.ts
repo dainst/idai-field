@@ -5,6 +5,8 @@ import {
   PouchdbDatastore,
   ProjectConfiguration,
   ConfigurationDocument,
+  KOREAN_FIELDWORK_CONFIGURATION_NAME,
+  KOREAN_FIELDWORK_PROJECT_IDENTIFIER,
   getConfigurationName,
 } from 'idai-field-core';
 import {
@@ -20,7 +22,7 @@ const loadConfiguration = async (
 ): Promise<ProjectConfiguration> => {
   const configReader = new ConfigReader();
 
-  const db = pouchdbDatastore.getDb();
+  const db = await getProjectDb(pouchdbDatastore, project);
   
   const config = await ConfigurationDocument.getConfigurationDocument(
     (id: string) => db.get(id),
@@ -28,9 +30,12 @@ const loadConfiguration = async (
     project,
     username
   );
+  const configurationName =
+    config.resource.customConfigurationName ?? getConfigurationName(project);
   const normalizedConfig = await normalizeKoreanFieldworkConfiguration(
     config,
     configReader,
+    configurationName,
     project,
     username
   );
@@ -38,23 +43,47 @@ const loadConfiguration = async (
   const configurator = new AppConfigurator(
     new ConfigLoader(new ConfigReader())
   );
-  return await configurator.go(getConfigurationName(project), normalizedConfig);
+  return await configurator.go(
+    getConfigurationName(project, normalizedConfig.resource.customConfigurationName),
+    normalizedConfig
+  );
+};
+
+const getProjectDb = async (
+  pouchdbDatastore: PouchdbDatastore,
+  project: string
+) => {
+  const currentDb = pouchdbDatastore.getDb();
+  if (currentDb && await isDbForProject(currentDb, project)) return currentDb;
+
+  await pouchdbDatastore.createDb(project);
+  return pouchdbDatastore.getDb();
+};
+
+const isDbForProject = async (db: any, project: string): Promise<boolean> => {
+  try {
+    return (await db.info()).db_name === project;
+  } catch {
+    return false;
+  }
 };
 
 const normalizeKoreanFieldworkConfiguration = async (
   config: ConfigurationDocument,
   configReader: ConfigReader,
+  configurationName: string,
   project: string,
   username: string
 ): Promise<ConfigurationDocument> => {
-  if (!isKoreanFieldworkProject(project)) return config;
+  if (configurationName !== KOREAN_FIELDWORK_CONFIGURATION_NAME
+      && !isKoreanFieldworkProject(project)) return config;
 
   const latestConfig = await ConfigurationDocument.getConfigurationDocument(
     async () => {
       throw new Error('Latest KoreanFieldwork configuration document must be read from bundled files');
     },
     configReader,
-    project,
+    KOREAN_FIELDWORK_PROJECT_IDENTIFIER,
     username
   );
 
@@ -68,6 +97,7 @@ const normalizeKoreanFieldworkConfiguration = async (
   );
   config.resource.languages = latestConfig.resource.languages;
   config.resource.projectLanguages = KOREAN_FIELDWORK_PROJECT_LANGUAGES.slice();
+  config.resource.customConfigurationName = KOREAN_FIELDWORK_CONFIGURATION_NAME;
 
   return config;
 };

@@ -15,7 +15,551 @@ project-information-modal {
     user-select: none;
 
     .card-body {
-      div {
+      .project-information-korean-fieldwork {
+        border-bottom: 1px solid #d8dee4;
+        margin-bottom: 12px;
+        padding-bottom: 12px;
+
+        .project-information-korean-fieldwork-title {
+          font-weight: 600;
+          margin-bottom: 8px;
+        }
+
+        .project-information-korean-today {
+          border-bottom: 1px solid #e4e7ec;
+          margin-bottom: 12px;
+          padding-bottom: 12px;
+        }
+
+        .project-information-korean-today-status {
+          border-radius: 5px;
+          display: inline-block;
+          font-size: 12px;
+          font-weight: 700;
+          margin-bottom: 8px;
+          padding: 4px 8px;
+
+          &.success {
+            background: #ecfdf3;
+            color: #027a48;
+          }
+
+          &.info {
+            background: #eff8ff;
+            color: #175cd3;
+          }
+
+          &.warning {
+            background: #fffaeb;
+            color: #b54708;
+          }
+        }
+
+        .project-information-korean-today-stats {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px;
+          margin-bottom: 6px;
+
+          span {
+            background: #f2f4f7;
+            border-radius: 5px;
+            color: #344054;
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 1;
+            padding: 5px 8px;
+          }
+        }
+
+        .project-information-korean-today-issues {
+          color: #9c4a1a;
+          font-size: 12px;
+          font-weight: 700;
+        }
+
+        .project-information-korean-priority {
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+          margin-top: 10px;
+        }
+
+        .project-information-korean-priority-title {
+          color: #344054;
+          font-size: 12px;
+          font-weight: 700;
+        }
+
+        .project-information-korean-priority-item {
+          background: #ffffff;
+          border: 1px solid #d0d5dd;
+          border-left-width: 4px;
+          border-radius: 4px;
+          color: #1d2939;
+          display: grid;
+          gap: 2px;
+          padding: 7px 9px;
+          text-align: left;
+          width: 100%;
+
+          &.critical {
+            border-left-color: #b42318;
+          }
+
+          &.warning {
+            border-left-color: #dc6803;
+          }
+
+          &.info {
+            border-left-color: #1570ef;
+          }
+
+          &:hover {
+            background: #f9fafb;
+          }
+        }
+
+        .project-information-korean-priority-identifier {
+          font-size: 12px;
+          font-weight: 700;
+        }
+
+        .project-information-korean-priority-action {
+          font-size: 12px;
+          line-height: 1.35;
+        }
+
+        .project-information-korean-priority-message {
+          color: #667085;
+          font-size: 11px;
+          line-height: 1.35;
+        }
+
+        .project-information-korean-fieldwork-current {
+          color: #4a5568;
+          display: flex;
+          flex-direction: column;
+          font-size: 12px;
+          gap: 2px;
+          margin-bottom: 12px;
+          margin-left: 20px;
+        }
+
+        .project-information-korean-workflow {
+          border-bottom: 1px solid #e4e7ec;
+          margin-bottom: 12px;
+          padding-bottom: 12px;
+        }
+
+        .project-information-korean-workflow-steps {
+          display: grid;
+          gap: 6px;
+        }
+
+        .project-information-korean-workflow-step {
+          align-items: center;
+          background: #ffffff;
+          border: 1px solid #d0d5dd;
+          border-radius: 4px;
+          display: grid;
+          gap: 8px;
+          grid-template-columns: auto minmax(0, 1fr) auto auto auto;
+          min-height: 38px;
+          padding: 6px 8px;
+
+          &.done {
+            background: #f6fef9;
+            border-color: #abefc6;
+          }
+
+          &.current {
+            background: #eff8ff;
+            border-color: #84caff;
+          }
+
+          &.attention {
+            background: #fffaeb;
+            border-color: #fedf89;
+          }
+
+          &.todo {
+            background: #f9fafb;
+            color: #667085;
+          }
+        }
+
+        .project-information-korean-workflow-index {
+          align-items: center;
+          background: #ffffff;
+          border: 1px solid #d0d5dd;
+          border-radius: 50%;
+          display: inline-flex;
+          font-size: 11px;
+          font-weight: 700;
+          height: 22px;
+          justify-content: center;
+          line-height: 1;
+          width: 22px;
+        }
+
+        .project-information-korean-workflow-body {
+          display: grid;
+          gap: 2px;
+          min-width: 0;
+        }
+
+        .project-information-korean-workflow-label {
+          color: #1d2939;
+          font-size: 12px;
+          font-weight: 700;
+          line-height: 1.2;
+        }
+
+        .project-information-korean-workflow-detail {
+          color: #667085;
+          font-size: 12px;
+          font-weight: 600;
+          line-height: 1.25;
+        }
+
+        .project-information-korean-workflow-status {
+          color: #475467;
+          font-size: 11px;
+          font-weight: 700;
+          line-height: 1;
+          white-space: nowrap;
+        }
+
+        .project-information-korean-workflow-step.done .project-information-korean-workflow-status {
+          color: #027a48;
+        }
+
+        .project-information-korean-workflow-step.current .project-information-korean-workflow-status {
+          color: #175cd3;
+        }
+
+        .project-information-korean-workflow-step.attention .project-information-korean-workflow-status {
+          color: #b54708;
+        }
+
+        .project-information-korean-workflow-action {
+          background: #ffffff;
+          border: 1px solid #d0d5dd;
+          border-radius: 4px;
+          color: #344054;
+          font-size: 11px;
+          font-weight: 800;
+          line-height: 1;
+          min-height: 26px;
+          padding: 4px 7px;
+          white-space: nowrap;
+
+          &.secondary {
+            color: #475467;
+          }
+
+          &:hover {
+            background: #eef2f6;
+          }
+        }
+
+        .project-information-korean-notebook {
+          border-bottom: 1px solid #e4e7ec;
+          margin-bottom: 12px;
+          padding-bottom: 12px;
+        }
+
+        .project-information-korean-notebook-header {
+          align-items: flex-start;
+          display: flex;
+          justify-content: space-between;
+          gap: 8px;
+        }
+
+        .project-information-korean-notebook-date {
+          color: #667085;
+          font-size: 11px;
+          font-weight: 700;
+          margin-top: -4px;
+        }
+
+        .project-information-korean-notebook-open-log {
+          background: #f0fdf4;
+          border: 1px solid #bbf7d0;
+          border-radius: 4px;
+          color: #2f5f4a;
+          font-size: 12px;
+          font-weight: 700;
+          padding: 5px 8px;
+
+          &:hover {
+            background: #dcfae6;
+          }
+        }
+
+        .project-information-korean-notebook-metrics {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px;
+          margin: 8px 0 6px;
+
+          &.secondary {
+            margin-top: 6px;
+          }
+
+          span {
+            background: #f8fafc;
+            border: 1px solid #d0d5dd;
+            border-radius: 4px;
+            color: #344054;
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 1;
+            padding: 5px 8px;
+
+            &.warning {
+              background: #fff1f3;
+              border-color: #fecdca;
+              color: #b42318;
+            }
+          }
+        }
+
+        .project-information-korean-notebook-filters {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px;
+          margin-top: 8px;
+        }
+
+        .project-information-korean-notebook-filter {
+          align-items: center;
+          background: #f8fafc;
+          border: 1px solid #d0d5dd;
+          border-radius: 5px;
+          color: #344054;
+          display: inline-flex;
+          flex-direction: column;
+          font-size: 11px;
+          font-weight: 800;
+          justify-content: center;
+          line-height: 1.1;
+          min-height: 42px;
+          min-width: 54px;
+          padding: 5px 8px;
+
+          span:first-child {
+            font-size: 14px;
+            font-weight: 900;
+          }
+
+          &.active {
+            background: #eff8ff;
+            border-color: #84caff;
+            color: #175cd3;
+          }
+
+          &.warning {
+            background: #fff1f3;
+            border-color: #fecdca;
+            color: #b42318;
+          }
+
+          &:disabled {
+            background: #f2f4f7;
+            border-color: #eaecf0;
+            color: #98a2b3;
+          }
+
+          &:not(:disabled):hover {
+            background: #eef4ff;
+          }
+        }
+
+        .project-information-korean-notebook-section {
+          margin-top: 10px;
+        }
+
+        .project-information-korean-notebook-section-title {
+          color: #344054;
+          font-size: 12px;
+          font-weight: 700;
+          margin-bottom: 5px;
+
+          &.warning {
+            color: #b54708;
+          }
+        }
+
+        .project-information-korean-notebook-item {
+          background: #ffffff;
+          border: 1px solid #d0d5dd;
+          border-radius: 4px;
+          color: #1d2939;
+          cursor: pointer;
+          display: grid;
+          gap: 2px;
+          margin-top: 5px;
+          padding: 7px 9px;
+          text-align: left;
+          width: 100%;
+
+          &.warning {
+            background: #fffbeb;
+            border-color: #fedf89;
+          }
+
+          &.info {
+            border-color: #b2ddff;
+          }
+
+          &:hover {
+            background: #f9fafb;
+          }
+        }
+
+        .project-information-korean-notebook-actions {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 5px;
+          justify-content: flex-end;
+          margin-top: 4px;
+        }
+
+        .project-information-korean-notebook-action {
+          background: #eff8ff;
+          border: 1px solid #b2ddff;
+          border-radius: 4px;
+          color: #175cd3;
+          font-size: 11px;
+          font-weight: 800;
+          line-height: 1;
+          min-height: 26px;
+          padding: 4px 7px;
+
+          &.secondary {
+            background: #ffffff;
+            border-color: #d0d5dd;
+            color: #475467;
+          }
+
+          &:hover {
+            background: #e0f2fe;
+          }
+        }
+
+        .project-information-korean-notebook-target {
+          color: #175cd3;
+          font-size: 11px;
+          font-weight: 700;
+        }
+
+        .project-information-korean-notebook-detail {
+          color: #344054;
+          font-size: 12px;
+          line-height: 1.35;
+        }
+
+        .project-information-korean-notebook-chip-row {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 4px;
+          margin-top: 3px;
+
+          span {
+            background: #f2f4f7;
+            border: 1px solid #d0d5dd;
+            border-radius: 4px;
+            color: #475467;
+            font-size: 10px;
+            font-weight: 800;
+            line-height: 1;
+            padding: 3px 5px;
+
+            &.warning {
+              background: #fff1f3;
+              border-color: #fecdca;
+              color: #b42318;
+            }
+          }
+        }
+
+        .project-information-korean-notebook-source {
+          color: #667085;
+          font-size: 11px;
+          line-height: 1.25;
+        }
+
+        .project-information-korean-notebook-empty {
+          background: #ecfdf3;
+          border: 1px solid #abefc6;
+          border-radius: 4px;
+          color: #027a48;
+          font-size: 12px;
+          font-weight: 700;
+          margin-top: 8px;
+          padding: 7px 9px;
+        }
+
+        .project-information-korean-fieldwork-label {
+          font-weight: 600;
+          margin-bottom: 6px;
+        }
+
+        .project-information-korean-fieldwork-mode-grid {
+          display: grid;
+          gap: 8px;
+          grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+          margin-bottom: 12px;
+        }
+
+        .project-information-korean-fieldwork-mode {
+          background: #ffffff;
+          border: 1px solid #c8d2df;
+          border-radius: 4px;
+          color: #24324a;
+          padding: 8px 10px;
+          text-align: left;
+
+          &.active {
+            background: #e9f1ff;
+            border-color: #5478b8;
+          }
+        }
+
+        .project-information-korean-fieldwork-mode-label {
+          display: block;
+          font-weight: 600;
+          margin-bottom: 2px;
+        }
+
+        .project-information-korean-fieldwork-mode-detail {
+          color: #536274;
+          display: block;
+          font-size: 12px;
+          line-height: 1.35;
+        }
+
+        .project-information-korean-fieldwork-boundary {
+          margin-bottom: 10px;
+          resize: vertical;
+        }
+
+        .project-information-korean-fieldwork-actions {
+          align-items: center;
+          display: flex;
+          gap: 8px;
+        }
+
+        .project-information-korean-fieldwork-saved {
+          color: #2f6f46;
+          font-size: 12px;
+          font-weight: 600;
+        }
+      }
+
+      > div {
         &.indented {
           margin-left: 20px;
         }

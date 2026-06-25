@@ -15,3 +15,7 @@ lerna-debug.log
 **/.lsp
 **/.clj-kondo
 
+# Local tablet verification artifacts
+tablet-*.png
+tablet-window*.xml
+

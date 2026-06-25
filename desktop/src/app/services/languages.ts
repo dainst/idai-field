@@ -2,8 +2,8 @@ import { clone, flatten, isObject, isArray, Map, set } from 'tsfun';
 import { I18N, Document } from 'idai-field-core';
 import { Settings } from './settings/settings';
 
-const remote = window.require('@electron/remote');
-const cldr = window.require('cldr');
+import { electronRemote as remote } from 'src/app/electron/electron';
+import cldr from 'cldr';
 
 
 const CONFIGURED_LANGUAGES: string[] = remote ? remote.getGlobal('config').languages : ['de'];

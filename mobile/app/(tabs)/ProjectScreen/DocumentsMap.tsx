@@ -1,36 +1,18 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import DocumentsMap from '@/components/Project/DocumentsMap';
 import { ProjectContext } from '@/contexts/project-context';
 import { PreferencesContext } from '@/contexts/preferences-context';
-import {
-  KoreanFieldworkInvestigationModeId,
-  loadKoreanFieldworkInvestigationModeId,
-} from '@/components/Project/korean-fieldwork-investigation-mode';
+import useKoreanFieldworkProjectSetupDefaults from '@/hooks/use-korean-fieldwork-project-setup-defaults';
 
 const DocumentMapContainer: React.FC = () => {
   const { repository, relationsManager, syncStatus, setQ, onParentSelected } =
     useContext(ProjectContext);
   const preferencesContext = useContext(PreferencesContext);
   const projectId = preferencesContext.preferences.currentProject;
-  const [investigationModeId, setInvestigationModeId] =
-    useState<KoreanFieldworkInvestigationModeId>();
-
-  useEffect(() => {
-    let isActive = true;
-    setInvestigationModeId(undefined);
-
-    loadKoreanFieldworkInvestigationModeId(projectId)
-      .then((modeId) => {
-        if (isActive && modeId) setInvestigationModeId(modeId);
-      })
-      .catch(() => undefined);
-
-    return () => {
-      isActive = false;
-    };
-  }, [projectId]);
+  const { investigationModeId, boundarySummary } =
+    useKoreanFieldworkProjectSetupDefaults(projectId, repository);
 
   if (!repository || syncStatus === undefined) {
     return <ProjectMapLoadingState />;
@@ -44,6 +26,7 @@ const DocumentMapContainer: React.FC = () => {
       relationsManager={relationsManager}
       selectParent={onParentSelected}
       investigationModeId={investigationModeId}
+      boundarySummary={boundarySummary}
     />
   );
 };

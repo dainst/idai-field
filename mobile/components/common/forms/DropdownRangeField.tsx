@@ -25,13 +25,11 @@ const DropdownRangeField: React.FC<FieldBaseProps> = ({
   const [endValuesObject, setEndValuesObject] = useState<ItemsObject>({});
   const [showEndElements, setShowEndElements] = useState<boolean>(false);
 
-  const getValues = useCallback(
-    () =>
-      field.valuelist && labels
-        ? labels.orderKeysByLabels(field.valuelist)
-        : [],
-    [field, labels]
-  );
+  const getValues = useCallback(() => {
+    if (!field.valuelist) return [];
+    return labels?.orderKeysByLabels(field.valuelist)
+      ?? Object.keys(field.valuelist.values ?? {});
+  }, [field, labels]);
 
   const initValuesObject = useCallback(() => {
     const itemData: ItemsObject = {};
@@ -45,13 +43,19 @@ const DropdownRangeField: React.FC<FieldBaseProps> = ({
   useEffect(() => {
     const currentValueRange = currentValue as OptionalRange<string> | undefined;
     const valuesData = initValuesObject();
-    if (currentValueRange) {
+    if (
+      currentValueRange?.value
+      && valuesData[currentValueRange.value]
+    ) {
       valuesData[currentValueRange.value].selected = true;
     } else valuesData[NO_VAL].selected = true;
     setValuesObject(valuesData);
 
     const endValuesData = initValuesObject();
-    if (currentValueRange && currentValueRange.endValue) {
+    if (
+      currentValueRange?.endValue
+      && endValuesData[currentValueRange.endValue]
+    ) {
       setShowEndElements(true);
       endValuesData[currentValueRange.endValue].selected = true;
     } else endValuesData[NO_VAL].selected = true;

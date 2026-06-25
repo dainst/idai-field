@@ -3,6 +3,7 @@ import { SyncStatus } from 'idai-field-core';
 import React, { useCallback, useContext, useState } from 'react';
 import { PreferencesContext } from '@/contexts/preferences-context';
 import { ProjectSettings } from '@/models/preferences';
+import { normalizeProjectSettings } from '@/models/project-settings';
 import Button from '@/components/common/Button';
 import SyncSettingsModal from './SyncSettingsModal';
 
@@ -25,8 +26,9 @@ const SyncSettingsButton: React.FC<SyncSettingsButtonProps> = ({ status }) => {
     [preferences]
   );
 
-  const settings =
-    preferences.preferences.projects[preferences.preferences.currentProject];
+  const settings = normalizeProjectSettings(
+    preferences.preferences.projects[preferences.preferences.currentProject]
+  );
 
   return (
     <>
@@ -44,6 +46,7 @@ const SyncSettingsButton: React.FC<SyncSettingsButtonProps> = ({ status }) => {
       <Button
         variant="transparent"
         icon={React.cloneElement(getSyncStatusIcon(status), { size: 18 })}
+        testID="sync-settings-button"
         onPress={() => setShowSettings(true)}
       />
     </>

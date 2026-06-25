@@ -119,8 +119,9 @@ defmodule FieldPublication.Settings do
     |> update()
     |> case do
       {:ok, %ApplicationSettings{} = updated_settings} ->
-        FileService.delete_admin_image_upload(file_name)
-        {:ok, updated_settings}
+        with :ok <- FileService.delete_admin_image_upload(file_name) do
+          {:ok, updated_settings}
+        end
 
       {:error, _} = error ->
         error
@@ -129,12 +130,8 @@ defmodule FieldPublication.Settings do
 
   def list_images() do
     FileService.list_uploaded_logos()
-    |> Enum.map(fn {file_name, path} ->
-      if String.ends_with?(path, ".svg") do
-        {file_name, {:svg, File.read!(path)}}
-      else
-        {file_name, :img}
-      end
+    |> Enum.map(fn {file_name, _path} ->
+      {file_name, :img}
     end)
   end
 

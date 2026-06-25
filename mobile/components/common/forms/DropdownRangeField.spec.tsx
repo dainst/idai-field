@@ -17,8 +17,8 @@ const valuelist: Valuelist = {
     fünf: { label: { de: 'fünf', en: 'five' } },
   },
 };
-const value = 'one';
-const endValue = 'two';
+const value = 'eins';
+const endValue = 'zwei';
 const mockField: Field = {
   name: fieldName,
   inputType: 'dropdownRange',
@@ -26,7 +26,6 @@ const mockField: Field = {
 };
 
 // Mocking modules
-jest.mock('idai-field-core');
 jest.mock('./ChoiceModal/ChoiceModal');
 
 describe('DropdownRangeField', () => {
@@ -42,13 +41,13 @@ describe('DropdownRangeField', () => {
     );
 
     expect(queryByTestId('endValueText')).toBeNull();
-    expect(queryByTestId('arrowIcon')).not.toBeNull();
+    expect(queryByTestId('arrowIconBtn')).not.toBeNull();
     expect(queryByTestId('valueText')).not.toBeNull();
 
     fireEvent.press(getByTestId('arrowIconBtn'));
 
     expect(queryByTestId('endValueText')).not.toBeNull();
-    expect(queryByTestId('arrowIcon')).toBeNull();
+    expect(queryByTestId('arrowIconBtn')).toBeNull();
     expect(queryByTestId('valueText')).not.toBeNull();
   });
 
@@ -61,7 +60,7 @@ describe('DropdownRangeField', () => {
     );
 
     expect(queryByTestId('endValueText')).toBeNull();
-    expect(queryByTestId('arrowIcon')).not.toBeNull();
+    expect(queryByTestId('arrowIconBtn')).not.toBeNull();
     expect(queryByTestId('valueText')).not.toBeNull();
 
     // test currentValue with only VALUE key
@@ -77,7 +76,7 @@ describe('DropdownRangeField', () => {
     );
 
     expect(queryByTestId('endValueText')).toBeNull();
-    expect(queryByTestId('arrowIcon')).not.toBeNull();
+    expect(queryByTestId('arrowIconBtn')).not.toBeNull();
     expect(queryByTestId('valueText')).not.toBeNull();
     expect(getByTestId('valueText').props.children).toEqual(value);
 
@@ -95,26 +94,26 @@ describe('DropdownRangeField', () => {
 
     expect(queryByTestId('endValueText')).not.toBeNull();
     expect(getByTestId('endValueText').props.children).toEqual(endValue);
-    expect(queryByTestId('arrowIcon')).toBeNull();
+    expect(queryByTestId('arrowIconBtn')).toBeNull();
     expect(queryByTestId('valueText')).not.toBeNull();
     expect(getByTestId('valueText').props.children).toEqual(value);
   });
 
   it('should provide all labels to regarding ChoiceModal', () => {
     const expectedValueChoices = {
-      [value]: { selected: true, label: 'one' },
-      two: { selected: false, label: 'two' },
-      three: { selected: false, label: 'three' },
-      four: { selected: false, label: 'four' },
-      five: { selected: false, label: 'five' },
+      fünf: { selected: false, label: 'fünf' },
+      vier: { selected: false, label: 'vier' },
+      [value]: { selected: true, label: 'eins' },
+      drei: { selected: false, label: 'drei' },
+      [endValue]: { selected: false, label: 'zwei' },
       [NO_VAL]: { selected: false, label: NO_VAL },
     };
     const expectedEndValueChoices = {
-      [endValue]: { selected: true, label: 'two' },
-      one: { selected: false, label: 'one' },
-      three: { selected: false, label: 'three' },
-      four: { selected: false, label: 'four' },
-      five: { selected: false, label: 'five' },
+      fünf: { selected: false, label: 'fünf' },
+      vier: { selected: false, label: 'vier' },
+      [value]: { selected: false, label: 'eins' },
+      drei: { selected: false, label: 'drei' },
+      [endValue]: { selected: true, label: 'zwei' },
       [NO_VAL]: { selected: false, label: NO_VAL },
     };
     const range: OptionalRange<string> = { value, endValue };
@@ -142,8 +141,8 @@ describe('DropdownRangeField', () => {
   it('should call setFunction with correct props if new value is selcted in ChoiceModal', () => {
     const setFunctionMock = jest.fn();
     const range: OptionalRange<string> = { value };
-    const newValue = 'four';
-    const newEndValue = 'two';
+    const newValue = 'vier';
+    const newEndValue = 'zwei';
     const { getByTestId } = render(
       <LabelsContext.Provider value={{ labels: new Labels(() => ['en']) }}>
         <DropdownRangeField

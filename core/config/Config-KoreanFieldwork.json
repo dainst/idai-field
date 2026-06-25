@@ -90,9 +90,23 @@
         "verificationState": {
           "inputType": "dropdown",
           "constraintIndexed": true
+        },
+        "projectInvestigationMode": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "projectBoundarySetupState": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "projectBoundarySummary": {
+          "inputType": "text",
+          "constraintIndexed": true
         }
       },
       "valuelists": {
+        "projectInvestigationMode": "KoreanFieldwork-projectInvestigationMode",
+        "projectBoundarySetupState": "KoreanFieldwork-projectBoundarySetupState",
         "digitalSourcePreservation": "KoreanFieldwork-digitalSourcePreservation",
         "investigationAdministration": "KoreanFieldwork-investigationAdministration",
         "investigationRequestIntake": "KoreanFieldwork-investigationRequestIntake",
@@ -132,6 +146,9 @@
         {
           "name": "koreanFieldwork",
           "fields": [
+            "projectInvestigationMode",
+            "projectBoundarySetupState",
+            "projectBoundarySummary",
             "investigationAdministration",
             "investigationRequestIntake",
             "investigationPlanChangeRecord",
@@ -357,6 +374,18 @@
     "Operation:default": {
       "hidden": [],
       "fields": {
+        "projectInvestigationMode": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "projectBoundarySetupState": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
+        "projectBoundarySummary": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
         "dailyLogContent": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -459,6 +488,8 @@
         }
       },
       "valuelists": {
+        "projectInvestigationMode": "KoreanFieldwork-projectInvestigationMode",
+        "projectBoundarySetupState": "KoreanFieldwork-projectBoundarySetupState",
         "dailyLogContent": "KoreanFieldwork-dailyLogContent",
         "dailyLogReview": "KoreanFieldwork-dailyLogReview",
         "digitalSourcePreservation": "KoreanFieldwork-digitalSourcePreservation",
@@ -505,6 +536,9 @@
         {
           "name": "koreanFieldwork",
           "fields": [
+            "projectInvestigationMode",
+            "projectBoundarySetupState",
+            "projectBoundarySummary",
             "recordCreationTiming",
             "dailyLogContent",
             "dailyLogReview",
@@ -568,6 +602,22 @@
         "featureInvestigationChecklist": {
           "inputType": "checkboxes",
           "constraintIndexed": true
+        },
+        "longAxisOrientation": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "shortAxisOrientation": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "orientationReference": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "orientationNote": {
+          "inputType": "text",
+          "constraintIndexed": true
         }
       },
       "valuelists": {
@@ -615,7 +665,14 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "spatialLocation"]
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "longAxisOrientation",
+            "shortAxisOrientation",
+            "orientationReference",
+            "orientationNote"
+          ]
         }
       ]
     },
@@ -1843,7 +1900,7 @@
       ]
     },
     "FeatureGroup:default": {
-      "hidden": [],
+      "hidden": ["fieldIdentifier", "reportIdentifier", "identifierRevisionHistory", "identifierRevisionNote"],
       "fields": {
         "isRecordedIn": {
           "inputType": "relation",
@@ -1878,6 +1935,22 @@
           "constraintIndexed": true
         },
         "featureGeometryRevisionNote": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "fieldIdentifier": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "reportIdentifier": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "identifierRevisionHistory": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "identifierRevisionNote": {
           "inputType": "text",
           "constraintIndexed": true
         },
@@ -1953,6 +2026,10 @@
             "featureGeometryReferenceLayerId",
             "featureGeometryRevisionHistory",
             "featureGeometryRevisionNote",
+            "fieldIdentifier",
+            "reportIdentifier",
+            "identifierRevisionHistory",
+            "identifierRevisionNote",
             "fieldRecordQuality",
             "settlementSpatialInterpretation",
             "recordCreationTiming",
@@ -1973,7 +2050,7 @@
       ]
     },
     "Feature:default": {
-      "hidden": [],
+      "hidden": ["fieldIdentifier", "reportIdentifier", "identifierRevisionHistory", "identifierRevisionNote"],
       "fields": {
         "isRecordedIn": {
           "inputType": "relation",
@@ -2015,6 +2092,22 @@
           "inputType": "text",
           "constraintIndexed": true
         },
+        "fieldIdentifier": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "reportIdentifier": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "identifierRevisionHistory": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "identifierRevisionNote": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
         "featureInvestigationChecklist": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -2024,6 +2117,22 @@
           "constraintIndexed": true
         },
         "featureChecklistNote": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "longAxisOrientation": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "shortAxisOrientation": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "orientationReference": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "orientationNote": {
           "inputType": "text",
           "constraintIndexed": true
         },
@@ -2529,6 +2638,10 @@
             "featureGeometryReferenceLayerId",
             "featureGeometryRevisionHistory",
             "featureGeometryRevisionNote",
+            "fieldIdentifier",
+            "reportIdentifier",
+            "identifierRevisionHistory",
+            "identifierRevisionNote",
             "featureInvestigationChecklist",
             "featureSoilProfilePhotoCount",
             "featureChecklistNote",
@@ -2639,7 +2752,15 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "dimensionVerticalExtent", "isPresentIn"]
+          "fields": [
+            "geometry",
+            "dimensionVerticalExtent",
+            "longAxisOrientation",
+            "shortAxisOrientation",
+            "orientationReference",
+            "orientationNote",
+            "isPresentIn"
+          ]
         },
         {
           "name": "time",
@@ -2648,7 +2769,7 @@
       ]
     },
     "FeatureSegment:default": {
-      "hidden": [],
+      "hidden": ["fieldIdentifier", "reportIdentifier", "identifierRevisionHistory", "identifierRevisionNote"],
       "fields": {
         "isRecordedIn": {
           "inputType": "relation",
@@ -2686,6 +2807,22 @@
           "inputType": "text",
           "constraintIndexed": true
         },
+        "fieldIdentifier": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "reportIdentifier": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "identifierRevisionHistory": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "identifierRevisionNote": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
         "featureInvestigationChecklist": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -2695,6 +2832,22 @@
           "constraintIndexed": true
         },
         "featureChecklistNote": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "longAxisOrientation": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "shortAxisOrientation": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "orientationReference": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "orientationNote": {
           "inputType": "text",
           "constraintIndexed": true
         },
@@ -2888,6 +3041,10 @@
             "featureGeometryReferenceLayerId",
             "featureGeometryRevisionHistory",
             "featureGeometryRevisionNote",
+            "fieldIdentifier",
+            "reportIdentifier",
+            "identifierRevisionHistory",
+            "identifierRevisionNote",
             "featureInvestigationChecklist",
             "featureSoilProfilePhotoCount",
             "featureChecklistNote",
@@ -2925,7 +3082,14 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "isPresentIn"]
+          "fields": [
+            "geometry",
+            "longAxisOrientation",
+            "shortAxisOrientation",
+            "orientationReference",
+            "orientationNote",
+            "isPresentIn"
+          ]
         },
         {
           "name": "time",
@@ -3614,6 +3778,22 @@
           "inputType": "text",
           "constraintIndexed": true
         },
+        "longAxisOrientation": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "shortAxisOrientation": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "orientationReference": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "orientationNote": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
         "fieldRecordQuality": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -3675,7 +3855,15 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "spatialLocation", "isPresentIn"]
+          "fields": [
+            "geometry",
+            "spatialLocation",
+            "longAxisOrientation",
+            "shortAxisOrientation",
+            "orientationReference",
+            "orientationNote",
+            "isPresentIn"
+          ]
         },
         {
           "name": "time",
@@ -4145,6 +4333,14 @@
           "inputType": "dropdown",
           "constraintIndexed": true
         },
+        "soilColorAssistCandidates": {
+          "inputType": "text",
+          "constraintIndexed": true
+        },
+        "soilColorAssistStatus": {
+          "inputType": "dropdown",
+          "constraintIndexed": true
+        },
         "soilProfileColorSwatches": {
           "inputType": "text",
           "constraintIndexed": true
@@ -4173,6 +4369,7 @@
       "valuelists": {
         "layerSequenceMeaning": "KoreanFieldwork-layerSequenceMeaning",
         "soilColorCaptureCondition": "KoreanFieldwork-soilColorCaptureCondition",
+        "soilColorAssistStatus": "KoreanFieldwork-soilColorAssistStatus",
         "fieldRecordQuality": "KoreanFieldwork-fieldRecordQuality",
         "recordCreationTiming": "KoreanFieldwork-recordCreationTiming",
         "verificationState": "KoreanFieldwork-verificationState"
@@ -4197,6 +4394,8 @@
             "soilProfileAnnotationStrokes",
             "soilProfileLayerMarkers",
             "soilColorCaptureCondition",
+            "soilColorAssistCandidates",
+            "soilColorAssistStatus",
             "soilProfileColorSwatches",
             "soilProfileColorNote",
             "soilProfileCaptureNote"

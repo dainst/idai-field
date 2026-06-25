@@ -1,6 +1,6 @@
 import { ImageManipulation } from '../image-manipulation';
 
-const sharp = window.require('sharp');
+import sharp from 'sharp';
 
 
 /**

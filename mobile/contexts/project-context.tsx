@@ -34,7 +34,23 @@ interface ProjectContextType {
   relationsManager: RelationsManager | undefined;
 }
 
-export const ProjectContext = createContext<ProjectContextType>(null);
+const defaultProjectContext: ProjectContextType = {
+  q: '',
+  documents: [],
+  hierarchyPath: [],
+  pushToHierarchy: () => {},
+  popFromHierarchy: () => {},
+  clearHierarchy: () => {},
+  onDocumentSelected: () => {},
+  onParentSelected: () => {},
+  isInOverview: () => false,
+  setQ: () => {},
+  repository: undefined,
+  syncStatus: undefined,
+  relationsManager: undefined,
+};
+
+export const ProjectContext = createContext<ProjectContextType>(defaultProjectContext);
 
 export const ProjectContextProvider = ({ children }) => {
   const [q, setQ] = useState<string>('');

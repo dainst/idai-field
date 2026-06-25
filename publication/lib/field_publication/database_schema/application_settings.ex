@@ -8,6 +8,7 @@ defmodule FieldPublication.DatabaseSchema.ApplicationSettings do
     @primary_inverse_default "#ffffff"
     @primary_hover_default "#375d97"
     @primary_inverse_hover_default "#ffffff"
+    @hex_color ~r/^#[0-9a-fA-F]{6}$/
 
     @derive Jason.Encoder
     @primary_key false
@@ -31,14 +32,20 @@ defmodule FieldPublication.DatabaseSchema.ApplicationSettings do
 
     defp force_color_defaults(changeset) do
       changeset
-      |> maybe_put_default(:primary, @primary_default)
-      |> maybe_put_default(:primary_inverse, @primary_inverse_default)
-      |> maybe_put_default(:primary_hover, @primary_hover_default)
-      |> maybe_put_default(:primary_inverse_hover, @primary_inverse_hover_default)
+      |> put_valid_color_or_default(:primary, @primary_default)
+      |> put_valid_color_or_default(:primary_inverse, @primary_inverse_default)
+      |> put_valid_color_or_default(:primary_hover, @primary_hover_default)
+      |> put_valid_color_or_default(:primary_inverse_hover, @primary_inverse_hover_default)
     end
 
-    defp maybe_put_default(changeset, key, default_value) do
-      put_change(changeset, key, get_field(changeset, key) || default_value)
+    defp put_valid_color_or_default(changeset, key, default_value) do
+      value = get_field(changeset, key)
+
+      if is_binary(value) and Regex.match?(@hex_color, value) do
+        put_change(changeset, key, String.downcase(value))
+      else
+        put_change(changeset, key, default_value)
+      end
     end
   end
 

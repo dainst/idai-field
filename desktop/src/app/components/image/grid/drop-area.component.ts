@@ -5,8 +5,8 @@ import { Messages } from '../../messages/messages';
 import { MsgWithParams } from '../../messages/msg-with-params';
 import { AppState } from '../../../services/app-state';
 
-const remote = window.require('@electron/remote');
-const webUtils = window.require('electron').webUtils;
+import { electronRemote as remote } from 'src/app/electron/electron';
+import { electronWebUtils as webUtils } from 'src/app/electron/electron';
 
 
 @Component({

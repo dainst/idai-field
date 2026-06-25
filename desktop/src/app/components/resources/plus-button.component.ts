@@ -9,6 +9,10 @@ import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { ResourcesComponent } from './resources.component';
 import { ComponentHelpers } from '../component-helpers';
+import {
+    getKoreanFieldworkDefaultFieldValues,
+    isKoreanFieldworkFeatureCategory
+} from '../../util/korean-fieldwork-draft-defaults';
 
 
 export type PlusButtonStatus = 'enabled'|'disabled-hierarchy';
@@ -16,20 +20,6 @@ export type PlusButtonStatus = 'enabled'|'disabled-hierarchy';
 
 const KOREAN_FIELDWORK_FEATURE_CATEGORY = 'Feature';
 const KOREAN_FIELDWORK_FEATURE_GEOMETRY_TYPE: FieldGeometryType = 'Polygon';
-const KOREAN_FIELDWORK_FEATURE_DEFAULT_FIELD_VALUES: Map<any> = {
-    featureRecordingStatus: 'candidate',
-    geometrySource: 'tabletSketch',
-    geometryConfidence: 'rough',
-    featureGeometryEditStatus: 'roughSketch',
-    featureInvestigationChecklist: []
-};
-const KOREAN_FIELDWORK_FEATURE_VALUELISTS: Map<string> = {
-    featureRecordingStatus: 'KoreanFieldwork-featureRecordingStatus',
-    geometrySource: 'KoreanFieldwork-geometrySource',
-    geometryConfidence: 'KoreanFieldwork-geometryConfidence',
-    featureGeometryEditStatus: 'KoreanFieldwork-featureGeometryEditStatus',
-    featureInvestigationChecklist: 'KoreanFieldwork-featureInvestigationChecklist'
-};
 
 
 @Component({
@@ -315,20 +305,9 @@ export class PlusButtonComponent implements OnInit, OnChanges, OnDestroy {
     private getKoreanFieldworkFeatureCategory(): CategoryForm|undefined {
 
         const featureCategory: CategoryForm|undefined = this.findSelectableCategory(KOREAN_FIELDWORK_FEATURE_CATEGORY);
-        return this.isKoreanFieldworkFeatureCategory(featureCategory)
+        return isKoreanFieldworkFeatureCategory(featureCategory)
             ? featureCategory
             : undefined;
-    }
-
-
-    private isKoreanFieldworkFeatureCategory(category: CategoryForm|undefined): boolean {
-
-        if (category?.name !== KOREAN_FIELDWORK_FEATURE_CATEGORY) return false;
-
-        return Object.keys(KOREAN_FIELDWORK_FEATURE_VALUELISTS).every(fieldName =>
-            CategoryForm.getField(category, fieldName)?.valuelist?.id
-                === KOREAN_FIELDWORK_FEATURE_VALUELISTS[fieldName]
-        );
     }
 
 
@@ -336,14 +315,10 @@ export class PlusButtonComponent implements OnInit, OnChanges, OnDestroy {
 
         const defaultFieldValues = { ...this.defaultFieldValues };
 
-        if (this.isKoreanFieldworkFeatureCategory(this.selectedCategory) && geometryType !== 'none') {
-            return {
-                ...KOREAN_FIELDWORK_FEATURE_DEFAULT_FIELD_VALUES,
-                ...defaultFieldValues
-            };
-        }
-
-        return defaultFieldValues;
+        return {
+            ...getKoreanFieldworkDefaultFieldValues(this.selectedCategory, { geometryType }),
+            ...defaultFieldValues
+        };
     }
 
 

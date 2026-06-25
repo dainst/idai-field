@@ -5,7 +5,8 @@ defmodule FieldPublicationWeb.Rest.Api.JsonTest do
 
   alias FieldPublication.{
     CouchService,
-    Projects
+    Projects,
+    Publications
   }
 
   alias FieldPublication.DatabaseSchema.Project
@@ -14,28 +15,41 @@ defmodule FieldPublicationWeb.Rest.Api.JsonTest do
 
   @core_database Application.compile_env(:field_publication, :core_database)
   @test_project_name "test_project_a"
+  @private_project_name "test_project_private"
 
   setup_all %{} do
     CouchService.put_database(@core_database)
 
     {project, publication} = ProjectSeed.start(@test_project_name, false)
+    {_private_project, private_publication} = ProjectSeed.start(@private_project_name, false)
+    {:ok, private_publication} = Publications.put(private_publication, %{"publication_date" => nil})
 
     on_exit(fn ->
-      Projects.get(@test_project_name)
-      |> case do
-        {:ok, %Project{} = project} ->
-          Projects.delete(project)
+      [@test_project_name, @private_project_name]
+      |> Enum.each(fn project_name ->
+        Projects.get(project_name)
+        |> case do
+          {:ok, %Project{} = project} ->
+            Projects.delete(project)
 
-        _ ->
-          :ok
-      end
+          _ ->
+            :ok
+        end
+      end)
 
       CouchService.delete_database(@core_database)
     end)
 
     [doc] = Data.get_doc_stream_for_all(publication) |> Enum.take(1)
+    [private_doc] = Data.get_doc_stream_for_all(private_publication) |> Enum.take(1)
 
-    %{project: project, publication: publication, doc: doc}
+    %{
+      project: project,
+      publication: publication,
+      doc: doc,
+      private_publication: private_publication,
+      private_doc: private_doc
+    }
   end
 
   test "returns raw data json for valid url", %{conn: conn, publication: publication, doc: doc} do
@@ -97,5 +111,29 @@ defmodule FieldPublicationWeb.Rest.Api.JsonTest do
                )
              end
            )
+  end
+
+  test "rejects json requests for unpublished publications without project access", %{
+    conn: conn,
+    private_publication: publication,
+    private_doc: doc
+  } do
+    assert get(
+             conn,
+             ~p"/api/json/raw/#{publication.project_name}/#{publication.draft_date}/#{doc["_id"]}"
+           )
+           |> response(403) == "You are not allowed to access that page."
+  end
+
+  test "rejects extended json requests for unpublished publications without project access", %{
+    conn: conn,
+    private_publication: publication,
+    private_doc: doc
+  } do
+    assert get(
+             conn,
+             ~p"/api/json/extended/#{publication.project_name}/#{publication.draft_date}/#{doc["_id"]}"
+           )
+           |> response(403) == "You are not allowed to access that page."
   end
 end

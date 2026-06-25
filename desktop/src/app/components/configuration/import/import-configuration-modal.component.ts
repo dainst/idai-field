@@ -11,8 +11,8 @@ import { AppState } from '../../../services/app-state';
 import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
 
-const PouchDB = window.require('pouchdb-browser');
-const remote = window.require('@electron/remote');
+import PouchDB from 'pouchdb-browser';
+import { electronRemote as remote } from 'src/app/electron/electron';
 
 
 @Component({

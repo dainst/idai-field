@@ -19,7 +19,6 @@ import {
   Object3D,
   Scene,
   Shape,
-  ShapeBufferGeometry,
   ShapeGeometry,
   ShapeUtils,
   Vector2,
@@ -138,11 +137,13 @@ export const polygonToShape: ShapeFunction<Position[][] | Position[][][]> = (
   const parent = new Object3D();
 
   if (isPosition2d(coordinates))
-    shapes.push(geoJsonPolyToShape(matrix, coordinates));
-  else if (isPosition3d(coordinates))
-    coordinates.forEach((polygon) =>
-      shapes.push(geoJsonPolyToShape(matrix, polygon))
+    addShapeIfRenderable(shapes, geoJsonPolyToShape(matrix, coordinates));
+  else
+    (coordinates as Position[][][]).forEach((polygon) =>
+      addShapeIfRenderable(shapes, geoJsonPolyToShape(matrix, polygon))
     );
+
+  if (shapes.length === 0) return;
 
   // selected Child
   const material = new MeshBasicMaterial({
@@ -174,9 +175,15 @@ const geoJsonPolyToShape = (matrix: Matrix4, polygon: Position[][]): Shape => {
   const shape = new Shape();
   polygon.forEach((ringCoords, i) => {
     if (i === 0) {
-      ringCoords.forEach((pos: Position, i: number) => {
-        const [x, y] = processTransform2d(matrix, pos);
-        if (i === 0) shape.moveTo(x, y);
+      let hasStartPoint = false;
+      ringCoords.forEach((pos: Position) => {
+        const transformed = transformPosition(matrix, pos);
+        if (!transformed) return;
+        const [x, y] = transformed;
+        if (!hasStartPoint) {
+          shape.moveTo(x, y);
+          hasStartPoint = true;
+        }
         else shape.lineTo(x, y);
       });
     }
@@ -199,11 +206,13 @@ export const lineStringToShape: ShapeFunction<Position[] | Position[][]> = (
   const shapes: Shape[] = [];
 
   if (isPosition1d(coordinates))
-    shapes.push(geoJsonLineToShape(matrix, coordinates));
+    addShapeIfRenderable(shapes, geoJsonLineToShape(matrix, coordinates));
   else
-    coordinates.forEach((lineString) =>
-      shapes.push(geoJsonLineToShape(matrix, lineString))
+    (coordinates as Position[][]).forEach((lineString) =>
+      addShapeIfRenderable(shapes, geoJsonLineToShape(matrix, lineString))
     );
+
+  if (shapes.length === 0) return;
 
   // selected Child
   shapes.forEach((shape) =>
@@ -224,9 +233,15 @@ const geoJsonLineToShape = (
   coordinates: Position[]
 ): Shape => {
   const shape = new Shape();
-  coordinates.forEach((point, i) => {
-    const [x, y] = processTransform2d(matrix, point);
-    if (i === 0) shape.moveTo(x, y);
+  let hasStartPoint = false;
+  coordinates.forEach((point) => {
+    const transformed = transformPosition(matrix, point);
+    if (!transformed) return;
+    const [x, y] = transformed;
+    if (!hasStartPoint) {
+      shape.moveTo(x, y);
+      hasStartPoint = true;
+    }
     else shape.lineTo(x, y);
   });
   return shape;
@@ -281,21 +296,25 @@ export const pointToShape: ShapeFunction<Position | Position[]> = (
   const points: Position[] = [];
 
   if (isPostion(coordinates))
-    points.push(processTransform2d(matrix, coordinates));
+    addPointIfRenderable(points, transformPosition(matrix, coordinates));
   else
     coordinates.forEach((coords) =>
-      points.push(processTransform2d(matrix, coords))
+      addPointIfRenderable(points, transformPosition(matrix, coords))
     );
 
+  if (points.length === 0) return;
+
   // selected Child
-  points.forEach((point) =>
-    parent.add(getCricleFromCoord(scene, point, true, color))
-  );
+  points.forEach((point) => {
+    const circle = getCricleFromCoord(scene, point, true, color);
+    if (circle) parent.add(circle);
+  });
 
   // not selected Child
-  points.forEach((point) =>
-    parent.add(getCricleFromCoord(scene, point, false, color))
-  );
+  points.forEach((point) => {
+    const circle = getCricleFromCoord(scene, point, false, color);
+    if (circle) parent.add(circle);
+  });
 
   addObjectInfo(parent, document, points);
   //scene.add(parent);
@@ -307,10 +326,13 @@ const getCricleFromCoord = (
   pos: Position,
   isSelected: boolean,
   color: string
-): Mesh => {
+): Mesh | undefined => {
   const radius =
     (scene.getObjectByName('pointParent')?.userData.radius as number) ||
     defaultPointRadius;
+  if (!isFinitePositiveNumber(radius) || !isRenderablePosition(pos)) {
+    return undefined;
+  }
   const segments = 30; //<-- Increase or decrease for more resolution
   const circleGeometry = new CircleGeometry(radius, segments);
   const [x, y] = pos;
@@ -379,16 +401,15 @@ const isPosition1d = (
 const isPosition2d = (
   coords: Position[][] | Position[][][]
 ): coords is Position[][] => arrayDim(coords) === 3;
-const isPosition3d = (
-  coords: Position[][] | Position[][][]
-): coords is Position[][][] => arrayDim(coords) === 4;
 
 export const addlocationPointToScene = (
   matrix: Matrix4,
   scene: Object3D,
   coordinates: Position
 ): void => {
-  const [x, y] = processTransform2d(matrix, coordinates);
+  const transformed = transformPosition(matrix, coordinates);
+  if (!transformed) return;
+  const [x, y] = transformed;
   const location = 'location';
 
   const point = scene.getObjectByName(location);
@@ -400,6 +421,7 @@ export const addlocationPointToScene = (
 
   const color = 'blue';
   const radius = defaultPointRadius;
+  if (!isFinitePositiveNumber(radius)) return;
   const segments = 30; //<-- Increase or decrease for more resolution
 
   const circleGeometry = new CircleGeometry(radius, segments);
@@ -438,9 +460,10 @@ export const addHighlightedDocToScene = (docId: string, scene: Scene): void => {
       )
     );
   } else
-    data.coords.forEach((coord) =>
-      parent?.add(getCricleFromCoord(scene, coord, false, highlightedColor))
-    );
+    data.coords.forEach((coord) => {
+      const circle = getCricleFromCoord(scene, coord, false, highlightedColor);
+      if (circle) parent?.add(circle);
+    });
 
   scene.add(parent);
 };
@@ -488,6 +511,12 @@ export const addLayerToScene = (
     documentToWorldMatrix,
     bottomRightCoordinates
   );
+  if (
+    !isRenderablePosition(topLeftTrans) ||
+    !isRenderablePosition(topRightTrans) ||
+    !isRenderablePosition(bottomLeftTrans) ||
+    !isRenderablePosition(bottomRightTrans)
+  ) return;
 
   const shape = new Shape();
   shape.moveTo(...(bottomLeftTrans as [number, number]));
@@ -502,6 +531,9 @@ export const addLayerToScene = (
   const height = new Vector2(...topLeftTrans).distanceTo(
     new Vector2(...bottomLeftTrans)
   );
+  if (!isFinitePositiveNumber(width) || !isFinitePositiveNumber(height)) {
+    return;
+  }
   const opacity = options?.getLayerOpacity
     ? options.getLayerOpacity(doc)
     : getResourceLayerOpacity(doc);
@@ -518,7 +550,7 @@ export const addLayerToScene = (
         options?.onTextureLoaded
       )
     : createMissingImageLayerMaterial(opacity);
-  const layerObject = new Mesh(new ShapeBufferGeometry(shape), material);
+  const layerObject = new Mesh(new ShapeGeometry(shape), material);
   layerObject.renderOrder = -Infinity; //top put all layers behind other polygons
   layerObject.name = doc.resource.identifier;
   layerObject.uuid = doc.resource.id;
@@ -579,3 +611,34 @@ const getResourceLayerOpacity = (doc: Document): number => {
     ? 0.65
     : 1;
 };
+
+const transformPosition = (
+  matrix: Matrix4,
+  position: Position
+): Position | undefined => {
+  const transformed = processTransform2d(matrix, position);
+  return isRenderablePosition(transformed) ? transformed : undefined;
+};
+
+const addShapeIfRenderable = (shapes: Shape[], shape: Shape) => {
+  if (
+    shape.getPoints().some((point) =>
+      Number.isFinite(point.x) && Number.isFinite(point.y)
+    )
+  ) {
+    shapes.push(shape);
+  }
+};
+
+const addPointIfRenderable = (
+  points: Position[],
+  point: Position | undefined
+) => {
+  if (point) points.push(point);
+};
+
+const isRenderablePosition = (position: Position): boolean =>
+  Number.isFinite(position[0]) && Number.isFinite(position[1]);
+
+const isFinitePositiveNumber = (value: number): boolean =>
+  Number.isFinite(value) && value > 0;

@@ -84,12 +84,12 @@ const renderFieldValue = (
 ): ReactNode =>
   field.type === 'relation'
     ? field.targets?.map(renderRelationTarget)
+    : Array.isArray(value)
+    ? value.map((entry) =>
+        renderFieldValue(field, entry, languages, config, labels)
+      )
     : field.type === 'default' && typeof value === 'string'
     ? renderStringValue(value)
-    : field.type === 'array' && Array.isArray(value)
-    ? value.map((value) =>
-        renderFieldValue(field, value, languages, config, labels)
-      )
     : renderObjectValue(value, field, languages, labels);
 
 const renderStringValue = (value: string) => <Text key={value}>{value}</Text>;
@@ -103,6 +103,9 @@ const renderObjectValue = (
   const text = FieldsViewUtil.getObjectLabel(
     value,
     field,
+    getSystemTimezone(),
+    getLocale(languages),
+    '.',
     getTranslation(languages),
     (value: number) => value.toLocaleString(languages),
     labels
@@ -121,6 +124,11 @@ const renderRelationTarget = (target: Document) => (
 
 const getTranslation = (_languages: string[]) => (key: string) =>
   translations[key];
+
+const getLocale = (languages: string[]): string => languages[0] ?? 'en';
+
+const getSystemTimezone = (): string =>
+  Intl.DateTimeFormat().resolvedOptions().timeZone;
 
 const styles = StyleSheet.create({
   container: {

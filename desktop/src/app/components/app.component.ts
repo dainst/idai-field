@@ -24,8 +24,8 @@ import { ImageUploader } from './image/upload/image-uploader';
 import { UploadModalComponent } from './image/upload/upload-modal.component';
 import { UploadStatus } from './image/upload/upload-status';
 
-const remote = window.require('@electron/remote');
-const ipcRenderer = window.require('electron')?.ipcRenderer;
+import { electronRemote as remote } from 'src/app/electron/electron';
+import { electronIpc as ipcRenderer } from 'src/app/electron/electron';
 
 
 @Component({

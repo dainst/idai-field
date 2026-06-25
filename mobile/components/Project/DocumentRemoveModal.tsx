@@ -84,7 +84,7 @@ const DocumentRemoveModal: React.FC<RemoveModalProps> = ({
               value={docValue}
               onChangeText={setDocValue}
               autoCapitalize="none"
-              autoCompleteType="off"
+              autoComplete="off"
               autoCorrect={false}
               autoFocus
             />

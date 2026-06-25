@@ -89,8 +89,7 @@ defmodule FieldPublicationWeb.ContactAndImprintLive do
         fn %Translation{language: language} -> language == selected_language end
       )
       |> then(fn %Translation{text: text} -> text end)
-      |> Earmark.as_html!()
-      |> Phoenix.HTML.raw()
+      |> FieldPublicationWeb.Markdown.to_html()
 
     socket
     |> assign(:selected_language, selected_language)

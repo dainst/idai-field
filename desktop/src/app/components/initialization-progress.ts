@@ -5,7 +5,7 @@ import { getMessage } from './initialization-messages';
 import { reload } from '../services/reload';
 import { SettingsService } from '../services/settings/settings-service';
 
-const remote = window.require('@electron/remote');
+import { electronRemote as remote } from 'src/app/electron/electron';
 
 
 type InitializationPhase =

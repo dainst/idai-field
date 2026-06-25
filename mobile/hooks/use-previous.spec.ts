@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react-native';
 import usePrevious from './use-previous';
 
 const data1 = ['1','2','3','4'];

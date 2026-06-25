@@ -1,13 +1,13 @@
 import React from 'react';
 import { Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { clone } from 'tsfun';
 import { ProjectSettings } from '@/models/preferences';
+import { normalizeProjectSettings } from '@/models/project-settings';
 import ConnectPouchForm from './ConnectPouchForm';
 import DisconectPouchForm from './DisconnectPouchForm';
 
 interface SyncSettingsModalProps {
-    settings: ProjectSettings;
+    settings?: ProjectSettings;
     onSettingsSet: (syncSettings: ProjectSettings) => void,
     onClose: () => void;
 }
@@ -19,14 +19,13 @@ const SyncSettingsModal: React.FC<SyncSettingsModalProps> = ({
     onClose
 }) => {
 
-    const onDisconnect = () => {
+    const syncSettings = normalizeProjectSettings(settings);
 
-        const newSettings = clone(settings);
-        newSettings.connected = false;
-        onSettingsSet(newSettings);
+    const onDisconnect = () => {
+        onSettingsSet({ ...syncSettings, connected: false });
     };
 
-    const onConnect = (newSettings: ProjectSettings) => onSettingsSet(newSettings);
+    const onConnect = (newSettings: ProjectSettings) => onSettingsSet(normalizeProjectSettings(newSettings));
 
     return (
         <Modal
@@ -34,9 +33,9 @@ const SyncSettingsModal: React.FC<SyncSettingsModalProps> = ({
             animationType="slide"
         >
             <SafeAreaView>
-                { settings.connected
+                { syncSettings.connected
                     ? <DisconectPouchForm onDisconnect={ onDisconnect } onClose={ onClose } />
-                    : <ConnectPouchForm settings={ settings } onConnect={ onConnect } onClose={ onClose } />
+                    : <ConnectPouchForm settings={ syncSettings } onConnect={ onConnect } onClose={ onClose } />
                 }
             </SafeAreaView>
         </Modal>);

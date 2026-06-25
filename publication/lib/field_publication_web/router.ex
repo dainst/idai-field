@@ -33,6 +33,10 @@ defmodule FieldPublicationWeb.Router do
   end
 
   scope "/api/json" do
+    pipe_through :fetch_session
+    pipe_through :fetch_current_user
+    pipe_through :require_json_publication_access
+
     get "/raw/:project_name/:draft_date/:uuid", FieldPublicationWeb.Api.JSON, :raw
     get "/extended/:project_name/:draft_date/:uuid", FieldPublicationWeb.Api.JSON, :extended
   end

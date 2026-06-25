@@ -10,8 +10,8 @@ import { MenuContext } from '../../../services/menu-context';
 import { AppState } from '../../../services/app-state';
 import { ImageUploader } from '../../image/upload/image-uploader';
 
-const remote = window.require('@electron/remote');
-const path = window.require('path');
+import { electronRemote as remote } from 'src/app/electron/electron';
+import { electronPath as path } from 'src/app/electron/electron';
 
 
 @Component({

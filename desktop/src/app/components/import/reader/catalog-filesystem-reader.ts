@@ -5,9 +5,9 @@ import { ReaderErrors } from './reader-errors';
 import { APP_DATA, CATALOG_IMAGES, CATALOG_JSONL, TEMP } from '../../export/catalog/catalog-exporter';
 import { Settings } from '../../../../app/services/settings/settings';
 
-const fs = window.require('fs');
-const remote = window.require('@electron/remote');
-const ipcRenderer = window.require('electron')?.ipcRenderer;
+import { electronFs as fs } from 'src/app/electron/electron';
+import { electronRemote as remote } from 'src/app/electron/electron';
+import { electronIpc as ipcRenderer } from 'src/app/electron/electron';
 
 
 /**

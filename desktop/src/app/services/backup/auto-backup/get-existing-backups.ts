@@ -2,7 +2,7 @@ import { Backup } from '../model/backup';
 import { BackupsMap } from '../model/backups-map';
 import { parseBackupFileName } from './backup-file-name-utils';
 
-const fs = require('fs');
+import { electronFs as fs } from 'src/app/electron/electron';
 
 
 export function getExistingBackups(backupDirectoryPath: string, includeSize: boolean = false): BackupsMap {

@@ -10,7 +10,16 @@ const mockField: Field = {
   inputType: 'dating',
 };
 
-const dating1: Dating = {
+type DatingFixture = Omit<Dating, 'isImprecise' | 'isUncertain'>
+  & Partial<Pick<Dating, 'isImprecise' | 'isUncertain'>>;
+
+const withDatingDefaults = (dating: DatingFixture): Dating => ({
+  isImprecise: false,
+  isUncertain: false,
+  ...dating,
+});
+
+const dating1: Dating = withDatingDefaults({
   type: 'single',
   end: {
     year: 1946,
@@ -18,8 +27,8 @@ const dating1: Dating = {
     inputType: 'bp',
   },
   source: 'Dating1',
-};
-const dating2: Dating = {
+});
+const dating2: Dating = withDatingDefaults({
   type: 'before',
   end: {
     year: 7,
@@ -27,7 +36,7 @@ const dating2: Dating = {
     inputType: 'ce',
   },
   source: 'Dating2',
-};
+});
 
 describe('DatingField', () => {
   it('should show form if add button is pressed', () => {
@@ -124,7 +133,7 @@ describe('DatingField', () => {
     const end = 8;
     const endUnit = 'ce';
     const expectedDating: Dating[] = [
-      {
+      withDatingDefaults({
         type: 'range',
         begin: {
           year: -5,
@@ -138,7 +147,7 @@ describe('DatingField', () => {
         },
         isImprecise: true,
         source,
-      },
+      }),
     ];
     const { getByTestId } = render(
       <DatingField field={mockField} setFunction={setFunc} />
@@ -173,7 +182,7 @@ describe('DatingField', () => {
     const end = 4;
     const endUnit = 'bp';
     const expectedDating: Dating[] = [
-      {
+      withDatingDefaults({
         type: 'single',
         end: {
           year: 1946,
@@ -181,7 +190,7 @@ describe('DatingField', () => {
           inputType: endUnit,
         },
         source,
-      },
+      }),
     ];
 
     const { getByTestId } = render(
@@ -207,7 +216,7 @@ describe('DatingField', () => {
     const end = 7;
     const endUnit = 'ce';
     const expectedDating: Dating[] = [
-      {
+      withDatingDefaults({
         type: 'before',
         end: {
           year: end,
@@ -216,7 +225,7 @@ describe('DatingField', () => {
         },
         isImprecise: true,
         source,
-      },
+      }),
     ];
 
     const { getByTestId } = render(
@@ -243,7 +252,7 @@ describe('DatingField', () => {
     const end = 100;
     const endUnit = 'bce';
     const expectedDating: Dating[] = [
-      {
+      withDatingDefaults({
         type: 'after',
         begin: {
           year: -end,
@@ -252,7 +261,7 @@ describe('DatingField', () => {
         },
         isImprecise: true,
         source,
-      },
+      }),
     ];
 
     const { getByTestId } = render(
@@ -286,20 +295,20 @@ describe('DatingField', () => {
     const endUnit = 'bce';
     const margin = 4;
     const expectedDating: Dating[] = [
-      {
+      withDatingDefaults({
         type: 'scientific',
         begin: {
-          year: -1,
+          year: -7,
           inputYear: end,
           inputType: 'bce',
         },
         end: {
-          year: 7,
+          year: 1,
           inputYear: end,
           inputType: 'bce',
         },
         margin,
-      },
+      }),
     ];
 
     const { getByTestId } = render(
@@ -342,7 +351,7 @@ describe('DatingField', () => {
     const source = 'Test';
     const end = 7;
     const endUnit = 'ce';
-    const newDating: Dating = {
+    const newDating: Dating = withDatingDefaults({
       type: 'before',
       end: {
         year: end,
@@ -351,7 +360,7 @@ describe('DatingField', () => {
       },
       isImprecise: true,
       source,
-    };
+    });
     const setFunc = jest.fn();
 
     const { getByTestId } = render(

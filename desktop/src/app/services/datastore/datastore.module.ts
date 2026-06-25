@@ -4,7 +4,7 @@ import { ChangesStream, Datastore, DocumentCache, IdGenerator, IndexFacade, Pouc
 import { SettingsProvider } from '../settings/settings-provider';
 import { ExpressServer } from '../express-server/express-server';
 
-const PouchDB = window.require('pouchdb-browser');
+import PouchDB from 'pouchdb-browser';
 
 
 /**

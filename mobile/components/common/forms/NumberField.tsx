@@ -38,7 +38,7 @@ const NumberField: React.FC<FieldBaseProps> = ({ setFunction, field, currentValu
                 onChangeText={ changeTextHandler }
                 style={ styles.textInputStyle }
                 keyboardType={ field.inputType === 'float' ? 'numeric' : 'number-pad' }
-                autoCompleteType="off"
+                autoComplete="off"
                 testID="input"
             />
         </View>

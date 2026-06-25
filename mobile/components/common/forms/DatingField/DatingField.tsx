@@ -28,11 +28,11 @@ const DatingField: React.FC<FieldBaseProps> = ({
   currentValue,
 }) => {
   const [showAddRow, setShowAddRow] = useState<boolean>(true);
-  const [type, setType] = useState<Dating.Types>('range');
+  const [type, setType] = useState<Dating.Type>('range');
   const [begin, setBegin] = useState<DatingElement>();
   const [end, setEnd] = useState<DatingElement>();
-  const [isImprecise, setIsImprecise] = useState<boolean>();
-  const [isUncertain, setIsUncertain] = useState<boolean>();
+  const [isImprecise, setIsImprecise] = useState<boolean>(false);
+  const [isUncertain, setIsUncertain] = useState<boolean>(false);
   const [margin, setMargin] = useState<number>();
   const [source, setSource] = useState<string>('');
 
@@ -46,7 +46,9 @@ const DatingField: React.FC<FieldBaseProps> = ({
       begin: begin
         ? begin
         : type === 'scientific'
-        ? { year: 0, inputYear: 0, inputType: 'bce' }
+        ? end
+          ? { ...end }
+          : { year: 0, inputYear: 0, inputType: 'bce' }
         : undefined,
       end: end || undefined,
       isImprecise,
@@ -68,7 +70,7 @@ const DatingField: React.FC<FieldBaseProps> = ({
     clearStates();
   };
 
-  const pickerSelectHandler = (selectedType: Dating.Types) => {
+  const pickerSelectHandler = (selectedType: Dating.Type) => {
     setType(selectedType);
     clearStates(false);
   };
@@ -85,8 +87,8 @@ const DatingField: React.FC<FieldBaseProps> = ({
     if (clearType) setType('range');
     setBegin(undefined);
     setEnd(undefined);
-    setIsImprecise(undefined);
-    setIsUncertain(undefined);
+    setIsImprecise(false);
+    setIsUncertain(false);
     setMargin(undefined);
     setSource('');
   };
@@ -94,7 +96,11 @@ const DatingField: React.FC<FieldBaseProps> = ({
   const getLabel = (dating: Dating): string =>
     dating.label
       ? dating.label
-      : Dating.generateLabel(dating, getTranslation(languages));
+      : Dating.generateLabel(
+          dating,
+          getTranslation(languages),
+          getDatingSourceLabel(languages)
+        );
 
   const renderItem = ({ item, index }: { item: Dating; index: number }) => (
     <Row style={styles.currentValues} testID={`currentValueDating_${index}`}>
@@ -138,7 +144,7 @@ const DatingField: React.FC<FieldBaseProps> = ({
             style={styles.typePicker}
             selectedValue={type}
             onValueChange={(itemValue) =>
-              pickerSelectHandler(itemValue as Dating.Types)
+              pickerSelectHandler(itemValue as Dating.Type)
             }
             itemStyle={styles.typePickerItem}
             testID="typePicker"
@@ -223,6 +229,11 @@ const DatingField: React.FC<FieldBaseProps> = ({
 
 const getTranslation = (_languages: string[]) => (key: string) =>
   translations[key];
+
+const getDatingSourceLabel = (_languages: string[]) => (value: unknown) =>
+  typeof value === 'string'
+    ? value
+    : JSON.stringify(value);
 
 const styles = StyleSheet.create({
   container: {

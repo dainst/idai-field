@@ -14,7 +14,7 @@ import { Messages } from '../components/messages/messages';
 import { M } from '../components/messages/m';
 import { ImageDocumentsManager } from '../components/image/overview/view/image-documents-manager';
 
-const ipcRenderer = window.require('electron')?.ipcRenderer;
+import { electronIpc as ipcRenderer } from 'src/app/electron/electron';
 
 
 @Injectable()

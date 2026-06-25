@@ -68,7 +68,7 @@ import { AutoBackupService } from '../services/backup/auto-backup/auto-backup-se
 import { ImageToolLauncher } from '../services/imagestore/image-tool-launcher';
 
 
-const remote = window.require('@electron/remote');
+import { electronRemote as remote } from 'src/app/electron/electron';
 
 
 registerLocaleData(localeDe, 'de');

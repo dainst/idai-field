@@ -19,8 +19,8 @@ import { Backup } from '../services/backup/model/backup';
 import { BackupService } from '../services/backup/backup-service';
 import { getExistingBackups } from '../services/backup/auto-backup/get-existing-backups';
 
-const ipcRenderer = window.require('electron')?.ipcRenderer;
-const fs = window.require('fs');
+import { electronIpc as ipcRenderer } from 'src/app/electron/electron';
+import { electronFs as fs } from 'src/app/electron/electron';
 
 
 interface Services {

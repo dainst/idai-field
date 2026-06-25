@@ -283,6 +283,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static PROJECT_CREATION_ERROR_IDENTIFIER_CHARACTERS = 'projectCreation.error.identifierCharacters';
     public static PROJECT_CREATION_ERROR_IDENTIFIER_EXISTS = 'projectCreation.error.identifierExists';
     public static PROJECT_CREATION_ERROR_IDENTIFIER_STARTING_CHARACTER = 'projectCreation.error.identifierStartingCharacter';
+    public static PROJECT_CREATION_ERROR_KOREAN_FIELDWORK_SETUP = 'projectCreation.error.koreanFieldworkSetup';
     public static PROJECT_CREATION_ERROR_NAME_LENGTH = 'projectCreation.error.nameLength';
 
     // Configuration Package
@@ -1245,6 +1246,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.PROJECT_CREATION_ERROR_NAME_LENGTH] = {
             content: $localize `:@@messages.projectCreation.error.nameLength:Der angegebene Projektname für die Sprache [0] ist um [1] Zeichen zu lang.`,
+            level: 'danger'
+        };
+        this.msgs[M.PROJECT_CREATION_ERROR_KOREAN_FIELDWORK_SETUP] = {
+            content: $localize `:@@messages.projectCreation.error.koreanFieldworkSetup:Bitte wählen Sie die Untersuchungsart aus und tragen Sie die Untersuchungsgrenze ein.`,
             level: 'danger'
         };
         this.msgs[M.CONFIGURATION_SUCCESS_IMPORT] = {

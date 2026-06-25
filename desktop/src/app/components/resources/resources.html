@@ -77,6 +77,8 @@
     </div>
 </div>
 
+<korean-fieldwork-priority-strip *ngIf="!isInWorkflowManagement()"></korean-fieldwork-priority-strip>
+
 <div class="row resources-container">
     <div class="col-lg-12 col-md-12 col-sm-12 bg-light">
         <resources-map *ngIf="viewFacade.getMode() === 'map'"></resources-map>

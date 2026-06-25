@@ -18,7 +18,7 @@ $androidDir = Join-Path $mobileDir 'android'
 $packageName = 'kr.idai.fieldmobile'
 
 function Show-Usage {
-    Write-Host 'Digital Field Notebook Android tablet launcher'
+    Write-Host '현장 기록 Android tablet launcher'
     Write-Host ''
     Write-Host 'Usage:'
     Write-Host '  .\run-idai-field-tablet-ko.ps1                 # Run an installed development build over USB'
@@ -147,6 +147,119 @@ function Invoke-NpmInstallIfNeeded {
     }
 }
 
+function Test-MetroServerReady {
+    param([int]$MetroPort)
+
+    try {
+        $response = Invoke-WebRequest -Uri "http://127.0.0.1:$MetroPort/status" -UseBasicParsing -TimeoutSec 5
+        return $response.StatusCode -eq 200
+    } catch {
+        return $false
+    }
+}
+
+function Stop-ExistingMetroServer {
+    param([int]$MetroPort)
+
+    $listeners = Get-NetTCPConnection -LocalPort $MetroPort -State Listen -ErrorAction SilentlyContinue |
+        Select-Object -ExpandProperty OwningProcess -Unique
+
+    foreach ($listenerPid in $listeners) {
+        $process = Get-CimInstance Win32_Process -Filter "ProcessId=$listenerPid" -ErrorAction SilentlyContinue
+        if (-not $process) { continue }
+
+        $commandLine = [string]$process.CommandLine
+        $isExpectedDevServer = $commandLine.Contains($mobileDir) -or
+            $commandLine.Contains($repoDir) -or
+            $commandLine -match 'expo[\\/]bin[\\/]cli' -or
+            $commandLine -match 'expo(\.cmd)?\s+start' -or
+            $commandLine -match 'metro'
+
+        if (-not $isExpectedDevServer) {
+            throw "Port $MetroPort is already in use by PID $listenerPid. Stop that process or choose another -Port."
+        }
+
+        Write-Host "Stopping existing Metro server on port $MetroPort (PID $listenerPid)."
+        & taskkill.exe /PID $listenerPid /T /F | Out-Null
+    }
+}
+
+function Assert-CoreDistAssetsReady {
+    $coreDistDir = Join-Path $coreDir 'dist'
+    $requiredFiles = @(
+        'config\Config-KoreanFieldwork.json',
+        'config\Config-Meninx.json',
+        'config\Core\Language.ko.json',
+        'config\Library\Templates\Templates.json',
+        'config\Library\Valuelists\Valuelists.json'
+    )
+
+    foreach ($requiredFile in $requiredFiles) {
+        $fullPath = Join-Path $coreDistDir $requiredFile
+        if (-not (Test-Path -LiteralPath $fullPath)) {
+            throw "Built core asset is missing: $fullPath"
+        }
+    }
+}
+
+function Start-TabletLaunchWhenMetroReady {
+    param(
+        [string]$Adb,
+        [string]$Serial,
+        [int]$MetroPort
+    )
+
+    $statusUrl = "http://127.0.0.1:$MetroPort/status"
+    $manifestUrl = "http://127.0.0.1:$MetroPort"
+    $devClientBundleUrl = [System.Uri]::EscapeDataString($manifestUrl)
+    $devClientUrl = "exp+idai-field-mobile://expo-development-client/?url=$devClientBundleUrl"
+    $launchCommand = @"
+`$ErrorActionPreference = 'SilentlyContinue'
+`$deadline = (Get-Date).AddMinutes(4)
+do {
+    try {
+        `$response = Invoke-WebRequest -Uri '$statusUrl' -UseBasicParsing -TimeoutSec 5
+        if (`$response.StatusCode -eq 200) { break }
+    } catch {}
+    Start-Sleep -Seconds 2
+} while ((Get-Date) -lt `$deadline)
+
+`$bundleReady = `$false
+`$bundleDeadline = (Get-Date).AddMinutes(6)
+do {
+    try {
+        `$manifest = Invoke-WebRequest -Uri '$manifestUrl' -UseBasicParsing -TimeoutSec 45 -Headers @{
+            'Expo-Platform' = 'android'
+            'Expo-API-Version' = '0'
+        }
+        `$manifestText = if (`$manifest.Content -is [byte[]]) {
+            [System.Text.Encoding]::UTF8.GetString(`$manifest.Content)
+        } else {
+            [string]`$manifest.Content
+        }
+        `$bundleAssetUrl = (`$manifestText | ConvertFrom-Json).launchAsset.url
+        if (`$bundleAssetUrl) {
+            Invoke-WebRequest -Uri `$bundleAssetUrl -UseBasicParsing -TimeoutSec 240 | Out-Null
+            `$bundleReady = `$true
+            break
+        }
+    } catch {}
+    Start-Sleep -Seconds 3
+} while ((Get-Date) -lt `$bundleDeadline)
+
+if (-not `$bundleReady) { exit 1 }
+
+& '$Adb' -s '$Serial' reverse 'tcp:$MetroPort' 'tcp:$MetroPort' | Out-Null
+& '$Adb' -s '$Serial' shell am force-stop '$packageName' | Out-Null
+Start-Sleep -Milliseconds 500
+& '$Adb' -s '$Serial' shell am start -a android.intent.action.VIEW -d '$devClientUrl' '$packageName' | Out-Null
+"@
+
+    Start-Process -FilePath 'powershell.exe' `
+        -ArgumentList @('-NoProfile', '-WindowStyle', 'Hidden', '-Command', $launchCommand) `
+        -WindowStyle Hidden | Out-Null
+}
+
 if ($Help) {
     Show-Usage
     exit 0
@@ -177,11 +290,12 @@ try {
     }
 
     $env:Path = "$nodeDir;$env:Path"
+    Stop-ExistingMetroServer -MetroPort $Port
 
     if ($InstallDebug) {
         $buildScript = Join-Path $repoDir 'build-idai-field-android-apk.ps1'
-        $buildArgs = @('-Variant', 'debug', '-Install')
-        if ($DeviceSerial) { $buildArgs += @('-DeviceSerial', $DeviceSerial) }
+        $buildArgs = @{ Variant = 'debug'; Install = $true }
+        if ($DeviceSerial) { $buildArgs.DeviceSerial = $DeviceSerial }
         & $buildScript @buildArgs
         if ($LASTEXITCODE -ne 0) { throw 'Debug APK installation failed' }
     }
@@ -197,6 +311,7 @@ try {
     } finally {
         Pop-Location
     }
+    Assert-CoreDistAssetsReady
 
     $adb = Resolve-Adb
     $devices = Get-ConnectedDevices -Adb $adb
@@ -207,9 +322,8 @@ try {
     if ($LASTEXITCODE -ne 0) { throw 'adb reverse failed' }
 
     if (-not $NoLaunch) {
-        Write-Host 'The tablet app will launch after Metro starts.'
-        $launchCommand = "Start-Sleep -Seconds 6; & `"$adb`" -s `"$serial`" shell monkey -p $packageName -c android.intent.category.LAUNCHER 1 | Out-Null"
-        Start-Process -FilePath 'powershell.exe' -ArgumentList @('-NoProfile', '-WindowStyle', 'Hidden', '-Command', $launchCommand) -WindowStyle Hidden | Out-Null
+        Write-Host 'The tablet app will open the USB development bundle when Metro is ready.'
+        Start-TabletLaunchWhenMetroReady -Adb $adb -Serial $serial -MetroPort $Port
     }
 
     Write-Host 'Starting the Metro development server.'

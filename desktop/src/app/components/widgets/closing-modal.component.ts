@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 
 
 @Component({
@@ -11,5 +11,15 @@ import { Component } from '@angular/core';
  */
 export class ClosingModalComponent {
 
-    constructor() {}
+    public mode: 'closeApp'|'closeProject';
+    public backupInfoVisible: boolean = false;
+
+    constructor(private changeDetectorRef: ChangeDetectorRef) {}
+
+
+    public showBackupInfo() {
+
+        this.backupInfoVisible = true;
+        this.changeDetectorRef.detectChanges();
+    }
 }

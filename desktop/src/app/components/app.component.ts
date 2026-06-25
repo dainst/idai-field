@@ -170,22 +170,27 @@ export class AppComponent {
 
             this.closing = true;
             this.syncService.stopSync();
-            this.openClosingModal();
-            this.serializationService.serialize();
+            const modalRef: NgbModalRef = this.openClosingModal();
+            await this.serializationService.serialize();
+            setTimeout(() => modalRef.componentInstance.showBackupInfo(), 200);
             await this.autoBackupService.requestBackupCreation();
 
             ipcRenderer.send('close');
-        });
+        })
     }
 
 
-    private openClosingModal() {
+    private openClosingModal(): NgbModalRef {
 
         this.menuService.setContext(MenuContext.BLOCKING_MODAL);
-        this.modalService.open(
+
+        const modalRef: NgbModalRef = this.modalService.open(
             ClosingModalComponent,
             { backdrop: 'static', keyboard: false, animation: false }
         );
+        modalRef.componentInstance.mode = 'closeApp';
+
+        return modalRef;
     }
 
 

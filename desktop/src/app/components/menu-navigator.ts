@@ -1,12 +1,15 @@
 import { Router } from '@angular/router';
 import { Injectable, NgZone } from '@angular/core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap/modal';
 import { Observable, Observer } from 'rxjs';
-import { ObserverUtil } from 'idai-field-core';
+import { ObserverUtil, PouchdbDatastore } from 'idai-field-core';
 import { reloadAndSwitchToHomeRoute } from '../services/reload';
 import { SettingsService } from '../services/settings/settings-service';
 import { Menus } from '../services/menus';
 import { MenuModalLauncher } from '../services/menu-modal-launcher';
 import { MenuContext } from '../services/menu-context';
+import { ClosingModalComponent } from './widgets/closing-modal.component';
+import { SerializationService } from '../services/serialization-service';
 
 const ipcRenderer = window.require('electron')?.ipcRenderer;
 
@@ -24,7 +27,10 @@ export class MenuNavigator {
                 private zone: NgZone,
                 private settingsService: SettingsService,
                 private menuService: Menus,
-                private menuModalLauncher: MenuModalLauncher) {}
+                private menuModalLauncher: MenuModalLauncher,
+                private modalService: NgbModal,
+                private serializationService: SerializationService,
+                private pouchdbDatastore: PouchdbDatastore) {}
 
 
     public initialize() {
@@ -43,8 +49,7 @@ export class MenuNavigator {
 
         switch(menuItem) {
             case 'openProject':
-                await this.settingsService.selectProject(projectIdentifier);
-                reloadAndSwitchToHomeRoute();
+                this.openProject(projectIdentifier);
                 break;
             case 'createProject':
                 await this.zone.run(() => this.menuModalLauncher.createProject());
@@ -78,4 +83,33 @@ export class MenuNavigator {
 
     public configurationMenuNotifications =
         (): Observable<string> => ObserverUtil.register(this.configurationMenuObservers);   
+    
+
+    private async openProject(projectIdentifier: string) {
+
+        if (await this.getDocumentCount() >= 10000) this.openClosingModal();
+        
+        await this.serializationService.serialize();
+
+        await this.settingsService.selectProject(projectIdentifier);
+        reloadAndSwitchToHomeRoute();
+    }
+
+
+    private openClosingModal() {
+
+        this.menuService.setContext(MenuContext.BLOCKING_MODAL);
+
+        const modalRef: NgbModalRef = this.modalService.open(
+            ClosingModalComponent,
+            { backdrop: 'static', keyboard: false, animation: false }
+        );
+        modalRef.componentInstance.mode = 'closeProject';
+    }
+
+
+    private async getDocumentCount(): Promise<number> {
+
+        return (await this.pouchdbDatastore.getDb().info()).doc_count;
+    }
 }

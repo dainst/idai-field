@@ -2,10 +2,13 @@
     <div class="process-modal-container">
         <div class="spinner"></div>
         <div class="process-info">
-            <div i18n="@@widgets.closingModal.info">
+            <div *ngIf="mode === 'closeApp'" i18n="@@widgets.closingModal.info.app">
                 Field Desktop wird beendet...
             </div>
-            <div id="backup-info" i18n="@@widgets.closingModal.backupInfo">
+            <div *ngIf="mode === 'closeProject'" i18n="@@widgets.closingModal.info.project">
+                Projekt wird geschlossen...
+            </div>
+            <div *ngIf="backupInfoVisible" id="backup-info" i18n="@@widgets.closingModal.backupInfo">
                 Bitte warten Sie, bis die Erstellung von Backup-Dateien abgeschlossen wurde.
             </div>
         </div>

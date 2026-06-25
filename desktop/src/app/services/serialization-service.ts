@@ -4,6 +4,7 @@ import { SettingsProvider } from './settings/settings-provider';
 
 const remote = window.require('@electron/remote');
 const fs = window.require('fs');
+const zlib = window.require('zlib');
 
 
 export interface SerializationObject {
@@ -31,10 +32,10 @@ export class SerializationService {
 
         const updateSequence: number = await this.getUpdateSequence();
 
-        this.writeFile('fulltextIndex.json', this.indexFacade.getFulltextIndex(), updateSequence);
-        this.writeFile('constraintIndex.json', this.indexFacade.getConstraintIndex(), updateSequence);
-        this.writeFile('indexItems.json', this.indexFacade.getIndexItems(), updateSequence);
-        this.writeFile('warnings.json', this.warningsManager.getAll(), updateSequence);
+        this.writeFile('fulltextIndex', this.indexFacade.getFulltextIndex(), updateSequence);
+        this.writeFile('constraintIndex', this.indexFacade.getConstraintIndex(), updateSequence);
+        this.writeFile('indexItems', this.indexFacade.getIndexItems(), updateSequence);
+        this.writeFile('warnings', this.warningsManager.getAll(), updateSequence);
     }
 
 
@@ -50,8 +51,13 @@ export class SerializationService {
             data
         };
 
-        const filePath: string = targetDirectoryPath + '/' + fileName;
-        fs.writeFileSync(filePath, JSON.stringify(serializationObject));
+        const filePath: string = targetDirectoryPath + '/' + fileName + '.field';
+
+        const brotliOptions = {
+            params: { [zlib.constants.BROTLI_PARAM_QUALITY]: 4 },
+        };
+
+        fs.writeFileSync(filePath,  zlib.brotliCompressSync(JSON.stringify(serializationObject), brotliOptions));
     }
 
 

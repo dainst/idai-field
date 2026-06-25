@@ -23,6 +23,7 @@ import { SerializationObject } from '../services/serialization-service';
 const ipcRenderer = window.require('electron')?.ipcRenderer;
 const remote = window.require('@electron/remote');
 const fs = window.require('fs');
+const zlib = window.require('zlib');
 
 
 interface Services {
@@ -300,10 +301,10 @@ const loadIndexAndWarnings = async (db: any, projectIdentifier: string) => {
 
     const updateSequence: number = (await db.info()).update_seq;
 
-    const fulltextIndex: FulltextIndex = deserialize('fulltextIndex.json', projectIdentifier, updateSequence);
-    const constraintIndex: ConstraintIndex = deserialize('constraintIndex.json', projectIdentifier, updateSequence);
-    const indexItems: Map<IndexItem> = deserialize('indexItems.json', projectIdentifier, updateSequence);
-    const warnings: Map<Warnings> = deserialize('warnings.json', projectIdentifier, updateSequence);
+    const fulltextIndex: FulltextIndex = deserialize('fulltextIndex', projectIdentifier, updateSequence);
+    const constraintIndex: ConstraintIndex = deserialize('constraintIndex', projectIdentifier, updateSequence);
+    const indexItems: Map<IndexItem> = deserialize('indexItems', projectIdentifier, updateSequence);
+    const warnings: Map<Warnings> = deserialize('warnings', projectIdentifier, updateSequence);
 
     return warnings && fulltextIndex && constraintIndex// && configurationIndex
         ? { warnings, fulltextIndex, constraintIndex, indexItems }
@@ -314,10 +315,15 @@ const loadIndexAndWarnings = async (db: any, projectIdentifier: string) => {
 const deserialize = (fileName: string, projectIdentifier: string, updateSequence: number) => {
 
     try {
-        const filePath: string = remote.getGlobal('appDataPath') + '/index/' + projectIdentifier + '/' + fileName;
+        const filePath: string = remote.getGlobal('appDataPath') + '/index/' + projectIdentifier + '/'
+            + fileName + '.field';
         if (!fs.existsSync(filePath)) return undefined;
 
-        const result: SerializationObject = JSON.parse(fs.readFileSync(filePath));
+        const result: SerializationObject = JSON.parse(
+            zlib.brotliDecompressSync(
+                fs.readFileSync(filePath)
+            )
+        );
 
         if (result.version === remote.app.getVersion() && result.updateSequence === updateSequence) {
             return result.data;

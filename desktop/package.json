@@ -202,7 +202,6 @@
     "wait-on": "9.0.5"
   },
   "browser": {
-    "zlib": false,
     "vm": false,
     "stream": false,
     "path": false,

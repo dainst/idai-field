@@ -34,11 +34,21 @@ export const FIELDWORK_QUICK_FIELDS = {
   featureInterpretationType: 'featureInterpretationType',
   featureStatus: 'featureRecordingStatus',
   featureType: 'featureType',
+  longAxisOrientation: 'longAxisOrientation',
+  orientationNote: 'orientationNote',
+  orientationReference: 'orientationReference',
   period: 'period',
   quality: 'fieldRecordQuality',
   verification: 'verificationState',
   timing: 'recordCreationTiming',
 } as const;
+
+export const LONG_AXIS_ORIENTATION_QUICK_OPTIONS: readonly KoreanFieldworkQuickOption[] = [
+  { value: 'N-E', label: 'N-E' },
+  { value: 'N-W', label: 'N-W' },
+  { value: 'S-E', label: 'S-E' },
+  { value: 'S-W', label: 'S-W' },
+];
 
 export const FEATURE_STATUS_QUICK_OPTIONS: readonly KoreanFieldworkQuickOption[] = [
   { value: 'candidate', label: '조사 전' },
@@ -91,6 +101,13 @@ export const QUALITY_QUICK_OPTIONS: readonly KoreanFieldworkQuickOption[] = [
 export const TIMING_QUICK_OPTIONS: readonly KoreanFieldworkQuickOption[] = [
   { value: 'sameDayFieldRecord', label: '당일 기록' },
   { value: 'duringFieldwork', label: '추가 기록' },
+];
+
+export const VERIFICATION_QUICK_OPTIONS: readonly KoreanFieldworkQuickOption[] = [
+  { value: 'observedInField', label: '현장 확인' },
+  { value: 'pendingDecision', label: '추가 확인' },
+  { value: 'needsRecheck', label: '재검토' },
+  { value: 'notObserved', label: '미확인' },
 ];
 
 export const FEATURE_TYPE_QUICK_OPTIONS: readonly KoreanFieldworkQuickOption[] =
@@ -147,6 +164,13 @@ const C = KOREAN_FIELDWORK_CATEGORIES;
 
 const FEATURE_CATEGORIES = new Set<string>(FEATURE_WORKFLOW_CATEGORIES);
 
+const AXIS_ORIENTATION_CATEGORIES = new Set<string>([
+  C.TRENCH,
+  C.FEATURE,
+  C.FEATURE_SEGMENT,
+  C.LAYER,
+]);
+
 const FIELDWORK_RECORD_CATEGORIES = new Set<string>([
   C.OPERATION,
   C.TRENCH,
@@ -170,6 +194,7 @@ export interface KoreanFieldworkQuickRecordAvailability {
   checklist: boolean;
   featureType: boolean;
   featureStatus: boolean;
+  axisOrientation: boolean;
   period: boolean;
   quality: boolean;
   verification: boolean;
@@ -193,11 +218,14 @@ export const getKoreanFieldworkQuickRecordAvailability = (
       && fieldNames.has(FIELDWORK_QUICK_FIELDS.featureInterpretationType),
     featureStatus: FEATURE_CATEGORIES.has(resource.category)
       && fieldNames.has(FIELDWORK_QUICK_FIELDS.featureStatus),
+    axisOrientation: AXIS_ORIENTATION_CATEGORIES.has(resource.category)
+      && fieldNames.has(FIELDWORK_QUICK_FIELDS.longAxisOrientation),
     period: resource.category === C.FEATURE
       && fieldNames.has(FIELDWORK_QUICK_FIELDS.period),
     quality: FIELDWORK_RECORD_CATEGORIES.has(resource.category)
       && fieldNames.has(FIELDWORK_QUICK_FIELDS.quality),
-    verification: false,
+    verification: FIELDWORK_RECORD_CATEGORIES.has(resource.category)
+      && fieldNames.has(FIELDWORK_QUICK_FIELDS.verification),
     timing: FIELDWORK_RECORD_CATEGORIES.has(resource.category)
       && fieldNames.has(FIELDWORK_QUICK_FIELDS.timing),
   };
@@ -209,8 +237,10 @@ export const hasKoreanFieldworkQuickRecordActions = (
   availability.checklist
   || availability.featureType
   || availability.featureStatus
+  || availability.axisOrientation
   || availability.period
   || availability.quality
+  || availability.verification
   || availability.timing;
 
 export const getKoreanFieldworkQuickPresets = (
@@ -313,6 +343,38 @@ export const getKoreanFieldworkFeatureTypeUpdates = (
         ? [...currentValues, featureInterpretationTypeValue]
         : currentValues,
   };
+};
+
+export const normalizeKoreanFieldworkLongAxisOrientation = (value: string): string => {
+  const parsedValue = parseLongAxisOrientation(value);
+
+  if (!parsedValue) return value.trim();
+
+  return parsedValue.degrees === undefined
+    ? `${parsedValue.start}-${parsedValue.end}`
+    : `${parsedValue.start}-${parsedValue.degrees}°-${parsedValue.end}`;
+};
+
+export const isKoreanFieldworkLongAxisOrientation = (value: string): boolean =>
+  parseLongAxisOrientation(value) !== undefined;
+
+export const describeKoreanFieldworkLongAxisOrientation = (
+  value: string
+): string | undefined => {
+  const parsedValue = parseLongAxisOrientation(value);
+  if (!parsedValue) return undefined;
+
+  return [
+    parsedValue.degrees === undefined
+      ? `${parsedValue.start}-${parsedValue.end}`
+      : `${parsedValue.start}-${parsedValue.degrees}°-${parsedValue.end}`,
+    ' = ',
+    `${KOREAN_CARDINAL_DIRECTION_LABELS[parsedValue.start]}에서 `,
+    `${KOREAN_CARDINAL_DIRECTION_LABELS[parsedValue.end]}쪽으로 `,
+    parsedValue.degrees === undefined
+      ? '기운 장축'
+      : `${parsedValue.degrees}°`,
+  ].join('');
 };
 
 const getStartFeatureInvestigationUpdates = (
@@ -456,3 +518,192 @@ export const getResourceFieldValue = (
 
 const hasTextValue = (value: unknown): boolean =>
   typeof value === 'string' && value.trim().length > 0;
+
+const DIRECTION_TOKEN_PATTERN = '(?:[NSEW]|북쪽?|남쪽?|동쪽?|서쪽?)';
+const DIAGONAL_DIRECTION_TOKEN_PATTERN =
+  '(?:NE|NW|SE|SW|북동쪽?|동북쪽?|북서쪽?|서북쪽?|남동쪽?|동남쪽?|남서쪽?|서남쪽?)';
+const DEGREE_TOKEN_PATTERN = '(?:°|˚|º|도|DEG|DEGREES?)';
+const LONG_AXIS_ORIENTATION_PATTERN = new RegExp(
+  [
+    `^(${DIRECTION_TOKEN_PATTERN})[-\\s]*(\\d{1,3})`,
+    `(?:\\s*${DEGREE_TOKEN_PATTERN})?`,
+    `[-\\s]*(${DIRECTION_TOKEN_PATTERN})$`,
+  ].join(''),
+  'i'
+);
+const LONG_AXIS_ORIENTATION_QUADRANT_PATTERN = new RegExp(
+  `^(${DIRECTION_TOKEN_PATTERN})[-\\s]+(${DIRECTION_TOKEN_PATTERN})$`,
+  'i'
+);
+const DIAGONAL_LONG_AXIS_ORIENTATION_PATTERN = new RegExp(
+  [
+    `^(${DIAGONAL_DIRECTION_TOKEN_PATTERN})[-\\s]*(\\d{1,3})`,
+    `(?:\\s*${DEGREE_TOKEN_PATTERN})?$`,
+  ].join(''),
+  'i'
+);
+const DIAGONAL_LONG_AXIS_ORIENTATION_QUADRANT_PATTERN = new RegExp(
+  `^(${DIAGONAL_DIRECTION_TOKEN_PATTERN})$`,
+  'i'
+);
+const KOREAN_LONG_AXIS_ORIENTATION_PHRASE_PATTERN = new RegExp(
+  [
+    `^(${DIRECTION_TOKEN_PATTERN})에서\\s*`,
+    `(${DIRECTION_TOKEN_PATTERN})으로\\s*(\\d{1,3})`,
+    `(?:\\s*${DEGREE_TOKEN_PATTERN})?$`,
+  ].join(''),
+  'i'
+);
+const KOREAN_LONG_AXIS_ORIENTATION_QUADRANT_PHRASE_PATTERN = new RegExp(
+  [
+    `^(${DIRECTION_TOKEN_PATTERN})에서\\s*`,
+    `(${DIRECTION_TOKEN_PATTERN})으로$`,
+  ].join(''),
+  'i'
+);
+
+const OPPOSITE_DIRECTION: Record<string, string> = {
+  E: 'W',
+  N: 'S',
+  S: 'N',
+  W: 'E',
+};
+
+const KOREAN_CARDINAL_DIRECTION_LABELS: Record<string, string> = {
+  E: '동',
+  N: '북',
+  S: '남',
+  W: '서',
+};
+
+const KOREAN_DIRECTION_TOKEN_MAP: Record<string, string> = {
+  동: 'E',
+  동쪽: 'E',
+  남: 'S',
+  남쪽: 'S',
+  북: 'N',
+  북쪽: 'N',
+  서: 'W',
+  서쪽: 'W',
+};
+
+const DIAGONAL_DIRECTION_TOKEN_MAP: Record<string, { start: string; end: string }> = {
+  NE: { start: 'N', end: 'E' },
+  NW: { start: 'N', end: 'W' },
+  SE: { start: 'S', end: 'E' },
+  SW: { start: 'S', end: 'W' },
+  동남: { start: 'S', end: 'E' },
+  동남쪽: { start: 'S', end: 'E' },
+  동북: { start: 'N', end: 'E' },
+  동북쪽: { start: 'N', end: 'E' },
+  남동: { start: 'S', end: 'E' },
+  남동쪽: { start: 'S', end: 'E' },
+  남서: { start: 'S', end: 'W' },
+  남서쪽: { start: 'S', end: 'W' },
+  북동: { start: 'N', end: 'E' },
+  북동쪽: { start: 'N', end: 'E' },
+  북서: { start: 'N', end: 'W' },
+  북서쪽: { start: 'N', end: 'W' },
+  서남: { start: 'S', end: 'W' },
+  서남쪽: { start: 'S', end: 'W' },
+  서북: { start: 'N', end: 'W' },
+  서북쪽: { start: 'N', end: 'W' },
+};
+
+const parseLongAxisOrientation = (
+  value: string
+): { start: string; degrees?: number; end: string } | undefined => {
+  const normalizedValue = value.trim().replace(/[–—]/g, '-');
+  const diagonalValue = parseDiagonalLongAxisOrientation(normalizedValue);
+  if (diagonalValue) return diagonalValue;
+
+  const quadrantValue = parseLongAxisOrientationQuadrant(normalizedValue);
+  if (quadrantValue) return quadrantValue;
+
+  const phraseMatch = normalizedValue.match(
+    KOREAN_LONG_AXIS_ORIENTATION_PHRASE_PATTERN
+  );
+  const match = phraseMatch
+    ? [phraseMatch[0], phraseMatch[1], phraseMatch[3], phraseMatch[2]]
+    : normalizedValue.match(LONG_AXIS_ORIENTATION_PATTERN);
+
+  if (!match) return undefined;
+
+  const start = normalizeCardinalDirectionToken(match[1]);
+  const end = normalizeCardinalDirectionToken(match[3]);
+  const degrees = Number(match[2]);
+
+  if (
+    !start
+    || !end
+    || !Number.isInteger(degrees)
+    || degrees < 0
+    || degrees > 90
+    || start === end
+    || OPPOSITE_DIRECTION[start] === end
+  ) {
+    return undefined;
+  }
+
+  return { start, degrees, end };
+};
+
+const parseDiagonalLongAxisOrientation = (
+  value: string
+): { start: string; degrees?: number; end: string } | undefined => {
+  const match = value.match(DIAGONAL_LONG_AXIS_ORIENTATION_PATTERN);
+  const quadrantMatch = value.match(DIAGONAL_LONG_AXIS_ORIENTATION_QUADRANT_PATTERN);
+  if (!match && !quadrantMatch) return undefined;
+
+  const direction = getDiagonalDirection((match ?? quadrantMatch)?.[1] ?? '');
+  const degrees = match ? Number(match[2]) : undefined;
+
+  if (
+    !direction
+    || (
+      degrees !== undefined
+      && (!Number.isInteger(degrees) || degrees < 0 || degrees > 90)
+    )
+  ) {
+    return undefined;
+  }
+
+  return {
+    start: direction.start,
+    degrees,
+    end: direction.end,
+  };
+};
+
+const parseLongAxisOrientationQuadrant = (
+  value: string
+): { start: string; end: string } | undefined => {
+  const phraseMatch = value.match(KOREAN_LONG_AXIS_ORIENTATION_QUADRANT_PHRASE_PATTERN);
+  const match = phraseMatch
+    ? [phraseMatch[0], phraseMatch[1], phraseMatch[2]]
+    : value.match(LONG_AXIS_ORIENTATION_QUADRANT_PATTERN);
+  if (!match) return undefined;
+
+  const start = normalizeCardinalDirectionToken(match[1]);
+  const end = normalizeCardinalDirectionToken(match[2]);
+
+  if (!start || !end || start === end || OPPOSITE_DIRECTION[start] === end) {
+    return undefined;
+  }
+
+  return { start, end };
+};
+
+const normalizeCardinalDirectionToken = (value: string): string | undefined => {
+  const normalizedValue = value.trim().toUpperCase();
+
+  return /^[NSEW]$/.test(normalizedValue)
+    ? normalizedValue
+    : KOREAN_DIRECTION_TOKEN_MAP[value.trim()];
+};
+
+const getDiagonalDirection = (
+  value: string
+): { start: string; end: string } | undefined =>
+  DIAGONAL_DIRECTION_TOKEN_MAP[value.trim().toUpperCase()]
+  ?? DIAGONAL_DIRECTION_TOKEN_MAP[value.trim()];

@@ -60,6 +60,37 @@
         Optional können Sie für jede Sprache einen Projektnamen angeben. Der Name darf beliebige Zeichen enthalten und
         maximal {{getNameMaxLength()}} Zeichen lang sein. Er kann jederzeit in den Projekteigenschaften geändert werden.
     </div>
+
+    <div *ngIf="isKoreanFieldworkTemplate()"
+         class="korean-fieldwork-project-setup">
+        <div class="korean-fieldwork-project-setup-status"
+             [class.complete]="isFilledIn()">
+            {{getKoreanFieldworkSetupStatus()}}
+        </div>
+        <div class="create-project-modal-heading">조사 방식:</div>
+        <div class="korean-fieldwork-mode-grid">
+            <button *ngFor="let mode of koreanInvestigationModes"
+                    type="button"
+                    class="korean-fieldwork-mode-option"
+                    [ngClass]="{ 'active': koreanInvestigationMode === mode.value }"
+                    (click)="koreanInvestigationMode = mode.value">
+                <span class="korean-fieldwork-mode-label">{{mode.label}}</span>
+                <span class="korean-fieldwork-mode-detail">{{mode.detail}}</span>
+            </button>
+        </div>
+
+        <div class="create-project-modal-heading korean-fieldwork-boundary-heading">조사 경계:</div>
+        <textarea class="form-control"
+                  rows="3"
+                  [(ngModel)]="koreanBoundarySummary"
+                  placeholder="예: 1구역 북쪽 능선부터 남쪽 농로까지"></textarea>
+        <div class="small-info-text">
+            프로젝트를 만들 때 정하는 기본 경계 기준입니다. 지도에서 도형을 그리거나 지원되는 파일 가져오기로 확정합니다.
+        </div>
+        <ol class="korean-fieldwork-start-steps">
+            <li *ngFor="let step of koreanFieldworkStartSteps">{{step}}</li>
+        </ol>
+    </div>
 </div>
 
 <div class="modal-footer">

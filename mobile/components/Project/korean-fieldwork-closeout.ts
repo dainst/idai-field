@@ -52,7 +52,7 @@ export const getKoreanFieldworkCloseoutSummary = (
   return {
     status: 'clear',
     title: '마감 가능',
-    detail: '현재 기록 기준으로 남은 점검 항목이 없습니다.',
+    detail: '현재 조사 구역 기록으로 남은 점검 항목이 없습니다.',
     counts,
     issues: [],
   };

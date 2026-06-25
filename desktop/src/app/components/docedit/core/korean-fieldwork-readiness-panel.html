@@ -1,0 +1,90 @@
+<div *ngIf="shouldShow()" class="korean-fieldwork-readiness-panel">
+    <div class="korean-fieldwork-readiness-header">
+        <span class="mdi mdi-alert-outline"></span>
+        <span>마감 전 확인</span>
+        <span class="korean-fieldwork-readiness-count">{{issues.length}}</span>
+    </div>
+
+    <div *ngIf="evidenceReview" class="korean-fieldwork-evidence-summary">
+        <div class="korean-fieldwork-evidence-summary-header">
+            <span>자료 확인</span>
+            <span class="korean-fieldwork-evidence-summary-status"
+                  [class.ready]="evidenceReview.reportReady"
+                  [class.warning]="!evidenceReview.reportReady">
+                {{getEvidenceReviewStatusLabel()}}
+            </span>
+        </div>
+        <div class="korean-fieldwork-evidence-metrics">
+            <span *ngFor="let metric of getEvidenceMetrics()"
+                  class="korean-fieldwork-evidence-metric"
+                  [class.empty]="metric.count === 0">
+                {{metric.label}} {{metric.count}}
+            </span>
+        </div>
+        <div *ngIf="getMissingEvidenceLabels().length > 0"
+             class="korean-fieldwork-evidence-missing">
+            보강 필요: {{getMissingEvidenceLabels().join(', ')}}
+        </div>
+        <div *ngIf="getPenMemoTranscriptionSummaryLabels().length > 0"
+             class="korean-fieldwork-evidence-missing">
+            전사 대기: {{getPenMemoTranscriptionSummaryLabels().join(', ')}}
+        </div>
+        <div *ngIf="hasSafeResolutionIssues()"
+             class="korean-fieldwork-safe-resolution">
+            <span>바로 반영 가능한 보완 {{getSafeResolutionIssueCount()}}건</span>
+            <button type="button"
+                    class="btn korean-fieldwork-safe-resolution-button"
+                    (click)="resolveSafeProjectIssues()">
+                <span class="mdi mdi-check-all"></span>
+                <span>안전 보완 반영</span>
+            </button>
+        </div>
+        <div *ngIf="getEvidenceCreationActions().length > 0"
+             class="korean-fieldwork-evidence-actions">
+            <button *ngFor="let action of getEvidenceCreationActions()"
+                    type="button"
+                    class="btn korean-fieldwork-evidence-create"
+                    (click)="createEvidenceRecord(action)">
+                <span class="mdi mdi-plus-circle-outline"></span>
+                <span>{{action.label}}</span>
+            </button>
+        </div>
+    </div>
+
+    <div *ngFor="let issue of getVisibleIssues()"
+         class="korean-fieldwork-readiness-issue"
+         [class.critical]="issue.severity === 'critical'"
+         [class.warning]="issue.severity === 'warning'"
+         [class.info]="issue.severity === 'info'">
+        <div class="korean-fieldwork-readiness-severity">
+            {{getSeverityLabel(issue.severity)}}
+        </div>
+        <div class="korean-fieldwork-readiness-message">
+            <div class="korean-fieldwork-readiness-context"
+                 [class.related]="!isCurrentDocumentIssue(issue)">
+                {{getIssueContextLabel(issue)}}
+            </div>
+            <div class="korean-fieldwork-readiness-action">{{issue.recommendedAction}}</div>
+            <div class="korean-fieldwork-readiness-fields" *ngIf="issue.relatedFields.length > 0">
+                {{issue.relatedFields.join(', ')}}
+            </div>
+        </div>
+        <button *ngIf="canResolveIssue(issue)"
+                type="button"
+                class="btn korean-fieldwork-readiness-resolve"
+                (click)="resolveIssue(issue)">
+            {{getResolutionLabel(issue)}}
+        </button>
+        <button *ngIf="canOpenIssueDocument(issue)"
+                type="button"
+                class="btn korean-fieldwork-readiness-open"
+                (click)="openIssueDocument(issue)">
+            <span class="mdi mdi-open-in-new"></span>
+            <span>열기</span>
+        </button>
+    </div>
+
+    <div *ngIf="getHiddenIssueCount() > 0" class="korean-fieldwork-readiness-more">
+        추가 확인 {{getHiddenIssueCount()}}건
+    </div>
+</div>

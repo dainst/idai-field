@@ -1,4 +1,5 @@
 import { getKoreanFieldworkEvidenceChips } from './korean-fieldwork-record-evidence';
+import { Document } from 'idai-field-core';
 import { KOREAN_FIELDWORK_CATEGORIES } from './korean-fieldwork-categories';
 
 const C = KOREAN_FIELDWORK_CATEGORIES;
@@ -15,6 +16,9 @@ describe('Korean fieldwork record evidence', () => {
     const photo = createDoc('photo-1', C.PHOTO, '사진 1', {
       depicts: ['feature-1'],
     });
+    const sketch = createDoc('sketch-1', C.PEN_MEMO, '약도 1', {
+      depicts: ['feature-1'],
+    });
     const sample = createDoc('sample-1', C.SAMPLE, '시료 1', {
       liesWithin: ['feature-1'],
     });
@@ -23,8 +27,9 @@ describe('Korean fieldwork record evidence', () => {
       pit,
       layer,
       photo,
+      sketch,
       sample,
-    ] as any);
+    ]);
 
     expect(chips.map((chip) => ({
       id: chip.id,
@@ -75,6 +80,14 @@ describe('Korean fieldwork record evidence', () => {
         documentIds: [],
       },
       {
+        id: 'sketches',
+        label: '약도·스케치',
+        count: 1,
+        tone: 'filled',
+        createCategoryName: C.PEN_MEMO,
+        documentIds: ['sketch-1'],
+      },
+      {
         id: 'finds',
         label: '유물',
         count: 0,
@@ -106,11 +119,14 @@ const createDoc = (
   category: string,
   identifier: string,
   relations: Record<string, string[]> = {}
-) => ({
+): Document => ({
+  _id: id,
   resource: {
     id,
     identifier,
     category,
     relations,
   },
+  created: { user: 'test', date: new Date(0) },
+  modified: [],
 });

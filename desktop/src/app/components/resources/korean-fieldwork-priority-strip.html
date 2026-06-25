@@ -1,0 +1,788 @@
+<div *ngIf="shouldShow()" class="korean-fieldwork-priority-strip">
+    <div class="korean-fieldwork-priority-strip-summary">
+        <span class="korean-fieldwork-priority-strip-title">현장 상태</span>
+        <span class="korean-fieldwork-priority-strip-status"
+              [class.success]="getStatusTone() === 'success'"
+              [class.info]="getStatusTone() === 'info'"
+              [class.warning]="getStatusTone() === 'warning'">
+            {{getStatusLabel()}}
+        </span>
+        <span class="korean-fieldwork-priority-strip-count">{{getSummaryLabel()}}</span>
+    </div>
+    <div *ngIf="shouldShowPanelNavigation()"
+         class="korean-fieldwork-priority-strip-panels"
+         role="tablist">
+        <button *ngFor="let panel of getPanelOptions()"
+                type="button"
+                class="korean-fieldwork-priority-strip-panel"
+                [class.active]="isPanelActive(panel.id)"
+                role="tab"
+                [attr.aria-selected]="isPanelActive(panel.id)"
+                (click)="setActivePanel(panel.id)">
+            <span>{{panel.label}}</span>
+            <span class="korean-fieldwork-priority-strip-panel-count">{{panel.count}}</span>
+        </button>
+    </div>
+    <div *ngIf="isPanelActive('today') && hasPriorityIssues()" class="korean-fieldwork-priority-strip-list">
+        <button *ngFor="let issue of getPriorityIssues()"
+                type="button"
+                class="korean-fieldwork-priority-strip-item"
+                [class.critical]="issue.severity === 'critical'"
+                [class.warning]="issue.severity === 'warning'"
+                [class.info]="issue.severity === 'info'"
+                [ngbTooltip]="issue.message"
+                container="body"
+                placement="bottom"
+                (click)="openIssue(issue)">
+            <span class="korean-fieldwork-priority-strip-severity">{{getSeverityLabel(issue.severity)}}</span>
+            <span class="korean-fieldwork-priority-strip-identifier">{{issue.identifier}}</span>
+            <span class="korean-fieldwork-priority-strip-action">{{issue.recommendedAction}}</span>
+            <span class="mdi mdi-open-in-new korean-fieldwork-priority-strip-open-icon"></span>
+        </button>
+    </div>
+    <div *ngIf="isPanelActive('today') && !hasPriorityIssues()" class="korean-fieldwork-priority-strip-empty">
+        {{getIssueBreakdownLabel()}}
+    </div>
+
+    <div *ngIf="isPanelActive('today')" class="korean-fieldwork-today-quick-actions">
+        <button *ngFor="let action of getTodayQuickActions()"
+                type="button"
+                class="korean-fieldwork-today-quick-action"
+                [class.success]="action.tone === 'success'"
+                [class.info]="action.tone === 'info'"
+                [class.warning]="action.tone === 'warning'"
+                [class.danger]="action.tone === 'danger'"
+                [class.neutral]="action.tone === 'neutral'"
+                [disabled]="action.disabled"
+                [ngbTooltip]="action.detail"
+                container="body"
+                placement="bottom"
+                (click)="runTodayQuickAction(action)">
+            <span class="mdi korean-fieldwork-today-quick-action-icon" [ngClass]="action.icon"></span>
+            <span class="korean-fieldwork-today-quick-action-body">
+                <span class="korean-fieldwork-today-quick-action-label">{{action.label}}</span>
+                <span class="korean-fieldwork-today-quick-action-detail">{{action.detail}}</span>
+            </span>
+        </button>
+    </div>
+
+    <div *ngIf="isPanelActive('today') && hasScopeSummary()"
+         class="korean-fieldwork-scope-summary"
+         [class.success]="scopeSummary?.tone === 'success'"
+         [class.info]="scopeSummary?.tone === 'info'"
+         [class.warning]="scopeSummary?.tone === 'warning'">
+        <div class="korean-fieldwork-scope-summary-main">
+            <span class="mdi mdi-map-marker-outline"></span>
+            <span class="korean-fieldwork-scope-summary-title">{{scopeSummary?.title}}</span>
+            <span class="korean-fieldwork-scope-summary-detail">{{scopeSummary?.detail}}</span>
+        </div>
+        <span class="korean-fieldwork-scope-summary-metrics">{{getScopeMetricLabel()}}</span>
+        <div class="korean-fieldwork-scope-summary-actions">
+            <button type="button"
+                    class="korean-fieldwork-scope-summary-action"
+                    (click)="runScopeSummaryAction(scopeSummary?.action)">
+                {{scopeSummary?.actionLabel}}
+            </button>
+            <button *ngIf="scopeSummary?.secondaryAction"
+                    type="button"
+                    class="korean-fieldwork-scope-summary-action secondary"
+                    [ngbTooltip]="scopeSummary?.secondaryActionDetail || scopeSummary?.secondaryActionLabel"
+                    container="body"
+                    placement="bottom"
+                    (click)="runScopeSummaryAction(scopeSummary?.secondaryAction)">
+                {{scopeSummary?.secondaryActionLabel}}
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="isPanelActive('closeout') && hasCloseoutSummary()"
+         class="korean-fieldwork-closeout-strip"
+         [class.clear]="closeoutSummary?.status === 'clear'"
+         [class.needs-review]="closeoutSummary?.status === 'needsReview'"
+         [class.blocked]="closeoutSummary?.status === 'blocked'">
+        <div class="korean-fieldwork-closeout-header">
+            <span class="mdi"
+                  [class.mdi-check-decagram-outline]="closeoutSummary?.status === 'clear'"
+                  [class.mdi-clipboard-alert-outline]="closeoutSummary?.status === 'needsReview'"
+                  [class.mdi-alert-octagon-outline]="closeoutSummary?.status === 'blocked'"></span>
+            <span class="korean-fieldwork-closeout-title">{{closeoutSummary?.title}}</span>
+            <span class="korean-fieldwork-closeout-counts">{{getCloseoutCountsLabel()}}</span>
+        </div>
+        <span class="korean-fieldwork-closeout-detail">{{closeoutSummary?.detail}}</span>
+        <button *ngIf="hasCloseoutBatchUpdates()"
+                type="button"
+                class="korean-fieldwork-closeout-batch-button"
+                (click)="resolveCloseoutBatchUpdates()">
+            <span class="mdi mdi-check-all"></span>
+            <span>안전 보완 반영</span>
+            <span>{{getCloseoutBatchUpdateCount()}}건 · {{getCloseoutBatchDocumentCount()}}기록</span>
+        </button>
+        <div *ngIf="getCloseoutIssues().length > 0"
+             class="korean-fieldwork-closeout-issues">
+            <button *ngFor="let issue of getCloseoutIssues()"
+                    type="button"
+                    class="korean-fieldwork-closeout-issue"
+                    [class.critical]="issue.severity === 'critical'"
+                    [class.warning]="issue.severity === 'warning'"
+                    [class.info]="issue.severity === 'info'"
+                    [ngbTooltip]="issue.message"
+                    container="body"
+                    placement="bottom"
+                    (click)="openCloseoutIssue(issue)">
+                <span>{{getSeverityLabel(issue.severity)}}</span>
+                <span>{{issue.identifier}}</span>
+                <span>{{issue.recommendedAction}}</span>
+                <span class="mdi mdi-open-in-new"></span>
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="isPanelActive('today') && hasPriorityTasks()" class="korean-fieldwork-task-strip">
+        <div class="korean-fieldwork-task-strip-header">
+            <span class="mdi mdi-format-list-checks"></span>
+            <span>오늘 우선 작업</span>
+        </div>
+        <span *ngFor="let task of getPriorityTasks()"
+              class="korean-fieldwork-task-card-group">
+            <button type="button"
+                    class="korean-fieldwork-task-card"
+                    [class.danger]="task.tone === 'danger'"
+                    [class.warning]="task.tone === 'warning'"
+                    [class.info]="task.tone === 'info'"
+                    [class.success]="task.tone === 'success'"
+                    [class.neutral]="task.tone === 'neutral'"
+                    [ngbTooltip]="task.detail"
+                    container="body"
+                    placement="bottom"
+                    (click)="runPriorityTask(task)">
+                <span class="korean-fieldwork-task-card-icon">
+                    <span class="mdi" [ngClass]="task.icon"></span>
+                </span>
+                <span class="korean-fieldwork-task-card-body">
+                    <span class="korean-fieldwork-task-title">{{task.title}}</span>
+                    <span class="korean-fieldwork-task-detail">{{task.detail}}</span>
+                </span>
+                <span class="korean-fieldwork-task-action">{{task.actionLabel}}</span>
+            </button>
+            <button *ngIf="canRunPriorityTaskSecondaryAction(task)"
+                    type="button"
+                    class="korean-fieldwork-task-secondary-action"
+                    [ngbTooltip]="task.secondaryActionDetail || task.secondaryActionLabel"
+                    container="body"
+                    placement="bottom"
+                    (click)="runPriorityTaskSecondaryAction(task)">
+                <span class="mdi mdi-file-import-outline"></span>
+                <span>{{task.secondaryActionLabel}}</span>
+            </button>
+        </span>
+    </div>
+
+    <div *ngIf="isPanelActive('records') && hasSelectedRecordWorkbench()"
+         class="korean-fieldwork-selected-workbench-strip">
+        <div class="korean-fieldwork-selected-workbench-header">
+            <span class="mdi mdi-crosshairs-gps"></span>
+            <span>선택 기록 작업대</span>
+            <span class="korean-fieldwork-selected-workbench-target">
+                {{getSelectedRecordWorkbenchCategoryLabel()}} · {{getSelectedRecordWorkbenchLabel()}}
+            </span>
+            <button type="button"
+                    class="korean-fieldwork-selected-workbench-command"
+                    ngbTooltip="선택한 기록을 지도에서 봅니다."
+                    container="body"
+                    placement="bottom"
+                    (click)="openSelectedRecordWorkbenchOnMap($event)">
+                <span class="mdi mdi-map-marker-radius-outline"></span>
+                <span>지도</span>
+            </button>
+            <button type="button"
+                    class="korean-fieldwork-selected-workbench-command"
+                    ngbTooltip="선택한 기록을 편집합니다."
+                    container="body"
+                    placement="bottom"
+                    (click)="openSelectedRecordWorkbenchDocument($event)">
+                <span class="mdi mdi-pencil-outline"></span>
+                <span>편집</span>
+            </button>
+            <button type="button"
+                    class="korean-fieldwork-selected-workbench-command quiet"
+                    ngbTooltip="현재 선택을 해제합니다."
+                    container="body"
+                    placement="bottom"
+                    (click)="clearSelectedRecordWorkbench($event)">
+                <span class="mdi mdi-close"></span>
+                <span>해제</span>
+            </button>
+        </div>
+        <div *ngIf="canReviseSelectedRecordIdentifier()"
+             class="korean-fieldwork-selected-workbench-identifier-panel">
+            <div class="korean-fieldwork-selected-workbench-identifier-title">
+                <span class="mdi mdi-rename-box-outline"></span>
+                <span>번호 정리</span>
+                <span>{{getSelectedRecordIdentifierRevisionHistoryLabel()}}</span>
+            </div>
+            <label class="korean-fieldwork-selected-workbench-identifier-field readonly">
+                <span>현장번호</span>
+                <input type="text"
+                       readonly
+                       [value]="getSelectedRecordFieldIdentifier()"
+                       (click)="$event.stopPropagation()">
+            </label>
+            <label class="korean-fieldwork-selected-workbench-identifier-field">
+                <span>정리번호</span>
+                <input #selectedRecordIdentifierInput
+                       type="text"
+                       [value]="getSelectedRecordReportIdentifier()"
+                       placeholder="예: 조선시대 3호 가마"
+                       (click)="$event.stopPropagation()"
+                       (input)="$event.stopPropagation()"
+                       (keydown.enter)="applySelectedRecordIdentifierRevision(selectedRecordIdentifierInput.value, selectedRecordIdentifierReasonInput.value, $event)">
+            </label>
+            <label class="korean-fieldwork-selected-workbench-identifier-field reason">
+                <span>이유</span>
+                <input #selectedRecordIdentifierReasonInput
+                       type="text"
+                       placeholder="예: 정리 과정에서 번호 확정"
+                       (click)="$event.stopPropagation()"
+                       (input)="$event.stopPropagation()"
+                       (keydown.enter)="applySelectedRecordIdentifierRevision(selectedRecordIdentifierInput.value, selectedRecordIdentifierReasonInput.value, $event)">
+            </label>
+            <button type="button"
+                    class="korean-fieldwork-selected-workbench-identifier-apply"
+                    [disabled]="!canApplySelectedRecordIdentifierRevision(selectedRecordIdentifierInput.value)"
+                    ngbTooltip="현장번호는 보존하고 정리번호와 변경 이력을 저장합니다."
+                    container="body"
+                    placement="bottom"
+                    (click)="applySelectedRecordIdentifierRevision(selectedRecordIdentifierInput.value, selectedRecordIdentifierReasonInput.value, $event)">
+                <span class="mdi mdi-check"></span>
+                <span>반영</span>
+            </button>
+        </div>
+        <div *ngIf="getSelectedRecordWorkbenchActions().length > 0"
+             class="korean-fieldwork-selected-workbench-actions">
+            <button *ngFor="let action of getSelectedRecordWorkbenchActions()"
+                    type="button"
+                    class="korean-fieldwork-workbench-action-button selected"
+                    [class.danger]="action.tone === 'danger'"
+                    [class.warning]="action.tone === 'warning'"
+                    [class.info]="action.tone === 'info'"
+                    [class.success]="action.tone === 'success'"
+                    [class.neutral]="action.tone === 'neutral'"
+                    [ngbTooltip]="action.detail"
+                    container="body"
+                    placement="bottom"
+                    (click)="runSelectedRecordWorkbenchAction(action, $event)">
+                <span class="mdi" [ngClass]="action.icon"></span>
+                <span>{{action.label}}</span>
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="isPanelActive('records') && hasRecordWorkFilterCounts()"
+         class="korean-fieldwork-record-work-filter-strip">
+        <span class="korean-fieldwork-record-work-filter-title">기록 작업</span>
+        <button *ngFor="let filter of getRecordWorkFilters()"
+                type="button"
+                class="korean-fieldwork-record-work-filter-chip"
+                [class.active]="isRecordWorkFilterActive(filter)"
+                [class.attention]="filter.id !== 'all' && getRecordWorkFilterCount(filter) > 0"
+                (click)="setActiveRecordWorkFilter(filter)">
+            <span>{{filter.label}}</span>
+            <span>{{getRecordWorkFilterCount(filter)}}</span>
+        </button>
+    </div>
+
+    <div *ngIf="hasPendingFeatureDraft()"
+         class="korean-fieldwork-feature-draft-picker">
+        <span class="korean-fieldwork-feature-draft-picker-main">
+            <span class="korean-fieldwork-feature-draft-picker-title">유구 성격 선택</span>
+            <span class="korean-fieldwork-feature-draft-picker-detail">
+                <span>포함 위치: {{getPendingFeatureDraftParentLabel()}}</span>
+                <span>성격이 보이면 고르고, 애매하면 유구로 먼저 만듭니다.</span>
+            </span>
+        </span>
+        <span class="korean-fieldwork-feature-draft-picker-options">
+            <button *ngFor="let preset of getFeatureDraftPresets()"
+                    type="button"
+                    class="korean-fieldwork-feature-draft-picker-option"
+                    (click)="createPendingFeatureDraft(preset, $event)">
+                <span class="mdi" [ngClass]="preset.icon"></span>
+                <span>{{getFeatureDraftPresetLabel(preset)}}</span>
+            </button>
+        </span>
+        <button type="button"
+                class="korean-fieldwork-feature-draft-picker-cancel"
+                (click)="cancelPendingFeatureDraft($event)">
+            취소
+        </button>
+    </div>
+
+    <div *ngIf="isPanelActive('records') && hasRecordWorkFilterCounts() && !hasFilteredRecordWorkItems()"
+         class="korean-fieldwork-record-work-filter-empty">
+        <span class="korean-fieldwork-record-work-filter-empty-title">
+            {{getFilteredRecordWorkEmptyState().title}}
+        </span>
+        <span class="korean-fieldwork-record-work-filter-empty-detail">
+            {{getFilteredRecordWorkEmptyState().detail}}
+        </span>
+    </div>
+
+    <div *ngIf="isPanelActive('records') && hasHierarchyLanes()"
+         class="korean-fieldwork-hierarchy-lanes">
+        <div class="korean-fieldwork-hierarchy-header">
+            <span class="mdi mdi-family-tree"></span>
+            <span>이어진 기록</span>
+            <span class="korean-fieldwork-hierarchy-scope">{{getHierarchyScopeLabel()}}</span>
+        </div>
+        <div class="korean-fieldwork-hierarchy-lane-row">
+            <div *ngFor="let lane of getHierarchyLanes()"
+                 class="korean-fieldwork-hierarchy-lane">
+                <div class="korean-fieldwork-hierarchy-lane-header">
+                    <span class="korean-fieldwork-hierarchy-lane-title">{{lane.label}}</span>
+                    <span class="korean-fieldwork-hierarchy-lane-count">{{lane.totalCount}}</span>
+                </div>
+                <div *ngIf="lane.items.length === 0"
+                     class="korean-fieldwork-hierarchy-empty">
+                    아직 없음
+                </div>
+                <div *ngFor="let item of lane.items"
+                     role="button"
+                     tabindex="0"
+                     class="korean-fieldwork-hierarchy-item"
+                     [class.active]="item.isCurrentScope"
+                     (click)="openHierarchyItem(item)"
+                     (keydown.enter)="openHierarchyItem(item)">
+                    <span class="korean-fieldwork-hierarchy-item-body">
+                        <span class="korean-fieldwork-hierarchy-item-title">{{item.identifier}}</span>
+                        <span *ngIf="item.parentIdentifier"
+                              class="korean-fieldwork-hierarchy-item-parent">
+                            포함 위치: {{item.parentIdentifier}}
+                        </span>
+                        <span class="korean-fieldwork-hierarchy-item-metrics">
+                            <span *ngIf="item.childCount > 0">이어진 기록 {{item.childCount}}</span>
+                            <span [class.warning]="item.issueCount > 0">확인 {{item.issueCount}}</span>
+                        </span>
+                    </span>
+                    <span class="korean-fieldwork-hierarchy-item-actions">
+                        <button type="button"
+                                class="korean-fieldwork-hierarchy-action"
+                                ngbTooltip="이 기록을 엽니다."
+                                container="body"
+                                placement="bottom"
+                                (click)="openHierarchyItem(item, $event)">
+                            <span class="mdi mdi-open-in-new"></span>
+                        </button>
+                        <button *ngIf="canCreateHierarchyItemChild(item)"
+                                type="button"
+                                class="korean-fieldwork-hierarchy-action"
+                                ngbTooltip="이 기록 아래로 다음 기록을 이어 만듭니다."
+                                container="body"
+                                placement="bottom"
+                                (click)="createHierarchyItemChild(item, $event)">
+                            <span class="mdi mdi-plus"></span>
+                        </button>
+                    </span>
+                </div>
+                <div *ngIf="lane.hiddenCount > 0"
+                     class="korean-fieldwork-hierarchy-hidden">
+                    외 {{lane.hiddenCount}}건
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="isPanelActive('records') && hasFilteredWorkbenchItems()" class="korean-fieldwork-workbench-strip">
+        <div class="korean-fieldwork-workbench-strip-header">
+            <span class="mdi mdi-view-dashboard-edit-outline"></span>
+            <span>현장 작업대</span>
+        </div>
+        <div *ngFor="let item of getFilteredWorkbenchItems()"
+             role="button"
+             tabindex="0"
+             class="korean-fieldwork-workbench-card"
+             [class.danger]="item.tone === 'danger'"
+             [class.warning]="item.tone === 'warning'"
+             [class.info]="item.tone === 'info'"
+             [class.success]="item.tone === 'success'"
+             [class.neutral]="item.tone === 'neutral'"
+             [ngbTooltip]="item.reasons.join(' · ')"
+             container="body"
+             placement="bottom"
+             (click)="openWorkbenchItem(item)"
+             (keydown.enter)="openWorkbenchItem(item)">
+            <span class="korean-fieldwork-workbench-card-top">
+                <span class="korean-fieldwork-workbench-category">{{item.categoryLabel}}</span>
+                <span class="korean-fieldwork-workbench-action">{{item.actionLabel}}</span>
+            </span>
+            <span class="korean-fieldwork-workbench-identifier">{{item.identifier}}</span>
+            <span *ngIf="item.parentPath" class="korean-fieldwork-workbench-parent">{{item.parentPath}}</span>
+            <span class="korean-fieldwork-workbench-reasons">
+                <span *ngFor="let reason of item.reasons"
+                      class="korean-fieldwork-workbench-reason">
+                    {{reason}}
+                </span>
+            </span>
+            <span *ngIf="getWorkbenchActions(item).length > 0"
+                  class="korean-fieldwork-workbench-actions">
+                <button *ngFor="let action of getWorkbenchActions(item)"
+                        type="button"
+                        class="korean-fieldwork-workbench-action-button"
+                        [class.danger]="action.tone === 'danger'"
+                        [class.warning]="action.tone === 'warning'"
+                        [class.info]="action.tone === 'info'"
+                        [class.success]="action.tone === 'success'"
+                        [class.neutral]="action.tone === 'neutral'"
+                        [ngbTooltip]="action.detail"
+                        container="body"
+                        placement="bottom"
+                        (click)="runWorkbenchAction(item, action, $event)">
+                    <span class="mdi" [ngClass]="action.icon"></span>
+                    <span>{{action.label}}</span>
+                </button>
+            </span>
+        </div>
+    </div>
+
+    <div *ngIf="isPanelActive('notebook') && hasNotebookPanel()" class="korean-fieldwork-notebook-strip">
+        <div class="korean-fieldwork-notebook-strip-header">
+            <span class="mdi mdi-notebook-edit-outline"></span>
+            <span>오늘 야장</span>
+            <span class="korean-fieldwork-notebook-strip-summary">{{getNotebookSummaryLabel()}}</span>
+            <button *ngIf="canRunNotebookDailyLogAction()"
+                    type="button"
+                    class="korean-fieldwork-notebook-strip-action-button"
+                    [ngbTooltip]="getNotebookDailyLogActionDetail()"
+                    container="body"
+                    placement="bottom"
+                    (click)="runNotebookDailyLogAction()">
+                {{getNotebookDailyLogActionLabel()}}
+            </button>
+            <button *ngIf="canRunNotebookRecordMemoAction()"
+                    type="button"
+                    class="korean-fieldwork-notebook-strip-action-button secondary"
+                    [ngbTooltip]="getNotebookRecordMemoActionDetail()"
+                    container="body"
+                    placement="bottom"
+                    (click)="runNotebookRecordMemoAction()">
+                {{getNotebookRecordMemoActionLabel()}}
+            </button>
+        </div>
+        <div *ngIf="hasNotebookSelectedRecordEntries()" class="korean-fieldwork-notebook-strip-items selected">
+            <div *ngFor="let entry of getNotebookSelectedRecordEntries()"
+                 class="korean-fieldwork-notebook-strip-item selected">
+                <button type="button"
+                        class="korean-fieldwork-notebook-strip-open"
+                        [ngbTooltip]="entry.detail"
+                        container="body"
+                        placement="bottom"
+                        (click)="openNotebookEntrySource(entry)">
+                    <span class="korean-fieldwork-notebook-strip-kind">선택</span>
+                    <span class="korean-fieldwork-notebook-strip-target">
+                        {{getNotebookSelectedRecordLabel()}} · {{entry.sourceLabel}} {{entry.dateLabel}}
+                    </span>
+                    <span class="korean-fieldwork-notebook-strip-detail">{{entry.detail}}</span>
+                    <span class="korean-fieldwork-notebook-strip-action">
+                        {{entry.sourceLabel}} 열기
+                        <span class="mdi mdi-open-in-new"></span>
+                    </span>
+                </button>
+                <button *ngIf="canContinueNotebookEntry(entry)"
+                        type="button"
+                        class="korean-fieldwork-notebook-strip-continue"
+                        (click)="continueNotebookEntry(entry, undefined, $event)">
+                    {{getNotebookContinuationActionLabel(entry)}}
+                </button>
+            </div>
+        </div>
+        <div *ngIf="hasNotebookRecentEntries()" class="korean-fieldwork-notebook-strip-items recent">
+            <div *ngFor="let entry of getNotebookRecentEntries()"
+                 class="korean-fieldwork-notebook-strip-item recent">
+                <button type="button"
+                        class="korean-fieldwork-notebook-strip-open"
+                        [ngbTooltip]="entry.detail"
+                        container="body"
+                        placement="bottom"
+                        (click)="openNotebookEntry(entry)">
+                    <span class="korean-fieldwork-notebook-strip-kind">최근</span>
+                    <span class="korean-fieldwork-notebook-strip-target">
+                        {{entry.targetCategoryLabel}} · {{entry.targetLabel}}
+                    </span>
+                    <span class="korean-fieldwork-notebook-strip-detail">{{entry.detail}}</span>
+                    <span class="korean-fieldwork-notebook-strip-action">
+                        {{getNotebookEntryActionLabel(entry)}}
+                        <span class="mdi mdi-open-in-new"></span>
+                    </span>
+                </button>
+                <button *ngIf="canContinueNotebookEntry(entry)"
+                        type="button"
+                        class="korean-fieldwork-notebook-strip-continue"
+                        (click)="continueNotebookEntry(entry, undefined, $event)">
+                    {{getNotebookContinuationActionLabel(entry)}}
+                </button>
+            </div>
+        </div>
+        <div *ngIf="hasNotebookFollowUps()" class="korean-fieldwork-notebook-strip-items">
+            <div *ngFor="let entry of getNotebookNextWorkEntries()"
+                 class="korean-fieldwork-notebook-strip-item">
+                <button type="button"
+                        class="korean-fieldwork-notebook-strip-open"
+                        [ngbTooltip]="entry.nextWork"
+                        container="body"
+                        placement="bottom"
+                        (click)="openNotebookEntry(entry)">
+                    <span class="korean-fieldwork-notebook-strip-kind">다음</span>
+                    <span class="korean-fieldwork-notebook-strip-target">
+                        {{entry.targetCategoryLabel}} · {{entry.targetLabel}}
+                    </span>
+                    <span class="korean-fieldwork-notebook-strip-detail">{{entry.nextWork}}</span>
+                    <span class="korean-fieldwork-notebook-strip-action">
+                        {{getNotebookEntryActionLabel(entry)}}
+                        <span class="mdi mdi-open-in-new"></span>
+                    </span>
+                </button>
+                <button *ngIf="canContinueNotebookEntry(entry, 'nextWork')"
+                        type="button"
+                        class="korean-fieldwork-notebook-strip-continue"
+                        (click)="continueNotebookEntry(entry, 'nextWork', $event)">
+                    {{getNotebookContinuationActionLabel(entry, 'nextWork')}}
+                </button>
+            </div>
+            <div *ngFor="let entry of getNotebookEvidenceMissingEntries()"
+                 class="korean-fieldwork-notebook-strip-item warning">
+                <button type="button"
+                        class="korean-fieldwork-notebook-strip-open"
+                        [ngbTooltip]="entry.detail"
+                        container="body"
+                        placement="bottom"
+                        (click)="openNotebookEntry(entry)">
+                    <span class="korean-fieldwork-notebook-strip-kind">번호</span>
+                    <span class="korean-fieldwork-notebook-strip-target">
+                        {{entry.targetCategoryLabel}} · {{entry.targetLabel}}
+                    </span>
+                    <span class="korean-fieldwork-notebook-strip-detail">
+                        사진·도면·스케치·유물·시료 번호 확인
+                    </span>
+                    <span class="korean-fieldwork-notebook-strip-action">
+                        {{getNotebookEntryActionLabel(entry)}}
+                        <span class="mdi mdi-open-in-new"></span>
+                    </span>
+                </button>
+                <button *ngIf="canContinueNotebookEntry(entry, 'evidenceNumbers')"
+                        type="button"
+                        class="korean-fieldwork-notebook-strip-continue warning"
+                        (click)="continueNotebookEntry(entry, 'evidenceNumbers', $event)">
+                    {{getNotebookContinuationActionLabel(entry, 'evidenceNumbers')}}
+                </button>
+            </div>
+        </div>
+        <div *ngIf="!hasNotebookFollowUps() && !hasNotebookSelectedRecordEntries() && !hasNotebookRecentEntries()"
+             class="korean-fieldwork-notebook-strip-empty">
+            오늘 야장에서 바로 보강할 항목은 없습니다.
+        </div>
+    </div>
+
+    <div *ngIf="isPanelActive('workflow')" class="korean-fieldwork-priority-strip-workflow">
+        <div *ngFor="let step of getWorkflowSteps(); let stepIndex = index"
+             class="korean-fieldwork-priority-strip-workflow-step"
+             [class.done]="step.status === 'done'"
+             [class.current]="step.status === 'current'"
+             [class.attention]="step.status === 'attention'"
+             [class.todo]="step.status === 'todo'">
+            <span class="korean-fieldwork-priority-strip-workflow-index">{{stepIndex + 1}}</span>
+            <span class="korean-fieldwork-priority-strip-workflow-body">
+                <span class="korean-fieldwork-priority-strip-workflow-label">{{step.label}}</span>
+                <span class="korean-fieldwork-priority-strip-workflow-detail">{{step.detail}}</span>
+            </span>
+            <span class="korean-fieldwork-priority-strip-workflow-status">
+                {{getWorkflowStepStatusLabel(step.status)}}
+            </span>
+            <button *ngIf="canRunWorkflowStep(step)"
+                    type="button"
+                    class="korean-fieldwork-priority-strip-workflow-action"
+                    (click)="runWorkflowStep(step)">
+                {{step.actionLabel}}
+            </button>
+            <button *ngIf="canRunWorkflowStepSecondaryAction(step)"
+                    type="button"
+                    class="korean-fieldwork-priority-strip-workflow-action secondary"
+                    [ngbTooltip]="step.secondaryActionDetail || step.secondaryActionLabel"
+                    container="body"
+                    placement="bottom"
+                    (click)="runWorkflowStepSecondaryAction(step)">
+                {{step.secondaryActionLabel}}
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="isPanelActive('records') && hasFilteredFeatureOverviewItems()"
+         class="korean-fieldwork-feature-overview">
+        <div class="korean-fieldwork-feature-overview-header">
+            <span class="mdi mdi-view-list"></span>
+            <span>전체 유구 현황</span>
+            <span class="korean-fieldwork-feature-overview-count">{{getFilteredFeatureOverviewItems().length}}</span>
+        </div>
+        <div class="korean-fieldwork-feature-overview-table">
+            <div class="korean-fieldwork-feature-overview-row header">
+                <span>유구</span>
+                <span>상태</span>
+                <span>근거</span>
+                <span>보완</span>
+                <span>다음</span>
+                <span>열기</span>
+            </div>
+            <div *ngFor="let item of getFilteredFeatureOverviewItems()"
+                 role="button"
+                 tabindex="0"
+                 class="korean-fieldwork-feature-overview-row"
+                 [class.danger]="item.tone === 'danger'"
+                 [class.warning]="item.tone === 'warning'"
+                 [class.info]="item.tone === 'info'"
+                 [class.success]="item.tone === 'success'"
+                 [class.neutral]="item.tone === 'neutral'"
+                 (click)="openUnitMatrixItem(item)"
+                 (keydown.enter)="openUnitMatrixItem(item)">
+                <span class="korean-fieldwork-feature-overview-feature">
+                    <span class="korean-fieldwork-feature-overview-identifier">{{item.identifier}}</span>
+                    <span *ngIf="item.parentPath" class="korean-fieldwork-feature-overview-parent">
+                        {{item.parentPath}}
+                    </span>
+                </span>
+                <span class="korean-fieldwork-feature-overview-status">
+                    <span class="korean-fieldwork-feature-overview-pill">{{item.statusLabel}}</span>
+                    <span class="korean-fieldwork-feature-overview-percent">{{item.completionPercent}}%</span>
+                </span>
+                <span class="korean-fieldwork-feature-overview-evidence">{{item.evidenceLabel}}</span>
+                <span class="korean-fieldwork-feature-overview-issue"
+                      [class.warning]="item.issueCount > 0"
+                      [class.danger]="item.hasCriticalIssue">
+                    {{item.issueCount}}
+                </span>
+                <span class="korean-fieldwork-feature-overview-next">{{item.nextActionLabel}}</span>
+                <span class="korean-fieldwork-feature-overview-actions">
+                    <button type="button"
+                            class="korean-fieldwork-feature-overview-action"
+                            (click)="openUnitMatrixItem(item); $event.stopPropagation()">
+                        <span class="mdi mdi-open-in-new"></span>
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="isPanelActive('records') && hasFilteredUnitMatrixItems()" class="korean-fieldwork-unit-matrix">
+        <div class="korean-fieldwork-unit-matrix-header">
+            <span class="mdi mdi-table-large"></span>
+            <span>기록 진행표</span>
+            <span class="korean-fieldwork-unit-matrix-count">{{getUnitMatrixItems().length}}</span>
+        </div>
+        <div class="korean-fieldwork-unit-matrix-table">
+            <div class="korean-fieldwork-unit-matrix-row header">
+                <span>단위</span>
+                <span>진행</span>
+                <span>자료</span>
+                <span>확인</span>
+                <span>동작</span>
+            </div>
+            <div *ngFor="let item of getFilteredUnitMatrixItems()"
+                 role="button"
+                 tabindex="0"
+                 class="korean-fieldwork-unit-matrix-row"
+                 [class.danger]="item.tone === 'danger'"
+                 [class.warning]="item.tone === 'warning'"
+                 [class.info]="item.tone === 'info'"
+                 [class.success]="item.tone === 'success'"
+                 [class.neutral]="item.tone === 'neutral'"
+                 (click)="openUnitMatrixItem(item)"
+                 (keydown.enter)="openUnitMatrixItem(item)">
+                <span class="korean-fieldwork-unit-matrix-unit">
+                    <span class="korean-fieldwork-unit-matrix-category">{{item.categoryLabel}}</span>
+                    <span class="korean-fieldwork-unit-matrix-identifier">{{item.identifier}}</span>
+                    <span *ngIf="item.parentPath" class="korean-fieldwork-unit-matrix-parent">
+                        {{item.parentPath}}
+                    </span>
+                </span>
+                <span class="korean-fieldwork-unit-matrix-progress">
+                    <span class="korean-fieldwork-unit-matrix-percent">{{item.completionPercent}}%</span>
+                    <span class="korean-fieldwork-unit-matrix-track">
+                        <span class="korean-fieldwork-unit-matrix-fill"
+                              [style.width.%]="item.completionPercent"></span>
+                    </span>
+                    <span *ngIf="item.checklistTotal > 0" class="korean-fieldwork-unit-matrix-small">
+                        과정 {{item.checklistDone}}/{{item.checklistTotal}}
+                    </span>
+                </span>
+                <span class="korean-fieldwork-unit-matrix-metrics">
+                    <span>이어진 기록 {{item.childStructureCount}}</span>
+                    <span>자료 {{item.evidenceCount}}</span>
+                </span>
+                <span class="korean-fieldwork-unit-matrix-issue"
+                      [class.warning]="item.issueCount > 0"
+                      [class.danger]="item.hasCriticalIssue">
+                    {{item.issueCount}}
+                </span>
+                <span class="korean-fieldwork-unit-matrix-actions">
+                    <button type="button"
+                            class="korean-fieldwork-unit-matrix-action"
+                            (click)="openUnitMatrixItem(item); $event.stopPropagation()">
+                        <span class="mdi mdi-open-in-new"></span>
+                    </button>
+                    <button *ngIf="item.nextChildCategoryName"
+                            type="button"
+                            class="korean-fieldwork-unit-matrix-action"
+                            [ngbTooltip]="item.nextChildCategoryName + ' 만들기'"
+                            container="body"
+                            placement="bottom"
+                            (click)="createUnitMatrixRecord(item, item.nextChildCategoryName, $event)">
+                        <span class="mdi mdi-plus"></span>
+                    </button>
+                    <button *ngIf="item.photoCategoryName"
+                            type="button"
+                            class="korean-fieldwork-unit-matrix-action"
+                            ngbTooltip="사진 만들기"
+                            container="body"
+                            placement="bottom"
+                            (click)="createUnitMatrixRecord(item, item.photoCategoryName, $event)">
+                        <span class="mdi mdi-camera-plus-outline"></span>
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="isPanelActive('records') && hasFilteredProgressItems()" class="korean-fieldwork-progress-board">
+        <div class="korean-fieldwork-progress-board-header">
+            <span class="mdi mdi-timeline-clock-outline"></span>
+            <span>현장 진행표</span>
+        </div>
+        <button *ngFor="let item of getFilteredProgressItems()"
+                type="button"
+                class="korean-fieldwork-progress-card"
+                [class.success]="item.tone === 'success'"
+                [class.info]="item.tone === 'info'"
+                [class.warning]="item.tone === 'warning'"
+                [class.danger]="item.tone === 'danger'"
+                [ngbTooltip]="item.detail"
+                container="body"
+                placement="bottom"
+                (click)="openProgressItem(item)">
+            <span class="korean-fieldwork-progress-card-top">
+                <span class="korean-fieldwork-progress-category">{{item.categoryLabel}}</span>
+                <span class="korean-fieldwork-progress-stage">{{item.stage}}</span>
+            </span>
+            <span class="korean-fieldwork-progress-identifier">{{item.identifier}}</span>
+            <span *ngIf="item.parentPath" class="korean-fieldwork-progress-parent">{{item.parentPath}}</span>
+            <span class="korean-fieldwork-progress-detail">{{item.detail}}</span>
+            <span class="korean-fieldwork-progress-metrics">
+                <span>이어진 기록 {{item.childCount}}</span>
+                <span>자료 {{item.evidenceCount}}</span>
+                <span [class.warning]="item.issueCount > 0">확인 {{item.issueCount}}</span>
+                <span *ngIf="item.checklistTotal > 0">
+                    과정 {{item.checklistDone}}/{{item.checklistTotal}}
+                </span>
+            </span>
+            <span class="korean-fieldwork-progress-action">
+                {{item.actionLabel}}
+                <span class="mdi mdi-open-in-new"></span>
+            </span>
+        </button>
+    </div>
+</div>

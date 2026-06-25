@@ -639,7 +639,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
       <View style={styles.headerRow}>
         <View style={styles.headerTitleRow}>
           <MaterialIcons name="edit-note" size={20} color="#175cd3" />
-          <Text style={styles.title}>야장 입력</Text>
+          <Text style={styles.title}>현장 메모 입력</Text>
         </View>
         <View style={styles.headerActions}>
           <TouchableOpacity
@@ -678,7 +678,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
             <View style={styles.savedFollowUpTitleText}>
               <Text style={styles.savedFollowUpTitle}>저장 완료</Text>
               <Text style={styles.savedFollowUpDetail} numberOfLines={2}>
-                방금 쓴 야장과 이어지는 기록을 바로 남기세요.
+                방금 쓴 현장 메모와 이어지는 기록을 바로 남기세요.
               </Text>
             </View>
           </View>
@@ -812,7 +812,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
         <ModeButton
           icon="sticky-note-2"
           label="선택 기록 메모"
-          detail="선택 기록에 연결"
+          detail="선택 기록에 추가"
           isActive={mode === 'recordMemo'}
           isDisabled={!canCreateRecordMemo}
           onPress={() => setMode('recordMemo')}
@@ -823,7 +823,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
           label={existingDailyLog ? '오늘 일지에 추가' : '오늘 작업일지'}
           detail={operationDocument
             ? operationDocument.resource.identifier
-            : '조사구역 필요'}
+            : '조사 경계 필요'}
           isActive={mode === 'dailyLog'}
           isDisabled={!canCreateDailyLog}
           onPress={() => setMode('dailyLog')}
@@ -895,7 +895,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
               기록 카드 불러오기
             </Text>
             <Text style={styles.recordSeedDetail} numberOfLines={1}>
-              설명·해석·연결 번호
+              관찰·약측·관련 번호
             </Text>
           </View>
         </TouchableOpacity>
@@ -930,7 +930,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
         <View style={styles.observationPromptPanel}>
           <View style={styles.observationPromptHeader}>
             <MaterialIcons name="checklist" size={16} color="#344054" />
-            <Text style={styles.observationPromptTitle}>관찰 항목</Text>
+            <Text style={styles.observationPromptTitle}>관찰·약측 항목</Text>
           </View>
           <ScrollView
             horizontal
@@ -988,7 +988,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
         <View style={styles.evidenceActionPanel}>
           <View style={styles.evidenceActionHeader}>
             <MaterialIcons name="add-photo-alternate" size={16} color="#344054" />
-            <Text style={styles.evidenceActionTitle}>연결 기록</Text>
+            <Text style={styles.evidenceActionTitle}>관련 자료 추가</Text>
           </View>
           <ScrollView
             horizontal
@@ -1011,7 +1011,7 @@ const KoreanFieldworkFieldNotePanel: React.FC<
         <View style={styles.historyPanel}>
           <View style={styles.historyHeader}>
             <MaterialIcons name="history" size={16} color="#344054" />
-            <Text style={styles.historyTitle}>최근 야장</Text>
+            <Text style={styles.historyTitle}>최근 현장 메모</Text>
           </View>
           {historyItems.map((item) => (
             <HistoryRow
@@ -1027,10 +1027,10 @@ const KoreanFieldworkFieldNotePanel: React.FC<
       <FieldNoteInputBlock
         icon="visibility"
         isStylusInputMode={isStylusInputMode}
-        label="관찰 내용"
+        label="관찰·스케치·약측"
         onChangeText={(value) => updateNoteInput('observation', value)}
         onPointerInput={handlePointerInput}
-        placeholder="색, 토질, 형태, 경계, 절단관계처럼 현장에서 본 사실"
+        placeholder="색, 토질, 형태, 경계, 절단관계와 평면/단면 스케치 번호, 약측값"
         testID="fieldNoteTextInput"
         value={noteInput.observation ?? ''}
       />
@@ -1057,11 +1057,11 @@ const KoreanFieldworkFieldNotePanel: React.FC<
       <FieldNoteInputBlock
         icon="tag"
         isStylusInputMode={isStylusInputMode}
-        label="사진·도면·유물·시료 번호"
+        label="사진·도면·스케치·유물·시료 번호"
         minHeight={52}
         onChangeText={(value) => updateNoteInput('evidenceNumbers', value)}
         onPointerInput={handlePointerInput}
-        placeholder="예: 사진 12-15, 도면 3, 유물 24, 시료 S-02"
+        placeholder="예: 사진 12-15, 도면 3, 스케치 A, 유물 24, 시료 S-02"
         testID="fieldNoteEvidenceNumbersInput"
         value={noteInput.evidenceNumbers ?? ''}
       />
@@ -1207,7 +1207,7 @@ const WorkflowChecklistPanel: React.FC<{
     >
       <View style={styles.workflowChecklistHeader}>
         <MaterialIcons name="fact-check" size={16} color="#344054" />
-        <Text style={styles.workflowChecklistTitle}>조사 흐름</Text>
+        <Text style={styles.workflowChecklistTitle}>조사 단계 확인</Text>
         <Text style={styles.workflowChecklistCount}>
           {activeOptionCount}/{options.length}
         </Text>
@@ -1869,6 +1869,8 @@ const getEvidenceActionIcon = (
       return 'photo-camera';
     case 'drawings':
       return 'architecture';
+    case 'sketches':
+      return 'draw';
     case 'finds':
       return 'inventory-2';
     case 'samples':

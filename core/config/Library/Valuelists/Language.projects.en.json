@@ -11804,6 +11804,40 @@
     },
     "description": "Korean field notebook record note states"
   },
+  "KoreanFieldwork-projectInvestigationMode": {
+    "values": {
+      "trialTrench": {
+        "label": "Trial trench survey"
+      },
+      "excavation": {
+        "label": "Excavation"
+      },
+      "surfaceSurvey": {
+        "label": "Surface survey"
+      },
+      "watchingBrief": {
+        "label": "Watching brief"
+      }
+    },
+    "description": "Investigation mode selected when the project starts"
+  },
+  "KoreanFieldwork-projectBoundarySetupState": {
+    "values": {
+      "notStarted": {
+        "label": "Not set"
+      },
+      "draftBoundary": {
+        "label": "Draft boundary"
+      },
+      "confirmed": {
+        "label": "Confirmed boundary"
+      },
+      "needsRevision": {
+        "label": "Needs revision"
+      }
+    },
+    "description": "Project survey boundary setup state"
+  },
   "KoreanFieldwork-excavationControlSafety": {
     "values": {
       "gridBaulkPlanSet": {
@@ -15871,6 +15905,7 @@
       "googleRoadmap": { "label": "Google Maps road map" },
       "googleSatellite": { "label": "Google Maps satellite" },
       "googleHybrid": { "label": "Google Maps hybrid" },
+      "kakaoHybrid": { "label": "Kakao Maps hybrid" },
       "customWmts": { "label": "Custom WMTS/TMS" },
       "importedRasterLayer": { "label": "Imported raster layer" },
       "importedVectorLayer": { "label": "Imported vector layer" }
@@ -19139,7 +19174,7 @@
         "label": "Grid investigation"
       },
       "quadrantInvestigation": {
-        "label": "Quadrant investigation"
+        "label": "In-progress investigation record"
       },
       "steppedInvestigation": {
         "label": "Stepped investigation"
@@ -19154,7 +19189,7 @@
         "label": "Pending decision"
       }
     },
-    "description": "Korean fieldwork excavation context checks for linking site, feature, finds, assemblage, environment, horizontal and vertical context, and the rationale for trench, pit, grid, quadrant, stepped, planned, or rescue excavation methods"
+    "description": "Korean fieldwork excavation context checks for linking site, feature, finds, assemblage, environment, horizontal and vertical context, and the rationale for trench, pit, in-progress exposure, stepped, planned, or rescue excavation records"
   },
   "KoreanFieldwork-excavationReverseSequenceCheck": {
     "values": {

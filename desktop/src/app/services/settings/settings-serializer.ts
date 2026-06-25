@@ -1,7 +1,8 @@
 import { getAsynchronousFs } from '../get-asynchronous-fs';
 import { Settings } from './settings';
+import { normalizeKoreanFieldworkMapProviderSettings } from '../../util/korean-fieldwork-map-provider-settings';
 
-const remote = window.require('@electron/remote');
+import { electronRemote as remote } from 'src/app/electron/electron';
 
 
 /**
@@ -31,6 +32,9 @@ export class SettingsSerializer {
         configToWrite['allowLargeFileUploads'] = settings.allowLargeFileUploads;
         configToWrite['hideHiddenFieldsInConfigurationEditor'] = settings.hideHiddenFieldsInConfigurationEditor;
         configToWrite['highlightCustomElements'] = settings.highlightCustomElements;
+        configToWrite['mapProviderSettings'] = normalizeKoreanFieldworkMapProviderSettings(
+            settings.mapProviderSettings
+        );
 
         configToWrite['syncTargets'] = Object.keys(settings.syncTargets).reduce((result, projectIdentifier) => {
             const syncTarget = settings.syncTargets[projectIdentifier];

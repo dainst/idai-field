@@ -1,0 +1,24 @@
+<div *ngIf="shouldShow()" class="korean-fieldwork-draft-preset-panel">
+    <div class="korean-fieldwork-draft-preset-header">
+        <span class="mdi mdi-view-quilt-outline"></span>
+        <span>기록 템플릿</span>
+    </div>
+    <div class="korean-fieldwork-draft-preset-list">
+        <button *ngFor="let preset of getPresets()"
+                type="button"
+                class="korean-fieldwork-draft-preset-button"
+                [ngbTooltip]="preset.detail"
+                container="body"
+                placement="bottom"
+                (click)="applyPreset(preset)">
+            <span class="korean-fieldwork-draft-preset-icon">
+                <span class="mdi" [ngClass]="preset.icon"></span>
+            </span>
+            <span class="korean-fieldwork-draft-preset-body">
+                <span class="korean-fieldwork-draft-preset-label">{{preset.label}}</span>
+                <span class="korean-fieldwork-draft-preset-detail">{{preset.detail}}</span>
+            </span>
+            <span class="korean-fieldwork-draft-preset-count">{{preset.fieldNames.length}}</span>
+        </button>
+    </div>
+</div>

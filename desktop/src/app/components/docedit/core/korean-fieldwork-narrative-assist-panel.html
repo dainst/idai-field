@@ -1,0 +1,37 @@
+<div *ngIf="shouldShow()" class="korean-fieldwork-narrative-assist-panel">
+    <div class="korean-fieldwork-narrative-assist-header">
+        <span class="mdi mdi-text-box-edit-outline"></span>
+        <span>야장 서술 보조</span>
+    </div>
+
+    <div *ngIf="hasChecklistItems()" class="korean-fieldwork-narrative-assist-checklist">
+        <span *ngFor="let item of getChecklistItems()"
+              class="korean-fieldwork-narrative-assist-check"
+              [class.complete]="item.isComplete"
+              [class.pending]="!item.isComplete">
+            <span class="mdi"
+                  [class.mdi-check-circle-outline]="item.isComplete"
+                  [class.mdi-circle-outline]="!item.isComplete"></span>
+            <span class="korean-fieldwork-narrative-assist-check-text">
+                <span>{{item.label}}</span>
+                <span>{{item.detail}}</span>
+            </span>
+        </span>
+    </div>
+
+    <div *ngFor="let group of getFieldGroups()" class="korean-fieldwork-narrative-assist-section">
+        <div class="korean-fieldwork-narrative-assist-label">{{group.label}}</div>
+        <div class="korean-fieldwork-narrative-assist-chip-row">
+            <button *ngFor="let snippet of group.snippets"
+                    type="button"
+                    class="btn korean-fieldwork-narrative-assist-chip"
+                    (click)="applySnippet(snippet)">
+                <span class="mdi" [ngClass]="snippet.icon"></span>
+                <span class="korean-fieldwork-narrative-assist-chip-text">
+                    <span class="korean-fieldwork-narrative-assist-chip-label">{{snippet.label}}</span>
+                    <span class="korean-fieldwork-narrative-assist-chip-detail">{{snippet.detail}}</span>
+                </span>
+            </button>
+        </div>
+    </div>
+</div>

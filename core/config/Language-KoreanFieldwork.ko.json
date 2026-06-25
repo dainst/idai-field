@@ -1,10 +1,12 @@
 {
   "groups": {
-    "stem": "기본 정보",
-    "hierarchy": "상위·하위 관계",
-    "workflow": "연결 기록",
-    "properties": "기본 내용",
-    "koreanFieldwork": "디지털 야장",
+    "stem": "핵심 정보",
+    "hierarchy": "포함 관계 원자료",
+    "identification": "식별 원자료",
+    "inventory": "수습·보관 원자료",
+    "workflow": "연결 기록 원자료",
+    "properties": "관찰 내용",
+    "koreanFieldwork": "현장 기록",
     "dimension": "크기",
     "position": "위치",
     "stratigraphy": "층위 관계",
@@ -209,6 +211,18 @@
         },
         "verificationState": {
           "label": "기록 상태"
+        },
+        "projectInvestigationMode": {
+          "label": "조사 방식",
+          "description": "프로젝트를 시작할 때 정한 기본 조사 방식입니다."
+        },
+        "projectBoundarySetupState": {
+          "label": "조사경계 설정 상태",
+          "description": "전체 조사경계가 정해졌는지, 초안인지, 수정이 필요한지 표시합니다."
+        },
+        "projectBoundarySummary": {
+          "label": "조사경계 메모",
+          "description": "허가구역, 필지, GPS 측량, 도면 기준 등 경계 판단 근거를 간단히 적습니다."
         }
       }
     },
@@ -397,8 +411,20 @@
       "label": "유적/지점"
     },
     "Operation": {
-      "label": "조사구역",
+      "label": "조사 기준",
       "fields": {
+        "projectInvestigationMode": {
+          "label": "조사 방식",
+          "description": "프로젝트를 시작할 때 정한 기본 조사 방식입니다."
+        },
+        "projectBoundarySetupState": {
+          "label": "조사경계 설정 상태",
+          "description": "전체 조사경계가 정해졌는지, 초안인지, 수정이 필요한지 표시합니다."
+        },
+        "projectBoundarySummary": {
+          "label": "조사경계 메모",
+          "description": "허가구역, 필지, GPS 측량, 도면 기준 등 경계 판단 근거를 간단히 적습니다."
+        },
         "dailyLogContent": {
           "label": "일일 작업기록"
         },
@@ -481,6 +507,22 @@
         },
         "verificationState": {
           "label": "기록 상태"
+        },
+        "longAxisOrientation": {
+          "label": "장축 방위",
+          "description": "현장 표기 그대로 입력합니다. 예: N-23°-E = 북에서 동쪽으로 23° 기운 장축."
+        },
+        "shortAxisOrientation": {
+          "label": "단축 방위",
+          "description": "예: N-67°-W처럼 단축 방향을 현장 표기 그대로 남깁니다."
+        },
+        "orientationReference": {
+          "label": "자북 메모",
+          "description": "따로 적지 않으면 자북으로 처리합니다. 보정하거나 다시 잰 값이 있을 때만 메모합니다."
+        },
+        "orientationNote": {
+          "label": "방위 메모",
+          "description": "추정값, 보정값, 재측정 필요, 장축 판단 근거를 적습니다."
         }
       }
     },
@@ -662,6 +704,18 @@
         "featureGeometryRevisionNote": {
           "label": "유구선 보정 메모"
         },
+        "fieldIdentifier": {
+          "label": "현장번호"
+        },
+        "reportIdentifier": {
+          "label": "정리번호"
+        },
+        "identifierRevisionHistory": {
+          "label": "번호 정리 이력"
+        },
+        "identifierRevisionNote": {
+          "label": "번호 정리 사유"
+        },
         "featureInterpretationType": {
           "label": "유구 성격"
         },
@@ -717,6 +771,18 @@
         },
         "featureGeometryRevisionNote": {
           "label": "유구선 보정 메모"
+        },
+        "fieldIdentifier": {
+          "label": "현장번호"
+        },
+        "reportIdentifier": {
+          "label": "정리번호"
+        },
+        "identifierRevisionHistory": {
+          "label": "번호 정리 이력"
+        },
+        "identifierRevisionNote": {
+          "label": "번호 정리 사유"
         },
         "featureInvestigationChecklist": {
           "label": "조사 체크리스트"
@@ -1002,6 +1068,22 @@
         },
         "verificationState": {
           "label": "기록 상태"
+        },
+        "longAxisOrientation": {
+          "label": "장축 방위",
+          "description": "현장 표기 그대로 입력합니다. 예: N-23°-E = 북에서 동쪽으로 23° 기운 장축."
+        },
+        "shortAxisOrientation": {
+          "label": "단축 방위",
+          "description": "예: N-67°-W처럼 단축 방향을 현장 표기 그대로 남깁니다."
+        },
+        "orientationReference": {
+          "label": "자북 메모",
+          "description": "따로 적지 않으면 자북으로 처리합니다. 보정하거나 다시 잰 값이 있을 때만 메모합니다."
+        },
+        "orientationNote": {
+          "label": "방위 메모",
+          "description": "추정값, 보정값, 재측정 필요, 장축 판단 근거를 적습니다."
         }
       }
     },
@@ -1031,6 +1113,18 @@
         },
         "featureGeometryRevisionNote": {
           "label": "유구선 보정 메모"
+        },
+        "fieldIdentifier": {
+          "label": "현장번호"
+        },
+        "reportIdentifier": {
+          "label": "정리번호"
+        },
+        "identifierRevisionHistory": {
+          "label": "번호 정리 이력"
+        },
+        "identifierRevisionNote": {
+          "label": "번호 정리 사유"
         },
         "featureInvestigationChecklist": {
           "label": "조사 체크리스트"
@@ -1130,6 +1224,22 @@
         },
         "verificationState": {
           "label": "기록 상태"
+        },
+        "longAxisOrientation": {
+          "label": "장축 방위",
+          "description": "현장 표기 그대로 입력합니다. 예: N-23°-E = 북에서 동쪽으로 23° 기운 장축."
+        },
+        "shortAxisOrientation": {
+          "label": "단축 방위",
+          "description": "예: N-67°-W처럼 단축 방향을 현장 표기 그대로 남깁니다."
+        },
+        "orientationReference": {
+          "label": "자북 메모",
+          "description": "따로 적지 않으면 자북으로 처리합니다. 보정하거나 다시 잰 값이 있을 때만 메모합니다."
+        },
+        "orientationNote": {
+          "label": "방위 메모",
+          "description": "추정값, 보정값, 재측정 필요, 장축 판단 근거를 적습니다."
         }
       }
     },
@@ -1553,6 +1663,22 @@
         },
         "verificationState": {
           "label": "기록 상태"
+        },
+        "longAxisOrientation": {
+          "label": "장축 방위",
+          "description": "현장 표기 그대로 입력합니다. 예: N-23°-E = 북에서 동쪽으로 23° 기운 장축."
+        },
+        "shortAxisOrientation": {
+          "label": "단축 방위",
+          "description": "예: N-67°-W처럼 단축 방향을 현장 표기 그대로 남깁니다."
+        },
+        "orientationReference": {
+          "label": "자북 메모",
+          "description": "따로 적지 않으면 자북으로 처리합니다. 보정하거나 다시 잰 값이 있을 때만 메모합니다."
+        },
+        "orientationNote": {
+          "label": "방위 메모",
+          "description": "추정값, 보정값, 재측정 필요, 장축 판단 근거를 적습니다."
         }
       }
     },
@@ -1585,6 +1711,12 @@
         },
         "soilColorCaptureCondition": {
           "label": "촬영 조건"
+        },
+        "soilColorAssistCandidates": {
+          "label": "사진 토색 후보"
+        },
+        "soilColorAssistStatus": {
+          "label": "사진 토색 보조 상태"
         },
         "soilProfileColorSwatches": {
           "label": "번호별 토색"

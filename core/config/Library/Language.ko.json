@@ -1,16 +1,16 @@
 {
   "groups": {
-    "stem": "기본 정보",
+    "stem": "핵심 정보",
     "properties": "속성",
     "time": "시간",
     "position": "위치/맥락",
     "dimension": "치수",
-    "identification": "식별",
+    "identification": "식별 정보",
     "other": "기타",
-    "inventory": "인벤토리",
-    "hierarchy": "계층",
+    "inventory": "자료 관리",
+    "hierarchy": "포함 위치",
     "stratigraphy": "층위 관계",
-    "workflow": "작업 흐름",
+    "workflow": "작업 기록",
     "mineralFraction": "미네랄분율",
     "organicFraction": "유기분획"
   },

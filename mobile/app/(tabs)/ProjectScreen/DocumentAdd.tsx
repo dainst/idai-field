@@ -23,6 +23,7 @@ import KoreanFieldworkDraftContextPanel from '@/components/Project/KoreanFieldwo
 import KoreanFieldworkDraftPresetPanel from '@/components/Project/KoreanFieldworkDraftPresetPanel';
 import KoreanFieldworkNarrativeAssistPanel from '@/components/Project/KoreanFieldworkNarrativeAssistPanel';
 import KoreanFieldworkQuickRecordPanel from '@/components/Project/KoreanFieldworkQuickRecordPanel';
+import KoreanFieldworkSoilColorPanel from '@/components/Project/KoreanFieldworkSoilColorPanel';
 import {
   getKoreanFieldworkReturnParam,
   getKoreanFieldworkReturnTarget,
@@ -196,7 +197,7 @@ const DocumentAdd: React.FC = () => {
         missingItems={getMissingDependencies([
           [!repository, '저장소'],
           [!categoryName, '기록 종류'],
-          [!parentDoc, '상위 기록'],
+          [!parentDoc, '포함 위치'],
           [!category, '양식'],
           [!labels, '라벨'],
           [!newResource, '입력값'],
@@ -224,6 +225,7 @@ const DocumentAdd: React.FC = () => {
         />
       }
       category={category}
+      collapseFormFieldsByDefault={true}
       headerText={`${labels.get(category)} 만들기`}
       returnBtnHandler={onReturn}
       formHeader={
@@ -237,22 +239,28 @@ const DocumentAdd: React.FC = () => {
             resource={newResource}
             onApplyPreset={applyResourceUpdates}
           />
-          <KoreanFieldworkNarrativeAssistPanel
-            category={category}
-            resource={newResource}
-            onUpdateResourceField={updateResource}
-          />
-          <KoreanFieldworkDraftContinuationPanel
-            categoryName={categoryName}
-            config={config}
-            onSaveWithTarget={saveButtonHandler}
-          />
           <KoreanFieldworkQuickRecordPanel
             category={category}
             investigationModeId={investigationModeId}
             resource={newResource}
             onUpdateResourceField={updateResource}
             onUpdateResourceFields={applyResourceUpdates}
+          />
+          <KoreanFieldworkNarrativeAssistPanel
+            category={category}
+            resource={newResource}
+            onUpdateResourceField={updateResource}
+          />
+          <KoreanFieldworkSoilColorPanel
+            category={category}
+            resource={newResource}
+            onUpdateResourceField={updateResource}
+            onUpdateResourceFields={applyResourceUpdates}
+          />
+          <KoreanFieldworkDraftContinuationPanel
+            categoryName={categoryName}
+            config={config}
+            onSaveWithTarget={saveButtonHandler}
           />
         </View>
       }

@@ -156,7 +156,7 @@ const ProgressCard: React.FC<{
       {item.detail}
     </Text>
     <View style={styles.metricRow}>
-      <Metric label="하위" value={item.metrics.hierarchyCount} />
+      <Metric label="이어진 기록" value={item.metrics.hierarchyCount} />
       <Metric label="자료" value={item.metrics.evidenceCount} />
       <Metric
         label="확인"

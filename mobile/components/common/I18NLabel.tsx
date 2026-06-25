@@ -8,11 +8,13 @@ interface I18NLabelProps extends TextProps {
 }
 
 const KOREAN_FIELDWORK_GROUP_LABELS: Record<string, string> = {
-  koreanFieldwork: '야장',
-  stem: '기본 정보',
-  hierarchy: '상위 기록',
-  workflow: '관련 작업',
-  properties: '기록 내용',
+  koreanFieldwork: '현장 기록',
+  stem: '핵심 정보',
+  hierarchy: '포함 위치',
+  workflow: '작업 기록',
+  identification: '식별 정보',
+  inventory: '자료 관리',
+  properties: '관찰 내용',
   position: '위치',
   time: '시기',
 };

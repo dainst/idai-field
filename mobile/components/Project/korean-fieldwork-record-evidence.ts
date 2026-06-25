@@ -20,11 +20,11 @@ interface EvidenceDefinition {
   id: string;
   label: string;
   getDocuments: (bundle: EvidenceBundle) => Document[];
-  categories: string[];
+  categories: readonly string[];
   createCategoryName?: string;
 }
 
-const EVIDENCE_TARGET_CATEGORIES = [
+const EVIDENCE_TARGET_CATEGORIES: readonly string[] = [
   C.OPERATION,
   C.TRENCH,
   C.FEATURE_GROUP,
@@ -67,6 +67,13 @@ const EVIDENCE_DEFINITIONS: EvidenceDefinition[] = [
     getDocuments: (bundle: EvidenceBundle) => bundle.drawings,
     categories: EVIDENCE_TARGET_CATEGORIES,
     createCategoryName: C.DRAWING,
+  },
+  {
+    id: 'sketches',
+    label: '약도·스케치',
+    getDocuments: (bundle: EvidenceBundle) => bundle.penMemos,
+    categories: EVIDENCE_TARGET_CATEGORIES,
+    createCategoryName: C.PEN_MEMO,
   },
   {
     id: 'finds',

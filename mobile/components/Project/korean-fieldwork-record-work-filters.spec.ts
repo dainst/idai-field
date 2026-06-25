@@ -25,6 +25,25 @@ describe('Korean fieldwork record work filters', () => {
     )).toBe(false);
   });
 
+  it('matches records marked for field recheck', () => {
+    const pending = createDocument('pending', C.FEATURE, {
+      verificationState: 'pendingDecision',
+    });
+    const recheck = createDocument('recheck', C.TRENCH, {
+      verificationState: 'needsRecheck',
+    });
+    const observed = createDocument('observed', C.TRENCH, {
+      verificationState: 'observedInField',
+    });
+
+    expect(matchesKoreanFieldworkRecordWorkFilter(pending, 'needsReview', [], {}))
+      .toBe(true);
+    expect(matchesKoreanFieldworkRecordWorkFilter(recheck, 'needsReview', [], {}))
+      .toBe(true);
+    expect(matchesKoreanFieldworkRecordWorkFilter(observed, 'needsReview', [], {}))
+      .toBe(false);
+  });
+
   it('matches candidate and investigating feature records', () => {
     const candidate = createDocument('candidate', C.FEATURE, {
       featureRecordingStatus: 'candidate',

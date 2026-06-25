@@ -42,6 +42,23 @@ describe('Korean fieldwork draft continuation helpers', () => {
     expect(options.map((option) => option.id)).toEqual(['edit', 'same']);
   });
 
+  it('prefers sketch memos before finds and samples when continuing feature records', () => {
+    const options = getKoreanFieldworkDraftContinuationOptions(
+      C.FEATURE,
+      createConfig([
+        [C.FEATURE_SEGMENT, C.FEATURE],
+        [C.PEN_MEMO, C.FEATURE],
+        [C.FIND, C.FEATURE],
+        [C.SAMPLE, C.FEATURE],
+      ])
+    );
+
+    expect(options[3].target).toEqual({
+      mode: 'addChild',
+      categoryName: C.PEN_MEMO,
+    });
+  });
+
   it('stays hidden for generic non-fieldwork categories', () => {
     expect(getKoreanFieldworkDraftContinuationOptions(
       'Pottery',

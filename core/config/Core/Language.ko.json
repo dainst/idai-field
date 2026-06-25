@@ -11,16 +11,16 @@
       "label": "간략 설명"
     },
     "includesStratigraphicalUnits": {
-      "label": "유구/층위 단위 포함"
+      "label": "유구/층위 단위 묶음"
     },
     "hasChildren": {
-      "label": "하위 자료"
+      "label": "묶어 둔 기록"
     },
     "isSubjectOf": {
-      "label": "대상 자료"
+      "label": "관련 작업 대상"
     },
     "isResultOf": {
-      "label": "결과 자료"
+      "label": "관련 작업 결과"
     }
   },
   "categories": {
@@ -52,22 +52,22 @@
   },
   "relations": {
     "isRecordedIn": {
-      "label": "조사 단위에 기록됨"
+      "label": "현장 단위에 기록"
     },
     "liesWithin": {
-      "label": "내부에 위치"
+      "label": "범위 안"
     },
     "includes": {
-      "label": "포함"
+      "label": "묶어 포함"
     },
     "isPresentIn": {
       "label": "단면/평면에 나타남"
     },
     "isAbove": {
-      "label": "상부"
+      "label": "위에 놓임"
     },
     "isBelow": {
-      "label": "하부"
+      "label": "아래에 놓임"
     },
     "isSameAs": {
       "label": "동일"
@@ -85,13 +85,13 @@
       "label": "채워짐"
     },
     "abuts": {
-      "label": "접대"
+      "label": "맞닿음"
     },
     "isAbuttedBy": {
-      "label": "인접자"
+      "label": "맞닿은 대상"
     },
     "bondsWith": {
-      "label": "다음과의 유대관계"
+      "label": "결합됨"
     },
     "borders": {
       "label": "경계를 접함"

@@ -1,0 +1,37 @@
+<div *ngIf="shouldShow()" class="korean-fieldwork-orientation-panel">
+    <div class="korean-fieldwork-orientation-header">
+        <span class="mdi mdi-compass-outline"></span>
+        <span>장축 방위</span>
+    </div>
+
+    <input class="form-control korean-fieldwork-orientation-input"
+           [class.is-invalid]="isOrientationInvalid()"
+           [ngModel]="getValue(fields.longAxisOrientation)"
+           (ngModelChange)="setLongAxisOrientation($event)"
+           (blur)="normalizeOrientation()"
+           placeholder="N-E 또는 N-23°-E">
+
+    <div class="korean-fieldwork-orientation-chip-row">
+        <button *ngFor="let option of orientationPresets"
+                type="button"
+                class="btn korean-fieldwork-orientation-chip"
+                [class.active]="isOrientationPresetActive(option.value)"
+                (click)="applyOrientationPreset(option.value)">
+            {{option.label}}
+        </button>
+    </div>
+
+    <div class="korean-fieldwork-orientation-hint"
+         [class.invalid]="isOrientationInvalid()">
+        {{getOrientationHint()}}
+    </div>
+
+    <div *ngIf="hasField(fields.orientationNote)"
+         class="korean-fieldwork-orientation-section">
+        <div class="korean-fieldwork-orientation-label">방위 메모</div>
+        <textarea class="form-control korean-fieldwork-orientation-textarea"
+                  [ngModel]="getValue(fields.orientationNote)"
+                  (ngModelChange)="setValue(fields.orientationNote, $event)"
+                  placeholder="재측정 필요, 나침반 흔들림, 현장 특이사항"></textarea>
+    </div>
+</div>

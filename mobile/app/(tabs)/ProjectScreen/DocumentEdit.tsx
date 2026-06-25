@@ -22,6 +22,7 @@ import KoreanFieldworkRecordActionPanel from '@/components/Project/KoreanFieldwo
 import KoreanFieldworkRecordContextPanel from '@/components/Project/KoreanFieldworkRecordContextPanel';
 import KoreanFieldworkNarrativeAssistPanel from '@/components/Project/KoreanFieldworkNarrativeAssistPanel';
 import KoreanFieldworkQuickRecordPanel from '@/components/Project/KoreanFieldworkQuickRecordPanel';
+import KoreanFieldworkSoilColorPanel from '@/components/Project/KoreanFieldworkSoilColorPanel';
 import {
   getKoreanFieldworkReturnParam,
   getKoreanFieldworkReturnTarget,
@@ -181,6 +182,7 @@ const DocumentEdit: React.FC = () => {
         />
       }
       category={category}
+      collapseFormFieldsByDefault={true}
       headerText={`${labels.get(category)} 편집: ${
         document.resource.identifier
       }`}
@@ -203,14 +205,20 @@ const DocumentEdit: React.FC = () => {
             onAddDocumentOfCategory={addRelatedDocument}
             onOpenDocument={openRelatedDocument}
           />
+          <KoreanFieldworkQuickRecordPanel
+            category={category}
+            investigationModeId={investigationModeId}
+            resource={resource}
+            onUpdateResourceField={updateResource}
+            onUpdateResourceFields={applyResourceUpdates}
+          />
           <KoreanFieldworkNarrativeAssistPanel
             category={category}
             resource={resource}
             onUpdateResourceField={updateResource}
           />
-          <KoreanFieldworkQuickRecordPanel
+          <KoreanFieldworkSoilColorPanel
             category={category}
-            investigationModeId={investigationModeId}
             resource={resource}
             onUpdateResourceField={updateResource}
             onUpdateResourceFields={applyResourceUpdates}

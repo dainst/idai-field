@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Document } from 'idai-field-core';
 
 export type KoreanFieldworkInvestigationModeId =
   'trialTrench'
@@ -12,6 +13,11 @@ export interface KoreanFieldworkInvestigationMode {
   label: string;
   primaryAction: string;
   requirements: readonly string[];
+}
+
+export interface KoreanFieldworkProjectSetupDefaults {
+  boundarySummary?: string;
+  investigationModeId?: KoreanFieldworkInvestigationModeId;
 }
 
 export const KOREAN_FIELDWORK_INVESTIGATION_MODES: readonly KoreanFieldworkInvestigationMode[] = [
@@ -38,7 +44,8 @@ export const KOREAN_FIELDWORK_INVESTIGATION_MODES: readonly KoreanFieldworkInves
       '제토와 유구 성격 파악',
       '유물 성격과 시대 추정',
       '조사 전 사진',
-      '반절·토층둑·조사 중 사진',
+      '조사 중 사진과 토층 확인',
+      '스케치·약측·실측 연결',
       '토층사진과 유물 노출 사진',
       '유물 수습과 완료 사진',
       '실측',
@@ -71,10 +78,16 @@ export const KOREAN_FIELDWORK_INVESTIGATION_MODES: readonly KoreanFieldworkInves
 ];
 
 const STORAGE_KEY_PREFIX = 'koreanFieldwork.investigationMode.v1';
+const BOUNDARY_SUMMARY_STORAGE_KEY_PREFIX =
+  'koreanFieldwork.boundarySummary.v1';
 
 export const createKoreanFieldworkInvestigationModeStorageKey = (
   projectId: string
 ): string => `${STORAGE_KEY_PREFIX}.${projectId}`;
+
+export const createKoreanFieldworkBoundarySummaryStorageKey = (
+  projectId: string
+): string => `${BOUNDARY_SUMMARY_STORAGE_KEY_PREFIX}.${projectId}`;
 
 export const getKoreanFieldworkInvestigationMode = (
   id: unknown
@@ -93,6 +106,42 @@ export const loadKoreanFieldworkInvestigationModeId = async (
   return getKoreanFieldworkInvestigationMode(storedValue)?.id;
 };
 
+export const loadKoreanFieldworkProjectSetupDefaults = async (
+  projectId: string,
+  projectDocument?: Document
+): Promise<KoreanFieldworkProjectSetupDefaults> => {
+  const [
+    storedInvestigationModeId,
+    storedBoundarySummary,
+  ] = await Promise.all([
+    loadKoreanFieldworkInvestigationModeId(projectId),
+    loadKoreanFieldworkBoundarySummary(projectId),
+  ]);
+  const documentDefaults =
+    getKoreanFieldworkProjectSetupDefaultsFromDocument(projectDocument);
+  const setupDefaults = {
+    investigationModeId:
+      storedInvestigationModeId ?? documentDefaults.investigationModeId,
+    boundarySummary:
+      storedBoundarySummary ?? documentDefaults.boundarySummary,
+  };
+
+  if (!storedInvestigationModeId && setupDefaults.investigationModeId) {
+    await saveKoreanFieldworkInvestigationModeId(
+      projectId,
+      setupDefaults.investigationModeId
+    ).catch(() => undefined);
+  }
+  if (!storedBoundarySummary && setupDefaults.boundarySummary) {
+    await saveKoreanFieldworkBoundarySummary(
+      projectId,
+      setupDefaults.boundarySummary
+    ).catch(() => undefined);
+  }
+
+  return setupDefaults;
+};
+
 export const saveKoreanFieldworkInvestigationModeId = async (
   projectId: string,
   modeId: KoreanFieldworkInvestigationModeId
@@ -101,4 +150,65 @@ export const saveKoreanFieldworkInvestigationModeId = async (
     createKoreanFieldworkInvestigationModeStorageKey(projectId),
     modeId
   );
+};
+
+export const getKoreanFieldworkProjectSetupDefaultsFromDocument = (
+  projectDocument: Document | undefined
+): KoreanFieldworkProjectSetupDefaults => {
+  const resource = projectDocument?.resource as Record<string, unknown> | undefined;
+  const boundarySummary = typeof resource?.projectBoundarySummary === 'string'
+    ? resource.projectBoundarySummary.trim()
+    : undefined;
+
+  return {
+    investigationModeId: getKoreanFieldworkInvestigationMode(
+      resource?.projectInvestigationMode
+    )?.id,
+    boundarySummary: boundarySummary || undefined,
+  };
+};
+
+export const createKoreanFieldworkProjectSetupResourceUpdates = (
+  defaults: KoreanFieldworkProjectSetupDefaults
+): Record<string, unknown> => {
+  const updates: Record<string, unknown> = {};
+  const boundarySummary = defaults.boundarySummary?.trim();
+
+  if (defaults.investigationModeId) {
+    updates.projectInvestigationMode = defaults.investigationModeId;
+  }
+
+  if (boundarySummary) {
+    updates.projectBoundarySetupState = 'draftBoundary';
+    updates.projectBoundarySummary = boundarySummary;
+    updates.shortDescription = boundarySummary;
+  }
+
+  return updates;
+};
+
+export const loadKoreanFieldworkBoundarySummary = async (
+  projectId: string
+): Promise<string | undefined> => {
+  const storedValue = await AsyncStorage.getItem(
+    createKoreanFieldworkBoundarySummaryStorageKey(projectId)
+  );
+  const boundarySummary = storedValue?.trim();
+
+  return boundarySummary ? boundarySummary : undefined;
+};
+
+export const saveKoreanFieldworkBoundarySummary = async (
+  projectId: string,
+  boundarySummary: string
+) => {
+  const normalizedSummary = boundarySummary.trim();
+  const storageKey = createKoreanFieldworkBoundarySummaryStorageKey(projectId);
+
+  if (normalizedSummary.length === 0) {
+    await AsyncStorage.removeItem(storageKey);
+    return;
+  }
+
+  await AsyncStorage.setItem(storageKey, normalizedSummary);
 };

@@ -1,6 +1,10 @@
 {
   "groups": {
-    "koreanFieldwork": "Korean fieldwork"
+    "hierarchy": "Parent/child records",
+    "identification": "Administrative identification",
+    "inventory": "Custody and inventory",
+    "koreanFieldwork": "Korean fieldwork",
+    "workflow": "Related records"
   },
   "categories": {
     "FieldRecordQualityReview": {
@@ -201,6 +205,18 @@
         },
         "verificationState": {
           "label": "Verification state"
+        },
+        "projectInvestigationMode": {
+          "label": "Investigation mode",
+          "description": "The primary investigation mode selected when the project starts."
+        },
+        "projectBoundarySetupState": {
+          "label": "Survey boundary setup state",
+          "description": "Whether the project survey boundary is not set, drafted, confirmed, or needs revision."
+        },
+        "projectBoundarySummary": {
+          "label": "Survey boundary note",
+          "description": "Short note on permit area, parcels, GPS survey, map source, or other boundary basis."
         }
       }
     },
@@ -391,6 +407,18 @@
     "Operation": {
       "label": "Investigation area",
       "fields": {
+        "projectInvestigationMode": {
+          "label": "Investigation mode",
+          "description": "The primary investigation mode selected when the project starts."
+        },
+        "projectBoundarySetupState": {
+          "label": "Survey boundary setup state",
+          "description": "Whether the project survey boundary is not set, drafted, confirmed, or needs revision."
+        },
+        "projectBoundarySummary": {
+          "label": "Survey boundary note",
+          "description": "Short note on permit area, parcels, GPS survey, map source, or other boundary basis."
+        },
         "dailyLogContent": {
           "label": "Daily work log"
         },
@@ -464,6 +492,22 @@
       "fields": {
         "featureInvestigationChecklist": {
           "label": "Investigation workflow checklist"
+        },
+        "longAxisOrientation": {
+          "label": "Long-axis orientation",
+          "description": "Record the field notation exactly, e.g. N-23°-E for a long axis 23° east of north."
+        },
+        "shortAxisOrientation": {
+          "label": "Short-axis orientation",
+          "description": "Record the short-axis bearing in the same field notation, e.g. N-67°-W."
+        },
+        "orientationReference": {
+          "label": "Magnetic north note",
+          "description": "Treat blank values as magnetic north; add a note only when the reading was corrected or remeasured."
+        },
+        "orientationNote": {
+          "label": "Orientation note",
+          "description": "Notes on estimated, corrected, uncertain, or remeasured orientation values."
         },
         "fieldRecordQuality": {
           "label": "Field record quality"
@@ -654,6 +698,18 @@
         "featureGeometryRevisionNote": {
           "label": "Geometry revision note"
         },
+        "fieldIdentifier": {
+          "label": "Field identifier"
+        },
+        "reportIdentifier": {
+          "label": "Report identifier"
+        },
+        "identifierRevisionHistory": {
+          "label": "Identifier revision history"
+        },
+        "identifierRevisionNote": {
+          "label": "Identifier revision reason"
+        },
         "featureInterpretationType": {
           "label": "Feature interpretation type"
         },
@@ -710,6 +766,18 @@
         "featureGeometryRevisionNote": {
           "label": "Geometry revision note"
         },
+        "fieldIdentifier": {
+          "label": "Field identifier"
+        },
+        "reportIdentifier": {
+          "label": "Report identifier"
+        },
+        "identifierRevisionHistory": {
+          "label": "Identifier revision history"
+        },
+        "identifierRevisionNote": {
+          "label": "Identifier revision reason"
+        },
         "featureInvestigationChecklist": {
           "label": "Investigation checklist"
         },
@@ -718,6 +786,22 @@
         },
         "featureChecklistNote": {
           "label": "Checklist note"
+        },
+        "longAxisOrientation": {
+          "label": "Long-axis orientation",
+          "description": "Record the field notation exactly, e.g. N-23°-E for a long axis 23° east of north."
+        },
+        "shortAxisOrientation": {
+          "label": "Short-axis orientation",
+          "description": "Record the short-axis bearing in the same field notation, e.g. N-67°-W."
+        },
+        "orientationReference": {
+          "label": "Magnetic north note",
+          "description": "Treat blank values as magnetic north; add a note only when the reading was corrected or remeasured."
+        },
+        "orientationNote": {
+          "label": "Orientation note",
+          "description": "Notes on estimated, corrected, uncertain, or remeasured orientation values."
         },
         "fieldRecordQuality": {
           "label": "Field record quality"
@@ -1024,6 +1108,18 @@
         "featureGeometryRevisionNote": {
           "label": "Geometry revision note"
         },
+        "fieldIdentifier": {
+          "label": "Field identifier"
+        },
+        "reportIdentifier": {
+          "label": "Report identifier"
+        },
+        "identifierRevisionHistory": {
+          "label": "Identifier revision history"
+        },
+        "identifierRevisionNote": {
+          "label": "Identifier revision reason"
+        },
         "featureInvestigationChecklist": {
           "label": "Investigation checklist"
         },
@@ -1032,6 +1128,22 @@
         },
         "featureChecklistNote": {
           "label": "Checklist note"
+        },
+        "longAxisOrientation": {
+          "label": "Long-axis orientation",
+          "description": "Record the field notation exactly, e.g. N-23°-E for a long axis 23° east of north."
+        },
+        "shortAxisOrientation": {
+          "label": "Short-axis orientation",
+          "description": "Record the short-axis bearing in the same field notation, e.g. N-67°-W."
+        },
+        "orientationReference": {
+          "label": "Magnetic north note",
+          "description": "Treat blank values as magnetic north; add a note only when the reading was corrected or remeasured."
+        },
+        "orientationNote": {
+          "label": "Orientation note",
+          "description": "Notes on estimated, corrected, uncertain, or remeasured orientation values."
         },
         "fieldRecordQuality": {
           "label": "Field record quality"
@@ -1537,6 +1649,22 @@
         "soilColorNote": {
           "label": "Soil color note"
         },
+        "longAxisOrientation": {
+          "label": "Long-axis orientation",
+          "description": "Record the field notation exactly, e.g. N-23°-E for a long axis 23° east of north."
+        },
+        "shortAxisOrientation": {
+          "label": "Short-axis orientation",
+          "description": "Record the short-axis bearing in the same field notation, e.g. N-67°-W."
+        },
+        "orientationReference": {
+          "label": "Magnetic north note",
+          "description": "Treat blank values as magnetic north; add a note only when the reading was corrected or remeasured."
+        },
+        "orientationNote": {
+          "label": "Orientation note",
+          "description": "Notes on estimated, corrected, uncertain, or remeasured orientation values."
+        },
         "fieldRecordQuality": {
           "label": "Field record quality"
         },
@@ -1577,6 +1705,12 @@
         },
         "soilColorCaptureCondition": {
           "label": "Capture condition"
+        },
+        "soilColorAssistCandidates": {
+          "label": "Photo soil color candidates"
+        },
+        "soilColorAssistStatus": {
+          "label": "Photo soil color assist status"
         },
         "soilProfileColorSwatches": {
           "label": "Color swatch JSON"

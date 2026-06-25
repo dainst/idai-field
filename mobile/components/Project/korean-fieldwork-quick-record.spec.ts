@@ -4,13 +4,17 @@ import {
 } from 'idai-field-core';
 import {
   FIELDWORK_QUICK_FIELDS,
+  describeKoreanFieldworkLongAxisOrientation,
   getKoreanFieldworkChecklistQuickOptions,
   getKoreanFieldworkFeatureTypeUpdates,
   getKoreanFieldworkQuickRecordAvailability,
   getKoreanFieldworkQuickPresetUpdates,
   getStringArrayFieldValues,
   hasKoreanFieldworkQuickRecordActions,
+  isKoreanFieldworkLongAxisOrientation,
   isKoreanFieldworkChecklistRecord,
+  LONG_AXIS_ORIENTATION_QUICK_OPTIONS,
+  normalizeKoreanFieldworkLongAxisOrientation,
   toggleStringArrayFieldValue,
 } from './korean-fieldwork-quick-record';
 import { KOREAN_FIELDWORK_CATEGORIES } from './korean-fieldwork-categories';
@@ -35,9 +39,10 @@ describe('Korean fieldwork quick record helpers', () => {
       checklist: true,
       featureType: false,
       featureStatus: false,
+      axisOrientation: false,
       period: false,
       quality: true,
-      verification: false,
+      verification: true,
       timing: true,
     });
     expect(hasKoreanFieldworkQuickRecordActions(availability)).toBe(true);
@@ -53,6 +58,7 @@ describe('Korean fieldwork quick record helpers', () => {
       checklist: false,
       featureType: false,
       featureStatus: false,
+      axisOrientation: false,
       period: false,
       quality: true,
       verification: false,
@@ -68,6 +74,25 @@ describe('Korean fieldwork quick record helpers', () => {
 
     expect(availability.checklist).toBe(false);
     expect(hasKoreanFieldworkQuickRecordActions(availability)).toBe(false);
+  });
+
+  it('shows verification as a standalone quick action for fieldwork records', () => {
+    const availability = getKoreanFieldworkQuickRecordAvailability(
+      createCategoryForm([FIELDWORK_QUICK_FIELDS.verification]),
+      createResource(C.TRENCH)
+    );
+
+    expect(availability).toEqual({
+      checklist: false,
+      featureType: false,
+      featureStatus: false,
+      axisOrientation: false,
+      period: false,
+      quality: false,
+      verification: true,
+      timing: false,
+    });
+    expect(hasKoreanFieldworkQuickRecordActions(availability)).toBe(true);
   });
 
   it('treats trenches as checklist records only in trial trench mode', () => {
@@ -99,12 +124,89 @@ describe('Korean fieldwork quick record helpers', () => {
       checklist: false,
       featureType: false,
       featureStatus: true,
+      axisOrientation: false,
       period: false,
       quality: false,
       verification: false,
       timing: false,
     });
     expect(hasKoreanFieldworkQuickRecordActions(availability)).toBe(true);
+  });
+
+  it('shows long-axis orientation quick input for axis-aware field records', () => {
+    const availability = getKoreanFieldworkQuickRecordAvailability(
+      createCategoryForm([FIELDWORK_QUICK_FIELDS.longAxisOrientation]),
+      createResource(C.FEATURE)
+    );
+
+    expect(availability).toEqual({
+      checklist: false,
+      featureType: false,
+      featureStatus: false,
+      axisOrientation: true,
+      period: false,
+      quality: false,
+      verification: false,
+      timing: false,
+    });
+    expect(hasKoreanFieldworkQuickRecordActions(availability)).toBe(true);
+  });
+
+  it('normalizes quadrant-bearing long-axis orientation entries', () => {
+    expect(LONG_AXIS_ORIENTATION_QUICK_OPTIONS.map((option) => option.value))
+      .toEqual([
+        'N-E',
+        'N-W',
+        'S-E',
+        'S-W',
+      ]);
+    expect(normalizeKoreanFieldworkLongAxisOrientation('n-e'))
+      .toBe('N-E');
+    expect(normalizeKoreanFieldworkLongAxisOrientation('북에서 동쪽으로'))
+      .toBe('N-E');
+    expect(normalizeKoreanFieldworkLongAxisOrientation('남서'))
+      .toBe('S-W');
+    expect(normalizeKoreanFieldworkLongAxisOrientation('n-23도-e'))
+      .toBe('N-23°-E');
+    expect(normalizeKoreanFieldworkLongAxisOrientation('북 23도 동'))
+      .toBe('N-23°-E');
+    expect(normalizeKoreanFieldworkLongAxisOrientation('북에서 동쪽으로 23도'))
+      .toBe('N-23°-E');
+    expect(normalizeKoreanFieldworkLongAxisOrientation('NE 23'))
+      .toBe('N-23°-E');
+    expect(normalizeKoreanFieldworkLongAxisOrientation('북동 23도'))
+      .toBe('N-23°-E');
+    expect(normalizeKoreanFieldworkLongAxisOrientation('남-45-서'))
+      .toBe('S-45°-W');
+    expect(normalizeKoreanFieldworkLongAxisOrientation('남서 45도'))
+      .toBe('S-45°-W');
+    expect(normalizeKoreanFieldworkLongAxisOrientation('S 45 W'))
+      .toBe('S-45°-W');
+    expect(normalizeKoreanFieldworkLongAxisOrientation('N-120°-E'))
+      .toBe('N-120°-E');
+    expect(isKoreanFieldworkLongAxisOrientation('N-23°-E')).toBe(true);
+    expect(isKoreanFieldworkLongAxisOrientation('N-E')).toBe(true);
+    expect(isKoreanFieldworkLongAxisOrientation('북에서 동쪽으로')).toBe(true);
+    expect(isKoreanFieldworkLongAxisOrientation('N-23도-E')).toBe(true);
+    expect(isKoreanFieldworkLongAxisOrientation('북 23도 동')).toBe(true);
+    expect(isKoreanFieldworkLongAxisOrientation('북에서 동쪽으로 23도')).toBe(true);
+    expect(isKoreanFieldworkLongAxisOrientation('NE 23')).toBe(true);
+    expect(isKoreanFieldworkLongAxisOrientation('북동 23도')).toBe(true);
+    expect(isKoreanFieldworkLongAxisOrientation('남서 45도')).toBe(true);
+    expect(isKoreanFieldworkLongAxisOrientation('북-23도-남')).toBe(false);
+    expect(isKoreanFieldworkLongAxisOrientation('N-23°-S')).toBe(false);
+    expect(isKoreanFieldworkLongAxisOrientation('N-120°-E')).toBe(false);
+  });
+
+  it('describes valid long-axis orientation entries in Korean', () => {
+    expect(describeKoreanFieldworkLongAxisOrientation('N-23°-E'))
+      .toBe('N-23°-E = 북에서 동쪽으로 23°');
+    expect(describeKoreanFieldworkLongAxisOrientation('N-E'))
+      .toBe('N-E = 북에서 동쪽으로 기운 장축');
+    expect(describeKoreanFieldworkLongAxisOrientation('남서 45도'))
+      .toBe('S-45°-W = 남에서 서쪽으로 45°');
+    expect(describeKoreanFieldworkLongAxisOrientation('N-120°-E'))
+      .toBeUndefined();
   });
 
   it('toggles string-array field values and ignores malformed entries', () => {
@@ -166,6 +268,7 @@ describe('Korean fieldwork quick record helpers', () => {
       checklist: true,
       featureType: false,
       featureStatus: true,
+      axisOrientation: false,
       period: false,
       quality: true,
       verification: false,
@@ -244,6 +347,7 @@ describe('Korean fieldwork quick record helpers', () => {
       checklist: true,
       featureType: false,
       featureStatus: true,
+      axisOrientation: false,
       period: false,
       quality: true,
       verification: false,

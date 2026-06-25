@@ -71,6 +71,7 @@ const DeleteProjectModal: React.FC<DeleteProjectModalProps> = ({
                 variant="danger"
                 onPress={onDelete}
                 isDisabled={password !== DELETE_PROJECT_CONFIRMATION_PASSWORD}
+                testID="confirm-delete-project-button"
               />
             }
           />

@@ -32,7 +32,14 @@ export const KOREAN_FIELDWORK_FEATURE_TYPE_OPTIONS: readonly KoreanFieldworkFeat
     label: '구상유구',
     identifierPrefix: '구상유구',
     featureInterpretationTypeValue: 'ditchOrGully',
-    description: '방향, 폭, 연결 관계를 확인',
+    description: '방향, 폭, 접속 관계를 확인',
+  },
+  {
+    value: 'kiln',
+    label: '가마',
+    identifierPrefix: '가마',
+    featureInterpretationTypeValue: 'kiln',
+    description: '연소부·소성부·연도부를 확인',
   },
   {
     value: 'dwelling',
@@ -53,6 +60,13 @@ export const KOREAN_FIELDWORK_FEATURE_TYPE_OPTIONS: readonly KoreanFieldworkFeat
     label: '목책열',
     identifierPrefix: '목책열',
     description: '주혈열, 진행 방향, 간격을 확인',
+  },
+  {
+    value: 'production',
+    label: '생산유구',
+    identifierPrefix: '생산유구',
+    featureInterpretationTypeValue: 'productionFeature',
+    description: '공정, 원료, 부속시설을 확인',
   },
   {
     value: 'building',
@@ -85,6 +99,8 @@ export const getKoreanFieldworkFeatureTypeLabelFromInterpretationType = (
 ): string | undefined => {
   const values = Array.isArray(value) ? value : [value];
   const option = KOREAN_FIELDWORK_FEATURE_TYPE_OPTIONS.find((candidate) =>
+    typeof candidate.featureInterpretationTypeValue === 'string'
+    &&
     values.includes(candidate.featureInterpretationTypeValue)
   );
 

@@ -3,6 +3,7 @@ import {
   isKoreanFieldworkDocumentAncestorOfScope,
   isKoreanFieldworkDocumentInScope,
 } from './korean-fieldwork-scope';
+import { Document } from 'idai-field-core';
 import { KOREAN_FIELDWORK_CATEGORIES } from './korean-fieldwork-categories';
 
 const C = KOREAN_FIELDWORK_CATEGORIES;
@@ -22,7 +23,7 @@ describe('Korean fieldwork scope helpers', () => {
     const otherTrench = createDoc('trench-2', C.TRENCH, 'trench-2', {
       liesWithin: [operation.resource.id],
     });
-    const documents = [operation, trench, feature, photo, otherTrench] as any[];
+    const documents = [operation, trench, feature, photo, otherTrench];
     const documentsById = toDocumentMap(documents);
 
     expect(getKoreanFieldworkScopedDocuments(
@@ -44,7 +45,7 @@ describe('Korean fieldwork scope helpers', () => {
     const feature = createDoc('feature-1', C.FEATURE, 'feature-1', {
       liesWithin: [trench.resource.id],
     });
-    const documents = [operation, trench, feature] as any[];
+    const documents = [operation, trench, feature];
 
     expect(getKoreanFieldworkScopedDocuments(
       documents,
@@ -66,7 +67,7 @@ describe('Korean fieldwork scope helpers', () => {
     const segment = createDoc('segment-1', C.FEATURE_SEGMENT, 'segment-1', {
       liesWithin: [feature.resource.id],
     });
-    const documents = [feature, segment] as any[];
+    const documents = [feature, segment];
 
     expect(getKoreanFieldworkScopedDocuments(
       documents,
@@ -85,7 +86,7 @@ describe('Korean fieldwork scope helpers', () => {
     const feature = createDoc('feature-1', C.FEATURE, 'feature-1', {
       liesWithin: ['trench-1'],
     });
-    const documents = [trench, feature] as any[];
+    const documents = [trench, feature];
     const documentsById = toDocumentMap(documents);
 
     expect(isKoreanFieldworkDocumentInScope(feature, trench, documentsById))
@@ -95,7 +96,7 @@ describe('Korean fieldwork scope helpers', () => {
   });
 });
 
-const toDocumentMap = (documents: any[]) => new Map(documents.map((document) => [
+const toDocumentMap = (documents: Document[]) => new Map(documents.map((document) => [
   document.resource.id,
   document,
 ]));
@@ -105,11 +106,14 @@ const createDoc = (
   category: string,
   identifier: string,
   relations: Record<string, string[]> = {}
-) => ({
+): Document => ({
+  _id: id,
   resource: {
     id,
     identifier,
     category,
     relations,
   },
+  created: { user: 'test', date: new Date(0) },
+  modified: [],
 });

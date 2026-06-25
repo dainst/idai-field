@@ -5,7 +5,6 @@ import {
     CategoryForm,
     I18N,
     KOREAN_FIELDWORK_PROJECT_LANGUAGES,
-    KOREAN_FIELDWORK_PROJECT_PREFIX,
     KOREAN_FIELDWORK_TEMPLATE_ID,
     Labels,
     ProjectConfiguration,
@@ -16,15 +15,22 @@ import { ConfigurationIndex } from '../../services/configuration/index/configura
 import { Language, Languages } from '../../services/languages';
 import { reloadAndSwitchToHomeRoute } from '../../services/reload';
 import { SettingsProvider } from '../../services/settings/settings-provider';
-import { SettingsService } from '../../services/settings/settings-service';
+import {
+    KoreanFieldworkProjectSetup,
+    SettingsService
+} from '../../services/settings/settings-service';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { ProjectIdentifierValidatorMessagesConversion } from '../messages/project-identifier-validator-messages-conversion';
 import { MsgWithParams } from '../messages/msg-with-params';
 import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
+import {
+    KOREAN_FIELDWORK_INVESTIGATION_MODES,
+    isKoreanFieldworkProjectSetupFilledIn
+} from '../../util/korean-fieldwork-project-setup';
 
-const remote = window.require('@electron/remote');
+import { electronRemote as remote } from 'src/app/electron/electron';
 
 
 @Component({
@@ -44,6 +50,8 @@ export class CreateProjectModalComponent implements OnInit {
 
     public projectIdentifier: string
     public projectName: I18N.String|undefined;
+    public koreanInvestigationMode: string = '';
+    public koreanBoundarySummary: string = '';
     public selectedTemplate: Template;
     public selectedLanguages: string[];
     public selectedLanguageObjects: Array<Language>;
@@ -52,6 +60,12 @@ export class CreateProjectModalComponent implements OnInit {
     public page: number = 0;
 
     public languages: { [languageCode: string]: Language };
+    public readonly koreanInvestigationModes = KOREAN_FIELDWORK_INVESTIGATION_MODES;
+    public readonly koreanFieldworkStartSteps: string[] = [
+        '프로젝트 기본 조사 방식을 정합니다.',
+        '조사 경계 기준을 문장으로 남깁니다.',
+        '프로젝트 생성 후 지도에서 경계를 그리거나 가져옵니다.'
+    ];
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -141,7 +155,9 @@ export class CreateProjectModalComponent implements OnInit {
             case 1:
                 return this.selectedLanguages && this.selectedLanguages.length > 0;
             case 2:
-                return this.projectIdentifier && !this.creating;
+                return !!this.projectIdentifier
+                    && !this.creating
+                    && this.isKoreanFieldworkSetupFilledIn();
         }
     }
 
@@ -179,7 +195,8 @@ export class CreateProjectModalComponent implements OnInit {
                 this.selectedTemplate,
                 this.selectedLanguages,
                 this.projectName,
-                remote.getGlobal('switches') && remote.getGlobal('switches').destroy_before_create
+                remote.getGlobal('switches') && remote.getGlobal('switches').destroy_before_create,
+                this.getKoreanFieldworkProjectSetup()
             );
             reloadAndSwitchToHomeRoute();
         } catch (msgWithParams) {
@@ -207,6 +224,10 @@ export class CreateProjectModalComponent implements OnInit {
 
         validationErrorMessage = this.validateProjectName();
         if (validationErrorMessage) return validationErrorMessage;
+
+        if (!this.isKoreanFieldworkSetupFilledIn()) {
+            return [M.PROJECT_CREATION_ERROR_KOREAN_FIELDWORK_SETUP];
+        }
     }
 
 
@@ -233,11 +254,38 @@ export class CreateProjectModalComponent implements OnInit {
 
         if (!this.isKoreanFieldworkTemplate()) return;
 
-        if (!this.projectIdentifier) this.projectIdentifier = KOREAN_FIELDWORK_PROJECT_PREFIX;
         this.selectedLanguages = KOREAN_FIELDWORK_PROJECT_LANGUAGES.slice();
         this.selectedLanguageObjects = this.selectedLanguages.map(languageCode => this.languages[languageCode]);
     }
 
 
-    private isKoreanFieldworkTemplate = () => this.selectedTemplate?.name === KOREAN_FIELDWORK_TEMPLATE_ID;
+    public isKoreanFieldworkTemplate = () => this.selectedTemplate?.name === KOREAN_FIELDWORK_TEMPLATE_ID;
+
+
+    public getKoreanFieldworkSetupStatus(): string {
+
+        if (!this.koreanInvestigationMode?.trim()) return '조사 방식을 선택해야 프로젝트를 만들 수 있습니다.';
+        if (!this.koreanBoundarySummary?.trim()) return '조사 경계를 입력해야 프로젝트를 만들 수 있습니다.';
+
+        return '프로젝트 생성 후 지도에서 조사 경계를 그리거나 가져와 확정하세요.';
+    }
+
+
+    private isKoreanFieldworkSetupFilledIn(): boolean {
+
+        return !this.isKoreanFieldworkTemplate()
+            || isKoreanFieldworkProjectSetupFilledIn(this.koreanInvestigationMode, this.koreanBoundarySummary);
+    }
+
+
+    private getKoreanFieldworkProjectSetup(): KoreanFieldworkProjectSetup|undefined {
+
+        if (!this.isKoreanFieldworkTemplate()) return undefined;
+
+        return {
+            projectInvestigationMode: this.koreanInvestigationMode.trim(),
+            projectBoundarySetupState: 'draftBoundary',
+            projectBoundarySummary: this.koreanBoundarySummary.trim()
+        };
+    }
 }

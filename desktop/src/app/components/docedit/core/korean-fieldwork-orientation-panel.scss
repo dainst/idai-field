@@ -1,0 +1,70 @@
+korean-fieldwork-orientation-panel {
+  .korean-fieldwork-orientation-panel {
+    background: #f5f9ff;
+    border: 1px solid #9cc2f2;
+    border-radius: 6px;
+    margin: 0 15px 14px 0;
+    padding: 12px;
+  }
+
+  .korean-fieldwork-orientation-header {
+    align-items: center;
+    color: #175cd3;
+    display: flex;
+    font-size: 16px;
+    font-weight: 700;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .korean-fieldwork-orientation-input,
+  .korean-fieldwork-orientation-textarea {
+    margin-top: 8px;
+  }
+
+  .korean-fieldwork-orientation-textarea {
+    min-height: 82px;
+  }
+
+  .korean-fieldwork-orientation-chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  .korean-fieldwork-orientation-chip {
+    background: #fff;
+    border: 1px solid #9cc2f2;
+    border-radius: 14px;
+    color: #164c96;
+    font-size: 13px;
+    line-height: 1.1;
+    padding: 5px 10px;
+
+    &.active,
+    &:hover {
+      background: #175cd3;
+      border-color: #175cd3;
+      color: #fff;
+    }
+  }
+
+  .korean-fieldwork-orientation-hint {
+    color: #45658f;
+    font-size: 12px;
+    margin-top: 6px;
+
+    &.invalid {
+      color: #b42318;
+      font-weight: 700;
+    }
+  }
+
+  .korean-fieldwork-orientation-label {
+    color: #4b5563;
+    font-size: 13px;
+    font-weight: 700;
+    margin-top: 12px;
+  }
+}

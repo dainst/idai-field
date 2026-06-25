@@ -35,6 +35,8 @@ import KoreanFieldworkScopePanel from '@/components/Project/KoreanFieldworkScope
 import KoreanFieldworkUnitMatrix from '@/components/Project/KoreanFieldworkUnitMatrix';
 import KoreanFieldworkWorkbenchPanel from '@/components/Project/KoreanFieldworkWorkbenchPanel';
 import {
+  KOREAN_FIELDWORK_CATEGORY_LABELS,
+  getKoreanFieldworkDisplayIdentifier,
   getKoreanFieldworkCategoryLabel,
   KOREAN_FIELDWORK_CATEGORIES,
 } from '@/components/Project/korean-fieldwork-categories';
@@ -89,19 +91,28 @@ import {
   matchesKoreanFieldworkRecordWorkFilter,
 } from '@/components/Project/korean-fieldwork-record-work-filters';
 import {
+  getKoreanFieldworkRecordListEmptyState,
+} from '@/components/Project/korean-fieldwork-record-list-empty-state';
+import {
   getKoreanFieldworkReturnParam,
   KOREAN_FIELDWORK_RETURN_TARGETS,
 } from '@/components/Project/korean-fieldwork-navigation';
 import {
-  loadKoreanFieldworkInvestigationModeId,
   saveKoreanFieldworkInvestigationModeId,
   KoreanFieldworkInvestigationModeId,
 } from '@/components/Project/korean-fieldwork-investigation-mode';
+import {
+  syncKoreanFieldworkProjectSetupDefaultsToProjectDocument,
+} from '@/components/Project/korean-fieldwork-project-setup-sync';
+import {
+  getLegacyRootDocumentsForOperation,
+} from '@/components/Project/korean-fieldwork-operation-wrap';
 import { ConfigurationContext } from '@/contexts/configuration-context';
 import LabelsContext from '@/contexts/labels/labels-context';
 import { PreferencesContext } from '@/contexts/preferences-context';
 import { ProjectContext } from '@/contexts/project-context';
 import { ToastType } from '@/components/common/Toast/ToastProvider';
+import useKoreanFieldworkProjectSetupDefaults from '@/hooks/use-korean-fieldwork-project-setup-defaults';
 import useToast from '@/hooks/use-toast';
 import { colors } from '@/utils/colors';
 
@@ -123,7 +134,7 @@ const RECORD_FILTERS: RecordFilter[] = [
   { id: 'all', label: '전체', categories: [] },
   {
     id: 'operation',
-    label: '조사구역',
+    label: '조사 구역 기록',
     categories: [
       KOREAN_FIELDWORK_CATEGORIES.OPERATION,
       KOREAN_FIELDWORK_CATEGORIES.SURVEY,
@@ -173,8 +184,8 @@ const RECORD_FILTERS: RecordFilter[] = [
 
 const RECORD_GROUPS: RecordGroup[] = [
   {
-    title: '조사구역과 경계',
-    subtitle: '현장 전체 범위, 구역, 측량 경계',
+    title: '조사 경계와 구역 기록',
+    subtitle: '조사 전체 범위, 구역 기록, 트렌치·유구 기준',
     categories: [
       KOREAN_FIELDWORK_CATEGORIES.OPERATION,
       KOREAN_FIELDWORK_CATEGORIES.SURVEY,
@@ -242,10 +253,12 @@ const DocumentsList: React.FC = () => {
   const [query, setQuery] = useState('');
   const [addModalParent, setAddModalParent] = useState<Document>();
   const [showFieldworkDetails, setShowFieldworkDetails] = useState(false);
-  const [investigationModeId, setInvestigationModeId] =
-    useState<KoreanFieldworkInvestigationModeId>();
   const [selectedWorkbenchDocumentId, setSelectedWorkbenchDocumentId] =
     useState<string>();
+  const [selectedInvestigationModeId, setSelectedInvestigationModeId] =
+    useState<KoreanFieldworkInvestigationModeId>();
+  const [isSelectedWorkbenchExpanded, setIsSelectedWorkbenchExpanded] =
+    useState(false);
   const [fieldNoteContinuation, setFieldNoteContinuation] =
     useState<{
       documentId: string;
@@ -255,6 +268,13 @@ const DocumentsList: React.FC = () => {
   const [isCreatingFieldNote, setIsCreatingFieldNote] = useState(false);
   const now = useMemo(() => new Date(), []);
   const projectId = preferencesContext.preferences.currentProject;
+  const {
+    investigationModeId: loadedInvestigationModeId,
+    boundarySummary,
+  } =
+    useKoreanFieldworkProjectSetupDefaults(projectId, repository);
+  const investigationModeId =
+    selectedInvestigationModeId ?? loadedInvestigationModeId;
 
   const documentsById = useMemo(
     () => new Map(documents.map((document) => [document.resource.id, document])),
@@ -292,6 +312,10 @@ const DocumentsList: React.FC = () => {
   ) ?? RECORD_FILTERS[0];
 
   const getCategoryLabel = useCallback((categoryName: string) => {
+    if (categoryName in KOREAN_FIELDWORK_CATEGORY_LABELS) {
+      return getKoreanFieldworkCategoryLabel(categoryName);
+    }
+
     const category = config.getCategory(categoryName);
     if (category && labels) return labels.get(category);
 
@@ -337,6 +361,15 @@ const DocumentsList: React.FC = () => {
     normalizedQuery,
     todaySummary.issueCountByDocumentId,
   ]);
+  const recordListEmptyState = useMemo(
+    () => getKoreanFieldworkRecordListEmptyState({
+      activeCategoryFilterId: activeFilter,
+      activeWorkFilterId: activeWorkFilter,
+      query,
+      totalDocumentCount: documents.length,
+    }),
+    [activeFilter, activeWorkFilter, documents.length, query]
+  );
 
   const groupedDocuments = useMemo(() => RECORD_GROUPS
     .map((group) => ({
@@ -383,25 +416,29 @@ const DocumentsList: React.FC = () => {
     () => getKoreanFieldworkCloseoutSummary(todaySummary.openIssues, 5),
     [todaySummary.openIssues]
   );
+  const operationCount = useMemo(
+    () => documents.filter((document) =>
+      document.resource.category === KOREAN_FIELDWORK_CATEGORIES.OPERATION
+    ).length,
+    [documents]
+  );
+  const legacyRootDocumentCount = useMemo(
+    () => operationCount === 0
+      ? getLegacyRootDocumentsForOperation(documents).length
+      : 0,
+    [documents, operationCount]
+  );
+  const hasFieldRecords = documents.length > 0;
   const hierarchyLabel = hierarchyPath.length > 0
-    ? hierarchyPath.map((document) => document.resource.identifier).join(' / ')
+    ? hierarchyPath.map((document) =>
+      getKoreanFieldworkDisplayIdentifier(document.resource.identifier)
+      || document.resource.id
+    ).join(' / ')
     : '전체 조사자료';
 
   useEffect(() => {
-    let isActive = true;
-    setInvestigationModeId(undefined);
-
-    loadKoreanFieldworkInvestigationModeId(projectId)
-      .then((modeId) => {
-        if (isActive && modeId) setInvestigationModeId(modeId);
-      })
-      .catch(() => undefined);
-
-    return () => {
-      isActive = false;
-    };
+    setSelectedInvestigationModeId(undefined);
   }, [projectId]);
-
   const openMap = () => router.navigate('/ProjectScreen/DocumentsMap');
   const editDocumentById = (docId: string, categoryName: string) => {
     router.navigate({
@@ -493,8 +530,12 @@ const DocumentsList: React.FC = () => {
       )
       && !!config.getCategory(KOREAN_FIELDWORK_CATEGORIES.DAILY_LOG)
     );
-  const selectWorkbenchDocument = (document: Document) => {
+  const selectWorkbenchDocument = (
+    document: Document,
+    options?: { expand?: boolean }
+  ) => {
     setSelectedWorkbenchDocumentId(document.resource.id);
+    setIsSelectedWorkbenchExpanded(!!options?.expand);
   };
   const continueNotebookEntry = (
     entry: KoreanFieldworkNotebookEntry,
@@ -506,6 +547,7 @@ const DocumentsList: React.FC = () => {
     fieldNoteContinuationRequestId.current += 1;
 
     setSelectedWorkbenchDocumentId(targetDocument.resource.id);
+    setIsSelectedWorkbenchExpanded(true);
     setFieldNoteContinuation({
       documentId: targetDocument.resource.id,
       seed: {
@@ -517,9 +559,16 @@ const DocumentsList: React.FC = () => {
   const openAddChildModal = (document: Document) => setAddModalParent(document);
   const closeAddChildModal = () => setAddModalParent(undefined);
   const selectInvestigationMode = (modeId: KoreanFieldworkInvestigationModeId) => {
-    setInvestigationModeId(modeId);
+    setSelectedInvestigationModeId(modeId);
     saveKoreanFieldworkInvestigationModeId(projectId, modeId)
       .catch(() => undefined);
+    syncKoreanFieldworkProjectSetupDefaultsToProjectDocument(
+      repository,
+      {
+        boundarySummary,
+        investigationModeId: modeId,
+      }
+    ).catch(() => undefined);
   };
   const navigateAddCategory = (
     categoryName: string,
@@ -631,13 +680,13 @@ const DocumentsList: React.FC = () => {
 
       showToast(
         ToastType.Success,
-        `${savedIdentifiers.join(', ')}에 야장을 저장했습니다.`
+        `${savedIdentifiers.join(', ')}에 현장 메모를 저장했습니다.`
       );
       setFieldNoteContinuation(undefined);
     } catch (error) {
       showToast(
         ToastType.Error,
-        `야장 메모를 저장하지 못했습니다. ${error}`
+        `현장 메모를 저장하지 못했습니다. ${error}`
       );
       throw error;
     } finally {
@@ -737,7 +786,7 @@ const DocumentsList: React.FC = () => {
       >
         <View style={styles.headerBand}>
           <View style={styles.headerText}>
-            <Text style={styles.kicker}>디지털 야장</Text>
+            <Text style={styles.kicker}>현장 기록</Text>
             <Text style={styles.title}>현장 기록판</Text>
             <Text style={styles.contextLine} numberOfLines={1}>
               현재 범위: {hierarchyLabel}
@@ -756,8 +805,16 @@ const DocumentsList: React.FC = () => {
         <KoreanFieldworkInvestigationModePanel
           modeId={investigationModeId}
           onSelectMode={selectInvestigationMode}
+          operationCount={operationCount}
+          totalDocumentCount={documents.length}
+          legacyRootDocumentCount={legacyRootDocumentCount}
+          surveyBoundaryCount={todaySummary.surveyBoundaries.length}
+          boundarySummary={boundarySummary}
+          onOpenMap={openMap}
         />
 
+        {hasFieldRecords && (
+          <>
         <View style={styles.metricsBand}>
           <Metric label="전체 기록" value={documents.length} icon="inventory-2" />
           <Metric label="오늘 일지" value={todaySummary.dailyLogs.length} icon="event-note" />
@@ -773,138 +830,6 @@ const DocumentsList: React.FC = () => {
             warning={todaySummary.openIssues.length > 0}
           />
         </View>
-
-        <KoreanFieldworkDailyNotebookDigest
-          canOpenDailyLog={!quickActions.dailyLog.disabled}
-          documents={documents}
-          now={now}
-          onContinueEntry={continueNotebookEntry}
-          onOpenDailyLog={openDailyLog}
-        />
-
-        {selectedWorkbenchDocument && (
-          <>
-            <KoreanFieldworkSelectedRecordWorkbench
-              document={selectedWorkbenchDocument}
-              documents={documents}
-              allowedAddCategoryNames={selectedWorkbenchAllowedAddCategoryNames}
-              investigationModeId={investigationModeId}
-              onAddChild={openAddChildModal}
-              onAddDocumentOfCategory={(parentDoc, categoryName) =>
-                navigateAddCategory(categoryName, parentDoc)}
-              onClearSelection={() => setSelectedWorkbenchDocumentId(undefined)}
-              onEditDocument={editDocument}
-              onOpenDocument={selectWorkbenchDocument}
-              onOpenMapDocument={onDocumentSelected}
-              onUpdateResourceFields={updateWorkbenchResourceFields}
-            />
-            <KoreanFieldworkFieldNotePanel
-              selectedDocument={selectedWorkbenchDocument}
-              documents={documents}
-              operationDocument={selectedFieldNoteOperation}
-              existingDailyLog={selectedFieldNoteDailyLog}
-              draftScopeId={preferencesContext.preferences.currentProject}
-              investigationModeId={investigationModeId}
-              continuationSeed={selectedFieldNoteContinuationSeed}
-              allowedAddCategoryNames={selectedWorkbenchAllowedAddCategoryNames}
-              canCreateRecordMemo={canCreateSelectedRecordMemo}
-              canCreateDailyLog={canCreateSelectedDailyLog}
-              isSaving={isCreatingFieldNote}
-              onCreateNote={createFieldNote}
-              onApplyToRecord={async (updates) => {
-                const wasUpdated = await updateWorkbenchResourceFields(
-                  selectedWorkbenchDocument,
-                  updates
-                );
-                if (!wasUpdated) throw new Error('record update failed');
-              }}
-              onAddDocumentOfCategory={(parentDoc, categoryName) =>
-                navigateAddCategory(categoryName, parentDoc)}
-              onOpenDocument={selectWorkbenchDocument}
-            />
-          </>
-        )}
-
-        <KoreanFieldworkNotebookLedger
-          documents={documents}
-          onContinueEntry={continueNotebookEntry}
-          onOpenDocument={selectWorkbenchDocument}
-        />
-
-        <KoreanFieldworkWorkbenchPanel
-          summary={todaySummary}
-          documents={documents}
-          investigationModeId={investigationModeId}
-          getAllowedAddCategoryNames={getAllowedAddCategoryNames}
-          onAddDocumentOfCategory={(parentDoc, categoryName) =>
-            navigateAddCategory(categoryName, parentDoc)}
-          onEditDocument={editDocumentById}
-        />
-
-        <KoreanFieldworkScopePanel
-          documents={documents}
-          hierarchyPath={hierarchyPath}
-          issueCount={todaySummary.openIssues.length}
-          onAddChild={openAddChildModal}
-          onBackScope={popFromHierarchy}
-          onClearScope={clearHierarchy}
-          onOpenMap={openMap}
-        />
-
-        <TouchableOpacity
-          activeOpacity={0.86}
-          onPress={() => setShowFieldworkDetails((current) => !current)}
-          style={styles.detailToggle}
-          testID="fieldworkDetailToggle"
-        >
-          <View style={styles.detailToggleText}>
-            <Text style={styles.detailToggleLabel}>
-              {showFieldworkDetails ? '상세 기록 접기' : '상세 기록 보기'}
-            </Text>
-            <Text style={styles.detailToggleDescription} numberOfLines={1}>
-              진행판, 조사 흐름, 기록 관계
-            </Text>
-          </View>
-          <MaterialIcons
-            name={showFieldworkDetails ? 'expand-less' : 'expand-more'}
-            size={22}
-            color="#344054"
-          />
-        </TouchableOpacity>
-
-        {showFieldworkDetails && (
-          <>
-            <KoreanFieldworkProgressBoard
-              summary={todaySummary}
-              documents={documents}
-              investigationModeId={investigationModeId}
-              onAddDocumentOfCategory={(parentDoc, categoryName) =>
-                navigateAddCategory(categoryName, parentDoc)}
-              onOpenDocument={onDocumentSelected}
-              onOpenMap={openMap}
-            />
-
-            <KoreanFieldworkUnitMatrix
-              summary={todaySummary}
-              documents={documents}
-              scopeParent={currentScopeParent}
-              investigationModeId={investigationModeId}
-              onOpenDocument={onDocumentSelected}
-              onAddDocumentOfCategory={(parentDoc, categoryName) =>
-                navigateAddCategory(categoryName, parentDoc)}
-            />
-
-            <KoreanFieldworkHierarchyBoard
-              documents={documents}
-              documentsById={documentsById}
-              hierarchyPath={hierarchyPath}
-              issueCountByDocumentId={todaySummary.issueCountByDocumentId}
-              onOpenDocument={onDocumentSelected}
-              onDrillDown={pushToHierarchy}
-              onAddChild={openAddChildModal}
-            />
-          </>
-        )}
 
         <View style={styles.actionBand}>
           <QuickAction
@@ -942,6 +867,150 @@ const DocumentsList: React.FC = () => {
               onOpenMap={openMap}
             />
           </View>
+        )}
+
+        <KoreanFieldworkDailyNotebookDigest
+          canOpenDailyLog={!quickActions.dailyLog.disabled}
+          documents={documents}
+          now={now}
+          onContinueEntry={continueNotebookEntry}
+          onOpenDailyLog={openDailyLog}
+        />
+
+        {selectedWorkbenchDocument && (
+          <>
+            <KoreanFieldworkSelectedRecordWorkbench
+              document={selectedWorkbenchDocument}
+              documents={documents}
+              allowedAddCategoryNames={selectedWorkbenchAllowedAddCategoryNames}
+              investigationModeId={investigationModeId}
+              isExpanded={isSelectedWorkbenchExpanded}
+              onAddChild={openAddChildModal}
+              onAddDocumentOfCategory={(parentDoc, categoryName) =>
+                navigateAddCategory(categoryName, parentDoc)}
+              onClearSelection={() => {
+                setSelectedWorkbenchDocumentId(undefined);
+                setIsSelectedWorkbenchExpanded(false);
+              }}
+              onEditDocument={editDocument}
+              onOpenDocument={(document) =>
+                selectWorkbenchDocument(document, {
+                  expand: isSelectedWorkbenchExpanded,
+                })}
+              onOpenMapDocument={onDocumentSelected}
+              onToggleExpanded={() =>
+                setIsSelectedWorkbenchExpanded((current) => !current)}
+              onUpdateResourceFields={updateWorkbenchResourceFields}
+            />
+            {isSelectedWorkbenchExpanded && (
+              <KoreanFieldworkFieldNotePanel
+                selectedDocument={selectedWorkbenchDocument}
+                documents={documents}
+                operationDocument={selectedFieldNoteOperation}
+                existingDailyLog={selectedFieldNoteDailyLog}
+                draftScopeId={preferencesContext.preferences.currentProject}
+                investigationModeId={investigationModeId}
+                continuationSeed={selectedFieldNoteContinuationSeed}
+                allowedAddCategoryNames={selectedWorkbenchAllowedAddCategoryNames}
+                canCreateRecordMemo={canCreateSelectedRecordMemo}
+                canCreateDailyLog={canCreateSelectedDailyLog}
+                isSaving={isCreatingFieldNote}
+                onCreateNote={createFieldNote}
+                onApplyToRecord={async (updates) => {
+                  const wasUpdated = await updateWorkbenchResourceFields(
+                    selectedWorkbenchDocument,
+                    updates
+                  );
+                  if (!wasUpdated) throw new Error('record update failed');
+                }}
+                onAddDocumentOfCategory={(parentDoc, categoryName) =>
+                  navigateAddCategory(categoryName, parentDoc)}
+                onOpenDocument={(document) =>
+                  selectWorkbenchDocument(document, { expand: true })}
+              />
+            )}
+          </>
+        )}
+
+        <TouchableOpacity
+          activeOpacity={0.86}
+          onPress={() => setShowFieldworkDetails((current) => !current)}
+          style={styles.detailToggle}
+          testID="fieldworkDetailToggle"
+        >
+          <View style={styles.detailToggleText}>
+            <Text style={styles.detailToggleLabel}>
+              {showFieldworkDetails ? '현장 보조판 접기' : '현장 보조판 보기'}
+            </Text>
+            <Text style={styles.detailToggleDescription} numberOfLines={1}>
+              필요할 때 메모·진행·범위만 확인
+            </Text>
+          </View>
+          <MaterialIcons
+            name={showFieldworkDetails ? 'expand-less' : 'expand-more'}
+            size={22}
+            color="#344054"
+          />
+        </TouchableOpacity>
+
+        {showFieldworkDetails && (
+          <>
+            <KoreanFieldworkNotebookLedger
+              documents={documents}
+              onContinueEntry={continueNotebookEntry}
+              onOpenDocument={selectWorkbenchDocument}
+            />
+
+            <KoreanFieldworkWorkbenchPanel
+              summary={todaySummary}
+              documents={documents}
+              investigationModeId={investigationModeId}
+              getAllowedAddCategoryNames={getAllowedAddCategoryNames}
+              onAddDocumentOfCategory={(parentDoc, categoryName) =>
+                navigateAddCategory(categoryName, parentDoc)}
+              onEditDocument={editDocumentById}
+            />
+
+            <KoreanFieldworkScopePanel
+              documents={documents}
+              hierarchyPath={hierarchyPath}
+              issueCount={todaySummary.openIssues.length}
+              onAddChild={openAddChildModal}
+              onBackScope={popFromHierarchy}
+              onClearScope={clearHierarchy}
+              onOpenMap={openMap}
+            />
+
+            <KoreanFieldworkProgressBoard
+              summary={todaySummary}
+              documents={documents}
+              investigationModeId={investigationModeId}
+              onAddDocumentOfCategory={(parentDoc, categoryName) =>
+                navigateAddCategory(categoryName, parentDoc)}
+              onOpenDocument={onDocumentSelected}
+              onOpenMap={openMap}
+            />
+
+            <KoreanFieldworkUnitMatrix
+              summary={todaySummary}
+              documents={documents}
+              scopeParent={currentScopeParent}
+              investigationModeId={investigationModeId}
+              onOpenDocument={onDocumentSelected}
+              onAddDocumentOfCategory={(parentDoc, categoryName) =>
+                navigateAddCategory(categoryName, parentDoc)}
+            />
+
+            <KoreanFieldworkHierarchyBoard
+              documents={documents}
+              documentsById={documentsById}
+              hierarchyPath={hierarchyPath}
+              issueCountByDocumentId={todaySummary.issueCountByDocumentId}
+              onOpenDocument={onDocumentSelected}
+              onDrillDown={pushToHierarchy}
+              onAddChild={openAddChildModal}
+            />
+          </>
         )}
 
         <View style={styles.searchBand}>
@@ -1047,16 +1116,20 @@ const DocumentsList: React.FC = () => {
 
         <View style={styles.recordsBand}>
           <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>기록 묶음</Text>
+            <Text style={styles.sectionTitle}>현장 기록</Text>
             <Text style={styles.sectionMeta}>{filteredDocuments.length}건</Text>
           </View>
 
           {filteredDocuments.length === 0 && (
             <View style={styles.emptyState}>
-              <MaterialIcons name="assignment-late" size={24} color="#697386" />
-              <Text style={styles.emptyTitle}>표시할 기록이 없습니다</Text>
+              <MaterialIcons
+                name={recordListEmptyState.icon as keyof typeof MaterialIcons.glyphMap}
+                size={24}
+                color="#697386"
+              />
+              <Text style={styles.emptyTitle}>{recordListEmptyState.title}</Text>
               <Text style={styles.emptyText}>
-                검색어나 분류를 바꾸거나, 지도에서 조사구역·트렌치·유구를 추가하세요.
+                {recordListEmptyState.text}
               </Text>
             </View>
           )}
@@ -1084,7 +1157,7 @@ const DocumentsList: React.FC = () => {
           {otherDocuments.length > 0 && (
             <RecordSection
               title="기타 기록"
-              subtitle="설정에는 남아 있지만 야장 묶음에는 따로 분류되지 않은 기록"
+              subtitle="설정에는 남아 있지만 현장 기록 목록에는 따로 분류되지 않은 기록"
               documents={otherDocuments}
               documentsById={documentsById}
               getCategoryLabel={getCategoryLabel}
@@ -1100,6 +1173,8 @@ const DocumentsList: React.FC = () => {
             />
           )}
         </View>
+          </>
+        )}
       </ScrollView>
     </View>
   );
@@ -1488,7 +1563,8 @@ const RecordRow: React.FC<{
 }) => {
   const config = useContext(ConfigurationContext);
   const category = config.getCategory(document.resource.category);
-  const title = document.resource.identifier || document.resource.id;
+  const title = getKoreanFieldworkDisplayIdentifier(document.resource.identifier)
+    || document.resource.id;
   const description = getRecordDescription(document);
   const statusChips = getKoreanFieldworkRecordStatusChips(document);
   const evidenceChips = getKoreanFieldworkEvidenceChips(document, documents);
@@ -1596,7 +1672,7 @@ const RecordRow: React.FC<{
       </View>
       <View style={styles.recordActions}>
         <TouchableOpacity
-          accessibilityLabel={`${title} 하위 기록 추가`}
+          accessibilityLabel={`${title} 이어 만들 기록 추가`}
           style={styles.iconButton}
           onPress={onAddChild}
           hitSlop={8}
@@ -1604,7 +1680,7 @@ const RecordRow: React.FC<{
           <MaterialIcons name="add" size={20} color="#475467" />
         </TouchableOpacity>
         <TouchableOpacity
-          accessibilityLabel={`${title} 하위 기록 보기`}
+          accessibilityLabel={`${title} 이어진 기록 보기`}
           style={styles.iconButton}
           onPress={onDrillDown}
           hitSlop={8}
@@ -1643,7 +1719,7 @@ const RecordWorkSummary: React.FC<{
       <Text style={[styles.recordWorkPercent, recordWorkPercentTextStyle(summary.tone)]}>
         {summary.completionPercent}%
       </Text>
-      <Text style={styles.recordWorkMetric}>하위 {summary.structureCount}</Text>
+      <Text style={styles.recordWorkMetric}>이어진 기록 {summary.structureCount}</Text>
       <Text style={styles.recordWorkMetric}>자료 {summary.evidenceCount}</Text>
       {summary.issueCount > 0 && (
         <Text style={styles.recordWorkIssue}>점검 {summary.issueCount}</Text>

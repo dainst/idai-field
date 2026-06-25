@@ -1,5 +1,6 @@
 import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
+import { Datastore, Document, ProjectConfiguration } from 'idai-field-core';
 import { clone, equal, flatten } from 'tsfun';
 import { M } from '../messages/m';
 import { TabManager } from '../../services/tabs/tab-manager';
@@ -17,9 +18,25 @@ import { Backup } from '../../services/backup/model/backup';
 import { getExistingBackups } from '../../services/backup/auto-backup/get-existing-backups';
 import { BackupsMap } from '../../services/backup/model/backups-map';
 import { getFileSizeLabel } from '../../util/get-file-size-label';
+import {
+    KOREAN_FIELDWORK_DEFAULT_INVESTIGATION_MODE,
+    KOREAN_FIELDWORK_PROJECT_BOUNDARY_SUMMARY_FIELD,
+    KOREAN_FIELDWORK_PROJECT_INVESTIGATION_MODE_FIELD,
+    KOREAN_FIELDWORK_INVESTIGATION_MODES,
+    createKoreanFieldworkProjectSetupResourceUpdates,
+    getKoreanFieldworkInvestigationModeLabel,
+    getKoreanFieldworkProjectSetupDefaultsFromDocument,
+    getKoreanFieldworkProjectResourceValue,
+    isKoreanFieldworkProject,
+    isKoreanFieldworkProjectSetupFilledIn
+} from '../../util/korean-fieldwork-project-setup';
+import {
+    getKoreanFieldworkSatelliteMapProviderNotice,
+    hasKoreanFieldworkSatelliteMapDisplayKey
+} from '../../util/korean-fieldwork-map-provider-settings';
 
-const address = window.require('address');
-const remote = window.require('@electron/remote');
+import { ip as getIpAddress } from 'address';
+import { electronRemote as remote } from 'src/app/electron/electron';
 
 
 @Component({
@@ -41,12 +58,17 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
 
     public settings: Settings;
     public originalKeepBackupSettings: KeepBackupsSettings;
-    public ipAddress: string = address.ip();
+    public ipAddress: string = getIpAddress() ?? '';
     public saving: boolean = false;
     public advancedSettingsCollapsed: boolean = true;
     public isLinux: boolean;
     public existingBackupsSizeLabel: string;
     public estimatedBackupsSizeLabel: string;
+    public projectDocument: Document|undefined;
+    public koreanInvestigationMode: string = KOREAN_FIELDWORK_DEFAULT_INVESTIGATION_MODE;
+    public koreanBoundarySummary: string = '';
+    public koreanProjectSetupSaved: boolean = false;
+    public readonly koreanInvestigationModes = KOREAN_FIELDWORK_INVESTIGATION_MODES;
 
     private existingBackups: Array<Backup> = [];
     private existingBackupsSize: number;
@@ -60,7 +82,9 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
                 private messages: Messages,
                 private tabManager: TabManager,
                 private menuService: Menus,
-                private decimalPipe: DecimalPipe) {
+                private decimalPipe: DecimalPipe,
+                private datastore: Datastore,
+                private projectConfiguration: ProjectConfiguration) {
 
         this.settingsProvider.settingsChangesNotifications().subscribe(settings => this.settings = settings);
     }
@@ -75,11 +99,12 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
     public hasMonthlyBackups = () => this.settings.keepBackups.monthly > 0;
 
 
-    ngOnInit() {
+    async ngOnInit() {
 
         this.isLinux = remote.getGlobal('os') === 'Linux';
         this.settings = this.settingsProvider.getSettings();
         this.originalKeepBackupSettings = clone(this.settings.keepBackups);
+        await this.loadKoreanProjectSetup();
     }
 
 
@@ -136,9 +161,97 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
     }
 
 
+    public isKoreanFieldworkProject = () =>
+        isKoreanFieldworkProject(this.projectDocument, this.projectConfiguration);
+
+
+    public getKoreanProjectIdentifier = () => this.settings?.selectedProject ?? '';
+
+
+    public getKoreanInvestigationModeLabel = () =>
+        getKoreanFieldworkInvestigationModeLabel(this.getProjectResourceValue(
+            KOREAN_FIELDWORK_PROJECT_INVESTIGATION_MODE_FIELD
+        ));
+
+
+    public getKoreanBoundarySummary = () =>
+        this.getProjectResourceValue(KOREAN_FIELDWORK_PROJECT_BOUNDARY_SUMMARY_FIELD) ?? '';
+
+
+    public getKoreanTabletSyncUrl = () => `http://${this.ipAddress}:3000`;
+
+
+    public hasKoreanTabletSyncPassword = () => !!this.settings?.hostPassword?.trim();
+
+
+    public getKoreanTabletSyncPassword = () => this.settings?.hostPassword ?? '';
+
+
+    public hasKoreanSatelliteMapDisplayKey = () =>
+        hasKoreanFieldworkSatelliteMapDisplayKey(this.settings?.mapProviderSettings);
+
+
+    public getKoreanMapProviderNotice = () =>
+        getKoreanFieldworkSatelliteMapProviderNotice(this.settings?.mapProviderSettings);
+
+
+    public setKoreanInvestigationMode(modeId: string) {
+
+        this.koreanInvestigationMode = modeId;
+        this.koreanProjectSetupSaved = false;
+    }
+
+
+    public markKoreanProjectSetupChanged() {
+
+        this.koreanProjectSetupSaved = false;
+    }
+
+
+    public canSaveKoreanProjectSetup = () =>
+        this.isKoreanFieldworkProject()
+        && isKoreanFieldworkProjectSetupFilledIn(this.koreanInvestigationMode, this.koreanBoundarySummary)
+        && this.hasKoreanProjectSetupChanges();
+
+
+    public hasKoreanProjectSetupChanges = () =>
+        this.koreanInvestigationMode !== (
+            this.getProjectResourceValue(KOREAN_FIELDWORK_PROJECT_INVESTIGATION_MODE_FIELD)
+                ?? KOREAN_FIELDWORK_DEFAULT_INVESTIGATION_MODE
+        )
+        || this.koreanBoundarySummary.trim() !== this.getKoreanBoundarySummary();
+
+
+    public getKoreanProjectSetupNotice(): string {
+
+        if (!isKoreanFieldworkProjectSetupFilledIn(this.koreanInvestigationMode, this.koreanBoundarySummary)) {
+            return '조사 방식과 조사 경계를 채워야 프로젝트 기본 흐름을 안정적으로 사용할 수 있습니다.';
+        }
+
+        if (this.koreanProjectSetupSaved) {
+            return '저장됨. 프로젝트 정보와 태블릿 기본 흐름에 같은 기준이 반영됩니다.';
+        }
+
+        if (this.hasKoreanProjectSetupChanges()) {
+            return '저장하면 프로젝트 정보와 태블릿 기본 흐름에 반영됩니다.';
+        }
+
+        return '프로젝트 생성 때 정한 조사 방식과 경계 기준입니다.';
+    }
+
+
     public async save() {
 
         AngularUtility.blurActiveElement();
+
+        if (
+            this.isKoreanFieldworkProject()
+            && this.hasKoreanProjectSetupChanges()
+            && !isKoreanFieldworkProjectSetupFilledIn(this.koreanInvestigationMode, this.koreanBoundarySummary)
+        ) {
+            this.messages.add([M.PROJECT_CREATION_ERROR_KOREAN_FIELDWORK_SETUP]);
+            return;
+        }
 
         this.saving = true;
         const languagesChanged: boolean
@@ -146,10 +259,13 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
 
         try {
             await this.settingsService.updateSettings(this.settings, 'settings');
+            await this.saveKoreanProjectSetupIfNeeded();
         } catch (err) {
             this.saving = false;
             if (err === SettingsErrors.MISSING_USERNAME) {
                 this.messages.add([M.SETTINGS_ERROR_MISSING_USERNAME]);
+            } else if (Array.isArray(err)) {
+                this.messages.add(err);
             } else {
                 console.error(err);
             }
@@ -220,6 +336,53 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
                 this.saving = false;
             }
         }
+    }
+
+
+    private async loadKoreanProjectSetup() {
+
+        try {
+            this.projectDocument = await this.datastore.get('project');
+            this.setKoreanProjectSetupFieldsFromDocument();
+        } catch (_) {
+            this.projectDocument = undefined;
+        }
+    }
+
+
+    private setKoreanProjectSetupFieldsFromDocument() {
+
+        const setupDefaults = getKoreanFieldworkProjectSetupDefaultsFromDocument(this.projectDocument);
+
+        this.koreanInvestigationMode = setupDefaults.investigationModeId
+            ?? KOREAN_FIELDWORK_DEFAULT_INVESTIGATION_MODE;
+        this.koreanBoundarySummary = setupDefaults.boundarySummary ?? '';
+        this.koreanProjectSetupSaved = false;
+    }
+
+
+    private async saveKoreanProjectSetupIfNeeded() {
+
+        if (!this.projectDocument || !this.canSaveKoreanProjectSetup()) return;
+
+        const updatedProjectDocument: Document = Document.clone(this.projectDocument);
+        Object.assign(
+            updatedProjectDocument.resource,
+            createKoreanFieldworkProjectSetupResourceUpdates({
+                investigationModeId: this.koreanInvestigationMode,
+                boundarySummary: this.koreanBoundarySummary
+            })
+        );
+
+        this.projectDocument = await this.datastore.update(updatedProjectDocument);
+        this.setKoreanProjectSetupFieldsFromDocument();
+        this.koreanProjectSetupSaved = true;
+    }
+
+
+    private getProjectResourceValue(fieldName: string): string|undefined {
+
+        return getKoreanFieldworkProjectResourceValue(this.projectDocument, fieldName);
     }
 
 

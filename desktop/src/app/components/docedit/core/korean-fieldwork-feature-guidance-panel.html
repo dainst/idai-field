@@ -1,0 +1,82 @@
+<div *ngIf="shouldShow()" class="korean-fieldwork-feature-guidance-panel">
+    <div class="korean-fieldwork-feature-guidance-header">
+        <span class="mdi mdi-shape-plus-outline"></span>
+        <span>유구 성격별 기록</span>
+    </div>
+
+    <div *ngIf="canRenderPeriodField()"
+         class="korean-fieldwork-feature-guidance-section primary">
+        <div class="korean-fieldwork-feature-guidance-label">
+            {{getChoiceFieldLabel(getPeriodFieldName())}}
+        </div>
+        <div class="korean-fieldwork-feature-guidance-chip-row">
+            <button *ngFor="let valueId of getChoiceValueIds(getPeriodFieldName())"
+                    type="button"
+                    class="btn korean-fieldwork-feature-guidance-chip"
+                    [class.active]="isChoiceValueActive(getPeriodFieldName(), valueId)"
+                    (click)="toggleChoiceValue(getPeriodFieldName(), valueId)">
+                {{getChoiceValueLabel(getPeriodFieldName(), valueId)}}
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="canSelectFeatureType()"
+         class="korean-fieldwork-feature-guidance-label">
+        유구 성격
+    </div>
+    <div *ngIf="canSelectFeatureType()"
+         class="korean-fieldwork-feature-guidance-type-row">
+        <button *ngFor="let preset of presets"
+                type="button"
+                class="btn korean-fieldwork-feature-guidance-type"
+                [class.active]="isPresetActive(preset)"
+                (click)="selectPreset(preset)">
+            <span class="mdi" [ngClass]="preset.icon"></span>
+            <span class="korean-fieldwork-feature-guidance-type-text">
+                <span class="korean-fieldwork-feature-guidance-type-label">{{preset.label}}</span>
+                <span class="korean-fieldwork-feature-guidance-type-detail">{{preset.detail}}</span>
+            </span>
+        </button>
+    </div>
+
+    <div *ngIf="getActivePreset() as activePreset" class="korean-fieldwork-feature-guidance-active">
+        <div class="korean-fieldwork-feature-guidance-active-header">
+            <span>{{getCoreAttributeTitle(activePreset)}}</span>
+            <button *ngIf="canApplyNarrativeTemplate()"
+                    type="button"
+                    class="btn korean-fieldwork-feature-guidance-template"
+                    (click)="applyNarrativeTemplate()">
+                {{getNarrativeTargetLabel()}} 틀 넣기
+            </button>
+        </div>
+
+        <div *ngFor="let checklist of getGuidedChecklistFields()"
+             class="korean-fieldwork-feature-guidance-section">
+            <div class="korean-fieldwork-feature-guidance-label">
+                {{getChecklistFieldLabel(checklist.fieldName)}}
+            </div>
+            <div class="korean-fieldwork-feature-guidance-chip-row">
+                <button *ngFor="let valueId of getSuggestedValueIds(checklist)"
+                        type="button"
+                        class="btn korean-fieldwork-feature-guidance-chip"
+                        [class.active]="isChecklistValueActive(checklist.fieldName, valueId)"
+                        (click)="toggleChecklistValue(checklist.fieldName, valueId)">
+                    {{getValueLabel(checklist.fieldName, valueId)}}
+                </button>
+            </div>
+        </div>
+
+        <div *ngIf="canApplyNarrativeTemplate()"
+             class="korean-fieldwork-feature-guidance-section note">
+            <div class="korean-fieldwork-feature-guidance-label">
+                야장 메모
+            </div>
+            <textarea class="korean-fieldwork-feature-guidance-note"
+                      rows="4"
+                      [placeholder]="getNarrativePlaceholder()"
+                      [value]="getNarrativeTargetValue()"
+                      (input)="updateNarrativeTargetValue($any($event.target).value)">
+            </textarea>
+        </div>
+    </div>
+</div>

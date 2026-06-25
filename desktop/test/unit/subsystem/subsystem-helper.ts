@@ -77,6 +77,11 @@ export async function setupSettingsService(pouchdbDatastore, projectIdentifier =
         imagestorePath: process.cwd() + '/test/test-temp/imagestore',
         backupDirectoryPath: process.cwd() + '/test/test-temp/backups',
         username: 'synctestuser',
+        mapProviderSettings: {
+            kakaoLocalRestApiKey: '',
+            kakaoMapJavaScriptKey: '',
+            kakaoNativeAppKey: ''
+        },
         keepBackups: { custom: 0, customInterval: 0, daily: 0, weekly: 0, monthly: 0 }
     });
 

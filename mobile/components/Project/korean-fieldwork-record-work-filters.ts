@@ -32,6 +32,12 @@ const PENDING_FEATURE_RECORDING_STATES = new Set([
   'investigating',
 ]);
 
+const REVIEW_VERIFICATION_STATES = new Set([
+  'conflictingEvidence',
+  'needsRecheck',
+  'pendingDecision',
+]);
+
 export const getKoreanFieldworkRecordWorkFilterCounts = (
   documents: Document[],
   allDocuments: Document[],
@@ -60,7 +66,8 @@ export const matchesKoreanFieldworkRecordWorkFilter = (
 ): boolean => {
   switch (filterId) {
     case 'needsReview':
-      return (issueCountByDocumentId[document.resource.id] ?? 0) > 0;
+      return (issueCountByDocumentId[document.resource.id] ?? 0) > 0
+        || hasReviewVerificationState(document);
     case 'pending':
       return hasPendingFieldworkStatus(document);
     case 'missingEvidence':
@@ -84,6 +91,12 @@ const hasPendingFieldworkStatus = (document: Document): boolean => {
   const resource = document.resource as Record<string, unknown>;
 
   return isTrackedValue(resource.featureRecordingStatus, PENDING_FEATURE_RECORDING_STATES);
+};
+
+const hasReviewVerificationState = (document: Document): boolean => {
+  const resource = document.resource as Record<string, unknown>;
+
+  return isTrackedValue(resource.verificationState, REVIEW_VERIFICATION_STATES);
 };
 
 const hasMissingEvidence = (

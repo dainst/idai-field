@@ -4,6 +4,7 @@ import {
   KoreanFieldworkTodaySummary,
 } from 'idai-field-core';
 import {
+  getKoreanFieldworkDisplayIdentifier,
   getKoreanFieldworkCategoryLabel,
   KOREAN_FIELDWORK_CATEGORIES,
 } from './korean-fieldwork-categories';
@@ -20,6 +21,19 @@ import {
 } from './korean-fieldwork-quick-record';
 
 const C = KOREAN_FIELDWORK_CATEGORIES;
+
+const FEATURE_PARENT_CATEGORIES: readonly string[] = [
+  C.TRENCH,
+  C.FEATURE_GROUP,
+];
+
+const PROGRESS_CATEGORY_ORDER: readonly string[] = [
+  C.OPERATION,
+  C.TRENCH,
+  C.FEATURE_GROUP,
+  C.FEATURE,
+  C.FEATURE_SEGMENT,
+];
 
 export type KoreanFieldworkProgressStageId =
   'setup'
@@ -154,7 +168,8 @@ const buildProgressItem = (
   return {
     id: document.resource.id,
     document,
-    title: document.resource.identifier || document.resource.id,
+    title: getKoreanFieldworkDisplayIdentifier(document.resource.identifier)
+      || document.resource.id,
     categoryLabel: getKoreanFieldworkCategoryLabel(document.resource.category),
     parentPath: formatKoreanFieldworkParentPath(document, documentsById),
     ...stage,
@@ -198,7 +213,7 @@ const getProgressStage = (
     return toStage(
       'investigation',
       'warning',
-      '제토 뒤 확인한 유구를 조사구역 아래에 먼저 기록하세요.',
+      '제토 뒤 확인한 유구를 조사 경계 안에 먼저 기록하세요.',
       '유구 기록'
     );
   }
@@ -210,7 +225,7 @@ const getProgressStage = (
     return toStage(
       'setup',
       'warning',
-      '조사구역 아래에 트렌치를 먼저 잡아야 후속 기록이 이어집니다.',
+      '조사 경계 안에 트렌치를 먼저 정해야 후속 기록이 이어집니다.',
       '트렌치 추가'
     );
   }
@@ -235,7 +250,7 @@ const getProgressStage = (
   }
 
   if (
-    [C.TRENCH, C.FEATURE_GROUP].includes(document.resource.category)
+    FEATURE_PARENT_CATEGORIES.includes(document.resource.category)
     && !descendants.some((descendant) => (
       descendant.resource.category === C.FEATURE
       || descendant.resource.category === C.FEATURE_GROUP
@@ -253,7 +268,7 @@ const getProgressStage = (
     return toStage(
       'evidence',
       'warning',
-      '사진·도면·유물·시료 근거가 아직 연결되지 않았습니다.',
+      '사진·도면·스케치·유물·시료 근거가 아직 없습니다.',
       '사진 추가'
     );
   }
@@ -271,7 +286,7 @@ const getProgressStage = (
   return toStage(
     'closeout',
     'success',
-    '현재 연결된 기록 기준으로 현장 마감 흐름이 갖춰져 있습니다.',
+    '현재 이어진 조사 구역 기록으로 현장 마감 흐름이 갖춰져 있습니다.',
     '기록 열기'
   );
 };
@@ -331,7 +346,7 @@ const getProgressAction = (
       };
     }
 
-    if ([C.TRENCH, C.FEATURE_GROUP].includes(document.resource.category)) {
+    if (FEATURE_PARENT_CATEGORIES.includes(document.resource.category)) {
       return {
         type: 'createDocument',
         parentDocumentId: document.resource.id,
@@ -515,13 +530,7 @@ const getToneRank = (tone: KoreanFieldworkStatusTone): number => {
 };
 
 const getCategoryRank = (categoryName: string): number => {
-  const index = [
-    C.OPERATION,
-    C.TRENCH,
-    C.FEATURE_GROUP,
-    C.FEATURE,
-    C.FEATURE_SEGMENT,
-  ].indexOf(categoryName);
+  const index = PROGRESS_CATEGORY_ORDER.indexOf(categoryName);
 
   return index === -1 ? 99 : index;
 };

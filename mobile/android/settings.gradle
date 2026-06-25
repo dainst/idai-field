@@ -44,7 +44,7 @@ if (getRNMinorVersion() >= 75) {
   }
 }
 
-rootProject.name = '디지털 야장'
+rootProject.name = '현장 기록'
 
 dependencyResolutionManagement {
   versionCatalogs {

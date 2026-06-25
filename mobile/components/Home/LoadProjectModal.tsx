@@ -7,27 +7,63 @@ import Heading from '@/components/common/Heading';
 import Input from '@/components/common/Input';
 import TitleBar from '@/components/common/TitleBar';
 import { colors } from '@/utils/colors';
+import {
+    getSyncUrlInvalidText,
+    validateSyncUrl,
+} from '@/utils/sync-url-validation';
+import {
+    getProjectNameInvalidText,
+    validateProjectName,
+} from './project-name-validation';
 
 interface LoadProjectModalProps {
+    existingProjects?: string[];
     onProjectLoad: (project: string, url: string, password: string) => void;
     onClose: () => void;
 }
 
-const LoadProjectModal: React.FC<LoadProjectModalProps> = ({ onClose, onProjectLoad }) => {
+const LoadProjectModal: React.FC<LoadProjectModalProps> = ({
+    existingProjects = [],
+    onClose,
+    onProjectLoad,
+}) => {
     const [project, setProject] = useState<string>('');
+    const [projectTouched, setProjectTouched] = useState<boolean>(false);
     const [url, setUrl] = useState<string>('');
+    const [urlTouched, setUrlTouched] = useState<boolean>(false);
     const [password, setPassword] = useState<string>('');
     const insets = useSafeAreaInsets();
+    const projectNameValidation = validateProjectName(project, existingProjects);
+    const { projectId } = projectNameValidation;
+    const syncUrlValidation = validateSyncUrl(url);
+    const syncUrl = syncUrlValidation.url;
+    const syncPassword = password.trim();
+    const showProjectNameError = projectTouched && !projectNameValidation.isAvailable;
+    const showUrlError = urlTouched && !syncUrlValidation.isValid;
+    const canLoadProject =
+        projectNameValidation.isAvailable
+        && syncUrlValidation.isValid
+        && syncPassword.length > 0;
 
     const onCreate = () => {
-        onProjectLoad(project, url, password);
-        setProject('');
+        if (!canLoadProject) return;
+
+        onProjectLoad(projectId, syncUrl, syncPassword);
+        resetForm();
         onClose();
     };
 
     const onCancel = () => {
-        setProject('');
+        resetForm();
         onClose();
+    };
+
+    const resetForm = () => {
+        setProject('');
+        setProjectTouched(false);
+        setUrl('');
+        setUrlTouched(false);
+        setPassword('');
     };
 
     return (
@@ -64,7 +100,8 @@ const LoadProjectModal: React.FC<LoadProjectModalProps> = ({ onClose, onProjectL
                                 title="가져오기"
                                 variant="mellow"
                                 onPress={onCreate}
-                                isDisabled={!project || !url || !password}
+                                isDisabled={!canLoadProject}
+                                testID="load-project-submit"
                             />
                         }
                     />
@@ -74,22 +111,34 @@ const LoadProjectModal: React.FC<LoadProjectModalProps> = ({ onClose, onProjectL
                             placeholder="프로젝트 이름"
                             testID="load-input"
                             value={project}
-                            onChangeText={setProject}
+                            onChangeText={(value) => {
+                                setProjectTouched(true);
+                                setProject(value);
+                            }}
                             autoCapitalize="none"
                             autoCorrect={false}
                             autoFocus
+                            invalidText={getProjectNameInvalidText(projectNameValidation)}
+                            isValid={showProjectNameError ? false : undefined}
                             style={styles.input}
                         />
                         <Input
                             placeholder="URL"
+                            testID="load-url-input"
                             value={url}
-                            onChangeText={setUrl}
+                            onChangeText={(value) => {
+                                setUrlTouched(true);
+                                setUrl(value);
+                            }}
                             autoCapitalize="none"
                             autoCorrect={false}
+                            invalidText={getSyncUrlInvalidText(syncUrlValidation)}
+                            isValid={showUrlError ? false : undefined}
                             style={styles.input}
                         />
                         <Input
                             placeholder="비밀번호"
+                            testID="load-password-input"
                             secureTextEntry
                             value={password}
                             onChangeText={setPassword}

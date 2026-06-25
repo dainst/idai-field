@@ -1,6 +1,8 @@
 <div class="container-fluid">
     <div #editor class="row">
-        <div id="edit-form-groups-container" class="col-md-3">
+        <div *ngIf="shouldShowGroupNavigation()"
+             id="edit-form-groups-container"
+             class="col-md-3">
             <ul id="edit-form-groups">
                 <li *ngFor="let group of groups" class="nav nav-pills"
                     (click)="activateGroup(group.name)">
@@ -8,7 +10,9 @@
                             class="nav-link" [id]="getGroupId(group)"
                             [class.active]="group.name === activeGroup"
                             [class.conflicted]="group.name === 'conflicts' && document._conflicts"
-                            href="javascript: void(0);">
+                            role="button"
+                            tabindex="0"
+                            (keydown.enter)="activateGroup(group.name)">
                         <span *ngIf="group.name === 'conflicts' && document._conflicts"
                             class="mdi mdi-alert">
                         </span>
@@ -18,9 +22,70 @@
             </ul>
         </div>
 
-        <div class="col-md-9 forms-container">
+        <div class="forms-container"
+             [class.col-md-9]="shouldShowGroupNavigation()"
+             [class.col-md-12]="!shouldShowGroupNavigation()">
+            <korean-fieldwork-record-context-panel *ngIf="activeGroup !== 'conflicts' && activeGroup !== 'images'"
+                                                   [document]="document"
+                                                   [fieldDefinitions]="fieldDefinitions"
+                                                   (onChanged)="onKoreanFieldworkPanelChanged()">
+            </korean-fieldwork-record-context-panel>
+
+            <korean-fieldwork-readiness-panel *ngIf="activeGroup !== 'conflicts' && activeGroup !== 'images'"
+                                              [document]="document"
+                                              [fieldDefinitions]="fieldDefinitions"
+                                              (onChanged)="onKoreanFieldworkPanelChanged()">
+            </korean-fieldwork-readiness-panel>
+
+            <korean-fieldwork-draft-preset-panel *ngIf="activeGroup !== 'conflicts' && activeGroup !== 'images'"
+                                                 [document]="document"
+                                                 [fieldDefinitions]="fieldDefinitions"
+                                                 (onChanged)="onKoreanFieldworkPanelChanged()">
+            </korean-fieldwork-draft-preset-panel>
+
+            <korean-fieldwork-feature-guidance-panel *ngIf="activeGroup !== 'conflicts' && activeGroup !== 'images'"
+                                                     [document]="document"
+                                                     [fieldDefinitions]="fieldDefinitions"
+                                                     (onChanged)="onKoreanFieldworkPanelChanged()">
+            </korean-fieldwork-feature-guidance-panel>
+
+            <korean-fieldwork-quick-record-panel *ngIf="activeGroup !== 'conflicts' && activeGroup !== 'images'"
+                                                 [document]="document"
+                                                 [fieldDefinitions]="fieldDefinitions"
+                                                 (onChanged)="onKoreanFieldworkPanelChanged()">
+            </korean-fieldwork-quick-record-panel>
+
+            <korean-fieldwork-narrative-assist-panel *ngIf="activeGroup !== 'conflicts' && activeGroup !== 'images'"
+                                                     [document]="document"
+                                                     [fieldDefinitions]="fieldDefinitions"
+                                                     (onChanged)="onKoreanFieldworkPanelChanged()">
+            </korean-fieldwork-narrative-assist-panel>
+
+            <korean-fieldwork-orientation-panel *ngIf="activeGroup !== 'conflicts' && activeGroup !== 'images'"
+                                                [document]="document"
+                                                [fieldDefinitions]="fieldDefinitions"
+                                                (onChanged)="onKoreanFieldworkPanelChanged()">
+            </korean-fieldwork-orientation-panel>
+
+            <korean-fieldwork-soil-color-panel *ngIf="activeGroup !== 'conflicts' && activeGroup !== 'images'"
+                                               [document]="document"
+                                               [fieldDefinitions]="fieldDefinitions"
+                                               (onChanged)="onKoreanFieldworkPanelChanged()">
+            </korean-fieldwork-soil-color-panel>
+
+            <button *ngIf="activeGroup !== 'conflicts' && activeGroup !== 'images' && shouldShowKoreanFieldworkRawStorageToggle()"
+                    type="button"
+                    class="btn korean-fieldwork-detail-toggle"
+                    (click)="toggleKoreanFieldworkDetailedForm()">
+                {{showKoreanFieldworkDetailedForm ? '기존 항목 접기' : '가져온 기존 항목'}}
+            </button>
+            <div *ngIf="activeGroup !== 'conflicts' && activeGroup !== 'images' && shouldShowKoreanFieldworkRawStorageSummary()"
+                 class="korean-fieldwork-detail-summary">
+                새 유구 기록은 위의 시대/시기·유구 성격·유구별 핵심 속성·야장 메모만 입력하면 충분합니다. 이 영역은 이전 양식에서 가져온 값이 있을 때만 확인합니다.
+            </div>
+
             <div id="{{activeGroup}}-group" class="scrollable-group"
-                 *ngIf="activeGroup !== 'conflicts' && activeGroup !== 'images'">
+                 *ngIf="activeGroup !== 'conflicts' && activeGroup !== 'images' && shouldShowActiveDetailedFormGroup()">
                 <edit-form-group [document]="document"
                                  [originalDocument]="originalDocument"
                                  [groupFields]="getGroupFields(activeGroup)"
@@ -29,6 +94,7 @@
                                  [languages]="languages"
                                  [scrollTargetField]="scrollTargetField"
                                  (onChanged)="onChanged()"
+                                 [hiddenFieldNames]="getHiddenFieldNames()"
                                  [disabledRelationFields]="disabledRelationFields">
                 </edit-form-group>
             </div>

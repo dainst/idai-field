@@ -1,5 +1,6 @@
 import { fireEvent, render } from '@testing-library/react-native';
 import React from 'react';
+import { Document } from 'idai-field-core';
 import KoreanFieldworkHierarchyBoard from './KoreanFieldworkHierarchyBoard';
 import { KOREAN_FIELDWORK_CATEGORIES } from './korean-fieldwork-categories';
 
@@ -17,7 +18,7 @@ describe('KoreanFieldworkHierarchyBoard', () => {
     const segment = createDoc('segment-1', C.FEATURE_SEGMENT, '피트 1', {
       liesWithin: [feature.resource.id],
     });
-    const documents = [operation, trench, feature, segment] as any[];
+    const documents = [operation, trench, feature, segment];
     const documentsById = new Map(documents.map((document) => [
       document.resource.id,
       document,
@@ -38,14 +39,14 @@ describe('KoreanFieldworkHierarchyBoard', () => {
     );
 
     expect(getByTestId('koreanFieldworkHierarchyBoard')).toBeTruthy();
-    expect(getByText('조사 흐름')).toBeTruthy();
+    expect(getByText('이어진 기록')).toBeTruthy();
     expect(getAllByText('T1').length).toBeGreaterThan(0);
     expect(getByText('수혈 1')).toBeTruthy();
     expect(getByText('피트')).toBeTruthy();
 
     fireEvent.press(getByText('수혈 1'));
-    fireEvent.press(getByLabelText('수혈 1 하위 범위로 이동'));
-    fireEvent.press(getByLabelText('수혈 1 하위 기록 추가'));
+    fireEvent.press(getByLabelText('수혈 1 이어진 기록 보기'));
+    fireEvent.press(getByLabelText('수혈 1 이어 만들 기록 추가'));
 
     expect(handleOpen).toHaveBeenCalledWith(feature);
     expect(handleDrillDown).toHaveBeenCalledWith(feature);
@@ -58,11 +59,14 @@ const createDoc = (
   category: string,
   identifier: string,
   relations: Record<string, string[]> = {}
-) => ({
+): Document => ({
+  _id: id,
   resource: {
     id,
     identifier,
     category,
     relations,
   },
+  created: { user: 'test', date: new Date(0) },
+  modified: [],
 });

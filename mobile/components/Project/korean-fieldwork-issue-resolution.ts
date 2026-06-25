@@ -67,7 +67,7 @@ export const getKoreanFieldworkIssueResolutionAction = (
         id: `resolve-${issue.ruleId}`,
         type: 'createDocument',
         label: '토층사진 추가',
-        detail: '부족한 토층사진 기록을 현재 기록 아래에 바로 만듭니다.',
+        detail: '부족한 토층사진 기록을 현재 기록에 붙입니다.',
         icon: 'terrain',
         tone: 'warning',
         categoryName: C.SOIL_PROFILE_PHOTO,
@@ -104,8 +104,9 @@ const mergeChecklistValues = (
   checklistValues: string[]
 ): string[] => {
   const resource = document.resource as unknown as Record<string, unknown>;
-  const mergedValues = Array.isArray(resource[FIELDWORK_QUICK_FIELDS.checklist])
-    ? resource[FIELDWORK_QUICK_FIELDS.checklist]
+  const existingChecklist = resource[FIELDWORK_QUICK_FIELDS.checklist];
+  const mergedValues = Array.isArray(existingChecklist)
+    ? existingChecklist
       .filter((value): value is string => typeof value === 'string')
     : [];
 

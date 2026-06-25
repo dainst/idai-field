@@ -1,0 +1,132 @@
+korean-fieldwork-narrative-assist-panel {
+  .korean-fieldwork-narrative-assist-panel {
+    background: #f3fbf6;
+    border: 1px solid #b7dcc8;
+    border-radius: 6px;
+    margin: 0 15px 14px 0;
+    padding: 12px;
+  }
+
+  .korean-fieldwork-narrative-assist-header {
+    align-items: center;
+    color: #2f6f4e;
+    display: flex;
+    font-size: 16px;
+    font-weight: 700;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .korean-fieldwork-narrative-assist-section {
+    margin-top: 8px;
+  }
+
+  .korean-fieldwork-narrative-assist-checklist {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 9px;
+  }
+
+  .korean-fieldwork-narrative-assist-check {
+    align-items: center;
+    background: #fff;
+    border: 1px solid #d0d5dd;
+    border-radius: 5px;
+    color: #475467;
+    display: inline-flex;
+    gap: 5px;
+    min-height: 34px;
+    padding: 5px 7px;
+
+    &.complete {
+      background: #ecfdf3;
+      border-color: #abefc6;
+      color: #027a48;
+    }
+
+    &.pending {
+      background: #fffbeb;
+      border-color: #fedf89;
+      color: #b54708;
+    }
+  }
+
+  .korean-fieldwork-narrative-assist-check-text {
+    display: grid;
+    gap: 1px;
+
+    span:first-child {
+      font-size: 11px;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    span:last-child {
+      color: #667085;
+      font-size: 10px;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+  }
+
+  .korean-fieldwork-narrative-assist-label {
+    color: #344054;
+    font-size: 12px;
+    font-weight: 800;
+    margin-bottom: 5px;
+  }
+
+  .korean-fieldwork-narrative-assist-chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+
+  .korean-fieldwork-narrative-assist-chip {
+    align-items: center;
+    background: #fff;
+    border: 1px solid #b7dcc8;
+    border-radius: 5px;
+    color: #244d3c;
+    display: inline-flex;
+    gap: 7px;
+    min-height: 42px;
+    padding: 6px 8px;
+    text-align: left;
+    width: 178px;
+
+    &:hover {
+      background: #e6f4ec;
+      border-color: #8fcaa9;
+      color: #244d3c;
+    }
+  }
+
+  .korean-fieldwork-narrative-assist-chip-text {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .korean-fieldwork-narrative-assist-chip-label {
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .korean-fieldwork-narrative-assist-chip-detail {
+    color: #667085;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-top: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

@@ -6,6 +6,26 @@ import { KOREAN_FIELDWORK_CATEGORIES } from './korean-fieldwork-categories';
 const C = KOREAN_FIELDWORK_CATEGORIES;
 
 describe('KoreanFieldworkRecordContextPanel', () => {
+  it('shows parent scope as a separate included-location line', () => {
+    const operation = createDoc('operation-1', C.OPERATION, 'OP1');
+    const trench = createDoc('trench-1', C.TRENCH, 'TR1', {
+      liesWithin: ['operation-1'],
+    });
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1', {
+      liesWithin: ['trench-1'],
+    });
+    const { getByText, queryByText } = render(
+      <KoreanFieldworkRecordContextPanel
+        document={feature}
+        documents={[operation, trench, feature]}
+        onOpenDocument={jest.fn()}
+      />
+    );
+
+    expect(getByText('포함 위치: OP1 > TR1')).toBeTruthy();
+    expect(queryByText('유구 · OP1 > TR1')).toBeNull();
+  });
+
   it('creates missing allowed evidence from the current fieldwork record', () => {
     const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
     const handleAddDocumentOfCategory = jest.fn();

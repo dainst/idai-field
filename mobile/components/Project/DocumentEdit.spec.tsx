@@ -28,22 +28,7 @@ import { ProjectContext } from '@/contexts/project-context';
 import DocumentEdit from '@/app/(tabs)/ProjectScreen/DocumentEdit';
 import { defaultMapSettings } from '@/components/Project/Map/map-settings';
 
-const project = 'testdb';
 const category = 'Pottery';
-const preferences: Preferences = {
-  username: 'testUser',
-  currentProject: project,
-  languages: ['en'],
-  recentProjects: [project],
-  projects: {
-    [project]: {
-      url: '',
-      password: '',
-      connected: true,
-      mapSettings: defaultMapSettings(),
-    },
-  },
-};
 
 const mockNavigate = jest.fn();
 const mockUseGlobalSearchParams = jest.fn();
@@ -68,12 +53,16 @@ jest.mock('expo-router', () => ({
 }));
 
 describe('DocumentEdit', () => {
+  let project: string;
+  let preferences: Preferences;
   let repository: DocumentRepository;
   let config: ProjectConfiguration;
   let pouchdbDatastore: PouchdbDatastore;
   let renderAPI: RenderAPI;
 
   beforeEach(async () => {
+    project = createTestProjectName('document-edit');
+    preferences = createPreferences(project);
     mockUseGlobalSearchParams.mockReturnValue({
       docId: t2.resource.id,
       categoryName: category,
@@ -85,7 +74,17 @@ describe('DocumentEdit', () => {
     );
     await pouchdbDatastore.createDb(
       project,
-      { _id: 'project', resource: { id: 'project' } },
+      {
+        _id: 'project',
+        resource: {
+          id: 'project',
+          identifier: 'project',
+          category: 'Project',
+          relations: {},
+        },
+        created: { user: 'test', date: new Date(0) },
+        modified: [],
+      },
       undefined,
       true
     );
@@ -133,7 +132,7 @@ describe('DocumentEdit', () => {
   });
 
   afterEach(async () => {
-    if (pouchdbDatastore) await pouchdbDatastore.destroyDb(project);
+    if (pouchdbDatastore && project) await pouchdbDatastore.destroyDb(project);
     cleanup();
     jest.clearAllMocks();
     mockNavigate.mockClear();
@@ -153,17 +152,30 @@ describe('DocumentEdit', () => {
       .toBeTruthy();
   });
 
-  it('should set input fields with correct values', async () => {
+  it('keeps the full form collapsed until detailed fields are needed', async () => {
+    await waitFor(() => renderAPI.getByTestId('documentForm'));
+
+    expect(renderAPI.queryByTestId('fullFormCollapsedSummary')).toBeTruthy();
+    expect(renderAPI.getByText(
+      '새 유구 기록은 위의 시대/시기·유구 성격·유구별 핵심 속성·야장 메모만 입력하면 충분합니다. 이 영역은 이전 양식에서 가져온 값이 있을 때만 확인합니다.'
+    ))
+      .toBeTruthy();
+    expect(renderAPI.getByText('가져온 기존 항목')).toBeTruthy();
+    expect(renderAPI.getByText('필요할 때만 열기')).toBeTruthy();
+    expect(renderAPI.queryByText(/기존 항목 \d+개 확인 중/)).toBeNull();
+    expect(renderAPI.queryByTestId('groupSelect_stem')).toBeNull();
+
+    fireEvent.press(renderAPI.getByTestId('fullFormToggle'));
+
+    expect(renderAPI.getByText(/기존 항목 \d+개 확인 중/)).toBeTruthy();
+  });
+
+  it('should show the quick observation input for direct field notes', async () => {
     const { getByTestId } = renderAPI;
 
-    await waitFor(() => {
-      getByTestId('documentForm');
-      fireEvent.press(getByTestId('groupSelect_stem'));
-    });
+    await waitFor(() => getByTestId('documentForm'));
 
-    expect(getByTestId('inputField_shortDescription').props.value).toEqual(
-      t2.resource.shortDescription
-    );
+    expect(getByTestId('quickRecordInput_description').props.value).toEqual('');
   });
 
   it('should update document with changed values', async () => {
@@ -173,19 +185,16 @@ describe('DocumentEdit', () => {
       ...t2,
       resource: {
         ...t2.resource,
-        shortDescription: newDescription,
+        description: newDescription,
       },
     };
 
-    await waitFor(() => {
-      getByTestId('documentForm');
-      fireEvent.press(getByTestId('groupSelect_stem'));
-      fireEvent.changeText(
-        getByTestId('inputField_shortDescription'),
-        newDescription
-      );
-      fireEvent.press(getByTestId('editDocBtn'));
-    });
+    await waitFor(() => getByTestId('documentForm'));
+    fireEvent.changeText(
+      getByTestId('quickRecordInput_description'),
+      newDescription
+    );
+    fireEvent.press(getByTestId('editDocBtn'));
 
     expect(repository.update).toHaveBeenCalledWith(expectedDoc);
   });
@@ -193,15 +202,12 @@ describe('DocumentEdit', () => {
   it('should navigate back to DocumentsMap after object hast been edited', async () => {
     const { getByTestId } = renderAPI;
 
-    await waitFor(() => {
-      getByTestId('documentForm');
-      fireEvent.press(getByTestId('groupSelect_stem'));
-      fireEvent.changeText(
-        getByTestId('inputField_shortDescription'),
-        'newDescription'
-      );
-      fireEvent.press(getByTestId('editDocBtn'));
-    });
+    await waitFor(() => getByTestId('documentForm'));
+    fireEvent.changeText(
+      getByTestId('quickRecordInput_description'),
+      'newDescription'
+    );
+    fireEvent.press(getByTestId('editDocBtn'));
 
     await waitFor(() => expect(mockNavigate).toHaveBeenCalledTimes(1));
     expect(mockNavigate).toHaveBeenCalledWith({
@@ -222,3 +228,26 @@ const createProjectConfiguration = (
     valuelists: {},
     projectLanguages: [],
   });
+
+const createPreferences = (project: string): Preferences => ({
+  username: 'testUser',
+  currentProject: project,
+  languages: ['en'],
+  recentProjects: [project],
+  mapProviderSettings: {
+    kakaoLocalRestApiKey: '',
+    kakaoMapJavaScriptKey: '',
+    kakaoNativeAppKey: '',
+  },
+  projects: {
+    [project]: {
+      url: '',
+      password: '',
+      connected: true,
+      mapSettings: defaultMapSettings(),
+    },
+  },
+});
+
+const createTestProjectName = (prefix: string): string =>
+  `${prefix}-${Math.random().toString(36).slice(2)}`;

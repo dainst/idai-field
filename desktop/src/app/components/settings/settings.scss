@@ -30,6 +30,204 @@
     scroll-margin: 12px;
   }
 
+  .korean-fieldwork-settings {
+    margin-top: 28px;
+
+    h5 {
+      margin-bottom: 12px;
+    }
+  }
+
+  .korean-fieldwork-settings-current-project {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    color: #495057;
+    font-weight: 600;
+  }
+
+  .korean-fieldwork-settings-help {
+    margin-bottom: 10px;
+  }
+
+  .korean-fieldwork-settings-mode-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .korean-fieldwork-settings-mode-option {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-height: 86px;
+    padding: 10px 12px;
+    border: 1px solid #cfd7df;
+    border-radius: 6px;
+    background: #fff;
+    color: #2f3941;
+    text-align: left;
+
+    &:hover,
+    &:focus {
+      border-color: #8f9faf;
+      outline: none;
+    }
+
+    &.active {
+      border-color: #52966d;
+      background: #f0f8f3;
+    }
+  }
+
+  .korean-fieldwork-settings-mode-label {
+    font-weight: 700;
+  }
+
+  .korean-fieldwork-settings-mode-detail {
+    color: #5d6872;
+    font-size: 13px;
+    line-height: 1.35;
+  }
+
+  .korean-fieldwork-settings-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: 10px;
+    padding: 9px 10px;
+    border: 1px solid #c9d4df;
+    border-radius: 6px;
+    background: #f8fafc;
+    color: #3f4a54;
+    font-size: 13px;
+    line-height: 1.35;
+
+    &.changed {
+      border-color: #8bb7da;
+      background: #eef7ff;
+    }
+
+    &.saved {
+      border-color: #8fc89e;
+      background: #f0f8f3;
+    }
+
+    &.incomplete {
+      border-color: #dbb46b;
+      background: #fff8e8;
+    }
+
+    .mdi {
+      margin-top: 1px;
+      font-size: 16px;
+    }
+  }
+
+  .korean-fieldwork-tablet-sync {
+    margin-top: 14px;
+    padding: 12px;
+    border: 1px solid #cfd7df;
+    border-radius: 6px;
+    background: #f8fafc;
+  }
+
+  .korean-fieldwork-tablet-sync-header {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 10px;
+    color: #2f3941;
+    font-weight: 700;
+  }
+
+  .korean-fieldwork-tablet-sync-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 8px;
+  }
+
+  .korean-fieldwork-tablet-sync-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+    padding: 8px 10px;
+    border: 1px solid #e0e6ec;
+    border-radius: 6px;
+    background: #fff;
+
+    code {
+      overflow-wrap: anywhere;
+      color: #1f2933;
+      font-size: 13px;
+    }
+  }
+
+  .korean-fieldwork-tablet-sync-label {
+    color: #5d6872;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .korean-fieldwork-tablet-sync-missing,
+  .korean-fieldwork-tablet-sync-note {
+    color: #5d6872;
+    font-size: 13px;
+    line-height: 1.35;
+  }
+
+  .korean-fieldwork-tablet-sync-note {
+    margin-top: 9px;
+  }
+
+  .korean-fieldwork-map-provider-settings {
+    margin-top: 14px;
+    padding: 12px;
+    border: 1px solid #cfd7df;
+    border-radius: 6px;
+    background: #fff;
+
+    input {
+      font-family: monospace;
+    }
+  }
+
+  .korean-fieldwork-map-provider-header {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 10px;
+    color: #2f3941;
+    font-weight: 700;
+  }
+
+  .korean-fieldwork-map-provider-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: 12px;
+    padding: 9px 10px;
+    border: 1px solid #c9d4df;
+    border-radius: 6px;
+    background: #f8fafc;
+    color: #3f4a54;
+    font-size: 13px;
+    line-height: 1.35;
+
+    &.ready {
+      border-color: #8fc89e;
+      background: #f0f8f3;
+    }
+
+    .mdi {
+      margin-top: 1px;
+      font-size: 16px;
+    }
+  }
+
   #advanced-settings {
     margin-bottom: 0;
 

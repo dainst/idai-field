@@ -22,6 +22,7 @@ describe('KoreanFieldworkRecordActionPanel', () => {
     );
 
     expect(getByText('현장 작업')).toBeTruthy();
+    expect(getByText('이어진 기록')).toBeTruthy();
 
     fireEvent.press(getByTestId('recordAction_create-Trench'));
 

@@ -31088,6 +31088,38 @@
       "correctionNeeded"
     ]
   },
+  "KoreanFieldwork-projectInvestigationMode": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-23",
+    "values": {
+      "trialTrench": {},
+      "excavation": {},
+      "surfaceSurvey": {},
+      "watchingBrief": {}
+    },
+    "order": [
+      "trialTrench",
+      "excavation",
+      "surfaceSurvey",
+      "watchingBrief"
+    ]
+  },
+  "KoreanFieldwork-projectBoundarySetupState": {
+    "createdBy": "codex",
+    "creationDate": "2026-06-23",
+    "values": {
+      "notStarted": {},
+      "draftBoundary": {},
+      "confirmed": {},
+      "needsRevision": {}
+    },
+    "order": [
+      "notStarted",
+      "draftBoundary",
+      "confirmed",
+      "needsRevision"
+    ]
+  },
   "KoreanFieldwork-excavationControlSafety": {
     "createdBy": "codex",
     "creationDate": "2026-06-19",
@@ -36787,6 +36819,7 @@
       "googleRoadmap": {},
       "googleSatellite": {},
       "googleHybrid": {},
+      "kakaoHybrid": {},
       "customWmts": {},
       "importedRasterLayer": {},
       "importedVectorLayer": {}
@@ -36797,6 +36830,7 @@
       "googleRoadmap",
       "googleSatellite",
       "googleHybrid",
+      "kakaoHybrid",
       "customWmts",
       "importedRasterLayer",
       "importedVectorLayer"

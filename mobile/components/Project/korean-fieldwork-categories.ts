@@ -32,7 +32,7 @@ export const KOREAN_FIELDWORK_CATEGORY_LABELS: Readonly<Record<string, string>> 
   [KOREAN_FIELDWORK_CATEGORIES.FIND]: '유물',
   [KOREAN_FIELDWORK_CATEGORIES.FIND_COLLECTION]: '유물 일괄',
   [KOREAN_FIELDWORK_CATEGORIES.LAYER]: '토층',
-  [KOREAN_FIELDWORK_CATEGORIES.OPERATION]: '조사구역',
+  [KOREAN_FIELDWORK_CATEGORIES.OPERATION]: '조사 구역 기록',
   [KOREAN_FIELDWORK_CATEGORIES.PEN_MEMO]: '펜메모',
   [KOREAN_FIELDWORK_CATEGORIES.PHOTO]: '사진',
   [KOREAN_FIELDWORK_CATEGORIES.PLACE]: '유적/지점',
@@ -40,14 +40,14 @@ export const KOREAN_FIELDWORK_CATEGORY_LABELS: Readonly<Record<string, string>> 
   [KOREAN_FIELDWORK_CATEGORIES.SOIL_PROFILE_PHOTO]: '토층 단면 사진',
   [KOREAN_FIELDWORK_CATEGORIES.SOURCE_EVIDENCE_INDEX]: '원문 근거 색인',
   [KOREAN_FIELDWORK_CATEGORIES.SURVEY]: '지표조사',
-  [KOREAN_FIELDWORK_CATEGORIES.SURVEY_BOUNDARY]: '조사경계',
+  [KOREAN_FIELDWORK_CATEGORIES.SURVEY_BOUNDARY]: '조사 경계',
   [KOREAN_FIELDWORK_CATEGORIES.TRENCH]: '트렌치',
 };
 
 export const KOREAN_FIELDWORK_CATEGORY_DESCRIPTIONS: Readonly<Record<string, string>> = {
   [KOREAN_FIELDWORK_CATEGORIES.AERIAL_MAP_LAYER]: '드론 정사영상과 기준 배경지도를 현장 지도에 맞춥니다.',
   [KOREAN_FIELDWORK_CATEGORIES.DAILY_LOG]: '오늘의 작업 범위, 담당자, 관찰 내용과 변경사항을 묶습니다.',
-  [KOREAN_FIELDWORK_CATEGORIES.DRAWING]: '실측도, 분포도, 보정 도면 등 도면 자료를 연결합니다.',
+  [KOREAN_FIELDWORK_CATEGORIES.DRAWING]: '실측도, 분포도, 보정 도면 등 도면 자료를 추가합니다.',
   [KOREAN_FIELDWORK_CATEGORIES.FEATURE]: '수혈, 주거지, 목책, 구상유구처럼 개별 유구를 기록합니다.',
   [KOREAN_FIELDWORK_CATEGORIES.FEATURE_GROUP]: '목책열, 수혈 여러 기, 건물지 여러 동처럼 함께 다루는 유구입니다.',
   [KOREAN_FIELDWORK_CATEGORIES.FEATURE_SEGMENT]: '피트, 절개면, 내부 퇴적처럼 유구 안에서 따로 조사한 세부 단위입니다.',
@@ -55,11 +55,11 @@ export const KOREAN_FIELDWORK_CATEGORY_DESCRIPTIONS: Readonly<Record<string, str
   [KOREAN_FIELDWORK_CATEGORIES.FIND]: '개별 유물의 출토 맥락, 수습 상태, 해석 근거를 기록합니다.',
   [KOREAN_FIELDWORK_CATEGORIES.FIND_COLLECTION]: '동일 맥락의 유물 일괄 수습 또는 묶음 기록입니다.',
   [KOREAN_FIELDWORK_CATEGORIES.LAYER]: '사진에 표시한 토층 번호별 토색과 필요한 메모를 남깁니다.',
-  [KOREAN_FIELDWORK_CATEGORIES.OPERATION]: '현장 조사구역, 조사 단위, 구역 경계의 기준 기록입니다.',
+  [KOREAN_FIELDWORK_CATEGORIES.OPERATION]: '조사 경계 안에서 트렌치·유구·유물 기록을 이어 붙이는 구역 기록입니다.',
   [KOREAN_FIELDWORK_CATEGORIES.PEN_MEMO]: '태블릿에서 바로 적는 손글씨 메모와 전사 상태를 남깁니다.',
-  [KOREAN_FIELDWORK_CATEGORIES.PHOTO]: '현장 사진, 유물 사진, 보고서용 사진 근거를 연결합니다.',
+  [KOREAN_FIELDWORK_CATEGORIES.PHOTO]: '현장 사진, 유물 사진, 보고서용 사진 근거를 추가합니다.',
   [KOREAN_FIELDWORK_CATEGORIES.SAMPLE]: '토양, 목탄, 유기물, 자연과학 분석용 시료를 기록합니다.',
-  [KOREAN_FIELDWORK_CATEGORIES.SOIL_PROFILE_PHOTO]: '토층 단면 사진과 토층 번호, 토색 기록을 연결합니다.',
+  [KOREAN_FIELDWORK_CATEGORIES.SOIL_PROFILE_PHOTO]: '토층 단면 사진과 토층 번호, 토색 기록을 남깁니다.',
   [KOREAN_FIELDWORK_CATEGORIES.SOURCE_EVIDENCE_INDEX]: '보고서·문헌·원자료의 근거자료를 나중에 추적할 수 있게 색인합니다.',
   [KOREAN_FIELDWORK_CATEGORIES.SURVEY]: '지표조사, 시굴 전 단계, 조사 방법과 관찰 조건을 기록합니다.',
   [KOREAN_FIELDWORK_CATEGORIES.SURVEY_BOUNDARY]: '조사 범위, 구역선, 배경지도 출처와 정확도를 기록합니다.',
@@ -120,6 +120,17 @@ export const KOREAN_FIELDWORK_CATEGORY_ORDER: readonly string[] = [
 export const getKoreanFieldworkCategoryLabel = (
   categoryName: string
 ): string => KOREAN_FIELDWORK_CATEGORY_LABELS[categoryName] ?? categoryName;
+
+export const getKoreanFieldworkDisplayIdentifier = (
+  identifier?: string
+): string => {
+  const value = (identifier ?? '').trim();
+  if (!value) return '';
+
+  return value
+    .replace(/^현장단위-/, '조사구역-')
+    .replace(/^조사기준-/, '조사구역-');
+};
 
 export const getKoreanFieldworkCategoryDescription = (
   categoryName: string

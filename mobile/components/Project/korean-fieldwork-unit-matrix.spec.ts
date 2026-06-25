@@ -4,7 +4,10 @@ import {
   KoreanFieldworkTodaySummary,
 } from 'idai-field-core';
 import { KOREAN_FIELDWORK_CATEGORIES } from './korean-fieldwork-categories';
-import { getKoreanFieldworkUnitMatrixItems } from './korean-fieldwork-unit-matrix';
+import {
+  getKoreanFieldworkFeatureOverviewItems,
+  getKoreanFieldworkUnitMatrixItems,
+} from './korean-fieldwork-unit-matrix';
 
 const C = KOREAN_FIELDWORK_CATEGORIES;
 
@@ -37,7 +40,7 @@ describe('Korean fieldwork unit matrix', () => {
     );
 
     expect(items.find((item) => item.id === 'operation-1')).toMatchObject({
-      categoryLabel: '조사구역',
+      categoryLabel: '조사 구역 기록',
       childStructureCount: 1,
       nextChildCategoryName: C.TRENCH,
     });
@@ -46,7 +49,7 @@ describe('Korean fieldwork unit matrix', () => {
       evidenceCount: 1,
       issueCount: 1,
       checklistDone: 1,
-      checklistTotal: 10,
+      checklistTotal: 9,
       nextChildCategoryName: C.FEATURE_SEGMENT,
       photoCategoryName: C.PHOTO,
       tone: 'warning',
@@ -111,6 +114,31 @@ describe('Korean fieldwork unit matrix', () => {
     );
 
     expect(items.map((item) => item.id)).toEqual(['trench-1', 'feature-1']);
+  });
+
+  it('builds an all-feature overview table from feature records only', () => {
+    const operation = createDoc('operation-1', C.OPERATION, '조사구역 1');
+    const trench = createDoc('trench-1', C.TRENCH, 'T1', {
+      liesWithin: ['operation-1'],
+    });
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1', {
+      liesWithin: ['trench-1'],
+    });
+    const photo = createDoc('photo-1', C.PHOTO, '사진 1', {
+      depicts: ['feature-1'],
+    });
+
+    const items = getKoreanFieldworkFeatureOverviewItems(
+      createSummary([]),
+      [operation, trench, feature, photo]
+    );
+
+    expect(items.map((item) => item.id)).toEqual(['feature-1']);
+    expect(items[0]).toMatchObject({
+      statusLabel: '조사 중',
+      evidenceLabel: '사진 1',
+      nextActionLabel: '조사 과정 0/9',
+    });
   });
 });
 

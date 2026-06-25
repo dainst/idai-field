@@ -37,7 +37,7 @@ describe('KoreanFieldworkNotebookLedger', () => {
       />
     );
 
-    expect(getByText('야장 흐름')).toBeTruthy();
+    expect(getByText('메모 흐름')).toBeTruthy();
     expect(getByText('배수로 정리.')).toBeTruthy();
     expect(getByText('바닥면 정리 중 원형 윤곽 확인.')).toBeTruthy();
     expect(getByText('번호 보강')).toBeTruthy();

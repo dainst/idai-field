@@ -49,8 +49,8 @@
   "menu.window.minimize": "최소화",
   "menu.help": "도움말",
   "info.close": "닫기",
-  "menu.tools.inventory": "인벤토리",
+  "menu.tools.inventory": "자료 관리",
   "menu.configuration.exportConfiguration": "설정 내보내기...",
   "autoUpdate.available.warning": "주의: 업데이트를 시작하기 전에 중요한 프로젝트를 모두 백업하세요.",
-  "menu.tools.workflow": "작업 흐름"
+  "menu.tools.workflow": "작업 기록"
 }

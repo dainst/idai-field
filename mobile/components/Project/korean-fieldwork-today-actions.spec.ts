@@ -113,7 +113,7 @@ describe('Korean fieldwork today actions', () => {
     ).featureCandidate).toMatchObject({
       icon: 'add-location-alt',
       label: '유구 확인',
-      detail: '트렌치 아래 유구 기록',
+      detail: '트렌치 안에 유구 기록',
       action: {
         type: 'createDocument',
         parentDocumentId: 'trench-1',
@@ -298,7 +298,7 @@ describe('Korean fieldwork today actions', () => {
       trench as any
     )).toMatchObject({
       dailyLog: {
-        detail: '상위 조사구역에서 작성',
+        detail: '현재 범위에서 작성',
         disabled: true,
       },
       featureCandidate: {

@@ -28,6 +28,8 @@ describe('Korean fieldwork narrative assist', () => {
       'feature-candidate-summary',
       'common-context-description',
       'feature-exposure',
+      'feature-field-note-flow',
+      'feature-sketch-measure-evidence',
       'feature-shape-scale',
     ]));
     expect(groups.flatMap((group) =>
@@ -60,6 +62,36 @@ describe('Korean fieldwork narrative assist', () => {
       }),
       exposureSnippet!
     )).toBe('평면 노출 상태, 경계의 명확성, 교란 여부를 확인함.');
+  });
+
+  it('adds a feature field-note flow that ties observation to sketch measurements and evidence numbers', () => {
+    const [descriptionGroup] = getKoreanFieldworkNarrativeFieldGroups(
+      createCategoryForm(['description']),
+      createResource(C.FEATURE)
+    );
+    const fieldNoteSnippet = descriptionGroup.snippets.find((snippet) =>
+      snippet.id === 'feature-field-note-flow'
+    );
+    const sketchMeasureSnippet = descriptionGroup.snippets.find((snippet) =>
+      snippet.id === 'feature-sketch-measure-evidence'
+    );
+
+    expect(fieldNoteSnippet).toBeTruthy();
+    expect(sketchMeasureSnippet).toBeTruthy();
+    expect(getKoreanFieldworkNarrativeSnippetValue(
+      createResource(C.FEATURE),
+      fieldNoteSnippet!
+    )).toContain('[스케치·약측] 약도/평면/단면 스케치 번호');
+    expect(getKoreanFieldworkNarrativeSnippetValue(
+      createResource(C.FEATURE),
+      fieldNoteSnippet!
+    )).toContain('[유구 성격] 미정/추정으로 둘 수 있으며');
+    expect(getKoreanFieldworkNarrativeSnippetValue(
+      createResource(C.FEATURE),
+      sketchMeasureSnippet!
+    )).toBe(
+      '[스케치·약측] 약도/평면/단면 스케치 번호, 측정 기준선, 장축×단축, 깊이, 촬영·도면 번호, 설명에서 참조할 부분을 함께 기록.'
+    );
   });
 
   it('replaces short descriptions with concise field-note labels', () => {

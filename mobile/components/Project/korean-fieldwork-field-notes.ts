@@ -160,8 +160,13 @@ const FIELD_NOTE_SECTION_DEFINITIONS: {
   { id: 'observation', label: '관찰 내용' },
   { id: 'interpretation', label: '해석' },
   { id: 'nextWork', label: '다음 작업' },
-  { id: 'evidenceNumbers', label: '사진·도면·유물·시료 번호' },
+  { id: 'evidenceNumbers', label: '사진·도면·스케치·유물·시료 번호' },
 ];
+const FIELD_NOTE_SECTION_ALIASES: Record<string, keyof KoreanFieldworkFieldNoteInput> = {
+  '스케치·약측/근거 번호': 'evidenceNumbers',
+  '근거 번호': 'evidenceNumbers',
+  '사진·도면·유물·시료 번호': 'evidenceNumbers',
+};
 
 export const createKoreanFieldworkRecordMemoDraft = (
   document: Document,
@@ -306,6 +311,13 @@ export const getKoreanFieldworkFieldNoteSummaries = (
       isRelatedRecordMemo(candidate, document)
       || isRelatedDailyLog(candidate, operationDocument)
     )
+    .filter((candidate) =>
+      hasMeaningfulFieldNoteText(
+        isRelatedRecordMemo(candidate, document)
+          ? getDocumentFieldNoteText(candidate)
+          : getRelevantDailyLogEntry(candidate, document)
+      )
+    )
     .sort(compareNewestFirst)
     .slice(0, limit);
 
@@ -449,8 +461,8 @@ export const getKoreanFieldworkFieldNoteChecklist = (
 ): KoreanFieldworkFieldNoteChecklistItem[] => [
   {
     id: 'observation',
-    label: '관찰',
-    detail: '눈으로 확인한 사실',
+    label: '관찰·약측',
+    detail: '그림과 함께 본 사실',
     isComplete: hasText(input.observation),
   },
   {
@@ -468,7 +480,7 @@ export const getKoreanFieldworkFieldNoteChecklist = (
   {
     id: 'evidenceNumbers',
     label: '번호',
-    detail: '사진·도면·유물·시료',
+    detail: '사진·도면·스케치·유물·시료',
     isComplete: hasText(input.evidenceNumbers),
   },
 ];
@@ -488,10 +500,10 @@ export const getKoreanFieldworkFieldNotePresets = (
     },
     {
       id: 'photoDrawing',
-      label: '사진·도면',
+      label: '사진·도면·약도',
       input: {
-        observation: '촬영·실측 기준점과 방향을 확인.',
-        nextWork: '사진·도면 번호를 야장에 연결.',
+        observation: '촬영·실측 기준점, 방향, 약도·스케치 번호를 확인.',
+        nextWork: '사진·도면·스케치 번호를 현장 메모에 적어두세요.',
       },
     },
     {
@@ -536,10 +548,10 @@ export const getKoreanFieldworkFieldNotePresets = (
     return [
       {
         id: 'featureProgress',
-        label: '유구 진행',
+        label: '유구 야장',
         input: {
-          observation: '평면 형태, 규모, 내부 퇴적, 중복 관계를 확인.',
-          interpretation: '유구 성격은 관찰 근거와 함께 보완.',
+          observation: '유구 성격을 확정하지 말고 평면 형태, 규모, 내부 퇴적, 중복 관계와 스케치·약측값을 먼저 기록.',
+          interpretation: '유구 성격은 미정/추정으로 두고 관찰·그림·사진 근거와 함께 보완.',
           nextWork: '단면 정리, 사진 보강, 실측, 유물·시료 수습 여부 확인.',
         },
       },
@@ -587,7 +599,7 @@ export const getKoreanFieldworkFieldNoteObservationPrompts = (
           id: 'group-relation',
           label: '선후 관계',
           detail: '중복·절단',
-          observation: '묶음 안팎의 중복, 절단, 선후관계를 기록.',
+          observation: '군집 안팎의 중복, 절단, 선후관계를 기록.',
         },
       ];
     case C.FEATURE_SEGMENT:
@@ -608,7 +620,7 @@ export const getKoreanFieldworkFieldNoteObservationPrompts = (
           id: 'segment-context',
           label: '주변 관계',
           detail: '인접 유구·층',
-          observation: '인접 유구, 층위, 조사구역 안 위치와의 관계를 기록.',
+          observation: '인접 유구, 층위, 조사 경계 안 위치와의 관계를 기록.',
         },
       ];
     case C.TRENCH:
@@ -617,7 +629,7 @@ export const getKoreanFieldworkFieldNoteObservationPrompts = (
           id: 'trench-position',
           label: '트렌치 위치',
           detail: '범위·방향·기준점',
-          observation: '트렌치 범위, 방향, 기준점, 조사구역과의 관계를 기록.',
+          observation: '트렌치 범위, 방향, 기준점, 조사 경계와의 관계를 기록.',
         },
       {
         id: 'trench-layer',
@@ -628,8 +640,8 @@ export const getKoreanFieldworkFieldNoteObservationPrompts = (
         {
           id: 'trench-feature',
           label: '확인 유구',
-          detail: '위치·연결',
-          observation: '트렌치 안에서 확인한 유구 위치, 경계, 연결 관계를 기록.',
+          detail: '위치·범위',
+          observation: '트렌치 안에서 확인한 유구 위치, 경계, 접속 관계를 기록.',
         },
       ];
     case C.LAYER:
@@ -862,8 +874,8 @@ export const getKoreanFieldworkFieldNoteGuidance = (
   if (!hasEvidenceNumbers && shouldPromptEvidenceNumbers(input, document)) {
     items.push({
       id: 'evidence-numbers',
-      label: '번호 연결',
-      detail: '사진·도면·유물·시료 번호가 생겼다면 같은 줄에 남기세요.',
+      label: '번호 확인',
+      detail: '사진·도면·스케치·유물·시료 번호가 생겼다면 같은 줄에 남기세요.',
       tone: 'guide',
     });
   }
@@ -923,12 +935,12 @@ export const getKoreanFieldworkFieldNoteReportPreview = (
   const categoryLabel = getKoreanFieldworkCategoryLabel(document.resource.category);
   const missingParts = [
     !interpretation ? '관찰과 구분한 해석' : undefined,
-    !evidenceNumbers ? '사진·도면·유물·시료 번호' : undefined,
+    !evidenceNumbers ? '사진·도면·스케치·유물·시료 번호' : undefined,
     !nextWork && shouldPromptNextWork(document) ? '다음 작업' : undefined,
   ].filter((part): part is string => !!part);
 
   return {
-    title: `${recordLabel} 보고서 연결 문장`,
+    title: `${recordLabel} 보고서 정리 문장`,
     sentence: [
       `${formatReportSubject(categoryLabel, recordLabel)} ${trimSentenceEnd(observation)}.`,
       interpretation
@@ -1003,8 +1015,8 @@ export const getKoreanFieldworkFieldNoteEvidenceActions = (
       id: chip.id,
       label: `${chip.label} 추가`,
       detail: chip.count > 0
-        ? `연결된 기록 ${chip.count}건`
-        : '아직 연결된 기록 없음',
+        ? `이어진 기록 ${chip.count}건`
+        : '아직 이어진 기록 없음',
       categoryName: chip.createCategoryName!,
       existingCount: chip.count,
     }));
@@ -1209,6 +1221,7 @@ const FIELD_NOTE_EVIDENCE_ACTION_IDS = new Set<string>([
   'photos',
   'soilProfilePhotos',
   'drawings',
+  'sketches',
   'finds',
   'samples',
 ]);
@@ -1217,6 +1230,7 @@ const FIELD_NOTE_EVIDENCE_NUMBER_LABELS: Record<string, string> = {
   photos: '사진',
   soilProfilePhotos: '토층사진',
   drawings: '도면',
+  sketches: '약도·스케치',
   finds: '유물',
   samples: '시료',
 };
@@ -1252,27 +1266,32 @@ const FIELD_NOTE_FOLLOW_UP_MATCHERS: {
   {
     actionIds: ['soilProfilePhotos'],
     pattern: /토층|단면|벽면/,
-    reason: '야장에 토층·단면 내용이 언급됐습니다.',
+    reason: '현장 메모에 토층·단면 내용이 언급됐습니다.',
   },
   {
     actionIds: ['photos'],
-    pattern: /사진|촬영|전경|세부|보강/,
-    reason: '야장에 사진 기록이 언급됐습니다.',
+    pattern: /사진|촬영|전경|세부/,
+    reason: '현장 메모에 사진 기록이 언급됐습니다.',
   },
   {
     actionIds: ['drawings'],
-    pattern: /도면|실측|평면도|단면도|스케치/,
-    reason: '야장에 도면·실측 기록이 언급됐습니다.',
+    pattern: /도면|실측|평면도|단면도/,
+    reason: '현장 메모에 도면·실측 기록이 언급됐습니다.',
+  },
+  {
+    actionIds: ['sketches'],
+    pattern: /스케치|약도|손그림|약측|그림/,
+    reason: '현장 메모에 스케치·약측 기록이 언급됐습니다.',
   },
   {
     actionIds: ['finds'],
     pattern: /유물|출토|수습|토기|자기|석기/,
-    reason: '야장에 유물 기록이 언급됐습니다.',
+    reason: '현장 메모에 유물 기록이 언급됐습니다.',
   },
   {
     actionIds: ['samples'],
     pattern: /시료|채취|샘플|분석/,
-    reason: '야장에 시료 기록이 언급됐습니다.',
+    reason: '현장 메모에 시료 기록이 언급됐습니다.',
   },
 ];
 
@@ -1288,6 +1307,7 @@ const FIELD_NOTE_EVIDENCE_ACTION_ORDER = [
   'soilProfilePhotos',
   'photos',
   'drawings',
+  'sketches',
   'finds',
   'samples',
 ];
@@ -1373,7 +1393,7 @@ const createFieldNoteHistoryItem = (
   text: string
 ): KoreanFieldworkFieldNoteHistoryItem[] => {
   const noteText = normalizeFieldNoteText(text);
-  if (!noteText) return [];
+  if (!hasMeaningfulFieldNoteText(noteText)) return [];
 
   const input = extractKoreanFieldworkFieldNoteInput(noteText);
 
@@ -1393,7 +1413,7 @@ const createNotebookEntryFromRecordMemo = (
   documentsById: Map<string, Document>
 ): KoreanFieldworkNotebookEntryWithSortKey[] => {
   const noteText = getDocumentFieldNoteText(memoDocument);
-  if (!noteText) return [];
+  if (!hasMeaningfulFieldNoteText(noteText)) return [];
 
   const targetDocument = getRelationIds(memoDocument, 'depicts')
     .map((documentId) => documentsById.get(documentId))
@@ -1416,7 +1436,10 @@ const createNotebookEntriesFromDailyLog = (
 ): KoreanFieldworkNotebookEntryWithSortKey[] => {
   const blocks = getDailyLogEntryBlocks(dailyLogDocument);
 
-  return blocks.map((block, index) => {
+  return blocks.flatMap((block, index) => {
+    const text = block.lines.join('\n');
+    if (!hasMeaningfulFieldNoteText(text)) return [];
+
     const targetDocument = block.contextLabel
       ? findDailyLogContextDocument(block.contextLabel, documents)
       : undefined;
@@ -1427,7 +1450,7 @@ const createNotebookEntriesFromDailyLog = (
       sourceLabel: '일지',
       targetDocument,
       targetLabelFallback: block.contextLabel,
-      text: block.lines.join('\n'),
+      text,
       timeLabel: block.timeLabel,
       order: index,
     });
@@ -1510,7 +1533,7 @@ const getNotebookContinuationNextWork = (
   focus === 'evidenceNumbers'
     ? mergeFieldNoteValue(
       entry.input.nextWork || entry.nextWork,
-      '사진·도면·유물·시료 번호를 이어서 확인.'
+      '사진·도면·스케치·유물·시료 번호를 이어서 확인.'
     )
     : entry.input.nextWork || entry.nextWork;
 
@@ -1707,7 +1730,7 @@ const getFieldNoteSectionId = (
 ): keyof KoreanFieldworkFieldNoteInput | undefined =>
   FIELD_NOTE_SECTION_DEFINITIONS.find((section) =>
     section.label === label
-  )?.id;
+  )?.id ?? FIELD_NOTE_SECTION_ALIASES[label];
 
 const appendFieldNoteInputLine = (
   input: KoreanFieldworkFieldNoteInput,
@@ -1744,6 +1767,24 @@ const hasAnyFieldNoteInput = (
 ): boolean => FIELD_NOTE_SECTION_DEFINITIONS.some((section) =>
   hasText(input[section.id])
 );
+
+const hasMeaningfulFieldNoteText = (text: string): boolean => {
+  const noteText = normalizeFieldNoteText(text);
+  if (!noteText) return false;
+
+  const input = extractKoreanFieldworkFieldNoteInput(noteText);
+  if (hasAnyFieldNoteInput(input)) return true;
+
+  return noteText.split('\n').some((rawLine) => {
+    const line = stripDailyLogEntryPrefix(rawLine.trim());
+    return line.length > 0 && !isFieldNoteSectionHeadingOnly(line);
+  });
+};
+
+const isFieldNoteSectionHeadingOnly = (line: string): boolean => {
+  const match = line.match(/^\[([^\]]+)\]\s*$/);
+  return !!match && !!getFieldNoteSectionId(match[1]);
+};
 
 const stripDailyLogEntryPrefix = (line: string): string =>
   line.replace(/^\d{2}:\d{2}\s+.+?\s-\s+/, '');

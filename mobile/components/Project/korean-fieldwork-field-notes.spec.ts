@@ -42,7 +42,7 @@ describe('korean-fieldwork-field-notes', () => {
       '[관찰 내용] 바닥면에서 원형 윤곽과 회갈색 사질토 확인.',
       '[해석] 주혈 가능성이 있으나 절단관계는 추가 확인 필요.',
       '[다음 작업] 단면 정리 후 사진 보강.',
-      '[사진·도면·유물·시료 번호] 사진 12-14, 도면 3',
+      '[사진·도면·스케치·유물·시료 번호] 사진 12-14, 도면 3',
     ].join('\n'));
     expect(getKoreanFieldworkFieldNoteChecklist(input).every((item) =>
       item.isComplete
@@ -208,10 +208,10 @@ describe('korean-fieldwork-field-notes', () => {
       expect.objectContaining({
         id: 'feature-complete-photo-feature-1',
         label: '기록 보강',
-        detail: '현장 마감 전 완료 사진을 연결했는지 확인하세요.',
+        detail: '현장 마감 전 완료 사진을 남겼는지 확인하세요.',
         input: {
           observation: '유구가 확인 상태지만 완료 사진 항목이 체크되지 않았습니다.',
-          nextWork: '현장 마감 전 완료 사진을 연결했는지 확인하세요.',
+          nextWork: '현장 마감 전 완료 사진을 남겼는지 확인하세요.',
         },
       }),
     ]);
@@ -226,7 +226,7 @@ describe('korean-fieldwork-field-notes', () => {
     expect(getKoreanFieldworkFieldNoteEvidenceActions(
       feature,
       [feature, photo],
-      [C.PHOTO, C.DRAWING]
+      [C.PHOTO, C.DRAWING, C.PEN_MEMO]
     )).toEqual([
       expect.objectContaining({
         id: 'photos',
@@ -236,6 +236,11 @@ describe('korean-fieldwork-field-notes', () => {
       expect.objectContaining({
         id: 'drawings',
         categoryName: C.DRAWING,
+        existingCount: 0,
+      }),
+      expect.objectContaining({
+        id: 'sketches',
+        categoryName: C.PEN_MEMO,
         existingCount: 0,
       }),
     ]);
@@ -254,7 +259,7 @@ describe('korean-fieldwork-field-notes', () => {
     const evidenceActions = getKoreanFieldworkFieldNoteEvidenceActions(
       feature,
       [feature, photo],
-      [C.PHOTO, C.SOIL_PROFILE_PHOTO, C.DRAWING, C.FIND, C.SAMPLE]
+      [C.PHOTO, C.SOIL_PROFILE_PHOTO, C.DRAWING, C.PEN_MEMO, C.FIND, C.SAMPLE]
     );
 
     expect(getKoreanFieldworkFieldNoteFollowUpActions({
@@ -266,6 +271,9 @@ describe('korean-fieldwork-field-notes', () => {
       'drawings',
       'finds',
     ]);
+    expect(getKoreanFieldworkFieldNoteFollowUpActions({
+      observation: '약도 스케치와 약측값 보강 필요.',
+    }, evidenceActions).map((action) => action.id)).toEqual(['sketches']);
     expect(getKoreanFieldworkFieldNoteFollowUpActions({
       observation: '경계만 확인.',
     }, evidenceActions)).toEqual([]);
@@ -281,7 +289,7 @@ describe('korean-fieldwork-field-notes', () => {
       nextWork: '사진 보강 후 단면 정리.',
       evidenceNumbers: '사진 12, 도면 3',
     }, feature)).toEqual({
-      title: '수혈 1 보고서 연결 문장',
+      title: '수혈 1 보고서 정리 문장',
       sentence: '유구 수혈 1은 바닥면에서 원형 윤곽을 확인. 주공 가능성이 있다.',
       supportingDetail: '근거 번호: 사진 12, 도면 3 · 다음 작업: 사진 보강 후 단면 정리.',
       missingParts: [],
@@ -290,7 +298,7 @@ describe('korean-fieldwork-field-notes', () => {
       observation: '평면 형태 확인.',
     }, feature)?.missingParts).toEqual([
       '관찰과 구분한 해석',
-      '사진·도면·유물·시료 번호',
+      '사진·도면·스케치·유물·시료 번호',
       '다음 작업',
     ]);
     expect(getKoreanFieldworkFieldNoteReportPreview({
@@ -318,7 +326,7 @@ describe('korean-fieldwork-field-notes', () => {
         '[관찰 내용] 바닥면에서 원형 윤곽을 확인.',
         '[해석] 주공으로 보이나 절단관계는 추가 확인 필요.',
         '[다음 작업] 단면 정리 후 사진 보강.',
-        '[사진·도면·유물·시료 번호] 사진 12-14',
+        '[사진·도면·스케치·유물·시료 번호] 사진 12-14',
       ].join('\n'),
       description: '기존 노출 양상.\n바닥면에서 원형 윤곽을 확인.',
       interpretation: [
@@ -341,7 +349,7 @@ describe('korean-fieldwork-field-notes', () => {
       description: '바닥면에서 원형 윤곽 확인.',
       fieldNote: [
         '[다음 작업] 단면 정리 후 사진 보강.',
-        '[사진·도면·유물·시료 번호] 사진 12',
+        '[사진·도면·스케치·유물·시료 번호] 사진 12',
       ].join('\n'),
       interpretation: '주공으로 보임.',
     });
@@ -373,13 +381,60 @@ describe('korean-fieldwork-field-notes', () => {
       '[관찰 내용] 바닥면에서 원형 윤곽 확인.',
       '[해석] 주공 가능성 있음.',
       '[다음 작업] 사진 보강 후 단면 정리.',
-      '[사진·도면·유물·시료 번호] 사진 12, 도면 3',
+      '[사진·도면·스케치·유물·시료 번호] 사진 12, 도면 3',
     ].join('\n'))).toEqual({
       observation: '바닥면에서 원형 윤곽 확인.',
       interpretation: '주공 가능성 있음.',
       nextWork: '사진 보강 후 단면 정리.',
       evidenceNumbers: '사진 12, 도면 3',
     });
+  });
+
+  it('accepts short evidence-number labels and ignores empty note templates', () => {
+    expect(extractKoreanFieldworkFieldNoteInput([
+      '[관찰 내용] 바닥면에서 원형 윤곽 확인.',
+      '[근거 번호] 사진 12, 도면 3',
+    ].join('\n'))).toMatchObject({
+      observation: '바닥면에서 원형 윤곽 확인.',
+      evidenceNumbers: '사진 12, 도면 3',
+    });
+
+    expect(extractKoreanFieldworkFieldNoteInput([
+      '[관찰 내용] 평면 윤곽과 깊이를 확인.',
+      '[스케치·약측/근거 번호] 스케치 A, 장축 2.1m, 사진 14',
+    ].join('\n'))).toMatchObject({
+      observation: '평면 윤곽과 깊이를 확인.',
+      evidenceNumbers: '스케치 A, 장축 2.1m, 사진 14',
+    });
+
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
+    const templateMemo = createDoc('memo-template', C.PEN_MEMO, '메모 틀', {
+      relations: { depicts: [feature.resource.id] },
+      date: '2026-06-23',
+      description: '[관찰 내용]\n\n[근거 번호]\n\n[다음 작업]',
+    });
+    const templateDailyLog = createDoc('daily-log-template', C.DAILY_LOG, '6월 23일 작업일지', {
+      date: '2026-06-23',
+      description: '09:00 수혈 1 - [관찰 내용]\n[근거 번호]\n[다음 작업]',
+    });
+
+    expect(getKoreanFieldworkFieldNoteHistoryItems(
+      feature,
+      [templateMemo, templateDailyLog]
+    )).toEqual([]);
+    expect(getKoreanFieldworkFieldNoteSummaries(
+      feature,
+      [templateMemo, templateDailyLog]
+    )).toEqual([]);
+    expect(getKoreanFieldworkNotebookEntries([
+      feature,
+      templateMemo,
+      templateDailyLog,
+    ])).toEqual([]);
+    expect(getKoreanFieldworkDailyNotebookDigest(
+      [feature, templateMemo, templateDailyLog],
+      new Date('2026-06-23T12:00:00.000Z')
+    ).entries).toEqual([]);
   });
 
   it('builds recent field note history for the selected record only', () => {
@@ -441,7 +496,7 @@ describe('korean-fieldwork-field-notes', () => {
       date: '2026-06-23',
       description: [
         '09:00 수혈 1 - [관찰 내용] 사진 보강 완료.',
-        '[사진·도면·유물·시료 번호] 사진 12',
+        '[사진·도면·스케치·유물·시료 번호] 사진 12',
         '10:30 A 구역 - [관찰 내용] 배수로 정리.',
         '[다음 작업] 북쪽 트렌치 배수 상태 확인.',
       ].join('\n'),
@@ -462,7 +517,7 @@ describe('korean-fieldwork-field-notes', () => {
     expect(entries[0]).toMatchObject({
       sourceLabel: '일지',
       targetLabel: 'A 구역',
-      targetCategoryLabel: '조사구역',
+      targetCategoryLabel: '조사 구역 기록',
       detail: '배수로 정리.',
       nextWork: '북쪽 트렌치 배수 상태 확인.',
       needsEvidenceNumbers: false,
@@ -498,7 +553,7 @@ describe('korean-fieldwork-field-notes', () => {
         observation: '바닥면 정리 중 원형 윤곽 확인.',
         nextWork: [
           '사진 보강.',
-          '사진·도면·유물·시료 번호를 이어서 확인.',
+          '사진·도면·스케치·유물·시료 번호를 이어서 확인.',
         ].join('\n'),
       },
     });
@@ -525,7 +580,7 @@ describe('korean-fieldwork-field-notes', () => {
       date: '2026-06-23',
       description: [
         '10:30 A 구역 - [관찰 내용] 배수로 정리.',
-        '[사진·도면·유물·시료 번호] 사진 12',
+        '[사진·도면·스케치·유물·시료 번호] 사진 12',
       ].join('\n'),
     });
 

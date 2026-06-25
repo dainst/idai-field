@@ -36,6 +36,7 @@ interface MapBottomSheetProps {
   createPenMemoDraft: () => void;
   createSoilProfilePhotoDraft: () => void;
   createSurveyBoundaryDraft: () => void;
+  openSatellitePicker: () => void;
   markGeometryNeedsAerialAlignment: () => void;
   markGeometryAdjustedToAerialLayer: () => void;
   toggleFeatureWorkflowStep: (stepValue: string) => void;
@@ -65,6 +66,7 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
   createPenMemoDraft,
   createSoilProfilePhotoDraft,
   createSurveyBoundaryDraft,
+  openSatellitePicker,
   markGeometryNeedsAerialAlignment,
   markGeometryAdjustedToAerialLayer,
   toggleFeatureWorkflowStep,
@@ -105,6 +107,13 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
           style={styles.docButton}
         />
         <Button
+          style={styles.button}
+          variant="secondary"
+          title="위성지도"
+          onPress={openSatellitePicker}
+          icon={<MaterialIcons name="satellite-alt" size={iconSize} />}
+        />
+        <Button
           style={[styles.button, styles.focusBtn]}
           title="보기"
           onPress={() => focusHandler(docId)}
@@ -119,7 +128,7 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
         <Button
           style={styles.button}
           variant="success"
-          title="하위추가"
+          title="이어 만들기"
           onPress={addChildPressHandler}
           icon={<Ionicons name="add" size={iconSize} />}
         />
@@ -150,7 +159,7 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
         <Button
           style={styles.button}
           variant="secondary"
-          title="조사경계"
+          title="조사 경계"
           isDisabled={!canCreateSurveyBoundary}
           onPress={createSurveyBoundaryDraft}
           icon={<MaterialIcons name="timeline" size={iconSize} />}
@@ -171,7 +180,7 @@ const MapBottomSheet: React.FC<MapBottomSheetProps> = ({
       </Row>
       {isFeatureWorkflowVisible && (
         <View style={styles.panel}>
-          <Text style={styles.fieldLabel}>조사 흐름</Text>
+          <Text style={styles.fieldLabel}>조사 단계 확인</Text>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}

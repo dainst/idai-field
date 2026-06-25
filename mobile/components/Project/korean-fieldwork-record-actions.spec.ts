@@ -19,7 +19,7 @@ describe('Korean fieldwork record actions', () => {
 
     expect(summary).toMatchObject({
       isTracked: true,
-      categoryLabel: '조사구역',
+      categoryLabel: '조사 구역 기록',
       structureCount: 0,
       evidenceCount: 0,
       issueCount: 0,
@@ -76,7 +76,7 @@ describe('Korean fieldwork record actions', () => {
     );
 
     expect(summary.checklistDone).toBe(2);
-    expect(summary.checklistTotal).toBe(10);
+    expect(summary.checklistTotal).toBe(9);
     expect(summary.actions.map((action) => action.id).slice(0, 3)).toEqual([
       'issue-feature-complete-photo-feature-1',
       'create-FeatureSegment',

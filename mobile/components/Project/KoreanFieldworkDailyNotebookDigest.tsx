@@ -119,7 +119,7 @@ const KoreanFieldworkDailyNotebookDigest: React.FC<
           label="번호 보강"
           focus="evidenceNumbers"
           onContinueEntry={onContinueEntry}
-          textForEntry={() => '사진·도면·유물·시료 번호를 이어서 적으세요.'}
+          textForEntry={() => '사진·도면·스케치·유물·시료 번호를 이어서 적으세요.'}
           warning
         />
       )}
@@ -128,7 +128,7 @@ const KoreanFieldworkDailyNotebookDigest: React.FC<
         <View style={styles.emptyRow} testID="dailyNotebookDigestEmpty">
           <MaterialIcons name="check-circle" size={16} color="#027a48" />
           <Text style={styles.emptyText}>
-            오늘 야장에서 바로 보강할 항목은 없습니다.
+            오늘 현장 메모에서 바로 보강할 항목은 없습니다.
           </Text>
         </View>
       )}

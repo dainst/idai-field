@@ -4,6 +4,7 @@ import {
   KoreanFieldworkTodaySummary,
 } from 'idai-field-core';
 import {
+  getKoreanFieldworkDisplayIdentifier,
   getKoreanFieldworkCategoryLabel,
   KOREAN_FIELDWORK_CATEGORIES,
 } from './korean-fieldwork-categories';
@@ -72,7 +73,12 @@ const FEATURE_CHECKLIST_STEPS = [
   'completionPhotoTaken',
 ];
 
-const CATEGORY_ORDER = [
+const REVIEW_VERIFICATION_STATES = new Set([
+  'conflictingEvidence',
+  'needsRecheck',
+]);
+
+const CATEGORY_ORDER: readonly string[] = [
   C.OPERATION,
   C.TRENCH,
   C.FEATURE_GROUP,
@@ -120,7 +126,8 @@ const buildWorkbenchItem = (
   return {
     id: document.resource.id,
     document,
-    title: document.resource.identifier || document.resource.id,
+    title: getKoreanFieldworkDisplayIdentifier(document.resource.identifier)
+      || document.resource.id,
     categoryLabel: getKoreanFieldworkCategoryLabel(document.resource.category),
     parentPath: formatKoreanFieldworkParentPath(document, documentsById),
     reasons,
@@ -150,6 +157,12 @@ const getWorkbenchReasons = (
     if (checkedStepCount < FEATURE_CHECKLIST_STEPS.length) {
       reasons.push(`과정 ${checkedStepCount}/${FEATURE_CHECKLIST_STEPS.length}`);
     }
+  }
+
+  if (resource.verificationState === 'pendingDecision') {
+    reasons.push('추가 확인');
+  } else if (isTrackedValue(resource.verificationState, REVIEW_VERIFICATION_STATES)) {
+    reasons.push('재확인');
   }
 
   if (QUALITY_TRACKED_CATEGORIES.has(document.resource.category)
@@ -230,6 +243,11 @@ const getStringArray = (value: unknown): string[] =>
 
 const hasTextValue = (value: unknown): boolean =>
   typeof value === 'string' && value.trim().length > 0;
+
+const isTrackedValue = (
+  value: unknown,
+  trackedValues: Set<string>
+): boolean => typeof value === 'string' && trackedValues.has(value);
 
 const dedupe = (values: string[]): string[] => {
   const seen = new Set<string>();

@@ -30,21 +30,6 @@ import DocumentAdd from '@/app/(tabs)/ProjectScreen/DocumentAdd';
 import { defaultMapSettings } from '@/components/Project/Map/map-settings';
 
 const category = 'Pottery';
-const project = 'testdb';
-const preferences: Preferences = {
-  username: 'testUser',
-  currentProject: project,
-  languages: ['en'],
-  recentProjects: [project],
-  projects: {
-    [project]: {
-      url: '',
-      password: '',
-      connected: true,
-      mapSettings: defaultMapSettings(),
-    },
-  },
-};
 
 const mockNavigate = jest.fn();
 const mockUseGlobalSearchParams = jest.fn();
@@ -69,14 +54,18 @@ jest.mock('expo-router', () => ({
 }));
 
 describe('DocumentAdd', () => {
+  let project: string;
+  let preferences: Preferences;
   let repository: DocumentRepository;
   let config: ProjectConfiguration;
   let pouchdbDatastore: PouchdbDatastore;
   let renderAPI: RenderAPI;
-  const shortDescription = 'This is a test document';
+  const observationDescription = 'This is a test document';
 
   beforeEach(async () => {
     jest.spyOn(Date, 'now').mockReturnValue(1700000000000);
+    project = createTestProjectName('document-add');
+    preferences = createPreferences(project);
     mockUseGlobalSearchParams.mockReturnValue({
       parentDocId: t2.resource.id,
       categoryName: category,
@@ -88,7 +77,17 @@ describe('DocumentAdd', () => {
     );
     await pouchdbDatastore.createDb(
       project,
-      { _id: 'project', resource: { id: 'project' } },
+      {
+        _id: 'project',
+        resource: {
+          id: 'project',
+          identifier: 'project',
+          category: 'Project',
+          relations: {},
+        },
+        created: { user: 'test', date: new Date(0) },
+        modified: [],
+      },
       undefined,
       true
     );
@@ -135,7 +134,7 @@ describe('DocumentAdd', () => {
   });
 
   afterEach(async () => {
-    if (pouchdbDatastore) await pouchdbDatastore.destroyDb(project);
+    if (pouchdbDatastore && project) await pouchdbDatastore.destroyDb(project);
     cleanup();
     jest.clearAllMocks();
     jest.restoreAllMocks();
@@ -156,20 +155,36 @@ describe('DocumentAdd', () => {
       .toBeTruthy();
   });
 
+  it('keeps compatibility fields out of a fresh fieldwork draft', async () => {
+    await waitFor(() => renderAPI.getByTestId('documentForm'));
+
+    expect(renderAPI.queryByTestId('fullFormCollapsedSummary')).toBeNull();
+    expect(renderAPI.queryByTestId('fullFormToggle')).toBeNull();
+    expect(renderAPI.queryByText('가져온 기존 항목')).toBeNull();
+    expect(renderAPI.queryByText(
+      '새 유구 기록은 위의 시대/시기·유구 성격·유구별 핵심 속성·야장 메모만 입력하면 충분합니다. 이 영역은 이전 양식에서 가져온 값이 있을 때만 확인합니다.'
+    ))
+      .toBeNull();
+    expect(renderAPI.queryByText(/기존 항목 \d+개 확인 중/)).toBeNull();
+    expect(renderAPI.queryByTestId('groupSelect_stem')).toBeNull();
+  });
+
   it('should create a new Document with entered values and correctly set relations field', async () => {
     const { getByTestId } = renderAPI;
 
     await waitFor(() => getByTestId('documentForm'));
 
-    fireEvent.press(getByTestId('groupSelect_stem'));
-    fireEvent.changeText(getByTestId('inputField_shortDescription'), shortDescription);
+    fireEvent.changeText(
+      getByTestId('quickRecordInput_description'),
+      observationDescription
+    );
     fireEvent.press(getByTestId('saveDocBtn'));
 
     await waitFor(() => expect(repository.create).toHaveBeenCalledTimes(1));
     expect(repository.create).toHaveBeenCalledWith({
       resource: expect.objectContaining({
         identifier: 'pottery-1700000000000',
-        shortDescription,
+        description: observationDescription,
         category,
       }),
     } as NewDocument);
@@ -181,8 +196,10 @@ describe('DocumentAdd', () => {
 
     await waitFor(() => getByTestId('documentForm'));
 
-    fireEvent.press(getByTestId('groupSelect_stem'));
-    fireEvent.changeText(getByTestId('inputField_shortDescription'), shortDescription);
+    fireEvent.changeText(
+      getByTestId('quickRecordInput_description'),
+      observationDescription
+    );
     fireEvent.press(getByTestId('saveDocBtn'));
 
     await waitFor(() => expect(repository.create).toHaveBeenCalledTimes(1));
@@ -205,3 +222,26 @@ const createProjectConfiguration = (
     valuelists: {},
     projectLanguages: [],
   });
+
+const createPreferences = (project: string): Preferences => ({
+  username: 'testUser',
+  currentProject: project,
+  languages: ['en'],
+  recentProjects: [project],
+  mapProviderSettings: {
+    kakaoLocalRestApiKey: '',
+    kakaoMapJavaScriptKey: '',
+    kakaoNativeAppKey: '',
+  },
+  projects: {
+    [project]: {
+      url: '',
+      password: '',
+      connected: true,
+      mapSettings: defaultMapSettings(),
+    },
+  },
+});
+
+const createTestProjectName = (prefix: string): string =>
+  `${prefix}-${Math.random().toString(36).slice(2)}`;

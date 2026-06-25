@@ -1,0 +1,219 @@
+<div *ngIf="shouldShow()" class="korean-fieldwork-record-context-panel">
+    <div class="korean-fieldwork-record-context-header">
+        <div class="korean-fieldwork-record-context-title-block">
+            <div class="korean-fieldwork-record-context-kicker">현장 맥락</div>
+            <div class="korean-fieldwork-record-context-title">
+                {{getCategoryLabel()}} · {{getCurrentIdentifier()}}
+            </div>
+        </div>
+        <div class="korean-fieldwork-record-context-metrics">
+            <span *ngFor="let metric of metrics"
+                  class="korean-fieldwork-record-context-metric"
+                  [class.empty]="metric.count === 0">
+                {{metric.label}} {{metric.count}}
+            </span>
+        </div>
+    </div>
+
+    <div *ngIf="parentPathLabel" class="korean-fieldwork-record-context-path">
+        포함 위치: {{parentPathLabel}}
+    </div>
+
+    <div *ngIf="getStatusChips().length > 0" class="korean-fieldwork-record-context-chips">
+        <span *ngFor="let chip of getStatusChips()"
+              class="korean-fieldwork-record-context-chip"
+              [class.info]="chip.tone === 'info'"
+              [class.success]="chip.tone === 'success'"
+              [class.warning]="chip.tone === 'warning'"
+              [class.danger]="chip.tone === 'danger'">
+            {{chip.label}}
+        </span>
+    </div>
+
+    <div *ngIf="hasEvidenceMetrics()" class="korean-fieldwork-record-context-evidence">
+        <div class="korean-fieldwork-record-context-evidence-title">
+            <span class="mdi mdi-file-document-check-outline"></span>
+            <span>자료 확인</span>
+        </div>
+        <div class="korean-fieldwork-record-context-evidence-row">
+            <span *ngFor="let metric of getEvidenceMetrics()"
+                  class="korean-fieldwork-record-context-evidence-metric"
+                  [class.empty]="metric.count === 0"
+                  [class.create]="metric.count === 0 && metric.canCreate">
+                {{metric.label}} {{metric.count}}
+                <span *ngIf="metric.count === 0 && metric.canCreate">필요</span>
+            </span>
+        </div>
+        <div *ngIf="hasEvidenceInsights()" class="korean-fieldwork-record-context-evidence-insights">
+            <span *ngFor="let insight of getEvidenceInsights()"
+                  class="korean-fieldwork-record-context-evidence-insight"
+                  [class.warning]="insight.tone === 'warning'">
+                <span class="korean-fieldwork-record-context-evidence-insight-label">
+                    {{insight.label}}
+                </span>
+                <span class="korean-fieldwork-record-context-evidence-insight-detail">
+                    {{insight.detail}}
+                </span>
+                <svg *ngIf="insight.sketchPreview as sketchPreview"
+                     class="korean-fieldwork-record-context-sketch-preview"
+                     [attr.viewBox]="sketchPreview.viewBox"
+                     role="img"
+                     [attr.aria-label]="sketchPreview.label">
+                    <path [attr.d]="sketchPreview.path"></path>
+                </svg>
+            </span>
+        </div>
+    </div>
+
+    <div *ngIf="hasRecordActions()" class="korean-fieldwork-record-context-actions">
+        <div class="korean-fieldwork-record-context-actions-title">
+            <span class="mdi mdi-view-dashboard-edit-outline"></span>
+            <span>바로 할 일</span>
+        </div>
+        <div class="korean-fieldwork-record-context-actions-grid">
+            <button *ngFor="let action of getRecordActions()"
+                    type="button"
+                    class="korean-fieldwork-record-context-action"
+                    [class.info]="action.tone === 'info'"
+                    [class.warning]="action.tone === 'warning'"
+                    [class.danger]="action.tone === 'danger'"
+                    [class.success]="action.tone === 'success'"
+                    (click)="runRecordAction(action)">
+                <span class="mdi korean-fieldwork-record-context-action-icon"
+                      [ngClass]="action.icon"></span>
+                <span class="korean-fieldwork-record-context-action-text">
+                    <span class="korean-fieldwork-record-context-action-label">
+                        {{action.label}}
+                    </span>
+                    <span class="korean-fieldwork-record-context-action-detail">
+                        {{action.detail}}
+                    </span>
+                </span>
+            </button>
+        </div>
+    </div>
+    <div *ngIf="hasRecordActionEmptyState()" class="korean-fieldwork-record-context-actions empty">
+        <div class="korean-fieldwork-record-context-actions-title success">
+            <span class="mdi mdi-check-circle-outline"></span>
+            <span>바로 할 일</span>
+        </div>
+        <div class="korean-fieldwork-record-context-action-empty">
+            현재 기록에서 바로 이어갈 필수 작업은 없습니다.
+        </div>
+    </div>
+
+    <div *ngIf="canShowIdentifierRevision()" class="korean-fieldwork-record-context-identifier">
+        <div class="korean-fieldwork-record-context-identifier-title">
+            <span class="mdi mdi-rename-box-outline"></span>
+            <span>번호 정리</span>
+            <span *ngIf="getIdentifierRevisionHistoryCount() > 0"
+                  class="korean-fieldwork-record-context-identifier-count">
+                이력 {{getIdentifierRevisionHistoryCount()}}
+            </span>
+        </div>
+        <div class="korean-fieldwork-record-context-identifier-grid">
+            <label class="korean-fieldwork-record-context-identifier-field">
+                <span>현장번호</span>
+                <input type="text"
+                       class="form-control"
+                       [value]="getIdentifierRevisionFieldIdentifier()"
+                       readonly>
+            </label>
+            <label class="korean-fieldwork-record-context-identifier-field">
+                <span>정리번호</span>
+                <input type="text"
+                       class="form-control"
+                       [value]="identifierRevisionNextValue"
+                       (input)="setIdentifierRevisionNextValue($any($event.target).value)">
+            </label>
+        </div>
+        <label class="korean-fieldwork-record-context-identifier-field">
+            <span>변경 이유</span>
+            <textarea class="form-control"
+                      rows="2"
+                      [value]="identifierRevisionReason"
+                      (input)="setIdentifierRevisionReason($any($event.target).value)"></textarea>
+        </label>
+        <div class="korean-fieldwork-record-context-identifier-actions">
+            <button type="button"
+                    class="btn korean-fieldwork-record-context-identifier-apply"
+                    [disabled]="!canApplyIdentifierRevision()"
+                    (click)="applyIdentifierRevision()">
+                정리번호 반영
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="hasContinuationActions()" class="korean-fieldwork-record-context-continuation">
+        <div class="korean-fieldwork-record-context-continuation-title">
+            <span class="mdi mdi-playlist-plus"></span>
+            <span>이어 만들기</span>
+        </div>
+        <div class="korean-fieldwork-record-context-continuation-actions">
+            <ng-container *ngFor="let action of getContinuationActions()">
+                <div *ngIf="isFeatureContinuationAction(action); else defaultContinuationAction"
+                     class="korean-fieldwork-record-context-continuation-action feature-type-picker">
+                    <span class="korean-fieldwork-record-context-continuation-label">
+                        유구 만들기
+                    </span>
+                    <span class="korean-fieldwork-record-context-continuation-detail">
+                        {{getFeatureContinuationDetail(action)}}
+                    </span>
+                    <span class="korean-fieldwork-record-context-feature-type-row">
+                        <button *ngFor="let preset of getFeatureContinuationPresets()"
+                                type="button"
+                                class="korean-fieldwork-record-context-feature-type"
+                                (click)="createFeatureContinuationRecord(action, preset)">
+                            <span class="mdi" [ngClass]="preset.icon"></span>
+                            <span>{{getFeatureContinuationPresetLabel(preset)}}</span>
+                        </button>
+                    </span>
+                </div>
+                <ng-template #defaultContinuationAction>
+                    <button type="button"
+                            class="korean-fieldwork-record-context-continuation-action"
+                            (click)="createContinuationRecord(action)">
+                        <span class="korean-fieldwork-record-context-continuation-label">
+                            {{getContinuationActionLabel(action)}} 만들기
+                        </span>
+                        <span class="korean-fieldwork-record-context-continuation-detail">
+                            {{getContinuationActionDetail(action)}}
+                        </span>
+                    </button>
+                </ng-template>
+            </ng-container>
+        </div>
+    </div>
+
+    <div *ngIf="hasNotebookEntries()" class="korean-fieldwork-record-context-notebook">
+        <div class="korean-fieldwork-record-context-notebook-title">
+            <span class="mdi mdi-notebook-edit-outline"></span>
+            <span>관련 야장</span>
+        </div>
+        <div *ngFor="let entry of getNotebookEntries()"
+             class="korean-fieldwork-record-context-notebook-item"
+             [class.info]="getNotebookEntryTone(entry) === 'info'"
+             [class.warning]="getNotebookEntryTone(entry) === 'warning'">
+            <span class="korean-fieldwork-record-context-notebook-meta">
+                {{entry.sourceLabel}} · {{entry.dateLabel}}
+            </span>
+            <span class="korean-fieldwork-record-context-notebook-detail">
+                {{getNotebookEntryDetail(entry)}}
+            </span>
+            <span class="korean-fieldwork-record-context-notebook-actions">
+                <button *ngIf="canApplyNotebookEntry(entry)"
+                        type="button"
+                        class="korean-fieldwork-record-context-notebook-action apply"
+                        (click)="applyNotebookEntry(entry)">
+                    {{getNotebookEntryApplyTargetLabel(entry)}}에 반영
+                </button>
+                <button type="button"
+                        class="korean-fieldwork-record-context-notebook-action"
+                        (click)="openNotebookEntry(entry)">
+                    {{getNotebookEntryActionLabel(entry)}}
+                    <span class="mdi mdi-open-in-new"></span>
+                </button>
+            </span>
+        </div>
+    </div>
+</div>

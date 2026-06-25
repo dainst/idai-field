@@ -1,4 +1,5 @@
 import { fireEvent, render } from '@testing-library/react-native';
+import { Document } from 'idai-field-core';
 import React from 'react';
 import MapBottomSheet from './MapBottomSheet';
 import { KOREAN_FIELDWORK_CATEGORIES } from '../korean-fieldwork-categories';
@@ -27,6 +28,7 @@ describe('MapBottomSheet', () => {
       })
     );
 
+    expect(getByText('조사 단계 확인')).toBeTruthy();
     expect(getByText('토층 정리')).toBeTruthy();
     expect(getByText('피트 토층도')).toBeTruthy();
     expect(queryByText('유물 수습')).toBeNull();
@@ -62,6 +64,17 @@ describe('MapBottomSheet', () => {
 
     expect(handleToggle).toHaveBeenCalledWith('trenchPitProfileDrawn');
   });
+
+  it('opens the satellite picker from the visible map action panel', () => {
+    const openSatellitePicker = jest.fn();
+    const { getByText } = render(
+      createBottomSheet({ openSatellitePicker })
+    );
+
+    fireEvent.press(getByText('위성지도'));
+
+    expect(openSatellitePicker).toHaveBeenCalled();
+  });
 });
 
 const createBottomSheet = (
@@ -81,6 +94,7 @@ const createBottomSheet = (
     createPenMemoDraft={jest.fn()}
     createSoilProfilePhotoDraft={jest.fn()}
     createSurveyBoundaryDraft={jest.fn()}
+    openSatellitePicker={jest.fn()}
     markGeometryNeedsAerialAlignment={jest.fn()}
     markGeometryAdjustedToAerialLayer={jest.fn()}
     toggleFeatureWorkflowStep={jest.fn()}
@@ -89,7 +103,8 @@ const createBottomSheet = (
   />
 );
 
-const createDoc = (category = C.FEATURE) => ({
+const createDoc = (category: string = C.FEATURE): Document => ({
+  _id: 'feature-1',
   resource: {
     id: 'feature-1',
     identifier: '조선시대 1호 수혈',
@@ -97,4 +112,6 @@ const createDoc = (category = C.FEATURE) => ({
     relations: {},
     featureInvestigationChecklist: ['trenchSoilCleaned'],
   },
-} as any);
+  created: { user: 'test', date: new Date(0) },
+  modified: [],
+});

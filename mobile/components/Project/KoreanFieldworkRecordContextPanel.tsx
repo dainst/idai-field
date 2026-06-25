@@ -77,8 +77,12 @@ const KoreanFieldworkRecordContextPanel: React.FC<KoreanFieldworkRecordContextPa
           <Text style={styles.kicker}>현장 맥락</Text>
           <Text style={styles.title} numberOfLines={1}>
             {getKoreanFieldworkCategoryLabel(document.resource.category)}
-            {parentPath ? ` · ${parentPath}` : ''}
           </Text>
+          {parentPath && (
+            <Text style={styles.parentPath} numberOfLines={1}>
+              포함 위치: {parentPath}
+            </Text>
+          )}
         </View>
         {visibleIssues.length > 0 && (
           <View style={styles.issueCountPill}>
@@ -476,6 +480,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '900',
     marginTop: 2,
+  },
+  parentPath: {
+    color: '#475467',
+    fontSize: 12,
+    fontWeight: '800',
+    marginTop: 3,
   },
   issueCountPill: {
     alignItems: 'center',

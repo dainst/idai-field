@@ -1,0 +1,94 @@
+<div *ngIf="shouldShow()" class="korean-fieldwork-soil-color-panel">
+    <div class="korean-fieldwork-soil-color-header">
+        <span class="mdi mdi-palette"></span>
+        <span>토색 빠른 기록</span>
+    </div>
+
+    <div class="korean-fieldwork-soil-color-section">
+        <div class="korean-fieldwork-soil-color-label">먼셀값</div>
+        <div class="korean-fieldwork-soil-color-chip-row">
+            <button *ngFor="let option of munsellPresets"
+                    type="button"
+                    class="btn korean-fieldwork-soil-color-chip"
+                    [class.active]="isMunsellPresetActive(option.value)"
+                    (click)="applyMunsellPreset(option.value)">
+                {{option.label}}
+            </button>
+        </div>
+
+        <input *ngIf="canRecordLayerMunsell()"
+               class="form-control korean-fieldwork-soil-color-input"
+               [ngModel]="getValue(fields.manualMunsell)"
+               (ngModelChange)="setLayerMunsell($event)"
+               placeholder="예: 10YR 4/3">
+
+        <textarea *ngIf="canRecordPhotoSwatches()"
+                  class="form-control korean-fieldwork-soil-color-textarea"
+                  [ngModel]="getValue(fields.profileColorSwatches)"
+                  (ngModelChange)="setValue(fields.profileColorSwatches, $event)"
+                  placeholder="1: 10YR 4/3 갈색&#10;2: 10YR 3/2 암회갈색"></textarea>
+    </div>
+
+    <div *ngIf="hasField(fields.assistCandidates)"
+         class="korean-fieldwork-soil-color-section">
+        <div class="korean-fieldwork-soil-color-label">사진 판독 후보</div>
+        <textarea class="form-control korean-fieldwork-soil-color-textarea korean-fieldwork-soil-color-candidates"
+                  [ngModel]="getValue(fields.assistCandidates)"
+                  (ngModelChange)="setAssistCandidates($event)"
+                  placeholder="사진에서 읽은 먼셀 후보가 여기에 표시됩니다"></textarea>
+        <div *ngIf="getAssistCandidateOptions().length > 0"
+             class="korean-fieldwork-soil-color-chip-row">
+            <button *ngFor="let option of getAssistCandidateOptions()"
+                    type="button"
+                    class="btn korean-fieldwork-soil-color-chip"
+                    (click)="applyAssistCandidate(option)">
+                {{option}}
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="canRecordLayerMunsell() && hasField(fields.moistureState)"
+         class="korean-fieldwork-soil-color-section">
+        <div class="korean-fieldwork-soil-color-label">수분 상태</div>
+        <div class="korean-fieldwork-soil-color-chip-row">
+            <button *ngFor="let option of moistureOptions"
+                    type="button"
+                    class="btn korean-fieldwork-soil-color-chip"
+                    [class.active]="getValue(fields.moistureState) === option.value"
+                    (click)="setValue(fields.moistureState, option.value)">
+                {{option.label}}
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="hasField(fields.captureCondition)"
+         class="korean-fieldwork-soil-color-section">
+        <div class="korean-fieldwork-soil-color-label">촬영 조건</div>
+        <div class="korean-fieldwork-soil-color-chip-row">
+            <button *ngFor="let option of captureConditionOptions"
+                    type="button"
+                    class="btn korean-fieldwork-soil-color-chip"
+                    [class.active]="getValue(fields.captureCondition) === option.value"
+                    (click)="setValue(fields.captureCondition, option.value)">
+                {{option.label}}
+            </button>
+        </div>
+    </div>
+
+    <div class="korean-fieldwork-soil-color-section">
+        <div class="korean-fieldwork-soil-color-label">토색 메모</div>
+        <textarea class="form-control korean-fieldwork-soil-color-textarea"
+                  [ngModel]="canRecordLayerMunsell() ? getValue(fields.soilColorNote) : getValue(fields.profileColorNote)"
+                  (ngModelChange)="setValue(canRecordLayerMunsell() ? fields.soilColorNote : fields.profileColorNote, $event)"
+                  placeholder="색 변화, 보정 필요 여부, 조명 조건 등을 적어두세요."></textarea>
+    </div>
+
+    <div *ngIf="canRecordPhotoSwatches() && hasField(fields.profileCaptureNote)"
+         class="korean-fieldwork-soil-color-section">
+        <div class="korean-fieldwork-soil-color-label">사진 메모</div>
+        <textarea class="form-control korean-fieldwork-soil-color-textarea"
+                  [ngModel]="getValue(fields.profileCaptureNote)"
+                  (ngModelChange)="setValue(fields.profileCaptureNote, $event)"
+                  placeholder="촬영 방향, 그늘, 보정판 위치 등을 적어두세요."></textarea>
+    </div>
+</div>

@@ -14,7 +14,9 @@ import {
 } from 'react-native';
 import { colors } from '@/utils/colors';
 import {
+  getKoreanFieldworkFeatureOverviewItems,
   getKoreanFieldworkUnitMatrixItems,
+  KoreanFieldworkFeatureOverviewItem,
   KoreanFieldworkUnitMatrixItem,
 } from './korean-fieldwork-unit-matrix';
 import { KoreanFieldworkStatusTone } from './korean-fieldwork-record-summary';
@@ -49,20 +51,37 @@ const KoreanFieldworkUnitMatrix: React.FC<KoreanFieldworkUnitMatrixProps> = ({
     ),
     [documents, investigationModeId, maxItems, scopeParent, summary]
   );
+  const featureOverviewItems = useMemo(
+    () => getKoreanFieldworkFeatureOverviewItems(
+      summary,
+      documents,
+      scopeParent,
+      80,
+      investigationModeId
+    ),
+    [documents, investigationModeId, scopeParent, summary]
+  );
 
   if (items.length === 0) return null;
 
   return (
     <View style={styles.container} testID="koreanFieldworkUnitMatrix">
+      {featureOverviewItems.length > 0 && (
+        <FeatureOverviewTable
+          items={featureOverviewItems}
+          onOpenDocument={onOpenDocument}
+        />
+      )}
+
       <View style={styles.titleRow}>
         <MaterialIcons name="table-chart" size={18} color="#344054" />
-        <Text style={styles.title}>조사 흐름표</Text>
+        <Text style={styles.title}>자료 진행표</Text>
         <Text style={styles.count}>{items.length}</Text>
       </View>
       <Text style={styles.subtitle} numberOfLines={1}>
         {scopeParent
           ? `${scopeParent.resource.identifier || scopeParent.resource.id} 범위`
-          : '전체 범위'}의 다음 기록과 연결 자료를 비교합니다.
+          : '전체 범위'}의 다음 기록과 관련 자료를 비교합니다.
       </Text>
 
       <ScrollView
@@ -91,6 +110,98 @@ const KoreanFieldworkUnitMatrix: React.FC<KoreanFieldworkUnitMatrixProps> = ({
     </View>
   );
 };
+
+const FeatureOverviewTable: React.FC<{
+  items: KoreanFieldworkFeatureOverviewItem[];
+  onOpenDocument: (document: Document) => void;
+}> = ({
+  items,
+  onOpenDocument,
+}) => (
+  <View style={styles.featureOverview}>
+    <View style={styles.titleRow}>
+      <MaterialIcons name="view-list" size={18} color="#344054" />
+      <Text style={styles.title}>전체 유구 현황</Text>
+      <Text style={styles.count}>{items.length}</Text>
+    </View>
+
+    <ScrollView
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      contentContainerStyle={styles.tableScroll}
+    >
+      <View style={styles.featureTable}>
+        <View style={styles.headerRow}>
+          <HeaderCell label="유구" style={styles.featureNameColumn} />
+          <HeaderCell label="상태" style={styles.featureStatusColumn} />
+          <HeaderCell label="근거" style={styles.featureEvidenceColumn} />
+          <HeaderCell label="보완" style={styles.featureIssueColumn} />
+          <HeaderCell label="다음" style={styles.featureNextColumn} />
+          <HeaderCell label="열기" style={styles.featureActionColumn} />
+        </View>
+        {items.map((item) => (
+          <View
+            key={item.id}
+            style={[styles.featureRow, rowToneStyle(item.tone)]}
+            testID={`featureOverviewRow_${item.id}`}
+          >
+            <View style={styles.featureNameColumn}>
+              <Text style={styles.unitTitle} numberOfLines={1}>
+                {item.title}
+              </Text>
+              {!!item.parentPath && (
+                <Text style={styles.parentPath} numberOfLines={1}>
+                  {item.parentPath}
+                </Text>
+              )}
+            </View>
+            <View style={styles.featureStatusColumn}>
+              <Text style={[styles.statusChip, statusChipStyle(item.tone)]} numberOfLines={1}>
+                {item.statusLabel}
+              </Text>
+              <Text style={styles.progressText}>{item.completionPercent}%</Text>
+            </View>
+            <View style={styles.featureEvidenceColumn}>
+              <Text
+                style={item.evidenceCount > 0 ? styles.featureEvidenceText : styles.emptyEvidence}
+                numberOfLines={2}
+              >
+                {item.evidenceLabel}
+              </Text>
+            </View>
+            <View style={styles.featureIssueColumn}>
+              <Text
+                style={[
+                  styles.issueValue,
+                  item.issueCount > 0 && styles.issueValueWarning,
+                  item.hasCriticalIssue && styles.issueValueDanger,
+                ]}
+              >
+                {item.issueCount}
+              </Text>
+            </View>
+            <View style={styles.featureNextColumn}>
+              <Text style={styles.featureNextText} numberOfLines={2}>
+                {item.nextActionLabel}
+              </Text>
+            </View>
+            <View style={styles.featureActionColumn}>
+              <UnitAction
+                icon="open-in-new"
+                label="열기"
+                onPress={(event) => {
+                  event?.stopPropagation?.();
+                  onOpenDocument(item.document);
+                }}
+                testID={`featureOverviewOpen_${item.id}`}
+              />
+            </View>
+          </View>
+        ))}
+      </View>
+    </ScrollView>
+  </View>
+);
 
 const HeaderCell: React.FC<{
   label: string;
@@ -156,7 +267,7 @@ const UnitRow: React.FC<{
         />
       </View>
       <Text style={styles.progressText}>
-        하위 {item.childStructureCount}
+        이어진 기록 {item.childStructureCount}
       </Text>
       {item.checklistTotal > 0 && (
         <Text style={styles.progressText}>
@@ -168,7 +279,7 @@ const UnitRow: React.FC<{
     <View style={styles.evidenceColumn}>
       <View style={styles.evidenceWrap}>
         {item.evidenceCount === 0 ? (
-          <Text style={styles.emptyEvidence}>연결 기록 없음</Text>
+          <Text style={styles.emptyEvidence}>관련 자료 없음</Text>
         ) : item.evidenceChips
           .filter((chip) => chip.count > 0)
           .slice(0, 3)
@@ -193,11 +304,11 @@ const UnitRow: React.FC<{
       {!!item.nextChildCategoryName && (
         <UnitAction
           icon="add"
-          label="하위"
+          label="추가"
           onPress={(event) => {
-            event?.stopPropagation?.();
-            onAddDocumentOfCategory(item.document, item.nextChildCategoryName!);
-          }}
+          event?.stopPropagation?.();
+          onAddDocumentOfCategory(item.document, item.nextChildCategoryName!);
+        }}
           testID={`unitMatrixAddChild_${item.id}`}
         />
       )}
@@ -347,6 +458,12 @@ const styles = StyleSheet.create({
   table: {
     minWidth: 720,
   },
+  featureOverview: {
+    marginBottom: 14,
+  },
+  featureTable: {
+    minWidth: 760,
+  },
   headerRow: {
     backgroundColor: '#eef2f6',
     borderColor: '#d0d5dd',
@@ -416,6 +533,48 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     paddingHorizontal: 6,
     width: 204,
+  },
+  featureNameColumn: {
+    justifyContent: 'center',
+    paddingHorizontal: 8,
+    width: 210,
+  },
+  featureStatusColumn: {
+    justifyContent: 'center',
+    paddingHorizontal: 8,
+    width: 108,
+  },
+  featureEvidenceColumn: {
+    justifyContent: 'center',
+    paddingHorizontal: 8,
+    width: 172,
+  },
+  featureIssueColumn: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 6,
+    width: 56,
+  },
+  featureNextColumn: {
+    justifyContent: 'center',
+    paddingHorizontal: 8,
+    width: 134,
+  },
+  featureActionColumn: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 6,
+    width: 80,
+  },
+  featureRow: {
+    backgroundColor: 'white',
+    borderColor: '#d0d5dd',
+    borderRadius: 6,
+    borderWidth: 1,
+    flexDirection: 'row',
+    marginTop: 7,
+    minHeight: 76,
+    paddingVertical: 8,
   },
   unitTitleRow: {
     alignItems: 'center',
@@ -553,6 +712,18 @@ const styles = StyleSheet.create({
     color: '#b54708',
     fontSize: 11,
     fontWeight: '900',
+  },
+  featureEvidenceText: {
+    color: '#344054',
+    fontSize: 11,
+    fontWeight: '800',
+    lineHeight: 15,
+  },
+  featureNextText: {
+    color: '#344054',
+    fontSize: 11,
+    fontWeight: '900',
+    lineHeight: 15,
   },
   issueValue: {
     color: '#475467',

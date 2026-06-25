@@ -52,13 +52,13 @@ const KoreanFieldworkHierarchyBoard: React.FC<KoreanFieldworkHierarchyBoardProps
     <View style={styles.container} testID="koreanFieldworkHierarchyBoard">
       <View style={styles.headerRow}>
         <View style={styles.titleWrap}>
-          <Text style={styles.kicker}>조사 흐름</Text>
+          <Text style={styles.kicker}>이어진 기록</Text>
           <Text style={styles.title} numberOfLines={1}>
             {scopeLabel}
           </Text>
         </View>
         <Text style={styles.flowText} numberOfLines={1}>
-          조사 방식에 맞춰 트렌치·유구·피트·토층을 이어갑니다
+          현재 범위에서 다음 기록을 이어 만듭니다
         </Text>
       </View>
 
@@ -150,7 +150,7 @@ const HierarchyItemRow: React.FC<{
         </Text>
         {!!item.parentIdentifier && (
           <Text style={styles.itemMeta} numberOfLines={1}>
-            상위 {item.parentIdentifier}
+            포함 위치: {item.parentIdentifier}
           </Text>
         )}
         <View style={styles.itemChipRow}>
@@ -165,7 +165,7 @@ const HierarchyItemRow: React.FC<{
       <View style={styles.itemActions}>
         <IconAction
           icon="account-tree"
-          label={`${identifier} 하위 범위로 이동`}
+          label={`${identifier} 이어진 기록 보기`}
           onPress={(event) => {
             event?.stopPropagation();
             onDrillDown(item.document);
@@ -173,7 +173,7 @@ const HierarchyItemRow: React.FC<{
         />
         <IconAction
           icon="add"
-          label={`${identifier} 하위 기록 추가`}
+          label={`${identifier} 이어 만들 기록 추가`}
           onPress={(event) => {
             event?.stopPropagation();
             onAddChild(item.document);

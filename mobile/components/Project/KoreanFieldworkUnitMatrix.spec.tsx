@@ -23,7 +23,7 @@ describe('KoreanFieldworkUnitMatrix', () => {
       />
     );
 
-    expect(getByText('조사 흐름표')).toBeTruthy();
+    expect(getByText('자료 진행표')).toBeTruthy();
     expect(getByText('조사구역 1')).toBeTruthy();
 
     fireEvent.press(getByTestId('unitMatrixOpen_operation-1'));
@@ -36,20 +36,26 @@ describe('KoreanFieldworkUnitMatrix', () => {
     const feature = createDoc('feature-1', C.FEATURE, '수혈 1', {
       liesWithin: ['operation-1'],
     });
+    const handleOpenDocument = jest.fn();
     const handleAddDocumentOfCategory = jest.fn();
 
-    const { getByTestId } = render(
+    const { getByTestId, getByText } = render(
       <KoreanFieldworkUnitMatrix
         summary={createSummary()}
         documents={[operation, feature]}
-        onOpenDocument={jest.fn()}
+        onOpenDocument={handleOpenDocument}
         onAddDocumentOfCategory={handleAddDocumentOfCategory}
       />
     );
 
+    expect(getByText('전체 유구 현황')).toBeTruthy();
+    expect(getByText('근거자료 없음')).toBeTruthy();
+
+    fireEvent.press(getByTestId('featureOverviewOpen_feature-1'));
     fireEvent.press(getByTestId('unitMatrixAddChild_operation-1'));
     fireEvent.press(getByTestId('unitMatrixAddPhoto_feature-1'));
 
+    expect(handleOpenDocument).toHaveBeenCalledWith(feature);
     expect(handleAddDocumentOfCategory).toHaveBeenCalledWith(
       operation,
       C.TRENCH

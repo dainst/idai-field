@@ -5,15 +5,13 @@ electron.crashReporter.start({
     uploadToServer: false
 });
 
-const remoteMain = require('@electron/remote/main');
 const fs = require('original-fs');
 const os = require('os');
 const url = require('url');
-const pathSeparator = require('path').sep;
+const path = require('path');
+const pathSeparator = path.sep;
 const log = require('electron-log');
 const autoUpdate = require('./auto-update.js');
-
-remoteMain.initialize();
 
 if (global.mode !== 'development') {
     process.chdir(electron.app.getAppPath().replace('app.asar', ''));
@@ -50,6 +48,7 @@ global.setConfigDefaults = config => {
 
     setSyncTargets(config);
     setFileSync(config);
+    setMapProviderSettingsDefaults(config);
     if (config.isAutoUpdateActive === undefined) config.isAutoUpdateActive = true;
     if (config.highlightCustomElements === undefined) config.highlightCustomElements = true;
     setLanguages(config);
@@ -59,6 +58,19 @@ global.setConfigDefaults = config => {
     }
 
     return config;
+};
+
+const setMapProviderSettingsDefaults = config => {
+
+    if (!config.mapProviderSettings || typeof config.mapProviderSettings !== 'object') {
+        config.mapProviderSettings = {};
+    }
+
+    for (const key of ['kakaoLocalRestApiKey', 'kakaoMapJavaScriptKey', 'kakaoNativeAppKey']) {
+        if (typeof config.mapProviderSettings[key] !== 'string') {
+            config.mapProviderSettings[key] = '';
+        }
+    }
 };
 
 const setFileSync = config => {
@@ -229,9 +241,6 @@ global.manualPath = global.mode === 'production'
 
 global.imageProcessing = process.argv.includes('--alternativeImageProcessing') ? 'jimp' : 'sharp';
 
-process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true;
-
-
 // -- OTHER GLOBALS
 
 require('./services/services');
@@ -240,6 +249,106 @@ require('./services/services');
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
+const normalizeUrlPath = parsedUrl => decodeURIComponent(parsedUrl.pathname).replace(/\\/g, '/');
+
+const isAppUrl = urlString => {
+    try {
+        const appUrl = new URL(global.distUrl);
+        const navigationUrl = new URL(urlString);
+
+        if (navigationUrl.protocol !== appUrl.protocol) return false;
+
+        if (appUrl.protocol === 'file:') {
+            return normalizeUrlPath(navigationUrl).startsWith(normalizeUrlPath(appUrl));
+        }
+
+        return navigationUrl.origin === appUrl.origin
+            && navigationUrl.pathname.startsWith(appUrl.pathname);
+    } catch (_) {
+        return false;
+    }
+};
+
+const isSafeExternalUrl = urlString => {
+    try {
+        return ['https:', 'http:', 'mailto:'].includes(new URL(urlString).protocol);
+    } catch (_) {
+        return false;
+    }
+};
+
+const denyBrowserPermissions = session => {
+    session.setPermissionRequestHandler((_webContents, _permission, callback) => callback(false));
+    session.setPermissionCheckHandler(() => false);
+};
+
+const getAllowedGlobal = name => {
+    switch (name) {
+        case 'appDataPath':
+        case 'config':
+        case 'configPath':
+        case 'imageProcessing':
+        case 'manualPath':
+        case 'mode':
+        case 'os':
+        case 'samplesPath':
+        case 'switches':
+        case 'toolsPath':
+            return global[name];
+        default:
+            throw new Error(`Blocked global access: ${name}`);
+    }
+};
+
+const setUpRendererIpc = () => {
+    electron.ipcMain.on('app:getAppPath', event => {
+        event.returnValue = electron.app.getAppPath();
+    });
+
+    electron.ipcMain.on('app:getName', event => {
+        event.returnValue = electron.app.getName();
+    });
+
+    electron.ipcMain.on('app:getPath', (event, name) => {
+        event.returnValue = electron.app.getPath(name);
+    });
+
+    electron.ipcMain.on('app:getVersion', event => {
+        event.returnValue = electron.app.getVersion();
+    });
+
+    electron.ipcMain.on('global:get', (event, name) => {
+        event.returnValue = getAllowedGlobal(name);
+    });
+
+    electron.ipcMain.on('global:getLocale', event => {
+        event.returnValue = global.getLocale();
+    });
+
+    electron.ipcMain.on('global:getMainLanguages', event => {
+        event.returnValue = global.getMainLanguages();
+    });
+
+    electron.ipcMain.on('global:setConfigDefaults', (event, config) => {
+        event.returnValue = global.setConfigDefaults(config);
+    });
+
+    electron.ipcMain.on('global:setMenuContext', (_event, context) => {
+        global.setMenuContext(context);
+    });
+
+    electron.ipcMain.on('global:updateConfig', (_event, config) => {
+        global.updateConfig(config);
+    });
+
+    electron.ipcMain.handle('dialog:showOpenDialog', (event, options) => {
+        return electron.dialog.showOpenDialog(electron.BrowserWindow.fromWebContents(event.sender), options);
+    });
+
+    electron.ipcMain.handle('dialog:showSaveDialog', (event, options) => {
+        return electron.dialog.showSaveDialog(electron.BrowserWindow.fromWebContents(event.sender), options);
+    });
+};
 
 const createWindow = () => {
 
@@ -252,26 +361,30 @@ const createWindow = () => {
         minWidth: 1220,
         minHeight: 600,
         webPreferences: {
-            nodeIntegration: true,
-            nodeIntegrationInWorker: true,
-            enableRemoteModule: true,
-            contextIsolation: false,
-            preload: require('path').join(electron.app.getAppPath(), 'electron/preload.js'),
+            nodeIntegration: false,
+            nodeIntegrationInWorker: false,
+            enableRemoteModule: false,
+            contextIsolation: true,
+            preload: path.join(electron.app.getAppPath(), 'electron/preload.js'),
+            sandbox: false,
             webSecurity: global.mode === 'production',
+            allowRunningInsecureContent: false,
+            webviewTag: false,
+            navigateOnDragDrop: false,
             backgroundThrottling: false
         },
         titleBarStyle: 'hiddenInset',
         title: 'Field Desktop'
     });
 
-    remoteMain.enable(mainWindow.webContents);
+    denyBrowserPermissions(mainWindow.webContents.session);
 
-    if (require('os').platform() === 'linux' && global.mode === 'production') {
-        const path = require('path').join(
+    if (os.platform() === 'linux' && global.mode === 'production') {
+        const iconPath = path.join(
             electron.app.getAppPath().replace('app.asar', 'icons'),
             'logo256x256.png'
         );
-        mainWindow.setIcon(electron.nativeImage.createFromPath(path));
+        mainWindow.setIcon(electron.nativeImage.createFromPath(iconPath));
     }
 
     setTimeout(() => {
@@ -292,8 +405,19 @@ const createWindow = () => {
         electron.app.quit();
     });
 
+    mainWindow.webContents.on('will-attach-webview', event => {
+        event.preventDefault();
+    });
+
+    mainWindow.webContents.on('will-navigate', (event, navigationUrl) => {
+        if (isAppUrl(navigationUrl)) return;
+
+        event.preventDefault();
+        if (isSafeExternalUrl(navigationUrl)) electron.shell.openExternal(navigationUrl);
+    });
+
     mainWindow.webContents.setWindowOpenHandler(({ url }) => {
-        electron.shell.openExternal(url);
+        if (isSafeExternalUrl(url)) electron.shell.openExternal(url);
         return { action: 'deny' };
     });
 };
@@ -330,6 +454,7 @@ if (global.mode !== 'production') {
 // initialization and is ready to create browser windows.
 electron.app.on('ready', () => {
     loadConfig();
+    setUpRendererIpc();
 
     global.distUrl = global.mode === 'production'
         ? 'file://' + __dirname + '/../dist/' + global.getLocale() + '/'
@@ -350,7 +475,7 @@ electron.ipcMain.on('reload', (event, route) => {
     if (global.mode === 'production') {
         mainWindow.loadURL(
             url.format({
-                pathname: require('path').join(__dirname, '/../dist/' + global.getLocale() + '/index.html'),
+                pathname: path.join(__dirname, '/../dist/' + global.getLocale() + '/index.html'),
                 protocol: 'file:',
                 slahes: true,
                 hash: route

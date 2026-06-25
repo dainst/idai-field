@@ -27,7 +27,7 @@ import {
 
 const C = KOREAN_FIELDWORK_CATEGORIES;
 
-const UNIT_CATEGORIES = [
+const UNIT_CATEGORIES: readonly string[] = [
   C.OPERATION,
   C.TRENCH,
   C.FEATURE,
@@ -65,6 +65,12 @@ export interface KoreanFieldworkUnitMatrixItem {
   photoCategoryName?: string;
 }
 
+export interface KoreanFieldworkFeatureOverviewItem extends KoreanFieldworkUnitMatrixItem {
+  statusLabel: string;
+  evidenceLabel: string;
+  nextActionLabel: string;
+}
+
 export const getKoreanFieldworkUnitMatrixItems = (
   summary: KoreanFieldworkTodaySummary,
   documents: Document[],
@@ -95,6 +101,25 @@ export const getKoreanFieldworkUnitMatrixItems = (
     .sort((itemA, itemB) => compareUnitMatrixItems(itemA, itemB, scopeParent))
     .slice(0, maxItems);
 };
+
+export const getKoreanFieldworkFeatureOverviewItems = (
+  summary: KoreanFieldworkTodaySummary,
+  documents: Document[],
+  scopeParent?: Document,
+  maxItems = 80,
+  investigationModeId?: KoreanFieldworkInvestigationModeId
+): KoreanFieldworkFeatureOverviewItem[] =>
+  getKoreanFieldworkUnitMatrixItems(
+    summary,
+    documents,
+    scopeParent,
+    Number.MAX_SAFE_INTEGER,
+    investigationModeId
+  )
+    .filter((item) => item.document.resource.category === C.FEATURE)
+    .sort(compareFeatureOverviewItems)
+    .slice(0, maxItems)
+    .map(toFeatureOverviewItem);
 
 const buildUnitMatrixItem = (
   document: Document,
@@ -247,6 +272,52 @@ const getNextChildCategoryName = (
   return undefined;
 };
 
+const toFeatureOverviewItem = (
+  item: KoreanFieldworkUnitMatrixItem
+): KoreanFieldworkFeatureOverviewItem => ({
+  ...item,
+  statusLabel: getFeatureOverviewStatusLabel(item),
+  evidenceLabel: getFeatureOverviewEvidenceLabel(item),
+  nextActionLabel: getFeatureOverviewNextActionLabel(item),
+});
+
+const getFeatureOverviewStatusLabel = (
+  item: KoreanFieldworkUnitMatrixItem
+): string => {
+  if (item.hasCriticalIssue) return '필수 보완';
+  if (item.issueCount > 0) return '보완 필요';
+  if (item.evidenceCount === 0) return '근거자료 없음';
+  if (item.checklistTotal > 0 && item.checklistDone < item.checklistTotal) {
+    return '조사 중';
+  }
+  if (item.completionPercent >= 100) return '정리됨';
+  return '검토 중';
+};
+
+const getFeatureOverviewEvidenceLabel = (
+  item: KoreanFieldworkUnitMatrixItem
+): string => {
+  const visibleEvidence = item.evidenceChips
+    .filter((chip) => chip.count > 0)
+    .map((chip) => `${chip.label} ${chip.count}`);
+
+  return visibleEvidence.length > 0 ? visibleEvidence.join(' · ') : '없음';
+};
+
+const getFeatureOverviewNextActionLabel = (
+  item: KoreanFieldworkUnitMatrixItem
+): string => {
+  if (item.issueCount > 0) return '보완 항목 확인';
+  if (item.evidenceCount === 0) return '사진·스케치 연결';
+  if (item.checklistTotal > 0 && item.checklistDone < item.checklistTotal) {
+    return `조사 과정 ${item.checklistDone}/${item.checklistTotal}`;
+  }
+  if (item.nextChildCategoryName) {
+    return `${getKoreanFieldworkCategoryLabel(item.nextChildCategoryName)} 추가`;
+  }
+  return '검토 완료';
+};
+
 const getChecklistDoneCount = (
   document: Document,
   checklistSteps: string[]
@@ -277,3 +348,10 @@ const getCategoryRank = (categoryName: string): number => {
   const index = UNIT_CATEGORIES.indexOf(categoryName);
   return index === -1 ? UNIT_CATEGORIES.length : index;
 };
+
+const compareFeatureOverviewItems = (
+  itemA: KoreanFieldworkUnitMatrixItem,
+  itemB: KoreanFieldworkUnitMatrixItem
+): number =>
+  (itemA.parentPath ?? '').localeCompare(itemB.parentPath ?? '', 'ko')
+  || itemA.title.localeCompare(itemB.title, 'ko');

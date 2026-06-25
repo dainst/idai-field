@@ -112,6 +112,30 @@ describe('Korean fieldwork document drafts', () => {
     });
   });
 
+  it('starts kiln Feature drafts with kiln interpretation metadata', () => {
+    const trenchDoc = createDoc('trench-1', C.TRENCH, {
+      isRecordedIn: ['operation-1'],
+    });
+    const config = allowRelations({
+      [`${C.FEATURE}:${C.TRENCH}`]: ['liesWithin'],
+    });
+
+    const draft = createKoreanFieldworkDraftResource(
+      trenchDoc,
+      C.FEATURE,
+      config,
+      { featureType: 'kiln' }
+    );
+
+    expect(draft).toMatchObject({
+      identifier: '가마-1700000000000',
+      category: C.FEATURE,
+      featureType: 'kiln',
+      featureInterpretationType: ['kiln'],
+      featureRecordingStatus: FEATURE_RECORDING_STATUS_CANDIDATE,
+    });
+  });
+
   it('creates Layer drafts with tablet-friendly sequence defaults', () => {
     const featureDoc = createDoc('feature-1', C.FEATURE, {
       isRecordedIn: ['operation-1'],
@@ -159,6 +183,8 @@ describe('Korean fieldwork document drafts', () => {
       soilProfileLayerMarkers: '[]',
       soilProfileLayerIds: '[]',
       soilProfileColorSwatches: '[]',
+      soilColorAssistCandidates: '',
+      soilColorAssistStatus: SOIL_COLOR_ASSIST_STATUS_DEFAULT,
       soilProfilePhotoSizeHintKb: SOIL_PROFILE_PHOTO_SIZE_HINT_KB_DEFAULT,
       soilProfilePhotoQuality: SOIL_PROFILE_PHOTO_QUALITY_DEFAULT,
       layerSequenceMeaning: LAYER_SEQUENCE_MEANING_DEFAULT,

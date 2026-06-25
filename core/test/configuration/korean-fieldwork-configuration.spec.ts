@@ -5,11 +5,16 @@ import {
     DEFAULT_PROJECT_LANGUAGES,
     getConfigurationName,
     KOREAN_FIELDWORK_CONFIGURATION_NAME,
+    KOREAN_FIELDWORK_FEATURE_GEOMETRY_EDIT_STATUS_ROUGH_SKETCH,
+    KOREAN_FIELDWORK_FEATURE_GEOMETRY_REVISION_HISTORY_DEFAULT,
+    KOREAN_FIELDWORK_FEATURE_RECORDING_STATUS_CANDIDATE,
+    KOREAN_FIELDWORK_GEOMETRY_CONFIDENCE_ROUGH,
+    KOREAN_FIELDWORK_GEOMETRY_SOURCE_TABLET_SKETCH,
     KOREAN_FIELDWORK_LAYER_SEQUENCE_MEANING_DEFAULT,
     KOREAN_FIELDWORK_PROJECT_IDENTIFIER,
     KOREAN_FIELDWORK_PROJECT_LABEL,
     KOREAN_FIELDWORK_PROJECT_LANGUAGES,
-    KOREAN_FIELDWORK_PROJECT_PREFIX,
+    KOREAN_FIELDWORK_RECORD_CREATION_TIMING_DURING_FIELDWORK,
     KOREAN_FIELDWORK_REFERENCE_BASEMAP_PROVIDER_DEFAULT,
     KOREAN_FIELDWORK_SOIL_COLOR_ASSIST_STATUS_DEFAULT,
     KOREAN_FIELDWORK_SOIL_PROFILE_PHOTO_QUALITY_DEFAULT,
@@ -86,7 +91,8 @@ describe('KoreanFieldwork project configuration', () => {
     it('maps Korean fieldwork project identifiers to the KoreanFieldwork configuration', () => {
 
         expect(getConfigurationName(KOREAN_FIELDWORK_PROJECT_IDENTIFIER)).toBe(KOREAN_FIELDWORK_CONFIGURATION_NAME);
-        expect(getConfigurationName(`${KOREAN_FIELDWORK_PROJECT_PREFIX}training`))
+        expect(getConfigurationName('korean-fieldwork-training')).toBe('Default');
+        expect(getConfigurationName('training', KOREAN_FIELDWORK_CONFIGURATION_NAME))
             .toBe(KOREAN_FIELDWORK_CONFIGURATION_NAME);
         expect(PROJECT_MAPPING[KOREAN_FIELDWORK_PROJECT_IDENTIFIER].prefix).toBe(KOREAN_FIELDWORK_CONFIGURATION_NAME);
         expect(PROJECT_MAPPING[KOREAN_FIELDWORK_PROJECT_IDENTIFIER].label).toBe(KOREAN_FIELDWORK_PROJECT_LABEL);
@@ -153,9 +159,17 @@ describe('KoreanFieldwork project configuration', () => {
 
         expect(template).toBeDefined();
         expect(templateLanguagesKo[KOREAN_FIELDWORK_TEMPLATE_ID].label).toBe(KOREAN_FIELDWORK_PROJECT_LABEL);
-        expect(templateLanguagesEn[KOREAN_FIELDWORK_TEMPLATE_ID].label).toBe('Korean field notebook');
+        expect(templateLanguagesEn[KOREAN_FIELDWORK_TEMPLATE_ID].label).toBe('Korean field record');
         expect(Object.keys(template.configuration.languages)).toEqual(['ko']);
         expect(template.configuration.order).toEqual(expectedForms);
+        expect(template.configuration.forms['Project:default'].fields.projectInvestigationMode.inputType)
+            .toBe('dropdown');
+        expect(template.configuration.forms['Project:default'].fields.projectBoundarySetupState.inputType)
+            .toBe('dropdown');
+        expect(template.configuration.forms['Project:default'].fields.projectBoundarySummary.inputType)
+            .toBe('text');
+        expect(template.configuration.forms['Project:default'].valuelists.projectInvestigationMode)
+            .toBe('KoreanFieldwork-projectInvestigationMode');
         expect(template.configuration.forms.DailyLog.parent).toBe('Operation');
         expect(template.configuration.forms.DailyLog.fields.isRecordedIn.range)
             .toEqual(['Operation']);
@@ -177,6 +191,10 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('dropdown');
         expect(template.configuration.forms['Trench:default'].fields.featureInvestigationChecklist.inputType)
             .toBe('checkboxes');
+        expect(template.configuration.forms['Trench:default'].fields.longAxisOrientation.inputType)
+            .toBe('input');
+        expect(template.configuration.forms['Trench:default'].fields.orientationNote.inputType)
+            .toBe('text');
         expect(template.configuration.forms['Trench:default'].valuelists.fieldRecordQuality)
             .toBe('KoreanFieldwork-fieldRecordQuality');
         expect(template.configuration.forms['Trench:default'].valuelists.featureInvestigationChecklist)
@@ -184,6 +202,25 @@ describe('KoreanFieldwork project configuration', () => {
         expect(template.configuration.forms['Trench:default'].groups
             .map((group: any) => group.name))
             .toContain('koreanFieldwork');
+        expect(template.configuration.forms['Trench:default'].groups
+            .find((group: any) => group.name === 'position').fields)
+            .toContain('longAxisOrientation');
+        expect(template.configuration.forms['Feature:default'].fields.longAxisOrientation.inputType)
+            .toBe('input');
+        [
+            'fieldIdentifier',
+            'reportIdentifier',
+            'identifierRevisionHistory',
+            'identifierRevisionNote'
+        ].forEach(fieldName => {
+            expect(template.configuration.forms['Feature:default'].hidden).toContain(fieldName);
+        });
+        expect(template.configuration.forms['Feature:default'].fields.reportIdentifier.inputType)
+            .toBe('input');
+        expect(template.configuration.forms['FeatureSegment:default'].fields.orientationReference.inputType)
+            .toBe('input');
+        expect(template.configuration.forms['Layer:default'].fields.orientationNote.inputType)
+            .toBe('text');
         expect(template.configuration.forms.SurveyBoundary.parent).toBe('Operation');
         expect(template.configuration.forms.SurveyBoundary.fields.isRecordedIn.range)
             .toEqual(['Operation']);
@@ -214,6 +251,7 @@ describe('KoreanFieldwork project configuration', () => {
         const config = configReader.read('/Config-KoreanFieldwork.json');
         const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
         const languages = configReader.getCustomLanguageConfigurations('KoreanFieldwork');
+        const coreKoreanLanguage = configReader.read('/Core/Language.ko.json');
         const valuelistLanguages = configReader.getValuelistsLanguages();
         const featureForm = config.forms['Feature:default'];
         const featureGroupForm = config.forms['FeatureGroup:default'];
@@ -243,6 +281,20 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.fields.featureGeometryReferenceLayerId.inputType).toBe('input');
         expect(featureForm.fields.featureGeometryRevisionHistory.inputType).toBe('text');
         expect(featureForm.fields.featureGeometryRevisionNote.inputType).toBe('text');
+        [
+            'fieldIdentifier',
+            'reportIdentifier',
+            'identifierRevisionHistory',
+            'identifierRevisionNote'
+        ].forEach(fieldName => {
+            expect(featureForm.hidden).toContain(fieldName);
+            expect(featureGroupForm.hidden).toContain(fieldName);
+            expect(featureSegmentForm.hidden).toContain(fieldName);
+        });
+        expect(featureForm.fields.fieldIdentifier.inputType).toBe('input');
+        expect(featureForm.fields.reportIdentifier.inputType).toBe('input');
+        expect(featureForm.fields.identifierRevisionHistory.inputType).toBe('text');
+        expect(featureForm.fields.identifierRevisionNote.inputType).toBe('text');
         expect(featureForm.fields.isRecordedIn.inputType).toBe('relation');
         expect(featureForm.fields.isRecordedIn.range).toEqual(['Operation', 'Trench', 'ExcavationArea']);
         expect(featureGroupForm.fields.isRecordedIn.inputType).toBe('relation');
@@ -252,10 +304,16 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.fields.featureInvestigationChecklist.inputType).toBe('checkboxes');
         expect(featureForm.fields.featureSoilProfilePhotoCount.inputType).toBe('unsignedInt');
         expect(featureForm.fields.featureChecklistNote.inputType).toBe('text');
+        expect(featureForm.fields.longAxisOrientation.inputType).toBe('input');
+        expect(featureForm.fields.shortAxisOrientation.inputType).toBe('input');
+        expect(featureForm.fields.orientationReference.inputType).toBe('input');
+        expect(featureForm.fields.orientationNote.inputType).toBe('text');
         expect(featureSegmentForm.fields.featureGeometryEditStatus.inputType).toBe('dropdown');
         expect(featureSegmentForm.fields.featureInvestigationChecklist.inputType).toBe('checkboxes');
         expect(featureSegmentForm.fields.featureSoilProfilePhotoCount.inputType).toBe('unsignedInt');
         expect(featureSegmentForm.fields.featureChecklistNote.inputType).toBe('text');
+        expect(featureSegmentForm.fields.longAxisOrientation.inputType).toBe('input');
+        expect(featureSegmentForm.fields.orientationNote.inputType).toBe('text');
         expect(featureGroupForm.valuelists.featureRecordingStatus).toBe('KoreanFieldwork-featureRecordingStatus');
         expect(featureForm.valuelists.featureRecordingStatus).toBe('KoreanFieldwork-featureRecordingStatus');
         expect(featureSegmentForm.valuelists.featureRecordingStatus).toBe('KoreanFieldwork-featureRecordingStatus');
@@ -267,7 +325,7 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('KoreanFieldwork-featureInvestigationChecklist');
         expect(featureSegmentForm.valuelists.featureInvestigationChecklist)
             .toBe('KoreanFieldwork-featureInvestigationChecklist');
-        expect(koreanFieldworkGroup.fields.slice(0, 12)).toEqual([
+        expect(koreanFieldworkGroup.fields.slice(0, 16)).toEqual([
             'featurePackage',
             'featureInterpretationType',
             'featureRecordingStatus',
@@ -277,10 +335,18 @@ describe('KoreanFieldwork project configuration', () => {
             'featureGeometryReferenceLayerId',
             'featureGeometryRevisionHistory',
             'featureGeometryRevisionNote',
+            'fieldIdentifier',
+            'reportIdentifier',
+            'identifierRevisionHistory',
+            'identifierRevisionNote',
             'featureInvestigationChecklist',
             'featureSoilProfilePhotoCount',
             'featureChecklistNote'
         ]);
+        expect(featureForm.groups.find((group: any) => group.name === 'position').fields)
+            .toContain('longAxisOrientation');
+        expect(featureSegmentForm.groups.find((group: any) => group.name === 'position').fields)
+            .toContain('longAxisOrientation');
 
         expect(valuelists['KoreanFieldwork-featurePeriod'].values.paleolithic).toBeDefined();
         expect(valuelists['KoreanFieldwork-featurePeriod'].values.joseon).toBeDefined();
@@ -311,6 +377,10 @@ describe('KoreanFieldwork project configuration', () => {
             .values.preInvestigationPhotoTaken.label).toBe('조사 전 사진');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-featureInvestigationChecklist']
             .values.preRecoveryFindPhotoTaken.label).toBe('수습 전 유물사진');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-projectInvestigationMode']
+            .values.excavation.label).toBe('발굴조사');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-projectBoundarySetupState']
+            .values.notStarted.label).toBe('아직 정하지 않음');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-geometrySource'].values.tabletSketch.label)
             .toBe('태블릿 스케치');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-featureGeometryEditStatus']
@@ -325,12 +395,33 @@ describe('KoreanFieldwork project configuration', () => {
         expect(languages.ko.categories.Place.label).toBe('유적/지점');
         expect(languages.ko.categories.Trench.label).toBe('트렌치');
         expect(languages.ko.categories.FieldRecordQualityReview.label).toBe('기록 보완 메모');
+        expect(coreKoreanLanguage.fields.hasChildren.label).toBe('묶어 둔 기록');
+        expect(coreKoreanLanguage.fields.isSubjectOf.label).toBe('관련 작업 대상');
+        expect(coreKoreanLanguage.relations.isRecordedIn.label).toBe('현장 단위에 기록');
+        expect(coreKoreanLanguage.relations.liesWithin.label).toBe('범위 안');
+        expect(coreKoreanLanguage.relations.includes.label).toBe('묶어 포함');
+        expect(coreKoreanLanguage.relations.isAbove.label).toBe('위에 놓임');
+        expect(coreKoreanLanguage.relations.isBelow.label).toBe('아래에 놓임');
+        expect(languages.ko.categories.Project.fields.projectInvestigationMode.label)
+            .toBe('조사 방식');
+        expect(languages.ko.categories.Project.fields.projectBoundarySetupState.label)
+            .toBe('조사경계 설정 상태');
         expect(languages.ko.categories.Feature.fields.featureInvestigationChecklist.label)
             .toBe('조사 체크리스트');
         expect(languages.ko.categories.Feature.fields.featureGeometryEditStatus.label)
             .toBe('유구선 보정 상태');
+        expect(languages.ko.categories.Feature.fields.longAxisOrientation.label)
+            .toBe('장축 방위');
+        expect(languages.ko.categories.Feature.fields.longAxisOrientation.description)
+            .toContain('N-23°-E');
+        expect(languages.ko.categories.Feature.fields.reportIdentifier.label)
+            .toBe('정리번호');
+        expect(languages.en.categories.Feature.fields.identifierRevisionNote.label)
+            .toBe('Identifier revision reason');
         expect(languages.en.categories.FeatureSegment.fields.featureInvestigationChecklist.label)
             .toBe('Investigation checklist');
+        expect(languages.en.categories.FeatureSegment.fields.longAxisOrientation.description)
+            .toContain('23° east of north');
     });
 
 
@@ -388,8 +479,11 @@ describe('KoreanFieldwork project configuration', () => {
             .values[KOREAN_FIELDWORK_REFERENCE_BASEMAP_PROVIDER_DEFAULT]).toBeDefined();
         expect(valuelists['KoreanFieldwork-referenceBasemapProvider'].values.googleRoadmap).toBeDefined();
         expect(valuelists['KoreanFieldwork-referenceBasemapProvider'].values.googleSatellite).toBeDefined();
+        expect(valuelists['KoreanFieldwork-referenceBasemapProvider'].values.kakaoHybrid).toBeDefined();
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-surveyBoundarySource']
             .values.manualBasemapTrace.label).toBe('배경지도 수동 추적');
+        expect(valuelistLanguages.projects.ko['KoreanFieldwork-referenceBasemapProvider']
+            .values.kakaoHybrid.label).toBe('카카오 위성지도');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-referenceBasemapProvider']
             .values.googleRoadmap.label).toBe('Google Maps road map');
         expect(languages.ko.categories.SurveyBoundary.label).toBe('조사경계');
@@ -543,18 +637,24 @@ describe('KoreanFieldwork project configuration', () => {
         expect(soilProfilePhotoForm.fields.soilProfileAnnotationStrokes.mandatory).toBe(true);
         expect(soilProfilePhotoForm.fields.soilProfileLayerMarkers.inputType).toBe('text');
         expect(soilProfilePhotoForm.fields.soilProfileLayerIds.inputType).toBe('text');
+        expect(soilProfilePhotoForm.fields.soilColorAssistCandidates.inputType).toBe('text');
+        expect(soilProfilePhotoForm.fields.soilColorAssistStatus.inputType).toBe('dropdown');
         expect(soilProfilePhotoForm.fields.soilProfileColorSwatches.inputType).toBe('text');
         expect(soilProfilePhotoForm.fields.soilProfileColorNote.inputType).toBe('text');
         expect(soilProfilePhotoForm.valuelists.layerSequenceMeaning)
             .toBe('KoreanFieldwork-layerSequenceMeaning');
         expect(soilProfilePhotoForm.valuelists.soilColorCaptureCondition)
             .toBe('KoreanFieldwork-soilColorCaptureCondition');
+        expect(soilProfilePhotoForm.valuelists.soilColorAssistStatus)
+            .toBe('KoreanFieldwork-soilColorAssistStatus');
         expect(soilProfileWorkflowGroup.fields).toContain('depicts');
         expect(soilProfileKoreanGroup.fields).toEqual([
             'soilProfilePhotoCapturedAt',
             'soilProfileAnnotationStrokes',
             'soilProfileLayerMarkers',
             'soilColorCaptureCondition',
+            'soilColorAssistCandidates',
+            'soilColorAssistStatus',
             'soilProfileColorSwatches',
             'soilProfileColorNote',
             'soilProfileCaptureNote'
@@ -570,10 +670,18 @@ describe('KoreanFieldwork project configuration', () => {
         expect(valuelists['KoreanFieldwork-soilColorCaptureCondition'].values.calibrationTargetUsed).toBeDefined();
         expect(valuelists['KoreanFieldwork-soilColorAssistStatus']
             .values[KOREAN_FIELDWORK_SOIL_COLOR_ASSIST_STATUS_DEFAULT]).toBeDefined();
+        expect(valuelists['KoreanFieldwork-soilColorAssistStatus'].values.candidatesAvailable).toBeDefined();
+        expect(valuelists['KoreanFieldwork-soilColorAssistStatus'].values.reviewed).toBeDefined();
         expect(KOREAN_FIELDWORK_LAYER_SEQUENCE_MEANING_DEFAULT).toBe('latestToEarliest');
         expect(KOREAN_FIELDWORK_SOIL_COLOR_ASSIST_STATUS_DEFAULT).toBe('notRun');
         expect(KOREAN_FIELDWORK_SOIL_PROFILE_PHOTO_SIZE_HINT_KB_DEFAULT).toBe(512);
         expect(KOREAN_FIELDWORK_SOIL_PROFILE_PHOTO_QUALITY_DEFAULT).toBe(0.35);
+        expect(KOREAN_FIELDWORK_RECORD_CREATION_TIMING_DURING_FIELDWORK).toBe('duringFieldwork');
+        expect(KOREAN_FIELDWORK_FEATURE_RECORDING_STATUS_CANDIDATE).toBe('candidate');
+        expect(KOREAN_FIELDWORK_FEATURE_GEOMETRY_EDIT_STATUS_ROUGH_SKETCH).toBe('roughSketch');
+        expect(KOREAN_FIELDWORK_FEATURE_GEOMETRY_REVISION_HISTORY_DEFAULT).toBe('[]');
+        expect(KOREAN_FIELDWORK_GEOMETRY_SOURCE_TABLET_SKETCH).toBe('tabletSketch');
+        expect(KOREAN_FIELDWORK_GEOMETRY_CONFIDENCE_ROUGH).toBe('rough');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-layerSequenceMeaning']
             .values.latestToEarliest.label).toBe('최근층부터');
         expect(valuelistLanguages.projects.ko['KoreanFieldwork-soilColorAssistStatus']
@@ -586,6 +694,8 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('사진 크기 기준(KB)');
         expect(languages.ko.categories.SoilProfilePhoto.fields.soilProfileColorSwatches.label)
             .toBe('번호별 토색');
+        expect(languages.ko.categories.SoilProfilePhoto.fields.soilColorAssistCandidates.label)
+            .toBe('사진 토색 후보');
         expect(languages.en.categories.SoilProfilePhoto.label).toBe('Soil profile photo');
     });
 
@@ -2797,6 +2907,7 @@ describe('KoreanFieldwork project configuration', () => {
         const featureForm = config.forms['Feature:default'];
         const featureGroupForm = config.forms['FeatureGroup:default'];
         const featureSegmentForm = config.forms['FeatureSegment:default'];
+        const layerForm = config.forms['Layer:default'];
         const fieldRecordQualityReviewForm = config.forms.FieldRecordQualityReview;
         const dailyLogForm = config.forms.DailyLog;
         const fieldReportConcurrentReviewForm = config.forms.FieldReportConcurrentReview;
@@ -2821,11 +2932,25 @@ describe('KoreanFieldwork project configuration', () => {
         expect(projectForm.fields.investigationAdministration.inputType).toBe('checkboxes');
         expect(projectForm.fields.permitConditionCompliance.inputType).toBe('checkboxes');
         expect(projectForm.fields.investigationRecordHandover.inputType).toBe('checkboxes');
+        expect(projectForm.fields.projectInvestigationMode.inputType).toBe('dropdown');
+        expect(projectForm.fields.projectBoundarySetupState.inputType).toBe('dropdown');
+        expect(projectForm.fields.projectBoundarySummary.inputType).toBe('text');
+        expect(projectForm.valuelists.projectInvestigationMode).toBe('KoreanFieldwork-projectInvestigationMode');
+        expect(projectForm.groups.find((group: any) => group.name === 'koreanFieldwork').fields.slice(0, 3))
+            .toEqual(['projectInvestigationMode', 'projectBoundarySetupState', 'projectBoundarySummary']);
+        expect(operationForm.fields.projectInvestigationMode.inputType).toBe('dropdown');
+        expect(operationForm.fields.projectBoundarySetupState.inputType).toBe('dropdown');
+        expect(operationForm.fields.projectBoundarySummary.inputType).toBe('text');
+        expect(operationForm.valuelists.projectInvestigationMode).toBe('KoreanFieldwork-projectInvestigationMode');
+        expect(operationForm.groups.find((group: any) => group.name === 'koreanFieldwork').fields.slice(0, 3))
+            .toEqual(['projectInvestigationMode', 'projectBoundarySetupState', 'projectBoundarySummary']);
         expect(operationForm.fields.recordCreationTiming.inputType).toBe('dropdown');
         expect(operationForm.fields.investigationRecordHandover.inputType).toBe('checkboxes');
         expect(trenchForm.fields.recordCreationTiming.inputType).toBe('dropdown');
         expect(trenchForm.fields.fieldRecordQuality.inputType).toBe('checkboxes');
         expect(trenchForm.fields.verificationState.inputType).toBe('dropdown');
+        expect(trenchForm.fields.longAxisOrientation.inputType).toBe('input');
+        expect(trenchForm.fields.orientationNote.inputType).toBe('text');
         expect(trenchForm.groups.map((group: any) => group.name))
             .toContain('koreanFieldwork');
         expect(featureGroupForm.fields.featurePackage.inputType).toBe('checkboxes');
@@ -2835,6 +2960,8 @@ describe('KoreanFieldwork project configuration', () => {
         expect(featureForm.fields.fortificationWaterFacility.inputType).toBe('checkboxes');
         expect(featureForm.fields.japaneseFortificationDitch.inputType).toBe('checkboxes');
         expect(featureForm.fields.recordCreationTiming.inputType).toBe('dropdown');
+        expect(layerForm.fields.longAxisOrientation.inputType).toBe('input');
+        expect(layerForm.fields.orientationReference.inputType).toBe('input');
         expect(fieldRecordQualityReviewForm.parent).toBe('Operation');
         expect(fieldRecordQualityReviewForm.fields.reviewedRecordUnit.inputType).toBe('checkboxes');
         expect(fieldRecordQualityReviewForm.fields.qualityReviewStage.inputType).toBe('checkboxes');
@@ -4728,7 +4855,7 @@ describe('KoreanFieldwork project configuration', () => {
             .toBe('Photo/drawing cross-checked');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-excavationContextModel']
             .values.quadrantInvestigation.label)
-            .toBe('Quadrant investigation');
+            .toBe('In-progress investigation record');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-excavationReverseSequenceCheck']
             .values.useSurfaceChecked.label)
             .toBe('Use surface checked');

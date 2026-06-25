@@ -3,18 +3,37 @@ export const DEFAULT_PROJECT_LANGUAGES: ReadonlyArray<string> = ['en'];
 export const KOREAN_FIELDWORK_CONFIGURATION_NAME = 'KoreanFieldwork';
 export const KOREAN_FIELDWORK_GROUP_NAME = 'koreanFieldwork';
 export const KOREAN_FIELDWORK_PROJECT_IDENTIFIER = 'korean-fieldwork';
-export const KOREAN_FIELDWORK_PROJECT_LABEL = '디지털 야장';
-export const KOREAN_FIELDWORK_PROJECT_PREFIX = `${KOREAN_FIELDWORK_PROJECT_IDENTIFIER}-`;
+export const KOREAN_FIELDWORK_PROJECT_LABEL = '현장 기록';
 export const KOREAN_FIELDWORK_PROJECT_LANGUAGES: ReadonlyArray<string> = ['ko'];
 export const KOREAN_FIELDWORK_TEMPLATE_ID = 'koreanFieldwork';
 export const KOREAN_FIELDWORK_LAYER_SEQUENCE_MEANING_DEFAULT = 'latestToEarliest';
+export const KOREAN_FIELDWORK_RECORD_CREATION_TIMING_DURING_FIELDWORK = 'duringFieldwork';
 export const KOREAN_FIELDWORK_SOIL_COLOR_ASSIST_STATUS_DEFAULT = 'notRun';
 export const KOREAN_FIELDWORK_SOIL_PROFILE_PHOTO_SIZE_HINT_KB_DEFAULT = 512;
 export const KOREAN_FIELDWORK_SOIL_PROFILE_PHOTO_QUALITY_DEFAULT = 0.35;
+export const KOREAN_FIELDWORK_FEATURE_RECORDING_STATUS_CANDIDATE = 'candidate';
+export const KOREAN_FIELDWORK_FEATURE_GEOMETRY_EDIT_STATUS_ROUGH_SKETCH = 'roughSketch';
+export const KOREAN_FIELDWORK_FEATURE_GEOMETRY_REVISION_HISTORY_DEFAULT = '[]';
+export const KOREAN_FIELDWORK_GEOMETRY_SOURCE_GPS_APPROXIMATE = 'gpsApproximate';
+export const KOREAN_FIELDWORK_GEOMETRY_SOURCE_TABLET_SKETCH = 'tabletSketch';
+export const KOREAN_FIELDWORK_GEOMETRY_CONFIDENCE_ROUGH = 'rough';
 export const KOREAN_FIELDWORK_SURVEY_BOUNDARY_TYPE_DEFAULT = 'operationBoundary';
 export const KOREAN_FIELDWORK_SURVEY_BOUNDARY_SOURCE_DEFAULT = 'manualBasemapTrace';
+export const KOREAN_FIELDWORK_SURVEY_BOUNDARY_SOURCE_CSV_IMPORT = 'csvImport';
+export const KOREAN_FIELDWORK_SURVEY_BOUNDARY_SOURCE_DXF_IMPORT = 'dxfImport';
+export const KOREAN_FIELDWORK_SURVEY_BOUNDARY_SOURCE_GEOJSON_IMPORT = 'geoJsonImport';
+export const KOREAN_FIELDWORK_SURVEY_BOUNDARY_SOURCE_GPS_WALKOVER = 'gpsWalkover';
+export const KOREAN_FIELDWORK_SURVEY_BOUNDARY_SOURCE_SHP_IMPORT = 'shpImport';
 export const KOREAN_FIELDWORK_SURVEY_BOUNDARY_ACCURACY_DEFAULT = 'visualReference';
+export const KOREAN_FIELDWORK_SURVEY_BOUNDARY_ACCURACY_APPROXIMATE_GPS = 'approximateGps';
+export const KOREAN_FIELDWORK_SURVEY_BOUNDARY_ACCURACY_IMPORTED_REFERENCE = 'importedReference';
 export const KOREAN_FIELDWORK_REFERENCE_BASEMAP_PROVIDER_DEFAULT = 'none';
+export const KOREAN_FIELDWORK_REFERENCE_BASEMAP_PROVIDER_GOOGLE_HYBRID = 'googleHybrid';
+export const KOREAN_FIELDWORK_REFERENCE_BASEMAP_PROVIDER_GOOGLE_SATELLITE = 'googleSatellite';
+export const KOREAN_FIELDWORK_REFERENCE_BASEMAP_PROVIDER_KAKAO_HYBRID = 'kakaoHybrid';
+export const KOREAN_FIELDWORK_REFERENCE_BASEMAP_PROVIDER_IMPORTED_RASTER_LAYER = 'importedRasterLayer';
+export const KOREAN_FIELDWORK_REFERENCE_BASEMAP_PROVIDER_IMPORTED_VECTOR_LAYER = 'importedVectorLayer';
+export const KOREAN_FIELDWORK_GPS_DRAFT_BOUNDARY_HALF_SIZE_METERS = 20;
 
 export const PROJECT_MAPPING = {
     'abbircella': { prefix: 'AbbirCella', label: 'AbbirCella' },
@@ -51,10 +70,14 @@ export const PROJECT_MAPPING = {
 };
 
 
-export function getConfigurationName(projectIdentifier: string): string {
+export function getConfigurationName(projectIdentifier: string, customConfigurationName?: string): string {
+
+    if (customConfigurationName) return customConfigurationName;
 
     for (let [identifier, project] of Object.entries(PROJECT_MAPPING)) {
-        if (projectIdentifier === identifier || projectIdentifier.startsWith(identifier + '-')) return project.prefix;
+        if (projectIdentifier === identifier) return project.prefix;
+        if (identifier !== KOREAN_FIELDWORK_PROJECT_IDENTIFIER
+                && projectIdentifier.startsWith(identifier + '-')) return project.prefix;
     }
 
     return 'Default';

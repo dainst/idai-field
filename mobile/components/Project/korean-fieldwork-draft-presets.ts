@@ -92,6 +92,7 @@ export const KOREAN_FIELDWORK_DRAFT_PRESETS: readonly KoreanFieldworkDraftPreset
       featureRecordingStatus: 'investigating',
       recordCreationTiming: 'duringFieldwork',
       fieldRecordQuality: ['immediateRecording'],
+      verificationState: 'observedInField',
       featureInvestigationChecklist: [
         'preInvestigationPhotoTaken',
         'inProgressPhotoTaken',

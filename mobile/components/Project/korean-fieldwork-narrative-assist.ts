@@ -55,7 +55,7 @@ export const KOREAN_FIELDWORK_NARRATIVE_FIELD_LABELS: Readonly<
   Record<KoreanFieldworkNarrativeField, string>
 > = {
   shortDescription: '짧은 설명',
-  description: '묘사',
+  description: '설명',
   interpretation: '해석',
 };
 
@@ -101,7 +101,7 @@ readonly KoreanFieldworkNarrativeSnippet[] = [
     detail: '범위와 기준점',
     icon: 'select-all',
     target: 'description',
-    text: '조사구역의 범위, 기준점, 접근 조건을 확인하고 작업 단위를 구분함.',
+    text: '조사 경계의 범위, 기준점, 접근 조건을 확인하고 기록할 구역을 구분함.',
     mode: 'append',
     categoryNames: [C.OPERATION, C.SURVEY_BOUNDARY],
   },
@@ -121,7 +121,7 @@ readonly KoreanFieldworkNarrativeSnippet[] = [
     detail: '배치와 중복',
     icon: 'hub',
     target: 'description',
-    text: '유구의 배치, 중복, 방향성을 기준으로 묶음 내부 관계를 구분하여 기록함.',
+    text: '유구의 배치, 중복, 방향성을 기준으로 군집 내부 관계를 구분하여 기록함.',
     mode: 'append',
     categoryNames: [C.FEATURE_GROUP],
   },
@@ -142,6 +142,26 @@ readonly KoreanFieldworkNarrativeSnippet[] = [
     icon: 'visibility',
     target: 'description',
     text: '평면 노출 상태, 경계의 명확성, 교란 여부를 확인함.',
+    mode: 'append',
+    categoryNames: FEATURE_WORKFLOW_CATEGORIES,
+  },
+  {
+    id: 'feature-field-note-flow',
+    label: '유구 야장',
+    detail: '그림·약측·근거',
+    icon: 'edit-note',
+    target: 'description',
+    text: '[관찰 내용] 유구 성격을 확정하지 말고 평면 형태, 규모, 내부 퇴적, 중복 관계를 확인.\n[스케치·약측] 약도/평면/단면 스케치 번호, 장축×단축, 깊이, 단면 위치를 적음.\n[사진·도면 번호] 사진 번호와 도면 번호를 서로 대조.\n[유구 성격] 미정/추정으로 둘 수 있으며, 유구명은 관찰·그림·사진 근거가 모이면 보완.\n[다음 작업] 단면 정리, 사진 보강, 실측, 유물·시료 수습 여부 확인.',
+    mode: 'append',
+    categoryNames: FEATURE_WORKFLOW_CATEGORIES,
+  },
+  {
+    id: 'feature-sketch-measure-evidence',
+    label: '스케치·약측',
+    detail: '그림과 설명 연결',
+    icon: 'straighten',
+    target: 'description',
+    text: '[스케치·약측] 약도/평면/단면 스케치 번호, 측정 기준선, 장축×단축, 깊이, 촬영·도면 번호, 설명에서 참조할 부분을 함께 기록.',
     mode: 'append',
     categoryNames: FEATURE_WORKFLOW_CATEGORIES,
   },

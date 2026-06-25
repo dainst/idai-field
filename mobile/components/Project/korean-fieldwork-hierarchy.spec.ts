@@ -2,6 +2,7 @@ import {
   getKoreanFieldworkHierarchyLanes,
   KOREAN_FIELDWORK_HIERARCHY_CATEGORIES,
 } from './korean-fieldwork-hierarchy';
+import { Document } from 'idai-field-core';
 import { KOREAN_FIELDWORK_CATEGORIES } from './korean-fieldwork-categories';
 
 const C = KOREAN_FIELDWORK_CATEGORIES;
@@ -29,7 +30,7 @@ describe('Korean fieldwork hierarchy lanes', () => {
       segment,
       layer,
       unrelatedFeature,
-    ] as any[];
+    ];
     const documentsById = new Map(documents.map((document) => [
       document.resource.id,
       document,
@@ -66,7 +67,7 @@ describe('Korean fieldwork hierarchy lanes', () => {
   it('limits visible items while preserving the total count', () => {
     const features = Array.from({ length: 6 }, (_, index) =>
       createDoc(`feature-${index}`, C.FEATURE, `유구 ${index}`)
-    ) as any[];
+    );
     const documentsById = new Map(features.map((document) => [
       document.resource.id,
       document,
@@ -100,11 +101,14 @@ const createDoc = (
   category: string,
   identifier: string,
   relations: Record<string, string[]> = {}
-) => ({
+): Document => ({
+  _id: id,
   resource: {
     id,
     identifier,
     category,
     relations,
   },
+  created: { user: 'test', date: new Date(0) },
+  modified: [],
 });

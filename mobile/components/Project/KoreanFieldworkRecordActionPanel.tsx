@@ -74,7 +74,7 @@ const KoreanFieldworkRecordActionPanel: React.FC<KoreanFieldworkRecordActionPane
       </Text>
 
       <View style={styles.metricRow}>
-        <Metric label="하위" value={summary.structureCount} />
+        <Metric label="이어진 기록" value={summary.structureCount} />
         <Metric label="자료" value={summary.evidenceCount} />
         <Metric label="확인" value={summary.issueCount} warning={summary.issueCount > 0} />
         {summary.checklistTotal > 0 && (

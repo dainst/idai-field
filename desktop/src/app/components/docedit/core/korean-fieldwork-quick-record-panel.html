@@ -1,0 +1,43 @@
+<div *ngIf="shouldShow()" class="korean-fieldwork-quick-record-panel">
+    <div class="korean-fieldwork-quick-record-header">
+        <span class="mdi mdi-checkbox-marked-circle-outline"></span>
+        <span>현장 최소 기록</span>
+    </div>
+
+    <div *ngFor="let fieldName of getVisiblePrimaryFieldNames()"
+         class="korean-fieldwork-quick-record-section">
+        <div class="korean-fieldwork-quick-record-label">{{getFieldLabel(fieldName)}}</div>
+        <div class="korean-fieldwork-quick-record-chip-row">
+            <button *ngFor="let valueId of getValues(fieldName)"
+                    type="button"
+                    class="btn korean-fieldwork-quick-record-chip"
+                    [class.active]="isActive(fieldName, valueId)"
+                    (click)="toggleValue(fieldName, valueId)">
+                {{getValueLabel(fieldName, valueId)}}
+            </button>
+        </div>
+    </div>
+
+    <button *ngIf="getSecondaryFieldCount() > 0"
+            type="button"
+            class="btn korean-fieldwork-quick-record-secondary-toggle"
+            (click)="showSecondaryFields = !showSecondaryFields">
+        {{showSecondaryFields ? '추가 상태값 접기' : '추가 상태값 보기 (' + getSecondaryFieldCount() + ')'}}
+    </button>
+
+    <div *ngIf="showSecondaryFields">
+        <div *ngFor="let fieldName of getVisibleSecondaryFieldNames()"
+             class="korean-fieldwork-quick-record-section secondary">
+            <div class="korean-fieldwork-quick-record-label">{{getFieldLabel(fieldName)}}</div>
+            <div class="korean-fieldwork-quick-record-chip-row">
+                <button *ngFor="let valueId of getValues(fieldName)"
+                        type="button"
+                        class="btn korean-fieldwork-quick-record-chip"
+                        [class.active]="isActive(fieldName, valueId)"
+                        (click)="toggleValue(fieldName, valueId)">
+                    {{getValueLabel(fieldName, valueId)}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -7,6 +7,22 @@ import KoreanFieldworkSelectedRecordWorkbench from './KoreanFieldworkSelectedRec
 const C = KOREAN_FIELDWORK_CATEGORIES;
 
 describe('KoreanFieldworkSelectedRecordWorkbench', () => {
+  it('keeps related details collapsed until requested', () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
+    const handleToggleExpanded = jest.fn();
+
+    const { getByTestId, queryByTestId } = renderWorkbench(feature, {
+      isExpanded: false,
+      onToggleExpanded: handleToggleExpanded,
+    });
+
+    expect(queryByTestId('evidenceMetric_photos')).toBeNull();
+
+    fireEvent.press(getByTestId('selectedRecordToggleDetails'));
+
+    expect(handleToggleExpanded).toHaveBeenCalledTimes(1);
+  });
+
   it('runs selected record commands from the tablet workbench', () => {
     const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
     const handleAddChild = jest.fn();
@@ -30,6 +46,20 @@ describe('KoreanFieldworkSelectedRecordWorkbench', () => {
     expect(handleEditDocument).toHaveBeenCalledWith(feature);
     expect(handleAddChild).toHaveBeenCalledWith(feature);
     expect(handleClearSelection).toHaveBeenCalledTimes(1);
+  });
+
+  it('shows compact field status chips in the selected workbench header', () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1', {
+      featureType: 'pit',
+      longAxisOrientation: 'n-23도-e',
+      orientationReference: '자북',
+    });
+
+    const { getAllByText, getByTestId, getByText } = renderWorkbench(feature);
+
+    expect(getByTestId('selectedRecordStatusChips')).toBeTruthy();
+    expect(getAllByText('수혈').length).toBeGreaterThan(0);
+    expect(getAllByText('장축 N-23°-E · 자북').length).toBeGreaterThan(0);
   });
 
   it('creates missing evidence records from the selected workbench', () => {
@@ -126,12 +156,14 @@ const renderWorkbench = (
     document={document}
     documents={[document]}
     allowedAddCategoryNames={[]}
+    isExpanded={true}
     onAddChild={jest.fn()}
     onAddDocumentOfCategory={jest.fn()}
     onClearSelection={jest.fn()}
     onEditDocument={jest.fn()}
     onOpenDocument={jest.fn()}
     onOpenMapDocument={jest.fn()}
+    onToggleExpanded={jest.fn()}
     onUpdateResourceFields={jest.fn()}
     {...overrides}
   />

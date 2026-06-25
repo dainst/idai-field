@@ -15,6 +15,7 @@ import { Alert, Keyboard, StyleSheet, View } from 'react-native';
 import useToast from '@/hooks/use-toast';
 import { DocumentRepository } from '@/repositories/document-repository';
 import { ToastType } from '@/components/common/Toast/ToastProvider';
+import Button from '@/components/common/Button';
 import DocumentAddModal from './DocumentAddModal';
 import DocumentRemoveModal from './DocumentRemoveModal';
 import KoreanFieldworkTodayBoard from './KoreanFieldworkTodayBoard';
@@ -24,6 +25,7 @@ import { router, useGlobalSearchParams } from 'expo-router';
 import SearchBar from './SearchBar';
 import { ProjectContext } from '@/contexts/project-context';
 import { KoreanFieldworkInvestigationModeId } from './korean-fieldwork-investigation-mode';
+import { MaterialIcons } from '@expo/vector-icons';
 interface DocumentsMapProps {
   repository: DocumentRepository;
   syncStatus: SyncStatus;
@@ -31,6 +33,7 @@ interface DocumentsMapProps {
   issueSearch: (q: string) => void;
   selectParent: (doc: Document) => void;
   investigationModeId?: KoreanFieldworkInvestigationModeId;
+  boundarySummary?: string;
 }
 
 const DocumentsMap: React.FC<DocumentsMapProps> = ({
@@ -40,10 +43,12 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
   issueSearch,
   selectParent,
   investigationModeId,
+  boundarySummary,
 }): ReactElement => {
   const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
   const [isDeleteModelOpen, setIsDeleteModelOpen] = useState<boolean>(false);
   const [highlightedDoc, setHighlightedDoc] = useState<Document>();
+  const [satellitePickerRequestId, setSatellitePickerRequestId] = useState(0);
   // TODO: configure expo router to load params
   const params = useGlobalSearchParams();
 
@@ -105,6 +110,10 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
       params: { docId, categoryName },
     });
   };
+
+  const openSatellitePicker = useCallback(() => {
+    setSatellitePickerRequestId((value) => value + 1);
+  }, []);
 
   const closeAddModal = () => setIsAddModalOpen(false);
 
@@ -196,6 +205,15 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
           onQrCodeScanned,
         }}
       />
+      <View style={styles.visibleMapActions}>
+        <Button
+          title="위성지도"
+          variant="secondary"
+          onPress={openSatellitePicker}
+          icon={<MaterialIcons name="satellite-alt" size={18} />}
+          style={styles.visibleMapActionButton}
+        />
+      </View>
       <KoreanFieldworkTodayBoard
         summary={todaySummary}
         documents={documents}
@@ -217,6 +235,8 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
           selectParent={selectParent}
           readinessIssues={todaySummary.openIssues}
           investigationModeId={investigationModeId}
+          boundarySummary={boundarySummary}
+          satellitePickerRequestId={satellitePickerRequestId}
         />
       </View>
     </View>
@@ -228,6 +248,17 @@ const getStringParam = (
 ): string | undefined => Array.isArray(param) ? param[0] : param;
 
 const styles = StyleSheet.create({
+  visibleMapActions: {
+    alignItems: 'flex-end',
+    backgroundColor: '#eef2f4',
+    borderBottomColor: '#d7e0e7',
+    borderBottomWidth: 1,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+  },
+  visibleMapActionButton: {
+    minWidth: 136,
+  },
   container: {
     flex: 1,
   },

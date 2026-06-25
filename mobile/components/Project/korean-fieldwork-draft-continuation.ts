@@ -59,8 +59,8 @@ const EVIDENCE_CATEGORY_PRIORITY: Readonly<Record<string, readonly string[]>> = 
   [C.OPERATION]: [C.SURVEY_BOUNDARY, C.DAILY_LOG, C.PEN_MEMO],
   [C.TRENCH]: [C.PHOTO, C.DRAWING, C.SOIL_PROFILE_PHOTO, C.PEN_MEMO],
   [C.FEATURE_GROUP]: [C.PHOTO, C.DRAWING, C.PEN_MEMO],
-  [C.FEATURE]: [C.PHOTO, C.SOIL_PROFILE_PHOTO, C.DRAWING, C.FIND, C.SAMPLE, C.PEN_MEMO],
-  [C.FEATURE_SEGMENT]: [C.PHOTO, C.SOIL_PROFILE_PHOTO, C.DRAWING, C.FIND, C.SAMPLE, C.PEN_MEMO],
+  [C.FEATURE]: [C.PHOTO, C.SOIL_PROFILE_PHOTO, C.DRAWING, C.PEN_MEMO, C.FIND, C.SAMPLE],
+  [C.FEATURE_SEGMENT]: [C.PHOTO, C.SOIL_PROFILE_PHOTO, C.DRAWING, C.PEN_MEMO, C.FIND, C.SAMPLE],
   [C.LAYER]: [C.SOIL_PROFILE_PHOTO, C.SAMPLE, C.PHOTO, C.DRAWING, C.PEN_MEMO],
   [C.SURVEY]: [C.SURVEY_BOUNDARY, C.FIND_COLLECTION, C.FIND, C.PHOTO, C.PEN_MEMO],
   [C.FIND_COLLECTION]: [C.FIND, C.PHOTO, C.PEN_MEMO],
@@ -82,14 +82,14 @@ export const getKoreanFieldworkDraftContinuationOptions = (
     {
       id: 'edit',
       label: '저장 후 열기',
-      detail: '방금 만든 기록에서 하위·자료 작업을 바로 이어갑니다.',
+      detail: '방금 만든 기록에서 관련 자료 작업을 바로 이어갑니다.',
       icon: 'open-in-new',
       target: { mode: 'edit' },
     },
     {
       id: 'same',
       label: '같은 종류 계속',
-      detail: `${getKoreanFieldworkCategoryLabel(categoryName)}를 같은 상위 기록 아래에 이어 씁니다.`,
+      detail: `${getKoreanFieldworkCategoryLabel(categoryName)}를 같은 포함 위치에서 이어 씁니다.`,
       icon: 'playlist-add',
       target: { mode: 'same' },
     },
@@ -100,7 +100,7 @@ export const getKoreanFieldworkDraftContinuationOptions = (
     options.push({
       id: 'next-child',
       label: `${getKoreanFieldworkCategoryLabel(nextChildCategoryName)} 추가`,
-      detail: '저장한 기록을 상위로 삼아 다음 조사 단위를 만듭니다.',
+      detail: '저장한 기록에 포함할 다음 하위 기록을 바로 만듭니다.',
       icon: 'account-tree',
       target: {
         mode: 'addChild',

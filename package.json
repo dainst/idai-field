@@ -6,6 +6,9 @@
   },
   "scripts": {
     "bootstrap": "npm i && lerna bootstrap -- --force",
-    "build": "lerna run build"
+    "build": "lerna run build",
+    "check:korean-fieldwork": "node tools/korean-fieldwork-verify.js",
+    "check:korean-fieldwork:full": "node tools/korean-fieldwork-verify.js --full-mobile --desktop-build",
+    "check:korean-fieldwork-parity": "node tools/korean-fieldwork-parity-check.js"
   }
 }

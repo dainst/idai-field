@@ -2,7 +2,10 @@ import {
   Document,
   KoreanFieldworkTodaySummary,
 } from 'idai-field-core';
-import { KOREAN_FIELDWORK_CATEGORIES } from './korean-fieldwork-categories';
+import {
+  getKoreanFieldworkDisplayIdentifier,
+  KOREAN_FIELDWORK_CATEGORIES,
+} from './korean-fieldwork-categories';
 import { KoreanFieldworkInvestigationModeId } from './korean-fieldwork-investigation-mode';
 import { getKoreanFieldworkPrimaryParent } from './korean-fieldwork-record-summary';
 
@@ -158,8 +161,8 @@ export const getKoreanFieldworkPriorityTasks = (
     tasks.push({
       id: 'start-operation',
       icon: 'map',
-      title: '조사구역부터 만들기',
-      detail: '지도에서 현장 조사구역을 먼저 잡아야 기록 흐름이 이어집니다.',
+      title: '조사 경계 생성',
+      detail: '조사 구역을 먼저 그리고 유구 기록을 이어갑니다.',
       tone: 'warning',
       action: { type: 'openMap' },
     });
@@ -184,7 +187,7 @@ export const getKoreanFieldworkPriorityTasks = (
     tasks.push({
       id: `issue-${issue.documentId}-${issue.ruleId}`,
       icon: issue.severity === 'critical' ? 'report' : 'fact-check',
-      title: `${issue.identifier} 확인`,
+      title: `${getKoreanFieldworkDisplayIdentifier(issue.identifier) || issue.identifier} 확인`,
       detail: issue.recommendedAction,
       tone: issue.severity === 'critical' ? 'danger' : 'warning',
       action: {
@@ -209,7 +212,7 @@ const appendCommonPriorityTasks = (
       id: 'create-daily-log',
       icon: 'event-note',
       title: '오늘 작업일지 작성',
-      detail: `${targets.primaryOperation.resource.identifier}의 작업 범위와 관찰 내용을 남기세요.`,
+      detail: `${getDisplayIdentifier(targets.primaryOperation)}의 작업 범위와 관찰 내용을 남기세요.`,
       tone: 'warning',
       action: {
         type: 'createDocument',
@@ -223,8 +226,8 @@ const appendCommonPriorityTasks = (
     tasks.push({
       id: 'create-survey-boundary',
       icon: 'polyline',
-      title: '조사경계 기록',
-      detail: '구역선, 기준지도, 경계 정확도를 조사구역에 연결하세요.',
+      title: '조사 경계 기록',
+      detail: '구역선, 기준지도, 경계 정확도를 조사 경계 기록에 남기세요.',
       tone: 'info',
       action: {
         type: 'createDocument',
@@ -290,7 +293,7 @@ const appendTrialTrenchPriorityTasks = (
     tasks.push(createFeatureTask(
       trench,
       '유구 확인 결과 기록',
-      '유구가 확인되면 트렌치 아래에 개별 유구를 만들고 경계·충전토를 남기세요.'
+      '유구가 확인되면 트렌치 안에 개별 유구를 만들고 경계·충전토를 남기세요.'
     ));
   } else {
     const segment = getFirstDirectChildByCategory(
@@ -305,7 +308,7 @@ const appendTrialTrenchPriorityTasks = (
         id: 'create-trench-pit',
         icon: 'vertical-align-bottom',
         title: '피트 조사 기록',
-        detail: `${feature.resource.identifier}의 성격 확인 피트나 절개 단위를 따로 남기세요.`,
+        detail: `${getDisplayIdentifier(feature)}의 성격 확인 피트나 절개 단위를 따로 남기세요.`,
         tone: 'info',
         action: toCreateDocumentAction(feature, C.FEATURE_SEGMENT),
       });
@@ -329,7 +332,7 @@ const appendTrialTrenchPriorityTasks = (
       id: 'create-trench-photo',
       icon: 'add-a-photo',
       title: '트렌치 사진 기록',
-      detail: '정방향, 사선, 기준 토층, 유구 노출 사진을 트렌치에 연결하세요.',
+      detail: '정방향, 사선, 기준 토층, 유구 노출 사진을 트렌치 기록에 남기세요.',
       tone: 'info',
       action: toCreateDocumentAction(trench, C.PHOTO),
     });
@@ -362,7 +365,7 @@ const appendExcavationPriorityTasks = (
       id: 'create-pre-investigation-photo',
       icon: 'add-a-photo',
       title: '조사 전 사진',
-      detail: `${feature.resource.identifier}의 조사 전 상태를 먼저 사진으로 남기세요.`,
+      detail: `${getDisplayIdentifier(feature)}의 조사 전 상태를 먼저 사진으로 남기세요.`,
       tone: 'warning',
       action: toCreateDocumentAction(feature, C.PHOTO),
     });
@@ -379,8 +382,8 @@ const appendExcavationPriorityTasks = (
     tasks.push({
       id: 'create-excavation-section',
       icon: 'splitscreen',
-      title: '반절·토층둑 기록',
-      detail: '반절 조사, 토층둑, 절개면처럼 조사 중 판단 단위를 따로 남기세요.',
+      title: '조사 중 기록',
+      detail: '토층이 드러나는 조사 중 상태를 사진·스케치·약측과 함께 남기세요.',
       tone: 'info',
       action: toCreateDocumentAction(feature, C.FEATURE_SEGMENT),
     });
@@ -403,7 +406,7 @@ const appendExcavationPriorityTasks = (
       id: 'create-excavation-drawing',
       icon: 'architecture',
       title: '실측 기록',
-      detail: '조사 완료 뒤 평면·단면 실측 기록을 유구에 연결하세요.',
+      detail: '평면·단면 스케치와 약측값을 유구 설명과 함께 연결해 두세요.',
       tone: 'info',
       action: toCreateDocumentAction(feature, C.DRAWING),
     });
@@ -426,7 +429,7 @@ const createTrenchTask = (
 const createFeatureTask = (
   parentDocument: Document,
   title = '유구 추가',
-  detail = `${parentDocument.resource.identifier} 아래에서 새 유구 기록을 시작하세요.`
+  detail = `${getDisplayIdentifier(parentDocument)} 안에 새 유구 기록을 시작하세요.`
 ): KoreanFieldworkPriorityTask => ({
   id: 'create-detected-feature',
   icon: 'add-location-alt',
@@ -514,8 +517,8 @@ const getDailyLogQuickActionDetail = (
 ): string => {
   if (summary.dailyLogs.length > 0) return '작성 내용 보기';
   if (targets.primaryOperation) return '바로 작성';
-  if (currentScopeParent) return '상위 조사구역에서 작성';
-  return '조사구역 필요';
+  if (currentScopeParent) return '현재 범위에서 작성';
+  return '조사 경계 필요';
 };
 
 const getFeatureCandidateQuickActionDetail = (
@@ -528,14 +531,14 @@ const getFeatureCandidateQuickActionDetail = (
     return `${summary.featureCandidates.length}건 기록`;
   }
   if (investigationModeId === 'trialTrench') {
-    if (targets.featureDraftParent) return '트렌치 아래 유구 기록';
+    if (targets.featureDraftParent) return '트렌치 안에 유구 기록';
     if (targets.primaryOperation) return '트렌치 먼저 추가';
     if (currentScopeParent) return '트렌치 필요';
-    return '조사구역 필요';
+    return '조사 경계 필요';
   }
   if (targets.featureDraftParent) return '유구 추가';
-  if (currentScopeParent) return '상위 기록 필요';
-  return '조사구역 필요';
+  if (currentScopeParent) return '현재 범위 확인';
+  return '조사 경계 필요';
 };
 
 const getFeatureQuickAction = (
@@ -592,3 +595,7 @@ const toCreateDocumentAction = (
   parentDocumentId: parentDocument.resource.id,
   categoryName,
 });
+
+const getDisplayIdentifier = (document: Document): string =>
+  getKoreanFieldworkDisplayIdentifier(document.resource.identifier)
+  || document.resource.id;

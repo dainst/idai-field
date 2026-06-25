@@ -18,13 +18,18 @@ import {
   getKoreanFieldworkIdentifierRevisionUpdates,
   getKoreanFieldworkReportIdentifier,
 } from './korean-fieldwork-identifier-revision';
-import { formatKoreanFieldworkParentPath } from './korean-fieldwork-record-summary';
+import {
+  formatKoreanFieldworkParentPath,
+  getKoreanFieldworkRecordStatusChips,
+  KoreanFieldworkStatusTone,
+} from './korean-fieldwork-record-summary';
 import { KoreanFieldworkInvestigationModeId } from './korean-fieldwork-investigation-mode';
 
 interface KoreanFieldworkSelectedRecordWorkbenchProps {
   document: Document;
   documents: Document[];
   allowedAddCategoryNames: string[];
+  isExpanded?: boolean;
   investigationModeId?: KoreanFieldworkInvestigationModeId;
   onAddChild: (document: Document) => void;
   onAddDocumentOfCategory: (parentDoc: Document, categoryName: string) => void;
@@ -32,6 +37,7 @@ interface KoreanFieldworkSelectedRecordWorkbenchProps {
   onEditDocument: (document: Document) => void;
   onOpenDocument: (document: Document) => void;
   onOpenMapDocument: (document: Document) => void;
+  onToggleExpanded?: () => void;
   onUpdateResourceFields: (
     document: Document,
     updates: Record<string, unknown>
@@ -44,6 +50,7 @@ const KoreanFieldworkSelectedRecordWorkbench: React.FC<
   document,
   documents,
   allowedAddCategoryNames,
+  isExpanded = false,
   investigationModeId,
   onAddChild,
   onAddDocumentOfCategory,
@@ -51,6 +58,7 @@ const KoreanFieldworkSelectedRecordWorkbench: React.FC<
   onEditDocument,
   onOpenDocument,
   onOpenMapDocument,
+  onToggleExpanded,
   onUpdateResourceFields,
 }) => {
   const documentsById = useMemo(
@@ -61,6 +69,7 @@ const KoreanFieldworkSelectedRecordWorkbench: React.FC<
     [documents]
   );
   const parentPath = formatKoreanFieldworkParentPath(document, documentsById);
+  const statusChips = getKoreanFieldworkRecordStatusChips(document);
   const title = document.resource.identifier || document.resource.id;
   const canReviseIdentifier = canReviseKoreanFieldworkIdentifier(document);
 
@@ -76,6 +85,19 @@ const KoreanFieldworkSelectedRecordWorkbench: React.FC<
             {getKoreanFieldworkCategoryLabel(document.resource.category)}
             {parentPath ? ` · ${parentPath}` : ''}
           </Text>
+          {statusChips.length > 0 && (
+            <View style={styles.statusRow} testID="selectedRecordStatusChips">
+              {statusChips.map((chip) => (
+                <Text
+                  key={chip.label}
+                  numberOfLines={1}
+                  style={[styles.statusChip, statusChipStyle(chip.tone)]}
+                >
+                  {chip.label}
+                </Text>
+              ))}
+            </View>
+          )}
         </View>
         <TouchableOpacity
           accessibilityLabel="선택 해제"
@@ -104,36 +126,56 @@ const KoreanFieldworkSelectedRecordWorkbench: React.FC<
         />
         <CommandButton
           icon="add"
-          label="하위"
+          label="이어 만들기"
           onPress={() => onAddChild(document)}
           testID="selectedRecordAddChild"
         />
       </View>
 
-      {canReviseIdentifier && (
-        <IdentifierRevisionPanel
-          document={document}
-          onApply={(updates) => onUpdateResourceFields(document, updates)}
+      <TouchableOpacity
+        activeOpacity={0.86}
+        onPress={onToggleExpanded}
+        style={styles.expandToggle}
+        testID="selectedRecordToggleDetails"
+      >
+        <Text style={styles.expandToggleText}>
+          {isExpanded ? '관련 자료·메모 접기' : '관련 자료·메모 펼치기'}
+        </Text>
+        <MaterialIcons
+          name={isExpanded ? 'expand-less' : 'expand-more'}
+          size={20}
+          color="#2f5f4a"
         />
-      )}
+      </TouchableOpacity>
 
-      <KoreanFieldworkRecordContextPanel
-        document={document}
-        documents={documents}
-        allowedAddCategoryNames={allowedAddCategoryNames}
-        onAddDocumentOfCategory={onAddDocumentOfCategory}
-        onOpenDocument={onOpenDocument}
-        onUpdateResourceFields={(updates) =>
-          onUpdateResourceFields(document, updates)}
-      />
-      <KoreanFieldworkRecordActionPanel
-        document={document}
-        documents={documents}
-        allowedAddCategoryNames={allowedAddCategoryNames}
-        investigationModeId={investigationModeId}
-        onAddDocumentOfCategory={onAddDocumentOfCategory}
-        onOpenDocument={onOpenDocument}
-      />
+      {isExpanded && (
+        <>
+          {canReviseIdentifier && (
+            <IdentifierRevisionPanel
+              document={document}
+              onApply={(updates) => onUpdateResourceFields(document, updates)}
+            />
+          )}
+
+          <KoreanFieldworkRecordContextPanel
+            document={document}
+            documents={documents}
+            allowedAddCategoryNames={allowedAddCategoryNames}
+            onAddDocumentOfCategory={onAddDocumentOfCategory}
+            onOpenDocument={onOpenDocument}
+            onUpdateResourceFields={(updates) =>
+              onUpdateResourceFields(document, updates)}
+          />
+          <KoreanFieldworkRecordActionPanel
+            document={document}
+            documents={documents}
+            allowedAddCategoryNames={allowedAddCategoryNames}
+            investigationModeId={investigationModeId}
+            onAddDocumentOfCategory={onAddDocumentOfCategory}
+            onOpenDocument={onOpenDocument}
+          />
+        </>
+      )}
     </View>
   );
 };
@@ -159,6 +201,21 @@ const CommandButton: React.FC<{
     <Text style={styles.commandLabel}>{label}</Text>
   </TouchableOpacity>
 );
+
+const statusChipStyle = (tone: KoreanFieldworkStatusTone) => {
+  switch (tone) {
+    case 'success':
+      return styles.statusChipSuccess;
+    case 'warning':
+      return styles.statusChipWarning;
+    case 'danger':
+      return styles.statusChipDanger;
+    case 'info':
+      return styles.statusChipInfo;
+    default:
+      return styles.statusChipNeutral;
+  }
+};
 
 const IdentifierRevisionPanel: React.FC<{
   document: Document;
@@ -293,6 +350,47 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     marginTop: 3,
   },
+  statusRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginTop: 7,
+  },
+  statusChip: {
+    borderRadius: 5,
+    borderWidth: 1,
+    fontSize: 11,
+    fontWeight: '900',
+    marginBottom: 4,
+    marginRight: 5,
+    maxWidth: 150,
+    paddingHorizontal: 7,
+    paddingVertical: 3,
+  },
+  statusChipDanger: {
+    backgroundColor: '#fff1f3',
+    borderColor: '#fecdd6',
+    color: '#c01048',
+  },
+  statusChipInfo: {
+    backgroundColor: '#eff8ff',
+    borderColor: '#b2ddff',
+    color: '#175cd3',
+  },
+  statusChipNeutral: {
+    backgroundColor: '#f8fafc',
+    borderColor: '#d0d5dd',
+    color: '#475467',
+  },
+  statusChipSuccess: {
+    backgroundColor: '#ecfdf3',
+    borderColor: '#abefc6',
+    color: '#027a48',
+  },
+  statusChipWarning: {
+    backgroundColor: '#fffaeb',
+    borderColor: '#fedf89',
+    color: '#b54708',
+  },
   closeButton: {
     alignItems: 'center',
     backgroundColor: '#f8fafc',
@@ -326,6 +424,22 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '900',
     marginLeft: 4,
+  },
+  expandToggle: {
+    alignItems: 'center',
+    backgroundColor: '#f8fafc',
+    borderColor: '#d0d5dd',
+    borderRadius: 6,
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    minHeight: 38,
+    paddingHorizontal: 10,
+  },
+  expandToggleText: {
+    color: '#2f5f4a',
+    fontSize: 12,
+    fontWeight: '900',
   },
   identifierSection: {
     borderTopColor: '#eaecf0',

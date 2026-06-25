@@ -232,21 +232,33 @@ const GLMap: React.FC<GLMapProps> = ({
 
   useEffect(() => {
     scene.clear();
-    geoDocuments.forEach((doc) =>
-      addDocumentToScene(doc, documentToWorldMatrix, scene, config)
-    );
-    layerDocuments.forEach((doc) =>
-      addLayerToScene(doc, documentToWorldMatrix, scene, {
-        getLayerImageUri,
-        getLayerOpacity,
-        onTextureLoaded: renderScene,
-      })
-    );
-    if (location) {
-      addlocationPointToScene(documentToWorldMatrix, scene, [
-        location.x,
-        location.y,
-      ]);
+    geoDocuments.forEach((doc) => {
+      try {
+        addDocumentToScene(doc, documentToWorldMatrix, scene, config);
+      } catch (error) {
+        console.warn('Unable to render map document', doc.resource.id, error);
+      }
+    });
+    layerDocuments.forEach((doc) => {
+      try {
+        addLayerToScene(doc, documentToWorldMatrix, scene, {
+          getLayerImageUri,
+          getLayerOpacity,
+          onTextureLoaded: renderScene,
+        });
+      } catch (error) {
+        console.warn('Unable to render map layer', doc.resource.id, error);
+      }
+    });
+    try {
+      if (location) {
+        addlocationPointToScene(documentToWorldMatrix, scene, [
+          location.x,
+          location.y,
+        ]);
+      }
+    } catch (error) {
+      console.warn('Unable to render current location on map', error);
     }
     renderScene();
   }, [
@@ -293,7 +305,12 @@ const GLMap: React.FC<GLMapProps> = ({
   }, [scene, selectedDocumentIds, previousSelectedDocIds, renderScene]);
 
   useEffect(() => {
-    if (renderer.current && glContextToScreenFactor.current) {
+    if (
+      renderer.current
+      && isUsableScreen(screen)
+      && Number.isFinite(glContextToScreenFactor.current)
+      && glContextToScreenFactor.current > 0
+    ) {
       renderer.current.setSize(
         screen.width * glContextToScreenFactor.current,
         screen.height * glContextToScreenFactor.current
@@ -307,9 +324,13 @@ const GLMap: React.FC<GLMapProps> = ({
     if (!updateDoc) return;
 
     const { document, status } = updateDoc;
-    if (status === 'deleted')
-      removeDocumentFromScene(document.resource.id, scene);
-    else updateDocumentInScene(document, documentToWorldMatrix, scene, config);
+    try {
+      if (status === 'deleted')
+        removeDocumentFromScene(document.resource.id, scene);
+      else updateDocumentInScene(document, documentToWorldMatrix, scene, config);
+    } catch (error) {
+      console.warn('Unable to update rendered map document', document.resource.id, error);
+    }
 
     renderScene();
   }, [updateDoc, scene, documentToWorldMatrix, config, renderScene]);
@@ -322,14 +343,21 @@ const GLMap: React.FC<GLMapProps> = ({
   }, [highlightedDocId, scene, renderScene]);
 
   useEffect(() => {
-    updatePointRadiusOfScene(
-      geoDocuments,
-      documentToWorldMatrix,
-      config,
-      scene,
-      pointRadius
-    );
-    setMapSettings(preferences.currentProject, { pointRadius });
+    try {
+      updatePointRadiusOfScene(
+        geoDocuments,
+        documentToWorldMatrix,
+        config,
+        scene,
+        pointRadius
+      );
+    } catch (error) {
+      console.warn('Unable to update map point radius', error);
+    }
+    setMapSettings(preferences.currentProject, {
+      ...getMapSettings(preferences.currentProject),
+      pointRadius,
+    });
     selectedDocumentIds.forEach((docId) => {
       const object = scene.getObjectByProperty('uuid', docId);
       if (object) {
@@ -345,20 +373,38 @@ const GLMap: React.FC<GLMapProps> = ({
   }, [pointRadius, scene, geoDocuments, documentToWorldMatrix, renderScene]);
 
   const onContextCreate = async (gl: ExpoWebGLRenderingContext) => {
-    const { drawingBufferWidth: width, drawingBufferHeight: height } = gl;
-    glContext.current = gl;
-    renderer.current = new Renderer({ gl: glContext.current });
-    glContextToScreenFactor.current = width / screen.width;
-    renderer.current.setSize(width, height);
-    renderer.current.setClearColor(colors.containerBackground);
+    try {
+      const { drawingBufferWidth: width, drawingBufferHeight: height } = gl;
+      if (
+        !isUsableScreen(screen)
+        || !Number.isFinite(width)
+        || !Number.isFinite(height)
+        || width <= 0
+        || height <= 0
+      ) {
+        console.warn('Unable to initialize GL map renderer: invalid screen or GL buffer size');
+        return;
+      }
+      glContext.current = gl;
+      renderer.current = new Renderer({ gl: glContext.current });
+      glContextToScreenFactor.current = width / screen.width;
+      if (!Number.isFinite(glContextToScreenFactor.current) || glContextToScreenFactor.current <= 0) {
+        console.warn('Unable to initialize GL map renderer: invalid screen scale');
+        return;
+      }
+      renderer.current.setSize(width, height);
+      renderer.current.setClearColor(colors.containerBackground);
 
-    camera.position.set(
-      cameraDefaultPos.x,
-      cameraDefaultPos.y,
-      cameraDefaultPos.z
-    );
+      camera.position.set(
+        cameraDefaultPos.x,
+        cameraDefaultPos.y,
+        cameraDefaultPos.z
+      );
 
-    renderScene();
+      renderScene();
+    } catch (error) {
+      console.warn('Unable to initialize GL map renderer', error);
+    }
   };
 
   if (!camera) return null;
@@ -407,5 +453,11 @@ const styles = StyleSheet.create({
     margin: 4,
   },
 });
+
+const isUsableScreen = (screen: LayoutRectangle): boolean =>
+  Number.isFinite(screen.width)
+  && Number.isFinite(screen.height)
+  && screen.width > 0
+  && screen.height > 0;
 
 export default GLMap;

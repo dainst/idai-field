@@ -47,6 +47,27 @@
           padding-left: 0;
           height: 100%;
 
+          .korean-fieldwork-detail-toggle {
+            background: #fff;
+            border: 1px solid #b7c4d6;
+            border-radius: 14px;
+            color: #394b60;
+            font-size: 13px;
+            margin: 0 15px 6px 0;
+            padding: 5px 10px;
+
+            &:hover {
+              background: #edf2f7;
+            }
+          }
+
+          .korean-fieldwork-detail-summary {
+            color: #64748b;
+            font-size: 12px;
+            line-height: 1.4;
+            margin: 0 15px 14px 0;
+          }
+
           .scrollable-group {
             height: 100%;
             overflow-y: auto;

@@ -29,6 +29,7 @@ describe('KoreanFieldworkProgressBoard', () => {
 
     expect(getByText('현장 진행표')).toBeTruthy();
     expect(getByText('착수')).toBeTruthy();
+    expect(getByText('이어진 기록')).toBeTruthy();
     expect(getByText('트렌치 추가')).toBeTruthy();
 
     fireEvent.press(getByTestId('progressAction_operation-1'));

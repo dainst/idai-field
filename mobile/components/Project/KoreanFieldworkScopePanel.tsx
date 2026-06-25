@@ -9,6 +9,7 @@ import {
   View,
 } from 'react-native';
 import {
+  getKoreanFieldworkDisplayIdentifier,
   getKoreanFieldworkCategoryLabel,
   KOREAN_FIELDWORK_CATEGORIES,
 } from './korean-fieldwork-categories';
@@ -24,6 +25,10 @@ interface KoreanFieldworkScopePanelProps {
 }
 
 const C = KOREAN_FIELDWORK_CATEGORIES;
+
+const getDisplayIdentifier = (document: Document): string =>
+  getKoreanFieldworkDisplayIdentifier(document.resource.identifier)
+  || document.resource.id;
 
 const STRUCTURE_CATEGORIES = [
   C.OPERATION,
@@ -75,10 +80,10 @@ const KoreanFieldworkScopePanel: React.FC<KoreanFieldworkScopePanelProps> = ({
     <View style={styles.container} testID="koreanFieldworkScopePanel">
       <View style={styles.headerRow}>
         <View style={styles.titleWrap}>
-          <Text style={styles.kicker}>현재 야장 범위</Text>
+          <Text style={styles.kicker}>현재 기록 범위</Text>
           <Text style={styles.title} numberOfLines={1}>
             {currentParent
-              ? `${getKoreanFieldworkCategoryLabel(currentParent.resource.category)} · ${currentParent.resource.identifier}`
+              ? `${getKoreanFieldworkCategoryLabel(currentParent.resource.category)} · ${getDisplayIdentifier(currentParent)}`
               : '전체 조사자료'}
           </Text>
         </View>
@@ -102,7 +107,7 @@ const KoreanFieldworkScopePanel: React.FC<KoreanFieldworkScopePanelProps> = ({
         {hierarchyPath.map((document) => (
           <ScopePathChip
             key={document.resource.id}
-            label={document.resource.identifier}
+            label={getDisplayIdentifier(document)}
             isActive={document.resource.id === currentParent?.resource.id}
           />
         ))}
@@ -128,7 +133,7 @@ const KoreanFieldworkScopePanel: React.FC<KoreanFieldworkScopePanelProps> = ({
             />
             <ScopeAction
               icon="arrow-upward"
-              label="상위"
+              label="위로"
               onPress={onBackScope}
               testID="scopeBack"
             />
@@ -136,7 +141,7 @@ const KoreanFieldworkScopePanel: React.FC<KoreanFieldworkScopePanelProps> = ({
         )}
         <ScopeAction
           icon="add"
-          label={currentParent ? '하위추가' : '조사구역에 추가'}
+          label={currentParent ? '이어 만들기' : '조사 구역 기록에 추가'}
           isDisabled={!addTarget}
           onPress={() => addTarget && onAddChild(addTarget)}
           testID="scopeAddChild"
@@ -192,7 +197,7 @@ export const getScopeStats = (
   issueCount: number
 ) => [
   {
-    label: '구조',
+    label: '현장 기록',
     value: countCategories(documents, STRUCTURE_CATEGORIES),
   },
   {

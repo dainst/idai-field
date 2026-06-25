@@ -47,6 +47,152 @@
                         damit Änderungen an Datensätzen einer Person zugeordnet werden können.
                     </div>
 
+                    <div *ngIf="isKoreanFieldworkProject()" class="korean-fieldwork-settings">
+                        <hr>
+
+                        <h5>프로젝트 기본 설정</h5>
+
+                        <div class="korean-fieldwork-settings-current-project">
+                            <span class="mdi mdi-folder-open-outline"></span>
+                            <span>{{getKoreanProjectIdentifier()}}</span>
+                        </div>
+
+                        <label class="control-label col-form-label">
+                            조사 방식
+                        </label>
+                        <div class="small-info-text korean-fieldwork-settings-help">
+                            조사 방식은 오늘 할 일을 묻는 값이 아니라, 이 프로젝트가 어떤 조사인지 정하는 기본값입니다.
+                        </div>
+                        <div class="korean-fieldwork-settings-mode-grid">
+                            <button *ngFor="let mode of koreanInvestigationModes"
+                                    type="button"
+                                    class="korean-fieldwork-settings-mode-option"
+                                    [class.active]="koreanInvestigationMode === mode.value"
+                                    (click)="setKoreanInvestigationMode(mode.value)">
+                                <span class="korean-fieldwork-settings-mode-label">{{mode.label}}</span>
+                                <span class="korean-fieldwork-settings-mode-detail">{{mode.detail}}</span>
+                            </button>
+                        </div>
+
+                        <label class="control-label col-form-label"
+                               for="korean-fieldwork-boundary-summary-input">
+                            조사 경계
+                        </label>
+                        <textarea id="korean-fieldwork-boundary-summary-input"
+                                  class="form-control"
+                                  rows="3"
+                                  [(ngModel)]="koreanBoundarySummary"
+                                  (ngModelChange)="markKoreanProjectSetupChanged()"
+                                  placeholder="예: 1구역 북쪽 능선부터 남쪽 농로까지"></textarea>
+                        <div class="small-info-text">
+                            프로젝트 초기에 정한 경계 기준입니다. 지도 도형은 조사 경계 기록으로 따로 남깁니다.
+                        </div>
+
+                        <div class="korean-fieldwork-settings-notice"
+                             [class.changed]="hasKoreanProjectSetupChanges()"
+                             [class.saved]="koreanProjectSetupSaved"
+                             [class.incomplete]="!canSaveKoreanProjectSetup() && hasKoreanProjectSetupChanges()">
+                            <span class="mdi"
+                                  [ngClass]="{
+                                    'mdi-check-circle-outline': koreanProjectSetupSaved,
+                                    'mdi-alert-circle-outline': !canSaveKoreanProjectSetup() && hasKoreanProjectSetupChanges(),
+                                    'mdi-information-outline': !koreanProjectSetupSaved
+                                        && (canSaveKoreanProjectSetup() || !hasKoreanProjectSetupChanges())
+                                  }"></span>
+                            <span>{{getKoreanProjectSetupNotice()}}</span>
+                        </div>
+
+                        <div class="korean-fieldwork-tablet-sync">
+                            <div class="korean-fieldwork-tablet-sync-header">
+                                <span class="mdi mdi-tablet-cellphone"></span>
+                                <span>태블릿 연결</span>
+                            </div>
+                            <div class="korean-fieldwork-tablet-sync-grid">
+                                <div class="korean-fieldwork-tablet-sync-item">
+                                    <span class="korean-fieldwork-tablet-sync-label">서버 URL</span>
+                                    <code>{{getKoreanTabletSyncUrl()}}</code>
+                                </div>
+                                <div class="korean-fieldwork-tablet-sync-item">
+                                    <span class="korean-fieldwork-tablet-sync-label">비밀번호</span>
+                                    <code *ngIf="hasKoreanTabletSyncPassword()">{{getKoreanTabletSyncPassword()}}</code>
+                                    <span *ngIf="!hasKoreanTabletSyncPassword()"
+                                          class="korean-fieldwork-tablet-sync-missing">
+                                        동기화 비밀번호 필요
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="korean-fieldwork-tablet-sync-note">
+                                조사 방식·경계와 야장 기록은 같은 프로젝트 문서로 동기화됩니다.
+                            </div>
+                        </div>
+
+                        <div class="korean-fieldwork-map-provider-settings">
+                            <div class="korean-fieldwork-map-provider-header">
+                                <span class="mdi mdi-map-check-outline"></span>
+                                <span>지도 API 키</span>
+                            </div>
+                            <div class="small-info-text korean-fieldwork-settings-help">
+                                카카오는 기능별 키가 다릅니다. REST 키는 주소·좌표용이고,
+                                태블릿 위성지도는 JavaScript 키 WebView 경로를 우선 사용합니다.
+                            </div>
+
+                            <label class="control-label col-form-label"
+                                   for="korean-fieldwork-kakao-local-rest-api-key-input">
+                                카카오 Local REST 키
+                            </label>
+                            <input id="korean-fieldwork-kakao-local-rest-api-key-input"
+                                   [ngModel]="settings.mapProviderSettings.kakaoLocalRestApiKey"
+                                   (ngModelChange)="settings.mapProviderSettings.kakaoLocalRestApiKey = $event"
+                                   class="form-control"
+                                   autocomplete="off"
+                                   autocapitalize="none"
+                                   spellcheck="false">
+                            <div class="small-info-text">
+                                주소 검색과 좌표 변환에 사용합니다. 위성지도 표시용 키는 아닙니다.
+                            </div>
+
+                            <label class="control-label col-form-label"
+                                   for="korean-fieldwork-kakao-map-javascript-key-input">
+                                카카오 지도 JavaScript 키
+                            </label>
+                            <input id="korean-fieldwork-kakao-map-javascript-key-input"
+                                   [ngModel]="settings.mapProviderSettings.kakaoMapJavaScriptKey"
+                                   (ngModelChange)="settings.mapProviderSettings.kakaoMapJavaScriptKey = $event"
+                                   class="form-control"
+                                   autocomplete="off"
+                                   autocapitalize="none"
+                                   spellcheck="false">
+                            <div class="small-info-text">
+                                WebView 또는 브라우저 기반 Kakao Maps 화면에 사용할 수 있습니다.
+                            </div>
+
+                            <label class="control-label col-form-label"
+                                   for="korean-fieldwork-kakao-native-app-key-input">
+                                카카오 Native App 키
+                            </label>
+                            <input id="korean-fieldwork-kakao-native-app-key-input"
+                                   [ngModel]="settings.mapProviderSettings.kakaoNativeAppKey"
+                                   (ngModelChange)="settings.mapProviderSettings.kakaoNativeAppKey = $event"
+                                   class="form-control"
+                                   autocomplete="off"
+                                   autocapitalize="none"
+                                   spellcheck="false">
+                            <div class="small-info-text">
+                                네이티브 지도 연동용으로 보관합니다. 현재 위성지도 경계 찍기는 JavaScript 키를 우선 사용합니다.
+                            </div>
+
+                            <div class="korean-fieldwork-map-provider-notice"
+                                 [class.ready]="hasKoreanSatelliteMapDisplayKey()">
+                                <span class="mdi"
+                                      [ngClass]="{
+                                        'mdi-check-circle-outline': hasKoreanSatelliteMapDisplayKey(),
+                                        'mdi-information-outline': !hasKoreanSatelliteMapDisplayKey()
+                                      }"></span>
+                                <span>{{getKoreanMapProviderNotice()}}</span>
+                            </div>
+                        </div>
+                    </div>
+
                     <hr>
 
 

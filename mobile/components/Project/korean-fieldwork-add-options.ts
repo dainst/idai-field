@@ -106,7 +106,7 @@ const PRIMARY_OPTIONS_BY_PARENT: Readonly<Record<string, readonly string[]>> = {
   ],
 };
 
-const PRIMARY_ONLY_CATEGORIES = new Set([
+const PRIMARY_ONLY_CATEGORIES = new Set<string>([
   C.AERIAL_MAP_LAYER,
   C.DAILY_LOG,
   C.FIELD_RECORD_QUALITY_REVIEW,
@@ -114,7 +114,7 @@ const PRIMARY_ONLY_CATEGORIES = new Set([
 ]);
 
 export const KOREAN_FIELDWORK_HIERARCHY_HELP =
-  '조사 방식에 맞춰 트렌치·유구·피트를 만들고, 토층은 사진 위 표시와 번호별 토색 메모로 남깁니다.';
+  '여기서는 층위 선후를 정하지 않습니다. 새 기록이 어느 조사 경계·트렌치·유구에 포함되는지만 정합니다.';
 
 export const getKoreanFieldworkAddOptions = (
   parentCategoryName: string,

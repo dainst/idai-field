@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
+import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Map, isArray } from 'tsfun';
 import { Datastore, PouchdbDatastore, Document, ImageStore, FileInfo, ImageVariant,
@@ -13,6 +14,35 @@ import { Routing } from '../../services/routing';
 import { getFileSizeLabel } from '../../util/get-file-size-label';
 import { MenuContext } from '../../services/menu-context';
 import { Menus } from '../../services/menus';
+import {
+    KOREAN_FIELDWORK_DEFAULT_INVESTIGATION_MODE,
+    KOREAN_FIELDWORK_PROJECT_BOUNDARY_SUMMARY_FIELD,
+    KOREAN_FIELDWORK_PROJECT_INVESTIGATION_MODE_FIELD,
+    KOREAN_FIELDWORK_INVESTIGATION_MODES,
+    createKoreanFieldworkProjectSetupResourceUpdates,
+    getKoreanFieldworkInvestigationModeLabel,
+    getKoreanFieldworkProjectResourceValue,
+    isKoreanFieldworkProject,
+    isKoreanFieldworkProjectSetupFilledIn
+} from '../../util/korean-fieldwork-project-setup';
+import {
+    KoreanFieldworkPriorityIssue,
+    KoreanFieldworkTodayStats,
+    makeKoreanFieldworkTodayStats
+} from '../../util/korean-fieldwork-today-stats';
+import {
+    KoreanFieldworkWorkflowAction,
+    KoreanFieldworkWorkflowStep,
+    makeKoreanFieldworkWorkflowSteps
+} from '../../util/korean-fieldwork-workflow';
+import {
+    KoreanFieldworkDailyNotebookDigest,
+    KoreanFieldworkNotebookEntry,
+    makeKoreanFieldworkDailyNotebookDigest
+} from '../../util/korean-fieldwork-notebook-digest';
+import { ViewFacade } from '../resources/view/view-facade';
+
+type KoreanNotebookFilter = 'recent'|'nextWork'|'needsEvidence';
 
 
 @Component({
@@ -45,6 +75,22 @@ export class ProjectInformationModalComponent implements OnInit {
     public thumbnailFileSize: string;
     public originalFileSize: string;
     public displayFileSize: string;
+    public projectDocument: Document|undefined;
+
+    public koreanInvestigationMode: string = KOREAN_FIELDWORK_DEFAULT_INVESTIGATION_MODE;
+    public koreanBoundarySummary: string = '';
+    public savingKoreanProjectSetup: boolean = false;
+    public koreanProjectSetupSaved: boolean = false;
+    public readonly koreanInvestigationModes = KOREAN_FIELDWORK_INVESTIGATION_MODES;
+    public koreanTodayStats: KoreanFieldworkTodayStats|undefined;
+    public koreanWorkflowSteps: KoreanFieldworkWorkflowStep[] = [];
+    public koreanNotebookDigest: KoreanFieldworkDailyNotebookDigest|undefined;
+    public koreanNotebookFilter: KoreanNotebookFilter = 'recent';
+    public readonly koreanNotebookFilters: { id: KoreanNotebookFilter; label: string }[] = [
+        { id: 'recent', label: '최근' },
+        { id: 'nextWork', label: '다음' },
+        { id: 'needsEvidence', label: '번호' }
+    ];
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -56,6 +102,8 @@ export class ProjectInformationModalComponent implements OnInit {
                 private messages: Messages,
                 private loading: Loading,
                 private routing: Routing,
+                private router: Router,
+                private viewFacade: ViewFacade,
                 private decimalPipe: DecimalPipe,
                 private menuService: Menus) {}
 
@@ -65,6 +113,224 @@ export class ProjectInformationModalComponent implements OnInit {
     public getLastChangedId = () => this.lastChangedDocument.resource.id;
 
     public getProjectIdentifier = () => this.settingsProvider.getSettings().selectedProject;
+
+    public isKoreanFieldworkProject = () =>
+        isKoreanFieldworkProject(this.projectDocument, this.projectConfiguration);
+
+    public getKoreanInvestigationModeLabel = () =>
+        getKoreanFieldworkInvestigationModeLabel(
+            this.getProjectResourceValue(KOREAN_FIELDWORK_PROJECT_INVESTIGATION_MODE_FIELD)
+        );
+
+    public getKoreanBoundarySummary = () =>
+        this.getProjectResourceValue(KOREAN_FIELDWORK_PROJECT_BOUNDARY_SUMMARY_FIELD) ?? '';
+
+    public shouldShowKoreanTodayStats = () =>
+        this.isKoreanFieldworkProject() && this.koreanTodayStats !== undefined;
+
+    public getKoreanPriorityIssues = () =>
+        this.koreanTodayStats?.priorityIssues ?? [];
+
+    public getKoreanWorkflowSteps = () => this.koreanWorkflowSteps;
+
+    public hasKoreanWorkflowSteps = () => this.getKoreanWorkflowSteps().length > 0;
+
+    public canRunKoreanWorkflowStep = (step: KoreanFieldworkWorkflowStep) => !!step.action;
+
+    public canRunKoreanWorkflowStepSecondaryAction = (step: KoreanFieldworkWorkflowStep) => !!step.secondaryAction;
+
+    public shouldShowKoreanNotebookDigest = () =>
+        this.isKoreanFieldworkProject()
+        && !!this.koreanNotebookDigest
+        && (
+            this.koreanNotebookDigest.entries.length > 0
+            || this.koreanNotebookDigest.dailyLogDocuments.length > 0
+        );
+
+    public getKoreanNotebookNextWorkEntries = () =>
+        this.koreanNotebookDigest?.nextWorkEntries.slice(0, 3) ?? [];
+
+    public getKoreanNotebookEvidenceMissingEntries = () =>
+        this.koreanNotebookDigest?.evidenceMissingEntries.slice(0, 3) ?? [];
+
+    public getKoreanNotebookEntryCount = () =>
+        this.koreanNotebookDigest?.entries.length ?? 0;
+
+    public getKoreanNotebookDailyLogCount = () =>
+        this.koreanNotebookDigest?.dailyLogDocuments.length ?? 0;
+
+    public getKoreanNotebookNextWorkCount = () =>
+        this.koreanNotebookDigest?.nextWorkEntries.length ?? 0;
+
+    public getKoreanNotebookEvidenceMissingCount = () =>
+        this.koreanNotebookDigest?.evidenceMissingEntries.length ?? 0;
+
+    public getKoreanNotebookFilterCount(filter: KoreanNotebookFilter): number {
+
+        switch (filter) {
+            case 'nextWork':
+                return this.getKoreanNotebookNextWorkCount();
+            case 'needsEvidence':
+                return this.getKoreanNotebookEvidenceMissingCount();
+            case 'recent':
+                return this.getKoreanNotebookEntryCount();
+        }
+    }
+
+    public setKoreanNotebookFilter(filter: KoreanNotebookFilter) {
+
+        if (this.getKoreanNotebookFilterCount(filter) === 0) return;
+
+        this.koreanNotebookFilter = filter;
+    }
+
+    public getKoreanNotebookVisibleEntries(): KoreanFieldworkNotebookEntry[] {
+
+        switch (this.koreanNotebookFilter) {
+            case 'nextWork':
+                return this.getKoreanNotebookNextWorkEntries();
+            case 'needsEvidence':
+                return this.getKoreanNotebookEvidenceMissingEntries();
+            case 'recent':
+                return this.koreanNotebookDigest?.entries.slice(0, 5) ?? [];
+        }
+    }
+
+    public getKoreanNotebookEntryTone(entry: KoreanFieldworkNotebookEntry): 'warning'|'info'|'neutral' {
+
+        if (entry.needsEvidenceNumbers) return 'warning';
+        return entry.nextWork ? 'info' : 'neutral';
+    }
+
+    public getKoreanNotebookEntryDetail(entry: KoreanFieldworkNotebookEntry): string {
+
+        if (this.koreanNotebookFilter === 'needsEvidence' && entry.needsEvidenceNumbers) {
+            return '사진·도면·스케치·유물·시료 번호를 이어서 확인하세요.';
+        }
+
+        return entry.nextWork || entry.detail || '야장 내용을 확인하세요.';
+    }
+
+    public getKoreanNotebookEntryOpenLabel(entry: KoreanFieldworkNotebookEntry): string {
+
+        return entry.targetDocument ? '대상 열기' : `${entry.sourceLabel} 열기`;
+    }
+
+    public canOpenKoreanNotebookSource = (entry: KoreanFieldworkNotebookEntry) =>
+        !!entry.targetDocument
+        && entry.targetDocument.resource.id !== entry.sourceDocument.resource.id;
+
+    public openKoreanNotebookEntry(entry: KoreanFieldworkNotebookEntry) {
+
+        this.activeModal.close();
+        this.routing.jumpToResource(entry.targetDocument ?? entry.sourceDocument);
+    }
+
+    public openKoreanNotebookSource(entry: KoreanFieldworkNotebookEntry) {
+
+        this.activeModal.close();
+        this.routing.jumpToResource(entry.sourceDocument);
+    }
+
+    public openKoreanDailyLog() {
+
+        if (!this.koreanNotebookDigest?.primaryDailyLog) return;
+
+        this.activeModal.close();
+        this.routing.jumpToResource(this.koreanNotebookDigest.primaryDailyLog);
+    }
+
+    public getKoreanWorkflowStepStatusLabel(status: KoreanFieldworkWorkflowStep['status']): string {
+
+        switch (status) {
+            case 'done':
+                return '완료';
+            case 'current':
+                return '다음';
+            case 'attention':
+                return '확인';
+            case 'todo':
+                return '대기';
+        }
+    }
+
+    public async runKoreanWorkflowStep(step: KoreanFieldworkWorkflowStep) {
+
+        if (!step.action) return;
+
+        try {
+            await this.runKoreanWorkflowAction(step.action);
+        } catch (errWithParams) {
+            this.messages.add(errWithParams);
+        }
+    }
+
+    public async runKoreanWorkflowStepSecondaryAction(step: KoreanFieldworkWorkflowStep) {
+
+        if (!step.secondaryAction) return;
+
+        try {
+            await this.runKoreanWorkflowAction(step.secondaryAction);
+        } catch (errWithParams) {
+            this.messages.add(errWithParams);
+        }
+    }
+
+    public setKoreanInvestigationMode(modeId: string) {
+
+        this.koreanInvestigationMode = modeId;
+        this.koreanProjectSetupSaved = false;
+    }
+
+    public markKoreanProjectSetupChanged() {
+
+        this.koreanProjectSetupSaved = false;
+    }
+
+    public canSaveKoreanProjectSetup = () =>
+        this.isKoreanFieldworkProject()
+        && !this.savingKoreanProjectSetup
+        && isKoreanFieldworkProjectSetupFilledIn(this.koreanInvestigationMode, this.koreanBoundarySummary)
+        && this.hasKoreanProjectSetupChanges();
+
+    public hasKoreanProjectSetupChanges = () =>
+        this.koreanInvestigationMode !== (
+            this.getProjectResourceValue(KOREAN_FIELDWORK_PROJECT_INVESTIGATION_MODE_FIELD)
+                ?? KOREAN_FIELDWORK_DEFAULT_INVESTIGATION_MODE
+        )
+        || this.koreanBoundarySummary.trim() !== this.getKoreanBoundarySummary();
+
+    public resetKoreanProjectSetupEdits() {
+
+        this.setKoreanProjectSetupFieldsFromDocument();
+        this.koreanProjectSetupSaved = false;
+    }
+
+    public async saveKoreanProjectSetup() {
+
+        if (!this.projectDocument || !this.canSaveKoreanProjectSetup()) return;
+
+        const updatedProjectDocument: Document = Document.clone(this.projectDocument);
+        Object.assign(
+            updatedProjectDocument.resource,
+            createKoreanFieldworkProjectSetupResourceUpdates(
+                this.koreanInvestigationMode,
+                this.koreanBoundarySummary
+            )
+        );
+
+        try {
+            this.savingKoreanProjectSetup = true;
+            this.projectDocument = await this.datastore.update(updatedProjectDocument);
+            this.setKoreanProjectSetupFieldsFromDocument();
+            await this.updateKoreanFieldworkSummary();
+            this.koreanProjectSetupSaved = true;
+        } catch (errWithParams) {
+            this.messages.add(errWithParams);
+        } finally {
+            this.savingKoreanProjectSetup = false;
+        }
+    }
   
 
     async ngOnInit() {
@@ -98,6 +364,41 @@ export class ProjectInformationModalComponent implements OnInit {
     }
 
 
+    public async openKoreanPriorityIssue(issue: KoreanFieldworkPriorityIssue) {
+
+        try {
+            const issueDocument = await this.datastore.get(issue.documentId);
+            this.activeModal.close();
+            this.routing.jumpToResource(issueDocument);
+        } catch (errWithParams) {
+            this.messages.add(errWithParams);
+        }
+    }
+
+    private async runKoreanWorkflowAction(action: KoreanFieldworkWorkflowAction) {
+
+        switch (action.type) {
+            case 'openProjectInfo':
+                return;
+            case 'openMap':
+                this.activeModal.close();
+                await this.viewFacade.deselect();
+                this.viewFacade.setMode('map');
+                return;
+            case 'openImport':
+                this.activeModal.close();
+                await this.router.navigate(['import']);
+                return;
+            case 'openDocument': {
+                const document = await this.datastore.get(action.documentId);
+                this.activeModal.close();
+                this.routing.jumpToResource(document);
+                return;
+            }
+        }
+    }
+
+
     private async updateInformation() {
 
         this.totalDocumentCount = await this.getDocumentCount();
@@ -105,6 +406,9 @@ export class ProjectInformationModalComponent implements OnInit {
         this.typeDocumentCount = await this.getTypeDocumentCount();
         this.storagePlaceDocumentCount = await this.getStoragePlaceDocumentCount();
         this.processDocumentCount = await this.getProcessDocumentCount();
+        this.projectDocument = await this.datastore.get('project');
+        this.setKoreanProjectSetupFieldsFromDocument();
+        await this.updateKoreanFieldworkSummary();
 
         this.lastChangedDocument = await this.getLastChangedDocument();
         if (this.lastChangedDocument) {
@@ -219,4 +523,45 @@ export class ProjectInformationModalComponent implements OnInit {
                 && fileInfo.variants.filter(v => v.name === variant).length === 1;
         }).length;
     }
+
+
+    private getProjectResourceValue(fieldName: string): string|undefined {
+
+        return getKoreanFieldworkProjectResourceValue(this.projectDocument, fieldName);
+    }
+
+
+    private setKoreanProjectSetupFieldsFromDocument() {
+
+        this.koreanInvestigationMode = this.getProjectResourceValue(KOREAN_FIELDWORK_PROJECT_INVESTIGATION_MODE_FIELD)
+            ?? KOREAN_FIELDWORK_DEFAULT_INVESTIGATION_MODE;
+        this.koreanBoundarySummary = this.getKoreanBoundarySummary();
+    }
+
+
+    private async updateKoreanFieldworkSummary() {
+
+        if (!this.isKoreanFieldworkProject()) {
+            this.koreanTodayStats = undefined;
+            this.koreanWorkflowSteps = [];
+            this.koreanNotebookDigest = undefined;
+            return;
+        }
+
+        try {
+            const documents = (await this.datastore.find({})).documents ?? [];
+            this.koreanTodayStats = makeKoreanFieldworkTodayStats(documents);
+            this.koreanNotebookDigest = makeKoreanFieldworkDailyNotebookDigest(documents);
+            this.koreanWorkflowSteps = makeKoreanFieldworkWorkflowSteps(
+                documents,
+                this.projectDocument,
+                this.koreanTodayStats
+            );
+        } catch (_) {
+            this.koreanTodayStats = undefined;
+            this.koreanWorkflowSteps = [];
+            this.koreanNotebookDigest = undefined;
+        }
+    }
+
 }

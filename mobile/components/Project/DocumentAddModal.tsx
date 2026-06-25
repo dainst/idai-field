@@ -126,10 +126,13 @@ const DocumentAddModal: React.FC<AddModalProps> = ({
       <View>
         <View style={styles.parentPanel}>
           <Text style={styles.parentLabel} numberOfLines={1}>
-            상위 기록: {parentDoc.resource.identifier}
+            포함 위치: {parentDoc.resource.identifier}
           </Text>
           <Text style={styles.parentMeta}>
-            성격이 보이면 고르고, 애매하면 바로 유구로 남깁니다.
+            성격이 보이면 고르고, 애매하면 유구로 먼저 시작합니다.
+          </Text>
+          <Text style={styles.hierarchyHelp}>
+            {KOREAN_FIELDWORK_HIERARCHY_HELP}
           </Text>
         </View>
         <TouchableOpacity
@@ -226,10 +229,10 @@ const DocumentAddModal: React.FC<AddModalProps> = ({
               <>
                 <View style={styles.parentPanel}>
                   <Text style={styles.parentLabel} numberOfLines={1}>
-                    상위 기록: {parentDoc.resource.identifier}
+                    포함 위치: {parentDoc.resource.identifier}
                   </Text>
                   <Text style={styles.parentMeta}>
-                    {parentCategoryLabel}에서 이어서 만들 기록을 고르세요.
+                    {parentCategoryLabel}에 포함할 기록을 고르세요.
                   </Text>
                   <Text style={styles.hierarchyHelp}>
                     {KOREAN_FIELDWORK_HIERARCHY_HELP}
@@ -254,10 +257,10 @@ const DocumentAddModal: React.FC<AddModalProps> = ({
                   <View style={styles.emptyState}>
                     <Ionicons name="information-circle-outline" size={24} color="#667085" />
                     <Text style={styles.emptyTitle}>
-                      바로 만들 수 있는 하위 기록이 없습니다
+                      이어 만들 수 있는 기록이 없습니다
                     </Text>
                     <Text style={styles.emptyText}>
-                      지금 조사 방식에 맞는 상위 기록을 먼저 선택해 주세요.
+                      지금 조사 방식에 맞는 현재 범위를 먼저 선택해 주세요.
                     </Text>
                   </View>
                 )}

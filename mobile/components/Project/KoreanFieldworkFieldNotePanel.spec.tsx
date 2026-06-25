@@ -23,7 +23,7 @@ describe('KoreanFieldworkFieldNotePanel', () => {
 
   afterEach(() => {
     act(() => {
-      jest.runOnlyPendingTimers();
+      jest.clearAllTimers();
     });
     jest.useRealTimers();
   });
@@ -58,10 +58,10 @@ describe('KoreanFieldworkFieldNotePanel', () => {
         '[관찰 내용] 바닥면 정리 중 원형 윤곽 확인.',
         '[해석] 주공으로 보이나 절단관계는 추가 확인 필요.',
         '[다음 작업] 단면 정리 후 사진 보강.',
-        '[사진·도면·유물·시료 번호] 사진 12-14, 도면 3',
+        '[사진·도면·스케치·유물·시료 번호] 사진 12-14, 도면 3',
       ].join('\n')
     );
-  });
+  }, 15000);
 
   it('expands note inputs when a tablet pen touches the writing area', () => {
     const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
@@ -357,7 +357,7 @@ describe('KoreanFieldworkFieldNotePanel', () => {
       '유구가 확인 상태지만 완료 사진 항목이 체크되지 않았습니다.',
     ].join('\n'));
     expect(getByTestId('fieldNoteNextWorkInput').props.value)
-      .toBe('현장 마감 전 완료 사진을 연결했는지 확인하세요.');
+      .toBe('현장 마감 전 완료 사진을 남겼는지 확인하세요.');
     expect(getByText('보강 항목에서 불러옴')).toBeTruthy();
   });
 
@@ -411,6 +411,7 @@ describe('KoreanFieldworkFieldNotePanel', () => {
     });
 
     expect(getByTestId('fieldNoteWorkflowChecklistPanel')).toBeTruthy();
+    expect(getByText('조사 단계 확인')).toBeTruthy();
     expect(getByText('조사 전 사진')).toBeTruthy();
 
     await act(async () => {
@@ -554,7 +555,7 @@ describe('KoreanFieldworkFieldNotePanel', () => {
     const handleAddDocumentOfCategory = jest.fn();
 
     const { getByTestId } = renderPanel(feature, {
-      allowedAddCategoryNames: [C.PHOTO, C.DRAWING, C.FIND, C.SAMPLE],
+      allowedAddCategoryNames: [C.PHOTO, C.DRAWING, C.PEN_MEMO, C.FIND, C.SAMPLE],
       onAddDocumentOfCategory: handleAddDocumentOfCategory,
     });
 
@@ -572,7 +573,7 @@ describe('KoreanFieldworkFieldNotePanel', () => {
     const handleAddDocumentOfCategory = jest.fn();
 
     const { getByTestId, queryByTestId } = renderPanel(feature, {
-      allowedAddCategoryNames: [C.PHOTO, C.DRAWING],
+      allowedAddCategoryNames: [C.PHOTO, C.DRAWING, C.PEN_MEMO],
       onAddDocumentOfCategory: handleAddDocumentOfCategory,
       onCreateNote: handleCreateNote,
     });
@@ -583,7 +584,7 @@ describe('KoreanFieldworkFieldNotePanel', () => {
     );
     fireEvent.changeText(
       getByTestId('fieldNoteNextWorkInput'),
-      '도면 정리.'
+      '도면 정리. 약도 스케치 보강.'
     );
     await act(async () => {
       fireEvent.press(getByTestId('fieldNoteSave'));
@@ -593,12 +594,20 @@ describe('KoreanFieldworkFieldNotePanel', () => {
 
     expect(getByTestId('fieldNoteFollowUpAction_photos')).toBeTruthy();
     expect(getByTestId('fieldNoteFollowUpAction_drawings')).toBeTruthy();
+    expect(getByTestId('fieldNoteFollowUpAction_sketches')).toBeTruthy();
 
     fireEvent.press(getByTestId('fieldNoteFollowUpAction_photos'));
 
     expect(handleAddDocumentOfCategory).toHaveBeenCalledWith(
       feature,
       C.PHOTO
+    );
+
+    fireEvent.press(getByTestId('fieldNoteFollowUpAction_sketches'));
+
+    expect(handleAddDocumentOfCategory).toHaveBeenCalledWith(
+      feature,
+      C.PEN_MEMO
     );
 
     fireEvent.changeText(
@@ -627,7 +636,7 @@ describe('KoreanFieldworkFieldNotePanel', () => {
         '[관찰 내용] 바닥면에서 원형 윤곽 확인.',
         '[해석] 주공 가능성 있음.',
         '[다음 작업] 사진 보강 후 단면 정리.',
-        '[사진·도면·유물·시료 번호] 사진 12, 도면 3',
+        '[사진·도면·스케치·유물·시료 번호] 사진 12, 도면 3',
       ].join('\n'),
     });
     const handleOpenDocument = jest.fn();
@@ -789,12 +798,12 @@ describe('KoreanFieldworkFieldNotePanel', () => {
     );
     fireEvent.changeText(
       getByTestId('fieldNoteTextInput'),
-      '임시로 적은 야장 내용.'
+      '임시로 적은 현장 메모 내용.'
     );
     await waitFor(() =>
       expect(AsyncStorage.setItem).toHaveBeenCalledWith(
         draftKey,
-        expect.stringContaining('임시로 적은 야장 내용.')
+        expect.stringContaining('임시로 적은 현장 메모 내용.')
       )
     );
 

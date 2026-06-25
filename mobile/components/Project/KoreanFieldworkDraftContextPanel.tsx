@@ -10,6 +10,7 @@ import {
   View,
 } from 'react-native';
 import {
+  getKoreanFieldworkDisplayIdentifier,
   getKoreanFieldworkCategoryLabel,
 } from './korean-fieldwork-categories';
 
@@ -19,12 +20,12 @@ interface KoreanFieldworkDraftContextPanelProps {
 }
 
 const RELATION_LABELS: Readonly<Record<string, string>> = {
-  depicts: '묘사',
+  depicts: '대상 기록',
   isDepictedIn: '사진·도면',
   isMapLayerOf: '지도 레이어',
-  isRecordedIn: '조사구역',
+  isRecordedIn: '조사 구역 기록',
   isRecordedInFeature: '유구 기록',
-  liesWithin: '소속',
+  liesWithin: '범위 안',
 };
 
 const KoreanFieldworkDraftContextPanel: React.FC<KoreanFieldworkDraftContextPanelProps> = ({
@@ -41,7 +42,7 @@ const KoreanFieldworkDraftContextPanel: React.FC<KoreanFieldworkDraftContextPane
       </View>
       <View style={styles.contextRow}>
         <View style={styles.contextBlock}>
-          <Text style={styles.contextLabel}>상위 기록</Text>
+          <Text style={styles.contextLabel}>포함 위치</Text>
           <Text style={styles.contextValue} numberOfLines={1}>
             {formatDocumentLabel(parentDocument)}
           </Text>
@@ -77,7 +78,8 @@ const getRelationChips = (
 
 const formatDocumentLabel = (document: Document): string => {
   const categoryLabel = getKoreanFieldworkCategoryLabel(document.resource.category);
-  const identifier = document.resource.identifier || document.resource.id;
+  const identifier = getKoreanFieldworkDisplayIdentifier(document.resource.identifier)
+    || document.resource.id;
 
   return `${categoryLabel} · ${identifier}`;
 };

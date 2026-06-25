@@ -40,6 +40,23 @@ describe('Korean fieldwork record summary', () => {
       .toBe('조사구역 1');
   });
 
+  it('normalizes legacy operation prefixes in parent paths', () => {
+    const legacyPrefix = '\uD604\uC7A5\uB2E8\uC704-';
+    const displayPrefix = '\uC870\uC0AC\uAD6C\uC5ED-';
+    const operation = createDoc(
+      'operation-1',
+      C.OPERATION,
+      `${legacyPrefix}20260625`
+    );
+    const boundary = createDoc('boundary-1', C.SURVEY_BOUNDARY, 'Boundary 1', {
+      isRecordedIn: ['operation-1'],
+    });
+    const documentsById = indexById([operation, boundary]);
+
+    expect(formatKoreanFieldworkParentPath(boundary, documentsById))
+      .toBe(`${displayPrefix}20260625`);
+  });
+
   it('keeps the Korean excavation hierarchy visible down to pit/detail records', () => {
     const operation = createDoc('operation-1', C.OPERATION, '조사구역 1');
     const trench = createDoc('trench-1', C.TRENCH, 'T1', {
@@ -83,8 +100,8 @@ describe('Korean fieldwork record summary', () => {
     expect(getKoreanFieldworkRecordStatusChips(feature)).toEqual([
       { label: '수혈', tone: 'info' },
       { label: '조사 전', tone: 'warning' },
+      { label: '재검토', tone: 'warning' },
       { label: '추가 기록', tone: 'info' },
-      { label: '약도', tone: 'warning' },
     ]);
   });
 
@@ -99,6 +116,30 @@ describe('Korean fieldwork record summary', () => {
       label: '기록 구분 2',
       tone: 'success',
     });
+  });
+
+  it('keeps long-axis orientation visible in record status chips', () => {
+    const feature = createDoc('feature-1', C.FEATURE, '수혈 1', {}, {
+      longAxisOrientation: '북에서 동쪽으로 23도',
+      orientationReference: '자북',
+    });
+
+    expect(getKoreanFieldworkRecordStatusChips(feature)).toContainEqual({
+      label: '장축 N-23°-E · 자북',
+      tone: 'info',
+    });
+  });
+
+  it('keeps project setup visible on operation records', () => {
+    const operation = createDoc('operation-1', C.OPERATION, '조사기준 1', {}, {
+      projectInvestigationMode: 'trialTrench',
+      projectBoundarySummary: '1구역 북쪽 능선부터 남쪽 농로까지',
+    });
+
+    expect(getKoreanFieldworkRecordStatusChips(operation)).toEqual([
+      { label: '조사 표본·시굴조사', tone: 'info' },
+      { label: '경계 1구역 북쪽 능선부터 남쪽 농로…', tone: 'success' },
+    ]);
   });
 
   it('shows feature type chips from desktop interpretation values', () => {

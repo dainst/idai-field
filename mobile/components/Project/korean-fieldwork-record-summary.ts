@@ -1,9 +1,16 @@
 import { Document } from 'idai-field-core';
-import { KOREAN_FIELDWORK_CATEGORIES } from './korean-fieldwork-categories';
+import {
+  getKoreanFieldworkDisplayIdentifier,
+  KOREAN_FIELDWORK_CATEGORIES,
+} from './korean-fieldwork-categories';
 import {
   getKoreanFieldworkFeatureTypeLabel,
   getKoreanFieldworkFeatureTypeLabelFromInterpretationType,
 } from './korean-fieldwork-feature-types';
+import {
+  FIELDWORK_QUICK_FIELDS,
+  normalizeKoreanFieldworkLongAxisOrientation,
+} from './korean-fieldwork-quick-record';
 
 export type KoreanFieldworkStatusTone =
   'neutral'
@@ -41,6 +48,23 @@ const RECORD_CREATION_TIMING_LABELS: Readonly<Record<string, KoreanFieldworkStat
   handoverStage: { label: '인계 단계', tone: 'info' },
   reportStageGenerated: { label: '보고 단계', tone: 'neutral' },
   postExcavationDerived: { label: '정리 파생', tone: 'neutral' },
+};
+
+const VERIFICATION_STATE_LABELS: Readonly<Record<string, KoreanFieldworkStatusChip>> = {
+  observedInField: { label: '현장 확인', tone: 'success' },
+  candidate: { label: '확인 후보', tone: 'warning' },
+  inferred: { label: '추정', tone: 'info' },
+  conflictingEvidence: { label: '근거 충돌', tone: 'danger' },
+  notObserved: { label: '미확인', tone: 'neutral' },
+  needsRecheck: { label: '재검토', tone: 'warning' },
+  pendingDecision: { label: '추가 확인', tone: 'warning' },
+};
+
+const PROJECT_INVESTIGATION_MODE_LABELS: Readonly<Record<string, string>> = {
+  trialTrench: '표본·시굴조사',
+  excavation: '발굴조사',
+  surfaceSurvey: '지표조사',
+  watchingBrief: '참관·입회조사',
 };
 
 const GEOMETRY_EDIT_STATUS_LABELS: Readonly<Record<string, KoreanFieldworkStatusChip>> = {
@@ -110,7 +134,10 @@ export const formatKoreanFieldworkParentPath = (
   if (path.length === 0) return undefined;
 
   return path
-    .map((parent) => parent.resource.identifier || parent.resource.id)
+    .map((parent) =>
+      getKoreanFieldworkDisplayIdentifier(parent.resource.identifier)
+      || parent.resource.id
+    )
     .join(' > ');
 };
 
@@ -123,10 +150,14 @@ export const getKoreanFieldworkRecordStatusChips = (
     ?? getKoreanFieldworkFeatureTypeLabelFromInterpretationType(
       resource.featureInterpretationType
     );
+  const axisOrientationChip = getLongAxisOrientationChip(resource);
 
+  pushProjectSetupChips(chips, resource);
   if (featureTypeLabel) chips.push({ label: featureTypeLabel, tone: 'info' });
+  if (axisOrientationChip) chips.push(axisOrientationChip);
 
   pushMappedChip(chips, resource.featureRecordingStatus, FEATURE_RECORDING_STATUS_LABELS);
+  pushMappedChip(chips, resource.verificationState, VERIFICATION_STATE_LABELS);
   pushMappedChip(chips, resource.recordCreationTiming, RECORD_CREATION_TIMING_LABELS);
   pushMappedChip(chips, resource.featureGeometryEditStatus, GEOMETRY_EDIT_STATUS_LABELS);
 
@@ -140,6 +171,73 @@ export const getKoreanFieldworkRecordStatusChips = (
   }
 
   return dedupeChips(chips).slice(0, 4);
+};
+
+const pushProjectSetupChips = (
+  chips: KoreanFieldworkStatusChip[],
+  resource: Record<string, unknown>
+) => {
+  if (
+    resource.category !== C.OPERATION
+    && resource.category !== 'Project'
+  ) {
+    return;
+  }
+
+  const modeLabel = typeof resource.projectInvestigationMode === 'string'
+    ? PROJECT_INVESTIGATION_MODE_LABELS[resource.projectInvestigationMode]
+    : undefined;
+  const boundarySummary = getTextResourceValue(resource.projectBoundarySummary);
+
+  if (modeLabel) chips.push({ label: `조사 ${modeLabel}`, tone: 'info' });
+  if (boundarySummary) {
+    chips.push({
+      label: `경계 ${shortenChipText(boundarySummary, 18)}`,
+      tone: 'success',
+    });
+  }
+};
+
+const shortenChipText = (value: string, maxLength: number): string =>
+  value.length > maxLength ? `${value.slice(0, maxLength - 1)}…` : value;
+
+const getLongAxisOrientationChip = (
+  resource: Record<string, unknown>
+): KoreanFieldworkStatusChip | undefined => {
+  const value = resource[FIELDWORK_QUICK_FIELDS.longAxisOrientation];
+  if (typeof value !== 'string') return undefined;
+
+  const trimmedValue = value.trim();
+  if (trimmedValue.length === 0) return undefined;
+
+  const normalizedValue = normalizeKoreanFieldworkLongAxisOrientation(trimmedValue)
+    || trimmedValue.replace(/\s+/g, ' ');
+  const referenceValue = getTextResourceValue(
+    resource[FIELDWORK_QUICK_FIELDS.orientationReference]
+  );
+  const label = referenceValue
+    ? `장축 ${normalizedValue} · ${referenceValue}`
+    : `장축 ${normalizedValue}`;
+
+  return { label, tone: 'info' };
+};
+
+const getTextResourceValue = (value: unknown): string | undefined => {
+  if (typeof value === 'string') {
+    const trimmedValue = value.trim();
+    return trimmedValue.length > 0 ? trimmedValue : undefined;
+  }
+
+  if (Array.isArray(value)) {
+    const firstTextValue = value.find((entry) =>
+      typeof entry === 'string' && entry.trim().length > 0
+    );
+    return typeof firstTextValue === 'string'
+      ? firstTextValue.trim()
+      : undefined;
+  }
+
+  return undefined;
 };
 
 const getFirstExistingDocument = (

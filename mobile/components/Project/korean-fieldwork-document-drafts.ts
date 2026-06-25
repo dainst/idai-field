@@ -1,5 +1,6 @@
 import {
   Document,
+  KOREAN_FIELDWORK_RECORD_CREATION_TIMING_DURING_FIELDWORK,
   NewResource,
   ProjectConfiguration,
   Resource,
@@ -46,8 +47,6 @@ const DRAFT_IDENTIFIER_PREFIXES: Readonly<Record<string, string>> = {
   [C.TRENCH]: 'trench',
 };
 
-const RECORD_CREATION_TIMING_DURING_FIELDWORK = 'duringFieldwork';
-
 export interface KoreanFieldworkDraftResourceOptions {
   featureType?: string;
 }
@@ -90,7 +89,7 @@ export const createKoreanFieldworkDraftResource = (
     return {
       ...resource,
       featureInvestigationChecklist: [],
-      recordCreationTiming: RECORD_CREATION_TIMING_DURING_FIELDWORK,
+      recordCreationTiming: KOREAN_FIELDWORK_RECORD_CREATION_TIMING_DURING_FIELDWORK,
       fieldRecordQuality: [],
     };
   }
@@ -111,6 +110,8 @@ export const createKoreanFieldworkDraftResource = (
       soilProfileLayerMarkers: '[]',
       soilProfileLayerIds: '[]',
       soilProfileColorSwatches: '[]',
+      soilColorAssistCandidates: '',
+      soilColorAssistStatus: SOIL_COLOR_ASSIST_STATUS_DEFAULT,
       soilProfilePhotoSizeHintKb: SOIL_PROFILE_PHOTO_SIZE_HINT_KB_DEFAULT,
       soilProfilePhotoQuality: SOIL_PROFILE_PHOTO_QUALITY_DEFAULT,
       layerSequenceMeaning: LAYER_SEQUENCE_MEANING_DEFAULT,

@@ -1,8 +1,9 @@
 import { I18N } from 'idai-field-core';
 import { SyncTarget } from './sync-target';
 import { KeepBackupsSettings } from './keep-backups-settings';
+import { KoreanFieldworkMapProviderSettings } from '../../util/korean-fieldwork-map-provider-settings';
 
-const remote = window.require('@electron/remote');
+import { electronRemote as remote } from 'src/app/electron/electron';
 
 
 export interface Settings {
@@ -21,6 +22,7 @@ export interface Settings {
     highlightCustomElements?: boolean;
     allowLargeFileUploads?: boolean;
     keepBackups: KeepBackupsSettings;
+    mapProviderSettings: KoreanFieldworkMapProviderSettings;
 }
 
 

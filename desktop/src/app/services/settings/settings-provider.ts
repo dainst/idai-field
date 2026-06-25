@@ -4,9 +4,11 @@ import { set } from 'tsfun';
 import { ObjectUtils, Name, ObserverUtil } from 'idai-field-core';
 import { Settings } from './settings';
 import { SettingsSerializer } from './settings-serializer';
+import { normalizeKoreanFieldworkMapProviderSettings } from '../../util/korean-fieldwork-map-provider-settings';
 
-const remote = window.require('@electron/remote');
-const pathSeparator = window.require('path').sep;
+import { electronRemote as remote } from 'src/app/electron/electron';
+import { electronPath } from 'src/app/electron/electron';
+const pathSeparator = electronPath.sep;
 
 
 @Injectable()
@@ -92,6 +94,7 @@ export class SettingsProvider {
         if (!settings.dbs || settings.dbs.length === 0) settings.dbs = ['test'];
         if (!settings.isSyncActive) settings.isSyncActive = false;
         if (settings.hostPassword === undefined) settings.hostPassword = SettingsProvider.generatePassword();
+        settings.mapProviderSettings = normalizeKoreanFieldworkMapProviderSettings(settings.mapProviderSettings);
 
         if (settings.imagestorePath) {
             settings.imagestorePath = SettingsProvider.addPathSeparator(settings.imagestorePath);

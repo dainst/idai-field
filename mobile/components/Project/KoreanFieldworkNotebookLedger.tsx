@@ -63,7 +63,7 @@ const KoreanFieldworkNotebookLedger: React.FC<
       <View style={styles.headerRow}>
         <View style={styles.titleRow}>
           <MaterialIcons name="subject" size={18} color="#175cd3" />
-          <Text style={styles.title}>야장 흐름</Text>
+          <Text style={styles.title}>메모 흐름</Text>
         </View>
         <View style={styles.metricRow}>
           <LedgerFilterChip
@@ -140,7 +140,7 @@ const NotebookEntryRow: React.FC<{
       onPress={() => onOpenDocument(documentToOpen)}
       style={[
         styles.entryRow,
-        entry.nextWork && styles.entryRowNextWork,
+        !!entry.nextWork && styles.entryRowNextWork,
         entry.needsEvidenceNumbers && styles.entryRowNeedsEvidence,
       ]}
       testID={`fieldNotebookEntry_${entry.id}`}

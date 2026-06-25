@@ -50,6 +50,40 @@
     },
     "description": "현장 기록, 해석, 보완 메모만 빠르게 구분하기 위한 목록"
   },
+  "KoreanFieldwork-projectInvestigationMode": {
+    "values": {
+      "trialTrench": {
+        "label": "표본·시굴조사"
+      },
+      "excavation": {
+        "label": "발굴조사"
+      },
+      "surfaceSurvey": {
+        "label": "지표조사"
+      },
+      "watchingBrief": {
+        "label": "참관·입회조사"
+      }
+    },
+    "description": "프로젝트 시작 시 정하는 조사 방식"
+  },
+  "KoreanFieldwork-projectBoundarySetupState": {
+    "values": {
+      "notStarted": {
+        "label": "아직 정하지 않음"
+      },
+      "draftBoundary": {
+        "label": "초안 경계"
+      },
+      "confirmed": {
+        "label": "확정 경계"
+      },
+      "needsRevision": {
+        "label": "수정 필요"
+      }
+    },
+    "description": "프로젝트 조사경계 설정 상태"
+  },
   "KoreanFieldwork-excavationControlSafety": {
     "values": {
       "gridBaulkPlanSet": {
@@ -328,7 +362,7 @@
       "minimalMarkingArea": { "label": "최소 범위 표기" },
       "edgeOrDecoratedSurfaceAvoided": { "label": "날·문양·취약면 회피" },
       "markingCoatingRiskReviewed": { "label": "표기·코팅 탈락위험 검토" },
-      "fieldSerialInventoryNumberLinked": { "label": "일련번호·정리번호 연결" },
+      "fieldSerialInventoryNumberLinked": { "label": "일련번호·정리번호 확인" },
       "ledgerRegisterPermanent": { "label": "꼬리표와 대장 보존" },
       "pendingDecision": { "label": "추가 확인" }
     },
@@ -1097,8 +1131,8 @@
       "baulkRemovalCrossCheck": { "label": "둑 제거 대조" },
       "gridBoundaryCrossCheck": { "label": "격자경계 대조" },
       "relationChangeReasonRecorded": { "label": "관계 수정 사유" },
-      "drawingNumberLinked": { "label": "도면번호 연결" },
-      "photoNumberLinked": { "label": "사진번호 연결" },
+      "drawingNumberLinked": { "label": "도면번호 기재" },
+      "photoNumberLinked": { "label": "사진번호 기재" },
       "reportUpdated": { "label": "보고서 반영" },
       "originalNumberRecorded": { "label": "최초번호 기록" },
       "revisedNumberRecorded": { "label": "변경번호 기록" },
@@ -1125,13 +1159,13 @@
   "KoreanFieldwork-pitDwellingExposureBaulk": {
     "values": {
       "initialStratigraphyChecked": {
-        "label": "기본층서 확인"
+        "label": "최초 층위 확인"
       },
       "shoulderLineRecorded": {
         "label": "어깨선 기록"
       },
       "baulkPlanSet": {
-        "label": "둑 설정계획"
+        "label": "토층둑 설정"
       },
       "crossBaulk": {
         "label": "십자둑"
@@ -1155,7 +1189,7 @@
         "label": "표시 사진 보존"
       },
       "plasticCoverOrShade": {
-        "label": "비닐·그늘 보양"
+        "label": "보양·차광"
       },
       "exploratoryTrenchJustified": {
         "label": "탐색 트렌치 사유"
@@ -1259,10 +1293,10 @@
         "label": "재층 기록"
       },
       "heatAlteredFloor": {
-        "label": "바닥 피열흔"
+        "label": "피열 바닥"
       },
       "timberDirectionMapped": {
-        "label": "탄화재 방향 도면화"
+        "label": "목재 방향"
       },
       "planAndProfileAfterExposure": {
         "label": "노출 후 평면·입단면도"
@@ -1470,8 +1504,8 @@
   },
   "KoreanFieldwork-surfaceBuildingJudgement": {
     "values": {
-      "groundLevelBuildingCandidate": { "label": "지면식 건물 후보" },
-      "raisedFloorBuildingCandidate": { "label": "고상식 건물 후보" },
+      "groundLevelBuildingCandidate": { "label": "지면식 후보" },
+      "raisedFloorBuildingCandidate": { "label": "고상식 후보" },
       "semiRaisedBuildingCandidate": { "label": "반고상식 건물 후보" },
       "wallPostBuildingCandidate": { "label": "벽주식 건물 후보" },
       "livingSurfaceConfirmed": { "label": "생활면 확인" },
@@ -1494,7 +1528,7 @@
   },
   "KoreanFieldwork-postholeGroupSurvey": {
     "values": {
-      "postholeArrayMapped": { "label": "주혈 배열 도면화" },
+      "postholeArrayMapped": { "label": "배열 도면화" },
       "bayUnitRecorded": { "label": "칸 단위 기록" },
       "measurementGridUsed": { "label": "방안실 사용" },
       "measuringRodUsed": { "label": "함척 사용" },
@@ -1679,7 +1713,7 @@
       "discard": { "label": "폐기" },
       "repairWaste": { "label": "보수 폐기물" },
       "referenceGroupDefined": { "label": "참조그룹 정의" },
-      "localRepertoireCompared": { "label": "지역 식별목록 대조" },
+      "localRepertoireCompared": { "label": "지역 양식 비교" },
       "sharedClaySelectionReviewed": { "label": "공통 원료 선택 검토" },
       "specializationChronologyReviewed": { "label": "전문화 단계 편년 검토" },
       "consumerSherdDistributionChecked": { "label": "소비지 토기편 분포 확인" },
@@ -3472,7 +3506,7 @@
     "values": {
       "sourceRecordLinked": { "label": "원기록 연결" },
       "reportItemLinked": { "label": "보고서 항목 연결" },
-      "registerNumberLinked": { "label": "대장번호 연결" },
+      "registerNumberLinked": { "label": "대장번호 확인" },
       "filePathRecorded": { "label": "파일경로 기록" },
       "formatVersionRecorded": { "label": "포맷·버전 기록" },
       "coordinateSystemRecorded": { "label": "좌표계 기록" },
@@ -3965,7 +3999,7 @@
         "label": "보존·행정"
       }
     },
-    "description": "조사방법론 자료에서 반복 확인된 디지털 야장 유적·업무 패키지 목록"
+    "description": "조사방법론 자료에서 반복 확인된 현장 기록 유적·업무 패키지 목록"
   },
   "KoreanFieldwork-featurePeriod": {
     "values": {
@@ -4123,6 +4157,7 @@
       "googleRoadmap": { "label": "Google 지도" },
       "googleSatellite": { "label": "Google 위성" },
       "googleHybrid": { "label": "Google 하이브리드" },
+      "kakaoHybrid": { "label": "카카오 위성지도" },
       "customWmts": { "label": "사용자 WMTS/TMS" },
       "importedRasterLayer": { "label": "가져온 래스터 레이어" },
       "importedVectorLayer": { "label": "가져온 벡터 레이어" }
@@ -5237,7 +5272,7 @@
         "label": "오염 통제"
       }
     },
-    "description": "시료명을 분석명으로 끝내지 않고 분석 질문과 채취 목적을 연결하기 위한 디지털 야장 목록"
+    "description": "시료명을 분석명으로 끝내지 않고 분석 질문과 채취 목적을 연결하기 위한 현장 기록 목록"
   },
   "KoreanFieldwork-sampleCollectionHandling": {
     "values": {
@@ -5456,8 +5491,8 @@
       "semiDowndraftStructuralKiln": { "label": "반도염식 구조요" },
       "fuelRefeedingPossible": { "label": "연료 재투입 가능" },
       "fireboxPresent": { "label": "화구 확인" },
-      "firingCombustionSeparated": { "label": "소성실·연소실 분리" },
-      "typeNameDeferred": { "label": "명칭 확정 보류" },
+      "firingCombustionSeparated": { "label": "소성·연소부 분리" },
+      "typeNameDeferred": { "label": "형식명 보류" },
       "pendingDecision": { "label": "추가 확인" }
     },
     "description": "토기요 명칭을 성급히 붙이지 않고 소성유구, 구조요, 구조요 후보, 화염 흐름, 화구와 소성실·연소실 분리 근거를 함께 남기기 위한 목록"
@@ -5472,8 +5507,8 @@
       "slopeNotSingleCriterion": { "label": "요상 경사 단독판정 금지" },
       "planShapeRecorded": { "label": "평면형 기록" },
       "scaleRecorded": { "label": "규모 기록" },
-      "firingCombustionRatio": { "label": "소성부·연소부 비율" },
-      "flameFlowRecorded": { "label": "화염 유동 방식" },
+      "firingCombustionRatio": { "label": "소성·연소 비율" },
+      "flameFlowRecorded": { "label": "화염 흐름" },
       "fireboxClosure": { "label": "화구 폐쇄" },
       "oxidationReductionBoundary": { "label": "산화·환원 경계" },
       "wallCollapseFragment": { "label": "함몰 벽체편" },
@@ -5901,12 +5936,12 @@
       "sampleSizeRecorded": { "label": "시료 크기 기록" },
       "labHandover": { "label": "분석실 인계" },
       "resultReceived": { "label": "결과 수신" },
-      "reportLinked": { "label": "보고서 연결" },
+      "reportLinked": { "label": "보고서 반영" },
       "sampleDamaged": { "label": "시료 파손" },
       "samplingImpossible": { "label": "채취 불가" },
       "pendingDecision": { "label": "추가 확인" }
     },
-    "description": "잘 구워진 소성면 선택부터 큐브 고정, 번호·주향 표시, 위치도면, 분석실 인계, 결과 수신, 보고서 연결까지 추적하는 목록"
+    "description": "잘 구워진 소성면 선택부터 큐브 고정, 번호·주향 표시, 위치도면, 분석실 인계, 결과 수신, 보고서 반영까지 추적하는 목록"
   },
   "KoreanFieldwork-archaeomagneticOrientationRecord": {
     "values": {
@@ -7391,7 +7426,7 @@
         "label": "바둑판식 조사"
       },
       "quadrantInvestigation": {
-        "label": "사분법 조사"
+        "label": "조사 중 기록"
       },
       "steppedInvestigation": {
         "label": "계단식 조사"
@@ -7406,7 +7441,7 @@
         "label": "추가 확인"
       }
     },
-    "description": "유적·유구·유물·유물복합체·환경을 함께 묶고, 조사방법 선택근거와 트렌치·피트·바둑판식·사분법·계단식 조사 방식을 기록하기 위한 목록"
+    "description": "유적·유구·유물·유물복합체·환경을 함께 묶고, 조사방법 선택근거와 트렌치·피트·조사 중 기록·계단식 조사 방식을 기록하기 위한 목록"
   },
   "KoreanFieldwork-excavationReverseSequenceCheck": {
     "values": {

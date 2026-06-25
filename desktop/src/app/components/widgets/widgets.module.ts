@@ -32,7 +32,7 @@ import { SearchableSelectComponent } from './searchable-select.component';
 import { DeletionInProgressModalComponent } from './deletion-in-progress-modal.component';
 import { RelationPickerGroupComponent } from './relation-picker/relation-picker-group.component';
 import { RelationPickerComponent } from './relation-picker/relation-picker.component';
-import { QuittingModalComponent } from './quitting-modal.component';
+import { ClosingModalComponent } from './closing-modal.component';
 import { ConfigurationInfoComponent } from './configuration-info.component';
 import { ReferencesInfoComponent } from './references-info.component';
 import { IdentifierInputComponent } from './identifier-input.component';
@@ -71,7 +71,7 @@ import { ImportExportProcessModalComponent } from './import-export-process-modal
         LanguagesListComponent,
         QrCodeScannerModalComponent,
         DeletionInProgressModalComponent,
-        QuittingModalComponent,
+        ClosingModalComponent,
         SearchableSelectComponent,
         RelationPickerGroupComponent,
         RelationPickerComponent,
@@ -99,7 +99,7 @@ import { ImportExportProcessModalComponent } from './import-export-process-modal
         PagingButtonsComponent,
         EditSaveDialogComponent,
         QrCodeScannerModalComponent,
-        QuittingModalComponent,
+        ClosingModalComponent,
         LanguagesListComponent,
         SearchableSelectComponent,
         RelationPickerGroupComponent,

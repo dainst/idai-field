@@ -14,7 +14,7 @@ import { ConfigurationChangeNotifications } from './configuration/notifications/
 import { MenuModalLauncher } from '../services/menu-modal-launcher';
 import { AppState } from '../services/app-state';
 import { AutoBackupService } from '../services/backup/auto-backup/auto-backup-service';
-import { QuittingModalComponent } from './widgets/quitting-modal.component';
+import { ClosingModalComponent } from './widgets/closing-modal.component';
 import { MenuContext } from '../services/menu-context';
 import { ImageToolLauncher } from '../services/imagestore/image-tool-launcher';
 import { ExpressServer } from '../services/express-server/express-server';
@@ -170,7 +170,7 @@ export class AppComponent {
 
             this.closing = true;
             this.syncService.stopSync();
-            this.openQuittingModal();
+            this.openClosingModal();
             this.serializationService.serialize();
             await this.autoBackupService.requestBackupCreation();
 
@@ -179,11 +179,11 @@ export class AppComponent {
     }
 
 
-    private openQuittingModal() {
+    private openClosingModal() {
 
         this.menuService.setContext(MenuContext.BLOCKING_MODAL);
         this.modalService.open(
-            QuittingModalComponent,
+            ClosingModalComponent,
             { backdrop: 'static', keyboard: false, animation: false }
         );
     }

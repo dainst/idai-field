@@ -1,6 +1,4 @@
 defmodule FieldHubHelper do
-  require Logger
-
   def start() do
     {"", 0} = System.cmd("bash", ["./startup.sh"], cd: "test/support/field_hub")
 

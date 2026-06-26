@@ -70,12 +70,12 @@ defmodule FieldPublicationWeb.Rest.Api.JsonTest do
 
     assert Enum.map(
              extended_doc.groups,
-             fn %Data.FieldGroup{fields: fields} = group ->
+             fn %Data.FieldGroup{fields: fields} = _group ->
                assert Enum.count(fields) > 0
 
                Enum.map(
                  fields,
-                 fn %Data.Field{} = field ->
+                 fn %Data.Field{} = _field ->
                    :ok
                  end
                )
@@ -91,7 +91,7 @@ defmodule FieldPublicationWeb.Rest.Api.JsonTest do
 
                Enum.map(
                  docs,
-                 fn %Data.Document{} = doc ->
+                 fn %Data.Document{} = _doc ->
                    :ok
                  end
                )

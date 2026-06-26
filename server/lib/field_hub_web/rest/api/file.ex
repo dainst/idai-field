@@ -136,7 +136,7 @@ defmodule FieldHubWeb.Rest.Api.Rest.File do
 
       {:io_opened, posix} ->
         Logger.error(
-          "Got `#{posix}` while trying to open file `#{uuid}` (#{type}) for project `#{project}`."
+          "Got `#{inspect(posix)}` while trying to open file `#{uuid}` (#{type}) for project `#{project}`."
         )
 
         send_resp(conn, 500, Jason.encode!(%{reason: "Unable to write file."}))

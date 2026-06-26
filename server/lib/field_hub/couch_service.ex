@@ -6,7 +6,6 @@ defmodule FieldHub.CouchService do
   @moduledoc """
   Bundles functions for directly interacting with the CouchDB.
   """
-  require Logger
 
   @doc """
   Sends a HEAD request to the configurated CouchDB's base url.

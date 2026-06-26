@@ -12,8 +12,6 @@ defmodule FieldHubWeb.Live.ProjectList do
 
   import FieldHubWeb.Components.SortableTable
 
-  require Logger
-
   def mount(_params, _session, %{assigns: %{current_user: current_user}} = socket) do
     socket =
       cond do

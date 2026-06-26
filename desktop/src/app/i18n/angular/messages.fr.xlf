@@ -8787,7 +8787,7 @@
       </trans-unit>
       <trans-unit id="matrix.export.info" datatype="html">
         <source>Matrix wird exportiert...</source>
-        <target state="needs-translation">Matrix wird exportiert...</target>
+        <target state="translated">Exportation de la matrice en cours...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/export-graph-modal.html</context>
           <context context-type="linenumber">4</context>
@@ -9463,7 +9463,7 @@
       </trans-unit>
       <trans-unit id="imageDownload.progress.single" datatype="html">
         <source>Originalbild wird geladen...</source>
-        <target state="needs-translation">Originalbild wird geladen...</target>
+        <target state="translated">Chargement de l'image d'origine</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/download/image-download-modal.html</context>
           <context context-type="linenumber">12</context>
@@ -9471,7 +9471,7 @@
       </trans-unit>
       <trans-unit id="imageDownload.progress.multiple" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{(processedImagesCount)}}"/> / <x id="INTERPOLATION_1" equiv-text="{{ downloadRequests.length }}"/> Originalbilder geladen... </source>
-        <target state="needs-translation"><x id="INTERPOLATION" equiv-text="{{(processedImagesCount)}}"/> / <x id="INTERPOLATION_1" equiv-text="{{ downloadRequests.length }}"/> Originalbilder geladen... </target>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{(processedImagesCount)}}"/> / <x id="INTERPOLATION_1" equiv-text="{{ downloadRequests.length }}"/> Chargement des images originales... </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/download/image-download-modal.html</context>
           <context context-type="linenumber">14,16</context>

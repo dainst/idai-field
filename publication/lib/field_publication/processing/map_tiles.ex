@@ -1,6 +1,4 @@
 defmodule FieldPublication.Processing.MapTiles do
-  require Logger
-
   alias Vix.Vips.{
     Image,
     Operation

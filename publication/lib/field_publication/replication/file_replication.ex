@@ -10,8 +10,6 @@ defmodule FieldPublication.Replication.FileReplication do
     Publication
   }
 
-  require Logger
-
   @field_hub_to_publication_file_mapping Application.compile_env(
                                            :field_publication,
                                            :field_hub_to_publication_file_mapping

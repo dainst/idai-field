@@ -6,8 +6,6 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
 
   alias FieldPublication.Publications.Data
 
-  require Logger
-
   def mount(_assigns, _session, socket) do
     published_projects =
       Enum.map(

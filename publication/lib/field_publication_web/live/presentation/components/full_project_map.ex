@@ -1,8 +1,6 @@
 defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
   use FieldPublicationWeb, :live_component
 
-  require Logger
-
   @impl true
   def render(assigns) do
     ~H"""

@@ -13,8 +13,6 @@ defmodule FieldPublication.Replication.CouchReplication do
     Publication
   }
 
-  require Logger
-
   def start(
         %{input: input, publication: %{database: target_database_name} = publication} = parameters
       ) do

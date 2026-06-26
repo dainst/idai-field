@@ -9,7 +9,6 @@ defmodule FieldPublication.Publications.Data do
   `FieldPublication.Publications.Data.Document` struct definition below.
   """
 
-  require FieldPublicationWeb.Translate
   require Logger
 
   alias FieldPublication.{

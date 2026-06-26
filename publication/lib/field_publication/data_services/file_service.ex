@@ -2,7 +2,6 @@ defmodule FieldPublication.FileService do
   @file_store_path Application.compile_env(:field_publication, :file_store_directory_root)
   @custom_assets_path "#{@file_store_path}/custom_assets/"
   @custom_images_path "#{@custom_assets_path}/images"
-  require Logger
 
   @moduledoc """
   This module handles interaction with data served from the application's file system. This is

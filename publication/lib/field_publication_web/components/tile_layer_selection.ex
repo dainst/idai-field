@@ -5,8 +5,6 @@ defmodule FieldPublicationWeb.Components.Map.TileLayerSelection do
   alias FieldPublication.Publications.Data.Document
   alias FieldPublication.DatabaseSchema.Publication
 
-  require Logger
-
   attr(:publication, Publication, required: true)
   attr(:layers, :list, required: true)
   attr(:event_target, :string, required: true)

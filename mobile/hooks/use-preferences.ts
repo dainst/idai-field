@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as SecureStore from 'expo-secure-store';
 import { useEffect, useState } from 'react';
 import { compose, detach, prepend, set, subtract, update } from 'tsfun';
 import {
@@ -17,6 +18,10 @@ import { isSampleProject } from '@/constants/sample-project';
 type SetCurrentProjectOptions = {
   includeInRecentProjects?: boolean;
 };
+
+export const PREFERENCES_STORAGE_KEY = 'preferences';
+export const PROJECT_PASSWORDS_SECURE_STORAGE_KEY = 'preferences.projectPasswords';
+export const MAP_PROVIDER_SETTINGS_SECURE_STORAGE_KEY = 'preferences.mapProviderSettings';
 
 export interface UsePreferences {
   preferences: Preferences;
@@ -52,7 +57,9 @@ const usePreferences = (): UsePreferences => {
 
   useEffect(() => {
     if (!preferencesLoaded) return;
-    savePreferences(preferences);
+    void savePreferences(preferences).catch((error) => {
+      console.warn('Failed to save preferences.', error);
+    });
   }, [preferences, preferencesLoaded]);
 
   const setCurrentProject = (
@@ -176,19 +183,37 @@ const usePreferences = (): UsePreferences => {
 export default usePreferences;
 
 const loadPreferences = async (): Promise<Preferences> => {
-  const prefString = await AsyncStorage.getItem('preferences');
-  if (!prefString) return getDefaultPreferences();
+  const prefString = await AsyncStorage.getItem(PREFERENCES_STORAGE_KEY);
+  if (!prefString) return hydrateSecurePreferences(getDefaultPreferences());
 
   try {
-    return normalizePreferences(JSON.parse(prefString));
+    return hydrateSecurePreferences(normalizePreferences(JSON.parse(prefString)));
   } catch (error) {
     console.warn('Failed to load saved preferences. Falling back to defaults.', error);
-    return getDefaultPreferences();
+    return hydrateSecurePreferences(getDefaultPreferences());
   }
 };
 
-const savePreferences = async (preferences: Preferences) =>
-  await AsyncStorage.setItem('preferences', JSON.stringify(preferences));
+const savePreferences = async (preferences: Preferences) => {
+  const [projectPasswordsSavedSecurely, mapProviderSettingsSavedSecurely] = await Promise.all([
+    saveSecureJson(
+    PROJECT_PASSWORDS_SECURE_STORAGE_KEY,
+    getProjectPasswords(preferences)
+    ),
+    saveSecureJson(
+    MAP_PROVIDER_SETTINGS_SECURE_STORAGE_KEY,
+    preferences.mapProviderSettings
+    ),
+  ]);
+
+  await AsyncStorage.setItem(
+    PREFERENCES_STORAGE_KEY,
+    JSON.stringify(stripSecurePreferences(preferences, {
+      stripProjectPasswords: projectPasswordsSavedSecurely,
+      stripMapProviderSettings: mapProviderSettingsSavedSecurely,
+    }))
+  );
+};
 
 export const getDefaultPreferences = (): Preferences => ({
   languages: getDefaultProjectLanguages(''),
@@ -255,6 +280,103 @@ const normalizePreferences = (preferences: unknown): Preferences => {
       ?? languages
       ?? getDefaultProjectLanguages(currentProject),
   };
+};
+
+const hydrateSecurePreferences = async (preferences: Preferences): Promise<Preferences> => {
+  const [storedProjectPasswords, storedMapProviderSettings] = await Promise.all([
+    loadSecureJson(PROJECT_PASSWORDS_SECURE_STORAGE_KEY),
+    loadSecureJson(MAP_PROVIDER_SETTINGS_SECURE_STORAGE_KEY),
+  ]);
+  const projectPasswords = isRecord(storedProjectPasswords)
+    ? storedProjectPasswords
+    : {};
+  const projects = Object.entries(preferences.projects).reduce(
+    (result, [project, projectSettings]) => ({
+      ...result,
+      [project]: {
+        ...projectSettings,
+        password: getStringValue(projectPasswords[project]) ?? projectSettings.password,
+      },
+    }),
+    {} as Record<string, ProjectSettings>
+  );
+
+  return {
+    ...preferences,
+    projects,
+    mapProviderSettings: isRecord(storedMapProviderSettings)
+      ? normalizeMapProviderSettings(storedMapProviderSettings)
+      : preferences.mapProviderSettings,
+  };
+};
+
+const stripSecurePreferences = (
+  preferences: Preferences,
+  {
+    stripProjectPasswords = true,
+    stripMapProviderSettings = true,
+  }: {
+    stripProjectPasswords?: boolean;
+    stripMapProviderSettings?: boolean;
+  } = {}
+): Preferences => ({
+  ...preferences,
+  projects: Object.entries(preferences.projects).reduce(
+    (result, [project, projectSettings]) => ({
+      ...result,
+      [project]: {
+        ...projectSettings,
+        password: stripProjectPasswords ? '' : projectSettings.password,
+      },
+    }),
+    {} as Record<string, ProjectSettings>
+  ),
+  mapProviderSettings: stripMapProviderSettings
+    ? defaultMapProviderSettings()
+    : preferences.mapProviderSettings,
+});
+
+const getProjectPasswords = (preferences: Preferences): Record<string, string> =>
+  Object.entries(preferences.projects).reduce(
+    (result, [project, projectSettings]) => projectSettings.password
+      ? { ...result, [project]: projectSettings.password }
+      : result,
+    {} as Record<string, string>
+  );
+
+const loadSecureJson = async (key: string): Promise<unknown> => {
+  try {
+    const value = await SecureStore.getItemAsync(key);
+    return value ? JSON.parse(value) : undefined;
+  } catch (error) {
+    console.warn(`Failed to load secure preference '${key}'.`, error);
+    return undefined;
+  }
+};
+
+const saveSecureJson = async (key: string, value: unknown): Promise<boolean> => {
+  try {
+    if (!hasPersistableSecureValue(value)) {
+      await SecureStore.deleteItemAsync(key);
+      return true;
+    }
+
+    await SecureStore.setItemAsync(key, JSON.stringify(value));
+    return true;
+  } catch (error) {
+    console.warn(`Failed to save secure preference '${key}'.`, error);
+    return false;
+  }
+};
+
+const hasPersistableSecureValue = (value: unknown): boolean => {
+  if (!isRecord(value)) return value !== undefined && value !== null;
+
+  return Object.values(value).some((entry) => {
+    if (typeof entry === 'string') return entry.length > 0;
+    if (isRecord(entry)) return hasPersistableSecureValue(entry);
+    return entry !== undefined && entry !== null;
+  });
 };
 
 const normalizeMapProviderSettings = (

@@ -230,7 +230,8 @@ const DocumentEdit: React.FC = () => {
       resourceActions={renderPhotoResourceActions(
         resource,
         updatePhotoCapture,
-        updateSoilProfileCapture
+        updateSoilProfileCapture,
+        preferencesContext.preferences.username
       )}
     />
   );
@@ -242,13 +243,15 @@ const getParam = (param: string | string[] | undefined): string | undefined =>
 const renderPhotoResourceActions = (
   resource: Resource,
   updatePhotoCapture: (data: FieldworkPhotoCaptureData) => void,
-  updateSoilProfileCapture: (data: SoilProfileCaptureData) => void
+  updateSoilProfileCapture: (data: SoilProfileCaptureData) => void,
+  username?: string
 ) => {
   if (resource.category === 'Photo') {
     return (
       <PhotoCameraButton
         capturedUri={getStringValue(resource.imageUri ?? resource.fieldworkPhotoUri)}
         onCapture={updatePhotoCapture}
+        username={username}
       />
     );
   }
@@ -258,6 +261,7 @@ const renderPhotoResourceActions = (
       <SoilProfileCameraButton
         capturedUri={getStringValue(resource.soilProfilePhotoUri)}
         onCapture={updateSoilProfileCapture}
+        username={username}
       />
     );
   }

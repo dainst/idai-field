@@ -1,11 +1,16 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as SecureStore from 'expo-secure-store';
 import {
     KOREAN_FIELDWORK_PROJECT_LANGUAGES,
 } from '@/constants/korean-fieldwork-project';
 import { SAMPLE_PROJECT_ID } from '@/constants/sample-project';
 import { act, renderHook, waitFor } from '@testing-library/react-native';
 import { defaultMapSettings } from '../components/Project/Map/map-settings';
-import usePreferences from './use-preferences';
+import usePreferences, {
+    MAP_PROVIDER_SETTINGS_SECURE_STORAGE_KEY,
+    PREFERENCES_STORAGE_KEY,
+    PROJECT_PASSWORDS_SECURE_STORAGE_KEY,
+} from './use-preferences';
 
 describe('usePreferences', () => {
     const koreanFieldworkProject = 'fieldwork-test';
@@ -13,6 +18,7 @@ describe('usePreferences', () => {
     beforeEach(() => {
 
         AsyncStorage.clear();
+        (SecureStore as any).__clearMock();
         jest.clearAllMocks();
     });
 
@@ -136,6 +142,22 @@ describe('usePreferences', () => {
                 kakaoMapJavaScriptKey: 'js-key',
                 kakaoNativeAppKey: 'native-key',
             });
+        await waitFor(() => expect(SecureStore.setItemAsync).toBeCalledWith(
+            MAP_PROVIDER_SETTINGS_SECURE_STORAGE_KEY,
+            JSON.stringify({
+                kakaoLocalRestApiKey: 'rest-key',
+                kakaoMapJavaScriptKey: 'js-key',
+                kakaoNativeAppKey: 'native-key',
+            })
+        ));
+
+        const storedPreferences = getLatestStoredPreferences();
+        expect(storedPreferences.mapProviderSettings).toEqual({
+            kakaoLocalRestApiKey: '',
+            kakaoMapJavaScriptKey: '',
+            kakaoNativeAppKey: '',
+        });
+        expect(JSON.stringify(storedPreferences)).not.toContain('rest-key');
     });
 
 
@@ -174,7 +196,14 @@ describe('usePreferences', () => {
             });
         });
 
-        expect(AsyncStorage.setItem).toBeCalledWith('preferences', JSON.stringify(result.current.preferences));
+        await waitFor(() => expect(SecureStore.setItemAsync).toBeCalledWith(
+            PROJECT_PASSWORDS_SECURE_STORAGE_KEY,
+            JSON.stringify({ test2: 'testword' })
+        ));
+
+        const storedPreferences = getLatestStoredPreferences();
+        expect(storedPreferences.projects.test2.password).toBe('');
+        expect(JSON.stringify(storedPreferences)).not.toContain('testword');
 
         const { result: result2 } = renderHook(() => usePreferences());
 
@@ -183,12 +212,113 @@ describe('usePreferences', () => {
         jest.spyOn(console, 'error').mockImplementation(jest.fn());
         await waitFor(() => expect(result2.current.preferences.projects['test2']).toBeDefined());
         
-        expect(AsyncStorage.getItem).toBeCalledWith('preferences');
+        expect(AsyncStorage.getItem).toBeCalledWith(PREFERENCES_STORAGE_KEY);
       
         const settings = result2.current.preferences.projects['test2'];
         expect(settings.url).toBe('https://test.url');
         expect(settings.password).toBe('testword');
         expect(settings.connected).toBe(true);
+    });
+
+
+    it('should not strip stored project passwords when secure persistence fails', async () => {
+
+        const warnSpy = jest.spyOn(console, 'warn').mockImplementation(jest.fn());
+        await AsyncStorage.setItem(PREFERENCES_STORAGE_KEY, JSON.stringify({
+            languages: ['en'],
+            currentProject: 'test2',
+            username: 'Tester',
+            recentProjects: ['test2'],
+            mapProviderSettings: {
+                kakaoLocalRestApiKey: '',
+                kakaoMapJavaScriptKey: '',
+                kakaoNativeAppKey: '',
+            },
+            projects: {
+                test2: {
+                    url: 'https://test.url',
+                    password: 'legacyword',
+                    connected: true,
+                    languages: ['en'],
+                    mapSettings: defaultMapSettings(),
+                },
+            },
+        }));
+        (AsyncStorage.setItem as jest.Mock).mockClear();
+        (SecureStore.setItemAsync as jest.Mock)
+            .mockRejectedValueOnce(new Error('secure store unavailable'));
+
+        const { result } = await renderUsePreferences();
+
+        await waitFor(() => expect(result.current.preferences.projects.test2.password)
+            .toBe('legacyword'));
+        await waitFor(() => expect(warnSpy).toHaveBeenCalled());
+
+        expect(AsyncStorage.setItem).not.toHaveBeenCalledWith(
+            PREFERENCES_STORAGE_KEY,
+            expect.stringContaining('"password":""')
+        );
+        expect(await AsyncStorage.getItem(PREFERENCES_STORAGE_KEY))
+            .toContain('legacyword');
+
+        warnSpy.mockRestore();
+    });
+
+
+    it('should preserve updated project passwords in AsyncStorage when secure persistence fails', async () => {
+
+        const warnSpy = jest.spyOn(console, 'warn').mockImplementation(jest.fn());
+        (SecureStore.setItemAsync as jest.Mock)
+            .mockRejectedValueOnce(new Error('secure store unavailable'));
+
+        const { result } = await renderUsePreferences();
+
+        await act(async () => {
+            result.current.setProjectSettings('test2', {
+                url: 'https://test.url',
+                password: 'newword',
+                connected: true,
+                languages: ['en'],
+                mapSettings: defaultMapSettings(),
+            });
+        });
+
+        await waitFor(() => expect(warnSpy).toHaveBeenCalled());
+
+        const storedPreferences = getLatestStoredPreferences();
+        expect(storedPreferences.projects.test2.password).toBe('newword');
+        expect(storedPreferences.projects.test2.connected).toBe(true);
+
+        warnSpy.mockRestore();
+    });
+
+
+    it('should preserve updated map provider keys in AsyncStorage when secure persistence fails', async () => {
+
+        const warnSpy = jest.spyOn(console, 'warn').mockImplementation(jest.fn());
+        (SecureStore.setItemAsync as jest.Mock)
+            .mockRejectedValueOnce(new Error('secure store unavailable'));
+
+        const { result } = await renderUsePreferences();
+
+        await act(async () => {
+            result.current.setMapProviderSettings({
+                kakaoLocalRestApiKey: 'rest-key',
+                kakaoMapJavaScriptKey: 'js-key',
+                kakaoNativeAppKey: 'native-key',
+            });
+        });
+
+        await waitFor(() => expect(warnSpy).toHaveBeenCalled());
+
+        const storedPreferences = getLatestStoredPreferences();
+        expect(storedPreferences.mapProviderSettings).toEqual({
+            kakaoLocalRestApiKey: 'rest-key',
+            kakaoMapJavaScriptKey: 'js-key',
+            kakaoNativeAppKey: 'native-key',
+        });
+
+        warnSpy.mockRestore();
     });
 
 
@@ -329,6 +459,14 @@ describe('usePreferences', () => {
 const renderUsePreferences = async () => {
 
     const renderResult = renderHook(() => usePreferences());
-    await waitFor(() => expect(AsyncStorage.getItem).toBeCalledWith('preferences'));
+    await waitFor(() => expect(AsyncStorage.getItem).toBeCalledWith(PREFERENCES_STORAGE_KEY));
     return renderResult;
+};
+
+const getLatestStoredPreferences = () => {
+
+    const calls = (AsyncStorage.setItem as jest.Mock).mock.calls
+        .filter(([key]) => key === PREFERENCES_STORAGE_KEY);
+    const latestCall = calls[calls.length - 1];
+    return JSON.parse(latestCall[1]);
 };

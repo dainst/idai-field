@@ -19,8 +19,9 @@ defmodule FieldHub.Project do
   Create a project and a default user with the given identifier.
 
   Returns
-  - `:invalid_name` if the requested project identifier falls outside of CouchDB's constraints for
-  database names or if the identifier is longer than 30 characters.
+  - `:invalid_name` if the requested project identifier does not start with a lowercase letter,
+  contains characters other than lowercase letters, digits, underscores, or hyphens, or is longer
+  than the configured maximum length.
   See https://docs.couchdb.org/en/stable/api/database/common.html#put--db.
   - `:already_exists` if a database with the given project identifier already exists in the CouchDB.
   - Otherwise the function returns `%{database: :created, file_store: <file store response>}}` where the file store response
@@ -30,7 +31,7 @@ defmodule FieldHub.Project do
   - `project_identifier` the project's name
   """
   def create(project_identifier) do
-    if String.length(project_identifier) > @identifier_length do
+    if not valid_identifier?(project_identifier) do
       :invalid_name
     else
       project_identifier
@@ -54,6 +55,13 @@ defmodule FieldHub.Project do
       end
     end
   end
+
+  def valid_identifier?(project_identifier) when is_binary(project_identifier) do
+    String.length(project_identifier) <= @identifier_length and
+      String.match?(project_identifier, ~r/^[a-z][0-9a-z\-_]*$/)
+  end
+
+  def valid_identifier?(_), do: false
 
   @doc """
   Deletes the project by name.

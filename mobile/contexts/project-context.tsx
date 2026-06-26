@@ -5,7 +5,7 @@ import React, {
   Dispatch,
   SetStateAction,
 } from 'react';
-import { Document } from 'idai-field-core';
+import { Document, FindOptions, Query } from 'idai-field-core';
 import usePouchDbDatastore from '@/hooks/use-pouchdb-datastore';
 import useRepository from '@/hooks/use-repository';
 import useSync from '@/hooks/use-sync';
@@ -15,8 +15,15 @@ import { PreferencesContext } from '@/contexts/preferences-context';
 import { DocumentRepository } from '@/repositories/document-repository';
 import { RelationsManager, SyncStatus } from 'idai-field-core';
 import useProjectData from '@/hooks/use-project-data';
+import useFieldworkImageSync from '@/hooks/use-fieldwork-image-sync';
+import useSearch from '@/hooks/use-search';
 import {router} from 'expo-router'
 import useOrientation from '@/hooks/use-orientation';
+
+const ALL_DOCUMENTS_QUERY: Query = {};
+const ALL_DOCUMENTS_FIND_OPTIONS: FindOptions = {
+  includeResourcesWithoutValidParent: true,
+};
 
 interface ProjectContextType {
   q: string;
@@ -93,6 +100,20 @@ export const ProjectContextProvider = ({ children }) => {
     clearHierarchy,
     isInOverview,
   } = useProjectData(repository, q);
+  const allDocuments = useSearch(
+    repository,
+    ALL_DOCUMENTS_QUERY,
+    ALL_DOCUMENTS_FIND_OPTIONS
+  );
+
+  useFieldworkImageSync({
+    documents: allDocuments,
+    project: preferences.preferences.currentProject,
+    projectSettings:
+      preferences.preferences.projects[preferences.preferences.currentProject],
+    repository,
+    syncStatus,
+  });
 
   const onDocumentSelected = (doc: Document) => {
     router.setParams({ highlightedDocId: doc.resource.id })

@@ -20,6 +20,24 @@ describe('Korean fieldwork handwriting', () => {
     ]);
   });
 
+  it('extracts handwriting payloads without relying on localized coordinate labels', () => {
+    const text = [
+      'field sketch coordinates {"version":1,"strokes":[{"points":[{"x":10.4,"y":20.5}]}]}',
+    ].join('\n');
+
+    expect(extractKoreanFieldworkHandwritingFromText(text)).toEqual([
+      { points: [{ x: 10, y: 21 }] },
+    ]);
+  });
+
+  it('normalizes legacy array handwriting payloads', () => {
+    expect(normalizeKoreanFieldworkHandwritingStrokes([
+      [{ x: 10.4, y: 20.5 }],
+    ])).toEqual([
+      { points: [{ x: 10, y: 21 }] },
+    ]);
+  });
+
   it('normalizes invalid stroke payloads before saving', () => {
     expect(normalizeKoreanFieldworkHandwritingStrokes({
       version: 1,

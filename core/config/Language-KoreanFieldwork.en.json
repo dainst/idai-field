@@ -1517,6 +1517,36 @@
     "Drawing": {
       "label": "Drawing",
       "fields": {
+        "fieldworkImageUploadStatus": {
+          "label": "Server upload status"
+        },
+        "fieldworkImageUploadedAt": {
+          "label": "Server upload time"
+        },
+        "fieldworkImageUploadedUri": {
+          "label": "Uploaded source URI"
+        },
+        "fieldworkImageUploadTarget": {
+          "label": "Upload target"
+        },
+        "fieldworkImageUploadedProject": {
+          "label": "Upload project"
+        },
+        "fieldworkImageUploadedSizeBytes": {
+          "label": "Uploaded size (bytes)"
+        },
+        "fieldworkImageUploadedMd5": {
+          "label": "Uploaded MD5 checksum"
+        },
+        "fieldworkImageStoredSizeBytes": {
+          "label": "Field Hub stored size (bytes)"
+        },
+        "fieldworkImageStoredMd5": {
+          "label": "Field Hub stored MD5 checksum"
+        },
+        "fieldworkImageStoredSha256": {
+          "label": "Field Hub stored SHA-256 checksum"
+        },
         "mediaEvidenceRole": {
           "label": "Media evidence role"
         },
@@ -1691,6 +1721,36 @@
         "soilProfilePhotoCapturedAt": {
           "label": "Captured at"
         },
+        "fieldworkImageUploadStatus": {
+          "label": "Server upload status"
+        },
+        "fieldworkImageUploadedAt": {
+          "label": "Server upload time"
+        },
+        "fieldworkImageUploadedUri": {
+          "label": "Uploaded source URI"
+        },
+        "fieldworkImageUploadTarget": {
+          "label": "Upload target"
+        },
+        "fieldworkImageUploadedProject": {
+          "label": "Upload project"
+        },
+        "fieldworkImageUploadedSizeBytes": {
+          "label": "Uploaded size (bytes)"
+        },
+        "fieldworkImageUploadedMd5": {
+          "label": "Uploaded MD5 checksum"
+        },
+        "fieldworkImageStoredSizeBytes": {
+          "label": "Field Hub stored size (bytes)"
+        },
+        "fieldworkImageStoredMd5": {
+          "label": "Field Hub stored MD5 checksum"
+        },
+        "fieldworkImageStoredSha256": {
+          "label": "Field Hub stored SHA-256 checksum"
+        },
         "soilProfileAnnotationStrokes": {
           "label": "Annotation stroke JSON"
         },
@@ -1799,6 +1859,48 @@
     "Photo": {
       "label": "Photo",
       "fields": {
+        "fieldworkPhotoUri": {
+          "label": "Fieldwork photo file"
+        },
+        "fieldworkPhotoSizeHintKb": {
+          "label": "Photo size hint (KB)"
+        },
+        "fieldworkPhotoQuality": {
+          "label": "Capture quality"
+        },
+        "fieldworkPhotoCapturedAt": {
+          "label": "Capture time"
+        },
+        "fieldworkImageUploadStatus": {
+          "label": "Server upload status"
+        },
+        "fieldworkImageUploadedAt": {
+          "label": "Server upload time"
+        },
+        "fieldworkImageUploadedUri": {
+          "label": "Uploaded source URI"
+        },
+        "fieldworkImageUploadTarget": {
+          "label": "Upload target"
+        },
+        "fieldworkImageUploadedProject": {
+          "label": "Upload project"
+        },
+        "fieldworkImageUploadedSizeBytes": {
+          "label": "Uploaded size (bytes)"
+        },
+        "fieldworkImageUploadedMd5": {
+          "label": "Uploaded MD5 checksum"
+        },
+        "fieldworkImageStoredSizeBytes": {
+          "label": "Field Hub stored size (bytes)"
+        },
+        "fieldworkImageStoredMd5": {
+          "label": "Field Hub stored MD5 checksum"
+        },
+        "fieldworkImageStoredSha256": {
+          "label": "Field Hub stored SHA-256 checksum"
+        },
         "mediaEvidenceRole": {
           "label": "Media evidence role"
         },

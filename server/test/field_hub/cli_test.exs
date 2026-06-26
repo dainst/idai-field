@@ -42,13 +42,14 @@ defmodule FieldHub.CLITest do
     assert log =~ "[warning] Project database '#{@project_identifier}' already exists."
   end
 
-  test "create_project/2 should log the requested password" do
+  test "create_project/2 should not log the requested password" do
     log =
       capture_log(fn ->
         assert :ok = CLI.create_project(@project_identifier, @user_password)
       end)
 
-    assert log =~ "Created user '#{@project_identifier}' with password '#{@user_password}'."
+    assert log =~ "Created user '#{@project_identifier}'."
+    refute log =~ @user_password
   end
 
   test "delete_project/1" do
@@ -107,7 +108,8 @@ defmodule FieldHub.CLITest do
         assert :ok = CLI.create_user(@project_identifier)
       end)
 
-    assert log =~ "Created user '#{@project_identifier}' with password"
+    assert log =~ "Created user '#{@project_identifier}' with a generated password."
+    refute log =~ "with generated password '"
   end
 
   test "create_user/1 twice should print warning" do
@@ -120,13 +122,14 @@ defmodule FieldHub.CLITest do
     assert log =~ "User '#{@project_identifier}' already exists."
   end
 
-  test "create_user/2 should log the requested password" do
+  test "create_user/2 should not log the requested password" do
     log =
       capture_log(fn ->
         assert :ok = CLI.create_user(@project_identifier, @user_password)
       end)
 
-    assert log =~ "Created user '#{@project_identifier}' with password '#{@user_password}'."
+    assert log =~ "Created user '#{@project_identifier}'."
+    refute log =~ @user_password
   end
 
   test "delete_user/1" do

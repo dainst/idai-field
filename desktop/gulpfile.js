@@ -9,7 +9,13 @@ gulp.task('copy-fonts', () => {
 });
 
 gulp.task('copy-core', () => {
-    return gulp.src(['../core/**/*'])
+    return gulp.src([
+        '../core/api-schemas/**/*',
+        '../core/config/**/*',
+        '../core/dist/**/*',
+        '../core/package.json',
+        '../core/README.md'
+    ], { base: '../core' })
         .pipe(gulp.dest('node_modules/idai-field-core'));
 });
 

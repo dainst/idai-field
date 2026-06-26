@@ -25,9 +25,20 @@ describe('useSearch', () => {
     renderHook(() => useSearch(repository, query));
 
     await waitFor(() => {
-      expect(repository.find).toHaveBeenCalledWith({
-        categories: query.categories,
-      });
+      expect(repository.find).toHaveBeenCalledWith(
+        { categories: query.categories },
+        undefined
+      );
+    });
+  });
+
+  it('passes datastore find options to the repository', async () => {
+    const query = {};
+    const options = { includeResourcesWithoutValidParent: true };
+    renderHook(() => useSearch(repository, query, options));
+
+    await waitFor(() => {
+      expect(repository.find).toHaveBeenCalledWith(query, options);
     });
   });
 
@@ -45,10 +56,13 @@ describe('useSearch', () => {
     });
 
     await waitFor(() => {
-      expect(repository.find).toHaveBeenLastCalledWith({
-        q: 'test',
-        categories: query.categories,
-      });
+      expect(repository.find).toHaveBeenLastCalledWith(
+        {
+          q: 'test',
+          categories: query.categories,
+        },
+        undefined
+      );
     });
   });
 

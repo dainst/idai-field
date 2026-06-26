@@ -167,7 +167,9 @@ describe('CreateProjectModal', () => {
     );
     fireEvent.press(getByTestId('create-project-submit'));
 
-    expect(getAllByText('프로젝트 이름에 / \\ : * ? " < > | 같은 문자는 쓸 수 없습니다.'))
+    expect(getAllByText(
+      '프로젝트 이름은 소문자로 시작하고 소문자, 숫자, 밑줄(_), 하이픈(-)만 사용할 수 있으며 30자 이하여야 합니다.'
+    ))
       .toHaveLength(2);
     expect(handleProjectCreated).not.toHaveBeenCalled();
   });

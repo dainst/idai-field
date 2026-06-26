@@ -3959,6 +3959,56 @@
     "Drawing:default": {
       "hidden": [],
       "fields": {
+        "fieldworkImageUploadStatus": {
+          "inputType": "input",
+          "editable": false,
+          "constraintIndexed": true
+        },
+        "fieldworkImageUploadedAt": {
+          "inputType": "input",
+          "editable": false,
+          "constraintIndexed": true
+        },
+        "fieldworkImageUploadedUri": {
+          "inputType": "input",
+          "editable": false,
+          "constraintIndexed": true
+        },
+        "fieldworkImageUploadTarget": {
+          "inputType": "input",
+          "editable": false,
+          "constraintIndexed": true
+        },
+        "fieldworkImageUploadedProject": {
+          "inputType": "input",
+          "editable": false,
+          "constraintIndexed": true
+        },
+        "fieldworkImageUploadedSizeBytes": {
+          "inputType": "unsignedInt",
+          "editable": false,
+          "constraintIndexed": true
+        },
+        "fieldworkImageUploadedMd5": {
+          "inputType": "input",
+          "editable": false,
+          "constraintIndexed": true
+        },
+        "fieldworkImageStoredSizeBytes": {
+          "inputType": "unsignedInt",
+          "editable": false,
+          "constraintIndexed": true
+        },
+        "fieldworkImageStoredMd5": {
+          "inputType": "input",
+          "editable": false,
+          "constraintIndexed": true
+        },
+        "fieldworkImageStoredSha256": {
+          "inputType": "input",
+          "editable": false,
+          "constraintIndexed": true
+        },
         "mediaEvidenceRole": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -4115,6 +4165,16 @@
         {
           "name": "koreanFieldwork",
           "fields": [
+            "fieldworkImageUploadStatus",
+            "fieldworkImageUploadedAt",
+            "fieldworkImageUploadedUri",
+            "fieldworkImageUploadTarget",
+            "fieldworkImageUploadedProject",
+            "fieldworkImageUploadedSizeBytes",
+            "fieldworkImageUploadedMd5",
+            "fieldworkImageStoredSizeBytes",
+            "fieldworkImageStoredMd5",
+            "fieldworkImageStoredSha256",
             "mediaEvidenceRole",
             "mediaQualityCheck",
             "digitalSourcePreservation",
@@ -4140,6 +4200,72 @@
     "Photo:default": {
       "hidden": [],
       "fields": {
+        "fieldworkPhotoUri": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "fieldworkPhotoSizeHintKb": {
+          "inputType": "unsignedInt",
+          "constraintIndexed": true
+        },
+        "fieldworkPhotoQuality": {
+          "inputType": "unsignedFloat",
+          "constraintIndexed": true
+        },
+        "fieldworkPhotoCapturedAt": {
+          "inputType": "input",
+          "constraintIndexed": true
+        },
+        "fieldworkImageUploadStatus": {
+          "inputType": "input",
+          "editable": false,
+          "constraintIndexed": true
+        },
+        "fieldworkImageUploadedAt": {
+          "inputType": "input",
+          "editable": false,
+          "constraintIndexed": true
+        },
+        "fieldworkImageUploadedUri": {
+          "inputType": "input",
+          "editable": false,
+          "constraintIndexed": true
+        },
+        "fieldworkImageUploadTarget": {
+          "inputType": "input",
+          "editable": false,
+          "constraintIndexed": true
+        },
+        "fieldworkImageUploadedProject": {
+          "inputType": "input",
+          "editable": false,
+          "constraintIndexed": true
+        },
+        "fieldworkImageUploadedSizeBytes": {
+          "inputType": "unsignedInt",
+          "editable": false,
+          "constraintIndexed": true
+        },
+        "fieldworkImageUploadedMd5": {
+          "inputType": "input",
+          "editable": false,
+          "constraintIndexed": true
+        },
+        "fieldworkImageStoredSizeBytes": {
+          "inputType": "unsignedInt",
+          "editable": false,
+          "constraintIndexed": true
+        },
+        "fieldworkImageStoredMd5": {
+          "inputType": "input",
+          "editable": false,
+          "constraintIndexed": true
+        },
+        "fieldworkImageStoredSha256": {
+          "inputType": "input",
+          "editable": false,
+          "constraintIndexed": true
+        },
         "mediaEvidenceRole": {
           "inputType": "checkboxes",
           "constraintIndexed": true
@@ -4265,6 +4391,17 @@
         {
           "name": "koreanFieldwork",
           "fields": [
+            "fieldworkPhotoCapturedAt",
+            "fieldworkImageUploadStatus",
+            "fieldworkImageUploadedAt",
+            "fieldworkImageUploadedUri",
+            "fieldworkImageUploadTarget",
+            "fieldworkImageUploadedProject",
+            "fieldworkImageUploadedSizeBytes",
+            "fieldworkImageUploadedMd5",
+            "fieldworkImageStoredSizeBytes",
+            "fieldworkImageStoredMd5",
+            "fieldworkImageStoredSha256",
             "mediaEvidenceRole",
             "mediaQualityCheck",
             "photoCaptureSafetyReview",
@@ -4310,6 +4447,56 @@
         },
         "soilProfilePhotoCapturedAt": {
           "inputType": "input",
+          "constraintIndexed": true
+        },
+        "fieldworkImageUploadStatus": {
+          "inputType": "input",
+          "editable": false,
+          "constraintIndexed": true
+        },
+        "fieldworkImageUploadedAt": {
+          "inputType": "input",
+          "editable": false,
+          "constraintIndexed": true
+        },
+        "fieldworkImageUploadedUri": {
+          "inputType": "input",
+          "editable": false,
+          "constraintIndexed": true
+        },
+        "fieldworkImageUploadTarget": {
+          "inputType": "input",
+          "editable": false,
+          "constraintIndexed": true
+        },
+        "fieldworkImageUploadedProject": {
+          "inputType": "input",
+          "editable": false,
+          "constraintIndexed": true
+        },
+        "fieldworkImageUploadedSizeBytes": {
+          "inputType": "unsignedInt",
+          "editable": false,
+          "constraintIndexed": true
+        },
+        "fieldworkImageUploadedMd5": {
+          "inputType": "input",
+          "editable": false,
+          "constraintIndexed": true
+        },
+        "fieldworkImageStoredSizeBytes": {
+          "inputType": "unsignedInt",
+          "editable": false,
+          "constraintIndexed": true
+        },
+        "fieldworkImageStoredMd5": {
+          "inputType": "input",
+          "editable": false,
+          "constraintIndexed": true
+        },
+        "fieldworkImageStoredSha256": {
+          "inputType": "input",
+          "editable": false,
           "constraintIndexed": true
         },
         "soilProfileAnnotationStrokes": {
@@ -4391,6 +4578,16 @@
           "name": "koreanFieldwork",
           "fields": [
             "soilProfilePhotoCapturedAt",
+            "fieldworkImageUploadStatus",
+            "fieldworkImageUploadedAt",
+            "fieldworkImageUploadedUri",
+            "fieldworkImageUploadTarget",
+            "fieldworkImageUploadedProject",
+            "fieldworkImageUploadedSizeBytes",
+            "fieldworkImageUploadedMd5",
+            "fieldworkImageStoredSizeBytes",
+            "fieldworkImageStoredMd5",
+            "fieldworkImageStoredSha256",
             "soilProfileAnnotationStrokes",
             "soilProfileLayerMarkers",
             "soilColorCaptureCondition",

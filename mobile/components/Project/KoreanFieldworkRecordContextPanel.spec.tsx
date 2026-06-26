@@ -71,6 +71,32 @@ describe('KoreanFieldworkRecordContextPanel', () => {
     expect(handleAddDocumentOfCategory).not.toHaveBeenCalled();
   });
 
+  it('opens linked tablet media records whose Field Hub original backup is not confirmed', () => {
+    const feature = createDoc('feature-1', C.FEATURE, '?섑삁 1', {}, {
+      featureRecordingStatus: 'confirmed',
+      featureInvestigationChecklist: ['completionPhotoTaken'],
+    });
+    const photo = createDoc('photo-1', C.PHOTO, '?섑삁 1 議곗궗 以??ъ쭊', {
+      depicts: ['feature-1'],
+    }, {
+      fieldworkPhotoUri: 'file:///tablet/photos/photo-1.jpg',
+    });
+    const handleOpenDocument = jest.fn();
+    const { getByTestId } = render(
+      <KoreanFieldworkRecordContextPanel
+        document={feature}
+        documents={[feature, photo]}
+        onOpenDocument={handleOpenDocument}
+      />
+    );
+
+    fireEvent.press(getByTestId(
+      'issueOpen_fieldwork-photo-upload-missing_photo-1'
+    ));
+
+    expect(handleOpenDocument).toHaveBeenCalledWith(photo);
+  });
+
   it('does not turn missing evidence into an add action when the category is not allowed', () => {
     const feature = createDoc('feature-1', C.FEATURE, '수혈 1');
     const handleAddDocumentOfCategory = jest.fn();

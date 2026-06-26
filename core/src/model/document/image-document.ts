@@ -29,8 +29,15 @@ export interface ImageDocument extends Document {
 export module ImageDocument {
 
     export function getOriginalFileExtension(document: ImageDocument): string {
-        
-        return document.resource.originalFilename.split('.').pop().toLowerCase();
+
+        const originalFilename = document.resource.originalFilename;
+        if (!originalFilename) return '';
+
+        const extensionSeparatorIndex = originalFilename.lastIndexOf('.');
+        if (extensionSeparatorIndex < 0 || extensionSeparatorIndex === originalFilename.length - 1) return '';
+
+        return originalFilename.substring(extensionSeparatorIndex + 1)
+            .toLowerCase();
     }
 
 

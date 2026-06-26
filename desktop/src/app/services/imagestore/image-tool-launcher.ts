@@ -165,7 +165,7 @@ export class ImageToolLauncher {
         }).map(image => {
             return {
                 image,
-                downloadThumbnail: !this.thumbnailFileInfos[image.resource.id] !== undefined
+                downloadThumbnail: this.thumbnailFileInfos[image.resource.id] === undefined
                     && this.remoteThumbnailFileInfos[image.resource.id] !== undefined
             };
         });

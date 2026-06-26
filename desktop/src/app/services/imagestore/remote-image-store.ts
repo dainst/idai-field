@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ImageVariant, RemoteImageStoreInterface, FileInfo, base64Encode } from 'idai-field-core';
+import {
+    ImageVariant,
+    RemoteImageStoreInterface,
+    FileInfo,
+    base64Encode,
+    buildFieldHubFileUrl
+} from 'idai-field-core';
 import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';
 import { SettingsProvider } from '../settings/settings-provider';
@@ -13,7 +19,7 @@ import axios from 'axios';
 export class RemoteImageStore implements RemoteImageStoreInterface {
 
     constructor(private settingsProvider: SettingsProvider,
-                private messages: Messages) {}
+                private messages: Messages|null) {}
 
 
     /**
@@ -36,11 +42,11 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
 
         return axios({
             method: 'put',
-            url: address + '/files/' + project + '/' + uuid,
+            url: buildFieldHubFileUrl(address, project, uuid),
             params,
             data,
             headers: {
-                'Content-Type': 'image/x-www-form-urlencoded',
+                'Content-Type': 'application/octet-stream',
                 Authorization: `Basic ${base64Encode(project + ':' + password)}`
             }
         })
@@ -48,8 +54,10 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
             return response.status;
         })
         .catch((error) => {
-            if (error.response.status === 409) {
-                this.messages.add([M.REMOTEIMAGESTORE_WARNING_LARGE_FILE_UPLOAD_BLOCKED_BY_PEER]);
+            if (error?.response?.status === 409) {
+                if (this.messages) {
+                    this.messages.add([M.REMOTEIMAGESTORE_WARNING_LARGE_FILE_UPLOAD_BLOCKED_BY_PEER]);
+                }
                 return 409;
             } else {
                 throw error;
@@ -72,7 +80,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
 
         await axios({
             method: 'delete',
-            url: address + '/files/' + project + '/' + uuid,
+            url: buildFieldHubFileUrl(address, project, uuid),
             headers: {
                 Authorization: `Basic ${base64Encode(project + ':' + password)}`
             }
@@ -112,7 +120,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
 
         const response = await axios({
             method: 'get',
-            url: url + '/files/' + project,
+            url: buildFieldHubFileUrl(url, project),
             params: { types },
             headers: {
                 'Content-Type': 'application/json',
@@ -153,7 +161,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
 
         const response = await axios({
             method: 'get',
-            url: url + '/files/' + project + '/' + uuid,
+            url: buildFieldHubFileUrl(url, project, uuid),
             params: { type },
             responseType: 'arraybuffer',
             headers: {
@@ -164,4 +172,6 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
 
         return Buffer.from(response.data);
     }
+
+
 }

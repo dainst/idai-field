@@ -54,7 +54,7 @@ import {
   KoreanFieldworkNotebookContinuationFocus,
 } from '@/components/Project/korean-fieldwork-field-notes';
 import {
-  getKoreanFieldworkCloseoutSummary,
+  makeKoreanFieldworkCloseoutSummary,
   KoreanFieldworkCloseoutStatus,
   KoreanFieldworkCloseoutSummary,
 } from '@/components/Project/korean-fieldwork-closeout';
@@ -413,8 +413,8 @@ const DocumentsList: React.FC = () => {
     [actionSummary, actionTargets, currentScopeParent, investigationModeId]
   );
   const closeoutSummary = useMemo(
-    () => getKoreanFieldworkCloseoutSummary(todaySummary.openIssues, 5),
-    [todaySummary.openIssues]
+    () => makeKoreanFieldworkCloseoutSummary(documents, 5),
+    [documents]
   );
   const operationCount = useMemo(
     () => documents.filter((document) =>

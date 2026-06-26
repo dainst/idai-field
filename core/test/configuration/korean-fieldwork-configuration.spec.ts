@@ -29,6 +29,22 @@ import { ConstraintIndex } from '../../src/index/constraint-index';
 
 
 const SAMPLE_DIR = path.resolve(__dirname, '../../../../docs/korean-fieldwork/samples');
+const FIELDWORK_IMAGE_UPLOAD_AUDIT_FIELDS = [
+    'fieldworkImageUploadStatus',
+    'fieldworkImageUploadedAt',
+    'fieldworkImageUploadedUri',
+    'fieldworkImageUploadTarget',
+    'fieldworkImageUploadedProject',
+    'fieldworkImageUploadedSizeBytes',
+    'fieldworkImageUploadedMd5',
+    'fieldworkImageStoredSizeBytes',
+    'fieldworkImageStoredMd5',
+    'fieldworkImageStoredSha256'
+];
+const FIELDWORK_IMAGE_UPLOAD_AUDIT_FIELD_INPUT_TYPES: Record<string, string> = {
+    fieldworkImageUploadedSizeBytes: 'unsignedInt',
+    fieldworkImageStoredSizeBytes: 'unsignedInt'
+};
 
 
 const loadSample = (fileName: string): any => {
@@ -40,6 +56,16 @@ const loadSample = (fileName: string): any => {
 const getSampleForm = (config: any, category: string): any => {
 
     return config.forms[category] ?? config.forms[`${category}:default`];
+};
+
+
+const expectFieldworkImageUploadAuditFieldsToBeSystemManaged = (form: any) => {
+
+    FIELDWORK_IMAGE_UPLOAD_AUDIT_FIELDS.forEach(fieldName => {
+        expect(form.fields[fieldName].inputType)
+            .toBe(FIELDWORK_IMAGE_UPLOAD_AUDIT_FIELD_INPUT_TYPES[fieldName] ?? 'input');
+        expect(form.fields[fieldName].editable).toBe(false);
+    });
 };
 
 
@@ -601,12 +627,21 @@ describe('KoreanFieldwork project configuration', () => {
         const valuelists = configReader.read('/Library/Valuelists/Valuelists.json');
         const languages = configReader.getConfigLanguages();
         const valuelistLanguages = configReader.getValuelistsLanguages();
+        const photoForm = config.forms['Photo:default'];
         const layerForm = config.forms['Layer:default'];
         const soilProfilePhotoForm = config.forms.SoilProfilePhoto;
+        const photoKoreanGroup = photoForm.groups.find((group: any) => group.name === 'koreanFieldwork');
         const layerKoreanGroup = layerForm.groups.find((group: any) => group.name === 'koreanFieldwork');
         const soilProfileKoreanGroup = soilProfilePhotoForm.groups.find((group: any) => group.name === 'koreanFieldwork');
         const soilProfileWorkflowGroup = soilProfilePhotoForm.groups.find((group: any) => group.name === 'workflow');
 
+        expect(photoForm.fields.fieldworkPhotoUri.inputType).toBe('input');
+        expect(photoForm.fields.fieldworkPhotoSizeHintKb.inputType).toBe('unsignedInt');
+        expect(photoForm.fields.fieldworkPhotoQuality.inputType).toBe('unsignedFloat');
+        expect(photoForm.fields.fieldworkPhotoCapturedAt.inputType).toBe('input');
+        expectFieldworkImageUploadAuditFieldsToBeSystemManaged(photoForm);
+        expect(photoKoreanGroup.fields).toContain('fieldworkPhotoCapturedAt');
+        expect(photoKoreanGroup.fields).toContain('fieldworkImageUploadedAt');
         expect(layerForm.fields.layerSequenceNumber.inputType).toBe('unsignedInt');
         expect(layerForm.fields.layerSequenceMeaning.inputType).toBe('dropdown');
         expect(layerForm.fields.soilColorMunsellManual.inputType).toBe('input');
@@ -633,6 +668,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(soilProfilePhotoForm.fields.soilProfilePhotoSizeHintKb.inputType).toBe('unsignedInt');
         expect(soilProfilePhotoForm.fields.soilProfilePhotoQuality.inputType).toBe('unsignedFloat');
         expect(soilProfilePhotoForm.fields.soilProfilePhotoCapturedAt.inputType).toBe('input');
+        expectFieldworkImageUploadAuditFieldsToBeSystemManaged(soilProfilePhotoForm);
         expect(soilProfilePhotoForm.fields.soilProfileAnnotationStrokes.inputType).toBe('text');
         expect(soilProfilePhotoForm.fields.soilProfileAnnotationStrokes.mandatory).toBe(true);
         expect(soilProfilePhotoForm.fields.soilProfileLayerMarkers.inputType).toBe('text');
@@ -650,6 +686,16 @@ describe('KoreanFieldwork project configuration', () => {
         expect(soilProfileWorkflowGroup.fields).toContain('depicts');
         expect(soilProfileKoreanGroup.fields).toEqual([
             'soilProfilePhotoCapturedAt',
+            'fieldworkImageUploadStatus',
+            'fieldworkImageUploadedAt',
+            'fieldworkImageUploadedUri',
+            'fieldworkImageUploadTarget',
+            'fieldworkImageUploadedProject',
+            'fieldworkImageUploadedSizeBytes',
+            'fieldworkImageUploadedMd5',
+            'fieldworkImageStoredSizeBytes',
+            'fieldworkImageStoredMd5',
+            'fieldworkImageStoredSha256',
             'soilProfileAnnotationStrokes',
             'soilProfileLayerMarkers',
             'soilColorCaptureCondition',
@@ -688,6 +734,14 @@ describe('KoreanFieldwork project configuration', () => {
             .values.notRun.label).toBe('미실행');
         expect(valuelistLanguages.projects.en['KoreanFieldwork-soilColorCaptureCondition']
             .values.calibrationTargetUsed.label).toBe('Calibration target used');
+        expect(languages.ko.categories.Photo.fields.fieldworkPhotoCapturedAt.label)
+            .toBe('촬영 시각');
+        expect(languages.ko.categories.Photo.fields.fieldworkImageUploadedAt.label)
+            .toBe('서버 업로드 시각');
+        expect(languages.en.categories.Photo.fields.fieldworkPhotoCapturedAt.label)
+            .toBe('Capture time');
+        expect(languages.en.categories.Photo.fields.fieldworkImageUploadedAt.label)
+            .toBe('Server upload time');
         expect(languages.ko.categories.Layer.label).toBe('토층');
         expect(languages.ko.categories.SoilProfilePhoto.label).toBe('토층 단면 사진');
         expect(languages.ko.categories.SoilProfilePhoto.fields.soilProfilePhotoSizeHintKb.label)
@@ -3341,6 +3395,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(findForm.fields.termAuthorityStatus.inputType).toBe('checkboxes');
         expect(findForm.fields.termSearchMapping.inputType).toBe('checkboxes');
         expect(sampleForm.fields.sampleCollectionHandling.inputType).toBe('checkboxes');
+        expectFieldworkImageUploadAuditFieldsToBeSystemManaged(drawingForm);
         expect(drawingForm.fields.mediaEvidenceRole.inputType).toBe('checkboxes');
         expect(drawingForm.fields.mediaQualityCheck.inputType).toBe('checkboxes');
         expect(drawingForm.fields.digitalSourcePreservation.inputType).toBe('checkboxes');
@@ -3359,6 +3414,7 @@ describe('KoreanFieldwork project configuration', () => {
         expect(drawingForm.fields.artifactElectronicDrawingProcedure.inputType).toBe('checkboxes');
         expect(drawingForm.fields.accessControlTag.inputType).toBe('checkboxes');
         expect(drawingForm.fields.mediaRights.inputType).toBe('checkboxes');
+        expectFieldworkImageUploadAuditFieldsToBeSystemManaged(photoForm);
         expect(photoForm.fields.mediaEvidenceRole.inputType).toBe('checkboxes');
         expect(photoForm.fields.mediaQualityCheck.inputType).toBe('checkboxes');
         expect(photoForm.fields.photoCaptureSafetyReview.inputType).toBe('checkboxes');

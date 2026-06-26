@@ -39,6 +39,7 @@ const setLanguages = jest.fn();
 const removeProject = jest.fn();
 const getMapSettings = jest.fn();
 const setMapSettings = jest.fn();
+const setMapProviderSettings = jest.fn();
 
 jest.mock('@/repositories/document-repository');
 jest.mock('@/contexts/project-context', () => {
@@ -117,6 +118,7 @@ describe('DocumentEdit', () => {
             removeProject,
             getMapSettings,
             setMapSettings,
+            setMapProviderSettings,
           }}
         >
           <LabelsContext.Provider value={{ labels: new Labels(() => ['en']) }}>
@@ -132,6 +134,7 @@ describe('DocumentEdit', () => {
   });
 
   afterEach(async () => {
+    await pouchdbDatastore?.getDb()?.close?.();
     if (pouchdbDatastore && project) await pouchdbDatastore.destroyDb(project);
     cleanup();
     jest.clearAllMocks();

@@ -1523,6 +1523,36 @@
     "Drawing": {
       "label": "도면",
       "fields": {
+        "fieldworkImageUploadStatus": {
+          "label": "서버 업로드 상태"
+        },
+        "fieldworkImageUploadedAt": {
+          "label": "서버 업로드 시각"
+        },
+        "fieldworkImageUploadedUri": {
+          "label": "업로드 원본 URI"
+        },
+        "fieldworkImageUploadTarget": {
+          "label": "업로드 대상"
+        },
+        "fieldworkImageUploadedProject": {
+          "label": "업로드 프로젝트"
+        },
+        "fieldworkImageUploadedSizeBytes": {
+          "label": "업로드 크기(bytes)"
+        },
+        "fieldworkImageUploadedMd5": {
+          "label": "업로드 MD5 체크섬"
+        },
+        "fieldworkImageStoredSizeBytes": {
+          "label": "Field Hub 저장본 크기(bytes)"
+        },
+        "fieldworkImageStoredMd5": {
+          "label": "Field Hub 저장본 MD5 체크섬"
+        },
+        "fieldworkImageStoredSha256": {
+          "label": "Field Hub 저장본 SHA-256 체크섬"
+        },
         "mediaEvidenceRole": {
           "label": "매체 증거 역할"
         },
@@ -1697,6 +1727,36 @@
         "soilProfilePhotoCapturedAt": {
           "label": "촬영 시각"
         },
+        "fieldworkImageUploadStatus": {
+          "label": "서버 업로드 상태"
+        },
+        "fieldworkImageUploadedAt": {
+          "label": "서버 업로드 시각"
+        },
+        "fieldworkImageUploadedUri": {
+          "label": "업로드 원본 URI"
+        },
+        "fieldworkImageUploadTarget": {
+          "label": "업로드 대상"
+        },
+        "fieldworkImageUploadedProject": {
+          "label": "업로드 프로젝트"
+        },
+        "fieldworkImageUploadedSizeBytes": {
+          "label": "업로드 크기(bytes)"
+        },
+        "fieldworkImageUploadedMd5": {
+          "label": "업로드 MD5 체크섬"
+        },
+        "fieldworkImageStoredSizeBytes": {
+          "label": "Field Hub 저장본 크기(bytes)"
+        },
+        "fieldworkImageStoredMd5": {
+          "label": "Field Hub 저장본 MD5 체크섬"
+        },
+        "fieldworkImageStoredSha256": {
+          "label": "Field Hub 저장본 SHA-256 체크섬"
+        },
         "soilProfileAnnotationStrokes": {
           "label": "펜 표시"
         },
@@ -1805,6 +1865,48 @@
     "Photo": {
       "label": "사진",
       "fields": {
+        "fieldworkPhotoUri": {
+          "label": "현장사진 파일"
+        },
+        "fieldworkPhotoSizeHintKb": {
+          "label": "사진 크기 기준(KB)"
+        },
+        "fieldworkPhotoQuality": {
+          "label": "촬영 상태"
+        },
+        "fieldworkPhotoCapturedAt": {
+          "label": "촬영 시각"
+        },
+        "fieldworkImageUploadStatus": {
+          "label": "서버 업로드 상태"
+        },
+        "fieldworkImageUploadedAt": {
+          "label": "서버 업로드 시각"
+        },
+        "fieldworkImageUploadedUri": {
+          "label": "업로드 원본 URI"
+        },
+        "fieldworkImageUploadTarget": {
+          "label": "업로드 대상"
+        },
+        "fieldworkImageUploadedProject": {
+          "label": "업로드 프로젝트"
+        },
+        "fieldworkImageUploadedSizeBytes": {
+          "label": "업로드 크기(bytes)"
+        },
+        "fieldworkImageUploadedMd5": {
+          "label": "업로드 MD5 체크섬"
+        },
+        "fieldworkImageStoredSizeBytes": {
+          "label": "Field Hub 저장본 크기(bytes)"
+        },
+        "fieldworkImageStoredMd5": {
+          "label": "Field Hub 저장본 MD5 체크섬"
+        },
+        "fieldworkImageStoredSha256": {
+          "label": "Field Hub 저장본 SHA-256 체크섬"
+        },
         "mediaEvidenceRole": {
           "label": "매체 증거 역할"
         },

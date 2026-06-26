@@ -83,7 +83,9 @@ describe('LoadProjectModal', () => {
     fireEvent.changeText(getByTestId('load-password-input'), 'secret');
     fireEvent.press(getByTestId('load-project-submit'));
 
-    expect(getByText('프로젝트 이름에 / \\ : * ? " < > | 같은 문자는 쓸 수 없습니다.'))
+    expect(getByText(
+      '프로젝트 이름은 소문자로 시작하고 소문자, 숫자, 밑줄(_), 하이픈(-)만 사용할 수 있으며 30자 이하여야 합니다.'
+    ))
       .toBeTruthy();
     expect(handleProjectLoad).not.toHaveBeenCalled();
     expect(handleClose).not.toHaveBeenCalled();

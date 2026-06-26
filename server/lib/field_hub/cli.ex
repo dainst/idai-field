@@ -105,7 +105,7 @@ defmodule FieldHub.CLI do
   - `project_identifier` the project's name.
   """
   def create_project(project_identifier) do
-    create_project(project_identifier, CouchService.create_password())
+    create_project(project_identifier, CouchService.create_password(), true)
   end
 
   @doc """
@@ -116,6 +116,10 @@ defmodule FieldHub.CLI do
   - `password` the default user's password.
   """
   def create_project(project_identifier, password) do
+    create_project(project_identifier, password, false)
+  end
+
+  defp create_project(project_identifier, password, generated_password?) do
     HTTPoison.start()
 
     Logger.info("Creating project #{project_identifier}.")
@@ -143,7 +147,7 @@ defmodule FieldHub.CLI do
           end
         end)
 
-        create_user(project_identifier, password)
+        create_user(project_identifier, password, generated_password?)
 
         Project.update_user(project_identifier, project_identifier, :member)
         |> case do
@@ -209,7 +213,7 @@ defmodule FieldHub.CLI do
   - `user_name` the user's name.
   """
   def create_user(user_name) do
-    create_user(user_name, CouchService.create_password())
+    create_user(user_name, CouchService.create_password(), true)
   end
 
   @doc """
@@ -220,12 +224,21 @@ defmodule FieldHub.CLI do
   - `password` the user's password.
   """
   def create_user(user_name, password) do
+    create_user(user_name, password, false)
+  end
+
+  defp create_user(user_name, password, generated_password?) do
     HTTPoison.start()
 
     User.create(user_name, password)
     |> case do
       :created ->
-        Logger.info("Created user '#{user_name}' with password '#{password}'.")
+        if generated_password? do
+          Logger.info("Created user '#{user_name}' with a generated password.")
+          IO.puts("Generated password for '#{user_name}': #{password}")
+        else
+          Logger.info("Created user '#{user_name}'.")
+        end
 
       :already_exists ->
         Logger.warning("User '#{user_name}' already exists.")

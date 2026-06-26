@@ -60,7 +60,7 @@ defmodule FieldHubWeb.Live.ProjectCreate do
             socket
             |> put_flash(
               :info,
-              "Project created project `#{identifier}` with password `#{password}` successfully."
+              "Project `#{identifier}` created successfully."
             )
             |> push_navigate(to: "/ui/projects/show/#{identifier}")
 
@@ -83,7 +83,7 @@ defmodule FieldHubWeb.Live.ProjectCreate do
         String.length(identifier) > @identifier_length ->
           :identifier_invalid
 
-        not String.match?(identifier, ~r/^[a-z][a-z0-9_$()+\/-]*$/) ->
+        not Project.valid_identifier?(identifier) ->
           :identifier_invalid
 
         Project.exists?(identifier) ->
@@ -121,8 +121,7 @@ defmodule FieldHubWeb.Live.ProjectCreate do
 
   defp format_issue(:identifier_invalid),
     do: """
-    Please provide a valid project identifier. The identifier must begin with a lower case letter (a-z), followed by any of the following letters:
-    Lowercase characters (a-z), Digits (0-9) or any of the characters _, $, (, ), +, -, and /. The maximum length is #{@identifier_length} characters.
+    Please provide a valid project identifier. The identifier must begin with a lower case letter (a-z), followed by lowercase characters (a-z), digits (0-9), underscores (_), or hyphens (-). The maximum length is #{@identifier_length} characters.
     """
 
   defp format_issue(:identifier_taken),

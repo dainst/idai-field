@@ -3,17 +3,22 @@ defmodule FieldHubWeb.Api.Rest.FileTest do
 
   alias FieldHub.{
     FileStore,
+    Project,
+    User,
     TestHelper
   }
 
   @cache_name Application.compile_env(:field_hub, :file_index_cache_name)
 
   @project "test_project"
+  @project_user_password "test_project_password"
   @user_name "test_user"
   @user_password "test_password"
   @example_file_path "test/fixtures/logo.png"
   @example_file File.read!(@example_file_path)
   @example_file_stats File.stat!("test/fixtures/logo.png")
+  @example_file_md5 :crypto.hash(:md5, @example_file) |> Base.encode16(case: :lower)
+  @example_file_sha256 :crypto.hash(:sha256, @example_file) |> Base.encode16(case: :lower)
   @schema File.read!("../core/api-schemas/files-list.json")
           |> Jason.decode!()
           |> ExJsonSchema.Schema.resolve()
@@ -22,9 +27,12 @@ defmodule FieldHubWeb.Api.Rest.FileTest do
 
   setup_all %{} do
     TestHelper.create_test_db_and_user(@project, @user_name, @user_password)
+    User.create(@project, @project_user_password)
+    Project.update_user(@project, @project, :member)
 
     on_exit(fn ->
       TestHelper.remove_test_db_and_user(@project, @user_name)
+      User.delete(@project)
     end)
   end
 
@@ -46,6 +54,26 @@ defmodule FieldHubWeb.Api.Rest.FileTest do
       |> put("/files/#{@project}/1234?type=original_image", @example_file)
 
     assert conn.status == 201
+    assert Jason.decode!(conn.resp_body) == %{
+             "info" => "File created.",
+             "md5" => @example_file_md5,
+             "sha256" => @example_file_sha256,
+             "size_bytes" => @example_file_stats.size
+           }
+  end
+
+  test "PUT /files/:project/:uuid accepts the default project account used by field clients", %{
+    conn: conn
+  } do
+    credentials = Base.encode64("#{@project}:#{@project_user_password}")
+
+    conn =
+      conn
+      |> set_valid_put_headers(credentials)
+      |> put("/files/#{@project}/tablet-photo-1?type=original_image", @example_file)
+
+    assert conn.status == 201
+    assert {:ok, _file_path} = FileStore.get_file_path("tablet-photo-1", @project, :original_image)
   end
 
   test "PUT /files/:project/:uuid with unsupported type throws 400", %{conn: conn} do
@@ -79,6 +107,38 @@ defmodule FieldHubWeb.Api.Rest.FileTest do
       |> put_req_header("authorization", "Basic #{credentials}")
       |> put_req_header("content-type", "image/png")
       |> put_req_header("content-length", "not_a_number")
+      |> put("/files/#{@project}/1234?type=original_image", @example_file)
+
+    assert conn.status == 400
+  end
+
+  test "PUT /files/:project/:uuid with negative Content-Length throws 400", %{conn: conn} do
+    credentials = Base.encode64("#{@user_name}:#{@user_password}")
+
+    conn =
+      conn
+      |> put_req_header("authorization", "Basic #{credentials}")
+      |> put_req_header("content-type", "image/png")
+      |> put_req_header("content-length", "-1")
+      |> put("/files/#{@project}/1234?type=original_image", @example_file)
+
+    assert conn.status == 400
+  end
+
+  test "PUT /files/:project/:uuid with duplicate Content-Length throws 400", %{conn: conn} do
+    credentials = Base.encode64("#{@user_name}:#{@user_password}")
+
+    conn =
+      conn
+      |> put_req_header("authorization", "Basic #{credentials}")
+      |> put_req_header("content-type", "image/png")
+      |> Map.update!(:req_headers, fn headers ->
+        [
+          {"content-length", Integer.to_string(byte_size(@example_file))},
+          {"content-length", Integer.to_string(byte_size(@example_file))}
+          | headers
+        ]
+      end)
       |> put("/files/#{@project}/1234?type=original_image", @example_file)
 
     assert conn.status == 400

@@ -397,7 +397,7 @@ defmodule FieldHubWeb.Live.ProjectShowTest do
       html = render(view)
 
       assert html =~
-               "<input type=\"text\" placeholder=\"New password\" id=\"password\" name=\"password\" value=\"\"/></div>"
+               "<input type=\"password\" placeholder=\"New password\" id=\"password\" name=\"password\" value=\"\"/></div>"
 
       # The "Set new password" button should be disabled as long as the input is an empty string.
       assert html =~ "phx-click=\"set_password\" disabled=\"disabled\" style=\"width:100%\""
@@ -408,7 +408,7 @@ defmodule FieldHubWeb.Live.ProjectShowTest do
         |> render_change(%{password: "typed_in_password"})
 
       assert html =~
-               "<input type=\"text\" placeholder=\"New password\" id=\"password\" name=\"password\" value=\"typed_in_password\"/></div>"
+               "<input type=\"password\" placeholder=\"New password\" id=\"password\" name=\"password\" value=\"typed_in_password\"/></div>"
 
       # The "Set new password" button should no longer be disabled.
       assert html =~ "phx-click=\"set_password\" style=\"width:100%\""
@@ -422,7 +422,7 @@ defmodule FieldHubWeb.Live.ProjectShowTest do
         |> render()
 
       assert html =~
-               "<input type=\"text\" placeholder=\"New password\" id=\"password\" name=\"password\" value=\"\"/></div>"
+               "<input type=\"password\" placeholder=\"New password\" id=\"password\" name=\"password\" value=\"\"/></div>"
 
       html =
         view
@@ -430,7 +430,7 @@ defmodule FieldHubWeb.Live.ProjectShowTest do
         |> render_click()
 
       assert not (html =~
-                    "<input type=\"text\" placeholder=\"New password\" id=\"password\" name=\"password\" value=\"\"/></div>")
+                    "<input type=\"password\" placeholder=\"New password\" id=\"password\" name=\"password\" value=\"\"/></div>")
     end
 
     test "button click as admin sets current password", %{conn: conn} do
@@ -447,7 +447,8 @@ defmodule FieldHubWeb.Live.ProjectShowTest do
         |> element("button", "Set new password")
         |> render_click()
 
-      assert html =~ "Successfully updated the password to &#39;#{new_password}&#39;."
+      assert html =~ "Password updated successfully."
+      refute html =~ new_password
 
       # Old password invalid
       assert {:error, 401} =

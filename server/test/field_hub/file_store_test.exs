@@ -52,6 +52,18 @@ defmodule FieldHub.FileStoreTest do
       assert byte_size(@content) == size_file_store
     end
 
+    test "moving an existing file cleans up temporary input without overwriting" do
+      target_path = "#{@project_directory}/original_images/1234"
+      temporary_path = "#{@project_directory}/original_images/1234.writing"
+
+      assert :ok = FileStore.store("1234", @project, :original_image, @content)
+      File.write!(temporary_path, [])
+
+      assert :ok = FileStore.store_by_moving("1234", @project, :original_image, temporary_path)
+      assert not File.exists?(temporary_path)
+      assert byte_size(@content) == File.stat!(target_path).size
+    end
+
     test "file deletion creates tombstone but leaves original file" do
       FileStore.store("1234", @project, :original_image, @content)
       assert File.exists?("#{@project_directory}/original_images/1234")

@@ -64,7 +64,7 @@ export class ImageUrlMaker {
             this.revokeUrl(imageId, ImageVariant.DISPLAY);
         }
 
-        for (const imageId of Object.keys(this.displayUrls)) {
+        for (const imageId of Object.keys(this.thumbnailUrls)) {
             this.revokeUrl(imageId, ImageVariant.THUMBNAIL);
         }
     }

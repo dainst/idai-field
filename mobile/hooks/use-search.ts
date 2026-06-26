@@ -1,19 +1,20 @@
-import { Document, Query } from 'idai-field-core';
+import { Document, FindOptions, Query } from 'idai-field-core';
 import { useCallback, useEffect, useState } from 'react';
 import { DocumentRepository } from '@/repositories/document-repository';
 
 const useSearch = (
   repository: DocumentRepository | undefined,
-  query: Query
+  query: Query,
+  options?: FindOptions
 ): Document[] => {
   const [documents, setDocuments] = useState<Document[]>([]);
 
   const issueSearch = useCallback(
     () =>
-      repository?.find(query)
+      repository?.find(query, options)
         .then((result) => setDocuments(result.documents))
         .catch((err) => console.log('Documents not found. Error:', err)),
-    [repository, query]
+    [repository, query, options]
   );
 
   useEffect(() => {

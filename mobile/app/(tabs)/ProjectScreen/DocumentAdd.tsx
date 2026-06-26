@@ -270,7 +270,8 @@ const DocumentAdd: React.FC = () => {
         categoryName,
         newResource,
         updatePhotoCapture,
-        updateSoilProfileCapture
+        updateSoilProfileCapture,
+        preferencesContext.preferences.username
       )}
     />
   );
@@ -287,13 +288,15 @@ const renderPhotoResourceActions = (
   categoryName: string,
   resource: NewResource,
   updatePhotoCapture: (data: FieldworkPhotoCaptureData) => void,
-  updateSoilProfileCapture: (data: SoilProfileCaptureData) => void
+  updateSoilProfileCapture: (data: SoilProfileCaptureData) => void,
+  username?: string
 ) => {
   if (categoryName === 'Photo') {
     return (
       <PhotoCameraButton
         capturedUri={getStringValue(resource.imageUri ?? resource.fieldworkPhotoUri)}
         onCapture={updatePhotoCapture}
+        username={username}
       />
     );
   }
@@ -303,6 +306,7 @@ const renderPhotoResourceActions = (
       <SoilProfileCameraButton
         capturedUri={getStringValue(resource.soilProfilePhotoUri)}
         onCapture={updateSoilProfileCapture}
+        username={username}
       />
     );
   }

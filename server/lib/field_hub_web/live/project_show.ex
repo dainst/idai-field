@@ -260,7 +260,7 @@ defmodule FieldHubWeb.Live.ProjectShow do
           error
 
         :updated ->
-          {:ok, "Successfully updated the password to '#{new_password}'."}
+          {:ok, "Password updated successfully."}
 
         :unknown ->
           {:error,

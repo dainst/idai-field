@@ -66,6 +66,39 @@ const REPORT_REVIEW_CATEGORIES = ['ReportPreparationReview', 'ReportEditorialCro
 const FEATURE_CATEGORIES = ['Feature', 'FeatureSegment'];
 const MEDIA_RELATIONS = ['depicts', 'isDepictedIn', 'isSubjectOf', 'isResultOf'];
 const CONTAINMENT_RELATIONS = ['liesWithin', 'isRecordedInFeature'];
+const FIELDWORK_IMAGE_UPLOAD_RELATED_FIELDS = [
+    'fieldworkImageUploadStatus',
+    'fieldworkImageUploadedAt',
+    'fieldworkImageUploadedUri',
+    'fieldworkImageUploadTarget',
+    'fieldworkImageUploadedProject',
+    'fieldworkImageUploadedSizeBytes',
+    'fieldworkImageUploadedMd5',
+    'fieldworkImageStoredSizeBytes',
+    'fieldworkImageStoredMd5',
+    'fieldworkImageStoredSha256',
+    'digitalSourcePreservation'
+];
+const FIELDWORK_IMAGE_UPLOAD_RULES = [
+    {
+        category: 'Photo',
+        uriFields: ['fieldworkPhotoUri', 'imageUri', 'fileUri'],
+        ruleId: 'fieldwork-photo-upload-missing',
+        message: 'Field Hub 원본 사진 백업이 아직 확인되지 않았습니다.'
+    },
+    {
+        category: 'SoilProfilePhoto',
+        uriFields: ['soilProfilePhotoUri', 'imageUri', 'fieldworkPhotoUri'],
+        ruleId: 'soil-profile-photo-upload-missing',
+        message: 'Field Hub 토층 원본 사진 백업이 아직 확인되지 않았습니다.'
+    },
+    {
+        category: 'Drawing',
+        uriFields: ['fieldworkPhotoUri', 'imageUri', 'fileUri'],
+        ruleId: 'fieldwork-drawing-upload-missing',
+        message: 'Field Hub 원본 도면 백업이 아직 확인되지 않았습니다.'
+    }
+];
 
 export const KOREAN_FIELDWORK_READINESS_RULES: KoreanFieldworkReadinessRule[] = [
     {
@@ -227,6 +260,32 @@ export const KOREAN_FIELDWORK_READINESS_RULES: KoreanFieldworkReadinessRule[] = 
                 '보고서 검토 기록에 교차 확인 대상이 없습니다.',
                 ['reportCrossCheck'],
                 '원고, 사진대장, 도면대장, 유물목록, 시료목록 중 확인 대상을 남기세요.'
+            )];
+        }
+    },
+    {
+        id: 'fieldwork-image-upload-missing',
+        label: 'Field Hub 원본 매체 백업 확인',
+        relatedFields: FIELDWORK_IMAGE_UPLOAD_RELATED_FIELDS,
+        evaluate: (document) => {
+            const rule = FIELDWORK_IMAGE_UPLOAD_RULES.find((candidate) =>
+                candidate.category === document.resource.category
+            );
+            if (!rule) return [];
+
+            const localUploadSource = rule.uriFields
+                .map((fieldName) => getTextValue(document.resource[fieldName]))
+                .find(isUploadableLocalUri);
+            if (!localUploadSource
+                    || hasConfirmedKoreanFieldworkImageUpload(document.resource, localUploadSource)) return [];
+
+            return [makeIssue(
+                document,
+                rule.ruleId,
+                'warning',
+                rule.message,
+                FIELDWORK_IMAGE_UPLOAD_RELATED_FIELDS,
+                '동기화 연결 후 원본 매체 업로드가 완료됐는지 확인하고 서버 업로드 시각을 남기세요.'
             )];
         }
     }
@@ -398,6 +457,96 @@ function hasValue(value: any): boolean {
     return Array.isArray(value)
         ? value.length > 0
         : value !== undefined && value !== null && value !== '';
+}
+
+function getTextValue(value: unknown): string|undefined {
+
+    return typeof value === 'string' && value.trim().length > 0
+        ? value.trim()
+        : undefined;
+}
+
+function getNumberValue(value: unknown): number|undefined {
+
+    if (typeof value === 'number' && Number.isFinite(value)) return value;
+
+    if (typeof value === 'string' && value.trim().length > 0) {
+        const parsed = Number(value);
+        if (Number.isFinite(parsed)) return parsed;
+    }
+
+    return undefined;
+}
+
+function isUploadableLocalUri(uri: string|undefined): boolean {
+
+    return !!uri && /^(file|content):\/\//.test(uri);
+}
+
+export function hasConfirmedKoreanFieldworkImageUpload(resource: Record<string, any>,
+                                                       sourceUri?: string): boolean {
+
+    const uploadedUri = getTextValue(resource.fieldworkImageUploadedUri);
+    const uploadTarget = getTextValue(resource.fieldworkImageUploadTarget);
+    const uploadedProject = getTextValue(resource.fieldworkImageUploadedProject);
+    const resourceId = getTextValue(resource.id);
+
+    return resource.fieldworkImageUploadStatus === 'uploaded'
+        && hasValue(resource.fieldworkImageUploadedAt)
+        && uploadedUri !== undefined
+        && (sourceUri === undefined || uploadedUri === sourceUri)
+        && uploadTarget !== undefined
+        && uploadedProject !== undefined
+        && resourceId !== undefined
+        && isConfirmedFieldHubOriginalImageTarget(uploadTarget, uploadedProject, resourceId)
+        && hasConfirmedUploadChecksum(resource, sourceUri)
+        && hasConfirmedUploadSize(resource, sourceUri)
+        && hasConfirmedStoredFileMetadata(resource)
+        && hasConfirmedDigitalSourcePreservation(resource);
+}
+
+function hasConfirmedUploadChecksum(resource: Record<string, any>, sourceUri?: string): boolean {
+
+    return !sourceUri?.startsWith('file://')
+        || hasValue(resource.fieldworkImageUploadedMd5);
+}
+
+function hasConfirmedUploadSize(resource: Record<string, any>, sourceUri?: string): boolean {
+
+    return !sourceUri?.startsWith('file://')
+        || getNumberValue(resource.fieldworkImageUploadedSizeBytes) !== undefined;
+}
+
+function hasConfirmedStoredFileMetadata(resource: Record<string, any>): boolean {
+
+    return getNumberValue(resource.fieldworkImageStoredSizeBytes) !== undefined
+        && hasValue(resource.fieldworkImageStoredMd5)
+        && hasValue(resource.fieldworkImageStoredSha256);
+}
+
+function isConfirmedFieldHubOriginalImageTarget(uploadTarget: string,
+                                                project: string,
+                                                resourceId: string): boolean {
+
+    const expectedTargetSuffix = [
+        '',
+        'files',
+        encodeURIComponent(project),
+        `${encodeURIComponent(resourceId)}?type=original_image`
+    ].join('/');
+
+    return uploadTarget.endsWith(expectedTargetSuffix);
+}
+
+function hasConfirmedDigitalSourcePreservation(resource: Record<string, any>): boolean {
+
+    if (!Array.isArray(resource.digitalSourcePreservation)) return false;
+
+    const requiredValues = resource.category === 'Drawing'
+        ? ['originalDrawing', 'webOrServerBackup', 'backupVerified']
+        : ['originalPhoto', 'originalImage', 'webOrServerBackup', 'backupVerified'];
+
+    return requiredValues.every(value => resource.digitalSourcePreservation.includes(value));
 }
 
 function makeIssue(

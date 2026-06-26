@@ -140,7 +140,7 @@ defmodule FieldHubWeb.Api.Rest.ProjectTest do
       response = Jason.decode!(conn.resp_body)
 
       expected_reason =
-        "Invalid project name: Identifier can have #{@identifier_length} characters maximum and requires valid name, regex: /^[a-z][a-z0-9_$()+/-]*$/"
+        "Invalid project name: Identifier can have #{@identifier_length} characters maximum and requires valid name, regex: /^[a-z][0-9a-z_-]*$/"
 
       assert %{
                "reason" => ^expected_reason
@@ -163,7 +163,7 @@ defmodule FieldHubWeb.Api.Rest.ProjectTest do
       response = Jason.decode!(conn.resp_body)
 
       expected_reason =
-        "Invalid project name: Identifier can have #{@identifier_length} characters maximum and requires valid name, regex: /^[a-z][a-z0-9_$()+/-]*$/"
+        "Invalid project name: Identifier can have #{@identifier_length} characters maximum and requires valid name, regex: /^[a-z][0-9a-z_-]*$/"
 
       assert %{
                "reason" => ^expected_reason

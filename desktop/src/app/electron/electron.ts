@@ -16,6 +16,7 @@ const remoteFallback = electronFallback?.remote;
 export const electronApp = api?.app ?? remoteFallback?.app;
 export const electronDialog = api?.dialog ?? remoteFallback?.dialog;
 export const electronFilesystem = api?.filesystem ?? (typeof window !== 'undefined' ? (window as any).filesystem : undefined);
+export const electronCrypto = api?.crypto ?? safeRequire('crypto');
 export const electronFs = api?.fs ?? safeRequire('fs');
 export const electronGlobals = api?.globals;
 export const electronIpc = api?.ipcRenderer ?? electronFallback?.ipcRenderer;

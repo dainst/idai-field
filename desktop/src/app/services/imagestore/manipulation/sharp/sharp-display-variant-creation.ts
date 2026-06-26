@@ -16,10 +16,14 @@ export module SharpDisplayVariantCreation {
         
         const imageId: string = document.resource.id;
         const fileExtension: string = ImageDocument.getOriginalFileExtension(document);
-        const width: number = document.resource.width;
-        const height: number = document.resource.height;
-
         const sharpImageHandle = SharpImageManipulation.getImageObject(originalData);
+        const imageMetadata = await sharpImageHandle.metadata();
+        const { width, height } = getImageDimensions(
+            document.resource.width,
+            document.resource.height,
+            imageMetadata.width,
+            imageMetadata.height
+        );
 
         const convertToJpeg: boolean = await shouldConvertToJpeg(
             width * height, fileExtension, sharpImageHandle
@@ -50,5 +54,27 @@ export module SharpDisplayVariantCreation {
         if (fileExtension.toLowerCase().includes('png') && pixels > ImageManipulation.MAX_ORIGINAL_PIXELS) {
             return await SharpImageManipulation.isOpaque(sharpLibHandle);
         }
+    }
+
+
+    function getImageDimensions(resourceWidth: unknown, resourceHeight: unknown,
+                                fallbackWidth: unknown, fallbackHeight: unknown) {
+
+        return {
+            width: getImageDimension(resourceWidth, fallbackWidth),
+            height: getImageDimension(resourceHeight, fallbackHeight)
+        };
+    }
+
+
+    function getImageDimension(resourceDimension: unknown, fallbackDimension: unknown): number {
+
+        const parsedResourceDimension = parseFloat(resourceDimension as any);
+        const parsedFallbackDimension = parseFloat(fallbackDimension as any);
+
+        if (Number.isFinite(parsedResourceDimension) && parsedResourceDimension > 0) return parsedResourceDimension;
+        if (Number.isFinite(parsedFallbackDimension) && parsedFallbackDimension > 0) return parsedFallbackDimension;
+
+        return 0;
     }
 }

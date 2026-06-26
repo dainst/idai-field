@@ -122,11 +122,20 @@ defmodule FieldHubWeb.Rest.Api.Rest.File do
            },
          {:size_check, {:ok, :matches}} <-
            {:size_check, check_sizes(tmp_file_path, expected_content_length)} do
-      FileStore.store_by_moving(sanitized_uuid, sanitized_project, parsed_type, tmp_file_path)
+      case FileStore.store_by_moving(sanitized_uuid, sanitized_project, parsed_type, tmp_file_path) do
+        :ok ->
+          FileStore.clear_cache(sanitized_project)
+          stored_file_metadata = get_stored_file_metadata(sanitized_uuid, sanitized_project, parsed_type)
+          send_resp(conn, 201, Jason.encode!(Map.put(stored_file_metadata, :info, "File created.")))
 
-      FileStore.clear_cache(sanitized_project)
+        {:error, posix} ->
+          Logger.error(
+            "Got `#{posix}` while trying to store file `#{uuid}` (#{type}) for project `#{project}`."
+          )
 
-      send_resp(conn, 201, Jason.encode!(%{info: "File created."}))
+          File.rm(tmp_file_path)
+          send_resp(conn, 500, Jason.encode!(%{reason: "Unable to store file."}))
+      end
     else
       {:parsed_type, {:error, type}} ->
         send_resp(conn, 400, Jason.encode!(%{reason: "Unknown file type: #{type}"}))
@@ -179,35 +188,74 @@ defmodule FieldHubWeb.Rest.Api.Rest.File do
       [string_value] ->
         Integer.parse(string_value)
         |> case do
-          {value, ""} ->
+          {value, ""} when value >= 0 ->
             {:ok, value}
 
           _ ->
             {:error, :invalid_content_length_header}
         end
+
+      _ ->
+        {:error, :invalid_content_length_header}
     end
   end
 
   defp start_body_streaming(conn, io_device, target_path) do
     parent = self()
 
-    spawn(fn ->
-      Process.monitor(parent)
+    monitor_pid =
+      spawn(fn ->
+        Process.monitor(parent)
 
-      receive do
-        {:DOWN, _ref, :process, _pid, {:shutdown, :local_closed}} ->
-          Logger.warning(
-            "File upload got interrupted for `#{target_path}`, deleting data received so far."
-          )
+        receive do
+          {:DOWN, _ref, :process, _pid, {:shutdown, :local_closed}} ->
+            Logger.warning(
+              "File upload got interrupted for `#{target_path}`, deleting data received so far."
+            )
 
-          File.rm(target_path)
-      end
-    end)
+            File.rm(target_path)
+        end
+      end)
 
-    stream_body(conn, io_device, target_path)
+    try do
+      stream_body(conn, io_device, target_path)
+    after
+      File.close(io_device)
+      Process.exit(monitor_pid, :shutdown)
+    end
   end
 
   @read_length Application.compile_env(:field_hub, :file_read_chunk_size_bytes, 8_000_000)
+  defp get_stored_file_metadata(uuid, project, type) do
+    with {:ok, file_path} <- FileStore.get_file_path(uuid, project, type),
+         {:ok, %Stat{size: size}} <- File.stat(file_path),
+         {:ok, md5} <- get_file_hash(file_path, :md5),
+         {:ok, sha256} <- get_file_hash(file_path, :sha256) do
+      %{
+        size_bytes: size,
+        md5: md5,
+        sha256: sha256
+      }
+    else
+      _ -> %{}
+    end
+  end
+
+  defp get_file_hash(file_path, algorithm) do
+    hash =
+      file_path
+      |> File.stream!([], @read_length)
+      |> Enum.reduce(:crypto.hash_init(algorithm), fn data, context ->
+        :crypto.hash_update(context, data)
+      end)
+      |> :crypto.hash_final()
+      |> Base.encode16(case: :lower)
+
+    {:ok, hash}
+  rescue
+    _ -> {:error, :hash_failed}
+  end
+
   defp stream_body(conn, io_device, path) do
     read_body(conn, length: @read_length)
     |> case do

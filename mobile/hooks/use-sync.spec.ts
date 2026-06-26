@@ -4,7 +4,7 @@ import {
   waitFor,
 } from '@testing-library/react-native';
 import { SyncService, SyncStatus } from 'idai-field-core';
-import useSync from './use-sync';
+import useSync, { getSyncErrorMessage } from './use-sync';
 
 const mockSyncServices: any[] = [];
 
@@ -81,8 +81,7 @@ describe('useSync', () => {
       );
       expect(service.startSync).toHaveBeenCalledWith(
         undefined,
-        true,
-        expect.any(Function)
+        true
       );
     });
   });
@@ -127,6 +126,18 @@ describe('useSync', () => {
     });
 
     expect(mockSyncServices[0].startSync).not.toHaveBeenCalled();
+  });
+
+  it('logs sync failures without leaking credentials', async () => {
+    const error = new Error(
+      'sync failed password=secret Authorization: Basic abc123'
+    );
+
+    const message = getSyncErrorMessage(error, 'secret');
+
+    expect(message).not.toContain('secret');
+    expect(message).not.toContain('abc123');
+    expect(message).toContain('[redacted]');
   });
 });
 

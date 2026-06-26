@@ -3,7 +3,7 @@ import { DecimalPipe } from '@angular/common';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Menus } from '../../services/menus';
 import { Map } from 'tsfun';
-import { FileInfo, ImageStore, ImageVariant, FileSyncPreference, PouchdbDatastore,
+import { FileInfo, ImageStore, ImageVariant, FileSyncPreference, PouchdbDatastore, ImageSyncService,
     SyncService } from 'idai-field-core';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
@@ -81,6 +81,8 @@ export class DownloadProjectComponent {
     public async onStartClicked() {
 
         this.menuService.setContext(MenuContext.MODAL);
+        this.cancelling = false;
+        this.fileDownloadPromises = [];
 
         const settings: Settings = this.settingsProvider.getSettings();
 
@@ -109,7 +111,7 @@ export class DownloadProjectComponent {
                     this.getUrl(),
                     this.getPassword(),
                     this.getProjectIdentifier(),
-                    preferences.map(preference => preference.variant)
+                    ImageSyncService.getRemoteQueryTypes(preferences)
                 ) : undefined;
 
             if (Settings.isSynchronizationActive(settings)) this.syncService.stopSync();
@@ -126,7 +128,7 @@ export class DownloadProjectComponent {
                 await AngularUtility.refresh(2000);
 
                 if (this.overwriteProject) await this.imageStore.deleteData(this.getProjectIdentifier());
-                await this.syncFiles(progressModalRef, fileList);
+                await this.syncFiles(progressModalRef, fileList, preferences);
                 progressModalRef.componentInstance.filesProgressPercent = 100;
             }
 
@@ -266,7 +268,8 @@ export class DownloadProjectComponent {
     }
 
 
-    private async syncFiles(progressModalRef: NgbModalRef, files: { [uuid: string]: FileInfo }): Promise<void> {
+    private async syncFiles(progressModalRef: NgbModalRef, files: { [uuid: string]: FileInfo },
+                            preferences: FileSyncPreference[]): Promise<void> {
 
         let counter: number = 0;
         const fileCount: number = Object.keys(files).length;
@@ -281,7 +284,7 @@ export class DownloadProjectComponent {
         }
 
         for (const batch of batches) {
-            await this.loadImageBatch(files, batch, 5);
+            await this.loadImageBatch(files, batch, 5, preferences);
 
             counter += batch.length;
             const progressValue = ((counter / fileCount) * 100);
@@ -290,38 +293,71 @@ export class DownloadProjectComponent {
     }
 
 
-    private async loadImageBatch(files: { [uuid: string]: FileInfo }, batch: string[], retries: number) {
+    private async loadImageBatch(files: { [uuid: string]: FileInfo }, batch: string[], retries: number,
+                                 preferences: FileSyncPreference[]) {
 
         try {
             if (this.cancelling) throw 'canceled';
 
+            const selectedVariants: ImageVariant[] = preferences.map(preference => preference.variant);
+            const batchDownloadPromises: Array<Promise<void>> = [];
+
             for (const uuid of batch) {
                 if (files[uuid].deleted) {
-                    this.imageStore.remove(uuid, this.getProjectIdentifier());
+                    await this.imageStore.remove(uuid, this.getProjectIdentifier());
                     continue;
                 }
 
-                for (const variant of files[uuid].variants) {
-                    if ([ImageVariant.ORIGINAL, ImageVariant.THUMBNAIL].includes(variant.name)) {
-                        this.fileDownloadPromises.push(
-                            this.remoteImageStore.getDataUsingCredentials(
-                                this.getUrl(), this.getPassword(), uuid, variant.name, this.getProjectIdentifier()
-                            ).then((data) => {
-                                return this.imageStore.store(uuid, data, this.getProjectIdentifier(), variant.name);
-                            })
-                        );
-                    }
+                for (const variant of this.getDownloadVariants(files[uuid], selectedVariants)) {
+                    const downloadPromise = this.remoteImageStore.getDataUsingCredentials(
+                        this.getUrl(), this.getPassword(), uuid, variant, this.getProjectIdentifier()
+                    ).then(async (data) => {
+                        await this.imageStore.store(uuid, data, this.getProjectIdentifier(), variant);
+                        if (variant === ImageVariant.ORIGINAL
+                                && selectedVariants.includes(ImageVariant.THUMBNAIL)
+                                && !DownloadProjectComponent.hasVariant(files[uuid], ImageVariant.THUMBNAIL)) {
+                            await this.imageStore.getData(uuid, ImageVariant.THUMBNAIL, this.getProjectIdentifier());
+                        }
+                    });
+
+                    this.fileDownloadPromises.push(downloadPromise);
+                    batchDownloadPromises.push(downloadPromise);
                 }
             }
 
-            await Promise.all(this.fileDownloadPromises);
+            const batchResults = await Promise.allSettled(batchDownloadPromises);
+            const failedResult = batchResults.find(result => result.status === 'rejected') as PromiseRejectedResult;
+            if (failedResult) throw failedResult.reason;
         } catch (e) {
+            if (e === 'canceled') throw e;
+
             if (retries > 0) {
-                this.loadImageBatch(files, batch, retries - 1)
+                await this.loadImageBatch(files, batch, retries - 1, preferences)
             } else {
                 throw "fileDownloadInterrupted";
             }
         }
+    }
+
+
+    private getDownloadVariants(fileInfo: FileInfo, selectedVariants: ImageVariant[]): ImageVariant[] {
+
+        const result: ImageVariant[] = [];
+
+        for (const variant of [ImageVariant.ORIGINAL, ImageVariant.THUMBNAIL]) {
+            if (selectedVariants.includes(variant) && DownloadProjectComponent.hasVariant(fileInfo, variant)) {
+                result.push(variant);
+            }
+        }
+
+        if (selectedVariants.includes(ImageVariant.THUMBNAIL)
+                && !DownloadProjectComponent.hasVariant(fileInfo, ImageVariant.THUMBNAIL)
+                && DownloadProjectComponent.hasVariant(fileInfo, ImageVariant.ORIGINAL)
+                && !result.includes(ImageVariant.ORIGINAL)) {
+            result.push(ImageVariant.ORIGINAL);
+        }
+
+        return result;
     }
 
 
@@ -333,7 +369,7 @@ export class DownloadProjectComponent {
             this.cancelling = true;
             this.syncService.stopReplication();
             await this.pouchdbDatastore.destroyDb(this.getProjectIdentifier());
-            await Promise.all(this.fileDownloadPromises);
+            await Promise.allSettled(this.fileDownloadPromises);
         } catch (err) {
         } finally {
             await this.imageStore.deleteData(this.getProjectIdentifier());
@@ -404,5 +440,11 @@ export class DownloadProjectComponent {
     private static parseSequenceNumber(updateSequence: string|number): number {
 
         return Number.parseInt((updateSequence + '').split('-')[0], 10);
+    }
+
+
+    private static hasVariant(fileInfo: FileInfo, variant: ImageVariant): boolean {
+
+        return (fileInfo.variants?.map(value => value.name) ?? fileInfo.types ?? []).includes(variant);
     }
 }

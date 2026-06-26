@@ -299,16 +299,27 @@ const featureRows = [
 ];
 
 const releaseCriticalPatterns = [
-  /^tools\/korean-fieldwork-(parity-check|verify)\.js$/,
+  /^tools\/korean-fieldwork-(media-contract-check|parity-check|verify)\.js$/,
+  /^core\/src\/datastore\/image\/(field-hub-file-url|image-sync-service)\.ts$/,
+  /^core\/test\/datastore\/image\/(field-hub-file-url|image-sync-service)\.spec\.ts$/,
+  /^core\/src\/datastore\/pouchdb\/(index|sync-service)\.ts$/,
+  /^core\/test\/datastore\/pouchdb\/sync-service\.spec\.ts$/,
+  /^core\/src\/model\/document\/image-document\.ts$/,
+  /^core\/test\/model\/image-document\.spec\.ts$/,
+  /^mobile\/app\/\(tabs\)\/ProjectScreen\/Document(Add|Edit)\.tsx$/,
+  /^mobile\/app\/\(tabs\)\/ProjectScreen\/index\.tsx$/,
   /^mobile\/app\/\(tabs\)\/SettingsScreen\.tsx$/,
   /^mobile\/components\/Home\/CreateProjectModal(\.spec)?\.tsx$/,
   /^mobile\/components\/Home\/LoadProjectModal\.spec\.tsx$/,
   /^mobile\/components\/Home\/project-name-validation(\.spec)?\.ts$/,
   /^mobile\/components\/Project\/KoreanFieldwork.*\.(ts|tsx)$/,
+  /^mobile\/components\/Project\/SoilProfileCameraButton(\.spec)?\.tsx?$/,
   /^mobile\/components\/Project\/Map\/korean-fieldwork-map-(provider-status|start-panel)(\.spec)?\.ts$/,
   /^mobile\/components\/Project\/korean-fieldwork-.*\.(ts|tsx)$/,
   /^mobile\/components\/Project\/soil-color-photo-assist(\.spec)?\.ts$/,
   /^mobile\/components\/common\/forms\/DocumentForm(\.spec)?\.tsx$/,
+  /^mobile\/contexts\/project-context(\.spec)?\.tsx$/,
+  /^mobile\/hooks\/use-(fieldwork-image-sync|preferences|search|sync)(\.spec)?\.ts$/,
   /^mobile\/hooks\/use-korean-fieldwork-project-setup-defaults(\.spec)?\.ts$/,
   /^mobile\/models\/project-settings(\.spec)?\.ts$/,
   /^mobile\/test\/screens\/.*\.spec\.tsx$/,
@@ -317,16 +328,31 @@ const releaseCriticalPatterns = [
   /^desktop\/test\/unit\/components\/docedit\/core\/edit-form\.component\.spec\.ts$/,
   /^desktop\/src\/app\/components\/project\/(create-project-modal|project-information-modal)\.component\.(ts|html|scss)$/,
   /^desktop\/src\/app\/components\/project\/create-project-modal\.html$/,
+  /^desktop\/src\/app\/components\/project\/download-project\.component\.(ts|html|scss)$/,
   /^desktop\/src\/app\/components\/settings\/settings\.(component\.)?(ts|html|scss)$/,
+  /^desktop\/src\/app\/components\/image\/export\/image-export-modal\.component\.ts$/,
+  /^desktop\/src\/app\/components\/image\/grid\/construct-grid\.ts$/,
+  /^desktop\/src\/app\/services\/imagestore\/(export-images|image-tool-launcher|image-url-maker|remote-image-store)\.ts$/,
+  /^desktop\/src\/app\/services\/imagestore\/manipulation\/(jimp|sharp)\/.*display-variant-creation\.ts$/,
+  /^desktop\/src\/app\/services\/express-server\/express-server\.ts$/,
   /^desktop\/src\/app\/services\/settings\/settings(-provider|-serializer)?\.ts$/,
   /^desktop\/electron\/main\.js$/,
-  /^desktop\/test\/unit\/components\/project\/(create-project-modal|project-information-modal)\.component\.spec\.ts$/,
+  /^desktop\/test\/unit\/components\/images\/grid\/construct-grid\.spec\.ts$/,
+  /^desktop\/test\/unit\/services\/express-server\.spec\.ts$/,
+  /^desktop\/test\/unit\/services\/imagestore\/(export-images|image-tool-launcher|image-url-maker|remote-image-store)\.spec\.ts$/,
+  /^desktop\/test\/unit\/components\/project\/(create-project-modal|download-project|project-information-modal)\.component\.spec\.ts$/,
   /^desktop\/test\/unit\/components\/settings\/settings\.component\.spec\.ts$/,
   /^desktop\/src\/app\/components\/resources\/korean-fieldwork-priority-strip(\.component)?\.(ts|html|scss)$/,
   /^desktop\/src\/app\/util\/korean-fieldwork-.*\.ts$/,
   /^desktop\/test\/unit\/components\/docedit\/core\/korean-fieldwork-.*\.spec\.ts$/,
   /^desktop\/test\/unit\/components\/resources\/korean-fieldwork-priority-strip\.component\.spec\.ts$/,
-  /^desktop\/test\/unit\/util\/korean-fieldwork-.*\.spec\.ts$/
+  /^desktop\/test\/unit\/util\/korean-fieldwork-.*\.spec\.ts$/,
+  /^server\/lib\/field_hub\/(cli|file_store|project)\.ex$/,
+  /^server\/lib\/field_hub_web\/live\/project_(create|show)\.(ex|html\.heex)$/,
+  /^server\/lib\/field_hub_web\/rest\/api\/(file|project)\.ex$/,
+  /^server\/test\/field_hub\/(cli|file_store|project)_test\.exs$/,
+  /^server\/test\/field_hub_web\/controllers\/api\/(file|project)_controller_test\.exs$/,
+  /^server\/test\/field_hub_web\/live\/project_(create|show)_live_test\.exs$/
 ];
 
 const classifiedSupportSourceGroups = [
@@ -373,8 +399,24 @@ const classifiedSupportSourceGroups = [
   {
     reason: 'release verification tooling that keeps tablet and desktop fieldwork flows aligned',
     files: [
+      'tools/korean-fieldwork-media-contract-check.js',
       'tools/korean-fieldwork-parity-check.js',
       'tools/korean-fieldwork-verify.js'
+    ]
+  },
+  {
+    reason: 'desktop local Field Hub-compatible file API bridge coverage for tablet uploads',
+    files: [
+      'desktop/src/app/services/express-server/express-server.ts',
+      'desktop/test/unit/services/express-server.spec.ts'
+    ]
+  },
+  {
+    reason: 'desktop image export handover manifests for later report preparation',
+    files: [
+      'desktop/src/app/components/image/export/image-export-modal.component.ts',
+      'desktop/src/app/services/imagestore/export-images.ts',
+      'desktop/test/unit/services/imagestore/export-images.spec.ts'
     ]
   },
   {
@@ -388,6 +430,14 @@ const classifiedSupportSourceGroups = [
       'desktop/src/app/util/korean-fieldwork-record-actions.ts',
       'desktop/src/app/util/korean-fieldwork-record-work-filters.ts',
       'desktop/src/app/util/korean-fieldwork-today-stats.ts'
+    ]
+  },
+  {
+    reason: 'tablet project screen that composes fieldwork panels and closeout summaries',
+    files: [
+      'mobile/app/(tabs)/ProjectScreen/DocumentAdd.tsx',
+      'mobile/app/(tabs)/ProjectScreen/DocumentEdit.tsx',
+      'mobile/app/(tabs)/ProjectScreen/index.tsx'
     ]
   },
   {
@@ -437,6 +487,8 @@ const classifiedSupportSources = classifiedSupportSourceGroups
   .flatMap((group) => group.files);
 
 const sourceInventoryPatterns = [
+  /^mobile\/app\/\(tabs\)\/ProjectScreen\/Document(Add|Edit)\.tsx$/,
+  /^mobile\/app\/\(tabs\)\/ProjectScreen\/index\.tsx$/,
   /^mobile\/app\/\(tabs\)\/SettingsScreen\.tsx$/,
   /^mobile\/components\/Home\/CreateProjectModal\.tsx$/,
   /^mobile\/components\/Project\/KoreanFieldwork.*\.tsx$/,
@@ -453,7 +505,7 @@ const sourceInventoryPatterns = [
   /^desktop\/src\/app\/components\/settings\/settings\.(component\.ts|html|scss)$/,
   /^desktop\/src\/app\/components\/resources\/korean-fieldwork-priority-strip\.(component\.ts|html|scss)$/,
   /^desktop\/src\/app\/util\/korean-fieldwork-.*\.ts$/,
-  /^tools\/korean-fieldwork-(parity-check|verify)\.js$/
+  /^tools\/korean-fieldwork-(media-contract-check|parity-check|verify)\.js$/
 ];
 
 const sharedPriorityTaskIds = [

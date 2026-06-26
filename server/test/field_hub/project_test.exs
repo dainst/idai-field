@@ -56,6 +56,18 @@ defmodule FieldHub.ProjectTest do
     assert %{database: :unknown_project, file_store: []} = Project.delete(identifier)
   end
 
+  test "can not create project with slash in name" do
+    identifier = "test/project"
+
+    on_exit(fn ->
+      Project.delete(identifier)
+    end)
+
+    refute Project.valid_identifier?(identifier)
+    assert :invalid_name = Project.create(identifier)
+    assert %{database: :unknown_project, file_store: []} = Project.delete(identifier)
+  end
+
   test "can not create project with more than the maximum characters in identifier" do
     long_project_identifier = String.duplicate("a", @identifier_length + 1)
 

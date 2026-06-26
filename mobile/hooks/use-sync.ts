@@ -1,4 +1,4 @@
-import { Document, PouchdbDatastore, SyncService, SyncStatus } from 'idai-field-core';
+import { PouchdbDatastore, SyncService, SyncStatus } from 'idai-field-core';
 import { useEffect, useState } from 'react';
 import { ProjectSettings } from '@/models/preferences';
 
@@ -37,7 +37,7 @@ const useSync = ({
       try {
         service.stopSync();
       } catch (error) {
-        console.error('Failed to stop sync:', error);
+        console.error('Failed to stop sync:', getSyncErrorMessage(error));
       }
     };
   }, [pouchdbDatastore]);
@@ -84,7 +84,7 @@ const useSync = ({
         );
         if (!isCancelled) setInitializedSyncKey(syncKey);
       } catch (error) {
-        console.error('Failed to initialize sync:', error);
+        console.error('Failed to initialize sync:', getSyncErrorMessage(error, projectSettings.password));
         setStatus(SyncStatus.Error);
       }
     };
@@ -116,10 +116,10 @@ const useSync = ({
     const startSyncProcess = async () => {
       try {
         if (!isCancelled) {
-          await syncService.startSync(undefined, true, isNotAnImage);
+          await syncService.startSync(undefined, true);
         }
       } catch (error) {
-        console.error('Failed to start sync:', error);
+        console.error('Failed to start sync:', getSyncErrorMessage(error, projectSettings.password));
         setStatus(SyncStatus.Error);
       }
     };
@@ -131,18 +131,70 @@ const useSync = ({
       try {
         syncService.stopSync();
       } catch (error) {
-        console.error('Failed to stop sync:', error);
+        console.error('Failed to stop sync:', getSyncErrorMessage(error, projectSettings.password));
       }
     };
-  }, [syncService, live, project, projectSettings?.connected, initializedSyncKey]);
+  }, [syncService, live, project, projectSettings?.connected, projectSettings?.password, initializedSyncKey]);
 
   return status;
 };
 
-const isNotAnImage = (doc: Document) =>
-  !['Image', 'Photo', 'Drawing'].includes(doc.resource.category);
-
 const getSyncKey = (project: string, url: string, password?: string) =>
   [project, url, password ?? ''].join('\u001f');
+
+export const getSyncErrorMessage = (
+  error: unknown,
+  secret?: string
+): string => {
+  const parts: string[] = [];
+
+  if (error instanceof Error) {
+    parts.push(error.message);
+  } else if (typeof error === 'string') {
+    parts.push(error);
+  } else {
+    const message = getErrorProperty(error, 'message');
+    if (typeof message === 'string') parts.push(message);
+  }
+
+  const status = getErrorProperty(error, 'status');
+  if (typeof status === 'number' || typeof status === 'string') {
+    parts.push(`status ${status}`);
+  }
+
+  const code = getErrorProperty(error, 'code');
+  if (typeof code === 'number' || typeof code === 'string') {
+    parts.push(`code ${code}`);
+  }
+
+  return redactSensitiveSyncLogText(
+    parts.length > 0 ? parts.join(' ') : 'Unknown sync error',
+    secret ? [secret] : []
+  );
+};
+
+const getErrorProperty = (
+  value: unknown,
+  key: string
+): unknown =>
+  value && typeof value === 'object' && key in value
+    ? (value as Record<string, unknown>)[key]
+    : undefined;
+
+const redactSensitiveSyncLogText = (
+  value: string,
+  secrets: string[] = []
+): string => {
+  let result = value
+    .replace(/Basic\s+[A-Za-z0-9+/=._~-]+/gi, 'Basic [redacted]')
+    .replace(/(Authorization["']?\s*[:=]\s*["']?)[^"',\s}]+/gi, '$1[redacted]')
+    .replace(/(password["']?\s*[:=]\s*["']?)[^"',\s}]+/gi, '$1[redacted]');
+
+  for (const secret of secrets) {
+    if (secret) result = result.split(secret).join('[redacted]');
+  }
+
+  return result;
+};
 
 export default useSync;

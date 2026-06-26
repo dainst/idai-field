@@ -61,7 +61,7 @@ defmodule FieldHubWeb.Rest.Api.Rest.Project do
               400,
               Jason.encode!(%{
                 reason:
-                  "Invalid project name: Identifier can have #{@identifier_length} characters maximum and requires valid name, regex: /^[a-z][a-z0-9_$()+/-]*$/"
+                  "Invalid project name: Identifier can have #{@identifier_length} characters maximum and requires valid name, regex: /^[a-z][0-9a-z_-]*$/"
               })
             )
 

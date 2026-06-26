@@ -3,7 +3,7 @@ import { Observable, Observer } from 'rxjs';
 import { isString } from 'tsfun';
 import { AppConfigurator, ConfigReader, ConfigurationDocument, getConfigurationName, ImageStore, ImageSyncService,
     KOREAN_FIELDWORK_CONFIGURATION_NAME, KOREAN_FIELDWORK_TEMPLATE_ID, Name, PouchdbDatastore,
-    ProjectConfiguration, SyncService, Template, Document, I18N, validateUrl, ObserverUtil } from 'idai-field-core';
+    ProjectConfiguration, SyncAuth, SyncService, Template, Document, I18N, validateUrl, ObserverUtil } from 'idai-field-core';
 import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';
 import { ExpressServer } from '../express-server/express-server';
@@ -320,10 +320,13 @@ export class SettingsService {
     }
 
 
-    private static async checkDatabaseExistence(url: string): Promise<boolean> {
+    private static async checkDatabaseExistence(url: string, auth?: SyncAuth): Promise<boolean> {
 
         try {
-            const info = await new PouchDB(url, { skip_setup: true }).info();
+            const options: any = { skip_setup: true };
+            if (auth) options.auth = auth;
+
+            const info = await new PouchDB(url, options).info();
             if (info.error) return false;
         } catch (err) {
             return false;

@@ -76,6 +76,194 @@ describe('Korean fieldwork readiness', () => {
     });
 
 
+    it('reports local tablet media without confirmed Field Hub original backup', () => {
+
+        const documents: any[] = [
+            makeDocument('photo-1', 'Photo', {
+                fieldworkPhotoUri: 'file:///tablet/photos/photo-1.jpg'
+            }),
+            makeDocument('soil-photo-1', 'SoilProfilePhoto', {
+                soilProfilePhotoUri: 'content://tablet/photos/soil-photo-1.jpg'
+            }),
+            makeDocument('drawing-1', 'Drawing', {
+                fileUri: 'file:///tablet/drawings/drawing-1.jpg'
+            }),
+            makeDocument('photo-2', 'Photo', {
+                fieldworkPhotoUri: 'file:///tablet/photos/photo-2.jpg',
+                digitalSourcePreservation: [
+                    'originalPhoto',
+                    'originalImage',
+                    'webOrServerBackup',
+                    'backupVerified'
+                ],
+                fieldworkImageUploadStatus: 'uploaded',
+                fieldworkImageUploadedAt: '2026-06-23T01:02:03.000Z',
+                fieldworkImageUploadedUri: 'file:///tablet/photos/photo-2.jpg',
+                fieldworkImageUploadTarget:
+                    'https://field.example/files/fieldwork/photo-2?type=original_image',
+                fieldworkImageUploadedProject: 'fieldwork',
+                fieldworkImageUploadedSizeBytes: 481516,
+                fieldworkImageUploadedMd5: 'tablet-md5',
+                fieldworkImageStoredSizeBytes: 481516,
+                fieldworkImageStoredMd5: 'tablet-md5',
+                fieldworkImageStoredSha256: 'server-sha256'
+            })
+        ];
+
+        const issues = getKoreanFieldworkReadinessIssues(documents as any);
+
+        expect(issues.map((issue) => issue.ruleId)).toEqual([
+            'fieldwork-photo-upload-missing',
+            'soil-profile-photo-upload-missing',
+            'fieldwork-drawing-upload-missing'
+        ]);
+        expect(issues[0].documentId).toBe('photo-1');
+        expect(issues[0].relatedFields).toEqual([
+            'fieldworkImageUploadStatus',
+            'fieldworkImageUploadedAt',
+            'fieldworkImageUploadedUri',
+            'fieldworkImageUploadTarget',
+            'fieldworkImageUploadedProject',
+            'fieldworkImageUploadedSizeBytes',
+            'fieldworkImageUploadedMd5',
+            'fieldworkImageStoredSizeBytes',
+            'fieldworkImageStoredMd5',
+            'fieldworkImageStoredSha256',
+            'digitalSourcePreservation'
+        ]);
+    });
+
+
+    it('keeps reporting tablet media when upload audit fields are incomplete', () => {
+
+        const documents: any[] = [
+            makeDocument('photo-1', 'Photo', {
+                fieldworkPhotoUri: 'file:///tablet/photos/photo-1.jpg',
+                fieldworkImageUploadStatus: 'uploaded',
+                fieldworkImageUploadedAt: '2026-06-23T01:02:03.000Z',
+                fieldworkImageUploadedUri: 'file:///tablet/photos/previous-photo.jpg',
+                fieldworkImageUploadTarget:
+                    'https://field.example/files/fieldwork/photo-1?type=original_image',
+                fieldworkImageUploadedProject: 'fieldwork',
+                digitalSourcePreservation: ['webOrServerBackup']
+            })
+        ];
+
+        const issues = getKoreanFieldworkReadinessIssues(documents as any);
+
+        expect(issues.map((issue) => issue.ruleId)).toEqual([
+            'fieldwork-photo-upload-missing'
+        ]);
+    });
+
+
+    it('keeps reporting tablet media when the upload target points to another file', () => {
+
+        const documents: any[] = [
+            makeDocument('photo-1', 'Photo', {
+                fieldworkPhotoUri: 'file:///tablet/photos/photo-1.jpg',
+                digitalSourcePreservation: [
+                    'originalPhoto',
+                    'originalImage',
+                    'webOrServerBackup',
+                    'backupVerified'
+                ],
+                fieldworkImageUploadStatus: 'uploaded',
+                fieldworkImageUploadedAt: '2026-06-23T01:02:03.000Z',
+                fieldworkImageUploadedUri: 'file:///tablet/photos/photo-1.jpg',
+                fieldworkImageUploadTarget:
+                    'https://field.example/files/fieldwork/other-photo?type=original_image',
+                fieldworkImageUploadedProject: 'fieldwork',
+                fieldworkImageUploadedSizeBytes: 481516,
+                fieldworkImageUploadedMd5: 'tablet-md5',
+                fieldworkImageStoredSizeBytes: 481516,
+                fieldworkImageStoredMd5: 'tablet-md5',
+                fieldworkImageStoredSha256: 'server-sha256'
+            })
+        ];
+
+        const issues = getKoreanFieldworkReadinessIssues(documents as any);
+
+        expect(issues.map((issue) => issue.ruleId)).toEqual([
+            'fieldwork-photo-upload-missing'
+        ]);
+    });
+
+
+    it('keeps reporting content URI tablet media when Field Hub stored metadata is missing', () => {
+
+        const documents: any[] = [
+            makeDocument('drawing-1', 'Drawing', {
+                fileUri: 'content://tablet/drawings/drawing-1.jpg',
+                digitalSourcePreservation: [
+                    'originalDrawing',
+                    'webOrServerBackup',
+                    'backupVerified'
+                ],
+                fieldworkImageUploadStatus: 'uploaded',
+                fieldworkImageUploadedAt: '2026-06-23T01:02:03.000Z',
+                fieldworkImageUploadedUri: 'content://tablet/drawings/drawing-1.jpg',
+                fieldworkImageUploadTarget:
+                    'https://field.example/files/fieldwork/drawing-1?type=original_image',
+                fieldworkImageUploadedProject: 'fieldwork'
+            })
+        ];
+
+        const issues = getKoreanFieldworkReadinessIssues(documents as any);
+
+        expect(issues.map((issue) => issue.ruleId)).toEqual([
+            'fieldwork-drawing-upload-missing'
+        ]);
+    });
+
+
+    it('keeps reporting file URI tablet media when upload size metadata is missing', () => {
+
+        const documents: any[] = [
+            makeDocument('photo-1', 'Photo', {
+                fieldworkPhotoUri: 'file:///tablet/photos/photo-1.jpg',
+                digitalSourcePreservation: [
+                    'originalPhoto',
+                    'originalImage',
+                    'webOrServerBackup',
+                    'backupVerified'
+                ],
+                fieldworkImageUploadStatus: 'uploaded',
+                fieldworkImageUploadedAt: '2026-06-23T01:02:03.000Z',
+                fieldworkImageUploadedUri: 'file:///tablet/photos/photo-1.jpg',
+                fieldworkImageUploadTarget:
+                    'https://field.example/files/fieldwork/photo-1?type=original_image',
+                fieldworkImageUploadedProject: 'fieldwork',
+                fieldworkImageUploadedMd5: 'tablet-md5'
+            })
+        ];
+
+        const issues = getKoreanFieldworkReadinessIssues(documents as any);
+
+        expect(issues.map((issue) => issue.ruleId)).toEqual([
+            'fieldwork-photo-upload-missing'
+        ]);
+    });
+
+
+    it('includes linked media backup issues in evidence bundles for report review', () => {
+
+        const feature = makeDocument('feature-1', 'Feature');
+        const photo = makeDocument('photo-1', 'Photo', {
+            fieldworkPhotoUri: 'file:///tablet/photos/photo-1.jpg',
+            relations: { depicts: ['feature-1'] }
+        });
+
+        const bundle = buildEvidenceBundle(feature as any, [feature, photo] as any);
+
+        expect(bundle.photos.length).toBe(1);
+        expect(bundle.issues.some((issue) =>
+            issue.documentId === 'photo-1'
+            && issue.ruleId === 'fieldwork-photo-upload-missing'
+        )).toBe(true);
+    });
+
+
     it('summarizes today board inputs from documents and warning issues', () => {
 
         const documents: any[] = [

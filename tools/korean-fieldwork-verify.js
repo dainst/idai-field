@@ -15,6 +15,7 @@ const options = {
   fullMobile: args.has('--full-mobile'),
   listTestPaths: args.has('--list-test-paths'),
   skipParity: args.has('--skip-parity'),
+  skipServer: args.has('--skip-server'),
   skipTests: args.has('--skip-tests')
 };
 
@@ -29,6 +30,7 @@ function main() {
     return;
   }
 
+  const mixCommand = validatePrerequisites();
   const steps = [];
 
   if (!options.skipParity) {
@@ -41,6 +43,25 @@ function main() {
   }
 
   if (!options.skipTests) {
+    steps.push({
+      label: 'Korean fieldwork media contract',
+      command: process.execPath,
+      args: ['tools/korean-fieldwork-media-contract-check.js'],
+      cwd: rootDir
+    });
+
+    steps.push(makeNpmStep({
+      label: 'Core sync and datastore unit tests',
+      args: ['--prefix', 'core', 'run', 'build']
+    }));
+
+    steps.push(makeNpmStep({
+      label: 'Core sync and datastore specs',
+      args: ['--prefix', 'core', 'test']
+    }));
+
+    steps.push(getDesktopCopyCoreStep());
+
     steps.push(makeNpmStep({
       label: 'Desktop Korean fieldwork unit tests',
       args: [
@@ -54,13 +75,13 @@ function main() {
     }));
 
     steps.push(getMobileTestStep());
+
+    if (!options.skipServer) steps.push(getServerTestStep(mixCommand));
   }
 
   if (options.desktopBuild) {
-    steps.push(makeNpmStep({
-      label: 'Desktop copy-core',
-      args: ['--prefix', 'desktop', 'run', 'copy-core']
-    }));
+    if (options.skipTests) steps.push(getDesktopCopyCoreStep());
+
     steps.push({
       label: 'Desktop Korean Angular build',
       command: process.execPath,
@@ -79,6 +100,27 @@ function main() {
 
   steps.forEach(runStep);
   console.log('\nKorean fieldwork verification completed.');
+}
+
+function validatePrerequisites() {
+  if (options.skipTests || options.skipServer) return undefined;
+
+  const mixCommand = findExecutable('mix');
+  if (!mixCommand) {
+    console.error(
+      'Cannot run Field Hub server tests: mix was not found on PATH; install Elixir or pass --skip-server explicitly.'
+    );
+    process.exit(1);
+  }
+
+  return mixCommand;
+}
+
+function getDesktopCopyCoreStep() {
+  return makeNpmStep({
+    label: 'Desktop copy-core',
+    args: ['--prefix', 'desktop', 'run', 'copy-core']
+  });
 }
 
 function getMobileTestStep() {
@@ -102,6 +144,15 @@ function getMobileTestStep() {
       });
 }
 
+function getServerTestStep(mixCommand) {
+  return {
+    label: 'Field Hub server tests',
+    command: mixCommand,
+    args: ['test'],
+    cwd: path.join(rootDir, 'server')
+  };
+}
+
 function makeNpmStep({ label, args }) {
   return fs.existsSync(npmCliPath)
     ? {
@@ -121,9 +172,17 @@ function makeNpmStep({ label, args }) {
 function getDesktopFieldworkTestPaths() {
   const explicitSpecs = new Set([
     'edit-form.component.spec.ts',
+    'construct-grid.spec.ts',
     'create-project-modal.component.spec.ts',
+    'download-project.component.spec.ts',
+    'express-server.spec.ts',
+    'export-images.spec.ts',
+    'image-export-modal.component.spec.ts',
+    'image-tool-launcher.spec.ts',
+    'image-url-maker.spec.ts',
     'project-information-modal.component.spec.ts',
-    'settings.component.spec.ts'
+    'settings.component.spec.ts',
+    'remote-image-store.spec.ts'
   ]);
 
   return walkFiles(path.join(rootDir, 'desktop', 'test', 'unit'))
@@ -143,6 +202,7 @@ function getMobileFieldworkTestPaths() {
     'components/Home',
     'components/Project',
     'components/common/forms',
+    'contexts',
     'constants',
     'hooks',
     'models',
@@ -159,10 +219,14 @@ function getMobileFieldworkTestPaths() {
     /CreateProjectModal\.spec\.tsx$/,
     /LoadProjectModal\.spec\.tsx$/,
     /project-name-validation\.spec\.ts$/,
+    /project-context\.spec\.tsx$/,
     /project-settings\.spec\.ts$/,
     /sample-project\.spec\.ts$/,
     /SettingsScreen\.spec\.tsx$/,
     /sync-url-validation\.spec\.ts$/,
+    /use-fieldwork-image-sync\.spec\.ts$/,
+    /use-search\.spec\.ts$/,
+    /use-sync\.spec\.ts$/,
     /use-preferences\.spec\.ts$/,
     /use-korean-fieldwork-project-setup-defaults\.spec\.ts$/
   ];
@@ -181,6 +245,12 @@ function getMobileFieldworkTestPaths() {
 function runStep(step) {
   const startTime = Date.now();
   console.log(`\n== ${step.label} ==`);
+
+  if (step.skipReason) {
+    console.log(`Skipped: ${step.skipReason}.`);
+    return;
+  }
+
   console.log([step.command, ...step.args].join(' '));
 
   const result = spawnSync(step.command, step.args, {
@@ -201,6 +271,18 @@ function runStep(step) {
   }
 
   console.log(`${step.label} passed in ${formatDuration(Date.now() - startTime)}.`);
+}
+
+function findExecutable(command) {
+  const locator = isWindows ? 'where.exe' : 'which';
+  const result = spawnSync(locator, [command], { encoding: 'utf8' });
+
+  if (result.status !== 0) return undefined;
+
+  return result.stdout
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .find(Boolean);
 }
 
 function walkFiles(dirPath) {

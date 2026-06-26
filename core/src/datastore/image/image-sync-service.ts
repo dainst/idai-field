@@ -127,7 +127,10 @@ export class ImageSyncService {
             const activeProject = this.imageStore.getActiveProject();
             
             const [remoteData, localData] = await Promise.all([
-                this.remoteImageStore.getFileInfos(activeProject, [preference.variant]),
+                this.remoteImageStore.getFileInfos(
+                    activeProject,
+                    ImageSyncService.getRemoteQueryTypes([preference])
+                ),
                 this.imageStore.getFileInfos(activeProject, [preference.variant])
             ]);
             
@@ -151,11 +154,18 @@ export class ImageSyncService {
                     if (!this.isVariantSyncActive(preference.variant)) return; // Stop if sync was disabled while iterating
                     this.status[preference.variant] = SyncStatus.Pulling;
     
-                    const data = await this.remoteImageStore.getData(uuid, preference.variant, activeProject);
+                    const downloadVariant = ImageSyncService.getPreferredDownloadVariant(
+                        differences.missingLocally[uuid],
+                        preference.variant
+                    );
+                    const data = await this.remoteImageStore.getData(uuid, downloadVariant, activeProject);
                     if (data !== null) {
-                        await this.imageStore.store(uuid, data, activeProject, preference.variant);
+                        await this.imageStore.store(uuid, data, activeProject, downloadVariant);
+                        if (downloadVariant !== preference.variant) {
+                            await this.imageStore.getData(uuid, preference.variant, activeProject);
+                        }
                     } else {
-                        throw Error(`Expected remote image ${uuid}, ${preference.variant} for project ${activeProject}, received null.`);
+                        throw Error(`Expected remote image ${uuid}, ${downloadVariant} for project ${activeProject}, received null.`);
                     }
                 }
             }
@@ -196,11 +206,14 @@ export class ImageSyncService {
                 : SyncStatus.Offline;
         } catch (e) {
             this.status[preference.variant] = SyncStatus.Error;
-            console.error(e);
+            console.error(
+                'Image synchronization error',
+                ImageSyncService.getSanitizedErrorMessage(e)
+            );
+        } finally {
+            this.inProcess[preference.variant] = false;
+            this.scheduleNextSync(preference);
         }
-
-        this.inProcess[preference.variant] = false;
-        this.scheduleNextSync(preference);
     }
 
 
@@ -261,8 +274,72 @@ export class ImageSyncService {
     }
 
 
+    public static getRemoteQueryTypes(preferences: FileSyncPreference[]): ImageVariant[] {
+
+        const result = new Set<ImageVariant>();
+
+        for (const preference of preferences) {
+            result.add(preference.variant);
+            if (preference.download && preference.variant === ImageVariant.THUMBNAIL) {
+                result.add(ImageVariant.ORIGINAL);
+            }
+        }
+
+        return Array.from(result);
+    }
+
+
+    public static getPreferredDownloadVariant(fileInfo: FileInfo, variant: ImageVariant): ImageVariant {
+
+        if (ImageSyncService.hasVariant(fileInfo, variant)) return variant;
+
+        if (variant === ImageVariant.THUMBNAIL && ImageSyncService.hasVariant(fileInfo, ImageVariant.ORIGINAL)) {
+            return ImageVariant.ORIGINAL;
+        }
+
+        return variant;
+    }
+
+
+    public static getSanitizedErrorMessage(error: any): string {
+
+        const parts: string[] = [];
+
+        if (error instanceof Error) {
+            parts.push(error.message);
+        } else if (typeof error === 'string') {
+            parts.push(error);
+        } else if (typeof error?.message === 'string') {
+            parts.push(error.message);
+        }
+
+        if (error?.response?.status) parts.push(`status ${error.response.status}`);
+        if (error?.status) parts.push(`status ${error.status}`);
+        if (error?.code) parts.push(`code ${error.code}`);
+
+        return ImageSyncService.redactSensitiveLogText(
+            parts.length > 0 ? parts.join(' ') : 'Unknown image synchronization error'
+        );
+    }
+
+
+    private static redactSensitiveLogText(value: string): string {
+
+        return value
+            .replace(/Basic\s+[A-Za-z0-9+/=._~-]+/gi, 'Basic [redacted]')
+            .replace(/(Authorization["']?\s*[:=]\s*["']?)[^"',\s}]+/gi, '$1[redacted]')
+            .replace(/(password["']?\s*[:=]\s*["']?)[^"',\s}]+/gi, '$1[redacted]');
+    }
+
+
     private isVariantSyncActive(variant: ImageVariant) {
 
         return this.active.find(val => val.variant === variant);
+    }
+
+
+    private static hasVariant(fileInfo: FileInfo, variant: ImageVariant): boolean {
+
+        return (fileInfo.variants?.map(value => value.name) ?? fileInfo.types ?? []).includes(variant);
     }
 }

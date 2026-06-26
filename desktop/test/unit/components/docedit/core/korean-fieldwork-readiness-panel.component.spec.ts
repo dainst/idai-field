@@ -244,6 +244,55 @@ describe('KoreanFieldworkReadinessPanelComponent', () => {
     });
 
 
+    it('shows linked tablet media records whose Field Hub original backup is not confirmed', async () => {
+
+        const featureDocument = createFeatureDocument({
+            featureRecordingStatus: 'confirmed',
+            featureInvestigationChecklist: ['completionPhotoTaken']
+        });
+        const linkedPhoto = createRelatedDocument(
+            'photo-1',
+            'Photo',
+            { depicts: ['feature-1'] },
+            { fieldworkPhotoUri: 'file:///tablet/photos/photo-1.jpg' }
+        );
+        const component = createComponent({
+            find: jest.fn().mockResolvedValue({
+                documents: [featureDocument, linkedPhoto]
+            })
+        });
+        component.document = featureDocument as any;
+        component.fieldDefinitions = [
+            { name: 'featureInvestigationChecklist' }
+        ] as any;
+
+        await component.refreshIssues();
+
+        const backupIssue = component.issues.find(issue =>
+            issue.ruleId === 'fieldwork-photo-upload-missing'
+        );
+
+        expect(backupIssue).toMatchObject({
+            documentId: 'photo-1',
+            identifier: 'photo-1',
+            relatedFields: [
+                'fieldworkImageUploadStatus',
+                'fieldworkImageUploadedAt',
+                'fieldworkImageUploadedUri',
+                'fieldworkImageUploadTarget',
+                'fieldworkImageUploadedProject',
+                'fieldworkImageUploadedSizeBytes',
+                'fieldworkImageUploadedMd5',
+                'fieldworkImageStoredSizeBytes',
+                'fieldworkImageStoredMd5',
+                'fieldworkImageStoredSha256',
+                'digitalSourcePreservation'
+            ]
+        });
+        expect(component.canOpenIssueDocument(backupIssue!)).toBe(true);
+    });
+
+
     it('opens linked evidence records without leaving the current edit context', async () => {
 
         const featureDocument = createFeatureDocument({

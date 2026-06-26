@@ -198,6 +198,7 @@ defmodule FieldHub.FileStore do
 
     result =
       if File.exists?(target_path) do
+        File.rm(input_path)
         :ok
       else
         File.rename(input_path, target_path)

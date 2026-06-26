@@ -1,6 +1,7 @@
 import {
     getKoreanFieldworkTodaySummary,
     Document,
+    hasConfirmedKoreanFieldworkImageUpload,
     KoreanFieldworkReadinessIssue
 } from 'idai-field-core';
 import { getPenMemoSketchSummaryLabel, getPenMemoTranscriptionSummaryLabel } from './korean-fieldwork-evidence-review';
@@ -29,6 +30,8 @@ const SEVERITY_ORDER: Record<KoreanFieldworkReadinessIssue['severity'], number> 
     info: 2
 };
 
+const PHOTO_CATEGORY = 'Photo';
+const DRAWING_CATEGORY = 'Drawing';
 const PEN_MEMO_CATEGORY = 'PenMemo';
 const SOIL_PROFILE_PHOTO_CATEGORY = 'SoilProfilePhoto';
 
@@ -38,8 +41,8 @@ export function makeKoreanFieldworkCloseoutSummary(documents: Document[],
 
     return getKoreanFieldworkCloseoutSummary(
         dedupeIssues([
-            ...getKoreanFieldworkTodaySummary(documents).openIssues,
-            ...getKoreanFieldworkCloseoutReviewIssues(documents)
+            ...getKoreanFieldworkCloseoutReviewIssues(documents),
+            ...getKoreanFieldworkTodaySummary(documents).openIssues
         ]),
         maxIssues
     );
@@ -100,8 +103,14 @@ function getIssueCounts(issues: KoreanFieldworkReadinessIssue[]): KoreanFieldwor
 function getKoreanFieldworkCloseoutReviewIssues(documents: Document[]): KoreanFieldworkReadinessIssue[] {
 
     return documents.flatMap(document => {
+        if (document.resource.category === PHOTO_CATEGORY) {
+            return getFieldworkPhotoCloseoutIssues(document);
+        }
         if (document.resource.category === SOIL_PROFILE_PHOTO_CATEGORY) {
             return getSoilProfilePhotoCloseoutIssues(document);
+        }
+        if (document.resource.category === DRAWING_CATEGORY) {
+            return getDrawingCloseoutIssues(document);
         }
         if (document.resource.category === PEN_MEMO_CATEGORY) {
             return getPenMemoCloseoutIssues(document);
@@ -112,9 +121,49 @@ function getKoreanFieldworkCloseoutReviewIssues(documents: Document[]): KoreanFi
 }
 
 
+function getFieldworkPhotoCloseoutIssues(document: Document): KoreanFieldworkReadinessIssue[] {
+
+    return [
+        ...getPhotoReportMetadataCloseoutIssues(
+            document,
+            'fieldwork-photo-report-metadata-missing',
+            '현장사진의 보고서용 원본 정보가 부족합니다.',
+            'fieldworkPhotoCapturedAt'
+        ),
+        ...getPhotoUploadCloseoutIssues(
+            document,
+            ['fieldworkPhotoUri', 'imageUri', 'fileUri'],
+            'fieldwork-photo-upload-missing',
+            '현장사진 원본의 Field Hub 백업이 아직 확인되지 않았습니다.'
+        )
+    ];
+}
+
+
+function getDrawingCloseoutIssues(document: Document): KoreanFieldworkReadinessIssue[] {
+
+    return getPhotoUploadCloseoutIssues(
+        document,
+        ['fieldworkPhotoUri', 'imageUri', 'fileUri'],
+        'fieldwork-drawing-upload-missing',
+        '도면 원본의 Field Hub 백업이 아직 확인되지 않았습니다.'
+    );
+}
+
+
 function getSoilProfilePhotoCloseoutIssues(document: Document): KoreanFieldworkReadinessIssue[] {
 
-    const issues: KoreanFieldworkReadinessIssue[] = [];
+    const issues: KoreanFieldworkReadinessIssue[] = getPhotoReportMetadataCloseoutIssues(
+        document,
+        'soil-profile-photo-report-metadata-missing',
+        '토층사진의 보고서용 원본 정보가 부족합니다.',
+        'soilProfilePhotoCapturedAt'
+    ).concat(getPhotoUploadCloseoutIssues(
+        document,
+        ['soilProfilePhotoUri', 'imageUri', 'fieldworkPhotoUri'],
+        'soil-profile-photo-upload-missing',
+        '토층사진 원본의 Field Hub 백업이 아직 확인되지 않았습니다.'
+    ));
 
     if (document.resource.soilColorAssistStatus === 'candidatesAvailable') {
         const candidateSummary = getMunsellCandidateSummaryLabel(document.resource.soilColorAssistCandidates);
@@ -147,6 +196,87 @@ function getSoilProfilePhotoCloseoutIssues(document: Document): KoreanFieldworkR
     }
 
     return issues;
+}
+
+
+function getPhotoUploadCloseoutIssues(document: Document,
+                                      uriFields: string[],
+                                      ruleId: string,
+                                      message: string): KoreanFieldworkReadinessIssue[] {
+
+    const localUploadSource = uriFields
+        .map(fieldName => getTextValue(document.resource[fieldName]))
+        .find(isUploadableLocalUri);
+
+    if (!localUploadSource
+            || hasConfirmedKoreanFieldworkImageUpload(document.resource, localUploadSource)) {
+        return [];
+    }
+
+    return [createCloseoutReviewIssue(
+        document,
+        ruleId,
+        message,
+        '동기화 연결 후 원본 이미지 업로드가 완료됐는지 확인하고 서버 업로드 시각을 남기세요.',
+        [
+            'fieldworkImageUploadStatus',
+            'fieldworkImageUploadedAt',
+            'fieldworkImageUploadedUri',
+            'fieldworkImageUploadTarget',
+            'fieldworkImageUploadedProject',
+            'fieldworkImageUploadedSizeBytes',
+            'fieldworkImageUploadedMd5',
+            'fieldworkImageStoredSizeBytes',
+            'fieldworkImageStoredMd5',
+            'fieldworkImageStoredSha256',
+            'digitalSourcePreservation'
+        ]
+    )];
+}
+
+
+function getPhotoReportMetadataCloseoutIssues(document: Document,
+                                             ruleId: string,
+                                             message: string,
+                                             capturedAtField: string): KoreanFieldworkReadinessIssue[] {
+
+    const missingFields = getMissingPhotoReportMetadataFields(document.resource, capturedAtField);
+
+    if (missingFields.length === 0) return [];
+
+    return [createCloseoutReviewIssue(
+        document,
+        ruleId,
+        message,
+        `${getMissingPhotoReportMetadataLabel(missingFields)}를 확인해 원본 파일과 보고서 사진을 대조할 수 있게 남기세요.`,
+        missingFields
+    )];
+}
+
+
+function getMissingPhotoReportMetadataFields(resource: Record<string, any>,
+                                             capturedAtField: string): string[] {
+
+    const missingFields: string[] = [];
+
+    if (!hasTextValue(resource.originalFilename)) missingFields.push('originalFilename');
+    if (!hasTextValue(resource[capturedAtField])) missingFields.push(capturedAtField);
+    if (!hasPositiveNumberValue(resource.width)) missingFields.push('width');
+    if (!hasPositiveNumberValue(resource.height)) missingFields.push('height');
+
+    return missingFields;
+}
+
+
+function getMissingPhotoReportMetadataLabel(fields: string[]): string {
+
+    return fields.map(field => {
+        if (field === 'originalFilename') return '원본 파일명';
+        if (field === 'width') return '가로 픽셀';
+        if (field === 'height') return '세로 픽셀';
+
+        return '촬영시각';
+    }).join(', ');
 }
 
 
@@ -241,9 +371,32 @@ function dedupeIssues(issues: KoreanFieldworkReadinessIssue[]): KoreanFieldworkR
 }
 
 
-function hasTextValue(value: unknown): boolean {
+function hasTextValue(value: unknown): value is string {
 
     return typeof value === 'string' && value.trim().length > 0;
+}
+
+
+function getTextValue(value: unknown): string|undefined {
+
+    return hasTextValue(value) ? value.trim() : undefined;
+}
+
+
+function isUploadableLocalUri(uri: string|undefined): boolean {
+
+    return !!uri && /^(file|content):\/\//.test(uri);
+}
+
+
+function hasPositiveNumberValue(value: unknown): boolean {
+
+    if (typeof value === 'number') return Number.isFinite(value) && value > 0;
+    if (typeof value !== 'string') return false;
+
+    const parsedValue = Number(value.trim());
+
+    return Number.isFinite(parsedValue) && parsedValue > 0;
 }
 
 

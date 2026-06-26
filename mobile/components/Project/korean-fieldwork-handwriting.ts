@@ -61,6 +61,8 @@ export const buildKoreanFieldworkHandwritingNoteText = (
 export const extractKoreanFieldworkHandwritingFromText = (
   text: string
 ): KoreanFieldworkHandwritingStroke[] => {
+  const payloadStrokes = extractKoreanFieldworkHandwritingFromPayloadCandidates(text);
+  if (payloadStrokes.length > 0) return payloadStrokes;
   const match = text.match(/^\[손그림 좌표\]\s*(.+)$/m);
   if (!match) return [];
 
@@ -71,12 +73,48 @@ export const extractKoreanFieldworkHandwritingFromText = (
   }
 };
 
+const extractKoreanFieldworkHandwritingFromPayloadCandidates = (
+  text: string
+): KoreanFieldworkHandwritingStroke[] => {
+  for (const payloadCandidate of getHandwritingPayloadCandidates(text)) {
+    try {
+      const strokes = normalizeKoreanFieldworkHandwritingStrokes(JSON.parse(payloadCandidate));
+      if (hasKoreanFieldworkHandwriting(strokes)) return strokes;
+    } catch {
+      continue;
+    }
+  }
+
+  return [];
+};
+
+const getHandwritingPayloadCandidates = (text: string): string[] =>
+  text
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .flatMap(getHandwritingPayloadCandidatesFromLine);
+
+const getHandwritingPayloadCandidatesFromLine = (line: string): string[] => {
+  const candidates: string[] = [];
+  const objectStart = line.includes('"strokes"') ? line.indexOf('{') : -1;
+  if (objectStart >= 0) candidates.push(line.slice(objectStart));
+
+  const legacyArrayStart = line.indexOf('[[{');
+  if (legacyArrayStart >= 0) candidates.push(line.slice(legacyArrayStart));
+
+  return candidates;
+};
+
 const normalizeStroke = (
   value: unknown
 ): KoreanFieldworkHandwritingStroke | undefined => {
-  if (!isRecord(value) || !Array.isArray(value.points)) return undefined;
+  const pointsValue = isRecord(value) && Array.isArray(value.points)
+    ? value.points
+    : value;
 
-  const points = value.points
+  if (!Array.isArray(pointsValue)) return undefined;
+
+  const points = pointsValue
     .map(normalizePoint)
     .filter((point): point is KoreanFieldworkHandwritingPoint => !!point);
 

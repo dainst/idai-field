@@ -3,6 +3,7 @@ import {
   ChangesStream,
   ConstraintIndex,
   Datastore,
+  FindOptions,
   Document,
   DocumentCache,
   Indexer,
@@ -66,8 +67,11 @@ export class DocumentRepository {
   public getMultiple = (resourceIds: string[]): Promise<Document[]> =>
     this.datastore.getMultiple(resourceIds);
 
-  public find = (query: Query): Promise<Datastore.FindResult> =>
-    this.datastore.find(query);
+  public find = (
+    query: Query,
+    options?: FindOptions
+  ): Promise<Datastore.FindResult> =>
+    this.datastore.find(query, options);
 
   public changed = () =>
     this.pouchdbDatastore.changesNotifications();

@@ -16,10 +16,13 @@ export module JimpDisplayVariantCreation {
         
         const imageId: string = document.resource.id;
         const fileExtension: string = ImageDocument.getOriginalFileExtension(document);
-        const width: number = document.resource.width;
-        const height: number = document.resource.height;
-
         const image = await JimpImageManipulation.getImageObject(originalData);
+        const { width, height } = getImageDimensions(
+            document.resource.width,
+            document.resource.height,
+            image?.bitmap?.width,
+            image?.bitmap?.height
+        );
 
         const convertToJpeg: boolean = shouldConvertToJpeg(
             width * height, fileExtension, image
@@ -50,5 +53,27 @@ export module JimpDisplayVariantCreation {
         if (fileExtension.toLowerCase().includes('png') && pixels > ImageManipulation.MAX_ORIGINAL_PIXELS) {
             return JimpImageManipulation.isOpaque(image);
         }
+    }
+
+
+    function getImageDimensions(resourceWidth: unknown, resourceHeight: unknown,
+                                fallbackWidth: unknown, fallbackHeight: unknown) {
+
+        return {
+            width: getImageDimension(resourceWidth, fallbackWidth),
+            height: getImageDimension(resourceHeight, fallbackHeight)
+        };
+    }
+
+
+    function getImageDimension(resourceDimension: unknown, fallbackDimension: unknown): number {
+
+        const parsedResourceDimension = parseFloat(resourceDimension as any);
+        const parsedFallbackDimension = parseFloat(fallbackDimension as any);
+
+        if (Number.isFinite(parsedResourceDimension) && parsedResourceDimension > 0) return parsedResourceDimension;
+        if (Number.isFinite(parsedFallbackDimension) && parsedFallbackDimension > 0) return parsedFallbackDimension;
+
+        return 0;
     }
 }

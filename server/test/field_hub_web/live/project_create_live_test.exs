@@ -170,7 +170,7 @@ defmodule FieldHubWeb.Live.ProjectCreateTest do
       html = render(view)
 
       assert html =~
-               "<input type=\"text\" placeholder=\"Password\" id=\"password\" name=\"password\" value=\"\"/>"
+               "<input type=\"password\" placeholder=\"Password\" id=\"password\" name=\"password\" value=\"\"/>"
 
       assert html =~ "<li>Please provide a password.\n</li>"
 
@@ -187,7 +187,7 @@ defmodule FieldHubWeb.Live.ProjectCreateTest do
         |> render()
 
       assert not (html =~
-                    "<input type=\"text\" placeholder=\"Password\" id=\"password\" name=\"password\" value=\"\"/>")
+                    "<input type=\"password\" placeholder=\"Password\" id=\"password\" name=\"password\" value=\"\"/>")
 
       assert not (html =~ "<li>Please provide a password.\n</li>")
     end
@@ -199,6 +199,17 @@ defmodule FieldHubWeb.Live.ProjectCreateTest do
         view
         |> element("form")
         |> render_change(%{identifier: "123"})
+
+      assert html =~ "Please provide a valid project identifier."
+    end
+
+    test "project identifier containing a slash results in warning", %{conn: conn} do
+      {:ok, view, _html_on_mount} = live(conn, "/ui/projects/create")
+
+      html =
+        view
+        |> element("form")
+        |> render_change(%{identifier: "test/project"})
 
       assert html =~ "Please provide a valid project identifier."
     end
@@ -256,8 +267,8 @@ defmodule FieldHubWeb.Live.ProjectCreateTest do
       assert html =~ "Issues"
 
       # html should now render the project_show content
-      assert html =~
-               "Project created project `#{@project}` with password `some_password` successfully."
+      assert html =~ "Project `#{@project}` created successfully."
+      refute html =~ "some_password"
     end
   end
 

@@ -1,3 +1,9 @@
+jest.mock('src/app/electron/electron', () => ({
+    electronRemote: {
+        getGlobal: () => undefined
+    }
+}), { virtual: true });
+
 import { constructGrid } from '../../../../../src/app/components/image/grid/construct-grid';
 
 
@@ -24,6 +30,23 @@ describe('constructGrid', () => {
         const rows = constructGrid(documents as any,4,800, 20);
 
         expect(rows[0][0].calculatedWidth).toBe(rows[0][0].calculatedHeight * 2);
+    });
+
+
+    test('should fall back to a square aspect ratio if image dimensions are missing', () => {
+
+        const rows = constructGrid([{
+            id: 'o1',
+            resource: {
+                id: 'o1',
+                identifier: 'ob1',
+                shortDescription: 'name',
+                originalFilename: 'abc'
+            }
+        }] as any, 4, 800, 20);
+
+        expect(rows[0][0].calculatedWidth).toBe(rows[0][0].calculatedHeight);
+        expect(Number.isFinite(rows[0][0].calculatedWidth)).toBe(true);
     });
 
 

@@ -1,9 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ImageStore, ImageDocument, ProjectConfiguration, Labels, Resource } from 'idai-field-core';
+import {
+    Datastore,
+    Document,
+    ImageStore,
+    ImageDocument,
+    ProjectConfiguration,
+    Labels,
+    Resource
+} from 'idai-field-core';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { AppState } from '../../../services/app-state';
-import { exportImages } from '../../../services/imagestore/export-images';
+import {
+    exportImages,
+    FieldworkImageExportRelatedDocumentIndex
+} from '../../../services/imagestore/export-images';
 import { SettingsProvider } from '../../../services/settings/settings-provider';
 import { Messages } from '../../messages/messages';
 import { M } from '../../messages/m';
@@ -42,7 +53,8 @@ export class ImageExportModalComponent implements OnInit {
                 private messages: Messages,
                 private menuService: Menus,
                 private projectConfiguration: ProjectConfiguration,
-                private labels: Labels) {}
+                private labels: Labels,
+                private datastore: Datastore) {}
 
 
     public getIdentifierLabel = () => this.labels.getFieldLabel(
@@ -66,17 +78,24 @@ export class ImageExportModalComponent implements OnInit {
     }
 
 
-    public startExport() {
+    public async startExport() {
 
         if (!this.targetDirectoryPath) return;
     
         try {
+            const [relatedDocumentsById, projectContext] = await Promise.all([
+                this.getRelatedDocumentsById(this.images),
+                this.getProjectContext()
+            ]);
+
             exportImages(
                 this.imageStore,
                 this.images,
                 this.targetDirectoryPath,
                 this.settingsProvider.getSettings().selectedProject,
-                this.selectedNamingOption === 'originalFilename'
+                this.selectedNamingOption === 'originalFilename',
+                relatedDocumentsById,
+                projectContext
             );
             this.showSuccessMessage();
             this.activeModal.close();
@@ -114,6 +133,48 @@ export class ImageExportModalComponent implements OnInit {
                 M.IMAGES_SUCCESS_IMAGES_EXPORTED_MULTIPLE,
                 this.images.length.toString()
             ]);
+        }
+    }
+
+
+    private async getRelatedDocumentsById(images: Array<ImageDocument>):
+            Promise<FieldworkImageExportRelatedDocumentIndex> {
+
+        const targetIds = [...new Set(images.flatMap(image => {
+            return Object.values(image.resource.relations ?? {}).flat();
+        }))];
+
+        const relatedDocuments = await Promise.all(targetIds.map(async targetId => {
+            try {
+                return await this.datastore.get(targetId);
+            } catch {
+                return undefined;
+            }
+        }));
+
+        return relatedDocuments.reduce((result: FieldworkImageExportRelatedDocumentIndex,
+                                        document: Document|undefined) => {
+            if (document) {
+                result[document.resource.id] = {
+                    id: document.resource.id,
+                    identifier: document.resource.identifier || document.resource.id,
+                    category: document.resource.category,
+                    resource: document.resource
+                };
+            }
+
+            return result;
+        }, {});
+    }
+
+
+    private async getProjectContext(): Promise<Record<string, any>> {
+
+        try {
+            const projectDocument: Document = await this.datastore.get('project');
+            return projectDocument.resource;
+        } catch {
+            return {};
         }
     }
 }

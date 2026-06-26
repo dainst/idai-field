@@ -60,7 +60,10 @@ function calculatedHeight(documents: Array<Document>, rowIndex: any, nrOfColumns
                           paddingRight: number) {
 
     const rowWidth = Math.ceil(gridWidth - paddingRight);
-    return rowWidth / calcNaturalRowWidth(documents, nrOfColumns, rowIndex);
+    const naturalRowWidth = calcNaturalRowWidth(documents, nrOfColumns, rowIndex);
+    return naturalRowWidth > 0
+        ? rowWidth / naturalRowWidth
+        : rowWidth;
 }
 
 
@@ -83,7 +86,7 @@ function calcNaturalRowWidth(documents: any, nrOfColumns: any, rowIndex: any) {
             naturalRowWidth += naturalRowWidth * (nrOfColumns - columnIndex) / columnIndex;
             break;
         }
-        naturalRowWidth += document.resource.width / parseFloat(document.resource.height);
+        naturalRowWidth += getAspectRatio(document.resource);
     }
 
     return naturalRowWidth;
@@ -95,8 +98,19 @@ function newCell(document: any, calculatedHeight: any): ImageContainer {
     const cell: ImageContainer = {};
     const image = document.resource as ImageResource;
     cell.document = document;
-    cell.calculatedWidth = image.width * calculatedHeight / image.height;
+    cell.calculatedWidth = getAspectRatio(image) * calculatedHeight;
     cell.calculatedHeight = calculatedHeight;
 
     return cell;
+}
+
+
+function getAspectRatio(image: ImageResource): number {
+
+    const width = parseFloat(image.width as any);
+    const height = parseFloat(image.height as any);
+
+    return Number.isFinite(width) && width > 0 && Number.isFinite(height) && height > 0
+        ? width / height
+        : 1;
 }

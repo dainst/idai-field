@@ -14,15 +14,26 @@ import { importFiles } from './endpoints/importFiles';
 import { ImageUploader } from '../../components/image/upload/image-uploader';
 import { UploadStatus } from '../../components/image/upload/upload-status';
 import { exportFile } from './endpoints/exportFile';
+import { electronCrypto as crypto } from 'src/app/electron/electron';
 
-import express from 'express';
+import * as expressModule from 'express';
 import { electronRemote as remote } from 'src/app/electron/electron';
-import expressPouchDB from 'express-pouchdb';
-import expressBasicAuth from 'express-basic-auth';
-import bodyParser from 'body-parser';
-import PouchDBBase from 'pouchdb-browser';
+import * as expressPouchDBModule from 'express-pouchdb';
+import * as expressBasicAuthModule from 'express-basic-auth';
+import * as bodyParser from 'body-parser';
+import * as PouchDBBaseModule from 'pouchdb-browser';
+
+const express = getCommonJsDefaultExport<any>(expressModule);
+const expressPouchDB = getCommonJsDefaultExport<any>(expressPouchDBModule);
+const expressBasicAuth = getCommonJsDefaultExport<any>(expressBasicAuthModule);
+const PouchDBBase = getCommonJsDefaultExport<any>(PouchDBBaseModule);
 
 let PouchDB = PouchDBBase;
+
+function getCommonJsDefaultExport<T>(module: T): T {
+
+    return (module as any).default ?? module;
+}
 
 
 export type ApiState = 'none'|'import'|'fileImport'|'export';
@@ -164,7 +175,7 @@ export class ExpressServer {
                         res.status(409).send({ reason: 'Currently no large file uploads accepted.' });
                     } else {
                         await this.imagestore.store(req.params.uuid, req.body, req.params.project, req.query.type);
-                        res.status(200).send({});
+                        res.status(200).send(getStoredFileMetadata(req.body));
                     }
                 }
             } catch (e) {
@@ -346,4 +357,24 @@ export class ExpressServer {
             ObserverUtil.notify(this.apiObservers, state);
         }
     }
+}
+
+
+function getStoredFileMetadata(data: Buffer): { size_bytes: number, md5?: string, sha256?: string } {
+
+    return {
+        size_bytes: data.byteLength,
+        md5: getFileHash(data, 'md5'),
+        sha256: getFileHash(data, 'sha256')
+    };
+}
+
+
+function getFileHash(data: Buffer, algorithm: 'md5'|'sha256'): string|undefined {
+
+    return typeof crypto?.createHash === 'function'
+        ? crypto.createHash(algorithm)
+            .update(data)
+            .digest('hex')
+        : undefined;
 }

@@ -30,24 +30,35 @@ import { ProjectConfiguration } from '../services';
             throw err;
         }
 
+        const totalCount: number = documents.length;
+
         setIndexing && await setIndexing();
 
         try {
             if (keepCachedInstances) {
                 documents = documents.filter(document => !documentCache.get(document.resource?.id));
             }
-            documents = await migrateDocuments(documents, projectConfiguration, cachingOnly ? setProgress : undefined);
+            documents = await migrateDocuments(documents, projectConfiguration, cachingOnly, setProgress);
 
-            documents.forEach(document => {
-                if (!cachingOnly) warningsUpdater.updateIndexIndependentWarnings(document);
+            let count: number = 0;
+            for (let document of documents) {
+                if (!cachingOnly) {
+                    warningsUpdater.updateIndexIndependentWarnings(document);
+                    if (setProgress && count % 250 === 0) await setProgress(totalCount * 0.15 + count * 0.15);
+                }
                 documentCache.set(document);
-            });
+                count++;
+            }
 
             if (keepCachedInstances) {
-                documentCache.getAll().forEach(document => {
-                    if (!cachingOnly) warningsUpdater.updateIndexIndependentWarnings(document);
-                });
+                for (let document of documentCache.getAll()) {
+                    if (!cachingOnly) {
+                        warningsUpdater.updateIndexIndependentWarnings(document);
+                        if (setProgress && count % 250 === 0) await setProgress(totalCount * 0.15 + count * 0.15);
+                    }
+                }
                 documents = documents.concat(documentCache.getAll());
+                count++;
             }
 
             if (!cachingOnly) {
@@ -74,15 +85,15 @@ import { ProjectConfiguration } from '../services';
     }
 
 
-    async function migrateDocuments(documents: Array<Document>,
-                                    projectConfiguration: ProjectConfiguration,
+    async function migrateDocuments(documents: Array<Document>, projectConfiguration: ProjectConfiguration,
+                                    cachingOnly: boolean,
                                     setProgress?: (progress: number) => Promise<void>): Promise<Array<Document>> {
 
         for (let i = 0; i < documents.length; i++) {
             try {
                 Migrator.migrate(documents[i], projectConfiguration);
                 if (setProgress && (i % 250 === 0 || i === documents.length)) {
-                    await setProgress(i);
+                    await setProgress(cachingOnly ? i : i * 0.15);
                 }
             } catch (err) {
                 console.warn('Error while migrating document: ', err);

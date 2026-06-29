@@ -89,14 +89,14 @@ export class IndexFacade {
             this._put(document, true, false);
             count++;
             if (setProgress && (count % 250 === 0 || count === documents.length)) {
-                await setProgress(count * 0.75);
+                await setProgress(documents.length * 0.3 + count * 0.45);
             }
         }
         for (let document of nonTypeDocuments) {
             this._put(document, true, false);
             count++;
             if (setProgress && (count % 250 === 0 || count === documents.length)) {
-                await setProgress(count * 0.75);
+                await setProgress(documents.length * 0.3 + count * 0.45);
             }
         }
 

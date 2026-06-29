@@ -36,6 +36,7 @@ export class SerializationService {
         this.writeFile('constraintIndex', this.indexFacade.getConstraintIndex(), updateSequence);
         this.writeFile('indexItems', this.indexFacade.getIndexItems(), updateSequence);
         this.writeFile('warnings', this.warningsManager.getAll(), updateSequence);
+        this.writeFile('info', true, updateSequence);
     }
 
 

@@ -301,12 +301,15 @@ const loadIndexAndWarnings = async (db: any, projectIdentifier: string) => {
 
     const updateSequence: number = (await db.info()).update_seq;
 
+    const info: any = deserialize('info', projectIdentifier, updateSequence);
+    if (!info) return undefined;
+
     const fulltextIndex: FulltextIndex = deserialize('fulltextIndex', projectIdentifier, updateSequence);
     const constraintIndex: ConstraintIndex = deserialize('constraintIndex', projectIdentifier, updateSequence);
     const indexItems: Map<IndexItem> = deserialize('indexItems', projectIdentifier, updateSequence);
     const warnings: Map<Warnings> = deserialize('warnings', projectIdentifier, updateSequence);
 
-    return warnings && fulltextIndex && constraintIndex// && configurationIndex
+    return warnings && fulltextIndex && constraintIndex
         ? { warnings, fulltextIndex, constraintIndex, indexItems }
         : undefined;
 }

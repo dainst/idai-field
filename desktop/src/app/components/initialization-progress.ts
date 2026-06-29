@@ -15,6 +15,10 @@ type InitializationPhase =
     |'loadingSampleObjects'
     |'processingImages'
     |'loadingConfiguration'
+    |'loadingFulltextIndex'
+    |'loadingConstraintIndex'
+    |'loadingIndexItems'
+    |'loadingWarnings'
     |'loadingDocuments'
     |'indexingDocuments';
 
@@ -243,6 +247,14 @@ export class InitializationProgress {
                 return 25 + this.getImageProcessingProgress();
             case 'loadingConfiguration':
                 return 35;
+            case 'loadingConstraintIndex':
+                return 37;
+            case 'loadingFulltextIndex':
+                return 40;
+            case 'loadingIndexItems':
+                return 43;
+            case 'loadingWarnings':
+                return 44;
             case 'loadingDocuments':
                 return this.maxIndexingProgress - this.indexingProgress < 1000 ? 100 : 45;
             case 'indexingDocuments':

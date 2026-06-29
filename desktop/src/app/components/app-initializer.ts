@@ -138,7 +138,7 @@ export const appInitializerFactory = (serviceLocator: AppInitializerServiceLocat
 
     const projectConfiguration: ProjectConfiguration = await loadConfiguration(settingsService, progress);
 
-    const loadedData = await loadIndexAndWarnings(pouchdbDatastore.getDb(), settings.selectedProject);
+    const loadedData = await loadIndexAndWarnings(pouchdbDatastore.getDb(), settings.selectedProject, progress);
     const services: Services = loadedData
         ? await restoreIndexes(projectConfiguration, warningsManager, loadedData.constraintIndex,
             loadedData.fulltextIndex, loadedData.indexItems, loadedData.warnings, configReader, configLoader,
@@ -297,16 +297,23 @@ const buildIndexes = async (projectConfiguration: ProjectConfiguration, warnings
 }
 
 
-const loadIndexAndWarnings = async (db: any, projectIdentifier: string) => {
+const loadIndexAndWarnings = async (db: any, projectIdentifier: string, progress: InitializationProgress) => {
 
     const updateSequence: number = (await db.info()).update_seq;
 
-    const info: any = deserialize('info', projectIdentifier, updateSequence);
+    const info: boolean = deserialize('info', projectIdentifier, updateSequence);
     if (!info) return undefined;
 
+    await progress.setPhase('loadingFulltextIndex');
     const fulltextIndex: FulltextIndex = deserialize('fulltextIndex', projectIdentifier, updateSequence);
+
+    await progress.setPhase('loadingConstraintIndex');
     const constraintIndex: ConstraintIndex = deserialize('constraintIndex', projectIdentifier, updateSequence);
+
+    await progress.setPhase('loadingIndexItems');
     const indexItems: Map<IndexItem> = deserialize('indexItems', projectIdentifier, updateSequence);
+
+    await progress.setPhase('loadingWarnings');
     const warnings: Map<Warnings> = deserialize('warnings', projectIdentifier, updateSequence);
 
     return warnings && fulltextIndex && constraintIndex

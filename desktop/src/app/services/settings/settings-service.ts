@@ -53,27 +53,6 @@ export class SettingsService {
     public changesNotifications = (): Observable<void> => ObserverUtil.register(this.changesObservers);
 
 
-    public async bootProjectDb(selectedProject: string, projectDocument?: Document,
-                               destroyBeforeCreate: boolean = false): Promise<void> {
-
-        try {
-            await this.pouchdbDatastore.createDb(
-                selectedProject,
-                projectDocument,
-                null,
-                destroyBeforeCreate
-            );
-            if (!await this.pouchdbDatastore.getDb().get('project')) {
-                throw Error('Project document is missing');
-            }
-            this.pouchdbDatastore.setupChangesEmitter();
-        } catch (msgWithParams) {
-            console.error(msgWithParams);
-            throw msgWithParams;
-        }
-    }
-
-
     /**
      * Sets, validates and persists the settings state.
      * Project settings have to be set separately.

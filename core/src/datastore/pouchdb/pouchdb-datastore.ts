@@ -37,6 +37,24 @@ export class PouchdbDatastore {
 
     public destroyDb = (dbName: string) => this.createPouchDB(dbName).destroy();
 
+
+    public async bootProjectDb(selectedProject: string, projectDocument?: Document,
+                               destroyBeforeCreate: boolean = false): Promise<void> {
+
+        await this.createDb(
+            selectedProject,
+            projectDocument,
+            null,
+            destroyBeforeCreate
+        );
+
+        if (!await this.getDb().get('project')) {
+            throw Error('Project document is missing');
+        }
+
+        this.setupChangesEmitter();
+    }
+
     
     public async createEmptyDb(name: string, destroyExisting: boolean = false) {
 

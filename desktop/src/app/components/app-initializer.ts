@@ -128,7 +128,7 @@ export const appInitializerFactory = (serviceLocator: AppInitializerServiceLocat
     await setupServer(expressServer, progress);
 
     let settings = await loadSettings(settingsService, progress);
-    await setUpDatabase(settingsService, settings, progress);
+    await setUpDatabase(pouchdbDatastore, settingsService, settings, progress);
     await loadSampleData(settings, pouchdbDatastore.getDb(), thumbnailGenerator, imagestore, progress);
 
     settings = await updateProjectNameInSettings(settingsService, pouchdbDatastore.getDb());
@@ -189,12 +189,12 @@ const setProjectNameInProgress = async (settings: Settings, progress: Initializa
 };
 
 
-const setUpDatabase = async (settingsService: SettingsService, settings: Settings,
+const setUpDatabase = async (pouchDbDatastore: PouchdbDatastore, settingsService: SettingsService, settings: Settings,
                              progress: InitializationProgress) => {
 
     await progress.setPhase('settingUpDatabase');
     try {
-        await settingsService.bootProjectDb(
+        await pouchDbDatastore.bootProjectDb(
             settings.selectedProject,
             settings.selectedProject === 'test'
                 ? SettingsService.createProjectDocument(settings)
@@ -204,7 +204,7 @@ const setUpDatabase = async (settingsService: SettingsService, settings: Setting
     } catch (msgWithParams) {
         const success: boolean = await restoreLatestBackup(settingsService, settings);
         if (success) {
-            await setUpDatabase(settingsService, settings, progress);
+            await setUpDatabase(pouchDbDatastore, settingsService, settings, progress);
         } else {
             console.error(msgWithParams);
             await progress.setError('databaseError');

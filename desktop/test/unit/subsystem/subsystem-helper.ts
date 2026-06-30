@@ -82,7 +82,7 @@ export async function setupSettingsService(pouchdbDatastore, projectIdentifier =
         keepBackups: { custom: 0, customInterval: 0, daily: 0, weekly: 0, monthly: 0 }
     });
 
-    await settingsService.bootProjectDb(
+    await pouchdbDatastore.bootProjectDb(
         settings.selectedProject,
         SettingsService.createProjectDocument(settings),
         true

@@ -33,7 +33,13 @@ export class BackupService {
             worker.onmessage = ({ data }) => {
                 if (data.error) console.error('Error while trying to create backup file', data.error);
                 resolve(data.success);
+                worker.terminate();
             }
+
+            worker.onerror = (err) => {
+                console.error('Error in backup worker', err);
+                worker.terminate();
+            };
         
             worker.postMessage({ project, targetFilePath });
         });

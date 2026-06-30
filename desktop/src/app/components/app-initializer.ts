@@ -204,6 +204,7 @@ const setUpDatabase = async (pouchDbDatastore: PouchdbDatastore, settingsService
     } catch (msgWithParams) {
         const success: boolean = await restoreLatestBackup(settingsService, settings);
         if (success) {
+            console.log('Successfully restored database from backup file');
             await setUpDatabase(pouchDbDatastore, settingsService, settings, progress);
         } else {
             console.error(msgWithParams);

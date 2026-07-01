@@ -11,7 +11,7 @@ defmodule Api.Worker.Images.ImageMagickImageConverter do
   @required_imagemagick_version [6, 9]
   @required_delegates ["jp2", "png", "jpeg"]
 
-  @intermediate_format_suffix "webp"
+  @intermediate_format_suffix "png"
 
   # as we want to provide it with cantaloupe
   @display_format_suffix "jp2"
@@ -132,7 +132,7 @@ defmodule Api.Worker.Images.ImageMagickImageConverter do
     source_img_path =
       "#{img_path(project, image_id)}/#{image_id}.#{rescale}.#{@intermediate_format_suffix}"
 
-    target_img_path = "#{img_path(project, image_id)}/#{z_index}/#{x_index}/#{y_index}.webp"
+    target_img_path = "#{img_path(project, image_id)}/#{z_index}/#{x_index}/#{y_index}.png"
 
     if File.exists?(target_img_path) do
       # don't overwrite existing files

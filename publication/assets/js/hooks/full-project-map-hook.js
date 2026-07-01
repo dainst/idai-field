@@ -164,7 +164,7 @@ export default (getFullProjectMapHook = () => {
                         {
                             layerFilter: (layer) => {
                                 const properties = layer.getProperties();
-                                return properties && !properties.drawn;
+                                return properties && !properties.drawLayer;
                             },
                         },
                     );

@@ -5,7 +5,6 @@ import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import { Geometry } from "ol/geom";
 import Map from "ol/Map";
-
 const pointRadius = 5;
 const lineWidth = pointRadius * 2;
 
@@ -72,24 +71,23 @@ function getPolygonStyle(properties: { [key: string]: any }) {
     let style = new Style({
         stroke: new Stroke({
             color: `rgba(${r}, ${g}, ${b}, ${a})`,
-            width: 1,
+            width: properties.fill ? 2 : 1,
+            lineDash: properties.category == "Trench" ? [20, 10, 5, 10] : null,
         }),
     });
 
     if (properties.fill) {
         style.setFill(
             new Fill({
-                color: `rgba(${r * 0.5}, ${g * 0.5}, ${b * 0.5}, 0.5)`,
+                color: `rgba(${r * 0.5}, ${g * 0.5}, ${b * 0.5}, 0.1)`,
             }),
         );
-        style.setZIndex(500);
     } else {
         style.setFill(
             new Fill({
                 color: `rgba(${r}, ${g}, ${b}, 0.0)`,
             }),
         );
-        style.setZIndex(0);
     }
 
     return style;

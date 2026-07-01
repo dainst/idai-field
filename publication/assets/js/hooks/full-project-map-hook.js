@@ -4,9 +4,6 @@ import { createEmpty, extend } from "ol/extent.js";
 import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
 import GeoJSON from "ol/format/GeoJSON.js";
-import Draw from "ol/interaction/Draw.js";
-import { Fill, Stroke } from "ol/style.js";
-import Style from "ol/style/Style.js";
 
 import {
     findFeature,
@@ -19,7 +16,7 @@ import PreviewOverlay from "./map/preview-overlay";
 import PublicationSelection from "./map/selection";
 const highlightZoomDuration = -1;
 
-export default getFullProjectMapHook = () => {
+export default (getFullProjectMapHook = () => {
     return {
         id: null,
         map: null,
@@ -359,4 +356,4 @@ export default getFullProjectMapHook = () => {
             clearAllHighlights(this.featureLayers);
         },
     };
-};
+});

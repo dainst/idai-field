@@ -8,7 +8,7 @@ import { Fill, Stroke, Style } from "ol/style";
 import GeoJSON from "ol/format/GeoJSON.js";
 import Draw from "ol/interaction/Draw.js";
 
-import { ViewHook } from "../../../deps/phoenix_live_view/assets/js/phoenix_live_view";
+import { ViewHook } from "../../../../deps/phoenix_live_view/assets/js/phoenix_live_view";
 
 export default class PublicationSelection {
     hook: ViewHook;

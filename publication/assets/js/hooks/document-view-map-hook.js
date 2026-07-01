@@ -18,7 +18,7 @@ import PublicationTileLayers from "./map/tile-layers";
 import PreviewOverlay from "./map/preview-overlay.js";
 import PublicationSelection from "./map/selection";
 
-export default getDocumentViewMapHook = () => {
+export default (getDocumentViewMapHook = () => {
     return {
         map: null,
         projectKey: null,
@@ -207,7 +207,7 @@ export default getDocumentViewMapHook = () => {
                 }
 
                 [
-                    // _this.ancestorLayer,
+                    _this.ancestorLayer,
                     _this.parentLayer,
                     _this.childrenLayer,
                 ].map((layer) => {
@@ -389,4 +389,4 @@ export default getDocumentViewMapHook = () => {
             setFillForLayer(this.docLayer, true);
         },
     };
-};
+});

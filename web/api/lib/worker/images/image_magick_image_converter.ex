@@ -98,6 +98,8 @@ defmodule Api.Worker.Images.ImageMagickImageConverter do
           # instead -resize, to prevent cache-resources-exhausted; cranking up resource limits did not work
           "-scale",
           "#{rescale}x#{rescale}",
+          "-background",
+          "transparent",
           target_img_path
         ]
       }

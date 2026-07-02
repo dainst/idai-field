@@ -71,6 +71,7 @@ export default (getFullProjectMapHook = () => {
                 `map-highlight-feature-${this.el.id}`,
                 ({ feature_id }) => {
                     if (this.map) {
+                        clearAllHighlights(this.featureLayers);
                         if (feature_id.startsWith("categories-")) {
                             this.highlightCategories(feature_id);
                         } else {
@@ -90,9 +91,6 @@ export default (getFullProjectMapHook = () => {
             this.handleEvent(`map-clear-highlights-${this.el.id}`, () => {
                 if (this.map) {
                     clearAllHighlights(this.featureLayers);
-                    this.refitView();
-
-                    this.lastHighlightChange = Date.now();
                 }
             });
 
@@ -230,7 +228,6 @@ export default (getFullProjectMapHook = () => {
         },
 
         highlightCategories(categories) {
-            clearAllHighlights(this.featureLayers);
             const categoryNames = categories
                 .replace("categories-", "")
                 .split(",");
@@ -253,18 +250,15 @@ export default (getFullProjectMapHook = () => {
         },
 
         highlightDocument(uuid) {
-            if (
-                this.map &&
-                Date.now() - this.lastHighlightChange > highlightZoomDuration
-            ) {
-                clearAllHighlights(this.featureLayers);
+            if (this.map) {
                 feature = findFeature(uuid, this.map);
                 parentId = feature.getProperties().parent;
 
                 if (this.drawnExtent) {
-                    this.map
-                        .getView()
-                        .fit(this.drawnExtent, { padding: [10, 10, 10, 10] });
+                    this.map.getView().fit(this.drawnExtent, {
+                        padding: [10, 10, 10, 10],
+                        duration: highlightZoomDuration,
+                    });
                 } else if (parentId) {
                     parent = findFeature(parentId, this.map);
                     if (parent) {
@@ -292,9 +286,7 @@ export default (getFullProjectMapHook = () => {
                         duration: highlightZoomDuration,
                     });
                 }
-
                 highlightFeature(feature);
-                this.lastHighlightChange = Date.now();
             }
         },
 

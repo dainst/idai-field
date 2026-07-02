@@ -158,35 +158,32 @@ export default (getFullProjectMapHook = () => {
             });
 
             this.map.on("pointermove", async function (e) {
-                if (e.dragging || _this.selectionMode) {
+                if (
+                    e.dragging ||
+                    _this.selectionMode ||
+                    _this.pinnedFeatures.length != 0
+                ) {
                     return;
                 }
 
-                if (_this.pinnedFeatures.length == 0) {
-                    _this.hoveredFeatures = _this.map.getFeaturesAtPixel(
-                        e.pixel,
-                        {
-                            layerFilter: (layer) => {
-                                const properties = layer.getProperties();
-                                return properties && !properties.drawLayer;
-                            },
-                        },
-                    );
-
-                    _this.overlay.update(
-                        _this.hoveredFeatures,
-                        _this.categoryLabels,
-                        e.coordinate,
-                        _this.language,
-                    );
-                }
-            });
-
-            this.map
-                .getTargetElement()
-                .addEventListener("pointerleave", function (e) {
-                    _this.overlay.hide();
+                _this.hoveredFeatures = _this.map.getFeaturesAtPixel(e.pixel, {
+                    layerFilter: (layer) => {
+                        const properties = layer.getProperties();
+                        return properties && !properties.drawLayer;
+                    },
                 });
+                clearAllHighlights(_this.featureLayers);
+                for (let feature of _this.hoveredFeatures) {
+                    highlightFeature(feature);
+                }
+
+                _this.overlay.update(
+                    _this.hoveredFeatures,
+                    _this.categoryLabels,
+                    e.coordinate,
+                    _this.language,
+                );
+            });
 
             this.map.on("singleclick", async function (e) {
                 if (_this.selectionMode) return;

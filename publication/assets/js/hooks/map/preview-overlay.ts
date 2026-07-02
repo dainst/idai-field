@@ -69,6 +69,14 @@ export default class PreviewOverlay {
             this.overlay.setPositioning(`${bottom}-${right}`);
             this.overlay.setOffset([offsetX, offsetY]);
             this.overlay.setPosition(coordinate);
+
+            const _this = this;
+            this.map
+                .getTargetElement()
+                .addEventListener("pointerleave", function (e) {
+                    // Hides the overlay when mouse is completely off the map.
+                    _this.hide();
+                });
         }
     }
 

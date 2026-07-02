@@ -208,7 +208,7 @@ export default (getFullProjectMapHook = () => {
                             `/projects/${_this.projectKey}/${_this.draftDate}/${properties.uuid}`,
                         );
 
-                    _this.identifierOverlay.setPosition(undefined);
+                    _this.overlay.setPosition(undefined);
                 }
             });
 

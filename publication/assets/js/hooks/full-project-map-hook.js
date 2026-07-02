@@ -148,9 +148,15 @@ export default (getFullProjectMapHook = () => {
                 this.draftDate,
             );
 
-            this.selection = new PublicationSelection(this, this.map, () => {
-                this.selectionMode = false;
-                this.refitView();
+            this.selection = new PublicationSelection(this.map, (result) => {
+                if (result.geometry) {
+                    this.pushEventTo(this.el, "drawn-selection", {
+                        coordinates: result.geometry,
+                    });
+                } else {
+                    this.selectionMode = false;
+                    this.refitView();
+                }
             });
 
             this.map.on("pointermove", async function (e) {
@@ -186,7 +192,6 @@ export default (getFullProjectMapHook = () => {
 
             this.map.on("singleclick", async function (e) {
                 if (_this.selectionMode) return;
-
                 if (_this.hoveredFeatures.length > 1) {
                     _this.pinnedFeatures = _this.hoveredFeatures;
                     _this.hoveredFeatures = [];

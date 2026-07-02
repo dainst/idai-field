@@ -180,8 +180,15 @@ export default (getDocumentViewMapHook = () => {
                 this.draftDate,
             );
 
-            this.selection = new PublicationSelection(this, this.map, () => {
-                this.selectionMode = false;
+            this.selection = new PublicationSelection(this.map, (result) => {
+                if (result.geometry) {
+                    this.pushEventTo(this.el, "drawn-selection", {
+                        coordinates: result.geometry,
+                    });
+                } else {
+                    this.selectionMode = false;
+                    this.refitView();
+                }
             });
 
             this.el.addEventListener("pointerenter", function (e) {

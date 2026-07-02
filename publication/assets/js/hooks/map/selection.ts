@@ -8,10 +8,7 @@ import { Fill, Stroke, Style } from "ol/style";
 import GeoJSON from "ol/format/GeoJSON.js";
 import Draw from "ol/interaction/Draw.js";
 
-import { ViewHook } from "../../../../deps/phoenix_live_view/assets/js/phoenix_live_view";
-
 export default class PublicationSelection {
-    hook: ViewHook;
     map: Map;
     source: VectorSource;
     layer: VectorLayer<VectorSource<Feature<Geometry>>>;
@@ -19,8 +16,7 @@ export default class PublicationSelection {
     draw: Draw;
     callback: Function;
 
-    constructor(hook: ViewHook, map: Map, drawEndCallback: Function) {
-        this.hook = hook;
+    constructor(map: Map, drawEndCallback: Function) {
         this.map = map;
         this.callback = drawEndCallback;
 
@@ -90,13 +86,12 @@ export default class PublicationSelection {
 
         this.draw.once("drawend", ({ feature }) => {
             this.source.clear();
-            this.hook.pushEventTo(this.hook.el, "drawn-selection", {
-                coordinates: (<Polygon>feature.getGeometry()).getCoordinates(),
-            });
             this.map.removeInteraction(this.draw);
             this.extent = feature.getGeometry().getExtent();
 
-            this.callback();
+            this.callback({
+                geometry: (<Polygon>feature.getGeometry()).getCoordinates(),
+            });
         });
 
         this.map.addInteraction(this.draw);
@@ -104,6 +99,6 @@ export default class PublicationSelection {
 
     stopDrawing() {
         this.map.removeInteraction(this.draw);
-        this.callback();
+        this.callback({});
     }
 }

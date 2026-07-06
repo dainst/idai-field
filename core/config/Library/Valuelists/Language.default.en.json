@@ -524,6 +524,18 @@
       },
       "Schliffrillendekor": {
         "label": "linear cut"
+      },
+      "Schlangenfadendekor": {
+        "label": "serpentine trail decoration"
+      },
+      "Tupfendekor": {
+        "label": "blob decoration"
+      },
+      "figürlicher Schliffdekor": {
+        "label": "figural cut decoration"
+      },
+      "Reticelladekor": {
+        "label": "reticella decoration"
       }
     }
   },
@@ -582,6 +594,12 @@
       },
       "Unsicher bzw. unbestimmbar": {
         "label": "uncertain or indeterminate"
+      },
+      "Rührstab": {
+        "label": "stirring rod"
+      },
+      "Scheiben": {
+        "label": "discs"
       }
     }
   },
@@ -695,6 +713,18 @@
       },
       "Deckelgefäß": {
         "label": "vessel with lid"
+      },
+      "Aschenurne": {
+        "label": "cinerary urn"
+      },
+      "Krug": {
+        "label": "Jug"
+      },
+      "Becher": {
+        "label": "Cup"
+      },
+      "Topf": {
+        "label": "Pot"
       }
     }
   },
@@ -759,6 +789,27 @@
       },
       "zarte Rippenschale": {
         "label": "delicate ribbed bowl ('zarte Rippenschale')"
+      },
+      "Kopfflasche": {
+        "label": "face bottle"
+      },
+      "Stamnos": {
+        "label": "Stamnos"
+      },
+      "Tierflasche": {
+        "label": "animal flask"
+      },
+      "Pelike": {
+        "label": "Pelike"
+      },
+      "Sprenkler": {
+        "label": "sprinkler vessel"
+      },
+      "Oinochoe": {
+        "label": "Oinochoe"
+      },
+      "Spitzamphora": {
+        "label": "pointed Amphora"
       }
     }
   },
@@ -1039,6 +1090,27 @@
       },
       "tonnenförmig": {
         "label": "barrel-shaped"
+      },
+      "ausladend": {
+        "label": "flaring"
+      },
+      "schlank": {
+        "label": "slender"
+      },
+      "hochoval": {
+        "label": "narrowly oval"
+      },
+      "breitoval": {
+        "label": "broadly oval"
+      },
+      "doppelkonisch": {
+        "label": "biconical"
+      },
+      "halbkugelig": {
+        "label": "hemispherical"
+      },
+      "spindelförmig": {
+        "label": "spindle-shaped"
       }
     }
   },
@@ -2958,6 +3030,19 @@
       },
       "mineralStrain": {
         "label": "Strain (unknown width) MIN"
+      }
+    }
+  },
+  "Mollusk-classification-default": {
+    "values": {
+      "Muschelschale (Bivalvia)": {
+        "label": "shell (Bivalvia)"
+      },
+      "Schneckenhaus (Gastropoda)": {
+        "label": "snail shell (Gastropoda)"
+      },
+      "Schuppe": {
+        "label": "scale"
       }
     }
   }

@@ -39,7 +39,6 @@ defmodule FieldPublication.MixProject do
       {:phoenix_ecto, "~> 4.7"},
       {:phoenix_live_reload, "~> 1.5", only: :dev},
       {:earmark, "~> 1.4"},
-      {:geo, "~> 4.1"},
       {:esbuild, "~> 0.10", runtime: Mix.env() == :dev},
       {:tailwind, "~> 0.4", runtime: Mix.env() == :dev},
       {:mix_audit, "~> 2.1", only: [:dev, :test], runtime: false},
@@ -54,7 +53,8 @@ defmodule FieldPublication.MixProject do
       {:iso639_elixir, "~> 0.2.1"},
       {:cachex, "~> 4.1"},
       {:cors_plug, "~> 3.0"},
-      {:iiif_image_plug, "~> 1.0"}
+      {:iiif_image_plug, "~> 1.0"},
+      {:ex_tempo, "~> 0.15"}
     ]
   end
 

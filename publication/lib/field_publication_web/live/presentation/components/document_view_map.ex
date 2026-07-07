@@ -32,15 +32,18 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
         project_key={@publication.project_name}
         draft_date={@publication.draft_date}
         phx-hook="DocumentViewMap"
+        initial_uuid={@uuid}
+        initial_linked={@linked_uuids |> Enum.join("|")}
       >
         <!-- set phx-update="ignore" to ensure changes the map's DOM elements are not re-rendered on updates
           by live view, but instead the content is controlled by OpenLayers (and/or our hook logic) client side after initializiation. -->
         <div style={@style} id={"#{@id}-map"} phx-update="ignore">
+          <div id={"#{@id}-loading-indicator"} class="text-center p-1 h-full w-full bg-white">
+            Loading map...
+          </div>
+
           <div class="text-xs" id={"#{@id}-identifier-tooltip"}>
-            <div class="grow h-full" id={"#{@id}-identifier-tooltip-content"}>
-              <!-- This div will get repurposed once the map is loaded. -->
-                Loading map...
-            </div>
+            <div class="grow h-full" id={"#{@id}-identifier-tooltip-content"}></div>
           </div>
         </div>
         <div class="absolute p-1 top-1 right-1 flex gap-1">
@@ -77,65 +80,46 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
         %{
           id: id,
           publication: %Publication{} = publication,
-          doc: %Document{} = doc,
-          ancestors: _ancestors
+          doc:
+            %Document{
+              relations: relations,
+              geometry: geometry
+            } = doc
         } =
           assigns,
         socket
       ) do
     hierarchy = Data.get_document_hierarchy(publication)
 
-    children_features =
-      doc
-      |> get_docs_in_relation(["contains", "isAbove", "cuts", "isCutBy"])
-      |> Data.get_map_feature_collection(publication)
-
-    parent_features =
-      doc
-      |> get_docs_in_relation(["isRecordedIn", "liesWithin", "isBelow"])
-      |> Data.get_map_feature_collection(publication)
-
-    document_feature_info =
-      case Data.create_map_feature(doc, hierarchy, publication) do
-        {:error, _} ->
-          %{}
-
-        {:ok, {category_labels, feature}} ->
-          %{category_labels: category_labels, feature: feature}
-      end
-
-    document_geometry_type =
-      case document_feature_info do
-        %{feature: %{properties: %{type: type}}} ->
-          type
-
-        _ ->
-          "None"
-      end
+    directly_linked_uuids =
+      Enum.map(relations, fn %RelationGroup{docs: docs} ->
+        Enum.map(docs, fn %Document{id: id} -> id end)
+      end)
+      |> List.flatten()
+      |> Enum.uniq()
 
     socket = assign(socket, set_defaults(assigns))
 
     socket =
-      if parent_features.features == [] and children_features.features == [] and
-           document_geometry_type == "None" do
-        assign(socket, :no_data, true)
-      else
-        socket
-        |> assign(:no_data, false)
-        |> push_event("document-map-update-#{id}", %{
-          document_uuid: doc.id,
-          document_feature_info: document_feature_info,
-          children_features: children_features,
-          parent_features: parent_features,
-          ancestor_features: %{}
-        })
-        |> assign(:document_geometry_type, document_geometry_type)
-        |> assign(:doc, doc)
+      case Map.get(socket.assigns, :uuid) do
+        value when value != doc.id ->
+          push_event(socket, "document-map-update-#{id}", %{
+            uuid: doc.id,
+            linked_uuids: directly_linked_uuids
+          })
+
+        _same_uuid_or_just_initialized ->
+          socket
       end
 
     {
       :ok,
       socket
+      |> assign(:no_data, false)
+      |> assign(:uuid, doc.id)
+      |> assign(:linked_uuids, directly_linked_uuids)
+      |> assign(:document_geometry_type, geometry["type"] || "None")
+      |> assign(:doc, doc)
     }
   end
 
@@ -147,7 +131,6 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     |> Map.put_new(:draw_box_mode, false)
     |> Map.put_new(:language, Gettext.get_locale(FieldPublicationWeb.Translate))
     |> Map.put_new(:focus, :default)
-    |> Map.put(:uuid, assigns.doc.id)
   end
 
   def handle_event("toggle-draw-box-mode", _, socket) do
@@ -185,21 +168,5 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     socket
     |> assign(:draw_box_mode, new_value)
     |> push_event("set-draw-box-mode-#{id}", %{new_value: new_value})
-  end
-
-  defp get_docs_in_relation(%Document{} = doc, relation_names) do
-    relation_names
-    |> Enum.map(fn relation_name ->
-      doc
-      |> Data.get_relation(relation_name)
-      |> case do
-        nil ->
-          []
-
-        %RelationGroup{docs: docs} ->
-          docs
-      end
-    end)
-    |> List.flatten()
   end
 end

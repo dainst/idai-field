@@ -1,18 +1,16 @@
 import Map from "ol/Map.js";
 import View from "ol/View.js";
-import { createEmpty, extend, isEmpty } from "ol/extent.js";
+import { createEmpty, extend } from "ol/extent.js";
 import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
 import GeoJSON from "ol/format/GeoJSON.js";
-import Style from "ol/style/Style.js";
-import { Fill, Stroke } from "ol/style.js";
-import Draw from "ol/interaction/Draw.js";
 
 import {
     styleFunction,
     setFillForLayer,
     clearAllHighlights,
     highlightFeature,
+    getDefaultAlpha,
 } from "./map/features";
 import PublicationTileLayers from "./map/tile-layers";
 import PreviewOverlay from "./map/preview-overlay.js";
@@ -22,16 +20,17 @@ export default (getDocumentViewMapHook = () => {
     return {
         map: null,
         projectKey: null,
-        projectDraftDate: null,
+        draftDate: null,
         publicationTileLayers: null,
         docId: null,
-        parentLayer: null,
-        ancestorLayer: null,
-        docLayer: null,
-        childrenLayer: null,
+        setupDone: false,
+        linkedDocIds: [],
+        mainFeature: null,
+        featureLayers: [],
         hoveredFeatures: [],
         pinnedFeatures: [],
         selectionMode: false,
+        fullVectorExtent: null,
         mounted() {
             this.initialize();
             this.handleEvent(
@@ -63,35 +62,18 @@ export default (getDocumentViewMapHook = () => {
 
             this.handleEvent(
                 `document-map-update-${this.el.id}`,
-                ({
-                    document_uuid,
-                    document_feature_info,
-                    children_features,
-                    parent_features,
-                }) => {
-                    this.docId = document_uuid;
-                    this.setMapFeatures(
-                        document_feature_info.category_labels
-                            ? document_feature_info.category_labels
-                            : null,
-                        document_feature_info.feature
-                            ? document_feature_info.feature
-                            : null,
-                        parent_features,
-                        children_features,
-                    );
+                ({ uuid, linked_uuids }) => {
+                    this.docId = uuid;
+                    this.linkedDocIds = linked_uuids;
+
+                    this.resetFeatures();
                 },
             );
 
             this.handleEvent(
                 `map-highlight-feature-${this.el.id}`,
                 ({ feature_id }) => {
-                    clearAllHighlights([
-                        this.ancestorLayer,
-                        this.parentLayer,
-                        this.docLayer,
-                        this.childrenLayer,
-                    ]);
+                    clearAllHighlights(this.featureLayers);
                     const vectorLayerFeatures = this.map
                         .getAllLayers()
                         .filter((layer) => layer instanceof VectorLayer)
@@ -102,7 +84,7 @@ export default (getDocumentViewMapHook = () => {
                         return f.getProperties().uuid == feature_id;
                     });
 
-                    if (feature) highlightFeature(feature);
+                    if (feature) highlightFeature(feature, 0.5);
                 },
             );
 
@@ -115,14 +97,7 @@ export default (getDocumentViewMapHook = () => {
             });
 
             this.handleEvent(`map-clear-highlights-${this.el.id}`, () => {
-                clearAllHighlights([
-                    this.ancestorLayer,
-                    this.parentLayer,
-                    this.docLayer,
-                    this.childrenLayer,
-                ]);
-
-                setFillForLayer(this.docLayer, true);
+                this.resetFeatures();
             });
 
             this.handleEvent(
@@ -149,11 +124,17 @@ export default (getDocumentViewMapHook = () => {
             );
         },
 
-        initialize() {
+        async initialize() {
             const _this = this;
+            this.id = this.el.getAttribute("id");
+
+            this.docId = this.el.getAttribute("initial_uuid");
+            this.linkedDocIds = this.el
+                .getAttribute("initial_linked")
+                .split("|");
 
             this.projectKey = this.el.getAttribute("project_key");
-            this.projectDraftDate = this.el.getAttribute("draft_date");
+            this.draftDate = this.el.getAttribute("draft_date");
             this.language = this.el.getAttribute("language");
 
             this.map = new Map({
@@ -170,7 +151,7 @@ export default (getDocumentViewMapHook = () => {
                 this.map,
                 overlayDiv,
                 this.projectKey,
-                this.projectDraftDate,
+                this.draftDate,
             );
 
             this.publicationTileLayers = new PublicationTileLayers(
@@ -196,11 +177,7 @@ export default (getDocumentViewMapHook = () => {
             });
 
             this.el.addEventListener("pointerleave", function (e) {
-                [_this.parentLayer, _this.childrenLayer].map((layer) => {
-                    setFillForLayer(layer, false);
-                });
-
-                setFillForLayer(_this.docLayer, true);
+                _this.resetFeatures();
                 _this.overlay.hide();
             });
 
@@ -213,13 +190,7 @@ export default (getDocumentViewMapHook = () => {
                     return;
                 }
 
-                [
-                    _this.ancestorLayer,
-                    _this.parentLayer,
-                    _this.childrenLayer,
-                ].map((layer) => {
-                    setFillForLayer(layer, false);
-                });
+                clearAllHighlights(_this.featureLayers);
 
                 const hitFeatures = _this.map.getFeaturesAtPixel(e.pixel, {
                     layerFilter: (layer) => {
@@ -266,109 +237,76 @@ export default (getDocumentViewMapHook = () => {
                     _this
                         .js()
                         .patch(
-                            `/projects/${_this.projectKey}/${_this.projectDraftDate}/${properties.uuid}`,
+                            `/projects/${_this.projectKey}/${_this.draftDate}/${properties.uuid}`,
                         );
                     _this.overlay.hide();
                 }
             });
+
+            const response = await fetch(
+                `/api/json/geometry_feature_collections/${this.projectKey}/${this.draftDate}`,
+            );
+            const { category_labels, feature_collections } =
+                await response.json();
+
+            this.categoryLabels = category_labels;
+
+            this.setMapFeatures(feature_collections);
+
+            document.getElementById(
+                `${this.id}-loading-indicator`,
+            ).style.display = "none";
         },
-        async setMapFeatures(
-            documentCategoryLabels,
-            documentFeature,
-            parentCollection,
-            childCollection,
-        ) {
-            if (this.childrenLayer) this.map.removeLayer(this.childrenLayer);
-            if (this.docLayer) this.map.removeLayer(this.docLayer);
-            if (this.parentLayer) this.map.removeLayer(this.parentLayer);
-            if (this.ancestorLayer) this.map.removeLayer(this.ancestorLayer);
+        setMapFeatures(featureCollections) {
+            for (const index in this.featureLayers) {
+                this.map.removeLayer(this.featureLayer[index]);
+            }
+            this.featureLayers = [];
 
-            this.categoryLabels = {};
-
-            let documentVectorSource = null;
-            if (documentFeature) {
-                this.categoryLabels[documentFeature.properties.category] =
-                    documentCategoryLabels;
-
-                documentFeature.properties.fill = true;
-
-                documentVectorSource = new VectorSource({
-                    features: new GeoJSON().readFeatures(documentFeature),
+            for (let key in featureCollections) {
+                let collection = featureCollections[key];
+                const vectorSource = new VectorSource({
+                    features: new GeoJSON().readFeatures(collection),
                 });
 
-                this.docLayer = new VectorLayer({
-                    source: documentVectorSource,
+                const featureLayer = new VectorLayer({
+                    name: key,
+                    source: vectorSource,
                     style: styleFunction,
-                    properties: {
-                        mainDocumentLayer: true,
-                    },
                 });
-                this.map.addLayer(this.docLayer);
+
+                this.featureLayers.push(featureLayer);
+                this.map.addLayer(featureLayer);
             }
 
-            for (categoryKey in parentCollection.properties.category_labels) {
-                this.categoryLabels[categoryKey] =
-                    parentCollection.properties.category_labels[categoryKey];
-            }
+            const vectorLayerFeatures = this.map
+                .getAllLayers()
+                .filter((layer) => layer instanceof VectorLayer)
+                .map((layer) => layer.getSource().getFeatures())
+                .flat();
 
-            const parentVectorSource = new VectorSource({
-                features: new GeoJSON().readFeatures(parentCollection),
+            const uuid = this.docId;
+            const linkedDocIds = this.linkedDocIds;
+
+            const fullVectorExtent = createEmpty();
+            vectorLayerFeatures.map(function (f) {
+                properties = f.getProperties();
+
+                if (
+                    properties.uuid == uuid ||
+                    linkedDocIds.includes(properties.uuid)
+                ) {
+                    extend(fullVectorExtent, f.getGeometry().getExtent());
+                }
             });
 
-            this.parentLayer = new VectorLayer({
-                name: "parentLayer",
-                source: parentVectorSource,
-                style: styleFunction,
-            });
-
-            this.map.addLayer(this.parentLayer);
-
-            for (categoryKey in childCollection.properties.category_labels) {
-                this.categoryLabels[categoryKey] =
-                    childCollection.properties.category_labels[categoryKey];
-            }
-
-            const childrenVectorSource = new VectorSource({
-                features: new GeoJSON().readFeatures(childCollection),
-            });
-
-            this.childrenLayer = new VectorLayer({
-                name: "childrenLayer",
-                source: childrenVectorSource,
-                style: styleFunction,
-            });
-
-            this.map.addLayer(this.childrenLayer);
-
-            aggregatedExtent = createEmpty();
-            aggregatedExtent = extend(
-                aggregatedExtent,
-                parentVectorSource.getExtent(),
-            );
-
-            if (documentFeature) {
-                aggregatedExtent = extend(
-                    aggregatedExtent,
-                    documentVectorSource.getExtent(),
-                );
-            }
-
-            aggregatedExtent = extend(
-                aggregatedExtent,
-                childrenVectorSource.getExtent(),
-            );
-
+            this.fullVectorExtent = fullVectorExtent;
             let fullExtent = createEmpty();
 
-            fullExtent = extend(fullExtent, aggregatedExtent);
+            fullExtent = extend(fullExtent, this.fullVectorExtent);
             fullExtent = extend(
                 fullExtent,
                 this.publicationTileLayers.getExtents().project,
-            );
-
-            fullExtent = extend(
-                fullExtent,
-                this.publicationTileLayers.getExtents().document,
             );
 
             this.map.getView().fit(fullExtent, { padding: [10, 10, 10, 10] });
@@ -381,19 +319,45 @@ export default (getDocumentViewMapHook = () => {
                 }),
             );
 
-            if (!isEmpty(aggregatedExtent)) {
+            this.setupDone = true;
+            this.resetFeatures();
+        },
+
+        resetFeatures() {
+            if (this.setupDone) {
                 this.map
                     .getView()
-                    .fit(aggregatedExtent, { padding: [10, 10, 10, 10] });
-            }
+                    .fit(this.fullVectorExtent, { padding: [10, 10, 10, 10] });
 
-            clearAllHighlights([
-                this.ancestorLayer,
-                this.parentLayer,
-                this.docLayer,
-                this.childrenLayer,
-            ]);
-            setFillForLayer(this.docLayer, true);
+                const vectorLayerFeatures = this.map
+                    .getAllLayers()
+                    .filter((layer) => layer instanceof VectorLayer)
+                    .map((layer) => layer.getSource().getFeatures())
+                    .flat();
+
+                const uuid = this.docId;
+                const linkedDocIds = this.linkedDocIds;
+
+                vectorLayerFeatures.map(function (f) {
+                    properties = f.getProperties();
+
+                    if (properties.uuid == uuid) {
+                        properties.hidden = false;
+                        properties.highlight = true;
+                        properties.alpha = 0.5;
+                    } else if (linkedDocIds.includes(properties.uuid)) {
+                        properties.hidden = false;
+                        properties.highlight = false;
+                        properties.alpha = getDefaultAlpha();
+                    } else {
+                        properties.hidden = true;
+                        properties.highlight = false;
+                        properties.alpha = getDefaultAlpha();
+                    }
+
+                    f.setProperties(properties);
+                });
+            }
         },
     };
 });

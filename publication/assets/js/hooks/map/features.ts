@@ -7,6 +7,7 @@ import { Geometry } from "ol/geom";
 import Map from "ol/Map";
 const pointRadius = 5;
 const lineWidth = pointRadius * 2;
+const defaultAlpha = 0.2;
 
 export const findFeature = function (uuid: string, map: Map) {
     const vectorLayerFeatures = map
@@ -24,6 +25,9 @@ export const findFeature = function (uuid: string, map: Map) {
 
 export const styleFunction = function (feature: Feature) {
     const props = feature.getProperties();
+
+    if (props.hidden == true) return null;
+
     if (props.type === "Polygon" || props.type === "MultiPolygon") {
         return getPolygonStyle(props);
     } else if (props.type == "LineString" || props.type === "MultiLineString") {
@@ -53,16 +57,37 @@ export const setFillForLayer = function (
     let features = layer.getSource().getFeatures();
     for (let feature of features) {
         let properties = feature.getProperties();
-        properties.fill = value;
+        properties.highlight = value;
         feature.setProperties(properties);
     }
 };
 
-export const highlightFeature = function (feature: Feature) {
+export const showFeature = function (feature: Feature) {
+    let properties = feature.getProperties();
+    properties.hidden = false;
+
+    feature.setProperties(properties);
+};
+export const hideFeature = function (feature: Feature) {
+    let properties = feature.getProperties();
+    properties.hidden = true;
+
+    feature.setProperties(properties);
+};
+
+export const highlightFeature = function (
+    feature: Feature,
+    alpha: number = defaultAlpha,
+) {
     let properties = feature.getProperties();
 
-    properties.fill = true;
+    properties.highlight = true;
+    properties.alpha = alpha;
     feature.setProperties(properties);
+};
+
+export const getDefaultAlpha = function () {
+    return defaultAlpha;
 };
 
 function getPolygonStyle(properties: { [key: string]: any }) {
@@ -71,15 +96,15 @@ function getPolygonStyle(properties: { [key: string]: any }) {
     let style = new Style({
         stroke: new Stroke({
             color: `rgba(${r}, ${g}, ${b}, ${a})`,
-            width: properties.fill ? 2 : 1,
+            width: properties.highlight ? 2 : 1,
             lineDash: properties.category == "Trench" ? [20, 10, 5, 10] : null,
         }),
     });
 
-    if (properties.fill) {
+    if (properties.highlight) {
         style.setFill(
             new Fill({
-                color: `rgba(${r * 0.5}, ${g * 0.5}, ${b * 0.5}, 0.1)`,
+                color: `rgba(${r * 0.5}, ${g * 0.5}, ${b * 0.5}, ${properties.alpha || defaultAlpha})`,
             }),
         );
     } else {
@@ -98,7 +123,7 @@ function getLineStyle(properties: { [key: string]: any }) {
 
     let styleColor: string;
 
-    if (properties.fill) {
+    if (properties.highlight) {
         styleColor = `rgba(${r}, ${g}, ${b}, 1)`;
     } else {
         styleColor = `rgba(${r}, ${g}, ${b}, 0.5)`;
@@ -131,7 +156,7 @@ function getPointStyle(properties: { [key: string]: any }) {
         }),
     );
 
-    if (properties.fill) {
+    if (properties.highlight) {
         styles.push(
             new Style({
                 image: new Circle({

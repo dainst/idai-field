@@ -163,12 +163,18 @@
     "qrcode": "1.5.3",
     "querystring-es3": "0.2.1",
     "rxjs": "~6.5.4",
-    "sharp": "0.34.4",
+    "sharp": "npm:@janhapke/sharp-electron@0.35.3-electron.1",
     "showdown": "2.1.0",
     "svg-pan-zoom": "3.6.2",
     "tsfun": "5.5.38",
     "url": "0.11.4",
     "zone.js": "0.16.1"
+  },
+  "overrides": {
+    "sharp": {
+      ".": "$sharp",
+      "sharp": "0.35.3"
+    }
   },
   "devDependencies": {
     "@angular-builders/custom-webpack": "21.0.3",

@@ -1,8 +1,6 @@
 defmodule FieldPublication.Replication do
   use GenServer
 
-  alias Phoenix.PubSub
-
   alias FieldPublication.{
     CouchService,
     Replication.CouchReplication,
@@ -265,11 +263,7 @@ defmodule FieldPublication.Replication do
         persisted_log(publication, :error, "#{msg} #{inspect(other)}")
     end
 
-    PubSub.broadcast(
-      FieldPublication.PubSub,
-      publication_id,
-      {publication_id, {:replication_stopped}}
-    )
+    Publications.broadcast(publication, {publication_id, {:replication_stopped}})
 
     {:noreply, cleanup(ref, running_replications)}
   end

@@ -136,6 +136,49 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
     }
   end
 
+  def handle_info(
+        {publication_id, {replication_process_type, progress}},
+        %{assigns: %{processing_state: state}} = socket
+      )
+      when replication_process_type in [:document_replication_count, :file_replication_count] do
+    updated_state =
+      Map.update(
+        state,
+        publication_id,
+        %{replication_process_type => nil},
+        fn publication_state ->
+          Map.put(publication_state, replication_process_type, progress)
+        end
+      )
+
+    {
+      :noreply,
+      assign(socket, :processing_state, updated_state)
+    }
+  end
+
+  def handle_info(
+        {publication_id, {:replication_stopped}},
+        %{assigns: %{processing_state: state}} = socket
+      ) do
+    updated_state =
+      Map.update(state, publication_id, %{}, fn publication_state ->
+        publication_state
+        |> Map.delete(:document_replication_count)
+        |> Map.delete(:file_replication_count)
+      end)
+
+    updated_state =
+      if updated_state[publication_id] == %{},
+        do: Map.delete(updated_state, publication_id),
+        else: updated_state
+
+    {
+      :noreply,
+      assign(socket, :processing_state, updated_state)
+    }
+  end
+
   def handle_info(info, socket) do
     Logger.debug("Ignoring handle_info/2 call:")
     Logger.debug(inspect(info))

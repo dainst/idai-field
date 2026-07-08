@@ -115,6 +115,10 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
         active?: Processing.show(publication, :preview_documents) != nil,
         progress: nil
       })
+      |> assign(:geo_collections, %{
+        active?: Processing.show(publication, :geo_collections) != nil,
+        progress: nil
+      })
       |> assign(:database_indices, %{
         active?: Processing.show(publication, :database_indices) != nil,
         progress: nil

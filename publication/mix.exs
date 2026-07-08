@@ -54,7 +54,8 @@ defmodule FieldPublication.MixProject do
       {:iso639_elixir, "~> 0.2.1"},
       {:cachex, "~> 4.1"},
       {:cors_plug, "~> 3.0"},
-      {:iiif_image_plug, "~> 1.0"}
+      {:iiif_image_plug, "~> 1.0"},
+      {:ex_brotli, "~> 0.6.0"}
     ]
   end
 

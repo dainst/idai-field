@@ -263,7 +263,7 @@ defmodule FieldPublication.Replication do
         persisted_log(publication, :error, "#{msg} #{inspect(other)}")
     end
 
-    Publications.broadcast(publication, {publication_id, {:replication_stopped}})
+    Publications.broadcast(publication, {:replication_stopped})
 
     {:noreply, cleanup(ref, running_replications)}
   end

@@ -4,6 +4,7 @@ defmodule FieldPublication.Publications do
   alias Phoenix.PubSub
 
   alias FieldPublication.CouchService
+  alias FieldPublication.FileService
   alias FieldPublication.Projects
   alias FieldPublication.Publications.{Data, Search}
 
@@ -316,7 +317,10 @@ defmodule FieldPublication.Publications do
          {:ok, %{status: status}} when status in [200, 404] <-
            CouchService.delete_document(doc_id, rev),
          {:ok, %{status: status}} when status in [200, 404] <-
-           CouchService.delete_database(database) do
+           CouchService.delete_database(database),
+         :ok <- FileService.delete_hierarchy(publication),
+         %{json: :ok, compressed: :ok} <-
+           FileService.delete_geometry_collections(publication) do
       {:ok, :deleted}
     else
       error ->

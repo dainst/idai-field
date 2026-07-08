@@ -13,12 +13,12 @@ defmodule FieldPublication.Publications.Data do
 
   alias FieldPublication.{
     CouchService,
+    FileService,
     Publications,
     Publications.Data.Document
   }
 
   alias FieldPublication.DatabaseSchema.{
-    DataHierarchy,
     DataIssues,
     DataPreview,
     LogEntry,
@@ -153,7 +153,6 @@ defmodule FieldPublication.Publications.Data do
       %{
         selector: %{
           "$or": [
-            %{doc_type: "hierarchy"},
             %{doc_type: "preview"},
             %{entries: %{"$elemMatch": %{reported_by: report_key}}}
           ]
@@ -171,40 +170,6 @@ defmodule FieldPublication.Publications.Data do
     |> Stream.chunk_every(10000)
     |> Enum.each(fn doc_list ->
       CouchService.post_documents(doc_list, meta_db_name)
-    end)
-
-    hierarchy_mapping = generate_hierarchy_mapping(publication)
-
-    hierarchy_documents =
-      hierarchy_mapping
-      |> Enum.map(fn {uuid, %{parent: parent_uuid, children: children}} ->
-        DataHierarchy.create(uuid, parent_uuid, children)
-      end)
-      |> Enum.filter(fn
-        {:ok, _doc} ->
-          true
-
-        {:error, changeset} ->
-          report_data_issue(
-            Ecto.Changeset.get_field(changeset, :uuid),
-            LogEntry.create(%{
-              type: "invalid_document",
-              reported_by: report_key,
-              severity: :error,
-              message: inspect(changeset)
-            }),
-            publication
-          )
-
-          Logger.error("Failed to create hierarchy document:")
-          Logger.error(inspect(changeset))
-          false
-      end)
-      |> Enum.map(fn {:ok, doc} -> doc end)
-
-    Stream.chunk_every(hierarchy_documents, 2000)
-    |> Enum.each(fn batch ->
-      CouchService.post_documents(batch, meta_db_name)
     end)
 
     config = Publications.get_configuration(publication)
@@ -342,8 +307,8 @@ defmodule FieldPublication.Publications.Data do
 
       # Update or initialize self
       acc =
-        Map.update(acc, doc["_id"], %{children: [], parent: parent_uuid}, fn existing ->
-          Map.put(existing, :parent, parent_uuid)
+        Map.update(acc, doc["_id"], %{"children" => [], "parent" => parent_uuid}, fn existing ->
+          Map.put(existing, "parent", parent_uuid)
         end)
 
       # Update or initialize the parent
@@ -351,11 +316,11 @@ defmodule FieldPublication.Publications.Data do
         Map.update(
           acc,
           parent_uuid,
-          %{children: [uuid], parent: nil},
+          %{"children" => [uuid], "parent" => nil},
           fn %{
-               children: existing_children
+               "children" => existing_children
              } = existing ->
-            Map.put(existing, :children, existing_children ++ [uuid])
+            Map.put(existing, "children", existing_children ++ [uuid])
           end
         )
       else
@@ -569,74 +534,54 @@ defmodule FieldPublication.Publications.Data do
     |> Stream.map(&document_map_to_struct/1)
   end
 
-  def get_project_geometry_feature_collections(
-        %Publication{project_name: project_key, draft_date: draft_date} = publication
-      ) do
-    cache_doc_name = "geometry_feature_collections_#{project_key}_#{draft_date}"
+  def create_geometry_feature_collections(publication) do
+    hierarchy = get_document_hierarchy(publication)
 
-    Cachex.get(:application_documents, cache_doc_name)
-    |> case do
-      {:ok, hit} when hit != nil ->
-        hit
+    feature_collections =
+      list_with_geometries(publication)
+      |> Enum.map(
+        &create_map_feature(
+          &1,
+          hierarchy,
+          publication
+        )
+      )
+      |> Enum.reduce(%{}, fn {:ok, {category_labels, category_color, feature}}, collections ->
+        category = feature.properties.category
 
-      _ ->
-        hierarchy = get_document_hierarchy(publication)
+        updated_collections =
+          case Map.get(collections, category) do
+            nil ->
+              # Create a new feature collection for this category with the first feature
+              # as its first member.
+              Map.put(collections, category, %{
+                type: "FeatureCollection",
+                properties: %{
+                  category: category,
+                  category_label: category_labels,
+                  category_color: category_color
+                },
+                features: [feature]
+              })
 
-        {category_labels, feature_collections} =
-          list_with_geometries(publication)
-          |> Enum.map(
-            &create_map_feature(
-              &1,
-              hierarchy,
-              publication
-            )
-          )
-          |> Enum.reduce({%{}, %{}}, fn {:ok, {category_labels, feature}},
-                                        {labels, collections} ->
-            category = feature.properties.category
+            existing_collection ->
+              # Otherwise add the feature to the existing collection.
+              updated_collection =
+                Map.update!(existing_collection, :features, fn existing_features ->
+                  existing_features ++ [feature]
+                end)
 
-            updated_labels =
-              case Map.get(labels, category) do
-                nil -> Map.put(labels, category, category_labels)
-                _existing -> labels
-              end
+              Map.put(collections, category, updated_collection)
+          end
 
-            updated_collections =
-              case Map.get(collections, category) do
-                nil ->
-                  # Create a new feature collection for this category with the first feature
-                  # as its first member.
-                  Map.put(collections, category, %{
-                    type: "FeatureCollection",
-                    properties: %{
-                      group: category
-                    },
-                    features: [feature]
-                  })
+        updated_collections
+      end)
+      |> Map.values()
 
-                existing_collection ->
-                  # Otherwise add the feature to the existing collection.
-                  updated_collection =
-                    Map.update!(existing_collection, :features, fn existing_features ->
-                      existing_features ++ [feature]
-                    end)
-
-                  Map.put(collections, category, updated_collection)
-              end
-
-            {updated_labels, updated_collections}
-          end)
-
-        result =
-          %{
-            category_labels: category_labels,
-            feature_collections: feature_collections
-          }
-
-        Cachex.put(:application_documents, cache_doc_name, result)
-
-        result
-    end
+    FieldPublication.FileService.write_geometry_collections(
+      publication,
+      feature_collections
+    )
   end
 
   def get_map_feature_collection(documents, %Publication{} = publication)
@@ -713,6 +658,7 @@ defmodule FieldPublication.Publications.Data do
       :ok,
       {
         category_labels,
+        color,
         %{
           type: "Feature",
           geometry: geometry,
@@ -720,7 +666,6 @@ defmodule FieldPublication.Publications.Data do
             type: geometry["type"],
             uuid: uuid,
             identifier: identifier,
-            color: color,
             description: description,
             category: category_key,
             parent: uuid_of_next_ancestor_with_geometry(uuid, hierarchy, publication)
@@ -939,15 +884,28 @@ defmodule FieldPublication.Publications.Data do
   end
 
   def get_document_hierarchy(%Publication{} = publication) do
-    cache_database = get_meta_database_name(publication)
-    hierarchy_cache = "hierarchy_#{Publications.get_doc_id(publication)}"
+    pub_id = Publications.get_doc_id(publication)
+    hierarchy_cache = "hierarchy_#{pub_id}"
 
     Cachex.get(@document_cache_name, hierarchy_cache)
     |> case do
       {:ok, nil} ->
-        Logger.debug("No document cache for hierarchy.")
+        path = FileService.publication_hierarchy_path(publication)
 
-        hierarchy = DataHierarchy.list(cache_database)
+        hierarchy =
+          if File.exists?(path) do
+            Logger.debug("No active document cache for `#{pub_id}` hierarchy loading from file.")
+
+            path
+            |> File.read!()
+            |> JSON.decode!()
+          else
+            Logger.debug("No active document cache for `#{pub_id}` hierarchy generating new one.")
+            new = generate_hierarchy_mapping(publication)
+            FileService.write_hierarchy(publication, new)
+            new
+          end
+
         Cachex.put(@document_cache_name, hierarchy_cache, hierarchy, ttl: 1000 * 60 * 60 * 24 * 7)
 
         hierarchy

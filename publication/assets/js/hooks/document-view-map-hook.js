@@ -24,13 +24,16 @@ export default (getDocumentViewMapHook = () => {
         publicationTileLayers: null,
         docId: null,
         setupDone: false,
+        nothingToShow: true,
         linkedDocIds: [],
+        categoriesMetadata: [],
         mainFeature: null,
         featureLayers: [],
         hoveredFeatures: [],
         pinnedFeatures: [],
         selectionMode: false,
         fullVectorExtent: null,
+        fullExtent: null,
         mounted() {
             this.initialize();
             this.handleEvent(
@@ -168,7 +171,7 @@ export default (getDocumentViewMapHook = () => {
                     });
                 } else {
                     this.selectionMode = false;
-                    this.refitView();
+                    this.resetFeatures();
                 }
             });
 
@@ -212,7 +215,7 @@ export default (getDocumentViewMapHook = () => {
                 if (e.coordinate) {
                     _this.overlay.update(
                         hitFeatures,
-                        _this.categoryLabels,
+                        _this.categoriesMetadata,
                         e.coordinate,
                         _this.language,
                     );
@@ -227,7 +230,7 @@ export default (getDocumentViewMapHook = () => {
                     _this.hoveredFeatures = [];
                     _this.overlay.update(
                         _this.pinnedFeatures,
-                        _this.categoryLabels,
+                        _this.categoriesMetadata,
                         e.coordinate,
                         _this.language,
                         true,
@@ -243,15 +246,30 @@ export default (getDocumentViewMapHook = () => {
                 }
             });
 
+            this.map
+                .getTargetElement()
+                .addEventListener("pointerleave", function (e) {
+                    // Hides the overlay if no pinned features and mouse is completely off the map.
+                    if (_this.pinnedFeatures.length === 0) {
+                        _this.overlay.hide();
+                    }
+                });
+
             const response = await fetch(
                 `/api/json/geometry_feature_collections/${this.projectKey}/${this.draftDate}`,
             );
-            const { category_labels, feature_collections } =
-                await response.json();
+            const featureCollections = await response.json();
 
-            this.categoryLabels = category_labels;
+            for (let collection of featureCollections) {
+                this.categoriesMetadata.push(collection.properties);
 
-            this.setMapFeatures(feature_collections);
+                for (let feature of collection.features) {
+                    feature.properties["color"] =
+                        collection.properties.category_color;
+                }
+            }
+
+            this.setMapFeatures(featureCollections);
 
             document.getElementById(
                 `${this.id}-loading-indicator`,
@@ -296,20 +314,24 @@ export default (getDocumentViewMapHook = () => {
                     properties.uuid == uuid ||
                     linkedDocIds.includes(properties.uuid)
                 ) {
+                    this.nothingToShow = false;
                     extend(fullVectorExtent, f.getGeometry().getExtent());
                 }
             });
 
             this.fullVectorExtent = fullVectorExtent;
-            let fullExtent = createEmpty();
+            console.log(this.fullVectorExtent);
+            this.fullExtent = createEmpty();
 
-            fullExtent = extend(fullExtent, this.fullVectorExtent);
-            fullExtent = extend(
-                fullExtent,
+            this.fullExtent = extend(this.fullExtent, this.fullVectorExtent);
+            this.fullExtent = extend(
+                this.fullExtent,
                 this.publicationTileLayers.getExtents().project,
             );
 
-            this.map.getView().fit(fullExtent, { padding: [10, 10, 10, 10] });
+            this.map
+                .getView()
+                .fit(this.fullExtent, { padding: [10, 10, 10, 10] });
             this.map.setView(
                 new View({
                     extent: this.map
@@ -324,6 +346,13 @@ export default (getDocumentViewMapHook = () => {
         },
 
         resetFeatures() {
+            if (this.nothingToShow) {
+                this.map
+                    .getView()
+                    .fit(this.fullExtent, { padding: [10, 10, 10, 10] });
+
+                return;
+            }
             if (this.setupDone) {
                 this.map
                     .getView()

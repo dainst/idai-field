@@ -1,4 +1,6 @@
 defmodule FieldPublication.FileService do
+  alias FieldPublication.DatabaseSchema.Publication
+
   @file_store_path Application.compile_env(:field_publication, :file_store_directory_root)
   @custom_assets_path "#{@file_store_path}/custom_assets/"
   @custom_images_path "#{@custom_assets_path}/images"
@@ -152,5 +154,87 @@ defmodule FieldPublication.FileService do
 
   def list_tile_image_directories(project_key) do
     File.ls!(get_map_tiles_base_path(project_key))
+  end
+
+  def write_geometry_collections(
+        %Publication{} = publication,
+        collection
+      ) do
+    path = publication_geometry_path(publication)
+    compressed_path = publication_geometry_path(publication, true)
+
+    with :ok <- path |> Path.dirname() |> File.mkdir_p(),
+         :ok <- compressed_path |> Path.dirname() |> File.mkdir_p() do
+      content = JSON.encode!(collection)
+
+      File.write!(path, content)
+      File.write!(compressed_path, content |> ExBrotli.compress!())
+
+      %{
+        json: path,
+        compressed: compressed_path
+      }
+    else
+      error ->
+        error
+    end
+  end
+
+  def delete_geometry_collections(%Publication{} = publication) do
+    %{
+      json:
+        publication
+        |> publication_geometry_path()
+        |> File.rm(),
+      compressed:
+        publication
+        |> publication_geometry_path()
+        |> File.rm()
+    }
+  end
+
+  def publication_geometry_path(%Publication{} = publication, compressed? \\ false) do
+    Path.join([
+      preprocessed_json(publication),
+      "geo_collections.json#{if compressed?, do: ".br"}"
+    ])
+  end
+
+  def write_hierarchy(
+        %Publication{} = publication,
+        hierarchy
+      ) do
+    path = publication_hierarchy_path(publication)
+
+    with :ok <- path |> Path.dirname() |> File.mkdir_p() do
+      content = JSON.encode!(hierarchy)
+
+      File.write(path, content)
+    else
+      error ->
+        error
+    end
+  end
+
+  def delete_hierarchy(%Publication{} = publication) do
+    publication
+    |> publication_hierarchy_path()
+    |> File.rm()
+  end
+
+  def publication_hierarchy_path(%Publication{} = publication) do
+    Path.join([
+      preprocessed_json(publication),
+      "hierarchy.json"
+    ])
+  end
+
+  defp preprocessed_json(%Publication{project_name: project_key, draft_date: draft_date}) do
+    Path.join([
+      @file_store_path,
+      "json",
+      project_key,
+      Date.to_string(draft_date)
+    ])
   end
 end

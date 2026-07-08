@@ -6,6 +6,12 @@ import Map from "ol/Map.js";
 
 import { ViewHook } from "../../../../deps/phoenix_live_view/assets/js/phoenix_live_view";
 
+interface CategoryMetadata {
+    category: string;
+    category_color: string;
+    category_label: { [key: string]: string };
+}
+
 export default class PreviewOverlay {
     hook: ViewHook;
     map: Map;
@@ -36,7 +42,7 @@ export default class PreviewOverlay {
 
     public update(
         features: Feature[],
-        categoryLabels: { [key: string]: { [key: string]: string } },
+        categoriesMetadata: CategoryMetadata[],
         coordinate: number[],
         selectedLanguage: string,
         pinned: boolean = false,
@@ -51,7 +57,7 @@ export default class PreviewOverlay {
             contentNode.appendChild(
                 this.renderPreviewList(
                     selectedLanguage,
-                    categoryLabels,
+                    categoriesMetadata,
                     features,
                     pinned,
                 ),
@@ -69,14 +75,6 @@ export default class PreviewOverlay {
             this.overlay.setPositioning(`${bottom}-${right}`);
             this.overlay.setOffset([offsetX, offsetY]);
             this.overlay.setPosition(coordinate);
-
-            const _this = this;
-            this.map
-                .getTargetElement()
-                .addEventListener("pointerleave", function (e) {
-                    // Hides the overlay when mouse is completely off the map.
-                    _this.hide();
-                });
         }
     }
 
@@ -86,7 +84,7 @@ export default class PreviewOverlay {
 
     private renderPreviewList(
         preferredLanguage: string,
-        categoryLabels: { [key: string]: { [key: string]: string } },
+        categoriesMetadata: CategoryMetadata[],
         features: Feature[],
         addButton: boolean,
     ) {
@@ -108,7 +106,7 @@ export default class PreviewOverlay {
                 list.appendChild(
                     this.renderPreviewIcon(
                         preferredLanguage,
-                        categoryLabels,
+                        categoriesMetadata,
                         feature,
                     ),
                 );
@@ -145,7 +143,7 @@ export default class PreviewOverlay {
 
     private renderPreviewIcon(
         preferredLanguage: string,
-        categoryLabels: { [key: string]: { [key: string]: string } },
+        categoriesMetadata: CategoryMetadata[],
         feature: Feature,
     ) {
         const properties = feature.getProperties();
@@ -163,17 +161,21 @@ export default class PreviewOverlay {
             "font-thin",
         );
 
+        const categoryMetadata = categoriesMetadata.find(
+            (elem) => elem.category == properties.category,
+        );
+
         categoryLabel.appendChild(
             document.createTextNode(
-                `${pickTranslation(categoryLabels[properties.category], preferredLanguage)}`,
+                `${pickTranslation(categoryMetadata.category_label, preferredLanguage)}`,
             ),
         );
 
-        const categoryInfo = document.createElement("div");
-        categoryInfo.classList.add("pl-2", "text-black");
-        categoryInfo.style.background = `hsl(from ${properties.color} h calc(s * 0.5) l)`;
+        const CategoryMetadata = document.createElement("div");
+        CategoryMetadata.classList.add("pl-2", "text-black");
+        CategoryMetadata.style.background = `hsl(from ${properties.color} h calc(s * 0.5) l)`;
 
-        categoryInfo.appendChild(categoryLabel);
+        CategoryMetadata.appendChild(categoryLabel);
 
         const documentInfo = document.createElement("div");
         documentInfo.classList.add(
@@ -203,7 +205,7 @@ export default class PreviewOverlay {
                 );
         });
 
-        preview.appendChild(categoryInfo);
+        preview.appendChild(CategoryMetadata);
         preview.appendChild(documentInfo);
 
         return preview;

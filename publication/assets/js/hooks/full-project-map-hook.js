@@ -28,7 +28,7 @@ export default (getFullProjectMapHook = () => {
         lastHighlightChange: Date.now(),
         hoveredFeatures: [],
         pinnedFeatures: [],
-        categoryLabels: {},
+        categoriesMetadata: [],
         selectionMode: false,
         overlay: null,
 
@@ -91,6 +91,10 @@ export default (getFullProjectMapHook = () => {
             this.handleEvent(`map-clear-highlights-${this.el.id}`, () => {
                 if (this.map) {
                     clearAllHighlights(this.featureLayers);
+
+                    if (this.selection.getExtent()) {
+                        this.refitView();
+                    }
                 }
             });
 
@@ -179,7 +183,7 @@ export default (getFullProjectMapHook = () => {
 
                 _this.overlay.update(
                     _this.hoveredFeatures,
-                    _this.categoryLabels,
+                    _this.categoriesMetadata,
                     e.coordinate,
                     _this.language,
                 );
@@ -192,7 +196,7 @@ export default (getFullProjectMapHook = () => {
                     _this.hoveredFeatures = [];
                     _this.overlay.update(
                         _this.pinnedFeatures,
-                        _this.categoryLabels,
+                        _this.categoriesMetadata,
                         e.coordinate,
                         _this.language,
                         true,
@@ -212,12 +216,27 @@ export default (getFullProjectMapHook = () => {
             const response = await fetch(
                 `/api/json/geometry_feature_collections/${this.projectKey}/${this.draftDate}`,
             );
-            const { category_labels, feature_collections } =
-                await response.json();
+            const featureCollections = await response.json();
 
-            this.categoryLabels = category_labels;
+            for (let collection of featureCollections) {
+                this.categoriesMetadata.push(collection.properties);
 
-            this.setMapFeatures(feature_collections);
+                for (let feature of collection.features) {
+                    feature.properties["color"] =
+                        collection.properties.category_color;
+                }
+            }
+
+            this.setMapFeatures(featureCollections);
+
+            this.map
+                .getTargetElement()
+                .addEventListener("pointerleave", function (e) {
+                    // Hides the overlay if no pinned features and mouse is completely off the map.
+                    if (_this.pinnedFeatures.length === 0) {
+                        _this.overlay.hide();
+                    }
+                });
 
             document.getElementById(
                 `${this.id}-loading-indicator`,
@@ -312,6 +331,7 @@ export default (getFullProjectMapHook = () => {
 
             for (let key in featureCollections) {
                 let collection = featureCollections[key];
+                console.log(collection);
                 const vectorSource = new VectorSource({
                     features: new GeoJSON().readFeatures(collection),
                 });

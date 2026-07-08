@@ -2,7 +2,6 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
   use FieldPublicationWeb, :live_component
 
   alias FieldPublication.DatabaseSchema.Publication
-  alias FieldPublication.Publications.Data
 
   alias FieldPublication.Publications.Data.{
     RelationGroup,
@@ -79,7 +78,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
   def update(
         %{
           id: id,
-          publication: %Publication{} = publication,
+          publication: %Publication{} = _publication,
           doc:
             %Document{
               relations: relations,
@@ -89,7 +88,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
           assigns,
         socket
       ) do
-    hierarchy = Data.get_document_hierarchy(publication)
+    # hierarchy = Data.get_document_hierarchy(publication)
 
     directly_linked_uuids =
       Enum.map(relations, fn %RelationGroup{docs: docs} ->

@@ -74,6 +74,7 @@ defmodule FieldPublication.Processing do
              :tile_images,
              :search_index,
              :preview_documents,
+             :geo_collections,
              :database_indices
            ] do
     # Extend the list of atoms in the guard above to support additional processing steps. You
@@ -104,6 +105,7 @@ defmodule FieldPublication.Processing do
              :tile_images,
              :search_index,
              :preview_documents,
+             :geo_collections,
              :database_indices
            ] do
     GenServer.call(__MODULE__, {:show, Publications.get_doc_id(publication), type})
@@ -132,6 +134,7 @@ defmodule FieldPublication.Processing do
              :tile_images,
              :search_index,
              :preview_documents,
+             :geo_collections,
              :database_indices
            ] do
     GenServer.call(__MODULE__, {:stop, Publications.get_doc_id(publication), type})
@@ -264,6 +267,38 @@ defmodule FieldPublication.Processing do
       broadcast(publication_id, :preview_documents, :processing_started)
 
       {:reply, :ok, running_tasks ++ [{task, :preview_documents, publication_id}]}
+    end
+  end
+
+  def handle_call(
+        {:start, %Publication{} = publication, :geo_collections},
+        _from,
+        running_tasks
+      ) do
+    publication_id = Publications.get_doc_id(publication)
+
+    Enum.any?(running_tasks, fn {_task, type, context} ->
+      publication_id == context and type == :geo_collections
+    end)
+    |> if do
+      # The `:geo_collections` task is already running for the given publication, keep the state as-is and return a
+      # `:already_running` atom to the caller.
+      {:reply, :already_running, running_tasks}
+    else
+      task =
+        Task.Supervisor.async_nolink(
+          FieldPublication.ProcessingSupervisor,
+          # Module that implements the actual processing.
+          Publications.Data,
+          # Function within that module to start the processing.
+          :create_geometry_feature_collections,
+          # Parameters for that function.
+          [publication]
+        )
+
+      broadcast(publication_id, :geo_collections, :processing_started)
+
+      {:reply, :ok, running_tasks ++ [{task, :geo_collections, publication_id}]}
     end
   end
 

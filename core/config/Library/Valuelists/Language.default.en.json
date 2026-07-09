@@ -526,7 +526,7 @@
         "label": "linear cut"
       },
       "Schlangenfadendekor": {
-        "label": "serpentine trail decoration"
+        "label": "snake-thread decoration"
       },
       "Tupfendekor": {
         "label": "blob decoration"
@@ -536,6 +536,9 @@
       },
       "Reticelladekor": {
         "label": "reticella decoration"
+      },
+      "Zwischengoldglas": {
+        "label": "gold-glass"
       }
     }
   },
@@ -725,6 +728,9 @@
       },
       "Topf": {
         "label": "Pot"
+      },
+      "Schüssel": {
+        "label": "bowl"
       }
     }
   },
@@ -791,7 +797,7 @@
         "label": "delicate ribbed bowl ('zarte Rippenschale')"
       },
       "Kopfflasche": {
-        "label": "face bottle"
+        "label": "head-shaped bottle"
       },
       "Stamnos": {
         "label": "Stamnos"
@@ -810,6 +816,9 @@
       },
       "Spitzamphora": {
         "label": "pointed Amphora"
+      },
+      "Luterion": {
+        "label": "louterion"
       }
     }
   },
@@ -1410,6 +1419,12 @@
       },
       "gedreht (auf Drehscheibe)": {
         "label": "wheel turned"
+      },
+      "In offene Halbformen geblasen": {
+        "label": "Blown into open two-part moulds"
+      },
+      "In Vorformen geblasen": {
+        "label": "Blown into a preform mould"
       }
     }
   },

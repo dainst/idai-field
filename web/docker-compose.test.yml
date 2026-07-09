@@ -60,9 +60,10 @@ services:
       labels:
         - "traefik.docker.network=web"
         - "traefik.enable=true"
-        - "traefik.frontend.rule=Host:field.test.idai.world; PathPrefix:/api"
+        - "traefik.frontend.rule=Host:field.test.idai.world,shapes.test.idai.world; PathPrefix:/api"
+        - "traefik.frontend.whiteList.sourceRange=${CIDR_WHITELIST}"
         - "traefik.port=4000"
-
+      
   ui:
     image: "ghcr.io/dainst/idai-field-web-ui:latest"
     networks:
@@ -72,9 +73,10 @@ services:
       labels:
         - "traefik.docker.network=web"
         - "traefik.enable=true"
-        - "traefik.frontend.rule=Host:field.test.idai.world"
+        - "traefik.frontend.rule=Host:field.test.idai.world,shapes.test.idai.world"
+        - "traefik.frontend.whiteList.sourceRange=${CIDR_WHITELIST}"
         - "traefik.port=80"
-
+        
 volumes:
   elasticsearch-data:
   idai-field-web_images:

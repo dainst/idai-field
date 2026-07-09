@@ -634,6 +634,9 @@
       },
       "Sonstige Abdrücke": {
         "label": "other impressions"
+      },
+      "Wischzeichen": {
+        "label": "wipe mark"
       }
     }
   },
@@ -681,6 +684,15 @@
     "values": {
       "Foto": {
         "label": "Foto"
+      },
+      "Endoskopie": {
+        "label": "endoscopy"
+      },
+      "Histologie": {
+        "label": "histology"
+      },
+      "Röntgen": {
+        "label": "x-ray"
       }
     }
   },
@@ -691,6 +703,39 @@
       },
       "Lehmziegelmauerwerk": {
         "label": "Mudbrick masonry"
+      },
+      "regelmäßiges Polygonalmauerwerk": {
+        "label": "regular polygonal masonry"
+      },
+      "regelmäßiges Trapezoidalmauerwerk": {
+        "label": "regular trapezoidal masonry"
+      },
+      "unregelmäßiges Trapezoidalmauerwerk": {
+        "label": "irregular trapezoidal masonry"
+      },
+      "unspezifisches Mauerwerk": {
+        "label": "unspecified masonry"
+      },
+      "Kyklopenmauerwerk": {
+        "label": "Cyclopean masonry"
+      },
+      "Polygonalmauerwerk": {
+        "label": "polygonal masonry"
+      },
+      "Feldsteinmauerwerk": {
+        "label": "fieldstone masonry"
+      },
+      "Opus Caementitium": {
+        "label": "opus caementicium"
+      },
+      "Unregelmäßiges Polygonalmauerwerk": {
+        "label": "irregular polygonal masonry"
+      },
+      "Ziegelmauerwerk": {
+        "label": "brick masonry"
+      },
+      "irreguläres Mauerwerk": {
+        "label": "irregular masonry"
       }
     }
   },
@@ -832,6 +877,9 @@
       },
       "Werkstatt": {
         "label": "Workshop"
+      },
+      "Haus": {
+        "label": "house"
       }
     }
   },
@@ -952,6 +1000,12 @@
       },
       "Säulenhalle": {
         "label": "Portico"
+      },
+      "Mauerkurtine": {
+        "label": "curtain wall"
+      },
+      "Toranlage": {
+        "label": "gate complex"
       }
     }
   },
@@ -1016,6 +1070,36 @@
       },
       "Kalk": {
         "label": "lime"
+      },
+      "Fliesen": {
+        "label": "tiles"
+      },
+      "Stahlbeton": {
+        "label": "steel-reinforced concrete"
+      },
+      "Holzwerkstoff": {
+        "label": "wood-based material"
+      },
+      "Kunststoff": {
+        "label": "synthetic material"
+      },
+      "Naturstein": {
+        "label": "natural stone"
+      },
+      "Stahl": {
+        "label": "steel"
+      },
+      "Unbekannt/Unerkannt": {
+        "label": "unknown/unrecognized"
+      },
+      "Kalzit": {
+        "label": "calcite"
+      },
+      "Kreide": {
+        "label": "chalk"
+      },
+      "Gips": {
+        "label": "gypsum"
       }
     }
   },
@@ -1130,6 +1214,81 @@
       },
       "Villa": {
         "label": "villa"
+      },
+      "Tumulus": {
+        "label": "tumulus"
+      },
+      "Palästra": {
+        "label": "palestra"
+      },
+      "Peripteros": {
+        "label": "peripteros"
+      },
+      "Peripteros sine portico": {
+        "label": "peripteros sine portico"
+      },
+      "Peristylhaus": {
+        "label": "peristyle house"
+      },
+      "Pseudo-Dipteros": {
+        "label": "pseudo-dipteros"
+      },
+      "Pseudo-Peripteros": {
+        "label": "Pseudo-Peripteros"
+      },
+      "Rundbau": {
+        "label": "rotunda"
+      },
+      "Schatzhaus": {
+        "label": "treasury"
+      },
+      "Terassenheiligtum": {
+        "label": "terraced sanctuary"
+      },
+      "Tholos": {
+        "label": "Tholos"
+      },
+      "Torbogen": {
+        "label": "arch"
+      },
+      "Triumphbogen": {
+        "label": "triumphal arch"
+      },
+      "dreischiffig": {
+        "label": "three-aisled"
+      },
+      "fünfschiffig": {
+        "label": "five-aisled"
+      },
+      "griechisches Theater": {
+        "label": "greek theatre"
+      },
+      "römisches Theater": {
+        "label": "roman theatre"
+      },
+      "vierschiffig": {
+        "label": "four-aisled"
+      },
+      "zweischiffig": {
+        "label": "two-aisled"
+      },
+      "Dipteros": {
+        "label": "dipteros"
+      },
+      "Hoftempel": {
+        "label": "courtyard temple"
+      },
+      "Palast": {
+        "label": "palace"
+      },
+      "Ehrensäule": {
+        "label": "honorary column"
+      },
+      "Aediculabau": {
+        "label": "aedicula structure"
+      },
+      "Atriumhaus": {
+        "label": "atrium house"
       }
     }
   },
@@ -1214,6 +1373,15 @@
       },
       "Lehmiger Ton": {
         "label": "loamy clay"
+      },
+      "Grobsand": {
+        "label": "fine gravel"
+      },
+      "Feinstsand": {
+        "label": "fine sand"
+      },
+      "Mergel": {
+        "label": "marl"
       }
     }
   },
@@ -1230,6 +1398,15 @@
       },
       "Vergoldung/metallischer Überzug": {
         "label": "gilding/metallic plating"
+      },
+      "Applik": {
+        "label": "applique decoration"
+      },
+      "Ritzung": {
+        "label": "scratching"
+      },
+      "Schnitzung": {
+        "label": "carving"
       }
     }
   },
@@ -1484,6 +1661,24 @@
       },
       "Wandziegel": {
         "label": "wall brick"
+      },
+      "Abschläge": {
+        "label": "flakes"
+      },
+      "Berg": {
+        "label": "mountain"
+      },
+      "Geröll": {
+        "label": "gravel"
+      },
+      "Platten": {
+        "label": "slabs"
+      },
+      "Variierend": {
+        "label": "varying"
+      },
+      "Ziegelbruch": {
+        "label": "brick fragment"
       }
     }
   },
@@ -1509,6 +1704,12 @@
       },
       "Weich gebrannt": {
         "label": "soft fired"
+      },
+      "Oberfläche glatt": {
+        "label": "smooth surface"
+      },
+      "Oberfläche rau": {
+        "label": "rough surface"
       }
     }
   },
@@ -1568,6 +1769,27 @@
       },
       "Lehm": {
         "label": "loam"
+      },
+      "Fliesen": {
+        "label": "tiles"
+      },
+      "Kunststoff": {
+        "label": "synthetic material"
+      },
+      "Gips": {
+        "label": "gypsum"
+      },
+      "Holzwerkstoff": {
+        "label": "wood-based material"
+      },
+      "Naturstein": {
+        "label": "natural stone"
+      },
+      "Stahlbeton": {
+        "label": "steel-reinforced concrete"
+      },
+      "Unbekannt/Unerkannt": {
+        "label": "unknown/unrecognized"
       }
     }
   },
@@ -1599,6 +1821,12 @@
       },
       "Kalk": {
         "label": "lime"
+      },
+      "Kalzit": {
+        "label": "calcite"
+      },
+      "Kreide": {
+        "label": "chalk"
       }
     }
   },
@@ -1629,6 +1857,27 @@
     "values": {
       "Unsicher bzw. unbestimmbar": {
         "label": "uncertain or indeterminate"
+      },
+      "Massengrab": {
+        "label": "mass burial"
+      },
+      "Mehrfachbestattung": {
+        "label": "multiple burial"
+      },
+      "Doppelbestattung": {
+        "label": "double burial"
+      },
+      "Dreifachbestattung": {
+        "label": "triple burial"
+      },
+      "Einzelbestattung": {
+        "label": "single burial"
+      },
+      "Grabdeponat": {
+        "label": "grave deposit"
+      },
+      "Kollektivbestattung": {
+        "label": "collective burial"
       }
     }
   },
@@ -1636,6 +1885,12 @@
     "values": {
       "Unsicher bzw. unbestimmbar": {
         "label": "uncertain or indeterminate"
+      },
+      "Primäre Bestattung": {
+        "label": "primary burial"
+      },
+      "Sekundäre Bestattung": {
+        "label": "secondary burial"
       }
     }
   },
@@ -1650,6 +1905,18 @@
     "values": {
       "Unsicher bzw. unbestimmbar": {
         "label": "uncertain or indeterminate"
+      },
+      "Bauchlage": {
+        "label": "prone position"
+      },
+      "Rückenlage": {
+        "label": "supine position"
+      },
+      "Seitenlage, links": {
+        "label": "lateral position, left"
+      },
+      "Seitenlage, rechts": {
+        "label": "lateral position, right"
       }
     }
   },
@@ -1660,6 +1927,9 @@
       },
       "Brandspuren": {
         "label": "burning marks (partly burned)"
+      },
+      "Keine Brandspuren": {
+        "label": "no burn marks"
       }
     }
   },
@@ -1707,6 +1977,24 @@
     "values": {
       "Unsicher bzw. unbestimmbar": {
         "label": "uncertain or indeterminate"
+      },
+      "am Kinn": {
+        "label": "on the chin"
+      },
+      "auf dem Becken": {
+        "label": "on the pelvis"
+      },
+      "auf der Brust": {
+        "label": "on the chest"
+      },
+      "ungleichmäßig": {
+        "label": "uneven"
+      },
+      "auf dem Bauch": {
+        "label": "on the stomach"
+      },
+      "an den Seiten": {
+        "label": "on the sides"
       }
     }
   },
@@ -2086,6 +2374,51 @@
       },
       "Zeder": {
         "label": "cedar"
+      },
+      "Birke": {
+        "label": "birch"
+      },
+      "Buche": {
+        "label": "beech"
+      },
+      "Eibe": {
+        "label": "yew"
+      },
+      "Erle": {
+        "label": "alder"
+      },
+      "Esche": {
+        "label": "ash"
+      },
+      "Fichte": {
+        "label": "spruce"
+      },
+      "Kastanie": {
+        "label": "chestnut"
+      },
+      "Ahorn": {
+        "label": "maple"
+      },
+      "Kiefer": {
+        "label": "pine"
+      },
+      "Kirsche": {
+        "label": "cherry"
+      },
+      "Lerche": {
+        "label": "lark"
+      },
+      "Linde": {
+        "label": "lime"
+      },
+      "Pappel": {
+        "label": "poplar"
+      },
+      "Tanne": {
+        "label": "fir"
+      },
+      "Ulme": {
+        "label": "elm"
       }
     }
   },
@@ -2146,6 +2479,9 @@
     "values": {
       "Lesesteine": {
         "label": "field stones"
+      },
+      "Bruchsteine": {
+        "label": "quarry-stones"
       }
     }
   },
@@ -2175,6 +2511,18 @@
       },
       "zylindrische Flasche": {
         "label": "cylindrical flask"
+      },
+      "Alabastron": {
+        "label": "Alabastron"
+      },
+      "Amphoriskos": {
+        "label": "amphoriskos"
+      },
+      "Aryballos": {
+        "label": "aryballos"
+      },
+      "Hydria": {
+        "label": "hydria"
       }
     }
   },
@@ -2549,6 +2897,12 @@
       },
       "Deckelgefäß": {
         "label": "vessel with lid"
+      },
+      "Teller": {
+        "label": "plate"
+      },
+      "Vorratsgefäß": {
+        "label": "storage vessel"
       }
     }
   },
@@ -2602,6 +2956,9 @@
       },
       "mittel": {
         "label": "medium"
+      },
+      "dominant": {
+        "label": "dominant"
       }
     }
   },
@@ -3058,6 +3415,64 @@
       },
       "Schuppe": {
         "label": "scale"
+      }
+    }
+  },
+  "Burial-graveFeature-default": {
+    "values": {
+      "Teil-Körperbestattung": {
+        "label": "partial inhumation"
+      },
+      "Brandbestattung": {
+        "label": "cremation"
+      },
+      "Kenotaph": {
+        "label": "cenotaph"
+      },
+      "Körperbestattung": {
+        "label": "inhumation"
+      },
+      "Ossuar": {
+        "label": "ossuary"
+      }
+    }
+  },
+  "Building-architecturalOrders-default": {
+    "values": {
+      "Dorische Ordnung": {
+        "label": "Doric order"
+      },
+      "Ionische Ordnung": {
+        "label": "Ionic order"
+      },
+      "Komposite Ordnung": {
+        "label": "Composite order"
+      },
+      "Korinthische Ordnung": {
+        "label": "Corinthian order"
+      },
+      "Toskanische Ordnung": {
+        "label": "Tuscan order"
+      }
+    }
+  },
+  "Architecture-blockTreatment-default": {
+    "values": {
+      "gespitzt": {
+        "label": "knapped"
+      },
+      "grob behauen": {
+        "label": "roughly boast"
+      },
+      "grob geglättet": {
+        "label": "roughly abraded"
+      }
+    }
+  },
+  "Architecture-construction-default": {
+    "values": {
+      "zweischalig mit Binderlagen": {
+        "label": "two exterior rows with binders"
       }
     }
   }

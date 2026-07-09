@@ -810,4 +810,32 @@ test.describe('resources', () => {
 
         await DoceditPage.clickCloseEdit();
     });
+
+
+    test('deselect a resource whose category has been removed', async () => {
+
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.clickHierarchyButton('S1');
+        await ResourcesPage.performCreateResource('Pottery1', 'find-pottery');
+        await ResourcesPage.clickSelectResource('Pottery1');
+        await waitForExist(FieldsViewPage.getFieldsView());
+
+        await navigateTo('configuration');
+        await ConfigurationPage.clickSelectCategoriesFilter('all');
+        await ConfigurationPage.deleteCategory('Pottery', 'Find', true);
+        await ConfigurationPage.save();
+                
+        await NavbarPage.clickCloseNonResourcesTab();
+        await waitForExist(ResourcesPage.getCreateDocumentButton());
+        await waitForNotExist(FieldsViewPage.getFieldsView());
+
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.clickSelectResource('S1');
+        await ResourcesPage.clickHierarchyButton('S1');
+        
+        const navigationButtons = await ResourcesPage.getNavigationButtons();
+        expect(await navigationButtons.count()).toBe(1);
+        expect(await getText(navigationButtons.nth(0))).toEqual('S1');
+        await waitForNotExist(FieldsViewPage.getFieldsView());
+    });
 });

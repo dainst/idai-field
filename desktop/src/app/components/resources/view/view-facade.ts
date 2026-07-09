@@ -134,7 +134,7 @@ export class ViewFacade {
 
         this.ready = false;
         await this.resourcesStateManager.initialize(viewName);
-        await this.populateDocumentList();
+        await this.documentsManager.populateAndDeselectIfNecessary();
         this.ready = true;
     }
 

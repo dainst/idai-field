@@ -1,6 +1,6 @@
 import Map from "ol/Map.js";
 import View from "ol/View.js";
-import { createEmpty, extend } from "ol/extent.js";
+import { createEmpty, extend, isEmpty } from "ol/extent.js";
 import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
 import GeoJSON from "ol/format/GeoJSON.js";
@@ -16,7 +16,7 @@ import PublicationTileLayers from "./map/tile-layers";
 import PreviewOverlay from "./map/preview-overlay.js";
 import PublicationSelection from "./map/selection";
 
-export default (getDocumentViewMapHook = () => {
+export default getDocumentViewMapHook = () => {
     return {
         map: null,
         projectKey: null,
@@ -32,8 +32,8 @@ export default (getDocumentViewMapHook = () => {
         hoveredFeatures: [],
         pinnedFeatures: [],
         selectionMode: false,
-        fullVectorExtent: null,
-        fullExtent: null,
+        activeVectorExtent: null,
+        fullExtent: null, // includes vector extent + the tile layers (map background images)
         mounted() {
             this.initialize();
             this.handleEvent(
@@ -69,6 +69,7 @@ export default (getDocumentViewMapHook = () => {
                     this.docId = uuid;
                     this.linkedDocIds = linked_uuids;
 
+                    this.resetActiveVectorExtent();
                     this.resetFeatures();
                 },
             );
@@ -297,33 +298,10 @@ export default (getDocumentViewMapHook = () => {
                 this.map.addLayer(featureLayer);
             }
 
-            const vectorLayerFeatures = this.map
-                .getAllLayers()
-                .filter((layer) => layer instanceof VectorLayer)
-                .map((layer) => layer.getSource().getFeatures())
-                .flat();
-
-            const uuid = this.docId;
-            const linkedDocIds = this.linkedDocIds;
-
-            const fullVectorExtent = createEmpty();
-            vectorLayerFeatures.map(function (f) {
-                properties = f.getProperties();
-
-                if (
-                    properties.uuid == uuid ||
-                    linkedDocIds.includes(properties.uuid)
-                ) {
-                    this.nothingToShow = false;
-                    extend(fullVectorExtent, f.getGeometry().getExtent());
-                }
-            });
-
-            this.fullVectorExtent = fullVectorExtent;
-            console.log(this.fullVectorExtent);
+            this.resetActiveVectorExtent();
             this.fullExtent = createEmpty();
 
-            this.fullExtent = extend(this.fullExtent, this.fullVectorExtent);
+            this.fullExtent = extend(this.fullExtent, this.activeVectorExtent);
             this.fullExtent = extend(
                 this.fullExtent,
                 this.publicationTileLayers.getExtents().project,
@@ -345,48 +323,74 @@ export default (getDocumentViewMapHook = () => {
             this.resetFeatures();
         },
 
-        resetFeatures() {
-            if (this.nothingToShow) {
-                this.map
-                    .getView()
-                    .fit(this.fullExtent, { padding: [10, 10, 10, 10] });
+        resetActiveVectorExtent() {
+            const vectorLayerFeatures = this.map
+                .getAllLayers()
+                .filter((layer) => layer instanceof VectorLayer)
+                .map((layer) => layer.getSource().getFeatures())
+                .flat();
 
+            const uuid = this.docId;
+            const linkedDocIds = this.linkedDocIds;
+
+            const activeVectorExtent = createEmpty();
+            vectorLayerFeatures.map(function (f) {
+                properties = f.getProperties();
+
+                if (
+                    properties.uuid == uuid ||
+                    linkedDocIds.includes(properties.uuid)
+                ) {
+                    extend(activeVectorExtent, f.getGeometry().getExtent());
+                }
+            });
+
+            this.activeVectorExtent = activeVectorExtent;
+        },
+
+        resetFeatures() {
+            if (!this.setupDone) return;
+
+            if (!isEmpty(this.activeVectorExtent)) {
+                this.map.getView().fit(this.activeVectorExtent, {
+                    padding: [10, 10, 10, 10],
+                });
+            } else if (!isEmpty(this.fullExtent)) {
+                this.map.getView().fit(this.fullExtent, {
+                    padding: [10, 10, 10, 10],
+                });
+            } else {
                 return;
             }
-            if (this.setupDone) {
-                this.map
-                    .getView()
-                    .fit(this.fullVectorExtent, { padding: [10, 10, 10, 10] });
 
-                const vectorLayerFeatures = this.map
-                    .getAllLayers()
-                    .filter((layer) => layer instanceof VectorLayer)
-                    .map((layer) => layer.getSource().getFeatures())
-                    .flat();
+            const vectorLayerFeatures = this.map
+                .getAllLayers()
+                .filter((layer) => layer instanceof VectorLayer)
+                .map((layer) => layer.getSource().getFeatures())
+                .flat();
 
-                const uuid = this.docId;
-                const linkedDocIds = this.linkedDocIds;
+            const uuid = this.docId;
+            const linkedDocIds = this.linkedDocIds;
 
-                vectorLayerFeatures.map(function (f) {
-                    properties = f.getProperties();
+            vectorLayerFeatures.map(function (f) {
+                properties = f.getProperties();
 
-                    if (properties.uuid == uuid) {
-                        properties.hidden = false;
-                        properties.highlight = true;
-                        properties.alpha = 0.5;
-                    } else if (linkedDocIds.includes(properties.uuid)) {
-                        properties.hidden = false;
-                        properties.highlight = false;
-                        properties.alpha = getDefaultAlpha();
-                    } else {
-                        properties.hidden = true;
-                        properties.highlight = false;
-                        properties.alpha = getDefaultAlpha();
-                    }
+                if (properties.uuid == uuid) {
+                    properties.hidden = false;
+                    properties.highlight = true;
+                    properties.alpha = 0.5;
+                } else if (linkedDocIds.includes(properties.uuid)) {
+                    properties.hidden = false;
+                    properties.highlight = false;
+                    properties.alpha = getDefaultAlpha();
+                } else {
+                    properties.hidden = true;
+                    properties.highlight = false;
+                    properties.alpha = getDefaultAlpha();
+                }
 
-                    f.setProperties(properties);
-                });
-            }
+                f.setProperties(properties);
+            });
         },
     };
-});
+};

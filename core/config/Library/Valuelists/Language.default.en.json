@@ -736,6 +736,18 @@
       },
       "irreguläres Mauerwerk": {
         "label": "irregular masonry"
+      },
+      "regelmäßiges Quadermauerwerk": {
+        "label": "regular ashlar masonry"
+      },
+      "unregelmäßiges Quadermauerwerk": {
+        "label": "irregular ashlar masonry"
+      },
+      "Quadermauerwerk": {
+        "label": "ashlar masonry"
+      },
+      "Spolienmauerwerk": {
+        "label": "spolia masonry"
       }
     }
   },
@@ -763,7 +775,7 @@
         "label": "vessel with lid"
       },
       "Aschenurne": {
-        "label": "cinerary urn"
+        "label": "cremation urn"
       },
       "Krug": {
         "label": "Jug"
@@ -854,7 +866,7 @@
         "label": "Pelike"
       },
       "Sprenkler": {
-        "label": "sprinkler vessel"
+        "label": "sprinkler flask"
       },
       "Oinochoe": {
         "label": "Oinochoe"
@@ -864,6 +876,9 @@
       },
       "Luterion": {
         "label": "louterion"
+      },
+      "Faltenbecher": {
+        "label": "indented beaker"
       }
     }
   },
@@ -1240,7 +1255,7 @@
         "label": "rotunda"
       },
       "Schatzhaus": {
-        "label": "treasury"
+        "label": "treasure house"
       },
       "Terassenheiligtum": {
         "label": "terraced sanctuary"
@@ -1289,6 +1304,9 @@
       },
       "Atriumhaus": {
         "label": "atrium house"
+      },
+      "Rednertribüne": {
+        "label": "rostra"
       }
     }
   },
@@ -1639,6 +1657,15 @@
       },
       "Wandziegel": {
         "label": "wall brick"
+      },
+      "Hypokaustziegel": {
+        "label": "hypocaust brick"
+      },
+      "Leistenziegel": {
+        "label": "ledge/lateral tile"
+      },
+      "Lochziegel/Hohlziegel": {
+        "label": "hollow brick"
       }
     }
   },
@@ -1679,6 +1706,12 @@
       },
       "Ziegelbruch": {
         "label": "brick fragment"
+      },
+      "Hohlziegel": {
+        "label": "hollow brick"
+      },
+      "Hypokaustziegel": {
+        "label": "hypocaust brick"
       }
     }
   },
@@ -1850,6 +1883,9 @@
       },
       "durchsichtig": {
         "label": "transparent"
+      },
+      "versintert": {
+        "label": "sintered"
       }
     }
   },
@@ -2482,6 +2518,9 @@
       },
       "Bruchsteine": {
         "label": "quarry-stones"
+      },
+      "Werksteine": {
+        "label": "dressed stones"
       }
     }
   },
@@ -3466,6 +3505,12 @@
       },
       "grob geglättet": {
         "label": "roughly abraded"
+      },
+      "fein geglättet": {
+        "label": "finely smoothed"
+      },
+      "unbehauen": {
+        "label": "un-dressed"
       }
     }
   },

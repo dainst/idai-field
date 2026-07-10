@@ -101,7 +101,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLiveTest do
     assert {:ok, _live_view_pid, html} =
              live(
                conn,
-               ~p"/projects/#{publication.project_name}/#{publication.draft_date}/1b5885eb-2082-477c-936a-e1ecb6d051f3?focus=map"
+               ~p"/projects/#{publication.project_name}/#{publication.draft_date}/1b5885eb-2082-477c-936a-e1ecb6d051f3/map/hierarchy"
              )
 
     assert html =~ "TTP-A-112043"
@@ -162,16 +162,17 @@ defmodule FieldPublicationWeb.Presentation.DocumentLiveTest do
            |> response(404)
   end
 
-  test "trying an unknown uuid will display corresponding error", %{
+  test "trying an unknown uuid will raise corresponding error", %{
     conn: conn,
     publication: publication
   } do
-    assert {:ok, _live_view_pid, html} =
-             live(
-               conn,
-               ~p"/projects/#{publication.project_name}/#{publication.draft_date}/not_existing"
-             )
-
-    assert html =~ "Document not found in selected publication."
+    assert_raise FieldPublicationWeb.Presentation.DocumentLive.UnknownPublicationDocumentError,
+                 "No document with id `not_existing` for publication of project `#{publication.project_name}` on #{publication.draft_date}.",
+                 fn ->
+                   live(
+                     conn,
+                     ~p"/projects/#{publication.project_name}/#{publication.draft_date}/not_existing"
+                   )
+                 end
   end
 end

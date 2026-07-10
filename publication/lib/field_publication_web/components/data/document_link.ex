@@ -10,7 +10,7 @@ defmodule FieldPublicationWeb.Components.Data.DocumentLink do
   attr(:image_count, :integer, default: 0)
   attr(:image_height, :integer, default: 64)
   attr(:geometry_indicator, :boolean, default: false)
-  attr(:focus, :atom, default: :default)
+  attr(:live_action, :atom, default: nil)
   attr(:hover_target, :string, default: nil)
   attr(:publication_search?, :boolean, default: true)
 
@@ -38,7 +38,7 @@ defmodule FieldPublicationWeb.Components.Data.DocumentLink do
           class="grow p-3 rounded-tr rounded-br hover:bg-(--primary-color)/10 suppress-link-styling"
           style={"border-color: #{desaturate_category_color(@doc.category.color)}; border-width: 1px 1px 1px 0px;"}
           navigate={
-            construct_doc_link(@doc.project_key, @doc.publication_draft_date, @doc.id, @focus)
+            construct_doc_link(@doc.project_key, @doc.publication_draft_date, @doc.id, @live_action)
           }
         >
           <div>
@@ -79,19 +79,25 @@ defmodule FieldPublicationWeb.Components.Data.DocumentLink do
     "hsl(from  #{color} h calc(s * 0.5) l)"
   end
 
-  defp construct_doc_link(project_name, draft_date, uuid, focus_parameter) do
+  defp construct_doc_link(project_name, draft_date, uuid, live_action) do
     uuid = if uuid == "project", do: "", else: uuid
+    construct(project_name, draft_date, uuid, live_action)
+  end
 
-    query =
-      case focus_parameter do
-        :map ->
-          %{focus: "map"}
+  defp construct(project_name, draft_date, uuid, nil) do
+    ~p"/projects/#{project_name}/#{draft_date}/#{uuid}"
+  end
 
-        _ ->
-          %{}
-      end
+  defp construct(project_name, draft_date, uuid, :map_dataseeet) do
+    ~p"/projects/#{project_name}/#{draft_date}/#{uuid}/map"
+  end
 
-    ~p"/projects/#{project_name}/#{draft_date}/#{uuid}?#{query}"
+  defp construct(project_name, draft_date, uuid, :map_hierarchy) do
+    ~p"/projects/#{project_name}/#{draft_date}/#{uuid}/map/hierarchy"
+  end
+
+  defp construct(project_name, draft_date, uuid, :map_context) do
+    ~p"/projects/#{project_name}/#{draft_date}/#{uuid}/map/context"
   end
 
   attr(:id, :string, required: true)

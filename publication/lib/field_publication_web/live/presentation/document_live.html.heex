@@ -24,32 +24,41 @@
       </div>
     </form>
   </div>
+
+  <.document_heading>
+    <.document_link doc={@doc} />
+  </.document_heading>
+
   <% category = Data.get_field_value(@doc, "category") %>
-  {cond do
-    @doc == :not_found ->
-      "Document not found in selected publication."
-
-    category == "Project" ->
-      DocumentComponents.project(%{
-        doc: @doc,
-        publication: @publication,
-        top_level_docs: @top_level_docs,
-        category_hierarchy: @category_hierarchy,
-        category_usage: @category_usage
-      })
-
-    category in @image_categories ->
-      DocumentComponents.image(%{
-        doc: @doc,
-        publication: @publication
-      })
-
-    true ->
-      DocumentComponents.generic(%{
-        doc: @doc,
-        ancestors: @ancestors,
-        publication: @publication,
-        focus: @focus
-      })
-  end}
+  <%= cond do %>
+    <% category == "Project" -> %>
+      <.live_component
+        id={"image-#{@doc.id}"}
+        module={FieldPublicationWeb.Presentation.Document.Project}
+        doc={@doc}
+        publication={@publication}
+      />
+    <% category in @image_categories -> %>
+      <.live_component
+        id={"image-#{@doc.id}"}
+        module={FieldPublicationWeb.Presentation.Document.Image}
+        doc={@doc}
+        publication={@publication}
+      />
+    <% @live_action in [:map_datasheet, :map_hierarchy, :map_context] -> %>
+      <.live_component
+        id={"datasheet-#{@doc.id}"}
+        module={FieldPublicationWeb.Presentation.Document.GenericMap}
+        doc={@doc}
+        publication={@publication}
+        live_action={@live_action}
+      />
+    <% true -> %>
+      <.live_component
+        id={"datasheet-#{@doc.id}"}
+        module={FieldPublicationWeb.Presentation.Document.GenericDatasheet}
+        doc={@doc}
+        publication={@publication}
+      />
+  <% end %>
 </div>

@@ -84,7 +84,11 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
   end
 
   @impl true
-  def mount(%{"project_id" => project_id, "draft_date" => draft_date_string}, _session, socket) do
+  def mount(
+        %{"project_identifier" => project_id, "draft_date" => draft_date_string},
+        _session,
+        socket
+      ) do
     %Publication{} = publication = Publications.get!(project_id, draft_date_string)
 
     channel = Publications.get_doc_id(publication)

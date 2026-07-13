@@ -25,11 +25,11 @@ defmodule FieldPublication.Processing.MapTiles do
   """
 
   def evaluate_state(%Publication{} = publication) do
-    FileService.initialize!(publication.project_name)
+    FileService.initialize!(publication.project_identifier)
 
-    %{image: current_raw_files} = FileService.list_raw_data_files(publication.project_name)
+    %{image: current_raw_files} = FileService.list_raw_data_files(publication.project_identifier)
 
-    existing_tiles = FileService.list_tile_image_directories(publication.project_name)
+    existing_tiles = FileService.list_tile_image_directories(publication.project_identifier)
 
     georeferenced_docs =
       Data.get_doc_stream_for_georeferenced(publication)
@@ -62,8 +62,8 @@ defmodule FieldPublication.Processing.MapTiles do
     }
   end
 
-  def start(%Publication{project_name: project_key} = publication) do
-    tiles_root = FileService.get_map_tiles_base_path(project_key)
+  def start(%Publication{project_identifier: project_identifier} = publication) do
+    tiles_root = FileService.get_map_tiles_base_path(project_identifier)
 
     %{
       documents_awaiting_processing: waiting,
@@ -104,11 +104,11 @@ defmodule FieldPublication.Processing.MapTiles do
         fn
           %{"resource" => %{"id" => uuid, "width" => width, "height" => height}} ->
             {:ok, image} =
-              project_key
+              project_identifier
               |> FileService.get_raw_image_data_path(uuid)
               |> Image.new_from_file()
 
-            target_base_path = FileService.get_map_tiles_base_path(project_key, uuid)
+            target_base_path = FileService.get_map_tiles_base_path(project_identifier, uuid)
 
             max = if width < height, do: height, else: width
 

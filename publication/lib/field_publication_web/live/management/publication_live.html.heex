@@ -1,7 +1,7 @@
 <.back navigate={~p"/management"}>{gettext("Back to management")}</.back>
 <.document_heading>
   Publication <span :if={is_nil(@publication.publication_date)}>draft </span>
-  '{@publication.draft_date}' for project '{@publication.project_name}'
+  '{@publication.draft_date}' for project '{@publication.project_identifier}'
 </.document_heading>
 
 <section>
@@ -11,7 +11,7 @@
   <ul class="p-4 list-disc list-inside">
     <%= if is_nil(@publication.publication_date) do %>
       <li :if={!is_nil(@publication.replication_finished)}>
-        <.link navigate={~p"/projects/#{@publication.project_name}/#{@publication.draft_date}"}>
+        <.link navigate={~p"/projects/#{@publication.project_identifier}/#{@publication.draft_date}"}>
           Preview draft
         </.link>
       </li>
@@ -27,7 +27,7 @@
       </li>
     <% else %>
       <li>
-        <.link navigate={~p"/projects/#{@publication.project_name}/#{@publication.draft_date}"}>
+        <.link navigate={~p"/projects/#{@publication.project_identifier}/#{@publication.draft_date}"}>
           <.icon name="hero-home-solid" /> View publication
         </.link>
       </li>
@@ -43,7 +43,7 @@
 
 <div :if={!is_nil(@publication.replication_finished)}>
   You may review and start the preprocessing steps required for the publication below. You can also add comments specific to this publication, that will be displayed on the publication's project document <.link navigate={
-    ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}"
+    ~p"/projects/#{@publication.project_identifier}/#{@publication.draft_date}"
   }>
     <.icon name="hero-home-solid" /> page
   </.link>. You can still change publication comment after the draft is published.
@@ -58,7 +58,7 @@
       </.labeled_value>
       <.labeled_value>
         <:label>Source project name</:label>
-        {@publication.source_project_name}
+        {@publication.source_project_identifier}
       </.labeled_value>
       <.labeled_value>
         <:label>Draft date</:label>
@@ -127,15 +127,15 @@
     </.group_heading>
     <.data_issues
       issues={@data_issues}
-      project_key={@publication.project_name}
+      project_identifier={@publication.project_identifier}
       draft_date={@publication.draft_date}
     />
   </:item>
   <:item :if={@publication.replication_finished != nil} title="Additional metadata">
     <.form for={@publication_form} phx-change="validate" phx-submit="save">
-      <.input type="hidden" field={@publication_form[:project_name]} />
+      <.input type="hidden" field={@publication_form[:project_identifier]} />
       <.input type="hidden" field={@publication_form[:source_url]} />
-      <.input type="hidden" field={@publication_form[:source_project_name]} />
+      <.input type="hidden" field={@publication_form[:source_project_identifier]} />
       <.input type="hidden" field={@publication_form[:draft_date]} />
       <.input type="hidden" field={@publication_form[:drafted_by]} />
       <.input type="hidden" field={@publication_form[:replication_finished]} />

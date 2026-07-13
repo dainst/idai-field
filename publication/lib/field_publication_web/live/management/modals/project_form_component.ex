@@ -30,9 +30,9 @@ defmodule FieldPublicationWeb.Management.Modals.ProjectFormComponent do
 
         <%= case @action do %>
           <% :edit_project -> %>
-            <.group_heading>{@project.name}</.group_heading>
+            <.group_heading>{@project.identifier}</.group_heading>
           <% :new_project -> %>
-            <.input field={@form[:name]} type="text" label="Project key" />
+            <.input field={@form[:identifier]} type="text" label="Project key" />
           <% _ -> %>
         <% end %>
         <%= if @users != [] do %>

@@ -8,21 +8,21 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
   import Phoenix.LiveViewTest
 
   @core_database Application.compile_env(:field_publication, :core_database)
-  @test_project_name "test_project_a"
+  @test_project_identifier "test_project_a"
   @test_user %FieldPublication.DatabaseSchema.User{
     name: "test_user",
     password: "pw",
     label: "Test user"
   }
-  @new_project_name "test_project_b"
+  @new_project_identifier "test_project_b"
 
   setup_all do
     CouchService.put_database(@core_database)
     CouchService.create_user(@test_user)
 
-    Projects.put(%Project{}, %{"name" => @test_project_name})
+    Projects.put(%Project{}, %{"identifier" => @test_project_identifier})
 
-    project = Projects.get!(@test_project_name)
+    project = Projects.get!(@test_project_identifier)
 
     on_exit(fn ->
       Projects.delete(project)
@@ -46,10 +46,13 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
     setup %{conn: conn} do
       conn = log_in_user(conn, @test_user.name)
 
-      Projects.put(%Project{}, %{"name" => @new_project_name, "editors" => [@test_user.name]})
+      Projects.put(%Project{}, %{
+        "identifier" => @new_project_identifier,
+        "editors" => [@test_user.name]
+      })
 
       on_exit(fn ->
-        Projects.get(@new_project_name)
+        Projects.get(@new_project_identifier)
         |> case do
           {:ok, project} ->
             Projects.delete(project)
@@ -69,8 +72,8 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
 
       refute html =~ "Administration"
       assert html =~ "Projects"
-      refute html =~ @test_project_name
-      assert html =~ @new_project_name
+      refute html =~ @test_project_identifier
+      assert html =~ @new_project_identifier
     end
 
     test "can access their project's draft form", %{conn: conn} do
@@ -78,7 +81,7 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
 
       {:ok, _live_process, html} =
         live_process
-        |> element("#project-panel-#{@new_project_name} a", "Draft new publication")
+        |> element("#project-panel-#{@new_project_identifier} a", "Draft new publication")
         |> render_click()
         |> follow_redirect(conn)
 
@@ -88,8 +91,13 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
     test "can neither edit nor delete their project settings", %{conn: conn} do
       {:ok, live_process, _html} = live(conn, ~p"/management")
 
-      assert not has_element?(live_process, "#project-panel-#{@new_project_name} a", "Edit")
-      assert not has_element?(live_process, "#project-panel-#{@new_project_name} a", "Delete")
+      assert not has_element?(live_process, "#project-panel-#{@new_project_identifier} a", "Edit")
+
+      assert not has_element?(
+               live_process,
+               "#project-panel-#{@new_project_identifier} a",
+               "Delete"
+             )
     end
 
     test "has no link to user management", %{conn: conn} do
@@ -103,7 +111,7 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
       conn = log_in_user(conn, Application.get_env(:field_publication, :couchdb_admin_name))
 
       on_exit(fn ->
-        Projects.get(@new_project_name)
+        Projects.get(@new_project_identifier)
         |> case do
           {:ok, project} ->
             Projects.delete(project)
@@ -120,7 +128,7 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
       {:ok, _live_process, html} = live(conn, ~p"/management")
 
       assert html =~ "Administration"
-      assert html =~ project.name
+      assert html =~ project.identifier
       assert html =~ "Publications (0)"
     end
 
@@ -134,9 +142,9 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
         |> follow_redirect(conn)
 
       assert live_process
-             |> form("#project-form", project: %{"name" => @test_project_name})
+             |> form("#project-form", project: %{"identifier" => @test_project_identifier})
              |> render_submit() =~
-               "a project with this name already exists, the provided document revision does not match the existing"
+               "a project with this identifier already exists, the provided document revision does not match the existing"
     end
 
     test "can create and delete projects", %{conn: conn} do
@@ -156,29 +164,30 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
 
       {:ok, live_process, html} =
         live_process
-        |> form("#project-form", project: %{"name" => @new_project_name})
+        |> form("#project-form", project: %{"identifier" => @new_project_identifier})
         |> render_submit()
         |> follow_redirect(conn)
 
       assert html =~ "Project created successfully"
-      assert html =~ @new_project_name
+      assert html =~ @new_project_identifier
 
-      {:ok, %Project{name: @new_project_name} = _project} = Projects.get(@new_project_name)
+      {:ok, %Project{identifier: @new_project_identifier} = _project} =
+        Projects.get(@new_project_identifier)
 
       live_process
-      |> element("#project-panel-#{@new_project_name} a", "Delete")
+      |> element("#project-panel-#{@new_project_identifier} a", "Delete")
       |> render_click()
 
       html = render(live_process)
 
-      assert not (html =~ @new_project_name)
+      assert not (html =~ @new_project_identifier)
 
-      assert {:error, :not_found} = Projects.get(@new_project_name)
+      assert {:error, :not_found} = Projects.get(@new_project_identifier)
     end
 
     test "can add and remove users to project", %{conn: conn} do
       on_exit(fn ->
-        case Projects.get(@test_project_name) do
+        case Projects.get(@test_project_identifier) do
           {:ok, project} ->
             Projects.put(project, %{"editors" => []})
 
@@ -191,13 +200,13 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
 
       assert not has_element?(
                live_process,
-               "#project-panel-#{@test_project_name}",
+               "#project-panel-#{@test_project_identifier}",
                @test_user.label
              )
 
       {:ok, live_process, html} =
         live_process
-        |> element("#project-panel-#{@test_project_name} a", "Edit")
+        |> element("#project-panel-#{@test_project_identifier} a", "Edit")
         |> render_click()
         |> follow_redirect(conn)
 
@@ -221,7 +230,11 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
         |> render_submit()
         |> follow_redirect(conn)
 
-      assert has_element?(live_process, "#project-panel-#{@test_project_name}", @test_user.label)
+      assert has_element?(
+               live_process,
+               "#project-panel-#{@test_project_identifier}",
+               @test_user.label
+             )
     end
 
     test "can access every projects' draft form", %{conn: conn} do
@@ -229,7 +242,7 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
 
       {:ok, live_process, _html} =
         live_process
-        |> element("#project-panel-#{@test_project_name} a", "Draft new publication")
+        |> element("#project-panel-#{@test_project_identifier} a", "Draft new publication")
         |> render_click()
         |> follow_redirect(conn)
 

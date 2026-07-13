@@ -10,7 +10,7 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
     published_projects =
       Enum.map(
         Publications.get_current_published(),
-        fn %Publication{project_name: project_name} = publication ->
+        fn %Publication{project_identifier: project_identifier} = publication ->
           doc = Publications.Data.get_extended_document("project", publication)
 
           longitude =
@@ -26,7 +26,7 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
             )
 
           metadata = %{
-            name: project_name,
+            name: project_identifier,
             doc: doc
           }
 
@@ -68,8 +68,8 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
     {:noreply, socket}
   end
 
-  def handle_event("project_selected", %{"id" => project_name}, socket) do
-    socket = push_navigate(socket, to: ~p"/projects/#{project_name}")
+  def handle_event("project_selected", %{"id" => project_identifier}, socket) do
+    socket = push_navigate(socket, to: ~p"/projects/#{project_identifier}")
 
     {:noreply, socket}
   end

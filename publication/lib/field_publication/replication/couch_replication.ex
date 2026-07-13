@@ -38,7 +38,7 @@ defmodule FieldPublication.Replication.CouchReplication do
   defp create_replication_doc(
          %ReplicationInput{
            source_url: source_url,
-           source_project_name: source_project_name,
+           source_project_identifier: source_project_identifier,
            source_user: source_user,
            source_password: source_password
          },
@@ -49,7 +49,7 @@ defmodule FieldPublication.Replication.CouchReplication do
       winning_revs_only: true,
       source: %{
         # This URL is relative to the CouchDB application context, which is not necessarily the same as FieldPublication's.
-        url: "#{source_url}/db/#{source_project_name}" |> source_url_fix(),
+        url: "#{source_url}/db/#{source_project_identifier}" |> source_url_fix(),
         headers: CouchService.headers(source_user, source_password) |> Enum.into(%{})
       },
       target: %{
@@ -178,7 +178,7 @@ defmodule FieldPublication.Replication.CouchReplication do
   defp source_doc_count(
          %ReplicationInput{
            source_url: url,
-           source_project_name: project_name,
+           source_project_identifier: project_identifier,
            source_user: user,
            source_password: password
          },
@@ -186,7 +186,7 @@ defmodule FieldPublication.Replication.CouchReplication do
        ) do
     Finch.build(
       :get,
-      "#{url}/db/#{project_name}",
+      "#{url}/db/#{project_identifier}",
       CouchService.headers(user, password)
     )
     |> Finch.request(FieldPublication.Finch)

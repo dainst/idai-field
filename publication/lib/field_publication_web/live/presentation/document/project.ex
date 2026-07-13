@@ -31,12 +31,12 @@ defmodule FieldPublicationWeb.Presentation.Document.Project do
         <div class="pt-4 pb-4 w-full gap-2 flex flex-row justify-center overflow-x-auto">
           <%= for %Data.Document{} = doc <- depicted_in.docs do %>
             <.link
-              patch={~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{doc.id}"}
+              patch={~p"/projects/#{@publication.project_identifier}/#{@publication.draft_date}/#{doc.id}"}
               class="p-2 border border-primary h-[310px]"
             >
               <.img_element
                 size="^,300"
-                project={@publication.project_name}
+                project={@publication.project_identifier}
                 uuid={doc.id}
                 alt={doc.identifier}
               />
@@ -196,7 +196,7 @@ defmodule FieldPublicationWeb.Presentation.Document.Project do
           target_id={"categories-#{Enum.join(get_child_category_names(children) ++ [category_name], ",")}"}
         >
           <.link navigate={
-            ~p"/projects/search/#{@publication.project_name}/#{@publication.draft_date}?#{%{filters: %{category: category_name}}}"
+            ~p"/projects/search/#{@publication.project_identifier}/#{@publication.draft_date}?#{%{filters: %{category: category_name}}}"
           }>
             <div class="flex flex-row mb-0.5 p-1">
               <span style={"color: #{desaturate_category_color(color)}"}>

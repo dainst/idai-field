@@ -24,7 +24,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
         <div class="flex gap-1 w-full text-center pb-1">
           <.link
             patch={
-              ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@doc.id}/map"
+              ~p"/projects/#{@publication.project_identifier}/#{@publication.draft_date}/#{@doc.id}/map"
             }
             class={"p-2 basis-1/3 hover:bg-primary/5 #{if @live_action == :map_datasheet, do: "border"}"}
           >
@@ -32,7 +32,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
           </.link>
           <.link
             patch={
-              ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@doc.id}/map/hierarchy"
+              ~p"/projects/#{@publication.project_identifier}/#{@publication.draft_date}/#{@doc.id}/map/hierarchy"
             }
             class={"p-2 basis-1/3 hover:bg-primary/5 #{if @live_action == :map_hierarchy, do: "border"}"}
           >
@@ -41,7 +41,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
           <.link
             :if={!Enum.empty?(@context)}
             patch={
-              ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@doc.id}/map/context"
+              ~p"/projects/#{@publication.project_identifier}/#{@publication.draft_date}/#{@doc.id}/map/context"
             }
             class={"p-2 basis-1/3 hover:bg-primary/5 #{if @live_action == :map_context, do: "border"}"}
           >
@@ -51,7 +51,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
 
           <.link
             class="p-2"
-            patch={~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@doc.id}"}
+            patch={~p"/projects/#{@publication.project_identifier}/#{@publication.draft_date}/#{@doc.id}"}
           >
             <.icon name="hero-arrows-pointing-in" />
           </.link>
@@ -111,12 +111,12 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
         <div class="p-2 bg-panel overflow-auto overscroll-contain grid grid-cols-3 gap-1 mt-2 max-h-[300px] mb-5">
           <%= for %Document{} = doc <- depicted_in.docs do %>
             <.link navigate={
-              ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{doc.id}"
+              ~p"/projects/#{@publication.project_identifier}/#{@publication.draft_date}/#{doc.id}"
             }>
               <div class="max-w-[250px]">
                 <.img_element
                   size="^250,"
-                  project={@publication.project_name}
+                  project={@publication.project_identifier}
                   uuid={doc.id}
                   alt={"Project image '#{doc.identifier}' (#{pick_default_translation(doc.category.labels)})"}
                 />

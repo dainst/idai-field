@@ -13,15 +13,15 @@ defmodule FieldPublicationWeb.Rest.Api.JsonTest do
   alias FieldPublication.Test.ProjectSeed
 
   @core_database Application.compile_env(:field_publication, :core_database)
-  @test_project_name "test_project_a"
+  @test_project_identifier "test_project_a"
 
   setup_all %{} do
     CouchService.put_database(@core_database)
 
-    {project, publication} = ProjectSeed.start(@test_project_name, false)
+    {project, publication} = ProjectSeed.start(@test_project_identifier, false)
 
     on_exit(fn ->
-      Projects.get(@test_project_name)
+      Projects.get(@test_project_identifier)
       |> case do
         {:ok, %Project{} = project} ->
           Projects.delete(project)
@@ -41,7 +41,7 @@ defmodule FieldPublicationWeb.Rest.Api.JsonTest do
   test "returns raw data json for valid url", %{conn: conn, publication: publication, doc: doc} do
     assert get(
              conn,
-             ~p"/api/json/raw/#{publication.project_name}/#{publication.draft_date}/#{doc["_id"]}"
+             ~p"/api/json/raw/#{publication.project_identifier}/#{publication.draft_date}/#{doc["_id"]}"
            )
            |> json_response(200) == doc
   end
@@ -55,7 +55,7 @@ defmodule FieldPublicationWeb.Rest.Api.JsonTest do
              extended_doc =
              get(
                conn,
-               ~p"/api/json/extended/#{publication.project_name}/#{publication.draft_date}/#{doc["_id"]}"
+               ~p"/api/json/extended/#{publication.project_identifier}/#{publication.draft_date}/#{doc["_id"]}"
              )
              |> json_response(200)
              |> Data.document_map_to_struct()

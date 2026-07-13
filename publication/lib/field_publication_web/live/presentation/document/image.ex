@@ -61,7 +61,7 @@ defmodule FieldPublicationWeb.Presentation.Document.Image do
           <li>
             <a
               download={@doc.identifier}
-              href={~p"/api/image/raw/#{@publication.project_name}/#{@doc.id}"}
+              href={~p"/api/image/raw/#{@publication.project_identifier}/#{@doc.id}"}
             >
               <.icon name="hero-photo-solid" /> Download original
             </a>
@@ -70,7 +70,7 @@ defmodule FieldPublicationWeb.Presentation.Document.Image do
             <a
               target="_blank"
               href={
-                ~p"/api/json/raw/#{@publication.project_name}/#{@publication.draft_date}/#{@doc.id}"
+                ~p"/api/json/raw/#{@publication.project_identifier}/#{@publication.draft_date}/#{@doc.id}"
               }
             >
               <span class="text-center inline-block w-5" style="block">{"{}"}</span> View JSON (raw)
@@ -80,7 +80,7 @@ defmodule FieldPublicationWeb.Presentation.Document.Image do
             <a
               target="_blank"
               href={
-                ~p"/api/json/extended/#{@publication.project_name}/#{@publication.draft_date}/#{@doc.id}"
+                ~p"/api/json/extended/#{@publication.project_identifier}/#{@publication.draft_date}/#{@doc.id}"
               }
             >
               <span class="text-center inline-block w-5" style="block">{"{}"}</span>
@@ -95,7 +95,7 @@ defmodule FieldPublicationWeb.Presentation.Document.Image do
 
               <.live_component
                 id="iiif-link"
-                copy_value={"#{FieldPublicationWeb.Endpoint.url()}/#{construct_iiif_info_url(@publication.project_name, @doc.id)}"}
+                copy_value={"#{FieldPublicationWeb.Endpoint.url()}/#{construct_iiif_info_url(@publication.project_identifier, @doc.id)}"}
                 module={ClipboardCopy}
               >
                 Copy IIIF link
@@ -108,7 +108,7 @@ defmodule FieldPublicationWeb.Presentation.Document.Image do
         <.iiif_viewer
           class="h-(--ol-full-height) p-2 bg-panel"
           id="iiif_viewer"
-          project={@publication.project_name}
+          project={@publication.project_identifier}
           uuid={@doc.id}
         />
       </div>

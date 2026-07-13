@@ -9,7 +9,7 @@ defmodule FieldPublication.DatabaseSchema.Project do
   @primary_key false
   embedded_schema do
     field(:_rev, :string)
-    field(:name, :string, primary_key: true)
+    field(:identifier, :string, primary_key: true)
     field(:doc_type, :string, default: @doc_type)
     field(:editors, {:array, :string}, default: [])
   end
@@ -17,8 +17,8 @@ defmodule FieldPublication.DatabaseSchema.Project do
   @doc false
   def changeset(project, attrs \\ %{}) do
     project
-    |> cast(attrs, [:name, :_rev, :editors])
-    |> validate_required([:name])
+    |> cast(attrs, [:identifier, :_rev, :editors])
+    |> validate_required([:identifier])
     |> Base.validate_doc_type(@doc_type)
   end
 
@@ -28,7 +28,7 @@ defmodule FieldPublication.DatabaseSchema.Project do
 end
 
 defimpl Phoenix.Param, for: FieldPublication.DatabaseSchema.Project do
-  def to_param(%{name: name}) do
-    name
+  def to_param(%{identifier: identifier}) do
+    identifier
   end
 end

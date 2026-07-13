@@ -16,7 +16,7 @@ defmodule FieldPublicationWeb.Presentation.Opengraph do
     )
     |> assign(
       :page_images,
-      create_images(doc, publication.project_name)
+      create_images(doc, publication.project_identifier)
     )
   end
 
@@ -34,10 +34,11 @@ defmodule FieldPublicationWeb.Presentation.Opengraph do
     end
   end
 
-  defp create_images(doc, project_name) do
+  defp create_images(doc, project_identifier) do
     Enum.map(doc.image_uuids, fn uuid ->
       %{
-        url: "#{FieldPublicationWeb.Endpoint.url()}/#{Image.construct_url(project_name, uuid)}",
+        url:
+          "#{FieldPublicationWeb.Endpoint.url()}/#{Image.construct_url(project_identifier, uuid)}",
         width: Image.get_default_width(),
         format: Image.get_default_format()
       }

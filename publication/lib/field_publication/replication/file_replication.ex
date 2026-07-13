@@ -19,7 +19,7 @@ defmodule FieldPublication.Replication.FileReplication do
         input:
           %ReplicationInput{
             source_url: source_url,
-            source_project_name: source_project_name,
+            source_project_identifier: source_project_identifier,
             source_user: source_user,
             source_password: source_password
           } = input,
@@ -30,7 +30,7 @@ defmodule FieldPublication.Replication.FileReplication do
       {"Authorization", "Basic #{"#{source_user}:#{source_password}" |> Base.encode64()}"}
     ]
 
-    base_file_url = "#{source_url}/files/#{source_project_name}"
+    base_file_url = "#{source_url}/files/#{source_project_identifier}"
 
     uuid_lists_by_variant =
       @field_hub_to_publication_file_mapping
@@ -45,7 +45,7 @@ defmodule FieldPublication.Replication.FileReplication do
             uuid
           end)
           |> Enum.reject(fn uuid ->
-            FileService.raw_data_file_exists?(publication.project_name, uuid, local_variant_name)
+            FileService.raw_data_file_exists?(publication.project_identifier, uuid, local_variant_name)
           end)
 
         {filtered, variant_name, local_variant_name}
@@ -140,7 +140,7 @@ defmodule FieldPublication.Replication.FileReplication do
     |> Finch.request(FieldPublication.Finch, receive_timeout: 1000 * 60 * 5)
     |> case do
       {:ok, %Finch.Response{status: 200, body: data}} ->
-        FileService.write_raw_data(publication.project_name, uuid, data, local_variant_name)
+        FileService.write_raw_data(publication.project_identifier, uuid, data, local_variant_name)
     end
 
     Agent.update(counter_pid, fn state -> Map.put(state, :counter, state[:counter] + 1) end)

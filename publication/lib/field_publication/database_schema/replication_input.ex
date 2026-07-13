@@ -6,10 +6,10 @@ defmodule FieldPublication.DatabaseSchema.ReplicationInput do
   embedded_schema do
     field(:drafted_by, :string)
     field(:source_url, :string)
-    field(:source_project_name, :string)
+    field(:source_project_identifier, :string)
     field(:source_user, :string)
     field(:source_password, :string, redact: true)
-    field(:project_name, :string)
+    field(:project_identifier, :string)
     field(:delete_existing_publication, :boolean, default: false)
     field(:processing, :boolean, default: true)
     field(:draft_date, :date)
@@ -21,20 +21,20 @@ defmodule FieldPublication.DatabaseSchema.ReplicationInput do
     |> cast(attrs, [
       :drafted_by,
       :source_url,
-      :source_project_name,
+      :source_project_identifier,
       :source_user,
       :source_password,
-      :project_name,
+      :project_identifier,
       :delete_existing_publication,
       :processing
     ])
     |> set_draft_date()
     |> validate_required([
       :source_url,
-      :source_project_name,
+      :source_project_identifier,
       :source_user,
       :source_password,
-      :project_name
+      :project_identifier
     ])
     |> validate_format(:source_url, ~r/^http(s)?:\/\/.*/, message: "Not a valid http(s) URL.")
   end
@@ -69,7 +69,7 @@ defmodule FieldPublication.DatabaseSchema.ReplicationInput do
     changeset
     |> add_error(:source_url, "Specified source not found, wrong URL?")
     |> add_error(
-      :source_project_name,
+      :source_project_identifier,
       "Specified source not found, wrong project name?"
     )
   end

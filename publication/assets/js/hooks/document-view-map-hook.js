@@ -139,7 +139,7 @@ export default getDocumentViewMapHook = () => {
 
             const fullscreen = this.el.getAttribute("fullscreen") !== null;
 
-            this.projectKey = this.el.getAttribute("project_key");
+            this.projectKey = this.el.getAttribute("project_identifier");
             this.draftDate = this.el.getAttribute("draft_date");
             this.language = this.el.getAttribute("language");
 

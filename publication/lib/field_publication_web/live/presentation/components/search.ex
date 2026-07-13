@@ -6,10 +6,10 @@ defmodule FieldPublicationWeb.Presentation.Components.Search do
   alias FieldPublication.Publications.Search
   alias FieldPublication.Publications.Search.SearchDocument
 
-  attr :current_query, :string, required: true
-  attr :total, :integer, required: true
-  attr :active_filters, :map, default: %{}
-  attr :active_geo_search?, :boolean, default: false
+  attr(:current_query, :string, required: true)
+  attr(:total, :integer, required: true)
+  attr(:active_filters, :map, default: %{})
+  attr(:active_geo_search?, :boolean, default: false)
 
   def search_input(assigns) do
     ~H"""
@@ -62,9 +62,9 @@ defmodule FieldPublicationWeb.Presentation.Components.Search do
 
   attr(:active_filters, :map, default: %{})
   attr(:available_filters, :map, required: true)
-  slot :inner_block, required: true
-  slot :active_heading
-  slot :available_heading, required: true
+  slot(:inner_block, required: true)
+  slot(:active_heading)
+  slot(:available_heading, required: true)
 
   def filter_list(assigns) do
     ~H"""
@@ -217,7 +217,7 @@ defmodule FieldPublicationWeb.Presentation.Components.Search do
     """
   end
 
-  defp get_filter_label("project_key") do
+  defp get_filter_label("project_identifier") do
     %{primary: Gettext.gettext(FieldPublicationWeb.Translate, "Project")}
   end
 

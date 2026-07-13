@@ -17,7 +17,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
       centerLat={@centerLat}
       zoom={@zoom}
       language={@language}
-      project_key={@publication.project_name}
+      project_identifier={@publication.project_identifier}
       draft_date={@publication.draft_date}
       phx-hook="DocumentViewMap"
       initial_uuid={@uuid}

@@ -52,12 +52,12 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericDatasheet do
             <div class="p-2 bg-panel overflow-auto overscroll-contain grid grid-cols-3 gap-1 mt-2 max-h-[300px] mb-5">
               <%= for %Document{} = doc <- depicted_in.docs do %>
                 <.link navigate={
-                  ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{doc.id}"
+                  ~p"/projects/#{@publication.project_identifier}/#{@publication.draft_date}/#{doc.id}"
                 }>
                   <div class="max-w-[250px]">
                     <.img_element
                       size="^250,"
-                      project={@publication.project_name}
+                      project={@publication.project_identifier}
                       uuid={doc.id}
                       alt={"Project image '#{doc.identifier}' (#{pick_default_translation(doc.category.labels)})"}
                     />
@@ -77,7 +77,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericDatasheet do
                 class="mb-1"
                 target="_blank"
                 href={
-                  ~p"/api/json/raw/#{@publication.project_name}/#{@publication.draft_date}/#{@doc.id}"
+                  ~p"/api/json/raw/#{@publication.project_identifier}/#{@publication.draft_date}/#{@doc.id}"
                 }
               >
                 <span class="text-center inline-block w-5" style="block">{"{}"}</span> View JSON (raw)
@@ -88,7 +88,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericDatasheet do
                 class="mb-1"
                 target="_blank"
                 href={
-                  ~p"/api/json/extended/#{@publication.project_name}/#{@publication.draft_date}/#{@doc.id}"
+                  ~p"/api/json/extended/#{@publication.project_identifier}/#{@publication.draft_date}/#{@doc.id}"
                 }
               >
                 <span class="text-center inline-block w-5" style="block">{"{}"}</span>
@@ -124,7 +124,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericDatasheet do
           <.group_heading>
             Geometry <span class="text-xs">({@geometry_type})</span>
             <.link patch={
-              ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@doc.id}/map"
+              ~p"/projects/#{@publication.project_identifier}/#{@publication.draft_date}/#{@doc.id}/map"
             }>
               <.icon name="hero-arrows-pointing-out" />
             </.link>

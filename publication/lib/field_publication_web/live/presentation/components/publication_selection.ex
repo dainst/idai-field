@@ -8,12 +8,12 @@ defmodule FieldPublicationWeb.Presentation.Components.PublicationSelection do
         <.icon name="hero-globe-europe-africa-solid" />
       </.link>
       <div>/</div>
-      <div>{@current_publication.project_name}</div>
+      <div>{@current_publication.project_identifier}</div>
       <div>/</div>
       {render_publication_dropdown(assigns)}
       <div>/</div>
       <.link patch={
-        ~p"/projects/#{@current_publication.project_name}/#{@current_publication.draft_date}"
+        ~p"/projects/#{@current_publication.project_identifier}/#{@current_publication.draft_date}"
       }>
         <.icon name="hero-home-solid" />
       </.link>
@@ -38,7 +38,7 @@ defmodule FieldPublicationWeb.Presentation.Components.PublicationSelection do
           <div class="font-semibold mb-2">Available publications</div>
           <%= for publication <- @publications do %>
             <% url =
-              ~p"/projects/#{publication.project_name}/#{publication.draft_date}"
+              ~p"/projects/#{publication.project_identifier}/#{publication.draft_date}"
 
             url =
               if Map.has_key?(assigns, :uuid) do

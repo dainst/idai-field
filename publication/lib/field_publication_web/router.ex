@@ -28,8 +28,8 @@ defmodule FieldPublicationWeb.Router do
       forward("/3", FieldPublicationWeb.Api.IIIFImage, %IIIFImagePlug.V3.Options{})
     end
 
-    get("/raw/:project_name/:uuid", FieldPublicationWeb.Api.Image, :raw)
-    get("/tile/:project_name/:uuid/:z/:x/:y", FieldPublicationWeb.Api.Image, :tile)
+    get("/raw/:project_identifier/:uuid", FieldPublicationWeb.Api.Image, :raw)
+    get("/tile/:project_identifier/:uuid/:z/:x/:y", FieldPublicationWeb.Api.Image, :tile)
   end
 
   scope "/api/json" do
@@ -37,11 +37,16 @@ defmodule FieldPublicationWeb.Router do
     pipe_through(:fetch_current_user)
     pipe_through([:browser, :require_published_or_project_access])
 
-    get("/raw/:project_id/:draft_date/:uuid", FieldPublicationWeb.Api.JSON, :raw)
-    get("/extended/:project_id/:draft_date/:uuid", FieldPublicationWeb.Api.JSON, :extended)
+    get("/raw/:project_identifier/:draft_date/:uuid", FieldPublicationWeb.Api.JSON, :raw)
 
     get(
-      "/geometry_feature_collections/:project_id/:draft_date",
+      "/extended/:project_identifier/:draft_date/:uuid",
+      FieldPublicationWeb.Api.JSON,
+      :extended
+    )
+
+    get(
+      "/geometry_feature_collections/:project_identifier/:draft_date",
       FieldPublicationWeb.Api.JSON,
       :geometry_feature_collections
     )
@@ -81,7 +86,7 @@ defmodule FieldPublicationWeb.Router do
       live("/users/:name/edit", Management.UserLive, :edit)
 
       live("/projects/new", Management.OverviewLive, :new_project)
-      live("/projects/:project_id/edit", Management.OverviewLive, :edit_project)
+      live("/projects/:project_identifier/edit", Management.OverviewLive, :edit_project)
 
       live("/settings", Management.SettingsLive)
     end
@@ -97,12 +102,12 @@ defmodule FieldPublicationWeb.Router do
         {FieldPublicationWeb.UserAuth, :ensure_has_project_access}
       ] do
       live(
-        "/projects/:project_id/publication/new",
+        "/projects/:project_identifier/publication/new",
         Management.OverviewLive,
         :new_publication
       )
 
-      live("/projects/:project_id/publication/:draft_date", Management.PublicationLive)
+      live("/projects/:project_identifier/publication/:draft_date", Management.PublicationLive)
     end
   end
 
@@ -111,25 +116,25 @@ defmodule FieldPublicationWeb.Router do
 
     live_session :require_published_or_project_access,
       on_mount: [{FieldPublicationWeb.UserAuth, :ensure_project_published_or_project_access}] do
-      live("/search/:project_id/:draft_date", Presentation.PublicationSearch)
-      live("/:project_id", Presentation.DocumentLive)
-      live("/:project_id/:draft_date", Presentation.DocumentLive)
-      live("/:project_id/:draft_date/:uuid", Presentation.DocumentLive)
+      live("/search/:project_identifier/:draft_date", Presentation.PublicationSearch)
+      live("/:project_identifier", Presentation.DocumentLive)
+      live("/:project_identifier/:draft_date", Presentation.DocumentLive)
+      live("/:project_identifier/:draft_date/:uuid", Presentation.DocumentLive)
 
       live(
-        "/:project_id/:draft_date/:uuid/map",
+        "/:project_identifier/:draft_date/:uuid/map",
         Presentation.DocumentLive,
         :map_datasheet
       )
 
       live(
-        "/:project_id/:draft_date/:uuid/map/hierarchy",
+        "/:project_identifier/:draft_date/:uuid/map/hierarchy",
         Presentation.DocumentLive,
         :map_hierarchy
       )
 
       live(
-        "/:project_id/:draft_date/:uuid/map/context",
+        "/:project_identifier/:draft_date/:uuid/map/context",
         Presentation.DocumentLive,
         :map_context
       )

@@ -19,9 +19,9 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
     defexception [:message, plug_status: 404]
   end
 
-  def mount(%{"project_id" => project_name}, _session, socket) do
+  def mount(%{"project_identifier" => project_identifier}, _session, socket) do
     publications =
-      project_name
+      project_identifier
       |> Publications.list()
       |> Stream.reject(fn %Publication{} = publication ->
         publication.replication_finished == nil
@@ -38,7 +38,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
     {
       :ok,
       socket
-      |> assign(:project_name, project_name)
+      |> assign(:project_identifier, project_identifier)
       |> assign(:publications, publications)
       |> assign(:draft_dates, draft_dates)
       |> assign(:focus, :default)
@@ -63,7 +63,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
         {:error, :not_found} ->
           raise UnknownPublicationDocumentError,
             message:
-              "No document with id `#{Map.get(parameters, "uuid")}` for publication of project `#{publication.project_name}` on #{publication.draft_date}."
+              "No document with id `#{Map.get(parameters, "uuid")}` for publication of project `#{publication.project_identifier}` on #{publication.draft_date}."
 
         %Document{id: uuid} = document ->
           project_map_layers = Publications.Data.get_project_map_layers(publication)
@@ -88,7 +88,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
   def handle_params(
         _no_date_was_requested,
         _uri,
-        %{assigns: %{publications: publications, project_name: project_name}} = socket
+        %{assigns: %{publications: publications, project_identifier: project_identifier}} = socket
       ) do
     # This handles the case where we were only handed a project name parameter. The mount/2 above will have already
     # evaluated the project name and its published publications. We select the newest publication (first in list) and
@@ -102,31 +102,8 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       socket
       |> assign(:publication, publication)
       |> push_patch(
-        to: ~p"/projects/#{project_name}/#{publication.draft_date}",
+        to: ~p"/projects/#{project_identifier}/#{publication.draft_date}",
         replace: true
-      )
-    }
-  end
-
-  def handle_event(
-        "geometry-clicked",
-        %{"uuid" => uuid},
-        %{assigns: %{publication: publication, focus: focus}} = socket
-      ) do
-    query_params =
-      case focus do
-        :map ->
-          %{focus: "map"}
-
-        _ ->
-          %{}
-      end
-
-    {
-      :noreply,
-      push_patch(socket,
-        to:
-          ~p"/projects/#{publication.project_name}/#{publication.draft_date}/#{uuid}?#{query_params}"
       )
     }
   end
@@ -136,14 +113,17 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
         %{"search_input" => q},
         %{
           assigns: %{
-            publication: %Publication{project_name: project_name, draft_date: draft_date}
+            publication: %Publication{
+              project_identifier: project_identifier,
+              draft_date: draft_date
+            }
           }
         } = socket
       ) do
     {
       :noreply,
       redirect(socket,
-        to: ~p"/projects/search/#{project_name}/#{draft_date}?#{%{q: q}}"
+        to: ~p"/projects/search/#{project_identifier}/#{draft_date}?#{%{q: q}}"
       )
     }
   end
@@ -152,7 +132,10 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
         {:drawn_selection, geometry},
         %{
           assigns: %{
-            publication: %Publication{project_name: project_name, draft_date: draft_date}
+            publication: %Publication{
+              project_identifier: project_identifier,
+              draft_date: draft_date
+            }
           }
         } = socket
       ) do
@@ -161,7 +144,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
     {
       :noreply,
-      push_navigate(socket, to: ~p"/projects/search/#{project_name}/#{draft_date}?#{query}")
+      push_navigate(socket, to: ~p"/projects/search/#{project_identifier}/#{draft_date}?#{query}")
     }
   end
 

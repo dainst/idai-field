@@ -369,7 +369,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     <%= cond do %>
       <% is_search_keyword?(@field.input_type) -> %>
         <.link navigate={
-          ~p"/projects/search/#{@publication.project_name}/#{@publication.draft_date}?#{%{filters: %{"#{@field.name}_keyword" => value}}}"
+          ~p"/projects/search/#{@publication.project_identifier}/#{@publication.draft_date}?#{%{filters: %{"#{@field.name}_keyword" => value}}}"
         }>
           {render_slot(@inner_block)}
         </.link>

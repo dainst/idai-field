@@ -112,7 +112,7 @@ export default (getFullProjectMapHook = () => {
         },
         async initialize() {
             this.id = this.el.getAttribute("id");
-            this.projectKey = this.el.getAttribute("project_key");
+            this.projectKey = this.el.getAttribute("project_identifier");
             this.draftDate = this.el.getAttribute("draft_date");
             this.language = this.el.getAttribute("language");
 

@@ -36,42 +36,42 @@ defmodule FieldPublication.FileService do
     |> File.rm()
   end
 
-  def get_raw_data_path(project_key) when is_binary(project_key) do
-    "#{@file_store_path}/raw/#{project_key}"
+  def get_raw_data_path(project_identifier) when is_binary(project_identifier) do
+    "#{@file_store_path}/raw/#{project_identifier}"
   end
 
-  def get_raw_image_data_path(project_key) when is_binary(project_key) do
-    "#{get_raw_data_path(project_key)}/image"
+  def get_raw_image_data_path(project_identifier) when is_binary(project_identifier) do
+    "#{get_raw_data_path(project_identifier)}/image"
   end
 
-  def get_raw_image_data_path(project_key, uuid)
-      when is_binary(project_key) and is_binary(uuid) do
-    "#{get_raw_image_data_path(project_key)}/#{uuid}"
+  def get_raw_image_data_path(project_identifier, uuid)
+      when is_binary(project_identifier) and is_binary(uuid) do
+    "#{get_raw_image_data_path(project_identifier)}/#{uuid}"
   end
 
-  def get_web_images_path(project_key) do
-    "#{@file_store_path}/web_images/#{project_key}"
+  def get_web_images_path(project_identifier) do
+    "#{@file_store_path}/web_images/#{project_identifier}"
   end
 
-  def get_web_images_path(project_key, uuid) do
-    "#{get_web_images_path(project_key)}/#{uuid}.tif"
+  def get_web_images_path(project_identifier, uuid) do
+    "#{get_web_images_path(project_identifier)}/#{uuid}.tif"
   end
 
-  def get_iiif_cache_path(project_key) when is_binary(project_key) do
+  def get_iiif_cache_path(project_identifier) when is_binary(project_identifier) do
     Path.join([
       @file_store_path,
       "iiif_cache",
-      project_key
+      project_identifier
     ])
   end
 
   def get_iiif_cache_path(%Plug.Conn{
         path_info: [id, region, scaling, rotation, quality_and_format]
       }) do
-    [project_key, uuid] = String.split(id, "%2F")
+    [project_identifier, uuid] = String.split(id, "%2F")
 
     Path.join([
-      get_iiif_cache_path(project_key),
+      get_iiif_cache_path(project_identifier),
       uuid,
       region,
       scaling,
@@ -80,33 +80,33 @@ defmodule FieldPublication.FileService do
     ])
   end
 
-  def get_map_tiles_base_path(project_key) do
-    "#{@file_store_path}/map_tiles/#{project_key}"
+  def get_map_tiles_base_path(project_identifier) do
+    "#{@file_store_path}/map_tiles/#{project_identifier}"
   end
 
-  def get_map_tiles_base_path(project_key, uuid) do
-    "#{get_map_tiles_base_path(project_key)}/#{uuid}"
+  def get_map_tiles_base_path(project_identifier, uuid) do
+    "#{get_map_tiles_base_path(project_identifier)}/#{uuid}"
   end
 
-  def initialize!(project_key) do
+  def initialize!(project_identifier) do
     [
-      get_raw_image_data_path(project_key),
-      get_web_images_path(project_key),
-      get_map_tiles_base_path(project_key)
+      get_raw_image_data_path(project_identifier),
+      get_web_images_path(project_identifier),
+      get_map_tiles_base_path(project_identifier)
     ]
     |> Enum.map(&File.mkdir_p!/1)
   end
 
-  def create_map_tiles_subdirectory(project_key, uuid, z_index, x_index) do
-    path = "#{get_map_tiles_base_path(project_key)}/#{uuid}/#{z_index}/#{x_index}"
+  def create_map_tiles_subdirectory(project_identifier, uuid, z_index, x_index) do
+    path = "#{get_map_tiles_base_path(project_identifier)}/#{uuid}/#{z_index}/#{x_index}"
     File.mkdir_p!(path)
   end
 
-  def delete(project_key) do
+  def delete(project_identifier) do
     [
-      get_raw_data_path(project_key),
-      get_web_images_path(project_key),
-      get_map_tiles_base_path(project_key)
+      get_raw_data_path(project_identifier),
+      get_web_images_path(project_identifier),
+      get_map_tiles_base_path(project_identifier)
     ]
     |> Enum.map(&File.rm_rf/1)
     |> Enum.reduce_while([], fn result, acc ->
@@ -127,33 +127,33 @@ defmodule FieldPublication.FileService do
     end
   end
 
-  def write_raw_data(project_key, uuid, data, :image) do
-    File.write!("#{get_raw_data_path(project_key)}/image/#{uuid}", data)
+  def write_raw_data(project_identifier, uuid, data, :image) do
+    File.write!("#{get_raw_data_path(project_identifier)}/image/#{uuid}", data)
   end
 
-  def read_raw_data(project_key, uuid, :image) do
-    File.read!("#{get_raw_data_path(project_key)}/image/#{uuid}")
+  def read_raw_data(project_identifier, uuid, :image) do
+    File.read!("#{get_raw_data_path(project_identifier)}/image/#{uuid}")
   end
 
-  def raw_data_file_exists?(project_key, uuid, :image) do
-    File.exists?("#{get_raw_data_path(project_key)}/image/#{uuid}")
+  def raw_data_file_exists?(project_identifier, uuid, :image) do
+    File.exists?("#{get_raw_data_path(project_identifier)}/image/#{uuid}")
   end
 
-  def list_raw_data_files(project_key) do
-    File.ls!(get_raw_data_path(project_key))
+  def list_raw_data_files(project_identifier) do
+    File.ls!(get_raw_data_path(project_identifier))
     |> Enum.map(fn directory ->
       {String.to_existing_atom(directory),
-       File.ls!("#{get_raw_data_path(project_key)}/#{directory}")}
+       File.ls!("#{get_raw_data_path(project_identifier)}/#{directory}")}
     end)
     |> Enum.into(%{})
   end
 
-  def list_web_image_files(project_key) do
-    File.ls!(get_web_images_path(project_key))
+  def list_web_image_files(project_identifier) do
+    File.ls!(get_web_images_path(project_identifier))
   end
 
-  def list_tile_image_directories(project_key) do
-    File.ls!(get_map_tiles_base_path(project_key))
+  def list_tile_image_directories(project_identifier) do
+    File.ls!(get_map_tiles_base_path(project_identifier))
   end
 
   def write_geometry_collections(
@@ -229,11 +229,14 @@ defmodule FieldPublication.FileService do
     ])
   end
 
-  defp preprocessed_json(%Publication{project_name: project_key, draft_date: draft_date}) do
+  defp preprocessed_json(%Publication{
+         project_identifier: project_identifier,
+         draft_date: draft_date
+       }) do
     Path.join([
       @file_store_path,
       "json",
-      project_key,
+      project_identifier,
       Date.to_string(draft_date)
     ])
   end

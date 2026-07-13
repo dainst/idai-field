@@ -14,15 +14,19 @@ defmodule FieldPublicationWeb.Presentation.PublicationSearch do
   @search_batch_limit 20
 
   @impl true
-  def mount(%{"draft_date" => draft_date, "project_id" => project_key}, _session, socket) do
-    publication = Publications.get!(project_key, draft_date)
+  def mount(
+        %{"draft_date" => draft_date, "project_identifier" => project_identifier},
+        _session,
+        socket
+      ) do
+    publication = Publications.get!(project_identifier, draft_date)
 
     project_document = Publications.Data.get_extended_document("project", publication, true)
 
     {
       :ok,
       socket
-      |> assign(:page_title, "Searching '#{project_key}' (#{draft_date})")
+      |> assign(:page_title, "Searching '#{project_identifier}' (#{draft_date})")
       |> assign(:publication, publication)
       |> assign(:project_document, project_document)
     }
@@ -98,7 +102,7 @@ defmodule FieldPublicationWeb.Presentation.PublicationSearch do
               # We do not want to provide a filter for the project itself, as we
               # are only ever having one value for the publication. This filter
               # is only useful in the system wide search at `/search`.
-              {"project_key", _value} -> true
+              {"project_identifier", _value} -> true
               _ -> false
             end
           )
@@ -141,7 +145,7 @@ defmodule FieldPublicationWeb.Presentation.PublicationSearch do
       push_patch(
         socket,
         to:
-          ~p"/projects/search/#{publication.project_name}/#{publication.draft_date}?#{url_parameters}"
+          ~p"/projects/search/#{publication.project_identifier}/#{publication.draft_date}?#{url_parameters}"
       )
     }
   end
@@ -171,7 +175,7 @@ defmodule FieldPublicationWeb.Presentation.PublicationSearch do
       :noreply,
       push_patch(socket,
         to:
-          ~p"/projects/search/#{publication.project_name}/#{publication.draft_date}?#{url_parameters}"
+          ~p"/projects/search/#{publication.project_identifier}/#{publication.draft_date}?#{url_parameters}"
       )
     }
   end
@@ -190,7 +194,7 @@ defmodule FieldPublicationWeb.Presentation.PublicationSearch do
       :noreply,
       push_patch(socket,
         to:
-          ~p"/projects/search/#{publication.project_name}/#{publication.draft_date}?#{url_parameters}"
+          ~p"/projects/search/#{publication.project_identifier}/#{publication.draft_date}?#{url_parameters}"
       )
     }
   end
@@ -209,7 +213,7 @@ defmodule FieldPublicationWeb.Presentation.PublicationSearch do
       :noreply,
       push_patch(socket,
         to:
-          ~p"/projects/search/#{publication.project_name}/#{publication.draft_date}?#{url_parameters}"
+          ~p"/projects/search/#{publication.project_identifier}/#{publication.draft_date}?#{url_parameters}"
       )
     }
   end

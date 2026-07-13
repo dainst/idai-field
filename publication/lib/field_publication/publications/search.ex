@@ -29,7 +29,7 @@ defmodule FieldPublication.Publications.Search do
       :id,
       :identifier,
       :category,
-      :project_key,
+      :project_identifier,
       :publication_draft_date,
       :configuration_based_field_mappings,
       :full_doc,
@@ -39,7 +39,7 @@ defmodule FieldPublication.Publications.Search do
       :id,
       :identifier,
       :category,
-      :project_key,
+      :project_identifier,
       :publication_draft_date,
       :configuration_based_field_mappings,
       :geometry,
@@ -54,7 +54,7 @@ defmodule FieldPublication.Publications.Search do
       id: map["id"],
       identifier: map["identifier"],
       category: map["category"],
-      project_key: map["project_key"],
+      project_identifier: map["project_identifier"],
       publication_draft_date: map["publication_draft_date"],
       configuration_based_field_mappings: map["configuration_based_field_mappings"] || %{},
       full_doc: Data.document_map_to_struct(map["full_doc"]),
@@ -130,7 +130,7 @@ defmodule FieldPublication.Publications.Search do
     # If this publication is also used in the system wide search via the project alias, switch that
     # alias too.
     project_alias =
-      publication.project_name
+      publication.project_identifier
       |> Projects.get!()
       |> get_alias()
 
@@ -157,7 +157,7 @@ defmodule FieldPublication.Publications.Search do
 
       [index_name] when is_binary(index_name) ->
         project_alias =
-          publication.project_name
+          publication.project_identifier
           |> Projects.get!()
           |> get_alias()
 
@@ -177,7 +177,7 @@ defmodule FieldPublication.Publications.Search do
 
       [index_name] when is_binary(index_name) ->
         project_alias =
-          publication.project_name
+          publication.project_identifier
           |> Projects.get!()
           |> get_alias()
 
@@ -317,7 +317,7 @@ defmodule FieldPublication.Publications.Search do
     filter_params =
       Enum.map(filter, fn {key, value} ->
         cond do
-          key in ["category", "project_key"] ->
+          key in ["category", "project_identifier"] ->
             %{term: %{key => value}}
 
           true ->
@@ -445,7 +445,7 @@ defmodule FieldPublication.Publications.Search do
       end)
       |> Stream.map(fn key ->
         cond do
-          key in ["category", "project_key"] ->
+          key in ["category", "project_identifier"] ->
             {key, %{terms: %{field: key, size: 200}}}
 
           true ->
@@ -485,7 +485,7 @@ defmodule FieldPublication.Publications.Search do
         type: "keyword",
         store: true
       },
-      project_key: %{
+      project_identifier: %{
         type: "keyword",
         store: true
       },
@@ -616,7 +616,7 @@ defmodule FieldPublication.Publications.Search do
         # but also all documents that are in one of its child categories ("Photo" and "Drawing" by default.).
         category: [res["category"]] ++ Data.get_parent_categories(publication, res["category"]),
         publication_draft_date: publication.draft_date,
-        project_key: publication.project_name,
+        project_identifier: publication.project_identifier,
         configuration_based_field_mappings: %{},
         geometry: geo,
         parent_geometry: parent_geo,
@@ -715,7 +715,7 @@ defmodule FieldPublication.Publications.Search do
           end)
 
         {
-          pub.project_name,
+          pub.project_identifier,
           category_labels,
           field_labels
         }
@@ -724,7 +724,7 @@ defmodule FieldPublication.Publications.Search do
         # We now merge the label information for all projects into one accumulator.
         %{category_labels: %{}, field_labels: %{}},
         fn {
-             project_name,
+             project_identifier,
              category_labels,
              field_labels
            },
@@ -732,17 +732,17 @@ defmodule FieldPublication.Publications.Search do
              category_labels: category_labels_acc,
              field_labels: field_labels_acc
            } = outer_acc ->
-          {updated_category_acc, _project_name} =
+          {updated_category_acc, _project_identifier} =
             Enum.reduce(
               category_labels,
-              {category_labels_acc, project_name},
+              {category_labels_acc, project_identifier},
               &evaluate_category_label_usage/2
             )
 
-          {updated_field_acc, _project_name} =
+          {updated_field_acc, _project_identifier} =
             Enum.reduce(
               field_labels,
-              {field_labels_acc, project_name},
+              {field_labels_acc, project_identifier},
               &evaluate_field_label_usage/2
             )
 
@@ -805,13 +805,13 @@ defmodule FieldPublication.Publications.Search do
     end)
   end
 
-  defp evaluate_category_label_usage({name, labels}, {acc, project_name}) do
+  defp evaluate_category_label_usage({name, labels}, {acc, project_identifier}) do
     existing = Map.get(acc, name, %{})
 
     translations =
       if Enum.empty?(existing) do
         Enum.map(labels, fn {lang, text} ->
-          {lang, [{text, 1, [project_name]}]}
+          {lang, [{text, 1, [project_identifier]}]}
         end)
         |> Enum.into(%{})
       else
@@ -826,15 +826,15 @@ defmodule FieldPublication.Publications.Search do
             variants =
               case matching_variant do
                 [] ->
-                  existing[lang] ++ [{text, 1, [project_name]}]
+                  existing[lang] ++ [{text, 1, [project_identifier]}]
 
                 [{text, count, projects_list}] ->
-                  [{text, count + 1, projects_list ++ [project_name]}] ++ other_variants
+                  [{text, count + 1, projects_list ++ [project_identifier]}] ++ other_variants
               end
 
             {lang, variants}
           else
-            {lang, [{text, 1, [project_name]}]}
+            {lang, [{text, 1, [project_identifier]}]}
           end
         end)
         |> Enum.reduce(%{}, fn {lang, translations}, acc ->
@@ -844,13 +844,13 @@ defmodule FieldPublication.Publications.Search do
 
     {
       Map.put(acc, name, translations),
-      project_name
+      project_identifier
     }
   end
 
   defp evaluate_field_label_usage(
          {field_name, %{"labels" => labels, "value_labels" => value_labels}},
-         {acc, project_name}
+         {acc, project_identifier}
        ) do
     existing = Map.get(acc, field_name, %{})
 
@@ -858,13 +858,13 @@ defmodule FieldPublication.Publications.Search do
       if Enum.empty?(existing) do
         {
           Enum.map(labels, fn {lang, text} ->
-            {lang, [{text, 1, [project_name]}]}
+            {lang, [{text, 1, [project_identifier]}]}
           end)
           |> Enum.into(%{}),
           Enum.map(value_labels, fn {value_name, labels} ->
             translations =
               Enum.map(labels, fn {lang, text} ->
-                {lang, [{text, 1, [project_name]}]}
+                {lang, [{text, 1, [project_identifier]}]}
               end)
               |> Enum.reduce(%{}, fn {lang, info}, inner_acc ->
                 Map.put(inner_acc, lang, info)
@@ -887,15 +887,15 @@ defmodule FieldPublication.Publications.Search do
               variants =
                 case matching_variant do
                   [] ->
-                    existing[lang] ++ [{text, 1, [project_name]}]
+                    existing[lang] ++ [{text, 1, [project_identifier]}]
 
                   [{text, count, projects_list}] ->
-                    [{text, count + 1, projects_list ++ [project_name]}] ++ other_variants
+                    [{text, count + 1, projects_list ++ [project_identifier]}] ++ other_variants
                 end
 
               {lang, variants}
             else
-              {lang, [{text, 1, [project_name]}]}
+              {lang, [{text, 1, [project_identifier]}]}
             end
           end)
           |> Enum.reduce(%{}, fn {lang, translations}, acc ->
@@ -916,18 +916,19 @@ defmodule FieldPublication.Publications.Search do
                       case matching_variant do
                         [] ->
                           existing["value_labels"][value_name][lang] ++
-                            [{text, 1, [project_name]}]
+                            [{text, 1, [project_identifier]}]
 
                         [{text, count, projects_list}] ->
-                          [{text, count + 1, projects_list ++ [project_name]}] ++ other_variants
+                          [{text, count + 1, projects_list ++ [project_identifier]}] ++
+                            other_variants
                       end
 
                     {lang, variants}
                   else
-                    {lang, [{text, 1, [project_name]}]}
+                    {lang, [{text, 1, [project_identifier]}]}
                   end
                 else
-                  {lang, [{text, 1, [project_name]}]}
+                  {lang, [{text, 1, [project_identifier]}]}
                 end
               end)
               |> Enum.reduce(%{}, fn {lang, translations}, acc ->
@@ -945,7 +946,7 @@ defmodule FieldPublication.Publications.Search do
         "labels" => label_translations,
         "value_labels" => value_label_translations
       }),
-      project_name
+      project_identifier
     }
   end
 
@@ -1267,8 +1268,8 @@ defmodule FieldPublication.Publications.Search do
   def index_name_to_publication(name) do
     regex = ~r/^publication_(.*)_(\d{4}-\d{2}-\d{2})__[ab]__$/
 
-    [[_full_match, project_name, draft_date_iso_8601]] = Regex.scan(regex, name)
+    [[_full_match, project_identifier, draft_date_iso_8601]] = Regex.scan(regex, name)
 
-    Publications.get(project_name, draft_date_iso_8601)
+    Publications.get(project_identifier, draft_date_iso_8601)
   end
 end

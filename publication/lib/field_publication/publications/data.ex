@@ -29,11 +29,11 @@ defmodule FieldPublication.Publications.Data do
 
   defmodule Document do
     @derive Jason.Encoder
-    @enforce_keys [:id, :identifier, :category, :project_key, :publication_draft_date]
+    @enforce_keys [:id, :identifier, :category, :project_identifier, :publication_draft_date]
     defstruct [
       :id,
       :identifier,
-      :project_key,
+      :project_identifier,
       :publication_draft_date,
       :category,
       :geometry,
@@ -74,7 +74,7 @@ defmodule FieldPublication.Publications.Data do
     %Document{
       id: map["id"],
       identifier: map["identifier"],
-      project_key: map["project_key"],
+      project_identifier: map["project_identifier"],
       publication_draft_date: map["publication_draft_date"],
       description: map["description"],
       category: %Category{
@@ -1079,7 +1079,7 @@ defmodule FieldPublication.Publications.Data do
           %Document{
             id: resource["id"],
             identifier: resource["identifier"],
-            project_key: publication.project_name,
+            project_identifier: publication.project_identifier,
             publication_draft_date: publication.draft_date,
             category: extend_category(category_configuration["item"], resource),
             groups: extend_field_groups(category_configuration["item"], resource),

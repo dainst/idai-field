@@ -73,14 +73,14 @@ defmodule FieldPublication.Replication do
   defp check_source_connection(
          %ReplicationInput{
            source_url: url,
-           source_project_name: project_name,
+           source_project_identifier: project_identifier,
            source_user: user,
            source_password: password
          } = input
        ) do
     Finch.build(
       :head,
-      "#{url}/db/#{project_name}",
+      "#{url}/db/#{project_identifier}",
       CouchService.headers(user, password)
     )
     |> Finch.request(FieldPublication.Finch)
@@ -181,7 +181,7 @@ defmodule FieldPublication.Replication do
           persisted_log(publication, :info, "Draft creation finished.")
 
           {:ok, %Publication{} = final_publication} =
-            Publications.get!(publication.project_name, publication.draft_date)
+            Publications.get!(publication.project_identifier, publication.draft_date)
             |> Publications.put(%{
               "replication_finished" => DateTime.utc_now(),
               "languages" => languages
@@ -296,13 +296,13 @@ defmodule FieldPublication.Replication do
         reported_by: "replication"
       })
 
-    Publications.get!(publication.project_name, publication.draft_date)
+    Publications.get!(publication.project_identifier, publication.draft_date)
     |> Map.update(:replication_logs, [], fn existing -> existing ++ [log_entry] end)
     |> Publications.put(%{})
   end
 
   def reconstruct_project_configuraton(%Publication{
-        source_project_name: source_project_name,
+        source_project_identifier: source_project_identifier,
         database: database_name,
         configuration_doc: configuration_doc_name
       }) do
@@ -318,7 +318,7 @@ defmodule FieldPublication.Replication do
           Application.get_env(:field_publication, :couchdb_url),
           Application.get_env(:field_publication, :couchdb_admin_name),
           Application.get_env(:field_publication, :couchdb_admin_password),
-          source_project_name,
+          source_project_identifier,
           CouchService.get_document_url(configuration_doc_name)
         ]
       )

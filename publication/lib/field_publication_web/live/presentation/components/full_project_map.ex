@@ -11,7 +11,7 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
       centerLat={@centerLat}
       zoom={@zoom}
       offset_base_element={@offset_base_element}
-      project_key={@publication.project_name}
+      project_identifier={@publication.project_identifier}
       draft_date={@publication.draft_date}
       language={@language}
       phx-hook="FullProjectMap"

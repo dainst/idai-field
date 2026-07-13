@@ -34,7 +34,7 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
-  defp apply_action(socket, :edit_project, %{"project_id" => id}) do
+  defp apply_action(socket, :edit_project, %{"project_identifier" => id}) do
     socket
     |> assign(:page_title, "Publishing | Edit Project")
     |> assign(:project, Projects.get!(id))
@@ -46,7 +46,7 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
     |> assign(:project, %Project{})
   end
 
-  defp apply_action(socket, :new_publication, %{"project_id" => id}) do
+  defp apply_action(socket, :new_publication, %{"project_identifier" => id}) do
     socket
     |> assign(:page_title, "Publishing | New publication draft")
     |> assign(:project, Projects.get!(id))
@@ -81,7 +81,7 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
       socket
       |> push_navigate(
         to:
-          ~p"/management/projects/#{publication.project_name}/publication/#{publication.draft_date}"
+          ~p"/management/projects/#{publication.project_identifier}/publication/#{publication.draft_date}"
       )
     }
   end
@@ -195,10 +195,10 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
 
   def handle_event(
         "delete-publication",
-        %{"project_key" => project_key, "draft_date" => draft_date},
+        %{"project_identifier" => project_identifier, "draft_date" => draft_date},
         socket
       ) do
-    Publications.get(project_key, draft_date)
+    Publications.get(project_identifier, draft_date)
     |> case do
       {:ok, publication} ->
         Publications.delete(publication)
@@ -226,11 +226,11 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
 
   def handle_event(
         "set_project_alias",
-        %{"draft_date" => draft_date, "project_name" => project_name},
+        %{"draft_date" => draft_date, "project_identifier" => project_identifier},
         %{assigns: %{projects: projects}} = socket
       ) do
     Enum.find(projects, fn entry ->
-      entry.project.name == project_name
+      entry.project.identifier == project_identifier
     end)
     |> Map.get(:publications, [])
     |> Enum.find(fn publication ->
@@ -245,10 +245,10 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
     projects =
       Projects.list()
       |> Enum.filter(fn %Project{} = project ->
-        Projects.has_project_access?(project.name, socket.assigns.current_user)
+        Projects.has_project_access?(project.identifier, socket.assigns.current_user)
       end)
       |> Enum.map(fn project ->
-        publications = Publications.list(project.name)
+        publications = Publications.list(project.identifier)
 
         Enum.each(publications, fn publication ->
           channel = Publications.get_doc_id(publication)

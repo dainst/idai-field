@@ -24,12 +24,12 @@ defmodule FieldPublication.Projects do
   """
 
   @doc """
-  Retrieve a project document by the projects name.
+  Retrieve a project document by the project's identifier.
 
   Returns `{:ok, %FieldPublication.DatabaseSchema.Project{}}` on success, or `{:error, :not_found}` if a project of that name does not exist.
 
   ## Parameters
-    - `name`: Name of the project as String.
+    - `identifier`: Identifier of the project as String.
 
   ## Examples
       iex> get("bourgou")
@@ -37,7 +37,7 @@ defmodule FieldPublication.Projects do
         :ok,
         %FieldPublication.DatabaseSchema.Project{
           _rev: "8-9bfcc2fc1c746216c79a47936b9d4d96",
-          name: "bourgou",
+          identifier: "bourgou",
           doc_type: "project",
           editors: []
         }
@@ -46,9 +46,9 @@ defmodule FieldPublication.Projects do
       iex> get("bourgou")
       {:error, :not_found}
   """
-  def get(name) when is_binary(name) do
+  def get(identifier) when is_binary(identifier) do
     %Project{
-      name: name,
+      identifier: identifier,
       doc_type: Project.doc_type()
     }
     |> get_document_id()
@@ -68,18 +68,18 @@ defmodule FieldPublication.Projects do
   end
 
   @doc """
-  Retrieve a project document by the projects name.
+  Retrieve a project document by the projects identifier.
 
   Returns a `%FieldPublication.DatabaseSchema.Project{}` schema struct or raises an expection if the project was not found.
 
   ## Parameters
-    - `name`: Name of the project as String.
+    - `identifier`: Project identifier of the project as String.
 
   ## Examples
       iex> get!("bourgou")
       %FieldPublication.DatabaseSchema.Project{
         _rev: "8-9bfcc2fc1c746216c79a47936b9d4d96",
-        name: "bourgou",
+        identifier: "bourgou",
         doc_type: "project",
         editors: []
       }
@@ -87,8 +87,8 @@ defmodule FieldPublication.Projects do
       iex> get("bourgou")
       ** (MatchError) no match of right hand side value: {:error, :not_found} (..)
   """
-  def get!(name) do
-    {:ok, project} = get(name)
+  def get!(identifier) do
+    {:ok, project} = get(identifier)
     project
   end
 
@@ -102,7 +102,7 @@ defmodule FieldPublication.Projects do
       [
         %FieldPublication.DatabaseSchema.Project{
           _rev: "8-9bfcc2fc1c746216c79a47936b9d4d96",
-          name: "bourgou",
+          identifier: "bourgou",
           doc_type: "project",
           editors: []
         },
@@ -131,22 +131,22 @@ defmodule FieldPublication.Projects do
 
   ## Example
   ### (1) Creating a new project document.
-      iex> FieldPublication.Projects.put(%FieldPublication.DatabaseSchema.Project{}, %{"name" => "my_new_project", "editors" => ["some_user"]})
+      iex> FieldPublication.Projects.put(%FieldPublication.DatabaseSchema.Project{}, %{"identifier" => "my_new_project", "editors" => ["some_user"]})
       {:ok,
       %FieldPublication.DatabaseSchema.Project{
         _rev: "1-efb39394b265b932a1c0d3d6ae3c2e6d",
-        name: "my_new_project",
+        identifier: "my_new_project",
         doc_type: "project",
         editors: ["some_user"]
       }}
 
-  ### (2) Attempting to create a new project document without a project name.
+  ### (2) Attempting to create a new project document without a project identifier.
       iex> FieldPublication.Projects.put(%FieldPublication.DatabaseSchema.Project{}, %{"editors" => ["some_user"]})
       {:error,
       #Ecto.Changeset<
         action: :create,
         changes: %{editors: ["some_user"]},
-        errors: [name: {"can't be blank", [validation: :required]}],
+        errors: [identifier: {"can't be blank", [validation: :required]}],
         data: #FieldPublication.DatabaseSchema.Project<>,
         valid?: false
       >}
@@ -155,7 +155,7 @@ defmodule FieldPublication.Projects do
       bourgou = FieldPublication.Projects.get!("bourgou")
       %FieldPublication.DatabaseSchema.Project{
         _rev: "8-9bfcc2fc1c746216c79a47936b9d4d96",
-        name: "bourgou",
+        identifier: "bourgou",
         doc_type: "project",
         editors: []
       }
@@ -164,7 +164,7 @@ defmodule FieldPublication.Projects do
       {:ok,
       %FieldPublication.DatabaseSchema.Project{
         _rev: "9-b5deb5d3c32e9638554cd9c9cf76ce2e",
-        name: "bourgou",
+        identifier: "bourgou",
         doc_type: "project",
         editors: ["some_user"]
       }}
@@ -176,7 +176,7 @@ defmodule FieldPublication.Projects do
          id <- get_document_id(project),
          {:ok, %{status: 201, body: body}} <- CouchService.put_document(id, project) do
       %{"rev" => rev} = Jason.decode!(body)
-      FileService.initialize!(project.name)
+      FileService.initialize!(project.identifier)
       {:ok, Map.put(project, :_rev, rev)}
     else
       {:error, %Changeset{} = _changeset} = error ->
@@ -187,8 +187,8 @@ defmodule FieldPublication.Projects do
         # CouchDB responded with a conflict status. Add a custom error to the changeset and also return an `{:error, changeset}` tuple.
         changeset
         |> add_error(
-          :name,
-          "a project with this name already exists, the provided document revision does not match the existing"
+          :identifier,
+          "a project with this identifier already exists, the provided document revision does not match the existing"
         )
         |> apply_action(:create)
     end
@@ -206,19 +206,19 @@ defmodule FieldPublication.Projects do
       iex(0)> project = FieldPublication.Projects.get!("my_doomed_project")
       %FieldPublication.DatabaseSchema.Project{
         _rev: "1-efb39394b265b932a1c0d3d6ae3c2e6d",
-        name: "my_doomed_project",
+        identifier: "my_doomed_project",
         doc_type: "project",
         editors: ["some_user"]
       }
       iex(1)> FieldPublication.Projects.delete(project)
       {:ok, :deleted}
   """
-  def delete(%Project{_rev: rev, name: name} = project) do
+  def delete(%Project{_rev: rev, identifier: identifier} = project) do
     doc_id = get_document_id(project)
 
-    {:ok, _deleted_paths} = FileService.delete(name)
+    {:ok, _deleted_paths} = FileService.delete(identifier)
     CouchService.delete_document(doc_id, rev)
-    publications = Publications.list(project.name)
+    publications = Publications.list(project.identifier)
     Enum.each(publications, &Publications.delete(&1))
 
     {:ok, :deleted}
@@ -230,19 +230,19 @@ defmodule FieldPublication.Projects do
   Returns `true` or `false`.
 
   ## Parameters
-    - `project_name`: Name of the project as a string.
+    - `identifier`: Project identifier of the project as a string.
     - `user_name`: Name of the user as a string or `nil`.
   """
-  def has_project_access?(_project_name, user_name) when is_nil(user_name) do
+  def has_project_access?(_identifier, user_name) when is_nil(user_name) do
     false
   end
 
-  def has_project_access?(project_name, user_name)
-      when is_binary(project_name) and is_binary(user_name) do
+  def has_project_access?(identifier, user_name)
+      when is_binary(identifier) and is_binary(user_name) do
     if Users.is_admin?(user_name) do
       true
     else
-      project = get!(project_name)
+      project = get!(identifier)
       user_name in project.editors
     end
   end
@@ -262,7 +262,7 @@ defmodule FieldPublication.Projects do
 
   def has_publication_access?(%Publication{} = publication, user_name)
       when is_binary(user_name) do
-    access? = has_project_access?(publication.project_name, user_name)
+    access? = has_project_access?(publication.project_identifier, user_name)
     date = publication.publication_date
 
     cond do

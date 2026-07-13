@@ -56,14 +56,14 @@ defmodule FieldPublicationWeb.Presentation.Components.WorldMap do
     |> Map.put_new(:zoom, 2)
   end
 
-  defp create_home_marker(%{longitude: lon, latitude: lat}, project_name) do
+  defp create_home_marker(%{longitude: lon, latitude: lat}, project_identifier) do
     %{
       type: "Feature",
       properties: %{
         style: "homeMarker",
         hover_event: "home_marker_hover",
         click_event: "project_selected",
-        id: project_name
+        id: project_identifier
       },
       geometry:
         %Geo.Point{

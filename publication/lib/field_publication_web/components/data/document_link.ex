@@ -22,7 +22,7 @@ defmodule FieldPublicationWeb.Components.Data.DocumentLink do
         <.link
           navigate={
             if @publication_search? do
-              ~p"/projects/search/#{@doc.project_key}/#{@doc.publication_draft_date}?#{%{filters: %{"category" => @doc.category.name}}}"
+              ~p"/projects/search/#{@doc.project_identifier}/#{@doc.publication_draft_date}?#{%{filters: %{"category" => @doc.category.name}}}"
             else
               ~p"/search?#{%{filters: %{"category" => @doc.category.name}}}"
             end
@@ -38,7 +38,7 @@ defmodule FieldPublicationWeb.Components.Data.DocumentLink do
           class="grow p-3 rounded-tr rounded-br hover:bg-(--primary-color)/10 suppress-link-styling"
           style={"border-color: #{desaturate_category_color(@doc.category.color)}; border-width: 1px 1px 1px 0px;"}
           navigate={
-            construct_doc_link(@doc.project_key, @doc.publication_draft_date, @doc.id, @live_action)
+            construct_doc_link(@doc.project_identifier, @doc.publication_draft_date, @doc.id, @live_action)
           }
         >
           <div>
@@ -59,7 +59,7 @@ defmodule FieldPublicationWeb.Components.Data.DocumentLink do
                 <.img_element
                   size={"^,#{@image_height}"}
                   class="p-1 inline"
-                  project={@doc.project_key}
+                  project={@doc.project_identifier}
                   uuid={uuid}
                   alt={"An image depicting '#{@doc.identifier}'"}
                 />
@@ -79,25 +79,25 @@ defmodule FieldPublicationWeb.Components.Data.DocumentLink do
     "hsl(from  #{color} h calc(s * 0.5) l)"
   end
 
-  defp construct_doc_link(project_name, draft_date, uuid, live_action) do
+  defp construct_doc_link(project_identifier, draft_date, uuid, live_action) do
     uuid = if uuid == "project", do: "", else: uuid
-    construct(project_name, draft_date, uuid, live_action)
+    construct(project_identifier, draft_date, uuid, live_action)
   end
 
-  defp construct(project_name, draft_date, uuid, nil) do
-    ~p"/projects/#{project_name}/#{draft_date}/#{uuid}"
+  defp construct(project_identifier, draft_date, uuid, nil) do
+    ~p"/projects/#{project_identifier}/#{draft_date}/#{uuid}"
   end
 
-  defp construct(project_name, draft_date, uuid, :map_dataseeet) do
-    ~p"/projects/#{project_name}/#{draft_date}/#{uuid}/map"
+  defp construct(project_identifier, draft_date, uuid, :map_dataseeet) do
+    ~p"/projects/#{project_identifier}/#{draft_date}/#{uuid}/map"
   end
 
-  defp construct(project_name, draft_date, uuid, :map_hierarchy) do
-    ~p"/projects/#{project_name}/#{draft_date}/#{uuid}/map/hierarchy"
+  defp construct(project_identifier, draft_date, uuid, :map_hierarchy) do
+    ~p"/projects/#{project_identifier}/#{draft_date}/#{uuid}/map/hierarchy"
   end
 
-  defp construct(project_name, draft_date, uuid, :map_context) do
-    ~p"/projects/#{project_name}/#{draft_date}/#{uuid}/map/context"
+  defp construct(project_identifier, draft_date, uuid, :map_context) do
+    ~p"/projects/#{project_identifier}/#{draft_date}/#{uuid}/map/context"
   end
 
   attr(:id, :string, required: true)

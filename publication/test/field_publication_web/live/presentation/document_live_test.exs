@@ -14,16 +14,16 @@ defmodule FieldPublicationWeb.Presentation.DocumentLiveTest do
 
   import Phoenix.LiveViewTest
   @core_database Application.compile_env(:field_publication, :core_database)
-  @test_project_name "test_project_a"
+  @test_project_identifier "test_project_a"
   @uuid "9579212f-6342-49bd-900f-e13fd70f6a80"
 
   setup_all %{} do
     CouchService.put_database(@core_database)
 
-    {project, publication} = ProjectSeed.start(@test_project_name, false)
+    {project, publication} = ProjectSeed.start(@test_project_identifier, false)
 
     on_exit(fn ->
-      Projects.get(@test_project_name)
+      Projects.get(@test_project_identifier)
       |> case do
         {:ok, %Project{} = project} ->
           Projects.delete(project)
@@ -43,7 +43,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLiveTest do
     publication: publication
   } do
     assert {:ok, _live_view_pid, html} =
-             live(conn, ~p"/projects/#{publication.project_name}/#{publication.draft_date}")
+             live(conn, ~p"/projects/#{publication.project_identifier}/#{publication.draft_date}")
 
     doc = Data.get_extended_document("project", publication)
     short_description = Data.get_field_value(doc, "shortName") |> Map.get("en")
@@ -67,7 +67,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLiveTest do
     assert {:ok, _live_view_pid, html} =
              live(
                conn,
-               ~p"/projects/#{publication.project_name}/#{publication.draft_date}/9579212f-6342-49bd-900f-e13fd70f6a80"
+               ~p"/projects/#{publication.project_identifier}/#{publication.draft_date}/9579212f-6342-49bd-900f-e13fd70f6a80"
              )
 
     assert html =~ "Depicts"
@@ -82,7 +82,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLiveTest do
     assert {:ok, _live_view_pid, html} =
              live(
                conn,
-               ~p"/projects/#{publication.project_name}/#{publication.draft_date}/1b5885eb-2082-477c-936a-e1ecb6d051f3"
+               ~p"/projects/#{publication.project_identifier}/#{publication.draft_date}/1b5885eb-2082-477c-936a-e1ecb6d051f3"
              )
 
     assert html =~ "TTP-A-112043"
@@ -101,7 +101,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLiveTest do
     assert {:ok, _live_view_pid, html} =
              live(
                conn,
-               ~p"/projects/#{publication.project_name}/#{publication.draft_date}/1b5885eb-2082-477c-936a-e1ecb6d051f3/map/hierarchy"
+               ~p"/projects/#{publication.project_identifier}/#{publication.draft_date}/1b5885eb-2082-477c-936a-e1ecb6d051f3/map/hierarchy"
              )
 
     assert html =~ "TTP-A-112043"
@@ -113,7 +113,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLiveTest do
     publication: publication
   } do
     path =
-      ~p"/projects/#{publication.project_name}/#{publication.draft_date}/1b5885eb-2082-477c-936a-e1ecb6d051f3"
+      ~p"/projects/#{publication.project_identifier}/#{publication.draft_date}/1b5885eb-2082-477c-936a-e1ecb6d051f3"
 
     assert {:ok, live_view, html} =
              live(
@@ -150,14 +150,14 @@ defmodule FieldPublicationWeb.Presentation.DocumentLiveTest do
     # Not a date
     assert get(
              conn,
-             ~p"/projects/#{publication.project_name}/not_a_date/#{@uuid}"
+             ~p"/projects/#{publication.project_identifier}/not_a_date/#{@uuid}"
            )
            |> response(404)
 
     # Unknown date
     assert get(
              conn,
-             ~p"/projects/#{publication.project_name}/2000-01-01/#{@uuid}"
+             ~p"/projects/#{publication.project_identifier}/2000-01-01/#{@uuid}"
            )
            |> response(404)
   end
@@ -167,11 +167,11 @@ defmodule FieldPublicationWeb.Presentation.DocumentLiveTest do
     publication: publication
   } do
     assert_raise FieldPublicationWeb.Presentation.DocumentLive.UnknownPublicationDocumentError,
-                 "No document with id `not_existing` for publication of project `#{publication.project_name}` on #{publication.draft_date}.",
+                 "No document with id `not_existing` for publication of project `#{publication.project_identifier}` on #{publication.draft_date}.",
                  fn ->
                    live(
                      conn,
-                     ~p"/projects/#{publication.project_name}/#{publication.draft_date}/not_existing"
+                     ~p"/projects/#{publication.project_identifier}/#{publication.draft_date}/not_existing"
                    )
                  end
   end

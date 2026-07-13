@@ -1400,6 +1400,18 @@
       },
       "Mergel": {
         "label": "marl"
+      },
+      "Lehm": {
+        "label": "loam"
+      },
+      "Sand": {
+        "label": "sand"
+      },
+      "Sandiger Lehm": {
+        "label": "sandy loam"
+      },
+      "Sandiger Schluff": {
+        "label": "sandy silt"
       }
     }
   },
@@ -2120,6 +2132,18 @@
       },
       "Werkzeug": {
         "label": "tool"
+      },
+      "Anhänger": {
+        "label": "pendant"
+      },
+      "Antefix": {
+        "label": "Antefix"
+      },
+      "Sarkophag": {
+        "label": "sarcophagus"
+      },
+      "Siegel": {
+        "label": "seal"
       }
     }
   },
@@ -2841,6 +2865,12 @@
       },
       "unregelmäßig": {
         "label": "irregular"
+      },
+      "formlos": {
+        "label": "shapeless"
+      },
+      "langgezogen": {
+        "label": "elongated"
       }
     }
   },
@@ -2875,6 +2905,18 @@
       },
       "erkennbar": {
         "label": "discernible"
+      },
+      "regelmäßig": {
+        "label": "regular"
+      },
+      "uneben": {
+        "label": "uneven"
+      },
+      "unklar": {
+        "label": "unclear"
+      },
+      "wellig": {
+        "label": "wavy"
       }
     }
   },
@@ -2888,6 +2930,18 @@
       },
       "Poliert": {
         "label": "polished"
+      },
+      "Andere": {
+        "label": "other"
+      },
+      "Glasur": {
+        "label": "glaze"
+      },
+      "Verstrichen": {
+        "label": "hand-smoothed"
+      },
+      "Überzug": {
+        "label": "coating"
       }
     }
   },
@@ -2904,6 +2958,12 @@
       },
       "Red Slip Ware": {
         "label": ""
+      },
+      "Schlichte Ware": {
+        "label": "plain ware"
+      },
+      "Terra sigilata": {
+        "label": "terra sigilata"
       }
     }
   },
@@ -3075,6 +3135,12 @@
     "values": {
       "Redslip": {
         "label": "Engobe vermelho (Red slip)"
+      },
+      "Schwarzfirnis": {
+        "label": "black-slip"
+      },
+      "Tongrundig": {
+        "label": "uncoated"
       }
     }
   },
@@ -3518,6 +3584,15 @@
     "values": {
       "zweischalig mit Binderlagen": {
         "label": "two exterior rows with binders"
+      },
+      "Fundament: Geschüttet": {
+        "label": "foundation: dumped"
+      },
+      "Fundament: gesetzt": {
+        "label": "foundation: set"
+      },
+      "einschalig vor Feld/Hang": {
+        "label": "single row at slope"
       }
     }
   }

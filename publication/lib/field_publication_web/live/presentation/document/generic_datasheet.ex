@@ -122,7 +122,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericDatasheet do
         <% end %>
         <div class="lg:mb-4">
           <.group_heading>
-            Geometry <span class="text-xs">(Todo)</span>
+            Geometry <span class="text-xs">({@geometry_type})</span>
             <.link patch={
               ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@doc.id}/map"
             }>
@@ -143,11 +143,21 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericDatasheet do
   end
 
   def update(%{doc: %Document{} = doc, publication: %Publication{} = publication}, socket) do
+    geometry_type =
+      case doc.geometry do
+        %{"type" => type} ->
+          type
+
+        _ ->
+          "None"
+      end
+
     {
       :ok,
       socket
       |> assign(:doc, doc)
       |> assign(:publication, publication)
+      |> assign(:geometry_type, geometry_type)
     }
   end
 end

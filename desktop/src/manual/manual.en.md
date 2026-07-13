@@ -1188,6 +1188,7 @@ The formats *CSV* and *JSON Lines* are suitable for creating new resources or ed
 
 Please note that new images can only be imported via the menu "Tools" ➝ "Image management". However, the resource data of already imported images can be edited via CSV or JSON Lines import.
 
+For guidance on importing project configurations (.configuration), please refer to the ‘Project configuration’ section.
 
 ## Export
 
@@ -1202,6 +1203,8 @@ Supported export formats are:
 * GeoJSON (.geojson, .json)
 * Shapefile (.zip)
 * Catalog (.catalog)
+
+For guidance on exporting project configurations (.configuration), please refer to the ‘Project configuration’ section.
 
 
 ## Formats

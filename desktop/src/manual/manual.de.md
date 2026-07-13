@@ -1207,6 +1207,8 @@ Für das Anlegen neuer Ressourcen oder das Editieren bestehender Ressourcen eign
 
 Bitte beachten Sie, dass neue Bilder ausschließlich über das Menü "Werkzeuge" ➝ "Bilderverwaltung" importiert werden können. Die Ressourcendaten bereits importierter Bilder können allerdings per CSV- oder JSON-Lines-Import bearbeitet werden.
 
+Hinweise für den Import und Export von Projektkonfigurationen (.configuration) finden Sie im Abschnitt "Projektkonfiguration". 
+
 
 ## Export
 
@@ -1222,6 +1224,7 @@ Unterstützte Export-Formate sind:
 * Shapefile (.zip)
 * Katalog (.catalog)
 
+Hinweise für den Export von Projektkonfigurationen (.configuration) finden Sie im Abschnitt "Projektkonfiguration". 
 
 ## Formate
 

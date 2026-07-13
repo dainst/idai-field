@@ -48,6 +48,13 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
             Context
           </.link>
           <div :if={Enum.empty?(@context)} class="p-2 basis-1/3 line-through">Context</div>
+
+          <.link
+            class="p-2"
+            patch={~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@doc.id}"}
+          >
+            <.icon name="hero-arrows-pointing-in" />
+          </.link>
         </div>
 
         <div class="p-2 overflow-auto max-h-(--ol-full-height)">
@@ -56,15 +63,14 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
       </div>
 
       <div class="basis-2/3">
-        <div class="mb-4">
-          <.live_component
-            module={FieldPublicationWeb.Presentation.Components.DocumentViewMap}
-            id="generic_doc_map_detail"
-            style="width:100%; height: var(--ol-full-height);"
-            doc={@doc}
-            publication={@publication}
-          />
-        </div>
+        <.live_component
+          module={FieldPublicationWeb.Presentation.Components.DocumentViewMap}
+          id="generic_doc_map_detail"
+          style="width:100%; height: var(--ol-full-height);"
+          doc={@doc}
+          publication={@publication}
+          explicit_uuids={@relevant_uuids}
+        />
       </div>
     </div>
     """
@@ -138,19 +144,32 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
           <.icon name="hero-chevron-double-up" />
         </div>
       <% end %>
-      <div class="bg-panel border p-2">
-        <div class="bg-white">
-      <.document_link
-        id={"self-#{@doc.id}"}
-        doc={@doc}
-        image_count={0}
-        geometry_indicator={true}
-        hover_target="generic_doc_map_detail"
-        live_action={:map_hierarchy}
-      />
-        </div>
-      </div>
 
+      <div class="border-2 border-primary bg-primary/50 p-2" }>
+        <.document_link
+          id={"self-#{@doc.id}"}
+          doc={@doc}
+          image_count={0}
+          geometry_indicator={true}
+          hover_target="generic_doc_map_detail"
+          live_action={:map_hierarchy}
+        />
+      </div>
+      <%= if !Enum.empty?(@hierarchy.siblings) do %>
+        <div class="justify-self-center text-center">
+          <.icon name="hero-pause" />
+        </div>
+      <% end %>
+      <%= for doc <- @hierarchy.siblings do %>
+        <.document_link
+          id={"self-#{doc.id}"}
+          doc={doc}
+          image_count={10}
+          geometry_indicator={true}
+          hover_target="generic_doc_map_detail"
+          live_action={:map_hierarchy}
+        />
+      <% end %>
       <div :if={@hierarchy.children != []} class="justify-self-center text-center">
         <.icon name="hero-chevron-double-down" />
       </div>
@@ -213,7 +232,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
         end
       )
 
-    hierarchy = construct_hierarchy(publication, doc)
+    {hierarchy, uuids} = construct_hierarchy(publication, doc)
 
     {
       :ok,
@@ -222,6 +241,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
       |> assign(:context, context)
       |> assign(:hierarchy, hierarchy)
       |> assign(:publication, publication)
+      |> assign(:relevant_uuids, uuids)
       |> assign(:live_action, live_action)
     }
   end
@@ -233,9 +253,25 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
 
     ancestor_uuids = accumulate_ancestors(parent_uuid, hierarchy)
 
-    %{
-      children: Data.get_preview_documents(children_uuids, publication),
-      ancestors: Data.get_preview_documents(ancestor_uuids, publication)
+    sibling_uuids =
+      Map.get(hierarchy, parent_uuid)
+      |> case do
+        nil ->
+          []
+
+        %{"children" => sibling_uuids} ->
+          sibling_uuids
+          |> Enum.reject(fn val -> val == uuid end)
+          |> Enum.sort()
+      end
+
+    {
+      %{
+        children: Data.get_preview_documents(children_uuids, publication),
+        siblings: Data.get_preview_documents(sibling_uuids, publication),
+        ancestors: Data.get_preview_documents(ancestor_uuids, publication)
+      },
+      children_uuids ++ sibling_uuids ++ ancestor_uuids ++ [uuid]
     }
   end
 

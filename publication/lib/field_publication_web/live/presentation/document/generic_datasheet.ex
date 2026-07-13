@@ -121,6 +121,14 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericDatasheet do
           </section>
         <% end %>
         <div class="lg:mb-4">
+          <.group_heading>
+            Geometry <span class="text-xs">(Todo)</span>
+            <.link patch={
+              ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@doc.id}/map"
+            }>
+              <.icon name="hero-arrows-pointing-out" />
+            </.link>
+          </.group_heading>
           <.live_component
             module={FieldPublicationWeb.Presentation.Components.DocumentViewMap}
             id="generic_doc_map"

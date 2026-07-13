@@ -10,66 +10,54 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
 
   def render(assigns) do
     ~H"""
-    <div>
-      <.group_heading>
-        Geometry <span class="text-xs">({@document_geometry_type})</span>
-        <.link patch={
-          ~p"/projects/#{@publication.project_name}/#{@publication.draft_date}/#{@uuid}?#{if @focus != :map, do: %{focus: "map"}, else: %{}}"
-        }>
-          <.icon name={
-            if @focus != :map, do: "hero-arrows-pointing-out", else: "hero-arrows-pointing-in"
-          } />
-        </.link>
-      </.group_heading>
-      <div
-        class="relative bg-panel"
-        id={@id}
-        centerLon={@centerLon}
-        centerLat={@centerLat}
-        zoom={@zoom}
-        language={@language}
-        project_key={@publication.project_name}
-        draft_date={@publication.draft_date}
-        phx-hook="DocumentViewMap"
-        initial_uuid={@uuid}
-        initial_linked={@linked_uuids |> Enum.join("|")}
-      >
-        <!-- set phx-update="ignore" to ensure changes the map's DOM elements are not re-rendered on updates
+    <div
+      class="relative bg-panel"
+      id={@id}
+      centerLon={@centerLon}
+      centerLat={@centerLat}
+      zoom={@zoom}
+      language={@language}
+      project_key={@publication.project_name}
+      draft_date={@publication.draft_date}
+      phx-hook="DocumentViewMap"
+      initial_uuid={@uuid}
+      initial_linked={@linked_uuids |> Enum.join("|")}
+    >
+      <!-- set phx-update="ignore" to ensure changes the map's DOM elements are not re-rendered on updates
           by live view, but instead the content is controlled by OpenLayers (and/or our hook logic) client side after initializiation. -->
-        <div style={@style} id={"#{@id}-map"} phx-update="ignore">
-          <div id={"#{@id}-loading-indicator"} class="text-center p-1 h-full w-full bg-white">
-            Loading map...
-          </div>
+      <div style={@style} id={"#{@id}-map"} phx-update="ignore">
+        <div id={"#{@id}-loading-indicator"} class="text-center p-1 h-full w-full bg-white">
+          Loading map...
+        </div>
 
-          <div class="text-xs" id={"#{@id}-identifier-tooltip"}>
-            <div class="grow h-full" id={"#{@id}-identifier-tooltip-content"}></div>
+        <div class="text-xs" id={"#{@id}-identifier-tooltip"}>
+          <div class="grow h-full" id={"#{@id}-identifier-tooltip-content"}></div>
+        </div>
+      </div>
+      <div class="absolute p-1 top-1 right-1 flex gap-1">
+        <div class="bg-white rounded">
+          <div
+            id={"#{@id}-draw-box-selector"}
+            phx-click="toggle-draw-box-mode"
+            phx-target={@myself}
+            class={"w-8 h-8 text-center pt-0.5 rounded #{if @draw_box_mode, do: "bg-primary/20 border border-primary hover:border-primary-hover"}"}
+          >
+            <.icon name="hero-pencil-square" />
           </div>
         </div>
-        <div class="absolute p-1 top-1 right-1 flex gap-1">
-          <div class="bg-white rounded">
-            <div
-              id={"#{@id}-draw-box-selector"}
-              phx-click="toggle-draw-box-mode"
-              phx-target={@myself}
-              class={"w-8 h-8 text-center pt-0.5 rounded #{if @draw_box_mode, do: "bg-primary/20 border border-primary hover:border-primary-hover"}"}
-            >
-              <.icon name="hero-pencil-square" />
-            </div>
-          </div>
-          <.live_component
-            module={FieldPublicationWeb.Components.Map.TileLayerSelection}
-            id={"#{@id}-tile-layer-selection"}
-            map_id={@id}
-            doc={@doc}
-            publication={@publication}
-          />
-        </div>
-        <div
-          :if={@no_data}
-          class="absolute w-full h-full top-0 bg-white text-center place-content-center"
-        >
-          <.icon class="mb-1" name="hero-no-symbol" /> No geometry context available
-        </div>
+        <.live_component
+          module={FieldPublicationWeb.Components.Map.TileLayerSelection}
+          id={"#{@id}-tile-layer-selection"}
+          map_id={@id}
+          doc={@doc}
+          publication={@publication}
+        />
+      </div>
+      <div
+        :if={@no_data}
+        class="absolute w-full h-full top-0 bg-white text-center place-content-center"
+      >
+        <.icon class="mb-1" name="hero-no-symbol" /> No geometry context available
       </div>
     </div>
     """
@@ -88,6 +76,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
           assigns,
         socket
       ) do
+    explicit_uuids = Map.get(assigns, :explicit_uuids, [])
     # hierarchy = Data.get_document_hierarchy(publication)
 
     directly_linked_uuids =
@@ -95,6 +84,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
         Enum.map(docs, fn %Document{id: id} -> id end)
       end)
       |> List.flatten()
+      |> Enum.concat(explicit_uuids)
       |> Enum.uniq()
 
     socket = assign(socket, set_defaults(assigns))
@@ -129,7 +119,6 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
     |> Map.put_new(:zoom, 2)
     |> Map.put_new(:draw_box_mode, false)
     |> Map.put_new(:language, Gettext.get_locale(FieldPublicationWeb.Translate))
-    |> Map.put_new(:focus, :default)
   end
 
   def handle_event("toggle-draw-box-mode", _, socket) do

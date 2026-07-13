@@ -18,7 +18,7 @@ defmodule FieldPublicationWeb.Components.Data.DocumentLink do
     ~H"""
     <% id = if @id, do: @id, else: "#{@doc.id}_link" %>
     <.maybe_map_hover_event id={"#{id}_map_hover"} doc={@doc} target_id={@hover_target}>
-      <div class="flex mb-0.5" id={id}>
+      <div class="bg-white flex rounded mb-0.5" id={id}>
         <.link
           navigate={
             if @publication_search? do

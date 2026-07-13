@@ -70,8 +70,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
           publication: %Publication{} = _publication,
           doc:
             %Document{
-              relations: relations,
-              geometry: geometry
+              relations: relations
             } = doc
         } =
           assigns,

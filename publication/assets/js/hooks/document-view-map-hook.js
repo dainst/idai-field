@@ -137,6 +137,8 @@ export default getDocumentViewMapHook = () => {
                 .getAttribute("initial_linked")
                 .split("|");
 
+            const fullscreen = this.el.getAttribute("fullscreen") !== null;
+
             this.projectKey = this.el.getAttribute("project_key");
             this.draftDate = this.el.getAttribute("draft_date");
             this.language = this.el.getAttribute("language");
@@ -156,6 +158,7 @@ export default getDocumentViewMapHook = () => {
                 overlayDiv,
                 this.projectKey,
                 this.draftDate,
+                fullscreen
             );
 
             this.publicationTileLayers = new PublicationTileLayers(

@@ -17,18 +17,22 @@ export default class PreviewOverlay {
     map: Map;
     overlay: Overlay;
     projectKey: string;
-    projectDraftDate: string;
+  projectDraftDate: string;
+  fullscreen: boolean
     constructor(
         hook: any,
         map: Map,
         container: HTMLElement,
         projectKey: string,
-        projectDraftDate: string,
+      projectDraftDate: string,
+        fullscreen: boolean = false
     ) {
         this.hook = hook;
         this.map = map;
         this.projectKey = projectKey;
-        this.projectDraftDate = projectDraftDate;
+      this.projectDraftDate = projectDraftDate;
+
+      this.fullscreen = fullscreen;
 
         this.overlay = new Overlay({
             element: container,
@@ -195,14 +199,19 @@ export default class PreviewOverlay {
 
         documentInfo.appendChild(document.createTextNode(documentInfoText));
 
-        const _this = this;
+
+
+
+      let url = `/projects/${this.projectKey}/${this.projectDraftDate}/${properties.uuid}`
+
+      if (this.fullscreen) {
+        url = `/projects/${this.projectKey}/${this.projectDraftDate}/${properties.uuid}/map`
+      }
+
+      const hook = this.hook
 
         documentInfo.addEventListener("click", function (event) {
-            return _this.hook
-                .js()
-                .navigate(
-                    `/projects/${_this.projectKey}/${_this.projectDraftDate}/${properties.uuid}`,
-                );
+            return hook                .js()                .navigate(                   url                );
         });
 
         preview.appendChild(CategoryMetadata);

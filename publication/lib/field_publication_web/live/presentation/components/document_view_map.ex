@@ -22,6 +22,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
       phx-hook="DocumentViewMap"
       initial_uuid={@uuid}
       initial_linked={@linked_uuids |> Enum.join("|")}
+      fullscreen={@fullscreen?}
     >
       <!-- set phx-update="ignore" to ensure changes the map's DOM elements are not re-rendered on updates
           by live view, but instead the content is controlled by OpenLayers (and/or our hook logic) client side after initializiation. -->
@@ -76,16 +77,18 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
           assigns,
         socket
       ) do
-    explicit_uuids = Map.get(assigns, :explicit_uuids, [])
-    # hierarchy = Data.get_document_hierarchy(publication)
+    explicit_uuids = Map.get(assigns, :explicit_uuids, nil)
 
-    directly_linked_uuids =
-      Enum.map(relations, fn %RelationGroup{docs: docs} ->
-        Enum.map(docs, fn %Document{id: id} -> id end)
-      end)
-      |> List.flatten()
-      |> Enum.concat(explicit_uuids)
-      |> Enum.uniq()
+    linked_uuids =
+      if explicit_uuids do
+        explicit_uuids
+      else
+        Enum.map(relations, fn %RelationGroup{docs: docs} ->
+          Enum.map(docs, fn %Document{id: id} -> id end)
+        end)
+        |> List.flatten()
+        |> Enum.uniq()
+      end
 
     socket = assign(socket, set_defaults(assigns))
 
@@ -94,7 +97,7 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
         value when value != doc.id ->
           push_event(socket, "document-map-update-#{id}", %{
             uuid: doc.id,
-            linked_uuids: directly_linked_uuids
+            linked_uuids: linked_uuids
           })
 
         _same_uuid_or_just_initialized ->
@@ -106,8 +109,8 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
       socket
       |> assign(:no_data, false)
       |> assign(:uuid, doc.id)
-      |> assign(:linked_uuids, directly_linked_uuids)
-      |> assign(:document_geometry_type, geometry["type"] || "None")
+      |> assign(:linked_uuids, linked_uuids)
+      |> assign(:fullscreen?, Map.get(assigns, :fullscreen?, false))
       |> assign(:doc, doc)
     }
   end

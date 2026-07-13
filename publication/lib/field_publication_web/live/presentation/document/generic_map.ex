@@ -70,6 +70,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
           doc={@doc}
           publication={@publication}
           explicit_uuids={@relevant_uuids}
+          fullscreen?={true}
         />
       </div>
     </div>
@@ -131,21 +132,30 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
   defp render_action(:map_hierarchy, assigns) do
     ~H"""
     <div class="flex flex-col gap-1">
-      <%= for ancestor_doc <- @hierarchy.ancestors do %>
-        <.document_link
-          id={"ancestor-#{ancestor_doc.id}"}
-          doc={ancestor_doc}
-          image_count={10}
-          geometry_indicator={true}
-          hover_target="generic_doc_map_detail"
-          live_action={:map_hierarchy}
-        />
-        <div class="justify-self-center text-center">
-          <.icon name="hero-chevron-double-up" />
-        </div>
-      <% end %>
+      <div class="ancestor-list">
+        <%= for ancestor_doc <- @hierarchy.ancestors do %>
+          <.document_link
+            id={"ancestor-#{ancestor_doc.id}"}
+            doc={ancestor_doc}
+            image_count={10}
+            geometry_indicator={true}
+            hover_target="generic_doc_map_detail"
+            live_action={:map_hierarchy}
+          />
+        <% end %>
+      </div>
+      <div class="ancestor-list hidden justify-self-center text-center">
+        <.icon name="hero-ellipsis-vertical" />
+      </div>
 
-      <div class="border-2 border-primary bg-primary/50 p-2" }>
+      <div
+        :if={@hierarchy.ancestors != []}
+        phx-click={JS.toggle(to: ".ancestor-list")}
+        class="pl-2 text-primary-inverse hover:text-primary-hover-inverse cursor-pointer bg-primary hover:bg-primary-hover rounded justify-self-center text-center"
+      >
+        <.icon name="hero-chevron-double-up" /> Lies within ({Enum.count(@hierarchy.ancestors)})
+      </div>
+      <div class="border-2 border-primary bg-panel p-2" }>
         <.document_link
           id={"self-#{@doc.id}"}
           doc={@doc}
@@ -156,33 +166,50 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
         />
       </div>
       <%= if !Enum.empty?(@hierarchy.siblings) do %>
-        <div class="justify-self-center text-center">
-          <.icon name="hero-pause" />
+        <div
+          class="pl-2 text-primary-inverse hover:text-primary-hover-inverse cursor-pointer bg-primary hover:bg-primary-hover rounded justify-self-center text-center"
+          phx-click={JS.toggle(to: ".sibling-list")}
+        >
+          <.icon name="hero-equals" /> Peers ({Enum.count(@hierarchy.siblings)})
         </div>
       <% end %>
-      <%= for doc <- @hierarchy.siblings do %>
-        <.document_link
-          id={"self-#{doc.id}"}
-          doc={doc}
-          image_count={10}
-          geometry_indicator={true}
-          hover_target="generic_doc_map_detail"
-          live_action={:map_hierarchy}
-        />
-      <% end %>
-      <div :if={@hierarchy.children != []} class="justify-self-center text-center">
-        <.icon name="hero-chevron-double-down" />
+      <div class="sibling-list">
+        <%= for doc <- @hierarchy.siblings do %>
+          <.document_link
+            id={"self-#{doc.id}"}
+            doc={doc}
+            image_count={10}
+            geometry_indicator={true}
+            hover_target="generic_doc_map_detail"
+            live_action={:map_hierarchy}
+          />
+        <% end %>
       </div>
-      <%= for doc <- @hierarchy.children do %>
-        <.document_link
-          id={"child-#{doc.id}"}
-          doc={doc}
-          image_count={10}
-          geometry_indicator={true}
-          hover_target="generic_doc_map_detail"
-          live_action={:map_hierarchy}
-        />
-      <% end %>
+      <div class="sibling-list hidden justify-self-center text-center">
+        <.icon name="hero-ellipsis-vertical" />
+      </div>
+      <div
+        :if={@hierarchy.children != []}
+        phx-click={JS.toggle(to: ".children-list")}
+        class="pl-2 text-primary-inverse hover:text-primary-hover-inverse cursor-pointer bg-primary hover:bg-primary-hover rounded justify-self-center text-center"
+      >
+        <.icon name="hero-chevron-double-down" /> Contains ({Enum.count(@hierarchy.children)})
+      </div>
+      <div class="children-list hidden justify-self-center text-center">
+        <.icon name="hero-ellipsis-vertical" />
+      </div>
+      <div class="children-list">
+        <%= for doc <- @hierarchy.children do %>
+          <.document_link
+            id={"child-#{doc.id}"}
+            doc={doc}
+            image_count={10}
+            geometry_indicator={true}
+            hover_target="generic_doc_map_detail"
+            live_action={:map_hierarchy}
+          />
+        <% end %>
+      </div>
     </div>
     """
   end

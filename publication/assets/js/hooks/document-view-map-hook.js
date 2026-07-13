@@ -181,8 +181,10 @@ export default getDocumentViewMapHook = () => {
             });
 
             this.el.addEventListener("pointerleave", function (e) {
-                _this.resetFeatures();
-                _this.overlay.hide();
+                if (_this.pinnedFeatures.length === 0) {
+                    _this.resetFeatures();
+                    _this.overlay.hide();
+                }
             });
 
             this.map.on("pointermove", async function (e) {

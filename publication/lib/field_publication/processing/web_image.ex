@@ -21,7 +21,11 @@ defmodule FieldPublication.Processing.WebImage do
 
   @data_report_key "processing_web_image"
 
-  def evaluate_web_images_state(%Publication{project_identifier: project_identifier} = publication) do
+  def report_key(), do: @data_report_key
+
+  def evaluate_web_images_state(
+        %Publication{project_identifier: project_identifier} = publication
+      ) do
     %{image: current_raw_files} = FileService.list_raw_data_files(project_identifier)
 
     current_web_files = FileService.list_web_image_files(project_identifier)

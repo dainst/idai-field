@@ -70,6 +70,10 @@ defmodule FieldPublication.Publications.Data do
     defstruct [:name, :value, :labels, :value_labels, :input_type]
   end
 
+  @report_key "meta_database_creation"
+
+  def report_key(), do: @report_key
+
   def document_map_to_struct(map) do
     %Document{
       id: map["id"],
@@ -145,8 +149,6 @@ defmodule FieldPublication.Publications.Data do
   end
 
   def recreate_meta_database(%Publication{database: db} = publication) do
-    report_key = "meta_database_creation"
-
     {_, meta_db_name} = create_meta_database(publication)
 
     CouchService.get_document_stream(
@@ -154,7 +156,7 @@ defmodule FieldPublication.Publications.Data do
         selector: %{
           "$or": [
             %{doc_type: "preview"},
-            %{entries: %{"$elemMatch": %{reported_by: report_key}}}
+            %{entries: %{"$elemMatch": %{reported_by: @report_key}}}
           ]
         }
       },
@@ -188,7 +190,7 @@ defmodule FieldPublication.Publications.Data do
           other["_id"],
           LogEntry.create(%{
             type: "invalid_document",
-            reported_by: report_key,
+            reported_by: @report_key,
             severity: :error,
             message: "Invalid document for preview creation."
           }),
@@ -215,7 +217,7 @@ defmodule FieldPublication.Publications.Data do
           raw_doc["_id"],
           LogEntry.create(%{
             type: "invalid_document",
-            reported_by: report_key,
+            reported_by: @report_key,
             severity: :error,
             message: inspect(error)
           }),

@@ -6,6 +6,11 @@ defmodule FieldPublication.Processing do
     MapTiles
   }
 
+  alias FieldPublication.Publications.{
+    Data,
+    Search
+  }
+
   alias FieldPublication.DatabaseSchema.Publication
 
   alias FieldPublication.DatabaseSchema.{
@@ -18,8 +23,6 @@ defmodule FieldPublication.Processing do
   alias Phoenix.PubSub
 
   require Logger
-
-  @data_report_key "processing"
 
   @moduledoc """
   This GenServer is used to start, stop and track processing tasks.
@@ -430,7 +433,7 @@ defmodule FieldPublication.Processing do
       task.ref == ref
     end)
     |> case do
-      {_task, _type, context} ->
+      {_task, type, context} ->
         Publications.get(context)
         |> case do
           {:ok, publication} ->
@@ -441,13 +444,15 @@ defmodule FieldPublication.Processing do
             #
             # But: This only affects completely unhandled processing issues, the more nuanced
             # issues reported by the processing tasks themselves are left intact.
-            Publications.Data.clear_data_issues(publication, @data_report_key)
+
+            report_key = report_key_by_processing_type(type)
+            Publications.Data.clear_data_issues(publication, report_key)
 
             Publications.Data.report_data_issue(
               "general",
               LogEntry.create(%{
                 type: "general_processing_crash",
-                reported_by: @data_report_key,
+                reported_by: report_key,
                 severity: :error,
                 message: inspect(reason)
               }),
@@ -484,4 +489,11 @@ defmodule FieldPublication.Processing do
     Logger.info("#{msg}: #{processing_type}, #{channel}")
     PubSub.broadcast!(FieldPublication.PubSub, channel, {channel, {msg, processing_type}})
   end
+
+  def report_key_by_processing_type(:web_images), do: WebImage.report_key()
+  def report_key_by_processing_type(:tile_images), do: MapTiles.report_key()
+  def report_key_by_processing_type(:search_index), do: Search.report_key()
+  def report_key_by_processing_type(:preview_documents), do: Data.report_key()
+  def report_key_by_processing_type(:geo_collections), do: Data.report_key()
+  def report_key_by_processing_type(:database_indices), do: Data.report_key()
 end

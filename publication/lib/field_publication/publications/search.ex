@@ -19,6 +19,8 @@ defmodule FieldPublication.Publications.Search do
 
   @data_report_key "publications_search"
 
+  def report_key(), do: @data_report_key
+
   defmodule SearchDocument do
     @moduledoc """
     Defines the data struct that is used for research data in the OpenSearch index.

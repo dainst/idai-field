@@ -16,6 +16,8 @@ defmodule FieldPublication.Processing.MapTiles do
   @tile_size 256
   @data_report_key "processing_map_tiles"
 
+  def report_key(), do: @data_report_key
+
   @moduledoc """
   This module contains functions for creating image tiles from raw image data to be served as
   TileLayer sources in OpenLayer maps.

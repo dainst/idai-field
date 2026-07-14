@@ -75,15 +75,19 @@ defmodule FieldPublication.DatabaseSchema.Publication do
   end
 
   defp ensure_project_exists(changeset) do
-    name = get_field(changeset, :project_identifier)
+    project_identifier = get_field(changeset, :project_identifier)
 
-    Projects.get(name)
+    Projects.get(project_identifier)
     |> case do
       {:ok, _project} ->
         changeset
 
       {:error, :not_found} ->
-        add_error(changeset, :project_identifier, "Project #{name} document not found.")
+        add_error(
+          changeset,
+          :project_identifier,
+          "Project #{project_identifier} document not found."
+        )
     end
   end
 end

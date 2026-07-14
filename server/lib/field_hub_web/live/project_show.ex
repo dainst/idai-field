@@ -48,6 +48,7 @@ defmodule FieldHubWeb.Live.ProjectShow do
           |> assign(:delete_files, false)
           |> assign(:hide_cache_cleared_message, true)
           |> assign(:page_title, project)
+          |> assign(:history_sort_state, {:date, :desc})
           |> read_project_doc()
         }
 

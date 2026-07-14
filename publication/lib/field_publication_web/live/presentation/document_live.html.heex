@@ -31,7 +31,6 @@
     <.document_link doc={@doc} />
   </.document_heading>
 
-  <% category = Data.get_field_value(@doc, "category") %>
   <%= cond do %>
     <% category == "Project" -> %>
       <.live_component
@@ -44,6 +43,20 @@
       <.live_component
         id={"image-#{@doc.id}"}
         module={FieldPublicationWeb.Presentation.Document.Image}
+        doc={@doc}
+        publication={@publication}
+      />
+    <% category == "Type" -> %>
+      <.live_component
+        id={"type-#{@doc.id}"}
+        module={FieldPublicationWeb.Presentation.Document.Type}
+        doc={@doc}
+        publication={@publication}
+      />
+    <% category == "TypeCatalog" -> %>
+      <.live_component
+        id={"type-catalog-#{@doc.id}"}
+        module={FieldPublicationWeb.Presentation.Document.TypeCatalog}
         doc={@doc}
         publication={@publication}
       />

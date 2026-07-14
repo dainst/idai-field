@@ -1,11 +1,13 @@
 <div>
+  <% category = Data.get_field_value(@doc, "category") %>
+
   <div class="flex gap-2 justify-between">
     <PublicationSelection.render
       publications={@publications}
       current_publication={@publication}
       uuid={@uuid}
       identifier={
-        if Data.get_field_value(@doc, "category") != "Project",
+        if category != "Project",
           do: Data.get_field_value(@doc, "identifier")
       }
     />
@@ -25,7 +27,7 @@
     </form>
   </div>
 
-  <.document_heading>
+  <.document_heading :if={category != "Project"}>
     <.document_link doc={@doc} />
   </.document_heading>
 

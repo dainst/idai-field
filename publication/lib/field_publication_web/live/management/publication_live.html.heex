@@ -11,7 +11,9 @@
   <ul class="p-4 list-disc list-inside">
     <%= if is_nil(@publication.publication_date) do %>
       <li :if={!is_nil(@publication.replication_finished)}>
-        <.link navigate={~p"/projects/#{@publication.project_identifier}/#{@publication.draft_date}"}>
+        <.link navigate={
+          ~p"/projects/#{@publication.project_identifier}/#{@publication.draft_date}"
+        }>
           Preview draft
         </.link>
       </li>
@@ -27,7 +29,9 @@
       </li>
     <% else %>
       <li>
-        <.link navigate={~p"/projects/#{@publication.project_identifier}/#{@publication.draft_date}"}>
+        <.link navigate={
+          ~p"/projects/#{@publication.project_identifier}/#{@publication.draft_date}"
+        }>
           <.icon name="hero-home-solid" /> View publication
         </.link>
       </li>

@@ -51,7 +51,9 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
 
           <.link
             class="p-2"
-            patch={~p"/projects/#{@publication.project_identifier}/#{@publication.draft_date}/#{@doc.id}"}
+            patch={
+              ~p"/projects/#{@publication.project_identifier}/#{@publication.draft_date}/#{@doc.id}"
+            }
           >
             <.icon name="hero-arrows-pointing-in" />
           </.link>

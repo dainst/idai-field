@@ -38,7 +38,12 @@ defmodule FieldPublicationWeb.Components.Data.DocumentLink do
           class="grow p-3 rounded-tr rounded-br hover:bg-(--primary-color)/10 suppress-link-styling"
           style={"border-color: #{desaturate_category_color(@doc.category.color)}; border-width: 1px 1px 1px 0px;"}
           navigate={
-            construct_doc_link(@doc.project_identifier, @doc.publication_draft_date, @doc.id, @live_action)
+            construct_doc_link(
+              @doc.project_identifier,
+              @doc.publication_draft_date,
+              @doc.id,
+              @live_action
+            )
           }
         >
           <div>

@@ -45,7 +45,11 @@ defmodule FieldPublication.Replication.FileReplication do
             uuid
           end)
           |> Enum.reject(fn uuid ->
-            FileService.raw_data_file_exists?(publication.project_identifier, uuid, local_variant_name)
+            FileService.raw_data_file_exists?(
+              publication.project_identifier,
+              uuid,
+              local_variant_name
+            )
           end)
 
         {filtered, variant_name, local_variant_name}

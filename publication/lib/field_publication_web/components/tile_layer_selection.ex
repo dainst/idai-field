@@ -246,7 +246,9 @@ defmodule FieldPublicationWeb.Components.Map.TileLayerSelection do
           <div class="grow text-nowrap">
             {identifier}
           </div>
-          <.link patch={~p"/projects/#{@publication.project_identifier}/#{@publication.draft_date}/#{uuid}"}>
+          <.link patch={
+            ~p"/projects/#{@publication.project_identifier}/#{@publication.draft_date}/#{uuid}"
+          }>
             <.icon class="w-5 h-5" name="hero-photo" />
           </.link>
         </div>

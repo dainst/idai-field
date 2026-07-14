@@ -728,7 +728,10 @@ defmodule FieldPublicationWeb.CoreComponents do
                 <%= for %{message: msg, reported_by: reported_by, uuid: uuid} <- entries do %>
                   <tr class="border-b last:border-b-0">
                     <td class="p-2">
-                      <a href={~p"/projects/#{@project_identifier}/#{@draft_date}/#{uuid}"} target="new">
+                      <a
+                        href={~p"/projects/#{@project_identifier}/#{@draft_date}/#{uuid}"}
+                        target="new"
+                      >
                         {uuid}
                       </a>
                     </td>

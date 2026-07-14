@@ -69,7 +69,8 @@ defmodule FieldPublication.Publications do
     end
   end
 
-  def get(project_identifier, draft_date) when is_binary(draft_date) and is_binary(project_identifier) do
+  def get(project_identifier, draft_date)
+      when is_binary(draft_date) and is_binary(project_identifier) do
     case Date.from_iso8601(draft_date) do
       {:ok, %Date{} = parsed} ->
         get(project_identifier, parsed)
@@ -215,7 +216,9 @@ defmodule FieldPublication.Publications do
   end
 
   def list(project_identifier) when is_binary(project_identifier) do
-    run_search(%{selector: %{doc_type: Publication.doc_type(), project_identifier: project_identifier}})
+    run_search(%{
+      selector: %{doc_type: Publication.doc_type(), project_identifier: project_identifier}
+    })
   end
 
   defp run_search(query) do

@@ -31,7 +31,9 @@ defmodule FieldPublicationWeb.Presentation.Document.Project do
         <div class="pt-4 pb-4 w-full gap-2 flex flex-row justify-center overflow-x-auto">
           <%= for %Data.Document{} = doc <- depicted_in.docs do %>
             <.link
-              patch={~p"/projects/#{@publication.project_identifier}/#{@publication.draft_date}/#{doc.id}"}
+              patch={
+                ~p"/projects/#{@publication.project_identifier}/#{@publication.draft_date}/#{doc.id}"
+              }
               class="p-2 border border-primary h-[310px]"
             >
               <.img_element

@@ -1,11 +1,13 @@
 <div>
+  <% category = Data.get_field_value(@doc, "category") %>
+
   <div class="flex gap-2 justify-between">
     <PublicationSelection.render
       publications={@publications}
       current_publication={@publication}
       uuid={@uuid}
       identifier={
-        if Data.get_field_value(@doc, "category") != "Project",
+        if category != "Project",
           do: Data.get_field_value(@doc, "identifier")
       }
     />
@@ -15,36 +17,63 @@
         <button class="bg-(--primary-color) hover:bg-(--primary-color-hover) inline-block text-white p-1">
           <.icon name="hero-magnifying-glass" />
         </button>
-        <input class="grow pl-2" type="text" name="search_input" placeholder="Search in project" />
+        <input
+          class="grow pl-2"
+          type="text"
+          name="search_input"
+          placeholder="Search in publication"
+        />
       </div>
     </form>
   </div>
-  <% category = Data.get_field_value(@doc, "category") %>
-  {cond do
-    @doc == :not_found ->
-      "Document not found in selected publication."
 
-    category == "Project" ->
-      DocumentComponents.project(%{
-        doc: @doc,
-        publication: @publication,
-        top_level_docs: @top_level_docs,
-        category_hierarchy: @category_hierarchy,
-        category_usage: @category_usage
-      })
+  <.document_heading :if={category != "Project"}>
+    <.document_link doc={@doc} />
+  </.document_heading>
 
-    category in @image_categories ->
-      DocumentComponents.image(%{
-        doc: @doc,
-        publication: @publication
-      })
-
-    true ->
-      DocumentComponents.generic(%{
-        doc: @doc,
-        ancestors: @ancestors,
-        publication: @publication,
-        focus: @focus
-      })
-  end}
+  <%= cond do %>
+    <% category == "Project" -> %>
+      <.live_component
+        id={"image-#{@doc.id}"}
+        module={FieldPublicationWeb.Presentation.Document.Project}
+        doc={@doc}
+        publication={@publication}
+      />
+    <% category in @image_categories -> %>
+      <.live_component
+        id={"image-#{@doc.id}"}
+        module={FieldPublicationWeb.Presentation.Document.Image}
+        doc={@doc}
+        publication={@publication}
+      />
+    <% category == "Type" -> %>
+      <.live_component
+        id={"type-#{@doc.id}"}
+        module={FieldPublicationWeb.Presentation.Document.Type}
+        doc={@doc}
+        publication={@publication}
+      />
+    <% category == "TypeCatalog" -> %>
+      <.live_component
+        id={"type-catalog-#{@doc.id}"}
+        module={FieldPublicationWeb.Presentation.Document.TypeCatalog}
+        doc={@doc}
+        publication={@publication}
+      />
+    <% @live_action in [:map_datasheet, :map_hierarchy, :map_context] -> %>
+      <.live_component
+        id={"datasheet-#{@doc.id}"}
+        module={FieldPublicationWeb.Presentation.Document.GenericMap}
+        doc={@doc}
+        publication={@publication}
+        live_action={@live_action}
+      />
+    <% true -> %>
+      <.live_component
+        id={"datasheet-#{@doc.id}"}
+        module={FieldPublicationWeb.Presentation.Document.GenericDatasheet}
+        doc={@doc}
+        publication={@publication}
+      />
+  <% end %>
 </div>

@@ -7,8 +7,8 @@ defmodule FieldHub.CouchServiceTest do
 
   use ExUnit.Case
 
-  @project "test"
-  @user_name "test_user"
+  @project "couch_service_test"
+  @user_name @project
   @user_password "test_password"
 
   @valid_credentials %Credentials{name: @user_name, password: @user_password}
@@ -42,6 +42,10 @@ defmodule FieldHub.CouchServiceTest do
 
     extra_project = "couch_test_extra_project"
 
+    on_exit(fn ->
+      TestHelper.remove_test_db_and_user(extra_project, extra_project)
+    end)
+
     databases = CouchService.get_all_databases()
     assert is_list(databases)
     initial_count = Enum.count(databases)
@@ -52,8 +56,6 @@ defmodule FieldHub.CouchServiceTest do
     assert is_list(databases)
     assert initial_count + 1 == Enum.count(databases)
     assert extra_project in databases
-
-    TestHelper.remove_test_db_and_user(extra_project, extra_project)
   end
 
   test "get_all_databases/0 does not return internal databases or databases without application user" do

@@ -16,8 +16,6 @@ defmodule FieldHubWeb.Live.ProjectShow do
     User
   }
 
-  require Logger
-
   def mount(%{"project" => project} = _params, %{"user_token" => user_token} = _session, socket) do
     # TODO: In newer Phoenix version use an `on_mount` plug. This check prevents direct unauthorized
     # access via websocket. In the normal application flow this will be unnesseary

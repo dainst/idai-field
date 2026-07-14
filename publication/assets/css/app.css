@@ -3,7 +3,6 @@
 
 @plugin "../js/heroicons.tailwind.plugin.js";
 
-
 /* This file is for your main application CSS */
 
 @font-face {
@@ -63,7 +62,6 @@ body {
 a.suppress-link-styling {
     color: black;
 }
-
 
 a.suppress-link-styling:hover {
     color: black;

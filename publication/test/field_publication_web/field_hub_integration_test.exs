@@ -7,7 +7,7 @@ defmodule FieldPublicationWeb.FieldHubIntegrationTest do
   """
 
   @core_database Application.compile_env(:field_publication, :core_database)
-  @test_project_name "field_hub_integration_test"
+  @test_project_identifier "field_hub_integration_test"
 
   alias FieldPublication.{
     CouchService,
@@ -30,12 +30,12 @@ defmodule FieldPublicationWeb.FieldHubIntegrationTest do
     FieldHubHelper.start()
     CouchService.put_database(@core_database)
 
-    Projects.put(%Project{}, %{"name" => @test_project_name})
+    Projects.put(%Project{}, %{"identifier" => @test_project_identifier})
 
-    project = Projects.get!(@test_project_name)
+    project = Projects.get!(@test_project_identifier)
 
     on_exit(fn ->
-      Publications.get(@test_project_name, Date.utc_today())
+      Publications.get(@test_project_identifier, Date.utc_today())
       |> case do
         {:ok, publication} ->
           Replication.stop(publication)
@@ -59,7 +59,7 @@ defmodule FieldPublicationWeb.FieldHubIntegrationTest do
     conn = log_in_user(conn, Application.get_env(:field_publication, :couchdb_admin_name))
 
     assert {:ok, live_process, _html} =
-             live(conn, ~p"/management/projects/#{@test_project_name}/publication/new")
+             live(conn, ~p"/management/projects/#{@test_project_identifier}/publication/new")
 
     pid = live_process.pid
     :erlang.trace(pid, true, [:receive])
@@ -70,7 +70,7 @@ defmodule FieldPublicationWeb.FieldHubIntegrationTest do
                source_url: FieldHubHelper.get_url(),
                source_user: FieldHubHelper.get_admin_name(),
                source_password: FieldHubHelper.get_admin_password(),
-               source_project_name: "testopolis",
+               source_project_identifier: "testopolis",
                delete_existing_publication: true
              }
            })
@@ -81,7 +81,7 @@ defmodule FieldPublicationWeb.FieldHubIntegrationTest do
     assert {:ok, live_process, html} = live(conn, publication_path)
 
     assert html =~
-             "Publication <span>draft </span>\n  &#39;#{Date.utc_today()}&#39; for project &#39;#{@test_project_name}&#39;"
+             "Publication <span>draft </span>\n  &#39;#{Date.utc_today()}&#39; for project &#39;#{@test_project_identifier}&#39;"
 
     assert_receive(
       {_publication_id, {:replication_stopped}},
@@ -90,10 +90,10 @@ defmodule FieldPublicationWeb.FieldHubIntegrationTest do
 
     %Publication{
       doc_type: "publication",
-      project_name: @test_project_name,
+      project_identifier: @test_project_identifier,
       drafted_by: "couch_admin",
       replication_logs: logs
-    } = Publications.get!(@test_project_name, "#{Date.utc_today()}")
+    } = Publications.get!(@test_project_identifier, "#{Date.utc_today()}")
 
     assert %LogEntry{
              # The rest would be something containing a date like: ""Replicating database for publication_test_project_a_<current date> by first replicating the database."
@@ -117,17 +117,17 @@ defmodule FieldPublicationWeb.FieldHubIntegrationTest do
     assert_receive {_publication_id, {:processing_stopped, :web_images}}, 1000 * 20
 
     %{image: image_uuids} =
-      FileService.list_raw_data_files(@test_project_name)
+      FileService.list_raw_data_files(@test_project_identifier)
 
     raw_images_count = Enum.count(image_uuids)
 
     web_files_count =
-      @test_project_name
+      @test_project_identifier
       |> FileService.list_web_image_files()
       |> Enum.count()
 
     tiles_count =
-      @test_project_name
+      @test_project_identifier
       |> FileService.list_tile_image_directories()
       |> Enum.count()
 

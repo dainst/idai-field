@@ -5,118 +5,154 @@ defmodule FieldPublicationWeb.Router do
   import FieldPublicationWeb.Gettext.Plug
 
   pipeline :browser do
-    plug :accepts, ["html"]
-    plug :fetch_session
-    plug :fetch_live_flash
-    plug :put_root_layout, html: {FieldPublicationWeb.Layouts, :root}
-    plug :protect_from_forgery
-    plug :put_secure_browser_headers
-    plug :fetch_current_user
-    plug :fetch_locale
+    plug(:accepts, ["html"])
+    plug(:fetch_session)
+    plug(:fetch_live_flash)
+    plug(:put_root_layout, html: {FieldPublicationWeb.Layouts, :root})
+    plug(:protect_from_forgery)
+    plug(:put_secure_browser_headers)
+    plug(:fetch_current_user)
+    plug(:fetch_locale)
   end
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug(:accepts, ["json"])
   end
 
   scope "/api/image" do
-    pipe_through :fetch_session
-    pipe_through :fetch_current_user
-    pipe_through :ensure_image_published
+    pipe_through(:fetch_session)
+    pipe_through(:fetch_current_user)
+    pipe_through(:ensure_image_published)
 
     scope "/iiif" do
       forward("/3", FieldPublicationWeb.Api.IIIFImage, %IIIFImagePlug.V3.Options{})
     end
 
-    get "/raw/:project_name/:uuid", FieldPublicationWeb.Api.Image, :raw
-    get "/tile/:project_name/:uuid/:z/:x/:y", FieldPublicationWeb.Api.Image, :tile
+    get("/raw/:project_identifier/:uuid", FieldPublicationWeb.Api.Image, :raw)
+    get("/tile/:project_identifier/:uuid/:z/:x/:y", FieldPublicationWeb.Api.Image, :tile)
   end
 
   scope "/api/json" do
-    get "/raw/:project_name/:draft_date/:uuid", FieldPublicationWeb.Api.JSON, :raw
-    get "/extended/:project_name/:draft_date/:uuid", FieldPublicationWeb.Api.JSON, :extended
+    pipe_through(:fetch_session)
+    pipe_through(:fetch_current_user)
+    pipe_through([:browser, :require_published_or_project_access])
+
+    get("/raw/:project_identifier/:draft_date/:uuid", FieldPublicationWeb.Api.JSON, :raw)
+
+    get(
+      "/extended/:project_identifier/:draft_date/:uuid",
+      FieldPublicationWeb.Api.JSON,
+      :extended
+    )
+
+    get(
+      "/geometry_feature_collections/:project_identifier/:draft_date",
+      FieldPublicationWeb.Api.JSON,
+      :geometry_feature_collections
+    )
   end
 
   # If user is already logged but tries to access '/log_in' we redirects to the user's
   # last known route or fall back on '/'.
   scope "/", FieldPublicationWeb do
-    pipe_through [:browser, :redirect_if_user_is_authenticated]
+    pipe_through([:browser, :redirect_if_user_is_authenticated])
 
     live_session :redirect_if_user_is_authenticated,
       on_mount: [{FieldPublicationWeb.UserAuth, :redirect_if_user_is_authenticated}] do
-      live "/log_in", UserLoginLive, :new
+      live("/log_in", UserLoginLive, :new)
     end
 
-    post "/log_in", UserSessionController, :create
+    post("/log_in", UserSessionController, :create)
   end
 
   # Routes that require an already logged in user.
   scope "/", FieldPublicationWeb do
-    pipe_through [:browser, :require_authenticated_user]
+    pipe_through([:browser, :require_authenticated_user])
 
     live_session :require_authenticated_user,
       on_mount: [{FieldPublicationWeb.UserAuth, :ensure_authenticated}] do
-      live "/management", Management.OverviewLive, :index
+      live("/management", Management.OverviewLive, :index)
     end
   end
 
   # Routes that require the admin user to be logged in.
   scope "/management", FieldPublicationWeb do
-    pipe_through [:browser, :require_administrator]
+    pipe_through([:browser, :require_administrator])
 
     live_session :require_administrator,
       on_mount: [{FieldPublicationWeb.UserAuth, :ensure_is_admin}] do
-      live "/users", Management.UserLive, :index
-      live "/users/new", Management.UserLive, :new
-      live "/users/:name/edit", Management.UserLive, :edit
+      live("/users", Management.UserLive, :index)
+      live("/users/new", Management.UserLive, :new)
+      live("/users/:name/edit", Management.UserLive, :edit)
 
-      live "/projects/new", Management.OverviewLive, :new_project
-      live "/projects/:project_id/edit", Management.OverviewLive, :edit_project
+      live("/projects/new", Management.OverviewLive, :new_project)
+      live("/projects/:project_identifier/edit", Management.OverviewLive, :edit_project)
 
-      live "/settings", Management.SettingsLive
+      live("/settings", Management.SettingsLive)
     end
   end
 
   # Routes that require a user with access to a specific project
   scope "/management", FieldPublicationWeb do
-    pipe_through [:browser, :require_project_access]
+    pipe_through([:browser, :require_project_access])
 
     live_session :require_project_access,
       on_mount: [
         {FieldPublicationWeb.UserAuth, :ensure_authenticated},
         {FieldPublicationWeb.UserAuth, :ensure_has_project_access}
       ] do
-      live "/projects/:project_id/publication/new",
-           Management.OverviewLive,
-           :new_publication
+      live(
+        "/projects/:project_identifier/publication/new",
+        Management.OverviewLive,
+        :new_publication
+      )
 
-      live "/projects/:project_id/publication/:draft_date", Management.PublicationLive
+      live("/projects/:project_identifier/publication/:draft_date", Management.PublicationLive)
     end
   end
 
   scope "/projects", FieldPublicationWeb do
-    pipe_through [:browser, :require_published_or_project_access]
+    pipe_through([:browser, :require_published_or_project_access])
 
     live_session :require_published_or_project_access,
       on_mount: [{FieldPublicationWeb.UserAuth, :ensure_project_published_or_project_access}] do
-      live "/:project_id", Presentation.DocumentLive
-      live "/:project_id/:draft_date", Presentation.DocumentLive
-      live "/:project_id/:draft_date/:uuid", Presentation.DocumentLive
+      live("/search/:project_identifier/:draft_date", Presentation.PublicationSearch)
+      live("/:project_identifier", Presentation.DocumentLive)
+      live("/:project_identifier/:draft_date", Presentation.DocumentLive)
+      live("/:project_identifier/:draft_date/:uuid", Presentation.DocumentLive)
+
+      live(
+        "/:project_identifier/:draft_date/:uuid/map",
+        Presentation.DocumentLive,
+        :map_datasheet
+      )
+
+      live(
+        "/:project_identifier/:draft_date/:uuid/map/hierarchy",
+        Presentation.DocumentLive,
+        :map_hierarchy
+      )
+
+      live(
+        "/:project_identifier/:draft_date/:uuid/map/context",
+        Presentation.DocumentLive,
+        :map_context
+      )
     end
   end
 
   # Routes without authentication required.
   scope "/", FieldPublicationWeb do
-    pipe_through [:browser]
+    pipe_through([:browser])
 
-    get "/select_locale", UILanguageController, :selection
-    delete "/log_out", UserSessionController, :delete
+    get("/select_locale", UILanguageController, :selection)
+    delete("/log_out", UserSessionController, :delete)
 
     live_session :mount_user,
       on_mount: [{FieldPublicationWeb.UserAuth, :mount_current_user}] do
-      live "/contact", ContactAndImprintLive
-      live "/search", Presentation.SearchLive
-      live "/", Presentation.HomeLive
+      live("/contact", ContactAndImprintLive)
+      live("/search", Presentation.SearchLive)
+      live("/", Presentation.HomeLive)
     end
   end
 
@@ -130,10 +166,10 @@ defmodule FieldPublicationWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/dev" do
-      pipe_through :browser
+      pipe_through(:browser)
 
-      live_dashboard "/dashboard", metrics: FieldPublicationWeb.Telemetry
-      forward "/mailbox", Plug.Swoosh.MailboxPreview
+      live_dashboard("/dashboard", metrics: FieldPublicationWeb.Telemetry)
+      forward("/mailbox", Plug.Swoosh.MailboxPreview)
     end
   end
 end

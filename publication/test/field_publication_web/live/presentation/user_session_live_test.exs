@@ -15,15 +15,15 @@ defmodule FieldPublicationWeb.Presentation.UserSessionLiveTest do
   import Phoenix.LiveViewTest
   @core_database Application.compile_env(:field_publication, :core_database)
   @cache_name Application.compile_env(:field_publication, :user_tokens_cache_name)
-  @test_project_name "test_project_a"
+  @test_project_identifier "test_project_a"
 
   setup_all %{} do
     CouchService.put_database(@core_database)
 
-    {project, publication} = ProjectSeed.start(@test_project_name, false)
+    {project, publication} = ProjectSeed.start(@test_project_identifier, false)
 
     on_exit(fn ->
-      Projects.get(@test_project_name)
+      Projects.get(@test_project_identifier)
       |> case do
         {:ok, %Project{} = project} ->
           Projects.delete(project)

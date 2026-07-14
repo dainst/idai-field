@@ -9,17 +9,16 @@ defmodule FieldPublication.Publications.Data do
   `FieldPublication.Publications.Data.Document` struct definition below.
   """
 
-  require FieldPublicationWeb.Translate
   require Logger
 
   alias FieldPublication.{
     CouchService,
+    FileService,
     Publications,
     Publications.Data.Document
   }
 
   alias FieldPublication.DatabaseSchema.{
-    DataHierarchy,
     DataIssues,
     DataPreview,
     LogEntry,
@@ -30,11 +29,11 @@ defmodule FieldPublication.Publications.Data do
 
   defmodule Document do
     @derive Jason.Encoder
-    @enforce_keys [:id, :identifier, :category, :project_key, :publication_draft_date]
+    @enforce_keys [:id, :identifier, :category, :project_identifier, :publication_draft_date]
     defstruct [
       :id,
       :identifier,
-      :project_key,
+      :project_identifier,
       :publication_draft_date,
       :category,
       :geometry,
@@ -71,11 +70,15 @@ defmodule FieldPublication.Publications.Data do
     defstruct [:name, :value, :labels, :value_labels, :input_type]
   end
 
+  @report_key "meta_database_creation"
+
+  def report_key(), do: @report_key
+
   def document_map_to_struct(map) do
     %Document{
       id: map["id"],
       identifier: map["identifier"],
-      project_key: map["project_key"],
+      project_identifier: map["project_identifier"],
       publication_draft_date: map["publication_draft_date"],
       description: map["description"],
       category: %Category{
@@ -146,17 +149,14 @@ defmodule FieldPublication.Publications.Data do
   end
 
   def recreate_meta_database(%Publication{database: db} = publication) do
-    report_key = "meta_database_creation"
-
     {_, meta_db_name} = create_meta_database(publication)
 
     CouchService.get_document_stream(
       %{
         selector: %{
           "$or": [
-            %{doc_type: "hierarchy"},
             %{doc_type: "preview"},
-            %{entries: %{"$elemMatch": %{reported_by: report_key}}}
+            %{entries: %{"$elemMatch": %{reported_by: @report_key}}}
           ]
         }
       },
@@ -172,40 +172,6 @@ defmodule FieldPublication.Publications.Data do
     |> Stream.chunk_every(10000)
     |> Enum.each(fn doc_list ->
       CouchService.post_documents(doc_list, meta_db_name)
-    end)
-
-    hierarchy_mapping = generate_hierarchy_mapping(publication)
-
-    hierarchy_documents =
-      hierarchy_mapping
-      |> Enum.map(fn {uuid, %{parent: parent_uuid, children: children}} ->
-        DataHierarchy.create(uuid, parent_uuid, children)
-      end)
-      |> Enum.filter(fn
-        {:ok, _doc} ->
-          true
-
-        {:error, changeset} ->
-          report_data_issue(
-            Ecto.Changeset.get_field(changeset, :uuid),
-            LogEntry.create(%{
-              type: "invalid_document",
-              reported_by: report_key,
-              severity: :error,
-              message: inspect(changeset)
-            }),
-            publication
-          )
-
-          Logger.error("Failed to create hierarchy document:")
-          Logger.error(inspect(changeset))
-          false
-      end)
-      |> Enum.map(fn {:ok, doc} -> doc end)
-
-    Stream.chunk_every(hierarchy_documents, 2000)
-    |> Enum.each(fn batch ->
-      CouchService.post_documents(batch, meta_db_name)
     end)
 
     config = Publications.get_configuration(publication)
@@ -224,7 +190,7 @@ defmodule FieldPublication.Publications.Data do
           other["_id"],
           LogEntry.create(%{
             type: "invalid_document",
-            reported_by: report_key,
+            reported_by: @report_key,
             severity: :error,
             message: "Invalid document for preview creation."
           }),
@@ -251,7 +217,7 @@ defmodule FieldPublication.Publications.Data do
           raw_doc["_id"],
           LogEntry.create(%{
             type: "invalid_document",
-            reported_by: report_key,
+            reported_by: @report_key,
             severity: :error,
             message: inspect(error)
           }),
@@ -343,8 +309,8 @@ defmodule FieldPublication.Publications.Data do
 
       # Update or initialize self
       acc =
-        Map.update(acc, doc["_id"], %{children: [], parent: parent_uuid}, fn existing ->
-          Map.put(existing, :parent, parent_uuid)
+        Map.update(acc, doc["_id"], %{"children" => [], "parent" => parent_uuid}, fn existing ->
+          Map.put(existing, "parent", parent_uuid)
         end)
 
       # Update or initialize the parent
@@ -352,11 +318,11 @@ defmodule FieldPublication.Publications.Data do
         Map.update(
           acc,
           parent_uuid,
-          %{children: [uuid], parent: nil},
+          %{"children" => [uuid], "parent" => nil},
           fn %{
-               children: existing_children
+               "children" => existing_children
              } = existing ->
-            Map.put(existing, :children, existing_children ++ [uuid])
+            Map.put(existing, "children", existing_children ++ [uuid])
           end
         )
       else
@@ -554,6 +520,198 @@ defmodule FieldPublication.Publications.Data do
      }}
   end
 
+  def list_with_geometries(%Publication{} = publication) do
+    db_name = get_meta_database_name(publication)
+
+    CouchService.get_document_stream(
+      %{
+        selector: %{"preview.geometry": %{"$ne": nil}},
+        use_index: "previews-with-geometry-index"
+      },
+      db_name
+    )
+    |> Stream.map(fn %{"preview" => preview} ->
+      preview
+    end)
+    |> Stream.map(&document_map_to_struct/1)
+  end
+
+  def create_geometry_feature_collections(publication) do
+    hierarchy = get_document_hierarchy(publication)
+
+    feature_collections =
+      list_with_geometries(publication)
+      |> Enum.map(
+        &create_map_feature(
+          &1,
+          hierarchy,
+          publication
+        )
+      )
+      |> Enum.reduce(%{}, fn {:ok, {category_labels, category_color, feature}}, collections ->
+        category = feature.properties.category
+
+        updated_collections =
+          case Map.get(collections, category) do
+            nil ->
+              # Create a new feature collection for this category with the first feature
+              # as its first member.
+              Map.put(collections, category, %{
+                type: "FeatureCollection",
+                properties: %{
+                  category: category,
+                  category_label: category_labels,
+                  category_color: category_color
+                },
+                features: [feature]
+              })
+
+            existing_collection ->
+              # Otherwise add the feature to the existing collection.
+              updated_collection =
+                Map.update!(existing_collection, :features, fn existing_features ->
+                  existing_features ++ [feature]
+                end)
+
+              Map.put(collections, category, updated_collection)
+          end
+
+        updated_collections
+      end)
+      |> Map.values()
+
+    FieldPublication.FileService.write_geometry_collections(
+      publication,
+      feature_collections
+    )
+  end
+
+  def get_map_feature_collection(documents, %Publication{} = publication)
+      when is_list(documents) do
+    hierarchy = get_document_hierarchy(publication)
+
+    {label_info, features} =
+      documents
+      |> Stream.map(fn %Document{} = document ->
+        create_map_feature(document, hierarchy, publication)
+      end)
+      |> Stream.reject(fn
+        {:error, _} -> true
+        _ -> false
+      end)
+      |> Enum.reduce(
+        {%{}, []},
+        fn {
+             :ok,
+             {category_labels, %{properties: %{category: category}} = feature}
+           },
+           {existing_labels_map, existing_feature_list} ->
+          updated_labels = Map.put_new(existing_labels_map, category, category_labels)
+          updated_features = existing_feature_list ++ [feature]
+
+          {updated_labels, updated_features}
+        end
+      )
+
+    %{
+      type: "FeatureCollection",
+      properties: %{
+        category_labels: label_info
+      },
+      features: features
+    }
+  end
+
+  def create_map_feature(
+        %Document{
+          geometry: nil
+        },
+        _hierarchy,
+        _publication
+      ) do
+    {:error, :no_geometry}
+  end
+
+  def create_map_feature(
+        %Document{
+          category: %Category{color: color, labels: category_labels, name: category_key},
+          id: uuid,
+          description: description,
+          identifier: identifier,
+          geometry: geometry
+        },
+        hierarchy,
+        publication
+      ) do
+    description =
+      case description do
+        nil ->
+          %{}
+
+        value when is_binary(value) ->
+          # Using the same key as Field Desktop, that is why it is no written with underscore.
+          %{unspecifiedLanguage: value}
+
+        values when is_map(values) ->
+          values
+      end
+
+    {
+      :ok,
+      {
+        category_labels,
+        color,
+        %{
+          type: "Feature",
+          geometry: geometry,
+          properties: %{
+            type: geometry["type"],
+            uuid: uuid,
+            identifier: identifier,
+            description: description,
+            category: category_key,
+            parent: uuid_of_next_ancestor_with_geometry(uuid, hierarchy, publication)
+          }
+        }
+      }
+    }
+  end
+
+  def next_ancestor_with_geometry(uuid, hierarchy, publication) do
+    Map.get(hierarchy, uuid)
+    |> case do
+      %{"parent" => nil} ->
+        nil
+
+      %{"parent" => parent_uuid} ->
+        get_preview_documents([parent_uuid], publication)
+
+      nil ->
+        nil
+    end
+    |> case do
+      [%Document{id: parent_uuid, geometry: nil}] ->
+        next_ancestor_with_geometry(parent_uuid, hierarchy, publication)
+
+      [%Document{} = parent_with_geometry] ->
+        parent_with_geometry
+
+      _ ->
+        nil
+    end
+  end
+
+  def uuid_of_next_ancestor_with_geometry(uuid, hierarchy, publication) do
+    next_ancestor_with_geometry(uuid, hierarchy, publication)
+    |> case do
+      %Document{id: uuid} ->
+        uuid
+
+      _ ->
+        nil
+    end
+  end
+
   def get_geometries_by_category(%Publication{} = publication) do
     color_mapping =
       publication
@@ -636,13 +794,34 @@ defmodule FieldPublication.Publications.Data do
     end
   end
 
-  def get_doc_count(%Publication{database: db}) do
-    CouchService.get_database(db)
-    |> then(fn {:ok, %{status: 200, body: body}} ->
-      body
-      |> Jason.decode!()
-      |> Map.get("doc_count", 0)
-    end)
+  def get_doc_count(%Publication{database: db}, include_design_documents? \\ false) do
+    document_count_overall =
+      CouchService.get_database(db)
+      |> case do
+        {:ok, %{status: 200, body: body}} ->
+          body
+          |> Jason.decode!()
+          |> Map.get("doc_count", 0)
+
+        _ ->
+          0
+      end
+
+    design_document_count =
+      CouchService.all_design_docs(db)
+      |> case do
+        {:ok, %{status: 200, body: body}} ->
+          body
+          |> Jason.decode!()
+          |> Map.get("total_rows", 0)
+
+        _ ->
+          0
+      end
+
+    if include_design_documents?,
+      do: document_count_overall,
+      else: document_count_overall - design_document_count
   end
 
   def get_raw_document(uuid, %Publication{database: db}) do
@@ -707,15 +886,28 @@ defmodule FieldPublication.Publications.Data do
   end
 
   def get_document_hierarchy(%Publication{} = publication) do
-    cache_database = get_meta_database_name(publication)
-    hierarchy_cache = "hierarchy_#{Publications.get_doc_id(publication)}"
+    pub_id = Publications.get_doc_id(publication)
+    hierarchy_cache = "hierarchy_#{pub_id}"
 
     Cachex.get(@document_cache_name, hierarchy_cache)
     |> case do
       {:ok, nil} ->
-        Logger.debug("No document cache for hierarchy.")
+        path = FileService.publication_hierarchy_path(publication)
 
-        hierarchy = DataHierarchy.list(cache_database)
+        hierarchy =
+          if File.exists?(path) do
+            Logger.debug("No active document cache for `#{pub_id}` hierarchy loading from file.")
+
+            path
+            |> File.read!()
+            |> JSON.decode!()
+          else
+            Logger.debug("No active document cache for `#{pub_id}` hierarchy generating new one.")
+            new = generate_hierarchy_mapping(publication)
+            FileService.write_hierarchy(publication, new)
+            new
+          end
+
         Cachex.put(@document_cache_name, hierarchy_cache, hierarchy, ttl: 1000 * 60 * 60 * 24 * 7)
 
         hierarchy
@@ -761,66 +953,6 @@ defmodule FieldPublication.Publications.Data do
       }
 
     run_query(query, database)
-  end
-
-  def get_doc_breakdown_by_category(%Publication{database: database} = publication) do
-    configuration =
-      Publications.get_configuration(publication)
-
-    %{
-      selector: %{},
-      fields: [
-        "resource.category",
-        "resource.geometry"
-      ]
-    }
-    |> run_query(database)
-    |> Stream.reject(fn %{
-                          "resource" => %{
-                            "category" => category_key
-                          }
-                        } ->
-      category_key in ["Project", "Configuration"]
-    end)
-    |> Enum.reduce(
-      %{},
-      fn %{
-           "resource" =>
-             %{
-               "category" => category_key
-             } = resource
-         },
-         acc ->
-        accumulated_category_data =
-          Map.get(
-            acc,
-            category_key,
-            Map.merge(
-              %{geometries: []},
-              configuration
-              |> search_category_tree(category_key)
-              |> Map.get("item")
-              |> extend_category(resource)
-            )
-          )
-
-        accumulated_category_data =
-          Map.get(resource, "geometry")
-          |> case do
-            nil ->
-              accumulated_category_data
-
-            geometry ->
-              Map.put(
-                accumulated_category_data,
-                :geometries,
-                accumulated_category_data.geometries ++ [geometry]
-              )
-          end
-
-        Map.put(acc, category_key, accumulated_category_data)
-      end
-    )
   end
 
   def get_doc_stream_for_georeferenced(%Publication{database: database}) do
@@ -949,7 +1081,7 @@ defmodule FieldPublication.Publications.Data do
           %Document{
             id: resource["id"],
             identifier: resource["identifier"],
-            project_key: publication.project_name,
+            project_identifier: publication.project_identifier,
             publication_draft_date: publication.draft_date,
             category: extend_category(category_configuration["item"], resource),
             groups: extend_field_groups(category_configuration["item"], resource),
@@ -1089,6 +1221,7 @@ defmodule FieldPublication.Publications.Data do
       relations
       |> Map.values()
       |> List.flatten()
+      |> Enum.uniq()
       |> get_preview_documents(publication)
 
     # ...then sort them into their respective relation groups, including the translated labels for those groups.
@@ -1136,8 +1269,9 @@ defmodule FieldPublication.Publications.Data do
         end)
         |> Enum.into(%{}),
       docs:
-        get_document_hierarchy(uuid, publication)
-        |> Map.get("children")
+        uuid
+        |> get_document_hierarchy(publication)
+        |> Map.get("children", [])
         |> get_preview_documents(publication)
     }
   end

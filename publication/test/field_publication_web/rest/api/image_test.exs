@@ -13,15 +13,15 @@ defmodule FieldPublicationWeb.Rest.Api.ImageTest do
   alias FieldPublication.Test.ProjectSeed
 
   @core_database Application.compile_env(:field_publication, :core_database)
-  @test_project_name "test_project_a"
+  @test_project_identifier "test_project_a"
 
   setup_all %{} do
     CouchService.put_database(@core_database)
 
-    {project, publication} = ProjectSeed.start(@test_project_name)
+    {project, publication} = ProjectSeed.start(@test_project_identifier)
 
     on_exit(fn ->
-      Projects.get(@test_project_name)
+      Projects.get(@test_project_identifier)
       |> case do
         {:ok, %Project{} = project} ->
           Projects.delete(project)
@@ -57,7 +57,7 @@ defmodule FieldPublicationWeb.Rest.Api.ImageTest do
     } =
       get(
         conn,
-        "/api/image/iiif/3/#{project.name}%2F#{uuid}/info.json"
+        "/api/image/iiif/3/#{project.identifier}%2F#{uuid}/info.json"
       )
       |> json_response(200)
 

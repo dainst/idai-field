@@ -78,9 +78,9 @@
 <%= if @projects != [] do %>
   <section class="grid lg:grid-cols-2 2xl:grid-cols-3">
     <%= for %{project: project, publications: publications, search_aliased_publication: search_aliased_publication} <- @projects do %>
-      <article class="border border-primary m-4" id={"project-panel-#{project.name}"}>
+      <article class="border border-primary m-4" id={"project-panel-#{project.identifier}"}>
         <h3 class="bg-panel p-4 m-2 text-center text-lg">
-          Project '{project.name}'
+          Project '{project.identifier}'
         </h3>
 
         <div class="ml-4 mr-4 grid grid-cols-2">
@@ -88,14 +88,14 @@
             <p class="font-semibold">Actions</p>
             <ul class="list-disc list-inside">
               <li>
-                <.link navigate={~p"/management/projects/#{project.name}/publication/new"}>
+                <.link navigate={~p"/management/projects/#{project.identifier}/publication/new"}>
                   Draft new publication
                 </.link>
               </li>
               <%= if FieldPublication.Users.is_admin?(@current_user) do %>
                 <li>
                   <.link
-                    navigate={~p"/management/projects/#{project.name}/edit"}
+                    navigate={~p"/management/projects/#{project.identifier}/edit"}
                     phx-click={JS.push_focus()}
                   >
                     Edit
@@ -104,8 +104,8 @@
                 <li>
                   <.link
                     phx-click={
-                      JS.push("delete", value: %{project_id: project.name})
-                      |> hide("##{project.name}")
+                      JS.push("delete", value: %{project_id: project.identifier})
+                      |> hide("##{project.identifier}")
                     }
                     data-confirm="Are you sure?"
                   >
@@ -183,12 +183,12 @@
                             phx-click={
                               JS.push("delete-publication",
                                 value: %{
-                                  project_key: publication.project_name,
+                                  project_identifier: publication.project_identifier,
                                   draft_date: publication.draft_date
                                 }
                               )
                             }
-                            data-confirm={"Are you sure you want to delete the publication created on #{publication.draft_date} for '#{publication.project_name}'?"}
+                            data-confirm={"Are you sure you want to delete the publication created on #{publication.draft_date} for '#{publication.project_identifier}'?"}
                           >
                             Delete
                           </.link>
@@ -232,14 +232,14 @@
                       <%= case search_aliased_publication do %>
                         <% {:ok, aliased_pub} when aliased_pub.draft_date == publication.draft_date -> %>
                           <.link navigate={
-                            ~p"/search?#{%{filters: [project_key: publication.project_name]}}"
+                            ~p"/search?#{%{filters: [project_identifier: publication.project_identifier]}}"
                           }>
                             <.icon name="hero-check" />
                           </.link>
                         <% _ -> %>
                           <.link
                             phx-click="set_project_alias"
-                            phx-value-project_name={publication.project_name}
+                            phx-value-project_identifier={publication.project_identifier}
                             phx-value-draft_date={publication.draft_date}
                           >
                             Set
@@ -274,7 +274,7 @@
   <%= if FieldPublication.Users.is_admin?(@current_user) do %>
     <.live_component
       module={FieldPublicationWeb.Management.Modals.ProjectFormComponent}
-      id={@project.name || :new}
+      id={@project.identifier || :new}
       title={@page_title}
       action={@live_action}
       project={@project}
@@ -294,7 +294,7 @@
     module={FieldPublicationWeb.Management.Modals.ReplicationFormComponent}
     id="publication_draft"
     action={:new}
-    project_name={@project.name}
+    project_identifier={@project.identifier}
     patch={~p"/management"}
     current_user={@current_user}
   />

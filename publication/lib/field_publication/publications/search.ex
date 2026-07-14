@@ -19,6 +19,8 @@ defmodule FieldPublication.Publications.Search do
 
   @data_report_key "publications_search"
 
+  def report_key(), do: @data_report_key
+
   defmodule SearchDocument do
     @moduledoc """
     Defines the data struct that is used for research data in the OpenSearch index.
@@ -29,7 +31,7 @@ defmodule FieldPublication.Publications.Search do
       :id,
       :identifier,
       :category,
-      :project_key,
+      :project_identifier,
       :publication_draft_date,
       :configuration_based_field_mappings,
       :full_doc,
@@ -39,10 +41,11 @@ defmodule FieldPublication.Publications.Search do
       :id,
       :identifier,
       :category,
-      :project_key,
+      :project_identifier,
       :publication_draft_date,
       :configuration_based_field_mappings,
       :geometry,
+      :parent_geometry,
       :full_doc,
       :full_doc_as_text
     ]
@@ -53,7 +56,7 @@ defmodule FieldPublication.Publications.Search do
       id: map["id"],
       identifier: map["identifier"],
       category: map["category"],
-      project_key: map["project_key"],
+      project_identifier: map["project_identifier"],
       publication_draft_date: map["publication_draft_date"],
       configuration_based_field_mappings: map["configuration_based_field_mappings"] || %{},
       full_doc: Data.document_map_to_struct(map["full_doc"]),
@@ -61,155 +64,176 @@ defmodule FieldPublication.Publications.Search do
     }
   end
 
-  def initialize_search_indices(%Publication{} = publication) do
-    publication_alias = get_search_alias(publication)
+  def create_empty_indices(%Publication{} = publication, delete_existing? \\ false) do
+    index_names = get_index_names(publication)
 
-    index_a = "#{publication_alias}__a__"
-    index_b = "#{publication_alias}__b__"
-
-    project_alias =
-      publication.project_name
-      |> Projects.get!()
-      |> get_search_alias()
-
-    aliased_project_index =
-      project_alias
-      |> OpenSearchService.get_indices_behind_alias()
-      |> List.first()
-
-    if aliased_project_index in [index_a, index_b] do
-      OpenSearchService.remove_alias(
-        aliased_project_index,
-        project_alias
-      )
-
-      # TODO?: As a fallback we could search all publications associated to the project,
-      # pick the most current one and use that one as the project alias.
+    if delete_existing? do
+      delete_indices(publication)
     end
 
-    [ok: _, ok: _] =
-      Enum.map([index_a, index_b], &OpenSearchService.delete_index/1)
+    index_names
+    |> Enum.map(fn name ->
+      {name, OpenSearchService.create_index(name)}
+    end)
+    |> Enum.map(fn
+      {name, {:ok, %{status: 400}}} ->
+        {
+          :already_exists,
+          name
+        }
 
-    [ok: %{status: 200}, ok: %{status: 200}] =
-      Enum.map([index_a, index_b], &OpenSearchService.create_index/1)
-
-    OpenSearchService.set_alias(index_a, publication_alias)
+      {name, {:ok, %{status: 200}}} ->
+        {:created, name}
+    end)
   end
 
-  def delete_search_indices(%Publication{} = publication) do
-    publication_alias = get_search_alias(publication)
+  def delete_indices(%Publication{} = publication) do
+    publication
+    |> get_index_names()
+    |> Enum.map(fn name ->
+      {
+        name,
+        OpenSearchService.delete_index(name)
+      }
+    end)
+    |> Enum.map(fn
+      {name, {:ok, %{status: 200}}} ->
+        {:deleted, name}
 
-    OpenSearchService.delete_index("#{publication_alias}__a__")
-    OpenSearchService.delete_index("#{publication_alias}__b__")
-
-    :ok
+      {name, {:ok, %{status: 404}}} ->
+        {:not_found, name}
+    end)
   end
 
-  def switch_active_alias(%Publication{} = publication) do
-    publication_alias = get_search_alias(publication)
+  def toggle_publication_alias(%Publication{} = publication) do
+    alias_name = get_alias(publication)
+    publication_index_names = get_index_names(publication)
 
-    old_index =
-      publication_alias
+    {next_index, old_index} =
+      publication
+      |> get_alias()
       |> OpenSearchService.get_indices_behind_alias()
-      |> List.first("#{publication_alias}__a__")
+      |> case do
+        [] ->
+          # The alias is currently not setup, pick the first index as next index.
+          {List.first(publication_index_names), nil}
 
-    next_index =
-      if String.ends_with?(old_index, "__a__") do
-        "#{publication_alias}__b__"
-      else
-        "#{publication_alias}__a__"
+        [value] when is_binary(value) ->
+          # The alias is in use, pick the currently unused one as next index.
+          {Enum.find(publication_index_names, fn name -> name != value end), value}
       end
 
-    OpenSearchService.remove_alias(old_index, publication_alias)
-    OpenSearchService.set_alias(next_index, publication_alias)
-
-    project_alias =
-      publication.project_name
-      |> Projects.get!()
-      |> get_search_alias()
-
-    if project_alias
-       |> OpenSearchService.get_indices_behind_alias()
-       |> List.first() == old_index do
-      OpenSearchService.remove_alias(old_index, project_alias)
-      OpenSearchService.set_alias(next_index, project_alias)
+    if old_index do
+      OpenSearchService.remove_alias(old_index, alias_name)
     end
 
-    :ok
-  end
+    OpenSearchService.set_alias(next_index, alias_name)
 
-  def reset_inactive_index(%Publication{} = publication, mapping) do
-    publication_alias = get_search_alias(publication)
+    # If this publication is also used in the system wide search via the project alias, switch that
+    # alias too.
+    project_alias =
+      publication.project_identifier
+      |> Projects.get!()
+      |> get_alias()
 
-    inactive_index =
-      publication_alias
-      |> OpenSearchService.get_indices_behind_alias()
-      |> List.first()
-      |> invert_search_index_name()
+    project_alias
+    |> OpenSearchService.get_indices_behind_alias()
+    |> case do
+      [index_name] when index_name != nil and index_name == old_index ->
+        OpenSearchService.set_alias(next_index, project_alias)
 
-    OpenSearchService.delete_index(inactive_index)
-    OpenSearchService.create_index(inactive_index, mapping)
+      _ ->
+        :ok
+    end
+
+    next_index
   end
 
   def set_project_alias(%Publication{} = publication) do
-    publication_alias = get_search_alias(publication)
+    publication
+    |> get_alias()
+    |> OpenSearchService.get_indices_behind_alias()
+    |> case do
+      [] ->
+        {:error, :no_active_publication_alias}
 
-    project_alias =
-      publication.project_name
-      |> Projects.get!()
-      |> get_search_alias()
+      [index_name] when is_binary(index_name) ->
+        project_alias =
+          publication.project_identifier
+          |> Projects.get!()
+          |> get_alias()
 
-    old_index =
-      project_alias
-      |> OpenSearchService.get_indices_behind_alias()
-      |> List.first()
+        OpenSearchService.set_alias(index_name, project_alias)
 
-    next_index =
-      publication_alias
-      |> OpenSearchService.get_indices_behind_alias()
-      |> List.first()
-
-    unless old_index == nil do
-      OpenSearchService.remove_alias(old_index, project_alias)
+        {:ok, project_alias}
     end
-
-    OpenSearchService.set_alias(next_index, project_alias)
   end
 
-  def clear_project_alias(%Publication{} = publication) do
-    project_alias =
-      publication.project_name
-      |> Projects.get!()
-      |> get_search_alias()
+  def remove_project_alias(%Publication{} = publication) do
+    publication
+    |> get_alias()
+    |> OpenSearchService.get_indices_behind_alias()
+    |> case do
+      [] ->
+        {:ok, :no_active_project_alias}
+
+      [index_name] when is_binary(index_name) ->
+        project_alias =
+          publication.project_identifier
+          |> Projects.get!()
+          |> get_alias()
+
+        OpenSearchService.set_alias(index_name, project_alias)
+
+        {:ok, project_alias}
+    end
+  end
+
+  def setup_index(%Publication{} = publication, mapping, active_alias? \\ false)
+      when is_map(mapping) do
+    alias_name = get_alias(publication)
+    publication_index_names = get_index_names(publication)
 
     index =
-      project_alias
+      alias_name
       |> OpenSearchService.get_indices_behind_alias()
-      |> List.first()
+      |> case do
+        [] ->
+          List.first(publication_index_names)
 
-    OpenSearchService.remove_alias(index, project_alias)
+        [aliased_index_name] when is_binary(aliased_index_name) ->
+          Enum.find(publication_index_names, fn name ->
+            name == aliased_index_name == active_alias?
+          end)
+      end
+
+    OpenSearchService.delete_index(index)
+    OpenSearchService.create_index(index, mapping)
+
+    index
+  end
+
+  defp get_index_names(%Publication{} = publication) do
+    publication_alias = get_alias(publication)
+    ["#{publication_alias}__a__", "#{publication_alias}__b__"]
+  end
+
+  def get_alias(%Publication{} = publication) do
+    publication
+    |> Publications.get_doc_id()
+    |> OpenSearchService.encode_chars()
+  end
+
+  def get_alias(%Project{} = project) do
+    project
+    |> Projects.get_document_id()
+    |> OpenSearchService.encode_chars()
   end
 
   def get_doc_count(%Publication{} = publication) do
     publication
     |> get_search_alias()
     |> OpenSearchService.get_doc_count()
-  end
-
-  def index_documents(docs, %Publication{} = publication, inactive_alias \\ true) do
-    index =
-      get_search_alias(publication)
-      |> OpenSearchService.get_indices_behind_alias()
-      |> List.first()
-
-    index =
-      if inactive_alias do
-        invert_search_index_name(index)
-      else
-        index
-      end
-
-    OpenSearchService.insert_documents(docs, index)
   end
 
   def get_category_count(%Publication{} = pub) do
@@ -242,7 +266,16 @@ defmodule FieldPublication.Publications.Search do
     end
   end
 
-  def search(q, filter, from \\ 0, size \\ 100) do
+  def search(q, filter, geometry_filter, from \\ 0, size \\ 100, publication \\ nil) do
+    index =
+      if publication == nil do
+        "project*"
+      else
+        get_search_alias(publication)
+        |> OpenSearchService.get_indices_behind_alias()
+        |> List.first()
+      end
+
     q =
       case q do
         "" ->
@@ -278,7 +311,7 @@ defmodule FieldPublication.Publications.Search do
             ]
           }
         },
-        aggs: generate_aggregations_queries(),
+        aggs: generate_aggregations_queries(index),
         from: from,
         size: size
       }
@@ -286,13 +319,48 @@ defmodule FieldPublication.Publications.Search do
     filter_params =
       Enum.map(filter, fn {key, value} ->
         cond do
-          key in ["category", "project_key"] ->
+          key in ["category", "project_identifier"] ->
             %{term: %{key => value}}
 
           true ->
             %{term: %{"configuration_based_field_mappings.#{key}" => value}}
         end
       end)
+
+    filter_params =
+      if geometry_filter do
+        filter_params ++
+          [
+            %{
+              bool: %{
+                should: [
+                  %{
+                    geo_shape: %{
+                      geometry: %{
+                        shape: %{
+                          type: "polygon",
+                          coordinates: [geometry_filter]
+                        }
+                      }
+                    }
+                  },
+                  %{
+                    geo_shape: %{
+                      parent_geometry: %{
+                        shape: %{
+                          type: "polygon",
+                          coordinates: [geometry_filter]
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+      else
+        filter_params
+      end
 
     payload =
       if Enum.empty?(filter_params) do
@@ -303,7 +371,7 @@ defmodule FieldPublication.Publications.Search do
         put_in(payload.query.bool, boolean_query)
       end
 
-    OpenSearchService.run_query("project_*", payload)
+    OpenSearchService.run_query(index, payload)
     |> case do
       {:ok, %{status: 200, body: body}} ->
         body = Jason.decode!(body)
@@ -319,7 +387,10 @@ defmodule FieldPublication.Publications.Search do
             body
             |> Map.get("aggregations", %{})
             |> Stream.map(&parse_aggregation_result/1)
-            |> Stream.reject(fn {_field, buckets} -> buckets == [] end)
+            |> Stream.reject(fn {_field, buckets} ->
+              # Ignore empty buckets or ones that have only one entry.
+              buckets == [] || Enum.count(buckets) == 1
+            end)
             |> Enum.sort_by(
               # Sorts the aggregations by descending size of all bucket entries
               fn {_field, buckets} ->
@@ -331,8 +402,8 @@ defmodule FieldPublication.Publications.Search do
     end
   end
 
-  defp generate_aggregations_queries() do
-    {:ok, %{status: 200, body: body}} = OpenSearchService.get_mapping("project*")
+  defp generate_aggregations_queries(index) do
+    {:ok, %{status: 200, body: body}} = OpenSearchService.get_mapping(index)
 
     _keyword_fields =
       Jason.decode!(body)
@@ -376,7 +447,7 @@ defmodule FieldPublication.Publications.Search do
       end)
       |> Stream.map(fn key ->
         cond do
-          key in ["category", "project_key"] ->
+          key in ["category", "project_identifier"] ->
             {key, %{terms: %{field: key, size: 200}}}
 
           true ->
@@ -416,7 +487,7 @@ defmodule FieldPublication.Publications.Search do
         type: "keyword",
         store: true
       },
-      project_key: %{
+      project_identifier: %{
         type: "keyword",
         store: true
       },
@@ -425,6 +496,10 @@ defmodule FieldPublication.Publications.Search do
         store: true
       },
       geometry: %{
+        type: "geo_shape",
+        store: true
+      },
+      parent_geometry: %{
         type: "geo_shape",
         store: true
       },
@@ -511,6 +586,29 @@ defmodule FieldPublication.Publications.Search do
           val
       end
 
+    hierarchy = Data.get_document_hierarchy(publication)
+
+    parent_geo =
+      Data.next_ancestor_with_geometry(res["id"], hierarchy, publication)
+      |> case do
+        nil ->
+          nil
+
+        %{id: uuid, geometry: geometry} = _doc ->
+          case Map.get(hierarchy, uuid) do
+            %{"parent" => nil} ->
+              # Only include parent documents that have a parent themself,
+              # otherwise too many documents will get included in the search
+              # result if there is one main document that encompasses all others.
+              #
+              # There might be a better solution to reduce "false positive"?
+              nil
+
+            _ ->
+              geometry
+          end
+      end
+
     base_document =
       %SearchDocument{
         id: res["id"],
@@ -520,9 +618,10 @@ defmodule FieldPublication.Publications.Search do
         # but also all documents that are in one of its child categories ("Photo" and "Drawing" by default.).
         category: [res["category"]] ++ Data.get_parent_categories(publication, res["category"]),
         publication_draft_date: publication.draft_date,
-        project_key: publication.project_name,
+        project_identifier: publication.project_identifier,
         configuration_based_field_mappings: %{},
         geometry: geo,
+        parent_geometry: parent_geo,
         full_doc: full_doc,
         full_doc_as_text: Jason.encode!(full_doc)
       }
@@ -618,7 +717,7 @@ defmodule FieldPublication.Publications.Search do
           end)
 
         {
-          pub.project_name,
+          pub.project_identifier,
           category_labels,
           field_labels
         }
@@ -627,7 +726,7 @@ defmodule FieldPublication.Publications.Search do
         # We now merge the label information for all projects into one accumulator.
         %{category_labels: %{}, field_labels: %{}},
         fn {
-             project_name,
+             project_identifier,
              category_labels,
              field_labels
            },
@@ -635,17 +734,17 @@ defmodule FieldPublication.Publications.Search do
              category_labels: category_labels_acc,
              field_labels: field_labels_acc
            } = outer_acc ->
-          {updated_category_acc, _project_name} =
+          {updated_category_acc, _project_identifier} =
             Enum.reduce(
               category_labels,
-              {category_labels_acc, project_name},
+              {category_labels_acc, project_identifier},
               &evaluate_category_label_usage/2
             )
 
-          {updated_field_acc, _project_name} =
+          {updated_field_acc, _project_identifier} =
             Enum.reduce(
               field_labels,
-              {field_labels_acc, project_name},
+              {field_labels_acc, project_identifier},
               &evaluate_field_label_usage/2
             )
 
@@ -708,13 +807,13 @@ defmodule FieldPublication.Publications.Search do
     end)
   end
 
-  defp evaluate_category_label_usage({name, labels}, {acc, project_name}) do
+  defp evaluate_category_label_usage({name, labels}, {acc, project_identifier}) do
     existing = Map.get(acc, name, %{})
 
     translations =
       if Enum.empty?(existing) do
         Enum.map(labels, fn {lang, text} ->
-          {lang, [{text, 1, [project_name]}]}
+          {lang, [{text, 1, [project_identifier]}]}
         end)
         |> Enum.into(%{})
       else
@@ -729,15 +828,15 @@ defmodule FieldPublication.Publications.Search do
             variants =
               case matching_variant do
                 [] ->
-                  existing[lang] ++ [{text, 1, [project_name]}]
+                  existing[lang] ++ [{text, 1, [project_identifier]}]
 
                 [{text, count, projects_list}] ->
-                  [{text, count + 1, projects_list ++ [project_name]}] ++ other_variants
+                  [{text, count + 1, projects_list ++ [project_identifier]}] ++ other_variants
               end
 
             {lang, variants}
           else
-            {lang, [{text, 1, [project_name]}]}
+            {lang, [{text, 1, [project_identifier]}]}
           end
         end)
         |> Enum.reduce(%{}, fn {lang, translations}, acc ->
@@ -747,13 +846,13 @@ defmodule FieldPublication.Publications.Search do
 
     {
       Map.put(acc, name, translations),
-      project_name
+      project_identifier
     }
   end
 
   defp evaluate_field_label_usage(
          {field_name, %{"labels" => labels, "value_labels" => value_labels}},
-         {acc, project_name}
+         {acc, project_identifier}
        ) do
     existing = Map.get(acc, field_name, %{})
 
@@ -761,13 +860,13 @@ defmodule FieldPublication.Publications.Search do
       if Enum.empty?(existing) do
         {
           Enum.map(labels, fn {lang, text} ->
-            {lang, [{text, 1, [project_name]}]}
+            {lang, [{text, 1, [project_identifier]}]}
           end)
           |> Enum.into(%{}),
           Enum.map(value_labels, fn {value_name, labels} ->
             translations =
               Enum.map(labels, fn {lang, text} ->
-                {lang, [{text, 1, [project_name]}]}
+                {lang, [{text, 1, [project_identifier]}]}
               end)
               |> Enum.reduce(%{}, fn {lang, info}, inner_acc ->
                 Map.put(inner_acc, lang, info)
@@ -790,15 +889,15 @@ defmodule FieldPublication.Publications.Search do
               variants =
                 case matching_variant do
                   [] ->
-                    existing[lang] ++ [{text, 1, [project_name]}]
+                    existing[lang] ++ [{text, 1, [project_identifier]}]
 
                   [{text, count, projects_list}] ->
-                    [{text, count + 1, projects_list ++ [project_name]}] ++ other_variants
+                    [{text, count + 1, projects_list ++ [project_identifier]}] ++ other_variants
                 end
 
               {lang, variants}
             else
-              {lang, [{text, 1, [project_name]}]}
+              {lang, [{text, 1, [project_identifier]}]}
             end
           end)
           |> Enum.reduce(%{}, fn {lang, translations}, acc ->
@@ -819,18 +918,19 @@ defmodule FieldPublication.Publications.Search do
                       case matching_variant do
                         [] ->
                           existing["value_labels"][value_name][lang] ++
-                            [{text, 1, [project_name]}]
+                            [{text, 1, [project_identifier]}]
 
                         [{text, count, projects_list}] ->
-                          [{text, count + 1, projects_list ++ [project_name]}] ++ other_variants
+                          [{text, count + 1, projects_list ++ [project_identifier]}] ++
+                            other_variants
                       end
 
                     {lang, variants}
                   else
-                    {lang, [{text, 1, [project_name]}]}
+                    {lang, [{text, 1, [project_identifier]}]}
                   end
                 else
-                  {lang, [{text, 1, [project_name]}]}
+                  {lang, [{text, 1, [project_identifier]}]}
                 end
               end)
               |> Enum.reduce(%{}, fn {lang, translations}, acc ->
@@ -848,7 +948,7 @@ defmodule FieldPublication.Publications.Search do
         "labels" => label_translations,
         "value_labels" => value_label_translations
       }),
-      project_name
+      project_identifier
     }
   end
 
@@ -891,14 +991,17 @@ defmodule FieldPublication.Publications.Search do
 
   @not_indexed_document_uuids ["project", "configuration"]
 
-  def evaluate_active_index_state(%Publication{} = publication) do
+  defp count_database_documents(publication) do
     database_count = Data.get_doc_count(publication)
 
     # We do not count documents 'project' or 'configuration' because they are not added to the index.
-    database_count =
-      if database_count >= 2,
-        do: database_count - Enum.count(@not_indexed_document_uuids),
-        else: 0
+    if database_count >= 2,
+      do: database_count - Enum.count(@not_indexed_document_uuids),
+      else: 0
+  end
+
+  def evaluate_active_index_state(%Publication{} = publication) do
+    database_count = count_database_documents(publication)
 
     if database_count == 0 do
       %{
@@ -923,14 +1026,13 @@ defmodule FieldPublication.Publications.Search do
     mapping = generate_index_mapping(publication)
     special_input_types = evaluate_input_types(publication)
 
-    {:ok, %{status: 200}} = reset_inactive_index(publication, mapping)
+    index_name = setup_index(publication, mapping)
 
-    initial_state =
-      publication
-      |> evaluate_active_index_state()
-      # We will re-index in a moment, so set the state for counter and percentage accordingly
-      |> Map.put(:counter, 0)
-      |> Map.put(:percentage, 0)
+    initial_state = %{
+      counter: 0,
+      percentage: 0,
+      overall: count_database_documents(publication)
+    }
 
     {:ok, counter_pid} =
       Agent.start_link(fn -> initial_state end)
@@ -966,7 +1068,7 @@ defmodule FieldPublication.Publications.Search do
 
       success_count =
         doc_batch
-        |> index_documents(publication)
+        |> OpenSearchService.insert_documents(index_name)
         |> case do
           {:ok, %{status: 200, body: body}} ->
             Jason.decode!(body)
@@ -1019,7 +1121,7 @@ defmodule FieldPublication.Publications.Search do
     end)
     |> Enum.to_list()
 
-    switch_active_alias(publication)
+    toggle_publication_alias(publication)
     evaluate_system_wide_label_usage()
   end
 
@@ -1029,13 +1131,17 @@ defmodule FieldPublication.Publications.Search do
              "_id" => uuid,
              "status" => 400,
              "error" => %{
-               "reason" => "failed to parse field [geometry] of type [geo_shape]",
+               "reason" => msg,
                "caused_by" => %{"caused_by" => %{"reason" => reason}}
              }
            }
          },
          %Publication{} = publication
-       ) do
+       )
+       when msg in [
+              "failed to parse field [geometry] of type [geo_shape]",
+              "failed to parse field [parent_geometry] of type [geo_shape]"
+            ] do
     Publications.Data.report_data_issue(
       uuid,
       LogEntry.create(%{
@@ -1056,13 +1162,17 @@ defmodule FieldPublication.Publications.Search do
              "_id" => uuid,
              "status" => 400,
              "error" => %{
-               "reason" => "failed to parse field [geometry] of type [geo_shape]",
+               "reason" => msg,
                "caused_by" => %{"reason" => reason}
              }
            }
          },
          %Publication{} = publication
-       ) do
+       )
+       when msg in [
+              "failed to parse field [geometry] of type [geo_shape]",
+              "failed to parse field [parent_geometry] of type [geo_shape]"
+            ] do
     Publications.Data.report_data_issue(
       uuid,
       LogEntry.create(%{
@@ -1160,16 +1270,8 @@ defmodule FieldPublication.Publications.Search do
   def index_name_to_publication(name) do
     regex = ~r/^publication_(.*)_(\d{4}-\d{2}-\d{2})__[ab]__$/
 
-    [[_full_match, project_name, draft_date_iso_8601]] = Regex.scan(regex, name)
+    [[_full_match, project_identifier, draft_date_iso_8601]] = Regex.scan(regex, name)
 
-    Publications.get(project_name, draft_date_iso_8601)
-  end
-
-  defp invert_search_index_name(index_name) do
-    if String.ends_with?(index_name, "__a__") do
-      String.replace(index_name, "__a__", "__b__")
-    else
-      String.replace(index_name, "__b__", "__a__")
-    end
+    Publications.get(project_identifier, draft_date_iso_8601)
   end
 end

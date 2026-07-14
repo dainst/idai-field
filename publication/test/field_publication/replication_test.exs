@@ -16,7 +16,7 @@
 
 #   @fieldhub_fixture_dir "test/support/fixtures/field_hub"
 #   @core_database Application.compile_env(:field_publication, :core_database)
-#   @project_name "test"
+#   @project_identifier "test"
 
 #   setup_all do
 #     System.cmd("docker-compose", ["up", "--wait"], cd: @fieldhub_fixture_dir)
@@ -34,7 +34,7 @@
 #   describe "tests running against field hub instance" do
 #     setup do
 #       CouchService.put_database(@core_database)
-#       {:ok, project} = Projects.put(%Project{}, %{"name" => @project_name})
+#       {:ok, project} = Projects.put(%Project{}, %{"name" => @project_identifier})
 
 #       on_exit(fn ->
 #         CouchService.delete_database(@core_database)
@@ -51,10 +51,10 @@
 #       {:ok, _initial_state, task_pid} =
 #         Replication.start(%ReplicationInput{
 #           source_url: "http://localhost:4003",
-#           source_project_name: "test",
+#           source_project_identifier: "test",
 #           source_user: "test",
 #           source_password: "pw",
-#           project_name: @project_name,
+#           project_identifier: @project_identifier,
 #           comments: [
 #             %Translation{language: "de", text: "ein test"},
 #             %Translation{language: "en", text: "a test"}
@@ -70,9 +70,9 @@
 #                %Publication{
 #                  _rev: _,
 #                  doc_type: "publication",
-#                  project_name: "test",
+#                  project_identifier: "test",
 #                  source_url: "http://localhost:4003",
-#                  source_project_name: "test",
+#                  source_project_identifier: "test",
 #                  draft_date: _,
 #                  publication_date: nil,
 #                  configuration_doc: configuration_doc,
@@ -134,7 +134,7 @@
 #                    }
 #                  ]
 #                }
-#              ] = Publications.list(%Project{name: @project_name})
+#              ] = Publications.list(%Project{name: @project_identifier})
 
 #       assert {:ok, %{status: 200}} = CouchService.get_document(configuration_doc)
 

@@ -9,8 +9,6 @@ defmodule FieldHub.Project do
 
   import CouchService.Credentials
 
-  require Logger
-
   @variant_types Application.compile_env(:field_hub, :valid_file_variants)
   @identifier_length Application.compile_env(:field_hub, :max_project_identifier_length)
 

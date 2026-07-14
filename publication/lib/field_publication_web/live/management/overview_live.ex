@@ -34,7 +34,7 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
-  defp apply_action(socket, :edit_project, %{"project_id" => id}) do
+  defp apply_action(socket, :edit_project, %{"project_identifier" => id}) do
     socket
     |> assign(:page_title, "Publishing | Edit Project")
     |> assign(:project, Projects.get!(id))
@@ -46,7 +46,7 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
     |> assign(:project, %Project{})
   end
 
-  defp apply_action(socket, :new_publication, %{"project_id" => id}) do
+  defp apply_action(socket, :new_publication, %{"project_identifier" => id}) do
     socket
     |> assign(:page_title, "Publishing | New publication draft")
     |> assign(:project, Projects.get!(id))
@@ -81,7 +81,7 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
       socket
       |> push_navigate(
         to:
-          ~p"/management/projects/#{publication.project_name}/publication/#{publication.draft_date}"
+          ~p"/management/projects/#{publication.project_identifier}/publication/#{publication.draft_date}"
       )
     }
   end
@@ -136,6 +136,49 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
     }
   end
 
+  def handle_info(
+        {publication_id, {replication_process_type, progress}},
+        %{assigns: %{processing_state: state}} = socket
+      )
+      when replication_process_type in [:document_replication_count, :file_replication_count] do
+    updated_state =
+      Map.update(
+        state,
+        publication_id,
+        %{replication_process_type => nil},
+        fn publication_state ->
+          Map.put(publication_state, replication_process_type, progress)
+        end
+      )
+
+    {
+      :noreply,
+      assign(socket, :processing_state, updated_state)
+    }
+  end
+
+  def handle_info(
+        {publication_id, {:replication_stopped}},
+        %{assigns: %{processing_state: state}} = socket
+      ) do
+    updated_state =
+      Map.update(state, publication_id, %{}, fn publication_state ->
+        publication_state
+        |> Map.delete(:document_replication_count)
+        |> Map.delete(:file_replication_count)
+      end)
+
+    updated_state =
+      if updated_state[publication_id] == %{},
+        do: Map.delete(updated_state, publication_id),
+        else: updated_state
+
+    {
+      :noreply,
+      assign(socket, :processing_state, updated_state)
+    }
+  end
+
   def handle_info(info, socket) do
     Logger.debug("Ignoring handle_info/2 call:")
     Logger.debug(inspect(info))
@@ -152,10 +195,10 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
 
   def handle_event(
         "delete-publication",
-        %{"project_key" => project_key, "draft_date" => draft_date},
+        %{"project_identifier" => project_identifier, "draft_date" => draft_date},
         socket
       ) do
-    Publications.get(project_key, draft_date)
+    Publications.get(project_identifier, draft_date)
     |> case do
       {:ok, publication} ->
         Publications.delete(publication)
@@ -183,11 +226,11 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
 
   def handle_event(
         "set_project_alias",
-        %{"draft_date" => draft_date, "project_name" => project_name},
+        %{"draft_date" => draft_date, "project_identifier" => project_identifier},
         %{assigns: %{projects: projects}} = socket
       ) do
     Enum.find(projects, fn entry ->
-      entry.project.name == project_name
+      entry.project.identifier == project_identifier
     end)
     |> Map.get(:publications, [])
     |> Enum.find(fn publication ->
@@ -202,10 +245,10 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
     projects =
       Projects.list()
       |> Enum.filter(fn %Project{} = project ->
-        Projects.has_project_access?(project.name, socket.assigns.current_user)
+        Projects.has_project_access?(project.identifier, socket.assigns.current_user)
       end)
       |> Enum.map(fn project ->
-        publications = Publications.list(project.name)
+        publications = Publications.list(project.identifier)
 
         Enum.each(publications, fn publication ->
           channel = Publications.get_doc_id(publication)

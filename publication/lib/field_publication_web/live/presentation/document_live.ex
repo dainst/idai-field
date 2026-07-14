@@ -1,5 +1,4 @@
 defmodule FieldPublicationWeb.Presentation.DocumentLive do
-  alias FieldPublication.Publications.Search
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.Projects
@@ -12,12 +11,17 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
   alias FieldPublicationWeb.Presentation.Opengraph
 
-  alias FieldPublicationWeb.Presentation.DocumentComponents
   alias FieldPublicationWeb.Presentation.Components.PublicationSelection
 
-  def mount(%{"project_id" => project_name}, _session, socket) do
+  import FieldPublicationWeb.Components.Data.DocumentLink
+
+  defmodule UnknownPublicationDocumentError do
+    defexception [:message, plug_status: 404]
+  end
+
+  def mount(%{"project_identifier" => project_identifier}, _session, socket) do
     publications =
-      project_name
+      project_identifier
       |> Publications.list()
       |> Stream.reject(fn %Publication{} = publication ->
         publication.replication_finished == nil
@@ -34,7 +38,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
     {
       :ok,
       socket
-      |> assign(:project_name, project_name)
+      |> assign(:project_identifier, project_identifier)
       |> assign(:publications, publications)
       |> assign(:draft_dates, draft_dates)
       |> assign(:focus, :default)
@@ -42,29 +46,49 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
   end
 
   def handle_params(
-        %{"draft_date" => date} = params,
+        %{"draft_date" => date} = parameters,
         _uri,
         %{assigns: %{publications: publications}} = socket
       ) do
-    %Publication{} =
-      current_publication =
+    publication =
       Enum.find(publications, fn pub ->
         Date.to_iso8601(pub.draft_date) == date
       end)
 
-    {
-      :noreply,
-      socket
-      |> assign(:publication, current_publication)
-      |> evaluate_requested_doc(current_publication, params)
-      |> assign(:focus, parse_focus(Map.get(params, "focus")))
-    }
+    socket =
+      parameters
+      |> Map.get("uuid", "project")
+      |> Publications.Data.get_extended_document(publication, true)
+      |> case do
+        {:error, :not_found} ->
+          raise UnknownPublicationDocumentError,
+            message:
+              "No document with id `#{Map.get(parameters, "uuid")}` for publication of project `#{publication.project_identifier}` on #{publication.draft_date}."
+
+        %Document{id: uuid} = document ->
+          project_map_layers = Publications.Data.get_project_map_layers(publication)
+          image_categories = Publications.Data.get_image_categories(publication)
+
+          socket
+          |> assign(:publication, publication)
+          |> assign(:uuid, uuid)
+          |> assign(:doc, document)
+          |> assign(:image_categories, image_categories)
+          |> assign(:project_map_layers, project_map_layers)
+          |> assign(
+            :page_title,
+            get_page_title(document)
+          )
+          |> Opengraph.add_opengraph_tags(publication, document)
+      end
+
+    {:noreply, socket}
   end
 
   def handle_params(
-        _neither_date_nor_language_were_requested,
+        _no_date_was_requested,
         _uri,
-        %{assigns: %{publications: publications, project_name: project_name}} = socket
+        %{assigns: %{publications: publications, project_identifier: project_identifier}} = socket
       ) do
     # This handles the case where we were only handed a project name parameter. The mount/2 above will have already
     # evaluated the project name and its published publications. We select the newest publication (first in list) and
@@ -78,31 +102,8 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       socket
       |> assign(:publication, publication)
       |> push_patch(
-        to: ~p"/projects/#{project_name}/#{publication.draft_date}",
+        to: ~p"/projects/#{project_identifier}/#{publication.draft_date}",
         replace: true
-      )
-    }
-  end
-
-  def handle_event(
-        "geometry-clicked",
-        %{"uuid" => uuid},
-        %{assigns: %{publication: publication, focus: focus}} = socket
-      ) do
-    query_params =
-      case focus do
-        :map ->
-          %{focus: "map"}
-
-        _ ->
-          %{}
-      end
-
-    {
-      :noreply,
-      push_patch(socket,
-        to:
-          ~p"/projects/#{publication.project_name}/#{publication.draft_date}/#{uuid}?#{query_params}"
       )
     }
   end
@@ -110,11 +111,40 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
   def handle_event(
         "search",
         %{"search_input" => q},
-        %{assigns: %{publication: %Publication{project_name: project_name}}} = socket
+        %{
+          assigns: %{
+            publication: %Publication{
+              project_identifier: project_identifier,
+              draft_date: draft_date
+            }
+          }
+        } = socket
       ) do
     {
       :noreply,
-      redirect(socket, to: ~p"/search?#{%{q: q, filters: %{project_key: project_name}}}")
+      redirect(socket,
+        to: ~p"/projects/search/#{project_identifier}/#{draft_date}?#{%{q: q}}"
+      )
+    }
+  end
+
+  def handle_info(
+        {:drawn_selection, geometry},
+        %{
+          assigns: %{
+            publication: %Publication{
+              project_identifier: project_identifier,
+              draft_date: draft_date
+            }
+          }
+        } = socket
+      ) do
+    query =
+      FieldPublicationWeb.Presentation.PublicationSearch.drawn_selection_to_parameter(geometry)
+
+    {
+      :noreply,
+      push_navigate(socket, to: ~p"/projects/search/#{project_identifier}/#{draft_date}?#{query}")
     }
   end
 
@@ -124,97 +154,5 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
   defp get_page_title(%Document{identifier: identifier, category: %{labels: labels}}) do
     "#{identifier} (#{pick_default_translation(labels)})"
-  end
-
-  defp evaluate_requested_doc(
-         socket,
-         %Publication{} = publication,
-         %{"uuid" => uuid}
-       )
-       when uuid != "project" do
-    # If a UUID was provided, load its extended document.
-    uuid
-    |> Publications.Data.get_extended_document(publication, true)
-    |> case do
-      {:error, :not_found} ->
-        socket
-        |> assign(:uuid, uuid)
-        |> assign(:doc, :not_found)
-        |> assign(:page_title, "Document not found")
-
-      %Document{} = extended_doc ->
-        project_map_layers = Publications.Data.get_project_map_layers(publication)
-        image_categories = Publications.Data.get_image_categories(publication)
-
-        ancestors =
-          publication
-          |> Publications.Data.get_document_hierarchy()
-          |> construct_ancestor_tree(uuid, [])
-          |> Data.get_preview_documents(publication)
-
-        socket
-        |> assign(:uuid, uuid)
-        |> assign(:doc, extended_doc)
-        |> assign(:image_categories, image_categories)
-        |> assign(:ancestors, ancestors)
-        |> assign(:project_map_layers, project_map_layers)
-        |> assign(
-          :page_title,
-          get_page_title(extended_doc)
-        )
-        |> Opengraph.add_opengraph_tags(publication, extended_doc)
-    end
-  end
-
-  defp evaluate_requested_doc(
-         socket,
-         %Publication{} = publication,
-         _params
-       ) do
-    # If no UUID was provided, load the publication's extended "project" document.
-    project_doc = Publications.Data.get_extended_document("project", publication, true)
-
-    top_level_docs =
-      Publications.Data.get_document_hierarchy(publication)
-      |> Stream.filter(fn {_uuid, relations} ->
-        # All documents that have no parent, but do have children are considered top level.
-        Map.get(relations, "parent") == nil && Map.get(relations, "children") != []
-      end)
-      |> Enum.map(fn {uuid, _values} ->
-        uuid
-      end)
-      |> Data.get_preview_documents(publication)
-
-    category_hierarchy = Data.get_category_hierarchy(publication)
-    category_usage = Search.get_category_count(publication)
-
-    socket
-    |> assign(:doc, project_doc)
-    |> assign(:publication, publication)
-    |> assign(:top_level_docs, top_level_docs)
-    |> assign(:category_hierarchy, category_hierarchy)
-    |> assign(:category_usage, category_usage)
-    |> assign(
-      :page_title,
-      get_page_title(project_doc)
-    )
-    |> assign(:uuid, "")
-  end
-
-  defp parse_focus("map"), do: :map
-  defp parse_focus(_), do: :default
-
-  defp construct_ancestor_tree(hierarchy, id, children) do
-    Map.get(hierarchy, id, %{})
-    |> case do
-      %{"parent" => nil} ->
-        children
-
-      %{"parent" => parent_id} ->
-        construct_ancestor_tree(hierarchy, parent_id, [parent_id] ++ children)
-
-      _ ->
-        children
-    end
   end
 end

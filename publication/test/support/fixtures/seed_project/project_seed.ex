@@ -16,7 +16,7 @@ defmodule FieldPublication.Test.ProjectSeed do
 
   require Logger
 
-  def start(project_name, process_images \\ true) do
+  def start(project_identifier, process_images \\ true) do
     seed_project_docs =
       File.read!("test/support/fixtures/seed_project/publication_data.json")
       |> Jason.decode!()
@@ -26,32 +26,32 @@ defmodule FieldPublication.Test.ProjectSeed do
         end)
       end)
 
-    case Projects.get(project_name) do
+    case Projects.get(project_identifier) do
       {:ok, %FieldPublication.DatabaseSchema.Project{} = project} ->
-        Logger.info("Recreating project '#{project_name}'.")
+        Logger.info("Recreating project '#{project_identifier}'.")
         {:ok, :deleted} = Projects.delete(project)
 
-        create(project_name, seed_project_docs, process_images)
+        create(project_identifier, seed_project_docs, process_images)
 
       _ ->
-        Logger.info("Creating project '#{project_name}'.")
-        create(project_name, seed_project_docs, process_images)
+        Logger.info("Creating project '#{project_identifier}'.")
+        create(project_identifier, seed_project_docs, process_images)
     end
   end
 
   def create(identifier, docs, process_images) do
     {:ok, %Project{} = project} =
       Projects.put(%Project{}, %{
-        "name" => identifier
+        "identifier" => identifier
       })
 
     {:ok, replication_input} =
       ReplicationInput.create(%{
         "source_url" => "http://example.org",
-        "source_project_name" => identifier,
+        "source_project_identifier" => identifier,
         "source_user" => "local_developer",
         "source_password" => "fake",
-        "project_name" => identifier,
+        "project_identifier" => identifier,
         "drafted_by" => "mix seed",
         "draft_date" => Date.from_iso8601!("2024-06-05")
       })
@@ -98,7 +98,7 @@ defmodule FieldPublication.Test.ProjectSeed do
 
     # Load latest document, otherwise the put below will error with a revision conflict.
     publication =
-      FieldPublication.Publications.get!(publication.project_name, publication.draft_date)
+      FieldPublication.Publications.get!(publication.project_identifier, publication.draft_date)
 
     {:ok, %FieldPublication.DatabaseSchema.Publication{} = publication} =
       Publications.put(publication, %{

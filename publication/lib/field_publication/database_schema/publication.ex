@@ -16,9 +16,9 @@ defmodule FieldPublication.DatabaseSchema.Publication do
   embedded_schema do
     field(:_rev, :string)
     field(:doc_type, :string, default: @doc_type)
-    field(:project_name, :string, primary_key: true)
+    field(:project_identifier, :string, primary_key: true)
     field(:source_url, :string)
-    field(:source_project_name, :string)
+    field(:source_project_identifier, :string)
     field(:draft_date, :date, primary_key: true)
     field(:drafted_by, :string)
     field(:replication_finished, :utc_datetime)
@@ -39,9 +39,9 @@ defmodule FieldPublication.DatabaseSchema.Publication do
     publication
     |> cast(attrs, [
       :_rev,
-      :project_name,
+      :project_identifier,
       :source_url,
-      :source_project_name,
+      :source_project_identifier,
       :drafted_by,
       :draft_date,
       :replication_finished,
@@ -58,9 +58,9 @@ defmodule FieldPublication.DatabaseSchema.Publication do
     |> cast_embed(:replication_logs)
     |> Translation.language_unique_constraint(:comments)
     |> validate_required([
-      :project_name,
+      :project_identifier,
       :source_url,
-      :source_project_name,
+      :source_project_identifier,
       :draft_date,
       :configuration_doc,
       :database,
@@ -75,15 +75,19 @@ defmodule FieldPublication.DatabaseSchema.Publication do
   end
 
   defp ensure_project_exists(changeset) do
-    name = get_field(changeset, :project_name)
+    project_identifier = get_field(changeset, :project_identifier)
 
-    Projects.get(name)
+    Projects.get(project_identifier)
     |> case do
       {:ok, _project} ->
         changeset
 
       {:error, :not_found} ->
-        add_error(changeset, :project_name, "Project #{name} document not found.")
+        add_error(
+          changeset,
+          :project_identifier,
+          "Project #{project_identifier} document not found."
+        )
     end
   end
 end

@@ -4,9 +4,6 @@ defmodule FieldHub.FileStore do
   @valid_file_variants Application.compile_env(:field_hub, :valid_file_variants)
   @index_cache_name Application.compile_env(:field_hub, :file_index_cache_name)
   @index_cache_expiration_ms 1000 * 60 * 60 * 24
-  # @index_cache_expiration_ms 3000
-
-  require Logger
 
   @moduledoc """
   Bundles functions to facilitate the storing, discarding and indexing of files in file system for the different projects.

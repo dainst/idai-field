@@ -13,20 +13,20 @@
 #   }
 
 #   @core_database Application.compile_env(:field_publication, :core_database)
-#   @local_project_name "local_test"
+#   @local_project_identifier "local_test"
 
 #   @publication_params_fixture %{
-#     project_name: @local_project_name,
+#     project_identifier: @local_project_identifier,
 #     source_url: "http://example.com",
-#     source_project_name: "source_test",
+#     source_project_identifier: "source_test",
 #     draft_date: "2023-09-28",
-#     configuration_doc: "configuration_#{@local_project_name}_2023-09-28",
-#     database: "publication_#{@local_project_name}_2023-09-28"
+#     configuration_doc: "configuration_#{@local_project_identifier}_2023-09-28",
+#     database: "publication_#{@local_project_identifier}_2023-09-28"
 #   }
 
 #   setup do
 #     CouchService.put_database(@core_database)
-#     {:ok, project} = Projects.put(%Project{}, %{"name" => @local_project_name})
+#     {:ok, project} = Projects.put(%Project{}, %{"name" => @local_project_identifier})
 
 #     on_exit(fn ->
 #       CouchService.delete_database(@core_database)
@@ -66,12 +66,12 @@
 #     end
 
 #     test "can not put without existing project" do
-#       Projects.get!(@local_project_name)
+#       Projects.get!(@local_project_identifier)
 #       |> Projects.delete()
 
 #       {:error, changeset} = Publications.put(%Publication{}, @publication_params_fixture)
 
-#       assert %Ecto.Changeset{errors: [project_name: {_msg, _}]} = changeset
+#       assert %Ecto.Changeset{errors: [project_identifier: {_msg, _}]} = changeset
 #     end
 
 #     test "can list publications" do
@@ -79,32 +79,32 @@
 
 #       Publications.put(%Publication{}, @publication_params_fixture)
 
-#       assert [%Publication{project_name: @local_project_name}] =
+#       assert [%Publication{project_identifier: @local_project_identifier}] =
 #                Publications.list()
 #     end
 
 #     test "can list publications for specific project" do
-#       other_project_name = "other_name"
-#       other_project_database_name = "publication_#{other_project_name}_2023-09-28"
+#       other_project_identifier = "other_name"
+#       other_project_database_name = "publication_#{other_project_identifier}_2023-09-28"
 
 #       other_project_params =
 #         @publication_params_fixture
-#         |> Map.put(:project_name, other_project_name)
-#         |> Map.put(:configuration_doc, "configuration_#{other_project_name}_2023-09-28")
+#         |> Map.put(:project_identifier, other_project_identifier)
+#         |> Map.put(:configuration_doc, "configuration_#{other_project_identifier}_2023-09-28")
 #         |> Map.put(:database, other_project_database_name)
 
-#       {:ok, other_project} = Projects.put(%Project{}, %{"name" => other_project_name})
+#       {:ok, other_project} = Projects.put(%Project{}, %{"name" => other_project_identifier})
 
 #       Publications.put(%Publication{}, @publication_params_fixture)
 #       Publications.put(%Publication{}, other_project_params)
 
 #       assert [
-#                %Publication{project_name: @local_project_name},
-#                %Publication{project_name: ^other_project_name}
+#                %Publication{project_identifier: @local_project_identifier},
+#                %Publication{project_identifier: ^other_project_identifier}
 #              ] = Publications.list()
 
 #       assert [
-#                %Publication{project_name: ^other_project_name}
+#                %Publication{project_identifier: ^other_project_identifier}
 #              ] = Publications.list(other_project)
 
 #       CouchService.delete_database(other_project_database_name)
@@ -120,8 +120,8 @@
 #     assert {:ok, publication} =
 #              Publications.create_from_replication_input(%ReplicationInput{
 #                source_url: "http://example.com",
-#                source_project_name: "source_test",
-#                project_name: @local_project_name,
+#                source_project_identifier: "source_test",
+#                project_identifier: @local_project_identifier,
 #                delete_existing_publication: false
 #              })
 

@@ -323,13 +323,8 @@ defmodule FieldPublication.CouchService do
   """
   def get_document_stream(query, database \\ @core_database)
       when is_map(query) and is_binary(database) do
-    batch_size = 500
-
     Stream.resource(
-      fn ->
-        query
-        |> Map.put(:limit, batch_size)
-      end,
+      fn -> Map.put_new(query, :limit, 500) end,
       fn payload ->
         Finch.build(
           :post,

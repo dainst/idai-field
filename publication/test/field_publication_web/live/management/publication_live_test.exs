@@ -9,7 +9,7 @@ defmodule FieldPublicationWeb.Management.PublicationLiveTest do
   import Phoenix.LiveViewTest
 
   @core_database Application.compile_env(:field_publication, :core_database)
-  @test_project_name "test_project_a"
+  @test_project_identifier "test_project_a"
   @test_user %FieldPublication.DatabaseSchema.User{
     name: "test_user",
     password: "pw",
@@ -21,12 +21,12 @@ defmodule FieldPublicationWeb.Management.PublicationLiveTest do
     CouchService.put_database(@core_database)
     CouchService.create_user(@test_user)
 
-    Projects.put(%Project{}, %{"name" => @test_project_name})
+    Projects.put(%Project{}, %{"identifier" => @test_project_identifier})
 
-    project = Projects.get!(@test_project_name)
+    project = Projects.get!(@test_project_identifier)
 
     on_exit(fn ->
-      Publications.get(@test_project_name, Date.utc_today())
+      Publications.get(@test_project_identifier, Date.utc_today())
       |> case do
         {:ok, publication} ->
           Publications.delete(publication)
@@ -51,7 +51,7 @@ defmodule FieldPublicationWeb.Management.PublicationLiveTest do
              :error,
              {:redirect,
               %{to: _, flash: %{"error" => "You are not allowed to access that page."}}}
-           } = live(conn, ~p"/management/projects/#{@test_project_name}/publication/new")
+           } = live(conn, ~p"/management/projects/#{@test_project_identifier}/publication/new")
 
     conn = recycle(conn)
     log_in_user(conn, @test_user.name)
@@ -61,24 +61,24 @@ defmodule FieldPublicationWeb.Management.PublicationLiveTest do
              :error,
              {:redirect,
               %{to: _, flash: %{"error" => "You are not allowed to access that page."}}}
-           } = live(conn, ~p"/management/projects/#{@test_project_name}/publication/new")
+           } = live(conn, ~p"/management/projects/#{@test_project_identifier}/publication/new")
   end
 
   test "editors have access to the input view", %{conn: conn} do
-    @test_project_name
+    @test_project_identifier
     |> Projects.get!()
     |> Projects.put(%{"editors" => [@test_user.name]})
 
     conn = log_in_user(conn, @test_user.name)
 
     on_exit(fn ->
-      @test_project_name
+      @test_project_identifier
       |> Projects.get!()
       |> Projects.put(%{"editors" => []})
     end)
 
     assert {:ok, _live_process, html} =
-             live(conn, ~p"/management/projects/#{@test_project_name}/publication/new")
+             live(conn, ~p"/management/projects/#{@test_project_identifier}/publication/new")
 
     assert html =~ "Create new publication draft"
   end
@@ -87,7 +87,7 @@ defmodule FieldPublicationWeb.Management.PublicationLiveTest do
     conn = log_in_user(conn, Application.get_env(:field_publication, :couchdb_admin_name))
 
     assert {:ok, _live_process, html} =
-             live(conn, ~p"/management/projects/#{@test_project_name}/publication/new")
+             live(conn, ~p"/management/projects/#{@test_project_identifier}/publication/new")
 
     assert html =~ "Create new publication draft"
   end

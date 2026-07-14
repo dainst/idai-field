@@ -33,10 +33,10 @@ defmodule FieldPublicationWeb.Management.Modals.ReplicationFormComponent do
           {@initialization_error}
         </div>
         <.input field={@form[:source_url]} type="url" label="Source URL" />
-        <.input field={@form[:source_project_name]} type="text" label="Source project name" />
+        <.input field={@form[:source_project_identifier]} type="text" label="Source project name" />
         <.input field={@form[:source_user]} type="text" label="Source user name" />
         <.input field={@form[:source_password]} type="password" label="Source user password" />
-        <.input field={@form[:project_name]} type="hidden" />
+        <.input field={@form[:project_identifier]} type="hidden" />
         <.input field={@form[:drafted_by]} type="hidden" />
 
         <.group_heading>Options</.group_heading>
@@ -109,27 +109,31 @@ defmodule FieldPublicationWeb.Management.Modals.ReplicationFormComponent do
   end
 
   defp create_changeset(%{
-         project_name: project_name,
+         project_identifier: project_identifier,
          draft_date: draft_date,
          current_user: current_user,
          action: :edit
        }) do
-    publication = Publications.get!(project_name, draft_date)
+    publication = Publications.get!(project_identifier, draft_date)
 
     ReplicationInput.changeset(%ReplicationInput{}, %{
       source_url: publication.source_url,
-      source_project_name: publication.source_project_name,
-      source_user: publication.source_project_name,
-      project_name: publication.project_name,
+      source_project_identifier: publication.source_project_identifier,
+      source_user: publication.source_project_identifier,
+      project_identifier: publication.project_identifier,
       drafted_by: current_user
     })
   end
 
-  defp create_changeset(%{project_name: project_name, current_user: current_user, action: :new}) do
+  defp create_changeset(%{
+         project_identifier: project_identifier,
+         current_user: current_user,
+         action: :new
+       }) do
     ReplicationInput.changeset(%ReplicationInput{}, %{
-      source_project_name: project_name,
-      source_user: project_name,
-      project_name: project_name,
+      source_project_identifier: project_identifier,
+      source_user: project_identifier,
+      project_identifier: project_identifier,
       drafted_by: current_user,
       comments: []
     })

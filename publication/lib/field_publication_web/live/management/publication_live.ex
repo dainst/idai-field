@@ -84,7 +84,11 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
   end
 
   @impl true
-  def mount(%{"project_id" => project_id, "draft_date" => draft_date_string}, _session, socket) do
+  def mount(
+        %{"project_identifier" => project_id, "draft_date" => draft_date_string},
+        _session,
+        socket
+      ) do
     %Publication{} = publication = Publications.get!(project_id, draft_date_string)
 
     channel = Publications.get_doc_id(publication)
@@ -113,6 +117,10 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
       })
       |> assign(:preview_documents, %{
         active?: Processing.show(publication, :preview_documents) != nil,
+        progress: nil
+      })
+      |> assign(:geo_collections, %{
+        active?: Processing.show(publication, :geo_collections) != nil,
         progress: nil
       })
       |> assign(:database_indices, %{

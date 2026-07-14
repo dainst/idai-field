@@ -6,6 +6,11 @@ defmodule FieldPublication.Processing do
     MapTiles
   }
 
+  alias FieldPublication.Publications.{
+    Data,
+    Search
+  }
+
   alias FieldPublication.DatabaseSchema.Publication
 
   alias FieldPublication.DatabaseSchema.{
@@ -18,8 +23,6 @@ defmodule FieldPublication.Processing do
   alias Phoenix.PubSub
 
   require Logger
-
-  @data_report_key "processing"
 
   @moduledoc """
   This GenServer is used to start, stop and track processing tasks.
@@ -74,6 +77,7 @@ defmodule FieldPublication.Processing do
              :tile_images,
              :search_index,
              :preview_documents,
+             :geo_collections,
              :database_indices
            ] do
     # Extend the list of atoms in the guard above to support additional processing steps. You
@@ -104,6 +108,7 @@ defmodule FieldPublication.Processing do
              :tile_images,
              :search_index,
              :preview_documents,
+             :geo_collections,
              :database_indices
            ] do
     GenServer.call(__MODULE__, {:show, Publications.get_doc_id(publication), type})
@@ -132,6 +137,7 @@ defmodule FieldPublication.Processing do
              :tile_images,
              :search_index,
              :preview_documents,
+             :geo_collections,
              :database_indices
            ] do
     GenServer.call(__MODULE__, {:stop, Publications.get_doc_id(publication), type})
@@ -268,6 +274,38 @@ defmodule FieldPublication.Processing do
   end
 
   def handle_call(
+        {:start, %Publication{} = publication, :geo_collections},
+        _from,
+        running_tasks
+      ) do
+    publication_id = Publications.get_doc_id(publication)
+
+    Enum.any?(running_tasks, fn {_task, type, context} ->
+      publication_id == context and type == :geo_collections
+    end)
+    |> if do
+      # The `:geo_collections` task is already running for the given publication, keep the state as-is and return a
+      # `:already_running` atom to the caller.
+      {:reply, :already_running, running_tasks}
+    else
+      task =
+        Task.Supervisor.async_nolink(
+          FieldPublication.ProcessingSupervisor,
+          # Module that implements the actual processing.
+          Publications.Data,
+          # Function within that module to start the processing.
+          :create_geometry_feature_collections,
+          # Parameters for that function.
+          [publication]
+        )
+
+      broadcast(publication_id, :geo_collections, :processing_started)
+
+      {:reply, :ok, running_tasks ++ [{task, :geo_collections, publication_id}]}
+    end
+  end
+
+  def handle_call(
         {:start, %Publication{} = publication, :database_indices},
         _from,
         running_tasks
@@ -378,11 +416,11 @@ defmodule FieldPublication.Processing do
     {:noreply, cleanup(ref, running_tasks)}
   end
 
-  def handle_info({:DOWN, ref, :process, _pid, _reason}, running_tasks) do
+  def handle_info({:DOWN, ref, :process, _pid, reason}, running_tasks) do
     Logger.error("A processing task failed irregularly.")
 
     try do
-      report_crash_to_publication(ref, running_tasks)
+      report_crash_to_publication(ref, reason, running_tasks)
     after
       :ok
     end
@@ -390,7 +428,7 @@ defmodule FieldPublication.Processing do
     {:noreply, cleanup(ref, running_tasks)}
   end
 
-  defp report_crash_to_publication(ref, running_tasks) do
+  defp report_crash_to_publication(ref, reason, running_tasks) do
     Enum.find(running_tasks, fn {task, _type, _context} ->
       task.ref == ref
     end)
@@ -406,15 +444,17 @@ defmodule FieldPublication.Processing do
             #
             # But: This only affects completely unhandled processing issues, the more nuanced
             # issues reported by the processing tasks themselves are left intact.
-            Publications.Data.clear_data_issues(publication, @data_report_key)
+
+            report_key = report_key_by_processing_type(type)
+            Publications.Data.clear_data_issues(publication, report_key)
 
             Publications.Data.report_data_issue(
               "general",
               LogEntry.create(%{
                 type: "general_processing_crash",
-                reported_by: @data_report_key,
+                reported_by: report_key,
                 severity: :error,
-                message: "processing task #{type} crashed"
+                message: inspect(reason)
               }),
               publication
             )
@@ -449,4 +489,11 @@ defmodule FieldPublication.Processing do
     Logger.info("#{msg}: #{processing_type}, #{channel}")
     PubSub.broadcast!(FieldPublication.PubSub, channel, {channel, {msg, processing_type}})
   end
+
+  def report_key_by_processing_type(:web_images), do: WebImage.report_key()
+  def report_key_by_processing_type(:tile_images), do: MapTiles.report_key()
+  def report_key_by_processing_type(:search_index), do: Search.report_key()
+  def report_key_by_processing_type(:preview_documents), do: Data.report_key()
+  def report_key_by_processing_type(:geo_collections), do: Data.report_key()
+  def report_key_by_processing_type(:database_indices), do: Data.report_key()
 end

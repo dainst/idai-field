@@ -5,21 +5,27 @@ defmodule FieldPublicationWeb.Api.Image do
 
   alias FieldPublication.FileService
 
-  def raw(conn, %{"project_name" => name, "uuid" => uuid} = _params) do
-    send_file(conn, 200, FileService.get_raw_image_data_path(name, uuid))
+  def raw(conn, %{"project_identifier" => project_identifier, "uuid" => uuid} = _params) do
+    send_file(conn, 200, FileService.get_raw_image_data_path(project_identifier, uuid))
   end
 
   def tile(
         conn,
-        %{"project_name" => name, "uuid" => uuid, "z" => z, "x" => x, "y" => y} = _params
+        %{
+          "project_identifier" => project_identifier,
+          "uuid" => uuid,
+          "z" => z,
+          "x" => x,
+          "y" => y
+        } = _params
       ) do
-    base_path = FileService.get_map_tiles_base_path(name, uuid)
+    base_path = FileService.get_map_tiles_base_path(project_identifier, uuid)
 
     path = "#{base_path}/#{z}/#{y}/#{x}.webp"
 
     if File.exists?(path) do
       cache_type =
-        Cachex.exists?(:published_images, {name, uuid})
+        Cachex.exists?(:published_images, {project_identifier, uuid})
         |> case do
           {:ok, false} ->
             # Caching in users' browsers only.

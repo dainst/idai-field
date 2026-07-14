@@ -81,7 +81,6 @@ end
 
 defimpl Jason.Encoder,
   for: [
-    FieldPublication.DatabaseSchema.DataHierarchy,
     FieldPublication.DatabaseSchema.DataPreview,
     FieldPublication.DatabaseSchema.DataIssues
   ] do

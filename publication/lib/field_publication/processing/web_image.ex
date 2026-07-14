@@ -21,10 +21,14 @@ defmodule FieldPublication.Processing.WebImage do
 
   @data_report_key "processing_web_image"
 
-  def evaluate_web_images_state(%Publication{project_name: project_key} = publication) do
-    %{image: current_raw_files} = FileService.list_raw_data_files(project_key)
+  def report_key(), do: @data_report_key
 
-    current_web_files = FileService.list_web_image_files(project_key)
+  def evaluate_web_images_state(
+        %Publication{project_identifier: project_identifier} = publication
+      ) do
+    %{image: current_raw_files} = FileService.list_raw_data_files(project_identifier)
+
+    current_web_files = FileService.list_web_image_files(project_identifier)
 
     image_categories = Publications.Data.get_image_categories(publication)
 
@@ -55,7 +59,7 @@ defmodule FieldPublication.Processing.WebImage do
     }
   end
 
-  def start(%Publication{project_name: project_key} = publication) do
+  def start(%Publication{project_identifier: project_identifier} = publication) do
     %{
       existing_raw_files: existing_raw_files,
       summary: summary,
@@ -89,10 +93,10 @@ defmodule FieldPublication.Processing.WebImage do
     |> Task.async_stream(
       fn uuid ->
         Logger.debug(
-          "Creating web image (pyramid TIFF) for '#{uuid}' in project '#{project_key}'..."
+          "Creating web image (pyramid TIFF) for '#{uuid}' in project '#{project_identifier}'..."
         )
 
-        project_key
+        project_identifier
         |> FileService.get_raw_image_data_path(uuid)
         |> Image.new_from_file()
         |> case do
@@ -113,7 +117,7 @@ defmodule FieldPublication.Processing.WebImage do
             # want end user's web browser to rotate image tiles because of the metadata.
             {:ok, {file, _}} = Operation.autorot(file)
 
-            target_path = FileService.get_web_images_path(project_key, uuid)
+            target_path = FileService.get_web_images_path(project_identifier, uuid)
 
             :ok =
               Operation.tiffsave(file, target_path,

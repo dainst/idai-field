@@ -4,6 +4,7 @@ defmodule FieldPublication.Publications do
   alias Phoenix.PubSub
 
   alias FieldPublication.CouchService
+  alias FieldPublication.FileService
   alias FieldPublication.Projects
   alias FieldPublication.Publications.{Data, Search}
 
@@ -27,19 +28,19 @@ defmodule FieldPublication.Publications do
   """
   def create_from_replication_input(%ReplicationInput{
         source_url: source_url,
-        source_project_name: source_project_name,
-        project_name: project_name,
+        source_project_identifier: source_project_identifier,
+        project_identifier: project_identifier,
         delete_existing_publication: delete_existing,
         drafted_by: drafted_by,
         draft_date: draft_date
       }) do
     changeset =
       %Publication{
-        project_name: project_name,
+        project_identifier: project_identifier,
         source_url: source_url,
-        source_project_name: source_project_name,
-        configuration_doc: "configuration_#{project_name}_#{draft_date}",
-        database: "publication_#{project_name}_#{draft_date}",
+        source_project_identifier: source_project_identifier,
+        configuration_doc: "configuration_#{project_identifier}_#{draft_date}",
+        database: "publication_#{project_identifier}_#{draft_date}",
         draft_date: draft_date,
         drafted_by: drafted_by
       }
@@ -48,7 +49,7 @@ defmodule FieldPublication.Publications do
     case apply_action(changeset, :create) do
       {:ok, publication} ->
         if delete_existing do
-          get(project_name, draft_date)
+          get(project_identifier, draft_date)
           |> case do
             {:ok, existing} ->
               # TODO: if the existing publication is already published, do not allow deletion?
@@ -68,19 +69,20 @@ defmodule FieldPublication.Publications do
     end
   end
 
-  def get(project_name, draft_date) when is_binary(draft_date) and is_binary(project_name) do
+  def get(project_identifier, draft_date)
+      when is_binary(draft_date) and is_binary(project_identifier) do
     case Date.from_iso8601(draft_date) do
       {:ok, %Date{} = parsed} ->
-        get(project_name, parsed)
+        get(project_identifier, parsed)
 
       _ ->
         {:error, :invalid_date}
     end
   end
 
-  def get(project_name, %Date{} = draft_date) when is_binary(project_name) do
+  def get(project_identifier, %Date{} = draft_date) when is_binary(project_identifier) do
     %Publication{
-      project_name: project_name,
+      project_identifier: project_identifier,
       draft_date: draft_date,
       doc_type: Publication.doc_type()
     }
@@ -88,8 +90,8 @@ defmodule FieldPublication.Publications do
     |> get()
   end
 
-  def get!(project_name, draft_date) do
-    {:ok, publication} = get(project_name, draft_date)
+  def get!(project_identifier, draft_date) do
+    {:ok, publication} = get(project_identifier, draft_date)
     publication
   end
 
@@ -146,8 +148,8 @@ defmodule FieldPublication.Publications do
     end
   end
 
-  def get_published(project_name) do
-    list(project_name)
+  def get_published(project_identifier) do
+    list(project_identifier)
     |> Stream.reject(fn %Publication{} = pub -> pub.publication_date == nil end)
     |> Enum.sort(fn %Publication{publication_date: a}, %Publication{publication_date: b} ->
       Date.compare(a, b) in [:eq, :gt]
@@ -156,8 +158,8 @@ defmodule FieldPublication.Publications do
 
   def get_current_published() do
     list()
-    |> Enum.group_by(fn val -> val.project_name end)
-    |> Stream.map(fn {_project_name, publications} ->
+    |> Enum.group_by(fn val -> val.project_identifier end)
+    |> Stream.map(fn {_project_identifier, publications} ->
       publications
       |> Stream.reject(fn %Publication{} = pub -> pub.publication_date == nil end)
       |> Enum.sort(fn %Publication{publication_date: a}, %Publication{publication_date: b} ->
@@ -168,8 +170,8 @@ defmodule FieldPublication.Publications do
     |> Enum.reject(fn val -> val == :none end)
   end
 
-  def get_current_published(project_name) do
-    project_name
+  def get_current_published(project_identifier) do
+    project_identifier
     |> get_published()
     |> List.first(:none)
   end
@@ -178,12 +180,12 @@ defmodule FieldPublication.Publications do
   Returns the most recent publication(s) based on user's access rights and
   the draft date.
   """
-  def get_most_recent(project_name \\ :all, user_name \\ nil)
+  def get_most_recent(project_identifier \\ :all, user_name \\ nil)
 
   def get_most_recent(:all, user_name) do
     list()
-    |> Enum.group_by(fn val -> val.project_name end)
-    |> Stream.map(fn {_project_name, publications} ->
+    |> Enum.group_by(fn val -> val.project_identifier end)
+    |> Stream.map(fn {_project_identifier, publications} ->
       publications
       |> Stream.reject(fn publication -> publication.replication_finished == nil end)
       |> Stream.filter(fn %Publication{} = pub ->
@@ -197,8 +199,8 @@ defmodule FieldPublication.Publications do
     |> Enum.reject(fn val -> val == nil end)
   end
 
-  def get_most_recent(project_name, user_name) do
-    list(project_name)
+  def get_most_recent(project_identifier, user_name) do
+    list(project_identifier)
     |> Stream.reject(fn publication -> publication.replication_finished == nil end)
     |> Stream.filter(fn publication ->
       Projects.has_publication_access?(publication, user_name)
@@ -213,8 +215,10 @@ defmodule FieldPublication.Publications do
     run_search(%{selector: %{doc_type: Publication.doc_type()}})
   end
 
-  def list(project_name) when is_binary(project_name) do
-    run_search(%{selector: %{doc_type: Publication.doc_type(), project_name: project_name}})
+  def list(project_identifier) when is_binary(project_identifier) do
+    run_search(%{
+      selector: %{doc_type: Publication.doc_type(), project_identifier: project_identifier}
+    })
   end
 
   defp run_search(query) do
@@ -276,7 +280,10 @@ defmodule FieldPublication.Publications do
          {:ok, %{status: 201}} <- CouchService.put_database(publication.database),
          {:ok, %{status: 201}} <- CouchService.put_document(publication.configuration_doc, %{}),
          {:ok, %{status: 201, body: body}} <- CouchService.put_document(doc_id, publication),
-         {:ok, %{status: 200}} <- Search.initialize_search_indices(publication) do
+         [
+           created: _index_name_a,
+           created: _index_name_b
+         ] <- Search.create_empty_indices(publication, true) do
       %{"rev" => rev} = Jason.decode!(body)
       {:ok, Map.put(publication, :_rev, rev)}
     else
@@ -309,13 +316,14 @@ defmodule FieldPublication.Publications do
            Data.delete_meta_database(publication),
          {:ok, %{status: status}} when status in [200, 404] <-
            delete_configuration_doc(publication),
-         # {:ok, %{status: status}} when status in [200, 404] <-
-         #   delete_hierarchy_doc(publication),
-         :ok <- Search.delete_search_indices(publication),
+         _not_found_or_deleted <- Search.delete_indices(publication),
          {:ok, %{status: status}} when status in [200, 404] <-
            CouchService.delete_document(doc_id, rev),
          {:ok, %{status: status}} when status in [200, 404] <-
-           CouchService.delete_database(database) do
+           CouchService.delete_database(database),
+         :ok <- FileService.delete_hierarchy(publication),
+         %{json: :ok, compressed: :ok} <-
+           FileService.delete_geometry_collections(publication) do
       {:ok, :deleted}
     else
       error ->
@@ -339,8 +347,8 @@ defmodule FieldPublication.Publications do
     end
   end
 
-  def generate_task_channel_name(project_key, draft_date) do
-    "#{project_key}_#{draft_date}_task"
+  def generate_task_channel_name(project_identifier, draft_date) do
+    "#{project_identifier}_#{draft_date}_task"
   end
 
   def get_doc_id(%Publication{} = publication) do

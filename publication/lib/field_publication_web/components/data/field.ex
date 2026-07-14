@@ -390,6 +390,6 @@ defmodule FieldPublicationWeb.Components.Data.Field do
     """
   end
 
-  @regex ~r/[^\d\w_:.]/
+  @regex ~r/[^\da-zA-z_:.]/
   def ensure_valid_id(input) when is_binary(input), do: String.replace(input, @regex, "_")
 end

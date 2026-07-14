@@ -12,47 +12,122 @@ defmodule FieldPublicationWeb.Presentation.Document.TypeCatalog do
 
   def render(assigns) do
     ~H"""
-    <div class="lg:basis-1/3 flex flex-col lg:flex-col-reverse lg:ml-2 lg:justify-end">
-      <%= for other_relation <- Enum.reject(
-      @doc.relations,
-      fn %RelationGroup{name: relation_name} -> relation_name in ["isDepictedIn", "hasDefaultMapLayer", "hasMapLayer"] end
-      )  do %>
-        <section>
-          <.group_heading>
-            {pick_default_translation(other_relation.labels)} ({Enum.count(other_relation.docs)})
-          </.group_heading>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1 overflow-y-auto max-h-[200vh]">
-            <%= for %Document{geometry: geometry} = doc <- other_relation.docs do %>
-              <%= if geometry do %>
-                <div
-                  id={"relations_map_highlighter_#{doc.id}"}
-                  phx-hook="HoverHighlightMapFeature"
-                  target_dom_element="generic_doc_map"
-                  target_id={doc.id}
-                >
-                  <.document_link
-                    doc={doc}
-                    image_count={10}
-                    geometry_indicator={true}
-                  />
-                </div>
-              <% else %>
-                <.document_link doc={doc} image_count={10} geometry_indicator={true} />
-              <% end %>
-            <% end %>
-          </div>
-        </section>
-      <% end %>
+    <div>
+      <.group_heading>
+        {Enum.count(@type_list)} types:
+      </.group_heading>
+
+      <form>
+        <div phx-click="toggle_sort" phx-target={@myself}>Toggle</div>
+        <input
+          phx-change="filter_identifier"
+          value={@filter}
+          phx-target={@myself}
+          name="identifier-filter"
+          type="text"
+          placeholder="Filter identifier"
+        />
+      </form>
+      <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1 overflow-y-auto max-h-[200vh]">
+        <%= for %Document{geometry: geometry} = doc <- @type_list do %>
+          <.document_link
+            doc={doc}
+            image_count={10}
+          />
+        <% end %>
+      </section>
     </div>
     """
   end
 
-  def update(%{doc: doc, publication: publication} = _assigns, socket) do
+  def update(
+        %{doc: %Document{} = doc, publication: publication} = _assigns,
+        socket
+      ) do
+    initial_order = :asc
+
+    type_list = get_full_list(doc, initial_order)
+
     {
       :ok,
       socket
       |> assign(:doc, doc)
+      |> assign(:sort_order, initial_order)
+      |> assign(:filter, nil)
+      |> assign(:type_list, type_list)
       |> assign(:publication, publication)
     }
+  end
+
+  def handle_event(
+        "toggle_sort",
+        _parameters,
+        %{assigns: %{type_list: type_list, sort_order: sort_order}} = socket
+      ) do
+    new_sort =
+      if sort_order == :asc do
+        :desc
+      else
+        :asc
+      end
+
+    sorted_list =
+      sort_type_list(type_list, sort_order)
+
+    {
+      :noreply,
+      socket
+      |> assign(:sort_order, new_sort)
+      |> assign(:type_list, sorted_list)
+    }
+  end
+
+  def handle_event("filter_identifier", %{"identifier-filter" => filter_parameter}, socket) do
+    {
+      :noreply,
+      socket
+      |> assign(:filter, String.downcase(filter_parameter))
+      |> apply_filter()
+    }
+  end
+
+  defp apply_filter(%{assigns: %{filter: filter, doc: doc, sort_order: sort_order}} = socket) do
+    type_list = get_full_list(doc, sort_order)
+
+    filtered_list =
+      Enum.filter(type_list, fn doc ->
+        doc.identifier
+        |> String.downcase()
+        |> String.contains?(filter)
+      end)
+
+    socket
+    |> assign(:type_list, filtered_list)
+  end
+
+  defp get_full_list(%Document{relations: relations}, sort_order) do
+    type_list =
+      Enum.filter(
+        relations,
+        fn %RelationGroup{
+             name: relation_name
+           } ->
+          relation_name in ["contains"]
+        end
+      )
+      |> List.first()
+      |> Map.get(:docs, [])
+      |> sort_type_list(sort_order)
+  end
+
+  defp sort_type_list(type_list, sort_order) do
+    type_list
+    |> Enum.sort(fn doc_a, doc_b ->
+      if sort_order == :asc do
+        doc_a.identifier < doc_b.identifier
+      else
+        doc_a.identifier > doc_b.identifier
+      end
+    end)
   end
 end

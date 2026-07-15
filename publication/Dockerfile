@@ -11,20 +11,20 @@
 #   - https://pkgs.org/ - resource for finding needed packages
 #   - Ex: hexpm/elixir:1.16.1-erlang-26.2.2-debian-bullseye-20240130-slim
 #
-ARG ELIXIR_VERSION=1.16.1
-ARG OTP_VERSION=26.2.2
-ARG DEBIAN_VERSION=bullseye-20240130-slim
+ARG ELIXIR_VERSION=1.20.2
+ARG OTP_VERSION=27.0.1
+ARG DEBIAN_VERSION=trixie-20260713-slim
 
 ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-debian-${DEBIAN_VERSION}"
 ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
 
-FROM ${BUILDER_IMAGE} as builder
+FROM ${BUILDER_IMAGE} AS builder
 
 # install build dependencies
 RUN apt-get update -y && apt-get install -y build-essential git curl \
     && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash
+RUN curl -sL https://deb.nodesource.com/setup_24.x | bash
 RUN apt-get install -y nodejs
 
 # prepare build dir
@@ -78,18 +78,18 @@ FROM ${RUNNER_IMAGE}
 
 RUN apt-get update -y
 
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash
+RUN curl -sL https://deb.nodesource.com/setup_24.x | bash
 RUN apt-get install -y nodejs
 
-RUN apt-get install -y libstdc++6 openssl libncurses5 locales ca-certificates \
+RUN apt-get install -y libstdc++6 openssl libncurses6 libc6 locales ca-certificates \
   && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
 # Set the locale
 RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
 
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
-ENV LC_ALL en_US.UTF-8
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US:en
+ENV LC_ALL=en_US.UTF-8
 
 RUN mkdir -p "/files"
 RUN chown nobody /files

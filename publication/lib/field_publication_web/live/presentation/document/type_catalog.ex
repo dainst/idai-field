@@ -32,26 +32,8 @@ defmodule FieldPublicationWeb.Presentation.Document.TypeCatalog do
             phx-target={@myself}
           >
             Showing {Enum.count(@type_list)} of {@total_type_number} types
-            <a
-              phx-click="toggle_sort"
-              phx-target={@myself}
-              class={"w-0 h-0
-                  border-l-[6px]
-                  border-r-[6px]
-                  border-l-transparent
-                  border-r-transparent
-                  inline-block
-                  #{if @sort_order == :asc, do: '
-                    border-b-[12px]
-                    border-b-gray-500
-                    ',
-                  else: '
-                    border-t-[12px]
-                    border-t-gray-500
-                    '}
-                      "}
-            >
-            </a>
+            <.icon :if={@sort_order == :asc} name="hero-chevron-up" />
+            <.icon :if={@sort_order == :desc} name="hero-chevron-down" />
           </div>
         </div>
       </form>
@@ -100,7 +82,7 @@ defmodule FieldPublicationWeb.Presentation.Document.TypeCatalog do
       end
 
     sorted_list =
-      sort_type_list(type_list, sort_order)
+      sort_type_list(type_list, new_sort)
 
     {
       :noreply,

@@ -1,0 +1,30 @@
+// Folder-specific settings
+//
+// For a full list of overridable settings, and general information on folder-specific settings,
+// see the documentation: https://zed.dev/docs/configuring-zed#settings-files
+{
+  "languages": {
+    "Elixir": {
+      "language_servers": ["expert"]
+    },
+    "EEx": {
+      "language_servers": ["expert", "tailwindcss-language-server"]
+    },
+    "HEEx": {
+      "language_servers": ["expert", "tailwindcss-language-server"]
+    }
+  },
+  "lsp": {
+    "tailwindcss-language-server": {
+      "settings": {
+        "includeLanguages": {
+          "elixir": "html",
+          "heex": "html",
+        },
+        "experimental": {
+          "classRegex": ["class=\"([^\"]*)\"", "class='([^']*)'"],
+        },
+      },
+    },
+  },
+}

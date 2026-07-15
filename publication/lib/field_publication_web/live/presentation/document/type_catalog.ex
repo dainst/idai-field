@@ -12,21 +12,48 @@ defmodule FieldPublicationWeb.Presentation.Document.TypeCatalog do
 
   def render(assigns) do
     ~H"""
-    <div>
-      <.group_heading>
-        {Enum.count(@type_list)} types:
-      </.group_heading>
-
-      <form>
-        <div phx-click="toggle_sort" phx-target={@myself}>Toggle</div>
-        <input
-          phx-change="filter_identifier"
-          value={@filter}
-          phx-target={@myself}
-          name="identifier-filter"
-          type="text"
-          placeholder="Filter identifier"
-        />
+    <div class="p-1 bg-panel">
+      <form class="p-2">
+        <div class="inline-block">
+          <div class="flex border border-black/20">
+            <input class="hero-magnifying-glass text-gray-400" />
+            <input
+              phx-change="filter_identifier"
+              value={@filter}
+              phx-target={@myself}
+              name="identifier-filter"
+              type="text"
+              placeholder="Search in type catalog"
+            />
+          </div>
+          <div
+            class="text-gray-700"
+            phx-click="toggle_sort"
+            phx-target={@myself}
+          >
+            Showing {Enum.count(@type_list)} of {@total_type_number} types
+            <a
+              phx-click="toggle_sort"
+              phx-target={@myself}
+              class={"w-0 h-0
+                  border-l-[6px]
+                  border-r-[6px]
+                  border-l-transparent
+                  border-r-transparent
+                  inline-block
+                  #{if @sort_order == :asc, do: '
+                    border-b-[12px]
+                    border-b-gray-500
+                    ',
+                  else: '
+                    border-t-[12px]
+                    border-t-gray-500
+                    '}
+                      "}
+            >
+            </a>
+          </div>
+        </div>
       </form>
       <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1 overflow-y-auto max-h-[200vh]">
         <%= for %Document{geometry: geometry} = doc <- @type_list do %>
@@ -56,6 +83,7 @@ defmodule FieldPublicationWeb.Presentation.Document.TypeCatalog do
       |> assign(:filter, nil)
       |> assign(:type_list, type_list)
       |> assign(:publication, publication)
+      |> assign(:total_type_number, Enum.count(type_list))
     }
   end
 

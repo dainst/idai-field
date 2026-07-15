@@ -331,7 +331,6 @@ export default (getFullProjectMapHook = () => {
 
             for (let key in featureCollections) {
                 let collection = featureCollections[key];
-                console.log(collection);
                 const vectorSource = new VectorSource({
                     features: new GeoJSON().readFeatures(collection),
                 });

@@ -21,5 +21,7 @@ config :field_publication,
   dev_routes: false,
   file_store_directory_root: "/files",
   iiif_response_headers: [
-    {"cache-control", "public, max-age=31536000, immutable"}
+    # TODO: Switch this out and define max-age only, private/public should be set dynamically
+    # based on the publication state of the image.
+    {"cache-control", "private, max-age=86400, immutable"}
   ]

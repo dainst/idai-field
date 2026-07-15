@@ -2586,6 +2586,69 @@
       },
       "Hydria": {
         "label": "hydria"
+      },
+      "Balsamarium": {
+        "label": "balsamarium"
+      },
+      "Dattelflasche": {
+        "label": "Date-shaped bottle"
+      },
+      "Faltenbecher": {
+        "label": "indented beaker"
+      },
+      "Kopfflasche": {
+        "label": "head-shaped bottle"
+      },
+      "Kotyle": {
+        "label": "Kotyle"
+      },
+      "Krater": {
+        "label": "Krater"
+      },
+      "Kylix": {
+        "label": "Kylix"
+      },
+      "Lekane": {
+        "label": "Lekanis"
+      },
+      "Lekythos": {
+        "label": "Lekythos"
+      },
+      "Luterion": {
+        "label": "Louterion"
+      },
+      "Lutrophore": {
+        "label": "Loutrophoros"
+      },
+      "Oinochoe": {
+        "label": "Oinochoe"
+      },
+      "Pelike": {
+        "label": "Pelike"
+      },
+      "Pithos": {
+        "label": "Pithos"
+      },
+      "Pyxis": {
+        "label": "Pyxis"
+      },
+      "Skyphos": {
+        "label": "Skyphos"
+      },
+      "Spitzamphora": {
+        "label": "pointed Amphora"
+      },
+      "Sprenkler": {
+        "label": "sprinkler vessel"
+      },
+      "Stamnos": {
+        "label": "Stamnos"
+      },
+      "Tierflasche": {
+        "label": "animal flask"
+      },
+      "Tischamphore": {
+        "label": "table Amphora"
       }
     }
   },
@@ -3002,6 +3065,33 @@
       },
       "Vorratsgefäß": {
         "label": "storage vessel"
+      },
+      "Amphore": {
+        "label": "Amphora"
+      },
+      "Aschenurne": {
+        "label": "cremation urn"
+      },
+      "Becher": {
+        "label": "cup"
+      },
+      "Flasche": {
+        "label": "flask"
+      },
+      "Krug": {
+        "label": "jug"
+      },
+      "Räuchergefäß": {
+        "label": "incense burner"
+      },
+      "Schüssel": {
+        "label": "bowl"
+      },
+      "Topf": {
+        "label": "pot"
+      },
+      "Unbestimmt": {
+        "label": "indeterminate"
       }
     }
   },

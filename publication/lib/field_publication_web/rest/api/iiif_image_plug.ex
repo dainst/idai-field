@@ -17,7 +17,15 @@ defmodule FieldPublicationWeb.Api.IIIFImage do
     path = FileService.get_iiif_cache_path(conn)
 
     if File.exists?(path) do
-      {:stop, Plug.Conn.send_file(conn, 200, path)}
+      conn =
+        Enum.reduce(@response_headers, conn, fn {key, value}, conn ->
+          Plug.Conn.put_resp_header(conn, key, value)
+        end)
+
+      {
+        :stop,
+        Plug.Conn.send_file(conn, 200, path)
+      }
     else
       {:continue, conn}
     end
@@ -52,6 +60,11 @@ defmodule FieldPublicationWeb.Api.IIIFImage do
       |> File.mkdir_p!()
 
       Vix.Vips.Image.write_to_file(image, path)
+
+      conn =
+        Enum.reduce(@response_headers, conn, fn {key, value}, conn ->
+          Plug.Conn.put_resp_header(conn, key, value)
+        end)
 
       {:stop, send_file(conn, 200, path)}
     else

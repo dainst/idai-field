@@ -36,7 +36,7 @@ defmodule FieldPublicationWeb.Api.Image do
         end
 
       conn
-      |> put_resp_header("cache-control", "#{cache_type}, max-age=31536000, immutable")
+      |> put_resp_header("cache-control", "#{cache_type}, max-age=86400, immutable")
       |> put_resp_header("content-type", "image/webp")
       |> send_file(
         200,

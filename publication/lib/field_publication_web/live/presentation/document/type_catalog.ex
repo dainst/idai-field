@@ -116,18 +116,17 @@ defmodule FieldPublicationWeb.Presentation.Document.TypeCatalog do
   end
 
   defp get_full_list(%Document{relations: relations}, sort_order) do
-    type_list =
-      Enum.filter(
-        relations,
-        fn %RelationGroup{
-             name: relation_name
-           } ->
-          relation_name in ["contains"]
-        end
-      )
-      |> List.first()
-      |> Map.get(:docs, [])
-      |> sort_type_list(sort_order)
+    Enum.filter(
+      relations,
+      fn %RelationGroup{
+           name: relation_name
+         } ->
+        relation_name in ["contains"]
+      end
+    )
+    |> List.first()
+    |> Map.get(:docs, [])
+    |> sort_type_list(sort_order)
   end
 
   defp sort_type_list(type_list, sort_order) do

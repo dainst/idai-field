@@ -29,6 +29,9 @@ jobs:
       - name: Install Field Hub dependencies and run setup
         run: mix setup
         working-directory: server
+      - name: Audit Field Hub dependencies
+        run: mix deps.audit
+        working-directory: server
       - name: Run Field Hub tests
         run: mix test
         working-directory: server

@@ -288,6 +288,10 @@ defmodule FieldHub.FileStore do
 
     variant_directory
     |> File.ls!()
+    |> Stream.reject(fn file_name ->
+      # Ignore all files that are currently being streamed (.writing suffix).
+      String.ends_with?(file_name, ".writing")
+    end)
     |> Stream.map(fn file_name ->
       # Evaluate file size and type
       %{
@@ -304,8 +308,7 @@ defmodule FieldHub.FileStore do
     end)
     |> Stream.reject(fn %{stat_type: type} -> type == :directory end)
     |> Stream.reject(fn %{name: file_name} ->
-      # Reject all files containing dots, added to ignore hidden OS files and files that are currently
-      # being streamed and have a .writing suffix.
+      # Reject all files containing dots, added to ignore hidden OS files.
       file_name
       |> String.trim_trailing(@tombstone_suffix)
       |> String.contains?(".")

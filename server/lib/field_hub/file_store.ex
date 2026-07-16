@@ -1,6 +1,7 @@
 defmodule FieldHub.FileStore do
   @file_directory_root Application.compile_env(:field_hub, :file_directory_root)
   @tombstone_suffix ".deleted"
+  @temporary_suffix ".writing"
   @valid_file_variants Application.compile_env(:field_hub, :valid_file_variants)
   @index_cache_name Application.compile_env(:field_hub, :file_index_cache_name)
   @index_cache_expiration_ms 1000 * 60 * 60 * 24
@@ -220,7 +221,7 @@ defmodule FieldHub.FileStore do
   """
   def create_write_io_device(uuid, project_identifier, file_variant) do
     directory = get_variant_directory(project_identifier, file_variant)
-    file_path = "#{directory}/#{uuid}.writing"
+    file_path = "#{directory}/#{uuid}#{@temporary_suffix}"
     {File.open(file_path, [:write]), file_path}
   end
 
@@ -290,7 +291,7 @@ defmodule FieldHub.FileStore do
     |> File.ls!()
     |> Stream.reject(fn file_name ->
       # Ignore all files that are currently being streamed (.writing suffix).
-      String.ends_with?(file_name, ".writing")
+      String.ends_with?(file_name, @temporary_suffix)
     end)
     |> Stream.map(fn file_name ->
       # Evaluate file size and type

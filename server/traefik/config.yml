@@ -15,7 +15,7 @@ entryPoints:
     address: ":443"
     transport:
       respondingTimeouts:
-        # Setting the timeout to 1 hour, up from 1 minute. Otherwise uploads/downloads of large images may get cancelled.
+        # Setting the timeout to 1 hour, up from 1 minute. Otherwise uploads of large images might get cancelled.
         readTimeout: "1h"
 
 certificatesResolvers:

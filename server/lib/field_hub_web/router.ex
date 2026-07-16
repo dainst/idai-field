@@ -31,7 +31,13 @@ defmodule FieldHubWeb.Router do
   forward("/db", ReverseProxyPlug,
     upstream: &CouchService.base_url/0,
     client_options: [
-      tesla_client: Tesla.client([], {Tesla.Adapter.Mint, body_as: :stream})
+      tesla_client:
+        Tesla.client([], {
+          Tesla.Adapter.Mint,
+          # timeout should atleast be same value set in core/src/datastore/pouchdb/sync-service.ts
+          # a day is much higher than that.
+          body_as: :stream, timeout: 1000 * 60 * 60 * 24
+        })
     ]
   )
 

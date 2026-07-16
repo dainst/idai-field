@@ -204,9 +204,9 @@ defmodule FieldHubWeb.Rest.Api.Rest.File do
     stream_body(conn, io_device, target_path)
   end
 
-  @read_length Application.compile_env(:field_hub, :file_read_chunk_size_bytes, 8_000_000)
+  @read_length Application.compile_env(:field_hub, :file_read_chunk_size_bytes, 800_000)
   defp stream_body(conn, io_device, path) do
-    read_body(conn, length: @read_length, read_timeout: 1000 * 60 * 30)
+    read_body(conn, length: @read_length)
     |> case do
       {:ok, data, conn} ->
         IO.binwrite(io_device, data)

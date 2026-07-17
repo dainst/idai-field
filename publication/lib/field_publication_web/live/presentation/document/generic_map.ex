@@ -115,14 +115,13 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
             <.link navigate={
               ~p"/projects/#{@publication.project_identifier}/#{@publication.draft_date}/#{doc.id}"
             }>
-              <div class="max-w-[250px]">
-                <.img_element
-                  size="^250,"
-                  project={@publication.project_identifier}
-                  uuid={doc.id}
-                  alt={"Project image '#{doc.identifier}' (#{pick_default_translation(doc.category.labels)})"}
-                />
-              </div>
+              <.img_element
+                class="border-1 border-primary hover:border-primary-hover h-[268px] w-[268px] object-center p-2 bg-panel"
+                size="^!250,250"
+                project={@publication.project_identifier}
+                uuid={doc.id}
+                alt={"Project image '#{doc.identifier}' (#{pick_default_translation(doc.category.labels)})"}
+              />
             </.link>
           <% end %>
         </div>

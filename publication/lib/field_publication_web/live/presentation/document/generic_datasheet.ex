@@ -49,19 +49,18 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericDatasheet do
             <.group_heading>
               {pick_default_translation(depicted_in.labels)} ({Enum.count(depicted_in.docs)})
             </.group_heading>
-            <div class="p-2 bg-panel overflow-auto overscroll-contain grid grid-cols-3 gap-1 mt-2 max-h-[300px] mb-5">
+            <div class="overflow-auto overscroll-contain flex flex-wrap gap-1 mt-2 max-h-[300px] mb-5">
               <%= for %Document{} = doc <- depicted_in.docs do %>
                 <.link navigate={
                   ~p"/projects/#{@publication.project_identifier}/#{@publication.draft_date}/#{doc.id}"
                 }>
-                  <div class="max-w-[250px]">
-                    <.img_element
-                      size="^250,"
-                      project={@publication.project_identifier}
-                      uuid={doc.id}
-                      alt={"Project image '#{doc.identifier}' (#{pick_default_translation(doc.category.labels)})"}
-                    />
-                  </div>
+                  <.img_element
+                    class="border-1 border-primary hover:border-primary-hover h-[268px] w-[268px] object-center p-2 bg-panel"
+                    size="^!250,250"
+                    project={@publication.project_identifier}
+                    uuid={doc.id}
+                    alt={"Project image '#{doc.identifier}' (#{pick_default_translation(doc.category.labels)})"}
+                  />
                 </.link>
               <% end %>
             </div>

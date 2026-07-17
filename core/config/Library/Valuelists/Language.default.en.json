@@ -2018,6 +2018,9 @@
       },
       "Billon": {
         "label": "Billon"
+      },
+      "Aluminium": {
+        "label": "aluminum"
       }
     }
   },
@@ -2250,6 +2253,9 @@
     "values": {
       "Unsicher bzw. unbestimmbar": {
         "label": "uncertain or indeterminate"
+      },
+      "Geprägt": {
+        "label": "embossed"
       }
     }
   },
@@ -2383,6 +2389,348 @@
       },
       "Sardinien": {
         "label": "Sardinia"
+      },
+      "Alexandrien": {
+        "label": "Alexandria"
+      },
+      "Apollonia": {
+        "label": "Apollonia"
+      },
+      "Aquileia": {
+        "label": "Aquileia"
+      },
+      "Archaiischer Bund": {
+        "label": "Achaean League"
+      },
+      "Arelate (Arles)": {
+        "label": "Arelate (Arles)"
+      },
+      "Argos": {
+        "label": "Argos"
+      },
+      "Argos Amphilochicum": {
+        "label": "Argos Amphilochicum"
+      },
+      "Arles": {
+        "label": "Arles"
+      },
+      "Arpi": {
+        "label": "Arpi"
+      },
+      "Asia Minor": {
+        "label": "Asia Minor"
+      },
+      "Asien": {
+        "label": "Asia"
+      },
+      "Aspendos": {
+        "label": "Aspendos"
+      },
+      "Assos": {
+        "label": "Assos"
+      },
+      "Astibus": {
+        "label": "Astibus"
+      },
+      "Athen": {
+        "label": "Athens"
+      },
+      "Aydın": {
+        "label": "Aydın"
+      },
+      "Babylon": {
+        "label": "Babylon"
+      },
+      "Barcino (Barcelona)": {
+        "label": "Barcino (Barcelona)"
+      },
+      "Beirut": {
+        "label": "Beirut"
+      },
+      "Bozcaada": {
+        "label": "Bozcaada"
+      },
+      "Byblos": {
+        "label": "Byblos"
+      },
+      "Byzantion": {
+        "label": "Byzantion"
+      },
+      "Böotien": {
+        "label": "Boeotia"
+      },
+      "Caesaraugusta": {
+        "label": "Caesaraugusta"
+      },
+      "Caesarea in Kappadokien": {
+        "label": "Caesarea in Cappadocia"
+      },
+      "Cales": {
+        "label": "Cales"
+      },
+      "Camulodunum (Colchester)": {
+        "label": "Camulodunum (Colchester)"
+      },
+      "Canosa di Puglia": {
+        "label": "Canosa di Puglia"
+      },
+      "Carnuntum": {
+        "label": "Carnuntum"
+      },
+      "Carthago (Tunis)": {
+        "label": "Carthage (Tunis)"
+      },
+      "Catania": {
+        "label": "Catania"
+      },
+      "Caulonia": {
+        "label": "Caulonia"
+      },
+      "Chalcedon": {
+        "label": "Chalcedon"
+      },
+      "Chalkida": {
+        "label": "Chalkida"
+      },
+      "Chalkidiki": {
+        "label": "Chalcidice"
+      },
+      "Chersones": {
+        "label": "Chersonesus"
+      },
+      "Chios": {
+        "label": "Chios"
+      },
+      "Colchester": {
+        "label": "Colchester"
+      },
+      "Colonia Agrippina (Köln)": {
+        "label": "Colonia Agrippina (Cologne)"
+      },
+      "Colonia Patricia": {
+        "label": "Colonia Patricia"
+      },
+      "Comitatenses": {
+        "label": "Comitatenses"
+      },
+      "Constantinopolis (Istanbul)": {
+        "label": "Constantinopolis (Istanbul)"
+      },
+      "Crotone": {
+        "label": "Croton"
+      },
+      "Cyme": {
+        "label": "Cyme"
+      },
+      "Damaskus": {
+        "label": "Damascus"
+      },
+      "Diesseitiges Gallian / Norditalien": {
+        "label": "Cisalpine Gaul / Northern Italy"
+      },
+      "Dionysopolis": {
+        "label": "Dionysopolis"
+      },
+      "Dyrrhachium": {
+        "label": "Dyrrhachium"
+      },
+      "Ekbatana": {
+        "label": "Ecbatana"
+      },
+      "Elea": {
+        "label": "Elea"
+      },
+      "Elis": {
+        "label": "Elis"
+      },
+      "Emerita": {
+        "label": "Emerita"
+      },
+      "Empüries": {
+        "label": "Emporion"
+      },
+      "Ephesos": {
+        "label": "Ephesus"
+      },
+      "Eretria": {
+        "label": "Eretria"
+      },
+      "Erythrai": {
+        "label": "Erythrai"
+      },
+      "Euböa": {
+        "label": "Euboea"
+      },
+      "Foça": {
+        "label": "Foça"
+      },
+      "Gela": {
+        "label": "Gela"
+      },
+      "Germe": {
+        "label": "Germe"
+      },
+      "Gortyn": {
+        "label": "Gortyn"
+      },
+      "Halikarnassos": {
+        "label": "Halicarnassus"
+      },
+      "Harran": {
+        "label": "Harran"
+      },
+      "Heraclea": {
+        "label": "Heraclea"
+      },
+      "Herakleia": {
+        "label": "Herakleia"
+      },
+      "Herakleia Pontike": {
+        "label": "Herakleia Pontike"
+      },
+      "Himera": {
+        "label": "Himera"
+      },
+      "Hispanien": {
+        "label": "Hispania"
+      },
+      "Hispanien-Punisch": {
+        "label": "Punic Hispania"
+      },
+      "Histria": {
+        "label": "Histria"
+      },
+      "Homs": {
+        "label": "Homs"
+      },
+      "Ibiza": {
+        "label": "Ibiza"
+      },
+      "Idalion": {
+        "label": "Idalion"
+      },
+      "Italien (Südosten)": {
+        "label": "Italy (southeast)"
+      },
+      "Kabile": {
+        "label": "Cabyle"
+      },
+      "Kamarina": {
+        "label": "Kamarina"
+      },
+      "Karien": {
+        "label": "Caria"
+      },
+      "Karystos": {
+        "label": "Karystos"
+      },
+      "Kelenderis": {
+        "label": "Kelenderis"
+      },
+      "Kertsch": {
+        "label": "Kerch"
+      },
+      "Klazomenai": {
+        "label": "Klazomenai"
+      },
+      "Knidos": {
+        "label": "Knidos"
+      },
+      "Kolchis": {
+        "label": "Colchis"
+      },
+      "Kolophon": {
+        "label": "Colophon"
+      },
+      "Konstantinopel": {
+        "label": "Constantinople"
+      },
+      "Korfu": {
+        "label": "Corfu"
+      },
+      "Korinthischer Bund": {
+        "label": "Hellenic League"
+      },
+      "Kos": {
+        "label": "Kos"
+      },
+      "Kydonia": {
+        "label": "Kydonia"
+      },
+      "Kyrenaika": {
+        "label": "Cyrenaica"
+      },
+      "Kyrene": {
+        "label": "Cyrene"
+      },
+      "Kyzikos": {
+        "label": "Kyzikos"
+      },
+      "Köln": {
+        "label": "Cologne"
+      },
+      "Lampsakos": {
+        "label": "Lampsakos"
+      },
+      "Laodikeia am Lykos": {
+        "label": "Laodicea on the Lycus"
+      },
+      "Lapta": {
+        "label": "Lapta"
+      },
+      "Larissa": {
+        "label": "Larissa"
+      },
+      "Larnaka": {
+        "label": "Larnaca"
+      },
+      "Latakia": {
+        "label": "Latakia"
+      },
+      "Lefkada": {
+        "label": "Lefkada"
+      },
+      "Lentini": {
+        "label": "Lentini"
+      },
+      "Lete": {
+        "label": "Lete"
+      },
+      "Locri": {
+        "label": "Locri"
+      },
+      "Locri Opuntii (Opus)": {
+        "label": "Locri Opuntii (Opus)"
+      },
+      "Londinium": {
+        "label": "Londinium"
+      },
+      "Lucera": {
+        "label": "Lucera"
+      },
+      "Lugdunum": {
+        "label": "Lugdunum"
+      },
+      "Lydien": {
+        "label": "Lydia"
+      },
+      "Lykien": {
+        "label": "Lycia"
+      },
+      "Lysimacheia": {
+        "label": "Lysimacheia"
+      },
+      "Lyttos": {
+        "label": "Lyttos"
+      },
+      "Magnesia am Mäander": {
+        "label": "Magnesia on the Maeander"
+      },
+      "Mainz": {
+        "label": "Mainz"
+      },
+      "Makedonien": {
+        "label": "Macedonia"
       }
     }
   },

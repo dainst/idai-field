@@ -55,7 +55,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericDatasheet do
                   ~p"/projects/#{@publication.project_identifier}/#{@publication.draft_date}/#{doc.id}"
                 }>
                   <.img_element
-                    class="border-1 border-primary hover:border-primary-hover h-[268px] w-[268px] object-center p-2 bg-panel"
+                    class="border-1 border-primary hover:border-primary-hover h-[268px] w-[268px] object-contain p-2 bg-panel"
                     size="^!250,250"
                     project={@publication.project_identifier}
                     uuid={doc.id}

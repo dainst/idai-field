@@ -27,7 +27,10 @@ defmodule FieldPublicationWeb.Presentation.Components.DocumentViewMap do
       <!-- set phx-update="ignore" to ensure changes the map's DOM elements are not re-rendered on updates
           by live view, but instead the content is controlled by OpenLayers (and/or our hook logic) client side after initializiation. -->
       <div style={@style} id={"#{@id}-map"} phx-update="ignore">
-        <div id={"#{@id}-loading-indicator"} class="text-center p-1 h-full w-full bg-white">
+        <div
+          id={"#{@id}-loading-indicator"}
+          class="text-center z-20 absolute p-1 h-full w-full bg-white"
+        >
           Loading map...
         </div>
 

@@ -312,17 +312,29 @@ export default getDocumentViewMapHook = () => {
                 this.publicationTileLayers.getExtents().project,
             );
 
-            this.map
-                .getView()
-                .fit(this.fullExtent, { padding: [10, 10, 10, 10] });
-            this.map.setView(
-                new View({
-                    extent: this.map
-                        .getView()
-                        .calculateExtent(this.map.getSize()),
-                    maxZoom: 40,
-                }),
-            );
+            if (!isEmpty(this.fullExtent))
+            {
+                this.map
+                    .getView()
+                    .fit(this.fullExtent, { padding: [10, 10, 10, 10] });
+                this.map.setView(
+                    new View({
+                        extent: this.map
+                            .getView()
+                            .calculateExtent(this.map.getSize()),
+                        maxZoom: 40,
+                    }),
+                );
+
+            } else {
+                // Nothing to fit the view to, pick [0,0] center as a default.
+                this.map.setView(
+                    new View({
+                        center: [0, 0],
+                        maxZoom: 40,
+                    }),
+                );
+            }
 
             this.setupDone = true;
             this.resetFeatures();
@@ -365,6 +377,7 @@ export default getDocumentViewMapHook = () => {
                     padding: [10, 10, 10, 10],
                 });
             } else {
+                this.
                 return;
             }
 

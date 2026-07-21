@@ -9,7 +9,7 @@ defmodule FieldPublicationWeb.Presentation.Document.Type do
     """
   end
 
-  def update(assigns, socket) do
+  def update(_assigns, socket) do
     {:ok, socket}
   end
 end

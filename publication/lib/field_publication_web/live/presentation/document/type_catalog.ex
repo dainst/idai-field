@@ -38,7 +38,7 @@ defmodule FieldPublicationWeb.Presentation.Document.TypeCatalog do
         </div>
       </form>
       <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1 overflow-y-auto max-h-[200vh]">
-        <%= for %Document{geometry: geometry} = doc <- @type_list do %>
+        <%= for doc <- @type_list do %>
           <.document_link
             doc={doc}
             image_count={10}

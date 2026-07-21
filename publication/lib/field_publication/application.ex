@@ -2,11 +2,14 @@ defmodule FieldPublication.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
+  require Logger
   alias FieldPublication.Settings
   alias FieldPublication.FileService
   alias FieldPublication.CouchService
 
   use Application
+
+  @required_node_version 24
 
   @impl true
   def start(_type, _args) do
@@ -46,7 +49,72 @@ defmodule FieldPublication.Application do
     FileService.initial_setup()
     Settings.load()
 
+    check_node_version()
+    |> extract_major_node_version()
+    |> parse_major_node_version()
+    |> compare_major_node_version()
+    |> case do
+      {:error, msg} ->
+        raise msg
+
+      :ok ->
+        Logger.debug("Node version >= #{@required_node_version} found.")
+        :ok
+    end
+
     supervisor_startup
+  end
+
+  defp check_node_version() do
+    case System.cmd("node", ["-v"]) do
+      {output, 0} ->
+        {:ok, output}
+
+      _ ->
+        {:error, "Did not find node, required version is >= #{@required_node_version}."}
+    end
+  end
+
+  defp extract_major_node_version({:ok, cmd_result}) do
+    pattern = ~r/^v(\d+)\..*$/
+
+    case Regex.run(pattern, cmd_result) do
+      [_full_string, maybe_number] ->
+        {:ok, maybe_number}
+
+      _ ->
+        {:error, "Failed to parse node version from #{cmd_result}."}
+    end
+  end
+
+  defp extract_major_node_version({:error, _} = error) do
+    error
+  end
+
+  defp parse_major_node_version({:ok, maybe_number}) do
+    case Integer.parse(maybe_number) do
+      {number, ""} ->
+        {:ok, number}
+
+      _ ->
+        {:error, "Unable to parse #{maybe_number} as integer."}
+    end
+  end
+
+  defp parse_major_node_version({:error, _} = error) do
+    error
+  end
+
+  defp compare_major_node_version({:ok, number}) do
+    if number < @required_node_version do
+      {:error, "Minimum node version is #{@required_node_version}, got #{number}."}
+    else
+      :ok
+    end
+  end
+
+  defp compare_major_node_version({:error, _} = error) do
+    error
   end
 
   # Tell Phoenix to update the endpoint configuration

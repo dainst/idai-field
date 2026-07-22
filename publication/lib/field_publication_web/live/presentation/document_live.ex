@@ -68,12 +68,14 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
         %Document{id: uuid} = document ->
           project_map_layers = Publications.Data.get_project_map_layers(publication)
           image_categories = Publications.Data.get_image_categories(publication)
+          type_categories = Publications.Data.get_type_categories(publication)
 
           socket
           |> assign(:publication, publication)
           |> assign(:uuid, uuid)
           |> assign(:doc, document)
           |> assign(:image_categories, image_categories)
+          |> assign(:type_categories, type_categories)
           |> assign(:project_map_layers, project_map_layers)
           |> assign(
             :page_title,

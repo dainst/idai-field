@@ -167,6 +167,7 @@ defmodule FieldPublicationWeb.Router do
 
     scope "/dev" do
       pipe_through(:browser)
+      live("/field_render", FieldRenderHelper)
 
       live_dashboard("/dashboard", metrics: FieldPublicationWeb.Telemetry)
       forward("/mailbox", Plug.Swoosh.MailboxPreview)

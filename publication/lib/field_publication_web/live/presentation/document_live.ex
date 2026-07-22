@@ -41,7 +41,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
       |> assign(:project_identifier, project_identifier)
       |> assign(:publications, publications)
       |> assign(:draft_dates, draft_dates)
-      |> assign(:focus, :default)
     }
   end
 

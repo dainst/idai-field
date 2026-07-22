@@ -9,7 +9,7 @@ defmodule FieldPublication.Application do
 
   use Application
 
-  @required_node_version 24
+  @required_node_version 22
 
   @impl true
   def start(_type, _args) do

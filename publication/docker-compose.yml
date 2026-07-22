@@ -1,6 +1,6 @@
 services:
   opensearch:
-    image: opensearchproject/opensearch:2.19.2
+    image: opensearchproject/opensearch:3.7.0
     container_name: "field_publication_opensearch"
     environment:
       - discovery.type=single-node
@@ -23,7 +23,7 @@ services:
       - 9600:9600 # Performance Analyzer
 
   couchdb:
-    image: couchdb:3.3.2
+    image: couchdb:3.5.2
     container_name: "field_publication_couchdb"
     ports:
       - "5985:5984"

@@ -45,8 +45,8 @@
         module={FieldPublicationWeb.Presentation.Document.Image}
         doc={@doc}
         publication={@publication}
-      />
-    <% category == "Type" -> %>
+      />    
+    <% category in @type_categories -> %>
       <.live_component
         id={"type-#{@doc.id}"}
         module={FieldPublicationWeb.Presentation.Document.Type}

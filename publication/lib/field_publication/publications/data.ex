@@ -481,6 +481,10 @@ defmodule FieldPublication.Publications.Data do
     ["Image"] ++ get_child_categories(publication, "Image")
   end
 
+  def get_type_categories(publication) do
+    ["Type"] ++ get_child_categories(publication, "Type")
+  end
+
   def get_flat_category_configs(publication) do
     publication
     |> Publications.get_configuration()

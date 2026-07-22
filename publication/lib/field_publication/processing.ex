@@ -64,6 +64,7 @@ defmodule FieldPublication.Processing do
     GenServer.call(__MODULE__, {:start, publication, :web_images})
     GenServer.call(__MODULE__, {:start, publication, :tile_images})
     GenServer.call(__MODULE__, {:start, publication, :search_index})
+    GenServer.call(__MODULE__, {:start, publication, :geo_collections})
     GenServer.call(__MODULE__, {:start, publication, :preview_documents})
     GenServer.call(__MODULE__, {:start, publication, :database_indices})
   end

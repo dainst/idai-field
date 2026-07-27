@@ -153,7 +153,7 @@
     "geotiff": "3.0.4",
     "idai-field-core": "^1.6.0",
     "image-size": "2.0.2",
-    "jimp": "1.6.0",
+    "jimp": "1.6.1",
     "leaflet": "1.7.1",
     "panzoom": "9.4.3",
     "pouchdb-browser": "9.0.0",

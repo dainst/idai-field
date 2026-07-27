@@ -748,6 +748,9 @@
       },
       "Spolienmauerwerk": {
         "label": "spolia masonry"
+      },
+      "Mischform Polygonal-/Quadermauerwerk": {
+        "label": "mixed polygonal and ashlar masonry"
       }
     }
   },
@@ -4758,6 +4761,103 @@
     "values": {
       "Felsgrab": {
         "label": "rock-cut tomb"
+      }
+    }
+  },
+  "damages-default": {
+    "values": {
+      "totalCollapse": {
+        "label": "total collapse"
+      },
+      "partialCollapse": {
+        "label": "partial collapse"
+      },
+      "missingconst": {
+        "label": "missing structural element"
+      },
+      "looseconst": {
+        "label": "loose structural element"
+      },
+      "fractures": {
+        "label": "fracture/break"
+      },
+      "riss1": {
+        "label": "crack (<1mm)"
+      },
+      "riss2": {
+        "label": "crack (1mm-5mm)"
+      },
+      "riss3": {
+        "label": "crack (>5mm)"
+      },
+      "riss4": {
+        "label": "crack (>10mm)"
+      },
+      "deformationSwelling": {
+        "label": "deformation: swelling/bulge"
+      },
+      "delamination": {
+        "label": "delamination/peeling of the walls"
+      },
+      "moisture": {
+        "label": "moisture"
+      },
+      "cavities": {
+        "label": "cavities"
+      },
+      "exfoliation": {
+        "label": "exfoliation"
+      },
+      "spalling": {
+        "label": "spalling/breakout"
+      },
+      "efflorescence": {
+        "label": "efflorescence"
+      },
+      "bioSettlement": {
+        "label": "biological growth"
+      },
+      "fireDamage": {
+        "label": "fire damage"
+      },
+      "erosion": {
+        "label": "erosion"
+      },
+      "corrosion": {
+        "label": "corrosion"
+      },
+      "crusting": {
+        "label": "crusting"
+      },
+      "mechanicDamage": {
+        "label": "mechanic damage"
+      },
+      "discoloration": {
+        "label": "discoloration"
+      },
+      "contamination": {
+        "label": "contamination"
+      },
+      "fragmentation": {
+        "label": "fragmentation"
+      },
+      "ruin": {
+        "label": "ruin"
+      },
+      "weathering": {
+        "label": "weathering"
+      },
+      "rotting": {
+        "label": "rotting/wood damage (structurally sound)"
+      },
+      "rottingstr": {
+        "label": "rotting/wood damage (structurally unsound)"
+      },
+      "vandalizm": {
+        "label": "vandalizm"
+      },
+      "fissure": {
+        "label": "cracks in the plaster"
       }
     }
   }

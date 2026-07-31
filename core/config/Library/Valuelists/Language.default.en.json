@@ -2342,6 +2342,174 @@
     "values": {
       "Unsicher bzw. unbestimmbar": {
         "label": "uncertain or indeterminate"
+      },
+      "1 1/2 Skripula": {
+        "label": "1 1/2 scripula"
+      },
+      "1 1/2 Solidus": {
+        "label": "1 1/2 solidi"
+      },
+      "1/2 Stater (Hemistater)": {
+        "label": "1/2 stater (hemistater)"
+      },
+      "1/30 Drachme": {
+        "label": "1/30 drachm"
+      },
+      "1/4  Stater (Tetarte)": {
+        "label": "1/4 stater (tetarte)"
+      },
+      "1/4 Einheit": {
+        "label": "tetarte"
+      },
+      "1/5 Drachme": {
+        "label": "1/5 drachm"
+      },
+      "2 Solidus": {
+        "label": "2 solidi"
+      },
+      "3 Solidus": {
+        "label": "3 solidi"
+      },
+      "4 1/2 Solidus": {
+        "label": "4 1/2 solidi"
+      },
+      "60 As": {
+        "label": "60 asses"
+      },
+      "9 Siliqua": {
+        "label": "9 siliquae"
+      },
+      "9 Solidus": {
+        "label": "9 solidi"
+      },
+      "Antoninian": {
+        "label": "antoninianus"
+      },
+      "Argenteus": {
+        "label": "argenteus"
+      },
+      "As": {
+        "label": "as"
+      },
+      "Aureus": {
+        "label": "aureus"
+      },
+      "Aureus¹": {
+        "label": "aureus¹"
+      },
+      "Aureus²": {
+        "label": "aureus²"
+      },
+      "Bruchteil": {
+        "label": "fraction"
+      },
+      "Cistophor": {
+        "label": "cistophorus"
+      },
+      "Denar": {
+        "label": "denarius"
+      },
+      "Denar (serratus)": {
+        "label": "denarius (serratus)"
+      },
+      "Didrachme": {
+        "label": "didrachm"
+      },
+      "Diobol": {
+        "label": "diobol"
+      },
+      "Distater": {
+        "label": "distater"
+      },
+      "Doppelter Sesterz": {
+        "label": "double sestertius"
+      },
+      "Drachme": {
+        "label": "drachm"
+      },
+      "Dupondius": {
+        "label": "dupondius"
+      },
+      "Gold-mehrfaches": {
+        "label": "gold multiple"
+      },
+      "Halber Solidus": {
+        "label": "semissis/semis"
+      },
+      "Hekte (1/6 Stater)": {
+        "label": "hekte (1/6 stater)"
+      },
+      "Hemidrachme": {
+        "label": "hemidrachm"
+      },
+      "Hemiobol": {
+        "label": "hemiobol"
+      },
+      "Medaillon": {
+        "label": "medaillon"
+      },
+      "Miliarense (leicht)": {
+        "label": "miliarense (light)"
+      },
+      "Miliarense (schwer)": {
+        "label": "miliarense (heavy)"
+      },
+      "Obolus": {
+        "label": "obol"
+      },
+      "Quadrans": {
+        "label": "quadrans"
+      },
+      "Quinar": {
+        "label": "quinarius"
+      },
+      "Quinar Aureus": {
+        "label": "quinarius aureus"
+      },
+      "Reduzierte Siliqua": {
+        "label": "reduced siliqua"
+      },
+      "Semis": {
+        "label": "semis"
+      },
+      "Semissis": {
+        "label": "semissis"
+      },
+      "Semuncia": {
+        "label": "semuncia"
+      },
+      "Sesterz": {
+        "label": "sestertius"
+      },
+      "Sextans": {
+        "label": "sextans"
+      },
+      "Silber-Mehrfaches": {
+        "label": "silver multiple"
+      },
+      "Siliqua": {
+        "label": "siliqua"
+      },
+      "Solidus": {
+        "label": "solidus"
+      },
+      "Stater": {
+        "label": "stater"
+      },
+      "Tetradrachme": {
+        "label": "tetradrachm"
+      },
+      "Tremissis": {
+        "label": "tremissis"
+      },
+      "Triens": {
+        "label": "triens"
+      },
+      "Uncia": {
+        "label": "uncia"
+      },
+      "Victoriatus": {
+        "label": "victoriatus"
       }
     }
   },
@@ -3385,6 +3553,69 @@
     "values": {
       "Zahn": {
         "label": "tooth"
+      },
+      "Becken (Pelvis)": {
+        "label": "Pelvis"
+      },
+      "Brustbein (Sternum)": {
+        "label": "Sternum"
+      },
+      "Elle (Ulna)": {
+        "label": "Ulna"
+      },
+      "Fingerknochen (Phalanges)": {
+        "label": "Phalanges"
+      },
+      "Fußknochen": {
+        "label": "Bones of the foot"
+      },
+      "Handknochen": {
+        "label": "Bones of the hand"
+      },
+      "Kniescheibe (Patella)": {
+        "label": "Patella"
+      },
+      "Langknochen": {
+        "label": "long bone"
+      },
+      "Oberarm (Humerus)": {
+        "label": "Humerus"
+      },
+      "Oberschenkel (Femur)": {
+        "label": "Femur"
+      },
+      "Rippen": {
+        "label": "Ribs"
+      },
+      "Schienenbein (Tibia)": {
+        "label": "Tibia"
+      },
+      "Schlüsselbein (Clavicula)": {
+        "label": "Clavicle"
+      },
+      "Schulterblatt (Scapula)": {
+        "label": "Scapula"
+      },
+      "Schädel (Cranium)": {
+        "label": "Skull (Cranium)"
+      },
+      "Speiche (Radius)": {
+        "label": "Radius"
+      },
+      "Steißbein": {
+        "label": "Coccyx"
+      },
+      "Undefinierbar": {
+        "label": "indefinable"
+      },
+      "Unterkiefer (Mandibula)": {
+        "label": "Mandible"
+      },
+      "Wadenbein (Fibula)": {
+        "label": "Fibula"
+      },
+      "Wirbel": {
+        "label": "Vertebra"
       }
     }
   },
@@ -4934,6 +5165,25 @@
       },
       "- 12 Uhr": {
         "label": "- 12 o'clock"
+      }
+    }
+  },
+  "Bone-burningGrade-default": {
+    "values": {
+      "I - 200°-300°C - Verfärbung etwa gelblichweiß-elfenbein glasig": {
+        "label": "I - 200°-300°C - Discoloration approximately yellowish-white to ivory glassy"
+      },
+      "II - 300°-400°C - Verfärbung etwa braun-dunkelbraun/schwarz": {
+        "label": "II - 300°-400°C - Discoloration approximately brown to dark brown/black"
+      },
+      "III - um 550°C - Verfärbung etwa grau/blaugrau-milchig hellgrau": {
+        "label": "III - around 550°C - Discoloration approximately gray/blue-gray to milky light grey"
+      },
+      "IV - 650°-750°C - Verfärbung etwa milchig weiß-mattweiß/kreideartig": {
+        "label": "IV - 650°-750°C - Discoloration approximately milky white to matte white/chalky"
+      },
+      "V - ab 800°C - Verfärbung etwa altweiß/schmutzigweiß": {
+        "label": "V - 800°C or higher - Discoloration approximately off-white/dirty white"
       }
     }
   }

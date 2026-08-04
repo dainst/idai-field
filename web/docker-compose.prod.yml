@@ -78,7 +78,39 @@ services:
         - "traefik.frontend.redirect.replacement=https://field.idai.world$${1}"
         - "traefik.frontend.redirect.permanent=true"
         - "traefik.port=80"
-
+  anubis:
+    image: ghcr.io/techarohq/anubis:v1.26.2
+    restart: unless-stopped
+    environment:
+      TARGET: " "
+      BIND: ":8080"
+      REDIRECT_DOMAINS: field.idai.world
+      PUBLIC_URL: "https://anubis.field.idai.world"
+      COOKIE_DOMAIN: field.idai.world
+      POLICY_FNAME: "/data/cfg/botPolicy.yaml"
+    volumes:
+      - "./botPolicy.yaml:/data/cfg/botPolicy.yaml:ro"
+    networks:
+      - web
+      - default
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.anubis.rule=Host(`anubis.field.idai.world`)
+      - traefik.http.routers.anubis.entrypoints=websecure
+      - traefik.http.routers.anubis.tls.certresolver=letsencrypt
+      - traefik.http.services.anubis.loadbalancer.server.port=8080 # Telling Traefik where to receive requests
+      - traefik.http.routers.anubis.service=anubis # Telling Traefik to use the above specified port
+  traefik:
+    image: "traefik:v3.6"
+    container_name: traefik
+    ports:
+      #- "80:80"
+      - "443:443"
+    labels:
+      - traefik.enable=true
+      - traefik.http.middlewares.anubis.forwardauth.address=http://anubis:8080/.within.website/x/cmd/anubis/api/check
+      - traefik.http.middlewares.realip.headers.customRequestHeaders.X-Forwarded-For=>CF-Connecting-IP
+   
 volumes:
   elasticsearch-data:
   idai-field-web_images:

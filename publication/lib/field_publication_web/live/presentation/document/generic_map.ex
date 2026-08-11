@@ -156,7 +156,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
       >
         <.icon name="hero-chevron-double-up" /> Lies within ({Enum.count(@hierarchy.ancestors)})
       </div>
-      <div class="border-2 border-primary bg-panel p-2" }>
+      <div class="border-2 border-primary bg-panel p-2">
         <.document_link
           id={"self-#{@doc.id}"}
           doc={@doc}

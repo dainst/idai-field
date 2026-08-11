@@ -1,6 +1,6 @@
 <section>
-  <%= for {field, description} <- @examples do %>
-    <pre>{description}:</pre>
+  <%= for %{data: field, description: description} <- @examples do %>
+    <div>{description}:</div>
     <.labeled_value class="border p-0.5 border-black/20">
       <:label><.render_field_label field={field} /></:label>
       <.render_field_data field={field} publication={@publication} />

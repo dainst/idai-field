@@ -80,7 +80,7 @@ services:
     image: ghcr.io/techarohq/anubis:v1.26.2
     restart: unless-stopped
     environment:
-      TARGET: " "
+      TARGET: "http://${FIELD_WEB_HOST}:80"
       BIND: ":8080"
       REDIRECT_DOMAINS: ${FIELD_WEB_HOST}
       PUBLIC_URL: "https://anubis.${FIELD_WEB_HOST}"

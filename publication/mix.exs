@@ -37,11 +37,13 @@ defmodule FieldPublication.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix_live_view, "~> 1.1"},
+      {:phoenix, "~> 1.8"},
+      {:phoenix_html, "~> 4.3"},
+      {:phoenix_live_view, "~> 1.2"},
       {:phoenix_live_dashboard, "~> 0.8"},
       {:phoenix_ecto, "~> 4.7"},
       {:phoenix_live_reload, "~> 1.5", only: :dev},
-      {:mdex, "~> 0.13.0"},
+      {:mdex, "~> 0.13"},
       {:geo, "~> 4.1"},
       {:esbuild, "~> 0.10", runtime: Mix.env() == :dev},
       {:tailwind, "~> 0.4", runtime: Mix.env() == :dev},

@@ -15,6 +15,19 @@ defmodule FieldPublicationWeb.Components.Data.Field do
   attr(:field, Field)
   attr(:hide_language_selection?, :boolean, default: false)
 
+  def render_field(assigns) do
+    ~H"""
+    <.labeled_value class="border p-0.5 border-black/20">
+      <:label><.render_field_label field={@field} /></:label>
+      <.render_field_data field={@field} publication={@publication} />
+    </.labeled_value>
+    """
+  end
+
+  attr(:publication, Publication, required: true)
+  attr(:field, Field)
+  attr(:hide_language_selection?, :boolean, default: false)
+
   def render_field_data(%{field: %Field{input_type: input_type}} = assigns)
       when input_type in ["boolean"] do
     # Explictly calling gettext("true") and gettext("false") to enable the Gettext to pickup the value

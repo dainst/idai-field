@@ -64,17 +64,18 @@ defmodule FieldPublicationWeb.FieldHubIntegrationTest do
     pid = live_process.pid
     :erlang.trace(pid, true, [:receive])
 
-    assert live_process
-           |> form("#replication-form", %{
-             replication_input: %{
-               source_url: FieldHubHelper.get_url(),
-               source_user: FieldHubHelper.get_admin_name(),
-               source_password: FieldHubHelper.get_admin_password(),
-               source_project_identifier: "testopolis",
-               delete_existing_publication: true
-             }
-           })
-           |> render_submit()
+    _html =
+      live_process
+      |> form("#replication-form", %{
+        replication_input: %{
+          source_url: FieldHubHelper.get_url(),
+          source_user: FieldHubHelper.get_admin_name(),
+          source_password: FieldHubHelper.get_admin_password(),
+          source_project_identifier: "testopolis",
+          delete_existing_publication: true
+        }
+      })
+      |> render_submit()
 
     {publication_path, _flash} = assert_redirect(live_process, 5000)
 

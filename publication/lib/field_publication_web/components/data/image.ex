@@ -16,12 +16,14 @@ defmodule FieldPublicationWeb.Components.Data.Image do
   attr(:quality, :string, default: @default_quality)
   attr(:format, :atom, values: [:jpg, :png, :webp], default: @default_format)
   attr(:rest, :global)
+  attr(:alt, :string)
 
   def img_element(assigns) do
     ~H"""
     <img
       {@rest}
       loading="lazy"
+      alt={@alt}
       src={construct_url(@project, @uuid, @region, @size, @rotation, @quality, @format)}
     />
     """

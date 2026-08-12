@@ -34,10 +34,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericDatasheet do
 
               <div class="grid max-md:grid-cols-1 md:grid-cols-2 gap-1 mt-2">
                 <%= for %Field{} = field <- fields do %>
-                  <.labeled_value class="border p-0.5 border-black/20">
-                    <:label><.render_field_label field={field} /></:label>
-                    <.render_field_data field={field} publication={@publication} />
-                  </.labeled_value>
+                  <.render_field field={field} publication={@publication} />
                 <% end %>
               </div>
             </section>

@@ -136,7 +136,12 @@
     />
   </:item>
   <:item :if={@publication.replication_finished != nil} title="Additional metadata">
-    <.form for={@publication_form} phx-change="validate" phx-submit="save">
+    <.form
+      id="publication-metadata"
+      for={@publication_form}
+      phx-change="validate"
+      phx-submit="save"
+    >
       <.input type="hidden" field={@publication_form[:project_identifier]} />
       <.input type="hidden" field={@publication_form[:source_url]} />
       <.input type="hidden" field={@publication_form[:source_project_identifier]} />

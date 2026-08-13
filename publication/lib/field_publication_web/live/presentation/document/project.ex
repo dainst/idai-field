@@ -19,13 +19,6 @@ defmodule FieldPublicationWeb.Presentation.Document.Project do
   def render(assigns) do
     ~H"""
     <div>
-      <.document_heading>
-        <.render_field_data
-          field={Data.get_field(@doc, "shortName")}
-          hide_language_selection?={true}
-          publication={@publication}
-        />
-      </.document_heading>
       <% depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
       <%= if depicted_in != nil do %>
         <div class="pt-4 pb-4 w-full gap-2 flex flex-row justify-center overflow-x-auto">
@@ -49,25 +42,20 @@ defmodule FieldPublicationWeb.Presentation.Document.Project do
 
       <div class="flex flex-row gap-4">
         <div class="basis-2/3">
-          <.group_heading>
-            {gettext("project_doc_about_project")}
-          </.group_heading>
-          <div class="bg-panel p-2">
+          <section>
             <% description = Data.get_field(@doc, "description") %>
             <%= if description do %>
               <.render_field_data_as_markdown field={description} />
             <% else %>
-              -
+              <div class="italic">No project description available.</div>
             <% end %>
-          </div>
-          <.group_heading class="mt-3">
-            {gettext("project_doc_about_publication")}
-          </.group_heading>
+          </section>
+
           <% comments =
             @publication.comments
             |> Enum.map(fn %Translation{language: lang, text: text} -> {lang, text} end)
             |> Enum.into(%{}) %>
-          <div class="bg-panel p-2">
+          <section>
             <%= if comments != %{} do %>
               <.live_component
                 :let={comment}
@@ -82,9 +70,9 @@ defmodule FieldPublicationWeb.Presentation.Document.Project do
                 </span>
               </.live_component>
             <% else %>
-              -
+              <div class="italic mt-8">No publication description available.</div>
             <% end %>
-          </div>
+          </section>
         </div>
 
         <div class="basis-1/3">

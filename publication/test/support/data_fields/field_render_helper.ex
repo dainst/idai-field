@@ -17,6 +17,7 @@ defmodule FieldRenderHelper do
         dropdown_range(),
         input(),
         radio(),
+        simple_input(),
         text(),
         unsigned_int()
       ]
@@ -42,7 +43,7 @@ defmodule FieldRenderHelper do
             value_labels: nil,
             input_type: "boolean"
           },
-          description: "`boolean` input"
+          description: "`boolean` input with translated field label"
         }
       ]
     end
@@ -95,7 +96,7 @@ defmodule FieldRenderHelper do
             input_type: "checkboxes"
           },
           description:
-            "`checkboxes` input with translated field labels and translated value labels"
+            "`checkboxes` input with translated field label and translated value labels"
         },
         %__MODULE__{
           data: %FieldData{
@@ -114,7 +115,32 @@ defmodule FieldRenderHelper do
             value_labels: nil,
             input_type: "checkboxes"
           },
-          description: "`checkboxes` input with translated field labels"
+          description:
+            "`checkboxes` input with translated field label without translated value labels"
+        }
+      ]
+    end
+
+    def date() do
+      [
+        %__MODULE__{
+          data: %FieldData{
+            name: "date",
+            value: "26.02.2021",
+            labels: %{
+              "de" => "Datum",
+              "en" => "Date",
+              "es" => "Fecha",
+              "fr" => "Date",
+              "it" => "Data",
+              "pt" => "Data",
+              "tr" => "Tarih",
+              "uk" => "Дата"
+            },
+            value_labels: nil,
+            input_type: "date"
+          },
+          description: "`date` input"
         }
       ]
     end
@@ -226,6 +252,26 @@ defmodule FieldRenderHelper do
           },
           description:
             "`input` input with translated field label and only a single translated value"
+        },
+        %__MODULE__{
+          data: %FieldData{
+            name: "shortDescription",
+            value: "Zerstörungshorizont Mauer 4044",
+            labels: %{
+              "de" => "Kurzbeschreibung",
+              "en" => "Short description",
+              "es" => "Descripción breve",
+              "fr" => "Description sommaire",
+              "it" => "Descrizione breve",
+              "pt" => "Descrição breve",
+              "tr" => "Kısa açıklama",
+              "uk" => "Короткий опис"
+            },
+            value_labels: nil,
+            input_type: "input"
+          },
+          description:
+            "`input` input with translated field label and only a single non-translated value"
         }
       ]
     end
@@ -257,6 +303,47 @@ defmodule FieldRenderHelper do
           },
           description:
             "`radio` input with with translated field label and translated value labels"
+        },
+        %__MODULE__{
+          data: %FieldData{
+            name: "storagePlace",
+            value: "Scherbenhalle TAX Kiste HBW",
+            labels: %{
+              "de" => "Aufbewahrungsort",
+              "en" => "Storage place",
+              "es" => "Lugar de almacenamiento",
+              "fr" => "Lieu de conservation",
+              "it" => "Luogo di conservazione",
+              "pt" => "Depósito",
+              "tr" => "Depolandığı yer",
+              "uk" => "Місце збереження"
+            },
+            value_labels: %{},
+            input_type: "radio"
+          },
+          description:
+            "`radio` input with with translated field label and without translated value labels"
+        }
+      ]
+    end
+
+    def simple_input() do
+      [
+        %__MODULE__{
+          data: %FieldData{
+            name: "originalFilename",
+            value: "D_DAI_HB_2018_4063_704_5.JPG",
+            labels: %{
+              "de" => "Ursprünglicher Dateiname",
+              "en" => "Original filename",
+              "es" => "Nombre original del archivo",
+              "pt" => "Nome de ficheiro original",
+              "tr" => "Orijinal dosya adı"
+            },
+            value_labels: nil,
+            input_type: "simpleInput"
+          },
+          description: "`simpleInput` input with translated field label"
         }
       ]
     end
@@ -286,6 +373,27 @@ defmodule FieldRenderHelper do
             input_type: "text"
           },
           description: "`text` input with with translated field label and translated values."
+        },
+        %__MODULE__{
+          data: %FieldData{
+            name: "description",
+            value:
+              "Bodenplatte von 1,8 cm Stärke. Auf der einen Seite geweißelt, auf der anderen Seite geglättet. Der Ton ist rotbraun und grob gemagert. Originalkanten sind nicht erhalten.",
+            labels: %{
+              "de" => "Beschreibung",
+              "en" => "Description",
+              "es" => "Descripción",
+              "fr" => "Description",
+              "it" => "Descrizione",
+              "pt" => "Descrição",
+              "tr" => "Açıklama",
+              "uk" => "Опис"
+            },
+            value_labels: nil,
+            input_type: "text"
+          },
+          description:
+            "`text` input with with translated field label and without translated values."
         }
       ]
     end

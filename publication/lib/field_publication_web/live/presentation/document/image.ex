@@ -38,16 +38,13 @@ defmodule FieldPublicationWeb.Presentation.Document.Image do
               name in ["identifier", "category", "geometry"]
             end) %>
           <%= unless fields == [] do %>
-            <section>
+            <section class="flex flex-col gap-1">
               <.group_heading>
                 {pick_default_translation(group.labels)}
               </.group_heading>
 
               <%= for %Field{} = field <- fields do %>
-                <.labeled_value class="p-0.5">
-                  <:label><.render_field_label field={field} /></:label>
-                  <.render_field_data field={field} publication={@publication} />
-                </.labeled_value>
+                <.render_field field={field} publication={@publication} />
               <% end %>
             </section>
           <% end %>

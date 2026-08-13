@@ -27,8 +27,8 @@
     <%= if assigns[:page_description] do %>
       <meta property="og:description" content={assigns[:page_description]} />
     <% end %>
-    <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
     <link phx-track-static rel="stylesheet" href={~p"/assets/ol.css"} />
+    <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
 
     <style>
       <%= FieldPublication.Settings.get_customized_css() %>

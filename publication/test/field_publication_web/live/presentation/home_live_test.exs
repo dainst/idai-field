@@ -80,7 +80,7 @@ defmodule FieldPublicationWeb.Presentation.HomeLiveTest do
     assert html =~ "Search"
 
     assert live_view_pid
-           |> element("a", "Search projects")
+           |> element("a", "Search all projects")
            |> render_click()
 
     {path, _flash} = assert_redirect(live_view_pid)

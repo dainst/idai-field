@@ -126,7 +126,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericDatasheet do
             </.link>
           </.group_heading>
           <.live_component
-            module={FieldPublicationWeb.Presentation.Components.DocumentViewMap}
+            module={FieldPublicationWeb.Components.DocumentViewMap}
             id="generic_doc_map"
             style="width:100%; height:500px;"
             doc={@doc}

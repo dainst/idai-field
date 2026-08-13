@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.Presentation.Components.WorldMap do
+defmodule FieldPublicationWeb.Components.WorldMap do
   use FieldPublicationWeb, :live_component
 
   alias FieldPublication.Settings

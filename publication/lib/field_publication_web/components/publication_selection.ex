@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.Presentation.Components.PublicationSelection do
+defmodule FieldPublicationWeb.Components.PublicationSelection do
   use FieldPublicationWeb, :html
 
   def render(assigns) do

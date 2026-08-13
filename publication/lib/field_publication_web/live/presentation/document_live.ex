@@ -11,7 +11,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
   alias FieldPublicationWeb.Presentation.Opengraph
 
-  alias FieldPublicationWeb.Presentation.Components.PublicationSelection
+  alias FieldPublicationWeb.Components.PublicationSelection
 
   import FieldPublicationWeb.Components.Data.DocumentLink
 

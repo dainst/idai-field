@@ -148,7 +148,7 @@ defmodule FieldPublicationWeb.Presentation.Document.Project do
       <div class="flex flex-row gap-4 mt-4" id="map-offset-element">
         <div class="basis-2/3 flex-none p-2">
           <.live_component
-            module={FieldPublicationWeb.Presentation.Components.FullProjectMap}
+            module={FieldPublicationWeb.Components.FullProjectMap}
             id="project_doc_map"
             style="height: 600px; background-color: var(--panel-color)"
             publication={@publication}

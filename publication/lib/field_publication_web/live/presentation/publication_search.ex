@@ -5,7 +5,7 @@ defmodule FieldPublicationWeb.Presentation.PublicationSearch do
   alias FieldPublication.Publications.Search
   alias FieldPublication.Publications.Data
 
-  import FieldPublicationWeb.Presentation.Components.Search
+  import FieldPublicationWeb.Components.Search
 
   import FieldPublicationWeb.Components.Data.{
     Field

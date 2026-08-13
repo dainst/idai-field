@@ -2,7 +2,7 @@ defmodule FieldPublicationWeb.Presentation.SearchLive do
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.Publications.Search
-  import FieldPublicationWeb.Presentation.Components.Search
+  import FieldPublicationWeb.Components.Search
 
   @search_batch_limit 20
 

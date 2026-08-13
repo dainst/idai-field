@@ -1,20 +1,28 @@
-defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
+defmodule FieldPublicationWeb.Components.DocumentViewMap do
   use FieldPublicationWeb, :live_component
 
-  @impl true
+  alias FieldPublication.DatabaseSchema.Publication
+
+  alias FieldPublication.Publications.Data.{
+    RelationGroup,
+    Document
+  }
+
   def render(assigns) do
     ~H"""
     <div
-      class="relative"
+      class="relative bg-panel"
       id={@id}
       centerLon={@centerLon}
       centerLat={@centerLat}
       zoom={@zoom}
-      offset_base_element={@offset_base_element}
+      language={@language}
       project_identifier={@publication.project_identifier}
       draft_date={@publication.draft_date}
-      language={@language}
-      phx-hook="FullProjectMap"
+      phx-hook="DocumentViewMap"
+      initial_uuid={@uuid}
+      initial_linked={@linked_uuids |> Enum.join("|")}
+      fullscreen={@fullscreen?}
     >
       <!-- set phx-update="ignore" to ensure changes the map's DOM elements are not re-rendered on updates
           by live view, but instead the content is controlled by OpenLayers (and/or our hook logic) client side after initializiation. -->
@@ -25,12 +33,13 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
         >
           Loading map...
         </div>
+
         <div class="text-xs" id={"#{@id}-identifier-tooltip"}>
           <div class="grow h-full" id={"#{@id}-identifier-tooltip-content"}></div>
         </div>
       </div>
       <div class="absolute p-1 top-1 right-1 flex gap-1">
-        <div class="bg-white">
+        <div class="bg-white rounded">
           <div
             id={"#{@id}-draw-box-selector"}
             phx-click="toggle-draw-box-mode"
@@ -44,29 +53,79 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
           module={FieldPublicationWeb.Components.Map.TileLayerSelection}
           id={"#{@id}-tile-layer-selection"}
           map_id={@id}
+          doc={@doc}
           publication={@publication}
         />
+      </div>
+      <div
+        :if={@no_data}
+        class="absolute w-full h-full top-0 bg-white text-center place-content-center"
+      >
+        <.icon class="mb-1" name="hero-no-symbol" /> No geometry context available
       </div>
     </div>
     """
   end
 
-  @impl true
   def update(
-        %{id: id, preset_geometry: preset_geometry} = assigns,
+        %{
+          id: id,
+          publication: %Publication{} = _publication,
+          doc:
+            %Document{
+              relations: relations
+            } = doc
+        } =
+          assigns,
         socket
       ) do
-    assigns = set_defaults(assigns)
+    explicit_uuids = Map.get(assigns, :explicit_uuids, nil)
+
+    linked_uuids =
+      if explicit_uuids do
+        explicit_uuids
+      else
+        Enum.map(relations, fn %RelationGroup{docs: docs} ->
+          Enum.map(docs, fn %Document{id: id} -> id end)
+        end)
+        |> List.flatten()
+        |> Enum.uniq()
+      end
+
+    socket = assign(socket, set_defaults(assigns))
+
+    socket =
+      case Map.get(socket.assigns, :uuid) do
+        value when value != doc.id ->
+          push_event(socket, "document-map-update-#{id}", %{
+            uuid: doc.id,
+            linked_uuids: linked_uuids
+          })
+
+        _same_uuid_or_just_initialized ->
+          socket
+      end
 
     {
       :ok,
       socket
-      |> assign(assigns)
-      |> push_event("render-selection-polygon-#{id}", %{geometry: preset_geometry})
+      |> assign(:no_data, false)
+      |> assign(:uuid, doc.id)
+      |> assign(:linked_uuids, linked_uuids)
+      |> assign(:fullscreen?, Map.get(assigns, :fullscreen?, false))
+      |> assign(:doc, doc)
     }
   end
 
-  @impl true
+  defp set_defaults(assigns) do
+    assigns
+    |> Map.put_new(:centerLon, 0)
+    |> Map.put_new(:centerLat, 0)
+    |> Map.put_new(:zoom, 2)
+    |> Map.put_new(:draw_box_mode, false)
+    |> Map.put_new(:language, Gettext.get_locale(FieldPublicationWeb.Translate))
+  end
+
   def handle_event("toggle-draw-box-mode", _, socket) do
     {
       :noreply,
@@ -94,16 +153,6 @@ defmodule FieldPublicationWeb.Presentation.Components.FullProjectMap do
       :noreply,
       toggle_draw_mode(socket)
     }
-  end
-
-  defp set_defaults(assigns) do
-    assigns
-    |> Map.put_new(:centerLon, 0)
-    |> Map.put_new(:centerLat, 0)
-    |> Map.put_new(:zoom, 2)
-    |> Map.put_new(:offset_base_element, nil)
-    |> Map.put_new(:language, Gettext.get_locale(FieldPublicationWeb.Translate))
-    |> Map.put_new(:draw_box_mode, false)
   end
 
   defp toggle_draw_mode(%{assigns: %{id: id, draw_box_mode: current}} = socket) do

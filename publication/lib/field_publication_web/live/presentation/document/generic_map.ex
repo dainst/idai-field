@@ -66,7 +66,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
 
       <div class="basis-2/3">
         <.live_component
-          module={FieldPublicationWeb.Presentation.Components.DocumentViewMap}
+          module={FieldPublicationWeb.Components.DocumentViewMap}
           id="generic_doc_map_detail"
           style="width:100%; height: var(--ol-full-height);"
           doc={@doc}

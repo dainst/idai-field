@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.Presentation.Components.Search do
+defmodule FieldPublicationWeb.Components.Search do
   use FieldPublicationWeb, :html
 
   import FieldPublicationWeb.Components.Data.DocumentLink

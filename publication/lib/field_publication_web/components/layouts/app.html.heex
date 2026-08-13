@@ -6,42 +6,50 @@
         {Settings.get_page_name()} v{Application.spec(:field_publication, :vsn)}
       </p>
     </.link>
-    <div class="flex items-center gap-4">
-      <%= if @current_user do %>
-        <.link navigate="/management" class="text-[0.8125rem]">
-          Management
-        </.link>
-        <.link href={~p"/log_out"} method="delete" class="text-[0.8125rem]">
-          Log out
-        </.link>
-      <% else %>
-        <.link href={~p"/log_in"} class="text-[0.8125rem]">
-          Log in
-        </.link>
-      <% end %>
-      <span class="text-[0.8125rem]">
-        {@current_user}
-      </span>
-      <div>
-        <form action={~p"/select_locale"} id="locale_form">
-          <.icon name="hero-globe-alt" class="h-6 w-6 mr-1" />
-          <select
-            name="locale"
-            id="locale-select"
-            phx-change={JS.dispatch("click", to: "#submit_language_selection")}
-          >
-            <%= for lang <- FieldPublicationWeb.Translate.supported_languages() do %>
-              <option
-                value={lang}
-                selected={Gettext.get_locale(FieldPublicationWeb.Translate) == lang}
+    <div class="relative">
+      <div class="lg:hidden">
+        <a phx-click={JS.toggle(to: "#menu")}><.icon name="hero-bars-3" /></a>
+      </div>
+      <div class="hidden lg:block absolute lg:relative right-0 z-10" id="menu">
+        <div class="flex flex-col bg-panel p-1 lg:flex-row gap-4 text-nowrap lg:bg-white">
+          <%= if @current_user do %>
+            <span>
+              {@current_user}
+            </span>
+            <.link navigate="/management">
+              Management
+            </.link>
+            <.link href={~p"/log_out"} method="delete">
+              Log out
+            </.link>
+          <% else %>
+            <.link href={~p"/log_in"}>
+              Log in
+            </.link>
+          <% end %>
+
+          <div>
+            <form action={~p"/select_locale"} id="locale_form">
+              <.icon name="hero-globe-alt" class="h-4 w-4" />
+              <select
+                name="locale"
+                id="locale-select"
+                phx-change={JS.dispatch("click", to: "#submit_language_selection")}
               >
-                {Map.get(FieldPublicationWeb.Translate.get_locale_labels(), lang, lang)}
-              </option>
-            <% end %>
-          </select>
-          <input type="hidden" name="return_to" value={@current_path} />
-          <button class="hidden" id="submit_language_selection"></button>
-        </form>
+                <%= for lang <- FieldPublicationWeb.Translate.supported_languages() do %>
+                  <option
+                    value={lang}
+                    selected={Gettext.get_locale(FieldPublicationWeb.Translate) == lang}
+                  >
+                    {Map.get(FieldPublicationWeb.Translate.get_locale_labels(), lang, lang)}
+                  </option>
+                <% end %>
+              </select>
+              <input type="hidden" name="return_to" value={@current_path} />
+              <button class="hidden" id="submit_language_selection"></button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </div>

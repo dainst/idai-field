@@ -40,8 +40,8 @@ defmodule FieldPublicationWeb.Presentation.Document.Project do
         </div>
       <% end %>
 
-      <div class="flex flex-row gap-4">
-        <div class="basis-2/3">
+      <div class="flex flex-col lg:flex-row gap-4">
+        <div class="lg:basis-2/3">
           <section>
             <% description = Data.get_field(@doc, "description") %>
             <%= if description do %>
@@ -75,7 +75,7 @@ defmodule FieldPublicationWeb.Presentation.Document.Project do
           </section>
         </div>
 
-        <div class="basis-1/3">
+        <div class="lg:basis-1/3">
           <% institution = Data.get_field(@doc, "institution") %>
           <%= if institution do %>
             <.labeled_value>
@@ -139,13 +139,13 @@ defmodule FieldPublicationWeb.Presentation.Document.Project do
         <.group_heading>
           {gettext("Main documents")}
         </.group_heading>
-        <div class="grid grid-cols-4 gap-1 max-h-96 overflow-y-auto">
+        <div class="grid grid-col-1 lg:grid-cols-3 gap-1 max-h-96 overflow-y-auto">
           <%= for doc <- @top_level_docs do %>
             <.document_link image_count={10} doc={doc} />
           <% end %>
         </div>
       </div>
-      <div class="flex flex-row gap-4 mt-4" id="map-offset-element">
+      <div class="flex flex-col lg:flex-row gap-4 mt-4" id="map-offset-element">
         <div class="basis-2/3 flex-none p-2">
           <.live_component
             module={FieldPublicationWeb.Components.FullProjectMap}

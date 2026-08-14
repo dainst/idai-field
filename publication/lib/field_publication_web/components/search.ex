@@ -103,7 +103,7 @@ defmodule FieldPublicationWeb.Components.Search do
   def result_list(assigns) do
     ~H"""
     <div class="w-full">
-      <div class="flex flex-row mb-2 sticky top-0">
+      <div class="flex flex-row mb-2">
         <% previous_from =
           if @query_params.from - @limit > 0,
             do: @query_params.from - @limit,

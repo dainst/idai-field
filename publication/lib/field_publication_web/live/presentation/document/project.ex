@@ -139,7 +139,7 @@ defmodule FieldPublicationWeb.Presentation.Document.Project do
         <.group_heading>
           {gettext("Main documents")}
         </.group_heading>
-        <div class="grid grid-col-1 lg:grid-cols-3 gap-1 max-h-96 overflow-y-auto">
+        <div class="grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-1 max-h-96 overflow-y-auto">
           <%= for doc <- @top_level_docs do %>
             <.document_link image_count={10} doc={doc} />
           <% end %>

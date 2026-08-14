@@ -125,7 +125,13 @@ defmodule FieldPublication.Processing.WebImage do
                 "tile-height": 256,
                 "tile-width": 256,
                 tile: true,
+                # Currently we use the deflate compression, because the better
+                # zstd is not precompiled with Vix. We could consider building the
+                # docker image with a custom libvips install and only keep deflate as
+                # a fallback in development?
+                #
                 # See https://iipimage.sourceforge.io/2024/12/tiff-image-encoding-optimizing-for-size-speed-and-quality
+                # See https://vix.hexdocs.pm/readme.html#advanced-setup
                 compression: :VIPS_FOREIGN_TIFF_COMPRESSION_DEFLATE
               )
 

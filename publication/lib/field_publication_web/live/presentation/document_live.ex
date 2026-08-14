@@ -11,8 +11,6 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
   alias FieldPublicationWeb.Presentation.Opengraph
 
-  alias FieldPublicationWeb.Components.PublicationSelection
-
   import FieldPublicationWeb.Components.Data.DocumentLink
 
   defmodule UnknownPublicationDocumentError do
@@ -20,15 +18,24 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
   end
 
   def mount(%{"project_identifier" => project_identifier}, _session, socket) do
-    publications =
-      project_identifier
-      |> Publications.list()
+    all_publications =
+      Publications.list()
       |> Stream.reject(fn %Publication{} = publication ->
         publication.replication_finished == nil
       end)
       |> Enum.filter(fn %Publication{} = publication ->
         Projects.has_publication_access?(publication, socket.assigns.current_user)
       end)
+
+    publications =
+      Enum.filter(all_publications, fn %Publication{project_identifier: id} ->
+        id == project_identifier
+      end)
+
+    projects =
+      all_publications
+      |> Enum.map(fn %Publication{project_identifier: identifier} -> identifier end)
+      |> Enum.uniq()
 
     draft_dates =
       Enum.map(publications, fn %Publication{} = publication ->
@@ -38,6 +45,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
     {
       :ok,
       socket
+      |> assign(:projects, projects)
       |> assign(:project_identifier, project_identifier)
       |> assign(:publications, publications)
       |> assign(:draft_dates, draft_dates)

@@ -22,7 +22,8 @@ defmodule FieldPublicationWeb.CoreComponents do
   alias Phoenix.LiveView.JS
 
   alias FieldPublication.DatabaseSchema.{
-    LogEntry
+    LogEntry,
+    Publication
   }
 
   @doc """
@@ -838,6 +839,130 @@ defmodule FieldPublicationWeb.CoreComponents do
         {render_slot(@label)}
       </label>
       <div class="pl-4 pr-4 pb-1">{render_slot(@inner_block)}</div>
+    </div>
+    """
+  end
+
+  attr :current_publication, Publication, required: true
+  attr :projects, :list, required: true
+  attr :publications, :list, required: true
+  attr :uuid, :string, default: nil
+  attr :identifier, :string, default: nil
+
+  def publication_navigation(assigns) do
+    ~H"""
+    <div class="mb-8 lg:mb-0 flex flex-col w-full lg:flex-row gap-2 items-center">
+      <.selection_dropdown
+        :let={option}
+        id="project_selection"
+        label="Selected project: "
+        z="z-20"
+        selected_option={@current_publication.project_identifier}
+        other_options={
+          Enum.filter(@projects, fn identifier ->
+            identifier != @current_publication.project_identifier
+          end)
+        }
+      >
+        <.link navigate={~p"/projects/#{option}/"}>{option}</.link>
+      </.selection_dropdown>
+
+      <.icon class="hidden lg:block" name="hero-slash" />
+
+      <.selection_dropdown
+        :let={option}
+        id="publication_selection"
+        label="Selected publication:"
+        selected_option={@current_publication.draft_date}
+        other_options={
+          Enum.filter(@publications, fn %{draft_date: date} ->
+            date != @current_publication.draft_date
+          end)
+          |> Enum.map(fn %{project_identifier: project, draft_date: date} ->
+            %{project: project, date: date}
+          end)
+        }
+      >
+        <% url =
+          ~p"/projects/#{option.project}/#{option.date}"
+
+        url =
+          if @uuid do
+            "#{url}/#{@uuid}"
+          else
+            url
+          end %>
+
+        <div>
+          <.link navigate={url}>{option.date}</.link>
+        </div>
+      </.selection_dropdown>
+
+      <.icon class="hidden lg:block" name="hero-slash" />
+
+      <.link patch={
+        ~p"/projects/#{@current_publication.project_identifier}/#{@current_publication.draft_date}"
+      }>
+        <.icon name="hero-home-solid" />
+      </.link>
+
+      <%= if @identifier do %>
+        <.icon class="hidden lg:block" name="hero-slash" />
+        <div class="hidden lg:block text-nowrap">
+          {@identifier}
+        </div>
+      <% end %>
+
+      <div class="lg:grow"></div>
+      <form class="w-full lg:w-fit" phx-submit="search">
+        <div class="flex border border-black/20 ">
+          <button class="bg-(--primary-color) hover:bg-(--primary-color-hover) inline-block text-white p-1">
+            <.icon name="hero-magnifying-glass" />
+          </button>
+          <input
+            class="grow pl-2"
+            type="text"
+            name="search_input"
+            placeholder="Search in publication"
+          />
+        </div>
+      </form>
+    </div>
+    """
+  end
+
+  slot :inner_block, required: true
+  attr :id, :string, required: true
+  attr :label, :string, default: "Select: "
+  attr :selected_option, :string, required: true
+  attr :z, :string, default: "z-10"
+  attr :other_options, :list, default: []
+
+  defp selection_dropdown(assigns) do
+    ~H"""
+    <div :if={@other_options != []}>{@label}</div>
+    <div id={@id} class={"#{@id}_selection relative w-full lg:w-fit text-center lg:text-left"}>
+      <div
+        :if={@other_options == []}
+        class="p-2"
+      >
+        {@selected_option}
+      </div>
+      <div
+        :if={@other_options != []}
+        class="p-2 cursor-pointer text-primary hover:text-primary-hover border lg:border-0"
+        phx-click={JS.toggle(to: "##{@id}_options")}
+      >
+        {@selected_option}
+      </div>
+      <div
+        id={"#{@id}_options"}
+        class={"#{@id}_selection hidden w-full lg:w-fit #{@z} bg-panel absolute flex flex-col"}
+      >
+        <%= for option <- @other_options do %>
+          <div class="p-2">{render_slot(@inner_block, option)}</div>
+        <% end %>
+      </div>
     </div>
     """
   end

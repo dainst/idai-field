@@ -35,7 +35,7 @@ defmodule FieldPublicationWeb.Components.Data.DocumentLink do
           </div>
         </.link>
         <.link
-          class="grow p-3 rounded-tr rounded-br hover:bg-(--primary-color)/10 suppress-link-styling"
+          class="grow overflow-hidden text-ellipsis p-3 rounded-tr rounded-br hover:bg-(--primary-color)/10 suppress-link-styling"
           style={"border-color: #{desaturate_category_color(@doc.category.color)}; border-width: 1px 1px 1px 0px;"}
           navigate={
             construct_doc_link(
@@ -46,18 +46,22 @@ defmodule FieldPublicationWeb.Components.Data.DocumentLink do
             )
           }
         >
+          <div class="text-slate-600 flex flex-col lg:flex-row">
+            <div>{@doc.identifier}</div>
+            <div class="lg:ml-2">
+              <small>
+                <%= if @doc.description != %{} do %>
+                  {pick_default_translation(@doc.description)}
+                <% end %>
+                <.icon
+                  :if={@geometry_indicator and @doc.geometry != nil}
+                  name="hero-map"
+                  class="mb-1"
+                />
+              </small>
+            </div>
+          </div>
           <div>
-            <span class="text-slate-600">{@doc.identifier}</span>
-            <small class="ml-2 text-slate-600">
-              <%= if @doc.description != %{} do %>
-                {pick_default_translation(@doc.description)}
-              <% end %>
-              <.icon
-                :if={@geometry_indicator and @doc.geometry != nil}
-                name="hero-map"
-                class="mb-1"
-              />
-            </small>
             <% uuids = Enum.take(@doc.image_uuids, @image_count) %>
             <div id={"#{id}-images"} class="flex items-center overflow-x-auto">
               <%= for uuid <- uuids do %>

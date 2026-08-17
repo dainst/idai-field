@@ -952,6 +952,7 @@ defmodule FieldPublicationWeb.CoreComponents do
         :if={@other_options != []}
         class="p-2 cursor-pointer text-primary hover:text-primary-hover border lg:border-0"
         phx-click={JS.toggle(to: "##{@id}_options")}
+        phx-click-away={JS.hide(to: "##{@id}_options")}
       >
         {@selected_option}
       </div>

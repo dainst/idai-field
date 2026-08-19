@@ -225,7 +225,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
             doc={doc}
             image_count={10}
             geometry_indicator={true}
-            hover_target="generic_doc_map"
+            hover_target="generic_doc_map_detail"
             live_action={:map_context}
           />
         <% end %>

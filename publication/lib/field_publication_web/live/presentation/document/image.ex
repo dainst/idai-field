@@ -49,7 +49,6 @@ defmodule FieldPublicationWeb.Presentation.Document.Image do
             </section>
           <% end %>
         <% end %>
-        <hr class="mt-4" />
 
         <.group_heading>
           Data formats

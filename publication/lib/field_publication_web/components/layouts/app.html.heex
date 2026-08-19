@@ -1,7 +1,7 @@
 <header class="px-4 sm:px-6 lg:px-8 h-(--main-navbar-height)">
   <div class="flex items-center justify-between border-b border-zinc-100 text-sm">
     <.link class="flex items-center gap-4 text-primary hover:text-primary-hover" navigate={~p"/"}>
-      <img src={Settings.get_logo_url()} class="h-12" />
+      <img src={Settings.get_logo_url()} class="h-12" alt="Website logo" />
       <p class="px-4 font-medium leading-6">
         {Settings.get_page_name()} v{Application.spec(:field_publication, :vsn)}
       </p>

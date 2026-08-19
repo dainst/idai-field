@@ -30,7 +30,7 @@ defmodule FieldPublicationWeb.Presentation.Document.Project do
               class="p-2 border border-primary"
             >
               <.img_element
-                size="^,300"
+                size="^!250,250"
                 project={@publication.project_identifier}
                 uuid={doc.id}
                 alt={doc.identifier}

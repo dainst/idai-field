@@ -214,6 +214,26 @@ export default class PreviewOverlay {
             return hook                .js()                .navigate(                   url                );
         });
 
+      documentInfo.addEventListener("mousemove", (_) => {
+          window.dispatchEvent(
+              new CustomEvent(
+                  `phx:map-highlight-feature-${hook.el.id}`,
+                  {
+                      detail: {
+                          feature_id: properties.uuid,
+                      },
+                  },
+              ),
+          );
+      });
+
+      documentInfo.addEventListener("mouseleave", (_) => {
+          window.dispatchEvent(
+            new CustomEvent(
+                  `phx:map-clear-highlights-${hook.el.id}`,
+              ),
+          );
+      });
         preview.appendChild(CategoryMetadata);
         preview.appendChild(documentInfo);
 

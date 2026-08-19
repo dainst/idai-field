@@ -52,7 +52,8 @@ defmodule FieldPublicationWeb.Api.IIIFImage do
         %Vix.Vips.Image{} = image,
         _format
       ) do
-    if Vix.Vips.Image.width(image) <= 250 && region == "full" do
+    if Vix.Vips.Image.width(image) <= 250 && Vix.Vips.Image.height(image) <= 250 &&
+         region == "full" do
       path = FileService.get_iiif_cache_path(conn)
 
       path

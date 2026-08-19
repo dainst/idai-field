@@ -27,7 +27,7 @@ defmodule FieldPublicationWeb.Presentation.Document.Project do
               patch={
                 ~p"/projects/#{@publication.project_identifier}/#{@publication.draft_date}/#{doc.id}"
               }
-              class="p-2 border border-primary h-[310px]"
+              class="p-2 border border-primary"
             >
               <.img_element
                 size="^,300"

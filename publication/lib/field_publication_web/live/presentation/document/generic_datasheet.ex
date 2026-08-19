@@ -46,7 +46,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericDatasheet do
             <.group_heading>
               {pick_default_translation(depicted_in.labels)} ({Enum.count(depicted_in.docs)})
             </.group_heading>
-            <div class="overflow-auto overscroll-contain flex flex-wrap gap-1 mt-2 max-h-[300px] mb-5">
+            <div class="flex flex-wrap gap-1 mt-2 mb-5">
               <%= for %Document{} = doc <- depicted_in.docs do %>
                 <.link navigate={
                   ~p"/projects/#{@publication.project_identifier}/#{@publication.draft_date}/#{doc.id}"

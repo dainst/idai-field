@@ -21,17 +21,7 @@ defmodule FieldPublicationWeb.Presentation.Document.Image do
   def render(assigns) do
     ~H"""
     <div class="flex flex-col-reverse lg:flex-row">
-      <div class="basis-full lg:basis-1/3 m-5">
-        <%= for %RelationGroup{} = relation_group <- @doc.relations do %>
-          <.group_heading>
-            {pick_default_translation(relation_group.labels)} ({Enum.count(relation_group.docs)})
-          </.group_heading>
-          <div class="overflow-auto overscroll-contain max-h-[200px]">
-            <%= for %Document{} = doc <- relation_group.docs do %>
-              <.document_link doc={doc} image_count={0} />
-            <% end %>
-          </div>
-        <% end %>
+      <div class="basis-full lg:basis-1/3">
         <%= for %FieldGroup{} = group <- @doc.groups do %>
           <% fields =
             Enum.reject(group.fields, fn %Field{name: name} ->
@@ -49,7 +39,16 @@ defmodule FieldPublicationWeb.Presentation.Document.Image do
             </section>
           <% end %>
         <% end %>
-
+        <%= for %RelationGroup{} = relation_group <- @doc.relations do %>
+          <.group_heading>
+            {pick_default_translation(relation_group.labels)} ({Enum.count(relation_group.docs)})
+          </.group_heading>
+          <section>
+            <%= for %Document{} = doc <- relation_group.docs do %>
+              <.document_link doc={doc} image_count={0} />
+            <% end %>
+          </section>
+        <% end %>
         <.group_heading>
           Data formats
         </.group_heading>

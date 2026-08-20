@@ -48,8 +48,6 @@ defmodule FieldPublicationWeb.Router do
         FieldPublicationWeb.Api.V1.Document,
         :raw
       )
-
-      get("/", FieldPublicationWeb.Api.V1.Document, :index)
     end
 
     scope "/v1/:project_identifier/:draft_date/geometry" do
@@ -58,12 +56,13 @@ defmodule FieldPublicationWeb.Router do
       get("/", FieldPublicationWeb.Api.V1, :geometry_feature_collections)
     end
 
-    scope "/v1/:project_identifier" do
-      get("/", FieldPublicationWeb.Api.V1, :publications)
+    scope "/v1/:project_identifier/:draft_date" do
+      pipe_through(:ensure_publication_access)
+      get("/", FieldPublicationWeb.Api.V1.Document, :index)
     end
 
     scope "/v1" do
-      get("/", FieldPublicationWeb.Api.V1, :projects)
+      get("/", FieldPublicationWeb.Api.V1, :publications)
     end
   end
 

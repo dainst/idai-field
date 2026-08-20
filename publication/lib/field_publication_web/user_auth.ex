@@ -177,7 +177,7 @@ defmodule FieldPublicationWeb.UserAuth do
   end
 
   def on_mount(
-        :ensure_has_project_access,
+        :ensure_project_access,
         %{"project_identifier" => project_identifier},
         session,
         socket
@@ -335,7 +335,7 @@ defmodule FieldPublicationWeb.UserAuth do
     end
   end
 
-  def require_published_or_project_access(
+  def ensure_publication_access(
         %{params: %{"project_identifier" => project_identifier, "draft_date" => draft_date}} =
           conn,
         _options
@@ -361,7 +361,7 @@ defmodule FieldPublicationWeb.UserAuth do
     end
   end
 
-  def require_published_or_project_access(
+  def ensure_publication_access(
         %{params: %{"project_identifier" => project_identifier}} = conn,
         _opts
       ) do

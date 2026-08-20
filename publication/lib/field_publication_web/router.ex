@@ -28,9 +28,6 @@ defmodule FieldPublicationWeb.Router do
       forward("/v3", FieldPublicationWeb.Api.IIIFImage, %IIIFImagePlug.V3.Options{})
     end
 
-    scope "/zxy/:z/:x/:y" do
-    end
-
     scope "/v1/:project_identifier/image/:uuid" do
       pipe_through(:ensure_image_access)
       get("/tile/:z/:x/:y", FieldPublicationWeb.Api.V1.Image, :zxy_tile)
@@ -38,7 +35,7 @@ defmodule FieldPublicationWeb.Router do
     end
 
     scope "/v1/:project_identifier/:draft_date/doc" do
-      pipe_through(:require_published_or_project_access)
+      pipe_through(:ensure_publication_access)
 
       get(
         "/:uuid/extended",
@@ -56,7 +53,7 @@ defmodule FieldPublicationWeb.Router do
     end
 
     scope "/v1/:project_identifier/:draft_date/geometry" do
-      pipe_through(:require_published_or_project_access)
+      pipe_through(:ensure_publication_access)
 
       get("/", FieldPublicationWeb.Api.V1, :geometry_feature_collections)
     end
@@ -117,7 +114,7 @@ defmodule FieldPublicationWeb.Router do
     live_session :ensure_project_access,
       on_mount: [
         {FieldPublicationWeb.UserAuth, :ensure_authenticated},
-        {FieldPublicationWeb.UserAuth, :ensure_has_project_access}
+        {FieldPublicationWeb.UserAuth, :ensure_project_access}
       ] do
       live(
         "/projects/:project_identifier/publication/new",
@@ -130,9 +127,9 @@ defmodule FieldPublicationWeb.Router do
   end
 
   scope "/projects", FieldPublicationWeb do
-    pipe_through([:browser, :require_published_or_project_access])
+    pipe_through([:browser, :ensure_publication_access])
 
-    live_session :require_published_or_project_access,
+    live_session :ensure_publication_access,
       on_mount: [{FieldPublicationWeb.UserAuth, :ensure_publication_access}] do
       live("/search/:project_identifier/:draft_date", Presentation.PublicationSearch)
       live("/:project_identifier", Presentation.DocumentLive)

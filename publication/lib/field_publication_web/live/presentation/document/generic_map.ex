@@ -59,7 +59,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
           </.link>
         </div>
 
-        <div class="p-2 overflow-auto max-h-(--ol-full-height)">
+        <div class="p-2 overflow-auto overscroll-contain max-h-(--ol-full-height)">
           {render_action(@live_action, assigns)}
         </div>
       </div>

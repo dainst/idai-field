@@ -10,6 +10,7 @@ import {
     highlightFeature,
     clearAllHighlights,
     styleFunction,
+    loadFeatureCollection
 } from "./map/features";
 import PublicationTileLayers from "./map/tile-layers";
 import PreviewOverlay from "./map/preview-overlay";
@@ -213,10 +214,7 @@ export default (getFullProjectMapHook = () => {
                 }
             });
 
-            const response = await fetch(
-                `/api/json/geometry_feature_collections/${this.projectKey}/${this.draftDate}`,
-            );
-            const featureCollections = await response.json();
+            const featureCollections = await loadFeatureCollection(this.projectKey, this.draftDate)
 
             for (let collection of featureCollections) {
                 this.categoriesMetadata.push(collection.properties);

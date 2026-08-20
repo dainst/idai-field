@@ -57,7 +57,7 @@ defmodule FieldPublicationWeb.Presentation.Document.Image do
           <li>
             <a
               download={@doc.identifier}
-              href={~p"/api/image/raw/#{@publication.project_identifier}/#{@doc.id}"}
+              href={~p"/api/v1/image/raw/#{@publication.project_identifier}/#{@doc.id}"}
             >
               <.icon name="hero-photo-solid" /> Download original
             </a>
@@ -66,7 +66,7 @@ defmodule FieldPublicationWeb.Presentation.Document.Image do
             <a
               target="_blank"
               href={
-                ~p"/api/json/raw/#{@publication.project_identifier}/#{@publication.draft_date}/#{@doc.id}"
+                ~p"/api/v1/doc/raw/#{@publication.project_identifier}/#{@publication.draft_date}/#{@doc.id}"
               }
             >
               <span class="text-center inline-block w-5" style="block">{"{}"}</span> View JSON (raw)
@@ -76,7 +76,7 @@ defmodule FieldPublicationWeb.Presentation.Document.Image do
             <a
               target="_blank"
               href={
-                ~p"/api/json/extended/#{@publication.project_identifier}/#{@publication.draft_date}/#{@doc.id}"
+                ~p"/api/v1/doc/extended/#{@publication.project_identifier}/#{@publication.draft_date}/#{@doc.id}"
               }
             >
               <span class="text-center inline-block w-5" style="block">{"{}"}</span>

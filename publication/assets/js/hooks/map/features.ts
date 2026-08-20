@@ -9,6 +9,13 @@ const pointRadius = 5;
 const lineWidth = pointRadius * 2;
 const defaultAlpha = 0.2;
 
+export const loadFeatureCollection = async function(projectKey: string, draftDate: string) {
+  const response = await fetch(
+      `/api/internal/geometry_feature_collections/${projectKey}/${draftDate}`,
+  );
+  return response.json();
+}
+
 export const findFeature = function (uuid: string, map: Map) {
     const vectorLayerFeatures = map
         .getAllLayers()

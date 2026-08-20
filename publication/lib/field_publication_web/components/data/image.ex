@@ -43,7 +43,7 @@ defmodule FieldPublicationWeb.Components.Data.Image do
     # same default parameters are already set by the `:attr` definitions.
     size = String.replace(size, "^", "%5E")
 
-    "/api/image/iiif/3/#{project}%2F#{uuid}/#{region}/#{size}/#{rotation}/#{quality}.#{format}"
+    "/api/iiif/image/v3/#{project}%2F#{uuid}/#{region}/#{size}/#{rotation}/#{quality}.#{format}"
   end
 
   attr(:project, :string, required: true)
@@ -61,7 +61,7 @@ defmodule FieldPublicationWeb.Components.Data.Image do
   end
 
   def construct_iiif_info_url(project, uuid),
-    do: "/api/image/iiif/3/#{project}%2F#{uuid}/info.json"
+    do: "/api/iiif/image/v3/#{project}%2F#{uuid}/info.json"
 
   def get_default_width(), do: @default_width
   def get_default_format(), do: @default_format

@@ -19,37 +19,46 @@ defmodule FieldPublicationWeb.Router do
     plug(:accepts, ["json"])
   end
 
-  scope "/api/image" do
+  scope "/api" do
     pipe_through(:fetch_session)
     pipe_through(:fetch_current_user)
-    pipe_through(:ensure_image_published)
 
-    scope "/iiif" do
-      forward("/3", FieldPublicationWeb.Api.IIIFImage, %IIIFImagePlug.V3.Options{})
+    scope "/iiif/image" do
+      pipe_through(:ensure_image_access)
+      forward("/v3", FieldPublicationWeb.Api.IIIFImage, %IIIFImagePlug.V3.Options{})
     end
 
-    get("/raw/:project_identifier/:uuid", FieldPublicationWeb.Api.Image, :raw)
-    get("/tile/:project_identifier/:uuid/:z/:x/:y", FieldPublicationWeb.Api.Image, :tile)
-  end
+    scope "/v1/image" do
+      pipe_through(:ensure_image_access)
+      get("/raw/:project_identifier/:uuid", FieldPublicationWeb.Api.Image, :raw)
+      get("/tile/:project_identifier/:uuid/:z/:x/:y", FieldPublicationWeb.Api.Image, :tile)
+    end
 
-  scope "/api/json" do
-    pipe_through(:fetch_session)
-    pipe_through(:fetch_current_user)
-    pipe_through([:browser, :require_published_or_project_access])
+    scope "/v1/doc" do
+      pipe_through(:require_published_or_project_access)
 
-    get("/raw/:project_identifier/:draft_date/:uuid", FieldPublicationWeb.Api.JSON, :raw)
+      get(
+        "/raw/:project_identifier/:draft_date/:uuid",
+        FieldPublicationWeb.Api.JSON,
+        :raw
+      )
 
-    get(
-      "/extended/:project_identifier/:draft_date/:uuid",
-      FieldPublicationWeb.Api.JSON,
-      :extended
-    )
+      get(
+        "/extended/:project_identifier/:draft_date/:uuid",
+        FieldPublicationWeb.Api.JSON,
+        :extended
+      )
+    end
 
-    get(
-      "/geometry_feature_collections/:project_identifier/:draft_date",
-      FieldPublicationWeb.Api.JSON,
-      :geometry_feature_collections
-    )
+    scope "/internal" do
+      pipe_through(:require_published_or_project_access)
+
+      get(
+        "/geometry_feature_collections/:project_identifier/:draft_date",
+        FieldPublicationWeb.Api.JSON,
+        :geometry_feature_collections
+      )
+    end
   end
 
   # If user is already logged but tries to access '/log_in' we redirects to the user's

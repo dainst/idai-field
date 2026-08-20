@@ -32,7 +32,8 @@ defmodule FieldPublicationWeb.Api.V1.Document do
               "category" => category,
               "shortDescription" => Map.get(resource, "shortDescription"),
               "hasImageData?" => category in image_categories,
-              "hasGeometry?" => Map.has_key?(resource, "geometry") && resource["geometry"] != nil
+              "hasGeoReference?" =>
+                Map.has_key?(resource, "georeference") && resource["georeference"] != nil
             }
           end)
           |> Enum.to_list()

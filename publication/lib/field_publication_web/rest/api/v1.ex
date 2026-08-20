@@ -7,44 +7,38 @@ defmodule FieldPublicationWeb.Api.V1 do
 
   alias FieldPublication.FileService
 
-  def projects(%{assigns: %{current_user: user}} = conn, _params) do
+  def publications(%{assigns: %{current_user: user}} = conn, _params) do
     project_list =
       Publications.list()
-      |> Enum.filter(fn %Publication{
-                          project_identifier: project_identifier,
-                          publication_date: publication_date
-                        } ->
+      |> Stream.filter(fn %Publication{
+                            project_identifier: project_identifier,
+                            publication_date: publication_date
+                          } ->
         publication_date != nil ||
           Projects.has_project_access?(project_identifier, user)
       end)
-      |> Enum.map(fn %Publication{project_identifier: project_identifier} ->
-        project_identifier
+      |> Enum.reduce(%{}, fn %Publication{
+                               project_identifier: project_identifier
+                             } = publication,
+                             acc ->
+        Map.update(acc, project_identifier, [publication], fn other_publications ->
+          other_publications ++ [publication]
+        end)
+      end)
+      |> Enum.map(fn {project_identifier, publication_list} ->
+        %{
+          project_identifier: project_identifier,
+          publications:
+            Enum.map(
+              publication_list,
+              fn %Publication{draft_date: draft_date} -> draft_date end
+            )
+        }
       end)
 
     conn
     |> Plug.Conn.put_resp_header("content-type", "application/json")
     |> Plug.Conn.send_resp(200, Jason.encode!(project_list))
-  end
-
-  def publications(%{assigns: %{current_user: user}} = conn, %{
-        "project_identifier" => project_identifier
-      }) do
-    publication_list =
-      Publications.list(project_identifier)
-      |> Enum.filter(fn %Publication{
-                          project_identifier: project_identifier,
-                          publication_date: publication_date
-                        } ->
-        publication_date != nil ||
-          Projects.has_project_access?(project_identifier, user)
-      end)
-      |> Enum.map(fn %Publication{draft_date: draft_date} ->
-        draft_date
-      end)
-
-    conn
-    |> Plug.Conn.put_resp_header("content-type", "application/json")
-    |> Plug.Conn.send_resp(200, Jason.encode!(publication_list))
   end
 
   def geometry_feature_collections(conn, %{

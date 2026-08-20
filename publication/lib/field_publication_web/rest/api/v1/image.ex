@@ -21,8 +21,8 @@ defmodule FieldPublicationWeb.Api.V1.Image do
       ) do
     base_path = FileService.get_map_tiles_base_path(project_identifier, uuid)
 
-    # Even though we serve the tiles with the z/x/y schema, the files are stored by the system
-    # as x/y/z, libvips generated the tiles in a z/y/x structure, which we translate here.
+    # Even though we serve the tiles with the z/x/y schema in the API, libvips generated
+    # the tiles in a z/y/x directory structure, which we translate here:
     path = "#{base_path}/#{z}/#{y}/#{x}.webp"
 
     if File.exists?(path) do

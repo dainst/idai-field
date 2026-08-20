@@ -57,7 +57,7 @@ defmodule FieldPublicationWeb.Presentation.Document.Image do
           <li>
             <a
               download={@doc.identifier}
-              href={~p"/api/v1/image/raw/#{@publication.project_identifier}/#{@doc.id}"}
+              href={~p"/api/v1/#{@publication.project_identifier}/image/#{@doc.id}"}
             >
               <.icon name="hero-photo-solid" /> Download original
             </a>
@@ -66,17 +66,17 @@ defmodule FieldPublicationWeb.Presentation.Document.Image do
             <a
               target="_blank"
               href={
-                ~p"/api/v1/doc/raw/#{@publication.project_identifier}/#{@publication.draft_date}/#{@doc.id}"
+                ~p"/api/v1/#{@publication.project_identifier}/#{@publication.draft_date}/doc/#{@doc.id}"
               }
             >
-              <span class="text-center inline-block w-5" style="block">{"{}"}</span> View JSON (raw)
+              <span class="text-center inline-block w-5" style="block">{"{}"}</span> View JSON
             </a>
           </li>
           <li>
             <a
               target="_blank"
               href={
-                ~p"/api/v1/doc/extended/#{@publication.project_identifier}/#{@publication.draft_date}/#{@doc.id}"
+                ~p"/api/v1/#{@publication.project_identifier}/#{@publication.draft_date}/doc/#{@doc.id}/extended"
               }
             >
               <span class="text-center inline-block w-5" style="block">{"{}"}</span>
@@ -91,7 +91,7 @@ defmodule FieldPublicationWeb.Presentation.Document.Image do
 
               <.live_component
                 id="iiif-link"
-                copy_value={"#{FieldPublicationWeb.Endpoint.url()}/#{construct_iiif_info_url(@publication.project_identifier, @doc.id)}"}
+                copy_value={"#{FieldPublicationWeb.Endpoint.url()}#{construct_iiif_info_url(@publication.project_identifier, @doc.id)}"}
                 module={ClipboardCopy}
               >
                 Copy IIIF link

@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.Api.Image do
+defmodule FieldPublicationWeb.Api.V1.Image do
   use FieldPublicationWeb, :controller
 
   import Plug.Conn
@@ -9,7 +9,7 @@ defmodule FieldPublicationWeb.Api.Image do
     send_file(conn, 200, FileService.get_raw_image_data_path(project_identifier, uuid))
   end
 
-  def tile(
+  def zxy_tile(
         conn,
         %{
           "project_identifier" => project_identifier,

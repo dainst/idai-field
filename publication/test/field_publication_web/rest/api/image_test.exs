@@ -57,7 +57,7 @@ defmodule FieldPublicationWeb.Rest.Api.ImageTest do
     } =
       get(
         conn,
-        "/api/image/iiif/3/#{project.identifier}%2F#{uuid}/info.json"
+        "/api/iiif/image/v3/#{project.identifier}%2F#{uuid}/info.json"
       )
       |> json_response(200)
 
@@ -67,12 +67,12 @@ defmodule FieldPublicationWeb.Rest.Api.ImageTest do
   end
 
   test "returns raw image data", %{conn: conn, project: project, image_doc: %{"_id" => uuid}} do
-    assert get(conn, ~p"/api/image/raw/#{project}/#{uuid}")
+    assert get(conn, ~p"/api/v1/#{project}/image/#{uuid}")
            |> response(200)
   end
 
   test "returns tile image data", %{conn: conn, project: project, image_doc: %{"_id" => uuid}} do
-    assert get(conn, ~p"/api/image/tile/#{project}/#{uuid}/0/0/0")
+    assert get(conn, ~p"/api/v1/#{project}/image/#{uuid}/tile/0/0/0")
            |> response(200)
   end
 end

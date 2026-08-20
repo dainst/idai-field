@@ -41,7 +41,7 @@ defmodule FieldPublicationWeb.Rest.Api.JsonTest do
   test "returns raw data json for valid url", %{conn: conn, publication: publication, doc: doc} do
     assert get(
              conn,
-             ~p"/api/json/raw/#{publication.project_identifier}/#{publication.draft_date}/#{doc["_id"]}"
+             ~p"/api/v1/#{publication.project_identifier}/#{publication.draft_date}/doc/#{doc["_id"]}"
            )
            |> json_response(200) == doc
   end
@@ -55,7 +55,7 @@ defmodule FieldPublicationWeb.Rest.Api.JsonTest do
              extended_doc =
              get(
                conn,
-               ~p"/api/json/extended/#{publication.project_identifier}/#{publication.draft_date}/#{doc["_id"]}"
+               ~p"/api/v1/#{publication.project_identifier}/#{publication.draft_date}/doc/#{doc["_id"]}/extended"
              )
              |> json_response(200)
              |> Data.document_map_to_struct()

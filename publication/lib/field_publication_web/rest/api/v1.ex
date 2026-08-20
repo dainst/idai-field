@@ -53,7 +53,7 @@ defmodule FieldPublicationWeb.Api.V1 do
     if File.exists?(path) do
       conn
       |> Plug.Conn.put_resp_header("content-encoding", "br")
-      |> Plug.Conn.put_resp_header("content-type", "application/json")
+      |> Plug.Conn.put_resp_header("content-type", "application/geo+json")
       # TODO: Set public/private based on publication status
       |> Plug.Conn.put_resp_header("cache-control", "private, max-age=86400, immutable")
       |> Plug.Conn.send_file(200, path)

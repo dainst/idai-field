@@ -391,24 +391,23 @@ defmodule FieldPublicationWeb.UserAuth do
     end
   end
 
-  def ensure_image_published(
+  def ensure_image_access(
         %{params: %{"project_identifier" => project_identifier, "uuid" => uuid}} = conn,
         _options
       ) do
     check_image_access(conn, project_identifier, uuid)
   end
 
-  def ensure_image_published(
+  def ensure_image_access(
         %{
-          path_info: ["api", "image", "iiif", "3", image_name | _everything_afterwards]
+          path_info: ["api", "iiif", "image", "v3", identifier | _everything_afterwards]
         } =
           conn,
         _opts
       ) do
-    # This is the variant of ensure_image_published/2 that is used for the reverse proxy routes of the
-    # cantaloupe image server. We can not extract project_identifier and uuid beforehand.
-    image_name
-    |> String.replace_suffix(".tif", "")
+    # This is the variant of ensure_image_access/2 that is used for IIIF requests.
+    # We can not extract project_identifier and uuid beforehand.
+    identifier
     |> String.split("%2F")
     |> case do
       [project_identifier, uuid] ->

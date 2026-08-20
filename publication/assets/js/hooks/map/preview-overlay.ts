@@ -234,10 +234,10 @@ export default class PreviewOverlay {
     //           ),
     //       );
     //   });
-    //     preview.appendChild(CategoryMetadata);
-    //     preview.appendChild(documentInfo);
+        preview.appendChild(CategoryMetadata);
+        preview.appendChild(documentInfo);
 
-    //     return preview;
+        return preview;
     }
 }
 

@@ -200,7 +200,7 @@ defmodule FieldPublicationWeb.UserAuth do
   end
 
   def on_mount(
-        :ensure_project_published_or_project_access,
+        :ensure_publication_access,
         %{"project_identifier" => project_identifier, "draft_date" => draft_date} = _opts,
         session,
         socket
@@ -232,7 +232,7 @@ defmodule FieldPublicationWeb.UserAuth do
   end
 
   def on_mount(
-        :ensure_project_published_or_project_access,
+        :ensure_publication_access,
         %{"project_identifier" => project_identifier},
         session,
         socket
@@ -318,7 +318,7 @@ defmodule FieldPublicationWeb.UserAuth do
   @doc """
   Used for routes that require the user to be authenticated.
   """
-  def require_project_access(
+  def ensure_project_access(
         %{params: %{"project_identifier" => project_identifier}} = conn,
         _opts
       ) do

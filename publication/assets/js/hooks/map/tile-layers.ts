@@ -197,7 +197,7 @@ function createTileLayer(metadata: TileLayerMetadata, projectKey: string) {
         metadata.geo_reference.topRightCoordinates[0],
     ];
 
-    const pathTemplate = `/api/v1/image/tile/${projectKey}/${metadata.uuid}/{z}/{x}/{y}`;
+    const pathTemplate = `/api/v1/image/${projectKey}/${metadata.uuid}/tile/{z}/{x}/{y}`;
 
     const resolutions = getResolutions(
         extent,

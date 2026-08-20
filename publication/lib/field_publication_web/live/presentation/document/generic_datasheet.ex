@@ -73,7 +73,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericDatasheet do
                 class="mb-1"
                 target="_blank"
                 href={
-                  ~p"/api/v1/doc/raw/#{@publication.project_identifier}/#{@publication.draft_date}/#{@doc.id}"
+                  ~p"/api/v1/#{@publication.project_identifier}/#{@publication.draft_date}/doc/#{@doc.id}"
                 }
               >
                 <span class="text-center inline-block w-5" style="block">{"{}"}</span> View JSON (raw)
@@ -84,7 +84,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericDatasheet do
                 class="mb-1"
                 target="_blank"
                 href={
-                  ~p"/api/v1/doc/extended/#{@publication.project_identifier}/#{@publication.draft_date}/#{@doc.id}"
+                  ~p"/api/v1/#{@publication.project_identifier}/#{@publication.draft_date}/doc/#{@doc.id}/extended"
                 }
               >
                 <span class="text-center inline-block w-5" style="block">{"{}"}</span>

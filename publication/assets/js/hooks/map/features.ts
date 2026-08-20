@@ -11,7 +11,7 @@ const defaultAlpha = 0.2;
 
 export const loadFeatureCollection = async function(projectKey: string, draftDate: string) {
   const response = await fetch(
-      `/api/internal/geometry_feature_collections/${projectKey}/${draftDate}`,
+      `/api/internal/${projectKey}/${draftDate}/geometry_feature_collections`,
   );
   return response.json();
 }

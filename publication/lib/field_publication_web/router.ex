@@ -28,36 +28,45 @@ defmodule FieldPublicationWeb.Router do
       forward("/v3", FieldPublicationWeb.Api.IIIFImage, %IIIFImagePlug.V3.Options{})
     end
 
-    scope "/v1/image" do
-      pipe_through(:ensure_image_access)
-      get("/raw/:project_identifier/:uuid", FieldPublicationWeb.Api.Image, :raw)
-      get("/tile/:project_identifier/:uuid/:z/:x/:y", FieldPublicationWeb.Api.Image, :tile)
+    scope "/zxy/:z/:x/:y" do
     end
 
-    scope "/v1/doc" do
+    scope "/v1/:project_identifier/image/:uuid" do
+      pipe_through(:ensure_image_access)
+      get("/tile/:z/:x/:y", FieldPublicationWeb.Api.V1.Image, :zxy_tile)
+      get("/", FieldPublicationWeb.Api.V1.Image, :raw)
+    end
+
+    scope "/v1/:project_identifier/:draft_date/doc" do
       pipe_through(:require_published_or_project_access)
 
       get(
-        "/raw/:project_identifier/:draft_date/:uuid",
-        FieldPublicationWeb.Api.JSON,
+        "/:uuid/extended",
+        FieldPublicationWeb.Api.V1.Document,
+        :extended
+      )
+
+      get(
+        "/:uuid",
+        FieldPublicationWeb.Api.V1.Document,
         :raw
       )
 
-      get(
-        "/extended/:project_identifier/:draft_date/:uuid",
-        FieldPublicationWeb.Api.JSON,
-        :extended
-      )
+      get("/", FieldPublicationWeb.Api.V1.Document, :index)
     end
 
-    scope "/internal" do
+    scope "/v1/:project_identifier/:draft_date/geometry" do
       pipe_through(:require_published_or_project_access)
 
-      get(
-        "/geometry_feature_collections/:project_identifier/:draft_date",
-        FieldPublicationWeb.Api.JSON,
-        :geometry_feature_collections
-      )
+      get("/", FieldPublicationWeb.Api.V1, :geometry_feature_collections)
+    end
+
+    scope "/v1/:project_identifier" do
+      get("/", FieldPublicationWeb.Api.V1, :publications)
+    end
+
+    scope "/v1" do
+      get("/", FieldPublicationWeb.Api.V1, :projects)
     end
   end
 

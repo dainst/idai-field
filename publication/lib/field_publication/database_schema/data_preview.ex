@@ -31,6 +31,7 @@ defmodule FieldPublication.DatabaseSchema.DataPreview do
   end
 
   def id(%__MODULE__{uuid: uuid}), do: "preview_#{uuid}"
+  def id(uuid) when is_binary(uuid), do: "preview_#{uuid}"
 
   def list(db_name, uuids \\ nil)
 
@@ -44,20 +45,26 @@ defmodule FieldPublication.DatabaseSchema.DataPreview do
   end
 
   def list(db_name, uuids) when is_binary(db_name) and is_list(uuids) do
-    Enum.map(uuids, fn uuid ->
-      %{selector: %{doc_type: "preview", uuid: uuid}}
-    end)
-    |> Task.async_stream(fn selector ->
-      CouchService.get_document_stream(selector, db_name)
-      |> Enum.map(fn %{"preview" => preview} ->
-        preview
-      end)
-      |> Enum.map(&Data.document_map_to_struct/1)
-    end)
-    |> Enum.reject(fn {:ok, result} -> result == [] end)
-    |> Enum.map(fn
-      {:ok, [doc]} -> doc
-    end)
+    uuids
+    |> Enum.map(&id/1)
+    |> CouchService.get_documents(db_name)
+    |> case do
+      {:ok, %{status: 200, body: body}} ->
+        Jason.decode!(body)
+        |> Map.get("results", [])
+        |> Stream.map(fn
+          %{"docs" => [%{"ok" => %{"preview" => doc}}]} ->
+            doc
+
+          _ ->
+            nil
+        end)
+        |> Stream.reject(&is_nil/1)
+        |> Enum.map(&Data.document_map_to_struct/1)
+
+      _ ->
+        []
+    end
   end
 
   defp changeset(%__MODULE__{} = preview, attrs) do

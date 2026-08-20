@@ -103,9 +103,9 @@ defmodule FieldPublicationWeb.Router do
 
   # Routes that require a user with access to a specific project
   scope "/management", FieldPublicationWeb do
-    pipe_through([:browser, :require_project_access])
+    pipe_through([:browser, :ensure_project_access])
 
-    live_session :require_project_access,
+    live_session :ensure_project_access,
       on_mount: [
         {FieldPublicationWeb.UserAuth, :ensure_authenticated},
         {FieldPublicationWeb.UserAuth, :ensure_has_project_access}
@@ -124,7 +124,7 @@ defmodule FieldPublicationWeb.Router do
     pipe_through([:browser, :require_published_or_project_access])
 
     live_session :require_published_or_project_access,
-      on_mount: [{FieldPublicationWeb.UserAuth, :ensure_project_published_or_project_access}] do
+      on_mount: [{FieldPublicationWeb.UserAuth, :ensure_publication_access}] do
       live("/search/:project_identifier/:draft_date", Presentation.PublicationSearch)
       live("/:project_identifier", Presentation.DocumentLive)
       live("/:project_identifier/:draft_date", Presentation.DocumentLive)

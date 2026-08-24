@@ -39,6 +39,12 @@ config :field_publication,
 # at the `config/runtime.exs`.
 config :field_publication, FieldPublication.Mailer, adapter: Swoosh.Adapters.Local
 
+config :phoenix,
+  static_compressors: [
+    Phoenix.Digester.Gzip,
+    ExBrotli.DigesterCompressor
+  ]
+
 # Configure esbuild (the version is required)
 config :esbuild,
   version: "0.17.11",

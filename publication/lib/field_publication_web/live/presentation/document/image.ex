@@ -99,7 +99,7 @@ defmodule FieldPublicationWeb.Presentation.Document.Image do
           </li>
         </ul>
       </div>
-      <div class="basis-full lg:basis-2/3 m-5">
+      <div class="basis-full mt-2 lg:mt-0 lg:ml-2 lg:basis-2/3">
         <.iiif_viewer
           class="h-(--ol-full-height) p-2 bg-panel"
           id="iiif_viewer"

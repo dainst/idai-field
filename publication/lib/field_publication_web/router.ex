@@ -16,14 +16,19 @@ defmodule FieldPublicationWeb.Router do
   end
 
   pipeline :api do
-    plug(:accepts, ["json"])
+    plug OpenApiSpex.Plug.PutApiSpec, module: FieldPublicationWeb.Api
+    plug(:accepts, ["json", "image"])
   end
 
   scope "/api" do
     pipe_through(:fetch_session)
     pipe_through(:fetch_current_user)
+    pipe_through(:api)
 
     scope "/iiif/image" do
+      get("/v3/spec/info", FieldPublicationWeb.Api, :iiif_v3_info_spec)
+      get("/v3/spec/data", FieldPublicationWeb.Api, :iiif_v3_data_spec)
+
       pipe_through(:ensure_image_access)
       forward("/v3", FieldPublicationWeb.Api.IIIFImage, %IIIFImagePlug.V3.Options{})
     end
@@ -62,8 +67,11 @@ defmodule FieldPublicationWeb.Router do
     end
 
     scope "/v1" do
+      get("/spec", FieldPublicationWeb.Api.V1, :spec)
       get("/", FieldPublicationWeb.Api.V1, :publications)
     end
+
+    get "/spec", OpenApiSpex.Plug.RenderSpec, []
   end
 
   # If user is already logged but tries to access '/log_in' we redirects to the user's
@@ -156,17 +164,22 @@ defmodule FieldPublicationWeb.Router do
   end
 
   # Routes without authentication required.
-  scope "/", FieldPublicationWeb do
+  scope "/" do
     pipe_through([:browser])
 
-    get("/select_locale", UILanguageController, :selection)
-    delete("/log_out", UserSessionController, :delete)
+    # get "/api_info", OpenApiSpex.Plug.SwaggerUI,
+    #   path: "/api/spec",
+    #   title: "API Specification · Field Publication"
+
+    get("/api_doc", FieldPublicationWeb.ApiDocControllerController, :show)
+    get("/select_locale", FieldPublicationWeb.UILanguageController, :selection)
+    delete("/log_out", FieldPublicationWeb.UserSessionController, :delete)
 
     live_session :mount_user,
       on_mount: [{FieldPublicationWeb.UserAuth, :mount_current_user}] do
-      live("/contact", ContactAndImprintLive)
-      live("/search", Presentation.SearchLive)
-      live("/", Presentation.HomeLive)
+      live("/contact", FieldPublicationWeb.ContactAndImprintLive)
+      live("/search", FieldPublicationWeb.Presentation.SearchLive)
+      live("/", FieldPublicationWeb.Presentation.HomeLive)
     end
   end
 

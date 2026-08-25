@@ -148,6 +148,19 @@ function getPointStyle(properties: { [key: string]: any }) {
     const [r, g, b, a] = asArray(properties.color);
     const styles = [];
 
+    if (properties.highlight) {
+        styles.push(
+            new Style({
+                image: new Circle({
+                    radius: pointRadius * 5,
+                    fill: new Fill({
+                        color: `rgba(256, 256, 256, 0.5)`,
+                    }),
+                }),
+            })
+        );
+    }
+
     styles.push(
         new Style({
             image: new Circle({

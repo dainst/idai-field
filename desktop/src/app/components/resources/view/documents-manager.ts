@@ -264,6 +264,18 @@ export class DocumentsManager {
     }
 
 
+    public async populateAndDeselectIfNecessary() {
+
+        await this.populateDocumentList();
+
+        const selectedDocument: FieldDocument = ResourcesState.getSelectedDocument(this.resourcesStateManager.get());
+
+        if (!this.documents.find(Document.hasEqualId(selectedDocument))) {
+            this.deselect();
+        }
+    }
+
+
     private getAllowedCategoryNames(): string[] {
 
         return this.resourcesStateManager.isInOverview()
@@ -306,18 +318,6 @@ export class DocumentsManager {
 
         this.resourcesStateManager.setSelectedDocument(document);
         if (viaResourceLink) ObserverUtil.notify(this.selectViaResourceLinkObservers, document);
-    }
-
-
-    private async populateAndDeselectIfNecessary() {
-
-        await this.populateDocumentList();
-
-        const selectedDocument: FieldDocument = ResourcesState.getSelectedDocument(this.resourcesStateManager.get());
-
-        if (!this.documents.find(Document.hasEqualId(selectedDocument))) {
-            this.deselect();
-        }
     }
 
 

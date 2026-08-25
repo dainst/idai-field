@@ -168,7 +168,8 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
         const [result, componentInstance] = this.modals.make<ValueEditorModalComponent>(
             ValueEditorModalComponent,
-            MenuContext.CONFIGURATION_MODAL
+            MenuContext.CONFIGURATION_MODAL,
+            'md'
         );
 
         componentInstance.value = this.getClonedValuelistDefinition().values[valueId]

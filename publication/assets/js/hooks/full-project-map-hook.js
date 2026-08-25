@@ -276,9 +276,14 @@ export default (getFullProjectMapHook = () => {
                 } else if (parentId) {
                     parent = findFeature(parentId, this.map);
                     if (parent) {
+                        let combinedExtent = createEmpty();
+
+                        combinedExtent = extend(combinedExtent, parent.getGeometry().getExtent());
+                        combinedExtent = extend(combinedExtent, feature.getGeometry().getExtent());
+
                         this.map
                             .getView()
-                            .fit(parent.getGeometry().getExtent(), {
+                            .fit(combinedExtent, {
                                 padding: [10, 10, 10, 10],
                                 duration: highlightZoomDuration,
                             });

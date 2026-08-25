@@ -501,7 +501,8 @@ defmodule FieldPublication.Publications.Search do
       },
       parent_geometry: %{
         type: "geo_shape",
-        store: true
+        store: true,
+        ignore_malformed: true
       },
       full_doc: %{
         type: "flat_object"

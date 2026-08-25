@@ -6,7 +6,7 @@ defmodule FieldPublicationWeb.Components.Data.Image do
   @default_size "^#{@default_width},"
   @default_rotation "0"
   @default_quality "default"
-  @default_format :jpg
+  @default_format :webp
 
   attr(:project, :string, required: true)
   attr(:uuid, :string, required: true)

@@ -10,7 +10,7 @@ import {
     highlightFeature,
     clearAllHighlights,
     styleFunction,
-    loadFeatureCollection
+    loadFeatureCollection,
 } from "./map/features";
 import PublicationTileLayers from "./map/tile-layers";
 import PreviewOverlay from "./map/preview-overlay";
@@ -159,7 +159,6 @@ export default (getFullProjectMapHook = () => {
                     });
                     this.lastInteractionBlock = Date.now();
                 } else {
-                    this.selectionMode = false;
                     this.refitView();
                 }
                 this.selectionMode = false;
@@ -217,7 +216,10 @@ export default (getFullProjectMapHook = () => {
                 }
             });
 
-            const featureCollections = await loadFeatureCollection(this.projectKey, this.draftDate)
+            const featureCollections = await loadFeatureCollection(
+                this.projectKey,
+                this.draftDate,
+            );
 
             for (let collection of featureCollections) {
                 this.categoriesMetadata.push(collection.properties);
@@ -287,15 +289,19 @@ export default (getFullProjectMapHook = () => {
                     if (parent) {
                         let combinedExtent = createEmpty();
 
-                        combinedExtent = extend(combinedExtent, parent.getGeometry().getExtent());
-                        combinedExtent = extend(combinedExtent, feature.getGeometry().getExtent());
+                        combinedExtent = extend(
+                            combinedExtent,
+                            parent.getGeometry().getExtent(),
+                        );
+                        combinedExtent = extend(
+                            combinedExtent,
+                            feature.getGeometry().getExtent(),
+                        );
 
-                        this.map
-                            .getView()
-                            .fit(combinedExtent, {
-                                padding: [10, 10, 10, 10],
-                                duration: highlightZoomDuration,
-                            });
+                        this.map.getView().fit(combinedExtent, {
+                            padding: [10, 10, 10, 10],
+                            duration: highlightZoomDuration,
+                        });
                     } else if (feature.getProperties().type != "Point") {
                         this.map
                             .getView()

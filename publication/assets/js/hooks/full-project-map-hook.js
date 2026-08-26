@@ -32,7 +32,8 @@ export default (getFullProjectMapHook = () => {
         categoriesMetadata: [],
         selectionMode: false,
         overlay: null,
-
+        lastInteractionBlock: Date.now(),
+        interactionTimeout: 500,
         mounted() {
             this.initialize();
             this.handleEvent(
@@ -156,10 +157,12 @@ export default (getFullProjectMapHook = () => {
                     this.pushEventTo(this.el, "drawn-selection", {
                         coordinates: result.geometry,
                     });
+                    this.lastInteractionBlock = Date.now();
                 } else {
                     this.selectionMode = false;
                     this.refitView();
                 }
+                this.selectionMode = false;
             });
 
             this.map.on("pointermove", async function (e) {
@@ -191,7 +194,8 @@ export default (getFullProjectMapHook = () => {
             });
 
             this.map.on("singleclick", async function (e) {
-                if (_this.selectionMode) return;
+                if (_this.selectionMode || _this.isInteractionOnTimeout())
+                    return;
                 if (_this.hoveredFeatures.length > 1) {
                     _this.pinnedFeatures = _this.hoveredFeatures;
                     _this.hoveredFeatures = [];
@@ -238,6 +242,12 @@ export default (getFullProjectMapHook = () => {
             document.getElementById(
                 `${this.id}-loading-indicator`,
             ).style.display = "none";
+        },
+
+        isInteractionOnTimeout() {
+            return (
+                Date.now() - this.lastInteractionBlock < this.interactionTimeout
+            );
         },
 
         highlightCategories(categories) {

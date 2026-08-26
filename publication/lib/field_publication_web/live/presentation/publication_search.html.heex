@@ -1,13 +1,21 @@
 <.document_heading>
-  <.render_field_data
-    field={Data.get_field(@project_document, "shortName")}
-    hide_language_selection?={true}
-    publication={@publication}
-  />
-  <.link class="text-sm" navigate={~p"/search?#{@url_parameters}"}>
-    Search all projects
-  </.link>
+  <div class="flex flex-row">
+    <.link
+      class="pr-2"
+      patch={~p"/projects/#{@publication.project_identifier}/#{@publication.draft_date}"}
+    >
+      <.icon name="hero-home-solid" />
+    </.link>
+    <.render_field_data
+      field={Data.get_field(@project_document, "shortName")}
+      hide_language_selection?={true}
+      publication={@publication}
+    />
+  </div>
 </.document_heading>
+<.link class="text-sm" navigate={~p"/search?#{@url_parameters}"}>
+  Search all projects
+</.link>
 
 <.async_result
   :let={%{total: total, docs: docs, available_filters: available_filters}}

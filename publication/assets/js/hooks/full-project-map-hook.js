@@ -209,8 +209,7 @@ export default (getFullProjectMapHook = () => {
                         .navigate(
                             `/projects/${_this.projectKey}/${_this.draftDate}/${properties.uuid}`,
                         );
-
-                    _this.overlay.setPosition(undefined);
+                    _this.overlay.hide();
                 }
             });
 

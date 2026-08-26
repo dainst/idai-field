@@ -1336,7 +1336,7 @@ export class BuiltInConfiguration {
         {
             name: 'liesWithin',
             domain: ['FindCollection', 'Find'],
-            range: ['FindCollection', 'Feature', 'Area', 'Sample', 'Room',
+            range: ['FindCollection', 'Feature', 'FeatureSegment', 'Area', 'Sample', 'Room',
                 'BuildingPart', 'Level', 'RoomFloor', 'RoomWall', 'RoomCeiling', 'Roof',
                 'Stairs', 'DesignElement'],
             editable: false,
@@ -1370,7 +1370,7 @@ export class BuiltInConfiguration {
         {
             name: 'liesWithin',
             domain: ['Sample'],
-            range: ['Sample', 'Feature', 'Find'],
+            range: ['Sample', 'Feature', 'FeatureSegment', 'Find'],
             editable: false,
             visible: false,
             inputType: 'relation'
@@ -1739,7 +1739,7 @@ export class BuiltInConfiguration {
             this.builtInRelations.push({
                 name: 'liesWithin',
                 domain: ['Find'],
-                range: ['Feature', 'Area', 'Quantification'],
+                range: ['Feature', 'FeatureSegment', 'Area', 'Quantification'],
                 editable: false,
                 inputType: 'relation'
             });

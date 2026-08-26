@@ -57,8 +57,11 @@ export default class PublicationSelection {
                 },
             });
 
-            this.source.addFeature(feature);
-            this.extent = feature.getGeometry().getExtent();
+            if (!Array.isArray(feature)) {
+                this.source.addFeature(feature);
+                this.extent = feature.getGeometry().getExtent();
+            }
+
         } else {
             this.extent = null;
         }
@@ -99,6 +102,5 @@ export default class PublicationSelection {
 
     stopDrawing() {
         this.map.removeInteraction(this.draw);
-        this.callback({});
     }
 }

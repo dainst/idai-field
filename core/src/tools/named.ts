@@ -1,7 +1,6 @@
 import { Map, on, Predicate } from 'tsfun';
 import { makeLookup, mapToArray } from './transformers';
 import { sortStructArray } from './sort-struct-array';
-import { SortUtil } from './sort-util';
 
 
 export type Name = string;
@@ -47,12 +46,6 @@ export namespace Named {
     
             return sortStructArray(order, Named.NAME)(items) as any;
         }
-    }
-
-
-    export function byName(a: Named, b: Named) { // to be used with sort
-
-        return SortUtil.alnumCompare(a.name, b.name);
     }
     
     

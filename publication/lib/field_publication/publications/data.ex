@@ -580,6 +580,22 @@ defmodule FieldPublication.Publications.Data do
       end)
       |> Map.values()
 
+    # project_epsg =
+    #   get_raw_document("project", publication)
+    #   |> case do
+    #     %{"resource" => %{"epsgId" => val}} ->
+    #       val
+
+    #     _ ->
+    #       nil
+    #   end
+
+    # FieldPublication.FileService.write_preprocessed_geo_vector_data(
+    #   publication,
+    #   feature_collections,
+    #   project_epsg
+    # )
+
     FieldPublication.FileService.write_geometry_collections(
       publication,
       feature_collections

@@ -279,8 +279,8 @@ export default (getFullProjectMapHook = () => {
                 feature = findFeature(uuid, this.map);
                 parentId = feature.getProperties().parent;
 
-                if (this.drawnExtent) {
-                    this.map.getView().fit(this.drawnExtent, {
+                if (this.selection.getExtent()) {
+                    this.map.getView().fit(this.selection.getExtent(), {
                         padding: [10, 10, 10, 10],
                         duration: highlightZoomDuration,
                     });

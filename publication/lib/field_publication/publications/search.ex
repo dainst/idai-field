@@ -589,25 +589,30 @@ defmodule FieldPublication.Publications.Search do
 
     hierarchy = Data.get_document_hierarchy(publication)
 
+    # `parent_geo` is a fallback in cases where the document itself has no geometry attached to it.
     parent_geo =
-      Data.next_ancestor_with_geometry(res["id"], hierarchy, publication)
-      |> case do
-        nil ->
-          nil
+      if geo == nil do
+        Data.next_ancestor_with_geometry(res["id"], hierarchy, publication)
+        |> case do
+          nil ->
+            nil
 
-        %{id: uuid, geometry: geometry} = _doc ->
-          case Map.get(hierarchy, uuid) do
-            %{"parent" => nil} ->
-              # Only include parent documents that have a parent themself,
-              # otherwise too many documents will get included in the search
-              # result if there is one main document that encompasses all others.
-              #
-              # There might be a better solution to reduce "false positive"?
-              nil
+          %{id: uuid, geometry: geometry} = _doc ->
+            case Map.get(hierarchy, uuid) do
+              %{"parent" => nil} ->
+                # Only include parent documents that have a parent themself,
+                # otherwise too many documents will get included in the search
+                # result if there is one main document that encompasses all others.
+                #
+                # There might be a better solution to reduce "false positive"?
+                nil
 
-            _ ->
-              geometry
-          end
+              _ ->
+                geometry
+            end
+        end
+      else
+        nil
       end
 
     base_document =

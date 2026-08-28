@@ -2,6 +2,7 @@ defmodule FieldPublicationWeb.Api do
   use FieldPublicationWeb, :controller
 
   alias OpenApiSpex.{Info, OpenApi, Paths, Server}
+
   alias FieldPublicationWeb.{Endpoint, Router}
   @behaviour OpenApi
 
@@ -37,8 +38,13 @@ defmodule FieldPublicationWeb.Api do
     |> OpenApiSpex.OpenApi.to_map()
     |> Map.update!("paths", fn derived_from_router ->
       # Add additional schemas defined below, whose routes are not directly part of the application.
-      Map.merge(derived_from_router, iiif_specs)
-      |> Map.delete("/api/v1/spec")
+      derived_from_router
+      |> Enum.filter(fn
+        {_key, %{"get" => "ok"}} -> false
+        _ -> true
+      end)
+      |> Enum.into(%{})
+      |> Map.merge(iiif_specs)
     end)
     |> OpenApiSpex.OpenApi.from_map()
   end
@@ -66,13 +72,13 @@ defmodule FieldPublicationWeb.Api do
             description:
               "The identifier used in IIIF requests is a combination of project identifier and
               the image's ID in the form `<project identifier>|<uuid>`.",
-            example: ["bourgou/1e8b4d62-260c-4a0c-9ded-914f97299e4e"]
+            example: "bourgou/1e8b4d62-260c-4a0c-9ded-914f97299e4e"
           }
         ],
         responses: %{
           "200": %{
             content: %{
-              "application/json": %{}
+              "application/ld+json": %{}
             }
           }
         }
@@ -110,28 +116,40 @@ defmodule FieldPublicationWeb.Api do
           %{
             name: "region",
             in: "path",
+            description: "The example `full` will __not__ crop the image.",
             example: "full",
             required: true
           },
           %{
             name: "size",
             in: "path",
+            description:
+              "The example `!250,250` will scale the (maybe cropped) image to 250 by 250 pixels while maintaining
+              its aspect ratio.",
             example: "!250,250",
             required: true
           },
           %{
             name: "rotation",
             in: "path",
+            description:
+              "The example `45` will rotate the (maybe cropped and scaled) image by 45 degrees clockwise.",
             example: "45",
             required: true
           },
           %{
             name: "quality",
             in: "path",
+            description:
+              "The example `gray` will transform the (maybe cropped, scaled and rotated) image into a grayscale
+              image.",
             example: "gray",
             required: true
           },
           %{
+            description:
+              "Defines the format of the image returned image. Field Publication currently supports `.jpg`, `.png` and `.webp` formats, as reported by
+              the IIIF metadata endpoint documented above.",
             name: "format",
             in: "path",
             example: ".jpg",
@@ -141,8 +159,7 @@ defmodule FieldPublicationWeb.Api do
         responses: %{
           "200": %{
             content: %{
-              # TODO: Phoenix does not accept image/* in the api pipeline, why?
-              "*/*": %{
+              "image/*": %{
                 type: :string,
                 format: :binary
               }

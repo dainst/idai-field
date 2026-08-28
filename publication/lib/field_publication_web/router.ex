@@ -17,7 +17,7 @@ defmodule FieldPublicationWeb.Router do
 
   pipeline :api do
     plug OpenApiSpex.Plug.PutApiSpec, module: FieldPublicationWeb.Api
-    plug(:accepts, ["json", "image"])
+    plug(:accepts, ["json", "jsonld", "webp", "jpeg", "png"])
   end
 
   scope "/api" do
@@ -35,8 +35,8 @@ defmodule FieldPublicationWeb.Router do
 
     scope "/v1/:project_identifier/image/:uuid" do
       pipe_through(:ensure_image_access)
-      get("/tile/:z/:x/:y", FieldPublicationWeb.Api.V1.Image, :zxy_tile)
-      get("/", FieldPublicationWeb.Api.V1.Image, :raw)
+      get("/tile/:z/:x/:y", FieldPublicationWeb.Api.V1.Project, :zxy_tile)
+      get("/", FieldPublicationWeb.Api.V1.Project, :raw_image)
     end
 
     scope "/v1/:project_identifier/:draft_date/doc" do
@@ -44,31 +44,31 @@ defmodule FieldPublicationWeb.Router do
 
       get(
         "/:uuid/extended",
-        FieldPublicationWeb.Api.V1.Document,
-        :extended
+        FieldPublicationWeb.Api.V1.Publication,
+        :extended_doc
       )
 
       get(
         "/:uuid",
-        FieldPublicationWeb.Api.V1.Document,
-        :raw
+        FieldPublicationWeb.Api.V1.Publication,
+        :raw_doc
       )
     end
 
     scope "/v1/:project_identifier/:draft_date/geometry" do
       pipe_through(:ensure_publication_access)
 
-      get("/", FieldPublicationWeb.Api.V1, :geometry_feature_collections)
+      get("/", FieldPublicationWeb.Api.V1.Publication, :geo_collections)
     end
 
     scope "/v1/:project_identifier/:draft_date" do
       pipe_through(:ensure_publication_access)
-      get("/", FieldPublicationWeb.Api.V1.Document, :index)
+      get("/", FieldPublicationWeb.Api.V1.Publication, :index)
     end
 
     scope "/v1" do
-      get("/spec", FieldPublicationWeb.Api.V1, :spec)
-      get("/", FieldPublicationWeb.Api.V1, :publications)
+      #  get("/spec", FieldPublicationWeb.Api.V1, :spec)
+      get("/", FieldPublicationWeb.Api.V1, :index)
     end
 
     get "/spec", OpenApiSpex.Plug.RenderSpec, []

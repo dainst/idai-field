@@ -45,16 +45,16 @@ defmodule FieldPublication.Test.ProjectSeed do
         "identifier" => identifier
       })
 
-    {:ok, replication_input} =
-      ReplicationInput.create(%{
-        "source_url" => "http://example.org",
-        "source_project_identifier" => identifier,
-        "source_user" => "local_developer",
-        "source_password" => "fake",
-        "project_identifier" => identifier,
-        "drafted_by" => "mix seed",
-        "draft_date" => Date.from_iso8601!("2024-06-05")
-      })
+    replication_input = %ReplicationInput{
+      delete_existing_publication: true,
+      source_url: "http://example.org",
+      source_project_identifier: identifier,
+      source_user: "remote_field_field_hub_user",
+      source_password: "fake",
+      project_identifier: identifier,
+      drafted_by: "mix seed",
+      draft_date: Date.from_iso8601!("2024-06-05")
+    }
 
     {:ok, %Publication{} = publication} =
       Publications.create_from_replication_input(replication_input)

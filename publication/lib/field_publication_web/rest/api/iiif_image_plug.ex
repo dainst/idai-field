@@ -14,7 +14,7 @@ defmodule FieldPublicationWeb.Api.IIIFImage do
 
   @impl true
   def data_call(conn) do
-    path = FileService.get_iiif_cache_path(conn)
+    path = get_image_cache_path(conn)
 
     if File.exists?(path) do
       conn =
@@ -54,7 +54,7 @@ defmodule FieldPublicationWeb.Api.IIIFImage do
       ) do
     if Vix.Vips.Image.width(image) <= 250 && Vix.Vips.Image.height(image) <= 250 &&
          region == "full" do
-      path = FileService.get_iiif_cache_path(conn)
+      path = get_image_cache_path(conn)
 
       path
       |> Path.dirname()
@@ -144,11 +144,47 @@ defmodule FieldPublicationWeb.Api.IIIFImage do
     )
   end
 
+  @identifier_joiner "|"
+
+  @doc "
+  Combines project identifier and uuid to a identifier string that can be used in the IIIF API.
+  "
+  def combine_to_identifier(project_identifier, uuid)
+      when is_binary(project_identifier) and is_binary(uuid) do
+    Enum.join([project_identifier, uuid], @identifier_joiner)
+  end
+
+  @doc "
+  Splits project identifier and uuid from a identifier string that is beeing used in the IIIF API.
+  "
+  def split_identifier(identifier) when is_binary(identifier) do
+    identifier
+    |> URI.decode()
+    |> String.split(@identifier_joiner)
+  end
+
+  def get_identifier_joiner(), do: @identifier_joiner
+
   defp identifier_to_path(identifier) do
-    [project, uuid] =
-      URI.decode(identifier)
-      |> String.split("/")
+    [project, uuid] = split_identifier(identifier)
 
     FieldPublication.FileService.get_web_images_path(project, uuid)
+  end
+
+  def get_image_cache_path(%Plug.Conn{
+        path_info: [identifier, region, scaling, rotation, quality_and_format]
+      }) do
+    [project_identifier, uuid] = split_identifier(identifier)
+
+    [
+      project_identifier,
+      uuid,
+      region,
+      scaling,
+      rotation,
+      quality_and_format
+    ]
+    |> Path.join()
+    |> FileService.get_iiif_cache_path()
   end
 end

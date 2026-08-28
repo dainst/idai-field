@@ -1,5 +1,5 @@
 defmodule FieldPublicationWeb.Components.Data.Image do
-  use Phoenix.Component
+  use FieldPublicationWeb, :html
 
   @default_region "full"
   @default_width 500
@@ -30,7 +30,7 @@ defmodule FieldPublicationWeb.Components.Data.Image do
   end
 
   def construct_url(
-        project,
+        project_identifier,
         uuid,
         region \\ @default_region,
         size \\ @default_size,
@@ -43,7 +43,9 @@ defmodule FieldPublicationWeb.Components.Data.Image do
     # same default parameters are already set by the `:attr` definitions.
     size = String.replace(size, "^", "%5E")
 
-    "/api/iiif/image/v3/#{project}%2F#{uuid}/#{region}/#{size}/#{rotation}/#{quality}.#{format}"
+    identifier = FieldPublicationWeb.Api.IIIFImage.combine_to_identifier(project_identifier, uuid)
+
+    "/api/iiif/image/v3/#{identifier}/#{region}/#{size}/#{rotation}/#{quality}.#{format}"
   end
 
   attr(:project, :string, required: true)
@@ -52,16 +54,16 @@ defmodule FieldPublicationWeb.Components.Data.Image do
 
   def iiif_viewer(assigns) do
     ~H"""
-    <% url = construct_iiif_info_url(@project, @uuid) %>
     <!-- Added phx-update ignore to keep rendered image when phones javascript reconnects after the tab was minimized.
     this might cause issues if we ever implement an iiif-viewer to iiif-viewer `patch` navigation.
     -->
-    <div phx-update="ignore" url={url} {@rest} phx-hook="IIIFViewer"></div>
+    <div phx-update="ignore" url={construct_iiif_info_url(@project, @uuid)} {@rest} phx-hook="IIIFViewer"></div>
     """
   end
 
-  def construct_iiif_info_url(project, uuid),
-    do: "/api/iiif/image/v3/#{project}%2F#{uuid}/info.json"
+  def construct_iiif_info_url(project_identifier, uuid) do
+    ~p"/api/iiif/image/v3/#{FieldPublicationWeb.Api.IIIFImage.combine_to_identifier(project_identifier, uuid)}/info.json"
+  end
 
   def get_default_width(), do: @default_width
   def get_default_format(), do: @default_format

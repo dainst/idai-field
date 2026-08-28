@@ -49,6 +49,7 @@ defmodule FieldPublicationWeb.Rest.Api.ImageTest do
     project: project,
     image_doc: %{"_id" => uuid}
   } do
+    identifier = FieldPublicationWeb.Api.IIIFImage.combine_to_identifier(project.identifier, uuid)
     # Try a query for image meta data.
     %{
       "@context" => "http://iiif.io/api/image/3/context.json",
@@ -57,7 +58,7 @@ defmodule FieldPublicationWeb.Rest.Api.ImageTest do
     } =
       get(
         conn,
-        "/api/iiif/image/v3/#{project.identifier}%2F#{uuid}/info.json"
+        "/api/iiif/image/v3/#{identifier}/info.json"
       )
       |> json_response(200)
 

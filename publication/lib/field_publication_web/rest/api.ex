@@ -71,7 +71,7 @@ defmodule FieldPublicationWeb.Api do
             type: "string",
             description:
               "The identifier used in IIIF requests is a combination of project identifier and
-              the image's ID in the form `<project identifier>|<uuid>`.",
+              the image's ID in the form `<project identifier>#{FieldPublicationWeb.Api.IIIFImage.get_identifier_joiner()}<uuid>`.",
             example: nil
           }
         ],
@@ -110,7 +110,8 @@ defmodule FieldPublicationWeb.Api do
             required: true,
             type: "string",
             description:
-              "The identifier used in IIIF requests is a combination of project identifier and the image ID in the form `<project identifier>|<uuid>`.",
+              "The identifier used in IIIF requests is a combination of project identifier and the image ID in the form
+              `<project identifier>#{FieldPublicationWeb.Api.IIIFImage.get_identifier_joiner()}<uuid>`.",
             example: nil
           },
           %{

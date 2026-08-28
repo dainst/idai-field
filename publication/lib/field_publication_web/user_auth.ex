@@ -408,7 +408,7 @@ defmodule FieldPublicationWeb.UserAuth do
     # This is the variant of ensure_image_access/2 that is used for IIIF requests.
     # We can not extract project_identifier and uuid beforehand.
     identifier
-    |> String.split("%2F")
+    |> FieldPublicationWeb.Api.IIIFImage.split_identifier()
     |> case do
       [project_identifier, uuid] ->
         check_image_access(conn, project_identifier, uuid)

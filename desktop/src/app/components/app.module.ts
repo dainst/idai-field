@@ -14,7 +14,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppConfigurator, ConfigLoader, ConfigReader, ConstraintIndex, Datastore, DocumentCache, FulltextIndex,
     IndexFacade, PouchdbDatastore, ProjectConfiguration, Query, RelationsManager, SyncService, Labels,
-    ImageStore, ImageSyncService, ConfigurationSerializer } from 'idai-field-core';
+    ImageStore, ImageSyncService, ConfigurationSerializer, Comparator } from 'idai-field-core';
 import { Translations } from '../angular/translations';
 import { AppController } from '../services/app-controller';
 import { StateSerializer } from '../services/state-serializer';
@@ -109,10 +109,10 @@ registerLocaleData(localeUk, 'uk');
         Languages,
         {
             provide: Labels,
-            useFactory: (languages: Languages) => {
-                return new Labels(() => languages.get());
+            useFactory: (comparator: Comparator, languages: Languages) => {
+                return new Labels(comparator, () => languages.get());
             },
-            deps: [Languages]
+            deps: [Comparator, Languages]
         },
         DecimalPipe,
         { provide: LOCALE_ID, useValue: remote.getGlobal('getLocale')() },
@@ -214,6 +214,11 @@ registerLocaleData(localeUk, 'uk');
         {
             provide: ConfigurationIndex,
             useFactory: (serviceLocator: AppInitializerServiceLocator) => serviceLocator.configurationIndex,
+            deps: [AppInitializerServiceLocator]
+        },
+        {
+            provide: Comparator,
+            useFactory: (serviceLocator: AppInitializerServiceLocator) => serviceLocator.projectConfiguration,
             deps: [AppInitializerServiceLocator]
         },
         {

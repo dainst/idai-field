@@ -2,6 +2,7 @@ import { basicIndexConfiguration } from '../../src/basic-index-configuration';
 import { ConstraintIndex } from '../../src/index/constraint-index';
 import { IndexFacade } from '../../src/index/index-facade';
 import { Query, SortMode } from '../../src/model/datastore/query';
+import { Comparator } from '../../src/services/comparator';
 import { Tree } from '../../src/tools/forest';
 import { createMockProjectConfiguration, doc } from '../test-helpers';
 
@@ -39,6 +40,7 @@ describe('IndexFacade', () => {
             createdConstraintIndex,
             createdFulltextIndex,
             projectConfiguration,
+            new Comparator('de'),
             true
         );
 

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { Datastore, FieldDocument, FieldsViewGroup, FieldsViewUtil,
+import { Comparator, Datastore, FieldDocument, FieldsViewGroup, FieldsViewUtil,
      Labels, Name, ProjectConfiguration, Resource } from 'idai-field-core';
 
 
@@ -27,7 +27,8 @@ export class FieldsViewComponent implements OnChanges {
 
     constructor(private projectConfiguration: ProjectConfiguration,
                 private datastore: Datastore,
-                private labels: Labels) {}
+                private labels: Labels,
+                private comparator: Comparator) {}
 
 
     public getGroupLabel = (group: FieldsViewGroup) => this.labels.get(group);
@@ -37,7 +38,7 @@ export class FieldsViewComponent implements OnChanges {
 
         if (this.resource && changes['resource']) {
             this.groups = await FieldsViewUtil.getGroupsForResource(
-                this.resource, this.projectConfiguration, this.datastore, this.labels
+                this.resource, this.projectConfiguration, this.datastore, this.labels, this.comparator
             );
         }
     }

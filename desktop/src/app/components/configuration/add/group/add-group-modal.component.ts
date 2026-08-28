@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { nop } from 'tsfun';
-import { CategoryForm, ConfigurationDocument, Labels, SortUtil, Document, GroupDefinition } from 'idai-field-core';
+import { CategoryForm, ConfigurationDocument, Labels, Comparator, Document, GroupDefinition } from 'idai-field-core';
 import { GroupEntry } from '../../../../services/configuration/index/group-index';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { Modals } from '../../../../services/modals';
@@ -40,7 +40,8 @@ export class AddGroupModalComponent {
                 private modals: Modals,
                 private menus: Menus,
                 private labels: Labels,
-                private settingsProvider: SettingsProvider) {}
+                private settingsProvider: SettingsProvider,
+                private comparator: Comparator) {}
 
 
     public initialize() {
@@ -85,7 +86,7 @@ export class AddGroupModalComponent {
 
         this.groups = this.configurationIndex.findGroups(this.searchTerm)
             .filter(group => !this.category.groups.find(categoryGroup => group.name === categoryGroup.name))
-            .sort((group1, group2) => SortUtil.alnumCompare(this.labels.get(group1), this.labels.get(group2)));
+            .sort((group1, group2) => this.comparator.alnumCompare(this.labels.get(group1), this.labels.get(group2)));
 
         this.selectedGroup = this.groups?.[0];
         this.emptyGroup = this.getEmptyGroup();

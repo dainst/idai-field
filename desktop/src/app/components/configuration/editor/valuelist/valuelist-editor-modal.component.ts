@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { equal, isEmpty, nop, set, Map, clone, on, is, isArray } from 'tsfun';
-import { I18N, InPlace, Labels, Named, SortUtil, Subfield, Valuelist, ValuelistValue } from 'idai-field-core';
+import { I18N, InPlace, Labels, Named, Comparator, Subfield, Valuelist, ValuelistValue } from 'idai-field-core';
 import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
 import { Menus } from '../../../../services/menus';
 import { Messages } from '../../../messages/messages';
@@ -51,7 +51,8 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
                 messages: Messages,
                 private settingsProvider: SettingsProvider,
                 private labels: Labels,
-                private configurationIndex: ConfigurationIndex) {
+                private configurationIndex: ConfigurationIndex,
+                private comparator: Comparator) {
 
         super(activeModal, modals, menuService, messages);
     }
@@ -237,7 +238,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
         } else {
             if (!valuelistDefinition.hidden) valuelistDefinition.hidden = [];
             valuelistDefinition.hidden.push(valueId);
-            valuelistDefinition.hidden.sort(SortUtil.alnumCompare);
+            valuelistDefinition.hidden.sort(this.comparator.alnumCompare);
         }
     }
 
@@ -275,7 +276,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
         );
 
         return valueIds.sort((valueId1: string, valueId2: string) => {
-            return SortUtil.alnumCompare(this.getValueLabel(valueId1), this.getValueLabel(valueId2));
+            return this.comparator.alnumCompare(this.getValueLabel(valueId1), this.getValueLabel(valueId2));
         });
     }
 

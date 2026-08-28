@@ -6,7 +6,6 @@ export { filterTrees, isTopLevelItemOrChildThereof, removeTrees } from './named-
 export { ObjectUtils } from './object-utils';
 export { ObserverUtil } from './observer-util';
 export { sortStructArray } from './sort-struct-array';
-export { SortUtil } from './sort-util';
 export { StringUtils } from './string-utils';
 export { addKeyAsProp, makeLookup, mapToArray } from './transformers';
 export { parseDate } from './parse-date';

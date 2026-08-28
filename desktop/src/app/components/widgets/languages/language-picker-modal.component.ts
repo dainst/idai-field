@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { SortUtil } from 'idai-field-core';
+import { Comparator } from 'idai-field-core';
 import { Language, Languages } from '../../../services/languages';
 import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
@@ -26,7 +26,8 @@ export class LanguagePickerModalComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
-                private menuService: Menus) {}
+                private menuService: Menus,
+                private comparator: Comparator) {}
 
 
     public getLanguageCodes = () => Languages.getSortedLanguageCodes(this.languages);
@@ -50,7 +51,7 @@ export class LanguagePickerModalComponent {
 
     public initialize() {
 
-        this.sortedLanguages = LanguagePickerModalComponent.getSortedLanguages(this.languages);
+        this.sortedLanguages = this.getSortedLanguages(this.languages);
     }
 
 
@@ -92,10 +93,10 @@ export class LanguagePickerModalComponent {
     }
 
 
-    private static getSortedLanguages(languages: { [languageCode: string]: Language }): Array<Language> {
+    private getSortedLanguages(languages: { [languageCode: string]: Language }): Array<Language> {
 
         return Object.values(languages).sort((language1, language2) => {
-            return SortUtil.alnumCompare(language1.label, language2.label);
+            return this.comparator.alnumCompare(language1.label, language2.label);
         });
     }
 }

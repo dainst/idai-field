@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { nop, to } from 'tsfun';
-import { CategoryForm, ConfigurationDocument, Field, SortUtil, Labels, ProjectConfiguration,
+import { CategoryForm, ConfigurationDocument, Field, Comparator, Labels, ProjectConfiguration,
     Relation } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { Modals } from '../../../../services/modals';
@@ -44,7 +44,8 @@ export class AddFieldModalComponent {
                 private modals: Modals,
                 private menus: Menus,
                 private labels: Labels,
-                private settingsProvider: SettingsProvider) {}
+                private settingsProvider: SettingsProvider,
+                private comparator: Comparator) {}
 
 
     public initialize() {
@@ -97,7 +98,7 @@ export class AddFieldModalComponent {
             .filter(field => (field.visible || field.editable)
                 && !CategoryForm.getFields(this.category).map(to('name')).includes(field.name)
                 && (!field.onlySubcategory || this.category.parentCategory))
-            .sort((field1, field2) => SortUtil.alnumCompare(this.labels.get(field1), this.labels.get(field2)));
+            .sort((field1, field2) => this.comparator.alnumCompare(this.labels.get(field1), this.labels.get(field2)));
 
         this.selectedField = this.fields?.[0];
         this.emptyField = this.getEmptyField();

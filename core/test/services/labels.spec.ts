@@ -1,10 +1,12 @@
 import { Relation } from '../../src/model/configuration/relation';
 import { Valuelist } from '../../src/model/configuration/valuelist';
+import { Comparator } from '../../src/services/comparator';
 import { Labels } from '../../src/services/labels';
 
 
 describe('Labels', () => {
 
+    const comparator = new Comparator('de');
     const getLanguages = () => ['de'];
 
 
@@ -21,7 +23,7 @@ describe('Labels', () => {
             }]
         } as any;
 
-        const labels = new Labels(getLanguages);
+        const labels = new Labels(comparator, getLanguages);
 
         expect(labels.getFieldLabel(category, 'aField')).toBe('Ein Feld');
     });
@@ -38,7 +40,7 @@ describe('Labels', () => {
             }]
         } as any;
 
-        const labels = new Labels(getLanguages);
+        const labels = new Labels(comparator, getLanguages);
         expect(labels.getFieldLabel(category, 'aField')).toBe('aField');
     });
 
@@ -53,7 +55,7 @@ describe('Labels', () => {
             inputType: 'relation'
         }
 
-        const labels = new Labels(getLanguages);
+        const labels = new Labels(comparator, getLanguages);
         expect(labels.getRelationLabel('aRelation', [relation])).toBe('Eine Relation');
     });
 
@@ -67,7 +69,7 @@ describe('Labels', () => {
             inputType: 'relation'
         }
 
-        const labels = new Labels(getLanguages);
+        const labels = new Labels(comparator, getLanguages);
         expect(labels.getRelationLabel('aRelation', [relation])).toBe('aRelation');
     });
 
@@ -84,7 +86,7 @@ describe('Labels', () => {
             id: '1'
         };
 
-        const labels = new Labels(getLanguages);
+        const labels = new Labels(comparator, getLanguages);
         expect(labels.orderKeysByLabels(valuelist)).toEqual(['2', '4', '3', '1']);
     });
 
@@ -103,7 +105,7 @@ describe('Labels', () => {
             id: '1'
         };
 
-        const labels = new Labels(getLanguages);
+        const labels = new Labels(comparator, getLanguages);
         expect(labels.orderKeysByLabels(valuelist)).toEqual(['2', '4', '3', '1']);
     });
 });

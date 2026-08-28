@@ -15,6 +15,7 @@ import { getSortedIds } from './get-sorted-ids';
 import { IndexItem, TypeResourceIndexItem } from './index-item';
 import { performQuery } from './perform-query';
 import { Relation } from '../model';
+import { Comparator } from '../services/comparator';
 
 
 const CONFIGURATION = 'Configuration';
@@ -35,6 +36,7 @@ export class IndexFacade {
     constructor(private constraintIndex: ConstraintIndex,
                 private fulltextIndex: FulltextIndex,
                 private projectConfiguration: ProjectConfiguration,
+                private comparator: Comparator,
                 private showWarnings: boolean) {}
 
 
@@ -156,7 +158,9 @@ export class IndexFacade {
             return queryResult;
         } else {
             const indexItems = queryResult.map(lookup(this.indexItems));
-            return getSortedIds(indexItems, query, this.projectConfiguration.getTypeCategories().map(to(Named.NAME)));
+            return getSortedIds(
+                indexItems, query, this.projectConfiguration.getTypeCategories().map(to(Named.NAME)), this.comparator
+            );
         }
     }
 

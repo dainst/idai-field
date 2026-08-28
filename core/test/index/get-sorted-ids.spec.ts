@@ -1,11 +1,15 @@
 import { getSortedIds } from '../../src/index/get-sorted-ids';
 import { SortMode } from '../../src/model/datastore/query';
+import { Comparator } from '../../src/services/comparator';
 
 
 /**
  * @author Daniel de Oliveira
  */
 describe('getSortedIds', () => {
+
+    const comparator = new Comparator('de');
+
 
     it('exactMatchFirst', () => {
 
@@ -18,13 +22,13 @@ describe('getSortedIds', () => {
         const result1 = getSortedIds(as as any, {
             q: 'C2',
             sort: { mode: SortMode.Alphanumeric }
-        }, ['Type']);
+        }, ['Type'], comparator);
         expect(result1).toEqual(['a', 'b', 'c']);
 
         const result2 = getSortedIds(as as any, {
             q: 'C2',
             sort: { mode: SortMode.ExactMatchFirst }
-        }, ['Type']);
+        }, ['Type'], comparator);
         expect(result2).toEqual(['c', 'a', 'b']);
     });
 
@@ -42,7 +46,8 @@ describe('getSortedIds', () => {
                 categories: ['Type'],
                 sort: { matchCategory: 'Pottery' }
             },
-            ['Type']
+            ['Type'],
+            comparator
         );
         expect(result1).toEqual(['a', 'b', 'c']);
 
@@ -51,7 +56,8 @@ describe('getSortedIds', () => {
                 categories: ['Type'],
                 sort: { matchCategory: 'Terracotta' }
             },
-            ['Type']
+            ['Type'],
+            comparator
         );
         expect(result2).toEqual(['c', 'b', 'a']);
     });
@@ -69,7 +75,8 @@ describe('getSortedIds', () => {
                 categories: ['Type'],
                 sort: { matchCategory: 'Terracotta' }
             },
-            ['Type']
+            ['Type'],
+            comparator
         );
         expect(result1).toEqual(['a', 'b']);
     });
@@ -87,7 +94,7 @@ describe('getSortedIds', () => {
         const result1 = getSortedIds(indexItems as any, {
             q: '',
             sort: { mode: SortMode.Alphanumeric }
-        }, []);
+        }, [], comparator);
         expect(result1).toEqual(['a', 'd', 'c', 'b']);
     });
 
@@ -104,7 +111,7 @@ describe('getSortedIds', () => {
         const result1 = getSortedIds(indexItems as any, {
             q: '',
             sort: { mode: SortMode.AlphanumericDescending }
-        }, []);
+        }, [], comparator);
         expect(result1).toEqual(['b', 'c', 'd', 'a']);
     });
 
@@ -121,7 +128,7 @@ describe('getSortedIds', () => {
         const result1 = getSortedIds(indexItems as any, {
             q: '',
             sort: { mode: SortMode.Date }
-        }, []);
+        }, [], comparator);
         expect(result1).toEqual(['a', 'd', 'c', 'b']);
     });
 
@@ -138,7 +145,7 @@ describe('getSortedIds', () => {
         const result1 = getSortedIds(indexItems as any, {
             q: '',
             sort: { mode: SortMode.DateDescending }
-        }, []);
+        }, [], comparator);
         expect(result1).toEqual(['b', 'c', 'd', 'a']);
     });
 
@@ -155,7 +162,7 @@ describe('getSortedIds', () => {
         const result1 = getSortedIds(indexItems as any, {
             q: '',
             sort: { mode: SortMode.Date }
-        }, []);
+        }, [], comparator);
         expect(result1).toEqual(['d', 'b', 'c', 'a']);
     });
 
@@ -172,7 +179,7 @@ describe('getSortedIds', () => {
         const result1 = getSortedIds(indexItems as any, {
             q: '',
             sort: { mode: SortMode.DateDescending }
-        }, []);
+        }, [], comparator);
         expect(result1).toEqual(['a', 'b', 'c', 'd']);
     });
 });

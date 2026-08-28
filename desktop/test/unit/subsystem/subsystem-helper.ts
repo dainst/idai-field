@@ -22,6 +22,7 @@ import { ThumbnailGenerator } from '../../../src/app/services/imagestore/thumbna
 import { RemoteImageStore } from '../../../src/app/services/imagestore/remote-image-store';
 import { DocumentHolder } from '../../../src/app/components/docedit/document-holder';
 import { Messages } from '../../../src/app/components/messages/messages';
+import { Comparator } from 'idai-field-core';
 
 const PouchDB = require('pouchdb-node');
 const fs = require('fs');
@@ -41,7 +42,7 @@ class IdGenerator {
  */
 export async function setupSettingsService(pouchdbDatastore, projectIdentifier = 'testdb') {
 
-    const pouchdbServer = new ExpressServer(undefined, undefined, undefined, undefined, undefined);
+    const pouchdbServer = new ExpressServer(undefined, undefined, undefined, undefined, undefined, undefined, undefined);
     const settingsProvider = new SettingsProvider();
     const fileSystemAdapter = new FsAdapter();
     const mockMessages = new Messages(undefined, 0);
@@ -118,6 +119,9 @@ export async function createApp(projectIdentifier = 'testdb'): Promise<App> {
     pouchdbDatastore.createDbForTesting(projectIdentifier);
     pouchdbDatastore.setupChangesEmitter();
 
+
+    const comparator = new Comparator('de');
+
     const {
         settingsService,
         projectConfiguration,
@@ -126,7 +130,7 @@ export async function createApp(projectIdentifier = 'testdb'): Promise<App> {
         remoteImageStore
     } = await setupSettingsService(pouchdbDatastore, projectIdentifier);
 
-    const { createdIndexFacade } = IndexerConfiguration.configureIndexers(projectConfiguration);
+    const { createdIndexFacade } = IndexerConfiguration.configureIndexers(projectConfiguration, comparator);
 
     await imageStore.init(settingsProvider.getSettings().imagestorePath, settingsProvider.getSettings().selectedProject);
 

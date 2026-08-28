@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { clone, Map } from 'tsfun';
-import { CategoryForm, ConfigurationDocument, Field, Groups, ProjectConfiguration, Relation, SortUtil } from 'idai-field-core';
+import { CategoryForm, ConfigurationDocument, Field, Groups, ProjectConfiguration, Relation, Comparator } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { MenuContext } from '../../../../services/menu-context';
 import { AngularUtility } from '../../../../angular/angular-utility';
@@ -47,7 +47,8 @@ export class AddCategoryFormModalComponent {
                 private configurationIndex: ConfigurationIndex,
                 private modals: Modals,
                 private menus: Menus,
-                private settingsProvider: SettingsProvider) {}
+                private settingsProvider: SettingsProvider,
+                private comparator: Comparator) {}
 
 
     public initialize() {
@@ -105,7 +106,7 @@ export class AddCategoryFormModalComponent {
                 ) && (!this.projectCategoryNames || !this.projectCategoryNames.includes(category.name))
                 && (!this.categoryFormToReplace || category.name === this.categoryFormToReplace.name)
             )
-            .sort((categoryForm1, categoryForm2) => SortUtil.alnumCompare(
+            .sort((categoryForm1, categoryForm2) => this.comparator.alnumCompare(
                 categoryForm1.libraryId ?? categoryForm1.name,
                 categoryForm2.libraryId ?? categoryForm2.name
             ));

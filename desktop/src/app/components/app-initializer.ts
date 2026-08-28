@@ -1,7 +1,7 @@
 import { Map, to } from 'tsfun';
 import { ConfigLoader, ConfigReader, ConfigurationDocument, ConstraintIndex,
     DocumentCache, FulltextIndex, ImageStore, Indexer, IndexFacade, PouchdbDatastore,
-    ProjectConfiguration, Document, Labels, ImageVariant, FileInfo } from 'idai-field-core';
+    ProjectConfiguration, Document, Labels, ImageVariant, FileInfo, Comparator } from 'idai-field-core';
 import { AngularUtility } from '../angular/angular-utility';
 import { ThumbnailGenerator } from '../services/imagestore/thumbnail-generator';
 import { InitializationProgress } from './initialization-progress';
@@ -20,6 +20,7 @@ import { BackupService } from '../services/backup/backup-service';
 import { getExistingBackups } from '../services/backup/auto-backup/get-existing-backups';
 
 const ipcRenderer = window.require('electron')?.ipcRenderer;
+const remote = window.require('@electron/remote');
 const fs = window.require('fs');
 
 
@@ -30,6 +31,7 @@ interface Services {
     constraintIndex?: ConstraintIndex;
     indexFacade?: IndexFacade;
     configurationIndex?: ConfigurationIndex;
+    comparator?: Comparator;
 }
 
 
@@ -92,6 +94,16 @@ export class AppInitializerServiceLocator {
         }
         return this.services.configurationIndex;
     }
+
+
+    public get comparator(): Comparator {
+
+        if (!this.services.comparator) {
+            console.error('Comparator has not yet been provided');
+            throw new Error('Comparator has not yet been provided');
+        }
+        return this.services.comparator;
+    }
 }
 
 
@@ -116,13 +128,15 @@ export const appInitializerFactory = (serviceLocator: AppInitializerServiceLocat
     await setUpDatabase(settingsService, settings, progress);
     await loadSampleData(settings, pouchdbDatastore.getDb(), thumbnailGenerator, imagestore, progress);
 
+    const comparator: Comparator = new Comparator(remote.getGlobal('getLocale')());
+
     settings = await updateProjectNameInSettings(settingsService, pouchdbDatastore.getDb());
-    await setProjectNameInProgress(settings, progress);
+    await setProjectNameInProgress(settings, progress, comparator);
     await copyThumbnailsFromDatabase(settings.selectedProject, pouchdbDatastore, imagestore);
     await createDisplayImages(imagestore, pouchdbDatastore.getDb(), settings.selectedProject, progress);
 
     const services = await loadConfiguration(
-        settingsService, progress, configReader, configLoader, pouchdbDatastore.getDb(),
+        settingsService, progress, configReader, configLoader, comparator, pouchdbDatastore.getDb(),
         settings.selectedProject, settings.username
     );
     serviceLocator.init(services);
@@ -156,10 +170,10 @@ const loadSettings = async (settingsService: SettingsService, progress: Initiali
 };
 
 
-const setProjectNameInProgress = async (settings: Settings, progress: InitializationProgress) => {
+const setProjectNameInProgress = async (settings: Settings, progress: InitializationProgress, comparator: Comparator) => {
 
     const projectIdentifier = settings.dbs[0];
-    const labels: Labels = new Labels(new Languages().get);
+    const labels: Labels = new Labels(comparator, new Languages().get);
     const projectName = labels.getFromI18NString(settings.projectNames?.[projectIdentifier]);
 
     await progress.setProjectName(
@@ -208,7 +222,7 @@ const loadSampleData = async (settings: Settings, db: any, thumbnailGenerator: T
 
 
 const loadConfiguration = async (settingsService: SettingsService, progress: InitializationProgress,
-                                 configReader: ConfigReader, configLoader: ConfigLoader,
+                                 configReader: ConfigReader, configLoader: ConfigLoader, comparator: Comparator,
                                  db: any, projectIdentifier: string, username: string): Promise<Services> => {
 
     await progress.setPhase('loadingConfiguration');
@@ -222,7 +236,7 @@ const loadConfiguration = async (settingsService: SettingsService, progress: Ini
     }
 
     const { createdConstraintIndex, createdFulltextIndex, createdIndexFacade }
-        = IndexerConfiguration.configureIndexers(configuration);
+        = IndexerConfiguration.configureIndexers(configuration, comparator);
 
     const configurationIndex = await buildConfigurationIndex(
         configReader, configLoader, db, configuration, projectIdentifier, username
@@ -233,7 +247,8 @@ const loadConfiguration = async (settingsService: SettingsService, progress: Ini
         constraintIndex: createdConstraintIndex,
         fulltextIndex: createdFulltextIndex,
         indexFacade: createdIndexFacade,
-        configurationIndex
+        configurationIndex,
+        comparator
     };
 };
 

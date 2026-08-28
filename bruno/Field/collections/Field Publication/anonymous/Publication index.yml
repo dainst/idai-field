@@ -1,0 +1,25 @@
+info:
+  name: Publication index
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: localhost:4001/api/v1/:project_id/:draft_date
+  params:
+    - name: draft_date
+      value: 2024-06-05
+      type: path
+      description: The publication draft date seeded by running `mix seed`.
+    - name: project_id
+      value: testopolis
+      type: path
+      description: The project's identifier seeded by running `mix seed`.
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

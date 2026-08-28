@@ -51,10 +51,10 @@ defmodule FieldPublicationWeb.Rest.Api.V1Test do
       CouchService.delete_database(@core_database)
     end)
 
-    today = Date.utc_today() |> Date.to_string()
-
-    [%{"project_identifier" => "test_project_a", "publications" => [^today]}] =
-      json =
+    json =
+      [
+        %{"project_identifier" => "test_project_a", "publications" => ["2024-06-05"]}
+      ] =
       conn
       |> get(~p"/api/v1/")
       |> json_response(200)

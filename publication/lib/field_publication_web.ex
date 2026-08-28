@@ -18,7 +18,7 @@ defmodule FieldPublicationWeb do
   """
 
   def static_paths,
-    do: ~w(assets fonts images robots.txt)
+    do: ~w(assets fonts images swagger-ui-5.32.14 robots.txt)
 
   def router do
     quote do

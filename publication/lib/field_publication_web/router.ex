@@ -16,22 +16,27 @@ defmodule FieldPublicationWeb.Router do
   end
 
   pipeline :api do
-    plug(:accepts, ["json"])
+    plug OpenApiSpex.Plug.PutApiSpec, module: FieldPublicationWeb.Api
+    plug(:accepts, ["json", "jsonld", "webp", "jpeg", "png"])
   end
 
   scope "/api" do
     pipe_through(:fetch_session)
     pipe_through(:fetch_current_user)
+    pipe_through(:api)
 
     scope "/iiif/image" do
+      get("/v3/spec/info", FieldPublicationWeb.Api, :iiif_v3_info_spec)
+      get("/v3/spec/data", FieldPublicationWeb.Api, :iiif_v3_data_spec)
+
       pipe_through(:ensure_image_access)
       forward("/v3", FieldPublicationWeb.Api.IIIFImage, %IIIFImagePlug.V3.Options{})
     end
 
     scope "/v1/:project_identifier/image/:uuid" do
       pipe_through(:ensure_image_access)
-      get("/tile/:z/:x/:y", FieldPublicationWeb.Api.V1.Image, :zxy_tile)
-      get("/", FieldPublicationWeb.Api.V1.Image, :raw)
+      get("/tile/:z/:x/:y", FieldPublicationWeb.Api.V1.Project, :zxy_tile)
+      get("/", FieldPublicationWeb.Api.V1.Project, :raw_image)
     end
 
     scope "/v1/:project_identifier/:draft_date/doc" do
@@ -39,31 +44,34 @@ defmodule FieldPublicationWeb.Router do
 
       get(
         "/:uuid/extended",
-        FieldPublicationWeb.Api.V1.Document,
-        :extended
+        FieldPublicationWeb.Api.V1.Publication,
+        :extended_doc
       )
 
       get(
         "/:uuid",
-        FieldPublicationWeb.Api.V1.Document,
-        :raw
+        FieldPublicationWeb.Api.V1.Publication,
+        :raw_doc
       )
     end
 
     scope "/v1/:project_identifier/:draft_date/geometry" do
       pipe_through(:ensure_publication_access)
 
-      get("/", FieldPublicationWeb.Api.V1, :geometry_feature_collections)
+      get("/", FieldPublicationWeb.Api.V1.Publication, :geo_collections)
     end
 
     scope "/v1/:project_identifier/:draft_date" do
       pipe_through(:ensure_publication_access)
-      get("/", FieldPublicationWeb.Api.V1.Document, :index)
+      get("/", FieldPublicationWeb.Api.V1.Publication, :index)
     end
 
     scope "/v1" do
-      get("/", FieldPublicationWeb.Api.V1, :publications)
+      #  get("/spec", FieldPublicationWeb.Api.V1, :spec)
+      get("/", FieldPublicationWeb.Api.V1, :index)
     end
+
+    get "/spec", OpenApiSpex.Plug.RenderSpec, []
   end
 
   # If user is already logged but tries to access '/log_in' we redirects to the user's
@@ -156,17 +164,22 @@ defmodule FieldPublicationWeb.Router do
   end
 
   # Routes without authentication required.
-  scope "/", FieldPublicationWeb do
+  scope "/" do
     pipe_through([:browser])
 
-    get("/select_locale", UILanguageController, :selection)
-    delete("/log_out", UserSessionController, :delete)
+    # get "/api_info", OpenApiSpex.Plug.SwaggerUI,
+    #   path: "/api/spec",
+    #   title: "API Specification · Field Publication"
+
+    get("/api_doc", FieldPublicationWeb.ApiDocControllerController, :show)
+    get("/select_locale", FieldPublicationWeb.UILanguageController, :selection)
+    delete("/log_out", FieldPublicationWeb.UserSessionController, :delete)
 
     live_session :mount_user,
       on_mount: [{FieldPublicationWeb.UserAuth, :mount_current_user}] do
-      live("/contact", ContactAndImprintLive)
-      live("/search", Presentation.SearchLive)
-      live("/", Presentation.HomeLive)
+      live("/contact", FieldPublicationWeb.ContactAndImprintLive)
+      live("/search", FieldPublicationWeb.Presentation.SearchLive)
+      live("/", FieldPublicationWeb.Presentation.HomeLive)
     end
   end
 

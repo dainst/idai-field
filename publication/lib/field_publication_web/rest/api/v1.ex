@@ -1,13 +1,54 @@
 defmodule FieldPublicationWeb.Api.V1 do
   use FieldPublicationWeb, :controller
+  use OpenApiSpex.ControllerSpecs
 
   alias FieldPublication.Projects
   alias FieldPublication.Publications
   alias FieldPublication.DatabaseSchema.Publication
 
-  alias FieldPublication.FileService
+  alias OpenApiSpex.Schema
 
-  def publications(%{assigns: %{current_user: user}} = conn, _params) do
+  tags(["Field Publication API 1.0"])
+
+  operation(:index,
+    summary: "Index of all projects and publications visible to the user.",
+    responses: [
+      ok: {
+        "Project and publication list",
+        "application/json",
+        %Schema{
+          title: "ProjectList",
+          description: "Lists all  projects alongside their publications.",
+          type: :array,
+          items: %Schema{
+            type: :object,
+            properties: %{
+              project_identifier: %Schema{type: :string},
+              publications: %Schema{
+                type: :array,
+                items: %Schema{
+                  type: :string
+                }
+              }
+            },
+            required: [
+              :project_identifier,
+              :publications
+            ],
+            example: %{
+              project_identifier: "bourgou",
+              publications: [
+                "2025-06-17",
+                "2026-04-17"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  )
+
+  def index(%{assigns: %{current_user: user}} = conn, _params) do
     project_list =
       Publications.list()
       |> Stream.filter(fn %Publication{
@@ -39,28 +80,5 @@ defmodule FieldPublicationWeb.Api.V1 do
     conn
     |> Plug.Conn.put_resp_header("content-type", "application/json")
     |> Plug.Conn.send_resp(200, Jason.encode!(project_list))
-  end
-
-  def geometry_feature_collections(conn, %{
-        "project_identifier" => project_identifier,
-        "draft_date" => draft_date
-      })
-      when is_binary(project_identifier) and is_binary(draft_date) do
-    path =
-      Publications.get!(project_identifier, draft_date)
-      |> FileService.publication_geometry_path(true)
-
-    if File.exists?(path) do
-      conn
-      |> Plug.Conn.put_resp_header("content-encoding", "br")
-      |> Plug.Conn.put_resp_header("content-type", "application/geo+json")
-      # TODO: Set public/private based on publication status
-      |> Plug.Conn.put_resp_header("cache-control", "private, max-age=86400, immutable")
-      |> Plug.Conn.send_file(200, path)
-    else
-      conn
-      |> Plug.Conn.put_resp_header("content-type", "application/json")
-      |> Plug.Conn.send_resp(404, JSON.encode!(%{}))
-    end
   end
 end

@@ -1,0 +1,10 @@
+info:
+  name: admin
+  type: folder
+  seq: 2
+
+request:
+  auth:
+    type: basic
+    username: couch_admin
+    password: couch_admin_password

@@ -60,7 +60,8 @@ defmodule FieldPublication.MixProject do
       {:cachex, "~> 4.1"},
       {:cors_plug, "~> 3.0"},
       {:iiif_image_plug, "~> 1.0"},
-      {:ex_brotli, "~> 0.6.0"}
+      {:ex_brotli, "~> 0.6.0"},
+      {:open_api_spex, "~> 3.22"}
     ]
   end
 

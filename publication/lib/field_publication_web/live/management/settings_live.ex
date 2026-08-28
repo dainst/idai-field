@@ -20,9 +20,8 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
       <.button class="w-full" disabled={@setting_form.source.changes == %{}}>
         Save changes
       </.button>
-      
-    <!-- Logo and favicon are not changed by this form, instead they have their own events
-     that get triggered when clicking in the uploaded images panel below. -->
+      <!-- Logo and favicon are not changed by this form, instead they have their own events
+      that get triggered when clicking in the uploaded images panel below. -->
       <.input type="hidden" field={@setting_form[:logo]} />
       <.input type="hidden" field={@setting_form[:favicon]} />
 

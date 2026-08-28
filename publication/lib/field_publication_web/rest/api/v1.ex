@@ -17,6 +17,8 @@ defmodule FieldPublicationWeb.Api.V1 do
         "Project and publication list",
         "application/json",
         %Schema{
+          title: "ProjectList",
+          description: "Lists all  projects alongside their publications.",
           type: :array,
           items: %Schema{
             type: :object,

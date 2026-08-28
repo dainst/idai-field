@@ -36,6 +36,7 @@ defmodule FieldPublicationWeb.Api.V1 do
             example: %{
               project_identifier: "bourgou",
               publications: [
+                "2025-06-17",
                 "2026-04-17"
               ]
             }

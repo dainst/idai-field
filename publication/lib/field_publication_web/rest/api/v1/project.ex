@@ -16,7 +16,7 @@ defmodule FieldPublicationWeb.Api.V1.Project do
         in: :path,
         description: "The project's id",
         type: :string,
-        example: "bourgou"
+        example: nil
       ],
       uuid: [
         in: :path,
@@ -50,9 +50,9 @@ defmodule FieldPublicationWeb.Api.V1.Project do
     parameters: [
       project_identifier: [
         in: :path,
-        description: "A project's identifier.",
+        description: "The project's identifier.",
         type: :string,
-        example: "bourgou"
+        example: nil
       ],
       uuid: [
         in: :path,

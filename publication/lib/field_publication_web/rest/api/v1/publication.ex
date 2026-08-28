@@ -19,27 +19,22 @@ defmodule FieldPublicationWeb.Api.V1.Publication do
     parameters: [
       project_identifier: [
         in: :path,
-        description: "A project's id",
+        description: "The project's identifier",
         type: :string,
-        example: "bourgou"
+        example: nil
       ],
       draft_date: [
         in: :path,
         description: "A publication's draft date linked to the specified project",
         type: :string,
-        example: "TODO"
+        example: nil
       ]
     ],
     responses: [
       ok: {
-        "Project and publication list",
-        "application/geo+json",
-        %Schema{
-          type: :array,
-          items: %OpenApiSpex.Reference{
-            "$ref": "https://geojson.org/schema/FeatureCollection.json"
-          }
-        }
+        "The list of documents in the pubication",
+        "application/json",
+        nil
       }
     ]
   )
@@ -97,27 +92,22 @@ defmodule FieldPublicationWeb.Api.V1.Publication do
     parameters: [
       project_identifier: [
         in: :path,
-        description: "A project's id",
+        description: "The project's identifier",
         type: :string,
-        example: "bourgou"
+        example: nil
       ],
       draft_date: [
         in: :path,
         description: "A publication's draft date linked to the specified project",
         type: :string,
-        example: "TODO"
+        example: nil
       ]
     ],
     responses: [
       ok: {
-        "Project and publication list",
-        "application/geo+json",
-        %Schema{
-          type: :array,
-          items: %OpenApiSpex.Reference{
-            "$ref": "https://geojson.org/schema/FeatureCollection.json"
-          }
-        }
+        "The raw document",
+        "application/json",
+        nil
       }
     ]
   )
@@ -147,27 +137,22 @@ defmodule FieldPublicationWeb.Api.V1.Publication do
     parameters: [
       project_identifier: [
         in: :path,
-        description: "A project's id",
+        description: "The project's identifier",
         type: :string,
-        example: "bourgou"
+        example: nil
       ],
       draft_date: [
         in: :path,
         description: "A publication's draft date linked to the specified project",
         type: :string,
-        example: "TODO"
+        example: nil
       ]
     ],
     responses: [
       ok: {
-        "Project and publication list",
-        "application/geo+json",
-        %Schema{
-          type: :array,
-          items: %OpenApiSpex.Reference{
-            "$ref": "https://geojson.org/schema/FeatureCollection.json"
-          }
-        }
+        "The extended document",
+        "application/json",
+        nil
       }
     ]
   )
@@ -191,15 +176,15 @@ defmodule FieldPublicationWeb.Api.V1.Publication do
     parameters: [
       project_identifier: [
         in: :path,
-        description: "A project's id",
+        description: "The project's identifier",
         type: :string,
-        example: "bourgou"
+        example: nil
       ],
       draft_date: [
         in: :path,
         description: "A publication's draft date linked to the specified project",
         type: :string,
-        example: "TODO"
+        example: nil
       ]
     ],
     responses: [

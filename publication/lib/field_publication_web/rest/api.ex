@@ -72,7 +72,7 @@ defmodule FieldPublicationWeb.Api do
             description:
               "The identifier used in IIIF requests is a combination of project identifier and
               the image's ID in the form `<project identifier>|<uuid>`.",
-            example: "bourgou/1e8b4d62-260c-4a0c-9ded-914f97299e4e"
+            example: nil
           }
         ],
         responses: %{
@@ -111,7 +111,7 @@ defmodule FieldPublicationWeb.Api do
             type: "string",
             description:
               "The identifier used in IIIF requests is a combination of project identifier and the image ID in the form `<project identifier>|<uuid>`.",
-            example: "bourgou/1e8b4d62-260c-4a0c-9ded-914f97299e4e"
+            example: nil
           },
           %{
             name: "region",

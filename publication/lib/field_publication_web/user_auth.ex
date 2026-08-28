@@ -99,16 +99,22 @@ defmodule FieldPublicationWeb.UserAuth do
   end
 
   @doc """
-  Authenticates the user by looking into the session
-  and remember me token.
+  Authenticates the user by looking into the session, remember me token or basic auth (in that order).
   """
   def fetch_current_user(conn, _opts) do
-    {user_token, conn} = ensure_user_token(conn)
-    user = user_token && get_user_by_session_token(user_token)
+    {user, conn} =
+      case check_user_token(conn) do
+        {nil, conn} ->
+          check_basic_auth(conn)
+
+        {user, conn} ->
+          {user, conn}
+      end
+
     assign(conn, :current_user, user)
   end
 
-  defp ensure_user_token(conn) do
+  defp check_user_token(conn) do
     if token = get_session(conn, :user_token) do
       {token, conn}
     else
@@ -119,6 +125,25 @@ defmodule FieldPublicationWeb.UserAuth do
       else
         {nil, conn}
       end
+    end
+    |> case do
+      {nil, conn} ->
+        # No token in HTTP request.
+        {nil, conn}
+
+      {user_token, conn} ->
+        {get_user_by_session_token(user_token), conn}
+    end
+  end
+
+  defp check_basic_auth(conn) do
+    # No or no valid token in HTTP request, check basic auth.
+    with {user, pass} <- Plug.BasicAuth.parse_basic_auth(conn),
+         {:ok, :valid} <- FieldPublication.CouchService.authenticate(user, pass) do
+      {user, conn}
+    else
+      _ ->
+        {nil, conn}
     end
   end
 

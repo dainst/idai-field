@@ -57,7 +57,13 @@ defmodule FieldPublicationWeb.Components.Data.Image do
     <!-- Added phx-update ignore to keep rendered image when phones javascript reconnects after the tab was minimized.
     this might cause issues if we ever implement an iiif-viewer to iiif-viewer `patch` navigation.
     -->
-    <div phx-update="ignore" url={construct_iiif_info_url(@project, @uuid)} {@rest} phx-hook="IIIFViewer"></div>
+    <div
+      phx-update="ignore"
+      url={construct_iiif_info_url(@project, @uuid)}
+      {@rest}
+      phx-hook="IIIFViewer"
+    >
+    </div>
     """
   end
 

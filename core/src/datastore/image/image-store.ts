@@ -1,3 +1,4 @@
+import { Map } from 'tsfun';
 import { FileStat, FilesystemAdapterInterface } from './filesystem-adapter-interface';
 import { ThumbnailGeneratorInterface } from './thumbnail-generator-interface';
 
@@ -38,6 +39,7 @@ export class ImageStore {
 
     private absolutePath: string|undefined = undefined;
     private activeProject: string|undefined = undefined;
+    private cachedFileStats: Map<Array<FileStat>> = {};
 
 
     constructor(private filesystem: FilesystemAdapterInterface,
@@ -82,6 +84,8 @@ export class ImageStore {
         
         await this.setupDirectories(project);
         await this.filesystem.writeFile(filePath, data);
+
+        delete this.cachedFileStats[type];
     }
 
 
@@ -125,6 +129,8 @@ export class ImageStore {
                 this.getFilePath(project, ImageVariant.DISPLAY, uuid + useOriginalSuffix)
             )
         ]);
+
+        this.cachedFileStats = {};
     }
 
 
@@ -141,6 +147,8 @@ export class ImageStore {
         await this.filesystem.writeFile(
             this.getFilePath(project, ImageVariant.DISPLAY, uuid) + useOriginalSuffix, Buffer.from([])
         );
+
+        delete this.cachedFileStats[ImageVariant.DISPLAY];
     }
 
 
@@ -150,7 +158,9 @@ export class ImageStore {
      */
     public async deleteData(project: string): Promise<any> {
 
-        return this.filesystem.remove(this.getDirectoryPath(project), true);
+        await this.filesystem.remove(this.getDirectoryPath(project), true);
+        
+        this.cachedFileStats = {};
     }
 
     
@@ -161,22 +171,22 @@ export class ImageStore {
      * by their variants.
      * @returns Object where each key represents an image UUID and each value is the image's {@link FileInfo}.
      */
-    public async getFileInfos(project: string, types: ImageVariant[] = []): Promise<{ [uuid: string]: FileInfo }> {
+    public async getFileInfos(project: string, types: ImageVariant[] = []): Promise<Map<FileInfo>> {
 
         let originalFileStats = [];
         let thumbnailFileStats = [];
         let displayFileStats = [];
 
         if (types.length === 0 || types.includes(ImageVariant.ORIGINAL)) {
-            originalFileStats = await this.getFileStats(this.getDirectoryPath(project, ImageVariant.ORIGINAL));
+            originalFileStats = await this.getFileStats(project, ImageVariant.ORIGINAL);
         } 
         if (types.length === 0 || types.includes(ImageVariant.THUMBNAIL)) {
-            thumbnailFileStats = await this.getFileStats(this.getDirectoryPath(project, ImageVariant.THUMBNAIL));
+            thumbnailFileStats = await this.getFileStats(project, ImageVariant.THUMBNAIL);
         }
         if (types.length === 0 || types.includes(ImageVariant.DISPLAY)) {
-            displayFileStats = await this.getFileStats(this.getDirectoryPath(project, ImageVariant.DISPLAY));
+            displayFileStats = await this.getFileStats(project, ImageVariant.DISPLAY);
         }
-        
+
         let result = this.aggregateFileMap({}, originalFileStats, ImageVariant.ORIGINAL);
         result = this.aggregateFileMap(result, thumbnailFileStats, ImageVariant.THUMBNAIL);
         result = this.aggregateFileMap(result, displayFileStats, ImageVariant.DISPLAY);
@@ -265,7 +275,18 @@ export class ImageStore {
     }
 
 
-    private async getFileStats(path: string): Promise<FileStat[]> {
+    private async getFileStats(project: string, variant: ImageVariant): Promise<Array<FileStat>> {
+
+        const path: string = this.getDirectoryPath(project, variant);
+
+        if (this.activeProject !== project) return await this.buildFileStats(path);
+
+        if (!this.cachedFileStats[variant]) this.cachedFileStats[variant] = await this.buildFileStats(path);
+        return this.cachedFileStats[variant];
+    }
+
+
+    private async buildFileStats(path: string): Promise<Array<FileStat>> {
 
         const listFiles = await this.filesystem.listFiles(path);
 

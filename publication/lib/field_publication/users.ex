@@ -55,13 +55,10 @@ defmodule FieldPublication.Users do
             {:ok, user}
 
           {:ok, %{status: 409}} ->
-            {
-              :error,
-              user
-              |> User.changeset()
-              |> Ecto.Changeset.add_error(:name, "name '#{name}' already taken.")
-              |> Ecto.Changeset.apply_action(:validate)
-            }
+            user
+            |> User.changeset()
+            |> Ecto.Changeset.add_error(:name, "name '#{name}' already taken.")
+            |> Ecto.Changeset.apply_action(:validate)
         end
     end
   end

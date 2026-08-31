@@ -34,7 +34,7 @@ defmodule FieldPublication.Users do
   @doc """
   Create a new user
 
-  Returns `{:ok, :created}` if successful or `{:error, :already_exists}` a user of that name already exists.
+  Returns `{:ok, %User{}}` if successful or `{:error, changeset}` a user of that name already exists.
 
   __Parameters__
   - `user_name` the user's name.

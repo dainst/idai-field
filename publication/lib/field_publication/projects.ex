@@ -6,7 +6,8 @@ defmodule FieldPublication.Projects do
   alias FieldPublication.DatabaseSchema.{
     Base,
     Project,
-    Publication
+    Publication,
+    User
   }
 
   alias FieldPublication.CouchService
@@ -222,6 +223,10 @@ defmodule FieldPublication.Projects do
     Enum.each(publications, &Publications.delete(&1))
 
     {:ok, :deleted}
+  end
+
+  def add_user(%Project{} = project, %User{name: name}) do
+    put(project, %{editors: project.editors ++ [name]})
   end
 
   @doc """

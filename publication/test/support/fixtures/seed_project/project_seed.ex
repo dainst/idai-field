@@ -16,93 +16,91 @@ defmodule FieldPublication.Test.ProjectSeed do
 
   require Logger
 
-  def start(project_identifier, process_images \\ true) do
-    seed_project_docs =
-      File.read!("test/support/fixtures/seed_project/publication_data.json")
-      |> Jason.decode!()
-      |> then(fn %{"rows" => rows} ->
-        Enum.map(rows, fn %{"doc" => doc} ->
-          Map.delete(doc, "_rev")
-        end)
-      end)
+  def create_full_publication(project_identifier, seed_and_preprocess? \\ false, publish? \\ true) do
+    project =
+      case Projects.get(project_identifier) do
+        {:ok, %FieldPublication.DatabaseSchema.Project{} = project} ->
+          Logger.info("Recreating project '#{project_identifier}'.")
+          {:ok, :deleted} = Projects.delete(project)
 
-    case Projects.get(project_identifier) do
-      {:ok, %FieldPublication.DatabaseSchema.Project{} = project} ->
-        Logger.info("Recreating project '#{project_identifier}'.")
-        {:ok, :deleted} = Projects.delete(project)
+          {:ok, %Project{} = project} = create_project(project_identifier)
+          project
 
-        create(project_identifier, seed_project_docs, process_images)
+        _ ->
+          Logger.info("Creating project '#{project_identifier}'.")
+          {:ok, %Project{} = project} = create_project(project_identifier)
+          project
+      end
 
-      _ ->
-        Logger.info("Creating project '#{project_identifier}'.")
-        create(project_identifier, seed_project_docs, process_images)
-    end
+    publication =
+      create_publication(
+        %ReplicationInput{
+          delete_existing_publication: true,
+          source_url: "http://example.org",
+          source_project_identifier: project_identifier,
+          source_user: "remote_field_field_hub_user",
+          source_password: "fake",
+          project_identifier: project_identifier,
+          drafted_by: "mix seed",
+          draft_date: Date.from_iso8601!("2024-06-05")
+        },
+        seed_and_preprocess?,
+        seed_and_preprocess?,
+        publish?
+      )
+
+    {project, publication}
   end
 
-  def create(identifier, docs, process_images) do
-    {:ok, %Project{} = project} =
-      Projects.put(%Project{}, %{
-        "identifier" => identifier
-      })
+  def add_unpublished(
+        project_identifier,
+        draft_date,
+        seed_data? \\ false,
+        preprocess? \\ false
+      ) do
+    create_publication(
+      %ReplicationInput{
+        delete_existing_publication: true,
+        source_url: "http://example.org",
+        source_project_identifier: project_identifier,
+        source_user: "remote_field_field_hub_user",
+        source_password: "fake",
+        project_identifier: project_identifier,
+        drafted_by: "mix seed",
+        draft_date: draft_date
+      },
+      seed_data?,
+      preprocess?,
+      false
+    )
+  end
 
-    replication_input = %ReplicationInput{
-      delete_existing_publication: true,
-      source_url: "http://example.org",
-      source_project_identifier: identifier,
-      source_user: "remote_field_field_hub_user",
-      source_password: "fake",
-      project_identifier: identifier,
-      drafted_by: "mix seed",
-      draft_date: Date.from_iso8601!("2024-06-05")
-    }
+  def create_project(identifier) do
+    Projects.put(%Project{}, %{
+      "identifier" => identifier
+    })
+  end
 
+  def create_publication(
+        %ReplicationInput{project_identifier: project_identifier} = replication_input,
+        seed_data? \\ false,
+        preprocess? \\ false,
+        publish? \\ true
+      ) do
     {:ok, %Publication{} = publication} =
       Publications.create_from_replication_input(replication_input)
 
-    Task.async_stream(docs, fn doc ->
-      CouchService.put_document(doc["_id"], doc, publication.database)
-    end)
-    |> Enum.to_list()
-
     :ok = Replication.reconstruct_project_configuraton(publication)
-
-    # Expecting one batch created.
-    [{:ok, %Finch.Response{status: 201}}] =
-      Publications.Data.recreate_meta_database(publication)
 
     seed_image_directory = "test/support/fixtures/seed_project/images/"
 
-    project_languages =
-      docs
-      |> Enum.find(fn doc ->
-        doc["_id"] == "configuration"
-      end)
-      |> then(fn %{"resource" => %{"projectLanguages" => langs}} -> langs end)
-
-    [] =
-      seed_image_directory
-      |> File.ls!()
-      |> Enum.map(fn uuid ->
-        FileService.write_raw_data(
-          identifier,
-          uuid,
-          File.read!("#{seed_image_directory}/#{uuid}"),
-          :image
-        )
-      end)
-      |> Enum.reject(fn val -> val == :ok end)
-
-    %{field_labels: _, category_labels: _} = Publications.Search.index_documents(publication)
-
-    {:ok, _} = Publications.Search.set_project_alias(publication)
-
     # Load latest document, otherwise the put below will error with a revision conflict.
-    publication =
-      FieldPublication.Publications.get!(publication.project_identifier, publication.draft_date)
+    # publication =
+    #   FieldPublication.Publications.get!(publication.project_identifier, publication.draft_date)
 
     {:ok, %FieldPublication.DatabaseSchema.Publication{} = publication} =
       Publications.put(publication, %{
-        "publication_date" => Date.from_iso8601!("2024-06-05"),
+        "publication_date" => if(publish?, do: publication.draft_date, else: nil),
         "comments" => [
           %{
             "text" =>
@@ -115,11 +113,46 @@ defmodule FieldPublication.Test.ProjectSeed do
             "language" => "de"
           }
         ],
-        "languages" => project_languages,
+        "languages" => ["en", "de"],
         "replication_finished" => DateTime.utc_now()
       })
 
-    if process_images do
+    if seed_data? do
+      [] =
+        seed_image_directory
+        |> File.ls!()
+        |> Enum.map(fn uuid ->
+          FileService.write_raw_data(
+            project_identifier,
+            uuid,
+            File.read!("#{seed_image_directory}/#{uuid}"),
+            :image
+          )
+        end)
+        |> Enum.reject(fn val -> val == :ok end)
+
+      File.read!("test/support/fixtures/seed_project/publication_data.json")
+      |> Jason.decode!()
+      |> then(fn %{"rows" => rows} ->
+        Enum.map(rows, fn %{"doc" => doc} ->
+          Map.delete(doc, "_rev")
+        end)
+      end)
+      |> Task.async_stream(fn doc ->
+        CouchService.put_document(doc["_id"], doc, publication.database)
+      end)
+      |> Enum.to_list()
+    end
+
+    if seed_data? && preprocess? do
+      # Expecting one batch created.
+      [{:ok, %Finch.Response{status: 201}}] =
+        Publications.Data.recreate_meta_database(publication)
+
+      %{field_labels: _, category_labels: _} = Publications.Search.index_documents(publication)
+
+      {:ok, _} = Publications.Search.set_project_alias(publication)
+
       [] =
         Processing.MapTiles.start(publication)
         |> Enum.reject(fn {val, val} -> val == :ok end)
@@ -129,6 +162,6 @@ defmodule FieldPublication.Test.ProjectSeed do
         |> Enum.reject(fn {val, val} -> val == :ok end)
     end
 
-    {project, publication}
+    publication
   end
 end

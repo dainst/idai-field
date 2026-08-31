@@ -8,6 +8,9 @@ defmodule FieldPublicationWeb.ConnCase do
   to build common data structures and query the data layer.
   """
 
+  @admin_name Application.compile_env(:field_publication, :couchdb_admin_name)
+  @admin_password Application.compile_env(:field_publication, :couchdb_admin_password)
+
   use ExUnit.CaseTemplate
 
   using do
@@ -35,4 +38,22 @@ defmodule FieldPublicationWeb.ConnCase do
     |> Phoenix.ConnTest.init_test_session(%{})
     |> FieldPublicationWeb.UserAuth.put_token_in_session(token)
   end
+
+  def add_admin_basic_auth(conn) do
+    Plug.Conn.put_req_header(
+      conn,
+      "authorization",
+      basic_auth(@admin_name, @admin_password)
+    )
+  end
+
+  def add_basic_auth(conn, user, password) do
+    Plug.Conn.put_req_header(
+      conn,
+      "authorization",
+      basic_auth(user, password)
+    )
+  end
+
+  defp basic_auth(user, password), do: "Basic " <> Base.encode64("#{user}:#{password}")
 end

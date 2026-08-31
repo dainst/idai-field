@@ -4,10 +4,10 @@ defmodule FieldPublicationWeb.Api.V1.Project do
 
   import Plug.Conn
 
-  alias OpenApiSpex.Schema
   alias FieldPublication.FileService
 
   tags(["Field Publication API 1.0"])
+  security [%{}, %{"basic_auth" => []}]
 
   operation(:raw_image,
     summary: "Retrieve the raw image data for a specific image document.",
@@ -25,13 +25,23 @@ defmodule FieldPublicationWeb.Api.V1.Project do
         example: nil
       ]
     ],
-    responses: [
-      ok: {
+    responses: %{
+      200 => {
         "Image data",
         "image/*",
         nil
+      },
+      401 => {
+        "Not authorized",
+        "application/text",
+        nil
+      },
+      403 => {
+        "Forbidden",
+        "application/text",
+        nil
       }
-    ]
+    }
   )
 
   def raw_image(conn, %{"project_identifier" => project_identifier, "uuid" => uuid} = _params) do
@@ -73,18 +83,23 @@ defmodule FieldPublicationWeb.Api.V1.Project do
         type: :integer
       ]
     ],
-    responses: [
-      ok: {
-        "Project and publication list",
-        "application/geo+json",
-        %Schema{
-          type: :array,
-          items: %OpenApiSpex.Reference{
-            "$ref": "https://geojson.org/schema/FeatureCollection.json"
-          }
-        }
+    responses: %{
+      200 => {
+        "Image data",
+        "image/*",
+        nil
+      },
+      401 => {
+        "Not authorized",
+        "application/text",
+        nil
+      },
+      403 => {
+        "Forbidden",
+        "application/text",
+        nil
       }
-    ]
+    }
   )
 
   def zxy_tile(

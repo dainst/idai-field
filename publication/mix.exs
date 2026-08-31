@@ -90,7 +90,7 @@ defmodule FieldPublication.MixProject do
         "phx.digest"
       ],
       seed: [
-        "run --eval 'FieldPublication.Test.ProjectSeed.start(\"testopolis\")'"
+        "run --eval 'FieldPublication.Test.ProjectSeed.create_full_publication(\"testopolis\")'"
       ]
     ]
   end

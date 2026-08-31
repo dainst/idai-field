@@ -9,9 +9,14 @@ defmodule FieldPublicationWeb.Api.V1 do
   alias OpenApiSpex.Schema
 
   tags(["Field Publication API 1.0"])
+  security [%{}, %{"basic_auth" => []}]
 
   operation(:index,
     summary: "Index of all projects and publications visible to the user.",
+    description:
+      "In order to view publications still in draft state, the user needs to be either be
+    a project editor or general administrator. Projects without any publication (neither draft state nor
+    published) are never returned, meaning there will never be an empty `publications` list.",
     responses: [
       ok: {
         "Project and publication list",

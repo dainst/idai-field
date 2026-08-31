@@ -1,7 +1,7 @@
 defmodule FieldPublicationWeb.Api do
   use FieldPublicationWeb, :controller
 
-  alias OpenApiSpex.{Info, OpenApi, Paths, Server}
+  alias OpenApiSpex.{Info, OpenApi, Paths, Server, SecurityScheme, Components}
 
   alias FieldPublicationWeb.{Endpoint, Router}
   @behaviour OpenApi
@@ -31,7 +31,12 @@ defmodule FieldPublicationWeb.Api do
         version: to_string(Application.spec(:my_app, :vsn))
       },
       # Populate the paths from a phoenix router
-      paths: Paths.from_router(Router)
+      paths: Paths.from_router(Router),
+      components: %Components{
+        securitySchemes: %{
+          "basic_auth" => %SecurityScheme{type: "http", scheme: "basic"}
+        }
+      }
     }
     # Discover request/response schemas from path specs
     |> OpenApiSpex.resolve_schema_modules()
@@ -61,7 +66,7 @@ defmodule FieldPublicationWeb.Api do
         operationId: "FieldPublicationWeb.Api.IIIFImage info",
         externalDocs: %{
           description: "Official API specification",
-          url: "https://iiif.io/api/image/3.0/"
+          url: "https://iiif.io/api/image/3.0/#5-image-information"
         },
         parameters: [
           %{
@@ -101,7 +106,7 @@ defmodule FieldPublicationWeb.Api do
         operationId: "iiif_v3_data",
         externalDocs: %{
           description: "Official API specification",
-          url: "https://iiif.io/api/image/3.0/"
+          url: "https://iiif.io/api/image/3.0/#4-image-requests"
         },
         parameters: [
           %{
@@ -158,7 +163,7 @@ defmodule FieldPublicationWeb.Api do
           }
         ],
         responses: %{
-          "200": %{
+          ok: %{
             content: %{
               "image/*": %{
                 type: :string,

@@ -440,27 +440,46 @@ defmodule FieldPublicationWeb.UserAuth do
 
       _ ->
         conn
-        |> resp(404, "")
+        |> resp(404, "Unknown identifier.")
         |> halt()
     end
   end
 
   defp check_image_access(conn, project_identifier, uuid) do
+    # Inline function this is used further down.
+    check_user_access = fn project_identifier, conn ->
+      cond do
+        Projects.has_project_access?(project_identifier, conn.assigns[:current_user]) ->
+          conn
+
+        conn.assigns[:current_user] ->
+          # Neither published nor user access.
+          conn
+          |> put_resp_header("content-type", "text/plain")
+          |> resp(403, "You are not allowed to view this image.")
+          |> halt()
+
+        true ->
+          conn
+          |> put_resp_header("content-type", "text/plain")
+          |> resp(401, "Please authenticate.")
+          |> halt()
+      end
+    end
+
+    # For each project, we retain an in memory cache about which images are already published. This
+    # is done in order to avoid hitting the database for every image tile that is served by the
+    # IIIF plug.
+    #
+    # The cache is populated lazily below (on demand).
     case Cachex.get(:published_images, {project_identifier, uuid}) do
       {:ok, true} ->
         # The image was evaluated as published before, image access is granted.
         conn
 
       {:ok, false} ->
-        if Projects.has_project_access?(project_identifier, conn.assigns[:current_user]) do
-          # The image is part of a non published draft the user has access to, image access is granted.
-          conn
-        else
-          # Neither published nor user access.
-          conn
-          |> resp(403, "The image you requested has not been published.")
-          |> halt()
-        end
+        # The image was evaluated before, but turned out to be not published (yet).
+        check_user_access.(project_identifier, conn)
 
       _ ->
         # The image has not been evaluated since the start of the application (not found in cache).
@@ -471,16 +490,7 @@ defmodule FieldPublicationWeb.UserAuth do
         else
           # Put `false` as cache value, but with a time to live (ttl) of 60 minutes.
           Cachex.put(:published_images, {project_identifier, uuid}, false, ttl: 1000 * 60 * 60)
-
-          if Projects.has_project_access?(project_identifier, conn.assigns[:current_user]) do
-            # The image is part of a non published draft the user has access to, image access is granted.
-            conn
-          else
-            # Neither published nor user access.
-            conn
-            |> resp(403, "The image you requested has not been published.")
-            |> halt()
-          end
+          check_user_access.(project_identifier, conn)
         end
     end
   end

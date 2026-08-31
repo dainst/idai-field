@@ -28,15 +28,14 @@ mix setup
 ```
 
 ## 3. Running the application
-Now you may start the Phoenix application with either
-```
-mix phx.server
-```
-
-or, if you want to use Elixir's interactive `iex` REPL to interact with the application directly from the command line
-
+Now you may start the Phoenix application with Elixir's interactive `iex` REPL to interact with the application directly from the command line:
 ```
 iex -S mix phx.server
+```
+
+If you do not need the REPL you can instead run:
+```
+mix phx.server
 ```
 
 Now you can visit [`localhost:4001`](http://localhost:4001) in your browser and should see the landing page. The next step would be to login as the COUCHDB_USER as defined in the [docker-compose.yml](docker-compose.yml). 

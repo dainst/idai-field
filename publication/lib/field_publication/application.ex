@@ -8,8 +8,12 @@ defmodule FieldPublication.Application do
 
   use Application
 
+  require Logger
+
   @impl true
   def start(_type, _args) do
+    check_gdal_version()
+
     children = [
       # Start the Telemetry supervisor
       FieldPublicationWeb.Telemetry,
@@ -55,6 +59,29 @@ defmodule FieldPublication.Application do
   def config_change(changed, _new, removed) do
     FieldPublicationWeb.Endpoint.config_change(changed, removed)
     :ok
+  end
+
+  @gdal_regex ~r(^GDAL 3\.\d+\.\d+ .+)
+  defp check_gdal_version() do
+    case System.cmd("gdal", ["--version"]) do
+      {response, 0} ->
+        if Regex.match?(@gdal_regex, response) do
+          {:ok, response}
+        else
+          {:error, response}
+        end
+
+      {response, _status_code} ->
+        {:error, response}
+    end
+    |> case do
+      {:ok, response} ->
+        Logger.info("Using `#{String.trim(response)}` installed on system.")
+        :ok
+
+      {:error, response} ->
+        raise "Field Publication requires GDAL 3 to be installed, system responded with `#{String.trim(response)}`."
+    end
   end
 end
 

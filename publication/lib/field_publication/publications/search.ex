@@ -34,8 +34,8 @@ defmodule FieldPublication.Publications.Search do
       :project_identifier,
       :publication_draft_date,
       :configuration_based_field_mappings,
-      :full_doc,
-      :full_doc_as_text
+      :preview,
+      :combined_text_content
     ]
     defstruct [
       :id,
@@ -46,8 +46,8 @@ defmodule FieldPublication.Publications.Search do
       :configuration_based_field_mappings,
       :geometry,
       :parent_geometry,
-      :full_doc,
-      :full_doc_as_text
+      :preview,
+      :combined_text_content
     ]
   end
 
@@ -59,8 +59,8 @@ defmodule FieldPublication.Publications.Search do
       project_identifier: map["project_identifier"],
       publication_draft_date: map["publication_draft_date"],
       configuration_based_field_mappings: map["configuration_based_field_mappings"] || %{},
-      full_doc: Data.document_map_to_struct(map["full_doc"]),
-      full_doc_as_text: map["full_doc_as_text"]
+      preview: Data.document_map_to_struct(map["preview"]),
+      combined_text_content: map["combined_text_content"]
     }
   end
 
@@ -208,7 +208,7 @@ defmodule FieldPublication.Publications.Search do
       end
 
     OpenSearchService.delete_index(index)
-    OpenSearchService.create_index(index, mapping)
+    {:ok, %{status: 200}} = OpenSearchService.create_index(index, mapping)
 
     index
   end
@@ -272,43 +272,26 @@ defmodule FieldPublication.Publications.Search do
         "project*"
       else
         get_search_alias(publication)
-        |> OpenSearchService.get_indices_behind_alias()
-        |> List.first()
       end
 
     q =
       case q do
-        "" ->
+        q when q == "" or q == "*" ->
           "*"
 
         q ->
-          q
+          "*#{q}*"
       end
 
     payload =
       %{
         query: %{
           bool: %{
-            must: [
-              %{
-                bool: %{
-                  should: [
-                    %{
-                      match_phrase: %{
-                        full_doc: %{
-                          query: q
-                        }
-                      }
-                    },
-                    %{
-                      wildcard: %{
-                        full_doc_as_text: %{value: "*#{q}*", case_insensitive: true, boost: 0.5}
-                      }
-                    }
-                  ]
-                }
+            must: %{
+              query_string: %{
+                query: q
               }
-            ]
+            }
           }
         },
         aggs: generate_aggregations_queries(index),
@@ -504,22 +487,21 @@ defmodule FieldPublication.Publications.Search do
         store: true,
         ignore_malformed: true
       },
-      full_doc: %{
+      preview: %{
         type: "flat_object"
       },
-      full_doc_as_text: %{
-        type: "wildcard"
+      combined_text_content: %{
+        type: "text"
       }
     }
 
-    configuration_based_mapping =
-      evaluate_input_types(pub)
-      |> then(fn %{
-                   single_keyword_fields: single_keyword_fields,
-                   multi_keyword_fields: multi_keyword_fields
-                 } ->
-        Enum.concat([single_keyword_fields, multi_keyword_fields])
-      end)
+    %{
+      single_keyword_fields: single_keyword_fields,
+      multi_keyword_fields: multi_keyword_fields
+    } = evaluate_input_types(pub)
+
+    keyword_mapping =
+      Enum.concat([single_keyword_fields, multi_keyword_fields])
       |> Stream.map(fn {_category_name, field_name} ->
         {"#{field_name}_keyword", %{type: "keyword", store: true}}
       end)
@@ -533,7 +515,7 @@ defmodule FieldPublication.Publications.Search do
             %{
               configuration_based_field_mappings: %{
                 type: "object",
-                properties: configuration_based_mapping
+                properties: keyword_mapping
               }
             }
           )
@@ -541,38 +523,15 @@ defmodule FieldPublication.Publications.Search do
     }
   end
 
-  def prepare_doc_for_indexing(doc, %Publication{} = publication, publication_configuration, %{
+  def prepare_doc_for_indexing(doc, %Publication{} = publication, %{
         single_keyword_fields: single_keyword_fields,
-        multi_keyword_fields: multi_keyword_fields
+        multi_keyword_fields: multi_keyword_fields,
+        text_fields: text_fields
       }) do
     %{"resource" => res} =
-      doc =
       doc
       |> Map.put("id", doc["_id"])
       |> Map.delete("_id")
-
-    full_doc =
-      Data.apply_project_configuration(doc, publication_configuration, publication)
-      |> case do
-        {:error, {:unknown_category, category_name}} ->
-          Publications.Data.report_data_issue(
-            res["id"],
-            LogEntry.create(%{
-              type: "category_not_found_in_configuration",
-              reported_by: @data_report_key,
-              severity: :error,
-              message:
-                "Category not found in configuration: `#{category_name}` in document `#{doc["id"]}`"
-            }),
-            publication
-          )
-
-          Logger.warning("Unknown category for document #{doc["id"]}")
-          doc
-
-        doc ->
-          doc
-      end
 
     geo =
       res["geometry"]
@@ -628,8 +587,29 @@ defmodule FieldPublication.Publications.Search do
         configuration_based_field_mappings: %{},
         geometry: geo,
         parent_geometry: parent_geo,
-        full_doc: full_doc,
-        full_doc_as_text: Jason.encode!(full_doc)
+        preview: List.first(Data.get_preview_documents([res["id"]], publication)),
+        #  full_doc: full_doc,
+        combined_text_content:
+          text_fields
+          |> Stream.filter(fn {category_name, _field_name} ->
+            category_name == res["category"]
+          end)
+          |> Enum.map(fn {_this_category, field_name} ->
+            Map.get(res, field_name)
+            |> case do
+              val when is_map(val) ->
+                Map.values(val)
+
+              values when is_list(values) ->
+                values
+
+              val ->
+                [val]
+            end
+            |> Enum.join(" ")
+          end)
+          |> Enum.reject(fn val -> is_nil(val) || val == "" end)
+          |> Enum.join(" ")
       }
 
     config_mapping_single_keyword =
@@ -989,9 +969,18 @@ defmodule FieldPublication.Publications.Search do
       |> Enum.map(fn {_input_type, category_and_field_names} -> category_and_field_names end)
       |> List.flatten()
 
+    text_candidates =
+      field_names_and_input_types
+      |> Enum.filter(fn {input_type, _category_and_field_names} ->
+        input_type in get_text_inputs()
+      end)
+      |> Enum.map(fn {_input_type, category_and_field_names} -> category_and_field_names end)
+      |> List.flatten()
+
     %{
       single_keyword_fields: keyword_candidates,
-      multi_keyword_fields: multi_keyword_candidates
+      multi_keyword_fields: multi_keyword_candidates,
+      text_fields: text_candidates
     }
   end
 
@@ -1027,8 +1016,6 @@ defmodule FieldPublication.Publications.Search do
   end
 
   def index_documents(%Publication{} = publication) do
-    publication_configuration = Publications.get_configuration(publication)
-
     mapping = generate_index_mapping(publication)
     special_input_types = evaluate_input_types(publication)
 
@@ -1064,11 +1051,10 @@ defmodule FieldPublication.Publications.Search do
       &prepare_doc_for_indexing(
         &1,
         publication,
-        publication_configuration,
         special_input_types
       )
     )
-    |> Stream.chunk_every(10)
+    |> Stream.chunk_every(100)
     |> Enum.map(fn doc_batch ->
       batch_size = Enum.count(doc_batch)
 
@@ -1094,10 +1080,7 @@ defmodule FieldPublication.Publications.Search do
           {:ok, %{status: status, body: body}} ->
             # Batch was not indexed.
             msg =
-              ("status code #{status} for\n " <>
-                 body)
-              |> Jason.decode!()
-              |> inspect()
+              "status code #{status} for\n #{inspect(body)}"
 
             Publications.Data.report_data_issue(
               "general",
@@ -1238,6 +1221,7 @@ defmodule FieldPublication.Publications.Search do
 
   def get_keyword_inputs(), do: ["dropdown", "radio"]
   def get_keyword_multi_inputs(), do: ["checkboxes", "dropdownRange"]
+  def get_text_inputs(), do: ["input", "text"]
 
   def get_search_alias(%Publication{} = publication) do
     publication

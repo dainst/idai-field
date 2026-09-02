@@ -134,7 +134,7 @@ defmodule FieldPublicationWeb.Components.Search do
           </span>
         </.link>
       </div>
-      <div :for={%SearchDocument{full_doc: doc} <- @docs}>
+      <div :for={%SearchDocument{preview: doc} <- @docs}>
         <.document_link
           id={doc.id}
           geometry_indicator={@map_indicators?}

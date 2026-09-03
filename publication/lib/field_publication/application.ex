@@ -63,7 +63,7 @@ defmodule FieldPublication.Application do
 
   @gdal_regex ~r(^GDAL 3\.\d+\.\d+ .+)
   defp check_gdal_version() do
-    case System.shell("gdal --version") do
+    case System.cmd("gdal", ["--version"]) do
       {response, 0} ->
         if Regex.match?(@gdal_regex, response) do
           {:ok, response}

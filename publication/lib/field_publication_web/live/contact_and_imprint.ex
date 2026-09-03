@@ -18,7 +18,7 @@ defmodule FieldPublicationWeb.ContactAndImprintLive do
   defp imprint(assigns) do
     ~H"""
     <%= if @imprint != [] do %>
-      <div class="flex gap-2">
+      <div :if={Enum.count(@imprint) > 1} class="flex gap-2">
         <%= for %Translation{language: language} <- @imprint do %>
           <div
             class={"cursor-pointer p-2 #{if @selected_language == language, do: "bg-gray-100 rounded-t"} border-(--primary-color)"}

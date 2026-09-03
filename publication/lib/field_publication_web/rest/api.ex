@@ -28,7 +28,8 @@ defmodule FieldPublicationWeb.Api do
         title: "API Documentation · #{Settings.get_page_name()}",
         description:
           "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-        version: to_string(Application.spec(:my_app, :vsn))
+        version: to_string(Application.spec(:my_app, :vsn)),
+        contact: get_contact()
       },
       # Populate the paths from a phoenix router
       paths: Paths.from_router(Router),
@@ -178,5 +179,18 @@ defmodule FieldPublicationWeb.Api do
     conn
     |> Plug.Conn.put_resp_header("content-type", "application/json")
     |> Plug.Conn.send_resp(200, JSON.encode!(spec))
+  end
+
+  defp get_contact() do
+    case Settings.get_contact_email() do
+      nil ->
+        nil
+
+      email ->
+        %OpenApiSpex.Contact{
+          email: email,
+          name: "service administrators"
+        }
+    end
   end
 end

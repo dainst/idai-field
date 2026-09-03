@@ -21,7 +21,9 @@ jobs:
         run: docker compose -f docker-compose.yml up -d
         working-directory: publication
       - name: Install GDAL
-        run: sudo apt install -y gdal
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lcov
       - name: Sleep to await CouchDB startup
         run: sleep 15s
       - name: Restore dependencies cache

@@ -61,14 +61,20 @@ defmodule FieldPublication.Application do
     :ok
   end
 
-  @gdal_regex ~r(^GDAL 3\.\d+\.\d+ .+)
+  @gdal_regex ~r"^GDAL 3\.(\d+)\.\d+ .+"
   defp check_gdal_version() do
-    case System.cmd("gdal", ["--version"]) do
+    case System.cmd("gdalinfo", ["--version"]) do
       {response, 0} ->
-        if Regex.match?(@gdal_regex, response) do
-          {:ok, response}
-        else
-          {:error, response}
+        Regex.scan(@gdal_regex, response)
+        |> case do
+          [[response, minor_version_string]] ->
+            {minor_version, ""} = Integer.parse(minor_version_string)
+
+            if minor_version >= 11 do
+              {:ok, response}
+            else
+              {:error, response}
+            end
         end
 
       {response, _status_code} ->
@@ -80,7 +86,7 @@ defmodule FieldPublication.Application do
         :ok
 
       {:error, response} ->
-        raise "Field Publication requires GDAL 3 to be installed, system responded with `#{String.trim(response)}`."
+        raise "Field Publication requires GDAL >= 3.11 to be installed, system responded with `#{String.trim(response)}`."
     end
   end
 end

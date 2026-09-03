@@ -32,6 +32,11 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
 
       <.color_scheme_settings {assigns} />
 
+      <section>
+        <.group_heading>Contact email</.group_heading>
+        <.input type="text" field={@setting_form[:contact_email]} placeholder="admin@example.com" />
+      </section>
+
       <.translation_input
         field={@setting_form[:imprint]}
         language_options={@imprint_options}

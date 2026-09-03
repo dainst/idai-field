@@ -177,7 +177,7 @@ defmodule FieldPublicationWeb.Router do
 
     live_session :mount_user,
       on_mount: [{FieldPublicationWeb.UserAuth, :mount_current_user}] do
-      live("/contact", FieldPublicationWeb.ContactAndImprintLive)
+      live("/imprint", FieldPublicationWeb.ContactAndImprintLive)
       live("/search", FieldPublicationWeb.Presentation.SearchLive)
       live("/", FieldPublicationWeb.Presentation.HomeLive)
     end

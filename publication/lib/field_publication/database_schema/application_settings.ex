@@ -58,6 +58,7 @@ defmodule FieldPublication.DatabaseSchema.ApplicationSettings do
     field(:doc_type, :string, default: @doc_type)
     field(:logo, :string)
     field(:favicon, :string)
+    field(:contact_email, :string, default: nil)
     field(:page_name, :string, default: "FieldPublication")
     embeds_one(:color_scheme, ColorScheme, defaults_to_struct: true, on_replace: :update)
     embeds_many(:imprint, Translation, on_replace: :delete)
@@ -69,7 +70,8 @@ defmodule FieldPublication.DatabaseSchema.ApplicationSettings do
       :_rev,
       :logo,
       :favicon,
-      :page_name
+      :page_name,
+      :contact_email
     ])
     |> cast_embed(:color_scheme)
     |> cast_embed(:imprint,

@@ -10,9 +10,9 @@ defmodule FieldPublicationWeb.ContactAndImprintLive do
 
   def render(assigns) do
     ~H"""
-    <%= if @contact != nil do %>
+    <%= if @imprint != nil do %>
       <div class="flex gap-2 ">
-        <%= for %Translation{language: language} <- @contact do %>
+        <%= for %Translation{language: language} <- @imprint do %>
           <div
             class={"cursor-pointer p-2 #{if @selected_language == language, do: "bg-gray-100 rounded-t"} border-(--primary-color)"}
             phx-click="select"
@@ -44,16 +44,16 @@ defmodule FieldPublicationWeb.ContactAndImprintLive do
   end
 
   def mount(_params, _session, socket) do
-    %ApplicationSettings{contact: contact} = Settings.get()
+    %ApplicationSettings{imprint: imprint} = Settings.get()
 
-    case contact do
+    case imprint do
       val when is_list(val) and val != [] ->
         selected_ui_language = Gettext.get_locale(FieldPublicationWeb.Translate)
 
         %Translation{language: language} =
           Enum.find(
-            contact,
-            List.first(contact),
+            imprint,
+            List.first(imprint),
             fn %Translation{language: language} -> language == selected_ui_language end
           )
 
@@ -61,12 +61,12 @@ defmodule FieldPublicationWeb.ContactAndImprintLive do
           :ok,
           socket
           |> assign(:page_title, "Contact and imprint")
-          |> assign(:contact, contact)
+          |> assign(:imprint, imprint)
           |> set_selected(language)
         }
 
       _ ->
-        {:ok, socket |> assign(:page_title, "Contact and imprint") |> assign(:contact, nil)}
+        {:ok, socket |> assign(:page_title, "Contact and imprint") |> assign(:imprint, nil)}
     end
   end
 
@@ -81,11 +81,11 @@ defmodule FieldPublicationWeb.ContactAndImprintLive do
     }
   end
 
-  defp set_selected(%{assigns: %{contact: contact}} = socket, selected_language) do
+  defp set_selected(%{assigns: %{imprint: imprint}} = socket, selected_language) do
     selected_text =
       Enum.find(
-        contact,
-        List.first(contact),
+        imprint,
+        List.first(imprint),
         fn %Translation{language: language} -> language == selected_language end
       )
       |> then(fn %Translation{text: text} -> text end)

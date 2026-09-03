@@ -60,7 +60,7 @@ defmodule FieldPublication.DatabaseSchema.ApplicationSettings do
     field(:favicon, :string)
     field(:page_name, :string, default: "FieldPublication")
     embeds_one(:color_scheme, ColorScheme, defaults_to_struct: true, on_replace: :update)
-    embeds_many(:contact, Translation, on_replace: :delete)
+    embeds_many(:imprint, Translation, on_replace: :delete)
   end
 
   def changeset(settings, attrs \\ %{}) do
@@ -72,11 +72,11 @@ defmodule FieldPublication.DatabaseSchema.ApplicationSettings do
       :page_name
     ])
     |> cast_embed(:color_scheme)
-    |> cast_embed(:contact,
-      sort_param: :contact_sort,
-      drop_param: :contact_drop
+    |> cast_embed(:imprint,
+      sort_param: :imprint_sort,
+      drop_param: :imprint_drop
     )
-    |> Translation.language_unique_constraint(:contact)
+    |> Translation.language_unique_constraint(:imprint)
     |> Base.validate_doc_type(@doc_type)
   end
 end

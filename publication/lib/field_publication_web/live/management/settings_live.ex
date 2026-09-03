@@ -33,7 +33,7 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
       <.color_scheme_settings {assigns} />
 
       <.translation_input
-        field={@setting_form[:contact]}
+        field={@setting_form[:imprint]}
         language_options={@imprint_options}
       >
         <:heading>Imprint</:heading>

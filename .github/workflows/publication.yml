@@ -25,7 +25,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y gdal-bin
           echo "/usr/bin/gdal" >> $GITHUB_PATH
-
       - name: Sleep to await CouchDB startup
         run: sleep 15s
       - name: Restore dependencies cache

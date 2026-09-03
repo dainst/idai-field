@@ -27,6 +27,8 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y gdal-bin
+          /usr/bin/gdal --version
+          echo "/usr/bin/gdal" >> $PATH
           echo $PATH
           echo $GITHUB_PATH
       - name: Sleep to await CouchDB and OpenSearch startup

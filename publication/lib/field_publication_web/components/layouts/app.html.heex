@@ -58,7 +58,13 @@
   <.flash_group flash={@flash} />
   {@inner_content}
 </main>
-<footer class="w-full flex gap-2 absolute h-16 bottom-0 justify-center border-t pt-2">
+<footer class="w-full z-1000 fixed bg-white/80 flex gap-2 bottom-0 justify-center border-t p-2">
   <.link navigate={~p"/imprint"}>Imprint and contact</.link>
-  | <a target="_blank" href="https://github.com/dainst/idai-field">The Field software system</a>
+  |<div>
+    <a target="_blank" href="https://github.com/dainst/idai-field"><img
+      class="inline h-6 mb-1"
+      src="/images/github.svg"
+      alt="Github Logo"
+    /> GitHub</a>
+  </div>
 </footer>

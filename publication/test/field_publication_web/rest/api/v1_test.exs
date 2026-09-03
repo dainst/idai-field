@@ -10,7 +10,7 @@ defmodule FieldPublicationWeb.Rest.Api.V1Test do
   }
 
   alias FieldPublication.DatabaseSchema.{
-    Project,
+    Project
   }
 
   alias FieldPublication.Test.ProjectSeed

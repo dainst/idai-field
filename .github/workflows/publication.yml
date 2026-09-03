@@ -20,6 +20,8 @@ jobs:
       - name: Start CouchDB and OpenSearch
         run: docker compose -f docker-compose.yml up -d
         working-directory: publication
+      - name: Install GDAL
+        run: sudo apt install -y gdal
       - name: Sleep to await CouchDB startup
         run: sleep 15s
       - name: Restore dependencies cache

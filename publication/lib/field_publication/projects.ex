@@ -4,7 +4,6 @@ defmodule FieldPublication.Projects do
   alias Ecto.Changeset
 
   alias FieldPublication.DatabaseSchema.{
-    Base,
     Project,
     Publication,
     User
@@ -48,11 +47,7 @@ defmodule FieldPublication.Projects do
       {:error, :not_found}
   """
   def get(identifier) when is_binary(identifier) do
-    %Project{
-      identifier: identifier,
-      doc_type: Project.doc_type()
-    }
-    |> get_document_id()
+    Project.id(identifier)
     |> CouchService.get_document()
     |> case do
       {:ok, %{status: 200, body: body}} ->
@@ -173,8 +168,7 @@ defmodule FieldPublication.Projects do
   def put(%Project{} = project, params \\ %{}) do
     changeset = Project.changeset(project, params)
 
-    with {:ok, project} <- apply_action(changeset, :create),
-         id <- get_document_id(project),
+    with {:ok, %Project{_id: id} = project} <- apply_action(changeset, :create),
          {:ok, %{status: 201, body: body}} <- CouchService.put_document(id, project) do
       %{"rev" => rev} = Jason.decode!(body)
       FileService.initialize!(project.identifier)
@@ -214,9 +208,7 @@ defmodule FieldPublication.Projects do
       iex(1)> FieldPublication.Projects.delete(project)
       {:ok, :deleted}
   """
-  def delete(%Project{_rev: rev, identifier: identifier} = project) do
-    doc_id = get_document_id(project)
-
+  def delete(%Project{_id: doc_id, _rev: rev, identifier: identifier} = project) do
     {:ok, _deleted_paths} = FileService.delete(identifier)
     CouchService.delete_document(doc_id, rev)
     publications = Publications.list(project.identifier)
@@ -280,15 +272,5 @@ defmodule FieldPublication.Projects do
       true ->
         false
     end
-  end
-
-  @doc """
-  Returns a standardized document id for the project struct.
-
-  ## Parameters
-    - `project`: Project schema struct.
-  """
-  def get_document_id(%Project{} = project) do
-    Base.construct_doc_id(project, Project)
   end
 end

@@ -251,8 +251,7 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
         publications = Publications.list(project.identifier)
 
         Enum.each(publications, fn publication ->
-          channel = Publications.get_doc_id(publication)
-          PubSub.subscribe(FieldPublication.PubSub, channel)
+          PubSub.subscribe(FieldPublication.PubSub, publication._id)
         end)
 
         %{

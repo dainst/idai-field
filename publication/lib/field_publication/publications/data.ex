@@ -148,7 +148,7 @@ defmodule FieldPublication.Publications.Data do
     DataIssues.remove_entries(report_key, meta_db_name)
   end
 
-  def recreate_meta_database(%Publication{database: db} = publication) do
+  def recreate_meta_database(%Publication{_id: pub_id, database: db} = publication) do
     {_, meta_db_name} = create_meta_database(publication)
 
     CouchService.get_document_stream(
@@ -175,7 +175,6 @@ defmodule FieldPublication.Publications.Data do
     end)
 
     config = Publications.get_configuration(publication)
-    pub_id = Publications.get_doc_id(publication)
 
     CouchService.get_document_stream(%{selector: %{}}, db)
     |> Stream.reject(fn
@@ -275,9 +274,7 @@ defmodule FieldPublication.Publications.Data do
     end)
   end
 
-  defp generate_hierarchy_mapping(%Publication{} = publication) do
-    pub_id = Publications.get_doc_id(publication)
-
+  defp generate_hierarchy_mapping(%Publication{_id: pub_id} = publication) do
     publication
     |> get_doc_stream_for_all()
     |> Enum.reduce(%{}, fn doc, acc ->
@@ -449,8 +446,8 @@ defmodule FieldPublication.Publications.Data do
     end
   end
 
-  defp get_meta_database_name(%Publication{} = publication) do
-    "meta_#{Publications.get_doc_id(publication)}"
+  defp get_meta_database_name(%Publication{_id: id}) do
+    "meta_#{id}"
   end
 
   def recreate_database_indices(%Publication{database: database} = publication) do
@@ -901,8 +898,7 @@ defmodule FieldPublication.Publications.Data do
     |> Enum.map(&apply_project_configuration(&1, config, publication, include_relations))
   end
 
-  def get_document_hierarchy(%Publication{} = publication) do
-    pub_id = Publications.get_doc_id(publication)
+  def get_document_hierarchy(%Publication{_id: pub_id} = publication) do
     hierarchy_cache = "hierarchy_#{pub_id}"
 
     Cachex.get(@document_cache_name, hierarchy_cache)

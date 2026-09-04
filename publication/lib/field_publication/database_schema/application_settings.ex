@@ -46,14 +46,12 @@ defmodule FieldPublication.DatabaseSchema.ApplicationSettings do
 
   import Ecto.Changeset
 
-  alias FieldPublication.DatabaseSchema.{
-    Base,
-    Translation
-  }
+  alias FieldPublication.DatabaseSchema.Translation
 
   @doc_type "application_settings"
   @primary_key false
   embedded_schema do
+    field(:_id, :string, default: @doc_type)
     field(:_rev, :string)
     field(:doc_type, :string, default: @doc_type)
     field(:logo, :string)
@@ -79,6 +77,5 @@ defmodule FieldPublication.DatabaseSchema.ApplicationSettings do
       drop_param: :imprint_drop
     )
     |> Translation.language_unique_constraint(:imprint)
-    |> Base.validate_doc_type(@doc_type)
   end
 end

@@ -9,13 +9,13 @@ defmodule FieldPublication.DatabaseSchema.DataIssues do
   @doc_type "issue"
   @primary_key false
   embedded_schema do
+    field(:_id, :string)
     field(:_rev, :string)
     field(:doc_type, :string, default: @doc_type)
     field(:uuid, :string)
     embeds_many(:entries, LogEntry, on_replace: :delete)
   end
 
-  def id(%__MODULE__{uuid: uuid}), do: "issue_#{uuid}"
   def id(uuid) when is_binary(uuid), do: "issue_#{uuid}"
 
   def create(uuid, %LogEntry{} = entry) when is_binary(uuid) do
@@ -149,5 +149,14 @@ defmodule FieldPublication.DatabaseSchema.DataIssues do
     |> cast(attrs, [:_rev, :uuid])
     |> cast_embed(:entries)
     |> validate_required([:uuid])
+    |> set_id()
+  end
+
+  def set_id(changeset) do
+    if uuid = get_field(changeset, :uuid) do
+      put_change(changeset, :_id, id(uuid))
+    else
+      changeset
+    end
   end
 end

@@ -97,7 +97,7 @@ defmodule FieldPublication.Processing do
   Get information about all currently running processing tasks for the given publication.
   """
   def show(%Publication{} = publication) do
-    GenServer.call(__MODULE__, {:show, Publications.get_doc_id(publication)})
+    GenServer.call(__MODULE__, {:show, publication._id})
   end
 
   @doc """
@@ -112,7 +112,7 @@ defmodule FieldPublication.Processing do
              :geo_collections,
              :database_indices
            ] do
-    GenServer.call(__MODULE__, {:show, Publications.get_doc_id(publication), type})
+    GenServer.call(__MODULE__, {:show, publication._id, type})
   end
 
   @doc """
@@ -126,13 +126,13 @@ defmodule FieldPublication.Processing do
   Stop all currently running processing tasks for the given publication.
   """
   def stop(%Publication{} = publication) do
-    GenServer.call(__MODULE__, {:stop, Publications.get_doc_id(publication)})
+    GenServer.call(__MODULE__, {:stop, publication._id})
   end
 
   @doc """
   Stop the currently running processing task as defined by `type` for the given publication.
   """
-  def stop(%Publication{} = publication, type)
+  def stop(%Publication{_id: id}, type)
       when type in [
              :web_images,
              :tile_images,
@@ -141,7 +141,7 @@ defmodule FieldPublication.Processing do
              :geo_collections,
              :database_indices
            ] do
-    GenServer.call(__MODULE__, {:stop, Publications.get_doc_id(publication), type})
+    GenServer.call(__MODULE__, {:stop, id, type})
   end
 
   # End of API function definitions. Everything below should __not__ get called directly from other modules.
@@ -152,9 +152,11 @@ defmodule FieldPublication.Processing do
   the GenServer. These calls will in general originate from the API functions defined above or from the
   asynchronous tasks started by the GenServer itself (reporting that the processing task has finished/crashed...).
   """
-  def handle_call({:start, %Publication{} = publication, :web_images}, _from, running_tasks) do
-    publication_id = Publications.get_doc_id(publication)
-
+  def handle_call(
+        {:start, %Publication{_id: publication_id} = publication, :web_images},
+        _from,
+        running_tasks
+      ) do
     Enum.any?(running_tasks, fn {_task, type, context} ->
       publication_id == context and type == :web_images
     end)
@@ -182,9 +184,11 @@ defmodule FieldPublication.Processing do
     end
   end
 
-  def handle_call({:start, %Publication{} = publication, :tile_images}, _from, running_tasks) do
-    publication_id = Publications.get_doc_id(publication)
-
+  def handle_call(
+        {:start, %Publication{_id: publication_id} = publication, :tile_images},
+        _from,
+        running_tasks
+      ) do
     Enum.any?(running_tasks, fn {_task, type, context} ->
       publication_id == context and type == :tile_images
     end)
@@ -212,9 +216,11 @@ defmodule FieldPublication.Processing do
     end
   end
 
-  def handle_call({:start, %Publication{} = publication, :search_index}, _from, running_tasks) do
-    publication_id = Publications.get_doc_id(publication)
-
+  def handle_call(
+        {:start, %Publication{_id: publication_id} = publication, :search_index},
+        _from,
+        running_tasks
+      ) do
     Enum.any?(running_tasks, fn {_task, type, context} ->
       publication_id == context and type == :search_index
     end)
@@ -243,12 +249,10 @@ defmodule FieldPublication.Processing do
   end
 
   def handle_call(
-        {:start, %Publication{} = publication, :preview_documents},
+        {:start, %Publication{_id: publication_id} = publication, :preview_documents},
         _from,
         running_tasks
       ) do
-    publication_id = Publications.get_doc_id(publication)
-
     Enum.any?(running_tasks, fn {_task, type, context} ->
       publication_id == context and type == :preview_documents
     end)
@@ -275,12 +279,10 @@ defmodule FieldPublication.Processing do
   end
 
   def handle_call(
-        {:start, %Publication{} = publication, :geo_collections},
+        {:start, %Publication{_id: publication_id} = publication, :geo_collections},
         _from,
         running_tasks
       ) do
-    publication_id = Publications.get_doc_id(publication)
-
     Enum.any?(running_tasks, fn {_task, type, context} ->
       publication_id == context and type == :geo_collections
     end)
@@ -307,12 +309,10 @@ defmodule FieldPublication.Processing do
   end
 
   def handle_call(
-        {:start, %Publication{} = publication, :database_indices},
+        {:start, %Publication{_id: publication_id} = publication, :database_indices},
         _from,
         running_tasks
       ) do
-    publication_id = Publications.get_doc_id(publication)
-
     Enum.any?(running_tasks, fn {_task, type, context} ->
       publication_id == context and type == :database_indices
     end)

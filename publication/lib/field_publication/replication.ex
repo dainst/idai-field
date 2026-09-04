@@ -130,12 +130,10 @@ defmodule FieldPublication.Replication do
   task has finished/crashed...).
   """
   def handle_call(
-        {:start, %ReplicationInput{} = input, %Publication{} = publication},
+        {:start, %ReplicationInput{} = input, %Publication{_id: publication_id} = publication},
         _from,
         running_replications
       ) do
-    publication_id = Publications.get_doc_id(publication)
-
     if publication_id in running_replications do
       {:reply, :already_running, running_replications}
     else
@@ -194,9 +192,11 @@ defmodule FieldPublication.Replication do
     end
   end
 
-  def handle_call({:stop, %Publication{} = publication}, _from, running_replications) do
-    publication_id = Publications.get_doc_id(publication)
-
+  def handle_call(
+        {:stop, %Publication{_id: publication_id} = publication},
+        _from,
+        running_replications
+      ) do
     case Map.get(running_replications, publication_id) do
       nil ->
         {:reply, :not_found, running_replications}
@@ -211,9 +211,11 @@ defmodule FieldPublication.Replication do
     end
   end
 
-  def handle_call({:show, %Publication{} = publication}, _from, running_replications) do
-    publication_id = Publications.get_doc_id(publication)
-
+  def handle_call(
+        {:show, %Publication{_id: publication_id}},
+        _from,
+        running_replications
+      ) do
     case Map.get(running_replications, publication_id) do
       nil ->
         {:reply, nil, running_replications}
@@ -224,13 +226,12 @@ defmodule FieldPublication.Replication do
   end
 
   def handle_info(
-        {_ref, {:ok, {:draft_created, publication}}},
+        {_ref, {:ok, {:draft_created, %Publication{_id: publication_id} = publication}}},
         running_replications
       ) do
     # Handles the success result of the async process started in `start/2` above. We check
     # if the input requested immediate processing and otherwise let the process stop, which will
     # get picked up in the handle_info/2 below that checks for the :DOWN atom.
-    publication_id = Publications.get_doc_id(publication)
 
     {_finished_task, %{input: %{processing: start_processing_immediately}}} =
       Map.get(running_replications, publication_id)

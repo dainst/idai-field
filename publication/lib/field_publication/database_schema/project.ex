@@ -3,11 +3,10 @@ defmodule FieldPublication.DatabaseSchema.Project do
 
   import Ecto.Changeset
 
-  alias FieldPublication.DatabaseSchema.Base
-
   @doc_type "project"
   @primary_key false
   embedded_schema do
+    field(:_id, :string)
     field(:_rev, :string)
     field(:identifier, :string, primary_key: true)
     field(:doc_type, :string, default: @doc_type)
@@ -19,11 +18,23 @@ defmodule FieldPublication.DatabaseSchema.Project do
     project
     |> cast(attrs, [:identifier, :_rev, :editors])
     |> validate_required([:identifier])
-    |> Base.validate_doc_type(@doc_type)
+    |> set_id()
   end
 
   def doc_type() do
     @doc_type
+  end
+
+  def set_id(changeset) do
+    if identifier = get_field(changeset, :identifier) do
+      put_change(changeset, :_id, id(identifier))
+    else
+      changeset
+    end
+  end
+
+  def id(identifier) do
+    Enum.join([@doc_type, identifier], "_")
   end
 end
 

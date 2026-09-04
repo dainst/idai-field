@@ -9,7 +9,6 @@ defmodule FieldPublication.Publications do
   alias FieldPublication.Publications.{Data, Search}
 
   alias FieldPublication.DatabaseSchema.{
-    Base,
     ReplicationInput,
     Publication
   }
@@ -81,12 +80,8 @@ defmodule FieldPublication.Publications do
   end
 
   def get(project_identifier, %Date{} = draft_date) when is_binary(project_identifier) do
-    %Publication{
-      project_identifier: project_identifier,
-      draft_date: draft_date,
-      doc_type: Publication.doc_type()
-    }
-    |> get_doc_id()
+    project_identifier
+    |> Publication.id(draft_date)
     |> get()
   end
 
@@ -241,10 +236,9 @@ defmodule FieldPublication.Publications do
   """
   def put(publication, params \\ %{})
 
-  def put(%Publication{_rev: rev} = publication, params) when not is_nil(rev) do
+  def put(%Publication{_id: doc_id, _rev: rev} = publication, params) when not is_nil(rev) do
     # If revision is not nil, this is an update to an existing publication. No need to to create documents, initializes search indices etc.
     changeset = Publication.changeset(publication, params)
-    doc_id = get_doc_id(publication)
 
     Cachex.del(:document_cache, doc_id)
 
@@ -267,15 +261,17 @@ defmodule FieldPublication.Publications do
         error
 
       {:ok, %{status: 409}} ->
-        {:error, Base.add_duplicate_doc_error(changeset)}
+        {
+          :error,
+          add_error(changeset, :duplicate_document, "Publication document version mismatch.")
+        }
     end
   end
 
   def put(%Publication{} = publication, params) do
     changeset = Publication.changeset(publication, params)
 
-    with {:ok, publication} <- apply_action(changeset, :create),
-         doc_id <- get_doc_id(publication),
+    with {:ok, %Publication{_id: doc_id}} <- apply_action(changeset, :create),
          _ <- Cachex.del(:document_cache, doc_id),
          {:ok, %{status: 201}} <- CouchService.put_database(publication.database),
          {:ok, %{status: 201}} <- CouchService.put_document(publication.configuration_doc, %{}),
@@ -291,7 +287,7 @@ defmodule FieldPublication.Publications do
         error
 
       {:ok, %{status: 409}} ->
-        {:error, Base.add_duplicate_doc_error(changeset)}
+        {:error, add_error(changeset, :duplicate_document, "Publication already exists.")}
 
       {:ok, %{status: 412}} ->
         {:error,
@@ -305,11 +301,11 @@ defmodule FieldPublication.Publications do
 
   def delete(
         %Publication{
+          _id: doc_id,
           _rev: rev,
           database: database
         } = publication
       ) do
-    doc_id = get_doc_id(publication)
     Cachex.del(:document_cache, doc_id)
 
     with {:ok, _preview_database_name} <-
@@ -351,13 +347,7 @@ defmodule FieldPublication.Publications do
     "#{project_identifier}_#{draft_date}_task"
   end
 
-  def get_doc_id(%Publication{} = publication) do
-    Base.construct_doc_id(publication, Publication)
-  end
-
-  def broadcast(%Publication{} = publication) do
-    id = get_doc_id(publication)
-
+  def broadcast(%Publication{_id: id} = publication) do
     PubSub.broadcast(
       FieldPublication.PubSub,
       id,
@@ -365,9 +355,7 @@ defmodule FieldPublication.Publications do
     )
   end
 
-  def broadcast(%Publication{} = publication, msg) do
-    id = get_doc_id(publication)
-
+  def broadcast(%Publication{_id: id}, msg) do
     PubSub.broadcast(
       FieldPublication.PubSub,
       id,

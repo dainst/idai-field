@@ -16,6 +16,8 @@ defmodule FieldPublication.Test.ProjectSeed do
 
   require Logger
 
+  @default_draft_date Date.from_iso8601!("2024-06-05")
+
   def create_full_publication(project_identifier, seed_and_preprocess? \\ false, publish? \\ true) do
     project =
       case Projects.get(project_identifier) do
@@ -42,7 +44,7 @@ defmodule FieldPublication.Test.ProjectSeed do
           source_password: "fake",
           project_identifier: project_identifier,
           drafted_by: "mix seed",
-          draft_date: Date.from_iso8601!("2024-06-05")
+          draft_date: @default_draft_date
         },
         seed_and_preprocess?,
         seed_and_preprocess?,

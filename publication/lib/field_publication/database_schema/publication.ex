@@ -6,7 +6,6 @@ defmodule FieldPublication.DatabaseSchema.Publication do
   alias FieldPublication.Projects
 
   alias FieldPublication.DatabaseSchema.{
-    Base,
     Translation,
     LogEntry
   }
@@ -14,6 +13,7 @@ defmodule FieldPublication.DatabaseSchema.Publication do
   @doc_type "publication"
   @primary_key false
   embedded_schema do
+    field(:_id, :string)
     field(:_rev, :string)
     field(:doc_type, :string, default: @doc_type)
     field(:project_identifier, :string, primary_key: true)
@@ -35,7 +35,7 @@ defmodule FieldPublication.DatabaseSchema.Publication do
     embeds_many(:replication_logs, LogEntry, on_replace: :delete)
   end
 
-  def changeset(publication, attrs \\ %{}) do
+  def changeset(%__MODULE__{} = publication, attrs \\ %{}) do
     publication
     |> cast(attrs, [
       :_rev,
@@ -67,11 +67,15 @@ defmodule FieldPublication.DatabaseSchema.Publication do
       :version
     ])
     |> ensure_project_exists()
-    |> Base.validate_doc_type(@doc_type)
+    |> set_id()
   end
 
   def doc_type() do
     @doc_type
+  end
+
+  def id(project_identifier, draft_date) do
+    Enum.join([@doc_type, project_identifier, draft_date], "_")
   end
 
   defp ensure_project_exists(changeset) do
@@ -88,6 +92,16 @@ defmodule FieldPublication.DatabaseSchema.Publication do
           :project_identifier,
           "Project #{project_identifier} document not found."
         )
+    end
+  end
+
+  def set_id(changeset) do
+    with project_identifier <- get_field(changeset, :project_identifier),
+         %Date{} = draft_date <- get_field(changeset, :draft_date) do
+      put_change(changeset, :_id, id(project_identifier, draft_date))
+    else
+      _something_else_already_invalid ->
+        changeset
     end
   end
 end

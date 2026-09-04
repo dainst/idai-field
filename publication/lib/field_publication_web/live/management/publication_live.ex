@@ -89,9 +89,7 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
         _session,
         socket
       ) do
-    %Publication{} = publication = Publications.get!(project_id, draft_date_string)
-
-    channel = Publications.get_doc_id(publication)
+    %Publication{_id: channel} = publication = Publications.get!(project_id, draft_date_string)
 
     PubSub.subscribe(FieldPublication.PubSub, channel)
 

@@ -218,16 +218,12 @@ defmodule FieldPublication.Publications.Search do
     ["#{publication_alias}__a__", "#{publication_alias}__b__"]
   end
 
-  def get_alias(%Publication{} = publication) do
-    publication
-    |> Publications.get_doc_id()
-    |> OpenSearchService.encode_chars()
+  def get_alias(%Publication{_id: id}) do
+    OpenSearchService.encode_chars(id)
   end
 
-  def get_alias(%Project{} = project) do
-    project
-    |> Projects.get_document_id()
-    |> OpenSearchService.encode_chars()
+  def get_alias(%Project{_id: id}) do
+    OpenSearchService.encode_chars(id)
   end
 
   def get_doc_count(%Publication{} = publication) do
@@ -1223,16 +1219,12 @@ defmodule FieldPublication.Publications.Search do
   def get_keyword_multi_inputs(), do: ["checkboxes", "dropdownRange"]
   def get_text_inputs(), do: ["input", "text"]
 
-  def get_search_alias(%Publication{} = publication) do
-    publication
-    |> Publications.get_doc_id()
-    |> OpenSearchService.encode_chars()
+  def get_search_alias(%Publication{_id: id}) do
+    OpenSearchService.encode_chars(id)
   end
 
-  def get_search_alias(%Project{} = project) do
-    project
-    |> Projects.get_document_id()
-    |> OpenSearchService.encode_chars()
+  def get_search_alias(%Project{_id: id}) do
+    OpenSearchService.encode_chars(id)
   end
 
   def get_currently_aliased_publication(%Project{} = project) do

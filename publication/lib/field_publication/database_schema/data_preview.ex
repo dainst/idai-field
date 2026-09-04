@@ -10,6 +10,7 @@ defmodule FieldPublication.DatabaseSchema.DataPreview do
   @doc_type "preview"
   @primary_key false
   embedded_schema do
+    field(:_id, :string)
     field(:_rev, :string)
     field(:doc_type, :string, default: @doc_type)
     field(:uuid, :string)
@@ -30,7 +31,6 @@ defmodule FieldPublication.DatabaseSchema.DataPreview do
     preview
   end
 
-  def id(%__MODULE__{uuid: uuid}), do: "preview_#{uuid}"
   def id(uuid) when is_binary(uuid), do: "preview_#{uuid}"
 
   def list(db_name, uuids \\ nil)
@@ -71,5 +71,14 @@ defmodule FieldPublication.DatabaseSchema.DataPreview do
     preview
     |> cast(attrs, [:_rev, :uuid, :preview])
     |> validate_required([:uuid, :preview])
+    |> set_id()
+  end
+
+  def set_id(changeset) do
+    if uuid = get_field(changeset, :uuid) do
+      put_change(changeset, :_id, id(uuid))
+    else
+      changeset
+    end
   end
 end

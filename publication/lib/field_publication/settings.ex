@@ -188,6 +188,12 @@ defmodule FieldPublication.Settings do
     name
   end
 
+  def get_contact_email() do
+    %ApplicationSettings{contact_email: contact_email} = get()
+
+    contact_email
+  end
+
   defp set_cache(doc), do: Cachex.put(:application_documents, @setting_doc_name, doc)
   defp clear_cache(), do: Cachex.del(:application_documents, @setting_doc_name)
 end

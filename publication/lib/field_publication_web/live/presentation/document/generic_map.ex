@@ -10,6 +10,8 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
   alias FieldPublication.DatabaseSchema.Publication
   alias FieldPublication.Publications.Data
 
+  alias FieldPublicationWeb.Components.DocumentMap
+
   alias FieldPublication.Publications.Data.{
     Document,
     Field,
@@ -66,7 +68,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
 
       <div class="basis-2/3">
         <.live_component
-          module={FieldPublicationWeb.Components.DocumentViewMap}
+          module={DocumentMap}
           id="generic_doc_map_detail"
           style="width:100%; height: var(--ol-full-height);"
           doc={@doc}

@@ -17,7 +17,7 @@ import PreviewOverlay from "./map/preview-overlay";
 import PublicationSelection from "./map/selection";
 const highlightZoomDuration = -1;
 
-export default (getFullProjectMapHook = () => {
+export default (getPublicationMapHook = () => {
     return {
         id: null,
         map: null,

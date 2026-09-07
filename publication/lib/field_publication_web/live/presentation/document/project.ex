@@ -1,6 +1,8 @@
 defmodule FieldPublicationWeb.Presentation.Document.Project do
   use FieldPublicationWeb, :live_component
 
+  alias FieldPublicationWeb.Components.PublicationMap
+
   import FieldPublicationWeb.Components.Data.{
     DocumentLink,
     Field,
@@ -148,7 +150,7 @@ defmodule FieldPublicationWeb.Presentation.Document.Project do
       <div class="flex flex-col lg:flex-row gap-4 mt-4" id="map-offset-element">
         <div class="basis-2/3 flex-none p-2">
           <.live_component
-            module={FieldPublicationWeb.Components.FullProjectMap}
+            module={PublicationMap}
             id="project_doc_map"
             style="height: 600px; background-color: var(--panel-color)"
             publication={@publication}

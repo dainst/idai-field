@@ -26,6 +26,7 @@ defmodule FieldPublication.DatabaseSchema.Publication do
     field(:configuration_doc, :string)
     field(:database, :string)
     field(:languages, {:array, :string}, default: [])
+    field(:contact, :string)
     # Version is currently not used, the default is saved. The idea is to maybe
     # allow revision releases that can be created to fix errors without adding
     # a new major version. These then could get communicated differently through
@@ -64,7 +65,8 @@ defmodule FieldPublication.DatabaseSchema.Publication do
       :draft_date,
       :configuration_doc,
       :database,
-      :version
+      :version,
+      :contact
     ])
     |> ensure_project_exists()
     |> set_id()

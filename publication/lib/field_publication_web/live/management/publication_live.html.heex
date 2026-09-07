@@ -160,6 +160,12 @@
           value={language}
         />
       <% end %>
+      <.input
+        type="text"
+        field={@publication_form[:contact]}
+        label="Contact"
+        placeholder="mail@example.org"
+      />
       <.translation_input
         field={@publication_form[:comments]}
         language_options={@translation_options}

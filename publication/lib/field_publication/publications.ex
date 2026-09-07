@@ -34,7 +34,8 @@ defmodule FieldPublication.Publications do
         draft_date: draft_date
       }) do
     changeset =
-      %Publication{
+      %Publication{}
+      |> Publication.changeset(%{
         project_identifier: project_identifier,
         source_url: source_url,
         source_project_identifier: source_project_identifier,
@@ -42,8 +43,7 @@ defmodule FieldPublication.Publications do
         database: "publication_#{project_identifier}_#{draft_date}",
         draft_date: draft_date,
         drafted_by: drafted_by
-      }
-      |> Publication.changeset()
+      })
 
     case apply_action(changeset, :create) do
       {:ok, publication} ->
@@ -252,7 +252,6 @@ defmodule FieldPublication.Publications do
           |> apply_action(:create)
         end)
 
-      # Map.put(publication, :_rev, rev)
       broadcast(updated_publication)
 
       {:ok, updated_publication}

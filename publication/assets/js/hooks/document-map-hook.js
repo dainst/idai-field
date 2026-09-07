@@ -71,13 +71,6 @@ export default getDocumentViewMapHook = () => {
             });
 
             this.handleEvent(
-                `render-selection-polygon-${this.el.id}`,
-                ({ geometry }) => {
-                    this.selection.presetSelection(geometry);
-                },
-            );
-
-            this.handleEvent(
                 `set-draw-box-mode-${this.el.id}`,
                 ({ new_value }) => {
                     this.selectionMode = new_value;

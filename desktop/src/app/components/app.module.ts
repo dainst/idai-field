@@ -218,7 +218,7 @@ registerLocaleData(localeUk, 'uk');
         },
         {
             provide: Comparator,
-            useFactory: (serviceLocator: AppInitializerServiceLocator) => serviceLocator.projectConfiguration,
+            useFactory: (serviceLocator: AppInitializerServiceLocator) => serviceLocator.comparator,
             deps: [AppInitializerServiceLocator]
         },
         {

@@ -181,7 +181,7 @@ defmodule FieldPublication.Replication do
                 body
                 |> Jason.decode!()
                 |> Map.get("resource", %{})
-                |> Map.get("contactMail", [])
+                |> Map.get("contactMail", nil)
 
               _ ->
                 nil

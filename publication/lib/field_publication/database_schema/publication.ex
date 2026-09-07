@@ -50,7 +50,8 @@ defmodule FieldPublication.DatabaseSchema.Publication do
       :configuration_doc,
       :database,
       :languages,
-      :version
+      :version,
+      :contact
     ])
     |> cast_embed(:comments,
       sort_param: :comments_sort,

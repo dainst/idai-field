@@ -35,31 +35,6 @@ export default (getPublicationMapHook = () => {
         interactionTimeout: 500,
         mounted() {
             this.initialize();
-            this.handleEvent(
-                `full-project-map-set-layers-${this.el.id}`,
-                ({ project_tile_layers }) => {
-                    this.publicationTileLayers.setProjectLayers(
-                        project_tile_layers,
-                    );
-                },
-            );
-
-            this.handleEvent(
-                `full-project-map-set-layer-visibility-${this.el.id}`,
-                ({ uuid, visibility }) => {
-                    this.publicationTileLayers.toggleLayerVisibility(
-                        uuid,
-                        visibility,
-                    );
-                },
-            );
-
-            this.handleEvent(
-                `full-project-map-data-${this.el.id}`,
-                ({ feature_collections }) => {
-                    this.setMapFeatures(feature_collections);
-                },
-            );
 
             this.handleEvent(
                 `render-selection-polygon-${this.el.id}`,

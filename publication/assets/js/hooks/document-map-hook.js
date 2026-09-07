@@ -36,32 +36,6 @@ export default getDocumentViewMapHook = () => {
         fullExtent: null, // includes vector extent + the tile layers (map background images)
         mounted() {
             this.initialize();
-            this.handleEvent(
-                `document-map-set-project-layers-${this.el.id}`,
-                ({ project_tile_layers }) => {
-                    this.publicationTileLayers.setProjectLayers(
-                        project_tile_layers,
-                    );
-                },
-            );
-            this.handleEvent(
-                `document-map-set-document-layers-${this.el.id}`,
-                ({ document_tile_layers }) => {
-                    this.publicationTileLayers.setDocumentLayers(
-                        document_tile_layers,
-                    );
-                },
-            );
-
-            this.handleEvent(
-                `document-map-set-layer-visibility-${this.el.id}`,
-                ({ uuid, visibility }) => {
-                    this.publicationTileLayers.toggleLayerVisibility(
-                        uuid,
-                        visibility,
-                    );
-                },
-            );
 
             this.handleEvent(
                 `document-map-update-${this.el.id}`,

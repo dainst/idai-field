@@ -67,7 +67,7 @@ defmodule FieldPublicationWeb.Components.PublicationMap do
       :ok,
       socket
       |> assign(assigns)
-      |> push_event("render-selection-polygon-#{id}", %{geometry: preset_geometry})
+      |> push_event("set-selection-polygon-#{id}", %{geometry: preset_geometry})
     }
   end
 

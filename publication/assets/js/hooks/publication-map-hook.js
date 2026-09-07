@@ -37,13 +37,6 @@ export default (getPublicationMapHook = () => {
             this.initialize();
 
             this.handleEvent(
-                `render-selection-polygon-${this.el.id}`,
-                ({ geometry }) => {
-                    this.selection.presetSelection(geometry);
-                },
-            );
-
-            this.handleEvent(
                 `map-highlight-feature-${this.el.id}`,
                 ({ feature_id }) => {
                     if (this.map) {
@@ -66,6 +59,13 @@ export default (getPublicationMapHook = () => {
                     }
                 }
             });
+
+            this.handleEvent(
+                `set-selection-polygon-${this.el.id}`,
+                ({ geometry }) => {
+                    this.selection.presetSelection(geometry);
+                },
+            );
 
             this.handleEvent(
                 `set-draw-box-mode-${this.el.id}`,
@@ -124,11 +124,7 @@ export default (getPublicationMapHook = () => {
             });
 
             this.map.on("pointermove", async function (e) {
-
-                if (
-                    e.dragging ||
-                    _this.selectionMode
-                ) {
+                if (e.dragging || _this.selectionMode) {
                     return;
                 }
 
@@ -170,7 +166,7 @@ export default (getPublicationMapHook = () => {
                 this.projectKey,
                 this.draftDate,
                 this.categoriesMetadata,
-                this.language
+                this.language,
             );
 
             this.setMapFeatures(featureCollections);

@@ -7,6 +7,7 @@ import GeoJSON from "ol/format/GeoJSON.js";
 
 import {
     findFeature,
+    findFeaturesAtPixel,
     highlightFeature,
     clearAllHighlights,
     styleFunction,
@@ -27,8 +28,6 @@ export default (getPublicationMapHook = () => {
         featureLayers: [],
         fullVectorExtent: null,
         lastHighlightChange: Date.now(),
-        hoveredFeatures: [],
-        pinnedFeatures: [],
         categoriesMetadata: [],
         selectionMode: false,
         overlay: null,
@@ -83,13 +82,6 @@ export default (getPublicationMapHook = () => {
                 },
             );
 
-            this.handleEvent(`close-preview-list-${this.el.id}`, () => {
-                if (this.map) {
-                    this.pinnedFeatures = [];
-                    this.overlay.update([]);
-                }
-            });
-
             this.handleEvent(`map-clear-highlights-${this.el.id}`, () => {
                 if (this.map) {
                     clearAllHighlights(this.featureLayers);
@@ -137,14 +129,6 @@ export default (getPublicationMapHook = () => {
                 `${this.el.getAttribute("id")}-identifier-tooltip`,
             );
 
-            this.overlay = new PreviewOverlay(
-                this,
-                this.map,
-                overlayDiv,
-                this.projectKey,
-                this.draftDate,
-            );
-
             this.publicationTileLayers = new PublicationTileLayers(
                 this,
                 this.map,
@@ -165,55 +149,29 @@ export default (getPublicationMapHook = () => {
             });
 
             this.map.on("pointermove", async function (e) {
+
                 if (
                     e.dragging ||
-                    _this.selectionMode ||
-                    _this.pinnedFeatures.length != 0
+                    _this.selectionMode
                 ) {
                     return;
                 }
 
-                _this.hoveredFeatures = _this.map.getFeaturesAtPixel(e.pixel, {
-                    layerFilter: (layer) => {
-                        const properties = layer.getProperties();
-                        return properties && !properties.drawLayer;
-                    },
-                });
+                const features = findFeaturesAtPixel(e.pixel, _this.map);
+
                 clearAllHighlights(_this.featureLayers);
-                for (let feature of _this.hoveredFeatures) {
+                for (let feature of features) {
                     highlightFeature(feature);
                 }
 
-                _this.overlay.update(
-                    _this.hoveredFeatures,
-                    _this.categoriesMetadata,
-                    e.coordinate,
-                    _this.language,
-                );
+                _this.overlay.mapHover(e, features);
             });
 
             this.map.on("singleclick", async function (e) {
                 if (_this.selectionMode || _this.isInteractionOnTimeout())
                     return;
-                if (_this.hoveredFeatures.length > 1) {
-                    _this.pinnedFeatures = _this.hoveredFeatures;
-                    _this.hoveredFeatures = [];
-                    _this.overlay.update(
-                        _this.pinnedFeatures,
-                        _this.categoriesMetadata,
-                        e.coordinate,
-                        _this.language,
-                        true,
-                    );
-                } else if (_this.hoveredFeatures.length === 1) {
-                    const properties = _this.hoveredFeatures[0].getProperties();
-                    _this
-                        .js()
-                        .navigate(
-                            `/projects/${_this.projectKey}/${_this.draftDate}/${properties.uuid}`,
-                        );
-                    _this.overlay.hide();
-                }
+
+                _this.overlay.mapClicked(e);
             });
 
             const featureCollections = await loadFeatureCollection(
@@ -230,16 +188,17 @@ export default (getPublicationMapHook = () => {
                 }
             }
 
-            this.setMapFeatures(featureCollections);
+            this.overlay = new PreviewOverlay(
+                this,
+                this.map,
+                overlayDiv,
+                this.projectKey,
+                this.draftDate,
+                this.categoriesMetadata,
+                this.language
+            );
 
-            this.map
-                .getTargetElement()
-                .addEventListener("pointerleave", function (e) {
-                    // Hides the overlay if no pinned features and mouse is completely off the map.
-                    if (_this.pinnedFeatures.length === 0) {
-                        _this.overlay.hide();
-                    }
-                });
+            this.setMapFeatures(featureCollections);
 
             document.getElementById(
                 `${this.id}-loading-indicator`,

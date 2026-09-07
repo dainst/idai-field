@@ -6,6 +6,7 @@ import VectorLayer from "ol/layer/Vector";
 import GeoJSON from "ol/format/GeoJSON.js";
 
 import {
+    findFeaturesAtPixel,
     styleFunction,
     setFillForLayer,
     clearAllHighlights,
@@ -30,8 +31,6 @@ export default getDocumentViewMapHook = () => {
         categoriesMetadata: [],
         mainFeature: null,
         featureLayers: [],
-        hoveredFeatures: [],
-        pinnedFeatures: [],
         selectionMode: false,
         activeVectorExtent: null,
         fullExtent: null, // includes vector extent + the tile layers (map background images)
@@ -93,14 +92,6 @@ export default getDocumentViewMapHook = () => {
                 },
             );
 
-            this.handleEvent(`close-preview-list-${this.el.id}`, () => {
-                if (this.map) {
-                    this.pinnedFeatures = [];
-                    this.overlay.update(this.pinnedFeatures);
-                    this.updateTooltip(this.pinnedFeatures);
-                }
-            });
-
             this.handleEvent(`map-clear-highlights-${this.el.id}`, () => {
                 this.resetFeatures();
             });
@@ -117,10 +108,7 @@ export default getDocumentViewMapHook = () => {
                 ({ new_value }) => {
                     this.selectionMode = new_value;
                     if (new_value == true) {
-                        this.pinnedFeatures = [];
-                        this.hoveredFeatures = [];
-
-                        this.overlay.update([]);
+                        this.overlay.hide();
                         this.selection.startDrawing();
                     } else {
                         this.selection.stopDrawing();
@@ -138,8 +126,6 @@ export default getDocumentViewMapHook = () => {
                 .getAttribute("initial_linked")
                 .split("|");
 
-            const fullscreen = this.el.getAttribute("fullscreen") !== null;
-
             this.projectKey = this.el.getAttribute("project_identifier");
             this.draftDate = this.el.getAttribute("draft_date");
             this.language = this.el.getAttribute("language");
@@ -148,19 +134,6 @@ export default getDocumentViewMapHook = () => {
                 target: `${this.el.getAttribute("id")}-map`,
                 view: new View(),
             });
-
-            const overlayDiv = document.getElementById(
-                `${this.el.getAttribute("id")}-identifier-tooltip`,
-            );
-
-            this.overlay = new PreviewOverlay(
-                this,
-                this.map,
-                overlayDiv,
-                this.projectKey,
-                this.draftDate,
-                fullscreen
-            );
 
             this.publicationTileLayers = new PublicationTileLayers(
                 this,
@@ -185,17 +158,14 @@ export default getDocumentViewMapHook = () => {
             });
 
             this.el.addEventListener("pointerleave", function (e) {
-                if (_this.pinnedFeatures.length === 0) {
-                    _this.resetFeatures();
-                    _this.overlay.hide();
-                }
+                _this.overlay.hide();
+                _this.resetFeatures();
             });
 
             this.map.on("pointermove", async function (e) {
                 if (
                     e.dragging ||
-                    _this.selectionMode ||
-                    _this.pinnedFeatures.length != 0
+                    _this.selectionMode
                 ) {
                     return;
                 }
@@ -213,54 +183,17 @@ export default getDocumentViewMapHook = () => {
                     },
                 });
 
-                _this.hoveredFeatures = hitFeatures;
-
-                for (feature of _this.hoveredFeatures) {
+                for (feature of hitFeatures) {
                     highlightFeature(feature);
                 }
 
-                if (e.coordinate) {
-                    _this.overlay.update(
-                        hitFeatures,
-                        _this.categoriesMetadata,
-                        e.coordinate,
-                        _this.language,
-                    );
-                }
+                _this.overlay.mapHover(e, hitFeatures)
             });
 
             this.map.on("singleclick", async function (e) {
                 if (_this.selectionMode) return;
-
-                if (_this.hoveredFeatures.length > 1) {
-                    _this.pinnedFeatures = _this.hoveredFeatures;
-                    _this.hoveredFeatures = [];
-                    _this.overlay.update(
-                        _this.pinnedFeatures,
-                        _this.categoriesMetadata,
-                        e.coordinate,
-                        _this.language,
-                        true,
-                    );
-                } else if (_this.hoveredFeatures.length === 1) {
-                    const properties = _this.hoveredFeatures[0].getProperties();
-                    _this
-                        .js()
-                        .patch(
-                            `/projects/${_this.projectKey}/${_this.draftDate}/${properties.uuid}`,
-                        );
-                    _this.overlay.hide();
-                }
+                _this.overlay.mapClicked(e);
             });
-
-            this.map
-                .getTargetElement()
-                .addEventListener("pointerleave", function (e) {
-                    // Hides the overlay if no pinned features and mouse is completely off the map.
-                    if (_this.pinnedFeatures.length === 0) {
-                        _this.overlay.hide();
-                    }
-                });
 
             const featureCollections = await loadFeatureCollection(this.projectKey, this.draftDate)
 
@@ -274,6 +207,22 @@ export default getDocumentViewMapHook = () => {
             }
 
             this.setMapFeatures(featureCollections);
+
+            const overlayDiv = document.getElementById(
+                `${this.el.getAttribute("id")}-identifier-tooltip`,
+            );
+            const fullscreen = this.el.getAttribute("fullscreen") !== null;
+
+            this.overlay = new PreviewOverlay(
+                this,
+                this.map,
+                overlayDiv,
+                this.projectKey,
+                this.draftDate,
+                this.categoriesMetadata,
+                this.language,
+                fullscreen
+            );
 
             document.getElementById(
                 `${this.id}-loading-indicator`,

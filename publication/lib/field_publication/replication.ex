@@ -174,6 +174,19 @@ defmodule FieldPublication.Replication do
                 []
             end
 
+          contact =
+            CouchService.get_document("project", publication.database)
+            |> case do
+              {:ok, %{status: 200, body: body}} ->
+                body
+                |> Jason.decode!()
+                |> Map.get("resource", %{})
+                |> Map.get("contactMail", [])
+
+              _ ->
+                nil
+            end
+
           Publications.Data.recreate_meta_database(publication)
 
           persisted_log(publication, :info, "Draft creation finished.")
@@ -181,6 +194,7 @@ defmodule FieldPublication.Replication do
           {:ok, %Publication{} = final_publication} =
             Publications.get!(publication.project_identifier, publication.draft_date)
             |> Publications.put(%{
+              "contact" => contact,
               "replication_finished" => DateTime.utc_now(),
               "languages" => languages
             })

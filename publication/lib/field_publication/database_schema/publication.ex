@@ -65,8 +65,7 @@ defmodule FieldPublication.DatabaseSchema.Publication do
       :draft_date,
       :configuration_doc,
       :database,
-      :version,
-      :contact
+      :version
     ])
     |> ensure_project_exists()
     |> set_id()

@@ -189,6 +189,8 @@ defmodule FieldPublication.Replication do
 
           Publications.Data.recreate_meta_database(publication)
 
+          {:ok, publication} = Publications.Geo.read_and_set_epsg_code(publication)
+
           persisted_log(publication, :info, "Draft creation finished.")
 
           {:ok, %Publication{} = final_publication} =

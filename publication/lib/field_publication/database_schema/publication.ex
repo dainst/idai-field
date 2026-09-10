@@ -27,6 +27,7 @@ defmodule FieldPublication.DatabaseSchema.Publication do
     field(:database, :string)
     field(:languages, {:array, :string}, default: [])
     field(:contact, :string)
+    field(:epsg_code, :integer)
     # Version is currently not used, the default is saved. The idea is to maybe
     # allow revision releases that can be created to fix errors without adding
     # a new major version. These then could get communicated differently through
@@ -51,7 +52,8 @@ defmodule FieldPublication.DatabaseSchema.Publication do
       :database,
       :languages,
       :version,
-      :contact
+      :contact,
+      :epsg_code
     ])
     |> cast_embed(:comments,
       sort_param: :comments_sort,

@@ -14,7 +14,7 @@ export const loadFeatureCollection = async function (
   projectKey: string,
   draftDate: string,
 ) {
-  const response = await fetch(`/api/v1/${projectKey}/${draftDate}/geometry`);
+  const response = await fetch(`/api/v1/${projectKey}/${draftDate}/geo/default`);
   return response.json();
 };
 

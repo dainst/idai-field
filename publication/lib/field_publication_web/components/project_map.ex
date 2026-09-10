@@ -1,6 +1,9 @@
 defmodule FieldPublicationWeb.Components.PublicationMap do
   use FieldPublicationWeb, :live_component
 
+  alias FieldPublication.DatabaseSchema.Publication
+  alias FieldPublication.Publications
+
   @moduledoc """
   This component provides a map displaying all geometries and tile layers for a given
   publication. It reacts to highlight events and can be used to draw a geometry selection
@@ -19,6 +22,8 @@ defmodule FieldPublicationWeb.Components.PublicationMap do
       project_identifier={@publication.project_identifier}
       draft_date={@publication.draft_date}
       language={@language}
+      projection_name={@publication.epsg_code}
+      projection={@projection}
       phx-hook="PublicationMap"
     >
       <!-- set phx-update="ignore" to ensure changes the map's DOM elements are not re-rendered on updates
@@ -58,7 +63,11 @@ defmodule FieldPublicationWeb.Components.PublicationMap do
 
   @impl true
   def update(
-        %{id: id, preset_geometry: preset_geometry} = assigns,
+        %{
+          id: id,
+          preset_geometry: preset_geometry,
+          publication: %Publication{epsg_code: epsg_code}
+        } = assigns,
         socket
       ) do
     assigns = set_defaults(assigns)
@@ -67,6 +76,7 @@ defmodule FieldPublicationWeb.Components.PublicationMap do
       :ok,
       socket
       |> assign(assigns)
+      |> assign(:projection, Publications.Geo.get_projection(epsg_code))
       |> push_event("set-selection-polygon-#{id}", %{geometry: preset_geometry})
     }
   end
@@ -79,10 +89,10 @@ defmodule FieldPublicationWeb.Components.PublicationMap do
     }
   end
 
-  def handle_event("drawn-selection", %{"coordinates" => multipolygon_coordinates}, socket) do
-    case multipolygon_coordinates do
-      [polygon_coordinates] when is_list(polygon_coordinates) ->
-        Enum.all?(polygon_coordinates, fn
+  def handle_event("drawn-selection", %{"coordinates" => polygon_coordinates}, socket) do
+    case polygon_coordinates do
+      value when is_list(value) ->
+        Enum.all?(value, fn
           [a, b] when is_float(a) and is_float(b) -> true
           _ -> false
         end)
@@ -92,7 +102,7 @@ defmodule FieldPublicationWeb.Components.PublicationMap do
     end
     |> if do
       # Sends notification to whatever live view is using this map component.
-      send(self(), {:drawn_selection, List.first(multipolygon_coordinates)})
+      send(self(), {:drawn_selection, polygon_coordinates})
     end
 
     {

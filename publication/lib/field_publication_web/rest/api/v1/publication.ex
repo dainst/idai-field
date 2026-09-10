@@ -12,6 +12,8 @@ defmodule FieldPublicationWeb.Api.V1.Publication do
 
   alias FieldPublication.FileService
 
+  @publication_not_found_message "Publication not found."
+
   tags(["Field Publication API 1.0"])
 
   operation(:index,
@@ -222,5 +224,128 @@ defmodule FieldPublicationWeb.Api.V1.Publication do
       |> Plug.Conn.put_resp_header("content-type", "application/json")
       |> Plug.Conn.send_resp(404, JSON.encode!(%{}))
     end
+  end
+
+  def list_geo_vector_data(conn, %{
+        "project_identifier" => project_identifier,
+        "draft_date" => draft_date
+      })
+      when is_binary(project_identifier) and is_binary(draft_date) do
+    case Publications.get(project_identifier, draft_date) do
+      {:ok, %Publication{epsg_code: default_code} = publication} ->
+        default_code = if default_code, do: default_code, else: "custom-crs"
+
+        conn
+        |> put_resp_header("content-type", "application/json")
+        |> send_resp(
+          200,
+          Jason.encode!(%{
+            default: default_code,
+            available: list_available_epsg_codes(publication)
+          })
+        )
+
+      _ ->
+        conn
+        |> put_resp_header("content-type", "text/plain")
+        |> send_resp(404, @publication_not_found_message)
+    end
+  end
+
+  def geo_vector_data(conn, %{
+        "project_identifier" => project_identifier,
+        "draft_date" => draft_date,
+        "epsg" => "default"
+      }) do
+    case Publications.get(project_identifier, draft_date) do
+      {:ok, %Publication{epsg_code: default_code} = publication} ->
+        send_geometry(conn, publication, default_code)
+
+      {:error, _} ->
+        conn
+        |> put_resp_header("content-type", "text/plain")
+        |> send_resp(404, @publication_not_found_message)
+    end
+  end
+
+  def geo_vector_data(conn, %{
+        "project_identifier" => project_identifier,
+        "draft_date" => draft_date,
+        "epsg" => epsg_param
+      }) do
+    with {:ok, publication} <- Publications.get(project_identifier, draft_date),
+         {epsg_code, ""} <- Integer.parse(epsg_param) do
+      send_geometry(conn, publication, epsg_code)
+    else
+      {:error, _} ->
+        conn
+        |> put_resp_header("content-type", "text/plain")
+        |> send_resp(404, @publication_not_found_message)
+
+      _ ->
+        conn
+        |> put_resp_header("content-type", "text/plain")
+        |> send_resp(400, "Invalid ESPG code, expecting integer value.")
+    end
+  end
+
+  defp send_geometry(conn, %Publication{} = publication, epsg_code) do
+    encodings =
+      get_req_header(conn, "accept-encoding")
+      |> Enum.map(&String.split(&1, ","))
+      |> List.flatten()
+      |> Enum.map(&String.trim/1)
+
+    {conn, preferred_compression} =
+      cond do
+        "br" in encodings ->
+          {
+            put_resp_header(conn, "content-encoding", "br"),
+            :br
+          }
+
+        "gzip" in encodings ->
+          {
+            put_resp_header(conn, "content-encoding", "gzip"),
+            :gzip
+          }
+
+        true ->
+          {
+            conn,
+            :none
+          }
+      end
+
+    case FileService.geo_vector_data_path(publication, epsg_code, preferred_compression) do
+      {:ok, path} ->
+        conn
+        |> put_resp_header("content-type", "application/geo+json")
+        |> send_file(200, path)
+
+      _ ->
+        conn
+        |> put_resp_header("content-type", "text/plain")
+        |> send_resp(404, "Feature collection for EPSG code #{epsg_code} not found.")
+    end
+  end
+
+  @epsg_code_regex ~r/vector_geometries_EPSG-(\d+)\.geojson/
+  defp list_available_epsg_codes(%Publication{} = publication) do
+    FileService.geo_data_path(publication)
+    |> File.ls!()
+    |> Stream.filter(fn file_name -> String.ends_with?(file_name, ".geojson") end)
+    |> Stream.map(fn file_name ->
+      Regex.run(@epsg_code_regex, file_name)
+      |> case do
+        [_, code_string] ->
+          {code, ""} = Integer.parse(code_string)
+          code
+
+        _ ->
+          nil
+      end
+    end)
+    |> Enum.reject(fn val -> is_nil(val) end)
   end
 end

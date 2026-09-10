@@ -519,28 +519,22 @@ defmodule FieldPublication.Publications.Search do
     }
   end
 
-  def prepare_doc_for_indexing(doc, %Publication{} = publication, %{
-        single_keyword_fields: single_keyword_fields,
-        multi_keyword_fields: multi_keyword_fields,
-        text_fields: text_fields
-      }) do
+  def prepare_doc_for_indexing(
+        doc,
+        %Publication{} = publication,
+        %{
+          single_keyword_fields: single_keyword_fields,
+          multi_keyword_fields: multi_keyword_fields,
+          text_fields: text_fields
+        },
+        uuid_to_epsg_4326_mapping
+      ) do
     %{"resource" => res} =
       doc
       |> Map.put("id", doc["_id"])
       |> Map.delete("_id")
 
-    geo =
-      res["geometry"]
-      |> case do
-        nil ->
-          nil
-
-        val when val == %{} ->
-          nil
-
-        val ->
-          val
-      end
+    geo = uuid_to_epsg_4326_mapping[doc["_id"]]
 
     hierarchy = Data.get_document_hierarchy(publication)
 
@@ -552,7 +546,7 @@ defmodule FieldPublication.Publications.Search do
           nil ->
             nil
 
-          %{id: uuid, geometry: geometry} = _doc ->
+          uuid ->
             case Map.get(hierarchy, uuid) do
               %{"parent" => nil} ->
                 # Only include parent documents that have a parent themself,
@@ -563,7 +557,7 @@ defmodule FieldPublication.Publications.Search do
                 nil
 
               _ ->
-                geometry
+                uuid_to_epsg_4326_mapping[uuid]
             end
         end
       else
@@ -1017,6 +1011,8 @@ defmodule FieldPublication.Publications.Search do
 
     index_name = setup_index(publication, mapping)
 
+    uuid_to_epsg_4326_mapping = Publications.Geo.uuid_to_epsg_4326_feature_mapping(publication)
+
     initial_state = %{
       counter: 0,
       percentage: 0,
@@ -1047,7 +1043,8 @@ defmodule FieldPublication.Publications.Search do
       &prepare_doc_for_indexing(
         &1,
         publication,
-        special_input_types
+        special_input_types,
+        uuid_to_epsg_4326_mapping
       )
     )
     |> Stream.chunk_every(100)

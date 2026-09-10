@@ -227,7 +227,7 @@ defmodule FieldPublication.Publications.Data do
     end)
     |> Stream.map(fn {_raw_doc, %Document{} = doc} ->
       # Remove groups and relations from doc
-      DataPreview.create(doc)
+      DataPreview.create(doc, nil, nil)
     end)
     |> Stream.filter(fn
       {:ok, _doc} ->
@@ -697,7 +697,7 @@ defmodule FieldPublication.Publications.Data do
         nil
 
       %{"parent" => parent_uuid} ->
-        get_preview_documents([parent_uuid], publication)
+        parent_uuid
 
       nil ->
         nil
@@ -1145,6 +1145,21 @@ defmodule FieldPublication.Publications.Data do
 
       {:error, :unknown_category} ->
         {:error, {:unknown_category, resource["category"]}}
+    end
+  end
+
+  def get_category(configuration, category_name) do
+    search_category_tree(configuration, category_name)
+    |> case do
+      {:ok, category_configuration} ->
+        %Category{
+          name: category_name,
+          labels: category_configuration["item"]["label"],
+          color: category_configuration["item"]["color"]
+        }
+
+      {:error, :unknown_category} ->
+        {:error, {:unknown_category, category_name}}
     end
   end
 

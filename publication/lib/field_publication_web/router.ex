@@ -61,6 +61,13 @@ defmodule FieldPublicationWeb.Router do
       get("/", FieldPublicationWeb.Api.V1.Publication, :geo_collections)
     end
 
+    scope "/v1/:project_identifier/:draft_date/geo" do
+      pipe_through(:ensure_publication_access)
+
+      get("/:epsg", FieldPublicationWeb.Api.V1.Publication, :geo_vector_data)
+      get("/", FieldPublicationWeb.Api.V1.Publication, :list_geo_vector_data)
+    end
+
     scope "/v1/:project_identifier/:draft_date" do
       pipe_through(:ensure_publication_access)
       get("/", FieldPublicationWeb.Api.V1.Publication, :index)

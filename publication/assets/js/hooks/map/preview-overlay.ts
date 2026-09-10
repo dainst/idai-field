@@ -8,239 +8,239 @@ import { ViewHook } from "../../../../deps/phoenix_live_view/assets/js/phoenix_l
 import { findFeaturesAtPixel } from "./features";
 
 interface CategoryMetadata {
-  category: string;
-  category_color: string;
-  category_label: { [key: string]: string };
+    category: string;
+    category_color: string;
+    category_label: { [key: string]: string };
 }
 
 export default class PreviewOverlay {
-  hook: ViewHook;
-  map: Map;
-  overlay: Overlay;
-  projectKey: string;
-  projectDraftDate: string;
-  fullscreen: boolean;
-  categoriesMetadata: CategoryMetadata[];
-  language: string;
-  isPinned: boolean;
+    hook: ViewHook;
+    map: Map;
+    overlay: Overlay;
+    projectKey: string;
+    projectDraftDate: string;
+    fullscreen: boolean;
+    categoriesMetadata: CategoryMetadata[];
+    language: string;
+    isPinned: boolean;
 
-  constructor(
-    hook: ViewHook,
-    map: Map,
-    container: HTMLElement,
-    projectKey: string,
-    projectDraftDate: string,
-    categoriesMetadata: CategoryMetadata[],
-    language: string,
-    fullscreen: boolean = false,
-  ) {
-    this.hook = hook;
-    this.map = map;
-    this.projectKey = projectKey;
-    this.projectDraftDate = projectDraftDate;
+    constructor(
+        hook: ViewHook,
+        map: Map,
+        container: HTMLElement,
+        projectKey: string,
+        projectDraftDate: string,
+        categoriesMetadata: CategoryMetadata[],
+        language: string,
+        fullscreen: boolean = false,
+    ) {
+        this.hook = hook;
+        this.map = map;
+        this.projectKey = projectKey;
+        this.projectDraftDate = projectDraftDate;
 
-    this.fullscreen = fullscreen;
-    this.categoriesMetadata = categoriesMetadata;
-    this.language = language;
+        this.fullscreen = fullscreen;
+        this.categoriesMetadata = categoriesMetadata;
+        this.language = language;
 
-    this.isPinned = false;
+        this.isPinned = false;
 
-    this.overlay = new Overlay({
-      element: container,
-      offset: [5, 5],
-    });
+        this.overlay = new Overlay({
+            element: container,
+            offset: [5, 5],
+        });
 
-    this.map.addOverlay(this.overlay);
+        this.map.addOverlay(this.overlay);
 
-    const _this = this;
-    this.map.getTargetElement().addEventListener("pointerleave", function (e) {
-      // Hides the overlay if mouse is completely off the map.
-      _this.hide();
-    });
+        const _this = this;
+        this.map
+            .getTargetElement()
+            .addEventListener("pointerleave", function (e) {
+                // Hides the overlay if mouse is completely off the map.
+                _this.hide();
+            });
 
-    this.hide();
-  }
-
-  public update(
-    features: FeatureLike[],
-    coordinate: number[]
-  ) {
-    const contentNode = this.overlay.getElement();
-
-    while (contentNode.firstChild) {
-      contentNode.removeChild(contentNode.firstChild);
-    }
-
-    if (features.length > 0) {
-      contentNode.appendChild(this.renderPreviewList(features));
-
-      const anchorPixel = this.map.getPixelFromCoordinate(coordinate);
-      const mapSize = this.map.getSize();
-
-      const right = anchorPixel[0] > mapSize[0] * 0.5 ? "right" : "left";
-      const bottom = anchorPixel[1] > mapSize[1] * 0.5 ? "bottom" : "top";
-
-      const offsetX = right == "right" ? -5 : 5;
-      const offsetY = bottom == "bottom" ? -5 : 5;
-
-      this.overlay.setPositioning(`${bottom}-${right}`);
-      this.overlay.setOffset([offsetX, offsetY]);
-      this.overlay.setPosition(coordinate);
-    }
-  }
-
-  public hide() {
-    this.overlay.setPosition(undefined);
-    this.isPinned = false;
-  }
-
-  public mapClicked(e: any) {
-    const features = findFeaturesAtPixel(e.pixel, this.map);
-
-    if (features.length > 1) {
-      this.isPinned = true;
-      this.update(features, e.coordinate);
-    } else if (features.length === 1) {
-      const properties = features[0].getProperties();
-      this.hook
-        .js()
-        .navigate(
-          `/projects/${this.projectKey}/${this.projectDraftDate}/${properties.uuid}`,
-        );
-      this.hide();
-    }
-  }
-
-  public mapHover(e: any, features: FeatureLike[] = []) {
-    if (this.isPinned) return;
-
-    if (features.length == 0) {
-      features = findFeaturesAtPixel(e.pixel, this.map);
-    }
-    this.update(features, e.coordinate);
-  }
-
-  private renderPreviewList(features: FeatureLike[]) {
-    const container = document.createElement("div");
-
-    container.classList.add("flex", "gap-0.5");
-
-    const list = document.createElement("div");
-    list.classList.add("flex", "flex-col", "gap-0.5", "overflow-y-auto");
-
-    list.style.maxHeight = `${this.hook.el.clientHeight * 0.5}px`;
-
-    if (features.length == 0) {
-      return list;
-    }
-
-    for (let feature of features) {
-      if (validFeature(feature))
-        list.appendChild(this.renderPreviewIcon(feature));
-    }
-
-    container.appendChild(list);
-
-    if (this.isPinned) {
-      const closeButton = document.createElement("button");
-
-      closeButton.classList.add(
-        "cursor-pointer",
-        "bg-primary",
-        "hover:bg-primary-hover",
-        "text-primary-inverse",
-        "hover:text-primary-inverse-hover",
-        "p-1",
-        "border",
-        "border-black",
-      );
-
-      closeButton.appendChild(document.createTextNode("x"));
-      closeButton.onclick = (e) => {
         this.hide();
-      };
-      container.appendChild(closeButton);
-    }
-    return container;
-  }
-
-  private renderPreviewIcon(feature: FeatureLike) {
-    const properties = feature.getProperties();
-
-    const preview = document.createElement("div");
-    preview.classList.add("border", "border-black", "flex");
-
-    preview.style.maxWidth = `${this.hook.el.clientWidth * 0.5 - 10}px`;
-
-    const categoryLabel = document.createElement("div");
-    categoryLabel.classList.add("h-full", "bg-white/60", "p-1", "font-thin");
-
-    const categoryMetadata = this.categoriesMetadata.find(
-      (elem) => elem.category == properties.category,
-    );
-
-    categoryLabel.appendChild(
-      document.createTextNode(
-        `${pickTranslation(categoryMetadata.category_label, this.language)}`,
-      ),
-    );
-
-    const CategoryMetadata = document.createElement("div");
-    CategoryMetadata.classList.add("pl-2", "text-black");
-    CategoryMetadata.style.background = `hsl(from ${properties.color} h calc(s * 0.5) l)`;
-
-    CategoryMetadata.appendChild(categoryLabel);
-
-    const documentInfo = document.createElement("div");
-    documentInfo.classList.add(
-      "document-info",
-      "grow",
-      "p-1",
-      "h-full",
-      "bg-white",
-      "cursor-pointer",
-    );
-
-    let documentInfoText = properties.identifier;
-
-    if (Object.keys(properties.description).length > 0) {
-      documentInfoText += ` | ${pickTranslation(properties.description, this.language)}`;
     }
 
-    documentInfo.appendChild(document.createTextNode(documentInfoText));
+    public update(features: FeatureLike[], coordinate: number[]) {
+        const contentNode = this.overlay.getElement();
 
-    let url = `/projects/${this.projectKey}/${this.projectDraftDate}/${properties.uuid}`;
+        while (contentNode.firstChild) {
+            contentNode.removeChild(contentNode.firstChild);
+        }
 
-    if (this.fullscreen) {
-      url = `/projects/${this.projectKey}/${this.projectDraftDate}/${properties.uuid}/map`;
+        if (features.length > 0) {
+            contentNode.appendChild(this.renderPreviewList(features));
+
+            const anchorPixel = this.map.getPixelFromCoordinate(coordinate);
+            const mapSize = this.map.getSize();
+
+            const right = anchorPixel[0] > mapSize[0] * 0.5 ? "right" : "left";
+            const bottom = anchorPixel[1] > mapSize[1] * 0.5 ? "bottom" : "top";
+
+            const offsetX = right == "right" ? -5 : 5;
+            const offsetY = bottom == "bottom" ? -5 : 5;
+
+            this.overlay.setPositioning(`${bottom}-${right}`);
+            this.overlay.setOffset([offsetX, offsetY]);
+            this.overlay.setPosition(coordinate);
+        }
     }
 
-    const hook = this.hook;
+    public hide() {
+        this.overlay.setPosition(undefined);
+        this.isPinned = false;
+    }
 
-    documentInfo.addEventListener("click", function (event) {
-      return hook.js().navigate(url);
-    });
+    public mapClicked(e: any) {
+        const features = findFeaturesAtPixel(e.pixel, this.map);
 
-    preview.appendChild(CategoryMetadata);
-    preview.appendChild(documentInfo);
+        if (features.length > 1) {
+            this.isPinned = true;
+            this.update(features, e.coordinate);
+        } else if (features.length === 1) {
+            const properties = features[0].getProperties();
+            this.hook
+                .js()
+                .navigate(
+                    `/projects/${this.projectKey}/${this.projectDraftDate}/${properties.uuid}`,
+                );
+            this.hide();
+        }
+    }
 
-    return preview;
-  }
+    public mapHover(e: any, features: FeatureLike[] = []) {
+        if (this.isPinned) return;
+
+        if (features.length == 0) {
+            features = findFeaturesAtPixel(e.pixel, this.map);
+        }
+        this.update(features, e.coordinate);
+    }
+
+    private renderPreviewList(features: FeatureLike[]) {
+        const container = document.createElement("div");
+
+        container.classList.add("flex", "gap-0.5");
+
+        const list = document.createElement("div");
+        list.classList.add("flex", "flex-col", "gap-0.5", "overflow-y-auto");
+
+        list.style.maxHeight = `${this.hook.el.clientHeight * 0.5}px`;
+
+        if (features.length == 0) {
+            return list;
+        }
+
+        for (let feature of features) {
+            if (validFeature(feature))
+                list.appendChild(this.renderPreviewIcon(feature));
+        }
+
+        container.appendChild(list);
+
+        if (this.isPinned) {
+            const closeButton = document.createElement("button");
+
+            closeButton.classList.add(
+                "cursor-pointer",
+                "bg-primary",
+                "hover:bg-primary-hover",
+                "text-primary-inverse",
+                "hover:text-primary-inverse-hover",
+                "p-1",
+                "border",
+                "border-black",
+            );
+
+            closeButton.appendChild(document.createTextNode("x"));
+            closeButton.onclick = (e) => {
+                this.hide();
+            };
+            container.appendChild(closeButton);
+        }
+        return container;
+    }
+
+    private renderPreviewIcon(feature: FeatureLike) {
+        const properties = feature.getProperties();
+
+        const preview = document.createElement("div");
+        preview.classList.add("border", "border-black", "flex");
+
+        preview.style.maxWidth = `${this.hook.el.clientWidth * 0.5 - 10}px`;
+
+        const categoryLabel = document.createElement("div");
+        categoryLabel.classList.add(
+            "h-full",
+            "bg-white/60",
+            "p-1",
+            "font-thin",
+        );
+
+        categoryLabel.appendChild(
+            document.createTextNode(
+                `${pickTranslation(properties.labels, this.language)}`,
+            ),
+        );
+
+        const CategoryMetadata = document.createElement("div");
+        CategoryMetadata.classList.add("pl-2", "text-black");
+        CategoryMetadata.style.background = `hsl(from ${properties.color} h calc(s * 0.5) l)`;
+
+        CategoryMetadata.appendChild(categoryLabel);
+
+        const documentInfo = document.createElement("div");
+        documentInfo.classList.add(
+            "document-info",
+            "grow",
+            "p-1",
+            "h-full",
+            "bg-white",
+            "cursor-pointer",
+        );
+
+        let documentInfoText = properties.identifier;
+
+        if (properties.short_description && Object.keys(properties.short_description).length > 0) {
+            documentInfoText += ` | ${pickTranslation(properties.short_description, this.language)}`;
+        }
+
+        documentInfo.appendChild(document.createTextNode(documentInfoText));
+
+        let url = `/projects/${this.projectKey}/${this.projectDraftDate}/${properties.uuid}`;
+
+        if (this.fullscreen) {
+            url = `/projects/${this.projectKey}/${this.projectDraftDate}/${properties.uuid}/map`;
+        }
+
+        const hook = this.hook;
+
+        documentInfo.addEventListener("click", function (event) {
+            return hook.js().navigate(url);
+        });
+
+        preview.appendChild(CategoryMetadata);
+        preview.appendChild(documentInfo);
+
+        return preview;
+    }
 }
 
 function pickTranslation(options: { [key: string]: string }, selected: string) {
-  if (options[selected]) return options[selected];
-  if (options["en"]) return options["en"];
+    if (options[selected]) return options[selected];
+    if (options["en"]) return options["en"];
 
-  return options[Object.keys(options)[0]];
+    return options[Object.keys(options)[0]];
 }
 
 function validFeature(feature: FeatureLike) {
-  const properties = feature.getProperties();
-  return (
-    properties.uuid &&
-    properties.identifier &&
-    properties.color &&
-    properties.category
-  );
+    const properties = feature.getProperties();
+    return (
+        properties.uuid &&
+        properties.identifier &&
+        properties.color &&
+        properties.category
+    );
 }

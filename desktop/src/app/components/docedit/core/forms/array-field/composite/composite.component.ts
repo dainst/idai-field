@@ -72,6 +72,7 @@ export class CompositeComponent implements OnInit, OnChanges {
 
         this.resource[this.field.name].splice(entryIndex, 1);
         if (this.resource[this.field.name].length === 0) delete this.resource[this.field.name];
+        this.updateEntryLabels();
     }
 
 

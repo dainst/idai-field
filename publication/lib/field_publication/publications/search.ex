@@ -46,6 +46,7 @@ defmodule FieldPublication.Publications.Search do
       :configuration_based_field_mappings,
       :geometry,
       :parent_geometry,
+      :root_geometry,
       :preview,
       :combined_text_content
     ]
@@ -323,6 +324,8 @@ defmodule FieldPublication.Publications.Search do
                       }
                     }
                   },
+                  # The `parent_geometry` contains a document's closes ancestors geometry. A special
+                  # case are ancestors that are at the root of the document hierarchy (see below).
                   %{
                     geo_shape: %{
                       parent_geometry: %{
@@ -330,6 +333,20 @@ defmodule FieldPublication.Publications.Search do
                           type: "polygon",
                           coordinates: [geometry_filter]
                         }
+                      }
+                    }
+                  },
+                  # The `root_geometry` contains a document's closes ancestors geometry, where the ancestor
+                  # is also a root document in the overall hierarchy. To avoid too broad search results,
+                  # these are only returned when completely `WITHIN` the search geometry.
+                  %{
+                    geo_shape: %{
+                      root_geometry: %{
+                        shape: %{
+                          type: "polygon",
+                          coordinates: [geometry_filter]
+                        },
+                        relation: "WITHIN"
                       }
                     }
                   }
@@ -480,7 +497,10 @@ defmodule FieldPublication.Publications.Search do
       },
       parent_geometry: %{
         type: "geo_shape",
-        store: true,
+        ignore_malformed: true
+      },
+      root_geometry: %{
+        type: "geo_shape",
         ignore_malformed: true
       },
       preview: %{
@@ -539,29 +559,24 @@ defmodule FieldPublication.Publications.Search do
     hierarchy = Data.get_document_hierarchy(publication)
 
     # `parent_geo` is a fallback in cases where the document itself has no geometry attached to it.
-    parent_geo =
+    {parent_geo, root_geo} =
       if geo == nil do
-        Data.next_ancestor_with_geometry(res["id"], hierarchy, publication)
+        find_next_ancestor_geometry(res["id"], hierarchy, uuid_to_epsg_4326_mapping)
         |> case do
           nil ->
-            nil
+            {nil, nil}
 
-          uuid ->
-            case Map.get(hierarchy, uuid) do
-              %{"parent" => nil} ->
-                # Only include parent documents that have a parent themself,
-                # otherwise too many documents will get included in the search
-                # result if there is one main document that encompasses all others.
-                #
-                # There might be a better solution to reduce "false positive"?
-                nil
-
-              _ ->
-                uuid_to_epsg_4326_mapping[uuid]
+          {ancestor_uuid, geometry} ->
+            # We ignore ancestors that are root documents, these tend to too much
+            # search results.
+            if hierarchy[ancestor_uuid]["parent"] do
+              {geometry, nil}
+            else
+              {nil, geometry}
             end
         end
       else
-        nil
+        {nil, nil}
       end
 
     base_document =
@@ -577,6 +592,7 @@ defmodule FieldPublication.Publications.Search do
         configuration_based_field_mappings: %{},
         geometry: geo,
         parent_geometry: parent_geo,
+        root_geometry: root_geo,
         preview: List.first(Data.get_preview_documents([res["id"]], publication)),
         #  full_doc: full_doc,
         combined_text_content:
@@ -663,6 +679,28 @@ defmodule FieldPublication.Publications.Search do
       :configuration_based_field_mappings,
       Map.merge(config_mapping_single_keyword, config_mapping_multi_keyword)
     )
+  end
+
+  defp find_next_ancestor_geometry(uuid, hierarchy, uuid_to_epsg_4326_mapping) do
+    Map.get(hierarchy, uuid)
+    |> case do
+      %{"parent" => nil} ->
+        nil
+
+      %{"parent" => parent_uuid} ->
+        uuid_to_epsg_4326_mapping[parent_uuid]
+        |> case do
+          nil ->
+            find_next_ancestor_geometry(parent_uuid, hierarchy, uuid_to_epsg_4326_mapping)
+
+          geometry ->
+            {parent_uuid, geometry}
+        end
+
+      nil ->
+        # UUID not in the hierarchy at all.
+        nil
+    end
   end
 
   def get_system_wide_label_usage() do
@@ -1122,7 +1160,8 @@ defmodule FieldPublication.Publications.Search do
        )
        when msg in [
               "failed to parse field [geometry] of type [geo_shape]",
-              "failed to parse field [parent_geometry] of type [geo_shape]"
+              "failed to parse field [parent_geometry] of type [geo_shape]",
+              "failed to parse field [root_geometry] of type [geo_shape]"
             ] do
     Publications.Data.report_data_issue(
       uuid,
@@ -1153,7 +1192,8 @@ defmodule FieldPublication.Publications.Search do
        )
        when msg in [
               "failed to parse field [geometry] of type [geo_shape]",
-              "failed to parse field [parent_geometry] of type [geo_shape]"
+              "failed to parse field [parent_geometry] of type [geo_shape]",
+              "failed to parse field [root_geometry] of type [geo_shape]"
             ] do
     Publications.Data.report_data_issue(
       uuid,

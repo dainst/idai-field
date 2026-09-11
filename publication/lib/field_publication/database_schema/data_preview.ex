@@ -15,23 +15,19 @@ defmodule FieldPublication.DatabaseSchema.DataPreview do
     field(:doc_type, :string, default: @doc_type)
     field(:uuid, :string)
     field(:preview, :map)
-    field(:normalized_geometry, :map)
-    field(:normalized_geo_reference, :map)
   end
 
-  def create(%Document{} = doc, geometry, geo_reference) do
+  def create(%Document{} = doc) do
     %__MODULE__{}
     |> changeset(%{
       uuid: doc.id,
-      preview: %{doc | groups: [], relations: [], geometry: []},
-      normalized_geometry: geometry,
-      normalized_geo_reference: geo_reference
+      preview: %{doc | groups: [], relations: [], geometry: []}
     })
     |> apply_action(:create)
   end
 
-  def create!(%Document{} = doc, geometry, geo_reference) do
-    {:ok, preview} = create(doc, geometry, geo_reference)
+  def create!(%Document{} = doc) do
+    {:ok, preview} = create(doc)
     preview
   end
 
@@ -73,7 +69,7 @@ defmodule FieldPublication.DatabaseSchema.DataPreview do
 
   defp changeset(%__MODULE__{} = preview, attrs) do
     preview
-    |> cast(attrs, [:_rev, :uuid, :preview, :geometry, :geo_reference])
+    |> cast(attrs, [:_rev, :uuid, :preview])
     |> validate_required([:uuid, :preview])
     |> set_id()
   end

@@ -227,7 +227,7 @@ defmodule FieldPublication.Publications.Data do
     end)
     |> Stream.map(fn {_raw_doc, %Document{} = doc} ->
       # Remove groups and relations from doc
-      DataPreview.create(doc, nil, nil)
+      DataPreview.create(doc)
     end)
     |> Stream.filter(fn
       {:ok, _doc} ->

@@ -251,10 +251,10 @@ defmodule FieldPublication.Publications.Geo do
       {:ok, path} ->
         path
         |> File.read!()
-        |> Jason.decode!()
+        |> Jason.decode()
 
       _ ->
-        {:error, :found}
+        {:error, :not_found}
     end
   end
 

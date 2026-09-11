@@ -32,7 +32,15 @@ defmodule FieldPublication.Publications.Geo do
     |> Map.get("#{epsg_code}")
   end
 
-  def generate_normalized_geometries(
+  @doc """
+  Accumulates the geometry of all documents in the publication and creates GeoJSON feature
+  collections.
+
+  - If the project has __no__ EPSG code, the feature coordinates are left as is.
+  - If the project has an ESPG code, the system will create a EPSG:4326 collection, as well as a
+  collection with the original projection (if the original was not EPSG:4326 already).
+  """
+  def generate_feature_collections(
         %Publication{project_identifier: project_identifier, draft_date: draft_date, database: db} =
           publication
       ) do

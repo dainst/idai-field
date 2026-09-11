@@ -295,9 +295,9 @@ defmodule FieldPublication.Processing do
         Task.Supervisor.async_nolink(
           FieldPublication.ProcessingSupervisor,
           # Module that implements the actual processing.
-          Publications.Data,
+          Publications.Geo,
           # Function within that module to start the processing.
-          :create_geometry_feature_collections,
+          :generate_feature_collections,
           # Parameters for that function.
           [publication]
         )

@@ -147,7 +147,8 @@ defmodule FieldPublication.Test.ProjectSeed do
     end
 
     if seed_data? && preprocess? do
-      # Expecting one batch created.
+      Publications.Geo.read_and_set_epsg_code(publication)
+
       [{:ok, %Finch.Response{status: 201}}] =
         Publications.Data.recreate_meta_database(publication)
 

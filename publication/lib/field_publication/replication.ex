@@ -151,11 +151,12 @@ defmodule FieldPublication.Replication do
           persisted_log(publication, :info, "Replicating files for #{publication_id}.")
           FileReplication.start(parameters)
 
-          persisted_log(
-            publication,
-            :info,
-            "Reconstructing project configuration for '#{publication_id}'."
-          )
+          {:ok, publication} =
+            persisted_log(
+              publication,
+              :info,
+              "Reconstructing project configuration for '#{publication_id}'."
+            )
 
           reconstruct_project_configuraton(publication)
 

@@ -548,21 +548,21 @@ defmodule FieldPublication.Publications.Search do
           multi_keyword_fields: multi_keyword_fields,
           text_fields: text_fields
         },
-        uuid_to_epsg_4326_mapping
+        normalized_feature_lookup
       ) do
     %{"resource" => res} =
       doc
       |> Map.put("id", doc["_id"])
       |> Map.delete("_id")
 
-    geo = uuid_to_epsg_4326_mapping[doc["_id"]]
+    geo = normalized_feature_lookup[doc["_id"]]
 
     hierarchy = Data.get_document_hierarchy(publication)
 
     # `parent_geo` is a fallback in cases where the document itself has no geometry attached to it.
     {parent_geo, root_geo} =
       if geo == nil do
-        Geo.find_next_ancestor_geometry(res["id"], hierarchy, uuid_to_epsg_4326_mapping)
+        Geo.find_next_ancestor_geometry(res["id"], hierarchy, normalized_feature_lookup)
         |> case do
           nil ->
             {nil, nil}
@@ -1022,13 +1022,18 @@ defmodule FieldPublication.Publications.Search do
     end
   end
 
-  def index_documents(%Publication{} = publication) do
+  def index_documents(%Publication{epsg_code: epsg_code} = publication) do
     mapping = generate_index_mapping(publication)
     special_input_types = evaluate_input_types(publication)
 
     index_name = setup_index(publication, mapping)
 
-    uuid_to_epsg_4326_mapping = Publications.Geo.uuid_to_epsg_4326_feature_mapping(publication)
+    normalized_feature_lookup =
+      if is_nil(epsg_code) do
+        %{}
+      else
+        Publications.Geo.uuid_to_epsg_4326_feature_mapping(publication)
+      end
 
     initial_state = %{
       counter: 0,
@@ -1061,7 +1066,7 @@ defmodule FieldPublication.Publications.Search do
         &1,
         publication,
         special_input_types,
-        uuid_to_epsg_4326_mapping
+        normalized_feature_lookup
       )
     )
     |> Stream.chunk_every(100)

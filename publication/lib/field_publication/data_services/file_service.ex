@@ -190,8 +190,13 @@ defmodule FieldPublication.FileService do
     ])
   end
 
-  def geo_vector_data_path(%Publication{} = publication, epsg_code, compression)
-      when is_number(epsg_code) and compression in [:br, :gzip, :none] do
+  def geo_vector_data_path(
+        %Publication{epsg_code: default_code} = publication,
+        epsg_code,
+        compression
+      )
+      when (is_number(epsg_code) or (is_nil(epsg_code) and is_nil(default_code))) and
+             compression in [:br, :gzip, :none] do
     compression_suffix =
       case compression do
         :br ->
@@ -204,10 +209,17 @@ defmodule FieldPublication.FileService do
           ""
       end
 
+    file_name =
+      if is_number(epsg_code) do
+        "vector_geometries_EPSG-#{epsg_code}.geojson#{compression_suffix}"
+      else
+        "vector_geometries_custom-crs.geojson#{compression_suffix}"
+      end
+
     path =
       Path.join([
         geo_data_path(publication),
-        "vector_geometries_EPSG-#{epsg_code}.geojson#{compression_suffix}"
+        file_name
       ])
 
     if File.exists?(path) do

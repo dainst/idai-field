@@ -40,7 +40,7 @@ defmodule FieldPublicationWeb.Components.PublicationMap do
         </div>
       </div>
       <div class="absolute p-1 top-1 right-1 flex gap-1">
-        <div class="bg-white">
+        <div :if={@publication.epsg_code} class="bg-white">
           <div
             id={"#{@id}-draw-box-selector"}
             phx-click="toggle-draw-box-mode"

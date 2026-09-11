@@ -176,10 +176,12 @@ defmodule FieldPublication.Publications.Geo do
       end
     else
       # When there is no EPSG code given, assume custom crs and do not attempt any reprojections.
-      File.write(
-        Path.join([temp_path, "vector_geometries_custom-crs.geojson"]),
-        Jason.encode!(geometry_collection)
-      )
+      output_file = Path.join([temp_path, "vector_geometries_custom-crs.geojson"])
+      encoded = Jason.encode!(geometry_collection)
+
+      File.write!(output_file, encoded)
+      File.write!("#{output_file}.gz", encoded |> :zlib.gzip())
+      File.write!("#{output_file}.br", encoded |> ExBrotli.compress!())
     end
 
     final_path = FileService.geo_data_path(publication)
@@ -249,27 +251,26 @@ defmodule FieldPublication.Publications.Geo do
       {:ok, path} ->
         path
         |> File.read!()
-        |> Jason.decode()
+        |> Jason.decode!()
 
       _ ->
         {:error, :found}
     end
   end
 
-  def uuid_to_epsg_4326_feature_mapping(%Publication{} = publication) do
-    Publications.Geo.vector_geometries(publication, 4326)
-    |> case do
-      {:ok, feature_collection} ->
-        feature_collection
-        |> Map.get("features")
-        |> Enum.map(fn %{"geometry" => geometry, "properties" => %{"uuid" => uuid}} ->
-          {uuid, geometry}
-        end)
-        |> Enum.into(%{})
+  def uuid_to_epsg_4326_feature_mapping(%Publication{epsg_code: nil}) do
+    :not_available
+  end
 
-      _ ->
-        %{}
-    end
+  def uuid_to_epsg_4326_feature_mapping(%Publication{} = publication) do
+    {:ok, feature_collection} = Publications.Geo.vector_geometries(publication, 4326)
+
+    feature_collection
+    |> Map.get("features")
+    |> Enum.map(fn %{"geometry" => geometry, "properties" => %{"uuid" => uuid}} ->
+      {uuid, geometry}
+    end)
+    |> Enum.into(%{})
   end
 
   def find_next_ancestor_geometry(uuid, hierarchy, uuid_to_epsg_4326_mapping) do

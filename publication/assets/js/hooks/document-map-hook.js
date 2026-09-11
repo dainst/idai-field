@@ -8,7 +8,7 @@ import GeoJSON from "ol/format/GeoJSON.js";
 import proj4 from "proj4";
 
 import {
-    findFeaturesAtPixel,
+    extentIsPoint,
     styleFunction,
     setFillForLayer,
     clearAllHighlights,
@@ -281,7 +281,7 @@ export default (getDocumentViewMapHook = () => {
         resetFeatures() {
             if (!this.setupDone) return;
 
-            if (!isEmpty(this.activeVectorExtent)) {
+            if (!isEmpty(this.activeVectorExtent) && !extentIsPoint(this.activeVectorExtent)) {
                 this.map.getView().fit(this.activeVectorExtent, {
                     padding: [10, 10, 10, 10],
                 });

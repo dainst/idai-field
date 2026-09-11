@@ -14,6 +14,7 @@ import {
     clearAllHighlights,
     styleFunction,
     loadFeatureCollection,
+    extentIsPoint,
 } from "./map/features";
 import PublicationTileLayers from "./map/tile-layers";
 import PreviewOverlay from "./map/preview-overlay";
@@ -218,6 +219,7 @@ export default (getPublicationMapHook = () => {
         highlightDocument(uuid) {
             if (this.map) {
                 feature = findFeature(uuid, this.map);
+                featureExtent = feature.getGeometry().getExtent()
                 parentId = feature.getProperties().parent;
 
                 if (this.selection.getExtent()) {
@@ -236,30 +238,25 @@ export default (getPublicationMapHook = () => {
                         );
                         combinedExtent = extend(
                             combinedExtent,
-                            feature.getGeometry().getExtent(),
+                            featureExtent,
                         );
 
                         this.map.getView().fit(combinedExtent, {
                             padding: [10, 10, 10, 10],
                             duration: highlightZoomDuration,
                         });
-                    } else if (feature.getProperties().type != "Point") {
-                        this.map
-                            .getView()
-                            .fit(feature.getGeometry().getExtent(), {
-                                padding: [10, 10, 10, 10],
-                                duration: highlightZoomDuration,
-                            });
                     } else {
                         console.log(
                             `No geometry or parent geometry to zoom to for ${uuid}`,
                         );
                     }
-                } else {
-                    this.map.getView().fit(feature.getGeometry().getExtent(), {
-                        padding: [10, 10, 10, 10],
-                        duration: highlightZoomDuration,
-                    });
+                } else if (feature.getProperties().type != "Point") {
+                    this.map
+                        .getView()
+                        .fit(featureExtent, {
+                            padding: [10, 10, 10, 10],
+                            duration: highlightZoomDuration,
+                        });
                 }
                 highlightFeature(feature);
             }

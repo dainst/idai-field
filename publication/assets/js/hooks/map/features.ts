@@ -6,6 +6,7 @@ import VectorSource from "ol/source/Vector";
 import { Geometry } from "ol/geom";
 import Map from "ol/Map";
 import { Pixel } from "ol/pixel";
+import { Extent } from "ol/extent";
 const pointRadius = 5;
 const lineWidth = pointRadius * 2;
 const defaultAlpha = 0.2;
@@ -64,6 +65,10 @@ export const findFeaturesAtPixel = function (pixel: Pixel, map: Map) {
     },
   });
 };
+
+export const extentIsPoint = function ([x1, y1, x2, y2]: Extent) {
+  return x1 == x2 && y1 == y2
+}
 
 export const styleFunction = function (feature: Feature) {
   const props = feature.getProperties();

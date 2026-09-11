@@ -3,6 +3,7 @@ defmodule FieldPublication.Publications.Search do
   alias FieldPublication.Projects
   alias FieldPublication.OpenSearchService
   alias FieldPublication.Publications.Data
+  alias FieldPublication.Publications.Geo
 
   alias FieldPublication.DatabaseSchema.{
     LogEntry,
@@ -561,7 +562,7 @@ defmodule FieldPublication.Publications.Search do
     # `parent_geo` is a fallback in cases where the document itself has no geometry attached to it.
     {parent_geo, root_geo} =
       if geo == nil do
-        find_next_ancestor_geometry(res["id"], hierarchy, uuid_to_epsg_4326_mapping)
+        Geo.find_next_ancestor_geometry(res["id"], hierarchy, uuid_to_epsg_4326_mapping)
         |> case do
           nil ->
             {nil, nil}
@@ -679,28 +680,6 @@ defmodule FieldPublication.Publications.Search do
       :configuration_based_field_mappings,
       Map.merge(config_mapping_single_keyword, config_mapping_multi_keyword)
     )
-  end
-
-  defp find_next_ancestor_geometry(uuid, hierarchy, uuid_to_epsg_4326_mapping) do
-    Map.get(hierarchy, uuid)
-    |> case do
-      %{"parent" => nil} ->
-        nil
-
-      %{"parent" => parent_uuid} ->
-        uuid_to_epsg_4326_mapping[parent_uuid]
-        |> case do
-          nil ->
-            find_next_ancestor_geometry(parent_uuid, hierarchy, uuid_to_epsg_4326_mapping)
-
-          geometry ->
-            {parent_uuid, geometry}
-        end
-
-      nil ->
-        # UUID not in the hierarchy at all.
-        nil
-    end
   end
 
   def get_system_wide_label_usage() do

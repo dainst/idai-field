@@ -123,6 +123,31 @@ defmodule FieldPublication.Publications.Geo do
         end
       )
 
+    lookup =
+      geometry_collection
+      |> Map.get(:features)
+      |> Enum.map(fn %{geometry: geometry, properties: %{uuid: uuid}} ->
+        {uuid, geometry}
+      end)
+      |> Enum.into(%{})
+
+    hierarchy = FieldPublication.Publications.Data.get_document_hierarchy(publication)
+
+    features_with_parents =
+      geometry_collection.features
+      |> Enum.map(fn %{properties: %{uuid: uuid}} = feature ->
+        find_next_ancestor_geometry(uuid, hierarchy, lookup)
+        |> case do
+          {parent_uuid, _geometry} ->
+            put_in(feature, [:properties, :parent], parent_uuid)
+
+          _ ->
+            put_in(feature, [:properties, :parent], nil)
+        end
+      end)
+
+    geometry_collection = Map.put(geometry_collection, :features, features_with_parents)
+
     temp_path =
       Path.join([
         System.tmp_dir!(),
@@ -244,6 +269,28 @@ defmodule FieldPublication.Publications.Geo do
 
       _ ->
         %{}
+    end
+  end
+
+  def find_next_ancestor_geometry(uuid, hierarchy, uuid_to_epsg_4326_mapping) do
+    Map.get(hierarchy, uuid)
+    |> case do
+      %{"parent" => nil} ->
+        nil
+
+      %{"parent" => parent_uuid} ->
+        uuid_to_epsg_4326_mapping[parent_uuid]
+        |> case do
+          nil ->
+            find_next_ancestor_geometry(parent_uuid, hierarchy, uuid_to_epsg_4326_mapping)
+
+          geometry ->
+            {parent_uuid, geometry}
+        end
+
+      nil ->
+        # UUID not in the hierarchy at all.
+        nil
     end
   end
 end

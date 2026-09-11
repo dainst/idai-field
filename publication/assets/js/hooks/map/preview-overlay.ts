@@ -7,12 +7,6 @@ import Map from "ol/Map.js";
 import { ViewHook } from "../../../../deps/phoenix_live_view/assets/js/phoenix_live_view";
 import { findFeaturesAtPixel } from "./features";
 
-interface CategoryMetadata {
-    category: string;
-    category_color: string;
-    category_label: { [key: string]: string };
-}
-
 export default class PreviewOverlay {
     hook: ViewHook;
     map: Map;
@@ -20,7 +14,6 @@ export default class PreviewOverlay {
     projectKey: string;
     projectDraftDate: string;
     fullscreen: boolean;
-    categoriesMetadata: CategoryMetadata[];
     language: string;
     isPinned: boolean;
 
@@ -30,7 +23,6 @@ export default class PreviewOverlay {
         container: HTMLElement,
         projectKey: string,
         projectDraftDate: string,
-        categoriesMetadata: CategoryMetadata[],
         language: string,
         fullscreen: boolean = false,
     ) {
@@ -40,7 +32,6 @@ export default class PreviewOverlay {
         this.projectDraftDate = projectDraftDate;
 
         this.fullscreen = fullscreen;
-        this.categoriesMetadata = categoriesMetadata;
         this.language = language;
 
         this.isPinned = false;
@@ -203,8 +194,8 @@ export default class PreviewOverlay {
 
         let documentInfoText = properties.identifier;
 
-        if (properties.short_description && Object.keys(properties.short_description).length > 0) {
-            documentInfoText += ` | ${pickTranslation(properties.short_description, this.language)}`;
+        if (properties.description && Object.keys(properties.description).length > 0) {
+            documentInfoText += ` | ${pickTranslation(properties.description, this.language)}`;
         }
 
         documentInfo.appendChild(document.createTextNode(documentInfoText));

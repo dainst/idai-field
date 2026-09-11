@@ -144,26 +144,12 @@ export default (getPublicationMapHook = () => {
                 },
             );
 
-            const featureCollections = await loadFeatureCollection(
+            const featureCollection = await loadFeatureCollection(
                 this.projectKey,
                 this.draftDate,
             );
 
-            this.categoriesMetadata =
-                featureCollections.properties.category_metadata.reduce(
-                    (acc, { name, color, labels }) => {
-                        acc[name] = { color: color, labels: labels };
-                        return acc;
-                    },
-                    {},
-                );
-
-            for (let feature of featureCollections.features) {
-                const { color, labels } =
-                    this.categoriesMetadata[feature.properties["category"]];
-                feature.properties["color"] = color;
-                feature.properties["labels"] = labels;
-            }
+            this.setMapFeatures(featureCollection);
 
             this.map.on("pointermove", async function (e) {
                 if (e.dragging || _this.selectionMode) {
@@ -193,11 +179,8 @@ export default (getPublicationMapHook = () => {
                 overlayDiv,
                 this.projectKey,
                 this.draftDate,
-                this.categoriesMetadata,
                 this.language,
             );
-
-            this.setMapFeatures(featureCollections);
 
             document.getElementById(
                 `${this.id}-loading-indicator`,
@@ -349,8 +332,6 @@ export default (getPublicationMapHook = () => {
             for (var i = 0; i < geometry.length; i++) {
                 reprojected.push(proj4(input, output, geometry[i]));
             }
-
-            console.log(reprojected)
 
             return reprojected;
         },

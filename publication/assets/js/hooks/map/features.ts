@@ -15,7 +15,31 @@ export const loadFeatureCollection = async function (
   draftDate: string,
 ) {
   const response = await fetch(`/api/v1/${projectKey}/${draftDate}/geo/default`);
-  return response.json();
+
+  const featureCollection = await response.json();
+
+  /*
+   * Color and category label are the same for every feature instance of that category.
+   * To reduce the file size, these two values are transferred in the collection's property field
+   * instead of the individual features'. For easier lookup while rendering, we add them to
+   * the individual features here.
+   */
+  const categoryMetadata =  featureCollection.properties.category_metadata.reduce(
+      (acc: Object, { name, color, labels }) => {
+          acc[name] = { color: color, labels: labels };
+          return acc;
+      },
+      {},
+  );
+
+  for (let feature of featureCollection.features) {
+      const { color, labels } =
+          categoryMetadata[feature.properties["category"]];
+      feature.properties["color"] = color;
+      feature.properties["labels"] = labels;
+  }
+
+  return featureCollection;
 };
 
 export const findFeature = function (uuid: string, map: Map) {

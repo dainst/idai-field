@@ -8,6 +8,8 @@ defmodule FieldPublicationWeb.Components.DocumentMap do
     Document
   }
 
+  alias FieldPublication.Publications.Geo
+
   @moduledoc """
   This component provides a map displaying the geometries and tile layers associated with a
   specific document. This includes the geometries of the document itself, as well as all other
@@ -36,6 +38,8 @@ defmodule FieldPublicationWeb.Components.DocumentMap do
       initial_uuid={@uuid}
       initial_linked={@linked_uuids |> Enum.join("|")}
       fullscreen={@fullscreen?}
+      projection_name={@publication.epsg_code}
+      projection={@projection}
     >
       <!-- set phx-update="ignore" to ensure changes the map's DOM elements are not re-rendered on updates
           by live view, but instead the content is controlled by OpenLayers (and/or our hook logic) client side after initializiation. -->
@@ -83,7 +87,7 @@ defmodule FieldPublicationWeb.Components.DocumentMap do
   def update(
         %{
           id: id,
-          publication: %Publication{} = _publication,
+          publication: %Publication{epsg_code: epsg_code} = _publication,
           doc:
             %Document{
               relations: relations
@@ -126,6 +130,7 @@ defmodule FieldPublicationWeb.Components.DocumentMap do
       |> assign(:uuid, doc.id)
       |> assign(:linked_uuids, linked_uuids)
       |> assign(:fullscreen?, Map.get(assigns, :fullscreen?, false))
+      |> assign(:projection, Geo.get_projection(epsg_code))
       |> assign(:doc, doc)
     }
   end
@@ -148,7 +153,7 @@ defmodule FieldPublicationWeb.Components.DocumentMap do
 
   def handle_event("drawn-selection", %{"coordinates" => multipolygon_coordinates}, socket) do
     case multipolygon_coordinates do
-      [polygon_coordinates] when is_list(polygon_coordinates) ->
+      polygon_coordinates when is_list(polygon_coordinates) ->
         Enum.all?(polygon_coordinates, fn
           [a, b] when is_float(a) and is_float(b) -> true
           _ -> false
@@ -159,7 +164,7 @@ defmodule FieldPublicationWeb.Components.DocumentMap do
     end
     |> if do
       # Sends notification to whatever live view is using this map component.
-      send(self(), {:drawn_selection, List.first(multipolygon_coordinates)})
+      send(self(), {:drawn_selection, multipolygon_coordinates})
     end
 
     {

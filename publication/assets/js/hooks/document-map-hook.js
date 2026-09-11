@@ -5,6 +5,8 @@ import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
 import GeoJSON from "ol/format/GeoJSON.js";
 
+import proj4 from "proj4";
+
 import {
     findFeaturesAtPixel,
     styleFunction,
@@ -12,13 +14,13 @@ import {
     clearAllHighlights,
     highlightFeature,
     getDefaultAlpha,
-    loadFeatureCollection
+    loadFeatureCollection,
 } from "./map/features";
 import PublicationTileLayers from "./map/tile-layers";
 import PreviewOverlay from "./map/preview-overlay.js";
 import PublicationSelection from "./map/selection";
 
-export default getDocumentViewMapHook = () => {
+export default (getDocumentViewMapHook = () => {
     return {
         map: null,
         projectKey: null,
@@ -87,7 +89,6 @@ export default getDocumentViewMapHook = () => {
         async initialize() {
             const _this = this;
             this.id = this.el.getAttribute("id");
-
             this.docId = this.el.getAttribute("initial_uuid");
             this.linkedDocIds = this.el
                 .getAttribute("initial_linked")
@@ -96,6 +97,15 @@ export default getDocumentViewMapHook = () => {
             this.projectKey = this.el.getAttribute("project_identifier");
             this.draftDate = this.el.getAttribute("draft_date");
             this.language = this.el.getAttribute("language");
+            this.projectionName = this.el.getAttribute("projection_name");
+            this.projection = this.el.getAttribute("projection");
+
+            if (this.projectionName && this.projection) {
+                proj4.defs(
+                    this.projectionName,
+                    this.projection,
+                );
+            }
 
             this.map = new Map({
                 target: `${this.el.getAttribute("id")}-map`,
@@ -109,10 +119,14 @@ export default getDocumentViewMapHook = () => {
                 this.draftDate,
             );
 
-            this.selection = new PublicationSelection(this.map, (result) => {
-                if (result.geometry) {
+            this.selection = new PublicationSelection(this.map, (resultPolygon) => {
+                if (resultPolygon) {
+                    const reprojected = [];
+                    for (var i = 0; i < resultPolygon.length; i++) {
+                        reprojected.push(proj4(this.projectionName, "EPSG:4326", resultPolygon[i]));
+                    }
                     this.pushEventTo(this.el, "drawn-selection", {
-                        coordinates: result.geometry,
+                        coordinates: reprojected,
                     });
                 } else {
                     this.selectionMode = false;
@@ -130,10 +144,7 @@ export default getDocumentViewMapHook = () => {
             });
 
             this.map.on("pointermove", async function (e) {
-                if (
-                    e.dragging ||
-                    _this.selectionMode
-                ) {
+                if (e.dragging || _this.selectionMode) {
                     return;
                 }
 
@@ -154,7 +165,7 @@ export default getDocumentViewMapHook = () => {
                     highlightFeature(feature);
                 }
 
-                _this.overlay.mapHover(e, hitFeatures)
+                _this.overlay.mapHover(e, hitFeatures);
             });
 
             this.map.on("singleclick", async function (e) {
@@ -162,16 +173,10 @@ export default getDocumentViewMapHook = () => {
                 _this.overlay.mapClicked(e);
             });
 
-            const featureCollections = await loadFeatureCollection(this.projectKey, this.draftDate)
-
-            for (let collection of featureCollections) {
-                this.categoriesMetadata.push(collection.properties);
-
-                for (let feature of collection.features) {
-                    feature.properties["color"] =
-                        collection.properties.category_color;
-                }
-            }
+            const featureCollections = await loadFeatureCollection(
+                this.projectKey,
+                this.draftDate,
+            );
 
             this.setMapFeatures(featureCollections);
 
@@ -186,37 +191,33 @@ export default getDocumentViewMapHook = () => {
                 overlayDiv,
                 this.projectKey,
                 this.draftDate,
-                this.categoriesMetadata,
                 this.language,
-                fullscreen
+                fullscreen,
             );
 
             document.getElementById(
                 `${this.id}-loading-indicator`,
             ).style.display = "none";
         },
-        setMapFeatures(featureCollections) {
+        setMapFeatures(collection) {
             for (const index in this.featureLayers) {
                 this.map.removeLayer(this.featureLayer[index]);
             }
             this.featureLayers = [];
 
-            for (let key in featureCollections) {
-                let collection = featureCollections[key];
-                const vectorSource = new VectorSource({
-                    features: new GeoJSON().readFeatures(collection),
-                });
+            const vectorSource = new VectorSource({
+                features: new GeoJSON().readFeatures(collection),
+            });
 
-                const featureLayer = new VectorLayer({
-                    name: key,
-                    source: vectorSource,
-                    style: styleFunction,
-                });
+            const featureLayer = new VectorLayer({
+                name: "project-geometries",
+                source: vectorSource,
+                style: styleFunction,
+            });
 
-                this.featureLayers.push(featureLayer);
-                this.map.addLayer(featureLayer);
-            }
+            this.featureLayers.push(featureLayer);
 
+            this.map.addLayer(featureLayer);
             this.resetActiveVectorExtent();
             this.fullExtent = createEmpty();
 
@@ -226,8 +227,7 @@ export default getDocumentViewMapHook = () => {
                 this.publicationTileLayers.getExtents().project,
             );
 
-            if (!isEmpty(this.fullExtent))
-            {
+            if (!isEmpty(this.fullExtent)) {
                 this.map
                     .getView()
                     .fit(this.fullExtent, { padding: [10, 10, 10, 10] });
@@ -239,7 +239,6 @@ export default getDocumentViewMapHook = () => {
                         maxZoom: 40,
                     }),
                 );
-
             } else {
                 // Nothing to fit the view to, pick [0,0] center as a default.
                 this.map.setView(
@@ -291,8 +290,7 @@ export default getDocumentViewMapHook = () => {
                     padding: [10, 10, 10, 10],
                 });
             } else {
-                this.
-                return;
+                this.return;
             }
 
             const vectorLayerFeatures = this.map
@@ -325,4 +323,4 @@ export default getDocumentViewMapHook = () => {
             });
         },
     };
-};
+});

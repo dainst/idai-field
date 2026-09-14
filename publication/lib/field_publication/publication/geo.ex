@@ -198,9 +198,6 @@ defmodule FieldPublication.Publication.Geo do
          output_epsg
        )
        when is_number(input_epsg) and is_number(output_epsg) do
-    output_file
-    |> Path.dirname()
-    |> File.mkdir_p!()
 
     temp_file =
       output_file

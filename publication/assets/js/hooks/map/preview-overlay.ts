@@ -194,11 +194,23 @@ export default class PreviewOverlay {
 
         let documentInfoText = properties.identifier;
 
-        if (properties.description && Object.keys(properties.description).length > 0) {
-            documentInfoText += ` | ${pickTranslation(properties.description, this.language)}`;
-        }
-
         documentInfo.appendChild(document.createTextNode(documentInfoText));
+
+        if (
+            properties.description &&
+            Object.keys(properties.description).length > 0
+        ) {
+            const documentDescription = document.createElement("span");
+            documentDescription.classList.add("font-light");
+
+            documentDescription.appendChild(
+                document.createTextNode(
+                    ` ${pickTranslation(properties.description, this.language)}`,
+                ),
+            );
+
+            documentInfo.appendChild(documentDescription);
+        }
 
         let url = `/projects/${this.projectKey}/${this.projectDraftDate}/${properties.uuid}`;
 

@@ -1,14 +1,13 @@
 defmodule FieldPublicationWeb.Components.DocumentMap do
   use FieldPublicationWeb, :live_component
 
-  alias FieldPublication.DatabaseSchema.Publication
+  alias FieldPublication.Publication
 
-  alias FieldPublication.Publications.Data.{
+  alias FieldPublication.Publication.{
+    Geo,
     RelationGroup,
     Document
   }
-
-  alias FieldPublication.Publications.Geo
 
   @moduledoc """
   This component provides a map displaying the geometries and tile layers associated with a

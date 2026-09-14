@@ -2,9 +2,11 @@ defmodule FieldPublication.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
-  alias FieldPublication.Settings
-  alias FieldPublication.FileService
-  alias FieldPublication.CouchService
+  alias FieldPublication.{
+    ApplicationSettings,
+    CouchService,
+    FileService,
+  }
 
   use Application
 
@@ -48,7 +50,7 @@ defmodule FieldPublication.Application do
     # Once all child processes are started, run the CouchDB setup.
     CouchService.initial_setup()
     FileService.initial_setup()
-    Settings.load()
+    ApplicationSettings.load()
 
     supervisor_startup
   end
@@ -93,11 +95,11 @@ end
 
 defimpl Jason.Encoder,
   for: [
-    FieldPublication.DatabaseSchema.ApplicationSettings,
-    FieldPublication.DatabaseSchema.DataIssues,
-    FieldPublication.DatabaseSchema.DataPreview,
-    FieldPublication.DatabaseSchema.Project,
-    FieldPublication.DatabaseSchema.Publication
+    FieldPublication.ApplicationSettings,
+    FieldPublication.Project,
+    FieldPublication.Publication,
+    FieldPublication.Publication.DataIssues,
+    FieldPublication.Publication.DocumentPreview
   ] do
   # When sending the JSON encoded Ecto schemas to CouchDB, `nil` value _rev entries will get rejected
   # CouchDB. This happens for newly created documents, that have not been persisted in the DB yet. In this

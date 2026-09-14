@@ -21,9 +21,10 @@ defmodule FieldPublicationWeb.CoreComponents do
 
   alias Phoenix.LiveView.JS
 
+  alias FieldPublication.Publication
+
   alias FieldPublication.DatabaseSchema.{
-    LogEntry,
-    Publication
+    LogEntry
   }
 
   @doc """

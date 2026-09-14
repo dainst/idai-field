@@ -5,11 +5,8 @@ defmodule FieldPublicationWeb.Presentation.UserSessionLiveTest do
 
   alias FieldPublication.{
     CouchService,
-    Projects
+    Project
   }
-
-  alias FieldPublication.DatabaseSchema.Project
-
   alias FieldPublication.Test.ProjectSeed
 
   import Phoenix.LiveViewTest
@@ -23,10 +20,10 @@ defmodule FieldPublicationWeb.Presentation.UserSessionLiveTest do
     {project, publication} = ProjectSeed.create_full_publication(@test_project_identifier, false)
 
     on_exit(fn ->
-      Projects.get(@test_project_identifier)
+      Project.get(@test_project_identifier)
       |> case do
         {:ok, %Project{} = project} ->
-          Projects.delete(project)
+          Project.delete(project)
 
         _ ->
           :ok

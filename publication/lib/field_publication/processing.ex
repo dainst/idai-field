@@ -1,26 +1,26 @@
 defmodule FieldPublication.Processing do
   use GenServer
 
+  alias Phoenix.PubSub
+
+  alias FieldPublication.Publication
+
   alias FieldPublication.Processing.{
     WebImage,
     MapTiles
   }
 
-  alias FieldPublication.Publications.{
-    Data,
+  alias FieldPublication.Publication.{
+    DocumentPreview,
+    DataIssues,
+    Geo,
     Search
   }
 
-  alias FieldPublication.DatabaseSchema.Publication
-
   alias FieldPublication.DatabaseSchema.{
-    LogEntry,
-    Publication
+    LogEntry
   }
 
-  alias FieldPublication.Publications
-
-  alias Phoenix.PubSub
 
   require Logger
 
@@ -235,7 +235,7 @@ defmodule FieldPublication.Processing do
         Task.Supervisor.async_nolink(
           FieldPublication.ProcessingSupervisor,
           # Module that implements the actual processing.
-          Publications.Search,
+          Search,
           # Function within that module to start the processing.
           :index_documents,
           # Parameters for that function.
@@ -265,9 +265,9 @@ defmodule FieldPublication.Processing do
         Task.Supervisor.async_nolink(
           FieldPublication.ProcessingSupervisor,
           # Module that implements the actual processing.
-          Publications.Data,
+          DocumentPreview,
           # Function within that module to start the processing.
-          :recreate_meta_database,
+          :recreate_previews,
           # Parameters for that function.
           [publication]
         )
@@ -295,7 +295,7 @@ defmodule FieldPublication.Processing do
         Task.Supervisor.async_nolink(
           FieldPublication.ProcessingSupervisor,
           # Module that implements the actual processing.
-          Publications.Geo,
+          Geo,
           # Function within that module to start the processing.
           :generate_feature_collections,
           # Parameters for that function.
@@ -325,7 +325,7 @@ defmodule FieldPublication.Processing do
         Task.Supervisor.async_nolink(
           FieldPublication.ProcessingSupervisor,
           # Module that implements the actual processing.
-          Publications.Data,
+          Publication,
           # Function within that module to start the processing.
           :recreate_database_indices,
           # Parameters for that function.
@@ -435,7 +435,7 @@ defmodule FieldPublication.Processing do
     end)
     |> case do
       {_task, type, context} ->
-        Publications.get(context)
+        Publication.get(context)
         |> case do
           {:ok, publication} ->
             # This clears all data issues associated with processing, which
@@ -447,9 +447,9 @@ defmodule FieldPublication.Processing do
             # issues reported by the processing tasks themselves are left intact.
 
             report_key = report_key_by_processing_type(type)
-            Publications.Data.clear_data_issues(publication, report_key)
+            DataIssues.remove_entries(report_key, publication)
 
-            Publications.Data.report_data_issue(
+            DataIssues.add_entry(
               "general",
               LogEntry.create(%{
                 type: "general_processing_crash",
@@ -494,7 +494,7 @@ defmodule FieldPublication.Processing do
   def report_key_by_processing_type(:web_images), do: WebImage.report_key()
   def report_key_by_processing_type(:tile_images), do: MapTiles.report_key()
   def report_key_by_processing_type(:search_index), do: Search.report_key()
-  def report_key_by_processing_type(:preview_documents), do: Data.report_key()
-  def report_key_by_processing_type(:geo_collections), do: Data.report_key()
-  def report_key_by_processing_type(:database_indices), do: Data.report_key()
+  def report_key_by_processing_type(:preview_documents), do: DocumentPreview.report_key()
+  def report_key_by_processing_type(:geo_collections), do: Geo.report_key()
+  def report_key_by_processing_type(:database_indices), do: Publication.report_key()
 end

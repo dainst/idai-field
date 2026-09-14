@@ -1,27 +1,53 @@
-defmodule FieldPublication.Projects do
-  import Ecto.Changeset
+defmodule FieldPublication.Project do
+  use Ecto.Schema
 
+  import Ecto.Changeset
   alias Ecto.Changeset
 
   alias FieldPublication.DatabaseSchema.{
-    Project,
-    Publication,
     User
   }
 
-  alias FieldPublication.CouchService
-  alias FieldPublication.Users
-  alias FieldPublication.FileService
-  alias FieldPublication.Publications
+  alias FieldPublication.{
+    CouchService,
+    FileService,
+    Publication,
+    Users
+  }
 
-  @moduledoc """
-  This module contains functions to retrieve, create, update and list projects within
-  the FieldPublication system.
+  @doc_type "project"
+  @primary_key false
+  embedded_schema do
+    field(:_id, :string)
+    field(:_rev, :string)
+    field(:identifier, :string, primary_key: true)
+    field(:doc_type, :string, default: @doc_type)
+    field(:editors, {:array, :string}, default: [])
+  end
 
-  Projects in this sense are used to control access to publications which in turn attach
-  themselves to a project. This means the primary data in FieldPublication is not handled
-  by this module, but by `FieldPublication.Publications` and its submodules.
-  """
+  @doc false
+  def changeset(project, attrs \\ %{}) do
+    project
+    |> cast(attrs, [:identifier, :_rev, :editors])
+    |> validate_required([:identifier])
+    |> set_id()
+  end
+
+  def doc_type() do
+    @doc_type
+  end
+
+  def set_id(changeset) do
+    if identifier = get_field(changeset, :identifier) do
+      put_change(changeset, :_id, id(identifier))
+    else
+      changeset
+    end
+  end
+
+  def id(identifier) do
+    Enum.join([@doc_type, identifier], "_")
+  end
 
   @doc """
   Retrieve a project document by the project's identifier.
@@ -47,7 +73,7 @@ defmodule FieldPublication.Projects do
       {:error, :not_found}
   """
   def get(identifier) when is_binary(identifier) do
-    Project.id(identifier)
+    id(identifier)
     |> CouchService.get_document()
     |> case do
       {:ok, %{status: 200, body: body}} ->
@@ -55,7 +81,7 @@ defmodule FieldPublication.Projects do
 
         {
           :ok,
-          apply_changes(Project.changeset(%Project{}, json_doc))
+          apply_changes(changeset(%__MODULE__{}, json_doc))
         }
 
       {:ok, %{status: 404}} ->
@@ -106,9 +132,9 @@ defmodule FieldPublication.Projects do
       ]
   """
   def list() do
-    CouchService.get_document_stream(%{selector: %{doc_type: Project.doc_type()}})
+    CouchService.get_document_stream(%{selector: %{doc_type: @doc_type}})
     |> Enum.map(fn doc ->
-      Project.changeset(%Project{}, doc)
+      changeset(%__MODULE__{}, doc)
       |> apply_changes()
     end)
   end
@@ -165,10 +191,10 @@ defmodule FieldPublication.Projects do
         editors: ["some_user"]
       }}
   """
-  def put(%Project{} = project, params \\ %{}) do
-    changeset = Project.changeset(project, params)
+  def put(%__MODULE__{} = project, params \\ %{}) do
+    changeset = changeset(project, params)
 
-    with {:ok, %Project{_id: id} = project} <- apply_action(changeset, :create),
+    with {:ok, %__MODULE__{_id: id} = project} <- apply_action(changeset, :create),
          {:ok, %{status: 201, body: body}} <- CouchService.put_document(id, project) do
       %{"rev" => rev} = Jason.decode!(body)
       FileService.initialize!(project.identifier)
@@ -208,16 +234,16 @@ defmodule FieldPublication.Projects do
       iex(1)> FieldPublication.Projects.delete(project)
       {:ok, :deleted}
   """
-  def delete(%Project{_id: doc_id, _rev: rev, identifier: identifier} = project) do
+  def delete(%__MODULE__{_id: doc_id, _rev: rev, identifier: identifier} = project) do
     {:ok, _deleted_paths} = FileService.delete(identifier)
     CouchService.delete_document(doc_id, rev)
-    publications = Publications.list(project.identifier)
-    Enum.each(publications, &Publications.delete(&1))
+    publications = Publication.list(project.identifier)
+    Enum.each(publications, &Publication.delete(&1))
 
     {:ok, :deleted}
   end
 
-  def add_user(%Project{} = project, %User{name: name}) do
+  def add_user(%__MODULE__{} = project, %User{name: name}) do
     put(project, %{editors: project.editors ++ [name]})
   end
 
@@ -272,5 +298,11 @@ defmodule FieldPublication.Projects do
       true ->
         false
     end
+  end
+end
+
+defimpl Phoenix.Param, for: FieldPublication.Project do
+  def to_param(%{identifier: identifier}) do
+    identifier
   end
 end

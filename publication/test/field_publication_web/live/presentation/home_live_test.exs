@@ -1,14 +1,14 @@
 defmodule FieldPublicationWeb.Presentation.HomeLiveTest do
   use FieldPublicationWeb.ConnCase
 
-  alias FieldPublication.Publications.Data
-
   alias FieldPublication.{
     CouchService,
-    Projects
+    Document,
+    Project,
+    Publication
   }
 
-  alias FieldPublication.DatabaseSchema.Project
+  alias FieldPublication.Publication.Document
 
   alias FieldPublication.Test.ProjectSeed
 
@@ -22,10 +22,10 @@ defmodule FieldPublicationWeb.Presentation.HomeLiveTest do
     {project, publication} = ProjectSeed.create_full_publication(@test_project_identifier, true)
 
     on_exit(fn ->
-      Projects.get(@test_project_identifier)
+      Project.get(@test_project_identifier)
       |> case do
         {:ok, %Project{} = project} ->
-          Projects.delete(project)
+          Project.delete(project)
 
         _ ->
           :ok
@@ -45,9 +45,9 @@ defmodule FieldPublicationWeb.Presentation.HomeLiveTest do
 
     assert html =~ "Projects"
 
-    doc = Data.get_extended_document("project", publication)
+    doc = Publication.get_extended_document("project", publication)
 
-    short_description = Data.get_field_value(doc, "shortName") |> Map.get("en")
+    short_description = Document.get_field_value(doc, "shortName") |> Map.get("en")
 
     assert html =~ short_description
 

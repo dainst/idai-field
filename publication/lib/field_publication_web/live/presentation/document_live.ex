@@ -1,13 +1,12 @@
 defmodule FieldPublicationWeb.Presentation.DocumentLive do
   use FieldPublicationWeb, :live_view
 
-  alias FieldPublication.Projects
+  alias FieldPublication.{
+    Project,
+    Publication
+  }
 
-  alias FieldPublication.DatabaseSchema.Publication
-
-  alias FieldPublication.Publications
-  alias FieldPublication.Publications.Data
-  alias FieldPublication.Publications.Data.Document
+  alias FieldPublication.Publication.{Configuration, Document}
 
   alias FieldPublicationWeb.Presentation.Opengraph
 
@@ -19,12 +18,12 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
 
   def mount(%{"project_identifier" => project_identifier}, _session, socket) do
     all_publications =
-      Publications.list()
+      Publication.list()
       |> Stream.reject(fn %Publication{} = publication ->
         publication.replication_finished == nil
       end)
       |> Enum.filter(fn %Publication{} = publication ->
-        Projects.has_publication_access?(publication, socket.assigns.current_user)
+        Project.has_publication_access?(publication, socket.assigns.current_user)
       end)
 
     publications =
@@ -65,7 +64,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
     socket =
       parameters
       |> Map.get("uuid", "project")
-      |> Publications.Data.get_extended_document(publication, true)
+      |> Publication.get_extended_document(publication, true)
       |> case do
         {:error, :not_found} ->
           raise UnknownPublicationDocumentError,
@@ -73,8 +72,8 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
               "No document with id `#{Map.get(parameters, "uuid")}` for publication of project `#{publication.project_identifier}` on #{publication.draft_date}."
 
         %Document{id: uuid} = document ->
-          project_map_layers = Publications.Data.get_project_map_layers(publication)
-          image_categories = Publications.Data.get_image_categories(publication)
+          project_map_layers = Publication.get_project_map_layers(publication)
+          image_categories = Configuration.get_image_categories(publication)
 
           socket
           |> assign(:publication, publication)
@@ -156,7 +155,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
   end
 
   defp get_page_title(%Document{id: "project", identifier: identifier} = doc) do
-    pick_default_translation(Data.get_field_value(doc, "shortName") || identifier)
+    pick_default_translation(Document.get_field_value(doc, "shortName") || identifier)
   end
 
   defp get_page_title(%Document{identifier: identifier, category: %{labels: labels}}) do

@@ -1,7 +1,8 @@
 defmodule FieldPublicationWeb.Management.OverviewLiveTest do
-  alias FieldPublication.Projects
-  alias FieldPublication.CouchService
-  alias FieldPublication.DatabaseSchema.Project
+  alias FieldPublication.{
+    CouchService,
+    Project
+  }
 
   use FieldPublicationWeb.ConnCase
 
@@ -20,12 +21,12 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
     CouchService.put_database(@core_database)
     CouchService.create_user(@test_user)
 
-    Projects.put(%Project{}, %{"identifier" => @test_project_identifier})
+    Project.put(%Project{}, %{"identifier" => @test_project_identifier})
 
-    project = Projects.get!(@test_project_identifier)
+    project = Project.get!(@test_project_identifier)
 
     on_exit(fn ->
-      Projects.delete(project)
+      Project.delete(project)
       CouchService.delete_database(@core_database)
       CouchService.delete_user(@test_user.name)
     end)
@@ -46,16 +47,16 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
     setup %{conn: conn} do
       conn = log_in_user(conn, @test_user.name)
 
-      Projects.put(%Project{}, %{
+      Project.put(%Project{}, %{
         "identifier" => @new_project_identifier,
         "editors" => [@test_user.name]
       })
 
       on_exit(fn ->
-        Projects.get(@new_project_identifier)
+        Project.get(@new_project_identifier)
         |> case do
           {:ok, project} ->
-            Projects.delete(project)
+            Project.delete(project)
 
           _ ->
             :ok
@@ -111,10 +112,10 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
       conn = log_in_user(conn, Application.get_env(:field_publication, :couchdb_admin_name))
 
       on_exit(fn ->
-        Projects.get(@new_project_identifier)
+        Project.get(@new_project_identifier)
         |> case do
           {:ok, project} ->
-            Projects.delete(project)
+            Project.delete(project)
 
           _ ->
             :ok
@@ -172,7 +173,7 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
       assert html =~ @new_project_identifier
 
       {:ok, %Project{identifier: @new_project_identifier} = _project} =
-        Projects.get(@new_project_identifier)
+        Project.get(@new_project_identifier)
 
       live_process
       |> element("#project-panel-#{@new_project_identifier} a", "Delete")
@@ -182,14 +183,14 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
 
       assert not (html =~ @new_project_identifier)
 
-      assert {:error, :not_found} = Projects.get(@new_project_identifier)
+      assert {:error, :not_found} = Project.get(@new_project_identifier)
     end
 
     test "can add and remove users to project", %{conn: conn} do
       on_exit(fn ->
-        case Projects.get(@test_project_identifier) do
+        case Project.get(@test_project_identifier) do
           {:ok, project} ->
-            Projects.put(project, %{"editors" => []})
+            Project.put(project, %{"editors" => []})
 
           _ ->
             :ok

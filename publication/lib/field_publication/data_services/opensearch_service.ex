@@ -1,5 +1,5 @@
 defmodule FieldPublication.OpenSearchService do
-  alias FieldPublication.Publications.Search.SearchDocument
+  alias FieldPublication.Publication.Search.SearchDocument
   require Logger
 
   @moduledoc """

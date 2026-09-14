@@ -23,7 +23,7 @@
                 phx-value-id={project[:name]}
               >
                 <div class="text-center">
-                  <%= case Data.get_field_value(doc, "shortName") do %>
+                  <%= case Document.get_field_value(doc, "shortName") do %>
                     <% val when is_map(val) -> %>
                       {pick_default_translation(val)}
                     <% val when is_binary(val) -> %>

@@ -7,17 +7,16 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericDatasheet do
     Image
   }
 
-  alias FieldPublication.DatabaseSchema.Publication
-  alias FieldPublication.Publications.Data
+  alias FieldPublication.Publication
 
-  alias FieldPublicationWeb.Components.DocumentMap
-
-  alias FieldPublication.Publications.Data.{
+  alias FieldPublication.Publication.{
     Document,
     Field,
     FieldGroup,
     RelationGroup
   }
+
+  alias FieldPublicationWeb.Components.DocumentMap
 
   def render(assigns) do
     ~H"""
@@ -47,7 +46,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericDatasheet do
             </section>
           <% end %>
         <% end %>
-        <% depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
+        <% depicted_in = Document.get_relation(@doc, "isDepictedIn") %>
         <%= if depicted_in do %>
           <section>
             <.group_heading>

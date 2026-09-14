@@ -1,14 +1,20 @@
-defmodule FieldPublication.Publications.Search do
-  alias FieldPublication.Publications
-  alias FieldPublication.Projects
-  alias FieldPublication.OpenSearchService
-  alias FieldPublication.Publications.Data
-  alias FieldPublication.Publications.Geo
-
-  alias FieldPublication.DatabaseSchema.{
-    LogEntry,
+defmodule FieldPublication.Publication.Search do
+  alias FieldPublication.{
+    OpenSearchService,
     Publication,
     Project
+  }
+
+  alias FieldPublication.Publication.{
+    Configuration,
+    DataIssues,
+    Document,
+    DocumentPreview,
+    Geo
+  }
+
+  alias FieldPublication.DatabaseSchema.{
+    LogEntry
   }
 
   require Logger
@@ -61,7 +67,7 @@ defmodule FieldPublication.Publications.Search do
       project_identifier: map["project_identifier"],
       publication_draft_date: map["publication_draft_date"],
       configuration_based_field_mappings: map["configuration_based_field_mappings"] || %{},
-      preview: Data.document_map_to_struct(map["preview"]),
+      preview: Document.from_map(map["preview"]),
       combined_text_content: map["combined_text_content"]
     }
   end
@@ -135,7 +141,7 @@ defmodule FieldPublication.Publications.Search do
     # alias too.
     project_alias =
       publication.project_identifier
-      |> Projects.get!()
+      |> Project.get!()
       |> get_alias()
 
     project_alias
@@ -162,7 +168,7 @@ defmodule FieldPublication.Publications.Search do
       [index_name] when is_binary(index_name) ->
         project_alias =
           publication.project_identifier
-          |> Projects.get!()
+          |> Project.get!()
           |> get_alias()
 
         OpenSearchService.set_alias(index_name, project_alias)
@@ -182,7 +188,7 @@ defmodule FieldPublication.Publications.Search do
       [index_name] when is_binary(index_name) ->
         project_alias =
           publication.project_identifier
-          |> Projects.get!()
+          |> Project.get!()
           |> get_alias()
 
         OpenSearchService.set_alias(index_name, project_alias)
@@ -557,7 +563,7 @@ defmodule FieldPublication.Publications.Search do
 
     geo = normalized_feature_lookup[doc["_id"]]
 
-    hierarchy = Data.get_document_hierarchy(publication)
+    hierarchy = Publication.get_document_hierarchy(publication)
 
     # `parent_geo` is a fallback in cases where the document itself has no geometry attached to it.
     {parent_geo, root_geo} =
@@ -587,14 +593,15 @@ defmodule FieldPublication.Publications.Search do
         # Based on the project configuration, we add a category's parent categories' keys to the search
         # document. As an example, this allows us to return not only "Image" documents when filtering by category key "Image",
         # but also all documents that are in one of its child categories ("Photo" and "Drawing" by default.).
-        category: [res["category"]] ++ Data.get_parent_categories(publication, res["category"]),
+        category:
+          [res["category"]] ++ Configuration.get_parent_categories(publication, res["category"]),
         publication_draft_date: publication.draft_date,
         project_identifier: publication.project_identifier,
         configuration_based_field_mappings: %{},
         geometry: geo,
         parent_geometry: parent_geo,
         root_geometry: root_geo,
-        preview: List.first(Data.get_preview_documents([res["id"]], publication)),
+        preview: List.first(DocumentPreview.list(publication, [res["id"]])),
         #  full_doc: full_doc,
         combined_text_content:
           text_fields
@@ -651,7 +658,7 @@ defmodule FieldPublication.Publications.Search do
               msg =
                 "Based on the project configuration expected Map or List values for field '#{field_name}', but got '#{values}'."
 
-              Publications.Data.report_data_issue(
+              DataIssues.add_entry(
                 res["id"],
                 LogEntry.create(%{
                   type: "data_to_configuration_mismatch",
@@ -695,9 +702,9 @@ defmodule FieldPublication.Publications.Search do
 
   def evaluate_system_wide_label_usage() do
     info =
-      Publications.get_current_published()
+      Publication.get_current_published()
       |> Enum.map(fn %Publication{} = pub ->
-        config = Publications.get_configuration(pub)
+        config = Configuration.get(pub)
 
         {category_labels, field_labels} =
           Enum.map(config, &extract_labels_for_configuration_item/1)
@@ -947,7 +954,7 @@ defmodule FieldPublication.Publications.Search do
 
   def evaluate_input_types(%Publication{} = publication) do
     field_names_and_input_types =
-      Publications.get_configuration(publication)
+      Configuration.get(publication)
       |> Enum.map(&flatten_input_types/1)
       |> List.flatten()
       |> Enum.uniq()
@@ -994,7 +1001,7 @@ defmodule FieldPublication.Publications.Search do
   @not_indexed_document_uuids ["project", "configuration"]
 
   defp count_database_documents(publication) do
-    database_count = Data.get_doc_count(publication)
+    database_count = Publication.get_doc_count(publication)
 
     # We do not count documents 'project' or 'configuration' because they are not added to the index.
     if database_count >= 2,
@@ -1026,13 +1033,16 @@ defmodule FieldPublication.Publications.Search do
     mapping = generate_index_mapping(publication)
     special_input_types = evaluate_input_types(publication)
 
+    # TODO: Check if they exist?
+    Geo.generate_feature_collections(publication)
+
     index_name = setup_index(publication, mapping)
 
     normalized_feature_lookup =
       if is_nil(epsg_code) do
         %{}
       else
-        Publications.Geo.uuid_to_epsg_4326_feature_mapping(publication)
+        Geo.uuid_to_epsg_4326_feature_mapping(publication)
       end
 
     initial_state = %{
@@ -1044,16 +1054,16 @@ defmodule FieldPublication.Publications.Search do
     {:ok, counter_pid} =
       Agent.start_link(fn -> initial_state end)
 
-    Publications.broadcast(publication, {
+    Publication.broadcast(publication, {
       :processing_progress,
       :search_index,
       initial_state
     })
 
-    Publications.Data.clear_data_issues(publication, @data_report_key)
+    DataIssues.remove_entries(@data_report_key, publication)
 
     publication
-    |> Publications.Data.get_doc_stream_for_all()
+    |> Publication.get_doc_stream_for_all()
     |> Stream.reject(fn %{"_id" => id} ->
       id in @not_indexed_document_uuids
     end)
@@ -1097,7 +1107,7 @@ defmodule FieldPublication.Publications.Search do
             msg =
               "status code #{status} for\n #{inspect(body)}"
 
-            Publications.Data.report_data_issue(
+            DataIssues.add_entry(
               "general",
               LogEntry.create(%{
                 type: "unexpected_open_search_response",
@@ -1121,7 +1131,7 @@ defmodule FieldPublication.Publications.Search do
           {state, state}
         end)
 
-      Publications.broadcast(publication, {:processing_progress, :search_index, updated_state})
+      Publication.broadcast(publication, {:processing_progress, :search_index, updated_state})
     end)
     |> Enum.to_list()
 
@@ -1147,7 +1157,7 @@ defmodule FieldPublication.Publications.Search do
               "failed to parse field [parent_geometry] of type [geo_shape]",
               "failed to parse field [root_geometry] of type [geo_shape]"
             ] do
-    Publications.Data.report_data_issue(
+    DataIssues.add_entry(
       uuid,
       LogEntry.create(%{
         type: "malformed_geometry",
@@ -1179,7 +1189,7 @@ defmodule FieldPublication.Publications.Search do
               "failed to parse field [parent_geometry] of type [geo_shape]",
               "failed to parse field [root_geometry] of type [geo_shape]"
             ] do
-    Publications.Data.report_data_issue(
+    DataIssues.add_entry(
       uuid,
       LogEntry.create(%{
         type: "malformed_geometry",
@@ -1197,7 +1207,7 @@ defmodule FieldPublication.Publications.Search do
          %{"index" => %{"_id" => uuid, "error" => error}},
          %Publication{} = publication
        ) do
-    Publications.Data.report_data_issue(
+    DataIssues.add_entry(
       uuid,
       LogEntry.create(%{
         type: "unknown",
@@ -1275,6 +1285,6 @@ defmodule FieldPublication.Publications.Search do
 
     [[_full_match, project_identifier, draft_date_iso_8601]] = Regex.scan(regex, name)
 
-    Publications.get(project_identifier, draft_date_iso_8601)
+    Publication.get(project_identifier, draft_date_iso_8601)
   end
 end

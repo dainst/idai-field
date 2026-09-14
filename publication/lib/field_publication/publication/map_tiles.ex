@@ -4,13 +4,15 @@ defmodule FieldPublication.Processing.MapTiles do
     Operation
   }
 
-  alias FieldPublication.FileService
-  alias FieldPublication.Publications
-  alias FieldPublication.Publications.Data
+  alias FieldPublication.{
+    FileService,
+    Publication
+  }
+
+  alias FieldPublication.Publication.DataIssues
 
   alias FieldPublication.DatabaseSchema.{
-    LogEntry,
-    Publication
+    LogEntry
   }
 
   @tile_size 256
@@ -34,7 +36,7 @@ defmodule FieldPublication.Processing.MapTiles do
     existing_tiles = FileService.list_tile_image_directories(publication.project_identifier)
 
     georeferenced_docs =
-      Data.get_doc_stream_for_georeferenced(publication)
+      Publication.get_doc_stream_for_georeferenced(publication)
       |> Enum.to_list()
 
     missing =
@@ -73,7 +75,7 @@ defmodule FieldPublication.Processing.MapTiles do
       missing_raw_files: missing_raw_files
     } = evaluate_state(publication)
 
-    Publications.Data.clear_data_issues(publication, @data_report_key)
+    DataIssues.remove_entries(@data_report_key, publication)
 
     issues =
       Enum.map(missing_raw_files, fn uuid ->
@@ -88,7 +90,7 @@ defmodule FieldPublication.Processing.MapTiles do
         }
       end)
 
-    Publications.Data.report_data_issues(issues, publication)
+    DataIssues.add_entries(issues, publication)
 
     File.mkdir_p!(tiles_root)
 
@@ -146,13 +148,13 @@ defmodule FieldPublication.Processing.MapTiles do
                 {state, state}
               end)
 
-            Publications.broadcast(
+            Publication.broadcast(
               publication,
               {:processing_progress, :tile_images, updated_state}
             )
 
           %{"_id" => uuid} ->
-            Publications.Data.report_data_issue(
+            DataIssues.add_entry(
               uuid,
               LogEntry.create(%{
                 type: "invalid_document_structure",

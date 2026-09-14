@@ -1,14 +1,21 @@
 defmodule FieldPublicationWeb.Rest.Api.V1.PublicationTest do
   use FieldPublicationWeb.ConnCase
 
-  alias FieldPublication.Publications.Data
 
   alias FieldPublication.{
     CouchService,
-    Projects
+    Project,
+    Publication
   }
 
-  alias FieldPublication.DatabaseSchema.Project
+  alias FieldPublication.Publication.{
+    Category,
+    Document,
+    Field,
+    FieldGroup,
+    RelationGroup
+  }
+
 
   alias FieldPublication.Test.ProjectSeed
 
@@ -21,10 +28,10 @@ defmodule FieldPublicationWeb.Rest.Api.V1.PublicationTest do
     {project, publication} = ProjectSeed.create_full_publication(@test_project_identifier, true)
 
     on_exit(fn ->
-      Projects.get(@test_project_identifier)
+      Project.get(@test_project_identifier)
       |> case do
         {:ok, %Project{} = project} ->
-          Projects.delete(project)
+          Project.delete(project)
 
         _ ->
           :ok
@@ -33,7 +40,7 @@ defmodule FieldPublicationWeb.Rest.Api.V1.PublicationTest do
       CouchService.delete_database(@core_database)
     end)
 
-    [doc] = Data.get_doc_stream_for_all(publication) |> Enum.take(1)
+    [doc] = Publication.get_doc_stream_for_all(publication) |> Enum.take(1)
 
     %{project: project, publication: publication, doc: doc}
   end
@@ -51,31 +58,31 @@ defmodule FieldPublicationWeb.Rest.Api.V1.PublicationTest do
     publication: publication,
     doc: doc
   } do
-    assert %Data.Document{} =
+    assert %Document{} =
              extended_doc =
              get(
                conn,
                ~p"/api/v1/#{publication.project_identifier}/#{publication.draft_date}/doc/#{doc["_id"]}/extended"
              )
              |> json_response(200)
-             |> Data.document_map_to_struct()
+             |> Document.from_map()
 
     assert extended_doc.id == doc["_id"]
 
     # Check if the nested structure of document matches the expectations.
 
-    assert %Data.Category{} = extended_doc.category
+    assert %Category{} = extended_doc.category
 
     assert Enum.count(extended_doc.groups) > 0
 
     assert Enum.map(
              extended_doc.groups,
-             fn %Data.FieldGroup{fields: fields} = _group ->
+             fn %FieldGroup{fields: fields} = _group ->
                assert Enum.count(fields) > 0
 
                Enum.map(
                  fields,
-                 fn %Data.Field{} = _field ->
+                 fn %Field{} = _field ->
                    :ok
                  end
                )
@@ -86,12 +93,12 @@ defmodule FieldPublicationWeb.Rest.Api.V1.PublicationTest do
 
     assert Enum.map(
              extended_doc.relations,
-             fn %Data.RelationGroup{docs: docs} ->
+             fn %RelationGroup{docs: docs} ->
                assert Enum.count(docs) > 0
 
                Enum.map(
                  docs,
-                 fn %Data.Document{} = _doc ->
+                 fn %Document{} = _doc ->
                    :ok
                  end
                )

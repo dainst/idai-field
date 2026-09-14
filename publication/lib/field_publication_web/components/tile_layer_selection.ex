@@ -1,9 +1,11 @@
 defmodule FieldPublicationWeb.Components.Map.TileLayerSelection do
   use FieldPublicationWeb, :live_component
 
-  alias FieldPublication.Publications.Data
-  alias FieldPublication.Publications.Data.Document
-  alias FieldPublication.DatabaseSchema.Publication
+  alias FieldPublication.Publication
+
+  alias FieldPublication.Publication.{
+    Document
+  }
 
   attr(:publication, Publication, required: true)
   attr(:layers, :list, required: true)
@@ -161,7 +163,7 @@ defmodule FieldPublicationWeb.Components.Map.TileLayerSelection do
     # "Default map layers" are supposed to be visibile immediately, while others are initialized hidden.
     default_map_layers =
       doc.default_map_layers
-      |> Data.get_raw_documents(publication)
+      |> Publication.get_raw_documents(publication)
       |> Stream.map(&create_tile_layer_info/1)
       |> Enum.map(fn layer_info ->
         Map.merge(layer_info, %{visible: true})
@@ -169,7 +171,7 @@ defmodule FieldPublicationWeb.Components.Map.TileLayerSelection do
 
     other_map_layers =
       doc.map_layers
-      |> Data.get_raw_documents(publication)
+      |> Publication.get_raw_documents(publication)
       |> Stream.map(&create_tile_layer_info/1)
       |> Enum.map(fn layer_info ->
         Map.merge(layer_info, %{visible: false})
@@ -182,13 +184,13 @@ defmodule FieldPublicationWeb.Components.Map.TileLayerSelection do
   defp create_project_layer_infos(publication) do
     # TODO: Create a cached function in `Data` module?
     project_doc_relations =
-      Data.get_raw_document("project", publication)
+      Publication.get_raw_document("project", publication)
       |> Map.get("resource", %{})
       |> Map.get("relations", %{})
 
     default_map_layers =
       Map.get(project_doc_relations, "hasDefaultMapLayer", [])
-      |> Data.get_raw_documents(publication)
+      |> Publication.get_raw_documents(publication)
       |> Stream.map(&create_tile_layer_info/1)
       |> Enum.map(fn layer_info ->
         Map.merge(layer_info, %{visible: true})
@@ -196,7 +198,7 @@ defmodule FieldPublicationWeb.Components.Map.TileLayerSelection do
 
     other_map_layers =
       Map.get(project_doc_relations, "hasMapLayer", [])
-      |> Data.get_raw_documents(publication)
+      |> Publication.get_raw_documents(publication)
       |> Stream.map(&create_tile_layer_info/1)
       |> Stream.map(fn layer_info ->
         Map.merge(layer_info, %{visible: false})

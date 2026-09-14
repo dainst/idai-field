@@ -1,10 +1,11 @@
 defmodule FieldPublicationWeb.Presentation.Opengraph do
   use FieldPublicationWeb, :html
 
-  alias FieldPublication.DatabaseSchema.Publication
+  alias FieldPublication.Publication
 
-  alias FieldPublication.Publications.Data
-  alias FieldPublication.Publications.Data.Document
+  alias FieldPublication.Publication.{
+    Document
+  }
 
   alias FieldPublicationWeb.Components.Data.Image
 
@@ -21,7 +22,7 @@ defmodule FieldPublicationWeb.Presentation.Opengraph do
   end
 
   defp create_description(doc) do
-    Data.get_field_value(doc, "shortDescription")
+    Document.get_field_value(doc, "shortDescription")
     |> case do
       value when is_binary(value) ->
         value

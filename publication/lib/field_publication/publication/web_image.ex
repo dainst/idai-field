@@ -4,12 +4,18 @@ defmodule FieldPublication.Processing.WebImage do
     Operation
   }
 
-  alias FieldPublication.FileService
-  alias FieldPublication.Publications
+  alias FieldPublication.{
+    FileService,
+    Publication
+  }
+
+  alias FieldPublication.Publication.{
+    Configuration,
+    DataIssues
+  }
 
   alias FieldPublication.DatabaseSchema.{
-    LogEntry,
-    Publication
+    LogEntry
   }
 
   require Logger
@@ -30,10 +36,10 @@ defmodule FieldPublication.Processing.WebImage do
 
     current_web_files = FileService.list_web_image_files(project_identifier)
 
-    image_categories = Publications.Data.get_image_categories(publication)
+    image_categories = Configuration.get_image_categories(publication)
 
     {existing, missing} =
-      Publications.Data.get_doc_stream_for_categories(publication, image_categories)
+      Publication.get_doc_stream_for_categories(publication, image_categories)
       |> Stream.map(fn %{"_id" => uuid} ->
         uuid
       end)
@@ -66,9 +72,9 @@ defmodule FieldPublication.Processing.WebImage do
       missing_raw_files: missing_raw_files
     } = evaluate_web_images_state(publication)
 
-    Publications.Data.clear_data_issues(publication, @data_report_key)
+    DataIssues.remove_entries(@data_report_key, publication)
 
-    Publications.Data.report_data_issues(
+    DataIssues.add_entries(
       Enum.map(missing_raw_files, fn uuid ->
         {uuid,
          LogEntry.create(%{
@@ -101,7 +107,7 @@ defmodule FieldPublication.Processing.WebImage do
         |> Image.new_from_file()
         |> case do
           {:error, _} ->
-            Publications.Data.report_data_issue(
+            DataIssues.add_entry(
               uuid,
               %LogEntry{
                 type: "invalid_file",
@@ -145,7 +151,7 @@ defmodule FieldPublication.Processing.WebImage do
                 {state, state}
               end)
 
-            Publications.broadcast(
+            Publication.broadcast(
               publication,
               {:processing_progress, :web_images, updated_state}
             )

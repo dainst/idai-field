@@ -1,9 +1,13 @@
-defmodule FieldPublication.DatabaseSchema.DataIssues do
+defmodule FieldPublication.Publication.DataIssues do
   use Ecto.Schema
 
   import Ecto.Changeset
 
-  alias FieldPublication.CouchService
+  alias FieldPublication.{
+    CouchService,
+    Publication
+  }
+
   alias FieldPublication.DatabaseSchema.LogEntry
 
   @doc_type "issue"
@@ -14,6 +18,22 @@ defmodule FieldPublication.DatabaseSchema.DataIssues do
     field(:doc_type, :string, default: @doc_type)
     field(:uuid, :string)
     embeds_many(:entries, LogEntry, on_replace: :delete)
+  end
+
+  defp changeset(project, attrs \\ %{}) do
+    project
+    |> cast(attrs, [:_rev, :uuid])
+    |> cast_embed(:entries)
+    |> validate_required([:uuid])
+    |> set_id()
+  end
+
+  def set_id(changeset) do
+    if uuid = get_field(changeset, :uuid) do
+      put_change(changeset, :_id, id(uuid))
+    else
+      changeset
+    end
   end
 
   def id(uuid) when is_binary(uuid), do: "issue_#{uuid}"
@@ -33,8 +53,8 @@ defmodule FieldPublication.DatabaseSchema.DataIssues do
     issues_doc
   end
 
-  def add_entry(uuid, %LogEntry{} = entry, database_name)
-      when is_binary(uuid) and is_binary(database_name) do
+  def add_entry(uuid, %LogEntry{} = entry, %Publication{meta_database: database_name})
+      when is_binary(uuid) do
     document_id = id(uuid)
 
     CouchService.get_document(document_id, database_name)
@@ -50,11 +70,11 @@ defmodule FieldPublication.DatabaseSchema.DataIssues do
         changeset = changeset(%__MODULE__{}, Jason.decode!(body))
 
         changeset
-        |> Ecto.Changeset.put_embed(
+        |> put_embed(
           :entries,
-          Ecto.Changeset.get_embed(changeset, :entries) ++ [entry]
+          get_embed(changeset, :entries) ++ [entry]
         )
-        |> Ecto.Changeset.apply_action(:create)
+        |> apply_action(:create)
         |> case do
           {:ok, updated_doc} ->
             CouchService.put_document(document_id, updated_doc, database_name)
@@ -65,7 +85,7 @@ defmodule FieldPublication.DatabaseSchema.DataIssues do
     end
   end
 
-  def add_entries(entries, database_name) do
+  def add_entries(entries, %Publication{meta_database: database_name}) do
     existing_list =
       Enum.map(entries, fn {uuid, _doc} -> id(uuid) end)
       |> CouchService.get_documents(database_name)
@@ -94,11 +114,11 @@ defmodule FieldPublication.DatabaseSchema.DataIssues do
           changeset = changeset(issue_doc)
 
           changeset
-          |> Ecto.Changeset.put_embed(
+          |> put_embed(
             :entries,
             issue_doc.entries ++ [entry]
           )
-          |> Ecto.Changeset.apply_action(:create)
+          |> apply_action(:create)
           |> case do
             {:ok, updated_doc} ->
               updated_doc
@@ -116,7 +136,7 @@ defmodule FieldPublication.DatabaseSchema.DataIssues do
     |> Enum.each(&CouchService.post_documents(&1, database_name))
   end
 
-  def remove_entries(report_key, database_name) do
+  def remove_entries(report_key, %Publication{meta_database: database_name}) do
     CouchService.get_document_stream(
       %{
         selector: %{entries: %{"$elemMatch": %{reported_by: report_key}}}
@@ -134,7 +154,10 @@ defmodule FieldPublication.DatabaseSchema.DataIssues do
     end)
   end
 
-  def list(database_name, selector \\ %{selector: %{doc_type: @doc_type}}) do
+  def list(
+        %Publication{meta_database: database_name},
+        selector \\ %{selector: %{doc_type: @doc_type}}
+      ) do
     CouchService.get_document_stream(selector, database_name)
     |> Stream.map(fn doc ->
       %__MODULE__{}
@@ -144,19 +167,26 @@ defmodule FieldPublication.DatabaseSchema.DataIssues do
     |> Enum.to_list()
   end
 
-  defp changeset(project, attrs \\ %{}) do
-    project
-    |> cast(attrs, [:_rev, :uuid])
-    |> cast_embed(:entries)
-    |> validate_required([:uuid])
-    |> set_id()
-  end
-
-  def set_id(changeset) do
-    if uuid = get_field(changeset, :uuid) do
-      put_change(changeset, :_id, id(uuid))
-    else
-      changeset
-    end
+  def get_grouped_issues(%Publication{} = publication) do
+    publication
+    |> list()
+    |> Enum.reduce(%{}, fn %__MODULE__{uuid: uuid, entries: entries} = _doc, acc ->
+      Enum.reduce(entries, acc, fn %LogEntry{
+                                     message: message,
+                                     severity: severity,
+                                     type: type,
+                                     reported_by: reported_by
+                                   },
+                                   inner_acc ->
+        Map.update(
+          inner_acc,
+          {type, severity},
+          [%{uuid: uuid, message: message, reported_by: reported_by}],
+          fn existing ->
+            existing ++ [%{uuid: uuid, message: message, reported_by: reported_by}]
+          end
+        )
+      end)
+    end)
   end
 end

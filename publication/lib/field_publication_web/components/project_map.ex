@@ -1,8 +1,8 @@
 defmodule FieldPublicationWeb.Components.PublicationMap do
   use FieldPublicationWeb, :live_component
 
-  alias FieldPublication.DatabaseSchema.Publication
-  alias FieldPublication.Publications
+  alias FieldPublication.Publication
+  alias FieldPublication.Publication.Geo
 
   @moduledoc """
   This component provides a map displaying all geometries and tile layers for a given
@@ -76,7 +76,7 @@ defmodule FieldPublicationWeb.Components.PublicationMap do
       :ok,
       socket
       |> assign(assigns)
-      |> assign(:projection, Publications.Geo.get_projection(epsg_code))
+      |> assign(:projection, Geo.get_projection(epsg_code))
       |> push_event("set-selection-polygon-#{id}", %{geometry: preset_geometry})
     }
   end

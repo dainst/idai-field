@@ -1,5 +1,5 @@
 defmodule FieldPublication.FileService do
-  alias FieldPublication.DatabaseSchema.Publication
+  alias FieldPublication.Publication
 
   @file_store_path Application.compile_env(:field_publication, :file_store_directory_root)
   @custom_assets_path "#{@file_store_path}/custom_assets/"

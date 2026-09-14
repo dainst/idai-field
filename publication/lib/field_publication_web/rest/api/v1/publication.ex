@@ -6,11 +6,14 @@ defmodule FieldPublicationWeb.Api.V1.Publication do
 
   alias OpenApiSpex.Schema
 
-  alias FieldPublication.Publications
-  alias FieldPublication.Publications.Data
-  alias FieldPublication.DatabaseSchema.Publication
+  alias FieldPublication.{
+    FileService,
+    Publication
+  }
 
-  alias FieldPublication.FileService
+  alias FieldPublication.Publication.{
+    Configuration
+  }
 
   @publication_not_found_message "Publication not found."
 
@@ -45,13 +48,13 @@ defmodule FieldPublicationWeb.Api.V1.Publication do
         conn,
         %{"project_identifier" => project_identifier, "draft_date" => draft_date} = _param
       ) do
-    Publications.get(project_identifier, draft_date)
+    Publication.get(project_identifier, draft_date)
     |> case do
       {:ok, %Publication{} = publication} ->
-        image_categories = Publications.Data.get_image_categories(publication)
+        image_categories = Configuration.get_image_categories(publication)
 
         list =
-          Data.get_doc_stream_for_all(publication)
+          Publication.get_doc_stream_for_all(publication)
           |> Stream.map(fn %{
                              "resource" =>
                                %{
@@ -119,9 +122,9 @@ defmodule FieldPublicationWeb.Api.V1.Publication do
         %{"project_identifier" => project_identifier, "draft_date" => draft_date, "uuid" => uuid} =
           _params
       ) do
-    publication = Publications.get!(project_identifier, draft_date)
+    publication = Publication.get!(project_identifier, draft_date)
 
-    doc = Data.get_raw_document(uuid, publication)
+    doc = Publication.get_raw_document(uuid, publication)
 
     conn
     |> Plug.Conn.put_resp_header("content-type", "application/json")
@@ -164,9 +167,9 @@ defmodule FieldPublicationWeb.Api.V1.Publication do
         %{"project_identifier" => project_identifier, "draft_date" => draft_date, "uuid" => uuid} =
           _params
       ) do
-    publication = Publications.get!(project_identifier, draft_date)
+    publication = Publication.get!(project_identifier, draft_date)
 
-    doc = Data.get_extended_document(uuid, publication, true)
+    doc = Publication.get_extended_document(uuid, publication, true)
 
     conn
     |> Plug.Conn.put_resp_header("content-type", "application/json")
@@ -209,7 +212,7 @@ defmodule FieldPublicationWeb.Api.V1.Publication do
       })
       when is_binary(project_identifier) and is_binary(draft_date) do
     path =
-      Publications.get!(project_identifier, draft_date)
+      Publication.get!(project_identifier, draft_date)
       |> FileService.publication_geometry_path(true)
 
     if File.exists?(path) do
@@ -231,7 +234,7 @@ defmodule FieldPublicationWeb.Api.V1.Publication do
         "draft_date" => draft_date
       })
       when is_binary(project_identifier) and is_binary(draft_date) do
-    case Publications.get(project_identifier, draft_date) do
+    case Publication.get(project_identifier, draft_date) do
       {:ok, %Publication{epsg_code: default_code} = publication} ->
         default_code = if default_code, do: default_code, else: "custom-crs"
 
@@ -257,7 +260,7 @@ defmodule FieldPublicationWeb.Api.V1.Publication do
         "draft_date" => draft_date,
         "epsg" => "default"
       }) do
-    case Publications.get(project_identifier, draft_date) do
+    case Publication.get(project_identifier, draft_date) do
       {:ok, %Publication{epsg_code: default_code} = publication} ->
         send_geometry(conn, publication, default_code)
 
@@ -273,7 +276,7 @@ defmodule FieldPublicationWeb.Api.V1.Publication do
         "draft_date" => draft_date,
         "epsg" => epsg_param
       }) do
-    with {:ok, publication} <- Publications.get(project_identifier, draft_date),
+    with {:ok, publication} <- Publication.get(project_identifier, draft_date),
          {epsg_code, ""} <- Integer.parse(epsg_param) do
       send_geometry(conn, publication, epsg_code)
     else

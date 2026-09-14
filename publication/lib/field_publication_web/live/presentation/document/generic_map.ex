@@ -7,17 +7,17 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
     Image
   }
 
-  alias FieldPublication.DatabaseSchema.Publication
-  alias FieldPublication.Publications.Data
+  alias FieldPublication.Publication
 
-  alias FieldPublicationWeb.Components.DocumentMap
-
-  alias FieldPublication.Publications.Data.{
+  alias FieldPublication.Publication.{
     Document,
+    DocumentPreview,
     Field,
     FieldGroup,
-    RelationGroup
+    RelationGroup,
   }
+
+  alias FieldPublicationWeb.Components.DocumentMap
 
   def render(assigns) do
     ~H"""
@@ -103,7 +103,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
       <% end %>
     <% end %>
 
-    <% depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
+    <% depicted_in = Document.get_relation(@doc, "isDepictedIn") %>
     <%= if depicted_in do %>
       <section>
         <.group_heading>
@@ -274,7 +274,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
   end
 
   defp construct_hierarchy(publication, %{id: uuid}) do
-    hierarchy = Data.get_document_hierarchy(publication)
+    hierarchy = Publication.get_document_hierarchy(publication)
 
     %{"children" => children_uuids, "parent" => parent_uuid} = Map.get(hierarchy, uuid)
 
@@ -294,9 +294,9 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
 
     {
       %{
-        children: Data.get_preview_documents(children_uuids, publication),
-        siblings: Data.get_preview_documents(sibling_uuids, publication),
-        ancestors: Data.get_preview_documents(ancestor_uuids, publication)
+        children: DocumentPreview.list(publication, children_uuids),
+        siblings: DocumentPreview.list(publication, sibling_uuids),
+        ancestors: DocumentPreview.list(publication, ancestor_uuids)
       },
       children_uuids ++ sibling_uuids ++ ancestor_uuids ++ [uuid]
     }

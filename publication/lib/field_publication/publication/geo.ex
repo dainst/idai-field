@@ -1,23 +1,23 @@
-defmodule FieldPublication.Publications.Geo do
+defmodule FieldPublication.Publication.Geo do
+
   alias FieldPublication.{
     CouchService,
     FileService,
-    Publications
+    Publication
   }
 
-  alias FieldPublication.Publications.Data
-
-  alias FieldPublication.DatabaseSchema.Publication
+  @report_key "geo"
+  def report_key(), do: @report_key
 
   def read_and_set_epsg_code(%Publication{database: db} = publication) do
     {:ok, %{status: 200, body: body}} = CouchService.get_document("project", db)
 
     case Jason.decode!(body) do
       %{"resource" => %{"epsgId" => id}} ->
-        Publications.put(publication, %{epsg_code: id})
+        Publication.put(publication, %{epsg_code: id})
 
       _epsgId_key_not_present ->
-        Publications.put(publication, %{epsg_code: nil})
+        Publication.put(publication, %{epsg_code: nil})
     end
   end
 
@@ -45,7 +45,7 @@ defmodule FieldPublication.Publications.Geo do
           publication
       ) do
     project_epsg_id =
-      Data.get_raw_document("project", publication)
+      Publication.get_raw_document("project", publication)
       |> case do
         %{"resource" => %{"epsgId" => id}} ->
           id
@@ -54,7 +54,7 @@ defmodule FieldPublication.Publications.Geo do
           nil
       end
 
-    config = Publications.get_configuration(publication)
+    config = Publication.Configuration.get(publication)
 
     geometry_collection =
       CouchService.get_document_stream(%{selector: %{}}, db)
@@ -65,7 +65,7 @@ defmodule FieldPublication.Publications.Geo do
         _other ->
           true
       end)
-      |> Enum.map(&Data.apply_project_configuration(&1, config, publication))
+      |> Enum.map(&Publication.Configuration.apply_project_configuration(&1, config, publication))
       |> Enum.reduce(
         %{
           type: "FeatureCollection",
@@ -73,9 +73,9 @@ defmodule FieldPublication.Publications.Geo do
           name: "Vector geometries for #{publication._id}."
         },
         fn
-          %Data.Document{
+          %Publication.Document{
             geometry: geometry,
-            category: %Data.Category{} = category_info
+            category: %Publication.Category{} = category_info
           } = doc,
           geometry_collection ->
             updated_features =
@@ -131,7 +131,7 @@ defmodule FieldPublication.Publications.Geo do
       end)
       |> Enum.into(%{})
 
-    hierarchy = FieldPublication.Publications.Data.get_document_hierarchy(publication)
+    hierarchy = Publication.get_document_hierarchy(publication)
 
     features_with_parents =
       geometry_collection.features
@@ -198,10 +198,15 @@ defmodule FieldPublication.Publications.Geo do
          output_epsg
        )
        when is_number(input_epsg) and is_number(output_epsg) do
+    output_file
+    |> Path.dirname()
+    |> File.mkdir_p!()
+
     temp_file =
       output_file
       |> Path.dirname()
       |> Path.join("temp.geojson")
+
 
     File.write!(temp_file, Jason.encode!(geo_json))
 
@@ -263,7 +268,7 @@ defmodule FieldPublication.Publications.Geo do
   end
 
   def uuid_to_epsg_4326_feature_mapping(%Publication{} = publication) do
-    {:ok, feature_collection} = Publications.Geo.vector_geometries(publication, 4326)
+    {:ok, feature_collection} = vector_geometries(publication, 4326)
 
     feature_collection
     |> Map.get("features")

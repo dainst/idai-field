@@ -2,9 +2,10 @@ defmodule FieldPublicationWeb.Api.V1 do
   use FieldPublicationWeb, :controller
   use OpenApiSpex.ControllerSpecs
 
-  alias FieldPublication.Projects
-  alias FieldPublication.Publications
-  alias FieldPublication.DatabaseSchema.Publication
+  alias FieldPublication.{
+    Project,
+    Publication
+  }
 
   alias OpenApiSpex.Schema
 
@@ -55,13 +56,13 @@ defmodule FieldPublicationWeb.Api.V1 do
 
   def index(%{assigns: %{current_user: user}} = conn, _params) do
     project_list =
-      Publications.list()
+      Publication.list()
       |> Stream.filter(fn %Publication{
                             project_identifier: project_identifier,
                             publication_date: publication_date
                           } ->
         publication_date != nil ||
-          Projects.has_project_access?(project_identifier, user)
+          Project.has_project_access?(project_identifier, user)
       end)
       |> Enum.reduce(%{}, fn %Publication{
                                project_identifier: project_identifier

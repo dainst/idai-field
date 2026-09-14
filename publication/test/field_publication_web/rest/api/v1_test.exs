@@ -5,12 +5,8 @@ defmodule FieldPublicationWeb.Rest.Api.V1Test do
 
   alias FieldPublication.{
     CouchService,
-    Projects,
+    Project,
     Users
-  }
-
-  alias FieldPublication.DatabaseSchema.{
-    Project
   }
 
   alias FieldPublication.Test.ProjectSeed
@@ -41,12 +37,12 @@ defmodule FieldPublicationWeb.Rest.Api.V1Test do
     {project_b, _publication} =
       ProjectSeed.create_full_publication(@test_project_identifier_b, false, false)
 
-    {:ok, project_b} = Projects.add_user(project_b, user)
+    {:ok, project_b} = Project.add_user(project_b, user)
 
-    {:ok, empty_project} = Projects.put(%Project{}, %{identifier: @empty_project_identifier})
+    {:ok, empty_project} = Project.put(%Project{}, %{identifier: @empty_project_identifier})
 
     on_exit(fn ->
-      Enum.each([empty_project, project_a, project_b], &Projects.delete/1)
+      Enum.each([empty_project, project_a, project_b], &Project.delete/1)
       Users.delete(@test_editor_name)
       CouchService.delete_database(@core_database)
     end)

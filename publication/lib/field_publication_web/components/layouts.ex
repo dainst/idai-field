@@ -1,6 +1,6 @@
 defmodule FieldPublicationWeb.Layouts do
   use FieldPublicationWeb, :html
 
-  alias FieldPublication.Settings
+  alias FieldPublication.ApplicationSettings
   embed_templates("layouts/*")
 end

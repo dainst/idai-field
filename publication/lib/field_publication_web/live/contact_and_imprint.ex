@@ -1,10 +1,9 @@
 defmodule FieldPublicationWeb.ContactAndImprintLive do
   use FieldPublicationWeb, :live_view
 
-  alias FieldPublication.Settings
+  alias FieldPublication.ApplicationSettings
 
   alias FieldPublication.DatabaseSchema.{
-    ApplicationSettings,
     Translation
   }
 
@@ -76,7 +75,7 @@ defmodule FieldPublicationWeb.ContactAndImprintLive do
     %ApplicationSettings{
       imprint: imprint,
       contact_email: contact_email
-    } = Settings.get()
+    } = ApplicationSettings.get()
 
     socket =
       socket

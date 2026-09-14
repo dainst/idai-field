@@ -1,7 +1,7 @@
 defmodule FieldPublicationWeb.Components.WorldMap do
   use FieldPublicationWeb, :live_component
 
-  alias FieldPublication.Settings
+  alias FieldPublication.ApplicationSettings
 
   @impl true
   def render(assigns) do
@@ -24,7 +24,7 @@ defmodule FieldPublicationWeb.Components.WorldMap do
   def update(%{id: id, projects: projects} = assigns, socket) do
     assigns = set_defaults(assigns)
 
-    %{color_scheme: %{primary: primary, primary_hover: primary_hover}} = Settings.get()
+    %{color_scheme: %{primary: primary, primary_hover: primary_hover}} = ApplicationSettings.get()
 
     features =
       projects

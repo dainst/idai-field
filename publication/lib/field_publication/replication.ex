@@ -6,12 +6,15 @@ defmodule FieldPublication.Replication do
     Replication.CouchReplication,
     Replication.FileReplication,
     Processing,
-    Publications
+    Publication
+  }
+
+  alias FieldPublication.Publication.{
+    Geo
   }
 
   alias FieldPublication.DatabaseSchema.{
     ReplicationInput,
-    Publication,
     LogEntry
   }
 
@@ -55,7 +58,7 @@ defmodule FieldPublication.Replication do
   ## Start of API functions to be called from the rest of the application.
 
   def initialize_publication(%ReplicationInput{} = params) do
-    with {:ok, publication} <- Publications.create_from_replication_input(params),
+    with {:ok, publication} <- Publication.create_from_replication_input(params),
          {:ok, :connection_successful} <- check_source_connection(params) do
       {:ok, publication}
     else
@@ -188,15 +191,13 @@ defmodule FieldPublication.Replication do
                 nil
             end
 
-          Publications.Data.recreate_meta_database(publication)
-
-          {:ok, publication} = Publications.Geo.read_and_set_epsg_code(publication)
+          {:ok, publication} = Geo.read_and_set_epsg_code(publication)
 
           persisted_log(publication, :info, "Draft creation finished.")
 
           {:ok, %Publication{} = final_publication} =
-            Publications.get!(publication.project_identifier, publication.draft_date)
-            |> Publications.put(%{
+            Publication.get!(publication.project_identifier, publication.draft_date)
+            |> Publication.put(%{
               "contact" => contact,
               "replication_finished" => DateTime.utc_now(),
               "languages" => languages
@@ -281,7 +282,7 @@ defmodule FieldPublication.Replication do
         persisted_log(publication, :error, "#{msg} #{inspect(other)}")
     end
 
-    Publications.broadcast(publication, {:replication_stopped})
+    Publication.broadcast(publication, {:replication_stopped})
 
     {:noreply, cleanup(ref, running_replications)}
   end
@@ -314,9 +315,9 @@ defmodule FieldPublication.Replication do
         reported_by: "replication"
       })
 
-    Publications.get!(publication.project_identifier, publication.draft_date)
+    Publication.get!(publication.project_identifier, publication.draft_date)
     |> Map.update(:replication_logs, [], fn existing -> existing ++ [log_entry] end)
-    |> Publications.put(%{})
+    |> Publication.put(%{})
   end
 
   def reconstruct_project_configuraton(%Publication{

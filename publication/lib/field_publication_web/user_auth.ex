@@ -1,7 +1,7 @@
 defmodule FieldPublicationWeb.UserAuth do
   alias FieldPublication.{
-    Publications,
-    Projects
+    Publication,
+    Project
   }
 
   use FieldPublicationWeb, :verified_routes
@@ -209,7 +209,7 @@ defmodule FieldPublicationWeb.UserAuth do
       ) do
     socket = mount_current_user(socket, session)
 
-    if Projects.has_project_access?(
+    if Project.has_project_access?(
          project_identifier,
          socket.assigns.current_user
        ) do
@@ -232,7 +232,7 @@ defmodule FieldPublicationWeb.UserAuth do
       ) do
     socket = mount_current_user(socket, session)
 
-    Publications.get(project_identifier, draft_date)
+    Publication.get(project_identifier, draft_date)
     |> case do
       {:error, :not_found} ->
         {
@@ -242,8 +242,8 @@ defmodule FieldPublicationWeb.UserAuth do
           |> Phoenix.LiveView.redirect(to: ~p"/")
         }
 
-      {:ok, %FieldPublication.DatabaseSchema.Publication{} = publication} ->
-        if not Projects.has_publication_access?(publication, socket.assigns.current_user) do
+      {:ok, %Publication{} = publication} ->
+        if not Project.has_publication_access?(publication, socket.assigns.current_user) do
           {
             :halt,
             socket
@@ -264,7 +264,7 @@ defmodule FieldPublicationWeb.UserAuth do
       ) do
     socket = mount_current_user(socket, session)
 
-    Publications.get_most_recent(project_identifier, socket.assigns.current_user)
+    Publication.get_most_recent(project_identifier, socket.assigns.current_user)
     |> case do
       nil ->
         {
@@ -274,7 +274,7 @@ defmodule FieldPublicationWeb.UserAuth do
           |> Phoenix.LiveView.redirect(to: ~p"/")
         }
 
-      %FieldPublication.DatabaseSchema.Publication{} = _most_recent ->
+      %Publication{} = _most_recent ->
         {:cont, socket}
     end
   end
@@ -347,7 +347,7 @@ defmodule FieldPublicationWeb.UserAuth do
         %{params: %{"project_identifier" => project_identifier}} = conn,
         _opts
       ) do
-    if Projects.has_project_access?(
+    if Project.has_project_access?(
          project_identifier,
          conn.assigns[:current_user]
        ) do
@@ -365,7 +365,7 @@ defmodule FieldPublicationWeb.UserAuth do
           conn,
         _options
       ) do
-    Publications.get(project_identifier, draft_date)
+    Publication.get(project_identifier, draft_date)
     |> case do
       {:error, _} ->
         conn
@@ -375,8 +375,8 @@ defmodule FieldPublicationWeb.UserAuth do
         )
         |> halt()
 
-      {:ok, %FieldPublication.DatabaseSchema.Publication{} = publication} ->
-        if not Projects.has_publication_access?(publication, conn.assigns.current_user) do
+      {:ok, %Publication{} = publication} ->
+        if not Project.has_publication_access?(publication, conn.assigns.current_user) do
           conn
           |> resp(403, "You are not allowed to access that page.")
           |> halt()
@@ -390,14 +390,14 @@ defmodule FieldPublicationWeb.UserAuth do
         %{params: %{"project_identifier" => project_identifier}} = conn,
         _opts
       ) do
-    Publications.get_most_recent(project_identifier, conn.assigns.current_user)
+    Publication.get_most_recent(project_identifier, conn.assigns.current_user)
     |> case do
       nil ->
         conn
         |> resp(404, "No publications found for project '#{project_identifier}'.")
         |> halt()
 
-      %FieldPublication.DatabaseSchema.Publication{} = _most_recent ->
+      %Publication{} = _most_recent ->
         conn
     end
   end
@@ -449,7 +449,7 @@ defmodule FieldPublicationWeb.UserAuth do
     # Inline function this is used further down.
     check_user_access = fn project_identifier, conn ->
       cond do
-        Projects.has_project_access?(project_identifier, conn.assigns[:current_user]) ->
+        Project.has_project_access?(project_identifier, conn.assigns[:current_user]) ->
           conn
 
         conn.assigns[:current_user] ->
@@ -497,9 +497,9 @@ defmodule FieldPublicationWeb.UserAuth do
 
   defp is_image_published?(project_identifier, uuid) do
     publication =
-      Publications.get_published(project_identifier)
+      Publication.get_published(project_identifier)
       |> Enum.find(fn pub ->
-        Publications.Data.document_exists?(uuid, pub)
+        Publication.document_exists?(uuid, pub)
       end)
 
     case publication do

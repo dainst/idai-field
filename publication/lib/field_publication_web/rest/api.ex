@@ -6,7 +6,7 @@ defmodule FieldPublicationWeb.Api do
   alias FieldPublicationWeb.{Endpoint, Router}
   @behaviour OpenApi
 
-  alias FieldPublication.Settings
+  alias FieldPublication.ApplicationSettings
 
   @impl OpenApi
   def spec do
@@ -25,7 +25,7 @@ defmodule FieldPublicationWeb.Api do
         Server.from_endpoint(Endpoint)
       ],
       info: %Info{
-        title: "API Documentation · #{Settings.get_page_name()}",
+        title: "API Documentation · #{ApplicationSettings.get_page_name()}",
         description:
           "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
         version: to_string(Application.spec(:my_app, :vsn)),
@@ -182,7 +182,7 @@ defmodule FieldPublicationWeb.Api do
   end
 
   defp get_contact() do
-    case Settings.get_contact_email() do
+    case ApplicationSettings.get_contact_email() do
       nil ->
         nil
 

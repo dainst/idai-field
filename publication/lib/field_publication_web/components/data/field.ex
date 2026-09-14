@@ -2,9 +2,14 @@ defmodule FieldPublicationWeb.Components.Data.Field do
   use FieldPublicationWeb, :html
 
   require Logger
-  alias FieldPublication.DatabaseSchema.Publication
-  alias FieldPublication.Publications.Data.Field
-  alias FieldPublication.Publications.Search
+
+  alias FieldPublication.Publication
+
+  alias FieldPublication.Publication.{
+    Field,
+    Search
+  }
+
   alias FieldPublicationWeb.Components.LanguageSelection
 
   defp is_search_keyword?(input_type) do

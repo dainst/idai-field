@@ -145,8 +145,8 @@ defmodule FieldPublication.Test.ProjectSeed do
     end
 
     if seed_data? && preprocess? do
-      Publications.Geo.read_and_set_epsg_code(publication)
-      Publications.Geo.generate_feature_collections(publication)
+      Publication.Geo.read_and_set_epsg_code(publication)
+      Publication.Geo.generate_feature_collections(publication)
 
       [{:ok, %Finch.Response{status: 201}}] =
         Publication.DocumentPreview.recreate_previews(publication)

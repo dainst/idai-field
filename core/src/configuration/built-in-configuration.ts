@@ -871,7 +871,22 @@ export class BuiltInConfiguration {
                 ]
             }
         },
-        SpatialReferenceElement: {
+        SpatialReferencePoint: {
+            fields: {},
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry', Relation.Position.IS_SPATIAL_REFERENCE_ENTITY_FOR]
+                    }
+                ]
+            }
+        },
+        SpatialReferenceLine: {
             fields: {},
             minimalForm: {
                 groups: [
@@ -1124,7 +1139,7 @@ export class BuiltInConfiguration {
         {
             name: 'isSpatialReferenceElementFor',
             inverse: 'hasSpatialReferenceElement',
-            domain: ['SpatialReferenceElement'],
+            domain: ['SpatialReferencePoint', 'SpatialReferenceLine'],
             range: ['Operation', 'Profile', 'Planum', 'Place', 'Level', 'Room', 'RoomWall', 'RoomFloor', 'RoomCeiling',
                 'BuildingPart', 'Opening', 'Roof', 'Stairs', 'Area', 'Damage', 'DesignElement', 'Feature',
                 'FeatureGroup', 'FeatureSegment', 'Find', 'FindCollection', 'Sample'],
@@ -1138,7 +1153,7 @@ export class BuiltInConfiguration {
             domain: ['Operation', 'Profile', 'Planum', 'Place', 'Level', 'Room', 'RoomWall', 'RoomFloor', 'RoomCeiling',
                 'BuildingPart', 'Opening', 'Roof', 'Stairs', 'Area', 'Damage', 'DesignElement', 'Feature',
                 'FeatureGroup', 'FeatureSegment', 'Find', 'FindCollection', 'Sample'],
-            range: ['SpatialReferenceElement'],
+            range: ['SpatialReferencePoint', 'SpatialReferenceLine'],
             editable: false,
             visible: false,
             inputType: 'relation'
@@ -1348,7 +1363,8 @@ export class BuiltInConfiguration {
         },
         {
             name: 'isRecordedIn',
-            domain: ['Find', 'FindCollection', 'Inscription', 'Sample', 'SpatialReferenceElement'],
+            domain: ['Find', 'FindCollection', 'Inscription', 'Sample', 'SpatialReferencePoint',
+                'SpatialReferenceLine'],
             range: ['Trench', 'Building', 'Survey', 'ExcavationArea'],
             editable: false,
             visible: false,
@@ -1480,7 +1496,7 @@ export class BuiltInConfiguration {
         },
         {
             name: 'liesWithin',
-            domain: ['SpatialReferenceElement'],
+            domain: ['SpatialReferencePoint', 'SpatialReferenceLine'],
             range: ['Place', 'FeatureGroup', 'Feature', 'Area', 'BuildingPart', 'Level', 'Room', 'RoomCeiling',
                 'RoomWall', 'RoomFloor', 'Roof', 'Opening', 'Stairs', 'DesignElement'],
             editable: false,

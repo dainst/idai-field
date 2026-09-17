@@ -211,7 +211,11 @@
           "hidden": [],
           "fields": {}
         },
-        "SpatialReferenceElement:default": {
+        "SpatialReferencePoint:default": {
+          "hidden": [],
+          "fields": {}
+        },
+        "SpatialReferenceLine:default": {
           "hidden": [],
           "fields": {}
         },
@@ -306,7 +310,8 @@
         "FindCollection",
         "Inscription",
         "Sample",
-        "SpatialReferenceElement",
+        "SpatialReferencePoint",
+        "SpatialReferenceLine",
         "Process",
         "Image",
         "Drawing",
@@ -657,7 +662,11 @@
           "identifierPrefix": "P",
           "color": "#ff0000"
         },
-        "SpatialReferenceElement:archaeoDox": {
+        "SpatialReferencePoint:archaeoDox": {
+          "hidden": [],
+          "fields": {}
+        },
+        "SpatialReferenceLine:archaeoDox": {
           "hidden": [],
           "fields": {}
         },
@@ -731,7 +740,8 @@
         "FeatureSegment",
         "Find",
         "Sample",
-        "SpatialReferenceElement",
+        "SpatialReferencePoint",
+        "SpatialReferenceLine",
         "Image",
         "Photo",
         "PlanDrawing",

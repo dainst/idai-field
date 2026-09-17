@@ -1265,8 +1265,12 @@
         }
       }
     },
-    "SpatialReferenceElement": {
-      "label": "Räumliches Bezugselement",
+    "SpatialReferencePoint": {
+      "label": "Räumlicher Bezugspunkt",
+      "fields": {}
+    },
+    "SpatialReferenceLine": {
+      "label": "Räumliche Bezugslinie",
       "fields": {}
     },
     "Drawing": {

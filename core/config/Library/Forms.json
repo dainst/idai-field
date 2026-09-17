@@ -1597,11 +1597,11 @@
         }
       ]
     },
-    "SpatialReferenceElement:default": {
+    "SpatialReferencePoint:default": {
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "categoryName": "SpatialReferenceElement",
+      "categoryName": "SpatialReferencePoint",
       "groups": [
         {
           "name": "stem",
@@ -1617,11 +1617,51 @@
         }
       ]
     },
-    "SpatialReferenceElement:archaeoDox": {
+    "SpatialReferencePoint:archaeoDox": {
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "categoryName": "SpatialReferenceElement",
+      "categoryName": "SpatialReferencePoint",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "date"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "isSpatialReferenceElementFor"]
+        }
+      ]
+    },
+    "SpatialReferenceLine:default": {
+      "description": {},
+      "createdBy": "",
+      "creationDate": "",
+      "categoryName": "SpatialReferenceLine",
+      "groups": [
+        {
+          "name": "stem",
+          "fields": ["identifier", "category", "shortDescription", "processor", "date"]
+        },
+        {
+          "name": "properties",
+          "fields": ["description"]
+        },
+        {
+          "name": "position",
+          "fields": ["geometry", "isSpatialReferenceElementFor"]
+        }
+      ]
+    },
+    "SpatialReferenceLine:archaeoDox": {
+      "description": {},
+      "createdBy": "",
+      "creationDate": "",
+      "categoryName": "SpatialReferenceLine",
       "groups": [
         {
           "name": "stem",

@@ -211,6 +211,10 @@
           "hidden": [],
           "fields": {}
         },
+        "SpatialReferenceElement:default": {
+          "hidden": [],
+          "fields": {}
+        },
         "TypeCatalog:default": {
           "hidden": [],
           "fields": {}
@@ -652,6 +656,10 @@
           },
           "identifierPrefix": "P",
           "color": "#ff0000"
+        },
+        "SpatialReferenceElement:archaeoDox": {
+          "hidden": [],
+          "fields": {}
         },
         "Image:archaeoDox": {
           "hidden": [],
